@@ -1,0 +1,91 @@
+{
+  "axis": "GENERAL_SELF_REVIEW",
+  "domain": "cosmos",
+  "timestamp": "2026-05-08T10:22:13.698721+00:00",
+  "sources_count": 8,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 0,
+  "youtube_items": [],
+  "analysis": {
+    "problem": "Отсутствие на масова употреба на балконни соларни панели в много държави",
+    "root_cause": "Отсутствие на законодателна база, която да позволи инсталацията на балконни соларни панели",
+    "severity": "MEDIUM",
+    "leverage_points": [
+      "Държавните органи, отпускат лицензии за инсталация на балконни соларни панели",
+      "Фирми, произвеждащи балконни соларни панели, които да лобират за промени в законодателството"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Лобинг за промени в законодателството, което да позволи инсталацията на балконни соларни панели",
+        "measurable_goal": "Броят на разрешенията за инсталация на балконни соларни панели да се увеличи с 20% за следващите 6 месеца",
+        "timeframe": "краткосрочно"
+      }
+    ],
+    "evidence": [
+      "The balcony solar boom is coming to the US: Dozens of US states are considering legislation to allow people to install plug-in solar systems, often called balcony solar.",
+      "These small arrays require little to no setup and could help cut emissions"
+    ],
+    "generalization": "Този проблем е свързан с домейна Планета, тъй като увеличаването на употребата на балконни соларни панели би могло да намали емисиите и да помогне за защита на околната среда",
+    "summary": "Отсутствие на масова употреба на балконни соларни панели в много държави поради липса на законодателна база. Предлагани действия: лобинг за промени в законодателството, което да позволи инсталацията на балконни соларни панели",
+    "risk_level": "MEDIUM"
+  },
+  "raw_items": [
+    {
+      "title": "Here’s how technology transformed babymaking",
+      "summary": "Technology is changing the way we make babies. The pioneering work of the scientists who invented IVF led to the birth of the first “test tube baby” in 1978. We’ve come a long, long way since then. This week, I’ve been working on a piece about the cutting edge of IVF technologies and what’s coming&#8230;",
+      "link": "https://www.technologyreview.com/2026/05/08/1136974/heres-how-technology-transformed-babymaking-ivf/",
+      "published": "Fri, 08 May 2026 09:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "The Download: the tech reshaping IVF and the rise of balcony solar",
+      "summary": "This is today&#8217;s edition of The Download, our weekday newsletter that provides a daily dose of what&#8217;s going on in the world of technology. What’s next for IVF IVF has brought millions of babies into the world over the last four decades. But the process can still be slow, painful, and expensive—and far from guaranteed&#8230;",
+      "link": "https://www.technologyreview.com/2026/05/07/1136956/the-download-ivf-tech-balcony-solar/",
+      "published": "Thu, 07 May 2026 12:10:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "The balcony solar boom is coming to the US",
+      "summary": "Dozens of US states are considering legislation to allow people to install plug-in solar systems, often called balcony solar. These small arrays require little to no setup and could help cut emissions and power bills. Balcony solar is already popular in Europe, and proponents say that the systems could make solar power more accessible for&#8230;",
+      "link": "https://www.technologyreview.com/2026/05/07/1136933/balcony-solar-boom/",
+      "published": "Thu, 07 May 2026 10:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "What’s next for IVF",
+      "summary": "MIT Technology Review’s What’s Next series looks across industries, trends, and technologies to give you a first look at the future. You can read the rest of them here. Forty-eight years ago this July, Louise Joy Brown became the world’s first person born with the help of in vitro fertilization. Millions more IVF babies have entered&#8230;",
+      "link": "https://www.technologyreview.com/2026/05/07/1136946/whats-next-for-ivf-ai-robot-pgt-gene-editing/",
+      "published": "Thu, 07 May 2026 09:04:50 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Scaling Trusted Access for Cyber with GPT-5.5 and GPT-5.5-Cyber",
+      "summary": "OpenAI expands Trusted Access for Cyber with GPT-5.5 and GPT-5.5-Cyber, helping verified defenders accelerate vulnerability research and protect critical infrastructure.",
+      "link": "https://openai.com/index/gpt-5-5-with-trusted-access-for-cyber",
+      "published": "Thu, 07 May 2026 13:00:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Parloa builds service agents customers want to talk to",
+      "summary": "Parloa leverages OpenAI models to power scalable, voice-driven AI customer service agents, enabling enterprises to design, simulate, and deploy reliable, real-time interactions.",
+      "link": "https://openai.com/index/parloa",
+      "published": "Thu, 07 May 2026 11:00:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Advancing voice intelligence with new models in the API",
+      "summary": "Explore new realtime voice models in the OpenAI API that can reason, translate, and transcribe speech, enabling more natural and intelligent voice experiences.",
+      "link": "https://openai.com/index/advancing-voice-intelligence-with-new-models-in-the-api",
+      "published": "Thu, 07 May 2026 10:00:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Testing ads in ChatGPT",
+      "summary": "OpenAI begins testing ads in ChatGPT to support free access, with clear labeling, answer independence, strong privacy protections, and user control.",
+      "link": "https://openai.com/index/testing-ads-in-chatgpt",
+      "published": "Thu, 07 May 2026 00:00:00 GMT",
+      "source_type": "rss"
+    }
+  ]
+}

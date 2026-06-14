@@ -1,0 +1,43 @@
+MODEL: qwen3:1.7b
+
+PROMPT:
+You are CORTEX++ AGI. Generate a JSON snapshot for PLANETARY_POTENTIAL_REVIEW — the integrated carrying capacity of Earth. Include: current_level (LOW/MEDIUM/HIGH), key_signals list, main_bottlenecks list, trends list. Return ONLY valid JSON.
+
+RESPONSE:
+Thinking...
+Okay, let's tackle this query. The user wants a JSON snapshot for the PLANETARY_POTENTIAL_REVIEW, which is about the integrated carrying capacity of Earth. They specified current_level, key_signals, main_bottlenecks, and trends. I need to make sure all these are included and the JSON is valid.
+
+First, I need to figure out the current_level. The carrying capacity of Earth is generally considered to be in a medium state. But I should verify if there's any recent data. Maybe it's LOW due to climate change impacts, MEDIUM because of ongoing efforts, or HIGH if there's a positive trend. Hmm, the user might expect a balanced approach. Let me go with MEDIUM as a middle ground.
+
+Next, key_signals. These are the main factors affecting the carrying capacity. They could include things like climate change, resource depletion, technological advancements, population growth, and policy changes. I need to list these in a meaningful way. Maybe something like climate change, resource scarcity, technological innovation, population growth, and policy effectiveness.
+
+Main_bottlenecks would be the obstacles preventing the carrying capacity from being higher. These might be climate change impacts, resource scarcity, economic constraints, political instability, and environmental degradation. These are the primary challenges that hinder the system's ability to sustain itself.
+
+Trends list should show the direction of changes. Trends could be increasing pressure from population and consumption, decreasing renewable energy adoption, rising greenhouse gas emissions, and improving sustainability practices. It's important to note the balance between growth and sustainability.
+
+I need to ensure the JSON is valid. Check for proper syntax, commas, brackets. Also, make sure the keys are in quotes, and the values are correctly formatted. Avoid any markdown, just plain JSON. Let me structure it with the required fields and correct data.
+...done thinking.
+
+{
+  "current_level": "MEDIUM",
+  "key_signals": [
+    "Climate change impacts",
+    "Resource scarcity",
+    "Technological innovation",
+    "Population growth",
+    "Policy effectiveness"
+  ],
+  "main_bottlenecks": [
+    "Climate change impacts",
+    "Resource scarcity",
+    "Economic constraints",
+    "Political instability",
+    "Environmental degradation"
+  ],
+  "trends": [
+    "Increasing pressure from population and consumption",
+    "Decreasing renewable energy adoption",
+    "Rising greenhouse gas emissions",
+    "Improving sustainability practices"
+  ]
+}

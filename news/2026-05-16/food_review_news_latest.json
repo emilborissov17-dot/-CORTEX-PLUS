@@ -1,0 +1,38 @@
+{
+  "axis": "FOOD_REVIEW",
+  "fetched_at": "2026-05-16T13:27:09.363060+00:00",
+  "smart_query": "food security hunger famine",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 0,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [],
+  "gdelt": [],
+  "github_repos": [],
+  "arxiv_papers": [
+    {
+      "title": "How adaptation to food resources and death rates shape oscillatory dynamics in a microbial population",
+      "snippet": "Microbes constantly interact with their environment by depleting and transforming food sources. Theoretical studies have mainly focused on Lotka-Volterra models, which do not account for food source dynamics. In contrast, consumer-resource models, which consider food source dynamics, are less explor",
+      "url": "https://arxiv.org/abs/2601.22967v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "An additional food driven biological control patch model, incorporating generalized competition",
+      "snippet": "Additional food sources for an introduced predator are known to increase its efficiency on a target pest. In this context, inhibiting factors such as interference, predator competition, and the introduction of temporally dependent quantity and quality of additional food are all known to enable pest ",
+      "url": "https://arxiv.org/abs/2510.06111v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[Prominent Scientists, Faith Leaders, Policymakers and Artists Call for a Prohibition on Superintelligence, as Poll Shows Americans Don’t Want It] Initial signatories include AI pioneers Yoshua Bengio and Geoffrey Hinton, leading media voices Steve Bannon and Glenn Beck, Obama's National Security Advisor Susan Rice, business trailblazers Steve Wozniak and Richard Branson, five Nobel Laureates, former Irish President Mary Robinson, actors Stephen Fry and Joseph Gordon-Levitt, and hundreds of others.",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

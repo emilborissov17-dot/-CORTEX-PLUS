@@ -1,0 +1,151 @@
+{
+  "axis": "ECONOMY_WORK_REVIEW",
+  "fetched_at": "2026-03-13T13:58:03.433071+00:00",
+  "smart_query": "economy work review",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "analysis": {
+    "summary": "[RSS News]\n- Dharshini David: Economy on shaky ground even before Iran war\n- Petrol retailers deny price gouging accusations\n\n[arXiv]\n- A Survey of Reinforcement Learning For Economics\n- The Data-Doll",
+    "sentiment": "NEUTRAL",
+    "urgency": "LOW",
+    "key_developments": []
+  },
+  "sentiment": "NEUTRAL",
+  "urgency": "LOW",
+  "summary": "[RSS News]\n- Dharshini David: Economy on shaky ground even before Iran war\n- Petrol retailers deny price gouging accusations\n\n[arXiv]\n- A Survey of Reinforcement Learning For Economics\n- The Data-Doll",
+  "key_developments": [],
+  "open_source_momentum": "",
+  "scientific_frontier": "",
+  "news_items": [
+    {
+      "title": "Dharshini David: Economy on shaky ground even before Iran war",
+      "snippet": "The government's hopes that 2026 would be the year when growth picks up are at risk of being scuppered.",
+      "url": "https://www.bbc.com/news/articles/cn0z7971r4zo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Petrol retailers deny price gouging accusations",
+      "snippet": "Ed Miliband says the competition watchdog is primed to intervene if firms use the oil price shock to \"rip off\" customers.",
+      "url": "https://www.bbc.com/news/articles/crk83e2g65no?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "US eases Russia oil sanctions as Iran war pushes up energy prices",
+      "snippet": "Washington says a 30-day waiver is only for sanctioned Russian oil already loaded on vessels at sea.",
+      "url": "https://www.bbc.com/news/articles/clyzj3g3pygo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "github_repos": [
+    {
+      "title": "AmirhosseinHonardoust/Economic-DNA-Repair",
+      "snippet": "A deep research study introducing the concept of Economic DNA Repair for smart contracts, designing self-correcting tokenomics that detect anomalies, repair unstable parameters, rebalance incentives, ",
+      "stars": 18,
+      "url": "https://github.com/AmirhosseinHonardoust/Economic-DNA-Repair",
+      "updated": "2026-02-23",
+      "source": "GitHub"
+    },
+    {
+      "title": "AmirhosseinHonardoust/Pricing-Negotiation-Intelligence",
+      "snippet": "This article reframes pricing as a negotiation rather than a prediction, showing how price emerges from tensions between product reality, market dynamics, and buyer behavior. It introduces negotiation",
+      "stars": 18,
+      "url": "https://github.com/AmirhosseinHonardoust/Pricing-Negotiation-Intelligence",
+      "updated": "2026-02-23",
+      "source": "GitHub"
+    },
+    {
+      "title": "AmirhosseinHonardoust/Metabolic-Tokenomics",
+      "snippet": "A scientific exploration of Metabolic Tokenomics, the framework that models token economies as living metabolic systems. Examines how tokens burn, store, and circulate energy like biological cells, ma",
+      "stars": 17,
+      "url": "https://github.com/AmirhosseinHonardoust/Metabolic-Tokenomics",
+      "updated": "2026-02-23",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "A Survey of Reinforcement Learning For Economics",
+      "snippet": "This survey (re)introduces reinforcement learning methods to economists. The curse of dimensionality limits how far exact dynamic programming can be effectively applied, forcing us to rely on suitably \"small\" problems or our ability to convert \"big\" problems into smaller ones. While this reduction h",
+      "url": "https://arxiv.org/abs/2603.08956v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "The Data-Dollars Tradeoff: Privacy Harms vs. Economic Risk in Personalized AI Adoption",
+      "snippet": "Privacy concerns significantly impact AI adoption, yet little is known about how information environments shape user responses to data leak threats. We conducted a 2 x 3 between-subjects experiment (N=610) examining how risk versus ambiguity about privacy leaks affects the adoption of AI personaliza",
+      "url": "https://arxiv.org/abs/2603.08848v1",
+      "source": "arXiv"
+    }
+  ],
+  "youtube_transcripts": [],
+  "podcast": "[Iran, protests, and sanctions] Book tour tickets and details here.The recent protests in Iran are about so many things. Human rights, corruption, freedom. But this time – they are also motivated by economic hardship. Hardship caused, in part, by US sanctions. The US has been sanctioning Iran in one way or another for 47 years. But sanctions, as a tool, only work some of the time, and US sanctions on Iran have not always conform",
+  "youtube_videos": [
+    {
+      "title": "YouTube:NngM_qdDMm8",
+      "video_id": "NngM_qdDMm8",
+      "url": "https://www.youtube.com/watch?v=NngM_qdDMm8",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:xHBoIhBwbBw",
+      "video_id": "xHBoIhBwbBw",
+      "url": "https://www.youtube.com/watch?v=xHBoIhBwbBw",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:yhpyHV1iz00",
+      "video_id": "yhpyHV1iz00",
+      "url": "https://www.youtube.com/watch?v=yhpyHV1iz00",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:PHe0bXAIuk0",
+      "video_id": "PHe0bXAIuk0",
+      "url": "https://www.youtube.com/watch?v=PHe0bXAIuk0",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:G6iRy-AISZs",
+      "video_id": "G6iRy-AISZs",
+      "url": "https://www.youtube.com/watch?v=G6iRy-AISZs",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:8nkCKbc87b8",
+      "video_id": "8nkCKbc87b8",
+      "url": "https://www.youtube.com/watch?v=8nkCKbc87b8",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:-0Hl62QOstE",
+      "video_id": "-0Hl62QOstE",
+      "url": "https://www.youtube.com/watch?v=-0Hl62QOstE",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:QH9cctgV2g0",
+      "video_id": "QH9cctgV2g0",
+      "url": "https://www.youtube.com/watch?v=QH9cctgV2g0",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:kfluSmAQYHo",
+      "video_id": "kfluSmAQYHo",
+      "url": "https://www.youtube.com/watch?v=kfluSmAQYHo",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:1QPMcWpJEgM",
+      "video_id": "1QPMcWpJEgM",
+      "url": "https://www.youtube.com/watch?v=1QPMcWpJEgM",
+      "source": "YouTube"
+    }
+  ]
+}

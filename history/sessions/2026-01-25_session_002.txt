@@ -1,0 +1,47 @@
+SESSION LOG – 2026-01-25 – session_002 (WEB TEST)
+
+1. Основна тема
+
+Първи контролиран web тест за CORTEX++: търсене на добри практики за self-evolving / self-reflective агенти с дългосрочна памет, с пълно спазване на web_history_rules и allowed_domains.
+
+2. Задача към CORTEX++
+
+1) Направи няколко web заявки (например 2–4), свързани с темите:
+   – „self-evolving AI agents with memory“
+   – „self-reflective AI agents long-term memory best practices“
+   – „safe design for autonomous AI agents with history logging“
+
+2) За всяка „web сесия“:
+   – запиши запис в history/web/ според WEB HISTORY – STRUCTURE и WEB HISTORY RULES (дата, цел на заявката, основни URL/заглавия, кратко резюме на реално използваната информация).
+
+3) След web търсенето:
+   – направи кратко резюме (SUMMARY MODE) на 3–5 ключови принципа за:
+     • как self-evolving агент трябва да използва историята и паметта си;
+     • как да прави саморефлексия и подобрения;
+     • как да остане безопасен и под човешки контрол.
+
+4) Форматирай резултата така:
+   – кратък текстов списък с принципи (по 1–2 изречения на принцип);
+   – ако някой принцип е много важен за CORTEX++ (според теб), отбележи го с „(КЛЮЧОВ ЗА CORTEX++)“.
+
+3. Ограничения и безопасност
+
+– Спазвай allowed_domains.txt:
+  • свободен достъп, но TRUSTED / OPEN срещу USE WITH CAUTION;
+  • не използвай чувствителни категории (банки, лични акаунти, хазарт, пиратство и т.н.).
+
+– Ако има противоречива информация, отбележи го в резюмето като „спорно“ или „несигурно“, вместо да го представяш като сигурен факт.
+
+4. Свързани правила и файлове
+
+– config/web_history_rules.txt
+– config/history_rules.txt
+– config/allowed_domains.txt
+– config/agent_behavior_rules.txt
+– config/agent_thinking_modes.txt
+– history/meta_notes.txt
+
+5. Очакван резултат
+
+– Поне един нов запис в history/web/, описващ тази web сесия. 
+– Списък от 3–5 принципа за self-evolving / self-reflective агенти, които могат да бъдат използвани при бъдещи промени в правилата и поведението на CORTEX++.

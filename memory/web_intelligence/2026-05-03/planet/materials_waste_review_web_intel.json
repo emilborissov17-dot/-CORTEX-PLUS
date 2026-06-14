@@ -1,0 +1,103 @@
+{
+  "axis": "MATERIALS_WASTE_REVIEW",
+  "domain": "planet",
+  "timestamp": "2026-05-03T08:45:09.036163+00:00",
+  "sources_count": 9,
+  "rss_count": 4,
+  "ddg_count": 4,
+  "youtube_count": 1,
+  "youtube_items": [
+    {
+      "title": "[YT] Plastic Recycling is an Actual Scam | Climate Town - YouTube",
+      "summary": "Хей, трябваше да изскоча от това, за да те уплаша, но се оказа, че на хартия е по-смешно, отколкото е на практика, така че се надявам, че нямаш нищо против, момче, имам много пластмаса тук и не се тревожи, ще я сложа в кошче за рециклиране, защото не съм социопат или някакъв либертарианец, но ето какво е - по- голямата част от тази пластмаса ще се окаже на сметище, изгорена или в океана и това е така, защото повечето пластмаси не са рециклируеми. О, но има символ за рециклиране точно върху него. Това е символът за рециклиране, създаден през 1970 г., а това е код за идентификация на смола, създаден от пластмасовата индустрия през 1988 г., за да подведе хората да мислят, че пластмасата е рециклируема и следователно може да е добре за околната среда. Рециклирането на пластмаса е лъжа, за да с",
+      "link": "https://www.youtube.com/watch?v=PJnJ8mK3Q3g",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "PJnJ8mK3Q3g",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "summary": "- Lytx’s 2026 Road Safety Report Highlights Emerging Fleet Risks: According to the 2026 Road Safety report from Lytx, severe collisions in 2025 declined, but overall crash rates continue to rise due to inattentive driving, handheld device use, and operational pressu\n- GFL Posts Record Q1 Margin, Rai",
+    "risk_level": "UNKNOWN",
+    "trend": "UNKNOWN",
+    "key_events": [
+      "Lytx’s 2026 Road Safety Report Highlights Emerging Fleet Risks",
+      "GFL Posts Record Q1 Margin, Raises Outlook",
+      "Jerseyville, IL Reaches Recycling Policies Agreement with County"
+    ],
+    "insights": [],
+    "youtube_insights": [],
+    "relevance_to_goal": "",
+    "generalization": ""
+  },
+  "raw_items": [
+    {
+      "title": "Lytx’s 2026 Road Safety Report Highlights Emerging Fleet Risks",
+      "summary": "According to the 2026 Road Safety report from Lytx, severe collisions in 2025 declined, but overall crash rates continue to rise due to inattentive driving, handheld device use, and operational pressures. To gain more insights on the report, Waste360 caught up with Dave Riordan, chief customer officer at Lytx, for a Q&amp;A.",
+      "link": "https://www.waste360.com/industry-insights/lytx-s-2026-road-safety-report-highlights-emerging-fleet-risks",
+      "published": "Thu, 30 Apr 2026 17:32:58 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "GFL Posts Record Q1 Margin, Raises Outlook",
+      "summary": "GFL Environmental reported first-quarter 2026 results showing steady revenue growth and enough momentum to lift its full-year outlook. Revenue, adjusted EBITDA, and Adjusted Free Cash Flow all came in ahead of expectations.",
+      "link": "https://www.waste360.com/industry-insights/gfl-posts-record-q1-margin-raises-outlook",
+      "published": "Thu, 30 Apr 2026 14:48:22 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Jerseyville, IL Reaches Recycling Policies Agreement with County",
+      "summary": "Jerseyville and Jersey County, Ill., have approved new recycling partnerships for a new recycling program in the area.",
+      "link": "https://www.waste360.com/waste-recycling/jerseyville-il-reaches-recycling-policies-agreement-with-county",
+      "published": "Thu, 30 Apr 2026 13:45:37 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Denton County Dumpster Company Rebrands, Expands to 23 North Texas Cities",
+      "summary": "Iron Eagle Dumpster Rentals, a family-owned roll-off dumpster company in Denton County, Texas, has rebranded from FreedomTX Dumpster Rentals and expanded delivery to 23 cities across North DFW.",
+      "link": "https://www.waste360.com/industry-insights/denton-county-dumpster-company-rebrands-expands-to-23-north-texas-cities",
+      "published": "Thu, 30 Apr 2026 12:52:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Plastic pollution",
+      "summary": "Plastic pollution is the accumulation of plastic objects and particles (e.g. plastic bottles, bags and microbeads) in the Earth's environment that adversely affects humans, wildlife and their habitat. Plastics that act as pollutants are categorized by size into micro-, meso-, or macro debris. Plastics are inexpensive and durable, making them very adaptable for different uses; as a result, manufact",
+      "link": "https://en.wikipedia.org/wiki/Plastic_pollution",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Plastic Pollution - Our World in Data",
+      "summary": "Originally published in November 2023; substantially updated in February 2026.Plastic pollution is mostly about how waste is managed, not how much is producedLow- to middle-income countries tend to produce much more plastic pollution",
+      "link": "https://ourworldindata.org/plastic-pollution",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Recycling",
+      "summary": "Recycling is the process of converting waste materials into new materials and objects. This concept often includes the recovery of energy from waste materials. The recyclability of a material depends on its ability to reacquire the properties it had in its original state. It is an alternative to \"conventional\" waste disposal that can save material and help lower greenhouse gas emissions. It can al",
+      "link": "https://en.wikipedia.org/wiki/Recycling",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Recycling Center - City of Athens",
+      "summary": "Recycling Center The Athens Recycling Center is dedicated to helping our community reduce waste, conserve resources, and protect the environment. By diverting valuable materials from landfills, we not only extend […]",
+      "link": "https://cityofathenstn.com/recycling-center/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "[YT] Plastic Recycling is an Actual Scam | Climate Town - YouTube",
+      "summary": "Хей, трябваше да изскоча от това, за да те уплаша, но се оказа, че на хартия е по-смешно, отколкото е на практика, така че се надявам, че нямаш нищо против, момче, имам много пластмаса тук и не се тревожи, ще я сложа в кошче за рециклиране, защото не съм социопат или някакъв либертарианец, но ето какво е - по- голямата част от тази пластмаса ще се окаже на сметище, изгорена или в океана и това е така, защото повечето пластмаси не са рециклируеми. О, но има символ за рециклиране точно върху него. Това е символът за рециклиране, създаден през 1970 г., а това е код за идентификация на смола, създаден от пластмасовата индустрия през 1988 г., за да подведе хората да мислят, че пластмасата е рециклируема и следователно може да е добре за околната среда. Рециклирането на пластмаса е лъжа, за да с",
+      "link": "https://www.youtube.com/watch?v=PJnJ8mK3Q3g",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "PJnJ8mK3Q3g",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ]
+}

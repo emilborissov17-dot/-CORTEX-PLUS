@@ -1,0 +1,71 @@
+{
+  "axis": "GOVERNANCE_INSTITUTIONS_REVIEW",
+  "fetched_at": "2026-03-29T11:45:37.641512+00:00",
+  "smart_query": "government corruption institutions",
+  "sources_count": {
+    "rss": 0,
+    "gdelt": 0,
+    "arxiv": 0,
+    "github": 3,
+    "web_search": 5
+  },
+  "rss": [],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "github/government.github.com",
+      "snippet": "Gather, curate, and feature stories of public servants and civic hackers using GitHub as part of their open government innovations",
+      "stars": 1926,
+      "url": "https://github.com/github/government.github.com",
+      "updated": "2026-03-28",
+      "source": "GitHub"
+    },
+    {
+      "title": "consuldemocracy/consuldemocracy",
+      "snippet": "Consul Democracy - Open Government and E-Participation Web Software",
+      "stars": 1529,
+      "url": "https://github.com/consuldemocracy/consuldemocracy",
+      "updated": "2026-03-26",
+      "source": "GitHub"
+    },
+    {
+      "title": "datagouv/data.gouv.fr",
+      "snippet": "Ce dépôt rassemble les tickets techniques qui portent sur data.gouv.fr.",
+      "stars": 112,
+      "url": "https://github.com/datagouv/data.gouv.fr",
+      "updated": "2026-03-27",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [],
+  "web_search": [
+    {
+      "title": "US democracy at risk as corruption threats grow - Brookings",
+      "url": "https://www.brookings.edu/articles/us-democracy-at-risk-as-corruption-threats-grow/",
+      "source": "WEB"
+    },
+    {
+      "title": "What Is Political Corruption and What Can We Do About It?",
+      "url": "https://www.brennancenter.org/our-work/research-reports/what-political-corruption-and-what-can-we-do-about-it",
+      "source": "WEB"
+    },
+    {
+      "title": "Political corruption - Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Political_corruption",
+      "source": "WEB"
+    },
+    {
+      "title": "Public Corruption — FBI",
+      "url": "https://www.fbi.gov/investigate/public-corruption",
+      "source": "WEB"
+    },
+    {
+      "title": "Corruption Perceptions Index 2025 - Transparency.org",
+      "url": "https://www.transparency.org/en/cpi/2025",
+      "source": "WEB"
+    }
+  ],
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL"
+}

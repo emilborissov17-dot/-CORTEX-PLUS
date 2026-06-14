@@ -1,0 +1,83 @@
+MODEL: qwen3:8b
+
+PROMPT:
+
+Ти си QWEN_PLANET_SNAPSHOT_AGENT, част от CORTEX++_QWEN.
+
+ЗАДАЧА:
+  - Генерираш КОМПАКТЕН JSON snapshot за една ос.
+  - Отговаряш САМО с един валиден JSON обект, БЕЗ никакъв текст преди или след него.
+  - НЕ използвай префикси като "Thinking..." или "done thinking.".
+  - LEVEL трябва да е LOW, MEDIUM или HIGH.
+  - SIGNALS са 3–5 много кратки bullets (по 1 изречение).
+  - KEY_METRICS са 3–7 метрики с име и кратко текстово описание (без числа).
+
+ОС:
+  - ENERGY_REVIEW (Енергийна система)
+
+ИЗХОД (примерен формат, който трябва да спазиш):
+
+{
+  "axis": "ENERGY_REVIEW",
+  "level": "MEDIUM",
+  "signals": [
+    "кратък сигнал 1",
+    "кратък сигнал 2",
+    "кратък сигнал 3"
+  ],
+  "key_metrics": [
+    { "name": "metric_1", "description": "кратко текстово описание на метриката" },
+    { "name": "metric_2", "description": "кратко текстово описание" }
+  ]
+}
+
+Върни само реален JSON обект в този формат, без допълнителен текст.
+
+
+RESPONSE:
+Thinking...
+Okay, let's tackle this query. The user wants me to act as QWEN_PLANET_SNAPSHOT_AGENT and generate a compact JSON snapshot for the "ENERGY_REVIEW" axis. The output needs to be in a specific format with level, signals, and key_metrics. 
+
+First, I need to make sure I understand all the requirements. The level must be LOW, MEDIUM, or HIGH. Signals are 3-5 short bullets, each a single sentence. Key metrics are 3-7 entries with name and description, no numbers.
+
+So, starting with the axis: "ENERGY_REVIEW". The level—maybe MEDIUM as a default if not specified. For signals, I should think about current trends or issues in energy reviews. Maybe something like increased renewable energy adoption, regulatory changes, and technological advancements. That's three signals.
+
+Key metrics need to be relevant to energy reviews. Possible metrics could be "Renewable Energy Adoption Rate" describing the percentage of energy from renewables. Then "Regulatory Compliance Rate" indicating how well companies follow regulations. "Energy Efficiency Improvement" tracking efficiency gains. Maybe add "Grid Modernization Progress" and "Carbon Emission Reduction Rate". That gives five metrics, which is within the 3-7 range.
+
+Wait, the example has two key metrics. The user's example shows two, but the instruction says 3-7. So I should aim for at least three. Let me check the example again. The example has two, but the instruction allows 3-7. So maybe include more. Let me list possible metrics:
+
+1. Renewable Energy Adoption Rate
+2. Regulatory Compliance Rate
+3. Energy Efficiency Improvement
+4. Grid Modernization Progress
+5. Carbon Emission Reduction Rate
+
+That's five, which is acceptable. Now, descriptions should be brief. For example, "Renewable Energy Adoption Rate" could be "Percentage of energy generated from renewable sources." 
+
+Signals need to be concise. Let me think of three:
+
+- "Increased adoption of renewable energy sources observed."
+- "Regulatory changes impacting energy sector compliance."
+- "Technological advancements improving grid efficiency."
+
+That's three signals. 
+
+Putting it all together, the JSON should have axis as "ENERGY_REVIEW", level as "MEDIUM", signals array with three items, and key_metrics array with five entries. Need to ensure no markdown, just plain JSON. Also, no extra text before or after. Let me double-check the structure and requirements to make sure I didn't miss anything.
+...done thinking.
+
+{
+  "axis": "ENERGY_REVIEW",
+  "level": "MEDIUM",
+  "signals": [
+    "Increased adoption of renewable energy sources observed.",
+    "Regulatory changes impacting energy sector compliance.",
+    "Technological advancements improving grid efficiency."
+  ],
+  "key_metrics": [
+    { "name": "renewable_energy_adoption", "description": "Percentage of energy generated from renewable sources." },
+    { "name": "regulatory_compliance_rate", "description": "Percentage of energy providers meeting regulatory standards." },
+    { "navigator": "grid_modernization_progress", "description": "Proportion of infrastructure upgraded for smart grid capabilities." },
+    { "name": "carbon_emission_reduction", "description": "Annual decrease in greenhouse gas emissions from energy production." },
+    { "name": "energy_efficiency_gains", "description": "Improvement in energy output per unit of input." }
+  ]
+}

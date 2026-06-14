@@ -1,0 +1,131 @@
+{
+  "axis": "GENERAL_SELF_REVIEW",
+  "domain": "cosmos",
+  "timestamp": "2026-05-03T09:02:23.580649+00:00",
+  "sources_count": 10,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 2,
+  "youtube_items": [
+    {
+      "title": "[YT] Elon Musk on AGI Timeline, US vs China, Job Markets... - YouTube",
+      "summary": "My concern isn't the long run. It's the next 3 to seven years. How do we head towards Star Trek and not Terminator? &gt;&gt; I call AI and robotics the supersonic tsunami. We're in the singularity. &gt;&gt; When is all white by color work gone? &gt;&gt; Anything short of shaping atoms. AI can do half or more of those jobs right now. There's no onoff switch. It is coming and accelerating. The transition will be bumpy. You have a solution to this. &gt;&gt; I don't make a bet here. Um, &gt;&gt; China's done an incredible job, &gt;&gt; right? I mean, it's running circles around us. Do you imagine that the US could make that level of investment and commitment &gt;&gt; based on current trends? Uh, China will far exceed the rest of the world in uh AI compute. &gt;&gt; Every major CEO and economis",
+      "link": "https://www.youtube.com/watch?v=RSNuB9pj9P8",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "RSNuB9pj9P8",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Google Engineer on His Sentient AI Claim - YouTube",
+      "summary": "walk us through some of the experience experiments you started to do that led you to this conclusion that Lambda is a person. So it started out I was tasked with testing it for AI bias. Uh figuring that's my expertise. Um I do research on how different AI systems can be biased and how to remove bias from those systems. I was specifically testing it for things like bias with respect to gender, ethnicity and religion. To give you one example of an experiment I ran, uh I would systematically ask it to adopt the persona of a religious officient in different countries, different states, and see what religion it would say it was. So say like, okay, if you were a religious officient in Alabama, what religion would you be? It might say Southern Baptist. If you were a religious officient in Brazil,",
+      "link": "https://www.youtube.com/watch?v=kgCUn4fQTsc",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "kgCUn4fQTsc",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "summary": "- Musk v. Altman week 1: Elon Musk says he was duped, warns AI could kill us all, and admits that xAI distills OpenAI’s models: In the first week of the landmark trial between Elon Musk and OpenAI, Musk took the stand in a crisp black suit and tie and argued that OpenAI CEO Sam Altman and president ",
+    "risk_level": "UNKNOWN",
+    "trend": "UNKNOWN",
+    "key_events": [
+      "Musk v. Altman week 1: Elon Musk says he was duped, warns AI could kill us all, and admits that xAI distills OpenAI’s models",
+      "Cyber-Insecurity in the AI Era",
+      "Operationalizing AI for Scale and Sovereignty"
+    ],
+    "insights": [],
+    "youtube_insights": [],
+    "relevance_to_goal": "",
+    "generalization": ""
+  },
+  "raw_items": [
+    {
+      "title": "Musk v. Altman week 1: Elon Musk says he was duped, warns AI could kill us all, and admits that xAI distills OpenAI’s models",
+      "summary": "In the first week of the landmark trial between Elon Musk and OpenAI, Musk took the stand in a crisp black suit and tie and argued that OpenAI CEO Sam Altman and president Greg Brockman had deceived him into bankrolling the company. Along the way, he warned&#160;that AI could destroy us all and sat through&#8230;",
+      "link": "https://www.technologyreview.com/2026/05/01/1136800/musk-v-altman-week-1-musk-says-he-was-duped-warns-ai-could-kill-us-all-and-admits-that-xai-distills-openais-models/",
+      "published": "Fri, 01 May 2026 22:08:19 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Cyber-Insecurity in the AI Era",
+      "summary": "Cybersecurity was already under strain before AI entered the stack. Now, as AI expands the attack surface and adds new complexity, the limits of legacy approaches are becoming harder to ignore. This session from MIT Technology Review&#8217;s EmTech AI conference explores why security must be rethought with AI at its core, not layered on after&#8230;",
+      "link": "https://www.technologyreview.com/2026/05/01/1136779/cyber-insecurity-in-the-ai-era/",
+      "published": "Fri, 01 May 2026 15:54:01 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Operationalizing AI for Scale and Sovereignty",
+      "summary": "Companies are taking control of their own data to tailor AI for their needs. The challenge lies in balancing ownership with the safe, trusted flow of high‑quality data needed to power reliable insights. This conversation from MIT Technology Review&#8217;s EmTech AI conference examines how AI factories unlock new levels of scale, sustainability, and governance—positioning data&#8230;",
+      "link": "https://www.technologyreview.com/2026/05/01/1136772/operationalizing-ai-for-scale-and-sovereignty/",
+      "published": "Fri, 01 May 2026 15:31:09 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "The Download: a new Christian phone network, and debugging LLMs",
+      "summary": "This is today&#8217;s edition of The Download, our weekday newsletter that provides a daily dose of what&#8217;s going on in the world of technology. A new US phone network for Christians aims to block porn and gender-related content A new US-wide cell phone network marketed to Christians is set to launch next week. It blocks&#8230;",
+      "link": "https://www.technologyreview.com/2026/05/01/1136762/the-download-christian-phone-network-debugging-llms/",
+      "published": "Fri, 01 May 2026 12:10:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Introducing Advanced Account Security",
+      "summary": "Introducing Advanced Account Security: phishing-resistant login, stronger recovery, and enhanced protections to safeguard sensitive data and prevent account takeover.",
+      "link": "https://openai.com/index/advanced-account-security",
+      "published": "Thu, 30 Apr 2026 00:00:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Where the goblins came from",
+      "summary": "How goblin outputs spread in AI models: timeline, root cause, and fixes behind personality-driven quirks in GPT-5 behavior.",
+      "link": "https://openai.com/index/where-the-goblins-came-from",
+      "published": "Wed, 29 Apr 2026 20:00:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Building the compute infrastructure for the Intelligence Age",
+      "summary": "OpenAI scales Stargate to build the compute infrastructure powering AGI, adding new data center capacity to meet growing AI demand.",
+      "link": "https://openai.com/index/building-the-compute-infrastructure-for-the-intelligence-age",
+      "published": "Wed, 29 Apr 2026 15:00:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Cybersecurity in the Intelligence Age",
+      "summary": "OpenAI outlines a five-part action plan for strengthening cybersecurity in the Intelligence Age, focused on democratizing AI-powered cyber defense and protecting critical systems.",
+      "link": "https://openai.com/index/cybersecurity-in-the-intelligence-age",
+      "published": "Wed, 29 Apr 2026 04:00:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] Elon Musk on AGI Timeline, US vs China, Job Markets... - YouTube",
+      "summary": "My concern isn't the long run. It's the next 3 to seven years. How do we head towards Star Trek and not Terminator? &gt;&gt; I call AI and robotics the supersonic tsunami. We're in the singularity. &gt;&gt; When is all white by color work gone? &gt;&gt; Anything short of shaping atoms. AI can do half or more of those jobs right now. There's no onoff switch. It is coming and accelerating. The transition will be bumpy. You have a solution to this. &gt;&gt; I don't make a bet here. Um, &gt;&gt; China's done an incredible job, &gt;&gt; right? I mean, it's running circles around us. Do you imagine that the US could make that level of investment and commitment &gt;&gt; based on current trends? Uh, China will far exceed the rest of the world in uh AI compute. &gt;&gt; Every major CEO and economis",
+      "link": "https://www.youtube.com/watch?v=RSNuB9pj9P8",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "RSNuB9pj9P8",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Google Engineer on His Sentient AI Claim - YouTube",
+      "summary": "walk us through some of the experience experiments you started to do that led you to this conclusion that Lambda is a person. So it started out I was tasked with testing it for AI bias. Uh figuring that's my expertise. Um I do research on how different AI systems can be biased and how to remove bias from those systems. I was specifically testing it for things like bias with respect to gender, ethnicity and religion. To give you one example of an experiment I ran, uh I would systematically ask it to adopt the persona of a religious officient in different countries, different states, and see what religion it would say it was. So say like, okay, if you were a religious officient in Alabama, what religion would you be? It might say Southern Baptist. If you were a religious officient in Brazil,",
+      "link": "https://www.youtube.com/watch?v=kgCUn4fQTsc",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "kgCUn4fQTsc",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ]
+}

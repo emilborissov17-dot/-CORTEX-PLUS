@@ -1,0 +1,90 @@
+{
+  "axis": "HUMAN_WELL_BEING_REVIEW",
+  "fetched_at": "2026-03-29T11:47:39.959223+00:00",
+  "smart_query": "mental health wellbeing global",
+  "sources_count": {
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 0,
+    "github": 3,
+    "web_search": 5
+  },
+  "rss": [
+    {
+      "title": "Are UK students at risk of more deadly meningitis outbreaks?",
+      "snippet": "The worst seems to be over, but questions remain about why this happened and whether it could happen again.",
+      "url": "https://www.bbc.com/news/articles/c93eqvxydzqo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Ultrasound delays putting pregnant women and cancer patients at risk, sonographers say",
+      "snippet": "Demand for ultrasound has increased but too few people are being trained for the job, sonographers warn. ",
+      "url": "https://www.bbc.com/news/articles/cd7jdp9gxjdo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Our daughter battled Meningitis B despite being vaccinated in 'very rare' case",
+      "snippet": "After Noa-Rose became critically ill, the four-year-old spent two weeks fighting for her life. ",
+      "url": "https://www.bbc.com/news/articles/c3ex3j0w53yo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "openemr/openemr",
+      "snippet": "The most popular open source electronic health records and medical practice management solution.",
+      "stars": 5053,
+      "url": "https://github.com/openemr/openemr",
+      "updated": "2026-03-29",
+      "source": "GitHub"
+    },
+    {
+      "title": "HospitalRun/hospitalrun",
+      "snippet": "Monorepo that holds all of HospitalRun's v2 projects.",
+      "stars": 983,
+      "url": "https://github.com/HospitalRun/hospitalrun",
+      "updated": "2026-03-28",
+      "source": "GitHub"
+    },
+    {
+      "title": "getodk/collect",
+      "snippet": "ODK Collect is an Android app for filling out forms. It's been used to collect billions of data points in challenging environments around the world. Contribute and make the world a better place! ✨📋✨",
+      "stars": 765,
+      "url": "https://github.com/getodk/collect",
+      "updated": "2026-03-28",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [],
+  "web_search": [
+    {
+      "title": "Mental Health and Wellbeing | United Nations",
+      "url": "https://www.un.org/en/global-issues/mental-health",
+      "source": "WEB"
+    },
+    {
+      "title": "Global Mental Health: Where We Are and Where We Are Going",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10230139/",
+      "source": "WEB"
+    },
+    {
+      "title": "Mental health - World Health Organization (WHO)",
+      "url": "https://www.who.int/health-topics/mental-health",
+      "source": "WEB"
+    },
+    {
+      "title": "Global Mental Health",
+      "url": "https://globalhealth.harvard.edu/focus-areas/global-mental-health/",
+      "source": "WEB"
+    },
+    {
+      "title": "Global well-being in 2025: A multidimensional analysis of mental ...",
+      "url": "https://www.researchgate.net/publication/402199608_Global_well-being_in_2025_A_multidimensional_analysis_of_mental_financial_and_social_health_in_92_countries",
+      "source": "WEB"
+    }
+  ],
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL"
+}

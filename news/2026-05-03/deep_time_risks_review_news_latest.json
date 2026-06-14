@@ -1,0 +1,56 @@
+{
+  "axis": "DEEP_TIME_RISKS_REVIEW",
+  "fetched_at": "2026-05-03T09:12:23.202945+00:00",
+  "smart_query": "nuclear war pandemic existential risk",
+  "sources_count": {
+    "wiki": 0,
+    "gdelt": 3,
+    "arxiv": 2,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [],
+  "gdelt": [
+    {
+      "title": "El termómetro del miedo : por qué el mercado no compra el apocalipsis",
+      "snippet": "El termómetro del miedo : por qué el mercado no compra el apocalipsis",
+      "url": "https://blogs.elconfidencial.com/economia/tribuna/2026-03-18/mercados-vix-volatilidad-riesgo-trump-1hms_4321334/",
+      "source": "blogs.elconfidencial.com"
+    },
+    {
+      "title": "The fuel crisis is about to whack Australia . Jim Chalmer budget must tread a fine line between panic and preparation | Peter Lewis",
+      "snippet": "The fuel crisis is about to whack Australia . Jim Chalmer budget must tread a fine line between panic and preparation | Peter Lewis",
+      "url": "https://www.theguardian.com/australia-news/commentisfree/2026/apr/29/budget-chalmers-fuel-crisis-fine-line",
+      "source": "theguardian.com"
+    },
+    {
+      "title": "La guerra in Medio Oriente 4 i Gran premi a rischio | Imola aspetta segnali dalla Fia",
+      "snippet": "La guerra in Medio Oriente 4 i Gran premi a rischio | Imola aspetta segnali dalla Fia",
+      "url": "https://www.zazoom.it/2026-03-03/la-guerra-in-medio-oriente-4-i-gran-premi-a-rischio-imola-aspetta-segnali-dalla-fia/18758150/",
+      "source": "zazoom.it"
+    }
+  ],
+  "github_repos": [],
+  "arxiv_papers": [
+    {
+      "title": "Synthetic Computers at Scale for Long-Horizon Productivity Simulation",
+      "snippet": "Realistic long-horizon productivity work is strongly conditioned on user-specific computer environments, where much of the work context is stored and organized through directory structures and content-rich artifacts. To scale synthetic data creation for such productivity scenarios, we introduce Synt",
+      "url": "https://arxiv.org/abs/2604.28181v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "KellyBench: A Benchmark for Long-Horizon Sequential Decision Making",
+      "snippet": "Language models are saturating benchmarks for procedural tasks with narrow objectives. But they are increasingly being deployed in long-horizon, non-stationary environments with open-ended goals. In this paper we introduce KellyBench, an environment for evaluating sequential decision-making in sport",
+      "url": "https://arxiv.org/abs/2604.27865v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[Statement from Max Tegmark on the Department of War’s ultimatum] \"Our safety and basic rights must not be at the mercy of a company's internal policy; lawmakers must work to codify these overwhelmingly popular red lines into law.\"",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

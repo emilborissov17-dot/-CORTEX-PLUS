@@ -1,0 +1,119 @@
+{
+  "axis": "PLANETARY_POTENTIAL_REVIEW",
+  "domain": "planet",
+  "timestamp": "2026-05-16T22:15:38.272438+00:00",
+  "sources_count": 10,
+  "rss_count": 4,
+  "ddg_count": 4,
+  "youtube_count": 2,
+  "youtube_items": [
+    {
+      "title": "[YT] The Dimming ( Geoengineering Watch ) - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] About Press Copyright Contact us Creators Advertise Developers Terms Privacy Policy & Safety How YouTube works Test new features.",
+      "link": "https://www.youtube.com/watch?v=rf78rEAJvhY",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "rf78rEAJvhY",
+      "transcript_method": "description",
+      "transcript_chars": 152,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Chemtrails, Here is your PROOF 100% Real... - YouTube",
+      "summary": "Thank you very much. I'm Richard Jordan Chairman of the conference. I'm going to just introduce Khaled the Lood who will introduce the speakers. So, Khaled, thank you very much for moderating the session and I turn it over to you and I will return in the bathroom. So, our next speaker is Dr. Rosaline Peterson. She's the California president and co-founder of the Agriculture Defense Coalition for him in 2006. So, perfect agriculture and crop reduction from uncontrolled experimental weather modification programs. A very interesting topic, you know, for an unspursalized person like myself. But also, very interesting in her CV that we have with you is also extensive efforts to protect drinking water supplies from toxic chemical contamination in martini, California. It's a very interesting topi",
+      "link": "https://www.youtube.com/watch?v=L5is16A8pfw",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "L5is16A8pfw",
+      "transcript_method": "whisper",
+      "transcript_chars": 14722,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "action": "Инкорпориране на планетарни граници в учебни програми и образователни системи, за да се подобри общественото разбиране и подкрепа за устойчиви практики",
+    "measurable_goal": "Повишаване на нивото на осведоменост за планетарни граници и устойчивост в 70% от възрастни чрез опитване на образователни кампании до 2025 г.",
+    "timeframe": "средносрочно",
+    "severity": "UNKNOWN"
+  },
+  "raw_items": [
+    {
+      "title": "Scientists discover hidden “brakes” that stop massive earthquakes",
+      "summary": "A mysterious underwater fault near Ecuador has been producing nearly identical magnitude 6 earthquakes every five to six years, baffling scientists for decades. Researchers now believe the fault contains hidden “brake zones” where seawater and unusual rock structures work together to stop quakes from becoming even larger. The discovery came from ultra-detailed seafloor recordings that captured how the fault behaves before and after major earthquakes.",
+      "link": "https://www.sciencedaily.com/releases/2026/05/260515233325.htm",
+      "published": "Sat, 16 May 2026 02:12:11 EDT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Deadly “red sky” solar storm from 800 years ago discovered in ancient trees",
+      "summary": "Researchers in Japan traced a hidden medieval solar storm using ancient tree rings and centuries-old sky observations. The team linked reports of eerie red auroras with spikes of carbon-14 trapped in buried wood, revealing a powerful solar radiation event around 1200 CE. The findings suggest the Sun was far more active at the time, with unusually short solar cycles.",
+      "link": "https://www.sciencedaily.com/releases/2026/05/260513221818.htm",
+      "published": "Thu, 14 May 2026 01:55:09 EDT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Giant squid discovery uncovers a hidden deep-sea world off Australia",
+      "summary": "Scientists exploring deep underwater canyons off the coast of Western Australia uncovered a hidden world packed with bizarre and elusive marine life — including signs of the legendary giant squid. By analyzing traces of DNA floating in seawater from depths exceeding 4 kilometers, researchers identified 226 species ranging from deep-diving whales to strange fish rarely or never seen in the region before. Some of the creatures may even be unknown to science.",
+      "link": "https://www.sciencedaily.com/releases/2026/05/260513221807.htm",
+      "published": "Thu, 14 May 2026 08:46:07 EDT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Giant “stealth” magma surge triggered thousands of earthquakes beneath Atlantic island",
+      "summary": "Deep beneath Portugal’s São Jorge Island, a massive surge of magma silently pushed upward from more than 20 kilometers underground in 2022, triggering thousands of earthquakes and briefly raising fears of a volcanic eruption. Scientists discovered that the molten rock climbed astonishingly fast — enough to fill 32,000 Olympic swimming pools — before stalling just 1.6 kilometers below the surface in what researchers call a “failed eruption.”",
+      "link": "https://www.sciencedaily.com/releases/2026/05/260513221803.htm",
+      "published": "Thu, 14 May 2026 09:50:50 EDT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Geoengineering",
+      "summary": "Geoengineering (also known as climate engineering or climate intervention) is the deliberate large-scale interventions in the Earth’s climate system intended to counteract human-caused climate change. The term commonly encompasses two broad categories: large-scale carbon dioxide removal (CDR) and solar radiation modification (SRM). CDR involves techniques to remove carbon dioxide from the atmosphe",
+      "link": "https://en.wikipedia.org/wiki/Geoengineering",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Among Young Climate Scientists, a Growing Interest In Geoengineering",
+      "summary": "The U.K.’s Advanced Research and Invention Agency (ARIA) has allotted 56.8 million British pounds ($76 million) for 21 research teams at global institutions to study climate geoengineering.",
+      "link": "https://www.yahoo.com/news/articles/among-young-climate-scientists-growing-080000985.html",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Planetary boundaries",
+      "summary": "Planetary boundaries are a framework to describe limits to the impacts of human activities on the Earth system. Beyond these limits, the environment may not be able to continue to self-regulate. This would mean the Earth system would leave the period of stability of the Holocene, in which human society developed.These nine boundaries are climate change, ocean acidification, stratospheric ozone dep",
+      "link": "https://en.wikipedia.org/wiki/Planetary_boundaries",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Planetary Boundaries - Stockholm Resilience Centre",
+      "summary": "The planetary boundaries framework highlights the rising security risks from human pressure on nine critical global processes that regulate the stability and resilience of the Earth.",
+      "link": "https://www.stockholmresilience.org/research/planetary-boundaries.html",
+      "source_type": "ddg"
+    },
+    {
+      "title": "[YT] The Dimming ( Geoengineering Watch ) - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] About Press Copyright Contact us Creators Advertise Developers Terms Privacy Policy & Safety How YouTube works Test new features.",
+      "link": "https://www.youtube.com/watch?v=rf78rEAJvhY",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "rf78rEAJvhY",
+      "transcript_method": "description",
+      "transcript_chars": 152,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Chemtrails, Here is your PROOF 100% Real... - YouTube",
+      "summary": "Thank you very much. I'm Richard Jordan Chairman of the conference. I'm going to just introduce Khaled the Lood who will introduce the speakers. So, Khaled, thank you very much for moderating the session and I turn it over to you and I will return in the bathroom. So, our next speaker is Dr. Rosaline Peterson. She's the California president and co-founder of the Agriculture Defense Coalition for him in 2006. So, perfect agriculture and crop reduction from uncontrolled experimental weather modification programs. A very interesting topic, you know, for an unspursalized person like myself. But also, very interesting in her CV that we have with you is also extensive efforts to protect drinking water supplies from toxic chemical contamination in martini, California. It's a very interesting topi",
+      "link": "https://www.youtube.com/watch?v=L5is16A8pfw",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "L5is16A8pfw",
+      "transcript_method": "whisper",
+      "transcript_chars": 14722,
+      "has_full_transcript": true
+    }
+  ]
+}

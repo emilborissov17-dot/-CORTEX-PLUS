@@ -1,0 +1,583 @@
+[
+  {
+    "timestamp": "2026-04-30T08:18:40.110249+00:00",
+    "axes_updated": 20,
+    "total_axes_in_kb": 20,
+    "axes_with_trend": 0
+  },
+  {
+    "timestamp": "2026-05-01T07:54:56.140391+00:00",
+    "axes_updated": 19,
+    "total_axes_in_kb": 20,
+    "axes_with_trend": 2
+  },
+  {
+    "timestamp": "2026-05-01T08:14:10.111075+00:00",
+    "axes_updated": 21,
+    "total_axes_in_kb": 21,
+    "axes_with_trend": 20
+  },
+  {
+    "timestamp": "2026-05-01T08:19:23.182057+00:00",
+    "axes_updated": 21,
+    "total_axes_in_kb": 21,
+    "axes_with_trend": 20
+  },
+  {
+    "timestamp": "2026-05-01T08:19:35.724145+00:00",
+    "axes_updated": 21,
+    "total_axes_in_kb": 21,
+    "axes_with_trend": 20
+  },
+  {
+    "timestamp": "2026-05-01T08:19:48.444520+00:00",
+    "axes_updated": 21,
+    "total_axes_in_kb": 21,
+    "axes_with_trend": 20
+  },
+  {
+    "timestamp": "2026-05-01T08:20:03.334637+00:00",
+    "axes_updated": 21,
+    "total_axes_in_kb": 21,
+    "axes_with_trend": 20
+  },
+  {
+    "timestamp": "2026-05-01T08:20:16.511259+00:00",
+    "axes_updated": 21,
+    "total_axes_in_kb": 21,
+    "axes_with_trend": 20
+  },
+  {
+    "timestamp": "2026-05-01T08:20:31.295235+00:00",
+    "axes_updated": 21,
+    "total_axes_in_kb": 21,
+    "axes_with_trend": 20
+  },
+  {
+    "timestamp": "2026-05-01T08:31:19.666345+00:00",
+    "axes_updated": 19,
+    "total_axes_in_kb": 21,
+    "axes_with_trend": 20
+  },
+  {
+    "timestamp": "2026-05-01T09:28:31.992198+00:00",
+    "axes_updated": 21,
+    "total_axes_in_kb": 22,
+    "axes_with_trend": 20
+  },
+  {
+    "timestamp": "2026-05-01T09:33:08.099152+00:00",
+    "axes_updated": 21,
+    "total_axes_in_kb": 22,
+    "axes_with_trend": 20
+  },
+  {
+    "timestamp": "2026-05-01T09:34:50.042135+00:00",
+    "axes_updated": 21,
+    "total_axes_in_kb": 22,
+    "axes_with_trend": 21
+  },
+  {
+    "timestamp": "2026-05-01T09:34:57.891561+00:00",
+    "axes_updated": 21,
+    "total_axes_in_kb": 22,
+    "axes_with_trend": 21
+  },
+  {
+    "timestamp": "2026-05-01T09:35:06.226751+00:00",
+    "axes_updated": 21,
+    "total_axes_in_kb": 22,
+    "axes_with_trend": 21
+  },
+  {
+    "timestamp": "2026-05-01T09:35:14.162598+00:00",
+    "axes_updated": 21,
+    "total_axes_in_kb": 22,
+    "axes_with_trend": 21
+  },
+  {
+    "timestamp": "2026-05-01T09:35:21.897401+00:00",
+    "axes_updated": 21,
+    "total_axes_in_kb": 22,
+    "axes_with_trend": 21
+  },
+  {
+    "timestamp": "2026-05-01T09:35:31.178292+00:00",
+    "axes_updated": 21,
+    "total_axes_in_kb": 22,
+    "axes_with_trend": 21
+  },
+  {
+    "timestamp": "2026-05-01T09:40:06.401759+00:00",
+    "axes_updated": 19,
+    "total_axes_in_kb": 22,
+    "axes_with_trend": 21
+  },
+  {
+    "timestamp": "2026-05-01T12:11:00.363712+00:00",
+    "axes_updated": 25,
+    "total_axes_in_kb": 25,
+    "axes_with_trend": 21,
+    "web_intel_used": true
+  },
+  {
+    "timestamp": "2026-05-01T12:24:50.380846+00:00",
+    "axes_updated": 25,
+    "total_axes_in_kb": 25,
+    "axes_with_trend": 21,
+    "web_intel_used": true
+  },
+  {
+    "timestamp": "2026-05-01T12:32:49.808094+00:00",
+    "axes_updated": 25,
+    "total_axes_in_kb": 25,
+    "axes_with_trend": 23,
+    "web_intel_used": true
+  },
+  {
+    "timestamp": "2026-05-01T12:38:56.032706+00:00",
+    "axes_updated": 25,
+    "total_axes_in_kb": 25,
+    "axes_with_trend": 23,
+    "web_intel_used": true
+  },
+  {
+    "timestamp": "2026-05-01T12:39:25.808609+00:00",
+    "axes_updated": 25,
+    "total_axes_in_kb": 25,
+    "axes_with_trend": 23,
+    "web_intel_used": true
+  },
+  {
+    "timestamp": "2026-05-01T13:00:10.807735+00:00",
+    "axes_updated": 25,
+    "total_axes_in_kb": 25,
+    "axes_with_trend": 23,
+    "web_intel_used": true
+  },
+  {
+    "timestamp": "2026-05-01T13:01:01.963054+00:00",
+    "axes_updated": 25,
+    "total_axes_in_kb": 25,
+    "axes_with_trend": 23,
+    "web_intel_used": true
+  },
+  {
+    "timestamp": "2026-05-01T13:03:41.903036+00:00",
+    "axes_updated": 25,
+    "total_axes_in_kb": 25,
+    "axes_with_trend": 23,
+    "web_intel_used": true
+  },
+  {
+    "timestamp": "2026-05-03T08:45:29.612424+00:00",
+    "axes_updated": 25,
+    "total_axes_in_kb": 25,
+    "axes_with_trend": 23,
+    "web_intel_used": true
+  },
+  {
+    "timestamp": "2026-05-03T08:46:58.444656+00:00",
+    "axes_updated": 25,
+    "total_axes_in_kb": 25,
+    "axes_with_trend": 23,
+    "web_intel_used": true
+  },
+  {
+    "timestamp": "2026-05-03T08:47:07.439046+00:00",
+    "axes_updated": 25,
+    "total_axes_in_kb": 25,
+    "axes_with_trend": 23,
+    "web_intel_used": true
+  },
+  {
+    "timestamp": "2026-05-03T08:47:17.793774+00:00",
+    "axes_updated": 25,
+    "total_axes_in_kb": 25,
+    "axes_with_trend": 23,
+    "web_intel_used": true
+  },
+  {
+    "timestamp": "2026-05-03T08:47:28.872052+00:00",
+    "axes_updated": 25,
+    "total_axes_in_kb": 25,
+    "axes_with_trend": 23,
+    "web_intel_used": true
+  },
+  {
+    "timestamp": "2026-05-03T08:47:37.914355+00:00",
+    "axes_updated": 25,
+    "total_axes_in_kb": 25,
+    "axes_with_trend": 23,
+    "web_intel_used": true
+  },
+  {
+    "timestamp": "2026-05-03T08:50:51.420244+00:00",
+    "axes_updated": 25,
+    "total_axes_in_kb": 25,
+    "axes_with_trend": 23,
+    "web_intel_used": true
+  },
+  {
+    "timestamp": "2026-05-03T09:04:02.935851+00:00",
+    "axes_updated": 25,
+    "total_axes_in_kb": 25,
+    "axes_with_trend": 23,
+    "web_intel_used": true
+  },
+  {
+    "timestamp": "2026-05-03T09:04:22.622107+00:00",
+    "axes_updated": 25,
+    "total_axes_in_kb": 25,
+    "axes_with_trend": 23,
+    "web_intel_used": true
+  },
+  {
+    "timestamp": "2026-05-04T06:49:37.440437+00:00",
+    "axes_updated": 25,
+    "total_axes_in_kb": 25,
+    "axes_with_trend": 24,
+    "web_intel_used": true
+  },
+  {
+    "timestamp": "2026-05-04T06:51:05.858600+00:00",
+    "axes_updated": 25,
+    "total_axes_in_kb": 25,
+    "axes_with_trend": 25,
+    "web_intel_used": true
+  },
+  {
+    "timestamp": "2026-05-04T06:51:20.624544+00:00",
+    "axes_updated": 25,
+    "total_axes_in_kb": 25,
+    "axes_with_trend": 25,
+    "web_intel_used": true
+  },
+  {
+    "timestamp": "2026-05-04T06:53:05.594235+00:00",
+    "axes_updated": 25,
+    "total_axes_in_kb": 25,
+    "axes_with_trend": 25,
+    "web_intel_used": true
+  },
+  {
+    "timestamp": "2026-05-04T07:20:43.989249+00:00",
+    "axes_updated": 0,
+    "total_axes_in_kb": 25,
+    "problems_tracked": 5,
+    "web_intel_problems": 0,
+    "source": "self_modifier"
+  },
+  {
+    "timestamp": "2026-05-04T07:21:55.879101+00:00",
+    "axes_updated": 0,
+    "total_axes_in_kb": 25,
+    "problems_tracked": 5,
+    "web_intel_problems": 0,
+    "source": "execute_patches"
+  },
+  {
+    "timestamp": "2026-05-04T07:23:20.743943+00:00",
+    "axes_updated": 0,
+    "total_axes_in_kb": 25,
+    "problems_tracked": 5,
+    "web_intel_problems": 0,
+    "source": "hypercortex"
+  },
+  {
+    "timestamp": "2026-05-04T08:01:10.542497+00:00",
+    "axes_updated": 16,
+    "total_axes_in_kb": 25,
+    "problems_tracked": 10,
+    "web_intel_problems": 16,
+    "source": "web_intelligence_agent"
+  },
+  {
+    "timestamp": "2026-05-04T08:01:24.302797+00:00",
+    "axes_updated": 16,
+    "total_axes_in_kb": 25,
+    "problems_tracked": 16,
+    "web_intel_problems": 16,
+    "source": "web_intelligence_agent"
+  },
+  {
+    "timestamp": "2026-05-04T08:29:59.383354+00:00",
+    "axes_updated": 16,
+    "total_axes_in_kb": 25,
+    "problems_tracked": 22,
+    "web_intel_problems": 16,
+    "source": "web_intelligence_agent"
+  },
+  {
+    "timestamp": "2026-05-04T08:32:42.566317+00:00",
+    "axes_updated": 16,
+    "total_axes_in_kb": 25,
+    "problems_tracked": 32,
+    "web_intel_problems": 16,
+    "source": "self_modifier"
+  },
+  {
+    "timestamp": "2026-05-04T08:33:49.393220+00:00",
+    "axes_updated": 16,
+    "total_axes_in_kb": 25,
+    "problems_tracked": 38,
+    "web_intel_problems": 16,
+    "source": "execute_patches"
+  },
+  {
+    "timestamp": "2026-05-04T08:35:26.025142+00:00",
+    "axes_updated": 16,
+    "total_axes_in_kb": 25,
+    "problems_tracked": 44,
+    "web_intel_problems": 16,
+    "source": "hypercortex"
+  },
+  {
+    "timestamp": "2026-05-04T08:59:07.967121+00:00",
+    "axes_updated": 16,
+    "total_axes_in_kb": 25,
+    "problems_tracked": 53,
+    "web_intel_problems": 16,
+    "source": "self_modifier"
+  },
+  {
+    "timestamp": "2026-05-04T09:06:40.082079+00:00",
+    "axes_updated": 16,
+    "total_axes_in_kb": 25,
+    "problems_tracked": 59,
+    "web_intel_problems": 16,
+    "source": "self_modifier"
+  },
+  {
+    "timestamp": "2026-05-04T09:07:52.478428+00:00",
+    "axes_updated": 16,
+    "total_axes_in_kb": 25,
+    "problems_tracked": 70,
+    "web_intel_problems": 16,
+    "source": "self_modifier"
+  },
+  {
+    "timestamp": "2026-05-04T09:18:30.661476+00:00",
+    "axes_updated": 16,
+    "total_axes_in_kb": 25,
+    "problems_tracked": 79,
+    "web_intel_problems": 16,
+    "source": "self_modifier"
+  },
+  {
+    "timestamp": "2026-05-04T12:38:57.124299+00:00",
+    "axes_updated": 16,
+    "total_axes_in_kb": 25,
+    "problems_tracked": 85,
+    "web_intel_problems": 16,
+    "source": "self_modifier"
+  },
+  {
+    "timestamp": "2026-05-04T12:48:51.698439+00:00",
+    "axes_updated": 16,
+    "total_axes_in_kb": 25,
+    "problems_tracked": 91,
+    "web_intel_problems": 16,
+    "source": "execute_patches"
+  },
+  {
+    "timestamp": "2026-05-04T12:49:03.412859+00:00",
+    "axes_updated": 16,
+    "total_axes_in_kb": 25,
+    "problems_tracked": 97,
+    "web_intel_problems": 16,
+    "source": "execute_patches"
+  },
+  {
+    "timestamp": "2026-05-04T12:55:12.716338+00:00",
+    "axes_updated": 16,
+    "total_axes_in_kb": 25,
+    "problems_tracked": 103,
+    "web_intel_problems": 16,
+    "source": "hypercortex"
+  },
+  {
+    "timestamp": "2026-05-04T14:02:24.791787+00:00",
+    "axes_updated": 16,
+    "total_axes_in_kb": 25,
+    "problems_tracked": 109,
+    "web_intel_problems": 16,
+    "source": "self_modifier"
+  },
+  {
+    "timestamp": "2026-05-04T14:28:56.331860+00:00",
+    "axes_updated": 16,
+    "total_axes_in_kb": 25,
+    "problems_tracked": 115,
+    "web_intel_problems": 16,
+    "source": "execute_patches"
+  },
+  {
+    "timestamp": "2026-05-04T14:34:08.553049+00:00",
+    "axes_updated": 16,
+    "total_axes_in_kb": 25,
+    "problems_tracked": 121,
+    "web_intel_problems": 16,
+    "source": "hypercortex"
+  },
+  {
+    "timestamp": "2026-05-07T10:20:41.204742+00:00",
+    "axes_updated": 16,
+    "total_axes_in_kb": 25,
+    "problems_tracked": 127,
+    "web_intel_problems": 16,
+    "source": "self_modifier"
+  },
+  {
+    "timestamp": "2026-05-07T10:21:00.856691+00:00",
+    "axes_updated": 16,
+    "total_axes_in_kb": 25,
+    "problems_tracked": 133,
+    "web_intel_problems": 16,
+    "source": "execute_patches"
+  },
+  {
+    "timestamp": "2026-05-07T10:21:09.416539+00:00",
+    "axes_updated": 16,
+    "total_axes_in_kb": 25,
+    "problems_tracked": 139,
+    "web_intel_problems": 16,
+    "source": "execute_patches"
+  },
+  {
+    "timestamp": "2026-05-07T10:21:16.912680+00:00",
+    "axes_updated": 16,
+    "total_axes_in_kb": 25,
+    "problems_tracked": 140,
+    "web_intel_problems": 16,
+    "source": "execute_patches"
+  },
+  {
+    "timestamp": "2026-05-07T10:23:25.652426+00:00",
+    "axes_updated": 16,
+    "total_axes_in_kb": 25,
+    "problems_tracked": 140,
+    "web_intel_problems": 16,
+    "source": "hypercortex"
+  },
+  {
+    "timestamp": "2026-05-08T08:44:36.902045+00:00",
+    "axes_updated": 16,
+    "total_axes_in_kb": 25,
+    "problems_tracked": 140,
+    "web_intel_problems": 16,
+    "source": "hypercortex"
+  },
+  {
+    "timestamp": "2026-05-08T08:56:51.027983+00:00",
+    "axes_updated": 16,
+    "total_axes_in_kb": 25,
+    "problems_tracked": 140,
+    "web_intel_problems": 16,
+    "source": "hypercortex"
+  },
+  {
+    "timestamp": "2026-05-08T08:59:51.048836+00:00",
+    "axes_updated": 16,
+    "total_axes_in_kb": 25,
+    "problems_tracked": 140,
+    "web_intel_problems": 16,
+    "source": "self_modifier"
+  },
+  {
+    "timestamp": "2026-05-08T09:25:33.741861+00:00",
+    "axes_updated": 16,
+    "total_axes_in_kb": 27,
+    "problems_tracked": 140,
+    "web_intel_problems": 16,
+    "source": "hypercortex"
+  },
+  {
+    "timestamp": "2026-05-08T10:28:58.385827+00:00",
+    "axes_updated": 25,
+    "total_axes_in_kb": 27,
+    "problems_tracked": 154,
+    "web_intel_problems": 25,
+    "source": "web_intelligence_agent"
+  },
+  {
+    "timestamp": "2026-05-09T06:01:07.019839+00:00",
+    "axes_updated": 25,
+    "total_axes_in_kb": 27,
+    "problems_tracked": 168,
+    "web_intel_problems": 25,
+    "source": "hypercortex"
+  },
+  {
+    "timestamp": "2026-05-09T06:04:04.453512+00:00",
+    "axes_updated": 25,
+    "total_axes_in_kb": 27,
+    "problems_tracked": 182,
+    "web_intel_problems": 25,
+    "source": "hypercortex"
+  },
+  {
+    "timestamp": "2026-05-16T13:24:02.572344+00:00",
+    "axes_updated": 25,
+    "total_axes_in_kb": 27,
+    "problems_tracked": 197,
+    "web_intel_problems": 25,
+    "source": "web_intelligence_agent"
+  },
+  {
+    "timestamp": "2026-05-16T22:17:20.079733+00:00",
+    "axes_updated": 23,
+    "total_axes_in_kb": 28,
+    "problems_tracked": 214,
+    "web_intel_problems": 23,
+    "source": "web_intelligence_agent"
+  },
+  {
+    "timestamp": "2026-05-16T23:26:31.323782+00:00",
+    "axes_updated": 23,
+    "total_axes_in_kb": 28,
+    "problems_tracked": 231,
+    "web_intel_problems": 23,
+    "source": "web_intelligence_agent"
+  },
+  {
+    "timestamp": "2026-05-17T08:18:53.873273+00:00",
+    "axes_updated": 25,
+    "total_axes_in_kb": 28,
+    "problems_tracked": 241,
+    "web_intel_problems": 25,
+    "source": "web_intelligence_agent"
+  },
+  {
+    "timestamp": "2026-05-17T14:40:09.367856+00:00",
+    "axes_updated": 24,
+    "total_axes_in_kb": 28,
+    "problems_tracked": 258,
+    "web_intel_problems": 24,
+    "source": "web_intelligence_agent"
+  },
+  {
+    "timestamp": "2026-05-18T07:36:53.292015+00:00",
+    "axes_updated": 25,
+    "total_axes_in_kb": 28,
+    "problems_tracked": 270,
+    "web_intel_problems": 25,
+    "source": "web_intelligence_agent"
+  },
+  {
+    "timestamp": "2026-06-11T18:59:30.237916+00:00",
+    "axes_updated": 25,
+    "total_axes_in_kb": 28,
+    "problems_tracked": 282,
+    "web_intel_problems": 25,
+    "source": "hypercortex"
+  },
+  {
+    "timestamp": "2026-06-11T19:06:53.526197+00:00",
+    "axes_updated": 25,
+    "total_axes_in_kb": 28,
+    "problems_tracked": 294,
+    "web_intel_problems": 25,
+    "source": "hypercortex"
+  }
+]

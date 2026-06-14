@@ -1,0 +1,35 @@
+Thinking...
+Okay, let's start by understanding the user's query. They provided a RAW_CONTEXT with various data sources and their statuses. My task is to generate a JSON object based on that data, following specific rules. 
+
+First, I need to check the status of each data source. The World Bank and IEF have failed statuses. The OPSD also failed due to a connection timeout. The other sources are OK. Since some data sources are unavailable, I can't retrieve real numbers for key metrics. 
+
+For the diagnosis status, since some data is missing, maybe the system is STRESSED. The short summary should mention the data availability issues. Key metrics can't be provided with real numbers, so I need to note that there's no real data available for those metrics.
+
+Risks would include data unavailability, which is a short-term risk. Opportunities might involve improving data access. Recommended actions should prioritize fixing the data sources. Notes for self-improvement should list the required data indicators and sources.
+
+I need to make sure all Bulgarian text is concise and that no real numbers are given where data isn't available. Also, any data requests should be formatted correctly in the notes.
+...done thinking.
+
+{
+  "diagnosis": {
+    "status": "STRESSED",
+    "short_summary_bg": "Системата за енергия е под напрежение поради неуспешни опити за достъп до ключови източници на данни (World Bank, IEF, OPSD) и липса на актуални метрики за оценка.",
+    "key_metrics": [
+      {"name": "Достъп до данни", "value": "Недостатъчно", "interpretation_bg": "Няма реални данни за тази метрика в подадения контекст/файлове, затова не давам оценка"}
+    ]
+  },
+  "risks": [
+    {"name": "Недостъпни източници", "description_bg": "Липса на данни от World Bank, IEF и OPSD затруднява анализът на глобалната енергийна система.", "time_horizon": "short"}
+  ],
+  "opportunities": [
+    {"name": "Укрепване на данни", "description_bg": "Повишаване на достъпа до надеждни източници за енергийни статистики и прогнози."}
+  ],
+  "recommended_actions": [
+    {"id": "ENERGY-ACT-001", "title_bg": "Решене на проблеми с достъпа до данни", "description_bg": "Проверете статуса на World Bank, IEF и OPSD и намерете алтернативни източници за енергийни статистики.", "priority": "high"}
+  ],
+  "notes_for_cortex_self_improvement": [
+    "DATA_REQUEST: Глобални енергийни статистики от World Bank / Energy Data",
+    "DATA_REQUEST: Производство и потребление на въглища от IEF",
+    "DATA_REQUEST: Реал-time енергийни данни от OPSD"
+  ]
+}

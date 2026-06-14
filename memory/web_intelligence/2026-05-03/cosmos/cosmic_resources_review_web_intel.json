@@ -1,0 +1,143 @@
+{
+  "axis": "COSMIC_RESOURCES_REVIEW",
+  "domain": "cosmos",
+  "timestamp": "2026-05-03T08:59:23.541234+00:00",
+  "sources_count": 11,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] Mining Asteroids for Resources: The Future of Space Economy ... - YouTube",
+      "summary": "Earth's resources are dwindling, and we need alternatives now more than ever. What if I told you the asteroid belt could be our next big answer? It's vast, filled with untapped riches just waiting for us to explore. Imagine the incredible value locked within these celestial bodies. Asteroids are like an astronomical bank account, packed with rare earth metals and precious resources. Take C- type asteroids rich in carbon or S-type filled with metals like nickel and iron. And let's not forget Mtype asteroids, which are treasure troes of precious metals. The sheer quantity of resources up there dwarfs what we have on Earth. But how do we tap into this cosmic bounty? We're developing robotic miners and orbital refineries to make it happen. Sure, microgravity mining poses challenges, but innova",
+      "link": "https://www.youtube.com/watch?v=Edf7XCHRHLw",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "Edf7XCHRHLw",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 991,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] THE ASTEROID MINING & SPACE ECONOMY - YouTube",
+      "summary": "The asteroid mining and space economy. Introduction. Wealth beyond Earth. Humanity is on the brink of a new economic revolution. One that extends beyond Earth's surface into deep space. The concept of asteroid mining and the rise of a space-based economy are no longer just science fiction dreams. They are rapidly becoming scientific, technological, and commercial realities. With rare minerals, precious metals, and water resources locked inside asteroids, space is now seen as the next great economic frontier, capable of transforming industries, energy systems, and global power structures. What is asteroid mining? Asteroid mining refers to the extraction of valuable resources from asteroids orbiting the sun. These space rocks contain enormous quantities of materials that are rare or limited ",
+      "link": "https://www.youtube.com/watch?v=GEHvDXeMF90",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "GEHvDXeMF90",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Mining Asteroids - How We Extract Resources in Space - YouTube",
+      "summary": "Asteroids are no longer just small rocky worlds floating in space. They have become new economic opportunities and places strategic to space exploration. &gt;&gt; There's almost unlimited resources on the asteroids. There are many different types and they each contain different resources that we could use. Most of them are made of metals like iron, nickel, or precious metals like gold or platinum. They're very valuable. However, the most valuable material on asteroids is the simplest element, water. [Music] In the near future, we could use asteroids as pit stops to refuel spacecrafts on route to deep space with propellant made out of water. That is where the value of asteroids really lie. Uh as they become gas stations or pit stops or stepping stones in our process to explore further and f",
+      "link": "https://www.youtube.com/watch?v=D3eVaW4ytZA",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "D3eVaW4ytZA",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "summary": "- Artemis 3 plans remain uncertain as schedule slips: <figure><img alt=\"SLS core stage for Artemis 3\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"683\" src=\"https://i0.wp.com/spacenews.com/wp-content/uploads/2026/05/Z63_707\n- NASA to increase value of CLPS contract to ",
+    "risk_level": "UNKNOWN",
+    "trend": "UNKNOWN",
+    "key_events": [
+      "Artemis 3 plans remain uncertain as schedule slips",
+      "NASA to increase value of CLPS contract to support surge of lunar lander missions",
+      "The opportunity beyond orbital data centers"
+    ],
+    "insights": [],
+    "youtube_insights": [],
+    "relevance_to_goal": "",
+    "generalization": ""
+  },
+  "raw_items": [
+    {
+      "title": "Artemis 3 plans remain uncertain as schedule slips",
+      "summary": "<figure><img alt=\"SLS core stage for Artemis 3\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"683\" src=\"https://i0.wp.com/spacenews.com/wp-content/uploads/2026/05/Z63_7070.jpg?fit=1024%2C683&amp;ssl=1\" width=\"1024\" /></figure>\n<p>More than two months after NASA announced revised plans for the Artemis 3 mission, the agency has provided few details about the mission amid signs its schedule may be slipping.</p>\n<p>The post <a href=\"https://spacenews.com/artemis-3-plans",
+      "link": "https://spacenews.com/artemis-3-plans-remain-uncertain-as-schedule-slips/",
+      "published": "Sun, 03 May 2026 00:42:38 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "NASA to increase value of CLPS contract to support surge of lunar lander missions",
+      "summary": "<figure><img alt=\"IM-5\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"576\" src=\"https://i0.wp.com/spacenews.com/wp-content/uploads/2026/03/im-5.jpeg?fit=1024%2C576&amp;ssl=1\" width=\"1024\" /></figure>\n<p>NASA is planning to increase the total value of a contract for robotic lunar lander missions to support a proposed surge in flights for the agency’s moon base plans.</p>\n<p>The post <a href=\"https://spacenews.com/nasa-to-increase-value-of-clps-contract-to-support-sur",
+      "link": "https://spacenews.com/nasa-to-increase-value-of-clps-contract-to-support-surge-of-lunar-lander-missions/",
+      "published": "Fri, 01 May 2026 22:43:05 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "The opportunity beyond orbital data centers",
+      "summary": "<figure><img alt=\"\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"574\" src=\"https://i0.wp.com/spacenews.com/wp-content/uploads/2026/05/Founders-scaled.png?fit=1024%2C574&amp;ssl=1\" width=\"1024\" /></figure>\n<p>Investor attention is starting to shift toward ventures that could be enabled by orbital data centers, even as the massive computing networks proposed by SpaceX and others remain years from reality.</p>\n<p>The post <a href=\"https://spacenews.com/the-opportunity",
+      "link": "https://spacenews.com/the-opportunity-beyond-orbital-data-centers/",
+      "published": "Fri, 01 May 2026 19:10:35 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Starcloud seeks more orbital data center funding shortly after unicorn status",
+      "summary": "<figure><img alt=\"\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"574\" src=\"https://i0.wp.com/spacenews.com/wp-content/uploads/2026/05/Philip-ODC-SN-scaled.png?fit=1024%2C574&amp;ssl=1\" width=\"1024\" /></figure>\n<p>Starcloud is looking to raise at least $200 million in a deal that would double the two-year-old orbital data center startup’s valuation to about $2.2 billion, a source close to the situation confirmed.</p>\n<p>The post <a href=\"https://spacenews.com/starcl",
+      "link": "https://spacenews.com/starcloud-seeks-more-orbital-data-center-funding-shortly-after-unicorn-status/",
+      "published": "Fri, 01 May 2026 12:57:48 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Canadian Mint to disclose sourcing data after report on cartel gold ties",
+      "summary": "Canada’s maker of circulation coins will start disclosing country-of-origin data by material type and provide a note for mixed materials.",
+      "link": "https://www.mining.com/canadian-mint-to-disclose-sourcing-data-after-report-on-cartel-gold-ties/",
+      "published": "",
+      "source_type": "rss"
+    },
+    {
+      "title": "Op-Ed: What Canada’s sovereign wealth fund, defence industrial strategy mean for miners",
+      "summary": "These initiatives reflect an increasingly strategic view of critical minerals as national assets, not just commodities.",
+      "link": "https://www.mining.com/op-ed-what-canadas-sovereign-wealth-fund-defence-industrial-strategy-mean-for-miners/",
+      "published": "",
+      "source_type": "rss"
+    },
+    {
+      "title": "Ontario to axe early-stage red tape, mining minister says",
+      "summary": "The Conservative majority government intends to pass new laws this autumn.",
+      "link": "https://www.mining.com/ontario-to-axe-early-stage-red-tape-mining-minister-says/",
+      "published": "",
+      "source_type": "rss"
+    },
+    {
+      "title": "Torex sees potential to extend life of Mexico gold mine",
+      "summary": "Morelos, one of Mexico’s biggest gold mines, has been Torex’s key asset since the company acquired the property in 2009.",
+      "link": "https://www.mining.com/torex-sees-potential-to-extend-life-of-mexico-gold-mine/",
+      "published": "",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] Mining Asteroids for Resources: The Future of Space Economy ... - YouTube",
+      "summary": "Earth's resources are dwindling, and we need alternatives now more than ever. What if I told you the asteroid belt could be our next big answer? It's vast, filled with untapped riches just waiting for us to explore. Imagine the incredible value locked within these celestial bodies. Asteroids are like an astronomical bank account, packed with rare earth metals and precious resources. Take C- type asteroids rich in carbon or S-type filled with metals like nickel and iron. And let's not forget Mtype asteroids, which are treasure troes of precious metals. The sheer quantity of resources up there dwarfs what we have on Earth. But how do we tap into this cosmic bounty? We're developing robotic miners and orbital refineries to make it happen. Sure, microgravity mining poses challenges, but innova",
+      "link": "https://www.youtube.com/watch?v=Edf7XCHRHLw",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "Edf7XCHRHLw",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 991,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] THE ASTEROID MINING & SPACE ECONOMY - YouTube",
+      "summary": "The asteroid mining and space economy. Introduction. Wealth beyond Earth. Humanity is on the brink of a new economic revolution. One that extends beyond Earth's surface into deep space. The concept of asteroid mining and the rise of a space-based economy are no longer just science fiction dreams. They are rapidly becoming scientific, technological, and commercial realities. With rare minerals, precious metals, and water resources locked inside asteroids, space is now seen as the next great economic frontier, capable of transforming industries, energy systems, and global power structures. What is asteroid mining? Asteroid mining refers to the extraction of valuable resources from asteroids orbiting the sun. These space rocks contain enormous quantities of materials that are rare or limited ",
+      "link": "https://www.youtube.com/watch?v=GEHvDXeMF90",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "GEHvDXeMF90",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ]
+}

@@ -1,0 +1,109 @@
+{
+  "axis": "SOCIAL_RELATIONS_REVIEW",
+  "fetched_at": "2026-05-17T16:10:23.637341+00:00",
+  "smart_query": "social inequality conflict trust",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 0,
+    "github": 3,
+    "youtube_transcripts": 2,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "WHO declares Ebola outbreak in DR Congo an international emergency",
+      "snippet": "The agency added that the outbreak, with around 246 cases and 80 deaths, does not meet the criteria of pandemic emergency.",
+      "url": "https://www.bbc.com/news/articles/c2l2p0wwzzdo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "How worrying is the Ebola outbreak in DR Congo?",
+      "snippet": "An outbreak in DR Congo has been declared a health emergency, with almost 250 suspected cases reported.",
+      "url": "https://www.bbc.com/news/articles/c9q311nj5r3o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Large-scale Ukrainian drone attack kills three in Moscow region, says Russia",
+      "snippet": "Ukraine's president says the strikes are a \"justified\" response to deadly Russian attacks on Ukrainian cities.",
+      "url": "https://www.bbc.com/news/articles/c5ye480kxpmo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "briatte/awesome-network-analysis",
+      "snippet": "A curated list of awesome network analysis resources.",
+      "stars": 4041,
+      "url": "https://github.com/briatte/awesome-network-analysis",
+      "updated": "2026-05-16",
+      "source": "GitHub"
+    },
+    {
+      "title": "obsei/obsei",
+      "snippet": "Obsei is a low code AI powered automation tool. It can be used in various business flows like social listening, AI based alerting, brand image analysis, comparative study and more .",
+      "stars": 1402,
+      "url": "https://github.com/obsei/obsei",
+      "updated": "2026-05-15",
+      "source": "GitHub"
+    },
+    {
+      "title": "shaypal5/awesome-twitter-data",
+      "snippet": "A list of Twitter datasets and related resources.",
+      "stars": 1111,
+      "url": "https://github.com/shaypal5/awesome-twitter-data",
+      "updated": "2026-05-17",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [],
+  "podcast": "[How to give feedback that lands | Dr Renee St Jacques] Most managers give feedback. Few give feedback that actually works. Drawing on her background in psychology and executive coaching, Renee St Jacques breaks down what so many well-intentioned leaders get wrong — and introduces a three-part framework to help teams rebuild trust and perform at their best. Hosted on Acast. See acast.com/privacy for more information.",
+  "wiki": null,
+  "youtube_items": [
+    {
+      "title": "[YT] The loneliness disease | Daisy Fancourt",
+      "summary": "[Music] I'm Daisy Fancort and I'm a professor of psychobiology and epidemiology. Welcome to my ex. [Music] The very makeup of our societies and the way that we engage with them is fundamentally changing. Over the last four million years, our ancestral species, hominins, has evolved dramatically. Our brains have increased in size, as of our social networks, and this has led to changes in the way that we bond with our networks, from grooming to singing to talking. These changes have taken a long time. Singing emerged around half a million years ago, language around a 100,000 years ago, but that pace of change is really accelerating. It's just been 150 years since the first telephone enabled easy virtual conversation and 50 years since mobile phones were invented and apps like Snapchat, Tik T",
+      "link": "https://www.youtube.com/watch?v=D06MVJqtN_8",
+      "source_type": "youtube",
+      "channel": "EXPeditions - The living library of knowledge",
+      "video_id": "D06MVJqtN_8",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] 🚹🚺 How does the ‘male lonliness epidemic’ affect society | #bebaddaasin",
+      "summary": "[DESCRIPTION FALLBACK] Link to bebadass.in: ...",
+      "link": "https://www.youtube.com/watch?v=Y9XQBEkjbTk",
+      "source_type": "youtube",
+      "channel": "Bffr Moe",
+      "video_id": "Y9XQBEkjbTk",
+      "transcript_method": "description",
+      "transcript_chars": 47,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] The Health Effects of Loneliness",
+      "summary": "[music] &gt;&gt; Reed Pence: Humans are innately social creatures. Few of us can truly go it alone. Our survival depends on having relationships with others, so our species has evolved a way to make sure we maintain them: loneliness. &gt;&gt; Richard Schwartz: Loneliness actually has a kind of signal to us that we are longing for more contact he is not a problem actually more to a solution when it actually motivates us to get back into contact with others. &gt;&gt; Pence: Dr. Richard Schwartz is Associate Professor of Psychiatry at the Harvard Medical School, and co-author of the book The Lonely American: Drifting Apart In The 21st Century. &gt;&gt; Schwartz: As human beings, we survive in groups. That loneliness is a feeling that motivates us to get back into the group when we’re out of i",
+      "link": "https://www.youtube.com/watch?v=YoqnIs5uc8E",
+      "source_type": "youtube",
+      "channel": "In Good Health Podcast",
+      "video_id": "YoqnIs5uc8E",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ],
+  "summary": "Социалните връзки и промените в начина на взаимодействие между хората са важна тема, която се разглежда в контекста на развитието на човечеството. Въпреки това, няма директна връзка с устойчива цивилизация и достоен живот за всеки.",
+  "urgency": "HIGH",
+  "sentiment": "CRITICAL",
+  "key_developments": [
+    "WHO declares Ebola outbreak in DR Congo an international emergency",
+    "How worrying is the Ebola outbreak in DR Congo?"
+  ],
+  "open_source_momentum": "No data",
+  "scientific_frontier": "No data",
+  "relevance_to_goal": "LOW"
+}

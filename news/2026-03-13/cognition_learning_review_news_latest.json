@@ -1,0 +1,169 @@
+{
+  "axis": "COGNITION_LEARNING_REVIEW",
+  "fetched_at": "2026-03-13T14:00:01.438394+00:00",
+  "smart_query": "cognition learning review",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 3,
+    "arxiv": 2,
+    "github": 3,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "analysis": {
+    "summary": "[RSS News]\n- Cannabis study finds THC can create false memories\n- New drug cuts seizures by up to 91% in children with rare epilepsy\n\n[GDELT News]\n- Call for Standby CSO Partners to Support Education ",
+    "sentiment": "NEUTRAL",
+    "urgency": "LOW",
+    "key_developments": []
+  },
+  "sentiment": "NEUTRAL",
+  "urgency": "LOW",
+  "summary": "[RSS News]\n- Cannabis study finds THC can create false memories\n- New drug cuts seizures by up to 91% in children with rare epilepsy\n\n[GDELT News]\n- Call for Standby CSO Partners to Support Education ",
+  "key_developments": [],
+  "open_source_momentum": "",
+  "scientific_frontier": "",
+  "news_items": [
+    {
+      "title": "Call for Standby CSO Partners to Support Education Programmes in Sudan",
+      "snippet": "Call for Standby CSO Partners to Support Education Programmes in Sudan",
+      "url": "https://www2.fundsforngos.org/children/call-for-standby-cso-partners-to-support-education-programmes-in-sudan/",
+      "source": "fundsforngos.org"
+    },
+    {
+      "title": "ชูกลยุทธ์เรียนฟรี - อัปเกรดวิชาการ โมเดล  อนุบาล 3 ขวบ  ลดเหลื่อมล้ำ",
+      "snippet": "ชูกลยุทธ์เรียนฟรี - อัปเกรดวิชาการ โมเดล  อนุบาล 3 ขวบ  ลดเหลื่อมล้ำ",
+      "url": "https://www.dailynews.co.th/news/5486264/",
+      "source": "dailynews.co.th"
+    },
+    {
+      "title": "At least 52 million children facing disrupted education due to Middle East and wider region conflict - Lebanon",
+      "snippet": "At least 52 million children facing disrupted education due to Middle East and wider region conflict - Lebanon",
+      "url": "https://reliefweb.int/report/lebanon/least-52-million-children-facing-disrupted-education-due-middle-east-and-wider-region-conflict",
+      "source": "reliefweb.int"
+    },
+    {
+      "title": "Cannabis study finds THC can create false memories",
+      "snippet": "THC doesn’t just blur memories—it can create new ones that never happened. In a controlled experiment, cannabis users were much more likely to recall words that were never shown and struggled with tasks like remembering to do something later. Researchers found that THC disrupted many different memor",
+      "url": "https://www.sciencedaily.com/releases/2026/03/260311004711.htm",
+      "source": "RSS"
+    },
+    {
+      "title": "New drug cuts seizures by up to 91% in children with rare epilepsy",
+      "snippet": "A new experimental drug is showing remarkable promise for children with Dravet syndrome, a severe genetic form of epilepsy. In clinical trials, the treatment zorevunersen cut seizures by as much as 91% while also improving quality of life for many patients. The therapy works by boosting the function",
+      "url": "https://www.sciencedaily.com/releases/2026/03/260304184215.htm",
+      "source": "RSS"
+    },
+    {
+      "title": "Why some kids struggle with math even when they try hard",
+      "snippet": "A new Stanford study suggests math struggles may be about more than numbers. Children who had difficulty with math were less likely to adjust their thinking after making mistakes during number comparison tasks. Brain imaging showed weaker activity in regions that help monitor errors and guide behavi",
+      "url": "https://www.sciencedaily.com/releases/2026/02/260213020416.htm",
+      "source": "RSS"
+    }
+  ],
+  "github_repos": [
+    {
+      "title": "AFLucas-UOM/AI-Early-Detection-System-for-Dyslexia-ADHD",
+      "snippet": "Proof-of-concept behavioural analysis system for early detection of dyslexia and ADHD using spelling pattern evaluation, sentence rewriting similarity analysis, and keyboard/mouse interaction monitori",
+      "stars": 6,
+      "url": "https://github.com/AFLucas-UOM/AI-Early-Detection-System-for-Dyslexia-ADHD",
+      "updated": "2026-03-06",
+      "source": "GitHub"
+    },
+    {
+      "title": "ShubhamMahajan880/studyAlpha-Ai-Agent",
+      "snippet": "🎓 StudyAlpha is an intelligent, end-to-end AI Study Coach powered by multi-agent collaboration, memory-augmented reasoning, adaptive quizzes, and ML weakness prediction.  Built for the Google × Kaggle",
+      "stars": 5,
+      "url": "https://github.com/ShubhamMahajan880/studyAlpha-Ai-Agent",
+      "updated": "2026-01-29",
+      "source": "GitHub"
+    },
+    {
+      "title": "Kuldeep-Padshala/genai-capstone-study-agent",
+      "snippet": "A Capstone Project Demonstrating LLM-Powered Agents, Parallel Execution, Session Memory, Observability & Long-Running Operations",
+      "stars": 1,
+      "url": "https://github.com/Kuldeep-Padshala/genai-capstone-study-agent",
+      "updated": "2025-12-02",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "AI Misuse in Education Is a Measurement Problem: Toward a Learning Visibility Framework",
+      "snippet": "The rapid integration of conversational AI systems into educational settings has intensified ethical concerns about academic integrity, fairness, and students' cognitive development. Institutional responses have largely centered on AI detection tools and restrictive policies, yet such approaches hav",
+      "url": "https://arxiv.org/abs/2603.07834v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "SuperSkillsStack: Agency, Domain Knowledge, Imagination, and Taste in Human-AI Design Education",
+      "snippet": "This study examines how students integrate generative artificial intelligence (AI) into design projects through the lens of the SuperSkillsStack framework, which identifies four key human competencies for effective human-AI collaboration: Agency, Domain Knowledge, Imagination, and Taste. As generati",
+      "url": "https://arxiv.org/abs/2603.07016v1",
+      "source": "arXiv"
+    }
+  ],
+  "youtube_transcripts": [],
+  "podcast": "[Unlearn Negative Thoughts & Behaviors Patterns | Dr. Alok Kanojia] Dr. Alok Kanojia, MD, MPH (\"Dr. K\"), is a Harvard-trained psychiatrist and expert in both Eastern and Western medicine to improve mental health. He explains tools for unlearning maladaptive thoughts and behavior patterns and for making behaviors that better mental and physical well-being more reflexive in work, relationships and daily life. We also discuss ways to resolve trauma, build stress tole",
+  "youtube_videos": [
+    {
+      "title": "YouTube:R-sVnmmw6WY",
+      "video_id": "R-sVnmmw6WY",
+      "url": "https://www.youtube.com/watch?v=R-sVnmmw6WY",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:MFHOatplZz8",
+      "video_id": "MFHOatplZz8",
+      "url": "https://www.youtube.com/watch?v=MFHOatplZz8",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:Ysl_UBI0wh8",
+      "video_id": "Ysl_UBI0wh8",
+      "url": "https://www.youtube.com/watch?v=Ysl_UBI0wh8",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:74qfUE_gDw4",
+      "video_id": "74qfUE_gDw4",
+      "url": "https://www.youtube.com/watch?v=74qfUE_gDw4",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:XScodv7E2j0",
+      "video_id": "XScodv7E2j0",
+      "url": "https://www.youtube.com/watch?v=XScodv7E2j0",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:NnwtFAr0koQ",
+      "video_id": "NnwtFAr0koQ",
+      "url": "https://www.youtube.com/watch?v=NnwtFAr0koQ",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:qyqDJzfO-hY",
+      "video_id": "qyqDJzfO-hY",
+      "url": "https://www.youtube.com/watch?v=qyqDJzfO-hY",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:mMmMZRdIoNk",
+      "video_id": "mMmMZRdIoNk",
+      "url": "https://www.youtube.com/watch?v=mMmMZRdIoNk",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:JEOHnUhDlNA",
+      "video_id": "JEOHnUhDlNA",
+      "url": "https://www.youtube.com/watch?v=JEOHnUhDlNA",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:CeOySguUMUI",
+      "video_id": "CeOySguUMUI",
+      "url": "https://www.youtube.com/watch?v=CeOySguUMUI",
+      "source": "YouTube"
+    }
+  ]
+}

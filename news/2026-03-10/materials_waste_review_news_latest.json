@@ -1,0 +1,59 @@
+{
+  "axis": "MATERIALS_WASTE_REVIEW",
+  "fetched_at": "2026-03-10T11:29:51.067842+00:00",
+  "smart_query": "materials waste review",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "github": 3
+  },
+  "analysis": {
+    "summary": "Цената на петрола играе ключова роля в икономиката, докато нови открития на морски видове подчертават необходимостта от охрана на океаните. Отворените източници за устойчиви технологии се разпространяват бързо, насочени към по-зелена икономика.",
+    "key_developments": [
+      "Икономическият ефект от цената на петрола",
+      "Отворен софтуер за анализ на слънчеви енергии"
+    ],
+    "sentiment": "POSITIVE",
+    "urgency": "MEDIUM",
+    "open_source_momentum": "HIGH",
+    "scientific_frontier": "Маринна биоразнообразие и трансформация на енергийни системи",
+    "relevance_to_goal": "HIGH"
+  },
+  "sentiment": "POSITIVE",
+  "urgency": "MEDIUM",
+  "summary": "Цената на петрола играе ключова роля в икономиката, докато нови открития на морски видове подчертават необходимостта от охрана на океаните. Отворените източници за устойчиви технологии се разпространяват бързо, насочени към по-зелена икономика.",
+  "key_developments": [
+    "Икономическият ефект от цената на петрола",
+    "Отворен софтуер за анализ на слънчеви енергии"
+  ],
+  "open_source_momentum": "HIGH",
+  "scientific_frontier": "Маринна биоразнообразие и трансформация на енергийни системи",
+  "github_repos": [
+    {
+      "title": "pogopaule/awesome-sustainability-jobs",
+      "snippet": "Dev jobs in the sustainability sector - be part of the solution, not the problem",
+      "stars": 504,
+      "url": "https://github.com/pogopaule/awesome-sustainability-jobs",
+      "updated": "2026-02-23",
+      "source": "GitHub"
+    },
+    {
+      "title": "Alkia/electra",
+      "snippet": "This is Electra blockchain's repository for a decentralized micro-grid electricity exchange solution",
+      "stars": 72,
+      "url": "https://github.com/Alkia/electra",
+      "updated": "2026-01-28",
+      "source": "GitHub"
+    },
+    {
+      "title": "NatLabRockies/PV_ICE",
+      "snippet": "An open-source tool to quantify Solar Photovoltaics (PV) Energy and Mass Flows in the Circular Economy, from a Reliability and Lifetime approach",
+      "stars": 43,
+      "url": "https://github.com/NatLabRockies/PV_ICE",
+      "updated": "2026-01-28",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": []
+}

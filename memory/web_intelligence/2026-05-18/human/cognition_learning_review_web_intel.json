@@ -1,0 +1,138 @@
+{
+  "axis": "COGNITION_LEARNING_REVIEW",
+  "domain": "human",
+  "timestamp": "2026-05-18T08:27:51.292763+00:00",
+  "sources_count": 9,
+  "rss_count": 7,
+  "ddg_count": 0,
+  "youtube_count": 2,
+  "youtube_items": [
+    {
+      "title": "[YT] You’re Not Behind (Yet): How to Learn AI in 29 Minutes - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] Download the free ChatGPT at Work PDFs: https://clickhubspot.com/2d0715More from Futurepedia: Join the fastest-growing AI education platform!",
+      "link": "https://www.youtube.com/watch?v=9c7zh2MkslY",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "9c7zh2MkslY",
+      "transcript_method": "description",
+      "transcript_chars": 164,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] How I'd Learn AI (if I could start over) - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] I’ve now released a free Python for AI course that’s the best place to start your AI journey.Watch it here: https://youtu.be/ygXn5nV5qFc Need help with a p...",
+      "link": "https://www.youtube.com/watch?v=h2FDq3agImI",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "h2FDq3agImI",
+      "transcript_method": "description",
+      "transcript_chars": 181,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "problem": "LGBTQ+ youth mental health is deteriorating due to lack of institutional support and affirmation in educational settings",
+    "root_cause": "School systems are not adequately addressing the mental health needs of LGBTQ+ students, despite evidence showing that affirming environments significantly reduce suicide risk",
+    "severity": "CRITICAL",
+    "leverage_points": [
+      "School administrators and policymakers who control educational resources and curriculum",
+      "Educators and counselors who interact directly with students"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Implement mandatory LGBTQ+ inclusivity training for all educators",
+        "measurable_goal": "Reduce reported suicide risk among LGBTQ+ students by 30% within 3 years",
+        "timeframe": "long-term"
+      },
+      {
+        "action": "Create school-based mental health support programs specifically for LGBTQ+ youth",
+        "measurable_goal": "Increase access to mental health services for LGBTQ+ students by 50% within 2 years",
+        "timeframe": "medium-term"
+      }
+    ],
+    "evidence": [
+      "LGBTQ+ Youth Mental Health Is Suffering, but Schools Are Poised to Help: 'One of the most important findings is that when adults, institutions, and communities become more affirming, the suicide risk of LGBTQ+ young people...'",
+      "The Taboo of…Money, Love and Power: DOCUMENTARY FILM In the documentary educational film 'The Taboo of Sovereignty, Money, Love and Power,' Mr. Liberty explores the taboos seldom discussed in polite conversation."
+    ],
+    "generalization": "This problem connects to broader issues of institutional discrimination, systemic underfunding of mental health services, and the failure of educational systems to address social equity and inclusion",
+    "summary": "LGBTQ+ youth mental health is at crisis levels due to lack of institutional support, with critical leverage points in school leadership and direct educator engagement",
+    "risk_level": "CRITICAL"
+  },
+  "raw_items": [
+    {
+      "title": "The Pandemic Hindered English Learners' Literacy. This Ohio District Is Turning the Tide.",
+      "summary": "&quot;We want to help the students continue to thrive, and really everything that we're thinking about with our student services is equitable learning ...",
+      "link": "https://www.edsurge.com/news/2026-05-13-the-pandemic-hindered-english-learners-literacy-this-ohio-district-is-turning-the-tide",
+      "published": "Wed, 13 May 2026 17:43:32 -0700",
+      "source_type": "rss"
+    },
+    {
+      "title": "Latest Canvas Attack Shows Schools Still Struggle With Cybersecurity",
+      "summary": "A cyberattack against one of the world’s largest digital education platforms has forced attention onto the vulnerability of U.S. schools’ data. ...",
+      "link": "https://www.edsurge.com/news/2026-05-12-latest-canvas-attack-shows-schools-still-struggle-with-cybersecurity",
+      "published": "Tue, 12 May 2026 11:29:33 -0700",
+      "source_type": "rss"
+    },
+    {
+      "title": "LGBTQ+ Youth Mental Health Is Suffering, but Schools Are Poised to Help",
+      "summary": "“One of the most important findings is that when adults, institutions, and communities become more affirming, the suicide risk of LGBTQ+ young people ...",
+      "link": "https://www.edsurge.com/news/2026-05-08-lgbtq-youth-mental-health-is-suffering-but-schools-are-poised-to-help",
+      "published": "Fri, 08 May 2026 16:30:50 -0700",
+      "source_type": "rss"
+    },
+    {
+      "title": "Screen Time Concerns Lead to Backlash Against Edtech Vetting Process",
+      "summary": "SCHOOL SOFTWARE SCRUTINY: Legislators have pushed back against cellphones in the classroom but are now focused on ensuring school software on devices ...",
+      "link": "https://www.edsurge.com/news/2026-05-07-screen-time-concerns-lead-to-backlash-against-edtech-vetting-process",
+      "published": "Thu, 07 May 2026 13:07:40 -0700",
+      "source_type": "rss"
+    },
+    {
+      "title": "The Taboo of…Money, Love and Power",
+      "summary": "DOCUMENTARY FILM In the documentary educational film &#8220;The Taboo of Sovereignty, Money, Love and Power,&#8221; Mr. Liberty explores the taboos seldom discussed in polite conversation. He reveals the nature of global power structures, money as a control system and the futility of elections. He is empowering people with popular sovereignty as a key to unlocking [&#8230;]",
+      "link": "https://mindshiftentertainment.wordpress.com/2005/04/01/hello-world/",
+      "published": "Fri, 01 Apr 2005 21:27:39 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Lotus: A Woman’s Journey of Empowerment",
+      "summary": "CLAIRE GAILLARD &#8211; DANCE IS LIFE! &#8220;From the revelation that disconnectedness between people and their passion, between individuals and their communities, reflect agonized personal wounds in each of us, her Empower Moves was birthed. It builds community and honors the People with Transcendance through story telling and interpretive forms of dance, allowing ecstatic communion, reconnection [&#8230;]",
+      "link": "https://mindshiftentertainment.wordpress.com/2003/03/23/lotus-a-womans-journey-of-empowerment/",
+      "published": "Sun, 23 Mar 2003 23:15:05 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Fresh Wave",
+      "summary": "JOHNNY LIGHT For over three decades, Johnny Light has been guided by a vision of a new world coming, the “fresh wave” is coming. These twelve songs are professionally produced and arranged, an album of his finest original compositions recorded with Michael Cooper at Rising Star Studios in Eugene, Oregon. Songs like Yes, Nobody’s Gonna [&#8230;]",
+      "link": "https://mindshiftentertainment.wordpress.com/1988/09/09/fresh-wave/",
+      "published": "Fri, 09 Sep 1988 23:17:22 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] You’re Not Behind (Yet): How to Learn AI in 29 Minutes - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] Download the free ChatGPT at Work PDFs: https://clickhubspot.com/2d0715More from Futurepedia: Join the fastest-growing AI education platform!",
+      "link": "https://www.youtube.com/watch?v=9c7zh2MkslY",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "9c7zh2MkslY",
+      "transcript_method": "description",
+      "transcript_chars": 164,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] How I'd Learn AI (if I could start over) - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] I’ve now released a free Python for AI course that’s the best place to start your AI journey.Watch it here: https://youtu.be/ygXn5nV5qFc Need help with a p...",
+      "link": "https://www.youtube.com/watch?v=h2FDq3agImI",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "h2FDq3agImI",
+      "transcript_method": "description",
+      "transcript_chars": 181,
+      "has_full_transcript": false
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "axis": "FOOD_REVIEW",
+  "fetched_at": "2026-04-30T08:28:56.956522+00:00",
+  "smart_query": "food security hunger famine",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 0,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [],
+  "gdelt": [],
+  "github_repos": [],
+  "arxiv_papers": [
+    {
+      "title": "How adaptation to food resources and death rates shape oscillatory dynamics in a microbial population",
+      "snippet": "Microbes constantly interact with their environment by depleting and transforming food sources. Theoretical studies have mainly focused on Lotka-Volterra models, which do not account for food source dynamics. In contrast, consumer-resource models, which consider food source dynamics, are less explor",
+      "url": "https://arxiv.org/abs/2601.22967v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "An additional food driven biological control patch model, incorporating generalized competition",
+      "snippet": "Additional food sources for an introduced predator are known to increase its efficiency on a target pest. In this context, inhibiting factors such as interference, predator competition, and the introduction of temporally dependent quantity and quality of additional food are all known to enable pest ",
+      "url": "https://arxiv.org/abs/2510.06111v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[Dark times for Cuba’s economic experiment] Live event info and tickets here. For more than 60 years, Cuba has survived on two seemingly contradictory economic strategies: leaning on friendly communist and socialist countries, and flirting with capitalism. And right now it seems the US is making both strategies impossible.Since January, the U.S. has been preventing almost all oil from reaching the island. Doctors can’t get to the hospitals ",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

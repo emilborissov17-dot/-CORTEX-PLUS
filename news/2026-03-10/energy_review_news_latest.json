@@ -1,0 +1,75 @@
+{
+  "axis": "ENERGY_REVIEW",
+  "fetched_at": "2026-03-10T11:40:38.173566+00:00",
+  "smart_query": "energy review",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube": 2,
+    "youtube_transcripts": 1
+  },
+  "analysis": {
+    "summary": "Енергийната революция се променя бързо, подканвайки към устойчиво развитие чрез слънчеви технологии, батерии и интелигентни системи. Откритията във физиката и отворените технологии подпомагат трансформацията към устойчиво цивилизационно развитие.",
+    "key_developments": [
+      "d1",
+      "d2"
+    ],
+    "sentiment": "POSITIVE",
+    "urgency": "HIGH",
+    "open_source_momentum": "STRONG",
+    "scientific_frontier": "AI и физика",
+    "relevance_to_goal": "HIGH"
+  },
+  "sentiment": "POSITIVE",
+  "urgency": "HIGH",
+  "summary": "Енергийната революция се променя бързо, подканвайки към устойчиво развитие чрез слънчеви технологии, батерии и интелигентни системи. Откритията във физиката и отворените технологии подпомагат трансформацията към устойчиво цивилизационно развитие.",
+  "key_developments": [
+    "d1",
+    "d2"
+  ],
+  "open_source_momentum": "STRONG",
+  "scientific_frontier": "AI и физика",
+  "github_repos": [
+    {
+      "title": "protontypes/open-sustainable-technology",
+      "snippet": "A directory and analysis of the open source ecosystem in the areas of climate change, sustainable energy, biodiversity and natural resources.  https://docs.getgrist.com/gSscJkc5Rb1R/OpenSustaintech",
+      "stars": 2457,
+      "url": "https://github.com/protontypes/open-sustainable-technology",
+      "updated": "2026-03-10",
+      "source": "GitHub"
+    },
+    {
+      "title": "PyPSA/PyPSA",
+      "snippet": "PyPSA: Python for Power System Analysis",
+      "stars": 1893,
+      "url": "https://github.com/PyPSA/PyPSA",
+      "updated": "2026-03-10",
+      "source": "GitHub"
+    },
+    {
+      "title": "pvlib/pvlib-python",
+      "snippet": "A set of documented functions for simulating the performance of photovoltaic energy systems.",
+      "stars": 1509,
+      "url": "https://github.com/pvlib/pvlib-python",
+      "updated": "2026-03-10",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "FVG-PT: Adaptive Foreground View-Guided Prompt Tuning for Vision-Language Models",
+      "snippet": "CLIP-based prompt tuning enables pretrained Vision-Language Models (VLMs) to efficiently adapt to downstream tasks. Although existing studies have made significant progress, they pay limited attention to changes in the internal attention representations of VLMs during the tuning process. In this pap",
+      "url": "https://arxiv.org/abs/2603.08708v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "A proof of conservation laws in gravitational scattering: tails and breaking of peeling",
+      "snippet": "We propose a definition of asymptotically flat spacetimes that is consistent with both null infinities and compatible with known properties of gravitational scattering, incoming and outgoing radiation, and interactions with matter. For this class of spacetimes, we prove three antipodal matching cond",
+      "url": "https://arxiv.org/abs/2603.08705v1",
+      "source": "arXiv"
+    }
+  ]
+}

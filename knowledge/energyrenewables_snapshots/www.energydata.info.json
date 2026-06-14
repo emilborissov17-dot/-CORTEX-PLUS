@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en"> <!--<![endif]-->
+  <head>
+    
+<meta charset="utf-8" />
+      <meta name="generator" content="ckan 2.9.13" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="description" content=""/>
+
+
+<!--<meta property="og:title" content="ENERGYDATA.INFO" />-->
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://energydata.info/"/>
+<meta property="og:description" content=""/>
+<meta property="og:image" content="https://energydata.info/images/meta/meta-logo.png"/>
+<meta property="fb:app_id" content="2174658362817864"/>
+<meta name="twitter:image:src" content="https://energydata.info/images/meta/meta-logo.png"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="apple-touch-icon" href="/images/meta/apple-touch-icon.png"/>
+<link rel="apple-touch-icon" sizes="57x57" href="/images/meta/apple-touch-icon-57x57.png"/>
+<link rel="apple-touch-icon" sizes="72x72" href="/images/meta/apple-touch-icon-72x72.png"/>
+<link rel="apple-touch-icon" sizes="76x76" href="/images/meta/apple-touch-icon-76x76.png"/>
+<link rel="apple-touch-icon" sizes="114x114" href="/images/meta/apple-touch-icon-114x114.png"/>
+<link rel="apple-touch-icon" sizes="120x120" href="/images/meta/apple-touch-icon-120x120.png"/>
+<link rel="apple-touch-icon" sizes="144x144" href="/images/meta/apple-touch-icon-144x144.png"/>
+<link rel="apple-touch-icon" sizes="152x152" href="/images/meta/apple-touch-icon-152x152.png"/>
+
+
+    <title>Welcome to ENERGYDATA.INFO - ENERGYDATA.INFO</title>
+
+    
+    
+    <link rel="shortcut icon" href="/images/meta/favicon.ico" />
+    
+    
+        <link rel="alternate" type="text/n3" href="https://energydata.info/catalog.n3"/>
+        <link rel="alternate" type="text/ttl" href="https://energydata.info/catalog.ttl"/>
+        <link rel="alternate" type="application/rdf+xml" href="https://energydata.info/catalog.xml"/>
+        <link rel="alternate" type="application/ld+json" href="https://energydata.info/catalog.jsonld"/>
+    
+
+
+
+    
+      
+      
+      
+    
+
+    
+    
+
+
+<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700,800,900&display=swap" rel="stylesheet">
+
+
+
+
+<!--Google Analytics Embed-->
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QVL2RL66WM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-QVL2RL66WM');
+</script>
+
+
+
+<!--&lt;!&ndash; End Google Tag Manager &ndash;&gt;-->
+
+<script>
+    (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function () {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-81901426-1', 'auto');
+    ga('send', 'pageview');
+
+</script>
+<!--End Google Analytics Embed-->
+
+
+
+
+<style>
+    #field-sitewide-search {
+        visibility: hidden;
+    }
+
+    .btn-search .fa-search {
+        visibility: hidden;
+    }
+</style>
+
+
+
+    
+  
+  <script>
+   function(){
+       var ct = 0
+       window.addEventListener(
+           "message",
+           (event) => {
+               if (event.origin !== "https://superset.energydata.info") return;
+               // For unclear cross-origin reasons, event.source.frameElement isn't
+               // allowed, despite us running in precisely the context that *should* be
+               // allowed to acccess it.
+               // window.frames just gives us a list of the windows, so that's also
+               // not helpful.
+               // Technically, this breaks if someone tries to embed with a frame
+               // rather than an iframe. Don't.
+               for (var frame of document.getElementsByTagName('iframe')) {
+                   if (frame.contentWindow === event.source) {
+                       break;
+                   }
+               }
+               // The second condition can occur if we have a non-iframe embed
+               if (!frame || frame.contentWindow !== event.source) return;
+               
+               var height = event.data.height;
+               // Check that only height is set on event.data
+               if (!height || Object.keys(event.data).length !== 1) return;
+               // Use style.height because it overrides height=, and we've used both in
+               // various locations
+               // UNDONE -- there's a thing pushing out the height when logged in with filters
+               if (ct < 3) {
+                   ct = ct + 1;
+                   frame.style.height = height + "px";
+               }
+           }
+       )
+   }()
+  </script>
+
+
+    
+    <link href="/webassets/base/66d3f3be_main.css" rel="stylesheet"/>
+<link href="/webassets/ckanext-harvest/c95a0af2_harvest_css.css" rel="stylesheet"/>
+<link href="/webassets/ckanext-offgridtheme/5c905135_theme.css" rel="stylesheet"/>
+<link href="/webassets/ckanext-offgridtheme/41b85324_application.css" rel="stylesheet"/>
+    
+  </head>
+
+  
+  <body data-site-root="https://energydata.info/" data-locale-root="https://energydata.info/" >
+
+    
+    <div class="sr-only sr-only-focusable"><a href="#content">Skip to content</a></div>
+  
+
+  
+    
+
+<header class="navbar navbar-static-top masthead">
+    <div class="container">
+        <button data-target="#main-navigation-toggle" data-toggle="collapse"
+                class="navbar-toggle collapsed btn btn-navbar" type="button">
+            <span class="fa fa-bars"></span>
+        </button>
+
+
+        
+<div>
+     
+             
+            <nav class="account not-authed">
+                <ul class="list-unstyled">
+                    
+                  <li><a href="/user/login">Login/Join</a></li>
+                  
+                            <!--<span class="text">Login/Join</span>-->
+                        </a></li>
+                    
+                </ul>
+            </nav>
+             
+</div>
+        <div class="nav-collapse collapse navbar-collapse nav-flex" id="main-navigation-toggle">
+            <div class="pull-left"><a href="/">
+                <h1 class="site-title" style="">ENERGYDATA.INFO <i data-placement="right" data-toggle="tooltip" title="ENERGYDATA.INFO is an open data platform providing access to datasets and data analytics relevant to the energy sector. ENERGYDATA.INFO has been developed as a public good available to governments, development organizations, private sector, non-governmental organizations, academia, civil society, and individuals to share data and analytics that can help achieving the United Nations’ Sustainable Development Goal 7 of ensuring access to affordable, reliable, sustainable and modern energy for all." class="fa fa-info-circle info-tip"></i></h1>
+            </a></div>
+            <div class="pull-right">
+            
+            <nav class="section navigation">
+                <ul class="nav nav-pills">
+                    <li><a href="/about">About</a></li>
+                    <li><a href="/application/">Apps</a></li>
+                    <li><a href="/dataset/">Datasets</a></li>
+                    <li><a href="/group/">Collections</a></li>
+                    <li><a href="/organization/">Partners</a></li>
+                    <li><a href="mailto:energydata@worldbankgroup.org?Subject=Energydata.info user feedback"><i class="fa fa-envelope"></i> Contribute</a>
+                    </li>
+                </ul>
+            </nav>
+            
+                </div>
+
+
+
+        </div>
+    </div>
+</header>
+
+  
+
+
+
+
+
+<section class="homepage">
+    <div class="container-fluid">
+        <div class="row row-hero">
+            <div class="col-sm-9">
+                <div class="col-sm-12">
+                    <h1 class="hero-title hero-1 hero-text">Open Data and Analytics </h1>
+                    <h3 class="hero-title hero-2 hero-text">for a sustainable energy future</h3>
+
+                </div>
+
+
+            </div>
+
+            <div class="col-sm-3">
+
+            </div>
+        </div>
+        <div class="row row-hero">
+            <div class="col-sm-9">
+                <div class="search-container">
+                    <form class="section hero-search simple-input"
+                          action="/dataset/"
+                          method="get">
+                        <div class="field input-group search-input-group-front">
+                            <input class="form-control front-search" style="visibility:visible;"
+                                   id="field-sitewide-search"
+                                   type="text" name="q"
+                                   placeholder="Search 1188 datasets from 193 countries"/>
+                            
+                            <button type="submit" aria-labelledby="search-label" style="display: contents;">
+                                <span class="input-group-addon input-search sub-btn" type="submit">
+                                    <i style="visibility:visible;" class="fa fa-search"></i>
+                                </span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="stats-hero">
+                    <a class="stats-link" href="/organization/"
+                       title="View the organizations">
+                        <p class="stats-num"><strong id="org_count" style="display:none">31</strong>
+                            <strong id="org_out">0</strong></p>
+
+                        <p class="stats-text">Partners</p>
+                    </a>
+                    <a class="stats-link"
+                       href="/application/"
+                       title="View the energy apps">
+                        
+                        <p class="stats-num"><strong id="app_count" style="display:none">11</strong>
+                            <strong id="app_out">0</strong></p>
+                        <p class="stats-text">Apps</p>
+                    </a>
+                    <a class="stats-link" href="/dataset/"
+                       title="View the datasets">
+                        <p class="stats-num"><strong id="dataset_count"
+                                                     style="display:none">1188</strong>
+
+                            <strong id="dataset_out">0</strong></p>
+
+                        <p class="stats-text">Datasets</p>
+                    </a>
+                    <a class="stats-link" href="/dataset/"
+                       title="Filter datasets by country">
+                        <p class="stats-num"><strong id="country_count"
+                                                     style="display:none">193</strong>
+                            <strong id="country_out">0</strong></p>
+
+                        <p class="stats-text">Countries</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="panel-stats">
+                <div class="owl-carousel owl-theme">
+                    <a class="type-icon"
+                       href="/dataset?vocab_topics=Energy+access">
+                        <div class="hero-icon topic-energy-access">
+
+                        </div>
+
+                        <span class="hero-icon-title">Energy <br>Access</span>
+
+                    </a>
+                    <a class="type-icon"
+                       href="/dataset?vocab_topics=Transmission+and+distribution">
+                        <div class="hero-icon topic-transmission-distribution">
+
+                        </div>
+                        <span class="hero-icon-title">Transmission&nbsp;& &nbsp;<br>distribution</span>
+
+                    </a>
+                    <a class="type-icon"
+                       href="/dataset?vocab_topics=Power+system+and+utilities">
+                        <div class="hero-icon topic-power-planning">
+
+                        </div>
+                        <span class="hero-icon-title">Power system <br>planning</span>
+                    </a>
+
+                    <div> <a class="type-icon"
+                             href="/dataset?vocab_topics=Climate">
+                        <div class="hero-icon topic-climate-change">
+
+                        </div><span class="hero-icon-title">Climate <br>Change</span></a>
+                    </div>
+                    <a class="type-icon"
+                        href="/dataset?vocab_topics=Renewable+energy">
+                        <div class="hero-icon topic-renewable-energy">
+
+                    </div>
+                        <span class="hero-icon-title">Renewable <br>energy</span>
+                    </a>
+
+                    <a class="type-icon"
+                       href="/dataset?vocab_topics=Population"><div class="hero-icon topic-demographics">
+
+                    </div><span class="hero-icon-title">Population and <br>Economy Data</span></a>
+
+                    <a class="type-icon"
+                       href="/dataset?vocab_topics=Energy%20efficiency"><div class="hero-icon topic-energy-efficiency">
+
+                    </div><span class="hero-icon-title">Energy <br>Efficiency</span></a>
+
+                    <a class="type-icon"
+                       href="/dataset?vocab_topics=Gender"><div class="hero-icon topic-gender">
+
+                    </div><span class="hero-icon-title">Gender</span></a>
+
+                    <a class="type-icon"
+                       href="/dataset?vocab_topics=Clean+cooking"><div class="hero-icon topic-clean-cooking">
+
+                    </div><span class="hero-icon-title">Clean <br>Cooking</span></a>
+
+                </div>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="container">
+                <div class="col-sm-6">
+                    <div class="front-tiles">
+                        <a href="/group/epm"><span class="front-sidebar">Featured Dataset - Morocco EPM</span></a>
+<div id="superset-container" class="set-viz">
+<iframe id="ifr" frameborder="0" scrolling="no" height="400" width="100%" src="https://superset.energydata.info/superset/dashboard/25?standalone=2"></iframe>
+</div>
+
+
+                    </div>
+                </div>
+
+
+                <div class="col-sm-6">
+                    <div class="front-tiles">
+                        <span class="front-sidebar">Recently updated datasets</span>
+                        
+                        
+                        <div class="update-item">
+                            <div class="update-topics"> <span><a href="/dataset?vocab_topics=Extractive industries">Extractive industries</a></span>&nbsp; </div>
+                            <div class="update-title"><a href="/dataset/pakistan-solar-radiation-measurement-data">Pakistan - Solar Radiation Measurement Data</a></div>
+                            <ul class="dataset-resource-list">
+                                
+                                <li><a href="/dataset/pakistan-solar-radiation-measurement-data" class="label" data-format="csv">CSV</a></li>
+                                
+                                <li><a href="/dataset/pakistan-solar-radiation-measurement-data" class="label" data-format="zip">ZIP</a></li>
+                                
+                                <li><a href="/dataset/pakistan-solar-radiation-measurement-data" class="label" data-format="xls">XLS</a></li>
+                                
+                            </ul>
+                            <div class="update-date">March 2, 2026</div>
+
+                        </div>
+                        <div class="update-item">
+                            <div class="update-topics"> <span><a href="/dataset?vocab_topics=Extractive industries">Extractive industries</a></span>&nbsp; </div>
+                            <div class="update-title"><a href="/dataset/burkina-faso-solar-radiation-measurement-data">Burkina Faso - Solar Radiation Measurement Data</a></div>
+                            <ul class="dataset-resource-list">
+                                
+                                <li><a href="/dataset/burkina-faso-solar-radiation-measurement-data" class="label" data-format="pdf">PDF</a></li>
+                                
+                                <li><a href="/dataset/burkina-faso-solar-radiation-measurement-data" class="label" data-format="xls">XLS</a></li>
+                                
+                                <li><a href="/dataset/burkina-faso-solar-radiation-measurement-data" class="label" data-format="csv">CSV</a></li>
+                                
+                            </ul>
+                            <div class="update-date">March 2, 2026</div>
+
+                        </div>
+                        <div class="update-item">
+                            <div class="update-topics"> <span><a href="/dataset?vocab_topics=Extractive industries">Extractive industries</a></span>&nbsp; </div>
+                            <div class="update-title"><a href="/dataset/zambia-solar-radiation-measurement-data">Zambia - Solar Radiation Measurement Data</a></div>
+                            <ul class="dataset-resource-list">
+                                
+                                <li><a href="/dataset/zambia-solar-radiation-measurement-data" class="label" data-format="xlsx">XLSX</a></li>
+                                
+                                <li><a href="/dataset/zambia-solar-radiation-measurement-data" class="label" data-format="csv">CSV</a></li>
+                                
+                            </ul>
+                            <div class="update-date">February 9, 2026</div>
+
+                        </div>
+                        <div class="update-item">
+                            <div class="update-topics"> <span><a href="/dataset?vocab_topics=Extractive industries">Extractive industries</a></span>&nbsp; </div>
+                            <div class="update-title"><a href="/dataset/unites-states-of-america-wind-speed-and-wind-power-potential-maps">Unites States of America - Wind Speed and Wind Power Potential Maps</a></div>
+                            <ul class="dataset-resource-list">
+                                
+                                <li><a href="/dataset/unites-states-of-america-wind-speed-and-wind-power-potential-maps" class="label" data-format="html">HTML</a></li>
+                                
+                            </ul>
+                            <div class="update-date">February 9, 2026</div>
+
+                        </div>
+
+                        <div class="front-tiles-footer"><a href="/dataset">View Catalog</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row app-row">
+            <div class="container container-front">
+                <div id="apps-carousel" class="carousel slide" data-ride="carousel">
+                  
+                    <div class="col-sm-12"><span class="front-sidebar">Featured Apps</span></div>
+                    <div class="carousel-inner">
+                        
+                        <div class="item active">
+                            <div class="col-sm-4">
+                                <div class="front-tiles front-tiles-apps" >
+                                    <a target="_blank" href="https://dre.energydata.info/">
+                                        <div class="app-image"><img src="uploads/application/2025-08-31-192459.571810DREGIFEDI.gif" alt="App screenshot"></div>
+                                        <div class="app-topic">Renewable energy</div>
+                                        <div class="app-title">Distributed Renewable Energy (DRE) Atlas</div>
+                                    </a>
+                                </div>
+                            </div>
+                            
+                            <div class="col-sm-4">
+                                <div class="front-tiles front-tiles-apps">
+                                    <a target="_blank" href="https://utilityperformance.energydata.info/?">
+                                        <div class="app-image"><img src="uploads/application/2024-05-21-091056.171905UPBEAT-MP4.gif" alt="App screenshot"></div>
+                                        <div class="app-topic">Power system and utilities</div>
+                                        <div class="app-title">UPBEAT- Utility Performance and Behavior Today</div>
+                                    </a>
+                                </div>
+                            </div>
+                            
+                            
+                            <div class="col-sm-4">
+                                <div class="front-tiles front-tiles-apps">
+                                    <a target="_blank" href="https://electrifynow.energydata.info/">
+                                        <div class="app-image"><img src="uploads/application/2024-04-19-130336.000860GEP-Test.gif" alt="App screenshot"></div>
+                                        <div class="app-topic">Energy access</div>
+                                        <div class="app-title">Global Electrification Platform (GEP)</div>
+                                    </a>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        
+                        <div class="item ">
+                            <div class="col-sm-4">
+                                <div class="front-tiles front-tiles-apps" >
+                                    <a target="_blank" href="https://rooftopsolar.energydata.info/">
+                                        <div class="app-image"><img src="uploads/application/2024-05-23-084555.206337Rooftop-Solar-MP4.gif" alt="App screenshot"></div>
+                                        <div class="app-topic">Renewable energy</div>
+                                        <div class="app-title">Rooftop Solar Tool</div>
+                                    </a>
+                                </div>
+                            </div>
+                            
+                            <div class="col-sm-4">
+                                <div class="front-tiles front-tiles-apps">
+                                    <a target="_blank" href="https://rezoning.energydata.info/">
+                                        <div class="app-image"><img src="uploads/application/2024-04-09-134628.106663REZoning-GIF.gif" alt="App screenshot"></div>
+                                        <div class="app-topic">Renewable energy</div>
+                                        <div class="app-title">Renewable Energy Zoning Tool</div>
+                                    </a>
+                                </div>
+                            </div>
+                            
+                            
+                            <div class="col-sm-4">
+                                <div class="front-tiles front-tiles-apps">
+                                    <a target="_blank" href="https://energydata.info/cooking/initiativesandplayersdatabase">
+                                        <div class="app-image"><img src="uploads/application/2024-05-23-083259.391002Clean-Cooking-Initiatives-MP4.gif" alt="App screenshot"></div>
+                                        <div class="app-topic">Clean Cooking</div>
+                                        <div class="app-title">Access to Modern Energy Cooking Services: Players and Initiatives database</div>
+                                    </a>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        
+                        <div class="item ">
+                            <div class="col-sm-4">
+                                <div class="front-tiles front-tiles-apps" >
+                                    <a target="_blank" href="https://energydata.info/cleancooking/planningtool/">
+                                        <div class="app-image"><img src="uploads/application/2024-05-23-084925.786379Clean-Cooking-Planning-MP4.gif" alt="App screenshot"></div>
+                                        <div class="app-topic">Clean Cooking</div>
+                                        <div class="app-title">Clean Cooking Planning Tool</div>
+                                    </a>
+                                </div>
+                            </div>
+                            
+                            <div class="col-sm-4">
+                                <div class="front-tiles front-tiles-apps">
+                                    <a target="_blank" href="https://globalwindatlas.info/">
+                                        <div class="app-image"><img src="uploads/application/2024-05-23-085831.081181GWA-MP4.gif" alt="App screenshot"></div>
+                                        <div class="app-topic">Wind</div>
+                                        <div class="app-title">Global Wind Atlas</div>
+                                    </a>
+                                </div>
+                            </div>
+                            
+                            
+                            <div class="col-sm-4">
+                                <div class="front-tiles front-tiles-apps">
+                                    <a target="_blank" href="http://globalsolaratlas.info/">
+                                        <div class="app-image"><img src="uploads/application/2024-05-23-090735.546382GSA-Mp4.gif" alt="App screenshot"></div>
+                                        <div class="app-topic">Solar</div>
+                                        <div class="app-title">Global Solar Atlas</div>
+                                    </a>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        
+                        <div class="item ">
+                            <div class="col-sm-4">
+                                <div class="front-tiles front-tiles-apps" >
+                                    <a target="_blank" href="https://rise.esmap.org/">
+                                        <div class="app-image"><img src="uploads/application/2024-05-21-092741.827238RISE-MP4-1.gif" alt="App screenshot"></div>
+                                        <div class="app-topic">Policies and plans</div>
+                                        <div class="app-title">Regulatory Indicators for Sustainable Energy (RISE)</div>
+                                    </a>
+                                </div>
+                            </div>
+                            
+                            <div class="col-sm-4">
+                                <div class="front-tiles front-tiles-apps">
+                                    <a target="_blank" href="https://trackingsdg7.esmap.org/">
+                                        <div class="app-image"><img src="uploads/application/2025-08-18-125005.859202SDG7.gif" alt="App screenshot"></div>
+                                        <div class="app-topic">Demographics</div>
+                                        <div class="app-title">Tracking SDG7: The Energy Progress Report</div>
+                                    </a>
+                                </div>
+                            </div>
+                            
+                            
+                        </div>
+                        
+                    </div>
+                    <!-- Previous/Next controls -->
+                    <a class="left carousel-control app-carousel" href="#apps-carousel" role="button" data-slide="prev">
+                        <span class="icon-prev" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="right carousel-control app-carousel" href="#apps-carousel" role="button" data-slide="next">
+                        <span class="icon-next" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+
+                </div>
+
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="container container-front">
+                         <div class="col-sm-12">
+                    <div class="front-tiles-footer"><a href="/application/">View all Apps</a></div>
+                         </div></div>
+        </div>
+
+
+    </div>
+
+
+</div>
+
+   </section>
+<!--END HOMEPAGE MARKUP-->
+
+<!--MAPBOX MAP-->
+
+<!--END MAPBOX MAP-->
+
+
+
+    <div class="footer-wrapper">
+
+<footer class="navbar-bottom site-footer">
+    <div class="container">
+
+        <div class="row">
+
+            <div class="footer-attr">
+                <div class="col-sm-3">
+                    <h3 class="footer-title" style="">ENERGYDATA.INFO</h3>
+                </div>
+                <div class="col-sm-2">
+                    <div class="attr-wbg-ifc attr-wbg"><a target="_blank" href="https://www.worldbank.org" title="Visit page"><img
+                            class="img img-responsive" alt="Logo" src="/images/wb-logo-c.png" /> </a></div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="attr-wbg-ifc"><a target="_blank" href="https://www.esmap.org/" title="Visit page"><img
+                            class="img img-responsive" alt="ESMAP Logo" src="/images/esmap-logo.png" width="600"
+                            height="128"/> </a></div>
+                </div>
+                <div class="col-sm-1">
+
+                </div>
+                <div class="col-sm-4">
+                    <div class="right-attr ">
+                        <p>Subscribe to our newsletter <a class="footer-contact" target="_blank" href="https://www.worldbank.org/en/newsletter-subscription?esmap=true"> Subscribe </a></p>
+
+                    </div>
+                </div>
+            </div>
+            </div>
+
+        </div>
+
+
+</footer>
+<div class="container-footer">
+<div class="container">
+                    <div class="footer-deri">
+                        <p class="attr-ds">
+                            &copy <span id="year"></span>&nbsp;Energy Sector Management Assistance Program | <a target="_blank"  href="https://www.esmap.org/privacy-policy">Privacy policy</a> |
+                            <a target="_blank" href="https://www.worldbank.org/en/access-to-information">Access to information</a>  | <a
+                                target="_blank" href="https://www.worldbank.org/en/about/legal">Legal</a>
+                            <span class="attr-deri">
+                        Maintained by <a target="_blank" href="https://derilinx.com/" title="Visit page">Derilinx</a>
+                    </span></p>
+
+                    </div>
+    <script>const year = document.querySelector('#year');
+if (year) {
+    year.innerHTML = new Date().getFullYear().toString();
+}</script>
+</div>
+</div>
+</div>
+  
+  
+  
+  
+    
+  
+  
+
+    
+
+
+
+
+
+
+
+
+      
+
+
+
+<div id='backgrounder_status' data-module='backgrounder_status' />
+
+
+    
+    
+    <link href="/webassets/vendor/f3b8236b_select2.css" rel="stylesheet"/>
+<link href="/webassets/vendor/0b01aef1_font-awesome.css" rel="stylesheet"/>
+    <script src="/webassets/vendor/d8ae4bed_jquery.js" type="text/javascript"></script>
+<script src="/webassets/vendor/fb6095a0_vendor.js" type="text/javascript"></script>
+<script src="/webassets/vendor/580fa18d_bootstrap.js" type="text/javascript"></script>
+<script src="/webassets/base/15a18f6c_main.js" type="text/javascript"></script>
+<script src="/webassets/base/54c75ef1_ckan.js" type="text/javascript"></script>
+<script src="/webassets/base/cd2c0272_tracking.js" type="text/javascript"></script>
+<script src="/webassets/ckanext-offgridtheme/18541e2f_animatenumber.js" type="text/javascript"></script>
+<script src="/webassets/ckanext-offgridtheme/483a6982_tools.js" type="text/javascript"></script>
+<script src="/webassets/ckanext-offgridtheme/a2709a5e_tooltip.js" type="text/javascript"></script>
+<script src="/webassets/backgrounder/status_58aad5e9.js" type="text/javascript"></script>
+  </body>
+</html>

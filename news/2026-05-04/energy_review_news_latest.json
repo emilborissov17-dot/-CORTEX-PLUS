@@ -1,0 +1,57 @@
+{
+  "axis": "ENERGY_REVIEW",
+  "fetched_at": "2026-05-04T08:10:41.926877+00:00",
+  "smart_query": "renewable energy solar wind",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "Non-compliance with a looming NERC deadline could cost clean energy owners and operators, big time",
+      "snippet": "Owners of inverter-based resources (IBRs) have been required to register with NERC by May 15, 2026, or face steep penalties.",
+      "url": "https://www.renewableenergyworld.com/energy-business/policy-and-regulation/non-compliance-with-a-looming-nerc-deadline-could-cost-clean-energy-owners-and-operators-big-time/",
+      "source": "RSS"
+    },
+    {
+      "title": "How VPPs could improve grid reliability and save utilities 40% over gas peaker plants",
+      "snippet": "A new report outlines how virtual power plants can free up capacity on the existing grid while highlighting how VPPs can also help meet new load growth driven by data centers.",
+      "url": "https://www.renewableenergyworld.com/power-grid/how-vpps-could-improve-grid-reliability-and-save-utilities-40-over-gas-peaker-plants/",
+      "source": "RSS"
+    },
+    {
+      "title": "Are Trump’s efforts against clean energy in vain? – This Week in Cleantech",
+      "snippet": "On this episode of the This Week in Cleantech podcast, Oliver Milman from The Guardian discusses how the clean energy industry is pushing forward despite Trump's aggressive efforts to suppress it.",
+      "url": "https://www.renewableenergyworld.com/podcasts/are-trumps-efforts-against-clean-energy-in-vain-this-week-in-cleantech/",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [],
+  "arxiv_papers": [
+    {
+      "title": "Reconfiguring flexibility in renewable power-to-ammonia systems using molten-salt thermal energy storage in the ammonia synthesis loop: A coordinated electro-hydrogen-thermal scheduling approach",
+      "snippet": "In renewable power-to-ammonia (ReP2A) systems, the intermittency of wind and solar generation propagates through electrolytic hydrogen production and induces thermal instability in the ammonia synthesis reactor (ASR). The resulting temperature cycling accelerates fatigue and shortens service life, w",
+      "url": "https://arxiv.org/abs/2604.25192v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Frequency Security Assessment in Power Systems With High Penetration of Renewables Considering Spatio-Temporal Frequency Distribution",
+      "snippet": "The increasing integration of renewable energy sources exacerbates the spatial and temporal differences in frequency across the power system, posing a serious challenge to the accurate and efficient assessment of system frequency security. To address this issue, a generic effective nodal frequency (",
+      "url": "https://arxiv.org/abs/2604.21262v2",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[The Resistance of a Cow] There’s something rotten in the cows of Denmark. And Minnesota. And Wisconsin. And Idaho. What could cause a previously thriving herd of majestic dairy cattle to stop drinking water and start drinking … urine? A Danish farmer calls a special investigator, who takes one look at his farm and nopes the heck out of there, refusing to return, citing “bad energy” coming from something nearby … a big bui",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

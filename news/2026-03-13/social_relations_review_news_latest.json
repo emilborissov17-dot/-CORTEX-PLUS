@@ -1,0 +1,160 @@
+{
+  "axis": "SOCIAL_RELATIONS_REVIEW",
+  "fetched_at": "2026-03-13T13:52:03.644811+00:00",
+  "smart_query": "\"Модели на социални връзки и общуване\"",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "analysis": {
+    "summary": "Социалните отношения са основа за устойчива общочовешка цивилизация. Нашата цел е да създадем обществото, където хората са свободни да комуникират и да разгърнат своя потенциал без страх от насилие и унижение. Системата гарантира достъп до базови нужди и ясни правила за всички хора.",
+    "key_developments": [
+      "Four crew members killed after US refuelling plane crashes in Iraq",
+      "'There's no hiding place on a ship': The sailors stranded in the Gulf"
+    ],
+    "sentiment": "NEGATIVE",
+    "urgency": "MEDIUM",
+    "open_source_momentum": "briatte/awesome-network-analysis star=3968: A curated list of awesome network analysis resources.",
+    "scientific_frontier": "The propensity for disobedience: Rule-breaking, compliance and social phase transitions",
+    "relevance_to_goal": "HIGH"
+  },
+  "sentiment": "NEGATIVE",
+  "urgency": "MEDIUM",
+  "summary": "Социалните отношения са основа за устойчива общочовешка цивилизация. Нашата цел е да създадем обществото, където хората са свободни да комуникират и да разгърнат своя потенциал без страх от насилие и унижение. Системата гарантира достъп до базови нужди и ясни правила за всички хора.",
+  "key_developments": [
+    "Four crew members killed after US refuelling plane crashes in Iraq",
+    "'There's no hiding place on a ship': The sailors stranded in the Gulf"
+  ],
+  "open_source_momentum": "briatte/awesome-network-analysis star=3968: A curated list of awesome network analysis resources.",
+  "scientific_frontier": "The propensity for disobedience: Rule-breaking, compliance and social phase transitions",
+  "news_items": [
+    {
+      "title": "Four crew members killed after US refuelling plane crashes in Iraq",
+      "snippet": "The US Central Command says rescue efforts continue after a refuelling aircraft went down over western Iraq.",
+      "url": "https://www.bbc.com/news/articles/cy0dz5ql17vo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "'There's no hiding place on a ship': The sailors stranded in the Gulf",
+      "snippet": "Drones, cruise missiles and fighter jets have become a common sight for many sailors stranded on ships in the Gulf.",
+      "url": "https://www.bbc.com/news/articles/ce3g0vz223no?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Bodies of 84 Iranian sailors killed in US torpedo strike to be repatriated",
+      "snippet": "The seamen died when Iranian warship the Iris Dena was sunk on 4 March by a US submarine near Sri Lanka. ",
+      "url": "https://www.bbc.com/news/articles/c363lk4xk07o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "github_repos": [
+    {
+      "title": "briatte/awesome-network-analysis",
+      "snippet": "A curated list of awesome network analysis resources.",
+      "stars": 3968,
+      "url": "https://github.com/briatte/awesome-network-analysis",
+      "updated": "2026-03-11",
+      "source": "GitHub"
+    },
+    {
+      "title": "obsei/obsei",
+      "snippet": "Obsei is a low code AI powered automation tool. It can be used in various business flows like social listening, AI based alerting, brand image analysis, comparative study and more .",
+      "stars": 1378,
+      "url": "https://github.com/obsei/obsei",
+      "updated": "2026-03-09",
+      "source": "GitHub"
+    },
+    {
+      "title": "shaypal5/awesome-twitter-data",
+      "snippet": "A list of Twitter datasets and related resources.",
+      "stars": 1098,
+      "url": "https://github.com/shaypal5/awesome-twitter-data",
+      "updated": "2026-03-09",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "The propensity for disobedience: Rule-breaking, compliance and social phase transitions",
+      "snippet": "We develop a mathematical model to describe the persistence of rule-breaking behaviors in societies, such as traffic violations, disregard for legal restrictions and other forms of noncompliance. Using a replicator-type dynamics with utility functions incorporating individual benefits, institutional",
+      "url": "https://arxiv.org/abs/2603.10221v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Social Knowledge for Cross-Domain User Preference Modeling",
+      "snippet": "We demonstrate that user preferences can be represented and predicted across topical domains using large-scale social modeling. Given information about popular entities favored by a user, we project the user into a social embedding space learned from a large-scale sample of the Twitter (now X) netwo",
+      "url": "https://arxiv.org/abs/2603.10148v1",
+      "source": "arXiv"
+    }
+  ],
+  "youtube_transcripts": [],
+  "podcast": "[Governor DeSantis Directs Florida State Agencies to Partner with Future of Life Institute to Shield Families from AI Harm] The collaboration will produce a Crisis Counselor Training Curriculum and a statewide AI Harms Reporting Form targeting dangerous AI companion applications",
+  "youtube_videos": [
+    {
+      "title": "YouTube:rObqFBhUjEw",
+      "video_id": "rObqFBhUjEw",
+      "url": "https://www.youtube.com/watch?v=rObqFBhUjEw",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:z2yLLN-79x4",
+      "video_id": "z2yLLN-79x4",
+      "url": "https://www.youtube.com/watch?v=z2yLLN-79x4",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:nVYOD5_4Cbg",
+      "video_id": "nVYOD5_4Cbg",
+      "url": "https://www.youtube.com/watch?v=nVYOD5_4Cbg",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:0cG0-S_Hhdo",
+      "video_id": "0cG0-S_Hhdo",
+      "url": "https://www.youtube.com/watch?v=0cG0-S_Hhdo",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:DmYEgBVAuGw",
+      "video_id": "DmYEgBVAuGw",
+      "url": "https://www.youtube.com/watch?v=DmYEgBVAuGw",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:hMD2mf5NtJw",
+      "video_id": "hMD2mf5NtJw",
+      "url": "https://www.youtube.com/watch?v=hMD2mf5NtJw",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:huwDvtVX688",
+      "video_id": "huwDvtVX688",
+      "url": "https://www.youtube.com/watch?v=huwDvtVX688",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:7Cjybh4Qim0",
+      "video_id": "7Cjybh4Qim0",
+      "url": "https://www.youtube.com/watch?v=7Cjybh4Qim0",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:lE8ttGejCpA",
+      "video_id": "lE8ttGejCpA",
+      "url": "https://www.youtube.com/watch?v=lE8ttGejCpA",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:qCGJrE92grg",
+      "video_id": "qCGJrE92grg",
+      "url": "https://www.youtube.com/watch?v=qCGJrE92grg",
+      "source": "YouTube"
+    }
+  ]
+}

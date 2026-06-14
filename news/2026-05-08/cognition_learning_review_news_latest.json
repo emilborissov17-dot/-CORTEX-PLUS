@@ -1,0 +1,76 @@
+{
+  "axis": "COGNITION_LEARNING_REVIEW",
+  "fetched_at": "2026-05-08T09:08:31.759711+00:00",
+  "smart_query": "education learning children schools",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 3,
+    "arxiv": 2,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "Scientists say travel could slow aging and boost your health",
+      "snippet": "A new study suggests travel could be a surprisingly powerful anti-aging tool. By viewing tourism through the lens of entropy, researchers found that positive travel experiences may help the body stay balanced and resilient. Activities like exploring new places, staying active, and connecting with ot",
+      "url": "https://www.sciencedaily.com/releases/2026/05/260504211836.htm",
+      "source": "RSS"
+    },
+    {
+      "title": "Your dreams aren’t random. Here’s what’s really happening",
+      "snippet": "Dreams are more structured than they seem, shaped by both personal traits and real-world experiences. Researchers found that the brain doesn’t just replay daily life—it reshapes it into imaginative, sometimes surreal scenarios. People who mind-wander more tend to have fragmented dreams, while those ",
+      "url": "https://www.sciencedaily.com/releases/2026/04/260428045538.htm",
+      "source": "RSS"
+    },
+    {
+      "title": "Doing this throughout life may cut Alzheimer’s risk by 38%",
+      "snippet": "A lifetime of mental stimulation—like reading, writing, and learning new skills—may help protect the brain as we age. People with the highest levels of cognitive enrichment had a much lower risk of Alzheimer’s and experienced symptoms years later than those with the lowest levels.",
+      "url": "https://www.sciencedaily.com/releases/2026/04/260414075648.htm",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [
+    {
+      "title": "Call for Standby CSO Partners to Support Education Programmes in Sudan",
+      "snippet": "Call for Standby CSO Partners to Support Education Programmes in Sudan",
+      "url": "https://www2.fundsforngos.org/children/call-for-standby-cso-partners-to-support-education-programmes-in-sudan/",
+      "source": "fundsforngos.org"
+    },
+    {
+      "title": "Education Above All Foundation , Assalam Schools celebrate Rawda Award for Excellence in Social Work",
+      "snippet": "Education Above All Foundation , Assalam Schools celebrate Rawda Award for Excellence in Social Work",
+      "url": "http://thepeninsulaqatar.com/article/23/04/2026/education-above-all-foundation-assalam-schools-celebrate-rawda-award-for-excellence-in-social-work",
+      "source": "thepeninsulaqatar.com"
+    },
+    {
+      "title": "War shuts classroom door on 52 million children , aid group says - World",
+      "snippet": "War shuts classroom door on 52 million children , aid group says - World",
+      "url": "https://www.dawn.com/news/1982867/war-shuts-classroom-door-on-52-million-children-aid-group-says",
+      "source": "dawn.com"
+    }
+  ],
+  "github_repos": [],
+  "arxiv_papers": [
+    {
+      "title": "A Dialogue-Based Framework for Correcting Multimodal Errors in AI-Assisted STEM Education",
+      "snippet": "Large Language Models (LLMs) are democratizing access to personalized tutoring; however, their effectiveness is hindered by challenges in processing multimodal content, which limits AI's potential to provide equitable, high-quality STEM support. This study evaluates LLM performance on multimodal phy",
+      "url": "https://arxiv.org/abs/2605.04131v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Investigating the Effects of Different Levels of User Control in an Interactive Educational Recommender System",
+      "snippet": "Educational recommender systems (ERSs) are becoming increasingly important in enhancing educational outcomes and personalizing learning experiences by providing recommendations of personalized resources and activities to learners, tailored to their individual learning needs. While user control is wi",
+      "url": "https://arxiv.org/abs/2605.01400v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[Essentials: Compulsive Behaviors & Deep Brain Stimulation | Dr. Casey Halpern] In this Huberman Lab Essentials episode, my guest is Dr. Casey Halpern, MD, a professor of neurosurgery at the Perelman School of Medicine at the University of Pennsylvania. We discuss how deep brain stimulation and other neuromodulation approaches are being used to treat Parkinson's disease, obsessive-compulsive disorder (OCD), binge eating disorder and depression-related symptoms. We also explor",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

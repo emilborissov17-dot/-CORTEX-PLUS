@@ -1,0 +1,101 @@
+{
+  "axis": "CLIMATE_GLOBAL_RISK_REVIEW",
+  "fetched_at": "2026-03-22T17:30:03.537419+00:00",
+  "smart_query": "climate change CO2 emissions",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 3,
+    "arxiv": 2,
+    "github": 3,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "Nasa's Artemis Moon rocket rolls back to pad for possible April launch",
+      "snippet": "Nasa is preparing a mission to send astronauts around the Moon for the first time in more than 50 years.",
+      "url": "https://www.bbc.com/news/articles/ckgrw045pg7o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Taxpayers to fund clear-up of huge illegal waste dumps",
+      "snippet": "The government says it will step in to clean up some of the biggest illegal rubbish tips in England.",
+      "url": "https://www.bbc.com/news/articles/cx2expk404vo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Natural History Museum overtakes British Museum as UK's top tourist attraction",
+      "snippet": "The venue broke the record for the most visitors to any museum or gallery in a single year. ",
+      "url": "https://www.bbc.com/news/articles/c70n09pz4y1o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [
+    {
+      "title": "How Switzerland is stalling on implementing new climate rules",
+      "snippet": "How Switzerland is stalling on implementing new climate rules",
+      "url": "https://www.swissinfo.ch/eng/emissions-reduction/how-switzerland-is-stalling-on-implementing-new-climate-rules/91111642",
+      "source": "swissinfo.ch"
+    },
+    {
+      "title": "Germany Remains Optimistic To Achieve The 2030 Climate Target",
+      "snippet": "Germany Remains Optimistic To Achieve The 2030 Climate Target",
+      "url": "https://www.deccanchronicle.com/world/europe/germany-hopeful-to-achieve-climate-targets-by-2030-1943989",
+      "source": "deccanchronicle.com"
+    },
+    {
+      "title": "CO2 reductions overestimated by millions in Washington report",
+      "snippet": "CO2 reductions overestimated by millions in Washington report",
+      "url": "https://www.khq.com/news/co2-reductions-overestimated-by-millions-in-washington-report/article_d7748495-e55e-4e17-970d-83d756ddb1c0.html",
+      "source": "khq.com"
+    }
+  ],
+  "github_repos": [
+    {
+      "title": "ESCOMP/CESM",
+      "snippet": "The Community Earth System Model",
+      "stars": 452,
+      "url": "https://github.com/ESCOMP/CESM",
+      "updated": "2026-03-20",
+      "source": "GitHub"
+    },
+    {
+      "title": "xgcm/xgcm",
+      "snippet": "python package for analyzing general circulation model output data",
+      "stars": 251,
+      "url": "https://github.com/xgcm/xgcm",
+      "updated": "2026-03-20",
+      "source": "GitHub"
+    },
+    {
+      "title": "climlab/climlab",
+      "snippet": "Python package for process-oriented climate modeling",
+      "stars": 242,
+      "url": "https://github.com/climlab/climlab",
+      "updated": "2026-03-18",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "FloeNet: A mass-conserving global sea ice emulator that generalizes across climates",
+      "snippet": "We introduce FloeNet, a machine-learning emulator trained on the Geophysical Fluid Dynamics Laboratory global sea ice model, SIS2. FloeNet is a mass-conserving model, emulating 6-hour mass and area budget tendencies related to sea ice and snow-on-sea-ice growth, melt, and advection. We train FloeNet",
+      "url": "https://arxiv.org/abs/2603.12449v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "The Rise of AI in Weather and Climate Information and its Impact on Global Inequality",
+      "snippet": "The rapid adoption of AI in Earth system science promises unprecedented speed and fidelity in the generation of climate information. However, this technological prowess rests on a fragile and unequal foundation: the current trajectory of AI development risks further automating and amplifying the Nor",
+      "url": "https://arxiv.org/abs/2603.05710v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[Return of the Flesh-Eaters] If a species is horrible enough, do we have the right to kill it forever?\nSeventy years ago, a nightmare parasite feasted on the live flesh of warm-blooded creatures in North America: the screwworm. That is, until a young scientist named Edward F. Knipling discovered a crucial screwworm weakness and hatched a sweeping project to wipe them out. Knipling’s seemingly zany plan to spray screwworms out",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

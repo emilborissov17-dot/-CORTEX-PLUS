@@ -1,0 +1,157 @@
+{
+  "axis": "ECONOMY_WORK_REVIEW",
+  "domain": "civilization",
+  "timestamp": "2026-05-17T08:18:47.833539+00:00",
+  "sources_count": 11,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] Economy Was Already Horrible. New Global Crisis Just Made It Worse. - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] The US lost 1.27 million jobs in 2025. Only 181,000 new jobs were created for the entire year. We haven’t seen job numbers this bad since 2010. Inflation was... Published March 22, 2026",
+      "link": "https://www.youtube.com/watch?v=SHySrxXWkg0",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "SHySrxXWkg0",
+      "transcript_method": "description",
+      "transcript_chars": 208,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] IMF warns of global recession, inflation over 6% if strait stays closed | ABC NEWS - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] The IMF says the fallout from the US and Israel's strikes on Iran will likely push growth down from 2025. It has recommended central banks raise interest rat... Published April 15, 2026",
+      "link": "https://www.youtube.com/watch?v=0w5_KA6Uvxo",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "0w5_KA6Uvxo",
+      "transcript_method": "description",
+      "transcript_chars": 208,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Is a Recession Coming? What 100+ Companies Are Telling Us | The Weekly Wrap - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] On this episode of The Weekly Wrap, Steve Eisman digs into one of the biggest earnings weeks of the year, covering over a hundred companies across industrial... Published 3 weeks ago",
+      "link": "https://www.youtube.com/watch?v=uii5YCeMhEI",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "uii5YCeMhEI",
+      "transcript_method": "description",
+      "transcript_chars": 205,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "problem": "Икономическата нестабилност и потенциалната рецесия поради глобални кризи и увеличение на безработицата",
+    "root_cause": "Глобалните кризи, конфликти и политическа нестабилност водят до увеличение на безработицата и намаляване на икономическите възможности",
+    "severity": "HIGH",
+    "leverage_points": [
+      "Глобални институции и правителства имат значителен ефект върху икономическата стабилност чрез монетарната и фискална политика",
+      "Централните банки могат да регулират лихвите и паричната маса за да стабилизират икономиката"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Въвеждане на монетарни и фискални стимули за подпомагане на икономическото възстановяване",
+        "measurable_goal": "Намаляване на безработицата и увеличение на икономическия растеж",
+        "timeframe": "краткосрочно"
+      },
+      {
+        "action": "Създаване на международни споразумения за намаляване на тарифите и увеличение на търговията",
+        "measurable_goal": "Увеличение на търговията и намаляване на протекционизма",
+        "timeframe": "средносрочно"
+      }
+    ],
+    "evidence": [
+      "US lost 1.27 million jobs in 2025. Only 181,000 new jobs were created for the entire year.",
+      "IMF warns of global recession, inflation over 6% if strait stays closed"
+    ],
+    "generalization": "Икономическата нестабилност е свързана с другите домейни, като здравословната биосфера и човешкото достойнство, тъй като икономическите кризи могат да водят до социални и екологични последици",
+    "summary": "Икономическата нестабилност и потенциалната рецесия поради глобални кризи и увеличение на безработицата, които могат да имат дългосрочни последици за човешкото достойнство и здравословната биосфера.",
+    "risk_level": "HIGH"
+  },
+  "raw_items": [
+    {
+      "title": "Robert paid £726 to skip the driving test waiting list. New laws mean others won't be able to",
+      "summary": "The government is cracking down on third parties who use bots to buy tests and resell them at inflated prices.",
+      "link": "https://www.bbc.com/news/articles/cx219pn5g70o?at_medium=RSS&at_campaign=rss",
+      "published": "Sat, 16 May 2026 23:27:55 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "'They took £20,000 I didn't owe': Parents hit by child maintenance errors",
+      "summary": "John Hammond is one of 30 parents who told BBC Your Voice they'd experienced problems with the CMS.",
+      "link": "https://www.bbc.com/news/articles/cq8wjn98y85o?at_medium=RSS&at_campaign=rss",
+      "published": "Fri, 15 May 2026 23:44:32 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Swatch shuts stores after crowds queue for new watch",
+      "summary": "Hundreds of people queue outside branches across the UK to get the £335 item.",
+      "link": "https://www.bbc.com/news/articles/c1d2qldr0yko?at_medium=RSS&at_campaign=rss",
+      "published": "Sun, 17 May 2026 08:00:06 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "UK borrowing costs rise and pound falls as leadership drama continues",
+      "summary": "Analysts say the moves have been fuelled by concerns a Burnham-led government would increase government borrowing.",
+      "link": "https://www.bbc.com/news/articles/czr2pl5lj84o?at_medium=RSS&at_campaign=rss",
+      "published": "Fri, 15 May 2026 19:30:01 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Senate Ruling Threatens Ballroom Funding in G.O.P. Budget Bill",
+      "summary": "Democrats announced Saturday night that the Senate’s top parliamentary referee had determined that the $1 billion provision did not comply with budget rules.",
+      "link": "https://www.nytimes.com/2026/05/16/us/politics/white-house-ballroom-senate.html",
+      "published": "Sun, 17 May 2026 02:43:31 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Shoppers’ Frenzy for ‘Royal Pop’ Pocket Watches Forces Swatch to Shut Stores",
+      "summary": "The pocket watches, a collaboration with the luxury timepiece maker Audemars Piguet, drew crowds to stores and malls around the world.",
+      "link": "https://www.nytimes.com/2026/05/16/business/swatch-audemars-piguet-watch-launch-closures.html",
+      "published": "Sun, 17 May 2026 00:24:08 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "China Indicates Tariffs Were Discussed at Trump Summit",
+      "summary": "China’s Ministry of Commerce said Saturday that the countries had struck a preliminary agreement to reduce some tariffs, seemingly contradicting statements by President Trump",
+      "link": "https://www.nytimes.com/2026/05/16/business/economy/china-tariffs-trump-summit.html",
+      "published": "Sat, 16 May 2026 23:25:56 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Thousands of FiveThirtyEight Articles Seemingly Vanish From the Internet",
+      "summary": "The influential polling analysis site was shut down last year, but an earlier archived version, fivethirtyeight.com, had lived on. Now the site is redirecting users to ABC News.",
+      "link": "https://www.nytimes.com/2026/05/16/business/media/fivethirtyeight-abc-removed.html",
+      "published": "Sat, 16 May 2026 22:15:17 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] Economy Was Already Horrible. New Global Crisis Just Made It Worse. - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] The US lost 1.27 million jobs in 2025. Only 181,000 new jobs were created for the entire year. We haven’t seen job numbers this bad since 2010. Inflation was... Published March 22, 2026",
+      "link": "https://www.youtube.com/watch?v=SHySrxXWkg0",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "SHySrxXWkg0",
+      "transcript_method": "description",
+      "transcript_chars": 208,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] IMF warns of global recession, inflation over 6% if strait stays closed | ABC NEWS - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] The IMF says the fallout from the US and Israel's strikes on Iran will likely push growth down from 2025. It has recommended central banks raise interest rat... Published April 15, 2026",
+      "link": "https://www.youtube.com/watch?v=0w5_KA6Uvxo",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "0w5_KA6Uvxo",
+      "transcript_method": "description",
+      "transcript_chars": 208,
+      "has_full_transcript": false
+    }
+  ]
+}

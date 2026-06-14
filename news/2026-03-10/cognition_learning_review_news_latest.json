@@ -1,0 +1,72 @@
+{
+  "axis": "COGNITION_LEARNING_REVIEW",
+  "fetched_at": "2026-03-10T11:18:45.734088+00:00",
+  "smart_query": "Cognition Learning Review Level Metrics Analysis",
+  "sources_count": {
+    "wiki": 0,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3
+  },
+  "analysis": {
+    "summary": "Важни разработки в областта на AI включват системи за ранно откриване на дислексия и ADHD, както и интелигентни AI-учители, които подпомагат образованието. Тези технологии са в състояние да подобрят достъпността и ефективността на обучението, което подкрепя целта за устойчиво развитие на цивилизацията.",
+    "key_developments": [
+      "d1",
+      "d2"
+    ],
+    "sentiment": "POSITIVE",
+    "urgency": "MEDIUM",
+    "open_source_momentum": "High activity in AI education tools (6+ stars for early detection, study coaching agents)",
+    "scientific_frontier": "Temporal generalization in time series forecasting, multi-agent collaboration for personalized learning",
+    "relevance_to_goal": "HIGH - Directly supports equitable education access and cognitive empowerment for sustainable societal progress"
+  },
+  "sentiment": "POSITIVE",
+  "urgency": "MEDIUM",
+  "summary": "Важни разработки в областта на AI включват системи за ранно откриване на дислексия и ADHD, както и интелигентни AI-учители, които подпомагат образованието. Тези технологии са в състояние да подобрят достъпността и ефективността на обучението, което подкрепя целта за устойчиво развитие на цивилизацията.",
+  "key_developments": [
+    "d1",
+    "d2"
+  ],
+  "open_source_momentum": "High activity in AI education tools (6+ stars for early detection, study coaching agents)",
+  "scientific_frontier": "Temporal generalization in time series forecasting, multi-agent collaboration for personalized learning",
+  "github_repos": [
+    {
+      "title": "AFLucas-UOM/AI-Early-Detection-System-for-Dyslexia-ADHD",
+      "snippet": "Proof-of-concept behavioural analysis system for early detection of dyslexia and ADHD using spelling pattern evaluation, sentence rewriting similarity analysis, and keyboard/mouse interaction monitori",
+      "stars": 6,
+      "url": "https://github.com/AFLucas-UOM/AI-Early-Detection-System-for-Dyslexia-ADHD",
+      "updated": "2026-03-06",
+      "source": "GitHub"
+    },
+    {
+      "title": "ShubhamMahajan880/studyAlpha-Ai-Agent",
+      "snippet": "🎓 StudyAlpha is an intelligent, end-to-end AI Study Coach powered by multi-agent collaboration, memory-augmented reasoning, adaptive quizzes, and ML weakness prediction.  Built for the Google × Kaggle",
+      "stars": 5,
+      "url": "https://github.com/ShubhamMahajan880/studyAlpha-Ai-Agent",
+      "updated": "2026-01-29",
+      "source": "GitHub"
+    },
+    {
+      "title": "Kuldeep-Padshala/genai-capstone-study-agent",
+      "snippet": "A Capstone Project Demonstrating LLM-Powered Agents, Parallel Execution, Session Memory, Observability & Long-Running Operations",
+      "stars": 1,
+      "url": "https://github.com/Kuldeep-Padshala/genai-capstone-study-agent",
+      "updated": "2025-12-02",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Impermanent: A Live Benchmark for Temporal Generalization in Time Series Forecasting",
+      "snippet": "Recent advances in time-series forecasting increasingly rely on pre-trained foundation-style models. While these models often claim broad generalization, existing evaluation protocols provide limited evidence. Indeed, most current benchmarks use static train-test splits that can easily lead to conta",
+      "url": "https://arxiv.org/abs/2603.08707v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Agentic Critical Training",
+      "snippet": "Training large language models (LLMs) as autonomous agents often begins with imitation learning, but it only teaches agents what to do without understanding why: agents never contrast successful actions against suboptimal alternatives and thus lack awareness of action quality. Recent approaches atte",
+      "url": "https://arxiv.org/abs/2603.08706v1",
+      "source": "arXiv"
+    }
+  ]
+}

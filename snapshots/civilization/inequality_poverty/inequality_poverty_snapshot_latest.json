@@ -1,0 +1,21 @@
+{
+  "source_type": "REAL_DATA",
+  "metrics": {
+    "gini_index": null,
+    "poverty_headcount_190": 10.4,
+    "income_share_bottom40": null,
+    "income_share_top10": null,
+    "multidimensional_poverty_pct": null,
+    "social_protection_coverage": 56.2646598815918
+  },
+  "raw": {
+    "gini_index": null,
+    "poverty_headcount_190": 10.4,
+    "income_share_bottom40": null,
+    "income_share_top10": null,
+    "multidimensional_poverty_pct": null,
+    "social_protection_coverage": 56.2646598815918
+  },
+  "snapshot_timestamp": "2026-06-11T19:06:36.029170+00:00",
+  "axis": "INEQUALITY_POVERTY_REVIEW"
+}

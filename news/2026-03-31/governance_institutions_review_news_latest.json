@@ -1,0 +1,103 @@
+{
+  "axis": "GOVERNANCE_INSTITUTIONS_REVIEW",
+  "fetched_at": "2026-03-31T07:34:29.960845+00:00",
+  "smart_query": "government corruption institutions",
+  "sources_count": {
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "web_search": 5
+  },
+  "rss": [
+    {
+      "title": "World News in Brief: Ukraine drone attacks, Afghan rights, Zero-Waste Day",
+      "snippet": "A night of drone attacks reportedly killed two people and injured 12 in the Ukrainian port city of Odesa, as a maternity hospital and three educational facilities were also damaged.",
+      "url": "https://news.un.org/feed/view/en/story/2026/03/1167221",
+      "source": "RSS"
+    },
+    {
+      "title": "MIDDLE EAST LIVE 30 March: UN peacekeepers killed amid Israel-Hezbollah clashes",
+      "snippet": "Further attacks have been reported across the Middle East as the war enters a second month, with two more Indonesian peacekeepers killed in Southern Lebanon on Monday, following the death of a fellow ‘blue helmet’ a day earlier. On the diplomatic front, the UN has announced a taskforce to restore th",
+      "url": "https://news.un.org/feed/view/en/story/2026/03/1167215",
+      "source": "RSS"
+    },
+    {
+      "title": "Syria: UN Commission documents grave violations in July 2025 escalation in Sweida",
+      "snippet": "More than 1,700 people were killed and nearly 200,000 more displaced in the July 2025 massacres in Sweida, Syria, UN human rights investigators said on Friday in a report&nbsp;that called for greater action towards accountability.&nbsp;",
+      "url": "https://news.un.org/feed/view/en/story/2026/03/1167210",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "github/government.github.com",
+      "snippet": "Gather, curate, and feature stories of public servants and civic hackers using GitHub as part of their open government innovations",
+      "stars": 1927,
+      "url": "https://github.com/github/government.github.com",
+      "updated": "2026-03-31",
+      "source": "GitHub"
+    },
+    {
+      "title": "consuldemocracy/consuldemocracy",
+      "snippet": "Consul Democracy - Open Government and E-Participation Web Software",
+      "stars": 1529,
+      "url": "https://github.com/consuldemocracy/consuldemocracy",
+      "updated": "2026-03-30",
+      "source": "GitHub"
+    },
+    {
+      "title": "datagouv/data.gouv.fr",
+      "snippet": "Ce dépôt rassemble les tickets techniques qui portent sur data.gouv.fr.",
+      "stars": 112,
+      "url": "https://github.com/datagouv/data.gouv.fr",
+      "updated": "2026-03-27",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Democratizing Federated Learning with Blockchain and Multi-Task Peer Prediction",
+      "snippet": "The synergy between Federated Learning and blockchain has been considered promising; however, the computationally intensive nature of contribution measurement conflicts with the strict computation and storage limits of blockchain systems. We propose a novel concept to decentralize the AI training pr",
+      "url": "https://arxiv.org/abs/2603.28434v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Can AI mediation improve democratic deliberation?",
+      "snippet": "The strength of democracy lies in the free and equal exchange of diverse viewpoints. Living up to this ideal at scale faces inherent tensions: broad participation, meaningful deliberation, and political equality often trade off with one another (Fishkin, 2011). We ask whether and how artificial inte",
+      "url": "https://arxiv.org/abs/2601.05904v1",
+      "source": "arXiv"
+    }
+  ],
+  "web_search": [
+    {
+      "title": "US democracy at risk as corruption threats grow - Brookings",
+      "url": "https://www.brookings.edu/articles/us-democracy-at-risk-as-corruption-threats-grow/",
+      "source": "WEB"
+    },
+    {
+      "title": "What Is Political Corruption and What Can We Do About It?",
+      "url": "https://www.brennancenter.org/our-work/research-reports/what-political-corruption-and-what-can-we-do-about-it",
+      "source": "WEB"
+    },
+    {
+      "title": "Political corruption - Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Political_corruption",
+      "source": "WEB"
+    },
+    {
+      "title": "Public Corruption — FBI",
+      "url": "https://www.fbi.gov/investigate/public-corruption",
+      "source": "WEB"
+    },
+    {
+      "title": "Enhancing Government Effectiveness and Transparency: The Fight Against ...",
+      "url": "https://www.worldbank.org/en/topic/governance/publication/enhancing-government-effectiveness-and-transparency-the-fight-against-corruption",
+      "source": "WEB"
+    }
+  ],
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL"
+}

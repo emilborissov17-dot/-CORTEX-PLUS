@@ -1,0 +1,392 @@
+
+=== RUN @ 2026-03-04 17:18:07 UTC ===
+[EXEC] AXIS=ENERGY TASK=Събиране на IEA отчети и архивирани IEF материали
+       DATA_SOURCES=IEA data portal; официален сайт на IEF
+       -> TODO: call iea_downloader for 'IEA data portal'
+       -> TODO: manual/web scrape for 'официален сайт на IEF'
+[EXEC] AXIS=ENERGY TASK=Събиране на логове за неуспешни заявки към IEF и други източници
+       DATA_SOURCES=IEA data portal; IEF официален сайт
+       -> TODO: call iea_downloader for 'IEA data portal'
+       -> TODO: manual/web scrape for 'IEF официален сайт'
+[EXEC] AXIS=ENERGY TASK=Събиране на национални и международни индикатори за енергийна бедност
+       DATA_SOURCES=World Bank Open Data; национални статистически портали
+       -> TODO: call world_bank_downloader for 'World Bank Open Data'
+       -> TODO: manual/web scrape for 'национални статистически портали'
+[EXEC] AXIS=ENERGY TASK=Събиране на данни за разпределение на доходи и субсидиен политики
+       DATA_SOURCES=World Bank Open Data; национални статистически портали
+       -> TODO: call world_bank_downloader for 'World Bank Open Data'
+       -> TODO: manual/web scrape for 'национални статистически портали'
+[EXEC] AXIS=ENERGY TASK=Събиране на информация за инсталирана и планирана енергийна запасност по технологии
+       DATA_SOURCES=ENTSO-E Transparency Platform; национални TSO портали
+       -> TODO: call entsoe_downloader for 'ENTSO-E Transparency Platform'
+       -> TODO: call tso_downloader for 'национални TSO портали'
+[EXEC] AXIS=ENERGY TASK=Събиране на регионални карти на инфраструктурата за енергийна запасност
+       DATA_SOURCES=ENTSO-E Transparency Platform; национални TSO портали
+       -> TODO: call entsoe_downloader for 'ENTSO-E Transparency Platform'
+       -> TODO: call tso_downloader for 'национални TSO портали'
+[EXEC] AXIS=ENERGY TASK=Събиране на метаданни за всички полеви данни (дата, регион, ресурс)
+       DATA_SOURCES=ENTSO-E Transparency Platform; IEA data portal
+       -> TODO: call entsoe_downloader for 'ENTSO-E Transparency Platform'
+       -> TODO: call iea_downloader for 'IEA data portal'
+[EXEC] AXIS=ENERGY TASK=Документиране на формати на API (CSV, Excel, JSON) за всички източници
+       DATA_SOURCES=ENTSO-E Transparency Platform; IEA data portal
+       -> TODO: call entsoe_downloader for 'ENTSO-E Transparency Platform'
+       -> TODO: call iea_downloader for 'IEA data portal'
+[EXEC] AXIS=ENERGY TASK=Събиране на логове за неуспешни заявки към ключови източници
+       DATA_SOURCES=ENTS и TSO портали; дипломатически канали
+       -> TODO: call tso_downloader for 'ENTS и TSO портали'
+       -> TODO: manual/web scrape for 'дипломатически канали'
+[EXEC] AXIS=ENERGY TASK=Събиране на ENTSO-E и TSO KPI за стабилност на енергийната мрежа
+       DATA_SOURCES=ENTSO-E Transparency Platform; национални TSO портали
+       -> TODO: call entsoe_downloader for 'ENTSO-E Transparency Platform'
+       -> TODO: call tso_downloader for 'национални TSO портали'
+[EXEC] AXIS=ENERGY TASK=Събиране на данни за инвестиции в енергийната инфраструктура
+       DATA_SOURCES=IEA data portal; World Bank Open Data
+       -> TODO: call iea_downloader for 'IEA data portal'
+       -> TODO: call world_bank_downloader for 'World Bank Open Data'
+[EXEC] AXIS=ENERGY TASK=Събиране на данни за публични проекти и кейс-студии
+       DATA_SOURCES=NREL; национални TSO портали; университети
+       -> TODO: call nrel_downloader for 'NREL'
+       -> TODO: call tso_downloader for 'национални TSO портали'
+       -> TODO: manual/web scrape for 'университети'
+[EXEC] AXIS=ENERGY TASK=Събиране на технически отчети за използване на AI/алгоритми в управлението на мрежата
+       DATA_SOURCES=NREL; национални TSO портали; университети
+       -> TODO: call nrel_downloader for 'NREL'
+       -> TODO: call tso_downloader for 'национални TSO портали'
+       -> TODO: manual/web scrape for 'университети'
+
+=== RUN @ 2026-03-04 17:20:03 UTC ===
+[EXEC] AXIS=ENERGY TASK=Събиране на IEA отчети и архивирани IEF материали
+       DATA_SOURCES=IEA data portal; официален сайт на IEF
+       -> TODO: call iea_downloader for 'IEA data portal'
+       -> TODO: manual/web scrape for 'официален сайт на IEF'
+[EXEC] AXIS=ENERGY TASK=Събиране на логове за неуспешни заявки към IEF и други източници
+       DATA_SOURCES=IEA data portal; IEF официален сайт
+       -> TODO: call iea_downloader for 'IEA data portal'
+       -> TODO: manual/web scrape for 'IEF официален сайт'
+[EXEC] AXIS=ENERGY TASK=Събиране на национални и международни индикатори за енергийна бедност
+       DATA_SOURCES=World Bank Open Data; национални статистически портали
+       -> TODO: call world_bank_downloader for 'World Bank Open Data'
+       -> TODO: manual/web scrape for 'национални статистически портали'
+[EXEC] AXIS=ENERGY TASK=Събиране на данни за разпределение на доходи и субсидиен политики
+       DATA_SOURCES=World Bank Open Data; национални статистически портали
+       -> TODO: call world_bank_downloader for 'World Bank Open Data'
+       -> TODO: manual/web scrape for 'национални статистически портали'
+[EXEC] AXIS=ENERGY TASK=Събиране на информация за инсталирана и планирана енергийна запасност по технологии
+       DATA_SOURCES=ENTSO-E Transparency Platform; национални TSO портали
+       -> TODO: call entsoe_downloader for 'ENTSO-E Transparency Platform'
+       -> TODO: call tso_downloader for 'национални TSO портали'
+[EXEC] AXIS=ENERGY TASK=Събиране на регионални карти на инфраструктурата за енергийна запасност
+       DATA_SOURCES=ENTSO-E Transparency Platform; национални TSO портали
+       -> TODO: call entsoe_downloader for 'ENTSO-E Transparency Platform'
+       -> TODO: call tso_downloader for 'национални TSO портали'
+[EXEC] AXIS=ENERGY TASK=Събиране на метаданни за всички полеви данни (дата, регион, ресурс)
+       DATA_SOURCES=ENTSO-E Transparency Platform; IEA data portal
+       -> TODO: call entsoe_downloader for 'ENTSO-E Transparency Platform'
+       -> TODO: call iea_downloader for 'IEA data portal'
+[EXEC] AXIS=ENERGY TASK=Документиране на формати на API (CSV, Excel, JSON) за всички източници
+       DATA_SOURCES=ENTSO-E Transparency Platform; IEA data portal
+       -> TODO: call entsoe_downloader for 'ENTSO-E Transparency Platform'
+       -> TODO: call iea_downloader for 'IEA data portal'
+[EXEC] AXIS=ENERGY TASK=Събиране на логове за неуспешни заявки към ключови източници
+       DATA_SOURCES=ENTS и TSO портали; дипломатически канали
+       -> TODO: call tso_downloader for 'ENTS и TSO портали'
+       -> TODO: manual/web scrape for 'дипломатически канали'
+[EXEC] AXIS=ENERGY TASK=Събиране на ENTSO-E и TSO KPI за стабилност на енергийната мрежа
+       DATA_SOURCES=ENTSO-E Transparency Platform; национални TSO портали
+       -> TODO: call entsoe_downloader for 'ENTSO-E Transparency Platform'
+       -> TODO: call tso_downloader for 'национални TSO портали'
+[EXEC] AXIS=ENERGY TASK=Събиране на данни за инвестиции в енергийната инфраструктура
+       DATA_SOURCES=IEA data portal; World Bank Open Data
+       -> TODO: call iea_downloader for 'IEA data portal'
+       -> TODO: call world_bank_downloader for 'World Bank Open Data'
+[EXEC] AXIS=ENERGY TASK=Събиране на данни за публични проекти и кейс-студии
+       DATA_SOURCES=NREL; национални TSO портали; университети
+       -> TODO: call nrel_downloader for 'NREL'
+       -> TODO: call tso_downloader for 'национални TSO портали'
+       -> TODO: manual/web scrape for 'университети'
+[EXEC] AXIS=ENERGY TASK=Събиране на технически отчети за използване на AI/алгоритми в управлението на мрежата
+       DATA_SOURCES=NREL; национални TSO портали; университети
+       -> TODO: call nrel_downloader for 'NREL'
+       -> TODO: call tso_downloader for 'национални TSO портали'
+       -> TODO: manual/web scrape for 'университети'
+
+=== RUN @ 2026-03-04 17:20:22 UTC ===
+[EXEC] AXIS=ENERGY TASK=Събиране на IEA отчети и архивирани IEF материали
+       DATA_SOURCES=IEA data portal; официален сайт на IEF
+       -> TODO: call iea_downloader for 'IEA data portal'
+       -> TODO: manual/web scrape for 'официален сайт на IEF'
+[EXEC] AXIS=ENERGY TASK=Събиране на логове за неуспешни заявки към IEF и други източници
+       DATA_SOURCES=IEA data portal; IEF официален сайт
+       -> TODO: call iea_downloader for 'IEA data portal'
+       -> TODO: manual/web scrape for 'IEF официален сайт'
+[EXEC] AXIS=ENERGY TASK=Събиране на национални и международни индикатори за енергийна бедност
+       DATA_SOURCES=World Bank Open Data; национални статистически портали
+       -> TODO: call world_bank_downloader for 'World Bank Open Data'
+       -> TODO: manual/web scrape for 'национални статистически портали'
+[EXEC] AXIS=ENERGY TASK=Събиране на данни за разпределение на доходи и субсидиен политики
+       DATA_SOURCES=World Bank Open Data; национални статистически портали
+       -> TODO: call world_bank_downloader for 'World Bank Open Data'
+       -> TODO: manual/web scrape for 'национални статистически портали'
+[EXEC] AXIS=ENERGY TASK=Събиране на информация за инсталирана и планирана енергийна запасност по технологии
+       DATA_SOURCES=ENTSO-E Transparency Platform; национални TSO портали
+       -> TODO: call entsoe_downloader for 'ENTSO-E Transparency Platform'
+       -> TODO: call tso_downloader for 'национални TSO портали'
+[EXEC] AXIS=ENERGY TASK=Събиране на регионални карти на инфраструктурата за енергийна запасност
+       DATA_SOURCES=ENTSO-E Transparency Platform; национални TSO портали
+       -> TODO: call entsoe_downloader for 'ENTSO-E Transparency Platform'
+       -> TODO: call tso_downloader for 'национални TSO портали'
+[EXEC] AXIS=ENERGY TASK=Събиране на метаданни за всички полеви данни (дата, регион, ресурс)
+       DATA_SOURCES=ENTSO-E Transparency Platform; IEA data portal
+       -> TODO: call entsoe_downloader for 'ENTSO-E Transparency Platform'
+       -> TODO: call iea_downloader for 'IEA data portal'
+[EXEC] AXIS=ENERGY TASK=Документиране на формати на API (CSV, Excel, JSON) за всички източници
+       DATA_SOURCES=ENTSO-E Transparency Platform; IEA data portal
+       -> TODO: call entsoe_downloader for 'ENTSO-E Transparency Platform'
+       -> TODO: call iea_downloader for 'IEA data portal'
+[EXEC] AXIS=ENERGY TASK=Събиране на логове за неуспешни заявки към ключови източници
+       DATA_SOURCES=ENTS и TSO портали; дипломатически канали
+       -> TODO: call tso_downloader for 'ENTS и TSO портали'
+       -> TODO: manual/web scrape for 'дипломатически канали'
+[EXEC] AXIS=ENERGY TASK=Събиране на ENTSO-E и TSO KPI за стабилност на енергийната мрежа
+       DATA_SOURCES=ENTSO-E Transparency Platform; национални TSO портали
+       -> TODO: call entsoe_downloader for 'ENTSO-E Transparency Platform'
+       -> TODO: call tso_downloader for 'национални TSO портали'
+[EXEC] AXIS=ENERGY TASK=Събиране на данни за инвестиции в енергийната инфраструктура
+       DATA_SOURCES=IEA data portal; World Bank Open Data
+       -> TODO: call iea_downloader for 'IEA data portal'
+       -> TODO: call world_bank_downloader for 'World Bank Open Data'
+[EXEC] AXIS=ENERGY TASK=Събиране на данни за публични проекти и кейс-студии
+       DATA_SOURCES=NREL; национални TSO портали; университети
+       -> TODO: call nrel_downloader for 'NREL'
+       -> TODO: call tso_downloader for 'национални TSO портали'
+       -> TODO: manual/web scrape for 'университети'
+[EXEC] AXIS=ENERGY TASK=Събиране на технически отчети за използване на AI/алгоритми в управлението на мрежата
+       DATA_SOURCES=NREL; национални TSO портали; университети
+       -> TODO: call nrel_downloader for 'NREL'
+       -> TODO: call tso_downloader for 'национални TSO портали'
+       -> TODO: manual/web scrape for 'университети'
+
+=== RUN @ 2026-03-04 17:24:17 UTC ===
+[EXEC] AXIS=ENERGY TASK=Събиране на IEA отчети и архивирани IEF материали
+       DATA_SOURCES=IEA data portal; официален сайт на IEF
+       -> TODO: call iea_downloader for 'IEA data portal'
+       -> TODO: manual/web scrape for 'официален сайт на IEF'
+[EXEC] AXIS=ENERGY TASK=Събиране на логове за неуспешни заявки към IEF и други източници
+       DATA_SOURCES=IEA data portal; IEF официален сайт
+       -> TODO: call iea_downloader for 'IEA data portal'
+       -> TODO: manual/web scrape for 'IEF официален сайт'
+[EXEC] AXIS=ENERGY TASK=Събиране на национални и международни индикатори за енергийна бедност
+       DATA_SOURCES=World Bank Open Data; национални статистически портали
+       -> OK: downloaded World Bank energy poverty indicators to 'C:\Users\emilb\Desktop\AGI\CORTEX++_QWEN\raw_data\world_bank\energy_poverty_global_20260304T172414Z.json'
+       -> TODO: manual/web scrape for 'национални статистически портали'
+[EXEC] AXIS=ENERGY TASK=Събиране на данни за разпределение на доходи и субсидиен политики
+       DATA_SOURCES=World Bank Open Data; национални статистически портали
+       -> OK: downloaded World Bank energy poverty indicators to 'C:\Users\emilb\Desktop\AGI\CORTEX++_QWEN\raw_data\world_bank\energy_poverty_global_20260304T172416Z.json'
+       -> TODO: manual/web scrape for 'национални статистически портали'
+[EXEC] AXIS=ENERGY TASK=Събиране на информация за инсталирана и планирана енергийна запасност по технологии
+       DATA_SOURCES=ENTSO-E Transparency Platform; национални TSO портали
+       -> TODO: call entsoe_downloader for 'ENTSO-E Transparency Platform'
+       -> TODO: call tso_downloader for 'национални TSO портали'
+[EXEC] AXIS=ENERGY TASK=Събиране на регионални карти на инфраструктурата за енергийна запасност
+       DATA_SOURCES=ENTSO-E Transparency Platform; национални TSO портали
+       -> TODO: call entsoe_downloader for 'ENTSO-E Transparency Platform'
+       -> TODO: call tso_downloader for 'национални TSO портали'
+[EXEC] AXIS=ENERGY TASK=Събиране на метаданни за всички полеви данни (дата, регион, ресурс)
+       DATA_SOURCES=ENTSO-E Transparency Platform; IEA data portal
+       -> TODO: call entsoe_downloader for 'ENTSO-E Transparency Platform'
+       -> TODO: call iea_downloader for 'IEA data portal'
+[EXEC] AXIS=ENERGY TASK=Документиране на формати на API (CSV, Excel, JSON) за всички източници
+       DATA_SOURCES=ENTSO-E Transparency Platform; IEA data portal
+       -> TODO: call entsoe_downloader for 'ENTSO-E Transparency Platform'
+       -> TODO: call iea_downloader for 'IEA data portal'
+[EXEC] AXIS=ENERGY TASK=Събиране на логове за неуспешни заявки към ключови източници
+       DATA_SOURCES=ENTS и TSO портали; дипломатически канали
+       -> TODO: call tso_downloader for 'ENTS и TSO портали'
+       -> TODO: manual/web scrape for 'дипломатически канали'
+[EXEC] AXIS=ENERGY TASK=Събиране на ENTSO-E и TSO KPI за стабилност на енергийната мрежа
+       DATA_SOURCES=ENTSO-E Transparency Platform; национални TSO портали
+       -> TODO: call entsoe_downloader for 'ENTSO-E Transparency Platform'
+       -> TODO: call tso_downloader for 'национални TSO портали'
+[EXEC] AXIS=ENERGY TASK=Събиране на данни за инвестиции в енергийната инфраструктура
+       DATA_SOURCES=IEA data portal; World Bank Open Data
+       -> TODO: call iea_downloader for 'IEA data portal'
+       -> OK: downloaded World Bank energy poverty indicators to 'C:\Users\emilb\Desktop\AGI\CORTEX++_QWEN\raw_data\world_bank\energy_poverty_global_20260304T172417Z.json'
+[EXEC] AXIS=ENERGY TASK=Събиране на данни за публични проекти и кейс-студии
+       DATA_SOURCES=NREL; национални TSO портали; университети
+       -> TODO: call nrel_downloader for 'NREL'
+       -> TODO: call tso_downloader for 'национални TSO портали'
+       -> TODO: manual/web scrape for 'университети'
+[EXEC] AXIS=ENERGY TASK=Събиране на технически отчети за използване на AI/алгоритми в управлението на мрежата
+       DATA_SOURCES=NREL; национални TSO портали; университети
+       -> TODO: call nrel_downloader for 'NREL'
+       -> TODO: call tso_downloader for 'национални TSO портали'
+       -> TODO: manual/web scrape for 'университети'
+
+=== RUN @ 2026-03-04 17:25:14 UTC ===
+[EXEC] AXIS=ENERGY TASK=Събиране на IEA отчети и архивирани IEF материали
+       DATA_SOURCES=IEA data portal; официален сайт на IEF
+       -> TODO: call iea_downloader for 'IEA data portal'
+       -> TODO: manual/web scrape for 'официален сайт на IEF'
+[EXEC] AXIS=ENERGY TASK=Събиране на логове за неуспешни заявки към IEF и други източници
+       DATA_SOURCES=IEA data portal; IEF официален сайт
+       -> TODO: call iea_downloader for 'IEA data portal'
+       -> TODO: manual/web scrape for 'IEF официален сайт'
+[EXEC] AXIS=ENERGY TASK=Събиране на национални и международни индикатори за енергийна бедност
+       DATA_SOURCES=World Bank Open Data; национални статистически портали
+       -> OK: downloaded World Bank energy poverty indicators to 'C:\Users\emilb\Desktop\AGI\CORTEX++_QWEN\raw_data\world_bank\energy_poverty_global_20260304T172512Z.json'
+       -> TODO: manual/web scrape for 'национални статистически портали'
+[EXEC] AXIS=ENERGY TASK=Събиране на данни за разпределение на доходи и субсидиен политики
+       DATA_SOURCES=World Bank Open Data; национални статистически портали
+       -> OK: downloaded World Bank energy poverty indicators to 'C:\Users\emilb\Desktop\AGI\CORTEX++_QWEN\raw_data\world_bank\energy_poverty_global_20260304T172513Z.json'
+       -> TODO: manual/web scrape for 'национални статистически портали'
+[EXEC] AXIS=ENERGY TASK=Събиране на информация за инсталирана и планирана енергийна запасност по технологии
+       DATA_SOURCES=ENTSO-E Transparency Platform; национални TSO портали
+       -> TODO: call entsoe_downloader for 'ENTSO-E Transparency Platform'
+       -> TODO: call tso_downloader for 'национални TSO портали'
+[EXEC] AXIS=ENERGY TASK=Събиране на регионални карти на инфраструктурата за енергийна запасност
+       DATA_SOURCES=ENTSO-E Transparency Platform; национални TSO портали
+       -> TODO: call entsoe_downloader for 'ENTSO-E Transparency Platform'
+       -> TODO: call tso_downloader for 'национални TSO портали'
+[EXEC] AXIS=ENERGY TASK=Събиране на метаданни за всички полеви данни (дата, регион, ресурс)
+       DATA_SOURCES=ENTSO-E Transparency Platform; IEA data portal
+       -> TODO: call entsoe_downloader for 'ENTSO-E Transparency Platform'
+       -> TODO: call iea_downloader for 'IEA data portal'
+[EXEC] AXIS=ENERGY TASK=Документиране на формати на API (CSV, Excel, JSON) за всички източници
+       DATA_SOURCES=ENTSO-E Transparency Platform; IEA data portal
+       -> TODO: call entsoe_downloader for 'ENTSO-E Transparency Platform'
+       -> TODO: call iea_downloader for 'IEA data portal'
+[EXEC] AXIS=ENERGY TASK=Събиране на логове за неуспешни заявки към ключови източници
+       DATA_SOURCES=ENTS и TSO портали; дипломатически канали
+       -> TODO: call tso_downloader for 'ENTS и TSO портали'
+       -> TODO: manual/web scrape for 'дипломатически канали'
+[EXEC] AXIS=ENERGY TASK=Събиране на ENTSO-E и TSO KPI за стабилност на енергийната мрежа
+       DATA_SOURCES=ENTSO-E Transparency Platform; национални TSO портали
+       -> TODO: call entsoe_downloader for 'ENTSO-E Transparency Platform'
+       -> TODO: call tso_downloader for 'национални TSO портали'
+[EXEC] AXIS=ENERGY TASK=Събиране на данни за инвестиции в енергийната инфраструктура
+       DATA_SOURCES=IEA data portal; World Bank Open Data
+       -> TODO: call iea_downloader for 'IEA data portal'
+       -> OK: downloaded World Bank energy poverty indicators to 'C:\Users\emilb\Desktop\AGI\CORTEX++_QWEN\raw_data\world_bank\energy_poverty_global_20260304T172514Z.json'
+[EXEC] AXIS=ENERGY TASK=Събиране на данни за публични проекти и кейс-студии
+       DATA_SOURCES=NREL; национални TSO портали; университети
+       -> TODO: call nrel_downloader for 'NREL'
+       -> TODO: call tso_downloader for 'национални TSO портали'
+       -> TODO: manual/web scrape for 'университети'
+[EXEC] AXIS=ENERGY TASK=Събиране на технически отчети за използване на AI/алгоритми в управлението на мрежата
+       DATA_SOURCES=NREL; национални TSO портали; университети
+       -> TODO: call nrel_downloader for 'NREL'
+       -> TODO: call tso_downloader for 'национални TSO портали'
+       -> TODO: manual/web scrape for 'университети'
+
+=== RUN @ 2026-03-05 07:04:11 UTC ===
+[EXEC] AXIS=ENERGY TASK=Събиране на IEA отчети и архивирани IEF материали
+       DATA_SOURCES=IEA data portal; официален сайт на IEF
+       -> TODO: call iea_downloader for 'IEA data portal'
+       -> TODO: manual/web scrape for 'официален сайт на IEF'
+[EXEC] AXIS=ENERGY TASK=Събиране на логове за неуспешни заявки към IEF и други източници
+       DATA_SOURCES=IEA data portal; IEF официален сайт
+       -> TODO: call iea_downloader for 'IEA data portal'
+       -> TODO: manual/web scrape for 'IEF официален сайт'
+[EXEC] AXIS=ENERGY TASK=Събиране на национални и международни индикатори за енергийна бедност
+       DATA_SOURCES=World Bank Open Data; национални статистически портали
+       -> OK: downloaded World Bank energy poverty indicators to 'C:\Users\emilb\Desktop\AGI\CORTEX++_QWEN\raw_data\world_bank\energy_poverty_global_20260305T070409Z.json'
+       -> TODO: manual/web scrape for 'национални статистически портали'
+[EXEC] AXIS=ENERGY TASK=Събиране на данни за разпределение на доходи и субсидиен политики
+       DATA_SOURCES=World Bank Open Data; национални статистически портали
+       -> OK: downloaded World Bank energy poverty indicators to 'C:\Users\emilb\Desktop\AGI\CORTEX++_QWEN\raw_data\world_bank\energy_poverty_global_20260305T070410Z.json'
+       -> TODO: manual/web scrape for 'национални статистически портали'
+[EXEC] AXIS=ENERGY TASK=Събиране на информация за инсталирана и планирана енергийна запасност по технологии
+       DATA_SOURCES=ENTSO-E Transparency Platform; национални TSO портали
+       -> ERROR: ENTSO-E download failed for 'ENTSO-E Transparency Platform': ENTSOE_API_KEY not set; cannot call ENTSO-E API yet
+       -> TODO: call tso_downloader for 'национални TSO портали'
+[EXEC] AXIS=ENERGY TASK=Събиране на регионални карти на инфраструктурата за енергийна запасност
+       DATA_SOURCES=ENTSO-E Transparency Platform; национални TSO портали
+       -> ERROR: ENTSO-E download failed for 'ENTSO-E Transparency Platform': ENTSOE_API_KEY not set; cannot call ENTSO-E API yet
+       -> TODO: call tso_downloader for 'национални TSO портали'
+[EXEC] AXIS=ENERGY TASK=Събиране на метаданни за всички полеви данни (дата, регион, ресурс)
+       DATA_SOURCES=ENTSO-E Transparency Platform; IEA data portal
+       -> ERROR: ENTSO-E download failed for 'ENTSO-E Transparency Platform': ENTSOE_API_KEY not set; cannot call ENTSO-E API yet
+       -> TODO: call iea_downloader for 'IEA data portal'
+[EXEC] AXIS=ENERGY TASK=Документиране на формати на API (CSV, Excel, JSON) за всички източници
+       DATA_SOURCES=ENTSO-E Transparency Platform; IEA data portal
+       -> ERROR: ENTSO-E download failed for 'ENTSO-E Transparency Platform': ENTSOE_API_KEY not set; cannot call ENTSO-E API yet
+       -> TODO: call iea_downloader for 'IEA data portal'
+[EXEC] AXIS=ENERGY TASK=Събиране на логове за неуспешни заявки към ключови източници
+       DATA_SOURCES=ENTS и TSO портали; дипломатически канали
+       -> TODO: call tso_downloader for 'ENTS и TSO портали'
+       -> TODO: manual/web scrape for 'дипломатически канали'
+[EXEC] AXIS=ENERGY TASK=Събиране на ENTSO-E и TSO KPI за стабилност на енергийната мрежа
+       DATA_SOURCES=ENTSO-E Transparency Platform; национални TSO портали
+       -> ERROR: ENTSO-E download failed for 'ENTSO-E Transparency Platform': ENTSOE_API_KEY not set; cannot call ENTSO-E API yet
+       -> TODO: call tso_downloader for 'национални TSO портали'
+[EXEC] AXIS=ENERGY TASK=Събиране на данни за инвестиции в енергийната инфраструктура
+       DATA_SOURCES=IEA data portal; World Bank Open Data
+       -> TODO: call iea_downloader for 'IEA data portal'
+       -> OK: downloaded World Bank energy poverty indicators to 'C:\Users\emilb\Desktop\AGI\CORTEX++_QWEN\raw_data\world_bank\energy_poverty_global_20260305T070411Z.json'
+[EXEC] AXIS=ENERGY TASK=Събиране на данни за публични проекти и кейс-студии
+       DATA_SOURCES=NREL; национални TSO портали; университети
+       -> TODO: call nrel_downloader for 'NREL'
+       -> TODO: call tso_downloader for 'национални TSO портали'
+       -> TODO: manual/web scrape for 'университети'
+[EXEC] AXIS=ENERGY TASK=Събиране на технически отчети за използване на AI/алгоритми в управлението на мрежата
+       DATA_SOURCES=NREL; национални TSO портали; университети
+       -> TODO: call nrel_downloader for 'NREL'
+       -> TODO: call tso_downloader for 'национални TSO портали'
+       -> TODO: manual/web scrape for 'университети'
+
+=== RUN @ 2026-03-05 07:16:52 UTC ===
+[EXEC] AXIS=ENERGY TASK=Събиране на IEA отчети и архивирани IEF материали
+       DATA_SOURCES=IEA data portal; официален сайт на IEF
+       -> TODO: call iea_downloader for 'IEA data portal'
+       -> TODO: manual/web scrape for 'официален сайт на IEF'
+[EXEC] AXIS=ENERGY TASK=Събиране на логове за неуспешни заявки към IEF и други източници
+       DATA_SOURCES=IEA data portal; IEF официален сайт
+       -> TODO: call iea_downloader for 'IEA data portal'
+       -> TODO: manual/web scrape for 'IEF официален сайт'
+[EXEC] AXIS=ENERGY TASK=Събиране на национални и международни индикатори за енергийна бедност
+       DATA_SOURCES=World Bank Open Data; национални статистически портали
+       -> OK: downloaded World Bank energy poverty indicators to 'C:\Users\emilb\Desktop\AGI\CORTEX++_QWEN\raw_data\world_bank\energy_poverty_global_20260305T071650Z.json'
+       -> TODO: manual/web scrape for 'национални статистически портали'
+[EXEC] AXIS=ENERGY TASK=Събиране на данни за разпределение на доходи и субсидиен политики
+       DATA_SOURCES=World Bank Open Data; национални статистически портали
+       -> OK: downloaded World Bank energy poverty indicators to 'C:\Users\emilb\Desktop\AGI\CORTEX++_QWEN\raw_data\world_bank\energy_poverty_global_20260305T071651Z.json'
+       -> TODO: manual/web scrape for 'национални статистически портали'
+[EXEC] AXIS=ENERGY TASK=Събиране на информация за инсталирана и планирана енергийна запасност по технологии
+       DATA_SOURCES=ENTSO-E Transparency Platform; национални TSO портали
+       -> ERROR: ENTSO-E download failed for 'ENTSO-E Transparency Platform': ENTSOE_API_KEY not set; cannot call ENTSO-E API yet
+       -> TODO: call tso_downloader for 'национални TSO портали'
+[EXEC] AXIS=ENERGY TASK=Събиране на регионални карти на инфраструктурата за енергийна запасност
+       DATA_SOURCES=ENTSO-E Transparency Platform; национални TSO портали
+       -> ERROR: ENTSO-E download failed for 'ENTSO-E Transparency Platform': ENTSOE_API_KEY not set; cannot call ENTSO-E API yet
+       -> TODO: call tso_downloader for 'национални TSO портали'
+[EXEC] AXIS=ENERGY TASK=Събиране на метаданни за всички полеви данни (дата, регион, ресурс)
+       DATA_SOURCES=ENTSO-E Transparency Platform; IEA data portal
+       -> ERROR: ENTSO-E download failed for 'ENTSO-E Transparency Platform': ENTSOE_API_KEY not set; cannot call ENTSO-E API yet
+       -> TODO: call iea_downloader for 'IEA data portal'
+[EXEC] AXIS=ENERGY TASK=Документиране на формати на API (CSV, Excel, JSON) за всички източници
+       DATA_SOURCES=ENTSO-E Transparency Platform; IEA data portal
+       -> ERROR: ENTSO-E download failed for 'ENTSO-E Transparency Platform': ENTSOE_API_KEY not set; cannot call ENTSO-E API yet
+       -> TODO: call iea_downloader for 'IEA data portal'
+[EXEC] AXIS=ENERGY TASK=Събиране на логове за неуспешни заявки към ключови източници
+       DATA_SOURCES=ENTS и TSO портали; дипломатически канали
+       -> TODO: call tso_downloader for 'ENTS и TSO портали'
+       -> TODO: manual/web scrape for 'дипломатически канали'
+[EXEC] AXIS=ENERGY TASK=Събиране на ENTSO-E и TSO KPI за стабилност на енергийната мрежа
+       DATA_SOURCES=ENTSO-E Transparency Platform; национални TSO портали
+       -> ERROR: ENTSO-E download failed for 'ENTSO-E Transparency Platform': ENTSOE_API_KEY not set; cannot call ENTSO-E API yet
+       -> TODO: call tso_downloader for 'национални TSO портали'
+[EXEC] AXIS=ENERGY TASK=Събиране на данни за инвестиции в енергийната инфраструктура
+       DATA_SOURCES=IEA data portal; World Bank Open Data
+       -> TODO: call iea_downloader for 'IEA data portal'
+       -> OK: downloaded World Bank energy poverty indicators to 'C:\Users\emilb\Desktop\AGI\CORTEX++_QWEN\raw_data\world_bank\energy_poverty_global_20260305T071652Z.json'
+[EXEC] AXIS=ENERGY TASK=Събиране на данни за публични проекти и кейс-студии
+       DATA_SOURCES=NREL; национални TSO портали; университети
+       -> TODO: call nrel_downloader for 'NREL'
+       -> TODO: call tso_downloader for 'национални TSO портали'
+       -> TODO: manual/web scrape for 'университети'
+[EXEC] AXIS=ENERGY TASK=Събиране на технически отчети за използване на AI/алгоритми в управлението на мрежата
+       DATA_SOURCES=NREL; национални TSO портали; университети
+       -> TODO: call nrel_downloader for 'NREL'
+       -> TODO: call tso_downloader for 'национални TSO портали'
+       -> TODO: manual/web scrape for 'университети'

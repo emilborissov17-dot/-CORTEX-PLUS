@@ -1,0 +1,145 @@
+{
+  "axis": "TECHNOLOGY_INFRA_REVIEW",
+  "domain": "civilization",
+  "timestamp": "2026-05-16T21:56:15.571323+00:00",
+  "sources_count": 10,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 2,
+  "youtube_items": [
+    {
+      "title": "[YT] Fix Wi-fi Connected But No Internet Access on Samsung... - YouTube",
+      "summary": "Welcome back to the channel. And today we're going to talk about Wi-Fi issues on your Samsung Galaxy Tab 8. Well, some users are complaining that whenever they try to connect their Samsung Galaxy 8 Tab to the Wi-Fi network, they see this. Sometimes they say it's connected but it has no internet. Some say it's failed to obtain the IP address. Some say it's kept disconnecting and the internet is extremely slow. No matter what problem you might have right now with your Samsung Galaxy 8 Tab, don't worry if you have relaxed sit back and let me go back and quickly show you some ways to solve your problem almost immediately. The very first troubleshooting that we're going to talk about is your airplane mood. Therefore, all you want to do is go ahead and show I've done from the top and literally t",
+      "link": "https://www.youtube.com/watch?v=SNZd2NLF76w",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "SNZd2NLF76w",
+      "transcript_method": "whisper",
+      "transcript_chars": 3275,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Fix windows 7 no internet access but connected ethernet - YouTube",
+      "summary": "My laptop is showing Wi-Fi no internet access. If you are in trouble like me, then see how to solve. The first method. Go to computer control panel. Now open the internet option. Then go to the Advanced option and click on the Reset button. Now check if your internet is okay. If this method does not fix your computer, you can follow the next procedure. The second method. This is the name of my laptop's Wi-Fi driver. The name of your laptop's Wi-Fi driver may be something else. Now go to the device manager of the computer. My Wi-Fi driver is showing inside the network adapter. Now right click on this Wi-Fi driver and click on Uninstall. Do not click on the delete option in any way here. Then click scan for hardware change. Now the Wi-Fi driver will be reinstalled on your laptop. Now connect",
+      "link": "https://www.youtube.com/watch?v=0_CIYgOz0jE",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "0_CIYgOz0jE",
+      "transcript_method": "whisper",
+      "transcript_chars": 875,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "Потребителите срещат проблеми с връзката (Wi-Fi или интернет) на уредите си, въпреки че са физически свързани.",
+    "root_cause": "Проблемът е свързан с настройки, конфликти между софтуерни компоненти или грешки в управлението на IP адреси.",
+    "severity": "MEDIUM",
+    "leverage_points": [
+      "Производителите на уреди (напр. Samsung, Microsoft) и техните поддръжки",
+      "Опцията за автоматичен ретаил на IP адреси и DNS на операционните системи"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Интегриране на автоматичен ретаил на IP адреси и DNS във всички уреди",
+        "measurable_goal": "Потребителите да открият 50% по-малко проблеми с връзката в първия месец след внедряването",
+        "timeframe": "дългосрочно"
+      },
+      {
+        "action": "Разработка на уеб-инструмент за диагностика на връзка, който да предложи решения за проблеми с IP адреси и DNS",
+        "measurable_goal": "Инструментът да бъде използван от 100 000+ потребители в първия месец",
+        "timeframe": "средносрочно"
+      }
+    ],
+    "evidence": [
+      "Видео: 'Fix Wi-fi Connected But No Internet Access on Samsung...'",
+      "Видео: 'Fix windows 7 no internet access but connected ethernet'"
+    ],
+    "generalization": "Проблемът е свързан с домейна на технологии и инфраструктурата, тъй като връзката е основен елемент за достъп до информация и услуги.",
+    "summary": "Потребителите срещат проблеми с интернет връзката, въпреки че са физически свързани, поради грешки в настройките и управлението на IP адреси.",
+    "risk_level": "MEDIUM"
+  },
+  "raw_items": [
+    {
+      "title": "How I Get Free Traffic from ChatGPT in 2025 (AIO vs SEO)",
+      "summary": "<p style=\"text-align: left;\">Three weeks ago, I tested something that completely changed how I think about organic traffic. I opened ChatGPT and asked a simple question: \"What's the best course on building SaaS with WordPress?\" The answer that appeared stopped me cold. My course showed up as the first result, recommended directly by the AI with specific reasons why it was valuable.</p><p style=\"text-align: left;\">I hadn't paid for advertising. I hadn't done any special promotion. The AI simply d",
+      "link": "https://techncruncher.blogspot.com/2025/12/how-i-get-free-traffic-from-chatgpt-in.html",
+      "published": "Thu, 04 Dec 2025 05:37:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Top 10 AI Tools That Will Transform Your Content Creation in 2025",
+      "summary": "<div style=\"text-align: left;\"><a href=\"https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEge5QgwLKWbavTUhIedQLI79z5BGD4h0ZoH4YMK6bGBL6fY4Je8R3GZurMZaJmtYirFS6pS-GgZD3xFAqfln8w8faEY2iDehndQNeez57DoiDsgYFJrIwMOLBjzcZiOJrqYDktm6pmRkwtprJChag0yQoeEZx1Pa_eKnt3kKzz69f-FSPWu_JXQxFq5Z8WZ/s1920/Blue%20Purple%20Futuristic%20Modern%203D%20Tech%20Company%20Business%20Presentation.jpg\" style=\"clear: left; margin-bottom: 1em;\"><span style=\"font-family: Coda;\"><img alt=\"Top 10 AI Tools That Will Trans",
+      "link": "https://techncruncher.blogspot.com/2025/01/top-10-ai-tools-that-will-transform.html",
+      "published": "Thu, 02 Jan 2025 09:26:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "LimeWire AI Studio Review 2023: Details, Pricing & Features",
+      "summary": "<p style=\"text-align: left;\"><span style=\"font-family: Oxygen;\">&nbsp;</span></p><p style=\"text-align: left;\"><span style=\"font-family: Oxygen;\">In the rapidly advancing landscape of AI technology and innovation, LimeWire emerges as a unique platform in the realm of generative AI tools. This platform not only stands out from the multitude of existing AI tools but also brings a fresh approach to content generation. LimeWire not only empowers users to create AI content but also provides creators w",
+      "link": "https://techncruncher.blogspot.com/2023/12/limewire-ai-studio-review-2023-details.html",
+      "published": "Tue, 12 Dec 2023 16:10:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Top 10 AI Tools in 2023 That Will Make Your Life Easier",
+      "summary": "<p><span style=\"font-family: Montserrat;\"><br /></span></p><div class=\"separator\" style=\"clear: both; text-align: center;\"><a href=\"https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiu91xnR3LQV62WoiA0scuFOTa-Xx9vIwouaceeyosFtZrJB0UivYIWtbcF3TCWEjKhRQVBiSeB00RQI0-cO_eBG6d05_6UV7zYw9qzyHMJ6u2m9_itNW2mFAS8LChEhhJQ14aJbI3GrkEsY9xCTExAT-qxUSh5asVFMAmX-ceWufpgV_DrG9tk3Y4umw/s1920/Blue%20Purple%20Futuristic%20Modern%203D%20Tech%20Company%20Business%20Presentation-min.jpg\" style=\"margin-left: 1",
+      "link": "https://techncruncher.blogspot.com/2023/01/top-10-ai-tools-in-2023-that-will-make.html",
+      "published": "Wed, 25 Jan 2023 19:52:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Old Oil and Gas Wells Could Find Second Life Producing Clean Energy",
+      "summary": "States across the US are looking to take major sources of pollution and use them to generate much-needed power.",
+      "link": "https://www.wired.com/story/oil-wells-second-life-clean-energy/",
+      "published": "Sat, 16 May 2026 11:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "How to Control Everything on Your Phone With Your Voice (iOS and Android)",
+      "summary": "Go fully hands-free with these tips for Android and iOS.",
+      "link": "https://www.wired.com/story/control-everything-on-your-phone-with-your-voice-ios-android/",
+      "published": "Sat, 16 May 2026 11:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Cybercriminal Twins Caught After They Forgot to Turn Off Microsoft Teams Recording",
+      "summary": "Plus: Instructure’s Canvas ransomware debacle comes to a close, an alleged dark net market kingpin gets arrested, OpenAI workers fall victim to a supply chain attack, and more.",
+      "link": "https://www.wired.com/story/security-news-this-week-cybercriminal-twins-caught-after-they-forgot-to-turn-off-microsoft-teams-recording/",
+      "published": "Sat, 16 May 2026 10:30:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Best Indoor Garden Systems: I've Been Testing All Year (2026)",
+      "summary": "Grow a backyard’s worth of greens and vegetables in your house with a vertical hydroponic garden. Here are a few that might be worth the investment.",
+      "link": "https://www.wired.com/gallery/best-indoor-gardening-systems/",
+      "published": "Sat, 16 May 2026 10:02:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] Fix Wi-fi Connected But No Internet Access on Samsung... - YouTube",
+      "summary": "Welcome back to the channel. And today we're going to talk about Wi-Fi issues on your Samsung Galaxy Tab 8. Well, some users are complaining that whenever they try to connect their Samsung Galaxy 8 Tab to the Wi-Fi network, they see this. Sometimes they say it's connected but it has no internet. Some say it's failed to obtain the IP address. Some say it's kept disconnecting and the internet is extremely slow. No matter what problem you might have right now with your Samsung Galaxy 8 Tab, don't worry if you have relaxed sit back and let me go back and quickly show you some ways to solve your problem almost immediately. The very first troubleshooting that we're going to talk about is your airplane mood. Therefore, all you want to do is go ahead and show I've done from the top and literally t",
+      "link": "https://www.youtube.com/watch?v=SNZd2NLF76w",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "SNZd2NLF76w",
+      "transcript_method": "whisper",
+      "transcript_chars": 3275,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Fix windows 7 no internet access but connected ethernet - YouTube",
+      "summary": "My laptop is showing Wi-Fi no internet access. If you are in trouble like me, then see how to solve. The first method. Go to computer control panel. Now open the internet option. Then go to the Advanced option and click on the Reset button. Now check if your internet is okay. If this method does not fix your computer, you can follow the next procedure. The second method. This is the name of my laptop's Wi-Fi driver. The name of your laptop's Wi-Fi driver may be something else. Now go to the device manager of the computer. My Wi-Fi driver is showing inside the network adapter. Now right click on this Wi-Fi driver and click on Uninstall. Do not click on the delete option in any way here. Then click scan for hardware change. Now the Wi-Fi driver will be reinstalled on your laptop. Now connect",
+      "link": "https://www.youtube.com/watch?v=0_CIYgOz0jE",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "0_CIYgOz0jE",
+      "transcript_method": "whisper",
+      "transcript_chars": 875,
+      "has_full_transcript": true
+    }
+  ]
+}

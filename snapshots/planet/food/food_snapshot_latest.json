@@ -1,0 +1,19 @@
+{
+  "axis": "FOOD_REVIEW",
+  "timestamp": "2026-06-11T19:06:13.987888+00:00",
+  "level": "MEDIUM",
+  "signals": [],
+  "key_metrics": [],
+  "model": "WORLD_BANK_API",
+  "source_type": "REAL_DATA",
+  "metrics": {
+    "prevalence_undernourishment_pct": 8.5,
+    "food_production_index": 100.0,
+    "cereal_yield_kg_per_ha": 4243.53110790989,
+    "agricultural_land_pct": 36.8835927730766,
+    "food_imports_pct_merch": 8.88847852943638,
+    "arable_land_per_person_ha": 0.171655156755891
+  },
+  "data_quality": "6/6 indicators fetched",
+  "fetched_date": "2026-06-11"
+}

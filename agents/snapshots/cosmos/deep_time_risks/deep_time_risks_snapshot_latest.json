@@ -1,0 +1,21 @@
+{
+  "current_level": "LOW",
+  "key_metrics": {
+    "asteroid_impact_probability": "Estimated chance of a civilization-threatening asteroid impact in the next century is less than 1%",
+    "supervolcano_activity": "No active supervolcanoes are currently showing signs of imminent eruption",
+    "astrophysical_event_frequency": "Cosmic events like gamma-ray bursts or nearby supernovae are extremely rare within human timescales"
+  },
+  "main_risks": [
+    "Asteroid impact with a diameter over 1 km",
+    "Supervolcano eruption with global climate effects",
+    "High-energy astrophysical events near Earth"
+  ],
+  "trends": [
+    "Improved asteroid detection and deflection technologies",
+    "Stable geological activity in supervolcanic regions",
+    "No significant increase in astrophysical event detection"
+  ],
+  "source_type": "LLM_GENERATED",
+  "snapshot_timestamp": "2026-04-13T06:09:11.286654+00:00",
+  "axis": "DEEP_TIME_RISKS_REVIEW"
+}

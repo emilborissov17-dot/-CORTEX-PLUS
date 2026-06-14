@@ -1,0 +1,81 @@
+{
+  "axis": "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL",
+  "fetched_at": "2026-03-27T07:58:57.087943+00:00",
+  "smart_query": "human rights democracy freedom",
+  "sources_count": {
+    "wiki": 0,
+    "gdelt": 3,
+    "arxiv": 2,
+    "github": 3,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [],
+  "gdelt": [
+    {
+      "title": "Altenkamp : Religionsfreiheit ist Gradmesser für Demokratie und Rechtsstaatlichkeit",
+      "snippet": "Altenkamp : Religionsfreiheit ist Gradmesser für Demokratie und Rechtsstaatlichkeit",
+      "url": "https://www.finanznachrichten.de/nachrichten-2026-03/68050343-altenkamp-religionsfreiheit-ist-gradmesser-fuer-demokratie-und-rechtsstaatlichkeit-007.htm",
+      "source": "finanznachrichten.de"
+    },
+    {
+      "title": "Silencing Citizens Threatens Democracy in Nigeria , NHRC Warn",
+      "snippet": "Silencing Citizens Threatens Democracy in Nigeria , NHRC Warn",
+      "url": "https://punchng.com/silencing-citizens-threatens-democracy-nhrc/",
+      "source": "punchng.com"
+    },
+    {
+      "title": "Avrupadan Ekrem İmamoğluna ödül : 9 bin imza verildi",
+      "snippet": "Avrupadan Ekrem İmamoğluna ödül : 9 bin imza verildi",
+      "url": "https://www.odatv.com/guncel/avrupadan-ekrem-imamogluna-odul-9-bin-imza-verildi-120131504",
+      "source": "odatv.com"
+    }
+  ],
+  "github_repos": [
+    {
+      "title": "cirosantilli/china-dictatorship",
+      "snippet": "反中共政治宣传库。Anti Chinese government propaganda. 住在中国真名用户的网友请别给星星，不然你要被警察请喝茶。常见问答集，新闻集和饭店和音乐建议。卐习万岁卐。冠状病毒审查郝海东新疆改造中心六四事件法轮功 996.ICU709大抓捕巴拿马文件邓家贵低端人口西藏骚乱。Friends who live in China and have real name on ac",
+      "stars": 2898,
+      "url": "https://github.com/cirosantilli/china-dictatorship",
+      "updated": "2026-03-26",
+      "source": "GitHub"
+    },
+    {
+      "title": "iiab/iiab",
+      "snippet": "Internet-in-a-Box - Build your own LIBRARY OF ALEXANDRIA with a Raspberry Pi !",
+      "stars": 1802,
+      "url": "https://github.com/iiab/iiab",
+      "updated": "2026-03-27",
+      "source": "GitHub"
+    },
+    {
+      "title": "namecoin/ncdns",
+      "snippet": ":globe_with_meridians: Namecoin to DNS bridge daemon",
+      "stars": 141,
+      "url": "https://github.com/namecoin/ncdns",
+      "updated": "2026-02-27",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "The enrichment paradox: critical capability thresholds and irreversible dependency in human-AI symbiosis",
+      "snippet": "As artificial intelligence assumes cognitive labor, no quantitative framework predicts when human capability loss becomes catastrophic. We present a two-variable dynamical systems model coupling capability (H) and delegation (D), grounded in three axioms: learning requires capability, practice, and ",
+      "url": "https://arxiv.org/abs/2603.24391v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Generative AI User Experience: Developing Human--AI Epistemic Partnership",
+      "snippet": "Generative AI (GenAI) has rapidly entered education, yet its user experience is often explained through adoption-oriented constructs such as usefulness, ease of use, and engagement. We argue that these constructs are no longer sufficient because systems such as ChatGPT do not merely support learning",
+      "url": "https://arxiv.org/abs/2603.23863v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[#234 – David Duvenaud on why 'aligned AI' would still kill democracy] Democracy might be a brief historical blip. That’s the unsettling thesis of a recent paper, which argues AI that can do all the work a human can do inevitably leads to the “gradual disempowerment” of humanity.For most of history, ordinary people had almost no control over their governments. Liberal democracy emerged only recently, and probably not coincidentally around the Industrial Revolution.To",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

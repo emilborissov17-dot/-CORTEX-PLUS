@@ -1,0 +1,101 @@
+{
+  "axis": "ENERGY_REVIEW",
+  "fetched_at": "2026-03-14T07:12:19.956289+00:00",
+  "smart_query": "renewable energy solar wind",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 3,
+    "arxiv": 2,
+    "github": 3,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "Factor This finance and project development roundup: ArcLight, Arevon, Aypa Power, Octopus, Sol Systems",
+      "snippet": "ArcLight acquires stake in 5.4 GW of power projects, Arevon closes on $920M in financing, Aypa Power secures funding for Ontario energy storage, Octopus Australia breaks ground on a $900M project, and Sol Systems shares two solar milestones.",
+      "url": "https://www.renewableenergyworld.com/energy-business/new-project-development/factor-this-finance-and-project-development-roundup-arclight-arevon-aypa-power-octopus-sol-systems/",
+      "source": "RSS"
+    },
+    {
+      "title": "Breaking: DOE rolls out $1.9B funding opportunity for ‘urgently needed’ grid upgrades",
+      "snippet": "The U.S. Department of Energy's Office of Electricity announced a $1.9 billion funding opportunity for power grid upgrades, aimed at modernizing the grid to lower electricity costs.",
+      "url": "https://www.renewableenergyworld.com/power-grid/grid-modernization/breaking-doe-rolls-out-1-9b-funding-opportunity-for-urgently-needed-grid-upgrades/",
+      "source": "RSS"
+    },
+    {
+      "title": "Can this new coalition help bring down energy costs? – This Week in Cleantech",
+      "snippet": "On this episode of the This Week in Cleantech podcast, Chuck McCutcheon from Axios discusses a new coalition of companies, including tech giants like Google and Tesla, which is aiming to make better use of underutilized capacity on the U.S. power grid.",
+      "url": "https://www.renewableenergyworld.com/podcasts/can-this-new-coalition-help-bring-down-energy-costs-this-week-in-cleantech/",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [
+    {
+      "title": "Oman expands renewable energy projects to boost sustainability and energy security",
+      "snippet": "Oman expands renewable energy projects to boost sustainability and energy security",
+      "url": "https://timesofoman.com/article/169173-oman-expands-renewable-energy-projects-to-boost-sustainability-and-energy-security",
+      "source": "timesofoman.com"
+    },
+    {
+      "title": "Gujarat rolls out three clean energy policies , spotlights rooftop wind",
+      "snippet": "Gujarat rolls out three clean energy policies , spotlights rooftop wind",
+      "url": "https://www.thehindubusinessline.com/economy/gujarat-rolls-out-3-clean-energy-policies-eyes-5-lakh-crore-investments-in-green-hydrogen-re/article70436420.ece",
+      "source": "thehindubusinessline.com"
+    },
+    {
+      "title": "Επιστήμη : Η ανάπτυξη των ανανεώσιμων πηγών ενέργειας « Ανακάλυψη της Χρονιάς » για το 2025 από το περιοδικό Science",
+      "snippet": "Επιστήμη : Η ανάπτυξη των ανανεώσιμων πηγών ενέργειας « Ανακάλυψη της Χρονιάς » για το 2025 από το περιοδικό Science",
+      "url": "https://newpost.gr/eidiseis/epistimi-i-anaptyxi-ton-ananeosimon-pigon-energeias-anakalypsi-tis-chronias-gia-to-2025-apo-to-periodiko-science/",
+      "source": "newpost.gr"
+    }
+  ],
+  "github_repos": [
+    {
+      "title": "protontypes/open-sustainable-technology",
+      "snippet": "A directory and analysis of the open source ecosystem in the areas of climate change, sustainable energy, biodiversity and natural resources.  https://docs.getgrist.com/gSscJkc5Rb1R/OpenSustaintech",
+      "stars": 2458,
+      "url": "https://github.com/protontypes/open-sustainable-technology",
+      "updated": "2026-03-11",
+      "source": "GitHub"
+    },
+    {
+      "title": "PyPSA/PyPSA",
+      "snippet": "PyPSA: Python for Power System Analysis",
+      "stars": 1899,
+      "url": "https://github.com/PyPSA/PyPSA",
+      "updated": "2026-03-14",
+      "source": "GitHub"
+    },
+    {
+      "title": "pvlib/pvlib-python",
+      "snippet": "A set of documented functions for simulating the performance of photovoltaic energy systems.",
+      "stars": 1513,
+      "url": "https://github.com/pvlib/pvlib-python",
+      "updated": "2026-03-13",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Fairness in Robust Unit Commitment Problem Considering Suppression of Renewable Energy",
+      "snippet": "Power company operators make power generation plans one day in advance, in what is known as the Unit Commitment (UC) problem. UC is exposed to uncertainties, such as unknown electricity load and disturbances caused by renewable energy sources, especially PVs. In previous research, we proposed the Re",
+      "url": "https://arxiv.org/abs/2603.09464v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Eigenvalue Patterns and Participation Analysis of Symmetric Renewable Energy Power Systems",
+      "snippet": "State-space analysis is widely employed for examining power system dynamics but faces challenges in large-scale power systems integrated with numerous inverter-based resources (IBRs), where the significant increase of system states complicates modal analysis. Notably, renewable energy power systems ",
+      "url": "https://arxiv.org/abs/2603.08351v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[#488 – Infinity, Paradoxes that Broke Mathematics, Gödel Incompleteness & the Multiverse – Joel David Hamkins] Joel David Hamkins is a mathematician and philosopher specializing in set theory, the foundations of mathematics, and the nature of infinity, and he&#8217;s the #1 highest-rated user on MathOverflow. He is also the author of several books, including Proof and the Art of Mathematics and Lectures on the Philosophy of Mathematics. And he has a great blog called Infinitely More.\nThank you for listenin",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

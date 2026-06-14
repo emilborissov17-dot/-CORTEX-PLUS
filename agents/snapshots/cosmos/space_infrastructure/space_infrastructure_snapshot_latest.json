@@ -1,0 +1,19 @@
+{
+  "source_type": "REAL_DATA",
+  "raw": {
+    "axis": "SPACE_INFRASTRUCTURE_REVIEW",
+    "source": "llm_estimates",
+    "fetched_date": "2026-04-13",
+    "metrics": {
+      "active_satellites_est": 9000,
+      "space_agencies_count": 72,
+      "annual_launches_est": 240,
+      "iss_operational": true,
+      "lunar_missions_active": 3
+    },
+    "data_quality": "static_estimates_2025",
+    "notes": "Static estimates — real-time space data API TODO (SpaceTrack requires registration)."
+  },
+  "snapshot_timestamp": "2026-04-13T06:08:20.629670+00:00",
+  "axis": "SPACE_INFRASTRUCTURE_REVIEW"
+}

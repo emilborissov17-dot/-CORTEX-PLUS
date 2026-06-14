@@ -1,0 +1,157 @@
+{
+  "axis": "ECOSYSTEMS_BIODIVERSITY_REVIEW",
+  "domain": "planet",
+  "timestamp": "2026-05-18T09:02:01.776118+00:00",
+  "sources_count": 11,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] Climate 101: Deforestation | National Geographic",
+      "summary": "Forest cover about 30% of the planet, and the ecosystems they create play an essential role in supporting life on Earth. But deforestation is clearing Earth's forests on a massive scale, and at the current rate of destruction, the world's rainforest could completely disappear within a hundred years. Why should we care about deforestation? Together, forestry and agriculture are responsible for 24% of greenhouse gas emissions, making deforestation a significant contributor to climate change. Deforestation impacts the amount of greenhouse gases in the atmosphere in two ways. First, when trees are filled, they release the carbon they are storing into the atmosphere. Second, trees play a critical role in absorbing the greenhouse gases that fuel global warming. Fewer forests mean larger amounts ",
+      "link": "https://www.youtube.com/watch?v=Ic-J6hcSKa8",
+      "published": "2017-08-21T17:00:03Z",
+      "source_type": "youtube",
+      "channel": "National Geographic",
+      "video_id": "Ic-J6hcSKa8",
+      "transcript_method": "whisper",
+      "transcript_chars": 2053,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Biodiversity Loss Emergency: The Silent Extinction Crisis Explained",
+      "summary": "Picture yourself walking through a lush rainforest, where the air is thick with humidity and the sounds of life surround you from every direction. The vibrant cause of tropical birds echo above. While below a myriad of insects buzz and rustle among the leaves, brightly colored flowers and plants of every imaginable shade create a mosaic of life and beauty. This is biodiversity in action. The variety of life forms that make up our planet's ecosystems. Biodeversity is more than just an array of different species. It's the intricate web of life that sustains ecosystems and by extension, human life. It encompasses the diversity within species between species and of ecosystems themselves. Healthy biodiversity ensures ecosystem productivity, where each species no matter how small has an importan",
+      "link": "https://www.youtube.com/watch?v=DjVU3kgmVBc",
+      "published": "2024-07-19T10:00:10Z",
+      "source_type": "youtube",
+      "channel": "The Knowledge Snack",
+      "video_id": "DjVU3kgmVBc",
+      "transcript_method": "whisper",
+      "transcript_chars": 14138,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Are 1,000,000 Species Really Going Extinct? What Can We Do About It?",
+      "summary": "Welcome back to NatureLeague. One of the ways that I try to think and feel about life on Earth is through the lens of current events and news reports. Something as simple as looking at trends for key search terms online can give me an idea of the way that stories and themes are being reported. And let's be honest, the vast majority of current events about nature are upsetting, like big time bombers. And it's easy to get really dismayed and feel helpless about what we're seeing, which can leave me wondering what I can do. Understanding the best research and current data about these topics is one way that I find a little bit of peace amid all of the noise. And so I wanted to take some time and break down a recent report on biodiversity with this in mind. That way, we can all know the facts a",
+      "link": "https://www.youtube.com/watch?v=W-DUqKJW0ZM",
+      "published": "2019-05-24T22:36:41Z",
+      "source_type": "youtube",
+      "channel": "Nature League",
+      "video_id": "W-DUqKJW0ZM",
+      "transcript_method": "whisper",
+      "transcript_chars": 20918,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "Biodiversity is declining at an alarming rate due to human activities and lack of coordinated global action.",
+    "root_cause": "Fragmentation of ecosystems, deforestation, and insufficient global governance mechanisms are leading to the loss of species and habitats.",
+    "severity": "CRITICAL",
+    "leverage_points": [
+      "Global Wildlife Health Authority (proposed)",
+      "International cooperation through IUCN and similar organizations"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Establish a Global Wildlife Health Authority to coordinate international efforts in biodiversity conservation and disease monitoring in wildlife.",
+        "measurable_goal": "Increase global collaboration on biodiversity protection by 50% within 5 years, as measured by participation in international conservation agreements.",
+        "timeframe": "long-term"
+      },
+      {
+        "action": "Implement stricter deforestation regulations and incentivize sustainable land-use practices through international funding and policy support.",
+        "measurable_goal": "Reduce deforestation rates by 30% within 10 years, as measured by satellite monitoring and national reporting.",
+        "timeframe": "medium-term"
+      }
+    ],
+    "evidence": [
+      "Deforestation is clearing Earth's forests on a massive scale, with rainforests potentially disappearing within a hundred years.",
+      "Biodiversity loss is described as an 'emergency' with a 'silent extinction crisis' due to the rapid decline of species."
+    ],
+    "generalization": "This problem connects to the domain of planetary health, as biodiversity loss undermines ecosystem resilience, which in turn affects human well-being, food security, and climate regulation.",
+    "summary": "Biodiversity is declining rapidly due to deforestation and lack of global coordination, requiring urgent action through new governance mechanisms and sustainable land-use policies.",
+    "risk_level": "CRITICAL"
+  },
+  "raw_items": [
+    {
+      "title": "Global",
+      "summary": "<span class=\"field field--name-title field--type-string field--label-hidden\">Global</span>\n<span class=\"field field--name-uid field--type-entity-reference field--label-hidden\"><span>integrations</span></span>\n<span class=\"field field--name-created field--type-created field--label-hidden\"><time class=\"datetime\" datetime=\"2022-02-21T08:14:38+01:00\" title=\"Monday, February 21, 2022 - 08:14\">Mon, 02/21/2022 - 08:14</time>\n</span>\n<span class=\"a2a_kit a2a_kit_size_20 addtoany_list\"><a class=\"a2a_butt",
+      "link": "https://iucn.org/our-work/region/global",
+      "published": "Mon, 21 Feb 2022 07:14:38 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Inside IUCN",
+      "summary": "<span class=\"field field--name-title field--type-string field--label-hidden\">Inside IUCN</span>\n<span class=\"field field--name-uid field--type-entity-reference field--label-hidden\"><span>review.sm</span></span>\n<span class=\"field field--name-created field--type-created field--label-hidden\"><time class=\"datetime\" datetime=\"2021-11-18T11:17:35+01:00\" title=\"Thursday, November 18, 2021 - 11:17\">Thu, 11/18/2021 - 11:17</time>\n</span>\n\n\n<span class=\"a2a_kit a2a_kit_size_20 addtoany_list\"><a class=\"a2",
+      "link": "https://iucn.org/content/inside-iucn",
+      "published": "Thu, 18 Nov 2021 10:17:35 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "DG Speech Node",
+      "summary": "<span class=\"field field--name-title field--type-string field--label-hidden\">DG Speech Node</span>\n<span class=\"field field--name-uid field--type-entity-reference field--label-hidden\"><span>review.webtf</span></span>\n<span class=\"field field--name-created field--type-created field--label-hidden\"><time class=\"datetime\" datetime=\"2021-11-18T10:56:51+01:00\" title=\"Thursday, November 18, 2021 - 10:56\">Thu, 11/18/2021 - 10:56</time>\n</span>\n\n\n<span class=\"a2a_kit a2a_kit_size_20 addtoany_list\"><a cla",
+      "link": "https://iucn.org/content/dg-speech-node",
+      "published": "Thu, 18 Nov 2021 09:56:51 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "It is time for a Global Wildlife Health Authority",
+      "summary": "<span class=\"field field--name-title field--type-string field--label-hidden\">It is time for a Global Wildlife Health Authority</span>\n<span class=\"field field--name-uid field--type-entity-reference field--label-hidden\"><span>integrations</span></span>\n<span class=\"field field--name-created field--type-created field--label-hidden\"><time class=\"datetime\" datetime=\"2021-10-20T09:48:06+02:00\" title=\"Wednesday, October 20, 2021 - 09:48\">Wed, 10/20/2021 - 09:48</time>\n</span>\n\n\n<span class=\"a2a_kit a2",
+      "link": "https://iucn.org/content/it-time-global-wildlife-health-authority",
+      "published": "Wed, 20 Oct 2021 07:48:06 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Giant squid discovery uncovers a hidden deep-sea world off Australia",
+      "summary": "Scientists exploring deep underwater canyons off the coast of Western Australia uncovered a hidden world packed with bizarre and elusive marine life — including signs of the legendary giant squid. By analyzing traces of DNA floating in seawater from depths exceeding 4 kilometers, researchers identified 226 species ranging from deep-diving whales to strange fish rarely or never seen in the region before. Some of the creatures may even be unknown to science.",
+      "link": "https://www.sciencedaily.com/releases/2026/05/260513221807.htm",
+      "published": "Thu, 14 May 2026 08:46:07 EDT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Deep diving fur seals experience delayed heart surges after returning to land",
+      "summary": "Fur seals may look like they’re simply resting after exhausting hunting trips at sea, but their bodies are secretly working overtime. Scientists discovered that hours after returning to land, the seals’ heart rates suddenly surge — sometimes doubling — as they recover from the intense physical stress of deep diving. The findings suggest that seals postpone much of their recovery until they’re safely ashore, likely flushing out lactic acid and rebuilding oxygen stores after days of nonstop diving",
+      "link": "https://www.sciencedaily.com/releases/2026/05/260508003119.htm",
+      "published": "Sat, 09 May 2026 07:35:27 EDT",
+      "source_type": "rss"
+    },
+    {
+      "title": "240-million-year-old giant “sand creeper” found hidden in retaining wall",
+      "summary": "A forgotten fossil hidden inside a garden wall has turned out to be one of Australia’s most remarkable prehistoric discoveries. Scientists have now identified the 240-million-year-old amphibian, Arenaerpeton supinatus, revealing an almost perfectly preserved skeleton—complete with rare traces of skin. This ancient river predator, about 1.2 meters long, looked somewhat like a giant salamander but was bulkier and armed with fearsome fang-like teeth.",
+      "link": "https://www.sciencedaily.com/releases/2026/05/260504154028.htm",
+      "published": "Wed, 06 May 2026 02:47:27 EDT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Scientists think they finally know why Neanderthals vanished",
+      "summary": "A new study suggests Neanderthals didn’t go extinct simply because of climate change or competition with Homo sapiens. Instead, the key difference may have been social connectivity—Homo sapiens formed stronger, more flexible networks that helped them survive environmental shocks. Neanderthals had connections too, but they were more fragile and regionally limited. This made them less resilient as conditions became increasingly unpredictable.",
+      "link": "https://www.sciencedaily.com/releases/2026/04/260427050609.htm",
+      "published": "Tue, 28 Apr 2026 04:42:03 EDT",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] Climate 101: Deforestation | National Geographic",
+      "summary": "Forest cover about 30% of the planet, and the ecosystems they create play an essential role in supporting life on Earth. But deforestation is clearing Earth's forests on a massive scale, and at the current rate of destruction, the world's rainforest could completely disappear within a hundred years. Why should we care about deforestation? Together, forestry and agriculture are responsible for 24% of greenhouse gas emissions, making deforestation a significant contributor to climate change. Deforestation impacts the amount of greenhouse gases in the atmosphere in two ways. First, when trees are filled, they release the carbon they are storing into the atmosphere. Second, trees play a critical role in absorbing the greenhouse gases that fuel global warming. Fewer forests mean larger amounts ",
+      "link": "https://www.youtube.com/watch?v=Ic-J6hcSKa8",
+      "published": "2017-08-21T17:00:03Z",
+      "source_type": "youtube",
+      "channel": "National Geographic",
+      "video_id": "Ic-J6hcSKa8",
+      "transcript_method": "whisper",
+      "transcript_chars": 2053,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Biodiversity Loss Emergency: The Silent Extinction Crisis Explained",
+      "summary": "Picture yourself walking through a lush rainforest, where the air is thick with humidity and the sounds of life surround you from every direction. The vibrant cause of tropical birds echo above. While below a myriad of insects buzz and rustle among the leaves, brightly colored flowers and plants of every imaginable shade create a mosaic of life and beauty. This is biodiversity in action. The variety of life forms that make up our planet's ecosystems. Biodeversity is more than just an array of different species. It's the intricate web of life that sustains ecosystems and by extension, human life. It encompasses the diversity within species between species and of ecosystems themselves. Healthy biodiversity ensures ecosystem productivity, where each species no matter how small has an importan",
+      "link": "https://www.youtube.com/watch?v=DjVU3kgmVBc",
+      "published": "2024-07-19T10:00:10Z",
+      "source_type": "youtube",
+      "channel": "The Knowledge Snack",
+      "video_id": "DjVU3kgmVBc",
+      "transcript_method": "whisper",
+      "transcript_chars": 14138,
+      "has_full_transcript": true
+    }
+  ]
+}

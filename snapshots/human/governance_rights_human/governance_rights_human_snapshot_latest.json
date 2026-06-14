@@ -1,0 +1,19 @@
+{
+  "source_type": "REAL_DATA",
+  "raw": {
+    "axis": "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL",
+    "source": "world_bank_api",
+    "fetched_date": "2026-06-11",
+    "metrics": {
+      "rule_of_law": null,
+      "voice_accountability": null,
+      "political_stability": null,
+      "gender_inequality_index": 27.2485552269582,
+      "child_labor_pct": null,
+      "access_justice_score": 3.03896103896104
+    },
+    "data_quality": "2/6 fetched"
+  },
+  "snapshot_timestamp": "2026-06-11T19:06:31.304447+00:00",
+  "axis": "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL"
+}

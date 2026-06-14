@@ -1,0 +1,63 @@
+{
+  "axis": "INFRASTRUCTURE_CITIES_REVIEW",
+  "fetched_at": "2026-05-04T08:09:44.076284+00:00",
+  "smart_query": "cities infrastructure urban development",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 3,
+    "arxiv": 0,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "Oscars says AI actors and writing cannot win awards",
+      "snippet": "The academy that controls the Oscars on Friday issued new award eligibility requirements around the use of artificial intelligence in film. ",
+      "url": "https://www.bbc.com/news/articles/cx21dl3v7d3o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Bright idea? UK firm pioneers data centres using lampposts",
+      "snippet": "The solar-powered iLamps will have a built-in Nvidia chip but there are questions over their security and scalability. ",
+      "url": "https://www.bbc.com/news/articles/c98r4e594p7o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Pentagon says US military to be an 'AI-first' fighting force",
+      "snippet": "The US military has agreed eight new contracts with big tech firms as it expands its artificial intelligence capabilities.",
+      "url": "https://www.bbc.com/news/articles/cy02gjq2987o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [
+    {
+      "title": "Ethiopia Scales Corridor Development to 75 Cities Nationwide - Ministry",
+      "snippet": "Ethiopia Scales Corridor Development to 75 Cities Nationwide - Ministry",
+      "url": "https://allafrica.com/stories/202603130039.html",
+      "source": "allafrica.com"
+    },
+    {
+      "title": "Cabinet clears Rs 1 lakh crore Urban Challenge Fund to drive market - led city infrastructure push",
+      "snippet": "Cabinet clears Rs 1 lakh crore Urban Challenge Fund to drive market - led city infrastructure push",
+      "url": "https://timesofindia.indiatimes.com/business/india-business/cabinet-clears-rs-1-lakh-crore-urban-challenge-fund-to-drive-market-led-city-infrastructure-push/articleshow/128341645.cms",
+      "source": "timesofindia.indiatimes.com"
+    },
+    {
+      "title": "Orașele și viața de noapte în economia urbană non - stop",
+      "snippet": "Orașele și viața de noapte în economia urbană non - stop",
+      "url": "https://www.kanald.ro/orasele-si-viata-de-noapte-in-economia-urbana-non-stop-20526216",
+      "source": "kanald.ro"
+    }
+  ],
+  "github_repos": [],
+  "arxiv_papers": [],
+  "podcast": "[The U.S. Public Wants Regulation (or Prohibition) of Expert‑Level and Superhuman AI] Three‑quarters of U.S. adults want strong regulations on AI development, preferring oversight akin to pharmaceuticals rather than industry \"self‑regulation.\"",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

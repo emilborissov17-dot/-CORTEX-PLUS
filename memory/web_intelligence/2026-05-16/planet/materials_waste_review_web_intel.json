@@ -1,0 +1,123 @@
+{
+  "axis": "MATERIALS_WASTE_REVIEW",
+  "domain": "planet",
+  "timestamp": "2026-05-16T18:47:25.782075+00:00",
+  "sources_count": 10,
+  "rss_count": 4,
+  "ddg_count": 5,
+  "youtube_count": 1,
+  "youtube_items": [
+    {
+      "title": "[YT] Farewell to Global Plastic Waste (How Import Bans Are ...Perspectives on Plastic Waste Management: Challenges and ...NEW Plastic waste management video tutorials - WASTEChallenges and solutions for global plastic governance ...Plastic Recycling in 2026 and Beyond: The ... - LinkedInFilms and Documentaries | Break Free From PlasticCurrent Challenges in Global Waste Plastic Management - AIChE",
+      "summary": "For decades, the global plastic waste trade has quietly taken shape. Developed countries have been shipping discarded plastics abroad, while developing nations have warned the environmental costs behind this practice. The production of plastic has skyrocketed, yet our ability to manage it has lacked far behind. As a result, waste keeps piling up. The turning point came in 2018, when China introduced its national sword policy. Effectively severing global recycling chains, in an instant. Countries that had long depended on exporting waste were forced to confound the massive amounts of garbage they themselves were generating. This crisis exposed the impotence of traditional recycling methods, but it also sparked the drive for innovation. The old paths of landfill and incineration are no longe",
+      "link": "https://www.youtube.com/watch?v=-4Q786dMQL4",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "-4Q786dMQL4",
+      "transcript_method": "whisper",
+      "transcript_chars": 1402,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "Неправилното управление на отпадъците води до загрязнение на водни ресурси и усилена урбана подтопяване.",
+    "root_cause": "Неправилното съхранение и разхлабената система за управление на отпадъците в много градове водят до загрязнение на водни системи и усилена урбана подтопяване.",
+    "severity": "CRITICAL",
+    "leverage_points": [
+      "Развитието на инфраструктура за събиране и обработка на отпадъци в градовете",
+      "Повишаване на обществената осведоменост и участието на граждани в управлението на отпадъците"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Инвестиции в инфраструктура за събиране и обработка на отпадъци в урбани центрове",
+        "measurable_goal": "Съкращаване на загрязнението на водни ресурси с 30% в рамките на 5 години",
+        "timeframe": "дългосрочно"
+      },
+      {
+        "action": "Разработка на образователни програми за управление на отпадъци в училищата",
+        "measurable_goal": "Повишаване на осведомеността за отпадъчни практики с 50% в рамките на 3 години",
+        "timeframe": "средносрочно"
+      }
+    ],
+    "evidence": [
+      "Импактът от неправилното управление на отпадъците върху урбана подтопяване и загрязнението на водни ресурси в нигерийски градове",
+      "Повечето от пластмасовия отпадък в океаните произтича от лошо управление на отпадъците, а не от високи нива на производство"
+    ],
+    "generalization": "Проблемът с отпадъците е свързан директно с домейните 'planet' и 'civilization', като влияе върху здравословната биосфера и устойчивостта на градските системи.",
+    "summary": "Неправилното управление на отпадъците води до загрязнение на водни ресурси и урбани проблеми, което изисква инфраструктурни инвестиции и образование.",
+    "risk_level": "CRITICAL"
+  },
+  "raw_items": [
+    {
+      "title": "Project Zero Waste field trip connects students to real-world sustainability efforts",
+      "summary": "Students from Valadez Middle School recently stepped beyond the classroom and into one of Orange County’s largest waste management facilities to learn firsthand how trash, recycling and composting systems operate.",
+      "link": "https://www.waste360.com/sustainability/project-zero-waste-field-trip-connects-students-to-real-world-sustainability-efforts",
+      "published": "Fri, 15 May 2026 12:00:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "California city launches state's first fully electric trash and recycling fleet",
+      "summary": "",
+      "link": "https://www.waste360.com/fleet-technology/california-city-launches-state-s-first-fully-electric-trash-and-recycling-fleet",
+      "published": "Fri, 15 May 2026 12:00:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "SWANA Releases New ARF Report on Horizontal Landfill Gas Collection Systems",
+      "summary": "The SWANA Applied Research Foundation (ARF) released a new report titled Horizontal Landfill Gas Collection Systems. This report provides updated guidance to assist solid waste professionals in designing, installing, and operating horizontal landfill gas (LFG) collection systems.",
+      "link": "https://www.waste360.com/landfill/swana-releases-new-arf-report-on-horizontal-landfill-gas-collection-systems",
+      "published": "Fri, 15 May 2026 12:00:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Penn researchers are turning food scraps into building materials — from pineapple peels to celery stalks",
+      "summary": "At Penn’s DumoLab, researchers work to solve multiple problems: how to keep food waste out of landfills, make healthier building materials and tackle climate change.",
+      "link": "https://www.waste360.com/food-waste/penn-researchers-are-turning-food-scraps-into-building-materials-from-pineapple-peels-to-celery-stalks",
+      "published": "Thu, 14 May 2026 19:14:57 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "7 ocean plastic statistics that actually matter in 2026",
+      "summary": "About 0.5% of all plastic waste ends up in the ocean.[2]. Why it matters: The older, higher figure is still widely repeated, but the distinction matters for solutions. Knowing that rivers are the primary delivery mechanism helps target interventions.",
+      "link": "https://plasticbank.com/blog/from-production-to-pollution-7-statistics-that-define-the-ocean-plastic-crisis/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "16 Biggest Environmental Problems of 2026 | Earth.Org",
+      "summary": "From the rise of AI and plastic pollution to fast fashion, here are 16 of the biggest environmental problems of 2026.",
+      "link": "https://earth.org/the-biggest-environmental-problems-of-our-lifetime/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "How much plastic ends up in the ocean? Where does it come from?",
+      "summary": "Originally published in November 2023; substantially updated in February 2026.Plastic pollution is mostly about how waste is managed, not how much is producedLow- to middle-income countries tend to produce much more plastic pollution",
+      "link": "https://ourworldindata.org/plastic-pollution",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Impact of improper waste disposal on urban flooding and...",
+      "summary": "Improper solid waste disposal is a pervasive environmental and public-health challenge in many Nigerian cities, contributing directly to increased urban flooding, degradation of water resources, and long-term threats to environmental sustainability.",
+      "link": "https://www.linkedin.com/pulse/impact-improper-waste-disposal-urban-flooding-cities-rita-bolusemihi-zrx2e",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Environmental Impact Of Improper Waste Management In Nigeria",
+      "summary": "Common Forms of Improper Waste Disposal in Nigeria. Here are the most widespread improper disposal practices across Nigerian states: Open dumping: Waste piled on vacant lots, road medians, and drainage paths without any containment.",
+      "link": "https://chuzeke.com/environmental-impact-improper-waste-management/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "[YT] Farewell to Global Plastic Waste (How Import Bans Are ...Perspectives on Plastic Waste Management: Challenges and ...NEW Plastic waste management video tutorials - WASTEChallenges and solutions for global plastic governance ...Plastic Recycling in 2026 and Beyond: The ... - LinkedInFilms and Documentaries | Break Free From PlasticCurrent Challenges in Global Waste Plastic Management - AIChE",
+      "summary": "For decades, the global plastic waste trade has quietly taken shape. Developed countries have been shipping discarded plastics abroad, while developing nations have warned the environmental costs behind this practice. The production of plastic has skyrocketed, yet our ability to manage it has lacked far behind. As a result, waste keeps piling up. The turning point came in 2018, when China introduced its national sword policy. Effectively severing global recycling chains, in an instant. Countries that had long depended on exporting waste were forced to confound the massive amounts of garbage they themselves were generating. This crisis exposed the impotence of traditional recycling methods, but it also sparked the drive for innovation. The old paths of landfill and incineration are no longe",
+      "link": "https://www.youtube.com/watch?v=-4Q786dMQL4",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "-4Q786dMQL4",
+      "transcript_method": "whisper",
+      "transcript_chars": 1402,
+      "has_full_transcript": true
+    }
+  ]
+}

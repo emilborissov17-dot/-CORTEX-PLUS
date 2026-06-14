@@ -1,0 +1,12 @@
+{
+  "tasks": [
+    {
+      "component": "trend_tracker",
+      "problem": "12 оси имат INSUFFICIENT_DATA защото нямат достатъчно исторически точки в axis_history.json",
+      "solution": "axis_history.json е DICT с ключове като 'ECONOMY_WORK_REVIEW'. Прочети memory/axis_history.json, намери осите където липсват данни, прочети memory/trends_latest.json и добави urgency_score като fallback. Итерирай с: for axis, data in history.items()",
+      "priority": "HIGH",
+      "added_at": "2026-04-10T09:47:21.094555+00:00",
+      "status": "pending"
+    }
+  ]
+}

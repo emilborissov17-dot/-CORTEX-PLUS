@@ -1,0 +1,37 @@
+{
+  "axis": "PLANETARY_POTENTIAL_REVIEW",
+  "fetched_at": "2026-05-04T08:11:03.532699+00:00",
+  "smart_query": "earth resources sustainability",
+  "sources_count": {
+    "wiki": 0,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [],
+  "gdelt": [],
+  "github_repos": [],
+  "arxiv_papers": [
+    {
+      "title": "Physical Analysis of Bennu Samples Reveals Regolith Production by Collisional Disruption on Near-Earth Asteroids",
+      "snippet": "Owing to the extremely low gravity of small near-Earth asteroids (NEAs), it has been assumed that impact-generated rock fragments escape into space and thus do not contribute to the accumulation of regolith. However, centimeter-sized stones returned from the small NEA Bennu by NASA's OSIRIS-REx miss",
+      "url": "https://arxiv.org/abs/2604.19361v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "On the curlometer measurement of field-aligned and perpendicular currents in low Earth orbit: Swarm observations and whole geospace simulations",
+      "snippet": "Measuring field-aligned currents (FACs) using magnetic field observations provides a powerful means to probe the multi-scale interactions between the magnetosphere, ionosphere and thermosphere. In this study, we apply the curlometer technique to Swarm spacecraft observations and to simulations of th",
+      "url": "https://arxiv.org/abs/2604.18553v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[#486 – Michael Levin: Hidden Reality of Alien Intelligence & Biological Life] Michael Levin is a biologist at Tufts University working on novel ways to understand and control complex pattern formation in biological systems.\nThank you for listening ❤ Check out our sponsors: https://lexfridman.com/sponsors/ep486-sc\nSee below for timestamps, transcript, and to give feedback, submit questions, contact Lex, etc.\nTranscript:\nhttps://lexfridman.com/michael-levin-2-transcript\nCONTA",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

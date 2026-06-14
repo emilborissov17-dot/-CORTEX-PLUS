@@ -1,0 +1,95 @@
+{
+  "axis": "GOAL_PROGRESS_REVIEW",
+  "domain": "cosmos",
+  "timestamp": "2026-05-18T06:34:24.982842+00:00",
+  "sources_count": 6,
+  "rss_count": 5,
+  "ddg_count": 0,
+  "youtube_count": 1,
+  "youtube_items": [
+    {
+      "title": "[YT] How to overcome your mistakes - YouTube",
+      "summary": "In a 2019 study, over 400 participants were enlisted to learn a mysterious, invented language. Individuals were asked about three pairs of rooms. For example, which of these two characters represents an animal? Then after a brief break, they were asked about the same room pairs with questions flipped, as in which of these two rooms represents a non-living object. But this game had a secret. The subject's answers in round one determine the rooms meanings in round two. In the first round, participants either had all their answers marked as correct, no matter what, or they were forced to fail every question. This meant that at the break, every participant had the same amount of information, and in round two, they were playing for real. But despite this even playing field, the successful parti",
+      "link": "https://www.youtube.com/watch?v=eBz7iUJu9UM",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "eBz7iUJu9UM",
+      "transcript_method": "whisper",
+      "transcript_chars": 4293,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "Повишение на бедността и негативно влияние върху здравето на хората поради нарушения в глобалните търговски коридори и енергийните доставки",
+    "root_cause": "Нарушения в глобалните търговски коридори и енергийните доставки са резултат от сложна взаимосвързаност между геополитическите напрежения, конфликти и разногласия между държавите",
+    "severity": "HIGH",
+    "leverage_points": [
+      "Международните организации и правителствата трябва да работят заедно за намаляване на геополитическите напрежения и конфликти",
+      "Развитието на алтернативни и устойчиви енергийни източници би могло да намали зависимостта от традиционните енергийни доставки и да стабилизира глобалните търговски коридори"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Създаване на платформа за международно сътрудничество и диалог за решаване на глобалните енергийни и търговски проблеми",
+        "measurable_goal": "Замръзване на 10% от геополитическите конфликти и намаляване на енергийните доставки с 5% през следващите 12 месеца",
+        "timeframe": "средносрочно"
+      }
+    ],
+    "evidence": [
+      "Глобалните енергийни и търговски коридори са сериозно нарушени, което е довело до повишение на бедността и негативно влияние върху здравето на хората",
+      "WHO предупреждава за опасностите от никотинови пушки, които се насочват към младите хора и водят до бързо увеличение на никотинова употреба сред тях"
+    ],
+    "generalization": "Този проблем е тясно свързан с домейна на човека и цивилизацията, тъй като влияе върху здравето, икономиката и социалните връзки на хората",
+    "summary": "Повишение на бедността и негативно влияние върху здравето на хората поради нарушения в глобалните търговски коридори и энергийните доставки. Тези проблеми трябва да бъдат решени чрез международно сътрудничество и диалог.",
+    "risk_level": "HIGH"
+  },
+  "raw_items": [
+    {
+      "title": "Global energy and trade disruption pushing millions towards poverty",
+      "summary": "<p>Disruptions to global energy supplies and trade corridors are driving up the cost of food, transport and essential goods worldwide, slowing economic growth and increasing pressure on vulnerable households and debt-strapped developing countries.</p>\n<p>The post <a href=\"https://news.un.org/feed/view/en/story/2026/05/1167526\">Global energy and trade disruption pushing millions towards poverty</a> appeared first on <a href=\"https://www.un.org/sustainabledevelopment\">United Nations Sustainable De",
+      "link": "https://news.un.org/feed/view/en/story/2026/05/1167526",
+      "published": "Fri, 15 May 2026 12:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "WHO sounds alarm over nicotine pouches targeting young people",
+      "summary": "<p>Brightly coloured nicotine pouches promoted through social media influencers, music festivals and youth-oriented advertising are driving a rapid rise in nicotine use among young people worldwide, the World Health Organization (WHO) warned on Friday. Read Full Story on UN News</p>\n<p>The post <a href=\"https://news.un.org/feed/view/en/story/2026/05/1167520\">WHO sounds alarm over nicotine pouches targeting young people</a> appeared first on <a href=\"https://www.un.org/sustainabledevelopment\">Uni",
+      "link": "https://news.un.org/feed/view/en/story/2026/05/1167520",
+      "published": "Fri, 15 May 2026 12:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Media Advisory | United Nations to launch 2026 mid-year update on the global economy",
+      "summary": "<p>The post <a href=\"https://www.un.org/sustainabledevelopment/blog/2026/05/media-advisory-united-nations-to-launch-2026-mid-year-update-on-the-global-economy/\">Media Advisory | United Nations to launch 2026 mid-year update on the global economy</a> appeared first on <a href=\"https://www.un.org/sustainabledevelopment\">United Nations Sustainable Development</a>.</p>",
+      "link": "https://www.un.org/sustainabledevelopment/blog/2026/05/media-advisory-united-nations-to-launch-2026-mid-year-update-on-the-global-economy/",
+      "published": "Thu, 14 May 2026 13:00:44 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Media Advisory | United Nations to launch 2026 mid-year update  on the global economy",
+      "summary": "<p>Media Advisory  United Nations to launch 2026 mid-year update on the global economy Press briefing live on UN WebTV The report is under embargo until 19 May 2026, 12:45 pm EDT The crisis in the Middle East has delivered another major shock to the world economy, heightening uncertainty, stoking inflationary pressures and testing the resilience of global  [...]</p>\n<p>The post <a href=\"https://www.un.org/sustainabledevelopment/blog/2026/05/media-advisory-united-nations-to-launch-2026-mid-year-u",
+      "link": "https://www.un.org/sustainabledevelopment/blog/2026/05/media-advisory-united-nations-to-launch-2026-mid-year-update-on-the-global-economy/",
+      "published": "Thu, 14 May 2026 13:00:32 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Hello world!",
+      "summary": "Welcome to WordPress. This is your first post. Edit or delete it, then start writing!",
+      "link": "https://sdg.iisd.org/hello-world/",
+      "published": "Thu, 18 May 2023 15:00:19 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] How to overcome your mistakes - YouTube",
+      "summary": "In a 2019 study, over 400 participants were enlisted to learn a mysterious, invented language. Individuals were asked about three pairs of rooms. For example, which of these two characters represents an animal? Then after a brief break, they were asked about the same room pairs with questions flipped, as in which of these two rooms represents a non-living object. But this game had a secret. The subject's answers in round one determine the rooms meanings in round two. In the first round, participants either had all their answers marked as correct, no matter what, or they were forced to fail every question. This meant that at the break, every participant had the same amount of information, and in round two, they were playing for real. But despite this even playing field, the successful parti",
+      "link": "https://www.youtube.com/watch?v=eBz7iUJu9UM",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "eBz7iUJu9UM",
+      "transcript_method": "whisper",
+      "transcript_chars": 4293,
+      "has_full_transcript": true
+    }
+  ]
+}

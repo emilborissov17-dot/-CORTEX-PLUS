@@ -1,0 +1,183 @@
+{
+  "axis": "TECHNOLOGY_AI_REVIEW",
+  "domain": "civilization",
+  "timestamp": "2026-05-16T22:17:12.968625+00:00",
+  "sources_count": 18,
+  "rss_count": 12,
+  "ddg_count": 0,
+  "youtube_count": 6,
+  "youtube_items": [
+    {
+      "title": "[YT] Jeff Kinney | Diary of a Wimpy Kid: Partypooper | Talks at Google",
+      "summary": "Welcome excited to have you here today. Thanks for coming. Be here in front of this big screen. Look at how big it is. It's just a huge screen. Okay, I thought that we would start with rapid fire questions. Okay, let's do it. Ready. This is our warm up. Just to get everybody on the same page. Okay. I scream or cake. Oh, ice cream. Elevators or escalators. Escalators. Interesting. Reading or writing? Writing. For me. What's your favorite day of the week? Friday, of course. Friday. Maybe Thursday. It's like a bonus weekend. It's leading you to the Friday. That's right. What do you think is the best age? The best age. Fifth grade was the best for me. Yeah, so I'll tell you why later. Okay. Oh, okay. I'll take note of that. You can use that next time. Yeah, I was ready to go. I was ready to go",
+      "link": "https://www.youtube.com/watch?v=t8ZUiinrksw",
+      "published": "2026-05-15T16:01:22+00:00",
+      "source_type": "youtube",
+      "channel": "Talks at Google",
+      "video_id": "t8ZUiinrksw",
+      "transcript_method": "whisper",
+      "transcript_chars": 36396,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Susie Wolff | Driven | Talks at Google",
+      "summary": "Welcome to the stage, Susie Wolf. Thank you so much for joining us. Oh, no. The welcome welcome Susie. It's truly an honor to have you here with us. And welcome everyone who is joining us here from New York, and joining us virtually as well. As you may or may not know, Susie's name is synonymous with breaking boundaries, from a record breaking career in carting to becoming the first woman in 22 years to take part in the Formula One race weekend. She has consistently redefined what it means to be in an elite athlete and motor sport. And then after retiring from the cockpit, she successfully pivoted into leadership, which I think is the most impressive part of this journey so far, just keeps getting more impressive. But serving as a team principal and CEO of the Venturi Racing Formula E team",
+      "link": "https://www.youtube.com/watch?v=YG5w939A9yQ",
+      "published": "2026-05-13T16:00:50+00:00",
+      "source_type": "youtube",
+      "channel": "Talks at Google",
+      "video_id": "YG5w939A9yQ",
+      "transcript_method": "whisper",
+      "transcript_chars": 44057,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Nelson Dellis | Everyday Genius: Hacks to Boost Your Memory, Focus... | Talks at Google",
+      "summary": "Now, listen, please take a seat. Welcome to Google, New York. Now, I don't know if you've been to Google offices before. No, first time. Good. You don't have to anymore. You've been to the best. So you're done. But welcome to Google. I do love this building. This is the old port authority building. It's a 2.9 million square feet. That's more than the square footage of the Empire State building. And this building was actually consecrated on October 3, 1932. Do you know what day of the week that was? October 3, 1932. Hold on. Let me figure it out. I think it's a Monday. That's right. All right. He got it. All right. So this is one of the many tricks you can learn by reading Nelson's book. And we're going to have some fun with you Nelson today. We're going to do a bunch of these different thi",
+      "link": "https://www.youtube.com/watch?v=MGY_OM8u42A",
+      "published": "2026-04-29T16:00:40+00:00",
+      "source_type": "youtube",
+      "channel": "Talks at Google",
+      "video_id": "MGY_OM8u42A",
+      "transcript_method": "whisper",
+      "transcript_chars": 32547,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Apply for the Affine Superintelligence Alignment Seminar #shorts",
+      "summary": "sooner or later, and I don't know, it's looking like maybe sooner. There will be AI systems that are more capable than all the humanity. It would be nice if before that happened, we developed a principled theoretical understanding of how intelligence and agency work that would allow us to be confident that those superhuman AI systems would be aligned with our interests, and wouldn't end up just killing everyone. You would think that a lot of people would be working on that, but it's just an extremely technically difficult problem. Most researchers tend to decide that it's too hard, and instead choose to work on easier problems with better empirical feedback lives. Or they decide there's not enough time, and the best thing to do is push for an international treaty to prevent anyone building",
+      "link": "https://www.youtube.com/watch?v=74dLBpQuhJM",
+      "published": "2026-03-14T21:06:15+00:00",
+      "source_type": "youtube",
+      "channel": "Robert Miles AI Safety",
+      "video_id": "74dLBpQuhJM",
+      "transcript_method": "whisper",
+      "transcript_chars": 1469,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Tech is Good, AI Will Be Different",
+      "summary": "Hi, this channel is about the risks of advanced AI and the safety research that people are doing to mitigate those risks. And sometimes when people hear that, they say to me, but Rob, technology is good. People are always scared of new technology, usually for pretty bad reasons. Technology! And their safety concerns slow new technologies down. So why you worried about AI risks? Don't you realize that technology is good? And the thing about this is, it's true. Technology is good and fears about new technology usually are misplaced. I think advanced AI may be an exception to the rule. Can you guess why? But the rule itself is very real and very important to me. I'm pretty much always on that side of these kinds of debates and have been for a long time. In fact, I'm probably more pro-technolo",
+      "link": "https://www.youtube.com/watch?v=zATXsGm_xJo",
+      "published": "2025-08-22T02:28:42+00:00",
+      "source_type": "youtube",
+      "channel": "Robert Miles AI Safety",
+      "video_id": "zATXsGm_xJo",
+      "transcript_method": "whisper",
+      "transcript_chars": 10492,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Robot Dog! Unitree Go2 review #shorts #robot #dog",
+      "summary": "What's up everyone? Today we're checking out the Unitree Go2 robot dog. A lot of fun can do a lot of cool tricks. Ways about 15 kilos, I'll say, 3 pounds. It'll run at 11 miles an hour. Keyweek points here are the camera on the front and the lidar sensor. This has to spin to work. So it's quite vulnerable. Also the battery on the side, the compartment will be over like this. I hope that's never useful to you. See you next time. Robot dog. It turned... Ah! Jesus Christ! It punished me! Ow!",
+      "link": "https://www.youtube.com/watch?v=nivfBcUPZ4E",
+      "published": "2025-07-23T00:28:20+00:00",
+      "source_type": "youtube",
+      "channel": "Robert Miles AI Safety",
+      "video_id": "nivfBcUPZ4E",
+      "transcript_method": "whisper",
+      "transcript_chars": 493,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "Конкуренцията за AI-ресурси води до несправедно разпределение на технологии и услуги, което ограничава достъпа за малки предприятия и индивидуални разработчици.",
+    "root_cause": "Платформи като Claude и Goose предлагат различни модели на ценообразуване, което води до несправедно разпределение на ресурсите и изкривява пазара.",
+    "severity": "HIGH",
+    "leverage_points": [
+      "Разработчиците на AI-платформи, които предлагат свободни алтернативи (като Goose)",
+      "Потребители, които са възприели свободните алтернативи и са избягвали платформи като Claude"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Изграждане на отворен източник AI-платформи с поддръжка от общността",
+        "measurable_goal": "Повишаване на броя на разработчиците, които използват отворен източник AI-платформи за 30% в рамките на 12 месеца",
+        "timeframe": "дългосрочно"
+      },
+      {
+        "action": "Създаване на публични стандарти за AI-платформи с цел по-справедливо разпределение на ресурсите",
+        "measurable_goal": "Установяване на минимални стандарти за достъп до AI-инструменти за малки предприятия и индивидуални разработчици",
+        "timeframe": "средносрочно"
+      }
+    ],
+    "evidence": [
+      "Claude Code costs up to $200 a month. Goose does the same thing for free.",
+      "Claude Code, Anthropic's terminal-based AI age"
+    ],
+    "generalization": "Проблемът е свързан с домейна на технологиите и економиката, като изкривява конкурентната среда и ограничава иновациите.",
+    "summary": "Платформи като Claude създават несправедно разпределение на AI-ресурси, което ограничава достъпа за малки предприятия и индивидуални разработчици.",
+    "risk_level": "HIGH"
+  },
+  "raw_items": [
+    {
+      "title": "Musk v. Altman week 3: Elon Musk and Sam Altman traded blows over each other’s credibility. Now the jury will pick a side.",
+      "summary": "In the final week of the Musk v. Altman trial, lawyers traded blows over Elon Musk’s and OpenAI CEO Sam Altman’s credibility. Altman was grilled on his alleged history of lying and self-dealing involving companies that do business with OpenAI. But he fired back, painting Musk as a power-seeker who wanted to control the development&#8230;",
+      "link": "https://www.technologyreview.com/2026/05/15/1137357/musk-v-altman-week-3/",
+      "published": "Fri, 15 May 2026 23:39:35 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "The Download: China’s AI drama factory and the WHO’s missing health targets",
+      "summary": "This is today&#8217;s edition of The Download, our weekday newsletter that provides a daily dose of what&#8217;s going on in the world of technology. How Chinese short dramas became AI content machines China’s short drama industry is fueled by bite-sized, melodramatic, and smutty shows built for smartphone scrolling. Now, many are being made entirely with&#8230;",
+      "link": "https://www.technologyreview.com/2026/05/15/1137341/the-download-china-short-drama-ai-who-health-targets/",
+      "published": "Fri, 15 May 2026 12:10:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "The world is on track to miss its health targets",
+      "summary": "Every year the World Health Organization publishes a global health statistics report. It features the numbers behind world health trends and, importantly, assesses whether we’re on track to reach ambitious goals set in 2015. It’s a bit like a health grade. The 2026 report was published on Wednesday. And the results aren’t looking brilliant. While&#8230;",
+      "link": "https://www.technologyreview.com/2026/05/15/1137270/the-world-is-on-track-to-miss-its-health-targets/",
+      "published": "Fri, 15 May 2026 09:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "How Chinese short dramas became AI content machines",
+      "summary": "In a dimly lit bedroom, a frightened young woman is thrown onto a bed by a tall, muscular man. He grabs her hand, and flame-like vines crawl across her body, fusing with her flesh. She levitates, then drops. A dragon-shaped tattoo appears across her chest. “Two months,” the man says. “Give me an heir, or&#8230;",
+      "link": "https://www.technologyreview.com/2026/05/15/1137326/chinese-short-dramas-ai/",
+      "published": "Fri, 15 May 2026 09:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Railway secures $100 million to challenge AWS with AI-native cloud infrastructure",
+      "summary": "<p><a href=\"https://railway.com/\">Railway</a>, a San Francisco-based cloud platform that has quietly amassed two million developers without spending a dollar on marketing, announced Thursday that it raised $100 million in a Series B funding round, as surging demand for artificial intelligence applications exposes the limitations of legacy cloud infrastructure.</p><p><a href=\"https://tq.vc/\">TQ Ventures</a> led the round, with participation from <a href=\"https://fpvventures.com/\">FPV Ventures</a>",
+      "link": "https://venturebeat.com/infrastructure/railway-secures-usd100-million-to-challenge-aws-with-ai-native-cloud",
+      "published": "Thu, 22 Jan 2026 14:00:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Claude Code costs up to $200 a month. Goose does the same thing for free.",
+      "summary": "<p>The artificial intelligence coding revolution comes with a catch: it&#x27;s expensive.</p><p><a href=\"https://claude.com/product/claude-code\">Claude Code</a>, Anthropic&#x27;s terminal-based AI agent that can write, debug, and deploy code autonomously, has captured the imagination of software developers worldwide. But its <a href=\"https://claude.com/pricing\">pricing</a> — ranging from $20 to $200 per month depending on usage — has sparked a growing rebellion among the very programmers it aims",
+      "link": "https://venturebeat.com/infrastructure/claude-code-costs-up-to-usd200-a-month-goose-does-the-same-thing-for-free",
+      "published": "Mon, 19 Jan 2026 14:00:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Listen Labs raises $69M after viral billboard hiring stunt to scale AI customer interviews",
+      "summary": "<p>Alfred Wahlforss was running out of options. His startup, <a href=\"https://listenlabs.ai/\">Listen Labs</a>, needed to hire over 100 engineers, but competing against Mark Zuckerberg&#x27;s <a href=\"https://news.bloomberglaw.com/employee-benefits/zuckerbergs-100-million-ai-job-offers-pay-off-parmy-olson\">$100 million offers</a> seemed impossible. So he spent $5,000 — a fifth of his marketing budget — on a <a href=\"https://billboardinsider.com/ai-startup/\">billboard in San Francisco</a> displayi",
+      "link": "https://venturebeat.com/technology/listen-labs-raises-usd69m-after-viral-billboard-hiring-stunt-to-scale-ai",
+      "published": "Fri, 16 Jan 2026 14:01:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Salesforce rolls out new Slackbot AI agent as it battles Microsoft and Google in workplace AI",
+      "summary": "<p><a href=\"https://www.salesforce.com/\">Salesforce</a> on Tuesday launched an entirely rebuilt version of <a href=\"https://slack.com/help/articles/202026038-An-introduction-to-Slackbot\">Slackbot</a>, the company&#x27;s workplace assistant, transforming it from a simple notification tool into what executives describe as a fully powered AI agent capable of searching enterprise data, drafting documents, and taking action on behalf of employees.</p><p>The new Slackbot, now generally available to <a",
+      "link": "https://venturebeat.com/technology/salesforce-rolls-out-new-slackbot-ai-agent-as-it-battles-microsoft-and",
+      "published": "Tue, 13 Jan 2026 13:00:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "AI Weekly Issue #492: AI slop : A $725B bet on what no one wanted",
+      "summary": "Hyperscalers will spend $725 billion on AI infrastructure this year. The users they are spending it on are now actively rejecting the output. Gartner finds 50% of US consumers prefer brands that don't use generative AI. Wikipedia just banned AI-generated content 44-2. Stack Overflow's new-question volume has fallen 78% year over year. Google AI Overviews have collapsed top-page CTR by 58%. This is the structural tension running through every story below: capacity is being added fastest in exactl",
+      "link": "https://aiweekly.co/issues/ai-slop-a-725b-bet-on-what-no-one-wanted",
+      "published": "Wed, 13 May 2026 00:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "AI Weekly Issue #491: 100 years from now : The Last Election",
+      "summary": "This is 100 Years From Now. Once a week we skip a century and try to picture what life actually looks like when the stuff we're building now has had time to settle in. This week: the last vote.",
+      "link": "https://aiweekly.co/issues/100-years-from-now-the-last-election",
+      "published": "Sun, 10 May 2026 00:00:00 +0000",
+      "source_type": "rss"
+    }
+  ]
+}

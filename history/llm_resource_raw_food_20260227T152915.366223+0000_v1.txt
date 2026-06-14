@@ -1,0 +1,44 @@
+Thinking...
+Okay, let's tackle this. The user wants me to act as an internal AGI resource review agent in the CORTEX++ system, focusing on the FOOD domain. My task is to generate a specific JSON object based on the provided raw context. 
+
+First, I need to parse the RAW_CONTEXT_START to understand the data. The main points are about the FOOD REVIEW agent evaluating the global food system. The input data includes a summary from FOOD_QUERY with information about the status of various data sources. 
+
+Looking at the sources, there are 5 active sources. Out of these, 2 are OK (status 200), and 3 failed (status 404 or errors). The failed sources include FAO, Our World in Data, and WFP. The EUROSTAT and World Bank sources are working. 
+
+The snapshot files list matches the sources. The key metrics here would be the number of active sources, OK sources, and failed sources. The status of the system would be STRESSED because some critical data sources are down, affecting data availability. 
+
+For risks, the main ones are the failed data sources. The WFP site is down, which is a short-term risk since it's a connectivity issue. The FAO and Our World in Data being down could be medium-term risks if not resolved. The opportunities might involve leveraging the working sources like World Bank and EUROSTAT for data. 
+
+Recommended actions should address the failed sources. Prioritizing fixing the WFP connection (high priority) and checking FAO and Our World in Data for alternative data sources (medium priority). 
+
+Notes for self-improvement would mention the need to handle data source failures better and maybe diversify data sources to avoid single points of failure. 
+
+Now, structuring the JSON with the required keys. The diagnosis status is STRESSED. Short summary in Bulgarian about the data source issues. Key metrics include active sources, OK sources, and failed sources. 
+
+Risks: Connection timeout for WFP (short), FAO and Our World in Data down (medium). Opportunities: Utilize existing working data sources. Recommended actions: Fix WFP connection (high), check other sources (medium). Notes: Improve handling of failed sources and diversify data.
+...done thinking.
+
+{
+  "diagnosis": {
+    "status": "STRESSED",
+    "short_summary_bg": "Част от ключовите източници на данни за хранителната система са недостъпни, което влияе върху достоверността на анализите.",
+    "key_metrics": [
+      {"name": "Активни източници", "value": "5", "interpretation_bg": "Източниците са активни, но някои не изпращат данни."},
+      {"name": "Източници с успешен статус", "value": "2", "interpretation_bg": "Само 2 от 5 източници предоставят актуални данни."},
+      {"name": "Източници с грешки", "value": "3", "interpretation_bg": "3 източника са нефункционални или недостъпни, което ограничава аналитиката."}
+    ]
+  },
+  "risks": [
+    {"name": "Недостъпност на WFP данни", "description_bg": "Връзката с WFP е изчезнала, което пречи на актуални информация за гладостта.", "time_horizon": "short"},
+    {"name": "Нестабилност на FAO и Our World in Data", "description_bg": "Двете основни източника за аграрни данни са недостъпни, което усилва зависимостта от останалите.", "time_horizon": "medium"}
+  ],
+  "opportunities": [
+    {"name": "Използване на функциониращи източници", "description_bg": "Възможно е да се използва информацията от World Bank и EUROSTAT за компенсиране на недостига."}
+  ],
+  "recommended_actions": [
+    {"id": "FOOD-ACT-001", "title_bg": "Решаване на проблема с WFP", "description_bg": "Проверете връзката с WFP и опитайте да се обновят данните за хранителна безбедност.", "priority": "high"}
+  ],
+  "notes_for_cortex_self_improvement": [
+    "Използването на множество източници е критично за достоверността на аналитиката. Нужно е да се изработи механизъм за автоматично подменяне на недостъпни източници."
+  ]
+}

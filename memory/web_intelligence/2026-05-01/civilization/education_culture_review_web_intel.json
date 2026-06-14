@@ -1,0 +1,145 @@
+{
+  "axis": "EDUCATION_CULTURE_REVIEW",
+  "domain": "civilization",
+  "timestamp": "2026-05-01T11:40:52.822463+00:00",
+  "sources_count": 11,
+  "rss_count": 4,
+  "ddg_count": 4,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] 2025 UNESCO Confucius Prize for Literacy highlights global education efforts - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] For more:https://www.cgtn.com/videoIn Qufu, the birthplace of Confucius in east China's Shandong Province, the 20th UNESCO Confucius Prize for Literacy was ... Published September 28, 2025",
+      "link": "https://www.youtube.com/watch?v=-SG9a5M-KCI",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "-SG9a5M-KCI",
+      "transcript_method": "description",
+      "transcript_chars": 211,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Global Media and Information Literacy Week Feature ...",
+      "summary": "[DESCRIPTION FALLBACK] Enjoy the videos and music you love, upload original content, and share it all with friends, family, and the world on YouTube.",
+      "link": "https://www.youtube.com/watch?v=7YuujfROZVI",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "7YuujfROZVI",
+      "transcript_method": "description",
+      "transcript_chars": 149,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Webinar: Digital Skills Unleashed - Launch of new global multi-lingual course for literacy educators - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] On 18 February 2026, the UNESCO Institute for Lifelong Learning (UIL) held a global launch webinar to unveil a new multi-lingual course designed to strengthe... Published February 19, 2026",
+      "link": "https://www.youtube.com/watch?v=di1n07s8c9I",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "di1n07s8c9I",
+      "transcript_method": "description",
+      "transcript_chars": 211,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "summary": "Всички изрази и данни показват, че във фокуса са глобални усилия за улучаване на образованието и литература, но същността на тези усилия е неясна. Възможни рискове се връщат към ниво на рискове, които са възможно да се развиат, а тенденциите са стабилни, но не са изключително устойчиви.",
+    "risk_level": "MEDIUM",
+    "trend": "STABLE",
+    "key_events": [
+      "Global education initiatives continue to expand",
+      "UNESCO Confucius Prize for Literacy highlights efforts",
+      "Digital skills training for educators"
+    ],
+    "insights": [
+      "Global education is a complex and multifaceted field with significant potential",
+      "Literacy programs face challenges in implementation and quality"
+    ],
+    "youtube_insights": [
+      "Global media and information literacy week features educational content",
+      "Webinars on digital skills for literacy educators"
+    ],
+    "relevance_to_goal": "The goal of improving education and literacy is relevant, but the implementation and quality of these efforts remain uncertain.",
+    "generalization": "Education and literacy initiatives are gaining traction globally, but their effectiveness and sustainability remain areas of concern."
+  },
+  "raw_items": [
+    {
+      "title": "Quality Concerns Remain as States Invest More Than Ever in Preschool Programs",
+      "summary": "A new report found states hit an all-time high for both spending and enrollment, but the quality of the programs remains a concern.",
+      "link": "https://www.edsurge.com/news/2026-04-30-quality-concerns-remain-as-states-invest-more-than-ever-in-preschool-programs",
+      "published": "Thu, 30 Apr 2026 09:21:04 -0700",
+      "source_type": "rss"
+    },
+    {
+      "title": "I Built Radical Possibility in Schools — and It Nearly Broke Me",
+      "summary": "What does it mean to “save your own life” in education? Former Voices of Change fellow Dee Watson reflects on burnout, resistance and radical ...",
+      "link": "https://www.edsurge.com/news/2026-04-29-i-built-radical-possibility-in-schools-and-it-nearly-broke-me",
+      "published": "Wed, 29 Apr 2026 01:00:00 -0700",
+      "source_type": "rss"
+    },
+    {
+      "title": "Districts Relying More on Data to Identify Gifted Students",
+      "summary": "Schools are finding new, data-driven ways to re-approach gifted and talented programs -- with a focus on inclusivity.",
+      "link": "https://www.edsurge.com/news/2026-04-23-districts-relying-more-on-data-to-identify-gifted-students",
+      "published": "Thu, 23 Apr 2026 01:02:00 -0700",
+      "source_type": "rss"
+    },
+    {
+      "title": "Returning to What it Means to Make School Human Again",
+      "summary": "After years of disruption, what does it mean to make schools human again? One educator reflects on moving from demoralization to renewal and why ...",
+      "link": "https://www.edsurge.com/news/2026-04-22-returning-to-what-it-means-to-make-school-human-again",
+      "published": "Wed, 22 Apr 2026 01:00:00 -0700",
+      "source_type": "rss"
+    },
+    {
+      "title": "Global education",
+      "summary": "Global education is a mental development program that seeks to improve global human development based on the understanding of global dynamics, through the various sectors of human development delivery. In formal education, as a mode of human development delivery, it is integrated into formal educational programs, as an advanced program where global dimensions to local problems are appreciated thro",
+      "link": "https://en.wikipedia.org/wiki/Global_education",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Global Education - Our World in Data",
+      "summary": "October 24, 2023 - Education has expanded widely, but large gaps in learning quality still trap many children in poverty and inequality. Explore our writing and data on global education.",
+      "link": "https://ourworldindata.org/global-education",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Literacy",
+      "summary": "Literacy is the ability to read and write, and illiteracy is the inability to read and write. Some researchers suggest that the study of literacy as a concept can be divided into two periods: the period before 1950, when literacy was understood solely as alphabetical literacy (understanding the meanings of words without necessarily being able to use words); and the period after 1950, when literacy",
+      "link": "https://en.wikipedia.org/wiki/Literacy",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Temukan dan simpan ide tentang literacy center ideas di Pinterest.",
+      "summary": "Temukan ide dan inspirasi terbaik Pinterest untuk Literacy center ideas. Dapatkan inspirasi dan cobalah hal-hal baru. 173 orang mencari ini. · Terakhir diperbarui 13 j.",
+      "link": "https://id.pinterest.com/ideas/literacy-center-ideas/904720024868/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "[YT] 2025 UNESCO Confucius Prize for Literacy highlights global education efforts - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] For more:https://www.cgtn.com/videoIn Qufu, the birthplace of Confucius in east China's Shandong Province, the 20th UNESCO Confucius Prize for Literacy was ... Published September 28, 2025",
+      "link": "https://www.youtube.com/watch?v=-SG9a5M-KCI",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "-SG9a5M-KCI",
+      "transcript_method": "description",
+      "transcript_chars": 211,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Global Media and Information Literacy Week Feature ...",
+      "summary": "[DESCRIPTION FALLBACK] Enjoy the videos and music you love, upload original content, and share it all with friends, family, and the world on YouTube.",
+      "link": "https://www.youtube.com/watch?v=7YuujfROZVI",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "7YuujfROZVI",
+      "transcript_method": "description",
+      "transcript_chars": 149,
+      "has_full_transcript": false
+    }
+  ]
+}

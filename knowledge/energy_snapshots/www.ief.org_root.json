@@ -1,0 +1,11 @@
+{
+  "source_name": "International Energy Forum (IEF)",
+  "source_url": "https://www.ief.org",
+  "docs": "https://www.ief.org/annual-conference",
+  "notes": "Информация за глобалната енергийна политика и тенденции, включително аналитични отчети за региони.",
+  "ok": false,
+  "data": {
+    "error": "HTTPSConnectionPool(host='www.ief.org', port=443): Max retries exceeded with url: / (Caused by ConnectTimeoutError(<urllib3.connection.HTTPSConnection object at 0x7ab847afa1e0>, 'Connection to www.ief.org timed out. (connect timeout=15)'))",
+    "fetched_at": "2026-02-27T11:30:27.218482"
+  }
+}

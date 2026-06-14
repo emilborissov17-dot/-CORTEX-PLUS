@@ -1,0 +1,113 @@
+{
+  "axis": "GOAL_PROGRESS_REVIEW",
+  "fetched_at": "2026-03-12T18:28:50.660056+00:00",
+  "smart_query": "Monitoring team progress towards annual goals",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 0,
+    "gdelt": 3,
+    "arxiv": 2,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "analysis": {
+    "summary": "Целта за устойчиво развитие на цивилизациите и достойнство за всички хора е ключова за по-добър свят. Не са намерени значителни разработки по тази ос. Основните източници не предоставят пряка информация за тазi цел.",
+    "key_developments": [
+      "Eldorado Gold – Transformational Growth in Greece in 2026"
+    ],
+    "sentiment": "NEUTRAL",
+    "urgency": "LOW",
+    "open_source_momentum": "No data",
+    "scientific_frontier": "Neural Field Thermal Tomography: A Differentiable Physics Framework for Non-Destructive Evaluation",
+    "relevance_to_goal": "The mentioned goal of sustainable civilization is not directly addressed by the provided sources, but the development of transformational growth can be seen as a step towards it."
+  },
+  "sentiment": "NEUTRAL",
+  "urgency": "LOW",
+  "summary": "Целта за устойчиво развитие на цивилизациите и достойнство за всички хора е ключова за по-добър свят. Не са намерени значителни разработки по тази ос. Основните източници не предоставят пряка информация за тазi цел.",
+  "key_developments": [
+    "Eldorado Gold – Transformational Growth in Greece in 2026"
+  ],
+  "open_source_momentum": "No data",
+  "scientific_frontier": "Neural Field Thermal Tomography: A Differentiable Physics Framework for Non-Destructive Evaluation",
+  "github_repos": [],
+  "arxiv_papers": [
+    {
+      "title": "Neural Field Thermal Tomography: A Differentiable Physics Framework for Non-Destructive Evaluation",
+      "snippet": "We propose Neural Field Thermal Tomography (NeFTY), a differentiable physics framework for the quantitative 3D reconstruction of material properties from transient surface temperature measurements. While traditional thermography relies on pixel-wise 1D approximations that neglect lateral diffusion, ",
+      "url": "https://arxiv.org/abs/2603.11045v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "V2M-Zero: Zero-Pair Time-Aligned Video-to-Music Generation",
+      "snippet": "Generating music that temporally aligns with video events is challenging for existing text-to-music models, which lack fine-grained temporal control. We introduce V2M-Zero, a zero-pair video-to-music generation approach that outputs time-aligned music for video. Our method is motivated by a key obse",
+      "url": "https://arxiv.org/abs/2603.11042v1",
+      "source": "arXiv"
+    }
+  ],
+  "youtube_transcripts": [],
+  "podcast": "How AI interacts with nuclear deterrence may be the single most important question in geopolitics — one that may define the stakes of today’s AI race. Nuclear deterrence rests on a state’s capacity to respond to a nuclear attack with a devastating nuclear strike of its own. But some theorists think that sophisticated AI could eliminate this capability — for example, by locating and destroying all  | The arrival of AGI could “compress a century of progress in a decade,” forcing humanity to make decisions with higher stakes than we’ve ever seen before — and with less time to get them right. But AI development also presents an opportunity: we could build and deploy AI tools that help us think more clearly, act more wisely, and coordinate more effectively. And if we roll these decision-making too",
+  "youtube_videos": [
+    {
+      "title": "YouTube:LP0VzkT06ng",
+      "video_id": "LP0VzkT06ng",
+      "url": "https://www.youtube.com/watch?v=LP0VzkT06ng",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:F1IctMHqAHY",
+      "video_id": "F1IctMHqAHY",
+      "url": "https://www.youtube.com/watch?v=F1IctMHqAHY",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:FniAH_KjJ6E",
+      "video_id": "FniAH_KjJ6E",
+      "url": "https://www.youtube.com/watch?v=FniAH_KjJ6E",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:SaUya_5jvxo",
+      "video_id": "SaUya_5jvxo",
+      "url": "https://www.youtube.com/watch?v=SaUya_5jvxo",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:0c9TisDfTC0",
+      "video_id": "0c9TisDfTC0",
+      "url": "https://www.youtube.com/watch?v=0c9TisDfTC0",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:G1FkyWSkuXI",
+      "video_id": "G1FkyWSkuXI",
+      "url": "https://www.youtube.com/watch?v=G1FkyWSkuXI",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:ZZ1mDqUA6Hg",
+      "video_id": "ZZ1mDqUA6Hg",
+      "url": "https://www.youtube.com/watch?v=ZZ1mDqUA6Hg",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:CwBCjJzFMds",
+      "video_id": "CwBCjJzFMds",
+      "url": "https://www.youtube.com/watch?v=CwBCjJzFMds",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:w569CfyajpE",
+      "video_id": "w569CfyajpE",
+      "url": "https://www.youtube.com/watch?v=w569CfyajpE",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:6ycUlL-TI1s",
+      "video_id": "6ycUlL-TI1s",
+      "url": "https://www.youtube.com/watch?v=6ycUlL-TI1s",
+      "source": "YouTube"
+    }
+  ]
+}

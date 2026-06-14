@@ -1,0 +1,502 @@
+{
+  "timestamp": "2026-05-03T09:04:09.128416+00:00",
+  "date": "2026-05-03",
+  "axes_covered": 25,
+  "total_axes": 25,
+  "total_sources": 284,
+  "youtube_videos_total": 57,
+  "critical_axes": [
+    "CLIMATE_GLOBAL_RISK_REVIEW"
+  ],
+  "deteriorating_axes": [],
+  "cross_domain_insights": [
+    {
+      "from_axis": "CLIMATE_GLOBAL_RISK_REVIEW",
+      "insight": "The year 2025 underscores the urgency of addressing climate change through global cooperation, technological innovation, and policy reform. The insights from key events and videos highlight the need for continued vigilance and action to protect the planet and its inhabitants."
+    },
+    {
+      "from_axis": "ECOSYSTEMS_BIODIVERSITY_REVIEW",
+      "insight": "The ecological health of the planet is under pressure from human activities, and while some areas are showing improvement, many regions are still at risk of biodiversity loss and ecosystem degradation."
+    },
+    {
+      "from_axis": "COGNITION_LEARNING_REVIEW",
+      "insight": "Education is evolving with AI and data, but quality and inclusivity remain critical challenges."
+    },
+    {
+      "from_axis": "SOCIAL_RELATIONS_REVIEW",
+      "insight": "Съществуват по-големи връзки между политически групи, но също се наблюдава по-високо неравенство и изолация. Това се отразява в обществената структура и възможно е да се наблюдава устойчиво промяна."
+    },
+    {
+      "from_axis": "INFRASTRUCTURE_CITIES_REVIEW",
+      "insight": "Smart city infrastructure is reshaping urban planning and governance, with AI and data-driven approaches playing a critical role in creating more efficient, sustainable, and livable cities."
+    },
+    {
+      "from_axis": "EDUCATION_CULTURE_REVIEW",
+      "insight": "Global education initiatives are increasingly being recognized as essential for human development, with a focus on literacy, digital skills, and inclusive education. International organizations are playing a key role in promoting these efforts, though challenges remain in ensuring quality and inclusivity."
+    },
+    {
+      "from_axis": "TECHNOLOGY_INFRA_REVIEW",
+      "insight": "Това изследване показва, че AI-технологията въвежда възможности за автоматизация и ускоряване на съдържание, но се нуждае от устойчиво управление на данни и рискове."
+    },
+    {
+      "from_axis": "TECHNOLOGY_AI_REVIEW",
+      "insight": "AI技术的潜力巨大，但其应用必须在安全、伦理和法律框架内进行，以确保其可持续发展。"
+    },
+    {
+      "from_axis": "SPACE_INFRASTRUCTURE_REVIEW",
+      "insight": "NASA is actively working on lunar missions, data center infrastructure, and space-based computing, showing a positive trend in space exploration and technological development."
+    },
+    {
+      "from_axis": "LONG_TERM_FUTURE_REVIEW",
+      "insight": "The analysis suggests that a balanced approach to AI development, ethical considerations, and long-term planning is essential for achieving a sustainable and prosperous future for humanity."
+    },
+    {
+      "from_axis": "DEEP_TIME_RISKS_REVIEW",
+      "insight": "The risk of natural disasters and the need for global cooperation in health and security are critical areas of focus."
+    },
+    {
+      "from_axis": "PLANETARY_POTENTIAL_REVIEW",
+      "insight": "The data reflects a trend towards interdisciplinary research and the application of scientific principles to solve complex global issues."
+    }
+  ],
+  "civilization_goal_alignment": {
+    "high_risk_count": 1,
+    "deteriorating_count": 0,
+    "status": "MONITORING"
+  },
+  "axes": {
+    "CLIMATE_GLOBAL_RISK_REVIEW": {
+      "summary": "2025 marks a critical year for climate action, with rising global temperatures, extreme weather events, and increased focus on transitioning away from fossil fuels. Key developments include the intensification of climate impacts in South Asia, the global push for clean energy, and the need for improved weather forecasting models.",
+      "risk_level": "HIGH",
+      "trend": "IMPROVING",
+      "key_events": [
+        "Extreme weather events in South Asia, including fires and floods, highlight the growing impact of climate change.",
+        "Global efforts to transition away from fossil fuels, such as China's clean-tech surge and the first-of-its-kind summit on decarbonization, show increasing commitment.",
+        "Improved weather forecasting models are being developed to better predict and mitigate climate impacts."
+      ],
+      "insights": [
+        "The integration of AI in climate models is still limited in its ability to forecast extreme weather events compared to traditional models.",
+        "Global cooperation remains essential for implementing effective climate policies and transitioning to sustainable energy sources."
+      ],
+      "youtube_insights": [
+        "The video on climate change 2025 highlights the increasing frequency and intensity of extreme weather events.",
+        "The video on extreme weather 2025 provides a detailed look at the impact of climate change on global ecosystems and human societies."
+      ],
+      "relevance_to_goal": "This year's climate developments are highly relevant to the goal of mitigating climate impacts and promoting sustainable practices. The insights from key events and videos provide valuable information for informed decision-making and action.",
+      "generalization": "The year 2025 underscores the urgency of addressing climate change through global cooperation, technological innovation, and policy reform. The insights from key events and videos highlight the need for continued vigilance and action to protect the planet and its inhabitants."
+    },
+    "ENERGY_REVIEW": {
+      "summary": "- Top Selling Electric Vehicles in the World — March 2026: <p>Tesla wins gold and silver in a market running at different speeds. BEVs vs. PHEVs Plugin vehicle registrations were up 5% year over year (YoY) in March, ending the month at around 1.7 million unit\n- Living Without Fossil Fuel Is Harder T",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN",
+      "key_events": [
+        "Top Selling Electric Vehicles in the World — March 2026",
+        "Living Without Fossil Fuel Is Harder Than We Think",
+        "$3.2 Million Awarded For Tribal Solar Projects"
+      ],
+      "insights": [],
+      "youtube_insights": [],
+      "relevance_to_goal": "",
+      "generalization": ""
+    },
+    "WATER_REVIEW": {
+      "summary": "- Northern Michigan’s Extreme Climate Disaster: <figure><img alt=\"\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"768\" src=\"https://i0.wp.com/www.circleofblue.org/wp-content/uploads/2026/05/20260416_161307-scaled.jpg?f\n- Corpus Christi Plans to Declare a ‘Water Emergenc",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN",
+      "key_events": [
+        "Northern Michigan’s Extreme Climate Disaster",
+        "Corpus Christi Plans to Declare a ‘Water Emergency.’ What Does That Mean?",
+        "Proposed Michigan Bill Would Tie State Wetland Protections to a Recently Narrowed Federal Standard"
+      ],
+      "insights": [],
+      "youtube_insights": [],
+      "relevance_to_goal": "",
+      "generalization": ""
+    },
+    "FOOD_REVIEW": {
+      "summary": "- Food security: Food security is the state of having reliable access to a sufficient quantity of affordable, healthy food. The availability of food for people of any class, gender, status, ethnicity, or religion is a\n- Global Food Security Index - Wikipedia: Food security differs around the world, ",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN",
+      "key_events": [
+        "Food security",
+        "Global Food Security Index - Wikipedia",
+        "Hunger"
+      ],
+      "insights": [],
+      "youtube_insights": [],
+      "relevance_to_goal": "",
+      "generalization": ""
+    },
+    "MATERIALS_WASTE_REVIEW": {
+      "summary": "- Lytx’s 2026 Road Safety Report Highlights Emerging Fleet Risks: According to the 2026 Road Safety report from Lytx, severe collisions in 2025 declined, but overall crash rates continue to rise due to inattentive driving, handheld device use, and operational pressu\n- GFL Posts Record Q1 Margin, Rai",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN",
+      "key_events": [
+        "Lytx’s 2026 Road Safety Report Highlights Emerging Fleet Risks",
+        "GFL Posts Record Q1 Margin, Raises Outlook",
+        "Jerseyville, IL Reaches Recycling Policies Agreement with County"
+      ],
+      "insights": [],
+      "youtube_insights": [],
+      "relevance_to_goal": "",
+      "generalization": ""
+    },
+    "ECOSYSTEMS_BIODIVERSITY_REVIEW": {
+      "summary": "The current state of biodiversity and ecosystem health is showing signs of improvement, but there are still significant risks and threats to global ecological stability. The key issues include deforestation, habitat loss, and the spread of invasive species, which are impacting both terrestrial and aquatic ecosystems.",
+      "risk_level": "MEDIUM",
+      "trend": "IMPROVING",
+      "key_events": [
+        "Scientists reveal a new species of pitviper in China",
+        "Research indicates that golden oyster mushrooms are becoming invasive in U.S. forests",
+        "Sharks and tuna are experiencing rising temperatures and habitat loss"
+      ],
+      "insights": [
+        "Deforestation and habitat loss are leading to biodiversity loss and species extinction, with cascading effects on ecosystems and human well-being.",
+        "The spread of invasive species like golden oyster mushrooms is disrupting native ecosystems and reducing biodiversity."
+      ],
+      "youtube_insights": [
+        "The causes of deforestation, biodiversity loss, and species extinction are being explored in a video by YouTube.",
+        "A video discusses how deforestation and habitat loss reduce biodiversity, focusing on edge effects and extinction debts."
+      ],
+      "relevance_to_goal": "The goal of preserving biodiversity and ecosystem health is relevant, but the current trends indicate that there is still significant risk to global ecological stability.",
+      "generalization": "The ecological health of the planet is under pressure from human activities, and while some areas are showing improvement, many regions are still at risk of biodiversity loss and ecosystem degradation."
+    },
+    "HUMAN_WELL_BEING_REVIEW": {
+      "summary": "- WHO Member States agree to extend negotiations on Pathogen Access and Benefit Sharing annex: <p>Member States of the World Health Organization (WHO) have progressed work on the Pathogen Access and Benefit Sharing (PABS) annex, a key part of the WHO Pandemic Agreement, and today agreed additio\n- Au",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN",
+      "key_events": [
+        "WHO Member States agree to extend negotiations on Pathogen Access and Benefit Sharing annex",
+        "Australia becomes the 30th country to eliminate trachoma as a public health problem",
+        "Efforts to eliminate hepatitis delivers gains but more action needed to meet 2030 targets"
+      ],
+      "insights": [],
+      "youtube_insights": [],
+      "relevance_to_goal": "",
+      "generalization": ""
+    },
+    "CULTURE_MEDIA_REVIEW": {
+      "summary": "- Actors From ‘The Pitt,’ ‘The Bear’ and More Take Over Broadway: Audiences are flocking to shows starring Patrick Ball of “The Pitt,” Jon Bernthal and Ayo Edebiri of “The Bear,” Ben Ahlers of “The Gilded Age” and more.\n- How 7 Looks for ‘The Devil Wears Prada 2’ Came Together: The film’s costume de",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN",
+      "key_events": [
+        "Actors From ‘The Pitt,’ ‘The Bear’ and More Take Over Broadway",
+        "How 7 Looks for ‘The Devil Wears Prada 2’ Came Together",
+        "Francisco de Zurbarán: Paintings So Real, You Can Hardly Resist Believing"
+      ],
+      "insights": [],
+      "youtube_insights": [],
+      "relevance_to_goal": "",
+      "generalization": ""
+    },
+    "COGNITION_LEARNING_REVIEW": {
+      "summary": "The global math gender gap is narrowing, but quality of programs remains a concern. Schools are increasingly using data to identify gifted students, and AI is transforming education. These trends suggest a shift toward data-driven, inclusive education models.",
+      "risk_level": "MEDIUM",
+      "trend": "IMPROVING",
+      "key_events": [
+        "Global math gender gap narrowing",
+        "Data-driven approaches in education",
+        "AI transforming educational practices"
+      ],
+      "insights": [
+        "Education must be early and targeted to address gender gaps",
+        "Data is becoming central to identifying gifted students",
+        "AI is reshaping how education is delivered"
+      ],
+      "youtube_insights": [
+        "AI and education: what's changing",
+        "Future of education in an AI-powered world"
+      ],
+      "relevance_to_goal": "High",
+      "generalization": "Education is evolving with AI and data, but quality and inclusivity remain critical challenges."
+    },
+    "SOCIAL_RELATIONS_REVIEW": {
+      "summary": "Събитията във връзка с обществената структура и социалната позиция на хората включват по-голям интерес към политическите и външните връзки, но също и по-висок риск за социално изолиране и неравенство. Възможно е да се наблюдава устойчиво промяна в обществената динамика.",
+      "risk_level": "MEDIUM",
+      "trend": "STABLE",
+      "key_events": [
+        "Повишено внимание към политическите връзки",
+        "Повишено неравенство в обществената структура",
+        "Риск за социално изолиране"
+      ],
+      "insights": [
+        "Съществуват по-големи връзки между политически групи",
+        "Съществуват по-големи връзки между индивиди",
+        "Повишено неравенство в обществената структура"
+      ],
+      "youtube_insights": [
+        "Разпространената тема на изолацията и социално неравенство",
+        "Съществуват по-големи връзки между политически групи"
+      ],
+      "relevance_to_goal": "Съществуват по-големи връзки между политически групи, но също се наблюдава по-високо неравенство и изолация. Това се отразява в обществената структура и възможно е да се наблюдава устойчиво промяна.",
+      "generalization": "Съществуват по-големи връзки между политически групи, но също се наблюдава по-високо неравенство и изолация. Това се отразява в обществената структура и възможно е да се наблюдава устойчиво промяна."
+    },
+    "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL": {
+      "summary": "- Zambia: Summit on Human Rights, Technology Effectively Canceled: Click to expand Image\n          \n\n\n\n  \n        \n  \n\n        \n                      \n      \n        \n              Zambia’s President Hakainde Hichilema speaks at a high-level meeting in Angola, Decemb\n- Nepal: Balen Government Should",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN",
+      "key_events": [
+        "Zambia: Summit on Human Rights, Technology Effectively Canceled",
+        "Nepal: Balen Government Should Bring Human Rights Reforms",
+        "Cambodia: Opposition Leader’s Appeal Denied"
+      ],
+      "insights": [],
+      "youtube_insights": [],
+      "relevance_to_goal": "",
+      "generalization": ""
+    },
+    "ECONOMY_WORK_REVIEW": {
+      "summary": "- Airlines can cancel flights in advance over fuel shortages under new plans: Ministers hope move would help avoid last-minute flight cancellations for passengers this summer over Middle East fuel supplies.\n- Spirit Airlines shutting down after rescue talks collapse: The airline had been in talks wi",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN",
+      "key_events": [
+        "Airlines can cancel flights in advance over fuel shortages under new plans",
+        "Spirit Airlines shutting down after rescue talks collapse",
+        "Voters will judge Trump on the economy - how is it doing?"
+      ],
+      "insights": [],
+      "youtube_insights": [],
+      "relevance_to_goal": "",
+      "generalization": ""
+    },
+    "INEQUALITY_POVERTY_REVIEW": {
+      "summary": "- Poverty: Poverty is a state or condition in which an individual lacks the financial resources and essentials for a basic standard of living. Poverty can have diverse environmental, legal, social, economic, and\n- Poverty | Definition, Causes, Types, & Facts | Britannica: Poverty, the state of one w",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN",
+      "key_events": [
+        "Poverty",
+        "Poverty | Definition, Causes, Types, & Facts | Britannica",
+        "Income inequality"
+      ],
+      "insights": [],
+      "youtube_insights": [],
+      "relevance_to_goal": "",
+      "generalization": ""
+    },
+    "INFRASTRUCTURE_CITIES_REVIEW": {
+      "summary": "Smart city infrastructure is rapidly evolving, driven by AI, IoT, and data-driven governance. Cities are adopting innovative technologies to improve sustainability, efficiency, and livability. Key trends include the integration of AI in urban planning, the rise of smart transit systems, and the push for data transparency and citizen engagement.",
+      "risk_level": "MEDIUM",
+      "trend": "IMPROVING",
+      "key_events": [
+        "Smart cities are becoming more prevalent, with cities like Telangana and others adopting AI and IoT for urban management.",
+        "Mayors and city planners are increasingly involved in shaping AI policies and technology adoption strategies.",
+        "Transit agencies are facing challenges in balancing budget allocation and worker retention, highlighting the need for sustainable urban planning."
+      ],
+      "insights": [
+        "AI and data analytics are transforming urban governance, enabling smarter traffic management, energy optimization, and public service delivery.",
+        "The future of smart cities will depend on collaboration between governments, private sector, and citizens to ensure equitable and sustainable development."
+      ],
+      "youtube_insights": [
+        "YouTube videos on smart city infrastructure highlight the integration of AI and IoT in urban planning and transportation.",
+        "Content on smart cities discusses the environmental and social benefits of intelligent urban systems."
+      ],
+      "relevance_to_goal": "High",
+      "generalization": "Smart city infrastructure is reshaping urban planning and governance, with AI and data-driven approaches playing a critical role in creating more efficient, sustainable, and livable cities."
+    },
+    "GOVERNANCE_INSTITUTIONS_REVIEW": {
+      "summary": "- Daily Press Briefing by the Office of the Spokesperson for the Secretary-General: In Cuba, the humanitarian situation continues to worsen as the energy crisis deepens, the Office for the Coordination of Humanitarian Affairs (OCHA) reports, noting that healthcare, waste collection, \n- Fifth Committ",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN",
+      "key_events": [
+        "Daily Press Briefing by the Office of the Spokesperson for the Secretary-General",
+        "Fifth Committee, 28th Meeting (AM)",
+        "Press Conference by Security Council President on Work Programme for May"
+      ],
+      "insights": [],
+      "youtube_insights": [],
+      "relevance_to_goal": "",
+      "generalization": ""
+    },
+    "EDUCATION_CULTURE_REVIEW": {
+      "summary": "Global education initiatives are gaining momentum, with a focus on literacy, digital skills, and inclusive education. There is a growing recognition of the importance of early education and the need for targeted interventions to address gender gaps and quality concerns in preschool programs. These efforts are being supported by international bodies like UNESCO, which are promoting global education as a key component of human development.",
+      "risk_level": "MEDIUM",
+      "trend": "IMPROVING",
+      "key_events": [
+        "Global Math Gains for Girls Are Slipping, Report Finds: Highlighting the need for early and targeted interventions in education.",
+        "Districts Relying More on Data to Identify Gifted Students: Emphasizing data-driven approaches to inclusivity in education.",
+        "UNESCO Confucius Prize for Literacy: Recognizing projects that promote inclusive education and global literacy."
+      ],
+      "insights": [
+        "The importance of early education and targeted interventions is becoming more widely recognized.",
+        "Global education initiatives are being supported by international organizations, but challenges remain in ensuring quality and inclusivity."
+      ],
+      "youtube_insights": [
+        "YouTube video on UNESCO Confucius Prize for Literacy highlights global education efforts.",
+        "Webinar on digital skills for literacy educators showcases new global multi-lingual course."
+      ],
+      "relevance_to_goal": "High",
+      "generalization": "Global education initiatives are increasingly being recognized as essential for human development, with a focus on literacy, digital skills, and inclusive education. International organizations are playing a key role in promoting these efforts, though challenges remain in ensuring quality and inclusivity."
+    },
+    "TECHNOLOGY_INFRA_REVIEW": {
+      "summary": "2-3 ключови събития върху техническото развитие и интеграция в 2025 г. са изследвани, но са възможно да се разглеждат като потенциални рискови или възможни устойчиви промени.",
+      "risk_level": "MEDIUM",
+      "trend": "IMPROVING",
+      "key_events": [
+        "Популаризация на AI-относно SEO и AIO в контекста на органична трафика",
+        "Интеграция на AI-студио за създаване на съдържание",
+        "Възможни промени в индустриалното използване на AI-технологии"
+      ],
+      "insights": [
+        "Използването на AI-студио може да се използва за автоматизация на съдържание, но се нуждае от устойчиво управление на данни.",
+        "Съветът за използване на AI-относно SEO може да се използва за увеличение на трафика, но се нуждае от правилно управление на рисковете."
+      ],
+      "youtube_insights": [
+        "Публикацията на AI-относно SEO и AIO в YouTube може да се използва за възможна възраст на трафика, но се нуждае от устойчиво управление на рисковете.",
+        "Използването на AI-студио в YouTube може да се използва за автоматизация на съдържание, но се нуждае от устойчиво управление на данни."
+      ],
+      "relevance_to_goal": "Много възможни, но се нуждае от устойчиво управление на рисковете и правилно използване на AI-технологии.",
+      "generalization": "Това изследване показва, че AI-технологията въвежда възможности за автоматизация и ускоряване на съдържание, но се нуждае от устойчиво управление на данни и рискове."
+    },
+    "TECHNOLOGY_AI_REVIEW": {
+      "summary": "AI技术在多个领域快速发展，包括内容生成、数据分析、网络安全等。尽管AI带来了效率提升，但也存在数据隐私、算法偏见、伦理问题等风险。",
+      "risk_level": "MEDIUM",
+      "trend": "IMPROVING",
+      "key_events": [
+        "Musk v. Altman (2023): Elon Musk质疑OpenAI的道德责任，强调AI可能带来的风险。",
+        "LimeWire AI Studio (2023): AI工具的普及和商业化。",
+        "AI在内容生成中的应用（如YouTube、RSS）: AI被广泛用于内容创作，但伴随数据安全与伦理问题。"
+      ],
+      "insights": [
+        "AI技术的快速发展带来了效率提升，但也需要关注其潜在风险，如数据隐私、算法偏见和伦理问题。",
+        "AI在内容生成和数据分析中的应用广泛，但需确保数据安全和算法透明性。"
+      ],
+      "youtube_insights": [
+        "Nelson Dellis 的视频：关于记忆和专注力的AI技巧。",
+        "Nir Eyal 的视频：关于行为改变和人类潜力的AI相关讨论。",
+        "Julia Minson 的视频：关于有效沟通和分歧的AI应用。"
+      ],
+      "relevance_to_goal": "AI技术的快速发展对内容创作、数据分析和网络安全等领域有重要影响，但需关注其风险和伦理问题。",
+      "generalization": "AI技术的潜力巨大，但其应用必须在安全、伦理和法律框架内进行，以确保其可持续发展。"
+    },
+    "SPACE_INFRASTRUCTURE_REVIEW": {
+      "summary": "2-3 key events related to NASA's space missions, including retirement of a director, Artemis program updates, and data center developments.",
+      "risk_level": "LOW",
+      "trend": "IMPROVING",
+      "key_events": [
+        "NASA Kennedy Center Director Announces Plans to Retire",
+        "Artemis 3 Plans Remain Uncertain as Schedule Slips",
+        "Starcloud Seeks More Orbital Data Center Funding"
+      ],
+      "insights": [
+        "NASA continues to focus on lunar missions and data center infrastructure.",
+        "There is a growing interest in orbital data centers and space-based computing."
+      ],
+      "youtube_insights": [
+        "YouTube videos about NASA's Mars Curiosity Rover and astronaut preparations.",
+        "Content about Progress 95 cargo ship docking and space station operations."
+      ],
+      "relevance_to_goal": "Relevant to the goal of exploring space, developing infrastructure, and advancing space research.",
+      "generalization": "NASA is actively working on lunar missions, data center infrastructure, and space-based computing, showing a positive trend in space exploration and technological development."
+    },
+    "COSMIC_RESOURCES_REVIEW": {
+      "summary": "- Artemis 3 plans remain uncertain as schedule slips: <figure><img alt=\"SLS core stage for Artemis 3\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"683\" src=\"https://i0.wp.com/spacenews.com/wp-content/uploads/2026/05/Z63_707\n- NASA to increase value of CLPS contract to ",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN",
+      "key_events": [
+        "Artemis 3 plans remain uncertain as schedule slips",
+        "NASA to increase value of CLPS contract to support surge of lunar lander missions",
+        "The opportunity beyond orbital data centers"
+      ],
+      "insights": [],
+      "youtube_insights": [],
+      "relevance_to_goal": "",
+      "generalization": ""
+    },
+    "LONG_TERM_FUTURE_REVIEW": {
+      "summary": "The analysis of current trends and events shows a mixed but generally improving trajectory in terms of human progress and AI safety. Key developments include a focus on long-term future planning, ethical considerations in AI, and the impact of AI on society.",
+      "risk_level": "MEDIUM",
+      "trend": "IMPROVING",
+      "key_events": [
+        "A group of people stand together at a point in the playing field. Each of them is pursuing a target.",
+        "Paraphrasing Is (At Best) a Partial Defence Against Steganography in LLMs.",
+        "Notes on equanimity from the inside.",
+        "Psychopathy: The Substrate.",
+        "AI Risk Agility Plans - v0.1.",
+        "Examples Of People Striving For Impact And Valuing Their Own Joy.",
+        "Should we end animal testing? A utilitarian analysis."
+      ],
+      "insights": [
+        "Paraphrasing offers some protection against steganography in LLMs.",
+        "Meditation and equanimity are important for mental well-being.",
+        "AI risk planning is essential for future safety.",
+        "Ethical considerations in AI are crucial for societal progress.",
+        "Humanity's potential for progress is significant if guided wisely."
+      ],
+      "youtube_insights": [
+        "[VIDEO] [YT] All Tomorrows: the future of humanity? - YouTube",
+        "[VIDEO] [YT] THE FUTURE OF HUMANITY: A.I Predicts 400 YEARS IN 3 MINUTES (4K) - YouTube"
+      ],
+      "relevance_to_goal": "High",
+      "generalization": "The analysis suggests that a balanced approach to AI development, ethical considerations, and long-term planning is essential for achieving a sustainable and prosperous future for humanity."
+    },
+    "DEEP_TIME_RISKS_REVIEW": {
+      "summary": "Global health initiatives are making progress in disease control and access. The risk of asteroid impacts remains, though the probability is decreasing.",
+      "risk_level": "MEDIUM",
+      "trend": "IMPROVING",
+      "key_events": [
+        "WHO extends negotiations on Pathogen Access and Benefit Sharing",
+        "Australia eliminates trachoma as a public health problem",
+        "Global efforts to combat hepatitis deliver measurable progress"
+      ],
+      "insights": [
+        "Global health initiatives are making progress in disease control and access.",
+        "The risk of asteroid impacts remains, though the probability is decreasing."
+      ],
+      "youtube_insights": [
+        "Video highlights the potential threat of asteroid impacts and the need for planetary defense.",
+        "The WHO's simulation exercise emphasizes the importance of preparedness for future health crises."
+      ],
+      "relevance_to_goal": "Relevant to global health preparedness and planetary defense.",
+      "generalization": "The risk of natural disasters and the need for global cooperation in health and security are critical areas of focus."
+    },
+    "GENERAL_SELF_REVIEW": {
+      "summary": "- Musk v. Altman week 1: Elon Musk says he was duped, warns AI could kill us all, and admits that xAI distills OpenAI’s models: In the first week of the landmark trial between Elon Musk and OpenAI, Musk took the stand in a crisp black suit and tie and argued that OpenAI CEO Sam Altman and president ",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN",
+      "key_events": [
+        "Musk v. Altman week 1: Elon Musk says he was duped, warns AI could kill us all, and admits that xAI distills OpenAI’s models",
+        "Cyber-Insecurity in the AI Era",
+        "Operationalizing AI for Scale and Sovereignty"
+      ],
+      "insights": [],
+      "youtube_insights": [],
+      "relevance_to_goal": "",
+      "generalization": ""
+    },
+    "GOAL_PROGRESS_REVIEW": {
+      "summary": "- ‘Real impact on the ground’ needed as Indonesia backs UN reform: <p>Indonesia is expecting a “strengthened multilateral system that delivers real impact on the ground,” as one of the key outcomes of the ongoing reform of the United Nations, that’s according to the \n- Iran crisis shows fossil fuels",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN",
+      "key_events": [
+        "‘Real impact on the ground’ needed as Indonesia backs UN reform",
+        "Iran crisis shows fossil fuels-based energy system ‘is inherently volatile and unstable’",
+        "AI in advertising risks fuelling information crisis, UN warns"
+      ],
+      "insights": [],
+      "youtube_insights": [],
+      "relevance_to_goal": "",
+      "generalization": ""
+    },
+    "PLANETARY_POTENTIAL_REVIEW": {
+      "summary": "Данните показват, че във висшето пространство има активни научни и технически изследвания, които се фокусират върху изграждането на устойчиво и безопасно бъдеще. Това включва не само механични изобретения, но и геоенергетични и климатически изследвания, които имат важна роля в разработването на планетарни стратегии. Също така, във висшето пространство има активни научни и технически изследвания, които се фокусират върху изграждането на устойчиво и безопасно бъдеще. Това включва не само механични изобретения, но и геоенергетични и климатически изследвания, които имат важна роля в разработването на планетарни стратегии.",
+      "risk_level": "MEDIUM",
+      "trend": "IMPROVING",
+      "key_events": [
+        "18th-century mechanical volcano roars to life: A centuries-old vision of a mechanical volcano has finally erupted into reality, as two University of Melbourne engineering students recreated a design first imagined in 1775 by volcanology enthusiast.",
+        "Double West Coast earthquake threat: Two of the most dangerous fault systems on the U.S. West Coast may be more connected than scientists once thought.",
+        "Scientists have uncovered a tiny wall-dwelling spider named Pikelinia floydmuraria, inspired by Pink Floyd."
+      ],
+      "insights": [
+        "The emergence of mechanical volcanoes and the study of seismic fault systems highlight the intersection of engineering and natural science.",
+        "The discovery of a spider inspired by Pink Floyd underscores the creative and interdisciplinary nature of scientific research."
+      ],
+      "youtube_insights": [
+        "The video discusses the reality of chemtrails and the scientific perspective on their origin.",
+        "The video highlights the importance of climate engineering and the need for scientific literacy."
+      ],
+      "relevance_to_goal": "The data shows a growing interest in planetary potential and the importance of scientific research in addressing global challenges.",
+      "generalization": "The data reflects a trend towards interdisciplinary research and the application of scientific principles to solve complex global issues."
+    }
+  },
+  "ready_for_self_observer": true
+}

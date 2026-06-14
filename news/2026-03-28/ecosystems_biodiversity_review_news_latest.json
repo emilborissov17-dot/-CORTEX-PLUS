@@ -1,0 +1,122 @@
+{
+  "axis": "ECOSYSTEMS_BIODIVERSITY_REVIEW",
+  "fetched_at": "2026-03-28T10:47:42.463809+00:00",
+  "smart_query": "biodiversity species extinction",
+  "sources_count": {
+    "rss": 3,
+    "gdelt": 3,
+    "arxiv": 2,
+    "github": 3,
+    "web_search": 5
+  },
+  "rss": [
+    {
+      "title": "Freshwater fish populations plunge 81% as river migrations collapse",
+      "snippet": "A sweeping global report finds that migratory freshwater fish are in steep decline, with populations down roughly 81% since 1970. These species depend on long, connected rivers, but dams and human pressures are cutting off their routes. Hundreds of species now need coordinated international protecti",
+      "url": "https://www.sciencedaily.com/releases/2026/03/260326064157.htm",
+      "source": "RSS"
+    },
+    {
+      "title": "Scientists found a rhino in the Arctic and it changes everything",
+      "snippet": "Scientists have uncovered a new species of rhinoceros in the Canadian High Arctic, revealing that rhinos once lived far farther north than expected. The fossil, dating back 23 million years, is unusually complete and has helped reshape ideas about how these animals migrated between continents. Evide",
+      "url": "https://www.sciencedaily.com/releases/2026/03/260324024245.htm",
+      "source": "RSS"
+    },
+    {
+      "title": "Beavers are turning rivers into powerful carbon sinks",
+      "snippet": "Beavers may be unlikely climate heroes, but new research suggests they could play a powerful role in fighting climate change. By building dams and transforming streams into wetlands, these industrious animals dramatically reshape how carbon moves and is stored in landscapes. Over just 13 years, a be",
+      "url": "https://www.sciencedaily.com/releases/2026/03/260322020245.htm",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [
+    {
+      "title": "Royal Society study finds no evidence of climate - driven mass EXTINCTION in the past 200 years – NaturalNews . com",
+      "snippet": "Royal Society study finds no evidence of climate - driven mass EXTINCTION in the past 200 years – NaturalNews . com",
+      "url": "https://www.naturalnews.com/2026-01-25-study-no-evidence-climate-driven-mass-extinction.html",
+      "source": "naturalnews.com"
+    },
+    {
+      "title": "World Wildlife Day 2026 : How Losing Just One Species Can Trigger Ecosystem Collapse",
+      "snippet": "World Wildlife Day 2026 : How Losing Just One Species Can Trigger Ecosystem Collapse",
+      "url": "https://www.yahoo.com/news/articles/world-wildlife-day-2026-losing-143200729.html",
+      "source": "yahoo.com"
+    },
+    {
+      "title": "Harimau Malaya di ambang kepupusan",
+      "snippet": "Harimau Malaya di ambang kepupusan",
+      "url": "https://www.astroawani.com/berita-malaysia/harimau-malaya-di-ambang-kepupusan-554662",
+      "source": "astroawani.com"
+    }
+  ],
+  "github_repos": [
+    {
+      "title": "protontypes/open-sustainable-technology",
+      "snippet": "A directory and analysis of the open source ecosystem in the areas of climate change, sustainable energy, biodiversity and natural resources.  https://docs.getgrist.com/gSscJkc5Rb1R/OpenSustaintech",
+      "stars": 2471,
+      "url": "https://github.com/protontypes/open-sustainable-technology",
+      "updated": "2026-03-28",
+      "source": "GitHub"
+    },
+    {
+      "title": "treflehq/trefle-api",
+      "snippet": "🍀 Trefle is a botanical JSON REST API for plants species, allowing you to search and query over all the registered species, and build the next gardening apps and farming robots.",
+      "stars": 570,
+      "url": "https://github.com/treflehq/trefle-api",
+      "updated": "2026-03-26",
+      "source": "GitHub"
+    },
+    {
+      "title": "blutjens/awesome-forests",
+      "snippet": "🌳 A curated list of ground-truth forest datasets for the machine learning and forestry community.",
+      "stars": 362,
+      "url": "https://github.com/blutjens/awesome-forests",
+      "updated": "2026-03-26",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Modulating biodiversity through higher-order interactions and intraspecific competition in rock-paper-scissors dynamics",
+      "snippet": "Understanding the mechanisms that govern species coexistence and biodiversity represents a fundamental challenge in ecology. This study extends the classic rock-paper-scissors model by introducing a context-dependent higher-order interaction mechanism where intraspecific competition is dynamically r",
+      "url": "https://arxiv.org/abs/2603.00566v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Properties of biodiversity indices that model future extinction risk",
+      "snippet": "The loss of biodiversity due to the likely widespread extinction of species in the near future is a focus of current concern in conservation biology. One approach to measure the impact of this extinction is based on the predicted loss of phylogenetic diversity. These predictions have become a focus ",
+      "url": "https://arxiv.org/abs/2602.16059v1",
+      "source": "arXiv"
+    }
+  ],
+  "web_search": [
+    {
+      "title": "How many species are we losing? | WWF",
+      "url": "https://wwf.panda.org/discover/our_focus/biodiversity/biodiversity/",
+      "source": "WEB"
+    },
+    {
+      "title": "Biodiversity loss | Causes, Effects, &amp; Facts | Britannica",
+      "url": "https://www.britannica.com/science/biodiversity-loss",
+      "source": "WEB"
+    },
+    {
+      "title": "Unpacking the extinction crisis: rates, patterns and causes of recent ...",
+      "url": "https://royalsocietypublishing.org/rspb/article/292/2057/20251717/234788/Unpacking-the-extinction-crisis-rates-patterns-and",
+      "source": "WEB"
+    },
+    {
+      "title": "Biodiversity - Our World in Data",
+      "url": "https://ourworldindata.org/biodiversity",
+      "source": "WEB"
+    },
+    {
+      "title": "Past and future decline and extinction of species - Royal Society",
+      "url": "https://royalsociety.org/news-resources/projects/biodiversity/decline-and-extinction/",
+      "source": "WEB"
+    }
+  ],
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL"
+}

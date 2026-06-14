@@ -1,0 +1,95 @@
+{
+  "axis": "COSMIC_RESOURCES_REVIEW",
+  "domain": "cosmos",
+  "timestamp": "2026-05-17T14:27:52.447312+00:00",
+  "sources_count": 6,
+  "rss_count": 0,
+  "ddg_count": 5,
+  "youtube_count": 1,
+  "youtube_items": [
+    {
+      "title": "[YT] Mokey's show - 424 - Asteroids - YouTube",
+      "summary": "Groovy: ayhug (Saness in progress please wait IDOTE) *stronk noises* *we're doing excercises everyday* *but then* ＨＥＬＬＯ 𝕰𝕴𝖄𝕴𝕰𝖄𝕴𝕰𝕴𝕰𝖄𝕴𝕰𝕴𝖄𝕰𝕴𝖄𝕴𝕰𝖄𝕰𝕴𝖄𝕴𝕰𝕴𝖄𝕴𝕰𝖄𝕰𝕴𝖄𝕰𝕴𝕴𝖄𝕴𝖄𝕾SSSS *hell* WHAT ARR motorboat noises) YӨЦ DӨIПG 𝘼 𝙝 𝙮 𝙪 𝙜 . WHATDOYOUWANT weLL i wanna kno what you're doinG WE ARE DOING EXERSCRICE 𝐅ÃⓉＳ𝕆 *chungus* 𝔞𝔩𝔨𝔡𝔰𝔧𝔞𝔰𝔨𝔡𝔧𝔩𝔞𝔡𝔩𝔨𝔞𝔧𝔰𝔡𝔩𝔨𝔧𝔞𝔰𝔡𝔩𝔨𝔧𝔞𝔰𝔩𝔡𝔧𝔞𝔩𝔰𝔡𝔧𝔞𝔩𝔨𝔡𝔰𝔧𝔞𝔰𝔨𝔡𝔧𝔩𝔞𝔡𝔩𝔨𝔞𝔧𝔰𝔡𝔩𝔨𝔧𝔞𝔰𝔡𝔩𝔨𝔧𝔞𝔰𝔩𝔡𝔧𝔞𝔩𝔰𝔡𝔧𝔞𝔩𝔨𝔡𝔰𝔧𝔞𝔰𝔨𝔡𝔧𝔩𝔞𝔡𝔩𝔨𝔞𝔧𝔰𝔡𝔩𝔨𝔧𝔞𝔰𝔡𝔩𝔨𝔧𝔞𝔰𝔩𝔡𝔧𝔞𝔩𝔰𝔡𝔧𝔞𝔩𝔨𝔡𝔰𝔧𝔞𝔰𝔨𝔡𝔧𝔩𝔞𝔡𝔩𝔨𝔞𝔧𝔰𝔡𝔩𝔨𝔧𝔞𝔰𝔡𝔩𝔨𝔧𝔞𝔰𝔩𝔡𝔧𝔞𝔩𝔰𝔡𝔧𝔞𝔩𝔨𝔡𝔰𝔧𝔞𝔰𝔨𝔡𝔧𝔩𝔞𝔡𝔩𝔨𝔞𝔧𝔰𝔡𝔩𝔨𝔧𝔞𝔰𝔡𝔩𝔨𝔧𝔞𝔰𝔩𝔡𝔧𝔞𝔩𝔰𝔡𝔧𝔞𝔩𝔨𝔡𝔰𝔧𝔞𝔰𝔨𝔡𝔧𝔩𝔞𝔡𝔩𝔨𝔞𝔧𝔰𝔡𝔩𝔨𝔧𝔞𝔰𝔡𝔩𝔨𝔧𝔞𝔰𝔩𝔡𝔧𝔞𝔩𝔰𝔡𝔧 Mokey: ,..lleeeeeeW I am really S T R O N G! ᏁᎧ ᎩᎧᏬ'ᏒᏋ ᏁᎧᏖ o u a g h That's right, Mokey. YOU WANNA BE STRONG SAUCE, MOKEY? I will get some... a s t e r o i d s, Mokey. *shocked noises* ǟֆȶɛʀօɨɖֆ? but the ǟֆȶɛʀօɨɖֆ are bad They're ＶＥＲＹ, ᐯ 乇 尺 ㄚ 🅱🅰🅳 THEYR",
+      "link": "https://www.youtube.com/watch?v=yLuVhRiSWac",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "yLuVhRiSWac",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "Астероидното миниране и изучаването на космически ресурси се провеждат вътрешно от държави и компании, без прозрачна глобална координация и общи стандарти.",
+    "root_cause": "Изключителната конкуренция и ексклюзивност на държавните и частни усилия в космоса предотвратяват сътрудничество и обмен на информация, което води до повторени усилия и недостатъчно използване на ресурсите.",
+    "severity": "HIGH",
+    "leverage_points": [
+      "Глобални институции като ЮНЕСКО или ООН, които могат да насърчават прозрачност и сътрудничество",
+      "Обществени движения и еко-организации, които могат да повлияят на политиците"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Създаване на международен консорциум за космически ресурси с участие на държави, компании и научни институции",
+        "measurable_goal": "Повече от 50% от космическите проекти да се извършват чрез този консорциум в рамките на 5 години",
+        "timeframe": "дългосрочно"
+      },
+      {
+        "action": "Интегриране на прозрачни стандарти за изучаване и използване на космически ресурси в международните споразумения",
+        "measurable_goal": "Създаване на минимален набор от стандарти за прозрачност и сътрудничество в рамките на 3 години",
+        "timeframe": "средносрочно"
+      }
+    ],
+    "evidence": [
+      "Space Resource Exploration and Utilization Act of 2015 (H.R. 1508) — никога не станал закон",
+      "European Space Resources Innovation Centre (ESRIC) е първият център в света, но работи вътрешно"
+    ],
+    "generalization": "Този проблем е свързан с домейна на космоса, но има директни последствия за земната цивилизация — недостатъчно използване на ресурси, конкуренция вместо сътрудничество, и недостатъчно участие на обществените институции.",
+    "summary": "Космическите ресурси се изучават и използват без прозрачна глобална координация, което предотвратява ефективното сътрудничество и използване на ресурсите.",
+    "risk_level": "HIGH"
+  },
+  "raw_items": [
+    {
+      "title": "Asteroid mining",
+      "summary": "Asteroid mining is the hypothetical and technically possible extraction of materials from asteroids and other minor planets, including near-Earth objects.Research missions focused on asteroid sample return, including Hayabusa, Hayabusa2, OSIRIS-REx, and Tianwen-2, illustrate the challenges of collecting ore from space using current technology. As of 2024, around 127 grams of asteroid material have",
+      "link": "https://en.wikipedia.org/wiki/Asteroid_mining",
+      "source_type": "ddg"
+    },
+    {
+      "title": "What is asteroid mining and how close are we to making it a ...",
+      "summary": "Nov 5, 2025 · At its core, asteroid mining means the extraction of materials from asteroids, minor planets, or other off-Earth bodies, and the return or in-situ use of those materials.",
+      "link": "https://interestingengineering.com/space/future-of-asteroid-mining-explained",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Space Resource Exploration and Utilization Act of 2015",
+      "summary": "The Space Resource Exploration and Utilization Act of 2015 (H.R. 1508) was a bill (which never became law) introduced in the 114th Congress of the U.S. on March 19, 2015, by Rep. Bill Posey, Republican of Florida. It is identical to the Senate bill by the same name (S. 976). The bill would have expanded Presidential power regarding space resources, and regulated US-based space exploration companie",
+      "link": "https://en.wikipedia.org/wiki/Space_Resource_Exploration_and_Utilization_Act_of_2015",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Lunar resources - Wikipedia",
+      "summary": "Although its applicability on exploiting natural resources remains in contention, leading experts generally agree with the position issued in 2015 by the International Institute of Space...",
+      "link": "https://en.wikipedia.org/wiki/Lunar_resources",
+      "source_type": "ddg"
+    },
+    {
+      "title": "European Space Resources Innovation Centre",
+      "summary": "The European Space Resources Innovation Centre (ESRIC) is a research, business, and innovation hub based in Luxembourg, established in August 2020 as the world's first center dedicated exclusively to the utilization of space resources in support of…",
+      "link": "https://grokipedia.com/page/european_space_resources_innovation_centre",
+      "source_type": "ddg"
+    },
+    {
+      "title": "[YT] Mokey's show - 424 - Asteroids - YouTube",
+      "summary": "Groovy: ayhug (Saness in progress please wait IDOTE) *stronk noises* *we're doing excercises everyday* *but then* ＨＥＬＬＯ 𝕰𝕴𝖄𝕴𝕰𝖄𝕴𝕰𝕴𝕰𝖄𝕴𝕰𝕴𝖄𝕰𝕴𝖄𝕴𝕰𝖄𝕰𝕴𝖄𝕴𝕰𝕴𝖄𝕴𝕰𝖄𝕰𝕴𝖄𝕰𝕴𝕴𝖄𝕴𝖄𝕾SSSS *hell* WHAT ARR motorboat noises) YӨЦ DӨIПG 𝘼 𝙝 𝙮 𝙪 𝙜 . WHATDOYOUWANT weLL i wanna kno what you're doinG WE ARE DOING EXERSCRICE 𝐅ÃⓉＳ𝕆 *chungus* 𝔞𝔩𝔨𝔡𝔰𝔧𝔞𝔰𝔨𝔡𝔧𝔩𝔞𝔡𝔩𝔨𝔞𝔧𝔰𝔡𝔩𝔨𝔧𝔞𝔰𝔡𝔩𝔨𝔧𝔞𝔰𝔩𝔡𝔧𝔞𝔩𝔰𝔡𝔧𝔞𝔩𝔨𝔡𝔰𝔧𝔞𝔰𝔨𝔡𝔧𝔩𝔞𝔡𝔩𝔨𝔞𝔧𝔰𝔡𝔩𝔨𝔧𝔞𝔰𝔡𝔩𝔨𝔧𝔞𝔰𝔩𝔡𝔧𝔞𝔩𝔰𝔡𝔧𝔞𝔩𝔨𝔡𝔰𝔧𝔞𝔰𝔨𝔡𝔧𝔩𝔞𝔡𝔩𝔨𝔞𝔧𝔰𝔡𝔩𝔨𝔧𝔞𝔰𝔡𝔩𝔨𝔧𝔞𝔰𝔩𝔡𝔧𝔞𝔩𝔰𝔡𝔧𝔞𝔩𝔨𝔡𝔰𝔧𝔞𝔰𝔨𝔡𝔧𝔩𝔞𝔡𝔩𝔨𝔞𝔧𝔰𝔡𝔩𝔨𝔧𝔞𝔰𝔡𝔩𝔨𝔧𝔞𝔰𝔩𝔡𝔧𝔞𝔩𝔰𝔡𝔧𝔞𝔩𝔨𝔡𝔰𝔧𝔞𝔰𝔨𝔡𝔧𝔩𝔞𝔡𝔩𝔨𝔞𝔧𝔰𝔡𝔩𝔨𝔧𝔞𝔰𝔡𝔩𝔨𝔧𝔞𝔰𝔩𝔡𝔧𝔞𝔩𝔰𝔡𝔧𝔞𝔩𝔨𝔡𝔰𝔧𝔞𝔰𝔨𝔡𝔧𝔩𝔞𝔡𝔩𝔨𝔞𝔧𝔰𝔡𝔩𝔨𝔧𝔞𝔰𝔡𝔩𝔨𝔧𝔞𝔰𝔩𝔡𝔧𝔞𝔩𝔰𝔡𝔧 Mokey: ,..lleeeeeeW I am really S T R O N G! ᏁᎧ ᎩᎧᏬ'ᏒᏋ ᏁᎧᏖ o u a g h That's right, Mokey. YOU WANNA BE STRONG SAUCE, MOKEY? I will get some... a s t e r o i d s, Mokey. *shocked noises* ǟֆȶɛʀօɨɖֆ? but the ǟֆȶɛʀօɨɖֆ are bad They're ＶＥＲＹ, ᐯ 乇 尺 ㄚ 🅱🅰🅳 THEYR",
+      "link": "https://www.youtube.com/watch?v=yLuVhRiSWac",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "yLuVhRiSWac",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ]
+}

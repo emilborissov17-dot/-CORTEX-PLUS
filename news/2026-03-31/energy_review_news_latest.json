@@ -1,0 +1,103 @@
+{
+  "axis": "ENERGY_REVIEW",
+  "fetched_at": "2026-03-31T07:32:30.138791+00:00",
+  "smart_query": "renewable energy solar wind",
+  "sources_count": {
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "web_search": 5
+  },
+  "rss": [
+    {
+      "title": "EPRI launches new large load framework to reduce time to power for data centers",
+      "snippet": "EPRI is launching Flex MOSAIC, a framework for large electric loads, developed with 65 utilities and tech providers, to improve data center power access and grid reliability.",
+      "url": "https://www.renewableenergyworld.com/energy-business/epri-launches-new-large-load-framework-to-reduce-time-to-power-for-data-centers/",
+      "source": "RSS"
+    },
+    {
+      "title": "Trump administration to pay French company $1B to walk away from US offshore wind leases",
+      "snippet": "The Trump administration will pay $1 billion to TotalEnergies to cancel two offshore wind leases in North Carolina and New York.",
+      "url": "https://www.renewableenergyworld.com/wind-power/offshore/trump-administration-to-pay-french-company-1b-to-walk-away-from-us-offshore-wind-leases/",
+      "source": "RSS"
+    },
+    {
+      "title": "Record heat, melting snow: What does it mean for California’s reservoirs?",
+      "snippet": "California faces a record heat wave impacting its Sierra Nevada snowpack, now at 38% of average for mid-March, complicating water storage.",
+      "url": "https://www.renewableenergyworld.com/hydro-power/record-heat-melting-snow-what-does-it-mean-for-californias-reservoirs/",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "protontypes/open-sustainable-technology",
+      "snippet": "A directory and analysis of the open source ecosystem in the areas of climate change, sustainable energy, biodiversity and natural resources.  https://docs.getgrist.com/gSscJkc5Rb1R/OpenSustaintech",
+      "stars": 2473,
+      "url": "https://github.com/protontypes/open-sustainable-technology",
+      "updated": "2026-03-30",
+      "source": "GitHub"
+    },
+    {
+      "title": "PyPSA/PyPSA",
+      "snippet": "PyPSA: Python for Power System Analysis",
+      "stars": 1920,
+      "url": "https://github.com/PyPSA/PyPSA",
+      "updated": "2026-03-30",
+      "source": "GitHub"
+    },
+    {
+      "title": "pvlib/pvlib-python",
+      "snippet": "A set of documented functions for simulating the performance of photovoltaic energy systems.",
+      "stars": 1527,
+      "url": "https://github.com/pvlib/pvlib-python",
+      "updated": "2026-03-28",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Entire Period Transient Stability of Synchronous Generators Considering LVRT Switching of Nearby Renewable Energy Sources",
+      "snippet": "In scenarios where synchronous generators (SGs) and grid-following renewable energy sources (GFLR) are co-located, existing research, which mainly focuses on the first-swing stability of SGs, often overlooks ongoing dynamic interactions between GFLRs and SGs throughout the entire rotor swing period.",
+      "url": "https://arxiv.org/abs/2603.25287v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Dominant Transient Stability of the Co-located PLL-Based Grid-Following Renewable Plant and Synchronous Condenser Systems",
+      "snippet": "Deploying synchronous condensers (SynCons) near grid-following renewable energy sources (GFLRs) is an effective and increasingly adopted strategy for grid support. However, the potential transient instability risks in such configurations remain an open research question. This study investigates the ",
+      "url": "https://arxiv.org/abs/2603.25192v1",
+      "source": "arXiv"
+    }
+  ],
+  "web_search": [
+    {
+      "title": "Solar Energy vs Wind Energy: Cost, Efficiency, Applicability, and ...",
+      "url": "https://nrgcleanpower.com/learning-center/solar-energy-vs-wind-energy/",
+      "source": "WEB"
+    },
+    {
+      "title": "Renewables - Energy System - IEA",
+      "url": "https://www.iea.org/energy-system/renewables",
+      "source": "WEB"
+    },
+    {
+      "title": "Renewable Energy Explained - Education",
+      "url": "https://education.nationalgeographic.org/resource/renewable-energy-explained/",
+      "source": "WEB"
+    },
+    {
+      "title": "A review of hybrid renewable energy systems: Solar and wind-powered ...",
+      "url": "https://www.sciencedirect.com/science/article/pii/S259012302300748X",
+      "source": "WEB"
+    },
+    {
+      "title": "Solar Energy Vs Wind Energy: Complete 2025 Comparison Guide",
+      "url": "https://solartechonline.com/blog/solar-energy-vs-wind-energy-comparison-guide/",
+      "source": "WEB"
+    }
+  ],
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL"
+}

@@ -1,0 +1,87 @@
+{
+  "axis": "EDUCATION_CULTURE_REVIEW",
+  "domain": "civilization",
+  "timestamp": "2026-05-08T09:54:27.240435+00:00",
+  "sources_count": 8,
+  "rss_count": 4,
+  "ddg_count": 4,
+  "youtube_count": 0,
+  "youtube_items": [],
+  "analysis": {
+    "problem": "Намалените постижения на девојки в математика на глобално ниво",
+    "root_cause": "Отсъствие на целевите мерки за решаване на проблема с ранна икономия в образованието",
+    "severity": "MEDIUM",
+    "leverage_points": [
+      "Учители и образователни институции",
+      "Семейства и общности, които могат да подпомогнат ранното образование"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Разработване и внедряване на целеви програми за ранно образование в математика за девојки",
+        "measurable_goal": "Увеличение на постиженията на девојки в математика с 20% през следващите 2 години",
+        "timeframe": "средносрочно"
+      }
+    ],
+    "evidence": [
+      "Данните от доклада показват, че глобалните постижения на девојки в математика се снижават",
+      "Изследванията показват, че ранните мерки за образование могат да намалят разликата в постиженията между девојки и момчета"
+    ],
+    "generalization": "Този проблем е свързан с домейна на планетата, тъй като образованието е ключов фактор за устойчивостта на човечеството и развитието на потенциала на всички хора",
+    "summary": "Намалените постижения на девојки в математика на глобално ниво могат да бъдат решени чрез целеви мерки за ранно образование, което ще има положителен ефект върху образованието и развитието на потенциала на девојките",
+    "risk_level": "MEDIUM"
+  },
+  "raw_items": [
+    {
+      "title": "Screen Time Concerns Lead to Backlash Against Edtech Vetting Process",
+      "summary": "SCHOOL SOFTWARE SCRUTINY: Legislators have pushed back against cellphones in the classroom but are now focused on ensuring school software on devices ...",
+      "link": "https://www.edsurge.com/news/2026-05-07-screen-time-concerns-lead-to-backlash-against-edtech-vetting-process",
+      "published": "Thu, 07 May 2026 13:07:40 -0700",
+      "source_type": "rss"
+    },
+    {
+      "title": "ISTE+ASCD Names 2026-27 Voices of Change Fellows",
+      "summary": "Six educators from across the country are joining the 2026-27 ISTE+ASCD Voices of Change Fellowship to share how schools are navigating AI, digital ...",
+      "link": "https://www.edsurge.com/news/2026-05-06-iste-ascd-names-2026-27-voices-of-change-fellows",
+      "published": "Wed, 06 May 2026 05:00:00 -0700",
+      "source_type": "rss"
+    },
+    {
+      "title": "Educators: Why Are You Thinking of Leaving the Field?",
+      "summary": "EdSurge wants to hear from educators who have recently left or plan to leave their jobs for another sector.",
+      "link": "https://www.edsurge.com/news/2026-05-05-educators-why-are-you-thinking-of-leaving-the-field",
+      "published": "Tue, 05 May 2026 11:47:02 -0700",
+      "source_type": "rss"
+    },
+    {
+      "title": "Global Math Gains for Girls Are Slipping, Report Finds",
+      "summary": "The global math gender gap: “Whatever we do, the action we take to address the issue must start quite early and must be very targeted.”",
+      "link": "https://www.edsurge.com/news/2026-05-01-girls-around-the-globe-are-losing-gains-in-math-data-shows",
+      "published": "Fri, 01 May 2026 01:00:00 -0700",
+      "source_type": "rss"
+    },
+    {
+      "title": "Global education",
+      "summary": "Global education is a mental development program that seeks to improve global human development based on the understanding of global dynamics, through the various sectors of human development delivery. In formal education, as a mode of human development delivery, it is integrated into formal educational programs, as an advanced program where global dimensions to local problems are appreciated thro",
+      "link": "https://en.wikipedia.org/wiki/Global_education",
+      "source_type": "ddg"
+    },
+    {
+      "title": "primarysource.org/about-us/what-is-global-education",
+      "summary": "A global education is one that incorporates learning about the cultures, geographies, histories, and current issues of all the world’s regions.",
+      "link": "https://primarysource.org/about-us/what-is-global-education/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Literacy",
+      "summary": "Literacy is the ability to read and write, and illiteracy is the inability to read and write. Some researchers suggest that the study of literacy as a concept can be divided into two periods: the period before 1950, when literacy was understood solely as alphabetical literacy (understanding the meanings of words without necessarily being able to use words); and the period after 1950, when literacy",
+      "link": "https://en.wikipedia.org/wiki/Literacy",
+      "source_type": "ddg"
+    },
+    {
+      "title": "What you need to know about literacy",
+      "summary": "March 24, 2026 - Literacy is a continuum of learning and proficiency in reading, writing and using numbers throughout life and is part of a larger set of skills, which include digital skills, media literacy, education for sustainable development and global citizenship as well as job-specific skills.",
+      "link": "https://www.unesco.org/en/literacy/need-know",
+      "source_type": "ddg"
+    }
+  ]
+}

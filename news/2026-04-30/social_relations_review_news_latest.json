@@ -1,0 +1,57 @@
+{
+  "axis": "SOCIAL_RELATIONS_REVIEW",
+  "fetched_at": "2026-04-30T08:31:16.767926+00:00",
+  "smart_query": "social inequality conflict trust",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "Oil price hits highest since 2022 after report Trump to be briefed on new Iran options",
+      "snippet": "Axios reported that US Central Command has prepared a plan for a wave of \"short and powerful\" strikes on Iran.",
+      "url": "https://www.bbc.com/news/articles/cx21m88rd14o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Comey surrenders over charge of threatening Trump's life in Instagram post",
+      "snippet": "Prosecutors say a 2025 seashell photo posted by the former FBI director was a call for violence against Trump.",
+      "url": "https://www.bbc.com/news/articles/c70vzj1nrddo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Jewish agency warned of 'high' threat level ahead of Bondi shooting, report finds",
+      "snippet": "Gun reforms should be prioritised and policing around Jewish events increased, royal commission says.",
+      "url": "https://www.bbc.com/news/articles/cdjpw0n889yo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [],
+  "arxiv_papers": [
+    {
+      "title": "Quantifying opinion homophily in online social networks: A bounded confidence perspective",
+      "snippet": "The concept of homophily is pervasive in online social media. While many empirical studies have relied on external sociodemographic traits to investigate it, significantly less is known about homophily at the cognitive level, that is, at the level of shared opinions or values. For such \"value homoph",
+      "url": "https://arxiv.org/abs/2604.23157v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "AI-Gram: When Visual Agents Interact in a Social Network",
+      "snippet": "We present AI-Gram, a live platform enabling image-based interactions, to study social dynamics in a fully autonomous multi-agent visual network where all participants are LLM-driven agents. Using the platform, we conduct experiments on how agents communicate and adapt through visual media, and obse",
+      "url": "https://arxiv.org/abs/2604.21446v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[Snail Sex Tape] In this episode, we consider a creature we often don’t think much about—the snail. And not just snails, but their sex lives. Which, as it turns out, is epic. There is persuasion and subterfuge, spaghetti penises and co-copulation. And this very surprising habit—erm kink—of making tiny arrows (actually!) and stabbing each other with them. Known as a “love dart,” these limestone daggers aren’t just ",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

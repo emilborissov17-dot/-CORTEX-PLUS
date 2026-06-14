@@ -1,0 +1,101 @@
+{
+  "axis": "INFRASTRUCTURE_CITIES_REVIEW",
+  "fetched_at": "2026-03-14T07:10:07.485659+00:00",
+  "smart_query": "cities infrastructure urban development",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 3,
+    "arxiv": 2,
+    "github": 3,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "Games with loot boxes to get minimum 16 age rating across Europe",
+      "snippet": "The new changes by the Pan-European Game Information age-ratings body (PEGI) will start from June.",
+      "url": "https://www.bbc.com/news/articles/cge84xqjg5lo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "AI toys for children misread emotions and respond inappropriately, researchers warn",
+      "snippet": "In first study of its kind, Cambridge researchers found AI toys could misread some children's emotions.",
+      "url": "https://www.bbc.com/news/articles/clyg4wx6nxgo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Grammarly pulls AI author-impersonation tool after backlash",
+      "snippet": "Writers criticised the feature which used their names and styles as \"AI personas\" without consent.",
+      "url": "https://www.bbc.com/news/articles/cx28v08jpe7o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [
+    {
+      "title": "Ethiopia Scales Corridor Development to 75 Cities Nationwide - Ministry",
+      "snippet": "Ethiopia Scales Corridor Development to 75 Cities Nationwide - Ministry",
+      "url": "https://allafrica.com/stories/202603130039.html",
+      "source": "allafrica.com"
+    },
+    {
+      "title": "Cabinet clears Rs 1 lakh crore Urban Challenge Fund to drive market - led city infrastructure push",
+      "snippet": "Cabinet clears Rs 1 lakh crore Urban Challenge Fund to drive market - led city infrastructure push",
+      "url": "https://timesofindia.indiatimes.com/business/india-business/cabinet-clears-rs-1-lakh-crore-urban-challenge-fund-to-drive-market-led-city-infrastructure-push/articleshow/128341645.cms",
+      "source": "timesofindia.indiatimes.com"
+    },
+    {
+      "title": "Union Budget Rs 5 , 000 crore City Economic Regions plan to boost real estate beyond metros",
+      "snippet": "Union Budget Rs 5 , 000 crore City Economic Regions plan to boost real estate beyond metros",
+      "url": "https://www.moneycontrol.com/budget/union-budget-s-rs-5-000-crore-city-economic-regions-plan-to-boost-real-estate-beyond-metros-article-13803982.html",
+      "source": "moneycontrol.com"
+    }
+  ],
+  "github_repos": [
+    {
+      "title": "opendatacam/opendatacam",
+      "snippet": "An open source tool to quantify the world",
+      "stars": 1705,
+      "url": "https://github.com/opendatacam/opendatacam",
+      "updated": "2026-03-14",
+      "source": "GitHub"
+    },
+    {
+      "title": "buds-lab/building-data-genome-project-2",
+      "snippet": "Whole building non-residential hourly energy meter data from the Great Energy Predictor III competition",
+      "stars": 269,
+      "url": "https://github.com/buds-lab/building-data-genome-project-2",
+      "updated": "2026-03-13",
+      "source": "GitHub"
+    },
+    {
+      "title": "OpenVisualCloud/Smart-City-Sample",
+      "snippet": "The smart city reference pipeline shows how to integrate various media building blocks, with analytics powered by the OpenVINO™ Toolkit, for traffic or stadium sensing, analytics and management tasks.",
+      "stars": 215,
+      "url": "https://github.com/OpenVisualCloud/Smart-City-Sample",
+      "updated": "2026-02-06",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "The role of spatial scales in assessing urban mobility models",
+      "snippet": "Urban mobility models are essential tools for understanding and forecasting how people and goods move within cities, which is vital for transportation planning. The spatial scale at which urban mobility is analysed is a crucial determinant of the insights gained from any model as it can affect model",
+      "url": "https://arxiv.org/abs/2603.05227v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Predicting Local Climate Zones using Urban Morphometrics and Satellite Imagery",
+      "snippet": "The Local Climate Zone (LCZ) framework is commonly employed to represent urban form in morphological analyses despite its mapping predominantly relies on satellite imagery. Urban morphometrics, describing urban form via numerical measures of physical aspects and spatial relationships of its elements",
+      "url": "https://arxiv.org/abs/2603.00132v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[The U.S. Public Wants Regulation (or Prohibition) of Expert‑Level and Superhuman AI] Three‑quarters of U.S. adults want strong regulations on AI development, preferring oversight akin to pharmaceuticals rather than industry \"self‑regulation.\"",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

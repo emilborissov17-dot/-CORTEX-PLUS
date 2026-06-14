@@ -1,0 +1,129 @@
+{
+  "axis": "MATERIALS_WASTE_REVIEW",
+  "domain": "planet",
+  "timestamp": "2026-05-17T14:01:36.607097+00:00",
+  "sources_count": 12,
+  "rss_count": 4,
+  "ddg_count": 6,
+  "youtube_count": 2,
+  "youtube_items": [
+    {
+      "title": "[YT] POWERFUL VIDEO: Why We Need to Stop Plastic... - YouTube",
+      "summary": "our oceans sustain life an abundant ocean can feed a billion people a healthy meal every day forever but now they are being filled killed by throwaway plastics the equivalent of one garbage truck of plastic is dumped in the sea every minute 17 point six billion pounds every year plastic is everywhere in our ocean floating on the surface mixing in the saltwater and sitting on the ocean bottom miles and miles deep and once in the ocean it never goes away over hundreds of years it breaks down into small pieces but those pieces even the tiny ones called micro plastics are still plastic sea turtles are choking on them scientists say that over 60% of whale and dolphin species are affected by it it's all plankton the base of the ocean food chain eat it and so do we it's in the water we drink it's",
+      "link": "https://www.youtube.com/watch?v=Yomf5pBN8dY",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "Yomf5pBN8dY",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 2949,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Recycling plastics – Resource efficiency with an optimized... - YouTube",
+      "summary": "Not every piece of packaging&nbsp; makes such a spectacular exit. Millions of packages in Germany simply feel&nbsp; empty at some point, squeezed out and useless. The result is two and a half million&nbsp; tons of packaging waste each year&nbsp;&nbsp; that ends up in the yellow bag or the yellow bin. And from there to a sorting plant.&nbsp; The problem is different kinds of&nbsp;&nbsp; plastic are difficult to separate from&nbsp; each other and from other materials. That's why most waste ends up&nbsp; being used for energy recovery. The empty packaging is burned for&nbsp; energy in conventional power plants&nbsp;&nbsp; for example or in the steel or cement industry. At this sorting plant in southern Hessen the&nbsp; MEILO company plans to greatly increase the&nbsp;&nbsp; proportion of reus",
+      "link": "https://www.youtube.com/watch?v=I_fUpP-hq3A",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "I_fUpP-hq3A",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "Неправилното управление на отпадъците води до загрязнение на океаните и увреждане на биосферата.",
+    "root_cause": "Ниските и средни икономики имат слаби инфраструктури за управление на отпадъците, което довежда до разхвърляне на отпадъци в природните водни обекти.",
+    "severity": "CRITICAL",
+    "leverage_points": [
+      "Развитие на инфраструктура за управление на отпадъците в ниските и средни икономики",
+      "Разпространение на образователни програми за устойчиво управление на отпадъците"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Инвестирани инвестиции в инфраструктурата за събиране и обработка на отпадъците в ниските и средни икономики",
+        "measurable_goal": "Увеличение на ефективността на управлението на отпадъците с 30% в 10 града в ниските и средни икономики до 2028 г.",
+        "timeframe": "дългосрочно"
+      },
+      {
+        "action": "Разработване на образователни програми за училища и обществени организации, насочени към устойчиво управление на отпадъците",
+        "measurable_goal": "Повишаване на осведомеността за устойчиво управление на отпадъците с 50% в 500 училища до 2027 г.",
+        "timeframe": "средносрочно"
+      }
+    ],
+    "evidence": [
+      "0.5% от всички пластмасови отпадъци достигат до океаните (2026 г.)",
+      "Ниските и средните икономики често имат слаби инфраструктури за управление на отпадъците, което води до загрязнение на водни обекти"
+    ],
+    "generalization": "Проблемът на управлението на отпадъците е свързан с домейните planet, materials и society, тъй като неправилното управление на отпадъците влияе върху здравословната биосфера, устойчивостта на ресурсите и социалното благополучие.",
+    "summary": "Неправилното управление на отпадъците води до загрязнение на океаните и увреждане на биосферата, особено в ниските и средните икономики.",
+    "risk_level": "CRITICAL"
+  },
+  "raw_items": [
+    {
+      "title": "California city launches state's first fully electric trash and recycling fleet",
+      "summary": "",
+      "link": "https://www.waste360.com/fleet-technology/california-city-launches-state-s-first-fully-electric-trash-and-recycling-fleet",
+      "published": "Fri, 15 May 2026 12:00:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Project Zero Waste field trip connects students to real-world sustainability efforts",
+      "summary": "Students from Valadez Middle School recently stepped beyond the classroom and into one of Orange County’s largest waste management facilities to learn firsthand how trash, recycling and composting systems operate.",
+      "link": "https://www.waste360.com/sustainability/project-zero-waste-field-trip-connects-students-to-real-world-sustainability-efforts",
+      "published": "Fri, 15 May 2026 12:00:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "SWANA Releases New ARF Report on Horizontal Landfill Gas Collection Systems",
+      "summary": "The SWANA Applied Research Foundation (ARF) released a new report titled Horizontal Landfill Gas Collection Systems. This report provides updated guidance to assist solid waste professionals in designing, installing, and operating horizontal landfill gas (LFG) collection systems.",
+      "link": "https://www.waste360.com/landfill/swana-releases-new-arf-report-on-horizontal-landfill-gas-collection-systems",
+      "published": "Fri, 15 May 2026 12:00:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Penn researchers are turning food scraps into building materials — from pineapple peels to celery stalks",
+      "summary": "At Penn’s DumoLab, researchers work to solve multiple problems: how to keep food waste out of landfills, make healthier building materials and tackle climate change.",
+      "link": "https://www.waste360.com/food-waste/penn-researchers-are-turning-food-scraps-into-building-materials-from-pineapple-peels-to-celery-stalks",
+      "published": "Thu, 14 May 2026 19:14:57 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "7 ocean plastic statistics that actually matter in 2026",
+      "summary": "About 0.5% of all plastic waste ends up in the ocean.[2]. Why it matters: The older, higher figure is still widely repeated, but the distinction matters for solutions. Knowing that rivers are the primary delivery mechanism helps target interventions.",
+      "link": "https://plasticbank.com/blog/from-production-to-pollution-7-statistics-that-define-the-ocean-plastic-crisis/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "16 Biggest Environmental Problems of 2026 | Earth.Org",
+      "summary": "From the rise of AI and plastic pollution to fast fashion, here are 16 of the biggest environmental problems of 2026.",
+      "link": "https://earth.org/the-biggest-environmental-problems-of-our-lifetime/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "How much plastic ends up in the ocean? Where does it come from?",
+      "summary": "Originally published in November 2023; substantially updated in February 2026.Plastic pollution is mostly about how waste is managed, not how much is producedLow- to middle-income countries tend to produce much more plastic pollution",
+      "link": "https://ourworldindata.org/plastic-pollution",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Impact of improper waste disposal on urban flooding and...",
+      "summary": "Improper solid waste disposal is a pervasive environmental and public-health challenge in many Nigerian cities, contributing directly to increased urban flooding, degradation of water resources, and long-term threats to environmental sustainability.",
+      "link": "https://www.linkedin.com/pulse/impact-improper-waste-disposal-urban-flooding-cities-rita-bolusemihi-zrx2e",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Environmental Impact Of Improper Waste Management In Nigeria",
+      "summary": "Common Forms of Improper Waste Disposal in Nigeria. Here are the most widespread improper disposal practices across Nigerian states: Open dumping: Waste piled on vacant lots, road medians, and drainage paths without any containment.",
+      "link": "https://chuzeke.com/environmental-impact-improper-waste-management/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "What are the long-term environmental impacts of improper junk...",
+      "summary": "Improper junk removal has far-reaching consequences that extend well beyond simply cluttering landfills. When household waste, construction debris, electronics, and bulky items like old furniture or appliances are dumped illegally or sent to landfills withoutRead More.",
+      "link": "https://timebusinessnews.com/what-are-the-long-term-environmental-impacts-of-improper-junk-removal-practices-and-how-can-responsible-methods-mitigate-climate-change-contributions/",
+      "source_type": "ddg"
+    }
+  ]
+}

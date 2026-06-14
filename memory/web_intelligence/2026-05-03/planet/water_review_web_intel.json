@@ -1,0 +1,109 @@
+{
+  "axis": "WATER_REVIEW",
+  "domain": "planet",
+  "timestamp": "2026-05-03T08:43:13.120324+00:00",
+  "sources_count": 10,
+  "rss_count": 4,
+  "ddg_count": 5,
+  "youtube_count": 1,
+  "youtube_items": [
+    {
+      "title": "[YT] Here's how Flint's water crisis happened - YouTube",
+      "summary": "Melissa May says the ominous change in the water was particularly noticeable at that time. My youngest retirement mom is yellow and is a philmy gross phome thing and it would smell like open sewer. But we were being told we're still getting used to the new system. It's safe. It's okay. But it wasn't okay. Far from it. Flint's tab water was laced with dangerous levels of lead. The state knew about it and did nothing. The trouble began two years ago when the state decided to switch flames from Detroit's drinking water to a new system. But the new system wouldn't be ready for two years. In the meantime to save money, they switched to the Flint River water. Three, two, one. That first decision turned out to be a mistake. As did nearly every step the state took after it. Michigan's Department o",
+      "link": "https://www.youtube.com/watch?v=nTpsMyNezPQ",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "nTpsMyNezPQ",
+      "transcript_method": "whisper",
+      "transcript_chars": 3972,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "summary": "- Northern Michigan’s Extreme Climate Disaster: <figure><img alt=\"\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"768\" src=\"https://i0.wp.com/www.circleofblue.org/wp-content/uploads/2026/05/20260416_161307-scaled.jpg?f\n- Corpus Christi Plans to Declare a ‘Water Emergenc",
+    "risk_level": "UNKNOWN",
+    "trend": "UNKNOWN",
+    "key_events": [
+      "Northern Michigan’s Extreme Climate Disaster",
+      "Corpus Christi Plans to Declare a ‘Water Emergency.’ What Does That Mean?",
+      "Proposed Michigan Bill Would Tie State Wetland Protections to a Recently Narrowed Federal Standard"
+    ],
+    "insights": [],
+    "youtube_insights": [],
+    "relevance_to_goal": "",
+    "generalization": ""
+  },
+  "raw_items": [
+    {
+      "title": "Northern Michigan’s Extreme Climate Disaster",
+      "summary": "<figure><img alt=\"\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"768\" src=\"https://i0.wp.com/www.circleofblue.org/wp-content/uploads/2026/05/20260416_161307-scaled.jpg?fit=1024%2C768&amp;ssl=1\" width=\"1024\" /></figure>\n<p>On April 7, 2026, a light drizzle began to fall from the dark clouds over the forests of Michigan’s lower peninsula. A spring rain, nothing especially unusual in a region of uncommonly clean lakes, the magnificent shorelines of two Great Lakes, ov",
+      "link": "https://www.circleofblue.org/2026/opinion/northern-michigans-extreme-climate-disaster/",
+      "published": "Sat, 02 May 2026 13:37:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Corpus Christi Plans to Declare a ‘Water Emergency.’ What Does That Mean?",
+      "summary": "<figure><img alt=\"Looking through a chain link fence at a water well with water spewing from it\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"683\" src=\"https://i0.wp.com/www.circleofblue.org/wp-content/uploads/2026/04/4O6A0229-2048x1366-1.jpg?fit=1024%2C683&amp;ssl=1\" width=\"1024\" /></figure>\n<p>By&#160;Dylan Baddour, Neena Satija of KUT, and Emily Salazar of KEDT This article originally appeared on&#160;Inside Climate News&#160;(hyperlink to the original story), a",
+      "link": "https://www.circleofblue.org/2026/world/corpus-christi-plans-to-declare-a-water-emergency-what-does-that-mean/",
+      "published": "Sat, 02 May 2026 13:34:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Proposed Michigan Bill Would Tie State Wetland Protections to a Recently Narrowed Federal Standard",
+      "summary": "<figure><img alt=\"\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"682\" src=\"https://i0.wp.com/www.circleofblue.org/wp-content/uploads/2023/05/2022-10-22-Michigan-Lovells-marshland-sunrise-JGanter-DJI_0621.DNG-dng_DXO-Edit2500.jpg?fit=1024%2C682&amp;ssl=1\" width=\"1024\" /></figure>\n<p>LANSING, Mich. — A bill introduced last month in the Michigan House proposes changing the state’s definition of “wetland” to more closely align with recently narrowed federal standards. ",
+      "link": "https://www.circleofblue.org/2026/water-policy-politics/proposed-michigan-bill-would-tie-state-wetland-protections-to-a-recently-narrowed-federal-standard/",
+      "published": "Thu, 30 Apr 2026 10:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Glen Canyon Dam Faces Its Existential Moment",
+      "summary": "<figure><img alt=\"\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"683\" src=\"https://i0.wp.com/www.circleofblue.org/wp-content/uploads/2026/04/2026-03-22-Lake-Powell-Glen-Canyon-BWalton-IMG_7046a-Edit-2500.jpg?fit=1024%2C683&amp;ssl=1\" width=\"1024\" /></figure>\n<p>PAGE, Ariz. – In the span of U.S. history certain years are turning points, milestones in the nation’s story. 1776. 1865. 1929. 1968. Circumstance and consequence conspire to make it so. For the Colorado Riv",
+      "link": "https://www.circleofblue.org/2026/supply/glen-canyon-dam-faces-its-existential-moment/",
+      "published": "Wed, 29 Apr 2026 11:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Water scarcity",
+      "summary": "Water scarcity (closely related to water stress or water crisis) is the lack of any, local or economically viably transportable, sources of fresh water resources to meet the standard water demand in a region. There are two types of water scarcity. One is physical. The other is economic water scarcity. Physical water scarcity is where there is not enough water to meet all demands. This includes wat",
+      "link": "https://en.wikipedia.org/wiki/Water_scarcity",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Water scarcity | Description, Mechanisms, Effects, & Solutions | Britannica",
+      "summary": "Water scarcity occurs when there are insufficient freshwater resources to meet the human and environmental demands of a certain area. Given the challenges of population growth, profligate use, growing pollution, and global warming, many countries and major cities worldwide are faced with increasing water scarcity.",
+      "link": "https://www.britannica.com/topic/water-scarcity",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Fresh water",
+      "summary": "Fresh water or freshwater is any naturally occurring liquid or frozen water containing low concentrations of dissolved salts and other total dissolved solids. The term excludes seawater and brackish water, but it does include non-salty mineral-rich waters, such as chalybeate springs. Fresh water may encompass frozen and meltwater in ice sheets, ice caps, glaciers, snowfields and icebergs, natural ",
+      "link": "https://en.wikipedia.org/wiki/Fresh_water",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Freshwater (Lakes and Rivers) and the Water Cycle | U.S. Geological Survey",
+      "summary": "Freshwater on the land surface is a vital part of the water cycle for everyday human life. On the landscape, freshwater is stored in rivers, lakes, reservoirs, creeks, and streams. Most of the water people use everyday comes from these sources of water on the land surface.",
+      "link": "https://www.usgs.gov/water-science-school/science/freshwater-lakes-and-rivers-and-water-cycle",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Freshwater | National Oceanic and Atmospheric Administration",
+      "summary": "October 7, 2020 - NOAA hydrologists provide river level forecasts to protect life and property and manage navigability of waterways. Many important fishes like salmon and sturgeon are anadromous, traveling between freshwater and saltwater throughout their life cycles. NOAA monitors and manages these fishes in partnership with local agencies.",
+      "link": "https://www.noaa.gov/education/resource-collections/freshwater",
+      "source_type": "ddg"
+    },
+    {
+      "title": "[YT] Here's how Flint's water crisis happened - YouTube",
+      "summary": "Melissa May says the ominous change in the water was particularly noticeable at that time. My youngest retirement mom is yellow and is a philmy gross phome thing and it would smell like open sewer. But we were being told we're still getting used to the new system. It's safe. It's okay. But it wasn't okay. Far from it. Flint's tab water was laced with dangerous levels of lead. The state knew about it and did nothing. The trouble began two years ago when the state decided to switch flames from Detroit's drinking water to a new system. But the new system wouldn't be ready for two years. In the meantime to save money, they switched to the Flint River water. Three, two, one. That first decision turned out to be a mistake. As did nearly every step the state took after it. Michigan's Department o",
+      "link": "https://www.youtube.com/watch?v=nTpsMyNezPQ",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "nTpsMyNezPQ",
+      "transcript_method": "whisper",
+      "transcript_chars": 3972,
+      "has_full_transcript": true
+    }
+  ]
+}

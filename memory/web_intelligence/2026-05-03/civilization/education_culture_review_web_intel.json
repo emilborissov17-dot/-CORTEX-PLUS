@@ -1,0 +1,145 @@
+{
+  "axis": "EDUCATION_CULTURE_REVIEW",
+  "domain": "civilization",
+  "timestamp": "2026-05-03T08:55:43.785286+00:00",
+  "sources_count": 11,
+  "rss_count": 4,
+  "ddg_count": 4,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] 2025 UNESCO Confucius Prize for Literacy highlights global education efforts - YouTube",
+      "summary": "A celebration of both heritage and humanity. The 20th UNESCO Confucious Prize for Literacy ceremony took place in Chu Fu, hometown of the ancient Chinese philosopher. This year's awards recognize three projects from Bangladesh, Ireland, and Morocco for their outstanding contributions to inclusive education. &gt;&gt; Thank you. &gt;&gt; We believe that people should have the right to have their literacy needs met. Um and by having this prize it gives international recognition for that work but also will help us to fund and sustain the work in the years to come. It gives up lot of strength. Hopefully uh we will be able to scale up more communities and internationally in other countries. &gt;&gt; Founded 20 years ago. The UNESCO Confucious Prize for Literacy honors individuals and institution",
+      "link": "https://www.youtube.com/watch?v=-SG9a5M-KCI",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "-SG9a5M-KCI",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 1799,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Webinar: Digital Skills Unleashed - Launch of new global multi-lingual course for literacy educators - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] On 18 February 2026, the UNESCO Institute for Lifelong Learning (UIL) held a global launch webinar to unveil a new multi-lingual course designed to strengthe... Published February 19, 2026",
+      "link": "https://www.youtube.com/watch?v=di1n07s8c9I",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "di1n07s8c9I",
+      "transcript_method": "description",
+      "transcript_chars": 211,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Global Media and Information Literacy Week Feature ...",
+      "summary": "e e e okay good morning good morning everyone you are very welcome I would like to remind you of two star in today's session about that translation kit if anyone would like to have the translation kit so he can tune the language that he preferred for the hearing the sessions in Arabic English and French and the other thing it's about the game or the application the competition that we started or we announced yesterday from jmi the the application M hunt which you can scan the QR code that you can see in the screen outside and start the game and today also we're going to have winners and new winners for new teams so it's kind of a nice competition that that you would enjoy and I wish you all the luck so ladies and gentlemen esteemed guests colleagues participants welcome to day two day two ",
+      "link": "https://www.youtube.com/watch?v=7YuujfROZVI",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "7YuujfROZVI",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "summary": "Global education initiatives are gaining momentum, with a focus on literacy, digital skills, and inclusive education. There is a growing recognition of the importance of early education and the need for targeted interventions to address gender gaps and quality concerns in preschool programs. These efforts are being supported by international bodies like UNESCO, which are promoting global education as a key component of human development.",
+    "risk_level": "MEDIUM",
+    "trend": "IMPROVING",
+    "key_events": [
+      "Global Math Gains for Girls Are Slipping, Report Finds: Highlighting the need for early and targeted interventions in education.",
+      "Districts Relying More on Data to Identify Gifted Students: Emphasizing data-driven approaches to inclusivity in education.",
+      "UNESCO Confucius Prize for Literacy: Recognizing projects that promote inclusive education and global literacy."
+    ],
+    "insights": [
+      "The importance of early education and targeted interventions is becoming more widely recognized.",
+      "Global education initiatives are being supported by international organizations, but challenges remain in ensuring quality and inclusivity."
+    ],
+    "youtube_insights": [
+      "YouTube video on UNESCO Confucius Prize for Literacy highlights global education efforts.",
+      "Webinar on digital skills for literacy educators showcases new global multi-lingual course."
+    ],
+    "relevance_to_goal": "High",
+    "generalization": "Global education initiatives are increasingly being recognized as essential for human development, with a focus on literacy, digital skills, and inclusive education. International organizations are playing a key role in promoting these efforts, though challenges remain in ensuring quality and inclusivity."
+  },
+  "raw_items": [
+    {
+      "title": "Global Math Gains for Girls Are Slipping, Report Finds",
+      "summary": "The global math gender gap: “Whatever we do, the action we take to address the issue must start quite early and must be very targeted.”",
+      "link": "https://www.edsurge.com/news/2026-05-01-girls-around-the-globe-are-losing-gains-in-math-data-shows",
+      "published": "Fri, 01 May 2026 01:00:00 -0700",
+      "source_type": "rss"
+    },
+    {
+      "title": "Quality Concerns Remain as States Invest More Than Ever in Preschool Programs",
+      "summary": "A new report found states hit an all-time high for both spending and enrollment, but the quality of the programs remains a concern.",
+      "link": "https://www.edsurge.com/news/2026-04-30-quality-concerns-remain-as-states-invest-more-than-ever-in-preschool-programs",
+      "published": "Thu, 30 Apr 2026 09:21:04 -0700",
+      "source_type": "rss"
+    },
+    {
+      "title": "I Built Radical Possibility in Schools — and It Nearly Broke Me",
+      "summary": "What does it mean to “save your own life” in education? Former Voices of Change fellow Dee Watson reflects on burnout, resistance and radical ...",
+      "link": "https://www.edsurge.com/news/2026-04-29-i-built-radical-possibility-in-schools-and-it-nearly-broke-me",
+      "published": "Wed, 29 Apr 2026 01:00:00 -0700",
+      "source_type": "rss"
+    },
+    {
+      "title": "Districts Relying More on Data to Identify Gifted Students",
+      "summary": "Schools are finding new, data-driven ways to re-approach gifted and talented programs -- with a focus on inclusivity.",
+      "link": "https://www.edsurge.com/news/2026-04-23-districts-relying-more-on-data-to-identify-gifted-students",
+      "published": "Thu, 23 Apr 2026 01:02:00 -0700",
+      "source_type": "rss"
+    },
+    {
+      "title": "Global education",
+      "summary": "Global education is a mental development program that seeks to improve global human development based on the understanding of global dynamics, through the various sectors of human development delivery. In formal education, as a mode of human development delivery, it is integrated into formal educational programs, as an advanced program where global dimensions to local problems are appreciated thro",
+      "link": "https://en.wikipedia.org/wiki/Global_education",
+      "source_type": "ddg"
+    },
+    {
+      "title": "primarysource.org/about-us/what-is-global-education",
+      "summary": "A global education is one that incorporates learning about the cultures, geographies, histories, and current issues of all the world’s regions.",
+      "link": "https://primarysource.org/about-us/what-is-global-education/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Literacy",
+      "summary": "Literacy is the ability to read and write, and illiteracy is the inability to read and write. Some researchers suggest that the study of literacy as a concept can be divided into two periods: the period before 1950, when literacy was understood solely as alphabetical literacy (understanding the meanings of words without necessarily being able to use words); and the period after 1950, when literacy",
+      "link": "https://en.wikipedia.org/wiki/Literacy",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Literacy: what you need to know - UNESCO",
+      "summary": "Learn about the global situation, UNESCO's definition and promotion of literacy, and the importance of digital and women's literacy. Find out how COVID-19 has impacted literacy and how UNESCO celebrates International Literacy Day and awards prizes.",
+      "link": "https://www.unesco.org/en/literacy/need-know",
+      "source_type": "ddg"
+    },
+    {
+      "title": "[YT] 2025 UNESCO Confucius Prize for Literacy highlights global education efforts - YouTube",
+      "summary": "A celebration of both heritage and humanity. The 20th UNESCO Confucious Prize for Literacy ceremony took place in Chu Fu, hometown of the ancient Chinese philosopher. This year's awards recognize three projects from Bangladesh, Ireland, and Morocco for their outstanding contributions to inclusive education. &gt;&gt; Thank you. &gt;&gt; We believe that people should have the right to have their literacy needs met. Um and by having this prize it gives international recognition for that work but also will help us to fund and sustain the work in the years to come. It gives up lot of strength. Hopefully uh we will be able to scale up more communities and internationally in other countries. &gt;&gt; Founded 20 years ago. The UNESCO Confucious Prize for Literacy honors individuals and institution",
+      "link": "https://www.youtube.com/watch?v=-SG9a5M-KCI",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "-SG9a5M-KCI",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 1799,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Webinar: Digital Skills Unleashed - Launch of new global multi-lingual course for literacy educators - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] On 18 February 2026, the UNESCO Institute for Lifelong Learning (UIL) held a global launch webinar to unveil a new multi-lingual course designed to strengthe... Published February 19, 2026",
+      "link": "https://www.youtube.com/watch?v=di1n07s8c9I",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "di1n07s8c9I",
+      "transcript_method": "description",
+      "transcript_chars": 211,
+      "has_full_transcript": false
+    }
+  ]
+}

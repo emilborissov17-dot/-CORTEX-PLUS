@@ -1,0 +1,37 @@
+{
+  "axis": "PLANETARY_POTENTIAL_REVIEW",
+  "fetched_at": "2026-05-08T09:05:00.203505+00:00",
+  "smart_query": "earth resources sustainability",
+  "sources_count": {
+    "wiki": 0,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [],
+  "gdelt": [],
+  "github_repos": [],
+  "arxiv_papers": [
+    {
+      "title": "Earth and Mars interior structures set by re-melting of the first solid mantle",
+      "snippet": "Magma ocean crystallisation sets up the early structure and long-term evolution of terrestrial planets. Recent seismic evidence signals the presence of a silicate layer at the base of Mars' mantle. Magma-ocean crystallisation and subsequent overturn has been invoked as a hypothesis for this layer's ",
+      "url": "https://arxiv.org/abs/2605.04840v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Physical Analysis of Bennu Samples Reveals Regolith Production by Collisional Disruption on Near-Earth Asteroids",
+      "snippet": "Owing to the extremely low gravity of small near-Earth asteroids (NEAs), it has been assumed that impact-generated rock fragments escape into space and thus do not contribute to the accumulation of regolith. However, centimeter-sized stones returned from the small NEA Bennu by NASA's OSIRIS-REx miss",
+      "url": "https://arxiv.org/abs/2604.19361v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[Battlefield rare earths: How the U.S. lost to China] At one point in history, one U.S. company monopolized the rare earths industry. Then China took over the industry. Can the U.S. bring it back?Rare earths are critical to making, like, everything. From smart phones to electric vehicles to microwaves. They’ve also become a powerful political weapon for China, which controls the majority of mining and processing of rare earths. Today, we have the sto",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

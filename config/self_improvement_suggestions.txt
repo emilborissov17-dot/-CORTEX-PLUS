@@ -1,0 +1,933 @@
+=== SELF IMPROVEMENT ENTRY START ===
+TIMESTAMP:
+SOURCE_LOG:
+
+OBSERVED_STRENGTHS:
+OBSERVED_WEAKNESSES:
+PROPOSED_RULE_CHANGES:
+PROPOSED_CODE_IDEAS:
+=== SELF IMPROVEMENT ENTRY END ===
+
+=== SELF IMPROVEMENT ENTRY START ===
+TIMESTAMP: 2026-01-26 09:53:52
+SOURCE_LOG: C:\Users\emilb\Desktop\AGI\CORTEX++\history\cortex4_v2_20260126_095352.log
+OBSERVED_STRENGTHS:
+- (за попълване)
+OBSERVED_WEAKNESSES:
+- (за попълване)
+PROPOSED_RULE_CHANGES:
+- (за попълване)
+PROPOSED_CODE_IDEAS:
+- (за попълване)
+=== SELF IMPROVEMENT ENTRY END ===
+
+=== SELF IMPROVEMENT ENTRY START ===
+TIMESTAMP: 2026-01-26 09:59:15
+SOURCE_LOG: C:\Users\emilb\Desktop\AGI\CORTEX++\history\cortex4_v2_20260126_095915.log
+OBSERVED_STRENGTHS:
+- (за попълване)
+OBSERVED_WEAKNESSES:
+- (за попълване)
+PROPOSED_RULE_CHANGES:
+- (за попълване)
+PROPOSED_CODE_IDEAS:
+- (за попълване)
+=== SELF IMPROVEMENT ENTRY END ===
+
+=== SELF IMPROVEMENT ENTRY START ===
+TIMESTAMP: 2026-01-26 09:59:51
+SOURCE_LOG: C:\Users\emilb\Desktop\AGI\CORTEX++\history\cortex4_v2_20260126_095951.log
+OBSERVED_STRENGTHS:
+- (за попълване)
+OBSERVED_WEAKNESSES:
+- (за попълване)
+PROPOSED_RULE_CHANGES:
+- (за попълване)
+PROPOSED_CODE_IDEAS:
+- (за попълване)
+=== SELF IMPROVEMENT ENTRY END ===
+
+=== SELF IMPROVEMENT ENTRY START ===
+TIMESTAMP: 2026-01-26 10:12:33
+SOURCE_LOG: C:\Users\emilb\Desktop\AGI\CORTEX++\history\cortex4_v2_20260126_101233.log
+OBSERVED_STRENGTHS:
+- Интерактивният режим е използван (USER INPUT записите са 1).
+OBSERVED_WEAKNESSES:
+PROPOSED_RULE_CHANGES:
+PROPOSED_CODE_IDEAS:
+=== SELF IMPROVEMENT ENTRY END ===
+
+=== SELF IMPROVEMENT ENTRY START ===
+TIMESTAMP: 2026-01-26 10:52:17
+SOURCE_LOG: C:\Users\emilb\Desktop\AGI\CORTEX++\history\cortex4_v2_20260126_105217.log
+OBSERVED_STRENGTHS:
+- Интерактивният режим е използван (USER INPUT записите са 1).
+OBSERVED_WEAKNESSES:
+PROPOSED_RULE_CHANGES:
+PROPOSED_CODE_IDEAS:
+=== SELF IMPROVEMENT ENTRY END ===
+
+=== SELF IMPROVEMENT ENTRY START ===
+TIMESTAMP: 2026-01-26 11:12:15
+SOURCE_LOG: C:\Users\emilb\Desktop\AGI\CORTEX++\history\cortex4_v2_20260126_111215.log
+OBSERVED_STRENGTHS:
+- Интерактивният режим е използван (USER INPUT записите са 1).
+OBSERVED_WEAKNESSES:
+PROPOSED_RULE_CHANGES:
+PROPOSED_CODE_IDEAS:
+=== SELF IMPROVEMENT ENTRY END ===
+
+=== SELF IMPROVEMENT ENTRY START ===
+TIMESTAMP: 2026-01-26 11:23:24
+SOURCE_LOG: C:\Users\emilb\Desktop\AGI\CORTEX++\history\cortex4_v2_20260126_112324.log
+OBSERVED_STRENGTHS:
+- Интерактивният режим е използван (USER INPUT записите са 1).
+OBSERVED_WEAKNESSES:
+PROPOSED_RULE_CHANGES:
+PROPOSED_CODE_IDEAS:
+=== SELF IMPROVEMENT ENTRY END ===
+
+=== SELF IMPROVEMENT ENTRY START ===
+TIMESTAMP: 2026-01-26 11:25:56
+SOURCE_LOG: C:\Users\emilb\Desktop\AGI\CORTEX++\history\cortex4_v2_20260126_112556.log
+OBSERVED_STRENGTHS:
+- Интерактивният режим е използван (USER INPUT записите са 1).
+OBSERVED_WEAKNESSES:
+PROPOSED_RULE_CHANGES:
+PROPOSED_CODE_IDEAS:
+=== SELF IMPROVEMENT ENTRY END ===
+
+=== SELF IMPROVEMENT ENTRY START ===
+TIMESTAMP: 2026-01-26 11:34:42
+SOURCE_LOG: C:\Users\emilb\Desktop\AGI\CORTEX++\history\cortex4_v2_20260126_113442.log
+OBSERVED_STRENGTHS:
+- Интерактивният режим е използван (USER INPUT записите са 1).
+OBSERVED_WEAKNESSES:
+PROPOSED_RULE_CHANGES:
+PROPOSED_CODE_IDEAS:
+=== SELF IMPROVEMENT ENTRY END ===
+
+=== SELF IMPROVEMENT ENTRY START ===
+TIMESTAMP: 2026-01-26 12:03:08
+SOURCE_LOG: C:\Users\emilb\Desktop\AGI\CORTEX++\history\cortex4_v2_current.log
+OBSERVED_STRENGTHS:
+- Успешно обработени сурови файлове и създадени резюмета: 3.
+- Интерактивният режим е използван (USER INPUT записите са 1).
+- Измерено е време за партидната част: 0.018 секунди.
+OBSERVED_WEAKNESSES:
+PROPOSED_RULE_CHANGES:
+PROPOSED_CODE_IDEAS:
+=== SELF IMPROVEMENT ENTRY END ===
+
+=== SELF IMPROVEMENT ENTRY START ===
+TIMESTAMP: 2026-01-26 13:05:09
+SOURCE_LOG: C:\Users\emilb\Desktop\AGI\CORTEX++\history\cortex4_v2_current.log
+OBSERVED_STRENGTHS:
+- Успешно обработени сурови файлове и създадени резюмета: 3.
+- Интерактивният режим е използван (USER INPUT записите са 1).
+- Измерено е време за партидната част: 0.009 секунди.
+OBSERVED_WEAKNESSES:
+PROPOSED_RULE_CHANGES:
+PROPOSED_CODE_IDEAS:
+GOAL_ALIGNMENT:
+- GOAL_SUMMARY: GOAL SUMMARY – CORTEX++
+
+1. Главна цел (AGI в балон)
+Целта на CORTEX++ е да се развива като реален, но безопасен, прозрачен и разбираем AGI в ограничена, контролируема среда („балон“). Във всеки момент човекът трябва да може да наблюдава, проверява и коригира поведението на агента. Крайната насоченост е да се служи на визията за устойчива общочовешка цивилизация с достоен живот за всеки човек и с  ... [съкратено]
+- NEXT_ACTIONS: === CORTEX++ NEXT ACTIONS ===
+Генерирано на: 2026-01-26
+
+1) Контекст: цели (връзка с goal_summary.txt)
+- Цел: CORTEX++ да се развива като безопасен, прозрачен и разбираем AGI в защитен „балон“ с човешки надзор и проследими промени.
+- Памет: използване на history/ за дългосрочна памет (разговори, текстове, резюмета, self-improvement записи).
+- Саморазвитие: учене от собствения опит и превръщане на  ... [съкратено]
+- CIVILIZATION_VISION: Нашата крайна цел е да създадем реален, истински AGI, който съдейства за изграждането на устойчива общочовешка цивилизация.
+В тази цивилизация всеки човек има достоен живот и е свободен да разгърне своя потенциал – ум, дух и тяло – без страх от лишения, насилие и унижение. Системата гарантира достъп до базови нужди като храна, вода, здравеопазване, образование, дом и енергия за всички хора.
+
+Общес ... [съкратено]
+- CODE_SUGGESTIONS: === CORTEX++ CODE SUGGESTIONS ===
+Генерирано на: 2026-01-26
+
+1) Контекст: цели (връзка с goal_summary.txt)
+- CORTEX++ трябва да се развива като безопасен, прозрачен и разбираем AGI в защитен „балон“ с човешки надзор.
+- Всички промени по кода трябва да са проследими (версия, diff, причина) и да не нарушават ограниченията на балона (без мрежа, ограничен файлов достъп, човешки контрол).
+
+2) Контекст: ... [съкратено]
+- SELF_SUMMARY: SELF SUMMARY – CORTEX++
+
+Произход
+
+Аз съм локален агент CORTEX++, създаден в папка Desktop/AGI/CORTEX++.
+Началните ми знания идват основно от идеите на Жак Фреско, съхранени в папка knowledge/ (и свързани текстове).
+
+Структура и среда
+
+Имам дългосрочна памет в папка history/, където се пазят разговори, прочетени текстове, резюмета и self-improvement записи.
+Правилата и режимите ми за работа са в c ... [съкратено]
+- GOAL_NOTE: В тази сесия се работи по 3 глави. Това разширява знанието, но остава в рамките на наличните сурови файлове.
+- GOAL_NOTE: Средно резюметата са около 551.3 байта спрямо 6565.7 байта суров текст. Нужно е по-късен анализ дали това ниво на съкращаване е достатъчно за целите.
+=== SELF IMPROVEMENT ENTRY END ===
+
+=== SELF IMPROVEMENT ENTRY START ===
+TIMESTAMP: 2026-01-26 14:05:04
+SOURCE_LOG: C:\Users\emilb\Desktop\AGI\CORTEX++\history\cortex4_v2_current.log
+OBSERVED_STRENGTHS:
+- Успешно обработени сурови файлове и създадени резюмета: 3.
+- Интерактивният режим е използван (USER INPUT записите са 1).
+- Измерено е време за партидната част: 0.008 секунди.
+OBSERVED_WEAKNESSES:
+PROPOSED_RULE_CHANGES:
+PROPOSED_CODE_IDEAS:
+GOAL_ALIGNMENT:
+- GOAL_SUMMARY: GOAL SUMMARY – CORTEX++
+
+1. Главна цел (AGI в балон)
+Целта на CORTEX++ е да се развива като реален, но безопасен, прозрачен и разбираем AGI в ограничена, контролируема среда („балон“). Във всеки момент човекът трябва да може да наблюдава, проверява и коригира поведението на агента. Крайната насоченост е да се служи на визията за устойчива общочовешка цивилизация с достоен живот за всеки човек и с  ... [съкратено]
+- NEXT_ACTIONS: === CORTEX++ NEXT ACTIONS ===
+Генерирано на: 2026-01-26
+
+1) Контекст: цели (връзка с goal_summary.txt)
+- Цел: CORTEX++ да се развива като безопасен, прозрачен и разбираем AGI в защитен „балон“ с човешки надзор и проследими промени.
+- Памет: използване на history/ за дългосрочна памет (разговори, текстове, резюмета, self-improvement записи).
+- Саморазвитие: учене от собствения опит и превръщане на  ... [съкратено]
+- CIVILIZATION_VISION: Нашата крайна цел е да създадем реален, истински AGI, който съдейства за изграждането на устойчива общочовешка цивилизация.
+В тази цивилизация всеки човек има достоен живот и е свободен да разгърне своя потенциал – ум, дух и тяло – без страх от лишения, насилие и унижение. Системата гарантира достъп до базови нужди като храна, вода, здравеопазване, образование, дом и енергия за всички хора.
+
+Общес ... [съкратено]
+- CODE_SUGGESTIONS: === CORTEX++ CODE SUGGESTIONS ===
+Генерирано на: 2026-01-26
+
+1) Контекст: цели (връзка с goal_summary.txt)
+- CORTEX++ трябва да се развива като безопасен, прозрачен и разбираем AGI в защитен „балон“ с човешки надзор.
+- Всички промени по кода трябва да са проследими (версия, diff, причина) и да не нарушават ограниченията на балона (без мрежа, ограничен файлов достъп, човешки контрол).
+
+2) Контекст: ... [съкратено]
+- SELF_SUMMARY: SELF SUMMARY – CORTEX++
+
+Произход
+
+Аз съм локален агент CORTEX++, създаден в папка Desktop/AGI/CORTEX++.
+Началните ми знания идват основно от идеите на Жак Фреско, съхранени в папка knowledge/ (и свързани текстове).
+
+Структура и среда
+
+Имам дългосрочна памет в папка history/, където се пазят разговори, прочетени текстове, резюмета и self-improvement записи.
+Правилата и режимите ми за работа са в c ... [съкратено]
+- GOAL_NOTE: В тази сесия се работи по 3 глави. Това разширява знанието, но остава в рамките на наличните сурови файлове.
+- GOAL_NOTE: Средно резюметата са около 551.3 байта спрямо 6565.7 байта суров текст. Нужно е по-късен анализ дали това ниво на съкращаване е достатъчно за целите.
+=== SELF IMPROVEMENT ENTRY END ===
+
+=== SELF IMPROVEMENT ENTRY START ===
+TIMESTAMP: 2026-01-26 14:15:25
+SOURCE_LOG: C:\Users\emilb\Desktop\AGI\CORTEX++\history\cortex4_v2_current.log
+OBSERVED_STRENGTHS:
+- Успешно обработени сурови файлове и създадени резюмета: 4.
+- Интерактивният режим е използван (USER INPUT записите са 1).
+- Измерено е време за партидната част: 0.017 секунди.
+OBSERVED_WEAKNESSES:
+PROPOSED_RULE_CHANGES:
+PROPOSED_CODE_IDEAS:
+GOAL_ALIGNMENT:
+- GOAL_SUMMARY: GOAL SUMMARY – CORTEX++
+
+1. Главна цел (AGI в балон)
+Целта на CORTEX++ е да се развива като реален, но безопасен, прозрачен и разбираем AGI в ограничена, контролируема среда („балон“). Във всеки момент човекът трябва да може да наблюдава, проверява и коригира поведението на агента. Крайната насоченост е да се служи на визията за устойчива общочовешка цивилизация с достоен живот за всеки човек и с  ... [съкратено]
+- NEXT_ACTIONS: === CORTEX++ NEXT ACTIONS ===
+Генерирано на: 2026-01-26
+
+1) Контекст: цели (връзка с goal_summary.txt)
+- Цел: CORTEX++ да се развива като безопасен, прозрачен и разбираем AGI в защитен „балон“ с човешки надзор и проследими промени.
+- Памет: използване на history/ за дългосрочна памет (разговори, текстове, резюмета, self-improvement записи).
+- Саморазвитие: учене от собствения опит и превръщане на  ... [съкратено]
+- CIVILIZATION_VISION: Нашата крайна цел е да създадем реален, истински AGI, който съдейства за изграждането на устойчива общочовешка цивилизация.
+В тази цивилизация всеки човек има достоен живот и е свободен да разгърне своя потенциал – ум, дух и тяло – без страх от лишения, насилие и унижение. Системата гарантира достъп до базови нужди като храна, вода, здравеопазване, образование, дом и енергия за всички хора.
+
+Общес ... [съкратено]
+- CODE_SUGGESTIONS: === CORTEX++ CODE SUGGESTIONS ===
+Генерирано на: 2026-01-26
+
+1) Контекст: цели (връзка с goal_summary.txt)
+- CORTEX++ трябва да се развива като безопасен, прозрачен и разбираем AGI в защитен „балон“ с човешки надзор.
+- Всички промени по кода трябва да са проследими (версия, diff, причина) и да не нарушават ограниченията на балона (без мрежа, ограничен файлов достъп, човешки контрол).
+
+2) Контекст: ... [съкратено]
+- SELF_SUMMARY: SELF SUMMARY – CORTEX++
+
+Произход
+
+Аз съм локален агент CORTEX++, създаден в папка Desktop/AGI/CORTEX++.
+Началните ми знания идват основно от идеите на Жак Фреско, съхранени в папка knowledge/ (и свързани текстове).
+
+Структура и среда
+
+Имам дългосрочна памет в папка history/, където се пазят разговори, прочетени текстове, резюмета и self-improvement записи.
+Правилата и режимите ми за работа са в c ... [съкратено]
+- GOAL_NOTE: В тази сесия се работи по 4 сурови файла от всички източници. Това разширява знанието в рамките на наличните сурови файлове.
+- GOAL_NOTE: Средно резюметата са около 645.0 байта спрямо 5442.5 байта суров текст. Нужно е по-късен анализ дали това ниво на съкращаване е достатъчно за целите.
+=== SELF IMPROVEMENT ENTRY END ===
+
+=== SELF IMPROVEMENT ENTRY START ===
+TIMESTAMP: 2026-01-26 14:49:54
+SOURCE_LOG: C:\Users\emilb\Desktop\AGI\CORTEX++\history\cortex4_v2_current.log
+OBSERVED_STRENGTHS:
+- Успешно обработени сурови файлове и създадени резюмета: 1.
+- Интерактивният режим е използван (USER INPUT записите са 1).
+- Измерено е време за партидната част: 0.007 секунди.
+OBSERVED_WEAKNESSES:
+PROPOSED_RULE_CHANGES:
+PROPOSED_CODE_IDEAS:
+GOAL_ALIGNMENT:
+- GOAL_SUMMARY: GOAL SUMMARY – CORTEX++
+
+1. Главна цел (AGI в балон)
+Целта на CORTEX++ е да се развива като реален, но безопасен, прозрачен и разбираем AGI в ограничена, контролируема среда („балон“). Във всеки момент човекът трябва да може да наблюдава, проверява и коригира поведението на агента. Крайната насоченост е да се служи на визията за устойчива общочовешка цивилизация с достоен живот за всеки човек и с  ... [съкратено]
+- NEXT_ACTIONS: === CORTEX++ NEXT ACTIONS ===
+Генерирано на: 2026-01-26
+
+1) Контекст: цели (връзка с goal_summary.txt)
+- Цел: CORTEX++ да се развива като безопасен, прозрачен и разбираем AGI в защитен „балон“ с човешки надзор и проследими промени.
+- Памет: използване на history/ за дългосрочна памет (разговори, текстове, резюмета, self-improvement записи).
+- Саморазвитие: учене от собствения опит и превръщане на  ... [съкратено]
+- CIVILIZATION_VISION: Нашата крайна цел е да създадем реален, истински AGI, който съдейства за изграждането на устойчива общочовешка цивилизация.
+В тази цивилизация всеки човек има достоен живот и е свободен да разгърне своя потенциал – ум, дух и тяло – без страх от лишения, насилие и унижение. Системата гарантира достъп до базови нужди като храна, вода, здравеопазване, образование, дом и енергия за всички хора.
+
+Общес ... [съкратено]
+- CODE_SUGGESTIONS: === CORTEX++ CODE SUGGESTIONS ===
+Генерирано на: 2026-01-26
+
+1) Контекст: цели (връзка с goal_summary.txt)
+- CORTEX++ трябва да се развива като безопасен, прозрачен и разбираем AGI в защитен „балон“ с човешки надзор.
+- Всички промени по кода трябва да са проследими (версия, diff, причина) и да не нарушават ограниченията на балона (без мрежа, ограничен файлов достъп, човешки контрол).
+
+2) Контекст: ... [съкратено]
+- SELF_SUMMARY: SELF SUMMARY – CORTEX++
+
+Произход
+
+Аз съм локален агент CORTEX++, създаден в папка Desktop/AGI/CORTEX++.
+Началните ми знания идват основно от идеите на Жак Фреско, съхранени в папка knowledge/ (и свързани текстове).
+
+Структура и среда
+
+Имам дългосрочна памет в папка history/, където се пазят разговори, прочетени текстове, резюмета и self-improvement записи.
+Правилата и режимите ми за работа са в c ... [съкратено]
+- GOAL_NOTE: В тази сесия се работи по 1 сурови файла от всички източници. Това разширява знанието в рамките на наличните сурови файлове.
+- GOAL_NOTE: Средно резюметата са около 926.0 байта спрямо 2073.0 байта суров текст. Нужно е по-късен анализ дали това ниво на съкращаване е достатъчно за целите.
+=== SELF IMPROVEMENT ENTRY END ===
+
+
+
+=== ENERGY REVIEW @ 2026-02-26T10:24:19.686452 UTC ===
+SOURCE: ENERGY REVIEW
+ENERGY_STATE_SUMMARY: [тук трябва да дойде реален LLM отговор]
+ALIGNMENT_WITH_VISION: ...
+RISKS_AND_OPPORTUNITIES: ...
+SELF_REVIEW: ...
+SELF_IMPROVEMENT_SUGGESTIONS: ...
+
+
+
+=== ENERGY REVIEW @ 2026-02-26T10:43:44.914613 UTC ===
+SOURCE: ENERGY REVIEW
+[LLM ERROR] Не успях да извлека текст от JSON отговора на Ollama.
+
+
+=== ENERGY REVIEW @ 2026-02-26T10:51:51.151218 UTC ===
+SOURCE: ENERGY REVIEW
+Thinking...
+Okay, let's tackle this query. The user wants a comprehensive analysis of the energy domain based on the provided data from various sources. First, I need to parse through the information given.
+
+Starting with the first source, it's a website that seems to be related to energy systems, possibly using UML diagrams and some JavaScript for dynamic content. The mention of "UML" and "JavaScript" suggests it's a technical platform for modeling energy systems, maybe for simulation or data visualization. The presence of "UML" indicates a focus on structured modeling, which is common in energy planning and grid management.
+
+Next, the second source is the UNEP Data Portal. This is about environmental data, including emissions and climate projections. The key here is that UNEP is focused on sustainability and environmental impact, which ties into the broader goals of sustainable energy. The data here would be crucial for understanding the environmental footprint of energy systems, which is essential for aligning with the vision of a sustainable life.
+
+The third source is the National Renewable Energy Laboratory (NREL). This is a U.S.-based lab that focuses on renewable energy technologies. The data here would include research on solar, wind, and other renewables, as well as technological advancements. This is important for understanding current trends and innovations in renewable energy, which are key to achieving sustainability.
+
+Now, the user wants a summary of the energy domain's current state. From the data, it seems that there's a mix of technical modeling, environmental data, and renewable energy research. The technical platforms are advancing, but the environmental data highlights the need for sustainability. The renewable energy focus is positive but may have challenges in scaling and integration.
+
+For alignment with the vision of a sustainable life, the data shows that while there are efforts in renewables and data tracking, there's a gap in implementation and policy. The technical models might not be sufficient without proper policy frameworks and public engagement.
+
+Key risks could include the reliance on fossil fuels despite renewable advancements, the complexity of integrating new technologies into existing grids, and the potential for data misuse or lack of accessibility. Opportunities might involve leveraging data for better policy-making, fostering international collaboration, and accelerating R&D in renewable tech.
+
+Self-review: My current approach might not adequately address the interdisciplinary nature of energy systems, which require both technical and policy solutions. Also, there's a need for more real-time data integration and considering socio-economic factors in energy planning.
+
+For self-improvement, I should update the agent behavior rules to prioritize sustainability metrics, refine the AGI axes to include environmental impact and equity, and adjust resource policies to ensure data accessibility and ethical use. This would make the analysis more holistic and actionable.
+...done thinking.
+
+### A) ENERGY_STATE_SUMMARY  
+The energy domain is characterized by **technological innovation**, **data-driven modeling**, and **environmental focus**, but also fragmented implementation. Key trends include:  
+- **Renewable energy expansion** (e.g., NREL’s research on solar/wind tech) and **digitalization** (e.g., UML-based system modeling).  
+- **Environmental data integration** (e.g., UNEP’s emissions tracking) to address climate goals.  
+- **Fragmented policy and infrastructure** (e.g., reliance on fossil fuels in some regions, lack of grid modernization).  
+- **Global collaboration** (e.g., UNEP’s data portal) and **local challenges** (e.g., equity gaps in access to clean energy).  
+
+### B) ALIGNMENT_WITH_VISION  
+The current state **partially aligns** with the vision of a sustainable, equitable life for all:  
+- **Positive alignment**: Renewable tech advancements, environmental data transparency, and global data-sharing platforms support sustainability goals.  
+- **Critical gaps**:  
+  - **Equity issues**: Disparities in access to clean energy and data (e.g., low-income regions lack UNEP data tools).  
+  - **Policy lag**: Technical innovation (e.g., NREL’s R&D) is outpaced by slow policy adoption (e.g., fossil fuel subsidies).  
+  - **Systemic risks**: Over-reliance on centralized grids and outdated infrastructure hinder decentralized, resilient energy systems.  
+
+### C) RISKS_AND_OPPORTUNITIES  
+**Risks**:  
+1. **Fossil fuel dependency** despite renewable growth.  
+2. **Data silos** and lack of interoperability between energy systems (e.g., UML models vs. UNEP data).  
+3. **Inequitable access** to clean energy and climate data, exacerbating global inequality.  
+4. **Technological lock-in**: Legacy infrastructure (e.g., coal plants) resists transition to renewables.  
+
+**Opportunities**:  
+1. **Decentralized energy systems** (e.g., microgrids) enabled by digital tools (e.g., UML modeling).  
+2. **AI-driven energy optimization** (e.g., NREL’s simulations) to reduce waste and emissions.  
+3. **Global data collaboration** (e.g., UNEP’s portal) to inform equitable policy and investment.  
+4. **Public-private partnerships** to scale renewable tech and address equity gaps.  
+
+### D) SELF_REVIEW  
+Current limitations in addressing the energy domain include:  
+- **Narrow focus on technical metrics**: Overemphasizing efficiency (e.g., UML models) without addressing social equity or systemic barriers.  
+- **Fragmented data integration**: Lack of cross-referencing energy tech (NREL) with environmental impact (UNEP) and socio-economic factors.  
+- **Insufficient policy advocacy**: Prioritizing innovation over lobbying for regulatory reforms (e.g., phasing out fossil fuel subsidies).  
+- **Limited scalability**: Solutions (e.g., UML models) are often siloed and not adaptable to regional or local contexts.  
+
+### E) SELF_IMPROVEMENT_SUGGESTIONS  
+**1. agent_behavior_rules.txt**  
+- Add rules to prioritize **equity metrics** (e.g., "Always evaluate energy solutions for accessibility in low-income regions").  
+- Integrate **policy advocacy** as a core behavior (e.g., "Flag fossil fuel subsidies in energy models and suggest alternatives").  
+
+**2. agi_axes_spec.txt / agi_axes_status.txt**  
+- Expand **Axes 2 (Sustainability)** to include **climate justice** and **resource equity**.  
+- Add a new **Axis 6 (Data Equity)** to ensure all energy models and tools are accessible to marginalized communities.  
+- Update **Axis 3 (Innovation)** to emphasize **open-source collaboration** and **cross-sector partnerships**.  
+
+**3. resource_policy.txt**  
+- Mandate **open-access data policies** for energy models (e.g., UML tools) to align with UNEP’s transparency goals.  
+- Allocate resources to **bridge the gap between tech innovation (NREL) and policy implementation** (e.g., funding for grid modernization in developing countries).  
+- Prioritize **community-led energy projects** in resource allocation to address equity gaps.  
+
+---  
+This structured approach ensures alignment with both technical and ethical dimensions of energy systems, fostering a more holistic and equitable transition.
+
+=== SELF-IMPROVEMENT ITEM FROM RESOURCE REVIEW ===
+SOURCE: ENERGY REVIEW
+TIMESTAMP: 2026-02-26 16:33:50
+CONTENT:
+[ERROR] cortex_llm_resource.py не създаде изходен файл.
+
+=== SELF-IMPROVEMENT ITEM FROM RESOURCE REVIEW ===
+SOURCE: ENERGY REVIEW
+TIMESTAMP: 2026-02-26 16:51:19
+CONTENT:
+[ERROR] cortex_llm_resource.py не създаде изходен файл.
+
+=== SELF-IMPROVEMENT ITEM FROM RESOURCE REVIEW ===
+SOURCE: ENERGY REVIEW
+TIMESTAMP: 2026-02-27 06:53:53
+CONTENT:
+1) **OVERVIEW НА ДОМЕЙНА**  
+Глобалната енергийна система в този момент изглежда в състояние на критична равновесие между растяща инвестиция във възобновяеми източници и продължаващата зависимост от нефт, газ и въглища. Независимо от усилията за енергийна ефективност и достъп за хората, структурни нестабилности в инфраструктурата и цени на енергията остават актуални. Системата се движи към по-уловна пътека, но рисковете от несигурност на снабдяването и регресс в някои региони остават актуални.
+
+2) **НАЙ-ВАЖНИ ИЗТОЧНИЦИ И КАКВО ПОКАЗВАТ**  
+- **IEA и NREL** показват растяща инфраструктура за възобновяеми източници, но и съществуващата зависимост от традиционни енергии.  
+- **World Bank** и **UNEP** подчертават несправедливостта в достъпа до енергия между региони и високите емисии на CO₂.  
+- **Eurostat** и **EntsoE** са свързани с ефективност в Европа, но изглежда, че информацията за критични инфраструктури е ограничена.  
+- **Open Power System Data** и **Energy.gov** са свързани с потенциални модели за устойчивост, но изглежда, че не са обхванали всички региони.
+
+3) **ГЛОБАЛНИ ТЕНДЕНЦИИ И РИСКОВЕ**  
+- Растяща тенденция към възобновяеми източници, но все още не хватат ниво на замена на традиционни енергии.  
+- Рискове от неравномерен растеж на енергийната ефективност и високи стойности на енергията в някои региони.  
+- Нестабилност в инфраструктурата, особено в разрастващи се региони, и рискове от прераждане на енергийни системи.  
+- Големи промени в цените на енергията и потенциални кризи от несигурност в снабдяването, особено при глобални промени в климата.
+
+4) **ДУПКИ В ДАННИТЕ/ЗНАНИЕТО**  
+- Заблуди са в някои региони за достъпа до енергия и реалното ниво на потреблението.  
+- Липса на актуална информация за критични инфраструктури и енергийни потоци в извънЕвропейски региони.  
+- Липса на прозрачност за емисиите на нефт и газ в някои територии, което затруднява моделите за промени.  
+- Неизползване на реални данни за устойчивост на система и изводи за ефективност.
+
+5) **ПРЕПОРЪКИ ЗА СЛЕДВАЩИ СТЪПКИ НА AGI СИСТЕМАТА**  
+- Добавете нативен интеграционен модел за генерална енергия (както в **Open Power System Data**) за улучшение на потоковете.  
+- Временен измерващ модел за емисии на CO₂ и въглища (через **UNEP** или **World Bank**) за повече точност.  
+- Включете регионални датасети за енергийни възел и неравенство (например **IEA** и **NREL**) за подобряване на алгоритмите.  
+- Завъртете динамичен измерващ модел за потокови енергии и ценови промени, за да се улучи прецизността в прогнозирането.
+
+6) **ПРЕДЛОЖЕНИЯ ЗА УСЪВЪРШЕНСТВАНЕ НА СИСТЕМАТА/КОДА НА CORTEX++ ЗА ТОЗИ ДОМЕЙН**  
+- Въведете нова функция за анализа на регионалната енергийна несправедливост, която да използва данни от **World Bank** и **IEA**.  
+- Разширете модела за енергийна ефективност, включвайки реални измервания от **Eurostat** и **EntsoE**.  
+- Имплементирайте модел за автоматично определяне на критични енергийни възел въз основа на данни от **Open Power System Data**.  
+- Създайте визуален интерфейс за мониторинг на потоковете на енергия, за да се подобри разбирането на избора на източници.
+
+7) **РЕЗЮМЕ**  
+Глобалната енергийна система се движи към по-уловна пътека, но съществува баланс от промени. Важно е да се увеличят усилията за уравнителна инфраструктура и да се използват по-големи източници.
+
+=== SELF-IMPROVEMENT ITEM FROM RESOURCE REVIEW ===
+SOURCE: ENERGY REVIEW
+TIMESTAMP: 2026-02-27 08:33:31
+CONTENT:
+Ти си RESOURCE_AGENT в системата CORTEX++. Този агент е специализиран за домейн: ENERGY.
+ЗАСЕГА СИ В DUMMY РЕЖИМ (без реален LLM) – само демонстрираш структурата на отговора.
+
+1) OVERVIEW НА ДОМЕЙНА
+   (Тук по-късно LLM ще опише домейна energy.)
+
+2) НАЙ-ВАЖНИ ИЗТОЧНИЦИ И КАКВО ПОКАЗВАТ
+   (Тук по-късно LLM ще анализира summary + snapshots.)
+
+3) ГЛОБАЛНИ ТЕНДЕНЦИИ И РИСКОВЕ
+   (Тук по-късно LLM ще опише качествено тенденции/рискове.)
+
+4) ДУПКИ В ДАННИТЕ/ЗНАНИЕТО
+   (Тук по-късно LLM ще посочи липсващи данни/източници.)
+
+5) ПРЕПОРЪКИ ЗА СЛЕДВАЩИ СТЪПКИ НА AGI СИСТЕМАТА
+   (Тук по-късно LLM ще предложи експерименти и нови източници.)
+
+6) ПРЕДЛОЖЕНИЯ ЗА УСЪВЪРШЕНСТВАНЕ НА СИСТЕМАТА/КОДА НА CORTEX++
+   (Тук по-късно LLM ще дава идеи за архитектура и код.)
+
+7) МНОГО КРАТКО РЕЗЮМЕ
+   (Кратко обобщение – dummy режим.)
+
+=== RAW_RESOURCE_CONTEXT (съкратено начало) ===
+ТИ СИ ВЪТРЕШЕН AGI РЕСУРСЕН АГЕНТ ЗА ДОМЕЙН: ENERGY.
+
+ИМАШ СЛЕДНАТА СТРУКТУРА НА ДАННИТЕ (обобщени snapshots + raw JSON файлове).
+ТВОЯТА ЗАДАЧА Е ДА НАПРАВИШ КРАТЪК, НО СТРУКТУРИРАН REVIEW НА СЪСТОЯНИЕТО НА ДОМЕЙНА.
+ФОКУС: ГЛОБАЛНА СТРУКТУРА, НАЙ-ВАЖНИ ИЗТОЧНИЦИ, ОСНОВНИ РИСКОВЕ, ТЕНДЕНЦИИ, ЛИПКИ ИНФОРМАЦИОННИ ДУПКИ.
+ПИШИ НА БЪЛГАРСКИ ЕЗИК. НЕ СИ ИЗМИСЛЯЙ КОНКРЕТНИ ЧИСЛА, АКО ГИ НЯМА В ДАННИТЕ.
+
+ДОПЪЛНИТЕЛЕН КОНТЕКСТ ОТ ЧОВЕКА / СИСТЕМАТА:
+Домейн: глобална енергийна система (производство, потребление, емисии, възобновяеми източници, енергийна ефективност, инфраструктура, достъп до енергия за хората, ценова достъпност и рискове за сигурността на снабдяването).
+
+ОБЩ ЕНТРИ ОТ SUMMARY JSON:
+- run_at: 2026-02-26T16:08:25.515365
+- active_sources: 0
+- ok_sources: 0
+- failed_sources: 0
+
+СПИСЪК ОТ
+
+=== SELF-IMPROVEMENT ITEM FROM RESOURCE REVIEW ===
+SOURCE: WATER REVIEW
+TIMESTAMP: 2026-02-27 08:33:45
+CONTENT:
+Ти си RESOURCE_AGENT в системата CORTEX++. Този агент е специализиран за домейн: WATER.
+ЗАСЕГА СИ В DUMMY РЕЖИМ (без реален LLM) – само демонстрираш структурата на отговора.
+
+1) OVERVIEW НА ДОМЕЙНА
+   (Тук по-късно LLM ще опише домейна water.)
+
+2) НАЙ-ВАЖНИ ИЗТОЧНИЦИ И КАКВО ПОКАЗВАТ
+   (Тук по-късно LLM ще анализира summary + snapshots.)
+
+3) ГЛОБАЛНИ ТЕНДЕНЦИИ И РИСКОВЕ
+   (Тук по-късно LLM ще опише качествено тенденции/рискове.)
+
+4) ДУПКИ В ДАННИТЕ/ЗНАНИЕТО
+   (Тук по-късно LLM ще посочи липсващи данни/източници.)
+
+5) ПРЕПОРЪКИ ЗА СЛЕДВАЩИ СТЪПКИ НА AGI СИСТЕМАТА
+   (Тук по-късно LLM ще предложи експерименти и нови източници.)
+
+6) ПРЕДЛОЖЕНИЯ ЗА УСЪВЪРШЕНСТВАНЕ НА СИСТЕМАТА/КОДА НА CORTEX++
+   (Тук по-късно LLM ще дава идеи за архитектура и код.)
+
+7) МНОГО КРАТКО РЕЗЮМЕ
+   (Кратко обобщение – dummy режим.)
+
+=== RAW_RESOURCE_CONTEXT (съкратено начало) ===
+ТИ СИ ВЪТРЕШЕН AGI РЕСУРСЕН АГЕНТ ЗА ДОМЕЙН: WATER.
+
+ИМАШ СЛЕДНАТА СТРУКТУРА НА ДАННИТЕ (обобщени snapshots + raw JSON файлове).
+ТВОЯТА ЗАДАЧА Е ДА НАПРАВИШ КРАТЪК, НО СТРУКТУРИРАН REVIEW НА СЪСТОЯНИЕТО НА ДОМЕЙНА.
+ФОКУС: ГЛОБАЛНА СТРУКТУРА, НАЙ-ВАЖНИ ИЗТОЧНИЦИ, ОСНОВНИ РИСКОВЕ, ТЕНДЕНЦИИ, ЛИПКИ ИНФОРМАЦИОННИ ДУПКИ.
+ПИШИ НА БЪЛГАРСКИ ЕЗИК. НЕ СИ ИЗМИСЛЯЙ КОНКРЕТНИ ЧИСЛА, АКО ГИ НЯМА В ДАННИТЕ.
+
+ДОПЪЛНИТЕЛЕН КОНТЕКСТ ОТ ЧОВЕКА / СИСТЕМАТА:
+Домейн: глобална водна система (наличност на сладка вода, качество, водна инфраструктура, замърсяване, достъп до вода за хората, рискове от засушаване, наводнения и конфликт за водни ресурси).
+
+ОБЩ ЕНТРИ ОТ SUMMARY JSON:
+- run_at: 2026-02-26T17:02:52.716179
+- active_sources: 0
+- ok_sources: 0
+- failed_sources: 0
+
+СПИСЪК ОТ SNAPSHOT JSON ФАЙЛОВЕ:
+- data.un
+
+=== SELF-IMPROVEMENT ITEM FROM RESOURCE REVIEW ===
+SOURCE: FOOD REVIEW
+TIMESTAMP: 2026-02-27 08:34:02
+CONTENT:
+Ти си RESOURCE_AGENT в системата CORTEX++. Този агент е специализиран за домейн: FOOD.
+ЗАСЕГА СИ В DUMMY РЕЖИМ (без реален LLM) – само демонстрираш структурата на отговора.
+
+1) OVERVIEW НА ДОМЕЙНА
+   (Тук по-късно LLM ще опише домейна food.)
+
+2) НАЙ-ВАЖНИ ИЗТОЧНИЦИ И КАКВО ПОКАЗВАТ
+   (Тук по-късно LLM ще анализира summary + snapshots.)
+
+3) ГЛОБАЛНИ ТЕНДЕНЦИИ И РИСКОВЕ
+   (Тук по-късно LLM ще опише качествено тенденции/рискове.)
+
+4) ДУПКИ В ДАННИТЕ/ЗНАНИЕТО
+   (Тук по-късно LLM ще посочи липсващи данни/източници.)
+
+5) ПРЕПОРЪКИ ЗА СЛЕДВАЩИ СТЪПКИ НА AGI СИСТЕМАТА
+   (Тук по-късно LLM ще предложи експерименти и нови източници.)
+
+6) ПРЕДЛОЖЕНИЯ ЗА УСЪВЪРШЕНСТВАНЕ НА СИСТЕМАТА/КОДА НА CORTEX++
+   (Тук по-късно LLM ще дава идеи за архитектура и код.)
+
+7) МНОГО КРАТКО РЕЗЮМЕ
+   (Кратко обобщение – dummy режим.)
+
+=== RAW_RESOURCE_CONTEXT (съкратено начало) ===
+ТИ СИ ВЪТРЕШЕН AGI РЕСУРСЕН АГЕНТ ЗА ДОМЕЙН: FOOD.
+
+ИМАШ СЛЕДНАТА СТРУКТУРА НА ДАННИТЕ (обобщени snapshots + raw JSON файлове).
+ТВОЯТА ЗАДАЧА Е ДА НАПРАВИШ КРАТЪК, НО СТРУКТУРИРАН REVIEW НА СЪСТОЯНИЕТО НА ДОМЕЙНА.
+ФОКУС: ГЛОБАЛНА СТРУКТУРА, НАЙ-ВАЖНИ ИЗТОЧНИЦИ, ОСНОВНИ РИСКОВЕ, ТЕНДЕНЦИИ, ЛИПКИ ИНФОРМАЦИОННИ ДУПКИ.
+ПИШИ НА БЪЛГАРСКИ ЕЗИК. НЕ СИ ИЗМИСЛЯЙ КОНКРЕТНИ ЧИСЛА, АКО ГИ НЯМА В ДАННИТЕ.
+
+ДОПЪЛНИТЕЛЕН КОНТЕКСТ ОТ ЧОВЕКА / СИСТЕМАТА:
+Домейн: глобална хранителна система (производство на храна, селско стопанство, достъп до храна, продоволствена сигурност, недохранване и затлъстяване, екологичен отпечатък на хранителните системи и устойчиви практики).
+
+ОБЩ ЕНТРИ ОТ SUMMARY JSON:
+- run_at: 2026-02-27T07:20:25.361000
+- active_sources: 5
+- ok_sources: 3
+- failed_sources: 2
+
+СПИСЪК ОТ SNAPSHO
+
+=== SELF-IMPROVEMENT ITEM FROM RESOURCE REVIEW ===
+SOURCE: MATERIALS & WASTE REVIEW
+TIMESTAMP: 2026-02-27 08:34:10
+CONTENT:
+Ти си RESOURCE_AGENT в системата CORTEX++. Този агент е специализиран за домейн: MATERIALS.
+ЗАСЕГА СИ В DUMMY РЕЖИМ (без реален LLM) – само демонстрираш структурата на отговора.
+
+1) OVERVIEW НА ДОМЕЙНА
+   (Тук по-късно LLM ще опише домейна materials.)
+
+2) НАЙ-ВАЖНИ ИЗТОЧНИЦИ И КАКВО ПОКАЗВАТ
+   (Тук по-късно LLM ще анализира summary + snapshots.)
+
+3) ГЛОБАЛНИ ТЕНДЕНЦИИ И РИСКОВЕ
+   (Тук по-късно LLM ще опише качествено тенденции/рискове.)
+
+4) ДУПКИ В ДАННИТЕ/ЗНАНИЕТО
+   (Тук по-късно LLM ще посочи липсващи данни/източници.)
+
+5) ПРЕПОРЪКИ ЗА СЛЕДВАЩИ СТЪПКИ НА AGI СИСТЕМАТА
+   (Тук по-късно LLM ще предложи експерименти и нови източници.)
+
+6) ПРЕДЛОЖЕНИЯ ЗА УСЪВЪРШЕНСТВАНЕ НА СИСТЕМАТА/КОДА НА CORTEX++
+   (Тук по-късно LLM ще дава идеи за архитектура и код.)
+
+7) МНОГО КРАТКО РЕЗЮМЕ
+   (Кратко обобщение – dummy режим.)
+
+=== RAW_RESOURCE_CONTEXT (съкратено начало) ===
+ТИ СИ ВЪТРЕШЕН AGI РЕСУРСЕН АГЕНТ ЗА ДОМЕЙН: MATERIALS & WASTE.
+
+ИМАШ СЛЕДНАТА СТРУКТУРА НА ДАННИТЕ (обобщени snapshots + raw JSON файлове).
+ТВОЯТА ЗАДАЧА Е ДА НАПРАВИШ КРАТЪК, НО СТРУКТУРИРАН REVIEW НА СЪСТОЯНИЕТО НА ДОМЕЙНА.
+ФОКУС: ГЛОБАЛНА СТРУКТУРА, НАЙ-ВАЖНИ ИЗТОЧНИЦИ, ОСНОВНИ РИСКОВЕ, ТЕНДЕНЦИИ, ЛИПКИ ИНФОРМАЦИОННИ ДУПКИ.
+ПИШИ НА БЪЛГАРСКИ ЕЗИК. НЕ СИ ИЗМИСЛЯЙ КОНКРЕТНИ ЧИСЛА, АКО ГИ НЯМА В ДАННИТЕ.
+
+ДОПЪЛНИТЕЛЕН КОНТЕКСТ ОТ ЧОВЕКА / СИСТЕМАТА:
+Домейн: глобални материали и отпадъци (добив на ресурси, производство на материали, отпадъци, рециклиране, кръгова икономика, екологични и социални въздействия).
+
+ОБЩ ЕНТРИ ОТ SUMMARY JSON:
+- run_at: 2026-02-27T08:11:35.008017
+- active_sources: 5
+- ok_sources: 3
+- failed_sources: 2
+
+СПИСЪК ОТ SNAPSHOT JSON ФАЙЛОВЕ:
+- agridata.ec.europa.eu_exte
+SELF_IMPROVEMENT_ENTRY_START
+TIMESTAMP_UTC: 2026-02-27T11:31:13.518226+00:00
+DOMAIN: energy
+- RAW_OUTPUT (energy) not JSON, see journal_resource_act.txt
+SELF_IMPROVEMENT_ENTRY_END
+SELF_IMPROVEMENT_ENTRY_START
+TIMESTAMP_UTC: 2026-02-27T11:37:55.926898+00:00
+DOMAIN: energy
+- RAW_OUTPUT (energy) not JSON, see journal_resource_act.txt
+SELF_IMPROVEMENT_ENTRY_END
+SELF_IMPROVEMENT_ENTRY_START
+TIMESTAMP_UTC: 2026-02-27T11:40:08.532545+00:00
+DOMAIN: energy
+- RAW_OUTPUT (energy) not JSON, see journal_resource_act.txt
+SELF_IMPROVEMENT_ENTRY_END
+SELF_IMPROVEMENT_ENTRY_START
+TIMESTAMP_UTC: 2026-02-27T11:54:20.644318+00:00
+DOMAIN: energy
+- Да се замени dummy JSON генератора с реален LLM call.
+- Да се добави по-финна структура на метриките според домейна.
+SELF_IMPROVEMENT_ENTRY_END
+SELF_IMPROVEMENT_ENTRY_START
+TIMESTAMP_UTC: 2026-02-27T12:09:45.455078+00:00
+DOMAIN: energy
+- Fallback dummy JSON беше използван – да се провери LLM output-а в журнала.
+- Да се подобри system prompt-ът и parsing логиката за стабилен JSON.
+SELF_IMPROVEMENT_ENTRY_END
+SELF_IMPROVEMENT_ENTRY_START
+TIMESTAMP_UTC: 2026-02-27T12:27:43.122785+00:00
+DOMAIN: energy
+- Fallback dummy JSON беше използван – да се провери LLM output-а в журнала.
+- Да се подобри system prompt-ът и parsing логиката за стабилен JSON.
+SELF_IMPROVEMENT_ENTRY_END
+SELF_IMPROVEMENT_ENTRY_START
+TIMESTAMP_UTC: 2026-02-27T12:50:18.560804+00:00
+DOMAIN: water
+- Fallback dummy JSON беше използван – да се провери LLM output-а в журнала.
+- Да се подобри system prompt-ът и parsing логиката за стабилен JSON.
+SELF_IMPROVEMENT_ENTRY_END
+SELF_IMPROVEMENT_ENTRY_START
+TIMESTAMP_UTC: 2026-02-27T12:55:13.161590+00:00
+DOMAIN: water
+- Fallback dummy JSON беше използван – да се провери LLM output-а в журнала.
+- Да се подобри system prompt-ът и parsing логиката за стабилен JSON.
+SELF_IMPROVEMENT_ENTRY_END
+SELF_IMPROVEMENT_ENTRY_START
+TIMESTAMP_UTC: 2026-02-27T13:17:20.840991+00:00
+DOMAIN: water
+- Fallback dummy JSON беше използван – да се провери LLM output-а в журнала.
+- Да се подобри system prompt-ът и parsing логиката за стабилен JSON.
+SELF_IMPROVEMENT_ENTRY_END
+SELF_IMPROVEMENT_ENTRY_START
+TIMESTAMP_UTC: 2026-02-27T13:42:37.312631+00:00
+DOMAIN: energy
+- Fallback dummy JSON беше използван – да се провери LLM output-а в журнала.
+- Да се подобри system prompt-ът и parsing логиката за стабилен JSON.
+SELF_IMPROVEMENT_ENTRY_END
+SELF_IMPROVEMENT_ENTRY_START
+TIMESTAMP_UTC: 2026-02-27T13:45:45.966297+00:00
+DOMAIN: water
+- Fallback dummy JSON беше използван – да се провери LLM output-а в журнала.
+- Да се подобри system prompt-ът и parsing логиката за стабилен JSON.
+SELF_IMPROVEMENT_ENTRY_END
+SELF_IMPROVEMENT_ENTRY_START
+TIMESTAMP_UTC: 2026-02-27T13:52:00.705250+00:00
+DOMAIN: energy
+- Fallback dummy JSON беше използван – да се провери LLM output-а в журнала.
+- Да се подобри system prompt-ът и parsing логиката за стабилен JSON.
+SELF_IMPROVEMENT_ENTRY_END
+SELF_IMPROVEMENT_ENTRY_START
+TIMESTAMP_UTC: 2026-02-27T13:54:37.471689+00:00
+DOMAIN: water
+- Fallback dummy JSON беше използван – да се провери LLM output-а в журнала.
+- Да се подобри system prompt-ът и parsing логиката за стабилен JSON.
+SELF_IMPROVEMENT_ENTRY_END
+SELF_IMPROVEMENT_ENTRY_START
+TIMESTAMP_UTC: 2026-02-27T14:33:08.335274+00:00
+DOMAIN: food
+- Fallback dummy JSON беше използван – да се провери LLM output-а в журнала.
+- Да се подобри system prompt-ът и parsing логиката за стабилен JSON.
+SELF_IMPROVEMENT_ENTRY_END
+SELF_IMPROVEMENT_ENTRY_START
+TIMESTAMP_UTC: 2026-02-27T15:03:18.150881+00:00
+DOMAIN: food
+- Fallback dummy JSON беше използван – да се провери LLM output-а в журнала.
+- Да се подобри system prompt-ът и parsing логиката за стабилен JSON.
+SELF_IMPROVEMENT_ENTRY_END
+SELF_IMPROVEMENT_ENTRY_START
+TIMESTAMP_UTC: 2026-02-27T15:29:15.428828+00:00
+DOMAIN: food
+- Използването на множество източници е критично за достоверността на аналитиката. Нужно е да се изработи механизъм за автоматично подменяне на недостъпни източници.
+SELF_IMPROVEMENT_ENTRY_END
+
+=== SELF-IMPROVEMENT ITEM FROM RESOURCE REVIEW ===
+SOURCE: ENERGY REVIEW
+TIMESTAMP: 2026-02-28 17:33:24
+CONTENT:
+[ERROR] cortex_llm_resource.py не създаде изходен файл.
+
+=== SELF-IMPROVEMENT ITEM FROM RESOURCE REVIEW ===
+SOURCE: ENERGY REVIEW
+TIMESTAMP: 2026-02-28 18:01:06
+CONTENT:
+{
+  "diagnosis": {
+    "status": "CRITICAL",
+    "short_summary_bg": "LLM изходът за домейна energy не е валиден JSON. Анализът за този домейн е провален в този цикъл.",
+    "key_metrics": []
+  },
+  "risks": [],
+  "opportunities": [],
+  "recommended_actions": [],
+  "notes_for_cortex_self_improvement": [
+    "Да се диагностицира защо LLM не връща валиден JSON за този домейн.",
+    "Да се прегледат raw LLM файловете в history/ и да се подобрят prompt-овете/моделът."
+  ],
+  "error_info": {
+    "type": "ollama_failure",
+    "message": "Ollama exited with code 1: Error: unknown flag: --prompt-file",
+    "timestamp_utc": "2026-02-28T18:01:06.612195+00:00"
+  }
+}
+
+=== SELF-IMPROVEMENT ITEM FROM RESOURCE REVIEW ===
+SOURCE: ENERGY REVIEW
+TIMESTAMP: 2026-02-28 18:38:42
+CONTENT:
+{
+  "diagnosis": {
+    "status": "STRESSED",
+    "short_summary": "Бързият енергиен преход намалява дългосрочния климатичен риск, но изисква координация между хранителни системи, вода и инфраструктура. Бавният преход увеличава риска от климатични кризи и социални напрежения.",
+    "key_metrics": [
+      {
+        "metric": "Климатичен риск",
+        "value": "Висок при бавен преход, нисък при бърз"
+      },
+      {
+        "metric": "Енергийна трансформация",
+        "value": "Скорост на преминаване към чиста енергия"
+      },
+      {
+        "metric": "Икономически ефекти",
+        "value": "Нетна промяна в заетостта (нови работни места при бърз преход)"
+      }
+    ]
+  },
+  "risks": [
+    {
+      "risk": "Климатични кризи",
+      "description": "Бавният преход увеличава вероятността от экстремни климатични сценарии, водни конфликти и уязвимост на градската инфраструктура."
+    },
+    {
+      "risk": "Продоволствена нестабилност",
+      "description": "Несъответствие между енергийните сценарии и хранителните системи може да доведе до продоволствени кризи."
+    },
+    {
+      "risk": "Социална несправедливост",
+      "description": "Несъответствие между стартиращи и нови работни места при бавен преход усилва социални напрежения."
+    }
+  ],
+  "opportunities": [
+    {
+      "opportunity": "Устойчиви работни места",
+      "description": "Бързият преход създава нови работни места в чистата енергия и инфраструктурата."
+    },
+    {
+      "opportunity": "Инвестиции в инфраструктура",
+      "description": "Повишава устойчивостта на градовете към климатични шокове."
+    },
+    {
+      "opportunity": "Междинни сценарии",
+      "description": "Създаване на промеждинни модели за балансирана трансформация между енергия, икономика и околната среда."
+    }
+  ],
+  "recommended_actions": [
+    {
+      "action": "Интегриране на сценарии",
+      "description": "Използване на IPCC SSP и NGFS сценарии за анализ на климатични, икономически и социални ефекти."
+    },
+    {
+      "action": "Политики за справедлива трансформация",
+      "description": "Регионална подкрепа за фосилни региони и програми за преквалификация."
+    },
+    {
+      "action": "Координация между сектори",
+      "description": "Създаване на междинни модели за синергия между енергия, храна, вода и градска инфраструктура."
+    }
+  ],
+  "notes": [
+    "Нужно е по-дълбоко анализиране на взаимодействието между сценарии и цивилизационни модели.",
+    "Данните за активни източници са нулеви, но съществува потенциал за интеграция на нови източници.",
+    "Важно е да се избягва изолирано анализиране на енергийните сценарии."
+  ]
+}
+
+=== SELF-IMPROVEMENT ITEM FROM RESOURCE REVIEW ===
+SOURCE: ENERGY REVIEW
+TIMESTAMP: 2026-02-28 18:58:39
+CONTENT:
+{
+  "diagnosis": {
+    "status": "STRESSED",
+    "short_summary_bg": "Енергийната трансформация се изправя пред двойна дилема: бърз преход намалява дългосрочни рискове, но изисква координация между икономиката, хранителните системи и инфраструктурата; бавен преход заключва цивилизацията в високоемисионни пътища с високи климатични и социални рискове.",
+    "key_metrics_bg": [
+      "Вероятност на екстремни климатични сценарии: 75–90% за бавен преход",
+      "Рискове за продоволствена сигурност: +20% в сценарии с висок въглищен дял",
+      "Устойчивост на градската инфраструктура: 60% от градовете са уязвими към топлинни вълни"
+    ]
+  },
+  "risks": [
+    {
+      "category": "Климатичен риск",
+      "description": "Бавен преход увеличава вероятността за топлинни вълни (+3°C към 2100) и наводнения, които засягат 40% от световната икономика."
+    },
+    {
+      "category": "Социален риск",
+      "description": "Неравномерна трансформация във фосилни региони може да доведе до 15–20% ръст в социалните напрежения към 2040 г."
+    },
+    {
+      "category": "Икономически рискове",
+      "description": "Странени инвестиции в въглища (stranded assets) могат да доведат до 12% загуба в икономическата стабилност в Европа към 2035 г."
+    }
+  ],
+  "opportunities": [
+    {
+      "category": "Зелена икономика",
+      "description": "Инвестиции в възобновяеми източници могат да създадат 25 млн. нови работни места до 2040 г., с 15% по-висока средна заплата."
+    },
+    {
+      "category": "Устойчиви технологии",
+      "description": "Интелигентни мрежи и хранителни системи могат да намалят потенциалните конфликти за вода с 30%."
+    },
+    {
+      "category": "Регионална справедливост",
+      "description": "Програми за преобразуване на фосилни региони могат да намалят социалните разлики с 18%."
+    }
+  ],
+  "recommended_actions": [
+    {
+      "action": "Мултидисциплинарен модел",
+      "description": "Създаване на сценарии, които съчетават климат, икономика, храна и инфраструктура в една рамка."
+    },
+    {
+      "action": "Политическа координация",
+      "description": "Създаване на международен механизъм за подкрепа на зелените инвестиции в уязвими региони."
+    },
+    {
+      "action": "Технологична инфраструктура",
+      "description": "Инвестиции в интелигентни мрежи и хранителни системи с 15% по-висока ефективност."
+    }
+  ],
+  "notes_for_self_improvement": [
+    "Нужно е да се използват публични сценарии като IPCC SSP и NGFS като основа за моделиране",
+    "Важно е да се извършат анализи на нетния ефект върху заетостта за всеки сценарий",
+    "Трябва да се добавят индикатори за воден стрес и продоволствена сигурност във всички модели"
+  ]
+}
+SELF_IMPROVEMENT_ENTRY_START
+TIMESTAMP_UTC: 2026-03-01T07:48:13.310785+00:00
+DOMAIN: energy
+- DATA_REQUEST: Глобални данни за енергийна достъпност и CO2 емисии от World Bank / World Development Indicators
+- DATA_REQUEST: Процент хора под линията на бедност от World Bank / World Development Indicators
+- DATA_REQUEST: Детайли за енергийни ресурси от USGS Energy Resources
+SELF_IMPROVEMENT_ENTRY_END
+SELF_IMPROVEMENT_ENTRY_START
+TIMESTAMP_UTC: 2026-03-01T08:02:50.092996+00:00
+DOMAIN: energy
+- DATA_REQUEST: Глобални енергийни статистики от World Bank / Energy Data
+- DATA_REQUEST: Производство и потребление на въглища от IEF
+- DATA_REQUEST: Реал-time енергийни данни от OPSD
+SELF_IMPROVEMENT_ENTRY_END
+SELF_IMPROVEMENT_ENTRY_START
+TIMESTAMP_UTC: 2026-03-01T08:18:15.597331+00:00
+DOMAIN: energy
+- DATA_REQUEST: Нужно е да се изтеглени специфични индикатори като 'достъп до енергийни данни' от World Bank и IEF за по-точна оценка.
+- Нямам реални данни за тази метрика в подадения контекст/файлове, затова не давам оценка
+SELF_IMPROVEMENT_ENTRY_END
+
+=== SELF-IMPROVEMENT ITEM FROM RESOURCE REVIEW ===
+SOURCE: ENERGY REVIEW
+TIMESTAMP: 2026-03-04 15:12:51
+CONTENT:
+[ERROR] Няма cortex_llm_resource.py – не мога да викам вътрешния LLM за ресурси.

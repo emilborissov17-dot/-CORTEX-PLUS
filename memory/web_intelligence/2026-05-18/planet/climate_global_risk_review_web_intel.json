@@ -1,0 +1,157 @@
+{
+  "axis": "CLIMATE_GLOBAL_RISK_REVIEW",
+  "domain": "planet",
+  "timestamp": "2026-05-18T08:40:09.866429+00:00",
+  "sources_count": 11,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] New Climate Research Warns of Faster Warming, AMOC Instability &amp; Rising Tipping Point Risks",
+      "summary": "[DESCRIPTION FALLBACK] A wave of new climate research in 2026 is raising urgent questions about whether global warming is accelerating, how stable key ...",
+      "link": "https://www.youtube.com/watch?v=JOmwQL3eTL0",
+      "published": "2026-05-17T17:00:34Z",
+      "source_type": "youtube",
+      "channel": "Just Have a Think",
+      "video_id": "JOmwQL3eTL0",
+      "transcript_method": "description",
+      "transcript_chars": 154,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] CBC News: The National | Canadian tests positive for hantavirus",
+      "summary": "[DESCRIPTION FALLBACK] May 17, 2026 | Health officials say they're taking every precaution after a lab confirms Canada's first case of hantavirus. The WHO ...",
+      "link": "https://www.youtube.com/watch?v=Jhxui60I24w",
+      "published": "2026-05-18T06:21:04Z",
+      "source_type": "youtube",
+      "channel": "CBC News: The National",
+      "video_id": "Jhxui60I24w",
+      "transcript_method": "description",
+      "transcript_chars": 158,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Climate Change Won&#39;t End the World. This Could.",
+      "summary": "[DESCRIPTION FALLBACK] Patreon: https://tinyurl.com/352v7xnn Merch: https://tinyurl.com/y478bz9h Is this how civilizations end? As climate disasters ...",
+      "link": "https://www.youtube.com/watch?v=M4pSD1D1JMo",
+      "published": "2026-02-12T19:00:27Z",
+      "source_type": "youtube",
+      "channel": "PBS Terra",
+      "video_id": "M4pSD1D1JMo",
+      "transcript_method": "description",
+      "transcript_chars": 152,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "problem": "The UK is no longer the top contributor to the UN’s Green Climate Fund, reflecting a decline in international climate finance leadership.",
+    "root_cause": "Political shifts and reduced financial commitments by major economies are undermining global climate finance mechanisms.",
+    "severity": "HIGH",
+    "leverage_points": [
+      "Global multilateral institutions and their ability to coordinate climate finance",
+      "National governments and their willingness to prioritize climate funding"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Establish a global climate finance task force under the UN to monitor and incentivize contributions",
+        "measurable_goal": "Increase the total funding to the Green Climate Fund by 20% within 18 months",
+        "timeframe": "medium-term"
+      },
+      {
+        "action": "Create a public-private partnership to mobilize private sector investment in climate adaptation and mitigation",
+        "measurable_goal": "Secure $50 billion in private climate investment by 2028",
+        "timeframe": "long-term"
+      }
+    ],
+    "evidence": [
+      "Analysis: UK no longer top UN Green Climate Fund donor after latest aid cut",
+      "DeBriefed 15 April 2026: Trump-Xi talk energy | ‘Supercharged’ El Niño | India’s first ‘heat lounges’"
+    ],
+    "generalization": "This reflects a broader trend of declining political will and financial commitment to global climate action, which risks exacerbating climate inequality and slowing the transition to sustainable development.",
+    "summary": "The UK's reduced climate funding leadership highlights a systemic decline in global climate finance, risking slower progress on climate action.",
+    "risk_level": "HIGH"
+  },
+  "raw_items": [
+    {
+      "title": "NASA Science, Cargo Launch on 34th SpaceX Resupply Mission to Station",
+      "summary": "The 34th SpaceX commercial resupply mission under contract with NASA is headed to the International Space Station with new scientific experiments after lifting off at 6:05 p.m. EDT Friday on a Falcon 9 rocket from Space Launch Complex 40 at Cape Canaveral Space Force Station in Florida. The SpaceX spacecraft, loaded with nearly 6,500 pounds [&#8230;]",
+      "link": "https://www.nasa.gov/news-release/nasa-science-cargo-launch-on-34th-spacex-resupply-mission-to-station/",
+      "published": "Fri, 15 May 2026 22:52:14 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Curiosity Shakes Loose a Pesky Rock",
+      "summary": "After NASA’s Curiosity Mars rover drilled a sample from this rock on April 25, 2026, it withdrew its robotic arm and pulled the entire rock off the surface with it. Engineers spent several days repositioning the arm and vibrating the drill to try and get the rock loose. When it finally detached on May 1, [&#8230;]",
+      "link": "https://www.nasa.gov/image-article/curiosity-shakes-loose-a-pesky-rock/",
+      "published": "Fri, 15 May 2026 14:45:52 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Hubble Sights Galaxy in Transition",
+      "summary": "This NASA Hubble Space Telescope image reveals an enigmatic galaxy with a bright center and a face that hints at spiral structure, yet it holds no obvious spiral arms. Reddish-brown clumps and filaments of dust partially obscure the galaxy’s full face, while red, blue, and orange light from distant galaxies shines through its diffuse outer […]",
+      "link": "https://science.nasa.gov/missions/hubble/hubble-sights-galaxy-in-transition/",
+      "published": "Fri, 15 May 2026 12:01:37 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Picturing Earth in a New Light",
+      "summary": "A recent analysis revealed where artificial light at night has intensified, as well as where it has diminished.",
+      "link": "https://science.nasa.gov/earth/earth-observatory/picturing-earth-in-a-new-light/",
+      "published": "Fri, 15 May 2026 04:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "DeBriefed 15 April 2026: Trump-Xi talk energy | ‘Supercharged’ El Niño | India’s first ‘heat lounges’",
+      "summary": "<p>Welcome to Carbon Brief’s DeBriefed. An essential guide to the week&#8217;s key developments relating to climate...</p>\n<p>The post <a href=\"https://www.carbonbrief.org/debriefed-15-april-2026-trump-xi-talk-energy-supercharged-el-nino-indias-first-heat-lounges/\">DeBriefed 15 April 2026: Trump-Xi talk energy | ‘Supercharged’ El Niño | India’s first ‘heat lounges’</a> appeared first on <a href=\"https://www.carbonbrief.org\">Carbon Brief</a>.</p>",
+      "link": "https://www.carbonbrief.org/debriefed-15-april-2026-trump-xi-talk-energy-supercharged-el-nino-indias-first-heat-lounges/",
+      "published": "Fri, 15 May 2026 13:50:06 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Analysis: UK no longer top UN Green Climate Fund donor after latest aid cut",
+      "summary": "<p>The UK is no longer the top contributor to the UN’s flagship Green Climate Fund...</p>\n<p>The post <a href=\"https://www.carbonbrief.org/analysis-uk-no-longer-top-un-green-climate-fund-donor-after-latest-aid-cut/\">Analysis: UK no longer top UN Green Climate Fund donor after latest aid cut</a> appeared first on <a href=\"https://www.carbonbrief.org\">Carbon Brief</a>.</p>",
+      "link": "https://www.carbonbrief.org/analysis-uk-no-longer-top-un-green-climate-fund-donor-after-latest-aid-cut/",
+      "published": "Fri, 15 May 2026 13:30:36 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "DeBriefed 8 May 2026: EU eyes fossil-fuel exemptions | Wind and solar save UK ‘£1.7bn’ | Amazon ‘tipping point’",
+      "summary": "<p>Welcome to Carbon Brief’s DeBriefed.&#160;An essential guide to the week&#8217;s key developments relating to climate...</p>\n<p>The post <a href=\"https://www.carbonbrief.org/debriefed-8-may-2026-eu-eyes-fossil-fuel-exemptions-wind-and-solar-save-uk-1-7bn-amazon-tipping-point/\">DeBriefed 8 May 2026: EU eyes fossil-fuel exemptions | Wind and solar save UK ‘£1.7bn’ | Amazon ‘tipping point’</a> appeared first on <a href=\"https://www.carbonbrief.org\">Carbon Brief</a>.</p>",
+      "link": "https://www.carbonbrief.org/debriefed-8-may-2026-eu-eyes-fossil-fuel-exemptions-wind-and-solar-save-uk-1-7bn-amazon-tipping-point/",
+      "published": "Fri, 08 May 2026 13:36:36 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Factcheck: What the UK car industry is not saying about EV targets",
+      "summary": "<p>For several years, the UK car industry has been claiming that demand is not high...</p>\n<p>The post <a href=\"https://www.carbonbrief.org/factcheck-what-the-uk-car-industry-is-not-saying-about-ev-targets/\">Factcheck: What the UK car industry is not saying about EV targets</a> appeared first on <a href=\"https://www.carbonbrief.org\">Carbon Brief</a>.</p>",
+      "link": "https://www.carbonbrief.org/factcheck-what-the-uk-car-industry-is-not-saying-about-ev-targets/",
+      "published": "Fri, 08 May 2026 13:18:15 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] New Climate Research Warns of Faster Warming, AMOC Instability &amp; Rising Tipping Point Risks",
+      "summary": "[DESCRIPTION FALLBACK] A wave of new climate research in 2026 is raising urgent questions about whether global warming is accelerating, how stable key ...",
+      "link": "https://www.youtube.com/watch?v=JOmwQL3eTL0",
+      "published": "2026-05-17T17:00:34Z",
+      "source_type": "youtube",
+      "channel": "Just Have a Think",
+      "video_id": "JOmwQL3eTL0",
+      "transcript_method": "description",
+      "transcript_chars": 154,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] CBC News: The National | Canadian tests positive for hantavirus",
+      "summary": "[DESCRIPTION FALLBACK] May 17, 2026 | Health officials say they're taking every precaution after a lab confirms Canada's first case of hantavirus. The WHO ...",
+      "link": "https://www.youtube.com/watch?v=Jhxui60I24w",
+      "published": "2026-05-18T06:21:04Z",
+      "source_type": "youtube",
+      "channel": "CBC News: The National",
+      "video_id": "Jhxui60I24w",
+      "transcript_method": "description",
+      "transcript_chars": 158,
+      "has_full_transcript": false
+    }
+  ]
+}

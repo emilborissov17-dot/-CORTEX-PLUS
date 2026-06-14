@@ -1,0 +1,57 @@
+{
+  "axis": "WATER_REVIEW",
+  "fetched_at": "2026-05-16T13:35:31.958793+00:00",
+  "smart_query": "water scarcity drinking water",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "Lauren Boebert suggests Trump withheld funds to Colorado over prosecution of election denier",
+      "snippet": "Republican said she hoped recent commutation of Tina Peters by governor would free up federal funding for clean drinking waterRepublican congresswoman Lauren Boebert suggested that Donald Trump blocked funds for a clean drinking water project in her state over the prosecution of election denier Tina",
+      "url": "https://www.theguardian.com/us-news/2026/may/16/lauren-boebert-trump-funds-colorado-drink-water-funds-tina-peters",
+      "source": "RSS"
+    },
+    {
+      "title": "Is it time to stop watering our gardens?",
+      "snippet": "With unpredictable weather patterns and summertime garden hose bans now normal, it might be time to let your plants adjust to drier conditionsLast week someone from Thames Water turned up&nbsp;to say we were using more than the average amount of water. I tried to explain that we have small children;",
+      "url": "https://www.theguardian.com/lifeandstyle/2026/may/15/is-it-time-to-become-a-water-conscious-gardener-summer-climate",
+      "source": "RSS"
+    },
+    {
+      "title": "River Thames in London gets first official bathing spot on Friday",
+      "snippet": "Thames at Ham designated as one of 13 new swimming areas across England to be monitored for water qualityThe first designated bathing water area on the River Thames in London will welcome swimmers for the official start of the bathing season on Friday as one of 13 new monitored swimming areas across",
+      "url": "https://www.theguardian.com/environment/2026/may/14/river-thames-london-first-designated-bathing-water-area-",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [],
+  "arxiv_papers": [
+    {
+      "title": "Acidification of Water by CO2",
+      "snippet": "Fundamental inorganic chemistry shows that increasing concentrations of atmospheric CO2 will have no harmful effect on organisms that live in the natural waters of the Earths, and may well benefit them. Alkalinity and dissolved CO2 give high buffering capacity to most natural waters and minimize the",
+      "url": "https://arxiv.org/abs/2605.12311v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Can hot water discharged from industrial processes enhance the likelihood of waterspouts?",
+      "snippet": "Italy and the surrounding seas are recognised as one of the European hotspots for tornadoes and waterspouts. In recent years, the town of Rosignano Solvay (on the Northern Tyrrhenian coast) experienced repeated waterspouts affecting the same areas, raising local concern about the possible influence ",
+      "url": "https://arxiv.org/abs/2603.24233v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[The Resistance of a Cow] There’s something rotten in the cows of Denmark. And Minnesota. And Wisconsin. And Idaho. What could cause a previously thriving herd of majestic dairy cattle to stop drinking water and start drinking … urine? A Danish farmer calls a special investigator, who takes one look at his farm and nopes the heck out of there, refusing to return, citing “bad energy” coming from something nearby … a big bui",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

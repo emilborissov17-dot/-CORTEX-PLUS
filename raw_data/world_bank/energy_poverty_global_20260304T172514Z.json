@@ -1,0 +1,2138 @@
+{
+  "access_to_electricity": [
+    {
+      "page": 1,
+      "pages": 1,
+      "per_page": 2000,
+      "total": 66,
+      "sourceid": "2",
+      "lastupdated": "2026-02-24"
+    },
+    [
+      {
+        "indicator": {
+          "id": "EG.ELC.ACCS.ZS",
+          "value": "Access to electricity (% of population)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "2025",
+        "value": null,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 1
+      },
+      {
+        "indicator": {
+          "id": "EG.ELC.ACCS.ZS",
+          "value": "Access to electricity (% of population)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "2024",
+        "value": null,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 1
+      },
+      {
+        "indicator": {
+          "id": "EG.ELC.ACCS.ZS",
+          "value": "Access to electricity (% of population)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "2023",
+        "value": 91.5991774421991,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 1
+      },
+      {
+        "indicator": {
+          "id": "EG.ELC.ACCS.ZS",
+          "value": "Access to electricity (% of population)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "2022",
+        "value": 91.2883104888965,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 1
+      },
+      {
+        "indicator": {
+          "id": "EG.ELC.ACCS.ZS",
+          "value": "Access to electricity (% of population)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "2021",
+        "value": 91.3342664591051,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 1
+      },
+      {
+        "indicator": {
+          "id": "EG.ELC.ACCS.ZS",
+          "value": "Access to electricity (% of population)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "2020",
+        "value": 90.3956876080963,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 1
+      },
+      {
+        "indicator": {
+          "id": "EG.ELC.ACCS.ZS",
+          "value": "Access to electricity (% of population)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "2019",
+        "value": 90.1083920202658,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 1
+      },
+      {
+        "indicator": {
+          "id": "EG.ELC.ACCS.ZS",
+          "value": "Access to electricity (% of population)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "2018",
+        "value": 89.7973878560124,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 1
+      },
+      {
+        "indicator": {
+          "id": "EG.ELC.ACCS.ZS",
+          "value": "Access to electricity (% of population)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "2017",
+        "value": 88.9317628469647,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 1
+      },
+      {
+        "indicator": {
+          "id": "EG.ELC.ACCS.ZS",
+          "value": "Access to electricity (% of population)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "2016",
+        "value": 88.1044791994569,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 1
+      },
+      {
+        "indicator": {
+          "id": "EG.ELC.ACCS.ZS",
+          "value": "Access to electricity (% of population)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "2015",
+        "value": 86.9239995427518,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 1
+      },
+      {
+        "indicator": {
+          "id": "EG.ELC.ACCS.ZS",
+          "value": "Access to electricity (% of population)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "2014",
+        "value": 86.1955840187905,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 1
+      },
+      {
+        "indicator": {
+          "id": "EG.ELC.ACCS.ZS",
+          "value": "Access to electricity (% of population)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "2013",
+        "value": 85.7106877963555,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 1
+      },
+      {
+        "indicator": {
+          "id": "EG.ELC.ACCS.ZS",
+          "value": "Access to electricity (% of population)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "2012",
+        "value": 84.93629043483,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 1
+      },
+      {
+        "indicator": {
+          "id": "EG.ELC.ACCS.ZS",
+          "value": "Access to electricity (% of population)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "2011",
+        "value": 84.5062333878765,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 1
+      },
+      {
+        "indicator": {
+          "id": "EG.ELC.ACCS.ZS",
+          "value": "Access to electricity (% of population)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "2010",
+        "value": 83.4471382973513,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 1
+      },
+      {
+        "indicator": {
+          "id": "EG.ELC.ACCS.ZS",
+          "value": "Access to electricity (% of population)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "2009",
+        "value": 82.8658227064746,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 1
+      },
+      {
+        "indicator": {
+          "id": "EG.ELC.ACCS.ZS",
+          "value": "Access to electricity (% of population)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "2008",
+        "value": 82.6681723773023,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 1
+      },
+      {
+        "indicator": {
+          "id": "EG.ELC.ACCS.ZS",
+          "value": "Access to electricity (% of population)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "2007",
+        "value": 81.9711576658049,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 1
+      },
+      {
+        "indicator": {
+          "id": "EG.ELC.ACCS.ZS",
+          "value": "Access to electricity (% of population)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "2006",
+        "value": 81.3534633010675,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 1
+      },
+      {
+        "indicator": {
+          "id": "EG.ELC.ACCS.ZS",
+          "value": "Access to electricity (% of population)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "2005",
+        "value": 80.7013310816536,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 1
+      },
+      {
+        "indicator": {
+          "id": "EG.ELC.ACCS.ZS",
+          "value": "Access to electricity (% of population)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "2004",
+        "value": 79.9521476684051,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 1
+      },
+      {
+        "indicator": {
+          "id": "EG.ELC.ACCS.ZS",
+          "value": "Access to electricity (% of population)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "2003",
+        "value": 79.9649010273987,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 1
+      },
+      {
+        "indicator": {
+          "id": "EG.ELC.ACCS.ZS",
+          "value": "Access to electricity (% of population)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "2002",
+        "value": 79.1007987332702,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 1
+      },
+      {
+        "indicator": {
+          "id": "EG.ELC.ACCS.ZS",
+          "value": "Access to electricity (% of population)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "2001",
+        "value": 78.7152432244994,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 1
+      },
+      {
+        "indicator": {
+          "id": "EG.ELC.ACCS.ZS",
+          "value": "Access to electricity (% of population)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "2000",
+        "value": 78.2214008583172,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 1
+      },
+      {
+        "indicator": {
+          "id": "EG.ELC.ACCS.ZS",
+          "value": "Access to electricity (% of population)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1999",
+        "value": 74.503210511674,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 1
+      },
+      {
+        "indicator": {
+          "id": "EG.ELC.ACCS.ZS",
+          "value": "Access to electricity (% of population)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1998",
+        "value": 73.196235388656,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 1
+      },
+      {
+        "indicator": {
+          "id": "EG.ELC.ACCS.ZS",
+          "value": "Access to electricity (% of population)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1997",
+        "value": null,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 1
+      },
+      {
+        "indicator": {
+          "id": "EG.ELC.ACCS.ZS",
+          "value": "Access to electricity (% of population)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1996",
+        "value": null,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 1
+      },
+      {
+        "indicator": {
+          "id": "EG.ELC.ACCS.ZS",
+          "value": "Access to electricity (% of population)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1995",
+        "value": null,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 1
+      },
+      {
+        "indicator": {
+          "id": "EG.ELC.ACCS.ZS",
+          "value": "Access to electricity (% of population)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1994",
+        "value": null,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 1
+      },
+      {
+        "indicator": {
+          "id": "EG.ELC.ACCS.ZS",
+          "value": "Access to electricity (% of population)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1993",
+        "value": null,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 1
+      },
+      {
+        "indicator": {
+          "id": "EG.ELC.ACCS.ZS",
+          "value": "Access to electricity (% of population)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1992",
+        "value": null,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 1
+      },
+      {
+        "indicator": {
+          "id": "EG.ELC.ACCS.ZS",
+          "value": "Access to electricity (% of population)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1991",
+        "value": null,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 1
+      },
+      {
+        "indicator": {
+          "id": "EG.ELC.ACCS.ZS",
+          "value": "Access to electricity (% of population)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1990",
+        "value": null,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 1
+      },
+      {
+        "indicator": {
+          "id": "EG.ELC.ACCS.ZS",
+          "value": "Access to electricity (% of population)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1989",
+        "value": null,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 1
+      },
+      {
+        "indicator": {
+          "id": "EG.ELC.ACCS.ZS",
+          "value": "Access to electricity (% of population)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1988",
+        "value": null,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 1
+      },
+      {
+        "indicator": {
+          "id": "EG.ELC.ACCS.ZS",
+          "value": "Access to electricity (% of population)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1987",
+        "value": null,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 1
+      },
+      {
+        "indicator": {
+          "id": "EG.ELC.ACCS.ZS",
+          "value": "Access to electricity (% of population)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1986",
+        "value": null,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 1
+      },
+      {
+        "indicator": {
+          "id": "EG.ELC.ACCS.ZS",
+          "value": "Access to electricity (% of population)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1985",
+        "value": null,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 1
+      },
+      {
+        "indicator": {
+          "id": "EG.ELC.ACCS.ZS",
+          "value": "Access to electricity (% of population)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1984",
+        "value": null,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 1
+      },
+      {
+        "indicator": {
+          "id": "EG.ELC.ACCS.ZS",
+          "value": "Access to electricity (% of population)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1983",
+        "value": null,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 1
+      },
+      {
+        "indicator": {
+          "id": "EG.ELC.ACCS.ZS",
+          "value": "Access to electricity (% of population)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1982",
+        "value": null,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 1
+      },
+      {
+        "indicator": {
+          "id": "EG.ELC.ACCS.ZS",
+          "value": "Access to electricity (% of population)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1981",
+        "value": null,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 1
+      },
+      {
+        "indicator": {
+          "id": "EG.ELC.ACCS.ZS",
+          "value": "Access to electricity (% of population)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1980",
+        "value": null,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 1
+      },
+      {
+        "indicator": {
+          "id": "EG.ELC.ACCS.ZS",
+          "value": "Access to electricity (% of population)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1979",
+        "value": null,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 1
+      },
+      {
+        "indicator": {
+          "id": "EG.ELC.ACCS.ZS",
+          "value": "Access to electricity (% of population)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1978",
+        "value": null,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 1
+      },
+      {
+        "indicator": {
+          "id": "EG.ELC.ACCS.ZS",
+          "value": "Access to electricity (% of population)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1977",
+        "value": null,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 1
+      },
+      {
+        "indicator": {
+          "id": "EG.ELC.ACCS.ZS",
+          "value": "Access to electricity (% of population)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1976",
+        "value": null,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 1
+      },
+      {
+        "indicator": {
+          "id": "EG.ELC.ACCS.ZS",
+          "value": "Access to electricity (% of population)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1975",
+        "value": null,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 1
+      },
+      {
+        "indicator": {
+          "id": "EG.ELC.ACCS.ZS",
+          "value": "Access to electricity (% of population)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1974",
+        "value": null,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 1
+      },
+      {
+        "indicator": {
+          "id": "EG.ELC.ACCS.ZS",
+          "value": "Access to electricity (% of population)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1973",
+        "value": null,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 1
+      },
+      {
+        "indicator": {
+          "id": "EG.ELC.ACCS.ZS",
+          "value": "Access to electricity (% of population)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1972",
+        "value": null,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 1
+      },
+      {
+        "indicator": {
+          "id": "EG.ELC.ACCS.ZS",
+          "value": "Access to electricity (% of population)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1971",
+        "value": null,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 1
+      },
+      {
+        "indicator": {
+          "id": "EG.ELC.ACCS.ZS",
+          "value": "Access to electricity (% of population)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1970",
+        "value": null,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 1
+      },
+      {
+        "indicator": {
+          "id": "EG.ELC.ACCS.ZS",
+          "value": "Access to electricity (% of population)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1969",
+        "value": null,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 1
+      },
+      {
+        "indicator": {
+          "id": "EG.ELC.ACCS.ZS",
+          "value": "Access to electricity (% of population)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1968",
+        "value": null,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 1
+      },
+      {
+        "indicator": {
+          "id": "EG.ELC.ACCS.ZS",
+          "value": "Access to electricity (% of population)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1967",
+        "value": null,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 1
+      },
+      {
+        "indicator": {
+          "id": "EG.ELC.ACCS.ZS",
+          "value": "Access to electricity (% of population)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1966",
+        "value": null,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 1
+      },
+      {
+        "indicator": {
+          "id": "EG.ELC.ACCS.ZS",
+          "value": "Access to electricity (% of population)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1965",
+        "value": null,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 1
+      },
+      {
+        "indicator": {
+          "id": "EG.ELC.ACCS.ZS",
+          "value": "Access to electricity (% of population)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1964",
+        "value": null,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 1
+      },
+      {
+        "indicator": {
+          "id": "EG.ELC.ACCS.ZS",
+          "value": "Access to electricity (% of population)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1963",
+        "value": null,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 1
+      },
+      {
+        "indicator": {
+          "id": "EG.ELC.ACCS.ZS",
+          "value": "Access to electricity (% of population)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1962",
+        "value": null,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 1
+      },
+      {
+        "indicator": {
+          "id": "EG.ELC.ACCS.ZS",
+          "value": "Access to electricity (% of population)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1961",
+        "value": null,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 1
+      },
+      {
+        "indicator": {
+          "id": "EG.ELC.ACCS.ZS",
+          "value": "Access to electricity (% of population)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1960",
+        "value": null,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 1
+      }
+    ]
+  ],
+  "renewable_energy_share": [
+    {
+      "page": 1,
+      "pages": 1,
+      "per_page": 2000,
+      "total": 66,
+      "sourceid": "2",
+      "lastupdated": "2026-02-24"
+    },
+    [
+      {
+        "indicator": {
+          "id": "EG.FEC.RNEW.ZS",
+          "value": "Renewable energy consumption (% of total final energy consumption)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "2025",
+        "value": null,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 2
+      },
+      {
+        "indicator": {
+          "id": "EG.FEC.RNEW.ZS",
+          "value": "Renewable energy consumption (% of total final energy consumption)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "2024",
+        "value": null,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 2
+      },
+      {
+        "indicator": {
+          "id": "EG.FEC.RNEW.ZS",
+          "value": "Renewable energy consumption (% of total final energy consumption)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "2023",
+        "value": null,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 2
+      },
+      {
+        "indicator": {
+          "id": "EG.FEC.RNEW.ZS",
+          "value": "Renewable energy consumption (% of total final energy consumption)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "2022",
+        "value": null,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 2
+      },
+      {
+        "indicator": {
+          "id": "EG.FEC.RNEW.ZS",
+          "value": "Renewable energy consumption (% of total final energy consumption)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "2021",
+        "value": null,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 2
+      },
+      {
+        "indicator": {
+          "id": "EG.FEC.RNEW.ZS",
+          "value": "Renewable energy consumption (% of total final energy consumption)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "2020",
+        "value": 19.7355641050053,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 2
+      },
+      {
+        "indicator": {
+          "id": "EG.FEC.RNEW.ZS",
+          "value": "Renewable energy consumption (% of total final energy consumption)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "2019",
+        "value": 18.5751641385934,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 2
+      },
+      {
+        "indicator": {
+          "id": "EG.FEC.RNEW.ZS",
+          "value": "Renewable energy consumption (% of total final energy consumption)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "2018",
+        "value": 18.1052270747944,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 2
+      },
+      {
+        "indicator": {
+          "id": "EG.FEC.RNEW.ZS",
+          "value": "Renewable energy consumption (% of total final energy consumption)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "2017",
+        "value": 17.8541835016377,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 2
+      },
+      {
+        "indicator": {
+          "id": "EG.FEC.RNEW.ZS",
+          "value": "Renewable energy consumption (% of total final energy consumption)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "2016",
+        "value": 17.6281084915531,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 2
+      },
+      {
+        "indicator": {
+          "id": "EG.FEC.RNEW.ZS",
+          "value": "Renewable energy consumption (% of total final energy consumption)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "2015",
+        "value": 17.4035082673572,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 2
+      },
+      {
+        "indicator": {
+          "id": "EG.FEC.RNEW.ZS",
+          "value": "Renewable energy consumption (% of total final energy consumption)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "2014",
+        "value": 17.3299951573821,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 2
+      },
+      {
+        "indicator": {
+          "id": "EG.FEC.RNEW.ZS",
+          "value": "Renewable energy consumption (% of total final energy consumption)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "2013",
+        "value": 17.1692464159295,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 2
+      },
+      {
+        "indicator": {
+          "id": "EG.FEC.RNEW.ZS",
+          "value": "Renewable energy consumption (% of total final energy consumption)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "2012",
+        "value": 16.8962150785112,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 2
+      },
+      {
+        "indicator": {
+          "id": "EG.FEC.RNEW.ZS",
+          "value": "Renewable energy consumption (% of total final energy consumption)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "2011",
+        "value": 16.6987205578704,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 2
+      },
+      {
+        "indicator": {
+          "id": "EG.FEC.RNEW.ZS",
+          "value": "Renewable energy consumption (% of total final energy consumption)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "2010",
+        "value": 16.7414815095897,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 2
+      },
+      {
+        "indicator": {
+          "id": "EG.FEC.RNEW.ZS",
+          "value": "Renewable energy consumption (% of total final energy consumption)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "2009",
+        "value": 17.0654993607187,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 2
+      },
+      {
+        "indicator": {
+          "id": "EG.FEC.RNEW.ZS",
+          "value": "Renewable energy consumption (% of total final energy consumption)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "2008",
+        "value": 16.6569817886533,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 2
+      },
+      {
+        "indicator": {
+          "id": "EG.FEC.RNEW.ZS",
+          "value": "Renewable energy consumption (% of total final energy consumption)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "2007",
+        "value": 16.5374660334277,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 2
+      },
+      {
+        "indicator": {
+          "id": "EG.FEC.RNEW.ZS",
+          "value": "Renewable energy consumption (% of total final energy consumption)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "2006",
+        "value": 16.7290772224366,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 2
+      },
+      {
+        "indicator": {
+          "id": "EG.FEC.RNEW.ZS",
+          "value": "Renewable energy consumption (% of total final energy consumption)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "2005",
+        "value": 16.6370993331808,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 2
+      },
+      {
+        "indicator": {
+          "id": "EG.FEC.RNEW.ZS",
+          "value": "Renewable energy consumption (% of total final energy consumption)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "2004",
+        "value": 16.7834791518651,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 2
+      },
+      {
+        "indicator": {
+          "id": "EG.FEC.RNEW.ZS",
+          "value": "Renewable energy consumption (% of total final energy consumption)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "2003",
+        "value": 17.067470633117,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 2
+      },
+      {
+        "indicator": {
+          "id": "EG.FEC.RNEW.ZS",
+          "value": "Renewable energy consumption (% of total final energy consumption)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "2002",
+        "value": 17.2206557859887,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 2
+      },
+      {
+        "indicator": {
+          "id": "EG.FEC.RNEW.ZS",
+          "value": "Renewable energy consumption (% of total final energy consumption)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "2001",
+        "value": 17.2141012541802,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 2
+      },
+      {
+        "indicator": {
+          "id": "EG.FEC.RNEW.ZS",
+          "value": "Renewable energy consumption (% of total final energy consumption)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "2000",
+        "value": 17.5262813966932,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 2
+      },
+      {
+        "indicator": {
+          "id": "EG.FEC.RNEW.ZS",
+          "value": "Renewable energy consumption (% of total final energy consumption)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1999",
+        "value": 17.8778259194218,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 2
+      },
+      {
+        "indicator": {
+          "id": "EG.FEC.RNEW.ZS",
+          "value": "Renewable energy consumption (% of total final energy consumption)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1998",
+        "value": 17.6182879337665,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 2
+      },
+      {
+        "indicator": {
+          "id": "EG.FEC.RNEW.ZS",
+          "value": "Renewable energy consumption (% of total final energy consumption)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1997",
+        "value": 17.4743432804444,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 2
+      },
+      {
+        "indicator": {
+          "id": "EG.FEC.RNEW.ZS",
+          "value": "Renewable energy consumption (% of total final energy consumption)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1996",
+        "value": 17.4450890685685,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 2
+      },
+      {
+        "indicator": {
+          "id": "EG.FEC.RNEW.ZS",
+          "value": "Renewable energy consumption (% of total final energy consumption)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1995",
+        "value": 17.4243468135946,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 2
+      },
+      {
+        "indicator": {
+          "id": "EG.FEC.RNEW.ZS",
+          "value": "Renewable energy consumption (% of total final energy consumption)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1994",
+        "value": 17.3572712155107,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 2
+      },
+      {
+        "indicator": {
+          "id": "EG.FEC.RNEW.ZS",
+          "value": "Renewable energy consumption (% of total final energy consumption)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1993",
+        "value": 17.2074395489013,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 2
+      },
+      {
+        "indicator": {
+          "id": "EG.FEC.RNEW.ZS",
+          "value": "Renewable energy consumption (% of total final energy consumption)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1992",
+        "value": 17.1858871999502,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 2
+      },
+      {
+        "indicator": {
+          "id": "EG.FEC.RNEW.ZS",
+          "value": "Renewable energy consumption (% of total final energy consumption)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1991",
+        "value": 16.8275092292776,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 2
+      },
+      {
+        "indicator": {
+          "id": "EG.FEC.RNEW.ZS",
+          "value": "Renewable energy consumption (% of total final energy consumption)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1990",
+        "value": 16.6761728451138,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 2
+      },
+      {
+        "indicator": {
+          "id": "EG.FEC.RNEW.ZS",
+          "value": "Renewable energy consumption (% of total final energy consumption)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1989",
+        "value": null,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 2
+      },
+      {
+        "indicator": {
+          "id": "EG.FEC.RNEW.ZS",
+          "value": "Renewable energy consumption (% of total final energy consumption)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1988",
+        "value": null,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 2
+      },
+      {
+        "indicator": {
+          "id": "EG.FEC.RNEW.ZS",
+          "value": "Renewable energy consumption (% of total final energy consumption)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1987",
+        "value": null,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 2
+      },
+      {
+        "indicator": {
+          "id": "EG.FEC.RNEW.ZS",
+          "value": "Renewable energy consumption (% of total final energy consumption)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1986",
+        "value": null,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 2
+      },
+      {
+        "indicator": {
+          "id": "EG.FEC.RNEW.ZS",
+          "value": "Renewable energy consumption (% of total final energy consumption)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1985",
+        "value": null,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 2
+      },
+      {
+        "indicator": {
+          "id": "EG.FEC.RNEW.ZS",
+          "value": "Renewable energy consumption (% of total final energy consumption)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1984",
+        "value": null,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 2
+      },
+      {
+        "indicator": {
+          "id": "EG.FEC.RNEW.ZS",
+          "value": "Renewable energy consumption (% of total final energy consumption)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1983",
+        "value": null,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 2
+      },
+      {
+        "indicator": {
+          "id": "EG.FEC.RNEW.ZS",
+          "value": "Renewable energy consumption (% of total final energy consumption)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1982",
+        "value": null,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 2
+      },
+      {
+        "indicator": {
+          "id": "EG.FEC.RNEW.ZS",
+          "value": "Renewable energy consumption (% of total final energy consumption)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1981",
+        "value": null,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 2
+      },
+      {
+        "indicator": {
+          "id": "EG.FEC.RNEW.ZS",
+          "value": "Renewable energy consumption (% of total final energy consumption)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1980",
+        "value": null,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 2
+      },
+      {
+        "indicator": {
+          "id": "EG.FEC.RNEW.ZS",
+          "value": "Renewable energy consumption (% of total final energy consumption)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1979",
+        "value": null,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 2
+      },
+      {
+        "indicator": {
+          "id": "EG.FEC.RNEW.ZS",
+          "value": "Renewable energy consumption (% of total final energy consumption)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1978",
+        "value": null,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 2
+      },
+      {
+        "indicator": {
+          "id": "EG.FEC.RNEW.ZS",
+          "value": "Renewable energy consumption (% of total final energy consumption)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1977",
+        "value": null,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 2
+      },
+      {
+        "indicator": {
+          "id": "EG.FEC.RNEW.ZS",
+          "value": "Renewable energy consumption (% of total final energy consumption)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1976",
+        "value": null,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 2
+      },
+      {
+        "indicator": {
+          "id": "EG.FEC.RNEW.ZS",
+          "value": "Renewable energy consumption (% of total final energy consumption)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1975",
+        "value": null,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 2
+      },
+      {
+        "indicator": {
+          "id": "EG.FEC.RNEW.ZS",
+          "value": "Renewable energy consumption (% of total final energy consumption)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1974",
+        "value": null,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 2
+      },
+      {
+        "indicator": {
+          "id": "EG.FEC.RNEW.ZS",
+          "value": "Renewable energy consumption (% of total final energy consumption)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1973",
+        "value": null,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 2
+      },
+      {
+        "indicator": {
+          "id": "EG.FEC.RNEW.ZS",
+          "value": "Renewable energy consumption (% of total final energy consumption)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1972",
+        "value": null,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 2
+      },
+      {
+        "indicator": {
+          "id": "EG.FEC.RNEW.ZS",
+          "value": "Renewable energy consumption (% of total final energy consumption)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1971",
+        "value": null,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 2
+      },
+      {
+        "indicator": {
+          "id": "EG.FEC.RNEW.ZS",
+          "value": "Renewable energy consumption (% of total final energy consumption)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1970",
+        "value": null,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 2
+      },
+      {
+        "indicator": {
+          "id": "EG.FEC.RNEW.ZS",
+          "value": "Renewable energy consumption (% of total final energy consumption)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1969",
+        "value": null,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 2
+      },
+      {
+        "indicator": {
+          "id": "EG.FEC.RNEW.ZS",
+          "value": "Renewable energy consumption (% of total final energy consumption)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1968",
+        "value": null,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 2
+      },
+      {
+        "indicator": {
+          "id": "EG.FEC.RNEW.ZS",
+          "value": "Renewable energy consumption (% of total final energy consumption)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1967",
+        "value": null,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 2
+      },
+      {
+        "indicator": {
+          "id": "EG.FEC.RNEW.ZS",
+          "value": "Renewable energy consumption (% of total final energy consumption)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1966",
+        "value": null,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 2
+      },
+      {
+        "indicator": {
+          "id": "EG.FEC.RNEW.ZS",
+          "value": "Renewable energy consumption (% of total final energy consumption)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1965",
+        "value": null,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 2
+      },
+      {
+        "indicator": {
+          "id": "EG.FEC.RNEW.ZS",
+          "value": "Renewable energy consumption (% of total final energy consumption)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1964",
+        "value": null,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 2
+      },
+      {
+        "indicator": {
+          "id": "EG.FEC.RNEW.ZS",
+          "value": "Renewable energy consumption (% of total final energy consumption)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1963",
+        "value": null,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 2
+      },
+      {
+        "indicator": {
+          "id": "EG.FEC.RNEW.ZS",
+          "value": "Renewable energy consumption (% of total final energy consumption)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1962",
+        "value": null,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 2
+      },
+      {
+        "indicator": {
+          "id": "EG.FEC.RNEW.ZS",
+          "value": "Renewable energy consumption (% of total final energy consumption)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1961",
+        "value": null,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 2
+      },
+      {
+        "indicator": {
+          "id": "EG.FEC.RNEW.ZS",
+          "value": "Renewable energy consumption (% of total final energy consumption)"
+        },
+        "country": {
+          "id": "1W",
+          "value": "World"
+        },
+        "countryiso3code": "WLD",
+        "date": "1960",
+        "value": null,
+        "unit": "",
+        "obs_status": "",
+        "decimal": 2
+      }
+    ]
+  ]
+}

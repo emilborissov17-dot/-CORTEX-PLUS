@@ -1,0 +1,62 @@
+{
+  "axis": "EDUCATION_CULTURE_REVIEW",
+  "fetched_at": "2026-03-27T08:01:08.866355+00:00",
+  "smart_query": "education access schools literacy",
+  "sources_count": {
+    "wiki": 0,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "upb-lea/reinforcement_learning_course_materials",
+      "snippet": "Lecture notes, tutorial tasks including solutions as well as online videos for the reinforcement learning course hosted by Paderborn University",
+      "stars": 1019,
+      "url": "https://github.com/upb-lea/reinforcement_learning_course_materials",
+      "updated": "2026-03-24",
+      "source": "GitHub"
+    },
+    {
+      "title": "spatialaudio/signals-and-systems-lecture",
+      "snippet": "Continuous- and Discrete-Time Signals and Systems - Theory and Computational Examples",
+      "stars": 370,
+      "url": "https://github.com/spatialaudio/signals-and-systems-lecture",
+      "updated": "2026-03-24",
+      "source": "GitHub"
+    },
+    {
+      "title": "merely-useful/py-rse",
+      "snippet": "Research Software Engineering with Python course material",
+      "stars": 261,
+      "url": "https://github.com/merely-useful/py-rse",
+      "updated": "2026-03-06",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Visual or Textual: Effects of Explanation Format and Personal Characteristics on the Perception of Explanations in an Educational Recommender System",
+      "snippet": "Explanations are central to improving transparency, trust, and user satisfaction in recommender systems (RS), yet it remains unclear how different explanation formats (visual vs. textual) are suited to users with different personal characteristics (PCs). To this end, we report a within-subject user ",
+      "url": "https://arxiv.org/abs/2603.25624v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Group-Differentiated Discourse on Generative AI in High School Education: A Case Study of Reddit Communities",
+      "snippet": "In this paper, we study how different Reddit communities discuss generative AI in high school education, focusing on learning, academic integrity, AI detection, and emotional framing. Using 3,789 posts from five education-related subreddits, we compare student, teacher, and mixed communities using a",
+      "url": "https://arxiv.org/abs/2603.24972v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[The Impact of AI in Education: Navigating the Imminent Future] What must be considered to build a safe but effective future for AI in education, and for children to be safe online?",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

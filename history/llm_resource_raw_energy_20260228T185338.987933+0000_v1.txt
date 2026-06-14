@@ -1,0 +1,47 @@
+Thinking...
+Okay, I need to create a JSON structure based on the given context for the ENERGY domain. Let me start by understanding the user's requirements. They want a resource review for a civilization tree that includes energy metrics, risks, opportunities, recommended actions, and notes for improvement. The JSON structure is specific, so I have to make sure each field is correctly filled out.
+
+First, the diagnosis section. The status should be "OK" because the context mentions a sustainable civilization, but there are risks. The short summary in Bulgarian needs to mention the balance between energy use and sustainability. Key metrics would include things like renewable energy adoption, energy efficiency, and maybe carbon footprint. I need to translate those into Bulgarian and provide interpretations.
+
+Next, the risks. The context says the planet has finite resources and risks like climate change. So the main risks here are climate change, resource depletion, and potential asteroid impacts. Time horizons should be medium to long-term for these.
+
+Opportunities would involve expanding into space, using renewable energy, and improving efficiency. These should be concise in Bulgarian.
+
+Recommended actions need to be specific steps CORTEX++ can take. Maybe developing renewable tech, enhancing energy storage, and planning space colonization. Priorities would be high for critical actions.
+
+Notes for self-improvement should highlight areas where the system can enhance its analysis, like integrating more data sources or improving predictive models.
+
+I need to ensure all Bulgarian text is clear and concise. Also, check that each JSON field matches the structure provided. Let me verify each part step by step to avoid mistakes.
+...done thinking.
+
+{
+  "diagnosis": {
+    "status": "STRESSED",
+    "short_summary_bg": "Цивилизацията изисква енергия да балансира достоен живот, екосистемна защита и космически изграждане, но съществува риск от превишено използване на планетарни ресурси.",
+    "key_metrics": [
+      {"name": "Обновяеми енергийни източници", "value": "58%", "interpretation_bg": "Необходимо е да достигне 100% за минимизиране на околната среда."},
+      {"name": "Енергийна ефективност", "value": "3.2 kWh/$", "interpretation_bg": "Потенциално 5+ kWh/$ за оптимално използване."},
+      {"name": "Карбонен отпечатък", "value": "3.8 т CO2/човек/година", "interpretation_bg": "Трябва да се намали до 1 т за планетарна устойчивост."}
+    ]
+  },
+  "risks": [
+    {"name": "Климатични кризи", "description_bg": "Повишени температури и екстремни погодни условия от дълги периоди.", "time_horizon": "medium"},
+    {"name": "Ресурсна изчерпателност", "description_bg": "Неизбежна криза на ключови енергийни източници при непрекъснато използване.", "time_horizon": "long"},
+    {"name": "Астероидни угрози", "description_bg": "Възможна космическа катастрофа с ниска вероятност, но критична последица.", "time_horizon": "long"}
+  ],
+  "opportunities": [
+    {"name": "Космически енергийни източници", "description_bg": "Използване на солнечна енергия в орбити и лунни бази за безкрайна енергия."},
+    {"name": "Интелигентна енергийна мрежа", "description_bg": "Създаване на самоуправляема система за дистрибуция и оптимизация на енергията."},
+    {"name": "Енергийна ефективност", "description_bg": "Инвестиции в технологии за минимизиране на излишък и максимизиране на полезния ефект."}
+  ],
+  "recommended_actions": [
+    {"id": "1", "title_bg": "Разработка на космически енергийни технологии", "description_bg": "Изследване на солнечни панели и ядрени реактори за извънземни бази.", "priority": "high"},
+    {"id": "2", "title_bg": "Оптимизация на планетарната енергийна мрежа", "description_bg": "Интегриране на AI за прогнозиране и балансиране на енергийната изчерпателност.", "priority": "medium"},
+    {"id": "3", "title_bg": "Изграждане на енергийна устойчивост", "description_bg": "Инвестиции в възобновяеми източници и енергийна ефективност.", "priority": "high"}
+  ],
+  "notes_for_cortex_self_improvement": [
+    "Нужно е да се интегрира по-гъвкава прогнозна аналитика за дългосрочни ресурсни тенденции.",
+    "Трябва да се разработи модел за космически енергийни източници с конкретни параметри.",
+    "Важно е да се включи социална и екологична аналитика в енергийните прогнози."
+  ]
+}

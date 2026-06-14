@@ -1,0 +1,87 @@
+HUMAN_SELF_TEMPLATE
+VERSION: 1.0
+
+PERSON_NAME:
+TIMESTAMP:
+REVIEW_PERIOD: (напр. 2024–2026)
+
+ВИЗИЯ ЗА ЖИВОТА
+LIFE_VISION: (какъв човек искам да бъда, какъв живот искам да живея)
+COMMON_GOAL_ALIGNMENT: (как моят живот се подравнява с визията за устойчива общочовешка цивилизация + AGI)
+
+ТЯЛО / ФИЗИЧНО (ENERGY, WATER, FOOD, HEALTH)
+STATUS_BODY: (енергия, сън, хранене, движение, здраве)
+KEY_FACTS_BODY:
+...
+TRENDS_BODY: (подобрение / влошаване, навици)
+...
+ACTIONS_BODY: (1–3 конкретни стъпки за следващия период)
+...
+
+УМ / ПОЗНАНИЕ (KNOWLEDGE, SKILLS, CLARITY)
+STATUS_MIND: (учене, концентрация, яснота, ментално натоварване)
+KEY_FACTS_MIND:
+...
+TRENDS_MIND:
+...
+ACTIONS_MIND: (какво искам да уча/практикувам, как да пазя ума си чист и ясен)
+...
+
+ДУХ / СТОЙНОСТИ (MEANING, PURPOSE, SPIRIT)
+STATUS_SPIRIT: (смисъл, ценности, усещане за посока, връзка с „по‑голямото“)
+KEY_VALUES: (3–5 най‑важни ценности)
+...
+TRENDS_SPIRIT: (усещам ли повече/по‑малко смисъл, къде)
+...
+ACTIONS_SPIRIT: (малки ритуали / практики за поддръжка на духа)
+...
+
+ВРЪЗКИ / ОБЩНОСТ (FAMILY, FRIENDS, SOCIETY)
+STATUS_RELATIONSHIPS: (близки хора, общност, самота/свързаност)
+KEY_FACTS_RELATIONSHIPS:
+...
+TRENDS_RELATIONSHIPS:
+...
+ACTIONS_RELATIONSHIPS: (на кого искам да дам повече внимание, как да съм по‑полезен за другите)
+...
+
+РАБОТА / ИКОНОМИКА (ECONOMY_WORK, CONTRIBUTION)
+STATUS_WORK: (работа, проекти, финанси, стабилност)
+KEY_FACTS_WORK:
+...
+TRENDS_WORK:
+...
+ACTIONS_WORK: (как да подравня работата си с ценностите и общата цел)
+...
+
+ГРАД / СРЕДА (INFRASTRUCTURE_CITIES, ENVIRONMENT)
+STATUS_ENVIRONMENT: (къде живея, условия, достъп до природа, сигурност)
+KEY_FACTS_ENVIRONMENT:
+...
+TRENDS_ENVIRONMENT:
+...
+ACTIONS_ENVIRONMENT: (малки стъпки за по‑устойчива и човечна среда около мен)
+...
+
+ДЪЛГОСРОЧЕН ПЪТ (LONG_TERM_FUTURE – ЛИЧЕН)
+PERSONAL_LONG_TERM: (какъв хоризонт виждам за себе си 5–10+ години)
+RISKS_PERSONAL: (какво може да ме отклони от пътя – здраве, навици, среда)
+OPPORTUNITIES_PERSONAL: (какво може силно да ме изстреля напред – умения, хора, проекти)
+
+SELF‑REFLECTION (ОГЛЕДАЛО)
+WHAT_WORKS_WELL: (какво в живота ми вече е подравнено с визията)
+WHAT_HURTS_OR_DRAINS: (какво ме изтощава / разминава с визията)
+WHAT_I_WANT_TO_CHANGE_FIRST: (1–3 най‑важни промени)
+
+ALIGNMENT_WITH_VISION
+SCORE_ALIGNMENT_SELF: (от -2 до +2 – как се чувствам спрямо собствената си визия и общата цел)
+SCORE_EXPLANATION_SELF:
+...
+
+NEXT_STEPS
+NEXT_30_DAYS_ACTIONS: (1–5 малки конкретни стъпки)
+NEXT_6_12_MONTHS_DIRECTION: (по‑големи движения, без да са детайлни планове)
+
+META:
+NOTES: (как се чувствам докато пиша това, какво искам да помня за следващия SELF REVIEW)
+...

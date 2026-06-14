@@ -1,0 +1,100 @@
+{
+  "axis": "MATERIALS_WASTE_REVIEW",
+  "fetched_at": "2026-05-17T16:52:27.858738+00:00",
+  "smart_query": "plastic waste pollution recycling",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 0,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube_transcripts": 3,
+    "podcast": 1
+  },
+  "rss": [],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "pogopaule/awesome-sustainability-jobs",
+      "snippet": "Dev jobs in the sustainability sector - be part of the solution, not the problem",
+      "stars": 506,
+      "url": "https://github.com/pogopaule/awesome-sustainability-jobs",
+      "updated": "2026-05-11",
+      "source": "GitHub"
+    },
+    {
+      "title": "Alkia/electra",
+      "snippet": "This is Electra blockchain's repository for a decentralized micro-grid electricity exchange solution",
+      "stars": 72,
+      "url": "https://github.com/Alkia/electra",
+      "updated": "2026-01-28",
+      "source": "GitHub"
+    },
+    {
+      "title": "NatLabRockies/PV_ICE",
+      "snippet": "An open-source tool to quantify Solar Photovoltaics (PV) Energy and Mass Flows in the Circular Economy, from a Reliability and Lifetime approach",
+      "stars": 43,
+      "url": "https://github.com/NatLabRockies/PV_ICE",
+      "updated": "2026-01-28",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Circularity in Perovskite-Based Tandem Photovoltaics for Terawatt-Scale Deployment",
+      "snippet": "As photovoltaics (PVs) scale from one to multiple terawatts over the next decade, ensuring sustainable deployment is urgently required. Crystalline silicon (c-Si) PVs, the current industry standard, will generate an estimated 160 million tonnes of waste by 2050, and there remains complex technoecono",
+      "url": "https://arxiv.org/abs/2605.13991v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Deterministic positioning of circular Bragg gratings using atomic force lithography for high-performance quantum dot light sources",
+      "snippet": "Semiconductor quantum dots (QDs) grown by molecular beam epitaxy are excellent quantum emitters, but their random spatial distribution hinders deterministic coupling to optical microcavities. We demonstrate a room-temperature atomic force microscopy (AFM)-assisted nano-oxidation lithography techniqu",
+      "url": "https://arxiv.org/abs/2605.03672v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[FLI’s President and CEO on Trump’s support for an AI ‘kill switch’] President Trump said during an interview aired yesterday by Fox Business that &#8220;there should be&#8221; when asked if AI needs [&#8230;]",
+  "wiki": null,
+  "youtube_items": [
+    {
+      "title": "[YT] Recycling Marine Plastic Waste A Circular Economy Case | Suzanna Laskaridis | TEDxAthens",
+      "summary": "Transcriber: Maria Pericleous Reviewer: Chryssa Rapessi In 2017, I was approached by a team of designers to help finance a project they were doing here in Greece. The aim was to reuse old fishing nets, and turn them into filament for 3D printers. I thought the idea of recycling marine plastic waste into something workable was absolutely fantastic. So I started working in my mind the idea of how this could actually be reused. We put together the best minds in the fields of marine plastic waste, new technologies and circular economy and dove right in. We have a storage area just outside of Athens, so we started suggesting to various friends and NGOs and various other companies who had been collecting marine plastic waste up to that point, that we’d take them back to our storage area. This ma",
+      "link": "https://www.youtube.com/watch?v=n_3vSDOY7iU",
+      "source_type": "youtube",
+      "channel": "TEDx Talks",
+      "video_id": "n_3vSDOY7iU",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Circulate Capital: Fighting Plastic Pollution and Advancing the Circular Economy in Asia",
+      "summary": "circulate capital is an emerging market investment manager we mobilize catalytic capital dedicated to financing solutions to plastic pollution and climate change we finance companies innovations and infrastructure across the entire plastic supply chain backed by leading global corporations private investors and development finance institutions our ambition is to unlock one billion dollars to advance a circular economy and prevent 150 million tons of plastic pollution by building the largest and most impactful portfolio globally and especially across emerging markets our portfolio is proving that by investing in this sector we can generate competitive financial returns prevent plastic pollution mitigate climate change and improve livelihoods especially across the region from collection and ",
+      "link": "https://www.youtube.com/watch?v=ee4UxzTD_HA",
+      "source_type": "youtube",
+      "channel": "Circulate Capital",
+      "video_id": "ee4UxzTD_HA",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 1861,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Can the Circular Economy Solve Our Plastics Problem?",
+      "summary": "there's a lot of sass in the business of getting us to recycle our plastic hey hey don't get me wrong that's not a bad thing it's important to grab our attention chances are you haven't met this water bottle before and you probably won't see it again because our recycling system is broken that's the thing about recycling right we Chuck something away and hope for the best out of sight out of mind but we're starting to realize that maybe recycling isn't the magical solution we thought it was consumers have been manipulated those plastic straws or pizza boxes by Design cannot be recycled cannot be recycled but what if there's a way we could turn things around what if we could make every plastic product reusable and even get rid of plastic waste altogether [Music] foreign Global Production of",
+      "link": "https://www.youtube.com/watch?v=X4EX3ISBZWo",
+      "source_type": "youtube",
+      "channel": "Bloomberg Originals",
+      "video_id": "X4EX3ISBZWo",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ],
+  "summary": "[arXiv]\n- Circularity in Perovskite-Based Tandem Photovoltaics for Terawatt-Scale Deployment\n- Deterministic positioning of circular Bragg gratings using atomic force lithography for high-performance ",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": [],
+  "open_source_momentum": "",
+  "scientific_frontier": "",
+  "relevance_to_goal": ""
+}

@@ -1,0 +1,90 @@
+{
+  "axis": "GOAL_PROGRESS_REVIEW",
+  "fetched_at": "2026-04-03T14:15:54.743875+00:00",
+  "smart_query": "sustainable development goals SDG",
+  "sources_count": {
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 0,
+    "github": 3,
+    "web_search": 5
+  },
+  "rss": [
+    {
+      "title": "Women leaders unite to advance gender equality, defend multilateralism amid growing global pushback",
+      "snippet": "The Secretary-General’s commitment towards women leadership in the United Nations was recognized at a pivotal moment marked by global uncertainty, economic volatility and increasing pressure on hard-won rights.",
+      "url": "https://news.un.org/feed/view/en/story/2026/04/1167240",
+      "source": "RSS"
+    },
+    {
+      "title": "Nearly 5 million children are still dying annually before their fifth birthday: Here’s why",
+      "snippet": "An estimated 4.9 million children died before their fifth birthday in 2024, including 2.3 million newborns, according to new United Nations estimates released on Tuesday – highlighting a worrying slowdown in global progress on child survival.",
+      "url": "https://news.un.org/feed/view/en/story/2026/03/1167151",
+      "source": "RSS"
+    },
+    {
+      "title": "Over a billion fear losing land and homes within five years",
+      "snippet": "Despite global progress in strengthening land tenure and governance, more than a billion people worldwide – nearly one in four adults – fear they could lose the rights to some or all of their land and housing within the next five years.&nbsp;",
+      "url": "https://news.un.org/feed/view/en/story/2026/02/1167037",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "samirsaci/supply-chain-sustainability",
+      "snippet": "Build Supply Chain Sustainability Reporting with Python",
+      "stars": 59,
+      "url": "https://github.com/samirsaci/supply-chain-sustainability",
+      "updated": "2026-03-14",
+      "source": "GitHub"
+    },
+    {
+      "title": "osdg-ai/osdg-tool",
+      "snippet": "OSDG is an open-source tool that maps and connects activities to the UN Sustainable Development Goals (SDGs) by identifying SDG-relevant content in any text. The tool is available online at www.osdg.a",
+      "stars": 46,
+      "url": "https://github.com/osdg-ai/osdg-tool",
+      "updated": "2026-03-04",
+      "source": "GitHub"
+    },
+    {
+      "title": "wmo-raf/climweb",
+      "snippet": "Open Source Content Management System for National Meteorological and Hydrological Services ",
+      "stars": 24,
+      "url": "https://github.com/wmo-raf/climweb",
+      "updated": "2026-03-31",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [],
+  "web_search": [
+    {
+      "title": "THE 17 GOALS | Sustainable Development",
+      "url": "https://sdgs.un.org/goals",
+      "source": "WEB"
+    },
+    {
+      "title": "United Nations Sustainable Development Goals (SDGs)",
+      "url": "https://unric.org/en/united-nations-sustainable-development-goals/",
+      "source": "WEB"
+    },
+    {
+      "title": "Sustainable Development Goals | United Nations Development Programme",
+      "url": "https://www.undp.org/sustainable-development-goals",
+      "source": "WEB"
+    },
+    {
+      "title": "Sustainable Development Goals - Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Sustainable_Development_Goals",
+      "source": "WEB"
+    },
+    {
+      "title": "What Are the UN Sustainable Development Goals (SDGs)?",
+      "url": "https://www.cfr.org/backgrounders/what-are-un-sustainable-development-goals",
+      "source": "WEB"
+    }
+  ],
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL"
+}

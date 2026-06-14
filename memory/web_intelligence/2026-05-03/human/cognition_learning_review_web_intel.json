@@ -1,0 +1,155 @@
+{
+  "axis": "COGNITION_LEARNING_REVIEW",
+  "domain": "human",
+  "timestamp": "2026-05-03T08:48:29.649544+00:00",
+  "sources_count": 10,
+  "rss_count": 7,
+  "ddg_count": 0,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] Future of Education: How to Get Ahead before AI Changes Everything - YouTube",
+      "summary": "By the end of 2025, AI can do what used to require a 4-year degree, and the numbers prove it. Entry-level job postings in the US are down about 35% compared to January 2023. Unemployment for recent graduates is 5.8%, one of the worst numbers we've seen in years. At the same time, AI tools like Chad GPT, Claude, Copilot, and Perplexity are getting better and better every month. They write, they summarize, they analyze code faster, cheaper, and more reliably than a lot of juniors. And the data shows the impact. According to Harvard Business Review, AI can already do 50 to 60% of typical junior tasks. Entry-level hiring in European tech has collapsed by over 70%. Starter jobs don't slow down. They kind of vanishing. Which raises the uncomfortable question, if AI can do the job, what's the deg",
+      "link": "https://www.youtube.com/watch?v=eaZ2R1K-SjQ",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "eaZ2R1K-SjQ",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] The Future Of Education In An AI-Powered World - YouTube",
+      "summary": "Please welcome Matt Britton. Thank you. HI EVERYONE. YOU KNOW, IT'S FUNNY. I GREW UP IN THE SHADOWS OF PHILADELPHIA, a huge Eagles fan. Sorry. And uh I always dreamed I'd come into Dallas and wow the crowd. I don't think I ever thought it would be like this. But hopefully I'll get to deliver like your Cowboys did yesterday, so congrats on that. Um I've spent my entire career helping the world's largest brands understand the new consumer. I was fortunate enough to have come out in the business world in the year 2000 when the new consumer was the millennial generation. The millennial generation is the first generation to grow up with the internet in the household. I'm a Gen Xer and when I tell my kids that when I grew up there was no internet, they look at we me the way I looked at my grandf",
+      "link": "https://www.youtube.com/watch?v=BX-K0PIls2I",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "BX-K0PIls2I",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] AI and Education: What's Changing, What Kids Must Learn, and the Path Forward | SXSW - YouTube",
+      "summary": "I think we need to move away from preparing kids for jobs cuz jobs are going to change. The way students are taught and what they're taught to optimize for is very at odds with where we're at right now with AI. The safest assumption we have to make in this moment is that kids are going to be using artificial intelligence at home. So, the classroom really has to be a place where the deep learning is happening and where we're raising the bar on knowledge. When you outsource your cognitive work to an AI, you actually become cognitively weaker. This is potentially really detrimental to society more broadly that we become so reliant on these technologies, we stop believing in our own ability to make decisions. In the age of advanced technologies, kids need to read more and we'll have to make sc",
+      "link": "https://www.youtube.com/watch?v=dXxZwwCoO04",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "dXxZwwCoO04",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "summary": "The global math gender gap is narrowing, but quality of programs remains a concern. Schools are increasingly using data to identify gifted students, and AI is transforming education. These trends suggest a shift toward data-driven, inclusive education models.",
+    "risk_level": "MEDIUM",
+    "trend": "IMPROVING",
+    "key_events": [
+      "Global math gender gap narrowing",
+      "Data-driven approaches in education",
+      "AI transforming educational practices"
+    ],
+    "insights": [
+      "Education must be early and targeted to address gender gaps",
+      "Data is becoming central to identifying gifted students",
+      "AI is reshaping how education is delivered"
+    ],
+    "youtube_insights": [
+      "AI and education: what's changing",
+      "Future of education in an AI-powered world"
+    ],
+    "relevance_to_goal": "High",
+    "generalization": "Education is evolving with AI and data, but quality and inclusivity remain critical challenges."
+  },
+  "raw_items": [
+    {
+      "title": "Global Math Gains for Girls Are Slipping, Report Finds",
+      "summary": "The global math gender gap: “Whatever we do, the action we take to address the issue must start quite early and must be very targeted.”",
+      "link": "https://www.edsurge.com/news/2026-05-01-girls-around-the-globe-are-losing-gains-in-math-data-shows",
+      "published": "Fri, 01 May 2026 01:00:00 -0700",
+      "source_type": "rss"
+    },
+    {
+      "title": "Quality Concerns Remain as States Invest More Than Ever in Preschool Programs",
+      "summary": "A new report found states hit an all-time high for both spending and enrollment, but the quality of the programs remains a concern.",
+      "link": "https://www.edsurge.com/news/2026-04-30-quality-concerns-remain-as-states-invest-more-than-ever-in-preschool-programs",
+      "published": "Thu, 30 Apr 2026 09:21:04 -0700",
+      "source_type": "rss"
+    },
+    {
+      "title": "I Built Radical Possibility in Schools — and It Nearly Broke Me",
+      "summary": "What does it mean to “save your own life” in education? Former Voices of Change fellow Dee Watson reflects on burnout, resistance and radical ...",
+      "link": "https://www.edsurge.com/news/2026-04-29-i-built-radical-possibility-in-schools-and-it-nearly-broke-me",
+      "published": "Wed, 29 Apr 2026 01:00:00 -0700",
+      "source_type": "rss"
+    },
+    {
+      "title": "Districts Relying More on Data to Identify Gifted Students",
+      "summary": "Schools are finding new, data-driven ways to re-approach gifted and talented programs -- with a focus on inclusivity.",
+      "link": "https://www.edsurge.com/news/2026-04-23-districts-relying-more-on-data-to-identify-gifted-students",
+      "published": "Thu, 23 Apr 2026 01:02:00 -0700",
+      "source_type": "rss"
+    },
+    {
+      "title": "The Taboo of…Money, Love and Power",
+      "summary": "DOCUMENTARY FILM In the documentary educational film &#8220;The Taboo of Sovereignty, Money, Love and Power,&#8221; Mr. Liberty explores the taboos seldom discussed in polite conversation. He reveals the nature of global power structures, money as a control system and the futility of elections. He is empowering people with popular sovereignty as a key to unlocking [&#8230;]",
+      "link": "https://mindshiftentertainment.wordpress.com/2005/04/01/hello-world/",
+      "published": "Fri, 01 Apr 2005 21:27:39 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Lotus: A Woman’s Journey of Empowerment",
+      "summary": "CLAIRE GAILLARD &#8211; DANCE IS LIFE! &#8220;From the revelation that disconnectedness between people and their passion, between individuals and their communities, reflect agonized personal wounds in each of us, her Empower Moves was birthed. It builds community and honors the People with Transcendance through story telling and interpretive forms of dance, allowing ecstatic communion, reconnection [&#8230;]",
+      "link": "https://mindshiftentertainment.wordpress.com/2003/03/23/lotus-a-womans-journey-of-empowerment/",
+      "published": "Sun, 23 Mar 2003 23:15:05 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Fresh Wave",
+      "summary": "JOHNNY LIGHT For over three decades, Johnny Light has been guided by a vision of a new world coming, the “fresh wave” is coming. These twelve songs are professionally produced and arranged, an album of his finest original compositions recorded with Michael Cooper at Rising Star Studios in Eugene, Oregon. Songs like Yes, Nobody’s Gonna [&#8230;]",
+      "link": "https://mindshiftentertainment.wordpress.com/1988/09/09/fresh-wave/",
+      "published": "Fri, 09 Sep 1988 23:17:22 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] Future of Education: How to Get Ahead before AI Changes Everything - YouTube",
+      "summary": "By the end of 2025, AI can do what used to require a 4-year degree, and the numbers prove it. Entry-level job postings in the US are down about 35% compared to January 2023. Unemployment for recent graduates is 5.8%, one of the worst numbers we've seen in years. At the same time, AI tools like Chad GPT, Claude, Copilot, and Perplexity are getting better and better every month. They write, they summarize, they analyze code faster, cheaper, and more reliably than a lot of juniors. And the data shows the impact. According to Harvard Business Review, AI can already do 50 to 60% of typical junior tasks. Entry-level hiring in European tech has collapsed by over 70%. Starter jobs don't slow down. They kind of vanishing. Which raises the uncomfortable question, if AI can do the job, what's the deg",
+      "link": "https://www.youtube.com/watch?v=eaZ2R1K-SjQ",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "eaZ2R1K-SjQ",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] The Future Of Education In An AI-Powered World - YouTube",
+      "summary": "Please welcome Matt Britton. Thank you. HI EVERYONE. YOU KNOW, IT'S FUNNY. I GREW UP IN THE SHADOWS OF PHILADELPHIA, a huge Eagles fan. Sorry. And uh I always dreamed I'd come into Dallas and wow the crowd. I don't think I ever thought it would be like this. But hopefully I'll get to deliver like your Cowboys did yesterday, so congrats on that. Um I've spent my entire career helping the world's largest brands understand the new consumer. I was fortunate enough to have come out in the business world in the year 2000 when the new consumer was the millennial generation. The millennial generation is the first generation to grow up with the internet in the household. I'm a Gen Xer and when I tell my kids that when I grew up there was no internet, they look at we me the way I looked at my grandf",
+      "link": "https://www.youtube.com/watch?v=BX-K0PIls2I",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "BX-K0PIls2I",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] AI and Education: What's Changing, What Kids Must Learn, and the Path Forward | SXSW - YouTube",
+      "summary": "I think we need to move away from preparing kids for jobs cuz jobs are going to change. The way students are taught and what they're taught to optimize for is very at odds with where we're at right now with AI. The safest assumption we have to make in this moment is that kids are going to be using artificial intelligence at home. So, the classroom really has to be a place where the deep learning is happening and where we're raising the bar on knowledge. When you outsource your cognitive work to an AI, you actually become cognitively weaker. This is potentially really detrimental to society more broadly that we become so reliant on these technologies, we stop believing in our own ability to make decisions. In the age of advanced technologies, kids need to read more and we'll have to make sc",
+      "link": "https://www.youtube.com/watch?v=dXxZwwCoO04",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "dXxZwwCoO04",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "axis": "FOOD_REVIEW",
+  "fetched_at": "2026-03-10T12:31:06.403320+00:00",
+  "smart_query": "food review",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 0,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3
+  },
+  "analysis": {
+    "summary": "[arXiv]\n- Impermanent: A Live Benchmark for Temporal Generalization in Time Series Forecasting\n- Agentic Critical Training\n\n[GitHub]\n- meyerls/FruitNeRF star=323: [IROS24] Offical Code for \"FruitNeRF:",
+    "sentiment": "NEUTRAL",
+    "urgency": "LOW",
+    "key_developments": []
+  },
+  "sentiment": "NEUTRAL",
+  "urgency": "LOW",
+  "summary": "[arXiv]\n- Impermanent: A Live Benchmark for Temporal Generalization in Time Series Forecasting\n- Agentic Critical Training\n\n[GitHub]\n- meyerls/FruitNeRF star=323: [IROS24] Offical Code for \"FruitNeRF:",
+  "key_developments": [],
+  "open_source_momentum": "",
+  "scientific_frontier": "",
+  "github_repos": [
+    {
+      "title": "meyerls/FruitNeRF",
+      "snippet": "[IROS24] Offical Code for \"FruitNeRF: A Unified Neural Radiance Field based Fruit Counting Framework\" - Inegrated into Nerfstudio",
+      "stars": 323,
+      "url": "https://github.com/meyerls/FruitNeRF",
+      "updated": "2026-03-10",
+      "source": "GitHub"
+    },
+    {
+      "title": "px39n/Awesome-Precision-Agriculture",
+      "snippet": "Advancement of UAV, deep Learning and cutting edged technologies and papers in Precision Agriculture. ",
+      "stars": 132,
+      "url": "https://github.com/px39n/Awesome-Precision-Agriculture",
+      "updated": "2026-02-15",
+      "source": "GitHub"
+    },
+    {
+      "title": "nesl/agrobot",
+      "snippet": "Neural-Kalman GNSS/INS Navigation for Precision Agriculture",
+      "stars": 79,
+      "url": "https://github.com/nesl/agrobot",
+      "updated": "2026-03-10",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Impermanent: A Live Benchmark for Temporal Generalization in Time Series Forecasting",
+      "snippet": "Recent advances in time-series forecasting increasingly rely on pre-trained foundation-style models. While these models often claim broad generalization, existing evaluation protocols provide limited evidence. Indeed, most current benchmarks use static train-test splits that can easily lead to conta",
+      "url": "https://arxiv.org/abs/2603.08707v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Agentic Critical Training",
+      "snippet": "Training large language models (LLMs) as autonomous agents often begins with imitation learning, but it only teaches agents what to do without understanding why: agents never contrast successful actions against suboptimal alternatives and thus lack awareness of action quality. Recent approaches atte",
+      "url": "https://arxiv.org/abs/2603.08706v1",
+      "source": "arXiv"
+    }
+  ]
+}

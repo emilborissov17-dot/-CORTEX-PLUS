@@ -1,0 +1,113 @@
+{
+  "axis": "CLIMATE_GLOBAL_RISK_REVIEW",
+  "fetched_at": "2026-03-12T18:29:17.861750+00:00",
+  "smart_query": "Current CO2 levels and climate risks",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "analysis": {
+    "summary": "Климатичните промени са глобален риск, който изисква вниманието на цялото международно общество. Приоритизацията на устойчивостта е от решаващо значение за бъдещето на човечеството. Целта е да се постигне устойчива цивилизация и достойнство за всички.",
+    "key_developments": [
+      "Prioritising AI data centres could block new homes, builders warn"
+    ],
+    "sentiment": "NEUTRAL",
+    "urgency": "MEDIUM",
+    "open_source_momentum": "No data",
+    "scientific_frontier": "LiTo: Surface Light Field Tokenization, V2M-Zero: Zero-Pair Time-Aligned Video-to-Music Generation",
+    "relevance_to_goal": "MEDIUM"
+  },
+  "sentiment": "NEUTRAL",
+  "urgency": "MEDIUM",
+  "summary": "Климатичните промени са глобален риск, който изисква вниманието на цялото международно общество. Приоритизацията на устойчивостта е от решаващо значение за бъдещето на човечеството. Целта е да се постигне устойчива цивилизация и достойнство за всички.",
+  "key_developments": [
+    "Prioritising AI data centres could block new homes, builders warn"
+  ],
+  "open_source_momentum": "No data",
+  "scientific_frontier": "LiTo: Surface Light Field Tokenization, V2M-Zero: Zero-Pair Time-Aligned Video-to-Music Generation",
+  "github_repos": [],
+  "arxiv_papers": [
+    {
+      "title": "LiTo: Surface Light Field Tokenization",
+      "snippet": "We propose a 3D latent representation that jointly models object geometry and view-dependent appearance. Most prior works focus on either reconstructing 3D geometry or predicting view-independent diffuse appearance, and thus struggle to capture realistic view-dependent effects. Our approach leverage",
+      "url": "https://arxiv.org/abs/2603.11047v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "V2M-Zero: Zero-Pair Time-Aligned Video-to-Music Generation",
+      "snippet": "Generating music that temporally aligns with video events is challenging for existing text-to-music models, which lack fine-grained temporal control. We introduce V2M-Zero, a zero-pair video-to-music generation approach that outputs time-aligned music for video. Our method is motivated by a key obse",
+      "url": "https://arxiv.org/abs/2603.11042v1",
+      "source": "arXiv"
+    }
+  ],
+  "youtube_transcripts": [],
+  "podcast": "The collaboration will produce a Crisis Counselor Training Curriculum and a statewide AI Harms Reporting Form targeting dangerous AI companion applications | \"Our safety and basic rights must not be at the mercy of a company's internal policy; lawmakers must work to codify these overwhelmingly popular red lines into law.\"",
+  "youtube_videos": [
+    {
+      "title": "YouTube:gCrgCxroubQ",
+      "video_id": "gCrgCxroubQ",
+      "url": "https://www.youtube.com/watch?v=gCrgCxroubQ",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:Rz0j-kLXfM8",
+      "video_id": "Rz0j-kLXfM8",
+      "url": "https://www.youtube.com/watch?v=Rz0j-kLXfM8",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:cWdPasvA8wU",
+      "video_id": "cWdPasvA8wU",
+      "url": "https://www.youtube.com/watch?v=cWdPasvA8wU",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:MHGoZLvgQNQ",
+      "video_id": "MHGoZLvgQNQ",
+      "url": "https://www.youtube.com/watch?v=MHGoZLvgQNQ",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:W3t_pepsl1M",
+      "video_id": "W3t_pepsl1M",
+      "url": "https://www.youtube.com/watch?v=W3t_pepsl1M",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:WY4G0KgbCQM",
+      "video_id": "WY4G0KgbCQM",
+      "url": "https://www.youtube.com/watch?v=WY4G0KgbCQM",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:lsj9u-P0NBs",
+      "video_id": "lsj9u-P0NBs",
+      "url": "https://www.youtube.com/watch?v=lsj9u-P0NBs",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:I_f36cCKBAA",
+      "video_id": "I_f36cCKBAA",
+      "url": "https://www.youtube.com/watch?v=I_f36cCKBAA",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:ndau5W7sf0A",
+      "video_id": "ndau5W7sf0A",
+      "url": "https://www.youtube.com/watch?v=ndau5W7sf0A",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:nEvWK3-UOis",
+      "video_id": "nEvWK3-UOis",
+      "url": "https://www.youtube.com/watch?v=nEvWK3-UOis",
+      "source": "YouTube"
+    }
+  ]
+}

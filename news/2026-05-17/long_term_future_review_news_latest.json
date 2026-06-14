@@ -1,0 +1,110 @@
+{
+  "axis": "LONG_TERM_FUTURE_REVIEW",
+  "fetched_at": "2026-05-17T16:20:42.219829+00:00",
+  "smart_query": "existential risk future civilization",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 0,
+    "github": 3,
+    "youtube_transcripts": 3,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "X pledges quicker action on hate and terror content in the UK",
+      "snippet": "Ofcom said the commitments were of particular importance after recent crimes targeting Jewish communities in the UK.",
+      "url": "https://www.bbc.com/news/articles/clyp9652v18o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Claim, counter-claim and tech's seedy side exposed: Five things we learned in the Musk-Altman trial",
+      "snippet": "As the jury deliberates, this is what we found out during the weeks-long trial with two tech titans at its heart.",
+      "url": "https://www.bbc.com/news/articles/cg7pj8p5mv4o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Inside the secretive and lucrative world of orchid breeding",
+      "snippet": "It can take a decade to bring a new orchid to market, so breeders keep their hi-tech processes secret.",
+      "url": "https://www.bbc.com/news/articles/cly039rr2mgo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "emcie-co/parlant",
+      "snippet": "Build reliable customer-facing AI agents with Parlant: an interaction control harness optimized for controlled, consistent, and predictable LLM interactions.",
+      "stars": 18079,
+      "url": "https://github.com/emcie-co/parlant",
+      "updated": "2026-05-17",
+      "source": "GitHub"
+    },
+    {
+      "title": "agencyenterprise/PromptInject",
+      "snippet": "PromptInject is a framework that assembles prompts in a modular fashion to provide a quantitative analysis of the robustness of LLMs to adversarial prompt attacks. 🏆 Best Paper Awards @ NeurIPS ML Saf",
+      "stars": 494,
+      "url": "https://github.com/agencyenterprise/PromptInject",
+      "updated": "2026-05-14",
+      "source": "GitHub"
+    },
+    {
+      "title": "ifixai-ai/iFixAi",
+      "snippet": "The open-source diagnostic for AI misalignment. 32 tests across fabrication, manipulation, deception, unpredictability, and opacity. Provider-agnostic. Runs against OpenAI, Anthropic, Bedrock, Azure, ",
+      "stars": 411,
+      "url": "https://github.com/ifixai-ai/iFixAi",
+      "updated": "2026-05-17",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [],
+  "podcast": "[#490 – State of AI in 2026: LLMs, Coding, Scaling Laws, China, Agents, GPUs, AGI] Nathan Lambert and Sebastian Raschka are machine learning researchers, engineers, and educators. Nathan is the post-training lead at the Allen Institute for AI (Ai2) and the author of The RLHF Book. Sebastian Raschka is the author of Build a Large Language Model (From Scratch) and Build a Reasoning Model (From Scratch).\nThank you for listening ❤ Check out our sponsors: https://lexfridman.com/spons",
+  "wiki": null,
+  "youtube_items": [
+    {
+      "title": "[YT] Is Generative AI an Existential Threat to the Human Species?",
+      "summary": "from everything you know everything you understand is generative AI potentially an existential threat to the human species I think that's what I've been saying yes it really is an existential threat some people say this is just science fiction and until fairly recently I believed it was a long way off I always thought it would be a very long-term threat but I thought it would be 100 years before we had really smart things um 50 years maybe we had plenty of time to think about it now I think it's quite likely that sometime in the next 20 years these things will get smarter than us and we really need to worry about what happens then",
+      "link": "https://www.youtube.com/watch?v=9fogzZ_6kR0",
+      "source_type": "youtube",
+      "channel": "Bloomberg News",
+      "video_id": "9fogzZ_6kR0",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 638,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] On the Future (Existential Threats) | Bullaki Science Podcast with Martin Rees",
+      "summary": "hi the following is a conversation with the lord professor martin rhys a leading cosmologist and astrophysicist he has conducted influential work on galaxy formation cosmic jets black holes gamma-ray births and speculative aspects of cosmology professor rhys is the astronomer royal and the past present of the royal society he is a prominent scientific spokesperson and author of popular science books in 2012 we co-founded the center for the study of existential risk which is a research center at the university of cambridge intended to study possible extinction level threats posed by present and future technology in this podcast we cover some of the aspects illustrated by professor rhys in his book on the future and these include nuclear warfare climate change biotech pandemics and artificia",
+      "link": "https://www.youtube.com/watch?v=ob0p_TkS3Ck",
+      "source_type": "youtube",
+      "channel": "BULLAKI",
+      "video_id": "ob0p_TkS3Ck",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] The 4 greatest threats to the survival of humanity",
+      "summary": "In January of 1995, Russia detected a nuclear missile headed its way. The alert went all the way to the president, who was deciding whether to strike back when another system contradicted the initial warning. What they thought was the first missile in a massive attack was actually a research rocket studying the Northern Lights. This incident happened after the end of the Cold War, but was nevertheless one of the closest calls we’ve had to igniting a global nuclear war. With the invention of the atomic bomb, humanity gained the power to destroy itself for the first time in our history. Since then, our existential risk— risk of either extinction or the unrecoverable collapse of human civilization— has steadily increased. It’s well within our power to reduce this risk, but in order to do so, ",
+      "link": "https://www.youtube.com/watch?v=WP6T4MH0Dn4",
+      "source_type": "youtube",
+      "channel": "TED-Ed",
+      "video_id": "WP6T4MH0Dn4",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ],
+  "summary": "Дългосрочната перспектива показва рискове от ускорен растеж на ИИ като потенциална заплаха за човечеството, докато се наблюдава растеж на открытия в областта на отворен източник и контрол на AI.",
+  "urgency": "HIGH",
+  "sentiment": "CRITICAL",
+  "key_developments": [
+    "YouTube Transcript: 'Generative AI potentially an existential threat to the human species... it's quite likely that sometime in the next 20 years these things will get smarter than us'",
+    "GitHub: emcie-co/parlant (18k stars) - Build reliable customer-facing AI agents with Parlant: an interaction control framework",
+    "GitHub: ifixai-ai/iFixAi (411 stars) - The open-source diagnostic for AI misalignment. 32 tests across fabrication, manipulation, and other issues"
+  ],
+  "open_source_momentum": "Positive, with multiple open-source projects focused on AI safety and control",
+  "scientific_frontier": "No data",
+  "relevance_to_goal": "CRITICAL - The potential existential threat to humanity challenges the vision of a sustainable civilization where everyone has a dignified life."
+}

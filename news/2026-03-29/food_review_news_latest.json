@@ -1,0 +1,71 @@
+{
+  "axis": "FOOD_REVIEW",
+  "fetched_at": "2026-03-29T11:43:36.353929+00:00",
+  "smart_query": "food security hunger famine",
+  "sources_count": {
+    "rss": 0,
+    "gdelt": 0,
+    "arxiv": 0,
+    "github": 3,
+    "web_search": 5
+  },
+  "rss": [],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "meyerls/FruitNeRF",
+      "snippet": "[IROS24] Offical Code for \"FruitNeRF: A Unified Neural Radiance Field based Fruit Counting Framework\" - Inegrated into Nerfstudio",
+      "stars": 324,
+      "url": "https://github.com/meyerls/FruitNeRF",
+      "updated": "2026-03-11",
+      "source": "GitHub"
+    },
+    {
+      "title": "px39n/Awesome-Precision-Agriculture",
+      "snippet": "Advancement of UAV, deep Learning and cutting edged technologies and papers in Precision Agriculture. ",
+      "stars": 133,
+      "url": "https://github.com/px39n/Awesome-Precision-Agriculture",
+      "updated": "2026-03-23",
+      "source": "GitHub"
+    },
+    {
+      "title": "nesl/agrobot",
+      "snippet": "Neural-Kalman GNSS/INS Navigation for Precision Agriculture",
+      "stars": 80,
+      "url": "https://github.com/nesl/agrobot",
+      "updated": "2026-03-14",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [],
+  "web_search": [
+    {
+      "title": "Millions of lives at risk, warn UN food agencies, as hunger crisis ...",
+      "url": "https://news.un.org/en/story/2025/11/1166342",
+      "source": "WEB"
+    },
+    {
+      "title": "Global Report on Food Crises (GRFC) 2025 - World Food Programme",
+      "url": "https://www.wfp.org/publications/global-report-food-crises-grfc",
+      "source": "WEB"
+    },
+    {
+      "title": "The State of Food Security and Nutrition in the World 2025",
+      "url": "https://data.unicef.org/resources/sofi-2025/",
+      "source": "WEB"
+    },
+    {
+      "title": "Food Security | Food Insecurity Statistics &amp; Solutions - World Bank Group",
+      "url": "https://www.worldbank.org/en/topic/agriculture/brief/food-security-update",
+      "source": "WEB"
+    },
+    {
+      "title": "The state of food security and nutrition in the world 2024",
+      "url": "https://www.who.int/publications/m/item/the-state-of-food-security-and-nutrition-in-the-world-2024",
+      "source": "WEB"
+    }
+  ],
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL"
+}

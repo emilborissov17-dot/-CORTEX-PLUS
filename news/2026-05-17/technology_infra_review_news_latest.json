@@ -1,0 +1,90 @@
+{
+  "axis": "TECHNOLOGY_INFRA_REVIEW",
+  "fetched_at": "2026-05-17T14:59:34.692029+00:00",
+  "smart_query": "technology internet digital access",
+  "sources_count": {
+    "wiki": 0,
+    "gdelt": 0,
+    "arxiv": 0,
+    "github": 3,
+    "youtube_transcripts": 3,
+    "podcast": 1
+  },
+  "rss": [],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "doocs/advanced-java",
+      "snippet": "😮 Core Interview Questions & Answers For Experienced Java(Backend) Developers | 互联网 Java 工程师进阶知识完全扫盲：涵盖高并发、分布式、高可用、微服务、海量数据处理等领域知识",
+      "stars": 78972,
+      "url": "https://github.com/doocs/advanced-java",
+      "updated": "2026-05-17",
+      "source": "GitHub"
+    },
+    {
+      "title": "redis/redis",
+      "snippet": "For developers, who are building real-time data-driven applications, Redis is the preferred, fastest, and most feature-rich cache, data structure server, and document and vector query engine.",
+      "stars": 74395,
+      "url": "https://github.com/redis/redis",
+      "updated": "2026-05-17",
+      "source": "GitHub"
+    },
+    {
+      "title": "binhnguyennus/awesome-scalability",
+      "snippet": "The Patterns of Scalable, Reliable, and Performant Large-Scale Systems",
+      "stars": 71059,
+      "url": "https://github.com/binhnguyennus/awesome-scalability",
+      "updated": "2026-05-17",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [],
+  "podcast": "[#496 – FFmpeg: The Incredible Technology Behind Video on the Internet] Jean-Baptiste Kempf is lead developer of VLC and president of VideoLAN. Kieran Kunhya is a longtime FFmpeg contributor, codec engineer, and the person behind the now-infamous FFmpeg account on X.\nThank you for listening ❤ Check out our sponsors: https://lexfridman.com/sponsors/ep496-sc\nSee below for timestamps, transcript, and to give feedback, submit questions, contact Lex, etc.\nTranscript:\nhttps",
+  "wiki": null,
+  "youtube_items": [
+    {
+      "title": "[YT] Why 2026 satellite internet is finally ending the global digital divide forever",
+      "summary": "In the vast expanse of space, humanity dared to dream beyond Earth's bounds. The Apollo program pushed the limits of exploration. Among its ambitious missions was Apollo 13, launched in April 1970, aiming for the moon's Framaro Formation. Astronauts Jim Levelvel, Jack Swigert, and Fred Hayes embarked on this journey. A testament to human ingenuity and courage. Their mission was part of the intense space race, a global competition to conquer the final frontier. But what began as a routine lunar voyage would soon transform into a desperate fight for survival miles from home. Just 2 days into their mission, a routine stir of an oxygen tank turned catastrophic. A sudden explosion rocked the spacecraft. The chilling words, \"Houston, we've had a problem.\" echoed across the vast distance, signali",
+      "link": "https://www.youtube.com/watch?v=QloAsVyhHuY",
+      "source_type": "youtube",
+      "channel": "TimeShift Tech",
+      "video_id": "QloAsVyhHuY",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Digital divide: 2 billion people still without internet access",
+      "summary": "President, excellencies, distinguished ladies and gentlemen, it is an honor to address this session of the council on behalf of the secretary general of the international telecommunication union. In 2025, two billion people worldwide were still cut off from the digital world with many disparities still persisting along the lines such as location, gender, age, disabilities, or affordability. 77% of men were using the internet, for example, compared to 71% of women. It is noteworthy that 85% of urban dwellers used the internet in 2025 compared to 58% of the rural population. In lowincome countries, the urban rural gap is even wider with only one in seven rural dwellers, that's 14% online. It is estimated that half of the world's schools remain offline. Without access to the internet, childre",
+      "link": "https://www.youtube.com/watch?v=M-4cjaCoFFM",
+      "source_type": "youtube",
+      "channel": "UN Human Rights Council",
+      "video_id": "M-4cjaCoFFM",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Bridging the Digital Divide: Why Access to Tech is Crucial for Everyones Future",
+      "summary": "Digital access is universal millions are being left behind in this idriven revolution and the consequences are dire. Picture a vibrant town where just a few blocks away families are trapped by outdated technology. This is the distant issue. It's happening right now and it's closer than you think. Invisible barriers to digital inclusion are everywhere. It's not just about having a device. It's about how that access shapes lives. Many communities are overlooked as funding flows to flashy urban projects, leaving rural areas in the dark. Imagine a school boasting a cutting edge curriculum pairs the uncomfortable truth. Many I tools are designed for a narrow audience, neglecting those who need them most. Technology often fails to accommodate diverse languages, abilities, and socioeconomic backg",
+      "link": "https://www.youtube.com/watch?v=ThoDVqVClpI",
+      "source_type": "youtube",
+      "channel": "ai_future",
+      "video_id": "ThoDVqVClpI",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ],
+  "summary": "Технологичната инфраструктура е от критично значение за постигане на устойчива цивилизация с достоен живот за всеки. Проектите като Redis и Awesome Scalability показват напредъка в разработването на мащабируеми и надеждни системи. Технологиите трябва да бъдат оценени спрямо тяхното принос в постигане на устойчивост и достойен живот.",
+  "urgency": "MEDIUM",
+  "sentiment": "NEUTRAL",
+  "key_developments": [
+    "doocs/advanced-java",
+    "redis/redis",
+    "binhnguyennus/awesome-scalability"
+  ],
+  "open_source_momentum": "Наличие на популярни отворени проекти като Redis и Awesome Scalability на GitHub показва висока степен на активност и принос в разработването на технологичната инфраструктура.",
+  "scientific_frontier": "No data",
+  "relevance_to_goal": "Висока, тъй като технологиите имат потенциал да подобрят живота на хората и да допринесат за постигане на устойчива цивилизация."
+}

@@ -1,0 +1,141 @@
+{
+  "axis": "FOOD_REVIEW",
+  "fetched_at": "2026-03-13T13:49:57.304212+00:00",
+  "smart_query": "\"Global hunger rates despite ample production\"",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 0,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "analysis": {
+    "summary": "Анализът на храните е важен за създаването на устойчива цивилизация, тъй като храните са основна нужда на човека. Използването на технологии като FruitNeRF и Precision Agriculture може да подобри производството и разпределението на храните. Тези разработки са насочени към увеличаването на устойчивостта и достъпа до храните.",
+    "key_developments": [
+      "FruitNeRF: A Unified Neural Radiance Field based Fruit",
+      "Precision Agriculture с използване на UAV и дълбоки технологии"
+    ],
+    "sentiment": "POSITIVE",
+    "urgency": "MEDIUM",
+    "open_source_momentum": "PX39N/Awesome-Precision-Agriculture и Meyerls/FruitNeRF имат над 450 звезди в GitHub",
+    "scientific_frontier": "Изследванията върху адаптацията на микробни популации към хранителни ресурси и динамиката на смъртността има потенциал за открития в областта на храните",
+    "relevance_to_goal": "Висока, тъй като храните са основна нужда на човека и разработките в тази област могат да помогнат за достигането на целта за създаване на устойчива цивилизация"
+  },
+  "sentiment": "POSITIVE",
+  "urgency": "MEDIUM",
+  "summary": "Анализът на храните е важен за създаването на устойчива цивилизация, тъй като храните са основна нужда на човека. Използването на технологии като FruitNeRF и Precision Agriculture може да подобри производството и разпределението на храните. Тези разработки са насочени към увеличаването на устойчивостта и достъпа до храните.",
+  "key_developments": [
+    "FruitNeRF: A Unified Neural Radiance Field based Fruit",
+    "Precision Agriculture с използване на UAV и дълбоки технологии"
+  ],
+  "open_source_momentum": "PX39N/Awesome-Precision-Agriculture и Meyerls/FruitNeRF имат над 450 звезди в GitHub",
+  "scientific_frontier": "Изследванията върху адаптацията на микробни популации към хранителни ресурси и динамиката на смъртността има потенциал за открития в областта на храните",
+  "news_items": [],
+  "github_repos": [
+    {
+      "title": "meyerls/FruitNeRF",
+      "snippet": "[IROS24] Offical Code for \"FruitNeRF: A Unified Neural Radiance Field based Fruit Counting Framework\" - Inegrated into Nerfstudio",
+      "stars": 324,
+      "url": "https://github.com/meyerls/FruitNeRF",
+      "updated": "2026-03-11",
+      "source": "GitHub"
+    },
+    {
+      "title": "px39n/Awesome-Precision-Agriculture",
+      "snippet": "Advancement of UAV, deep Learning and cutting edged technologies and papers in Precision Agriculture. ",
+      "stars": 132,
+      "url": "https://github.com/px39n/Awesome-Precision-Agriculture",
+      "updated": "2026-02-15",
+      "source": "GitHub"
+    },
+    {
+      "title": "nesl/agrobot",
+      "snippet": "Neural-Kalman GNSS/INS Navigation for Precision Agriculture",
+      "stars": 79,
+      "url": "https://github.com/nesl/agrobot",
+      "updated": "2026-03-10",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "How adaptation to food resources and death rates shape oscillatory dynamics in a microbial population",
+      "snippet": "Microbes constantly interact with their environment by depleting and transforming food sources. Theoretical studies have mainly focused on Lotka-Volterra models, which do not account for food source dynamics. In contrast, consumer-resource models, which consider food source dynamics, are less explor",
+      "url": "https://arxiv.org/abs/2601.22967v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "An additional food driven biological control patch model, incorporating generalized competition",
+      "snippet": "Additional food sources for an introduced predator are known to increase its efficiency on a target pest. In this context, inhibiting factors such as interference, predator competition, and the introduction of temporally dependent quantity and quality of additional food are all known to enable pest ",
+      "url": "https://arxiv.org/abs/2510.06111v1",
+      "source": "arXiv"
+    }
+  ],
+  "youtube_transcripts": [],
+  "podcast": "[The laws of the office revisited] Live event info and tickets here.If something is going wrong in your workplace, there's probably a law that explains why. Meetings always seem long, and never end early? There’s Parkinson’s Law, which says work expands to the time allotted, or, restated: meetings will always take up all the time blocked on Outlook calendars. Is your boss bad at managing? Check the Peter Principle, which says peopl",
+  "youtube_videos": [
+    {
+      "title": "YouTube:YXCkMStgl14",
+      "video_id": "YXCkMStgl14",
+      "url": "https://www.youtube.com/watch?v=YXCkMStgl14",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:lXMILJ4hJx8",
+      "video_id": "lXMILJ4hJx8",
+      "url": "https://www.youtube.com/watch?v=lXMILJ4hJx8",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:VYxM9lqzO9c",
+      "video_id": "VYxM9lqzO9c",
+      "url": "https://www.youtube.com/watch?v=VYxM9lqzO9c",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:LAP4XCWb6mQ",
+      "video_id": "LAP4XCWb6mQ",
+      "url": "https://www.youtube.com/watch?v=LAP4XCWb6mQ",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:lng84KUY-1w",
+      "video_id": "lng84KUY-1w",
+      "url": "https://www.youtube.com/watch?v=lng84KUY-1w",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:nGHKm6lFw2w",
+      "video_id": "nGHKm6lFw2w",
+      "url": "https://www.youtube.com/watch?v=nGHKm6lFw2w",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:CE7RcV5VevU",
+      "video_id": "CE7RcV5VevU",
+      "url": "https://www.youtube.com/watch?v=CE7RcV5VevU",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:DIJM8qBaws0",
+      "video_id": "DIJM8qBaws0",
+      "url": "https://www.youtube.com/watch?v=DIJM8qBaws0",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:Tqt1de0KRN8",
+      "video_id": "Tqt1de0KRN8",
+      "url": "https://www.youtube.com/watch?v=Tqt1de0KRN8",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:_IO2K4DJ36A",
+      "video_id": "_IO2K4DJ36A",
+      "url": "https://www.youtube.com/watch?v=_IO2K4DJ36A",
+      "source": "YouTube"
+    }
+  ]
+}

@@ -1,0 +1,121 @@
+{
+  "axis": "CULTURE_MEDIA_REVIEW",
+  "domain": "human",
+  "timestamp": "2026-05-17T14:06:58.682481+00:00",
+  "sources_count": 9,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 1,
+  "youtube_items": [
+    {
+      "title": "[YT] How Manipulation Distorts Freedom of Speech Today - YouTube",
+      "summary": "guess what oh man you're going to love this you're going to love this little tactic that they use if you can get enough [&nbsp;__&nbsp;] mon to believe that they can control the weather you can definitely get the same amount plus probably two or three times that to believe something like all the FEMA funds are going to brown people not the white people affected by the storm you see you see why they're trying to they're trying to [&nbsp;__&nbsp;] spread a Nazi lie that the Jews the Jews is what she's saying",
+      "link": "https://www.youtube.com/watch?v=o357DerJ1NA",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "o357DerJ1NA",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 511,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "Манипулацията на общественото мнение чрез фалшиви информационни стратегии и лъжи за FEMA и погодата",
+    "root_cause": "Потребителят е изложен на манипулационни техники, които използват страх и несигурност, за да повлияят на неговото разбиране на реалните събития и дистрибуция на ресурси",
+    "severity": "HIGH",
+    "leverage_points": [
+      "Потребителят, който е изложен на тези манипулации",
+      "Критични медийни канали, които разпространяват тези фалшиви съобщения"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Повишаване на медицинската и образователна грамотност на обществото",
+        "measurable_goal": "Измерване чрез анкети за разбиране на медицински и информационни факти",
+        "timeframe": "дългосрочно"
+      },
+      {
+        "action": "Разпространение на инфографики и образователни материали в социалните мрежи",
+        "measurable_goal": "Измерване чрез ръст на вярността на информацията в социалните мрежи",
+        "timeframe": "средносрочно"
+      }
+    ],
+    "evidence": [
+      "„How Manipulation Distorts Freedom of Speech Today“ – YouTube транскрипция, която демонстрира техники за манипулация чрез измислени истории за FEMA и погода",
+      "„Will Ferrell Plays Ghost of Epstein on ‘S.N.L.’ Season Finale“ – пример за как медиите могат да използват фалшиви истории за политически и социални събития"
+    ],
+    "generalization": "Този проблем е свързан с домейна на информационната екология и обществената доверие, които са критични за поддържането на устойчива и прозрачна цивилизация",
+    "summary": "Манипулацията на общественото мнение чрез фалшиви информационни стратегии е сериозен проблем, който изисква образователни и информационни мерки.",
+    "risk_level": "HIGH"
+  },
+  "raw_items": [
+    {
+      "title": "Inside the Met Opera: Does Peter Gelb Have ‘the Most Difficult Job on Earth’?",
+      "summary": "Peter Gelb, the general manager of the Metropolitan Opera, said he is not going anywhere as he struggles with financial crises and opera’s place in a changing arts landscape.",
+      "link": "https://www.nytimes.com/2026/05/17/arts/music/metropolitan-opera-general-manager-peter-gelb.html",
+      "published": "Sun, 17 May 2026 14:01:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Tonys 2026 Predictions: Who Will Win? And Who Should?",
+      "summary": "Our chief theater critic looks at this year’s nominees and makes some predictions (and recommendations).",
+      "link": "https://www.nytimes.com/2026/05/17/theater/tonys-2026-predictions.html",
+      "published": "Sun, 17 May 2026 09:00:26 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "What the Dickens? Will Ferrell Plays Ghost of Epstein on ‘S.N.L.’ Season Finale",
+      "summary": "Ferrell, the “Saturday Night Live” alum, appears with James Austin Johnson as President Trump in a sendup of “A Christmas Carol.” Paul McCartney provides the music.",
+      "link": "https://www.nytimes.com/2026/05/17/arts/television/will-ferrell-epstein-snl-season-finale.html",
+      "published": "Sun, 17 May 2026 13:28:35 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Derek Klena Brings Broadway Flair to the Savannah Bananas",
+      "summary": "Derek Klena was a successful actor with a Tony nomination to his name. But he’s found a bigger audience with the barnstorming baseball sensation.",
+      "link": "https://www.nytimes.com/2026/05/17/arts/savannnah-bananas-derek-klena-broadway.html",
+      "published": "Sun, 17 May 2026 09:00:56 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "‘It’s not healthy for me to be doing so much’: from Adolescence to His Dark Materials, how Jack Thorne took over TV",
+      "summary": "<p>He has made smash hit shows for Netflix and has adapted Harry Potter for the stage. Yet the in-demand writer’s latest show Falling is new territory for him – a love story</p><p>I hear Jack Thorne before I&nbsp;see&nbsp;him. We’re meeting in a quiet cafe in Hampstead, north London, to discuss his very first love story for TV, Falling. I catch snatches of him chatting with various waiters – “Thank you, good sir” and “Lovely, lovely” – before he appears in front of me, all smiles but a little ne",
+      "link": "https://www.theguardian.com/stage/2026/may/17/jack-thorne-falling-adolescence-stephen-graham-this-is-england-keeley-hawes-paapa-essiedu",
+      "published": "Sun, 17 May 2026 09:00:34 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Bulgaria wins 70th Eurovision contest with Dara and Bangaranga",
+      "summary": "<p>The UK finished last as the contest, held in Vienna, saw five countries boycott it over the participation of Israel</p><p>Bulgaria has won the 2026 Eurovision song contest after singer Dara swept to victory with the song Bangaranga.</p><p>The 27-year-old singer’s triumph is a first victory in the 70-year history of the song contest for Bulgaria, which only joined Eurovision in 2005 and sat out the last three editions.</p> <a href=\"https://www.theguardian.com/world/2026/may/17/bulgaria-wins-70",
+      "link": "https://www.theguardian.com/world/2026/may/17/bulgaria-wins-70th-eurovision-contest-dara-bangaranga",
+      "published": "Sat, 16 May 2026 23:20:16 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Paper Tiger review – Adam Driver and Scarlett Johansson reunite for heavyweight James Gray saga",
+      "summary": "<p><strong>Cannes film festival:</strong> The Marriage Story stars team up with Miles Teller for this sombre and impressive story of shady dealings in 80s New York</p><p>With this muscular, heartfelt and sombre new picture set in 1980s New York, <a href=\"https://www.theguardian.com/film/2019/mar/18/streaming-james-gray-the-immigrant\">James Gray</a> again resurrects the spirit of Elia Kazan in a blue-collar tragedy of fraternal loyalty and betrayal; a movie about men and their horror of appearing",
+      "link": "https://www.theguardian.com/film/2026/may/17/paper-tiger-review-adam-driver-scarlett-johansson-miles-teller-james-gray",
+      "published": "Sun, 17 May 2026 10:35:55 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Stage Kiss review – behind-the-scenes romcom is charming but slippery",
+      "summary": "<p><strong>Hampstead theatre, London<br /></strong>A first love is rekindled on stage and off in Sarah Ruhl’s metatheatrical romance and farcical send-up of hammy old musicals</p><p>It doesn’t take long for the protagonists of <a href=\"https://www.theguardian.com/books/2022/sep/17/sarah-ruhl-smile-story-of-a-face-this-is-the-age-of-narcissus-somethings-got-to-give\">Sarah Ruhl</a>’s 2011-set romantic comedy – two actors who have been cast in a 1930s melodrama called The Last Kiss – to realise the",
+      "link": "https://www.theguardian.com/stage/2026/may/17/stage-kiss-review-hampstead-theatre",
+      "published": "Sun, 17 May 2026 09:46:04 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] How Manipulation Distorts Freedom of Speech Today - YouTube",
+      "summary": "guess what oh man you're going to love this you're going to love this little tactic that they use if you can get enough [&nbsp;__&nbsp;] mon to believe that they can control the weather you can definitely get the same amount plus probably two or three times that to believe something like all the FEMA funds are going to brown people not the white people affected by the storm you see you see why they're trying to they're trying to [&nbsp;__&nbsp;] spread a Nazi lie that the Jews the Jews is what she's saying",
+      "link": "https://www.youtube.com/watch?v=o357DerJ1NA",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "o357DerJ1NA",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 511,
+      "has_full_transcript": true
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "energyrenewables": {
+    "run_at": "2026-03-01T11:19:49.573956",
+    "active_sources": 36,
+    "ok_sources": 22,
+    "failed_sources": 14
+  },
+  "metrics_interpretation_bg": [
+    "Реална стойност за World за 2024 според файла owid-energy-data.csv за метрика energy_per_capita."
+  ]
+}

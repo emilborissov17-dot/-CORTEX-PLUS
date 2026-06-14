@@ -1,0 +1,101 @@
+{
+  "axis": "INEQUALITY_POVERTY_REVIEW",
+  "domain": "civilization",
+  "timestamp": "2026-05-16T21:50:47.469793+00:00",
+  "sources_count": 7,
+  "rss_count": 0,
+  "ddg_count": 6,
+  "youtube_count": 1,
+  "youtube_items": [
+    {
+      "title": "[YT] Sub-Saharan Africa Explained - YouTube",
+      "summary": "This is Sub-Saharan Africa, the region's south of the world's largest desert. It includes 49 countries. But a closer look reveals that there are actually hundreds of different ethnic groups, speaking over 2,000 languages. The region is diverse economically as well. South Africa has a modern economy with a huge variety of important industries, from tech and finance, to chemicals and manufacturing. While many of its neighbors rely heavily on commodities and natural resource exports, it's not just a versity that makes this region unique. It's also the age of the population. Almost 60% of Sub-Saharan Africa's population is under the age of 20, making it the most youthful region in the world. It's also the fastest growing. It's estimated that by 2050, one in four people on Earth will be African",
+      "link": "https://www.youtube.com/watch?v=ggLp5_97B4I",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "ggLp5_97B4I",
+      "transcript_method": "whisper",
+      "transcript_chars": 6910,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "Субсахарската Африка преживява резки промени в по-високи нива на бедност и неравенство, въпреки измерими напредъци в икономиката на някои страни.",
+    "root_cause": "Неравенството и бедността се увеличават поради нестабилна икономика, липса на инфраструктура, неравномерно разпределение на ресурсите и социални несправедности.",
+    "severity": "CRITICAL",
+    "leverage_points": [
+      "Повишаване на инвестицията в образование и здравеопазване",
+      "Разработване на регионални икономически политики с участие на местните общности"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Изграждане на инфраструктура за образование и здравеопазване в бедни региони на Субсахарска Африка",
+        "measurable_goal": "Увеличаване на достъпа до основно образование и здравеопазване с 50% в 10 г. в бедни региони",
+        "timeframe": "дългосрочно"
+      },
+      {
+        "action": "Разработване на регионални икономически политики с участие на местните общности и международни партньори",
+        "measurable_goal": "Създаване на минимум 5 нови регионални икономически партньорства за сътрудничество в Субсахарска Африка до 2030 г.",
+        "timeframe": "средносрочно"
+      }
+    ],
+    "evidence": [
+      "839 милиона души са в бедността в Субсахарска Африка според актуалните данни от Всемирния банк (2024 г.)",
+      "Неравенството в Субсахарска Африка се увеличава, въпреки някои икономически напредъци в някои страни"
+    ],
+    "generalization": "Проблемът с бедността и неравенството в Субсахарска Африка е свързан с по-голяма тенденция към социална несправедност и неравномерно развитие в цялата цивилизация, което влияе и на здравословната биосфера и устойчивостта на разумния живот.",
+    "summary": "Субсахарската Африка преживява резки промени в по-високи нива на бедност и неравенство, въпреки измерими напредъци в икономиката на някои страни.",
+    "risk_level": "CRITICAL"
+  },
+  "raw_items": [
+    {
+      "title": "September 2025 global poverty update from the World Bank: New data and regional classifications",
+      "summary": "September 29, 2025 - As of 2024, 839 million people ... New document). This upward revision stems primarily from an increase in the extreme poverty rate of Sub-Saharan Africa....",
+      "link": "https://blogs.worldbank.org/en/opendata/september-2025-global-poverty-update-from-the-world-bank--new-da",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Income Inequality Trends in Sub-Saharan Africa: Divergence, Determinants and Consequences | United Nations Development Programme",
+      "summary": "The 2030 Agenda for Sustainable Development and its 17 Sustainable Development Goals (SDGs) underscore the need to address broad inequalities in their quest to ‘leave no-one behind.’ Income Inequality Trends in sub-Saharan Africa: Divergence, Determinants, and Consequences is a groundbreaking United Nations Development Programme (UNDP) study that provides policy guidance to reduce income inequalit",
+      "link": "https://www.undp.org/africa/publications/income-inequality-trends-sub-saharan-africa-divergence-determinants-and-consequences",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Global Multidimensional Poverty Index 2025",
+      "summary": "More than half the population is ... education and living conditions. Together, sub-Saharan Africa and South Asia account for 83.2 percent of all multidimensionally poor people worldwide....",
+      "link": "https://hdr.undp.org/system/files/documents/global-report-document/mpireport2025en.pdf",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Latin America - Wikipedia",
+      "summary": "Latin America has the highest rates of non-marital childbearing in the world, with 55–74% of all children in the region born to unmarried parents.[250] In most countries in this traditionally Catholic region, children born outside marriage are now the norm.",
+      "link": "https://en.wikipedia.org/wiki/Latin_America",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Indigenous people living in poverty by country LATAM | Statista",
+      "summary": "Poverty rate by gender in Latin American countries 2024.Economic Commission for Latin America and the Caribbean. (November 20, 2025). Share of indigenous population living in poverty in selected Latin American countries in 2024, by country [Graph].",
+      "link": "https://www.statista.com/statistics/1287593/indigenous-population-living-poverty-ltin-american-countries/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Latin America Plunges into Poverty and Inequality",
+      "summary": "By Raúl Antonio Capote on March 28, 2024 photo weforum Despite Predictions Latin America Plunges into Poverty and InequalityCalculations and predictions about the economy in the world, is beginning to ...",
+      "link": "https://taskforceamericas.org/latin-america-plunges-into-poverty-and-inequality/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "[YT] Sub-Saharan Africa Explained - YouTube",
+      "summary": "This is Sub-Saharan Africa, the region's south of the world's largest desert. It includes 49 countries. But a closer look reveals that there are actually hundreds of different ethnic groups, speaking over 2,000 languages. The region is diverse economically as well. South Africa has a modern economy with a huge variety of important industries, from tech and finance, to chemicals and manufacturing. While many of its neighbors rely heavily on commodities and natural resource exports, it's not just a versity that makes this region unique. It's also the age of the population. Almost 60% of Sub-Saharan Africa's population is under the age of 20, making it the most youthful region in the world. It's also the fastest growing. It's estimated that by 2050, one in four people on Earth will be African",
+      "link": "https://www.youtube.com/watch?v=ggLp5_97B4I",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "ggLp5_97B4I",
+      "transcript_method": "whisper",
+      "transcript_chars": 6910,
+      "has_full_transcript": true
+    }
+  ]
+}

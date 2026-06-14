@@ -1,0 +1,37 @@
+{
+  "axis": "CULTURE_MEDIA_REVIEW",
+  "fetched_at": "2026-05-16T13:29:01.633963+00:00",
+  "smart_query": "media disinformation culture",
+  "sources_count": {
+    "wiki": 0,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [],
+  "gdelt": [],
+  "github_repos": [],
+  "arxiv_papers": [
+    {
+      "title": "Large Language Models for Causal Relations Extraction in Social Media: A Validation Framework for Disaster Intelligence",
+      "snippet": "During disasters, extracting causal relations from social media can strengthen situational awareness by identifying factors linked to casualties, physical damage, infrastructure disruption, and cascading impacts. However, disaster-related posts are often informal, fragmented, and context-dependent, ",
+      "url": "https://arxiv.org/abs/2605.11348v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Journalists, media and influencers: An analysis of the conversation in the digital public sphere during the Qatar 2022 World Cup",
+      "snippet": "Public digital conversation around major sporting events takes place within a hybrid system in which journalists and the media compete with new intermediaries, including influencers, to gain greater visibility and engage with audiences. This study analyses the Qatar 2022 World Cup as a case of high ",
+      "url": "https://arxiv.org/abs/2605.11331v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[Prominent Scientists, Faith Leaders, Policymakers and Artists Call for a Prohibition on Superintelligence, as Poll Shows Americans Don’t Want It] Initial signatories include AI pioneers Yoshua Bengio and Geoffrey Hinton, leading media voices Steve Bannon and Glenn Beck, Obama's National Security Advisor Susan Rice, business trailblazers Steve Wozniak and Richard Branson, five Nobel Laureates, former Irish President Mary Robinson, actors Stephen Fry and Joseph Gordon-Levitt, and hundreds of others.",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

@@ -1,0 +1,132 @@
+{
+  "axis": "ECOSYSTEMS_BIODIVERSITY_REVIEW",
+  "fetched_at": "2026-03-13T13:48:41.124826+00:00",
+  "smart_query": "\"Conservation efforts global forest cover\"",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube": 5,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "analysis": {
+    "summary": "Анализът на ос ECOSYSTEMS_BIODIVERSITY_REVIEW показва, че топлината на океаните може да ускори развитието на микроби, които контролират морските хранителни вещества. Учените са открили знаци на древен живот на неочаквано място. Тези открития имат важно значение за разбирането на биологичното разнообразие.",
+    "key_developments": [
+      "Ocean warming may supercharge a tiny microbe that controls marine nutrients",
+      "Scientists stunned to find signs of ancient life in a place no one expected",
+      "Modulating biodiversity through higher-order interactions and intraspecific competition in rock-paper-scissors dynamics"
+    ],
+    "sentiment": "NEUTRAL",
+    "urgency": "MEDIUM",
+    "open_source_momentum": "protontypes/open-sustainable-technology star=2458, treflehq/trefle-api star=567, blutjens/awesome-forests star=358",
+    "scientific_frontier": "Modulating biodiversity through higher-order interactions and intraspecific competition in rock-paper-scissors dynamics, Properties of biodiversity indices that model future extinction risk",
+    "relevance_to_goal": "高い"
+  },
+  "sentiment": "NEUTRAL",
+  "urgency": "MEDIUM",
+  "summary": "Анализът на ос ECOSYSTEMS_BIODIVERSITY_REVIEW показва, че топлината на океаните може да ускори развитието на микроби, които контролират морските хранителни вещества. Учените са открили знаци на древен живот на неочаквано място. Тези открития имат важно значение за разбирането на биологичното разнообразие.",
+  "key_developments": [
+    "Ocean warming may supercharge a tiny microbe that controls marine nutrients",
+    "Scientists stunned to find signs of ancient life in a place no one expected",
+    "Modulating biodiversity through higher-order interactions and intraspecific competition in rock-paper-scissors dynamics"
+  ],
+  "open_source_momentum": "protontypes/open-sustainable-technology star=2458, treflehq/trefle-api star=567, blutjens/awesome-forests star=358",
+  "scientific_frontier": "Modulating biodiversity through higher-order interactions and intraspecific competition in rock-paper-scissors dynamics, Properties of biodiversity indices that model future extinction risk",
+  "news_items": [
+    {
+      "title": "Ocean warming may supercharge a tiny microbe that controls marine nutrients",
+      "snippet": "As deep-sea waters warm, scientists expected trouble for the microbes that help keep ocean chemistry in balance. Instead, researchers found that Nitrosopumilus maritimus can adapt to warmer, iron-limited conditions by using iron more efficiently. Because these microbes control key nitrogen reactions",
+      "url": "https://www.sciencedaily.com/releases/2026/03/260311004708.htm",
+      "source": "RSS"
+    },
+    {
+      "title": "Scientists stunned to find signs of ancient life in a place no one expected",
+      "snippet": "While exploring ancient seabeds in Morocco, scientists discovered strange wrinkle-like textures in deep-water sediments that shouldn’t have been there. These structures are usually made by sunlight-loving microbial mats in shallow waters. But the rocks formed far below the reach of light, suggesting",
+      "url": "https://www.sciencedaily.com/releases/2026/03/260307213247.htm",
+      "source": "RSS"
+    },
+    {
+      "title": "Scientists discover tiny ocean fungus that kills toxic algae",
+      "snippet": "Scientists have discovered a newly identified marine fungus that can infect and kill toxic algae responsible for harmful blooms. The microscopic parasite, named Algophthora mediterranea, attacks algae such as Ostreopsis cf. ovata, which produces toxins that can irritate the lungs, skin, and eyes of ",
+      "url": "https://www.sciencedaily.com/releases/2026/03/260305223223.htm",
+      "source": "RSS"
+    }
+  ],
+  "github_repos": [
+    {
+      "title": "protontypes/open-sustainable-technology",
+      "snippet": "A directory and analysis of the open source ecosystem in the areas of climate change, sustainable energy, biodiversity and natural resources.  https://docs.getgrist.com/gSscJkc5Rb1R/OpenSustaintech",
+      "stars": 2458,
+      "url": "https://github.com/protontypes/open-sustainable-technology",
+      "updated": "2026-03-11",
+      "source": "GitHub"
+    },
+    {
+      "title": "treflehq/trefle-api",
+      "snippet": "🍀 Trefle is a botanical JSON REST API for plants species, allowing you to search and query over all the registered species, and build the next gardening apps and farming robots.",
+      "stars": 567,
+      "url": "https://github.com/treflehq/trefle-api",
+      "updated": "2026-03-08",
+      "source": "GitHub"
+    },
+    {
+      "title": "blutjens/awesome-forests",
+      "snippet": "🌳 A curated list of ground-truth forest datasets for the machine learning and forestry community.",
+      "stars": 358,
+      "url": "https://github.com/blutjens/awesome-forests",
+      "updated": "2026-02-21",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Modulating biodiversity through higher-order interactions and intraspecific competition in rock-paper-scissors dynamics",
+      "snippet": "Understanding the mechanisms that govern species coexistence and biodiversity represents a fundamental challenge in ecology. This study extends the classic rock-paper-scissors model by introducing a context-dependent higher-order interaction mechanism where intraspecific competition is dynamically r",
+      "url": "https://arxiv.org/abs/2603.00566v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Properties of biodiversity indices that model future extinction risk",
+      "snippet": "The loss of biodiversity due to the likely widespread extinction of species in the near future is a focus of current concern in conservation biology. One approach to measure the impact of this extinction is based on the predicted loss of phylogenetic diversity. These predictions have become a focus ",
+      "url": "https://arxiv.org/abs/2602.16059v1",
+      "source": "arXiv"
+    }
+  ],
+  "youtube_transcripts": [],
+  "podcast": "[Conservation: a love story | Elsaphan Njora] What if the key to saving nature isn't just about science or policy, but love? Love for the land, for the people who depend on it, for the world we leave behind. Artist Elsaphan Njora has journeyed across Kenya witnessing ecosystems vanish, from Indigenous forests to sacred lakes. But he's also seen communities breathing life back into rivers, forests and coasts in creative, unexpected ways — show",
+  "youtube_videos": [
+    {
+      "title": "YouTube:uxM1yDkufT0",
+      "video_id": "uxM1yDkufT0",
+      "url": "https://www.youtube.com/watch?v=uxM1yDkufT0",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:XzWGHFp5Kps",
+      "video_id": "XzWGHFp5Kps",
+      "url": "https://www.youtube.com/watch?v=XzWGHFp5Kps",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:ukNkKcRRhiw",
+      "video_id": "ukNkKcRRhiw",
+      "url": "https://www.youtube.com/watch?v=ukNkKcRRhiw",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:_tCSgz_ik7A",
+      "video_id": "_tCSgz_ik7A",
+      "url": "https://www.youtube.com/watch?v=_tCSgz_ik7A",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:LnAUN3bFi34",
+      "video_id": "LnAUN3bFi34",
+      "url": "https://www.youtube.com/watch?v=LnAUN3bFi34",
+      "source": "YouTube"
+    }
+  ]
+}

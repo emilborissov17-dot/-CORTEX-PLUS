@@ -1,0 +1,33 @@
+{
+  "source_type": "REAL_DATA",
+  "metrics": {
+    "axis": "EDUCATION_CULTURE_REVIEW",
+    "source": "world_bank_api",
+    "fetched_date": "2026-06-11",
+    "metrics": {
+      "literacy_rate_adult_pct": 87.7399978637695,
+      "primary_enrollment_pct": 89.4124,
+      "secondary_enrollment_pct": 66.27183,
+      "tertiary_enrollment_pct": 43.6151390075684,
+      "govt_education_spend_pct_gdp": 3.56927475138052,
+      "internet_users_pct": 73.6
+    },
+    "data_quality": "6/6 fetched"
+  },
+  "raw": {
+    "axis": "EDUCATION_CULTURE_REVIEW",
+    "source": "world_bank_api",
+    "fetched_date": "2026-06-11",
+    "metrics": {
+      "literacy_rate_adult_pct": 87.7399978637695,
+      "primary_enrollment_pct": 89.4124,
+      "secondary_enrollment_pct": 66.27183,
+      "tertiary_enrollment_pct": 43.6151390075684,
+      "govt_education_spend_pct_gdp": 3.56927475138052,
+      "internet_users_pct": 73.6
+    },
+    "data_quality": "6/6 fetched"
+  },
+  "snapshot_timestamp": "2026-06-11T19:06:41.857286+00:00",
+  "axis": "EDUCATION_CULTURE_REVIEW"
+}

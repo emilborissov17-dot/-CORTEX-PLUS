@@ -1,0 +1,146 @@
+{
+  "axis": "HUMAN_WELL_BEING_REVIEW",
+  "fetched_at": "2026-03-12T18:27:20.010837+00:00",
+  "smart_query": "What metrics measure human mental health?",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "analysis": {
+    "summary": "Изследванията показват, че здравето на хората е ключов приоритет за устойчива цивилизация. Статистиката по болнични чакания и здравни сертификати е важна за оценка на системата. Електронни здравни записи са важен инструмент за по-добро обслужване.",
+    "key_developments": [
+      "Hundreds of GPs tell BBC they have never refused a fit note for mental health concerns",
+      "NHS tracker - are hospital waiting times improving near you?",
+      "openemr/openemr",
+      "HospitalRun/hospitalrun",
+      "getodk/collect"
+    ],
+    "sentiment": "NEUTRAL",
+    "urgency": "MEDIUM",
+    "open_source_momentum": "The most popular open source electronic health records and medical practice management system (openemr/openemr) has 5008 stars, while HospitalRun/hospitalrun has 982 stars and getodk/collect has 761 stars.",
+    "scientific_frontier": "Uncovering statistical structure in large-scale neural activity with Restricted Boltzmann Machines",
+    "relevance_to_goal": "The analysis of human well-being is crucial for achieving a sustainable civilization with dignity for all, as it highlights areas that require improvement in the healthcare system."
+  },
+  "sentiment": "NEUTRAL",
+  "urgency": "MEDIUM",
+  "summary": "Изследванията показват, че здравето на хората е ключов приоритет за устойчива цивилизация. Статистиката по болнични чакания и здравни сертификати е важна за оценка на системата. Електронни здравни записи са важен инструмент за по-добро обслужване.",
+  "key_developments": [
+    "Hundreds of GPs tell BBC they have never refused a fit note for mental health concerns",
+    "NHS tracker - are hospital waiting times improving near you?",
+    "openemr/openemr",
+    "HospitalRun/hospitalrun",
+    "getodk/collect"
+  ],
+  "open_source_momentum": "The most popular open source electronic health records and medical practice management system (openemr/openemr) has 5008 stars, while HospitalRun/hospitalrun has 982 stars and getodk/collect has 761 stars.",
+  "scientific_frontier": "Uncovering statistical structure in large-scale neural activity with Restricted Boltzmann Machines",
+  "github_repos": [
+    {
+      "title": "openemr/openemr",
+      "snippet": "The most popular open source electronic health records and medical practice management solution.",
+      "stars": 5008,
+      "url": "https://github.com/openemr/openemr",
+      "updated": "2026-03-12",
+      "source": "GitHub"
+    },
+    {
+      "title": "HospitalRun/hospitalrun",
+      "snippet": "Monorepo that holds all of HospitalRun's v2 projects.",
+      "stars": 982,
+      "url": "https://github.com/HospitalRun/hospitalrun",
+      "updated": "2026-03-06",
+      "source": "GitHub"
+    },
+    {
+      "title": "getodk/collect",
+      "snippet": "ODK Collect is an Android app for filling out forms. It's been used to collect billions of data points in challenging environments around the world. Contribute and make the world a better place! ✨📋✨",
+      "stars": 761,
+      "url": "https://github.com/getodk/collect",
+      "updated": "2026-03-09",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Agentar-Fin-OCR",
+      "snippet": "In this paper, we propose Agentar-Fin-OCR, a document parsing system tailored to financial-domain documents, transforming ultra-long financial PDFs into semantically consistent, highly accurate, structured outputs with auditing-grade provenance. To address finance-specific challenges such as complex",
+      "url": "https://arxiv.org/abs/2603.11044v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Uncovering statistical structure in large-scale neural activity with Restricted Boltzmann Machines",
+      "snippet": "Large-scale electrophysiological recordings now allow simultaneous monitoring of thousands of neurons across multiple brain regions, revealing structured variability in neural population activity. Understanding how these collective patterns emerge from microscopic neural interactions requires models",
+      "url": "https://arxiv.org/abs/2603.11032v1",
+      "source": "arXiv"
+    }
+  ],
+  "youtube_transcripts": [],
+  "podcast": "In this Huberman Lab Essentials episode, I discuss the mechanisms through which deliberate heat exposure enhances both physical and mental health.\n\nI outline specific protocols for deliberate heat exposure, including recommended temperature ranges, frequency, timing, duration and sauna alternatives. In addition, I explain how to tailor your heat protocols to support your specific goals, such as in | Dr. Alex Marson, MD, PhD, is a Senior Investigator at the Gladstone Institutes and a professor of medicine at the University of California, San Francisco. We discuss the biology of the immune system and cancer, and everyday choices that can increase or decrease your cancer risk, several of which are surprising but all of which are actionable. We also discuss immunotherapy, including how engineered",
+  "youtube_videos": [
+    {
+      "title": "YouTube:m7V_7RiWt5s",
+      "video_id": "m7V_7RiWt5s",
+      "url": "https://www.youtube.com/watch?v=m7V_7RiWt5s",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:AAZfWdw4HlA",
+      "video_id": "AAZfWdw4HlA",
+      "url": "https://www.youtube.com/watch?v=AAZfWdw4HlA",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:BKjIPcnsMpQ",
+      "video_id": "BKjIPcnsMpQ",
+      "url": "https://www.youtube.com/watch?v=BKjIPcnsMpQ",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:X4gVWzbuytk",
+      "video_id": "X4gVWzbuytk",
+      "url": "https://www.youtube.com/watch?v=X4gVWzbuytk",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:ArOTqcMH2G0",
+      "video_id": "ArOTqcMH2G0",
+      "url": "https://www.youtube.com/watch?v=ArOTqcMH2G0",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:MEJVEkVgacg",
+      "video_id": "MEJVEkVgacg",
+      "url": "https://www.youtube.com/watch?v=MEJVEkVgacg",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:G0zJGDokyWQ",
+      "video_id": "G0zJGDokyWQ",
+      "url": "https://www.youtube.com/watch?v=G0zJGDokyWQ",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:XgqNxomZoeY",
+      "video_id": "XgqNxomZoeY",
+      "url": "https://www.youtube.com/watch?v=XgqNxomZoeY",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:cyAUxyNvTrE",
+      "video_id": "cyAUxyNvTrE",
+      "url": "https://www.youtube.com/watch?v=cyAUxyNvTrE",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:wGhnrSEcwec",
+      "video_id": "wGhnrSEcwec",
+      "url": "https://www.youtube.com/watch?v=wGhnrSEcwec",
+      "source": "YouTube"
+    }
+  ]
+}

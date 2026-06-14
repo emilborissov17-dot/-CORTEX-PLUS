@@ -1,0 +1,146 @@
+{
+  "axis": "INFRASTRUCTURE_CITIES_REVIEW",
+  "fetched_at": "2026-03-12T18:25:30.638985+00:00",
+  "smart_query": "Urban planning infrastructure development in cities",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "analysis": {
+    "summary": "Изграждането на устойчиви градове е ключов елемент от целта за устойчива цивилизация. Текущите разработки в областта на открития код и научните изследвания са важни за постигане на тази цел. Откритите данни и иновационните решения са от изключителна важност.",
+    "key_developments": [
+      "Grammarly pulls AI author-impersonation tool after backlash",
+      "Lloyds, Bank of Scotland and Halifax apps showed customers other users' transactions",
+      "opendatacam/opendatacam star=1704: An open source tool to quantify the world",
+      "buds-lab/building-data-genome-project-2 star=268: Whole building non-residential hourly energy meter data from the Great Energy Pr",
+      "OpenVisualCloud/Smart-City-Sample star=215: The smart city reference pipeline shows how to integrate various media building"
+    ],
+    "sentiment": "NEUTRAL",
+    "urgency": "MEDIUM",
+    "open_source_momentum": "Moderate, with 3 open-source projects on GitHub related to urban development and data analysis",
+    "scientific_frontier": "Research on Mars-like exoplanet atmospheres and household debt modeling, indicating a growing interest in interdisciplinary approaches to sustainability",
+    "relevance_to_goal": "The development of sustainable cities is crucial for achieving dignity for all and a sustainable civilization, and the current advancements in open-source technologies and scientific research are contributing to this goal"
+  },
+  "sentiment": "NEUTRAL",
+  "urgency": "MEDIUM",
+  "summary": "Изграждането на устойчиви градове е ключов елемент от целта за устойчива цивилизация. Текущите разработки в областта на открития код и научните изследвания са важни за постигане на тази цел. Откритите данни и иновационните решения са от изключителна важност.",
+  "key_developments": [
+    "Grammarly pulls AI author-impersonation tool after backlash",
+    "Lloyds, Bank of Scotland and Halifax apps showed customers other users' transactions",
+    "opendatacam/opendatacam star=1704: An open source tool to quantify the world",
+    "buds-lab/building-data-genome-project-2 star=268: Whole building non-residential hourly energy meter data from the Great Energy Pr",
+    "OpenVisualCloud/Smart-City-Sample star=215: The smart city reference pipeline shows how to integrate various media building"
+  ],
+  "open_source_momentum": "Moderate, with 3 open-source projects on GitHub related to urban development and data analysis",
+  "scientific_frontier": "Research on Mars-like exoplanet atmospheres and household debt modeling, indicating a growing interest in interdisciplinary approaches to sustainability",
+  "github_repos": [
+    {
+      "title": "opendatacam/opendatacam",
+      "snippet": "An open source tool to quantify the world",
+      "stars": 1704,
+      "url": "https://github.com/opendatacam/opendatacam",
+      "updated": "2026-03-04",
+      "source": "GitHub"
+    },
+    {
+      "title": "buds-lab/building-data-genome-project-2",
+      "snippet": "Whole building non-residential hourly energy meter data from the Great Energy Predictor III competition",
+      "stars": 268,
+      "url": "https://github.com/buds-lab/building-data-genome-project-2",
+      "updated": "2026-03-11",
+      "source": "GitHub"
+    },
+    {
+      "title": "OpenVisualCloud/Smart-City-Sample",
+      "snippet": "The smart city reference pipeline shows how to integrate various media building blocks, with analytics powered by the OpenVINO™ Toolkit, for traffic or stadium sensing, analytics and management tasks.",
+      "stars": 215,
+      "url": "https://github.com/OpenVisualCloud/Smart-City-Sample",
+      "updated": "2026-02-06",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Oxygenated False Positive Biosignatures in Mars-like Exoplanet Atmospheres",
+      "snippet": "Oxygen is a well-studied biosignature. Studying potential abiotic pathways for O2 build-up in exoplanet atmospheres is essential for evaluating whether the detection of O2 would constitute a biosignature detection on other worlds. Previous modeling efforts in the literature demonstrated that detecta",
+      "url": "https://arxiv.org/abs/2603.11017v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "A Semi-Structural Model with Household Debt for Israel",
+      "snippet": "We propose a semi-structural DSGE model for the Israeli economy, as a small open economy, which contains a financial friction in the household sector credit market. Such a friction is reflected in a positive relationship between households' leverage ratio and their interest rate (credit spread) on d",
+      "url": "https://arxiv.org/abs/2603.11013v1",
+      "source": "arXiv"
+    }
+  ],
+  "youtube_transcripts": [],
+  "podcast": "We're so entangled with our devices that online has started to feel more real than IRL, says journalist Nayeema Raza. As screens reshape how we connect and relate, she offers three practical habits to reignite curiosity, restore presence and break free from our phones.(Following the talk, Elise Hu, host of TED Talks Daily, interviews Raza on the best approach to discussing difficult topics — wheth | Where's the best free comedy show in town? Tom Sullam, cofounder of the annual Comedy Wildlife Photography Awards, shares hilarious animal photos that dissolve the distance between humans and nature. The result? A joyful case for caring about what we're at risk of losing.Learn more about our flagship conference happening this April at&nbsp;attend.ted.com/podcast Hosted on Acast. See acast.com/priv",
+  "youtube_videos": [
+    {
+      "title": "YouTube:Pj1vNBdQ2GA",
+      "video_id": "Pj1vNBdQ2GA",
+      "url": "https://www.youtube.com/watch?v=Pj1vNBdQ2GA",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:ZJD-2vm0EPE",
+      "video_id": "ZJD-2vm0EPE",
+      "url": "https://www.youtube.com/watch?v=ZJD-2vm0EPE",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:l90sqZMU9Gw",
+      "video_id": "l90sqZMU9Gw",
+      "url": "https://www.youtube.com/watch?v=l90sqZMU9Gw",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:4_nw1jRl2y0",
+      "video_id": "4_nw1jRl2y0",
+      "url": "https://www.youtube.com/watch?v=4_nw1jRl2y0",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:njzcZvklJ28",
+      "video_id": "njzcZvklJ28",
+      "url": "https://www.youtube.com/watch?v=njzcZvklJ28",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:od-j3T1DFs0",
+      "video_id": "od-j3T1DFs0",
+      "url": "https://www.youtube.com/watch?v=od-j3T1DFs0",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:YHmSxqmpZ88",
+      "video_id": "YHmSxqmpZ88",
+      "url": "https://www.youtube.com/watch?v=YHmSxqmpZ88",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:N_m-CMNxias",
+      "video_id": "N_m-CMNxias",
+      "url": "https://www.youtube.com/watch?v=N_m-CMNxias",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:UL5Ccpx-ogY",
+      "video_id": "UL5Ccpx-ogY",
+      "url": "https://www.youtube.com/watch?v=UL5Ccpx-ogY",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:ldtUrIco_rk",
+      "video_id": "ldtUrIco_rk",
+      "url": "https://www.youtube.com/watch?v=ldtUrIco_rk",
+      "source": "YouTube"
+    }
+  ]
+}

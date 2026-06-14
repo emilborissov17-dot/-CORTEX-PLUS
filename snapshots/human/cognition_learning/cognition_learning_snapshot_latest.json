@@ -1,0 +1,18 @@
+{
+  "source_type": "REAL_DATA",
+  "raw": {
+    "axis": "COGNITION_LEARNING_REVIEW",
+    "source": "world_bank_api",
+    "fetched_date": "2026-06-11",
+    "metrics": {
+      "literacy_rate_youth_pct": 93.1100006103516,
+      "primary_completion_rate": 88.0215835571289,
+      "tertiary_enrollment_pct": 43.6151390075684,
+      "govt_expenditure_education_pct": 3.56927475138052,
+      "pupil_teacher_ratio_primary": null
+    },
+    "data_quality": "4/5 fetched"
+  },
+  "snapshot_timestamp": "2026-06-11T19:06:27.493630+00:00",
+  "axis": "COGNITION_LEARNING_REVIEW"
+}

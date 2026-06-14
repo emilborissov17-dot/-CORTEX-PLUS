@@ -1,0 +1,143 @@
+{
+  "axis": "ECONOMY_WORK_REVIEW",
+  "domain": "civilization",
+  "timestamp": "2026-05-03T08:51:24.336145+00:00",
+  "sources_count": 11,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] IMF warns of global recession, inflation over 6% if strait stays closed | ABC NEWS - YouTube",
+      "summary": "The International Monetary Fund has warned of a potential global recession due to the economic shocks from the war in the Middle East. The IMF notes US and Israeli strikes on Iran, the closing of the Strait of Hormuz, and strikes on energy infrastructure in Gulf countries have rocked global markets and will likely push growth down from 2025. The body's chief economist says the reopening of the strait can avoid the worst outcomes. But says there are three possible scenarios the IMF must consider should talks fail. Our report presents three scenarios. Our reference forecast assumes a short-lived conflict and a moderate 19% rise in energy prices in 2026. Still, some damage will not be avoided. Global growth falls to 3.1% this year, a downgrade from January forecast, and headline inflation ris",
+      "link": "https://www.youtube.com/watch?v=0w5_KA6Uvxo",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "0w5_KA6Uvxo",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Economy Was Already Horrible. New Global Crisis Just Made It Worse. - YouTube",
+      "summary": "My husband and I finally made the difficult decision to leave the United States. &gt;&gt; This economy is so bad. $33 for toilet paper. We can't even afford to &gt;&gt; America has become completely unaffordable and I don't know why more people are not talking about this. &gt;&gt; I just got laid off from my job after 12 years. The way that the world is right now, how do you lay someone off? &gt;&gt; The gas was 22 289. Last time I got gas after he filled it up, I said, \"Ooh, gas must have went up.\" It was 3:15. It's 350. 92,000 jobs disappeared last month. The same month, the US government started spending $891 million per day of taxpayer money to fund their conflict in Iran. You know, the economy is already bad when the CEO of McDonald's is taking the world's smallest bite of a burger he",
+      "link": "https://www.youtube.com/watch?v=SHySrxXWkg0",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "SHySrxXWkg0",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] State of the Economy: Unemployment rate, inflation and recession concerns - YouTube",
+      "summary": "Good to see you. The economy has been holding steady and the latest numbers show that jobs have been growing slowly with hospitality and health care seeing increases but manufacturing seeing fewer jobs. Unemployment has been holding steady at 4.2%. Is a recession still a concern? And will the Fed cut rate cuts this summer come as expected? Alexander Salter watches these numbers very closely. He's an economic perceiver at Texas Tech University and he joins us. Good to see you. First of all, you know, there's been kind of two tracks to what we've seen in 2025. On the one hand, consumers have been, you know, you know, loudly telling us that they're concerned about prices that they have to pay for goods. But on the other hand, you know, big picture economists have told us that things are, you ",
+      "link": "https://www.youtube.com/watch?v=Pu9Nbg07HeY",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "Pu9Nbg07HeY",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "summary": "- Airlines can cancel flights in advance over fuel shortages under new plans: Ministers hope move would help avoid last-minute flight cancellations for passengers this summer over Middle East fuel supplies.\n- Spirit Airlines shutting down after rescue talks collapse: The airline had been in talks wi",
+    "risk_level": "UNKNOWN",
+    "trend": "UNKNOWN",
+    "key_events": [
+      "Airlines can cancel flights in advance over fuel shortages under new plans",
+      "Spirit Airlines shutting down after rescue talks collapse",
+      "Voters will judge Trump on the economy - how is it doing?"
+    ],
+    "insights": [],
+    "youtube_insights": [],
+    "relevance_to_goal": "",
+    "generalization": ""
+  },
+  "raw_items": [
+    {
+      "title": "Airlines can cancel flights in advance over fuel shortages under new plans",
+      "summary": "Ministers hope move would help avoid last-minute flight cancellations for passengers this summer over Middle East fuel supplies.",
+      "link": "https://www.bbc.com/news/articles/c794zd1vqn4o?at_medium=RSS&at_campaign=rss",
+      "published": "Sun, 03 May 2026 07:12:25 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Spirit Airlines shutting down after rescue talks collapse",
+      "summary": "The airline had been in talks with the Trump administration about a $500m bailout.",
+      "link": "https://www.bbc.com/news/articles/cqxlnrqjvzyo?at_medium=RSS&at_campaign=rss",
+      "published": "Sat, 02 May 2026 23:16:13 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Voters will judge Trump on the economy - how is it doing?",
+      "summary": "How much Donald Trump can do with the time he has left as president will depend massively on the cost of living.",
+      "link": "https://www.bbc.com/news/articles/cgepyv20vrpo?at_medium=RSS&at_campaign=rss",
+      "published": "Sat, 02 May 2026 23:40:15 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Trump says he will hike tariffs on EU cars to 25%",
+      "summary": "The current level of tariffs charged on goods entering the US from the EU is 15%, under a deal negotiated last July.",
+      "link": "https://www.bbc.com/news/articles/c4g8zpylzz9o?at_medium=RSS&at_campaign=rss",
+      "published": "Fri, 01 May 2026 19:42:56 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Spirit Airlines Cancels All Flights, Stranding Passengers",
+      "summary": "The budget carrier abruptly canceled flights early on Saturday, leaving passengers to rush to make other plans. “Even if they go back into business, never again,” one traveler said.",
+      "link": "https://www.nytimes.com/2026/05/02/business/spirit-airlines-passengers-stranded.html",
+      "published": "Sat, 02 May 2026 20:55:48 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "The Cannabis Industry’s New Best Friend? President Trump",
+      "summary": "The administration’s decision to relax federal regulations on medical marijuana comes with big tax breaks for many cannabis companies, and could drive new investment in the budding sector.",
+      "link": "https://www.nytimes.com/2026/05/02/business/dealbook/cannabis-industry-trump.html",
+      "published": "Sat, 02 May 2026 15:08:22 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Is Tooth Brushing at Work Gross?",
+      "summary": "Plus: Is it insane to refuse a raise?",
+      "link": "https://www.nytimes.com/2026/05/02/business/flossing-brushing-work-gross.html",
+      "published": "Sat, 02 May 2026 09:01:07 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "5 Money Lessons From People Caring for Their Elderly Parents",
+      "summary": "Generation X-ers and others shared stories of family crises, and we asked experts how to think about living longer than you expect.",
+      "link": "https://www.nytimes.com/2026/05/02/business/aging-parents-money-finances-retirement.html",
+      "published": "Sat, 02 May 2026 12:34:19 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] IMF warns of global recession, inflation over 6% if strait stays closed | ABC NEWS - YouTube",
+      "summary": "The International Monetary Fund has warned of a potential global recession due to the economic shocks from the war in the Middle East. The IMF notes US and Israeli strikes on Iran, the closing of the Strait of Hormuz, and strikes on energy infrastructure in Gulf countries have rocked global markets and will likely push growth down from 2025. The body's chief economist says the reopening of the strait can avoid the worst outcomes. But says there are three possible scenarios the IMF must consider should talks fail. Our report presents three scenarios. Our reference forecast assumes a short-lived conflict and a moderate 19% rise in energy prices in 2026. Still, some damage will not be avoided. Global growth falls to 3.1% this year, a downgrade from January forecast, and headline inflation ris",
+      "link": "https://www.youtube.com/watch?v=0w5_KA6Uvxo",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "0w5_KA6Uvxo",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Economy Was Already Horrible. New Global Crisis Just Made It Worse. - YouTube",
+      "summary": "My husband and I finally made the difficult decision to leave the United States. &gt;&gt; This economy is so bad. $33 for toilet paper. We can't even afford to &gt;&gt; America has become completely unaffordable and I don't know why more people are not talking about this. &gt;&gt; I just got laid off from my job after 12 years. The way that the world is right now, how do you lay someone off? &gt;&gt; The gas was 22 289. Last time I got gas after he filled it up, I said, \"Ooh, gas must have went up.\" It was 3:15. It's 350. 92,000 jobs disappeared last month. The same month, the US government started spending $891 million per day of taxpayer money to fund their conflict in Iran. You know, the economy is already bad when the CEO of McDonald's is taking the world's smallest bite of a burger he",
+      "link": "https://www.youtube.com/watch?v=SHySrxXWkg0",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "SHySrxXWkg0",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ]
+}

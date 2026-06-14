@@ -1,0 +1,115 @@
+{
+  "axis": "TECHNOLOGY_AI_REVIEW",
+  "fetched_at": "2026-03-12T18:29:04.056557+00:00",
+  "smart_query": "Axis AI technology review metrics analysis",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "analysis": {
+    "summary": "Технологиите на изкуствения интелект продължават да се развиват, но със скандали като Grammarly и проблемите с банковите апликации. Тези проблеми показват нуждата от устойчиви и надеждни решения. Целта за устойчива цивилизация изисква грижливо проектирани технологии.",
+    "key_developments": [
+      "Grammarly pulls AI author-impersonation tool after backlash",
+      "Lloyds, Bank of Scotland and Halifax apps showed customers other users' transactions"
+    ],
+    "sentiment": "NEUTRAL",
+    "urgency": "MEDIUM",
+    "open_source_momentum": "No data",
+    "scientific_frontier": "COMIC: Agentic Sketch Comedy Generation, LiTo: Surface Light Field Tokenization",
+    "relevance_to_goal": "Технологиите трябва да бъдат разработени с цел да повишат достойнството и благополучието на всички хора, съгласно целта за устойчива цивилизация."
+  },
+  "sentiment": "NEUTRAL",
+  "urgency": "MEDIUM",
+  "summary": "Технологиите на изкуствения интелект продължават да се развиват, но със скандали като Grammarly и проблемите с банковите апликации. Тези проблеми показват нуждата от устойчиви и надеждни решения. Целта за устойчива цивилизация изисква грижливо проектирани технологии.",
+  "key_developments": [
+    "Grammarly pulls AI author-impersonation tool after backlash",
+    "Lloyds, Bank of Scotland and Halifax apps showed customers other users' transactions"
+  ],
+  "open_source_momentum": "No data",
+  "scientific_frontier": "COMIC: Agentic Sketch Comedy Generation, LiTo: Surface Light Field Tokenization",
+  "github_repos": [],
+  "arxiv_papers": [
+    {
+      "title": "COMIC: Agentic Sketch Comedy Generation",
+      "snippet": "We propose a fully automated AI system that produces short comedic videos similar to sketch shows such as Saturday Night Live. Starting with character references, the system employs a population of agents loosely based on real production studio roles, structured to optimize the quality and diversity",
+      "url": "https://arxiv.org/abs/2603.11048v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "LiTo: Surface Light Field Tokenization",
+      "snippet": "We propose a 3D latent representation that jointly models object geometry and view-dependent appearance. Most prior works focus on either reconstructing 3D geometry or predicting view-independent diffuse appearance, and thus struggle to capture realistic view-dependent effects. Our approach leverage",
+      "url": "https://arxiv.org/abs/2603.11047v1",
+      "source": "arXiv"
+    }
+  ],
+  "youtube_transcripts": [],
+  "podcast": "Jeff Kaplan is a legendary Blizzard game designer of World of Warcraft and Overwatch, now preparing to launch a new game, The Legend of California, from his new studio Kintsugiyama &#8211; available to wishlist on Steam today, with alpha later in March.\nThank you for listening ❤ Check out our sponsors: https://lexfridman.com/sponsors/ep493-sc\nSee below for timestamps, and to give feedback, submit  | Rick Beato is a music educator, interviewer, producer, songwriter, and a true multi-instrument musician, playing guitar, bass, cello &#38; piano. His incredible YouTube channel celebrates great musicians &#38; musical ideas, and helps millions of people fall in love with great music all over again.\nThank you for listening ❤ Check out our sponsors: https://lexfridman.com/sponsors/ep492-sc\nSee below",
+  "youtube_videos": [
+    {
+      "title": "YouTube:xDXWBqfgZeE",
+      "video_id": "xDXWBqfgZeE",
+      "url": "https://www.youtube.com/watch?v=xDXWBqfgZeE",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:hUqbbtxr8e4",
+      "video_id": "hUqbbtxr8e4",
+      "url": "https://www.youtube.com/watch?v=hUqbbtxr8e4",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:d_1jSfe_KMg",
+      "video_id": "d_1jSfe_KMg",
+      "url": "https://www.youtube.com/watch?v=d_1jSfe_KMg",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:NYzDYwdIBCQ",
+      "video_id": "NYzDYwdIBCQ",
+      "url": "https://www.youtube.com/watch?v=NYzDYwdIBCQ",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:cNk-CnfTQFM",
+      "video_id": "cNk-CnfTQFM",
+      "url": "https://www.youtube.com/watch?v=cNk-CnfTQFM",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:YTVkO6kHiUo",
+      "video_id": "YTVkO6kHiUo",
+      "url": "https://www.youtube.com/watch?v=YTVkO6kHiUo",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:kvk8hpkdKDQ",
+      "video_id": "kvk8hpkdKDQ",
+      "url": "https://www.youtube.com/watch?v=kvk8hpkdKDQ",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:JUUF85otSF4",
+      "video_id": "JUUF85otSF4",
+      "url": "https://www.youtube.com/watch?v=JUUF85otSF4",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:LA2YUpp_avI",
+      "video_id": "LA2YUpp_avI",
+      "url": "https://www.youtube.com/watch?v=LA2YUpp_avI",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:Wz65tgNdDqY",
+      "video_id": "Wz65tgNdDqY",
+      "url": "https://www.youtube.com/watch?v=Wz65tgNdDqY",
+      "source": "YouTube"
+    }
+  ]
+}

@@ -1,0 +1,89 @@
+Thinking...
+Okay, let's tackle this query. The user wants me to act as an ENERGY REVIEW agent inside the CORTEX++ system, evaluating the GLOBAL ENERGY SYSTEM based on specific constitutional priorities. The output needs to be a JSON object with several fields, all in Bulgarian. The challenge is that there's no real data provided, so I can't make up numbers. Instead, I need to note the lack of data and suggest how to get it.
+
+First, I'll check each axis one by one. For basic_needs_energy, without data on current energy supply meeting basic needs, I can't assess. Similarly, justice_equity requires info on who benefits and who pays, which isn't available. The same goes for climate_environment, future_generations, and space_expansion. All these areas need specific metrics that aren't provided here.
+
+Next, the output structure requires a status, summary, key findings, axes assessment, etc. Since there's no data, the status should be UNKNOWN. The summary in Bulgarian should mention the lack of data. Key findings will list the missing data points. Each axis assessment will have UNKNOWN status and comments explaining the data gap.
+
+For the metrics_interpretation and data_quality sections, I need to explain that real data is missing and what's needed. The recommendations should suggest specific OWID CSV data requests. The action_plan needs at least three actions, distributed across different levels, with clear actors and descriptions.
+
+I'll make sure to format all text in Bulgarian as required. Also, avoid any explanations outside the JSON. The internet data requests should be in the specified format, listing the OWID CSV URLs needed. Since the user mentioned adding these to a file, I'll structure them properly.
+
+Finally, I'll compile all these elements into the JSON structure, ensuring all fields are correctly filled with the appropriate placeholders and explanations about missing data. This approach adheres to the user's rules and provides a comprehensive yet accurate assessment based on the given constraints.
+...done thinking.
+
+{
+  "status": "UNKNOWN",
+  "summary_bg": "Няма достъп до актуални и пълни данни за глобалната енергийна система, което ограничава възможността за обективна оценка по всички оси.",
+  "key_findings_bg": [
+    "Липса на актуални метрики за покриване на основни нужди, справедливост, климатични последици и потенциал за разширение на цивилизацията.",
+    "Неизвестни данни за регионални неравенства, енергийна бедност и влияние върху бъдеще поколения."
+  ],
+  "axes_assessment": [
+    {
+      "axis": "basic_needs_energy",
+      "status": "UNKNOWN",
+      "comment_bg": "Липсват данни за покриване на основни нужди (храна, вода, здраве, комуникация) от глобална гледна точка."
+    },
+    {
+      "axis": "justice_equity",
+      "status": "UNKNOWN",
+      "comment_bg": "Не са налични информация за разпределението на ползите и разходите от енергийната система."
+    },
+    {
+      "axis": "climate_environment",
+      "status": "UNKNOWN",
+      "comment_bg": "Липса на данни за емисии, загрязнение и екологични последици на текущия енергийен мешкан."
+    },
+    {
+      "axis": "future_generations",
+      "status": "UNKNOWN",
+      "comment_bg": "Неизвестни рискове за бъдещи поколения и възможности за разширение на инфраструктурата."
+    },
+    {
+      "axis": "space_expansion",
+      "status": "UNKNOWN",
+      "comment_bg": "Липса на информация за въздействието на енергийната система върху потенциалното разширение на цивилизацията в космоса."
+    }
+  ],
+  "metrics_interpretation_bg": [
+    "Ако бяха налични данни, бихме могли да оценим дали текущата енергийна система покрива нуждите на хората, избягва несправедливост, минимизира климатичните рискове и подготвя път за бъдещи поколения."
+  ],
+  "data_quality_bg": [
+    "Нужни са актуални метрики за енергийното потребление, разпределението на ресурсите, климатични емисии и социални неравенства.",
+    "Изискват се данни от OWID CSV за глобални енергийни източници, регионални разлики и екологични последици."
+  ],
+  "recommendations_bg": [
+    "Събиране на данни за енергийното потребление на персона и регион, разпределението на ресурсите и социални неравенства.",
+    "Анализ на климатичните и екологични последици на текущия енергийен мешкан."
+  ],
+  "action_plan": [
+    {
+      "id": "ENERGY-TACTIC-001",
+      "level": "POLITICAL",
+      "actor": "CORTEX++",
+      "scope": "ENERGY_SYSTEM",
+      "time_horizon": "long",
+      "description_bg": "Изискване на достъп до OWID CSV данни за глобални енергийни източници и разпределение.",
+      "expected_effect_bg": "Предоставяне на точни метрики за оценка на справедливост и екологични рискове."
+    },
+    {
+      "id": "ENERGY-TACTIC-002",
+      "level": "ORGANIZATIONAL",
+      "actor": "human_collective",
+      "scope": "JUSTICE",
+      "time_horizon": "medium",
+      "description_bg": "Разработка на регионални енергийни проекти с участие на местни общности.",
+      "expected_effect_bg": "Увеличаване на достъпа до енергия за изостанали региони и намаляване на социални неравенства."
+    },
+    {
+      "id": "ENERGY-TACTIC-003",
+      "level": "TECHNICAL",
+      "actor": "CORTEX++",
+      "scope": "CLIMATE",
+      "time_horizon": "short",
+      "description_bg": "Интегриране на алгоритми за прогнозиране на климатичните рискове от енергийните източници.",
+      "expected_effect_bg": "Повишаване на точността на оценките за екологичните последици и подпомагане на справедливо разпределение."
+    }
+  ]
+}

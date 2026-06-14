@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<title>CORTEX++ Dashboard</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: system-ui, sans-serif; background: #0f0f0f; color: #e0e0e0; padding: 1.5rem; }
+h1 { font-size: 18px; font-weight: 500; margin-bottom: 4px; color: #fff; }
+.ts { font-size: 11px; color: #444; margin-bottom: 1.5rem; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 1.5rem; }
+.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 1rem; }
+.metric { background: #1a1a1a; border-radius: 8px; padding: 12px 14px; border: 0.5px solid #2a2a2a; }
+.metric-label { font-size: 11px; color: #666; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.04em; }
+.metric-value { font-size: 22px; font-weight: 500; color: #fff; }
+.metric-sub { font-size: 11px; color: #444; margin-top: 2px; }
+.card { background: #1a1a1a; border: 0.5px solid #2a2a2a; border-radius: 10px; padding: 1rem 1.25rem; margin-bottom: 1rem; }
+.card-title { font-size: 11px; font-weight: 500; margin-bottom: 12px; color: #666; text-transform: uppercase; letter-spacing: 0.05em; }
+.row { display: flex; align-items: center; gap: 8px; padding: 5px 0; border-bottom: 0.5px solid #1e1e1e; }
+.row:last-child { border-bottom: none; }
+.row-label { font-size: 12px; color: #777; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.row-val { font-size: 12px; font-weight: 500; }
+.bar-wrap { flex: 1; height: 4px; background: #222; border-radius: 2px; overflow: hidden; }
+.bar { height: 100%; border-radius: 2px; }
+.dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+.tag { display: inline-block; font-size: 10px; padding: 2px 7px; border-radius: 5px; }
+.tag-ok { background: #1a2e1a; color: #5a9e5a; }
+.tag-fail { background: #2e1a1a; color: #b85a5a; }
+.gray { color: #555; }
+.btn { background: #1e1e1e; border: 0.5px solid #333; border-radius: 6px; padding: 6px 14px; font-size: 12px; cursor: pointer; color: #aaa; margin-right: 6px; margin-bottom: 8px; }
+.btn:hover { background: #252525; }
+.insight { font-size: 12px; color: #5a8a5a; padding: 3px 0; }
+.direction { font-size: 12px; color: #7a9a7a; font-style: italic; margin-bottom: 6px; }
+.next { font-size: 11px; color: #3a6a3a; margin-top: 6px; }
+</style>
+</head>
+<body>
+<h1>CORTEX++ // DASHBOARD</h1>
+<div class="ts" id="ts">Зареждане...</div>
+<div class="grid-4">
+  <div class="metric"><div class="metric-label">ChromaDB памети</div><div class="metric-value" id="m-chroma">—</div></div>
+  <div class="metric"><div class="metric-label">Оси STABLE</div><div class="metric-value" id="m-stable">—</div><div class="metric-sub" id="m-stable-sub"></div></div>
+  <div class="metric"><div class="metric-label">Self-modifier</div><div class="metric-value" id="m-modifier">—</div></div>
+  <div class="metric"><div class="metric-label">Snapshots</div><div class="metric-value" id="m-snaps">—</div></div>
+</div>
+<div style="margin-bottom:1rem;">
+  <button class="btn" onclick="loadAll()">Обнови</button>
+  <button class="btn" onclick="alert('Пусни: python3 cortex_scanner.py\nПосле натисни Обнови.')">Пусни scanner</button>
+</div>
+<div class="grid-2">
+  <div class="card">
+    <div class="card-title">Trend tracker — оси</div>
+    <div id="axes-list"></div>
+  </div>
+  <div class="card">
+    <div class="card-title">Система</div>
+    <div id="system-list"></div>
+    <div style="margin-top:12px;"><div class="card-title">OpenClaw</div><div id="openclaw-list"></div></div>
+    <div style="margin-top:12px;"><div class="card-title">Reasoning памет</div><div id="reasoning-list"></div></div>
+  </div>
+</div>
+<div class="card">
+  <div class="card-title">Self_modifier — последни действия</div>
+  <div id="journal-list"></div>
+</div>
+<div class="card">
+  <div class="card-title">Predictor — предсказание → реалност → корекция</div>
+  <div id="predictor-list"></div>
+</div>
+<script>
+async function loadJSON(p) {
+  try { const r=await fetch(p+'?t='+Date.now()); if(!r.ok) return null; return await r.json(); } catch { return null; }
+}
+function col(s) { if(s===null||s===undefined) return '#444'; if(s>=70) return '#5a9e5a'; if(s>=50) return '#b8921a'; return '#b85a5a'; }
+
+async function loadAll() {
+  const d = await loadJSON('./memory/cortex_full_state.json');
+  if(!d) { document.getElementById('ts').textContent='cortex_full_state.json не е намерен — пусни: python3 cortex_scanner.py'; return; }
+  document.getElementById('ts').textContent='Обновено: '+new Date(d.timestamp).toLocaleString('bg');
+  document.getElementById('m-chroma').textContent=d.session?.chromadb_memories||'—';
+  document.getElementById('m-snaps').textContent=d.system?.snap_count||'—';
+  document.getElementById('m-modifier').textContent=(d.memory?.modifier_ok||0)+'✓ '+(d.memory?.modifier_fail||0)+'✗';
+
+  const t=d.trends||{}, scores=t.scores||{};
+  const stable=t.stable||[], improving=t.improving||[], insuf=t.insufficient||[];
+  document.getElementById('m-stable').textContent=stable.length+improving.length;
+  document.getElementById('m-stable-sub').textContent=insuf.length+' insufficient';
+
+  const allAxes=[...improving.map(a=>({a,t:'IMPROVING'})),...stable.map(a=>({a,t:'STABLE'})),...insuf.map(a=>({a,t:'INSUFFICIENT'}))];
+  document.getElementById('axes-list').innerHTML=allAxes.map(({a,t})=>{
+    const s=scores[a]??null, pct=s!==null?Math.min(100,Math.round(s)):5, c=col(s);
+    const dc=t==='IMPROVING'?'#7ab87a':t==='STABLE'?'#5a9e5a':'#333';
+    return `<div class="row"><div class="dot" style="background:${dc}"></div><span class="row-label">${a.replace('_REVIEW','').replace(/_/g,' ')}</span><div class="bar-wrap"><div class="bar" style="width:${pct}%;background:${c}"></div></div><span class="row-val" style="color:${c}">${s!==null?Math.round(s):'N/A'}</span></div>`;
+  }).join('')||'<div class="gray" style="font-size:12px">Няма данни</div>';
+
+  const sys=d.system||{};
+  document.getElementById('system-list').innerHTML=[['Здраве',sys.health||'—'],['Капацитет',sys.capacity?sys.capacity+'%':'—'],['RAM',sys.ram_free?sys.ram_free+'GB':'—'],['CPU',sys.cpu!==undefined?sys.cpu+'%':'—']].map(([l,v])=>`<div class="row"><span class="row-label">${l}</span><span class="row-val">${v}</span></div>`).join('');
+
+  const oc=d.agents?.openclaw||{};
+  document.getElementById('openclaw-list').innerHTML=[['Health',oc.health||'—'],['Mission',oc.mission_pct?oc.mission_pct+'%':'—']].map(([l,v])=>`<div class="row"><span class="row-label">${l}</span><span class="row-val">${v}</span></div>`).join('');
+
+  const r=d.reasoning||{}, last=r.last;
+  document.getElementById('reasoning-list').innerHTML=last?`<div class="direction">${last.direction||'—'}</div>${(last.key_insights||[]).slice(0,2).map(i=>`<div class="insight">• ${i}</div>`).join('')}<div class="next">→ ${last.next_step||'—'}</div><div style="font-size:11px;color:#333;margin-top:4px">Сесии: ${r.total_sessions}</div>`:'<div class="gray" style="font-size:12px">Няма сесии</div>';
+
+  const rec=d.memory?.modifier_recent||[];
+  document.getElementById('journal-list').innerHTML=rec.map(m=>`<div class="row"><span class="row-label">${m.status==='OK'?(m.action||'').replace('Код написан и тестван: ',''):(m.problem||'').substring(0,70)}</span><span class="tag ${m.status==='OK'?'tag-ok':'tag-fail'}">${m.status}</span></div>`).join('')||'<div class="gray" style="font-size:12px">Няма записи</div>';
+
+  const pred=d.predictor||{};
+  document.getElementById('predictor-list').innerHTML=pred.total?`<div class="row"><span class="row-label">Общо предсказания</span><span class="row-val">${pred.total}</span></div><div class="row"><span class="row-label">Проверени</span><span class="row-val">${pred.resolved}</span></div><div class="row"><span class="row-label">Средна грешка</span><span class="row-val">${pred.avg_error!==null?pred.avg_error:'—'}</span></div>`:'<div class="gray" style="font-size:12px">Predictor не е изграден още.</div>';
+}
+loadAll();
+setInterval(loadAll,30000);
+</script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+{
+  "axis": "ENERGY_REVIEW",
+  "fetched_at": "2026-05-08T09:17:56.707939+00:00",
+  "smart_query": "renewable energy solar wind",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "Could this privately funded bill assistance program be the key to lower payments?",
+      "snippet": "The California Public Utilities Commission approved a program allowing Pacific Gas and Electric Company and Citizens Energy Corporation to invest in energy bill assistance for low-income households.",
+      "url": "https://www.renewableenergyworld.com/energy-business/policy-and-regulation/could-this-privately-funded-bill-assistance-program-be-the-key-to-lower-payments/",
+      "source": "RSS"
+    },
+    {
+      "title": "G&W Electric adds more grid monitoring capabilities to its portfolio",
+      "snippet": "G&#038;W Electric acquired Safegrid, a Finland-based grid monitoring solutions provider, enhancing its digital capabilities for utilities.",
+      "url": "https://www.renewableenergyworld.com/power-grid/grid-modernization/gw-electric-adds-more-grid-monitoring-capabilities-to-its-portfolio/",
+      "source": "RSS"
+    },
+    {
+      "title": "Affordability and reliability define the data center wave",
+      "snippet": "To meet electricity demands of data centers, the US power grid will need to expand and evolve in ways that require stakeholders to rethink traditional frameworks.",
+      "url": "https://www.renewableenergyworld.com/power-grid/affordability-and-reliability-define-the-data-center-wave/",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [],
+  "arxiv_papers": [
+    {
+      "title": "Reconfiguring flexibility in renewable power-to-ammonia systems using molten-salt thermal energy storage in the ammonia synthesis loop: A coordinated electro-hydrogen-thermal scheduling approach",
+      "snippet": "In renewable power-to-ammonia (ReP2A) systems, the intermittency of wind and solar generation propagates through electrolytic hydrogen production and induces thermal instability in the ammonia synthesis reactor (ASR). The resulting temperature cycling accelerates fatigue and shortens service life, w",
+      "url": "https://arxiv.org/abs/2604.25192v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Frequency Security Assessment in Power Systems With High Penetration of Renewables Considering Spatio-Temporal Frequency Distribution",
+      "snippet": "The increasing integration of renewable energy sources exacerbates the spatial and temporal differences in frequency across the power system, posing a serious challenge to the accurate and efficient assessment of system frequency security. To address this issue, a generic effective nodal frequency (",
+      "url": "https://arxiv.org/abs/2604.21262v2",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[The Resistance of a Cow] There’s something rotten in the cows of Denmark. And Minnesota. And Wisconsin. And Idaho. What could cause a previously thriving herd of majestic dairy cattle to stop drinking water and start drinking … urine? A Danish farmer calls a special investigator, who takes one look at his farm and nopes the heck out of there, refusing to return, citing “bad energy” coming from something nearby … a big bui",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

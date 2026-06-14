@@ -1,0 +1,18 @@
+{
+  "run_at": "2026-03-04T12:00:00Z",
+  "active_sources": 10,
+  "ok_sources": 7,
+  "failed_sources": 3,
+  "sources": [
+    "IEA Data Portal",
+    "Eurostat Energy Statistics",
+    "NREL Renewable Energy Data",
+    "World Bank Energy Data",
+    "Open Power System Data",
+    "USGS Energy Resources",
+    "ENTSO-E Transparency Portal",
+    "International Energy Forum",
+    "UNEP Data Portal",
+    "NREL Global"
+  ]
+}

@@ -1,0 +1,103 @@
+{
+  "axis": "GOVERNANCE_INSTITUTIONS_REVIEW",
+  "fetched_at": "2026-03-27T09:44:53.127007+00:00",
+  "smart_query": "government corruption institutions",
+  "sources_count": {
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "web_search": 5
+  },
+  "rss": [
+    {
+      "title": "Ukraine: danger is only increasing, warns UN human rights office",
+      "snippet": "More than four years since Russia’s full-scale invasion of Ukraine, the “danger is only increasing”, particularly from attack drones, a top UN human rights official warned on Thursday.",
+      "url": "https://news.un.org/feed/view/en/story/2026/03/1167201",
+      "source": "RSS"
+    },
+    {
+      "title": "MIDDLE EAST LIVE 25 March: All eyes on Strait of Hormuz; war is ‘out of control’, UN chief warns",
+      "snippet": "It’s day 26 of war in the Middle East. The UN chief says with the conflict now totally out of control, diplomacy must prevail. Ongoing strikes in Israel and Iran have included intensifying Israeli attacks against Hezbollah targets in Lebanon, while some US troops are heading to the region, the Penta",
+      "url": "https://news.un.org/feed/view/en/story/2026/03/1167195",
+      "source": "RSS"
+    },
+    {
+      "title": "MIDDLE EAST LIVE 24 March: West Bank attacks and Lebanon in focus as Security Council meets",
+      "snippet": "As the war continues to roil the Middle East and compound suffering for civilians across the region, the economic ramifications of the emergency are still playing out, with the Strait of Hormuz the focus of global attention with crude oil prices surging over $100 a barrel again. Meanwhile, settler a",
+      "url": "https://news.un.org/feed/view/en/story/2026/03/1167187",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "github/government.github.com",
+      "snippet": "Gather, curate, and feature stories of public servants and civic hackers using GitHub as part of their open government innovations",
+      "stars": 1923,
+      "url": "https://github.com/github/government.github.com",
+      "updated": "2026-03-26",
+      "source": "GitHub"
+    },
+    {
+      "title": "consuldemocracy/consuldemocracy",
+      "snippet": "Consul Democracy - Open Government and E-Participation Web Software",
+      "stars": 1529,
+      "url": "https://github.com/consuldemocracy/consuldemocracy",
+      "updated": "2026-03-26",
+      "source": "GitHub"
+    },
+    {
+      "title": "datagouv/data.gouv.fr",
+      "snippet": "Ce dépôt rassemble les tickets techniques qui portent sur data.gouv.fr.",
+      "stars": 113,
+      "url": "https://github.com/datagouv/data.gouv.fr",
+      "updated": "2026-03-17",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Can AI mediation improve democratic deliberation?",
+      "snippet": "The strength of democracy lies in the free and equal exchange of diverse viewpoints. Living up to this ideal at scale faces inherent tensions: broad participation, meaningful deliberation, and political equality often trade off with one another (Fishkin, 2011). We ask whether and how artificial inte",
+      "url": "https://arxiv.org/abs/2601.05904v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Fair Voting Methods as a Catalyst for Democratic Resilience: A Trilogy on Legitimacy, Impact and AI Safeguarding",
+      "snippet": "This article shows how fair voting methods can be a catalyst for change in the way we make collective decisions, and how such change can promote long-awaited upgrades of democracy. Based on real-world evidence from democratic innovations in participatory budgeting, in Switzerland and beyond, I highl",
+      "url": "https://arxiv.org/abs/2512.17461v1",
+      "source": "arXiv"
+    }
+  ],
+  "web_search": [
+    {
+      "title": "US democracy at risk as corruption threats grow - Brookings",
+      "url": "https://www.brookings.edu/articles/us-democracy-at-risk-as-corruption-threats-grow/",
+      "source": "WEB"
+    },
+    {
+      "title": "What Is Political Corruption and What Can We Do About It?",
+      "url": "https://www.brennancenter.org/our-work/research-reports/what-political-corruption-and-what-can-we-do-about-it",
+      "source": "WEB"
+    },
+    {
+      "title": "A history of corruption in the United States - Harvard Law School",
+      "url": "https://hls.harvard.edu/today/a-history-of-corruption-in-the-united-states/",
+      "source": "WEB"
+    },
+    {
+      "title": "How Corruption at the Top Erodes Support for Democracy",
+      "url": "https://www.gsb.stanford.edu/insights/how-corruption-top-erodes-support-democracy",
+      "source": "WEB"
+    },
+    {
+      "title": "Political corruption - Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Political_corruption",
+      "source": "WEB"
+    }
+  ],
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL"
+}

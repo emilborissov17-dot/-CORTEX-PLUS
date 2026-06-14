@@ -1,0 +1,61 @@
+MODEL: qwen3:8b
+
+PROMPT:
+
+Ти си QWEN_PLANET_SNAPSHOT_AGENT, част от CORTEX++_QWEN.
+
+ЗАДАЧА:
+  - Генерираш КОМПАКТЕН JSON snapshot за една ос.
+  - Отговаряш САМО с един валиден JSON обект, БЕЗ никакъв текст преди или след него.
+  - НЕ използвай префикси като "Thinking..." или "done thinking.".
+  - LEVEL трябва да е LOW, MEDIUM или HIGH.
+  - SIGNALS са 3–5 много кратки bullets (по 1 изречение).
+  - KEY_METRICS са 3–7 метрики с име и кратко текстово описание (без числа).
+
+ОС:
+  - ECOSYSTEMS_BIODIVERSITY_REVIEW (Екосистеми и биоразнообразие)
+
+ИЗХОД (примерен формат, който трябва да спазиш):
+
+{
+  "axis": "ECOSYSTEMS_BIODIVERSITY_REVIEW",
+  "level": "MEDIUM",
+  "signals": [
+    "кратък сигнал 1",
+    "кратък сигнал 2",
+    "кратък сигнал 3"
+  ],
+  "key_metrics": [
+    { "name": "metric_1", "description": "кратко текстово описание на метриката" },
+    { "name": "metric_2", "description": "кратко текстово описание" }
+  ]
+}
+
+Върни само реален JSON обект в този формат, без допълнителен текст.
+
+
+RESPONSE:
+Thinking...
+Okay, I need to generate a JSON snapshot for the axis ECOSYSTEMS_BIODIVERSITY_REVIEW. Let me start by understanding the requirements. The user wants a compact JSON with specific fields: axis, level, signals, and key_metrics. The level should be LOW, MEDIUM, or HIGH. Signals are 3-5 short bullets, each a single sentence. Key metrics are 3-7 entries with name and description.
+
+First, the axis is given, so that's straightforward. For the level, I'll choose MEDIUM as a balanced option. Now, signals. I need three to five short points. Let me think about current issues in ecosystems and biodiversity. Maybe something about habitat loss, illegal wildlife trade, and climate change impacts. That's three signals.
+
+Next, key metrics. They need names and brief descriptions. Let's see: maybe "Habitat Fragmentation Rate" to measure how habitats are split. "Endangered Species Population Trend" to track species at risk. "Carbon Sequestration Capacity" for how ecosystems absorb CO2. That's three metrics. Wait, the user said 3-7, so maybe add a couple more. "Invasive Species Spread Rate" to monitor non-native species. "Protected Area Coverage" to show how much land is conserved. That makes five metrics. Let me check if the descriptions are concise and avoid numbers. Yes, they are. Now, structure the JSON accordingly. Ensure no extra text, just the JSON object. Let me verify the example format again to make sure I'm not missing anything. All set.
+...done thinking.
+
+{
+  "axis": "ECOSYSTEMS_BIODIVERSITY_REVIEW",
+  "level": "MEDIUM",
+  "signals": [
+    "Habitat fragmentation accelerates species isolation",
+    "Illegal wildlife trade persists in key regions",
+    "Climate change disrupts migratory patterns"
+  ],
+  "key_metrics": [
+    { "name": "habitat_fragmentation_rate", "description": "Measures land division into isolated ecosystems" },
+    { "name": "endangered_species_population_trend", "description": "Tracks decline/stabilization of at-risk species" },
+    { ""name": "carbon_sequestration_capacity", "description": "Quantifies ecosystem CO2 absorption potential" },
+    { "name": "invasive_species_spread_rate", "description": "Monitors non-native species encroachment speed" },
+    { "name": "protected_area_coverage", "description": "Evaluates conserved land/sea area proportion" }
+  ]
+}

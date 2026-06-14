@@ -1,0 +1,138 @@
+{
+  "axis": "COGNITION_LEARNING_REVIEW",
+  "domain": "human",
+  "timestamp": "2026-05-17T14:08:55.597059+00:00",
+  "sources_count": 9,
+  "rss_count": 7,
+  "ddg_count": 0,
+  "youtube_count": 2,
+  "youtube_items": [
+    {
+      "title": "[YT] You’re Not Behind (Yet): How to Learn AI in 29 Minutes - YouTube",
+      "summary": "AI is becoming more powerful and more deeply&nbsp; woven into everything we do. Some people try&nbsp;&nbsp; to ignore it, but it's not going away. If you're&nbsp; watching this, you already knew that. You're not&nbsp;&nbsp; asking if you should learn AI. You're asking how.&nbsp; Whether you want to work smarter, spark new ideas,&nbsp;&nbsp; automate parts of your business, or just buy back&nbsp; your time, this video will give you the full road&nbsp;&nbsp; map. You'll learn the key concepts, the right&nbsp; tools, and a clear step-by-step action plan.&nbsp;&nbsp; It's simpler than you think, and by the end,&nbsp; you'll be ahead of 99% of people trying to&nbsp;&nbsp; figure this out. But I also know the AI landscape&nbsp; can feel overwhelming. So, before we dive in,&nbsp;&nbsp; let's brea",
+      "link": "https://www.youtube.com/watch?v=9c7zh2MkslY",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "9c7zh2MkslY",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] How I'd Learn AI (if I could start over) - YouTube",
+      "summary": "so you want to learn artificial intelligence then this video is for you I'm going to provide you with a complete roadmap that I would follow if I had to start over today on my artificial intelligence journey and now for context I started studying artificial intelligence back in 2013 10 years ago and over the past years I've been working as a freelance data scientist helping my clients with various end-to-end data science and artificial intelligence Solutions and applications I also share all of this knowledge and my journey on this YouTube channel which as of today has over 25 000 subscribers and at the end of this video I will also provide you with a resource completely for free where you can follow all of these steps to complete roadmap even with training videos and instructions so make ",
+      "link": "https://www.youtube.com/watch?v=h2FDq3agImI",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "h2FDq3agImI",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "Нестабилността на дигиталната образователна инфраструктура води до риск за уязвимостта на училищата и учащите си.",
+    "root_cause": "Недостатъчно инвестиране в киберсигурността и липса на стандартизирана процедура за проверка на училищните софтуерни продукти.",
+    "severity": "HIGH",
+    "leverage_points": [
+      "Училищни администрации и регулаторни органи",
+      "Образователни технологии и платформи"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Разработване на общински стандарти за киберсигурност в образованието",
+        "measurable_goal": "Повече от 70% от училищата да съответстват на новите стандарти за киберсигурност за 2025 г.",
+        "timeframe": "дългосрочно"
+      },
+      {
+        "action": "Интегриране на киберсигурност като задължителен модул в образователните програми",
+        "measurable_goal": "Повече от 50% от училищата да включват киберсигурност в учебния план до 2026 г.",
+        "timeframe": "средносрочно"
+      }
+    ],
+    "evidence": [
+      "Latest Canvas Attack Shows Schools Still Struggle With Cybersecurity",
+      "Screen Time Concerns Lead to Backlash Against Edtech Vetting Process"
+    ],
+    "generalization": "Този проблем е свързан с домейна на COGNITION_LEARNING_REVIEW, защото нестабилността на образователната инфраструктура влияе върху достъпа до знания, усвоението на умения и психическото здраве на учащите.",
+    "summary": "Училищата са уязвими за кибератаки поради липса на стандартизирани процедури за сигурност, което предизвиква риски за образованието и здравето на учащите.",
+    "risk_level": "HIGH"
+  },
+  "raw_items": [
+    {
+      "title": "The Pandemic Hindered English Learners' Literacy. This Ohio District Is Turning the Tide.",
+      "summary": "&quot;We want to help the students continue to thrive, and really everything that we're thinking about with our student services is equitable learning ...",
+      "link": "https://www.edsurge.com/news/2026-05-13-the-pandemic-hindered-english-learners-literacy-this-ohio-district-is-turning-the-tide",
+      "published": "Wed, 13 May 2026 17:43:32 -0700",
+      "source_type": "rss"
+    },
+    {
+      "title": "Latest Canvas Attack Shows Schools Still Struggle With Cybersecurity",
+      "summary": "A cyberattack against one of the world’s largest digital education platforms has forced attention onto the vulnerability of U.S. schools’ data. ...",
+      "link": "https://www.edsurge.com/news/2026-05-12-latest-canvas-attack-shows-schools-still-struggle-with-cybersecurity",
+      "published": "Tue, 12 May 2026 11:29:33 -0700",
+      "source_type": "rss"
+    },
+    {
+      "title": "LGBTQ+ Youth Mental Health Is Suffering, but Schools Are Poised to Help",
+      "summary": "“One of the most important findings is that when adults, institutions, and communities become more affirming, the suicide risk of LGBTQ+ young people ...",
+      "link": "https://www.edsurge.com/news/2026-05-08-lgbtq-youth-mental-health-is-suffering-but-schools-are-poised-to-help",
+      "published": "Fri, 08 May 2026 16:30:50 -0700",
+      "source_type": "rss"
+    },
+    {
+      "title": "Screen Time Concerns Lead to Backlash Against Edtech Vetting Process",
+      "summary": "SCHOOL SOFTWARE SCRUTINY: Legislators have pushed back against cellphones in the classroom but are now focused on ensuring school software on devices ...",
+      "link": "https://www.edsurge.com/news/2026-05-07-screen-time-concerns-lead-to-backlash-against-edtech-vetting-process",
+      "published": "Thu, 07 May 2026 13:07:40 -0700",
+      "source_type": "rss"
+    },
+    {
+      "title": "The Taboo of…Money, Love and Power",
+      "summary": "DOCUMENTARY FILM In the documentary educational film &#8220;The Taboo of Sovereignty, Money, Love and Power,&#8221; Mr. Liberty explores the taboos seldom discussed in polite conversation. He reveals the nature of global power structures, money as a control system and the futility of elections. He is empowering people with popular sovereignty as a key to unlocking [&#8230;]",
+      "link": "https://mindshiftentertainment.wordpress.com/2005/04/01/hello-world/",
+      "published": "Fri, 01 Apr 2005 21:27:39 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Lotus: A Woman’s Journey of Empowerment",
+      "summary": "CLAIRE GAILLARD &#8211; DANCE IS LIFE! &#8220;From the revelation that disconnectedness between people and their passion, between individuals and their communities, reflect agonized personal wounds in each of us, her Empower Moves was birthed. It builds community and honors the People with Transcendance through story telling and interpretive forms of dance, allowing ecstatic communion, reconnection [&#8230;]",
+      "link": "https://mindshiftentertainment.wordpress.com/2003/03/23/lotus-a-womans-journey-of-empowerment/",
+      "published": "Sun, 23 Mar 2003 23:15:05 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Fresh Wave",
+      "summary": "JOHNNY LIGHT For over three decades, Johnny Light has been guided by a vision of a new world coming, the “fresh wave” is coming. These twelve songs are professionally produced and arranged, an album of his finest original compositions recorded with Michael Cooper at Rising Star Studios in Eugene, Oregon. Songs like Yes, Nobody’s Gonna [&#8230;]",
+      "link": "https://mindshiftentertainment.wordpress.com/1988/09/09/fresh-wave/",
+      "published": "Fri, 09 Sep 1988 23:17:22 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] You’re Not Behind (Yet): How to Learn AI in 29 Minutes - YouTube",
+      "summary": "AI is becoming more powerful and more deeply&nbsp; woven into everything we do. Some people try&nbsp;&nbsp; to ignore it, but it's not going away. If you're&nbsp; watching this, you already knew that. You're not&nbsp;&nbsp; asking if you should learn AI. You're asking how.&nbsp; Whether you want to work smarter, spark new ideas,&nbsp;&nbsp; automate parts of your business, or just buy back&nbsp; your time, this video will give you the full road&nbsp;&nbsp; map. You'll learn the key concepts, the right&nbsp; tools, and a clear step-by-step action plan.&nbsp;&nbsp; It's simpler than you think, and by the end,&nbsp; you'll be ahead of 99% of people trying to&nbsp;&nbsp; figure this out. But I also know the AI landscape&nbsp; can feel overwhelming. So, before we dive in,&nbsp;&nbsp; let's brea",
+      "link": "https://www.youtube.com/watch?v=9c7zh2MkslY",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "9c7zh2MkslY",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] How I'd Learn AI (if I could start over) - YouTube",
+      "summary": "so you want to learn artificial intelligence then this video is for you I'm going to provide you with a complete roadmap that I would follow if I had to start over today on my artificial intelligence journey and now for context I started studying artificial intelligence back in 2013 10 years ago and over the past years I've been working as a freelance data scientist helping my clients with various end-to-end data science and artificial intelligence Solutions and applications I also share all of this knowledge and my journey on this YouTube channel which as of today has over 25 000 subscribers and at the end of this video I will also provide you with a resource completely for free where you can follow all of these steps to complete roadmap even with training videos and instructions so make ",
+      "link": "https://www.youtube.com/watch?v=h2FDq3agImI",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "h2FDq3agImI",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ]
+}

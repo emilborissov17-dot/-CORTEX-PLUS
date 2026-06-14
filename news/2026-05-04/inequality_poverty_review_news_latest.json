@@ -1,0 +1,63 @@
+{
+  "axis": "INEQUALITY_POVERTY_REVIEW",
+  "fetched_at": "2026-05-04T08:08:46.806577+00:00",
+  "smart_query": "inequality poverty wealth gap",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 3,
+    "arxiv": 0,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "The Iran war has strengthened Ukraine in surprising ways. Could a ceasefire with Russia be closer?",
+      "snippet": "President Zelensky has been visiting the Gulf to demonstrate his country's military nous.",
+      "url": "https://www.bbc.com/news/articles/cgjp7vpee03o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Three dead in suspected virus outbreak on Atlantic cruise ship",
+      "snippet": "The World Health Organization said one case of hantavirus infection had been confirmed, with five more suspected cases under investigation.",
+      "url": "https://www.bbc.com/news/articles/cy0294829ndo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Russian strikes kill 10 as Zelensky says Ukraine hits oil tankers and terminal",
+      "snippet": "Fatalities have been reported around Ukraine as Kyiv says Russian \"shadow fleet\" tankers were hit by drones.",
+      "url": "https://www.bbc.com/news/articles/clyp41v1n1go?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [
+    {
+      "title": " ¿ Qué estados lideran la desigualdad racial en riqueza y oportunidades en 2026 ? ",
+      "snippet": " ¿ Qué estados lideran la desigualdad racial en riqueza y oportunidades en 2026 ? ",
+      "url": "https://eldiariony.com/2026/04/07/brecha-racial-en-ee-uu-los-estados-con-mayor-desigualdad-economica-en-2026/",
+      "source": "eldiariony.com"
+    },
+    {
+      "title": "Sí , presidente , en España también hay pobreza y desigualdad",
+      "snippet": "Sí , presidente , en España también hay pobreza y desigualdad",
+      "url": "https://cincodias.elpais.com/opinion/2026-03-02/si-presidente-en-espana-tambien-hay-pobreza-y-desigualdad.html",
+      "source": "cincodias.elpais.com"
+    },
+    {
+      "title": "Thinking Allowed - Debt and Wealth Inequality",
+      "snippet": "Thinking Allowed - Debt and Wealth Inequality",
+      "url": "https://www.bbc.co.uk/sounds/play/m002sfvg",
+      "source": "bbc.co.uk"
+    }
+  ],
+  "github_repos": [],
+  "arxiv_papers": [],
+  "podcast": "[Village gossip, pesticide bans, and gene drives: 17 experts on the future of global health] What does it really take to lift millions out of poverty and prevent needless deaths?In this special compilation episode, 17 past guests — including economists, nonprofit founders, and policy advisors — share their most powerful and actionable insights from the front lines of global health and development. You’ll hear about the critical need to boost agricultural productivity in sub-Saharan Africa",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

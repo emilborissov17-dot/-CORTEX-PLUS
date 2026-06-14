@@ -1,0 +1,110 @@
+{
+  "axis": "WATER_REVIEW",
+  "fetched_at": "2026-05-17T15:26:34.890084+00:00",
+  "smart_query": "water scarcity drinking water",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 0,
+    "github": 3,
+    "youtube_transcripts": 3,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "Lauren Boebert suggests Trump withheld funds to Colorado over prosecution of election denier",
+      "snippet": "Republican said she hoped recent commutation of Tina Peters by governor would free up federal funding for clean drinking waterRepublican congresswoman Lauren Boebert suggested that Donald Trump blocked funds for a clean drinking water project in her state over the prosecution of election denier Tina",
+      "url": "https://www.theguardian.com/us-news/2026/may/16/lauren-boebert-trump-funds-colorado-drink-water-funds-tina-peters",
+      "source": "RSS"
+    },
+    {
+      "title": "Is it time to stop watering our gardens?",
+      "snippet": "With unpredictable weather patterns and summertime garden hose bans now normal, it might be time to let your plants adjust to drier conditionsLast week someone from Thames Water turned up&nbsp;to say we were using more than the average amount of water. I tried to explain that we have small children;",
+      "url": "https://www.theguardian.com/lifeandstyle/2026/may/15/is-it-time-to-become-a-water-conscious-gardener-summer-climate",
+      "source": "RSS"
+    },
+    {
+      "title": "River Thames in London gets first official bathing spot on Friday",
+      "snippet": "Thames at Ham designated as one of 13 new swimming areas across England to be monitored for water qualityThe first designated bathing water area on the River Thames in London will welcome swimmers for the official start of the bathing season on Friday as one of 13 new monitored swimming areas across",
+      "url": "https://www.theguardian.com/environment/2026/may/14/river-thames-london-first-designated-bathing-water-area-",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "wilsto/pool-monitor-card",
+      "snippet": "Keep your swimming pool safe and crystal clear by monitoring up to 25 water chemistry parameters at a glance.",
+      "stars": 118,
+      "url": "https://github.com/wilsto/pool-monitor-card",
+      "updated": "2026-05-04",
+      "source": "GitHub"
+    },
+    {
+      "title": "DOI-USGS/EGRET",
+      "snippet": "An R-package for the analysis of long-term changes in water quality and streamflow, including the water-quality method Weighted Regressions on Time, Discharge, and Season (WRTDS). https://doi-usgs.git",
+      "stars": 99,
+      "url": "https://github.com/DOI-USGS/EGRET",
+      "updated": "2026-05-13",
+      "source": "GitHub"
+    },
+    {
+      "title": "KnowFlow/KnowFlow_AWM",
+      "snippet": "KnowFlow Automatic Water Monitoring device is an open sourced tool enable everyone having access to first hand water quality data with low cost.",
+      "stars": 96,
+      "url": "https://github.com/KnowFlow/KnowFlow_AWM",
+      "updated": "2026-04-02",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [],
+  "podcast": "[The Resistance of a Cow] There’s something rotten in the cows of Denmark. And Minnesota. And Wisconsin. And Idaho. What could cause a previously thriving herd of majestic dairy cattle to stop drinking water and start drinking … urine? A Danish farmer calls a special investigator, who takes one look at his farm and nopes the heck out of there, refusing to return, citing “bad energy” coming from something nearby … a big bui",
+  "wiki": null,
+  "youtube_items": [
+    {
+      "title": "[YT] 10 Countries You Didn’t Know Are Running Out of Water | Learn with xia",
+      "summary": "What if I told you the next world crisis won't be about oil, but water? And no, it's not just happening in deserts. Right now, some of the most beautiful, powerful, and unexpected countries on Earth are running out of water. And most people have no idea. This is not just about thirst. It's about survival, food, migration, and even war. Here are 10 countries you didn't know are running out of water, and why it's a global red flag we can't ignore. Number 10, Italy. Yes, Italy. Land of pasta, wine, and historic Roman aqueducts. But today, those aqueducts are leaking like crazy. Italy loses up to 40% of its clean water through broken, outdated pipes before it ever reaches homes. In 2022, the mighty Per River dried so low they found a World War II bomb at the bottom. From farming to drinking, n",
+      "link": "https://www.youtube.com/watch?v=4zZWzp8xNS0",
+      "source_type": "youtube",
+      "channel": "WonderSphere",
+      "video_id": "4zZWzp8xNS0",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Explained | World&#39;s Water Crisis | FULL EPISODE | Netflix",
+      "summary": "Turn on a faucet and clean water rushes out as much as we want anytime we want. It's easy to forget that the quest for this has been one of the defining struggles of human history. Civilizations that harnessed water thrived, the ones that failed, fell. Today, seven and ten people on earth can count on having running water in their homes. The water flows from the risers to connecting mains and finally through service connections into each building on the street. At least so they think. Cape Town, it could become the first major city in the world to run out of water. Cape Town, South Africa, is inching closer now to day zero. Just 92 days away from having to shut off most water taps because of a severe drought. Cape Town is the first major city in the world to plan to indefinitely shut off i",
+      "link": "https://www.youtube.com/watch?v=C65iqOSCZOY",
+      "source_type": "youtube",
+      "channel": "Netflix",
+      "video_id": "C65iqOSCZOY",
+      "transcript_method": "whisper",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Fresh water scarcity: An introduction to the problem - Christiana Z. Peppard",
+      "summary": "Translator: Anton Hikov Reviewer: Luba Aleksandrova Може би сте чували, че прясната вода е на свършване. Това може да ви звучи странно, понеже, ако живеете в място, където водата тече свободно от кранчето или душа по всяко време, това със сигурност не изглежда като голяма работа. Тя е просто там, нали така? Не е така! Единственото очевидно нещо за прясната вода е колко много имаме нужда от нея. Понеже тя е от съществено значение за живота, трябва да мислим за нея внимателно. Точно сега, в този момент, някои хора, жени и момичета по-специално, ходят с часове и километри на ден, за да доставят питейна вода и дори и тогава, тя може да не е чиста. Всеки 15 секунди, едно дете умира поради болести породени от водата. Това е трагично! Най-наложителните причини да се мисли за прясната вода, следов",
+      "link": "https://www.youtube.com/watch?v=otrpxtAmDAk",
+      "source_type": "youtube",
+      "channel": "TED-Ed",
+      "video_id": "otrpxtAmDAk",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ],
+  "summary": "Воднен кризисът става все по-сериозен проблем в развити страни, включително Италия, където 40% от чистата вода се загубява поради старите тръби. Съществуват технологии за мониторинг на водата, които могат да помогнат за управление.",
+  "urgency": "HIGH",
+  "sentiment": "CRITICAL",
+  "key_developments": [
+    "Италия загубява 40% от чистата вода поради старите и повръщани тръби",
+    "Реката Пер в Италия се изсъхна до нивото на Втората световна война",
+    "GitHub има проекти като KnowFlow_AWM и DOI-USGS/EGRET за анализ и мониторинг на водата"
+  ],
+  "open_source_momentum": "High: 3 open-source проекти за мониторинг и анализ на водата",
+  "scientific_frontier": "No data",
+  "relevance_to_goal": "CRITICAL"
+}

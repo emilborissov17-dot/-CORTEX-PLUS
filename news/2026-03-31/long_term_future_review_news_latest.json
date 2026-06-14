@@ -1,0 +1,103 @@
+{
+  "axis": "LONG_TERM_FUTURE_REVIEW",
+  "fetched_at": "2026-03-31T07:35:17.116800+00:00",
+  "smart_query": "existential risk future civilization",
+  "sources_count": {
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "web_search": 5
+  },
+  "rss": [
+    {
+      "title": "Social media firms must better enforce Australia under-16 ban, watchdog says",
+      "snippet": "Regulator eSafety says it has concerns about how Facebook, Instagram, Snapchat, TikTok and YouTube are complying with the ban.",
+      "url": "https://www.bbc.com/news/articles/cy4181pkxl2o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Kris Jenner's image spreads in Chinese social media good luck trend",
+      "snippet": "Hundreds of thousands of posts have been shared in the past three days as users hope for prosperity",
+      "url": "https://www.bbc.com/news/articles/c0rx57zgz52o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Tech CEOs suddenly love blaming AI for mass job cuts. Why?",
+      "snippet": "More tech leaders are pointing to job cuts caused by AI tools - and a need for more investment cash.",
+      "url": "https://www.bbc.com/news/articles/cde5y2x51y8o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "emcie-co/parlant",
+      "snippet": "The conversational control layer for customer-facing AI agents - Parlant is a context-engineering framework optimized for controlling customer interactions.",
+      "stars": 17857,
+      "url": "https://github.com/emcie-co/parlant",
+      "updated": "2026-03-31",
+      "source": "GitHub"
+    },
+    {
+      "title": "agencyenterprise/PromptInject",
+      "snippet": "PromptInject is a framework that assembles prompts in a modular fashion to provide a quantitative analysis of the robustness of LLMs to adversarial prompt attacks. 🏆 Best Paper Awards @ NeurIPS ML Saf",
+      "stars": 470,
+      "url": "https://github.com/agencyenterprise/PromptInject",
+      "updated": "2026-03-30",
+      "source": "GitHub"
+    },
+    {
+      "title": "MinghuiChen43/awesome-trustworthy-deep-learning",
+      "snippet": "A curated list of trustworthy deep learning papers. Daily updating...",
+      "stars": 384,
+      "url": "https://github.com/MinghuiChen43/awesome-trustworthy-deep-learning",
+      "updated": "2026-03-28",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "AI Survival Stories: a Taxonomic Analysis of AI Existential Risk",
+      "snippet": "Since the release of ChatGPT, there has been a lot of debate about whether AI systems pose an existential risk to humanity. This paper develops a general framework for thinking about the existential risk of AI systems. We analyze a two premise argument that AI systems pose a threat to humanity. Prem",
+      "url": "https://arxiv.org/abs/2601.09765v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Humanity in the Age of AI: Reassessing 2025's Existential-Risk Narratives",
+      "snippet": "Two 2025 publications, \"AI 2027\" (Kokotajlo et al., 2025) and \"If Anyone Builds It, Everyone Dies\" (Yudkowsky & Soares, 2025), assert that superintelligent artificial intelligence will almost certainly destroy or render humanity obsolete within the next decade. Both rest on the classic chain formula",
+      "url": "https://arxiv.org/abs/2512.04119v1",
+      "source": "arXiv"
+    }
+  ],
+  "web_search": [
+    {
+      "title": "Existential Risks: What Threatens Humanity&#x27;s Future - Globaïa",
+      "url": "https://globaia.org/risks/",
+      "source": "WEB"
+    },
+    {
+      "title": "Here are the Top 10 threats to the survival of civilization",
+      "url": "https://www.sciencenews.org/article/threats-civilization-survival-humanity-apocalypse",
+      "source": "WEB"
+    },
+    {
+      "title": "Global catastrophic risk - Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Global_catastrophic_risk",
+      "source": "WEB"
+    },
+    {
+      "title": "The Precipice: Existential Risk and the Future of Humanity (London ...",
+      "url": "https://jfsdigital.org/articles-and-essays/2024-2/vol-29-no-2-december-2024/the-precipice-existential-risk-and-the-future-of-humanity-london-bloomsbury-2020-by-toby-ord/",
+      "source": "WEB"
+    },
+    {
+      "title": "Existential Risks Initiative",
+      "url": "https://seri.stanford.edu/",
+      "source": "WEB"
+    }
+  ],
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL"
+}

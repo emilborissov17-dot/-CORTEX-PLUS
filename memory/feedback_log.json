@@ -1,0 +1,24 @@
+[
+  {
+    "timestamp": "2026-04-30T06:57:22.986666+00:00",
+    "avg_score": 29.9,
+    "axes_count": 1,
+    "axes_improved": 0,
+    "axes_degraded": 0,
+    "top_improvements": [],
+    "top_degradations": [],
+    "beneficial_actions": 0,
+    "harmful_actions": 0
+  },
+  {
+    "timestamp": "2026-04-30T06:59:09.809491+00:00",
+    "avg_score": 52.49,
+    "axes_count": 8,
+    "axes_improved": 0,
+    "axes_degraded": 0,
+    "top_improvements": [],
+    "top_degradations": [],
+    "beneficial_actions": 0,
+    "harmful_actions": 0
+  }
+]

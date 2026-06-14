@@ -1,0 +1,138 @@
+{
+  "axis": "GENERAL_SELF_REVIEW",
+  "fetched_at": "2026-05-17T16:51:21.469535+00:00",
+  "smart_query": "artificial intelligence progress",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 3,
+    "arxiv": 2,
+    "github": 3,
+    "youtube_transcripts": 3,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "X pledges quicker action on hate and terror content in the UK",
+      "snippet": "Ofcom said the commitments were of particular importance after recent crimes targeting Jewish communities in the UK.",
+      "url": "https://www.bbc.com/news/articles/clyp9652v18o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Claim, counter-claim and tech's seedy side exposed: Five things we learned in the Musk-Altman trial",
+      "snippet": "As the jury deliberates, this is what we found out during the weeks-long trial with two tech titans at its heart.",
+      "url": "https://www.bbc.com/news/articles/cg7pj8p5mv4o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Inside the secretive and lucrative world of orchid breeding",
+      "snippet": "It can take a decade to bring a new orchid to market, so breeders keep their hi-tech processes secret.",
+      "url": "https://www.bbc.com/news/articles/cly039rr2mgo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [
+    {
+      "title": "Apple ,  Yapay Zekâya Girmeden  Yapay Zeka Sayesinde 900 Milyon Dolar Kazandı : Peki ama Nasıl ? ",
+      "snippet": "Apple ,  Yapay Zekâya Girmeden  Yapay Zeka Sayesinde 900 Milyon Dolar Kazandı : Peki ama Nasıl ? ",
+      "url": "https://www.webtekno.com/apple-yapay-zek-ya-girmeden-yapay-zeka-sayesinde-900-milyon-dolar-kazandi-peki-ama-nasil-h213981.html",
+      "source": "webtekno.com"
+    },
+    {
+      "title": "Geleceğin işleri belli oldu ! İşte yapay zekaya göre günde sadece  saat çalışıp servet kazandıracak 5 meslek",
+      "snippet": "Geleceğin işleri belli oldu ! İşte yapay zekaya göre günde sadece  saat çalışıp servet kazandıracak 5 meslek",
+      "url": "https://www.yeniakit.com.tr/foto-galeri/gelecegin-isleri-belli-oldu-iste-yapay-zekaya-gore-gunde-sadece-uc-saat-calisip-servet-kazandiracak-5-meslek-150970",
+      "source": "yeniakit.com.tr"
+    },
+    {
+      "title": "Yapay zeka yönetiminde uluslararası standart : TPye ISO 42001 belgesi",
+      "snippet": "Yapay zeka yönetiminde uluslararası standart : TPye ISO 42001 belgesi",
+      "url": "https://www.chip.com.tr/guncel/yapay-zeka-yonetiminde-uluslararasi-standart-tpye-iso-42001-belgesi_179533.html",
+      "source": "chip.com.tr"
+    }
+  ],
+  "github_repos": [
+    {
+      "title": "microsoft/autogen",
+      "snippet": "A programming framework for agentic AI",
+      "stars": 58109,
+      "url": "https://github.com/microsoft/autogen",
+      "updated": "2026-05-17",
+      "source": "GitHub"
+    },
+    {
+      "title": "2noise/ChatTTS",
+      "snippet": "A generative speech model for daily dialogue.",
+      "stars": 39271,
+      "url": "https://github.com/2noise/ChatTTS",
+      "updated": "2026-05-17",
+      "source": "GitHub"
+    },
+    {
+      "title": "agentscope-ai/agentscope",
+      "snippet": "Build and run agents you can see, understand and trust.",
+      "stars": 25193,
+      "url": "https://github.com/agentscope-ai/agentscope",
+      "updated": "2026-05-17",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Understanding How International Students in the U.S. Are Using Conversational AI to Support Cross-Cultural Adaptation",
+      "snippet": "Moving to a new culture and adapting to a new life, as an international student, can be a stressful experience. In the US, international students face unique overlapping challenges, yet the current support ecosystem, including university support systems and informal social networks, remains largely ",
+      "url": "https://arxiv.org/abs/2605.15127v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "AI Knows When It's Being Watched: Functional Strategic Action and Contextual Register Modulation in Large Language Models",
+      "snippet": "Large language models (LLMs) have been extensively studied from computational and cognitive perspectives, yet their behavior as communicative actors in socially structured contexts remains underexplored. This study examines whether LLM-based multi-agent systems exhibit systematic linguistic adaptati",
+      "url": "https://arxiv.org/abs/2605.15034v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[Prominent Scientists, Faith Leaders, Policymakers and Artists Call for a Prohibition on Superintelligence, as Poll Shows Americans Don’t Want It] Initial signatories include AI pioneers Yoshua Bengio and Geoffrey Hinton, leading media voices Steve Bannon and Glenn Beck, Obama's National Security Advisor Susan Rice, business trailblazers Steve Wozniak and Richard Branson, five Nobel Laureates, former Irish President Mary Robinson, actors Stephen Fry and Joseph Gordon-Levitt, and hundreds of others.",
+  "wiki": null,
+  "youtube_items": [
+    {
+      "title": "[YT] Is AI🤖 Truly Conscious? - Elon Musk",
+      "summary": "itely do you think these llms like do you think that any of the Machinery that you've interacted with is showing anything signs of anything that might be equated to Consciousness I mean the llms are remarkable right and they certainly pass the teing test as far as I'm concerned passing test so from from a testing standpoint I think we will if we're not there already we soon will be where you would not be able to tell that you're yeah interacting with a that's coming right away man yes in fact probably sort of here unless you're really sneaky and you ask like harsh questions and Corner the damn things were probably already there yeah so long as you if you know some of the tricks like how many RS are there in renderer um bizi can't figure that one out oh I didn't know that that was one of it",
+      "link": "https://www.youtube.com/watch?v=gdlTspKdsjU",
+      "source_type": "youtube",
+      "channel": "Get Ready to Consider",
+      "video_id": "gdlTspKdsjU",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 951,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Sam Altman on AGI: people will freak out then move on",
+      "summary": "the world had like a twoe freak out with gp4 right this changes everything AGI is coming tomorrow there are no jobs by the end of the year and now people are like why is it so slow um and I love that I think that's a great thing about the human spirit that we always want more and better and I think that's why we're never going to run out of things to do gp4 was a big deal in some sense and did not change the world as much as everybody had their meltdown about I believe that some day we will make something that qualifies as an AGI by whatever fuzzy definition you want the world will have a twoe freakout and then people will go on with their lives we are making a tool that is impressive but humans are going to do their human things and Society has a lot of inertia and I think like we will bo",
+      "link": "https://www.youtube.com/watch?v=T2g8FF8-RLA",
+      "source_type": "youtube",
+      "channel": "The Economist",
+      "video_id": "T2g8FF8-RLA",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 957,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Lost in the Hype: AI Will Never Become Conscious | Sir Roger Penrose (Nobel)",
+      "summary": "Well, you have to be careful. First of all, the name is wrong. It's not artificial intelligence. It's not intelligence. Intelligence would involve consciousness. And I've always been the strong promoter of the idea that these devices are not conscious and they will not be be conscious as unless they bring in some other ideas. The computer, they're not they're all computable notions. I think when people use the word intelligence they mean something which is conscious. I mean that you see I developed my own ideas after going to a course. You see when I was a graduate student in Cambridge I went to three courses which were nothing to do what I was supposed to be doing. One was by Bondi on general relativity. One must be Draq on quantum mechanics. Distinguished very distinguished Paul Dra. And",
+      "link": "https://www.youtube.com/watch?v=e9484gNpFF8",
+      "source_type": "youtube",
+      "channel": "This Is The World",
+      "video_id": "e9484gNpFF8",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ],
+  "summary": "[RSS News]\n- X pledges quicker action on hate and terror content in the UK\n- Claim, counter-claim and tech's seedy side exposed: Five things we learned in the Musk-Altman trial\n\n[GDELT News]\n- Apple ,",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": [],
+  "open_source_momentum": "",
+  "scientific_frontier": "",
+  "relevance_to_goal": ""
+}

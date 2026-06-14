@@ -1,0 +1,82 @@
+{
+  "axis": "COGNITION_LEARNING_REVIEW",
+  "fetched_at": "2026-03-20T08:16:00.568862+00:00",
+  "smart_query": "education learning children schools",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube": 10,
+    "youtube_transcripts": 1,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "Scientists link childhood stress to lifelong digestive issues",
+      "snippet": "Early life stress may set the stage for long-term digestive problems by disrupting the gut-brain connection. Studies in both mice and thousands of children found links to symptoms like pain, constipation, and IBS. Scientists discovered that different biological pathways control different gut issues,",
+      "url": "https://www.sciencedaily.com/releases/2026/03/260317064444.htm",
+      "source": "RSS"
+    },
+    {
+      "title": "Cannabis study finds THC can create false memories",
+      "snippet": "THC doesn’t just blur memories—it can create new ones that never happened. In a controlled experiment, cannabis users were much more likely to recall words that were never shown and struggled with tasks like remembering to do something later. Researchers found that THC disrupted many different memor",
+      "url": "https://www.sciencedaily.com/releases/2026/03/260311004711.htm",
+      "source": "RSS"
+    },
+    {
+      "title": "New drug cuts seizures by up to 91% in children with rare epilepsy",
+      "snippet": "A new experimental drug is showing remarkable promise for children with Dravet syndrome, a severe genetic form of epilepsy. In clinical trials, the treatment zorevunersen cut seizures by as much as 91% while also improving quality of life for many patients. The therapy works by boosting the function",
+      "url": "https://www.sciencedaily.com/releases/2026/03/260304184215.htm",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "AFLucas-UOM/AI-Early-Detection-System-for-Dyslexia-ADHD",
+      "snippet": "Proof-of-concept behavioural analysis system for early detection of dyslexia and ADHD using spelling pattern evaluation, sentence rewriting similarity analysis, and keyboard/mouse interaction monitori",
+      "stars": 6,
+      "url": "https://github.com/AFLucas-UOM/AI-Early-Detection-System-for-Dyslexia-ADHD",
+      "updated": "2026-03-06",
+      "source": "GitHub"
+    },
+    {
+      "title": "ShubhamMahajan880/studyAlpha-Ai-Agent",
+      "snippet": "🎓 StudyAlpha is an intelligent, end-to-end AI Study Coach powered by multi-agent collaboration, memory-augmented reasoning, adaptive quizzes, and ML weakness prediction.  Built for the Google × Kaggle",
+      "stars": 5,
+      "url": "https://github.com/ShubhamMahajan880/studyAlpha-Ai-Agent",
+      "updated": "2026-01-29",
+      "source": "GitHub"
+    },
+    {
+      "title": "Kuldeep-Padshala/genai-capstone-study-agent",
+      "snippet": "A Capstone Project Demonstrating LLM-Powered Agents, Parallel Execution, Session Memory, Observability & Long-Running Operations",
+      "stars": 1,
+      "url": "https://github.com/Kuldeep-Padshala/genai-capstone-study-agent",
+      "updated": "2025-12-02",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Large Language Models in Teaching and Learning: Reflections on Implementing an AI Chatbot in Higher Education",
+      "snippet": "The landscape of education is changing rapidly, shaped by emerging pedagogical approaches, technological innovations such as artificial intelligence (AI), and evolving societal expectations, all of which demand thorough evaluation of new educational tools. Although large language models (LLMs) prese",
+      "url": "https://arxiv.org/abs/2603.17773v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "GUIDE: GenAI Units In Digital Design Education",
+      "snippet": "GenAI Units In Digital Design Education (GUIDE) is an open courseware repository with runnable Google Colab labs and other materials. We describe the repository's architecture and educational approach based on standardized teaching units comprising slides, short videos, runnable labs, and related pa",
+      "url": "https://arxiv.org/abs/2603.17296v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[The Impact of AI in Education: Navigating the Imminent Future] What must be considered to build a safe but effective future for AI in education, and for children to be safe online?",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

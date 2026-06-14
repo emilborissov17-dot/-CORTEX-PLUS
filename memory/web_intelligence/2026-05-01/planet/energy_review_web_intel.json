@@ -1,0 +1,121 @@
+{
+  "axis": "ENERGY_REVIEW",
+  "domain": "planet",
+  "timestamp": "2026-05-01T13:36:39.368873+00:00",
+  "sources_count": 14,
+  "rss_count": 12,
+  "ddg_count": 0,
+  "youtube_count": 2,
+  "youtube_items": [
+    {
+      "title": "[YT] Will Renewable Energy Dominate in 2025? - YouTube",
+      "summary": "Welcome to Renée Energy.com on YouTube, the hub for all things renewable energy and sustainability. Our channel is dedicated to bringing you the latest innovations and insights in green energy, including cutting-edge developments like green hydrogen. Whether you're a sustainability veteran or just beginning your journey, we have something for everyone. Join us on this channel to explore inspiring projects for a sustainable tomorrow. We bring you the latest in renewable energy, sustainability, and cutting-edge technologies. And don't forget, for more in-depth information and resources, visit our website and subscribe to our newsletter for the latest updates and exclusive content. Welcome to Renée Energy.com, your go-to source for the latest insights and renewable energy and sustainable tech",
+      "link": "https://www.youtube.com/watch?v=N43dSWuYF3Y",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "N43dSWuYF3Y",
+      "transcript_method": "whisper",
+      "transcript_chars": 10040,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Top Renewable Energy Trends in 2025 The Future of Clean ... - YouTube",
+      "summary": "Wonder what's powering the world in 2025. Here are the top renewable energy trends you need to know. Trend one, solar tech breakthroughs. Solar panels are getting cheaper and more efficient than ever. Harnessing more power from the sun, trend two, offshore wind expansion, offshore wind farms are booming, generating massive clean energy from ocean winds. Trend three, energy storage solutions, better batteries in storage tech mean renewable energy is reliable. Day and night, trend four, green hydrogen rising, green hydrogen is emerging as a clean fuel for heavy industry and transport trend five, smart grids in AI, smart grids with AI manage energy efficiently, reducing waste and costs, ready to ride the wave of clean energy, follow us for more green tech insights.",
+      "link": "https://www.youtube.com/watch?v=JkT_qH3nfDQ",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "JkT_qH3nfDQ",
+      "transcript_method": "whisper",
+      "transcript_chars": 772,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "summary": "- 1,000th Electric Bus Set For Part Of Belgium: <p>Sometimes these electric vehicle developments don’t seem real, but they are. The speed at which transportation is electrifying is almost stunning sometimes. In the Flanders region of Belgium, the t\n- Record Month for EV Sales in Europe!: <p>BEVs rea",
+    "risk_level": "UNKNOWN",
+    "trend": "UNKNOWN",
+    "key_events": [
+      "1,000th Electric Bus Set For Part Of Belgium",
+      "Record Month for EV Sales in Europe!",
+      "US DOE Has Released 17.5 Million Barrels from the Strategic Petroleum Reserve since March"
+    ],
+    "insights": [],
+    "youtube_insights": [],
+    "relevance_to_goal": "",
+    "generalization": ""
+  },
+  "raw_items": [
+    {
+      "title": "1,000th Electric Bus Set For Part Of Belgium",
+      "summary": "<p>Sometimes these electric vehicle developments don’t seem real, but they are. The speed at which transportation is electrifying is almost stunning sometimes. In the Flanders region of Belgium, the transport agency De Lijn commissioned its 1,000th electric bus. Yes, that’s electric bus number 1,000 — with many more to go.   ... [continued]</p>\n<p>The post <a href=\"https://cleantechnica.com/2026/05/01/1000th-electric-bus-set-for-part-of-belgium/\">1,000th Electric Bus Set For Part Of Belgium</a> ",
+      "link": "https://cleantechnica.com/2026/05/01/1000th-electric-bus-set-for-part-of-belgium/",
+      "published": "Fri, 01 May 2026 13:25:33 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Record Month for EV Sales in Europe!",
+      "summary": "<p>BEVs reach 22% market share! Thanks to a number of factors (new, cheaper and/or better models, record high gas prices, mass arrival of Chinese models, etc.), EVs have risen to record highs in Europe, with over half a million plugin vehicles being registered in Europe in March, 349,000 of them   ... [continued]</p>\n<p>The post <a href=\"https://cleantechnica.com/2026/04/30/record-month-for-ev-sales-in-europe/\">Record Month for EV Sales in Europe!</a> appeared first on <a href=\"https://cleantech",
+      "link": "https://cleantechnica.com/2026/04/30/record-month-for-ev-sales-in-europe/",
+      "published": "Fri, 01 May 2026 03:57:54 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "US DOE Has Released 17.5 Million Barrels from the Strategic Petroleum Reserve since March",
+      "summary": "<p>Between the week ending March 20 and the week ending April 24, the U.S. Department of Energy (DOE) released a total of 17.5 million barrels of crude oil from the U.S. Strategic Petroleum Reserve (SPR), according to data in our Weekly Petroleum Status Report. DOE released 7.1 million barrels in the   ... [continued]</p>\n<p>The post <a href=\"https://cleantechnica.com/2026/04/30/us-doe-has-released-17-5-million-barrels-from-the-strategic-petroleum-reserve-since-march/\">US DOE Has Released 17.5 M",
+      "link": "https://cleantechnica.com/2026/04/30/us-doe-has-released-17-5-million-barrels-from-the-strategic-petroleum-reserve-since-march/",
+      "published": "Fri, 01 May 2026 03:56:39 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Farmers Are Choosing Solar to Maintain their Farms. Localities Shouldn’t Take Away That Choice.",
+      "summary": "<p>America’s family farmers are facing mounting challenges. Input costs like fertilizer and diesel are going up while international markets recede and commodity prices crater. Despite these challenges, American farmers are resilient and resourceful. They make decisions every day that balance risk, reward, and long-term stewardship. They adapt to volatile commodity   ... [continued]</p>\n<p>The post <a href=\"https://cleantechnica.com/2026/04/30/farmers-are-choosing-solar-to-maintain-their-farms-lo",
+      "link": "https://cleantechnica.com/2026/04/30/farmers-are-choosing-solar-to-maintain-their-farms-localities-shouldnt-take-away-that-choice/",
+      "published": "Fri, 01 May 2026 03:55:09 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Why the effects on the Iran conflict will be felt on the US grid – This Week in Cleantech",
+      "summary": "On this episode of the This Week in Cleantech podcast, Bianca Giacobone of Latitude Media discusses how Iran's strikes on aluminum smelters in the UAE and Bahrain last month pushed prices up 11% to their highest level since Russia’s 2022 invasion of Ukraine.",
+      "link": "https://www.renewableenergyworld.com/podcasts/why-the-effects-on-the-iran-conflict-will-be-felt-on-the-us-grid-this-week-in-cleantech/",
+      "published": "Fri, 24 Apr 2026 15:52:05 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "How can utilities transform data center backlash into a catalyst for grid modernization?",
+      "summary": "The benefits of data center development to communities in the short and long term are real and quantifiable, but they require a proactive strategy to ensure those who live alongside these facilities feel like partners in their success, rather than spectators to their growth.",
+      "link": "https://www.renewableenergyworld.com/power-grid/how-can-utilities-transform-data-center-backlash-into-a-catalyst-for-grid-modernization/",
+      "published": "Fri, 24 Apr 2026 14:13:12 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Federal judge strikes down some Trump administration actions that have slowed clean energy projects",
+      "summary": "A federal judge struck down several Trump administration actions slowing down development of clean energy, including a requirement that all solar and wind energy projects on federal lands and waters be personally approved by Interior Secretary Doug Burgum.",
+      "link": "https://www.renewableenergyworld.com/energy-business/policy-and-regulation/federal-judge-strikes-down-some-trump-administration-actions-that-have-slowed-clean-energy-projects/",
+      "published": "Thu, 23 Apr 2026 17:43:52 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Two steps forward, one step back: California can’t seem to figure out community solar",
+      "summary": "James McGarry, CCSA's West regional director, explains why CPUC's proposed community solar program doesn't work and how it creates barriers to meaningful customer savings and impedes the development of new projects.",
+      "link": "https://www.renewableenergyworld.com/solar/community-solar/two-steps-forward-one-step-back-california-cant-seem-to-figure-out-community-solar/",
+      "published": "Thu, 23 Apr 2026 15:15:19 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Exxon Beats Q1 Earnings on Oil Price Surge Despite 6% Production Drop",
+      "summary": "Higher oil prices drove the first-quarter adjusted earnings at ExxonMobil (NYSE: XOM) above the analyst estimates as the jump in prices more than offset lower oil and gas production in the Middle East and Kazakhstan.  Exxon on Friday reported adjusted earnings excluding identified items of $4.9 billion, or $1.16 per share. This compares with an analyst consensus estimate of $0.98 EPS in the Wall Street Journal.  Total revenues and other income at Exxon rose to $85.14 billion in the quarter, up f",
+      "link": "https://oilprice.com/Latest-Energy-News/World-News/Exxon-Beats-Q1-Earnings-on-Oil-Price-Surge-Despite-6-Production-Drop.html",
+      "published": "Fri, 01 May 2026 08:30:00 -0500",
+      "source_type": "rss"
+    },
+    {
+      "title": "Pakistan Imports First LNG Cargo in Weeks in Relief for Energy Crisis",
+      "summary": "Pakistan has welcomed the first LNG cargo in almost two months as an LNG carrier docked at the GasPort terminal in what would be the first relief to the energy crisis in the country. The Denmark-flagged LNG carrier Seapeak Magellan departed from Sabine Pass in the United States on March 31, and arrived at the Port Qasim in Pakistan on April 30, data on MarineTraffic showed. The 140,000 cubic meters of LNG has started feeding re-gasified LNG (RLNG) into the national gas network, local outlet The ",
+      "link": "https://oilprice.com/Latest-Energy-News/World-News/Pakistan-Imports-First-LNG-Cargo-in-Weeks-in-Relief-for-Energy-Crisis.html",
+      "published": "Fri, 01 May 2026 07:30:00 -0500",
+      "source_type": "rss"
+    }
+  ]
+}

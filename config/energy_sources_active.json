@@ -1,0 +1,112 @@
+[
+  {
+    "name": "IEA Data Portal",
+    "url": "https://www.iea.org/data-and-statistics",
+    "docs": "https://www.iea.org/data-and-statistics/faq",
+    "notes": "Световни данни за енергия, включително производство, потребление, възобновяеми източници и емисии, с фокус върху развитието на Европа, САЩ и други региони.",
+    "status": "active",
+    "type": "dataset_or_api",
+    "added_at": "2026-02-25T16:31:54.025151",
+    "last_checked_status": 200,
+    "last_checked_at": "2026-02-25T16:31:54.025206"
+  },
+  {
+    "name": "Eurostat Energy Statistics",
+    "url": "https://ec.europa.eu/eurostat/databrowser",
+    "docs": "https://ec.europa.eu/eurostat/cache/energy/index.htm",
+    "notes": "Официални данни за Европейския съюз и Европейска икономическа зона, включително възобновяеми източници и енергийна политиката.",
+    "status": "active",
+    "type": "dataset_or_api",
+    "added_at": "2026-02-25T16:31:56.798421",
+    "last_checked_status": 200,
+    "last_checked_at": "2026-02-25T16:31:56.798431"
+  },
+  {
+    "name": "NREL Renewable Energy Data",
+    "url": "https://www.nrel.gov/research.html",
+    "docs": "https://www.nrel.gov/analysis.html",
+    "notes": "Данни за възобновяеми източници в САЩ, включително ветер, слънце, вода и биомаса, с документация за технически изчисления.",
+    "status": "active",
+    "type": "dataset_or_api",
+    "added_at": "2026-02-25T16:32:01.625361",
+    "last_checked_status": 200,
+    "last_checked_at": "2026-02-25T16:32:01.625372"
+  },
+  {
+    "name": "World Bank Energy Data",
+    "url": "https://data.worldbank.org/topic/energy",
+    "docs": "https://datahelpdesk.worldbank.org/",
+    "notes": "Мирови данни за енергия, включително достъпност, производство и емисии, с изготвението за много региони, включително развойни държави.",
+    "status": "active",
+    "type": "dataset_or_api",
+    "added_at": "2026-02-25T16:32:03.688358",
+    "last_checked_status": 200,
+    "last_checked_at": "2026-02-25T16:32:03.688371"
+  },
+  {
+    "name": "Open Power System Data (OPSD)",
+    "url": "https://open-power-system-data.org",
+    "docs": "https://open-power-system-data.org/docs",
+    "notes": "Детайлни данни за електрическа генерация и дистрибуция в Европа, включително възобновяеми източници и резервни мощности.",
+    "status": "active",
+    "type": "dataset_or_api",
+    "added_at": "2026-02-25T16:32:08.790657",
+    "last_checked_status": 200,
+    "last_checked_at": "2026-02-25T16:32:08.790668"
+  },
+  {
+    "name": "USGS Energy Resources",
+    "url": "https://energy.gov/eere/",
+    "docs": "https://www.usgs.gov/programs/energy",
+    "notes": "Данни за нефт, газ, уран и възобновяеми източници в САЩ, включително геоложки и еко-оценки.",
+    "status": "active",
+    "type": "dataset_or_api",
+    "added_at": "2026-02-25T16:32:15.122084",
+    "last_checked_status": 200,
+    "last_checked_at": "2026-02-25T16:32:15.122094"
+  },
+  {
+    "name": "ENTSO-E Transparency Portal",
+    "url": "https://transparency.entsoe.eu",
+    "docs": "https://transparency.entsoe.eu/",
+    "notes": "Данни за трансмисията на електрическата енергия в Европа, включително мощност, потребление и възобновяеми източници.",
+    "status": "active",
+    "type": "dataset_or_api",
+    "added_at": "2026-02-25T16:32:16.538153",
+    "last_checked_status": 200,
+    "last_checked_at": "2026-02-25T16:32:16.538172"
+  },
+  {
+    "name": "International Energy Forum (IEF)",
+    "url": "https://www.ief.org",
+    "docs": "https://www.ief.org/annual-conference",
+    "notes": "Информация за глобалната енергийна политика и тенденции, включително аналитични отчети за региони.",
+    "status": "active",
+    "type": "dataset_or_api",
+    "added_at": "2026-02-25T16:32:18.272101",
+    "last_checked_status": 200,
+    "last_checked_at": "2026-02-25T16:32:18.272118"
+  },
+  {
+    "name": "UNEP Data Portal",
+    "url": "https://data.unep.org",
+    "docs": "https://data.unep.org/faq",
+    "notes": "Достъп до данни за енергия и околната среда, включително емисии и климатични проекции.",
+    "status": "active",
+    "type": "dataset_or_api",
+    "added_at": "2026-02-25T16:32:24.726765",
+    "last_checked_status": 200,
+    "last_checked_at": "2026-02-25T16:32:24.726780"
+  },
+  {
+    "name": "National Renewable Energy Laboratory (NREL)",
+    "url": "https://www.nrel.gov",
+    "docs": "https://www.nrel.gov/research/",
+    "notes": "Данни за възобновяеми източници и технологични изследвания в САЩ, включително симулации и публични отчети.",
+    "status": "active",
+    "type": "dataset_or_api",
+    "added_at": "2026-02-25T16:32:26.768884",
+    "last_checked_status": 200,
+    "last_checked_at": "2026-02-25T16:32:26.768898"
+  }
+]

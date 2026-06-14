@@ -1,0 +1,81 @@
+{
+  "axis": "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL",
+  "fetched_at": "2026-03-14T07:09:45.541482+00:00",
+  "smart_query": "human rights democracy freedom",
+  "sources_count": {
+    "wiki": 0,
+    "gdelt": 3,
+    "arxiv": 2,
+    "github": 3,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [],
+  "gdelt": [
+    {
+      "title": "Rappler receives 2025 Freedom Flame Award from Friedrich Naumann Foundation",
+      "snippet": "Rappler receives 2025 Freedom Flame Award from Friedrich Naumann Foundation",
+      "url": "https://www.rappler.com/about/rappler-receives-2025-freedom-flame-award-friedrich-naumann-foundation/",
+      "source": "rappler.com"
+    },
+    {
+      "title": "Gelecek Yıldan İtibaren Verilecek O Dersin Taslağı Hazır - MEB Personel - En Güncel Öğretmen Haber , Atamaları , Maaşları , MEB Duyuruları",
+      "snippet": "Gelecek Yıldan İtibaren Verilecek O Dersin Taslağı Hazır - MEB Personel - En Güncel Öğretmen Haber , Atamaları , Maaşları , MEB Duyuruları",
+      "url": "https://mebpersonel.com/meb/gelecek-yildan-itibaren-verilecek-o-dersin-taslagi-hazir-h166192.html",
+      "source": "mebpersonel.com"
+    },
+    {
+      "title": "GREATEST HITS , 14 : China university dean manifesto calls for ousting CCP regime :  Start a prairie fire  – World Tribune : U . S . Politics and Cult",
+      "snippet": "GREATEST HITS , 14 : China university dean manifesto calls for ousting CCP regime :  Start a prairie fire  – World Tribune : U . S . Politics and Culture , Geostrategy , China , North Korea , Corporate Watch , Media Watch",
+      "url": "https://worldtribune.com/greatest-hits-14-china-university-deans-manifesto-calls-for-ousting-ccp-regime-start-a-prairie-fire/",
+      "source": "worldtribune.com"
+    }
+  ],
+  "github_repos": [
+    {
+      "title": "cirosantilli/china-dictatorship",
+      "snippet": "反中共政治宣传库。Anti Chinese government propaganda. 住在中国真名用户的网友请别给星星，不然你要被警察请喝茶。常见问答集，新闻集和饭店和音乐建议。卐习万岁卐。冠状病毒审查郝海东新疆改造中心六四事件法轮功 996.ICU709大抓捕巴拿马文件邓家贵低端人口西藏骚乱。Friends who live in China and have real name on ac",
+      "stars": 2887,
+      "url": "https://github.com/cirosantilli/china-dictatorship",
+      "updated": "2026-03-14",
+      "source": "GitHub"
+    },
+    {
+      "title": "iiab/iiab",
+      "snippet": "Internet-in-a-Box - Build your own LIBRARY OF ALEXANDRIA with a Raspberry Pi !",
+      "stars": 1778,
+      "url": "https://github.com/iiab/iiab",
+      "updated": "2026-03-14",
+      "source": "GitHub"
+    },
+    {
+      "title": "namecoin/ncdns",
+      "snippet": ":globe_with_meridians: Namecoin to DNS bridge daemon",
+      "stars": 141,
+      "url": "https://github.com/namecoin/ncdns",
+      "updated": "2026-02-27",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Human-Centred LLM Privacy Audits: Findings and Frictions",
+      "snippet": "Large language models (LLMs) learn statistical associations from massive training corpora and user interactions, and deployed systems can surface or infer information about individuals. Yet people lack practical ways to inspect what a model associates with their name. We report interim findings from",
+      "url": "https://arxiv.org/abs/2603.12094v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "LLMs in social services: How does chatbot accuracy affect human accuracy?",
+      "snippet": "Social service programs like the Supplemental Nutrition Assistance Program (SNAP, or food stamps) have eligibility rules that can be challenging to understand. For nonprofit caseworkers who often support clients in navigating a dozen or more complex programs, LLM-based chatbots may offer a means to ",
+      "url": "https://arxiv.org/abs/2603.11213v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[#234 – David Duvenaud on why 'aligned AI' would still kill democracy] Democracy might be a brief historical blip. That’s the unsettling thesis of a recent paper, which argues AI that can do all the work a human can do inevitably leads to the “gradual disempowerment” of humanity.For most of history, ordinary people had almost no control over their governments. Liberal democracy emerged only recently, and probably not coincidentally around the Industrial Revolution.To",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

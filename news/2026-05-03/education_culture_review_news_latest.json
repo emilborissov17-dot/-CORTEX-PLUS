@@ -1,0 +1,56 @@
+{
+  "axis": "EDUCATION_CULTURE_REVIEW",
+  "fetched_at": "2026-05-03T09:09:22.198380+00:00",
+  "smart_query": "education access schools literacy",
+  "sources_count": {
+    "wiki": 0,
+    "gdelt": 3,
+    "arxiv": 2,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [],
+  "gdelt": [
+    {
+      "title": "Discovery Education Highlights Commitment to Financial Literacy Month With Free , Real - World Learning Resources",
+      "snippet": "Discovery Education Highlights Commitment to Financial Literacy Month With Free , Real - World Learning Resources",
+      "url": "https://www.finanznachrichten.de/nachrichten-2026-04/68221126-discovery-education-highlights-commitment-to-financial-literacy-month-with-free-real-world-learning-resources-200.htm",
+      "source": "finanznachrichten.de"
+    },
+    {
+      "title": "Educación refuerza la alfabetización con la entrega de tablets y libros en escuelas primarias",
+      "snippet": "Educación refuerza la alfabetización con la entrega de tablets y libros en escuelas primarias",
+      "url": "https://www.tiemposur.com.ar/info-general/educacion-refuerza-la-alfabetizacion-con-la-entrega-de-tablets-y-libros-en-escuelas-primarias",
+      "source": "tiemposur.com.ar"
+    },
+    {
+      "title": "Road to Literacy : nominate a school to win one of 2 , 000 trolley libraries",
+      "snippet": "Road to Literacy : nominate a school to win one of 2 , 000 trolley libraries",
+      "url": "https://www.timeslive.co.za/news/2026-02-13-road-to-literacy-nominate-a-school-to-win-one-of-2000-trolley-libraries/",
+      "source": "timeslive.co.za"
+    }
+  ],
+  "github_repos": [],
+  "arxiv_papers": [
+    {
+      "title": "Towards an Ethical AI Curriculum: A Pan-African, Culturally Contextualized Framework for Primary and Secondary Education",
+      "snippet": "Artificial intelligence (AI) is now embedded in educational, civic, and economic systems worldwide. For African primary and secondary education, this creates a double imperative: to prepare a young population (over sixty per cent of Africans are under twenty-five) for AI-mediated labour markets with",
+      "url": "https://arxiv.org/abs/2604.27708v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Math Education Digital Shadows for facilitating learning with LLMs: Math performance, anxiety and confidence in simulated students and AIs",
+      "snippet": "To enhance LLMs' impact on math education, we need data on their mathematical prowess and biases across prompts. To fill this gap, we introduce MEDS (Math Education Digital Shadows) as a dataset mapping how large language models reason about and report mathematics across human- and AI-like condition",
+      "url": "https://arxiv.org/abs/2604.27618v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[FLI’s President and CEO on Trump’s support for an AI ‘kill switch’] President Trump said during an interview aired yesterday by Fox Business that &#8220;there should be&#8221; when asked if AI needs [&#8230;]",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

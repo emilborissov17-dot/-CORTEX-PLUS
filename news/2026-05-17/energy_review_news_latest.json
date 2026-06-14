@@ -1,0 +1,130 @@
+{
+  "axis": "ENERGY_REVIEW",
+  "fetched_at": "2026-05-17T16:45:59.386290+00:00",
+  "smart_query": "renewable energy solar wind",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 3,
+    "arxiv": 0,
+    "github": 3,
+    "youtube_transcripts": 2,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "xAI grows data center gas fleet despite legal scrutiny – This Week in Cleantech",
+      "snippet": "On this episode of the This Week in Cleantech podcast, Molly Taft from WIRED discusses Elon Musk's AI company xAI's decision to add 19 natural gas turbines to its Colossus 2 data center in Southaven, Mississippi.",
+      "url": "https://www.renewableenergyworld.com/podcasts/xai-grows-data-center-gas-fleet-despite-legal-scrutiny-this-week-in-cleantech/",
+      "source": "RSS"
+    },
+    {
+      "title": "The EPA is expediting clean air permits for power plants to remove ‘unnecessary delays’",
+      "snippet": "The U.S. Environmental Protection Agency is expediting Clean Air Act permit reviews to eliminate delays, allowing concurrent public comment and review.",
+      "url": "https://www.renewableenergyworld.com/energy-business/policy-and-regulation/the-epa-is-expediting-clean-air-permits-for-power-plants-to-remove-unnecessary-delays/",
+      "source": "RSS"
+    },
+    {
+      "title": "Elective pay explained as key IRS deadline approaches | Q&A with tax credit specialist Bryen Alperin",
+      "snippet": "Municipalities, schools, and first-time applicants are accelerating projects under the IRS's elective pay provision before the May 15 deadline.",
+      "url": "https://www.renewableenergyworld.com/energy-business/policy-and-regulation/elective-pay-explained-as-key-irs-deadline-approaches-qa-with-tax-credit-specialist-bryen-alperin/",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [
+    {
+      "title": "Oman expands renewable energy projects to boost sustainability and energy security",
+      "snippet": "Oman expands renewable energy projects to boost sustainability and energy security",
+      "url": "https://timesofoman.com/article/169173-oman-expands-renewable-energy-projects-to-boost-sustainability-and-energy-security",
+      "source": "timesofoman.com"
+    },
+    {
+      "title": "Renewable Energy Surge : Solar & Wind Big Eco Wins and Hidden Costs Revealed",
+      "snippet": "Renewable Energy Surge : Solar & Wind Big Eco Wins and Hidden Costs Revealed",
+      "url": "https://www.ibtimes.com/renewable-energy-surge-solar-winds-big-eco-wins-hidden-costs-revealed-3798822",
+      "source": "ibtimes.com"
+    },
+    {
+      "title": "Can Renewable Energy Fully Replace Fossil Fuels and Become the Main Energy Source in the Future ? ",
+      "snippet": "Can Renewable Energy Fully Replace Fossil Fuels and Become the Main Energy Source in the Future ? ",
+      "url": "https://www.techtimes.com/articles/316482/20260511/can-renewable-energy-fully-replace-fossil-fuels-become-main-energy-source-future.htm",
+      "source": "techtimes.com"
+    }
+  ],
+  "github_repos": [
+    {
+      "title": "protontypes/open-sustainable-technology",
+      "snippet": "A directory and analysis of the open source ecosystem in the areas of climate change, sustainable energy, biodiversity and natural resources.  https://docs.getgrist.com/gSscJkc5Rb1R/OpenSustaintech",
+      "stars": 2496,
+      "url": "https://github.com/protontypes/open-sustainable-technology",
+      "updated": "2026-05-17",
+      "source": "GitHub"
+    },
+    {
+      "title": "PyPSA/PyPSA",
+      "snippet": "PyPSA: Python for Power System Analysis",
+      "stars": 1988,
+      "url": "https://github.com/PyPSA/PyPSA",
+      "updated": "2026-05-17",
+      "source": "GitHub"
+    },
+    {
+      "title": "pvlib/pvlib-python",
+      "snippet": "A set of documented functions for simulating the performance of photovoltaic energy systems.",
+      "stars": 1565,
+      "url": "https://github.com/pvlib/pvlib-python",
+      "updated": "2026-05-15",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [],
+  "podcast": "[The Resistance of a Cow] There’s something rotten in the cows of Denmark. And Minnesota. And Wisconsin. And Idaho. What could cause a previously thriving herd of majestic dairy cattle to stop drinking water and start drinking … urine? A Danish farmer calls a special investigator, who takes one look at his farm and nopes the heck out of there, refusing to return, citing “bad energy” coming from something nearby … a big bui",
+  "wiki": null,
+  "youtube_items": [
+    {
+      "title": "[YT] The Green Energy Revolution: How Solar &amp; Wind Are Changing Everything (2025)",
+      "summary": "The numbers tell a story that seemed impossible just a decade ago. In 2024, for the first time in history, the world invested more in solar energy than in all fossil fuels combined. Solar power installations are now growing at a pace that consistently shatters expert predictions. What we are witnessing is not merely an energy transition. It is the fastest global technological and industrial transformation in human history. This is the story of how solar and wind energy went from expensive subsidized alternatives to the cheapest sources of electricity humanity has ever known and how this shift is fundamentally rewriting the rules of global power. The revolution began with a simple relentless curve, Swanson's law, named after the founder of SunPower. It observed that the price of solar photo",
+      "link": "https://www.youtube.com/watch?v=xBWMi5m662M",
+      "source_type": "youtube",
+      "channel": "Rewind Economix",
+      "video_id": "xBWMi5m662M",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] The Energy Revolution is Unstoppable: Record Solar and Wind Additions in 2025",
+      "summary": "The world added a staggering amount of wind and solar power in 2025. And the numbers were incredible. Hello my friends. Welcome to the channel. I'm Sam Evans. And this is video number 8,100. I've done many videos about wind and solar and batteries and how important they are to the planet. But what just happened in 2025 is truly truly astonishing. New data from global energy think tank Ember shows that 814 gigawatts of new solar and wind capacity came online last year, which was an increase of 17% from 2024's 696 gigawatts. That brings total global wind and solar capacity to 4,174 gigawatts or just over 4 terawatts. That sounds like a lot and it is. It's huge. But actually, a lot of wind and solar was also wasted. Completely wasted. In 2025. Curtailed, the industry calls it. In fact, at lea",
+      "link": "https://www.youtube.com/watch?v=spSOp5s_6_A",
+      "source_type": "youtube",
+      "channel": "The Electric Viking",
+      "video_id": "spSOp5s_6_A",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] 2025 Amazing Renewable Energy Facts",
+      "summary": "Thank you.",
+      "link": "https://www.youtube.com/watch?v=-ENCA0LOtVs",
+      "source_type": "youtube",
+      "channel": "engineer ED",
+      "video_id": "-ENCA0LOtVs",
+      "transcript_method": "whisper",
+      "transcript_chars": 10,
+      "has_full_transcript": true
+    }
+  ],
+  "summary": "Енергийната трансформация постепенно достига критична точка, като соларната енергия надхвърля за първи път в историята инвестицията във всички фосилни горива. Това е революционен момент в развитието на устойчива цивилизация.",
+  "urgency": "HIGH",
+  "sentiment": "POSITIVE",
+  "key_developments": [
+    "xAI разширява газовата си инфраструктура, несмотря на правените прегледи",
+    "EPA ускорява разрешенията за чист въздушен въздух за електроенергийни централи, за да избегне ненужни задръжки",
+    "Оман разширява проекти за възобновяема енергия за по-висока устойчивост и енергийна сигурност",
+    "Всички възобновяеми източници на енергия достигат рекордни инвестиции в 2024 г., като соларната енергия надхвърля възобновяемите горива"
+  ],
+  "open_source_momentum": "protontypes/open-sustainable-technology (star=2496), PyPSA/PyPSA (star=1988), pvlib/pvlib-python (star=1565)",
+  "scientific_frontier": "No data",
+  "relevance_to_goal": "CRITICAL"
+}

@@ -1,0 +1,103 @@
+ENERGY_REVIEW CONTEXT
+Generated at: 2026-03-02T19:41:40.082482+00:00
+
+=== DOMAIN SUMMARY: energysupply ===
+- run_at: 2026-03-02T19:35:10.106343, active_sources: 56, ok_sources: 33, failed_sources: 23
+- sources:
+  * International Energy Agency (IEA) | https://www.iea.org | status=200 | error=None
+  * U.S. Energy Information Administration (EIA) | https://www.eia.gov | status=200 | error=None
+  * World Bank Energy Statistics | https://data.worldbank.org/topic/energy | status=403 | error=HTTP 403
+  * European Commission - Joint Research Centre (JRC) | https://ec.europa.eu/jrc | status=200 | error=None
+  * National Renewable Energy Laboratory (NREL) | https://www.nrel.gov | status=200 | error=None
+  * International Renewable Energy Agency (IRENA) | https://www.irena.org | status=403 | error=HTTP 403
+  * Global Energy Observatory (GEO) - University of Texas | https://geo.utexas.edu | status=None | error=[ERROR] ConnectionError(MaxRetryError('HTTPSConnectionPool(host=\'geo.utexas.edu\', port=443): Max retries exceeded with url: / (Caused by NameResolutionError("HTTPSConnection(host=\'geo.utexas.edu\', port=443): Failed to resolve \'geo.utexas.edu\' ([Errno 11001] getaddrinfo failed)"))'))
+  * World Resources Institute (WRI) Energy Access | https://www.wri.org/programs/energy-access | status=404 | error=HTTP 404
+  * Energy Information Administration (EIA) API | https://www.eia.gov/developers/api-documentation | status=404 | error=HTTP 404
+  * International Energy Forum (IEF) | https://www.ief.org | status=200 | error=None
+  * Global Carbon Project | https://globalcarbonproject.org | status=None | error=[ERROR] ConnectionError(MaxRetryError('HTTPSConnectionPool(host=\'globalcarbonproject.org\', port=443): Max retries exceeded with url: / (Caused by NameResolutionError("HTTPSConnection(host=\'globalcarbonproject.org\', port=443): Failed to resolve \'globalcarbonproject.org\' ([Errno 11001] getaddrinfo failed)"))'))
+  * National Agency for Energy Efficiency (NAEE) - Turkey | https://www.enerji.gov.tr | status=200 | error=None
+  * European Environment Agency (EEA) Energy Data | https://www.eea.europa.eu | status=200 | error=None
+  * International Energy Outlook (IEO) - U.S. Energy Information Administration | https://www.eia.gov/outlooks/ieo | status=200 | error=None
+  * Global Energy Transition Index (GETI) - World Economic Forum | https://www.weforum.org | status=403 | error=HTTP 403
+  * Energy Data Initiative (EDI) - World Bank | https://data.worldbank.org | status=200 | error=None
+  * Energy Storage Association (ESA) | https://www.energystorage.org | status=200 | error=None
+  * Global Energy System (GES) - Stanford University | https://energy.stanford.edu | status=200 | error=None
+  * International Energy Statistics Database (IESD) | https://iesd.org | status=200 | error=None
+  * Energy Markets and Policy Research (EMPR) - University of Cambridge | https://www.energy.cam.ac.uk | status=200 | error=None
+  * International Energy Agency (IEA) | https://www.iea.org/data-and-statistics | status=200 | error=None
+  * U.S. Energy Information Administration (EIA) | https://www.eia.gov/data-and-models | status=404 | error=HTTP 404
+  * European Union Energy Data Portal | https://ec.europa.eu/eurostat/cache/estat/energy/databrowser_en.html | status=404 | error=HTTP 404
+  * World Bank Energy Statistics | https://data.worldbank.org/topic/energy | status=403 | error=HTTP 403
+  * International Renewable Energy Agency (IRENA) | https://www.irena.org/data-and-statistics | status=403 | error=HTTP 403
+  * National Renewable Energy Laboratory (NREL) | https://www.nrel.gov/ | status=200 | error=None
+  * Global Energy Observatory (GEO) | https://www.worldenergy.org/ | status=200 | error=None
+  * Open Energy Markets (OEM) | https://open-energy-markets.org/ | status=None | error=[ERROR] ConnectionError(MaxRetryError('HTTPSConnectionPool(host=\'open-energy-markets.org\', port=443): Max retries exceeded with url: / (Caused by NameResolutionError("HTTPSConnection(host=\'open-energy-markets.org\', port=443): Failed to resolve \'open-energy-markets.org\' ([Errno 11001] getaddrinfo failed)"))'))
+  * World Resources Institute (WRI) | https://www.wri.org/energy | status=200 | error=None
+  * International Energy Forum (IEF) | https://www.ief.org/ | status=200 | error=None
+  * Energy Data Initiative (EDi) | https://www.edi.org.uk/ | status=436 | error=HTTP 436
+  * Global Energy Statistical Database (GESDB) | https://www.ief.org/ | status=200 | error=None
+  * European Energy Agency (EU Emissions Trading System) | https://www.eea.europa.eu/data-and-maps/ | status=200 | error=None
+  * African Energy Outlook (AEO) | https://www.africanenergy.org/ | status=None | error=[ERROR] ConnectionError(MaxRetryError('HTTPSConnectionPool(host=\'www.africanenergy.org\', port=443): Max retries exceeded with url: / (Caused by NameResolutionError("HTTPSConnection(host=\'www.africanenergy.org\', port=443): Failed to resolve \'www.africanenergy.org\' ([Errno 11001] getaddrinfo failed)"))'))
+  * International Energy Outlook (IEO) | https://www.iea.org/reports/international-energy-outlook | status=404 | error=HTTP 404
+  * International Energy Agency (IEA) Energy Statistics | https://www.iea.org/data-and-statistics | status=200 | error=None
+  * U.S. Energy Information Administration (EIA) | https://www.eia.gov | status=200 | error=None
+  * European Commission Energy Data Portal | https://ec.europa.eu/energy/data_en | status=200 | error=None
+  * International Renewable Energy Agency (IRENA) | https://www.irena.org/data-and-statistics | status=403 | error=HTTP 403
+  * World Bank Energy Statistics | https://data.worldbank.org/indicator | status=200 | error=None
+  * National Renewable Energy Laboratory (NREL) | https://www.nrel.gov | status=200 | error=None
+  * OpenEI (Open Energy Information) | https://openei.org/ | status=200 | error=None
+  * Global Electricity Dataset (GloE) | https://www.global-energy.org/ | status=200 | error=None
+  * International Energy Forum (IEF) API | https://www.ief.org/ | status=200 | error=None
+  * World Energy Council (WEC) Energy Data | https://www.worldenergy.org/ | status=200 | error=None
+  * National Geospatial-Intelligence Agency (NGA) | https://www.nga.gov/ | status=403 | error=HTTP 403
+  * Asian Development Bank (ADB) Energy Data Portal | https://www.adb.org/energy | status=200 | error=None
+  * African Development Bank (AfDB) Energy Data | https://www.afdb.org/energy | status=403 | error=HTTP 403
+  * Global Petrol and Gas Data (GlobalPetrol) | https://www.globalpetrol.org/ | status=None | error=[ERROR] ConnectionError(MaxRetryError('HTTPSConnectionPool(host=\'www.globalpetrol.org\', port=443): Max retries exceeded with url: / (Caused by NameResolutionError("HTTPSConnection(host=\'www.globalpetrol.org\', port=443): Failed to resolve \'www.globalpetrol.org\' ([Errno 11001] getaddrinfo failed)"))'))
+  * European Environment Agency (EEA) Energy Data | https://www.eea.europa.eu/data-and-maps/ | status=200 | error=None
+  * Energy Information Portal (EIP) | https://www.energyportal.org/ | status=None | error=[ERROR] ConnectionError(MaxRetryError('HTTPSConnectionPool(host=\'www.energyportal.org\', port=443): Max retries exceeded with url: / (Caused by NameResolutionError("HTTPSConnection(host=\'www.energyportal.org\', port=443): Failed to resolve \'www.energyportal.org\' ([Errno 11001] getaddrinfo failed)"))'))
+  * International Energy Statistics (IES) | https://www.ies.org/ | status=403 | error=HTTP 403
+  * Energy Storage Database (ESDB) | https://www.energystorage.org/ | status=200 | error=None
+  * Global Wind Energy Council (GWEC) | https://gwec.net/ | status=200 | error=None
+  * International Solar Energy Society (ISES) | https://www.solarsystem.org/ | status=436 | error=HTTP 436
+  * Global Energy Transition Index (GEC) | https://www.genevainstitute.org | status=None | error=[ERROR] SSLError(MaxRetryError('HTTPSConnectionPool(host=\'www.genevainstitute.org\', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerificationError(1, "[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for \'www.genevainstitute.org\'. (_ssl.c:1081)")))'))
+
+=== DOMAIN SUMMARY: energyrenewables ===
+- run_at: 2026-03-02T19:41:40.039764, active_sources: 37, ok_sources: 22, failed_sources: 15
+- sources:
+  * https://www.irena.org | https://www.irena.org | status=403 | error=HTTP 403
+  * https://www.iea.org | https://www.iea.org | status=200 | error=None
+  * https://data.worldbank.org/topic/energy | https://data.worldbank.org/topic/energy | status=403 | error=HTTP 403
+  * https://nrel.gov | https://nrel.gov | status=200 | error=None
+  * https://ec.europa.eu/eurostat | https://ec.europa.eu/eurostat | status=200 | error=None
+  * https://www.eia.gov | https://www.eia.gov | status=200 | error=None
+  * https://www.energy.gov/eere | https://www.energy.gov/eere | status=200 | error=None
+  * https://gwec.net | https://gwec.net | status=200 | error=None
+  * https://www.seia.org | https://www.seia.org | status=403 | error=HTTP 403
+  * https://globalcarbonproject.org | https://globalcarbonproject.org | status=None | error=[ERROR] ConnectionError(MaxRetryError('HTTPSConnectionPool(host=\'globalcarbonproject.org\', port=443): Max retries exceeded with url: / (Caused by NameResolutionError("HTTPSConnection(host=\'globalcarbonproject.org\', port=443): Failed to resolve \'globalcarbonproject.org\' ([Errno 11001] getaddrinfo failed)"))'))
+  * https://www.unep.org/resources/publications | https://www.unep.org/resources/publications | status=403 | error=HTTP 403
+  * https://www.wri.org/energy | https://www.wri.org/energy | status=200 | error=None
+  * https://ises.org | https://ises.org | status=200 | error=None
+  * https://www.neb.gov.ca | https://www.neb.gov.ca | status=None | error=[ERROR] ConnectionError(MaxRetryError('HTTPSConnectionPool(host=\'www.neb.gov.ca\', port=443): Max retries exceeded with url: / (Caused by NameResolutionError("HTTPSConnection(host=\'www.neb.gov.ca\', port=443): Failed to resolve \'www.neb.gov.ca\' ([Errno 11001] getaddrinfo failed)"))'))
+  * https://www.ofgem.gov.uk | https://www.ofgem.gov.uk | status=200 | error=None
+  * https://www.cemcleanenergyministerial.org | https://www.cemcleanenergyministerial.org | status=None | error=[ERROR] ConnectionError(MaxRetryError('HTTPSConnectionPool(host=\'www.cemcleanenergyministerial.org\', port=443): Max retries exceeded with url: / (Caused by NameResolutionError("HTTPSConnection(host=\'www.cemcleanenergyministerial.org\', port=443): Failed to resolve \'www.cemcleanenergyministerial.org\' ([Errno 11001] getaddrinfo failed)"))'))
+  * https://www.eea.europa.eu | https://www.eea.europa.eu | status=200 | error=None
+  * https://ief.org | https://ief.org | status=200 | error=None
+  * https://www.irena.org/renewables-watch | https://www.irena.org/renewables-watch | status=403 | error=HTTP 403
+  * https://www.irena.org/publications | https://www.irena.org/publications | status=403 | error=HTTP 403
+  * IRENA Renewable Energy Statistics | https://data.irena.org | status=None | error=[ERROR] ConnectionError(MaxRetryError('HTTPSConnectionPool(host=\'data.irena.org\', port=443): Max retries exceeded with url: / (Caused by NameResolutionError("HTTPSConnection(host=\'data.irena.org\', port=443): Failed to resolve \'data.irena.org\' ([Errno 11001] getaddrinfo failed)"))'))
+  * IEA Renewable Energy Statistics | https://www.iea.org/data-and-statistics | status=200 | error=None
+  * UNEP EPD (Emissions Database for Global Atmospheric Research) | https://epd.unep.org | status=None | error=[ERROR] ConnectionError(MaxRetryError('HTTPSConnectionPool(host=\'epd.unep.org\', port=443): Max retries exceeded with url: / (Caused by NameResolutionError("HTTPSConnection(host=\'epd.unep.org\', port=443): Failed to resolve \'epd.unep.org\' ([Errno 11001] getaddrinfo failed)"))'))
+  * EU JRC Energy Data Portal | https://ec.europa.eu/jrc/en/energy | status=403 | error=HTTP 403
+  * U.S. NREL REmap Database | https://remap.nrel.gov | status=None | error=[ERROR] ConnectionError(MaxRetryError('HTTPSConnectionPool(host=\'remap.nrel.gov\', port=443): Max retries exceeded with url: / (Caused by NameResolutionError("HTTPSConnection(host=\'remap.nrel.gov\', port=443): Failed to resolve \'remap.nrel.gov\' ([Errno 11001] getaddrinfo failed)"))'))
+  * World Bank Energy Statistics | https://data.worldbank.org/indicator | status=200 | error=None
+  * Global Carbon Project | https://www.globalcarbonproject.org | status=200 | error=None
+  * World Resources Institute (WRI) Energy Data | https://www.wri.org/energy | status=200 | error=None
+  * Open Energy Dataset (EU Energy Data Hub) | https://www.energydata.info | status=200 | error=None
+  * National Renewable Energy Laboratory (NREL) | https://www.nrel.gov | status=200 | error=None
+  * Global Solar Atlas (IRENA) | https://globalsolaratlas.info | status=200 | error=None
+  * Wind Atlas (NREL) | https://www.nrel.gov/research/wind.html | status=404 | error=HTTP 404
+  * IEA Wind Power Data | https://www.iea.org/data-and-statistics | status=200 | error=None
+  * IEA Solar Power Data | https://www.iea.org/data-and-statistics | status=200 | error=None
+  * Energy Transition Matrix (European Environment Agency) | https://www.eea.europa.eu | status=200 | error=None
+  * World Energy Council (WEC) Energy Data | https://www.worldenergy.org | status=200 | error=None
+  * https://www.energytransitionmatrix.com | https://www.energytransitionmatrix.com | status=None | error=[ERROR] ConnectionError(MaxRetryError('HTTPSConnectionPool(host=\'www.energytransitionmatrix.com\', port=443): Max retries exceeded with url: / (Caused by NameResolutionError("HTTPSConnection(host=\'www.energytransitionmatrix.com\', port=443): Failed to resolve \'www.energytransitionmatrix.com\' ([Errno 11001] getaddrinfo failed)"))'))

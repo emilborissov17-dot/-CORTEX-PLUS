@@ -1,0 +1,95 @@
+{
+  "axis": "COSMIC_RESOURCES_REVIEW",
+  "domain": "cosmos",
+  "timestamp": "2026-05-18T08:05:20.583572+00:00",
+  "sources_count": 6,
+  "rss_count": 0,
+  "ddg_count": 5,
+  "youtube_count": 1,
+  "youtube_items": [
+    {
+      "title": "[YT] Mining Asteroids for Resources: The Future of Space Economy ...How Asteroid Mining Could Change Earth Forever | Watch - MSNPBS Space Time | How Asteroid Mining Will Save Earth | Season ...Economics of the Stars: The Future of Asteroid Mining and the ...Are we on the verge of mining metals from the asteroids ... - BBCWhat is asteroid mining and how close are we to making it a ...Asteroid Mining Economics: Will Space Resources Reshape ...",
+      "summary": "[DESCRIPTION FALLBACK] Oct 11, 2025 · Learn how scientists and private companies plan to extract materials from asteroids to support space exploration and Earth’s growing demand. Discover the technology, challenges, and... Oct 30, 2025 · In this video, we explore the promise and peril of harvesting resources from space, the technology making it possible, and the questions it raises about the future of our world economy. Jun 27, 2018 · Money talks, and tens of billions or even trillions of dollars per asteroid speaks v",
+      "link": "https://www.youtube.com/watch?v=Edf7XCHRHLw",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "Edf7XCHRHLw",
+      "transcript_method": "description",
+      "transcript_chars": 523,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "problem": "Asteroid mining could destabilize global markets by creating an unregulated supply of space resources.",
+    "root_cause": "Lack of international legal frameworks to govern space resource extraction and distribution.",
+    "severity": "HIGH",
+    "leverage_points": [
+      "International space agencies and governments",
+      "Private space mining companies"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Establish a binding international treaty on space resource governance",
+        "measurable_goal": "At least 50% of major space-faring nations ratify the treaty within 5 years",
+        "timeframe": "long-term"
+      },
+      {
+        "action": "Create a transparent global registry for asteroid mining operations",
+        "measurable_goal": "All registered mining operations are publicly accessible and auditable within 3 years",
+        "timeframe": "medium-term"
+      }
+    ],
+    "evidence": [
+      "We may be about to see an asteroid-mining gold rush. But here's why...: The risks of asteroid mining. As alluring as an impending space-age gold rush may sound, there are reasons for caution – not least the potential destabilisation of global markets.",
+      "Space Resource Exploration and Utilization Act of 2015: The Space Resource Exploration and Utilization Act of 2015 (H.R. 1508) was a bill (which never became law) introduced in the 114th Congress of the U.S. on March 19, 2015, by Rep. Bill Posey, Republica"
+    ],
+    "generalization": "This issue connects to the broader domain of cosmic resource management, where unregulated extraction could lead to market distortions, geopolitical tensions, and environmental risks across space and Earth.",
+    "summary": "Asteroid mining could destabilize global markets due to lack of regulation, requiring international governance frameworks to prevent economic and geopolitical risks.",
+    "risk_level": "HIGH"
+  },
+  "raw_items": [
+    {
+      "title": "Asteroid mining",
+      "summary": "Asteroid mining is the hypothetical and technically possible extraction of materials from asteroids and other minor planets, including near-Earth objects.Research missions focused on asteroid sample return, including Hayabusa, Hayabusa2, OSIRIS-REx, and Tianwen-2, illustrate the challenges of collecting ore from space using current technology. As of 2024, around 127 grams of asteroid material have",
+      "link": "https://en.wikipedia.org/wiki/Asteroid_mining",
+      "source_type": "ddg"
+    },
+    {
+      "title": "We may be about to see an asteroid-mining gold rush. But here's why...",
+      "summary": "The risks of asteroid mining. As alluring as an impending space-age gold rush may sound, there are reasons for caution – not least the potential destabilisation of global markets.",
+      "link": "https://www.skyatnightmagazine.com/space-science/asteroid-mining-pros-cons",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Space Resource Exploration and Utilization Act of 2015",
+      "summary": "The Space Resource Exploration and Utilization Act of 2015 (H.R. 1508) was a bill (which never became law) introduced in the 114th Congress of the U.S. on March 19, 2015, by Rep. Bill Posey, Republican of Florida. It is identical to the Senate bill by the same name (S. 976). The bill would have expanded Presidential power regarding space resources, and regulated US-based space exploration companie",
+      "link": "https://en.wikipedia.org/wiki/Space_Resource_Exploration_and_Utilization_Act_of_2015",
+      "source_type": "ddg"
+    },
+    {
+      "title": "European Space Resources Innovation Centre",
+      "summary": "The European Space Resources Innovation Centre (ESRIC) is a research, business, and innovation hub based in Luxembourg, established in August 2020 as the world's first center dedicated exclusively to the utilization of space resources in support of…",
+      "link": "https://grokipedia.com/page/european_space_resources_innovation_centre",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Home - Space Resources Program",
+      "summary": "The Center for Space Resources, in partnership with Space Ventures Consultants, the Mines Beck Venture Center, and The CPI Group hosted the second ...",
+      "link": "https://space.mines.edu/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "[YT] Mining Asteroids for Resources: The Future of Space Economy ...How Asteroid Mining Could Change Earth Forever | Watch - MSNPBS Space Time | How Asteroid Mining Will Save Earth | Season ...Economics of the Stars: The Future of Asteroid Mining and the ...Are we on the verge of mining metals from the asteroids ... - BBCWhat is asteroid mining and how close are we to making it a ...Asteroid Mining Economics: Will Space Resources Reshape ...",
+      "summary": "[DESCRIPTION FALLBACK] Oct 11, 2025 · Learn how scientists and private companies plan to extract materials from asteroids to support space exploration and Earth’s growing demand. Discover the technology, challenges, and... Oct 30, 2025 · In this video, we explore the promise and peril of harvesting resources from space, the technology making it possible, and the questions it raises about the future of our world economy. Jun 27, 2018 · Money talks, and tens of billions or even trillions of dollars per asteroid speaks v",
+      "link": "https://www.youtube.com/watch?v=Edf7XCHRHLw",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "Edf7XCHRHLw",
+      "transcript_method": "description",
+      "transcript_chars": 523,
+      "has_full_transcript": false
+    }
+  ]
+}

@@ -1,0 +1,82 @@
+{
+  "axis": "ECOSYSTEMS_BIODIVERSITY_REVIEW",
+  "fetched_at": "2026-03-20T08:15:37.954831+00:00",
+  "smart_query": "biodiversity species extinction",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube": 10,
+    "youtube_transcripts": 1,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "Scientists thought ravens followed wolves. They were wrong",
+      "snippet": "Ravens have long been thought to follow wolves to find food, but new research shows they’re far more strategic. By tracking both animals in Yellowstone, scientists discovered that ravens memorize areas where wolf kills are likely and fly directly to those spots—sometimes from great distances. Rather",
+      "url": "https://www.sciencedaily.com/releases/2026/03/260319044643.htm",
+      "source": "RSS"
+    },
+    {
+      "title": "Life rebounded shockingly fast after the asteroid that killed the dinosaurs",
+      "snippet": "The asteroid impact that wiped out the dinosaurs didn’t keep life down for long. New research shows that microscopic plankton began evolving into new species within just a few thousand years—and possibly in under 2,000 years—after the disaster. Scientists uncovered this rapid rebound by using a rare",
+      "url": "https://www.sciencedaily.com/releases/2026/03/260315004414.htm",
+      "source": "RSS"
+    },
+    {
+      "title": "Ocean warming may supercharge a tiny microbe that controls marine nutrients",
+      "snippet": "As deep-sea waters warm, scientists expected trouble for the microbes that help keep ocean chemistry in balance. Instead, researchers found that Nitrosopumilus maritimus can adapt to warmer, iron-limited conditions by using iron more efficiently. Because these microbes control key nitrogen reactions",
+      "url": "https://www.sciencedaily.com/releases/2026/03/260311004708.htm",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "protontypes/open-sustainable-technology",
+      "snippet": "A directory and analysis of the open source ecosystem in the areas of climate change, sustainable energy, biodiversity and natural resources.  https://docs.getgrist.com/gSscJkc5Rb1R/OpenSustaintech",
+      "stars": 2465,
+      "url": "https://github.com/protontypes/open-sustainable-technology",
+      "updated": "2026-03-20",
+      "source": "GitHub"
+    },
+    {
+      "title": "treflehq/trefle-api",
+      "snippet": "🍀 Trefle is a botanical JSON REST API for plants species, allowing you to search and query over all the registered species, and build the next gardening apps and farming robots.",
+      "stars": 569,
+      "url": "https://github.com/treflehq/trefle-api",
+      "updated": "2026-03-17",
+      "source": "GitHub"
+    },
+    {
+      "title": "blutjens/awesome-forests",
+      "snippet": "🌳 A curated list of ground-truth forest datasets for the machine learning and forestry community.",
+      "stars": 359,
+      "url": "https://github.com/blutjens/awesome-forests",
+      "updated": "2026-03-19",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Modulating biodiversity through higher-order interactions and intraspecific competition in rock-paper-scissors dynamics",
+      "snippet": "Understanding the mechanisms that govern species coexistence and biodiversity represents a fundamental challenge in ecology. This study extends the classic rock-paper-scissors model by introducing a context-dependent higher-order interaction mechanism where intraspecific competition is dynamically r",
+      "url": "https://arxiv.org/abs/2603.00566v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Properties of biodiversity indices that model future extinction risk",
+      "snippet": "The loss of biodiversity due to the likely widespread extinction of species in the near future is a focus of current concern in conservation biology. One approach to measure the impact of this extinction is based on the predicted loss of phylogenetic diversity. These predictions have become a focus ",
+      "url": "https://arxiv.org/abs/2602.16059v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[Return of the Flesh-Eaters] If a species is horrible enough, do we have the right to kill it forever?\nSeventy years ago, a nightmare parasite feasted on the live flesh of warm-blooded creatures in North America: the screwworm. That is, until a young scientist named Edward F. Knipling discovered a crucial screwworm weakness and hatched a sweeping project to wipe them out. Knipling’s seemingly zany plan to spray screwworms out",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

@@ -1,0 +1,75 @@
+{
+  "axis": "LONG_TERM_FUTURE_REVIEW",
+  "fetched_at": "2026-03-10T11:45:46.182307+00:00",
+  "smart_query": "long term future review",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 3,
+    "arxiv": 2,
+    "github": 3,
+    "youtube": 2,
+    "youtube_transcripts": 1
+  },
+  "analysis": {
+    "summary": "Във фокуса е правната дейност срещу OpenAI и GPS-конфликти в Близкия изток, докато научните изследвания и отворените източници продължават да изтъкват важността си за бъдещето на ИИ. Предсказанието за достигане на AGI до 2027 г. подчертава ускореното развитие на интелигентни системи.",
+    "key_developments": [
+      "Съдебен процес срещу OpenAI за убийството в канадска училищна стая",
+      "Изследвания за автоматизирана научна изследователска активност на ИИ"
+    ],
+    "sentiment": "CRITICAL",
+    "urgency": "HIGH",
+    "open_source_momentum": "Растяща активност в отворените източници с фокус върху контролни слоеве и модулни рамки за ИИ агенти",
+    "scientific_frontier": "Инновации в предварителната групировка на сили и автоматизирано обучение на ИИ агенти",
+    "relevance_to_goal": "Висока релевантност към целта за устойчиво развитие, тъй като AGI и отворените технологии могат да определят бъдещето на човечеството"
+  },
+  "sentiment": "CRITICAL",
+  "urgency": "HIGH",
+  "summary": "Във фокуса е правната дейност срещу OpenAI и GPS-конфликти в Близкия изток, докато научните изследвания и отворените източници продължават да изтъкват важността си за бъдещето на ИИ. Предсказанието за достигане на AGI до 2027 г. подчертава ускореното развитие на интелигентни системи.",
+  "key_developments": [
+    "Съдебен процес срещу OpenAI за убийството в канадска училищна стая",
+    "Изследвания за автоматизирана научна изследователска активност на ИИ"
+  ],
+  "open_source_momentum": "Растяща активност в отворените източници с фокус върху контролни слоеве и модулни рамки за ИИ агенти",
+  "scientific_frontier": "Инновации в предварителната групировка на сили и автоматизирано обучение на ИИ агенти",
+  "github_repos": [
+    {
+      "title": "emcie-co/parlant",
+      "snippet": "The conversational control layer for customer-facing AI agents - Parlant is a context-engineering framework optimized for controlling customer interactions.",
+      "stars": 17817,
+      "url": "https://github.com/emcie-co/parlant",
+      "updated": "2026-03-10",
+      "source": "GitHub"
+    },
+    {
+      "title": "agencyenterprise/PromptInject",
+      "snippet": "PromptInject is a framework that assembles prompts in a modular fashion to provide a quantitative analysis of the robustness of LLMs to adversarial prompt attacks. 🏆 Best Paper Awards @ NeurIPS ML Saf",
+      "stars": 460,
+      "url": "https://github.com/agencyenterprise/PromptInject",
+      "updated": "2026-03-10",
+      "source": "GitHub"
+    },
+    {
+      "title": "MinghuiChen43/awesome-trustworthy-deep-learning",
+      "snippet": "A curated list of trustworthy deep learning papers. Daily updating...",
+      "stars": 382,
+      "url": "https://github.com/MinghuiChen43/awesome-trustworthy-deep-learning",
+      "updated": "2026-02-21",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Exp-Force: Experience-Conditioned Pre-Grasp Force Selection with Vision-Language Models",
+      "snippet": "Accurate pre-contact grasp force selection is critical for safe and reliable robotic manipulation. Adaptive controllers regulate force after contact but still require a reasonable initial estimate. Starting a grasp with too little force requires reactive adjustment, while starting a grasp with too h",
+      "url": "https://arxiv.org/abs/2603.08668v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "PostTrainBench: Can LLM Agents Automate LLM Post-Training?",
+      "snippet": "AI agents have become surprisingly proficient at software engineering over the past year, largely due to improvements in reasoning capabilities. This raises a deeper question: can these systems extend their capabilities to automate AI research itself? In this paper, we explore post-training, the cri",
+      "url": "https://arxiv.org/abs/2603.08640v1",
+      "source": "arXiv"
+    }
+  ]
+}

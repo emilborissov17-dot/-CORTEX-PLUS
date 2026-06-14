@@ -1,0 +1,133 @@
+{
+  "axis": "HUMAN_WELL_BEING_REVIEW",
+  "domain": "human",
+  "timestamp": "2026-05-03T08:47:06.977659+00:00",
+  "sources_count": 15,
+  "rss_count": 12,
+  "ddg_count": 0,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] Practice Being Broke Before Quitting Your Job — Michelle Khare",
+      "summary": "When did you take action towards realizing the dream? Could have been a very small thing, I don't know, but like what was the kind of defining first step that kind of set you on the actual path to realizing what you laid out? I took action pretty immediately, but it took me a year to quit my job. And I'll define what the difference is. I took action immediately by This might be crazy. This was a Tim Ferriss experiment. I really resonated with what you wrote about coming to terms with the worst possible outcome. Mhm. And so I decided, I'm going to train myself for the worst possible outcome. &gt;&gt; it. So I moved into a studio apartment with a roommate. I cut like like financially stripped down I mean, I didn't have much anyways, but stripped as much as I could to simulate if if I'm truly",
+      "link": "https://www.youtube.com/watch?v=UOyDS1vakL8",
+      "published": "2026-04-30T17:44:22+00:00",
+      "source_type": "youtube",
+      "channel": "Tim Ferriss",
+      "video_id": "UOyDS1vakL8",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] The AI Frontier and How to Spot Billion-Dollar Companies Before Everyone Else — Elad Gil",
+      "summary": "There are moments in time where it's very smart to be contrarian. &gt;&gt; And there are moments in time where being consensus is the smartest possible thing you can do. And I think right now we're in a moment in time where being consensus is very right. You know, you can really overthink it. And what's a contrarian thing? We should go do a bunch of hardware stuff cuz blah blah blah. You like maybe buy more AI. You know what I mean? I think people make these things way too complicated. &gt;&gt; Yeah. True. In every aspect of life probably. All nice to see you. Thanks for making the time. appreciate it. &gt;&gt; Yeah, as always &gt;&gt; and I thought we could begin with something we were chatting about or you were explaining before we started recording which is a new phenomenon of sorts. Co",
+      "link": "https://www.youtube.com/watch?v=HutNi2cNsCg",
+      "published": "2026-04-29T22:04:02+00:00",
+      "source_type": "youtube",
+      "channel": "Tim Ferriss",
+      "video_id": "HutNi2cNsCg",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] From 9th-Grade Dropout to DC's Longest-Serving Police Chief — Cathy Lanier",
+      "summary": "I would say the two things that have helped me in that exam that have helped me most of my law enforcement career my grandmother instilled in me two things problem solving being a big part of that is is like you never make excuses when bad things happen don't make excuses you put yourself in that position you found yourself here it is nobody else's fault but yours you know I'm not an excuse person I don't make excuses if I find myself in a bad situation I did something to get myself here and I'm going to get myself out and that was the way she taught. The other thing she taught me was she's like, \"You're going to be damned if you do and damned if you don't. You better be damned for doing [clears throat] like so [laughter] you act. You always act. You don't let your circumstances dictate fo",
+      "link": "https://www.youtube.com/watch?v=ItmGtrEhuek",
+      "published": "2026-04-23T15:57:55+00:00",
+      "source_type": "youtube",
+      "channel": "Tim Ferriss",
+      "video_id": "ItmGtrEhuek",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "summary": "- WHO Member States agree to extend negotiations on Pathogen Access and Benefit Sharing annex: <p>Member States of the World Health Organization (WHO) have progressed work on the Pathogen Access and Benefit Sharing (PABS) annex, a key part of the WHO Pandemic Agreement, and today agreed additio\n- Au",
+    "risk_level": "UNKNOWN",
+    "trend": "UNKNOWN",
+    "key_events": [
+      "WHO Member States agree to extend negotiations on Pathogen Access and Benefit Sharing annex",
+      "Australia becomes the 30th country to eliminate trachoma as a public health problem",
+      "Efforts to eliminate hepatitis delivers gains but more action needed to meet 2030 targets"
+    ],
+    "insights": [],
+    "youtube_insights": [],
+    "relevance_to_goal": "",
+    "generalization": ""
+  },
+  "raw_items": [
+    {
+      "title": "WHO Member States agree to extend negotiations on Pathogen Access and Benefit Sharing annex",
+      "summary": "<p>Member States of the World Health Organization (WHO) have progressed work on the Pathogen Access and Benefit Sharing (PABS) annex, a key part of the WHO Pandemic Agreement, and today agreed additional time was needed to finalize the framework for ensuring a better, more equitable, response to future pandemics.</p><p>Countries today ended the resumed session of the sixth meeting of the Intergovernmental Working Group (IGWG) on the WHO Pandemic Agreement in Geneva, focused on the PABS system. T",
+      "link": "https://www.who.int/news/item/01-05-2026-who-member-states-agree-to-extend-negotiations-on-pathogen-access-and-benefit-sharing-annex",
+      "published": "Fri, 01 May 2026 16:52:42 Z",
+      "source_type": "rss"
+    },
+    {
+      "title": "Australia becomes the 30th country to eliminate trachoma as a public health problem",
+      "summary": "The World Health Organization (WHO) has validated Australia for eliminating trachoma as a public health problem, marking a significant milestone in the health of indigenous peoples and in global efforts to combat neglected tropical diseases (NTDs). Trachoma, the world’s leading infectious cause of blindness, no longer represents a public health problem in the country.",
+      "link": "https://www.who.int/news/item/29-04-2026-australia-becomes-the-30th-country-to-eliminate-trachoma-as-a-public-health-problem",
+      "published": "Wed, 29 Apr 2026 06:10:07 Z",
+      "source_type": "rss"
+    },
+    {
+      "title": "Efforts to eliminate hepatitis delivers gains but more action needed to meet 2030 targets",
+      "summary": "<p>Global efforts to combat viral hepatitis are delivering measurable progress in reducing infections and deaths, but the disease remains a major global health challenge, according to a new World Health Organization (WHO) <a href=\"https://www.who.int/publications/i/item/9789240122383\">report</a> released today at the World Hepatitis Summit.</p><p>Viral hepatitis B and C &ndash; the two infections responsible for 95% of hepatitis-related deaths worldwide &ndash; claimed 1.34&nbsp;million lives in",
+      "link": "https://www.who.int/news/item/28-04-2026-efforts-to-eliminate-hepatitis-delivers-gains-but-more-action-needed-to-meet-2030-targets",
+      "published": "Tue, 28 Apr 2026 05:37:30 Z",
+      "source_type": "rss"
+    },
+    {
+      "title": "Practicing today for tomorrow’s emergencies – WHO convenes countries and partners to simulate response to major disease outbreak",
+      "summary": "<p>The World Health Organization (WHO) wrapped up Exercise Polaris II, a 2-day high-level simulation exercise, based around an outbreak of a fictional new bacterium spreading across the world. Bringing together 26 countries and territories, 600 health emergency experts and over 25 partners, the exercise, which took place on 22 and 23 April, allowed countries to test their preparedness for pandemics and other major health emergencies, including activating their emergency workforce structures, inf",
+      "link": "https://www.who.int/news/item/27-04-2026-practicing-today-for-tomorrow-s-emergencies-who-convenes-countries-and-partners-to-simulate-response-to-major-disease-outbreak",
+      "published": "Mon, 27 Apr 2026 13:12:09 Z",
+      "source_type": "rss"
+    },
+    {
+      "title": "Third United Nations Conference on Landlocked Developing Countries (LLDC3)",
+      "summary": "<div class=\"field field-name-field-image field-type-image field-label-hidden\"><div class=\"field-items\"><div class=\"field-item even\" rel=\"og:image rdfs:seealso\"><img alt=\"\" class=\"img-responsive\" height=\"270\" src=\"https://www.un.org/sites/un2.un.org/files/styles/large/public/field/image/2024/07/lldc3.jpg\" width=\"480\" /></div></div></div><div class=\"field field-name-body field-type-text-with-summary field-label-hidden\"><div class=\"field-items\"><div class=\"field-item even\"><p style=\"text-align: cen",
+      "link": "https://www.un.org/en/civil-society/third-united-nations-conference-landlocked-developing-countries-lldc3",
+      "published": "Tue, 24 Oct 2023 16:36:20 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "#UNGA78 - Wrap Day 4",
+      "summary": "<div class=\"field field-name-og-group-ref field-type-entityreference field-label-above\"><div class=\"field-label\">Groups audience:&nbsp;</div><div class=\"field-items\"><div class=\"field-item even\"><a href=\"https://www.un.org/en/live/unga78\">General Assembly 78 Live Blog</a></div></div></div><div class=\"field field-name-field-video-embed-a-la-iseek field-type-video-embed-field field-label-above\"><div class=\"field-label\">Video embed a la iseek:&nbsp;</div><div class=\"field-items\"><div class=\"field-i",
+      "link": "https://www.un.org/en/card/209827",
+      "published": "Thu, 21 Sep 2023 22:14:42 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Until we meet again",
+      "summary": "<div class=\"field field-name-body field-type-text-with-summary field-label-hidden\"><div class=\"field-items\"><div class=\"field-item even\"><div>\n\t<p>In a few days, world leaders will head back to capitals and barricades will be dismantled, but the General Assembly keeps working. Global threats don’t stop at the end of the high-level week, and neither does the search for responses. Countries continue grappling with the problems affecting us all: from the outer reaches of space to the seabed floor.<",
+      "link": "https://www.un.org/en/card/209826",
+      "published": "Thu, 21 Sep 2023 21:57:19 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "last day",
+      "summary": "<div class=\"field field-name-body field-type-text-with-summary field-label-hidden\"><div class=\"field-items\"><div class=\"field-item even\"></div></div></div><div class=\"field field-name-og-group-ref field-type-entityreference field-label-above\"><div class=\"field-label\">Groups audience:&nbsp;</div><div class=\"field-items\"><div class=\"field-item even\"><a href=\"https://www.un.org/en/live/unga78\">General Assembly 78 Live Blog</a></div></div></div>",
+      "link": "https://www.un.org/en/card/209825",
+      "published": "Thu, 21 Sep 2023 21:55:21 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "What death doulas can teach us about dying",
+      "summary": "Death doulas or soul midwives have increased in popularity in recent years. What do they do?",
+      "link": "https://www.bbc.com/news/articles/cp9vp0ld1leo?at_medium=RSS&at_campaign=rss",
+      "published": "Sat, 02 May 2026 23:10:38 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "The struggle to get hold of medication in England is set to get worse",
+      "summary": "People living with conditions include heart problems, stroke risks, eye infections and bipolar are unable to get hold of the drugs they rely on.",
+      "link": "https://www.bbc.com/news/articles/c202jqn3jzro?at_medium=RSS&at_campaign=rss",
+      "published": "Fri, 01 May 2026 11:33:26 GMT",
+      "source_type": "rss"
+    }
+  ]
+}

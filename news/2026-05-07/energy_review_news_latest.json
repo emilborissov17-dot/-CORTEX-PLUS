@@ -1,0 +1,44 @@
+{
+  "axis": "ENERGY_REVIEW",
+  "fetched_at": "2026-05-07T10:29:02.013621+00:00",
+  "smart_query": "renewable energy solar wind",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 0,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "NERC issues Level 3 Alert to address ‘immediate risks’ data center loads pose to the grid",
+      "snippet": "The North American Electric Reliability Corporation issued a Level 3 Essential Action Alert on May 4, urging grid operators to address risks from large data center loads.",
+      "url": "https://www.renewableenergyworld.com/power-grid/nerc-issues-level-3-alert-to-address-immediate-risks-data-center-loads-pose-to-the-grid/",
+      "source": "RSS"
+    },
+    {
+      "title": "Stonepeak, Bernhard look to nab a regulated utility in latest acquisition",
+      "snippet": "Cleco, a Louisiana utility with 298,000 customers, will be acquired by Stonepeak and Bernhard Capital Partners, pending regulatory approvals.",
+      "url": "https://www.renewableenergyworld.com/energy-business/stonepeak-bernhard-look-to-nab-a-regulated-utility-in-latest-acquisition/",
+      "source": "RSS"
+    },
+    {
+      "title": "The EDAM is live. What’s the EDAM again?",
+      "snippet": "The California Independent System Operator (CAISO) and day-one participant PacifiCorp launched the Extended Day-Ahead Market (EDAM) on May 1, aiming to reduce electricity costs for customers by coordinating supply and demand across the Western United States.",
+      "url": "https://www.renewableenergyworld.com/power-grid/grid-modernization/the-edam-is-live-whats-the-edam-again/",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [],
+  "arxiv_papers": [],
+  "podcast": "[The Resistance of a Cow] There’s something rotten in the cows of Denmark. And Minnesota. And Wisconsin. And Idaho. What could cause a previously thriving herd of majestic dairy cattle to stop drinking water and start drinking … urine? A Danish farmer calls a special investigator, who takes one look at his farm and nopes the heck out of there, refusing to return, citing “bad energy” coming from something nearby … a big bui",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

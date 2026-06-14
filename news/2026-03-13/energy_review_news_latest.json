@@ -1,0 +1,160 @@
+{
+  "axis": "ENERGY_REVIEW",
+  "fetched_at": "2026-03-13T13:50:19.163063+00:00",
+  "smart_query": "\"Рост на възобновяемата енергия в България\"",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "analysis": {
+    "summary": "Новите слънчеви инсталации в Невада спаднаха драматично през 2025 г.Peak Energy и RWE разгорнахме батерия с натрий-ион в Уисконсин. Изследванията в областта на възобновяемата енергия продължават да се развиват.",
+    "key_developments": [
+      "New solar installations in Nevada fell dramatically in 2025",
+      "Peak Energy and RWE deploying sodium-ion battery in Wisconsin"
+    ],
+    "sentiment": "NEUTRAL",
+    "urgency": "MEDIUM",
+    "open_source_momentum": "Protontypes/open-sustainable-technology и PyPSA/PyPSA са примери за отворен изходен код в областта на устойчивите технологии и анализ на енергийните системи.",
+    "scientific_frontier": "Fairness in Robust Unit Commitment Problem Considering Suppression of Renewable Energy и Eigenvalue Patterns and Participation Analysis of Symmetric Renewable Energy Power Systems представят последните научни изследвания в областта на възобновяемата енергия.",
+    "relevance_to_goal": "Разработването на устойчиви енергийни източници е критически важен аспект на изграждането на устойчива общочовешка цивилизация."
+  },
+  "sentiment": "NEUTRAL",
+  "urgency": "MEDIUM",
+  "summary": "Новите слънчеви инсталации в Невада спаднаха драматично през 2025 г.Peak Energy и RWE разгорнахме батерия с натрий-ион в Уисконсин. Изследванията в областта на възобновяемата енергия продължават да се развиват.",
+  "key_developments": [
+    "New solar installations in Nevada fell dramatically in 2025",
+    "Peak Energy and RWE deploying sodium-ion battery in Wisconsin"
+  ],
+  "open_source_momentum": "Protontypes/open-sustainable-technology и PyPSA/PyPSA са примери за отворен изходен код в областта на устойчивите технологии и анализ на енергийните системи.",
+  "scientific_frontier": "Fairness in Robust Unit Commitment Problem Considering Suppression of Renewable Energy и Eigenvalue Patterns and Participation Analysis of Symmetric Renewable Energy Power Systems представят последните научни изследвания в областта на възобновяемата енергия.",
+  "news_items": [
+    {
+      "title": "New solar installations in Nevada fell dramatically in 2025",
+      "snippet": "New solar installations in Nevada declined significantly in 2025, ranking 27th nationally, according to a report by the Solar Energy Industries Association.",
+      "url": "https://www.renewableenergyworld.com/solar/new-solar-installations-in-nevada-fell-dramatically-in-2025/",
+      "source": "RSS"
+    },
+    {
+      "title": "Peak Energy and RWE deploying sodium-ion battery in Wisconsin",
+      "snippet": "Peak Energy will set up its sodium-ion grid storage battery technology at the RWE Lab, as the developer eyes larger deployment in MISO territory.",
+      "url": "https://www.renewableenergyworld.com/energy-storage/battery/peak-energy-and-rwe-deploying-sodium-ion-battery-in-wisconsin/",
+      "source": "RSS"
+    },
+    {
+      "title": "One year after Green Bank’s demise, court mulls future of grant-based climate policy",
+      "snippet": "The Trump administration faced skepticism in court over its claim of an unfettered right to break contracts. But it’s not clear that can save efforts to sow a clean energy future with federal seed money.",
+      "url": "https://www.renewableenergyworld.com/energy-business/policy-and-regulation/one-year-after-green-banks-demise-court-mulls-future-of-grant-based-climate-policy/",
+      "source": "RSS"
+    }
+  ],
+  "github_repos": [
+    {
+      "title": "protontypes/open-sustainable-technology",
+      "snippet": "A directory and analysis of the open source ecosystem in the areas of climate change, sustainable energy, biodiversity and natural resources.  https://docs.getgrist.com/gSscJkc5Rb1R/OpenSustaintech",
+      "stars": 2458,
+      "url": "https://github.com/protontypes/open-sustainable-technology",
+      "updated": "2026-03-11",
+      "source": "GitHub"
+    },
+    {
+      "title": "PyPSA/PyPSA",
+      "snippet": "PyPSA: Python for Power System Analysis",
+      "stars": 1898,
+      "url": "https://github.com/PyPSA/PyPSA",
+      "updated": "2026-03-13",
+      "source": "GitHub"
+    },
+    {
+      "title": "pvlib/pvlib-python",
+      "snippet": "A set of documented functions for simulating the performance of photovoltaic energy systems.",
+      "stars": 1512,
+      "url": "https://github.com/pvlib/pvlib-python",
+      "updated": "2026-03-13",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Fairness in Robust Unit Commitment Problem Considering Suppression of Renewable Energy",
+      "snippet": "Power company operators make power generation plans one day in advance, in what is known as the Unit Commitment (UC) problem. UC is exposed to uncertainties, such as unknown electricity load and disturbances caused by renewable energy sources, especially PVs. In previous research, we proposed the Re",
+      "url": "https://arxiv.org/abs/2603.09464v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Eigenvalue Patterns and Participation Analysis of Symmetric Renewable Energy Power Systems",
+      "snippet": "State-space analysis is widely employed for examining power system dynamics but faces challenges in large-scale power systems integrated with numerous inverter-based resources (IBRs), where the significant increase of system states complicates modal analysis. Notably, renewable energy power systems ",
+      "url": "https://arxiv.org/abs/2603.08351v1",
+      "source": "arXiv"
+    }
+  ],
+  "youtube_transcripts": [],
+  "podcast": "[Governor DeSantis Directs Florida State Agencies to Partner with Future of Life Institute to Shield Families from AI Harm] The collaboration will produce a Crisis Counselor Training Curriculum and a statewide AI Harms Reporting Form targeting dangerous AI companion applications",
+  "youtube_videos": [
+    {
+      "title": "YouTube:WUQ1haAFWX4",
+      "video_id": "WUQ1haAFWX4",
+      "url": "https://www.youtube.com/watch?v=WUQ1haAFWX4",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:xev1aUjWSdg",
+      "video_id": "xev1aUjWSdg",
+      "url": "https://www.youtube.com/watch?v=xev1aUjWSdg",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:BlfpuCVs9Xo",
+      "video_id": "BlfpuCVs9Xo",
+      "url": "https://www.youtube.com/watch?v=BlfpuCVs9Xo",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:mcnbcBsImDE",
+      "video_id": "mcnbcBsImDE",
+      "url": "https://www.youtube.com/watch?v=mcnbcBsImDE",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:D8qummRioHg",
+      "video_id": "D8qummRioHg",
+      "url": "https://www.youtube.com/watch?v=D8qummRioHg",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:p6AMuQSudg8",
+      "video_id": "p6AMuQSudg8",
+      "url": "https://www.youtube.com/watch?v=p6AMuQSudg8",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:Feapz91Cbg0",
+      "video_id": "Feapz91Cbg0",
+      "url": "https://www.youtube.com/watch?v=Feapz91Cbg0",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:CmBTX7Fkffg",
+      "video_id": "CmBTX7Fkffg",
+      "url": "https://www.youtube.com/watch?v=CmBTX7Fkffg",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:8MxshXKPxJ0",
+      "video_id": "8MxshXKPxJ0",
+      "url": "https://www.youtube.com/watch?v=8MxshXKPxJ0",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:fbSNr-jQQKU",
+      "video_id": "fbSNr-jQQKU",
+      "url": "https://www.youtube.com/watch?v=fbSNr-jQQKU",
+      "source": "YouTube"
+    }
+  ]
+}

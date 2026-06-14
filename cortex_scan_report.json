@@ -1,0 +1,17 @@
+{
+  "scan_date": "2026-03-14",
+  "base_path": "/mnt/c/Users/emilb/Desktop/AGI/CORTEX++_QWEN",
+  "total_issues": 2,
+  "issues": [
+    {
+      "type": "MISSING_FILE",
+      "path": "/mnt/c/Users/emilb/Desktop/AGI/CORTEX++_QWEN/core/cortex4_v2.py",
+      "fix": "Create core/cortex4_v2.py или коригирай пътя в кода"
+    },
+    {
+      "type": "MISSING_MODULE",
+      "module": "ollama",
+      "fix": "pip install ollama или премахни зависимостта ако не се ползва"
+    }
+  ]
+}

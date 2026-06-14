@@ -1,0 +1,77 @@
+{
+  "axis": "TECHNOLOGY_AI_REVIEW",
+  "fetched_at": "2026-03-10T11:20:35.752723+00:00",
+  "smart_query": "axis TECHNOLOGY_AI_REVIEW level metrics parameters",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube": 2,
+    "youtube_transcripts": 1
+  },
+  "analysis": {
+    "summary": "Във фокуса на общественото внимание е процесът срещу OpenAI за убийството в канадска училище и проблемите с GPS измамите в Близкия изток. Съществуват важни научни напредъци в квантовите модели и кодове, които подпомагат разработването на безопасни ИИ системи.",
+    "key_developments": [
+      "Съдебен процес срещу OpenAI за убийството в училище",
+      "Измамни практики с GPS в Близкия изток",
+      "Научни изследвания в квантови модели и кодове"
+    ],
+    "sentiment": "CRITICAL",
+    "urgency": "HIGH",
+    "open_source_momentum": "Силна поддръжка от проектите в GitHub за AI безопасност",
+    "scientific_frontier": "Квантови изчисления и спинални модели",
+    "relevance_to_goal": "Висока релевантност към целта за устойчиво развитие и етично ИИ"
+  },
+  "sentiment": "CRITICAL",
+  "urgency": "HIGH",
+  "summary": "Във фокуса на общественото внимание е процесът срещу OpenAI за убийството в канадска училище и проблемите с GPS измамите в Близкия изток. Съществуват важни научни напредъци в квантовите модели и кодове, които подпомагат разработването на безопасни ИИ системи.",
+  "key_developments": [
+    "Съдебен процес срещу OpenAI за убийството в училище",
+    "Измамни практики с GPS в Близкия изток",
+    "Научни изследвания в квантови модели и кодове"
+  ],
+  "open_source_momentum": "Силна поддръжка от проектите в GitHub за AI безопасност",
+  "scientific_frontier": "Квантови изчисления и спинални модели",
+  "github_repos": [
+    {
+      "title": "Jakobovski/ai-safety-cheatsheet",
+      "snippet": "A compilation of AI safety ideas, problems, and solutions.",
+      "stars": 19,
+      "url": "https://github.com/Jakobovski/ai-safety-cheatsheet",
+      "updated": "2026-01-23",
+      "source": "GitHub"
+    },
+    {
+      "title": "swarm-ai-safety/swarm",
+      "snippet": "SWARM: System-Wide Assessment of Risk in Multi-agent environments",
+      "stars": 16,
+      "url": "https://github.com/swarm-ai-safety/swarm",
+      "updated": "2026-03-10",
+      "source": "GitHub"
+    },
+    {
+      "title": "shin4141/decision-os-paper",
+      "snippet": "Public gateway for the Decision-OS series (V4–V9). Canonical artifacts on Zenodo (DOI).",
+      "stars": 3,
+      "url": "https://github.com/shin4141/decision-os-paper",
+      "updated": "2026-03-08",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Understanding thermal and quantum fluctuations in extended Kitaev-Yao-Lee spin-orbital model",
+      "snippet": "Building upon the spin-1/2 Kitaev model on a honeycomb lattice, the Yao-Lee spin-orbital model provides exactly solvable quantum spin liquids with potentially better stability against perturbations due to the additional degree of freedom. Recently, the microscopic mechanism underlying the Yao-Lee in",
+      "url": "https://arxiv.org/abs/2603.08710v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Coupled-Layer Construction of Quantum Product Codes",
+      "snippet": "Product codes are a class of quantum error correcting codes built from two or more constituent codes. They have recently gained prominence for a breakthrough yielding quantum low-density parity-check (qLDPC) codes with favorable scaling of both code distance and encoding rate. However, despite its p",
+      "url": "https://arxiv.org/abs/2603.08711v1",
+      "source": "arXiv"
+    }
+  ]
+}

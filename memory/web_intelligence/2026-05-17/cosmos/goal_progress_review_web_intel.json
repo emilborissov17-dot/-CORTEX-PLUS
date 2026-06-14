@@ -1,0 +1,95 @@
+{
+  "axis": "GOAL_PROGRESS_REVIEW",
+  "domain": "cosmos",
+  "timestamp": "2026-05-17T14:30:17.481525+00:00",
+  "sources_count": 6,
+  "rss_count": 5,
+  "ddg_count": 0,
+  "youtube_count": 1,
+  "youtube_items": [
+    {
+      "title": "[YT] From poverty to inequality: The UN's 'abysmal' failure to hit ...From poverty to equality: The UN's 'abysmal' failure to hit ...With less than one fifth of targets on track, world is ...Why are the Sustainable Development Goals failing? Overcoming ...10 criticisms of the UN’s Sustainable Development GoalsU.N. Sustainable Development Goals aren't on track for ... - NPRSDG Academy Library | UN SDG:Learn",
+      "summary": "create a better world and a better life for all that was the overall objective set by countries in 2015 with 17 goals including ending extreme poverty ensuring every child gets a quality education and protecting the planet and all of these by 2030 as world leaders meet for the UN Summit the hardest part remains to be done because only 15 percent of set targets to achieve the 17 goals are on track many are going in the wrong direction it's abysmal it's a sobering fact that we will come into in the the general assembly huge implications for everyone and it is a failure of ours to tackle Global inequalities our triple planetary crisis over the last few years progress has been set back by the covid-19 pandemic Wars worsening climate catastrophes and sharp increases in the cost of living over 7",
+      "link": "https://www.youtube.com/watch?v=cAoa8EY6WiM",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "cAoa8EY6WiM",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 1366,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "Милиони хора са тласкани към бедност поради глобални нарушения в енергийните доставки и търговските коридори",
+    "root_cause": "Нарушенията в енергийните доставки и търговските коридори са причинени от различни фактори, включително конфликти, политическа нестабилност и изменение на климата",
+    "severity": "HIGH",
+    "leverage_points": [
+      "Международни организации като Обединените нации трябва да вземат по-активна роля в решаването на тези проблеми",
+      "Владите на страните трябва да работят заедно, за да намерят съвместни решения за енергийните и търговските проблеми"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Обединените нации трябва да проведат конференция, на която да обсъдят енергийните и търговските проблеми и да намерят съвместни решения",
+        "measurable_goal": "Броят на страните, които се съгласяват да участват в конференцията и да работят заедно за решаване на проблемите",
+        "timeframe": "краткосрочно"
+      }
+    ],
+    "evidence": [
+      "Disruptions to global energy supplies and trade corridors are driving up the cost of food, transport and essential goods worldwide, slowing economic growth and increasing pressure on vulnerable households",
+      "Only 15 percent of set targets to achieve the 17 Sustainable Development Goals are on track"
+    ],
+    "generalization": "Този проблем е свързан с другите домейни, като здравословната биосфера и човешкото достойнство, тъй като energy и търговските проблеми могат да имат негативно въздействие върху околната среда и човешкото благосъстояние",
+    "summary": "Милиони хора са тласкани към бедност поради глобални нарушения в енергийните доставки и търговските коридори, което изисква координирано действие от международните организации и владите на страните.",
+    "risk_level": "HIGH"
+  },
+  "raw_items": [
+    {
+      "title": "Global energy and trade disruption pushing millions towards poverty",
+      "summary": "<p>Disruptions to global energy supplies and trade corridors are driving up the cost of food, transport and essential goods worldwide, slowing economic growth and increasing pressure on vulnerable households and debt-strapped developing countries.</p>\n<p>The post <a href=\"https://news.un.org/feed/view/en/story/2026/05/1167526\">Global energy and trade disruption pushing millions towards poverty</a> appeared first on <a href=\"https://www.un.org/sustainabledevelopment\">United Nations Sustainable De",
+      "link": "https://news.un.org/feed/view/en/story/2026/05/1167526",
+      "published": "Fri, 15 May 2026 12:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "WHO sounds alarm over nicotine pouches targeting young people",
+      "summary": "<p>Brightly coloured nicotine pouches promoted through social media influencers, music festivals and youth-oriented advertising are driving a rapid rise in nicotine use among young people worldwide, the World Health Organization (WHO) warned on Friday. Read Full Story on UN News</p>\n<p>The post <a href=\"https://news.un.org/feed/view/en/story/2026/05/1167520\">WHO sounds alarm over nicotine pouches targeting young people</a> appeared first on <a href=\"https://www.un.org/sustainabledevelopment\">Uni",
+      "link": "https://news.un.org/feed/view/en/story/2026/05/1167520",
+      "published": "Fri, 15 May 2026 12:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Media Advisory | United Nations to launch 2026 mid-year update on the global economy",
+      "summary": "<p>The post <a href=\"https://www.un.org/sustainabledevelopment/blog/2026/05/media-advisory-united-nations-to-launch-2026-mid-year-update-on-the-global-economy/\">Media Advisory | United Nations to launch 2026 mid-year update on the global economy</a> appeared first on <a href=\"https://www.un.org/sustainabledevelopment\">United Nations Sustainable Development</a>.</p>",
+      "link": "https://www.un.org/sustainabledevelopment/blog/2026/05/media-advisory-united-nations-to-launch-2026-mid-year-update-on-the-global-economy/",
+      "published": "Thu, 14 May 2026 13:00:44 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Media Advisory | United Nations to launch 2026 mid-year update  on the global economy",
+      "summary": "<p>Media Advisory  United Nations to launch 2026 mid-year update on the global economy Press briefing live on UN WebTV The report is under embargo until 19 May 2026, 12:45 pm EDT The crisis in the Middle East has delivered another major shock to the world economy, heightening uncertainty, stoking inflationary pressures and testing the resilience of global  [...]</p>\n<p>The post <a href=\"https://www.un.org/sustainabledevelopment/blog/2026/05/media-advisory-united-nations-to-launch-2026-mid-year-u",
+      "link": "https://www.un.org/sustainabledevelopment/blog/2026/05/media-advisory-united-nations-to-launch-2026-mid-year-update-on-the-global-economy/",
+      "published": "Thu, 14 May 2026 13:00:32 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Hello world!",
+      "summary": "Welcome to WordPress. This is your first post. Edit or delete it, then start writing!",
+      "link": "https://sdg.iisd.org/hello-world/",
+      "published": "Thu, 18 May 2023 15:00:19 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] From poverty to inequality: The UN's 'abysmal' failure to hit ...From poverty to equality: The UN's 'abysmal' failure to hit ...With less than one fifth of targets on track, world is ...Why are the Sustainable Development Goals failing? Overcoming ...10 criticisms of the UN’s Sustainable Development GoalsU.N. Sustainable Development Goals aren't on track for ... - NPRSDG Academy Library | UN SDG:Learn",
+      "summary": "create a better world and a better life for all that was the overall objective set by countries in 2015 with 17 goals including ending extreme poverty ensuring every child gets a quality education and protecting the planet and all of these by 2030 as world leaders meet for the UN Summit the hardest part remains to be done because only 15 percent of set targets to achieve the 17 goals are on track many are going in the wrong direction it's abysmal it's a sobering fact that we will come into in the the general assembly huge implications for everyone and it is a failure of ours to tackle Global inequalities our triple planetary crisis over the last few years progress has been set back by the covid-19 pandemic Wars worsening climate catastrophes and sharp increases in the cost of living over 7",
+      "link": "https://www.youtube.com/watch?v=cAoa8EY6WiM",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "cAoa8EY6WiM",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 1366,
+      "has_full_transcript": true
+    }
+  ]
+}

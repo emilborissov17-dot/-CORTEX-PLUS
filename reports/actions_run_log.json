@@ -1,0 +1,402 @@
+[
+  {
+    "run_at": "2026-03-27T10:18:42.097285+00:00",
+    "plan_file": "/mnt/c/Users/emilb/Desktop/AGI/CORTEX++_QWEN/reports/actions_plan_latest.json",
+    "actions": [
+      {
+        "id": "test_llm_refactor_hypercortex",
+        "type": "llm_refactor",
+        "result": {
+          "status": "error",
+          "reason": "llm_call_failed: 'latin-1' codec can't encode characters in position 7-10: ordinal not in range(256)"
+        }
+      }
+    ]
+  },
+  {
+    "run_at": "2026-03-27T10:19:52.687065+00:00",
+    "plan_file": "/mnt/c/Users/emilb/Desktop/AGI/CORTEX++_QWEN/reports/actions_plan_latest.json",
+    "actions": [
+      {
+        "id": "test_llm_refactor_hypercortex",
+        "type": "llm_refactor",
+        "result": {
+          "status": "error",
+          "reason": "llm_call_failed: 'latin-1' codec can't encode characters in position 7-10: ordinal not in range(256)"
+        }
+      }
+    ]
+  },
+  {
+    "run_at": "2026-03-27T10:27:08.319026+00:00",
+    "plan_file": "/mnt/c/Users/emilb/Desktop/AGI/CORTEX++_QWEN/reports/actions_plan_latest.json",
+    "actions": [
+      {
+        "id": "test_llm_refactor_hypercortex",
+        "type": "llm_refactor",
+        "result": {
+          "status": "error",
+          "reason": "llm_call_failed: 'latin-1' codec can't encode characters in position 7-10: ordinal not in range(256)"
+        }
+      }
+    ]
+  },
+  {
+    "run_at": "2026-03-27T10:28:48.149870+00:00",
+    "plan_file": "/mnt/c/Users/emilb/Desktop/AGI/CORTEX++_QWEN/reports/actions_plan_latest.json",
+    "actions": [
+      {
+        "id": "test_llm_refactor_hypercortex",
+        "type": "llm_refactor",
+        "result": {
+          "status": "error",
+          "reason": "llm_call_failed: 'latin-1' codec can't encode characters in position 7-10: ordinal not in range(256)"
+        }
+      }
+    ]
+  },
+  {
+    "run_at": "2026-03-27T10:45:11.006634+00:00",
+    "plan_file": "/mnt/c/Users/emilb/Desktop/AGI/CORTEX++_QWEN/reports/actions_plan_latest.json",
+    "actions": [
+      {
+        "id": "test_llm_refactor_hypercortex",
+        "type": "llm_refactor",
+        "result": {
+          "status": "ok",
+          "backup_path": "/mnt/c/Users/emilb/Desktop/AGI/CORTEX++_QWEN/hypercortex_runner.py.bak_20260327_124511",
+          "bytes_before": 3381,
+          "bytes_after": 2665
+        }
+      }
+    ]
+  },
+  {
+    "run_at": "2026-03-27T10:57:16.688983+00:00",
+    "plan_file": "/mnt/c/Users/emilb/Desktop/AGI/CORTEX++_QWEN/reports/actions_plan_latest.json",
+    "actions": [
+      {
+        "id": "test_llm_refactor_hypercortex",
+        "type": "llm_refactor",
+        "result": {
+          "status": "ok",
+          "backup_path": "/mnt/c/Users/emilb/Desktop/AGI/CORTEX++_QWEN/hypercortex_runner.py.bak_20260327_125716",
+          "bytes_before": 2665,
+          "bytes_after": 2270
+        }
+      }
+    ]
+  },
+  {
+    "run_at": "2026-03-27T11:18:21.829761+00:00",
+    "plan_file": "/mnt/c/Users/emilb/Desktop/AGI/CORTEX++_QWEN/reports/actions_plan_latest.json",
+    "actions": [
+      {
+        "id": "test_llm_refactor_hypercortex",
+        "type": "llm_refactor",
+        "result": {
+          "status": "ok",
+          "backup_path": "/mnt/c/Users/emilb/Desktop/AGI/CORTEX++_QWEN/hypercortex_runner.py.bak_20260327_131821",
+          "bytes_before": 2945,
+          "bytes_after": 2843
+        }
+      }
+    ]
+  },
+  {
+    "run_at": "2026-03-29T09:04:04.520191+00:00",
+    "plan_file": "C:\\Users\\emilb\\Desktop\\AGI\\CORTEX++_QWEN\\reports\\actions_plan_latest.json",
+    "actions": [
+      {
+        "id": "test_llm_refactor_hypercortex",
+        "type": "llm_refactor",
+        "result": {
+          "status": "error",
+          "reason": "llm_call_failed: 404 Client Error: Not Found for url: http://localhost:11434/api/generate"
+        }
+      }
+    ]
+  },
+  {
+    "run_at": "2026-03-29T11:01:46.780257+00:00",
+    "plan_file": "C:\\Users\\emilb\\Desktop\\AGI\\CORTEX++_QWEN\\reports\\actions_plan_latest.json",
+    "actions": [
+      {
+        "id": "test_llm_refactor_hypercortex",
+        "type": "llm_refactor",
+        "result": {
+          "status": "error",
+          "reason": "llm_call_failed: 404 Client Error: Not Found for url: http://localhost:11434/api/generate"
+        }
+      }
+    ]
+  },
+  {
+    "run_at": "2026-03-29T13:02:19.145270+00:00",
+    "plan_file": "C:\\Users\\emilb\\Desktop\\AGI\\CORTEX++_QWEN\\reports\\actions_plan_latest.json",
+    "actions": [
+      {
+        "id": "test_llm_refactor_hypercortex",
+        "type": "llm_refactor",
+        "result": {
+          "status": "error",
+          "reason": "llm_call_failed: 404 Client Error: Not Found for url: http://localhost:11434/api/generate"
+        }
+      }
+    ]
+  },
+  {
+    "run_at": "2026-03-31T06:47:05.730637+00:00",
+    "plan_file": "C:\\Users\\emilb\\Desktop\\AGI\\CORTEX++_QWEN\\reports\\actions_plan_latest.json",
+    "actions": [
+      {
+        "id": "test_llm_refactor_hypercortex",
+        "type": "llm_refactor",
+        "result": {
+          "status": "error",
+          "reason": "llm_call_failed: 404 Client Error: Not Found for url: http://localhost:11434/api/generate"
+        }
+      }
+    ]
+  },
+  {
+    "run_at": "2026-04-01T09:03:43.879269+00:00",
+    "plan_file": "C:\\Users\\emilb\\Desktop\\AGI\\CORTEX++_QWEN\\reports\\actions_plan_latest.json",
+    "actions": [
+      {
+        "id": "test_llm_refactor_hypercortex",
+        "type": "llm_refactor",
+        "result": {
+          "status": "error",
+          "reason": "llm_call_failed: 404 Client Error: Not Found for url: http://localhost:11434/api/generate"
+        }
+      }
+    ]
+  },
+  {
+    "run_at": "2026-04-03T13:16:24.281295+00:00",
+    "plan_file": "C:\\Users\\emilb\\Desktop\\AGI\\CORTEX++_QWEN\\reports\\actions_plan_latest.json",
+    "actions": [
+      {
+        "id": "test_llm_refactor_hypercortex",
+        "type": "llm_refactor",
+        "result": {
+          "status": "error",
+          "reason": "llm_call_failed: 404 Client Error: Not Found for url: http://localhost:11434/api/generate"
+        }
+      }
+    ]
+  },
+  {
+    "run_at": "2026-04-05T14:02:01.919133+00:00",
+    "plan_file": "C:\\Users\\emilb\\Desktop\\AGI\\CORTEX++_QWEN\\reports\\actions_plan_latest.json",
+    "actions": [
+      {
+        "id": "test_llm_refactor_hypercortex",
+        "type": "llm_refactor",
+        "result": {
+          "status": "error",
+          "reason": "llm_call_failed: 404 Client Error: Not Found for url: http://localhost:11434/api/generate"
+        }
+      }
+    ]
+  },
+  {
+    "run_at": "2026-04-05T16:03:05.217844+00:00",
+    "plan_file": "C:\\Users\\emilb\\Desktop\\AGI\\CORTEX++_QWEN\\reports\\actions_plan_latest.json",
+    "actions": [
+      {
+        "id": "test_llm_refactor_hypercortex",
+        "type": "llm_refactor",
+        "result": {
+          "status": "error",
+          "reason": "llm_call_failed: 404 Client Error: Not Found for url: http://localhost:11434/api/generate"
+        }
+      }
+    ]
+  },
+  {
+    "run_at": "2026-04-05T17:07:25.756060+00:00",
+    "plan_file": "C:\\Users\\emilb\\Desktop\\AGI\\CORTEX++_QWEN\\reports\\actions_plan_latest.json",
+    "actions": [
+      {
+        "id": "test_llm_refactor_hypercortex",
+        "type": "llm_refactor",
+        "result": {
+          "status": "error",
+          "reason": "llm_call_failed: 404 Client Error: Not Found for url: http://localhost:11434/api/generate"
+        }
+      }
+    ]
+  },
+  {
+    "run_at": "2026-04-08T16:49:23.185637+00:00",
+    "plan_file": "C:\\Users\\emilb\\Desktop\\AGI\\CORTEX++_QWEN\\reports\\actions_plan_latest.json",
+    "actions": [
+      {
+        "id": "test_llm_refactor_hypercortex",
+        "type": "llm_refactor",
+        "result": {
+          "status": "error",
+          "reason": "llm_call_failed: 404 Client Error: Not Found for url: http://localhost:11434/api/generate"
+        }
+      }
+    ]
+  },
+  {
+    "run_at": "2026-04-10T09:19:43.315312+00:00",
+    "plan_file": "/mnt/c/Users/emilb/Desktop/AGI/CORTEX++_QWEN/reports/actions_plan_latest.json",
+    "actions": [
+      {
+        "id": "test_llm_refactor_hypercortex",
+        "type": "llm_refactor",
+        "result": {
+          "status": "ok",
+          "backup_path": "/mnt/c/Users/emilb/Desktop/AGI/CORTEX++_QWEN/hypercortex_runner.py.bak_20260410_121943",
+          "bytes_before": 3121,
+          "bytes_after": 3120
+        }
+      }
+    ]
+  },
+  {
+    "run_at": "2026-04-10T10:00:42.609870+00:00",
+    "plan_file": "/mnt/c/Users/emilb/Desktop/AGI/CORTEX++_QWEN/reports/actions_plan_latest.json",
+    "actions": [
+      {
+        "id": "test_llm_refactor_hypercortex",
+        "type": "llm_refactor",
+        "result": {
+          "status": "ok",
+          "backup_path": "/mnt/c/Users/emilb/Desktop/AGI/CORTEX++_QWEN/hypercortex_runner.py.bak_20260410_130042",
+          "bytes_before": 3552,
+          "bytes_after": 3552
+        }
+      }
+    ]
+  },
+  {
+    "run_at": "2026-04-10T10:14:04.870081+00:00",
+    "plan_file": "/mnt/c/Users/emilb/Desktop/AGI/CORTEX++_QWEN/reports/actions_plan_latest.json",
+    "actions": [
+      {
+        "id": "test_llm_refactor_hypercortex",
+        "type": "llm_refactor",
+        "result": {
+          "status": "ok",
+          "backup_path": "/mnt/c/Users/emilb/Desktop/AGI/CORTEX++_QWEN/hypercortex_runner.py.bak_20260410_131404",
+          "bytes_before": 4262,
+          "bytes_after": 4262
+        }
+      }
+    ]
+  },
+  {
+    "run_at": "2026-04-10T10:20:32.041853+00:00",
+    "plan_file": "/mnt/c/Users/emilb/Desktop/AGI/CORTEX++_QWEN/reports/actions_plan_latest.json",
+    "actions": [
+      {
+        "id": "test_llm_refactor_hypercortex",
+        "type": "llm_refactor",
+        "result": {
+          "status": "ok",
+          "backup_path": "/mnt/c/Users/emilb/Desktop/AGI/CORTEX++_QWEN/hypercortex_runner.py.bak_20260410_132032",
+          "bytes_before": 4262,
+          "bytes_after": 4262
+        }
+      }
+    ]
+  },
+  {
+    "run_at": "2026-04-10T13:00:45.044961+00:00",
+    "plan_file": "/mnt/c/Users/emilb/Desktop/AGI/CORTEX++_QWEN/reports/actions_plan_latest.json",
+    "actions": [
+      {
+        "id": "test_llm_refactor_hypercortex",
+        "type": "llm_refactor",
+        "result": {
+          "status": "ok",
+          "backup_path": "/mnt/c/Users/emilb/Desktop/AGI/CORTEX++_QWEN/hypercortex_runner.py.bak_20260410_160045",
+          "bytes_before": 4262,
+          "bytes_after": 4262
+        }
+      }
+    ]
+  },
+  {
+    "run_at": "2026-04-13T05:43:20.781087+00:00",
+    "plan_file": "/mnt/c/Users/emilb/Desktop/AGI/CORTEX++_QWEN/reports/actions_plan_latest.json",
+    "actions": [
+      {
+        "id": "test_llm_refactor_hypercortex",
+        "type": "llm_refactor",
+        "result": {
+          "status": "ok",
+          "backup_path": "/mnt/c/Users/emilb/Desktop/AGI/CORTEX++_QWEN/hypercortex_runner.py.bak_20260413_084320",
+          "bytes_before": 4262,
+          "bytes_after": 4262
+        }
+      }
+    ]
+  },
+  {
+    "run_at": "2026-04-13T06:09:48.526648+00:00",
+    "plan_file": "/mnt/c/Users/emilb/Desktop/AGI/CORTEX++_QWEN/reports/actions_plan_latest.json",
+    "actions": [
+      {
+        "id": "test_llm_refactor_hypercortex",
+        "type": "llm_refactor",
+        "result": {
+          "status": "ok",
+          "backup_path": "/mnt/c/Users/emilb/Desktop/AGI/CORTEX++_QWEN/hypercortex_runner.py.bak_20260413_090948",
+          "bytes_before": 4262,
+          "bytes_after": 4262
+        }
+      }
+    ]
+  },
+  {
+    "run_at": "2026-04-13T06:30:50.552826+00:00",
+    "plan_file": "/mnt/c/Users/emilb/Desktop/AGI/CORTEX++_QWEN/reports/actions_plan_latest.json",
+    "actions": [
+      {
+        "id": "test_llm_refactor_hypercortex",
+        "type": "llm_refactor",
+        "result": {
+          "status": "ok",
+          "backup_path": "/mnt/c/Users/emilb/Desktop/AGI/CORTEX++_QWEN/hypercortex_runner.py.bak_20260413_093050",
+          "bytes_before": 4262,
+          "bytes_after": 4262
+        }
+      }
+    ]
+  },
+  {
+    "run_at": "2026-04-13T11:59:02.125934+00:00",
+    "plan_file": "C:\\Users\\emilb\\Desktop\\AGI\\CORTEX++_QWEN\\reports\\actions_plan_latest.json",
+    "actions": [
+      {
+        "id": "test_llm_refactor_hypercortex",
+        "type": "llm_refactor",
+        "result": {
+          "status": "error",
+          "reason": "llm_call_failed: 404 Client Error: Not Found for url: http://localhost:11434/api/generate"
+        }
+      }
+    ]
+  },
+  {
+    "run_at": "2026-04-13T12:59:00.081479+00:00",
+    "plan_file": "C:\\Users\\emilb\\Desktop\\AGI\\CORTEX++_QWEN\\reports\\actions_plan_latest.json",
+    "actions": [
+      {
+        "id": "test_llm_refactor_hypercortex",
+        "type": "llm_refactor",
+        "result": {
+          "status": "error",
+          "reason": "llm_call_failed: 404 Client Error: Not Found for url: http://localhost:11434/api/generate"
+        }
+      }
+    ]
+  }
+]

@@ -1,0 +1,141 @@
+{
+  "axis": "CULTURE_MEDIA_REVIEW",
+  "domain": "human",
+  "timestamp": "2026-05-01T11:34:44.117797+00:00",
+  "sources_count": 15,
+  "rss_count": 12,
+  "ddg_count": 0,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] Maria Ressa on Social Media and Democracy - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] Nobel Peace Prize winner Maria Ressa discusses the role of social media in spreading misinformation and its impact on democracy. She highlights global trends, challenges to press freedom, and the ...",
+      "link": "https://www.youtube.com/watch?v=Y5t_uCGNCjo",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "Y5t_uCGNCjo",
+      "transcript_method": "description",
+      "transcript_chars": 222,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Ethics Series - Misinformation/Disinformation on Social Media: How ...",
+      "summary": "[DESCRIPTION FALLBACK] Disinformation, in particular, has become a favored tool of authoritarian regimes, leveraging social media to destabilize democracies by amplifying false narratives and deepening divisions.",
+      "link": "https://www.youtube.com/watch?v=wVb3-OPI4HE",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "wVb3-OPI4HE",
+      "transcript_method": "description",
+      "transcript_chars": 212,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] How Does Misinformation Impact Freedom Of Speech In America ... - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] We'll also examine the role of political groups, particularly Democrats, in addressing misinformation through measures like social media moderation, fact-checking initiatives, and media literacy ...",
+      "link": "https://www.youtube.com/watch?v=BjfETRzlsyI",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "BjfETRzlsyI",
+      "transcript_method": "description",
+      "transcript_chars": 221,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "summary": "Възможно е да се използва дълбоко аналитическо осмисляне на данните, но не се получават конкретни данни за коректност на изразителната система или за нейната връзка със съществителни обстоятелства. Дадените данни са възможно да са отражени във възможно изразителни същества, но не се получават незабвенни или със стабилни данни за изпълнение на целите на изразителната система.",
+    "risk_level": "HIGH",
+    "trend": "UNKNOWN",
+    "key_events": [
+      "The Audacity of Art at the Obama Presidential Center",
+      "Sofiane Pamart Emerged From France’s Rap Scene",
+      "In ‘Our Land,’ Lucrecia Martel Turns Her Camera on a Killing"
+    ],
+    "insights": [
+      "The role of social media in spreading misinformation and its impact on democracy",
+      "The challenges faced by indie music companies in the streaming era",
+      "The impact of disinformation on freedom of speech in America"
+    ],
+    "youtube_insights": [
+      "Maria Ressa on Social Media and Democracy",
+      "Ethics Series - Misinformation/Disinformation on Social Media",
+      "How Does Misinformation Impact Freedom Of Speech In America"
+    ],
+    "relevance_to_goal": "The data provided does not offer sufficient insight into the performance or relevance of the AI system in relation to its intended goals.",
+    "generalization": "The data suggests a possible connection between social media and misinformation, but no concrete evidence is provided to support the performance or relevance of the AI system."
+  },
+  "raw_items": [
+    {
+      "title": "The Audacity of Art at the Obama Presidential Center",
+      "summary": "Barack and Michelle Obama commissioned 30 artists to create work for their campus, which starts visitor previews next week on the South Side of Chicago.",
+      "link": "https://www.nytimes.com/2026/05/01/arts/design/art-barack-obama-presidential-center-bradford-mehretu-gibson.html",
+      "published": "Fri, 01 May 2026 09:01:49 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "This Dance Duo Gets Down to Business, With a Dose of the Erotic",
+      "summary": "Bullyache’s show “A Good Man Is Hard to Find,” about the violence of corporate life, combines choreography and theater with pop culture verve.",
+      "link": "https://www.nytimes.com/2026/05/01/arts/design/bullyache-a-good-man-is-hard-to-find.html",
+      "published": "Fri, 01 May 2026 11:08:56 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Sofiane Pamart Emerged From France’s Rap Scene. Now, He’s Setting the Piano World on Fire.",
+      "summary": "Sofiane Pamart is on a mission to make his instrument as popular, and spectacular, as possible.",
+      "link": "https://www.nytimes.com/2026/05/01/arts/music/sofiane-pamart.html",
+      "published": "Fri, 01 May 2026 09:07:10 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "In ‘Our Land,’ Lucrecia Martel Turns Her Camera on a Killing",
+      "summary": "Technology, history and human lives intersect in Lucrecia Martel’s examination of the death of an Indigenous leader in Argentina.",
+      "link": "https://www.nytimes.com/2026/05/01/movies/our-land-lucrecia-martel-argentina.html",
+      "published": "Fri, 01 May 2026 09:01:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "The devil wears Primark: is the romcom reporter about to get the sack?",
+      "summary": "<p>Glamour? Money? Hope? They’re so last season. With fashion magazines on their knees, where does that leave The Devil Wears Prada 2 – and its famously relatable heroine?</p><p>Runway magazine is collapsing. Miranda is eating in the cafeteria and flying economy. Andy is the new features editor. Emily is dating a billionaire. Somebody dies. Amelia Dimoldenberg makes a cameo. But the one unexpected detail in The Devil Wears Prada 2 that I can’t stop thinking about is this: Andy worries that she’l",
+      "link": "https://www.theguardian.com/film/2026/may/01/the-devil-wears-prada-2-romcom-reporter-heroine",
+      "published": "Fri, 01 May 2026 04:00:37 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "‘Major labels are trying to scoop up everything’: the chaotic future for indie music companies – and why vinyl isn’t working",
+      "summary": "<p>As stalwarts Sub Pop and Rough Trade celebrate big anniversaries, insiders speak candidly about the challenges they face. Can streaming ever ensure their survival?</p><p>In the late 1980s, the fledgling Seattle record label Sub Pop was a mess. It struggled to pay the phone bill; staff would race to cash their wage cheques before they bounced; and the management couldn’t even cover studio time that had been booked for their artists. “We were a big train wreck,” laughs <a href=\"https://www.theg",
+      "link": "https://www.theguardian.com/music/2026/may/01/chaotic-future-indie-music-labels-sub-pop-rough-trade",
+      "published": "Fri, 01 May 2026 07:00:41 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "A Midsummer Night’s Dream review – hilarious and heartfelt, from top to Bottom",
+      "summary": "<p><strong>Globe theatre, London<br /></strong>A spunky Helena and an inspired Puck elicit cheers and laughter in Emily Lim’s generous, creative and clever show</p><p>I can’t remember the last time I got the giggles in the theatre but director Emily Lim’s joyful take on A Midsummer Night’s Dream just about undid me. It’s generous, creative and clever, always with an eye to making the audience feel included. With gloriously extravagant costumes (concept by Fly Davis), a set that spontaneously blo",
+      "link": "https://www.theguardian.com/stage/2026/may/01/a-midsummer-nights-dream-review-globe-theatre-london",
+      "published": "Fri, 01 May 2026 11:10:50 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Post your questions for Harry Potter and Fast Show star Mark Williams",
+      "summary": "<p>The patriarch of the Weasley family in seven wizarding films has also been prolific as a small screen detective and comedy catchphrase master. Assuming it suits you, he’ll be here with answers</p><p>Twenty-five years have now passed since the first Harry Potter film and, with the HBO reboot due out this Christmas, Warner Bros is ramping up the celebrations. Key among them is the unveiling of a new feature at the studio tour showcasing key moments, costumes and props from Harry Potter and the ",
+      "link": "https://www.theguardian.com/culture/2026/may/01/post-your-questions-for-harry-potter-and-fast-show-star-mark-williams",
+      "published": "Fri, 01 May 2026 09:31:42 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "How did Banksy put up a statue in central London?",
+      "summary": "The sculpture depicts a suited man walking forward off a plinth while carrying a flag that covers his face.",
+      "link": "https://www.bbc.com/news/articles/cn4pvyw82exo?at_medium=RSS&at_campaign=rss",
+      "published": "Fri, 01 May 2026 11:00:53 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Oscar goes missing after Academy Award winner is blocked from taking it on flight",
+      "summary": "The airline said it regrets the situation and was doing an urgent \"comprehensive internal search\" for the award.",
+      "link": "https://www.bbc.com/news/articles/cz72j59znw3o?at_medium=RSS&at_campaign=rss",
+      "published": "Fri, 01 May 2026 03:02:21 GMT",
+      "source_type": "rss"
+    }
+  ]
+}

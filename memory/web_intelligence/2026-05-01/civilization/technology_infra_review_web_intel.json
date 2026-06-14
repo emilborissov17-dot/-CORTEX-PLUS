@@ -1,0 +1,121 @@
+{
+  "axis": "TECHNOLOGY_INFRA_REVIEW",
+  "domain": "civilization",
+  "timestamp": "2026-05-01T11:41:38.555356+00:00",
+  "sources_count": 14,
+  "rss_count": 12,
+  "ddg_count": 0,
+  "youtube_count": 2,
+  "youtube_items": [
+    {
+      "title": "[YT] How 5G Technology is Bridging the Digital Divide - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] Explore how 5G technology is connecting underserved communities and improving access to education, healthcare, and economic opportunities. Discover the power...",
+      "link": "https://www.youtube.com/watch?v=-mljaUsLIy4",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "-mljaUsLIy4",
+      "transcript_method": "description",
+      "transcript_chars": 183,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] How 5G Is Widening the Digital Divide and Fueling Global ... - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] Inequality, Reimagined in Digital Form What makes the 5G divide particularly dangerous is that it reproduces existing social and economic inequalities in a new, harder-to-see form.",
+      "link": "https://www.youtube.com/watch?v=J1xlldyKRcY",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "J1xlldyKRcY",
+      "transcript_method": "description",
+      "transcript_chars": 203,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "summary": "- How I Get Free Traffic from ChatGPT in 2025 (AIO vs SEO): <p style=\"text-align: left;\">Three weeks ago, I tested something that completely changed how I think about organic traffic. I opened ChatGPT and asked a simple question: \"What's the best course on bui\n- Top 10 AI Tools That Will Transform Y",
+    "risk_level": "UNKNOWN",
+    "trend": "UNKNOWN",
+    "key_events": [
+      "How I Get Free Traffic from ChatGPT in 2025 (AIO vs SEO)",
+      "Top 10 AI Tools That Will Transform Your Content Creation in 2025",
+      "LimeWire AI Studio Review 2023: Details, Pricing & Features"
+    ],
+    "insights": [],
+    "youtube_insights": [],
+    "relevance_to_goal": "",
+    "generalization": ""
+  },
+  "raw_items": [
+    {
+      "title": "How I Get Free Traffic from ChatGPT in 2025 (AIO vs SEO)",
+      "summary": "<p style=\"text-align: left;\">Three weeks ago, I tested something that completely changed how I think about organic traffic. I opened ChatGPT and asked a simple question: \"What's the best course on building SaaS with WordPress?\" The answer that appeared stopped me cold. My course showed up as the first result, recommended directly by the AI with specific reasons why it was valuable.</p><p style=\"text-align: left;\">I hadn't paid for advertising. I hadn't done any special promotion. The AI simply d",
+      "link": "https://techncruncher.blogspot.com/2025/12/how-i-get-free-traffic-from-chatgpt-in.html",
+      "published": "Thu, 04 Dec 2025 05:37:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Top 10 AI Tools That Will Transform Your Content Creation in 2025",
+      "summary": "<div style=\"text-align: left;\"><a href=\"https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEge5QgwLKWbavTUhIedQLI79z5BGD4h0ZoH4YMK6bGBL6fY4Je8R3GZurMZaJmtYirFS6pS-GgZD3xFAqfln8w8faEY2iDehndQNeez57DoiDsgYFJrIwMOLBjzcZiOJrqYDktm6pmRkwtprJChag0yQoeEZx1Pa_eKnt3kKzz69f-FSPWu_JXQxFq5Z8WZ/s1920/Blue%20Purple%20Futuristic%20Modern%203D%20Tech%20Company%20Business%20Presentation.jpg\" style=\"clear: left; margin-bottom: 1em;\"><span style=\"font-family: Coda;\"><img alt=\"Top 10 AI Tools That Will Trans",
+      "link": "https://techncruncher.blogspot.com/2025/01/top-10-ai-tools-that-will-transform.html",
+      "published": "Thu, 02 Jan 2025 09:26:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "LimeWire AI Studio Review 2023: Details, Pricing & Features",
+      "summary": "<p style=\"text-align: left;\"><span style=\"font-family: Oxygen;\">&nbsp;</span></p><p style=\"text-align: left;\"><span style=\"font-family: Oxygen;\">In the rapidly advancing landscape of AI technology and innovation, LimeWire emerges as a unique platform in the realm of generative AI tools. This platform not only stands out from the multitude of existing AI tools but also brings a fresh approach to content generation. LimeWire not only empowers users to create AI content but also provides creators w",
+      "link": "https://techncruncher.blogspot.com/2023/12/limewire-ai-studio-review-2023-details.html",
+      "published": "Tue, 12 Dec 2023 16:10:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Top 10 AI Tools in 2023 That Will Make Your Life Easier",
+      "summary": "<p><span style=\"font-family: Montserrat;\"><br /></span></p><div class=\"separator\" style=\"clear: both; text-align: center;\"><a href=\"https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiu91xnR3LQV62WoiA0scuFOTa-Xx9vIwouaceeyosFtZrJB0UivYIWtbcF3TCWEjKhRQVBiSeB00RQI0-cO_eBG6d05_6UV7zYw9qzyHMJ6u2m9_itNW2mFAS8LChEhhJQ14aJbI3GrkEsY9xCTExAT-qxUSh5asVFMAmX-ceWufpgV_DrG9tk3Y4umw/s1920/Blue%20Purple%20Futuristic%20Modern%203D%20Tech%20Company%20Business%20Presentation-min.jpg\" style=\"margin-left: 1",
+      "link": "https://techncruncher.blogspot.com/2023/01/top-10-ai-tools-in-2023-that-will-make.html",
+      "published": "Wed, 25 Jan 2023 19:52:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "What Chef Jon Kung Swears By in the Kitchen (2026)",
+      "summary": "Plus, their definitive takes on sharpening knives and washing rice.",
+      "link": "https://www.wired.com/story/jon-kung-starter-pack/",
+      "published": "Fri, 01 May 2026 11:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Do You Need Aluminum Luggage? (2026): Rimowa, Away, Carl Friedrik",
+      "summary": "All-metal carry-ons give you the turn-left-on-a-plane look, but are they really worth the cost of a vacation?",
+      "link": "https://www.wired.com/story/do-you-need-aluminum-luggage/",
+      "published": "Fri, 01 May 2026 10:30:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Soundcore Nebula P1 Projector Review (2026): Compact and Portable for Indoor-Outdoor Viewing",
+      "summary": "This all-in-one indoor-outdoor projector from Anker is compact, affordable, and water-resistant—but not cinema quality.",
+      "link": "https://www.wired.com/review/soundcore-nebula-p1/",
+      "published": "Fri, 01 May 2026 10:03:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "This Treatment Could Reverse Osteoarthritis Joint Damage With a Single Injection",
+      "summary": "Osteoarthritis has no cure, but researchers have developed new therapies that help aging or damaged joints repair themselves in a matter of weeks.",
+      "link": "https://www.wired.com/story/osteoarthritis-joint-damage-single-injection-treatment/",
+      "published": "Fri, 01 May 2026 09:30:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "There's a lot of hype about Chinese EVs—is any of it true?",
+      "summary": "In addition to being full of screens, China now wants its cars to be packed with AI.",
+      "link": "https://arstechnica.com/cars/2026/05/theres-a-lot-of-hype-about-chinese-evs-is-any-of-it-true/",
+      "published": "Fri, 01 May 2026 11:00:15 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Trump nominates Fox News doctor to be the next surgeon general",
+      "summary": "Trump lashes out at Cassidy while announcing his new nomination.",
+      "link": "https://arstechnica.com/health/2026/04/trump-nominates-fox-news-doctor-to-be-the-next-surgeon-general/",
+      "published": "Thu, 30 Apr 2026 22:09:36 +0000",
+      "source_type": "rss"
+    }
+  ]
+}

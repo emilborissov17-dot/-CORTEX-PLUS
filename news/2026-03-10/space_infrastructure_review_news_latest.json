@@ -1,0 +1,59 @@
+{
+  "axis": "SPACE_INFRASTRUCTURE_REVIEW",
+  "fetched_at": "2026-03-10T11:55:42.533650+00:00",
+  "smart_query": "AXIS SPACE INFRASTRUCTURE REVIEW METRICS LEVEL",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "github": 3
+  },
+  "analysis": {
+    "summary": "Лунната еклипсa и върнатият в атмосферата прът от НАСА показват напредък в изследването на космоса, докато отворените източници подчертават иновации за устойчиво развитие. Проектите като EZ-RASSOR и Stable-Pi-Core насърчават автономното изкопаване и децентрализираните екосистеми.",
+    "key_developments": [
+      "Върнатият прът от НАСА изследва магнитните обвивки",
+      "EZ-RASSOR представя държавен ресурсен робот"
+    ],
+    "sentiment": "POSITIVE",
+    "urgency": "MEDIUM",
+    "open_source_momentum": "HIGH",
+    "scientific_frontier": "Космическо изследване и устойчиви технологии",
+    "relevance_to_goal": "HIGH"
+  },
+  "sentiment": "POSITIVE",
+  "urgency": "MEDIUM",
+  "summary": "Лунната еклипсa и върнатият в атмосферата прът от НАСА показват напредък в изследването на космоса, докато отворените източници подчертават иновации за устойчиво развитие. Проектите като EZ-RASSOR и Stable-Pi-Core насърчават автономното изкопаване и децентрализираните екосистеми.",
+  "key_developments": [
+    "Върнатият прът от НАСА изследва магнитните обвивки",
+    "EZ-RASSOR представя държавен ресурсен робот"
+  ],
+  "open_source_momentum": "HIGH",
+  "scientific_frontier": "Космическо изследване и устойчиви технологии",
+  "github_repos": [
+    {
+      "title": "KOSASIH/stable-pi-core",
+      "snippet": "Stable-Pi-Core is a next-generation decentralized ecosystem that integrates blockchain, quantum AI, IoT, edge computing, and AR/VR to deliver secure, scalable, and personalized solutions for payments,",
+      "stars": 111,
+      "url": "https://github.com/KOSASIH/stable-pi-core",
+      "updated": "2026-02-25",
+      "source": "GitHub"
+    },
+    {
+      "title": "FlaSpaceInst/EZ-RASSOR",
+      "snippet": "An inexpensive, autonomous, regolith-mining robot",
+      "stars": 62,
+      "url": "https://github.com/FlaSpaceInst/EZ-RASSOR",
+      "updated": "2026-02-18",
+      "source": "GitHub"
+    },
+    {
+      "title": "BarthPaleologue/CosmosJourneyer",
+      "snippet": "Cosmos Journeyer is a space exploration game running directly in the browser! Take your spaceship and witness the beauty of this virtually infinite universe.",
+      "stars": 36,
+      "url": "https://github.com/BarthPaleologue/CosmosJourneyer",
+      "updated": "2026-03-06",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": []
+}

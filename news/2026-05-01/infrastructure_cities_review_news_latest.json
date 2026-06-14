@@ -1,0 +1,57 @@
+{
+  "axis": "INFRASTRUCTURE_CITIES_REVIEW",
+  "fetched_at": "2026-05-01T13:11:25.125127+00:00",
+  "smart_query": "cities infrastructure urban development",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "Spotify adds 'Verified' badges to distinguish human artists from AI",
+      "snippet": "The music streaming platform will review criteria such as artists' live dates and social media presence.",
+      "url": "https://www.bbc.com/news/articles/c5yerr4m1yno?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Apple says iPhone 17 'most popular ever' as sales soar",
+      "snippet": "The record results come as boss Tim Cook is preparing to bow out after 15 years at the helm.",
+      "url": "https://www.bbc.com/news/articles/ce8pdk3l4d2o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Will AI lead to more accurate opinion polls?",
+      "snippet": "It's cheaper and faster to collect people's opinions using AI, but will it make polls more accurate?",
+      "url": "https://www.bbc.com/news/articles/cwyw6rylzepo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [],
+  "arxiv_papers": [
+    {
+      "title": "How Many Visual Levers Drive Urban Perception? Interventional Counterfactuals via Multiple Localised Edits",
+      "snippet": "Street-view perception models predict subjective attributes such as safety at scale, but remain correlational: they do not identify which localized visual changes would plausibly shift human judgement for a specific scene. We propose a lever-based interventional counterfactual framework that recasts",
+      "url": "https://arxiv.org/abs/2604.22103v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Diagnosing Urban Street Vitality via a Visual-Semantic and Spatiotemporal Framework for Street-Level Economics",
+      "snippet": "Micro-scale street-level economic assessment is fundamental for precision spatial resource allocation. While Street View Imagery (SVI) advances urban sensing, existing approaches remain semantically superficial and overlook brand hierarchy heterogeneity and structural recession. To address this, we ",
+      "url": "https://arxiv.org/abs/2604.19798v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[The skyscrapers that NIMBYs and zoning couldn't stop] LIVE SHOW TOUR INFO HERE. New stories, live tapings, special guests, book signings and more. What would you build on a piece of land when all the normal rules go out the window?On today’s show, how the Squamish Nation reclaimed a sliver of prime urban real estate and were liberated from zoning restrictions, to the consternation of their wealthy NIMBY neighbors.We trace the 100 year saga of what mi",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

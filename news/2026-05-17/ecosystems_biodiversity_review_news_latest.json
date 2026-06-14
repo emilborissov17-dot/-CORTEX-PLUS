@@ -1,0 +1,111 @@
+{
+  "axis": "ECOSYSTEMS_BIODIVERSITY_REVIEW",
+  "fetched_at": "2026-05-17T15:04:44.566259+00:00",
+  "smart_query": "biodiversity species extinction",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 0,
+    "github": 3,
+    "youtube_transcripts": 3,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "Giant squid discovery uncovers a hidden deep-sea world off Australia",
+      "snippet": "Scientists exploring deep underwater canyons off the coast of Western Australia uncovered a hidden world packed with bizarre and elusive marine life — including signs of the legendary giant squid. By analyzing traces of DNA floating in seawater from depths exceeding 4 kilometers, researchers identif",
+      "url": "https://www.sciencedaily.com/releases/2026/05/260513221807.htm",
+      "source": "RSS"
+    },
+    {
+      "title": "Scientists say this algae could remove microplastics from drinking water",
+      "snippet": "Researchers created a special kind of algae that can grab microscopic plastic pollution out of water almost like a magnet. The algae produce limonene, an orange-scented oil that helps them bind to water-repelling microplastics, forming easy-to-remove clumps. As a bonus, the algae also clean wastewat",
+      "url": "https://www.sciencedaily.com/releases/2026/05/260511213201.htm",
+      "source": "RSS"
+    },
+    {
+      "title": "Stunning fossil discovery challenges the origins of animal life",
+      "snippet": "Scientists revisiting mysterious 540-million-year-old microfossils from Brazil have overturned a major idea about early animal life. What were once thought to be trails left behind by tiny worm-like creatures are now believed to be fossilized communities of bacteria and algae — some with remarkably ",
+      "url": "https://www.sciencedaily.com/releases/2026/05/260511213139.htm",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "protontypes/open-sustainable-technology",
+      "snippet": "A directory and analysis of the open source ecosystem in the areas of climate change, sustainable energy, biodiversity and natural resources.  https://docs.getgrist.com/gSscJkc5Rb1R/OpenSustaintech",
+      "stars": 2496,
+      "url": "https://github.com/protontypes/open-sustainable-technology",
+      "updated": "2026-05-17",
+      "source": "GitHub"
+    },
+    {
+      "title": "microsoft/Biodiversity",
+      "snippet": "Microsoft AI for Good Lab — Biodiversity research hub. Open-source AI models, edge devices, and tools for biodiversity monitoring and conservation. Hosts SPARROW-Studio at /SPARROW-Studio. Your source",
+      "stars": 1007,
+      "url": "https://github.com/microsoft/Biodiversity",
+      "updated": "2026-05-15",
+      "source": "GitHub"
+    },
+    {
+      "title": "treflehq/trefle-api",
+      "snippet": "🍀 Trefle is a botanical JSON REST API for plants species, allowing you to search and query over all the registered species, and build the next gardening apps and farming robots.",
+      "stars": 576,
+      "url": "https://github.com/treflehq/trefle-api",
+      "updated": "2026-05-11",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [],
+  "podcast": "[Return of the Flesh-Eaters] If a species is horrible enough, do we have the right to kill it forever?\nSeventy years ago, a nightmare parasite feasted on the live flesh of warm-blooded creatures in North America: the screwworm. That is, until a young scientist named Edward F. Knipling discovered a crucial screwworm weakness and hatched a sweeping project to wipe them out. Knipling’s seemingly zany plan to spray screwworms out",
+  "wiki": null,
+  "youtube_items": [
+    {
+      "title": "[YT] We need IMMEDIATE action to stop extinction crisis, David Attenborough - BBC",
+      "summary": "over the course of my life i've encountered some of the world's most remarkable species of animals only now do i realize just how lucky i've been many of these wonders seem set to disappear forever the un panel of experts has found that one million animal and plant species face extinction it is worse than expected this is happening much faster than we've ever seen before today we are the asteroid that's causing many many species to go extinct simultaneously the evidence is that unless immediate action is taken this crisis has grave impacts for us all we're not just losing nice things to look at we're losing critical parts of earth's system and it's threatening our food our water our climate we are encroaching further and further every day into wildlife habitat and that drives emerging dise",
+      "link": "https://www.youtube.com/watch?v=dbCR0KSU52g",
+      "source_type": "youtube",
+      "channel": "BBC",
+      "video_id": "dbCR0KSU52g",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Million animals, plants at risk of extinction due to human activities, U.N. report says",
+      "summary": "as we told you yesterday about 1 million species of animals and plants around the world are now at risk of extinction in part due to pollution and overfishing a new United Nations report says nature is essential for our existence and a good quality of life but points to a start warning humans are transforming the planet's natural habitat at an unprecedented rate Jonathan Vigliotti is in Los Angeles eluate in Los Angeles with what the future could look like if nothing's done Jonathan good morning and good morning John scientists say the report is a landmark in the conservation battle not only was it compiled by scientists hundreds of them it was approved by diplomats as well from 132 countries including here in the US they say human survival depends on healthy animals and plants and destroy",
+      "link": "https://www.youtube.com/watch?v=5tgNtIUOL4E",
+      "source_type": "youtube",
+      "channel": "CBS Mornings",
+      "video_id": "5tgNtIUOL4E",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Climate 101: Deforestation | National Geographic",
+      "summary": "- [Narrator] Forests cover about 30% of the planet. And the ecosystems they create play an essential role in supporting life on earth. But deforestation is clearing earth's forest on a massive scale. And at the current rate of destruction, the world's rainforest can completely disappear within 100 years. Why should we care about deforestation? Together Forestry and Agriculture are responsible for 24% of greenhouse gas emissions, making deforestation a significant contributor to climate change. Deforestation impacts the amount of greenhouse gases in the atmosphere in two ways. First, when trees are felled, they release the carbon they are storing into the atmosphere. Second, trees play a critical role in absorbing the greenhouse gases that fuel global warming. Fewer forests mean larger amou",
+      "link": "https://www.youtube.com/watch?v=Ic-J6hcSKa8",
+      "source_type": "youtube",
+      "channel": "National Geographic",
+      "video_id": "Ic-J6hcSKa8",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 2102,
+      "has_full_transcript": true
+    }
+  ],
+  "summary": "Екосистемите и биоразнообразието са ключови за устойчивата цивилизация. Откритията във въглеродния цикъл и нови технологии за почистване на водата показват възможности, но и ускорената загуба на видове предупреждава за критична ситуация.",
+  "urgency": "CRITICAL",
+  "sentiment": "CRITICAL",
+  "key_developments": [
+    "Giant squid discovery uncovers a hidden deep-sea world off Australia",
+    "Scientists say this algae could remove microplastics from drinking water",
+    "Microsoft AI for Good Lab — Biodiversity research hub. Open-source AI models, ed",
+    "over the course of my life i've encountered some of the world's most remarkable species of animals only now do i realize just how lucky i've been many of these wonders seem set to disappear forever the un panel of experts has found that one million animal and plant species face extinction"
+  ],
+  "open_source_momentum": "Microsoft AI for Good Lab — Biodiversity research hub. Open-source AI models, ed",
+  "scientific_frontier": "No data",
+  "relevance_to_goal": "HIGH"
+}

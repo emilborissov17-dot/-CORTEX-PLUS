@@ -1,0 +1,96 @@
+{
+  "axis": "SOCIAL_RELATIONS_REVIEW",
+  "domain": "human",
+  "timestamp": "2026-05-08T09:53:20.398995+00:00",
+  "sources_count": 8,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 0,
+  "youtube_items": [],
+  "analysis": {
+    "problem": "Отчуждение и липса на доверие към официалните източници на здравословна информация в САЩ, водещо до търсене на алтернативни източници като социални медиа инфлуенсъри и подкасти",
+    "root_cause": "Отсутствие на прозрачност и доверие към официалните здравословни институции и липса на критическия разум сред част от населението",
+    "severity": "MEDIUM",
+    "leverage_points": [
+      "Здравословните институции и организациите в САЩ",
+      "Образователните системи и програми, насочени към критическия разум и медиа-грамотност"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Развитие на образователни програми за критически разум и медиа-грамотност",
+        "measurable_goal": "Увеличение на процента на населението с критически разум и способност да оценява достоверността на здравословната информация",
+        "timeframe": "средносрочно"
+      },
+      {
+        "action": "Усиление на透рачността и отчетността на здравословните институции",
+        "measurable_goal": "Увеличение на процента на доверие към официалните източници на здравословна информация",
+        "timeframe": "краткосрочно"
+      }
+    ],
+    "evidence": [
+      "40% от възрастните в САЩ получават здравословна информация от социални медиа инфлуенсъри или подкасти",
+      "Полу от възрастните под 50 години в САЩ получават здравословна информация от социални медиа инфлуенсъри или подкасти"
+    ],
+    "generalization": "Проблемът е свързан с домейна на цивилизацията, като отразява нуждата от прозрачност и достоверност в информацията, както и с домейна на човека, като показва важността на критическия разум и образованието за здравословният избор",
+    "summary": "Отчуждението от официалните източници на здравословна информация в САЩ води до търсене на алтернативни източници, което създава риск за здравословната сигурност. Необходими са образователни програми и усилия за прозрачност, за да се възстанови доверието и да се подобри критическият разум.",
+    "risk_level": "MEDIUM"
+  },
+  "raw_items": [
+    {
+      "title": "10 facts about Cubans in the U.S.",
+      "summary": "Millions of people living in the U.S. trace their origins to Cuba. They make up the third-largest Hispanic origin group in the U.S., after Mexicans and Puerto Ricans.",
+      "link": "https://www.pewresearch.org/short-reads/2026/05/07/10-facts-about-cubans-in-the-u-s/",
+      "published": "Thu, 07 May 2026 20:15:46 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Moms, Coaches, Doctors, Entrepreneurs: Who Are America’s Health and Wellness Influencers?",
+      "summary": "Half of U.S. adults under 50 say they get health and wellness information from social media influencers or podcasts. About 4 in 10 of these influencers describe themselves as health care professionals; coaches and entrepreneurs are almost as common.",
+      "link": "https://www.pewresearch.org/data-labs/2026/05/07/moms-coaches-doctors-entrepreneurs-who-are-americas-health-and-wellness-influencers/",
+      "published": "Thu, 07 May 2026 14:00:20 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Why do Americans get information from health and wellness influencers, and how do they find them?",
+      "summary": "Some 40% of U.S. adults say they ever get health and wellness information from social media influencers or podcasts. This analysis takes a deeper dive into the reasons Americans do this, how they come across these influencers and how they view the information these influencers offer. Some of the key takeaways: Other parts of this [&#8230;]",
+      "link": "https://www.pewresearch.org/data-labs/2026/05/07/why-do-americans-get-information-from-health-and-wellness-influencers-and-how-do-they-find-them/",
+      "published": "Thu, 07 May 2026 14:00:22 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Trust in health and wellness influencers",
+      "summary": "Some 40% of U.S. adults say they ever get health and wellness information from social media influencers or podcasts. This analysis takes a deeper dive into these Americans’ experiences with these influencers – how much they trust them, what they learn, and how the information they get makes them feel about their health. Some of [&#8230;]",
+      "link": "https://www.pewresearch.org/data-labs/2026/05/07/trust-in-health-and-wellness-influencers/",
+      "published": "Thu, 07 May 2026 14:00:23 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Trump says US-Iran ceasefire still in place after exchange of fire in Strait of Hormuz",
+      "summary": "Iran accuses the US of violating the truce, alleging it targeted an oil tanker and carried out attacks on coastal areas.",
+      "link": "https://www.bbc.com/news/articles/c626zyywxjno?at_medium=RSS&at_campaign=rss",
+      "published": "Fri, 08 May 2026 05:57:08 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Oil prices rise after US and Iran exchange fire in Hormuz strait",
+      "summary": "US President Donald Trump says the ceasefire between Washington and Tehran is still in place.",
+      "link": "https://www.bbc.com/news/articles/c86dp85g59xo?at_medium=RSS&at_campaign=rss",
+      "published": "Fri, 08 May 2026 08:43:55 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Third British national has suspected hantavirus infection, UK government says",
+      "summary": "The patient is on the remote Atlantic island of Tristan da Cunha, which was visited by the cruise ship in April.",
+      "link": "https://www.bbc.com/news/articles/c5yr41vq2ero?at_medium=RSS&at_campaign=rss",
+      "published": "Fri, 08 May 2026 06:03:23 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Anti-war protests rock Japan as PM pushes for stronger defence",
+      "summary": "Japan's largest anti-war protests in decades highlight a population divided over changes to its pacifist constitution.",
+      "link": "https://www.bbc.com/news/articles/c4g93v8jqnyo?at_medium=RSS&at_campaign=rss",
+      "published": "Thu, 07 May 2026 22:15:51 GMT",
+      "source_type": "rss"
+    }
+  ]
+}

@@ -1,0 +1,90 @@
+{
+  "axis": "LONG_TERM_FUTURE_REVIEW",
+  "fetched_at": "2026-04-03T14:16:49.250535+00:00",
+  "smart_query": "existential risk future civilization",
+  "sources_count": {
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 0,
+    "github": 3,
+    "web_search": 5
+  },
+  "rss": [
+    {
+      "title": "Fewer UK adults posting on social media, Ofcom finds",
+      "snippet": "Some experts believe it highlights a social media shift as platforms boost short video.",
+      "url": "https://www.bbc.com/news/articles/cgqk718l4neo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Elon Musk's SpaceX set to be worth $1 trillion with planned public listing",
+      "snippet": "The company’s public stock debut is set to be one of the most valuable in history, and could make Musk the world's first trillionaire.",
+      "url": "https://www.bbc.com/news/articles/c2k35lg92dpo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Peppa Pig and Transformers owner Hasbro hit by cyber-attack",
+      "snippet": "The firm says its operations remain open but says the hack \"may result in some delays\". ",
+      "url": "https://www.bbc.com/news/articles/cx24e1nryn9o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "emcie-co/parlant",
+      "snippet": "The conversational control layer for customer-facing AI agents - Parlant is a context-engineering framework optimized for controlling customer interactions.",
+      "stars": 17867,
+      "url": "https://github.com/emcie-co/parlant",
+      "updated": "2026-04-03",
+      "source": "GitHub"
+    },
+    {
+      "title": "agencyenterprise/PromptInject",
+      "snippet": "PromptInject is a framework that assembles prompts in a modular fashion to provide a quantitative analysis of the robustness of LLMs to adversarial prompt attacks. 🏆 Best Paper Awards @ NeurIPS ML Saf",
+      "stars": 472,
+      "url": "https://github.com/agencyenterprise/PromptInject",
+      "updated": "2026-04-02",
+      "source": "GitHub"
+    },
+    {
+      "title": "MinghuiChen43/awesome-trustworthy-deep-learning",
+      "snippet": "A curated list of trustworthy deep learning papers. Daily updating...",
+      "stars": 384,
+      "url": "https://github.com/MinghuiChen43/awesome-trustworthy-deep-learning",
+      "updated": "2026-03-28",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [],
+  "web_search": [
+    {
+      "title": "Here are the Top 10 threats to the survival of civilization",
+      "url": "https://www.sciencenews.org/article/threats-civilization-survival-humanity-apocalypse",
+      "source": "WEB"
+    },
+    {
+      "title": "Global catastrophic risk - Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Global_catastrophic_risk",
+      "source": "WEB"
+    },
+    {
+      "title": "Existential Risks: Threats to Humanity&#x27;s Survival",
+      "url": "https://existential-risk.com/concept",
+      "source": "WEB"
+    },
+    {
+      "title": "Existential Risks: What Threatens Humanity&#x27;s Future - Globaïa",
+      "url": "https://globaia.org/risks/",
+      "source": "WEB"
+    },
+    {
+      "title": "Existential Risks Initiative",
+      "url": "https://seri.stanford.edu/",
+      "source": "WEB"
+    }
+  ],
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL"
+}

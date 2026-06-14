@@ -1,0 +1,149 @@
+{
+  "axis": "ECOSYSTEMS_BIODIVERSITY_REVIEW",
+  "domain": "planet",
+  "timestamp": "2026-05-01T13:47:43.171460+00:00",
+  "sources_count": 11,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] The Causes of Deforestation, Biodiversity Loss, and Species Extinction, Emphasizing the Impact of - YouTube",
+      "summary": "Just specifically on the subject of deforestation, we told that forest and trees provide oxygen. So how exactly are we causing deforestation biodiversity loss and species extinction? And again, what is the specific concern about that? Is it the oxygen from the forest? And why is biodiversity loss or species extinction? How does that affect us? So those three things, deforestation biodiversity loss, species extinction, how are we creating this with our diet and what concerns you about it? Is it just the oxygen from the forest? Just, could you elaborate? Well, the grazing land that's on earth, that's not how the earth looked when we arrived on the scene. So we have deforested land all over the planet. We're doing it currently in the Amazon and elsewhere. For the very purpose of raising anima",
+      "link": "https://www.youtube.com/watch?v=QOKYEhkb1WQ",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "QOKYEhkb1WQ",
+      "transcript_method": "whisper",
+      "transcript_chars": 14953,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Why Is Biodiversity Loss A Result Of Deforestation? - YouTube",
+      "summary": "Imagine a vibrant bustling city full of unique characters, all playing a role in its daily rhythm. Now, picture that city being systematically dismantled, its neighborhoods raised and its infrastructure destroyed. This scenario on a global scale reflects a critical, environmental challenge that impacts every living thing. By would a versity loss is indeed a direct and severe consequence of deforestation. When forests are cleared, it leads to the irreversible destruction of habitats, fragmentation of remaining ecosystems, and profound alterations to the delicate balance necessary for countless species to survive and thrive. This process diminishes the variety of life on Earth at an alarming rate. The primary reason for biodiversity loss due to deforestation is straightforward habitat destru",
+      "link": "https://www.youtube.com/watch?v=trbu6RR0fw8",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "trbu6RR0fw8",
+      "transcript_method": "whisper",
+      "transcript_chars": 4065,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] How Deforestation and Habitat Loss reduce Biodiversity: Edge Effects and Extinction Debts explained - YouTube",
+      "summary": "Every minute an area the size of a soccer or football field, depending on where you watch this from, is clear cut in the Amazon basin, which because of feedbacks of the forest on its own climate, maybe on the brink of turning into a Savannah. Over half of the original 6 million square miles of rainforest that blanket in much of the tropics has been clear cut. In the United States less than 21% of old growth forests still exist. In the US Midwest only a tiny fraction of the original Tolgrass Prairie remains, with less than 1 tenth of 1% of the original Tolgrass Prairie remaining in Iowa. With the destruction of the flora that makes up any ecosystem, the associated fauna disappears as well. The mind boggling amount of habitat destruction that has happened and continues to happen is the curre",
+      "link": "https://www.youtube.com/watch?v=utUttHCCHXk",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "utUttHCCHXk",
+      "transcript_method": "whisper",
+      "transcript_chars": 6096,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "summary": "The global wildlife health crisis is accelerating, with deforestation, habitat loss, and climate change driving biodiversity loss and species extinction. These factors are interconnected, and the impact is felt across ecosystems and human societies.",
+    "risk_level": "HIGH",
+    "trend": "DETERIORATING",
+    "key_events": [
+      "Scientists reveal a new species in China, highlighting the fragility of ecosystems and the need for conservation efforts.",
+      "Golden oyster mushrooms spreading in U.S. forests, outcompeting native species and disrupting local ecosystems.",
+      "Sharks and tuna overheating due to climate change, with severe consequences for marine biodiversity."
+    ],
+    "insights": [
+      "Deforestation and habitat loss are primary drivers of biodiversity loss, with edge effects and extinction debts amplifying the damage.",
+      "Climate change exacerbates these issues, making conservation efforts more complex and urgent."
+    ],
+    "youtube_insights": [
+      "Understanding the causes of deforestation and biodiversity loss, as explained in a YouTube video.",
+      "The impact of deforestation on ecosystems and human health, as discussed in another YouTube video."
+    ],
+    "relevance_to_goal": "This information is highly relevant to the goal of preserving biodiversity and mitigating the effects of climate change on ecosystems.",
+    "generalization": "The global wildlife health crisis is worsening, with interconnected threats from deforestation, climate change, and human activities. Conservation efforts must be urgent and comprehensive to prevent further biodiversity loss."
+  },
+  "raw_items": [
+    {
+      "title": "Global",
+      "summary": "<span class=\"field field--name-title field--type-string field--label-hidden\">Global</span>\n<span class=\"field field--name-uid field--type-entity-reference field--label-hidden\"><span>integrations</span></span>\n<span class=\"field field--name-created field--type-created field--label-hidden\"><time class=\"datetime\" datetime=\"2022-02-21T08:14:38+01:00\" title=\"Monday, February 21, 2022 - 08:14\">Mon, 02/21/2022 - 08:14</time>\n</span>\n<span class=\"a2a_kit a2a_kit_size_20 addtoany_list\"><a class=\"a2a_butt",
+      "link": "https://iucn.org/our-work/region/global",
+      "published": "Mon, 21 Feb 2022 07:14:38 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Inside IUCN",
+      "summary": "<span class=\"field field--name-title field--type-string field--label-hidden\">Inside IUCN</span>\n<span class=\"field field--name-uid field--type-entity-reference field--label-hidden\"><span>review.sm</span></span>\n<span class=\"field field--name-created field--type-created field--label-hidden\"><time class=\"datetime\" datetime=\"2021-11-18T11:17:35+01:00\" title=\"Thursday, November 18, 2021 - 11:17\">Thu, 11/18/2021 - 11:17</time>\n</span>\n\n\n<span class=\"a2a_kit a2a_kit_size_20 addtoany_list\"><a class=\"a2",
+      "link": "https://iucn.org/content/inside-iucn",
+      "published": "Thu, 18 Nov 2021 10:17:35 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "DG Speech Node",
+      "summary": "<span class=\"field field--name-title field--type-string field--label-hidden\">DG Speech Node</span>\n<span class=\"field field--name-uid field--type-entity-reference field--label-hidden\"><span>review.webtf</span></span>\n<span class=\"field field--name-created field--type-created field--label-hidden\"><time class=\"datetime\" datetime=\"2021-11-18T10:56:51+01:00\" title=\"Thursday, November 18, 2021 - 10:56\">Thu, 11/18/2021 - 10:56</time>\n</span>\n\n\n<span class=\"a2a_kit a2a_kit_size_20 addtoany_list\"><a cla",
+      "link": "https://iucn.org/content/dg-speech-node",
+      "published": "Thu, 18 Nov 2021 09:56:51 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "It is time for a Global Wildlife Health Authority",
+      "summary": "<span class=\"field field--name-title field--type-string field--label-hidden\">It is time for a Global Wildlife Health Authority</span>\n<span class=\"field field--name-uid field--type-entity-reference field--label-hidden\"><span>integrations</span></span>\n<span class=\"field field--name-created field--type-created field--label-hidden\"><time class=\"datetime\" datetime=\"2021-10-20T09:48:06+02:00\" title=\"Wednesday, October 20, 2021 - 09:48\">Wed, 10/20/2021 - 09:48</time>\n</span>\n\n\n<span class=\"a2a_kit a2",
+      "link": "https://iucn.org/content/it-time-global-wildlife-health-authority",
+      "published": "Wed, 20 Oct 2021 07:48:06 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Scientists think they finally know why Neanderthals vanished",
+      "summary": "A new study suggests Neanderthals didn’t go extinct simply because of climate change or competition with Homo sapiens. Instead, the key difference may have been social connectivity—Homo sapiens formed stronger, more flexible networks that helped them survive environmental shocks. Neanderthals had connections too, but they were more fragile and regionally limited. This made them less resilient as conditions became increasingly unpredictable.",
+      "link": "https://www.sciencedaily.com/releases/2026/04/260427050609.htm",
+      "published": "Tue, 28 Apr 2026 04:42:03 EDT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Scientists warn about golden oyster mushrooms sold in Florida markets",
+      "summary": "The golden oyster mushroom may be a culinary hit, but it’s becoming an ecological problem. Scientists warn it’s spreading quickly through U.S. forests, where it outcompetes native fungi and reduces biodiversity. In just a decade, it has appeared in more than 25 states, largely due to human cultivation and transport. Its silent expansion is now raising concerns about long-term impacts on forest ecosystems.",
+      "link": "https://www.sciencedaily.com/releases/2026/04/260423031521.htm",
+      "published": "Fri, 24 Apr 2026 09:41:23 EDT",
+      "source_type": "rss"
+    },
+    {
+      "title": "DNA reveals a hidden pitviper species in China",
+      "summary": "A vivid green pitviper hiding in Sichuan’s misty mountains has been revealed as a completely new species. Scientists had overlooked it for decades, assuming it was a common snake—until DNA analysis proved otherwise. Named after Laozi, it features striking differences between males and females, including bold stripes and eye colors. The discovery highlights just how many unknown species may still be lurking in well-studied regions.",
+      "link": "https://www.sciencedaily.com/releases/2026/04/260422044617.htm",
+      "published": "Wed, 22 Apr 2026 05:15:51 EDT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Sharks and tuna are overheating and running out of options",
+      "summary": "Some of the ocean’s fastest and most fearsome predators—like great white sharks and tuna—are running hotter than expected, and it’s costing them dearly. New research shows these warm-bodied fish burn nearly four times more energy than cold-blooded species, forcing them to eat more while also struggling to shed excess heat. As oceans warm, this creates a dangerous “double jeopardy”: rising temperatures push them closer to overheating, while shrinking food supplies make survival even harder.",
+      "link": "https://www.sciencedaily.com/releases/2026/04/260417224459.htm",
+      "published": "Sat, 18 Apr 2026 01:10:25 EDT",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] The Causes of Deforestation, Biodiversity Loss, and Species Extinction, Emphasizing the Impact of - YouTube",
+      "summary": "Just specifically on the subject of deforestation, we told that forest and trees provide oxygen. So how exactly are we causing deforestation biodiversity loss and species extinction? And again, what is the specific concern about that? Is it the oxygen from the forest? And why is biodiversity loss or species extinction? How does that affect us? So those three things, deforestation biodiversity loss, species extinction, how are we creating this with our diet and what concerns you about it? Is it just the oxygen from the forest? Just, could you elaborate? Well, the grazing land that's on earth, that's not how the earth looked when we arrived on the scene. So we have deforested land all over the planet. We're doing it currently in the Amazon and elsewhere. For the very purpose of raising anima",
+      "link": "https://www.youtube.com/watch?v=QOKYEhkb1WQ",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "QOKYEhkb1WQ",
+      "transcript_method": "whisper",
+      "transcript_chars": 14953,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Why Is Biodiversity Loss A Result Of Deforestation? - YouTube",
+      "summary": "Imagine a vibrant bustling city full of unique characters, all playing a role in its daily rhythm. Now, picture that city being systematically dismantled, its neighborhoods raised and its infrastructure destroyed. This scenario on a global scale reflects a critical, environmental challenge that impacts every living thing. By would a versity loss is indeed a direct and severe consequence of deforestation. When forests are cleared, it leads to the irreversible destruction of habitats, fragmentation of remaining ecosystems, and profound alterations to the delicate balance necessary for countless species to survive and thrive. This process diminishes the variety of life on Earth at an alarming rate. The primary reason for biodiversity loss due to deforestation is straightforward habitat destru",
+      "link": "https://www.youtube.com/watch?v=trbu6RR0fw8",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "trbu6RR0fw8",
+      "transcript_method": "whisper",
+      "transcript_chars": 4065,
+      "has_full_transcript": true
+    }
+  ]
+}

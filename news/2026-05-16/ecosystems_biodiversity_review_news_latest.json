@@ -1,0 +1,76 @@
+{
+  "axis": "ECOSYSTEMS_BIODIVERSITY_REVIEW",
+  "fetched_at": "2026-05-16T13:27:36.874204+00:00",
+  "smart_query": "biodiversity species extinction",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 3,
+    "arxiv": 2,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "Giant squid discovery uncovers a hidden deep-sea world off Australia",
+      "snippet": "Scientists exploring deep underwater canyons off the coast of Western Australia uncovered a hidden world packed with bizarre and elusive marine life — including signs of the legendary giant squid. By analyzing traces of DNA floating in seawater from depths exceeding 4 kilometers, researchers identif",
+      "url": "https://www.sciencedaily.com/releases/2026/05/260513221807.htm",
+      "source": "RSS"
+    },
+    {
+      "title": "Scientists say this algae could remove microplastics from drinking water",
+      "snippet": "Researchers created a special kind of algae that can grab microscopic plastic pollution out of water almost like a magnet. The algae produce limonene, an orange-scented oil that helps them bind to water-repelling microplastics, forming easy-to-remove clumps. As a bonus, the algae also clean wastewat",
+      "url": "https://www.sciencedaily.com/releases/2026/05/260511213201.htm",
+      "source": "RSS"
+    },
+    {
+      "title": "Stunning fossil discovery challenges the origins of animal life",
+      "snippet": "Scientists revisiting mysterious 540-million-year-old microfossils from Brazil have overturned a major idea about early animal life. What were once thought to be trails left behind by tiny worm-like creatures are now believed to be fossilized communities of bacteria and algae — some with remarkably ",
+      "url": "https://www.sciencedaily.com/releases/2026/05/260511213139.htm",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [
+    {
+      "title": "World Wildlife Day 2026 : How Losing Just One Species Can Trigger Ecosystem Collapse",
+      "snippet": "World Wildlife Day 2026 : How Losing Just One Species Can Trigger Ecosystem Collapse",
+      "url": "https://www.yahoo.com/news/articles/world-wildlife-day-2026-losing-143200729.html",
+      "source": "yahoo.com"
+    },
+    {
+      "title": "Krisis Iklim Picu Perombakan Habitat Tanaman pada 2100 , Keanekaragaman Hayati di Asia Tenggara",
+      "snippet": "Krisis Iklim Picu Perombakan Habitat Tanaman pada 2100 , Keanekaragaman Hayati di Asia Tenggara",
+      "url": "https://lestari.kompas.com/read/2026/05/08/103000586/krisis-iklim-picu-perombakan-habitat-tanaman-pada-2100-keanekaragaman-hayati",
+      "source": "lestari.kompas.com"
+    },
+    {
+      "title": "بينها السلحفاة المصرية .. حملة لـ حماية البيئة بسوق الجمعة لإنقاذ أنواع مهددة بالانقراض",
+      "snippet": "بينها السلحفاة المصرية .. حملة لـ حماية البيئة بسوق الجمعة لإنقاذ أنواع مهددة بالانقراض",
+      "url": "https://www.dostor.org/5446518",
+      "source": "dostor.org"
+    }
+  ],
+  "github_repos": [],
+  "arxiv_papers": [
+    {
+      "title": "Disentangling the interactive effects of anthropogenic disturbances on biodiversity",
+      "snippet": "Anthropogenic activity threatens biodiversity through climate change, habitat fragmentation, and increasing frequency and scale of disturbance. Various theoretical studies have sought to shed light on how these factors could promote or hinder the coexistence of species. However, our understanding of",
+      "url": "https://arxiv.org/abs/2603.29116v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Modulating biodiversity through higher-order interactions and intraspecific competition in rock-paper-scissors dynamics",
+      "snippet": "Understanding the mechanisms that govern species coexistence and biodiversity represents a fundamental challenge in ecology. This study extends the classic rock-paper-scissors model by introducing a context-dependent higher-order interaction mechanism where intraspecific competition is dynamically r",
+      "url": "https://arxiv.org/abs/2603.00566v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[Return of the Flesh-Eaters] If a species is horrible enough, do we have the right to kill it forever?\nSeventy years ago, a nightmare parasite feasted on the live flesh of warm-blooded creatures in North America: the screwworm. That is, until a young scientist named Edward F. Knipling discovered a crucial screwworm weakness and hatched a sweeping project to wipe them out. Knipling’s seemingly zany plan to spray screwworms out",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

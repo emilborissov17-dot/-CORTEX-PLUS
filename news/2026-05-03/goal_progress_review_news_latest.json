@@ -1,0 +1,57 @@
+{
+  "axis": "GOAL_PROGRESS_REVIEW",
+  "fetched_at": "2026-05-03T09:08:38.449255+00:00",
+  "smart_query": "sustainable development goals SDG",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "‘Real impact on the ground’ needed as Indonesia backs UN reform",
+      "snippet": "Indonesia is expecting a “strengthened multilateral system that delivers real impact on the ground,” as one of the key outcomes of the ongoing reform of the United Nations, that’s according to the country’s outgoing Deputy Minister of Foreign Affairs for Multilateral Cooperation, Tri Tharyat.",
+      "url": "https://news.un.org/feed/view/en/story/2026/05/1167429",
+      "source": "RSS"
+    },
+    {
+      "title": "AI in advertising risks fuelling information crisis, UN warns",
+      "snippet": "With spending on advertising topping $1 trillion a year worldwide, the United Nations on Wednesday highlighted the untapped power of major brands to shape the future of Artificial Intelligence, warning that a failure to act could deepen a global information integrity crisis.",
+      "url": "https://news.un.org/feed/view/en/story/2026/04/1167405",
+      "source": "RSS"
+    },
+    {
+      "title": "Tobago’s teen archery champion takes aim at sustainability targets",
+      "snippet": "Six-time Trinidad and Tobago archery champion, Anthurium Lewis, has told UN News how sport helped her overcome age barriers in environmental advocacy and how in the future it can contribute to reaching globally agreed poverty and sustainability goals.",
+      "url": "https://news.un.org/feed/view/en/story/2026/04/1167310",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [],
+  "arxiv_papers": [
+    {
+      "title": "Unveiling the Nexus Between Economic Complexity and Environmental Sustainability: Evidence from BRICS-T Countries",
+      "snippet": "This study analyses the impacts of economic complexity on environmental performance in BRICS-T countries. Annual data for the period 1999-2021, Durbin-Hausman cointegration test and Augmented Mean Group (AMG) estimator are used in the analysis. The robustness of the Panel AMG results is tested with ",
+      "url": "https://arxiv.org/abs/2604.13150v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "An Agnostic Approach to Sustainability: From Capitals Substitutability to Non-Collapse Dynamics",
+      "snippet": "We construct a stochastic dynamical systems theory in which sustainability is a structural boundary property of a fully coupled Earth--Human--Production system. Each subsystem is modelled as a vector-valued process governed by stochastic differential equations with multiplicative noise and absolute ",
+      "url": "https://arxiv.org/abs/2602.23402v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[Village gossip, pesticide bans, and gene drives: 17 experts on the future of global health] What does it really take to lift millions out of poverty and prevent needless deaths?In this special compilation episode, 17 past guests — including economists, nonprofit founders, and policy advisors — share their most powerful and actionable insights from the front lines of global health and development. You’ll hear about the critical need to boost agricultural productivity in sub-Saharan Africa",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

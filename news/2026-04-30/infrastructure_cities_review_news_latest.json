@@ -1,0 +1,57 @@
+{
+  "axis": "INFRASTRUCTURE_CITIES_REVIEW",
+  "fetched_at": "2026-04-30T08:28:26.326456+00:00",
+  "smart_query": "cities infrastructure urban development",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "Musk accuses OpenAI lawyer of trying to 'trick' him in combative testimony",
+      "snippet": "Elon Musk was cross-examined on the third day of the trial over his lawsuit against Sam Altman and OpenAI.",
+      "url": "https://www.bbc.com/news/articles/czj29yygyzgo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Why friendly AI chatbots might be less trustworthy",
+      "snippet": "Researchers found adjusting AI systems to be more warm and friendly to users would result in an \"accuracy trade-off\".",
+      "url": "https://www.bbc.com/news/articles/cd9pdjgvxj8o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Musk accuses Altman of stealing a charity as courtroom battle begins",
+      "snippet": "The case over OpenAI's history and public commitments could have major implications for the future of AI.",
+      "url": "https://www.bbc.com/news/articles/cz027nyz529o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [],
+  "arxiv_papers": [
+    {
+      "title": "How Many Visual Levers Drive Urban Perception? Interventional Counterfactuals via Multiple Localised Edits",
+      "snippet": "Street-view perception models predict subjective attributes such as safety at scale, but remain correlational: they do not identify which localized visual changes would plausibly shift human judgement for a specific scene. We propose a lever-based interventional counterfactual framework that recasts",
+      "url": "https://arxiv.org/abs/2604.22103v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Diagnosing Urban Street Vitality via a Visual-Semantic and Spatiotemporal Framework for Street-Level Economics",
+      "snippet": "Micro-scale street-level economic assessment is fundamental for precision spatial resource allocation. While Street View Imagery (SVI) advances urban sensing, existing approaches remain semantically superficial and overlook brand hierarchy heterogeneity and structural recession. To address this, we ",
+      "url": "https://arxiv.org/abs/2604.19798v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[The skyscrapers that NIMBYs and zoning couldn't stop] LIVE SHOW TOUR INFO HERE. New stories, live tapings, special guests, book signings and more. What would you build on a piece of land when all the normal rules go out the window?On today’s show, how the Squamish Nation reclaimed a sliver of prime urban real estate and were liberated from zoning restrictions, to the consternation of their wealthy NIMBY neighbors.We trace the 100 year saga of what mi",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

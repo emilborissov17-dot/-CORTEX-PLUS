@@ -1,0 +1,109 @@
+{
+  "axis": "CULTURE_MEDIA_REVIEW",
+  "domain": "human",
+  "timestamp": "2026-05-04T14:58:46.192031+00:00",
+  "sources_count": 9,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 1,
+  "youtube_items": [
+    {
+      "title": "[YT] Social Media is Making Us Unsocial | Kristin Gallucci - YouTube",
+      "summary": "II Just a moment I'm posting this. A few years ago, I attended a social media event. This is an event where people gather and share their ideas with an audience. Many of these influencers had spent years creating videos and sharing their stories and encouraging others to build authentic relationships. I watched with enthusiasm each one walk into the conference and right on by. I was headed for the most Instagram worthy location in the conference hall. With each attempt to introduce myself, I was ignored or brushed off. You see, they chose to connect online rather than to connect with a human being. I chose social media over the potential of a real relationship right in front of them. That was the moment. The moment that changed my perspective. Social media is making us on social. Social me",
+      "link": "https://www.youtube.com/watch?v=66cD5En8Vfg",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "66cD5En8Vfg",
+      "transcript_method": "whisper",
+      "transcript_chars": 3745,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "Анализ на CULTURE_MEDIA_REVIEW — данни получени но LLM грешка",
+    "root_cause": "LLM parsing грешка",
+    "severity": "UNKNOWN",
+    "leverage_points": [],
+    "proposed_actions": [],
+    "evidence": [
+      "5 Minutes That Will Make You Love Belting",
+      "The Zen of Peter Frampton",
+      "A ‘Lord of the Flies’ for the ‘Adolescence’ Era"
+    ],
+    "generalization": "",
+    "summary": "- 5 Minutes That Will Make You Love Belting: Michele on Streisand. Hudson on Holliday. Chenoweth on Menzel. Ten insiders (and five Times writers) testify to the thrill of the big Broadway sound.\n- The",
+    "risk_level": "UNKNOWN",
+    "trend": "UNKNOWN"
+  },
+  "raw_items": [
+    {
+      "title": "5 Minutes That Will Make You Love Belting",
+      "summary": "Michele on Streisand. Hudson on Holliday. Chenoweth on Menzel. Ten insiders (and five Times writers) testify to the thrill of the big Broadway sound.",
+      "link": "https://www.nytimes.com/2026/05/04/theater/streisand-holliday-broadway-michele-chenoweth-menzel.html",
+      "published": "Mon, 04 May 2026 09:00:58 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "The Zen of Peter Frampton",
+      "summary": "Grappling with a progressive muscular disease and making a new album with his son, the onetime British guitar hero may be happier than ever.",
+      "link": "https://www.nytimes.com/2026/05/04/arts/music/peter-frampton-carry-the-light.html",
+      "published": "Mon, 04 May 2026 09:00:39 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "A ‘Lord of the Flies’ for the ‘Adolescence’ Era",
+      "summary": "A new TV series based on the William Golding classic, written by Jack Thorne, explores how boys are susceptible to the influence of others.",
+      "link": "https://www.nytimes.com/2026/05/04/arts/television/lord-of-the-flies-tv-netflix-jack-thorne.html",
+      "published": "Mon, 04 May 2026 09:02:13 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Ken Griffin Acquires Second Original Printing of the Constitution",
+      "summary": "The document, purchased in a private sale for an undisclosed amount, will be on view in New York for the 250th anniversary of American independence.",
+      "link": "https://www.nytimes.com/2026/05/04/arts/ken-griffin-constitution-250.html",
+      "published": "Mon, 04 May 2026 12:59:39 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "‘We got a drive-by egging in Baltimore’: Super Furry Animals on making The Man Don’t Give a Fuck",
+      "summary": "<p>‘The man is the establishment, I suppose, the military industrial complex. A few year later, when we played it live, we added a loop of Bill Hicks saying: “All governments are liars and murderers”’</p><p>Gruff was the first person I ever met who could just churn out songs – good, catchy ones. I joined his band Ffa Coffi Pawb, but by 1992 they’d split and Gruff and I were living in Cardiff, as were Bunf, Guto and my brother Cian, the other future Furries. We started out doing techno sets, and ",
+      "link": "https://www.theguardian.com/culture/2026/may/04/super-furry-animals-on-making-the-man-dont-give-a-fuck-bill-hicks",
+      "published": "Mon, 04 May 2026 13:30:24 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Next stop – infinity! My transcendental experience on Japan’s ‘art island’ guided by its master Lee Ufan",
+      "summary": "<p>Is this the ultimate location for contemplative art? Our writer travels to the legendary island of Naoshima – and meets the great creator of its most spellbinding works. Will he step through the arch and find nirvana?</p><p></p><p>The island of Naoshima used to be heavily polluted and dominated by a Mitsubishi plant. Now, after being redeveloped by the billionaire Sōichirō Fukutake in 1989, it’s known as Japan’s “art island”. Boasting 3,000 inhabitants and rising up out of Seto Inland Sea, th",
+      "link": "https://www.theguardian.com/artanddesign/2026/may/04/infinity-transcendental-japan-naoshima-art-island-lee-ufan",
+      "published": "Mon, 04 May 2026 04:00:12 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Ready for their close-ups: celebrity passport photos",
+      "summary": "<p>In 1953, Dave Sharkey, a former professional boxer, and his wife, Ann, founded a photographic studio in Oxford Street, London. The studio promised prints ‘ready in 10 minutes’ long before anyone else in the city could provide such a quick turnaround. Conveniently located near the US embassy and Selfridges, the studio, which was eventually taken over by the couple’s son Philip, became a bustling crossroads for artists, actors, musicians and athletes alike, all looking to get their passport pho",
+      "link": "https://www.theguardian.com/artanddesign/gallery/2026/may/04/ready-for-their-close-ups-celebrity-passport-photos",
+      "published": "Mon, 04 May 2026 06:00:15 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Making Life on Earth: Attenborough’s Greatest Adventure review – the anecdotes are just amazing",
+      "summary": "<p>From tales of giant tortoises trampling tents to almost getting shot, this is a relentlessly entertaining documentary about one of David Attenborough’s greatest pieces of TV</p><p>Life on Earth has a good claim for the top spot in any list of the best British TV shows of all time. A giant leap forward from previous wildlife programmes, it gave us the David Attenborough epic as we now know it: every expansive, expensive, dazzlingly informative BBC nature series since has used a template that L",
+      "link": "https://www.theguardian.com/tv-and-radio/2026/may/03/making-life-on-earth-attenboroughs-greatest-adventure-review-the-anecdotes-are-just-amazing",
+      "published": "Sun, 03 May 2026 20:00:02 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] Social Media is Making Us Unsocial | Kristin Gallucci - YouTube",
+      "summary": "II Just a moment I'm posting this. A few years ago, I attended a social media event. This is an event where people gather and share their ideas with an audience. Many of these influencers had spent years creating videos and sharing their stories and encouraging others to build authentic relationships. I watched with enthusiasm each one walk into the conference and right on by. I was headed for the most Instagram worthy location in the conference hall. With each attempt to introduce myself, I was ignored or brushed off. You see, they chose to connect online rather than to connect with a human being. I chose social media over the potential of a real relationship right in front of them. That was the moment. The moment that changed my perspective. Social media is making us on social. Social me",
+      "link": "https://www.youtube.com/watch?v=66cD5En8Vfg",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "66cD5En8Vfg",
+      "transcript_method": "whisper",
+      "transcript_chars": 3745,
+      "has_full_transcript": true
+    }
+  ]
+}

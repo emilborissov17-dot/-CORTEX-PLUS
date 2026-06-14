@@ -1,0 +1,123 @@
+{
+  "axis": "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL",
+  "domain": "human",
+  "timestamp": "2026-05-17T14:12:17.903638+00:00",
+  "sources_count": 9,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 1,
+  "youtube_items": [
+    {
+      "title": "[YT] What are the universal human rights? - Benedetta Berti - YouTube",
+      "summary": "The idea of human rights is that each one of us, no matter who we are or where we are born, is entitled to the same basic rights and freedoms. Human rights are not privileges, and they cannot be granted or revoked. They are inalienable and universal. That may sound straighforward enough, but it gets incredibly complicated as soon as anyone tries to put the idea into practice. What exactly are the basic human rights? Who gets to pick them? Who enforces them, and how? The history behind the concept of human rights is a long one. Throughout the centuries and across societies, religions, and cultures we have struggled with defining notions of rightfulness, justice, and rights. But one of the most modern affirmations of universal human rights emerged from the ruins of World War II with the crea",
+      "link": "https://www.youtube.com/watch?v=nDgIVseTkuE",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "nDgIVseTkuE",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "Политически затворници и ограничения на правата на гражданите се увеличават в няколко ключови страни, включително Чад, Китай, Венесуела и Хърватия.",
+    "root_cause": "Нарушаването на демократичните институции и насилието срещу опозицията водят до ограничаване на правата на гражданите и подкопаване на основните свободи.",
+    "severity": "CRITICAL",
+    "leverage_points": [
+      "Международната общественост и правозащитни организации",
+      "Съюзите на държавите в ООН и ЕС"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Организиране на международна кампания за поддръжка на политическите затворници и защита на правата на гражданите в засегнатите страни",
+        "measurable_goal": "Повече от 1 милион подписа за кампанията в рамките на 6 месеца",
+        "timeframe": "краткосрочно"
+      },
+      {
+        "action": "Подкрепа на независимите правозащитни организации в засегнатите страни",
+        "measurable_goal": "Финансова подкрепа за минимум 3 организации в рамките на 12 месеца",
+        "timeframe": "средносрочно"
+      }
+    ],
+    "evidence": [
+      "Сucces Masra, председател на опозиционната партия Les Transformateurs в Чад, е арестуван.",
+      "Политическият затворник Пастор Езра Джин в Китай е под изтезание.",
+      "Украина предлага законодателство, което угрожа правата на гражданите.",
+      "Венесуела се опитва да построи устойчив демократичен преход след Мадура."
+    ],
+    "generalization": "Този проблем е свързан с домейна на човешките права и устойчивостта на демократичните институции, които са основата на здравословна биосфера и мирно сътрудничество.",
+    "summary": "Нарушаването на демократичните институции води до ограничаване на правата на гражданите и подкопаване на основните свободи в няколко ключови страни.",
+    "risk_level": "CRITICAL"
+  },
+  "raw_items": [
+    {
+      "title": "One Year on Since Arrest of Opposition Leader in Chad",
+      "summary": "Click to expand Image\n          \n\n\n\n  \n        \n  \n\n        \n                      \n      \n        \n              Succes Masra, president of the Chadian opposition party Les Transformateurs, outside the party headquarters in N'Djamena, April 8, 2021.\n                    © 2021 Marco Longer/AFP via Getty Images\n          \n    \n\n\n  \n<p>One year after&nbsp;Chadian authorities&nbsp;arrested and later sentenced Succès Masra, the prominent opposition leader and former prime minister, his continued imp",
+      "link": "https://www.hrw.org/news/2026/05/15/one-year-on-since-arrest-of-opposition-leader-in-chad",
+      "published": "Fri, 15 May 2026 13:40:00 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "Ukraine’s Proposed Legislation Threatens Rights",
+      "summary": "Click to expand Image\n          \n\n\n\n  \n        \n  \n\n        \n                      \n      \n        \n              A placard reads \"Civil Code Is Step Back\" during a peaceful protest to urge MPs to refine the draft of the new Civil Code taking into account amendments proposed by human rights activists, in Mariinsky Park, Kyiv, Ukraine, May 5, 2026.\n                    © 2026 Pavlo Bahmut/Ukrinform via Reuters \n          \n    \n\n\n  \n<p>Ukraine’s parliament on April 28 advanced a bill to make sweepi",
+      "link": "https://www.hrw.org/news/2026/05/15/ukraines-proposed-legislation-threatens-rights",
+      "published": "Fri, 15 May 2026 12:06:03 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "New York Considers Measures to Rein in ICE",
+      "summary": "Click to expand Image\n          \n\n\n\n  \n        \n  \n\n        \n                      \n      \n        \n              Immigration activists are calling on Governor Kathy Hochul to sign the NY For All Act, which expands protection for immigrants living in New York reguardless of immigration status. New York City, March 22, 2026.\n                    © 2026 Steve Sanchez/Sipa via AP Photo\n          \n    \n\n\n  \n<p>New York Governor Kathy Hochul has announced a proposed budget deal that includes reforms a",
+      "link": "https://www.hrw.org/news/2026/05/14/new-york-considers-measures-to-rein-in-ice",
+      "published": "Thu, 14 May 2026 10:26:53 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "US Foreign Aid Cuts Harm Human Rights Globally",
+      "summary": "Click to expand Image\n          \n\n\n\n  \n        \n  \n\n        \n                      \n      \n        \n              A USAID box amid materials left behind after widespread vandalism and looting following clashes at the World Food Programme warehouse in Bukavu, Democratic Republic of Congo, February 21, 2025.\n                    © 2025 Luis Tato/AFP via Getty Images\n          \n    \n\n\n  \n<p>(Washington, DC) – The&nbsp;United States government’s abrupt cuts to nearly all US foreign aid in 2025 harmed",
+      "link": "https://www.hrw.org/news/2026/05/14/us-foreign-aid-cuts-harm-human-rights-globally",
+      "published": "Thu, 14 May 2026 03:00:00 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "D. Jeffrey Hirschberg",
+      "summary": "<span class=\"field field--name-title field--type-string field--label-hidden\">D. Jeffrey Hirschberg</span>\n<span class=\"field field--name-uid field--type-entity-reference field--label-hidden\"><span lang=\"lang\">zevans@freedom…</span></span>\n<span class=\"field field--name-created field--type-created field--label-hidden\"><time class=\"datetime\" datetime=\"2026-05-05T14:33:17-04:00\" title=\"Tuesday, May 5, 2026 - 14:33\">Tue, 05/05/2026 - 14:33</time>\n</span>\n\n  <div class=\"field field--name-field-person",
+      "link": "https://freedomhouse.org/expert/d-jeffrey-hirschberg",
+      "published": "Tue, 05 May 2026 18:33:17 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "After the Election: Revitalizing Hungarian Democracy, and Lessons from the Opposition Victory",
+      "summary": "<span class=\"field field--name-title field--type-string field--label-hidden\">After the Election: Revitalizing Hungarian Democracy, and Lessons from the Opposition Victory</span>\n<span class=\"field field--name-uid field--type-entity-reference field--label-hidden\"><span lang=\"lang\">zevans@freedom…</span></span>\n<span class=\"field field--name-created field--type-created field--label-hidden\"><time class=\"datetime\" datetime=\"2026-04-28T13:57:40-04:00\" title=\"Tuesday, April 28, 2026 - 13:57\">Tue, 04/2",
+      "link": "https://freedomhouse.org/article/after-election-revitalizing-hungarian-democracy-and-lessons-opposition-victory",
+      "published": "Tue, 28 Apr 2026 17:57:40 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Political Prisoner Spotlight: The Struggle for Pastor Ezra Jin’s Freedom in China",
+      "summary": "<div class=\"node node--type-event node--view-mode-rss ds-1col clearfix hero-no-header share-buttons-on\">\n\n\n        \n\n\n\n  <div class=\"no-header-wrapper\">\n    <span class=\"hr\"></span>\n    <div class=\"grid header\">\n      <div class=\"text-wrapper\">\n\n        \n        \n        <h1 class=\"basic-h1 dark-text\"><span class=\"field field--name-title field--type-string field--label-hidden\">Political Prisoner Spotlight: The Struggle for Pastor Ezra Jin’s Freedom in China</span>\n</h1>\n\n                </div>\n ",
+      "link": "https://freedomhouse.org/event/political-prisoner-spotlight-struggle-pastor-ezra-jins-freedom-china",
+      "published": "Tue, 28 Apr 2026 14:14:45 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Beyond Maduro: Building a Sustainable Democratic Transition in Venezuela",
+      "summary": "<span class=\"field field--name-title field--type-string field--label-hidden\">Beyond Maduro: Building a Sustainable Democratic Transition in Venezuela</span>\n<span class=\"field field--name-uid field--type-entity-reference field--label-hidden\"><span lang=\"lang\">zevans@freedom…</span></span>\n<span class=\"field field--name-created field--type-created field--label-hidden\"><time class=\"datetime\" datetime=\"2026-04-23T12:57:41-04:00\" title=\"Thursday, April 23, 2026 - 12:57\">Thu, 04/23/2026 - 12:57</time",
+      "link": "https://freedomhouse.org/article/beyond-maduro-building-sustainable-democratic-transition-venezuela",
+      "published": "Thu, 23 Apr 2026 16:57:41 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] What are the universal human rights? - Benedetta Berti - YouTube",
+      "summary": "The idea of human rights is that each one of us, no matter who we are or where we are born, is entitled to the same basic rights and freedoms. Human rights are not privileges, and they cannot be granted or revoked. They are inalienable and universal. That may sound straighforward enough, but it gets incredibly complicated as soon as anyone tries to put the idea into practice. What exactly are the basic human rights? Who gets to pick them? Who enforces them, and how? The history behind the concept of human rights is a long one. Throughout the centuries and across societies, religions, and cultures we have struggled with defining notions of rightfulness, justice, and rights. But one of the most modern affirmations of universal human rights emerged from the ruins of World War II with the crea",
+      "link": "https://www.youtube.com/watch?v=nDgIVseTkuE",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "nDgIVseTkuE",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ]
+}

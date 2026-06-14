@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en"
+      dir="ltr" 
+  xmlns:content="http://purl.org/rss/1.0/modules/content/"
+  xmlns:dc="http://purl.org/dc/terms/"
+  xmlns:foaf="http://xmlns.com/foaf/0.1/"
+  xmlns:og="http://ogp.me/ns#"
+  xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+  xmlns:sioc="http://rdfs.org/sioc/ns#"
+  xmlns:sioct="http://rdfs.org/sioc/types#"
+  xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema#" class="no-js">
+
+<head>
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<link rel="shortcut icon" href="https://www.energy.cam.ac.uk/profiles/cambridge/themes/cambridge_theme/favicon.ico" type="image/vnd.microsoft.icon" />
+<link rel="apple-touch-icon" href="https://www.energy.cam.ac.uk/profiles/cambridge/themes/cambridge_theme/apple-touch-icon.png" type="image/png" />
+<meta name="generator" content="Drupal 7 (https://www.drupal.org)" />
+<link rel="canonical" href="https://www.energy.cam.ac.uk/" />
+<link rel="shortlink" href="https://www.energy.cam.ac.uk/" />
+<meta name="dcterms.title" content="Energy" />
+<meta name="dcterms.description" content="Interdisciplinary Research Centre" />
+<meta name="dcterms.type" content="Text" />
+<meta name="dcterms.format" content="text/html" />
+<meta name="dcterms.identifier" content="https://www.energy.cam.ac.uk/" />
+
+  <title>Energy | Interdisciplinary Research Centre</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <link type="text/css" rel="stylesheet" href="https://www.energy.cam.ac.uk/sites/default/files/css/css_xE-rWrJf-fncB6ztZfd2huxqgxu4WO-qwma6Xer30m4.css" media="all" />
+<link type="text/css" rel="stylesheet" href="https://www.energy.cam.ac.uk/sites/default/files/css/css_wJB5Rp67hxRla9wvIjNlpAqm3OTtu9xrn15lAoKYcEs.css" media="all" />
+<link type="text/css" rel="stylesheet" href="https://www.energy.cam.ac.uk/sites/default/files/css/css_pkzqE4MkAksqW3L1t6uBJ4k2F_Ln6YYitmVOLbsIsnI.css" media="all" />
+<link type="text/css" rel="stylesheet" href="https://www.energy.cam.ac.uk/sites/default/files/css/css_TZBLxdg3N2UduQtOE2dgRSFMCkFG-NWJk6_hB1tAgag.css" media="all" />
+<link type="text/css" rel="stylesheet" href="https://www.energy.cam.ac.uk/sites/default/files/css/css_e1hjcjr9yB3-xRxRq4vcYHDZRKo8ftwUlbRtn874xIM.css" media="all" />
+
+  <script type="text/javascript" src="//use.typekit.com/hyb5bko.js"></script>
+  <script type="text/javascript">try {
+      Typekit.load();
+    } catch (e) {
+    }</script>
+  <script type="text/javascript">document.documentElement.className += " js";</script>
+
+</head>
+
+<body class="html front not-logged-in no-sidebars page-node page-node- page-node-2 node-type-page campl-theme-1" >
+
+<!--[if lt IE 7]>
+<div class="lt-ie9 lt-ie8 lt-ie7">
+<![endif]-->
+<!--[if IE 7]>
+<div class="lt-ie9 lt-ie8">
+<![endif]-->
+<!--[if IE 8]>
+<div class="lt-ie9">
+<![endif]-->
+
+<a href="#page-content" class="campl-skipTo">skip to content</a>
+
+<noscript aria-hidden="true"><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-55Z5753D" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+
+<div class="campl-row campl-global-header">
+  <div class="campl-wrap clearfix">
+    <div class="campl-header-container campl-column8" id="global-header-controls">
+      <a href="https://www.cam.ac.uk" class="campl-main-logo">
+        <img alt="University of Cambridge" src="/profiles/cambridge/themes/cambridge_theme/images/interface/main-logo-small.png"/>
+      </a>
+
+      <ul class="campl-unstyled-list campl-horizontal-navigation campl-global-navigation clearfix">
+        <li>
+          <a href="#study-with-us">Study at Cambridge</a>
+        </li>
+        <li>
+          <a href="#about-the-university">About the University</a>
+        </li>
+        <li>
+          <a href="https://www.cam.ac.uk/research?ucam-ref=global-header" class="campl-no-drawer">Research at Cambridge</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="campl-column2">
+      <div class="campl-quicklinks">
+      </div>
+    </div>
+
+    <div class="campl-column2">
+
+      <div class="campl-site-search" id="site-search-btn">
+
+        <label for="header-search" class="hidden">Search site</label>
+
+        <div class="campl-search-input">
+          <form action="https://search.cam.ac.uk/web" method="get">
+            <input id="header-search" type="text" title="Search" name="query" value="" placeholder="Search"/>
+
+            
+            <input type="image" alt="Search" class="campl-search-submit"
+                   src="/profiles/cambridge/themes/cambridge_theme/images/interface/btn-search-header.png"/>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+<div class="campl-row campl-global-header campl-search-drawer">
+  <div class="campl-wrap clearfix">
+    <form class="campl-site-search-form" id="site-search-container" action="https://search.cam.ac.uk/web" method="get">
+      <div class="campl-search-form-wrapper clearfix">
+        <input type="text" class="text" title="Search" name="query" value="" placeholder="Search"/>
+
+        
+        <input type="image" alt="Search" class="campl-search-submit"
+               src="/profiles/cambridge/themes/cambridge_theme/images/interface/btn-search.png"/>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="campl-row campl-global-navigation-drawer">
+
+  <div class="campl-wrap clearfix">
+    <div class="campl-column12 campl-home-link-container">
+      <a href="">Home</a>
+    </div>
+  </div>
+  <div class="campl-wrap clearfix">
+    <div class="campl-column12 campl-global-navigation-mobile-list campl-global-navigation-list">
+      <div class="campl-global-navigation-outer clearfix" id="study-with-us">
+        <ul class="campl-unstyled-list campl-global-navigation-header-container ">
+          <li><a href="https://www.cam.ac.uk/study-at-cambridge?ucam-ref=global-header">Study at Cambridge</a></li>
+        </ul>
+        <div class="campl-column4">
+          <ul
+            class="campl-global-navigation-container campl-unstyled-list campl-global-navigation-secondary-with-children">
+            <li>
+              <a href="https://www.undergraduate.study.cam.ac.uk/?ucam-ref=global-header">Undergraduate</a>
+              <ul class="campl-global-navigation-tertiary campl-unstyled-list">
+                <li>
+                  <a href="https://www.undergraduate.study.cam.ac.uk/courses?ucam-ref=global-header">Undergraduate courses</a>
+                </li>
+                <li>
+                  <a href="https://www.undergraduate.study.cam.ac.uk/applying?ucam-ref=global-header">Applying</a>
+                </li>
+                <li>
+                  <a href="https://www.undergraduate.study.cam.ac.uk/events?ucam-ref=global-header">Events and open days</a>
+                </li>
+                <li>
+                  <a href="https://www.undergraduate.study.cam.ac.uk/finance?ucam-ref=global-header">Fees and finance</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <div class="campl-column4">
+          <ul
+            class="campl-global-navigation-container campl-unstyled-list campl-global-navigation-secondary-with-children">
+            <li>
+              <a href="https://www.postgraduate.study.cam.ac.uk/?ucam-ref=global-header">Postgraduate</a>
+              <ul class="campl-global-navigation-tertiary campl-unstyled-list">
+                <li>
+                  <a href="https://www.postgraduate.study.cam.ac.uk/courses?ucam-ref=global-header">Postgraduate courses</a>
+                </li>
+                <li>
+                  <a href="https://www.postgraduate.study.cam.ac.uk/application-process/how-do-i-apply?ucam-ref=global-header">How to apply</a>
+		</li>
+                <li>
+                  <a href="https://www.postgraduate.study.cam.ac.uk/events?ucam-ref=global-header">Postgraduate events</a>
+                </li>		      
+                <li>
+		  <a href="https://www.postgraduate.study.cam.ac.uk/funding?ucam-ref=global-header">Fees and funding</a>
+		</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <div class="campl-column4">
+          <ul class="campl-global-navigation-container campl-unstyled-list last">
+            <li>
+              <a href="https://www.internationalstudents.cam.ac.uk/?ucam-ref=global-header">International
+                students</a>
+            </li>
+            <li>
+              <a href="https://www.ice.cam.ac.uk/?ucam-ref=global-header">Continuing education</a>
+            </li>
+            <li>
+              <a href="https://www.epe.admin.cam.ac.uk/?ucam-ref=global-header">Executive and professional education</a>
+            </li>
+            <li>
+              <a href="https://www.educ.cam.ac.uk/?ucam-ref=global-header">Courses in education</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="campl-global-navigation-outer clearfix" id="about-the-university">
+        <ul class="campl-global-navigation-header-container campl-unstyled-list">
+          <li><a href="https://www.cam.ac.uk/about-the-university?ucam-ref=global-header">About the University</a></li>
+        </ul>
+        <div class="campl-column4">
+          <ul class="campl-global-navigation-container campl-unstyled-list">
+            <li>
+              <a href="https://www.cam.ac.uk/about-the-university/how-the-university-and-colleges-work?ucam-ref=global-header">How the
+                University and Colleges work</a>
+            </li>
+            <li>
+              <a href="https://www.cam.ac.uk/about-the-university/term-dates-and-calendars?ucam-ref=global-header">Term dates and calendars</a>
+            </li>
+            <li>
+              <a href="https://www.cam.ac.uk/about-the-university/history?ucam-ref=global-header">History</a>
+            </li>
+            <li>
+              <a href="https://map.cam.ac.uk/?ucam-ref=global-header">Map</a>
+            </li>
+            <li>
+              <a href="https://www.cam.ac.uk/about-the-university/visiting-the-university?ucam-ref=global-header">Visiting the University</a>
+            </li>
+          </ul>
+        </div>
+        <div class="campl-column4">
+          <ul class="campl-global-navigation-container campl-unstyled-list">
+            <li>
+              <a href="https://www.cam.ac.uk/about-the-university/annual-reports?ucam-ref=global-header">Annual reports</a>
+            </li>
+            <li>
+              <a href="https://www.equality.admin.cam.ac.uk/?ucam-ref=global-header">Equality and diversity</a>
+            </li>
+            <li>
+              <a href="https://www.cam.ac.uk/news?ucam-ref=global-header">News</a>
+            </li>
+            <li>
+              <a href="https://www.cam.ac.uk/a-global-university?ucam-ref=global-header">A global university</a>
+            </li>
+          </ul>
+        </div>
+        <div class="campl-column4">
+          <ul class="campl-global-navigation-container campl-unstyled-list">
+            <li>
+              <a href="https://www.admin.cam.ac.uk/whatson/?ucam-ref=global-header">Events</a>
+            </li>
+            <li>
+              <a href="https://www.cam.ac.uk/public-engagement?ucam-ref=global-header">Public engagement</a>
+            </li>
+            <li>
+              <a href="https://www.jobs.cam.ac.uk/">Jobs</a>
+            </li>
+            <li>
+              <a href="https://www.philanthropy.cam.ac.uk/?ucam-ref=global-header">Give to Cambridge</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="campl-global-navigation-outer clearfix" id="our-research">
+        <ul class="campl-global-navigation-header-container campl-unstyled-list">
+          <li><a href="">Research at Cambridge</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <ul class="campl-unstyled-list campl-quicklinks-list campl-global-navigation-container ">
+      <li>
+        <a href="https://www.cam.ac.uk/for-staff?ucam-ref=global-quick-links">For staff</a>
+      </li>
+      <li>
+        <a href="https://www.cambridgestudents.cam.ac.uk/?ucam-ref=global-quick-links">For Cambridge students</a>
+      </li>
+      <li>
+        <a href="https://www.alumni.cam.ac.uk/?ucam-ref=global-quick-links">For alumni</a>
+      </li>
+	  <li>
+        <a href="https://www.research-operations.admin.cam.ac.uk/?ucam-ref=global-quick-links">For our researchers</a>
+      </li>
+      <li>
+        <a href="https://www.cam.ac.uk/business-and-enterprise?ucam-ref=global-quick-links">Business and enterprise</a>
+      </li>
+      <li>
+        <a href="https://www.cam.ac.uk/colleges-and-departments?ucam-ref=global-quick-links">Colleges &amp; departments</a>
+      </li>
+	  <li>
+        <a href="https://www.cam.ac.uk/email-and-phone-search?ucam-ref=global-quick-links">Email &amp; phone search</a>
+      </li>
+      <li>
+        <a href="https://www.philanthropy.cam.ac.uk/?ucam-ref=global-quick-links">Give to Cambridge</a>
+      </li>
+      <li>
+        <a href="https://www.libraries.cam.ac.uk/?ucam-ref=global-quick-links">Libraries</a>
+      </li>
+      <li>
+        <a href="https://www.museums.cam.ac.uk/?ucam-ref=global-quick-links">Museums &amp; collections</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="campl-row campl-page-header campl-section-page">
+  <div class="campl-wrap clearfix">
+    <div class="campl-column12">
+      <div class="campl-content-container campl-co-branding-container">
+
+        
+                          
+                  <img src="https://www.energy.cam.ac.uk/sites/default/files/e-irc-logo-white-globe-line-only-120x116.png" class="campl-co-branding-logo" alt=""/>
+        
+                  <h1 class="campl-page-title">
+                  Energy                            </h1>
+        
+                  <div id="site-slogan" class="campl-page-subtitle">
+            Interdisciplinary Research Centre          </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+  <div class="campl-row campl-page-header">
+    <div class="campl-wrap">
+        <div class="region region-horizontal-navigation">
+    <div id="block-menu-block-1" class="block block-menu-block">
+
+  
+  
+  
+  <div>
+    <div class="menu-block-wrapper menu-block-1 menu-name-main-menu parent-mlid-0 menu-level-1">
+  <div class="campl-wrap clearfix campl-local-navigation"><div class="campl-local-navigation-container"><ul class="campl-unstyled-list"><li class="first leaf active-trail active menu-mlid-289 campl-current-page"><a href="/" class="active-trail campl-selected active">Home</a></li>
+<li class="leaf menu-mlid-5309"><a href="/aboutus">About Us</a></li>
+<li class="expanded menu-mlid-17301"><a href="/research-themes-0">Research Themes</a><ul class="campl-unstyled-list local-dropdown-menu"><li class="first collapsed menu-mlid-17301"><a href="/research-themes-0">Research Themes overview</a></li>
+<li class="leaf menu-mlid-17601"><a href="/research-themes-0/materials">Materials</a></li>
+<li class="leaf menu-mlid-17611"><a href="/research-themes-0/systems">Systems</a></li>
+<li class="last leaf menu-mlid-17621"><a href="/research-themes-0/sustainability">Sustainability</a></li>
+</ul></li>
+<li class="expanded menu-mlid-5325"><a href="/news-and-events/news" title="">News and Events</a><ul class="campl-unstyled-list local-dropdown-menu"><li class="first leaf menu-mlid-5329"><a href="/news-and-events/news" title="">News</a></li>
+<li class="last expanded menu-mlid-2415"><a href="/events">Events</a><ul class="campl-unstyled-list local-dropdown-menu"><li class="first collapsed menu-mlid-2415"><a href="/events">Events overview</a></li>
+<li class="last leaf menu-mlid-4163"><a href="/events/past-events">Past Events</a></li>
+</ul></li>
+</ul></li>
+<li class="leaf menu-mlid-5381"><a href="/contact-us">Contact Us</a></li>
+<li class="last leaf menu-mlid-19538"><a href="/cambridge-climate-challenge-2026">Cambridge Climate Challenge 2026</a></li>
+</ul></div></div></div>
+  </div>
+
+</div>
+  </div>
+    </div>
+  </div>
+
+  <div class="campl-row campl-page-header">
+    <div class="campl-wrap clearfix">
+      <div class="campl-column9 campl-recessed-carousel">
+          <div class="region region-carousel">
+    <div id="block-views-carousel-block" class="block block-views">
+
+  
+  
+  
+  <div>
+    <div class="view view-carousel view-id-carousel view-display-id-block section-carousel campl-carousel clearfix campl-banner view-dom-id-44f0322279fde00de7c3a2251d5d557b">
+        
+  
+  
+      <div class="view-content">
+      <div class="campl-carousel-container">    <ul class="campl-unstyled-list campl-slides">          <li class="campl-slide campl-column12">
+<span property="dc:title" content="Cambridge Festival - 1 April 2026 - Register" class="rdf-meta element-hidden"></span><div class="image-container">
+  <div class="field field-name-field-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><a href="https://www.energy.cam.ac.uk/events/making-energy-choices-heat-pumps-solar-panels-electric-cars"><img typeof="foaf:Image" class="campl-scale-with-grid" src="https://www.energy.cam.ac.uk/sites/default/files/styles/carousel/public/cf-making-energy-choices-mar-2026.jpg?itok=82fC1NXV" alt="" /></a></div></div></div></div>
+
+<div class="campl-slide-caption">
+
+      <a href="https://www.energy.cam.ac.uk/events/making-energy-choices-heat-pumps-solar-panels-electric-cars">
+  
+  <span class="campl-slide-caption-txt">Cambridge Festival - 1 April 2026 - Register</span>
+
+      </a>
+  
+</div>
+</li>
+          <li class="campl-slide campl-column12">
+<span property="dc:title" content="ENERGY RESEARCH HIGHLIGHT" class="rdf-meta element-hidden"></span><div class="image-container">
+  <div class="field field-name-field-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><a href="https://www.energy.cam.ac.uk/blog/research-highlight-blueprints-decarbonization-how-ai-agents-are-automating-building-energy"><img typeof="foaf:Image" class="campl-scale-with-grid" src="https://www.energy.cam.ac.uk/sites/default/files/styles/carousel/public/homepage-carousel/research-highlight-from_blueprints_to_decarbonization-feb-2026-885x432.jpg?itok=CJG1WkwU" alt="" /></a></div></div></div></div>
+
+<div class="campl-slide-caption">
+
+      <a href="https://www.energy.cam.ac.uk/blog/research-highlight-blueprints-decarbonization-how-ai-agents-are-automating-building-energy">
+  
+  <span class="campl-slide-caption-txt">ENERGY RESEARCH HIGHLIGHT</span>
+
+      </a>
+  
+</div>
+</li>
+          <li class="campl-slide campl-column12">
+<span property="dc:title" content="NEWS" class="rdf-meta element-hidden"></span><div class="image-container">
+  <div class="field field-name-field-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><a href="https://www.energy.cam.ac.uk/news/sustainable-cellulose-packaging"><img typeof="foaf:Image" class="campl-scale-with-grid" src="https://www.energy.cam.ac.uk/sites/default/files/styles/carousel/public/news-cellulose-cambridge-enterprise-feb-2026.jpg?itok=_zvGyXX0" alt="" /></a></div></div></div></div>
+
+<div class="campl-slide-caption">
+
+      <a href="https://www.energy.cam.ac.uk/news/sustainable-cellulose-packaging">
+  
+  <span class="campl-slide-caption-txt">NEWS</span>
+
+      </a>
+  
+</div>
+</li>
+          <li class="campl-slide campl-column12">
+<span property="dc:title" content="Energy start-up news" class="rdf-meta element-hidden"></span><div class="image-container">
+  <div class="field field-name-field-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><a href="https://www.energy.cam.ac.uk/news/cambridge-ai-spinout-helping-factories-become-more-productive-lower-energy-use-and-reduce"><img typeof="foaf:Image" class="campl-scale-with-grid" src="https://www.energy.cam.ac.uk/sites/default/files/styles/carousel/public/news-ai-spinout-production-energy-jan-2026.jpg?itok=9jlanken" alt="" /></a></div></div></div></div>
+
+<div class="campl-slide-caption">
+
+      <a href="https://www.energy.cam.ac.uk/news/cambridge-ai-spinout-helping-factories-become-more-productive-lower-energy-use-and-reduce">
+  
+  <span class="campl-slide-caption-txt">Energy start-up news</span>
+
+      </a>
+  
+</div>
+</li>
+          <li class="campl-slide campl-column12">
+<span property="dc:title" content="REPORT: From gridlock to grid power" class="rdf-meta element-hidden"></span><div class="image-container">
+  <div class="field field-name-field-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><a href="https://www.energy.cam.ac.uk/blog/report-gridlock-grid-power-how-get-renewable-energy-where-its-needed-uk"><img typeof="foaf:Image" class="campl-scale-with-grid" src="https://www.energy.cam.ac.uk/sites/default/files/styles/carousel/public/research-highlight-report-from_gridlock_to_grid_power-jan_2026.jpg?itok=pgktgrH_" alt="" /></a></div></div></div></div>
+
+<div class="campl-slide-caption">
+
+      <a href="https://www.energy.cam.ac.uk/blog/report-gridlock-grid-power-how-get-renewable-energy-where-its-needed-uk">
+  
+  <span class="campl-slide-caption-txt">REPORT: From gridlock to grid power</span>
+
+      </a>
+  
+</div>
+</li>
+      </ul></div>    </div>
+  
+  
+  
+  
+  
+  
+</div>  </div>
+
+</div>
+  </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="campl-row campl-content
+    campl-recessed-content">
+    <div class="campl-wrap clearfix">
+                            <div class="campl-column6 campl-main-content" id="page-content">
+
+          <div class="campl-sub-column-right-border">
+
+            
+                                      
+              <div class="region region-content">
+    <div id="block-system-main" class="block block-system">
+
+  
+  
+  
+  <div>
+    <div id="node-2" class="node node-page clearfix" about="/homepage-do-not-delete" typeof="foaf:Document">
+
+  
+      <span property="dc:title" content="Homepage - do not delete" class="rdf-meta element-hidden"></span>
+  
+  
+  
+
+
+</div>
+  </div>
+
+</div>
+<div id="block-views-homepage-teasers-block-1" class="block block-views">
+
+  
+  
+  
+  <div>
+    <div class="view view-homepage-teasers view-id-homepage_teasers view-display-id-block_1 view-dom-id-4735b22ac51c0c20af43edf24524e791">
+        
+  
+  
+      <div class="view-content">
+      
+
+  <div class="campl-row clearfix">  <div class="campl-column6 campl-hide-teaser-divider campl-teasers-borders campl-column-first">
+    
+<div class="campl-vertical-padding node node-link"  about="/link/energy-research-has-far-reaching-impact" typeof="sioc:Item foaf:Document">
+  <div class="campl-vertical-teaser campl-teaser campl-teaser-border campl-content-container campl-side-padding">
+
+          <a href="https://www.energy.cam.ac.uk/research-themes-0">
+        <div class="campl-primary-cta teaser-cta-button">Read more<span class="element-invisible"> at: Energy research has far reaching impact</span></div>
+    
+          <div class="campl-content-container campl-vertical-teaser-img">
+        <div class="field field-name-field-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><img typeof="foaf:Image" class="campl-scale-with-grid" src="https://www.energy.cam.ac.uk/sites/default/files/styles/inline/public/energy_wordle_-_250x250.jpg?itok=kmDLl6Jd" alt="Interdisciplinary Research across the University of Cambridge" title="Celebrating interdisciplinary research at Cambridge" /></div></div></div>      </div>
+    
+          </a>
+    
+    <div class="campl-content-container campl-vertical-teaser-txt">
+            <h3 class='campl-teaser-title'>Energy research has far reaching impact</h3>
+      <span property="dc:title" content="Energy research has far reaching impact" class="rdf-meta element-hidden"></span>            <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>Find out more about how research at Cambridge is helping to charge a car in six-minutes, decarbonise transport and produce fuel from thin air!</p></div></div></div>    </div>
+
+  </div>
+</div>
+
+<div class="campl-content-container campl-side-padding">
+  <hr class="campl-teaser-divider">
+</div>
+  </div>
+      <div class="campl-column6 campl-hide-teaser-divider campl-teasers-borders campl-column-last campl-column-end">
+    
+<div class="campl-vertical-padding node node-link"  about="/link/new-courses" typeof="sioc:Item foaf:Document">
+  <div class="campl-vertical-teaser campl-teaser campl-teaser-border campl-content-container campl-side-padding">
+
+          <a href="https://www.energy.cam.ac.uk/news/university-launches-its-mphil-energy-materials-and-phd-sustainable-energy-materials">
+        <div class="campl-primary-cta teaser-cta-button">Read more<span class="element-invisible"> at: New Courses</span></div>
+    
+          <div class="campl-content-container campl-vertical-teaser-img">
+        <div class="field field-name-field-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><img typeof="foaf:Image" class="campl-scale-with-grid" src="https://www.energy.cam.ac.uk/sites/default/files/styles/inline/public/teaser-mphilphd-in-materials-launch-250x250.jpg?itok=bIRTULav" alt="" /></div></div></div>      </div>
+    
+          </a>
+    
+    <div class="campl-content-container campl-vertical-teaser-txt">
+            <h3 class='campl-teaser-title'>New Courses</h3>
+      <span property="dc:title" content="New Courses" class="rdf-meta element-hidden"></span>            <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>The University of Cambridge launches its MPhil in Advanced Materials for the Energy Transition and PhD in Sustainable Energy Materials Innovations. Both courses start in October 2024.</p></div></div></div>    </div>
+
+  </div>
+</div>
+
+<div class="campl-content-container campl-side-padding">
+  <hr class="campl-teaser-divider">
+</div>
+  </div>
+  </div><div class="campl-column12"><div class="campl-content-container campl-side-padding"><hr class="campl-teaser-divider"></div></div>  <div class="campl-row clearfix">  <div class="campl-column6 campl-hide-teaser-divider campl-teasers-borders campl-column-first">
+    
+<div class="campl-vertical-padding node node-link"  about="/link/research-highlights-and-blogs" typeof="sioc:Item foaf:Document">
+  <div class="campl-vertical-teaser campl-teaser campl-teaser-border campl-content-container campl-side-padding">
+
+          <a href="https://www.energy.cam.ac.uk/blogs">
+        <div class="campl-primary-cta teaser-cta-button">Read more<span class="element-invisible"> at: Research highlights and Blogs</span></div>
+    
+          <div class="campl-content-container campl-vertical-teaser-img">
+        <div class="field field-name-field-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><img typeof="foaf:Image" class="campl-scale-with-grid" src="https://www.energy.cam.ac.uk/sites/default/files/styles/inline/public/blog-research-highlight-teaser-250x250.jpg?itok=G7UA6o9V" alt="University of Cambridge energy blogs and research highlights" /></div></div></div>      </div>
+    
+          </a>
+    
+    <div class="campl-content-container campl-vertical-teaser-txt">
+            <h3 class='campl-teaser-title'>Research highlights and Blogs</h3>
+      <span property="dc:title" content="Research highlights and Blogs" class="rdf-meta element-hidden"></span>            <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>Insights, research highlights, publications and researcher blogs showing the energy-related research taking place across the University of Cambridge</p></div></div></div>    </div>
+
+  </div>
+</div>
+
+<div class="campl-content-container campl-side-padding">
+  <hr class="campl-teaser-divider">
+</div>
+  </div>
+      <div class="campl-column6 campl-hide-teaser-divider campl-teasers-borders campl-column-last campl-column-end">
+    
+<div class="campl-vertical-padding node node-link"  about="/Plastic_Waste" typeof="sioc:Item foaf:Document">
+  <div class="campl-vertical-teaser campl-teaser campl-teaser-border campl-content-container campl-side-padding">
+
+          <a href="https://www.energy.cam.ac.uk/aboutus">
+        <div class="campl-primary-cta teaser-cta-button">Read more<span class="element-invisible"> at: Get involved</span></div>
+    
+          <div class="campl-content-container campl-vertical-teaser-img">
+        <div class="field field-name-field-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><img typeof="foaf:Image" class="campl-scale-with-grid" src="https://www.energy.cam.ac.uk/sites/default/files/styles/inline/public/brett-jordan-jd0d-lrehfe-unsplash_1.jpg?itok=cReE3dBE" alt="" title="Photo by Brett Jordan on Unsplash" /></div></div></div>      </div>
+    
+          </a>
+    
+    <div class="campl-content-container campl-vertical-teaser-txt">
+            <h3 class='campl-teaser-title'>Get involved</h3>
+      <span property="dc:title" content="Get involved" class="rdf-meta element-hidden"></span>            <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>Come and speak to us and find out more about the services we offer</p></div></div></div>    </div>
+
+  </div>
+</div>
+
+<div class="campl-content-container campl-side-padding">
+  <hr class="campl-teaser-divider">
+</div>
+  </div>
+  </div><div class="campl-column12"><div class="campl-content-container campl-side-padding"><hr class="campl-teaser-divider"></div></div>  <div class="campl-row clearfix">  <div class="campl-column6 campl-hide-teaser-divider campl-teasers-borders campl-column-first campl-column-last">
+    
+<div class="campl-vertical-padding node node-link"  about="/link/collaboration" typeof="sioc:Item foaf:Document">
+  <div class="campl-vertical-teaser campl-teaser campl-teaser-border campl-content-container campl-side-padding">
+
+          <a href="https://www.energy.cam.ac.uk/contact-us">
+        <div class="campl-primary-cta teaser-cta-button">Read more<span class="element-invisible"> at: Collaboration</span></div>
+    
+          <div class="campl-content-container campl-vertical-teaser-img">
+        <div class="field field-name-field-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><img typeof="foaf:Image" class="campl-scale-with-grid" src="https://www.energy.cam.ac.uk/sites/default/files/styles/inline/public/desola-lanre-ologun-igur1ix0mqm-unsplash.jpg?itok=unrfGB9V" alt="" title="Photo by Desola Lanre-Ologun on Unsplash" /></div></div></div>      </div>
+    
+          </a>
+    
+    <div class="campl-content-container campl-vertical-teaser-txt">
+            <h3 class='campl-teaser-title'>Collaboration</h3>
+      <span property="dc:title" content="Collaboration" class="rdf-meta element-hidden"></span>            <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>We are able to support research institutions, businesses, government departments and any other organisations interested in establishing an energy related research collaboration with the University of Cambridge</p></div></div></div>    </div>
+
+  </div>
+</div>
+
+<div class="campl-content-container campl-side-padding">
+  <hr class="campl-teaser-divider">
+</div>
+  </div>
+  
+</div><div class="campl-column12"><div class="campl-content-container campl-side-padding"><hr class="campl-teaser-divider"></div></div>    </div>
+  
+  
+  
+  
+  
+  
+</div>  </div>
+
+</div>
+  </div>
+
+          </div>
+
+        </div>
+      
+              <div class="campl-column3 campl-main-content-sub-column">
+            <div class="region region-sub-content">
+    <div id="block-views-blog-posts-block-1" class="block block-views">
+
+  
+  
+  
+  <div>
+    <div class="view view-blog-posts view-id-blog_posts view-display-id-block_1 view-dom-id-50e0d797b113c3a70005d82a6f4bb8b4">
+        
+  
+  
+      <div class="view-content">
+      
+
+  <div class="campl-row clearfix">  <div class="views-row views-row-1 views-row-odd views-row-first views-row-last campl-column12 campl-hide-teaser-divider campl-teasers-borders campl-column-first">
+    
+<div class="campl-vertical-padding node node-blog"  about="/blog/research-highlight-blueprints-decarbonization-how-ai-agents-are-automating-building-energy" typeof="sioc:Item foaf:Document">
+  <div class="campl-vertical-teaser campl-teaser campl-teaser-border campl-content-container campl-side-padding">
+
+          <a href="/blog/research-highlight-blueprints-decarbonization-how-ai-agents-are-automating-building-energy">
+        <div class="campl-primary-cta teaser-cta-button">Read more<span class="element-invisible"> at: RESEARCH HIGHLIGHT - From Blueprints to Decarbonization: How AI Agents are Automating Building Energy Modeling</span></div>
+    
+          <div class="campl-content-container campl-vertical-teaser-img">
+        <div class="field field-name-field-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><img typeof="foaf:Image" class="campl-scale-with-grid" src="https://www.energy.cam.ac.uk/sites/default/files/styles/inline/public/homepage-carousel/research-highlight-from_blueprints_to_decarbonization-feb-2026-885x432.jpg?itok=bkNH0Gu_" alt="" /></div></div></div>      </div>
+    
+          </a>
+    
+    <div class="campl-content-container campl-vertical-teaser-txt">
+            <h3 class='campl-teaser-title'>RESEARCH HIGHLIGHT - From Blueprints to Decarbonization: How AI Agents are Automating Building Energy Modeling</h3>
+      <span property="dc:title" content="RESEARCH HIGHLIGHT - From Blueprints to Decarbonization: How AI Agents are Automating Building Energy Modeling" class="rdf-meta element-hidden"></span>            <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>Data2BEM’ framework cuts modeling time by 90%, accelerating the path to net-zero buildings.</p></div></div></div>    </div>
+
+  </div>
+</div>
+
+<div class="campl-content-container campl-side-padding">
+  <hr class="campl-teaser-divider">
+</div>
+  </div>
+  </div><div class="campl-column12"><div class="campl-content-container campl-side-padding"><hr class="campl-teaser-divider"></div></div>
+    </div>
+  
+  
+  
+      <div class="campl-content-container campl-no-top-padding clearfix">
+  <p>
+    <a class="campl-secondary-cta campl-float-right" href="/blogs">
+      more blog posts    </a>
+  </p>
+</div>
+  
+  
+  
+</div>  </div>
+
+</div>
+<div id="block-views-news-block" class="block block-views">
+
+  
+      <div class="campl-content-container">
+      <div class="campl-heading-container">
+        <h2>Latest news</h2>
+      </div>
+    </div>
+  
+  
+  <div>
+    <div class="view view-news view-id-news view-display-id-block view-dom-id-ae0b0b03c58a1c906f3fd2ee32c999cf">
+        
+  
+  
+      <div class="view-content">
+      
+
+    <div class="views-row views-row-1 views-row-odd views-row-first">
+    
+<div class="campl-content-container campl-side-padding">
+  <div class="campl-listing-item campl-news-listing clearfix">
+
+        <p class="campl-listing-title"><a href="/news/sustainable-cellulose-packaging">Sustainable cellulose packaging</a></p>
+    <span property="dc:title" content="Sustainable cellulose packaging" class="rdf-meta element-hidden"></span>
+    <p class="campl-datestamp"><span property="dc:date dc:created" content="2026-02-13T05:05:56+00:00" datatype="xsd:dateTime">13 February 2026</span></p>
+
+    
+  </div>
+</div>
+  </div>
+      <div class="views-row views-row-2 views-row-even">
+    
+<div class="campl-content-container campl-side-padding">
+  <div class="campl-listing-item campl-news-listing clearfix">
+
+        <p class="campl-listing-title"><a href="/news/university-cambridge-academics-secure-royal-academy-engineering-green-future-fellowships"> University of Cambridge academics secure Royal Academy of Engineering Green Future Fellowships</a></p>
+    <span property="dc:title" content=" University of Cambridge academics secure Royal Academy of Engineering Green Future Fellowships" class="rdf-meta element-hidden"></span>
+    <p class="campl-datestamp"><span property="dc:date dc:created" content="2026-01-20T01:16:33+00:00" datatype="xsd:dateTime">20 January 2026</span></p>
+
+    
+  </div>
+</div>
+  </div>
+      <div class="views-row views-row-3 views-row-odd">
+    
+<div class="campl-content-container campl-side-padding">
+  <div class="campl-listing-item campl-news-listing clearfix">
+
+        <p class="campl-listing-title"><a href="/news/cambridge-ai-spinout-helping-factories-become-more-productive-lower-energy-use-and-reduce">Cambridge AI spinout is helping factories become more productive, lower energy use and reduce emissions</a></p>
+    <span property="dc:title" content="Cambridge AI spinout is helping factories become more productive, lower energy use and reduce emissions" class="rdf-meta element-hidden"></span>
+    <p class="campl-datestamp"><span property="dc:date dc:created" content="2026-01-20T00:07:50+00:00" datatype="xsd:dateTime">20 January 2026</span></p>
+
+    
+  </div>
+</div>
+  </div>
+      <div class="views-row views-row-4 views-row-even views-row-last">
+    
+<div class="campl-content-container campl-side-padding">
+  <div class="campl-listing-item campl-news-listing clearfix">
+
+        <p class="campl-listing-title"><a href="/news/sustainability-starts-knowledge">Sustainability starts with knowledge</a></p>
+    <span property="dc:title" content="Sustainability starts with knowledge" class="rdf-meta element-hidden"></span>
+    <p class="campl-datestamp"><span property="dc:date dc:created" content="2026-01-19T23:38:09+00:00" datatype="xsd:dateTime">19 January 2026</span></p>
+
+    
+  </div>
+</div>
+  </div>
+  
+    </div>
+  
+  
+  
+      <div class="campl-content-container campl-no-top-padding clearfix">
+  <p>
+    <a class="campl-secondary-cta campl-float-right" href="/news-and-events/news">
+      View all news    </a>
+  </p>
+</div>
+  
+  
+  
+</div>  </div>
+
+</div>
+  </div>
+        </div>
+      
+              <div class="campl-column3 campl-secondary-content campl-recessed-secondary-content">
+            <div class="region region-sidebar">
+    <div id="block-block-6" class="block block-block">
+
+  
+      <div class="campl-content-container campl-no-bottom-padding">
+      <div class="campl-heading-container">
+        <h2>About Us</h2>
+      </div>
+    </div>
+  
+  
+  <div class="campl-content-container">
+    <h3><span>The Energy IRC brings together Cambridge’s research knowledge and expertise, in collaboration with global partners, to create solutions for a sustainable and resilient energy landscape for generations to come.</span></h3>
+<p> </p>
+<table>
+<tbody>
+<tr>
+<td>
+			<a href="https://www.linkedin.com/company/energy-irc" target="_blank"><br />
+<div class="media media-element-container media-wysiwyg media-wysiwyg-align-center">
+<div id="file-6641" class="file file-image file-image-jpeg">
+<h2 class="element-invisible"><a href="https://www.energy.cam.ac.uk/file/linkedinlogo-50x50jpg">linkedin_logo_-_50x50.jpg</a></h2>
+<div class="content">
+    <img height="50" width="50" class="media-element file-wysiwyg campl-scale-with-grid" data-delta="3" typeof="foaf:Image" src="https://www.energy.cam.ac.uk/files/media/linkedin_logo_-_50x50.jpg" alt="" />  </div>
+</div>
+</div>
+<p></p></a>
+<p>			<a href="https://www.linkedin.com/company/energy-irc" target="_blank">LinkedIn</a>
+			</p></td>
+<td>
+			<a href="https://bsky.app/profile/energycambridge.bsky.social" target="_blank"><br />
+<div class="media media-element-container media-wysiwyg media-wysiwyg-align-center">
+<div id="file-7837" class="file file-image file-image-jpeg">
+<h2 class="element-invisible"><a href="https://www.energy.cam.ac.uk/file/blueskylogo-50x50jpg">bluesky_logo-50x50.jpg</a></h2>
+<div class="content">
+    <img height="50" width="50" class="media-element file-wysiwyg campl-scale-with-grid" data-delta="1" typeof="foaf:Image" src="https://www.energy.cam.ac.uk/files/media/bluesky_logo-50x50.jpg" alt="" />  </div>
+</div>
+</div>
+<p></p></a>
+<p>			<a href="https://bsky.app/profile/energycambridge.bsky.social" target="_blank">Bluesky</a>
+			</p></td>
+<td>
+			<a href="https://x.com/EnergyCambridge" target="_blank"><br />
+<div class="media media-element-container media-wysiwyg">
+<div id="file-6621" class="file file-image file-image-jpeg">
+<h2 class="element-invisible"><a href="https://www.energy.cam.ac.uk/file/xtwitterlogo-50x50jpg">x_twitter_logo_-_50x50.jpg</a></h2>
+<div class="content">
+    <img height="50" width="50" class="media-element file-wysiwyg campl-scale-with-grid" data-delta="4" typeof="foaf:Image" src="https://www.energy.cam.ac.uk/files/media/x_twitter_logo_-_50x50.jpg" alt="" />  </div>
+</div>
+</div>
+<p></p></a>
+<p><a href="https://twitter.com/EnergyCambridge?lang=en" target="_blank">X</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+  </div>
+
+</div>
+<div id="block-block-8" class="block block-block">
+
+  
+      <div class="campl-content-container campl-no-bottom-padding">
+      <div class="campl-heading-container">
+        <h2>Follow us on Twitter</h2>
+      </div>
+    </div>
+  
+  
+  <div class="campl-content-container">
+    <p><a class="twitter-timeline" href="https://twitter.com/EnergyCambridge" data-height="1000">Tweets by EnergyCambridge</a></p>
+  </div>
+
+</div>
+<div id="block-views-events-block" class="block block-views">
+
+  
+      <div class="campl-content-container campl-no-bottom-padding">
+      <div class="campl-heading-container">
+        <h2>Events</h2>
+      </div>
+    </div>
+  
+  
+  <div>
+    <div class="view view-events view-id-events view-display-id-block campl-content-container campl-no-top-padding view-dom-id-9f0ece8d7cb97c9622619b3e6f6fcaf3">
+        
+  
+  
+      <div class="view-content">
+          <ul class="campl-unstyled-list highlight-events">          <li class="campl-highlight-event-item clearfix">  
+  <div class="campl-highlight-date-container">        <span class="campl-highlight-date"><span class="campl-highlight-day"><span  property="dc:date" datatype="xsd:dateTime" content="2026-03-03T15:00:00+00:00" class="date-display-single">03</span></span><span  property="dc:date" datatype="xsd:dateTime" content="2026-03-03T15:00:00+00:00" class="date-display-single">Mar</span></span>  </div>  
+  <div class="campl-highlight-event-details">        <span class="campl-highlight-event-link"><a href="/events/designing-single-atom-catalysts-and-nanocatalysts-hydrogen-production-and-utilization">Designing Single-atom Catalysts and Nanocatalysts for Hydrogen Production and Utilization</a></span>  </div></li>
+          <li class="campl-highlight-event-item clearfix">  
+  <div class="campl-highlight-date-container">        <span class="campl-highlight-date"><span class="campl-highlight-day"><span  property="dc:date" datatype="xsd:dateTime" content="2026-03-04T12:00:00+00:00" class="date-display-single">04</span></span><span  property="dc:date" datatype="xsd:dateTime" content="2026-03-04T12:00:00+00:00" class="date-display-single">Mar</span></span>  </div>  
+  <div class="campl-highlight-event-details">        <span class="campl-highlight-event-link"><a href="/events/cambridge-enterprise-creating-research-impact-through-commercialisation-1">Cambridge Enterprise: Creating Research Impact through Commercialisation</a></span>  </div></li>
+          <li class="campl-highlight-event-item clearfix">  
+  <div class="campl-highlight-date-container">        <span class="campl-highlight-date"><span class="campl-highlight-day"><span  property="dc:date" datatype="xsd:dateTime" content="2026-03-04T15:00:00+00:00" class="date-display-single">04</span></span><span  property="dc:date" datatype="xsd:dateTime" content="2026-03-04T15:00:00+00:00" class="date-display-single">Mar</span></span>  </div>  
+  <div class="campl-highlight-event-details">        <span class="campl-highlight-event-link"><a href="/events/good-board-bad-board-debate-2026">Good Board | Bad Board Debate 2026</a></span>  </div></li>
+          <li class="campl-highlight-event-item clearfix">  
+  <div class="campl-highlight-date-container">        <span class="campl-highlight-date"><span class="campl-highlight-day"><span  property="dc:date" datatype="xsd:dateTime" content="2026-03-04T17:30:00+00:00" class="date-display-single">04</span></span><span  property="dc:date" datatype="xsd:dateTime" content="2026-03-04T17:30:00+00:00" class="date-display-single">Mar</span></span>  </div>  
+  <div class="campl-highlight-event-details">        <span class="campl-highlight-event-link"><a href="/events/cambridge-climate-challenge-training-introduction-business-models-workshop">Cambridge Climate Challenge training: Introduction to business models workshop</a></span>  </div></li>
+          <li class="campl-highlight-event-item clearfix">  
+  <div class="campl-highlight-date-container">        <span class="campl-highlight-date"><span class="campl-highlight-day"><span  property="dc:date" datatype="xsd:dateTime" content="2026-03-04T18:00:00+00:00" class="date-display-single">04</span></span><span  property="dc:date" datatype="xsd:dateTime" content="2026-03-04T18:00:00+00:00" class="date-display-single">Mar</span></span>  </div>  
+  <div class="campl-highlight-event-details">        <span class="campl-highlight-event-link"><a href="/events/ai-climate-solution-or-energy-problem">AI - Climate Solution or Energy Problem? </a></span>  </div></li>
+      </ul>    </div>
+  
+  
+  
+      <div class="campl-content-container campl-no-top-padding clearfix">
+  <p>
+    <a class="campl-secondary-cta campl-float-right" href="/events">
+      View all events    </a>
+  </p>
+</div>
+  
+  
+  
+</div>  </div>
+
+</div>
+<div id="block-block-4" class="block block-block">
+
+  
+  
+  
+  <div class="campl-content-container">
+    <script charset="utf-8" src="https://platform.twitter.com/widgets.js" type="text/javascript" width="100%"></script><p> </p>
+  </div>
+
+</div>
+  </div>
+        </div>
+      
+      
+    </div>
+
+  </div>
+
+  <div class="campl-row campl-local-footer">
+    <div class="campl-wrap clearfix">
+      <div class="campl-column3 campl-footer-navigation">
+                    <div class="region region-footer-1">
+    <div id="block-block-5" class="block block-block campl-content-container campl-navigation-list">
+
+  
+      <h3>Contact us</h3>
+  
+  
+  <div class="content">
+    <p>Information provided by:</p>
+<h3> <a href="mailto:energy@admin.cam.ac.uk">energy@admin.cam.ac.uk</a></h3>
+<h3><a href="https://www.energy.cam.ac.uk/privacy-and-cookie-policies">Site Privacy &amp; Cookie Policies</a></h3>
+  </div>
+
+</div>
+  </div>
+              </div>
+      <div class="campl-column3 campl-footer-navigation">
+                                </div>
+      <div class="campl-column3 campl-footer-navigation">
+                                </div>
+      <div class="campl-column3 campl-footer-navigation last">
+                                </div>
+    </div>
+  </div>
+
+<div class="campl-row campl-global-footer">
+  <div class="campl-wrap clearfix">
+    <div class="campl-column3 campl-footer-navigation">
+      <div class="campl-content-container campl-footer-logo">
+        <img alt="University of Cambridge" src="/profiles/cambridge/themes/cambridge_theme/images/interface/main-logo-small.png"
+             class="campl-scale-with-grid"/>
+
+        <p>&#169; 2026 University of Cambridge</p>
+        <ul class="campl-unstyled-list campl-global-footer-links">
+          <li>
+            <a href="https://www.cam.ac.uk/about-the-university/contact-the-university?ucam-ref=global-footer">Contact the University</a>
+          </li>
+          <li>
+            <a href="https://www.cam.ac.uk/about-this-site/accessibility?ucam-ref=global-footer">Accessibility</a>
+          </li>
+          <li>
+            <a href="https://www.information-compliance.admin.cam.ac.uk/foi?ucam-ref=global-footer">Freedom of information</a>
+          </li>
+		  <li>
+		    <a href="https://www.cam.ac.uk/about-this-site/privacy-policy?ucam-ref=global-footer">Privacy policy and cookies</a>
+		  </li>
+		  <li>
+		    <a href="https://www.governanceandcompliance.admin.cam.ac.uk/governance-and-strategy/anti-slavery-and-anti-trafficking?ucam-ref=global-footer">Statement on Modern Slavery</a>
+		  </li>
+          <li>
+            <a href="https://www.cam.ac.uk/about-this-site/terms-and-conditions?ucam-ref=global-footer">Terms and conditions</a>
+          </li>
+		  <li>
+            <a href="https://www.cam.ac.uk/university-a-z?ucam-ref=global-footer">University A-Z</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="campl-column3 campl-footer-navigation">
+      <div class="campl-content-container campl-navigation-list">
+
+        <div class="link-list">
+          <h3><a href="https://www.cam.ac.uk/study-at-cambridge?ucam-ref=global-footer">Study at Cambridge</a></h3>
+          <ul class="campl-unstyled-list campl-page-children">
+            <li>
+              <a href="https://www.undergraduate.study.cam.ac.uk/?ucam-ref=global-footer">Undergraduate</a>
+            </li>
+            <li>
+              <a href="https://www.postgraduate.study.cam.ac.uk?ucam-ref=global-footer">Postgraduate</a>
+            </li>
+            <li>
+              <a href="https://www.pace.cam.ac.uk/?ucam-ref=global-footer">Professional and continuing education</a>
+            </li>
+            <li>
+              <a href="https://www.epe.admin.cam.ac.uk/?ucam-ref=global-footer">Executive and professional education</a>
+            </li>
+            <li>
+              <a href="https://www.educ.cam.ac.uk/?ucam-ref=global-footer">Courses in education</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="campl-column3 campl-footer-navigation">
+      <div class="campl-content-container campl-navigation-list">
+        <h3><a href="https://www.cam.ac.uk/about-the-university?ucam-ref=global-footer">About the University</a></h3>
+        <ul class="campl-unstyled-list campl-page-children">
+          <li>
+            <a href="https://www.cam.ac.uk/about-the-university/how-the-university-and-colleges-work?ucam-ref=global-footer">How the University
+              and Colleges work</a>
+          </li>
+		  <li>
+            <a href="https://www.philanthropy.cam.ac.uk/give-now?ucam-ref=global-footer">Give to Cambridge</a>
+          </li>
+		  <li>
+            <a href="https://www.jobs.cam.ac.uk">Jobs</a>
+          </li>
+          <li>
+            <a href="https://map.cam.ac.uk/?ucam-ref=global-footer">Map</a>
+          </li>
+          <li>
+            <a href="https://www.cam.ac.uk/about-the-university/visiting-the-university?ucam-ref=global-footer">Visiting the University</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="campl-column3 campl-footer-navigation last">
+      <div class="campl-content-container campl-navigation-list">
+        <h3><a href="https://www.cam.ac.uk/research?ucam-ref=global-footer">Research at Cambridge</a></h3>
+        <ul class="campl-unstyled-list campl-page-children">
+          <li>
+            <a href="https://www.cam.ac.uk/research/news?ucam-ref=global-footer">Research news</a>
+          </li>
+		  <li>
+            <a href="https://www.cam.ac.uk/research/research-at-cambridge?ucam-ref=global-footer">About research at Cambridge</a>
+          </li>
+          <li>
+            <a href="https://www.cam.ac.uk/public-engagement?ucam-ref=global-footer">Public engagement</a>
+          </li>
+          <li>
+            <a href="https://www.cam.ac.uk/research/spotlight-on?ucam-ref=global-footer">Spotlight on...</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="https://www.energy.cam.ac.uk/sites/default/files/js/js_o6T7PVUab9ogIXo266EGX1UpGk_cm_1nASwpQML322U.js"></script>
+<script type="text/javascript" src="https://www.energy.cam.ac.uk/sites/default/files/js/js_Pt6OpwTd6jcHLRIjrE-eSPLWMxWDkcyYrPTIrXDSON0.js"></script>
+<script type="text/javascript" src="https://www.energy.cam.ac.uk/sites/default/files/js/js_LvRGprsJiXJINM9M-UBIXWMLdlhvhSxxTN9QOkhsvwg.js"></script>
+<script type="text/javascript" src="https://www.energy.cam.ac.uk/sites/default/files/js/js_0jzZrM_Bf65tlePIOcTyDrVEO4dOvipQblWxMfrHjl8.js"></script>
+<script type="text/javascript" src="https://www.energy.cam.ac.uk/sites/default/files/js/js_hQmvjWkSvVwHzs0T3J3hLAECzhAgd20GIxrkuwTotzA.js"></script>
+<script type="text/javascript">
+<!--//--><![CDATA[//><!--
+jQuery.extend(Drupal.settings, {"basePath":"\/","pathPrefix":"","setHasJsCookie":0,"ajaxPageState":{"theme":"cambridge_theme","theme_token":"JiiHSwGLcuYDifFSBXTbCfsZ1zuBpblAXDaN7ivBON0","css":{"modules\/system\/system.base.css":1,"modules\/system\/system.menus.css":1,"modules\/system\/system.messages.css":1,"modules\/system\/system.theme.css":1,"modules\/aggregator\/aggregator.css":1,"profiles\/cambridge\/modules\/contrib\/calendar\/css\/calendar_multiday.css":1,"profiles\/cambridge\/modules\/features\/cambridge_events\/css\/events.css":1,"profiles\/cambridge\/modules\/features\/cambridge_teasers\/css\/teasers.css":1,"profiles\/cambridge\/modules\/contrib\/date\/date_repeat_field\/date_repeat_field.css":1,"modules\/field\/theme\/field.css":1,"modules\/node\/node.css":1,"profiles\/cambridge\/modules\/contrib\/toc_node\/css\/toc_node.css":1,"modules\/user\/user.css":1,"profiles\/cambridge\/modules\/contrib\/views\/css\/views.css":1,"profiles\/cambridge\/modules\/contrib\/ckeditor\/css\/ckeditor.css":1,"profiles\/cambridge\/modules\/contrib\/media\/modules\/media_wysiwyg\/css\/media_wysiwyg.base.css":1,"profiles\/cambridge\/modules\/contrib\/ctools\/css\/ctools.css":1,"profiles\/cambridge\/libraries\/fancybox\/source\/jquery.fancybox.css":1,"profiles\/cambridge\/modules\/custom\/cambridge_cookie_compliance\/css\/style.css":1,"profiles\/cambridge\/themes\/cambridge_theme\/css\/full-stylesheet.css":1,"profiles\/cambridge\/themes\/cambridge_theme\/css\/drupal.css":1,"profiles\/cambridge\/themes\/cambridge_theme\/css\/falcon.css":1,"public:\/\/css_injector\/css_injector_1.css":1,"public:\/\/css_injector\/css_injector_2.css":1,"public:\/\/css_injector\/css_injector_3.css":1,"public:\/\/css_injector\/css_injector_4.css":1,"public:\/\/css_injector\/css_injector_5.css":1,"public:\/\/css_injector\/css_injector_6.css":1,"public:\/\/css_injector\/css_injector_7.css":1,"public:\/\/css_injector\/css_injector_8.css":1,"public:\/\/css_injector\/css_injector_9.css":1,"public:\/\/css_injector\/css_injector_11.css":1,"public:\/\/css_injector\/css_injector_12.css":1,"public:\/\/css_injector\/css_injector_13.css":1,"public:\/\/css_injector\/css_injector_14.css":1,"public:\/\/css_injector\/css_injector_15.css":1,"public:\/\/css_injector\/css_injector_16.css":1,"public:\/\/css_injector\/css_injector_17.css":1},"js":{"https:\/\/www.energy.cam.ac.uk\/sites\/default\/files\/google_tag\/energy_gtm\/google_tag.script.js":1,"profiles\/cambridge\/modules\/contrib\/jquery_update\/replace\/jquery\/1.12\/jquery.min.js":1,"misc\/jquery-extend-3.4.0.js":1,"misc\/jquery-html-prefilter-3.5.0-backport.js":1,"misc\/jquery.once.js":1,"misc\/drupal.js":1,"profiles\/cambridge\/modules\/contrib\/jquery_update\/js\/jquery_browser.js":1,"profiles\/cambridge\/modules\/features\/cambridge_teasers\/js\/teasers.js":1,"profiles\/cambridge\/modules\/features\/cambridge_teasers\/js\/jquery.matchHeight-min.js":1,"profiles\/cambridge\/modules\/contrib\/entityreference\/js\/entityreference.js":1,"profiles\/cambridge\/modules\/contrib\/fancybox\/fancybox.js":1,"profiles\/cambridge\/libraries\/fancybox\/source\/jquery.fancybox.pack.js":1,"profiles\/cambridge\/libraries\/fancybox\/lib\/jquery.mousewheel-3.0.6.pack.js":1,"profiles\/cambridge\/themes\/cambridge_theme\/js\/custom.js":1,"profiles\/cambridge\/themes\/cambridge_theme\/js\/libs\/ios-orientationchange-fix.js":1,"profiles\/cambridge\/themes\/cambridge_theme\/js\/libs\/modernizr.js":1,"profiles\/cambridge\/themes\/cambridge_theme\/js\/drupal.js":1}},"fancybox":[]});
+//--><!]]>
+</script>
+
+
+<!--[if lte IE 8]>
+</div>
+<![endif]-->
+
+</body>
+
+</html>

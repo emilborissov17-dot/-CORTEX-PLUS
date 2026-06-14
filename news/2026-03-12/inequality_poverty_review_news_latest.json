@@ -1,0 +1,140 @@
+{
+  "axis": "INEQUALITY_POVERTY_REVIEW",
+  "fetched_at": "2026-03-12T18:25:01.637514+00:00",
+  "smart_query": "Axis inequality poverty review metrics analysis",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "analysis": {
+    "summary": "Инструменти като Neural Field Thermal Tomography могат да подсетят неравенствата и бедността чрез различими физически рамки. Проектите като ph-poverty-mapping и Clustering-Ward-Level-Poverty-Using-Satellite-Imagery ползват изкуствен интелект и сателитни изображения, за да картографират бедността. Тези развитиета показват потенциал за подобряване на живота на хората в нужда.",
+    "key_developments": [
+      "thinkingmachines/ph-poverty-mapping",
+      "rs-anderson/Clustering-Ward-Level-Poverty-Using-Satellite-Imagery"
+    ],
+    "sentiment": "POSITIVE",
+    "urgency": "MEDIUM",
+    "open_source_momentum": "High, with 85 stars for ph-poverty-mapping and 4 stars for Clustering-Ward-Level-Poverty-Using-Satellite-Imagery",
+    "scientific_frontier": "Neural Field Thermal Tomography and asymptotically optimal bound for the concentration function of a sum of independent integer random variables",
+    "relevance_to_goal": "High, as these developments aim to reduce inequality and poverty, promoting dignity for all"
+  },
+  "sentiment": "POSITIVE",
+  "urgency": "MEDIUM",
+  "summary": "Инструменти като Neural Field Thermal Tomography могат да подсетят неравенствата и бедността чрез различими физически рамки. Проектите като ph-poverty-mapping и Clustering-Ward-Level-Poverty-Using-Satellite-Imagery ползват изкуствен интелект и сателитни изображения, за да картографират бедността. Тези развитиета показват потенциал за подобряване на живота на хората в нужда.",
+  "key_developments": [
+    "thinkingmachines/ph-poverty-mapping",
+    "rs-anderson/Clustering-Ward-Level-Poverty-Using-Satellite-Imagery"
+  ],
+  "open_source_momentum": "High, with 85 stars for ph-poverty-mapping and 4 stars for Clustering-Ward-Level-Poverty-Using-Satellite-Imagery",
+  "scientific_frontier": "Neural Field Thermal Tomography and asymptotically optimal bound for the concentration function of a sum of independent integer random variables",
+  "github_repos": [
+    {
+      "title": "thinkingmachines/ph-poverty-mapping",
+      "snippet": "Mapping Philippine Poverty using Machine Learning, Satellite Imagery, and Crowd-sourced Geospatial Information",
+      "stars": 85,
+      "url": "https://github.com/thinkingmachines/ph-poverty-mapping",
+      "updated": "2026-03-06",
+      "source": "GitHub"
+    },
+    {
+      "title": "rs-anderson/Clustering-Ward-Level-Poverty-Using-Satellite-Imagery",
+      "snippet": "Combing satellite imagery and machine learning methods to cluster ward-level povery in Gauteng, South Africa.",
+      "stars": 4,
+      "url": "https://github.com/rs-anderson/Clustering-Ward-Level-Poverty-Using-Satellite-Imagery",
+      "updated": "2024-04-06",
+      "source": "GitHub"
+    },
+    {
+      "title": "ejanalysis/EJAM",
+      "snippet": "Environmental Justice Analysis Multisite tool for summarizing environmental and residential population information for multiple locations. This detached fork of the package and this repository are not",
+      "stars": 2,
+      "url": "https://github.com/ejanalysis/EJAM",
+      "updated": "2026-02-12",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Neural Field Thermal Tomography: A Differentiable Physics Framework for Non-Destructive Evaluation",
+      "snippet": "We propose Neural Field Thermal Tomography (NeFTY), a differentiable physics framework for the quantitative 3D reconstruction of material properties from transient surface temperature measurements. While traditional thermography relies on pixel-wise 1D approximations that neglect lateral diffusion, ",
+      "url": "https://arxiv.org/abs/2603.11045v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "An asymptotically optimal bound for the concentration function of a sum of independent integer random variables",
+      "snippet": "For a random variable $X$ define $Q(X) = \\sup_{x \\in \\mathbb{R}} \\mathbb{P}(X=x)$.\n  Let $X_1, \\dots, X_n$ be independent integer random variables. Suppose $Q(X_i) \\le α_i \\in (0,1]$ for each $i \\in \\{1, \\dots, n\\}$. Juškevičius (2023) conjectured that $Q(X_1 + \\dots +X_n) \\le Q(Y_1 + \\dots+ Y_n)$ w",
+      "url": "https://arxiv.org/abs/2603.11043v1",
+      "source": "arXiv"
+    }
+  ],
+  "youtube_transcripts": [],
+  "podcast": "How AI interacts with nuclear deterrence may be the single most important question in geopolitics — one that may define the stakes of today’s AI race. Nuclear deterrence rests on a state’s capacity to respond to a nuclear attack with a devastating nuclear strike of its own. But some theorists think that sophisticated AI could eliminate this capability — for example, by locating and destroying all  | The arrival of AGI could “compress a century of progress in a decade,” forcing humanity to make decisions with higher stakes than we’ve ever seen before — and with less time to get them right. But AI development also presents an opportunity: we could build and deploy AI tools that help us think more clearly, act more wisely, and coordinate more effectively. And if we roll these decision-making too",
+  "youtube_videos": [
+    {
+      "title": "YouTube:rEnf_CFoyv0",
+      "video_id": "rEnf_CFoyv0",
+      "url": "https://www.youtube.com/watch?v=rEnf_CFoyv0",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:-6zTrQJHUt8",
+      "video_id": "-6zTrQJHUt8",
+      "url": "https://www.youtube.com/watch?v=-6zTrQJHUt8",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:ns9f2FOc26M",
+      "video_id": "ns9f2FOc26M",
+      "url": "https://www.youtube.com/watch?v=ns9f2FOc26M",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:UcyOiVuzAQY",
+      "video_id": "UcyOiVuzAQY",
+      "url": "https://www.youtube.com/watch?v=UcyOiVuzAQY",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:EgWkPWTghEc",
+      "video_id": "EgWkPWTghEc",
+      "url": "https://www.youtube.com/watch?v=EgWkPWTghEc",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:N59w3EjJ5v8",
+      "video_id": "N59w3EjJ5v8",
+      "url": "https://www.youtube.com/watch?v=N59w3EjJ5v8",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:DDHec2Ku6Ug",
+      "video_id": "DDHec2Ku6Ug",
+      "url": "https://www.youtube.com/watch?v=DDHec2Ku6Ug",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:Quf4y499sUY",
+      "video_id": "Quf4y499sUY",
+      "url": "https://www.youtube.com/watch?v=Quf4y499sUY",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:k6pcAcFKW30",
+      "video_id": "k6pcAcFKW30",
+      "url": "https://www.youtube.com/watch?v=k6pcAcFKW30",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:LyGu8dmyoek",
+      "video_id": "LyGu8dmyoek",
+      "url": "https://www.youtube.com/watch?v=LyGu8dmyoek",
+      "source": "YouTube"
+    }
+  ]
+}

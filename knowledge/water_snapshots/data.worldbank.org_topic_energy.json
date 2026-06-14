@@ -1,0 +1,14 @@
+{
+  "source_name": "World Bank Water & Energy (proxy)",
+  "source_url": "https://data.worldbank.org/topic/energy",
+  "docs": "https://datahelpdesk.worldbank.org/",
+  "notes": "Глобални индикатори за достъп до ресурси и инфраструктура; засега се използва като общ ресурсен индикатор, включително за вода.",
+  "ok": true,
+  "data": {
+    "status_code": 403,
+    "content_type": "text/html",
+    "text_sample": "<html>\r\n<head><title>403 Forbidden</title></head>\r\n<body>\r\n<center><h1>403 Forbidden</h1></center>\r\n<hr><center>nginx</center>\r\n</body>\r\n</html>\r\n",
+    "fetched_at": "2026-02-27T11:30:30.441685",
+    "json": null
+  }
+}

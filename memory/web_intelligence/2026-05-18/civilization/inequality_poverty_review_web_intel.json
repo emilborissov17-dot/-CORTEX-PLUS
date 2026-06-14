@@ -1,0 +1,101 @@
+{
+  "axis": "INEQUALITY_POVERTY_REVIEW",
+  "domain": "civilization",
+  "timestamp": "2026-05-18T07:58:46.164922+00:00",
+  "sources_count": 7,
+  "rss_count": 0,
+  "ddg_count": 6,
+  "youtube_count": 1,
+  "youtube_items": [
+    {
+      "title": "[YT] Sub-Saharan Africa Explained - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] Sub-Saharan Africa is a remarkably diverse region, with hundreds of ethnic groups speaking two thousand of the world’s seven thousand languages.",
+      "link": "https://www.youtube.com/watch?v=ggLp5_97B4I",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "ggLp5_97B4I",
+      "transcript_method": "description",
+      "transcript_chars": 167,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "problem": "Extreme poverty persists in Sub-Saharan Africa despite the region's significant mineral wealth.",
+    "root_cause": "The region's mineral wealth does not translate into equitable economic development due to systemic corruption, poor governance, and lack of investment in human capital.",
+    "severity": "CRITICAL",
+    "leverage_points": [
+      "Improving governance and transparency in resource management",
+      "Investing in education and healthcare to build human capital"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Implementing transparent revenue-sharing mechanisms for mineral exports in the DRC and other Sub-Saharan countries",
+        "measurable_goal": "Increase the percentage of mineral revenues allocated to public services and infrastructure development",
+        "timeframe": "long-term"
+      },
+      {
+        "action": "Expanding access to quality education and healthcare in Sub-Saharan Africa",
+        "measurable_goal": "Reduce the percentage of the population living in extreme poverty by 15% over the next decade",
+        "timeframe": "medium-term"
+      }
+    ],
+    "evidence": [
+      "Sub-Saharan Africa accounts for 67% of the global population living in extreme poverty",
+      "The region produces over 70% of the world's cobalt but has the highest rates of extreme poverty"
+    ],
+    "generalization": "This problem connects to the broader domain of civilization by highlighting the failure of economic systems to ensure equitable distribution of resources and opportunities, which undermines both dignity and long-term sustainability.",
+    "summary": "Sub-Saharan Africa's extreme poverty persists despite its mineral wealth due to poor governance and lack of investment in human capital.",
+    "risk_level": "CRITICAL"
+  },
+  "raw_items": [
+    {
+      "title": "Sub-Saharan Africa - Wikipedia",
+      "summary": "Sub-Saharan Africa is a key player in the global minerals market, producing over 70% of the world's cobalt and hosting about 50% of its reserves in the Democratic Republic of the Congo (DRC). The region also harbors significant lithium deposits in Zimbabwe, DR Congo, and Mali.[101].",
+      "link": "https://en.wikipedia.org/wiki/Sub-Saharan_Africa",
+      "source_type": "ddg"
+    },
+    {
+      "title": "One in six people live in Sub-Saharan Africa, but... - Our World in Data",
+      "summary": "Here, Sub-Saharan Africa accounts for 67% of the global population living in extreme poverty, contrasting sharply with the much smaller percentage attributed to the Rest of the World. Text on the left states, \"16% of all people live in Sub-Saharan Africa,\" and an arrow points towards it.",
+      "link": "https://ourworldindata.org/data-insights/one-in-six-people-live-in-sub-saharan-africa-but-it-accounts-for-two-thirds-of-global-extreme-poverty",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Income Inequality Trends in Sub-Saharan Africa: Divergence...",
+      "summary": "Click here: Does Good Governance Affect Inequality in Sub-Saharan Africa? Click here: Causes and Impact of Conflicts in Africa : What have Scholars researched? Click here: The Impact of Violence & Revolution on Inequality in Africa. What factors decrease income inequality?",
+      "link": "https://www.undp.org/africa/publications/income-inequality-trends-sub-saharan-africa-divergence-determinants-and-consequences",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Latin America - Wikipedia",
+      "summary": "Latin America has the highest rates of non-marital childbearing in the world, with 55–74% of all children in the region born to unmarried parents.[250] In most countries in this traditionally Catholic region, children born outside marriage are now the norm.",
+      "link": "https://en.wikipedia.org/wiki/Latin_America",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Costa Rica had the highest poverty rate of OECD member countries.",
+      "summary": "Poverty rate by gender in Latin American countries 2024. + Poverty gap in OECD countries based on disposable income 2022, by country.Poverty rates in OECD countries as of 2023 [Graph], OECD, February 8, 2026.",
+      "link": "https://www.statista.com/statistics/233910/poverty-rates-in-oecd-countries/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "The hidden gender gap in Latin America’s poverty decline",
+      "summary": "Latin America has demonstrated it can reduce poverty. The question is whether it can do so equitably—through policies that account for how household structure, care responsibilities, and labor market discrimination interact across women’s lives.",
+      "link": "https://globaldev.blog/the-hidden-gender-gap-in-latin-americas-poverty-decline/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "[YT] Sub-Saharan Africa Explained - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] Sub-Saharan Africa is a remarkably diverse region, with hundreds of ethnic groups speaking two thousand of the world’s seven thousand languages.",
+      "link": "https://www.youtube.com/watch?v=ggLp5_97B4I",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "ggLp5_97B4I",
+      "transcript_method": "description",
+      "transcript_chars": 167,
+      "has_full_transcript": false
+    }
+  ]
+}

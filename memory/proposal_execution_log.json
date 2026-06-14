@@ -1,0 +1,617 @@
+[
+  {
+    "index": 0,
+    "component": "trend_tracker",
+    "problem": "12 оси имат INSUFFICIENT_DATA защото нямат достатъчно исторически точки в axis_history.json",
+    "result": {
+      "status": "queued",
+      "reason": "Добавено в pending_tasks.json"
+    },
+    "timestamp": "2026-04-10T09:47:21.096816+00:00"
+  },
+  {
+    "index": 1,
+    "component": "predictor",
+    "status": "invalid",
+    "reason": "Няма нито python_code нито target_file",
+    "timestamp": "2026-04-10T09:47:21.096856+00:00"
+  },
+  {
+    "index": 2,
+    "component": "predictor",
+    "status": "invalid",
+    "reason": "Няма нито python_code нито target_file",
+    "timestamp": "2026-04-10T09:47:21.096883+00:00"
+  },
+  {
+    "index": 3,
+    "component": "climate_global_risk_review",
+    "problem": "Предсказаната стойност за глобалния климатичен риск не съответства на реалната, при което има грешка от 25.6%",
+    "result": {
+      "status": "skipped",
+      "reason": "sklearn/pandas с реални данни — пропускаме (данните може да липсват)"
+    },
+    "timestamp": "2026-04-10T09:47:21.096932+00:00"
+  },
+  {
+    "index": 4,
+    "component": "technology_ai_review",
+    "problem": "Предсказанието за технологиите за изкуствен интелект има грешка от 17.5, което показва несъответствие между очакваните и реалните резултати.",
+    "result": {
+      "status": "skipped",
+      "reason": "sklearn/pandas с реални данни — пропускаме (данните може да липсват)"
+    },
+    "timestamp": "2026-04-10T09:47:21.096966+00:00"
+  },
+  {
+    "index": 5,
+    "component": "technology_ai_review",
+    "problem": "Прогнозната грешка за технологиите е 17.5, което показва значителна разлика между предсказаните и реалните стойности.",
+    "result": {
+      "status": "skipped",
+      "reason": "sklearn/pandas с реални данни — пропускаме (данните може да липсват)"
+    },
+    "timestamp": "2026-04-10T09:47:21.097003+00:00"
+  },
+  {
+    "index": 1,
+    "component": "predictor",
+    "status": "invalid",
+    "reason": "Няма нито python_code нито target_file",
+    "timestamp": "2026-04-10T09:48:21.079845+00:00"
+  },
+  {
+    "index": 2,
+    "component": "predictor",
+    "status": "invalid",
+    "reason": "Няма нито python_code нито target_file",
+    "timestamp": "2026-04-10T09:48:21.079888+00:00"
+  },
+  {
+    "index": 1,
+    "component": "predictor",
+    "status": "invalid",
+    "reason": "Няма нито python_code нито target_file",
+    "timestamp": "2026-04-10T10:01:10.979685+00:00"
+  },
+  {
+    "index": 2,
+    "component": "predictor",
+    "status": "invalid",
+    "reason": "Няма нито python_code нито target_file",
+    "timestamp": "2026-04-10T10:01:10.979743+00:00"
+  },
+  {
+    "index": 1,
+    "component": "predictor",
+    "status": "invalid",
+    "reason": "Няма нито python_code нито target_file",
+    "timestamp": "2026-04-10T10:14:39.247398+00:00"
+  },
+  {
+    "index": 2,
+    "component": "predictor",
+    "status": "invalid",
+    "reason": "Няма нито python_code нито target_file",
+    "timestamp": "2026-04-10T10:14:39.247540+00:00"
+  },
+  {
+    "index": 1,
+    "component": "predictor",
+    "status": "invalid",
+    "reason": "Няма нито python_code нито target_file",
+    "timestamp": "2026-04-10T10:21:06.788078+00:00"
+  },
+  {
+    "index": 2,
+    "component": "predictor",
+    "status": "invalid",
+    "reason": "Няма нито python_code нито target_file",
+    "timestamp": "2026-04-10T10:21:06.788601+00:00"
+  },
+  {
+    "index": 1,
+    "component": "predictor",
+    "status": "invalid",
+    "reason": "Няма нито python_code нито target_file",
+    "timestamp": "2026-04-10T13:01:18.678893+00:00"
+  },
+  {
+    "index": 2,
+    "component": "predictor",
+    "status": "invalid",
+    "reason": "Няма нито python_code нито target_file",
+    "timestamp": "2026-04-10T13:01:18.678934+00:00"
+  },
+  {
+    "index": 1,
+    "component": "predictor",
+    "status": "invalid",
+    "reason": "Няма нито python_code нито target_file",
+    "timestamp": "2026-04-13T05:43:54.800572+00:00"
+  },
+  {
+    "index": 2,
+    "component": "predictor",
+    "status": "invalid",
+    "reason": "Няма нито python_code нито target_file",
+    "timestamp": "2026-04-13T05:43:54.800640+00:00"
+  },
+  {
+    "index": 1,
+    "component": "predictor",
+    "status": "invalid",
+    "reason": "Няма нито python_code нито target_file",
+    "timestamp": "2026-04-13T06:10:20.656694+00:00"
+  },
+  {
+    "index": 2,
+    "component": "predictor",
+    "status": "invalid",
+    "reason": "Няма нито python_code нито target_file",
+    "timestamp": "2026-04-13T06:10:20.656742+00:00"
+  },
+  {
+    "index": 1,
+    "component": "predictor",
+    "status": "invalid",
+    "reason": "Няма нито python_code нито target_file",
+    "timestamp": "2026-04-13T06:31:24.102057+00:00"
+  },
+  {
+    "index": 2,
+    "component": "predictor",
+    "status": "invalid",
+    "reason": "Няма нито python_code нито target_file",
+    "timestamp": "2026-04-13T06:31:24.102098+00:00"
+  },
+  {
+    "index": 1,
+    "component": "predictor",
+    "status": "invalid",
+    "reason": "Няма нито python_code нито target_file",
+    "timestamp": "2026-04-13T07:17:28.641000+00:00"
+  },
+  {
+    "index": 2,
+    "component": "predictor",
+    "status": "invalid",
+    "reason": "Няма нито python_code нито target_file",
+    "timestamp": "2026-04-13T07:17:28.641075+00:00"
+  },
+  {
+    "index": 6,
+    "component": "technology_ai_review",
+    "problem": "Прогнозната грешка за технологиите за изкуствен интелект превишава средната грешка.",
+    "result": {
+      "status": "skipped",
+      "reason": "Забранена операция: open("
+    },
+    "timestamp": "2026-04-13T07:17:28.641124+00:00"
+  },
+  {
+    "index": 1,
+    "component": "predictor",
+    "status": "invalid",
+    "reason": "Няма нито python_code нито target_file",
+    "timestamp": "2026-04-13T07:28:12.943057+00:00"
+  },
+  {
+    "index": 2,
+    "component": "predictor",
+    "status": "invalid",
+    "reason": "Няма нито python_code нито target_file",
+    "timestamp": "2026-04-13T07:28:12.943101+00:00"
+  },
+  {
+    "index": 7,
+    "component": "economy_work_review",
+    "problem": "Непредвидена грешка в предсказанията за ЕКОНОМИЧЕСКИ ОТГЛЕД НА РАБОТАТА от 26.0 пункта.",
+    "result": {
+      "status": "error",
+      "returncode": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/tmp/tmpbyh0ppq7.py\", line 3, in <module>\n    BASE = pathlib.Path(__file__).resolve().parents[2]\n           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^\n  File \"/usr/lib/python3.12/pathlib.py\", line 281, in __getitem__\n    raise IndexError(idx)\nIndexError: 2\n"
+    },
+    "timestamp": "2026-04-13T07:28:13.059783+00:00"
+  },
+  {
+    "index": 8,
+    "component": "technology_ai_review",
+    "problem": "Прогнозната грешка е с 1.5 по-голяма от средната грешка, показвайки потенциална неточност в предсказателния модел",
+    "result": {
+      "status": "skipped",
+      "reason": "sklearn/pandas с реални данни — пропускаме (данните може да липсват)"
+    },
+    "timestamp": "2026-04-13T07:28:13.059871+00:00"
+  },
+  {
+    "index": 1,
+    "component": "predictor",
+    "status": "invalid",
+    "reason": "Няма нито python_code нито target_file",
+    "timestamp": "2026-04-13T07:33:25.779077+00:00"
+  },
+  {
+    "index": 2,
+    "component": "predictor",
+    "status": "invalid",
+    "reason": "Няма нито python_code нито target_file",
+    "timestamp": "2026-04-13T07:33:25.779130+00:00"
+  },
+  {
+    "index": 7,
+    "component": "economy_work_review",
+    "problem": "Непредвидена грешка в предсказанията за ЕКОНОМИЧЕСКИ ОТГЛЕД НА РАБОТАТА от 26.0 пункта.",
+    "result": {
+      "status": "error",
+      "returncode": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/tmp/tmpjuy4fgif.py\", line 5, in <module>\n    from agents.core.economy_work_review import EconomyWorkReview\nModuleNotFoundError: No module named 'agents'\n"
+    },
+    "timestamp": "2026-04-13T07:33:25.928706+00:00"
+  },
+  {
+    "index": 1,
+    "component": "predictor",
+    "status": "invalid",
+    "reason": "Няма нито python_code нито target_file",
+    "timestamp": "2026-04-13T07:38:17.020856+00:00"
+  },
+  {
+    "index": 2,
+    "component": "predictor",
+    "status": "invalid",
+    "reason": "Няма нито python_code нито target_file",
+    "timestamp": "2026-04-13T07:38:17.020911+00:00"
+  },
+  {
+    "index": 7,
+    "component": "economy_work_review",
+    "problem": "Непредвидена грешка в предсказанията за ЕКОНОМИЧЕСКИ ОТГЛЕД НА РАБОТАТА от 26.0 пункта.",
+    "result": {
+      "status": "error",
+      "returncode": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/tmp/tmpww1a22ia.py\", line 5, in <module>\n    from agents.core.economy_work_review import EconomyWorkReview\nModuleNotFoundError: No module named 'agents'\n"
+    },
+    "timestamp": "2026-04-13T07:38:17.134159+00:00"
+  },
+  {
+    "index": 1,
+    "component": "predictor",
+    "status": "invalid",
+    "reason": "Няма нито python_code нито target_file",
+    "timestamp": "2026-04-13T07:47:47.678619+00:00"
+  },
+  {
+    "index": 2,
+    "component": "predictor",
+    "status": "invalid",
+    "reason": "Няма нито python_code нито target_file",
+    "timestamp": "2026-04-13T07:47:47.678664+00:00"
+  },
+  {
+    "index": 7,
+    "component": "economy_work_review",
+    "problem": "Непредвидена грешка в предсказанията за ЕКОНОМИЧЕСКИ ОТГЛЕД НА РАБОТАТА от 26.0 пункта.",
+    "result": {
+      "status": "error",
+      "returncode": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/tmp/tmpmv6bg0uf.py\", line 5, in <module>\n    from agents.core.economy_work_review import EconomyWorkReview\nModuleNotFoundError: No module named 'agents'\n"
+    },
+    "timestamp": "2026-04-13T07:47:47.793886+00:00"
+  },
+  {
+    "index": 1,
+    "component": "predictor",
+    "status": "invalid",
+    "reason": "Няма нито python_code нито target_file",
+    "timestamp": "2026-04-13T07:49:59.890345+00:00"
+  },
+  {
+    "index": 2,
+    "component": "predictor",
+    "status": "invalid",
+    "reason": "Няма нито python_code нито target_file",
+    "timestamp": "2026-04-13T07:49:59.890387+00:00"
+  },
+  {
+    "index": 7,
+    "component": "economy_work_review",
+    "problem": "Непредвидена грешка в предсказанията за ЕКОНОМИЧЕСКИ ОТГЛЕД НА РАБОТАТА от 26.0 пункта.",
+    "result": {
+      "status": "error",
+      "returncode": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/tmp/tmp4y34m63j.py\", line 5, in <module>\n    from agents.core.economy_work_review import EconomyWorkReview\nModuleNotFoundError: No module named 'agents'\n"
+    },
+    "timestamp": "2026-04-13T07:49:59.996213+00:00"
+  },
+  {
+    "index": 1,
+    "component": "predictor",
+    "status": "invalid",
+    "reason": "Няма нито python_code нито target_file",
+    "timestamp": "2026-04-13T08:07:33.360467+00:00"
+  },
+  {
+    "index": 2,
+    "component": "predictor",
+    "status": "invalid",
+    "reason": "Няма нито python_code нито target_file",
+    "timestamp": "2026-04-13T08:07:33.360525+00:00"
+  },
+  {
+    "index": 7,
+    "component": "economy_work_review",
+    "problem": "Непредвидена грешка в предсказанията за ЕКОНОМИЧЕСКИ ОТГЛЕД НА РАБОТАТА от 26.0 пункта.",
+    "result": {
+      "status": "error",
+      "returncode": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/tmp/tmpxuum3t2e.py\", line 5, in <module>\n    from agents.core.economy_work_review import EconomyWorkReview\nModuleNotFoundError: No module named 'agents'\n"
+    },
+    "timestamp": "2026-04-13T08:07:33.462955+00:00"
+  },
+  {
+    "index": 1,
+    "component": "predictor",
+    "status": "invalid",
+    "reason": "Няма нито python_code нито target_file",
+    "timestamp": "2026-04-13T08:15:21.516428+00:00"
+  },
+  {
+    "index": 2,
+    "component": "predictor",
+    "status": "invalid",
+    "reason": "Няма нито python_code нито target_file",
+    "timestamp": "2026-04-13T08:15:21.516473+00:00"
+  },
+  {
+    "index": 7,
+    "component": "economy_work_review",
+    "problem": "Непредвидена грешка в предсказанията за ЕКОНОМИЧЕСКИ ОТГЛЕД НА РАБОТАТА от 26.0 пункта.",
+    "result": {
+      "status": "error",
+      "returncode": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/tmp/tmpbac2qdac.py\", line 5, in <module>\n    from agents.core.economy_work_review import EconomyWorkReview\nModuleNotFoundError: No module named 'agents'\n"
+    },
+    "timestamp": "2026-04-13T08:15:21.613456+00:00"
+  },
+  {
+    "index": 12,
+    "component": "economy_work_review",
+    "problem": "Системата има грешка в предсказанието на стойността за ECONOMY_WORK_REVIEW, която е 24.0, което е над средната грешка от 17.2",
+    "result": {
+      "status": "error",
+      "returncode": 1,
+      "stdout": "Patch applied for ECONOMY_WORK_REVIEW\n",
+      "stderr": "Traceback (most recent call last):\n  File \"/tmp/tmpme4wbjte.py\", line 10, in <module>\n    economy_work_review_prediction = economy_work_review_predictionCorrection(economy_work_review_prediction)\n                                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nNameError: name 'economy_work_review_prediction' is not defined. Did you mean: 'economy_work_review_predictionCorrection'?\n"
+    },
+    "timestamp": "2026-04-13T08:15:21.711429+00:00"
+  },
+  {
+    "index": 13,
+    "component": "technology_ai_review",
+    "problem": "Предсказанието на технологиите за изкуствен интелект е с голяма грешка от 19.5, което надхвърля средната грешка от 18.7.",
+    "result": {
+      "status": "skipped",
+      "reason": "sklearn/pandas с реални данни — пропускаме (данните може да липсват)"
+    },
+    "timestamp": "2026-04-13T08:15:21.711496+00:00"
+  },
+  {
+    "index": 14,
+    "component": "climate_global_risk_review",
+    "problem": "Предсказаните стойности за глобалните климатични рискове имат значителна грешка спрямо реалните данни.",
+    "result": {
+      "status": "ok",
+      "returncode": 0,
+      "stdout": "Patch applied for CLIMATE_GLOBAL_RISK_REVIEW\n",
+      "stderr": ""
+    },
+    "timestamp": "2026-04-13T08:15:21.752902+00:00"
+  },
+  {
+    "index": 0,
+    "component": "economy_work_review",
+    "problem": "Грешката в предсказанието за ECONOMY_WORK_REVIEW е 24.0, което е над средната грешка от 20.8",
+    "result": {
+      "status": "skipped",
+      "reason": "sklearn/pandas с реални данни — пропускаме (данните може да липсват)"
+    },
+    "timestamp": "2026-04-13T08:22:10.679464+00:00"
+  },
+  {
+    "index": 1,
+    "component": "governance_institutions_review",
+    "problem": "Моделът за прогнозиране на институциите на управление показва значителна грешка в прогнозите си.",
+    "result": {
+      "status": "error",
+      "returncode": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/tmp/tmpt6g3cdo0.py\", line 10, in <module>\n    with open(BASE / 'data' / 'governance_institutions_review.json', 'r') as file:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: '/mnt/c/Users/emilb/Desktop/AGI/CORTEX++_QWEN/data/governance_institutions_review.json'\n"
+    },
+    "timestamp": "2026-04-13T08:22:10.778225+00:00"
+  },
+  {
+    "index": 1,
+    "component": "governance_institutions_review",
+    "problem": "Моделът за прогнозиране на институциите на управление показва значителна грешка в прогнозите си.",
+    "result": {
+      "status": "error",
+      "returncode": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/tmp/tmp2odr5548.py\", line 10, in <module>\n    with open(BASE / 'data' / 'governance_institutions_review.json', 'r') as file:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: '/mnt/c/Users/emilb/Desktop/AGI/CORTEX++_QWEN/data/governance_institutions_review.json'\n"
+    },
+    "alignment": {
+      "allowed": true,
+      "risk_score": 0.0,
+      "notes": "alignment_guard_missing_fallback_allow"
+    },
+    "timestamp": "2026-04-13T08:47:47.135437+00:00"
+  },
+  {
+    "index": 1,
+    "component": "governance_institutions_review",
+    "problem": "Моделът за прогнозиране на институциите на управление показва значителна грешка в прогнозите си.",
+    "result": {
+      "status": "error",
+      "returncode": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/tmp/tmpwch52q3b.py\", line 10, in <module>\n    with open(BASE / 'data' / 'governance_institutions_review.json', 'r') as file:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: '/mnt/c/Users/emilb/Desktop/AGI/CORTEX++_QWEN/data/governance_institutions_review.json'\n"
+    },
+    "alignment": {
+      "allowed": true,
+      "risk_score": 0.0,
+      "notes": "alignment_guard_missing_fallback_allow"
+    },
+    "timestamp": "2026-04-13T08:54:44.489207+00:00"
+  },
+  {
+    "index": 1,
+    "component": "governance_institutions_review",
+    "problem": "Моделът за прогнозиране на институциите на управление показва значителна грешка в прогнозите си.",
+    "result": {
+      "status": "skipped",
+      "reason": "Забранена операция: requests"
+    },
+    "alignment": {
+      "allowed": true,
+      "risk_score": 0.0,
+      "notes": "alignment_guard_missing_fallback_allow"
+    },
+    "timestamp": "2026-04-13T08:57:44.444914+00:00"
+  },
+  {
+    "index": 0,
+    "component": "economy_work_review",
+    "problem": "Грешката в предсказанието за ECONOMY_WORK_REVIEW е 24.0, което е над средната грешка от 20.8",
+    "result": {
+      "status": "skipped",
+      "reason": "sklearn/pandas с реални данни — пропускаме (данните може да липсват)"
+    },
+    "alignment": {
+      "allowed": true,
+      "risk_score": 0.0,
+      "notes": "alignment_guard_missing_fallback_allow"
+    },
+    "timestamp": "2026-04-13T09:33:08.547156+00:00"
+  },
+  {
+    "index": 1,
+    "component": "governance_institutions_review",
+    "problem": "Моделът за прогнозиране на институциите на управление показва значителна грешка в прогнозите си.",
+    "result": {
+      "status": "error",
+      "returncode": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/tmp/tmp5130surf.py\", line 14, in <module>\n    latest = payload[1][0]\n             ~~~~~~~^^^\nIndexError: list index out of range\n"
+    },
+    "alignment": {
+      "allowed": true,
+      "risk_score": 0.0,
+      "notes": "alignment_guard_missing_fallback_allow"
+    },
+    "timestamp": "2026-04-13T09:33:09.367705+00:00"
+  },
+  {
+    "index": 0,
+    "component": "economy_work_review",
+    "problem": "Грешката в предсказанието за ECONOMY_WORK_REVIEW е 24.0, което е над средната грешка от 20.8",
+    "result": {
+      "status": "skipped",
+      "reason": "sklearn/pandas с реални данни — пропускаме (данните може да липсват)"
+    },
+    "alignment": {
+      "allowed": true,
+      "risk_score": 0.0,
+      "notes": "alignment_guard_missing_fallback_allow"
+    },
+    "timestamp": "2026-04-13T11:59:18.378768+00:00"
+  },
+  {
+    "index": 1,
+    "component": "governance_institutions_review",
+    "problem": "Моделът за прогнозиране на институциите на управление показва значителна грешка в прогнозите си.",
+    "result": {
+      "status": "error",
+      "returncode": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"C:\\Users\\emilb\\AppData\\Local\\Temp\\tmpusl4r5qh.py\", line 14, in <module>\n    latest = payload[1][0]\n             ~~~~~~~^^^\nIndexError: list index out of range\n"
+    },
+    "alignment": {
+      "allowed": true,
+      "risk_score": 0.0,
+      "notes": "alignment_guard_missing_fallback_allow"
+    },
+    "timestamp": "2026-04-13T11:59:19.286195+00:00"
+  },
+  {
+    "index": 0,
+    "component": "economy_work_review",
+    "problem": "Грешката в предсказанието за ECONOMY_WORK_REVIEW е 24.0, което е над средната грешка от 20.8",
+    "result": {
+      "status": "skipped",
+      "reason": "sklearn/pandas с реални данни — пропускаме (данните може да липсват)"
+    },
+    "alignment": {
+      "allowed": true,
+      "risk_score": 0.0,
+      "notes": "alignment_guard_missing_fallback_allow"
+    },
+    "timestamp": "2026-04-13T12:59:16.253002+00:00"
+  },
+  {
+    "index": 1,
+    "component": "governance_institutions_review",
+    "problem": "Моделът за прогнозиране на институциите на управление показва значителна грешка в прогнозите си.",
+    "result": {
+      "status": "error",
+      "returncode": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"C:\\Users\\emilb\\AppData\\Local\\Temp\\tmpn7iy_rqy.py\", line 14, in <module>\n    latest = payload[1][0]\n             ~~~~~~~^^^\nIndexError: list index out of range\n"
+    },
+    "alignment": {
+      "allowed": true,
+      "risk_score": 0.0,
+      "notes": "alignment_guard_missing_fallback_allow"
+    },
+    "timestamp": "2026-04-13T12:59:17.172301+00:00"
+  },
+  {
+    "index": 0,
+    "component": "economy_work_review",
+    "problem": "Грешката в предсказанието за ECONOMY_WORK_REVIEW е 24.0, което е над средната грешка от 20.8",
+    "result": {
+      "status": "skipped",
+      "reason": "sklearn/pandas с реални данни — пропускаме (данните може да липсват)"
+    },
+    "alignment": {
+      "allowed": true,
+      "risk_score": 0.0,
+      "notes": "aligned"
+    },
+    "timestamp": "2026-04-13T17:41:57.716382+00:00"
+  },
+  {
+    "index": 1,
+    "component": "governance_institutions_review",
+    "problem": "Моделът за прогнозиране на институциите на управление показва значителна грешка в прогнозите си.",
+    "result": {
+      "status": "error",
+      "returncode": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/tmp/tmpukpd5ibu.py\", line 14, in <module>\n    latest = payload[1][0]\n             ~~~~~~~^^^\nIndexError: list index out of range\n"
+    },
+    "alignment": {
+      "allowed": true,
+      "risk_score": 0.1,
+      "notes": "aligned"
+    },
+    "timestamp": "2026-04-13T17:41:58.335303+00:00"
+  }
+]

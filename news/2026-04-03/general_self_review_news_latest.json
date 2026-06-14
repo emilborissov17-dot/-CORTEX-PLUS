@@ -1,0 +1,109 @@
+{
+  "axis": "GENERAL_SELF_REVIEW",
+  "fetched_at": "2026-04-03T14:17:09.015276+00:00",
+  "smart_query": "artificial intelligence progress",
+  "sources_count": {
+    "rss": 3,
+    "gdelt": 3,
+    "arxiv": 0,
+    "github": 3,
+    "web_search": 5
+  },
+  "rss": [
+    {
+      "title": "Fewer UK adults posting on social media, Ofcom finds",
+      "snippet": "Some experts believe it highlights a social media shift as platforms boost short video.",
+      "url": "https://www.bbc.com/news/articles/cgqk718l4neo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Elon Musk's SpaceX set to be worth $1 trillion with planned public listing",
+      "snippet": "The company’s public stock debut is set to be one of the most valuable in history, and could make Musk the world's first trillionaire.",
+      "url": "https://www.bbc.com/news/articles/c2k35lg92dpo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Peppa Pig and Transformers owner Hasbro hit by cyber-attack",
+      "snippet": "The firm says its operations remain open but says the hack \"may result in some delays\". ",
+      "url": "https://www.bbc.com/news/articles/cx24e1nryn9o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [
+    {
+      "title": "Akıllı telefonlarda çok modlu yapay zekâ arkadaşı trendi büyüyor",
+      "snippet": "Akıllı telefonlarda çok modlu yapay zekâ arkadaşı trendi büyüyor",
+      "url": "https://www.teknolojioku.com/basin-bulteni/akilli-telefonlarda-cok-modlu-yapay-zeka-arkadasi-trendi-buyuyor-69791a3fbd657766da0c8408",
+      "source": "teknolojioku.com"
+    },
+    {
+      "title": "Yeni unicornlar yapay zekâdan çıkıyor | Türkiye Gazetesi",
+      "snippet": "Yeni unicornlar yapay zekâdan çıkıyor | Türkiye Gazetesi",
+      "url": "https://www.turkiyegazetesi.com.tr/teknoloji/yeni-unicornlar-yapay-zekadan-cikiyor-1762465",
+      "source": "turkiyegazetesi.com.tr"
+    },
+    {
+      "title": "Њу Делхи : Моди отворио сајам вештачке интелигенције",
+      "snippet": "Њу Делхи : Моди отворио сајам вештачке интелигенције",
+      "url": "https://www.politika.rs/scc/clanak/732673/nju-delhi-modi-otvorio-sajam-vestacke-inteligencije",
+      "source": "politika.rs"
+    }
+  ],
+  "github_repos": [
+    {
+      "title": "microsoft/autogen",
+      "snippet": "A programming framework for agentic AI",
+      "stars": 56644,
+      "url": "https://github.com/microsoft/autogen",
+      "updated": "2026-04-03",
+      "source": "GitHub"
+    },
+    {
+      "title": "2noise/ChatTTS",
+      "snippet": "A generative speech model for daily dialogue.",
+      "stars": 39014,
+      "url": "https://github.com/2noise/ChatTTS",
+      "updated": "2026-04-03",
+      "source": "GitHub"
+    },
+    {
+      "title": "agentscope-ai/agentscope",
+      "snippet": "Build and run agents you can see, understand and trust.",
+      "stars": 22906,
+      "url": "https://github.com/agentscope-ai/agentscope",
+      "updated": "2026-04-03",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [],
+  "web_search": [
+    {
+      "title": "Progress in artificial intelligence - Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Progress_in_artificial_intelligence",
+      "source": "WEB"
+    },
+    {
+      "title": "The 2025 AI Index Report - Stanford HAI",
+      "url": "https://hai.stanford.edu/ai-index/2025-ai-index-report",
+      "source": "WEB"
+    },
+    {
+      "title": "Home | Progress in Artificial Intelligence | Springer Nature Link",
+      "url": "https://link.springer.com/journal/13748",
+      "source": "WEB"
+    },
+    {
+      "title": "The Future of AI: Breakthroughs, Trends &amp; Challenges in 2026",
+      "url": "https://www.milesit.com/progress-in-artificial-intelligence/",
+      "source": "WEB"
+    },
+    {
+      "title": "Welcome to State of AI Report 2025",
+      "url": "https://www.stateof.ai/",
+      "source": "WEB"
+    }
+  ],
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL"
+}

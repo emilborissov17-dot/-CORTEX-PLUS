@@ -1,0 +1,82 @@
+{
+  "axis": "GOVERNANCE_INSTITUTIONS_REVIEW",
+  "fetched_at": "2026-03-22T17:26:58.101128+00:00",
+  "smart_query": "government corruption institutions",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 0,
+    "gdelt": 3,
+    "arxiv": 2,
+    "github": 3,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [],
+  "gdelt": [
+    {
+      "title": "Banteras rasuah kekal keutamaan kerajaan – PM",
+      "snippet": "Banteras rasuah kekal keutamaan kerajaan – PM",
+      "url": "https://www.sinarharian.com.my/article/763494/berita/nasional/banteras-rasuah-kekal-keutamaan-kerajaan-ndash-pm",
+      "source": "sinarharian.com.my"
+    },
+    {
+      "title": "Δημοσκόπηση Alco : 6 στους 10 δεν είναι καθόλου ικανοποιημένοι με την κυβέρνηση – Ακρίβεια και διαφθορά τα μεγάλα « αγκάθια » ",
+      "snippet": "Δημοσκόπηση Alco : 6 στους 10 δεν είναι καθόλου ικανοποιημένοι με την κυβέρνηση – Ακρίβεια και διαφθορά τα μεγάλα « αγκάθια » ",
+      "url": "https://www.topontiki.gr/2026/02/03/dimoskopisi-alco-6-stous-10-den-ine-katholou-ikanopiimeni-me-tin-kivernisi-ta-simantikotera-provlimata-tis-choras/",
+      "source": "topontiki.gr"
+    },
+    {
+      "title": "Mahama vows to fight corruption as Ghana marks 69th independence",
+      "snippet": "Mahama vows to fight corruption as Ghana marks 69th independence",
+      "url": "https://www.myjoyonline.com/mahama-vows-to-fight-corruption-as-ghana-marks-69th-independence/",
+      "source": "myjoyonline.com"
+    }
+  ],
+  "github_repos": [
+    {
+      "title": "github/government.github.com",
+      "snippet": "Gather, curate, and feature stories of public servants and civic hackers using GitHub as part of their open government innovations",
+      "stars": 1919,
+      "url": "https://github.com/github/government.github.com",
+      "updated": "2026-03-19",
+      "source": "GitHub"
+    },
+    {
+      "title": "consuldemocracy/consuldemocracy",
+      "snippet": "Consul Democracy - Open Government and E-Participation Web Software",
+      "stars": 1529,
+      "url": "https://github.com/consuldemocracy/consuldemocracy",
+      "updated": "2026-03-20",
+      "source": "GitHub"
+    },
+    {
+      "title": "datagouv/data.gouv.fr",
+      "snippet": "Ce dépôt rassemble les tickets techniques qui portent sur data.gouv.fr.",
+      "stars": 113,
+      "url": "https://github.com/datagouv/data.gouv.fr",
+      "updated": "2026-03-17",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Can AI mediation improve democratic deliberation?",
+      "snippet": "The strength of democracy lies in the free and equal exchange of diverse viewpoints. Living up to this ideal at scale faces inherent tensions: broad participation, meaningful deliberation, and political equality often trade off with one another (Fishkin, 2011). We ask whether and how artificial inte",
+      "url": "https://arxiv.org/abs/2601.05904v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Fair Voting Methods as a Catalyst for Democratic Resilience: A Trilogy on Legitimacy, Impact and AI Safeguarding",
+      "snippet": "This article shows how fair voting methods can be a catalyst for change in the way we make collective decisions, and how such change can promote long-awaited upgrades of democracy. Based on real-world evidence from democratic innovations in participatory budgeting, in Switzerland and beyond, I highl",
+      "url": "https://arxiv.org/abs/2512.17461v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[Why automating human labour will break our political system | Rose Hadshar, Forethought] The most important political question in the age of advanced AI might not be who wins elections. It might be whether elections continue to matter at all.That’s the view of Rose Hadshar, researcher at Forethought, who believes we could see extreme, AI-enabled power concentration without a coup or dramatic ‘end of democracy’ moment.She foresees something more insidious: an elite group with access to",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

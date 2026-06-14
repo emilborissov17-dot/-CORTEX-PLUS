@@ -1,0 +1,87 @@
+{
+  "core": [
+    {
+      "id": "human",
+      "name": "Човек",
+      "description": "Ум, дух, тяло и отношенията между хората."
+    },
+    {
+      "id": "planet",
+      "name": "Планета",
+      "description": "Ресурси, екосистеми и климат на Земята."
+    },
+    {
+      "id": "civilization",
+      "name": "Цивилизация",
+      "description": "Инфраструктура, икономика, институции, култура и технологии."
+    },
+    {
+      "id": "cosmos",
+      "name": "Космос",
+      "description": "Дългосрочно оцеляване и развитие отвъд Земята."
+    }
+  ],
+  "domains": [
+    {
+      "id": "human",
+      "core": "human",
+      "name": "Човек",
+      "subdomains": [
+        { "id": "health_physical", "name": "Физическо здраве" },
+        { "id": "health_mental", "name": "Психично и емоционално здраве" },
+        { "id": "nutrition_water", "name": "Храна и вода" },
+        { "id": "housing_safety", "name": "Жилище и сигурност" },
+        { "id": "education_basic", "name": "Базово образование и грамотност" },
+        { "id": "education_advanced", "name": "Развитие и творчество" },
+        { "id": "freedom_autonomy", "name": "Свобода и автономия" },
+        { "id": "community_belonging", "name": "Общност и принадлежност" },
+        { "id": "meaning_spirituality", "name": "Смисъл и духовност" }
+      ]
+    },
+    {
+      "id": "planet",
+      "core": "planet",
+      "name": "Планета",
+      "subdomains": [
+        { "id": "energy_supply", "name": "Енергиен ресурс и снабдяване" },
+        { "id": "energy_renewables", "name": "Възобновяеми източници и ефективност" },
+        { "id": "water_availability", "name": "Наличност на вода" },
+        { "id": "water_quality", "name": "Качество на водата" },
+        { "id": "food_production", "name": "Производство на храна" },
+        { "id": "food_access", "name": "Достъп до храна" },
+        { "id": "materials_resources", "name": "Материали и суровини" },
+        { "id": "materials_circularity", "name": "Рециклиране и кръгова икономика" },
+        { "id": "climate_state", "name": "Климат и емисии" },
+        { "id": "biodiversity", "name": "Екосистеми и биоразнообразие" }
+      ]
+    },
+    {
+      "id": "civilization",
+      "core": "civilization",
+      "name": "Цивилизация",
+      "subdomains": [
+        { "id": "infra_transport", "name": "Транспортна инфраструктура" },
+        { "id": "infra_energy_grid", "name": "Енергийни мрежи и жилища" },
+        { "id": "infra_digital", "name": "Дигитална инфраструктура" },
+        { "id": "economy_real", "name": "Реална икономика и производство" },
+        { "id": "economy_distribution", "name": "Разпределение и достъп до блага" },
+        { "id": "governance", "name": "Управление и институции" },
+        { "id": "justice_human_rights", "name": "Правосъдие и права на човека" },
+        { "id": "culture_media", "name": "Култура и медии" },
+        { "id": "science_research", "name": "Наука и изследвания" },
+        { "id": "technology_ai", "name": "Технологии и изкуствен интелект" }
+      ]
+    },
+    {
+      "id": "cosmos",
+      "core": "cosmos",
+      "name": "Космос",
+      "subdomains": [
+        { "id": "risk_global", "name": "Глобални екзистенциални рискове" },
+        { "id": "space_exploration", "name": "Космическо изследване" },
+        { "id": "space_settlement", "name": "Дългосрочно заселване" },
+        { "id": "space_resources", "name": "Космически ресурси" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,139 @@
+{
+  "axis": "SPACE_INFRASTRUCTURE_REVIEW",
+  "domain": "cosmos",
+  "timestamp": "2026-05-03T08:58:32.453762+00:00",
+  "sources_count": 15,
+  "rss_count": 12,
+  "ddg_count": 0,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] Six Years of NASA's Mars Curiosity Rover",
+      "summary": "you you you",
+      "link": "https://www.youtube.com/watch?v=l6PAhdKxa2c",
+      "published": "2026-04-30T14:46:14+00:00",
+      "source_type": "youtube",
+      "channel": "NASA",
+      "video_id": "l6PAhdKxa2c",
+      "transcript_method": "whisper",
+      "transcript_chars": 11,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] NASA Astronaut Anil Menon Prelaunch News Conference (April 29, 2026)",
+      "summary": "[music] &gt;&gt; Good afternoon and welcome to NASA's Johnson Space Center. I am Chelsea Byarte, here joined by our guest, NASA astronaut Anil Menon. Uh he's getting ready to launch to the International Space Station on the Soyuz MS-29 mission in July alongside his two crewmates, Pyotr Dubrov and Anna Kikina. Uh they're not joining us here today as they're back in Star City for training. Um but Anil here is going to be taking your questions in three ways. So, we have reporters here in the room. Uh we've got reporters on our phone bridge dialed in, and we're taking some questions pre-submitted on social media as well that we're ready for. If you're joining us on the phone, please go ahead and press star one to enter the question queue. If your question has already been asked or you want to ",
+      "link": "https://www.youtube.com/watch?v=eshK9LS8I5w",
+      "published": "2026-04-29T18:35:53+00:00",
+      "source_type": "youtube",
+      "channel": "NASA",
+      "video_id": "eshK9LS8I5w",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Progress 95 Cargo Ship Docking",
+      "summary": "[music] &gt;&gt; Good evening from Mission Control in Houston and the International Space Station Flight Control Room here at NASA's Johnson Space Center. Here's a look at the orbit 3 team led by flight director Diane Dailey and her team of flight controllers working in tandem with Russian flight controllers half a world away at the Russian Mission Control Center on the outskirts of Moscow. Teams are monitoring the automated arrival of the uncrewed Progress 95 spacecraft. It'll dock to the after port of the Zvezda service module here in about 45 minutes. This is the final leg of its 2-day 33 orbit journey carrying nearly 3 tons of food, fuel, and supplies to the Expedition 74 crew of seven living and working on the International Space Station. And here you see on your screen just activated",
+      "link": "https://www.youtube.com/watch?v=hUpVpUw3rkM",
+      "published": "2026-04-28T00:15:32+00:00",
+      "source_type": "youtube",
+      "channel": "NASA",
+      "video_id": "hUpVpUw3rkM",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "summary": "2-3 key events related to NASA's space missions, including retirement of a director, Artemis program updates, and data center developments.",
+    "risk_level": "LOW",
+    "trend": "IMPROVING",
+    "key_events": [
+      "NASA Kennedy Center Director Announces Plans to Retire",
+      "Artemis 3 Plans Remain Uncertain as Schedule Slips",
+      "Starcloud Seeks More Orbital Data Center Funding"
+    ],
+    "insights": [
+      "NASA continues to focus on lunar missions and data center infrastructure.",
+      "There is a growing interest in orbital data centers and space-based computing."
+    ],
+    "youtube_insights": [
+      "YouTube videos about NASA's Mars Curiosity Rover and astronaut preparations.",
+      "Content about Progress 95 cargo ship docking and space station operations."
+    ],
+    "relevance_to_goal": "Relevant to the goal of exploring space, developing infrastructure, and advancing space research.",
+    "generalization": "NASA is actively working on lunar missions, data center infrastructure, and space-based computing, showing a positive trend in space exploration and technological development."
+  },
+  "raw_items": [
+    {
+      "title": "NASA Kennedy Center Director Announces Plans to Retire",
+      "summary": "NASA announced Friday Janet Petro, center director for the agency’s Kennedy Space Center in Florida, is retiring. Prior to joining NASA, Petro worked in a variety of military and industry positions, ultimately beginning her career at the agency in 2007 and working her way up to center director, as well as serving as acting administrator [&#8230;]",
+      "link": "https://www.nasa.gov/news-release/nasa-kennedy-center-director-announces-plans-to-retire/",
+      "published": "Fri, 01 May 2026 17:01:48 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "NASA Artemis II Crew Rings Nasdaq Closing Bell",
+      "summary": "Nasdaq Chair and Chief Executive Officer Adena T. Friedman, left, and NASA’s Artemis II crewmembers CSA (Canadian Space Agency) astronaut Jeremy Hansen, and NASA astronauts Christina Koch, Victor Glover, and Reid Wiseman, right, ring the closing bell of the Nasdaq market session, Thursday, April 30, 2026. NASA’s Artemis II mission took Wiseman, Glover, Koch, and [&#8230;]",
+      "link": "https://www.nasa.gov/image-article/nasa-artemis-ii-crew-rings-nasdaq-closing-bell/",
+      "published": "Fri, 01 May 2026 16:08:05 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Key Support Equipment Arrives at Kennedy for Roman Space Telescope",
+      "summary": "Technicians at NASA’s Payload Hazardous Servicing Facility (PHSF) at the agency’s Kennedy Space Center in Florida offloaded eight high-efficiency particulate air (HEPA) wall modules and other ground support equipment on April 27. The equipment will support launch processing of the agency’s Nancy Grace Roman Space Telescope. Each 1,800-pound module enhances the&#160;PHSF’s&#160;clean room systems, helping meet [&#8230;]",
+      "link": "https://www.nasa.gov/image-article/key-support-equipment-arrives-at-kennedy-for-roman-space-telescope/",
+      "published": "Fri, 01 May 2026 15:44:03 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "NASA’s STORIE Mission to Tell Tale of Earth’s Ring Current",
+      "summary": "Earth’s magnetic field is like a powerful trap. It lures electrically charged particles in space, near our planet, and snares them in an invisible, doughnut-shaped pen around Earth known as the ring current. This captive swarm of charged particles plays an important role in how Earth reacts to changing conditions in space, called space weather, which […]",
+      "link": "https://science.nasa.gov/science-research/heliophysics/nasas-storie-mission-to-tell-tale-of-earths-ring-current/",
+      "published": "Fri, 01 May 2026 15:31:08 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Artemis 3 plans remain uncertain as schedule slips",
+      "summary": "<figure><img alt=\"SLS core stage for Artemis 3\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"683\" src=\"https://i0.wp.com/spacenews.com/wp-content/uploads/2026/05/Z63_7070.jpg?fit=1024%2C683&amp;ssl=1\" width=\"1024\" /></figure>\n<p>More than two months after NASA announced revised plans for the Artemis 3 mission, the agency has provided few details about the mission amid signs its schedule may be slipping.</p>\n<p>The post <a href=\"https://spacenews.com/artemis-3-plans",
+      "link": "https://spacenews.com/artemis-3-plans-remain-uncertain-as-schedule-slips/",
+      "published": "Sun, 03 May 2026 00:42:38 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "NASA to increase value of CLPS contract to support surge of lunar lander missions",
+      "summary": "<figure><img alt=\"IM-5\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"576\" src=\"https://i0.wp.com/spacenews.com/wp-content/uploads/2026/03/im-5.jpeg?fit=1024%2C576&amp;ssl=1\" width=\"1024\" /></figure>\n<p>NASA is planning to increase the total value of a contract for robotic lunar lander missions to support a proposed surge in flights for the agency’s moon base plans.</p>\n<p>The post <a href=\"https://spacenews.com/nasa-to-increase-value-of-clps-contract-to-support-sur",
+      "link": "https://spacenews.com/nasa-to-increase-value-of-clps-contract-to-support-surge-of-lunar-lander-missions/",
+      "published": "Fri, 01 May 2026 22:43:05 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "The opportunity beyond orbital data centers",
+      "summary": "<figure><img alt=\"\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"574\" src=\"https://i0.wp.com/spacenews.com/wp-content/uploads/2026/05/Founders-scaled.png?fit=1024%2C574&amp;ssl=1\" width=\"1024\" /></figure>\n<p>Investor attention is starting to shift toward ventures that could be enabled by orbital data centers, even as the massive computing networks proposed by SpaceX and others remain years from reality.</p>\n<p>The post <a href=\"https://spacenews.com/the-opportunity",
+      "link": "https://spacenews.com/the-opportunity-beyond-orbital-data-centers/",
+      "published": "Fri, 01 May 2026 19:10:35 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Starcloud seeks more orbital data center funding shortly after unicorn status",
+      "summary": "<figure><img alt=\"\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"574\" src=\"https://i0.wp.com/spacenews.com/wp-content/uploads/2026/05/Philip-ODC-SN-scaled.png?fit=1024%2C574&amp;ssl=1\" width=\"1024\" /></figure>\n<p>Starcloud is looking to raise at least $200 million in a deal that would double the two-year-old orbital data center startup’s valuation to about $2.2 billion, a source close to the situation confirmed.</p>\n<p>The post <a href=\"https://spacenews.com/starcl",
+      "link": "https://spacenews.com/starcloud-seeks-more-orbital-data-center-funding-shortly-after-unicorn-status/",
+      "published": "Fri, 01 May 2026 12:57:48 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Live coverage: SpaceX launches South Korean Earth observation satellite, plus 44 more payloads on midnight Falcon 9 rideshare mission",
+      "summary": "The CAS500-2 mission lifted off from pad 4E at Vandenberg Space Force Base at 12 a.m. PDT (3 a.m. EDT / 0700 UTC). The Korea Aerospace Industries’ Compact Advanced Satellite 500 (CAS500) satellite will be the first to deploy about an hour after liftoff. <a class=\"mh-excerpt-more\" href=\"https://spaceflightnow.com/2026/05/02/live-coverage-spacex-to-launch-south-korean-earth-observation-satellite-44-more-payloads-on-overnight-falcon-9-rideshare-mission/\" title=\"Live coverage: SpaceX launches South ",
+      "link": "https://spaceflightnow.com/2026/05/02/live-coverage-spacex-to-launch-south-korean-earth-observation-satellite-44-more-payloads-on-overnight-falcon-9-rideshare-mission/",
+      "published": "Sat, 02 May 2026 19:59:11 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "SpaceX marks May Day, National Space Day with Starlink mission on a Falcon 9 rocket from Cape Canaveral",
+      "summary": "The Starlink 10-38 mission saw SpaceX deploy 29 broadband internet satellites into low Earth orbit. Liftoff from pad 40 at Cape Canaveral Space Force Station happened at 2:06:10 p.m. EDT (1806:10 UTC). <a class=\"mh-excerpt-more\" href=\"https://spaceflightnow.com/2026/05/01/live-coverage-spacex-marks-may-day-with-starlink-mission-on-a-falcon-9-rocket-from-cape-canaveral/\" title=\"SpaceX marks May Day, National Space Day with Starlink mission on a Falcon 9 rocket from Cape Canaveral\"></a>",
+      "link": "https://spaceflightnow.com/2026/05/01/live-coverage-spacex-marks-may-day-with-starlink-mission-on-a-falcon-9-rocket-from-cape-canaveral/",
+      "published": "Fri, 01 May 2026 11:57:18 +0000",
+      "source_type": "rss"
+    }
+  ]
+}

@@ -1,0 +1,140 @@
+{
+  "axis": "ECOSYSTEMS_BIODIVERSITY_REVIEW",
+  "fetched_at": "2026-03-12T18:25:45.323112+00:00",
+  "smart_query": "\"Protected areas impact biodiversity positively worldwide\"",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "analysis": {
+    "summary": "Изучаването на екосистемите и биоразнообразието е важно за създаването на устойчива цивилизация. Изследванията показват, че океанското затопляне може да усили микроб, който контролира морските хранителни вещества. Науката открива древен живот на неочаквани места.",
+    "key_developments": [
+      "Ocean warming may supercharge a tiny microbe that controls marine nutrients",
+      "Scientists stunned to find signs of ancient life in a place no one expected"
+    ],
+    "sentiment": "NEUTRAL",
+    "urgency": "MEDIUM",
+    "open_source_momentum": "protontypes/open-sustainable-technology, treflehq/trefle-api, blutjens/awesome-forests",
+    "scientific_frontier": "Universality of Classically Trainable, Quantum-Deployed Boson-Sampling Generative Models, TreeON: Reconstructing 3D Tree Point Clouds from Orthophotos and Heightmaps",
+    "relevance_to_goal": "HIGH"
+  },
+  "sentiment": "NEUTRAL",
+  "urgency": "MEDIUM",
+  "summary": "Изучаването на екосистемите и биоразнообразието е важно за създаването на устойчива цивилизация. Изследванията показват, че океанското затопляне може да усили микроб, който контролира морските хранителни вещества. Науката открива древен живот на неочаквани места.",
+  "key_developments": [
+    "Ocean warming may supercharge a tiny microbe that controls marine nutrients",
+    "Scientists stunned to find signs of ancient life in a place no one expected"
+  ],
+  "open_source_momentum": "protontypes/open-sustainable-technology, treflehq/trefle-api, blutjens/awesome-forests",
+  "scientific_frontier": "Universality of Classically Trainable, Quantum-Deployed Boson-Sampling Generative Models, TreeON: Reconstructing 3D Tree Point Clouds from Orthophotos and Heightmaps",
+  "github_repos": [
+    {
+      "title": "protontypes/open-sustainable-technology",
+      "snippet": "A directory and analysis of the open source ecosystem in the areas of climate change, sustainable energy, biodiversity and natural resources.  https://docs.getgrist.com/gSscJkc5Rb1R/OpenSustaintech",
+      "stars": 2458,
+      "url": "https://github.com/protontypes/open-sustainable-technology",
+      "updated": "2026-03-11",
+      "source": "GitHub"
+    },
+    {
+      "title": "treflehq/trefle-api",
+      "snippet": "🍀 Trefle is a botanical JSON REST API for plants species, allowing you to search and query over all the registered species, and build the next gardening apps and farming robots.",
+      "stars": 567,
+      "url": "https://github.com/treflehq/trefle-api",
+      "updated": "2026-03-08",
+      "source": "GitHub"
+    },
+    {
+      "title": "blutjens/awesome-forests",
+      "snippet": "🌳 A curated list of ground-truth forest datasets for the machine learning and forestry community.",
+      "stars": 358,
+      "url": "https://github.com/blutjens/awesome-forests",
+      "updated": "2026-02-21",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Universality of Classically Trainable, Quantum-Deployed Boson-Sampling Generative Models",
+      "snippet": "Recent work on the instantaneous quantum polynomial-time (IQP) quantum-circuit Born machine (QCBM) highlights a promising paradigm for generative modeling: train classically, deploy quantumly. In this setting, the training objective can be evaluated efficiently on a classical computer, while samplin",
+      "url": "https://arxiv.org/abs/2603.11014v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "TreeON: Reconstructing 3D Tree Point Clouds from Orthophotos and Heightmaps",
+      "snippet": "We present TreeON, a novel neural-based framework for reconstructing detailed 3D tree point clouds from sparse top-down geodata, using only a single orthophoto and its corresponding Digital Surface Model (DSM). Our method introduces a new training supervision strategy that combines both geometric su",
+      "url": "https://arxiv.org/abs/2603.10996v1",
+      "source": "arXiv"
+    }
+  ],
+  "youtube_transcripts": [],
+  "podcast": "In this episode, we consider a creature we often don’t think much about—the snail. And not just snails, but their sex lives. Which, as it turns out, is epic. There is persuasion and subterfuge, spaghetti penises and co-copulation. And this very surprising habit—erm kink—of making tiny arrows (actually!) and stabbing each other with them. Known as a “love dart,” these limestone daggers aren’t just  | In this episode, first aired in 2014, we examine three very different kinds of black boxes—spaces where we know what’s going in, we know what’s coming out, but can’t see what happens in-between.\nFrom the darkest parts of metamorphosis to a sixty-year-old secret among magicians, and the nature of consciousness itself, we shine some light on three questions. But for each, we contend with an answerle",
+  "youtube_videos": [
+    {
+      "title": "YouTube:yJX1Te0jey0",
+      "video_id": "yJX1Te0jey0",
+      "url": "https://www.youtube.com/watch?v=yJX1Te0jey0",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:Poq3NbpMGZI",
+      "video_id": "Poq3NbpMGZI",
+      "url": "https://www.youtube.com/watch?v=Poq3NbpMGZI",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:g2cAVcgHjic",
+      "video_id": "g2cAVcgHjic",
+      "url": "https://www.youtube.com/watch?v=g2cAVcgHjic",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:HQnwI0Q1Ouc",
+      "video_id": "HQnwI0Q1Ouc",
+      "url": "https://www.youtube.com/watch?v=HQnwI0Q1Ouc",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:vcUCPrwH_yE",
+      "video_id": "vcUCPrwH_yE",
+      "url": "https://www.youtube.com/watch?v=vcUCPrwH_yE",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:RyJxrm-ADnA",
+      "video_id": "RyJxrm-ADnA",
+      "url": "https://www.youtube.com/watch?v=RyJxrm-ADnA",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:MqnqRhXtmR8",
+      "video_id": "MqnqRhXtmR8",
+      "url": "https://www.youtube.com/watch?v=MqnqRhXtmR8",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:dJGaHlk-uXY",
+      "video_id": "dJGaHlk-uXY",
+      "url": "https://www.youtube.com/watch?v=dJGaHlk-uXY",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:4gvEuxibg9g",
+      "video_id": "4gvEuxibg9g",
+      "url": "https://www.youtube.com/watch?v=4gvEuxibg9g",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:8CFPKh9ri-c",
+      "video_id": "8CFPKh9ri-c",
+      "url": "https://www.youtube.com/watch?v=8CFPKh9ri-c",
+      "source": "YouTube"
+    }
+  ]
+}

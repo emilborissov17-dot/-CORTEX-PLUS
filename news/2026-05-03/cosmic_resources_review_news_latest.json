@@ -1,0 +1,37 @@
+{
+  "axis": "COSMIC_RESOURCES_REVIEW",
+  "fetched_at": "2026-05-03T09:07:46.118582+00:00",
+  "smart_query": "asteroid mining space resources",
+  "sources_count": {
+    "wiki": 0,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [],
+  "gdelt": [],
+  "github_repos": [],
+  "arxiv_papers": [
+    {
+      "title": "Shape and spin axis determination of the Tianwen-2 target asteroid (469219) Kamo'oalewa from lightcurve inversion",
+      "snippet": "Near-Earth asteroid (469219) Kamo'oalewa is an Earth quasi-satellite, temporarily trapped in a 1:1 orbital resonance with our planet. Despite its dynamical relevance and the hypothesis that it may be a lunar ejecta fragment, its physical properties are still poorly constrained. In particular, no rel",
+      "url": "https://arxiv.org/abs/2604.26734v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Euclid: Asteroid rotation periods from the Euclid Ecliptic Survey",
+      "snippet": "The Euclid Ecliptic Survey was conducted during the calibration phase of the mission, 23-31 December 2023, as a campaign to study Solar System objects. We used data from this survey to analyse more than 23 000 appeareances of 2321 known asteroids. Due to their high apparent angular motion relative t",
+      "url": "https://arxiv.org/abs/2604.25652v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[Antibiotic Apocalypse] Doctor and special correspondent Avir Mitra takes Executive Editor Soren Wheeler, plus a live studio audience, on a journey from the operating room to inside the body to the farm to the sewers and back again—searching for answers to an alarming threat to humanity’s existence as we know it: antibiotic resistance in bacteria. \n This live show, performed in New York City and also in Little Rock, Arka",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

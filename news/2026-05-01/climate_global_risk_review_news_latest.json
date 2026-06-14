@@ -1,0 +1,57 @@
+{
+  "axis": "CLIMATE_GLOBAL_RISK_REVIEW",
+  "fetched_at": "2026-05-01T13:10:04.366560+00:00",
+  "smart_query": "climate change CO2 emissions",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "Global forest loss slows but El Niño fires could threaten progress",
+      "snippet": "The loss of tropical rainforests eased last year, according to new analysis, but scientists warn they are still disappearing rapidly.",
+      "url": "https://www.bbc.com/news/articles/c78q5pygn66o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "£20m mystery gift buys London Zoo new hospital where you can watch vets work",
+      "snippet": "Visitors will be able to watch live veterinary procedures inside a state-of-the-art new animal hospital.",
+      "url": "https://www.bbc.com/news/articles/cpqpj7wy4x4o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "UK's biggest ever environmental pollution claim reaches High Court",
+      "snippet": "One of the UK's largest chicken producers and a water company accused of polluting three rivers including the River Wye",
+      "url": "https://www.bbc.com/news/articles/cqxl5rjw58po?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [],
+  "arxiv_papers": [
+    {
+      "title": "Quantifying the safe operating space for the Amazon rainforest under climate change and deforestation",
+      "snippet": "The Amazon rainforest is considered one of the core tipping elements in the climate system with a potential tipping point from rainforest to savannah between 2 and 6 °C of global warming. However, ongoing deforestation constitutes an additional major threat to the Amazon rainforest that acts simulta",
+      "url": "https://arxiv.org/abs/2604.27681v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Multiscale Decomposition Reveals Predictable Interannual Variability and Climate Trends in Antarctic Sea Ice Loss",
+      "snippet": "Antarctic sea ice has undergone unprecedented changes in recent years, raising questions about how this key geophysical system is responding to climate change. Decades of slow expansion were replaced by a precipitous decline in 2014-2017, a subsequent apparent recovery, and a renewed collapse from 2",
+      "url": "https://arxiv.org/abs/2604.26594v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[A cheat sheet for accelerating clean energy | Kimiko Hirata] After the Fukushima disaster shut down Japan's nuclear reactors, the coal industry rushed in to fill the energy gap. As climate advocate Kimiko Hirata watched dozens of new coal plant proposals quietly surface across the country — each one locking in decades of future emissions — she resolved to make them impossible to ignore. She shares how a small, scrappy civil society movement took on a fossil",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

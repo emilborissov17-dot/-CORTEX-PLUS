@@ -1,0 +1,146 @@
+{
+  "axis": "ECOSYSTEMS_BIODIVERSITY_REVIEW",
+  "domain": "planet",
+  "timestamp": "2026-05-16T18:54:00.343763+00:00",
+  "sources_count": 11,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] Deforestation & Biodiversity Loss: Why Forests Matter More ...GCSE Biology - How Humans Reduce Biodiversity (2026/27 exams)Deforestation's Deadly Impact: Why Our Planet's Biodiversity ...2026's Alarming Deforestation Surge: Hotspots Losing Forests ...Forests are running out of time. How can we save them?Resources | Videos | Halting deforestation, degradation and ...The State of Forests in 2025 and Why it Matters for 2026",
+      "summary": "Forests are the Earth's lungs. They are vast ancient ecosystems teaming with life, from towering trees to tiny insects, forests are home to a diverse array of species, but our forests are under threat. Deforestation, driven by human activities is rapidly clearing these vital landscapes. As forests disappear, so too does the incredible biodiversity they harbor. Forests are not just collections of trees, they are intricate webs of life. Each species from the smallest plant to the largest predator plays a crucial role in maintaining the delicate balance of the ecosystem. When we cut down forests, we disrupt these intricate relationships and put entire ecosystems at risk. The loss of biodiversity through deforestation is a global crisis that demands our attention. Biodiversity is the variety o",
+      "link": "https://www.youtube.com/watch?v=JoMp7jHrrqA",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "JoMp7jHrrqA",
+      "transcript_method": "whisper",
+      "transcript_chars": 4454,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] GCSE Biology - How Humans Reduce Biodiversity (2026/27 exams)Deforestation's Deadly Impact: Why Our Planet's Biodiversity ...2026's Alarming Deforestation Surge: Hotspots Losing Forests ...Forests are running out of time. How can we save them?Resources | Videos | Halting deforestation, degradation and ...The State of Forests in 2025 and Why it Matters for 2026",
+      "summary": "By a diversity is the variety of different species on Earth, or within an ecosystem. So if we were to compare your average field to a rainforest, the rainforest has far higher biodiversity, because there's a much wider range of different species there. From the animals and plants to the bacteria and fungi. Now if you're like me, you might feel that having a high biodiversity is a good thing in its own right, because having lots of species on Earth is nice. However it actually has some very important functions as well. One of these is to make ecosystem stable. If there are loads of different species in an ecosystem, then even if something happens to one of them, like they catch disease and go extinct, the ecosystem itself will be okay, because there are so many other relationships that the ",
+      "link": "https://www.youtube.com/watch?v=cickRHnPKvc",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "cickRHnPKvc",
+      "transcript_method": "whisper",
+      "transcript_chars": 3996,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Deforestation's Deadly Impact: Why Our Planet's Biodiversity ...",
+      "summary": "as habitats are destroyed, countless species are pushed to the brink of extinction. The Amazon's astonishing biodiversity, its greatest treasure, may be disappearing before we even know what we're losing. Scientists estimate that thousands of species could vanish every year due to deforestation, many of which haven't even been discovered yet.",
+      "link": "https://www.youtube.com/watch?v=grJ5TqEwzng",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "grJ5TqEwzng",
+      "transcript_method": "whisper",
+      "transcript_chars": 344,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "Анализ на ECOSYSTEMS_BIODIVERSITY_REVIEW — данни получени но LLM грешка",
+    "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: 402 Client Error: Payment Required for url: https://",
+    "severity": "UNKNOWN",
+    "leverage_points": [],
+    "proposed_actions": [],
+    "evidence": [
+      "Global",
+      "Inside IUCN",
+      "DG Speech Node"
+    ],
+    "generalization": "",
+    "summary": "- Global: <span class=\"field field--name-title field--type-string field--label-hidden\">Global</span>\n<span class=\"field field--name-uid field--type-entity-reference field--label-hidden\"><span>integrat",
+    "risk_level": "UNKNOWN",
+    "trend": "UNKNOWN",
+    "llm_raw": ""
+  },
+  "raw_items": [
+    {
+      "title": "Global",
+      "summary": "<span class=\"field field--name-title field--type-string field--label-hidden\">Global</span>\n<span class=\"field field--name-uid field--type-entity-reference field--label-hidden\"><span>integrations</span></span>\n<span class=\"field field--name-created field--type-created field--label-hidden\"><time class=\"datetime\" datetime=\"2022-02-21T08:14:38+01:00\" title=\"Monday, February 21, 2022 - 08:14\">Mon, 02/21/2022 - 08:14</time>\n</span>\n<span class=\"a2a_kit a2a_kit_size_20 addtoany_list\"><a class=\"a2a_butt",
+      "link": "https://iucn.org/our-work/region/global",
+      "published": "Mon, 21 Feb 2022 07:14:38 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Inside IUCN",
+      "summary": "<span class=\"field field--name-title field--type-string field--label-hidden\">Inside IUCN</span>\n<span class=\"field field--name-uid field--type-entity-reference field--label-hidden\"><span>review.sm</span></span>\n<span class=\"field field--name-created field--type-created field--label-hidden\"><time class=\"datetime\" datetime=\"2021-11-18T11:17:35+01:00\" title=\"Thursday, November 18, 2021 - 11:17\">Thu, 11/18/2021 - 11:17</time>\n</span>\n\n\n<span class=\"a2a_kit a2a_kit_size_20 addtoany_list\"><a class=\"a2",
+      "link": "https://iucn.org/content/inside-iucn",
+      "published": "Thu, 18 Nov 2021 10:17:35 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "DG Speech Node",
+      "summary": "<span class=\"field field--name-title field--type-string field--label-hidden\">DG Speech Node</span>\n<span class=\"field field--name-uid field--type-entity-reference field--label-hidden\"><span>review.webtf</span></span>\n<span class=\"field field--name-created field--type-created field--label-hidden\"><time class=\"datetime\" datetime=\"2021-11-18T10:56:51+01:00\" title=\"Thursday, November 18, 2021 - 10:56\">Thu, 11/18/2021 - 10:56</time>\n</span>\n\n\n<span class=\"a2a_kit a2a_kit_size_20 addtoany_list\"><a cla",
+      "link": "https://iucn.org/content/dg-speech-node",
+      "published": "Thu, 18 Nov 2021 09:56:51 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "It is time for a Global Wildlife Health Authority",
+      "summary": "<span class=\"field field--name-title field--type-string field--label-hidden\">It is time for a Global Wildlife Health Authority</span>\n<span class=\"field field--name-uid field--type-entity-reference field--label-hidden\"><span>integrations</span></span>\n<span class=\"field field--name-created field--type-created field--label-hidden\"><time class=\"datetime\" datetime=\"2021-10-20T09:48:06+02:00\" title=\"Wednesday, October 20, 2021 - 09:48\">Wed, 10/20/2021 - 09:48</time>\n</span>\n\n\n<span class=\"a2a_kit a2",
+      "link": "https://iucn.org/content/it-time-global-wildlife-health-authority",
+      "published": "Wed, 20 Oct 2021 07:48:06 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Giant squid discovery uncovers a hidden deep-sea world off Australia",
+      "summary": "Scientists exploring deep underwater canyons off the coast of Western Australia uncovered a hidden world packed with bizarre and elusive marine life — including signs of the legendary giant squid. By analyzing traces of DNA floating in seawater from depths exceeding 4 kilometers, researchers identified 226 species ranging from deep-diving whales to strange fish rarely or never seen in the region before. Some of the creatures may even be unknown to science.",
+      "link": "https://www.sciencedaily.com/releases/2026/05/260513221807.htm",
+      "published": "Thu, 14 May 2026 08:46:07 EDT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Deep diving fur seals experience delayed heart surges after returning to land",
+      "summary": "Fur seals may look like they’re simply resting after exhausting hunting trips at sea, but their bodies are secretly working overtime. Scientists discovered that hours after returning to land, the seals’ heart rates suddenly surge — sometimes doubling — as they recover from the intense physical stress of deep diving. The findings suggest that seals postpone much of their recovery until they’re safely ashore, likely flushing out lactic acid and rebuilding oxygen stores after days of nonstop diving",
+      "link": "https://www.sciencedaily.com/releases/2026/05/260508003119.htm",
+      "published": "Sat, 09 May 2026 07:35:27 EDT",
+      "source_type": "rss"
+    },
+    {
+      "title": "240-million-year-old giant “sand creeper” found hidden in retaining wall",
+      "summary": "A forgotten fossil hidden inside a garden wall has turned out to be one of Australia’s most remarkable prehistoric discoveries. Scientists have now identified the 240-million-year-old amphibian, Arenaerpeton supinatus, revealing an almost perfectly preserved skeleton—complete with rare traces of skin. This ancient river predator, about 1.2 meters long, looked somewhat like a giant salamander but was bulkier and armed with fearsome fang-like teeth.",
+      "link": "https://www.sciencedaily.com/releases/2026/05/260504154028.htm",
+      "published": "Wed, 06 May 2026 02:47:27 EDT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Scientists think they finally know why Neanderthals vanished",
+      "summary": "A new study suggests Neanderthals didn’t go extinct simply because of climate change or competition with Homo sapiens. Instead, the key difference may have been social connectivity—Homo sapiens formed stronger, more flexible networks that helped them survive environmental shocks. Neanderthals had connections too, but they were more fragile and regionally limited. This made them less resilient as conditions became increasingly unpredictable.",
+      "link": "https://www.sciencedaily.com/releases/2026/04/260427050609.htm",
+      "published": "Tue, 28 Apr 2026 04:42:03 EDT",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] Deforestation & Biodiversity Loss: Why Forests Matter More ...GCSE Biology - How Humans Reduce Biodiversity (2026/27 exams)Deforestation's Deadly Impact: Why Our Planet's Biodiversity ...2026's Alarming Deforestation Surge: Hotspots Losing Forests ...Forests are running out of time. How can we save them?Resources | Videos | Halting deforestation, degradation and ...The State of Forests in 2025 and Why it Matters for 2026",
+      "summary": "Forests are the Earth's lungs. They are vast ancient ecosystems teaming with life, from towering trees to tiny insects, forests are home to a diverse array of species, but our forests are under threat. Deforestation, driven by human activities is rapidly clearing these vital landscapes. As forests disappear, so too does the incredible biodiversity they harbor. Forests are not just collections of trees, they are intricate webs of life. Each species from the smallest plant to the largest predator plays a crucial role in maintaining the delicate balance of the ecosystem. When we cut down forests, we disrupt these intricate relationships and put entire ecosystems at risk. The loss of biodiversity through deforestation is a global crisis that demands our attention. Biodiversity is the variety o",
+      "link": "https://www.youtube.com/watch?v=JoMp7jHrrqA",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "JoMp7jHrrqA",
+      "transcript_method": "whisper",
+      "transcript_chars": 4454,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] GCSE Biology - How Humans Reduce Biodiversity (2026/27 exams)Deforestation's Deadly Impact: Why Our Planet's Biodiversity ...2026's Alarming Deforestation Surge: Hotspots Losing Forests ...Forests are running out of time. How can we save them?Resources | Videos | Halting deforestation, degradation and ...The State of Forests in 2025 and Why it Matters for 2026",
+      "summary": "By a diversity is the variety of different species on Earth, or within an ecosystem. So if we were to compare your average field to a rainforest, the rainforest has far higher biodiversity, because there's a much wider range of different species there. From the animals and plants to the bacteria and fungi. Now if you're like me, you might feel that having a high biodiversity is a good thing in its own right, because having lots of species on Earth is nice. However it actually has some very important functions as well. One of these is to make ecosystem stable. If there are loads of different species in an ecosystem, then even if something happens to one of them, like they catch disease and go extinct, the ecosystem itself will be okay, because there are so many other relationships that the ",
+      "link": "https://www.youtube.com/watch?v=cickRHnPKvc",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "cickRHnPKvc",
+      "transcript_method": "whisper",
+      "transcript_chars": 3996,
+      "has_full_transcript": true
+    }
+  ]
+}

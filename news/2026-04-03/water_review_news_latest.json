@@ -1,0 +1,90 @@
+{
+  "axis": "WATER_REVIEW",
+  "fetched_at": "2026-04-03T14:12:47.167330+00:00",
+  "smart_query": "water scarcity drinking water",
+  "sources_count": {
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 0,
+    "github": 3,
+    "web_search": 5
+  },
+  "rss": [
+    {
+      "title": "EPA moves to designate microplastics and pharmaceuticals as contaminants in drinking water",
+      "snippet": "Proposal, a win for RFK Jr’s Maha movement, is a ‘first step’ toward tackling plastic pollution, advocates sayThe Environmental Protection Agency (EPA) proposed on Thursday to include microplastics and pharmaceuticals on a list of contaminants in drinking water for the first time, a step that could ",
+      "url": "https://www.theguardian.com/environment/2026/apr/03/epa-microplastics-pharmaceuticals-water",
+      "source": "RSS"
+    },
+    {
+      "title": "Thames Water ‘close to deal that would spare it new Ofwat fines until 2030’",
+      "snippet": "Offer reportedly put forward by creditors hoping to save struggling firm from being renationalised temporarilyBusiness live – latest updatesThames Water is said to be close to a deal with its regulator that would allow the company to avoid new fines for four years, as long as it commits to investing",
+      "url": "https://www.theguardian.com/business/2026/apr/02/thames-water-close-to-deal-that-would-spare-it-ofwat-fines-until-2030",
+      "source": "RSS"
+    },
+    {
+      "title": "We’ve been coming to this waterhole for 30 years. Like the creek we’ve been rearranged – ravaged by time but still shining | Jessie Cole",
+      "snippet": "When we strip off, it is all there on our bodies: scars mixed in with the ordinary wear and tear. It’s bolstering – this evidence of life livedMost waterholes in the northern rivers of New South Wales are hidden from view. Creeks snake through private land, unseen from the road. To find the path to ",
+      "url": "https://www.theguardian.com/commentisfree/2026/mar/29/australia-waterhole-ravaged-by-time-still-shining",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "wilsto/pool-monitor-card",
+      "snippet": "Keep your swimming pool safe and crystal clear by monitoring up to 25 water chemistry parameters at a glance.",
+      "stars": 116,
+      "url": "https://github.com/wilsto/pool-monitor-card",
+      "updated": "2026-03-29",
+      "source": "GitHub"
+    },
+    {
+      "title": "DOI-USGS/EGRET",
+      "snippet": "An R-package for the analysis of long-term changes in water quality and streamflow, including the water-quality method Weighted Regressions on Time, Discharge, and Season (WRTDS). https://doi-usgs.git",
+      "stars": 97,
+      "url": "https://github.com/DOI-USGS/EGRET",
+      "updated": "2026-03-31",
+      "source": "GitHub"
+    },
+    {
+      "title": "KnowFlow/KnowFlow_AWM",
+      "snippet": "KnowFlow Automatic Water Monitoring device is an open sourced tool enable everyone having access to first hand water quality data with low cost.",
+      "stars": 96,
+      "url": "https://github.com/KnowFlow/KnowFlow_AWM",
+      "updated": "2026-04-02",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [],
+  "web_search": [
+    {
+      "title": "Water scarcity - UNICEF",
+      "url": "https://www.unicef.org/wash/water-scarcity",
+      "source": "WEB"
+    },
+    {
+      "title": "Water scarcity | Description, Mechanisms, Effects, &amp; Solutions | Britannica",
+      "url": "https://www.britannica.com/topic/water-scarcity",
+      "source": "WEB"
+    },
+    {
+      "title": "World enters era of &#x27;global water bankruptcy&#x27; | UN News",
+      "url": "https://news.un.org/en/story/2026/01/1166800",
+      "source": "WEB"
+    },
+    {
+      "title": "Water Shortage Crisis: Are We Running Out of Fresh Water? Global Data ...",
+      "url": "https://www.sciencetimes.com/articles/61285/20260209/water-shortage-crisis-are-we-running-out-fresh-water-global-data-reveals-truth.htm",
+      "source": "WEB"
+    },
+    {
+      "title": "Water Scarcity: Causes, Impacts, and Solutions | World Wildlife Fund",
+      "url": "https://www.worldwildlife.org/our-work/freshwater/water-scarcity/",
+      "source": "WEB"
+    }
+  ],
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL"
+}

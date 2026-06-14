@@ -1,0 +1,370 @@
+=== OLD VERSION ===
+# cortex4.py
+# Cortex 4 – Fresco агент с локални файлове (без истински web),
+# фокус: принципи + авто-резюмета от Designing the Future
+
+import os
+import textwrap
+
+# === НАСТРОЙКИ НА ПЪТИЩАТА (С ПАПКА AGI) ===
+
+# Базова папка на проекта CORTEX++
+PROJECT_DIR = r"C:\Users\emilb\Desktop\AGI\CORTEX++"
+
+# Папка с Fresco знание (книжката Designing the Future – работен пакет)
+FRESCO_DF_DIR = os.path.join(
+    PROJECT_DIR,
+    "knowledge",
+    "fresco_designing_future"
+)
+
+RAW_DIR = os.path.join(FRESCO_DF_DIR, "01_raw")
+SUMMARY_BG_DIR = os.path.join(FRESCO_DF_DIR, "02_summary_bg")
+PRINCIPLES_FILE = os.path.join(FRESCO_DF_DIR, "principles_ch01_03_bg.txt")
+
+# (по-късно можем да вържем history/, config/ и др.)
+# HISTORY_DIR = os.path.join(PROJECT_DIR, "history")
+
+
+# === ПОМОЩНИ ФУНКЦИИ ===
+
+def print_heading(text):
+    print()
+    print("=" * 80)
+    print(text)
+    print("=" * 80)
+    print()
+
+
+def load_principles(path):
+    """Чете принципите от текстов файл (ако съществува)."""
+    if not os.path.exists(path):
+        print(f"ВНИМАНИЕ: Няма файл с принципи: {path}")
+        return None
+
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            content = f.read().strip()
+        if not content:
+            print(f"ВНИМАНИЕ: Файлът с принципи е празен: {path}")
+            return None
+        return content
+    except Exception as e:
+        print(f"Грешка при четене на принципите: {e}")
+        return None
+
+
+def pick_random_principle_text(all_text):
+    """
+    Много прост избор на „случаен принцип“:
+    разделяме по празни редове или тирета и вземаме първото смислено парче.
+    (Може да го направим по-умен по-късно.)
+    """
+    if not all_text:
+        return None
+
+    # опит: разделяне по редове и търсене на първия „пълен“ ред / блок
+    lines = [l.strip() for l in all_text.splitlines()]
+    # филтрираме празните
+    lines = [l for l in lines if l]
+
+    if not lines:
+        return None
+
+    # засега просто взимаме първия непразен ред
+    return lines[0]
+
+
+def fake_ollama_summary(text):
+    """
+    ВРЕМЕННА ФУНКЦИЯ:
+    Вместо истинско извикване към Ollama, правим просто „резюме“ –
+    вземаме първите N знака и ги форматираме.
+    Когато решиш, можем да го вържем към истински модел.
+    """
+    if not text:
+        return "Няма текст за резюме."
+
+    # Вземаме първите ~800 знака и слагаме три точки
+    snippet = text[:800]
+    if len(text) > 800:
+        snippet += "..."
+
+    wrapped = textwrap.fill(snippet, width=80)
+    summary = (
+        "АВТОМАТИЧНО РЕЗЮМЕ (fake, без модел):\n"
+        "-------------------------------------\n"
+        f"{wrapped}\n"
+    )
+    return summary
+
+
+def summarize_raw_folder(raw_dir, summary_dir):
+    """
+    Обхожда всички .txt файлове в 01_raw и за всеки създава
+    *_auto_summary_bg.txt в 02_summary_bg (с fake резюме).
+    """
+    if not os.path.exists(raw_dir):
+        print()
+        print(f"Папката с оригинални глави не съществува: {raw_dir}")
+        return
+
+    if not os.path.exists(summary_dir):
+        os.makedirs(summary_dir, exist_ok=True)
+
+    files = [f for f in os.listdir(raw_dir) if f.lower().endswith(".txt")]
+    if not files:
+        print()
+        print(f"Няма .txt файлове в {raw_dir}")
+        return
+
+    print()
+    print(f"Намерени са {len(files)} сурови файла в 01_raw.")
+    for name in files:
+        raw_path = os.path.join(raw_dir, name)
+
+        # изходно име: basename + "_auto_summary_bg.txt"
+        base, _ = os.path.splitext(name)
+        out_name = f"{base}_auto_summary_bg.txt"
+        out_path = os.path.join(summary_dir, out_name)
+
+        print(f"Обработвам: {name} -> {out_name} ...")
+
+        try:
+            with open(raw_path, "r", encoding="utf-8") as f:
+                text = f.read()
+
+            summary = fake_ollama_summary(text)
+
+            with open(out_path, "w", encoding="utf-8") as f_out:
+                f_out.write(summary)
+
+        except Exception as e:
+            print(f"Грешка при обработка на {name}: {e}")
+
+    print()
+    print("Готово с автоматичните резюмета в 02_summary_bg.")
+
+
+# === ГЛАВНА ФУНКЦИЯ ===
+
+def main():
+    print("Cortex 4 – Fresco агент с локални файлове (AGI път) + принципи.\n")
+
+    # 1) Зареждаме принципите
+    print("1) Зареждам принципите от Jacque Fresco (глави 1–3)...")
+    all_principles = load_principles(PRINCIPLES_FILE)
+
+    if all_principles is None:
+        print("Няма заредени принципи.")
+        random_principle = None
+    else:
+        random_principle = pick_random_principle_text(all_principles)
+
+    print("\nСЛУЧАЕН ПРИНЦИП ЗА ТАЗИ СЕСИЯ:")
+    if random_principle:
+        print(random_principle)
+    else:
+        print("Няма налични принципи или не успях да извадя отделен принцип.")
+
+    # 2) Автоматични резюмета за суровите глави
+    print("\n2) Генерирам автоматични резюмета за суровите глави в 01_raw...")
+    summarize_raw_folder(RAW_DIR, SUMMARY_BG_DIR)
+
+    # Финален отчет
+    print("\nКрай на Cortex 4.")
+    print("Оригинални глави: ", RAW_DIR)
+    print("Ръчни/авто резюмета (твои + auto): ", SUMMARY_BG_DIR)
+    print("Файл с принципи: ", PRINCIPLES_FILE)
+
+
+if __name__ == "__main__":
+    main()
+
+
+=== NEW VERSION ===
+# AUTO-GENERATED VARIANT BY code_manager.py
+# Original: cortex4.py
+# Created: 2026-01-25 19:10:37
+
+# cortex4.py
+# Cortex 4 – Fresco агент с локални файлове (без истински web),
+# фокус: принципи + авто-резюмета от Designing the Future
+
+import os
+import textwrap
+
+# === НАСТРОЙКИ НА ПЪТИЩАТА (С ПАПКА AGI) ===
+
+# Базова папка на проекта CORTEX++
+PROJECT_DIR = r"C:\Users\emilb\Desktop\AGI\CORTEX++"
+
+# Папка с Fresco знание (книжката Designing the Future – работен пакет)
+FRESCO_DF_DIR = os.path.join(
+    PROJECT_DIR,
+    "knowledge",
+    "fresco_designing_future"
+)
+
+RAW_DIR = os.path.join(FRESCO_DF_DIR, "01_raw")
+SUMMARY_BG_DIR = os.path.join(FRESCO_DF_DIR, "02_summary_bg")
+PRINCIPLES_FILE = os.path.join(FRESCO_DF_DIR, "principles_ch01_03_bg.txt")
+
+# (по-късно можем да вържем history/, config/ и др.)
+# HISTORY_DIR = os.path.join(PROJECT_DIR, "history")
+
+
+# === ПОМОЩНИ ФУНКЦИИ ===
+
+def print_heading(text):
+    print()
+    print("=" * 80)
+    print(text)
+    print("=" * 80)
+    print()
+
+
+def load_principles(path):
+    """Чете принципите от текстов файл (ако съществува)."""
+    if not os.path.exists(path):
+        print(f"ВНИМАНИЕ: Няма файл с принципи: {path}")
+        return None
+
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            content = f.read().strip()
+        if not content:
+            print(f"ВНИМАНИЕ: Файлът с принципи е празен: {path}")
+            return None
+        return content
+    except Exception as e:
+        print(f"Грешка при четене на принципите: {e}")
+        return None
+
+
+def pick_random_principle_text(all_text):
+    """
+    Много прост избор на „случаен принцип“:
+    разделяме по празни редове или тирета и вземаме първото смислено парче.
+    (Може да го направим по-умен по-късно.)
+    """
+    if not all_text:
+        return None
+
+    # опит: разделяне по редове и търсене на първия „пълен“ ред / блок
+    lines = [l.strip() for l in all_text.splitlines()]
+    # филтрираме празните
+    lines = [l for l in lines if l]
+
+    if not lines:
+        return None
+
+    # засега просто взимаме първия непразен ред
+    return lines[0]
+
+
+def fake_ollama_summary(text):
+    """
+    ВРЕМЕННА ФУНКЦИЯ:
+    Вместо истинско извикване към Ollama, правим просто „резюме“ –
+    вземаме първите N знака и ги форматираме.
+    Когато решиш, можем да го вържем към истински модел.
+    """
+    if not text:
+        return "Няма текст за резюме."
+
+    # Вземаме първите ~800 знака и слагаме три точки
+    snippet = text[:800]
+    if len(text) > 800:
+        snippet += "..."
+
+    wrapped = textwrap.fill(snippet, width=80)
+    summary = (
+        "АВТОМАТИЧНО РЕЗЮМЕ (fake, без модел):\n"
+        "-------------------------------------\n"
+        f"{wrapped}\n"
+    )
+    return summary
+
+
+def summarize_raw_folder(raw_dir, summary_dir):
+    """
+    Обхожда всички .txt файлове в 01_raw и за всеки създава
+    *_auto_summary_bg.txt в 02_summary_bg (с fake резюме).
+    """
+    if not os.path.exists(raw_dir):
+        print()
+        print(f"Папката с оригинални глави не съществува: {raw_dir}")
+        return
+
+    if not os.path.exists(summary_dir):
+        os.makedirs(summary_dir, exist_ok=True)
+
+    files = [f for f in os.listdir(raw_dir) if f.lower().endswith(".txt")]
+    if not files:
+        print()
+        print(f"Няма .txt файлове в {raw_dir}")
+        return
+
+    print()
+    print(f"Намерени са {len(files)} сурови файла в 01_raw.")
+    for name in files:
+        raw_path = os.path.join(raw_dir, name)
+
+        # изходно име: basename + "_auto_summary_bg.txt"
+        base, _ = os.path.splitext(name)
+        out_name = f"{base}_auto_summary_bg.txt"
+        out_path = os.path.join(summary_dir, out_name)
+
+        print(f"Обработвам: {name} -> {out_name} ...")
+
+        try:
+            with open(raw_path, "r", encoding="utf-8") as f:
+                text = f.read()
+
+            summary = fake_ollama_summary(text)
+
+            with open(out_path, "w", encoding="utf-8") as f_out:
+                f_out.write(summary)
+
+        except Exception as e:
+            print(f"Грешка при обработка на {name}: {e}")
+
+    print()
+    print("Готово с автоматичните резюмета в 02_summary_bg.")
+
+
+# === ГЛАВНА ФУНКЦИЯ ===
+
+def main():
+    print("Cortex 4 – Fresco агент с локални файлове (AGI път) + принципи.\n")
+
+    # 1) Зареждаме принципите
+    print("1) Зареждам принципите от Jacque Fresco (глави 1–3)...")
+    all_principles = load_principles(PRINCIPLES_FILE)
+
+    if all_principles is None:
+        print("Няма заредени принципи.")
+        random_principle = None
+    else:
+        random_principle = pick_random_principle_text(all_principles)
+
+    print("\nСЛУЧАЕН ПРИНЦИП ЗА ТАЗИ СЕСИЯ:")
+    if random_principle:
+        print(random_principle)
+    else:
+        print("Няма налични принципи или не успях да извадя отделен принцип.")
+
+    # 2) Автоматични резюмета за суровите глави
+    print("\n2) Генерирам автоматични резюмета за суровите глави в 01_raw...")
+    summarize_raw_folder(RAW_DIR, SUMMARY_BG_DIR)
+
+    # Финален отчет
+    print("\nКрай на Cortex 4.")
+    print("Оригинални глави: ", RAW_DIR)
+    print("Ръчни/авто резюмета (твои + auto): ", SUMMARY_BG_DIR)
+    print("Файл с принципи: ", PRINCIPLES_FILE)
+
+
+if __name__ == "__main__":
+    main()

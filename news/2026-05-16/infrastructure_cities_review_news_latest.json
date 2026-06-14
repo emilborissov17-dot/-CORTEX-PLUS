@@ -1,0 +1,76 @@
+{
+  "axis": "INFRASTRUCTURE_CITIES_REVIEW",
+  "fetched_at": "2026-05-16T13:35:09.089668+00:00",
+  "smart_query": "cities infrastructure urban development",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 3,
+    "arxiv": 2,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "X pledges quicker action on hate and terror content in the UK",
+      "snippet": "Ofcom said the commitments were of particular importance after recent crimes targeting Jewish communities in the UK.",
+      "url": "https://www.bbc.com/news/articles/clyp9652v18o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Claim, counter-claim and tech's seedy side exposed: Five things we learned in the Musk-Altman trial",
+      "snippet": "As the jury deliberates, this is what we found out during the weeks-long trial with two tech titans at its heart.",
+      "url": "https://www.bbc.com/news/articles/cg7pj8p5mv4o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Inside the secretive and lucrative world of orchid breeding",
+      "snippet": "It can take a decade to bring a new orchid to market, so breeders keep their hi-tech processes secret.",
+      "url": "https://www.bbc.com/news/articles/cly039rr2mgo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [
+    {
+      "title": "Ethiopia Scales Corridor Development to 75 Cities Nationwide - Ministry",
+      "snippet": "Ethiopia Scales Corridor Development to 75 Cities Nationwide - Ministry",
+      "url": "https://allafrica.com/stories/202603130039.html",
+      "source": "allafrica.com"
+    },
+    {
+      "title": "Qazaxıstan mediasında Ümumdünya Şəhərsalma Forumunun 13 - cü sessiyasına hazırlıq geniş işıqlandırılıb",
+      "snippet": "Qazaxıstan mediasında Ümumdünya Şəhərsalma Forumunun 13 - cü sessiyasına hazırlıq geniş işıqlandırılıb",
+      "url": "https://musavat.com/news/qazaxistan-mediasinda-umumdunya-sehersalma-forumunun-13-cu-sessiyasina-hazirliq-genis-isiqlandirilib_1258604.html",
+      "source": "musavat.com"
+    },
+    {
+      "title": "Orașele și viața de noapte în economia urbană non - stop",
+      "snippet": "Orașele și viața de noapte în economia urbană non - stop",
+      "url": "https://www.kanald.ro/orasele-si-viata-de-noapte-in-economia-urbana-non-stop-20526216",
+      "source": "kanald.ro"
+    }
+  ],
+  "github_repos": [],
+  "arxiv_papers": [
+    {
+      "title": "A Critical Pragmatism Approach for Algorithmic Fairness: Lessons from Urban Planning Theory",
+      "snippet": "As data scientists grapple with increasingly complex ethical decisions in machine learning (ML) and data science, the field of algorithmic fairness has offered multiple solutions, from formal mathematical definitions to holistic notions of fairness drawn from various academic disciplines. However, n",
+      "url": "https://arxiv.org/abs/2605.02773v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Urban to Rural Migration in Eastern Europe: Unpacking digital ruralities through TikTok video analysis",
+      "snippet": "Urban to rural migration is a less-researched phenomenon compared to its counterpart: rural to urban migration. In parts of Europe, an increasing number of people living in big urban centers within the country, or moving from other countries decide to relocate to rural areas. In this paper, we exami",
+      "url": "https://arxiv.org/abs/2605.00453v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[The U.S. Public Wants Regulation (or Prohibition) of Expert‑Level and Superhuman AI] Three‑quarters of U.S. adults want strong regulations on AI development, preferring oversight akin to pharmaceuticals rather than industry \"self‑regulation.\"",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

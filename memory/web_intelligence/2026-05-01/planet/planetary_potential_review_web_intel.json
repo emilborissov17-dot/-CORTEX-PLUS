@@ -1,0 +1,139 @@
+{
+  "axis": "PLANETARY_POTENTIAL_REVIEW",
+  "domain": "planet",
+  "timestamp": "2026-05-01T12:10:49.295024+00:00",
+  "sources_count": 11,
+  "rss_count": 4,
+  "ddg_count": 4,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] Planetary Boundaries: Navigating Our Limits - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] Rockström delves into the relationship between planetary boundaries and climate tipping points, emphasizing that the boundaries are scientifically set to avoid triggering these dangerous thresholds.",
+      "link": "https://www.youtube.com/watch?v=tG-hh-gSKFQ",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "tG-hh-gSKFQ",
+      "transcript_method": "description",
+      "transcript_chars": 221,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Johan Rockström: Tipping points and planetary boundaries - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] We need to navigate & be stewards of all the planetary boundaries.We need to #ActNow!Check out the interview with Johan Rockström for the Transformative Urba...",
+      "link": "https://www.youtube.com/watch?v=zMqI0t0ipcg",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "zMqI0t0ipcg",
+      "transcript_method": "description",
+      "transcript_chars": 183,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Official Planetary Health Check 2025 with Johan Rockström - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] The Tipping Points of Climate Change — and Where We Stand | Johan Rockström | TED Bad Idea #11 \"No such thing as planetary boundaries\" with Johan Rockström",
+      "link": "https://www.youtube.com/watch?v=ndPVcg6uSZc",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "ndPVcg6uSZc",
+      "transcript_method": "description",
+      "transcript_chars": 178,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "summary": "- Earth is splitting open beneath the Pacific Northwest, scientists say: For the first time, scientists have watched a subduction zone literally fall apart beneath the ocean floor. Using advanced seismic imaging, they found the Juan de Fuca plate splitting into fragments a\n- Scientists finally expla",
+    "risk_level": "UNKNOWN",
+    "trend": "UNKNOWN",
+    "key_events": [
+      "Earth is splitting open beneath the Pacific Northwest, scientists say",
+      "Scientists finally explain how the Twelve Apostles rose from the ocean",
+      "Hidden ocean heat is creeping toward Antarctica’s fragile ice shelves"
+    ],
+    "insights": [],
+    "youtube_insights": [],
+    "relevance_to_goal": "",
+    "generalization": ""
+  },
+  "raw_items": [
+    {
+      "title": "Earth is splitting open beneath the Pacific Northwest, scientists say",
+      "summary": "For the first time, scientists have watched a subduction zone literally fall apart beneath the ocean floor. Using advanced seismic imaging, they found the Juan de Fuca plate splitting into fragments as it sinks beneath North America. Rather than collapsing all at once, the plate is tearing piece by piece, like a train slowly derailing. The finding helps explain ancient plate fragments and could refine how scientists understand earthquake behavior.",
+      "link": "https://www.sciencedaily.com/releases/2026/04/260429232851.htm",
+      "published": "Wed, 29 Apr 2026 23:36:37 EDT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Scientists finally explain how the Twelve Apostles rose from the ocean",
+      "summary": "Australia’s famous Twelve Apostles didn’t just erode into existence—they were slowly pushed up from the ocean floor by powerful tectonic forces over millions of years, new research reveals. Scientists discovered that these towering limestone stacks act like a natural time capsule, preserving clues about ancient climates, sea levels, and even life from up to 14 million years ago.",
+      "link": "https://www.sciencedaily.com/releases/2026/04/260429102028.htm",
+      "published": "Thu, 30 Apr 2026 09:04:23 EDT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Hidden ocean heat is creeping toward Antarctica’s fragile ice shelves",
+      "summary": "Deep beneath the Southern Ocean, a quiet but alarming shift is underway: warm water is creeping closer to Antarctica, and scientists are now seeing it clearly for the first time. By combining decades of ship data with robotic float measurements and machine learning, researchers uncovered that a massive pool of heat—circumpolar deep water—has expanded and edged toward the continent over the past 20 years.",
+      "link": "https://www.sciencedaily.com/releases/2026/04/260429102023.htm",
+      "published": "Thu, 30 Apr 2026 08:33:27 EDT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Scientists just found a chilling way life may have begun",
+      "summary": "New experiments suggest that freezing and thawing on early Earth may have helped primitive cell-like structures grow and evolve. Tiny lipid bubbles behaved very differently depending on their membrane makeup—some fused into larger compartments and captured DNA more efficiently. These fusion events could have mixed key molecules, setting the stage for more complex chemistry.",
+      "link": "https://www.sciencedaily.com/releases/2026/04/260428045559.htm",
+      "published": "Wed, 29 Apr 2026 08:11:14 EDT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Geoengineering",
+      "summary": "Geoengineering (also known as climate engineering or climate intervention) is the deliberate large-scale interventions in the Earth’s climate system intended to counteract human-caused climate change. The term commonly encompasses two broad categories: large-scale carbon dioxide removal (CDR) and solar radiation modification (SRM). CDR involves techniques to remove carbon dioxide from the atmosphe",
+      "link": "https://en.wikipedia.org/wiki/Geoengineering",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Among Young Climate Scientists, a Growing Interest In Geoengineering",
+      "summary": "Other academic institutions, too, have launched climate geoengineering initiatives, incorporating the niche field into curricula. Harvard University introduced its Solar Geoengineering...",
+      "link": "https://e360.yale.edu/digest/young-climate-scientists-geoengineering",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Planetary boundaries",
+      "summary": "Planetary boundaries are a framework to describe limits to the impacts of human activities on the Earth system. Beyond these limits, the environment may not be able to continue to self-regulate. This would mean the Earth system would leave the period of stability of the Holocene, in which human society developed.These nine boundaries are climate change, ocean acidification, stratospheric ozone dep",
+      "link": "https://en.wikipedia.org/wiki/Planetary_boundaries",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Planetary boundary layer - Wikipedia",
+      "summary": "Not to be confused with planetary boundaries . ... A convective planetary boundary layer is a type of planetary boundary layer where positive ...",
+      "link": "https://en.wikipedia.org/wiki/Planetary_boundary_layer",
+      "source_type": "ddg"
+    },
+    {
+      "title": "[YT] Planetary Boundaries: Navigating Our Limits - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] Rockström delves into the relationship between planetary boundaries and climate tipping points, emphasizing that the boundaries are scientifically set to avoid triggering these dangerous thresholds.",
+      "link": "https://www.youtube.com/watch?v=tG-hh-gSKFQ",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "tG-hh-gSKFQ",
+      "transcript_method": "description",
+      "transcript_chars": 221,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Johan Rockström: Tipping points and planetary boundaries - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] We need to navigate & be stewards of all the planetary boundaries.We need to #ActNow!Check out the interview with Johan Rockström for the Transformative Urba...",
+      "link": "https://www.youtube.com/watch?v=zMqI0t0ipcg",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "zMqI0t0ipcg",
+      "transcript_method": "description",
+      "transcript_chars": 183,
+      "has_full_transcript": false
+    }
+  ]
+}

@@ -1,0 +1,3 @@
+DONE | OWID_CSV | energy | https://ourworldindata.org/grapher/primary-energy-consumption.csv | OWID: primary energy consumption by country/year
+DONE | OWID_CSV | energy | https://ourworldindata.org/grapher/energy-use-per-person.csv | OWID: energy use per person
+DONE | OWID_CSV | energy | https://ourworldindata.org/grapher/share-electricity-renewables.csv | OWID: share of electricity from renewables

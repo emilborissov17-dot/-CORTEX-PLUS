@@ -1,0 +1,24 @@
+{
+  "snapshot_id": "energy_global_overview_2026_03_04",
+  "timestamp_utc": "2026-03-04T12:00:00Z",
+  "sources": [
+    "IEA synthetic test source",
+    "IPCC synthetic test source",
+    "World Bank synthetic test source"
+  ],
+  "indicators": {
+    "global_primary_energy_demand_trend": "increasing_slowly",
+    "renewables_share_trend": "increasing",
+    "fossil_share_trend": "decreasing_slowly",
+    "electricity_demand_trend": "increasing",
+    "co2_emissions_trend": "plateau_or_slight_decline",
+    "energy_access_gap": "hundreds_of_millions_without_reliable_electricity",
+    "price_volatility": "high_in_fossil_fuels",
+    "infrastructure_risks": [
+      "aging_grids_in_developed_countries",
+      "insufficient_transmission_for_renewables",
+      "geopolitical_risks_in_fossil_exports"
+    ]
+  },
+  "notes_bg": "Синтетичен snapshot за тест на ENERGY REVIEW: описва глобални тенденции, без да претендира за точни числа."
+}

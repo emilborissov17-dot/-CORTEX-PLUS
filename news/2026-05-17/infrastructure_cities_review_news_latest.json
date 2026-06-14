@@ -1,0 +1,124 @@
+{
+  "axis": "INFRASTRUCTURE_CITIES_REVIEW",
+  "fetched_at": "2026-05-17T16:05:15.542616+00:00",
+  "smart_query": "cities infrastructure urban development",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube_transcripts": 3,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "X pledges quicker action on hate and terror content in the UK",
+      "snippet": "Ofcom said the commitments were of particular importance after recent crimes targeting Jewish communities in the UK.",
+      "url": "https://www.bbc.com/news/articles/clyp9652v18o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Claim, counter-claim and tech's seedy side exposed: Five things we learned in the Musk-Altman trial",
+      "snippet": "As the jury deliberates, this is what we found out during the weeks-long trial with two tech titans at its heart.",
+      "url": "https://www.bbc.com/news/articles/cg7pj8p5mv4o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Inside the secretive and lucrative world of orchid breeding",
+      "snippet": "It can take a decade to bring a new orchid to market, so breeders keep their hi-tech processes secret.",
+      "url": "https://www.bbc.com/news/articles/cly039rr2mgo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "opendatacam/opendatacam",
+      "snippet": "An open source tool to quantify the world",
+      "stars": 1714,
+      "url": "https://github.com/opendatacam/opendatacam",
+      "updated": "2026-05-08",
+      "source": "GitHub"
+    },
+    {
+      "title": "duy-phamduc68/TrafficLab-3D",
+      "snippet": "Create a digital-twin style traffic visualization using only mp4 CCTV footage and its Google Maps location.",
+      "stars": 287,
+      "url": "https://github.com/duy-phamduc68/TrafficLab-3D",
+      "updated": "2026-05-17",
+      "source": "GitHub"
+    },
+    {
+      "title": "buds-lab/building-data-genome-project-2",
+      "snippet": "Whole building non-residential hourly energy meter data from the Great Energy Predictor III competition",
+      "stars": 284,
+      "url": "https://github.com/buds-lab/building-data-genome-project-2",
+      "updated": "2026-05-11",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "A Critical Pragmatism Approach for Algorithmic Fairness: Lessons from Urban Planning Theory",
+      "snippet": "As data scientists grapple with increasingly complex ethical decisions in machine learning (ML) and data science, the field of algorithmic fairness has offered multiple solutions, from formal mathematical definitions to holistic notions of fairness drawn from various academic disciplines. However, n",
+      "url": "https://arxiv.org/abs/2605.02773v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Urban to Rural Migration in Eastern Europe: Unpacking digital ruralities through TikTok video analysis",
+      "snippet": "Urban to rural migration is a less-researched phenomenon compared to its counterpart: rural to urban migration. In parts of Europe, an increasing number of people living in big urban centers within the country, or moving from other countries decide to relocate to rural areas. In this paper, we exami",
+      "url": "https://arxiv.org/abs/2605.00453v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[The U.S. Public Wants Regulation (or Prohibition) of Expert‑Level and Superhuman AI] Three‑quarters of U.S. adults want strong regulations on AI development, preferring oversight akin to pharmaceuticals rather than industry \"self‑regulation.\"",
+  "wiki": null,
+  "youtube_items": [
+    {
+      "title": "[YT] Top 5 Most Dangerous Smart Cities Tracking Every Move You Make in 2026",
+      "summary": "It's fully operational. During the CO lockdowns, Moscow used this system to catch residents violating quarantine, sending automated fines before those people even reached home. Every traffic camera, every metro gate, every public screen feeds into a single unified intelligence platform. The system can track a specific individual across the city using gate recognition, meaning it can identify you by the way you walk, even if your face is covered. Shenzhen operates over 1.9 million cameras across a city of 17 million people. That's more cameras per square kilometer than anywhere else on the planet. The system uses AI that doesn't just watch. It thinks it predicts crowd movement, detects unusual behavior before anything happens, and identifies individuals across multiple cameras simultaneousl",
+      "link": "https://www.youtube.com/watch?v=C8zplcodfzo",
+      "source_type": "youtube",
+      "channel": "Power of 5",
+      "video_id": "C8zplcodfzo",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] 🇮🇳 I Investigated India’s $10 BILLION New Capital City… Success or Failure? | Amaravati",
+      "summary": "Friends, in today's video we will explore India's most ambitious capital. To the city of Amaravati, the biggest dream project of Andhra Pradesh. Today I I have come to the ground to show you how much work has been done in Amravati so far. What projects are going on here and what projects are going to come here. We will also talk about upcoming investments in Amravati in this video. I'll find out. So where I'm standing right now is the Seed Access Road, which runs through this entire Amravati district. It's the backbone of the city [music]. This side access road leads directly to Vijayawada. It connects to Amravati and the speciality of this road is that this road has been properly developed. It has been designed with considerable beautification. Whatever is on this road, you will find it Y",
+      "link": "https://www.youtube.com/watch?v=a8YQTEuu1Ok",
+      "source_type": "youtube",
+      "channel": "Infra Talks",
+      "video_id": "a8YQTEuu1Ok",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] 2026 Smart Cities Will Track Your EVERY Move – You Can’t Hide",
+      "summary": "Представете си свят, в който вашата идентичност се излъчва към държавата с всяка стъпка, която правите по обществен тротоар.  Биометричното наблюдение превърна градските ни центрове в денонощна криминалистична лаборатория, където поверителността е отживелица. Разглеждаме тъмната страна на мрежата, където умният град се превръща в дигитален затвор.  Нека започнем с невидимата инфраструктура, която прави всичко това възможно.  До 2026 г. градовете по целия свят ще бъдат оборудвани със скрити технологии, които ни наблюдават постоянно.  Умните градове използват IoT сензори, малки устройства, свързани с интернет, и 8K камери с висока разделителна способност за проследяване на движенията.  Те са интегрирани в улични лампи, сгради и светофари, без да е необходимо използването на традиционни контр",
+      "link": "https://www.youtube.com/watch?v=gCIYc4Em48g",
+      "source_type": "youtube",
+      "channel": "The Curiosity Stick",
+      "video_id": "gCIYc4Em48g",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ],
+  "summary": "Инфраструктурата на градовете се превръща в инструмент за контрол и наблюдение, което противоречи на визията за достоен живот и устойчива цивилизация.",
+  "urgency": "HIGH",
+  "sentiment": "CRITICAL",
+  "key_developments": [
+    "Москва използва система с камери за автоматичен контрол на изпълнението на карантинните мерки и издава автоматични глоби.",
+    "Шенчен една от най-надзорените градове в света с над 1,9 милиона камери.",
+    "Системата използва AI за предикция на движението на хората и детекция на необичайно поведение.",
+    "Технологии като TrafficLab-3D и OpenDataCam се използват за анализ на трафика и количествени данни за градската инфраструктура."
+  ],
+  "open_source_momentum": "TrafficLab-3D, OpenDataCam",
+  "scientific_frontier": "Critical Pragmatism Approach for Algorithmic Fairness",
+  "relevance_to_goal": "CRITICAL"
+}

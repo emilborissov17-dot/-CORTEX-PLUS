@@ -1,0 +1,103 @@
+{
+  "axis": "GENERAL_SELF_REVIEW",
+  "fetched_at": "2026-03-27T09:45:17.255496+00:00",
+  "smart_query": "artificial intelligence progress",
+  "sources_count": {
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "web_search": 5
+  },
+  "rss": [
+    {
+      "title": "Just Eat and Autotrader among firms investigated in fake reviews probe",
+      "snippet": "The UK's competition watchdog says it is looking at five firms in its investigation into misleading online reviews.",
+      "url": "https://www.bbc.com/news/articles/cj37eeyz0epo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Judge rejects Pentagon's attempt to 'cripple' Anthropic",
+      "snippet": "A federal judge told the government it could not immediately enforce a ban on Anthropic’s tools.\n",
+      "url": "https://www.bbc.com/news/articles/cvg4p02lvd0o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Elon Musk's X advertising boycott lawsuit dismissed by US judge",
+      "snippet": "US District Judge Jane Boyle said the company had failed to show it had suffered any harm under federal competition laws.",
+      "url": "https://www.bbc.com/news/articles/c05dlm0l0jgo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "microsoft/autogen",
+      "snippet": "A programming framework for agentic AI",
+      "stars": 56288,
+      "url": "https://github.com/microsoft/autogen",
+      "updated": "2026-03-27",
+      "source": "GitHub"
+    },
+    {
+      "title": "2noise/ChatTTS",
+      "snippet": "A generative speech model for daily dialogue.",
+      "stars": 38997,
+      "url": "https://github.com/2noise/ChatTTS",
+      "updated": "2026-03-27",
+      "source": "GitHub"
+    },
+    {
+      "title": "letta-ai/letta",
+      "snippet": "Letta is the platform for building stateful agents: AI with advanced memory that can learn and self-improve over time.",
+      "stars": 21770,
+      "url": "https://github.com/letta-ai/letta",
+      "updated": "2026-03-27",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "A Unified Memory Perspective for Probabilistic Trustworthy AI",
+      "snippet": "Trustworthy artificial intelligence increasingly relies on probabilistic computation to achieve robustness, interpretability, security and privacy. In practical systems, such workloads interleave deterministic data access with repeated stochastic sampling across models, data paths and system functio",
+      "url": "https://arxiv.org/abs/2603.25692v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Decidable By Construction: Design-Time Verification for Trustworthy AI",
+      "snippet": "A prevailing assumption in machine learning is that model correctness must be enforced after the fact. We observe that the properties determining whether an AI model is numerically stable, computationally correct, or consistent with a physical domain do not necessarily demand post hoc enforcement. T",
+      "url": "https://arxiv.org/abs/2603.25414v1",
+      "source": "arXiv"
+    }
+  ],
+  "web_search": [
+    {
+      "title": "Progress in artificial intelligence - Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Progress_in_artificial_intelligence",
+      "source": "WEB"
+    },
+    {
+      "title": "AI And The End Of Progress? Why Innovation May Be More Fragile ... - Forbes",
+      "url": "https://www.forbes.com/sites/bernardmarr/2025/10/03/ai-and-the-end-of-progress-why-innovation-may-be-more-fragile-than-we-think/",
+      "source": "WEB"
+    },
+    {
+      "title": "The 2025 AI Index Report - Stanford HAI",
+      "url": "https://hai.stanford.edu/ai-index/2025-ai-index-report",
+      "source": "WEB"
+    },
+    {
+      "title": "AI News | Latest Headlines and Developments | Reuters",
+      "url": "https://www.reuters.com/technology/artificial-intelligence/",
+      "source": "WEB"
+    },
+    {
+      "title": "Artificial Intelligence - Latest AI News and Analysis - WSJ.com",
+      "url": "https://www.wsj.com/tech/ai",
+      "source": "WEB"
+    }
+  ],
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL"
+}

@@ -1,0 +1,103 @@
+{
+  "axis": "INEQUALITY_POVERTY_REVIEW",
+  "fetched_at": "2026-03-28T10:47:51.961992+00:00",
+  "smart_query": "inequality poverty wealth gap",
+  "sources_count": {
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "web_search": 5
+  },
+  "rss": [
+    {
+      "title": "Iran war splits older and younger conservatives - as pressure builds for Trump to find exit ramp",
+      "snippet": "More than a thousand miles from Washington, the conflict was a dominant topic of conversation at CPAC.",
+      "url": "https://www.bbc.com/news/articles/cjd8e4px12ro?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Nepal's ex-PM arrested over fatal protest crackdown",
+      "snippet": "More than 70 people were killed during an uprising last year which ousted Oli's government.",
+      "url": "https://www.bbc.com/news/articles/cn89ry7y835o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "'The gravest crime against humanity': What does the UN vote on slavery mean?",
+      "snippet": "African and Caribbean nations want countries which benefited from slavery to pay compensation but it will not be straightforward.",
+      "url": "https://www.bbc.com/news/articles/c0rxqng5pyno?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "thinkingmachines/ph-poverty-mapping",
+      "snippet": "Mapping Philippine Poverty using Machine Learning, Satellite Imagery, and Crowd-sourced Geospatial Information",
+      "stars": 86,
+      "url": "https://github.com/thinkingmachines/ph-poverty-mapping",
+      "updated": "2026-03-23",
+      "source": "GitHub"
+    },
+    {
+      "title": "rs-anderson/Clustering-Ward-Level-Poverty-Using-Satellite-Imagery",
+      "snippet": "Combing satellite imagery and machine learning methods to cluster ward-level povery in Gauteng, South Africa.",
+      "stars": 4,
+      "url": "https://github.com/rs-anderson/Clustering-Ward-Level-Poverty-Using-Satellite-Imagery",
+      "updated": "2024-04-06",
+      "source": "GitHub"
+    },
+    {
+      "title": "ejanalysis/EJAM",
+      "snippet": "Environmental Justice Analysis Multisite tool for summarizing environmental and residential population information for multiple locations. This detached fork of the package and this repository are not",
+      "stars": 2,
+      "url": "https://github.com/ejanalysis/EJAM",
+      "updated": "2026-02-12",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Poverty traps are rare, but trappedness isn't",
+      "snippet": "The persistence of poverty is not well explained by who is poor. We argue the relevant object of measurement is trappedness--expected escape time from deprivation--which varies systematically across institutional environments and is invisible to standard poverty indices. Using Markov chains estimate",
+      "url": "https://arxiv.org/abs/2603.18716v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Measuring the depth of multidimensional poverty with ordinal data",
+      "snippet": "This paper proposes a positional poverty gap measure of multidimensional poverty within the Alkire-Foster counting framework. The measure captures the depth of deprivations even when indicators are ordinal, unlike the standard poverty gap, which requires cardinal variables. The proposed method draws",
+      "url": "https://arxiv.org/abs/2603.15149v1",
+      "source": "arXiv"
+    }
+  ],
+  "web_search": [
+    {
+      "title": "Wealth inequality in America just hit its widest gap in more than 3 ...",
+      "url": "https://www.cbsnews.com/news/us-wealth-gap-widest-in-three-decades-federal-reserve/",
+      "source": "WEB"
+    },
+    {
+      "title": "How Trump&#x27;s economic policies are widening America&#x27;s wealth gap",
+      "url": "https://www.nbcnews.com/business/economy/trump-economy-wealth-gap-americans-affordability-inflation-prices-rcna264112",
+      "source": "WEB"
+    },
+    {
+      "title": "Income Inequality Is Surging In The U.S., New Oxfam Report Shows",
+      "url": "https://www.forbes.com/sites/josiecox/2025/11/03/income-inequality-is-surging-in-the-us-new-oxfam-report-shows/",
+      "source": "WEB"
+    },
+    {
+      "title": "PDF Income and Wealth Inequality in The United States: National Bureau of ...",
+      "url": "https://www.nber.org/system/files/working_papers/w33823/w33823.pdf",
+      "source": "WEB"
+    },
+    {
+      "title": "Nine Charts about Wealth Inequality in America - Urban Institute",
+      "url": "https://apps.urban.org/features/wealth-inequality-charts/",
+      "source": "WEB"
+    }
+  ],
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL"
+}

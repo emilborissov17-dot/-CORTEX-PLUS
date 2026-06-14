@@ -1,0 +1,90 @@
+{
+  "axis": "INEQUALITY_POVERTY_REVIEW",
+  "fetched_at": "2026-03-29T11:44:51.307676+00:00",
+  "smart_query": "inequality poverty wealth gap",
+  "sources_count": {
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 0,
+    "github": 3,
+    "web_search": 5
+  },
+  "rss": [
+    {
+      "title": "Jeremy Bowen: Trump is waging war based on instinct and it isn't working",
+      "snippet": "One month into the conflict in Iran, Trump's gut-instinct approach is not proving effective, writes the BBC's international editor.",
+      "url": "https://www.bbc.com/news/articles/c5y969pnxgvo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Three Lebanese journalists killed in Israeli strike, say broadcasters",
+      "snippet": "The Israeli military confirms it killed Ali Shoeib from the Hezbollah-affiliated Al Manar TV.",
+      "url": "https://www.bbc.com/news/articles/cgme1j70294o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "One ant for $220: The new frontier of wildlife trafficking",
+      "snippet": "The craze for collecting ants takes Kenya by surprise as smugglers zone in to make a profit.",
+      "url": "https://www.bbc.com/news/articles/cg4g44zv37qo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "thinkingmachines/ph-poverty-mapping",
+      "snippet": "Mapping Philippine Poverty using Machine Learning, Satellite Imagery, and Crowd-sourced Geospatial Information",
+      "stars": 86,
+      "url": "https://github.com/thinkingmachines/ph-poverty-mapping",
+      "updated": "2026-03-23",
+      "source": "GitHub"
+    },
+    {
+      "title": "rs-anderson/Clustering-Ward-Level-Poverty-Using-Satellite-Imagery",
+      "snippet": "Combing satellite imagery and machine learning methods to cluster ward-level povery in Gauteng, South Africa.",
+      "stars": 4,
+      "url": "https://github.com/rs-anderson/Clustering-Ward-Level-Poverty-Using-Satellite-Imagery",
+      "updated": "2024-04-06",
+      "source": "GitHub"
+    },
+    {
+      "title": "ejanalysis/EJAM",
+      "snippet": "Environmental Justice Analysis Multisite tool for summarizing environmental and residential population information for multiple locations. This detached fork of the package and this repository are not",
+      "stars": 2,
+      "url": "https://github.com/ejanalysis/EJAM",
+      "updated": "2026-02-12",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [],
+  "web_search": [
+    {
+      "title": "Wealth inequality in America just hit its widest gap in more than 3 ...",
+      "url": "https://www.cbsnews.com/news/us-wealth-gap-widest-in-three-decades-federal-reserve/",
+      "source": "WEB"
+    },
+    {
+      "title": "Income Inequality Is Surging In The U.S., New Oxfam Report Shows",
+      "url": "https://www.forbes.com/sites/josiecox/2025/11/03/income-inequality-is-surging-in-the-us-new-oxfam-report-shows/",
+      "source": "WEB"
+    },
+    {
+      "title": "Economic Inequality Seen as Major Challenge Around the World",
+      "url": "https://www.pewresearch.org/global/2025/01/09/economic-inequality-seen-as-major-challenge-around-the-world/",
+      "source": "WEB"
+    },
+    {
+      "title": "Nine Charts about Wealth Inequality in America - Urban Institute",
+      "url": "https://apps.urban.org/features/wealth-inequality-charts/",
+      "source": "WEB"
+    },
+    {
+      "title": "Wealth Inequality - Inequality.org",
+      "url": "https://inequality.org/facts/wealth-inequality/",
+      "source": "WEB"
+    }
+  ],
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL"
+}

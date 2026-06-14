@@ -1,0 +1,47 @@
+Thinking...
+Okay, let's tackle this. The user wants me to act as an internal AGI resource review agent in the CORTEX++ system, focusing on the FOOD domain. The task is to generate a JSON object based on the provided RAW_CONTEXT. 
+
+First, I need to parse the RAW_CONTEXT carefully. The main points are about the status of data sources for the FOOD REVIEW. There are five sources, but three failed. The FAO and Our World in Data files are 404, and the WFP site timed out. Only World Bank and Eurostat are working.
+
+Starting with the diagnosis status. Since three out of five sources are failed, that's a problem. But some data is still available. The status might be STRESSED because critical data sources are down, affecting the ability to get comprehensive insights. 
+
+Short summary in Bulgarian should mention the failed sources and the impact on data availability. Key metrics: number of active sources (2), failed sources (3), and maybe the percentage of failed (60%). Interpretation would note that partial data availability hampers analysis.
+
+Risks: The main risk is the unavailability of key data sources like FAO and WFP, which are critical for food security and hunger data. Time horizon is medium to long since these are major organizations. Another risk is the timeout on WFP, which could be a short-term issue but might persist.
+
+Opportunities: Leveraging the working sources (World Bank and Eurostat) for current data. Also, maybe improving data collection methods to reduce dependency on single sources.
+
+Recommended actions: High priority to fix the failed sources, like checking FAO and WFP links. Maybe contacting their teams for access. Also, developing alternative data collection methods. 
+
+Notes for self-improvement: Need to handle failed sources better, maybe implement retries or alternative data streams. Also, the timeout on WFP might indicate network issues that need addressing.
+
+Now, structure all this into the required JSON format with Bulgarian text. Ensure all keys are present and the values are concise. Check that the JSON is valid and no extra text is included.
+...done thinking.
+
+{
+  "diagnosis": {
+    "status": "STRESSED",
+    "short_summary_bg": "3 от 5 ключови източника са неактивни или неподходящи, което ограничава достъпа до актуални данни за хранителната система.",
+    "key_metrics": [
+      {"name": "Активни източници", "value": "2", "interpretation_bg": "Достъп до част от необходимите данни съществува, но недостатъчно за пълно анализиране."}, 
+      {"name": "Неактивни източници", "value": "3", "interpretation_bg": "Критични източници като FAO и WFP са недостъпни, което угрожа на аналитиката."}, 
+      {"name": "Процент неактивни източници", "value": "60%", "interpretation_bg": "Висок процент на недостъпни източници подчертава системни проблеми с достъпа."}
+    ]
+  },
+  "risks": [
+    {"name": "Недостъпност на FAO данни", "description_bg": "Изчезналия файл FAO предотвратява анализа на глобалната производство и статистика.", "time_horizon": "medium"},
+    {"name": "Нестабилност на WFP източник", "description_bg": "Съединението с WFP се прекъсва, което предизвиква губитие на данни за глад и хранителна сигурност.", "time_horizon": "short"},
+    {"name": "Недостиг на актуални данни", "description_bg": "Прекъснати източници ограничават възможността за актуални анализи на хранителната система.", "time_horizon": "long"}
+  ],
+  "opportunities": [
+    {"name": "Използване на World Bank и Eurostat", "description_bg": "Достъпът до данни от тези източници може да се използва за поддръжка на анализи."},
+    {"name": "Разработване на алтернативни източници", "description_bg": "Изграждане на нови канали за данни може да намали зависимостта от нестабилни източници."}
+  ],
+  "recommended_actions": [
+    {"id": "FOOD-ACT-001", "title_bg": "Възстановяване на FAO и WFP данни", "description_bg": "Проверете връзките с FAO и WFP, и актуализирайте файловете за достъп.", "priority": "high"}
+  ],
+  "notes_for_cortex_self_improvement": [
+    "Използвайте механизми за повторни опити при неуспешни връзки с източници.",
+    "Разширете списъка на източници с алтернативни данни за по-надежден анализ."
+  ]
+}

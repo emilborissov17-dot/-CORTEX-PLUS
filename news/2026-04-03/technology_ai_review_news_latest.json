@@ -1,0 +1,90 @@
+{
+  "axis": "TECHNOLOGY_AI_REVIEW",
+  "fetched_at": "2026-04-03T14:15:07.050754+00:00",
+  "smart_query": "artificial intelligence AI regulation",
+  "sources_count": {
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 0,
+    "github": 3,
+    "web_search": 5
+  },
+  "rss": [
+    {
+      "title": "Fewer UK adults posting on social media, Ofcom finds",
+      "snippet": "Some experts believe it highlights a social media shift as platforms boost short video.",
+      "url": "https://www.bbc.com/news/articles/cgqk718l4neo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Elon Musk's SpaceX set to be worth $1 trillion with planned public listing",
+      "snippet": "The company’s public stock debut is set to be one of the most valuable in history, and could make Musk the world's first trillionaire.",
+      "url": "https://www.bbc.com/news/articles/c2k35lg92dpo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Peppa Pig and Transformers owner Hasbro hit by cyber-attack",
+      "snippet": "The firm says its operations remain open but says the hack \"may result in some delays\". ",
+      "url": "https://www.bbc.com/news/articles/cx24e1nryn9o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "swarm-ai-safety/swarm",
+      "snippet": "SWARM: System-Wide Assessment of Risk in Multi-agent systems",
+      "stars": 24,
+      "url": "https://github.com/swarm-ai-safety/swarm",
+      "updated": "2026-04-01",
+      "source": "GitHub"
+    },
+    {
+      "title": "Jakobovski/ai-safety-cheatsheet",
+      "snippet": "A compilation of AI safety ideas, problems, and solutions.",
+      "stars": 20,
+      "url": "https://github.com/Jakobovski/ai-safety-cheatsheet",
+      "updated": "2026-03-18",
+      "source": "GitHub"
+    },
+    {
+      "title": "shin4141/decision-os-paper",
+      "snippet": "Public gateway for the Decision-OS series (V4–V9). Canonical artifacts on Zenodo (DOI).",
+      "stars": 3,
+      "url": "https://github.com/shin4141/decision-os-paper",
+      "updated": "2026-03-22",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [],
+  "web_search": [
+    {
+      "title": "The White House just laid out how it wants to regulate AI",
+      "url": "https://www.cnn.com/2026/03/20/tech/white-house-ai-framework",
+      "source": "WEB"
+    },
+    {
+      "title": "PDF White House National Policy Framework for AI - Legislative Recommendations",
+      "url": "https://www.whitehouse.gov/wp-content/uploads/2026/03/03.20.26-National-Policy-Framework-for-Artificial-Intelligence-Legislative-Recommendations.pdf",
+      "source": "WEB"
+    },
+    {
+      "title": "Regulating Artificial Intelligence: U.S. and International Approaches ...",
+      "url": "https://www.congress.gov/crs-product/R48555",
+      "source": "WEB"
+    },
+    {
+      "title": "White House Releases a National Policy Framework for Artificial ...",
+      "url": "https://www.hklaw.com/en/insights/publications/2026/03/white-house-releases-a-national-policy-framework-for-artificial",
+      "source": "WEB"
+    },
+    {
+      "title": "Artificial Intelligence Legislation Database",
+      "url": "https://www.ncsl.org/financial-services/artificial-intelligence-legislation-database",
+      "source": "WEB"
+    }
+  ],
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL"
+}

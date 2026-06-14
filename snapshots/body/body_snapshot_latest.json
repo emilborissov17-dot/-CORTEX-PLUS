@@ -1,0 +1,67 @@
+{
+  "timestamp": "2026-06-01T13:29:25.203186+00:00",
+  "health": "HEALTHY",
+  "capacity_pct": 50.1,
+  "cpu": {
+    "percent": 10.2,
+    "count_logical": 16,
+    "count_physical": 8,
+    "freq_mhz": 2555.0,
+    "load_avg_1m": 0.0
+  },
+  "ram": {
+    "total_gb": 14.88,
+    "available_gb": 7.45,
+    "used_gb": 7.43,
+    "percent": 49.9,
+    "swap_used_gb": 3.38,
+    "swap_percent": 7.9
+  },
+  "disk": {
+    "total_gb": 1022.87,
+    "free_gb": 718.44,
+    "percent": 29.8,
+    "read_mb": 417775.0,
+    "write_mb": 460032.9
+  },
+  "network": {
+    "bytes_sent_mb": 2855.8,
+    "bytes_recv_mb": 8104.6,
+    "connections": 286
+  },
+  "temperatures": {},
+  "processes": {
+    "total": 217,
+    "top_cpu": [
+      {
+        "name": "System Idle Process",
+        "cpu_pct": 0.0
+      },
+      {
+        "name": "System",
+        "cpu_pct": 0.0
+      },
+      {
+        "name": "",
+        "cpu_pct": 0.0
+      },
+      {
+        "name": "Registry",
+        "cpu_pct": 0.0
+      },
+      {
+        "name": "SecurityHealthService.exe",
+        "cpu_pct": 0.0
+      }
+    ]
+  },
+  "ollama": {
+    "running": true,
+    "loaded_models": []
+  },
+  "snapshots_count": 64,
+  "uptime": "unknown",
+  "bottleneck": "NONE",
+  "axis": "BODY_SCAN",
+  "source_type": "BODY_SCANNER"
+}

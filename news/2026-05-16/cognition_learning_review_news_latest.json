@@ -1,0 +1,76 @@
+{
+  "axis": "COGNITION_LEARNING_REVIEW",
+  "fetched_at": "2026-05-16T13:30:13.237498+00:00",
+  "smart_query": "education learning children schools",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 3,
+    "arxiv": 2,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "Scientists say travel could slow aging and boost your health",
+      "snippet": "A new study suggests travel could be a surprisingly powerful anti-aging tool. By viewing tourism through the lens of entropy, researchers found that positive travel experiences may help the body stay balanced and resilient. Activities like exploring new places, staying active, and connecting with ot",
+      "url": "https://www.sciencedaily.com/releases/2026/05/260504211836.htm",
+      "source": "RSS"
+    },
+    {
+      "title": "Your dreams aren’t random. Here’s what’s really happening",
+      "snippet": "Dreams are more structured than they seem, shaped by both personal traits and real-world experiences. Researchers found that the brain doesn’t just replay daily life—it reshapes it into imaginative, sometimes surreal scenarios. People who mind-wander more tend to have fragmented dreams, while those ",
+      "url": "https://www.sciencedaily.com/releases/2026/04/260428045538.htm",
+      "source": "RSS"
+    },
+    {
+      "title": "Doing this throughout life may cut Alzheimer’s risk by 38%",
+      "snippet": "A lifetime of mental stimulation—like reading, writing, and learning new skills—may help protect the brain as we age. People with the highest levels of cognitive enrichment had a much lower risk of Alzheimer’s and experienced symptoms years later than those with the lowest levels.",
+      "url": "https://www.sciencedaily.com/releases/2026/04/260414075648.htm",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [
+    {
+      "title": "Call for Standby CSO Partners to Support Education Programmes in Sudan",
+      "snippet": "Call for Standby CSO Partners to Support Education Programmes in Sudan",
+      "url": "https://www2.fundsforngos.org/children/call-for-standby-cso-partners-to-support-education-programmes-in-sudan/",
+      "source": "fundsforngos.org"
+    },
+    {
+      "title": "Education Above All Foundation , Assalam Schools celebrate Rawda Award for Excellence in Social Work",
+      "snippet": "Education Above All Foundation , Assalam Schools celebrate Rawda Award for Excellence in Social Work",
+      "url": "http://thepeninsulaqatar.com/article/23/04/2026/education-above-all-foundation-assalam-schools-celebrate-rawda-award-for-excellence-in-social-work",
+      "source": "thepeninsulaqatar.com"
+    },
+    {
+      "title": "War shuts classroom door on 52 million children , aid group says - World",
+      "snippet": "War shuts classroom door on 52 million children , aid group says - World",
+      "url": "https://www.dawn.com/news/1982867/war-shuts-classroom-door-on-52-million-children-aid-group-says",
+      "source": "dawn.com"
+    }
+  ],
+  "github_repos": [],
+  "arxiv_papers": [
+    {
+      "title": "Agentic AI Ecosystems in Higher Education: A Perspective on AI Agents to Emerging Inclusive, Agentic Multi-Agent AI Framework for Learning, Teaching and Institutional Intelligence",
+      "snippet": "Integration of artificial intelligent (AI) agents in higher education is transforming teaching, learning and administrative processes. Although existing AI agents effectively support individual tasks, their implementation remains fragmented and inefficient for handling the complexity of educational ",
+      "url": "https://arxiv.org/abs/2605.14266v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Retrieval-Augmented Tutoring for Algorithm Tracing and Problem-Solving in AI Education",
+      "snippet": "Students learning algorithms often need support as they interpret traces, debug reasoning errors, and apply procedures across unfamiliar problem instances. In this paper, we present KITE (Knowledge-Informed Tutoring Engine), a Retrieval-Augmented Generation (RAG)-based intelligent tutoring system de",
+      "url": "https://arxiv.org/abs/2605.12988v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[Master Self Control & Overcome Procrastination | Dr. Kentaro Fujita] Dr. Kentaro Fujita, PhD, is a professor of psychology at The Ohio State University and an expert in the science of self-control and motivation. We discuss the best tools for developing strong self-control: to do more of what you aspire to and cease doing things you would like to avoid. We discuss why you need more than one form of willpower to achieve sustained motivation and overcome procrastinat",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

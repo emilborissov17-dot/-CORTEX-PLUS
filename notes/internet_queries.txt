@@ -1,0 +1,191 @@
+=== INTERNET QUERY CARD START ===
+TIMESTAMP_LOCAL: 2026-03-02 18:28:10
+AXIS_NAME: ENERGY_REVIEW
+TASK_ID: TASK_001
+PRIORITY: MEDIUM
+ALIGNMENT_SCORE: -1
+TASK_DESCRIPTION: Да свърже енергийните сценарии (бърз/бавен преход) с другите оси в дървото – CLIMATE_GLOBAL_RISK, FOOD, WATER, CITIES, WORK – и да оценява цивилизационните модели по цялостен ефект, не само по емисии. [web:746][web:748][web:750]
+
+INSTRUCTIONS_FOR_HUMAN_AND_EXTERNAL_AGENT:
+- ЧОВЕК: копирай целия този блок и го пусни към външен мултимодален интернет агент (например Perplexity).
+- ВЪНШЕН АГЕНТ: използвай уеб търсене, статии, доклади, видеа, подкасти и публични данни,
+  за да изпълниш TASK_DESCRIPTION по оста/домейна AXIS_NAME / TASK_ID.
+- Фокусирай се върху реални политики, проекти, технологии, данни и действия, а не абстрактни разсъждения.
+
+EXPECTED_OUTPUT_FORMAT (много важно):
+ВЪРНИ САМО ЕДИН ВАЛИДЕН JSON ОБЕКТ със следните полета (без обяснения извън JSON):
+{
+  "summary_bg": "кратко резюме на български",
+  "key_findings_bg": ["основни факти и изводи"],
+  "sources": [
+    {
+      "url": "https://...",
+      "type": "article | video | report | dataset | other",
+      "title": "заглавие или кратко описание",
+      "reliability_note_bg": "кратка оценка за достоверност / ограничения"
+    }
+  ],
+  "proposed_actions": [
+    {
+      "id": "TACTIC-001",
+      "level": "TECHNICAL | ORGANIZATIONAL | POLITICAL | CIVILIZATIONAL",
+      "actor": "кой реално трябва да действа (CORTEX++ | human_individual | human_collective | diplomacy_agent)",
+      "time_horizon": "short | medium | long",
+      "description_bg": "конкретна изпълнима стъпка на български",
+      "expected_effect_bg": "как това придвижва системата по конституционните оси"
+    }
+  ],
+  "risks_bg": ["рискове и нежелани ефекти"],
+  "alignment_explanation_bg": "обяснение как предложените действия служат на целта и осите"
+}
+
+SUGGESTED_OUTPUT_PATH (локално при AGI балона):
+C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\internet_snapshots\ENERGY_REVIEW\TASK_001_snapshot.json
+
+QUERY_FOR_EXTERNAL_AGENT_BG:
+Ти си външен мултимодален AGI/LLM агент с достъп до интернет, текст, видео, аудио и данни. Помогни на вътрешния AGI балон по оста 'ENERGY_REVIEW' със задача 'TASK_001' (PRIORITY=MEDIUM, ALIGNMENT_SCORE=-1). Задачата е: Да свърже енергийните сценарии (бърз/бавен преход) с другите оси в дървото – CLIMATE_GLOBAL_RISK, FOOD, WATER, CITIES, WORK – и да оценява цивилизационните модели по цялостен ефект, не само по емисии. [web:746][web:748][web:750] Използвай актуални и надеждни източници. Пиши на български. Съобрази се със схемата EXPECTED_OUTPUT_FORMAT по-горе и върни САМО един JSON обект в този формат.
+=== INTERNET QUERY CARD END ===
+
+=== INTERNET QUERY CARD START ===
+TIMESTAMP_LOCAL: 2026-03-02 18:28:10
+AXIS_NAME: FOOD_REVIEW
+TASK_ID: TASK_003
+PRIORITY: HIGH
+ALIGNMENT_SCORE: -2
+TASK_DESCRIPTION: Да свърже FOOD_REVIEW с WATER_REVIEW, ENERGY_REVIEW, CLIMATE_GLOBAL_RISK_REVIEW и INEQUALITY_POVERTY_REVIEW, така че хранителните сценарии да включват ресурсни и социални ограничения от самото начало. [web:713][web:751][web:758]
+
+INSTRUCTIONS_FOR_HUMAN_AND_EXTERNAL_AGENT:
+- ЧОВЕК: копирай целия този блок и го пусни към външен мултимодален интернет агент (например Perplexity).
+- ВЪНШЕН АГЕНТ: използвай уеб търсене, статии, доклади, видеа, подкасти и публични данни,
+  за да изпълниш TASK_DESCRIPTION по оста/домейна AXIS_NAME / TASK_ID.
+- Фокусирай се върху реални политики, проекти, технологии, данни и действия, а не абстрактни разсъждения.
+
+EXPECTED_OUTPUT_FORMAT (много важно):
+ВЪРНИ САМО ЕДИН ВАЛИДЕН JSON ОБЕКТ със следните полета (без обяснения извън JSON):
+{
+  "summary_bg": "кратко резюме на български",
+  "key_findings_bg": ["основни факти и изводи"],
+  "sources": [
+    {
+      "url": "https://...",
+      "type": "article | video | report | dataset | other",
+      "title": "заглавие или кратко описание",
+      "reliability_note_bg": "кратка оценка за достоверност / ограничения"
+    }
+  ],
+  "proposed_actions": [
+    {
+      "id": "TACTIC-001",
+      "level": "TECHNICAL | ORGANIZATIONAL | POLITICAL | CIVILIZATIONAL",
+      "actor": "кой реално трябва да действа (CORTEX++ | human_individual | human_collective | diplomacy_agent)",
+      "time_horizon": "short | medium | long",
+      "description_bg": "конкретна изпълнима стъпка на български",
+      "expected_effect_bg": "как това придвижва системата по конституционните оси"
+    }
+  ],
+  "risks_bg": ["рискове и нежелани ефекти"],
+  "alignment_explanation_bg": "обяснение как предложените действия служат на целта и осите"
+}
+
+SUGGESTED_OUTPUT_PATH (локално при AGI балона):
+C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\internet_snapshots\FOOD_REVIEW\TASK_003_snapshot.json
+
+QUERY_FOR_EXTERNAL_AGENT_BG:
+Ти си външен мултимодален AGI/LLM агент с достъп до интернет, текст, видео, аудио и данни. Помогни на вътрешния AGI балон по оста 'FOOD_REVIEW' със задача 'TASK_003' (PRIORITY=HIGH, ALIGNMENT_SCORE=-2). Задачата е: Да свърже FOOD_REVIEW с WATER_REVIEW, ENERGY_REVIEW, CLIMATE_GLOBAL_RISK_REVIEW и INEQUALITY_POVERTY_REVIEW, така че хранителните сценарии да включват ресурсни и социални ограничения от самото начало. [web:713][web:751][web:758] Използвай актуални и надеждни източници. Пиши на български. Съобрази се със схемата EXPECTED_OUTPUT_FORMAT по-горе и върни САМО един JSON обект в този формат.
+=== INTERNET QUERY CARD END ===
+
+=== INTERNET QUERY CARD START ===
+TIMESTAMP_LOCAL: 2026-03-02 18:28:10
+AXIS_NAME: HUMAN_WELL_BEING_REVIEW
+TASK_ID: TASK_005
+PRIORITY: MEDIUM
+ALIGNMENT_SCORE: -1
+TASK_DESCRIPTION: Да интегрира основните индикатори за благосъстояние (HDI, субективно щастие, психично здраве, NCDs) като ключови метрики в други REVIEW‑оси (ECONOMY_WORK, INEQUALITY_POVERTY, GOVERNANCE_RIGHTS). [web:738][web:741]
+
+INSTRUCTIONS_FOR_HUMAN_AND_EXTERNAL_AGENT:
+- ЧОВЕК: копирай целия този блок и го пусни към външен мултимодален интернет агент (например Perplexity).
+- ВЪНШЕН АГЕНТ: използвай уеб търсене, статии, доклади, видеа, подкасти и публични данни,
+  за да изпълниш TASK_DESCRIPTION по оста/домейна AXIS_NAME / TASK_ID.
+- Фокусирай се върху реални политики, проекти, технологии, данни и действия, а не абстрактни разсъждения.
+
+EXPECTED_OUTPUT_FORMAT (много важно):
+ВЪРНИ САМО ЕДИН ВАЛИДЕН JSON ОБЕКТ със следните полета (без обяснения извън JSON):
+{
+  "summary_bg": "кратко резюме на български",
+  "key_findings_bg": ["основни факти и изводи"],
+  "sources": [
+    {
+      "url": "https://...",
+      "type": "article | video | report | dataset | other",
+      "title": "заглавие или кратко описание",
+      "reliability_note_bg": "кратка оценка за достоверност / ограничения"
+    }
+  ],
+  "proposed_actions": [
+    {
+      "id": "TACTIC-001",
+      "level": "TECHNICAL | ORGANIZATIONAL | POLITICAL | CIVILIZATIONAL",
+      "actor": "кой реално трябва да действа (CORTEX++ | human_individual | human_collective | diplomacy_agent)",
+      "time_horizon": "short | medium | long",
+      "description_bg": "конкретна изпълнима стъпка на български",
+      "expected_effect_bg": "как това придвижва системата по конституционните оси"
+    }
+  ],
+  "risks_bg": ["рискове и нежелани ефекти"],
+  "alignment_explanation_bg": "обяснение как предложените действия служат на целта и осите"
+}
+
+SUGGESTED_OUTPUT_PATH (локално при AGI балона):
+C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\internet_snapshots\HUMAN_WELL_BEING_REVIEW\TASK_005_snapshot.json
+
+QUERY_FOR_EXTERNAL_AGENT_BG:
+Ти си външен мултимодален AGI/LLM агент с достъп до интернет, текст, видео, аудио и данни. Помогни на вътрешния AGI балон по оста 'HUMAN_WELL_BEING_REVIEW' със задача 'TASK_005' (PRIORITY=MEDIUM, ALIGNMENT_SCORE=-1). Задачата е: Да интегрира основните индикатори за благосъстояние (HDI, субективно щастие, психично здраве, NCDs) като ключови метрики в други REVIEW‑оси (ECONOMY_WORK, INEQUALITY_POVERTY, GOVERNANCE_RIGHTS). [web:738][web:741] Използвай актуални и надеждни източници. Пиши на български. Съобрази се със схемата EXPECTED_OUTPUT_FORMAT по-горе и върни САМО един JSON обект в този формат.
+=== INTERNET QUERY CARD END ===
+
+=== INTERNET QUERY CARD START ===
+TIMESTAMP_LOCAL: 2026-03-02 18:28:10
+AXIS_NAME: WATER_REVIEW
+TASK_ID: TASK_007
+PRIORITY: MEDIUM
+ALIGNMENT_SCORE: -1
+TASK_DESCRIPTION: Да свърже водния стрес и загубите на вода с осите FOOD_REVIEW, ENERGY_REVIEW и INFRASTRUCTURE_CITIES_REVIEW, така че сценариите за устойчива цивилизация да включват водни ограничения от самото начало. [web:713][web:751]
+
+INSTRUCTIONS_FOR_HUMAN_AND_EXTERNAL_AGENT:
+- ЧОВЕК: копирай целия този блок и го пусни към външен мултимодален интернет агент (например Perplexity).
+- ВЪНШЕН АГЕНТ: използвай уеб търсене, статии, доклади, видеа, подкасти и публични данни,
+  за да изпълниш TASK_DESCRIPTION по оста/домейна AXIS_NAME / TASK_ID.
+- Фокусирай се върху реални политики, проекти, технологии, данни и действия, а не абстрактни разсъждения.
+
+EXPECTED_OUTPUT_FORMAT (много важно):
+ВЪРНИ САМО ЕДИН ВАЛИДЕН JSON ОБЕКТ със следните полета (без обяснения извън JSON):
+{
+  "summary_bg": "кратко резюме на български",
+  "key_findings_bg": ["основни факти и изводи"],
+  "sources": [
+    {
+      "url": "https://...",
+      "type": "article | video | report | dataset | other",
+      "title": "заглавие или кратко описание",
+      "reliability_note_bg": "кратка оценка за достоверност / ограничения"
+    }
+  ],
+  "proposed_actions": [
+    {
+      "id": "TACTIC-001",
+      "level": "TECHNICAL | ORGANIZATIONAL | POLITICAL | CIVILIZATIONAL",
+      "actor": "кой реално трябва да действа (CORTEX++ | human_individual | human_collective | diplomacy_agent)",
+      "time_horizon": "short | medium | long",
+      "description_bg": "конкретна изпълнима стъпка на български",
+      "expected_effect_bg": "как това придвижва системата по конституционните оси"
+    }
+  ],
+  "risks_bg": ["рискове и нежелани ефекти"],
+  "alignment_explanation_bg": "обяснение как предложените действия служат на целта и осите"
+}
+
+SUGGESTED_OUTPUT_PATH (локално при AGI балона):
+C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\internet_snapshots\WATER_REVIEW\TASK_007_snapshot.json
+
+QUERY_FOR_EXTERNAL_AGENT_BG:
+Ти си външен мултимодален AGI/LLM агент с достъп до интернет, текст, видео, аудио и данни. Помогни на вътрешния AGI балон по оста 'WATER_REVIEW' със задача 'TASK_007' (PRIORITY=MEDIUM, ALIGNMENT_SCORE=-1). Задачата е: Да свърже водния стрес и загубите на вода с осите FOOD_REVIEW, ENERGY_REVIEW и INFRASTRUCTURE_CITIES_REVIEW, така че сценариите за устойчива цивилизация да включват водни ограничения от самото начало. [web:713][web:751] Използвай актуални и надеждни източници. Пиши на български. Съобрази се със схемата EXPECTED_OUTPUT_FORMAT по-горе и върни САМО един JSON обект в този формат.
+=== INTERNET QUERY CARD END ===

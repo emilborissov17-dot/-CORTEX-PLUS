@@ -1,0 +1,19 @@
+{
+  "axis": "WATER_REVIEW",
+  "timestamp": "2026-06-11T19:06:11.966822+00:00",
+  "level": "MEDIUM",
+  "signals": [],
+  "key_metrics": [],
+  "model": "WORLD_BANK_API",
+  "source_type": "REAL_DATA",
+  "metrics": {
+    "access_safe_water_pct": 73.6686144265244,
+    "access_sanitation_pct": 58.4951883486035,
+    "water_productivity_usd_m3": 23.3061933923877,
+    "annual_freshwater_withdrawal_pct": 9.2339298524297,
+    "rural_water_access_pct": 60.4017547264604,
+    "urban_water_access_pct": 83.4072338315247
+  },
+  "data_quality": "6/6 indicators fetched",
+  "fetched_date": "2026-06-11"
+}

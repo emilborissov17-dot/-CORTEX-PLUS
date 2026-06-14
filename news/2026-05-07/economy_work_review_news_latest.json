@@ -1,0 +1,63 @@
+{
+  "axis": "ECONOMY_WORK_REVIEW",
+  "fetched_at": "2026-05-07T10:32:51.986712+00:00",
+  "smart_query": "economy unemployment poverty wages",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 3,
+    "arxiv": 0,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "Shell latest oil giant to see profits surge due to Iran war impact",
+      "snippet": "The energy giant's profits jump by nearly a quarter as it benefits from the recent volatility in the oil price ",
+      "url": "https://www.bbc.com/news/articles/ce3p0x54drwo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Major rail disruption in south of England following radio fault",
+      "snippet": "Trains have been cancelled and delayed, but Network Rail says services are now returning to normal.",
+      "url": "https://www.bbc.com/news/articles/ckgp8yjllx1o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "'We had people come just to see it': Amazon delivers its first UK parcels by drone",
+      "snippet": "The unmanned aircraft can drop off 100 parcels a day within a 12km radius of Amazon's hub.",
+      "url": "https://www.bbc.com/news/articles/cx21k21vnmgo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [
+    {
+      "title": "Workers mark Labour Day amid rising unemployment and poverty in Afghanistan",
+      "snippet": "Workers mark Labour Day amid rising unemployment and poverty in Afghanistan",
+      "url": "https://www.khaama.com/workers-mark-labour-day-amid-rising-unemployment-and-poverty-in-afghanistan/",
+      "source": "khaama.com"
+    },
+    {
+      "title": "خبير اقتصادي : 700 مليون إنسان يعيشون بأقل من 2 . 15 دولار يومياً",
+      "snippet": "خبير اقتصادي : 700 مليون إنسان يعيشون بأقل من 2 . 15 دولار يومياً",
+      "url": "https://www.azzaman.com/%D8%AE%D8%A8%D9%8A%D8%B1-%D8%A7%D9%82%D8%AA%D8%B5%D8%A7%D8%AF%D9%8A-700-%D9%85%D9%84%D9%8A%D9%88%D9%86-%D8%A5%D9%86%D8%B3%D8%A7%D9%86-%D9%8A%D8%B9%D9%8A%D8%B4%D9%88%D9%86-%D8%A8%D8%A3%D9%82%D9%84/",
+      "source": "azzaman.com"
+    },
+    {
+      "title": "最新数据显示 ， 新西兰七分之一的儿童生活在贫困中",
+      "snippet": "最新数据显示 ， 新西兰七分之一的儿童生活在贫困中",
+      "url": "https://baijiahao.baidu.com/s?id=1858169624334283859",
+      "source": "baijiahao.baidu.com"
+    }
+  ],
+  "github_repos": [],
+  "arxiv_papers": [],
+  "podcast": "[How to get through the Strait of Hormuz] The United States has been at war with Iran since February 28th. And for a month and a half, Iran’s main leverage over the U.S. has been their control over the Strait of Hormuz — a key global shipping route. Iran has attacked ships that try to pass without approval. And recently they’ve insinuated that one part of the Strait — the part near Oman — is not safe. Which means that captains had to go r",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

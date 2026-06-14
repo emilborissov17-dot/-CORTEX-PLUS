@@ -1,0 +1,142 @@
+{
+  "axis": "COSMIC_RESOURCES_REVIEW",
+  "domain": "cosmos",
+  "timestamp": "2026-05-04T13:56:42.126338+00:00",
+  "sources_count": 12,
+  "rss_count": 4,
+  "ddg_count": 5,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] The Space Mining Boom - How Resources Will Shape the Future Economy - YouTube",
+      "summary": "From the moon to the asteroids, the race for space resources could spark the greatest economic boom in human history. Why mine in space? We think about mining our instinct is to picture hard hats and tunnels, but the truth is that Earth is a planet that we've already dug deep. There's plenty more though, or without masses our moon, every other moon, Mars, Mercury, and the entire asteroid boat combined. On Earth, the easy near surface veins of gold, silver and copper were tapped centuries ago, and every year which chasing wars that are a lower in concentration, part of the reach, and more destructed to the environment to extract. Mine remains with most polluting and energy-intensive industries on the planet, and the cost, both economic and ecological, will only keep climbing. Short technolo",
+      "link": "https://www.youtube.com/watch?v=0l5Sv54pgYI",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "0l5Sv54pgYI",
+      "transcript_method": "whisper",
+      "transcript_chars": 26475,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] The Space Economy: Is Asteroid Mining About to Rewrite Global Wealth? - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] Space is no longer the future — it’s the next economic frontier.And it may redefine what “value” actually means.What happens when the most valuable resources... Published January 2, 2026",
+      "link": "https://www.youtube.com/watch?v=HT2HZxA31hA",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "HT2HZxA31hA",
+      "transcript_method": "description",
+      "transcript_chars": 209,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Asteroid Mining - YouTube",
+      "summary": "Welcome to another video from explaining the future.com and of a second of three films about obtaining resources from space. Last time we looked at how we may venture into orbit in order to most efficiently harvest energy from the sun. In this video we're now going to travel far further to see how future space pioneers may obtain raw materials from the asteroids. Lastroids, also known as minor planets or planetoids, are chunks of space debris in orbit around the sun. They are the material left over from when the planets were formed and range with a few meters to hundreds of kilometers in diameter. Most asteroids are located in the main asteroid belt between the orbits of Mars and Jupiter. This contains millions of asteroids of which 750,000 are more than one kilometer across with over 200 ",
+      "link": "https://www.youtube.com/watch?v=erF17yO9VsE",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "erF17yO9VsE",
+      "transcript_method": "whisper",
+      "transcript_chars": 5208,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "Отсутствие на регулации и законодателство за извличане на ресурси от астероиди",
+    "root_cause": "Отсъствието на международно признати правила и норми за извличане на ресурси от астероиди",
+    "severity": "MEDIUM",
+    "leverage_points": [
+      "Международните организации и правителствата имат значително влияние върху развитието на регулациите и законодателството за извличане на ресурси от астероиди",
+      "Индустриалните компании и предприятия, занимаващи се с извличане на ресурси от космоса, също имат важна роля в формирането на тези регулации"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Създаване на международно признати регулации и законодателство за извличане на ресурси от астероиди",
+        "measurable_goal": "Разработване и приемане на международен договор или споразумение за регулиране на извличането на ресурси от астероиди",
+        "timeframe": "дългосрочно"
+      }
+    ],
+    "evidence": [
+      "Space Resource Exploration and Utilization Act of 2015 не станал закон",
+      "Отсутствие на международно признати правила и норми за извличане на ресурси от астероиди"
+    ],
+    "generalization": "Този проблем е свързан с домейна на цивилизацията, тъй като разработването на регулации и законодателство за извличане на ресурси от астероиди ще има директно влияние върху развитието на космическата индустрия и върху отношенията между страните",
+    "summary": "Отсутствие на регулации и законодателство за извличане на ресурси от астероиди предstawя риск за устойчивостта и безопасността на космическите hoạtности. Създаването на международно признати регулации и законодателство е необходимо за развитието на космическата индустрия.",
+    "risk_level": "MEDIUM"
+  },
+  "raw_items": [
+    {
+      "title": "Space’s missing half",
+      "summary": "<figure><img alt=\"An illustration of Outpost’s CarryAll, a reusable return vehicle designed for on-orbit warehousing, in-space manufacturing and precision delivery anywhere on Earth within 60 minutes. Credit: Outpost\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"572\" src=\"https://i0.wp.com/spacenews.com/wp-content/uploads/2026/05/Outpost-CarryAll-Hero.jpg?fit=1024%2C572&amp;ssl=1\" width=\"1024\" /></figure>\n<p>Every generation reshapes how civilization moves goods. C",
+      "link": "https://spacenews.com/spaces-missing-half/",
+      "published": "Mon, 04 May 2026 13:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Lawsuit claims Starship launches damage homes",
+      "summary": "<figure><img alt=\"Super Heavy\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"576\" src=\"https://i0.wp.com/spacenews.com/wp-content/uploads/2026/05/starship-superheavy-flt12.jpeg?fit=1024%2C576&amp;ssl=1\" width=\"1024\" /></figure>\n<p>As SpaceX prepares for the first flight of version 3 of Starship, the company is facing a new legal challenge from local residents who claim launches damage their homes.</p>\n<p>The post <a href=\"https://spacenews.com/lawsuit-claims-starshi",
+      "link": "https://spacenews.com/lawsuit-claims-starship-launches-damage-homes/",
+      "published": "Mon, 04 May 2026 12:05:32 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "IonQ to offer ground-movement monitoring via Capella radar satellites",
+      "summary": "<figure><img alt=\"\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"945\" src=\"https://i0.wp.com/spacenews.com/wp-content/uploads/2026/05/Miami_Florida.png?fit=1024%2C945&amp;ssl=1\" width=\"1024\" /></figure>\n<p>Interferometric Synthetic Aperture Radar, or InSAR, enables automated detection of surface changes</p>\n<p>The post <a href=\"https://spacenews.com/ionq-to-offer-ground-movement-monitoring-via-capella-radar-satellites/\">IonQ to offer ground-movement monitoring via ",
+      "link": "https://spacenews.com/ionq-to-offer-ground-movement-monitoring-via-capella-radar-satellites/",
+      "published": "Mon, 04 May 2026 12:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Taylor Geospatial unveils global field dataset",
+      "summary": "<figure><img alt=\"\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"500\" src=\"https://i0.wp.com/spacenews.com/wp-content/uploads/2026/05/Imagery-from-the-global-agricultural-dataset-Fields-of-the-World-Credit-Taylor-Geospatial-.png?fit=879%2C500&amp;ssl=1\" width=\"879\" /></figure>\n<p>SAN FRANCISCO – The first global dataset showing the boundaries of agricultural fields was released in late April, after an 18-month campaign by geospatial experts in industry and academia",
+      "link": "https://spacenews.com/taylor-geospatial-unveils-global-field-dataset/",
+      "published": "Mon, 04 May 2026 12:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Asteroid mining",
+      "summary": "Asteroid mining is the hypothetical and technically possible extraction of materials from asteroids and other minor planets, including near-Earth objects.Research missions focused on asteroid sample return, including Hayabusa, Hayabusa2, OSIRIS-REx, and Tianwen-2, illustrate the challenges of collecting ore from space using current technology. As of 2024, around 127 grams of asteroid material have",
+      "link": "https://en.wikipedia.org/wiki/Asteroid_mining",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Are we on the verge of mining metals from the asteroids above Earth?",
+      "summary": "Following a further launch next year, the company plans to develop ways to mine near-Earth asteroids for the valuable, concentrated metals some contain – particularly the platinum-group metals essential to much of our fuel cell and renewable technology. Published March 23, 2025",
+      "link": "https://www.bbc.com/future/article/20250320-how-close-are-we-really-to-mining-asteroids",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Space Resource Exploration and Utilization Act of 2015",
+      "summary": "The Space Resource Exploration and Utilization Act of 2015 (H.R. 1508) was a bill (which never became law) introduced in the 114th Congress of the U.S. on March 19, 2015, by Rep. Bill Posey, Republican of Florida. It is identical to the Senate bill by the same name (S. 976). The bill would have expanded Presidential power regarding space resources, and regulated US-based space exploration companie",
+      "link": "https://en.wikipedia.org/wiki/Space_Resource_Exploration_and_Utilization_Act_of_2015",
+      "source_type": "ddg"
+    },
+    {
+      "title": "European Space Resources Innovation Centre",
+      "summary": "The European Space Resources Innovation Centre (ESRIC) is a research, business, and innovation hub based in Luxembourg, established in August 2020 as the world's first center dedicated exclusively to the utilization of space resources in support of…",
+      "link": "https://grokipedia.com/page/european_space_resources_innovation_centre",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Home - Space Resources Program",
+      "summary": "June 7, 2025 - In recent years, growing interest in space resources by space agencies and the private sector has been driven by an awareness that further exploration and growth of commercial opportunities in space will require extraction of materials, production of propellants, and power generation from extraterrestrial resources for more affordable and flexible transportation, facilities construc",
+      "link": "https://space.mines.edu/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "[YT] The Space Mining Boom - How Resources Will Shape the Future Economy - YouTube",
+      "summary": "From the moon to the asteroids, the race for space resources could spark the greatest economic boom in human history. Why mine in space? We think about mining our instinct is to picture hard hats and tunnels, but the truth is that Earth is a planet that we've already dug deep. There's plenty more though, or without masses our moon, every other moon, Mars, Mercury, and the entire asteroid boat combined. On Earth, the easy near surface veins of gold, silver and copper were tapped centuries ago, and every year which chasing wars that are a lower in concentration, part of the reach, and more destructed to the environment to extract. Mine remains with most polluting and energy-intensive industries on the planet, and the cost, both economic and ecological, will only keep climbing. Short technolo",
+      "link": "https://www.youtube.com/watch?v=0l5Sv54pgYI",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "0l5Sv54pgYI",
+      "transcript_method": "whisper",
+      "transcript_chars": 26475,
+      "has_full_transcript": true
+    }
+  ]
+}

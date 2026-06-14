@@ -1,0 +1,96 @@
+{
+  "axis": "GOVERNANCE_INSTITUTIONS_REVIEW",
+  "domain": "civilization",
+  "timestamp": "2026-05-01T11:39:46.958914+00:00",
+  "sources_count": 12,
+  "rss_count": 12,
+  "ddg_count": 0,
+  "youtube_count": 0,
+  "youtube_items": [],
+  "analysis": {
+    "summary": "- Daily Press Briefing by the Office of the Spokesperson for the Secretary-General: In Mogadishu, Somalia, Under-Secretary-General for Humanitarian Affairs and Emergency Relief Coordinator Tom Fletcher, meeting with the diplomatic community and humanitarian partners, warned that with\n- 25th Permanen",
+    "risk_level": "UNKNOWN",
+    "trend": "UNKNOWN",
+    "key_events": [
+      "Daily Press Briefing by the Office of the Spokesperson for the Secretary-General",
+      "25th Permanent Forum on Indigenous Issues, 12th Meeting (PM)",
+      "Calls Mount for Nuclear Justice as Review Conference Meets under ‘Damocles’ Sword’"
+    ],
+    "insights": [],
+    "youtube_insights": [],
+    "relevance_to_goal": "",
+    "generalization": ""
+  },
+  "raw_items": [
+    {
+      "title": "Daily Press Briefing by the Office of the Spokesperson for the Secretary-General",
+      "summary": "In Mogadishu, Somalia, Under-Secretary-General for Humanitarian Affairs and Emergency Relief Coordinator Tom Fletcher, meeting with the diplomatic community and humanitarian partners, warned that without urgent funding, more aid programmes would close. Two million people in Somalia survive on one meal a day.",
+      "link": "https://press.un.org/en/2026/db260430.doc.htm",
+      "published": "Thu, 30 Apr 2026 18:41:39 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "25th Permanent Forum on Indigenous Issues, 12th Meeting (PM)",
+      "summary": "At 3 p.m. on Friday, 1 May, the UN Permanent Forum on Indigenous Issues will conclude its twenty-fifth session. The two-week session - which opened on 20 April and featured an address by Secretary-General António Guterres - has focused on the theme “Ensuring Indigenous Peoples’ health, including in the context of conflict”. The Forum - a high-level advisory body of the Economic and Social Council - was established in 2000 by resolution 2000/22, with the mandate to address Indigenous issues relat",
+      "link": "https://press.un.org/en/blog/7",
+      "published": "Thu, 30 Apr 2026 18:29:14 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "Calls Mount for Nuclear Justice as Review Conference Meets under ‘Damocles’ Sword’",
+      "summary": "With the risk of nuclear weapons use “at its highest since the darkest moments of the cold war”, United Nations delegates and representatives of international agencies and organizations today called for urgent efforts to reverse previous failures and deliver concrete results in disarmament and non-proliferation, as the eleventh Review Conference of the Parties to the Treaty on the Non-Proliferation of Nuclear Weapons (NPT) concluded its general debate.",
+      "link": "https://press.un.org/en/2026/dc3911.doc.htm",
+      "published": "Thu, 30 Apr 2026 18:16:57 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "Security Council Adopts Resolution 2824 (2026), Extending Mandate of United Nations Mission in South Sudan for One Year",
+      "summary": "The Security Council today extended the mandate of the United Nations Mission in South Sudan (UNMISS) until 30 April 2027.",
+      "link": "https://press.un.org/en/2026/sc16354.doc.htm",
+      "published": "Thu, 30 Apr 2026 17:50:01 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "Trump’s Plan B for Tariffs Rests on Shaky Foundations",
+      "summary": "The Section 301 case outlined by U.S. trade officials is neither coherent nor defensible.",
+      "link": "https://foreignpolicy.com/2026/05/01/trump-tariffs-ustr-iran-plan-b/",
+      "published": "Fri, 01 May 2026 10:00:53 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "The View From Europe",
+      "summary": "Belgian Defense Minister Theo Francken on Hegseth, Hormuz, and NATO.",
+      "link": "https://foreignpolicy.com/2026/04/30/hormuz-iran-trump-nato-belgium-francken/",
+      "published": "Thu, 30 Apr 2026 22:12:55 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Iran War Nears 60-Day War Powers Deadline",
+      "summary": "But U.S. Defense Secretary Pete Hegseth argues that the cease-fire has paused the clock.",
+      "link": "https://foreignpolicy.com/2026/04/30/hegseth-senate-testimony-iran-war-60-days-war-powers-resolution/",
+      "published": "Thu, 30 Apr 2026 19:34:19 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Giorgia Meloni’s Populist Formula Failed",
+      "summary": "The Italian prime minister hasn’t convincingly delivered the renewal she once promised.",
+      "link": "https://foreignpolicy.com/2026/04/30/italy-giorgia-meloni-populist-economy-nationalism-referendum-approval/",
+      "published": "Thu, 30 Apr 2026 18:27:52 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Billions of meals at risk due to Iran war, says fertiliser boss",
+      "summary": "A shortage of fertiliser due to the Iran conflict could reduce crop yields and push prices higher, says the boss of Yara.",
+      "link": "https://www.bbc.com/news/articles/cpwp50v4ye7o?at_medium=RSS&at_campaign=rss",
+      "published": "Fri, 01 May 2026 08:41:52 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Violence in Australian town after arrest of man over girl's murder",
+      "summary": "Unrest took place outside hospital where man suspected of murdering a five-year-old girl was being treated.",
+      "link": "https://www.bbc.com/news/articles/cddp4j7p8pzo?at_medium=RSS&at_campaign=rss",
+      "published": "Fri, 01 May 2026 04:08:19 GMT",
+      "source_type": "rss"
+    }
+  ]
+}

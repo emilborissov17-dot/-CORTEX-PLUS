@@ -1,0 +1,145 @@
+{
+  "axis": "HUMAN_WELL_BEING_REVIEW",
+  "domain": "human",
+  "timestamp": "2026-05-04T14:54:54.843539+00:00",
+  "sources_count": 11,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] Practice Being Broke Before Quitting Your Job — Michelle Khare",
+      "summary": "when did you take action towards realizing the dream? Could have been a very small thing, I don't know, but like what was the kind of defining first step that kind of set you on the actual path to realizing what you laid out? I took action pretty immediately, but it took me a year to quit my job, and I'll define what the differences. I took action immediately by this might be crazy, this was a Tim Ferriss experiment. I really resonated with what you wrote about coming to terms with the worst possible outcome. And so I decided I'm going to train myself for the worst possible outcome. I love it. So I moved into a studio apartment with a roommate. I cut, like financially stripped down. I mean, I didn't have much anyways, but stripped as much as I could to simulate if I'm truly failing at this",
+      "link": "https://www.youtube.com/watch?v=UOyDS1vakL8",
+      "published": "2026-04-30T17:44:22+00:00",
+      "source_type": "youtube",
+      "channel": "Tim Ferriss",
+      "video_id": "UOyDS1vakL8",
+      "transcript_method": "whisper",
+      "transcript_chars": 3617,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] The AI Frontier and How to Spot Billion-Dollar Companies Before Everyone Else — Elad Gil",
+      "summary": "[DESCRIPTION FALLBACK] Elad Gil is CEO of Gil & Co, a multi-stage investment firm, holding company, and operating company working on the world’s most advanced technologies. Elad is a serial entrepreneur, operating executive, and investor or advisor to private companies, including AirBnB, Anduril, Coinbase, Figma, Instacart, OpenAI, SpaceX, and Stripe. He was previously VP of Corporate Strategy at Twitter and started mobile at Google. He was the founder and CEO of Mixerlabs and Color. Elad is the author of the bestsell",
+      "link": "https://www.youtube.com/watch?v=HutNi2cNsCg",
+      "published": "2026-04-29T22:04:02+00:00",
+      "source_type": "youtube",
+      "channel": "Tim Ferriss",
+      "video_id": "HutNi2cNsCg",
+      "transcript_method": "description",
+      "transcript_chars": 523,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] From 9th-Grade Dropout to DC's Longest-Serving Police Chief — Cathy Lanier",
+      "summary": "[DESCRIPTION FALLBACK] Cathy Lanier is the Chief Security Officer of the National Football League, where she oversees security across the league office and all 32 clubs. Before the NFL, she served as Chief of Police of Washington, D.C., from 2007 to 2016 — the first woman in the role and the longest-serving chief in the force's history — where her strategies helped cut violent crime by 21 percent even as the city's population grew 15 percent.\n\nThis episode is brought to you by:\n\nEight Sleep Pod Cover 5 sleeping soluti",
+      "link": "https://www.youtube.com/watch?v=ItmGtrEhuek",
+      "published": "2026-04-23T15:57:55+00:00",
+      "source_type": "youtube",
+      "channel": "Tim Ferriss",
+      "video_id": "ItmGtrEhuek",
+      "transcript_method": "description",
+      "transcript_chars": 523,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "problem": "Анализ на HUMAN_WELL_BEING_REVIEW — данни получени но LLM грешка",
+    "root_cause": "LLM parsing грешка",
+    "severity": "UNKNOWN",
+    "leverage_points": [],
+    "proposed_actions": [],
+    "evidence": [
+      "WHO Member States agree to extend negotiations on Pathogen Access and Benefit Sharing annex",
+      "Australia becomes the 30th country to eliminate trachoma as a public health problem",
+      "Efforts to eliminate hepatitis delivers gains but more action needed to meet 2030 targets"
+    ],
+    "generalization": "",
+    "summary": "- WHO Member States agree to extend negotiations on Pathogen Access and Benefit Sharing annex: <p>Member States of the World Health Organization (WHO) have progressed work on the Pathogen Access and B",
+    "risk_level": "UNKNOWN",
+    "trend": "UNKNOWN"
+  },
+  "raw_items": [
+    {
+      "title": "WHO Member States agree to extend negotiations on Pathogen Access and Benefit Sharing annex",
+      "summary": "<p>Member States of the World Health Organization (WHO) have progressed work on the Pathogen Access and Benefit Sharing (PABS) annex, a key part of the WHO Pandemic Agreement, and today agreed additional time was needed to finalize the framework for ensuring a better, more equitable, response to future pandemics.</p><p>Countries today ended the resumed session of the sixth meeting of the Intergovernmental Working Group (IGWG) on the WHO Pandemic Agreement in Geneva, focused on the PABS system. T",
+      "link": "https://www.who.int/news/item/01-05-2026-who-member-states-agree-to-extend-negotiations-on-pathogen-access-and-benefit-sharing-annex",
+      "published": "Fri, 01 May 2026 16:52:42 Z",
+      "source_type": "rss"
+    },
+    {
+      "title": "Australia becomes the 30th country to eliminate trachoma as a public health problem",
+      "summary": "The World Health Organization (WHO) has validated Australia for eliminating trachoma as a public health problem, marking a significant milestone in the health of indigenous peoples and in global efforts to combat neglected tropical diseases (NTDs). Trachoma, the world’s leading infectious cause of blindness, no longer represents a public health problem in the country.",
+      "link": "https://www.who.int/news/item/29-04-2026-australia-becomes-the-30th-country-to-eliminate-trachoma-as-a-public-health-problem",
+      "published": "Wed, 29 Apr 2026 06:10:07 Z",
+      "source_type": "rss"
+    },
+    {
+      "title": "Efforts to eliminate hepatitis delivers gains but more action needed to meet 2030 targets",
+      "summary": "<p>Global efforts to combat viral hepatitis are delivering measurable progress in reducing infections and deaths, but the disease remains a major global health challenge, according to a new World Health Organization (WHO) <a href=\"https://www.who.int/publications/i/item/9789240122383\">report</a> released today at the World Hepatitis Summit.</p><p>Viral hepatitis B and C &ndash; the two infections responsible for 95% of hepatitis-related deaths worldwide &ndash; claimed 1.34&nbsp;million lives in",
+      "link": "https://www.who.int/news/item/28-04-2026-efforts-to-eliminate-hepatitis-delivers-gains-but-more-action-needed-to-meet-2030-targets",
+      "published": "Tue, 28 Apr 2026 05:37:30 Z",
+      "source_type": "rss"
+    },
+    {
+      "title": "Practicing today for tomorrow’s emergencies – WHO convenes countries and partners to simulate response to major disease outbreak",
+      "summary": "<p>The World Health Organization (WHO) wrapped up Exercise Polaris II, a 2-day high-level simulation exercise, based around an outbreak of a fictional new bacterium spreading across the world. Bringing together 26 countries and territories, 600 health emergency experts and over 25 partners, the exercise, which took place on 22 and 23 April, allowed countries to test their preparedness for pandemics and other major health emergencies, including activating their emergency workforce structures, inf",
+      "link": "https://www.who.int/news/item/27-04-2026-practicing-today-for-tomorrow-s-emergencies-who-convenes-countries-and-partners-to-simulate-response-to-major-disease-outbreak",
+      "published": "Mon, 27 Apr 2026 13:12:09 Z",
+      "source_type": "rss"
+    },
+    {
+      "title": "NHS cancer jab could save patients hours in hospital",
+      "summary": "Thousands of patients will be offered a new injectable form of an immunotherapy drug that takes minutes.",
+      "link": "https://www.bbc.com/news/articles/cx214vld41ko?at_medium=RSS&at_campaign=rss",
+      "published": "Sun, 03 May 2026 23:10:56 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "What death doulas can teach us about dying",
+      "summary": "Death doulas or soul midwives have increased in popularity in recent years. What do they do?",
+      "link": "https://www.bbc.com/news/articles/cp9vp0ld1leo?at_medium=RSS&at_campaign=rss",
+      "published": "Sat, 02 May 2026 23:10:38 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "The struggle to get hold of medication in England is set to get worse",
+      "summary": "People living with conditions include heart problems, stroke risks, eye infections and bipolar are unable to get hold of the drugs they rely on.",
+      "link": "https://www.bbc.com/news/articles/c202jqn3jzro?at_medium=RSS&at_campaign=rss",
+      "published": "Fri, 01 May 2026 11:33:26 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Martha's Rule helplines get more than 1,700 calls from worried NHS staff",
+      "summary": "The scheme encourages staff and families to seek an urgent second opinion if they fear a patient's condition is worsening.",
+      "link": "https://www.bbc.com/news/articles/c4g9drqn2l3o?at_medium=RSS&at_campaign=rss",
+      "published": "Fri, 01 May 2026 10:54:52 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] Practice Being Broke Before Quitting Your Job — Michelle Khare",
+      "summary": "when did you take action towards realizing the dream? Could have been a very small thing, I don't know, but like what was the kind of defining first step that kind of set you on the actual path to realizing what you laid out? I took action pretty immediately, but it took me a year to quit my job, and I'll define what the differences. I took action immediately by this might be crazy, this was a Tim Ferriss experiment. I really resonated with what you wrote about coming to terms with the worst possible outcome. And so I decided I'm going to train myself for the worst possible outcome. I love it. So I moved into a studio apartment with a roommate. I cut, like financially stripped down. I mean, I didn't have much anyways, but stripped as much as I could to simulate if I'm truly failing at this",
+      "link": "https://www.youtube.com/watch?v=UOyDS1vakL8",
+      "published": "2026-04-30T17:44:22+00:00",
+      "source_type": "youtube",
+      "channel": "Tim Ferriss",
+      "video_id": "UOyDS1vakL8",
+      "transcript_method": "whisper",
+      "transcript_chars": 3617,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] The AI Frontier and How to Spot Billion-Dollar Companies Before Everyone Else — Elad Gil",
+      "summary": "[DESCRIPTION FALLBACK] Elad Gil is CEO of Gil & Co, a multi-stage investment firm, holding company, and operating company working on the world’s most advanced technologies. Elad is a serial entrepreneur, operating executive, and investor or advisor to private companies, including AirBnB, Anduril, Coinbase, Figma, Instacart, OpenAI, SpaceX, and Stripe. He was previously VP of Corporate Strategy at Twitter and started mobile at Google. He was the founder and CEO of Mixerlabs and Color. Elad is the author of the bestsell",
+      "link": "https://www.youtube.com/watch?v=HutNi2cNsCg",
+      "published": "2026-04-29T22:04:02+00:00",
+      "source_type": "youtube",
+      "channel": "Tim Ferriss",
+      "video_id": "HutNi2cNsCg",
+      "transcript_method": "description",
+      "transcript_chars": 523,
+      "has_full_transcript": false
+    }
+  ]
+}

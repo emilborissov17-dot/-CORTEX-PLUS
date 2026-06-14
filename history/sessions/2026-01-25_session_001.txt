@@ -1,0 +1,43 @@
+SESSION LOG – 2026-01-25 – session_001
+
+1. Основна тема
+
+Първоначално подреждане на CORTEX++ като агент в „балон“: рамка за история, web история, поведение, режими на мислене и доверие към източници.
+
+2. Какво направихме в тази сесия
+
+– Създадохме и попълнихме:
+  • self_summary.txt
+  • goal_summary.txt
+  • history/meta_notes.txt (първи записи ЧОВЕК + CORTEX++)
+
+– Подредихме и актуализирахме конфигурационни файлове в config/:
+  • history_rules.txt – структура + правила кога/какво се записва в history/
+  • web_history_rules.txt – структура + правила за history/web/
+  • agent_behavior_rules.txt – поведение на CORTEX++ като партньор на човека
+  • agent_thinking_modes.txt – режими на мислене (fast, slow, summary, planning, reflection, human-in-the-loop)
+  • allowed_domains.txt – свободен достъп до web, но TRUSTED / OPEN срещу USE WITH CAUTION + забранени категории
+
+3. Причина да се запише тази сесия
+
+– Това е първата ясно дефинирана „контролна точка“ в развитието на CORTEX++ като агент с:
+  • дългосрочна история
+  • web история
+  • правила за поведение и мислене
+  • правила за доверие към източници.
+
+4. Свързани файлове
+
+– config/history_rules.txt
+– config/web_history_rules.txt
+– config/agent_behavior_rules.txt
+– config/agent_thinking_modes.txt
+– config/allowed_domains.txt
+– self_summary.txt
+– goal_summary.txt
+– history/meta_notes.txt
+
+5. Идеи/следващи стъпки
+
+– Да тестваме агентските правила върху реална задача (примерно анализ/резюме на текст от knowledge/ и запис на резултата в нова сесия). 
+– Да доразвием структурата на sessions/ (номер на сесия, тип задача, време, евентуално кратък „outcome“).

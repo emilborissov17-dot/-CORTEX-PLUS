@@ -1,0 +1,90 @@
+{
+  "axis": "INFRASTRUCTURE_CITIES_REVIEW",
+  "fetched_at": "2026-03-29T11:49:12.444034+00:00",
+  "smart_query": "cities infrastructure urban development",
+  "sources_count": {
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 0,
+    "github": 3,
+    "web_search": 5
+  },
+  "rss": [
+    {
+      "title": "PS5 price hiked by £90 due to global 'pressures'",
+      "snippet": "The changes will see the recommended retail price of the PS5 rise from £479.99 to £569.99 in the UK.\n\n",
+      "url": "https://www.bbc.com/news/articles/czx9852nkexo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Lloyds bank reveals IT glitch affected almost half a million customers",
+      "snippet": "In a letter to the Treasury Select Committee, Lloyds apologised and said some compensation had been paid.",
+      "url": "https://www.bbc.com/news/articles/c70dqk2vjv8o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Just Eat and Autotrader among firms investigated in fake reviews probe",
+      "snippet": "The UK's competition watchdog says it is looking at five firms in its investigation into misleading online reviews.",
+      "url": "https://www.bbc.com/news/articles/cj37eeyz0epo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "opendatacam/opendatacam",
+      "snippet": "An open source tool to quantify the world",
+      "stars": 1706,
+      "url": "https://github.com/opendatacam/opendatacam",
+      "updated": "2026-03-27",
+      "source": "GitHub"
+    },
+    {
+      "title": "buds-lab/building-data-genome-project-2",
+      "snippet": "Whole building non-residential hourly energy meter data from the Great Energy Predictor III competition",
+      "stars": 274,
+      "url": "https://github.com/buds-lab/building-data-genome-project-2",
+      "updated": "2026-03-28",
+      "source": "GitHub"
+    },
+    {
+      "title": "OpenVisualCloud/Smart-City-Sample",
+      "snippet": "The smart city reference pipeline shows how to integrate various media building blocks, with analytics powered by the OpenVINO™ Toolkit, for traffic or stadium sensing, analytics and management tasks.",
+      "stars": 215,
+      "url": "https://github.com/OpenVisualCloud/Smart-City-Sample",
+      "updated": "2026-02-06",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [],
+  "web_search": [
+    {
+      "title": "Designing for What Comes Next: How Cities Are Rewriting the Rules of ...",
+      "url": "https://urbanland.uli.org/design-planning/designing-for-what-comes-next-how-cities-are-rewriting-the-rules-of-urban-development",
+      "source": "WEB"
+    },
+    {
+      "title": "Smart Cities Revolutionize Urban Infrastructure: Key U.S. Projects ...",
+      "url": "https://www.build-news.com/smart-infrastructure-and-urban-development/smart-cities-revolutionize-urban-infrastructure-key-u-s-projects-reshaping-construction/",
+      "source": "WEB"
+    },
+    {
+      "title": "Urban Development - World Bank Group",
+      "url": "https://www.worldbank.org/ext/en/topic/urban-development",
+      "source": "WEB"
+    },
+    {
+      "title": "Building Smart Cities and Infrastructure - CWRU Online Engineering",
+      "url": "https://online-engineering.case.edu/blog/building-smart-cities-and-infrastructure",
+      "source": "WEB"
+    },
+    {
+      "title": "Urbanization and sustainable cities development: A critical examination",
+      "url": "https://www.developmentaid.org/news-stream/post/186952/urbanization-and-sustainable-cities-development",
+      "source": "WEB"
+    }
+  ],
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL"
+}

@@ -1,0 +1,109 @@
+{
+  "axis": "INEQUALITY_POVERTY_REVIEW",
+  "fetched_at": "2026-04-03T14:14:39.772269+00:00",
+  "smart_query": "inequality poverty wealth gap",
+  "sources_count": {
+    "rss": 3,
+    "gdelt": 3,
+    "arxiv": 0,
+    "github": 3,
+    "web_search": 5
+  },
+  "rss": [
+    {
+      "title": "Artemis II leaves Earth's orbit on track for far side of the Moon",
+      "snippet": "The mission's last, big push on its lunar journey takes humans out of the Earth's orbit for the first time since 1972.",
+      "url": "https://www.bbc.com/news/articles/c937g7nd5x4o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Trump removes US Attorney General Pam Bondi",
+      "snippet": "Bondi's time as top US law enforcement officer was overshadowed by her handling of the Epstein files.",
+      "url": "https://www.bbc.com/news/articles/ce843ge47z4o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "France's Muslim gathering ban overturned by courts",
+      "snippet": "The Paris police department had argued that the four-day gathering was a security threat because it could be a target of terrorism.",
+      "url": "https://www.bbc.com/news/articles/cwyjekvwww0o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [
+    {
+      "title": "Map Reveals States With Worst Wealth Inequality",
+      "snippet": "Map Reveals States With Worst Wealth Inequality",
+      "url": "https://www.newsweek.com/map-states-worst-wealth-inequality-11428950",
+      "source": "newsweek.com"
+    },
+    {
+      "title": "Sí , presidente , en España también hay pobreza y desigualdad",
+      "snippet": "Sí , presidente , en España también hay pobreza y desigualdad",
+      "url": "https://cincodias.elpais.com/opinion/2026-03-02/si-presidente-en-espana-tambien-hay-pobreza-y-desigualdad.html",
+      "source": "cincodias.elpais.com"
+    },
+    {
+      "title": "Küresel eşitsizlik derinleşiyor -  Sen çalış , ben yiyeyim  düzenine tepki",
+      "snippet": "Küresel eşitsizlik derinleşiyor -  Sen çalış , ben yiyeyim  düzenine tepki",
+      "url": "https://www.yeniasya.com.tr/ekonomi/kuresel-esitsizlik-derinlesiyor-sen-calis-ben-yiyeyim-duzenine-tepki_618505",
+      "source": "yeniasya.com.tr"
+    }
+  ],
+  "github_repos": [
+    {
+      "title": "thinkingmachines/ph-poverty-mapping",
+      "snippet": "Mapping Philippine Poverty using Machine Learning, Satellite Imagery, and Crowd-sourced Geospatial Information",
+      "stars": 86,
+      "url": "https://github.com/thinkingmachines/ph-poverty-mapping",
+      "updated": "2026-03-23",
+      "source": "GitHub"
+    },
+    {
+      "title": "rs-anderson/Clustering-Ward-Level-Poverty-Using-Satellite-Imagery",
+      "snippet": "Combing satellite imagery and machine learning methods to cluster ward-level povery in Gauteng, South Africa.",
+      "stars": 4,
+      "url": "https://github.com/rs-anderson/Clustering-Ward-Level-Poverty-Using-Satellite-Imagery",
+      "updated": "2024-04-06",
+      "source": "GitHub"
+    },
+    {
+      "title": "ejanalysis/EJAM",
+      "snippet": "Environmental Justice Analysis Multisite tool for summarizing environmental and residential population information for multiple locations. This detached fork of the package and this repository are not",
+      "stars": 2,
+      "url": "https://github.com/ejanalysis/EJAM",
+      "updated": "2026-02-12",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [],
+  "web_search": [
+    {
+      "title": "Wealth inequality in America just hit its widest gap in more than 3 ...",
+      "url": "https://www.cbsnews.com/news/us-wealth-gap-widest-in-three-decades-federal-reserve/",
+      "source": "WEB"
+    },
+    {
+      "title": "Income Inequality Is Surging In The U.S., New Oxfam Report Shows",
+      "url": "https://www.forbes.com/sites/josiecox/2025/11/03/income-inequality-is-surging-in-the-us-new-oxfam-report-shows/",
+      "source": "WEB"
+    },
+    {
+      "title": "Economic Inequality Seen as Major Challenge Around the World",
+      "url": "https://www.pewresearch.org/global/2025/01/09/economic-inequality-seen-as-major-challenge-around-the-world/",
+      "source": "WEB"
+    },
+    {
+      "title": "How Trump&#x27;s economic policies are widening America&#x27;s wealth gap",
+      "url": "https://www.nbcnews.com/business/economy/trump-economy-wealth-gap-americans-affordability-inflation-prices-rcna264112",
+      "source": "WEB"
+    },
+    {
+      "title": "Nine Charts about Wealth Inequality in America - Urban Institute",
+      "url": "https://apps.urban.org/features/wealth-inequality-charts/",
+      "source": "WEB"
+    }
+  ],
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL"
+}

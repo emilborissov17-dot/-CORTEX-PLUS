@@ -1,0 +1,157 @@
+{
+  "axis": "ECOSYSTEMS_BIODIVERSITY_REVIEW",
+  "domain": "planet",
+  "timestamp": "2026-05-08T09:42:26.818946+00:00",
+  "sources_count": 11,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] The Causes of Deforestation, Biodiversity Loss, and Species Extinction, Emphasizing the Impact of - YouTube",
+      "summary": "um just specifically on the subject of deforestation um we're told that forests and trees provide oxygen so how are we how exactly are we causing deforestation biodiversity loss and species Extinction and again what is the specific concern about that is it the oxygen from the forest like and why what is biodiversity loss or species Extinction how does that affect us so those three things def forestation biodiversity loss species Extinction how is how are we creating this with our diet and what concerns you about it is it just the oxygen from the forest just could you elaborate well the the the grazing land that's on Earth that's not how uh the Earth looked when we arrived on the scene so we have deforested uh land all over the planet we're doing it currently in the Amazon and elsewhere um ",
+      "link": "https://www.youtube.com/watch?v=QOKYEhkb1WQ",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "QOKYEhkb1WQ",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Why Is Biodiversity Loss A Result Of Deforestation? - YouTube",
+      "summary": "Imagine a vibrant, bustling city full of unique characters, all playing a role in its daily rhythm. Now picture that city being systematically dismantled, its neighborhoods raised, and its infrastructure destroyed. This scenario on a global scale reflects a critical environmental challenge that impacts every living thing. Biodiversity loss is indeed a direct and severe consequence of deforestation. When forests are cleared, it leads to the irreversible destruction of habitats, fragmentation of remaining ecosystems, and profound alterations to the delicate balance necessary for countless species to survive and thrive. This process diminishes the variety of life on Earth at an alarming rate. The primary reason for biodiversity loss due to deforestation is straightforward habitat destruction.",
+      "link": "https://www.youtube.com/watch?v=trbu6RR0fw8",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "trbu6RR0fw8",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] How Deforestation and Habitat Loss reduce Biodiversity: Edge Effects and Extinction Debts explained - YouTube",
+      "summary": "every minute an area the size of a soccer or football field depending on where you watch this from is clear-cut in the Amazon basin which because of feedbacks of the forest on its own climate may be on the brink of turning into a savanna over half of the original six million square miles of rainforest that blanketed much of the tropics has been clear-cut in the United States less than 21 percent of old-growth forests still exist in the u.s. Midwest only a tiny fraction of the original tall grass prairie remains with less than 1/10 of one percent of the original tall grass prairie remaining in Iowa with the destruction of the flora that makes up an ecosystem The Associated fauna disappears as well the mind-boggling amount of habitat destruction that has happened and continues to happen is t",
+      "link": "https://www.youtube.com/watch?v=utUttHCCHXk",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "utUttHCCHXk",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "Разрушаването на горите и загубата на биоразнообразие",
+    "root_cause": "Човешка дейност, като отсечене на дървета и замяна на естествени местообитания с аграрни или урбанизирани територии",
+    "severity": "HIGH",
+    "leverage_points": [
+      "Правителствени политики и законодателни актове за опазване на горите и биоразнообразието",
+      "Съзнанието и участие на местните общности в опазването на околната среда"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Въвеждане наeffective мерки за защита на горите и биоразнообразието",
+        "measurable_goal": "Снижаване на темпа на отсечене на дървета с 20% през следващите 2 години",
+        "timeframe": "средносрочно"
+      },
+      {
+        "action": "Повишаване на осведомеността на обществеността относно важността на биоразнообразието",
+        "measurable_goal": "Повишаване на броя на участниците в инициативи за опазване на околната среда с 30% през следващата година",
+        "timeframe": "краткосрочно"
+      }
+    ],
+    "evidence": [
+      "Една площ по големина на футболно поле е разсечена всяка минута в басейна на Амазонка",
+      "Повече от половината от 原инитетните 6 милиона квадратни мили тропически гори са разсечени"
+    ],
+    "generalization": "Разрушаването на горите и загубата на биоразнообразие има връзки с други домейни, като човешкото здраве, икономическото развитие и климатичните промени",
+    "summary": "Разрушаването на горите и загубата на биоразнообразие са сериозни проблеми, които изискват бързи и efektivi мерки за защита на околната среда. Повишаването на осведомеността на обществеността и въвеждането на закони за опазване на горите и биоразнообразието са необходими за намаляване на темпа на отсечене на дървета и запазване на биоразнообразието.",
+    "risk_level": "HIGH"
+  },
+  "raw_items": [
+    {
+      "title": "Global",
+      "summary": "<span class=\"field field--name-title field--type-string field--label-hidden\">Global</span>\n<span class=\"field field--name-uid field--type-entity-reference field--label-hidden\"><span>integrations</span></span>\n<span class=\"field field--name-created field--type-created field--label-hidden\"><time class=\"datetime\" datetime=\"2022-02-21T08:14:38+01:00\" title=\"Monday, February 21, 2022 - 08:14\">Mon, 02/21/2022 - 08:14</time>\n</span>\n<span class=\"a2a_kit a2a_kit_size_20 addtoany_list\"><a class=\"a2a_butt",
+      "link": "https://iucn.org/our-work/region/global",
+      "published": "Mon, 21 Feb 2022 07:14:38 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Inside IUCN",
+      "summary": "<span class=\"field field--name-title field--type-string field--label-hidden\">Inside IUCN</span>\n<span class=\"field field--name-uid field--type-entity-reference field--label-hidden\"><span>review.sm</span></span>\n<span class=\"field field--name-created field--type-created field--label-hidden\"><time class=\"datetime\" datetime=\"2021-11-18T11:17:35+01:00\" title=\"Thursday, November 18, 2021 - 11:17\">Thu, 11/18/2021 - 11:17</time>\n</span>\n\n\n<span class=\"a2a_kit a2a_kit_size_20 addtoany_list\"><a class=\"a2",
+      "link": "https://iucn.org/content/inside-iucn",
+      "published": "Thu, 18 Nov 2021 10:17:35 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "DG Speech Node",
+      "summary": "<span class=\"field field--name-title field--type-string field--label-hidden\">DG Speech Node</span>\n<span class=\"field field--name-uid field--type-entity-reference field--label-hidden\"><span>review.webtf</span></span>\n<span class=\"field field--name-created field--type-created field--label-hidden\"><time class=\"datetime\" datetime=\"2021-11-18T10:56:51+01:00\" title=\"Thursday, November 18, 2021 - 10:56\">Thu, 11/18/2021 - 10:56</time>\n</span>\n\n\n<span class=\"a2a_kit a2a_kit_size_20 addtoany_list\"><a cla",
+      "link": "https://iucn.org/content/dg-speech-node",
+      "published": "Thu, 18 Nov 2021 09:56:51 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "It is time for a Global Wildlife Health Authority",
+      "summary": "<span class=\"field field--name-title field--type-string field--label-hidden\">It is time for a Global Wildlife Health Authority</span>\n<span class=\"field field--name-uid field--type-entity-reference field--label-hidden\"><span>integrations</span></span>\n<span class=\"field field--name-created field--type-created field--label-hidden\"><time class=\"datetime\" datetime=\"2021-10-20T09:48:06+02:00\" title=\"Wednesday, October 20, 2021 - 09:48\">Wed, 10/20/2021 - 09:48</time>\n</span>\n\n\n<span class=\"a2a_kit a2",
+      "link": "https://iucn.org/content/it-time-global-wildlife-health-authority",
+      "published": "Wed, 20 Oct 2021 07:48:06 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "240-million-year-old giant “sand creeper” found hidden in retaining wall",
+      "summary": "A forgotten fossil hidden inside a garden wall has turned out to be one of Australia’s most remarkable prehistoric discoveries. Scientists have now identified the 240-million-year-old amphibian, Arenaerpeton supinatus, revealing an almost perfectly preserved skeleton—complete with rare traces of skin. This ancient river predator, about 1.2 meters long, looked somewhat like a giant salamander but was bulkier and armed with fearsome fang-like teeth.",
+      "link": "https://www.sciencedaily.com/releases/2026/05/260504154028.htm",
+      "published": "Wed, 06 May 2026 02:47:27 EDT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Scientists think they finally know why Neanderthals vanished",
+      "summary": "A new study suggests Neanderthals didn’t go extinct simply because of climate change or competition with Homo sapiens. Instead, the key difference may have been social connectivity—Homo sapiens formed stronger, more flexible networks that helped them survive environmental shocks. Neanderthals had connections too, but they were more fragile and regionally limited. This made them less resilient as conditions became increasingly unpredictable.",
+      "link": "https://www.sciencedaily.com/releases/2026/04/260427050609.htm",
+      "published": "Tue, 28 Apr 2026 04:42:03 EDT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Scientists warn about golden oyster mushrooms sold in Florida markets",
+      "summary": "The golden oyster mushroom may be a culinary hit, but it’s becoming an ecological problem. Scientists warn it’s spreading quickly through U.S. forests, where it outcompetes native fungi and reduces biodiversity. In just a decade, it has appeared in more than 25 states, largely due to human cultivation and transport. Its silent expansion is now raising concerns about long-term impacts on forest ecosystems.",
+      "link": "https://www.sciencedaily.com/releases/2026/04/260423031521.htm",
+      "published": "Fri, 24 Apr 2026 09:41:23 EDT",
+      "source_type": "rss"
+    },
+    {
+      "title": "DNA reveals a hidden pitviper species in China",
+      "summary": "A vivid green pitviper hiding in Sichuan’s misty mountains has been revealed as a completely new species. Scientists had overlooked it for decades, assuming it was a common snake—until DNA analysis proved otherwise. Named after Laozi, it features striking differences between males and females, including bold stripes and eye colors. The discovery highlights just how many unknown species may still be lurking in well-studied regions.",
+      "link": "https://www.sciencedaily.com/releases/2026/04/260422044617.htm",
+      "published": "Wed, 22 Apr 2026 05:15:51 EDT",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] The Causes of Deforestation, Biodiversity Loss, and Species Extinction, Emphasizing the Impact of - YouTube",
+      "summary": "um just specifically on the subject of deforestation um we're told that forests and trees provide oxygen so how are we how exactly are we causing deforestation biodiversity loss and species Extinction and again what is the specific concern about that is it the oxygen from the forest like and why what is biodiversity loss or species Extinction how does that affect us so those three things def forestation biodiversity loss species Extinction how is how are we creating this with our diet and what concerns you about it is it just the oxygen from the forest just could you elaborate well the the the grazing land that's on Earth that's not how uh the Earth looked when we arrived on the scene so we have deforested uh land all over the planet we're doing it currently in the Amazon and elsewhere um ",
+      "link": "https://www.youtube.com/watch?v=QOKYEhkb1WQ",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "QOKYEhkb1WQ",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Why Is Biodiversity Loss A Result Of Deforestation? - YouTube",
+      "summary": "Imagine a vibrant, bustling city full of unique characters, all playing a role in its daily rhythm. Now picture that city being systematically dismantled, its neighborhoods raised, and its infrastructure destroyed. This scenario on a global scale reflects a critical environmental challenge that impacts every living thing. Biodiversity loss is indeed a direct and severe consequence of deforestation. When forests are cleared, it leads to the irreversible destruction of habitats, fragmentation of remaining ecosystems, and profound alterations to the delicate balance necessary for countless species to survive and thrive. This process diminishes the variety of life on Earth at an alarming rate. The primary reason for biodiversity loss due to deforestation is straightforward habitat destruction.",
+      "link": "https://www.youtube.com/watch?v=trbu6RR0fw8",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "trbu6RR0fw8",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ]
+}

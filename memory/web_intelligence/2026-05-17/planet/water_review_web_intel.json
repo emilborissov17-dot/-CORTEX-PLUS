@@ -1,0 +1,130 @@
+{
+  "axis": "WATER_REVIEW",
+  "domain": "planet",
+  "timestamp": "2026-05-17T13:59:16.349543+00:00",
+  "sources_count": 13,
+  "rss_count": 4,
+  "ddg_count": 6,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] Water scarcity - Innovation to combat drought | DW Documentary - YouTube",
+      "summary": "Climate change is making it clear what a precious treasure we have – in water. We simply want to use the groundwater we have — good, safe water — as efficiently as we can, Yet too much water can become a threat, too. We face a great two-part challenge: managing weather extremes while protecting our planet’s vital water resources. Construction on Hamburg's sewer system began over 180 years ago. The old masonry is still in place. Public works supervisor Dirk Grünert inspects it regularly. Here, look — that's pretty deep… three centimeters. Pretty significant. These walls are easily repaired. What's of greater concern for the man responsible for their maintenance — increasingly extreme weather. No sewer system was designed for that — not even newly built ones. During a downpour, we wouldn't b",
+      "link": "https://www.youtube.com/watch?v=5zyxsOMw634",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "5zyxsOMw634",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] The Water Crisis | National Geographic - YouTube",
+      "summary": "the following program is paid content for finish fresh water we can't live without it but it's running out fast we call this the bathtub ring and the reservoir has dropped 120 feet in the last 20 years now i'm tracking down innovators who are trying to turn the tide we're here in the trenches right in a desperate fight to change our water thirsty ways laser leveling our field helps us be very efficient with our irrigation but we can't just rely on the experts to bring us back from the brink and wait until after the water is already down the drain we all need to make changes in our daily lives [Music] can we strike a balance between the comforts of modern life and the health of the planet can we hang on to the fresh water we so desperately need [Music] before we use up the last drop los ang",
+      "link": "https://www.youtube.com/watch?v=3VyfN30XzDM",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "3VyfN30XzDM",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] The World Enters Era Of 'Global Water Bankruptcy': UN Issues Stark Warning | WION - YouTube",
+      "summary": "In other updates that we are tracking, the United Nations has warned that the world has entered an era of global water bankruptcy. A new report saying rivers, lakes are depleting faster than nature can replenish them with consequences visible on every continent. The UN University Institute for Water, Environment, and Health has said decades of overuse, pollution, environmental destruction, and climate pressures have pushed many water systems beyond recovery. The report argued that terms like water stress and water crisis no longer capture the scale of the problem. Instead, it introduced the phrase water bankruptcy. It means a state where long-term water use exceeds resupply and damages ecosystems so severely that previous levels cannot realistically be restored. The report claimed that evi",
+      "link": "https://www.youtube.com/watch?v=YAtk0Vt8ivU",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "YAtk0Vt8ivU",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 2747,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "Анализ на WATER_REVIEW — данни получени но LLM грешка",
+    "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: HTTPConnectionPool(host='localhost', port=11434): Re",
+    "severity": "UNKNOWN",
+    "leverage_points": [],
+    "proposed_actions": [],
+    "evidence": [
+      "Utah’s Big Nuclear Bet – Feasible or Fantasy?",
+      "As a Colorado Aquifer Runs Low, Dangerous Heavy Metals Threaten Rural Communities’ Drinking Water",
+      "Michigan lawmakers may fund last-ditch effort to save whitefish"
+    ],
+    "generalization": "",
+    "summary": "- Utah’s Big Nuclear Bet – Feasible or Fantasy?: <figure><img alt=\"\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"682\" src=\"https://www.circleofblue.org/wp-content/uploa",
+    "risk_level": "UNKNOWN",
+    "trend": "UNKNOWN",
+    "llm_raw": ""
+  },
+  "raw_items": [
+    {
+      "title": "Utah’s Big Nuclear Bet – Feasible or Fantasy?",
+      "summary": "<figure><img alt=\"\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"682\" src=\"https://www.circleofblue.org/wp-content/uploads/2026/05/SPPCAAU6CZFIHLJPCXQGCRJLR4.avif\" width=\"1024\" /></figure>\n<p>A version of this&#160; article was first published by the Salt Lake Tribune on April 28, 2026. It was reported and edited&#160; in collaboration with Main Street Media Cooperative, which assigns veteran New York Times correspondents to assist local news organizations in repor",
+      "link": "https://www.circleofblue.org/2026/water-energy/utahs-big-nuclear-bet-feasible-or-fantasy/",
+      "published": "Thu, 14 May 2026 10:48:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "As a Colorado Aquifer Runs Low, Dangerous Heavy Metals Threaten Rural Communities’ Drinking Water",
+      "summary": "<figure><img alt=\"a woman sits on a couch looking towards a light coming from a window\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"626\" src=\"https://i0.wp.com/www.circleofblue.org/wp-content/uploads/2026/05/ICN_ClimateDrought_SanLuisValley_JacobSpetzler-2048x1252-1.jpg?fit=1024%2C626&amp;ssl=1\" width=\"1024\" /></figure>\n<p>By Emily Payne, Inside Climate News This article originally appeared on&#160;Inside Climate News&#160;(hyperlink to the original story), a nonp",
+      "link": "https://www.circleofblue.org/2026/supply/water-quality/pollution/as-a-colorado-aquifer-runs-low-dangerous-heavy-metals-threaten-rural-communities-drinking-water/",
+      "published": "Mon, 11 May 2026 18:20:39 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Michigan lawmakers may fund last-ditch effort to save whitefish",
+      "summary": "<figure><img alt=\"\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"683\" src=\"https://i0.wp.com/www.circleofblue.org/wp-content/uploads/2023/05/Whitefish-4-1.jpg?fit=1024%2C683&amp;ssl=1\" width=\"1024\" /></figure>\n<p>Originally published by Bridge Michigan As lake whitefish teeter on the brink of collapse in the lower Great Lakes, Michigan lawmakers are considering investing in a last-ditch effort to save the iconic species before it’s too late. An appropriations bill&",
+      "link": "https://www.circleofblue.org/2026/great-lakes/michigan-lawmakers-may-fund-last-ditch-effort-to-save-whitefish/",
+      "published": "Mon, 11 May 2026 17:57:48 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "As affordability issues surge, is it finally time for offshore wind?",
+      "summary": "<figure><img alt=\"\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"683\" src=\"https://i0.wp.com/www.circleofblue.org/wp-content/uploads/2026/05/2025-12-07-MI-Ludington-Lake-Winds-JGanter-_MG_9681-Edit-2500.jpg?fit=1024%2C683&amp;ssl=1\" width=\"1024\" /></figure>\n<p>By Stephen Starr, Great Lakes Now Covering an area the size of the United Kingdom and surrounded by half a dozen large, energy-hungry metropolitan regions, the Great Lakes, surprisingly, boasts not a single o",
+      "link": "https://www.circleofblue.org/2026/water-energy/as-affordability-issues-surge-is-it-finally-time-for-offshore-wind/",
+      "published": "Wed, 06 May 2026 13:18:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Drought continues to impact water quality and river levels across...",
+      "summary": "The recent drought has taken a toll on groundwater levels and water quality across Florida. Despite this, drinking water supply for residents and water supply used to extinguish recent wildfires has had little to no impact.",
+      "link": "https://www.wmnf.org/drought-continues-impact-water-quality-river-levels-florida-wmnf/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Florida is building the world's largest environmental restoration project",
+      "summary": "The ecosystem recharges the water supply for all of South Florida – a population approaching nine million. South Florida's primary source of drinking water comes from groundwater stored in aquifers, mainly the Biscayne Aquifer, which is replenished by the Everglades.",
+      "link": "https://www.bbc.com/future/article/20240815-floridas-everglades-reservoir-will-clean-the-states-water",
+      "source_type": "ddg"
+    },
+    {
+      "title": "The Biggest Environmental Problems of 2025 | Eden Green",
+      "summary": "Prolonged droughts also threaten food and water supplies. They can be particularly damaging in areas that rely on agriculture.It affects the air we breathe, the water we drink, and the land we depend on for food. Solving these problems is key to protecting both people and nature.",
+      "link": "https://www.edengreen.com/blog-collection/environmental-problems",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Current Drought Conditions for Michigan featuring an Interactive...",
+      "summary": "As of April 14, 2026 there are currently no areas of Michigan under drought conditions.Michigan Drought Conditions Map. Click on the map for more information.",
+      "link": "https://www.plantmaps.com/en/us/state/michigan/current-drought-conditions",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Current state-level drought information for Michigan: . | Drought.gov",
+      "summary": "Historical Drought Conditions in Michigan. Drought is a normal climate pattern that has occurred in varying degrees of length, severity, and size throughout history.",
+      "link": "https://www.drought.gov/states/michigan",
+      "source_type": "ddg"
+    },
+    {
+      "title": "India groundwater depletion and contamination risks amid 2026 El...",
+      "summary": "Delhi’s broader groundwater crisis remains severe, with many parts of the city still witnessing declining water tables. Climate variability, rising population, and uneven enforcement of water policies continue to strain the system.",
+      "link": "https://www.indiatoday.in/science/story/india-groundwater-crisis-depletion-contamination-el-nino-2026-2884746-2026-03-22",
+      "source_type": "ddg"
+    }
+  ]
+}

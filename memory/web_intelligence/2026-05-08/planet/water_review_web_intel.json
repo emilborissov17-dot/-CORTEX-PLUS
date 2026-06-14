@@ -1,0 +1,123 @@
+{
+  "axis": "WATER_REVIEW",
+  "domain": "planet",
+  "timestamp": "2026-05-08T09:40:37.148847+00:00",
+  "sources_count": 10,
+  "rss_count": 4,
+  "ddg_count": 5,
+  "youtube_count": 1,
+  "youtube_items": [
+    {
+      "title": "[YT] The Yamuna, India's most polluted river - YouTube",
+      "summary": "[Music] the composition of the liquid has changed it doesn't have any properties of water [Music] left is very [Music] important [Music] water [Music] crime the yamuna river in North India begins high up in the Himalayas and teams with life for hundreds of kilometers in the Indian capital of Delhi it undergoes an astonishing transformation this is the vad V this is the yamuna enter up to this point into the de on that side water is clean before barage water come from the Himalaya region origin of the Yuna point so it's clean 400 km and then 400 km and then the next 22 km onwards it becomes okay okay okay okay basically this is the same water okay before the viras and after the vas am is basically killed by the human activities in this water heavy metals toxic Metals pesticide all are [Musi",
+      "link": "https://www.youtube.com/watch?v=eHCaIvPN2rY",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "eHCaIvPN2rY",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "Замърсяване на реките и водните ресурси, което води до водна скъпост и криза",
+    "root_cause": "Човешка дейност, включително промишлено-замърсяване, неконтролирано използване на води и липса на ефективни мерки за опазване на околната среда",
+    "severity": "HIGH",
+    "leverage_points": [
+      "Правителствата и регулиращите органи имат значителен ефект върху проблема чрез поставяне на правила и законодателства за опазване на водните ресурси",
+      "Поведението на потребителите и промишлеността е втората ключова точка, която може да повлияе на проблема чрез прилагане на екологични практики и технологии"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Въвеждане на строги правила за контрол на замърсяване на реките и водните ресурси",
+        "measurable_goal": "Намаление на нивата на замърсяване с 30% в рамките на 2 години",
+        "timeframe": "средносрочно"
+      },
+      {
+        "action": "Инвестиции в технологии за очистка и възстановяване на водните ресурси",
+        "measurable_goal": "Възстановяване на 20% от реките и водните ресурси до първоначалното си състояние в рамките на 5 години",
+        "timeframe": "дългосрочно"
+      }
+    ],
+    "evidence": [
+      "Река Ямуна в Индия е една от най-замърсените реки в света",
+      "Водната скъпост е проблем, свързан с липсата на достъп до чиста вода за милиони хора по света"
+    ],
+    "generalization": "Проблемът е свързан с домейните на човека и цивилизацията, тъй като водните ресурси са жизненоважни за човешкото здраве и благосъстояние, както и за устойчивостта на цивилизацията",
+    "summary": "Замърсяване на реките и водните ресурси е сериозен проблем, който изисква незабавни действия от правителствата, потребителите и промишлеността, за да се намали риска от водна скъпост и криза.",
+    "risk_level": "HIGH"
+  },
+  "raw_items": [
+    {
+      "title": "As affordability issues surge, is it finally time for offshore wind?",
+      "summary": "<figure><img alt=\"\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"683\" src=\"https://i0.wp.com/www.circleofblue.org/wp-content/uploads/2026/05/2025-12-07-MI-Ludington-Lake-Winds-JGanter-_MG_9681-Edit-2500.jpg?fit=1024%2C683&amp;ssl=1\" width=\"1024\" /></figure>\n<p>By Stephen Starr, Great Lakes Now Covering an area the size of the United Kingdom and surrounded by half a dozen large, energy-hungry metropolitan regions, the Great Lakes, surprisingly, boasts not a single o",
+      "link": "https://www.circleofblue.org/2026/water-energy/as-affordability-issues-surge-is-it-finally-time-for-offshore-wind/",
+      "published": "Wed, 06 May 2026 13:18:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Trump has an energy ‘tiger team.’ Carney’s fast-tracking office ‘operates similarly,’ docs say",
+      "summary": "<figure><img alt=\"Looking out over Toronto, Canada at sunset\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"564\" src=\"https://i0.wp.com/www.circleofblue.org/wp-content/uploads/2026/05/2024-06-Canada-Toronto-ip-JGanter-IMG_4946.JPG-Edit-2500.jpg?fit=1024%2C564&amp;ssl=1\" width=\"1024\" /></figure>\n<p>By  Carl Meyer; Originally published by The Narwhal Summary Prime Minister Mark Carney’s special office for speeding up major projects “operates similarly” to U.S. Preside",
+      "link": "https://www.circleofblue.org/2026/water-energy/trump-has-an-energy-tiger-team-carneys-fast-tracking-office-operates-similarly-docs-say/",
+      "published": "Tue, 05 May 2026 19:39:49 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Supreme Court Rules For Public Interest in Line 5 Case",
+      "summary": "<figure><img alt=\"\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"584\" src=\"https://i0.wp.com/www.circleofblue.org/wp-content/uploads/2019/01/2013-07-Mackinac-Bridge-Michigan-Line-5-JCGanter_G3_5541-2500.jpg?fit=1024%2C584&amp;ssl=1\" width=\"1024\" /></figure>\n<p>In a ruling that puts vital decisions about operating the Line 5 oil pipeline back in a Michigan state court, the U.S. Supreme Court unanimously decided on April 22 against the effort by Enbridge Inc., the Li",
+      "link": "https://www.circleofblue.org/2026/water-policy-politics/supreme-court-rules-for-public-interest-in-line-5-case/",
+      "published": "Sun, 03 May 2026 13:31:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Northern Michigan’s Extreme Climate Disaster",
+      "summary": "<figure><img alt=\"\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"768\" src=\"https://i0.wp.com/www.circleofblue.org/wp-content/uploads/2026/05/20260416_161307-scaled.jpg?fit=1024%2C768&amp;ssl=1\" width=\"1024\" /></figure>\n<p>On April 7, 2026, a light drizzle began to fall from the dark clouds over the forests of Michigan’s lower peninsula. A spring rain, nothing especially unusual in a region of uncommonly clean lakes, the magnificent shorelines of two Great Lakes, ov",
+      "link": "https://www.circleofblue.org/2026/opinion/northern-michigans-extreme-climate-disaster/",
+      "published": "Sat, 02 May 2026 13:37:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Water scarcity",
+      "summary": "Water scarcity (closely related to water stress or water crisis) is the lack of any, local or economically viably transportable, sources of fresh water resources to meet the standard water demand in a region. There are two types of water scarcity. One is physical. The other is economic water scarcity. Physical water scarcity is where there is not enough water to meet all demands. This includes wat",
+      "link": "https://en.wikipedia.org/wiki/Water_scarcity",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Water scarcity | Description, Mechanisms, Effects, & Solutions | Britannica",
+      "summary": "Water scarcity occurs when there are insufficient freshwater resources to meet the human and environmental demands of a certain area. Given the challenges of population growth, profligate use, growing pollution, and global warming, many countries and major cities worldwide are faced with increasing water scarcity.",
+      "link": "https://www.britannica.com/topic/water-scarcity",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Fresh water",
+      "summary": "Fresh water or freshwater is any naturally occurring liquid or frozen water containing low concentrations of dissolved salts and other total dissolved solids. The term excludes seawater and brackish water, but it does include non-salty mineral-rich waters, such as chalybeate springs. Fresh water may encompass frozen and meltwater in ice sheets, ice caps, glaciers, snowfields and icebergs, natural ",
+      "link": "https://en.wikipedia.org/wiki/Fresh_water",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Find and save ideas about best freshwater fish on Pinterest.",
+      "summary": "Discover Pinterest’s best ideas and inspiration for Best freshwater fish. Get inspired and try out new things. 15 people searched this.",
+      "link": "https://www.pinterest.com/ideas/best-freshwater-fish/917798299345/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "3 Bed in Freshwater 92961, Freshwater (updated prices 2026)",
+      "summary": "If you book and review your stay, you can help 3 Bed in Freshwater 92961 meet this goal.Yes, 3 Bed in Freshwater 92961 is popular with guests booking family stays.",
+      "link": "https://www.booking.com/hotel/gb/3-bed-in-freshwater-92961.en-gb.html",
+      "source_type": "ddg"
+    },
+    {
+      "title": "[YT] The Yamuna, India's most polluted river - YouTube",
+      "summary": "[Music] the composition of the liquid has changed it doesn't have any properties of water [Music] left is very [Music] important [Music] water [Music] crime the yamuna river in North India begins high up in the Himalayas and teams with life for hundreds of kilometers in the Indian capital of Delhi it undergoes an astonishing transformation this is the vad V this is the yamuna enter up to this point into the de on that side water is clean before barage water come from the Himalaya region origin of the Yuna point so it's clean 400 km and then 400 km and then the next 22 km onwards it becomes okay okay okay okay basically this is the same water okay before the viras and after the vas am is basically killed by the human activities in this water heavy metals toxic Metals pesticide all are [Musi",
+      "link": "https://www.youtube.com/watch?v=eHCaIvPN2rY",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "eHCaIvPN2rY",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ]
+}

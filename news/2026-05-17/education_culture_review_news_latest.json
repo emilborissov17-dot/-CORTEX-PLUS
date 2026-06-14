@@ -1,0 +1,89 @@
+{
+  "axis": "EDUCATION_CULTURE_REVIEW",
+  "fetched_at": "2026-05-17T15:48:05.995954+00:00",
+  "smart_query": "education access schools literacy",
+  "sources_count": {
+    "wiki": 0,
+    "gdelt": 0,
+    "arxiv": 0,
+    "github": 3,
+    "youtube_transcripts": 3,
+    "podcast": 1
+  },
+  "rss": [],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "upb-lea/reinforcement_learning_course_materials",
+      "snippet": "Lecture notes, tutorial tasks including solutions as well as online videos for the reinforcement learning course hosted by Paderborn University",
+      "stars": 1052,
+      "url": "https://github.com/upb-lea/reinforcement_learning_course_materials",
+      "updated": "2026-05-17",
+      "source": "GitHub"
+    },
+    {
+      "title": "spatialaudio/signals-and-systems-lecture",
+      "snippet": "Continuous- and Discrete-Time Signals and Systems - Theory and Computational Examples",
+      "stars": 374,
+      "url": "https://github.com/spatialaudio/signals-and-systems-lecture",
+      "updated": "2026-05-15",
+      "source": "GitHub"
+    },
+    {
+      "title": "merely-useful/py-rse",
+      "snippet": "Research Software Engineering with Python course material",
+      "stars": 260,
+      "url": "https://github.com/merely-useful/py-rse",
+      "updated": "2026-05-03",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [],
+  "podcast": "[The wildlife sanctuary you can visit from anywhere | Maya Higa] Creator Maya Higa is on a mission to use the internet to build the next generation of conservationists. Her virtual education center, Alveus Sanctuary, is one of the most-watched sanctuaries on Earth, with dozens of rescued animals and cameras livestreaming to a community of millions inspired to help protect the wildlife. Visit with Bean the Hawk, Winnie the Moo and more — and see what the future ",
+  "wiki": null,
+  "youtube_items": [
+    {
+      "title": "[YT] 2025 UNESCO Confucius Prize for Literacy highlights global education efforts",
+      "summary": "A celebration of both heritage and humanity. The 20th UNESCO Confucious Prize for Literacy ceremony took place in Chu Fu, hometown of the ancient Chinese philosopher. This year's awards recognize three projects from Bangladesh, Ireland, and Morocco for their outstanding contributions to inclusive education. &gt;&gt; Thank you. &gt;&gt; We believe that people should have the right to have their literacy needs met. Um and by having this prize it gives international recognition for that work but also will help us to fund and sustain the work in the years to come. It gives up lot of strength. Hopefully uh we will be able to scale up more communities and internationally in other countries. &gt;&gt; Founded 20 years ago. The UNESCO Confucious Prize for Literacy honors individuals and institution",
+      "link": "https://www.youtube.com/watch?v=-SG9a5M-KCI",
+      "source_type": "youtube",
+      "channel": "CGTN",
+      "video_id": "-SG9a5M-KCI",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 1799,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] International Literacy Day 2023: Promoting literacy for a world in transition",
+      "summary": "[Music] imagine if you couldn't read life-saving information such as pandemic precautions if you couldn't count the change you were given in a shop imagine if you couldn't stay informed about a crisis if you couldn't spot fake news in the media or if you couldn't read about alarming issues such as climate change today at least one in seven young people and adults around the world still lack basic literacy and y skills that's 763 million adults 2/3 of whom are women they are spread unevenly across regions countries and populations equipping people with literacy numeracy and digital skills can make a big difference in their lives and societies it lays the foundation for further learning literacy is also an essential means for increasing environmental awareness embra embracing cultural differ",
+      "link": "https://www.youtube.com/watch?v=bB6ngFqh0V0",
+      "source_type": "youtube",
+      "channel": "UNESCO",
+      "video_id": "bB6ngFqh0V0",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 2357,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] National Adult Literacy Agency in Ireland awarded the 2025 UNESCO Confucius Prize for Literacy",
+      "summary": "it's what it's called for It's just nice to know that there's opportunities out there in Nala's here to help us get back into education. Thank you.",
+      "link": "https://www.youtube.com/watch?v=-OOoFZVzNtc",
+      "source_type": "youtube",
+      "channel": "UNESCO",
+      "video_id": "-OOoFZVzNtc",
+      "transcript_method": "whisper",
+      "transcript_chars": 147,
+      "has_full_transcript": true
+    }
+  ],
+  "summary": "Едукацията и културата са ключови за устойчивата цивилизация. UNESCO Confucius Prize за грамотност признава проекти, които подпомагат включителната образование в различни страни.",
+  "urgency": "LOW",
+  "sentiment": "POSITIVE",
+  "key_developments": [
+    "UNESCO Confucius Prize за грамотност 2023 г. признава три проекти от Бангладеш, Ирландия и Марокко за включително образование",
+    "Признанието дава международно признание и финансови средства за поддръжка на проекти"
+  ],
+  "open_source_momentum": "No data",
+  "scientific_frontier": "No data",
+  "relevance_to_goal": "HIGH"
+}

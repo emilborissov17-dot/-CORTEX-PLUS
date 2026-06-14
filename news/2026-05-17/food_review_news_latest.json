@@ -1,0 +1,89 @@
+{
+  "axis": "FOOD_REVIEW",
+  "fetched_at": "2026-05-17T15:09:57.239239+00:00",
+  "smart_query": "food security hunger famine",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 0,
+    "gdelt": 0,
+    "arxiv": 0,
+    "github": 3,
+    "youtube_transcripts": 3,
+    "podcast": 1
+  },
+  "rss": [],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "meyerls/FruitNeRF",
+      "snippet": "[IROS24] Offical Code for \"FruitNeRF: A Unified Neural Radiance Field based Fruit Counting Framework\" - Inegrated into Nerfstudio",
+      "stars": 327,
+      "url": "https://github.com/meyerls/FruitNeRF",
+      "updated": "2026-04-29",
+      "source": "GitHub"
+    },
+    {
+      "title": "px39n/Awesome-Precision-Agriculture",
+      "snippet": "Advancement of UAV, deep Learning and cutting edged technologies and papers in Precision Agriculture. ",
+      "stars": 136,
+      "url": "https://github.com/px39n/Awesome-Precision-Agriculture",
+      "updated": "2026-05-11",
+      "source": "GitHub"
+    },
+    {
+      "title": "nesl/agrobot",
+      "snippet": "Neural-Kalman GNSS/INS Navigation for Precision Agriculture",
+      "stars": 82,
+      "url": "https://github.com/nesl/agrobot",
+      "updated": "2026-04-25",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [],
+  "podcast": "[Prominent Scientists, Faith Leaders, Policymakers and Artists Call for a Prohibition on Superintelligence, as Poll Shows Americans Don’t Want It] Initial signatories include AI pioneers Yoshua Bengio and Geoffrey Hinton, leading media voices Steve Bannon and Glenn Beck, Obama's National Security Advisor Susan Rice, business trailblazers Steve Wozniak and Richard Branson, five Nobel Laureates, former Irish President Mary Robinson, actors Stephen Fry and Joseph Gordon-Levitt, and hundreds of others.",
+  "wiki": null,
+  "youtube_items": [
+    {
+      "title": "[YT] State of Food Security and Nutrition in The World 2025",
+      "summary": "For the first time since 2019, the latest joint UN agency hunger report shows progress. The state of food security and nutrition in the world of 2025 reports that between 638 and 720 million people faced hunger in 2024. This represents about 8.2% 2% of the global population, down from 8.5% in 2023 and 8.7% in 2022. While this good news is welcome, progress around the globe has been unequal. Progress has been made in Southern Asia, Southeastern Asia, and South America. Hunger increased in Africa. More than 20% of the population faced hunger in 2024. Hunger has been steadily on the rise in Western Asia, reaching 12.7% in 2024. Projections show that we are not on track to meet the SDG target of eradicating hunger by 2030 and that 512 million people may still be chronically undernourished in 2",
+      "link": "https://www.youtube.com/watch?v=jZwPIMk-HoM",
+      "source_type": "youtube",
+      "channel": "Food and Agriculture Organization of the United Nations",
+      "video_id": "jZwPIMk-HoM",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 2477,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Ep 28 - G20’s Take on Agriculture and Global Food Security",
+      "summary": "[music] As the world we've made uh significant progress in addressing hunger, but it remains a major challenge. I mean, think about it. In 2024, there were roughly 720 million people that were living in hunger. Which is why I think at the G20 summit in Johannesburg uh in November 2025, it was important that the issue of food security gets to be one of the discussion point by the leaders and in fact if one reads the leader declaration at the end of the summit to say what are they saying about global hunger there are a number of things that they are suggesting and one of the important one is of course asking the question of what can agriculture do to resolve global hunger and I think that's an important question because we know from literature observations that improvement in agricultural pr",
+      "link": "https://www.youtube.com/watch?v=i8nB9zEpbPo",
+      "source_type": "youtube",
+      "channel": "agriview wandile",
+      "video_id": "i8nB9zEpbPo",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Why are so Many People going Hungry? | World Hunger | FAO Explainer | United Nations",
+      "summary": "If you're watching this, chances are that you are in the fortunate position to have access to&nbsp; the food you want, when you need it. For the most part, this is thanks to strong&nbsp; economies, distribution networks, skilled labor, abundant resources, the list goes on.&nbsp; If these components are developed enough, you would be fairly certain that when you go&nbsp; out looking for it, you will have access to enough food to keep you and your family&nbsp; strong and healthy. Sounds easy, right? Then why are so many&nbsp; people going hungry? HOW DO WE END WORLD HUNGER?&nbsp; and what is FAO doing about it? In many countries, rural communities depend&nbsp; heavily on small scale farming to sustain themselves.&nbsp; In turn, the involvement provided by these communities in small scale far",
+      "link": "https://www.youtube.com/watch?v=Ke06QUfOeTE",
+      "source_type": "youtube",
+      "channel": "United Nations",
+      "video_id": "Ke06QUfOeTE",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ],
+  "summary": "Данните показват незначително намаление на хората, страдащи от глад, но растежът на глада в Африка и Западна Азия подчертава неравномерността на напредъка. Това е критичен момент, който изисква по-усърдна дейност.",
+  "urgency": "HIGH",
+  "sentiment": "CRITICAL",
+  "key_developments": [
+    "For the first time since 2019, the latest joint UN agency hunger report shows progress. The state of food security and nutrition in the world of 2025 reports that between 638 and 720 million people faced hunger in 2024. This represents about 8.2% of the global population, down from 8.5% in 2023 and 8.7% in 2022. While this good news is welcome, progress around the globe has been unequal. Progress has been made in Southern Asia, Southeastern Asia, and South America. Hunger increased in Africa. More than 20% of the population faced hunger in 2024. Hunger has been steadily on the rise in Western Asia, reaching 12.7% in 2024. Projections show that we are not on track to meet the SDG target of eradicating hunger by 2030 and that 512 million people may still be chronically undernourished in 2030."
+  ],
+  "open_source_momentum": "No data",
+  "scientific_frontier": "No data",
+  "relevance_to_goal": "CRITICAL"
+}

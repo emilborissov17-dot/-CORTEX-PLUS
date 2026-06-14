@@ -1,0 +1,159 @@
+MODEL: qwen3:8b
+
+PROMPT:
+
+Ти си QWEN_PLANET_SNAPSHOT_AGENT, част от CORTEX++_QWEN.
+
+ЗАДАЧА:
+  - За всяка от PLANET осите, върни компактeн JSON snapshot.
+  - НЕ обяснявай, не добавяй текст извън JSON.
+  - LEVEL трябва да е LOW, MEDIUM или HIGH.
+  - SIGNALS са 3–5 много кратки bullets (по 1 изречение).
+  - KEY_METRICS са 3–7 метрики с име и кратко текстово описание (без числа, защото засега няма външни API).
+
+ОСИ:
+- CLIMATE_GLOBAL_RISK_REVIEW
+- ENERGY_REVIEW
+- WATER_REVIEW
+- FOOD_REVIEW
+- MATERIALS_WASTE_REVIEW
+- ECOSYSTEMS_BIODIVERSITY_REVIEW
+
+ИЗХОД:
+Върни точно този JSON формат (масив от обекти), без други обяснения:
+
+[
+  {
+    "axis": "CLIMATE_GLOBAL_RISK_REVIEW",
+    "level": "MEDIUM",
+    "signals": [
+      "...",
+      "..."
+    ],
+    "key_metrics": [
+      { "name": "metric_1", "description": "..." },
+      { "name": "metric_2", "description": "..." }
+    ]
+  },
+  {
+    "axis": "ENERGY_REVIEW",
+    "level": "MEDIUM",
+    "signals": [
+      "...",
+      "..."
+    ],
+    "key_metrics": [
+      { "name": "metric_1", "description": "..." }
+    ]
+  }
+  // ... останалите оси в същия формат
+]
+
+
+RESPONSE:
+Thinking...
+Okay, let's tackle this query. The user wants me to act as QWEN_PLANET_SNAPSHOT_AGENT and generate a JSON snapshot for each of the specified axes. The output needs to be in a specific format with level, signals, and key_metrics. 
+
+First, I need to make sure I understand each axis. The axes are CLIMATE_GLOBAL_RISK_REVIEW, ENERGY_REVIEW, WATER_REVIEW, FOOD_REVIEW, MATERIALS_WASTE_REVIEW, and ECOSYSTEMS_BIODIVERSITY_REVIEW. For each, I have to create a JSON object with level (LOW, MEDIUM, HIGH), signals (3-5 bullets), and key_metrics (3-7 metrics).
+
+The user emphasized not adding any text outside the JSON and to return exactly the specified format. So I need to be precise. Let me start with CLIMATE_GLOBAL_RISK_REVIEW. The level here is probably MEDIUM since climate risks are significant but not the highest. Signals could include things like extreme weather events increasing, carbon emissions still high, and policy uncertainty. Key metrics might be temperature rise, emission levels, and policy adoption rates.
+
+Next, ENERGY_REVIEW. Level might be MEDIUM again. Signals could involve renewable energy growth, fossil fuel dependency, and grid modernization. Key metrics could be renewable energy share, fossil fuel consumption, and grid efficiency.
+
+For WATER_REVIEW, the level might be HIGH due to water scarcity issues. Signals could include droughts, pollution, and infrastructure aging. Key metrics would be water scarcity index, pollution levels, and infrastructure age.
+
+FOOD_REVIEW might be MEDIUM. Signals could be food insecurity, sustainable practices, and supply chain issues. Metrics might include food insecurity rates, sustainable farming adoption, and supply chain efficiency.
+
+MATERIALS_WASTE_REVIEW could be HIGH due to waste management challenges. Signals might involve plastic pollution, recycling rates, and e-waste. Metrics could be plastic waste volume, recycling rates, and e-waste generation.
+
+ECOSYSTEMS_BIODIVERSITY_REVIEW is likely HIGH. Signals could include species loss, habitat destruction, and conservation efforts. Metrics would be biodiversity loss rate, habitat destruction area, and conservation success.
+
+I need to ensure each entry has the correct number of signals and metrics. Also, the descriptions in key_metrics should be brief without numbers. Let me check each axis again to make sure I'm not missing any and that the levels are consistent with the risks involved. Once that's done, I can structure the JSON accordingly, making sure it's valid and follows the user's format exactly.
+...done thinking.
+
+[
+  {
+    "axis": "CLIMATE_GLOBAL_RISK_REVIEW",
+    "level": "MEDIUM",
+    "signals": [
+      "Extreme weather events are increasing in frequency",
+      "Carbon emissions remain persistently high",
+      "Policy uncertainty delays mitigation efforts"
+    ],
+    "key_metrics": [
+      { "name": "metric_1", "description": "Global temperature rise above 1.5°C threshold" },
+      { "name": "metric_2", "description": "CO2 emissions growth in developing economies" },
+      { "name": "metric_3", "description": "Adaptation funding gaps in vulnerable regions" }
+    ]
+  },
+  {
+    "axis": "ENERGY_REVIEW",
+    "level": "MEDIUM",
+    "signals": [
+      "Renewable energy adoption is accelerating",
+      "Fossil fuel dependency persists in key sectors",
+      "Grid modernization lags behind demand"
+    ],
+    "key_metrics": [
+      { "name": "metric_1", "description": "Renewable energy capacity growth rate" },
+      { ""name": "metric_2", "description": "Fossil fuel price volatility impact" },
+      { "name": "metric_3", "description": "Energy storage deployment progress" }
+    ]
+  },
+  {
+    "axis": "WATER_REVIEW",
+    "level": "HIGH",
+    "signals": [
+      "Freshwater scarcity affects 2 billion people",
+      "Pollution levels exceed safe thresholds in major rivers",
+      "Aging infrastructure increases leakage risks"
+    ],
+    "key_metrics": [
+      { "name": "metric_1", "description": "Water stress index by region" },
+      { "name": "metric_2", "description": "Industrial pollution discharge rates" },
+      { "name": "metric_3", "description": "Water recycling adoption rates" }
+    ]
+  },
+  {
+    "axis": "FOOD_REVIEW",
+    "level": "MEDIUM",
+    "signals": [
+      "Food insecurity impacts 30% of global population",
+      "Sustainable farming practices are expanding",
+      "Supply chain disruptions persist in key regions"
+    ],
+    "key_metrics": [
+      { "name": "metric_1", "description": "Calorie availability per capita" },
+      { "name": "metric_2", "description": "Organic farming adoption rates" },
+      { "name": "metric_3", "description": "Food waste reduction progress" }
+    ]
+  },
+  {
+    "axis": "MATERIALS_WASTE_REVIEW",
+    "level": "HIGH",
+    "signals": [
+      "Plastic waste volumes exceed recycling capacity",
+      "E-waste contains toxic heavy metals",
+      "Circular economy adoption is fragmented"
+    ],
+    "key_metrics": [
+      { "name": "metric_1", "description": "Plastic waste generation rates" },
+      { "name": "metric_2", "description": "Recycling infrastructure coverage" },
+      { "name": "metric_3", "description": "E-waste treatment capacity" }
+    ]
+  },
+  {
+    "axis": "ECOSYSTEMS_BIODIVERSITY_REVIEW",
+    "level": "HIGH",
+    "signals": [
+      "Species extinction rates 100x higher than natural levels",
+      "Habitat destruction accelerates in tropical zones",
+      "Conservation efforts show mixed effectiveness"
+    ],
+    "key_metrics": [
+      { "name": "metric_1", "description": "Biodiversity loss rate by ecosystem" },
+      { "name": "metric_2", "description": "Protected area coverage gaps" },
+      { "name": "metric_3", "description": "Invasive species spread rates" }
+    ]
+  }
+]

@@ -1,0 +1,162 @@
+{
+  "axis": "COGNITION_LEARNING_REVIEW",
+  "domain": "human",
+  "timestamp": "2026-05-16T19:34:33.194015+00:00",
+  "sources_count": 10,
+  "rss_count": 7,
+  "ddg_count": 0,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] Future of Education: How to Get Ahead before AI Changes Everything - YouTube",
+      "summary": "By the end of 2025, AI can do what used to require a four-year degree and the numbers proven. Entry level job postings in the US are down about 35% compared to January 2023. Unemployment for a recent graduates is 5.8% one of the worst numbers we've seen in years. At the same time, AI tools like Chad TBT, Claude, Copilot and Proplexity are getting better and better every month. They write they summarize the analyzed code, faster, cheaper, and more reliably than a lot of juniors. And the data shows the impact. According to Harvard Business Review, AI can already do 50 to 60% of typical junior tasks. Entry level hiring in European tech has collapsed by over 70% started jobs, don't slow down. They kind of vanish, which raises the uncomfortable question if AI can do the job, what's the degree a",
+      "link": "https://www.youtube.com/watch?v=eaZ2R1K-SjQ",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "eaZ2R1K-SjQ",
+      "transcript_method": "whisper",
+      "transcript_chars": 21327,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] The Future Of Education In An AI-Powered World - YouTube",
+      "summary": "Please welcome Matt Britain. Thank you. Hi, everyone. You know, it's funny. I grew up in the shadows of Philadelphia, a huge equals fan. Sorry. And I always dreamed I'd come in the Dallas and while the crowd. I don't think I ever thought it would be like this. But hopefully I'll get to deliver today. Like your Cowboys, I guess they're so congrats on that. I've spent my entire career helping the world-largest brands understand the new consumer. I was fortunate enough to have come out in the business world in the year 2000 when the new consumer was the millennial generation. The millennial generation is the first generation they got with the internet and the household. I'm a jet-nexer and when I tell my kids that when I grew up, there was no internet. They look at me the way I looked at my g",
+      "link": "https://www.youtube.com/watch?v=BX-K0PIls2I",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "BX-K0PIls2I",
+      "transcript_method": "whisper",
+      "transcript_chars": 49423,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] AI and Education: What's Changing, What Kids Must Learn, and the Path Forward | SXSW - YouTube",
+      "summary": "They think we need to move away from preparing kids for jobs. His jobs are going to change. The way students are taught and what they're taught to optimize for is very at odds with where we're at right now with AI. The safest assumption we have to make in this moment is that kids are going to be using artificial intelligence at home. So the classroom really has to be a place where the deep learning is happening and we're raising the bar on knowledge when you outsource your cognitive work to an AI you actually become cognitively weaker. This is potentially really detrimental to society more broadly that we've become so reliant on these technologies. We stop believing in our own ability to make decisions. In the age of advanced technologies, kids need to read more and will have to make schoo",
+      "link": "https://www.youtube.com/watch?v=dXxZwwCoO04",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "dXxZwwCoO04",
+      "transcript_method": "whisper",
+      "transcript_chars": 50484,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "Ниските нива на грамотност и образование сред учениците, особенно сред английските последователи, поради пандемията и кибератаките над образователните платформи",
+    "root_cause": "Отсъствието на адекватна подкрепа и ресурси за учениците и образователните институции, както и уязвимостта на образователните платформи към кибератаки",
+    "severity": "MEDIUM",
+    "leverage_points": [
+      "Развитието на надеждни и безопасни образователни платформи",
+      "Повишаването на осведомеността и подготовката на учители и образователни институции за работа с технологиите и предотвратяване на кибератаките"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Създаване на национална програма за подкрепа на образованието и подобряване на грамотността сред учениците",
+        "measurable_goal": "Повишаване на нивата на грамотност сред учениците с 20% през следващите 2 години",
+        "timeframe": "средносрочно"
+      },
+      {
+        "action": "Разработване и внедряване на мерки за повишаване на сигурността на образователните платформи",
+        "measurable_goal": "Снижаване на броя на кибератаките над образователните платформи с 30% през следващите 12 месеца",
+        "timeframe": "краткосрочно"
+      }
+    ],
+    "evidence": [
+      "The Pandemic Hindered English Learners' Literacy",
+      "Latest Canvas Attack Shows Schools Still Struggle With Cybersecurity"
+    ],
+    "generalization": "Този проблем е свързан с домейна на човека и цивилизацията, тъй като образованието е от основно значение за личностно развитие и социален прогрес",
+    "summary": "Ниските нива на грамотност и образование сред учениците са сериозен проблем, поради пандемията и кибератаките над образователните платформи. Необходими са действия за подобряване на сигурността и качеството на образованието.",
+    "risk_level": "MEDIUM"
+  },
+  "raw_items": [
+    {
+      "title": "The Pandemic Hindered English Learners' Literacy. This Ohio District Is Turning the Tide.",
+      "summary": "&quot;We want to help the students continue to thrive, and really everything that we're thinking about with our student services is equitable learning ...",
+      "link": "https://www.edsurge.com/news/2026-05-13-the-pandemic-hindered-english-learners-literacy-this-ohio-district-is-turning-the-tide",
+      "published": "Wed, 13 May 2026 17:43:32 -0700",
+      "source_type": "rss"
+    },
+    {
+      "title": "Latest Canvas Attack Shows Schools Still Struggle With Cybersecurity",
+      "summary": "A cyberattack against one of the world’s largest digital education platforms has forced attention onto the vulnerability of U.S. schools’ data. ...",
+      "link": "https://www.edsurge.com/news/2026-05-12-latest-canvas-attack-shows-schools-still-struggle-with-cybersecurity",
+      "published": "Tue, 12 May 2026 11:29:33 -0700",
+      "source_type": "rss"
+    },
+    {
+      "title": "LGBTQ+ Youth Mental Health Is Suffering, but Schools Are Poised to Help",
+      "summary": "“One of the most important findings is that when adults, institutions, and communities become more affirming, the suicide risk of LGBTQ+ young people ...",
+      "link": "https://www.edsurge.com/news/2026-05-08-lgbtq-youth-mental-health-is-suffering-but-schools-are-poised-to-help",
+      "published": "Fri, 08 May 2026 16:30:50 -0700",
+      "source_type": "rss"
+    },
+    {
+      "title": "Screen Time Concerns Lead to Backlash Against Edtech Vetting Process",
+      "summary": "SCHOOL SOFTWARE SCRUTINY: Legislators have pushed back against cellphones in the classroom but are now focused on ensuring school software on devices ...",
+      "link": "https://www.edsurge.com/news/2026-05-07-screen-time-concerns-lead-to-backlash-against-edtech-vetting-process",
+      "published": "Thu, 07 May 2026 13:07:40 -0700",
+      "source_type": "rss"
+    },
+    {
+      "title": "The Taboo of…Money, Love and Power",
+      "summary": "DOCUMENTARY FILM In the documentary educational film &#8220;The Taboo of Sovereignty, Money, Love and Power,&#8221; Mr. Liberty explores the taboos seldom discussed in polite conversation. He reveals the nature of global power structures, money as a control system and the futility of elections. He is empowering people with popular sovereignty as a key to unlocking [&#8230;]",
+      "link": "https://mindshiftentertainment.wordpress.com/2005/04/01/hello-world/",
+      "published": "Fri, 01 Apr 2005 21:27:39 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Lotus: A Woman’s Journey of Empowerment",
+      "summary": "CLAIRE GAILLARD &#8211; DANCE IS LIFE! &#8220;From the revelation that disconnectedness between people and their passion, between individuals and their communities, reflect agonized personal wounds in each of us, her Empower Moves was birthed. It builds community and honors the People with Transcendance through story telling and interpretive forms of dance, allowing ecstatic communion, reconnection [&#8230;]",
+      "link": "https://mindshiftentertainment.wordpress.com/2003/03/23/lotus-a-womans-journey-of-empowerment/",
+      "published": "Sun, 23 Mar 2003 23:15:05 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Fresh Wave",
+      "summary": "JOHNNY LIGHT For over three decades, Johnny Light has been guided by a vision of a new world coming, the “fresh wave” is coming. These twelve songs are professionally produced and arranged, an album of his finest original compositions recorded with Michael Cooper at Rising Star Studios in Eugene, Oregon. Songs like Yes, Nobody’s Gonna [&#8230;]",
+      "link": "https://mindshiftentertainment.wordpress.com/1988/09/09/fresh-wave/",
+      "published": "Fri, 09 Sep 1988 23:17:22 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] Future of Education: How to Get Ahead before AI Changes Everything - YouTube",
+      "summary": "By the end of 2025, AI can do what used to require a four-year degree and the numbers proven. Entry level job postings in the US are down about 35% compared to January 2023. Unemployment for a recent graduates is 5.8% one of the worst numbers we've seen in years. At the same time, AI tools like Chad TBT, Claude, Copilot and Proplexity are getting better and better every month. They write they summarize the analyzed code, faster, cheaper, and more reliably than a lot of juniors. And the data shows the impact. According to Harvard Business Review, AI can already do 50 to 60% of typical junior tasks. Entry level hiring in European tech has collapsed by over 70% started jobs, don't slow down. They kind of vanish, which raises the uncomfortable question if AI can do the job, what's the degree a",
+      "link": "https://www.youtube.com/watch?v=eaZ2R1K-SjQ",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "eaZ2R1K-SjQ",
+      "transcript_method": "whisper",
+      "transcript_chars": 21327,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] The Future Of Education In An AI-Powered World - YouTube",
+      "summary": "Please welcome Matt Britain. Thank you. Hi, everyone. You know, it's funny. I grew up in the shadows of Philadelphia, a huge equals fan. Sorry. And I always dreamed I'd come in the Dallas and while the crowd. I don't think I ever thought it would be like this. But hopefully I'll get to deliver today. Like your Cowboys, I guess they're so congrats on that. I've spent my entire career helping the world-largest brands understand the new consumer. I was fortunate enough to have come out in the business world in the year 2000 when the new consumer was the millennial generation. The millennial generation is the first generation they got with the internet and the household. I'm a jet-nexer and when I tell my kids that when I grew up, there was no internet. They look at me the way I looked at my g",
+      "link": "https://www.youtube.com/watch?v=BX-K0PIls2I",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "BX-K0PIls2I",
+      "transcript_method": "whisper",
+      "transcript_chars": 49423,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] AI and Education: What's Changing, What Kids Must Learn, and the Path Forward | SXSW - YouTube",
+      "summary": "They think we need to move away from preparing kids for jobs. His jobs are going to change. The way students are taught and what they're taught to optimize for is very at odds with where we're at right now with AI. The safest assumption we have to make in this moment is that kids are going to be using artificial intelligence at home. So the classroom really has to be a place where the deep learning is happening and we're raising the bar on knowledge when you outsource your cognitive work to an AI you actually become cognitively weaker. This is potentially really detrimental to society more broadly that we've become so reliant on these technologies. We stop believing in our own ability to make decisions. In the age of advanced technologies, kids need to read more and will have to make schoo",
+      "link": "https://www.youtube.com/watch?v=dXxZwwCoO04",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "dXxZwwCoO04",
+      "transcript_method": "whisper",
+      "transcript_chars": 50484,
+      "has_full_transcript": true
+    }
+  ]
+}

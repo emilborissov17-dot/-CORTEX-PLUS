@@ -1,0 +1,103 @@
+{
+  "axis": "SOCIAL_RELATIONS_REVIEW",
+  "fetched_at": "2026-03-28T10:48:36.595010+00:00",
+  "smart_query": "social inequality conflict trust",
+  "sources_count": {
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "web_search": 5
+  },
+  "rss": [
+    {
+      "title": "Iran war splits older and younger conservatives - as pressure builds for Trump to find exit ramp",
+      "snippet": "More than a thousand miles from Washington, the conflict was a dominant topic of conversation at CPAC.",
+      "url": "https://www.bbc.com/news/articles/cjd8e4px12ro?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Nepal's ex-PM arrested over fatal protest crackdown",
+      "snippet": "More than 70 people were killed during an uprising last year which ousted Oli's government.",
+      "url": "https://www.bbc.com/news/articles/cn89ry7y835o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "'The gravest crime against humanity': What does the UN vote on slavery mean?",
+      "snippet": "African and Caribbean nations want countries which benefited from slavery to pay compensation but it will not be straightforward.",
+      "url": "https://www.bbc.com/news/articles/c0rxqng5pyno?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "briatte/awesome-network-analysis",
+      "snippet": "A curated list of awesome network analysis resources.",
+      "stars": 3969,
+      "url": "https://github.com/briatte/awesome-network-analysis",
+      "updated": "2026-03-25",
+      "source": "GitHub"
+    },
+    {
+      "title": "obsei/obsei",
+      "snippet": "Obsei is a low code AI powered automation tool. It can be used in various business flows like social listening, AI based alerting, brand image analysis, comparative study and more .",
+      "stars": 1384,
+      "url": "https://github.com/obsei/obsei",
+      "updated": "2026-03-28",
+      "source": "GitHub"
+    },
+    {
+      "title": "shaypal5/awesome-twitter-data",
+      "snippet": "A list of Twitter datasets and related resources.",
+      "stars": 1099,
+      "url": "https://github.com/shaypal5/awesome-twitter-data",
+      "updated": "2026-03-20",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Human, AI, and Hybrid Ensembles for Detection of Adaptive, RL-based Social Bots",
+      "snippet": "The use of reinforcement learning to dynamically adapt and evade detection is now well-documented in several cybersecurity settings including Covert Social Influence Operations (CSIOs), in which bots try to spread disinformation. While AI bot detectors have improved greatly, they are largely limited",
+      "url": "https://arxiv.org/abs/2603.23796v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Emergence of Fragility in LLM-based Social Networks: the Case of Moltbook",
+      "snippet": "The rapid diffusion of large language models and the growth in their capability has enabled the emergence of online environments populated by autonomous AI agents that interact through natural language. These platforms provide a novel empirical setting for studying collective dynamics among artifici",
+      "url": "https://arxiv.org/abs/2603.23279v1",
+      "source": "arXiv"
+    }
+  ],
+  "web_search": [
+    {
+      "title": "Exploring the effects of inequality on social trust in the United ...",
+      "url": "https://link.springer.com/article/10.1007/s44202-025-00344-5",
+      "source": "WEB"
+    },
+    {
+      "title": "New UN Report Warns of Global Social Crisis Driven by Insecurity ...",
+      "url": "https://unu.edu/press-release/new-un-report-warns-global-social-crisis-driven-insecurity-inequality-and-distrust",
+      "source": "WEB"
+    },
+    {
+      "title": "Why do inequality and deprivation produce high crime and low trust?",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7820585/",
+      "source": "WEB"
+    },
+    {
+      "title": "Key elements of social cohesion in conflict-affected societies: a ...",
+      "url": "https://www.tandfonline.com/doi/full/10.1080/23311886.2025.2586176",
+      "source": "WEB"
+    },
+    {
+      "title": "Income inequality and social trust - ScienceDirect",
+      "url": "https://www.sciencedirect.com/science/article/pii/S0165176525005129",
+      "source": "WEB"
+    }
+  ],
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL"
+}

@@ -1,0 +1,38 @@
+{
+  "run_at": "2026-02-27T11:31:25.693086",
+  "active_sources": 5,
+  "ok_sources": 3,
+  "failed_sources": 2,
+  "sources": [
+    {
+      "name": "UN Environment – Global Resources Outlook",
+      "url": "https://www.resourcepanel.org/reports/global-resources-outlook-2024",
+      "file": "www.resourcepanel.org_reports_global-resources-outlook-2024.json",
+      "status": 200
+    },
+    {
+      "name": "UNEP – Global E-waste Monitor",
+      "url": "https://ewastemonitor.info/",
+      "file": "ewastemonitor.info_.json",
+      "status": 200
+    },
+    {
+      "name": "Our World in Data – Material Footprint",
+      "url": "https://ourworldindata.org/material-footprint",
+      "file": "ourworldindata.org_material-footprint.json",
+      "status": 404
+    },
+    {
+      "name": "World Bank – Material flows and resource productivity",
+      "url": "https://datacatalog.worldbank.org/search/dataset/0039595",
+      "file": "datacatalog.worldbank.org_search_dataset_0039595.json",
+      "status": 200
+    },
+    {
+      "name": "EU – Agri-food & bioeconomy materials",
+      "url": "https://agridata.ec.europa.eu/extensions/DataPortal.html",
+      "file": "agridata.ec.europa.eu_extensions_DataPortal.html.json",
+      "status": 404
+    }
+  ]
+}

@@ -1,0 +1,84 @@
+{
+  "axis": "MATERIALS_WASTE_REVIEW",
+  "fetched_at": "2026-03-28T10:48:32.150319+00:00",
+  "smart_query": "plastic waste pollution recycling",
+  "sources_count": {
+    "rss": 0,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "web_search": 5
+  },
+  "rss": [],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "pogopaule/awesome-sustainability-jobs",
+      "snippet": "Dev jobs in the sustainability sector - be part of the solution, not the problem",
+      "stars": 506,
+      "url": "https://github.com/pogopaule/awesome-sustainability-jobs",
+      "updated": "2026-03-25",
+      "source": "GitHub"
+    },
+    {
+      "title": "Alkia/electra",
+      "snippet": "This is Electra blockchain's repository for a decentralized micro-grid electricity exchange solution",
+      "stars": 72,
+      "url": "https://github.com/Alkia/electra",
+      "updated": "2026-01-28",
+      "source": "GitHub"
+    },
+    {
+      "title": "NatLabRockies/PV_ICE",
+      "snippet": "An open-source tool to quantify Solar Photovoltaics (PV) Energy and Mass Flows in the Circular Economy, from a Reliability and Lifetime approach",
+      "stars": 43,
+      "url": "https://github.com/NatLabRockies/PV_ICE",
+      "updated": "2026-01-28",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Switchable circular dichroism and ionic migration dominated charge transport in a chiral spin crossover polymer",
+      "snippet": "We demonstrate thermally switchable chiroptical activity in a chiral spin crossover (SCO) material, where circular dichroism is significant in the low spin state but quenched in the high-spin state for both enantiomers. With magnetometry we establish a cooperative transition with hysteresis near roo",
+      "url": "https://arxiv.org/abs/2603.11261v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Electronic Structure and Resonant Circular Dichroism of La$_{0.7}$Sr$_{0.3}$MnO$_3$ from Soft X-ray Angle-Resolved Photoemission",
+      "snippet": "Coupling between spin, orbital, charge, and lattice degrees of freedom in transition-metal oxides produces a variety of electronic and magnetic phenomena of importance for future technologies. Here, we explore the electronic band structure of a (111)-oriented La0.7Sr0.3MnO3 thin film through soft X-",
+      "url": "https://arxiv.org/abs/2603.10794v1",
+      "source": "arXiv"
+    }
+  ],
+  "web_search": [
+    {
+      "title": "Plastic recycling: A panacea or environmental pollution problem",
+      "url": "https://www.nature.com/articles/s44296-024-00024-w",
+      "source": "WEB"
+    },
+    {
+      "title": "Plastic Pollution Impacts and Solutions - World Resources Institute",
+      "url": "https://www.wri.org/insights/plastic-pollution-global-plastics-treaty-explained",
+      "source": "WEB"
+    },
+    {
+      "title": "Sustainable Management of Plastics | US EPA",
+      "url": "https://www.epa.gov/plastics",
+      "source": "WEB"
+    },
+    {
+      "title": "Current practices of plastic waste management, environmental impacts ...",
+      "url": "https://www.sciencedirect.com/science/article/pii/S2405844024168697",
+      "source": "WEB"
+    },
+    {
+      "title": "Plastic pollution | UNEP - UN Environment Programme",
+      "url": "https://www.unep.org/topics/chemicals-and-pollution-action/plastic-pollution",
+      "source": "WEB"
+    }
+  ],
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL"
+}

@@ -1,0 +1,131 @@
+{
+  "axis": "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL",
+  "fetched_at": "2026-03-13T13:55:29.113881+00:00",
+  "smart_query": "Human rights implementation worldwide today",
+  "sources_count": {
+    "wiki": 0,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "analysis": {
+    "summary": "[arXiv]\n- Human-Centred LLM Privacy Audits: Findings and Frictions\n- LLMs in social services: How does chatbot accuracy affect human accuracy?\n\n[GitHub]\n- cirosantilli/china-dictatorship star=2886: 反中",
+    "sentiment": "NEUTRAL",
+    "urgency": "LOW",
+    "key_developments": []
+  },
+  "sentiment": "NEUTRAL",
+  "urgency": "LOW",
+  "summary": "[arXiv]\n- Human-Centred LLM Privacy Audits: Findings and Frictions\n- LLMs in social services: How does chatbot accuracy affect human accuracy?\n\n[GitHub]\n- cirosantilli/china-dictatorship star=2886: 反中",
+  "key_developments": [],
+  "open_source_momentum": "",
+  "scientific_frontier": "",
+  "news_items": [],
+  "github_repos": [
+    {
+      "title": "cirosantilli/china-dictatorship",
+      "snippet": "反中共政治宣传库。Anti Chinese government propaganda. 住在中国真名用户的网友请别给星星，不然你要被警察请喝茶。常见问答集，新闻集和饭店和音乐建议。卐习万岁卐。冠状病毒审查郝海东新疆改造中心六四事件法轮功 996.ICU709大抓捕巴拿马文件邓家贵低端人口西藏骚乱。Friends who live in China and have real name on ac",
+      "stars": 2886,
+      "url": "https://github.com/cirosantilli/china-dictatorship",
+      "updated": "2026-03-13",
+      "source": "GitHub"
+    },
+    {
+      "title": "iiab/iiab",
+      "snippet": "Internet-in-a-Box - Build your own LIBRARY OF ALEXANDRIA with a Raspberry Pi !",
+      "stars": 1778,
+      "url": "https://github.com/iiab/iiab",
+      "updated": "2026-03-13",
+      "source": "GitHub"
+    },
+    {
+      "title": "namecoin/ncdns",
+      "snippet": ":globe_with_meridians: Namecoin to DNS bridge daemon",
+      "stars": 141,
+      "url": "https://github.com/namecoin/ncdns",
+      "updated": "2026-02-27",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Human-Centred LLM Privacy Audits: Findings and Frictions",
+      "snippet": "Large language models (LLMs) learn statistical associations from massive training corpora and user interactions, and deployed systems can surface or infer information about individuals. Yet people lack practical ways to inspect what a model associates with their name. We report interim findings from",
+      "url": "https://arxiv.org/abs/2603.12094v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "LLMs in social services: How does chatbot accuracy affect human accuracy?",
+      "snippet": "Social service programs like the Supplemental Nutrition Assistance Program (SNAP, or food stamps) have eligibility rules that can be challenging to understand. For nonprofit caseworkers who often support clients in navigating a dozen or more complex programs, LLM-based chatbots may offer a means to ",
+      "url": "https://arxiv.org/abs/2603.11213v1",
+      "source": "arXiv"
+    }
+  ],
+  "youtube_transcripts": [],
+  "podcast": "[#234 – David Duvenaud on why 'aligned AI' would still kill democracy] Democracy might be a brief historical blip. That’s the unsettling thesis of a recent paper, which argues AI that can do all the work a human can do inevitably leads to the “gradual disempowerment” of humanity.For most of history, ordinary people had almost no control over their governments. Liberal democracy emerged only recently, and probably not coincidentally around the Industrial Revolution.To",
+  "youtube_videos": [
+    {
+      "title": "YouTube:ECJZnyakbX8",
+      "video_id": "ECJZnyakbX8",
+      "url": "https://www.youtube.com/watch?v=ECJZnyakbX8",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:nDgIVseTkuE",
+      "video_id": "nDgIVseTkuE",
+      "url": "https://www.youtube.com/watch?v=nDgIVseTkuE",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:fKFi8SpIOB4",
+      "video_id": "fKFi8SpIOB4",
+      "url": "https://www.youtube.com/watch?v=fKFi8SpIOB4",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:h-bYMQRT9ik",
+      "video_id": "h-bYMQRT9ik",
+      "url": "https://www.youtube.com/watch?v=h-bYMQRT9ik",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:Cto_bUrKyyY",
+      "video_id": "Cto_bUrKyyY",
+      "url": "https://www.youtube.com/watch?v=Cto_bUrKyyY",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:6e8m8L9BFa4",
+      "video_id": "6e8m8L9BFa4",
+      "url": "https://www.youtube.com/watch?v=6e8m8L9BFa4",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:nB2Jsukci_g",
+      "video_id": "nB2Jsukci_g",
+      "url": "https://www.youtube.com/watch?v=nB2Jsukci_g",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:Z7LM-T4eOP8",
+      "video_id": "Z7LM-T4eOP8",
+      "url": "https://www.youtube.com/watch?v=Z7LM-T4eOP8",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:zCXooiCDIxU",
+      "video_id": "zCXooiCDIxU",
+      "url": "https://www.youtube.com/watch?v=zCXooiCDIxU",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:XXCHD1hUrOs",
+      "video_id": "XXCHD1hUrOs",
+      "url": "https://www.youtube.com/watch?v=XXCHD1hUrOs",
+      "source": "YouTube"
+    }
+  ]
+}

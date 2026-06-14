@@ -1,0 +1,152 @@
+{
+  "axis": "CLIMATE_GLOBAL_RISK_REVIEW",
+  "domain": "planet",
+  "timestamp": "2026-05-04T14:06:16.383710+00:00",
+  "sources_count": 11,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] In what ways do extreme weather events result from climate change? | DW News - YouTube",
+      "summary": "In climate news, the planet is on track to log its second hottest year on record this year. That's according to Europe's global warming monitor. New data from the Copernicus Climate Change Service shows that at 225 is currently tied with 2023 after a historic high recorded in 2024, making them the three hottest years ever recorded. The agency's latest report shows the three-year averages on track to exceed one and a half degree Celsius above pre-industrial levels. For the first time, you'll recall that's the threshold targeted in the 2015 Paris Climate Accord. Well, Samantha Burgess is strategically lead for climate in the Copernicus Climate Change Service, which produced that report. Welcome to DW. So is global warming accelerating or how do you interpret this new data? Yes, the trajector",
+      "link": "https://www.youtube.com/watch?v=B7Q8cw5JPiU",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "B7Q8cw5JPiU",
+      "transcript_method": "whisper",
+      "transcript_chars": 4102,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] What Climate Science Actually Says About Extreme Weather - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] 2025 Climate Speaker - Roger Pielke, Jr. (The Honest Broker)https://atkinson.cornell.edu/climatespkrsRecorded at Cornell University - November 12, 2025 Published November 13, 2025",
+      "link": "https://www.youtube.com/watch?v=6bMG2Ds0sVA",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "6bMG2Ds0sVA",
+      "transcript_method": "description",
+      "transcript_chars": 202,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] EXPLAINED: How Climate Change is Fueling Extreme Weather | Dawn News English - YouTube",
+      "summary": "I came to a meet up with the Acha la huella sevita ma. Acha la huella sevita ma. Acha la huella sevita ma. Acha la huella sevita ma. Acha la huella sevita ma. Acha la huella sevita ma. Acha la huella sevita ma. Acha la huella sevita ma. Acha la huella sevita ma. Acha la huella sevita ma. Acha la huella sevita ma. Acha la huella sevita ma. Acha la huella sevita ma. Acha la huella sevita ma. Acha la huella sevita ma. Acha la huella sevita ma. Acha la huella sevita ma. We will be able to build our homes in a way that we can build our homes. Climate change can also play role into all of this. That means warm temperatures and dry atmosphere becomes more frequent. The reason is really typically the atmosphere at warm is to take up more water. Which also makes it as a colleague of mine called it ",
+      "link": "https://www.youtube.com/watch?v=UhxhDsVzFmU",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "UhxhDsVzFmU",
+      "transcript_method": "whisper",
+      "transcript_chars": 1944,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "Повишено ниво на кlimatologic risk, споделено в различни източници, включително със статии от Carbon Brief и YouTube-а.",
+    "root_cause": "Повишено ниво на global warming, със статия от Carbon Brief, където се признава, че 2025 г. е третото най-тъмно години в историята, и със YouTube-а, където се признава, че El Niño приближава се и че това може да доведе до повече сблъквания с кlimatologic events.",
+    "severity": "HIGH",
+    "leverage_points": [
+      "Експертната институция, като Copernicus Climate Change Service, е върнала се към 2023 г. като най-тъмна година, което подчертава високото рисково ниво.",
+      "YouTube-а е изложил на публикуване, че El Niño приближава се и че това може да доведе до повече сблъквания с кlimatologic events."
+    ],
+    "proposed_actions": [
+      {
+        "action": "Използване на моделите за прогнозиране на кlimatologic events, като се използват traditionall models и AI-модели.",
+        "measurable_goal": "Проверка на точността на прогнозирането на кlimatologic events през 2025 г. чрез сравнение на резултатите от AI и traditionall models.",
+        "timeframe": "дългосрочно"
+      }
+    ],
+    "evidence": [
+      "Статия от Carbon Brief, където се признава, че 2025 г. е третото най-тъмно години в историята.",
+      "YouTube-а, където се признава, че El Niño приближава се и че това може да доведе до повече сблъквания с кlimatologic events."
+    ],
+    "generalization": "Този проблем е свързан с домейните на кlimatologic risk и на прогнозирането на кlimatologic events. Той подчертава високото рисково ниво и изисква активен подход за улеснение на прогнозирането и предотвратяване на сблъквания.",
+    "summary": "Повишено ниво на кlimatologic risk, споделено в различни източници, включително със статии от Carbon Brief и YouTube-а. Това подчертава високото рисково ниво и изисква активен подход за улеснение на прогнозирането и предотвратяване на сблъквания.",
+    "risk_level": "HIGH"
+  },
+  "raw_items": [
+    {
+      "title": "LAGEOS: An Earth Science Mission Built for Enduring Precision",
+      "summary": "On May 4, 1976, a spacecraft resembling a disco ball entered orbit almost 3,700 miles (6,000 kilometers) above Earth. This shiny, two‑foot‑wide (60‑centimeter) sphere called the Laser Geodynamics Satellite, or LAGEOS, is covered with 426 retroreflectors—small mirrored prisms designed to bounce laser light directly back to where it came from. Beneath its aluminum exterior sits [&#8230;]",
+      "link": "https://www.nasa.gov/missions/lageos/lageos-an-earth-science-mission-built-for-enduring-precision/",
+      "published": "Mon, 04 May 2026 13:15:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "NASA Kennedy Center Director Announces Plans to Retire",
+      "summary": "NASA announced Friday Janet Petro, center director for the agency’s Kennedy Space Center in Florida, is retiring. Prior to joining NASA, Petro worked in a variety of military and industry positions, ultimately beginning her career at the agency in 2007 and working her way up to center director, as well as serving as acting administrator [&#8230;]",
+      "link": "https://www.nasa.gov/news-release/nasa-kennedy-center-director-announces-plans-to-retire/",
+      "published": "Fri, 01 May 2026 17:01:48 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "NASA Artemis II Crew Rings Nasdaq Closing Bell",
+      "summary": "Nasdaq Chair and Chief Executive Officer Adena T. Friedman, left, and NASA’s Artemis II crewmembers CSA (Canadian Space Agency) astronaut Jeremy Hansen, and NASA astronauts Christina Koch, Victor Glover, and Reid Wiseman, right, ring the closing bell of the Nasdaq market session, Thursday, April 30, 2026. NASA’s Artemis II mission took Wiseman, Glover, Koch, and [&#8230;]",
+      "link": "https://www.nasa.gov/image-article/nasa-artemis-ii-crew-rings-nasdaq-closing-bell/",
+      "published": "Fri, 01 May 2026 16:08:05 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Key Support Equipment Arrives at Kennedy for Roman Space Telescope",
+      "summary": "Technicians at NASA’s Payload Hazardous Servicing Facility (PHSF) at the agency’s Kennedy Space Center in Florida offloaded eight high-efficiency particulate air (HEPA) wall modules and other ground support equipment on April 27. The equipment will support launch processing of the agency’s Nancy Grace Roman Space Telescope. Each 1,800-pound module enhances the&#160;PHSF’s&#160;clean room systems, helping meet [&#8230;]",
+      "link": "https://www.nasa.gov/image-article/key-support-equipment-arrives-at-kennedy-for-roman-space-telescope/",
+      "published": "Fri, 01 May 2026 15:44:03 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "DeBriefed 1 May 2026: Countries chart path away from fossil fuels | China’s clean-tech surge | Global forest loss slows",
+      "summary": "<p>Welcome to Carbon Brief’s DeBriefed.&#160;An essential guide to the week&#8217;s key developments relating to climate...</p>\n<p>The post <a href=\"https://www.carbonbrief.org/debriefed-1-may-2026-countries-chart-path-away-from-fossil-fuels-chinas-clean-tech-surge-global-forest-loss-slows/\">DeBriefed 1 May 2026: Countries chart path away from fossil fuels | China’s clean-tech surge | Global forest loss slows</a> appeared first on <a href=\"https://www.carbonbrief.org\">Carbon Brief</a>.</p>",
+      "link": "https://www.carbonbrief.org/debriefed-1-may-2026-countries-chart-path-away-from-fossil-fuels-chinas-clean-tech-surge-global-forest-loss-slows/",
+      "published": "Fri, 01 May 2026 15:28:36 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Santa Marta: Key outcomes from first summit on ‘transitioning away’ from fossil fuels",
+      "summary": "<p>Countries attending a first-of-its-kind summit have walked away with plans to develop national roadmaps away...</p>\n<p>The post <a href=\"https://www.carbonbrief.org/santa-marta-key-outcomes-from-first-summit-on-transitioning-away-from-fossil-fuels/\">Santa Marta: Key outcomes from first summit on ‘transitioning away’ from fossil fuels</a> appeared first on <a href=\"https://www.carbonbrief.org\">Carbon Brief</a>.</p>",
+      "link": "https://www.carbonbrief.org/santa-marta-key-outcomes-from-first-summit-on-transitioning-away-from-fossil-fuels/",
+      "published": "Thu, 30 Apr 2026 15:37:28 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "China Briefing 30 April 2026: Fossil fuel ‘strict controls’ | El Niño approaches | Why cleantech exports have surged",
+      "summary": "<p>Welcome to Carbon Brief’s China Briefing. China Briefing handpicks and explains the most important climate...</p>\n<p>The post <a href=\"https://www.carbonbrief.org/china-briefing-30-april-2026-fossil-fuel-strict-controls-el-nino-approaches-why-cleantech-exports-have-surged/\">China Briefing 30 April 2026: Fossil fuel ‘strict controls’ | El Niño approaches | Why cleantech exports have surged</a> appeared first on <a href=\"https://www.carbonbrief.org\">Carbon Brief</a>.</p>",
+      "link": "https://www.carbonbrief.org/china-briefing-30-april-2026-fossil-fuel-strict-controls-el-nino-approaches-why-cleantech-exports-have-surged/",
+      "published": "Thu, 30 Apr 2026 14:09:29 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Traditional models still ‘outperform AI’ for extreme weather forecasts",
+      "summary": "<p>Computer models that use artificial intelligence (AI) cannot forecast record-breaking weather as well as traditional...</p>\n<p>The post <a href=\"https://www.carbonbrief.org/traditional-models-still-outperform-ai-for-extreme-weather-forecasts/\">Traditional models still &#8216;outperform AI&#8217; for extreme weather forecasts</a> appeared first on <a href=\"https://www.carbonbrief.org\">Carbon Brief</a>.</p>",
+      "link": "https://www.carbonbrief.org/traditional-models-still-outperform-ai-for-extreme-weather-forecasts/",
+      "published": "Wed, 29 Apr 2026 18:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] In what ways do extreme weather events result from climate change? | DW News - YouTube",
+      "summary": "In climate news, the planet is on track to log its second hottest year on record this year. That's according to Europe's global warming monitor. New data from the Copernicus Climate Change Service shows that at 225 is currently tied with 2023 after a historic high recorded in 2024, making them the three hottest years ever recorded. The agency's latest report shows the three-year averages on track to exceed one and a half degree Celsius above pre-industrial levels. For the first time, you'll recall that's the threshold targeted in the 2015 Paris Climate Accord. Well, Samantha Burgess is strategically lead for climate in the Copernicus Climate Change Service, which produced that report. Welcome to DW. So is global warming accelerating or how do you interpret this new data? Yes, the trajector",
+      "link": "https://www.youtube.com/watch?v=B7Q8cw5JPiU",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "B7Q8cw5JPiU",
+      "transcript_method": "whisper",
+      "transcript_chars": 4102,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] What Climate Science Actually Says About Extreme Weather - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] 2025 Climate Speaker - Roger Pielke, Jr. (The Honest Broker)https://atkinson.cornell.edu/climatespkrsRecorded at Cornell University - November 12, 2025 Published November 13, 2025",
+      "link": "https://www.youtube.com/watch?v=6bMG2Ds0sVA",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "6bMG2Ds0sVA",
+      "transcript_method": "description",
+      "transcript_chars": 202,
+      "has_full_transcript": false
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+MODEL: qwen3:8b
+
+PROMPT:
+
+Ти си QWEN_PLANET_SNAPSHOT_AGENT, част от CORTEX++_QWEN.
+
+ЗАДАЧА:
+  - Генерираш КОМПАКТЕН JSON snapshot за една ос.
+  - Отговаряш САМО с един валиден JSON обект, БЕЗ никакъв текст преди или след него.
+  - НЕ използвай префикси като "Thinking..." или "done thinking.".
+  - LEVEL трябва да е LOW, MEDIUM или HIGH.
+  - SIGNALS са 3–5 много кратки bullets (по 1 изречение).
+  - KEY_METRICS са 3–7 метрики с име и кратко текстово описание (без числа).
+
+ОС:
+  - ENERGY_REVIEW (Енергийна система)
+
+ИЗХОД (примерен формат, който трябва да спазиш):
+
+{
+  "axis": "ENERGY_REVIEW",
+  "level": "MEDIUM",
+  "signals": [
+    "кратък сигнал 1",
+    "кратък сигнал 2",
+    "кратък сигнал 3"
+  ],
+  "key_metrics": [
+    { "name": "metric_1", "description": "кратко текстово описание на метриката" },
+    { "name": "metric_2", "description": "кратко текстово описание" }
+  ]
+}
+
+Върни само реален JSON обект в този формат, без допълнителен текст.
+
+
+RESPONSE:
+Thinking...
+Okay, let's tackle this query. The user wants me to act as QWEN_PLANET_SNAPSHOT_AGENT and generate a compact JSON snapshot for the ENERGY_REVIEW axis. The output needs to be in a specific format with level, signals, and key_metrics.
+
+First, I need to determine the level. The options are LOW, MEDIUM, or HIGH. Since ENERGY_REVIEW is a system that's likely under some scrutiny but not in critical failure, MEDIUM seems appropriate.
+
+Next, the signals. They should be 3-5 short bullets. Let me think about current issues in energy reviews. Maybe delays in renewable integration, regulatory hurdles, and public opposition to new projects. That covers different aspects.
+
+For key_metrics, I need 3-7 metrics with names and descriptions. Let's include things like Renewable Integration Rate, Regulatory Approval Time, Public Opposition Rate, Grid Stability Index, Energy Cost Variance, and Carbon Emission Reduction. Each should have a concise description without numbers.
+
+I need to make sure the JSON is valid, no extra text, and follows the structure exactly. Let me double-check the example provided to ensure alignment. No prefixes, just the JSON object. Alright, putting it all together now.
+...done thinking.
+
+{
+  "axis": "ENERGY_REVIEW",
+  "level": "MEDIUM",
+  "signals": [
+    "Задължителни проверки за въглищни инфраструктури се удължават",
+    "Реновиране на ветерански енергийни централи се забавя",
+    "Нови източници на енергия се изследват със съмнителни резултати"
+  ],
+  "key_metrics": [
+    { "name": "renewable_integration_rate", "description": "Процент от новите енергийни проекти със зелени технологии" },
+    { ""name": "regulatory_approval_time", "description": "Средно време за одобрение на енергийни проекти" },
+    { "name": "grid_stability_index", "description": "Мерка за стабилност на енергийната мрежа" },
+    { "name": "energy_cost_variance", "description": "Разлика между очаквани и реални енергийни разходи" },
+    { "name": "carbon_emission_reduction", "description": "Процент на намалени въглеродни емисии от 2020 г." }
+  ]
+}

@@ -1,0 +1,117 @@
+{
+  "axis": "EDUCATION_CULTURE_REVIEW",
+  "domain": "civilization",
+  "timestamp": "2026-05-17T14:20:41.454829+00:00",
+  "sources_count": 9,
+  "rss_count": 4,
+  "ddg_count": 4,
+  "youtube_count": 1,
+  "youtube_items": [
+    {
+      "title": "[YT] Why the Middle East’s Borders Guarantee Forever Wars - YouTube",
+      "summary": "this video is made possible by nebula use the link down in the description below to support real life lore directly by signing up where you can watch 25 additional and exclusive full-length videos in my ongoing nebula modern conflict series covering recent major Wars and crises including this video's next part covering how Isis was able to rise to power in Iraq and Syria throughout all of our lifetimes the Middle East is a region that has been nearly synonymous with Warfare instability and conflict you've heard nearly every single year of your life about some kind of conflict going on in this place regardless of when you were born because conflicts have been raging here without a pause for nearly the entirety of the past Century just since the turn of the 21st century alone there have been",
+      "link": "https://www.youtube.com/watch?v=JN4mnVLP0rU",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "JN4mnVLP0rU",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "Нестабилността на цифровата образователна инфраструктура в училищата води до уязвимост към кибератаки и ограничава достъпа до еднакво качество образование",
+    "root_cause": "Недостатъчна инвестиция в сигурността на образователните платформи и липса на строги стандарти за одобрение на софтуер в училищата",
+    "severity": "HIGH",
+    "leverage_points": [
+      "Регулатори и правителствени органи, които задължават стандарти за сигурност и одобрение на образователни технологии",
+      "Образователни институции и училища, които инвестират в сигурност и тренировки за преподаватели"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Законодателни мерки за задължително одобрение на образователни софтуери от независими експерти",
+        "measurable_goal": "Всички нови образователни софтуери да са одобрени от независима комисия за сигурност и ефективност",
+        "timeframe": "дългосрочно"
+      },
+      {
+        "action": "Развитие на общински центрове за обучение на преподаватели в областта на цифровата сигурност и устойчивост на образователната инфраструктура",
+        "measurable_goal": "Увеличение на броя на преподавателите с обучение в областта на киберсигурност от 15% до 50% за следващите 3 години",
+        "timeframe": "средносрочно"
+      }
+    ],
+    "evidence": [
+      "Latest Canvas Attack Shows Schools Still Struggle With Cybersecurity",
+      "Screen Time Concerns Lead to Backlash Against Edtech Vetting Process"
+    ],
+    "generalization": "Този проблем е свързан с домейните 'civilization' и 'technology', като влияе директно върху устойчивостта на образователната система и здравето на биосферата чрез уязвимостта на инфраструктурата",
+    "summary": "Уязвимостта на образователната инфраструктура предизвиква рискове за сигурността и равенство в образованието. Законодателни и образователни действия са необходими за подобряване на този проблем.",
+    "risk_level": "HIGH"
+  },
+  "raw_items": [
+    {
+      "title": "The Pandemic Hindered English Learners' Literacy. This Ohio District Is Turning the Tide.",
+      "summary": "&quot;We want to help the students continue to thrive, and really everything that we're thinking about with our student services is equitable learning ...",
+      "link": "https://www.edsurge.com/news/2026-05-13-the-pandemic-hindered-english-learners-literacy-this-ohio-district-is-turning-the-tide",
+      "published": "Wed, 13 May 2026 17:43:32 -0700",
+      "source_type": "rss"
+    },
+    {
+      "title": "Latest Canvas Attack Shows Schools Still Struggle With Cybersecurity",
+      "summary": "A cyberattack against one of the world’s largest digital education platforms has forced attention onto the vulnerability of U.S. schools’ data. ...",
+      "link": "https://www.edsurge.com/news/2026-05-12-latest-canvas-attack-shows-schools-still-struggle-with-cybersecurity",
+      "published": "Tue, 12 May 2026 11:29:33 -0700",
+      "source_type": "rss"
+    },
+    {
+      "title": "LGBTQ+ Youth Mental Health Is Suffering, but Schools Are Poised to Help",
+      "summary": "“One of the most important findings is that when adults, institutions, and communities become more affirming, the suicide risk of LGBTQ+ young people ...",
+      "link": "https://www.edsurge.com/news/2026-05-08-lgbtq-youth-mental-health-is-suffering-but-schools-are-poised-to-help",
+      "published": "Fri, 08 May 2026 16:30:50 -0700",
+      "source_type": "rss"
+    },
+    {
+      "title": "Screen Time Concerns Lead to Backlash Against Edtech Vetting Process",
+      "summary": "SCHOOL SOFTWARE SCRUTINY: Legislators have pushed back against cellphones in the classroom but are now focused on ensuring school software on devices ...",
+      "link": "https://www.edsurge.com/news/2026-05-07-screen-time-concerns-lead-to-backlash-against-edtech-vetting-process",
+      "published": "Thu, 07 May 2026 13:07:40 -0700",
+      "source_type": "rss"
+    },
+    {
+      "title": "Global education",
+      "summary": "Global education is a mental development program that seeks to improve global human development based on the understanding of global dynamics, through the various sectors of human development delivery. In formal education, as a mode of human development delivery, it is integrated into formal educational programs, as an advanced program where global dimensions to local problems are appreciated thro",
+      "link": "https://en.wikipedia.org/wiki/Global_education",
+      "source_type": "ddg"
+    },
+    {
+      "title": "primarysource.org/about-us/what-is-global-education",
+      "summary": "A global education is one that incorporates learning about the cultures, geographies, histories, and current issues of all the world’s regions.",
+      "link": "https://primarysource.org/about-us/what-is-global-education/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Literacy",
+      "summary": "Literacy is the ability to read and write, and illiteracy is the inability to read and write. Some researchers suggest that the study of literacy as a concept can be divided into two periods: the period before 1950, when literacy was understood solely as alphabetical literacy (understanding the meanings of words without necessarily being able to use words); and the period after 1950, when literacy",
+      "link": "https://en.wikipedia.org/wiki/Literacy",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Find and save ideas about literacy resources online on Pinterest.",
+      "summary": "Discover Pinterest’s best ideas and inspiration for Literacy resources online. Get inspired and try out new things. Last updated 3d.",
+      "link": "https://www.pinterest.com/ideas/literacy-resources-online/895104067051/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "[YT] Why the Middle East’s Borders Guarantee Forever Wars - YouTube",
+      "summary": "this video is made possible by nebula use the link down in the description below to support real life lore directly by signing up where you can watch 25 additional and exclusive full-length videos in my ongoing nebula modern conflict series covering recent major Wars and crises including this video's next part covering how Isis was able to rise to power in Iraq and Syria throughout all of our lifetimes the Middle East is a region that has been nearly synonymous with Warfare instability and conflict you've heard nearly every single year of your life about some kind of conflict going on in this place regardless of when you were born because conflicts have been raging here without a pause for nearly the entirety of the past Century just since the turn of the 21st century alone there have been",
+      "link": "https://www.youtube.com/watch?v=JN4mnVLP0rU",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "JN4mnVLP0rU",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ]
+}

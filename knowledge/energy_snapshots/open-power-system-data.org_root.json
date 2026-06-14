@@ -1,0 +1,11 @@
+{
+  "source_name": "Open Power System Data (OPSD)",
+  "source_url": "https://open-power-system-data.org",
+  "docs": "https://open-power-system-data.org/docs",
+  "notes": "Детайлни данни за електрическа генерация и дистрибуция в Европа, включително възобновяеми източници и резервни мощности.",
+  "ok": false,
+  "data": {
+    "error": "HTTPSConnectionPool(host='open-power-system-data.org', port=443): Max retries exceeded with url: / (Caused by ConnectTimeoutError(<urllib3.connection.HTTPSConnection object at 0x7ab847af9ac0>, 'Connection to open-power-system-data.org timed out. (connect timeout=15)'))",
+    "fetched_at": "2026-02-27T11:30:10.916395"
+  }
+}

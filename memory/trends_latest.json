@@ -1,0 +1,229 @@
+{
+  "date": "2026-06-10",
+  "timestamp": "2026-06-10T19:50:12.576516+00:00",
+  "axes_tracked": 27,
+  "improving": [],
+  "deteriorating": [],
+  "stable": [
+    "ECONOMY_WORK_REVIEW",
+    "EDUCATION_CULTURE_REVIEW",
+    "GOVERNANCE_INSTITUTIONS_REVIEW",
+    "INEQUALITY_POVERTY_REVIEW",
+    "INFRASTRUCTURE_CITIES_REVIEW",
+    "TECHNOLOGY_AI_REVIEW",
+    "TECHNOLOGY_INFRA_REVIEW",
+    "CLIMATE_GLOBAL_RISK_REVIEW",
+    "COSMIC_RESOURCES_REVIEW",
+    "SPACE_INFRASTRUCTURE_REVIEW",
+    "COGNITION_LEARNING_REVIEW",
+    "CULTURE_MEDIA_REVIEW",
+    "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL",
+    "HUMAN_WELL_BEING_REVIEW",
+    "SOCIAL_RELATIONS_REVIEW",
+    "ECOSYSTEMS_BIODIVERSITY_REVIEW",
+    "ENERGY_REVIEW",
+    "FOOD_REVIEW",
+    "MATERIALS_WASTE_REVIEW",
+    "WATER_REVIEW"
+  ],
+  "insufficient_data": [
+    "BODY_SCAN",
+    "DEEP_TIME_RISKS_REVIEW",
+    "GENERAL_SELF_REVIEW",
+    "GOAL_PROGRESS_REVIEW",
+    "LONG_TERM_FUTURE_REVIEW",
+    "OPENCLAW_SOLUTIONS",
+    "PLANETARY_POTENTIAL_REVIEW"
+  ],
+  "details": {
+    "BODY_SCAN": {
+      "trend": "INSUFFICIENT_DATA",
+      "score_today": null,
+      "score_prev": null,
+      "metrics_count": 0,
+      "history_days": 1
+    },
+    "ECONOMY_WORK_REVIEW": {
+      "trend": "STABLE",
+      "score_today": 66.03,
+      "score_prev": 66.03,
+      "metrics_count": 3,
+      "history_days": 44
+    },
+    "EDUCATION_CULTURE_REVIEW": {
+      "trend": "STABLE",
+      "score_today": 60.24,
+      "score_prev": 60.24,
+      "metrics_count": 3,
+      "history_days": 44
+    },
+    "GOVERNANCE_INSTITUTIONS_REVIEW": {
+      "trend": "STABLE",
+      "score_today": 13.82,
+      "score_prev": 13.82,
+      "metrics_count": 18,
+      "history_days": 30
+    },
+    "INEQUALITY_POVERTY_REVIEW": {
+      "trend": "STABLE",
+      "score_today": 89.6,
+      "score_prev": 89.6,
+      "metrics_count": 1,
+      "history_days": 44
+    },
+    "INFRASTRUCTURE_CITIES_REVIEW": {
+      "trend": "STABLE",
+      "score_today": 56.42,
+      "score_prev": 56.42,
+      "metrics_count": 3,
+      "history_days": 44
+    },
+    "TECHNOLOGY_AI_REVIEW": {
+      "trend": "STABLE",
+      "score_today": 42.45,
+      "score_prev": 42.45,
+      "metrics_count": 3,
+      "history_days": 44
+    },
+    "TECHNOLOGY_INFRA_REVIEW": {
+      "trend": "STABLE",
+      "score_today": 60.05,
+      "score_prev": 60.05,
+      "metrics_count": 2,
+      "history_days": 44
+    },
+    "CLIMATE_GLOBAL_RISK_REVIEW": {
+      "trend": "STABLE",
+      "score_today": 41.93,
+      "score_prev": 41.93,
+      "metrics_count": 8,
+      "history_days": 30
+    },
+    "COSMIC_RESOURCES_REVIEW": {
+      "trend": "STABLE",
+      "score_today": 100.0,
+      "score_prev": 100.0,
+      "metrics_count": 1,
+      "history_days": 44
+    },
+    "DEEP_TIME_RISKS_REVIEW": {
+      "trend": "INSUFFICIENT_DATA",
+      "score_today": null,
+      "score_prev": null,
+      "metrics_count": 0,
+      "history_days": 1
+    },
+    "GENERAL_SELF_REVIEW": {
+      "trend": "INSUFFICIENT_DATA",
+      "score_today": null,
+      "score_prev": null,
+      "metrics_count": 0,
+      "history_days": 1
+    },
+    "GOAL_PROGRESS_REVIEW": {
+      "trend": "INSUFFICIENT_DATA",
+      "score_today": null,
+      "score_prev": null,
+      "metrics_count": 0,
+      "history_days": 1
+    },
+    "LONG_TERM_FUTURE_REVIEW": {
+      "trend": "INSUFFICIENT_DATA",
+      "score_today": null,
+      "score_prev": null,
+      "metrics_count": 0,
+      "history_days": 1
+    },
+    "SPACE_INFRASTRUCTURE_REVIEW": {
+      "trend": "STABLE",
+      "score_today": 100.0,
+      "score_prev": 100.0,
+      "metrics_count": 2,
+      "history_days": 44
+    },
+    "COGNITION_LEARNING_REVIEW": {
+      "trend": "STABLE",
+      "score_today": 74.92,
+      "score_prev": 74.92,
+      "metrics_count": 3,
+      "history_days": 44
+    },
+    "CULTURE_MEDIA_REVIEW": {
+      "trend": "STABLE",
+      "score_today": 75.87,
+      "score_prev": 75.87,
+      "metrics_count": 3,
+      "history_days": 44
+    },
+    "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL": {
+      "trend": "STABLE",
+      "score_today": 15.14,
+      "score_prev": 15.14,
+      "metrics_count": 2,
+      "history_days": 30
+    },
+    "HUMAN_WELL_BEING_REVIEW": {
+      "trend": "STABLE",
+      "score_today": 76.6,
+      "score_prev": 76.6,
+      "metrics_count": 4,
+      "history_days": 44
+    },
+    "SOCIAL_RELATIONS_REVIEW": {
+      "trend": "STABLE",
+      "score_today": 76.18,
+      "score_prev": 76.18,
+      "metrics_count": 2,
+      "history_days": 44
+    },
+    "OPENCLAW_SOLUTIONS": {
+      "trend": "INSUFFICIENT_DATA",
+      "score_today": null,
+      "score_prev": null,
+      "metrics_count": 0,
+      "history_days": 1
+    },
+    "ECOSYSTEMS_BIODIVERSITY_REVIEW": {
+      "trend": "STABLE",
+      "score_today": 31.14,
+      "score_prev": 31.14,
+      "metrics_count": 1,
+      "history_days": 30
+    },
+    "ENERGY_REVIEW": {
+      "trend": "STABLE",
+      "score_today": 55.67,
+      "score_prev": 55.67,
+      "metrics_count": 2,
+      "history_days": 41
+    },
+    "FOOD_REVIEW": {
+      "trend": "STABLE",
+      "score_today": 100.0,
+      "score_prev": 100.0,
+      "metrics_count": 1,
+      "history_days": 30
+    },
+    "MATERIALS_WASTE_REVIEW": {
+      "trend": "STABLE",
+      "score_today": 13.43,
+      "score_prev": 13.43,
+      "metrics_count": 4,
+      "history_days": 30
+    },
+    "PLANETARY_POTENTIAL_REVIEW": {
+      "trend": "INSUFFICIENT_DATA",
+      "score_today": null,
+      "score_prev": null,
+      "metrics_count": 0,
+      "history_days": 1
+    },
+    "WATER_REVIEW": {
+      "trend": "STABLE",
+      "score_today": 65.01,
+      "score_prev": 65.01,
+      "metrics_count": 6,
+      "history_days": 30
+    }
+  }
+}

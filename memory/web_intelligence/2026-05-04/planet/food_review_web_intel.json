@@ -1,0 +1,89 @@
+{
+  "axis": "FOOD_REVIEW",
+  "domain": "planet",
+  "timestamp": "2026-05-04T14:34:47.433601+00:00",
+  "sources_count": 5,
+  "rss_count": 0,
+  "ddg_count": 4,
+  "youtube_count": 1,
+  "youtube_items": [
+    {
+      "title": "[YT] Inside Africa's Food Forest Mega-Project - YouTube",
+      "summary": "Welcome to one of the largest-scale land restoration projects on the planet. Before this work, people relied on food aid just to survive. But 10 years ago, a vast, barren wasteland began to transform. And now, half a million people are feeding themselves from this land. So could this work be the key to ending hunger in Africa and beyond? Let's find out. I'm traveling in the Sahelode Africa with the largest humanitarian agency on Earth, the United Nations World Food Program, the first responders to hunger in war zones and disasters. But what I came here to see is the mind-blowing work they're doing to actually solve hunger by fixing the underlying problem. Because when soiled blow away and the land desertifies, people can't feed themselves. But what I'm witnessing here is the repair of soil",
+      "link": "https://www.youtube.com/watch?v=xbBdIG--b58",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "xbBdIG--b58",
+      "transcript_method": "whisper",
+      "transcript_chars": 11185,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "Повече от 40% от населението на Африка не има стабилно достъп до храна, което се свърже с неравенство и бедност в региона.",
+    "root_cause": "Недостатък на инфраструктура, низка интелигентност на населението и непълна поддръжка на селскотводството в региона са причинени от глобални промени и непълна устойчивост на биосфери.",
+    "severity": "MEDIUM",
+    "leverage_points": [
+      "Регионалната институция (например Африканска организация за екология и инфраструктура) има най-голям ефект върху проблема",
+      "Публични хранителни институции и селскотводствени фермери са втори точки на лост"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Проведене на масови селскотводствени фермерски институции в района",
+        "measurable_goal": "Повече от 50% от населението на Африка ще имат достъп до храна през 2027-2028 г. г. г.",
+        "timeframe": "дългосрочно"
+      },
+      {
+        "action": "Разпространение на инфраструктура за хранителна индустрия",
+        "measurable_goal": "Повече от 30% от хранителните институции в района ще имат стабилна инфраструктура през 2027-2028 г. г. г.",
+        "timeframe": "средносрочно"
+      }
+    ],
+    "evidence": [
+      "Данни от World Food Programme показат, че 40% от населението на Африка е в статус на бедност",
+      "YouTube-трансскрипцията показва, че 500 000 души са се изправили на хранителна бедност в района"
+    ],
+    "generalization": "Този проблем е свързан с неравенство, бедност и непълна устойчивост на биосфери, които са причинени от глобални промени и непълна поддръжка на селскотводството.",
+    "summary": "Регионални институции и селскотводствени фермери са ключови актьори, които могат да се използват за решаване на проблема. Дългосрочни инвеститации в инфраструктура и селскотводството могат да доведат до устойчиво решение.",
+    "risk_level": "MEDIUM"
+  },
+  "raw_items": [
+    {
+      "title": "Food security",
+      "summary": "Food security is the state of having reliable access to a sufficient quantity of affordable, healthy food. The availability of food for people of any class, gender, status, ethnicity, or religion is another element of food protection. Similarly, household food security is considered to exist when all the members of a family have consistent access to enough food for an active, healthy life. Food-se",
+      "link": "https://en.wikipedia.org/wiki/Food_security",
+      "source_type": "ddg"
+    },
+    {
+      "title": "What is food security? | World Food Programme",
+      "summary": "Learn what food security means and why it matters for people's well-being and stability. Find out how WFP collects and uses data to measure food insecurity and improve access to food in crisis-affected areas.",
+      "link": "https://www.wfp.org/stories/food-security-what-it-means-and-why-it-matters",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Hunger",
+      "summary": "In politics, humanitarian aid, and the social sciences, hunger is defined as a condition in which an individual does not have the physical or financial capability to consume sufficient food to meet basic nutritional needs for a sustained period. In the field of hunger relief, the term hunger is used in a sense that surpasses the typical desire for food that all humans experience, also referred to ",
+      "link": "https://en.wikipedia.org/wiki/Hunger",
+      "source_type": "ddg"
+    },
+    {
+      "title": "What Is Hunger? | Action Against Hunger",
+      "summary": "January 13, 2026 - Hunger is defined by the United Nations as the periods when people experience severe food insecurity—meaning that they go for entire days without eating due to lack of money, access to food, or other resources.",
+      "link": "https://www.actionagainsthunger.org/the-hunger-crisis/world-hunger-facts/what-is-hunger/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "[YT] Inside Africa's Food Forest Mega-Project - YouTube",
+      "summary": "Welcome to one of the largest-scale land restoration projects on the planet. Before this work, people relied on food aid just to survive. But 10 years ago, a vast, barren wasteland began to transform. And now, half a million people are feeding themselves from this land. So could this work be the key to ending hunger in Africa and beyond? Let's find out. I'm traveling in the Sahelode Africa with the largest humanitarian agency on Earth, the United Nations World Food Program, the first responders to hunger in war zones and disasters. But what I came here to see is the mind-blowing work they're doing to actually solve hunger by fixing the underlying problem. Because when soiled blow away and the land desertifies, people can't feed themselves. But what I'm witnessing here is the repair of soil",
+      "link": "https://www.youtube.com/watch?v=xbBdIG--b58",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "xbBdIG--b58",
+      "transcript_method": "whisper",
+      "transcript_chars": 11185,
+      "has_full_transcript": true
+    }
+  ]
+}

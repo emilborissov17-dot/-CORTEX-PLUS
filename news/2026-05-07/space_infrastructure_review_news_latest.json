@@ -1,0 +1,44 @@
+{
+  "axis": "SPACE_INFRASTRUCTURE_REVIEW",
+  "fetched_at": "2026-05-07T10:35:16.607871+00:00",
+  "smart_query": "space exploration NASA SpaceX",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 0,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "Cornell Students Aid NASA with Drone Safety in Sky",
+      "snippet": "A team of Cornell University students are turning heads within industry and the federal government with the results of their research into creating a national air transportation management system in which thousands of drones could safely operate together. NASA is sponsoring their work through the Un",
+      "url": "https://www.nasa.gov/aeronautics/usrc-cornell-drone-safety/",
+      "source": "RSS"
+    },
+    {
+      "title": "A Sea of Spinning Clouds",
+      "snippet": "Icy, isolated Peter I Island stirred up a show in the atmosphere off the West Antarctic coast.",
+      "url": "https://science.nasa.gov/earth/earth-observatory/a-sea-of-spinning-clouds/",
+      "source": "RSS"
+    },
+    {
+      "title": "Ames Science Stars of the Month May 2026",
+      "snippet": "NASA Ames Science Directorate Stars of the Month: May 2026 The NASA Ames Science Directorate recognizes the outstanding contributions of (pictured left to right) Lora Jovanović, Tammy Moore, Frances Donovan, and Jaden Ta. Their commitment to the NASA mission represents the entrepreneurial spirit, te",
+      "url": "https://www.nasa.gov/general/ames-science-stars-of-the-month-may-2026/",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [],
+  "arxiv_papers": [],
+  "podcast": "[#494 – Jensen Huang: NVIDIA – The $4 Trillion Company & the AI Revolution] Jensen Huang is the co-founder and CEO of NVIDIA, the world&#8217;s most valuable company and the engine powering the AI computing revolution.\nThank you for listening ❤ Check out our sponsors: https://lexfridman.com/sponsors/ep494-sc\nSee below for timestamps, transcript, and to give feedback, submit questions, contact Lex, etc.\nTranscript:\nhttps://lexfridman.com/jensen-huang-transcript\nCONTACT LEX",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

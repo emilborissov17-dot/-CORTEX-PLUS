@@ -1,0 +1,57 @@
+{
+  "axis": "INEQUALITY_POVERTY_REVIEW",
+  "fetched_at": "2026-04-30T08:25:02.904857+00:00",
+  "smart_query": "inequality poverty wealth gap",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "Oil price hits highest since 2022 after report Trump to be briefed on new Iran options",
+      "snippet": "Axios reported that US Central Command has prepared a plan for a wave of \"short and powerful\" strikes on Iran.",
+      "url": "https://www.bbc.com/news/articles/cx21m88rd14o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Comey surrenders over charge of threatening Trump's life in Instagram post",
+      "snippet": "Prosecutors say a 2025 seashell photo posted by the former FBI director was a call for violence against Trump.",
+      "url": "https://www.bbc.com/news/articles/c70vzj1nrddo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Jewish agency warned of 'high' threat level ahead of Bondi shooting, report finds",
+      "snippet": "Gun reforms should be prioritised and policing around Jewish events increased, royal commission says.",
+      "url": "https://www.bbc.com/news/articles/cdjpw0n889yo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [],
+  "arxiv_papers": [
+    {
+      "title": "Poverty traps are rare, but trappedness isn't",
+      "snippet": "The persistence of poverty is not well explained by who is poor. We argue the relevant object of measurement is trappedness--expected escape time from deprivation--which varies systematically across institutional environments and is invisible to standard poverty indices. Using Markov chains estimate",
+      "url": "https://arxiv.org/abs/2603.18716v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Measuring the depth of multidimensional poverty with ordinal data",
+      "snippet": "This paper proposes a positional poverty gap measure of multidimensional poverty within the Alkire-Foster counting framework. The measure captures the depth of deprivations even when indicators are ordinal, unlike the standard poverty gap, which requires cardinal variables. The proposed method draws",
+      "url": "https://arxiv.org/abs/2603.15149v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[Village gossip, pesticide bans, and gene drives: 17 experts on the future of global health] What does it really take to lift millions out of poverty and prevent needless deaths?In this special compilation episode, 17 past guests — including economists, nonprofit founders, and policy advisors — share their most powerful and actionable insights from the front lines of global health and development. You’ll hear about the critical need to boost agricultural productivity in sub-Saharan Africa",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

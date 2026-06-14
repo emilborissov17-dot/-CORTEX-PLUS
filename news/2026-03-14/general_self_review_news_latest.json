@@ -1,0 +1,82 @@
+{
+  "axis": "GENERAL_SELF_REVIEW",
+  "fetched_at": "2026-03-14T07:11:24.919949+00:00",
+  "smart_query": "artificial intelligence progress",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "Games with loot boxes to get minimum 16 age rating across Europe",
+      "snippet": "The new changes by the Pan-European Game Information age-ratings body (PEGI) will start from June.",
+      "url": "https://www.bbc.com/news/articles/cge84xqjg5lo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "AI toys for children misread emotions and respond inappropriately, researchers warn",
+      "snippet": "In first study of its kind, Cambridge researchers found AI toys could misread some children's emotions.",
+      "url": "https://www.bbc.com/news/articles/clyg4wx6nxgo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Grammarly pulls AI author-impersonation tool after backlash",
+      "snippet": "Writers criticised the feature which used their names and styles as \"AI personas\" without consent.",
+      "url": "https://www.bbc.com/news/articles/cx28v08jpe7o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "microsoft/autogen",
+      "snippet": "A programming framework for agentic AI",
+      "stars": 55590,
+      "url": "https://github.com/microsoft/autogen",
+      "updated": "2026-03-14",
+      "source": "GitHub"
+    },
+    {
+      "title": "2noise/ChatTTS",
+      "snippet": "A generative speech model for daily dialogue.",
+      "stars": 38929,
+      "url": "https://github.com/2noise/ChatTTS",
+      "updated": "2026-03-14",
+      "source": "GitHub"
+    },
+    {
+      "title": "letta-ai/letta",
+      "snippet": "Letta is the platform for building stateful agents: AI with advanced memory that can learn and self-improve over time.",
+      "stars": 21568,
+      "url": "https://github.com/letta-ai/letta",
+      "updated": "2026-03-14",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Increasing intelligence in AI agents can worsen collective outcomes",
+      "snippet": "When resources are scarce, will a population of AI agents coordinate in harmony, or descend into tribal chaos? Diverse decision-making AI from different developers is entering everyday devices -- from phones and medical devices to battlefield drones and cars -- and these AI agents typically compete ",
+      "url": "https://arxiv.org/abs/2603.12129v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Cascade: Composing Software-Hardware Attack Gadgets for Adversarial Threat Amplification in Compound AI Systems",
+      "snippet": "Rapid progress in generative AI has given rise to Compound AI systems - pipelines comprised of multiple large language models (LLM), software tools and database systems. Compound AI systems are constructed on a layered traditional software stack running on a distributed hardware infrastructure. Many",
+      "url": "https://arxiv.org/abs/2603.12023v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[#486 – Michael Levin: Hidden Reality of Alien Intelligence & Biological Life] Michael Levin is a biologist at Tufts University working on novel ways to understand and control complex pattern formation in biological systems.\nThank you for listening ❤ Check out our sponsors: https://lexfridman.com/sponsors/ep486-sc\nSee below for timestamps, transcript, and to give feedback, submit questions, contact Lex, etc.\nTranscript:\nhttps://lexfridman.com/michael-levin-2-transcript\nCONTA",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

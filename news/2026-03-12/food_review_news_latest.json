@@ -1,0 +1,140 @@
+{
+  "axis": "FOOD_REVIEW",
+  "fetched_at": "2026-03-12T18:28:31.145519+00:00",
+  "smart_query": "Countries with moderate hunger issues worldwide",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 0,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "analysis": {
+    "summary": "Изследванията в областта на оценката на храните имат потенциал да подобрят устойчивостта на цивилизацията. Технологиите като Neural Field Thermal Tomography и FruitNeRF могат да бъдат използвани за оценка на качеството на храните. Това може да допринесе за достойнството на хората чрез осигуряване на висококачествена храна.",
+    "key_developments": [
+      "FruitNeRF",
+      "Neural Field Thermal Tomography"
+    ],
+    "sentiment": "POSITIVE",
+    "urgency": "MEDIUM",
+    "open_source_momentum": "High, with projects like meyerls/FruitNeRF and px39n/Awesome-Precision-Agriculture having a significant number of stars on GitHub",
+    "scientific_frontier": "Cutting-edge research in areas like Surface Light Field Tokenization and Neural Field Thermal Tomography is being published on arXiv",
+    "relevance_to_goal": "Medium, as sustainable food production and evaluation can contribute to a sustainable civilization and dignity for all"
+  },
+  "sentiment": "POSITIVE",
+  "urgency": "MEDIUM",
+  "summary": "Изследванията в областта на оценката на храните имат потенциал да подобрят устойчивостта на цивилизацията. Технологиите като Neural Field Thermal Tomography и FruitNeRF могат да бъдат използвани за оценка на качеството на храните. Това може да допринесе за достойнството на хората чрез осигуряване на висококачествена храна.",
+  "key_developments": [
+    "FruitNeRF",
+    "Neural Field Thermal Tomography"
+  ],
+  "open_source_momentum": "High, with projects like meyerls/FruitNeRF and px39n/Awesome-Precision-Agriculture having a significant number of stars on GitHub",
+  "scientific_frontier": "Cutting-edge research in areas like Surface Light Field Tokenization and Neural Field Thermal Tomography is being published on arXiv",
+  "github_repos": [
+    {
+      "title": "meyerls/FruitNeRF",
+      "snippet": "[IROS24] Offical Code for \"FruitNeRF: A Unified Neural Radiance Field based Fruit Counting Framework\" - Inegrated into Nerfstudio",
+      "stars": 324,
+      "url": "https://github.com/meyerls/FruitNeRF",
+      "updated": "2026-03-11",
+      "source": "GitHub"
+    },
+    {
+      "title": "px39n/Awesome-Precision-Agriculture",
+      "snippet": "Advancement of UAV, deep Learning and cutting edged technologies and papers in Precision Agriculture. ",
+      "stars": 132,
+      "url": "https://github.com/px39n/Awesome-Precision-Agriculture",
+      "updated": "2026-02-15",
+      "source": "GitHub"
+    },
+    {
+      "title": "nesl/agrobot",
+      "snippet": "Neural-Kalman GNSS/INS Navigation for Precision Agriculture",
+      "stars": 79,
+      "url": "https://github.com/nesl/agrobot",
+      "updated": "2026-03-10",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "LiTo: Surface Light Field Tokenization",
+      "snippet": "We propose a 3D latent representation that jointly models object geometry and view-dependent appearance. Most prior works focus on either reconstructing 3D geometry or predicting view-independent diffuse appearance, and thus struggle to capture realistic view-dependent effects. Our approach leverage",
+      "url": "https://arxiv.org/abs/2603.11047v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Neural Field Thermal Tomography: A Differentiable Physics Framework for Non-Destructive Evaluation",
+      "snippet": "We propose Neural Field Thermal Tomography (NeFTY), a differentiable physics framework for the quantitative 3D reconstruction of material properties from transient surface temperature measurements. While traditional thermography relies on pixel-wise 1D approximations that neglect lateral diffusion, ",
+      "url": "https://arxiv.org/abs/2603.11045v1",
+      "source": "arXiv"
+    }
+  ],
+  "youtube_transcripts": [],
+  "podcast": "Live event info and tickets here.If something is going wrong in your workplace, there's probably a law that explains why. Meetings always seem long, and never end early? There’s Parkinson’s Law, which says work expands to the time allotted, or, restated: meetings will always take up all the time blocked on Outlook calendars. Is your boss bad at managing? Check the Peter Principle, which says peopl | What do we want from sports? The very best athletes competing as hard as they know how, putting all their effort and training and natural ability to the test against their opponents. But this time of year, that’s not the product the NBA is putting on the court. Instead, teams at the bottom of the league are competing … to lose, because it could help them get a top pick in next year’s draft. It’s c",
+  "youtube_videos": [
+    {
+      "title": "YouTube:eLEc7f8krro",
+      "video_id": "eLEc7f8krro",
+      "url": "https://www.youtube.com/watch?v=eLEc7f8krro",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:Qn2lGJyevjs",
+      "video_id": "Qn2lGJyevjs",
+      "url": "https://www.youtube.com/watch?v=Qn2lGJyevjs",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:IRw5GxVtSSs",
+      "video_id": "IRw5GxVtSSs",
+      "url": "https://www.youtube.com/watch?v=IRw5GxVtSSs",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:Ke06QUfOeTE",
+      "video_id": "Ke06QUfOeTE",
+      "url": "https://www.youtube.com/watch?v=Ke06QUfOeTE",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:kB85FYBH_M4",
+      "video_id": "kB85FYBH_M4",
+      "url": "https://www.youtube.com/watch?v=kB85FYBH_M4",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:z2o1gtbzMLY",
+      "video_id": "z2o1gtbzMLY",
+      "url": "https://www.youtube.com/watch?v=z2o1gtbzMLY",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:nw0BKZCFq7M",
+      "video_id": "nw0BKZCFq7M",
+      "url": "https://www.youtube.com/watch?v=nw0BKZCFq7M",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:Y_DyucyiBjw",
+      "video_id": "Y_DyucyiBjw",
+      "url": "https://www.youtube.com/watch?v=Y_DyucyiBjw",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:XD8N8fFbDps",
+      "video_id": "XD8N8fFbDps",
+      "url": "https://www.youtube.com/watch?v=XD8N8fFbDps",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:uMBQ80MahV4",
+      "video_id": "uMBQ80MahV4",
+      "url": "https://www.youtube.com/watch?v=uMBQ80MahV4",
+      "source": "YouTube"
+    }
+  ]
+}

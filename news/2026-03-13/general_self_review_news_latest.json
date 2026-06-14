@@ -1,0 +1,180 @@
+{
+  "axis": "GENERAL_SELF_REVIEW",
+  "fetched_at": "2026-03-13T13:54:51.860988+00:00",
+  "smart_query": "\"Самооценка на личностно развитие и прогрес\"",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 3,
+    "arxiv": 2,
+    "github": 3,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "analysis": {
+    "summary": "Системата CORTEX++ оценява развитието на AGI и устойчiva общочовешка цивилизация. Източниците сочат, че развитията в областта на AI и AGI бързо напредват. Системата следи източниците за да събере информация за последните разработки и тенденции в областта.",
+    "key_developments": [
+      "Games with loot boxes to get minimum 16 age rating across Europe",
+      "AI toys for children misread emotions and respond inappropriately, researchers warn",
+      "Increasing intelligence in AI agents can worsen collective outcomes"
+    ],
+    "sentiment": "NEUTRAL",
+    "urgency": "MEDIUM",
+    "open_source_momentum": "Платформата за агентен AI microsoft/autogen има 55561 звезди, а генеративната речева модел 2noise/ChatTTS има 38925 звезди.",
+    "scientific_frontier": "Изследването Increasing intelligence in AI agents can worsen collective outcomes показва, че увеличаването на интелигентността на AI агентите може да влоши колективните резултати.",
+    "relevance_to_goal": "Тези разработки са важни за целта на системата CORTEX++ да създаде реален AGI, който съдейства за изграждането на устойчива общочовешка цивилизация."
+  },
+  "sentiment": "NEUTRAL",
+  "urgency": "MEDIUM",
+  "summary": "Системата CORTEX++ оценява развитието на AGI и устойчiva общочовешка цивилизация. Източниците сочат, че развитията в областта на AI и AGI бързо напредват. Системата следи източниците за да събере информация за последните разработки и тенденции в областта.",
+  "key_developments": [
+    "Games with loot boxes to get minimum 16 age rating across Europe",
+    "AI toys for children misread emotions and respond inappropriately, researchers warn",
+    "Increasing intelligence in AI agents can worsen collective outcomes"
+  ],
+  "open_source_momentum": "Платформата за агентен AI microsoft/autogen има 55561 звезди, а генеративната речева модел 2noise/ChatTTS има 38925 звезди.",
+  "scientific_frontier": "Изследването Increasing intelligence in AI agents can worsen collective outcomes показва, че увеличаването на интелигентността на AI агентите може да влоши колективните резултати.",
+  "news_items": [
+    {
+      "title": "Akıllı telefonlarda çok modlu yapay zekâ arkadaşı trendi büyüyor",
+      "snippet": "Akıllı telefonlarda çok modlu yapay zekâ arkadaşı trendi büyüyor",
+      "url": "https://www.teknolojioku.com/basin-bulteni/akilli-telefonlarda-cok-modlu-yapay-zeka-arkadasi-trendi-buyuyor-69791a3fbd657766da0c8408",
+      "source": "teknolojioku.com"
+    },
+    {
+      "title": "Yeni unicornlar yapay zekâdan çıkıyor | Türkiye Gazetesi",
+      "snippet": "Yeni unicornlar yapay zekâdan çıkıyor | Türkiye Gazetesi",
+      "url": "https://www.turkiyegazetesi.com.tr/teknoloji/yeni-unicornlar-yapay-zekadan-cikiyor-1762465",
+      "source": "turkiyegazetesi.com.tr"
+    },
+    {
+      "title": "Њу Делхи : Моди отворио сајам вештачке интелигенције",
+      "snippet": "Њу Делхи : Моди отворио сајам вештачке интелигенције",
+      "url": "https://www.politika.rs/scc/clanak/732673/nju-delhi-modi-otvorio-sajam-vestacke-inteligencije",
+      "source": "politika.rs"
+    },
+    {
+      "title": "Games with loot boxes to get minimum 16 age rating across Europe",
+      "snippet": "The new changes by the Pan-European Game Information age-ratings body (PEGI) will start from June.",
+      "url": "https://www.bbc.com/news/articles/cge84xqjg5lo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "AI toys for children misread emotions and respond inappropriately, researchers warn",
+      "snippet": "In first study of its kind, Cambridge researchers found AI toys could misread some children's emotions.",
+      "url": "https://www.bbc.com/news/articles/clyg4wx6nxgo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Grammarly pulls AI author-impersonation tool after backlash",
+      "snippet": "Writers criticised the feature which used their names and styles as \"AI personas\" without consent.",
+      "url": "https://www.bbc.com/news/articles/cx28v08jpe7o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "github_repos": [
+    {
+      "title": "microsoft/autogen",
+      "snippet": "A programming framework for agentic AI",
+      "stars": 55561,
+      "url": "https://github.com/microsoft/autogen",
+      "updated": "2026-03-13",
+      "source": "GitHub"
+    },
+    {
+      "title": "2noise/ChatTTS",
+      "snippet": "A generative speech model for daily dialogue.",
+      "stars": 38925,
+      "url": "https://github.com/2noise/ChatTTS",
+      "updated": "2026-03-13",
+      "source": "GitHub"
+    },
+    {
+      "title": "letta-ai/letta",
+      "snippet": "Letta is the platform for building stateful agents: AI with advanced memory that can learn and self-improve over time.",
+      "stars": 21553,
+      "url": "https://github.com/letta-ai/letta",
+      "updated": "2026-03-13",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Increasing intelligence in AI agents can worsen collective outcomes",
+      "snippet": "When resources are scarce, will a population of AI agents coordinate in harmony, or descend into tribal chaos? Diverse decision-making AI from different developers is entering everyday devices -- from phones and medical devices to battlefield drones and cars -- and these AI agents typically compete ",
+      "url": "https://arxiv.org/abs/2603.12129v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Cascade: Composing Software-Hardware Attack Gadgets for Adversarial Threat Amplification in Compound AI Systems",
+      "snippet": "Rapid progress in generative AI has given rise to Compound AI systems - pipelines comprised of multiple large language models (LLM), software tools and database systems. Compound AI systems are constructed on a layered traditional software stack running on a distributed hardware infrastructure. Many",
+      "url": "https://arxiv.org/abs/2603.12023v1",
+      "source": "arXiv"
+    }
+  ],
+  "youtube_transcripts": [],
+  "podcast": "[#493 – Jeff Kaplan: World of Warcraft, Overwatch, Blizzard, and Future of Gaming] Jeff Kaplan is a legendary Blizzard game designer of World of Warcraft and Overwatch, now preparing to launch a new game, The Legend of California, from his new studio Kintsugiyama &#8211; available to wishlist on Steam today, with alpha later in March.\nThank you for listening ❤ Check out our sponsors: https://lexfridman.com/sponsors/ep493-sc\nSee below for timestamps, and to give feedback, submit ",
+  "youtube_videos": [
+    {
+      "title": "YouTube:Z_zMULZieCo",
+      "video_id": "Z_zMULZieCo",
+      "url": "https://www.youtube.com/watch?v=Z_zMULZieCo",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:vzeS6rXikSc",
+      "video_id": "vzeS6rXikSc",
+      "url": "https://www.youtube.com/watch?v=vzeS6rXikSc",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:j-WT_4XXF5k",
+      "video_id": "j-WT_4XXF5k",
+      "url": "https://www.youtube.com/watch?v=j-WT_4XXF5k",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:M5WsWgiZtUg",
+      "video_id": "M5WsWgiZtUg",
+      "url": "https://www.youtube.com/watch?v=M5WsWgiZtUg",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:JVGktNp4p08",
+      "video_id": "JVGktNp4p08",
+      "url": "https://www.youtube.com/watch?v=JVGktNp4p08",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:bzSe4FszpuU",
+      "video_id": "bzSe4FszpuU",
+      "url": "https://www.youtube.com/watch?v=bzSe4FszpuU",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:bpYxqWJ4pWo",
+      "video_id": "bpYxqWJ4pWo",
+      "url": "https://www.youtube.com/watch?v=bpYxqWJ4pWo",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:lS8Whhfj-SM",
+      "video_id": "lS8Whhfj-SM",
+      "url": "https://www.youtube.com/watch?v=lS8Whhfj-SM",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:SMlGHuozF5Y",
+      "video_id": "SMlGHuozF5Y",
+      "url": "https://www.youtube.com/watch?v=SMlGHuozF5Y",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:yvZI-jeyxic",
+      "video_id": "yvZI-jeyxic",
+      "url": "https://www.youtube.com/watch?v=yvZI-jeyxic",
+      "source": "YouTube"
+    }
+  ]
+}

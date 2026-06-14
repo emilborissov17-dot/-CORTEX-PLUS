@@ -1,0 +1,117 @@
+{
+  "axis": "DEEP_TIME_RISKS_REVIEW",
+  "domain": "cosmos",
+  "timestamp": "2026-05-17T14:30:44.449212+00:00",
+  "sources_count": 11,
+  "rss_count": 4,
+  "ddg_count": 6,
+  "youtube_count": 1,
+  "youtube_items": [
+    {
+      "title": "[YT] The Fukushima Disaster: Japan’s Nuclear Nightmare - YouTube",
+      "summary": "[Music] I [Applause] hold on S [Music] [Applause] [Music] [Applause] it it in [Music] I 16,000 people died that day and 2500 went missing mommy for the rest it was a lifetime traumatic [Music] incident many many people lost [Music] everything but the worst was yet to come the earthquake created a power blackout at Fukushima daichi nuclear plant the emergency generator started but did not run for long the cooling pumps did not restart and about 45 minutes later later the tsunami reached the nuclear plant the entire nuclear plant quickly became out of control without the cooling pumps the temperature of each reactor went off the chart a multiple meltdown was threatening to happen starting March 12th 2011 one of the six reactor units exploded followed not long after by two others released an ",
+      "link": "https://www.youtube.com/watch?v=RSbAatRc7N4",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "RSbAatRc7N4",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "Рapid growth of nicotine pouches targeting youth, with limited regulation",
+    "root_cause": "Aggressive marketing strategies by nicotine pouch brands are attracting young consumers, while regulatory frameworks are insufficient to address the public health risk",
+    "severity": "HIGH",
+    "leverage_points": [
+      "World Health Organization (WHO) and regulatory bodies in key markets",
+      "Public awareness campaigns and youth education programs"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Implement stricter regulations on nicotine pouch advertising and sales to minors",
+        "measurable_goal": "Reduce youth access to nicotine pouches by 50% within 3 years",
+        "timeframe": "дългосрочно"
+      },
+      {
+        "action": "Launch global public awareness campaigns on the health risks of nicotine use",
+        "measurable_goal": "Increase awareness among youth by 70% within 2 years",
+        "timeframe": "средносрочно"
+      }
+    ],
+    "evidence": [
+      "WHO warns nicotine pouch brands targeting youth as sales surge",
+      "Limited regulation worldwide is cited as a key factor in the rapid growth of nicotine pouches"
+    ],
+    "generalization": "This issue is connected to the broader domains of public health, youth development, and regulatory policy, as it reflects the challenge of balancing commercial interests with health and safety",
+    "summary": "The rapid growth of nicotine pouches targeting youth, with limited regulation, poses a significant public health risk that requires immediate regulatory and educational intervention.",
+    "risk_level": "HIGH"
+  },
+  "raw_items": [
+    {
+      "title": "Epidemic of Ebola Disease caused by Bundibugyo virus in the Democratic Republic of the Congo and Uganda determined a public health emergency of international concern",
+      "summary": "Epidemic of Ebola Disease caused by Bundibugyo virus in the Democratic Republic of the Congo and Uganda determined a public health emergency of international concern",
+      "link": "https://www.who.int/news/item/17-05-2026-epidemic-of-ebola-disease-in-the-democratic-republic-of-the-congo-and-uganda-determined-a-public-health-emergency-of-international-concern",
+      "published": "Sat, 16 May 2026 23:21:17 Z",
+      "source_type": "rss"
+    },
+    {
+      "title": "WHO warns nicotine pouch brands targeting youth as sales surge",
+      "summary": "The World Health Organization (WHO) warns about the rapid growth and aggressive marketing of nicotine pouches, especially targeting youth, amid limited regulation worldwide. Nicotine pouches pose significant health risks and governments are urged to implement strong regulatory measures to prevent addiction and protect young people.",
+      "link": "https://www.who.int/news/item/15-05-2026-who-warns-nicotine-pouch-brands-targeting-youth-as-sales-surge",
+      "published": "Thu, 14 May 2026 17:26:02 Z",
+      "source_type": "rss"
+    },
+    {
+      "title": "Follow-up message by the WHO Director-General to the people of Tenerife regarding the hantavirus response",
+      "summary": "A message from the Director-General of the World Health Organization expressing gratitude to the people of Tenerife for their solidarity and successful cooperation during the operation to safely disembark and care for over 120 passengers from 23 countries amid an outbreak of hantavirus.",
+      "link": "https://www.who.int/news/item/14-05-2026-follow-up-message-by-the-who-director-general-to-the-people-of-tenerife-regarding-the-hantavirus-response",
+      "published": "Thu, 14 May 2026 13:27:15 Z",
+      "source_type": "rss"
+    },
+    {
+      "title": "Tunisia validated by WHO as having eliminated trachoma as a public health problem",
+      "summary": "Tunisia has been officially validated by the World Health Organization (WHO) as having eliminated trachoma as a public health problem, marking a significant achievement after decades of sustained effort.",
+      "link": "https://www.who.int/news/item/14-05-2026-tunisia-validated-by-who-as-having-eliminated-trachoma-as-a-public-health-problem",
+      "published": "Thu, 14 May 2026 09:23:04 Z",
+      "source_type": "rss"
+    },
+    {
+      "title": "Asteroid impact",
+      "summary": "An impact event is a collision between astronomical objects causing measurable effects. Impact events have been found to regularly occur in planetary systems, though the most frequent involve asteroids, comets or meteoroids and have minimal effect. When large objects impact terrestrial planets such as the Earth, there can be significant physical and biospheric consequences, as the impacting body i",
+      "link": "https://en.wikipedia.org/wiki/Asteroid_impact",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Impact event - Wikipedia",
+      "summary": "Besides the direct effect of asteroid impacts on a planet's surface topography, global climate and life, recent studies have shown that several ...",
+      "link": "https://en.wikipedia.org/wiki/Impact_event",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Asteroid impact avoidance - Wikipedia",
+      "summary": "Asteroid impact avoidance encompasses the methods by which near-Earth objects (NEO) on a potential collision course with Earth could be diverted ...",
+      "link": "https://en.wikipedia.org/wiki/Asteroid_impact_avoidance",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Pandemic Response Accountability Committee",
+      "summary": "The Pandemic Response Accountability Committee (PRAC) is an independent oversight committee within the Council of the Inspectors General on Integrity and Efficiency, created by the Coronavirus Aid, Relief, and Economic Security (CARES) Act of 2020 to ensure that the $2.2 trillion of the CARES act, plus 5 other pandemic-related pieces of legislation totaling over $5 trillion in government funds, we",
+      "link": "https://en.wikipedia.org/wiki/Pandemic_Response_Accountability_Committee",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Tool for Influenza Pandemic Risk Assessment",
+      "summary": "The Tool for Influenza Pandemic Risk Assessment (TIPRA) is a standardized framework developed by the World Health Organization (WHO) to evaluate the pandemic potential of influenza A viruses, focusing on their ability to acquire sustained human-to-h…",
+      "link": "https://grokipedia.com/page/tool_for_influenza_pandemic_risk_assessment",
+      "source_type": "ddg"
+    },
+    {
+      "title": "From Detection to Decision-Making: Understanding Pandemic Risk",
+      "summary": "Pandemic Risk Assessment is an emerging scientific toolkit designed to assess how pandemic risk is evolving over time. Rather than predicting the next outbreak...",
+      "link": "https://www.globaldispatches.org/p/understanding-pandemic-risk",
+      "source_type": "ddg"
+    }
+  ]
+}

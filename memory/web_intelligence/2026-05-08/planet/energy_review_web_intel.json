@@ -1,0 +1,147 @@
+{
+  "axis": "ENERGY_REVIEW",
+  "domain": "planet",
+  "timestamp": "2026-05-08T09:40:11.306265+00:00",
+  "sources_count": 15,
+  "rss_count": 12,
+  "ddg_count": 0,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] The Energy Revolution is Unstoppable: Record Solar and Wind Additions in 2025 - YouTube",
+      "summary": "The world added a staggering amount of wind and solar power in 2025 and the numbers were incredible. Hello my friends, welcome to the channel. I'm Sam Evans and this is video number 8,100. I've done many videos about wind and solar and batteries and how important they are to the planet, but what just happened in 2025 is truly truly astonishing. New data from global energy think tank Ember shows that 814 gawatt of new solar and wind capacity came online last year which was an increase of 17% from 2024's 696 gaw. That brings total global wind and solar capacity to 4,174 gaw or just over 4 terowatt. That sounds like a lot and it is. It's huge. But actually a lot of wind and solar was also wasted. Completely wasted in 2025. Curtailed the industry calls it. In fact, at least $30 billion was was",
+      "link": "https://www.youtube.com/watch?v=spSOp5s_6_A",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "spSOp5s_6_A",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Renewable energy met all new demand for electricity in 2025: report - YouTube",
+      "summary": "New data this week shows there's serious progress being made around the world on renewable energy as energy shocks from the restricted Strait of Hormuz continue to highlight, of course, the world's dependence on fossil fuels. So, for more on all of this, let's go to the CBC's Anand Ram. He joins us now live. Okay, so the the headlines here seem to be about solar power. What more do we know about that? &gt;&gt; Absolutely. In two reports this week, one from the International Energy Agency and one from Ember, their think tank in the UK, solar is everywhere. It's growth. Basically, its rise from 2024 to 2025 was faster and higher than any other fuel source. And that, interestingly enough, is driven by investment from big polluters like China and India, who contribute to a lot of CO2 emissions",
+      "link": "https://www.youtube.com/watch?v=DMsjUM4cEq0",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "DMsjUM4cEq0",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Will Renewable Energy Dominate in 2025? - YouTube",
+      "summary": "welcome to Renee energy.com on YouTube the hub for all things renewable energy and sustainability our channel is dedicated to bringing you the latest Innovations and insights in green energy including Cutting Edge developments like green hydrogen whether you're a sustainability veteran or just beginning your journey we have something for everyone join us on this channel to explore inspiring projects for a sustainable tomorrow we bring you the latest and renewable energy sustainability and Cutting Edge Technologies and don't forget for more in-depth information and resources visit our website and subscribe to our newsletter for the latest updates and exclusive content welcome to Rene energy.com your go-to source for the latest insights in renewable energy and sustainable technology as the w",
+      "link": "https://www.youtube.com/watch?v=N43dSWuYF3Y",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "N43dSWuYF3Y",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "Недостатъчна надеждност на електрическата мрежа за да посрещне големите потребности на големите данни центрове",
+    "root_cause": "Бързият растеж на данните центровете и липсата на адекватна инфраструктура за да посрещне увеличаващите се потребности",
+    "severity": "HIGH",
+    "leverage_points": [
+      "Регулаторите на електрическата мрежа, които могат да установят правила и регулации за да гарантират надеждността на мрежата",
+      "Инвеститорите в инфраструктурата на данните центрове, които могат да планират и инвестират в нови капацитети и технологии за да подобрят ефективността и надеждността на данните центрове"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Разработване на планове за разширение и модернизация на електрическата мрежа",
+        "measurable_goal": "Намаление на броя на авариите и прекъсванията в електроснабдяването с 20% през следващите 2 години",
+        "timeframe": "средносрочно"
+      },
+      {
+        "action": "Извършване на проучвания и оценки на потенциала за внедряване на нови технологии за данни центрове, които да намалят потреблението на електроенергия",
+        "measurable_goal": "Намаление на потреблението на електроенергия в данните центрове с 15% през следващите 3 години",
+        "timeframe": "дългосрочно"
+      }
+    ],
+    "evidence": [
+      "NERC издаде Level 3 Alert за да се решат рисковете, свързани с големите данни центрове",
+      "Потреблението на електроенергия от данните центрове се очаква да нарасне значително в следващите години"
+    ],
+    "generalization": "Този проблем е свързан с домейна на цивилизацията, тъй като данните центрове играят важна роля в модерната икономика и общество, и недостатъчната инфраструктура може да има значителни последствия за стабилността и развитието на цивилизацията",
+    "summary": "Недостатъчната надеждност на електрическата мрежа за да посрещне големите потребности на големите данни центрове е сериозен проблем, който изисква бързо действие от регулаторите и инвеститорите за да се гарантира стабилността и развитието на цивилизацията.",
+    "risk_level": "HIGH"
+  },
+  "raw_items": [
+    {
+      "title": "EV Penetration Continues to Grow Down Under — April Update",
+      "summary": "<p>In April 2026, 25,087 plugin vehicles were sold into the Australian market, out of 94,049 total vehicle sales. This represents almost 27% of the market. Battery electric vehicles achieved 15,459 units sold, and plugin hybrids 9,628. Month on month, BEV numbers appear to have stayed steady, while PHEVs have increased.   ... [continued]</p>\n<p>The post <a href=\"https://cleantechnica.com/2026/05/07/ev-penetration-continues-to-grow-down-under-april-update/\">EV Penetration Continues to Grow Down U",
+      "link": "https://cleantechnica.com/2026/05/07/ev-penetration-continues-to-grow-down-under-april-update/",
+      "published": "Fri, 08 May 2026 03:58:30 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "XPENG Unveils The “World Model Accelerator” X-Cache, Which Requires No Training, Is Plug-And-Play, And Boosts Inference Speed By 2.7 Times",
+      "summary": "<p>Guangzhou, May 6, 2026 — XPENG (NYSE: XPEV, HKEX: 9868), a leading China-based high-tech company, previously released the X-World technical report and demonstrated the practical value of this technology in XPENG&#8217;s autonomous driving. Recently, XPENG once again announced advancements in world model technology, the X-Cache technical report. X-Cache leverages the continuity   ... [continued]</p>\n<p>The post <a href=\"https://cleantechnica.com/2026/05/07/xpeng-unveils-the-world-model-acceler",
+      "link": "https://cleantechnica.com/2026/05/07/xpeng-unveils-the-world-model-accelerator-x-cache-which-requires-no-training-is-plug-and-play-and-boosts-inference-speed-by-2-7-times/",
+      "published": "Fri, 08 May 2026 03:57:15 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "1st Robotaxi Service in Europe",
+      "summary": "<p>Europe finally has a robotaxi service, years after the first robotaxis launched in the US and China (in 2020 in both places). The new robotaxi service didn&#8217;t launch in one of Europe&#8217;s larger, more famous countries, but in the small country of Croatia on the Adriatic Sea (which, by the   ... [continued]</p>\n<p>The post <a href=\"https://cleantechnica.com/2026/05/07/1st-robotaxi-service-in-europe/\">1st Robotaxi Service in Europe</a> appeared first on <a href=\"https://cleantechnica.co",
+      "link": "https://cleantechnica.com/2026/05/07/1st-robotaxi-service-in-europe/",
+      "published": "Fri, 08 May 2026 03:50:11 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "SEC Moves Toward Rescinding Climate Disclosure Rule, Retreating Further From Investor Protection",
+      "summary": "<p>SEC Moves Toward Rescinding Climate Disclosure Rule, Retreating Further From Investor Protection WASHINGTON, D.C. — The Securities and Exchange Commission has submitted a proposed rule titled “Rescission of Climate-Related Disclosure Rules” to the White House Office of Management and Budget for review, advancing the agency’s effort to formally rescind its 2024 climate disclosure   ... [continued]</p>\n<p>The post <a href=\"https://cleantechnica.com/2026/05/07/sec-moves-toward-rescinding-climate",
+      "link": "https://cleantechnica.com/2026/05/07/sec-moves-toward-rescinding-climate-disclosure-rule-retreating-further-from-investor-protection/",
+      "published": "Fri, 08 May 2026 03:19:18 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Could this privately funded bill assistance program be the key to lower payments?",
+      "summary": "The California Public Utilities Commission approved a program allowing Pacific Gas and Electric Company and Citizens Energy Corporation to invest in energy bill assistance for low-income households.",
+      "link": "https://www.renewableenergyworld.com/energy-business/policy-and-regulation/could-this-privately-funded-bill-assistance-program-be-the-key-to-lower-payments/",
+      "published": "Thu, 07 May 2026 18:32:40 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "G&W Electric adds more grid monitoring capabilities to its portfolio",
+      "summary": "G&#038;W Electric acquired Safegrid, a Finland-based grid monitoring solutions provider, enhancing its digital capabilities for utilities.",
+      "link": "https://www.renewableenergyworld.com/power-grid/grid-modernization/gw-electric-adds-more-grid-monitoring-capabilities-to-its-portfolio/",
+      "published": "Thu, 07 May 2026 18:08:45 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Affordability and reliability define the data center wave",
+      "summary": "To meet electricity demands of data centers, the US power grid will need to expand and evolve in ways that require stakeholders to rethink traditional frameworks.",
+      "link": "https://www.renewableenergyworld.com/power-grid/affordability-and-reliability-define-the-data-center-wave/",
+      "published": "Thu, 07 May 2026 13:06:55 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "NERC issues Level 3 Alert to address ‘immediate risks’ data center loads pose to the grid",
+      "summary": "The North American Electric Reliability Corporation issued a Level 3 Essential Action Alert on May 4, urging grid operators to address risks from large data center loads.",
+      "link": "https://www.renewableenergyworld.com/power-grid/nerc-issues-level-3-alert-to-address-immediate-risks-data-center-loads-pose-to-the-grid/",
+      "published": "Wed, 06 May 2026 18:23:57 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "More Than 40 India-Bound Ships Remain Trapped Near Hormuz",
+      "summary": "More than 40 India-bound vessels, nearly half of which carry energy products, are still trapped in the Persian Gulf, unable to pass through the Strait of Hormuz, officials told Indian outlet The Economic Times on Friday. The ships are laden with crude oil, liquefied petroleum gas (LPG), and LNG, as well as fertilizer and other products.    A total of 13 ships flagged to India are still stuck west of the Strait of Hormuz, according to the Indian government. The Indian authorities have drafted a l",
+      "link": "https://oilprice.com/Latest-Energy-News/World-News/More-Than-40-India-Bound-Ships-Remain-Trapped-Near-Hormuz.html",
+      "published": "Fri, 08 May 2026 04:30:00 -0500",
+      "source_type": "rss"
+    },
+    {
+      "title": "A Golden Opportunity for Canada’s Oil and Gas Industry",
+      "summary": "Canada has a “golden opportunity” to become a major global oil player as the war in the Middle East limits sources of crude and natural gas, the head of the International Energy Agency said, adding that “The cost of missing this train will be incredible,” as quoted by Bloomberg. Fatih Birol said the world was losing 14 million barrels in daily supply because of the war, and reliability has gained even more prominence for importers of energy commodities. After the war ends, the IEA’s secretary ge",
+      "link": "https://oilprice.com/Latest-Energy-News/World-News/A-Golden-Opportunity-for-Canadas-Oil-and-Gas-Industry.html",
+      "published": "Fri, 08 May 2026 03:30:00 -0500",
+      "source_type": "rss"
+    }
+  ]
+}

@@ -1,0 +1,88 @@
+{
+  "axis": "CLIMATE_GLOBAL_RISK_REVIEW",
+  "domain": "planet",
+  "timestamp": "2026-05-01T13:34:54.603733+00:00",
+  "sources_count": 8,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 0,
+  "youtube_items": [],
+  "analysis": {
+    "summary": "2-3 ключови събития върху климатското риска, които показват тенденция към устойчиво развитие и улучдаване на визията на CORTEX++.",
+    "risk_level": "MEDIUM",
+    "trend": "IMPROVING",
+    "key_events": [
+      "Ново събитие: Hubble изобразява съществуващата галаксия NGC 3137, което показва устойчиво развитие на научното осмисляне на климатското риска.",
+      "Ново съ-founded: Cyclone Maila изпрати леден буря, която е превърнала във възможност за устойчиво управление на възможните ледени слоеве в горите.",
+      "Ново събитие: Първото съвет за превод от фуломенти, което показва тенденция към устойчиво развитие на енергетическите институти."
+    ],
+    "insights": [
+      "Тенденция към устойчиво развитие на климатското риска е очевидна, особено във възможните ледени слоеве в горите и във възможните енергетически институти.",
+      "Новите събития показват устойчиво развитие на научното осмисляне и на енергетическите институти, което е в съответствие с визията на CORTEX++."
+    ],
+    "youtube_insights": [
+      "YouTube видео: 'Hubble Spots a Starry Spiral' – показва устойчиво развитие на научното осмисляне.",
+      "YouTube видео: 'Cyclone Rains Spur Papua New Guinea Landslides' – показва тенденция към устойчиво управление на възможните ледени слоеве в горите."
+    ],
+    "relevance_to_goal": "Високо",
+    "generalization": "Устойчиво развитие на климатското риска е в съответствие с визията на CORTEX++ и показва тенденция към устойчиво развитие на научното осмисляне и на енергетическите институти."
+  },
+  "raw_items": [
+    {
+      "title": "Hubble Spots a Starry Spiral",
+      "summary": "In this new picture from NASA’s Hubble Space Telescope, a spiral galaxy glittering with star clusters is the center of attention. NGC 3137 is located 53 million light-years away in the constellation Antlia (the Air Pump). As a nearby spiral galaxy, this target offers astronomers an excellent opportunity to study the cycle of stellar birth and death, […]",
+      "link": "https://science.nasa.gov/missions/hubble/hubble-spots-a-starry-spiral/",
+      "published": "Fri, 01 May 2026 11:48:55 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Cyclone Rains Spur Papua New Guinea Landslides",
+      "summary": "Heavy rains from Tropical Cyclone Maila triggered a deadly landslide in the mountains of East New Britain.",
+      "link": "https://science.nasa.gov/earth/earth-observatory/cyclone-rains-spur-papua-new-guinea-landslides/",
+      "published": "Fri, 01 May 2026 04:01:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "NASA Invites Media to Ireland Artemis Accords Signing",
+      "summary": "Ireland will sign the Artemis Accords during a ceremony at 3 p.m. EDT Monday, May 4, at NASA Headquarters in Washington. NASA Administrator Jared Isaacman will host Ambassador of Ireland to the United States of America Geraldine Byrne Nason; Minister for Enterprise, Tourism and Employment Peter Burke, T.D., of Ireland; and U.S. Department of State [&#8230;]",
+      "link": "https://www.nasa.gov/news-release/nasa-invites-media-to-ireland-artemis-accords-signing/",
+      "published": "Thu, 30 Apr 2026 20:45:59 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Odyssey Team Celebrates on a Global Map of Mars",
+      "summary": "Description Team members past and present from NASA’s 2001 Mars Odyssey orbiter mission gathered on April 15, 2026, to celebrate 25 years since the spacecraft’s launch, which took place April 7, 2001. For the occasion, the team rolled out a giant global map of Mars created using imagery from Odyssey’s THEMIS (Thermal Emission Imaging System) […]",
+      "link": "https://science.nasa.gov/photojournal/odyssey-team-celebrates-on-a-global-map-of-mars/",
+      "published": "Thu, 30 Apr 2026 18:19:29 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Santa Marta: Key outcomes from first summit on ‘transitioning away’ from fossil fuels",
+      "summary": "<p>Countries attending a first-of-its-kind summit have walked away with plans to develop national roadmaps away...</p>\n<p>The post <a href=\"https://www.carbonbrief.org/santa-marta-key-outcomes-from-first-summit-on-transitioning-away-from-fossil-fuels/\">Santa Marta: Key outcomes from first summit on ‘transitioning away’ from fossil fuels</a> appeared first on <a href=\"https://www.carbonbrief.org\">Carbon Brief</a>.</p>",
+      "link": "https://www.carbonbrief.org/santa-marta-key-outcomes-from-first-summit-on-transitioning-away-from-fossil-fuels/",
+      "published": "Thu, 30 Apr 2026 15:37:28 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "China Briefing 30 April 2026: Fossil fuel ‘strict controls’ | El Niño approaches | Why cleantech exports have surged",
+      "summary": "<p>Welcome to Carbon Brief’s China Briefing. China Briefing handpicks and explains the most important climate...</p>\n<p>The post <a href=\"https://www.carbonbrief.org/china-briefing-30-april-2026-fossil-fuel-strict-controls-el-nino-approaches-why-cleantech-exports-have-surged/\">China Briefing 30 April 2026: Fossil fuel ‘strict controls’ | El Niño approaches | Why cleantech exports have surged</a> appeared first on <a href=\"https://www.carbonbrief.org\">Carbon Brief</a>.</p>",
+      "link": "https://www.carbonbrief.org/china-briefing-30-april-2026-fossil-fuel-strict-controls-el-nino-approaches-why-cleantech-exports-have-surged/",
+      "published": "Thu, 30 Apr 2026 14:09:29 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Traditional models still ‘outperform AI’ for extreme weather forecasts",
+      "summary": "<p>Computer models that use artificial intelligence (AI) cannot forecast record-breaking weather as well as traditional...</p>\n<p>The post <a href=\"https://www.carbonbrief.org/traditional-models-still-outperform-ai-for-extreme-weather-forecasts/\">Traditional models still &#8216;outperform AI&#8217; for extreme weather forecasts</a> appeared first on <a href=\"https://www.carbonbrief.org\">Carbon Brief</a>.</p>",
+      "link": "https://www.carbonbrief.org/traditional-models-still-outperform-ai-for-extreme-weather-forecasts/",
+      "published": "Wed, 29 Apr 2026 18:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "World ‘will not see significant return to coal’ in 2026 – despite Iran crisis",
+      "summary": "<p>A much-discussed “return to coal” by some countries in the wake of the Iran war...</p>\n<p>The post <a href=\"https://www.carbonbrief.org/world-will-not-see-significant-return-to-coal-in-2026-despite-iran-crisis/\">World ‘will not see significant return to coal’ in 2026 – despite Iran crisis</a> appeared first on <a href=\"https://www.carbonbrief.org\">Carbon Brief</a>.</p>",
+      "link": "https://www.carbonbrief.org/world-will-not-see-significant-return-to-coal-in-2026-despite-iran-crisis/",
+      "published": "Tue, 28 Apr 2026 13:54:19 +0000",
+      "source_type": "rss"
+    }
+  ]
+}

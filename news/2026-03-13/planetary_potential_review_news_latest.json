@@ -1,0 +1,131 @@
+{
+  "axis": "PLANETARY_POTENTIAL_REVIEW",
+  "fetched_at": "2026-03-13T13:59:00.793248+00:00",
+  "smart_query": "planetary potential review",
+  "sources_count": {
+    "wiki": 0,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "analysis": {
+    "summary": "[arXiv]\n- Global Abiotic Sulfur Cycling on Earth-like Terrestrial Planets\n- Mimicking the earth core conditions with ultrafast laser materials interaction\n\n[GitHub]\n- satellite-image-deep-learning/tec",
+    "sentiment": "NEUTRAL",
+    "urgency": "LOW",
+    "key_developments": []
+  },
+  "sentiment": "NEUTRAL",
+  "urgency": "LOW",
+  "summary": "[arXiv]\n- Global Abiotic Sulfur Cycling on Earth-like Terrestrial Planets\n- Mimicking the earth core conditions with ultrafast laser materials interaction\n\n[GitHub]\n- satellite-image-deep-learning/tec",
+  "key_developments": [],
+  "open_source_momentum": "",
+  "scientific_frontier": "",
+  "news_items": [],
+  "github_repos": [
+    {
+      "title": "satellite-image-deep-learning/techniques",
+      "snippet": "Techniques for deep learning with satellite & aerial imagery",
+      "stars": 10055,
+      "url": "https://github.com/satellite-image-deep-learning/techniques",
+      "updated": "2026-03-13",
+      "source": "GitHub"
+    },
+    {
+      "title": "sacridini/Awesome-Geospatial",
+      "snippet": "Long list of geospatial tools and resources",
+      "stars": 4791,
+      "url": "https://github.com/sacridini/Awesome-Geospatial",
+      "updated": "2026-03-13",
+      "source": "GitHub"
+    },
+    {
+      "title": "torchgeo/torchgeo",
+      "snippet": "TorchGeo: datasets, samplers, transforms, and pre-trained models for geospatial data",
+      "stars": 3921,
+      "url": "https://github.com/torchgeo/torchgeo",
+      "updated": "2026-03-12",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Global Abiotic Sulfur Cycling on Earth-like Terrestrial Planets",
+      "snippet": "Sulfur is a redox active element that may have helped mediate an electron flow that kickstarted life and which presently is an essential element for all life on Earth. Despite current uncertainties in global sulfur fluxes, modeling sulfur's abiotic cycling through Earth's deep history is important f",
+      "url": "https://arxiv.org/abs/2603.06124v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Mimicking the earth core conditions with ultrafast laser materials interaction",
+      "snippet": "Ultrafast lasers create extreme, non-equilibrium thermodynamic conditions that can transiently reach pressures and temperatures comparable to interior core of the earth. Here we show that femtosecond excitation of amorphous silica-hafnia multilayer dielectrics drives the formation of high-pressure c",
+      "url": "https://arxiv.org/abs/2602.22460v1",
+      "source": "arXiv"
+    }
+  ],
+  "youtube_transcripts": [],
+  "podcast": "[#493 – Jeff Kaplan: World of Warcraft, Overwatch, Blizzard, and Future of Gaming] Jeff Kaplan is a legendary Blizzard game designer of World of Warcraft and Overwatch, now preparing to launch a new game, The Legend of California, from his new studio Kintsugiyama &#8211; available to wishlist on Steam today, with alpha later in March.\nThank you for listening ❤ Check out our sponsors: https://lexfridman.com/sponsors/ep493-sc\nSee below for timestamps, and to give feedback, submit ",
+  "youtube_videos": [
+    {
+      "title": "YouTube:XL2QBS7xaNs",
+      "video_id": "XL2QBS7xaNs",
+      "url": "https://www.youtube.com/watch?v=XL2QBS7xaNs",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:SLJW9WF4eqw",
+      "video_id": "SLJW9WF4eqw",
+      "url": "https://www.youtube.com/watch?v=SLJW9WF4eqw",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:n1MYyL6cm3A",
+      "video_id": "n1MYyL6cm3A",
+      "url": "https://www.youtube.com/watch?v=n1MYyL6cm3A",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:iolZ3yjjL4Q",
+      "video_id": "iolZ3yjjL4Q",
+      "url": "https://www.youtube.com/watch?v=iolZ3yjjL4Q",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:LeKHqL-VlZA",
+      "video_id": "LeKHqL-VlZA",
+      "url": "https://www.youtube.com/watch?v=LeKHqL-VlZA",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:QzFxPsZ8W2U",
+      "video_id": "QzFxPsZ8W2U",
+      "url": "https://www.youtube.com/watch?v=QzFxPsZ8W2U",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:FF6Z2tzxnpU",
+      "video_id": "FF6Z2tzxnpU",
+      "url": "https://www.youtube.com/watch?v=FF6Z2tzxnpU",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:crAkvCa2kW0",
+      "video_id": "crAkvCa2kW0",
+      "url": "https://www.youtube.com/watch?v=crAkvCa2kW0",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:zvQT1kNpbGs",
+      "video_id": "zvQT1kNpbGs",
+      "url": "https://www.youtube.com/watch?v=zvQT1kNpbGs",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:V5Kcabyq7BE",
+      "video_id": "V5Kcabyq7BE",
+      "url": "https://www.youtube.com/watch?v=V5Kcabyq7BE",
+      "source": "YouTube"
+    }
+  ]
+}

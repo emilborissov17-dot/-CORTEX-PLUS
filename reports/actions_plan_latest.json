@@ -1,0 +1,14 @@
+{
+  "generated_at": "2026-03-27T10:30:00Z",
+  "actions": [
+    {
+      "id": "test_llm_refactor_hypercortex",
+      "type": "llm_refactor",
+      "target_path": "hypercortex_runner.py",
+      "backup": true,
+      "enabled": true,
+      "instructions": "Refactor main into smaller functions, keep behavior identical.",
+      "max_tokens": 2048
+    }
+  ]
+}

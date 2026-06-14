@@ -1,0 +1,71 @@
+{
+  "axis": "MATERIALS_WASTE_REVIEW",
+  "fetched_at": "2026-03-29T11:47:55.328274+00:00",
+  "smart_query": "plastic waste pollution recycling",
+  "sources_count": {
+    "rss": 0,
+    "gdelt": 0,
+    "arxiv": 0,
+    "github": 3,
+    "web_search": 5
+  },
+  "rss": [],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "pogopaule/awesome-sustainability-jobs",
+      "snippet": "Dev jobs in the sustainability sector - be part of the solution, not the problem",
+      "stars": 506,
+      "url": "https://github.com/pogopaule/awesome-sustainability-jobs",
+      "updated": "2026-03-25",
+      "source": "GitHub"
+    },
+    {
+      "title": "Alkia/electra",
+      "snippet": "This is Electra blockchain's repository for a decentralized micro-grid electricity exchange solution",
+      "stars": 72,
+      "url": "https://github.com/Alkia/electra",
+      "updated": "2026-01-28",
+      "source": "GitHub"
+    },
+    {
+      "title": "NatLabRockies/PV_ICE",
+      "snippet": "An open-source tool to quantify Solar Photovoltaics (PV) Energy and Mass Flows in the Circular Economy, from a Reliability and Lifetime approach",
+      "stars": 43,
+      "url": "https://github.com/NatLabRockies/PV_ICE",
+      "updated": "2026-01-28",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [],
+  "web_search": [
+    {
+      "title": "Plastic recycling: A panacea or environmental pollution problem",
+      "url": "https://www.nature.com/articles/s44296-024-00024-w",
+      "source": "WEB"
+    },
+    {
+      "title": "Plastic Pollution Impacts and Solutions - World Resources Institute",
+      "url": "https://www.wri.org/insights/plastic-pollution-global-plastics-treaty-explained",
+      "source": "WEB"
+    },
+    {
+      "title": "Current practices of plastic waste management, environmental impacts ...",
+      "url": "https://www.sciencedirect.com/science/article/pii/S2405844024168697",
+      "source": "WEB"
+    },
+    {
+      "title": "Sustainable Management of Plastics | US EPA",
+      "url": "https://www.epa.gov/plastics",
+      "source": "WEB"
+    },
+    {
+      "title": "Plastic Waste: Challenges and Opportunities to Mitigate Pollution and ...",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9857911/",
+      "source": "WEB"
+    }
+  ],
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL"
+}

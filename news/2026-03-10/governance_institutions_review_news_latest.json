@@ -1,0 +1,73 @@
+{
+  "axis": "GOVERNANCE_INSTITUTIONS_REVIEW",
+  "fetched_at": "2026-03-10T11:22:18.806063+00:00",
+  "smart_query": "GOVERNANCE_INSTITUTIONS_REVIEW level=? metrics=?",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3
+  },
+  "analysis": {
+    "summary": "Миксът от коментари на Тръмп предизвиква неясности за края на войната, докато Файсал Ислам отбелязва влиянието върху цените на нефта. Отворените източници и иновациите в киберсигурността подчертават динамика в технологичното развитие.",
+    "key_developments": [
+      "Миксът от коментари на Тръмп и неясности за края на войната",
+      "Изследване за киберсигурност в AI ера"
+    ],
+    "sentiment": "NEUTRAL",
+    "urgency": "MEDIUM",
+    "open_source_momentum": "Висока активност с проектите за отворена администрация и гражданска хакерска дейност",
+    "scientific_frontier": "Изследванията за киберсигурност и нелинейни вибрации в материали",
+    "relevance_to_goal": "Средна връзка към управлението и технологичните иновации, но не директно към устойчивостта или достойнството"
+  },
+  "sentiment": "NEUTRAL",
+  "urgency": "MEDIUM",
+  "summary": "Миксът от коментари на Тръмп предизвиква неясности за края на войната, докато Файсал Ислам отбелязва влиянието върху цените на нефта. Отворените източници и иновациите в киберсигурността подчертават динамика в технологичното развитие.",
+  "key_developments": [
+    "Миксът от коментари на Тръмп и неясности за края на войната",
+    "Изследване за киберсигурност в AI ера"
+  ],
+  "open_source_momentum": "Висока активност с проектите за отворена администрация и гражданска хакерска дейност",
+  "scientific_frontier": "Изследванията за киберсигурност и нелинейни вибрации в материали",
+  "github_repos": [
+    {
+      "title": "github/government.github.com",
+      "snippet": "Gather, curate, and feature stories of public servants and civic hackers using GitHub as part of their open government innovations",
+      "stars": 1914,
+      "url": "https://github.com/github/government.github.com",
+      "updated": "2026-03-04",
+      "source": "GitHub"
+    },
+    {
+      "title": "consuldemocracy/consuldemocracy",
+      "snippet": "Consul Democracy - Open Government and E-Participation Web Software",
+      "stars": 1524,
+      "url": "https://github.com/consuldemocracy/consuldemocracy",
+      "updated": "2026-03-10",
+      "source": "GitHub"
+    },
+    {
+      "title": "datagouv/data.gouv.fr",
+      "snippet": "Ce dépôt rassemble les tickets techniques qui portent sur data.gouv.fr.",
+      "stars": 112,
+      "url": "https://github.com/datagouv/data.gouv.fr",
+      "updated": "2026-03-07",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Nonlinear Mode Coupling in Silicon Nitride Membrane Resonators",
+      "snippet": "Nonlinear interactions between vibrational modes play a crucial role in understanding the dynamical response of nanomechanical resonators. Here, we report the experimental observation and theoretical modeling of nonlinear mode coupling in a high-stress square silicon nitride membrane resonator. We q",
+      "url": "https://arxiv.org/abs/2603.08689v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Cybersecurity AI: Hacking Consumer Robots in the AI Era",
+      "snippet": "Is robot cybersecurity broken by AI? Consumer robots -- from autonomous lawnmowers to powered exoskeletons and window cleaners -- are rapidly entering homes and workplaces, yet their security remains rooted in assumptions of specialized attacker expertise. This paper presents evidence that Generativ",
+      "url": "https://arxiv.org/abs/2603.08665v1",
+      "source": "arXiv"
+    }
+  ]
+}

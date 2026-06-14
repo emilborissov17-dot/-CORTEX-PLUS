@@ -1,0 +1,14 @@
+{
+  "source_name": "UNEP Environment & Water",
+  "source_url": "https://data.unep.org",
+  "docs": "https://data.unep.org/faq",
+  "notes": "Данни за околната среда, климат и ресурси, част от които са директно свързани с водни системи и качество на водата.",
+  "ok": true,
+  "data": {
+    "status_code": 200,
+    "content_type": "text/html; charset=utf-8",
+    "text_sample": "<!DOCTYPE html>\r\n<html lang=\"en\">\r\n  <head>\r\n    <meta charset=\"UTF-8\" />\r\n    <link rel=\"icon\" href=\"/app/favicon.ico\" />\r\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\r\n    <title>UNEP Data Catalogue</title>\r\n    <script type=\"module\" crossorigin src=\"/app/assets/index-05231041.js\"></script>\n    <link rel=\"stylesheet\" href=\"/app/assets/index-40a643e8.css\">\n  </head>\r\n  <body>\r\n    <div id=\"app\"></div>\r\n    \r\n  </body>\r\n </html> \r\n",
+    "fetched_at": "2026-02-27T11:30:51.969451",
+    "json": null
+  }
+}

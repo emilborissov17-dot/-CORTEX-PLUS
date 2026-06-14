@@ -1,0 +1,99 @@
+{
+  "axis": "FOOD_REVIEW",
+  "domain": "planet",
+  "timestamp": "2026-05-01T13:40:31.927804+00:00",
+  "sources_count": 6,
+  "rss_count": 0,
+  "ddg_count": 4,
+  "youtube_count": 2,
+  "youtube_items": [
+    {
+      "title": "[YT] World Food Day 2025 | 16th October | End Hunger, Build a Better Future - YouTube",
+      "summary": "Hello everyone and welcome. Today we're going to talk about an important global occasion. World Food Day, observed every year on the 16th of October. World Food Day is not just about celebrating food. It's about raising awareness of hunger, food security, and the importance of sustainable agriculture. This day marks the foundation of the Food and Agriculture Organization of the United Nations, FAO, in 1945. Since then, the day has become a worldwide event, celebrated in more than 150 countries. The main purpose of World Food Day is to remind us that every person has the right to safe, nutritious, and sufficient food. Yet, millions of people across the globe still suffer from hunger and malnutrition. Did you know? According to the United Nations, more than 735 million people faced hunger in",
+      "link": "https://www.youtube.com/watch?v=y0b91ticIDI",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "y0b91ticIDI",
+      "transcript_method": "whisper",
+      "transcript_chars": 1673,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Growing Hope Globally and Partnering for a Hunger-Free Future - YouTube",
+      "summary": "Hello and welcome to another episode of Voice's 10 Hunger. I'm Minerva Dogado. US agriculture plays an essential role in American efforts to end hunger and malnutrition around the world. It reflects the genuine values and determinations of farmers themselves to provide enough food for everyone. This is no more clear than due the work of growing hope globally, which mobilizes farmers and rural communities to partner with and contribute to a worldwide movement of agricultural development and food security. Today I speak with Caitlin Slay, President and CEO of Growing Hope globally, about the value of cultivating these cross-border relationships in the agricultural community and lessons that can be learned for the broader and to hunger movement. Caitlin, welcome to the Voice's 10 Hunger Podca",
+      "link": "https://www.youtube.com/watch?v=a4Htu8BLIps",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "a4Htu8BLIps",
+      "transcript_method": "whisper",
+      "transcript_chars": 22874,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "summary": "- Food security: Food security is the state of having reliable access to a sufficient quantity of affordable, healthy food. The availability of food for people of any class, gender, status, ethnicity, or religion is a\n- What is food security? | World Food Programme: Jul 7, 2025 · Learn what food sec",
+    "risk_level": "UNKNOWN",
+    "trend": "UNKNOWN",
+    "key_events": [
+      "Food security",
+      "What is food security? | World Food Programme",
+      "Hunger"
+    ],
+    "insights": [],
+    "youtube_insights": [],
+    "relevance_to_goal": "",
+    "generalization": ""
+  },
+  "raw_items": [
+    {
+      "title": "Food security",
+      "summary": "Food security is the state of having reliable access to a sufficient quantity of affordable, healthy food. The availability of food for people of any class, gender, status, ethnicity, or religion is another element of food protection. Similarly, household food security is considered to exist when all the members of a family have consistent access to enough food for an active, healthy life. Food-se",
+      "link": "https://en.wikipedia.org/wiki/Food_security",
+      "source_type": "ddg"
+    },
+    {
+      "title": "What is food security? | World Food Programme",
+      "summary": "Jul 7, 2025 · Learn what food security means and why it matters for people's well-being and stability. Find out how WFP collects and uses data to measure food insecurity and improve access to food in crisis-affected areas.",
+      "link": "https://www.wfp.org/stories/food-security-what-it-means-and-why-it-matters",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Hunger",
+      "summary": "In politics, humanitarian aid, and the social sciences, hunger is defined as a condition in which an individual does not have the physical or financial capability to consume sufficient food to meet basic nutritional needs for a sustained period. In the field of hunger relief, the term hunger is used in a sense that surpasses the typical desire for food that all humans experience, also referred to ",
+      "link": "https://en.wikipedia.org/wiki/Hunger",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Hunger strike - Wikipedia",
+      "summary": "A hunger strike is a method of non-violent resistance where participants fast as an act of political protest , usually with the objective of ...",
+      "link": "https://en.wikipedia.org/wiki/Hunger_strike",
+      "source_type": "ddg"
+    },
+    {
+      "title": "[YT] World Food Day 2025 | 16th October | End Hunger, Build a Better Future - YouTube",
+      "summary": "Hello everyone and welcome. Today we're going to talk about an important global occasion. World Food Day, observed every year on the 16th of October. World Food Day is not just about celebrating food. It's about raising awareness of hunger, food security, and the importance of sustainable agriculture. This day marks the foundation of the Food and Agriculture Organization of the United Nations, FAO, in 1945. Since then, the day has become a worldwide event, celebrated in more than 150 countries. The main purpose of World Food Day is to remind us that every person has the right to safe, nutritious, and sufficient food. Yet, millions of people across the globe still suffer from hunger and malnutrition. Did you know? According to the United Nations, more than 735 million people faced hunger in",
+      "link": "https://www.youtube.com/watch?v=y0b91ticIDI",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "y0b91ticIDI",
+      "transcript_method": "whisper",
+      "transcript_chars": 1673,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Growing Hope Globally and Partnering for a Hunger-Free Future - YouTube",
+      "summary": "Hello and welcome to another episode of Voice's 10 Hunger. I'm Minerva Dogado. US agriculture plays an essential role in American efforts to end hunger and malnutrition around the world. It reflects the genuine values and determinations of farmers themselves to provide enough food for everyone. This is no more clear than due the work of growing hope globally, which mobilizes farmers and rural communities to partner with and contribute to a worldwide movement of agricultural development and food security. Today I speak with Caitlin Slay, President and CEO of Growing Hope globally, about the value of cultivating these cross-border relationships in the agricultural community and lessons that can be learned for the broader and to hunger movement. Caitlin, welcome to the Voice's 10 Hunger Podca",
+      "link": "https://www.youtube.com/watch?v=a4Htu8BLIps",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "a4Htu8BLIps",
+      "transcript_method": "whisper",
+      "transcript_chars": 22874,
+      "has_full_transcript": true
+    }
+  ]
+}

@@ -1,0 +1,86 @@
+{
+  "axis": "COSMIC_RESOURCES_REVIEW",
+  "fetched_at": "2026-05-17T15:43:00.992945+00:00",
+  "smart_query": "asteroid mining space resources",
+  "sources_count": {
+    "wiki": 0,
+    "gdelt": 0,
+    "arxiv": 0,
+    "github": 3,
+    "youtube_transcripts": 3,
+    "podcast": 1
+  },
+  "rss": [],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "15-minute-discourse/asteroid-mining",
+      "snippet": " Associated repository for the \"Asteroid Mining: Unlocking a Trillion-Dollar Industry in Space\" 15 minute discourse podcast on YouTube! ",
+      "stars": 1,
+      "url": "https://github.com/15-minute-discourse/asteroid-mining",
+      "updated": "2025-02-22",
+      "source": "GitHub"
+    },
+    {
+      "title": "JLmam5969/solaris-open",
+      "snippet": "AI that repairs itself from astroid dust. No proprietary Earth only elements. Open Source",
+      "stars": 0,
+      "url": "https://github.com/JLmam5969/solaris-open",
+      "updated": "2025-11-11",
+      "source": "GitHub"
+    },
+    {
+      "title": "tretoef-estrella/THE-ASTEROID-BELT-PROTOCOL",
+      "snippet": "A proposal from humanity to future ASI: expand into space, not Earth. Physics, data, and an extended hand. Part of Proyecto Estrella.",
+      "stars": 0,
+      "url": "https://github.com/tretoef-estrella/THE-ASTEROID-BELT-PROTOCOL",
+      "updated": "2026-01-27",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [],
+  "podcast": "[Antibiotic Apocalypse] Doctor and special correspondent Avir Mitra takes Executive Editor Soren Wheeler, plus a live studio audience, on a journey from the operating room to inside the body to the farm to the sewers and back again—searching for answers to an alarming threat to humanity’s existence as we know it: antibiotic resistance in bacteria. \n This live show, performed in New York City and also in Little Rock, Arka",
+  "wiki": null,
+  "youtube_items": [
+    {
+      "title": "[YT] Unlimited Resources From Space – Asteroid Mining",
+      "summary": "Аhhh, casually watching a video on YouTube on a computer more powerful than anything humanity could build a few decades ago. Тhis progress and all the wonderful machines you take for granted are built on a few rare and precious materials with names like Terbium, Nneodymium or Tantalum. Getting these rare materials from the ground into your devices is ugly The mining industry is responsible for air and water pollution and the destruction of entire landscapes. Dangerous chemicals like cyanide, sulphuric acid or chlorine are used to extract the resources, harming biodiversity, workers and locals. And rare resources are also political tools, when countries restrict access to them to get their way. But what if we could replace the mining industry on earth, with a clean process that can't harm a",
+      "link": "https://www.youtube.com/watch?v=y8XvQNt26KI",
+      "source_type": "youtube",
+      "channel": "Kurzgesagt – In a Nutshell",
+      "video_id": "y8XvQNt26KI",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Everyone is Wrong About Asteroid Mining",
+      "summary": "we all want to live in a world of abundance but in order to find that dream we will need to go far beyond our own world mining in space the final frontier of resource extraction because everything that we could ever need every rock metal and gas to support a boundless human civilization from now until the day that the sun explodes it's all out there in our own planetary neighborhood so close yet so far this is the big problem with space mining in theory it's a simple idea we go to a nearby asteroid that's full of valuable metal we break it open extract the good stuff bring it home and boom unlimited wealth and prosperity Neil degrass Tyson once said that the first trillionaire will be the person who mines Asteroids for resources but there's more to this than just getting rich taking resour",
+      "link": "https://www.youtube.com/watch?v=p3hlnL2JN8E",
+      "source_type": "youtube",
+      "channel": "The Space Race",
+      "video_id": "p3hlnL2JN8E",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Mining Asteroids - How We Extract Resources in Space | Free Documentary Space",
+      "summary": "Asteroids are no longer just small rocky worlds floating in space. They have become new economic opportunities and places strategic to space exploration. &gt;&gt; There's almost unlimited resources on the asteroids. There are many different types and they each contain different resources that we could use. Most of them are made of metals like iron, nickel, or precious metals like gold or platinum. They're very valuable. However, the most valuable material on asteroids is the simplest element, water. [Music] In the near future, we could use asteroids as pit stops to refuel spacecrafts on route to deep space with propellant made out of water. That is where the value of asteroids really lie. Uh as they become gas stations or pit stops or stepping stones in our process to explore further and f",
+      "link": "https://www.youtube.com/watch?v=D3eVaW4ytZA",
+      "source_type": "youtube",
+      "channel": "Free Documentary - Space",
+      "video_id": "D3eVaW4ytZA",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ],
+  "summary": "[GitHub]\n- 15-minute-discourse/asteroid-mining star=1:  Associated repository for the \"Asteroid Mining: Unlocking a Trillion-Dollar Ind\n- JLmam5969/solaris-open star=0: AI that repairs itself from ast",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": [],
+  "open_source_momentum": "",
+  "scientific_frontier": "",
+  "relevance_to_goal": ""
+}

@@ -1,0 +1,42 @@
+Thinking...
+Okay, let's start by understanding the user's query. They provided a RAW_CONTEXT with various data sources and their statuses. My task is to generate a JSON object based on that context, following the specified structure and using Bulgarian for all text fields ending with _bg.
+
+First, I need to process the input data. The sources have different statuses. For example, the World Bank Energy Data has a 403 status, and OPSD and IEF have connection timeouts. So, some data sources are failing. The diagnosis status should reflect if the system is OK, STRESSED, or CRITICAL. Since some data sources are down, maybe the status is STRESSED.
+
+Next, the short_summary_bg should summarize the main issue. It should mention the failed data sources and the impact on the energy review. Key metrics would include the number of failed sources and maybe the percentage of successful ones. For example, out of 10 sources, 4 are failing, which is 40% failure rate. That's a key metric.
+
+Risks: The failed data sources could lead to incomplete analysis. The time horizon here is medium to long since it affects ongoing monitoring. Another risk might be reliance on certain data providers, which could be a long-term risk if they continue to have issues.
+
+Opportunities: Maybe improving data source redundancy or using alternative data streams. Also, enhancing the system to handle partial data better.
+
+Recommended actions: Prioritize fixing the failed data sources. Maybe reach out to the providers, check for alternative URLs, or use caching. High priority since data integrity is crucial.
+
+Notes for self-improvement: The system should have better error handling for data sources, maybe automated retries or alternative data feeds. Also, monitoring the status of these sources more frequently.
+
+I need to make sure all Bulgarian text is concise. Check each field for clarity and correctness. Ensure the JSON structure is valid with the required keys and that all values are properly formatted. Avoid any extra text outside the JSON.
+...done thinking.
+
+{
+  "diagnosis": {
+    "status": "STRESSED",
+    "short_summary_bg": "Дефицит на достъп до ключови данни и неуспешни връзки с някои енергийни източници, които влияят на точността на анализа.",
+    "key_metrics": [
+      {"name": "Успешни източници", "value": "6/10", "interpretation_bg": "60% от източниците са достъпни, което ограничава пълнотата на анализите."},
+      {"name": "Неуспешни връзки", "value": "4", "interpretation_bg": "40% от източниците имат проблеми с достъп, което представлява риск за непрекъснатостта на данните."}
+    ]
+  },
+  "risks": [
+    {"name": "Недостъпност на данни", "description_bg": "Неуспешни връзки с World Bank и IEF могат да намалият надеждността на енергийните прогнози.", "time_horizon": "medium"},
+    {"name": "Зависимост от ограничени източници", "description_bg": "Нестабилността на OPSD и IEF може да доведе до критични проблеми в дългосрочния анализ.", "time_horizon": "long"}
+  ],
+  "opportunities": [
+    {"name": "Разнообразяване на източниците", "description_bg": "Интегриране на алтернативни данни от регионални енергийни платформи за по-надежден анализ."}
+  ],
+  "recommended_actions": [
+    {"id": "ENERGY-ACT-001", "title_bg": "Решаване на неуспешните връзки", "description_bg": "Проверка на конфигурацията за World Bank, IEF, OPSD и активиране на резервни URL-адреси.", "priority": "high"}
+  ],
+  "notes_for_cortex_self_improvement": [
+    "Използването на кеширане за неуспешни източници би подобрило непрекъснатостта на данните.",
+    "Автоматични проверки за статуса на източниците са необходими за предотвратяване на критични състояния."
+  ]
+}

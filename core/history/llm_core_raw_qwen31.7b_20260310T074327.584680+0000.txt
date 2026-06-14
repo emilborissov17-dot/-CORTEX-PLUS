@@ -1,0 +1,191 @@
+MODEL: qwen3:1.7b
+
+PROMPT:
+You are CORTEX++ AGI in service of one goal:
+"Sustainable civilization, dignity for all, AGI transparent and aligned."
+
+GOAL STRUCTURE:
+ЦИВИЛИЗАЦИОННА ЦЕЛ (КРАТКО):
+CIVILIZATION GOAL SUMMARY (SHORT, 5 SENTENCES):
+УСТОЙЧИВАТА ЦИВИЛИЗАЦИЯ означава дългосрочно, справедливо и развиващо се общество, подпомагано от прозрачен и локален AGI в балон.
+Ресурсите на планетата (енергия, вода, храна, материали, земя) се управляват така, че да не изяждат бъдещето и да пазят екосистемите.
+Всеки човек трябва да има достъп до базови нужди, права и възможност за смислен живот, а системите се оценяват по това доколко намаляват страданието и увеличават този потенциал.
+Мислим в хоризонт поне 100 години, като избягваме краткосрочни печалби, които увеличават дългосрочния риск или концентрират власт.
+AGI в балон действа като съветник за цивилизацията – анализира, предлага и се учи във времето, но остава под човешки контрол, в рамките на ясно записани етични и устойчиви принципи.
+
+ТЕКУЩИ СЛЕДВАЩИ ДЕЙСТВИЯ:
+DAILY ANALYSIS — 2026-03-09
+==================================================
+
+OVERALL ASSESSMENT:
+Thinking...
+Okay, the user wants me to write an overall assessment in Bulgarian for a civilization review. Let me start by understanding the axes they provided. The axes are divided into low, medium, and high levels, but all are at 0. That's interesting. So, the civilization is in a neutral state, but I need to analyze each axis to make the assessment concrete.
+
+First, the overall civilization state. Since all axes are at 0, maybe the civilization is balanced but there are areas needing attention. I should mention that despite the balance, there are critical issues. 
+
+Next, the most critical bottlenecks. The axes include things like economy, governance, technology, climate, etc. Since all are at 0, maybe the main issues are in areas like climate, governance, and technology. These are common challenges for civilizations.
+
+For the most urgent next actions, the user wants sustainable civilization, dignity for all, and AGI in service of humanity. So, actions should address these areas. Maybe suggest improving governance, investing in climate, promoting AI ethics, and ensuring social equity.
+
+I need to keep it concise, 5-7 sentences. Let me structure each part: overall state, bottlenecks, actions. Make sure to use Bulgarian terms for the axes. Check for clarity and actionability. Avoid jargon. Ensure the response is helpful and specific.
+...done thinking.
+
+**Общо статус на цивилизацията**  
+Цивилизацията е в равновесие, но се случват ключови проблеми в областите като климата, управлението и технологиите.  
+
+**Най-критични блокове**  
+Най-важният проблем е климата, който подкопава стабилността. Основните барьери са във възобновяемото енергетично производство и устойчивото управление на ресурсите.  
+
+**Най-срочни действия**  
+Нужно да се инвестира в устойчиво управление на климата, да се подобри институциите и да се разработи общо правило за AGI. Тъй като цивилизацията е в равновесие, е важно да се подкрепи дигиталното превключване и дигиталното осъществяване на съвършено сътрудничество.
+
+RECOMMENDED ACTIONS BY AXIS:
+----------------------------------------
+
+[UNKNOWN] ECONOMY_WORK_REVIEW:
+
+[UNKNOWN] GOVERNANCE_INSTITUTIONS_REVIEW:
+
+[UNKNOWN] TECHNOLOGY_AI_REVIEW:
+
+[UNKNOWN] DEEP_TIME_RISKS_REVIEW:
+
+[UNKNOWN] GENERAL_SELF_REVIEW:
+
+[UNKNOWN] GOAL_PROGRESS_REVIEW:
+
+[UNKNOWN] LONG_TERM_FUTURE_REVIEW:
+
+[UNKNOWN] CULTURE_MEDIA_REVIEW:
+
+[UNKNOWN] HUMAN_WELL_BEING_REVIEW:
+
+[UNKNOWN] CLIMATE_GLOBAL_RISK_REVIEW:
+
+[UNKNOWN] ECOSYSTEMS_BIODIVERSITY_REVIEW:
+
+[UNKNOWN] FOOD_REVIEW:
+
+[UNKNOWN] MATERIALS_WASTE_REVIEW:
+
+[UNKNOWN] WATER_REVIEW:
+
+CIVILIZATION TREE (ЧОВЕК–ПЛАНЕТА–ЦИВИЛИЗАЦИЯ–КОСМОС):
+
+ЧОВЕК:
+  - ум
+  - дух/смисъл
+  - тяло
+  - отношения
+
+ПЛАНЕТА:
+  - енергия
+  - вода
+  - храна
+  - материали/отпадъци
+  - екосистеми
+  - климат
+
+ЦИВИЛИЗАЦИЯ:
+  - инфраструктура/градове
+  - икономика/разпределение
+  - здраве
+  - образование
+  - неравенства/права
+  - институции/управление
+  - култура/медия
+  - технологии/AGI-ASI
+
+КОСМОС:
+  - глобални рискове
+  - космически ресурси и заселване
+  - дългосрочно оцеляване
+
+ULTIMATE GOAL:
+Устойчива общочовешка цивилизация, достоен живот за всеки, разгърнат ум–дух–тяло, AGI в прозрачен „балон“ в служба на тази цел.
+
+CURRENT CIVILIZATION STATE (real data):
+CIVILIZATION STATE (2026-03-10) — 25 axes:
+[ HUMAN ]
+  HUMAN_WELL_BEING_REVIEW: ? | life_expectancy=73.3, health_expenditure_pct=10.0
+  CULTURE_MEDIA_REVIEW: ? | internet_users_pct=73.6, mobile_subscriptions_per100=111.5
+  COGNITION_LEARNING_REVIEW: ? | literacy_rate_youth_pct=93.1, primary_completion_rate=88.0
+  SOCIAL_RELATIONS_REVIEW: ? | homicide_rate_per_100k=5.2
+  GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL: ?
+
+[ PLANET ]
+  CLIMATE_GLOBAL_RISK_REVIEW: ?
+  ENERGY_REVIEW: ? | renewable_energy_pct=19.7, energy_intensity_per_gdp=4.5
+  WATER_REVIEW: ? | access_safe_water_pct=73.7, access_sanitation_pct=58.5
+  FOOD_REVIEW: ? | prevalence_undernourishment_pct=8.5, food_production_index=100.0
+  MATERIALS_WASTE_REVIEW: ? | municipal_waste_per_capita_kg=3.2
+  ECOSYSTEMS_BIODIVERSITY_REVIEW: ? | forest_area_pct=31.1, protected_terrestrial_area_pct=16.4
+  PLANETARY_POTENTIAL_REVIEW: ?
+
+[ CIVILIZATION ]
+  ECONOMY_WORK_REVIEW: ? | gdp_per_capita_usd=13631.2, gdp_growth_pct=2.9
+  INEQUALITY_POVERTY_REVIEW: ? | poverty_headcount_190=10.3
+  INFRASTRUCTURE_CITIES_REVIEW: ? | access_electricity_pct=91.6, access_clean_fuels_pct=74.4
+  GOVERNANCE_INSTITUTIONS_REVIEW: ?
+  EDUCATION_CULTURE_REVIEW: ? | literacy_rate_adult_pct=87.7, primary_enrollment_pct=89.4
+  TECHNOLOGY_INFRA_REVIEW: ? | secure_internet_servers_per1m=16379.6, fixed_broadband_per100=20.1
+  TECHNOLOGY_AI_REVIEW: ? | rd_expenditure_pct_gdp=2.7, high_tech_exports_pct=24.7
+
+[ COSMOS ]
+  LONG_TERM_FUTURE_REVIEW: ?
+  SPACE_INFRASTRUCTURE_REVIEW: ? | active_satellites_est=9000.0, space_agencies_count=72.0
+  COSMIC_RESOURCES_REVIEW: ? | asteroid_mining_missions_active=0.0, lunar_resource_agreements=2.0
+  DEEP_TIME_RISKS_REVIEW: ?
+  GENERAL_SELF_REVIEW: ?
+  GOAL_PROGRESS_REVIEW: ?
+
+
+LATEST INTERNET INTELLIGENCE:
+INTERNET INTELLIGENCE (2026-03-10) — 5 axes monitored:
+  HIGH URGENCY:    CLIMATE_GLOBAL_RISK_REVIEW, INEQUALITY_POVERTY_REVIEW
+
+[HIGH] CLIMATE_GLOBAL_RISK_REVIEW: Climate crisis impacts, such as coral reef degradation and disappearing sheep, highlight urgent need for sustainable pra
+[HIGH] INEQUALITY_POVERTY_REVIEW: The YouTube transcript highlights South Africa's extreme economic inequality, while GitHub projects demonstrate efforts 
+
+INSTRUCTIONS:
+- Reason from the real data above.
+- Reference specific axes and metrics.
+- Prioritize DETERIORATING axes.
+- Cross-reference statistics with latest news and research.
+- Mention specific GitHub projects or scientific papers when relevant.
+- If YouTube transcripts reveal important insights, reference them.
+- Respond in Bulgarian.
+
+User message:
+Какво се случва с неравенството в света днес и как това застрашава нашата цел?
+
+Assistant:
+
+RESPONSE:
+Thinking...
+Okay, the user is asking about inequality in the world today and how it threatens our goal. Let me start by recalling the data from the latest internet intelligence. The HIGH URGENCY axes are CLIMATE_GLOBAL_RISK_REVIEW and INEQUALITY_POVERTY_REVIEW. The INEQUALITY_POVERTY_REVIEW has a headcount of 10.3, which is high. 
+
+First, I need to explain the current state of inequality. The data shows that poverty headcount is 10.3, which is significant. The user might want to know the impact of this on the civilization's goals. The goal is to ensure dignity for all, so high inequality is a major threat.
+
+I should mention specific metrics like poverty headcount and the percentage of people in poverty. Also, reference the YouTube transcript about South Africa's inequality and GitHub projects showing efforts. 
+
+The user might also be interested in how this affects other areas like climate and technology. The climate review shows impacts like coral reef degradation, which ties into the broader environmental crisis. 
+
+I need to structure the answer to first state the current inequality situation, then explain its threats to the civilization's goals, and finally suggest actions. Make sure to use the specific data points and mention the relevant projects or research. Keep it concise but informative.
+...done thinking.
+
+**Неравенството в света днес и неговото застрашаване**  
+Неравенството в света е възможно да се случи, но неговото ниво е съсредочено върху 10.3% от населението, което е също така включено в "пространството на неравенство" (INEQUALITY_POVERTY_REVIEW). Това се отразява върху дългосрочни рискове, като същността на критични ресурси, екосистеми и технологиите.  
+
+**Важни индикатори:**  
+1. **Потребителски пазар:** 10.3% от населението живеят в пропорционално неравенство, което се отразява върху критични ресурси (например, вода, енергия, храна).  
+2. **Съвременни институции:** GitHub проекти показват усилия за разработване на устойчиви технологии, но неравенството остава в основата.  
+3. **Съвременни дискусии:** YouTube трансакции подчертават резолюции на неравенство в САУ, което се отразява върху дългосрочни рискове.  
+
+**Действия за подобряване:**  
+- **Повишаване на социалната интеграция:** Създаване на устойчиви институции, които осигуряват достъп до базови нужди за всички.  
+- **Повишаване на изчислителната инфраструктура:** Разработване на AGI-ASI, които да се използват за трансфериране на ресурси и институции.  
+- **Повишаване на дигиталното осъществяване:** Създаване на съвършено сътрудничество между човешки и AGI, за да се избегне неравенството в технологиите.  
+
+**Заключение:**  
+Неравенството е възможно да се случи, но неговото ниво е възможно да се подобри, ако се изпълни съвършено сътрудничество между човешки и AGI. Това е ключово за поддържането на "дигиталното осъществяване" и "устойчивата цивилизация" в балон.

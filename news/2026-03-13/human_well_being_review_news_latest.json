@@ -1,0 +1,160 @@
+{
+  "axis": "HUMAN_WELL_BEING_REVIEW",
+  "fetched_at": "2026-03-13T13:49:00.640482+00:00",
+  "smart_query": "\"Global health metrics for human development\"",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "analysis": {
+    "summary": "Анализът на човешкото благосъстояние показва, че достъпът до здравеопазване и основни потребности остава проблем за много хора. Статията за отказване на медицински сертификати за психическо здраве показва, че има все още много предразсъдъци и трудности в тази област. Отворените източници като OpenEMR и HospitalRun помагат за подобряване на здравеопазването.",
+    "key_developments": [
+      "Hundreds of GPs tell BBC they have never refused a fit note for mental health concerns",
+      "openemr/openemr star=5011: The most popular open source electronic health records and medical practice management"
+    ],
+    "sentiment": "NEUTRAL",
+    "urgency": "MEDIUM",
+    "open_source_momentum": "OpenEMR и HospitalRun се разработват от общността, което показва растящ интерес към отворени източници за здравеопазване",
+    "scientific_frontier": "Global stability of a Hebbian/anti-Hebbian network for principal subspace learning",
+    "relevance_to_goal": "Достъпът до здравеопазване и основни потребности е важен аспект от цивилизацията, която се стремим да създадем"
+  },
+  "sentiment": "NEUTRAL",
+  "urgency": "MEDIUM",
+  "summary": "Анализът на човешкото благосъстояние показва, че достъпът до здравеопазване и основни потребности остава проблем за много хора. Статията за отказване на медицински сертификати за психическо здраве показва, че има все още много предразсъдъци и трудности в тази област. Отворените източници като OpenEMR и HospitalRun помагат за подобряване на здравеопазването.",
+  "key_developments": [
+    "Hundreds of GPs tell BBC they have never refused a fit note for mental health concerns",
+    "openemr/openemr star=5011: The most popular open source electronic health records and medical practice management"
+  ],
+  "open_source_momentum": "OpenEMR и HospitalRun се разработват от общността, което показва растящ интерес към отворени източници за здравеопазване",
+  "scientific_frontier": "Global stability of a Hebbian/anti-Hebbian network for principal subspace learning",
+  "news_items": [
+    {
+      "title": "Hundreds of GPs tell BBC they have never refused a fit note for mental health concerns",
+      "snippet": "The number of fit notes issued has been rising, with more than 11.2m approved in England last year.",
+      "url": "https://www.bbc.com/news/articles/c20lew24kngo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "'My hotel bill is £12,000': British holidaymakers stranded by Iran war",
+      "snippet": "Flights are restricted due to the conflict leaving people stuck running up bills for rooms and food.",
+      "url": "https://www.bbc.com/news/articles/czj1lr10vdko?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "AI toys for children misread emotions and respond inappropriately, researchers warn",
+      "snippet": "In first study of its kind, Cambridge researchers found AI toys could misread some children's emotions.",
+      "url": "https://www.bbc.com/news/articles/clyg4wx6nxgo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "github_repos": [
+    {
+      "title": "openemr/openemr",
+      "snippet": "The most popular open source electronic health records and medical practice management solution.",
+      "stars": 5011,
+      "url": "https://github.com/openemr/openemr",
+      "updated": "2026-03-13",
+      "source": "GitHub"
+    },
+    {
+      "title": "HospitalRun/hospitalrun",
+      "snippet": "Monorepo that holds all of HospitalRun's v2 projects.",
+      "stars": 982,
+      "url": "https://github.com/HospitalRun/hospitalrun",
+      "updated": "2026-03-06",
+      "source": "GitHub"
+    },
+    {
+      "title": "getodk/collect",
+      "snippet": "ODK Collect is an Android app for filling out forms. It's been used to collect billions of data points in challenging environments around the world. Contribute and make the world a better place! ✨📋✨",
+      "stars": 761,
+      "url": "https://github.com/getodk/collect",
+      "updated": "2026-03-09",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Global stability of a Hebbian/anti-Hebbian network for principal subspace learning",
+      "snippet": "Biological neural networks self-organize according to local synaptic modifications to produce stable computations. How modifications at the synaptic level give rise to such computations at the network level remains an open question. Pehlevan et al. [Neur. Comp. 27 (2015), 1461--1495] proposed a mode",
+      "url": "https://arxiv.org/abs/2601.13170v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "On graphical domination for threshold-linear networks with recurrent excitation and global inhibition",
+      "snippet": "Graphical domination was first introduced in [1] in the context of combinatorial threshold-linear networks (CTLNs). There it was shown that when a domination relationship exists between a pair of vertices in a graph, certain fixed points in the corresponding CTLN can be ruled out. Here we prove two ",
+      "url": "https://arxiv.org/abs/2510.05098v1",
+      "source": "arXiv"
+    }
+  ],
+  "youtube_transcripts": [],
+  "podcast": "[Essentials: Using Light to Optimize Health] In this Huberman Lab Essentials episode, I explore how different wavelengths of light affect the human body and how light exposure can improve sleep quality, mood and daytime alertness while supporting healthy hormone regulation. I also discuss the therapeutic use of ultraviolet and infrared/red light for a wide variety of benefits, including improved skin health and offsetting age-related vision ",
+  "youtube_videos": [
+    {
+      "title": "YouTube:wUzTaxZpYn4",
+      "video_id": "wUzTaxZpYn4",
+      "url": "https://www.youtube.com/watch?v=wUzTaxZpYn4",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:6S4jWfJ0ii8",
+      "video_id": "6S4jWfJ0ii8",
+      "url": "https://www.youtube.com/watch?v=6S4jWfJ0ii8",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:4PkD4JebMAY",
+      "video_id": "4PkD4JebMAY",
+      "url": "https://www.youtube.com/watch?v=4PkD4JebMAY",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:PRyj6htVvUI",
+      "video_id": "PRyj6htVvUI",
+      "url": "https://www.youtube.com/watch?v=PRyj6htVvUI",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:w5wORaWcWPY",
+      "video_id": "w5wORaWcWPY",
+      "url": "https://www.youtube.com/watch?v=w5wORaWcWPY",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:-YOgIq_dHtw",
+      "video_id": "-YOgIq_dHtw",
+      "url": "https://www.youtube.com/watch?v=-YOgIq_dHtw",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:HwgZQ1DqG3w",
+      "video_id": "HwgZQ1DqG3w",
+      "url": "https://www.youtube.com/watch?v=HwgZQ1DqG3w",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:tIK8M_8_gk8",
+      "video_id": "tIK8M_8_gk8",
+      "url": "https://www.youtube.com/watch?v=tIK8M_8_gk8",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:37R8FNigJD8",
+      "video_id": "37R8FNigJD8",
+      "url": "https://www.youtube.com/watch?v=37R8FNigJD8",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:6IjYw7I1nvE",
+      "video_id": "6IjYw7I1nvE",
+      "url": "https://www.youtube.com/watch?v=6IjYw7I1nvE",
+      "source": "YouTube"
+    }
+  ]
+}

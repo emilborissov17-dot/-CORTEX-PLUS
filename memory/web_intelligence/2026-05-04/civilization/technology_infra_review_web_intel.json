@@ -1,0 +1,109 @@
+{
+  "axis": "TECHNOLOGY_INFRA_REVIEW",
+  "domain": "civilization",
+  "timestamp": "2026-05-04T13:33:43.697034+00:00",
+  "sources_count": 9,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 1,
+  "youtube_items": [
+    {
+      "title": "[YT] How 5G Technology is Bridging the Digital Divide - YouTube",
+      "summary": "5G technology is more than just faster internet. It's a powerful tool for bridging the digital divide. In today's video, we'll explore how 5G is connecting underserved communities and improving access to essential services like education, healthcare, and information. One of the most significant impacts of 5G is in education. By providing high-speed internet to remote and underserved areas, 5G enables students to access online learning platforms, digital resources and virtual classrooms. This connectivity is crucial for closing the education gap and ensuring that every student has the opportunity to succeed. 5G is also transforming healthcare by enabling telemedicine and remote patient monitor. In areas where medical services are scarce, 5G allows patients to consult with doctors and specia",
+      "link": "https://www.youtube.com/watch?v=-mljaUsLIy4",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "-mljaUsLIy4",
+      "transcript_method": "whisper",
+      "transcript_chars": 1544,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "Анализ на TECHNOLOGY_INFRA_REVIEW — данни получени но LLM грешка",
+    "root_cause": "LLM parsing грешка",
+    "severity": "UNKNOWN",
+    "leverage_points": [],
+    "proposed_actions": [],
+    "evidence": [
+      "How I Get Free Traffic from ChatGPT in 2025 (AIO vs SEO)",
+      "Top 10 AI Tools That Will Transform Your Content Creation in 2025",
+      "LimeWire AI Studio Review 2023: Details, Pricing & Features"
+    ],
+    "generalization": "",
+    "summary": "- How I Get Free Traffic from ChatGPT in 2025 (AIO vs SEO): <p style=\"text-align: left;\">Three weeks ago, I tested something that completely changed how I think about organic traffic. I opened ChatGPT",
+    "risk_level": "UNKNOWN",
+    "trend": "UNKNOWN"
+  },
+  "raw_items": [
+    {
+      "title": "How I Get Free Traffic from ChatGPT in 2025 (AIO vs SEO)",
+      "summary": "<p style=\"text-align: left;\">Three weeks ago, I tested something that completely changed how I think about organic traffic. I opened ChatGPT and asked a simple question: \"What's the best course on building SaaS with WordPress?\" The answer that appeared stopped me cold. My course showed up as the first result, recommended directly by the AI with specific reasons why it was valuable.</p><p style=\"text-align: left;\">I hadn't paid for advertising. I hadn't done any special promotion. The AI simply d",
+      "link": "https://techncruncher.blogspot.com/2025/12/how-i-get-free-traffic-from-chatgpt-in.html",
+      "published": "Thu, 04 Dec 2025 05:37:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Top 10 AI Tools That Will Transform Your Content Creation in 2025",
+      "summary": "<div style=\"text-align: left;\"><a href=\"https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEge5QgwLKWbavTUhIedQLI79z5BGD4h0ZoH4YMK6bGBL6fY4Je8R3GZurMZaJmtYirFS6pS-GgZD3xFAqfln8w8faEY2iDehndQNeez57DoiDsgYFJrIwMOLBjzcZiOJrqYDktm6pmRkwtprJChag0yQoeEZx1Pa_eKnt3kKzz69f-FSPWu_JXQxFq5Z8WZ/s1920/Blue%20Purple%20Futuristic%20Modern%203D%20Tech%20Company%20Business%20Presentation.jpg\" style=\"clear: left; margin-bottom: 1em;\"><span style=\"font-family: Coda;\"><img alt=\"Top 10 AI Tools That Will Trans",
+      "link": "https://techncruncher.blogspot.com/2025/01/top-10-ai-tools-that-will-transform.html",
+      "published": "Thu, 02 Jan 2025 09:26:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "LimeWire AI Studio Review 2023: Details, Pricing & Features",
+      "summary": "<p style=\"text-align: left;\"><span style=\"font-family: Oxygen;\">&nbsp;</span></p><p style=\"text-align: left;\"><span style=\"font-family: Oxygen;\">In the rapidly advancing landscape of AI technology and innovation, LimeWire emerges as a unique platform in the realm of generative AI tools. This platform not only stands out from the multitude of existing AI tools but also brings a fresh approach to content generation. LimeWire not only empowers users to create AI content but also provides creators w",
+      "link": "https://techncruncher.blogspot.com/2023/12/limewire-ai-studio-review-2023-details.html",
+      "published": "Tue, 12 Dec 2023 16:10:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Top 10 AI Tools in 2023 That Will Make Your Life Easier",
+      "summary": "<p><span style=\"font-family: Montserrat;\"><br /></span></p><div class=\"separator\" style=\"clear: both; text-align: center;\"><a href=\"https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiu91xnR3LQV62WoiA0scuFOTa-Xx9vIwouaceeyosFtZrJB0UivYIWtbcF3TCWEjKhRQVBiSeB00RQI0-cO_eBG6d05_6UV7zYw9qzyHMJ6u2m9_itNW2mFAS8LChEhhJQ14aJbI3GrkEsY9xCTExAT-qxUSh5asVFMAmX-ceWufpgV_DrG9tk3Y4umw/s1920/Blue%20Purple%20Futuristic%20Modern%203D%20Tech%20Company%20Business%20Presentation-min.jpg\" style=\"margin-left: 1",
+      "link": "https://techncruncher.blogspot.com/2023/01/top-10-ai-tools-in-2023-that-will-make.html",
+      "published": "Wed, 25 Jan 2023 19:52:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "RFK Jr.’s New Podcast Is as Weird as You’d Expect",
+      "summary": "The first two episodes of Robert F. Kennedy Jr.’s new podcast feature him discoursing on food with a reality-TV chef and, for some reason, Mike Tyson. Vaccines are not on the agenda.",
+      "link": "https://www.wired.com/story/rfk-jrs-new-podcast-is-as-weird-as-youd-expect/",
+      "published": "Mon, 04 May 2026 11:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Do Lightsaber Blades Have Mass?",
+      "summary": "On Star Wars Day, we put to rest a question that has bedeviled sci-fi nerds for years.",
+      "link": "https://www.wired.com/story/do-lightsaber-blades-have-mass/",
+      "published": "Mon, 04 May 2026 11:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "What I Packed to Run 80 Miles Across the Italian Apennine Mountains",
+      "summary": "Here's everything you need to survive while running many mountain miles. It all fits into a 10-lb pack.",
+      "link": "https://www.wired.com/story/what-i-packed-to-run-80-miles-italian-apennine/",
+      "published": "Mon, 04 May 2026 10:32:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "A Federal Worker Was Fired for Filming DOGE. Now She’s Running for Congress",
+      "summary": "Alexis Goldstein, a former Consumer Financial Protection Bureau employee, was fired this year for recording DOGE’s incursion into the agency.",
+      "link": "https://www.wired.com/story/a-federal-worker-was-fired-for-filming-doge-now-shes-running-for-congress/",
+      "published": "Mon, 04 May 2026 10:30:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] How 5G Technology is Bridging the Digital Divide - YouTube",
+      "summary": "5G technology is more than just faster internet. It's a powerful tool for bridging the digital divide. In today's video, we'll explore how 5G is connecting underserved communities and improving access to essential services like education, healthcare, and information. One of the most significant impacts of 5G is in education. By providing high-speed internet to remote and underserved areas, 5G enables students to access online learning platforms, digital resources and virtual classrooms. This connectivity is crucial for closing the education gap and ensuring that every student has the opportunity to succeed. 5G is also transforming healthcare by enabling telemedicine and remote patient monitor. In areas where medical services are scarce, 5G allows patients to consult with doctors and specia",
+      "link": "https://www.youtube.com/watch?v=-mljaUsLIy4",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "-mljaUsLIy4",
+      "transcript_method": "whisper",
+      "transcript_chars": 1544,
+      "has_full_transcript": true
+    }
+  ]
+}

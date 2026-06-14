@@ -1,0 +1,17 @@
+{
+    "2026-04-30T10:30:37.028673": {
+        "last_update": "2026-04-30T10:30:37.028673",
+        "data_sources": {
+            "OPEN_METEO_CLIMATE": "https://api.open-meteo.com",
+            "OPEN_METEO_ARCHIVE": "https://api.open-meteo.com",
+            "OPEN_METEO_FORECAST": "https://api.open-meteo.com",
+            "OPENWEATHERMAP_AIR_POLLUTION": "https://api.openweathermap.org",
+            "WORLD_BANK_CLIMATE_API": "https://climate-api.worldbank.org"
+        },
+        "risk_correction": {
+            "model_adjustment": "Enabled",
+            "data_inclusion": "Historical climate data + real-time monitoring",
+            "risk_overestimation": "Corrected by integrating multi-source validation"
+        }
+    }
+}

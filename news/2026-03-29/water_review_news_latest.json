@@ -1,0 +1,90 @@
+{
+  "axis": "WATER_REVIEW",
+  "fetched_at": "2026-03-29T11:43:20.668574+00:00",
+  "smart_query": "water scarcity drinking water",
+  "sources_count": {
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 0,
+    "github": 3,
+    "web_search": 5
+  },
+  "rss": [
+    {
+      "title": "We’ve been coming to this waterhole for 30 years. Like the creek we’ve been rearranged – ravaged by time but still shining | Jessie Cole",
+      "snippet": "When we strip off, it is all there on our bodies: scars mixed in with the ordinary wear and tear. It’s bolstering – this evidence of life livedMost waterholes in the northern rivers of New South Wales are hidden from view. Creeks snake through private land, unseen from the road. To find the path to ",
+      "url": "https://www.theguardian.com/commentisfree/2026/mar/29/australia-waterhole-ravaged-by-time-still-shining",
+      "source": "RSS"
+    },
+    {
+      "title": "‘It helped me feed my six children’: how Africa’s first water fund supports farmers to protect Kenya’s biggest river",
+      "snippet": "Conserving the watershed of the Tana and improving farming methods is securing water supplies and livelihoods alike in a changing climateWhen in 2017 David Nyoro became one of the first farmers to partner with Africa’s first water fund to conserve the watershed of Kenya’s biggest river, he received ",
+      "url": "https://www.theguardian.com/environment/2026/mar/27/africa-water-fund-farmers-protect-kenya-river-tana",
+      "source": "RSS"
+    },
+    {
+      "title": "Listen to a grieving mother and have no doubts: water privatisation has been a lethal scandal | Clive Lewis",
+      "snippet": "Progressives must wage a battle against a rotten capitalist system that milks our resources – and destroys lives. Let the fightback start with water In more than a decade as an MP, I have attended hundreds of meetings in parliament. Most pass. Some linger. Few stay with you. But a recent event was v",
+      "url": "https://www.theguardian.com/commentisfree/2026/mar/26/water-privatisation-lethal-scandal-grieving-mother-capitalist-system",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "wilsto/pool-monitor-card",
+      "snippet": "Keep your swimming pool safe and crystal clear by monitoring up to 25 water chemistry parameters at a glance.",
+      "stars": 115,
+      "url": "https://github.com/wilsto/pool-monitor-card",
+      "updated": "2026-03-27",
+      "source": "GitHub"
+    },
+    {
+      "title": "DOI-USGS/EGRET",
+      "snippet": "An R-package for the analysis of long-term changes in water quality and streamflow, including the water-quality method Weighted Regressions on Time, Discharge, and Season (WRTDS). https://doi-usgs.git",
+      "stars": 97,
+      "url": "https://github.com/DOI-USGS/EGRET",
+      "updated": "2026-03-12",
+      "source": "GitHub"
+    },
+    {
+      "title": "KnowFlow/KnowFlow_AWM",
+      "snippet": "KnowFlow Automatic Water Monitoring device is an open sourced tool enable everyone having access to first hand water quality data with low cost.",
+      "stars": 95,
+      "url": "https://github.com/KnowFlow/KnowFlow_AWM",
+      "updated": "2025-12-19",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [],
+  "web_search": [
+    {
+      "title": "World Enters &quot;Era of Global Water Bankruptcy&quot; UN Scientists Formally ...",
+      "url": "https://unu.edu/inweh/news/world-enters-era-of-global-water-bankruptcy",
+      "source": "WEB"
+    },
+    {
+      "title": "Water scarcity - UNICEF",
+      "url": "https://www.unicef.org/wash/water-scarcity",
+      "source": "WEB"
+    },
+    {
+      "title": "1 in 4 people globally still lack access to safe drinking water - WHO ...",
+      "url": "https://www.who.int/news/item/26-08-2025-1-in-4-people-globally-still-lack-access-to-safe-drinking-water---who--unicef",
+      "source": "WEB"
+    },
+    {
+      "title": "World enters era of &#x27;global water bankruptcy&#x27; | UN News",
+      "url": "https://news.un.org/en/story/2026/01/1166800",
+      "source": "WEB"
+    },
+    {
+      "title": "Water scarcity | Description, Mechanisms, Effects, &amp; Solutions | Britannica",
+      "url": "https://www.britannica.com/topic/water-scarcity",
+      "source": "WEB"
+    }
+  ],
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL"
+}

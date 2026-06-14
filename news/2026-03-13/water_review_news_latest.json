@@ -1,0 +1,180 @@
+{
+  "axis": "WATER_REVIEW",
+  "fetched_at": "2026-03-13T13:48:21.131399+00:00",
+  "smart_query": "\"Global water access and sanitation statistics\"",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 3,
+    "arxiv": 2,
+    "github": 3,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "analysis": {
+    "summary": "Ситуацията с водата в различни части на света продължава да бъде предизвикателство, с проблеми като замърсяване и недостиг на чиста вода. Новини от различни източници показват, че има случаи на затваряне на инспекции на водни обекти и увеличаване на бремето на管理лнието на водните ресурси. Тези проблеми подчертават необходимостта от по-добро управление и защита на водните ресурси.",
+    "key_developments": [
+      "Water inspectors shut out of Alcoa mine sites in Perth drinking water catchment",
+      "Pénurie deau potable à Kiyungi Ngoy : la population lance un cri dalarme",
+      "وزير الري : الإجراءات الأحادية غير المنظبطة بمنابع نهر النيل زادت عبء إدارة المياه في مصر"
+    ],
+    "sentiment": "NEGATIVE",
+    "urgency": "MEDIUM",
+    "open_source_momentum": "GitHub проекти като wilsto/pool-monitor-card и DOI-USGS/EGRET показват интерес към разработката на инструменти за мониторинг и анализ на водните ресурси.",
+    "scientific_frontier": "Изследванията от arXiv, като това за въздействието на никеловите обработки върху яснотата на водата в Индонезия, подчертават важността на научното изследване на водните ресурси.",
+    "relevance_to_goal": "Проблемите с водата имат пряко въздействие върху достойния живот на хората и свободата им да разгърнат своя потенциал, което е в противоречие с нашата крайна цел за създаване на устойчива общочовешка цивилизация."
+  },
+  "sentiment": "NEGATIVE",
+  "urgency": "MEDIUM",
+  "summary": "Ситуацията с водата в различни части на света продължава да бъде предизвикателство, с проблеми като замърсяване и недостиг на чиста вода. Новини от различни източници показват, че има случаи на затваряне на инспекции на водни обекти и увеличаване на бремето на管理лнието на водните ресурси. Тези проблеми подчертават необходимостта от по-добро управление и защита на водните ресурси.",
+  "key_developments": [
+    "Water inspectors shut out of Alcoa mine sites in Perth drinking water catchment",
+    "Pénurie deau potable à Kiyungi Ngoy : la population lance un cri dalarme",
+    "وزير الري : الإجراءات الأحادية غير المنظبطة بمنابع نهر النيل زادت عبء إدارة المياه في مصر"
+  ],
+  "open_source_momentum": "GitHub проекти като wilsto/pool-monitor-card и DOI-USGS/EGRET показват интерес към разработката на инструменти за мониторинг и анализ на водните ресурси.",
+  "scientific_frontier": "Изследванията от arXiv, като това за въздействието на никеловите обработки върху яснотата на водата в Индонезия, подчертават важността на научното изследване на водните ресурси.",
+  "news_items": [
+    {
+      "title": "وزير الري : الإجراءات الأحادية غير المنظبطة بمنابع نهر النيل زادت عبء إدارة المياه في مصر",
+      "snippet": "وزير الري : الإجراءات الأحادية غير المنظبطة بمنابع نهر النيل زادت عبء إدارة المياه في مصر",
+      "url": "https://www.dostor.org/5414489",
+      "source": "dostor.org"
+    },
+    {
+      "title": "Pénurie deau potable à Kiyungi Ngoy : la population lance un cri dalarme",
+      "snippet": "Pénurie deau potable à Kiyungi Ngoy : la population lance un cri dalarme",
+      "url": "https://www.radiookapi.net/2025/12/27/actualite/societe/penurie-deau-potable-kiyungi-ngoy-la-population-lance-un-cri-dalarme",
+      "source": "radiookapi.net"
+    },
+    {
+      "title": "Shahapur Water Scarcity : धरणांचा तालुका तरीही टंचाई कायम ; शहापूरमध्ये 17 कोटींचा पाणी आराखडा मंजूर",
+      "snippet": "Shahapur Water Scarcity : धरणांचा तालुका तरीही टंचाई कायम ; शहापूरमध्ये 17 कोटींचा पाणी आराखडा मंजूर",
+      "url": "https://pudhari.news/maharashtra/palghar/shahapur-water-scarcity-tanker-supply-17-crore-water-plan-thane-district-vu03",
+      "source": "pudhari.news"
+    },
+    {
+      "title": "Who are the key figures in the sewage crisis, and where are they now?",
+      "snippet": "With anger stoked by Channel 4’s drama Dirty Business, we look at what has happened to some of the main playersWater companies have been in the public eye for the wrong reasons again recently. South West Water was in the dock pleading guilty to supplying water unfit for human consumption, while the ",
+      "url": "https://www.theguardian.com/environment/2026/mar/13/who-are-the-key-figures-in-the-sewage-crisis-and-where-are-they-now",
+      "source": "RSS"
+    },
+    {
+      "title": "Water inspectors shut out of Alcoa mine sites in Perth drinking water catchment, documents show",
+      "snippet": "Fencing installed around Alcoa’s bauxite mine sites in 2025 blocked rangers conducting inspections, Water Corporation documents sayFollow our Australia news live blog for latest updatesGet our breaking news email, free app or daily news podcastConservation groups have accused the US mining company A",
+      "url": "https://www.theguardian.com/australia-news/2026/mar/12/alcoa-mine-perth-water-inspectors-shut-out",
+      "source": "RSS"
+    },
+    {
+      "title": "Welsh Water to pay £44.7m after ‘unacceptable’ sewage works failings",
+      "snippet": "Proposed package comes after regulator finds ‘serious and unacceptable breaches’ in how company operatesWelsh Water is to pay a proposed £44.7m after the industry regulator found “serious and unacceptable” breaches in the supplier’s sewage and network services.The water authority for England and Wal",
+      "url": "https://www.theguardian.com/business/2026/mar/12/dwr-cymru-welsh-water-apologises-ofwat-enforcement-plan-regulator",
+      "source": "RSS"
+    }
+  ],
+  "github_repos": [
+    {
+      "title": "wilsto/pool-monitor-card",
+      "snippet": "Keep your swimming pool safe and crystal clear by monitoring up to 25 water chemistry parameters at a glance.",
+      "stars": 105,
+      "url": "https://github.com/wilsto/pool-monitor-card",
+      "updated": "2026-03-09",
+      "source": "GitHub"
+    },
+    {
+      "title": "DOI-USGS/EGRET",
+      "snippet": "An R-package for the analysis of long-term changes in water quality and streamflow, including the water-quality method Weighted Regressions on Time, Discharge, and Season (WRTDS). https://doi-usgs.git",
+      "stars": 97,
+      "url": "https://github.com/DOI-USGS/EGRET",
+      "updated": "2026-03-12",
+      "source": "GitHub"
+    },
+    {
+      "title": "KnowFlow/KnowFlow_AWM",
+      "snippet": "KnowFlow Automatic Water Monitoring device is an open sourced tool enable everyone having access to first hand water quality data with low cost.",
+      "stars": 95,
+      "url": "https://github.com/KnowFlow/KnowFlow_AWM",
+      "updated": "2025-12-19",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Causal Attribution of Coastal Water Clarity Degradation to Nickel Processing Expansion at the Indonesia Morowali Industrial Park, Sulawesi",
+      "snippet": "Indonesia's nickel ore export ban has driven rapid expansion of smelting and hydrometallurgical processing capacity at the Indonesia Morowali Industrial Park (IMIP), now the world's largest integrated nickel processing complex, on the coast of Central Sulawesi. Whether this industrialization has deg",
+      "url": "https://arxiv.org/abs/2603.07331v2",
+      "source": "arXiv"
+    },
+    {
+      "title": "Modelling the long-term impacts of artificial warming on the Martian water cycle and surface ice distribution",
+      "snippet": "Recent papers by Ansari et al. (2024, Science Advances 10, eadn4650) and Richardson et al. (2025, arXiv eprint 2504.01455) have suggested that global warming of the Martian surface ('terraforming') by 35 K to sustain local habitats above the melting point of water could be achieved through the injec",
+      "url": "https://arxiv.org/abs/2603.01539v1",
+      "source": "arXiv"
+    }
+  ],
+  "youtube_transcripts": [],
+  "podcast": "[Kleptotherms] In this episode, we break the thermometer and watch the mercury spill out as we discover that temperature is far stranger than it seems. We first ran this episode in 2021: Five stories that run the gamut from snakes to stars. We start out underwater, with a species of snake that has evolved a devious trick for keeping warm. Then we hear the tale of a young man whose seemingly simple method of warm",
+  "youtube_videos": [
+    {
+      "title": "YouTube:szNC4jBdpa4",
+      "video_id": "szNC4jBdpa4",
+      "url": "https://www.youtube.com/watch?v=szNC4jBdpa4",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:akj9cVG66P0",
+      "video_id": "akj9cVG66P0",
+      "url": "https://www.youtube.com/watch?v=akj9cVG66P0",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:51mnY_H4q_g",
+      "video_id": "51mnY_H4q_g",
+      "url": "https://www.youtube.com/watch?v=51mnY_H4q_g",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:_T-pkYsG1PI",
+      "video_id": "_T-pkYsG1PI",
+      "url": "https://www.youtube.com/watch?v=_T-pkYsG1PI",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:IazDnV9hv3Y",
+      "video_id": "IazDnV9hv3Y",
+      "url": "https://www.youtube.com/watch?v=IazDnV9hv3Y",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:Kxz1QaaYbys",
+      "video_id": "Kxz1QaaYbys",
+      "url": "https://www.youtube.com/watch?v=Kxz1QaaYbys",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:ROosdUmdioc",
+      "video_id": "ROosdUmdioc",
+      "url": "https://www.youtube.com/watch?v=ROosdUmdioc",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:r5Z-3EN6h1w",
+      "video_id": "r5Z-3EN6h1w",
+      "url": "https://www.youtube.com/watch?v=r5Z-3EN6h1w",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:1xDjDwvhEss",
+      "video_id": "1xDjDwvhEss",
+      "url": "https://www.youtube.com/watch?v=1xDjDwvhEss",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:FmHqOgrqi4s",
+      "video_id": "FmHqOgrqi4s",
+      "url": "https://www.youtube.com/watch?v=FmHqOgrqi4s",
+      "source": "YouTube"
+    }
+  ]
+}

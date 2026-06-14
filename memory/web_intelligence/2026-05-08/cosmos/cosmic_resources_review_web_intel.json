@@ -1,0 +1,58 @@
+{
+  "axis": "COSMIC_RESOURCES_REVIEW",
+  "domain": "cosmos",
+  "timestamp": "2026-05-08T10:13:46.465071+00:00",
+  "sources_count": 5,
+  "rss_count": 0,
+  "ddg_count": 5,
+  "youtube_count": 0,
+  "youtube_items": [],
+  "analysis": {
+    "problem": "Анализ на COSMIC_RESOURCES_REVIEW — данни получени но LLM грешка",
+    "root_cause": "LLM parsing грешка",
+    "severity": "UNKNOWN",
+    "leverage_points": [],
+    "proposed_actions": [],
+    "evidence": [
+      "Asteroid mining",
+      "What is asteroid mining and how close are we to making it a reality?",
+      "Space Resource Exploration and Utilization Act of 2015"
+    ],
+    "generalization": "",
+    "summary": "- Asteroid mining: Asteroid mining is the hypothetical and technically possible extraction of materials from asteroids and other minor planets, including near-Earth objects.Research missions focused o",
+    "risk_level": "UNKNOWN",
+    "trend": "UNKNOWN"
+  },
+  "raw_items": [
+    {
+      "title": "Asteroid mining",
+      "summary": "Asteroid mining is the hypothetical and technically possible extraction of materials from asteroids and other minor planets, including near-Earth objects.Research missions focused on asteroid sample return, including Hayabusa, Hayabusa2, OSIRIS-REx, and Tianwen-2, illustrate the challenges of collecting ore from space using current technology. As of 2024, around 127 grams of asteroid material have",
+      "link": "https://en.wikipedia.org/wiki/Asteroid_mining",
+      "source_type": "ddg"
+    },
+    {
+      "title": "What is asteroid mining and how close are we to making it a reality?",
+      "summary": "Asteroid mining is moving from fiction to fact, here's how missions and startups are redefining resource extraction beyond Earth.",
+      "link": "https://interestingengineering.com/space/future-of-asteroid-mining-explained",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Space Resource Exploration and Utilization Act of 2015",
+      "summary": "The Space Resource Exploration and Utilization Act of 2015 (H.R. 1508) was a bill (which never became law) introduced in the 114th Congress of the U.S. on March 19, 2015, by Rep. Bill Posey, Republican of Florida. It is identical to the Senate bill by the same name (S. 976). The bill would have expanded Presidential power regarding space resources, and regulated US-based space exploration companie",
+      "link": "https://en.wikipedia.org/wiki/Space_Resource_Exploration_and_Utilization_Act_of_2015",
+      "source_type": "ddg"
+    },
+    {
+      "title": "European Space Resources Innovation Centre",
+      "summary": "The European Space Resources Innovation Centre (ESRIC) is a research, business, and innovation hub based in Luxembourg, established in August 2020 as the world's first center dedicated exclusively to the utilization of space resources in support of…",
+      "link": "https://grokipedia.com/page/european_space_resources_innovation_centre",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Space Resources | twinkl.co.uk",
+      "summary": "Discover a universe of space resources designed for curious young minds. From STEM activities to creative crafts and classroom packs, these tools make learning about our solar system...",
+      "link": "https://www.twinkl.co.uk/collection/space-resources",
+      "source_type": "ddg"
+    }
+  ]
+}

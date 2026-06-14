@@ -1,0 +1,45 @@
+Thinking...
+Okay, let's tackle this query. The user wants me to act as an internal AGI resource review agent in the CORTEX++ system, specifically in the FOOD domain. The task is to generate a JSON object based on the provided RAW_CONTEXT. 
+
+First, I need to parse the RAW_CONTEXT carefully. The main points are about the status of data sources for the FOOD REVIEW. There are five sources listed, with some having status codes. The FAO and Our World in Data files are 404, meaning they're not accessible. The WFP site has a connection timeout error, and the World Bank and Eurostat are okay. 
+
+Starting with the diagnosis status. Since three out of five sources are failed, that's a problem. But the ones that are working (World Bank and Eurostat) might still provide some data. However, the failed sources could mean missing data, which affects the overall assessment. The status should probably be "STRESSED" because there are critical data gaps but some data is still available.
+
+For the short_summary_bg, I need to mention the data source issues and their impact on the food system analysis. Key metrics: maybe the number of active vs failed sources. The interpretation would be that missing data from key organizations like FAO and WFP limits the ability to assess global food security and sustainability.
+
+Risks: The main risk is the reliance on incomplete data. The WFP connection timeout is a short-term risk because it's an immediate issue. The FAO and Our World in Data being down could be medium-term if not resolved. Long-term risk might be the lack of data from these key sources affecting long-term planning.
+
+Opportunities: Leveraging the available data from World Bank and Eurostat. Also, maybe improving data collection methods or partnerships to get more reliable sources.
+
+Recommended actions: High priority to fix the WFP connection issue. Medium priority to find alternatives for FAO and Our World in Data. Maybe also reach out to those organizations for data access.
+
+Notes for self-improvement: The system should handle connection timeouts better, maybe with retries or alternative endpoints. Also, having backup data sources could prevent such issues in the future.
+
+I need to make sure all Bulgarian text is concise and clear. Check that each key in the JSON matches the required structure. Avoid any extra text outside the JSON. Also, ensure that the JSON is valid with proper syntax and that all required fields are present.
+...done thinking.
+
+{
+  "diagnosis": {
+    "status": "STRESSED",
+    "short_summary_bg": "Повечето източници на данни са недоступни или са с грешки, което ограничава анализа на глобалната хранителна система.",
+    "key_metrics": [
+      {"name": "Активни източници", "value": "2", "interpretation_bg": "Достъпни са само 2 от 5 ключови източници, което води до недостатъчни данни за оценка."},
+      {"name": "Неуспешни източници", "value": "3", "interpretation_bg": "Прекъснати връзки с FAO, WFP и Our World in Data затрудняват анализът на хранителната безбедност и устойчивост."}
+    ]
+  },
+  "risks": [
+    {"name": "Недостъпност на ключови данни", "description_bg": "Повреждането на FAO и WFP източници предотвратява актуална оценка на хранителната криза.", "time_horizon": "short"},
+    {"name": "Нестабилна връзка с WFP", "description_bg": "Повтарящото се времево изчезване на връзката с WFP е краткосрочен риск за актуализиране на хранителната карта.", "time_horizon": "short"},
+    {"name": "Дългосрочна несигурност", "description_bg": "Непрекъснатото недостига на данни от FAO и Our World in Data може да доведе до непълни анализи.", "time_horizon": "long"}
+  ],
+  "opportunities": [
+    {"name": "Използване на наличните източници", "description_bg": "Данните от World Bank и Eurostat могат да се използват за частична оценка на сектора."}
+  ],
+  "recommended_actions": [
+    {"id": "FOOD-ACT-001", "title_bg": "Изправяне на връзката с WFP", "description_bg": "Проверете стабилността на връзката с WFP и опитайте да изтеглите данни от архивни версии.", "priority": "high"}
+  ],
+  "notes_for_cortex_self_improvement": [
+    "Използвайте алтернативни източници за данни при неуспешни връзки с ключови организации.",
+    "Изградете механизъм за автоматични повторни опити при времена изчезване на връзките."
+  ]
+}

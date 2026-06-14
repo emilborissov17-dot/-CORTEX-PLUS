@@ -1,0 +1,147 @@
+{
+  "axis": "ENERGY_REVIEW",
+  "domain": "planet",
+  "timestamp": "2026-05-18T08:43:54.691236+00:00",
+  "sources_count": 15,
+  "rss_count": 12,
+  "ddg_count": 0,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] Why Europe Can’t Escape the Energy Crisis in 2025",
+      "summary": "[DESCRIPTION FALLBACK] Europe is facing a major energy crisis in 2025. Sky-high electricity prices, disrupted supply chains, and heavy reliance on imports ...",
+      "link": "https://www.youtube.com/watch?v=xf9v4SadoWw",
+      "published": "2025-01-24T18:44:23Z",
+      "source_type": "youtube",
+      "channel": "Macro Moments",
+      "video_id": "xf9v4SadoWw",
+      "transcript_method": "description",
+      "transcript_chars": 158,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] THE NUCLEAR GAP: Uranium&#39;s Supply Deficit Is Getting Wider Every Year While Demand Keeps Climbing…",
+      "summary": "[DESCRIPTION FALLBACK] In this video, I break down exactly what is happening inside the global uranium market right now — why the supply deficit keeps ...",
+      "link": "https://www.youtube.com/watch?v=9V7YWaMVLZ8",
+      "published": "2026-05-17T12:35:02Z",
+      "source_type": "youtube",
+      "channel": "Asian Guy Og",
+      "video_id": "9V7YWaMVLZ8",
+      "transcript_method": "description",
+      "transcript_chars": 154,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Global Bond Rout Deepens as Inflation Fears Hit Stocks | The Asia Trade 5/18/2026",
+      "summary": "[DESCRIPTION FALLBACK] \"Bloomberg: The Asia Trade\" brings you everything you need to know to get ahead as the trading day begins in Asia. Bloomberg ...",
+      "link": "https://www.youtube.com/watch?v=D0Ut8xFMwpM",
+      "published": "2026-05-18T05:47:22Z",
+      "source_type": "youtube",
+      "channel": "Bloomberg Television",
+      "video_id": "D0Ut8xFMwpM",
+      "transcript_method": "description",
+      "transcript_chars": 151,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "problem": "Despite rapid growth in solar energy adoption, there is a growing reliance on natural gas for data centers and a widening uranium supply deficit, creating an energy system that is not fully sustainable.",
+    "root_cause": "The energy transition is being undermined by continued investment in fossil fuel-based infrastructure and a lack of strategic planning for long-term energy security, particularly in critical sectors like data centers and nuclear energy.",
+    "severity": "HIGH",
+    "leverage_points": [
+      "The expansion of data centers using natural gas and the lack of renewable energy alternatives in their infrastructure",
+      "The global uranium supply deficit and insufficient investment in nuclear energy development"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Mandate renewable energy sourcing for all new data center projects",
+        "measurable_goal": "Achieve 100% renewable energy use for data centers by 2030",
+        "timeframe": "long-term"
+      },
+      {
+        "action": "Accelerate nuclear energy development through public-private partnerships",
+        "measurable_goal": "Increase nuclear energy capacity by 30% by 2035",
+        "timeframe": "medium-term"
+      }
+    ],
+    "evidence": [
+      "xAI grows data center gas fleet despite legal scrutiny – This Week in Cleantech: xAI adds 19 natural gas turbines to its Colossus 2 data center",
+      "THE NUCLEAR GAP: Uranium's Supply Deficit Is Getting Wider Every Year While Demand Keeps Climbing…: The video highlights the growing uranium supply deficit"
+    ],
+    "generalization": "This problem connects to the broader challenge of transitioning to sustainable energy systems while maintaining economic and technological growth, particularly in energy-intensive industries like data storage and computing.",
+    "summary": "The energy system is at risk due to growing reliance on natural gas for data centers and a widening uranium supply deficit, undermining long-term sustainability.",
+    "risk_level": "HIGH"
+  },
+  "raw_items": [
+    {
+      "title": "NEW! Solar Survey Report 2026",
+      "summary": "<p>Solar power is being installed faster than any other power source in the world. That&#8217;s the case in the United States, and that&#8217;s the case globally. Solar power is booming. But not all is perfect in the solar industry, not all is sunshine and rainbows. (Sorry for the weak puns.)   ... [continued]</p>\n<p>The post <a href=\"https://cleantechnica.com/2026/05/18/new-solar-survey-report-2026/\">NEW! Solar Survey Report 2026</a> appeared first on <a href=\"https://cleantechnica.com\">CleanTe",
+      "link": "https://cleantechnica.com/2026/05/18/new-solar-survey-report-2026/",
+      "published": "Mon, 18 May 2026 06:22:29 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Waymo Reaching 11 Cities & 1,400 Square Miles As World Cup Approaches",
+      "summary": "<p>The World Cup is fast approaching, and Waymo has been expanding its service in new cities while also growing its service areas in existing cities in anticipation of the biggest sporting event in the world. &#8220;The world’s largest 24/7 autonomous ride-hailing service just got bigger,&#8221; as the company wrote a   ... [continued]</p>\n<p>The post <a href=\"https://cleantechnica.com/2026/05/18/waymo-reaching-11-cities-1400-square-miles-as-world-cup-approaches/\">Waymo Reaching 11 Cities &#038;",
+      "link": "https://cleantechnica.com/2026/05/18/waymo-reaching-11-cities-1400-square-miles-as-world-cup-approaches/",
+      "published": "Mon, 18 May 2026 05:23:12 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Judge In Australia Not Happy About Tesla Dragging Its Feet In Class Action Case",
+      "summary": "<p>It took a lot longer than I expected, but there are class action lawsuits underway against Tesla in the US and Australia, and they just keep dragging on. In fact, in Australia, Tesla has been dragging things along so much that a judge there is losing his patience. This case   ... [continued]</p>\n<p>The post <a href=\"https://cleantechnica.com/2026/05/17/judge-in-australia-not-happy-about-tesla-dragging-its-feet-in-class-action-case/\">Judge In Australia Not Happy About Tesla Dragging Its Feet I",
+      "link": "https://cleantechnica.com/2026/05/17/judge-in-australia-not-happy-about-tesla-dragging-its-feet-in-class-action-case/",
+      "published": "Mon, 18 May 2026 03:00:21 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Ethiopia Leads EV Revolution In Africa",
+      "summary": "<p>When Ethiopia banned the import of conventional cars two years ago, many were skeptical. But the policy has been highly successful. </p>\n<p>The post <a href=\"https://cleantechnica.com/2026/05/17/ethiopia-leads-ev-revolution-in-africa/\">Ethiopia Leads EV Revolution In Africa</a> appeared first on <a href=\"https://cleantechnica.com\">CleanTechnica</a>.</p>",
+      "link": "https://cleantechnica.com/2026/05/17/ethiopia-leads-ev-revolution-in-africa/",
+      "published": "Sun, 17 May 2026 20:18:56 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "xAI grows data center gas fleet despite legal scrutiny – This Week in Cleantech",
+      "summary": "On this episode of the This Week in Cleantech podcast, Molly Taft from WIRED discusses Elon Musk's AI company xAI's decision to add 19 natural gas turbines to its Colossus 2 data center in Southaven, Mississippi.",
+      "link": "https://www.renewableenergyworld.com/podcasts/xai-grows-data-center-gas-fleet-despite-legal-scrutiny-this-week-in-cleantech/",
+      "published": "Fri, 15 May 2026 18:34:58 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "The EPA is expediting clean air permits for power plants to remove ‘unnecessary delays’",
+      "summary": "The U.S. Environmental Protection Agency is expediting Clean Air Act permit reviews to eliminate delays, allowing concurrent public comment and review.",
+      "link": "https://www.renewableenergyworld.com/energy-business/policy-and-regulation/the-epa-is-expediting-clean-air-permits-for-power-plants-to-remove-unnecessary-delays/",
+      "published": "Thu, 14 May 2026 19:15:05 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Elective pay explained as key IRS deadline approaches | Q&A with tax credit specialist Bryen Alperin",
+      "summary": "Municipalities, schools, and first-time applicants are accelerating projects under the IRS's elective pay provision before the May 15 deadline.",
+      "link": "https://www.renewableenergyworld.com/energy-business/policy-and-regulation/elective-pay-explained-as-key-irs-deadline-approaches-qa-with-tax-credit-specialist-bryen-alperin/",
+      "published": "Thu, 14 May 2026 13:25:35 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Amazon turns to geothermal, solar and storage to power Nevada data center growth",
+      "summary": "The 700 MW portfolio includes Zanskar’s 20-year agreement to deliver 100 MW of baseload geothermal power to NV Energy by 2030.",
+      "link": "https://www.renewableenergyworld.com/energy-business/new-project-development/amazon-turns-to-geothermal-solar-and-storage-to-power-nevada-data-center-growth/",
+      "published": "Tue, 12 May 2026 19:50:54 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "HSBC Bets $4 Billion on China’s Clean Energy Export Boom",
+      "summary": "British HSBC set up an investment vehicle worth $4 billion to fund energy transition technology from China, including wind and solar power, electric vehicles, data centers, and artificial intelligence. According to Reuters, the Sustainability and Transition Credit Facility comes amid growing interest in alternative energy prompted by the oil and gas crunch caused by the war between the United States, Israel, and Iran. The war has already cost 1 billion barrels in lost global oil supply, accordin",
+      "link": "https://oilprice.com/Latest-Energy-News/World-News/HSBC-Bets-4-Billion-on-Chinas-Clean-Energy-Export-Boom.html",
+      "published": "Mon, 18 May 2026 03:15:00 -0500",
+      "source_type": "rss"
+    },
+    {
+      "title": "China’s Coal Output Slips as Imports Extend Decline",
+      "summary": "China’s coal production last month inched down by 1%, to 385.63 million tons, Reuters has reported, citing official statistics data. The decline was from an all-time high achieved in March. Over the first four months, China’s coal production also dipped, to 1.58 billion tons, which was a modest 0.1% decline on the first four months of 2025, and came amid ample supply, and despite higher coal generation and lower imports. Imports of coal into China slid by 14% last month to 33.1 million tons, wit",
+      "link": "https://oilprice.com/Latest-Energy-News/World-News/Chinas-Coal-Output-Slips-as-Imports-Extend-Decline.html",
+      "published": "Mon, 18 May 2026 02:00:00 -0500",
+      "source_type": "rss"
+    }
+  ]
+}

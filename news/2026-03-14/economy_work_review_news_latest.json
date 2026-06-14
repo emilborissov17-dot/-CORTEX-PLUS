@@ -1,0 +1,101 @@
+{
+  "axis": "ECONOMY_WORK_REVIEW",
+  "fetched_at": "2026-03-14T07:13:38.102239+00:00",
+  "smart_query": "economy unemployment poverty wages",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 3,
+    "arxiv": 2,
+    "github": 3,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "'We're not profiteering on fuel. But my staff still face abuse'",
+      "snippet": "Independent retailer Goran Raven says the higher oil price is \"horrific\" for him as well as his customers.",
+      "url": "https://www.bbc.com/news/articles/c626mdvn6d5o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Chancellor to offer support over rising heating oil costs",
+      "snippet": "Rachel Reeves says the Treasury is also looking at \"different options\" to help households most vulnerable to soaring energy bills.",
+      "url": "https://www.bbc.com/news/articles/cvg3y9dpvxgo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Judge says 'no evidence' to justify Federal Reserve probe",
+      "snippet": "Jeanine Pirro said she would appeal the ruling, which blocks the subpoenas she issued to the central bank. ",
+      "url": "https://www.bbc.com/news/articles/cwy6z25y7z0o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [
+    {
+      "title": "Bonus Demografi Tanpa Lapangan Kerja Berkualitas",
+      "snippet": "Bonus Demografi Tanpa Lapangan Kerja Berkualitas",
+      "url": "https://money.kompas.com/read/2026/02/10/064000426/bonus-demografi-tanpa-lapangan-kerja-berkualitas",
+      "source": "money.kompas.com"
+    },
+    {
+      "title": "La manovra non risolve il gap salariale e stringe il cappio intorno alla classe media",
+      "snippet": "La manovra non risolve il gap salariale e stringe il cappio intorno alla classe media",
+      "url": "https://www.ilfattoquotidiano.it/2025/12/31/manovra-finanziaria-gap-salariale-produttivita-oggi/8242064/",
+      "source": "ilfattoquotidiano.it"
+    },
+    {
+      "title": "بالاترین : مسعود نیلی : جامعه ایران ، یک انبار باروت است که هرلحظه امکان انفجار دارد / آینده کشور بسیار تاریک است",
+      "snippet": "بالاترین : مسعود نیلی : جامعه ایران ، یک انبار باروت است که هرلحظه امکان انفجار دارد / آینده کشور بسیار تاریک است",
+      "url": "https://www.balatarin.com:443/permlink/2026/2/7/6430658",
+      "source": "balatarin.com"
+    }
+  ],
+  "github_repos": [
+    {
+      "title": "AmirhosseinHonardoust/Economic-DNA-Repair",
+      "snippet": "A deep research study introducing the concept of Economic DNA Repair for smart contracts, designing self-correcting tokenomics that detect anomalies, repair unstable parameters, rebalance incentives, ",
+      "stars": 18,
+      "url": "https://github.com/AmirhosseinHonardoust/Economic-DNA-Repair",
+      "updated": "2026-02-23",
+      "source": "GitHub"
+    },
+    {
+      "title": "AmirhosseinHonardoust/Pricing-Negotiation-Intelligence",
+      "snippet": "This article reframes pricing as a negotiation rather than a prediction, showing how price emerges from tensions between product reality, market dynamics, and buyer behavior. It introduces negotiation",
+      "stars": 18,
+      "url": "https://github.com/AmirhosseinHonardoust/Pricing-Negotiation-Intelligence",
+      "updated": "2026-02-23",
+      "source": "GitHub"
+    },
+    {
+      "title": "AmirhosseinHonardoust/Metabolic-Tokenomics",
+      "snippet": "A scientific exploration of Metabolic Tokenomics, the framework that models token economies as living metabolic systems. Examines how tokens burn, store, and circulate energy like biological cells, ma",
+      "stars": 17,
+      "url": "https://github.com/AmirhosseinHonardoust/Metabolic-Tokenomics",
+      "updated": "2026-02-23",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "A Survey of Reinforcement Learning For Economics",
+      "snippet": "This survey (re)introduces reinforcement learning methods to economists. The curse of dimensionality limits how far exact dynamic programming can be effectively applied, forcing us to rely on suitably \"small\" problems or our ability to convert \"big\" problems into smaller ones. While this reduction h",
+      "url": "https://arxiv.org/abs/2603.08956v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "The Data-Dollars Tradeoff: Privacy Harms vs. Economic Risk in Personalized AI Adoption",
+      "snippet": "Privacy concerns significantly impact AI adoption, yet little is known about how information environments shape user responses to data leak threats. We conducted a 2 x 3 between-subjects experiment (N=610) examining how risk versus ambiguity about privacy leaks affects the adoption of AI personaliza",
+      "url": "https://arxiv.org/abs/2603.08848v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[The ICE hiring boom] Live event info and tickets here. ICE is scaling up, with rapid new hiring. So we ask, has training new officers changed? At what cost? Also, the Trump administration has plans to pour billions of dollars into warehouses for mass immigrant detention centers, which can totally change the economy of some areas. We hear from a rural town in Georgia that wants an ICE facility in its own backyard. Thes",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

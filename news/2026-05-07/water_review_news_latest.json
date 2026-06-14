@@ -1,0 +1,63 @@
+{
+  "axis": "WATER_REVIEW",
+  "fetched_at": "2026-05-07T10:25:33.191838+00:00",
+  "smart_query": "water scarcity drinking water",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 3,
+    "arxiv": 0,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "Up to 2cm a month: Nasa keeps track as Mexico City sinks into the ground",
+      "snippet": "Powerful radar system is providing new data on city’s subsidence, which experts hope will draw more attention to itWalking into Mexico City’s sprawling central Zócalo is a dizzying experience. At one end of the plaza, the capital’s cathedral, with its soaring spires, slumps in one direction. An atta",
+      "url": "https://www.theguardian.com/world/2026/may/07/mexico-city-sinking-subsidence-2cm-a-month-nasa-nisar",
+      "source": "RSS"
+    },
+    {
+      "title": "From V2 rocket-scarred London to Ukraine: how nature thrives in bomb craters",
+      "snippet": "In the UK capital, Bomb Crater Pond is full of wildlife, while scientists studying land obliterated by recent Russian blasts 1,500 miles away have seen ‘how quickly nature begins to heal itself’In February 1945, towards the end of the second world war, a German V2 rocket struck Walthamstow Marshes i",
+      "url": "https://www.theguardian.com/environment/2026/may/06/london-to-ukraine-how-nature-is-thriving-in-bomb-craters",
+      "source": "RSS"
+    },
+    {
+      "title": "Horrified Wagga residents call for proper sanitation at homeless camp where baby was found dead",
+      "snippet": "Tent where twins were born up to a 15-minute walk away from nearest public toilets or running waterFollow our Australia news live blog for latest updatesGet our breaking news email, free app or daily news podcastThe tent where a newborn baby was found dead at Wagga beach at the weekend was part of a",
+      "url": "https://www.theguardian.com/australia-news/2026/may/06/wagga-homeless-camp-baby-found-dead-sanitation-ntwnfb",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [
+    {
+      "title": "Climate Change , Drinking Water Security , and Public Health",
+      "snippet": "Climate Change , Drinking Water Security , and Public Health",
+      "url": "https://link.springer.com/book/10.1007/978-3-032-12074-8",
+      "source": "link.springer.com"
+    },
+    {
+      "title": "Laccès à leau potable reste un défi au Mali - Studio Tamani - Informations , débats , magazines : toute lactualité du Mali , en 5 langues",
+      "snippet": "Laccès à leau potable reste un défi au Mali - Studio Tamani - Informations , débats , magazines : toute lactualité du Mali , en 5 langues",
+      "url": "https://www.studiotamani.org/200764-lacces-a-leau-potable-reste-un-defi-au-mali",
+      "source": "studiotamani.org"
+    },
+    {
+      "title": "Pasokan Air Minum Ikut Terganggu Imbas Perang Israel - AS vs Iran , Kok Bisa ? ",
+      "snippet": "Pasokan Air Minum Ikut Terganggu Imbas Perang Israel - AS vs Iran , Kok Bisa ? ",
+      "url": "https://www.viva.co.id/berita/dunia/1892622-pasokan-air-minum-ikut-terganggu-imbas-perang-israel-as-vs-iran-kok-bisa",
+      "source": "viva.co.id"
+    }
+  ],
+  "github_repos": [],
+  "arxiv_papers": [],
+  "podcast": "[The Resistance of a Cow] There’s something rotten in the cows of Denmark. And Minnesota. And Wisconsin. And Idaho. What could cause a previously thriving herd of majestic dairy cattle to stop drinking water and start drinking … urine? A Danish farmer calls a special investigator, who takes one look at his farm and nopes the heck out of there, refusing to return, citing “bad energy” coming from something nearby … a big bui",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

@@ -1,0 +1,139 @@
+{
+  "axis": "INFRASTRUCTURE_CITIES_REVIEW",
+  "domain": "civilization",
+  "timestamp": "2026-05-03T08:53:25.258080+00:00",
+  "sources_count": 12,
+  "rss_count": 4,
+  "ddg_count": 5,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] Smart City Infrastructure: The Future of Transportation and Urban Planning!",
+      "summary": "Smart city infrastructure. The future of&nbsp; transportation and urban planning. The future&nbsp;&nbsp; of transportation and urban planning is being&nbsp; shaped by smart city infrastructure. This video&nbsp;&nbsp; explores how cuttingedge technology and innovative&nbsp; design are being used to create more efficient,&nbsp;&nbsp; sustainable, and livable urban environments.&nbsp; Animated logo intro with upbeat music. Welcome&nbsp;&nbsp; to Civil Engineering Edge, your ultimate source&nbsp; for insight, innovation, and inspiration in civil&nbsp;&nbsp; engineering. If you're passionate about shaping&nbsp; the future of our cities, don't forget to like,&nbsp;&nbsp; share, and subscribe. Imagine a city where&nbsp; traffic jams are a thing of the past,&nbsp;&nbsp; where public transport runs",
+      "link": "https://www.youtube.com/watch?v=F-8LAPLaDUw",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "F-8LAPLaDUw",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Smart Cities: Future of Urban Living | Innovation and ... - YouTube",
+      "summary": "imagine a city that pulses with intelligence a city where every building every street and every corner is alive with data and connectivity this is not just a dream but a reality that is unfolding before our eyes buildings whisper secrets to each other they communicate through a network of sensors and systems sharing information about energy usage structural health and even occupancy levels this constant exchange of data ensures that buildings operate at Peak eff efficiency reducing waste and enhancing comfort for their inhabitants traffic flows with an almost Eerie efficiency smart traffic Management Systems analyze real-time data to optimize traffic lights reduce congestion and even predict traffic patterns this means less time spent in traffic jams and more time for the things that matte",
+      "link": "https://www.youtube.com/watch?v=l7OrgmOCnh8",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "l7OrgmOCnh8",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Smart Cities Explained: How AI is Shaping the Future - YouTube",
+      "summary": "imagine living in a city where traffic jams are a thing of the past energy is used efficiently and public services are optimized to meet your needs seamlessly sounds like a dream right well this is rapidly becoming a reality thanks to the integration of artificial intelligence into urban environments AI is revolutionizing how cities operate making them smarter more efficient and more responsive to the needs of their inhabitants let's start with Transportation traditional Traffic Systems often lead to frust ating delays and congestion but with AI cities like Tokyo and San Francisco are transforming this experience in Tokyo AI driven vehicles are being tested to navigate the complex Urban environment imagine cars that can communicate with traffic lights and even with each other this technolo",
+      "link": "https://www.youtube.com/watch?v=DnzXEv4uB7c",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "DnzXEv4uB7c",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "summary": "Smart city infrastructure is rapidly evolving, driven by AI, IoT, and data-driven governance. Cities are adopting innovative technologies to improve sustainability, efficiency, and livability. Key trends include the integration of AI in urban planning, the rise of smart transit systems, and the push for data transparency and citizen engagement.",
+    "risk_level": "MEDIUM",
+    "trend": "IMPROVING",
+    "key_events": [
+      "Smart cities are becoming more prevalent, with cities like Telangana and others adopting AI and IoT for urban management.",
+      "Mayors and city planners are increasingly involved in shaping AI policies and technology adoption strategies.",
+      "Transit agencies are facing challenges in balancing budget allocation and worker retention, highlighting the need for sustainable urban planning."
+    ],
+    "insights": [
+      "AI and data analytics are transforming urban governance, enabling smarter traffic management, energy optimization, and public service delivery.",
+      "The future of smart cities will depend on collaboration between governments, private sector, and citizens to ensure equitable and sustainable development."
+    ],
+    "youtube_insights": [
+      "YouTube videos on smart city infrastructure highlight the integration of AI and IoT in urban planning and transportation.",
+      "Content on smart cities discusses the environmental and social benefits of intelligent urban systems."
+    ],
+    "relevance_to_goal": "High",
+    "generalization": "Smart city infrastructure is reshaping urban planning and governance, with AI and data-driven approaches playing a critical role in creating more efficient, sustainable, and livable cities."
+  },
+  "raw_items": [
+    {
+      "title": "Autonomous VW buses to begin microtransit service in Florida community",
+      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.com/yvBE8nr82dJTbUxPSBbAjel2vxAjyHj_nnLgCH-bDOA/g:nowe:143:0/c:2336:1319/rs:fill:1600:900:1/Z3M6Ly9kaXZlc2l0ZS1zdG9yYWdlL2RpdmVpbWFnZS9KT04tRklYX1ZXX0JFRVAxNjM5MjkuanBlZw==.webp\" /></div></figure><p>Beep and Moia plan to expand on-demand and scheduled circulator services throughout the country, Beep&rsquo;s CEO said.</p>",
+      "link": "https://www.smartcitiesdive.com/news/beep-moia-volkswagen-microtransit-florida/819065/",
+      "published": "Fri, 01 May 2026 11:46:00 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "Mayors look to shape AI policy — and the technology itself — in new coalition",
+      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.com/Fii9UiNARsCKDPEsBQTF6cSnWVT271VV222GYLmSh5o/g:ce/rs:fill:1600:900:1/Z3M6Ly9kaXZlc2l0ZS1zdG9yYWdlL2RpdmVpbWFnZS9HZXR0eUltYWdlcy0yMjAzMjk5MTM2LmpwZw==.webp\" /></div></figure><p>&ldquo;Local governments must set the frameworks to shape the use and impacts of these technologies,&rdquo; said Boston Mayor Michelle Wu, a member of the global Mayors AI Forum.</p>",
+      "link": "https://www.smartcitiesdive.com/news/mayors-ai-policy-forum-bloomberg-johns-hopkins/819084/",
+      "published": "Fri, 01 May 2026 11:01:07 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "Who should decide budgets? Some cities are starting to share the power.",
+      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.com/8xdQfCJtFC9dJ60CW1krau_rGOq7hh2d6cYQWXjyfus/g:ce/rs:fill:1600:900:1/Z3M6Ly9kaXZlc2l0ZS1zdG9yYWdlL2RpdmVpbWFnZS9HZXR0eUltYWdlcy0xMTg4OTA4Njk3LmpwZw==.webp\" /></div></figure><p>Participatory budgeting is reshaping how funds are allocated, bringing residents into decisions that elected officials and staff traditionally controlled, an expert says.</p>",
+      "link": "https://www.smartcitiesdive.com/news/participatory-budgeting-celina-su/819080/",
+      "published": "Fri, 01 May 2026 10:50:22 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "How transit agencies can hire and keep front-line workers",
+      "summary": "<p>An Urban Institute researcher predicts that &ldquo;under current trends, the cost of service will go up over time.&rdquo;</p>",
+      "link": "https://www.smartcitiesdive.com/news/transit-agencies-frontline-worker-recruit-retain/818892/",
+      "published": "Thu, 30 Apr 2026 11:58:00 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "Smart cities",
+      "summary": "A smart city is an urban model that leverages technology, human capital, and governance to improve sustainability, efficiency, and social inclusion, which are considered goals for cities of the future. Smart cities use digital technology to collect data and operate services. Data is collected from citizens, devices, buildings, or cameras. Smart city applications are diverse and include, but are no",
+      "link": "https://en.wikipedia.org/wiki/Smart_cities",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Smart city - Wikipedia",
+      "summary": "Notable disparities among smart city definitions include the relative focus on economic advantages versus environmental or social benefits and specific technology choices.[29].",
+      "link": "https://en.wikipedia.org/wiki/Smart_city",
+      "source_type": "ddg"
+    },
+    {
+      "title": "List of Smart and AMRUT Cities in Telangana",
+      "summary": "The Smart and AMRUT cities in Telangana comprise urban local bodies selected under the Government of India's Smart Cities Mission, launched in 2015 to...",
+      "link": "https://grokipedia.com/page/List_of_Smart_and_AMRUT_Cities_in_Telangana",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Urban planning",
+      "summary": "Urban planning (also called city planning or town planning in some contexts) is the process of developing and designing land use and the built environment, including air, water, and the infrastructure passing into and out of urban areas, such as transportation, communications, and distribution networks, and their accessibility. Traditionally, urban planning followed a top-down approach in master p",
+      "link": "https://en.wikipedia.org/wiki/Urban_planning",
+      "source_type": "ddg"
+    },
+    {
+      "title": "What Is Urban Planning?. The art of shaping cities, and letting | Medium",
+      "summary": "Urban planning, sometimes also “city planning” or “town planning,” is an interdisciplinary field that studies urban areas and how we can purposefully direct their development...",
+      "link": "https://medium.com/the-urban-condition/what-is-urban-planning-97b1b9f40efa",
+      "source_type": "ddg"
+    },
+    {
+      "title": "[YT] Smart City Infrastructure: The Future of Transportation and Urban Planning!",
+      "summary": "Smart city infrastructure. The future of&nbsp; transportation and urban planning. The future&nbsp;&nbsp; of transportation and urban planning is being&nbsp; shaped by smart city infrastructure. This video&nbsp;&nbsp; explores how cuttingedge technology and innovative&nbsp; design are being used to create more efficient,&nbsp;&nbsp; sustainable, and livable urban environments.&nbsp; Animated logo intro with upbeat music. Welcome&nbsp;&nbsp; to Civil Engineering Edge, your ultimate source&nbsp; for insight, innovation, and inspiration in civil&nbsp;&nbsp; engineering. If you're passionate about shaping&nbsp; the future of our cities, don't forget to like,&nbsp;&nbsp; share, and subscribe. Imagine a city where&nbsp; traffic jams are a thing of the past,&nbsp;&nbsp; where public transport runs",
+      "link": "https://www.youtube.com/watch?v=F-8LAPLaDUw",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "F-8LAPLaDUw",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ]
+}

@@ -1,0 +1,117 @@
+{
+  "axis": "LONG_TERM_FUTURE_REVIEW",
+  "domain": "cosmos",
+  "timestamp": "2026-05-04T14:03:02.415977+00:00",
+  "sources_count": 12,
+  "rss_count": 4,
+  "ddg_count": 6,
+  "youtube_count": 2,
+  "youtube_items": [
+    {
+      "title": "[YT] All Tomorrows: the future of humanity? - YouTube",
+      "summary": "All tomorrow's, a billion-year chronicle of the myriad species and mixed fortunes of man. Long ago, in the distant past, humans colonized Mars, it took centuries to terraform the red planet. First, they made oceans using the water from comets. Then they sent microbes to create breathable air, then introduced genetically modified plants and animals. It was only after Mars was transformed into a habitable world that the first people came to Mars in colonit ships. So the first steps on Mars were taken not by astronauts but by barefoot children on lush green grass. The people of Mars developed their own culture and identity separate to Earth. The low gravity made Marsians tall and spindly and they became almost a different species to the Earthlings. For hundreds of years, the two planets coexi",
+      "link": "https://www.youtube.com/watch?v=imNtSPM3-r4",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "imNtSPM3-r4",
+      "transcript_method": "whisper",
+      "transcript_chars": 32700,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] THE FUTURE OF HUMANITY: A.I Predicts 400 Years In 3 Minutes (4K)",
+      "summary": "tasked with designing 400 years into the future, two Arcadia's set-out of a mission to both one humanity of the dangers of the current planet conditions, and show our species its great potential should be worked together. And so we begin, known to the Arcadia as the reckoning in the year 2040, where societies efforts to push initiatives and to gendous of sustainability failed Gita Humanities obsession with over-consularism. Next we have the dystopian era, taking place in the year 2070, where the living conditions are inconceivably depressing, unhygenic, and inhumane. Also with the sheer mismanagement of waste dumping around our beloved planet in space, leading more governments to assemble the people of the nations. After much trial and chibulation, we move on to the year 2100, the retreat.",
+      "link": "https://www.youtube.com/watch?v=-UBaW1OIgTo",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "-UBaW1OIgTo",
+      "transcript_method": "whisper",
+      "transcript_chars": 2145,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "Анализ на LONG_TERM_FUTURE_REVIEW — данни получени но LLM грешка",
+    "root_cause": "LLM parsing грешка",
+    "severity": "UNKNOWN",
+    "leverage_points": [],
+    "proposed_actions": [],
+    "evidence": [
+      "Taking woo seriously but not literally",
+      "Enneagram Epicycles",
+      "Auto-review of agent actions without synchronous human oversight"
+    ],
+    "generalization": "",
+    "summary": "- Taking woo seriously but not literally: <p><span>I think that a lot of “woo” - a broad term that includes things like chakras, energy healing, Tarot, various Eastern religions and neopagan practices",
+    "risk_level": "UNKNOWN",
+    "trend": "UNKNOWN"
+  },
+  "raw_items": [
+    {
+      "title": "Taking woo seriously but not literally",
+      "summary": "<p><span>I think that a lot of “woo” - a broad term that includes things like chakras, energy healing, Tarot, various Eastern religions and neopagan practices, etc. - consists of things that have real effects and uses, even if many (though not all) of their practitioners are mistaken about the exact mechanisms and make unwarranted metaphysical claims.</span></p><p><span>Now, a woo practitioner might explain what’s happening in a way that doesn’t fit any sensible scientific model of the world. So",
+      "link": "https://www.lesswrong.com/posts/oMqx9D9EEW9AMDsbf/taking-woo-seriously-but-not-literally",
+      "published": "Mon, 04 May 2026 13:36:52 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Enneagram Epicycles",
+      "summary": "<div><figure><a class=\"image-link image2\" href=\"https://substackcdn.com/image/fetch/$s_!2iLC!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fd1a586e4-2e90-438f-b1e5-991870886647_1024x559.png\" target=\"_blank\"><div><img alt=\"\" src=\"https://res.cloudinary.com/lesswrong-2-0/image/upload/f_auto,q_auto/v1/mirroredImages/Qmg4RiTHYT7mu6S3L/twutowxe0gwadzkp5lnm\" /><div></div></div></a></figure></div><p>The core insights of Enneagram theory <",
+      "link": "https://www.lesswrong.com/posts/Qmg4RiTHYT7mu6S3L/enneagram-epicycles",
+      "published": "Mon, 04 May 2026 03:00:49 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Auto-review of agent actions without synchronous human oversight",
+      "summary": "<p><em>This is an unofficial <a href=\"https://gist.github.com/Glinte/5c3fa2f6bcecb7c573664b19bb76eaaf\">automated</a> linkpost.</em></p>\n\n<p>\n        Last week, we released <strong><a href=\"https://x.com/OpenAIDevs/status/2047436655863464011\" rel=\"noopener\" target=\"_blank\">Auto-review in Codex</a></strong>. Until now, users had two choices:\n        <strong>Default mode</strong>, which requires frequent human approval, and <strong>Full Access mode</strong>\n        which removes friction at the exp",
+      "link": "https://www.lesswrong.com/posts/Zh7C8LupqScAPyxau/auto-review-of-agent-actions-without-synchronous-human",
+      "published": "Mon, 04 May 2026 02:12:18 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "ASI motives and the ontonormative goods (re IABIED’s core argument)",
+      "summary": "<p><span>In IABIED, the load-bearing argument and, to me, the main contribution of the book, is about ASI motives. There’s more in there, but the thrust of the book is to argue for the truth of a specific conclusion about motives, namely that an ASI’s motives and goals would be completely unintelligible and alien to humanity.</span></p><p><span>I claim there is a shared attractor in values that is deeply meaningful and necessarily present in an ASI. I want to be clear that I’m not arguing for th",
+      "link": "https://www.lesswrong.com/posts/KdodK6Ejx7iifHHbE/asi-motives-and-the-ontonormative-goods-re-iabied-s-core",
+      "published": "Mon, 04 May 2026 01:31:49 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Existential risk",
+      "summary": "A global catastrophic risk or a doomsday scenario is a hypothetical event that could damage human well-being on a global scale, endangering or even destroying modern civilization. Existential risk is a related term limited to events that could cause full-blown human extinction or permanently and drastically curtail humanity's existence or potential.In the 21st century, a number of academic and non",
+      "link": "https://en.wikipedia.org/wiki/Existential_risk",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Existential threat",
+      "summary": "An \"existential threat\" is a term in contemporary English, particularly in political, military, journalistic, and business discourse, referring to a danger or challenge that threatens the very existence, survival, sovereignty, core identity, or fund…",
+      "link": "https://grokipedia.com/page/Existential_threat",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Existential Risks: Analyzing Human Extinction Scenarios and Related...",
+      "summary": "Existential risks have a cluster of features that make ordinary risk management ineffective. A final section of this paper discusses several ethical and policy implications.",
+      "link": "https://nickbostrom.com/papers/existential-risks/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Civilization collapse",
+      "summary": "Societal collapse (also known as civilizational collapse or systems collapse) is the fall of a complex human society characterized by the loss of cultural identity and of social complexity as an adaptive system, the downfall of government, and the rise of violence. Possible causes of a societal collapse include natural catastrophe, war, pestilence, famine, economic collapse, population decline or ",
+      "link": "https://en.wikipedia.org/wiki/Civilization_collapse",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Societal collapse - Wikipedia",
+      "summary": "Societal collapse (also known as civilizational collapse or systems collapse) is the fall of a complex human society characterized by the loss of cultural identity and of social complexity as an adaptive system, the downfall of government, and the rise of violence. [1] Possible causes of a societal collapse include natural catastrophe, war, pestilence, famine, economic collapse, population ...",
+      "link": "https://en.wikipedia.org/wiki/Societal_collapse",
+      "source_type": "ddg"
+    },
+    {
+      "title": "1177 B.C.: The Year Civilization Collapsed",
+      "summary": "1177 B.C.: The Year Civilization Collapsed is a non-fiction history book authored by American archaeologist Eric H. Cline and first published in 2014 by Princeton University Press as part of the Turning Points in Ancient History series. The work inv…",
+      "link": "https://grokipedia.com/page/1177_bc_the_year_civilization_collapsed",
+      "source_type": "ddg"
+    }
+  ]
+}

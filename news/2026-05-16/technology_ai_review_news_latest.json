@@ -1,0 +1,98 @@
+{
+  "axis": "TECHNOLOGY_AI_REVIEW",
+  "fetched_at": "2026-05-16T16:34:31.040914+00:00",
+  "smart_query": "artificial intelligence AI regulation",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 0,
+    "youtube_transcripts": 2,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "X pledges quicker action on hate and terror content in the UK",
+      "snippet": "Ofcom said the commitments were of particular importance after recent crimes targeting Jewish communities in the UK.",
+      "url": "https://www.bbc.com/news/articles/clyp9652v18o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Claim, counter-claim and tech's seedy side exposed: Five things we learned in the Musk-Altman trial",
+      "snippet": "As the jury deliberates, this is what we found out during the weeks-long trial with two tech titans at its heart.",
+      "url": "https://www.bbc.com/news/articles/cg7pj8p5mv4o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Inside the secretive and lucrative world of orchid breeding",
+      "snippet": "It can take a decade to bring a new orchid to market, so breeders keep their hi-tech processes secret.",
+      "url": "https://www.bbc.com/news/articles/cly039rr2mgo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [],
+  "arxiv_papers": [
+    {
+      "title": "Artificial Intelligence-Assistant Cardiotocography: Unified Model for Signal Reconstruction, Fetal Heart Rate Analysis, and Variability Assessment",
+      "snippet": "The monitoring of fetal heart rate (FHR) and the assessment of its variability are crucial for preventing fetal compromise and adverse outcomes. However, traditional methods encounter limitations arising from equipment performance, data transmission, and subjective assessments by doctors. We have de",
+      "url": "https://arxiv.org/abs/2605.14242v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Dynamical Predictive Modelling of Cardiovascular Disease Progression Post-Myocardial Infarction via ECG-Trained Artificial Intelligence Model",
+      "snippet": "Myocardial infarction (MI) is a leading cause of death, and its adverse outcomes are urgent to predict. Yet ECG-based prognostic models underperform because deep learning requires large, labelled datasets, which are scarce in medicine. Foundation models can learn from unlabelled ECGs via selfsupervi",
+      "url": "https://arxiv.org/abs/2605.13568v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[Prominent Scientists, Faith Leaders, Policymakers and Artists Call for a Prohibition on Superintelligence, as Poll Shows Americans Don’t Want It] Initial signatories include AI pioneers Yoshua Bengio and Geoffrey Hinton, leading media voices Steve Bannon and Glenn Beck, Obama's National Security Advisor Susan Rice, business trailblazers Steve Wozniak and Richard Branson, five Nobel Laureates, former Irish President Mary Robinson, actors Stephen Fry and Joseph Gordon-Levitt, and hundreds of others.",
+  "wiki": null,
+  "youtube_items": [
+    {
+      "title": "[YT] Roadmap to Become a Generative AI Expert for Beginners in 2025",
+      "summary": "[DESCRIPTION FALLBACK] Check out this roadmap to become an expert Data Scientist in 2025!",
+      "link": "https://www.youtube.com/watch?v=39zbC_PrNQs",
+      "source_type": "youtube",
+      "channel": "Analytics Vidhya",
+      "video_id": "39zbC_PrNQs",
+      "transcript_method": "description",
+      "transcript_chars": 89,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Artificial Intelligence in 2025 | 60 Minutes Full Episodes",
+      "summary": "If you're a major artificial intelligence company worth $183 billion, it might seem like bad business to reveal that in testing your AI models resulted to blackmail, to avoid being shut down. In real life, we're recently used by Chinese hackers in a cyber attack on foreign governments. But those disclosures aren't unusual, for anthropic. CEO Dario Amade has centered his company's brand around transparency and safety, which doesn't seem to have heard its bottom line. 80% of anthropics revenue now comes from businesses. 300,000 of them use its AI models called Claude. Dario Amade talks a lot about the potential dangers of AI and has repeatedly called for its regulation. But Amade is also engaged in a multi-trillion dollar arms race, a cut-throat competition to develop a form of intelligence ",
+      "link": "https://www.youtube.com/watch?v=KpOcUrPdx-4",
+      "source_type": "youtube",
+      "channel": "60 Minutes",
+      "video_id": "KpOcUrPdx-4",
+      "transcript_method": "whisper",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] OpenAI’s Sam Altman Talks ChatGPT, AI Agents and Superintelligence — Live at TED2025",
+      "summary": "So, welcome to Ted. Thank you so much for coming. Thank you. It's honor. Your company has been releasing crazy and saying new models pretty much every other week it feels like. I've been playing with a couple of them. I'd like to show you what I've been playing. So, Sora, this is the image and video generator. I asked Sora this. What will it look like when you share some shocking revelations here at Ted? You want to see how it imagined it? I mean, not bad. How would you grade that? Five fingers on all hands? Very close to what I'm wearing. I've never seen you quite that animated. No, I don't show that animated. So, maybe it'd be plus. But this one genuinely astounded me. When I asked it to come up with a diagram that shows a difference between intelligence and consciousness. Like how would",
+      "link": "https://www.youtube.com/watch?v=5MWT_doo68k",
+      "source_type": "youtube",
+      "channel": "TED",
+      "video_id": "5MWT_doo68k",
+      "transcript_method": "whisper",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ],
+  "summary": "Технологиите за изкуствен интелект (AI) продължават да се развиват с интеграцията им в различни области, включително здравеопазването и борбата срещу онлайн-злоупотребите. Изследванията върху AI моделите за анализ на сигнали и прогнозиране на заболявания набират скорост.透彻ността и безопасността на AI системите стават все по-важни.",
+  "urgency": "MEDIUM",
+  "sentiment": "NEUTRAL",
+  "key_developments": [
+    "X pledges quicker action on hate and terror content in the UK",
+    "Artificial Intelligence-Assistant Cardiotocography: Unified Model for Signal Reconstruction, Fetal Heart Rate Analysis, and Variability Assessment",
+    "Dario Amade talks a lot about the potential dangers of AI and has repeatedly called for its regulation"
+  ],
+  "open_source_momentum": "No data",
+  "scientific_frontier": "Dynamical Predictive Modelling of Cardiovascular Disease Progression Post-Myocardial Infarction via ECG-Trained Artificial Intelligence Model",
+  "relevance_to_goal": "Повечето разработки в тази област имат потенциал да допринесат за постигане на устойчива цивилизация с достоен живот за всеки, но прозрачността и безопасността на AI системите остават ключови предизвикателства."
+}

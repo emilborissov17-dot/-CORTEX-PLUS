@@ -1,0 +1,111 @@
+{
+  "axis": "WATER_REVIEW",
+  "domain": "planet",
+  "timestamp": "2026-05-04T14:30:24.820554+00:00",
+  "sources_count": 10,
+  "rss_count": 4,
+  "ddg_count": 5,
+  "youtube_count": 1,
+  "youtube_items": [
+    {
+      "title": "[YT] Here's how Flint's water crisis happened - YouTube",
+      "summary": "Melissa May says the ominous change in the water was particularly noticeable at that time. My youngest retirement mom is yellow and is a philmy gross phome thing and it would smell like open sewer. But we were being told we're still getting used to the new system. It's safe. It's okay. But it wasn't okay. Far from it. Flint's tab water was laced with dangerous levels of lead. The state knew about it and did nothing. The trouble began two years ago when the state decided to switch flames from Detroit's drinking water to a new system. But the new system wouldn't be ready for two years. In the meantime to save money, they switched to the Flint River water. Three, two, one. That first decision turned out to be a mistake. As did nearly every step the state took after it. Michigan's Department o",
+      "link": "https://www.youtube.com/watch?v=nTpsMyNezPQ",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "nTpsMyNezPQ",
+      "transcript_method": "whisper",
+      "transcript_chars": 3972,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "Анализ на WATER_REVIEW — данни получени но LLM грешка",
+    "root_cause": "LLM parsing грешка",
+    "severity": "UNKNOWN",
+    "leverage_points": [],
+    "proposed_actions": [],
+    "evidence": [
+      "Supreme Court Rules For Public Interest in Line 5 Case",
+      "Northern Michigan’s Extreme Climate Disaster",
+      "Corpus Christi Plans to Declare a ‘Water Emergency.’ What Does That Mean?"
+    ],
+    "generalization": "",
+    "summary": "- Supreme Court Rules For Public Interest in Line 5 Case: <figure><img alt=\"\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"584\" src=\"https://i0.wp.com/www.circleofblue.o",
+    "risk_level": "UNKNOWN",
+    "trend": "UNKNOWN"
+  },
+  "raw_items": [
+    {
+      "title": "Supreme Court Rules For Public Interest in Line 5 Case",
+      "summary": "<figure><img alt=\"\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"584\" src=\"https://i0.wp.com/www.circleofblue.org/wp-content/uploads/2019/01/2013-07-Mackinac-Bridge-Michigan-Line-5-JCGanter_G3_5541-2500.jpg?fit=1024%2C584&amp;ssl=1\" width=\"1024\" /></figure>\n<p>In a ruling that puts vital decisions about operating the Line 5 oil pipeline back in a Michigan state court, the U.S. Supreme Court unanimously decided on April 22 against the effort by Enbridge Inc., the Li",
+      "link": "https://www.circleofblue.org/2026/water-policy-politics/supreme-court-rules-for-public-interest-in-line-5-case/",
+      "published": "Sun, 03 May 2026 13:31:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Northern Michigan’s Extreme Climate Disaster",
+      "summary": "<figure><img alt=\"\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"768\" src=\"https://i0.wp.com/www.circleofblue.org/wp-content/uploads/2026/05/20260416_161307-scaled.jpg?fit=1024%2C768&amp;ssl=1\" width=\"1024\" /></figure>\n<p>On April 7, 2026, a light drizzle began to fall from the dark clouds over the forests of Michigan’s lower peninsula. A spring rain, nothing especially unusual in a region of uncommonly clean lakes, the magnificent shorelines of two Great Lakes, ov",
+      "link": "https://www.circleofblue.org/2026/opinion/northern-michigans-extreme-climate-disaster/",
+      "published": "Sat, 02 May 2026 13:37:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Corpus Christi Plans to Declare a ‘Water Emergency.’ What Does That Mean?",
+      "summary": "<figure><img alt=\"Looking through a chain link fence at a water well with water spewing from it\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"683\" src=\"https://i0.wp.com/www.circleofblue.org/wp-content/uploads/2026/04/4O6A0229-2048x1366-1.jpg?fit=1024%2C683&amp;ssl=1\" width=\"1024\" /></figure>\n<p>By&#160;Dylan Baddour, Neena Satija of KUT, and Emily Salazar of KEDT This article originally appeared on&#160;Inside Climate News&#160;(hyperlink to the original story), a",
+      "link": "https://www.circleofblue.org/2026/world/corpus-christi-plans-to-declare-a-water-emergency-what-does-that-mean/",
+      "published": "Sat, 02 May 2026 13:34:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Proposed Michigan Bill Would Tie State Wetland Protections to a Recently Narrowed Federal Standard",
+      "summary": "<figure><img alt=\"\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"682\" src=\"https://i0.wp.com/www.circleofblue.org/wp-content/uploads/2023/05/2022-10-22-Michigan-Lovells-marshland-sunrise-JGanter-DJI_0621.DNG-dng_DXO-Edit2500.jpg?fit=1024%2C682&amp;ssl=1\" width=\"1024\" /></figure>\n<p>LANSING, Mich. — A bill introduced last month in the Michigan House proposes changing the state’s definition of “wetland” to more closely align with recently narrowed federal standards. ",
+      "link": "https://www.circleofblue.org/2026/water-policy-politics/proposed-michigan-bill-would-tie-state-wetland-protections-to-a-recently-narrowed-federal-standard/",
+      "published": "Thu, 30 Apr 2026 10:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Water scarcity",
+      "summary": "Water scarcity (closely related to water stress or water crisis) is the lack of any, local or economically viably transportable, sources of fresh water resources to meet the standard water demand in a region. There are two types of water scarcity. One is physical. The other is economic water scarcity. Physical water scarcity is where there is not enough water to meet all demands. This includes wat",
+      "link": "https://en.wikipedia.org/wiki/Water_scarcity",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Water Use and Stress - Our World in Data",
+      "summary": "This page was first published in 2015. We made minor changes to the text in February 2024.Water Use and StressWater stress and scarcity",
+      "link": "https://ourworldindata.org/water-use-stress",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Fresh water",
+      "summary": "Fresh water or freshwater is any naturally occurring liquid or frozen water containing low concentrations of dissolved salts and other total dissolved solids. The term excludes seawater and brackish water, but it does include non-salty mineral-rich waters, such as chalybeate springs. Fresh water may encompass frozen and meltwater in ice sheets, ice caps, glaciers, snowfields and icebergs, natural ",
+      "link": "https://en.wikipedia.org/wiki/Fresh_water",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Find and save ideas about exotic freshwater fish on Pinterest.",
+      "summary": "Discover Pinterest’s best ideas and inspiration for Exotic freshwater fish. Get inspired and try out new things. 47 people searched this. · Last updated 1w.",
+      "link": "https://www.pinterest.com/ideas/exotic-freshwater-fish/925027351909/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "3 Bed in Freshwater 92961, Freshwater (updated prices 2026)",
+      "summary": "If you book and review your stay, you can help 3 Bed in Freshwater 92961 meet this goal.Yes, 3 Bed in Freshwater 92961 is popular with guests booking family stays.",
+      "link": "https://www.booking.com/hotel/gb/3-bed-in-freshwater-92961.en-gb.html",
+      "source_type": "ddg"
+    },
+    {
+      "title": "[YT] Here's how Flint's water crisis happened - YouTube",
+      "summary": "Melissa May says the ominous change in the water was particularly noticeable at that time. My youngest retirement mom is yellow and is a philmy gross phome thing and it would smell like open sewer. But we were being told we're still getting used to the new system. It's safe. It's okay. But it wasn't okay. Far from it. Flint's tab water was laced with dangerous levels of lead. The state knew about it and did nothing. The trouble began two years ago when the state decided to switch flames from Detroit's drinking water to a new system. But the new system wouldn't be ready for two years. In the meantime to save money, they switched to the Flint River water. Three, two, one. That first decision turned out to be a mistake. As did nearly every step the state took after it. Michigan's Department o",
+      "link": "https://www.youtube.com/watch?v=nTpsMyNezPQ",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "nTpsMyNezPQ",
+      "transcript_method": "whisper",
+      "transcript_chars": 3972,
+      "has_full_transcript": true
+    }
+  ]
+}

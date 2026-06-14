@@ -1,0 +1,170 @@
+{
+  "BODY_SCAN": {
+    "score": 0.5,
+    "score_100": 50.0,
+    "level": "MEDIUM",
+    "timestamp": "2026-05-07T10:20:42.026925+00:00"
+  },
+  "ECONOMY_WORK_REVIEW": {
+    "score": 0.5,
+    "score_100": 50.0,
+    "level": "MEDIUM",
+    "timestamp": "2026-05-07T10:20:42.026947+00:00"
+  },
+  "EDUCATION_CULTURE_REVIEW": {
+    "score": 0.5,
+    "score_100": 50.0,
+    "level": "MEDIUM",
+    "timestamp": "2026-05-07T10:20:42.026954+00:00"
+  },
+  "GOVERNANCE_INSTITUTIONS_REVIEW": {
+    "score": 0.311,
+    "score_100": 31.1,
+    "level": "LOW",
+    "timestamp": "2026-05-07T10:20:42.026966+00:00"
+  },
+  "INEQUALITY_POVERTY_REVIEW": {
+    "score": 0.333,
+    "score_100": 33.3,
+    "level": "LOW",
+    "timestamp": "2026-05-07T10:20:42.026973+00:00"
+  },
+  "INFRASTRUCTURE_CITIES_REVIEW": {
+    "score": 0.5,
+    "score_100": 50.0,
+    "level": "MEDIUM",
+    "timestamp": "2026-05-07T10:20:42.026979+00:00"
+  },
+  "TECHNOLOGY_AI_REVIEW": {
+    "score": 0.5,
+    "score_100": 50.0,
+    "level": "MEDIUM",
+    "timestamp": "2026-05-07T10:20:42.026984+00:00"
+  },
+  "TECHNOLOGY_INFRA_REVIEW": {
+    "score": 0.5,
+    "score_100": 50.0,
+    "level": "MEDIUM",
+    "timestamp": "2026-05-07T10:20:42.026988+00:00"
+  },
+  "CLIMATE_GLOBAL_RISK_REVIEW": {
+    "score": 0.059,
+    "score_100": 5.9,
+    "level": "LOW",
+    "timestamp": "2026-05-07T10:20:42.026995+00:00"
+  },
+  "COSMIC_RESOURCES_REVIEW": {
+    "score": 0.5,
+    "score_100": 50.0,
+    "level": "MEDIUM",
+    "timestamp": "2026-05-07T10:20:42.026999+00:00"
+  },
+  "DEEP_TIME_RISKS_REVIEW": {
+    "score": 0.5,
+    "score_100": 50.0,
+    "level": "MEDIUM",
+    "timestamp": "2026-05-07T10:20:42.027001+00:00"
+  },
+  "GENERAL_SELF_REVIEW": {
+    "score": 0.5,
+    "score_100": 50.0,
+    "level": "MEDIUM",
+    "timestamp": "2026-05-07T10:20:42.027005+00:00"
+  },
+  "GOAL_PROGRESS_REVIEW": {
+    "score": 0.5,
+    "score_100": 50.0,
+    "level": "MEDIUM",
+    "timestamp": "2026-05-07T10:20:42.027007+00:00"
+  },
+  "LONG_TERM_FUTURE_REVIEW": {
+    "score": 0.5,
+    "score_100": 50.0,
+    "level": "MEDIUM",
+    "timestamp": "2026-05-07T10:20:42.027010+00:00"
+  },
+  "SPACE_INFRASTRUCTURE_REVIEW": {
+    "score": 0.5,
+    "score_100": 50.0,
+    "level": "MEDIUM",
+    "timestamp": "2026-05-07T10:20:42.027012+00:00"
+  },
+  "COGNITION_LEARNING_REVIEW": {
+    "score": 0.5,
+    "score_100": 50.0,
+    "level": "MEDIUM",
+    "timestamp": "2026-05-07T10:20:42.027015+00:00"
+  },
+  "CULTURE_MEDIA_REVIEW": {
+    "score": 0.5,
+    "score_100": 50.0,
+    "level": "MEDIUM",
+    "timestamp": "2026-05-07T10:20:42.027018+00:00"
+  },
+  "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL": {
+    "score": 0.5,
+    "score_100": 50.0,
+    "level": "MEDIUM",
+    "timestamp": "2026-05-07T10:20:42.027021+00:00"
+  },
+  "HUMAN_WELL_BEING_REVIEW": {
+    "score": 0.5,
+    "score_100": 50.0,
+    "level": "MEDIUM",
+    "timestamp": "2026-05-07T10:20:42.027023+00:00"
+  },
+  "SOCIAL_RELATIONS_REVIEW": {
+    "score": 0.5,
+    "score_100": 50.0,
+    "level": "MEDIUM",
+    "timestamp": "2026-05-07T10:20:42.027026+00:00"
+  },
+  "MASTER": {
+    "score": 0.5,
+    "score_100": 50.0,
+    "level": "MEDIUM",
+    "timestamp": "2026-05-07T10:20:42.027029+00:00"
+  },
+  "OPENCLAW_SOLUTIONS": {
+    "score": 0.5,
+    "score_100": 50.0,
+    "level": "MEDIUM",
+    "timestamp": "2026-05-07T10:20:42.027031+00:00"
+  },
+  "ECOSYSTEMS_BIODIVERSITY_REVIEW": {
+    "score": 0.217,
+    "score_100": 21.7,
+    "level": "LOW",
+    "timestamp": "2026-05-07T10:20:42.027037+00:00"
+  },
+  "ENERGY_REVIEW": {
+    "score": 0.477,
+    "score_100": 47.7,
+    "level": "MEDIUM",
+    "timestamp": "2026-05-07T10:20:42.027042+00:00"
+  },
+  "FOOD_REVIEW": {
+    "score": 0.309,
+    "score_100": 30.9,
+    "level": "LOW",
+    "timestamp": "2026-05-07T10:20:42.027046+00:00"
+  },
+  "MATERIALS_WASTE_REVIEW": {
+    "score": 0.134,
+    "score_100": 13.4,
+    "level": "LOW",
+    "timestamp": "2026-05-07T10:20:42.027050+00:00"
+  },
+  "PLANETARY_POTENTIAL_REVIEW": {
+    "score": 0.5,
+    "score_100": 50.0,
+    "level": "MEDIUM",
+    "timestamp": "2026-05-07T10:20:42.027054+00:00"
+  },
+  "WATER_REVIEW": {
+    "score": 0.514,
+    "score_100": 51.4,
+    "level": "MEDIUM",
+    "timestamp": "2026-05-07T10:20:42.027058+00:00"
+  }
+}

@@ -1,0 +1,61 @@
+Thinking...
+Okay, let's tackle this. The user wants me to act as an internal AGI resource review agent in the CORTEX++ system for the ENERGY domain. My task is to generate a JSON object based on the provided context. Let me start by understanding the context thoroughly.
+
+First, looking at the RAW_CONTEXT_START, there are two domain summaries: energysupply and energyrenewables. Each has active_sources, ok_sources, failed_sources, and a list of sources with their statuses and errors. 
+
+For the diagnosis status, I need to determine if it's OK, STRESSED, or CRITICAL. The energysupply domain has 35 sources, 20 ok, 15 failed. Energyrenewables has 20 sources, 11 ok, 9 failed. The failed sources are a significant portion, so maybe STRESSED or CRITICAL. But maybe the overall status is STRESSED because some are failing but not all. However, the exact criteria aren't given, so I'll have to infer. Since 15 out of 35 (approx 43%) and 9 out of 20 (45%) are failed, that's a lot, so maybe CRITICAL. But maybe the system allows for some failed sources, so STRESSED. Let me check the key metrics. The key metrics should include the number of active sources, ok sources, failed sources, and maybe some specific metrics like the number of failed sources in each domain. 
+
+For the risks, I need to identify potential issues. The main issues are the failed sources. The errors include HTTP 403 (Forbidden), 404 (Not Found), and connection errors like NameResolutionError. So risks could be data access issues due to authentication problems (403), outdated or incorrect URLs leading to 404, and DNS resolution failures. Time horizons: some might be short-term (like DNS issues that can be resolved quickly), others might be medium-term (like API changes leading to 404). 
+
+Opportunities could be improving data access by fixing authentication, updating URLs, or using alternative sources. Maybe also leveraging the working sources more effectively. 
+
+Recommended actions should address the risks. For example, fixing the 403 errors by checking authentication, updating URLs for 404, resolving DNS issues. Priorities would be high for critical failures. 
+
+Notes for self-improvement might include the need for better error handling, regular checks on source availability, and maybe a more robust way to handle API changes. 
+
+Now, translating all this into the JSON structure. Let me make sure all the Bulgarian fields are correctly filled. For example, the diagnosis short_summary_bg should explain the status. Key metrics: active_sources, ok_sources, failed_sources. 
+
+Wait, the key_metrics array in the JSON example has name and value. So for each key metric, like "Active Sources", "OK Sources", "Failed Sources", with their counts. 
+
+Risks: each with a name, description, and time horizon. For example, "HTTP 403 Forbidden Errors" as a risk, description about authentication, time horizon short. 
+
+Opportunities: like "Enhanced Data Access" by fixing authentication and URLs. 
+
+Recommended actions: actions to fix the issues, with priority. 
+
+Notes for self-improvement: things like improving error handling, regular monitoring, etc. 
+
+I need to ensure that all the Bulgarian text is concise and clear. Also, check that the JSON structure matches the schema provided. Let me make sure there are no typos and that the numbers are correct. For example, in energysupply, active_sources is 35, ok_sources 20, failed 15. In energyrenewables, active_sources 20, ok 11, failed 9. 
+
+I think that's all. Now, structuring the JSON accordingly.
+...done thinking.
+
+{
+  "diagnosis": {
+    "status": "CRITICAL",
+    "short_summary_bg": "Голяма част от източниците за енергийни данни не работят, поради технически грешки и проблеми с достъпа.",
+    "key_metrics": [
+      {"name": "Активни източници", "value": "55", "interpretation_bg": "Общо активни източници за енергия и въобичаени източници."},
+      {"name": "Източници с успех", "value": "31", "interpretation_bg": "Източници, които предоставят данни без грешки."},
+      {"name": "Източници с грешки", "value": "24", "interpretation_bg": "Източници, които са неактивни или имат технически проблеми."}
+    ]
+  },
+  "risks": [
+    {"name": "HTTP 403 Forbidden", "description_bg": "Несигурен достъп до ресурси, причинен от неправилни аутентикационни ключове или ограничения.", "time_horizon": "short"},
+    {"name": "HTTP 404 Not Found", "description_bg": "Изчезнали или преместени URL-адреси, които водят до грешка.", "time_horizon": "medium"},
+    {"name": "DNS Name Resolution Error", "description_bg": "Неуспешно разрешаване на името на хоста, което пречи на връзката.", "time_horizon": "long"}
+  ],
+  "opportunities": [
+    {"name": "Укрепване на достъпа до данни", "description_bg": "Изправяне на проблеми с аутентикацията и актуализиране на URL-адресите."},
+    {"name": "Оптимизация на източниците", "description_bg": "Използване по-ефективно на функциониращите източници за по-точни анализи."}
+  ],
+  "recommended_actions": [
+    {"id": "1", "name": "Проверка на аутентикационните ключове", "description_bg": "Решаване на проблеми с HTTP 403 грешките.", "priority": "high"},
+    {"id": "2", "name": "Актуализация на URL-адресите", "description_bg": "Изправяне на нефункциониращи URL-адреси за HTTP 404 грешки.", "priority": "medium"},
+    {"id": "3", "name": "Решаване на DNS проблеми", "description_bg": "Изправяне на DNS грешки за връзка с източниците.", "priority": "high"}
+  ],
+  "notes": [
+    "Нужно е по-строго контролиране на достъпа до източниците и регулярна проверка на техните URL-адреси.",
+    "Разглеждане на алтернативни източници за данни в случай на продължителни проблеми."
+  ]
+}

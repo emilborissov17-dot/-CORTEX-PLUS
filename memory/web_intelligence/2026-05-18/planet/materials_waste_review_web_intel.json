@@ -1,0 +1,141 @@
+{
+  "axis": "MATERIALS_WASTE_REVIEW",
+  "domain": "planet",
+  "timestamp": "2026-05-18T08:57:43.512772+00:00",
+  "sources_count": 13,
+  "rss_count": 4,
+  "ddg_count": 6,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] Plastic Wars (full documentary) | FRONTLINE",
+      "summary": "The world is flooded with plastic garbage in the state none of this is recyclable. Have efforts to solve the plastic problem made it worse? Do you think the industry used recycling to somewhere plastic? Absolutely. Frontline and NPR investigate the battle over plastics. We have to manage the waste right. We have to fix this and what's at stake. For the oil and gas industry, the plastic is their lifeline. This is the big war. Now, plastic wars. In 2015, a marine biologist came across a sea turtle in distress. Yeah, I read it's bleeding already. Oh, poor baby. I'm sorry. That is plastic. Oh, that's a big problem. Oh, man. The plastic is not a problem. The plastic is not a problem. Our video of the encounter quickly went viral. This poor sea turtle would attract more than 35 million views. Ai",
+      "link": "https://www.youtube.com/watch?v=-dk3NOEgX7o",
+      "published": "2020-04-01T02:00:10Z",
+      "source_type": "youtube",
+      "channel": "FRONTLINE PBS | Official",
+      "video_id": "-dk3NOEgX7o",
+      "transcript_method": "whisper",
+      "transcript_chars": 44218,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] What really happens to the plastic you throw away - Emma Bryce",
+      "summary": "This is the story of three plastic bottles, empty and discarded. Their journeys are about to diverge, without comes that impact nothing less than the fate of the planet. But they weren't always this way. To understand where these bottles end up, we must first explore their origins. The heroes of our story were conceived in this oil refinery. The plastic in their bodies was formed by chemically bonding oil and gas molecules together to make monomers. In turn, these monomers were bonded into long polymer chains to make plastic in the form of millions of pellets. Those were melted at manufacturing plants and reformed in molds to create the resilient material that makes up the triplets' bodies. The means filled the bottles with sweet bubbly liquid and they were then wrapped, shipped, bought, o",
+      "link": "https://www.youtube.com/watch?v=_6xlNyWPpB8",
+      "published": "2015-04-21T15:03:57Z",
+      "source_type": "youtube",
+      "channel": "TED-Ed",
+      "video_id": "_6xlNyWPpB8",
+      "transcript_method": "whisper",
+      "transcript_chars": 3106,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Can Boyan Slat Stop Plastic Pollution at its Source | WILD HOPE",
+      "summary": "When it was 16 years old, I went diving and I was hoping to see all these beautiful reefs and fish. Yeah, I looked around me and I just saw more plastic bags and fish. And this was so shocking and disappointed that I asked myself the question, why can't we just clean this up? The plastic pollution is one of the largest threat throrotians face today. It's very important that we have the belief that we can do this. Soon after my scuba diving experience, I had to do a science paper back in high school and I decided to study the plastic pollution and how I could potentially clean this up. And the original idea was to have a very long floating barrier in the middle of the ocean attached to the sea beds that would use the natural current of the ocean to collect the plastic. In 2013, that simple ",
+      "link": "https://www.youtube.com/watch?v=7iwnC5x7-aA",
+      "published": "2024-07-22T14:04:07Z",
+      "source_type": "youtube",
+      "channel": "Nature on PBS",
+      "video_id": "7iwnC5x7-aA",
+      "transcript_method": "whisper",
+      "transcript_chars": 10008,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "Insufficient waste management and plastic pollution",
+    "root_cause": "Lack of effective waste management infrastructure and inadequate regulation of plastic production and disposal",
+    "severity": "HIGH",
+    "leverage_points": [
+      "Government policies and regulations on waste management and plastic production",
+      "Consumer behavior and awareness of plastic pollution"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Implement extended producer responsibility for plastic production and disposal",
+        "measurable_goal": "Reduce plastic waste in oceans by 50% within 5 years",
+        "timeframe": "medium-term"
+      },
+      {
+        "action": "Develop and implement effective waste management infrastructure in low- to middle-income countries",
+        "measurable_goal": "Increase waste collection rates by 30% within 3 years",
+        "timeframe": "short-term"
+      }
+    ],
+    "evidence": [
+      "About 0.5% of all plastic waste ends up in the ocean",
+      "Low- to middle-income countries tend to have inadequate waste management infrastructure"
+    ],
+    "generalization": "This problem connects to the domains of Planet, Human, and Civilization, as it affects not only the environment but also human health and the economy",
+    "summary": "Insufficient waste management and plastic pollution are significant environmental problems that require immediate attention and action. Effective waste management infrastructure and regulation of plastic production and disposal are necessary to mitigate this issue.",
+    "risk_level": "HIGH"
+  },
+  "raw_items": [
+    {
+      "title": "California city launches state's first fully electric trash and recycling fleet",
+      "summary": "",
+      "link": "https://www.waste360.com/fleet-technology/california-city-launches-state-s-first-fully-electric-trash-and-recycling-fleet",
+      "published": "Fri, 15 May 2026 12:00:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Project Zero Waste field trip connects students to real-world sustainability efforts",
+      "summary": "Students from Valadez Middle School recently stepped beyond the classroom and into one of Orange County’s largest waste management facilities to learn firsthand how trash, recycling and composting systems operate.",
+      "link": "https://www.waste360.com/sustainability/project-zero-waste-field-trip-connects-students-to-real-world-sustainability-efforts",
+      "published": "Fri, 15 May 2026 12:00:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "SWANA Releases New ARF Report on Horizontal Landfill Gas Collection Systems",
+      "summary": "The SWANA Applied Research Foundation (ARF) released a new report titled Horizontal Landfill Gas Collection Systems. This report provides updated guidance to assist solid waste professionals in designing, installing, and operating horizontal landfill gas (LFG) collection systems.",
+      "link": "https://www.waste360.com/landfill/swana-releases-new-arf-report-on-horizontal-landfill-gas-collection-systems",
+      "published": "Fri, 15 May 2026 12:00:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Penn researchers are turning food scraps into building materials — from pineapple peels to celery stalks",
+      "summary": "At Penn’s DumoLab, researchers work to solve multiple problems: how to keep food waste out of landfills, make healthier building materials and tackle climate change.",
+      "link": "https://www.waste360.com/food-waste/penn-researchers-are-turning-food-scraps-into-building-materials-from-pineapple-peels-to-celery-stalks",
+      "published": "Thu, 14 May 2026 19:14:57 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "7 ocean plastic statistics that actually matter in 2026",
+      "summary": "About 0.5% of all plastic waste ends up in the ocean.[2]. Why it matters: The older, higher figure is still widely repeated, but the distinction matters for solutions. Knowing that rivers are the primary delivery mechanism helps target interventions.",
+      "link": "https://plasticbank.com/blog/from-production-to-pollution-7-statistics-that-define-the-ocean-plastic-crisis/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "16 Biggest Environmental Problems of 2026 | Earth.Org",
+      "summary": "From the rise of AI and plastic pollution to fast fashion, here are 16 of the biggest environmental problems of 2026.",
+      "link": "https://earth.org/the-biggest-environmental-problems-of-our-lifetime/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "How much plastic ends up in the ocean? Where does it come from?",
+      "summary": "Originally published in November 2023; substantially updated in February 2026.Plastic pollution is mostly about how waste is managed, not how much is producedLow- to middle-income countries tend to produce much more plastic pollution",
+      "link": "https://ourworldindata.org/plastic-pollution",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Environmental and health implications of improper waste ...",
+      "summary": "While astounding cities promise employment and opportunities, they do not seem to be able to keep up with the magnifying concern of waste management. This research looks at the implications of poor waste management on the demography as well as on the environment’s state and public health.",
+      "link": "https://wjarr.com/sites/default/files/fulltext_pdf/WJARR-2025-0713.pdf",
+      "source_type": "ddg"
+    },
+    {
+      "title": "By the numbers: What impacted waste and recycling in 2025",
+      "summary": "Dec 23, 2025 · By the numbers: What impacted waste and recycling in 2025 Take a look back at the year’s notable data points on policy, regulation, labor, recycling trends and more.",
+      "link": "https://www.wastedive.com/news/by-the-numbers-how-waste-and-recycling-changed-in-2025/808612/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Environmental impacts in e-waste management using deep ...",
+      "summary": "Aug 15, 2025 · The study aims to address the E-waste challenges in South Asia by analyzing its generation, management, and hazardous impacts, focusing on the social, environmental, and economic aspects of recycling and proposing sustainable management strategies.",
+      "link": "https://link.springer.com/article/10.1007/s44163-025-00376-9",
+      "source_type": "ddg"
+    }
+  ]
+}

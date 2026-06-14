@@ -1,0 +1,57 @@
+{
+  "axis": "SPACE_INFRASTRUCTURE_REVIEW",
+  "fetched_at": "2026-05-03T09:07:10.388933+00:00",
+  "smart_query": "space exploration NASA SpaceX",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 1,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "NASA Kennedy Center Director Announces Plans to Retire",
+      "snippet": "NASA announced Friday Janet Petro, center director for the agency’s Kennedy Space Center in Florida, is retiring. Prior to joining NASA, Petro worked in a variety of military and industry positions, ultimately beginning her career at the agency in 2007 and working her way up to center director, as w",
+      "url": "https://www.nasa.gov/news-release/nasa-kennedy-center-director-announces-plans-to-retire/",
+      "source": "RSS"
+    },
+    {
+      "title": "NASA Artemis II Crew Rings Nasdaq Closing Bell",
+      "snippet": "Nasdaq Chair and Chief Executive Officer Adena T. Friedman, left, and NASA’s Artemis II crewmembers CSA (Canadian Space Agency) astronaut Jeremy Hansen, and NASA astronauts Christina Koch, Victor Glover, and Reid Wiseman, right, ring the closing bell of the Nasdaq market session, Thursday, April 30,",
+      "url": "https://www.nasa.gov/image-article/nasa-artemis-ii-crew-rings-nasdaq-closing-bell/",
+      "source": "RSS"
+    },
+    {
+      "title": "Key Support Equipment Arrives at Kennedy for Roman Space Telescope",
+      "snippet": "Technicians at NASA’s Payload Hazardous Servicing Facility (PHSF) at the agency’s Kennedy Space Center in Florida offloaded eight high-efficiency particulate air (HEPA) wall modules and other ground support equipment on April 27. The equipment will support launch processing of the agency’s Nancy Gra",
+      "url": "https://www.nasa.gov/image-article/key-support-equipment-arrives-at-kennedy-for-roman-space-telescope/",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [],
+  "arxiv_papers": [
+    {
+      "title": "Bayesian power spectrum estimation with modelling of systematic effects in delay-fringe rate space",
+      "snippet": "Observing the Epoch of Reionisation using 21cm radio interferometry has proven to be a challenging task. Extraction of the extremely faint redshifted signal is complicated by the presence of bright foregrounds, radio frequency interference (RFI), and systematic artefacts. We discuss the challenge of",
+      "url": "https://arxiv.org/abs/2604.26885v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Charge diffusion and modulation transfer function in a Nancy Grace Roman Space Telescope detector",
+      "snippet": "The Nancy Grace Roman Space Telescope (Roman) is an observatory motivated by the search to understand dark energy, exoplanets, and general astrophysics. Roman will bring unprecedented amounts of precision to weak gravitational lensing measurements, which necessitates an improved understanding of ins",
+      "url": "https://arxiv.org/abs/2604.26114v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[#494 – Jensen Huang: NVIDIA – The $4 Trillion Company & the AI Revolution] Jensen Huang is the co-founder and CEO of NVIDIA, the world&#8217;s most valuable company and the engine powering the AI computing revolution.\nThank you for listening ❤ Check out our sponsors: https://lexfridman.com/sponsors/ep494-sc\nSee below for timestamps, transcript, and to give feedback, submit questions, contact Lex, etc.\nTranscript:\nhttps://lexfridman.com/jensen-huang-transcript\nCONTACT LEX",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

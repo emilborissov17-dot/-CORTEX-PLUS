@@ -1,0 +1,82 @@
+{
+  "axis": "COSMIC_RESOURCES_REVIEW",
+  "domain": "cosmos",
+  "timestamp": "2026-05-01T12:06:24.753582+00:00",
+  "sources_count": 8,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 0,
+  "youtube_items": [],
+  "analysis": {
+    "summary": "- Amazon Leo passes 300 satellites with Atlas and Ariane launches: <figure><img alt=\"Ariane 64 launch\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"734\" src=\"https://i0.wp.com/spacenews.com/wp-content/uploads/2026/05/ariane6-va268.jpeg?\n- DARPA selects three companies ",
+    "risk_level": "UNKNOWN",
+    "trend": "UNKNOWN",
+    "key_events": [
+      "Amazon Leo passes 300 satellites with Atlas and Ariane launches",
+      "DARPA selects three companies for lunar orbiter studies",
+      "Space Force taps K2 satellites to test laser communications for missile-defense"
+    ],
+    "insights": [],
+    "youtube_insights": [],
+    "relevance_to_goal": "",
+    "generalization": ""
+  },
+  "raw_items": [
+    {
+      "title": "Amazon Leo passes 300 satellites with Atlas and Ariane launches",
+      "summary": "<figure><img alt=\"Ariane 64 launch\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"734\" src=\"https://i0.wp.com/spacenews.com/wp-content/uploads/2026/05/ariane6-va268.jpeg?fit=1024%2C734&amp;ssl=1\" width=\"1024\" /></figure>\n<p>A pair of launches this week pushed the number of Amazon Leo satellites deployed to more than 300, but the company is still far short of a looming FCC milestone.</p>\n<p>The post <a href=\"https://spacenews.com/amazon-leo-passes-300-satellites-with",
+      "link": "https://spacenews.com/amazon-leo-passes-300-satellites-with-atlas-and-ariane-launches/",
+      "published": "Fri, 01 May 2026 12:01:08 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "DARPA selects three companies for lunar orbiter studies",
+      "summary": "<figure><img alt=\"LASSO\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"752\" src=\"https://i0.wp.com/spacenews.com/wp-content/uploads/2026/05/benchmark-lasso.jpeg?fit=1000%2C752&amp;ssl=1\" width=\"1000\" /></figure>\n<p>The Defense Advanced Research Projects Agency has awarded contracts to three companies to study concepts for a lunar mission to search for water ice in very low orbits.</p>\n<p>The post <a href=\"https://spacenews.com/darpa-selects-three-companies-for-lunar",
+      "link": "https://spacenews.com/darpa-selects-three-companies-for-lunar-orbiter-studies/",
+      "published": "Fri, 01 May 2026 10:53:12 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Space Force taps K2 satellites to test laser communications for missile-defense",
+      "summary": "<figure><img alt=\"\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"411\" src=\"https://i0.wp.com/spacenews.com/wp-content/uploads/2026/04/HEdIiA1aIAAgaCR-scaled.jpeg?fit=1024%2C411&amp;ssl=1\" width=\"1024\" /></figure>\n<p>Experiments will attempt to establish crosslinks from medium Earth orbit satellites</p>\n<p>The post <a href=\"https://spacenews.com/space-force-taps-k2-satellites-to-test-laser-communications-for-missile-defense/\">Space Force taps K2 satellites to test l",
+      "link": "https://spacenews.com/space-force-taps-k2-satellites-to-test-laser-communications-for-missile-defense/",
+      "published": "Fri, 01 May 2026 00:30:54 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "SpaceComputer to conduct on-orbit test of secure computing infrastructure",
+      "summary": "<figure><img alt=\"\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"491\" src=\"https://i0.wp.com/spacenews.com/wp-content/uploads/2026/04/rsz_filip_rezabek_left_and_daniel_bar_right_872725e8-a849-4ccf-b33b-b1464f90f204.jpg?fit=879%2C491&amp;ssl=1\" width=\"879\" /></figure>\n<p>SAN FRANCISCO &#8212; SpaceComputer, a Singapore-based startup developing distributed computing infrastructure, is preparing to test its hardware and software in orbit later this year. The startup’s",
+      "link": "https://spacenews.com/spacecomputer-to-conduct-on-orbit-test-of-secure-computing-infrastructure/",
+      "published": "Thu, 30 Apr 2026 23:38:09 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Trump sons invested in US group developing $1.1B tungsten project in Kazakhstan: FT",
+      "summary": "According to Financial Times, both Donald Trump Jr. and Eric Trump have been using a shell company to buy stakes in a US construction group called Skyline Builders.",
+      "link": "https://www.mining.com/trump-sons-invested-in-us-group-developing-1-1b-tungsten-project-in-kazakhstan-ft/",
+      "published": "",
+      "source_type": "rss"
+    },
+    {
+      "title": "Arizona Metals tanks on rare negative-value PEA for Kay copper-zinc mine",
+      "summary": "The PEA gives Kay a post-tax NPV (at a 5% discount) of -$6 million and an internal rate of return of 4.9%.",
+      "link": "https://www.mining.com/arizona-metals-tanks-on-rare-negative-value-pea-for-kay-copper-zinc-mine/",
+      "published": "",
+      "source_type": "rss"
+    },
+    {
+      "title": "Colombia cartel ties taint Canadian Mint gold",
+      "summary": "An unidentified Texas supplier mixed Colombian gold with US gold before delivering it to the Mint, the New York Times reported.",
+      "link": "https://www.mining.com/colombia-cartel-ties-taint-canadian-mint-gold/",
+      "published": "",
+      "source_type": "rss"
+    },
+    {
+      "title": "Canada positioned for $200B clean energy boom, but faster approvals needed: report",
+      "summary": "CanREA projects demand for electricity to rise, driven by industrial electrification, data centre growth, population increases, and the expansion of energy-intensive sectors.",
+      "link": "https://www.mining.com/canada-positioned-for-200b-clean-energy-boom-but-faster-approvals-needed-report/",
+      "published": "",
+      "source_type": "rss"
+    }
+  ]
+}

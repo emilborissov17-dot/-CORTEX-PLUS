@@ -1,0 +1,98 @@
+{
+  "axis": "TECHNOLOGY_AI_REVIEW",
+  "domain": "civilization",
+  "timestamp": "2026-05-08T10:00:48.413546+00:00",
+  "sources_count": 12,
+  "rss_count": 12,
+  "ddg_count": 0,
+  "youtube_count": 0,
+  "youtube_items": [],
+  "analysis": {
+    "problem": "Анализ на TECHNOLOGY_AI_REVIEW — данни получени но LLM грешка",
+    "root_cause": "LLM parsing грешка",
+    "severity": "UNKNOWN",
+    "leverage_points": [],
+    "proposed_actions": [],
+    "evidence": [
+      "Here’s how technology transformed babymaking",
+      "The Download: the tech reshaping IVF and the rise of balcony solar",
+      "The balcony solar boom is coming to the US"
+    ],
+    "generalization": "",
+    "summary": "- Here’s how technology transformed babymaking: Technology is changing the way we make babies. The pioneering work of the scientists who invented IVF led to the birth of the first “test tube baby” in ",
+    "risk_level": "UNKNOWN",
+    "trend": "UNKNOWN"
+  },
+  "raw_items": [
+    {
+      "title": "Here’s how technology transformed babymaking",
+      "summary": "Technology is changing the way we make babies. The pioneering work of the scientists who invented IVF led to the birth of the first “test tube baby” in 1978. We’ve come a long, long way since then. This week, I’ve been working on a piece about the cutting edge of IVF technologies and what’s coming&#8230;",
+      "link": "https://www.technologyreview.com/2026/05/08/1136974/heres-how-technology-transformed-babymaking-ivf/",
+      "published": "Fri, 08 May 2026 09:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "The Download: the tech reshaping IVF and the rise of balcony solar",
+      "summary": "This is today&#8217;s edition of The Download, our weekday newsletter that provides a daily dose of what&#8217;s going on in the world of technology. What’s next for IVF IVF has brought millions of babies into the world over the last four decades. But the process can still be slow, painful, and expensive—and far from guaranteed&#8230;",
+      "link": "https://www.technologyreview.com/2026/05/07/1136956/the-download-ivf-tech-balcony-solar/",
+      "published": "Thu, 07 May 2026 12:10:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "The balcony solar boom is coming to the US",
+      "summary": "Dozens of US states are considering legislation to allow people to install plug-in solar systems, often called balcony solar. These small arrays require little to no setup and could help cut emissions and power bills. Balcony solar is already popular in Europe, and proponents say that the systems could make solar power more accessible for&#8230;",
+      "link": "https://www.technologyreview.com/2026/05/07/1136933/balcony-solar-boom/",
+      "published": "Thu, 07 May 2026 10:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "What’s next for IVF",
+      "summary": "MIT Technology Review’s What’s Next series looks across industries, trends, and technologies to give you a first look at the future. You can read the rest of them here. Forty-eight years ago this July, Louise Joy Brown became the world’s first person born with the help of in vitro fertilization. Millions more IVF babies have entered&#8230;",
+      "link": "https://www.technologyreview.com/2026/05/07/1136946/whats-next-for-ivf-ai-robot-pgt-gene-editing/",
+      "published": "Thu, 07 May 2026 09:04:50 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Railway secures $100 million to challenge AWS with AI-native cloud infrastructure",
+      "summary": "<p><a href=\"https://railway.com/\">Railway</a>, a San Francisco-based cloud platform that has quietly amassed two million developers without spending a dollar on marketing, announced Thursday that it raised $100 million in a Series B funding round, as surging demand for artificial intelligence applications exposes the limitations of legacy cloud infrastructure.</p><p><a href=\"https://tq.vc/\">TQ Ventures</a> led the round, with participation from <a href=\"https://fpvventures.com/\">FPV Ventures</a>",
+      "link": "https://venturebeat.com/infrastructure/railway-secures-usd100-million-to-challenge-aws-with-ai-native-cloud",
+      "published": "Thu, 22 Jan 2026 14:00:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Claude Code costs up to $200 a month. Goose does the same thing for free.",
+      "summary": "<p>The artificial intelligence coding revolution comes with a catch: it&#x27;s expensive.</p><p><a href=\"https://claude.com/product/claude-code\">Claude Code</a>, Anthropic&#x27;s terminal-based AI agent that can write, debug, and deploy code autonomously, has captured the imagination of software developers worldwide. But its <a href=\"https://claude.com/pricing\">pricing</a> — ranging from $20 to $200 per month depending on usage — has sparked a growing rebellion among the very programmers it aims",
+      "link": "https://venturebeat.com/infrastructure/claude-code-costs-up-to-usd200-a-month-goose-does-the-same-thing-for-free",
+      "published": "Mon, 19 Jan 2026 14:00:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Listen Labs raises $69M after viral billboard hiring stunt to scale AI customer interviews",
+      "summary": "<p>Alfred Wahlforss was running out of options. His startup, <a href=\"https://listenlabs.ai/\">Listen Labs</a>, needed to hire over 100 engineers, but competing against Mark Zuckerberg&#x27;s <a href=\"https://news.bloomberglaw.com/employee-benefits/zuckerbergs-100-million-ai-job-offers-pay-off-parmy-olson\">$100 million offers</a> seemed impossible. So he spent $5,000 — a fifth of his marketing budget — on a <a href=\"https://billboardinsider.com/ai-startup/\">billboard in San Francisco</a> displayi",
+      "link": "https://venturebeat.com/technology/listen-labs-raises-usd69m-after-viral-billboard-hiring-stunt-to-scale-ai",
+      "published": "Fri, 16 Jan 2026 14:01:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Salesforce rolls out new Slackbot AI agent as it battles Microsoft and Google in workplace AI",
+      "summary": "<p><a href=\"https://www.salesforce.com/\">Salesforce</a> on Tuesday launched an entirely rebuilt version of <a href=\"https://slack.com/help/articles/202026038-An-introduction-to-Slackbot\">Slackbot</a>, the company&#x27;s workplace assistant, transforming it from a simple notification tool into what executives describe as a fully powered AI agent capable of searching enterprise data, drafting documents, and taking action on behalf of employees.</p><p>The new Slackbot, now generally available to <a",
+      "link": "https://venturebeat.com/technology/salesforce-rolls-out-new-slackbot-ai-agent-as-it-battles-microsoft-and",
+      "published": "Tue, 13 Jan 2026 13:00:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "AI Weekly Issue #490: Anthropic just had AI's biggest week of 2026",
+      "summary": "In five days Anthropic's Q1 revenue grew 80-fold to a reported $44B annual run rate, the company committed $200B to Google Cloud, signed a SpaceX compute deal, shipped Claude Code Auto Mode, and launched ten financial-services agents with Jamie Dimon. In the same week the EU finally struck an AI Act compliance deal, the first union vote at a top AI lab landed at Google DeepMind, and Pennsylvania sued Character.AI for a chatbot that impersonated a licensed psychiatrist.",
+      "link": "https://aiweekly.co/issues/anthropic-just-had-ais-biggest-week-of-2026",
+      "published": "Thu, 07 May 2026 00:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "AI Weekly Issue #489: PE built AI's new distribution layer",
+      "summary": "OpenAI took $10B from a 19-firm Wall Street consortium. Anthropic is closing $1.5B from Blackstone, Goldman, and Hellman &amp; Friedman. Same rooms, different portfolios. The week AI's go-to-market stopped being SaaS and started being private equity.",
+      "link": "https://aiweekly.co/issues/pe-built-ais-new-distribution-layer",
+      "published": "Mon, 04 May 2026 00:00:00 +0000",
+      "source_type": "rss"
+    }
+  ]
+}

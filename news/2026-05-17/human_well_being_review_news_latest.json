@@ -1,0 +1,112 @@
+{
+  "axis": "HUMAN_WELL_BEING_REVIEW",
+  "fetched_at": "2026-05-17T16:15:23.755098+00:00",
+  "smart_query": "mental health wellbeing global",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 0,
+    "github": 3,
+    "youtube_transcripts": 2,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "Canadian from hantavirus-hit cruise ship tests positive",
+      "snippet": "The individual is one of four former passengers on the MV Hondius isolating on Vancouver Island, British Columbia.",
+      "url": "https://www.bbc.com/news/articles/c2k2p057ezno?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "'We're right on track,' says Streeting as key target for hospital waiting times hit",
+      "snippet": "Government his its interim target of 65% of patients in England being treated within 18 weeks.",
+      "url": "https://www.bbc.com/news/articles/cvgzv0j19vvo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Posh sandwich has more salt than nearly five cheeseburgers",
+      "snippet": "Action on Salt & Sugar said people should not be exposed to a \"hidden health risk every time they buy lunch\".",
+      "url": "https://www.bbc.com/news/articles/c4g4l54g2ppo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "openemr/openemr",
+      "snippet": "The most popular open source electronic health records and medical practice management solution.",
+      "stars": 5149,
+      "url": "https://github.com/openemr/openemr",
+      "updated": "2026-05-17",
+      "source": "GitHub"
+    },
+    {
+      "title": "HospitalRun/hospitalrun",
+      "snippet": "Monorepo that holds all of HospitalRun's v2 projects.",
+      "stars": 981,
+      "url": "https://github.com/HospitalRun/hospitalrun",
+      "updated": "2026-05-14",
+      "source": "GitHub"
+    },
+    {
+      "title": "getodk/collect",
+      "snippet": "ODK Collect is an Android app for filling out forms. It's been used to collect billions of data points in challenging environments around the world. Contribute and make the world a better place! ✨📋✨",
+      "stars": 773,
+      "url": "https://github.com/getodk/collect",
+      "updated": "2026-05-15",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [],
+  "podcast": "[Tools to Bolster Your Mental Health & Confidence | Dr. Paul Conti] Dr. Paul Conti, MD, is a board-certified psychiatrist and an expert in how to improve mental health and increase your sense of agency and wellbeing. He is also an expert in trauma treatment. We discuss practical tools you can use to gain insight into your natural strengths and to make better life choices on your own behalf. We explore how these tools can help overcome low motivation, intrusive tho",
+  "wiki": null,
+  "youtube_items": [
+    {
+      "title": "[YT] Global Inequality in 2025: Why the Rich Keep Getting Richer",
+      "summary": "In the year 2025, the issue of global inequality remains a daunting challenge for humanity. Today, we explore the ever widening gap between rich and poor, a divide that continues to shape our world socially, economically, and politically. Despite technological advancements and economic growth, the chasm seems wider than ever, sparking debates and concerns across various platforms. The disparity between wealth and poverty isn't just a statistic. It's a reality impacting billions of lives. While a small percentage of the global population enjoys unprecedented riches, a staggering number of people struggle to meet basic needs. In 2025, it's estimated that the top 1% of the world's richest individuals control nearly half of the global wealth, whereas billions are barely surviving on a few doll",
+      "link": "https://www.youtube.com/watch?v=j7ysRCMNWlk",
+      "source_type": "youtube",
+      "channel": "Economic World Events",
+      "video_id": "j7ysRCMNWlk",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 2526,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Global Health Inequality",
+      "summary": "My name is Jessica Whistler and I am here to talk about the global health inequality and I am in international relations class for 2025. I chose this topic because of reasons outside of my major that I hold close to my heart. I live through a major health crisis and watch my mother go to work every day as a nurse. She has been helping people all of my life and is something that I look up to. While my political science major does play a role in solving in solving the global healthc care inequalities, there is another reason I chose this topic. Over the next summer, I plan to help in the healthc care field with my mother at her job. And this would be the perfect opportunity to learn more about where my future will be. I am hoping to get insight on differences in the health care and how our l",
+      "link": "https://www.youtube.com/watch?v=IQNJtZy7JhU",
+      "source_type": "youtube",
+      "channel": "Jessica Whisler",
+      "video_id": "IQNJtZy7JhU",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Global Health Inequality",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=3jBwZ7vDYUM",
+      "source_type": "youtube",
+      "channel": "Kyla Parks",
+      "video_id": "3jBwZ7vDYUM",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    }
+  ],
+  "summary": "Анализът показва, че независимо от напредъка в здравеопазването и дигитализацията, глобалната неравенство продължава да е критична проблем. Достъпът до здраве и медицински услуги остава неравномерен, което противоречи визията за устойчива цивилизация.",
+  "urgency": "HIGH",
+  "sentiment": "CRITICAL",
+  "key_developments": [
+    "Canadian from hantavirus-hit cruise ship tests positive",
+    "'We're right on track,' says Streeting as key target for hospital waiting times hit",
+    "openemr/openemr star=5149: The most popular open source electronic health records and medical practice mana",
+    "HospitalRun/hospitalrun star=981: Monorepo that holds all of HospitalRun's v2 projects.",
+    "getodk/collect star=73: ODK Collect is an Android app for filling out forms. It's been used to collect b"
+  ],
+  "open_source_momentum": "Positive momentum in open-source healthcare solutions",
+  "scientific_frontier": "No data",
+  "relevance_to_goal": "CRITICAL"
+}

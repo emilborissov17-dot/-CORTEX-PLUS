@@ -1,0 +1,57 @@
+{
+  "axis": "ECONOMY_WORK_REVIEW",
+  "fetched_at": "2026-05-16T13:33:07.154964+00:00",
+  "smart_query": "economy unemployment poverty wages",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "'They took £20,000 I didn't owe': Parents hit by child maintenance errors",
+      "snippet": "John Hammond is one of 30 parents who told BBC Your Voice they'd experienced problems with the CMS.",
+      "url": "https://www.bbc.com/news/articles/cq8wjn98y85o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "UK borrowing costs rise and pound falls as leadership drama continues",
+      "snippet": "Analysts say the moves have been fuelled by concerns a Burnham-led government would increase government borrowing.",
+      "url": "https://www.bbc.com/news/articles/czr2pl5lj84o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "British Gas pays £20m over prepayment meter force-fitting scandal",
+      "snippet": "The regulator say the energy supplier breached licence conditions aimed at protecting customers in vulnerable situations.",
+      "url": "https://www.bbc.com/news/articles/cq8p7l1y59lo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [],
+  "arxiv_papers": [
+    {
+      "title": "Deep Learning for Solving and Estimating Dynamic Models in Economics and Finance",
+      "snippet": "This script offers an implementation-oriented introduction to deep learning methods for solving and estimating high-dimensional dynamic stochastic models in economics and finance. Its starting point is the curse of dimensionality: heterogeneous-agent economies, overlapping-generations models with ag",
+      "url": "https://arxiv.org/abs/2605.14493v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Introducing Feedback Thinking and System Dynamics Modeling in Economics Education",
+      "snippet": "System dynamics is a methodology that is widely used in many academic fields. It explains the behavior of social and economic systems with models that capture complex causality and feedback effects. This 'practice paper' discusses the opportunities and barriers for introducing feedback thinking and ",
+      "url": "https://arxiv.org/abs/2605.06757v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[Jerome Powell and the Future of Fed Independence] If you have a credit card, hope to buy a house, or just want stable grocery prices – let’s talk about the future of Fed independence!It’s impossibly important for the Federal Reserve to steer monetary policy without political interference – an ideal pushed to its brink during Jerome Powell’s time as Fed Chair.Powell’s Fed faced a once-in-a-century pandemic, oversaw the economy as inflation spiked ",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

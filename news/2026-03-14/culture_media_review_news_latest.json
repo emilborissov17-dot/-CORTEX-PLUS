@@ -1,0 +1,62 @@
+{
+  "axis": "CULTURE_MEDIA_REVIEW",
+  "fetched_at": "2026-03-14T07:13:53.448402+00:00",
+  "smart_query": "media disinformation culture",
+  "sources_count": {
+    "wiki": 0,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "Duffy12150557/Security-Research-Toolkit",
+      "snippet": "Security Research Toolkit — Video and image analysis tool for neural inpainting and AI-generated content detection with SORA signature extraction, temporal consistency analysis, CNN artifact detection",
+      "stars": 33,
+      "url": "https://github.com/Duffy12150557/Security-Research-Toolkit",
+      "updated": "2026-03-13",
+      "source": "GitHub"
+    },
+    {
+      "title": "bbidwell85/Totality",
+      "snippet": "Analyze quality, track collection completeness, find upgrades, manage media wishlists.",
+      "stars": 12,
+      "url": "https://github.com/bbidwell85/Totality",
+      "updated": "2026-03-13",
+      "source": "GitHub"
+    },
+    {
+      "title": "AFLucas-UOM/Accurate-Name-Extraction",
+      "snippet": "2026 IEEE Conference on Artificial Intelligence (CAI26) · A modular computer vision and NLP pipeline for automated extraction of personal names from broadcast news videos, combining YOLOv12-based news",
+      "stars": 3,
+      "url": "https://github.com/AFLucas-UOM/Accurate-Name-Extraction",
+      "updated": "2026-03-06",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Uncertainty-Aware Estimation of Mis/Disinformation Prevalence on Social Media",
+      "snippet": "Estimation of mis/disinformation prevalence in social media is crucial for designing mitigation strategies to limit its impact. Yet, such estimations are subject to several uncertainties that are rarely quantified jointly. In this study, we present a methodological contribution in which confidence i",
+      "url": "https://arxiv.org/abs/2603.11058v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Behavior Change as a Signal for Identifying Social Media Manipulation",
+      "snippet": "Social media accounts engaging in online manipulation can change their behaviors for re-purposing or to evade detection. Existing detection systems are built on features that do not exploit such behavioral patterns. Here we investigate the degree to which change in behavior can serve as a signal for",
+      "url": "https://arxiv.org/abs/2603.03128v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[The sneaky language tricks cults use to influence you | Amanda Montell] In the age of social media and wellness trends, the comments section is as good as a cult compound, says linguist and cultural commentator Amanda Montell. Using Taylor Swift’s throng of devoted Swifties as her guide, she exposes three sneaky language tactics that cults use to influence us (for better or for worse), revealing why none of us are as cult-proof as we’d like to think.(Following the tal",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

@@ -1,0 +1,93 @@
+{
+  "axis": "INFRASTRUCTURE_CITIES_REVIEW",
+  "domain": "civilization",
+  "timestamp": "2026-05-08T09:54:05.659170+00:00",
+  "sources_count": 9,
+  "rss_count": 4,
+  "ddg_count": 5,
+  "youtube_count": 0,
+  "youtube_items": [],
+  "analysis": {
+    "problem": "Недостатъчно финансиране за инфраструктурни проекти, което може да забави или спре разработката на устойчиви градове",
+    "root_cause": "Ограничения във финансирането и липса на ефикасни механизми за управление на инфраструктурни проекти",
+    "severity": "MEDIUM",
+    "leverage_points": [
+      "Участие на частния сектор в финансирането и изпълнението на инфраструктурни проекти",
+      "Увеличаване на прозрачността и отчетността в управлението на инфраструктурни проекти"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Създаване на партньорства между публичния и частния сектор за финансиране и изпълнение на инфраструктурни проекти",
+        "measurable_goal": "Увеличение на броя на партньорствата между публичния и частния сектор с 20% през следващите 2 години",
+        "timeframe": "средносрочно"
+      }
+    ],
+    "evidence": [
+      "HUD continues shift away from ‘housing first,’ harm reduction in homelessness funding",
+      "Governments should help finance infrastructure — not construct and run it"
+    ],
+    "generalization": "Този проблем е свързан с другите домейни, като здравословна биосфера и достойнство за всички, тъй като недостигът на устойчиви инфраструктури може да доведе до влошаване на здравословното състояние и намаляване на достойнството на хората",
+    "summary": "Недостатъчно финансиране за инфраструктурни проекти може да забави или спре разработката на устойчиви градове, но създаването на партньорства между публичния и частния сектор може да бъде ефикасен механизъм за решаване на този проблем.",
+    "risk_level": "MEDIUM"
+  },
+  "raw_items": [
+    {
+      "title": "HUD continues shift away from ‘housing first,’ harm reduction in homelessness funding",
+      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.com/_DS-X9hLLCfy8ZavRwAaRBpTG_n4w4LOK1bSRNCPLIo/g:ce/rs:fill:1600:900:1/Z3M6Ly9kaXZlc2l0ZS1zdG9yYWdlL2RpdmVpbWFnZS9HZXR0eUltYWdlcy0yMjI5MzYzNjcyLmpwZw==.webp\" /></div></figure><p>Transitional housing, childcare, job training and addiction treatment are priorities for its Continuum of Care funding opportunity to be published June 1.</p>",
+      "link": "https://www.smartcitiesdive.com/news/hud-homelessness-funding-coc-grants-housing-first/819598/",
+      "published": "Thu, 07 May 2026 11:26:32 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "Surface transportation legislation in 2026: What we know so far",
+      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.com/csE6jN60B_ztbiMBrx1qrKMamqOm_kzmUvClFDvJ0K0/g:ce/rs:fill:1600:900:1/Z3M6Ly9kaXZlc2l0ZS1zdG9yYWdlL2RpdmVpbWFnZS9HZXR0eUltYWdlcy0yMTk3NDQzMzcwLmpwZw==.webp\" /></div></figure><p>Congress has begun work that will determine the next five years of funding and policies for highways, mass transit and other transportation modes.</p>",
+      "link": "https://www.smartcitiesdive.com/news/surface-transportation-reauthorization-2026/818721/",
+      "published": "Thu, 07 May 2026 10:00:00 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "‘Supplemental’ municipal utility begins solar-and-storage installations in Ann Arbor, Michigan",
+      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.com/J3RB50Toy6QOga-v-2KZBxl5O8aSZkQPg20HGtFwbaI/g:ce/rs:fill:1600:900:1/Z3M6Ly9kaXZlc2l0ZS1zdG9yYWdlL2RpdmVpbWFnZS9HZXR0eUltYWdlcy0yMTgzMzIyMzU3LmpwZw==.webp\" /></div></figure><p>The Ann Arbor Sustainable Energy Utility will use locally sited solar, batteries and other resources to improve reliability and lower costs for subscribers, city officials say.</p>",
+      "link": "https://www.smartcitiesdive.com/news/ann-arbor-municipal-utility-solar-storage-installs/819356/",
+      "published": "Thu, 07 May 2026 09:53:29 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "Governments should help finance infrastructure — not construct and run it",
+      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.com/bzKMv-o2bEifIm970MTGGS6w3WjHflhZYJNCYh4xVSY/g:ce/rs:fill:1600:900:1/Z3M6Ly9kaXZlc2l0ZS1zdG9yYWdlL2RpdmVpbWFnZS9HZXR0eUltYWdlcy0yMjYyMDE1OTMyLmpwZw==.webp\" /></div></figure><p>When delays and cost escalations carry no financial consequence, they become routine.&nbsp;To prevent this, project governance structures must align capital with performance.</p>",
+      "link": "https://www.smartcitiesdive.com/news/government-finance-infrastructure-not-run-it/819552/",
+      "published": "Thu, 07 May 2026 08:45:48 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "Smart cities",
+      "summary": "A smart city is an urban model that leverages technology, human capital, and governance to improve sustainability, efficiency, and social inclusion, which are considered goals for cities of the future. Smart cities use digital technology to collect data and operate services. Data is collected from citizens, devices, buildings, or cameras. Smart city applications are diverse and include, but are no",
+      "link": "https://en.wikipedia.org/wiki/Smart_cities",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Smart city - Wikipedia",
+      "summary": "A smart city is powered by \"smart connections\" for various items such as street lighting, smart buildings, distributed energy resources, data analytics, and smart transportation.",
+      "link": "https://en.wikipedia.org/wiki/Smart_city",
+      "source_type": "ddg"
+    },
+    {
+      "title": "List of Smart and AMRUT Cities in Telangana",
+      "summary": "The Smart and AMRUT cities in Telangana comprise urban local bodies selected under the Government of India's Smart Cities Mission, launched in 2015 to...",
+      "link": "https://grokipedia.com/page/List_of_Smart_and_AMRUT_Cities_in_Telangana",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Urban planning",
+      "summary": "Urban planning (also called city planning or town planning in some contexts) is the process of developing and designing land use and the built environment, including air, water, and the infrastructure passing into and out of urban areas, such as transportation, communications, and distribution networks, and their accessibility. Traditionally, urban planning followed a top-down approach in master p",
+      "link": "https://en.wikipedia.org/wiki/Urban_planning",
+      "source_type": "ddg"
+    },
+    {
+      "title": "What Is Urban Planning? | ArchDaily",
+      "summary": "In theory, urban planning is a process of elaborating solutions that aim both to improve or requalify an existing urban area, as well as to create a new urbanization in a given region.",
+      "link": "https://www.archdaily.com/984049/what-is-urban-planning",
+      "source_type": "ddg"
+    }
+  ]
+}

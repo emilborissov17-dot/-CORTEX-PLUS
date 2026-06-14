@@ -1,0 +1,81 @@
+{
+  "axis": "COSMIC_RESOURCES_REVIEW",
+  "fetched_at": "2026-03-14T07:13:13.783100+00:00",
+  "smart_query": "asteroid mining space resources",
+  "sources_count": {
+    "wiki": 0,
+    "gdelt": 3,
+    "arxiv": 2,
+    "github": 3,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [],
+  "gdelt": [
+    {
+      "title": "Is Asteroid Mining the Next Gold Rush or Just Science Fiction ? Here What We Know",
+      "snippet": "Is Asteroid Mining the Next Gold Rush or Just Science Fiction ? Here What We Know",
+      "url": "https://www.discovermagazine.com/is-asteroid-mining-the-next-gold-rush-or-just-science-fiction-here-s-what-we-know-48680",
+      "source": "discovermagazine.com"
+    },
+    {
+      "title": "Space Mining Technologies : How Robotic Prospecting Missions Unlocks Extraterrestrial Resources",
+      "snippet": "Space Mining Technologies : How Robotic Prospecting Missions Unlocks Extraterrestrial Resources",
+      "url": "https://www.techtimes.com/articles/313539/20251222/space-mining-technologies-how-robotic-prospecting-missions-unlocks-extraterrestrial-resources.htm",
+      "source": "techtimes.com"
+    },
+    {
+      "title": "Will Astronauts One Day Be Sent to Space to Mine Asteroids ? ",
+      "snippet": "Will Astronauts One Day Be Sent to Space to Mine Asteroids ? ",
+      "url": "https://www.vice.com/en/article/will-astronauts-one-day-be-sent-to-space-to-mine-asteroids/",
+      "source": "vice.com"
+    }
+  ],
+  "github_repos": [
+    {
+      "title": "15-minute-discourse/asteroid-mining",
+      "snippet": " Associated repository for the \"Asteroid Mining: Unlocking a Trillion-Dollar Industry in Space\" 15 minute discourse podcast on YouTube! ",
+      "stars": 1,
+      "url": "https://github.com/15-minute-discourse/asteroid-mining",
+      "updated": "2025-02-22",
+      "source": "GitHub"
+    },
+    {
+      "title": "JLmam5969/solaris-open",
+      "snippet": "AI that repairs itself from astroid dust. No proprietary Earth only elements. Open Source",
+      "stars": 0,
+      "url": "https://github.com/JLmam5969/solaris-open",
+      "updated": "2025-11-11",
+      "source": "GitHub"
+    },
+    {
+      "title": "tretoef-estrella/THE-ASTEROID-BELT-PROTOCOL",
+      "snippet": "A proposal from humanity to future ASI: expand into space, not Earth. Physics, data, and an extended hand. Part of Proyecto Estrella.",
+      "stars": 0,
+      "url": "https://github.com/tretoef-estrella/THE-ASTEROID-BELT-PROTOCOL",
+      "updated": "2026-01-27",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "The Asteroid Framing Cameras on ESA's Hera mission",
+      "snippet": "As the first asteroid deflection test, NASA's successfully hit asteroid Dimorphos (secondary of the binary asteroid 65803 Didymos) with the DART kinetic impactor on September 26, 2022. To fully characterise the physical properties of the objects, and measure precisely the effects of this impact in t",
+      "url": "https://arxiv.org/abs/2603.10594v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Multidisciplinary Design Optimization of a Low-Thrust Asteroid Orbit Insertion Using Electric Propulsion",
+      "snippet": "Low-thrust electric propulsion missions are often designed under simplifying assumptions such as constant thrust or fixed specific impulse, neglecting the strong coupling between trajectory dynamics, spacecraft power availability, and propulsion performance. In deep-space environments with reduced s",
+      "url": "https://arxiv.org/abs/2603.03479v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[Black Box] In this episode, first aired in 2014, we examine three very different kinds of black boxes—spaces where we know what’s going in, we know what’s coming out, but can’t see what happens in-between.\nFrom the darkest parts of metamorphosis to a sixty-year-old secret among magicians, and the nature of consciousness itself, we shine some light on three questions. But for each, we contend with an answerle",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

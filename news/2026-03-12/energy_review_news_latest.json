@@ -1,0 +1,140 @@
+{
+  "axis": "ENERGY_REVIEW",
+  "fetched_at": "2026-03-12T18:26:20.654971+00:00",
+  "smart_query": "Renewable energy sources global market trends",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "analysis": {
+    "summary": "Изследването на оса ENERGY_REVIEW показва, че компании като Peak Energy и RWE развиват натрий-ионни батерии в Уисконсин. Това развитие е важно за създаването на устойчива цивилизация. Осветлението на фундаменталните проблеми в енергетиката е също така от изключителна важност.",
+    "key_developments": [
+      "Peak Energy and RWE deploying sodium-ion battery in Wisconsin",
+      "Utilities should focus on the fundamentals – Emerson’s Sally Jacquemin | DTECH Interview Studio"
+    ],
+    "sentiment": "POSITIVE",
+    "urgency": "MEDIUM",
+    "open_source_momentum": "Protontypes/open-sustainable-technology, PyPSA/PyPSA, pvlib/pvlib-python",
+    "scientific_frontier": "Neural Field Thermal Tomography: A Differentiable Physics Framework for Non-Destructive Evaluation, DynVLA: Learning World Dynamics for Action Reasoning in Autonomous Driving",
+    "relevance_to_goal": "Висока, тъй като развитието на устойчиви енергийни технологии е от изключителна важност за създаването на устойчива цивилизация и достойнство за всички."
+  },
+  "sentiment": "POSITIVE",
+  "urgency": "MEDIUM",
+  "summary": "Изследването на оса ENERGY_REVIEW показва, че компании като Peak Energy и RWE развиват натрий-ионни батерии в Уисконсин. Това развитие е важно за създаването на устойчива цивилизация. Осветлението на фундаменталните проблеми в енергетиката е също така от изключителна важност.",
+  "key_developments": [
+    "Peak Energy and RWE deploying sodium-ion battery in Wisconsin",
+    "Utilities should focus on the fundamentals – Emerson’s Sally Jacquemin | DTECH Interview Studio"
+  ],
+  "open_source_momentum": "Protontypes/open-sustainable-technology, PyPSA/PyPSA, pvlib/pvlib-python",
+  "scientific_frontier": "Neural Field Thermal Tomography: A Differentiable Physics Framework for Non-Destructive Evaluation, DynVLA: Learning World Dynamics for Action Reasoning in Autonomous Driving",
+  "github_repos": [
+    {
+      "title": "protontypes/open-sustainable-technology",
+      "snippet": "A directory and analysis of the open source ecosystem in the areas of climate change, sustainable energy, biodiversity and natural resources.  https://docs.getgrist.com/gSscJkc5Rb1R/OpenSustaintech",
+      "stars": 2458,
+      "url": "https://github.com/protontypes/open-sustainable-technology",
+      "updated": "2026-03-11",
+      "source": "GitHub"
+    },
+    {
+      "title": "PyPSA/PyPSA",
+      "snippet": "PyPSA: Python for Power System Analysis",
+      "stars": 1897,
+      "url": "https://github.com/PyPSA/PyPSA",
+      "updated": "2026-03-12",
+      "source": "GitHub"
+    },
+    {
+      "title": "pvlib/pvlib-python",
+      "snippet": "A set of documented functions for simulating the performance of photovoltaic energy systems.",
+      "stars": 1511,
+      "url": "https://github.com/pvlib/pvlib-python",
+      "updated": "2026-03-12",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Neural Field Thermal Tomography: A Differentiable Physics Framework for Non-Destructive Evaluation",
+      "snippet": "We propose Neural Field Thermal Tomography (NeFTY), a differentiable physics framework for the quantitative 3D reconstruction of material properties from transient surface temperature measurements. While traditional thermography relies on pixel-wise 1D approximations that neglect lateral diffusion, ",
+      "url": "https://arxiv.org/abs/2603.11045v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "DynVLA: Learning World Dynamics for Action Reasoning in Autonomous Driving",
+      "snippet": "We propose DynVLA, a driving VLA model that introduces a new CoT paradigm termed Dynamics CoT. DynVLA forecasts compact world dynamics before action generation, enabling more informed and physically grounded decision-making. To obtain compact dynamics representations, DynVLA introduces a Dynamics To",
+      "url": "https://arxiv.org/abs/2603.11041v1",
+      "source": "arXiv"
+    }
+  ],
+  "youtube_transcripts": [],
+  "podcast": "We're so entangled with our devices that online has started to feel more real than IRL, says journalist Nayeema Raza. As screens reshape how we connect and relate, she offers three practical habits to reignite curiosity, restore presence and break free from our phones.(Following the talk, Elise Hu, host of TED Talks Daily, interviews Raza on the best approach to discussing difficult topics — wheth | Where's the best free comedy show in town? Tom Sullam, cofounder of the annual Comedy Wildlife Photography Awards, shares hilarious animal photos that dissolve the distance between humans and nature. The result? A joyful case for caring about what we're at risk of losing.Learn more about our flagship conference happening this April at&nbsp;attend.ted.com/podcast Hosted on Acast. See acast.com/priv",
+  "youtube_videos": [
+    {
+      "title": "YouTube:Sq-y-wiZduE",
+      "video_id": "Sq-y-wiZduE",
+      "url": "https://www.youtube.com/watch?v=Sq-y-wiZduE",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:2ZIfqLDG_Qs",
+      "video_id": "2ZIfqLDG_Qs",
+      "url": "https://www.youtube.com/watch?v=2ZIfqLDG_Qs",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:UVf2Yw7uFoE",
+      "video_id": "UVf2Yw7uFoE",
+      "url": "https://www.youtube.com/watch?v=UVf2Yw7uFoE",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:ZiE6GdSeJeU",
+      "video_id": "ZiE6GdSeJeU",
+      "url": "https://www.youtube.com/watch?v=ZiE6GdSeJeU",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:68UgJkTQw6E",
+      "video_id": "68UgJkTQw6E",
+      "url": "https://www.youtube.com/watch?v=68UgJkTQw6E",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:K15gJRlxeSc",
+      "video_id": "K15gJRlxeSc",
+      "url": "https://www.youtube.com/watch?v=K15gJRlxeSc",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:Mj9akrqWluY",
+      "video_id": "Mj9akrqWluY",
+      "url": "https://www.youtube.com/watch?v=Mj9akrqWluY",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:zhSbB1mv6HE",
+      "video_id": "zhSbB1mv6HE",
+      "url": "https://www.youtube.com/watch?v=zhSbB1mv6HE",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:avXfk3oHeUY",
+      "video_id": "avXfk3oHeUY",
+      "url": "https://www.youtube.com/watch?v=avXfk3oHeUY",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:DjXrY-5y4Hw",
+      "video_id": "DjXrY-5y4Hw",
+      "url": "https://www.youtube.com/watch?v=DjXrY-5y4Hw",
+      "source": "YouTube"
+    }
+  ]
+}

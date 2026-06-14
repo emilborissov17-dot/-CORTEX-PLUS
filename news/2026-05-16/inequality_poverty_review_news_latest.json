@@ -1,0 +1,113 @@
+{
+  "axis": "INEQUALITY_POVERTY_REVIEW",
+  "fetched_at": "2026-05-16T16:54:26.832170+00:00",
+  "smart_query": "inequality poverty wealth gap",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 3,
+    "arxiv": 2,
+    "github": 0,
+    "youtube_transcripts": 3,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "Senior IS leader killed in joint operation, US and Nigeria say",
+      "snippet": "President Donald Trump said the operation eliminated \"the most active terrorist in the world\", Abu-Bilal al-Minuki.",
+      "url": "https://www.bbc.com/news/articles/cy72p2kpd03o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Rescue diver dies during search for bodies of Italians who drowned in Maldives caves",
+      "snippet": "Staff Sgt Mohamed Mahdhee died while diving in the search-and-rescue operation, the Maldives government tells the BBC.",
+      "url": "https://www.bbc.com/news/articles/c1w2gv1gdnjo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "US planning to charge ex-Cuban leader Raúl Castro",
+      "snippet": "Charges could come as soon as next week in a case reportedly focused on Cuba's downing of two planes in 1996.",
+      "url": "https://www.bbc.com/news/articles/c1w2gnd9xp2o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [
+    {
+      "title": " ¿ Qué estados lideran la desigualdad racial en riqueza y oportunidades en 2026 ? ",
+      "snippet": " ¿ Qué estados lideran la desigualdad racial en riqueza y oportunidades en 2026 ? ",
+      "url": "https://eldiariony.com/2026/04/07/brecha-racial-en-ee-uu-los-estados-con-mayor-desigualdad-economica-en-2026/",
+      "source": "eldiariony.com"
+    },
+    {
+      "title": "Sí , presidente , en España también hay pobreza y desigualdad",
+      "snippet": "Sí , presidente , en España también hay pobreza y desigualdad",
+      "url": "https://cincodias.elpais.com/opinion/2026-03-02/si-presidente-en-espana-tambien-hay-pobreza-y-desigualdad.html",
+      "source": "cincodias.elpais.com"
+    },
+    {
+      "title": "Thinking Allowed - Debt and Wealth Inequality",
+      "snippet": "Thinking Allowed - Debt and Wealth Inequality",
+      "url": "https://www.bbc.co.uk/sounds/play/m002sfvg",
+      "source": "bbc.co.uk"
+    }
+  ],
+  "github_repos": [],
+  "arxiv_papers": [
+    {
+      "title": "Poverty traps are rare, but trappedness isn't",
+      "snippet": "The persistence of poverty is not well explained by who is poor. We argue the relevant object of measurement is trappedness--expected escape time from deprivation--which varies systematically across institutional environments and is invisible to standard poverty indices. Using Markov chains estimate",
+      "url": "https://arxiv.org/abs/2603.18716v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Measuring the depth of multidimensional poverty with ordinal data",
+      "snippet": "This paper proposes a positional poverty gap measure of multidimensional poverty within the Alkire-Foster counting framework. The measure captures the depth of deprivations even when indicators are ordinal, unlike the standard poverty gap, which requires cardinal variables. The proposed method draws",
+      "url": "https://arxiv.org/abs/2603.15149v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[Village gossip, pesticide bans, and gene drives: 17 experts on the future of global health] What does it really take to lift millions out of poverty and prevent needless deaths?In this special compilation episode, 17 past guests — including economists, nonprofit founders, and policy advisors — share their most powerful and actionable insights from the front lines of global health and development. You’ll hear about the critical need to boost agricultural productivity in sub-Saharan Africa",
+  "wiki": null,
+  "youtube_items": [
+    {
+      "title": "[YT] Wealth Inequality in America Has Never Been Worse. The Middle Class Has Disappeared",
+      "summary": "Most people have no clue about how severe wealth inequality has become in America and how much worse it's getting. There's a YouTube video by user Paul Zane where he references a study done by a Harvard economist and professor and the study asked 5,000 Americans how they believed wealth was distributed in the United States. The group was first asked what they thought the wealth distribution in America looked like. Finding up American wealth into five segments, the participants came up with the following, a bar chart that looks like this. With the top 20% owning a little bit more than half of the nation's wealth and the bottom 20% owning just a sliver of wealth no more than 5%. Participants were then asked what they thought the ideal distribution should be. Over 9 out of 10 participants sai",
+      "link": "https://www.youtube.com/watch?v=EdqxBNgnmxU",
+      "source_type": "youtube",
+      "channel": "Humphrey Yang",
+      "video_id": "EdqxBNgnmxU",
+      "transcript_method": "whisper",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Is inequality inevitable?",
+      "summary": "In South Africa, one of the most unequal countries in the world, the richest one-tenth of one percent owns almost 30 percent of all the country's wealth. More than double what the bottom 90 percent owns. Income and wealth inequality are not new. In fact, economists and historians who've charted economic inequality throughout history haven't found a single society without it, which raises a bleak question. Is inequality inevitable? One way to estimate inequality is with a number called the genie index, which is calculated by comparing the income or wealth distribution of a perfectly equal society to the actual income or wealth distribution. The area of this shape multiplied by two is the genie index. The genie of one indicates perfect inequality. One person has everything and everyone else ",
+      "link": "https://www.youtube.com/watch?v=rEnf_CFoyv0",
+      "source_type": "youtube",
+      "channel": "TED-Ed",
+      "video_id": "rEnf_CFoyv0",
+      "transcript_method": "whisper",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] How Hong Kong became one of the world’s most unequal cities",
+      "summary": "It's a city where some people live in the lap of luxury, while others call metal cages home. Hong Kong is a paradise for those rich, and it's a hell for those poor. They say it is. Hong Kong's richest earn 81 times more than its poorest residents, according to median figures released in a report by the charity Augs Fem. That's $130,000, or roughly $16,562 US dollars per month, for people on the wealthiest end of the scale, but a mere $1600 or $203 US dollars for the poorest. And the problem is worsening. Hong Kong's wealth gap had more than doubled by the first quarter of 2024 compared to data from five years earlier. Income inequality is a major challenge for many cities around the world, but in Hong Kong, the disparity has reached staggering levels. While more than a million of Hong Kong",
+      "link": "https://www.youtube.com/watch?v=hR67NxGhTYs",
+      "source_type": "youtube",
+      "channel": "South China Morning Post",
+      "video_id": "hR67NxGhTYs",
+      "transcript_method": "whisper",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ],
+  "summary": "[RSS News]\n- Senior IS leader killed in joint operation, US and Nigeria say\n- Rescue diver dies during search for bodies of Italians who drowned in Maldives caves\n\n[GDELT News]\n-  ¿ Qué estados lidera",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": [],
+  "open_source_momentum": "",
+  "scientific_frontier": "",
+  "relevance_to_goal": ""
+}

@@ -1,0 +1,76 @@
+{
+  "axis": "WATER_REVIEW",
+  "fetched_at": "2026-04-30T08:31:45.232392+00:00",
+  "smart_query": "water scarcity drinking water",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 3,
+    "arxiv": 2,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "Critical minerals are ‘oil of 21st century’ as demand fuels poverty and pollution in poorer countries",
+      "snippet": "Rush for lithium, cobalt and nickel is ravaging livelihoods, water and health of world’s most vulnerable, UN study says Critical minerals such as lithium, cobalt and nickel are becoming the “oil of the 21st century” as the scramble for precious metals deepens poverty and creates public health crises",
+      "url": "https://www.theguardian.com/global-development/2026/apr/29/critical-minerals-are-oil-of-21st-century-as-demand-fuels-poverty-and-pollution-in-poorer-countries",
+      "source": "RSS"
+    },
+    {
+      "title": "Urban areas host 80% of England’s homes at high risk of flooding, study finds",
+      "snippet": "Exclusive: 839,000 homes in urban areas face threat of surface-water flooding, with social housing tenants most vulnerable to costsEight in 10 of the homes that are at high risk of flooding in England are now in towns and cities, according to analysis by the National Housing Federation (NHF), which ",
+      "url": "https://www.theguardian.com/environment/2026/apr/29/england-homes-high-risk-flooding-towns-cities-urban-environment-study",
+      "source": "RSS"
+    },
+    {
+      "title": "Deadly Israeli attacks worsen Gaza’s water shortage crisis",
+      "snippet": "Engineer and two drivers killed in recent weeks as scarcity of clean water fuels spread of preventable diseasesIsraeli forces in Gaza killed a water engineer and two drivers who transported water to displaced families over four days in mid-April, exacerbating severe shortages of clean water that are",
+      "url": "https://www.theguardian.com/world/2026/apr/27/israeli-attacks-gaza-clean-water-shortage-crisis-disease-palestine",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [
+    {
+      "title": "وزير الري : الإجراءات الأحادية غير المنظبطة بمنابع نهر النيل زادت عبء إدارة المياه في مصر",
+      "snippet": "وزير الري : الإجراءات الأحادية غير المنظبطة بمنابع نهر النيل زادت عبء إدارة المياه في مصر",
+      "url": "https://www.dostor.org/5414489",
+      "source": "dostor.org"
+    },
+    {
+      "title": "Climate Change , Drinking Water Security , and Public Health",
+      "snippet": "Climate Change , Drinking Water Security , and Public Health",
+      "url": "https://link.springer.com/book/10.1007/978-3-032-12074-8",
+      "source": "link.springer.com"
+    },
+    {
+      "title": "Laccès à leau potable reste un défi au Mali - Studio Tamani - Informations , débats , magazines : toute lactualité du Mali , en 5 langues",
+      "snippet": "Laccès à leau potable reste un défi au Mali - Studio Tamani - Informations , débats , magazines : toute lactualité du Mali , en 5 langues",
+      "url": "https://www.studiotamani.org/200764-lacces-a-leau-potable-reste-un-defi-au-mali",
+      "source": "studiotamani.org"
+    }
+  ],
+  "github_repos": [],
+  "arxiv_papers": [
+    {
+      "title": "Can hot water discharged from industrial processes enhance the likelihood of waterspouts?",
+      "snippet": "Italy and the surrounding seas are recognised as one of the European hotspots for tornadoes and waterspouts. In recent years, the town of Rosignano Solvay (on the Northern Tyrrhenian coast) experienced repeated waterspouts affecting the same areas, raising local concern about the possible influence ",
+      "url": "https://arxiv.org/abs/2603.24233v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "End-to-End Optical Propagation Modeling for Water-to-Air Channels under Sea Surface and UAV Effects",
+      "snippet": "Underwater observatories have recently emerged as an efficient solution for marine biodiversity monitoring. The primary objective of this work is to enable efficient and cost-effective data muling from underwater sensors by investigating the use of optical wireless communications to transmit data fr",
+      "url": "https://arxiv.org/abs/2603.23727v2",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[The Resistance of a Cow] There’s something rotten in the cows of Denmark. And Minnesota. And Wisconsin. And Idaho. What could cause a previously thriving herd of majestic dairy cattle to stop drinking water and start drinking … urine? A Danish farmer calls a special investigator, who takes one look at his farm and nopes the heck out of there, refusing to return, citing “bad energy” coming from something nearby … a big bui",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

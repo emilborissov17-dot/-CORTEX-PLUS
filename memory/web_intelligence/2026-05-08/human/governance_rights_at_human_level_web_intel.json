@@ -1,0 +1,96 @@
+{
+  "axis": "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL",
+  "domain": "human",
+  "timestamp": "2026-05-08T09:53:30.281761+00:00",
+  "sources_count": 8,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 0,
+  "youtube_items": [],
+  "analysis": {
+    "problem": "Заключването и смъртта на критика Aimable Karasira в руандийски затвор по деня на неговото освобождаване",
+    "root_cause": "Отсъствие на независима съдебна система и свободни медии в Руанда, което позволява на правителството да потиска опозиционни гласове",
+    "severity": "HIGH",
+    "leverage_points": [
+      "Международните организации и донори на Руанда, които могат да оказват натиск върху правителството да спазва човешките права",
+      "Медийните организации и активистите за човешки права, които могат да повишат осведомеността за случая и да изискват действия от правителството"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Извършване на независимо разследване на смъртта на Aimable Karasira и наказване на отговорните",
+        "measurable_goal": "Публикуване на доклад от независима организация за човешки права,potвърждаващ резултатите от разследването",
+        "timeframe": "краткосрочно"
+      },
+      {
+        "action": "Организиране на кампания за повишаване на осведомеността за отсъствието на свобода на словото в Руанда и нуждата от реформи",
+        "measurable_goal": "Публикуване на статии и видеоматериали в медии с голяма аудитория, както и отзвук в социалните мрежи",
+        "timeframe": "средносрочно"
+      }
+    ],
+    "evidence": [
+      "Заключването и смъртта на Aimable Karasira в руандийски затвор по деня на неговото освобождаване",
+      "Отсъствие на независима съдебна система и свободни медии в Руанда"
+    ],
+    "generalization": "Отсъствието на свобода на словото и независима съдебна система в Руанда е свързано с домейна на човека, тъй като влияе върху правата и достойнството на хората, както и върху устойчивостта на цивилизацията като цяло",
+    "summary": "Заключването и смъртта на критика Aimable Karasira в Руанда показват сериозни проблеми с отсъствието на свобода на словото и независима съдебна система в страната. Необходими са независимо разследване и мерки за повишаване на осведомеността и реформи в правосъдието.",
+    "risk_level": "HIGH"
+  },
+  "raw_items": [
+    {
+      "title": "Rwanda: Critic Dies in Prison on Release Day",
+      "summary": "Click to expand Image\n          \n\n\n\n  \n        \n  \n\n        \n                      \n      \n        \n              Aimable Karasira.\n                    © Private\n          \n    \n\n\n  \n<p>(Nairobi) – Rwandan authorities should conduct an effective, independent, and transparent investigation into the death in custody of Aimable Karasira, a Rwandan academic and outspoken government critic, on the day he was set to be released from prison, Human Rights Watch said today.</p><p>Karasira’s prosecution a",
+      "link": "https://www.hrw.org/news/2026/05/08/rwanda-critic-dies-in-prison-on-release-day",
+      "published": "Fri, 08 May 2026 00:00:00 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "UN Guidance on Dismantling Gender Stereotypes",
+      "summary": "Click to expand Image\n          \n\n\n\n  \n        \n  \n\n        \n                      \n      \n        \n              People rally on International Women's Day in Jakarta demanding the Indonesian government pass an anti-discrimination law and ratify the International Labor Organization (ILO) convention concerning the elimination of sexual violence and harassment at work, March 8, 2024.\n                    © 2024 Bay Ismoyo/AFP via Getty Images\n          \n    \n\n\n  \n<p>Gender stereotypes are such a pe",
+      "link": "https://www.hrw.org/news/2026/05/07/un-guidance-on-dismantling-gender-stereotypes",
+      "published": "Thu, 07 May 2026 11:48:30 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "EU: Protect Integrity of Anti-Deforestation Law",
+      "summary": "Click to expand Image\n          \n\n\n\n  \n        \n  \n\n        \n                      \n      \n        \n              Cattle walk along an illegally deforested area in an extractive reserve near Jaci-Parana, Rondonia state, Brazil, July 12, 2023.\n                    © 2023 Andre Penner/AP Photo\n          \n    \n\n\n  \n<p>(Brussels) – The&nbsp;European Commission’s announcement that it would not initiate a process to further amend the text of its milestone anti-deforestation regulation paves the way for",
+      "link": "https://www.hrw.org/news/2026/05/07/eu-protect-integrity-of-anti-deforestation-law",
+      "published": "Thu, 07 May 2026 07:00:00 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "Burkina Faso’s Junta Escalates Attack on Information",
+      "summary": "Click to expand Image\n          \n\n\n\n  \n        \n  \n\n        \n                      \n      \n        \n              News studio of TV5Monde in Paris, April 9, 2015.\n                    © 2015 Geoffroy Van der Hasselt/Anadolu Agency/Getty Images  \n          \n    \n\n\n  \n<p>The military authorities in&nbsp;Burkina Faso are tightening their grip on what people can see, hear, and know.</p><p>On May 5, Burkina Faso’s media regulator&nbsp;ordered the suspension of French broadcaster TV5Monde, accusing it ",
+      "link": "https://www.hrw.org/news/2026/05/06/burkina-fasos-junta-escalates-attack-on-information",
+      "published": "Wed, 06 May 2026 13:03:14 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "D. Jeffrey Hirschberg",
+      "summary": "<span class=\"field field--name-title field--type-string field--label-hidden\">D. Jeffrey Hirschberg</span>\n<span class=\"field field--name-uid field--type-entity-reference field--label-hidden\"><span lang=\"lang\">zevans@freedom…</span></span>\n<span class=\"field field--name-created field--type-created field--label-hidden\"><time class=\"datetime\" datetime=\"2026-05-05T14:33:17-04:00\" title=\"Tuesday, May 5, 2026 - 14:33\">Tue, 05/05/2026 - 14:33</time>\n</span>\n\n  <div class=\"field field--name-field-person",
+      "link": "https://freedomhouse.org/expert/d-jeffrey-hirschberg",
+      "published": "Tue, 05 May 2026 18:33:17 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "After the Election: Revitalizing Hungarian Democracy, and Lessons from the Opposition Victory",
+      "summary": "<span class=\"field field--name-title field--type-string field--label-hidden\">After the Election: Revitalizing Hungarian Democracy, and Lessons from the Opposition Victory</span>\n<span class=\"field field--name-uid field--type-entity-reference field--label-hidden\"><span lang=\"lang\">zevans@freedom…</span></span>\n<span class=\"field field--name-created field--type-created field--label-hidden\"><time class=\"datetime\" datetime=\"2026-04-28T13:57:40-04:00\" title=\"Tuesday, April 28, 2026 - 13:57\">Tue, 04/2",
+      "link": "https://freedomhouse.org/article/after-election-revitalizing-hungarian-democracy-and-lessons-opposition-victory",
+      "published": "Tue, 28 Apr 2026 17:57:40 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Political Prisoner Spotlight: The Struggle for Pastor Ezra Jin’s Freedom in China",
+      "summary": "<div class=\"node node--type-event node--view-mode-rss ds-1col clearfix hero-no-header share-buttons-on\">\n\n\n        \n\n\n\n  <div class=\"no-header-wrapper\">\n    <span class=\"hr\"></span>\n    <div class=\"grid header\">\n      <div class=\"text-wrapper\">\n\n        \n        \n        <h1 class=\"basic-h1 dark-text\"><span class=\"field field--name-title field--type-string field--label-hidden\">Political Prisoner Spotlight: The Struggle for Pastor Ezra Jin’s Freedom in China</span>\n</h1>\n\n                </div>\n ",
+      "link": "https://freedomhouse.org/event/political-prisoner-spotlight-struggle-pastor-ezra-jins-freedom-china",
+      "published": "Tue, 28 Apr 2026 14:14:45 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Beyond Maduro: Building a Sustainable Democratic Transition in Venezuela",
+      "summary": "<span class=\"field field--name-title field--type-string field--label-hidden\">Beyond Maduro: Building a Sustainable Democratic Transition in Venezuela</span>\n<span class=\"field field--name-uid field--type-entity-reference field--label-hidden\"><span lang=\"lang\">zevans@freedom…</span></span>\n<span class=\"field field--name-created field--type-created field--label-hidden\"><time class=\"datetime\" datetime=\"2026-04-23T12:57:41-04:00\" title=\"Thursday, April 23, 2026 - 12:57\">Thu, 04/23/2026 - 12:57</time",
+      "link": "https://freedomhouse.org/article/beyond-maduro-building-sustainable-democratic-transition-venezuela",
+      "published": "Thu, 23 Apr 2026 16:57:41 +0000",
+      "source_type": "rss"
+    }
+  ]
+}

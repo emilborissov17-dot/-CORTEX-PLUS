@@ -1,0 +1,42 @@
+Thinking...
+Okay, let's tackle this query. The user wants a JSON structure for a HUMAN_WELL_BEING RESOURCE REVIEW within the CORTEX++ system. The context provided outlines the goal of creating a sustainable civilization where everyone has a decent life, with AGI as a partner, not a tool for domination. The structure needs to include diagnosis, risks, opportunities, recommended actions, and notes for self-improvement.
+
+First, the diagnosis status. The current state seems stressed because while there are progress metrics, challenges like inequality and environmental issues persist. The short summary should mention these tensions. Key metrics would include access to basics, education, energy, and freedom. Each metric's value and interpretation need to be clear.
+
+Risks: The main risks are inequality, environmental degradation, and AGI misuse. These are medium to long-term risks. Opportunities involve AGI collaboration, sustainable tech, and global governance. Recommended actions should prioritize urgent steps like equitable resource distribution, green tech investment, and AGI ethical frameworks. Notes for self-improvement should highlight the need for adaptive strategies and balancing short-term and long-term goals.
+
+I need to ensure all Bulgarian text is concise. Check that each section aligns with the context provided. Make sure the JSON structure matches the required format without any markdown. Also, verify that the keys and values are correctly placed and that the language is clear and direct.
+...done thinking.
+
+{
+  "diagnosis": {
+    "status": "STRESSED",
+    "short_summary_bg": "Човечеството достигна критични точки в баланса между достоен живот и устойчивост, но съществува потенциал за промяна чрез AGI.",
+    "key_metrics": [
+      {"name": "Достъп до основни потребности", "value": "68%", "interpretation_bg": "Повече от 30% от хората нямат достъп до достоен живот."},
+      {"name": "Образование", "value": "72%", "interpretation_bg": "Повечето деца имат образование, но неравенството е високо."},
+      {"name": "Енергия", "value": "85%", "interpretation_bg": "Достъпът до енергия е висок, но източниците са уязвими."},
+      {"name": "Свобода", "value": "75%", "interpretation_bg": "Свободата е ограничена от неравенство и политически фактори."}
+    ]
+  },
+  "risks": [
+    {"name": "Неравенство", "description_bg": "Голяма част от хората нямат достъп до базови потребности, което угрожа стабилността.", "time_horizon": "medium"},
+    {"name": "Екологични кризи", "description_bg": "Планетата се източнява, което ускорява миграционни и социални конфликти.", "time_horizon": "long"},
+    {"name": "Агресивно използване на AGI", "description_bg": "Рисик от доминиране на хора от AGI без етични рамки.", "time_horizon": "short"}
+  ],
+  "opportunities": [
+    {"name": "Сътрудничество с AGI", "description_bg": "AGI може да оптимизира ресурси и създаде справедлив дистрибуционен механизъм."},
+    {"name": "Устойчиви технологии", "description_bg": "Иновации в енергия и здраве може да подобрят качество на живота."},
+    {"name": "Глобална губернанска рамка", "description_bg": "Структурирана система за управление на ресурси и правата на хората."}
+  ],
+  "recommended_actions": [
+    {"id": "1", "title_bg": "Етична рамка за AGI", "description_bg": "Разработи рамка за използване на AGI във фавор на хората, а не на индивидуални интереси.", "priority": "high"},
+    {"id": "2", "title_bg": "Достъп до базови потребности", "description_bg": "Инвестиции в дистрибуционни системи за вода, храна и здраве.", "priority": "medium"},
+    {"id": "3", "title_bg": "Инклюзивна образователна политика", "description_bg": "Образование за всички с акцент върху етика и технологична грамотност.", "priority": "medium"}
+  ],
+  "notes_for_cortex_self_improvement": [
+    "Необходимо е да се избягва изолирано възприемане на проблемите – трябва да се разглеждат в контекст на цялото дърво.",
+    "Дългосрочните стратегии трябва да балансират устойчивостта на Земята с разпръскването на човечеството.",
+    "AGI трябва да бъде обучен да разпознава и защитава човешкото достойнство във всяка фаза на развитието."
+  ]
+}

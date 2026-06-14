@@ -1,0 +1,90 @@
+{
+  "axis": "ECONOMY_WORK_REVIEW",
+  "fetched_at": "2026-04-03T14:14:09.977354+00:00",
+  "smart_query": "economy unemployment poverty wages",
+  "sources_count": {
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 0,
+    "github": 3,
+    "web_search": 5
+  },
+  "rss": [
+    {
+      "title": "'I ended up paying £500': Your subscription trap stories",
+      "snippet": "Many readers have experienced the ordeal of cancelling a subscription.",
+      "url": "https://www.bbc.com/news/articles/cz78lv9qej4o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "US jobs surge unexpectedly in March despite Iran war",
+      "snippet": "Employers added 178,000 jobs, far more than had expected, the Labor Department says. ",
+      "url": "https://www.bbc.com/news/articles/crk165g4vv3o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "M&S boss calls for more action on crime and abuse of staff",
+      "snippet": "Thinus Keeve's comments come days after an M&S store was targeted during disorder in south London.",
+      "url": "https://www.bbc.com/news/articles/crk16j2j1ygo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "AmirhosseinHonardoust/Economic-DNA-Repair",
+      "snippet": "A deep research study introducing the concept of Economic DNA Repair for smart contracts, designing self-correcting tokenomics that detect anomalies, repair unstable parameters, rebalance incentives, ",
+      "stars": 18,
+      "url": "https://github.com/AmirhosseinHonardoust/Economic-DNA-Repair",
+      "updated": "2026-02-23",
+      "source": "GitHub"
+    },
+    {
+      "title": "AmirhosseinHonardoust/Pricing-Negotiation-Intelligence",
+      "snippet": "This article reframes pricing as a negotiation rather than a prediction, showing how price emerges from tensions between product reality, market dynamics, and buyer behavior. It introduces negotiation",
+      "stars": 18,
+      "url": "https://github.com/AmirhosseinHonardoust/Pricing-Negotiation-Intelligence",
+      "updated": "2026-02-23",
+      "source": "GitHub"
+    },
+    {
+      "title": "AmirhosseinHonardoust/Workforce-Disruption-Equilibrium-Engine",
+      "snippet": "An interpretable system that models the future of work as an equilibrium under AI-driven forces. Instead of predicting job loss, it decomposes workforce disruption into automation pressure, adaptabili",
+      "stars": 17,
+      "url": "https://github.com/AmirhosseinHonardoust/Workforce-Disruption-Equilibrium-Engine",
+      "updated": "2026-02-23",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [],
+  "web_search": [
+    {
+      "title": "How Increasing the Federal Minimum Wage Could Affect Employment and ...",
+      "url": "https://www.cbo.gov/publication/55681",
+      "source": "WEB"
+    },
+    {
+      "title": "Underemployment, Recessions, and Poverty - Congress.gov",
+      "url": "https://www.congress.gov/crs-product/R46939",
+      "source": "WEB"
+    },
+    {
+      "title": "The federal minimum wage is officially a poverty wage in 2025",
+      "url": "https://www.epi.org/blog/the-federal-minimum-wage-is-officially-a-poverty-wage-in-2025/",
+      "source": "WEB"
+    },
+    {
+      "title": "The Working Poor: Lack of Job Quality Increases Poverty Rates",
+      "url": "https://www.clasp.org/blog/working-poor-lack-job-quality-poverty-rise/",
+      "source": "WEB"
+    },
+    {
+      "title": "How Unemployment Impacts the Economy and Society - Investopedia",
+      "url": "https://www.investopedia.com/financial-edge/0811/the-cost-of-unemployment-to-the-economy.aspx",
+      "source": "WEB"
+    }
+  ],
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL"
+}

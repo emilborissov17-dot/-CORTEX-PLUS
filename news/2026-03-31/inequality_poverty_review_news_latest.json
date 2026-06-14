@@ -1,0 +1,122 @@
+{
+  "axis": "INEQUALITY_POVERTY_REVIEW",
+  "fetched_at": "2026-03-31T07:33:52.961253+00:00",
+  "smart_query": "inequality poverty wealth gap",
+  "sources_count": {
+    "rss": 3,
+    "gdelt": 3,
+    "arxiv": 2,
+    "github": 3,
+    "web_search": 5
+  },
+  "rss": [
+    {
+      "title": "Spain closes airspace to US aircraft involved in Iran war",
+      "snippet": "It follows a decision by the Spanish government to deny the US use of the two jointly run military bases in Andalusia.",
+      "url": "https://www.bbc.com/news/articles/cwy368j1e3lo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Sexual violence part of 'everyday life' in parts of Sudan, charity says",
+      "snippet": "Victims describe how they have been targeted while carrying out everyday activities. ",
+      "url": "https://www.bbc.com/news/articles/c5ywgn2n3nqo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Eurovision Song Contest launches first-ever Asia edition",
+      "snippet": "Broadcasters from 10 countries, including South Korea and the Philippines, will be taking part.",
+      "url": "https://www.bbc.com/news/articles/cx2rwq53zxyo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [
+    {
+      "title": "Map Reveals States With Worst Wealth Inequality",
+      "snippet": "Map Reveals States With Worst Wealth Inequality",
+      "url": "https://www.newsweek.com/map-states-worst-wealth-inequality-11428950",
+      "source": "newsweek.com"
+    },
+    {
+      "title": "Sí , presidente , en España también hay pobreza y desigualdad",
+      "snippet": "Sí , presidente , en España también hay pobreza y desigualdad",
+      "url": "https://cincodias.elpais.com/opinion/2026-03-02/si-presidente-en-espana-tambien-hay-pobreza-y-desigualdad.html",
+      "source": "cincodias.elpais.com"
+    },
+    {
+      "title": "Küresel eşitsizlik derinleşiyor -  Sen çalış , ben yiyeyim  düzenine tepki",
+      "snippet": "Küresel eşitsizlik derinleşiyor -  Sen çalış , ben yiyeyim  düzenine tepki",
+      "url": "https://www.yeniasya.com.tr/ekonomi/kuresel-esitsizlik-derinlesiyor-sen-calis-ben-yiyeyim-duzenine-tepki_618505",
+      "source": "yeniasya.com.tr"
+    }
+  ],
+  "github_repos": [
+    {
+      "title": "thinkingmachines/ph-poverty-mapping",
+      "snippet": "Mapping Philippine Poverty using Machine Learning, Satellite Imagery, and Crowd-sourced Geospatial Information",
+      "stars": 86,
+      "url": "https://github.com/thinkingmachines/ph-poverty-mapping",
+      "updated": "2026-03-23",
+      "source": "GitHub"
+    },
+    {
+      "title": "rs-anderson/Clustering-Ward-Level-Poverty-Using-Satellite-Imagery",
+      "snippet": "Combing satellite imagery and machine learning methods to cluster ward-level povery in Gauteng, South Africa.",
+      "stars": 4,
+      "url": "https://github.com/rs-anderson/Clustering-Ward-Level-Poverty-Using-Satellite-Imagery",
+      "updated": "2024-04-06",
+      "source": "GitHub"
+    },
+    {
+      "title": "ejanalysis/EJAM",
+      "snippet": "Environmental Justice Analysis Multisite tool for summarizing environmental and residential population information for multiple locations. This detached fork of the package and this repository are not",
+      "stars": 2,
+      "url": "https://github.com/ejanalysis/EJAM",
+      "updated": "2026-02-12",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Poverty traps are rare, but trappedness isn't",
+      "snippet": "The persistence of poverty is not well explained by who is poor. We argue the relevant object of measurement is trappedness--expected escape time from deprivation--which varies systematically across institutional environments and is invisible to standard poverty indices. Using Markov chains estimate",
+      "url": "https://arxiv.org/abs/2603.18716v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Measuring the depth of multidimensional poverty with ordinal data",
+      "snippet": "This paper proposes a positional poverty gap measure of multidimensional poverty within the Alkire-Foster counting framework. The measure captures the depth of deprivations even when indicators are ordinal, unlike the standard poverty gap, which requires cardinal variables. The proposed method draws",
+      "url": "https://arxiv.org/abs/2603.15149v1",
+      "source": "arXiv"
+    }
+  ],
+  "web_search": [
+    {
+      "title": "Wealth inequality in America just hit its widest gap in more than 3 ...",
+      "url": "https://www.cbsnews.com/news/us-wealth-gap-widest-in-three-decades-federal-reserve/",
+      "source": "WEB"
+    },
+    {
+      "title": "Nine Charts about Wealth Inequality in America - Urban Institute",
+      "url": "https://apps.urban.org/features/wealth-inequality-charts/",
+      "source": "WEB"
+    },
+    {
+      "title": "PDF Income and Wealth Inequality in The United States: National Bureau of ...",
+      "url": "https://www.nber.org/system/files/working_papers/w33823/w33823.pdf",
+      "source": "WEB"
+    },
+    {
+      "title": "Income Inequality Is Surging In The U.S., New Oxfam Report Shows",
+      "url": "https://www.forbes.com/sites/josiecox/2025/11/03/income-inequality-is-surging-in-the-us-new-oxfam-report-shows/",
+      "source": "WEB"
+    },
+    {
+      "title": "Wealth Inequality - Inequality.org",
+      "url": "https://inequality.org/facts/wealth-inequality/",
+      "source": "WEB"
+    }
+  ],
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL"
+}

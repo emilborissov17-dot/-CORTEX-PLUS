@@ -1,0 +1,38 @@
+{
+  "axis": "MATERIALS_WASTE_REVIEW",
+  "fetched_at": "2026-05-03T09:10:25.261517+00:00",
+  "smart_query": "plastic waste pollution recycling",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 0,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [],
+  "gdelt": [],
+  "github_repos": [],
+  "arxiv_papers": [
+    {
+      "title": "A step-by-step workflow to extract the genuine circular dichroism of thin films",
+      "snippet": "Circular Dichroism (CD) spectroscopy has evolved from a purely solution based method towards a powerful tool in the analysis of chiral thin films. Although a straightforward technique, the genuine CD signal is often accompanied by artifacts arising from optical anisotropy and instrumental imperfecti",
+      "url": "https://arxiv.org/abs/2604.24653v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Localized Exciton Emission with Spontaneous Circular Polarization in NiPS3/WSe2 Heterostructures",
+      "snippet": "Two-dimensional (2D) van der Waals (vdW) heterostructures (HSs) provide a versatile platform for tailoring electronic, optical, and magnetic properties via proximity effects at their interfaces. In this work, we explore the optical response of few-layer NiPS3/WSe2 HSs using low-temperature micro-pho",
+      "url": "https://arxiv.org/abs/2604.17409v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[FLI’s President and CEO on Trump’s support for an AI ‘kill switch’] President Trump said during an interview aired yesterday by Fox Business that &#8220;there should be&#8221; when asked if AI needs [&#8230;]",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

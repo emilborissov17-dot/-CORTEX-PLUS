@@ -1,0 +1,98 @@
+{
+  "axis": "CLIMATE_GLOBAL_RISK_REVIEW",
+  "fetched_at": "2026-05-16T16:41:55.088657+00:00",
+  "smart_query": "climate change CO2 emissions",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 0,
+    "youtube_transcripts": 3,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "Is it safe to swim at England's bathing sites?",
+      "snippet": "Signs warning people not to swim are in place at almost all of England's official inland river bathing sites due to concerns the water could be unsafe",
+      "url": "https://www.bbc.com/news/videos/c0q27gn78d1o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "'Don't swim' at 12 of 14 river bathing sites, as more locations announced",
+      "snippet": "Too much bacteria linked to faeces found at almost all England's designated river bathing sites",
+      "url": "https://www.bbc.com/news/articles/cvgzvqq9345o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "White-tailed eagles to be released in Exmoor despite farmer warnings",
+      "snippet": "Some farmers fear the reintroduction of the UK's biggest bird of prey will threaten their livestock.",
+      "url": "https://www.bbc.com/news/articles/cd6p26y6d8vo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [],
+  "arxiv_papers": [
+    {
+      "title": "Generative climate downscaling enables high-resolution compound risk assessment by preserving multivariate dependencies",
+      "snippet": "Physics-based climate projections using general circulation models are essential for assessing future risks, but their coarse resolution limits regional decision-making. Statistical downscaling can efficiently add detail, yet many methods treat variables independently, degrading inter-variable relat",
+      "url": "https://arxiv.org/abs/2605.11531v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "AIMIP Phase 1: systematic evaluations of AI weather and climate models",
+      "snippet": "We present the AI weather and climate model intercomparison project (AIMIP), phase 1. Drawing from the rich tradition of intercomparisons in climate model development, we specify a common experiment, output data format, and training constraints (namely, training against historical reanalysis data) f",
+      "url": "https://arxiv.org/abs/2605.06944v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[Return of the Flesh-Eaters] If a species is horrible enough, do we have the right to kill it forever?\nSeventy years ago, a nightmare parasite feasted on the live flesh of warm-blooded creatures in North America: the screwworm. That is, until a young scientist named Edward F. Knipling discovered a crucial screwworm weakness and hatched a sweeping project to wipe them out. Knipling’s seemingly zany plan to spray screwworms out",
+  "wiki": null,
+  "youtube_items": [
+    {
+      "title": "[YT] Top 5 Climate Disasters of 2025 That Shook the World | Planet Pulse | N18G",
+      "summary": "2025 will be remembered as the year the climate crisis stopped knocking and kicked the door right down. Across continents, nature unleashed its fury, record breaking storms, catastrophic floods, raging wildfires and deadly heat waves pushed communities to the edge. From South Asia's devastating monsoon floods that swallowed towns and displaced millions, two powerful cyclones staring through coastlines in India, Sri Lanka and the Caribbean, the human cost was staggering. Mountains collapsed to under torrential rain, forests burned through historic heat and cities, struggle to cope with disasters arriving back to back. Scientists warned these were not frequency, but part of a dangerous new climate pattern driven by warming oceans, rising temperatures and increasingly erratic weather systems.",
+      "link": "https://www.youtube.com/watch?v=LX_sXGvOTg4",
+      "source_type": "youtube",
+      "channel": "Firstpost",
+      "video_id": "LX_sXGvOTg4",
+      "transcript_method": "whisper",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Inside the planet’s most urgent climate warning | Global Warning E1 | Featured Documentary",
+      "summary": "Something Mementus has happened. While we have been going about our daily lives, the world turned. Climate change is no longer a distant fear. It has now become a clear and current threat. Things that used to happen in geological timesbans are now unraveling in our lifetimes. We are the pivot generation. The Forus, Normality, after us, potential chaos. It falls to us to apply the breaks that will prevent climate change becoming a runaway juggernaut that no one can stop. The future of human civilization will be what we make it. Global warning is a road map for what is happening to the planet and what we can do to stop us. The future of human civilization will be what we make it. The future of human civilization will be what we make it. The future of human civilization will be what we make i",
+      "link": "https://www.youtube.com/watch?v=F8vI5_gN90g",
+      "source_type": "youtube",
+      "channel": "Al Jazeera English",
+      "video_id": "F8vI5_gN90g",
+      "transcript_method": "whisper",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Climate Extremes:  Extreme Weather (Full Documentary)",
+      "summary": "The range of weather extremes that we're experiencing today is already noticeably different, detectably scientifically different than it was in the 20th century. And of course the problem with that is that most of our cities, most of our infrastructure, the way we live our lives is largely predicated on the range of events that we're experienced in the era when a lot of the world was as it is today was engineered and built and designed. But we're no longer living in that world, we're already living in a world where the likelihood of seeing extreme heat events or really heavy downpours is different than it used to be. Typically the weather is boring, right? It is basically average, not affecting our life a lot, but the extremes is when we are far away from that, when suddenly it gets much, ",
+      "link": "https://www.youtube.com/watch?v=X6VCTfzl1DU",
+      "source_type": "youtube",
+      "channel": "OoS Pictures",
+      "video_id": "X6VCTfzl1DU",
+      "transcript_method": "whisper",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ],
+  "summary": "Климатичният риск ескалира, като рекордни бури, катастрофални наводнения, свирепи пожари и смъртоносни вълни от жега поставят общностите на ръба. През 2025 година климатичната криза стигна до точка, където природата освободи своята ярост, а последствията бяха бедствени. Тези събития показват, че става въпрос не за чести явления, а за нови климатични модели, обуславяни от затопляне на океаните, нарастващи температури и все по-непредсказуеми метеорологични системи.",
+  "urgency": "CRITICAL",
+  "sentiment": "CRITICAL",
+  "key_developments": [
+    "Generative climate downscaling enables high-resolution compound risk assessment by preserving multivariate dependencies",
+    "'Don't swim' at 12 of 14 river bathing sites, as more locations announced",
+    "2025 will be remembered as the year the climate crisis stopped knocking and kicked the door right down"
+  ],
+  "open_source_momentum": "No data",
+  "scientific_frontier": "arXiv: Generative climate downscaling enables high-resolution compound risk assessment by preserving multivariate dependencies",
+  "relevance_to_goal": "Климатичните рискове и последствията им представляват провал на дизайна, който пречи на изграждането на устойчива цивилизация с достоен живот за всеки."
+}

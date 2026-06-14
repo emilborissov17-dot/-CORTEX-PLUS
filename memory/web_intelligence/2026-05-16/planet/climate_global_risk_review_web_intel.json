@@ -1,0 +1,157 @@
+{
+  "axis": "CLIMATE_GLOBAL_RISK_REVIEW",
+  "domain": "planet",
+  "timestamp": "2026-05-16T21:29:31.327817+00:00",
+  "sources_count": 11,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] Extreme Weather 2025: Fires, Floods, Heatwaves & Cyclones ...In a new documentary, PIK Director Johan Rockström joins ...State of the Global Climate 2025 - wmo.intWildfires, floods and extreme heat: These are the biggest ...Watch Four Climate Trends For 2025 - BloombergEXPLAINED: How Climate Change is Fueling Extreme Weather ...Inside the planet’s most urgent climate warning - YouTube",
+      "summary": "Welcome to StarCon International, where every story is built on verified facts and trusted sources. 2024 wasn't just another hot year. It was the hottest year in modern history, with global temperatures rising about 1.46 degrees Celsius above pre-industrial levels according to NASA, and the World Meteorological Organizations, 2025 reports on 2024 climate data. But a single global number doesn't tell the full story. Every continent and nearly every nation experienced its own wave of heat, flood, drought, or storm. In this documentary, we'll travel continent by continent, presenting only evidence you can check yourself. Every statistic will appear on screen with its source so you can verify every claim. Our mission is clear to deliver truth you can trust. Let's begin our journey across a pla",
+      "link": "https://www.youtube.com/watch?v=jrLBkuyQgKs",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "jrLBkuyQgKs",
+      "transcript_method": "whisper",
+      "transcript_chars": 8661,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] EXPLAINED: How Climate Change is Fueling Extreme Weather ...Inside the planet’s most urgent climate warning - YouTube",
+      "summary": "Video Crazy Let's go to the next one. Let's go to the next one. So we'll move to the next one. We've seen a warmer atmosphere. So it's warmer oceans. And in that atmosphere, I can actually carry more moisture. So all these actually contribute to the fact that he waves, as we've experienced him in the past, become more intense and obviously also more frequent. Heavy rainfall events can also be more intense because the atmosphere can carry more moisture. And interesting, the same effects. The fact that atmosphere can carry more moisture also applies, that he can actually extract more moisture from the vegetation, and from the surface. And therefore also may make droughts more intense. So, while fire complex type of event, there are many factors playing in. That's the management of the forest",
+      "link": "https://www.youtube.com/watch?v=UhxhDsVzFmU",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "UhxhDsVzFmU",
+      "transcript_method": "whisper",
+      "transcript_chars": 2550,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Inside the planet’s most urgent climate warning - YouTube",
+      "summary": "Something Mementus has happened. While we have been going about our daily lives, the world turned. Climate change is no longer a distant fear. It has now become a clear and current threat. Things that used to happen in geological timesbans are now unraveling in our lifetimes. We are the pivot generation. The Forus, Normality, after us, potential chaos. It falls to us to apply the breaks that will prevent climate change becoming a runaway juggernaut that no one can stop. The future of human civilization will be what we make it. Global warning is a road map for what is happening to the planet and what we can do to stop us. The future of human civilization will be what we make it. The future of human civilization will be what we make it. The future of human civilization will be what we make i",
+      "link": "https://www.youtube.com/watch?v=F8vI5_gN90g",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "F8vI5_gN90g",
+      "transcript_method": "whisper",
+      "transcript_chars": 29005,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "Увеличението на глобалните температури и честотата на екстремалните неблагоприятни явления",
+    "root_cause": "Глобалното затопляне, причинено от антропогенните емисии на парникови газове",
+    "severity": "CRITICAL",
+    "leverage_points": [
+      "Глобалните политики и споразумения по снижаване на емисиите на парникови газове",
+      "Инвестиции във възобновяеми източници на енергия и енергийна ефикасност"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Нарастване на инвестициите във възобновяеми източници на енергия",
+        "measurable_goal": "Снижаване на емисиите на парникови газове с 50% до 2030 г.",
+        "timeframe": "средносрочно"
+      },
+      {
+        "action": "Въвеждане на политики за енергийна ефикасност в индустриите",
+        "measurable_goal": "Снижаване на енергийния разход с 20% до 2028 г.",
+        "timeframe": "краткосрочно"
+      }
+    ],
+    "evidence": [
+      "Глобалните температури са се увеличили с 1,46 градуса Целзий над прединдустриалните нива",
+      "Честотата и интензивността на екстремалните неблагоприятни явления се увеличават"
+    ],
+    "generalization": "Този проблем е свързан с домейните на човека, цивилизацията и космоса, тъй като има директно влияние върху здравето, сигурността и благосъстоянието на хората, както и върху устойчивостта на планетата и цивилизацията",
+    "summary": "Увеличението на глобалните температури и честотата на екстремалните неблагоприятни явления представляват критичен проблем, който трябва да бъде решен чрез глобални усилия за снижаване на емисиите на парникови газове и въвеждане на политики за енергийна ефикасност",
+    "risk_level": "CRITICAL"
+  },
+  "raw_items": [
+    {
+      "title": "NASA Science, Cargo Launch on 34th SpaceX Resupply Mission to Station",
+      "summary": "The 34th SpaceX commercial resupply mission under contract with NASA is headed to the International Space Station with new scientific experiments after lifting off at 6:05 p.m. EDT Friday on a Falcon 9 rocket from Space Launch Complex 40 at Cape Canaveral Space Force Station in Florida. The SpaceX spacecraft, loaded with nearly 6,500 pounds [&#8230;]",
+      "link": "https://www.nasa.gov/news-release/nasa-science-cargo-launch-on-34th-spacex-resupply-mission-to-station/",
+      "published": "Fri, 15 May 2026 22:52:14 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Curiosity Shakes Loose a Pesky Rock",
+      "summary": "After NASA’s Curiosity Mars rover drilled a sample from this rock on April 25, 2026, it withdrew its robotic arm and pulled the entire rock off the surface with it. Engineers spent several days repositioning the arm and vibrating the drill to try and get the rock loose. When it finally detached on May 1, [&#8230;]",
+      "link": "https://www.nasa.gov/image-article/curiosity-shakes-loose-a-pesky-rock/",
+      "published": "Fri, 15 May 2026 14:45:52 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Hubble Sights Galaxy in Transition",
+      "summary": "This NASA Hubble Space Telescope image reveals an enigmatic galaxy with a bright center and a face that hints at spiral structure, yet it holds no obvious spiral arms. Reddish-brown clumps and filaments of dust partially obscure the galaxy’s full face, while red, blue, and orange light from distant galaxies shines through its diffuse outer […]",
+      "link": "https://science.nasa.gov/missions/hubble/hubble-sights-galaxy-in-transition/",
+      "published": "Fri, 15 May 2026 12:01:37 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Picturing Earth in a New Light",
+      "summary": "A recent analysis revealed where artificial light at night has intensified, as well as where it has diminished.",
+      "link": "https://science.nasa.gov/earth/earth-observatory/picturing-earth-in-a-new-light/",
+      "published": "Fri, 15 May 2026 04:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "DeBriefed 15 April 2026: Trump-Xi talk energy | ‘Supercharged’ El Niño | India’s first ‘heat lounges’",
+      "summary": "<p>Welcome to Carbon Brief’s DeBriefed. An essential guide to the week&#8217;s key developments relating to climate...</p>\n<p>The post <a href=\"https://www.carbonbrief.org/debriefed-15-april-2026-trump-xi-talk-energy-supercharged-el-nino-indias-first-heat-lounges/\">DeBriefed 15 April 2026: Trump-Xi talk energy | ‘Supercharged’ El Niño | India’s first ‘heat lounges’</a> appeared first on <a href=\"https://www.carbonbrief.org\">Carbon Brief</a>.</p>",
+      "link": "https://www.carbonbrief.org/debriefed-15-april-2026-trump-xi-talk-energy-supercharged-el-nino-indias-first-heat-lounges/",
+      "published": "Fri, 15 May 2026 13:50:06 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Analysis: UK no longer top UN Green Climate Fund donor after latest aid cut",
+      "summary": "<p>The UK is no longer the top contributor to the UN’s flagship Green Climate Fund...</p>\n<p>The post <a href=\"https://www.carbonbrief.org/analysis-uk-no-longer-top-un-green-climate-fund-donor-after-latest-aid-cut/\">Analysis: UK no longer top UN Green Climate Fund donor after latest aid cut</a> appeared first on <a href=\"https://www.carbonbrief.org\">Carbon Brief</a>.</p>",
+      "link": "https://www.carbonbrief.org/analysis-uk-no-longer-top-un-green-climate-fund-donor-after-latest-aid-cut/",
+      "published": "Fri, 15 May 2026 13:30:36 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "DeBriefed 8 May 2026: EU eyes fossil-fuel exemptions | Wind and solar save UK ‘£1.7bn’ | Amazon ‘tipping point’",
+      "summary": "<p>Welcome to Carbon Brief’s DeBriefed.&#160;An essential guide to the week&#8217;s key developments relating to climate...</p>\n<p>The post <a href=\"https://www.carbonbrief.org/debriefed-8-may-2026-eu-eyes-fossil-fuel-exemptions-wind-and-solar-save-uk-1-7bn-amazon-tipping-point/\">DeBriefed 8 May 2026: EU eyes fossil-fuel exemptions | Wind and solar save UK ‘£1.7bn’ | Amazon ‘tipping point’</a> appeared first on <a href=\"https://www.carbonbrief.org\">Carbon Brief</a>.</p>",
+      "link": "https://www.carbonbrief.org/debriefed-8-may-2026-eu-eyes-fossil-fuel-exemptions-wind-and-solar-save-uk-1-7bn-amazon-tipping-point/",
+      "published": "Fri, 08 May 2026 13:36:36 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Factcheck: What the UK car industry is not saying about EV targets",
+      "summary": "<p>For several years, the UK car industry has been claiming that demand is not high...</p>\n<p>The post <a href=\"https://www.carbonbrief.org/factcheck-what-the-uk-car-industry-is-not-saying-about-ev-targets/\">Factcheck: What the UK car industry is not saying about EV targets</a> appeared first on <a href=\"https://www.carbonbrief.org\">Carbon Brief</a>.</p>",
+      "link": "https://www.carbonbrief.org/factcheck-what-the-uk-car-industry-is-not-saying-about-ev-targets/",
+      "published": "Fri, 08 May 2026 13:18:15 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] Extreme Weather 2025: Fires, Floods, Heatwaves & Cyclones ...In a new documentary, PIK Director Johan Rockström joins ...State of the Global Climate 2025 - wmo.intWildfires, floods and extreme heat: These are the biggest ...Watch Four Climate Trends For 2025 - BloombergEXPLAINED: How Climate Change is Fueling Extreme Weather ...Inside the planet’s most urgent climate warning - YouTube",
+      "summary": "Welcome to StarCon International, where every story is built on verified facts and trusted sources. 2024 wasn't just another hot year. It was the hottest year in modern history, with global temperatures rising about 1.46 degrees Celsius above pre-industrial levels according to NASA, and the World Meteorological Organizations, 2025 reports on 2024 climate data. But a single global number doesn't tell the full story. Every continent and nearly every nation experienced its own wave of heat, flood, drought, or storm. In this documentary, we'll travel continent by continent, presenting only evidence you can check yourself. Every statistic will appear on screen with its source so you can verify every claim. Our mission is clear to deliver truth you can trust. Let's begin our journey across a pla",
+      "link": "https://www.youtube.com/watch?v=jrLBkuyQgKs",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "jrLBkuyQgKs",
+      "transcript_method": "whisper",
+      "transcript_chars": 8661,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] EXPLAINED: How Climate Change is Fueling Extreme Weather ...Inside the planet’s most urgent climate warning - YouTube",
+      "summary": "Video Crazy Let's go to the next one. Let's go to the next one. So we'll move to the next one. We've seen a warmer atmosphere. So it's warmer oceans. And in that atmosphere, I can actually carry more moisture. So all these actually contribute to the fact that he waves, as we've experienced him in the past, become more intense and obviously also more frequent. Heavy rainfall events can also be more intense because the atmosphere can carry more moisture. And interesting, the same effects. The fact that atmosphere can carry more moisture also applies, that he can actually extract more moisture from the vegetation, and from the surface. And therefore also may make droughts more intense. So, while fire complex type of event, there are many factors playing in. That's the management of the forest",
+      "link": "https://www.youtube.com/watch?v=UhxhDsVzFmU",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "UhxhDsVzFmU",
+      "transcript_method": "whisper",
+      "transcript_chars": 2550,
+      "has_full_transcript": true
+    }
+  ]
+}

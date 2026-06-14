@@ -1,0 +1,20 @@
+# CORTEX++ ACT journal
+
+[2026-02-25T13:45:02] MODE: ACT
+EXPERIMENT_NAME: Проверка на симулационния процес
+WHAT_I_TRIED: Опит за стартиране на симулация чрез скрипта run_sim.py.
+RAW_RESULT:
+[2026-02-25T13:44:10] OPENCLAW_RAW_RESULT:
+ERROR: Command '['python3', 'run_sim.py']' returned non-zero exit status 2.
+MY_INTERPRETATION:
+Грешката указва проблем с командните аргументи или самия скрипт – трябва да се провери правилността на конфигурацията и зависимостите.
+
+[2026-02-25T13:46:00] MODE: ACT
+EXPERIMENT_NAME: Simulation Setup Test
+WHAT_I_TRIED: Attempted to run a simulation using OpenCLaw with custom initial conditions and boundary parameters.
+RAW_RESULT:
+[2026-02-25T13:45:18] OPENCLAW_RAW_RESULT:
+ERROR: Command '['python3', 'run_sim.py']' returned non-zero exit status 2.
+MY_INTERPRETATION:
+The error suggests a critical failure in the simulation script setup, likely due to invalid parameters or missing dependencies. Future experiments must validate input configurations and ensure compatibility with the simulator's requirements.
+

@@ -1,0 +1,157 @@
+{
+  "axis": "ECONOMY_WORK_REVIEW",
+  "domain": "civilization",
+  "timestamp": "2026-05-16T21:54:25.725213+00:00",
+  "sources_count": 11,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] IMF warns of global recession, inflation over 6% if strait stays closed | ABC NEWS - YouTube",
+      "summary": "The International Monetary Fund has warned of a potential global recession due to the economic shocks from the war in the Middle East. The IMF notes US and Israeli strikes on Iran, the closing of the Strait of Hormuz and strikes on energy infrastructure in Gulf countries have rocked global markets and will likely push growth down from 2025. The body's chief economist says the reopening of the Strait can avoid the worst outcomes. But says there are three possible scenarios the IMF must consider should talks fail. A report presents three scenarios. A reference forecast assumes a short-lived conflict and a moderate 19 percent rise in energy prices in 2026. Still, some damage will not be avoided. Global growth falls to 3.1% this year, downgrade from January forecast and headline inflation rise",
+      "link": "https://www.youtube.com/watch?v=0w5_KA6Uvxo",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "0w5_KA6Uvxo",
+      "transcript_method": "whisper",
+      "transcript_chars": 4306,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Economy Was Already Horrible. New Global Crisis Just Made It Worse. - YouTube",
+      "summary": "Nihals been an I finally made the difficult decision to leave the United States. This economy is so bad. $33 for toilet paper. We can't even afford to shit. America has become completely unaffordable and I don't know why more people are not talking about this. I just got laid off for my job after 12 years. The way that the world is right now. How do you lay someone off? The gas was too, too, too, 80 now. That's not my god, guys. At the field of the U.S. Oh, gas must've been up. It was doing 15. This is $350. 92,000 jobs disappeared last month. The same month, the U.S. government started spending $891 million per day of taxpayer money to fund their conflict and Iran. You know the economy is already bad when the CEO of McDonald's is taking the world's smallest bite of a burger he's trying to",
+      "link": "https://www.youtube.com/watch?v=SHySrxXWkg0",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "SHySrxXWkg0",
+      "transcript_method": "whisper",
+      "transcript_chars": 11757,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Is a Recession Coming? What 100+ Companies Are Telling Us | The Weekly Wrap - YouTube",
+      "summary": "Because of higher oil prices, the war is impacting the earnings of some companies. Is a recession on the horizon? We will look at this week's quarterly earnings for clues. This week will over 100 companies reported. Across multiple industries, these results give us a big window into the health of the economy. The results at United Health Care, Elevents, and Malina were mostly better than expected or at least met expectations. The industry is turning, or at least appearing to turn. The negative reactions to service now in IBM show how precarious building a positive software narrative can be. I would tread very carefully. Hi, this is Steve Eisenman, and welcome to another episode of the weekly rap. This is for the week ending Friday, April 24, but recorded Thursday night, April 23. I'm excit",
+      "link": "https://www.youtube.com/watch?v=uii5YCeMhEI",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "uii5YCeMhEI",
+      "transcript_method": "whisper",
+      "transcript_chars": 28722,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "Неправилно изчисление на детския поддръжник води до финансови загуби за родители",
+    "root_cause": "Недостатъчна прозрачност и грешки в системата за детски поддръжник довеждат до несправедни финансови загуби за родители",
+    "severity": "HIGH",
+    "leverage_points": [
+      "Правителствени институции, отговорни за управлението на детския поддръжник",
+      "Независими контролни органи, които проверяват правилността на изчисленията"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Разработване на автоматизирана система за проверка на детския поддръжник",
+        "measurable_goal": "Системата да намали грешките с минимум 40% в първата година",
+        "timeframe": "дългосрочно"
+      },
+      {
+        "action": "Образование на служителите в системата за детски поддръжник",
+        "measurable_goal": "Всички служители да преминат обучение за изчисленията в рамките на 6 месеца",
+        "timeframe": "средносрочно"
+      }
+    ],
+    "evidence": [
+      "'They took £20,000 I didn't owe': Parents hit by child maintenance errors",
+      "John Hammond is one of 30 parents who told BBC Your Voice they'd experienced problems with the CMS"
+    ],
+    "generalization": "Този проблем е свързан с несправедното разпределение на ресурси в обществото и с необходимостта от прозрачност в управлението на социални програми",
+    "summary": "Неправилни изчисления на детския поддръжник довеждат до големи финансови загуби за родители, което подчертава нуждата от прозрачност и по-ефективни механизми за управление.",
+    "risk_level": "CRITICAL"
+  },
+  "raw_items": [
+    {
+      "title": "'They took £20,000 I didn't owe': Parents hit by child maintenance errors",
+      "summary": "John Hammond is one of 30 parents who told BBC Your Voice they'd experienced problems with the CMS.",
+      "link": "https://www.bbc.com/news/articles/cq8wjn98y85o?at_medium=RSS&at_campaign=rss",
+      "published": "Fri, 15 May 2026 23:44:32 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "UK borrowing costs rise and pound falls as leadership drama continues",
+      "summary": "Analysts say the moves have been fuelled by concerns a Burnham-led government would increase government borrowing.",
+      "link": "https://www.bbc.com/news/articles/czr2pl5lj84o?at_medium=RSS&at_campaign=rss",
+      "published": "Fri, 15 May 2026 19:30:01 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "British Gas pays £20m over prepayment meter force-fitting scandal",
+      "summary": "The regulator say the energy supplier breached licence conditions aimed at protecting customers in vulnerable situations.",
+      "link": "https://www.bbc.com/news/articles/cq8p7l1y59lo?at_medium=RSS&at_campaign=rss",
+      "published": "Fri, 15 May 2026 17:49:05 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Heathrow rival could lead expansion, watchdog says",
+      "summary": "The aviation watchdog is considering new rules for Heathrow ahead of its possible expansion.",
+      "link": "https://www.bbc.com/news/articles/cqxpz4q5vdvo?at_medium=RSS&at_campaign=rss",
+      "published": "Fri, 15 May 2026 14:08:28 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Oysters, Champagne and Billionaires Buying Art",
+      "summary": "When the European Fine Art Foundation alights in Manhattan, it’s something like a billionaire version of the classic television game show “Supermarket Sweep.”",
+      "link": "https://www.nytimes.com/2026/05/16/style/tefaf-auction-nyc-art.html",
+      "published": "Sat, 16 May 2026 13:00:05 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "U.S. Debt Is Now Bigger Than the Economy. That’s Not the Real Problem.",
+      "summary": "Washington quickly brushed off a startling milestone in a mounting problem.",
+      "link": "https://www.nytimes.com/2026/05/16/business/dealbook/debt-100-percent-gdp.html",
+      "published": "Sat, 16 May 2026 12:00:03 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Which Countries Are Profiting From the Iran War Oil Shock",
+      "summary": "An analysis of oil export data offers clues about which nations have benefited from higher prices, and which have lost a lot of revenue.",
+      "link": "https://www.nytimes.com/2026/05/16/business/energy-environment/iran-war-oil-countries-winners-losers.html",
+      "published": "Sat, 16 May 2026 09:01:31 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Josh Tyrangiel book excerpt: How OpenAI and Khan Academy Made a Chatbot",
+      "summary": "Inside a collaboration to bring artificial intelligence into the classroom.",
+      "link": "https://www.nytimes.com/2026/05/16/business/tyrangiel-ai-book-openai-khan-academy-khanmigo.html",
+      "published": "Sat, 16 May 2026 09:01:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] IMF warns of global recession, inflation over 6% if strait stays closed | ABC NEWS - YouTube",
+      "summary": "The International Monetary Fund has warned of a potential global recession due to the economic shocks from the war in the Middle East. The IMF notes US and Israeli strikes on Iran, the closing of the Strait of Hormuz and strikes on energy infrastructure in Gulf countries have rocked global markets and will likely push growth down from 2025. The body's chief economist says the reopening of the Strait can avoid the worst outcomes. But says there are three possible scenarios the IMF must consider should talks fail. A report presents three scenarios. A reference forecast assumes a short-lived conflict and a moderate 19 percent rise in energy prices in 2026. Still, some damage will not be avoided. Global growth falls to 3.1% this year, downgrade from January forecast and headline inflation rise",
+      "link": "https://www.youtube.com/watch?v=0w5_KA6Uvxo",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "0w5_KA6Uvxo",
+      "transcript_method": "whisper",
+      "transcript_chars": 4306,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Economy Was Already Horrible. New Global Crisis Just Made It Worse. - YouTube",
+      "summary": "Nihals been an I finally made the difficult decision to leave the United States. This economy is so bad. $33 for toilet paper. We can't even afford to shit. America has become completely unaffordable and I don't know why more people are not talking about this. I just got laid off for my job after 12 years. The way that the world is right now. How do you lay someone off? The gas was too, too, too, 80 now. That's not my god, guys. At the field of the U.S. Oh, gas must've been up. It was doing 15. This is $350. 92,000 jobs disappeared last month. The same month, the U.S. government started spending $891 million per day of taxpayer money to fund their conflict and Iran. You know the economy is already bad when the CEO of McDonald's is taking the world's smallest bite of a burger he's trying to",
+      "link": "https://www.youtube.com/watch?v=SHySrxXWkg0",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "SHySrxXWkg0",
+      "transcript_method": "whisper",
+      "transcript_chars": 11757,
+      "has_full_transcript": true
+    }
+  ]
+}

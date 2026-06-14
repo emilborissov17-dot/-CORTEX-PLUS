@@ -1,0 +1,57 @@
+[
+  {
+    "name": "UN Environment – Global Resources Outlook",
+    "url": "https://www.resourcepanel.org/reports/global-resources-outlook-2024",
+    "docs": "https://www.resourcepanel.org/publications",
+    "notes": "Глобален преглед на добива и използването на материали, въздействие върху околната среда и ресурсна ефективност.",
+    "status": "active",
+    "type": "report_or_portal",
+    "added_at": "2026-02-27T09:20:00",
+    "last_checked_status": 200,
+    "last_checked_at": "2026-02-27T09:20:00"
+  },
+  {
+    "name": "UNEP – Global E-waste Monitor",
+    "url": "https://ewastemonitor.info/",
+    "docs": "https://ewastemonitor.info/",
+    "notes": "Данни и анализи за електронните отпадъци, рециклиране и материали в електронните устройства.",
+    "status": "active",
+    "type": "dataset_or_portal",
+    "added_at": "2026-02-27T09:20:00",
+    "last_checked_status": 200,
+    "last_checked_at": "2026-02-27T09:20:00"
+  },
+  {
+    "name": "Our World in Data – Material Footprint",
+    "url": "https://ourworldindata.org/material-footprint",
+    "docs": "https://ourworldindata.org/easier-to-reuse-our-data",
+    "notes": "Данни за материалния отпечатък, използване на суровини и дългосрочни тенденции.",
+    "status": "active",
+    "type": "dataset_or_api",
+    "added_at": "2026-02-27T09:20:00",
+    "last_checked_status": 200,
+    "last_checked_at": "2026-02-27T09:20:00"
+  },
+  {
+    "name": "World Bank – Material flows and resource productivity",
+    "url": "https://datacatalog.worldbank.org/search/dataset/0039595",
+    "docs": "https://datahelpdesk.worldbank.org/",
+    "notes": "Набори от данни за материални потоци и ресурсна производителност.",
+    "status": "active",
+    "type": "dataset_or_portal",
+    "added_at": "2026-02-27T09:20:00",
+    "last_checked_status": 200,
+    "last_checked_at": "2026-02-27T09:20:00"
+  },
+  {
+    "name": "EU – Agri-food & bioeconomy materials",
+    "url": "https://agridata.ec.europa.eu/extensions/DataPortal.html",
+    "docs": "https://agridata.ec.europa.eu/extensions/DataPortal/API_Documentation.html",
+    "notes": "Данни за агро-хранителни материали, биомаса и потоци в рамките на ЕС.",
+    "status": "active",
+    "type": "dataset_or_api",
+    "added_at": "2026-02-27T09:20:00",
+    "last_checked_status": 200,
+    "last_checked_at": "2026-02-27T09:20:00"
+  }
+]

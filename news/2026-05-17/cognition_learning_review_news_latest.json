@@ -1,0 +1,129 @@
+{
+  "axis": "COGNITION_LEARNING_REVIEW",
+  "fetched_at": "2026-05-17T16:25:07.368941+00:00",
+  "smart_query": "education learning children schools",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 3,
+    "arxiv": 0,
+    "github": 3,
+    "youtube_transcripts": 2,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "Scientists say travel could slow aging and boost your health",
+      "snippet": "A new study suggests travel could be a surprisingly powerful anti-aging tool. By viewing tourism through the lens of entropy, researchers found that positive travel experiences may help the body stay balanced and resilient. Activities like exploring new places, staying active, and connecting with ot",
+      "url": "https://www.sciencedaily.com/releases/2026/05/260504211836.htm",
+      "source": "RSS"
+    },
+    {
+      "title": "Your dreams aren’t random. Here’s what’s really happening",
+      "snippet": "Dreams are more structured than they seem, shaped by both personal traits and real-world experiences. Researchers found that the brain doesn’t just replay daily life—it reshapes it into imaginative, sometimes surreal scenarios. People who mind-wander more tend to have fragmented dreams, while those ",
+      "url": "https://www.sciencedaily.com/releases/2026/04/260428045538.htm",
+      "source": "RSS"
+    },
+    {
+      "title": "Doing this throughout life may cut Alzheimer’s risk by 38%",
+      "snippet": "A lifetime of mental stimulation—like reading, writing, and learning new skills—may help protect the brain as we age. People with the highest levels of cognitive enrichment had a much lower risk of Alzheimer’s and experienced symptoms years later than those with the lowest levels.",
+      "url": "https://www.sciencedaily.com/releases/2026/04/260414075648.htm",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [
+    {
+      "title": "Call for Standby CSO Partners to Support Education Programmes in Sudan",
+      "snippet": "Call for Standby CSO Partners to Support Education Programmes in Sudan",
+      "url": "https://www2.fundsforngos.org/children/call-for-standby-cso-partners-to-support-education-programmes-in-sudan/",
+      "source": "fundsforngos.org"
+    },
+    {
+      "title": "Education Above All Foundation , Assalam Schools celebrate Rawda Award for Excellence in Social Work",
+      "snippet": "Education Above All Foundation , Assalam Schools celebrate Rawda Award for Excellence in Social Work",
+      "url": "http://thepeninsulaqatar.com/article/23/04/2026/education-above-all-foundation-assalam-schools-celebrate-rawda-award-for-excellence-in-social-work",
+      "source": "thepeninsulaqatar.com"
+    },
+    {
+      "title": "War shuts classroom door on 52 million children , aid group says - World",
+      "snippet": "War shuts classroom door on 52 million children , aid group says - World",
+      "url": "https://www.dawn.com/news/1982867/war-shuts-classroom-door-on-52-million-children-aid-group-says",
+      "source": "dawn.com"
+    }
+  ],
+  "github_repos": [
+    {
+      "title": "SirhanMacx/Claw-ED",
+      "snippet": "Open source CLI agent that generates complete lesson bundles in your teaching voice. 48+ tools, zero-touch 9-file output, local-first privacy.",
+      "stars": 48,
+      "url": "https://github.com/SirhanMacx/Claw-ED",
+      "updated": "2026-05-17",
+      "source": "GitHub"
+    },
+    {
+      "title": "AFLucas-UOM/AI-Early-Detection-System-for-Dyslexia-ADHD",
+      "snippet": "Proof-of-concept behavioural analysis system for early detection of dyslexia and ADHD using spelling pattern evaluation, sentence rewriting similarity analysis, and keyboard/mouse interaction monitori",
+      "stars": 6,
+      "url": "https://github.com/AFLucas-UOM/AI-Early-Detection-System-for-Dyslexia-ADHD",
+      "updated": "2026-03-06",
+      "source": "GitHub"
+    },
+    {
+      "title": "ShubhamMahajan880/studyAlpha-Ai-Agent",
+      "snippet": "🎓 StudyAlpha is an intelligent, end-to-end AI Study Coach powered by multi-agent collaboration, memory-augmented reasoning, adaptive quizzes, and ML weakness prediction.  Built for the Google × Kaggle",
+      "stars": 5,
+      "url": "https://github.com/ShubhamMahajan880/studyAlpha-Ai-Agent",
+      "updated": "2026-01-29",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [],
+  "podcast": "[Master Self Control & Overcome Procrastination | Dr. Kentaro Fujita] Dr. Kentaro Fujita, PhD, is a professor of psychology at The Ohio State University and an expert in the science of self-control and motivation. We discuss the best tools for developing strong self-control: to do more of what you aspire to and cease doing things you would like to avoid. We discuss why you need more than one form of willpower to achieve sustained motivation and overcome procrastinat",
+  "wiki": null,
+  "youtube_items": [
+    {
+      "title": "[YT] Roadmap to Become a Generative AI Expert for Beginners in 2025",
+      "summary": "[DESCRIPTION FALLBACK] Check out this roadmap to become an expert Data Scientist in 2025!",
+      "link": "https://www.youtube.com/watch?v=39zbC_PrNQs",
+      "source_type": "youtube",
+      "channel": "Analytics Vidhya",
+      "video_id": "39zbC_PrNQs",
+      "transcript_method": "description",
+      "transcript_chars": 89,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] What is the Future of Education? Freakonomics’ Steve Levitt &amp; Google Chief Technologist Ben Gomes",
+      "summary": "- How do I get an AI tutor in every kid's ear? How is there not a stampede to get kids equipped with those tools? (dramatic classical music) - So Steven, I've been a huge fan of your books for a long time. - Thank you. - \"Freakonomics\" and \"SuperFreakonomics,\" and they showed the power of data to upend conventional wisdom. And I, you know, now you're interested in education. And do you think there's a lot of need to upend conventional wisdom in education? - (laughing) Oh my god. I mean, I think we've layered, for hundreds of years, we've layered little changes on top of what already existed. And I feel like we've just so lost sight of the objective, which is to create a new generation of people who are well-adjusted and curious and excited about the world. It's an incredibly hard problem, ",
+      "link": "https://www.youtube.com/watch?v=U-7THjkQdbg",
+      "source_type": "youtube",
+      "channel": "Google",
+      "video_id": "U-7THjkQdbg",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Top FREE AI Courses in 2025",
+      "summary": "and you are an absolute beginner, check out AI for everyone. It's free. It teaches you the basics of AI and it was made by a professor from Stanford. If you're intermediate, check out Prompt Engineering by OpenAI. It helps you write smarter prompts to get better results using ChatBT. If you're advanced, check out Vibe Coding with Ripple. It helps you build really cool apps using AI. If you're super advanced and ready for the next level, check out the Chachi PT API",
+      "link": "https://www.youtube.com/watch?v=I4goR8VJl8g",
+      "source_type": "youtube",
+      "channel": "Sajjaad Khader",
+      "video_id": "I4goR8VJl8g",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 468,
+      "has_full_transcript": true
+    }
+  ],
+  "summary": "На този аксис COGNITION_LEARNING_REVIEW се наблюдават развитието на едукационни програми и технологии, които подпомагат образованието. Източниците показват интерес към електронни адженти и системи за ранно откриване на дислексия и АДХД. Целта е да се предостави достъп до качествено образование за всеки.",
+  "urgency": "MEDIUM",
+  "sentiment": "POSITIVE",
+  "key_developments": [
+    "Call for Standby CSO Partners to Support Education Programmes in Sudan",
+    "AFLucas-UOM/AI-Early-Detection-System-for-Dyslexia-ADHD",
+    "ShubhamMahajan880/studyAlpha-Ai-Agent"
+  ],
+  "open_source_momentum": "Присутстват се опен сорс проекти като SirhanMacx/Claw-ED и AFLucas-UOM/AI-Early-Detection-System-for-Dyslexia-ADHD, които показват растяща поддръжка за едукационни технологии.",
+  "scientific_frontier": "No data",
+  "relevance_to_goal": "Тези разработки спомагат за постигане на устойчива цивилизация с достоен живот за всеки, като предоставят достъп до качествено образование и подпомагат развитието на ново поколение от добре адаптирани, любопитни и ентусиазирани хора."
+}

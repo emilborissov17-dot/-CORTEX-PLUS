@@ -1,0 +1,130 @@
+{
+  "axis": "PLANETARY_POTENTIAL_REVIEW",
+  "domain": "planet",
+  "timestamp": "2026-05-18T06:37:13.022092+00:00",
+  "sources_count": 10,
+  "rss_count": 4,
+  "ddg_count": 4,
+  "youtube_count": 2,
+  "youtube_items": [
+    {
+      "title": "[YT] The Dimming ( Geoengineering Watch ) - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] About Press Copyright Contact us Creators Advertise Developers Terms Privacy Policy & Safety How YouTube works Test new features.",
+      "link": "https://www.youtube.com/watch?v=rf78rEAJvhY",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "rf78rEAJvhY",
+      "transcript_method": "description",
+      "transcript_chars": 152,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Chemtrails, Here is your PROOF 100% Real... - YouTube",
+      "summary": "Thank you very much. I'm Richard Jordan Chairman of the conference. I'm going to just introduce Khaled the Lood who will introduce the speakers. So, Khaled, thank you very much for moderating the session and I turn it over to you and I will return in the bathroom. So, our next speaker is Dr. Rosaline Peterson. She's the California president and co-founder of the Agriculture Defense Coalition for him in 2006. So, perfect agriculture and crop reduction from uncontrolled experimental weather modification programs. A very interesting topic, you know, for an unspursalized person like myself. But also, very interesting in her CV that we have with you is also extensive efforts to protect drinking water supplies from toxic chemical contamination in martini, California. It's a very interesting topi",
+      "link": "https://www.youtube.com/watch?v=L5is16A8pfw",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "L5is16A8pfw",
+      "transcript_method": "whisper",
+      "transcript_chars": 14722,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "Анализ на PLANETARY_POTENTIAL_REVIEW — данни получени но LLM грешка",
+    "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: Ollama: няма налични модели",
+    "severity": "UNKNOWN",
+    "leverage_points": [],
+    "proposed_actions": [],
+    "evidence": [
+      "Ancient lost ocean may have built Central Asia’s dinosaur-era mountains",
+      "Scientists warn that the world’s rivers are running out of oxygen",
+      "Scientists discover hidden “brakes” that stop massive earthquakes"
+    ],
+    "generalization": "",
+    "summary": "- Ancient lost ocean may have built Central Asia’s dinosaur-era mountains: Scientists have uncovered evidence that the vanished Tethys Ocean may have sculpted Central Asia’s mountainous landscape duri",
+    "risk_level": "UNKNOWN",
+    "trend": "UNKNOWN",
+    "llm_raw": ""
+  },
+  "raw_items": [
+    {
+      "title": "Ancient lost ocean may have built Central Asia’s dinosaur-era mountains",
+      "summary": "Scientists have uncovered evidence that the vanished Tethys Ocean may have sculpted Central Asia’s mountainous landscape during the dinosaur era. Using decades of geological data, researchers found that distant tectonic activity linked to the ancient ocean appears to match periods of rapid mountain formation. Surprisingly, climate and mantle processes played only a minor role. The discovery could reshape how scientists understand mountain building across the planet.",
+      "link": "https://www.sciencedaily.com/releases/2026/05/260515233350.htm",
+      "published": "Sun, 17 May 2026 20:40:10 EDT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Scientists warn that the world’s rivers are running out of oxygen",
+      "summary": "Rivers around the world are quietly running out of oxygen — and climate change is emerging as the main culprit. A sweeping global analysis of more than 21,000 river systems found that nearly 80% have been steadily losing dissolved oxygen over the past four decades, threatening fish, biodiversity, and the overall health of freshwater ecosystems. Surprisingly, tropical rivers are being hit the hardest, even more than rivers in rapidly warming polar regions.",
+      "link": "https://www.sciencedaily.com/releases/2026/05/260515233327.htm",
+      "published": "Sat, 16 May 2026 23:35:49 EDT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Scientists discover hidden “brakes” that stop massive earthquakes",
+      "summary": "A mysterious underwater fault near Ecuador has been producing nearly identical magnitude 6 earthquakes every five to six years, baffling scientists for decades. Researchers now believe the fault contains hidden “brake zones” where seawater and unusual rock structures work together to stop quakes from becoming even larger. The discovery came from ultra-detailed seafloor recordings that captured how the fault behaves before and after major earthquakes.",
+      "link": "https://www.sciencedaily.com/releases/2026/05/260515233325.htm",
+      "published": "Sat, 16 May 2026 02:12:11 EDT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Deadly “red sky” solar storm from 800 years ago discovered in ancient trees",
+      "summary": "Researchers in Japan traced a hidden medieval solar storm using ancient tree rings and centuries-old sky observations. The team linked reports of eerie red auroras with spikes of carbon-14 trapped in buried wood, revealing a powerful solar radiation event around 1200 CE. The findings suggest the Sun was far more active at the time, with unusually short solar cycles.",
+      "link": "https://www.sciencedaily.com/releases/2026/05/260513221818.htm",
+      "published": "Thu, 14 May 2026 01:55:09 EDT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Geoengineering",
+      "summary": "Geoengineering (also known as climate engineering or climate intervention) is the deliberate large-scale interventions in the Earth’s climate system intended to counteract human-caused climate change. The term commonly encompasses two broad categories: large-scale carbon dioxide removal (CDR) and solar radiation modification (SRM). CDR involves techniques to remove carbon dioxide from the atmosphe",
+      "link": "https://en.wikipedia.org/wiki/Geoengineering",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Among Young Climate Scientists, a Growing Interest In Geoengineering",
+      "summary": "Other academic institutions, too, have launched climate geoengineering initiatives, incorporating the niche field into curricula. Harvard University introduced its Solar Geoengineering...",
+      "link": "https://e360.yale.edu/digest/young-climate-scientists-geoengineering",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Planetary boundaries",
+      "summary": "Planetary boundaries are a framework to describe limits to the impacts of human activities on the Earth system. Beyond these limits, the environment may not be able to continue to self-regulate. This would mean the Earth system would leave the period of stability of the Holocene, in which human society developed.These nine boundaries are climate change, ocean acidification, stratospheric ozone dep",
+      "link": "https://en.wikipedia.org/wiki/Planetary_boundaries",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Planetary boundary layer - Wikipedia",
+      "summary": "Not to be confused with planetary boundaries . ... A convective planetary boundary layer is a type of planetary boundary layer where positive ...",
+      "link": "https://en.wikipedia.org/wiki/Planetary_boundary_layer",
+      "source_type": "ddg"
+    },
+    {
+      "title": "[YT] The Dimming ( Geoengineering Watch ) - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] About Press Copyright Contact us Creators Advertise Developers Terms Privacy Policy & Safety How YouTube works Test new features.",
+      "link": "https://www.youtube.com/watch?v=rf78rEAJvhY",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "rf78rEAJvhY",
+      "transcript_method": "description",
+      "transcript_chars": 152,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Chemtrails, Here is your PROOF 100% Real... - YouTube",
+      "summary": "Thank you very much. I'm Richard Jordan Chairman of the conference. I'm going to just introduce Khaled the Lood who will introduce the speakers. So, Khaled, thank you very much for moderating the session and I turn it over to you and I will return in the bathroom. So, our next speaker is Dr. Rosaline Peterson. She's the California president and co-founder of the Agriculture Defense Coalition for him in 2006. So, perfect agriculture and crop reduction from uncontrolled experimental weather modification programs. A very interesting topic, you know, for an unspursalized person like myself. But also, very interesting in her CV that we have with you is also extensive efforts to protect drinking water supplies from toxic chemical contamination in martini, California. It's a very interesting topi",
+      "link": "https://www.youtube.com/watch?v=L5is16A8pfw",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "L5is16A8pfw",
+      "transcript_method": "whisper",
+      "transcript_chars": 14722,
+      "has_full_transcript": true
+    }
+  ]
+}

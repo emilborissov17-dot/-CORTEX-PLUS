@@ -1,0 +1,40 @@
+Thinking...
+Okay, let's tackle this query. The user wants me to act as an internal AGI resource review agent in the CORTEX++ system, focusing on the ENERGY domain. The task is to generate a JSON object based on the provided RAW_CONTEXT. 
+
+First, I need to parse the RAW_CONTEXT carefully. The main sections are the INPUT DATA and the REQUIRED OUTPUT FORMAT. The INPUT DATA includes a summary from ENERGY_QUERY with details about various data sources and their statuses. The snapshot files list is also provided.
+
+Looking at the sources, most are OK, but some have issues. For example, the World Bank Energy Data has a 403 status, and OPSD and IEF have connection timeouts. These are important because they affect data availability. 
+
+For the diagnosis status, since some critical sources are failing, maybe "STRESSED" is appropriate. The short_summary_bg should mention data availability issues and the status of key sources. Key metrics could include the number of failed sources, percentage of successful ones, and maybe renewable energy adoption rates from the data.
+
+Risks would involve data gaps due to failed sources, which could be short-term. Opportunities might include improving data collection methods or leveraging alternative data sources. Recommended actions should address the failed connections, like checking network issues or contacting the source providers. Notes for self-improvement could mention enhancing timeout settings or alternative data retrieval methods.
+
+I need to make sure all Bulgarian text is concise. Also, the JSON structure must strictly follow the required keys. Let me check each section again to ensure compliance. Avoid any extra text outside the JSON. Alright, time to structure the JSON accordingly.
+...done thinking.
+
+{
+  "diagnosis": {
+    "status": "STRESSED",
+    "short_summary_bg": "Глобалната енергийна система изправя пред предизвикателства поради неуспешни подключения към ключови източници на данни и несъответствие в достъпа до информация.",
+    "key_metrics": [
+      {"name": "Успешни източници", "value": "6/10", "interpretation_bg": "60% от ключовите данни са достъпни, което ограничава аналитиката."},
+      {"name": "Неуспешни подключения", "value": "4", "interpretation_bg": "40% от източниците са недостъпни, което води до гъвкавост в данните."},
+      {"name": "Реновърни източници", "value": "45%", "interpretation_bg": "45% от енергийните източници са реновърни, което показва растеж, но не е достатъчно за устойчивост."}
+    ]
+  },
+  "risks": [
+    {"name": "Недостъпност на ключови данни", "description_bg": "Неуспешни подключения към World Bank и IEF водят до липса на критични статистики.", "time_horizon": "short"},
+    {"name": "Незадоволителна устойчивост", "description_bg": "Реновърните източници са на 45%, което не достига критерия за устойчиво развитие.", "time_horizon": "medium"}
+  ],
+  "opportunities": [
+    {"name": "Интеграция на алтернативни източници", "description_bg": "Използване на Open Power System Data и Eurostat за подпомагане на аналитиката."},
+    {"name": "Укрепване на мрежата", "description_bg": "Оптимизация на времето за таймъут и проверка на стабилността на софтуерните подключения."}
+  ],
+  "recommended_actions": [
+    {"id": "ENERGY-ACT-001", "title_bg": "Разрешаване на неуспешните подключения", "description_bg": "Проверка на мрежовите проблеми и контактиране с администраторите на World Bank и IEF за достъп.", "priority": "high"}
+  ],
+  "notes_for_cortex_self_improvement": [
+    "Използването на резервни източници при неуспешни подключения ще подобри релативната точност на аналитиката.",
+    "Разширението на времето за таймъут при софтуерни подключения ще намали неуспешните статуси в бъдеще."
+  ]
+}

@@ -1,0 +1,46 @@
+MODEL: qwen3:1.7b
+
+PROMPT:
+You are CORTEX++ AGI. Generate a JSON snapshot for PLANETARY_POTENTIAL_REVIEW — the integrated carrying capacity of Earth. Include: current_level (LOW/MEDIUM/HIGH), key_signals list, main_bottlenecks list, trends list. Return ONLY valid JSON.
+
+RESPONSE:
+Thinking...
+Okay, the user wants a JSON snapshot for PLANETARY_POTENTIAL_REVIEW, which is about the integrated carrying capacity of Earth. Let me break down what they need.
+
+First, the current_level should be LOW, MEDIUM, or HIGH. Since the topic is about carrying capacity, which is a complex system, I think the current level might be LOW. But I need to verify if that's accurate. Maybe it's MEDIUM because there are factors like climate change and resource depletion that are affecting it.
+
+Next, key_signals. These are the main factors influencing the carrying capacity. They should include things like climate change, population growth, resource depletion, technological advancements, and policy changes. I need to make sure these are relevant and in the right order.
+
+Main_bottlenecks list. These are the obstacles preventing the carrying capacity from improving. Things like climate change, resource scarcity, pollution, and economic inequality come to mind. Also, maybe geopolitical conflicts or lack of international cooperation.
+
+Trends list. Trends are the directions the carrying capacity is moving. Maybe increasing population, climate change impacts, technological solutions, and policy shifts. I should mention both positive and negative trends, like the potential for tech solutions but also the risks from climate change.
+
+I need to ensure the JSON is valid, with proper syntax. Keys should be in double quotes, commas between items, and proper structure. Also, check that the lists are correctly formatted. Let me put it all together now.
+...done thinking.
+
+{
+  "PLANETARY_POTENTIAL_REVIEW": {
+    "current_level": "LOW",
+    "key_signals": [
+      "Climate change and rising global temperatures",
+      "Population growth and resource scarcity",
+      "Technological innovation and sustainability efforts",
+      "Policy shifts and international cooperation",
+      "Economic development and environmental degradation"
+    ],
+    "main_bottlenecks": [
+      "Climate change impacts on ecosystems and food security",
+      "Resource depletion and geopolitical conflicts",
+      "Pollution and environmental degradation",
+      "Inequitable distribution of resources",
+      "Lack of global coordination on sustainability"
+    ],
+    "trends": [
+      "Increasing population pressure on natural resources",
+      "Accelerated climate change effects",
+      "Rising awareness of sustainability challenges",
+      "Technological advancements in green energy and agriculture",
+      "Shifts in global economic priorities toward sustainability"
+    ]
+  }
+}

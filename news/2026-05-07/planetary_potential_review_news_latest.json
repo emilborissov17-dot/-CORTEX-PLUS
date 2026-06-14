@@ -1,0 +1,24 @@
+{
+  "axis": "PLANETARY_POTENTIAL_REVIEW",
+  "fetched_at": "2026-05-07T10:29:58.220364+00:00",
+  "smart_query": "earth resources sustainability",
+  "sources_count": {
+    "wiki": 0,
+    "gdelt": 0,
+    "arxiv": 0,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [],
+  "gdelt": [],
+  "github_repos": [],
+  "arxiv_papers": [],
+  "podcast": "[Battlefield rare earths: How the U.S. lost to China] At one point in history, one U.S. company monopolized the rare earths industry. Then China took over the industry. Can the U.S. bring it back?Rare earths are critical to making, like, everything. From smart phones to electric vehicles to microwaves. They’ve also become a powerful political weapon for China, which controls the majority of mining and processing of rare earths. Today, we have the sto",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

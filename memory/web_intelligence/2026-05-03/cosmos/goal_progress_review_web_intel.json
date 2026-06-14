@@ -1,0 +1,134 @@
+{
+  "axis": "GOAL_PROGRESS_REVIEW",
+  "domain": "cosmos",
+  "timestamp": "2026-05-03T09:03:21.749508+00:00",
+  "sources_count": 8,
+  "rss_count": 5,
+  "ddg_count": 0,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] SDG Report 2025 Overview - YouTube",
+      "summary": "As we mark a decade since the&nbsp; adoption of the 2030 agenda,&nbsp;&nbsp; we stand at a turning point in human history. With just 5 years remaining, we've made&nbsp; remarkable progress. But it's not enough.&nbsp;&nbsp; The 2025 SDG Report reveals that only 35% of&nbsp; SDG targets are on track or making moderate&nbsp;&nbsp; progress with nearly half moving too slowly and&nbsp; 18% are regressing below 2015 baseline levels.&nbsp;&nbsp; The last decade proves that transformation&nbsp; is possible. Millions have gained access&nbsp;&nbsp; to essential services. For the first time,&nbsp; more than half of the world's population is&nbsp;&nbsp; now covered by at least one social protection&nbsp; benefit. Maternal and child mortality rates&nbsp;&nbsp; have fallen. More than 100 million childre",
+      "link": "https://www.youtube.com/watch?v=MFUyf5Z6hD8",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "MFUyf5Z6hD8",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Launch of the Sustainable Development Goals Report 2025 - YouTube",
+      "summary": "All right. Good afternoon. Thank you for your patience. We are delighted to be joined by the secretary general of the United Nations, the deputy secretary general of the United Nations, the under secretary general for economic and social affairs, and next to the under secretary general is Bjork Sundair who is the assistant secretary general in the department of economic and social affairs. The secretary general will say a few words. Uh Mr. Lee will then say a few words. Then Mr. believe the SG and the DSG have to leave because of other events during linked to the high level political forum but uh the assistant secretary general will stay behind and answer uh your questions though the secretary general will take a couple of questions as well with that introduction sir you have the floor dea",
+      "link": "https://www.youtube.com/watch?v=v-Afm04x2Ow",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "v-Afm04x2Ow",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] The Sustainable Development Goals - Action Towards 2030 - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] Secondly, they integrate all dimensions of sustainability: economic development, social progress and environmental protection. Thirdly, the SDGs tell us we should leave no one behind.",
+      "link": "https://www.youtube.com/watch?v=9-xdy1Jr2eg",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "9-xdy1Jr2eg",
+      "transcript_method": "description",
+      "transcript_chars": 206,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "summary": "- ‘Real impact on the ground’ needed as Indonesia backs UN reform: <p>Indonesia is expecting a “strengthened multilateral system that delivers real impact on the ground,” as one of the key outcomes of the ongoing reform of the United Nations, that’s according to the \n- Iran crisis shows fossil fuels",
+    "risk_level": "UNKNOWN",
+    "trend": "UNKNOWN",
+    "key_events": [
+      "‘Real impact on the ground’ needed as Indonesia backs UN reform",
+      "Iran crisis shows fossil fuels-based energy system ‘is inherently volatile and unstable’",
+      "AI in advertising risks fuelling information crisis, UN warns"
+    ],
+    "insights": [],
+    "youtube_insights": [],
+    "relevance_to_goal": "",
+    "generalization": ""
+  },
+  "raw_items": [
+    {
+      "title": "‘Real impact on the ground’ needed as Indonesia backs UN reform",
+      "summary": "<p>Indonesia is expecting a “strengthened multilateral system that delivers real impact on the ground,” as one of the key outcomes of the ongoing reform of the United Nations, that’s according to the country’s outgoing Deputy Minister of Foreign Affairs for Multilateral Cooperation, Tri Tharyat.</p>\n<p>The post <a href=\"https://news.un.org/feed/view/en/story/2026/05/1167429\">‘Real impact on the ground’ needed as Indonesia backs UN reform</a> appeared first on <a href=\"https://www.un.org/sustaina",
+      "link": "https://news.un.org/feed/view/en/story/2026/05/1167429",
+      "published": "Fri, 01 May 2026 12:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Iran crisis shows fossil fuels-based energy system ‘is inherently volatile and unstable’",
+      "summary": "<p>Senior UN climate leaders are getting behind countries mobilising this week for a transition away from fossil fuels at a groundbreaking event in Colombia. Read Full Story on UN News</p>\n<p>The post <a href=\"https://news.un.org/feed/view/en/story/2026/04/1167401\">Iran crisis shows fossil fuels-based energy system ‘is inherently volatile and unstable’</a> appeared first on <a href=\"https://www.un.org/sustainabledevelopment\">United Nations Sustainable Development</a>.</p>",
+      "link": "https://news.un.org/feed/view/en/story/2026/04/1167401",
+      "published": "Wed, 29 Apr 2026 12:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "AI in advertising risks fuelling information crisis, UN warns",
+      "summary": "<p>With spending on advertising topping $1 trillion a year worldwide, the United Nations on Wednesday highlighted the untapped power of major brands to shape the future of Artificial Intelligence, warning that a failure to act could deepen a global information integrity crisis.</p>\n<p>The post <a href=\"https://news.un.org/feed/view/en/story/2026/04/1167405\">AI in advertising risks fuelling information crisis, UN warns</a> appeared first on <a href=\"https://www.un.org/sustainabledevelopment\">Unit",
+      "link": "https://news.un.org/feed/view/en/story/2026/04/1167405",
+      "published": "Wed, 29 Apr 2026 12:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "World News in Brief: Europe warming twice as fast, acute hunger in Lebanon, peacekeepers deployed in Congo",
+      "summary": "<p>New data shows record heatwaves from the Mediterranean to the Arctic last year, with glaciers shrinking and snow cover declining, according to the UN World Meteorological Organization (WMO).  Read Full Story on UN News</p>\n<p>The post <a href=\"https://news.un.org/feed/view/en/story/2026/04/1167408\">World News in Brief: Europe warming twice as fast, acute hunger in Lebanon, peacekeepers deployed in Congo</a> appeared first on <a href=\"https://www.un.org/sustainabledevelopment\">United Nations S",
+      "link": "https://news.un.org/feed/view/en/story/2026/04/1167408",
+      "published": "Wed, 29 Apr 2026 12:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Hello world!",
+      "summary": "Welcome to WordPress. This is your first post. Edit or delete it, then start writing!",
+      "link": "https://sdg.iisd.org/hello-world/",
+      "published": "Thu, 18 May 2023 15:00:19 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] SDG Report 2025 Overview - YouTube",
+      "summary": "As we mark a decade since the&nbsp; adoption of the 2030 agenda,&nbsp;&nbsp; we stand at a turning point in human history. With just 5 years remaining, we've made&nbsp; remarkable progress. But it's not enough.&nbsp;&nbsp; The 2025 SDG Report reveals that only 35% of&nbsp; SDG targets are on track or making moderate&nbsp;&nbsp; progress with nearly half moving too slowly and&nbsp; 18% are regressing below 2015 baseline levels.&nbsp;&nbsp; The last decade proves that transformation&nbsp; is possible. Millions have gained access&nbsp;&nbsp; to essential services. For the first time,&nbsp; more than half of the world's population is&nbsp;&nbsp; now covered by at least one social protection&nbsp; benefit. Maternal and child mortality rates&nbsp;&nbsp; have fallen. More than 100 million childre",
+      "link": "https://www.youtube.com/watch?v=MFUyf5Z6hD8",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "MFUyf5Z6hD8",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Launch of the Sustainable Development Goals Report 2025 - YouTube",
+      "summary": "All right. Good afternoon. Thank you for your patience. We are delighted to be joined by the secretary general of the United Nations, the deputy secretary general of the United Nations, the under secretary general for economic and social affairs, and next to the under secretary general is Bjork Sundair who is the assistant secretary general in the department of economic and social affairs. The secretary general will say a few words. Uh Mr. Lee will then say a few words. Then Mr. believe the SG and the DSG have to leave because of other events during linked to the high level political forum but uh the assistant secretary general will stay behind and answer uh your questions though the secretary general will take a couple of questions as well with that introduction sir you have the floor dea",
+      "link": "https://www.youtube.com/watch?v=v-Afm04x2Ow",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "v-Afm04x2Ow",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] The Sustainable Development Goals - Action Towards 2030 - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] Secondly, they integrate all dimensions of sustainability: economic development, social progress and environmental protection. Thirdly, the SDGs tell us we should leave no one behind.",
+      "link": "https://www.youtube.com/watch?v=9-xdy1Jr2eg",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "9-xdy1Jr2eg",
+      "transcript_method": "description",
+      "transcript_chars": 206,
+      "has_full_transcript": false
+    }
+  ]
+}

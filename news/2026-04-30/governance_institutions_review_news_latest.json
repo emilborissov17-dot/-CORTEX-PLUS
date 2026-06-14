@@ -1,0 +1,57 @@
+{
+  "axis": "GOVERNANCE_INSTITUTIONS_REVIEW",
+  "fetched_at": "2026-04-30T08:25:18.850703+00:00",
+  "smart_query": "government corruption institutions",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "World News in Brief: Syria human rights update, Cuba post-hurricane support still vital, impunity and violence in Myanmar",
+      "snippet": "Three mass graves were recently uncovered in northeastern Syria, including one reportedly at the site of a former detention centre run by the Kurdish-backed Syrian Armed Forces (SDF).&nbsp;",
+      "url": "https://news.un.org/feed/view/en/story/2026/04/1167399",
+      "source": "RSS"
+    },
+    {
+      "title": "Afghanistan risks losing 25,000 women teachers and health workers",
+      "snippet": "Restrictions on girls’ education and women’s employment in Afghanistan could leave the country with a deficit of over 25,000 female teachers and health workers by 2030, the UN Children’s Fund (UNICEF) warned on Tuesday.&nbsp;",
+      "url": "https://news.un.org/feed/view/en/story/2026/04/1167389",
+      "source": "RSS"
+    },
+    {
+      "title": "UN rights chief urges action to end impunity and address disappearances in Mexico",
+      "snippet": "Mexican authorities must intensify efforts to end impunity, protect journalists and human rights defenders, and address the country’s “painful” crisis of disappearances, UN human rights chief Volker Türk has said.",
+      "url": "https://news.un.org/feed/view/en/story/2026/04/1167371",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [],
+  "arxiv_papers": [
+    {
+      "title": "Peer Identity Bias in Multi-Agent LLM Evaluation: An Empirical Study Using the TRUST Democratic Discourse Analysis Pipeline",
+      "snippet": "The TRUST democratic discourse analysis pipeline exposes its large language model (LLM) components to peer model identity through multiple structural channels -- a design feature whose bias implications have not previously been empirically tested. We provide the first systematic measurement of ident",
+      "url": "https://arxiv.org/abs/2604.22971v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Trajectory-Aware Reliability Modeling of Democratic Systems",
+      "snippet": "Failures in complex systems often emerge through gradual degradation and the propagation of stress across interacting components rather than through isolated shocks. Democratic systems exhibit similar dynamics, where weakening institutions can trigger cascading deterioration in related institutional",
+      "url": "https://arxiv.org/abs/2604.20127v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[#239 – Rose Hadshar on why automating all human labour will break our political system] The most important political question in the age of advanced AI might not be who wins elections. It might be whether elections continue to matter at all.That’s the view of Rose Hadshar, researcher at Forethought, who believes we could see extreme, AI-enabled power concentration without a coup or dramatic ‘end of democracy’ moment.She foresees something more insidious: an elite group with access to",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

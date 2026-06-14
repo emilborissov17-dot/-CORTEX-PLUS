@@ -1,0 +1,90 @@
+{
+  "axis": "GENERAL_SELF_REVIEW",
+  "fetched_at": "2026-03-29T11:47:14.157072+00:00",
+  "smart_query": "artificial intelligence progress",
+  "sources_count": {
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 0,
+    "github": 3,
+    "web_search": 5
+  },
+  "rss": [
+    {
+      "title": "PS5 price hiked by £90 due to global 'pressures'",
+      "snippet": "The changes will see the recommended retail price of the PS5 rise from £479.99 to £569.99 in the UK.\n\n",
+      "url": "https://www.bbc.com/news/articles/czx9852nkexo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Lloyds bank reveals IT glitch affected almost half a million customers",
+      "snippet": "In a letter to the Treasury Select Committee, Lloyds apologised and said some compensation had been paid.",
+      "url": "https://www.bbc.com/news/articles/c70dqk2vjv8o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Just Eat and Autotrader among firms investigated in fake reviews probe",
+      "snippet": "The UK's competition watchdog says it is looking at five firms in its investigation into misleading online reviews.",
+      "url": "https://www.bbc.com/news/articles/cj37eeyz0epo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "microsoft/autogen",
+      "snippet": "A programming framework for agentic AI",
+      "stars": 56366,
+      "url": "https://github.com/microsoft/autogen",
+      "updated": "2026-03-29",
+      "source": "GitHub"
+    },
+    {
+      "title": "2noise/ChatTTS",
+      "snippet": "A generative speech model for daily dialogue.",
+      "stars": 39001,
+      "url": "https://github.com/2noise/ChatTTS",
+      "updated": "2026-03-29",
+      "source": "GitHub"
+    },
+    {
+      "title": "agentscope-ai/agentscope",
+      "snippet": "Build and run agents you can see, understand and trust.",
+      "stars": 21848,
+      "url": "https://github.com/agentscope-ai/agentscope",
+      "updated": "2026-03-29",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [],
+  "web_search": [
+    {
+      "title": "Progress in artificial intelligence - Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Progress_in_artificial_intelligence",
+      "source": "WEB"
+    },
+    {
+      "title": "The 2025 AI Index Report - Stanford HAI",
+      "url": "https://hai.stanford.edu/ai-index/2025-ai-index-report",
+      "source": "WEB"
+    },
+    {
+      "title": "3. Public and expert predictions for AI&#x27;s next 20 years",
+      "url": "https://www.pewresearch.org/internet/2025/04/03/public-and-expert-predictions-for-ais-next-20-years/",
+      "source": "WEB"
+    },
+    {
+      "title": "Home | Progress in Artificial Intelligence | Springer Nature Link",
+      "url": "https://link.springer.com/journal/13748",
+      "source": "WEB"
+    },
+    {
+      "title": "PDF The state of AI in 2025 - McKinsey &amp; Company",
+      "url": "https://www.mckinsey.com/~/media/mckinsey/business%20functions/quantumblack/our%20insights/the%20state%20of%20ai/november%202025/the-state-of-ai-2025-agents-innovation_cmyk-v1.pdf",
+      "source": "WEB"
+    }
+  ],
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL"
+}

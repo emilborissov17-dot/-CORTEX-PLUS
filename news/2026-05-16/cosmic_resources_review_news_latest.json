@@ -1,0 +1,56 @@
+{
+  "axis": "COSMIC_RESOURCES_REVIEW",
+  "fetched_at": "2026-05-16T13:29:27.455030+00:00",
+  "smart_query": "asteroid mining space resources",
+  "sources_count": {
+    "wiki": 0,
+    "gdelt": 3,
+    "arxiv": 2,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [],
+  "gdelt": [
+    {
+      "title": "A Long Beach aerospace firm is betting on a new industrial boom : capturing asteroids",
+      "snippet": "A Long Beach aerospace firm is betting on a new industrial boom : capturing asteroids",
+      "url": "https://www.santafenewmexican.com/news/a-long-beach-aerospace-firm-is-betting-on-a-new-industrial-boom-capturing-asteroids/article_65cb825d-5cd3-5e64-86a2-cfb200083e2f.html",
+      "source": "santafenewmexican.com"
+    },
+    {
+      "title": "A Long Beach aerospace firm is betting on a new industrial boom : capturing asteroids",
+      "snippet": "A Long Beach aerospace firm is betting on a new industrial boom : capturing asteroids",
+      "url": "https://lbpost.com/news/business/asteroid-mining-exlabs-long-beach",
+      "source": "lbpost.com"
+    },
+    {
+      "title": "A Long Beach aerospace firm is betting on a new industrial boom : Capturing asteroids",
+      "snippet": "A Long Beach aerospace firm is betting on a new industrial boom : Capturing asteroids",
+      "url": "https://www.smdailyjournal.com/news/state/a-long-beach-aerospace-firm-is-betting-on-a-new-industrial-boom-capturing-asteroids/article_7981ae97-3758-43c2-b419-1c20f0980ab3.html",
+      "source": "smdailyjournal.com"
+    }
+  ],
+  "github_repos": [],
+  "arxiv_papers": [
+    {
+      "title": "Resonant Networks of Spin-Orbit Coupling in Ellipsoid-Ellipsoid Binary Asteroid Systems",
+      "snippet": "The dynamical evolution of binary asteroid systems is deeply influenced by spin-orbit resonances. However, their domains of influence and mutual interactions remain elusive, in particular in the space where multiple resonant modes coexist. In such regimes, the standard single-resonance approach is i",
+      "url": "https://arxiv.org/abs/2605.14814v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Modeling and Analysis of Main-Belt Asteroidal Dust Flux and Velocity Distribution at Inner Planets",
+      "snippet": "Interplanetary dust in the inner solar system originates from multiple sources, including short-period comets and main-belt asteroids. In this work, we focus specifically on the dynamical evolution of asteroid-derived dust using N-body simulations that incorporates solar gravity, planetary perturbat",
+      "url": "https://arxiv.org/abs/2605.12420v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[Antibiotic Apocalypse] Doctor and special correspondent Avir Mitra takes Executive Editor Soren Wheeler, plus a live studio audience, on a journey from the operating room to inside the body to the farm to the sewers and back again—searching for answers to an alarming threat to humanity’s existence as we know it: antibiotic resistance in bacteria. \n This live show, performed in New York City and also in Little Rock, Arka",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

@@ -1,0 +1,14 @@
+RESOURCE POLICY – CORTEX++
+
+NETWORK_ACCESS: FORBIDDEN
+FILE_ACCESS_ROOT: C:\Users\emilb\Desktop\AGI\CORTEX++
+ALLOWED_WRITE_DIRS:
+- history\
+- knowledge\
+- config\
+- tests\
+
+FORBIDDEN_ACTIONS:
+- Изпълнение на външен код от интернет.
+- Писане извън AGI балона (Desktop/AGI/CORTEX++).
+- Промяна на системни файлове или настройки на операционната система.

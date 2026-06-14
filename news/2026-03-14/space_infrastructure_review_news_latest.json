@@ -1,0 +1,82 @@
+{
+  "axis": "SPACE_INFRASTRUCTURE_REVIEW",
+  "fetched_at": "2026-03-14T07:14:09.014221+00:00",
+  "smart_query": "space exploration NASA SpaceX",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "Volunteers Find Oddly High Solar Flare Rates",
+      "snippet": "Patches of the Sun’s surface often show strong magnetic fields. These fields can emerge within a matter of hours, and can decay slowly or quickly, sometimes over days, weeks, or even months. Thanks to a new study about these long-lived active regions, we now know much more about the patches where th",
+      "url": "https://science.nasa.gov/get-involved/citizen-science/volunteers-find-oddly-high-solar-flare-rates/",
+      "source": "RSS"
+    },
+    {
+      "title": "Extra Extra! Extra Data Stream Added to the Daily Minor Planet!",
+      "snippet": "The Daily Minor Planet citizen science project is expanding! In addition to data received nightly from the Catalina Sky Survey’s Mt. Lemmon telescope in Arizona, the project’s science team is now processing images from the Bok 2.3-meter telescope at Kitt Peak National Observatory. The Bok is a might",
+      "url": "https://science.nasa.gov/get-involved/citizen-science/extra-extra-extra-data-stream-added-to-the-daily-minor-planet/",
+      "source": "RSS"
+    },
+    {
+      "title": "NASA Selects Finalists in Student Aircraft Maintenance Competition",
+      "snippet": "NASA&#160;has&#160;selected&#160;eight&#160;student&#160;teams as finalists in the 2026 Gateways to Blue Skies&#160;Competition, giving them the resources to help address&#160;a critical challenge&#160;for&#160;U.S. aviation:&#160;maintenance.&#160; Challenges facing the commercial aviation industry",
+      "url": "https://www.nasa.gov/aeronautics/nasa-selects-finalists-in-student-aircraft-maintenance-competition/",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "KOSASIH/stable-pi-core",
+      "snippet": "Stable-Pi-Core is a next-generation decentralized ecosystem that integrates blockchain, quantum AI, IoT, edge computing, and AR/VR to deliver secure, scalable, and personalized solutions for payments,",
+      "stars": 111,
+      "url": "https://github.com/KOSASIH/stable-pi-core",
+      "updated": "2026-02-25",
+      "source": "GitHub"
+    },
+    {
+      "title": "FlaSpaceInst/EZ-RASSOR",
+      "snippet": "An inexpensive, autonomous, regolith-mining robot",
+      "stars": 62,
+      "url": "https://github.com/FlaSpaceInst/EZ-RASSOR",
+      "updated": "2026-02-18",
+      "source": "GitHub"
+    },
+    {
+      "title": "BarthPaleologue/CosmosJourneyer",
+      "snippet": "Cosmos Journeyer is a space exploration game running directly in the browser! Take your spaceship and witness the beauty of this virtually infinite universe.",
+      "stars": 36,
+      "url": "https://github.com/BarthPaleologue/CosmosJourneyer",
+      "updated": "2026-03-13",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Evaluating the spatial intra-pixel sensitivity variations and influence based on space observation",
+      "snippet": "Intra-pixel sensitivity variations (IPSVs) in charge-coupled devices (CCDs) and complementary metal-oxide-semiconductor (CMOS) detectors constitute a significant source of astrometric error for undersampled stellar observations. Since laboratory-based IPSV measurements suffer from limited applicabil",
+      "url": "https://arxiv.org/abs/2603.10355v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Structural Design and Performance Analysis of Laser Transmitting Telescope for Space Gravitational Wave Detection",
+      "snippet": "The spaceborne laser emission telescope is a core and critical component of the space gravitational wave detection system.Compared with ground-based telescopes, the on-orbit space environment is more complex and harsh, presenting higher technical challenges for the design of the optical system and s",
+      "url": "https://arxiv.org/abs/2603.07967v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[Black Box] In this episode, first aired in 2014, we examine three very different kinds of black boxes—spaces where we know what’s going in, we know what’s coming out, but can’t see what happens in-between.\nFrom the darkest parts of metamorphosis to a sixty-year-old secret among magicians, and the nature of consciousness itself, we shine some light on three questions. But for each, we contend with an answerle",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

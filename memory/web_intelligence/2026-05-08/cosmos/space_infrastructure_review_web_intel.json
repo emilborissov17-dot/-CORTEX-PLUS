@@ -1,0 +1,74 @@
+{
+  "axis": "SPACE_INFRASTRUCTURE_REVIEW",
+  "domain": "cosmos",
+  "timestamp": "2026-05-08T10:10:32.486074+00:00",
+  "sources_count": 7,
+  "rss_count": 4,
+  "ddg_count": 3,
+  "youtube_count": 0,
+  "youtube_items": [],
+  "analysis": {
+    "problem": "Анализ на SPACE_INFRASTRUCTURE_REVIEW — данни получени но LLM грешка",
+    "root_cause": "LLM parsing грешка",
+    "severity": "UNKNOWN",
+    "leverage_points": [],
+    "proposed_actions": [],
+    "evidence": [
+      "Rocket Lab announces five-launch Neutron deal as it continues aiming for late 2026 debut",
+      "SpaceX launches 24 Starlink satellites on Falcon 9 rocket from Vandenberg SFB",
+      "Lockheed Martin joins collaboration with Firefly Aerospace and Seagate for off-shore launches"
+    ],
+    "generalization": "",
+    "summary": "- Rocket Lab announces five-launch Neutron deal as it continues aiming for late 2026 debut: The company pivoted to a Neutron rocket launch debut no earlier than the fourth quarter of 2026 following a ",
+    "risk_level": "UNKNOWN",
+    "trend": "UNKNOWN"
+  },
+  "raw_items": [
+    {
+      "title": "Rocket Lab announces five-launch Neutron deal as it continues aiming for late 2026 debut",
+      "summary": "The company pivoted to a Neutron rocket launch debut no earlier than the fourth quarter of 2026 following a first stage tank test failure earlier this year. The first flight of Neutron won’t be reusable, but aims to recover the first stage during its second flight with a landing barge. <a class=\"mh-excerpt-more\" href=\"https://spaceflightnow.com/2026/05/07/rocket-lab-announces-five-launch-neutron-deal-as-it-continues-aiming-for-late-2026-debut/\" title=\"Rocket Lab announces five-launch Neutron dea",
+      "link": "https://spaceflightnow.com/2026/05/07/rocket-lab-announces-five-launch-neutron-deal-as-it-continues-aiming-for-late-2026-debut/",
+      "published": "Thu, 07 May 2026 22:35:44 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "SpaceX launches 24 Starlink satellites on Falcon 9 rocket from Vandenberg SFB",
+      "summary": "The Starlink 17-29 mission was the 44th dedicated flight supporting the broadband internet constellation so far in 2026. Liftoff from pad 4E at Vandenberg Space Force Base happened at 8:59:19 p.m. PDT (11:59:19 p.m. EDT / 0359:19 UTC). <a class=\"mh-excerpt-more\" href=\"https://spaceflightnow.com/2026/05/05/live-coverage-spacex-to-launch-24-starlink-satellites-on-falcon-9-rocket-from-vandenberg-sfb-7/\" title=\"SpaceX launches 24 Starlink satellites on Falcon 9 rocket from Vandenberg SFB\"></a>",
+      "link": "https://spaceflightnow.com/2026/05/05/live-coverage-spacex-to-launch-24-starlink-satellites-on-falcon-9-rocket-from-vandenberg-sfb-7/",
+      "published": "Tue, 05 May 2026 13:15:50 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Lockheed Martin joins collaboration with Firefly Aerospace and Seagate for off-shore launches",
+      "summary": "The announcement comes ahead of Firefly Aerospace’s first quarter earnings call for investors. A timeline for the first ocean-based Alpha rocket launches wasn't announced. <a class=\"mh-excerpt-more\" href=\"https://spaceflightnow.com/2026/05/04/lockheed-martin-announces-collaboration-with-firefly-aerospace-and-seagate-for-off-shore-launches/\" title=\"Lockheed Martin joins collaboration with Firefly Aerospace and Seagate for off-shore launches\"></a>",
+      "link": "https://spaceflightnow.com/2026/05/04/lockheed-martin-announces-collaboration-with-firefly-aerospace-and-seagate-for-off-shore-launches/",
+      "published": "Mon, 04 May 2026 21:52:31 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "SpaceX launches South Korean Earth observation satellite, plus 44 more payloads on midnight Falcon 9 rideshare mission",
+      "summary": "The CAS500-2 mission lifted off from pad 4E at Vandenberg Space Force Base at 12 a.m. PDT (3 a.m. EDT / 0700 UTC). The Korea Aerospace Industries’ Compact Advanced Satellite 500 (CAS500) satellite was the first to deploy about an hour after liftoff. <a class=\"mh-excerpt-more\" href=\"https://spaceflightnow.com/2026/05/02/live-coverage-spacex-to-launch-south-korean-earth-observation-satellite-44-more-payloads-on-overnight-falcon-9-rideshare-mission/\" title=\"SpaceX launches South Korean Earth observ",
+      "link": "https://spaceflightnow.com/2026/05/02/live-coverage-spacex-to-launch-south-korean-earth-observation-satellite-44-more-payloads-on-overnight-falcon-9-rideshare-mission/",
+      "published": "Sat, 02 May 2026 19:59:11 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Space exploration",
+      "summary": "Space exploration is the physical investigation of outer space by uncrewed robotic space probes and through human spaceflight.While the observation of objects in space, known as astronomy, predates reliable recorded history, it was the development of large and relatively efficient rockets during the mid-twentieth century that allowed physical space exploration to become a reality. Common rationale",
+      "link": "https://en.wikipedia.org/wiki/Space_exploration",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Space exploration | History, Definition, & Facts | Britannica",
+      "summary": "Space exploration, investigation, by means of crewed and uncrewed spacecraft, of the reaches of the universe beyond Earth's atmosphere and the use of the information so gained to increase knowledge of the cosmos and benefit humanity. Learn more about space exploration in this article.",
+      "link": "https://www.britannica.com/science/space-exploration",
+      "source_type": "ddg"
+    },
+    {
+      "title": "SpaceX",
+      "summary": "Space Exploration Technologies Corporation, doing business as SpaceX (stylized as SPACEX in upper caps), is a private American aerospace and artificial intelligence company headquartered at the Starbase development site in Starbase, Texas. Since its founding in 2002, the company has made numerous advances in rocket propulsion, reusable launch vehicles, human spaceflight and satellite constellation",
+      "link": "https://en.wikipedia.org/wiki/SpaceX",
+      "source_type": "ddg"
+    }
+  ]
+}

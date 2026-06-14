@@ -1,0 +1,145 @@
+{
+  "axis": "CULTURE_MEDIA_REVIEW",
+  "domain": "human",
+  "timestamp": "2026-05-18T08:25:50.200319+00:00",
+  "sources_count": 10,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 2,
+  "youtube_items": [
+    {
+      "title": "[YT] The Battle for Your Time: Exposing the Costs of Social Media",
+      "summary": "[DESCRIPTION FALLBACK] Do we truly comprehend how much of our time and attention is given to technology? In his talk, Dino Ambrosi reframes how we think about our relationships to ...",
+      "link": "https://www.youtube.com/watch?v=4TMPXK9tw5U",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "4TMPXK9tw5U",
+      "transcript_method": "description",
+      "transcript_chars": 183,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Social Media is Making Us Unsocial | Kristin Gallucci - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] Social technology is simultaneously connecting us and isolating us. It’s affecting everything from our basic social relationships to the way that we work, le...",
+      "link": "https://www.youtube.com/watch?v=66cD5En8Vfg",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "66cD5En8Vfg",
+      "transcript_method": "description",
+      "transcript_chars": 183,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "problem": "Cultural and media content is increasingly promoting divisive narratives and antisemitism, undermining social cohesion and trust in institutions.",
+    "root_cause": "The dominance of media platforms and cultural institutions in shaping public discourse allows harmful narratives to spread, often without adequate scrutiny or accountability.",
+    "severity": "HIGH",
+    "leverage_points": [
+      "Media and cultural institutions that amplify divisive content",
+      "Lack of transparency and accountability in content moderation and curation"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Implement independent audits of major media platforms to assess the spread of divisive and antisemitic content",
+        "measurable_goal": "Reduce the percentage of content flagged as antisemitic by 30% within one year",
+        "timeframe": "short-term"
+      },
+      {
+        "action": "Promote media literacy programs in schools and public spaces to help audiences critically engage with cultural and media content",
+        "measurable_goal": "Increase public awareness of media manipulation tactics by 40% within two years",
+        "timeframe": "medium-term"
+      }
+    ],
+    "evidence": [
+      "'An orgy of antisemitism is overtaking the west': Son of Saul’s László Nemes on Hollywood hypocrisy",
+      "'It’s not healthy for me to be doing so much': from Adolescence to His Dark Materials, how Jack Thorne took over TV"
+    ],
+    "generalization": "This problem connects to the broader domain of information ecosystems, where the spread of harmful narratives can erode trust, polarize societies, and threaten democratic processes.",
+    "summary": "Cultural and media content is spreading divisive and antisemitic narratives, requiring stronger accountability and media literacy to mitigate its impact.",
+    "risk_level": "HIGH"
+  },
+  "raw_items": [
+    {
+      "title": "Inside the Met Opera: Does Peter Gelb Have ‘the Most Difficult Job on Earth’?",
+      "summary": "Peter Gelb, the general manager of the Metropolitan Opera, said he is not going anywhere as he struggles with financial crises and opera’s place in a changing arts landscape.",
+      "link": "https://www.nytimes.com/2026/05/17/arts/music/metropolitan-opera-general-manager-peter-gelb.html",
+      "published": "Sun, 17 May 2026 18:59:37 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Isabel Leonard and Others Offer Tastings of ‘Frida y Diego’",
+      "summary": "The performers of a Met Opera production about Frida Kahlo and Diego Rivera have been promoting the show in decidedly unoperatic places, including a cemetery.",
+      "link": "https://www.nytimes.com/2026/05/17/arts/music/isabel-leonard-frida-y-diego-met.html",
+      "published": "Sun, 17 May 2026 23:00:01 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Tonys 2026 Predictions: Who Will Win? And Who Should?",
+      "summary": "Our chief theater critic looks at this year’s nominees and makes some predictions (and recommendations).",
+      "link": "https://www.nytimes.com/2026/05/17/theater/tonys-2026-predictions.html",
+      "published": "Sun, 17 May 2026 09:00:26 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Review: In ‘Dad Don’t Read This’ a Playwright (Maybe?) Grows Up",
+      "summary": "Eliya Smith’s disturbing teen dramedy explores the ambivalence and confusion of life on the brink of adulthood.",
+      "link": "https://www.nytimes.com/2026/05/17/theater/dad-dont-read-this-review.html",
+      "published": "Sun, 17 May 2026 20:13:17 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "‘An orgy of antisemitism is overtaking the west’: Son of Saul’s László Nemes on Hollywood hypocrisy",
+      "summary": "<p>His extraordinary Auschwitz film won every award going. Now the Hungarian director is back with new drama Orphan, as well as a Jean Moulin biopic at Cannes. He talks about resurgent global prejudice – and refusing to be lectured by the film industry ‘overclass’</p><p>We’ve been talking for less than five minutes when I spot the swastika. It’s just above the head of László Nemes, one of Europe’s most acclaimed directors, as he sits in the suite of a London hotel, talking about Orphan, his inte",
+      "link": "https://www.theguardian.com/film/2026/may/18/antisemitism-west-son-of-saul-laszlo-nemes-orphan-moulin",
+      "published": "Mon, 18 May 2026 04:00:58 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "‘It’s not healthy for me to be doing so much’: from Adolescence to His Dark Materials, how Jack Thorne took over TV",
+      "summary": "<p>He has made smash hit shows for Netflix and has adapted Harry Potter for the stage. Yet the in-demand writer’s latest show Falling is new territory for him – a love story</p><p>I hear Jack Thorne before I&nbsp;see&nbsp;him. We’re meeting in a quiet cafe in Hampstead, north London, to discuss his very first love story for TV, Falling. I catch snatches of him chatting with various waiters – “Thank you, good sir” and “Lovely, lovely” – before he appears in front of me, all smiles but a little ne",
+      "link": "https://www.theguardian.com/stage/2026/may/17/jack-thorne-falling-adolescence-stephen-graham-this-is-england-keeley-hawes-paapa-essiedu",
+      "published": "Sun, 17 May 2026 09:00:34 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Bulgaria wins 70th Eurovision contest with Dara and Bangaranga",
+      "summary": "<p>The UK finished last as the contest, held in Vienna, saw five countries boycott it over the participation of Israel</p><p>Bulgaria has won the 2026 Eurovision song contest after singer Dara swept to victory with the song Bangaranga.</p><p>The 27-year-old singer’s triumph is a first victory in the 70-year history of the song contest for Bulgaria, which only joined Eurovision in 2005 and sat out the last three editions.</p> <a href=\"https://www.theguardian.com/world/2026/may/17/bulgaria-wins-70",
+      "link": "https://www.theguardian.com/world/2026/may/17/bulgaria-wins-70th-eurovision-contest-dara-bangaranga",
+      "published": "Sat, 16 May 2026 23:20:16 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "What should win this year’s International Booker?",
+      "summary": "<p>Political oppression in Tehran, a witch’s tale from France, a film-maker in Nazi Germany …  we weigh up the contenders for the International Booker prize 2026</p><p>This year’s International Booker prize shortlisted titles are a diverse bunch, both geographically – from Brazil to Taiwan – and in style, from mainstream blockbuster to experimental jeu d’esprit. As in recent&nbsp;years, independent presses are rewarded for their efforts in promoting translated fiction, providing four of the six ",
+      "link": "https://www.theguardian.com/books/2026/may/17/what-should-win-this-years-international-booker",
+      "published": "Sun, 17 May 2026 15:00:44 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] The Battle for Your Time: Exposing the Costs of Social Media",
+      "summary": "[DESCRIPTION FALLBACK] Do we truly comprehend how much of our time and attention is given to technology? In his talk, Dino Ambrosi reframes how we think about our relationships to ...",
+      "link": "https://www.youtube.com/watch?v=4TMPXK9tw5U",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "4TMPXK9tw5U",
+      "transcript_method": "description",
+      "transcript_chars": 183,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Social Media is Making Us Unsocial | Kristin Gallucci - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] Social technology is simultaneously connecting us and isolating us. It’s affecting everything from our basic social relationships to the way that we work, le...",
+      "link": "https://www.youtube.com/watch?v=66cD5En8Vfg",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "66cD5En8Vfg",
+      "transcript_method": "description",
+      "transcript_chars": 183,
+      "has_full_transcript": false
+    }
+  ]
+}

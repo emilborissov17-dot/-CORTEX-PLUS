@@ -1,0 +1,57 @@
+{
+  "axis": "ENERGY_REVIEW",
+  "fetched_at": "2026-05-01T13:08:43.913252+00:00",
+  "smart_query": "renewable energy solar wind",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "Why the effects on the Iran conflict will be felt on the US grid – This Week in Cleantech",
+      "snippet": "On this episode of the This Week in Cleantech podcast, Bianca Giacobone of Latitude Media discusses how Iran's strikes on aluminum smelters in the UAE and Bahrain last month pushed prices up 11% to their highest level since Russia’s 2022 invasion of Ukraine. ",
+      "url": "https://www.renewableenergyworld.com/podcasts/why-the-effects-on-the-iran-conflict-will-be-felt-on-the-us-grid-this-week-in-cleantech/",
+      "source": "RSS"
+    },
+    {
+      "title": "How can utilities transform data center backlash into a catalyst for grid modernization?",
+      "snippet": "The benefits of data center development to communities in the short and long term are real and quantifiable, but they require a proactive strategy to ensure those who live alongside these facilities feel like partners in their success, rather than spectators to their growth.",
+      "url": "https://www.renewableenergyworld.com/power-grid/how-can-utilities-transform-data-center-backlash-into-a-catalyst-for-grid-modernization/",
+      "source": "RSS"
+    },
+    {
+      "title": "Federal judge strikes down some Trump administration actions that have slowed clean energy projects",
+      "snippet": "A federal judge struck down several Trump administration actions slowing down development of clean energy, including a requirement that all solar and wind energy projects on federal lands and waters be personally approved by Interior Secretary Doug Burgum.",
+      "url": "https://www.renewableenergyworld.com/energy-business/policy-and-regulation/federal-judge-strikes-down-some-trump-administration-actions-that-have-slowed-clean-energy-projects/",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [],
+  "arxiv_papers": [
+    {
+      "title": "Reconfiguring flexibility in renewable power-to-ammonia systems using molten-salt thermal energy storage in the ammonia synthesis loop: A coordinated electro-hydrogen-thermal scheduling approach",
+      "snippet": "In renewable power-to-ammonia (ReP2A) systems, the intermittency of wind and solar generation propagates through electrolytic hydrogen production and induces thermal instability in the ammonia synthesis reactor (ASR). The resulting temperature cycling accelerates fatigue and shortens service life, w",
+      "url": "https://arxiv.org/abs/2604.25192v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Frequency Security Assessment in Power Systems With High Penetration of Renewables Considering Spatio-Temporal Frequency Distribution",
+      "snippet": "The increasing integration of renewable energy sources exacerbates the spatial and temporal differences in frequency across the power system, posing a serious challenge to the accurate and efficient assessment of system frequency security. To address this issue, a generic effective nodal frequency (",
+      "url": "https://arxiv.org/abs/2604.21262v2",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[A cheat sheet for accelerating clean energy | Kimiko Hirata] After the Fukushima disaster shut down Japan's nuclear reactors, the coal industry rushed in to fill the energy gap. As climate advocate Kimiko Hirata watched dozens of new coal plant proposals quietly surface across the country — each one locking in decades of future emissions — she resolved to make them impossible to ignore. She shares how a small, scrappy civil society movement took on a fossil",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

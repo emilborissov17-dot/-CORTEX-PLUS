@@ -1,0 +1,57 @@
+{
+  "axis": "COGNITION_LEARNING_REVIEW",
+  "fetched_at": "2026-05-01T13:10:45.635069+00:00",
+  "smart_query": "education learning children schools",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "Your dreams aren’t random. Here’s what’s really happening",
+      "snippet": "Dreams are more structured than they seem, shaped by both personal traits and real-world experiences. Researchers found that the brain doesn’t just replay daily life—it reshapes it into imaginative, sometimes surreal scenarios. People who mind-wander more tend to have fragmented dreams, while those ",
+      "url": "https://www.sciencedaily.com/releases/2026/04/260428045538.htm",
+      "source": "RSS"
+    },
+    {
+      "title": "Doing this throughout life may cut Alzheimer’s risk by 38%",
+      "snippet": "A lifetime of mental stimulation—like reading, writing, and learning new skills—may help protect the brain as we age. People with the highest levels of cognitive enrichment had a much lower risk of Alzheimer’s and experienced symptoms years later than those with the lowest levels.",
+      "url": "https://www.sciencedaily.com/releases/2026/04/260414075648.htm",
+      "source": "RSS"
+    },
+    {
+      "title": "Lonely people have worse memory but don’t decline faster, study finds",
+      "snippet": "Loneliness may quietly affect how well older adults remember things—but it might not be speeding up mental decline after all. A large European study tracking over 10,000 people for seven years found that those who felt lonelier started off with weaker memory, yet their memory didn’t deteriorate any ",
+      "url": "https://www.sciencedaily.com/releases/2026/04/260414075633.htm",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [],
+  "arxiv_papers": [
+    {
+      "title": "Towards an Ethical AI Curriculum: A Pan-African, Culturally Contextualized Framework for Primary and Secondary Education",
+      "snippet": "Artificial intelligence (AI) is now embedded in educational, civic, and economic systems worldwide. For African primary and secondary education, this creates a double imperative: to prepare a young population (over sixty per cent of Africans are under twenty-five) for AI-mediated labour markets with",
+      "url": "https://arxiv.org/abs/2604.27708v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Math Education Digital Shadows for facilitating learning with LLMs: Math performance, anxiety and confidence in simulated students and AIs",
+      "snippet": "To enhance LLMs' impact on math education, we need data on their mathematical prowess and biases across prompts. To fill this gap, we introduce MEDS (Math Education Digital Shadows) as a dataset mapping how large language models reason about and report mathematics across human- and AI-like condition",
+      "url": "https://arxiv.org/abs/2604.27618v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[Essentials: The Neuroscience of Speech, Language & Music | Dr. Erich Jarvis] In this Huberman Lab Essentials episode, my guest is Dr. Erich Jarvis, PhD, a professor and Head of the Laboratory of Neurogenetics of Language at Rockefeller University and an investigator at the Howard Hughes Medical Institute (HHMI). We discuss the brain circuits and genes underlying spoken language and why the ability to learn and produce vocalizations is extraordinarily rare in the animal kin",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

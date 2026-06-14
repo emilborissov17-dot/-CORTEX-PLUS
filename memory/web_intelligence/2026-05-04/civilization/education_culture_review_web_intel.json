@@ -1,0 +1,153 @@
+{
+  "axis": "EDUCATION_CULTURE_REVIEW",
+  "domain": "civilization",
+  "timestamp": "2026-05-04T13:02:59.290791+00:00",
+  "sources_count": 11,
+  "rss_count": 4,
+  "ddg_count": 4,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] 2025 UNESCO Confucius Prize for Literacy highlights global education efforts - YouTube",
+      "summary": "A celebration of both heritage and humanity, the 20th UNESCO Confucius Prize for Literacy ceremony took place in Shufu, hometown of the Asian Chinese philosopher. These years awards recognize three projects from Bangladesh, Ireland and Morocco for their outstanding contributions to inclusive education. We believe that people should have the rights to have their literacy needs mesh, and by having this prize, it gives international recognition for that work, but also will help us to fund and sustain the work in the years to come. It gives up a lot of strength. Hopefully, we will be able to scale up more communities and internationally in other countries. Fang did 20 years ago, the UNESCO Confucius Prize for Literacy, honors individuals and institutions that have made outstanding contribution",
+      "link": "https://www.youtube.com/watch?v=-SG9a5M-KCI",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "-SG9a5M-KCI",
+      "transcript_method": "whisper",
+      "transcript_chars": 1726,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Webinar: Digital Skills Unleashed - Launch of new global multi-lingual course for literacy educators - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] On 18 February 2026, the UNESCO Institute for Lifelong Learning (UIL) held a global launch webinar to unveil a new multi-lingual course designed to strengthe... Published February 19, 2026",
+      "link": "https://www.youtube.com/watch?v=di1n07s8c9I",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "di1n07s8c9I",
+      "transcript_method": "description",
+      "transcript_chars": 211,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Global Media and Information Literacy Week Feature ...",
+      "summary": "[DESCRIPTION FALLBACK] Enjoy the videos and music you love, upload original content, and share it all with friends, family, and the world on YouTube.",
+      "link": "https://www.youtube.com/watch?v=7YuujfROZVI",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "7YuujfROZVI",
+      "transcript_method": "description",
+      "transcript_chars": 149,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "problem": "Global math gender gap is widening, with girls' math gains slowing down, despite increased investment in preschool programs and data-driven approaches to education.",
+    "root_cause": "The widening gender gap in math education is driven by systemic inequities in early childhood education, lack of targeted support for girls, and the persistence of stereotypes that limit female participation in STEM fields.",
+    "severity": "MEDIUM",
+    "leverage_points": [
+      "Education systems and policymakers are the primary actors in addressing this issue.",
+      "Data-driven approaches and early intervention programs are critical to closing the gap."
+    ],
+    "proposed_actions": [
+      {
+        "action": "Implement targeted early childhood education programs for girls, with a focus on math and STEM skills.",
+        "measurable_goal": "Increase girls' math proficiency by 15% in preschool programs within 2 years.",
+        "timeframe": "2 years"
+      },
+      {
+        "action": "Develop and scale multi-lingual literacy and math education tools for under-resourced communities.",
+        "measurable_goal": "Expand access to digital learning resources in low-income regions by 2028.",
+        "timeframe": "5 years"
+      }
+    ],
+    "evidence": [
+      "Global math gender gap report: 'Whatever we do, the action we take to address the issue must start quite early and must be very targeted.'",
+      "Preschool enrollment and spending are at record highs, but program quality remains a concern."
+    ],
+    "generalization": "This issue is interconnected with education quality, data-driven decision-making, and systemic inequities in early childhood education. It affects not only girls but also the broader development of future leaders and innovators.",
+    "summary": "The widening math gender gap highlights the need for early intervention and targeted education programs to ensure equitable learning opportunities for all students. Addressing this issue is critical for building a more inclusive and equitable education system.",
+    "risk_level": "MEDIUM"
+  },
+  "raw_items": [
+    {
+      "title": "Global Math Gains for Girls Are Slipping, Report Finds",
+      "summary": "The global math gender gap: “Whatever we do, the action we take to address the issue must start quite early and must be very targeted.”",
+      "link": "https://www.edsurge.com/news/2026-05-01-girls-around-the-globe-are-losing-gains-in-math-data-shows",
+      "published": "Fri, 01 May 2026 01:00:00 -0700",
+      "source_type": "rss"
+    },
+    {
+      "title": "Quality Concerns Remain as States Invest More Than Ever in Preschool Programs",
+      "summary": "A new report found states hit an all-time high for both spending and enrollment, but the quality of the programs remains a concern.",
+      "link": "https://www.edsurge.com/news/2026-04-30-quality-concerns-remain-as-states-invest-more-than-ever-in-preschool-programs",
+      "published": "Thu, 30 Apr 2026 09:21:04 -0700",
+      "source_type": "rss"
+    },
+    {
+      "title": "I Built Radical Possibility in Schools — and It Nearly Broke Me",
+      "summary": "What does it mean to “save your own life” in education? Former Voices of Change fellow Dee Watson reflects on burnout, resistance and radical ...",
+      "link": "https://www.edsurge.com/news/2026-04-29-i-built-radical-possibility-in-schools-and-it-nearly-broke-me",
+      "published": "Wed, 29 Apr 2026 01:00:00 -0700",
+      "source_type": "rss"
+    },
+    {
+      "title": "Districts Relying More on Data to Identify Gifted Students",
+      "summary": "Schools are finding new, data-driven ways to re-approach gifted and talented programs -- with a focus on inclusivity.",
+      "link": "https://www.edsurge.com/news/2026-04-23-districts-relying-more-on-data-to-identify-gifted-students",
+      "published": "Thu, 23 Apr 2026 01:02:00 -0700",
+      "source_type": "rss"
+    },
+    {
+      "title": "Global education",
+      "summary": "Global education is a mental development program that seeks to improve global human development based on the understanding of global dynamics, through the various sectors of human development delivery. In formal education, as a mode of human development delivery, it is integrated into formal educational programs, as an advanced program where global dimensions to local problems are appreciated thro",
+      "link": "https://en.wikipedia.org/wiki/Global_education",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Global Education - North-South Centre - The Council of Europe",
+      "summary": "Global education is education that opens people's eyes and minds to the realities of the globalised world and awakens them to bring about a world of greater justice, equity and Human Rights for all. Global education is a pedagogical approach that fosters multiple perspectives and the ...",
+      "link": "https://www.coe.int/en/web/north-south-centre/global-education",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Literacy",
+      "summary": "Literacy is the ability to read and write, and illiteracy is the inability to read and write. Some researchers suggest that the study of literacy as a concept can be divided into two periods: the period before 1950, when literacy was understood solely as alphabetical literacy (understanding the meanings of words without necessarily being able to use words); and the period after 1950, when literacy",
+      "link": "https://en.wikipedia.org/wiki/Literacy",
+      "source_type": "ddg"
+    },
+    {
+      "title": "What you need to know about literacy",
+      "summary": "March 24, 2026 - Literacy is a continuum of learning and proficiency in reading, writing and using numbers throughout life and is part of a larger set of skills, which include digital skills, media literacy, education for sustainable development and global citizenship as well as job-specific skills.",
+      "link": "https://www.unesco.org/en/literacy/need-know",
+      "source_type": "ddg"
+    },
+    {
+      "title": "[YT] 2025 UNESCO Confucius Prize for Literacy highlights global education efforts - YouTube",
+      "summary": "A celebration of both heritage and humanity, the 20th UNESCO Confucius Prize for Literacy ceremony took place in Shufu, hometown of the Asian Chinese philosopher. These years awards recognize three projects from Bangladesh, Ireland and Morocco for their outstanding contributions to inclusive education. We believe that people should have the rights to have their literacy needs mesh, and by having this prize, it gives international recognition for that work, but also will help us to fund and sustain the work in the years to come. It gives up a lot of strength. Hopefully, we will be able to scale up more communities and internationally in other countries. Fang did 20 years ago, the UNESCO Confucius Prize for Literacy, honors individuals and institutions that have made outstanding contribution",
+      "link": "https://www.youtube.com/watch?v=-SG9a5M-KCI",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "-SG9a5M-KCI",
+      "transcript_method": "whisper",
+      "transcript_chars": 1726,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Webinar: Digital Skills Unleashed - Launch of new global multi-lingual course for literacy educators - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] On 18 February 2026, the UNESCO Institute for Lifelong Learning (UIL) held a global launch webinar to unveil a new multi-lingual course designed to strengthe... Published February 19, 2026",
+      "link": "https://www.youtube.com/watch?v=di1n07s8c9I",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "di1n07s8c9I",
+      "transcript_method": "description",
+      "transcript_chars": 211,
+      "has_full_transcript": false
+    }
+  ]
+}

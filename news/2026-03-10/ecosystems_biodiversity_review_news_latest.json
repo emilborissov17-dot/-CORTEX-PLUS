@@ -1,0 +1,73 @@
+{
+  "axis": "ECOSYSTEMS_BIODIVERSITY_REVIEW",
+  "fetched_at": "2026-03-10T11:31:59.339426+00:00",
+  "smart_query": "ecosystems biodiversity review",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3
+  },
+  "analysis": {
+    "summary": "Изкръгнати са признаци за древна форма на живот в непредвидено място, а откриха морска дъждовна гъбичка, която убива токсични водорасли, което подпомага екосистемната стабилност. Откритията подчертават важността на биоразнообразието за устойчивото развитие.",
+    "key_developments": [
+      "d1",
+      "d2"
+    ],
+    "sentiment": "POSITIVE",
+    "urgency": "MEDIUM",
+    "open_source_momentum": "Силна подкрепа от open-source проекти (protontypes/open-sustainable-technology, trefle-api) за климатични и ботанически иновации.",
+    "scientific_frontier": "Използване на AI за генерация на видео и анализ на графове, както и нови подходи към ботанически API и датасети за гори.",
+    "relevance_to_goal": "Висока релевантност към целта за устойчиво цивилизационно достойнство, като комбинира научни пророчици, технологични иновации и защита на биоразнообразието."
+  },
+  "sentiment": "POSITIVE",
+  "urgency": "MEDIUM",
+  "summary": "Изкръгнати са признаци за древна форма на живот в непредвидено място, а откриха морска дъждовна гъбичка, която убива токсични водорасли, което подпомага екосистемната стабилност. Откритията подчертават важността на биоразнообразието за устойчивото развитие.",
+  "key_developments": [
+    "d1",
+    "d2"
+  ],
+  "open_source_momentum": "Силна подкрепа от open-source проекти (protontypes/open-sustainable-technology, trefle-api) за климатични и ботанически иновации.",
+  "scientific_frontier": "Използване на AI за генерация на видео и анализ на графове, както и нови подходи към ботанически API и датасети за гори.",
+  "github_repos": [
+    {
+      "title": "protontypes/open-sustainable-technology",
+      "snippet": "A directory and analysis of the open source ecosystem in the areas of climate change, sustainable energy, biodiversity and natural resources.  https://docs.getgrist.com/gSscJkc5Rb1R/OpenSustaintech",
+      "stars": 2457,
+      "url": "https://github.com/protontypes/open-sustainable-technology",
+      "updated": "2026-03-10",
+      "source": "GitHub"
+    },
+    {
+      "title": "treflehq/trefle-api",
+      "snippet": "🍀 Trefle is a botanical JSON REST API for plants species, allowing you to search and query over all the registered species, and build the next gardening apps and farming robots.",
+      "stars": 567,
+      "url": "https://github.com/treflehq/trefle-api",
+      "updated": "2026-03-08",
+      "source": "GitHub"
+    },
+    {
+      "title": "blutjens/awesome-forests",
+      "snippet": "🌳 A curated list of ground-truth forest datasets for the machine learning and forestry community.",
+      "stars": 358,
+      "url": "https://github.com/blutjens/awesome-forests",
+      "updated": "2026-02-21",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "HiAR: Efficient Autoregressive Long Video Generation via Hierarchical Denoising",
+      "snippet": "Autoregressive (AR) diffusion offers a promising framework for generating videos of theoretically infinite length. However, a major challenge is maintaining temporal continuity while preventing the progressive quality degradation caused by error accumulation. To ensure continuity, existing methods t",
+      "url": "https://arxiv.org/abs/2603.08703v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "A note on approximating the average degree of bounded arboricity graphs",
+      "snippet": "Estimating the average degree of graph is a classic problem in sublinear graph algorithm. Eden, Ron, and Seshadhri (ICALP 2017, SIDMA 2019) gave a simple algorithm for this problem whose running time depended on the graph arboricity, but the underlying simplicity and associated analysis were buried ",
+      "url": "https://arxiv.org/abs/2603.08694v1",
+      "source": "arXiv"
+    }
+  ]
+}

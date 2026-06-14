@@ -1,0 +1,101 @@
+{
+  "axis": "INEQUALITY_POVERTY_REVIEW",
+  "domain": "civilization",
+  "timestamp": "2026-05-17T14:14:05.204782+00:00",
+  "sources_count": 7,
+  "rss_count": 0,
+  "ddg_count": 6,
+  "youtube_count": 1,
+  "youtube_items": [
+    {
+      "title": "[YT] The ONLY 8 YouTube Shorts Niches That Will Make You Rich In 2025",
+      "summary": "I'm about to show you eight viral YouTube shorts niches that can make you rich from channels that you can literally start printing with right now to a sevenf figureure channel idea that could change your life and I'll be ranking them on this ladder. The higher we go, the more profitable the niches become. The catch is that the niches get harder and harder to pull off. So, not only will I be giving you the exact road map and details to make this work, but at the very top of the ladder, I'll be showing you what I believe is the best YouTube shorts niche with insane potential for any of you watching to make a generational amount of money. That might sound like I'm overselling, but I am genuinely serious. Now, I know when I tell you this first niche, a lot of you are going to spam hundreds of ",
+      "link": "https://www.youtube.com/watch?v=MEZuuEgz7pU",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "MEZuuEgz7pU",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "Повече от 430 милиона души живеят в бедност в Субсахарска Африка, където над 40% от населението живее в крайна бедност.",
+    "root_cause": "Неравенството и недостатъчното развитие на икономиките в региона водят до висока степен на бедност и ограничено достъп до образование, здраве и икономически възможности.",
+    "severity": "CRITICAL",
+    "leverage_points": [
+      "Развитието на местните икономики и инвестиции в образование и здраве",
+      "Повишаване на международната подкрепа и прозрачността на помощи"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Инвестиции в образование и здраве в Субсахарска Африка",
+        "measurable_goal": "Снижение на бедността с 10% в следващите 10 години",
+        "timeframe": "дългосрочно"
+      },
+      {
+        "action": "Укрепване на местните икономики чрез подкрепа на малки предприятия и селското стопанство",
+        "measurable_goal": "Увеличение на броя на хората с работна възможност с 15% в следващите 5 години",
+        "timeframe": "средносрочно"
+      }
+    ],
+    "evidence": [
+      "430 милиона души живеят в бедност в Субсахарска Африка (2026)",
+      "Над 40% от населението живее в крайна бедност (2018)"
+    ],
+    "generalization": "Този проблем е свързан с домейните 'civilization' и 'inequality', както и с 'poverty' и 'development'. Високото неравенство и бедността в региона ускоряват разпада на социалната стабилност и увреждат здравословната биосфера.",
+    "summary": "Субсахарска Африка има висока степен на бедност и неравенство, което представлява критичен проблем за устойчивостта на цивилизацията.",
+    "risk_level": "CRITICAL"
+  },
+  "raw_items": [
+    {
+      "title": "Sub-Saharan Africa - Wikipedia",
+      "summary": "Sub-Saharan Africa is a key player in the global minerals market, producing over 70% of the world's cobalt and hosting about 50% of its reserves in the Democratic Republic of the Congo (DRC). The region also harbors significant lithium deposits in Zimbabwe, DR Congo, and Mali.[101].",
+      "link": "https://en.wikipedia.org/wiki/Sub-Saharan_Africa",
+      "source_type": "ddg"
+    },
+    {
+      "title": "One in six people live in Sub-Saharan Africa, but... - Our World in Data",
+      "summary": "Here, Sub-Saharan Africa accounts for 67% of the global population living in extreme poverty, contrasting sharply with the much smaller percentage attributed to the Rest of the World. Text on the left states, \"16% of all people live in Sub-Saharan Africa,\" and an arrow points towards it.",
+      "link": "https://ourworldindata.org/data-insights/one-in-six-people-live-in-sub-saharan-africa-but-it-accounts-for-two-thirds-of-global-extreme-poverty",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Poverty Rate by Country 2026 | World Population Review",
+      "summary": "More than 430 million of these people live in Sub-Saharan Africa, the poorest region in the world, where more than 40% of people lived in extreme poverty as of 2018. Many countries in which poverty is rising have been plagued by political instability or conflict.",
+      "link": "https://worldpopulationreview.com/country-rankings/poverty-rate-by-country",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Latin America - Wikipedia",
+      "summary": "Latin America has the highest rates of non-marital childbearing in the world, with 55–74% of all children in the region born to unmarried parents.[250] In most countries in this traditionally Catholic region, children born outside marriage are now the norm.",
+      "link": "https://en.wikipedia.org/wiki/Latin_America",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Indigenous people living in poverty by country LATAM | Statista",
+      "summary": "Poverty rate by gender in Latin American countries 2024.Economic Commission for Latin America and the Caribbean. (November 20, 2025). Share of indigenous population living in poverty in selected Latin American countries in 2024, by country [Graph].",
+      "link": "https://www.statista.com/statistics/1287593/indigenous-population-living-poverty-ltin-american-countries/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Closing inequality gaps in Latin America and the Caribbean is possible",
+      "summary": "Poverty and inequality levels have worsened, public budgets remain strained due to the pandemic’s impact, and economic growth continues to fall short of its potential. Shockingly, nearly 18% of the population now lives on less than $3.1 a...",
+      "link": "https://acr.ippf.org/featured-perspective/closing-inequality-gaps-latin-america-and-caribbean-possible",
+      "source_type": "ddg"
+    },
+    {
+      "title": "[YT] The ONLY 8 YouTube Shorts Niches That Will Make You Rich In 2025",
+      "summary": "I'm about to show you eight viral YouTube shorts niches that can make you rich from channels that you can literally start printing with right now to a sevenf figureure channel idea that could change your life and I'll be ranking them on this ladder. The higher we go, the more profitable the niches become. The catch is that the niches get harder and harder to pull off. So, not only will I be giving you the exact road map and details to make this work, but at the very top of the ladder, I'll be showing you what I believe is the best YouTube shorts niche with insane potential for any of you watching to make a generational amount of money. That might sound like I'm overselling, but I am genuinely serious. Now, I know when I tell you this first niche, a lot of you are going to spam hundreds of ",
+      "link": "https://www.youtube.com/watch?v=MEZuuEgz7pU",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "MEZuuEgz7pU",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ]
+}

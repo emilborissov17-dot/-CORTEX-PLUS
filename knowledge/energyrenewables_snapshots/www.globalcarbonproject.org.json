@@ -1,0 +1,208 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en"><!-- InstanceBegin template="/Templates/3column.dwt" codeOutsideHTMLIsLocked="false" -->
+<head>
+<!-- InstanceBeginEditable name="doctitle" -->
+<title>GCP : Global Carbon Project : Homepage</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<!-- InstanceEndEditable --><!-- InstanceBeginEditable name="meta" -->
+<meta name="description" content="The Global Carbon Project (GCP) was established in 2001 in recognition of the enormous scientific challenge and fundamentally critical nature of the issue for Earth sustainability.">
+<meta name="keywords" content="Global, Carbon, Project, GCP, world, cycle, Emission, emissions, emmission, emmissions, emmision, emmisions, dioxide, co2, co 2, ocean, forest, atmosphere, land, sea, footprint, vegetation, ">
+<!-- InstanceEndEditable -->
+<link rel="shortcut icon" href="favicon.ico">
+<link rel="icon" type="image/png" href="favicon.png">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="DC.Publisher" content="Global Carbon Project (GCP)">
+<meta name="DC.Title" content="Global Carbon Project (GCP)">
+<meta name="DC.Language" content="en">
+<link href="css/gcp.css" rel="stylesheet" type="text/css">
+<meta name="google-translate-customization" content="14086efab9930a89-702d210afa642498-g6e9c8d7fcbff3cf0-1b"></meta>
+<!-- InstanceBeginEditable name="head" --><!-- InstanceEndEditable -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-46392014-1', 'globalcarbonproject.org');
+  ga('send', 'pageview');
+
+</script>
+</head>
+<body>
+<!-- PAGEWRAPPER -->
+<div id="pagewrapper">
+  
+  <!-- TOP -->
+ <div id=bannertopnav><a href="http://www.futureearth.org/" target="_new" alt="Future Earth">Future Earth</a><span class="menupad"></span></div>
+  <div id=mainbanner><img src="global/images/theme/GCP_banner.png" alt="Global Carbon Project (GCP)" width="800" height="103px" border="0" usemap="#Logo" />
+    <map name="Logo">
+      <!-- <area shape="rect" coords="0,32,215,130" href="../index.htm" alt="Home"> -->
+      <area shape="rect" coords="0,0,215,98" href="index.htm" alt="Home">
+    </map>
+  </div>
+  <!-- /TOP -->
+  
+  <!-- TOPNAVIGATION -->
+  <ul id="bannerbottomnav">
+    <li></li> <!-- for spacing from the edge -->
+    <li><a href="index.htm" alt="Home">Home</a></li>
+    <li class="bannerbottomnavsep">|</li>
+    <li><a href="http://www.globalcarbonatlas.org/" target="_new" alt="Carbon Atlas">Carbon Atlas</a></li>
+    <li class="bannerbottomnavsep">|</li>
+    <li><a href="carbonbudget/index.htm" alt="Carbon budget">Carbon Budget</a></li>
+    <li class="bannerbottomnavsep">|</li>
+    <li><a href="methanebudget/index.htm" alt="Methane Budget">CH<sub>4</sub> Budget</a></li>
+    <li class="bannerbottomnavsep">|</li>
+    <li><a href="nitrousoxidebudget/index.htm" alt="Nitrous Oxide Budget">N<sub>2</sub>O Budget</a></li>
+    <li class="bannerbottomnavsep">|</li>
+    <li><a href="reccap/index.htm" alt="RECCAP">RECCAP</a></li>
+    <li class="bannerbottomnavsep">|</li>
+    <li><a href="http://www.cger.nies.go.jp/gcp/" target="_new" alt="Urbanization">Urbanization</a></li>
+    <li class="bannerbottomnavsep">|</li>
+    <li><a href="search.asp" alt="Search">Search</a></li>
+    <li></li> <!-- for spacing from the edge -->
+  </ul>
+  <!-- /TOPNAVIGATION -->
+  
+  <!-- PAGEBODY -->
+  <div id="pagebody">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" summary="layout table">
+      <tr>
+        <td width="160" valign="top" id="subnavcell"><!-- LEFTNAV -->
+          <div id="navcontainer">
+            <div id="leftnav">
+              <ul>
+                <li class="snavli">
+                   <div id="translate" class="snava">
+                     Translate this site
+                   </div>
+                   <div id="google_translate_element">
+                     <script type="text/javascript">
+                       function googleTranslateElementInit() {
+                         new google.translate.TranslateElement({pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, autoDisplay: false, gaTrack: true, gaId: 'UA-46392014-1'}, 'google_translate_element');
+                       }
+                     </script>
+                     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+                  </div>
+                </li>
+                <li><a href="about/index.htm" title="About GCP" class="sub1">About GCP</a></li>
+                <li><a href="activities/index.htm" title="Activities" class="sub1">Activities</a></li>
+                <li><a href="meetings/index.htm" title="Meetings" class="sub1">Meetings</a></li>
+                <li><a href="products/index.htm" title="Publications" class="sub1">Publications</a></li>
+                <li><a href="science/index.htm" title="Science" class="sub1">Science</a></li>
+                <li><a href="research/index.htm" title="Research Programs" class="sub1">Research Programs</a></li>
+                <li><a href="carbonneutral/index.htm" title="Carbon Neutral" class="sub1">Carbon Neutral</a></li>
+                <li><a href="products/internetResources.htm" title="Find selected Internet links" class="sub1">Internet Resources</a></li>
+                <li><a href="sitemap.htm" title="Site Map" class="sub1">Site Map</a></li>
+                <li><a href="contact.htm" title="Contact Us" class="sub1">Contact Us</a></li>
+              </ul>
+              <div class="leftnavbottom"></div>
+            </div>
+          </div>
+          <!-- /LEFTNAV -->
+        </td>
+        <td valign="top"><!-- CONTENT CONTAINER -->
+          <div id="contentcontainer">
+            <!-- CONTENT -->
+            <div class="content"><!-- InstanceBeginEditable name="EditRegionContent" -->
+              <h1>The Global Carbon Project</h1>
+              <p>The Global Carbon Project (GCP) integrates knowledge of greenhouse gases for human activities and the Earth system. Our projects include global budgets for three dominant greenhouse gases &mdash; carbon dioxide, methane, and nitrous oxide &mdash; and complementary efforts in urban, regional, cumulative, and negative emissions.</p>
+              <table width="99%" border="0" align="center" cellpadding="5" cellspacing="0" class="content" id="tablenormal">
+                <tr class="borderbottom">
+                   <td width="32%" align="center" class="borderbottomright">
+                     <strong>
+                       The GHG budget of the permafrost region
+                     </strong>
+                  </td>
+                  <td width="32%" align="center" class="borderbottomleft">
+		            <strong>
+                      GCP Boston Office <br />Job Opportunities
+                    </strong>
+                  </td>
+                  <td width="32%" align="center" class="borderbottomleft">
+		            <strong>
+			           Global Carbon Atlas
+                    </strong>
+                  </td>
+                 
+                </tr>
+                <tr>
+                  <td width="32%" align="center" valign="top" class="alignCentre">
+                    <a href="news/TheGHGBudgetOfThePermafrostRegion.html" class="small">
+                       <img src="global/images/general/TheGHGBudgetOfThePermafrostRegion_Thumb1.jpg" class="border" width="117" height="150" hspace="8" vspace="3" border="0">
+                    </a>
+                    <a href="news/TheGHGBudgetOfThePermafrostRegion.html" class="small">research papers</a>
+                  </td>
+                  <td width="32%" align="center" valign="top" class="borderleft">
+			        <a href="gcpjobs.htm" class="small">
+                       <img src="global/images/general/BostonCollegeGCPJobs.jpg" class="border" alt="inside of Boston College building"  title="GCP jobs at Boston College" width="117" height="150" hspace="8" vspace="3" border="0">
+                    </a>
+                    <a href="gcpjobs.htm" class="small">jobs</a>
+                  </td>
+                 <td width="32%" align="center" valign="top" class="borderleft">
+                  <a href="https://globalcarbonatlas.org/" class="small">
+                       <img src="global/images/general/globalCarbonAtlas_Thumb.png" class="border"
+                       width="117" height="150" hspace="8" vspace="3" border="0">
+                    </a>
+                 <a href="https://globalcarbonatlas.org/" class="small">website</a>
+                  </td>
+                  
+                </tr>
+              </table>
+            <!-- InstanceEndEditable --></div>
+            <!-- /CONTENT -->
+          </div>
+          <!-- /CONTENT CONTAINER -->
+        </td>
+        <td width="150" valign="top"><!-- SIDEBAR -->
+          <div id="sidebarcontainer"><!-- InstanceBeginEditable name="EditRegionSidebar" -->
+            <div id="sidebar">
+              <table width="100%" border="0" cellspacing="0" cellpadding="6">
+                <tr>
+                  <th>Science Highlights</th>
+                </tr>
+                <tr>
+                  <td align="center"><a href="carbonbudget/index.htm"><img src="global/images/carbonbudget/carbonBudget2025_small.png" class="border" alt="Global Carbon Budget 2025" width="140" height="90" border="0"></a><br>
+                  <span class="small"><a href="carbonbudget/index.htm">Carbon Budget 2025</a></span></td>
+                </tr>
+                <tr>
+                  <td align="center"><a href="nitrousoxidebudget/index.htm"><img src="nitrousoxidebudget/24/files/nitrousOxideBudget-2024-small.png" class="border" alt="Global Nitrous Oxide Budget 2024" width="140" height="90" border="0"></a><br>
+                  <span class="small"><a href="nitrousoxidebudget/index.htm">N<sub>2</sub>O Budget 2024</a></span></td>
+                </tr>
+				<tr>
+				  <td align="center"><a href="methanebudget/index.htm"><img src="methanebudget/24/files/methaneBudget-2024-small.png" class="border" alt="Methane Budget 2020" 
+				  width="140" height="90" border="0"></a><br>
+                  <span class="small"><a href="methanebudget/index.htm">Methane Budget 2024</a></span></td>
+			    </tr>
+				<tr>
+                  <td align="center"><span class="small"><br>
+                  <a href="news/ScienceHighlights.html">More Highlights...</a></span></td>
+                </tr>
+              </table>
+            </div>
+            <!-- InstanceEndEditable --></div>
+          <!-- /SIDEBAR -->
+        </td>
+      </tr>
+    </table>
+  </div>
+  <!-- /PAGEBODY -->
+  
+  <!-- FOOTER -->
+    <ul id="footer">
+      <li>&copy; GCP 2001-2025</li>
+      <li class ="footersep">|</li>
+      <li>Global Carbon Project</li>
+      <li class ="footersep">|</li>
+      <li><script type="text/javascript"> document.write("<n uers=\"znvygb:vasb@tybonypneobacebwrpg.bet\" ery=\"absbyybj\">vasb@tybonypneobacebwrpg.bet</n>".replace(/[a-zA-Z]/g, function(c){return String.fromCharCode((c<="Z"?90:122)>=(c=c.charCodeAt(0)+13)?c:c-26);})); </script></li>
+      <li class ="footersep">|</li>
+      <li><a href="disclaimer.htm" alt="Disclaimer">Disclaimer</a></li>
+    </ul>
+  <!-- /FOOTER -->
+
+<!-- /PAGEWRAPPER -->
+<script src="https://static.getclicky.com/js" type="text/javascript"></script>
+<script type="text/javascript">try{ clicky.init(66383901); }catch(err){}</script>
+<noscript><p><img alt="Clicky" width="1" height="1" src="http://in.getclicky.com/66383901ns.gif" /></p></noscript>
+</body>
+<!-- InstanceEnd --></html>

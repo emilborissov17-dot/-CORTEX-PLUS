@@ -1,0 +1,56 @@
+{
+  "axis": "CULTURE_MEDIA_REVIEW",
+  "fetched_at": "2026-05-01T13:10:55.446725+00:00",
+  "smart_query": "media disinformation culture",
+  "sources_count": {
+    "wiki": 0,
+    "gdelt": 3,
+    "arxiv": 2,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [],
+  "gdelt": [
+    {
+      "title": "В ДУ состоится семинар по медиаграмотности для сениоров « Понимай информацию !» ",
+      "snippet": "В ДУ состоится семинар по медиаграмотности для сениоров « Понимай информацию !» ",
+      "url": "https://www.gorod.lv/novosti/364092-v-du-sostoitsya-seminar-po-mediagramotnosti-dlya-seniorov-ponimai-informatsiu",
+      "source": "gorod.lv"
+    },
+    {
+      "title": "STRATCOM Zirvesi 2026  da  Küresel Düzende Yeni Çerçeve : Stratejik Ýletiþim Perspektifi  Paneli yapýldý",
+      "snippet": "STRATCOM Zirvesi 2026  da  Küresel Düzende Yeni Çerçeve : Stratejik Ýletiþim Perspektifi  Paneli yapýldý",
+      "url": "https://www.star.com.tr/guncel/stratcom-zirvesi-2026da-kuresel-duzende-yeni-cerceve-stratejik-iletisim-perspektifi-paneli-yapildi-haber-2005467/",
+      "source": "star.com.tr"
+    },
+    {
+      "title": "Švicarski glasači odbacili plan smanjenja financiranja za državnu televiziju",
+      "snippet": "Švicarski glasači odbacili plan smanjenja financiranja za državnu televiziju",
+      "url": "https://www.index.hr/vijesti/clanak/svicarski-glasaci-odbacili-plan-smanjenja-financiranja-za-drzavnu-televiziju/2768917.aspx",
+      "source": "index.hr"
+    }
+  ],
+  "github_repos": [],
+  "arxiv_papers": [
+    {
+      "title": "Social Media Data Toolkit: Standardization and Anonymization of Social Network Datasets",
+      "snippet": "The rapid diversification of social media platforms and the increasing restrictions on official APIs have significantly complicated cross-platform analysis. Researchers are often forced to rely on heterogeneous datasets obtained through web scraping and historical archives; however they often lack s",
+      "url": "https://arxiv.org/abs/2604.27710v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Temporal and Content Coupling Analysis of Social Media User Behavior",
+      "snippet": "News consumption behavior is shaped by the coupling between temporal dynamics and content selection. This study proposes a multi-scale temporal-content framework and validates it on two large real-world news datasets, MIND and Adressa. Results reveal hierarchical temporal patterns. At the macroscale",
+      "url": "https://arxiv.org/abs/2604.27530v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[Prominent Scientists, Faith Leaders, Policymakers and Artists Call for a Prohibition on Superintelligence, as Poll Shows Americans Don’t Want It] Initial signatories include AI pioneers Yoshua Bengio and Geoffrey Hinton, leading media voices Steve Bannon and Glenn Beck, Obama's National Security Advisor Susan Rice, business trailblazers Steve Wozniak and Richard Branson, five Nobel Laureates, former Irish President Mary Robinson, actors Stephen Fry and Joseph Gordon-Levitt, and hundreds of others.",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}
