@@ -1,0 +1,10 @@
+{
+  "cycle_id": "cycle_test_2",
+  "count": 1,
+  "decisions": [
+    {
+      "action": "monitor",
+      "priority": "HIGH"
+    }
+  ]
+}
