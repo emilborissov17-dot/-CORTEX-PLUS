@@ -1,0 +1,77 @@
+{
+  "cycle_id": "cycle_test_2",
+  "timestamp": "2026-06-14T07:24:15.496605+00:00",
+  "count": 7,
+  "signals": [
+    {
+      "source": "NOAA",
+      "category": "EARTH_HEALTH",
+      "domain": "atmosphere",
+      "metric": "co2_ppm",
+      "value": 432.44,
+      "delta": null,
+      "timestamp": "2026-05-09",
+      "raw": {}
+    },
+    {
+      "source": "USGS",
+      "category": "THREATS",
+      "domain": "geological",
+      "metric": "earthquake_magnitude",
+      "value": 5.8,
+      "delta": null,
+      "timestamp": "2026-05-09",
+      "raw": {}
+    },
+    {
+      "source": "USGS",
+      "category": "THREATS",
+      "domain": "geological",
+      "metric": "earthquake_magnitude",
+      "value": 4.2,
+      "delta": null,
+      "timestamp": "2026-05-09",
+      "raw": {}
+    },
+    {
+      "source": "UNHCR",
+      "category": "HUMAN_HEALTH",
+      "domain": "displacement",
+      "metric": "total_refugees",
+      "value": 43400000,
+      "delta": null,
+      "timestamp": "2026-05-09",
+      "raw": {}
+    },
+    {
+      "source": "arXiv",
+      "category": "PROGRESS",
+      "domain": "ai",
+      "metric": "arxiv_paper",
+      "value": "UniPool MoE",
+      "delta": null,
+      "timestamp": "2026-05-09",
+      "raw": {}
+    },
+    {
+      "source": "GBIF",
+      "category": "EARTH_HEALTH",
+      "domain": "biodiversity",
+      "metric": "species_observations_30d",
+      "value": 4933538,
+      "delta": null,
+      "timestamp": "2026-05-09",
+      "raw": {}
+    },
+    {
+      "source": "NOAA SWPC",
+      "category": "EARTH_HEALTH",
+      "domain": "solar",
+      "metric": "kp_index",
+      "value": 2.67,
+      "delta": null,
+      "timestamp": "2026-05-09",
+      "raw": {}
+    }
+  ]
+}

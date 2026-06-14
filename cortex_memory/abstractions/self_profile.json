@@ -1,0 +1,19 @@
+{
+  "total_cycles": 3,
+  "avg_goal_score": 0.8,
+  "best_goal_score": 0.85,
+  "sensor_reliability": {
+    "NOAA": 3,
+    "USGS": 6,
+    "UNHCR": 3,
+    "arXiv": 3,
+    "GBIF": 3,
+    "NOAA SWPC": 3
+  },
+  "weak_domains": [],
+  "strong_domains": [
+    "geological"
+  ],
+  "last_escalation": null,
+  "known_gaps": []
+}
