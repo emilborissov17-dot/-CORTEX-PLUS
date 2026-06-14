@@ -1,0 +1,123 @@
+{
+  "axis": "FOOD_REVIEW",
+  "domain": "planet",
+  "timestamp": "2026-05-03T08:44:12.002042+00:00",
+  "sources_count": 7,
+  "rss_count": 0,
+  "ddg_count": 4,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] State of Food Security and Nutrition in The World 2025",
+      "summary": "For the first time since 2019, the latest joint UN agency hunger report shows progress. The state of food security and nutrition in the world of 2025 reports that between 638 and 720 million people faced hunger in 2024. This represents about 8.2% 2% of the global population, down from 8.5% in 2023 and 8.7% in 2022. While this good news is welcome, progress around the globe has been unequal. Progress has been made in Southern Asia, Southeastern Asia, and South America. Hunger increased in Africa. More than 20% of the population faced hunger in 2024. Hunger has been steadily on the rise in Western Asia, reaching 12.7% in 2024. Projections show that we are not on track to meet the SDG target of eradicating hunger by 2030 and that 512 million people may still be chronically undernourished in 2",
+      "link": "https://www.youtube.com/watch?v=jZwPIMk-HoM",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "jZwPIMk-HoM",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 2477,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] The State of Food and Agriculture 2025 - YouTube",
+      "summary": "As the Food and Agriculture Organization of the United Nations marks 80 [music] years since its creation, we reflect on 8 decades of agricultural development driving [music] transformative change and the land undergirling the agricultural development required for a growing population. [music] Today, land supports 95% of our planet's food production while providing us with essential ecosystem services. And yet, human-induced land degradation is a pervasive global challenge. Land is a finite [music] resource that underpins food security, livelihoods, biodiversity, and ecosystem services. From productivity decline [music] to complete agricultural abandonment, land degradation is a threat to food security. A new report, the state of food and agriculture 2025, charts pathways to address land de",
+      "link": "https://www.youtube.com/watch?v=MOJGEn_HC8I",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "MOJGEn_HC8I",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 2958,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] SDG 2 | Zero Hunger 2025 | Review of Global Food Security ... - YouTube",
+      "summary": "Imagine a banquet table stretching across the world. At one end, abundance, fresh fruit, steaming bread, glittering plates of excess. At the other, emptiness. One in 11 people are still hungry. Welcome to the human buffet. Now, technically, hunger is improving slightly. The share of people facing hunger fell to 8.2% 2% in 2024, down from 8 8.5% the year before. But we are still above prepandemic levels, which means that COVID did not just steal our lives, it also stole our lunches. 2.3 billion people, that's nearly a third of humanity, face moderate to severe food insecurity. Some call it moderate. I just call it eating less so that your child can eat more. And here's the cruel irony. The world produces enough food for everyone. We just don't distribute it to everyone. So the problem isn't",
+      "link": "https://www.youtube.com/watch?v=MBd_KIrXUE8",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "MBd_KIrXUE8",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 2332,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "summary": "- Food security: Food security is the state of having reliable access to a sufficient quantity of affordable, healthy food. The availability of food for people of any class, gender, status, ethnicity, or religion is a\n- Global Food Security Index - Wikipedia: Food security differs around the world, ",
+    "risk_level": "UNKNOWN",
+    "trend": "UNKNOWN",
+    "key_events": [
+      "Food security",
+      "Global Food Security Index - Wikipedia",
+      "Hunger"
+    ],
+    "insights": [],
+    "youtube_insights": [],
+    "relevance_to_goal": "",
+    "generalization": ""
+  },
+  "raw_items": [
+    {
+      "title": "Food security",
+      "summary": "Food security is the state of having reliable access to a sufficient quantity of affordable, healthy food. The availability of food for people of any class, gender, status, ethnicity, or religion is another element of food protection. Similarly, household food security is considered to exist when all the members of a family have consistent access to enough food for an active, healthy life. Food-se",
+      "link": "https://en.wikipedia.org/wiki/Food_security",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Global Food Security Index - Wikipedia",
+      "summary": "Food security differs around the world, with some regions being much more prone to food insecurity due to both lack of fertile land, as well as capital that could procure sufficient food...",
+      "link": "https://en.wikipedia.org/wiki/Global_Food_Security_Index",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Hunger",
+      "summary": "In politics, humanitarian aid, and the social sciences, hunger is defined as a condition in which an individual does not have the physical or financial capability to consume sufficient food to meet basic nutritional needs for a sustained period. In the field of hunger relief, the term hunger is used in a sense that surpasses the typical desire for food that all humans experience, also referred to ",
+      "link": "https://en.wikipedia.org/wiki/Hunger",
+      "source_type": "ddg"
+    },
+    {
+      "title": "What is Hunger. The images we see on television. The | Medium",
+      "summary": "It is the day-in-day-out hunger that over 1 billion people suffer, that tackles life more than famine. What is really is hunger Is it the gnawing pain in the stomach when you miss a meal?",
+      "link": "https://medium.com/@tellabu3/what-is-hunger-552357c33e54",
+      "source_type": "ddg"
+    },
+    {
+      "title": "[YT] State of Food Security and Nutrition in The World 2025",
+      "summary": "For the first time since 2019, the latest joint UN agency hunger report shows progress. The state of food security and nutrition in the world of 2025 reports that between 638 and 720 million people faced hunger in 2024. This represents about 8.2% 2% of the global population, down from 8.5% in 2023 and 8.7% in 2022. While this good news is welcome, progress around the globe has been unequal. Progress has been made in Southern Asia, Southeastern Asia, and South America. Hunger increased in Africa. More than 20% of the population faced hunger in 2024. Hunger has been steadily on the rise in Western Asia, reaching 12.7% in 2024. Projections show that we are not on track to meet the SDG target of eradicating hunger by 2030 and that 512 million people may still be chronically undernourished in 2",
+      "link": "https://www.youtube.com/watch?v=jZwPIMk-HoM",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "jZwPIMk-HoM",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 2477,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] The State of Food and Agriculture 2025 - YouTube",
+      "summary": "As the Food and Agriculture Organization of the United Nations marks 80 [music] years since its creation, we reflect on 8 decades of agricultural development driving [music] transformative change and the land undergirling the agricultural development required for a growing population. [music] Today, land supports 95% of our planet's food production while providing us with essential ecosystem services. And yet, human-induced land degradation is a pervasive global challenge. Land is a finite [music] resource that underpins food security, livelihoods, biodiversity, and ecosystem services. From productivity decline [music] to complete agricultural abandonment, land degradation is a threat to food security. A new report, the state of food and agriculture 2025, charts pathways to address land de",
+      "link": "https://www.youtube.com/watch?v=MOJGEn_HC8I",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "MOJGEn_HC8I",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 2958,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] SDG 2 | Zero Hunger 2025 | Review of Global Food Security ... - YouTube",
+      "summary": "Imagine a banquet table stretching across the world. At one end, abundance, fresh fruit, steaming bread, glittering plates of excess. At the other, emptiness. One in 11 people are still hungry. Welcome to the human buffet. Now, technically, hunger is improving slightly. The share of people facing hunger fell to 8.2% 2% in 2024, down from 8 8.5% the year before. But we are still above prepandemic levels, which means that COVID did not just steal our lives, it also stole our lunches. 2.3 billion people, that's nearly a third of humanity, face moderate to severe food insecurity. Some call it moderate. I just call it eating less so that your child can eat more. And here's the cruel irony. The world produces enough food for everyone. We just don't distribute it to everyone. So the problem isn't",
+      "link": "https://www.youtube.com/watch?v=MBd_KIrXUE8",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "MBd_KIrXUE8",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 2332,
+      "has_full_transcript": true
+    }
+  ]
+}

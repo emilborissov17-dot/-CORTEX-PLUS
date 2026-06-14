@@ -1,0 +1,81 @@
+{
+  "axis": "CULTURE_MEDIA_REVIEW",
+  "fetched_at": "2026-03-22T17:30:40.855945+00:00",
+  "smart_query": "media disinformation culture",
+  "sources_count": {
+    "wiki": 0,
+    "gdelt": 3,
+    "arxiv": 2,
+    "github": 3,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [],
+  "gdelt": [
+    {
+      "title": "В ДУ состоится семинар по медиаграмотности для сениоров « Понимай информацию !» ",
+      "snippet": "В ДУ состоится семинар по медиаграмотности для сениоров « Понимай информацию !» ",
+      "url": "https://www.gorod.lv/novosti/364092-v-du-sostoitsya-seminar-po-mediagramotnosti-dlya-seniorov-ponimai-informatsiu",
+      "source": "gorod.lv"
+    },
+    {
+      "title": "Finnish children learn media literacy at 3 years old -- for protection against Russian propaganda",
+      "snippet": "Finnish children learn media literacy at 3 years old -- for protection against Russian propaganda",
+      "url": "https://nypost.com/2026/01/05/world-news/finnish-children-learn-media-literacy-at-3-years-old-for-protection-against-russian-propaganda/",
+      "source": "nypost.com"
+    },
+    {
+      "title": "TROGODIŠNJACI NA DEZINFORMATIVNOJ OBUCI : Male Fince u školama uče kako da prepoznaju lažne vesti",
+      "snippet": "TROGODIŠNJACI NA DEZINFORMATIVNOJ OBUCI : Male Fince u školama uče kako da prepoznaju lažne vesti",
+      "url": "https://www.novosti.rs/planeta/svet/1563188/trogodisnjaci-dezinformativnoj-obuci-male-fince-skolama-uce-kako-prepoznaju-lazne-vesti",
+      "source": "novosti.rs"
+    }
+  ],
+  "github_repos": [
+    {
+      "title": "Duffy12150557/Security-Research-Toolkit",
+      "snippet": "Security Research Toolkit — Video and image analysis tool for neural inpainting and AI-generated content detection with SORA signature extraction, temporal consistency analysis, CNN artifact detection",
+      "stars": 33,
+      "url": "https://github.com/Duffy12150557/Security-Research-Toolkit",
+      "updated": "2026-03-13",
+      "source": "GitHub"
+    },
+    {
+      "title": "bbidwell85/Totality",
+      "snippet": "Analyze quality, track collection completeness, find upgrades, manage media wishlists.",
+      "stars": 13,
+      "url": "https://github.com/bbidwell85/Totality",
+      "updated": "2026-03-22",
+      "source": "GitHub"
+    },
+    {
+      "title": "AFLucas-UOM/Accurate-Name-Extraction",
+      "snippet": "2026 IEEE Conference on Artificial Intelligence (CAI26) · A modular computer vision and NLP pipeline for automated extraction of personal names from broadcast news videos, combining YOLOv12-based news",
+      "stars": 3,
+      "url": "https://github.com/AFLucas-UOM/Accurate-Name-Extraction",
+      "updated": "2026-03-06",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Information Pathways in Online Science Communication: The Role of Platform Actors and News Media",
+      "snippet": "Online discussions of science involve complex interactions among experts, news media, and social media users as they interpret and disseminate scientific findings. While prior work has examined these actors in isolation, their interplay in shaping science communication remains poorly understood. Usi",
+      "url": "https://arxiv.org/abs/2603.17249v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "A Multi-Level Data-driven Framework for Understanding Perceptions Towards Cycling Infrastructure Across Regions Leveraging Social Media Discourse",
+      "snippet": "Cycling plays an important role in sustainable urban mobility, yet how people perceive cycling infrastructure varies widely and remains challenging to assess at large spatial scales. Existing research has mainly relied on surveys or short-form social media data and has often focused on individual ci",
+      "url": "https://arxiv.org/abs/2603.17221v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[The 6 eras of NBA fashion — from restrained to radical | Mitchell S. Jackson] What are you wearing, and why? This is the question that writer and TED Fellow Mitchell S. Jackson asks as he unpacks the six eras of NBA style. Tracing an arc from Bill Russell to Lebron James and beyond, he explores how players use fashion on and off the court to challenge the limits placed upon them — revealing a deeper story about culture, identity and power.Learn more about our flagship confe",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

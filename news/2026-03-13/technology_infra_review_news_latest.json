@@ -1,0 +1,131 @@
+{
+  "axis": "TECHNOLOGY_INFRA_REVIEW",
+  "fetched_at": "2026-03-13T13:57:03.665106+00:00",
+  "smart_query": "technology infra review",
+  "sources_count": {
+    "wiki": 0,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "analysis": {
+    "summary": "[arXiv]\n- Optimizing Reinforcement Learning Training over Digital Twin Enabled Multi-fidelity Networks\n- A Lightweight Digital-Twin-Based Framework for Edge-Assisted Vehicle Tracking and Collision Pre",
+    "sentiment": "NEUTRAL",
+    "urgency": "LOW",
+    "key_developments": []
+  },
+  "sentiment": "NEUTRAL",
+  "urgency": "LOW",
+  "summary": "[arXiv]\n- Optimizing Reinforcement Learning Training over Digital Twin Enabled Multi-fidelity Networks\n- A Lightweight Digital-Twin-Based Framework for Edge-Assisted Vehicle Tracking and Collision Pre",
+  "key_developments": [],
+  "open_source_momentum": "",
+  "scientific_frontier": "",
+  "news_items": [],
+  "github_repos": [
+    {
+      "title": "Snailclimb/JavaGuide",
+      "snippet": "Java 面试 & 后端通用面试指南，覆盖计算机基础、数据库、分布式、高并发与系统设计。准备后端技术面试，首选 JavaGuide！",
+      "stars": 154214,
+      "url": "https://github.com/Snailclimb/JavaGuide",
+      "updated": "2026-03-13",
+      "source": "GitHub"
+    },
+    {
+      "title": "doocs/advanced-java",
+      "snippet": "😮 Core Interview Questions & Answers For Experienced Java(Backend) Developers | 互联网 Java 工程师进阶知识完全扫盲：涵盖高并发、分布式、高可用、微服务、海量数据处理等领域知识",
+      "stars": 78897,
+      "url": "https://github.com/doocs/advanced-java",
+      "updated": "2026-03-13",
+      "source": "GitHub"
+    },
+    {
+      "title": "redis/redis",
+      "snippet": "For developers, who are building real-time data-driven applications, Redis is the preferred, fastest, and most feature-rich cache, data structure server, and document and vector query engine.",
+      "stars": 73415,
+      "url": "https://github.com/redis/redis",
+      "updated": "2026-03-13",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Optimizing Reinforcement Learning Training over Digital Twin Enabled Multi-fidelity Networks",
+      "snippet": "In this paper, we investigate a novel digital network twin (DNT) assisted deep learning (DL) model training framework. In particular, we consider a physical network where a base station (BS) uses several antennas to serve multiple mobile users, and a DNT that is a virtual representation of the physi",
+      "url": "https://arxiv.org/abs/2603.08931v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "A Lightweight Digital-Twin-Based Framework for Edge-Assisted Vehicle Tracking and Collision Prediction",
+      "snippet": "Vehicle tracking, motion estimation, and collision prediction are fundamental components of traffic safety and management in Intelligent Transportation Systems (ITS). Many recent approaches rely on computationally intensive prediction models, which limits their practical deployment on resource-const",
+      "url": "https://arxiv.org/abs/2603.07338v1",
+      "source": "arXiv"
+    }
+  ],
+  "youtube_transcripts": [],
+  "podcast": "[#493 – Jeff Kaplan: World of Warcraft, Overwatch, Blizzard, and Future of Gaming] Jeff Kaplan is a legendary Blizzard game designer of World of Warcraft and Overwatch, now preparing to launch a new game, The Legend of California, from his new studio Kintsugiyama &#8211; available to wishlist on Steam today, with alpha later in March.\nThank you for listening ❤ Check out our sponsors: https://lexfridman.com/sponsors/ep493-sc\nSee below for timestamps, and to give feedback, submit ",
+  "youtube_videos": [
+    {
+      "title": "YouTube:l6cgakp-F7Y",
+      "video_id": "l6cgakp-F7Y",
+      "url": "https://www.youtube.com/watch?v=l6cgakp-F7Y",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:pQ0_lStwn-w",
+      "video_id": "pQ0_lStwn-w",
+      "url": "https://www.youtube.com/watch?v=pQ0_lStwn-w",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:BXURkPozIZo",
+      "video_id": "BXURkPozIZo",
+      "url": "https://www.youtube.com/watch?v=BXURkPozIZo",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:Z4Vkt-3mppY",
+      "video_id": "Z4Vkt-3mppY",
+      "url": "https://www.youtube.com/watch?v=Z4Vkt-3mppY",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:3PaeDuCsrK8",
+      "video_id": "3PaeDuCsrK8",
+      "url": "https://www.youtube.com/watch?v=3PaeDuCsrK8",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:wM5fCmvJ1aE",
+      "video_id": "wM5fCmvJ1aE",
+      "url": "https://www.youtube.com/watch?v=wM5fCmvJ1aE",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:T_pmN3AB-Ug",
+      "video_id": "T_pmN3AB-Ug",
+      "url": "https://www.youtube.com/watch?v=T_pmN3AB-Ug",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:Tx0uoiuLAZg",
+      "video_id": "Tx0uoiuLAZg",
+      "url": "https://www.youtube.com/watch?v=Tx0uoiuLAZg",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:IgDQUofJDgk",
+      "video_id": "IgDQUofJDgk",
+      "url": "https://www.youtube.com/watch?v=IgDQUofJDgk",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:VMswiYcKKjc",
+      "video_id": "VMswiYcKKjc",
+      "url": "https://www.youtube.com/watch?v=VMswiYcKKjc",
+      "source": "YouTube"
+    }
+  ]
+}

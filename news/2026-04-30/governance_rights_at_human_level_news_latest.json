@@ -1,0 +1,37 @@
+{
+  "axis": "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL",
+  "fetched_at": "2026-04-30T08:26:37.398891+00:00",
+  "smart_query": "human rights democracy freedom",
+  "sources_count": {
+    "wiki": 0,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [],
+  "gdelt": [],
+  "github_repos": [],
+  "arxiv_papers": [
+    {
+      "title": "Human-in-the-Loop Benchmarking of Heterogeneous LLMs for Automated Competency Assessment in Secondary Level Mathematics",
+      "snippet": "As Competency-Based Education (CBE) is gaining traction around the world, the shift from marks-based assessment to qualitative competency mapping is a manual challenge for educators. This paper tackles the bottleneck issue by suggesting a \"Human-in-the-Loop\" benchmarking framework to assess the effe",
+      "url": "https://arxiv.org/abs/2604.26607v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "The Alignment Target Problem: Divergent Moral Judgments of Humans, AI Systems, and Their Designers",
+      "snippet": "The quest to align machine behavior with human values raises fundamental questions about the moral frameworks that should govern AI decision-making. Much alignment research assumes that the appropriate benchmark is how humans themselves would act in a given situation. Research into agent-type value ",
+      "url": "https://arxiv.org/abs/2604.24155v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[#239 – Rose Hadshar on why automating all human labour will break our political system] The most important political question in the age of advanced AI might not be who wins elections. It might be whether elections continue to matter at all.That’s the view of Rose Hadshar, researcher at Forethought, who believes we could see extreme, AI-enabled power concentration without a coup or dramatic ‘end of democracy’ moment.She foresees something more insidious: an elite group with access to",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

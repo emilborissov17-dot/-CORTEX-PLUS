@@ -1,0 +1,81 @@
+{
+  "axis": "CULTURE_MEDIA_REVIEW",
+  "fetched_at": "2026-03-27T07:57:57.693243+00:00",
+  "smart_query": "media disinformation culture",
+  "sources_count": {
+    "wiki": 0,
+    "gdelt": 3,
+    "arxiv": 2,
+    "github": 3,
+    "youtube": 10,
+    "youtube_transcripts": 1,
+    "podcast": 1
+  },
+  "rss": [],
+  "gdelt": [
+    {
+      "title": "В ДУ состоится семинар по медиаграмотности для сениоров « Понимай информацию !» ",
+      "snippet": "В ДУ состоится семинар по медиаграмотности для сениоров « Понимай информацию !» ",
+      "url": "https://www.gorod.lv/novosti/364092-v-du-sostoitsya-seminar-po-mediagramotnosti-dlya-seniorov-ponimai-informatsiu",
+      "source": "gorod.lv"
+    },
+    {
+      "title": "Finnish children learn media literacy at 3 years old -- for protection against Russian propaganda",
+      "snippet": "Finnish children learn media literacy at 3 years old -- for protection against Russian propaganda",
+      "url": "https://nypost.com/2026/01/05/world-news/finnish-children-learn-media-literacy-at-3-years-old-for-protection-against-russian-propaganda/",
+      "source": "nypost.com"
+    },
+    {
+      "title": "TROGODIŠNJACI NA DEZINFORMATIVNOJ OBUCI : Male Fince u školama uče kako da prepoznaju lažne vesti",
+      "snippet": "TROGODIŠNJACI NA DEZINFORMATIVNOJ OBUCI : Male Fince u školama uče kako da prepoznaju lažne vesti",
+      "url": "https://www.novosti.rs/planeta/svet/1563188/trogodisnjaci-dezinformativnoj-obuci-male-fince-skolama-uce-kako-prepoznaju-lazne-vesti",
+      "source": "novosti.rs"
+    }
+  ],
+  "github_repos": [
+    {
+      "title": "Duffy12150557/Security-Research-Toolkit",
+      "snippet": "Security Research Toolkit — Video and image analysis tool for neural inpainting and AI-generated content detection with SORA signature extraction, temporal consistency analysis, CNN artifact detection",
+      "stars": 33,
+      "url": "https://github.com/Duffy12150557/Security-Research-Toolkit",
+      "updated": "2026-03-13",
+      "source": "GitHub"
+    },
+    {
+      "title": "bbidwell85/Totality",
+      "snippet": "Analyze quality, track collection completeness, find upgrades, manage media wishlists.",
+      "stars": 14,
+      "url": "https://github.com/bbidwell85/Totality",
+      "updated": "2026-03-26",
+      "source": "GitHub"
+    },
+    {
+      "title": "AFLucas-UOM/Accurate-Name-Extraction",
+      "snippet": "2026 IEEE Conference on Artificial Intelligence (CAI26) · A modular computer vision and NLP pipeline for automated extraction of personal names from broadcast news videos, combining YOLOv12-based news",
+      "stars": 3,
+      "url": "https://github.com/AFLucas-UOM/Accurate-Name-Extraction",
+      "updated": "2026-03-06",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Empirical Evaluation of Link Deletion Methods for Limiting Information Diffusion on Social Media",
+      "snippet": "Although beneficial information abounds on social media, the dissemination of harmful information such as so-called ``fake news'' has become a serious issue. Therefore, many researchers have devoted considerable effort to limiting the diffusion of harmful information. A promising approach to limitin",
+      "url": "https://arxiv.org/abs/2603.21470v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "The Prosocial Ranking Challenge: Reducing Polarization on Social Media without Sacrificing Engagement",
+      "snippet": "We report the first direct comparisons of multiple alternative social media algorithms on multiple platforms on outcomes of societal interest. We used a browser extension to modify which posts were shown to desktop social media users, randomly assigning 9,386 users to a control group or one of five ",
+      "url": "https://arxiv.org/abs/2603.19626v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[My bank called in the middle of my TED Talk | Mike Albo] In this TED Talk gone wrong, comedian Mike Albo receives an unexpected call from his bank. The result: a hilariously uncomfortable tour of his purchase history, and a reminder that in the digital age, our data knows us a little too well.Learn more about our flagship conference happening this April at&nbsp;attend.ted.com/podcast Hosted on Acast. See acast.com/privacy for more information.",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

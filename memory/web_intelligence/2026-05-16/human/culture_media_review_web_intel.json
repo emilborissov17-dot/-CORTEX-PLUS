@@ -1,0 +1,121 @@
+{
+  "axis": "CULTURE_MEDIA_REVIEW",
+  "domain": "human",
+  "timestamp": "2026-05-16T19:24:08.695846+00:00",
+  "sources_count": 9,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 1,
+  "youtube_items": [
+    {
+      "title": "[YT] Whoever Controls the Media, the Images, Controls the Culture | Min Kim",
+      "summary": "So when I began my sociology research at Ipan hypothesis, that varies people could look at the same exact thing and see something completely different. That seems a little counterintuitive, but let me explain. This is a photo of Kendrick Lamar, a claimed in Granny Witting Hip Hop artist on the cover of Rolling Stone magazine. This is also a photo of Kendrick Lamar on the cover of GQ magazine. And as you can tell, these two depictions of the same human being, the same pop culture figure are quite different. A German-my experiment I asked participants to look at each photo and describe what they saw. And more importantly, tell me how they felt whether or not they liked the photo and why or why not. So when I showed this photo, I had one part just been looking at it and said, that's a dope ph",
+      "link": "https://www.youtube.com/watch?v=ZpjWioF6iMo",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "ZpjWioF6iMo",
+      "transcript_method": "whisper",
+      "transcript_chars": 11606,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "Културната и медийната индустрия поддържа стереотипи и манипулира общественото мнение чрез избор на тематика и представяне на събития",
+    "root_cause": "Медийните и културни платформи избират и подчертават определени истории, които подкрепят съществуващите социални и политически структури, като игнорират или манипулират други гледни точки",
+    "severity": "HIGH",
+    "leverage_points": [
+      "Медийните компании и алгоритмични платформи, които контролират как информацията се разпространява",
+      "Образователни и културни институции, които формират критично мислещо население"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Интегриране на критична медиаедукация в образованието на всички нива",
+        "measurable_goal": "Разработване на стандартни учебни програми по медиаанализа и критично мислене в училища и висше образование",
+        "timeframe": "дългосрочно"
+      },
+      {
+        "action": "Създаване на независими медиа и културни платформи, които представят разнообразни гледни точки",
+        "measurable_goal": "Изграждане на минимум 50 нови независими медиа канали в Европа и САЩ в рамките на 5 години",
+        "timeframe": "средносрочно"
+      }
+    ],
+    "evidence": [
+      "Видеото на Min Kim показва, че една и съща снимка може да бъде интерпретирана по различен начин в зависимост от медиите",
+      "Смитсона е добавял обратно текст за импетмент на портрета на Тръмп, което показва политизация на културните институции"
+    ],
+    "generalization": "Този проблем е свързан с домейните на образование, политика и технология, тъй като медиите формират общественото мнение, което влияе върху политическите и социални структури",
+    "summary": "Медийната индустрия манипулира общественото мнение чрез избор на тематика и представяне на събития, което води към укрепване на стереотипи и ограничаване на критичното мислене.",
+    "risk_level": "CRITICAL"
+  },
+  "raw_items": [
+    {
+      "title": "Martin Short and the Secret to Finding Joy While Surviving Tragedy",
+      "summary": "The comedy star, who is the subject of a new documentary, has faced a series of unimaginable losses. Yet he says there are always laughs to remember.",
+      "link": "https://www.nytimes.com/2026/05/15/movies/martin-short-marty-life-is-short.html",
+      "published": "Fri, 15 May 2026 09:02:41 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Lisa Ann Walter of ‘Abbott Elementary’ Dishes It Out",
+      "summary": "During a midcareer renaissance, the “Abbott Elementary” and “Parent Trap” star is returning to stand-up, propelled by “the insanity of being a grown-ass woman.”",
+      "link": "https://www.nytimes.com/2026/05/15/arts/television/lisa-ann-walter-abbott-elementary-parent-trap.html",
+      "published": "Sat, 16 May 2026 07:10:15 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Smithsonian Adds Back Impeachment Language to Label on Trump Portrait",
+      "summary": "The language had been removed from wall text in the National Portrait Gallery, but it’s back as the museum unveiled changes to its exhibition on U.S. presidents.",
+      "link": "https://www.nytimes.com/2026/05/15/arts/design/trump-impeachment-smithsonian-national-portrait-gallery.html",
+      "published": "Fri, 15 May 2026 22:37:04 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "At Cannes, the Specter of Hollywood Always Looms Large (Even in Its Absence)",
+      "summary": "The lack of big studio movies is apparent in the festival’s quiet start, though the filmmakers James Gray and Jane Schoenbrun have made an impression.",
+      "link": "https://www.nytimes.com/2026/05/15/movies/cannes-film-festival-fast-furious.html",
+      "published": "Fri, 15 May 2026 15:06:21 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "The 100 best novels of all time",
+      "summary": "<p><em>The top 100 novels of all time published in English, as voted for by authors, critics and academics worldwide. How many have you read?</em></p> <a href=\"https://www.theguardian.com/books/ng-interactive/2026/may/12/the-100-best-novels-of-all-time\">Continue reading...</a>",
+      "link": "https://www.theguardian.com/books/ng-interactive/2026/may/12/the-100-best-novels-of-all-time",
+      "published": "Sat, 16 May 2026 05:00:40 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "The Beloved review – Javier Bardem turns in a career-scariest performance",
+      "summary": "<p><strong>Cannes film festival:</strong> This tremendously alarming drama from Rodrigo Sorogoyen is an meditation on male auteurs entirely without sentimentality</p><p>Javier Bardem gives his scariest performance since No Country For Old Men in this disquieting new film about emotional abuse from Spanish director Rodrigo Sorogoyen, who made 2023 rural noir shocker <a href=\"https://www.theguardian.com/film/2023/mar/22/the-beasts-review-unsettling-rural-noir-is-a-euro-arthouse-twist-on-straw-dogs",
+      "link": "https://www.theguardian.com/film/2026/may/16/the-beloved-review-javier-bardem-turns-in-a-career-scariest-performance",
+      "published": "Sat, 16 May 2026 17:46:50 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "How did Eurovision go from sequins and flares to geopolitical slugfest?",
+      "summary": "<p>The contest is enduring the biggest boycott it has ever seen, but 2026 is far from its first year of controversy</p><p>A song contest intended to promote European harmony and cultural exchange morphs into a battle over human rights. A boycott dominates headlines and polarises opinion. Performers with big hair proclaim art over politics.</p><p>It could only be <a href=\"https://www.theguardian.com/tv-and-radio/eurovision\">Eurovision</a>. But the year was 1969, and the dispute centred on Austria",
+      "link": "https://www.theguardian.com/tv-and-radio/2026/may/16/eurovision-boycott-protest-history",
+      "published": "Sat, 16 May 2026 09:00:05 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "‘It looked like Star Wars on Earth’: the making of Top Gun at 40",
+      "summary": "<p>Producer Jerry Bruckheimer and co-writer Jack Epps discuss how the smash hit action drama came to be, from Tom Cruise vomiting on himself to ruling the box office</p><p>It would be one of the most important flights in film history. When a young 5ft 7in actor with long hair and ponytail rocked up on a motorcycle, a group of US navy pilots were all too happy to test his need for speed.</p><p>“They look at him and they don’t know who <a href=\"https://www.theguardian.com/film/tomcruise\">Tom Cruis",
+      "link": "https://www.theguardian.com/film/2026/may/16/making-of-top-gun-40th-anniversary",
+      "published": "Sat, 16 May 2026 09:00:06 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] Whoever Controls the Media, the Images, Controls the Culture | Min Kim",
+      "summary": "So when I began my sociology research at Ipan hypothesis, that varies people could look at the same exact thing and see something completely different. That seems a little counterintuitive, but let me explain. This is a photo of Kendrick Lamar, a claimed in Granny Witting Hip Hop artist on the cover of Rolling Stone magazine. This is also a photo of Kendrick Lamar on the cover of GQ magazine. And as you can tell, these two depictions of the same human being, the same pop culture figure are quite different. A German-my experiment I asked participants to look at each photo and describe what they saw. And more importantly, tell me how they felt whether or not they liked the photo and why or why not. So when I showed this photo, I had one part just been looking at it and said, that's a dope ph",
+      "link": "https://www.youtube.com/watch?v=ZpjWioF6iMo",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "ZpjWioF6iMo",
+      "transcript_method": "whisper",
+      "transcript_chars": 11606,
+      "has_full_transcript": true
+    }
+  ]
+}

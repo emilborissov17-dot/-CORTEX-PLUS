@@ -1,0 +1,57 @@
+{
+  "axis": "GENERAL_SELF_REVIEW",
+  "fetched_at": "2026-04-30T08:25:59.551711+00:00",
+  "smart_query": "artificial intelligence progress",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "Musk accuses OpenAI lawyer of trying to 'trick' him in combative testimony",
+      "snippet": "Elon Musk was cross-examined on the third day of the trial over his lawsuit against Sam Altman and OpenAI.",
+      "url": "https://www.bbc.com/news/articles/czj29yygyzgo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Why friendly AI chatbots might be less trustworthy",
+      "snippet": "Researchers found adjusting AI systems to be more warm and friendly to users would result in an \"accuracy trade-off\".",
+      "url": "https://www.bbc.com/news/articles/cd9pdjgvxj8o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Musk accuses Altman of stealing a charity as courtroom battle begins",
+      "snippet": "The case over OpenAI's history and public commitments could have major implications for the future of AI.",
+      "url": "https://www.bbc.com/news/articles/cz027nyz529o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [],
+  "arxiv_papers": [
+    {
+      "title": "HalluCiteChecker: A Lightweight Toolkit for Hallucinated Citation Detection and Verification in the Era of AI Scientists",
+      "snippet": "We introduce HalluCiteChecker, a toolkit for detecting and verifying hallucinated citations in scientific papers. While AI assistant technologies have transformed the academic writing process, including citation recommendation, they have also led to the emergence of hallucinated citations that do no",
+      "url": "https://arxiv.org/abs/2604.26835v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "From Black-Box Confidence to Measurable Trust in Clinical AI: A Framework for Evidence, Supervision, and Staged Autonomy",
+      "snippet": "Trust in clinical artificial intelligence (AI) cannot be reduced to model accuracy, fluency of generation, or overall positive user impression. In medicine, trust must be engineered as a measurable system property grounded in evidence, supervision, and operational boundaries of AI autonomy. This art",
+      "url": "https://arxiv.org/abs/2604.26671v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[#486 – Michael Levin: Hidden Reality of Alien Intelligence & Biological Life] Michael Levin is a biologist at Tufts University working on novel ways to understand and control complex pattern formation in biological systems.\nThank you for listening ❤ Check out our sponsors: https://lexfridman.com/sponsors/ep486-sc\nSee below for timestamps, transcript, and to give feedback, submit questions, contact Lex, etc.\nTranscript:\nhttps://lexfridman.com/michael-levin-2-transcript\nCONTA",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

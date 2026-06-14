@@ -1,0 +1,76 @@
+{
+  "axis": "SPACE_INFRASTRUCTURE_REVIEW",
+  "fetched_at": "2026-05-16T13:33:35.089496+00:00",
+  "smart_query": "space exploration NASA SpaceX",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 3,
+    "arxiv": 2,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "NASA Science, Cargo Launch on 34th SpaceX Resupply Mission to Station",
+      "snippet": "The 34th SpaceX commercial resupply mission under contract with NASA is headed to the International Space Station with new scientific experiments after lifting off at 6:05 p.m. EDT Friday on a Falcon 9 rocket from Space Launch Complex 40 at Cape Canaveral Space Force Station in Florida. The SpaceX s",
+      "url": "https://www.nasa.gov/news-release/nasa-science-cargo-launch-on-34th-spacex-resupply-mission-to-station/",
+      "source": "RSS"
+    },
+    {
+      "title": "Curiosity Shakes Loose a Pesky Rock",
+      "snippet": "After NASA’s Curiosity Mars rover drilled a sample from this rock on April 25, 2026, it withdrew its robotic arm and pulled the entire rock off the surface with it. Engineers spent several days repositioning the arm and vibrating the drill to try and get the rock loose. When it finally detached on M",
+      "url": "https://www.nasa.gov/image-article/curiosity-shakes-loose-a-pesky-rock/",
+      "source": "RSS"
+    },
+    {
+      "title": "Hubble Sights Galaxy in Transition",
+      "snippet": "This NASA Hubble Space Telescope image reveals an enigmatic galaxy with a bright center and a face that hints at spiral structure, yet it holds no obvious spiral arms. Reddish-brown clumps and filaments of dust partially obscure the galaxy’s full face, while red, blue, and orange light from distant ",
+      "url": "https://science.nasa.gov/missions/hubble/hubble-sights-galaxy-in-transition/",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [
+    {
+      "title": "With new patch design , the Crew - 13 astronauts clearly arent superstitious",
+      "snippet": "With new patch design , the Crew - 13 astronauts clearly arent superstitious",
+      "url": "https://arstechnica.com/space/2026/04/nasas-spacex-crew-13-pays-homage-to-apollo-13-on-mission-patch/",
+      "source": "arstechnica.com"
+    },
+    {
+      "title": "NASA nu are un plan de salvare pentru astronauții trimiși pe Lună . Zboruri de testare în loc de aselenizare cu echipaj uman",
+      "snippet": "NASA nu are un plan de salvare pentru astronauții trimiși pe Lună . Zboruri de testare în loc de aselenizare cu echipaj uman",
+      "url": "https://evz.ro/nasa-nu-are-un-plan-de-salvare-pentru-astronautii-trimisi-pe-luna-zboruri-de-testare-in-loc-de-aselenizare-cu-echipaj-uman.html",
+      "source": "evz.ro"
+    },
+    {
+      "title": "NASA provides  high - level  update on Artemis moon landings , more . Watch",
+      "snippet": "NASA provides  high - level  update on Artemis moon landings , more . Watch",
+      "url": "https://www.yahoo.com/news/articles/nasa-provides-high-level-artemis-124430628.html",
+      "source": "yahoo.com"
+    }
+  ],
+  "github_repos": [],
+  "arxiv_papers": [
+    {
+      "title": "Formulation of testing gravitational redshift based on Laser Time link between China Space Station and a ground station",
+      "snippet": "This paper presents a high-precision gravitational redshift test using the China Space Station (CSS) Laser Time Transfer (CLT) system. We develop a comprehensive observation equation based on a c^{-3} order relativistic model for space-ground clock comparison. While the CSS optical clock system is c",
+      "url": "https://arxiv.org/abs/2605.07216v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "A preliminary exploration of the effects of baseline length for the LIFE space mission",
+      "snippet": "By aiming to find and characterise dozens of habitable exoplanets through the technique of nulling interferometry, the LIFE space mission will produce transformational science. One of the key parameters for such an interferometric mission is the nulling baseline length - the distance between nulled ",
+      "url": "https://arxiv.org/abs/2605.06648v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[#494 – Jensen Huang: NVIDIA – The $4 Trillion Company & the AI Revolution] Jensen Huang is the co-founder and CEO of NVIDIA, the world&#8217;s most valuable company and the engine powering the AI computing revolution.\nThank you for listening ❤ Check out our sponsors: https://lexfridman.com/sponsors/ep494-sc\nSee below for timestamps, transcript, and to give feedback, submit questions, contact Lex, etc.\nTranscript:\nhttps://lexfridman.com/jensen-huang-transcript\nCONTACT LEX",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

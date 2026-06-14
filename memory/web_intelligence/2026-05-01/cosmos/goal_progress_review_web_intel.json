@@ -1,0 +1,86 @@
+{
+  "axis": "GOAL_PROGRESS_REVIEW",
+  "domain": "cosmos",
+  "timestamp": "2026-05-01T12:09:53.123120+00:00",
+  "sources_count": 6,
+  "rss_count": 5,
+  "ddg_count": 0,
+  "youtube_count": 1,
+  "youtube_items": [
+    {
+      "title": "[YT] Agenda 2030 translation - New World Order disguised as Sustainable...",
+      "summary": "[DESCRIPTION FALLBACK] Translation of UN's Agenda 2030 for Sustainable DevelopmentPlease watch my documentary: https://www.youtube.com/watch?v=8D4kPjJg0K4.",
+      "link": "https://www.youtube.com/watch?v=FIdmr04qk50",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "FIdmr04qk50",
+      "transcript_method": "description",
+      "transcript_chars": 155,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "summary": "- Iran crisis shows fossil fuels-based energy system ‘is inherently volatile and unstable’: <p>Senior UN climate leaders are getting behind countries mobilising this week for a transition away from fossil fuels at a groundbreaking event in Colombia. Read Full Story on UN News</p>\n<p>The post\n- AI in",
+    "risk_level": "UNKNOWN",
+    "trend": "UNKNOWN",
+    "key_events": [
+      "Iran crisis shows fossil fuels-based energy system ‘is inherently volatile and unstable’",
+      "AI in advertising risks fuelling information crisis, UN warns",
+      "World News in Brief: Europe warming twice as fast, acute hunger in Lebanon, peacekeepers deployed in Congo"
+    ],
+    "insights": [],
+    "youtube_insights": [],
+    "relevance_to_goal": "",
+    "generalization": ""
+  },
+  "raw_items": [
+    {
+      "title": "Iran crisis shows fossil fuels-based energy system ‘is inherently volatile and unstable’",
+      "summary": "<p>Senior UN climate leaders are getting behind countries mobilising this week for a transition away from fossil fuels at a groundbreaking event in Colombia. Read Full Story on UN News</p>\n<p>The post <a href=\"https://news.un.org/feed/view/en/story/2026/04/1167401\">Iran crisis shows fossil fuels-based energy system ‘is inherently volatile and unstable’</a> appeared first on <a href=\"https://www.un.org/sustainabledevelopment\">United Nations Sustainable Development</a>.</p>",
+      "link": "https://news.un.org/feed/view/en/story/2026/04/1167401",
+      "published": "Wed, 29 Apr 2026 12:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "AI in advertising risks fuelling information crisis, UN warns",
+      "summary": "<p>With spending on advertising topping $1 trillion a year worldwide, the United Nations on Wednesday highlighted the untapped power of major brands to shape the future of Artificial Intelligence, warning that a failure to act could deepen a global information integrity crisis.</p>\n<p>The post <a href=\"https://news.un.org/feed/view/en/story/2026/04/1167405\">AI in advertising risks fuelling information crisis, UN warns</a> appeared first on <a href=\"https://www.un.org/sustainabledevelopment\">Unit",
+      "link": "https://news.un.org/feed/view/en/story/2026/04/1167405",
+      "published": "Wed, 29 Apr 2026 12:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "World News in Brief: Europe warming twice as fast, acute hunger in Lebanon, peacekeepers deployed in Congo",
+      "summary": "<p>New data shows record heatwaves from the Mediterranean to the Arctic last year, with glaciers shrinking and snow cover declining, according to the UN World Meteorological Organization (WMO).  Read Full Story on UN News</p>\n<p>The post <a href=\"https://news.un.org/feed/view/en/story/2026/04/1167408\">World News in Brief: Europe warming twice as fast, acute hunger in Lebanon, peacekeepers deployed in Congo</a> appeared first on <a href=\"https://www.un.org/sustainabledevelopment\">United Nations S",
+      "link": "https://news.un.org/feed/view/en/story/2026/04/1167408",
+      "published": "Wed, 29 Apr 2026 12:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Press Release | UN and Top Design Schools Unveil Next Chapter of Sustainable Tour Guide Uniforms",
+      "summary": "<p>UN and Top Design Schools Unveil Next Chapter of Sustainable Tour Guide Uniforms   New York, 28 April 2026 The United Nations, with academic and creative partners, today launched the next phase of the UN Tour Guide uniform initiative. The initiative brings together the UN Office for Partnerships and the UN Department of Global Communications  [...]</p>\n<p>The post <a href=\"https://www.un.org/sustainabledevelopment/blog/2026/04/press-release-sustainable-tour-guide-uniforms/\">Press Release | UN",
+      "link": "https://www.un.org/sustainabledevelopment/blog/2026/04/press-release-sustainable-tour-guide-uniforms/",
+      "published": "Tue, 28 Apr 2026 21:22:59 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Hello world!",
+      "summary": "Welcome to WordPress. This is your first post. Edit or delete it, then start writing!",
+      "link": "https://sdg.iisd.org/hello-world/",
+      "published": "Thu, 18 May 2023 15:00:19 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] Agenda 2030 translation - New World Order disguised as Sustainable...",
+      "summary": "[DESCRIPTION FALLBACK] Translation of UN's Agenda 2030 for Sustainable DevelopmentPlease watch my documentary: https://www.youtube.com/watch?v=8D4kPjJg0K4.",
+      "link": "https://www.youtube.com/watch?v=FIdmr04qk50",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "FIdmr04qk50",
+      "transcript_method": "description",
+      "transcript_chars": 155,
+      "has_full_transcript": false
+    }
+  ]
+}

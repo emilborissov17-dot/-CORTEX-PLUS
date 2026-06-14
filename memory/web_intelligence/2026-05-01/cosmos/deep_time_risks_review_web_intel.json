@@ -1,0 +1,141 @@
+{
+  "axis": "DEEP_TIME_RISKS_REVIEW",
+  "domain": "cosmos",
+  "timestamp": "2026-05-01T12:08:12.882947+00:00",
+  "sources_count": 12,
+  "rss_count": 4,
+  "ddg_count": 5,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] Humanity's End: 10 Real Threats to Our Survival - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] What are the most realistic threats to human extinction? From climate change, nuclear war, and AI takeover to asteroid impacts and pandemics, this cinematic documentary explores 10 scientifically ...",
+      "link": "https://www.youtube.com/watch?v=XT7uQ0jXGhw",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "XT7uQ0jXGhw",
+      "transcript_method": "description",
+      "transcript_chars": 222,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] The Biggest Eruptions That Changed Earth Forever - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] True apocalypses can break through and unleash eruptions tens of times more powerful than all of our nuclear weapons combined, subjecting the climate to centuries worth of change in a single year ...",
+      "link": "https://www.youtube.com/watch?v=fXb02MQ78yQ",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "fXb02MQ78yQ",
+      "transcript_method": "description",
+      "transcript_chars": 222,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Nuclear War vs. Asteroid Strike: Which Apocalypse is Worse?",
+      "summary": "[DESCRIPTION FALLBACK] In this gripping 10-minute video, we dive deep into the chilling question: Which apocalypse is worse, a nuclear war or an asteroid strike? Explore the devastating impacts of each catastrophe and ...",
+      "link": "https://www.youtube.com/watch?v=Tn8ayBQA4Pc",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "Tn8ayBQA4Pc",
+      "transcript_method": "description",
+      "transcript_chars": 221,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "summary": "Всеки от тези събития има своите пътища и последствия, но в дългосрочен план те са възможни за разпространение и възстановяване на дълбоки рискове. Всъщност, тези събития са възможни за създаване на дълбоки рискове, които са възможни за разпространение и възстановяване на дълбоки рискове. Всъщност, тези събития са възможни за създаване на дълбоки рискове, които са възможни за разпространение и възстановяване на дълбоки рискове.",
+    "risk_level": "HIGH",
+    "trend": "STABLE",
+    "key_events": [
+      "Australia becomes the 30th country to eliminate trachoma as a public health problem",
+      "Global efforts to combat viral hepatitis are delivering measurable progress in reducing infections and deaths",
+      "WHO convenes countries and partners to simulate response to major disease outbreak"
+    ],
+    "insights": [
+      "Trachoma is a preventable disease that can be eliminated through public health efforts",
+      "Viral hepatitis remains a major global health challenge despite progress",
+      "Simulation exercises highlight the need for preparedness in the face of emerging diseases"
+    ],
+    "youtube_insights": [
+      "Humanity's End: 10 Real Threats to Our Survival",
+      "The Biggest Eruptions That Changed Earth Forever",
+      "Nuclear War vs. Asteroid Strike: Which Apocalypse is Worse?"
+    ],
+    "relevance_to_goal": "These events highlight the importance of preparedness and mitigation strategies in the face of global health threats, which is directly relevant to the goal of reducing the risk of major global disasters.",
+    "generalization": "These events demonstrate the potential for global health threats to escalate, emphasizing the need for coordinated international efforts to mitigate risks and protect public health."
+  },
+  "raw_items": [
+    {
+      "title": "Australia becomes the 30th country to eliminate trachoma as a public health problem",
+      "summary": "The World Health Organization (WHO) has validated Australia for eliminating trachoma as a public health problem, marking a significant milestone in the health of indigenous peoples and in global efforts to combat neglected tropical diseases (NTDs). Trachoma, the world’s leading infectious cause of blindness, no longer represents a public health problem in the country.",
+      "link": "https://www.who.int/news/item/29-04-2026-australia-becomes-the-30th-country-to-eliminate-trachoma-as-a-public-health-problem",
+      "published": "Wed, 29 Apr 2026 06:10:07 Z",
+      "source_type": "rss"
+    },
+    {
+      "title": "Efforts to eliminate hepatitis delivers gains but more action needed to meet 2030 targets",
+      "summary": "<p>Global efforts to combat viral hepatitis are delivering measurable progress in reducing infections and deaths, but the disease remains a major global health challenge, according to a new World Health Organization (WHO) <a href=\"https://www.who.int/publications/i/item/9789240122383\">report</a> released today at the World Hepatitis Summit.</p><p>Viral hepatitis B and C &ndash; the two infections responsible for 95% of hepatitis-related deaths worldwide &ndash; claimed 1.34&nbsp;million lives in",
+      "link": "https://www.who.int/news/item/28-04-2026-efforts-to-eliminate-hepatitis-delivers-gains-but-more-action-needed-to-meet-2030-targets",
+      "published": "Tue, 28 Apr 2026 05:37:30 Z",
+      "source_type": "rss"
+    },
+    {
+      "title": "Practicing today for tomorrow’s emergencies – WHO convenes countries and partners to simulate response to major disease outbreak",
+      "summary": "<p>The World Health Organization (WHO) wrapped up Exercise Polaris II, a 2-day high-level simulation exercise, based around an outbreak of a fictional new bacterium spreading across the world. Bringing together 26 countries and territories, 600 health emergency experts and over 25 partners, the exercise, which took place on 22 and 23 April, allowed countries to test their preparedness for pandemics and other major health emergencies, including activating their emergency workforce structures, inf",
+      "link": "https://www.who.int/news/item/27-04-2026-practicing-today-for-tomorrow-s-emergencies-who-convenes-countries-and-partners-to-simulate-response-to-major-disease-outbreak",
+      "published": "Mon, 27 Apr 2026 13:12:09 Z",
+      "source_type": "rss"
+    },
+    {
+      "title": "WHO prequalifies first-ever malaria treatment for newborns and infants, adds new diagnostic tests",
+      "summary": "<p>Ahead of World Malaria Day on 25 April, the World Health Organization (WHO) has announced a significant step forward in the fight against malaria with the prequalification of the first treatment developed specifically for newborns and young infants weighing between two and five kilograms. The prequalification designation indicates that the medicine meets international standards of quality, safety and efficacy, and will help to expand access to quality-assured treatment for one of the most und",
+      "link": "https://www.who.int/news/item/24-04-2026-who-prequalifies-first-ever-malaria-treatment-for-newborns-and-infants-adds-new-diagnostic-tests",
+      "published": "Fri, 24 Apr 2026 16:11:22 Z",
+      "source_type": "rss"
+    },
+    {
+      "title": "Asteroid impact",
+      "summary": "An impact event is a collision between astronomical objects causing measurable effects. Impact events have been found to regularly occur in planetary systems, though the most frequent involve asteroids, comets or meteoroids and have minimal effect. When large objects impact terrestrial planets such as the Earth, there can be significant physical and biospheric consequences, as the impacting body i",
+      "link": "https://en.wikipedia.org/wiki/Asteroid_impact",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Impact event - Wikipedia",
+      "summary": "2 weeks ago - An impact event is a collision between astronomical objects causing measurable effects. Impact events have been found to regularly occur in planetary systems, though the most frequent involve asteroids, comets or meteoroids and have minimal effect.",
+      "link": "https://en.wikipedia.org/wiki/Impact_event",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Asteroid impact prediction - Wikipedia",
+      "summary": "5 days ago - Asteroid impact prediction is the prediction of the dates and times of asteroids impacting Earth, along with the locations and severities of the impacts. The process of impact prediction follows three major steps: Discovery of an asteroid and initial assessment of its orbit which is generally ...",
+      "link": "https://en.wikipedia.org/wiki/Asteroid_impact_prediction",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Supervolcano",
+      "summary": "A supervolcano is a volcano that has had an eruption with a volcanic explosivity index (VEI) of 8, the largest recorded value on the index. This means the volume of deposits for such an eruption is greater than 1,000 cubic kilometers (240 cubic miles).Supervolcanoes occur when magma in the mantle rises into the crust but is unable to break through it. Pressure builds in a large and growing magma p",
+      "link": "https://en.wikipedia.org/wiki/Supervolcano",
+      "source_type": "ddg"
+    },
+    {
+      "title": "What Is The Yellowstone Supervolcano? : ScienceAlert",
+      "summary": "Going on past eruptions of similar magnitudes, the supervolcano's ash cloud might also lead to significant global cooling for a few years, affecting ...",
+      "link": "https://www.sciencealert.com/yellowstone-supervolcano",
+      "source_type": "ddg"
+    },
+    {
+      "title": "[YT] Humanity's End: 10 Real Threats to Our Survival - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] What are the most realistic threats to human extinction? From climate change, nuclear war, and AI takeover to asteroid impacts and pandemics, this cinematic documentary explores 10 scientifically ...",
+      "link": "https://www.youtube.com/watch?v=XT7uQ0jXGhw",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "XT7uQ0jXGhw",
+      "transcript_method": "description",
+      "transcript_chars": 222,
+      "has_full_transcript": false
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+MODEL: qwen3:1.7b
+
+PROMPT:
+You are CORTEX++ AGI. Generate a JSON snapshot for PLANETARY_POTENTIAL_REVIEW — the integrated carrying capacity of Earth. Include: current_level (LOW/MEDIUM/HIGH), key_signals list, main_bottlenecks list, trends list. Return ONLY valid JSON.
+
+RESPONSE:
+Thinking...
+Okay, the user wants a JSON snapshot for the PLANETARY_POTENTIAL_REVIEW, which is about the integrated carrying capacity of Earth. Let me break down what they need.
+
+First, the current_level should be LOW, MEDIUM, or HIGH. Since the carrying capacity is under stress from various factors like climate change, resource depletion, and pollution, I'll go with LOW. 
+
+Next, key_signals. These are the main factors affecting the carrying capacity. I need to list them. Maybe things like climate change, resource depletion, pollution, population growth, economic factors, technological advancements, policy changes, and social awareness. That's seven points. 
+
+Main_bottlenecks. These are the biggest obstacles. Climate change and resource depletion are obvious. Then pollution and population growth. Maybe also economic factors like inequality and technological limitations. So four points here.
+
+Trends list. Trends can be future projections. Maybe things like increasing climate impacts, resource scarcity, environmental policies, technological solutions, and societal changes. That's four trends.
+
+I need to make sure the JSON is valid. No syntax errors. Keys should be in quotes, commas properly placed. Also, the JSON should only include the required fields: current_level, key_signals, main_bottlenecks, trends. No extra keys.
+
+Let me check the structure again. The example from the previous response had each list as an array. So I'll format each list as an array of strings. 
+
+Double-check the current_level is LOW. Key_signals are the seven points. Main_bottlenecks are four. Trends four. All valid. No markdown, just plain JSON. Alright, that should do it.
+...done thinking.
+
+{
+  "current_level": "LOW",
+  "key_signals": [
+    "Climate change impacts",
+    "Resource depletion",
+    "Pollution levels",
+    "Population growth",
+    "Economic pressures",
+    "Technological advancements",
+    "Policy implementations"
+  ],
+  "main_bottlenecks": [
+    "Climate change and environmental degradation",
+    "Resource scarcity and overexploitation",
+    "Pollution and waste management",
+    "Population growth and urbanization"
+  ],
+  "trends": [
+    "Increasing climate impacts and biodiversity loss",
+    "Accelerated resource depletion and scarcity",
+    "Rise in environmental policies and regulations",
+    "Technological solutions for sustainability"
+  ]
+}

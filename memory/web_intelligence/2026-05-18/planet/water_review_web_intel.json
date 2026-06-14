@@ -1,0 +1,141 @@
+{
+  "axis": "WATER_REVIEW",
+  "domain": "planet",
+  "timestamp": "2026-05-18T08:47:35.422146+00:00",
+  "sources_count": 13,
+  "rss_count": 4,
+  "ddg_count": 6,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] Explained | World&#39;s Water Crisis | FULL EPISODE | Netflix",
+      "summary": "[DESCRIPTION FALLBACK] In partnership with Vox Media Studios and Vox, this enlightening explainer series will take viewers deep inside a wide range of ...",
+      "link": "https://www.youtube.com/watch?v=C65iqOSCZOY",
+      "published": "2020-04-17T13:00:00Z",
+      "source_type": "youtube",
+      "channel": "Netflix",
+      "video_id": "C65iqOSCZOY",
+      "transcript_method": "description",
+      "transcript_chars": 154,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Fresh water scarcity: An introduction to the problem - Christiana Z. Peppard",
+      "summary": "[DESCRIPTION FALLBACK] View full lesson: http://ed.ted.com/lessons/fresh-water-scarcity-an-introduction-to-the-problem-christiana-z-peppard Fresh water is ...",
+      "link": "https://www.youtube.com/watch?v=otrpxtAmDAk",
+      "published": "2013-02-14T16:02:00Z",
+      "source_type": "youtube",
+      "channel": "TED-Ed",
+      "video_id": "otrpxtAmDAk",
+      "transcript_method": "description",
+      "transcript_chars": 158,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Central Asia&#39;s water crisis: a human security perspective",
+      "summary": "[DESCRIPTION FALLBACK] This clip sheds light on the critical issue of water scarcity in Central Asia, exploring its profound impact on various aspects of ...",
+      "link": "https://www.youtube.com/watch?v=kyn-Eh-s63U",
+      "published": "2023-07-31T13:11:50Z",
+      "source_type": "youtube",
+      "channel": "Central Asia Solidarity Groups",
+      "video_id": "kyn-Eh-s63U",
+      "transcript_method": "description",
+      "transcript_chars": 157,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "problem": "Groundwater depletion and contamination are threatening drinking water supplies and ecosystem health in multiple regions, including Florida and Michigan.",
+    "root_cause": "Excessive groundwater pumping, drought, and industrial contamination are depleting aquifers and introducing harmful substances into water sources.",
+    "severity": "CRITICAL",
+    "leverage_points": [
+      "Regulatory enforcement of groundwater extraction limits",
+      "Investment in water treatment and pollution prevention technologies"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Implement stricter regulations on groundwater extraction in aquifer-dependent regions",
+        "measurable_goal": "Reduce groundwater extraction rates by 20% within five years",
+        "timeframe": "long-term"
+      },
+      {
+        "action": "Fund large-scale water treatment and desalination projects in affected regions",
+        "measurable_goal": "Achieve 30% improvement in water quality in contaminated areas within ten years",
+        "timeframe": "long-term"
+      }
+    ],
+    "evidence": [
+      "Florida’s Floridan Aquifer is being overpumped, leading to sinkholes and declining water quality",
+      "Michigan’s aquifers are under stress due to drought and contamination from heavy metals"
+    ],
+    "generalization": "This problem connects to the broader domain of planetary health, as groundwater depletion affects both human populations and ecosystem stability, with cascading effects on food security, biodiversity, and climate resilience.",
+    "summary": "Groundwater depletion and contamination are causing severe water shortages and health risks, requiring urgent regulatory and technological interventions.",
+    "risk_level": "CRITICAL"
+  },
+  "raw_items": [
+    {
+      "title": "Utah’s Big Nuclear Bet – Feasible or Fantasy?",
+      "summary": "<figure><img alt=\"\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"682\" src=\"https://www.circleofblue.org/wp-content/uploads/2026/05/SPPCAAU6CZFIHLJPCXQGCRJLR4.avif\" width=\"1024\" /></figure>\n<p>A version of this&#160; article was first published by the Salt Lake Tribune on April 28, 2026. It was reported and edited&#160; in collaboration with Main Street Media Cooperative, which assigns veteran New York Times correspondents to assist local news organizations in repor",
+      "link": "https://www.circleofblue.org/2026/water-energy/utahs-big-nuclear-bet-feasible-or-fantasy/",
+      "published": "Thu, 14 May 2026 10:48:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "As a Colorado Aquifer Runs Low, Dangerous Heavy Metals Threaten Rural Communities’ Drinking Water",
+      "summary": "<figure><img alt=\"a woman sits on a couch looking towards a light coming from a window\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"626\" src=\"https://i0.wp.com/www.circleofblue.org/wp-content/uploads/2026/05/ICN_ClimateDrought_SanLuisValley_JacobSpetzler-2048x1252-1.jpg?fit=1024%2C626&amp;ssl=1\" width=\"1024\" /></figure>\n<p>By Emily Payne, Inside Climate News This article originally appeared on&#160;Inside Climate News&#160;(hyperlink to the original story), a nonp",
+      "link": "https://www.circleofblue.org/2026/supply/water-quality/pollution/as-a-colorado-aquifer-runs-low-dangerous-heavy-metals-threaten-rural-communities-drinking-water/",
+      "published": "Mon, 11 May 2026 18:20:39 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Michigan lawmakers may fund last-ditch effort to save whitefish",
+      "summary": "<figure><img alt=\"\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"683\" src=\"https://i0.wp.com/www.circleofblue.org/wp-content/uploads/2023/05/Whitefish-4-1.jpg?fit=1024%2C683&amp;ssl=1\" width=\"1024\" /></figure>\n<p>Originally published by Bridge Michigan As lake whitefish teeter on the brink of collapse in the lower Great Lakes, Michigan lawmakers are considering investing in a last-ditch effort to save the iconic species before it’s too late. An appropriations bill&",
+      "link": "https://www.circleofblue.org/2026/great-lakes/michigan-lawmakers-may-fund-last-ditch-effort-to-save-whitefish/",
+      "published": "Mon, 11 May 2026 17:57:48 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "As affordability issues surge, is it finally time for offshore wind?",
+      "summary": "<figure><img alt=\"\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"683\" src=\"https://i0.wp.com/www.circleofblue.org/wp-content/uploads/2026/05/2025-12-07-MI-Ludington-Lake-Winds-JGanter-_MG_9681-Edit-2500.jpg?fit=1024%2C683&amp;ssl=1\" width=\"1024\" /></figure>\n<p>By Stephen Starr, Great Lakes Now Covering an area the size of the United Kingdom and surrounded by half a dozen large, energy-hungry metropolitan regions, the Great Lakes, surprisingly, boasts not a single o",
+      "link": "https://www.circleofblue.org/2026/water-energy/as-affordability-issues-surge-is-it-finally-time-for-offshore-wind/",
+      "published": "Wed, 06 May 2026 13:18:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Drought continues to impact water quality and river levels across...",
+      "summary": "The recent drought has taken a toll on groundwater levels and water quality across Florida. Despite this, drinking water supply for residents and water supply used to extinguish recent wildfires has had little to no impact.",
+      "link": "https://www.wmnf.org/drought-continues-impact-water-quality-river-levels-florida-wmnf/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "What’s Causing Sinkholes to Multiply in Florida?",
+      "summary": "Florida’s primary water source, the Floridan Aquifer, is one of the most productive aquifer systems in the world, supplying drinking water to millions of residents. However, excessive groundwater pumping is directly linked to the increased formation of sinkholes across the state.",
+      "link": "https://www.animalsaroundtheglobe.com/whats-causing-sinkholes-to-multiply-in-florida-5-318192/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Florida is building the world's largest environmental restoration project",
+      "summary": "The ecosystem recharges the water supply for all of South Florida – a population approaching nine million. South Florida's primary source of drinking water comes from groundwater stored in aquifers, mainly the Biscayne Aquifer, which is replenished by the Everglades.",
+      "link": "https://www.bbc.com/future/article/20240815-floridas-everglades-reservoir-will-clean-the-states-water",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Current Drought Conditions for Michigan featuring an Interactive...",
+      "summary": "As of April 14, 2026 there are currently no areas of Michigan under drought conditions.Michigan Drought Conditions Map. Click on the map for more information.",
+      "link": "https://www.plantmaps.com/en/us/state/michigan/current-drought-conditions",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Current state-level drought information for Michigan: . | Drought.gov",
+      "summary": "Historical Drought Conditions in Michigan. Drought is a normal climate pattern that has occurred in varying degrees of length, severity, and size throughout history.",
+      "link": "https://www.drought.gov/states/michigan",
+      "source_type": "ddg"
+    },
+    {
+      "title": "NGT asks Haryana to tackle waterlogging and groundwater depletion...",
+      "summary": "The tribunal gave the state six months to examine the issue and act on illegal groundwater extraction and worsening soil salinity. Published on: May 18, 2026 7:05 AM IST.",
+      "link": "https://www.hindustantimes.com/cities/gurugram-news/ngt-asks-haryana-to-tackle-waterlogging-and-groundwater-depletion-crisis-101779068109353.html",
+      "source_type": "ddg"
+    }
+  ]
+}

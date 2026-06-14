@@ -1,0 +1,103 @@
+{
+  "axis": "SOCIAL_RELATIONS_REVIEW",
+  "fetched_at": "2026-03-31T07:36:32.194647+00:00",
+  "smart_query": "social inequality conflict trust",
+  "sources_count": {
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "web_search": 5
+  },
+  "rss": [
+    {
+      "title": "Spain closes airspace to US aircraft involved in Iran war",
+      "snippet": "It follows a decision by the Spanish government to deny the US use of the two jointly run military bases in Andalusia.",
+      "url": "https://www.bbc.com/news/articles/cwy368j1e3lo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Sexual violence part of 'everyday life' in parts of Sudan, charity says",
+      "snippet": "Victims describe how they have been targeted while carrying out everyday activities. ",
+      "url": "https://www.bbc.com/news/articles/c5ywgn2n3nqo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Eurovision Song Contest launches first-ever Asia edition",
+      "snippet": "Broadcasters from 10 countries, including South Korea and the Philippines, will be taking part.",
+      "url": "https://www.bbc.com/news/articles/cx2rwq53zxyo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "briatte/awesome-network-analysis",
+      "snippet": "A curated list of awesome network analysis resources.",
+      "stars": 3974,
+      "url": "https://github.com/briatte/awesome-network-analysis",
+      "updated": "2026-03-30",
+      "source": "GitHub"
+    },
+    {
+      "title": "obsei/obsei",
+      "snippet": "Obsei is a low code AI powered automation tool. It can be used in various business flows like social listening, AI based alerting, brand image analysis, comparative study and more .",
+      "stars": 1385,
+      "url": "https://github.com/obsei/obsei",
+      "updated": "2026-03-29",
+      "source": "GitHub"
+    },
+    {
+      "title": "shaypal5/awesome-twitter-data",
+      "snippet": "A list of Twitter datasets and related resources.",
+      "stars": 1099,
+      "url": "https://github.com/shaypal5/awesome-twitter-data",
+      "updated": "2026-03-20",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "MGDIL: Multi-Granularity Summarization and Domain-Invariant Learning for Cross-Domain Social Bot Detection",
+      "snippet": "Social bots increasingly infiltrate online platforms through sophisticated disguises, threatening healthy information ecosystems. Existing detection methods often rely on modality specific cues or local contextual features, making them brittle when modalities are missing or inputs are incomplete. Mo",
+      "url": "https://arxiv.org/abs/2603.27928v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Interplay between social contact and media exposure in the overestimation of racial diversity in the U.S",
+      "snippet": "The general population systematically overestimates the size of minority groups, yet how these misperceptions vary across racial groups and geographical scales remains poorly understood. Using a purpose-built survey of the U.S. population, we examine overestimation of people of color (PoC) communiti",
+      "url": "https://arxiv.org/abs/2603.26896v1",
+      "source": "arXiv"
+    }
+  ],
+  "web_search": [
+    {
+      "title": "Exploring the effects of inequality on social trust in the United ...",
+      "url": "https://link.springer.com/article/10.1007/s44202-025-00344-5",
+      "source": "WEB"
+    },
+    {
+      "title": "Key elements of social cohesion in conflict-affected societies: a ...",
+      "url": "https://www.tandfonline.com/doi/full/10.1080/23311886.2025.2586176",
+      "source": "WEB"
+    },
+    {
+      "title": "Why do inequality and deprivation produce high crime and low trust?",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7820585/",
+      "source": "WEB"
+    },
+    {
+      "title": "New UN Report Warns of Global Social Crisis Driven by Insecurity ...",
+      "url": "https://unu.edu/press-release/new-un-report-warns-global-social-crisis-driven-insecurity-inequality-and-distrust",
+      "source": "WEB"
+    },
+    {
+      "title": "Income inequality and social trust - ScienceDirect",
+      "url": "https://www.sciencedirect.com/science/article/pii/S0165176525005129",
+      "source": "WEB"
+    }
+  ],
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL"
+}

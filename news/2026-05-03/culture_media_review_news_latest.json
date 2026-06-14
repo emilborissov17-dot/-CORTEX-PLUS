@@ -1,0 +1,37 @@
+{
+  "axis": "CULTURE_MEDIA_REVIEW",
+  "fetched_at": "2026-05-03T09:11:47.464216+00:00",
+  "smart_query": "media disinformation culture",
+  "sources_count": {
+    "wiki": 0,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [],
+  "gdelt": [],
+  "github_repos": [],
+  "arxiv_papers": [
+    {
+      "title": "Social Media Data Toolkit: Standardization and Anonymization of Social Network Datasets",
+      "snippet": "The rapid diversification of social media platforms and the increasing restrictions on official APIs have significantly complicated cross-platform analysis. Researchers are often forced to rely on heterogeneous datasets obtained through web scraping and historical archives; however they often lack s",
+      "url": "https://arxiv.org/abs/2604.27710v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Temporal and Content Coupling Analysis of Social Media User Behavior",
+      "snippet": "News consumption behavior is shaped by the coupling between temporal dynamics and content selection. This study proposes a multi-scale temporal-content framework and validates it on two large real-world news datasets, MIND and Adressa. Results reveal hierarchical temporal patterns. At the macroscale",
+      "url": "https://arxiv.org/abs/2604.27530v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[Prominent Scientists, Faith Leaders, Policymakers and Artists Call for a Prohibition on Superintelligence, as Poll Shows Americans Don’t Want It] Initial signatories include AI pioneers Yoshua Bengio and Geoffrey Hinton, leading media voices Steve Bannon and Glenn Beck, Obama's National Security Advisor Susan Rice, business trailblazers Steve Wozniak and Richard Branson, five Nobel Laureates, former Irish President Mary Robinson, actors Stephen Fry and Joseph Gordon-Levitt, and hundreds of others.",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

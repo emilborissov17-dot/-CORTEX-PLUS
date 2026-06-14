@@ -1,0 +1,90 @@
+{
+  "axis": "HUMAN_WELL_BEING_REVIEW",
+  "fetched_at": "2026-04-03T14:17:39.507614+00:00",
+  "smart_query": "mental health wellbeing global",
+  "sources_count": {
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 0,
+    "github": 3,
+    "web_search": 5
+  },
+  "rss": [
+    {
+      "title": "Fewer heat-related deaths in 2025 despite warmest summer",
+      "snippet": "Summer 2025 was the warmest UK summer on record, with four heatwaves, a top temperature of nearly 38C and a mean temperature of 16.1C",
+      "url": "https://www.bbc.com/news/articles/cy91xqxn2jdo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Doctors lose new jobs package as strike to go ahead",
+      "snippet": "The offer of 1,000 more training posts has been withdrawn after the union refused to scrap the planned six-day strike.",
+      "url": "https://www.bbc.com/news/articles/cwyj7dwwlq9o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Prince William praises £20m milestone for Bowelbabe fund",
+      "snippet": "The Bowelbabe fund, set up by Dame Deborah James in 2022, helps to support Cancer Research UK. ",
+      "url": "https://www.bbc.com/news/articles/c4gvd994x15o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "openemr/openemr",
+      "snippet": "The most popular open source electronic health records and medical practice management solution.",
+      "stars": 5062,
+      "url": "https://github.com/openemr/openemr",
+      "updated": "2026-04-03",
+      "source": "GitHub"
+    },
+    {
+      "title": "HospitalRun/hospitalrun",
+      "snippet": "Monorepo that holds all of HospitalRun's v2 projects.",
+      "stars": 983,
+      "url": "https://github.com/HospitalRun/hospitalrun",
+      "updated": "2026-04-02",
+      "source": "GitHub"
+    },
+    {
+      "title": "getodk/collect",
+      "snippet": "ODK Collect is an Android app for filling out forms. It's been used to collect billions of data points in challenging environments around the world. Contribute and make the world a better place! ✨📋✨",
+      "stars": 765,
+      "url": "https://github.com/getodk/collect",
+      "updated": "2026-04-02",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [],
+  "web_search": [
+    {
+      "title": "Mental Health and Wellbeing | United Nations",
+      "url": "https://www.un.org/en/global-issues/mental-health",
+      "source": "WEB"
+    },
+    {
+      "title": "Global Mental Health: Where We Are and Where We Are Going",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10230139/",
+      "source": "WEB"
+    },
+    {
+      "title": "Mental health - World Health Organization (WHO)",
+      "url": "https://www.who.int/health-topics/mental-health",
+      "source": "WEB"
+    },
+    {
+      "title": "Global Mental Health",
+      "url": "https://globalhealth.harvard.edu/focus-areas/global-mental-health/",
+      "source": "WEB"
+    },
+    {
+      "title": "Countdown for Global Mental Health 2030 Dashboard",
+      "url": "https://data.unicef.org/resources/countdown-for-global-mental-health-2030-dashboard/",
+      "source": "WEB"
+    }
+  ],
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL"
+}

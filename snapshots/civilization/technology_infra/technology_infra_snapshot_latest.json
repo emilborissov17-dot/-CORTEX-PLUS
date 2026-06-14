@@ -1,0 +1,33 @@
+{
+  "source_type": "REAL_DATA",
+  "metrics": {
+    "axis": "TECHNOLOGY_INFRA_REVIEW",
+    "source": "world_bank_api",
+    "fetched_date": "2026-06-11",
+    "metrics": {
+      "secure_internet_servers_per1m": 16379.6369660674,
+      "fixed_broadband_per100": 20.11,
+      "mobile_subscriptions_per100": 111.5,
+      "air_transport_passengers": 4268984474.03796,
+      "container_port_traffic": 839847482.0,
+      "logistics_performance_index": 3.0
+    },
+    "data_quality": "6/6 fetched"
+  },
+  "raw": {
+    "axis": "TECHNOLOGY_INFRA_REVIEW",
+    "source": "world_bank_api",
+    "fetched_date": "2026-06-11",
+    "metrics": {
+      "secure_internet_servers_per1m": 16379.6369660674,
+      "fixed_broadband_per100": 20.11,
+      "mobile_subscriptions_per100": 111.5,
+      "air_transport_passengers": 4268984474.03796,
+      "container_port_traffic": 839847482.0,
+      "logistics_performance_index": 3.0
+    },
+    "data_quality": "6/6 fetched"
+  },
+  "snapshot_timestamp": "2026-06-11T19:06:43.855329+00:00",
+  "axis": "TECHNOLOGY_INFRA_REVIEW"
+}

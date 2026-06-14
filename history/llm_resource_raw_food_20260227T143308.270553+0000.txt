@@ -1,0 +1,44 @@
+Thinking...
+Okay, let's tackle this. The user wants me to act as an internal AGI resource review agent in the CORTEX++ system, specifically for the FOOD domain. My task is to generate a JSON object based on the provided RAW_CONTEXT. Let me start by understanding the context.
+
+First, the RAW_CONTEXT has a FOOD REVIEW with a timestamp. The main input data is from the FOOD_QUERY, which includes the status of different data sources. There are 5 active sources, but 3 failed. The FAO and Our World in Data files are 404, WFP has a connection timeout, and EUROSTAT is okay. The snapshot files list matches the sources.
+
+Now, I need to structure the JSON with the required keys. Let's start with the diagnosis. The status here is probably STRESSED because some sources are failing. The short_summary_bg should mention the failed sources and the impact on data availability. Key metrics would include the number of failed sources, percentage of failed sources, and maybe the number of accessible sources. 
+
+For risks, the main ones are data unavailability from failed sources (short-term), potential gaps in global hunger data (medium-term), and reliance on limited data sources (long-term). Opportunities might be improving data collection methods or partnerships. Recommended actions could involve rechecking failed sources, reaching out to data providers, and diversifying data sources. Notes for self-improvement would highlight the need for better error handling and redundant data sources.
+
+I need to make sure all Bulgarian text is concise. Let me check each section again. Diagnosis status is STRESSED. Key metrics: failed_sources (3), percentage (60%), and accessible_sources (2). Risks: data unavailability (short), gaps in hunger data (medium), reliance on limited sources (long). Opportunities: enhance data collection, leverage partnerships. Recommended action: recheck failed sources with high priority. Notes: improve error handling and redundancy.
+
+Wait, the key_metrics should have name, value, and interpretation. So for failed_sources, value is 3, interpretation is that it affects data reliability. Accessible_sources is 2, which is 40% (since 2 out of 5). Maybe that's better. Also, the percentage of failed sources is 60% (3/5). That might be a better metric. Let me adjust that. 
+
+So key_metrics would be: failed_sources (3, 60% of total), accessible_sources (2, 40% of total). Interpretation for failed_sources is that it impacts data reliability. Accessible_sources shows partial data availability. 
+
+Risks: data unavailability from failed sources (short), potential gaps in hunger data (medium), reliance on limited sources (long). Opportunities: enhance data collection methods, leverage partnerships. Recommended action: recheck failed sources, prioritize high. Notes: improve error handling, redundant sources.
+
+I think that covers it. Now structure the JSON accordingly, making sure all Bulgarian fields are correctly filled and the JSON is valid.
+...done thinking.
+
+{
+  "diagnosis": {
+    "status": "STRESSED",
+    "short_summary_bg": "3 от 5 ключови източника на данни са неактивни или са се счупили, което намалява достоверността на анализите.",
+    "key_metrics": [
+      {"name": "failed_sources", "value": "3", "interpretation_bg": "60% от източниците са нефункционални, което подкопава достоверността на данните."},
+      {"name": "accessible_sources", "value": "2", "interpretation_bg": "40% от източниците са достъпни, но ограниченият брой води до несъвършен анализ."}
+    ]
+  },
+  "risks": [
+    {"name": "Недостиг на данни от FAO и WFP", "description_bg": "Неуспешни опити за достъп до критични данни за хранителна безбедност и глад.", "time_horizon": "short"},
+    {"name": "Нестабилност в достъпа до източници", "description_bg": "Сезонни или технически проблеми със сървърите на източниците могат да намалят достоверността на анализите.", "time_horizon": "medium"},
+    {"name": "Ограничен брой източници", "description_bg": "Висока зависимост от само 2 успешни източника може да доведе до недостатъчни изводи.", "time_horizon": "long"}
+  ],
+  "opportunities": [
+    {"name": "Укрепване на партньорства с източниците", "description_bg": "Разширяване на достъпа до данни чрез активни контакти с FAO, WFP и други институции."}
+  ],
+  "recommended_actions": [
+    {"id": "FOOD-ACT-001", "title_bg": "Повторно проверяване на неуспешните източници", "description_bg": "Потърсете алтернативни URL-адреси или актуализиране на данните от съществуващи източници.", "priority": "high"}
+  ],
+  "notes_for_cortex_self_improvement": [
+    "Използвайте по-надеждни методи за проверка на достъпа до източници, включително редовни тестове на URL-адреси."
+  ]
+}

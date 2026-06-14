@@ -1,0 +1,43 @@
+Thinking...
+Okay, let's tackle this query. The user wants me to act as an internal AGI resource review agent in the CORTEX++ system, specifically for the WATER domain. The task is to generate a JSON object based on the provided RAW_CONTEXT. 
+
+First, I need to parse the RAW_CONTEXT carefully. The input data includes a summary from WATER_QUERY and a list of snapshot files. The main points to consider are the status of the data sources and the snapshot files.
+
+Looking at the sources, most are OK, but there's a failure with the OPSD proxy due to a connection timeout. The World Bank file has a 403 status, which might mean access is denied. The placeholder_water_data.json is listed in the snapshot files, which might be a local file not accessible via the web. 
+
+For the diagnosis status, since most sources are OK but some are failing, maybe the status is STRESSED. The short_summary_bg should mention the mixed status of data sources and the critical issues like the OPSD timeout and World Bank 403. Key metrics could include the number of OK sources, failed sources, and the presence of the placeholder file. 
+
+Risks would include the OPSD connection timeout (short-term), the World Bank access issue (medium-term), and potential data gaps from the placeholder file (long-term). Opportunities might involve leveraging the placeholder data if it's comprehensive or improving data access protocols. 
+
+Recommended actions should address the immediate issues, like fixing the OPSD connection, and maybe improving the handling of the placeholder file. Notes for self-improvement could mention the need for better error handling for the World Bank and OPSD sources, and ensuring the placeholder data is reliable.
+
+I need to make sure all Bulgarian text is concise and clear. The JSON structure must follow the exact keys and priorities. Let me double-check each section to ensure compliance with the required format and that all data points from the RAW_CONTEXT are accurately reflected.
+...done thinking.
+
+{
+  "diagnosis": {
+    "status": "STRESSED",
+    "short_summary_bg": "Глобалната вода система показва смесени резултати: повечето източници са активни, но има критични проблеми с достъп до някои данни.",
+    "key_metrics": [
+      {"name": "Активни източници", "value": "8/10", "interpretation_bg": "80% от източниците са успешно достъпни, но 2/10 са с критични грешки."},
+      {"name": "Критични грешки", "value": "2", "interpretation_bg": "Опитът за достъп до OPSD и World Bank данни е провален, което ограничава анализите."},
+      {"name": "Плейсхолдър данни", "value": "1", "interpretation_bg": "Има 1 локален файл, който може да попълни недостига, но неговата валидност е неизвестна."}
+    ]
+  },
+  "risks": [
+    {"name": "Прекъснати връзки с OPSD", "description_bg": "Връзката с Open Power System Data е изчезнала, което затруднява анализ на инфраструктурата.", "time_horizon": "short"},
+    {"name": "Ограничения достъп до World Bank данни", "description_bg": "403 грешка при достъп до данни за вода и енергия, което води до неизпълнени източници.", "time_horizon": "medium"},
+    {"name": "Недостиг на актуални данни", "description_bg": "Плейсхолдър файлът не е проверен, което може да доведе до непълни изводи.", "time_horizon": "long"}
+  ],
+  "opportunities": [
+    {"name": "Използване на локални данни", "description_bg": "Плейсхолдър файлът може да бъде използван за временно попълване на недостигащите данни."}
+  ],
+  "recommended_actions": [
+    {"id": "WATER-ACT-001", "title_bg": "Решаване на OPSD връзката", "description_bg": "Проверете и отстранете проблема с връзката към Open Power System Data.", "priority": "high"},
+    {"id": "WATER-ACT-002", "title_bg": "Проверка на плейсхолдър данни", "description_bg": "Изпратете локалния файл за проверка на валидност и актуалност.", "priority": "medium"}
+  ],
+  "notes_for_cortex_self_improvement": [
+    "Нужно е по-ефективно управление на грешки при достъп до World Bank и OPSD източници.",
+    "Следващият review трябва да включва проверка на плейсхолдър файлове за валидност."
+  ]
+}

@@ -1,0 +1,89 @@
+{
+  "axis": "CULTURE_MEDIA_REVIEW",
+  "fetched_at": "2026-05-17T16:00:04.812932+00:00",
+  "smart_query": "media disinformation culture",
+  "sources_count": {
+    "wiki": 0,
+    "gdelt": 0,
+    "arxiv": 0,
+    "github": 3,
+    "youtube_transcripts": 3,
+    "podcast": 1
+  },
+  "rss": [],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "Duffy12150557/Security-Research-Toolkit",
+      "snippet": "Security Research Toolkit — Video and image analysis tool for neural inpainting and AI-generated content detection with SORA signature extraction, temporal consistency analysis, CNN artifact detection",
+      "stars": 36,
+      "url": "https://github.com/Duffy12150557/Security-Research-Toolkit",
+      "updated": "2026-04-08",
+      "source": "GitHub"
+    },
+    {
+      "title": "bbidwell85/Totality",
+      "snippet": "Analyze quality, track collection completeness, find upgrades, manage media wishlists.",
+      "stars": 18,
+      "url": "https://github.com/bbidwell85/Totality",
+      "updated": "2026-04-21",
+      "source": "GitHub"
+    },
+    {
+      "title": "moguiyu/NewsPrism",
+      "snippet": "Multilingual news monitor that clusters same-event coverage into Chinese cross-source digests with focus maps and strict positive highlights",
+      "stars": 13,
+      "url": "https://github.com/moguiyu/NewsPrism",
+      "updated": "2026-05-16",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [],
+  "podcast": "[Prominent Scientists, Faith Leaders, Policymakers and Artists Call for a Prohibition on Superintelligence, as Poll Shows Americans Don’t Want It] Initial signatories include AI pioneers Yoshua Bengio and Geoffrey Hinton, leading media voices Steve Bannon and Glenn Beck, Obama's National Security Advisor Susan Rice, business trailblazers Steve Wozniak and Richard Branson, five Nobel Laureates, former Irish President Mary Robinson, actors Stephen Fry and Joseph Gordon-Levitt, and hundreds of others.",
+  "wiki": null,
+  "youtube_items": [
+    {
+      "title": "[YT] Does Social Media Kill Democracy? | Freedom of Speech vs Censorship",
+      "summary": "the recent vote in India the world's biggest democracy was dubbed loquats PAP election in America it has been said that Trump would never have become president without the help of Facebook and in Germany in the run-up to the European Parliament election one youtuber posted a video railing against the conservative CDU party it dominated the final days of its campaign what effect do social media have on democracy a YouTube Facebook &amp; Co threatening free society our topic unsafe today 2.6 billion people worldwide use Facebook Instagram or whatsapp at least once a day I know I do social platforms are actually the main place where many teenagers get their news but it's important to check sources and facts because especially in social media it's often unclear where a post comes from what com",
+      "link": "https://www.youtube.com/watch?v=qraF9NSA3BQ",
+      "source_type": "youtube",
+      "channel": "DW Shift",
+      "video_id": "qraF9NSA3BQ",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Should social media be censored? Here&#39;s what both sides have to say",
+      "summary": "there's been much debate this past year about freedom of speech and social media we should err on the side of greater expression they are literally spreading lies misinformation propaganda companies that engage in censoring or any political conduct will not be able to keep their liability shield the dilemma should social media companies censor speech that they deem to be hateful or violent or false or should they keep it up in the spirit of freedom of speech and what happens when the speaker is an elected official i believe that we have two responsibilities to remove content when it can cause real danger as effectively as we can and to fight to uphold as wide of a definition of freedom of expression as possible of course the first amendment doesn't legally apply to facebook or to twitter o",
+      "link": "https://www.youtube.com/watch?v=xnOj7IWJ_yU",
+      "source_type": "youtube",
+      "channel": "CNN Business",
+      "video_id": "xnOj7IWJ_yU",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] The Rise of Hate Speech on Social Media. Alarming Statistics and Impact",
+      "summary": "the study from The Institute of strategic dialogue found that anti-semitic tweets doubled from June 22 to February 2023 one study reported that as many as 86% of the posts reported for hateful content remained up after being reported hate speech on the platform is up uh so what what they will typically do is they will count the number of posts but not count the number of views so what matters is was that a post given high visibility or what did like one person see it uh and if you look at the number of views of how how many how many times was hze content viewed on our platform it is down substantially yeah",
+      "link": "https://www.youtube.com/watch?v=WMlSWr7ndSc",
+      "source_type": "youtube",
+      "channel": "TED Talk Bites",
+      "video_id": "WMlSWr7ndSc",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 613,
+      "has_full_transcript": true
+    }
+  ],
+  "summary": "Социалните медии имат значимо влияние върху демокрацията, като могат да разпространят фалшиви новини и манипулативен контент. Това изисква внимателен подход към проверката на източници и факти. Открити са инструменти като Security Research Toolkit и NewsPrism, които могат да помогнат в анализа на медиите.",
+  "urgency": "MEDIUM",
+  "sentiment": "NEUTRAL",
+  "key_developments": [
+    "Security Research Toolkit",
+    "NewsPrism"
+  ],
+  "open_source_momentum": "Налични са отворени инструменти като Security Research Toolkit и NewsPrism на GitHub",
+  "scientific_frontier": "No data",
+  "relevance_to_goal": "Визията за устойчива цивилизация изисква критично мислене и достоверна информация, които могат да бъдат поддержани от инструменти за анализ на медиите."
+}

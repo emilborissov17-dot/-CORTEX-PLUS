@@ -1,0 +1,57 @@
+{
+  "axis": "INFRASTRUCTURE_CITIES_REVIEW",
+  "fetched_at": "2026-05-08T09:01:15.507297+00:00",
+  "smart_query": "cities infrastructure urban development",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "Instagram privacy tech is turned off today - what does this mean for your DMs?",
+      "snippet": "The platform said it would remove end-to-end encrypted messages, a major U‑turn by parent company Meta.",
+      "url": "https://www.bbc.com/news/articles/clypzxl3lvqo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "How sunburn inspired a new way to store energy",
+      "snippet": "Molecules that can capture heat could be a useful technology to decarbonise heating. ",
+      "url": "https://www.bbc.com/news/articles/c62l9gnx775o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Meta brings High Court challenge over Ofcom fees",
+      "snippet": "Meta said Ofcom's calculations were \"disproportionate\"; the regulator said it would defend its position.",
+      "url": "https://www.bbc.com/news/articles/cj0pqpgvvn2o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [],
+  "arxiv_papers": [
+    {
+      "title": "A Critical Pragmatism Approach for Algorithmic Fairness: Lessons from Urban Planning Theory",
+      "snippet": "As data scientists grapple with increasingly complex ethical decisions in machine learning (ML) and data science, the field of algorithmic fairness has offered multiple solutions, from formal mathematical definitions to holistic notions of fairness drawn from various academic disciplines. However, n",
+      "url": "https://arxiv.org/abs/2605.02773v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Urban to Rural Migration in Eastern Europe: Unpacking digital ruralities through TikTok video analysis",
+      "snippet": "Urban to rural migration is a less-researched phenomenon compared to its counterpart: rural to urban migration. In parts of Europe, an increasing number of people living in big urban centers within the country, or moving from other countries decide to relocate to rural areas. In this paper, we exami",
+      "url": "https://arxiv.org/abs/2605.00453v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[The U.S. Public Wants Regulation (or Prohibition) of Expert‑Level and Superhuman AI] Three‑quarters of U.S. adults want strong regulations on AI development, preferring oversight akin to pharmaceuticals rather than industry \"self‑regulation.\"",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

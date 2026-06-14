@@ -1,0 +1,147 @@
+{
+  "axis": "ENERGY_REVIEW",
+  "domain": "planet",
+  "timestamp": "2026-05-17T13:57:52.329385+00:00",
+  "sources_count": 15,
+  "rss_count": 12,
+  "ddg_count": 0,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] How solar and wind projects are accelerating the energy transition - YouTube",
+      "summary": "Uzbekistan has added 5,600 megawatts of solar and wind capacity to its national grid in recent years as the country accelerates investment in renewable energy projects. President Shavkat Mirziyoyev says renewable sources now account for around 30% of the country's electricity mix with international developers involved major solar and wind projects across several regions. Officials say the expansion is aimed at strengthening energy security, reducing dependence on natural gas, and meeting rising electricity demand from industry and households. Last year we have a large project approved. Uh when it's finished, the solar uh plant in Samarkand will produce um one have capacity of 1 gigawatt generation of renewable energy. This means it is going to be the largest in Central Asia. International ",
+      "link": "https://www.youtube.com/watch?v=unOElj2dds0",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "unOElj2dds0",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 1661,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] The Energy Revolution is Unstoppable: Record Solar and Wind Additions in 2025 - YouTube",
+      "summary": "The world added a staggering amount of wind and solar power in 2025. And the numbers were incredible. Hello my friends. Welcome to the channel. I'm Sam Evans. And this is video number 8,100. I've done many videos about wind and solar and batteries and how important they are to the planet. But what just happened in 2025 is truly truly astonishing. New data from global energy think tank Ember shows that 814 gigawatts of new solar and wind capacity came online last year, which was an increase of 17% from 2024's 696 gigawatts. That brings total global wind and solar capacity to 4,174 gigawatts or just over 4 terawatts. That sounds like a lot and it is. It's huge. But actually, a lot of wind and solar was also wasted. Completely wasted. In 2025. Curtailed, the industry calls it. In fact, at lea",
+      "link": "https://www.youtube.com/watch?v=spSOp5s_6_A",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "spSOp5s_6_A",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Renewable energy met all new demand for electricity in 2025: report - YouTube",
+      "summary": "New data this week shows there's serious progress being made around the world on renewable energy as energy shocks from the restricted Strait of Hormuz continue to highlight, of course, the world's dependence on fossil fuels. So, for more on all of this, let's go to the CBC's Anand Ram. He joins us now live. Okay, so the the headlines here seem to be about solar power. What more do we know about that? &gt;&gt; Absolutely. In two reports this week, one from the International Energy Agency and one from Ember, their think tank in the UK, solar is everywhere. It's growth. Basically, its rise from 2024 to 2025 was faster and higher than any other fuel source. And that, interestingly enough, is driven by investment from big polluters like China and India, who contribute to a lot of CO2 emissions",
+      "link": "https://www.youtube.com/watch?v=DMsjUM4cEq0",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "DMsjUM4cEq0",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "Изграждането на нови газови турбини от xAI захранва датакентери в САЩ, въпреки растящата промяна към възобновяеми източници на енергия.",
+    "root_cause": "xAI избира да използва газови турбини, въпреки наличието на възможности за геотермална и слънчева енергия, което създава противоречие между технологичния прогрес и климатичната устойчивост.",
+    "severity": "HIGH",
+    "leverage_points": [
+      "xAI като гигант в AI индустрията, което го прави ключов актьор в избора на енергийни източници",
+      "Националните и международни регулатори, които могат да налагат ограничения върху използването на газови турбини"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Регулатори да налагат ограничения върху използването на газови турбини за хранене на датакентери",
+        "measurable_goal": "Съкратене на новите газови турбини за хранене на датакентери с 50% до 2028 г.",
+        "timeframe": "дългосрочно"
+      },
+      {
+        "action": "xAI да инвестира в геотермални и слънчеви източници за хранене на датакентерите си",
+        "measurable_goal": "Достигане на 100% възобновяеми източници за хранене на датакентерите до 2027 г.",
+        "timeframe": "средносрочно"
+      }
+    ],
+    "evidence": [
+      "xAI добавя 19 газови турбини към Colossus 2 датакентера си в САЩ",
+      "Amazon използва геотермална и слънчева енергия за хранене на датакентерите си в Невада"
+    ],
+    "generalization": "Този проблем е свързан с другите домейни, като използването на възобновяеми източници на енергия в технологичния сектор, както и с влиянието на големите компании върху климатичната политика.",
+    "summary": "xAI използва газови турбини за хранене на датакентерите си, въпреки наличието на възобновяеми източници, което създава проблем за климатичната устойчивост.",
+    "risk_level": "HIGH"
+  },
+  "raw_items": [
+    {
+      "title": "Attacks On Wind Power Make No Sense — It’s Just Another Form Of Solar Energy",
+      "summary": "<p>A vast and well-organized campaign is actively underway to suspend global wind energy discourse. The Financial Times calls it the US president’s “crusade against renewable energy.” WindEurope, who describe themselves as “the voice of the wind energy industry,” say attacks on wind power pose a “systemic risk to Europe’s security.”   ... [continued]</p>\n<p>The post <a href=\"https://cleantechnica.com/2026/05/17/attacks-on-wind-power-make-no-sense-its-just-another-form-of-solar-energy/\">Attacks O",
+      "link": "https://cleantechnica.com/2026/05/17/attacks-on-wind-power-make-no-sense-its-just-another-form-of-solar-energy/",
+      "published": "Sun, 17 May 2026 13:26:45 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Our New Jaecoo J5 Battery Electric Vehicle!",
+      "summary": "<p>This new entrant to the Australian market has shot into the top ten consistently over the last few months — with 1,845 units sold since its launch early this year. Jaecoo is a sub-brand of Chery. For a first-time EV owner&#8217;s point of view, I reached out to one of   ... [continued]</p>\n<p>The post <a href=\"https://cleantechnica.com/2026/05/16/our-new-jaecoo-j5-battery-electric-vehicle/\">Our New Jaecoo J5 Battery Electric Vehicle!</a> appeared first on <a href=\"https://cleantechnica.com\">C",
+      "link": "https://cleantechnica.com/2026/05/16/our-new-jaecoo-j5-battery-electric-vehicle/",
+      "published": "Sun, 17 May 2026 02:15:45 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Solar & Farming Can Share Land, But The Details Matter",
+      "summary": "<p>Agrivoltaics has become one of those ideas that is simple enough to fit on a social media tile and complex enough to be mangled by one. The image that prompted this discussion showed a farmer kneeling beneath solar panels in front of vegetables, sheep, mountains, and an American flag, with   ... [continued]</p>\n<p>The post <a href=\"https://cleantechnica.com/2026/05/16/solar-farming-can-share-land-but-the-details-matter/\">Solar &#038; Farming Can Share Land, But The Details Matter</a> appeared",
+      "link": "https://cleantechnica.com/2026/05/16/solar-farming-can-share-land-but-the-details-matter/",
+      "published": "Sun, 17 May 2026 01:29:34 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "US Plan To Allocate Water From The Colorado River Will Severely Impact California, Arizona, & Nevada",
+      "summary": "<p>Crunch time has come for communities that rely on water from the Colorado River. California, Arizona, and Nevada will be directly affected.</p>\n<p>The post <a href=\"https://cleantechnica.com/2026/05/16/us-plan-to-allocate-water-from-the-colorado-river-will-severely-impact-california-arizona-nevada/\">US Plan To Allocate Water From The Colorado River Will Severely Impact California, Arizona, &#038; Nevada</a> appeared first on <a href=\"https://cleantechnica.com\">CleanTechnica</a>.</p>",
+      "link": "https://cleantechnica.com/2026/05/16/us-plan-to-allocate-water-from-the-colorado-river-will-severely-impact-california-arizona-nevada/",
+      "published": "Sun, 17 May 2026 01:17:26 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "xAI grows data center gas fleet despite legal scrutiny – This Week in Cleantech",
+      "summary": "On this episode of the This Week in Cleantech podcast, Molly Taft from WIRED discusses Elon Musk's AI company xAI's decision to add 19 natural gas turbines to its Colossus 2 data center in Southaven, Mississippi.",
+      "link": "https://www.renewableenergyworld.com/podcasts/xai-grows-data-center-gas-fleet-despite-legal-scrutiny-this-week-in-cleantech/",
+      "published": "Fri, 15 May 2026 18:34:58 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "The EPA is expediting clean air permits for power plants to remove ‘unnecessary delays’",
+      "summary": "The U.S. Environmental Protection Agency is expediting Clean Air Act permit reviews to eliminate delays, allowing concurrent public comment and review.",
+      "link": "https://www.renewableenergyworld.com/energy-business/policy-and-regulation/the-epa-is-expediting-clean-air-permits-for-power-plants-to-remove-unnecessary-delays/",
+      "published": "Thu, 14 May 2026 19:15:05 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Elective pay explained as key IRS deadline approaches | Q&A with tax credit specialist Bryen Alperin",
+      "summary": "Municipalities, schools, and first-time applicants are accelerating projects under the IRS's elective pay provision before the May 15 deadline.",
+      "link": "https://www.renewableenergyworld.com/energy-business/policy-and-regulation/elective-pay-explained-as-key-irs-deadline-approaches-qa-with-tax-credit-specialist-bryen-alperin/",
+      "published": "Thu, 14 May 2026 13:25:35 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Amazon turns to geothermal, solar and storage to power Nevada data center growth",
+      "summary": "The 700 MW portfolio includes Zanskar’s 20-year agreement to deliver 100 MW of baseload geothermal power to NV Energy by 2030.",
+      "link": "https://www.renewableenergyworld.com/energy-business/new-project-development/amazon-turns-to-geothermal-solar-and-storage-to-power-nevada-data-center-growth/",
+      "published": "Tue, 12 May 2026 19:50:54 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Beijing’s Silence Is Fueling the Hormuz Crisis",
+      "summary": "Even though the Xi–Trump summit in Beijing was supposed to project stability, the outcome was clearly the opposite. In real terms, the meeting could ultimately be remembered as the moment the world began to understand that there is no viable great-power strategy to contain the Iran war or to reopen the Strait of Hormuz. The latter will have a long-lasting, debilitating effect on the stability of global shipping and energy markets. Even when taking into account all the choreography, ceremonial ha",
+      "link": "https://oilprice.com/Energy/Energy-General/Beijings-Silence-Is-Fueling-the-Hormuz-Crisis.html",
+      "published": "Sat, 16 May 2026 18:00:00 -0500",
+      "source_type": "rss"
+    },
+    {
+      "title": "Big Oil Rushes Into Argentina’s Vaca Muerta Shale",
+      "summary": "Local and international energy companies are vying for additional exploration blocks in Argentina’s Vaca Muerta shale basin as the Middle East crisis and the blocked Strait of Hormuz are reigniting a global race to tap resources outside conflict zones.     What was a predominantly U.S. business until a few years ago, shale exploration and production is now gaining momentum outside North America. And Argentina’s Vaca Muerta is top of the list of oil and gas companies, including U.S. shale giants,",
+      "link": "https://oilprice.com/Energy/Crude-Oil/Big-Oil-Rushes-Into-Argentinas-Vaca-Muerta-Shale.html",
+      "published": "Sat, 16 May 2026 16:00:00 -0500",
+      "source_type": "rss"
+    }
+  ]
+}

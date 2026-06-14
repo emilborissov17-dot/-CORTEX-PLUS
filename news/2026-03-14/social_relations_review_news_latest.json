@@ -1,0 +1,101 @@
+{
+  "axis": "SOCIAL_RELATIONS_REVIEW",
+  "fetched_at": "2026-03-14T07:09:27.946344+00:00",
+  "smart_query": "social inequality conflict trust",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 3,
+    "arxiv": 2,
+    "github": 3,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "More US Marines and warships to be moved to Middle East, reports say",
+      "snippet": "The reinforcements will come from an amphibious ready group that is usually based in Japan, an official told CBS, the BBC's US partner.",
+      "url": "https://www.bbc.com/news/articles/cq8gj9n12g8o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Los Angeles asks for investigation into LA28 Olympics chief over Epstein ties",
+      "snippet": "The LA city council voted unanimously for an investigation into LA28 chief Casey Wasserman over his Epstein ties. ",
+      "url": "https://www.bbc.com/news/articles/cn9ewxq98e5o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Family of Michigan synagogue suspect killed in Lebanon airstrike, officials say",
+      "snippet": "The FBI said the suspect had large quantities of fireworks and petrol in his vehicle when it caught fire after ramming a synagogue on Thursday.",
+      "url": "https://www.bbc.com/news/articles/cdxz0jpzk4do?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [
+    {
+      "title": "또  국민 통합  강조한 이 대통령  다르다고 등 돌리면 전진 못한다  ",
+      "snippet": "또  국민 통합  강조한 이 대통령  다르다고 등 돌리면 전진 못한다  ",
+      "url": "https://www.ohmynews.com/NWS_Web/View/at_pg.aspx?CNTN_CD=A0003195672&PAGE_CD=N0002&CMPT_CD=M0118",
+      "source": "ohmynews.com"
+    },
+    {
+      "title": "Perempuan Hanya Punya 64 Persen Hak Hukum Dibanding Laki - laki",
+      "snippet": "Perempuan Hanya Punya 64 Persen Hak Hukum Dibanding Laki - laki",
+      "url": "https://lestari.kompas.com/read/2026/03/04/104522686/perempuan-hanya-punya-64-persen-hak-hukum-dibanding-laki-laki",
+      "source": "lestari.kompas.com"
+    },
+    {
+      "title": "또  국민 통합  강조한 이 대통령  다르다고 등 돌리면 전진 못한다  ",
+      "snippet": "또  국민 통합  강조한 이 대통령  다르다고 등 돌리면 전진 못한다  ",
+      "url": "https://www.ohmynews.com/NWS_Web/View/at_pg.aspx?CNTN_CD=A0003195672&PAGE_CD=N0002&CMPT_CD=M0112",
+      "source": "ohmynews.com"
+    }
+  ],
+  "github_repos": [
+    {
+      "title": "briatte/awesome-network-analysis",
+      "snippet": "A curated list of awesome network analysis resources.",
+      "stars": 3968,
+      "url": "https://github.com/briatte/awesome-network-analysis",
+      "updated": "2026-03-11",
+      "source": "GitHub"
+    },
+    {
+      "title": "obsei/obsei",
+      "snippet": "Obsei is a low code AI powered automation tool. It can be used in various business flows like social listening, AI based alerting, brand image analysis, comparative study and more .",
+      "stars": 1379,
+      "url": "https://github.com/obsei/obsei",
+      "updated": "2026-03-13",
+      "source": "GitHub"
+    },
+    {
+      "title": "shaypal5/awesome-twitter-data",
+      "snippet": "A list of Twitter datasets and related resources.",
+      "stars": 1098,
+      "url": "https://github.com/shaypal5/awesome-twitter-data",
+      "updated": "2026-03-09",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "The propensity for disobedience: Rule-breaking, compliance and social phase transitions",
+      "snippet": "We develop a mathematical model to describe the persistence of rule-breaking behaviors in societies, such as traffic violations, disregard for legal restrictions and other forms of noncompliance. Using a replicator-type dynamics with utility functions incorporating individual benefits, institutional",
+      "url": "https://arxiv.org/abs/2603.10221v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Social Knowledge for Cross-Domain User Preference Modeling",
+      "snippet": "We demonstrate that user preferences can be represented and predicted across topical domains using large-scale social modeling. Given information about popular entities favored by a user, we project the user into a social embedding space learned from a large-scale sample of the Twitter (now X) netwo",
+      "url": "https://arxiv.org/abs/2603.10148v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[Don't hate the replicator, hate the game] The world of science has been stuck in an existential crisis over whether we actually know the things we thought we knew. Re-running an old study today doesn't always yield the same result. Same with re-enacting old experiments. Collectively, this is known as the “replication crisis.” Economist Abel Brodeur has come up with one way to help fix this crisis: he’s invented an internationally crowdsou",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

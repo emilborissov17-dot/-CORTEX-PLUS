@@ -1,0 +1,2254 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" prefix="og: https://ogp.me/ns#">
+  <head>
+        <script>
+      window.dataLayer = window.dataLayer ||[];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('consent','default',{
+        'ad_storage':'denied',
+        'analytics_storage':'denied',
+        'ad_user_data':'denied',
+        'ad_personalization':'denied',
+        'personalization_storage':'denied',
+        'functionality_storage':'granted',
+        'security_storage':'granted',
+        'wait_for_update': 500
+      });
+      gtag("set", "ads_data_redaction", true);
+    </script>
+            <script src="https://cmp.osano.com/AzyfddTRtqi1560Dk/2f1a8361-e0bc-41c3-b332-023fe627c0bb/osano.js"></script>
+        <meta charset="utf-8" />
+<meta name="description" content="The WRI Polsky Center for the Global Energy Transition delivers pragmatic, scalable and urgently needed solutions to achieve a clean, abundant, affordable and reliable energy future." />
+<link rel="canonical" href="https://www.wri.org/energy" />
+<meta name="wri_published" content="February 10 2025" />
+<meta name="wri_thumbnail" content="https://files.wri.org/d8/s3fs-public/styles/150_tall/s3/2025-02/cycle-rickshaw-walking-keoladeo-ghana-national-park.jpg?VersionId=wJv0HOXWF0xkHFU7eTEh2TbpW7Sz1xaz&amp;itok=mHJRm975" />
+<meta name="wri_type" content="Program/Center" />
+<meta property="og:site_name" content="World Resources Institute" />
+<meta property="og:url" content="https://www.wri.org/energy" />
+<meta property="og:title" content="Energy" />
+<meta property="og:description" content="The WRI Polsky Center for the Global Energy Transition harnesses analytical power, convening ability and global expertise to help orchestrate a transition to a clean, abundant, affordable and reliable energy future by overcoming critical barriers." />
+<meta property="og:image" content="https://files.wri.org/d8/s3fs-public/styles/1222x722/s3/2025-02/cycle-rickshaw-walking-keoladeo-ghana-national-park.jpg?VersionId=e_tIueesARkBs73Vg4B4PQPWSeNcK2x3&amp;h=c3635fa2&amp;itok=6gGo1kGd" />
+<meta property="og:image:width" content="1222" />
+<meta property="og:image:height" content="722" />
+<meta property="og:image:alt" content="Cycle rickshaw walking in Keoladeo Ghana National Park in Bharatpur, India" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:description" content="The WRI Polsky Center for the Global Energy Transition harnesses analytical power, convening ability and global expertise to help orchestrate a transition to a clean, abundant, affordable and reliable energy future by overcoming critical barriers." />
+<meta name="twitter:title" content="Energy" />
+<meta name="Generator" content="Drupal 10 (https://www.drupal.org)" />
+<meta name="MobileOptimized" content="width" />
+<meta name="HandheldFriendly" content="true" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<script type="application/ld+json">{
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": "WebSite",
+            "@id": "https://www.wri.org/",
+            "name": "World Resources Institute",
+            "url": "https://www.wri.org/",
+            "publisher": {
+                "@type": "Organization",
+                "@id": "https://www.wri.org/",
+                "name": "World Resource Institute",
+                "url": "https://www.wri.org/",
+                "sameAs": [
+                    "http://www.facebook.com/pages/World-Resources-Institute/61863318139",
+                    "http://twitter.comworldresources",
+                    "http://www.youtube.com/WorldResourcesInst",
+                    "https://www.linkedin.com/company/world-resources-institute/"
+                ],
+                "logo": {
+                    "@type": "ImageObject",
+                    "representativeOfPage": "True",
+                    "url": "https://www.wri.org/profiles/contrib/wri_sites/themes/custom/ts_wrin/logo.png",
+                    "width": "150",
+                    "height": "53"
+                }
+            }
+        }
+    ]
+}</script>
+<link rel="icon" href="/sites/default/files/favicon.ico" type="image/vnd.microsoft.icon" />
+<script>window.a2a_config=window.a2a_config||{};a2a_config.callbacks=[];a2a_config.overlays=[];a2a_config.templates={};a2a_config.icon_color = "transparent,#000000";
+
+(function () {
+  // Ensure a2a_config exists before AddToAny runs.
+  window.a2a_config = window.a2a_config || {};
+  window.a2a_config.callbacks = window.a2a_config.callbacks || [];
+
+  function showCopiedMessage(buttonEl, message) {
+    if (!buttonEl) return;
+
+    // Remove any existing message for this button.
+    var existing = buttonEl.parentNode && buttonEl.parentNode.querySelector(".a2a-copy-toast");
+    if (existing) existing.remove();
+
+    var toast = document.createElement("span");
+    toast.className = "a2a-copy-toast";
+    toast.setAttribute("role", "status");
+    toast.setAttribute("aria-live", "polite");
+    toast.textContent = message || "Link Copied";
+
+    // Put the message right after the icon.
+    buttonEl.insertAdjacentElement("afterend", toast);
+
+    // Auto-remove after a short delay.
+    window.setTimeout(function () {
+      toast.classList.add("is-hiding");
+      window.setTimeout(function () {
+        if (toast && toast.parentNode) toast.parentNode.removeChild(toast);
+      }, 250);
+    }, 1400);
+  }
+
+  function fallbackCopy(text) {
+    // Old-school fallback for non-secure contexts / older browsers.
+    var ta = document.createElement("textarea");
+    ta.value = text;
+    ta.setAttribute("readonly", "");
+    ta.style.position = "absolute";
+    ta.style.left = "-9999px";
+    document.body.appendChild(ta);
+    ta.select();
+    try {
+      document.execCommand("copy");
+      return true;
+    } catch (e) {
+      return false;
+    } finally {
+      document.body.removeChild(ta);
+    }
+  }
+
+  window.a2a_config.callbacks.push({
+    share: function (data) {
+      // Only override the Copy Link service.
+      if (!data || data.serviceCode !== "copy_link") return;
+
+      var url = data.url || window.location.href;
+      var btn = data.node;
+
+      // Prevent AddToAny’s default modal / UI for copy_link.
+      // Returning { stop: true } cancels the share action. :contentReference[oaicite:3]{index=3}
+      var stop = { stop: true };
+
+      // Prefer modern Clipboard API when available (requires HTTPS / secure context).
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard
+          .writeText(url)
+          .then(function () {
+            showCopiedMessage(btn, "Link Copied");
+          })
+          .catch(function () {
+            // If permissions fail, try fallback.
+            var ok = fallbackCopy(url);
+            showCopiedMessage(btn, ok ? "Link Copied" : "Copy failed");
+          });
+
+        return stop;
+      }
+
+      // Non-secure context or older browser fallback.
+      var ok = fallbackCopy(url);
+      showCopiedMessage(btn, ok ? "Link Copied" : "Copy failed");
+      return stop;
+    },
+  });
+})();
+</script>
+<style>.addtoany_list a {
+  display: inline-flex;
+  border: 1px solid #e8e8e7 !important;
+  border-radius: 3px;
+  padding: 4px !important;
+  margin: 0 4px;
+}
+
+/* Ensure the icon itself is a positioning context */
+.addtoany_list {
+  position: relative;
+}
+.a2a_button_copy_link {
+  position: relative;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Toast positioned above the icon */
+.a2a-copy-toast {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 6px;
+
+  font-size: 12px;
+  line-height: 1.2;
+  white-space: nowrap;
+
+  opacity: 1;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+}
+
+/* Fade-out state */
+.a2a-copy-toast.is-hiding {
+  opacity: 0;
+}
+</style>
+
+    <title>WRI Polsky Center for the Global Energy Transition | World Resources Institute</title>
+    <link rel="stylesheet" media="all" href="/sites/default/files/css/css_KWty1SnjSv5AnZGx1syEwbvLoNo4MbsWp2oBD0mmWws.css?delta=0&amp;language=en&amp;theme=ts_wrin&amp;include=eJx1UdGSIyEI_CFPP8lilEzYoFjCJJn9-nMyk926ytyLQneLNEDOJlDXAEfgL12qOVBFi1S_MJn0kFQ9VuzzGgulLkqGZxqq0a6kUbETaszYOiYwzPGOXUnq2aMiGVjPGOlmErFMmPOo8cDpIr3EiSXd1KUbZhrSCClJz6N6-Il2G1izSzwKr2ECxXdcUBVm1HdeJQ9OOobclwbs4Que_wCZgGXeoTpaAKZvdAyrLBYzaZLhbw1SMQm7MvqCcCE27D5Bs834DsrLjN9sgA3a7UBk-F5ZIIckpQx1gw5zh3bVdwu_iF9qWyYmvWJ2HbVJVbpjNJh4DH3_N-wZPP7suVMqjTE2aUs7JhhOMKerGpZ9Xqbx0amGAlTdnfCh4XVuK1sY3bGQcNx-21kT1tsaE47x96g017i0DyUylqHwGQ2I1ZvM80nBt-zC-Jzk-V_-2OgHvx0foF3HI7_v_i_1yy4f" />
+<link rel="stylesheet" media="all" href="/sites/default/files/css/css_wyYBnEuAcyj0WPJlhzhUSUOtfNohnlZ-TuCfhbGx3X8.css?delta=1&amp;language=en&amp;theme=ts_wrin&amp;include=eJx1UdGSIyEI_CFPP8lilEzYoFjCJJn9-nMyk926ytyLQneLNEDOJlDXAEfgL12qOVBFi1S_MJn0kFQ9VuzzGgulLkqGZxqq0a6kUbETaszYOiYwzPGOXUnq2aMiGVjPGOlmErFMmPOo8cDpIr3EiSXd1KUbZhrSCClJz6N6-Il2G1izSzwKr2ECxXdcUBVm1HdeJQ9OOobclwbs4Que_wCZgGXeoTpaAKZvdAyrLBYzaZLhbw1SMQm7MvqCcCE27D5Bs834DsrLjN9sgA3a7UBk-F5ZIIckpQx1gw5zh3bVdwu_iF9qWyYmvWJ2HbVJVbpjNJh4DH3_N-wZPP7suVMqjTE2aUs7JhhOMKerGpZ9Xqbx0amGAlTdnfCh4XVuK1sY3bGQcNx-21kT1tsaE47x96g017i0DyUylqHwGQ2I1ZvM80nBt-zC-Jzk-V_-2OgHvx0foF3HI7_v_i_1yy4f" />
+<link rel="stylesheet" media="all" href="https://use.typekit.net/xrt8xkt.css" />
+<link rel="stylesheet" media="all" href="/sites/default/files/css/css_rhtXF49qXGeNZch-8kHJIHgnnDvmtEncW-Kyvk7OUoQ.css?delta=3&amp;language=en&amp;theme=ts_wrin&amp;include=eJx1UdGSIyEI_CFPP8lilEzYoFjCJJn9-nMyk926ytyLQneLNEDOJlDXAEfgL12qOVBFi1S_MJn0kFQ9VuzzGgulLkqGZxqq0a6kUbETaszYOiYwzPGOXUnq2aMiGVjPGOlmErFMmPOo8cDpIr3EiSXd1KUbZhrSCClJz6N6-Il2G1izSzwKr2ECxXdcUBVm1HdeJQ9OOobclwbs4Que_wCZgGXeoTpaAKZvdAyrLBYzaZLhbw1SMQm7MvqCcCE27D5Bs834DsrLjN9sgA3a7UBk-F5ZIIckpQx1gw5zh3bVdwu_iF9qWyYmvWJ2HbVJVbpjNJh4DH3_N-wZPP7suVMqjTE2aUs7JhhOMKerGpZ9Xqbx0amGAlTdnfCh4XVuK1sY3bGQcNx-21kT1tsaE47x96g017i0DyUylqHwGQ2I1ZvM80nBt-zC-Jzk-V_-2OgHvx0foF3HI7_v_i_1yy4f" />
+<link rel="stylesheet" media="all" href="/sites/default/files/css/css_Y2_Fu5a4oBY7Nu3m0mP7X-hRFtF2neAxxHkC7eMbRpM.css?delta=4&amp;language=en&amp;theme=ts_wrin&amp;include=eJx1UdGSIyEI_CFPP8lilEzYoFjCJJn9-nMyk926ytyLQneLNEDOJlDXAEfgL12qOVBFi1S_MJn0kFQ9VuzzGgulLkqGZxqq0a6kUbETaszYOiYwzPGOXUnq2aMiGVjPGOlmErFMmPOo8cDpIr3EiSXd1KUbZhrSCClJz6N6-Il2G1izSzwKr2ECxXdcUBVm1HdeJQ9OOobclwbs4Que_wCZgGXeoTpaAKZvdAyrLBYzaZLhbw1SMQm7MvqCcCE27D5Bs834DsrLjN9sgA3a7UBk-F5ZIIckpQx1gw5zh3bVdwu_iF9qWyYmvWJ2HbVJVbpjNJh4DH3_N-wZPP7suVMqjTE2aUs7JhhOMKerGpZ9Xqbx0amGAlTdnfCh4XVuK1sY3bGQcNx-21kT1tsaE47x96g017i0DyUylqHwGQ2I1ZvM80nBt-zC-Jzk-V_-2OgHvx0foF3HI7_v_i_1yy4f" />
+<link rel="stylesheet" media="all" href="/webform/css/polsky_center_sign_up/custom.css?tarxnx" />
+
+    <script type="application/json" data-drupal-selector="drupal-settings-json">{"path":{"baseUrl":"\/","pathPrefix":"","currentPath":"node\/105106","currentPathIsAdmin":false,"isFront":false,"currentLanguage":"en"},"pluralDelimiter":"\u0003","suppressDeprecationErrors":true,"ajaxPageState":{"libraries":"eJyFU1uS4yAMvBCBjzkQJYPikACikJyM5_QrB2enKs7WfhikVkvoZYhRCOrqYBfsuVMVA8woPtUrBqHuArPFin1efUmhEyfBT5xUvVwSe8aekH3E1jGAYPR37JyofnIqFCHzJwt1EfJYJoxRYzxwOlMvfsoUbgeH6_9TVAoxVPIsa051NuGGManFQwjUoybo_kqjE1ijCVnjrG4CxpdckBlm5JdeKaqNOqrUC-T0gybDSov4mDiQlr86qhgom6JvgjunLNhtgCZbXwZIz1rtViWIms0AfIafNRNEF6gUZb_DSRPtrEVqqBNN2n590DToMHdoF3axLw2y_UXsUtsy5cQXjKYjN6qc7ugFpqyTG9m5ocHjNHTDqbSMvlFb2j4G9wF78bbhNwkXcO-Av38ZXlmwjLYK-0dP1RVI1dwTPtg9z205loxmH73bb7ttR6PMt9UH3Ir3nObql3ZgalszzQcYMxZ1tBEFUmbLcD--8k4SmucPybxo54zfE33_074vzcG-HQdQLupkx3oZ7Y0fo3cqnmYpT2if0q9o9zltCCM9yXoPvdENXUdZuv6lAxMKTr8rP7UfouKgfQUvHcLtD-frnmM","theme":"ts_wrin","theme_token":null},"ajaxTrustedUrl":{"form_action_p_pvdeGsVG5zNF_XLGPTvYSKCf43t8qZYSwcfZl2uzM":true},"simple_popup_blocks":{"settings":[{"uid":"beforefilesmodal","type":0,"css_selector":"1","identifier":"block-beforefilesmodal","layout":"4","visit_counts":"0","overlay":"1","trigger_method":"1","trigger_selector":".files-overlay-trigger-webform","delay":0,"enable_escape":"1","trigger_width":null,"minimize":"1","close":"1","use_time_frequency":false,"time_frequency":"3600","show_minimized_button":"1","width":"600","cookie_expiry":0,"status":"1","escape":"1"},{"uid":"classyembed","type":0,"css_selector":"1","identifier":"block-classyembed","layout":"6","visit_counts":"0","overlay":false,"trigger_method":0,"trigger_selector":"#custom-css-id","delay":0,"enable_escape":"1","trigger_width":null,"minimize":"1","close":"1","use_time_frequency":false,"time_frequency":"3600","show_minimized_button":false,"width":"1200","cookie_expiry":"100","status":"1"},{"uid":"files_modal","type":"1","css_selector":0,"identifier":"files-modal","layout":"5","visit_counts":"0","overlay":"1","trigger_method":"1","trigger_selector":".files-overlay-trigger","delay":0,"minimize":"1","close":"1","width":"600","cookie_expiry":"100","status":"1","escape":"1"},{"uid":"wri_region_map_popup","type":"1","css_selector":0,"identifier":"wri-region-map-popup","layout":"7","visit_counts":"0","overlay":false,"trigger_method":"1","trigger_selector":".wri-region-map-popup-button","delay":0,"minimize":false,"close":false,"width":"500","cookie_expiry":0,"status":"1","escape":"1"}]},"webform":{"dialog":{"options":{"narrow":{"title":"Narrow","width":600},"normal":{"title":"Normal","width":800},"wide":{"title":"Wide","width":1000}},"entity_type":"node","entity_id":"105106"}},"wri_filter":{"filterCookieName":"STYXKEY_wri_filter","allFilters":{"53":{"id":"53","name":"climate"},"226":{"id":"226","name":"cities"},"222":{"id":"222","name":"energy"},"4422":{"id":"4422","name":"food"},"73":{"id":"73","name":"forests"},"56":{"id":"56","name":"freshwater"},"18861":{"id":"18861","name":"ocean"},"74":{"id":"74","name":"business"},"10510":{"id":"10510","name":"economics"},"9640":{"id":"9640","name":"finance"},"227":{"id":"227","name":"equity \u0026 governance"}},"pageIsFilterable":false,"currentFilterName":""},"wri_seo":{"node_type":"microsite","default_details":{"primary topic":""}},"ckeditorAccordion":{"accordionStyle":{"collapseAll":1,"keepRowsOpen":0,"animateAccordionOpenAndClose":1,"openTabsWithHash":1,"allowHtmlInTitles":0}},"wri_common":{"gtm_id":"GTM-WGH5WB9","analytics_url":"https:\/\/www.googletagmanager.com"},"simple_recaptcha_v3":{"sitekey":"6Lfe0pUaAAAAADa4jxZYcZ-H67EiunZ-DqLRlYgS","forms":{"webform_submission_polsky_center_sign_up_node_105106_add_form":{"form_id":"webform_submission_polsky_center_sign_up_node_105106_add_form","score":"90","error_message":"There was an error during validation of your form submission, please try to reload the page and submit form again.","action":"polsky_center_sign_up"}}},"intersectionObserverMargin":"100px","user":{"uid":0,"permissionsHash":"b96204c9d505144fedf04ff3722cc9a90e078ebcb594d09570f6e919d4d6a196"}}</script>
+<script src="/sites/default/files/js/js_FRbHfrHbwzdagsebWhrf1w_Xx3Za5PpgXb3qdELjNXQ.js?scope=header&amp;delta=0&amp;language=en&amp;theme=ts_wrin&amp;include=eJyFkNFuwyAMRX-Ihod-EHLAzZwARrabKv360SbbpLXTHsD3Hl8ZZEjJGOrm4RDDRbiaA1W0QHXGaCx-1gEryrSFQlFYyfBNhBUqB7UtU51cXDBR7wSIkSURV_-t9lewJsdYRkwhw33LDMlTx6J9ZE-deFSUFcUJauOqtGIwGDNquFDuQb87uJ1275RKyxgat2sLY-a4qH_DvnKCEZrFD_C_QVjPzjTchKovQNXdcLywFH_UIRFknl4wZixYbUhoQFkHhRX_DRlPU_47VlAVptf-43L9hyFyKX29XZ4m29Gxnx85HBt6EEV-hnvdfeMFvaBdpQbbmXH0_cz6dHfm4qGdYzCBuHwCPSHfZQ"></script>
+
+    
+  </head>
+  <body class="transparent-header white energy path-node page-node-type-microsite">
+    <!-- Google Tag Manager (noscript) -->
+        <noscript>
+      <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WGH5WB9" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <!-- Grid Layout Checker -->
+        <!-- END Grid Layout Checker -->
+
+    <a href="#main-content" class="visually-hidden focusable skip-link">
+      Skip to main content
+    </a>
+
+    <div id="accessibility-url">
+      <a href="/accessibility" class="visually-hidden focusable skip-link">
+		    Accessibility
+      </a>
+    </div>
+      
+        <main class="dialog-off-canvas-main-canvas" data-off-canvas-main-canvas>
+      
+  <div id="tray-nav-wrapper">
+  <div id="tray-nav-canvas">
+        <header>
+      <div class="container header-wrapper">
+                  
+  
+
+<div  class="region region-primary-nav">
+  <div id="block-ts-wrin-branding" class="block block-system block-system-branding-block">
+  
+    
+        <a href="/" rel="home" class="site-logo">
+      <img class="logo-white hidden" src="/sites/default/files/nav_logo_white_0.svg" alt="Home" />
+      <img class="logo-color" src="/sites/default/files/nav_logo_color_0.svg" alt="Home" />
+    </a>
+        <div class="site-name hidden">
+      <a href="/" title="Home" rel="home">World Resources Institute</a>
+    </div>
+        <div class="site-slogan visually-hidden">Making Big Ideas Happen</div>
+  </div>
+<nav role="navigation" aria-labelledby="block-ts-wrin-main-menu-menu" id="block-ts-wrin-main-menu" class="block block-menu navigation menu--main">
+            
+  <h2 class="visually-hidden" id="block-ts-wrin-main-menu-menu">Main navigation</h2>
+  
+
+        <div class="menu-wrapper">
+
+              <ul class="menu">
+                    <li class="menu-item menu-item--collapsed">
+        <a href="/research" data-drupal-link-system-path="node/71">Research</a>
+              </li>
+                <li class="menu-item menu-item--collapsed">
+        <a href="/data" data-drupal-link-system-path="node/72">Data</a>
+              </li>
+                <li class="menu-item menu-item--collapsed">
+        <a href="/initiatives" data-drupal-link-system-path="node/73">Initiatives</a>
+              </li>
+                <li class="menu-item menu-item--collapsed">
+        <a href="/insights" data-drupal-link-system-path="node/100014">Insights</a>
+              </li>
+        </ul>
+  
+
+</div><a href="#scroll" class="nav-arrow"><svg aria-hidden="true" data-title="Click to see more items" tabindex="-1" data-prefix="far" data-icon="chevron-right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" class="svg-inline--fa fa-chevron-right fa-w-8 fa-3x"><path d="M24.707 38.101L4.908 57.899c-4.686 4.686-4.686 12.284 0 16.971L185.607 256 4.908 437.13c-4.686 4.686-4.686 12.284 0 16.971L24.707 473.9c4.686 4.686 12.284 4.686 16.971 0l209.414-209.414c4.686-4.686 4.686-12.284 0-16.971L41.678 38.101c-4.687-4.687-12.285-4.687-16.971 0z"/><title>Click to see more</title></svg></a>
+  </nav>
+
+</div>
+
+                <div class="header-right ">
+                      
+  
+
+<div  class="region region-secondary-nav">
+  <nav role="navigation" aria-labelledby="block-secondarynavigation-menu" id="block-secondarynavigation" class="block block-menu navigation menu--secondary">
+            
+  <h2 class="visually-hidden" id="block-secondarynavigation-menu">Secondary Navigation</h2>
+  
+
+        
+              <ul class="menu">
+                    <li class="menu-item">
+        <a href="/our-approach" data-drupal-link-system-path="node/100163">Our Approach</a>
+              </li>
+                <li class="menu-item">
+        <a href="/our-work" data-drupal-link-system-path="node/100023">Our Work</a>
+              </li>
+        </ul>
+  
+
+
+  </nav>
+<nav role="navigation" aria-labelledby="block-donate-menu" id="block-donate" class="block block-menu navigation menu--donate">
+            
+  <h2 class="visually-hidden" id="block-donate-menu">Donate</h2>
+  
+
+        
+              <ul class="menu">
+                    <li class="menu-item">
+        <a href="https://giving.wri.org/campaign/694046/donate">Donate</a>
+              </li>
+        </ul>
+  
+
+
+  </nav>
+
+</div>
+
+          
+          
+                      <button class="tray-toggle search-toggle" aria-label="Toggle Search Menu" title="Search Menu" data-tray="search-tray">
+  <svg viewBox="0 0 18 19" version="1.1" xmlns="http://www.w3.org/2000/svg">
+    <g transform="translate(1 1)" stroke-width="2" fill="none" fill-rule="evenodd">
+      <circle cx="7.69047619" cy="7.69047619" r="7.69047619" shape-rendering="geometricPrecision"/>
+      <path stroke-linecap="square" d="M13 14l2.3998058 2.3998058" shape-rendering="geometricPrecision"/>
+    </g>
+  </svg>
+</button>
+          
+                      <button class="tray-toggle filter-toggle" aria-label="Toggle filter Menu" title="Filter Menu" data-tray="filter-tray">
+      <span class="filter-icon">
+        <svg width="22px" height="24px" viewBox="0 0 22 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <g id="block-styles" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g id="assets" transform="translate(-194.000000, -186.000000)" stroke-width="2">
+              <g id="icon/gear-white-copy-2" transform="translate(195.018833, 187.000000)">
+                <path d="M9.99998346,14.1437469 C8.10683773,14.1437469 6.57210464,12.6090138 6.57210464,10.7158681 C6.57210464,8.82272233 8.10683773,7.28798924 9.99998346,7.28798924 C11.8931292,7.28798924 13.4278623,8.82272233 13.4278623,10.7158681 C13.4278623,12.6090138 11.8931292,14.1437469 9.99998346,14.1437469 Z M18.3523689,12.6590768 C18.499688,12.0242017 18.5741447,11.3727453 18.5741447,10.7158681 C18.5741447,10.0589908 18.499688,9.40737496 18.3523689,8.77265936 L19.8018036,7.28097404 C20.0203907,7.0558501 20.0626413,6.71338109 19.9062344,6.4418612 L19.2804472,5.35801375 L18.65466,4.27400686 C18.527111,4.05334712 18.293537,3.92356604 18.0475269,3.92356604 C17.9901298,3.92356604 17.9328922,3.93058123 17.8754952,3.94508993 L15.8567137,4.4546481 C14.895951,3.55558723 13.7462564,2.89121649 12.493566,2.51080166 L11.9261325,0.509558172 C11.8403558,0.208542581 11.5650094,5.15143483e-14 11.2515578,5.15143483e-14 L8.74824966,5.15143483e-14 C8.43495748,5.15143483e-14 8.15945169,0.208542581 8.073675,0.509558172 L7.50640091,2.51080166 C6.2537105,2.89121649 5.10385645,3.55558723 4.1432532,4.4546481 L2.1243123,3.94508993 C2.06707469,3.93058123 2.00967765,3.92356604 1.95291836,3.92356604 C1.70642995,3.92356604 1.47285589,4.05334712 1.34578522,4.27400686 L0.719998036,5.35801375 L0.0942108564,6.4418612 C-0.0628338243,6.71338109 -0.0204237887,7.0558501 0.198163274,7.28097404 L1.64743855,8.77265936 C1.50011948,9.40737496 1.42614107,10.0589908 1.42614107,10.7158681 C1.42614107,11.3727453 1.50011948,12.0242017 1.64743855,12.6590768 L0.198163274,14.1507621 C-0.0204237887,14.375886 -0.0628338243,14.7181956 0.0942108564,14.9898749 L0.719998036,16.0737224 L1.34578522,17.1577293 C1.47285589,17.378389 1.70642995,17.5081701 1.95291836,17.5081701 C2.00967765,17.5081701 2.06707469,17.5011549 2.1243123,17.4866462 L4.1432532,16.977088 C5.10385645,17.8761489 6.2537105,18.5405196 7.50640091,18.9209345 L8.073675,20.9221779 C8.15945169,21.2238313 8.43495748,21.4317361 8.74824966,21.4317361 L11.2515578,21.4317361 C11.5650094,21.4317361 11.8403558,21.2238313 11.9261325,20.9221779 L12.493566,18.9209345 C13.7462564,18.5405196 14.895951,17.8761489 15.8567137,16.977088 L17.8754952,17.4866462 C17.9328922,17.5011549 17.9901298,17.5081701 18.0475269,17.5081701 C18.293537,17.5081701 18.527111,17.378389 18.65466,17.1577293 L19.2804472,16.0737224 L19.9062344,14.9898749 C20.0626413,14.7181956 20.0203907,14.375886 19.8018036,14.1507621 L18.3523689,12.6590768 Z" id="icon/gear-black"></path>
+              </g>
+            </g>
+          </g>
+        </svg>
+      </span>
+</button>
+          
+                      
+<button class="menu-toggle" aria-label="Open mobile menu" title="Menu Toggle">
+  <div class="ts-menu-toggle-wrapper">
+    <span></span>
+  </div>
+</button>
+                  </div>
+      </div>
+    </header>
+    
+    <div class="mobile-menu-target">
+      <div class="ts-mobile-menu__wrapper">
+                  
+
+<div  class="region region-hamburger-nav container">
+  <div class="hamburger-header">
+    <a href="/" rel="home" class="site-logo">
+      <img class="logo-white" src="/sites/default/files/nav_logo_white_0.svg" alt="Home" />
+    </a>
+    <div class="donate-menu">
+              <ul class="menu">
+                    <li class="menu-item">
+        <a href="https://giving.wri.org/campaign/694046/donate">Donate</a>
+              </li>
+        </ul>
+  
+
+</div>
+    <button class="mega_menu_close" aria-label="Toggle Mega Menu" title="Close Mega Menu">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#ffffff">
+        <path d="M23 20.168l-8.185-8.187 8.185-8.174-2.832-2.807-8.182 8.179-8.176-8.179-2.81 2.81 8.186 8.196-8.186 8.184 2.81 2.81 8.203-8.192 8.18 8.192z"/>
+      </svg>
+    </button>
+  </div>
+  <div class="hamburger-content">
+    
+<nav role="navigation" aria-labelledby="block-quicklinks-menu" id="block-quicklinks" class="block block-menu navigation menu--quick-links margin-bottom-md">
+            
+  <h2 class="visually-hidden" id="block-quicklinks-menu">Quick Links</h2>
+  
+
+        
+        <div class="menu-wrapper">
+          <ul class="menu">
+                    <li class="menu-item">
+        <span>Quick Links</span>
+              </li>
+                <li class="menu-item">
+        <a href="/news" data-drupal-link-system-path="node/100179">News </a>
+              </li>
+                <li class="menu-item">
+        <a href="/resources" data-drupal-link-system-path="resources">Resource Library</a>
+              </li>
+                <li class="menu-item">
+        <a href="https://www.wri.org/about/experts-staff">Experts</a>
+              </li>
+                <li class="menu-item">
+        <a href="/events" data-drupal-link-system-path="events">Events</a>
+              </li>
+                <li class="menu-item">
+        <a href="/careers" data-drupal-link-system-path="node/105746">Careers</a>
+              </li>
+                <li class="menu-item">
+        <a href="/donate" class="button small" data-drupal-link-system-path="node/100250">Donate</a>
+              </li>
+          </ul>
+    </div>
+  
+
+
+  </nav><a href="#scroll" aria-hidden="true" tabindex="-1" class="nav-arrow"><svg aria-hidden="true" data-prefix="far" data-icon="chevron-right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" class="svg-inline--fa fa-chevron-right fa-w-8 fa-3x"><path d="M24.707 38.101L4.908 57.899c-4.686 4.686-4.686 12.284 0 16.971L185.607 256 4.908 437.13c-4.686 4.686-4.686 12.284 0 16.971L24.707 473.9c4.686 4.686 12.284 4.686 16.971 0l209.414-209.414c4.686-4.686 4.686-12.284 0-16.971L41.678 38.101c-4.687-4.687-12.285-4.687-16.971 0z"/><title>Click to see more</title></svg></a>
+<nav role="navigation" aria-labelledby="block-mainnavigation-menu" id="block-mainnavigation" class="block block-menu navigation menu--main">
+            
+  <h2 class="visually-hidden" id="block-mainnavigation-menu">Main navigation</h2>
+  
+
+        
+
+              <ul class="menu">
+                    <li class="menu-item menu-item--collapsed">
+        <a href="/research" data-drupal-link-system-path="node/71">Research</a>
+              </li>
+                <li class="menu-item menu-item--collapsed">
+        <a href="/data" data-drupal-link-system-path="node/72">Data</a>
+              </li>
+                <li class="menu-item menu-item--collapsed">
+        <a href="/initiatives" data-drupal-link-system-path="node/73">Initiatives</a>
+              </li>
+                <li class="menu-item menu-item--collapsed">
+        <a href="/insights" data-drupal-link-system-path="node/100014">Insights</a>
+              </li>
+        </ul>
+  
+
+
+  </nav>
+<nav role="navigation" aria-labelledby="block-footermenusecondary-2-menu" id="block-footermenusecondary-2" class="block block-menu navigation menu--footer-secondary">
+            
+  <h2 class="visually-hidden" id="block-footermenusecondary-2-menu">Footer menu - secondary</h2>
+  
+
+        
+              <ul class="menu">
+                    <li class="menu-item menu-item--expanded menu-item--active-trail">
+        <span class="menu-item-title"><a href="/our-work" class="flexible-row-submenu" data-drupal-link-system-path="node/100023">Our Work</a></span>
+                                <ul class="menu">
+                    <li class="menu-item menu-item--expanded">
+        <span class="menu-item-title"><span>Regions</span></span>
+                                <ul class="menu">
+                    <li class="menu-item">
+        <span class="menu-item-title"><a href="/africa" data-drupal-link-system-path="node/100030">Africa</a></span>
+              </li>
+                <li class="menu-item">
+        <span class="menu-item-title"><a href="/asia" data-drupal-link-system-path="node/100062">Asia</a></span>
+              </li>
+                <li class="menu-item">
+        <span class="menu-item-title"><a href="/wri-europe" data-drupal-link-system-path="node/100060">Europe</a></span>
+              </li>
+                <li class="menu-item">
+        <span class="menu-item-title"><a href="/latin-america" data-drupal-link-system-path="node/100032">Latin America</a></span>
+              </li>
+                <li class="menu-item">
+        <span class="menu-item-title"><a href="/north-america" data-drupal-link-system-path="node/100065">North America</a></span>
+              </li>
+        </ul>
+  
+              </li>
+                <li class="menu-item menu-item--expanded menu-item--active-trail">
+        <span class="menu-item-title"><span>Topics</span></span>
+                                <ul class="menu">
+                    <li class="menu-item">
+        <span class="menu-item-title"><a href="/cities" data-drupal-link-system-path="node/103166">Cities</a></span>
+              </li>
+                <li class="menu-item">
+        <span class="menu-item-title"><a href="/climate" data-drupal-link-system-path="node/100004">Climate</a></span>
+              </li>
+                <li class="menu-item menu-item--active-trail">
+        <span class="menu-item-title"><a href="/energy" data-drupal-link-system-path="node/105106" class="is-active" aria-current="page">Energy</a></span>
+              </li>
+                <li class="menu-item">
+        <span class="menu-item-title"><a href="/food" data-drupal-link-system-path="node/100006">Food</a></span>
+              </li>
+                <li class="menu-item">
+        <span class="menu-item-title"><a href="/forests" data-drupal-link-system-path="node/100007">Forests</a></span>
+              </li>
+                <li class="menu-item">
+        <span class="menu-item-title"><a href="/freshwater" data-drupal-link-system-path="node/100009">Freshwater</a></span>
+              </li>
+                <li class="menu-item">
+        <span class="menu-item-title"><a href="/ocean" data-drupal-link-system-path="node/100008">Ocean</a></span>
+              </li>
+        </ul>
+  
+              </li>
+                <li class="menu-item menu-item--expanded">
+        <span class="menu-item-title"><span>Centers</span></span>
+                                <ul class="menu">
+                    <li class="menu-item">
+        <span class="menu-item-title"><a href="/economics" data-drupal-link-system-path="node/100025">Economics</a></span>
+              </li>
+                <li class="menu-item">
+        <span class="menu-item-title"><a href="/equitable-development" data-drupal-link-system-path="node/100027">Equity</a></span>
+              </li>
+                <li class="menu-item">
+        <span class="menu-item-title"><a href="/finance" data-drupal-link-system-path="node/100026">Finance</a></span>
+              </li>
+        </ul>
+  
+              </li>
+        </ul>
+  
+              </li>
+        </ul>
+  
+
+
+  </nav>
+<nav role="navigation" aria-labelledby="block-megamenu-menu" id="block-megamenu" class="block block-menu navigation menu--mega-menu">
+            
+  <h2 class="visually-hidden" id="block-megamenu-menu">Mega Menu</h2>
+  
+
+        
+              <ul class="menu">
+                    <li class="menu-item menu-item--expanded">
+        <span class="menu-item-title"><a href="/our-approach" data-drupal-link-system-path="node/100163">Our Approach</a></span>
+                                <ul class="menu">
+                    <li class="menu-item">
+        <span class="menu-item-title"><a href="/strategic-plan" data-drupal-link-system-path="node/103333">Strategic Plan</a></span>
+              </li>
+                <li class="menu-item">
+        <span class="menu-item-title"><a href="/our-approach/managing-for-results" data-drupal-link-system-path="node/100303">Managing for Results</a></span>
+              </li>
+                <li class="menu-item">
+        <span class="menu-item-title"><a href="/top-outcomes" data-drupal-link-system-path="node/100164">Top Outcomes</a></span>
+              </li>
+        </ul>
+  
+              </li>
+                <li class="menu-item menu-item--expanded">
+        <span class="menu-item-title"><a href="/about" data-drupal-link-system-path="node/100080">About Us</a></span>
+                                <ul class="menu">
+                    <li class="menu-item">
+        <span class="menu-item-title"><a href="/about/mission-values" data-drupal-link-system-path="node/100258">Mission</a></span>
+              </li>
+                <li class="menu-item">
+        <span class="menu-item-title"><a href="https://www.wri.org/about/experts-staff">Staff</a></span>
+              </li>
+                <li class="menu-item">
+        <span class="menu-item-title"><a href="/annual-report/2024" data-drupal-link-system-path="node/105292">Latest Annual Report</a></span>
+              </li>
+                <li class="menu-item">
+        <span class="menu-item-title"><a href="/about/financials" data-drupal-link-system-path="node/100221">Financials </a></span>
+              </li>
+                <li class="menu-item">
+        <span class="menu-item-title"><a href="/about/history" data-drupal-link-system-path="node/102377">History</a></span>
+              </li>
+                <li class="menu-item">
+        <span class="menu-item-title"><a href="/sustainability-wri" data-drupal-link-system-path="node/100257">Sustainability at WRI</a></span>
+              </li>
+                <li class="menu-item">
+        <span class="menu-item-title"><a href="/about/board-directors" data-drupal-link-system-path="node/100147">Board of Directors</a></span>
+              </li>
+                <li class="menu-item">
+        <span class="menu-item-title"><a href="https://wri.ethicspoint.com/">Whistleblower and Ethics Reporting</a></span>
+              </li>
+                <li class="menu-item">
+        <span class="menu-item-title"><a href="https://secure.ethicspoint.com/domain/media/en/gui/72880/code.pdf">Code of Conduct</a></span>
+              </li>
+        </ul>
+  
+              </li>
+                <li class="menu-item menu-item--expanded">
+        <span class="menu-item-title"><a href="/join-us" data-drupal-link-system-path="node/100251">Join Us</a></span>
+                                <ul class="menu">
+                    <li class="menu-item">
+        <span class="menu-item-title"><a href="/events" data-drupal-link-system-path="events">Events</a></span>
+              </li>
+                <li class="menu-item">
+        <span class="menu-item-title"><a href="https://careers.wri.org">Careers</a></span>
+              </li>
+                <li class="menu-item">
+        <span class="menu-item-title"><a href="/support" data-drupal-link-system-path="node/105478">Ways to Give</a></span>
+              </li>
+                <li class="menu-item">
+        <span class="menu-item-title"><a href="/about/procurement-opportunities" data-drupal-link-system-path="node/100304">Procurement Opportunities</a></span>
+              </li>
+                <li class="menu-item">
+        <span class="menu-item-title"><a href="/about/contact" data-drupal-link-system-path="node/100415">Contact the Institute</a></span>
+              </li>
+        </ul>
+  
+              </li>
+        </ul>
+  
+
+
+  </nav>
+<div id="block-wrinsearch-2" class="block block-wri-search block-single-file-component-blockwri-search-menu">
+  
+    
+      <div class="search-tray tray-contents">
+      <form class="single-border" action="/search">
+    <div class="input-wrapper">
+      <label for="wrinsearch_2">What can we help you find?</label>
+      <input class="ghost" type="text" name="keys" id="wrinsearch_2">
+    </div>
+    <input class="button ghost form" type="submit" value="Search">
+  </form>
+
+  <button class="tray-nav__close" aria-label="Toggle Search Menu" title="Close Search Menu">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#ffffff">
+      <path d="M23 20.168l-8.185-8.187 8.185-8.174-2.832-2.807-8.182 8.179-8.176-8.179-2.81 2.81 8.186 8.196-8.186 8.184 2.81 2.81 8.203-8.192 8.18 8.192z"/>
+    </svg>
+  </button>
+  
+              <ul class="search-menu-block">
+                    <li class="menu-item">
+        <a href="/support" data-drupal-link-system-path="node/105478">Ways to Give</a>
+              </li>
+                <li class="menu-item">
+        <a href="/join-us" data-drupal-link-system-path="node/100251">Join us</a>
+              </li>
+                <li class="menu-item">
+        <a href="/about/experts-staff" data-drupal-link-system-path="about/experts-staff">Contact an Expert</a>
+              </li>
+                <li class="menu-item">
+        <a href="/insights" data-drupal-link-system-path="node/100014">Explore WRI Perspectives</a>
+              </li>
+        </ul>
+  
+
+
+</div>
+
+  </div>
+
+  </div>
+  <div class="hamburger-slider">
+    <div class="hamburger-slider-contents">
+      <a href="#" class="back">Back</a>
+      <ul class="menu"></ul>
+    </div>
+  </div>
+</div>
+
+              </div>
+    </div>
+
+        <div id="tray-nav">
+              
+  
+
+<div  class="region region-wrin-custom">
+  <div id="block-wrinfilter" class="block block-wri-filter block-single-file-component-blockwri-filter">
+  
+    
+  
+<div class="filter-tray tray-contents content-side-padding">
+  <div class="header">
+    <h2 class="h2 white">Filter Your Site Experience by Topic</h2>
+    <p class="white">Applying the filters below will filter all articles, data, insights and projects by the topic area you select.</p>
+  </div>
+  <ul>
+    <li><a class="sitewide-content-filter all-topics active h4 white" href="/content-filter/remove">All Topics <span class="filter-remove italic-tiny white">Remove filter</span></a></li>
+          <li><a class="sitewide-content-filter white h4" data-filter="climate" href="/content-filter/53">Climate <span class="filter-description italic-tiny black">filter site by Climate</span></a></li>
+          <li><a class="sitewide-content-filter white h4" data-filter="cities" href="/content-filter/226">Cities <span class="filter-description italic-tiny black">filter site by Cities</span></a></li>
+          <li><a class="sitewide-content-filter white h4" data-filter="energy" href="/content-filter/222">Energy <span class="filter-description italic-tiny black">filter site by Energy</span></a></li>
+          <li><a class="sitewide-content-filter white h4" data-filter="food" href="/content-filter/4422">Food <span class="filter-description italic-tiny black">filter site by Food</span></a></li>
+          <li><a class="sitewide-content-filter white h4" data-filter="forests" href="/content-filter/73">Forests <span class="filter-description italic-tiny black">filter site by Forests</span></a></li>
+          <li><a class="sitewide-content-filter white h4" data-filter="freshwater" href="/content-filter/56">Freshwater <span class="filter-description italic-tiny black">filter site by Freshwater</span></a></li>
+          <li><a class="sitewide-content-filter white h4" data-filter="ocean" href="/content-filter/18861">Ocean <span class="filter-description italic-tiny black">filter site by Ocean</span></a></li>
+          <li><a class="sitewide-content-filter white h4" data-filter="business" href="/content-filter/74">Business <span class="filter-description italic-tiny black">filter site by Business</span></a></li>
+          <li><a class="sitewide-content-filter white h4" data-filter="economics" href="/content-filter/10510">Economics <span class="filter-description italic-tiny black">filter site by Economics</span></a></li>
+          <li><a class="sitewide-content-filter white h4" data-filter="finance" href="/content-filter/9640">Finance <span class="filter-description italic-tiny black">filter site by Finance</span></a></li>
+          <li><a class="sitewide-content-filter white h4" data-filter="equity &amp; governance" href="/content-filter/227">Equity &amp; Governance <span class="filter-description italic-tiny black">filter site by Equity &amp; Governance</span></a></li>
+      </ul>
+  <button class="tray-nav__close" aria-label="Toggle filter Menu" title="Close Filter Menu">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#ffffff">
+      <path d="M23 20.168l-8.185-8.187 8.185-8.174-2.832-2.807-8.182 8.179-8.176-8.179-2.81 2.81 8.186 8.196-8.186 8.184 2.81 2.81 8.203-8.192 8.18 8.192z"/>
+    </svg>
+  </button>
+</div>
+</div>
+<div id="block-wrinsearch" class="block block-wri-search block-single-file-component-blockwri-search-menu">
+  
+    
+      <div class="search-tray tray-contents">
+      <h2 class="h2 white">Search WRI.org</h2>
+        <p class="tray-nav-description">Not sure where to find something? Search all of the site&#039;s content.</p>
+    <form class="single-border" action="/search">
+    <div class="input-wrapper">
+      <label for="wrinsearch">What can we help you find?</label>
+      <input class="ghost" type="text" name="keys" id="wrinsearch">
+    </div>
+    <input class="button ghost form" type="submit" value="Search">
+  </form>
+
+  <button class="tray-nav__close" aria-label="Toggle Search Menu" title="Close Search Menu">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#ffffff">
+      <path d="M23 20.168l-8.185-8.187 8.185-8.174-2.832-2.807-8.182 8.179-8.176-8.179-2.81 2.81 8.186 8.196-8.186 8.184 2.81 2.81 8.203-8.192 8.18 8.192z"/>
+    </svg>
+  </button>
+  
+              <ul class="search-menu-block">
+                    <li class="menu-item">
+        <a href="/support" data-drupal-link-system-path="node/105478">Ways to Give</a>
+              </li>
+                <li class="menu-item">
+        <a href="/join-us" data-drupal-link-system-path="node/100251">Join us</a>
+              </li>
+                <li class="menu-item">
+        <a href="/about/experts-staff" data-drupal-link-system-path="about/experts-staff">Contact an Expert</a>
+              </li>
+                <li class="menu-item">
+        <a href="/insights" data-drupal-link-system-path="node/100014">Explore WRI Perspectives</a>
+              </li>
+        </ul>
+  
+
+
+</div>
+
+  </div>
+
+</div>
+
+          </div>
+    
+          
+  
+
+<div  class="region region-admin">
+  <div data-drupal-messages-fallback class="hidden"></div>
+
+</div>
+
+    
+                  
+  
+
+<div  id="main-content" class="region region-content">
+  <div id="block-ts-wrin-content" class="block block-system block-system-main-block">
+  
+    
+      
+<article class="node node--type-microsite node--view-mode-full">
+
+  
+    
+
+  
+  <div class="node__content">
+      <div class="layout layout--onecol">
+    <div  class="layout__region layout__region--content">
+      <div class="block block-layout-builder block-extra-field-blocknodemicrositecontent-moderation-control">
+  
+    
+      
+  </div>
+<div class="block-content--type-hero block block-layout-builder block-inline-blockhero">
+  
+    
+      
+<div  class="ds-1col clearfix">
+
+      
+
+    <div class="landing-page__hero has-image add-transparent-header add-white-header">
+          <div class="hero__image">
+          <picture>
+                  <source srcset="https://files.wri.org/d8/s3fs-public/styles/3000x900/s3/2025-02/cycle-rickshaw-walking-keoladeo-ghana-national-park.jpg?VersionId=KL3uqr4gZYASE5F4grIehQatqdkRrxay&amp;h=c3635fa2&amp;itok=_ATc8NXk 1x" media="(min-width: 1440px)" type="image/jpeg" width="3000" height="900"/>
+              <source srcset="https://files.wri.org/d8/s3fs-public/styles/1440x700/s3/2025-02/cycle-rickshaw-walking-keoladeo-ghana-national-park.jpg?VersionId=ksHQLNahTu9id2onsEQgDqxYm_Pi2.tw&amp;h=c3635fa2&amp;itok=0XQ8bDs_ 1x" media="(min-width: 1024px) and (max-width: 1440px)" type="image/jpeg" width="1440" height="700"/>
+              <source srcset="https://files.wri.org/d8/s3fs-public/styles/1024x640/s3/2025-02/cycle-rickshaw-walking-keoladeo-ghana-national-park.jpg?VersionId=IGZPhC3DgMvPzK8LXoeo6siHhY9cZuJX&amp;h=c3635fa2&amp;itok=Kk5GB3hf 1x" media="(min-width: 768px) and (max-width: 1023px)" type="image/jpeg" width="1024" height="640"/>
+              <source srcset="https://files.wri.org/d8/s3fs-public/styles/768x640/s3/2025-02/cycle-rickshaw-walking-keoladeo-ghana-national-park.jpg?VersionId=QH19uUAEHoLuOSG.dcPYXzJJ4tvU_B1E&amp;h=c3635fa2&amp;itok=939HEa9h 1x" media="(min-width: 501px) and (max-width: 767px)" type="image/jpeg" width="768" height="640"/>
+              <source srcset="https://files.wri.org/d8/s3fs-public/styles/500x700/s3/2025-02/cycle-rickshaw-walking-keoladeo-ghana-national-park.jpg?VersionId=V8R5YU7m5a6UrIplre9hXO.ZJ20pkXfs&amp;h=c3635fa2&amp;itok=C_QW5Am0 1x" media="(min-width: 0px) and (max-width: 500px)" type="image/jpeg" width="500" height="700"/>
+                  <img loading="eager" width="500" height="700" src="https://files.wri.org/d8/s3fs-public/styles/500x700/s3/2025-02/cycle-rickshaw-walking-keoladeo-ghana-national-park.jpg?VersionId=V8R5YU7m5a6UrIplre9hXO.ZJ20pkXfs&amp;h=c3635fa2&amp;itok=C_QW5Am0" alt="Cycle rickshaw walking in Keoladeo Ghana National Park in Bharatpur, India" />
+
+  </picture>
+
+      </div>
+    
+    <div class="hero__text">
+      <div class="grid">
+        <div class="hero__text--inner padding-vertical">
+          <div class="margin-top-xl"></div>
+          <h1 class="h1 xl white"><p><span class="has-gold-color">WRI Polsky Center</span><br><span class="has-gold-color">for the Global Energy Transition</span></p></h1>
+          <div class="intro"><p>Driving Forward a Clean, Abundant, Affordable and Reliable Energy Future</p><p><a class="button" href="#signup">Sign Up for News &amp; Updates</a></p></div>
+                      <div class="landing-page__hero__content">
+              
+    <div class="paragraph paragraph--type--happening-now paragraph--view-mode--default">
+          
+<div class="field field--name-field-listing field--type-viewfield field--label-above">
+  
+      <div class="field__label">Happening Now</div>
+    
+        
+<div class="field__item field__item-label-hidden happening-now-teasers">
+  
+    
+      <div class="views-element-container"><div class="view view-happening-now view-id-happening_now view-display-id-teasers js-view-dom-id-48d0911cdf8db82034b455a281a51329a66cf6fb95296547ef5e6bdcb5f4fdfc">
+  
+    
+      
+      <div class="view-content">
+      <div class="item-list">
+  
+  <ul class="listing-items">
+
+          <li><div class="views-field views-field-title"><span class="field-content"><a href="/insights/enabling-plug-in-solar-states" hreflang="en">&#039;Plug-In Solar&#039; Has Faced Major Red Tape in Most States. That Could Soon Change</a></span></div></li>
+          <li><div class="views-field views-field-title"><span class="field-content"><a href="/insights/solar-transforms-farming-berbere-ethiopia" hreflang="en">Solar Brings Long-Awaited Water to Ethiopian Farmers</a></span></div></li>
+          <li><div class="views-field views-field-title"><span class="field-content"><a href="/insights/integrated-resource-planning-accelerates-clean-energy" hreflang="en">Integrated Resource Planning Offers a Strategy to Accelerate Clean Energy</a></span></div></li>
+    
+  </ul>
+
+</div>
+
+    </div>
+  
+          </div>
+</div>
+
+  </div>
+
+    </div>
+
+      </div>
+
+
+            </div>
+                  </div>
+      </div>
+    </div>
+
+          <div class="dark-overlay"></div>
+      </div>
+</div>
+  <div class="landing-page__hero__field-listing__mobile container content-side-padding padding-vertical white">
+    
+    <div class="paragraph paragraph--type--happening-now paragraph--view-mode--default">
+          
+<div class="field field--name-field-listing field--type-viewfield field--label-above">
+  
+      <div class="field__label">Happening Now</div>
+    
+        
+<div class="field__item field__item-label-hidden happening-now-teasers">
+  
+    
+      <div class="views-element-container"><div class="view view-happening-now view-id-happening_now view-display-id-teasers js-view-dom-id-48d0911cdf8db82034b455a281a51329a66cf6fb95296547ef5e6bdcb5f4fdfc">
+  
+    
+      
+      <div class="view-content">
+      <div class="item-list">
+  
+  <ul class="listing-items">
+
+          <li><div class="views-field views-field-title"><span class="field-content"><a href="/insights/enabling-plug-in-solar-states" hreflang="en">&#039;Plug-In Solar&#039; Has Faced Major Red Tape in Most States. That Could Soon Change</a></span></div></li>
+          <li><div class="views-field views-field-title"><span class="field-content"><a href="/insights/solar-transforms-farming-berbere-ethiopia" hreflang="en">Solar Brings Long-Awaited Water to Ethiopian Farmers</a></span></div></li>
+          <li><div class="views-field views-field-title"><span class="field-content"><a href="/insights/integrated-resource-planning-accelerates-clean-energy" hreflang="en">Integrated Resource Planning Offers a Strategy to Accelerate Clean Energy</a></span></div></li>
+    
+  </ul>
+
+</div>
+
+    </div>
+  
+          </div>
+</div>
+
+  </div>
+
+    </div>
+
+      </div>
+
+
+  </div>
+
+
+  </div>
+<div class="block block-ctools block-entity-viewnode">
+  
+    
+              <div id="publication__detail" class="publication__detail robust-display tall-hero">
+              <div class="landing-page__hero ">
+                                <div class="block-field-blocknodeprogram-centerfield-twitter-account">
+              
+            </div>
+                                 <div class="publication__toc gold-bar">
+  <div class="grid publication__toc-inner black-bar-inner">
+    
+      
+    <nav role="navigation" id="menu-toc" aria-labelledby="menu-toc" class="toc">
+  
+      
+<div class="menu-wrapper">
+  <div class="menu">
+                <ul class="toc-list-wrapper">
+                    <li class="menu-item menu-item--expanded menu-item--active-trail">
+        <a href="/energy" data-drupal-link-system-path="node/105106" class="is-active" aria-current="page">WRI Polsky Center for the Global Energy Transition</a>
+                                <ul class="menu">
+                    <li class="menu-item">
+        <a href="/energy/about" data-drupal-link-system-path="node/105107">About</a>
+              </li>
+                <li class="menu-item">
+        <a href="/energy/our-work" data-drupal-link-system-path="node/105108">Our Work</a>
+              </li>
+                <li class="menu-item">
+        <a href="/energy/advisory-group" data-drupal-link-system-path="node/105109">Advisory Group</a>
+              </li>
+                <li class="menu-item">
+        <a href="/energy/news-events" data-drupal-link-system-path="node/105110">News &amp; Events</a>
+              </li>
+                <li class="menu-item">
+        <a href="/energy/publications" data-drupal-link-system-path="node/105111">Publications</a>
+              </li>
+                <li class="menu-item">
+        <a href="/energy/initiatives" data-drupal-link-system-path="node/105164">Initiatives</a>
+              </li>
+        </ul>
+          <span><a href="#scroll" aria-hidden="true" tabindex="-1" class="nav-arrow"><span class="continue">... </span><svg aria-hidden="true" data-prefix="far" data-icon="chevron-right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" class="svg-inline--fa fa-chevron-right fa-w-8 fa-3x"><path d="M24.707 38.101L4.908 57.899c-4.686 4.686-4.686 12.284 0 16.971L185.607 256 4.908 437.13c-4.686 4.686-4.686 12.284 0 16.971L24.707 473.9c4.686 4.686 12.284 4.686 16.971 0l209.414-209.414c4.686-4.686 4.686-12.284 0-16.971L41.678 38.101c-4.687-4.687-12.285-4.687-16.971 0z"/><title>Click to see more</title></svg></a></span>
+      
+              </li>
+        </ul>
+      
+  </div>
+</div>
+
+  </nav>
+
+    </div>
+</div>
+
+                  </div>
+                            <div class="mobile__toc grid">
+            <div class="internal-menu-pages">
+                                                                                      <div class="internal-menu-pages">
+  <div class="field-label" tabindex="0"><a tabindex="-1" href="#">Menu</a></div>
+  <nav role="navigation" id="menu-toc" aria-labelledby="menu-toc" class="page-hierarchies">
+  
+      
+
+  <ul class="menu menu-level-0">
+                  
+        <li class="menu-item menu-item--expanded menu-item--active-trail">
+          <a href="/energy" data-drupal-link-system-path="node/105106" class="is-active" aria-current="page">WRI Polsky Center for the Global Energy Transition</a>
+                                
+  
+  <div class="menu_link_content menu-link-contentmicrosites view-mode-default menu-dropdown menu-dropdown-0 menu-type-default">
+              
+  <ul class="menu menu-level-1">
+                  
+        <li class="menu-item">
+          <a href="/energy/about" data-drupal-link-system-path="node/105107">About</a>
+                                
+  
+  <div class="menu_link_content menu-link-contentmicrosites view-mode-default menu-dropdown menu-dropdown-1 menu-type-default">
+              
+      </div>
+
+
+
+                  </li>
+                      
+        <li class="menu-item">
+          <a href="/energy/our-work" data-drupal-link-system-path="node/105108">Our Work</a>
+                                
+  
+  <div class="menu_link_content menu-link-contentmicrosites view-mode-default menu-dropdown menu-dropdown-1 menu-type-default">
+              
+      </div>
+
+
+
+                  </li>
+                      
+        <li class="menu-item">
+          <a href="/energy/advisory-group" data-drupal-link-system-path="node/105109">Advisory Group</a>
+                                
+  
+  <div class="menu_link_content menu-link-contentmicrosites view-mode-default menu-dropdown menu-dropdown-1 menu-type-default">
+              
+      </div>
+
+
+
+                  </li>
+                      
+        <li class="menu-item">
+          <a href="/energy/news-events" data-drupal-link-system-path="node/105110">News &amp; Events</a>
+                                
+  
+  <div class="menu_link_content menu-link-contentmicrosites view-mode-default menu-dropdown menu-dropdown-1 menu-type-default">
+              
+      </div>
+
+
+
+                  </li>
+                      
+        <li class="menu-item">
+          <a href="/energy/publications" data-drupal-link-system-path="node/105111">Publications</a>
+                                
+  
+  <div class="menu_link_content menu-link-contentmicrosites view-mode-default menu-dropdown menu-dropdown-1 menu-type-default">
+              
+      </div>
+
+
+
+                  </li>
+                      
+        <li class="menu-item">
+          <a href="/energy/initiatives" data-drupal-link-system-path="node/105164">Initiatives</a>
+                                
+  
+  <div class="menu_link_content menu-link-contentmicrosites view-mode-default menu-dropdown menu-dropdown-1 menu-type-default">
+              
+      </div>
+
+
+
+                  </li>
+          </ul>
+
+
+
+      </div>
+
+
+
+                  </li>
+          </ul>
+
+
+  </nav>
+</div>
+
+                          </div>
+           </div>
+      
+
+      <div class="publication__main grid margin-top-md">
+
+        
+        
+                  <div class="publication__image margin-bottom-sm">
+            <div class="publication__image-inner">
+              <div >
+                
+    <img loading="lazy" src="https://files.wri.org/d8/s3fs-public/styles/250_wide/s3/2025-02/wri-polsky-center-energy-logo.png?VersionId=cj2yhZvs18NsgxXrkflq9Fndr5Nc90Hu&amp;itok=d2TZhbyo" width="250" height="47" alt="WRI Polsky Center for the Global Energy Transition logo" class="image-style-_50-wide" />
+
+
+
+
+              </div>
+            </div>
+          </div>
+        
+                  <div  class="layout__region layout__region--main_content main-content margin-bottom-lg">
+            
+  <article class="media media--type-video media--view-mode-full">
+  
+      
+            <div class="field field--name-field-media-oembed-video field--type-string field--label-hidden field__item">
+<div class="oembed-lazyload oembed-lazyload--vimeo" data-strategy="intersection-observer">
+  <a class="oembed-lazyload__button" href="https://vimeo.com/1060507932" title="Watch " rel="nofollow"><span class="oembed-lazyload__thumbnail" style="background-image: url('')"></span></a>
+  <iframe data-src="/media/oembed?url=https%3A//vimeo.com/1060507932&amp;max_width=0&amp;max_height=0&amp;hash=i1WPy-fKBv4CyNHTGAMwkck76lK-ho8B61ttBM9ANMc&amp;oembed_lazyload=1&amp;provider=Vimeo&amp;oembed_lazyload_hash=V5P8OKVU6zqeHUW8p2H8OH41ocYz7u-TwFWx-NCXv0I" id="oembed-iframe" width="426" height="240" class="media-oembed-content oembed-lazyload__iframe oembed-lazyload__iframe--hidden"></iframe>
+
+</div>
+</div>
+      
+  </article>
+
+
+          </div>
+        
+      </div>
+    </div>
+  
+
+
+
+  </div>
+<div class="field-intro-paragraphs block block-layout-builder block-field-blocknodemicrositefield-intro-paragraphs">
+  
+    
+      
+      <div class="field field--name-field-intro-paragraphs field--type-entity-reference-revisions field--label-hidden field__items">
+              <div class="field__item">  <div class="paragraph paragraph--type--program-lead-in paragraph--view-mode--default">
+          
+            <div class="field field--name-field-leadin-title field--type-string field--label-hidden field__item"><h2>Our Challenge</h2>
+</div>
+      
+            <div class="clearfix text-formatted field field--name-field-leadin-paragraph field--type-text-long field--label-hidden field__item"><p>Energy powers every aspect of modern life—homes, hospitals, schools and industries—creating opportunities for healthier, more prosperous communities. Access to clean, abundant, affordable and reliable energy is a cornerstone of economic growth and human well-being.</p><p>Meeting this challenge requires bold, pragmatic action to modernize energy systems, scale new technologies and expand access. Transitioning to a sustainable energy economy is an opportunity to create jobs, boost economic growth and enhance global security while ensuring an inclusive and reliable energy future.</p><p>Yet, the global energy system is falling short. The energy sector is responsible for 75.7% of global greenhouse gas emissions and over 666 million people still lack access to electricity. Meanwhile, surging energy demand outpaces the deployment of clean energy solutions, threatening energy security and economic stability.</p></div>
+      
+      </div>
+</div>
+              <div class="field__item">  <div class="paragraph paragraph--type--statistics paragraph--view-mode--default">
+          
+      <div class="field field--name-field-statistics field--type-entity-reference-revisions field--label-hidden field__items">
+              <div class="field__item">  <div class="paragraph paragraph--type--statistic paragraph--view-mode--default">
+          
+            <div class="field field--name-field-statistic-number field--type-string field--label-hidden field__item">666M</div>
+      
+            <div class="clearfix text-formatted field field--name-field-statistic-text field--type-text-long field--label-hidden field__item"><p>people worldwide lacked access to electricity in 2025</p></div>
+      
+      </div>
+</div>
+              <div class="field__item">  <div class="paragraph paragraph--type--statistic paragraph--view-mode--default">
+          
+            <div class="field field--name-field-statistic-number field--type-string field--label-hidden field__item">2.1B</div>
+      
+            <div class="clearfix text-formatted field field--name-field-statistic-text field--type-text-long field--label-hidden field__item"><p>people lacked access to clean cooking fuels in 2023</p></div>
+      
+      </div>
+</div>
+              <div class="field__item">  <div class="paragraph paragraph--type--statistic paragraph--view-mode--default">
+          
+            <div class="field field--name-field-statistic-number field--type-string field--label-hidden field__item">75.7%</div>
+      
+            <div class="clearfix text-formatted field field--name-field-statistic-text field--type-text-long field--label-hidden field__item"><p>of global emissions come from energy consumption</p></div>
+      
+      </div>
+</div>
+              <div class="field__item">  <div class="paragraph paragraph--type--statistic paragraph--view-mode--default">
+          
+            <div class="field field--name-field-statistic-number field--type-string field--label-hidden field__item">$4.5T</div>
+      
+            <div class="clearfix text-formatted field field--name-field-statistic-text field--type-text-long field--label-hidden field__item"><p>USD per year needed in clean energy investments</p></div>
+      
+      </div>
+</div>
+          </div>
+  
+      </div>
+</div>
+              <div class="field__item">  <div class="paragraph paragraph--type--program-lead-in paragraph--view-mode--default">
+          
+            <div class="field field--name-field-leadin-title field--type-string field--label-hidden field__item"><h2>Our Approach</h2>
+</div>
+      
+            <div class="clearfix text-formatted field field--name-field-leadin-paragraph field--type-text-long field--label-hidden field__item"><p>The WRI Polsky Center for the Global Energy Transition delivers pragmatic, scalable and urgently needed solutions to achieve a clean, abundant, affordable and reliable energy future.</p><p>Harnessing WRI’s renowned analytical power, convening ability and global expertise, the WRI Polsky Energy Center works with governments, utilities, companies, financial institutions and civil society to find bold solutions to the barriers that stand in the way of the energy transition, including modernizing grids, unlocking financing, sourcing critical minerals responsibly and building a future-ready workforce.&nbsp;</p><p>We support the global commitment to accelerate renewable energy, deliver energy storage solutions and increase energy efficiency, while continuing to transition from fossil fuels. &nbsp;</p><p>The WRI Polsky Energy Center takes a unique, three-part approach that combines WRI’s renowned experts, a world-class Advisory Group and collaboration with partners to:&nbsp;</p><ul><li>Generate evidence-based analyses on barriers and solutions through rigorous research from around the world.</li><li>Orchestrate the change by engaging influential actors—banks, companies, utilities, governments and civil society—to co-create and implement solutions.</li><li>Leverage WRI’s reach—including the Institute’s presence in a dozen of the world’s most influential economies—and global expertise on topics that are important to the energy transition such as land use, oceans, urban development, climate, economics, finance and governance.&nbsp;&nbsp;</li></ul><p><a name="signup"></a></p></div>
+      
+      </div>
+</div>
+          </div>
+  
+  </div>
+<div class="block block-webform block-webform-block grid">
+  <div class="webform-outer">
+    
+        
+          <form class="webform-submission-form webform-submission-add-form webform-submission-polsky-center-sign-up-form webform-submission-polsky-center-sign-up-add-form webform-submission-polsky-center-sign-up-node-105106-form webform-submission-polsky-center-sign-up-node-105106-add-form polskyform js-webform-details-toggle webform-details-toggle" data-recaptcha-id="webform_submission_polsky_center_sign_up_node_105106_add_form" data-drupal-selector="webform-submission-polsky-center-sign-up-node-105106-add-form" action="/energy" method="post" id="webform-submission-polsky-center-sign-up-node-105106-add-form" accept-charset="UTF-8">
+  
+  <div id="edit-markup" class="js-form-item form-item js-form-type-webform-markup form-type-webform-markup js-form-item-markup form-item-markup form-no-label">
+        <h2>Connect with us</h2><p>Sign up for updates from the WRI Polsky Center for the Global Energy Transition</p>
+        </div>
+<div class="js-form-item form-item js-form-type-email form-type-email js-form-item-email form-item-email">
+      <label for="edit-email" class="js-form-required form-required">Email</label>
+        <input data-drupal-selector="edit-email" type="email" id="edit-email" name="email" value="" size="60" maxlength="254" class="form-email required" required="required" aria-required="true" />
+
+        </div>
+<div data-drupal-selector="edit-flexbox" class="webform-flexbox js-webform-flexbox js-form-wrapper form-wrapper" id="edit-flexbox"><div class="webform-flex webform-flex--1"><div class="webform-flex--container"><div class="js-form-item form-item js-form-type-textfield form-type-textfield js-form-item-first-name form-item-first-name">
+      <label for="edit-first-name" class="js-form-required form-required">First name</label>
+        <input data-drupal-selector="edit-first-name" type="text" id="edit-first-name" name="first_name" value="" size="60" maxlength="255" class="form-text required" required="required" aria-required="true" />
+
+        </div>
+</div></div><div class="webform-flex webform-flex--1"><div class="webform-flex--container"><div class="js-form-item form-item js-form-type-textfield form-type-textfield js-form-item-last-name form-item-last-name">
+      <label for="edit-last-name" class="js-form-required form-required">Last name</label>
+        <input data-drupal-selector="edit-last-name" type="text" id="edit-last-name" name="last_name" value="" size="60" maxlength="255" class="form-text required" required="required" aria-required="true" />
+
+        </div>
+</div></div></div>
+<input data-drupal-selector="edit-simple-recaptcha-token" type="hidden" name="simple_recaptcha_token" value="" />
+<input data-drupal-selector="edit-simple-recaptcha-type" type="hidden" name="simple_recaptcha_type" value="v3" />
+<input data-drupal-selector="edit-simple-recaptcha-score" type="hidden" name="simple_recaptcha_score" value="90" />
+<input data-drupal-selector="edit-simple-recaptcha-message" type="hidden" name="simple_recaptcha_message" value="" />
+<input autocomplete="off" data-drupal-selector="form-b81sbdyinxerp79rrmkzrbpwu3p-hhnwqtxknuocvh4" type="hidden" name="form_build_id" value="form-b81SbdYiNxeRP79rRmKzRbpWU3p-HhnwqTxkNuocVh4" />
+<input data-drupal-selector="edit-webform-submission-polsky-center-sign-up-node-105106-add-form" type="hidden" name="form_id" value="webform_submission_polsky_center_sign_up_node_105106_add_form" />
+<div data-drupal-selector="edit-actions" class="form-actions js-form-wrapper form-wrapper" id="edit-actions"><div id="webform_submission_polsky_center_sign_up_node_105106_add_form-captcha" class="recaptcha-v3 recaptcha-v3-wrapper js-form-wrapper form-wrapper" data-drupal-selector="edit-captcha"></div>
+<input class="webform-button--submit button button--primary js-form-submit form-submit" data-drupal-selector="edit-submit" type="submit" id="edit-submit" name="op" value="Submit" />
+
+</div>
+
+
+  
+</form>
+
+      </div>
+</div>
+<div class="block-content--type-text-block block block-layout-builder block-inline-blocktext-block landing-page__content grid text-block">
+  <div class="layout__region--main_content main-content">
+  
+  
+      
+            <div class="clearfix text-formatted field field--name-body field--type-text-with-summary field--label-hidden field__item"><style>
+.energy-connect-links {
+	font-family: "adobe-caslon-pro",serif !important;
+	font-weight: 400;
+	font-style: italic;
+}
+</style><p class="energy-connect-links">Connect with WRI's Energy Program:</p><table border="0" cellpadding="1" cellspacing="1"><tbody><tr><td><a href="https://bsky.app/profile/wrienergy.bsky.social"><img style="width:25px;" src="https://files.wri.org/d8/s3fs-public/2025-02/bluesky-logo.png"></a></td><td><a href="https://www.linkedin.com/showcase/wri-energy-program"><img style="width:25px;" src="https://files.wri.org/d8/s3fs-public/2025-02/linkedin-logo.png"></a></td></tr></tbody></table></div>
+      
+    </div>
+</div>
+<div class="block-content--type-narrative-taxonomy block block-layout-builder block-inline-blocknarrative-taxonomy">
+  
+    
+      <div class="unfriendly-block">
+  <div class="grid top-border-thick"><div class="narrative-taxonomy">
+  <p><strong>WRI's energy work addresses a number of topics including </strong><a href="https://www.wri.org/initiatives/clean-energy"><strong>clean energy supply</strong></a><strong>, </strong><a href="https://www.wri.org/initiatives/decarbonizing-energy-consumption"><strong>decarbonized energy consumption</strong></a><strong>, </strong><a href="https://www.wri.org/energy/energy-access"><strong>energy access and equitable development</strong></a><strong>, and </strong><a href="https://www.wri.org/initiatives/energy-minerals-and-circularity"><strong>energy minerals and circularity</strong></a><strong>. </strong><a href="https://www.wri.org/resources/topic/222/type/initiatives-30003"><strong>Explore all projects</strong></a><strong> in depth.</strong></p>
+</div></div>
+  <div class="content grid"><div class="layout__region--listing">
+<div class="field field--name-field-listing field--type-viewfield field--label-hidden">
+  
+    
+        
+<div class="field__item field__item-label-hidden">
+  
+    
+      <div class="views-element-container"><div class="tiles content-listing view view-homepage-projects view-id-homepage_projects view-display-id-tiles js-view-dom-id-b2d3e46fe51cadd7e49b04ad1cadbfffe326c93144c303fa31f4dc2668f1f23f">
+  
+    
+      
+      <div class="view-content">
+      <div class="item-list">
+  
+  <ul class="listing-items">
+
+          <li><div  class="tile project_detail">
+      <div class="card-image">
+              
+      <picture>
+                  <source srcset="https://files.wri.org/d8/s3fs-public/styles/646x464/s3/kutch-sunset.jpg?VersionId=UHzJ_u8vSG13AKPNel16kKG5R0JA_2tG&amp;h=fff89ad5&amp;itok=gFheXm0u 1x" media="(min-width: 1440px)" type="image/jpeg" width="646" height="464"/>
+              <source srcset="https://files.wri.org/d8/s3fs-public/styles/646x464/s3/kutch-sunset.jpg?VersionId=UHzJ_u8vSG13AKPNel16kKG5R0JA_2tG&amp;h=fff89ad5&amp;itok=gFheXm0u 1x" media="(min-width: 1024px) and (max-width: 1440px)" type="image/jpeg" width="646" height="464"/>
+              <source srcset="https://files.wri.org/d8/s3fs-public/styles/646x464/s3/kutch-sunset.jpg?VersionId=UHzJ_u8vSG13AKPNel16kKG5R0JA_2tG&amp;h=fff89ad5&amp;itok=gFheXm0u 1x" media="(min-width: 768px) and (max-width: 1023px)" type="image/jpeg" width="646" height="464"/>
+              <source srcset="https://files.wri.org/d8/s3fs-public/styles/768x460/s3/kutch-sunset.jpg?VersionId=qq3y.pT5sP0Ac_cwW7b30nkIjaUDvkIy&amp;h=fff89ad5&amp;itok=ejQ5nrtp 1x" media="(min-width: 501px) and (max-width: 767px)" type="image/jpeg" width="768" height="460"/>
+              <source srcset="https://files.wri.org/d8/s3fs-public/styles/500x375/s3/kutch-sunset.jpg?VersionId=9DtU6Yh1N1PRTOMkS.YfUKzizYIsDiKM&amp;h=fff89ad5&amp;itok=G86-1pjP 1x" media="(min-width: 0px) and (max-width: 500px)" type="image/jpeg" width="500" height="375"/>
+                  <img loading="lazy" width="463" height="330" src="https://files.wri.org/d8/s3fs-public/styles/463x330/s3/kutch-sunset.jpg?VersionId=YAo3zzIGmiwZyrXFcFWOZqsTR7PR6.cm&amp;h=fff89ad5&amp;itok=LepPYMBx" alt="kutch sunset.jpg" />
+
+  </picture>
+
+
+
+          </div>
+    <div class="card-text has-white-background-color">
+      <div class="margin-right-sm margin-top-sm">
+                  
+  <h3 class="h3">
+  Energy Access Explorer
+</h3>
+
+
+        
+                      
+      <div class="secondary"><p>An open-source data platform that provides mapping and tools to support inclusive, locally led approaches to achieving energy access for all people.</p></div>
+      
+  
+
+
+        
+
+                  <div class="tile-buttons">
+            
+  <a href="https://www.energyaccessexplorer.org/" class="button small">Launch Platform<span class="visually-hidden">Launch Platform</span></a>
+
+    <a href="/initiatives/energy-access-explorer" class="button small white" hreflang="en">Visit Project</a>
+
+
+          </div>
+        
+                  <div class="subtext top-border-tiny">
+            <span class="italic-xtra-tiny">Part of</span>     
+      <span class="small label"><a href="/energy" hreflang="en">Energy</a></span>
+      
+  
+
+
+          </div>
+              </div>
+    </div>
+
+  </div>
+
+</li>
+          <li><div  class="tile project_detail">
+      <div class="card-image">
+              
+      <picture>
+                  <source srcset="https://files.wri.org/d8/s3fs-public/styles/646x464/s3/2023-01/chicago-skyline-jeff-brown-unsplash.jpeg?VersionId=SkYSNSizRSzYJRvZKwczmwzop9OLOaHA&amp;h=e5aec6c8&amp;itok=kvegt6HF 1x" media="(min-width: 1440px)" type="image/jpeg" width="646" height="464"/>
+              <source srcset="https://files.wri.org/d8/s3fs-public/styles/646x464/s3/2023-01/chicago-skyline-jeff-brown-unsplash.jpeg?VersionId=SkYSNSizRSzYJRvZKwczmwzop9OLOaHA&amp;h=e5aec6c8&amp;itok=kvegt6HF 1x" media="(min-width: 1024px) and (max-width: 1440px)" type="image/jpeg" width="646" height="464"/>
+              <source srcset="https://files.wri.org/d8/s3fs-public/styles/646x464/s3/2023-01/chicago-skyline-jeff-brown-unsplash.jpeg?VersionId=SkYSNSizRSzYJRvZKwczmwzop9OLOaHA&amp;h=e5aec6c8&amp;itok=kvegt6HF 1x" media="(min-width: 768px) and (max-width: 1023px)" type="image/jpeg" width="646" height="464"/>
+              <source srcset="https://files.wri.org/d8/s3fs-public/styles/768x460/s3/2023-01/chicago-skyline-jeff-brown-unsplash.jpeg?VersionId=WksM8BO4_75IXJuE2lynTF9W0HuQQcOJ&amp;h=e5aec6c8&amp;itok=A6besx_v 1x" media="(min-width: 501px) and (max-width: 767px)" type="image/jpeg" width="768" height="460"/>
+              <source srcset="https://files.wri.org/d8/s3fs-public/styles/500x375/s3/2023-01/chicago-skyline-jeff-brown-unsplash.jpeg?VersionId=.IHvmUPGPeJUgbPgWQodUNJBGU_w7n9O&amp;h=e5aec6c8&amp;itok=0-cME17U 1x" media="(min-width: 0px) and (max-width: 500px)" type="image/jpeg" width="500" height="375"/>
+                  <img loading="lazy" width="463" height="330" src="https://files.wri.org/d8/s3fs-public/styles/463x330/s3/2023-01/chicago-skyline-jeff-brown-unsplash.jpeg?VersionId=qbrmvHfYoOPCkdaYf2lFBfn1xEcLS0pD&amp;h=e5aec6c8&amp;itok=jrItksXO" alt="Chicago skyline during the day." />
+
+  </picture>
+
+
+
+          </div>
+    <div class="card-text has-white-background-color">
+      <div class="margin-right-sm margin-top-sm">
+                  
+  <h3 class="h3">
+  Clean Energy for Large Buyers
+</h3>
+
+
+        
+                      
+      <div class="secondary"><p>Working with large energy buyers to implement renewable energy alternatives.</p></div>
+      
+  
+
+
+        
+
+                  <div class="tile-buttons">
+            
+    <a href="/initiatives/clean-energy-large-buyers" class="button small white" hreflang="en">Visit Project</a>
+
+
+          </div>
+        
+                  <div class="subtext top-border-tiny">
+            <span class="italic-xtra-tiny">Part of</span>     
+      <span class="small label"><a href="/energy" hreflang="en">Energy</a></span>
+      
+  
+
+
+          </div>
+              </div>
+    </div>
+
+  </div>
+
+</li>
+          <li><div  class="tile project_detail">
+      <div class="card-image">
+              
+      <picture>
+                  <source srcset="https://files.wri.org/d8/s3fs-public/styles/646x464/s3/2021-12/climate-solutions-partnership-banner-image.jpeg?VersionId=B4pabvHoHH_5VrKLaH4uM5ZCh8lDYW.C&amp;h=790be497&amp;itok=FChecZax 1x" media="(min-width: 1440px)" type="image/jpeg" width="646" height="464"/>
+              <source srcset="https://files.wri.org/d8/s3fs-public/styles/646x464/s3/2021-12/climate-solutions-partnership-banner-image.jpeg?VersionId=B4pabvHoHH_5VrKLaH4uM5ZCh8lDYW.C&amp;h=790be497&amp;itok=FChecZax 1x" media="(min-width: 1024px) and (max-width: 1440px)" type="image/jpeg" width="646" height="464"/>
+              <source srcset="https://files.wri.org/d8/s3fs-public/styles/646x464/s3/2021-12/climate-solutions-partnership-banner-image.jpeg?VersionId=B4pabvHoHH_5VrKLaH4uM5ZCh8lDYW.C&amp;h=790be497&amp;itok=FChecZax 1x" media="(min-width: 768px) and (max-width: 1023px)" type="image/jpeg" width="646" height="464"/>
+              <source srcset="https://files.wri.org/d8/s3fs-public/styles/768x460/s3/2021-12/climate-solutions-partnership-banner-image.jpeg?VersionId=290jxFxy1mMBxX6sn2R5wY.z6qhxLIIv&amp;h=790be497&amp;itok=UlIrqn_- 1x" media="(min-width: 501px) and (max-width: 767px)" type="image/jpeg" width="768" height="460"/>
+              <source srcset="https://files.wri.org/d8/s3fs-public/styles/500x375/s3/2021-12/climate-solutions-partnership-banner-image.jpeg?VersionId=qkA9oghFKu8Vijw9WT67nNBcJBrjMBKP&amp;h=790be497&amp;itok=CLLGBwvh 1x" media="(min-width: 0px) and (max-width: 500px)" type="image/jpeg" width="500" height="375"/>
+                  <img loading="lazy" width="463" height="330" src="https://files.wri.org/d8/s3fs-public/styles/463x330/s3/2021-12/climate-solutions-partnership-banner-image.jpeg?VersionId=AG_decjjJS9gb9SkQJ3mfKEYvVY0231Z&amp;h=790be497&amp;itok=bIxUJHem" alt="Solar panels in park surrounded by skyscrapers" />
+
+  </picture>
+
+
+
+          </div>
+    <div class="card-text has-white-background-color">
+      <div class="margin-right-sm margin-top-sm">
+                  
+  <h3 class="h3">
+  Climate Solutions Partnership
+</h3>
+
+
+        
+                      
+      <div class="secondary"><p>A five-year philanthropic collaboration to scale climate solutions by combining HSBC’s financial expertise with the knowledge and experience of WRI, WWF and a network of local partners</p></div>
+      
+  
+
+
+        
+
+                  <div class="tile-buttons">
+            
+    <a href="/initiatives/climate-solutions-partnership" class="button small white" hreflang="en">Visit Project</a>
+
+
+          </div>
+        
+                  <div class="subtext top-border-tiny">
+            <span class="italic-xtra-tiny">Part of</span>     
+      <span class="small label"><a href="/business" hreflang="en">Business</a></span>
+      
+  
+
+
+          </div>
+              </div>
+    </div>
+
+  </div>
+
+</li>
+          <li><div  class="tile project_detail">
+      <div class="card-image">
+              
+      <picture>
+                  <source srcset="https://files.wri.org/d8/s3fs-public/styles/646x464/s3/2025-11/crescent-dunes-solar-thermal-facility.jpg?VersionId=rmqWET4ZrcquZCMLTA_qtmCJBzSzit.7&amp;h=3d526551&amp;itok=V6uo6Gp6 1x" media="(min-width: 1440px)" type="image/jpeg" width="646" height="464"/>
+              <source srcset="https://files.wri.org/d8/s3fs-public/styles/646x464/s3/2025-11/crescent-dunes-solar-thermal-facility.jpg?VersionId=rmqWET4ZrcquZCMLTA_qtmCJBzSzit.7&amp;h=3d526551&amp;itok=V6uo6Gp6 1x" media="(min-width: 1024px) and (max-width: 1440px)" type="image/jpeg" width="646" height="464"/>
+              <source srcset="https://files.wri.org/d8/s3fs-public/styles/646x464/s3/2025-11/crescent-dunes-solar-thermal-facility.jpg?VersionId=rmqWET4ZrcquZCMLTA_qtmCJBzSzit.7&amp;h=3d526551&amp;itok=V6uo6Gp6 1x" media="(min-width: 768px) and (max-width: 1023px)" type="image/jpeg" width="646" height="464"/>
+              <source srcset="https://files.wri.org/d8/s3fs-public/styles/768x460/s3/2025-11/crescent-dunes-solar-thermal-facility.jpg?VersionId=aVaIHZkc6Pu4g1Tg80fAJJino6TRltot&amp;h=3d526551&amp;itok=UOdLQpJm 1x" media="(min-width: 501px) and (max-width: 767px)" type="image/jpeg" width="768" height="460"/>
+              <source srcset="https://files.wri.org/d8/s3fs-public/styles/500x375/s3/2025-11/crescent-dunes-solar-thermal-facility.jpg?VersionId=UQ9bzSjR9h0mT45ylcklwhvL068ATaMH&amp;h=3d526551&amp;itok=TTNqm0aa 1x" media="(min-width: 0px) and (max-width: 500px)" type="image/jpeg" width="500" height="375"/>
+                  <img loading="lazy" width="463" height="330" src="https://files.wri.org/d8/s3fs-public/styles/463x330/s3/2025-11/crescent-dunes-solar-thermal-facility.jpg?VersionId=bNppsRvB3UHtXuqpaHAwm3lEwso5.z9H&amp;h=3d526551&amp;itok=lsMnHYx7" alt="Worker in desert solar field." />
+
+  </picture>
+
+
+
+          </div>
+    <div class="card-text has-white-background-color">
+      <div class="margin-right-sm margin-top-sm">
+                  
+  <h3 class="h3">
+  US Power Market Reform in the Southeast and West
+</h3>
+
+
+        
+                  
+        
+
+                  <div class="tile-buttons">
+            
+    <a href="/initiatives/us-power-market-reform-southeast-and-west" class="button small white" hreflang="en">Visit Project</a>
+
+
+          </div>
+        
+                  <div class="subtext top-border-tiny">
+            <span class="italic-xtra-tiny">Part of</span>     
+      <span class="small label"><a href="/energy" hreflang="en">Energy</a></span>
+      
+  
+
+
+          </div>
+              </div>
+    </div>
+
+  </div>
+
+</li>
+    
+  </ul>
+
+</div>
+
+    </div>
+  
+          </div>
+</div>
+
+  </div>
+
+    </div>
+</div>
+          <div class="layout__region--more-link">
+        <span class="more-link__line"></span>
+        
+  <a href="/resources/topic/energy-222/type/initiatives-30003" class="button small">View all Initiatives</a>
+
+      </div>
+      </div>
+</div>
+
+
+  </div>
+<div class="block-content--type-listing-block block block-layout-builder block-inline-blocklisting-block">
+  
+    
+          <div class="cards-content_listing content_listing grid margin-bottom-lg unfriendly-block">
+
+          <div  class="layout__region layout__region--header top-border-thick margin-bottom-md">
+        <h2 class="h3 margin-zero">
+          
+  Featured Energy Resources
+
+        </h2>
+              </div>
+    
+    
+          <div  class="layout__region layout__region--listing">
+        
+<div class="field field--name-field-listing field--type-viewfield field--label-hidden">
+  
+    
+        
+<div class="field__item field__item-label-hidden">
+  
+    
+      <div class="views-element-container"><div class="card-listing content-listing view view-content-listing view-id-content_listing view-display-id-cards js-view-dom-id-e3956e825b0b9156a98cfc7bf035ffbbdea76b199856cec31451eadb718fadeb">
+  
+    
+      
+      <div class="view-content">
+      <div class="item-list">
+  
+  <ul class="listing-items">
+
+          <li><div class="article">
+  <div  class="ds-1col clearfix card">
+    
+          <div class="card-image">
+                  
+    <img loading="lazy" src="https://files.wri.org/d8/s3fs-public/styles/363x245/s3/2026-02/balcony-solar.jpg?VersionId=Kq5x9Sd5CCxOZxXKpYPeLRpqEk40bGaz&amp;h=f0a396fa&amp;itok=bU_CeKSX" width="363" height="245" alt="A man installs balcony solar panels on an apartment balcony in Germany" class="image-style-_63x245" />
+
+
+
+
+              </div>
+      <div class="card-text">
+                  <div class="tags topic-tag margin-top-xs">
+            
+  <a href="/energy" hreflang="en">Energy</a>
+
+            
+          </div>
+                                                          <h3 class="teaser-title margin-top-xs ">
+            
+    <a href="/insights/enabling-plug-in-solar-states" hreflang="en">&#039;Plug-In Solar&#039; Has Faced Major Red Tape in Most States. That Could Soon Change</a>
+
+
+          </h3>
+                                  <span class="content-type-region bundle">
+          
+  Insights
+
+        </span>
+                          <span class="date-region date">
+              
+            February 26, 2026
+      
+  
+
+
+        </span>
+                      </div>
+      </div>
+</div>
+
+</li>
+          <li><div class="article">
+  <div  class="ds-1col clearfix card">
+    
+          <div class="card-image">
+                  
+    <img loading="lazy" src="https://files.wri.org/d8/s3fs-public/styles/363x245/s3/2026-02/farmers-harvesting-berbere.JPG?VersionId=PKQ3gI946OxFHtg2Bk9blChQrmSMn1r.&amp;h=cdfa3412&amp;itok=A_C_CXoZ" width="363" height="245" alt="Farmers harvesting crops." class="image-style-_63x245" />
+
+
+
+
+              </div>
+      <div class="card-text">
+                  <div class="tags topic-tag margin-top-xs">
+            
+  <a href="/energy" hreflang="en">Energy</a>
+
+            
+          </div>
+                                                          <h3 class="teaser-title margin-top-xs ">
+            
+    <a href="/insights/solar-transforms-farming-berbere-ethiopia" hreflang="en">Solar Brings Long-Awaited Water to Ethiopian Farmers</a>
+
+
+          </h3>
+                                  <span class="content-type-region bundle">
+          
+  Insights
+
+        </span>
+                          <span class="date-region date">
+              
+            February 24, 2026
+      
+  
+
+
+        </span>
+                      </div>
+      </div>
+</div>
+
+</li>
+          <li><div class="article">
+  <div  class="ds-1col clearfix card">
+    
+          <div class="card-image">
+                  
+    <img loading="lazy" src="https://files.wri.org/d8/s3fs-public/styles/363x245/s3/2026-02/cleaning-solar-panels.jpg?VersionId=5SHjTbAuWULglvuqzP542caRGNK68CQH&amp;h=854a7be2&amp;itok=C4Y4iyUo" width="363" height="245" alt="Cleaning solar panels." class="image-style-_63x245" />
+
+
+
+
+              </div>
+      <div class="card-text">
+                  <div class="tags topic-tag margin-top-xs">
+            
+  <a href="/initiatives/clean-energy-supply" hreflang="en">Clean Energy</a>
+
+            
+          </div>
+                                                          <h3 class="teaser-title margin-top-xs ">
+            
+    <a href="/insights/integrated-resource-planning-accelerates-clean-energy" hreflang="en">Integrated Resource Planning Offers a Strategy to Accelerate Clean Energy</a>
+
+
+          </h3>
+                                  <span class="content-type-region bundle">
+          
+  Insights
+
+        </span>
+                          <span class="date-region date">
+              
+            February 5, 2026
+      
+  
+
+
+        </span>
+                      </div>
+      </div>
+</div>
+
+</li>
+          <li><div class="article">
+  <div  class="ds-1col clearfix card">
+    
+          <div class="card-image">
+                  
+    <img loading="lazy" src="https://files.wri.org/d8/s3fs-public/styles/363x245/s3/2026-01/winter-storm-fern_0.jpg?VersionId=sB1_xDVotSwAyY_sD6d34rAzN3xJz873&amp;h=3a46a77c&amp;itok=5HqiX7_m" width="363" height="245" alt="A  woman walks alone along a snow-covered street in New York City as Winter Storm Fern intensifies" class="image-style-_63x245" />
+
+
+
+
+              </div>
+      <div class="card-text">
+                  <div class="tags topic-tag margin-top-xs">
+            
+  <a href="/energy" hreflang="en">Energy</a>
+
+            
+          </div>
+                                                          <h3 class="teaser-title margin-top-xs ">
+            
+    <a href="/insights/how-can-US-avoid-winter-storm-blackouts" hreflang="en">Expert Q&amp;A: How Can the US Avoid Power Outages During Winter Storms?</a>
+
+
+          </h3>
+                                  <span class="content-type-region bundle">
+          
+  Insights
+
+        </span>
+                          <span class="date-region date">
+              
+            February 3, 2026
+      
+  
+
+
+        </span>
+                      </div>
+      </div>
+</div>
+
+</li>
+    
+  </ul>
+
+</div>
+
+    </div>
+  
+          </div>
+</div>
+
+  </div>
+
+    </div>
+
+      </div>
+    
+          <div class="layout__region--more-link">
+        <span class="more-link__line"></span>
+        
+  <a href="/resources/topic/energy-222" class="button small">View more</a>
+
+      </div>
+      </div>
+
+
+  </div>
+<div class="field-featured-experts block block-layout-builder block-field-blocknodemicrositefield-featured-experts">
+  
+    
+      
+<div class="persons grid margin-bottom-lg margin-top-lg">
+  
+      <h2 class="layout__region layout__region--header h3 top-border-thick margin-bottom-md">
+      Featured Experts
+    </h2>
+    
+  <div class="layout__region layout__region--listing">
+    <div class="content-listing ">
+      <div class="item-list">
+                  <ul class="listing-items">
+                          <li class="field__item">  <div class="person-teaser-item">
+    <div class="person-teaser__inner-wrapper">
+      <div class="left-section">
+                  
+    <img loading="lazy" src="https://files.wri.org/d8/s3fs-public/styles/100x100/s3/alex-perera-wri2.jpg?VersionId=TLm7bdTKkTfYmTQUEBD6U3d3m09karG2&amp;h=a7e6d17b&amp;itok=pZFNHWZR" width="100" height="100" class="image-style-_00x100" />
+
+
+
+
+              </div>
+      <div  class="right-section">
+          
+                  <div class="card-headline">
+            
+    <a href="/profile/alex-perera" class="person-title" hreflang="en">Alex Perera</a>
+
+
+          </div>
+                          <div class="card small-text light">
+            
+  <p><span>Director, Corporate Energy Partnerships</span>, WRI Polsky Center for the Global Energy Transition</p>
+
+          </div>
+              </div>
+    </div>
+  </div>
+
+</li>
+                          <li class="field__item">  <div class="person-teaser-item">
+    <div class="person-teaser__inner-wrapper">
+      <div class="left-section">
+                  
+    <img loading="lazy" src="https://files.wri.org/d8/s3fs-public/styles/100x100/s3/2021-08/lori-bird.jpeg?VersionId=7iJbNAdiUsV4LmduCOlBe2OIHqb.pzq.&amp;h=fbf7a813&amp;itok=DTiWfbN1" width="100" height="100" alt="Lori Bird" class="image-style-_00x100" />
+
+
+
+
+              </div>
+      <div  class="right-section">
+          
+                  <div class="card-headline">
+            
+    <a href="/profile/lori-bird" class="person-title" hreflang="en">Lori Bird</a>
+
+
+          </div>
+                          <div class="card small-text light">
+            
+  <p>Director, U.S. Energy Program, WRI U.S. Polsky Energy Center</p>
+
+          </div>
+              </div>
+    </div>
+  </div>
+
+</li>
+                          <li class="field__item">  <div class="person-teaser-item">
+    <div class="person-teaser__inner-wrapper">
+      <div class="left-section">
+                  
+    <img loading="lazy" src="https://files.wri.org/d8/s3fs-public/styles/100x100/s3/taryn-fransen_1.jpg?VersionId=s1yfkUklJHkfyTlv6QyUQtGVbZ7OGDm1&amp;h=cd2a7045&amp;itok=FIZ-pZK7" width="100" height="100" class="image-style-_00x100" />
+
+
+
+
+              </div>
+      <div  class="right-section">
+          
+                  <div class="card-headline">
+            
+    <a href="/profile/taryn-fransen" class="person-title" hreflang="en">Taryn Fransen</a>
+
+
+          </div>
+                          <div class="card small-text light">
+            
+  <p>Director of Global Research and Data, WRI Polsky Center for the Global Energy Transition</p>
+
+          </div>
+              </div>
+    </div>
+  </div>
+
+</li>
+                          <li class="field__item">  <div class="person-teaser-item">
+    <div class="person-teaser__inner-wrapper">
+      <div class="left-section">
+                  
+    <img loading="lazy" src="https://files.wri.org/d8/s3fs-public/styles/100x100/s3/2025-10/isaacs-headshot_0.png?VersionId=J7vLmxjtIfb2HsST.LYS.bMSVIl8P_6y&amp;h=d52f2484&amp;itok=9M7uN8F4" width="100" height="100" alt="Jessica Isaacs Global Impact Director WRI Polsky Center for the Global Energy Transition" class="image-style-_00x100" />
+
+
+
+
+              </div>
+      <div  class="right-section">
+          
+                  <div class="card-headline">
+            
+    <a href="/profile/jessica-isaacs" class="person-title" hreflang="en">Jessica Isaacs</a>
+
+
+          </div>
+                          <div class="card small-text light">
+            
+  <p><span>Global Impact Director, WRI Polsky Center for the Global Energy Transition</span></p>
+
+          </div>
+              </div>
+    </div>
+  </div>
+
+</li>
+                          <li class="field__item">  <div class="person-teaser-item">
+    <div class="person-teaser__inner-wrapper">
+      <div class="left-section">
+                  
+    <img loading="lazy" src="https://files.wri.org/d8/s3fs-public/styles/100x100/s3/Clorinda_Wibowo.jpg?VersionId=1No9VJ0HGov61sgpDSYwdXGDdFU1NHn4&amp;h=363d9f74&amp;itok=_oqmLMJI" width="100" height="100" class="image-style-_00x100" />
+
+
+
+
+              </div>
+      <div  class="right-section">
+          
+                  <div class="card-headline">
+            
+    <a href="/profile/clorinda-kurnia-wibowo" class="person-title" hreflang="en">Clorinda Kurnia Wibowo</a>
+
+
+          </div>
+                          <div class="card small-text light">
+            
+  <p>Energy Manager, WRI Indonesia</p>
+
+          </div>
+              </div>
+    </div>
+  </div>
+
+</li>
+                      </ul>
+              </div>
+    </div>
+  </div>
+  </div>
+
+  </div>
+<div class="field-primary-contacts block block-layout-builder block-field-blocknodemicrositefield-primary-contacts">
+  
+    
+      <div class="persons grid margin-bottom-lg margin-top-lg">
+  
+      <h2 class="layout__region layout__region--header h3 top-border-thick margin-bottom-md">
+      Media Contacts
+    </h2>
+    
+  <div class="layout__region layout__region--listing">
+    <div class="content-listing ">
+      <div class="item-list">
+                  <ul class="listing-items">
+                          <li class="field__item">  <div class="person-teaser-item">
+    <div class="person-teaser__inner-wrapper">
+      <div class="left-section">
+                  
+    <img loading="lazy" src="https://files.wri.org/d8/s3fs-public/styles/100x100/s3/2024-10/sarah-george.png?VersionId=xFUmI79mfC4CnSPp4wC2YIZwtXbLW02W&amp;h=10a69ff2&amp;itok=yZey9kvz" width="100" height="100" alt="Sarah George" class="image-style-_00x100" />
+
+
+
+
+              </div>
+      <div  class="right-section">
+          
+                  <div class="card-headline">
+            
+    <a href="/profile/sarah-george" class="person-title" hreflang="en">Sarah George</a>
+
+
+          </div>
+                          <div class="card small-text light">
+            
+  <p>Global Communications and Media Manager, Energy, <span>WRI Polsky Center for the Global Energy Transition</span></p>
+
+          </div>
+              </div>
+    </div>
+  </div>
+
+</li>
+                      </ul>
+              </div>
+    </div>
+  </div>
+
+</div>
+
+  </div>
+
+    </div>
+  </div>
+
+  </div>
+
+</article>
+
+  </div>
+
+</div>
+
+          
+    <footer>
+                <div class="region region-footer-top">
+    <div class="container">
+      <div class="footer-padding">
+        <div id="block-howyoucanhelpblock" class="block block-wri-block block-how-you-can-help">
+  
+    
+      <h3 class="h4 white">How You Can Help</h3><p>WRI relies on the generosity of donors like you to turn research into action. You can support our work by making a gift today or exploring other ways to give.</p>
+              <ul class="menu">
+                    <li class="menu-item">
+        <span class="menu-item-title"><a href="https://giving.wri.org/give/406206/#!/donation/checkout?c_src=webite&amp;c_src2=footer-link" class="button small">Donate</a></span>
+              </li>
+                <li class="menu-item">
+        <span class="menu-item-title"><a href="/support" class="button small" data-drupal-link-system-path="node/105478">Ways to Give</a></span>
+              </li>
+        </ul>
+  
+
+
+  </div>
+<div id="block-webform" class="block block-webform block-webform-block grid">
+  <div class="webform-outer">
+    
+          <h2>Stay Informed</h2>
+        
+          <form id="wri-stay-informed-footer" action="" method="post">
+  
+  <div data-drupal-selector="edit-flexbox" class="webform-flexbox js-webform-flexbox js-form-wrapper form-wrapper" id="edit-flexbox--2"><div class="webform-flex webform-flex--1"><div class="webform-flex--container"><div class="input-wrapper js-form-item form-item js-form-type-email form-type-email js-form-item-email form-item-email">
+      <label for="edit-email--2" class="js-form-required form-required">Email</label>
+        <input data-drupal-selector="edit-email" type="email" id="edit-email--2" name="email" value="" size="60" maxlength="254" class="form-email required" required="required" aria-required="true" />
+
+        </div>
+</div></div></div>
+<input data-drupal-selector="edit-url-action" type="hidden" name="url_action" value="/webform/sign_up_for_wri_digest" />
+<input autocomplete="off" data-drupal-selector="form-ofibthosiksvvp-wkytegufnuiqjbhrkhnebxff1deg" type="hidden" name="form_build_id" value="form-OFIBtHOSiksvVP-WKYTeGufNuiQjbHRKhNebxFF1dEg" />
+<input data-drupal-selector="edit-webform-submission-simple-email-submit-node-105106-add-form" type="hidden" name="form_id" value="webform_submission_simple_email_submit_node_105106_add_form" />
+<div data-drupal-selector="edit-actions" class="form-actions js-form-wrapper form-wrapper" id="edit-actions--2"><input class="webform-button--submit button button--primary js-form-submit form-submit" data-drupal-selector="edit-submit" type="submit" id="edit-submit--2" name="op" value="Submit" />
+
+</div>
+
+
+  
+</form>
+
+      </div>
+</div>
+
+      </div>
+    </div>
+  </div>
+
+                    <div class="region-footer">
+          <div class="container">
+            <div class="footer-padding">
+              <div class="footer-logo margin-bottom-md">
+                <a href="/">
+                  <img class="logo-white" src="/sites/default/files/nav_logo_white_0.svg" alt="Home" />
+                </a>
+              </div>
+                              
+  
+
+<div  class="region region-footer-left">
+  <nav role="navigation" aria-labelledby="block-footermenumain-menu" id="block-footermenumain" class="block block-menu navigation menu--footer-main">
+            
+  <h2 class="visually-hidden" id="block-footermenumain-menu">Footer menu - main</h2>
+  
+
+        
+              <ul class="menu">
+                    <li class="menu-item">
+        <span class="menu-item-title"><a href="/research" data-drupal-link-system-path="node/71">Research</a></span>
+              </li>
+                <li class="menu-item">
+        <span class="menu-item-title"><a href="/data" data-drupal-link-system-path="node/72">Data</a></span>
+              </li>
+                <li class="menu-item">
+        <span class="menu-item-title"><a href="/initiatives" data-drupal-link-system-path="node/73">Initiatives</a></span>
+              </li>
+                <li class="menu-item">
+        <span class="menu-item-title"><a href="/insights" title="WRI Insights" data-drupal-link-system-path="node/100014">Insights</a></span>
+              </li>
+        </ul>
+  
+
+
+  </nav>
+<nav role="navigation" aria-labelledby="block-footermenusecondary-menu" id="block-footermenusecondary" class="block block-menu navigation menu--footer-secondary">
+            
+  <h2 class="visually-hidden" id="block-footermenusecondary-menu">Footer menu - secondary</h2>
+  
+
+        
+              <ul class="menu">
+                    <li class="menu-item menu-item--expanded menu-item--active-trail">
+        <span class="menu-item-title"><a href="/our-work" class="flexible-row-submenu" data-drupal-link-system-path="node/100023">Our Work</a></span>
+                                <ul class="menu">
+                    <li class="menu-item menu-item--expanded">
+        <span class="menu-item-title"><span>Regions</span></span>
+                                <ul class="menu">
+                    <li class="menu-item">
+        <span class="menu-item-title"><a href="/africa" data-drupal-link-system-path="node/100030">Africa</a></span>
+              </li>
+                <li class="menu-item">
+        <span class="menu-item-title"><a href="/asia" data-drupal-link-system-path="node/100062">Asia</a></span>
+              </li>
+                <li class="menu-item">
+        <span class="menu-item-title"><a href="/wri-europe" data-drupal-link-system-path="node/100060">Europe</a></span>
+              </li>
+                <li class="menu-item">
+        <span class="menu-item-title"><a href="/latin-america" data-drupal-link-system-path="node/100032">Latin America</a></span>
+              </li>
+                <li class="menu-item">
+        <span class="menu-item-title"><a href="/north-america" data-drupal-link-system-path="node/100065">North America</a></span>
+              </li>
+        </ul>
+  
+              </li>
+                <li class="menu-item menu-item--expanded menu-item--active-trail">
+        <span class="menu-item-title"><span>Topics</span></span>
+                                <ul class="menu">
+                    <li class="menu-item">
+        <span class="menu-item-title"><a href="/cities" data-drupal-link-system-path="node/103166">Cities</a></span>
+              </li>
+                <li class="menu-item">
+        <span class="menu-item-title"><a href="/climate" data-drupal-link-system-path="node/100004">Climate</a></span>
+              </li>
+                <li class="menu-item menu-item--active-trail">
+        <span class="menu-item-title"><a href="/energy" data-drupal-link-system-path="node/105106" class="is-active" aria-current="page">Energy</a></span>
+              </li>
+                <li class="menu-item">
+        <span class="menu-item-title"><a href="/food" data-drupal-link-system-path="node/100006">Food</a></span>
+              </li>
+                <li class="menu-item">
+        <span class="menu-item-title"><a href="/forests" data-drupal-link-system-path="node/100007">Forests</a></span>
+              </li>
+                <li class="menu-item">
+        <span class="menu-item-title"><a href="/freshwater" data-drupal-link-system-path="node/100009">Freshwater</a></span>
+              </li>
+                <li class="menu-item">
+        <span class="menu-item-title"><a href="/ocean" data-drupal-link-system-path="node/100008">Ocean</a></span>
+              </li>
+        </ul>
+  
+              </li>
+                <li class="menu-item menu-item--expanded">
+        <span class="menu-item-title"><span>Centers</span></span>
+                                <ul class="menu">
+                    <li class="menu-item">
+        <span class="menu-item-title"><a href="/economics" data-drupal-link-system-path="node/100025">Economics</a></span>
+              </li>
+                <li class="menu-item">
+        <span class="menu-item-title"><a href="/equitable-development" data-drupal-link-system-path="node/100027">Equity</a></span>
+              </li>
+                <li class="menu-item">
+        <span class="menu-item-title"><a href="/finance" data-drupal-link-system-path="node/100026">Finance</a></span>
+              </li>
+        </ul>
+  
+              </li>
+        </ul>
+  
+              </li>
+        </ul>
+  
+
+
+  </nav>
+
+</div>
+
+              
+                              
+  
+
+<div  class="region region-footer-right">
+  <nav role="navigation" aria-labelledby="block-footermenuoffices-menu" id="block-footermenuoffices" class="block block-menu navigation menu--footer-offices">
+            
+  <h2 class="visually-hidden" id="block-footermenuoffices-menu">Footer menu - Offices</h2>
+  
+
+        
+              <ul class="menu">
+                    <li class="menu-item menu-item--expanded">
+        <span class="menu-item-title"><span>International Websites</span></span>
+                                <ul class="menu">
+                    <li class="menu-item">
+        <span class="menu-item-title"><a href="https://africa.wri.org?utm_source=wri-org&amp;utm_medium=wri-org-footer-link" target="_blank">WRI Africa</a></span>
+              </li>
+                <li class="menu-item">
+        <span class="menu-item-title"><a href="https://brasil.wri.org?utm_source=wri-org-website&amp;utm_medium=wri-org-website-footer-link" target="_blank">WRI Brasil</a></span>
+              </li>
+                <li class="menu-item">
+        <span class="menu-item-title"><a href="https://www.wri.org.cn?utm_source=wri-org-website&amp;utm_medium=wri-org-website-footer-link" target="_blank">WRI China</a></span>
+              </li>
+                <li class="menu-item">
+        <span class="menu-item-title"><a href="https://es.wri.org/wri-colombia?utm_source=wri-org-website&amp;utm_medium=wri-org-website-footer-link">WRI Colombia</a></span>
+              </li>
+                <li class="menu-item">
+        <span class="menu-item-title"><a href="https://wri-india.org?utm_source=wri-org-website&amp;utm_medium=wri-org-website-footer-link" target="_blank">WRI India</a></span>
+              </li>
+                <li class="menu-item">
+        <span class="menu-item-title"><a href="https://id.wri.org?utm_source=wri-org-website&amp;utm_medium=wri-org-website-footer-link" target="_blank">WRI Indonesia</a></span>
+              </li>
+                <li class="menu-item">
+        <span class="menu-item-title"><a href="https://es.wri.org/wri-mexico?utm_source=wri-org-website&amp;utm_medium=wri-org-website-footer-link" target="_blank">WRI Mexico</a></span>
+              </li>
+        </ul>
+  
+              </li>
+        </ul>
+  
+
+
+  </nav>
+<nav role="navigation" aria-labelledby="block-footermenuadditional-menu" id="block-footermenuadditional" class="block block-menu navigation menu--footer-additional">
+            
+  <h2 class="visually-hidden" id="block-footermenuadditional-menu">Footer menu - Additional</h2>
+  
+
+        
+              <ul class="menu">
+                    <li class="menu-item">
+        <span class="menu-item-title"><a href="/about/contact" data-drupal-link-system-path="node/100415">Contact Us</a></span>
+              </li>
+                <li class="menu-item">
+        <span class="menu-item-title"><a href="/events" data-drupal-link-system-path="events">Events</a></span>
+              </li>
+                <li class="menu-item">
+        <span class="menu-item-title"><a href="/resources" data-drupal-link-system-path="resources">Resource Library</a></span>
+              </li>
+                <li class="menu-item">
+        <span class="menu-item-title"><a href="/media-contacts" data-drupal-link-system-path="node/100406">For Media</a></span>
+              </li>
+                <li class="menu-item">
+        <span class="menu-item-title"><a href="/about/financials" data-drupal-link-system-path="node/100221">Financials</a></span>
+              </li>
+                <li class="menu-item">
+        <span class="menu-item-title"><a href="/careers" data-drupal-link-system-path="node/105746">Careers</a></span>
+              </li>
+                <li class="menu-item">
+        <span class="menu-item-title"><a href="/internships" title="Internships at WRI" data-drupal-link-system-path="node/100297">Internships</a></span>
+              </li>
+                <li class="menu-item">
+        <span class="menu-item-title"><a href="/about/privacy-policy" data-drupal-link-system-path="node/100305">Privacy  Policy</a></span>
+              </li>
+                <li class="menu-item">
+        <span class="menu-item-title"><a href="/about/legal-notices" data-drupal-link-system-path="node/104409">Legal Notices</a></span>
+              </li>
+                <li class="menu-item">
+        <span class="menu-item-title"><a href="https://wri.ethicspoint.com">Whistleblower and Ethics Reporting</a></span>
+              </li>
+                <li class="menu-item">
+        <span class="menu-item-title"><a href="" class="osano-cookie-preference-link" title="Manage privacy and cookie preferences">Cookie Preferences</a></span>
+              </li>
+        </ul>
+  
+
+
+  </nav>
+<div id="block-addressblock" class="block block-wri-block block-address-block">
+  
+    
+      
+  </div>
+<nav role="navigation" aria-labelledby="block-socialmenu-menu" id="block-socialmenu" class="block block-menu navigation menu--social-menu">
+            
+  <h2 class="visually-hidden" id="block-socialmenu-menu">Social menu</h2>
+  
+
+        
+              <ul class="menu">
+                    <li class="menu-item">
+        <span class="menu-item-title"><a href="https://www.facebook.com/worldresources/" class="facebook">Facebook</a></span>
+              </li>
+                <li class="menu-item">
+        <span class="menu-item-title"><a href="https://www.instagram.com/worldresources/" class="instagram">Instagram</a></span>
+              </li>
+                <li class="menu-item">
+        <span class="menu-item-title"><a href="https://www.linkedin.com/company/world-resources-institute/" class="linkedin">LinkedIn</a></span>
+              </li>
+                <li class="menu-item">
+        <span class="menu-item-title"><a href="https://www.threads.net/@worldresources" class="threads">Threads</a></span>
+              </li>
+                <li class="menu-item">
+        <span class="menu-item-title"><a href="https://bsky.app/profile/worldresources.bsky.social" class="bluesky">Bluesky</a></span>
+              </li>
+                <li class="menu-item">
+        <span class="menu-item-title"><a href="https://twitter.com/worldresources" class="twitter">Twitter</a></span>
+              </li>
+                <li class="menu-item">
+        <span class="menu-item-title"><a href="https://www.youtube.com/WorldResourcesInst" class="youtube">Youtube</a></span>
+              </li>
+        </ul>
+  
+
+
+  </nav>
+<div id="block-copyrightblock" class="block block-wri-block block-copyright-block">
+  
+    
+      <p>&copy; 2026 World Resources Institute</p>
+  </div>
+
+</div>
+
+                          </div>
+          </div>
+        </div>
+          </footer>
+
+    
+  </div>
+</div>
+
+  </main>
+
+      
+    <script src="/sites/default/files/js/js_KzAJZ8_fQfn9G74QGLbGyncy3T-ynfQAFaKWYMLPb6E.js?scope=footer&amp;delta=0&amp;language=en&amp;theme=ts_wrin&amp;include=eJyFkNFuwyAMRX-Ihod-EHLAzZwARrabKv360SbbpLXTHsD3Hl8ZZEjJGOrm4RDDRbiaA1W0QHXGaCx-1gEryrSFQlFYyfBNhBUqB7UtU51cXDBR7wSIkSURV_-t9lewJsdYRkwhw33LDMlTx6J9ZE-deFSUFcUJauOqtGIwGDNquFDuQb87uJ1275RKyxgat2sLY-a4qH_DvnKCEZrFD_C_QVjPzjTchKovQNXdcLywFH_UIRFknl4wZixYbUhoQFkHhRX_DRlPU_47VlAVptf-43L9hyFyKX29XZ4m29Gxnx85HBt6EEV-hnvdfeMFvaBdpQbbmXH0_cz6dHfm4qGdYzCBuHwCPSHfZQ"></script>
+<script src="https://static.addtoany.com/menu/page.js" defer></script>
+<script src="/sites/default/files/js/js_FLUf4PDp30uUPewK8ELEc14uj1ed9fQ7CFe5BfltH6k.js?scope=footer&amp;delta=2&amp;language=en&amp;theme=ts_wrin&amp;include=eJyFkNFuwyAMRX-Ihod-EHLAzZwARrabKv360SbbpLXTHsD3Hl8ZZEjJGOrm4RDDRbiaA1W0QHXGaCx-1gEryrSFQlFYyfBNhBUqB7UtU51cXDBR7wSIkSURV_-t9lewJsdYRkwhw33LDMlTx6J9ZE-deFSUFcUJauOqtGIwGDNquFDuQb87uJ1275RKyxgat2sLY-a4qH_DvnKCEZrFD_C_QVjPzjTchKovQNXdcLywFH_UIRFknl4wZixYbUhoQFkHhRX_DRlPU_47VlAVptf-43L9hyFyKX29XZ4m29Gxnx85HBt6EEV-hnvdfeMFvaBdpQbbmXH0_cz6dHfm4qGdYzCBuHwCPSHfZQ"></script>
+<script src="/modules/contrib/ckeditor_accordion/js/accordion.frontend.min.js?tarxnx"></script>
+<script src="/sites/default/files/js/js_yBku-Q-Ccvu4T4xqA-3LNlpLfpAGeshAG1NPbx-3OFs.js?scope=footer&amp;delta=4&amp;language=en&amp;theme=ts_wrin&amp;include=eJyFkNFuwyAMRX-Ihod-EHLAzZwARrabKv360SbbpLXTHsD3Hl8ZZEjJGOrm4RDDRbiaA1W0QHXGaCx-1gEryrSFQlFYyfBNhBUqB7UtU51cXDBR7wSIkSURV_-t9lewJsdYRkwhw33LDMlTx6J9ZE-deFSUFcUJauOqtGIwGDNquFDuQb87uJ1275RKyxgat2sLY-a4qH_DvnKCEZrFD_C_QVjPzjTchKovQNXdcLywFH_UIRFknl4wZixYbUhoQFkHhRX_DRlPU_47VlAVptf-43L9hyFyKX29XZ4m29Gxnx85HBt6EEV-hnvdfeMFvaBdpQbbmXH0_cz6dHfm4qGdYzCBuHwCPSHfZQ"></script>
+<script src="https://www.google.com/recaptcha/api.js?render=6Lfe0pUaAAAAADa4jxZYcZ-H67EiunZ-DqLRlYgS" defer async></script>
+<script src="/sites/default/files/js/js_DsyxRrCPQdQa8mRXXUBudSGf_yjfI3UNQ91b1QSjxoo.js?scope=footer&amp;delta=6&amp;language=en&amp;theme=ts_wrin&amp;include=eJyFkNFuwyAMRX-Ihod-EHLAzZwARrabKv360SbbpLXTHsD3Hl8ZZEjJGOrm4RDDRbiaA1W0QHXGaCx-1gEryrSFQlFYyfBNhBUqB7UtU51cXDBR7wSIkSURV_-t9lewJsdYRkwhw33LDMlTx6J9ZE-deFSUFcUJauOqtGIwGDNquFDuQb87uJ1275RKyxgat2sLY-a4qH_DvnKCEZrFD_C_QVjPzjTchKovQNXdcLywFH_UIRFknl4wZixYbUhoQFkHhRX_DRlPU_47VlAVptf-43L9hyFyKX29XZ4m29Gxnx85HBt6EEV-hnvdfeMFvaBdpQbbmXH0_cz6dHfm4qGdYzCBuHwCPSHfZQ"></script>
+
+  <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9d62d70be8f29e21',t:'MTc3MjQ4MDA3OA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

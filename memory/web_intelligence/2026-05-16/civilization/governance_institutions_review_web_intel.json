@@ -1,0 +1,101 @@
+{
+  "axis": "GOVERNANCE_INSTITUTIONS_REVIEW",
+  "domain": "civilization",
+  "timestamp": "2026-05-16T21:52:49.894935+00:00",
+  "sources_count": 13,
+  "rss_count": 12,
+  "ddg_count": 0,
+  "youtube_count": 1,
+  "youtube_items": [
+    {
+      "title": "[YT] Disappear And Come Back Unrecognizable In 2026 - YouTube",
+      "summary": "Alright, so let me tell you something interesting and I promise this actually has to do with the video. I was reading a few weeks ago, Nessa spends about 4.5 billion dollars a year on space operations, and a really big slice of that pie is literally to figure out how to transform regular people into superhuman performers. So they spend about 15 million dollars per year individually on an astronaut. And as they were going through this whole process, they figured out one protocol that changes everything. One that you can actually apply in your 2026 to achieve every single goal that you might have for the year. Here's the protocol. You know what NASA does with an astronaut before mission? A immersion phase. Complete isolation. Zero contact with the outside world. No family, no friends, no par",
+      "link": "https://www.youtube.com/watch?v=H895ZcG13Hg",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "H895ZcG13Hg",
+      "transcript_method": "whisper",
+      "transcript_chars": 23535,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "action": "Изработване на международен мандат за изграждане на инфраструктура, която подкрепя биосферата, здравето и образованието, включително във военните и космическите армии",
+    "measurable_goal": "Изграден минимален набор от инфраструктурни проекти за поддръжка на биосферата и здравето във всички военни и космически институции в рамките на 5 години",
+    "timeframe": "дългосрочно",
+    "severity": "UNKNOWN"
+  },
+  "raw_items": [
+    {
+      "title": "Bereaved Families, Friends of Gazans Killed Recount Tragic Loss, Denounce Ongoing Violence, Displacement, as Palestinian Rights Committee Marks Nakba Anniversary",
+      "summary": "At a special event today marking the seventy-eighth anniversary of the Nakba, the United Nations Palestinian Rights Committee heard testimonies from bereaved families and friends of victims — those killed during the events of 78 years ago, as well as in the ongoing conflict — including the mother of Hind Rajab, a five-year-old girl from Gaza, who has become a symbol of innocent lives lost amidst violence and war.",
+      "link": "https://press.un.org/en/2026/gapal1493.doc.htm",
+      "published": "Fri, 15 May 2026 16:15:01 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "Security Council Press Statement on Terrorist Attacks in Mali",
+      "summary": "The members of the Security Council condemned in the strongest terms the heinous and cowardly terrorist attacks in several locations across Mali on 25 April 2026 and in the days that followed, including 6 May 2026, which resulted in the loss of life and injury.",
+      "link": "https://press.un.org/en/2026/sc16360.doc.htm",
+      "published": "Fri, 15 May 2026 16:13:35 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "From Tragedy to Opportunity, ‘New Syria’ Is Writing Its Own Story, Security Council Hears, as Speakers Laud Progress, Call for Sustained Recovery",
+      "summary": "While Syria has seen progress towards accountability and sustained international engagement, the Security Council heard today that unresolved tensions, economic hardship and repeated violations of Syria’s sovereignty persist as the country charts its path forward in a volatile region.",
+      "link": "https://press.un.org/en/2026/sc16358.doc.htm",
+      "published": "Fri, 15 May 2026 16:00:41 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "Security Council Sanctions Committee Concerning South Sudan Discusses Final Report of Panel of Experts",
+      "summary": "On 27 March 2026, the Panel of Experts on South Sudan briefed the members of the Security Council Committee established pursuant to resolution 2206 (2015), in connection with the Panel’s final report submitted in pursuance of paragraph 18 of resolution 2781 (2025).",
+      "link": "https://press.un.org/en/2026/sc16359.doc.htm",
+      "published": "Fri, 15 May 2026 14:48:19 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "CIA Director Ratcliffe’s Trip to Havana",
+      "summary": "The United States is offering to turn Cuba’s lights back on—for a price.",
+      "link": "https://foreignpolicy.com/2026/05/15/cuba-ratcliffe-cia-regime-change-us-blockade-oil-fuel-blackouts-china-russia/",
+      "published": "Fri, 15 May 2026 20:02:14 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "What in the World?",
+      "summary": "Test yourself on the week of May 9: U.S. President Donald Trump visits China, India and Kenya host summits, and several prime ministers have a rough time.",
+      "link": "https://foreignpolicy.com/2026/05/15/foreign-policy-news-quiz-philippines-africa-summit-macron-trump-china-starmer/",
+      "published": "Fri, 15 May 2026 19:15:07 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "A ‘Lord of the Flies’ for Our Time",
+      "summary": "This is the perfect project for the creator of ‘Adolescence.’",
+      "link": "https://foreignpolicy.com/2026/05/15/lord-of-the-flies-netflix-bbc-adolescence/",
+      "published": "Fri, 15 May 2026 19:00:02 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "The 156,000 and the 1.4 Billion",
+      "summary": "What Curaçao figured out about World Cup soccer that India still hasn’t.",
+      "link": "https://foreignpolicy.com/2026/05/15/world-cup-soccer-football-india-curacao-citizenship/",
+      "published": "Fri, 15 May 2026 18:40:32 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Taiwan insists it is independent after Trump warning",
+      "summary": "Fresh from his summit in Beijing, the US president warned against a formal declaration of independence by the island.",
+      "link": "https://www.bbc.com/news/articles/cx2132w81jqo?at_medium=RSS&at_campaign=rss",
+      "published": "Sat, 16 May 2026 17:01:53 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Man drives car into pedestrians in Italy, injuring eight",
+      "summary": "Eight people were injured, four seriously, before passers-by gave chase and stopped the man.",
+      "link": "https://www.bbc.com/news/articles/cyv28pd4n22o?at_medium=RSS&at_campaign=rss",
+      "published": "Sat, 16 May 2026 20:36:17 GMT",
+      "source_type": "rss"
+    }
+  ]
+}

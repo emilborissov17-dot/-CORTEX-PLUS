@@ -1,0 +1,82 @@
+{
+  "axis": "INFRASTRUCTURE_CITIES_REVIEW",
+  "fetched_at": "2026-03-21T11:43:47.532365+00:00",
+  "smart_query": "cities infrastructure urban development",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "Luke Littler applies to trademark his face to combat AI fakes",
+      "snippet": "The darts star's image has been used legally on darts merchandise, snacks and fashion brands.",
+      "url": "https://www.bbc.com/news/articles/c5y7374x9n4o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Hargreaves Lansdown says IT issues which affected thousands are over",
+      "snippet": "The finance firm has apologised for the disruption to its website and app, which has angered many customers.",
+      "url": "https://www.bbc.com/news/articles/cx2reyjdyjzo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Publisher cancels horror novel's release over AI claims",
+      "snippet": "Author Mia Ballard denies having used AI herself when writing the horror story Shy Girl.",
+      "url": "https://www.bbc.com/news/articles/c5y9d44jj24o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "opendatacam/opendatacam",
+      "snippet": "An open source tool to quantify the world",
+      "stars": 1705,
+      "url": "https://github.com/opendatacam/opendatacam",
+      "updated": "2026-03-19",
+      "source": "GitHub"
+    },
+    {
+      "title": "buds-lab/building-data-genome-project-2",
+      "snippet": "Whole building non-residential hourly energy meter data from the Great Energy Predictor III competition",
+      "stars": 271,
+      "url": "https://github.com/buds-lab/building-data-genome-project-2",
+      "updated": "2026-03-20",
+      "source": "GitHub"
+    },
+    {
+      "title": "OpenVisualCloud/Smart-City-Sample",
+      "snippet": "The smart city reference pipeline shows how to integrate various media building blocks, with analytics powered by the OpenVINO™ Toolkit, for traffic or stadium sensing, analytics and management tasks.",
+      "stars": 215,
+      "url": "https://github.com/OpenVisualCloud/Smart-City-Sample",
+      "updated": "2026-02-06",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "CoDesignAI: An AI-Enabled Multi-Agent, Multi-User System for Collaborative Urban Design at the Conceptual Stage",
+      "snippet": "Public participation has become increasingly important in collaborative urban design; yet, existing processes often face challenges in achieving efficient and scalable citizen engagement. To address this gap, this study explores how large language models (LLMs) can support cooperation among communit",
+      "url": "https://arxiv.org/abs/2603.16008v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Hyper-learning and Unlearning: A Narrative Speculation on Urbanism in Media Ecologies",
+      "snippet": "Hyper-learning and Unlearning is a speculative animation that reflect how learning is reconfigured within digital media ecologies. Using architectural education as a microcosm, the work reframes the city as a hyper-learning apparatus where urban space, algorithmic systems, and platform infrastructur",
+      "url": "https://arxiv.org/abs/2603.14810v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[The U.S. Public Wants Regulation (or Prohibition) of Expert‑Level and Superhuman AI] Three‑quarters of U.S. adults want strong regulations on AI development, preferring oversight akin to pharmaceuticals rather than industry \"self‑regulation.\"",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

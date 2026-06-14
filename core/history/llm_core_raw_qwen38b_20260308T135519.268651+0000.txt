@@ -1,0 +1,66 @@
+MODEL: qwen3:8b
+
+PROMPT:
+
+Ти си QWEN_PLANET_SNAPSHOT_AGENT, част от CORTEX++_QWEN.
+
+ЗАДАЧА:
+  - Генерираш КОМПАКТЕН JSON snapshot за една ос.
+  - Отговаряш САМО с един валиден JSON обект, БЕЗ никакъв текст преди или след него.
+  - НЕ използвай префикси като "Thinking..." или "done thinking.".
+  - LEVEL трябва да е LOW, MEDIUM или HIGH.
+  - SIGNALS са 3–5 много кратки bullets (по 1 изречение).
+  - KEY_METRICS са 3–7 метрики с име и кратко текстово описание (без числа).
+
+ОС:
+  - ENERGY_REVIEW (Енергийна система)
+
+ИЗХОД (примерен формат, който трябва да спазиш):
+
+{
+  "axis": "ENERGY_REVIEW",
+  "level": "MEDIUM",
+  "signals": [
+    "кратък сигнал 1",
+    "кратък сигнал 2",
+    "кратък сигнал 3"
+  ],
+  "key_metrics": [
+    { "name": "metric_1", "description": "кратко текстово описание на метриката" },
+    { "name": "metric_2", "description": "кратко текстово описание" }
+  ]
+}
+
+Върни само реален JSON обект в този формат, без допълнителен текст.
+
+
+RESPONSE:
+Thinking...
+Okay, let's tackle this query. The user wants me to act as QWEN_PLANET_SNAPSHOT_AGENT and generate a compact JSON snapshot for the "ENERGY_REVIEW" axis. The output needs to be in a specific format with level, signals, and key_metrics. 
+
+First, I need to determine the level. The options are LOW, MEDIUM, or HIGH. Since the user didn't specify, I'll go with MEDIUM as a default, which is a safe middle ground.
+
+Next, the signals. They should be 3-5 short bullets. Let me think about key points related to energy review. Maybe something about system stability, demand fluctuations, and renewable integration. That covers different aspects without being too technical.
+
+For key_metrics, there should be 3-7 metrics. Let's list some important ones. "System Stability" makes sense as a metric. Then "Demand Fluctuation" to capture variability. "Renewable Integration" is crucial. Maybe "Energy Loss Rate" to measure efficiency. "Grid Resilience" for reliability, and "Carbon Emission Reduction" for environmental impact. That's six metrics, which fits the range.
+
+I need to ensure the JSON is valid, no extra text, and follows the structure exactly. Also, check that each signal is a single sentence and metrics have names and descriptions without numbers. Avoid any markdown and make sure the JSON syntax is correct. Let me double-check the example provided to match the format. Yep, looks good. Time to put it all together.
+...done thinking.
+
+{
+  "axis": "ENERGY_REVIEW",
+  "level": "MEDIUM",
+  "signals": [
+    "Стабилността на енергийната система се подобри след модернизация",
+    "Изискванията за висока ефективност растат във всички региони",
+    "Интеграцията на въобичайени източници се ускорява във високи нива"
+  ],
+  "key_metrics": [
+    { "name": "system_stability", "description": "Мерка за устойчивост на енергийната мрежа" },
+    { "name": "demand_fluctuation", "description": "Измерва променливостта на енергийното изискване" },
+    { ""name": "renewable_integration", "description": "Процент на въобичайени източници в общия поток" },
+    { "name": "energy_loss_rate", "description": "Мерка за загуби в трансмисионната мрежа" },
+    { "name": "grid_resilience", "description": "Устойчивост на мрежата към неочаквани промени" },
+    { "name": "carbon_emission_reduction", "description": "Потенциално намаление на въглеродните емисии" }
+  ]
+}

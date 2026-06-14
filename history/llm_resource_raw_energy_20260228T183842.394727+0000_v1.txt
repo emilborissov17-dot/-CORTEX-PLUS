@@ -1,0 +1,83 @@
+Thinking...
+Okay, let's tackle this. The user wants me to act as an internal AGI resource review agent for the ENERGY domain. My task is to generate a JSON object with a specific structure based on the provided context. 
+
+First, I need to parse the RAW_CONTEXT_START to understand the data and the requirements. The context includes various snapshots and a summary of the energy domain's current state. The key points are about two energy transition scenarios: fast and slow. The fast transition reduces long-term climate risks but requires coordination across sectors. The slow transition saves short-term costs but increases long-term risks.
+
+The JSON structure needs to have diagnosis, risks, opportunities, recommended actions, and notes. All Bulgarian text must be concise. I need to make sure not to invent numbers if they're not in the data. 
+
+Starting with the diagnosis. The status is likely "STRESSED" because there are significant risks and opportunities mentioned. The short summary should mention the two scenarios and their impacts. Key metrics would include things like climate risk, energy transition speed, and economic impacts. 
+
+For risks, the main ones are the slow transition leading to higher climate risks, potential food and water shortages, and infrastructure vulnerabilities. Opportunities include the fast transition's benefits for sustainability and job creation. 
+
+Recommended actions should prioritize policies for a fast transition, investments in infrastructure, and coordination across sectors. Notes for self-improvement might highlight the need for better data integration and scenario analysis.
+
+I need to ensure all Bulgarian text is clear and concise, avoiding any markdown. Also, the JSON must be valid. Let me structure each section step by step, cross-referencing the context to fill in the details accurately.
+...done thinking.
+
+{
+  "diagnosis": {
+    "status": "STRESSED",
+    "short_summary": "Бързият енергиен преход намалява дългосрочния климатичен риск, но изисква координация между хранителни системи, вода и инфраструктура. Бавният преход увеличава риска от климатични кризи и социални напрежения.",
+    "key_metrics": [
+      {
+        "metric": "Климатичен риск",
+        "value": "Висок при бавен преход, нисък при бърз"
+      },
+      {
+        "metric": "Енергийна трансформация",
+        "value": "Скорост на преминаване към чиста енергия"
+      },
+      {
+        "metric": "Икономически ефекти",
+        "value": "Нетна промяна в заетостта (нови работни места при бърз преход)"
+      }
+    ]
+  },
+  "risks": [
+    {
+      "risk": "Климатични кризи",
+      "description": "Бавният преход увеличава вероятността от экстремни климатични сценарии, водни конфликти и уязвимост на градската инфраструктура."
+    },
+    {
+      "risk": "Продоволствена нестабилност",
+      "description": "Несъответствие между енергийните сценарии и хранителните системи може да доведе до продоволствени кризи."
+    },
+    {
+      "risk": "Социална несправедливост",
+      "description": "Несъответствие между стартиращи и нови работни места при бавен преход усилва социални напрежения."
+    }
+  ],
+  "opportunities": [
+    {
+      "opportunity": "Устойчиви работни места",
+      "description": "Бързият преход създава нови работни места в чистата енергия и инфраструктурата."
+    },
+    {
+      "opportunity": "Инвестиции в инфраструктура",
+      "description": "Повишава устойчивостта на градовете към климатични шокове."
+    },
+    {
+      "opportunity": "Междинни сценарии",
+      "description": "Създаване на промеждинни модели за балансирана трансформация между енергия, икономика и околната среда."
+    }
+  ],
+  "recommended_actions": [
+    {
+      "action": "Интегриране на сценарии",
+      "description": "Използване на IPCC SSP и NGFS сценарии за анализ на климатични, икономически и социални ефекти."
+    },
+    {
+      "action": "Политики за справедлива трансформация",
+      "description": "Регионална подкрепа за фосилни региони и програми за преквалификация."
+    },
+    {
+      "action": "Координация между сектори",
+      "description": "Създаване на междинни модели за синергия между енергия, храна, вода и градска инфраструктура."
+    }
+  ],
+  "notes": [
+    "Нужно е по-дълбоко анализиране на взаимодействието между сценарии и цивилизационни модели.",
+    "Данните за активни източници са нулеви, но съществува потенциал за интеграция на нови източници.",
+    "Важно е да се избягва изолирано анализиране на енергийните сценарии."
+  ]
+}

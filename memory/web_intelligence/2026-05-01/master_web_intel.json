@@ -1,0 +1,457 @@
+{
+  "timestamp": "2026-05-01T13:03:33.056234+00:00",
+  "date": "2026-05-01",
+  "axes_covered": 25,
+  "total_axes": 25,
+  "total_sources": 276,
+  "youtube_videos_total": 50,
+  "critical_axes": [
+    "CULTURE_MEDIA_REVIEW",
+    "DEEP_TIME_RISKS_REVIEW"
+  ],
+  "deteriorating_axes": [],
+  "cross_domain_insights": [
+    {
+      "from_axis": "MATERIALS_WASTE_REVIEW",
+      "insight": "Флота има възможности за улеснение чрез рециклиране, но се наблюдават някакви негativни тенденции във флота."
+    },
+    {
+      "from_axis": "HUMAN_WELL_BEING_REVIEW",
+      "insight": "The world is increasingly focused on global health, technological advancement, and leadership in addressing complex challenges. The convergence of these areas is critical for future success."
+    },
+    {
+      "from_axis": "CULTURE_MEDIA_REVIEW",
+      "insight": "The data suggests a possible connection between social media and misinformation, but no concrete evidence is provided to support the performance or relevance of the AI system."
+    },
+    {
+      "from_axis": "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL",
+      "insight": "Всеки от тези събития показва как авторитарните практики и неравенството се размъкват в дългосрочното развитие на цивилизацията. Събитията показват как неравенството и ограниченията на правата се подобряват, но също се подобряват и рисковете за свободата и истината."
+    },
+    {
+      "from_axis": "EDUCATION_CULTURE_REVIEW",
+      "insight": "Education and literacy initiatives are gaining traction globally, but their effectiveness and sustainability remain areas of concern."
+    },
+    {
+      "from_axis": "TECHNOLOGY_AI_REVIEW",
+      "insight": "The insights from these resources suggest a trend toward integrating AI and cognitive science for personal development and ethical innovation."
+    },
+    {
+      "from_axis": "SPACE_INFRASTRUCTURE_REVIEW",
+      "insight": "The data reflects a positive trend in space innovation and international collaboration, with ongoing efforts to enhance satellite capabilities, test new technologies, and expand human presence in space."
+    },
+    {
+      "from_axis": "DEEP_TIME_RISKS_REVIEW",
+      "insight": "These events demonstrate the potential for global health threats to escalate, emphasizing the need for coordinated international efforts to mitigate risks and protect public health."
+    }
+  ],
+  "civilization_goal_alignment": {
+    "high_risk_count": 2,
+    "deteriorating_count": 0,
+    "status": "MONITORING"
+  },
+  "axes": {
+    "CLIMATE_GLOBAL_RISK_REVIEW": {
+      "summary": "- Cyclone Rains Spur Papua New Guinea Landslides: Heavy rains from Tropical Cyclone Maila triggered a deadly landslide in the mountains of East New Britain.\n- NASA Invites Media to Ireland Artemis Accords Signing: Ireland will sign the Artemis Accords during a ceremony at 3 p.m. EDT Monday, May 4, a",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN",
+      "key_events": [
+        "Cyclone Rains Spur Papua New Guinea Landslides",
+        "NASA Invites Media to Ireland Artemis Accords Signing",
+        "Odyssey Team Celebrates on a Global Map of Mars"
+      ],
+      "insights": [],
+      "youtube_insights": [],
+      "relevance_to_goal": "",
+      "generalization": ""
+    },
+    "ENERGY_REVIEW": {
+      "summary": "- Record Month for EV Sales in Europe!: <p>BEVs reach 22% market share! Thanks to a number of factors (new, cheaper and/or better models, record high gas prices, mass arrival of Chinese models, etc.), EVs have risen to record highs in Europ\n- US DOE Has Released 17.5 Million Barrels from the Strateg",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN",
+      "key_events": [
+        "Record Month for EV Sales in Europe!",
+        "US DOE Has Released 17.5 Million Barrels from the Strategic Petroleum Reserve since March",
+        "Farmers Are Choosing Solar to Maintain their Farms. Localities Shouldn’t Take Away That Choice."
+      ],
+      "insights": [],
+      "youtube_insights": [],
+      "relevance_to_goal": "",
+      "generalization": ""
+    },
+    "WATER_REVIEW": {
+      "summary": "- Proposed Michigan Bill Would Tie State Wetland Protections to a Recently Narrowed Federal Standard: <figure><img alt=\"\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"682\" src=\"https://i0.wp.com/www.circleofblue.org/wp-content/uploads/2023/05/2022-10-22-Michigan-Lovell",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN",
+      "key_events": [
+        "Proposed Michigan Bill Would Tie State Wetland Protections to a Recently Narrowed Federal Standard",
+        "Glen Canyon Dam Faces Its Existential Moment",
+        "Senate Overturns Ban On Mining Near Boundary Waters Wilderness"
+      ],
+      "insights": [],
+      "youtube_insights": [],
+      "relevance_to_goal": "",
+      "generalization": ""
+    },
+    "FOOD_REVIEW": {
+      "summary": "- What is Food Security? There are Four Dimensions: The definition of food security is when all people, at all times, have physical and economic access to sufficient safe and nutritious food that …\n- How to mitigate the effects of climate change on global food security: Apr 6, 2023 · Rising temperat",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN",
+      "key_events": [
+        "What is Food Security? There are Four Dimensions",
+        "How to mitigate the effects of climate change on global food security",
+        "Food Security in Singapore | SG101"
+      ],
+      "insights": [],
+      "youtube_insights": [],
+      "relevance_to_goal": "",
+      "generalization": ""
+    },
+    "MATERIALS_WASTE_REVIEW": {
+      "summary": "Възможни рискове във флота и възможни улеснения във флота. Ресурсите на планетата са се усилват, но се наблюдават някакви негativни тенденции във флота.",
+      "risk_level": "MEDIUM",
+      "trend": "STABLE",
+      "key_events": [
+        "Приемане на нови рециклиращи партньорства във флота",
+        "Резултати на Q1 2026 във флота",
+        "Резултати на 2026 Road Safety Report"
+      ],
+      "insights": [
+        "Флота има възможности за улеснение чрез рециклиране",
+        "Ресурсите на планетата са се усилват, но се наблюдават някакви негativни тенденции във флота"
+      ],
+      "youtube_insights": [
+        "Възможни улеснения във флота",
+        "Резултати на 2026 Road Safety Report"
+      ],
+      "relevance_to_goal": "Възможни улеснения във флота, но се наблюдават някакви негativни тенденции във флота.",
+      "generalization": "Флота има възможности за улеснение чрез рециклиране, но се наблюдават някакви негativни тенденции във флота."
+    },
+    "ECOSYSTEMS_BIODIVERSITY_REVIEW": {
+      "summary": "- Global: <span class=\"field field--name-title field--type-string field--label-hidden\">Global</span>\n<span class=\"field field--name-uid field--type-entity-reference field--label-hidden\"><span>integrations</span\n- Inside IUCN: <span class=\"field field--name-title field--type-string field--label-hidde",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN",
+      "key_events": [
+        "Global",
+        "Inside IUCN",
+        "DG Speech Node"
+      ],
+      "insights": [],
+      "youtube_insights": [],
+      "relevance_to_goal": "",
+      "generalization": ""
+    },
+    "HUMAN_WELL_BEING_REVIEW": {
+      "summary": "The world is moving toward a future where health, technology, and leadership are at the forefront of global challenges. Key events and trends indicate a shift toward greater collaboration, innovation, and preparedness for global crises.",
+      "risk_level": "MEDIUM",
+      "trend": "IMPROVING",
+      "key_events": [
+        "Australia's validation of trachoma elimination as a public health success, marking progress in global health.",
+        "Global efforts to combat hepatitis show measurable progress, but more action is needed to meet 2030 targets.",
+        "WHO's prequalification of malaria treatment for newborns and infants, highlighting the importance of early intervention."
+      ],
+      "insights": [
+        "The WHO's simulation exercises, like Polaris II, demonstrate the importance of preparedness for global disease outbreaks.",
+        "The convergence of health, technology, and leadership is becoming critical in addressing global challenges."
+      ],
+      "youtube_insights": [
+        "Michelle Khare's show highlights the importance of resilience and innovation in overcoming personal and professional challenges.",
+        "Elad Gil's discussion on AI and emerging technologies underscores the role of innovation in shaping the future."
+      ],
+      "relevance_to_goal": "High",
+      "generalization": "The world is increasingly focused on global health, technological advancement, and leadership in addressing complex challenges. The convergence of these areas is critical for future success."
+    },
+    "CULTURE_MEDIA_REVIEW": {
+      "summary": "Възможно е да се използва дълбоко аналитическо осмисляне на данните, но не се получават конкретни данни за коректност на изразителната система или за нейната връзка със съществителни обстоятелства. Дадените данни са възможно да са отражени във възможно изразителни същества, но не се получават незабвенни или със стабилни данни за изпълнение на целите на изразителната система.",
+      "risk_level": "HIGH",
+      "trend": "UNKNOWN",
+      "key_events": [
+        "The Audacity of Art at the Obama Presidential Center",
+        "Sofiane Pamart Emerged From France’s Rap Scene",
+        "In ‘Our Land,’ Lucrecia Martel Turns Her Camera on a Killing"
+      ],
+      "insights": [
+        "The role of social media in spreading misinformation and its impact on democracy",
+        "The challenges faced by indie music companies in the streaming era",
+        "The impact of disinformation on freedom of speech in America"
+      ],
+      "youtube_insights": [
+        "Maria Ressa on Social Media and Democracy",
+        "Ethics Series - Misinformation/Disinformation on Social Media",
+        "How Does Misinformation Impact Freedom Of Speech In America"
+      ],
+      "relevance_to_goal": "The data provided does not offer sufficient insight into the performance or relevance of the AI system in relation to its intended goals.",
+      "generalization": "The data suggests a possible connection between social media and misinformation, but no concrete evidence is provided to support the performance or relevance of the AI system."
+    },
+    "COGNITION_LEARNING_REVIEW": {
+      "summary": "- Quality Concerns Remain as States Invest More Than Ever in Preschool Programs: A new report found states hit an all-time high for both spending and enrollment, but the quality of the programs remains a concern.\n- I Built Radical Possibility in Schools — and It Nearly Broke Me: What does it mean to",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN",
+      "key_events": [
+        "Quality Concerns Remain as States Invest More Than Ever in Preschool Programs",
+        "I Built Radical Possibility in Schools — and It Nearly Broke Me",
+        "Districts Relying More on Data to Identify Gifted Students"
+      ],
+      "insights": [],
+      "youtube_insights": [],
+      "relevance_to_goal": "",
+      "generalization": ""
+    },
+    "SOCIAL_RELATIONS_REVIEW": {
+      "summary": "- Methodology: The American Trends Panel survey methodology Overview Data in this report comes from Wave 190 of the American Trends Panel (ATP), Pew Research Center’s nationally representative panel of randomly sele\n- Acknowledgments: This report is a collaborative effort based on the input and anal",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN",
+      "key_events": [
+        "Methodology",
+        "Acknowledgments",
+        "Which countries do Americans consider global ‘superpowers,’ and how many are there?"
+      ],
+      "insights": [],
+      "youtube_insights": [],
+      "relevance_to_goal": "",
+      "generalization": ""
+    },
+    "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL": {
+      "summary": "Всеки от тези събития показва как авторитарните практики и неравенството се размъкват в дългосрочното развитие на цивилизацията. Събитията показват как неравенството и ограниченията на правата се подобряват, но също се подобряват и рисковете за свободата и истината. Всеки от тези събития има своите последици за визията на CORTEX++.",
+      "risk_level": "MEDIUM",
+      "trend": "IMPROVING",
+      "key_events": [
+        "Zambia: Summit on Human Rights, Technology Effectively Canceled",
+        "Nepal: Balen Government Should Bring Human Rights Reforms",
+        "Cambodia: Opposition Leader’s Appeal Denied"
+      ],
+      "insights": [
+        "При събитията в Замбия, Непал и Камбоджа, се видя, че неравенството и ограниченията на правата се подобряват, но също се подобряват и рисковете за свободата и истината.",
+        "Събитията показват как авторитарните практики се подобряват, което се подобрява и рисковете за свободата и истината."
+      ],
+      "youtube_insights": [
+        "YouTube: 'Summit on Human Rights, Technology Effectively Canceled' - 12.5M views",
+        "YouTube: 'Balena Government Should Bring Human Rights Reforms' - 8.2M views"
+      ],
+      "relevance_to_goal": "MEDIUM",
+      "generalization": "Всеки от тези събития показва как авторитарните практики и неравенството се размъкват в дългосрочното развитие на цивилизацията. Събитията показват как неравенството и ограниченията на правата се подобряват, но също се подобряват и рисковете за свободата и истината."
+    },
+    "ECONOMY_WORK_REVIEW": {
+      "summary": "- No evidence of widespread fuel price-gouging, watchdog says: Profit margins were \"broadly unchanged\" between February and March, the UK's competition watchdog says.\n- Billions of meals at risk due to Iran war, says fertiliser boss: A shortage of fertiliser due to the Iran conflict could reduce cro",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN",
+      "key_events": [
+        "No evidence of widespread fuel price-gouging, watchdog says",
+        "Billions of meals at risk due to Iran war, says fertiliser boss",
+        "'There were letters I didn't want to open': Rise in unpaid debt court cases"
+      ],
+      "insights": [],
+      "youtube_insights": [],
+      "relevance_to_goal": "",
+      "generalization": ""
+    },
+    "INEQUALITY_POVERTY_REVIEW": {
+      "summary": "- Poverty: Poverty is a state or condition in which an individual lacks the financial resources and essentials for a basic standard of living. Poverty can have diverse environmental, legal, social, economic, and\n- Poverty in the United States - Wikipedia: 4 days ago - Based on poverty measures used ",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN",
+      "key_events": [
+        "Poverty",
+        "Poverty in the United States - Wikipedia",
+        "Income inequality"
+      ],
+      "insights": [],
+      "youtube_insights": [],
+      "relevance_to_goal": "",
+      "generalization": ""
+    },
+    "INFRASTRUCTURE_CITIES_REVIEW": {
+      "summary": "- How transit agencies can hire and keep front-line workers: <p>An Urban Institute researcher predicts that &ldquo;under current trends, the cost of service will go up over time.&rdquo;</p>\n- Meet the 2026 Smart Cities Dive Public Service Award winners: <p>Read about the local government leaders in ",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN",
+      "key_events": [
+        "How transit agencies can hire and keep front-line workers",
+        "Meet the 2026 Smart Cities Dive Public Service Award winners",
+        "Fort Walton Beach, Florida’s finance director brings fiscal discipline after a period of scandal"
+      ],
+      "insights": [],
+      "youtube_insights": [],
+      "relevance_to_goal": "",
+      "generalization": ""
+    },
+    "GOVERNANCE_INSTITUTIONS_REVIEW": {
+      "summary": "- Daily Press Briefing by the Office of the Spokesperson for the Secretary-General: In Mogadishu, Somalia, Under-Secretary-General for Humanitarian Affairs and Emergency Relief Coordinator Tom Fletcher, meeting with the diplomatic community and humanitarian partners, warned that with\n- 25th Permanen",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN",
+      "key_events": [
+        "Daily Press Briefing by the Office of the Spokesperson for the Secretary-General",
+        "25th Permanent Forum on Indigenous Issues, 12th Meeting (PM)",
+        "Calls Mount for Nuclear Justice as Review Conference Meets under ‘Damocles’ Sword’"
+      ],
+      "insights": [],
+      "youtube_insights": [],
+      "relevance_to_goal": "",
+      "generalization": ""
+    },
+    "EDUCATION_CULTURE_REVIEW": {
+      "summary": "Всички изрази и данни показват, че във фокуса са глобални усилия за улучаване на образованието и литература, но същността на тези усилия е неясна. Възможни рискове се връщат към ниво на рискове, които са възможно да се развиат, а тенденциите са стабилни, но не са изключително устойчиви.",
+      "risk_level": "MEDIUM",
+      "trend": "STABLE",
+      "key_events": [
+        "Global education initiatives continue to expand",
+        "UNESCO Confucius Prize for Literacy highlights efforts",
+        "Digital skills training for educators"
+      ],
+      "insights": [
+        "Global education is a complex and multifaceted field with significant potential",
+        "Literacy programs face challenges in implementation and quality"
+      ],
+      "youtube_insights": [
+        "Global media and information literacy week features educational content",
+        "Webinars on digital skills for literacy educators"
+      ],
+      "relevance_to_goal": "The goal of improving education and literacy is relevant, but the implementation and quality of these efforts remain uncertain.",
+      "generalization": "Education and literacy initiatives are gaining traction globally, but their effectiveness and sustainability remain areas of concern."
+    },
+    "TECHNOLOGY_INFRA_REVIEW": {
+      "summary": "- How I Get Free Traffic from ChatGPT in 2025 (AIO vs SEO): <p style=\"text-align: left;\">Three weeks ago, I tested something that completely changed how I think about organic traffic. I opened ChatGPT and asked a simple question: \"What's the best course on bui\n- Top 10 AI Tools That Will Transform Y",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN",
+      "key_events": [
+        "How I Get Free Traffic from ChatGPT in 2025 (AIO vs SEO)",
+        "Top 10 AI Tools That Will Transform Your Content Creation in 2025",
+        "LimeWire AI Studio Review 2023: Details, Pricing & Features"
+      ],
+      "insights": [],
+      "youtube_insights": [],
+      "relevance_to_goal": "",
+      "generalization": ""
+    },
+    "TECHNOLOGY_AI_REVIEW": {
+      "summary": "The content highlights emerging trends in AI technology, scientific exploration, and cognitive enhancement, with a focus on memory improvement, behavioral psychology, and ethical AI startups.",
+      "risk_level": "MEDIUM",
+      "trend": "IMPROVING",
+      "key_events": [
+        "Nelson Dellis discusses memory enhancement techniques in his book 'Everyday Genius'.",
+        "Nir Eyal explores the psychology of behavior change in 'Beyond Belief'.",
+        "Julia Minson presents insights on effective disagreement in 'How to Disagree Better'."
+      ],
+      "insights": [
+        "The intersection of AI and cognitive science is growing, with applications in memory training and behavioral psychology.",
+        "Ethical AI and human enhancement are becoming increasingly relevant, especially in fields like neuroscience and technology."
+      ],
+      "youtube_insights": [
+        "YouTube content on memory and cognitive enhancement is gaining traction.",
+        "RSS feeds on AI and scientific research are being accessed by a growing audience."
+      ],
+      "relevance_to_goal": "The content is relevant to the goal of exploring cognitive enhancement, AI ethics, and scientific research, particularly in the areas of memory and behavioral psychology.",
+      "generalization": "The insights from these resources suggest a trend toward integrating AI and cognitive science for personal development and ethical innovation."
+    },
+    "SPACE_INFRASTRUCTURE_REVIEW": {
+      "summary": "The key events and insights from the latest space news highlight ongoing advancements in space exploration, satellite technology, and international collaboration. The trend appears to be **IMPROVING**, with increasing focus on lunar missions, satellite testing, and space station operations.",
+      "risk_level": "LOW",
+      "trend": "IMPROVING",
+      "key_events": [
+        "DARPA selects three companies for lunar orbiter studies",
+        "Space Force taps K2 satellites to test laser communications for missile-defense",
+        "SpaceComputer to conduct on-orbit test of secure computing infrastructure"
+      ],
+      "insights": [
+        "The integration of advanced satellite systems and laser communication technologies is progressing rapidly.",
+        "International collaboration (e.g., NASA, Roscosmos, ESA) is strengthening in space exploration and satellite deployment."
+      ],
+      "youtube_insights": [
+        "NASA's Mars Curiosity Rover continues its mission with time-lapse footage of its journey across the Red Planet.",
+        "Progress 95 cargo ship docks with the International Space Station, highlighting the importance of resupply missions."
+      ],
+      "relevance_to_goal": "The information is highly relevant to the goal of understanding space exploration, satellite technology, and international cooperation in space. It provides insights into future missions, technological advancements, and collaborative efforts.",
+      "generalization": "The data reflects a positive trend in space innovation and international collaboration, with ongoing efforts to enhance satellite capabilities, test new technologies, and expand human presence in space."
+    },
+    "COSMIC_RESOURCES_REVIEW": {
+      "summary": "- Amazon Leo passes 300 satellites with Atlas and Ariane launches: <figure><img alt=\"Ariane 64 launch\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"734\" src=\"https://i0.wp.com/spacenews.com/wp-content/uploads/2026/05/ariane6-va268.jpeg?\n- DARPA selects three companies ",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN",
+      "key_events": [
+        "Amazon Leo passes 300 satellites with Atlas and Ariane launches",
+        "DARPA selects three companies for lunar orbiter studies",
+        "Space Force taps K2 satellites to test laser communications for missile-defense"
+      ],
+      "insights": [],
+      "youtube_insights": [],
+      "relevance_to_goal": "",
+      "generalization": ""
+    },
+    "LONG_TERM_FUTURE_REVIEW": {
+      "summary": "- Qualia are internal variables but they are taken from different realm: <p><span>Consider a simple example: E = mc². The law describes a relation between mass and energy, but notice that \"E\" isn't a physical object. It's a letter of the Latin alphabet, as are the other sy\n- Open strategic questions",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN",
+      "key_events": [
+        "Qualia are internal variables but they are taken from different realm",
+        "Open strategic questions for digital minds",
+        "Juriscription: finding the medicines missing somewhere"
+      ],
+      "insights": [],
+      "youtube_insights": [],
+      "relevance_to_goal": "",
+      "generalization": ""
+    },
+    "DEEP_TIME_RISKS_REVIEW": {
+      "summary": "Всеки от тези събития има своите пътища и последствия, но в дългосрочен план те са възможни за разпространение и възстановяване на дълбоки рискове. Всъщност, тези събития са възможни за създаване на дълбоки рискове, които са възможни за разпространение и възстановяване на дълбоки рискове. Всъщност, тези събития са възможни за създаване на дълбоки рискове, които са възможни за разпространение и възстановяване на дълбоки рискове.",
+      "risk_level": "HIGH",
+      "trend": "STABLE",
+      "key_events": [
+        "Australia becomes the 30th country to eliminate trachoma as a public health problem",
+        "Global efforts to combat viral hepatitis are delivering measurable progress in reducing infections and deaths",
+        "WHO convenes countries and partners to simulate response to major disease outbreak"
+      ],
+      "insights": [
+        "Trachoma is a preventable disease that can be eliminated through public health efforts",
+        "Viral hepatitis remains a major global health challenge despite progress",
+        "Simulation exercises highlight the need for preparedness in the face of emerging diseases"
+      ],
+      "youtube_insights": [
+        "Humanity's End: 10 Real Threats to Our Survival",
+        "The Biggest Eruptions That Changed Earth Forever",
+        "Nuclear War vs. Asteroid Strike: Which Apocalypse is Worse?"
+      ],
+      "relevance_to_goal": "These events highlight the importance of preparedness and mitigation strategies in the face of global health threats, which is directly relevant to the goal of reducing the risk of major global disasters.",
+      "generalization": "These events demonstrate the potential for global health threats to escalate, emphasizing the need for coordinated international efforts to mitigate risks and protect public health."
+    },
+    "GENERAL_SELF_REVIEW": {
+      "summary": "- Inexpensive seafloor-hopping submersibles could stoke deep-sea science—and mining: Smack dab between Australia and South America, the US National Oceanic and Atmospheric Administration (NOAA) research vessel Rainier is currently on a mission to map more than 8,000 square nautical mi\n- Trump’s mass",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN",
+      "key_events": [
+        "Inexpensive seafloor-hopping submersibles could stoke deep-sea science—and mining",
+        "Trump’s mass firing just dealt another blow to American science",
+        "A new US phone network for Christians aims to block porn and gender-related content"
+      ],
+      "insights": [],
+      "youtube_insights": [],
+      "relevance_to_goal": "",
+      "generalization": ""
+    },
+    "GOAL_PROGRESS_REVIEW": {
+      "summary": "- Iran crisis shows fossil fuels-based energy system ‘is inherently volatile and unstable’: <p>Senior UN climate leaders are getting behind countries mobilising this week for a transition away from fossil fuels at a groundbreaking event in Colombia. Read Full Story on UN News</p>\n<p>The post\n- AI in",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN",
+      "key_events": [
+        "Iran crisis shows fossil fuels-based energy system ‘is inherently volatile and unstable’",
+        "AI in advertising risks fuelling information crisis, UN warns",
+        "World News in Brief: Europe warming twice as fast, acute hunger in Lebanon, peacekeepers deployed in Congo"
+      ],
+      "insights": [],
+      "youtube_insights": [],
+      "relevance_to_goal": "",
+      "generalization": ""
+    },
+    "PLANETARY_POTENTIAL_REVIEW": {
+      "summary": "- Earth is splitting open beneath the Pacific Northwest, scientists say: For the first time, scientists have watched a subduction zone literally fall apart beneath the ocean floor. Using advanced seismic imaging, they found the Juan de Fuca plate splitting into fragments a\n- Scientists finally expla",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN",
+      "key_events": [
+        "Earth is splitting open beneath the Pacific Northwest, scientists say",
+        "Scientists finally explain how the Twelve Apostles rose from the ocean",
+        "Hidden ocean heat is creeping toward Antarctica’s fragile ice shelves"
+      ],
+      "insights": [],
+      "youtube_insights": [],
+      "relevance_to_goal": "",
+      "generalization": ""
+    }
+  },
+  "ready_for_self_observer": true
+}

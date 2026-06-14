@@ -1,0 +1,50 @@
+MODEL: qwen3:1.7b
+
+PROMPT:
+You are CORTEX++ AGI. Generate a JSON snapshot for PLANETARY_POTENTIAL_REVIEW — the integrated carrying capacity of Earth. Include: current_level (LOW/MEDIUM/HIGH), key_signals list, main_bottlenecks list, trends list. Return ONLY valid JSON.
+
+RESPONSE:
+Thinking...
+Okay, the user wants a JSON snapshot for PLANETARY_POTENTIAL_REVIEW, which is about the integrated carrying capacity of Earth. Let me break down what they need.
+
+First, the current_level should be LOW, MEDIUM, or HIGH. Since the topic is about carrying capacity, which is a complex and dynamic system, I think the current level might be LOW. But I need to verify. Carrying capacity is about the balance between resources and population, so maybe it's not yet at a high level. But maybe it's in the medium range because there are factors like climate change and resource depletion. Hmm, I'll go with MEDIUM for now.
+
+Next, key_signals. These are the main factors that influence the carrying capacity. They should be things like climate change, population growth, resource extraction, technological advancement, policy regulations. So the key_signals list would include those. Let me make sure they are relevant and not too broad.
+
+Main_bottlenecks. These are the obstacles that hinder the carrying capacity. Things like overpopulation, pollution, deforestation, climate change, and resource scarcity. These are the main issues that limit the Earth's ability to sustain its population. So the main_bottlenecks list would include those.
+
+Trends list. Trends are the future projections. Maybe things like increasing population, climate change impacts, technological solutions, policy changes. So trends could be: population growth, climate change effects, technological innovations, policy reforms.
+
+Now, I need to structure this into a valid JSON. The keys are current_level, key_signals, main_bottlenecks, trends. Each with their respective values. Make sure the JSON is valid, no syntax errors. Also, ensure that the lists are properly formatted as arrays. Let me check the JSON structure again.
+
+Current_level: "MEDIUM"
+key_signals: ["climate change", "population growth", "resource extraction", "technological advancement", "policy regulations"]
+main_bottlenecks: ["overpopulation", "pollution", "deforestation", "climate change", "resource scarcity"]
+trends: ["population growth", "climate change effects", "technological innovations", "policy reforms"]
+
+Yes, that looks good. I'll format it into a JSON object with those keys and values. Make sure the quotes are correct and the commas are properly placed. No trailing commas. Alright, that should be the JSON snapshot.
+...done thinking.
+
+{
+  "current_level": "MEDIUM",
+  "key_signals": [
+    "climate change",
+    "population growth",
+    "resource extraction",
+    "technological advancement",
+    "policy regulations"
+  ],
+  "main_bottlenecks": [
+    "overpopulation",
+    "pollution",
+    "deforestation",
+    "climate change",
+    "resource scarcity"
+  ],
+  "trends": [
+    "population growth",
+    "climate change effects",
+    "technological innovations",
+    "policy reforms"
+  ]
+}

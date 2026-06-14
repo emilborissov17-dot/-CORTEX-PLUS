@@ -1,0 +1,99 @@
+{
+  "axis": "GOAL_PROGRESS_REVIEW",
+  "fetched_at": "2026-05-16T17:01:22.044100+00:00",
+  "smart_query": "sustainable development goals SDG",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 0,
+    "youtube_transcripts": 3,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "Global energy and trade disruption pushing millions towards poverty",
+      "snippet": "Disruptions to global energy supplies and trade corridors are driving up the cost of food, transport and essential goods worldwide, slowing economic growth and increasing pressure on vulnerable households and debt-strapped developing countries.",
+      "url": "https://news.un.org/feed/view/en/story/2026/05/1167526",
+      "source": "RSS"
+    },
+    {
+      "title": "UN leads call to prepare ‘for when digital systems fail’",
+      "snippet": "It can be annoying when the wifi signal is cut, but what about if everything digital we rely on were to crash suddenly – from satellites to life-support systems in hospitals?",
+      "url": "https://news.un.org/feed/view/en/story/2026/05/1167445",
+      "source": "RSS"
+    },
+    {
+      "title": "‘Real impact on the ground’ needed as Indonesia backs UN reform",
+      "snippet": "Indonesia is expecting a “strengthened multilateral system that delivers real impact on the ground,” as one of the key outcomes of the ongoing reform of the United Nations, that’s according to the country’s outgoing Deputy Minister of Foreign Affairs for Multilateral Cooperation, Tri Tharyat.",
+      "url": "https://news.un.org/feed/view/en/story/2026/05/1167429",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [],
+  "arxiv_papers": [
+    {
+      "title": "Unveiling the Nexus Between Economic Complexity and Environmental Sustainability: Evidence from BRICS-T Countries",
+      "snippet": "This study analyses the impacts of economic complexity on environmental performance in BRICS-T countries. Annual data for the period 1999-2021, Durbin-Hausman cointegration test and Augmented Mean Group (AMG) estimator are used in the analysis. The robustness of the Panel AMG results is tested with ",
+      "url": "https://arxiv.org/abs/2604.13150v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "AI Agents for Sustainable SMEs: A Green ESG Assessment Framework",
+      "snippet": "This study presents a novel, AI-driven framework for assessing Environmental, Social, and Governance (ESG) performance in European small and medium-sized enterprises (SMEs). An initial phase established expert-validated ESG baseline scores from a subset of the Flash Eurobarometer FL549 survey data. ",
+      "url": "https://arxiv.org/abs/2605.00841v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[Village gossip, pesticide bans, and gene drives: 17 experts on the future of global health] What does it really take to lift millions out of poverty and prevent needless deaths?In this special compilation episode, 17 past guests — including economists, nonprofit founders, and policy advisors — share their most powerful and actionable insights from the front lines of global health and development. You’ll hear about the critical need to boost agricultural productivity in sub-Saharan Africa",
+  "wiki": null,
+  "youtube_items": [
+    {
+      "title": "[YT] How We Can Make the World a Better Place by 2030 | Michael Green | TED Talks",
+      "summary": "Do you think the world is going to be a better place next year? In the next decade, can we end hunger, achieve gender equality, halt climate change? All in the next 15 years? Well according to the governments of the world, yes, we can. In the last few days, the leaders of the world meeting at the UN in New York agreed a new set of global goals for the development of the world to 2030. And here they are, these goals are the product of a massive consultation exercise. The global goals are who we, humanity, want to be. Now that's the plan, but can we get there? Can this vision for a better world really be achieved? Well I'm here today because we've run the numbers and the answer, shockingly is that maybe we actually can, but not with business as usual. Now the idea that the world is going to ",
+      "link": "https://www.youtube.com/watch?v=o08ykAqLOxk",
+      "source_type": "youtube",
+      "channel": "TED",
+      "video_id": "o08ykAqLOxk",
+      "transcript_method": "whisper",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Stocktaking | What it will take to achieve the Sustainable Development Goals? | United Nations",
+      "summary": "It is so decided. In 2015, World leaders made the promise for the well-being of all people and the planet. We need action. To reach the sustainable development goals by 2030. There's progress in life expectancy and disease prevention. There's greater gender parity in management positions. Many developing economies have seen a growing middle class. Safe sanitation and basic hygiene services are becoming the norm. More than 95% of the global population have access to mobile broadband networks. The future of energy is cleaner. Unfortunately, at the halfway point, only 15% of SDG targets are on track. And more than a third are stagnated or in regression. More than 780 million people face chronic hunger. More than 100 million families are fleeing war, conflict and human rights violations. Socia",
+      "link": "https://www.youtube.com/watch?v=enGJyhu6Xr0",
+      "source_type": "youtube",
+      "channel": "United Nations",
+      "video_id": "enGJyhu6Xr0",
+      "transcript_method": "whisper",
+      "transcript_chars": 1575,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Sustainable Development Goals (SDGs) Explained in 10 minutes or less",
+      "summary": "Hey all, it's Kaylee, welcome to Pina Suit, where every week I talk about sustainability. Why you ask? Because I dream of a world where a global pandemic does not create 15 new billionaires. Today I'm going to be covering the United Nations Sustainable Development Goals, or as you may know them, the SDGs, global goals, or 2030 agenda for sustainable development. I'm going to attempt to give you everything you need to know about them in just 10 minutes or less so we better get going. The 2030 agenda for sustainable development was adopted on September 25, 2015, universally. Universal adoption means that every single country, all 193 UN member states agreed. I'm sure you can imagine that getting 193 countries to agree on anything is next to impossible, but that's what makes this agenda so gr",
+      "link": "https://www.youtube.com/watch?v=xubK4T9Nc8A",
+      "source_type": "youtube",
+      "channel": "Hippy In A Suit",
+      "video_id": "xubK4T9Nc8A",
+      "transcript_method": "whisper",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ],
+  "summary": "Визията за устойчива цивилизация срещу бедността и войната се подкрепя от усилия за по-устойчиво развитие, но срещу рискове от глобални енергийни и търговски разриви.",
+  "urgency": "HIGH",
+  "sentiment": "CRITICAL",
+  "key_developments": [
+    "Global energy and trade disruption pushing millions towards poverty",
+    "UN leads call to prepare ‘for when digital systems fail’",
+    "Unveiling the Nexus Between Economic Complexity and Environmental Sustainability: Evidence from BRICS-T Countries",
+    "AI Agents for Sustainable SMEs: A Green ESG Assessment Framework"
+  ],
+  "open_source_momentum": "No data",
+  "scientific_frontier": "AI Agents for Sustainable SMEs: A Green ESG Assessment Framework",
+  "relevance_to_goal": "PARTIAL"
+}

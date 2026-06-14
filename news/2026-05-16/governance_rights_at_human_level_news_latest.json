@@ -1,0 +1,37 @@
+{
+  "axis": "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL",
+  "fetched_at": "2026-05-16T13:36:22.959390+00:00",
+  "smart_query": "human rights democracy freedom",
+  "sources_count": {
+    "wiki": 0,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [],
+  "gdelt": [],
+  "github_repos": [],
+  "arxiv_papers": [
+    {
+      "title": "Predicting Disagreement with Human Raters in LLM-as-a-Judge Difficulty Assessment without Using Generation-Time Probability Signals",
+      "snippet": "Automatic generation of educational materials using large language models (LLMs) is becoming increasingly common, but assigning difficulty levels to such materials still requires substantial human effort. LLM-as-a-Judge has therefore attracted attention, yet disagreement with human raters remains a ",
+      "url": "https://arxiv.org/abs/2605.12422v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Improving Hybrid Human-AI Tutoring by Differentiating Human Tutor Roles Based on Student Needs",
+      "snippet": "Hybrid human-AI tutoring, where technology and humans jointly facilitate student learning, can be more beneficial than AI-only tutoring. However, preliminary evidence suggests that lower-performing students derive greater benefit from human-AI tutoring than higher-performing students. As such, this ",
+      "url": "https://arxiv.org/abs/2605.11155v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[#239 – Rose Hadshar on why automating all human labour will break our political system] The most important political question in the age of advanced AI might not be who wins elections. It might be whether elections continue to matter at all.That’s the view of Rose Hadshar, researcher at Forethought, who believes we could see extreme, AI-enabled power concentration without a coup or dramatic ‘end of democracy’ moment.She foresees something more insidious: an elite group with access to",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

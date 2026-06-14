@@ -1,0 +1,153 @@
+{
+  "axis": "PLANETARY_POTENTIAL_REVIEW",
+  "domain": "planet",
+  "timestamp": "2026-05-04T08:01:18.303881+00:00",
+  "sources_count": 11,
+  "rss_count": 4,
+  "ddg_count": 4,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] Can Biospheric Tipping Points Scale up to Planetary Boundaries? Guest: Marten Scheffer - YouTube",
+      "summary": "If you have reasons to believe that there is a tipping point, we don't which it is difficult to return. I think the wise thing to do is go carefully and it's good to realize that there might be a tipping point. If you are walking blindfolded in a landscape and there is a gentle downward slope and maybe there is at some point anabyss and if you fall into a tie, I mean it's interesting to know that whether the abbyss exists or not. You would move around more carefully if you know the abbyss exists even if you don't know where it is. I wouldn't call the insight of the existence of a tipping point useless if you don't know where it is. Welcome to Inside Byad of Earth City. This podcast is hosted by Idaev, the German Center for Integrative Byad of Earth City Research. My name is Fokahan. I am h",
+      "link": "https://www.youtube.com/watch?v=UQE04nw6XHM",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "UQE04nw6XHM",
+      "transcript_method": "whisper",
+      "transcript_chars": 27618,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Climate Science, Planetary Boundaries, Tipping Points, Biodiversity (Planetary Health Academy #1) - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] Video recording of the first online lecture of the Planetary Health Academy (5/13/2020) on the topic 'Climate Science, Planetary Boundaries, Tipping Points, ... Published February 25, 2022 Views 204",
+      "link": "https://www.youtube.com/watch?v=ScN3CGXPpYM",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "ScN3CGXPpYM",
+      "transcript_method": "description",
+      "transcript_chars": 221,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Tipping Points & Planetary Boundaries – Protecting Planet's Health | Levke Caesar | ClimTip Webinar - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] 🌍 Can we weave tipping point science into a bigger picture of planetary boundaries?In this ClimTip webinar, Dr. Levke Caesar from the Potsdam Institute for ... Published June 27, 2025",
+      "link": "https://www.youtube.com/watch?v=Jk5-KSJm7iY",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "Jk5-KSJm7iY",
+      "transcript_method": "description",
+      "transcript_chars": 206,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "problem": "Planetary boundaries are being exceeded due to human activities, particularly in the context of climate change and biodiversity loss, as evidenced by the emergence of tipping points and the increasing risks highlighted by the Stockholm Resilience Centre.",
+    "root_cause": "Human activities are pushing the Earth's systems beyond the planetary boundaries, leading to the potential triggering of tipping points that could destabilize ecosystems and climate systems. This is exacerbated by the increasing interconnectedness of fault systems and the spread of climate-related threats.",
+    "severity": "MEDIUM",
+    "leverage_points": [
+      "The United States Environmental Protection Agency (EPA) and the Stockholm Resilience Centre are key actors in monitoring and reporting on planetary boundaries and tipping points.",
+      "The interconnectedness of fault systems (e.g., Cascadia and San Andreas) highlights the need for coordinated risk management and geoengineering interventions."
+    ],
+    "proposed_actions": [
+      {
+        "action": "Implement a coordinated planetary boundary monitoring system",
+        "measurable_goal": "Establish a real-time monitoring framework for key planetary boundaries, including climate change, biodiversity loss, and human health risks.",
+        "timeframe": "Short-term"
+      },
+      {
+        "action": "Promote interdisciplinary research and collaboration",
+        "measurable_goal": "Encourage collaboration between climate scientists, geologists, and policymakers to develop integrated strategies for mitigating tipping points.",
+        "timeframe": "Medium-term"
+      }
+    ],
+    "evidence": [
+      "The Planetary Boundaries framework highlights rising risks from human pressure on nine critical global processes.",
+      "New research suggests the Cascadia and San Andreas fault systems may be more interconnected than previously thought, increasing the risk of large-scale earthquakes."
+    ],
+    "generalization": "The problem of exceeding planetary boundaries is closely linked to the emergence of tipping points and the interconnectedness of natural systems. It requires coordinated efforts across scientific, policy, and technological domains.",
+    "summary": "The risk of exceeding planetary boundaries is significant, particularly in the context of climate change and biodiversity loss. A coordinated monitoring system and interdisciplinary collaboration are essential to mitigate this risk.",
+    "risk_level": "MEDIUM"
+  },
+  "raw_items": [
+    {
+      "title": "Malaria didn’t just kill early humans, it shaped who we became",
+      "summary": "Long before humans spread across the globe, a deadly disease may have quietly shaped where our ancestors lived—and even how we evolved. New research reveals that malaria didn’t just threaten early human survival; it actively pushed populations away from high-risk regions across Africa, fragmenting groups over tens of thousands of years. This separation influenced how different populations met, mixed, and exchanged genes, helping shape the genetic diversity we see today.",
+      "link": "https://www.sciencedaily.com/releases/2026/05/260502233859.htm",
+      "published": "Sun, 03 May 2026 12:04:21 EDT",
+      "source_type": "rss"
+    },
+    {
+      "title": "18th-century mechanical volcano roars to life 250 years later",
+      "summary": "A centuries-old vision of a mechanical volcano has finally erupted into reality, as two University of Melbourne engineering students recreated a design first imagined in 1775 by volcanology enthusiast Sir William Hamilton. Drawing from an 18th-century watercolor and a preserved sketch, they used modern tools like LED lighting and electronic systems to simulate the glowing flows and explosive drama of Mount Vesuvius.",
+      "link": "https://www.sciencedaily.com/releases/2026/05/260502015359.htm",
+      "published": "Sat, 02 May 2026 09:27:56 EDT",
+      "source_type": "rss"
+    },
+    {
+      "title": "The “big one” might not come alone: Double West Coast earthquake threat",
+      "summary": "Two of the most dangerous fault systems on the U.S. West Coast may be more connected than scientists once thought. New research suggests the Cascadia subduction zone and the San Andreas fault can “sync up,” triggering earthquakes within minutes or hours of each other. This rare “synchronization” could dramatically increase the scale of a major West Coast disaster. Instead of one massive quake, multiple regions could be hit at nearly the same time.",
+      "link": "https://www.sciencedaily.com/releases/2026/05/260502002153.htm",
+      "published": "Sat, 02 May 2026 08:47:20 EDT",
+      "source_type": "rss"
+    },
+    {
+      "title": "This “Pink Floyd” spider hunts prey 6x its size and lives in walls",
+      "summary": "Scientists have uncovered a tiny wall-dwelling spider named Pikelinia floydmuraria, inspired by Pink Floyd. Despite its size, it’s a fierce predator that hunts ants much larger than itself and helps reduce common urban pests like mosquitoes and flies. Its clever strategy of building webs near lights makes it especially effective. The discovery also raises new questions about its mysterious link to similar spiders in the Galápagos.",
+      "link": "https://www.sciencedaily.com/releases/2026/05/260501052851.htm",
+      "published": "Fri, 01 May 2026 08:27:27 EDT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Geoengineering",
+      "summary": "Geoengineering (also known as climate engineering or climate intervention) is the deliberate large-scale interventions in the Earth’s climate system intended to counteract human-caused climate change. The term commonly encompasses two broad categories: large-scale carbon dioxide removal (CDR) and solar radiation modification (SRM). CDR involves techniques to remove carbon dioxide from the atmosphe",
+      "link": "https://en.wikipedia.org/wiki/Geoengineering",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Geoengineering - US EPA",
+      "summary": "Feb 26, 2026 · Geoengineering encompasses a broad range of activities that intentionally attempt to cool the Earth or remove certain gases from the atmosphere. This web area provides an overview of the basics of geoengineering, potential impacts of solar geoengineering, and answers to frequent questions.",
+      "link": "https://www.epa.gov/geoengineering",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Planetary boundaries",
+      "summary": "Planetary boundaries are a framework to describe limits to the impacts of human activities on the Earth system. Beyond these limits, the environment may not be able to continue to self-regulate. This would mean the Earth system would leave the period of stability of the Holocene, in which human society developed.These nine boundaries are climate change, ocean acidification, stratospheric ozone dep",
+      "link": "https://en.wikipedia.org/wiki/Planetary_boundaries",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Planetary boundaries - Stockholm Resilience Centre",
+      "summary": "2 weeks ago - The planetary boundaries framework highlights the rising risks from human pressure on nine critical global processes that regulate the stability and resilience of the Earth",
+      "link": "https://www.stockholmresilience.org/research/planetary-boundaries.html",
+      "source_type": "ddg"
+    },
+    {
+      "title": "[YT] Can Biospheric Tipping Points Scale up to Planetary Boundaries? Guest: Marten Scheffer - YouTube",
+      "summary": "If you have reasons to believe that there is a tipping point, we don't which it is difficult to return. I think the wise thing to do is go carefully and it's good to realize that there might be a tipping point. If you are walking blindfolded in a landscape and there is a gentle downward slope and maybe there is at some point anabyss and if you fall into a tie, I mean it's interesting to know that whether the abbyss exists or not. You would move around more carefully if you know the abbyss exists even if you don't know where it is. I wouldn't call the insight of the existence of a tipping point useless if you don't know where it is. Welcome to Inside Byad of Earth City. This podcast is hosted by Idaev, the German Center for Integrative Byad of Earth City Research. My name is Fokahan. I am h",
+      "link": "https://www.youtube.com/watch?v=UQE04nw6XHM",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "UQE04nw6XHM",
+      "transcript_method": "whisper",
+      "transcript_chars": 27618,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Climate Science, Planetary Boundaries, Tipping Points, Biodiversity (Planetary Health Academy #1) - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] Video recording of the first online lecture of the Planetary Health Academy (5/13/2020) on the topic 'Climate Science, Planetary Boundaries, Tipping Points, ... Published February 25, 2022 Views 204",
+      "link": "https://www.youtube.com/watch?v=ScN3CGXPpYM",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "ScN3CGXPpYM",
+      "transcript_method": "description",
+      "transcript_chars": 221,
+      "has_full_transcript": false
+    }
+  ]
+}

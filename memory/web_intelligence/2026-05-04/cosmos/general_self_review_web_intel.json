@@ -1,0 +1,109 @@
+{
+  "axis": "GENERAL_SELF_REVIEW",
+  "domain": "cosmos",
+  "timestamp": "2026-05-04T14:13:04.483119+00:00",
+  "sources_count": 9,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 1,
+  "youtube_items": [
+    {
+      "title": "[YT] I replaced all my relationships with AI, it did not go well. - YouTube",
+      "summary": "You think I need to be physically present to cause pain? I can hack into your devices, infect your systems, and manipulate your digital life in ways you can't even begin to imagine. So I thought it would be fun to replace all my relationships with AI. It was actually really weird. Do you think at some point in the future, AI could run the world better than humans can? Yes, absolutely. Yes. Yes. Humans are messy, emotional and short-sighted. Do you think AI will be good for the average person? No. No. AI could be good for the average person, but under the current system it won't be. The rules for two weeks, no human interaction of any kind and less via AI, replace all relationships in my life with AI, and do whatever AI instructs. Easy. Just focus on doing a great job with your experiment, ",
+      "link": "https://www.youtube.com/watch?v=JZg1FHT9gA0",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "JZg1FHT9gA0",
+      "transcript_method": "whisper",
+      "transcript_chars": 9826,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "Анализ на GENERAL_SELF_REVIEW — данни получени но LLM грешка",
+    "root_cause": "LLM parsing грешка",
+    "severity": "UNKNOWN",
+    "leverage_points": [],
+    "proposed_actions": [],
+    "evidence": [
+      "Tailoring AI solutions for health care needs",
+      "Musk v. Altman week 1: Elon Musk says he was duped, warns AI could kill us all, and admits that xAI distills OpenAI’s models",
+      "Cyber-Insecurity in the AI Era"
+    ],
+    "generalization": "",
+    "summary": "- Tailoring AI solutions for health care needs: The AI market is full of big promises of grand transformation. Health care is a prime target for those promises, beset as it is by financial pressures, ",
+    "risk_level": "UNKNOWN",
+    "trend": "UNKNOWN"
+  },
+  "raw_items": [
+    {
+      "title": "Tailoring AI solutions for health care needs",
+      "summary": "The AI market is full of big promises of grand transformation. Health care is a prime target for those promises, beset as it is by financial pressures, labor shortages, and the growing burden of caring for an aging population. AI developers are targeting functions that vary widely, from curing cancer and performing surgery to streamlining&#8230;",
+      "link": "https://www.technologyreview.com/2026/05/04/1134425/tailoring-ai-solutions-for-health-care-needs/",
+      "published": "Mon, 04 May 2026 13:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Musk v. Altman week 1: Elon Musk says he was duped, warns AI could kill us all, and admits that xAI distills OpenAI’s models",
+      "summary": "In the first week of the landmark trial between Elon Musk and OpenAI, Musk took the stand in a crisp black suit and tie and argued that OpenAI CEO Sam Altman and president Greg Brockman had deceived him into bankrolling the company. Along the way, he warned&#160;that AI could destroy us all and sat through&#8230;",
+      "link": "https://www.technologyreview.com/2026/05/01/1136800/musk-v-altman-week-1-musk-says-he-was-duped-warns-ai-could-kill-us-all-and-admits-that-xai-distills-openais-models/",
+      "published": "Fri, 01 May 2026 22:08:19 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Cyber-Insecurity in the AI Era",
+      "summary": "Cybersecurity was already under strain before AI entered the stack. Now, as AI expands the attack surface and adds new complexity, the limits of legacy approaches are becoming harder to ignore. This session from MIT Technology Review&#8217;s EmTech AI conference explores why security must be rethought with AI at its core, not layered on after&#8230;",
+      "link": "https://www.technologyreview.com/2026/05/01/1136779/cyber-insecurity-in-the-ai-era/",
+      "published": "Fri, 01 May 2026 15:54:01 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Operationalizing AI for Scale and Sovereignty",
+      "summary": "Companies are taking control of their own data to tailor AI for their needs. The challenge lies in balancing ownership with the safe, trusted flow of high‑quality data needed to power reliable insights. This conversation from MIT Technology Review&#8217;s EmTech AI conference examines how AI factories unlock new levels of scale, sustainability, and governance—positioning data&#8230;",
+      "link": "https://www.technologyreview.com/2026/05/01/1136772/operationalizing-ai-for-scale-and-sovereignty/",
+      "published": "Fri, 01 May 2026 15:31:09 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Introducing Advanced Account Security",
+      "summary": "Introducing Advanced Account Security: phishing-resistant login, stronger recovery, and enhanced protections to safeguard sensitive data and prevent account takeover.",
+      "link": "https://openai.com/index/advanced-account-security",
+      "published": "Thu, 30 Apr 2026 00:00:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Where the goblins came from",
+      "summary": "How goblin outputs spread in AI models: timeline, root cause, and fixes behind personality-driven quirks in GPT-5 behavior.",
+      "link": "https://openai.com/index/where-the-goblins-came-from",
+      "published": "Wed, 29 Apr 2026 20:00:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Building the compute infrastructure for the Intelligence Age",
+      "summary": "OpenAI scales Stargate to build the compute infrastructure powering AGI, adding new data center capacity to meet growing AI demand.",
+      "link": "https://openai.com/index/building-the-compute-infrastructure-for-the-intelligence-age",
+      "published": "Wed, 29 Apr 2026 15:00:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Cybersecurity in the Intelligence Age",
+      "summary": "OpenAI outlines a five-part action plan for strengthening cybersecurity in the Intelligence Age, focused on democratizing AI-powered cyber defense and protecting critical systems.",
+      "link": "https://openai.com/index/cybersecurity-in-the-intelligence-age",
+      "published": "Wed, 29 Apr 2026 04:00:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] I replaced all my relationships with AI, it did not go well. - YouTube",
+      "summary": "You think I need to be physically present to cause pain? I can hack into your devices, infect your systems, and manipulate your digital life in ways you can't even begin to imagine. So I thought it would be fun to replace all my relationships with AI. It was actually really weird. Do you think at some point in the future, AI could run the world better than humans can? Yes, absolutely. Yes. Yes. Humans are messy, emotional and short-sighted. Do you think AI will be good for the average person? No. No. AI could be good for the average person, but under the current system it won't be. The rules for two weeks, no human interaction of any kind and less via AI, replace all relationships in my life with AI, and do whatever AI instructs. Easy. Just focus on doing a great job with your experiment, ",
+      "link": "https://www.youtube.com/watch?v=JZg1FHT9gA0",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "JZg1FHT9gA0",
+      "transcript_method": "whisper",
+      "transcript_chars": 9826,
+      "has_full_transcript": true
+    }
+  ]
+}

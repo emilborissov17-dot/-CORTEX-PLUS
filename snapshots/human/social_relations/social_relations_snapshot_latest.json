@@ -1,0 +1,18 @@
+{
+  "source_type": "REAL_DATA",
+  "raw": {
+    "axis": "SOCIAL_RELATIONS_REVIEW",
+    "source": "world_bank_api",
+    "fetched_date": "2026-06-11",
+    "metrics": {
+      "homicide_rate_per_100k": 5.2,
+      "refugee_population": null,
+      "internally_displaced": null,
+      "conflict_deaths_per_100k": null,
+      "urbanization_pct": 57.5634797111357
+    },
+    "data_quality": "2/5 fetched"
+  },
+  "snapshot_timestamp": "2026-06-11T19:06:29.294462+00:00",
+  "axis": "SOCIAL_RELATIONS_REVIEW"
+}

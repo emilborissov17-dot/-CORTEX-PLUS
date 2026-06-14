@@ -1,0 +1,2614 @@
+{
+  "experiences": [
+    {
+      "timestamp": "2026-03-21T11:57:35.950058+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/trend_tracker_patch.py",
+        "problem": "12 оси имат INSUFFICIENT_DATA защото нямат метрики в TRACKED"
+      },
+      "body_state": {
+        "ram_mb": 150.0,
+        "cpu_pct": 0.0,
+        "open_files": 6
+      }
+    },
+    {
+      "timestamp": "2026-03-21T11:57:38.444900+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/climate_global_risk_review_patch.py",
+        "problem": "Недостатъчен анализ на климатичните рискове и техните въздей"
+      },
+      "body_state": {
+        "ram_mb": 150.0,
+        "cpu_pct": 0.0,
+        "open_files": 6
+      }
+    },
+    {
+      "timestamp": "2026-03-22T11:16:33.702790+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Синтаксис: Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    im",
+        "problem": "12 оси имат INSUFFICIENT_DATA защото нямат метрики в TRACKED"
+      },
+      "body_state": {
+        "ram_mb": 36.4,
+        "cpu_pct": 0.0,
+        "open_files": 2
+      }
+    },
+    {
+      "timestamp": "2026-03-22T11:16:36.093002+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/climate_global_risk_review_patch.py",
+        "problem": "Недостатъчен анализ на климатичните рискове и техните въздей"
+      },
+      "body_state": {
+        "ram_mb": 36.5,
+        "cpu_pct": 0.0,
+        "open_files": 2
+      }
+    },
+    {
+      "timestamp": "2026-03-22T12:02:00.014281+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/trend_tracker_patch.py",
+        "problem": "12 оси имат INSUFFICIENT_DATA защото нямат метрики в TRACKED"
+      },
+      "body_state": {
+        "ram_mb": 36.3,
+        "cpu_pct": 0.0,
+        "open_files": 2
+      }
+    },
+    {
+      "timestamp": "2026-03-22T12:02:03.026326+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/climate_global_risk_review_patch.py",
+        "problem": "Недостатъчен анализ на климатичните рискове и техните въздей"
+      },
+      "body_state": {
+        "ram_mb": 36.4,
+        "cpu_pct": 0.0,
+        "open_files": 2
+      }
+    },
+    {
+      "timestamp": "2026-03-24T08:11:21.715657+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/trend_tracker_patch.py",
+        "problem": "12 оси имат INSUFFICIENT_DATA защото нямат метрики в TRACKED"
+      },
+      "body_state": {
+        "ram_mb": 36.3,
+        "cpu_pct": 0.0,
+        "open_files": 2
+      }
+    },
+    {
+      "timestamp": "2026-03-24T08:11:24.088872+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/climate_global_risk_review_patch.py",
+        "problem": "Недостатъчен анализ на климатичните рискове и техните въздей"
+      },
+      "body_state": {
+        "ram_mb": 36.4,
+        "cpu_pct": 0.0,
+        "open_files": 2
+      }
+    },
+    {
+      "timestamp": "2026-03-25T10:07:24.041686+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/trend_tracker_patch.py",
+        "problem": "12 оси имат INSUFFICIENT_DATA защото нямат метрики в TRACKED"
+      },
+      "body_state": {
+        "ram_mb": 36.5,
+        "cpu_pct": 0.0,
+        "open_files": 2
+      }
+    },
+    {
+      "timestamp": "2026-03-25T10:07:27.790115+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/climate_global_risk_review_patch.py",
+        "problem": "Недостатъчен анализ на климатичните рискове и техните въздей"
+      },
+      "body_state": {
+        "ram_mb": 36.5,
+        "cpu_pct": 0.0,
+        "open_files": 2
+      }
+    },
+    {
+      "timestamp": "2026-03-25T11:51:55.119388+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/trend_tracker_patch.py",
+        "problem": "12 оси имат INSUFFICIENT_DATA защото нямат метрики в TRACKED"
+      },
+      "body_state": {
+        "ram_mb": 36.4,
+        "cpu_pct": 0.0,
+        "open_files": 2
+      }
+    },
+    {
+      "timestamp": "2026-03-25T11:51:58.013618+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/climate_global_risk_review_patch.py",
+        "problem": "Недостатъчен анализ на климатичните рискове и техните въздей"
+      },
+      "body_state": {
+        "ram_mb": 36.5,
+        "cpu_pct": 15.6,
+        "open_files": 2
+      }
+    },
+    {
+      "timestamp": "2026-03-27T08:14:53.884571+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/trend_tracker_patch.py",
+        "problem": "12 оси имат INSUFFICIENT_DATA защото нямат метрики в TRACKED"
+      },
+      "body_state": {
+        "ram_mb": 181.4,
+        "cpu_pct": 0.0,
+        "open_files": 6
+      }
+    },
+    {
+      "timestamp": "2026-03-27T08:14:56.043009+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/climate_global_risk_review_patch.py",
+        "problem": "Недостатъчен анализ на климатичните рискове и техните въздей"
+      },
+      "body_state": {
+        "ram_mb": 181.4,
+        "cpu_pct": 0.0,
+        "open_files": 6
+      }
+    },
+    {
+      "timestamp": "2026-03-27T16:34:21.605194+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/trend_tracker_patch.py",
+        "problem": "12 оси имат INSUFFICIENT_DATA защото нямат метрики в TRACKED"
+      },
+      "body_state": {
+        "ram_mb": 30.5,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-03-27T16:34:24.085488+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/climate_global_risk_review_patch.py",
+        "problem": "Недостатъчен анализ на климатичните рискове и техните въздей"
+      },
+      "body_state": {
+        "ram_mb": 30.6,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-03-27T16:44:09.230164+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан и тестван: agents/core/trend_tracker_patch.py",
+        "problem": "12 оси имат INSUFFICIENT_DATA защото нямат метрики в TRACKED"
+      },
+      "body_state": {
+        "ram_mb": 30.5,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-03-27T16:44:19.766131+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан и тестван: agents/core/climate_global_risk_review_patch.py",
+        "problem": "Недостатъчен анализ на климатичните рискове и техните въздей"
+      },
+      "body_state": {
+        "ram_mb": 30.7,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-03-27T16:48:27.525807+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Изпълнение грешка: TypeError: list indices must be integers or slices, not str",
+        "problem": "12 оси имат INSUFFICIENT_DATA защото нямат достатъчно истори"
+      },
+      "body_state": {
+        "ram_mb": 30.8,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-03-27T16:48:38.978633+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан и тестван: agents/core/climate_global_risk_review_patch.py",
+        "problem": "Недостатъчен анализ на климатичните рискове и техните въздей"
+      },
+      "body_state": {
+        "ram_mb": 30.9,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-03-27T16:50:03.729554+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан и тестван: agents/core/trend_tracker_patch.py",
+        "problem": "12 оси имат INSUFFICIENT_DATA защото нямат достатъчно истори"
+      },
+      "body_state": {
+        "ram_mb": 30.6,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-03-27T16:50:15.086052+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан и тестван: agents/core/climate_global_risk_review_patch.py",
+        "problem": "Недостатъчен анализ на климатичните рискове и техните въздей"
+      },
+      "body_state": {
+        "ram_mb": 30.8,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-03-28T10:55:16.794296+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан и тестван: agents/core/trend_tracker_patch.py",
+        "problem": "12 оси имат INSUFFICIENT_DATA защото нямат достатъчно истори"
+      },
+      "body_state": {
+        "ram_mb": 218.4,
+        "cpu_pct": 0.0,
+        "open_files": 6
+      }
+    },
+    {
+      "timestamp": "2026-03-28T10:55:28.486226+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Изпълнение грешка: IndexError: list index out of range",
+        "problem": "Недостатъчен анализ на климатичните рискове и техните въздей"
+      },
+      "body_state": {
+        "ram_mb": 218.5,
+        "cpu_pct": 0.0,
+        "open_files": 6
+      }
+    },
+    {
+      "timestamp": "2026-03-29T05:57:54.336121+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан и тестван: agents/core/trend_tracker_patch.py",
+        "problem": "12 оси имат INSUFFICIENT_DATA защото нямат достатъчно истори"
+      },
+      "body_state": {
+        "ram_mb": 30.3,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-03-29T05:58:05.888945+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан и тестван: agents/core/predictor_patch.py",
+        "problem": "Ниската точност на предсказанията за ECONOMY_WORK_REVIEW"
+      },
+      "body_state": {
+        "ram_mb": 30.5,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-03-29T09:04:09.913147+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан и тестван: agents/core/trend_tracker_patch.py",
+        "problem": "12 оси имат INSUFFICIENT_DATA защото нямат достатъчно истори"
+      },
+      "body_state": {
+        "ram_mb": 36.7,
+        "cpu_pct": 0.0,
+        "open_files": 2
+      }
+    },
+    {
+      "timestamp": "2026-03-29T09:04:12.680626+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Изпълнение грешка: UnicodeDecodeError: 'charmap' codec can't decode byte 0x81 in position 64: character maps to <undefi",
+        "problem": "Ниската точност на предсказанията за ECONOMY_WORK_REVIEW"
+      },
+      "body_state": {
+        "ram_mb": 36.8,
+        "cpu_pct": 15.5,
+        "open_files": 2
+      }
+    },
+    {
+      "timestamp": "2026-03-29T11:01:52.940197+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан и тестван: agents/core/trend_tracker_patch.py",
+        "problem": "12 оси имат INSUFFICIENT_DATA защото нямат достатъчно истори"
+      },
+      "body_state": {
+        "ram_mb": 36.7,
+        "cpu_pct": 0.0,
+        "open_files": 2
+      }
+    },
+    {
+      "timestamp": "2026-03-29T11:01:55.939095+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Синтаксис грешка: Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    im",
+        "problem": "Ниската точност на предсказанията за ECONOMY_WORK_REVIEW"
+      },
+      "body_state": {
+        "ram_mb": 36.6,
+        "cpu_pct": 0.0,
+        "open_files": 2
+      }
+    },
+    {
+      "timestamp": "2026-03-29T13:02:24.953239+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Синтаксис грешка: Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    im",
+        "problem": "12 оси имат INSUFFICIENT_DATA защото нямат достатъчно истори"
+      },
+      "body_state": {
+        "ram_mb": 36.5,
+        "cpu_pct": 0.0,
+        "open_files": 2
+      }
+    },
+    {
+      "timestamp": "2026-03-29T13:02:28.269298+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Синтаксис грешка: Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    im",
+        "problem": "Ниската точност на предсказанията за ECONOMY_WORK_REVIEW"
+      },
+      "body_state": {
+        "ram_mb": 36.6,
+        "cpu_pct": 0.0,
+        "open_files": 2
+      }
+    },
+    {
+      "timestamp": "2026-03-31T06:47:11.545672+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан и тестван: agents/core/trend_tracker_patch.py",
+        "problem": "12 оси имат INSUFFICIENT_DATA защото нямат достатъчно истори"
+      },
+      "body_state": {
+        "ram_mb": 36.9,
+        "cpu_pct": 0.0,
+        "open_files": 2
+      }
+    },
+    {
+      "timestamp": "2026-03-31T06:47:14.488351+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Синтаксис грешка: Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    im",
+        "problem": "Ниската точност на предсказанията за ECONOMY_WORK_REVIEW"
+      },
+      "body_state": {
+        "ram_mb": 36.9,
+        "cpu_pct": 0.0,
+        "open_files": 2
+      }
+    },
+    {
+      "timestamp": "2026-04-01T09:03:49.865409+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан и тестван: agents/core/trend_tracker_patch.py",
+        "problem": "12 оси имат INSUFFICIENT_DATA защото нямат достатъчно истори"
+      },
+      "body_state": {
+        "ram_mb": 36.8,
+        "cpu_pct": 0.0,
+        "open_files": 2
+      }
+    },
+    {
+      "timestamp": "2026-04-01T09:03:52.836910+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Синтаксис грешка: Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    im",
+        "problem": "Ниската точност на предсказанията за ECONOMY_WORK_REVIEW"
+      },
+      "body_state": {
+        "ram_mb": 36.7,
+        "cpu_pct": 0.0,
+        "open_files": 2
+      }
+    },
+    {
+      "timestamp": "2026-04-03T13:16:30.183799+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан и тестван: agents/core/trend_tracker_patch.py",
+        "problem": "12 оси имат INSUFFICIENT_DATA защото нямат достатъчно истори"
+      },
+      "body_state": {
+        "ram_mb": 36.8,
+        "cpu_pct": 0.0,
+        "open_files": 2
+      }
+    },
+    {
+      "timestamp": "2026-04-03T13:16:33.328791+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Изпълнение грешка: UnicodeDecodeError: 'charmap' codec can't decode byte 0x81 in position 64: character maps to <undefi",
+        "problem": "Ниската точност на предсказанията за ECONOMY_WORK_REVIEW"
+      },
+      "body_state": {
+        "ram_mb": 36.8,
+        "cpu_pct": 0.0,
+        "open_files": 2
+      }
+    },
+    {
+      "timestamp": "2026-04-03T15:58:29.213101+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан и тестван: agents/core/trend_tracker_patch.py",
+        "problem": "12 оси имат INSUFFICIENT_DATA защото нямат достатъчно истори"
+      },
+      "body_state": {
+        "ram_mb": 31.2,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-04-03T15:58:40.449547+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Изпълнение грешка: TypeError: unsupported operand type(s) for *=: 'dict' and 'float'",
+        "problem": "Ниската точност на предсказанията за ECONOMY_WORK_REVIEW"
+      },
+      "body_state": {
+        "ram_mb": 31.4,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-04-03T16:17:00.852292+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан и тестван: agents/core/trend_tracker_patch.py",
+        "problem": "12 оси имат INSUFFICIENT_DATA защото нямат достатъчно истори"
+      },
+      "body_state": {
+        "ram_mb": 31.1,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-04-03T16:17:12.033602+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан и тестван: agents/core/predictor_patch.py",
+        "problem": "Ниската точност на предсказанията за ECONOMY_WORK_REVIEW"
+      },
+      "body_state": {
+        "ram_mb": 31.2,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-04-04T17:29:49.750649+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан и тестван: agents/core/trend_tracker_patch.py",
+        "problem": "12 оси имат INSUFFICIENT_DATA защото нямат достатъчно истори"
+      },
+      "body_state": {
+        "ram_mb": 30.7,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-04-04T17:30:02.347305+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан и тестван: agents/core/predictor_patch.py",
+        "problem": "Ниската точност на предсказанията за ECONOMY_WORK_REVIEW"
+      },
+      "body_state": {
+        "ram_mb": 30.8,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-04-05T14:02:07.949964+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Синтаксис грешка: Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    im",
+        "problem": "12 оси имат INSUFFICIENT_DATA защото нямат достатъчно истори"
+      },
+      "body_state": {
+        "ram_mb": 36.9,
+        "cpu_pct": 0.0,
+        "open_files": 2
+      }
+    },
+    {
+      "timestamp": "2026-04-05T14:02:10.646313+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Синтаксис грешка: Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    im",
+        "problem": "Ниската точност на предсказанията за ECONOMY_WORK_REVIEW"
+      },
+      "body_state": {
+        "ram_mb": 37.0,
+        "cpu_pct": 0.0,
+        "open_files": 2
+      }
+    },
+    {
+      "timestamp": "2026-04-05T16:03:11.317547+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан и тестван: agents/core/trend_tracker_patch.py",
+        "problem": "12 оси имат INSUFFICIENT_DATA защото нямат достатъчно истори"
+      },
+      "body_state": {
+        "ram_mb": 36.9,
+        "cpu_pct": 0.0,
+        "open_files": 2
+      }
+    },
+    {
+      "timestamp": "2026-04-05T16:03:14.553669+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Синтаксис грешка: Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    im",
+        "problem": "Ниската точност на предсказанията за ECONOMY_WORK_REVIEW"
+      },
+      "body_state": {
+        "ram_mb": 37.0,
+        "cpu_pct": 0.0,
+        "open_files": 2
+      }
+    },
+    {
+      "timestamp": "2026-04-05T17:07:32.093707+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан и тестван: agents/core/trend_tracker_patch.py",
+        "problem": "12 оси имат INSUFFICIENT_DATA защото нямат достатъчно истори"
+      },
+      "body_state": {
+        "ram_mb": 36.7,
+        "cpu_pct": 0.0,
+        "open_files": 2
+      }
+    },
+    {
+      "timestamp": "2026-04-05T17:07:34.804773+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Синтаксис грешка: Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    im",
+        "problem": "Ниската точност на предсказанията за ECONOMY_WORK_REVIEW"
+      },
+      "body_state": {
+        "ram_mb": 36.7,
+        "cpu_pct": 0.0,
+        "open_files": 2
+      }
+    },
+    {
+      "timestamp": "2026-04-08T16:49:28.568785+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан и тестван: agents/core/trend_tracker_patch.py",
+        "problem": "12 оси имат INSUFFICIENT_DATA защото нямат достатъчно истори"
+      },
+      "body_state": {
+        "ram_mb": 36.9,
+        "cpu_pct": 0.0,
+        "open_files": 2
+      }
+    },
+    {
+      "timestamp": "2026-04-08T16:49:31.599468+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Синтаксис грешка: Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    im",
+        "problem": "Ниската точност на предсказанията за ECONOMY_WORK_REVIEW"
+      },
+      "body_state": {
+        "ram_mb": 36.9,
+        "cpu_pct": 0.0,
+        "open_files": 2
+      }
+    },
+    {
+      "timestamp": "2026-04-13T17:43:41.711943+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/economy_work_review_patch.py",
+        "problem": "Грешката в предсказанието за ECONOMY_WORK_REVIEW е 24.0, кое"
+      },
+      "body_state": {
+        "ram_mb": 30.5,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-04-13T17:43:44.048622+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/governance_institutions_review_patch.py",
+        "problem": "Моделът за прогнозиране на институциите на управление показв"
+      },
+      "body_state": {
+        "ram_mb": 30.6,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-04-27T07:12:50.887300+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/economy_work_review_patch.py",
+        "problem": "Грешката в предсказанието за ECONOMY_WORK_REVIEW е 24.0, кое"
+      },
+      "body_state": {
+        "ram_mb": 30.7,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-04-27T07:12:53.619846+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/governance_institutions_review_patch.py",
+        "problem": "Моделът за прогнозиране на институциите на управление показв"
+      },
+      "body_state": {
+        "ram_mb": 30.9,
+        "cpu_pct": 10.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-04-27T07:28:36.904254+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/economy_work_review_patch.py",
+        "problem": "Грешката в предсказанието за ECONOMY_WORK_REVIEW е 24.0, кое"
+      },
+      "body_state": {
+        "ram_mb": 30.9,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-04-27T07:28:39.290764+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/governance_institutions_review_patch.py",
+        "problem": "Моделът за прогнозиране на институциите на управление показв"
+      },
+      "body_state": {
+        "ram_mb": 31.0,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-04-27T07:41:06.107110+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/economy_work_review_patch.py",
+        "problem": "Грешката в предсказанието за ECONOMY_WORK_REVIEW е 24.0, кое"
+      },
+      "body_state": {
+        "ram_mb": 30.8,
+        "cpu_pct": 10.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-04-27T07:41:08.526244+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/governance_institutions_review_patch.py",
+        "problem": "Моделът за прогнозиране на институциите на управление показв"
+      },
+      "body_state": {
+        "ram_mb": 31.1,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-04-27T07:53:34.450923+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/economy_work_review_patch.py",
+        "problem": "Грешката в предсказанието за ECONOMY_WORK_REVIEW е 24.0, кое"
+      },
+      "body_state": {
+        "ram_mb": 30.8,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-04-27T07:53:36.945757+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/governance_institutions_review_patch.py",
+        "problem": "Моделът за прогнозиране на институциите на управление показв"
+      },
+      "body_state": {
+        "ram_mb": 31.1,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-04-27T08:43:26.783963+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/technology_ai_review_patch.py",
+        "problem": "Предсказанието за технологиите и изкуствения интелект има гр"
+      },
+      "body_state": {
+        "ram_mb": 28.5,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-04-27T08:44:25.407771+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/energy_review_patch.py",
+        "problem": "Прогнозната грешка за ENERGY_REVIEW е 16.3, което надхвърля "
+      },
+      "body_state": {
+        "ram_mb": 28.6,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-04-27T09:41:23.474332+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/technology_ai_review_patch.py",
+        "problem": "Предсказанието за технологиите и изкуствения интелект има гр"
+      },
+      "body_state": {
+        "ram_mb": 28.6,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-04-27T09:41:41.377003+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/energy_review_patch.py",
+        "problem": "Прогнозната грешка за ENERGY_REVIEW е 16.3, което надхвърля "
+      },
+      "body_state": {
+        "ram_mb": 28.7,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-04-27T09:50:30.709109+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/technology_ai_review_patch.py",
+        "problem": "Предсказанието за технологиите и изкуствения интелект има гр"
+      },
+      "body_state": {
+        "ram_mb": 28.5,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-04-27T09:50:44.964999+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/energy_review_patch.py",
+        "problem": "Прогнозната грешка за ENERGY_REVIEW е 16.3, което надхвърля "
+      },
+      "body_state": {
+        "ram_mb": 28.7,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-04-27T10:06:42.961127+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/technology_ai_review_patch.py",
+        "problem": "Предсказанието за технологиите и изкуствения интелект има гр"
+      },
+      "body_state": {
+        "ram_mb": 28.5,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-04-27T10:07:12.728809+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/energy_review_patch.py",
+        "problem": "Прогнозната грешка за ENERGY_REVIEW е 16.3, което надхвърля "
+      },
+      "body_state": {
+        "ram_mb": 28.8,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-04-27T10:34:14.728368+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/technology_ai_review_patch.py",
+        "problem": "Предсказанието за технологиите и изкуствения интелект има гр"
+      },
+      "body_state": {
+        "ram_mb": 28.3,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-04-27T10:34:14.871631+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/energy_review_patch.py",
+        "problem": "Прогнозната грешка за ENERGY_REVIEW е 16.3, което надхвърля "
+      },
+      "body_state": {
+        "ram_mb": 28.5,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-04-27T11:17:57.736637+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/technology_ai_review_patch.py",
+        "problem": "Предсказанието за технологиите и изкуствения интелект има гр"
+      },
+      "body_state": {
+        "ram_mb": 28.1,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-04-27T11:17:57.879120+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/energy_review_patch.py",
+        "problem": "Прогнозната грешка за ENERGY_REVIEW е 16.3, което надхвърля "
+      },
+      "body_state": {
+        "ram_mb": 28.4,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-04-27T13:50:46.228792+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/technology_ai_review_patch.py",
+        "problem": "Предсказанието за технологиите и изкуствения интелект има гр"
+      },
+      "body_state": {
+        "ram_mb": 28.1,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-04-27T13:50:46.371346+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/energy_review_patch.py",
+        "problem": "Прогнозната грешка за ENERGY_REVIEW е 16.3, което надхвърля "
+      },
+      "body_state": {
+        "ram_mb": 28.4,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-04-27T15:30:40.465404+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/technology_ai_review_patch.py",
+        "problem": "Предсказанието за технологиите и изкуствения интелект има гр"
+      },
+      "body_state": {
+        "ram_mb": 28.7,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-04-27T15:30:40.615704+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/energy_review_patch.py",
+        "problem": "Прогнозната грешка за ENERGY_REVIEW е 16.3, което надхвърля "
+      },
+      "body_state": {
+        "ram_mb": 28.9,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-04-27T15:32:29.671799+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/technology_ai_review_patch.py",
+        "problem": "Предсказанието за технологиите и изкуствения интелект има гр"
+      },
+      "body_state": {
+        "ram_mb": 28.2,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-04-27T15:32:29.816309+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/energy_review_patch.py",
+        "problem": "Прогнозната грешка за ENERGY_REVIEW е 16.3, което надхвърля "
+      },
+      "body_state": {
+        "ram_mb": 28.4,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-04-27T15:50:32.445264+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Runtime грешка: Traceback (most recent call last):\n  File \"/tmp/tmp17ltlprj.py\", line 3, in <module>\n    BASE = pathlib.Path(__file__).resolve().parents[2]\n           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^\n  Fil",
+        "problem": "Предсказанието за технологиите и изкуствения интелект има гр"
+      },
+      "body_state": {
+        "ram_mb": 28.4,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-04-27T15:50:32.709288+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Runtime грешка: Traceback (most recent call last):\n  File \"/tmp/tmp72kegks4.py\", line 3, in <module>\n    BASE = pathlib.Path(__file__).resolve().parents[2]\n           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^\n  Fil",
+        "problem": "Прогнозната грешка за ENERGY_REVIEW е 16.3, което надхвърля "
+      },
+      "body_state": {
+        "ram_mb": 28.7,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-04-29T06:21:24.624558+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Runtime грешка: Traceback (most recent call last):\n  File \"/tmp/tmpo1f_w3xh.py\", line 6, in <module>\n    BASE = pathlib.Path(__file__).resolve().parents[2]\n           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^\n  Fil",
+        "problem": "Предсказанието за технологиите и изкуствения интелект има гр"
+      },
+      "body_state": {
+        "ram_mb": 28.2,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-04-29T06:21:24.910519+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Runtime грешка: Traceback (most recent call last):\n  File \"/tmp/tmpk7v9atzs.py\", line 6, in <module>\n    BASE = pathlib.Path(__file__).resolve().parents[2]\n           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^\n  Fil",
+        "problem": "Прогнозната грешка за ENERGY_REVIEW е 16.3, което надхвърля "
+      },
+      "body_state": {
+        "ram_mb": 28.4,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-04-29T09:03:12.903970+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Runtime грешка: Traceback (most recent call last):\n  File \"/tmp/tmpwwtoyj2y.py\", line 6, in <module>\n    BASE = pathlib.Path(__file__).resolve().parents[2]\n           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^\n  Fil",
+        "problem": "Предсказанието за технологиите и изкуствения интелект има гр"
+      },
+      "body_state": {
+        "ram_mb": 28.5,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-04-29T09:03:13.190015+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Runtime грешка: Traceback (most recent call last):\n  File \"/tmp/tmphvfqalp1.py\", line 6, in <module>\n    BASE = pathlib.Path(__file__).resolve().parents[2]\n           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^\n  Fil",
+        "problem": "Прогнозната грешка за ENERGY_REVIEW е 16.3, което надхвърля "
+      },
+      "body_state": {
+        "ram_mb": 28.7,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-04-29T09:07:40.546635+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Runtime грешка: Traceback (most recent call last):\n  File \"/tmp/tmpz3hkazi1.py\", line 6, in <module>\n    BASE = pathlib.Path(__file__).resolve().parents[2]\n           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^\n  Fil",
+        "problem": "Предсказанието за технологиите и изкуствения интелект има гр"
+      },
+      "body_state": {
+        "ram_mb": 27.4,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-04-29T09:07:40.850203+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Runtime грешка: Traceback (most recent call last):\n  File \"/tmp/tmpa_c25x62.py\", line 6, in <module>\n    BASE = pathlib.Path(__file__).resolve().parents[2]\n           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^\n  Fil",
+        "problem": "Прогнозната грешка за ENERGY_REVIEW е 16.3, което надхвърля "
+      },
+      "body_state": {
+        "ram_mb": 27.7,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-04-29T09:11:08.524260+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Runtime грешка: Traceback (most recent call last):\n  File \"/tmp/tmpnofc8_ls.py\", line 37, in <module>\n    main()\n  File \"/tmp/tmpnofc8_ls.py\", line 33, in main\n    correction = technology_ai_review()\n                ",
+        "problem": "Предсказанието за технологиите и изкуствения интелект има гр"
+      },
+      "body_state": {
+        "ram_mb": 29.8,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-04-29T09:13:11.042636+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Runtime грешка: Traceback (most recent call last):\n  File \"/tmp/tmpvqokrdv1.py\", line 39, in <module>\n    main()\n  File \"/tmp/tmpvqokrdv1.py\", line 34, in main\n    energy_review_data = load_energy_review_snapshot()\n ",
+        "problem": "Прогнозната грешка за ENERGY_REVIEW е 16.3, което надхвърля "
+      },
+      "body_state": {
+        "ram_mb": 22.5,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-04-29T09:25:40.311977+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Runtime грешка: Traceback (most recent call last):\n  File \"/tmp/tmpvmc_zwwm.py\", line 8, in <module>\n    from memory.semantic_memory import remember, search\nImportError: cannot import name 'search' from 'memory.seman",
+        "problem": "Предсказанието за технологиите и изкуствения интелект има гр"
+      },
+      "body_state": {
+        "ram_mb": 27.7,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-04-29T09:27:09.886176+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/energy_review_patch.py",
+        "problem": "Прогнозната грешка за ENERGY_REVIEW е 16.3, което надхвърля "
+      },
+      "body_state": {
+        "ram_mb": 21.5,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-04-29T10:25:50.737953+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/technology_ai_review_patch.py",
+        "problem": "Предсказанието за технологиите и изкуствения интелект има гр"
+      },
+      "body_state": {
+        "ram_mb": 28.0,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-04-29T10:27:23.745347+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/energy_review_patch.py",
+        "problem": "Прогнозната грешка за ENERGY_REVIEW е 16.3, което надхвърля "
+      },
+      "body_state": {
+        "ram_mb": 20.7,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-04-29T12:04:14.328010+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/technology_ai_review_patch.py",
+        "problem": "Предсказанието за технологиите и изкуствения интелект има гр"
+      },
+      "body_state": {
+        "ram_mb": 27.0,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-04-29T12:05:26.004579+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/energy_review_patch.py",
+        "problem": "Прогнозната грешка за ENERGY_REVIEW е 16.3, което надхвърля "
+      },
+      "body_state": {
+        "ram_mb": 27.1,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-04-29T12:14:11.446671+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/technology_ai_review_patch.py",
+        "problem": "Предсказанието за технологиите и изкуствения интелект има гр"
+      },
+      "body_state": {
+        "ram_mb": 27.9,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-04-29T12:15:20.384471+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/energy_review_patch.py",
+        "problem": "Прогнозната грешка за ENERGY_REVIEW е 16.3, което надхвърля "
+      },
+      "body_state": {
+        "ram_mb": 23.3,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-04-29T14:17:52.034881+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/technology_ai_review_patch.py",
+        "problem": "Предсказанието за технологиите и изкуствения интелект има гр"
+      },
+      "body_state": {
+        "ram_mb": 28.2,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-04-29T14:19:06.827756+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/energy_review_patch.py",
+        "problem": "Прогнозната грешка за ENERGY_REVIEW е 16.3, което надхвърля "
+      },
+      "body_state": {
+        "ram_mb": 22.1,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-04-29T14:36:45.815190+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/technology_ai_review_patch.py",
+        "problem": "Предсказанието за технологиите и изкуствения интелект има гр"
+      },
+      "body_state": {
+        "ram_mb": 28.2,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-04-29T14:38:47.847523+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Runtime грешка: Traceback (most recent call last):\n  File \"/usr/lib/python3/dist-packages/requests/models.py\", line 971, in json\n    return complexjson.loads(self.text, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "problem": "Прогнозната грешка за ENERGY_REVIEW е 16.3, което надхвърля "
+      },
+      "body_state": {
+        "ram_mb": 25.5,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-04-29T14:50:21.763384+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/technology_ai_review_patch.py",
+        "problem": "Предсказанието за технологиите и изкуствения интелект има гр"
+      },
+      "body_state": {
+        "ram_mb": 26.7,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-04-29T14:51:31.615095+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/energy_review_patch.py",
+        "problem": "Прогнозната грешка за ENERGY_REVIEW е 16.3, което надхвърля "
+      },
+      "body_state": {
+        "ram_mb": 22.7,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-04-29T15:18:23.841137+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/technology_ai_review_patch.py",
+        "problem": "Предсказанието за технологиите и изкуствения интелект има гр"
+      },
+      "body_state": {
+        "ram_mb": 28.6,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-04-29T15:19:28.575885+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/energy_review_patch.py",
+        "problem": "Прогнозната грешка за ENERGY_REVIEW е 16.3, което надхвърля "
+      },
+      "body_state": {
+        "ram_mb": 28.1,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-04-29T15:20:50.832882+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Command '['/usr/bin/python3', '/tmp/tmpmwhpdljj.py']' timed out after 15 seconds",
+        "problem": "Предсказанието е значително подценено според реалните стойно"
+      },
+      "body_state": {
+        "ram_mb": 14.9,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-04-29T15:22:51.391246+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Runtime грешка: Traceback (most recent call last):\n  File \"/tmp/tmpy0bmousa.py\", line 49, in <module>\n    main()\n  File \"/tmp/tmpy0bmousa.py\", line 42, in main\n    config = load_config(config_file_path)\n             ",
+        "problem": "Предсказанията за глобалната климатична риска са надценени, "
+      },
+      "body_state": {
+        "ram_mb": 21.3,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-04-29T15:24:13.888582+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Command '['/usr/bin/python3', '/tmp/tmpg8pnkcks.py']' timed out after 15 seconds",
+        "problem": "Предсказанието за нивото на добрещо бъде подценено поради не"
+      },
+      "body_state": {
+        "ram_mb": 17.1,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-04-30T05:33:27.790118+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/technology_ai_review_patch.py",
+        "problem": "Предсказанието за технологиите и изкуствения интелект има гр"
+      },
+      "body_state": {
+        "ram_mb": 28.2,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-04-30T05:35:30.448309+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Runtime грешка: Traceback (most recent call last):\n  File \"/tmp/tmpamc3l0rn.py\", line 40, in <module>\n    main()\n  File \"/tmp/tmpamc3l0rn.py\", line 33, in main\n    corrected_energy_review = energy_review_patch()\n    ",
+        "problem": "Прогнозната грешка за ENERGY_REVIEW е 16.3, което надхвърля "
+      },
+      "body_state": {
+        "ram_mb": 26.7,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-04-30T05:37:32.644049+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/economy_work_review_patch.py",
+        "problem": "Предсказанието е значително подценено според реалните стойно"
+      },
+      "body_state": {
+        "ram_mb": 20.7,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-04-30T05:39:37.332931+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Runtime грешка: Traceback (most recent call last):\n  File \"/tmp/tmpfuk3cyi3.py\", line 64, in <module>\n    main()\n  File \"/tmp/tmpfuk3cyi3.py\", line 61, in main\n    update_climate_global_risk_review(corrected_data)\n  ",
+        "problem": "Предсказанията за глобалната климатична риска са надценени, "
+      },
+      "body_state": {
+        "ram_mb": 19.4,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-04-30T05:41:50.455745+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/human_well_being_review_patch.py",
+        "problem": "Предсказанието за нивото на добрещо бъде подценено поради не"
+      },
+      "body_state": {
+        "ram_mb": 18.9,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-04-30T07:25:48.381481+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/technology_ai_review_patch.py",
+        "problem": "Предсказанието за технологиите и изкуствения интелект има гр"
+      },
+      "body_state": {
+        "ram_mb": 28.5,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-04-30T07:27:42.334288+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/energy_review_patch.py",
+        "problem": "Прогнозната грешка за ENERGY_REVIEW е 16.3, което надхвърля "
+      },
+      "body_state": {
+        "ram_mb": 22.0,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-04-30T07:29:06.473834+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Command '['/usr/bin/python3', '/tmp/tmptv58ce4m.py']' timed out after 15 seconds",
+        "problem": "Предсказанието е значително подценено според реалните стойно"
+      },
+      "body_state": {
+        "ram_mb": 14.1,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-04-30T07:30:37.187893+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/climate_global_risk_review_patch.py",
+        "problem": "Предсказанията за глобалната климатична риска са надценени, "
+      },
+      "body_state": {
+        "ram_mb": 13.5,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-04-30T07:31:56.304995+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Runtime грешка: Traceback (most recent call last):\n  File \"/tmp/tmp425kd12v.py\", line 42, in <module>\n    calibrate_human_well_being_model()\n  File \"/tmp/tmp425kd12v.py\", line 38, in calibrate_human_well_being_model\n",
+        "problem": "Предсказанието за нивото на добрещо бъде подценено поради не"
+      },
+      "body_state": {
+        "ram_mb": 13.1,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-04-30T08:30:46.741893+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/technology_ai_review_patch.py",
+        "problem": "Предсказанието за технологиите и изкуствения интелект има гр"
+      },
+      "body_state": {
+        "ram_mb": 28.1,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-04-30T08:32:04.225547+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/energy_review_patch.py",
+        "problem": "Прогнозната грешка за ENERGY_REVIEW е 16.3, което надхвърля "
+      },
+      "body_state": {
+        "ram_mb": 25.0,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-04-30T08:33:26.758501+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Command '['/usr/bin/python3', '/tmp/tmp88koy72u.py']' timed out after 15 seconds",
+        "problem": "Предсказанието е значително подценено според реалните стойно"
+      },
+      "body_state": {
+        "ram_mb": 15.9,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-04-30T08:35:15.593665+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/climate_global_risk_review_patch.py",
+        "problem": "Предсказанията за глобалната климатична риска са надценени, "
+      },
+      "body_state": {
+        "ram_mb": 14.7,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-04-30T08:37:18.592456+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Синтаксис: Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n  File",
+        "problem": "Предсказанието за нивото на добрещо бъде подценено поради не"
+      },
+      "body_state": {
+        "ram_mb": 19.1,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-05-01T06:58:30.951403+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/technology_ai_review_patch.py",
+        "problem": "Предсказанието за технологиите и изкуствения интелект има гр"
+      },
+      "body_state": {
+        "ram_mb": 28.6,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-05-01T07:00:35.071398+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Runtime грешка: Traceback (most recent call last):\n  File \"/usr/lib/python3/dist-packages/requests/models.py\", line 971, in json\n    return complexjson.loads(self.text, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "problem": "Прогнозната грешка за ENERGY_REVIEW е 16.3, което надхвърля "
+      },
+      "body_state": {
+        "ram_mb": 30.8,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-05-01T07:02:37.696652+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/economy_work_review_patch.py",
+        "problem": "Предсказанието е значително подценено според реалните стойно"
+      },
+      "body_state": {
+        "ram_mb": 30.9,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-05-01T07:04:13.927317+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/climate_global_risk_review_patch.py",
+        "problem": "Предсказанията за глобалната климатична риска са надценени, "
+      },
+      "body_state": {
+        "ram_mb": 30.9,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-05-01T07:05:24.318794+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Runtime грешка: Traceback (most recent call last):\n  File \"/tmp/tmpz_15aylr.py\", line 29, in <module>\n    remember(\"human_well_being_calibration_data\", CALIBRATION_DATA_PATH)\n  File \"/mnt/c/Users/emilb/Desktop/AGI/CO",
+        "problem": "Предсказанието за нивото на добрещо бъде подценено поради не"
+      },
+      "body_state": {
+        "ram_mb": 30.9,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-05-01T07:31:25.041769+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/technology_ai_review_patch.py",
+        "problem": "Предсказанието за технологиите и изкуствения интелект има гр"
+      },
+      "body_state": {
+        "ram_mb": 28.4,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-05-01T07:32:47.467518+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/energy_review_patch.py",
+        "problem": "Прогнозната грешка за ENERGY_REVIEW е 16.3, което надхвърля "
+      },
+      "body_state": {
+        "ram_mb": 27.5,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-05-01T07:34:15.047212+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Command '['/usr/bin/python3', '/tmp/tmps9bahk_n.py']' timed out after 15 seconds",
+        "problem": "Предсказанието е значително подценено според реалните стойно"
+      },
+      "body_state": {
+        "ram_mb": 16.8,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-05-01T07:39:18.831137+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/climate_global_risk_review_patch.py",
+        "problem": "Предсказанията за глобалната климатична риска са надценени, "
+      },
+      "body_state": {
+        "ram_mb": 14.9,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-05-01T07:40:40.992266+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Runtime грешка: Traceback (most recent call last):\n  File \"/tmp/tmpuf9gaqa0.py\", line 59, in <module>\n    run_calibration_patch()\n  File \"/tmp/tmpuf9gaqa0.py\", line 44, in run_calibration_patch\n    current_model_pred",
+        "problem": "Предсказанието за нивото на добрещо бъде подценено поради не"
+      },
+      "body_state": {
+        "ram_mb": 13.9,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-05-01T07:41:30.217642+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/technology_ai_review_patch.py",
+        "problem": "Предсказанието за технологиите и изкуствения интелект има гр"
+      },
+      "body_state": {
+        "ram_mb": 27.8,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-05-01T07:43:03.226874+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/energy_review_patch.py",
+        "problem": "Прогнозната грешка за ENERGY_REVIEW е 16.3, което надхвърля "
+      },
+      "body_state": {
+        "ram_mb": 28.1,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-05-01T07:45:15.281458+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Command '['/usr/bin/python3', '/tmp/tmpxwg6fwg_.py']' timed out after 15 seconds",
+        "problem": "Предсказанието е значително подценено според реалните стойно"
+      },
+      "body_state": {
+        "ram_mb": 28.1,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-05-01T07:47:01.433919+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/climate_global_risk_review_patch.py",
+        "problem": "Предсказанията за глобалната климатична риска са надценени, "
+      },
+      "body_state": {
+        "ram_mb": 28.1,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-05-01T07:48:38.818735+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Runtime грешка: Traceback (most recent call last):\n  File \"/tmp/tmpvwhebn98.py\", line 33, in <module>\n    correction_factor = calibration_data['correction_factor']\n                        ~~~~~~~~~~~~~~~~^^^^^^^^^^^^",
+        "problem": "Предсказанието за нивото на добрещо бъде подценено поради не"
+      },
+      "body_state": {
+        "ram_mb": 28.2,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-05-01T07:55:52.807051+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/technology_ai_review_patch.py",
+        "problem": "Предсказанието за технологиите и изкуствения интелект има гр"
+      },
+      "body_state": {
+        "ram_mb": 27.8,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-05-01T07:57:28.344153+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/technology_ai_review_patch.py",
+        "problem": "Предсказанието за технологиите и изкуствения интелект има гр"
+      },
+      "body_state": {
+        "ram_mb": 28.8,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-05-01T07:58:36.581865+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/energy_review_patch.py",
+        "problem": "Прогнозната грешка за ENERGY_REVIEW е 16.3, което надхвърля "
+      },
+      "body_state": {
+        "ram_mb": 24.7,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-05-01T08:00:07.377897+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Runtime грешка: Traceback (most recent call last):\n  File \"/tmp/tmpv2urxuqn.py\", line 56, in <module>\n    result = predict_with_calibration()\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/tmpv2urxuqn.py\", line",
+        "problem": "Предсказанието е значително подценено според реалните стойно"
+      },
+      "body_state": {
+        "ram_mb": 20.3,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-05-01T08:08:20.162810+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/technology_ai_review_patch.py",
+        "problem": "Предсказанието за технологиите и изкуствения интелект има гр"
+      },
+      "body_state": {
+        "ram_mb": 28.8,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-05-01T08:09:45.486126+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/energy_review_patch.py",
+        "problem": "Прогнозната грешка за ENERGY_REVIEW е 16.3, което надхвърля "
+      },
+      "body_state": {
+        "ram_mb": 26.8,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-05-01T08:11:02.893937+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Command '['/usr/bin/python3', '/tmp/tmp8dohg30p.py']' timed out after 15 seconds",
+        "problem": "Предсказанието е значително подценено според реалните стойно"
+      },
+      "body_state": {
+        "ram_mb": 17.4,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-05-01T08:12:44.844284+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/climate_global_risk_review_patch.py",
+        "problem": "Предсказанията за глобалната климатична риска са надценени, "
+      },
+      "body_state": {
+        "ram_mb": 16.0,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-05-01T08:13:57.203958+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/human_well_being_review_patch.py",
+        "problem": "Предсказанието за нивото на добрещо бъде подценено поради не"
+      },
+      "body_state": {
+        "ram_mb": 15.9,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-05-01T09:21:01.667809+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/technology_ai_review_patch.py",
+        "problem": "Предсказанието за технологиите и изкуствения интелект има гр"
+      },
+      "body_state": {
+        "ram_mb": 28.3,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-05-01T09:22:14.784333+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/energy_review_patch.py",
+        "problem": "Прогнозната грешка за ENERGY_REVIEW е 16.3, което надхвърля "
+      },
+      "body_state": {
+        "ram_mb": 25.3,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-05-01T09:24:15.408101+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Runtime грешка: Traceback (most recent call last):\n  File \"/tmp/tmpas6a1xmx.py\", line 33, in <module>\n    review_result = economy_work_review()\n                    ^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/tmpas6a1xmx.py\", ",
+        "problem": "Предсказанието е значително подценено според реалните стойно"
+      },
+      "body_state": {
+        "ram_mb": 27.6,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-05-01T09:26:16.899431+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/climate_global_risk_review_patch.py",
+        "problem": "Предсказанията за глобалната климатична риска са надценени, "
+      },
+      "body_state": {
+        "ram_mb": 22.6,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-05-01T09:28:18.085058+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/human_well_being_review_patch.py",
+        "problem": "Предсказанието за нивото на добрещо бъде подценено поради не"
+      },
+      "body_state": {
+        "ram_mb": 19.7,
+        "cpu_pct": 0.0,
+        "open_files": 0
+      }
+    },
+    {
+      "timestamp": "2026-05-03T08:43:24.652373+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/technology_ai_review_patch.py",
+        "problem": "Предсказанието за технологиите и изкуствения интелект има гр"
+      },
+      "body_state": {
+        "ram_mb": 152.4,
+        "cpu_pct": 0.0,
+        "open_files": 6
+      }
+    },
+    {
+      "timestamp": "2026-05-03T08:43:45.042737+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Синтаксис: Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n  File",
+        "problem": "Прогнозната грешка за ENERGY_REVIEW е 16.3, което надхвърля "
+      },
+      "body_state": {
+        "ram_mb": 153.5,
+        "cpu_pct": 0.0,
+        "open_files": 6
+      }
+    },
+    {
+      "timestamp": "2026-05-03T08:44:25.160151+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/economy_work_review_patch.py",
+        "problem": "Предсказанието е значително подценено според реалните стойно"
+      },
+      "body_state": {
+        "ram_mb": 153.5,
+        "cpu_pct": 0.0,
+        "open_files": 6
+      }
+    },
+    {
+      "timestamp": "2026-05-03T08:44:48.751127+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Runtime грешка: Traceback (most recent call last):\n  File \"/tmp/tmpg4c8flfq.py\", line 4, in <module>\n    웢\nNameError: name '웢' is not defined\n",
+        "problem": "Предсказанията за глобалната климатична риска са надценени, "
+      },
+      "body_state": {
+        "ram_mb": 154.0,
+        "cpu_pct": 0.0,
+        "open_files": 6
+      }
+    },
+    {
+      "timestamp": "2026-05-03T08:45:20.381011+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Runtime грешка: Traceback (most recent call last):\n  File \"/tmp/tmptx_w9h5o.py\", line 4, in <module>\n    มหาวิทยาลัย\nNameError: name 'มหาวิทยาลัย' is not defined\n",
+        "problem": "Предсказанието за нивото на добрещо бъде подценено поради не"
+      },
+      "body_state": {
+        "ram_mb": 153.7,
+        "cpu_pct": 0.0,
+        "open_files": 6
+      }
+    },
+    {
+      "timestamp": "2026-05-04T06:47:59.328755+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/technology_ai_review_patch.py",
+        "problem": "Предсказанието за технологиите и изкуствения интелект има гр"
+      },
+      "body_state": {
+        "ram_mb": 153.7,
+        "cpu_pct": 0.0,
+        "open_files": 6
+      }
+    },
+    {
+      "timestamp": "2026-05-04T06:48:21.152531+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Runtime грешка: Traceback (most recent call last):\n  File \"/tmp/tmpvcws_8g5.py\", line 4, in <module>\n    Aynı\nNameError: name 'Aynı' is not defined\n",
+        "problem": "Прогнозната грешка за ENERGY_REVIEW е 16.3, което надхвърля "
+      },
+      "body_state": {
+        "ram_mb": 155.3,
+        "cpu_pct": 0.0,
+        "open_files": 6
+      }
+    },
+    {
+      "timestamp": "2026-05-04T06:48:38.228228+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/economy_work_review_patch.py",
+        "problem": "Предсказанието е значително подценено според реалните стойно"
+      },
+      "body_state": {
+        "ram_mb": 155.0,
+        "cpu_pct": 0.0,
+        "open_files": 6
+      }
+    },
+    {
+      "timestamp": "2026-05-04T06:48:58.143575+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Runtime грешка: Traceback (most recent call last):\n  File \"/tmp/tmpg8vs2lax.py\", line 35, in <module>\n    patch_climate_risk_review()\n  File \"/tmp/tmpg8vs2lax.py\", line 31, in patch_climate_risk_review\n    original =",
+        "problem": "Предсказанията за глобалната климатична риска са надценени, "
+      },
+      "body_state": {
+        "ram_mb": 155.3,
+        "cpu_pct": 0.0,
+        "open_files": 6
+      }
+    },
+    {
+      "timestamp": "2026-05-04T06:49:26.767725+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Runtime грешка: Traceback (most recent call last):\n  File \"/tmp/tmpqal33c87.py\", line 23, in <module>\n    core.groq_backend.call_groq = call_groq\n    ^^^^\nNameError: name 'core' is not defined\n",
+        "problem": "Предсказанието за нивото на добрещо бъде подценено поради не"
+      },
+      "body_state": {
+        "ram_mb": 155.4,
+        "cpu_pct": 0.0,
+        "open_files": 6
+      }
+    },
+    {
+      "timestamp": "2026-05-04T07:19:24.433676+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/unknown_patch.py",
+        "problem": "The climate global risk review (CLIMATE_GLOBAL_RISK_REVIEW) "
+      },
+      "body_state": {
+        "ram_mb": 153.9,
+        "cpu_pct": 0.0,
+        "open_files": 6
+      }
+    },
+    {
+      "timestamp": "2026-05-04T07:19:39.105372+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/unknown_patch.py",
+        "problem": "The system has limited capacity to autonomously learn from c"
+      },
+      "body_state": {
+        "ram_mb": 156.2,
+        "cpu_pct": 0.0,
+        "open_files": 6
+      }
+    },
+    {
+      "timestamp": "2026-05-04T07:20:04.286839+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/unknown_patch.py",
+        "problem": "The system lacks robust reasoning capabilities to evaluate c"
+      },
+      "body_state": {
+        "ram_mb": 155.5,
+        "cpu_pct": 0.0,
+        "open_files": 6
+      }
+    },
+    {
+      "timestamp": "2026-05-04T07:20:25.300618+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/unknown_patch.py",
+        "problem": "Липсата на актуални данни за GOVERNANCE_INSTITUTIONS_REVIEW "
+      },
+      "body_state": {
+        "ram_mb": 156.1,
+        "cpu_pct": 0.0,
+        "open_files": 6
+      }
+    },
+    {
+      "timestamp": "2026-05-04T07:20:43.766226+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Runtime грешка: Traceback (most recent call last):\n  File \"/tmp/tmpzg03ealh.py\", line 30, in <module>\n    add_data_fetching()\n  File \"/tmp/tmpzg03ealh.py\", line 21, in add_data_fetching\n    memory.semantic_memory.rem",
+        "problem": "Недостигът на актуални данни за CLIMATE_GLOBAL_RISK_REVIEW п"
+      },
+      "body_state": {
+        "ram_mb": 160.2,
+        "cpu_pct": 0.0,
+        "open_files": 6
+      }
+    },
+    {
+      "timestamp": "2026-05-04T08:31:37.728200+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Runtime грешка:   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current\n                                 Dload  Upload   Total   Spent    Left  Speed\n\n  0     0    0     0    0     0      0   ",
+        "problem": "The climate global risk review (CLIMATE_GLOBAL_RISK_REVIEW) "
+      },
+      "body_state": {
+        "ram_mb": 151.9,
+        "cpu_pct": 0.0,
+        "open_files": 6
+      }
+    },
+    {
+      "timestamp": "2026-05-04T08:31:57.320093+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/unknown_patch.py",
+        "problem": "The system has limited capacity to autonomously learn from c"
+      },
+      "body_state": {
+        "ram_mb": 152.1,
+        "cpu_pct": 0.0,
+        "open_files": 6
+      }
+    },
+    {
+      "timestamp": "2026-05-04T08:32:17.060770+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Синтаксис: Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n  File",
+        "problem": "The system lacks robust reasoning capabilities to evaluate c"
+      },
+      "body_state": {
+        "ram_mb": 152.6,
+        "cpu_pct": 0.0,
+        "open_files": 6
+      }
+    },
+    {
+      "timestamp": "2026-05-04T08:32:36.108033+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/unknown_patch.py",
+        "problem": "Липсата на актуални данни за GOVERNANCE_INSTITUTIONS_REVIEW "
+      },
+      "body_state": {
+        "ram_mb": 152.8,
+        "cpu_pct": 0.0,
+        "open_files": 6
+      }
+    },
+    {
+      "timestamp": "2026-05-04T08:58:53.576677+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Runtime грешка:   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current\n                                 Dload  Upload   Total   Spent    Left  Speed\n\n  0     0    0     0    0     0      0   ",
+        "problem": "The system has limited capacity to autonomously learn from c"
+      },
+      "body_state": {
+        "ram_mb": 152.8,
+        "cpu_pct": 0.0,
+        "open_files": 6
+      }
+    },
+    {
+      "timestamp": "2026-05-04T08:58:57.925025+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Runtime грешка: Traceback (most recent call last):\n  File \"/tmp/tmpljhg5i7p.py\", line 48, in <module>\n    main()\n  File \"/tmp/tmpljhg5i7p.py\", line 25, in main\n    open_government_data = fetch_data(open_government_ur",
+        "problem": "Липсата на актуални данни за GOVERNANCE_INSTITUTIONS_REVIEW "
+      },
+      "body_state": {
+        "ram_mb": 159.2,
+        "cpu_pct": 0.0,
+        "open_files": 6
+      }
+    },
+    {
+      "timestamp": "2026-05-04T08:59:02.097536+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Runtime грешка: Traceback (most recent call last):\n  File \"/tmp/tmpk_bmjrow.py\", line 65, in <module>\n    main()\n  File \"/tmp/tmpk_bmjrow.py\", line 60, in main\n    remember(\"civic_participation_metrics\", participatio",
+        "problem": "Недостатък в правителствената гъвкавост и устойчивост на дър"
+      },
+      "body_state": {
+        "ram_mb": 153.4,
+        "cpu_pct": 0.0,
+        "open_files": 6
+      }
+    },
+    {
+      "timestamp": "2026-05-04T09:07:34.733465+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/unknown_patch.py",
+        "problem": "The climate global risk review (CLIMATE_GLOBAL_RISK_REVIEW) "
+      },
+      "body_state": {
+        "ram_mb": 153.9,
+        "cpu_pct": 0.0,
+        "open_files": 6
+      }
+    },
+    {
+      "timestamp": "2026-05-04T09:07:37.823602+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/unknown_patch.py",
+        "problem": "The system has limited capacity to autonomously learn from c"
+      },
+      "body_state": {
+        "ram_mb": 154.7,
+        "cpu_pct": 0.0,
+        "open_files": 6
+      }
+    },
+    {
+      "timestamp": "2026-05-04T09:07:41.251671+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/unknown_patch.py",
+        "problem": "The system lacks robust reasoning capabilities to evaluate c"
+      },
+      "body_state": {
+        "ram_mb": 155.1,
+        "cpu_pct": 0.0,
+        "open_files": 6
+      }
+    },
+    {
+      "timestamp": "2026-05-04T09:07:41.768465+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/unknown_patch.py",
+        "problem": "Липсата на актуални данни за GOVERNANCE_INSTITUTIONS_REVIEW "
+      },
+      "body_state": {
+        "ram_mb": 155.2,
+        "cpu_pct": 0.0,
+        "open_files": 6
+      }
+    },
+    {
+      "timestamp": "2026-05-04T09:07:45.322332+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/unknown_patch.py",
+        "problem": "Недостатък в правителствената гъвкавост и устойчивост на дър"
+      },
+      "body_state": {
+        "ram_mb": 155.3,
+        "cpu_pct": 0.0,
+        "open_files": 6
+      }
+    },
+    {
+      "timestamp": "2026-05-04T09:18:09.180202+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/climate_patch.py",
+        "problem": "The climate global risk review (CLIMATE_GLOBAL_RISK_REVIEW) "
+      },
+      "body_state": {
+        "ram_mb": 154.2,
+        "cpu_pct": 0.0,
+        "open_files": 6
+      }
+    },
+    {
+      "timestamp": "2026-05-04T09:18:12.782454+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/climate_patch.py",
+        "problem": "The system has limited capacity to autonomously learn from c"
+      },
+      "body_state": {
+        "ram_mb": 155.2,
+        "cpu_pct": 0.0,
+        "open_files": 6
+      }
+    },
+    {
+      "timestamp": "2026-05-04T09:18:16.350963+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/climate_patch.py",
+        "problem": "The system lacks robust reasoning capabilities to evaluate c"
+      },
+      "body_state": {
+        "ram_mb": 155.5,
+        "cpu_pct": 0.0,
+        "open_files": 6
+      }
+    },
+    {
+      "timestamp": "2026-05-04T09:18:20.421838+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Runtime грешка: Traceback (most recent call last):\n  File \"/tmp/tmpwakmuivn.py\", line 52, in <module>\n    main()\n  File \"/tmp/tmpwakmuivn.py\", line 41, in main\n    governance_data = load_json_data(governance_data_fil",
+        "problem": "Липсата на актуални данни за GOVERNANCE_INSTITUTIONS_REVIEW "
+      },
+      "body_state": {
+        "ram_mb": 155.7,
+        "cpu_pct": 0.0,
+        "open_files": 6
+      }
+    },
+    {
+      "timestamp": "2026-05-04T09:18:23.793040+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Runtime грешка: Traceback (most recent call last):\n  File \"/tmp/tmpki43_lqg.py\", line 57, in <module>\n    main()\n  File \"/tmp/tmpki43_lqg.py\", line 41, in main\n    previous_data = load_data(BASE_DIR / 'memory' / 'pre",
+        "problem": "Недостатък в правителствената гъвкавост и устойчивост на дър"
+      },
+      "body_state": {
+        "ram_mb": 155.6,
+        "cpu_pct": 0.0,
+        "open_files": 6
+      }
+    },
+    {
+      "timestamp": "2026-05-04T09:27:03.104189+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Runtime грешка: Traceback (most recent call last):\n  File \"/tmp/tmptrar4hl3.py\", line 4, in <module>\n    EĞİ\nNameError: name 'EĞİ' is not defined\n",
+        "problem": "The climate global risk review (CLIMATE_GLOBAL_RISK_REVIEW) "
+      },
+      "body_state": {
+        "ram_mb": 149.0,
+        "cpu_pct": 0.0,
+        "open_files": 6
+      }
+    },
+    {
+      "timestamp": "2026-05-04T12:31:52.414277+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Runtime грешка: Traceback (most recent call last):\n  File \"/tmp/tmpnr28w5qw.py\", line 52, in <module>\n    main()\n  File \"/tmp/tmpnr28w5qw.py\", line 25, in main\n    co2_data = _safe_load(co2_path, [{'data': []}])\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/tmpnr28w5qw.py\", line 14, in _safe_load",
+        "problem": "The climate global risk review (CLIMATE_GLOBAL_RISK_REVIEW) "
+      },
+      "body_state": {
+        "ram_mb": 136.1,
+        "cpu_pct": 0.0,
+        "open_files": 6
+      }
+    },
+    {
+      "timestamp": "2026-05-04T12:35:34.049156+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/climate_patch.py",
+        "problem": "The system has limited capacity to autonomously learn from c"
+      },
+      "body_state": {
+        "ram_mb": 106.8,
+        "cpu_pct": 0.0,
+        "open_files": 6
+      }
+    },
+    {
+      "timestamp": "2026-05-04T12:38:49.509736+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Синтаксис: Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n  File",
+        "problem": "The system lacks robust reasoning capabilities to evaluate c"
+      },
+      "body_state": {
+        "ram_mb": 112.8,
+        "cpu_pct": 0.0,
+        "open_files": 6
+      }
+    },
+    {
+      "timestamp": "2026-05-04T14:02:15.173220+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/climate_patch.py",
+        "problem": "The system has limited capacity to autonomously learn from c"
+      },
+      "body_state": {
+        "ram_mb": 95.2,
+        "cpu_pct": 0.0,
+        "open_files": 6
+      }
+    },
+    {
+      "timestamp": "2026-05-07T10:20:27.994209+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Command '['/usr/bin/python3', '/tmp/tmpiad1ii0j.py']' timed out after 15 seconds",
+        "problem": "Недостатък в правителствената гъвкавост и устойчивост на дър"
+      },
+      "body_state": {
+        "ram_mb": 154.8,
+        "cpu_pct": 0.0,
+        "open_files": 6
+      }
+    },
+    {
+      "timestamp": "2026-05-07T10:20:30.982952+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/general_patch.py",
+        "problem": "Отсутствие на точни данни за неравенство и бедност"
+      },
+      "body_state": {
+        "ram_mb": 155.2,
+        "cpu_pct": 0.0,
+        "open_files": 6
+      }
+    },
+    {
+      "timestamp": "2026-05-07T10:20:34.290539+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Runtime грешка: ",
+        "problem": "Повишено ниво на непрекъснато движение и неразрешен проблем "
+      },
+      "body_state": {
+        "ram_mb": 156.7,
+        "cpu_pct": 0.0,
+        "open_files": 6
+      }
+    },
+    {
+      "timestamp": "2026-05-07T10:20:34.481600+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/ecosystems_biodiversity_review_patch.py",
+        "problem": "Агентът липсва ключови данни за измерване на биодIVERSITЕТА "
+      },
+      "body_state": {
+        "ram_mb": 156.7,
+        "cpu_pct": 10.0,
+        "open_files": 6
+      }
+    },
+    {
+      "timestamp": "2026-05-07T10:20:35.124318+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/ecosystems_biodiversity_review_patch.py",
+        "problem": "Агентът липсва ключови датуми и реални данни за биодиверзите"
+      },
+      "body_state": {
+        "ram_mb": 157.1,
+        "cpu_pct": 0.0,
+        "open_files": 6
+      }
+    },
+    {
+      "timestamp": "2026-05-08T08:59:41.092016+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Синтаксис: Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    im",
+        "problem": "Недостатък в правителствената гъвкавост и устойчивост на дър"
+      },
+      "body_state": {
+        "ram_mb": 134.1,
+        "cpu_pct": 0.0,
+        "open_files": 9
+      }
+    },
+    {
+      "timestamp": "2026-05-08T08:59:44.036641+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Синтаксис: Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    im",
+        "problem": "Отсутствие на точни данни за неравенство и бедност"
+      },
+      "body_state": {
+        "ram_mb": 135.1,
+        "cpu_pct": 0.0,
+        "open_files": 9
+      }
+    },
+    {
+      "timestamp": "2026-05-08T08:59:46.979029+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Синтаксис: Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    im",
+        "problem": "Повишено ниво на непрекъснато движение и неразрешен проблем "
+      },
+      "body_state": {
+        "ram_mb": 136.2,
+        "cpu_pct": 0.0,
+        "open_files": 9
+      }
+    },
+    {
+      "timestamp": "2026-05-08T08:59:47.230789+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/ecosystems_biodiversity_review_patch.py",
+        "problem": "Агентът липсва ключови данни за измерване на биодIVERSITЕТА "
+      },
+      "body_state": {
+        "ram_mb": 137.2,
+        "cpu_pct": 0.0,
+        "open_files": 9
+      }
+    },
+    {
+      "timestamp": "2026-05-08T08:59:47.648271+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/ecosystems_biodiversity_review_patch.py",
+        "problem": "Агентът липсва ключови датуми и реални данни за биодиверзите"
+      },
+      "body_state": {
+        "ram_mb": 136.8,
+        "cpu_pct": 0.0,
+        "open_files": 9
+      }
+    }
+  ],
+  "summary": {
+    "total_experiences": 200,
+    "success_rate_pct": 66.0,
+    "error_count": 68,
+    "timeout_count": 0,
+    "api_calls": 0,
+    "avg_ram_mb_last10": 146.0,
+    "last_error": "Синтаксис: Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    im",
+    "last_updated": "2026-05-08T08:59:47.797040+00:00"
+  }
+}

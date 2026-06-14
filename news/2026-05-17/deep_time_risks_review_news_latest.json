@@ -1,0 +1,90 @@
+{
+  "axis": "DEEP_TIME_RISKS_REVIEW",
+  "fetched_at": "2026-05-17T15:32:16.993359+00:00",
+  "smart_query": "nuclear war pandemic existential risk",
+  "sources_count": {
+    "wiki": 0,
+    "gdelt": 0,
+    "arxiv": 0,
+    "github": 3,
+    "youtube_transcripts": 3,
+    "podcast": 1
+  },
+  "rss": [],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "PipFoweraker/pdoom1",
+      "snippet": "Save the world from deadly AI through paperwork",
+      "stars": 7,
+      "url": "https://github.com/PipFoweraker/pdoom1",
+      "updated": "2026-04-03",
+      "source": "GitHub"
+    },
+    {
+      "title": "holo-q/foom",
+      "snippet": "WARNING: cognitive hazards ahead",
+      "stars": 4,
+      "url": "https://github.com/holo-q/foom",
+      "updated": "2026-05-09",
+      "source": "GitHub"
+    },
+    {
+      "title": "nikthink/pauseai.ca",
+      "snippet": "https://pauseai.ca/",
+      "stars": 4,
+      "url": "https://github.com/nikthink/pauseai.ca",
+      "updated": "2026-04-14",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [],
+  "podcast": "[Your Friendly Neighborhood Hookworms] For most of human history, people went about their daily lives with a worm or two (or fifty) in their guts. Only in the past century, with pharmaceuticals and sanitation practices, have we made significant strides towards deworming the whole of humanity. And that’s typically been thought of as a good thing, because having too many worms in your body can–quite literally–suck the life out of you.\nBu",
+  "wiki": null,
+  "youtube_items": [
+    {
+      "title": "[YT] All The Ways Humanity Could End Explained In 60 Minutes ",
+      "summary": "When we think about the future, we often picture our children and grandchildren living in a world much like our own. We imagine progress, new technologies, and a continuing story for humanity. But what if this story has an end? What if something could happen that would erase our species from the earth forever? This is the idea of human extinction. It is not just about a bad war or a terrible disaster that kills many people. It is about a final event after which there are no humans left to rebuild, to remember, or to hope. Thinking about this is difficult, but it is also very important. If we understand the dangers, we might be able to prevent them from happening. This essay is a guide to those dangers. The idea of extinction is the ultimate risk because everything we value depends on our s",
+      "link": "https://www.youtube.com/watch?v=NbSZmC57DIQ",
+      "source_type": "youtube",
+      "channel": "Ace View",
+      "video_id": "NbSZmC57DIQ",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] 10 Catastrophes That Could Destroy Life On Earth",
+      "summary": "One. Asteroid impact. A catastrophe that could end life on Earth. It starts quietly. Far beyond Earth, a massive space rock drifts through the darkness. It is similar in size to the one that caused the Chicxulub impact, the event that wiped out the dinosaurs millions of years ago. This asteroid is not small. It is several kilometers wide, moving faster than a bullet. When it enters Earth's atmosphere, it becomes a blazing fireball brighter than the sun. The sky lights up. People look up, but there is no time to react. The impact is instant and devastating. When the asteroid hits the ground or ocean, it releases more energy than billions of nuclear bombs. The surface melts. A giant crater forms. Shock waves travel across the planet, causing earthquakes and tsunamis that destroy coastlines. ",
+      "link": "https://www.youtube.com/watch?v=22AOUYmnUrQ",
+      "source_type": "youtube",
+      "channel": "Top10DarkAmazingFacts",
+      "video_id": "22AOUYmnUrQ",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] #banaraslitfest",
+      "summary": "Here are five terrifying ways the world could end. And number one is most likely to happen in the near future. Number, climate collapse. Rising seas, mega droughts, and unstoppable storm. Climate change is already happening and probably would drown us all again in a great flood. Number four, asteroid impact. One giant rock like the one that killed the dinosaurs could strike with the force of millions of nuclear bombs, ending civilization in minutes. Number three, super volcano eruption. A Yellowstoneized blast would fill the skies with ash, blocking the sun, collapsing crops, and starving nations. Number two, nuclear war. Thousands of warheads launched. Fallout clouds would plunge Earth into a deadly nuclear winter. Number one, global pandemic 2.0. CO was just practice. Imagine a virus tha",
+      "link": "https://www.youtube.com/watch?v=lOrb1vbbAeY",
+      "source_type": "youtube",
+      "channel": "Geo Shookt",
+      "video_id": "lOrb1vbbAeY",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 1027,
+      "has_full_transcript": true
+    }
+  ],
+  "summary": "Deep_time_risks_review анализира рисковете, които угрожат на изчезването на човечеството, като подчертава важността на разбирането и предотвратяването на тези сценарии. Визията за устойчива цивилизация изисква разбиране на тези рискове, за да се осигури бъдеще за всички.",
+  "urgency": "CRITICAL",
+  "sentiment": "CRITICAL",
+  "key_developments": [
+    "PipFoweraker/pdoom1 star=7: Save the world from deadly AI through paperwork",
+    "holo-q/foom star=4: WARNING: cognitive hazards ahead",
+    "nikthink/pauseai.ca star=4: https://pauseai.ca/"
+  ],
+  "open_source_momentum": "High",
+  "scientific_frontier": "No data",
+  "relevance_to_goal": "High"
+}

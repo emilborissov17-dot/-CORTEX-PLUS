@@ -1,0 +1,63 @@
+{
+  "axis": "GENERAL_SELF_REVIEW",
+  "fetched_at": "2026-03-10T11:47:51.662802+00:00",
+  "smart_query": "Axis general self-review levels metrics",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "github": 3,
+    "youtube": 2,
+    "youtube_transcripts": 1
+  },
+  "analysis": {
+    "summary": "Въпреки рисковете, някои компании разработват ИИ отговорно, като Anthropic, което изгражда безопасни модели. Съществуват и нови отворени източници, които подпомагат развитието на агенти и генеративни модели.",
+    "key_developments": [
+      "Съдебен процес срещу OpenAI за убийството в канадска училищна стая",
+      "GPS jamming в Близкия източак като скрита битка",
+      "Разработката на отворени проекти като Autogen и ChatTTS"
+    ],
+    "sentiment": "POSITIVE",
+    "urgency": "MEDIUM",
+    "open_source_momentum": "Висока активност с растящи проекти за агенти и генеративни модели",
+    "scientific_frontier": "Безопасност на ИИ и етично развитие на агенти с памет",
+    "relevance_to_goal": "Висока релевантност към целта за устойчиво цивилизационно достойнство"
+  },
+  "sentiment": "POSITIVE",
+  "urgency": "MEDIUM",
+  "summary": "Въпреки рисковете, някои компании разработват ИИ отговорно, като Anthropic, което изгражда безопасни модели. Съществуват и нови отворени източници, които подпомагат развитието на агенти и генеративни модели.",
+  "key_developments": [
+    "Съдебен процес срещу OpenAI за убийството в канадска училищна стая",
+    "GPS jamming в Близкия източак като скрита битка",
+    "Разработката на отворени проекти като Autogen и ChatTTS"
+  ],
+  "open_source_momentum": "Висока активност с растящи проекти за агенти и генеративни модели",
+  "scientific_frontier": "Безопасност на ИИ и етично развитие на агенти с памет",
+  "github_repos": [
+    {
+      "title": "microsoft/autogen",
+      "snippet": "A programming framework for agentic AI",
+      "stars": 55397,
+      "url": "https://github.com/microsoft/autogen",
+      "updated": "2026-03-10",
+      "source": "GitHub"
+    },
+    {
+      "title": "2noise/ChatTTS",
+      "snippet": "A generative speech model for daily dialogue.",
+      "stars": 38899,
+      "url": "https://github.com/2noise/ChatTTS",
+      "updated": "2026-03-10",
+      "source": "GitHub"
+    },
+    {
+      "title": "letta-ai/letta",
+      "snippet": "Letta is the platform for building stateful agents: AI with advanced memory that can learn and self-improve over time.",
+      "stars": 21494,
+      "url": "https://github.com/letta-ai/letta",
+      "updated": "2026-03-10",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": []
+}

@@ -1,0 +1,82 @@
+{
+  "axis": "SOCIAL_RELATIONS_REVIEW",
+  "fetched_at": "2026-03-21T11:46:23.403756+00:00",
+  "smart_query": "social inequality conflict trust",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "Iranian strikes on bases used by US caused $800m in damage, new analysis shows",
+      "snippet": "Much of the damage was caused in initial retaliatory strikes by Iran in the week after the US and Israel launched its operation.",
+      "url": "https://www.bbc.com/news/articles/cddq7j48p35o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Fans elated as BTS play first gig together in nearly four years",
+      "snippet": "RM, Jin, Suga, J-Hope, Jimin, V and Jung Kook perform together for the first time since October 2022.",
+      "url": "https://www.bbc.com/news/articles/cge0dyjwezgo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Russian drone attack kills two in Ukraine ahead of talks in US, officials say",
+      "snippet": "Two children, aged 11 and 15 were also injured in the attack which took place in Zaporizhzhia.",
+      "url": "https://www.bbc.com/news/articles/crl18nwjzzzo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "briatte/awesome-network-analysis",
+      "snippet": "A curated list of awesome network analysis resources.",
+      "stars": 3969,
+      "url": "https://github.com/briatte/awesome-network-analysis",
+      "updated": "2026-03-20",
+      "source": "GitHub"
+    },
+    {
+      "title": "obsei/obsei",
+      "snippet": "Obsei is a low code AI powered automation tool. It can be used in various business flows like social listening, AI based alerting, brand image analysis, comparative study and more .",
+      "stars": 1381,
+      "url": "https://github.com/obsei/obsei",
+      "updated": "2026-03-20",
+      "source": "GitHub"
+    },
+    {
+      "title": "shaypal5/awesome-twitter-data",
+      "snippet": "A list of Twitter datasets and related resources.",
+      "stars": 1099,
+      "url": "https://github.com/shaypal5/awesome-twitter-data",
+      "updated": "2026-03-20",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Grievance Politics vs. Policy Debates: A Cross-Platform Analysis of Conservative Discourse on Truth Social and Reddit",
+      "snippet": "We present the first large-scale comparative analysis of Truth Social and the most popular conservative Reddit communities, r/Conservative, r/conservatives, and r/Republican. Using topic modeling with FASTopic and LLM-assisted refinement, we analyze topic prevalence, toxicity, and temporal dynamics ",
+      "url": "https://arxiv.org/abs/2603.17901v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "A Multi-Level Data-driven Framework for Understanding Perceptions Towards Cycling Infrastructure Across Regions Leveraging Social Media Discourse",
+      "snippet": "Cycling plays an important role in sustainable urban mobility, yet how people perceive cycling infrastructure varies widely and remains challenging to assess at large spatial scales. Existing research has mainly relied on surveys or short-form social media data and has often focused on individual ci",
+      "url": "https://arxiv.org/abs/2603.17221v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[Don't hate the replicator, hate the game] The world of science has been stuck in an existential crisis over whether we actually know the things we thought we knew. Re-running an old study today doesn't always yield the same result. Same with re-enacting old experiments. Collectively, this is known as the “replication crisis.” Economist Abel Brodeur has come up with one way to help fix this crisis: he’s invented an internationally crowdsou",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

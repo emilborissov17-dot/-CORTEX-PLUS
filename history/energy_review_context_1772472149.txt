@@ -1,0 +1,10 @@
+ENERGY_REVIEW CONTEXT
+Generated at: 2026-03-02T17:22:29.499414+00:00
+
+=== DOMAIN SUMMARY: energysupply ===
+- run_at: 2026-03-02T17:22:29.346851+00:00, active_sources: 56, ok_sources: 0, failed_sources: 56
+- sources:
+
+=== DOMAIN SUMMARY: energyrenewables ===
+- run_at: 2026-03-02T17:22:29.499387+00:00, active_sources: 36, ok_sources: 0, failed_sources: 36
+- sources:

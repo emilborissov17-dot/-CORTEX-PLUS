@@ -1,0 +1,25 @@
+{
+  "axis": "MATERIALS_WASTE_REVIEW",
+  "fetched_at": "2026-05-07T10:30:36.374982+00:00",
+  "smart_query": "plastic waste pollution recycling",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 0,
+    "gdelt": 0,
+    "arxiv": 0,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [],
+  "gdelt": [],
+  "github_repos": [],
+  "arxiv_papers": [],
+  "podcast": "[FLI’s President and CEO on Trump’s support for an AI ‘kill switch’] President Trump said during an interview aired yesterday by Fox Business that &#8220;there should be&#8221; when asked if AI needs [&#8230;]",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

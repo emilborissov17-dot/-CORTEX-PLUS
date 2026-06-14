@@ -1,0 +1,340 @@
+{
+  "timestamp": "2026-04-03T14:19:27.817348+00:00",
+  "snapshots": {
+    "BODY_SCAN": {
+      "timestamp": null,
+      "current_level": null,
+      "summary": ""
+    },
+    "ECONOMY_WORK_REVIEW": {
+      "timestamp": "2026-04-03T13:08:55.242345+00:00",
+      "current_level": null,
+      "summary": ""
+    },
+    "EDUCATION_CULTURE_REVIEW": {
+      "timestamp": "2026-04-03T13:11:06.028346+00:00",
+      "current_level": null,
+      "summary": ""
+    },
+    "GOVERNANCE_INSTITUTIONS_REVIEW": {
+      "timestamp": "2026-04-03T13:10:48.294306+00:00",
+      "current_level": null,
+      "summary": ""
+    },
+    "INEQUALITY_POVERTY_REVIEW": {
+      "timestamp": "2026-04-03T13:09:43.014575+00:00",
+      "current_level": null,
+      "summary": ""
+    },
+    "INFRASTRUCTURE_CITIES_REVIEW": {
+      "timestamp": "2026-04-03T13:10:45.192446+00:00",
+      "current_level": null,
+      "summary": ""
+    },
+    "TECHNOLOGY_AI_REVIEW": {
+      "timestamp": "2026-04-03T13:11:26.324843+00:00",
+      "current_level": null,
+      "summary": ""
+    },
+    "TECHNOLOGY_INFRA_REVIEW": {
+      "timestamp": "2026-04-03T13:11:23.828828+00:00",
+      "current_level": null,
+      "summary": ""
+    },
+    "COSMIC_RESOURCES_REVIEW": {
+      "timestamp": "2026-03-22T08:51:35.921630+00:00",
+      "current_level": null,
+      "summary": ""
+    },
+    "DEEP_TIME_RISKS_REVIEW": {
+      "timestamp": "2026-03-22T08:54:33.717857+00:00",
+      "current_level": null,
+      "summary": ""
+    },
+    "GENERAL_SELF_REVIEW": {
+      "timestamp": "2026-03-28T10:44:10.083893+00:00",
+      "current_level": "MEDIUM",
+      "summary": "Активна семантична памет,Groq reasoning и Autonomic pulse. Налични са 105 спомена в ChromaDB и 29 снимки в паметта."
+    },
+    "GOAL_PROGRESS_REVIEW": {
+      "timestamp": "2026-03-28T10:45:44.331388+00:00",
+      "current_level": "MEDIUM",
+      "summary": ""
+    },
+    "LONG_TERM_FUTURE_REVIEW": {
+      "timestamp": "2026-03-28T10:47:10.666772+00:00",
+      "current_level": "medium",
+      "summary": ""
+    },
+    "SPACE_INFRASTRUCTURE_REVIEW": {
+      "timestamp": "2026-03-22T08:51:35.914691+00:00",
+      "current_level": null,
+      "summary": ""
+    },
+    "COGNITION_LEARNING_REVIEW": {
+      "timestamp": "2026-04-03T13:05:04.026337+00:00",
+      "current_level": null,
+      "summary": ""
+    },
+    "CULTURE_MEDIA_REVIEW": {
+      "timestamp": "2026-04-03T13:02:08.487962+00:00",
+      "current_level": null,
+      "summary": ""
+    },
+    "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL": {
+      "timestamp": "2026-04-03T13:07:52.328293+00:00",
+      "current_level": null,
+      "summary": ""
+    },
+    "HUMAN_WELL_BEING_REVIEW": {
+      "timestamp": "2026-04-03T13:01:18.132537+00:00",
+      "current_level": null,
+      "summary": ""
+    },
+    "SOCIAL_RELATIONS_REVIEW": {
+      "timestamp": "2026-04-03T13:06:20.492718+00:00",
+      "current_level": null,
+      "summary": ""
+    },
+    "OPENCLAW_SOLUTIONS": {
+      "timestamp": "2026-03-28T10:55:01.446304+00:00",
+      "current_level": null,
+      "summary": ""
+    },
+    "CLIMATE_GLOBAL_RISK_REVIEW": {
+      "timestamp": null,
+      "current_level": null,
+      "summary": ""
+    },
+    "ECOSYSTEMS_BIODIVERSITY_REVIEW": {
+      "timestamp": null,
+      "current_level": null,
+      "summary": ""
+    },
+    "ENERGY_REVIEW": {
+      "timestamp": null,
+      "current_level": null,
+      "summary": ""
+    },
+    "FOOD_REVIEW": {
+      "timestamp": null,
+      "current_level": null,
+      "summary": ""
+    },
+    "MATERIALS_WASTE_REVIEW": {
+      "timestamp": null,
+      "current_level": null,
+      "summary": ""
+    },
+    "PLANETARY_POTENTIAL_REVIEW": {
+      "timestamp": null,
+      "current_level": null,
+      "summary": ""
+    },
+    "WATER_REVIEW": {
+      "timestamp": null,
+      "current_level": null,
+      "summary": ""
+    }
+  },
+  "memory": {
+    "modifier_ok": 0,
+    "modifier_fail": 0,
+    "modifier_recent": []
+  },
+  "agents": {
+    "openclaw": {
+      "health": null,
+      "mission_pct": 30
+    }
+  },
+  "trends": {
+    "date": "2026-04-03",
+    "stable": [
+      "ECONOMY_WORK_REVIEW",
+      "EDUCATION_CULTURE_REVIEW",
+      "GOVERNANCE_INSTITUTIONS_REVIEW",
+      "INEQUALITY_POVERTY_REVIEW",
+      "INFRASTRUCTURE_CITIES_REVIEW",
+      "TECHNOLOGY_AI_REVIEW",
+      "TECHNOLOGY_INFRA_REVIEW",
+      "COSMIC_RESOURCES_REVIEW",
+      "SPACE_INFRASTRUCTURE_REVIEW",
+      "COGNITION_LEARNING_REVIEW",
+      "CULTURE_MEDIA_REVIEW",
+      "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL",
+      "HUMAN_WELL_BEING_REVIEW",
+      "SOCIAL_RELATIONS_REVIEW",
+      "CLIMATE_GLOBAL_RISK_REVIEW",
+      "ECOSYSTEMS_BIODIVERSITY_REVIEW",
+      "ENERGY_REVIEW",
+      "FOOD_REVIEW",
+      "MATERIALS_WASTE_REVIEW",
+      "WATER_REVIEW"
+    ],
+    "improving": [],
+    "deteriorating": [],
+    "insufficient": [
+      "BODY_SCAN",
+      "DEEP_TIME_RISKS_REVIEW",
+      "GENERAL_SELF_REVIEW",
+      "GOAL_PROGRESS_REVIEW",
+      "LONG_TERM_FUTURE_REVIEW",
+      "OPENCLAW_SOLUTIONS",
+      "PLANETARY_POTENTIAL_REVIEW"
+    ],
+    "axes_tracked": 27,
+    "scores": {
+      "ECONOMY_WORK_REVIEW": 66.0,
+      "EDUCATION_CULTURE_REVIEW": 60.2,
+      "GOVERNANCE_INSTITUTIONS_REVIEW": 13.3,
+      "INEQUALITY_POVERTY_REVIEW": 89.7,
+      "INFRASTRUCTURE_CITIES_REVIEW": 56.4,
+      "TECHNOLOGY_AI_REVIEW": 42.5,
+      "TECHNOLOGY_INFRA_REVIEW": 60.0,
+      "COSMIC_RESOURCES_REVIEW": 100.0,
+      "SPACE_INFRASTRUCTURE_REVIEW": 100.0,
+      "COGNITION_LEARNING_REVIEW": 74.9,
+      "CULTURE_MEDIA_REVIEW": 75.9,
+      "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL": 15.0,
+      "HUMAN_WELL_BEING_REVIEW": 76.7,
+      "SOCIAL_RELATIONS_REVIEW": 76.2,
+      "CLIMATE_GLOBAL_RISK_REVIEW": 39.4,
+      "ECOSYSTEMS_BIODIVERSITY_REVIEW": 31.1,
+      "ENERGY_REVIEW": 55.7,
+      "FOOD_REVIEW": 100.0,
+      "MATERIALS_WASTE_REVIEW": 13.4,
+      "WATER_REVIEW": 65.0
+    }
+  },
+  "session": {
+    "date": "2026-03-28",
+    "chromadb_memories": 108,
+    "groq": "ACTIVE",
+    "achievements": [
+      "Groq llama-3.3-70b интегриран",
+      "Internet agent за 17 оси",
+      "World Bank реални данни",
+      "autonomic_pulse heartbeat активен",
+      "cortex_reasoner реално мислене"
+    ]
+  },
+  "reasoning": {
+    "total_sessions": 2,
+    "last": {
+      "key_insights": [
+        "Снапшотът отчита данни от 27 оси, включително здраве, икономика, неравенство, инфраструктура, управление и технологии.",
+        "Данните показват умерено ниво на здраве и капацитет на операционната система, но с ограничения в капацитета за паралелни задачи порadi ограничен RAM.",
+        "Икономическите показатели включват среден БВП на глава от населението, растеж на БВП и ниво на безработица."
+      ],
+      "reasoning_path": "BODY_SCAN->ECONOMY_WORK_REVIEW->INEQUALITY_POVERTY_REVIEW",
+      "open_questions": [
+        "Как да се разшири капацитета за паралелни задачи в операционната система?",
+        "Каква е връзката между икономическите показатели и неравенството в обществото?"
+      ],
+      "principles_discovered": [
+        "Измерването на здравето и капацитета на операционната система е важно за разбирането на системните ограничения.",
+        "Икономическите показатели трябва да се анализират в контекста на обществените проблеми като неравенство и бедност."
+      ],
+      "direction": "Анализ на икономическите показатели и обществени проблеми",
+      "next_step": "Разширение на анализа към осите INEQUALITY_POVERTY_REVIEW, INFRASTRUCTURE_CITIES_REVIEW и TECHNOLOGY_AI_REVIEW",
+      "timestamp": "2026-03-28T10:55:41.411993+00:00"
+    }
+  },
+  "predictor": {
+    "total": 5,
+    "resolved": 0,
+    "avg_error": null,
+    "last_5": [
+      {
+        "axis": "ECONOMY_WORK_REVIEW",
+        "predicted_score": 50,
+        "confidence": 0.6,
+        "reasoning": "Няма оптимистични сведения в данните, но липсата на сериозни кризи и негативни тенденции не позволя да се предскаже кризисна ситуация. Предполагам умерено състояние на икономиката.",
+        "key_signals": [
+          "Няма положителни изявления от ключови лица",
+          "Инвестиращи вprobe за фалшиви отзиви"
+        ],
+        "predicted_at": "2026-03-29T05:51:08.781987+00:00",
+        "check_at": null,
+        "actual_score": 66.0,
+        "error": 16.0,
+        "corrected": true,
+        "checked_at": "2026-03-29T05:54:23.311472+00:00"
+      },
+      {
+        "axis": "TECHNOLOGY_AI_REVIEW",
+        "predicted_score": 60,
+        "confidence": 0.6,
+        "reasoning": "Негативните новини за скок на цената на PS5 и грешка в банковата система на Lloyds, както и разследването на фирми за фалшиви отзиви, показват потенциал за намаляване на доверието в технологиите и услугите. Все пак, липсата на сериозни сигнали за критични проблеми или широкомащабни атаки, позволява да се оценява ситуацията като умерено негативна.",
+        "key_signals": [
+          "PS5 цена скок",
+          "Lloyds IT грешка",
+          "фалшиви отзиви разследване"
+        ],
+        "predicted_at": "2026-03-29T05:51:21.985635+00:00",
+        "check_at": null,
+        "actual_score": 42.5,
+        "error": 17.5,
+        "corrected": true,
+        "checked_at": "2026-03-29T05:54:25.466803+00:00"
+      },
+      {
+        "axis": "CLIMATE_GLOBAL_RISK_REVIEW",
+        "predicted_score": 65,
+        "confidence": 0.7,
+        "reasoning": "Няма данни, които да показват рязко влошаване или подобряване на климатичната ситуация в следващите 24 часа. Сегашните заглавия не съдържат информация, която би могла да окаже съществено влияние върху оценката на климатичния риск.",
+        "key_signals": [
+          "Отсъствие на значими климатични събития в заглавията",
+          "Няма нови статии в arXiv, които би могли да окажат влияние"
+        ],
+        "predicted_at": "2026-03-29T05:51:25.222784+00:00",
+        "check_at": null,
+        "actual_score": null,
+        "error": null,
+        "corrected": false
+      },
+      {
+        "axis": "ECONOMY_WORK_REVIEW",
+        "predicted_score": 60,
+        "confidence": 0.6,
+        "reasoning": "Анализът на текущите данни показва, че икономическата ситуация е предимно ổnна, но има някои негативни тенденции, като увеличаването на цените на бензина и разследванията за фалшиви отзиви. Средната грешка от последните предсказания е относително висока, което показва, че има несигурност в прогнозите.",
+        "key_signals": [
+          "Петролни цени над 150p",
+          "Разследвания за фалшиви отзиви",
+          "Висока средна грешка в предсказанията"
+        ],
+        "predicted_at": "2026-03-29T05:54:41.525593+00:00",
+        "check_at": null,
+        "actual_score": null,
+        "error": null,
+        "corrected": false
+      },
+      {
+        "axis": "TECHNOLOGY_AI_REVIEW",
+        "predicted_score": 60,
+        "confidence": 0.6,
+        "reasoning": "Негативните новини за увеличение на цената на PS5 и проблема с IT система на Lloyds bank показват потенциални рискове в технологичния сектор, но липсата на значителни негативни новини в арХив статии и относително ниска средна грешка от последните предсказания предполагат, че ситуацията не е критична.",
+        "key_signals": [
+          "PS5 price hike",
+          "Lloyds bank IT glitch",
+          "относително стабилна средна грешка"
+        ],
+        "predicted_at": "2026-03-29T05:55:00.359837+00:00",
+        "check_at": null,
+        "actual_score": null,
+        "error": null,
+        "corrected": false
+      }
+    ]
+  },
+  "system": {
+    "snap_count": 27,
+    "health": "Тялото ми е спокойно — CPU 2.9% | Паметта е свободна — 6.01G",
+    "cpu": 2.9,
+    "ram_free": 6.01,
+    "ram_used": 56.6,
+    "gpu_name": "NVIDIA GeForce GTX 1650",
+    "gpu_vram_free": 3952
+  }
+}

@@ -1,0 +1,183 @@
+{
+  "axis": "TECHNOLOGY_AI_REVIEW",
+  "domain": "civilization",
+  "timestamp": "2026-05-18T08:07:39.494998+00:00",
+  "sources_count": 18,
+  "rss_count": 12,
+  "ddg_count": 0,
+  "youtube_count": 6,
+  "youtube_items": [
+    {
+      "title": "[YT] Jeff Kinney | Diary of a Wimpy Kid: Partypooper | Talks at Google",
+      "summary": "[DESCRIPTION FALLBACK] New York Times bestselling author, Jeff Kinney, talks about \"Partypooper\" his global smash-hit series, \"Diary of a Wimpy Kid\" which has sold over 300 million copies!\n\nIn Partypooper ,Greg Heffley is planning the ultimate party—for himself. But when the guest list grows, the decorations flop, and the surprises backfire, this birthday bash turns into a total blowout—just not the kind Greg had in mind. \n\nGet the book here: https://goo.gle/4u1fu8j.  \nLearn more about Jeff: https://wimpykid.com/. \n\nJ",
+      "link": "https://www.youtube.com/watch?v=t8ZUiinrksw",
+      "published": "2026-05-15T16:01:22+00:00",
+      "source_type": "youtube",
+      "channel": "Talks at Google",
+      "video_id": "t8ZUiinrksw",
+      "transcript_method": "description",
+      "transcript_chars": 523,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Susie Wolff | Driven | Talks at Google",
+      "summary": "[DESCRIPTION FALLBACK] F1 Academy’s Managing Director, former professional racing driver and one of the most respected women in motorsport Susie Wolff discusses her book Driven, an inside look at the competitive world of Formula One and trailblazer Susie Wolff's 20-year career, taking readers from the driver’s seat and the F1 paddock all the way to the future of the sport.\n\nDriven is a thrilling story about the highest levels of driving―but more than that, it’s a story of perseverance bound to inspire anyone on or off",
+      "link": "https://www.youtube.com/watch?v=YG5w939A9yQ",
+      "published": "2026-05-13T16:00:50+00:00",
+      "source_type": "youtube",
+      "channel": "Talks at Google",
+      "video_id": "YG5w939A9yQ",
+      "transcript_method": "description",
+      "transcript_chars": 523,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Nelson Dellis | Everyday Genius: Hacks to Boost Your Memory, Focus... | Talks at Google",
+      "summary": "[DESCRIPTION FALLBACK] Six-time USA Memory Champion, two-time Guinness World Record holder, Grandmaster of Memory, keynote speaker, and world-renowned memory coach, Nelson Dellis, discusses his book \"Everyday Genius: Hacks to Boost Your Memory, Focus, Problem-Solving, and Much More,\" where he shows you how to reclaim and strengthen your most valuable asset: your brain.\n\nEveryday Genius teaches you to memorize names and faces instantly, speed-read with deep comprehension, calculate mentally with surprising accuracy, an",
+      "link": "https://www.youtube.com/watch?v=MGY_OM8u42A",
+      "published": "2026-04-29T16:00:40+00:00",
+      "source_type": "youtube",
+      "channel": "Talks at Google",
+      "video_id": "MGY_OM8u42A",
+      "transcript_method": "description",
+      "transcript_chars": 523,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Apply for the Affine Superintelligence Alignment Seminar #shorts",
+      "summary": "[DESCRIPTION FALLBACK] http://minily.org/affine",
+      "link": "https://www.youtube.com/watch?v=74dLBpQuhJM",
+      "published": "2026-03-14T21:06:15+00:00",
+      "source_type": "youtube",
+      "channel": "Robert Miles AI Safety",
+      "video_id": "74dLBpQuhJM",
+      "transcript_method": "description",
+      "transcript_chars": 47,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Tech is Good, AI Will Be Different",
+      "summary": "[DESCRIPTION FALLBACK] Why is technology good? Are there any exceptions to the rule?\n\nCheck out AISafety.info!\nhttp://aisafety.info\n\nSources:\nLarge Language Models can Strategically Deceive their Users when Put Under Pressure: https://arxiv.org/abs/2311.07590\nhttps://www.apolloresearch.ai/research/our-research-on-strategic-deception-presented-at-the-uks-ai-safety-summit\nLarge Language Models Often Know When They Are Being Evaluated: https://arxiv.org/abs/2505.23836\nFrontier Models are Capable of In-context Scheming: h",
+      "link": "https://www.youtube.com/watch?v=zATXsGm_xJo",
+      "published": "2025-08-22T02:28:42+00:00",
+      "source_type": "youtube",
+      "channel": "Robert Miles AI Safety",
+      "video_id": "zATXsGm_xJo",
+      "transcript_method": "description",
+      "transcript_chars": 523,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Robot Dog! Unitree Go2 review #shorts #robot #dog",
+      "summary": "[DESCRIPTION FALLBACK] I'm joking of course. If you're physically fighting robots you've already lost.",
+      "link": "https://www.youtube.com/watch?v=nivfBcUPZ4E",
+      "published": "2025-07-23T00:28:20+00:00",
+      "source_type": "youtube",
+      "channel": "Robert Miles AI Safety",
+      "video_id": "nivfBcUPZ4E",
+      "transcript_method": "description",
+      "transcript_chars": 102,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "problem": "The rapid commodification of AI-generated content is leading to the proliferation of low-quality, often unethical content that exploits users and lacks transparency.",
+    "root_cause": "The lack of regulation and ethical guidelines in AI content creation, combined with the economic incentives for producing cheap, scalable content, is driving the creation of exploitative and low-quality AI-generated media.",
+    "severity": "CRITICAL",
+    "leverage_points": [
+      "AI content creators and platforms that prioritize profit over ethics",
+      "Regulatory bodies and policymakers who fail to enforce AI content standards"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Implement mandatory ethical guidelines and content labeling for all AI-generated media",
+        "measurable_goal": "At least 80% of AI content platforms adopt standardized content labeling by 2025",
+        "timeframe": "long-term"
+      },
+      {
+        "action": "Create a global AI content certification program to ensure transparency and ethical standards",
+        "measurable_goal": "Certify 50% of major AI content platforms within 3 years",
+        "timeframe": "medium-term"
+      }
+    ],
+    "evidence": [
+      "How Chinese short dramas became AI content machines: AI-generated content is being used to create highly exploitative and unethical media.",
+      "Claude Code costs up to $200 a month. Goose does the same thing for free: The economic disparity in AI tools is enabling the creation of low-cost, low-quality content."
+    ],
+    "generalization": "This problem is not limited to AI content creation but reflects a broader trend of technology being used without ethical oversight, leading to exploitation and harm in multiple domains such as media, education, and healthcare.",
+    "summary": "The lack of ethical and regulatory oversight in AI content creation is enabling the production of exploitative and low-quality media, with serious implications for user trust and safety.",
+    "risk_level": "CRITICAL"
+  },
+  "raw_items": [
+    {
+      "title": "Musk v. Altman week 3: Elon Musk and Sam Altman traded blows over each other’s credibility. Now the jury will pick a side.",
+      "summary": "In the final week of the Musk v. Altman trial, lawyers traded blows over Elon Musk’s and OpenAI CEO Sam Altman’s credibility. Altman was grilled on his alleged history of lying and self-dealing involving companies that do business with OpenAI. But he fired back, painting Musk as a power-seeker who wanted to control the development&#8230;",
+      "link": "https://www.technologyreview.com/2026/05/15/1137357/musk-v-altman-week-3/",
+      "published": "Fri, 15 May 2026 23:39:35 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "The Download: China’s AI drama factory and the WHO’s missing health targets",
+      "summary": "This is today&#8217;s edition of The Download, our weekday newsletter that provides a daily dose of what&#8217;s going on in the world of technology. How Chinese short dramas became AI content machines China’s short drama industry is fueled by bite-sized, melodramatic, and smutty shows built for smartphone scrolling. Now, many are being made entirely with&#8230;",
+      "link": "https://www.technologyreview.com/2026/05/15/1137341/the-download-china-short-drama-ai-who-health-targets/",
+      "published": "Fri, 15 May 2026 12:10:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "The world is on track to miss its health targets",
+      "summary": "Every year the World Health Organization publishes a global health statistics report. It features the numbers behind world health trends and, importantly, assesses whether we’re on track to reach ambitious goals set in 2015. It’s a bit like a health grade. The 2026 report was published on Wednesday. And the results aren’t looking brilliant. While&#8230;",
+      "link": "https://www.technologyreview.com/2026/05/15/1137270/the-world-is-on-track-to-miss-its-health-targets/",
+      "published": "Fri, 15 May 2026 09:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "How Chinese short dramas became AI content machines",
+      "summary": "In a dimly lit bedroom, a frightened young woman is thrown onto a bed by a tall, muscular man. He grabs her hand, and flame-like vines crawl across her body, fusing with her flesh. She levitates, then drops. A dragon-shaped tattoo appears across her chest. “Two months,” the man says. “Give me an heir, or&#8230;",
+      "link": "https://www.technologyreview.com/2026/05/15/1137326/chinese-short-dramas-ai/",
+      "published": "Fri, 15 May 2026 09:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Railway secures $100 million to challenge AWS with AI-native cloud infrastructure",
+      "summary": "<p><a href=\"https://railway.com/\">Railway</a>, a San Francisco-based cloud platform that has quietly amassed two million developers without spending a dollar on marketing, announced Thursday that it raised $100 million in a Series B funding round, as surging demand for artificial intelligence applications exposes the limitations of legacy cloud infrastructure.</p><p><a href=\"https://tq.vc/\">TQ Ventures</a> led the round, with participation from <a href=\"https://fpvventures.com/\">FPV Ventures</a>",
+      "link": "https://venturebeat.com/infrastructure/railway-secures-usd100-million-to-challenge-aws-with-ai-native-cloud",
+      "published": "Thu, 22 Jan 2026 14:00:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Claude Code costs up to $200 a month. Goose does the same thing for free.",
+      "summary": "<p>The artificial intelligence coding revolution comes with a catch: it&#x27;s expensive.</p><p><a href=\"https://claude.com/product/claude-code\">Claude Code</a>, Anthropic&#x27;s terminal-based AI agent that can write, debug, and deploy code autonomously, has captured the imagination of software developers worldwide. But its <a href=\"https://claude.com/pricing\">pricing</a> — ranging from $20 to $200 per month depending on usage — has sparked a growing rebellion among the very programmers it aims",
+      "link": "https://venturebeat.com/infrastructure/claude-code-costs-up-to-usd200-a-month-goose-does-the-same-thing-for-free",
+      "published": "Mon, 19 Jan 2026 14:00:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Listen Labs raises $69M after viral billboard hiring stunt to scale AI customer interviews",
+      "summary": "<p>Alfred Wahlforss was running out of options. His startup, <a href=\"https://listenlabs.ai/\">Listen Labs</a>, needed to hire over 100 engineers, but competing against Mark Zuckerberg&#x27;s <a href=\"https://news.bloomberglaw.com/employee-benefits/zuckerbergs-100-million-ai-job-offers-pay-off-parmy-olson\">$100 million offers</a> seemed impossible. So he spent $5,000 — a fifth of his marketing budget — on a <a href=\"https://billboardinsider.com/ai-startup/\">billboard in San Francisco</a> displayi",
+      "link": "https://venturebeat.com/technology/listen-labs-raises-usd69m-after-viral-billboard-hiring-stunt-to-scale-ai",
+      "published": "Fri, 16 Jan 2026 14:01:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Salesforce rolls out new Slackbot AI agent as it battles Microsoft and Google in workplace AI",
+      "summary": "<p><a href=\"https://www.salesforce.com/\">Salesforce</a> on Tuesday launched an entirely rebuilt version of <a href=\"https://slack.com/help/articles/202026038-An-introduction-to-Slackbot\">Slackbot</a>, the company&#x27;s workplace assistant, transforming it from a simple notification tool into what executives describe as a fully powered AI agent capable of searching enterprise data, drafting documents, and taking action on behalf of employees.</p><p>The new Slackbot, now generally available to <a",
+      "link": "https://venturebeat.com/technology/salesforce-rolls-out-new-slackbot-ai-agent-as-it-battles-microsoft-and",
+      "published": "Tue, 13 Jan 2026 13:00:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "AI Weekly Issue #492: AI slop : A $725B bet on what no one wanted",
+      "summary": "Hyperscalers will spend $725 billion on AI infrastructure this year. The users they are spending it on are now actively rejecting the output. Gartner finds 50% of US consumers prefer brands that don't use generative AI. Wikipedia just banned AI-generated content 44-2. Stack Overflow's new-question volume has fallen 78% year over year. Google AI Overviews have collapsed top-page CTR by 58%. This is the structural tension running through every story below: capacity is being added fastest in exactl",
+      "link": "https://aiweekly.co/issues/ai-slop-a-725b-bet-on-what-no-one-wanted",
+      "published": "Wed, 13 May 2026 00:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "AI Weekly Issue #491: 100 years from now : The Last Election",
+      "summary": "This is 100 Years From Now. Once a week we skip a century and try to picture what life actually looks like when the stuff we're building now has had time to settle in. This week: the last vote.",
+      "link": "https://aiweekly.co/issues/100-years-from-now-the-last-election",
+      "published": "Sun, 10 May 2026 00:00:00 +0000",
+      "source_type": "rss"
+    }
+  ]
+}

@@ -1,0 +1,139 @@
+{
+  "axis": "MATERIALS_WASTE_REVIEW",
+  "domain": "planet",
+  "timestamp": "2026-05-01T13:43:03.361205+00:00",
+  "sources_count": 11,
+  "rss_count": 4,
+  "ddg_count": 4,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] Tackling Plastic Pollution Through The Circular Economy - YouTube",
+      "summary": "By shifting away from the traditional linear take-make-waste approach, the circular economy offers a pathway to resilient and sustainable growth. The concept of a circular economy has gained significant momentum across apect economies. Over the past year, standards Australia has been working with apect to increase the adoption of circular economy standards and raise awareness on circular economy practices within apect economies. The result of recycling is the commonif-home Vietnam, and we currently, the first factory in Vietnam successfully applied a photo to photo recycling technology model. So that means, this photo we collect after use, we can produce a product that can make a new photo. We operate with P0, 0 waste, 0 emission, and 0 waste water. Right now, we have 25 certificates that ",
+      "link": "https://www.youtube.com/watch?v=-OxI_Cth5fs",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "-OxI_Cth5fs",
+      "transcript_method": "whisper",
+      "transcript_chars": 1192,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Ending Trash Pollution by Reusing all Materials in a Circular ...",
+      "summary": "California has a trash problem. Even after recycling billions of products, we still throw out 40 million tons of garbage a year, turning limited materials into pollution that piles up in land fills and in our streets, rivers and ocean. The solution is to stop treating our waste like trash. As our population grows, we can keep our convenient lives by reusing materials in a circular economy. Cutting plastic pollution by having industry use less plastic and recycled the rest. There's about 1.3 1.4 million pounds of trash in this yard that would have ended up in our landfills. It's going to become products. Adding wine and liquor to the redemption program to reuse more glass. One of the right things about glass is it's 100% infinitely recyclable. Cutting climate pollution from rotting food in ",
+      "link": "https://www.youtube.com/watch?v=uW8ed5xBlEo",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "uW8ed5xBlEo",
+      "transcript_method": "whisper",
+      "transcript_chars": 1080,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] What’s next for the plastics industry? - YouTube",
+      "summary": "We need to focus, right? If you want to implement, you need to focus. One company can't move the mark by themselves. This is why it is a system solution to deal with that. We need to, again, work differently and be able to leverage one another's strength. It makes me really optimistic about what we can achieve in the next five years. Welcome to the circular economy show. I'm your host Finn and in today's episode, we'll be discussing the ElamacArthur Foundation's bold new action plan to tackle the plastics crisis over the next five years. I was lucky enough to visit one of the foundation's plastics workshops last year in Barcelona, where leading businesses in the plastics and packaging value chain joined us to dive into the 2030 plastics agenda for business. They discussed how to bring it t",
+      "link": "https://www.youtube.com/watch?v=1vv8tifZIlc",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "1vv8tifZIlc",
+      "transcript_method": "whisper",
+      "transcript_chars": 14786,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "summary": "- Lytx’s 2026 Road Safety Report Highlights Emerging Fleet Risks: According to the 2026 Road Safety report from Lytx, severe collisions in 2025 declined, but overall crash rates continue to rise due to inattentive driving, handheld device use, and operational pressu\n- GFL Posts Record Q1 Margin, Rai",
+    "risk_level": "UNKNOWN",
+    "trend": "UNKNOWN",
+    "key_events": [
+      "Lytx’s 2026 Road Safety Report Highlights Emerging Fleet Risks",
+      "GFL Posts Record Q1 Margin, Raises Outlook",
+      "Jerseyville, IL Reaches Recycling Policies Agreement with County"
+    ],
+    "insights": [],
+    "youtube_insights": [],
+    "relevance_to_goal": "",
+    "generalization": ""
+  },
+  "raw_items": [
+    {
+      "title": "Lytx’s 2026 Road Safety Report Highlights Emerging Fleet Risks",
+      "summary": "According to the 2026 Road Safety report from Lytx, severe collisions in 2025 declined, but overall crash rates continue to rise due to inattentive driving, handheld device use, and operational pressures. To gain more insights on the report, Waste360 caught up with Dave Riordan, chief customer officer at Lytx, for a Q&amp;A.",
+      "link": "https://www.waste360.com/industry-insights/lytx-s-2026-road-safety-report-highlights-emerging-fleet-risks",
+      "published": "Thu, 30 Apr 2026 17:32:58 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "GFL Posts Record Q1 Margin, Raises Outlook",
+      "summary": "GFL Environmental reported first-quarter 2026 results showing steady revenue growth and enough momentum to lift its full-year outlook. Revenue, adjusted EBITDA, and Adjusted Free Cash Flow all came in ahead of expectations.",
+      "link": "https://www.waste360.com/industry-insights/gfl-posts-record-q1-margin-raises-outlook",
+      "published": "Thu, 30 Apr 2026 14:48:22 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Jerseyville, IL Reaches Recycling Policies Agreement with County",
+      "summary": "Jerseyville and Jersey County, Ill., have approved new recycling partnerships for a new recycling program in the area.",
+      "link": "https://www.waste360.com/waste-recycling/jerseyville-il-reaches-recycling-policies-agreement-with-county",
+      "published": "Thu, 30 Apr 2026 13:45:37 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Denton County Dumpster Company Rebrands, Expands to 23 North Texas Cities",
+      "summary": "Iron Eagle Dumpster Rentals, a family-owned roll-off dumpster company in Denton County, Texas, has rebranded from FreedomTX Dumpster Rentals and expanded delivery to 23 cities across North DFW.",
+      "link": "https://www.waste360.com/industry-insights/denton-county-dumpster-company-rebrands-expands-to-23-north-texas-cities",
+      "published": "Thu, 30 Apr 2026 12:52:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Plastic pollution",
+      "summary": "Plastic pollution is the accumulation of plastic objects and particles (e.g. plastic bottles, bags and microbeads) in the Earth's environment that adversely affects humans, wildlife and their habitat. Plastics that act as pollutants are categorized by size into micro-, meso-, or macro debris. Plastics are inexpensive and durable, making them very adaptable for different uses; as a result, manufact",
+      "link": "https://en.wikipedia.org/wiki/Plastic_pollution",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Plastic Pollution - Our World in Data",
+      "summary": "Plastic has added much value to our lives: it's a cheap, versatile, and sterile material used in various applications, including construction, home appliances, medical instruments, and food packaging. However, when plastic waste is mismanaged — not recycled, incinerated, or kept in sealed landfills — it becomes an environmental pollutant.",
+      "link": "https://ourworldindata.org/plastic-pollution",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Recycling",
+      "summary": "Recycling is the process of converting waste materials into new materials and objects. This concept often includes the recovery of energy from waste materials. The recyclability of a material depends on its ability to reacquire the properties it had in its original state. It is an alternative to \"conventional\" waste disposal that can save material and help lower greenhouse gas emissions. It can al",
+      "link": "https://en.wikipedia.org/wiki/Recycling",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Recycling Ideas",
+      "summary": "Recycling Project Ideas. Recycling Science Projects For Kids. Recycling Day Activities For Kids. کاردستی با وسایل بازیافتی برای مدرسه.",
+      "link": "https://www.pinterest.com/ideas/recycling-ideas/927796844565/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "[YT] Tackling Plastic Pollution Through The Circular Economy - YouTube",
+      "summary": "By shifting away from the traditional linear take-make-waste approach, the circular economy offers a pathway to resilient and sustainable growth. The concept of a circular economy has gained significant momentum across apect economies. Over the past year, standards Australia has been working with apect to increase the adoption of circular economy standards and raise awareness on circular economy practices within apect economies. The result of recycling is the commonif-home Vietnam, and we currently, the first factory in Vietnam successfully applied a photo to photo recycling technology model. So that means, this photo we collect after use, we can produce a product that can make a new photo. We operate with P0, 0 waste, 0 emission, and 0 waste water. Right now, we have 25 certificates that ",
+      "link": "https://www.youtube.com/watch?v=-OxI_Cth5fs",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "-OxI_Cth5fs",
+      "transcript_method": "whisper",
+      "transcript_chars": 1192,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Ending Trash Pollution by Reusing all Materials in a Circular ...",
+      "summary": "California has a trash problem. Even after recycling billions of products, we still throw out 40 million tons of garbage a year, turning limited materials into pollution that piles up in land fills and in our streets, rivers and ocean. The solution is to stop treating our waste like trash. As our population grows, we can keep our convenient lives by reusing materials in a circular economy. Cutting plastic pollution by having industry use less plastic and recycled the rest. There's about 1.3 1.4 million pounds of trash in this yard that would have ended up in our landfills. It's going to become products. Adding wine and liquor to the redemption program to reuse more glass. One of the right things about glass is it's 100% infinitely recyclable. Cutting climate pollution from rotting food in ",
+      "link": "https://www.youtube.com/watch?v=uW8ed5xBlEo",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "uW8ed5xBlEo",
+      "transcript_method": "whisper",
+      "transcript_chars": 1080,
+      "has_full_transcript": true
+    }
+  ]
+}

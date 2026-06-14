@@ -1,0 +1,131 @@
+{
+  "axis": "INEQUALITY_POVERTY_REVIEW",
+  "domain": "civilization",
+  "timestamp": "2026-05-04T12:52:47.762112+00:00",
+  "sources_count": 8,
+  "rss_count": 0,
+  "ddg_count": 5,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] How Wealth Inequality Spiraled Out of Control | Robert Reich - YouTube",
+      "summary": "Elon Musk's wealth has surpassed $200 billion, and we take the median US worker over four million years to make that much. Wealth inequality is eating this country alive. We're now in America's second-gilded age. Just like the late 19th century, when a handful of robberbearers monopolize the economy, kept wages down, and bribed lawmakers. While today's robberbearers take joy rides in the space, the distance between their gargantuan wealth, and the financial struggles of working Americans has never been clearer. During the first 19 months of the pandemic, US billionaires added $2.1 trillion to their collective wealth, and the rich have enough political power to cut their taxes to almost nothing, sometimes literally nothing. In fact, Jeff Bezos paid no federal income taxes in 2007 or in 2011",
+      "link": "https://www.youtube.com/watch?v=wOI8RuhW7q0",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "wOI8RuhW7q0",
+      "transcript_method": "whisper",
+      "transcript_chars": 9043,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Wealth Inequality in America - YouTube",
+      "summary": "There's a chart I saw recently that I can't get out of my head. A Harvard Business Professor in Economist asked more than 5,000 Americans how they thought wealth was distributed in the United States. This is what they said they thought it was. Dividing the country into five rough groups of the top, bottom, and middle three, 20% groups, they asked people how they thought the wealth in this country was divided. Then he asked them what they thought was the ideal distribution. And 92% that's at least 9 out of 10 of them said it should be more like this. In other words, more equitable than they think it is. Now that fact is telling admittedly the notion that most Americans know that the system is already skewed unfairly. But what's most interesting to me is the reality compared to our perceptio",
+      "link": "https://www.youtube.com/watch?v=QPKKQnijnsM",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "QPKKQnijnsM",
+      "transcript_method": "whisper",
+      "transcript_chars": 5349,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] The UK’s Generational Wealth Gap - Mike Brewer - YouTube",
+      "summary": "Pleew myd o Gos ni â fus gender? Noedd yn Cyns onn Cesgkaronon cynillu, am aeb aed uncertaintyos yn foc hi gardabaethydd d devildoeth minus yn ffrwr Cytraeth naes southman hwint nazimaiurt predictguy gydreu am hon era Swydd oennu fel klif gydawn Fleg hay wthlaspo i oedd we incline i'n byrrch y pios fithwn. yn ydd yn y aten gallu dy 아� Pผum sy'l ddim yn排 hofer, y frwy Dygr y Bermtig fel i reclaimadw am nór ширfod yn bwythig yn ddwedd gyrofin dis rozmwerolwr within ac42. Dyllflod yn y por yr reproductive lächyl y hylna atmintonol gwach o gwachion nad yn y dementia a ile y bsydu busd! fissaŌddy 23 pdr, fel ensellu dod ymit dergeidith thrathb IQedd hymne, felidadhon dreפרradialideth yn managersan ystwint yn ysyngrillydd lwyffraetryneth onna hy tertf ilented y ארch, a un byfaid ac ond dydeth sp",
+      "link": "https://www.youtube.com/watch?v=Gv1YfAND3es",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "Gv1YfAND3es",
+      "transcript_method": "whisper",
+      "transcript_chars": 41975,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "Анализ на INEQUALITY_POVERTY_REVIEW — данни получени но LLM грешка",
+    "root_cause": "LLM parsing грешка",
+    "severity": "UNKNOWN",
+    "leverage_points": [],
+    "proposed_actions": [],
+    "evidence": [
+      "Poverty",
+      "Poverty | Definition, Causes, Types, & Facts | Britannica",
+      "Income inequality"
+    ],
+    "generalization": "",
+    "summary": "- Poverty: Poverty is a state or condition in which an individual lacks the financial resources and essentials for a basic standard of living. Poverty can have diverse environmental, legal, social, ec",
+    "risk_level": "UNKNOWN",
+    "trend": "UNKNOWN"
+  },
+  "raw_items": [
+    {
+      "title": "Poverty",
+      "summary": "Poverty is a state or condition in which an individual lacks the financial resources and essentials for a basic standard of living. Poverty can have diverse environmental, legal, social, economic, and political causes and effects. When evaluating poverty in statistics or economics there are two main measures: absolute poverty which compares income against the amount needed to meet basic personal n",
+      "link": "https://en.wikipedia.org/wiki/Poverty",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Poverty | Definition, Causes, Types, & Facts | Britannica",
+      "summary": "Poverty, the state of one who lacks a usual or socially acceptable amount of money or material possessions. Poverty is said to exist when people lack the means to satisfy their basic needs. Learn more about types and causes of poverty in this article.",
+      "link": "https://www.britannica.com/topic/poverty",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Income inequality",
+      "summary": "In economics, income distribution covers how a country's total GDP is distributed amongst its population. Economic theory and economic policy have long seen income and its distribution as a central concern. Unequal distribution of income causes economic inequality which is a concern in almost all countries around the world.",
+      "link": "https://en.wikipedia.org/wiki/Income_inequality",
+      "source_type": "ddg"
+    },
+    {
+      "title": "The Truth About Income Inequality | by Durber Singha | Medium",
+      "summary": "Income inequality is one of the most talked about and debated topics of today.One country that has very little income inequality and a very small gap between the rich and poor is Japan.",
+      "link": "https://medium.com/@durbersingha/the-truth-about-income-inequality-37e7408b8387",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Is inequality going up or down? | From Poverty to Power",
+      "summary": "Today’s income inequality also becomes tomorrow’s wealth inequality, as the value of wealth rises more rapidly than incomes. This is compounded by inheritance.",
+      "link": "https://frompoverty.oxfam.org.uk/is-inequality-going-up-or-down/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "[YT] How Wealth Inequality Spiraled Out of Control | Robert Reich - YouTube",
+      "summary": "Elon Musk's wealth has surpassed $200 billion, and we take the median US worker over four million years to make that much. Wealth inequality is eating this country alive. We're now in America's second-gilded age. Just like the late 19th century, when a handful of robberbearers monopolize the economy, kept wages down, and bribed lawmakers. While today's robberbearers take joy rides in the space, the distance between their gargantuan wealth, and the financial struggles of working Americans has never been clearer. During the first 19 months of the pandemic, US billionaires added $2.1 trillion to their collective wealth, and the rich have enough political power to cut their taxes to almost nothing, sometimes literally nothing. In fact, Jeff Bezos paid no federal income taxes in 2007 or in 2011",
+      "link": "https://www.youtube.com/watch?v=wOI8RuhW7q0",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "wOI8RuhW7q0",
+      "transcript_method": "whisper",
+      "transcript_chars": 9043,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Wealth Inequality in America - YouTube",
+      "summary": "There's a chart I saw recently that I can't get out of my head. A Harvard Business Professor in Economist asked more than 5,000 Americans how they thought wealth was distributed in the United States. This is what they said they thought it was. Dividing the country into five rough groups of the top, bottom, and middle three, 20% groups, they asked people how they thought the wealth in this country was divided. Then he asked them what they thought was the ideal distribution. And 92% that's at least 9 out of 10 of them said it should be more like this. In other words, more equitable than they think it is. Now that fact is telling admittedly the notion that most Americans know that the system is already skewed unfairly. But what's most interesting to me is the reality compared to our perceptio",
+      "link": "https://www.youtube.com/watch?v=QPKKQnijnsM",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "QPKKQnijnsM",
+      "transcript_method": "whisper",
+      "transcript_chars": 5349,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] The UK’s Generational Wealth Gap - Mike Brewer - YouTube",
+      "summary": "Pleew myd o Gos ni â fus gender? Noedd yn Cyns onn Cesgkaronon cynillu, am aeb aed uncertaintyos yn foc hi gardabaethydd d devildoeth minus yn ffrwr Cytraeth naes southman hwint nazimaiurt predictguy gydreu am hon era Swydd oennu fel klif gydawn Fleg hay wthlaspo i oedd we incline i'n byrrch y pios fithwn. yn ydd yn y aten gallu dy 아� Pผum sy'l ddim yn排 hofer, y frwy Dygr y Bermtig fel i reclaimadw am nór ширfod yn bwythig yn ddwedd gyrofin dis rozmwerolwr within ac42. Dyllflod yn y por yr reproductive lächyl y hylna atmintonol gwach o gwachion nad yn y dementia a ile y bsydu busd! fissaŌddy 23 pdr, fel ensellu dod ymit dergeidith thrathb IQedd hymne, felidadhon dreפרradialideth yn managersan ystwint yn ysyngrillydd lwyffraetryneth onna hy tertf ilented y ארch, a un byfaid ac ond dydeth sp",
+      "link": "https://www.youtube.com/watch?v=Gv1YfAND3es",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "Gv1YfAND3es",
+      "transcript_method": "whisper",
+      "transcript_chars": 41975,
+      "has_full_transcript": true
+    }
+  ]
+}

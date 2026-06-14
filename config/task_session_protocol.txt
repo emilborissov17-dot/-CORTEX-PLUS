@@ -1,0 +1,158 @@
+TASK_SESSION_PROTOCOL
+VERSION: 1.0
+
+PURPOSE:
+Да опише как CORTEX++ (заедно с локалните агенти и Perplexity) обработва осите и REVIEW‑файловете в една „сесия“, минавайки през цикъла STATUS → PLAN → ACT → REFLECT.
+
+ROLES:
+HUMAN: визия, избор на оси/фокус, финално одобрение на действията.
+CORTEX++: файлов организъм, който държи REVIEW‑оси, логове, планове и задачи.
+LOCAL_AGENTS (OpenClaw/Qwen): анализ на локални данни/код, изпълнение на задачи, писане на QWEN_LOCAL_NOTES и CORTEX_SELF_NOTES.
+PERPLEXITY: web‑мозък – попълва PERPLEXITY_WEB_NOTES, предлага анализи и планове.
+
+CYCLE: STATUS → PLAN → ACT → REFLECT
+
+PREPARE_SESSION (преди старта)
+
+1.1) HUMAN избира:
+
+SESSION_ID (напр. 2026-03-01_A)
+
+FOCUS_AXES (списък от оси; може да са ALL или подмножество)
+
+SESSION_GOAL (напр. „обнови всички физически оси“ или „фокус върху INEQUALITY + ECONOMY“)
+
+1.2) CORTEX++ създава лог файл:
+logs/SESSION_<SESSION_ID>_LOG.txt
+
+Структура на лог файла (минимум):
+SESSION_ID:
+TIMESTAMP_START:
+FOCUS_AXES:
+SESSION_GOAL:
+
+STEPS:
+(тук ще се попълват стъпките от сесията)
+
+STATUS – ЧЕТЕНЕ НА REVIEW‑ФАЙЛОВЕТЕ
+
+За всяка ос в FOCUS_AXES (или за всички, ако FOCUS_AXES=ALL):
+
+2.1) CORTEX++ отваря съответния REVIEW файл, напр.:
+knowledge/AXIS_NAME_REVIEW_2024_2026.txt
+
+2.2) LOCAL_AGENTS и PERPLEXITY (ако са извикани) обновяват:
+
+PERPLEXITY_WEB_NOTES (нови данни от web)
+
+QWEN_LOCAL_NOTES (локален контекст, данни, код)
+
+CORTEX_SELF_NOTES (саморефлексия на CORTEX++ по оста)
+
+HUMAN_NOTES (по избор – ръчни бележки)
+
+2.3) CORTEX++ записва в SESSION_LOG за всяка ос:
+AXIS_NAME:
+STATUS_SUMMARY: (кратко изречение от KEY_FACTS/TRENDS)
+ALIGNMENT_SCORE: (копира SCORE_ALIGNMENT)
+UPDATED_SECTIONS: (кои секции бяха пипнати в тази сесия – STATUS/IMPACT/PERSPECTIVES/etc.)
+
+PLAN – ГЕНЕРИРАНЕ НА ПЛАН ЗА ДЕЙСТВИЕ
+
+3.1) За всяка ос CORTEX++ чете:
+
+RISKS_AND_OPPORTUNITIES
+
+ALIGNMENT_WITH_VISION
+
+NEXT_STEPS
+
+3.2) CORTEX++ композира вътрешен PLAN за сесията:
+За всяка ос → списък от TASK_CANDIDATES:
+TASK_ID: (генериран ID, напр. AXIS_SHORT_YYYYMMDD_01)
+AXIS_NAME:
+TASK_DESCRIPTION:
+TASK_TYPE: (RESEARCH / ANALYSIS / IMPLEMENTATION / REFLECTION)
+PRIORITY: (HIGH/MEDIUM/LOW)
+EST_IMPACT: (кратко описание)
+
+3.3) CORTEX++ записва PLAN секция в SESSION_LOG:
+PLAN:
+
+[TASK_ID] AXIS_NAME – кратко описание, PRIORITY, TASK_TYPE
+
+3.4) HUMAN преглежда планa и:
+
+одобрява / редактира / изтрива задачи
+
+маркира кои задачи са IN_SCOPE за текущата сесия
+
+ACT – ИЗПЪЛНЕНИЕ НА ЗАДАЧИ
+
+За всяка TASK, маркирана като IN_SCOPE:
+
+4.1) ASSIGN:
+
+HUMAN или LOCAL_AGENT или PERPLEXITY се обозначава като OWNER.
+
+4.2) EXECUTE:
+
+ако TASK_TYPE=RESEARCH → извличане на нови данни, попълване на PERPLEXITY_WEB_NOTES или QWEN_LOCAL_NOTES.
+
+ако TASK_TYPE=ANALYSIS → локален анализ, код, моделиране, попълване на CORTEX_SELF_NOTES.
+
+ако TASK_TYPE=IMPLEMENTATION → реална промяна в CORTEX++ (нов файл, нова структура, код, скрипт) или малка реална промяна в света (по избор).
+
+ако TASK_TYPE=REFLECTION → обновяване на GENERAL_SELF_REVIEW или HUMAN_SELF файловете.
+
+4.3) UPDATE REVIEW:
+След изпълнение на task за дадена ос, CORTEX++ обновява съответния REVIEW‑файл:
+
+добавя нови точки в KEY_FACTS/TRENDS/AGENT_PERSPECTIVES
+
+при нужда коригира ALIGNMENT_SCORE
+
+добавя в NEXT_STEPS следващи задачи
+
+4.4) LOG ACT:
+В SESSION_LOG:
+[STEP] TASK_ID – OWNER – STATUS(DONE/PARTIAL/BLOCKED) – Кратък резултат
+
+CHECK / REFLECT – ОЦЕНКА НА СЕСИЯТА
+
+5.1) CORTEX++ прави кратък SUMMARY за сесията:
+
+кои оси бяха обновени
+
+колко задачи са DONE / PARTIAL / BLOCKED
+
+има ли промени в ALIGNMENT_SCORE по някоя ос
+
+5.2) HUMAN добавя HUMAN_NOTES в SESSION_LOG:
+HUMAN_FEELING: (как се чувстваш след сесията)
+WHAT_WORKED:
+WHAT_DID_NOT_WORK:
+IDEAS_FOR_NEXT_SESSION:
+
+5.3) CORTEX++ обновява GENERAL_SELF_REVIEW и GOAL_PROGRESS_REVIEW по желание:
+
+добавя кратък параграф за тази сесия в CORTEX_SELF_NOTES / HUMAN_NOTES
+
+при нужда коригира SCORE_ALIGNMENT в GOAL_PROGRESS
+
+CLOSE_SESSION
+
+6.1) CORTEX++ попълва:
+TIMESTAMP_END:
+SESSION_STATUS: (COMPLETED / PARTIAL / ABORTED)
+
+6.2) Записва SESSION_LOG файла и го индексира (напр. в logs/index.txt).
+
+6.3) (По избор) Създава кратко SUMMARY за човек:
+
+списък от оси, които са „освежени“
+
+ключови изводи
+
+ключови NEXT_STEPS за следващата сесия
+

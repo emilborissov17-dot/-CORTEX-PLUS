@@ -1,0 +1,82 @@
+{
+  "axis": "CLIMATE_GLOBAL_RISK_REVIEW",
+  "fetched_at": "2026-03-14T07:08:49.558420+00:00",
+  "smart_query": "climate change CO2 emissions",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "Artemis II: Nasa targets early April for Moon mission",
+      "snippet": "Nasa says technical problems that have delayed the rocket are fixed and it is ready for launch. \n",
+      "url": "https://www.bbc.com/news/articles/c4g8qp42rq6o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Prioritising AI data centres could block new homes, builders warn",
+      "snippet": "The government plans to give data centres priority access to the electricity grid to speed up development.",
+      "url": "https://www.bbc.com/news/articles/c9dn2znzez7o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Secret of hedgehog hearing discovered at far beyond human range",
+      "snippet": "Researchers played a sountrack to hedgehogs to identify the frequency of sounds they can hear",
+      "url": "https://www.bbc.com/news/articles/c8d52n0dnzro?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "ESCOMP/CESM",
+      "snippet": "The Community Earth System Model",
+      "stars": 450,
+      "url": "https://github.com/ESCOMP/CESM",
+      "updated": "2026-03-13",
+      "source": "GitHub"
+    },
+    {
+      "title": "xgcm/xgcm",
+      "snippet": "python package for analyzing general circulation model output data",
+      "stars": 251,
+      "url": "https://github.com/xgcm/xgcm",
+      "updated": "2026-03-12",
+      "source": "GitHub"
+    },
+    {
+      "title": "climlab/climlab",
+      "snippet": "Python package for process-oriented climate modeling",
+      "stars": 242,
+      "url": "https://github.com/climlab/climlab",
+      "updated": "2026-03-03",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "The Rise of AI in Weather and Climate Information and its Impact on Global Inequality",
+      "snippet": "The rapid adoption of AI in Earth system science promises unprecedented speed and fidelity in the generation of climate information. However, this technological prowess rests on a fragile and unequal foundation: the current trajectory of AI development risks further automating and amplifying the Nor",
+      "url": "https://arxiv.org/abs/2603.05710v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Climate Downscaling with Stochastic Interpolants (CDSI)",
+      "snippet": "Global climate projections rely on computationally demanding Earth System Models (ESMs), which are typically limited to coarse spatial resolutions due to their high cost. To obtain high-resolution projections for regions of interest, it is common to use Regional Climate Models (RCMs), which are driv",
+      "url": "https://arxiv.org/abs/2603.03838v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[Return of the Flesh-Eaters] If a species is horrible enough, do we have the right to kill it forever?\nSeventy years ago, a nightmare parasite feasted on the live flesh of warm-blooded creatures in North America: the screwworm. That is, until a young scientist named Edward F. Knipling discovered a crucial screwworm weakness and hatched a sweeping project to wipe them out. Knipling’s seemingly zany plan to spray screwworms out",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

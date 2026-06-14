@@ -1,0 +1,57 @@
+{
+  "axis": "SOCIAL_RELATIONS_REVIEW",
+  "fetched_at": "2026-05-04T08:12:25.164645+00:00",
+  "smart_query": "social inequality conflict trust",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "The Iran war has strengthened Ukraine in surprising ways. Could a ceasefire with Russia be closer?",
+      "snippet": "President Zelensky has been visiting the Gulf to demonstrate his country's military nous.",
+      "url": "https://www.bbc.com/news/articles/cgjp7vpee03o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Three dead in suspected virus outbreak on Atlantic cruise ship",
+      "snippet": "The World Health Organization said one case of hantavirus infection had been confirmed, with five more suspected cases under investigation.",
+      "url": "https://www.bbc.com/news/articles/cy0294829ndo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Russian strikes kill 10 as Zelensky says Ukraine hits oil tankers and terminal",
+      "snippet": "Fatalities have been reported around Ukraine as Kyiv says Russian \"shadow fleet\" tankers were hit by drones.",
+      "url": "https://www.bbc.com/news/articles/clyp41v1n1go?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [],
+  "arxiv_papers": [
+    {
+      "title": "Social Bias in LLM-Generated Code: Benchmark and Mitigation",
+      "snippet": "Large Language Models (LLMs) are increasingly deployed to generate code for human-centered applications where demographic fairness is critical. However, existing evaluations focus almost exclusively on functional correctness, leaving social bias in LLM-generated code largely unexamined. Extending ou",
+      "url": "https://arxiv.org/abs/2605.00382v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Social Media Data Toolkit: Standardization and Anonymization of Social Network Datasets",
+      "snippet": "The rapid diversification of social media platforms and the increasing restrictions on official APIs have significantly complicated cross-platform analysis. Researchers are often forced to rely on heterogeneous datasets obtained through web scraping and historical archives; however they often lack s",
+      "url": "https://arxiv.org/abs/2604.27710v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[Snail Sex Tape] In this episode, we consider a creature we often don’t think much about—the snail. And not just snails, but their sex lives. Which, as it turns out, is epic. There is persuasion and subterfuge, spaghetti penises and co-copulation. And this very surprising habit—erm kink—of making tiny arrows (actually!) and stabbing each other with them. Known as a “love dart,” these limestone daggers aren’t just ",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

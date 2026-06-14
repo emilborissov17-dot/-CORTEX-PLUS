@@ -1,0 +1,110 @@
+{
+  "axis": "GOVERNANCE_INSTITUTIONS_REVIEW",
+  "fetched_at": "2026-05-17T15:15:00.501344+00:00",
+  "smart_query": "government corruption institutions",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 0,
+    "github": 3,
+    "youtube_transcripts": 3,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "Turning silence into stories: Cambodian activist amplifies LGBTQI+ youth voices",
+      "snippet": "Cambodian activist Panha Theng, a 2025 UN Young Leader for the Sustainable Development Goals, says visibility and safe spaces remain critical for LGBTQI+ youth across Southeast Asia amid continuing stigma and discrimination.",
+      "url": "https://news.un.org/feed/view/en/story/2026/05/1167529",
+      "source": "RSS"
+    },
+    {
+      "title": "World News in Brief: UN relief vehicle struck in Ukraine, emergency airdrops in South Sudan, backlash against LGBTIQ+ rights",
+      "snippet": "The Secretary-General is alarmed that a clearly marked United Nations vehicle was struck twice in Kherson city in Ukraine on 14 May, his spokesperson said in a statement.",
+      "url": "https://news.un.org/feed/view/en/story/2026/05/1167525",
+      "source": "RSS"
+    },
+    {
+      "title": "Afghan mothers and children face worsening hunger crisis, WFP warns",
+      "snippet": "Afghanistan’s deepening malnutrition crisis is pushing mothers and children to the brink, the UN World Food Programme has warned, as mass returns from neighbouring countries and severe funding shortfalls overwhelm already strained humanitarian operations.",
+      "url": "https://news.un.org/feed/view/en/story/2026/05/1167523",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "github/government.github.com",
+      "snippet": "Gather, curate, and feature stories of public servants and civic hackers using GitHub as part of their open government innovations",
+      "stars": 1940,
+      "url": "https://github.com/github/government.github.com",
+      "updated": "2026-05-17",
+      "source": "GitHub"
+    },
+    {
+      "title": "consuldemocracy/consuldemocracy",
+      "snippet": "Consul Democracy - Open Government and E-Participation Web Software",
+      "stars": 1532,
+      "url": "https://github.com/consuldemocracy/consuldemocracy",
+      "updated": "2026-05-17",
+      "source": "GitHub"
+    },
+    {
+      "title": "datagouv/data.gouv.fr",
+      "snippet": "Ce dépôt rassemble les tickets techniques qui portent sur data.gouv.fr.",
+      "stars": 118,
+      "url": "https://github.com/datagouv/data.gouv.fr",
+      "updated": "2026-04-29",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [],
+  "podcast": "[#239 – Rose Hadshar on why automating all human labour will break our political system] The most important political question in the age of advanced AI might not be who wins elections. It might be whether elections continue to matter at all.That’s the view of Rose Hadshar, researcher at Forethought, who believes we could see extreme, AI-enabled power concentration without a coup or dramatic ‘end of democracy’ moment.She foresees something more insidious: an elite group with access to",
+  "wiki": null,
+  "youtube_items": [
+    {
+      "title": "[YT] Global Geopolitical Outlook 2026",
+      "summary": "Thank you. Thank you. Good afternoon. My name is Terry Martin as you just heard and uh it's great to be back at the World Knowledge Forum. This is I believe my eighth time at the World Knowledge Forum and I always get to talk to really interesting people. It's why one of the reasons why I keep coming back. I also like Korea a lot. Um but you I never get to talk to people any more interesting than the gentleman sitting right next to me here on this stage. Um it is really my my great pleasure to introduce uh Hal Brance. Hal Brans uh we already just heard a brief introduction. You saw some details about him up on your screen. He is a foreign affairs global policy guru in many circles. I know he's not he would reject that title, but uh he's highly regarded. He's a professor, distinguished prof",
+      "link": "https://www.youtube.com/watch?v=Gkw2vbJCFkQ",
+      "source_type": "youtube",
+      "channel": "World Knowledge Forum",
+      "video_id": "Gkw2vbJCFkQ",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] The top 10 geopolitical developments for 2026",
+      "summary": "Hi everybody and a really warm welcome. Today we're delighted to share the launch of our 2026 Geostrategic Outlook. Now we've been publishing these geostrategic outlooks for nearly eight years now. In each of those eight years, we've identified the top 10 issues that we believe are impacting the global business community, but also policymakers and government entities throughout the world. And so in 2026, we do the same thing. We identify our top 10 development that we think those individuals and those organizations should be focusing on. We're going to do one thing slightly differently this year, though. As well as hearing about those top 10 issues, we're going to move around the globe and hear from four of my colleagues in the Geostrategic Business Group for their take on what all of this",
+      "link": "https://www.youtube.com/watch?v=KqZqusPFf78",
+      "source_type": "youtube",
+      "channel": "EY Global",
+      "video_id": "KqZqusPFf78",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] How top geopolitical risks facing world in 2026 relate to Venezuela operation",
+      "summary": "The US military raid on Venezuela over the weekend stunned the world and sparked a global debate about whether President Trump might use force against other countries. Our next guest, Ian Bremer, is the president of the geopolitical risk consultancy firm, the Eurasia Group. The group's annual top risks report analyzes the top 10 geopolitical risks facing the world in the coming year. Topping this year's list is political revolution here in the US with Bremer arguing the United States is itself unwinding its own global order. Ian, good morning. Uh we will get to that number one risk in a moment, but I want to talk about number three, which is &gt;&gt; the Donro doctrine. &gt;&gt; The Don Row doctrine. And those are the words the president used himself to describe what's going on right now o",
+      "link": "https://www.youtube.com/watch?v=BwXr2tT5on0",
+      "source_type": "youtube",
+      "channel": "CBS Mornings",
+      "video_id": "BwXr2tT5on0",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ],
+  "summary": "Горизонта на управлението и институциите се разширява чрез прозрачност и участие на гражданите, но съществуват и предизвикателства във външната политика и защитата на правата на групи като LGBTQI+.",
+  "urgency": "HIGH",
+  "sentiment": "CRITICAL",
+  "key_developments": [
+    "Камбоджийският активист подчертава важността на промяната на разказа за LGBTQI+ младежи",
+    "UN колесница е атакувана в Украйна, а в Южен Судан се провеждат аварийни въздушни разпределяния",
+    "Реакцията на обществото към правата на LGBTQI+ групи показва динамика в общественото мнение"
+  ],
+  "open_source_momentum": "Consul Democracy и government.github.com показват растеж в отвореното управление и участие на граждани",
+  "scientific_frontier": "No data",
+  "relevance_to_goal": "CRITICAL"
+}

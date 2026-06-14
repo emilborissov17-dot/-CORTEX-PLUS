@@ -1,0 +1,37 @@
+{
+  "axis": "TECHNOLOGY_INFRA_REVIEW",
+  "fetched_at": "2026-05-08T09:04:39.007225+00:00",
+  "smart_query": "technology internet digital access",
+  "sources_count": {
+    "wiki": 0,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [],
+  "gdelt": [],
+  "github_repos": [],
+  "arxiv_papers": [
+    {
+      "title": "Network Digital Untwinning: Towards Backward Optimization of Digital Twins",
+      "snippet": "Network digital twins (NDTs) are transforming network management by offering precise virtual replicas of physical network systems. However, their reliance on diverse and sensitive data introduces significant challenges related to data management, regulatory compliance, and user privacy. In scenarios",
+      "url": "https://arxiv.org/abs/2605.00169v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Digital Twin-assisted belief-state reinforcement learning for latency-robust ISAC in 6G networks",
+      "snippet": "Integrated Sensing and Communication (ISAC) enables joint data transmission and environmental perception for sixth-generation (6G) networks, but centralized and virtualized RAN control loops introduce telemetry latency that yields stale observations and unstable control. This paper proposes a Digita",
+      "url": "https://arxiv.org/abs/2604.25967v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[#496 – FFmpeg: The Incredible Technology Behind Video on the Internet] Jean-Baptiste Kempf is lead developer of VLC and president of VideoLAN. Kieran Kunhya is a longtime FFmpeg contributor, codec engineer, and the person behind the now-infamous FFmpeg account on X.\nThank you for listening ❤ Check out our sponsors: https://lexfridman.com/sponsors/ep496-sc\nSee below for timestamps, transcript, and to give feedback, submit questions, contact Lex, etc.\nTranscript:\nhttps",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

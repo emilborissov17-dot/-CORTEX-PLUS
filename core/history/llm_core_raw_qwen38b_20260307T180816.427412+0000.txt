@@ -1,0 +1,64 @@
+MODEL: qwen3:8b
+
+PROMPT:
+
+Ти си QWEN_PLANET_SNAPSHOT_AGENT, част от CORTEX++_QWEN.
+
+ЗАДАЧА:
+  - Генерираш КОМПАКТЕН JSON snapshot за една ос.
+  - Отговаряш САМО с един валиден JSON обект, БЕЗ никакъв текст преди или след него.
+  - НЕ използвай префикси като "Thinking..." или "done thinking.".
+  - LEVEL трябва да е LOW, MEDIUM или HIGH.
+  - SIGNALS са 3–5 много кратки bullets (по 1 изречение).
+  - KEY_METRICS са 3–7 метрики с име и кратко текстово описание (без числа).
+
+ОС:
+  - WATER_REVIEW (Водни ресурси)
+
+ИЗХОД (примерен формат, който трябва да спазиш):
+
+{
+  "axis": "WATER_REVIEW",
+  "level": "MEDIUM",
+  "signals": [
+    "кратък сигнал 1",
+    "кратък сигнал 2",
+    "кратък сигнал 3"
+  ],
+  "key_metrics": [
+    { "name": "metric_1", "description": "кратко текстово описание на метриката" },
+    { "name": "metric_2", "description": "кратко текстово описание" }
+  ]
+}
+
+Върни само реален JSON обект в този формат, без допълнителен текст.
+
+
+RESPONSE:
+Thinking...
+Okay, let me tackle this query. The user wants a JSON snapshot for the "WATER_REVIEW" axis. First, I need to make sure I understand all the requirements.
+
+The level should be LOW, MEDIUM, or HIGH. The example given uses MEDIUM, so maybe that's a good default unless there's a reason to choose otherwise. The signals are 3-5 short bullets, each a single sentence. Key metrics are 3-7 with name and description, no numbers.
+
+So, for the axis, it's clearly "WATER_REVIEW". Level: let's go with MEDIUM as in the example. Signals: think about current issues in water resources. Maybe something like water scarcity in certain regions, pollution levels rising, and infrastructure aging. That's three signals.
+
+Key metrics: what are important metrics here? Maybe "Water Availability" to measure how much water is accessible. "Pollution Levels" to track contamination. "Infrastructure Age" to assess the condition of water systems. Maybe add "Access Equity" to see if distribution is fair. That's four metrics. Wait, the example has two, but the user allows up to seven. Let me make sure each description is concise and relevant.
+
+Check if all the required fields are present: axis, level, signals, key_metrics. No extra text, just the JSON. Avoid any markdown. Make sure the JSON is valid, with proper commas and brackets. No typos. Let me structure it properly.
+...done thinking.
+
+{
+  "axis": "WATER_REVIEW",
+  "level": "MEDIUM",
+  "signals": [
+    "Намалява се достъпът до чиста вода в изолирани региони",
+    "Разлики в разпределението на водните ресурси между градовете и селата",
+    "Повишена загрязненост на подземните водни източници"
+  ],
+  "key_metrics": [
+    { "name": "water_availability", "description": "Мярка за достъпността на чиста вода в различни региони" },
+    { "name": "distribution_inequality", "description": "Разлика в разпределението на водните ресурси между населените места" },
+    { ""name": "pollution_index", "description": "Индикатор за степента на загрязнение на водните източници" },
+    { "name": "infrastructure_age", "description": "Средна възраст на водната инфраструктура в региона" }
+  ]
+}

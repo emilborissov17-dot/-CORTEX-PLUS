@@ -1,0 +1,182 @@
+{
+  "axis": "LONG_TERM_FUTURE_REVIEW",
+  "fetched_at": "2026-03-13T13:54:02.418594+00:00",
+  "smart_query": "\"Sustainable global development beyond 2050\"",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 3,
+    "arxiv": 2,
+    "github": 3,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "analysis": {
+    "summary": "Текущите разработки в областта на изкуствения интелект и устойчвото общество продължават да напредват, но все още има nhiều предизвикателства, които трябва да бъдат преодолени. Новини като ограниченията на игри с „лоот бокс“ и проблемите с ИИ игрушки, които не могат да разчетат правилно емоциите, показват сложността на тези теми. Целта за създаване на истински AGI, който да съдейства за изграждането на устойчива общочовешка цивилизация, изисква продължаващо развитие и оценка.",
+    "key_developments": [
+      "Games with loot boxes to get minimum 16 age rating across Europe",
+      "AI toys for children misread emotions and respond inappropriately, researchers warn",
+      "AI Survival Stories: a Taxonomic Analysis of AI Existential Risk",
+      "Humanity in the Age of AI: Reassessing 2025's Existential-Risk Narratives"
+    ],
+    "sentiment": "NEUTRAL",
+    "urgency": "MEDIUM",
+    "open_source_momentum": "емcie-co/parlant star=17824, agencyenterprise/PromptInject star=465, MinghuiChen43/awesome-trustworthy-deep-learning star=382",
+    "scientific_frontier": "AI Survival Stories: a Taxonomic Analysis of AI Existential Risk, Humanity in the Age of AI: Reassessing 2025's Existential-Risk Narratives",
+    "relevance_to_goal": "Висока, защото разработките в ИИ и оценките на устойчивостта на обществото са direktно свързани с целта за създаване на истински AGI, който да съдейства за изграждането на устойчива общочовешка цивилизация."
+  },
+  "sentiment": "NEUTRAL",
+  "urgency": "MEDIUM",
+  "summary": "Текущите разработки в областта на изкуствения интелект и устойчвото общество продължават да напредват, но все още има nhiều предизвикателства, които трябва да бъдат преодолени. Новини като ограниченията на игри с „лоот бокс“ и проблемите с ИИ игрушки, които не могат да разчетат правилно емоциите, показват сложността на тези теми. Целта за създаване на истински AGI, който да съдейства за изграждането на устойчива общочовешка цивилизация, изисква продължаващо развитие и оценка.",
+  "key_developments": [
+    "Games with loot boxes to get minimum 16 age rating across Europe",
+    "AI toys for children misread emotions and respond inappropriately, researchers warn",
+    "AI Survival Stories: a Taxonomic Analysis of AI Existential Risk",
+    "Humanity in the Age of AI: Reassessing 2025's Existential-Risk Narratives"
+  ],
+  "open_source_momentum": "емcie-co/parlant star=17824, agencyenterprise/PromptInject star=465, MinghuiChen43/awesome-trustworthy-deep-learning star=382",
+  "scientific_frontier": "AI Survival Stories: a Taxonomic Analysis of AI Existential Risk, Humanity in the Age of AI: Reassessing 2025's Existential-Risk Narratives",
+  "news_items": [
+    {
+      "title": "Bostromova trilema : Je li stvarnost simulacija ? ",
+      "snippet": "Bostromova trilema : Je li stvarnost simulacija ? ",
+      "url": "https://www.advance.hr/tekstovi/znanost/bostromova-trilema-je-li-stvarnost-simulacija",
+      "source": "advance.hr"
+    },
+    {
+      "title": "AB dış politika şefinden ABDye yanıt :  Avrupa küşte değil  ",
+      "snippet": "AB dış politika şefinden ABDye yanıt :  Avrupa küşte değil  ",
+      "url": "https://tr.euronews.com/my-europe/2026/02/15/ab-dis-politika-sefinden-abdye-yanit-avrupa-cokuste-degil",
+      "source": "tr.euronews.com"
+    },
+    {
+      "title": "Europa ante su hora decisiva – INFOVATICANA",
+      "snippet": "Europa ante su hora decisiva – INFOVATICANA",
+      "url": "https://infovaticana.com/2026/03/02/europa-ante-su-hora-decisiva/",
+      "source": "infovaticana.com"
+    },
+    {
+      "title": "Games with loot boxes to get minimum 16 age rating across Europe",
+      "snippet": "The new changes by the Pan-European Game Information age-ratings body (PEGI) will start from June.",
+      "url": "https://www.bbc.com/news/articles/cge84xqjg5lo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "AI toys for children misread emotions and respond inappropriately, researchers warn",
+      "snippet": "In first study of its kind, Cambridge researchers found AI toys could misread some children's emotions.",
+      "url": "https://www.bbc.com/news/articles/clyg4wx6nxgo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Grammarly pulls AI author-impersonation tool after backlash",
+      "snippet": "Writers criticised the feature which used their names and styles as \"AI personas\" without consent.",
+      "url": "https://www.bbc.com/news/articles/cx28v08jpe7o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "github_repos": [
+    {
+      "title": "emcie-co/parlant",
+      "snippet": "The conversational control layer for customer-facing AI agents - Parlant is a context-engineering framework optimized for controlling customer interactions.",
+      "stars": 17824,
+      "url": "https://github.com/emcie-co/parlant",
+      "updated": "2026-03-13",
+      "source": "GitHub"
+    },
+    {
+      "title": "agencyenterprise/PromptInject",
+      "snippet": "PromptInject is a framework that assembles prompts in a modular fashion to provide a quantitative analysis of the robustness of LLMs to adversarial prompt attacks. 🏆 Best Paper Awards @ NeurIPS ML Saf",
+      "stars": 465,
+      "url": "https://github.com/agencyenterprise/PromptInject",
+      "updated": "2026-03-13",
+      "source": "GitHub"
+    },
+    {
+      "title": "MinghuiChen43/awesome-trustworthy-deep-learning",
+      "snippet": "A curated list of trustworthy deep learning papers. Daily updating...",
+      "stars": 382,
+      "url": "https://github.com/MinghuiChen43/awesome-trustworthy-deep-learning",
+      "updated": "2026-02-21",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "AI Survival Stories: a Taxonomic Analysis of AI Existential Risk",
+      "snippet": "Since the release of ChatGPT, there has been a lot of debate about whether AI systems pose an existential risk to humanity. This paper develops a general framework for thinking about the existential risk of AI systems. We analyze a two premise argument that AI systems pose a threat to humanity. Prem",
+      "url": "https://arxiv.org/abs/2601.09765v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Humanity in the Age of AI: Reassessing 2025's Existential-Risk Narratives",
+      "snippet": "Two 2025 publications, \"AI 2027\" (Kokotajlo et al., 2025) and \"If Anyone Builds It, Everyone Dies\" (Yudkowsky & Soares, 2025), assert that superintelligent artificial intelligence will almost certainly destroy or render humanity obsolete within the next decade. Both rest on the classic chain formula",
+      "url": "https://arxiv.org/abs/2512.04119v1",
+      "source": "arXiv"
+    }
+  ],
+  "youtube_transcripts": [],
+  "podcast": "[The U.S. Public Wants Regulation (or Prohibition) of Expert‑Level and Superhuman AI] Three‑quarters of U.S. adults want strong regulations on AI development, preferring oversight akin to pharmaceuticals rather than industry \"self‑regulation.\"",
+  "youtube_videos": [
+    {
+      "title": "YouTube:o08ykAqLOxk",
+      "video_id": "o08ykAqLOxk",
+      "url": "https://www.youtube.com/watch?v=o08ykAqLOxk",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:8JGwJwIYgPU",
+      "video_id": "8JGwJwIYgPU",
+      "url": "https://www.youtube.com/watch?v=8JGwJwIYgPU",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:2njn71TqkjA",
+      "video_id": "2njn71TqkjA",
+      "url": "https://www.youtube.com/watch?v=2njn71TqkjA",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:milERbJAJVk",
+      "video_id": "milERbJAJVk",
+      "url": "https://www.youtube.com/watch?v=milERbJAJVk",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:-SqTiyv3PJc",
+      "video_id": "-SqTiyv3PJc",
+      "url": "https://www.youtube.com/watch?v=-SqTiyv3PJc",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:jU3xDom0QZY",
+      "video_id": "jU3xDom0QZY",
+      "url": "https://www.youtube.com/watch?v=jU3xDom0QZY",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:fdnSh-AK21Y",
+      "video_id": "fdnSh-AK21Y",
+      "url": "https://www.youtube.com/watch?v=fdnSh-AK21Y",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:Q-W-7Khf3c8",
+      "video_id": "Q-W-7Khf3c8",
+      "url": "https://www.youtube.com/watch?v=Q-W-7Khf3c8",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:JpX-sKh08l8",
+      "video_id": "JpX-sKh08l8",
+      "url": "https://www.youtube.com/watch?v=JpX-sKh08l8",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:UIJGiJYvc4Y",
+      "video_id": "UIJGiJYvc4Y",
+      "url": "https://www.youtube.com/watch?v=UIJGiJYvc4Y",
+      "source": "YouTube"
+    }
+  ]
+}

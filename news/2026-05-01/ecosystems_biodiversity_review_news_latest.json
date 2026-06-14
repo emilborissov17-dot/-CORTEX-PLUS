@@ -1,0 +1,57 @@
+{
+  "axis": "ECOSYSTEMS_BIODIVERSITY_REVIEW",
+  "fetched_at": "2026-05-01T13:09:43.384683+00:00",
+  "smart_query": "biodiversity species extinction",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "Scientists warn about golden oyster mushrooms sold in Florida markets",
+      "snippet": "The golden oyster mushroom may be a culinary hit, but it’s becoming an ecological problem. Scientists warn it’s spreading quickly through U.S. forests, where it outcompetes native fungi and reduces biodiversity. In just a decade, it has appeared in more than 25 states, largely due to human cultivati",
+      "url": "https://www.sciencedaily.com/releases/2026/04/260423031521.htm",
+      "source": "RSS"
+    },
+    {
+      "title": "Scientists just debunked a 50-year myth about Hawaii’s birds",
+      "snippet": "A new study from the University of Hawaiʻi at Mānoa is overturning a decades-old belief that Indigenous Hawaiians hunted native waterbirds to extinction. Instead, researchers found no scientific evidence supporting this claim and propose a more complex explanation involving climate change, invasive ",
+      "url": "https://www.sciencedaily.com/releases/2026/04/260414075644.htm",
+      "source": "RSS"
+    },
+    {
+      "title": "Strange “elephant skin” rocks reveal ancient life in the dark ocean",
+      "snippet": "A puzzling wrinkled rock formation in Morocco has led scientists to rethink where ancient microbes could live. Instead of shallow, sunlit waters, these microbes may have thrived deep in the ocean, fueled by chemicals delivered by underwater landslides. The discovery suggests that dark, nutrient-rich",
+      "url": "https://www.sciencedaily.com/releases/2026/04/260402042807.htm",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [],
+  "arxiv_papers": [
+    {
+      "title": "Disentangling the interactive effects of anthropogenic disturbances on biodiversity",
+      "snippet": "Anthropogenic activity threatens biodiversity through climate change, habitat fragmentation, and increasing frequency and scale of disturbance. Various theoretical studies have sought to shed light on how these factors could promote or hinder the coexistence of species. However, our understanding of",
+      "url": "https://arxiv.org/abs/2603.29116v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Modulating biodiversity through higher-order interactions and intraspecific competition in rock-paper-scissors dynamics",
+      "snippet": "Understanding the mechanisms that govern species coexistence and biodiversity represents a fundamental challenge in ecology. This study extends the classic rock-paper-scissors model by introducing a context-dependent higher-order interaction mechanism where intraspecific competition is dynamically r",
+      "url": "https://arxiv.org/abs/2603.00566v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[Return of the Flesh-Eaters] If a species is horrible enough, do we have the right to kill it forever?\nSeventy years ago, a nightmare parasite feasted on the live flesh of warm-blooded creatures in North America: the screwworm. That is, until a young scientist named Edward F. Knipling discovered a crucial screwworm weakness and hatched a sweeping project to wipe them out. Knipling’s seemingly zany plan to spray screwworms out",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

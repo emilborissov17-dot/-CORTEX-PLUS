@@ -1,0 +1,43 @@
+{
+  "axis": "CLIMATE_GLOBAL_RISK_REVIEW",
+  "timestamp": "2026-06-11T19:06:07.941371+00:00",
+  "level": "LOW",
+  "signals": [
+    "Средните температури остават относително стабилни във времето.",
+    "Делът на дните с екстремни температури остава нисък.",
+    "Валежите остават без ясно изразен тренд."
+  ],
+  "key_metrics": [
+    {
+      "name": "temperature_trend",
+      "description": "Дългосрочен тренд на средните температури според климатичните модели."
+    },
+    {
+      "name": "extreme_temperature_days_share",
+      "description": "Относителен дял на дните с екстремни температурни стойности."
+    },
+    {
+      "name": "precipitation_change",
+      "description": "Промяна във валежите спрямо дългосрочната база."
+    },
+    {
+      "name": "climate_risk_score",
+      "description": "Обобщен индикатор за климатичен риск, комбиниращ няколко климатични фактори."
+    }
+  ],
+  "model": "CLIMATE_GLOBAL_RISK_MULTI_REAL_DATA",
+  "source_type": "REAL_DATA",
+  "metrics": {
+    "co2_ppm_current": 432.03,
+    "co2_ppm_year_ago": 430.05,
+    "co2_annual_increase": 1.98,
+    "co2_date": "2026-05-31",
+    "co2_annual_mean": 427.35,
+    "archive_precipitation_variability": 2.1825398892247443,
+    "forecast_forecast_max_temp_7d": 29.7,
+    "forecast_forecast_heavy_rain_days_7d": 0.0,
+    "wb_wb_country_code_mentions": 0.0
+  },
+  "data_quality": "REAL_NOAA",
+  "fetched_date": "2026-06-11"
+}

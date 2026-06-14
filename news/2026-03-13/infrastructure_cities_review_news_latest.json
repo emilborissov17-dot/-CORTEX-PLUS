@@ -1,0 +1,162 @@
+{
+  "axis": "INFRASTRUCTURE_CITIES_REVIEW",
+  "fetched_at": "2026-03-13T13:51:24.400150+00:00",
+  "smart_query": "\"Модернизация на инфраструктура в българските градове\"",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "analysis": {
+    "summary": "Изграждането на устойчива общочовешка цивилизация включва развитие на инфраструктурата в градовете. Тук се обсъжда връзката между инфраструктурата и достъпа до базови нужди като храна, вода, здравеопазване и образование. Системата гарантира достъп до тези нужди за всички хора.",
+    "key_developments": [
+      "opendatacam/opendatacam",
+      "buds-lab/building-data-genome-project-2",
+      "OpenVisualCloud/Smart-City-Sample"
+    ],
+    "sentiment": "NEUTRAL",
+    "urgency": "LOW",
+    "open_source_momentum": "Наблюдава се растеж в отворения код за градската инфраструктура с проекти като opendatacam/opendatacam и OpenVisualCloud/Smart-City-Sample.",
+    "scientific_frontier": "Изследванията върхуurban mobility models и Urban Morphometrics показват напредък в оценката на местните климатични зони и градската мобилност.",
+    "relevance_to_goal": "Достигането на целта за устойчива цивилизация изисква развитие на инфраструктурата, което гарантира достъп до базови нужди за всички хора."
+  },
+  "sentiment": "NEUTRAL",
+  "urgency": "LOW",
+  "summary": "Изграждането на устойчива общочовешка цивилизация включва развитие на инфраструктурата в градовете. Тук се обсъжда връзката между инфраструктурата и достъпа до базови нужди като храна, вода, здравеопазване и образование. Системата гарантира достъп до тези нужди за всички хора.",
+  "key_developments": [
+    "opendatacam/opendatacam",
+    "buds-lab/building-data-genome-project-2",
+    "OpenVisualCloud/Smart-City-Sample"
+  ],
+  "open_source_momentum": "Наблюдава се растеж в отворения код за градската инфраструктура с проекти като opendatacam/opendatacam и OpenVisualCloud/Smart-City-Sample.",
+  "scientific_frontier": "Изследванията върхуurban mobility models и Urban Morphometrics показват напредък в оценката на местните климатични зони и градската мобилност.",
+  "news_items": [
+    {
+      "title": "Games with loot boxes to get minimum 16 age rating across Europe",
+      "snippet": "The new changes by the Pan-European Game Information age-ratings body (PEGI) will start from June.",
+      "url": "https://www.bbc.com/news/articles/cge84xqjg5lo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "AI toys for children misread emotions and respond inappropriately, researchers warn",
+      "snippet": "In first study of its kind, Cambridge researchers found AI toys could misread some children's emotions.",
+      "url": "https://www.bbc.com/news/articles/clyg4wx6nxgo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Grammarly pulls AI author-impersonation tool after backlash",
+      "snippet": "Writers criticised the feature which used their names and styles as \"AI personas\" without consent.",
+      "url": "https://www.bbc.com/news/articles/cx28v08jpe7o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "github_repos": [
+    {
+      "title": "opendatacam/opendatacam",
+      "snippet": "An open source tool to quantify the world",
+      "stars": 1704,
+      "url": "https://github.com/opendatacam/opendatacam",
+      "updated": "2026-03-04",
+      "source": "GitHub"
+    },
+    {
+      "title": "buds-lab/building-data-genome-project-2",
+      "snippet": "Whole building non-residential hourly energy meter data from the Great Energy Predictor III competition",
+      "stars": 269,
+      "url": "https://github.com/buds-lab/building-data-genome-project-2",
+      "updated": "2026-03-13",
+      "source": "GitHub"
+    },
+    {
+      "title": "OpenVisualCloud/Smart-City-Sample",
+      "snippet": "The smart city reference pipeline shows how to integrate various media building blocks, with analytics powered by the OpenVINO™ Toolkit, for traffic or stadium sensing, analytics and management tasks.",
+      "stars": 215,
+      "url": "https://github.com/OpenVisualCloud/Smart-City-Sample",
+      "updated": "2026-02-06",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "The role of spatial scales in assessing urban mobility models",
+      "snippet": "Urban mobility models are essential tools for understanding and forecasting how people and goods move within cities, which is vital for transportation planning. The spatial scale at which urban mobility is analysed is a crucial determinant of the insights gained from any model as it can affect model",
+      "url": "https://arxiv.org/abs/2603.05227v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Predicting Local Climate Zones using Urban Morphometrics and Satellite Imagery",
+      "snippet": "The Local Climate Zone (LCZ) framework is commonly employed to represent urban form in morphological analyses despite its mapping predominantly relies on satellite imagery. Urban morphometrics, describing urban form via numerical measures of physical aspects and spatial relationships of its elements",
+      "url": "https://arxiv.org/abs/2603.00132v1",
+      "source": "arXiv"
+    }
+  ],
+  "youtube_transcripts": [],
+  "podcast": "[Governor DeSantis Directs Florida State Agencies to Partner with Future of Life Institute to Shield Families from AI Harm] The collaboration will produce a Crisis Counselor Training Curriculum and a statewide AI Harms Reporting Form targeting dangerous AI companion applications",
+  "youtube_videos": [
+    {
+      "title": "YouTube:imYT_lFdyLI",
+      "video_id": "imYT_lFdyLI",
+      "url": "https://www.youtube.com/watch?v=imYT_lFdyLI",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:F0FB7QSRk2s",
+      "video_id": "F0FB7QSRk2s",
+      "url": "https://www.youtube.com/watch?v=F0FB7QSRk2s",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:XoSGp3JBOR8",
+      "video_id": "XoSGp3JBOR8",
+      "url": "https://www.youtube.com/watch?v=XoSGp3JBOR8",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:JLMIFstRzOU",
+      "video_id": "JLMIFstRzOU",
+      "url": "https://www.youtube.com/watch?v=JLMIFstRzOU",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:iJAcTsRSIH8",
+      "video_id": "iJAcTsRSIH8",
+      "url": "https://www.youtube.com/watch?v=iJAcTsRSIH8",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:qR_T34Qumfs",
+      "video_id": "qR_T34Qumfs",
+      "url": "https://www.youtube.com/watch?v=qR_T34Qumfs",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:EGxqQDJE2Jk",
+      "video_id": "EGxqQDJE2Jk",
+      "url": "https://www.youtube.com/watch?v=EGxqQDJE2Jk",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:vlxegHXk2hU",
+      "video_id": "vlxegHXk2hU",
+      "url": "https://www.youtube.com/watch?v=vlxegHXk2hU",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:BwmoOvzg-6k",
+      "video_id": "BwmoOvzg-6k",
+      "url": "https://www.youtube.com/watch?v=BwmoOvzg-6k",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:Sz9x0An0CfY",
+      "video_id": "Sz9x0An0CfY",
+      "url": "https://www.youtube.com/watch?v=Sz9x0An0CfY",
+      "source": "YouTube"
+    }
+  ]
+}

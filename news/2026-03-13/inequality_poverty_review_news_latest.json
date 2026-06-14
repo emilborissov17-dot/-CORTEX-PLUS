@@ -1,0 +1,82 @@
+{
+  "axis": "INEQUALITY_POVERTY_REVIEW",
+  "fetched_at": "2026-03-13T15:07:22.040174+00:00",
+  "smart_query": "inequality poverty wealth gap",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "All six crew members killed after US refuelling plane crashes in Iraq",
+      "snippet": "The US Central Command says all six crew members died after a refuelling aircraft went down over western Iraq.",
+      "url": "https://www.bbc.com/news/articles/cy0dz5ql17vo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Bodies of 84 Iranian sailors killed in US torpedo strike to be repatriated",
+      "snippet": "The seamen died when Iranian warship the Iris Dena was sunk on 4 March by a US submarine near Sri Lanka. ",
+      "url": "https://www.bbc.com/news/articles/c363lk4xk07o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Cuba says it will release 51 prisoners in the coming days",
+      "snippet": "Havana says it is in talks with Washington as no fuel has entered the island in three months.",
+      "url": "https://www.bbc.com/news/articles/cwy8zv9gp0go?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "thinkingmachines/ph-poverty-mapping",
+      "snippet": "Mapping Philippine Poverty using Machine Learning, Satellite Imagery, and Crowd-sourced Geospatial Information",
+      "stars": 85,
+      "url": "https://github.com/thinkingmachines/ph-poverty-mapping",
+      "updated": "2026-03-06",
+      "source": "GitHub"
+    },
+    {
+      "title": "rs-anderson/Clustering-Ward-Level-Poverty-Using-Satellite-Imagery",
+      "snippet": "Combing satellite imagery and machine learning methods to cluster ward-level povery in Gauteng, South Africa.",
+      "stars": 4,
+      "url": "https://github.com/rs-anderson/Clustering-Ward-Level-Poverty-Using-Satellite-Imagery",
+      "updated": "2024-04-06",
+      "source": "GitHub"
+    },
+    {
+      "title": "ejanalysis/EJAM",
+      "snippet": "Environmental Justice Analysis Multisite tool for summarizing environmental and residential population information for multiple locations. This detached fork of the package and this repository are not",
+      "stars": 2,
+      "url": "https://github.com/ejanalysis/EJAM",
+      "updated": "2026-02-12",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "The effects of International Monetary Fund programs: a systematic review with narrative synthesis on poverty, inequality, and social indicators",
+      "snippet": "This systematic review with narrative synthesis examines the social impacts of International Monetary Fund (IMF) programs. We systematically searched five academic databases and grey literature following PRISMA guidelines and included 53 empirical studies that met predefined eligibility criteria. Fo",
+      "url": "https://arxiv.org/abs/2511.08617v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Closing the SNAP Gap: Identifying Under-Enrollment in High-Poverty ZIP Codes",
+      "snippet": "This project began by constructing an index of economic insecurity using multiple socioeconomic indicators. Although poverty alone predicted SNAP participation more accurately than the composite index, its explanatory power was weaker than anticipated, echoing past findings that enrollment cannot be",
+      "url": "https://arxiv.org/abs/2511.00080v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[What would your \"deathbed self\" tell you today? | Lauren Deeley] What if the key to making better decisions today is getting to know the person you'll become tomorrow? Drawing on psychological research and real-life stories, private wealth advisor Lauren Deeley explores how building a meaningful connection with your \"deathbed self\" can bring more clarity, joy and intention to the life you're building right now.Learn more about our flagship conference happening ",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

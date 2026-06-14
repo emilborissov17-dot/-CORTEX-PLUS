@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html class="client-nojs" lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<title>Energy Information and Data | OpenEI.org</title>
+<script>document.documentElement.className="client-js";RLCONF={"wgBreakFrames":false,"wgSeparatorTransformTable":["",""],"wgDigitTransformTable":["",""],"wgDefaultDateFormat":"dmy","wgMonthNames":["","January","February","March","April","May","June","July","August","September","October","November","December"],"wgRequestId":"aaXmWnoW6tOCI33kGIdfJAAAAYg","wgCanonicalNamespace":"","wgCanonicalSpecialPageName":false,"wgNamespaceNumber":0,"wgPageName":"Main_Page","wgTitle":"Main Page","wgCurRevisionId":1104564,"wgRevisionId":1104564,"wgArticleId":1,"wgIsArticle":true,"wgIsRedirect":false,"wgAction":"view","wgUserName":null,"wgUserGroups":["*"],"wgCategories":[],"wgPageViewLanguage":"en","wgPageContentLanguage":"en","wgPageContentModel":"wikitext","wgRelevantPageName":"Main_Page","wgRelevantArticleId":1,"wgIsProbablyEditable":false,"wgRelevantPageIsProbablyEditable":false,"wgRestrictionEdit":["sysop"],"wgRestrictionMove":["sysop"],"wgIsMainPage":true,"wgPageFormsTargetName":null,
+"wgPageFormsAutocompleteValues":[],"wgPageFormsAutocompleteOnAllChars":false,"wgPageFormsFieldProperties":[],"wgPageFormsCargoFields":[],"wgPageFormsDependentFields":[],"wgPageFormsCalendarValues":[],"wgPageFormsCalendarParams":[],"wgPageFormsCalendarHTML":null,"wgPageFormsGridValues":[],"wgPageFormsGridParams":[],"wgPageFormsContLangYes":null,"wgPageFormsContLangNo":null,"wgPageFormsContLangMonths":[],"wgPageFormsHeightForMinimizingInstances":800,"wgPageFormsDelayReload":false,"wgPageFormsShowOnSelect":[],"wgPageFormsScriptPath":"/w/extensions/PageForms","edgValues":[],"wgPageFormsEDSettings":null,"wgAmericanDates":false,"sdgDownArrowImage":"/w/extensions/SemanticDrilldown/skins/down-arrow.png","sdgRightArrowImage":"/w/extensions/SemanticDrilldown/skins/right-arrow.png","wgCiteReferencePreviewsActive":true,"srfFilteredConfig":null,"egMapsScriptPath":"/w/extensions/Maps/","egMapsDebugJS":false,"egMapsAvailableServices":["leaflet","googlemaps3"],"egMapsLeafletLayersApiKeys":{"MapBox":""
+,"MapQuestOpen":"","Thunderforest":"","GeoportailFrance":""}};RLSTATE={"site.styles":"ready","user.styles":"ready","user":"ready","user.options":"loading","ext.smw.style":"ready","ext.smw.tooltip.styles":"ready","ext.srf.styles":"ready","mediawiki.skinning.interface":"ready","skins.openei":"ready"};RLPAGEMODULES=["ext.smw.style","ext.smw.tooltips","smw.entityexaminer","site","mediawiki.page.ready","skins.openei.js","ext.smw.purge"];</script>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.loader.impl(function(){return["user.options@12s5i",function($,jQuery,require,module){mw.user.tokens.set({"patrolToken":"+\\","watchToken":"+\\","csrfToken":"+\\"});
+}];});});</script>
+<link rel="stylesheet" href="/w/load.php?lang=en&amp;modules=ext.smw.style%7Cext.smw.tooltip.styles%7Cext.srf.styles%7Cmediawiki.skinning.interface%7Cskins.openei&amp;only=styles&amp;skin=openei">
+<script async="" src="/w/load.php?lang=en&amp;modules=startup&amp;only=scripts&amp;raw=1&amp;skin=openei"></script>
+<style>#mw-indicator-mw-helplink {display:none;}</style>
+<meta name="ResourceLoaderDynamicStyles" content="">
+<link rel="stylesheet" href="/w/load.php?lang=en&amp;modules=site.styles&amp;only=styles&amp;skin=openei">
+<meta name="generator" content="MediaWiki 1.43.0">
+<meta name="robots" content="max-image-preview:standard">
+<meta name="format-detection" content="telephone=no">
+<meta name="description" content="Main Page: Find energy information and data.  Share knowledge.  Connect with people.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="alternate" type="application/rdf+xml" title="Main Page" href="/w/index.php?title=Special:ExportRDF/Main_Page&amp;xmlmime=rdf">
+<link rel="search" type="application/opensearchdescription+xml" href="/w/rest.php/v1/search" title="Open Energy Information (en)">
+<link rel="EditURI" type="application/rsd+xml" href="https://openei.org/w/api.php?action=rsd">
+<link rel="license" href="https://creativecommons.org/publicdomain/zero/1.0/">
+<link rel="alternate" type="application/atom+xml" title="Open Energy Information Atom feed" href="/w/index.php?title=Special:RecentChanges&amp;feed=atom">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GEZRSCPTPF"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-GEZRSCPTPF');
+</script>
+
+</head>
+<body class="mediawiki ltr sitedir-ltr mw-hide-empty-elt ns-0 ns-subject page-Main_Page rootpage-Main_Page skin-openei action-view approvedRevs-noapprovedrev">    <!-- jQuery -->
+    <!-- Note: MW loads its own jQuery, which can overwrite extensions attached to this one.  Use the MW loader if you jQuery mods need to be global, or attach them to the DOM. -jw -->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <!-- jQuery UI -->
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- Loaded by the MW resource loader so that BS attached to the right jQuery
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    -->
+
+    <!-- Font Awesome link -->
+    <!-- old font awesome link <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Oxygen:400,700|Ubuntu:300" rel="stylesheet">
+
+    <!-- OpenEI Skin Header -->
+    <nav class="navbar navbar-openei navbar-default navbar-static-top">
+      <div class="container-fluid">
+        <!-- Brand and toggle grouped for better mobile display -->
+        <div class="navbar-header">
+          <a class="navbar-brand" href="/wiki/Main_Page" aria-label="Main Page Link">
+            <!--<img class="have2x" src="/w/resources/assets/change-your-logo.svg" alt="OpenEI: Energy Information">-->
+            <object aria-label="OpenEI: Energy Information" height="36" width="120" type="image/svg+xml" data="/w/skins/OpenEI/images/openei_logo.svg" style="pointer-events: none;"></object>
+          </a>
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#oeiNavbarCollpase" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar top-bar"></span>
+            <span class="icon-bar middle-bar"></span>
+            <span class="icon-bar bottom-bar"></span>
+          </button>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="oeiNavbarCollpase">
+          <span class="nav navbar-nav primary-nav" style="margin-top: 11.5px;">Open energy information, data and resources</span>
+          <!-- User Menu -->
+          <ul class="nav navbar-nav navbar-right openei-user">
+            <li class="dropdown user-menu">
+    <a href="my user page" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+<i class="fa fa-user" aria-hidden="true"></i><span class="sr-only">My User</span>
+</a>
+              <ul class="dropdown-menu">
+                                <li><a class="create_account" href="https://auth.openei.org/register?redir=https://openei.org/wiki/Main+Page">Create account</a></li>
+<li><a class="log_in" href="https://auth.openei.org/login?redir=https://openei.org/wiki/Main+Page">Log in</a></li>
+              </ul>
+            </li>
+          </ul>
+
+          <!-- Print PDF Button -->
+          <div id="printPDFButton" style="display:none;">
+            <div class="print">
+              <i class="fa fa-print"></i>
+            </div>
+          </div>
+
+          <!-- OpenEI Search form -->
+          <!-- <form class="navbar-form navbar-right openei-search" action="/search/" method="get" name="openei-search">
+            <div class="form-group">
+              <label class="sr-only" for="oeiSearchQuery">Search open E I</label>
+              <input type="text" name="q" id="oeiSearchQuery" class="form-control" placeholder="Search">
+              <button type="submit" class="btn btn-default btn-search" value="Search" aria-label="Search"><i class="fa fa-search" aria-hidden="true"></i></button>
+            </div>
+          </form>-->
+
+          
+          <!-- Wiki Actions Menu -->
+          <div id="pageLinks" class="btn-group" role="navigation">
+            <button type="button" class="btn btn-default dropdown-toggle wiki-actions-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-label="Menu">
+              <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+            </button>
+            <div class="shadow"></div>
+              <ul class="dropdown-menu dropdown-menu-right">
+                <li class="page-actions"><a class="view_source" href="/w/index.php?title=Main_Page&action=edit">View source</a></li>
+<li class="page-actions"><a class="history" href="/w/index.php?title=Main_Page&action=history">History</a></li>
+<li class="page-actions"><a class="refresh" href="/w/index.php?title=Main_Page&action=purge">Refresh</a></li>
+<li class="page-actions"><a class="what_links_here" href="/wiki/Special:WhatLinksHere/Main_Page">What links here</a></li>
+<li class="page-actions"><a class="browse_properties" href="/wiki/Special:Browse/Main_Page">Browse Properties</a></li>
+              </ul>
+            </div>
+          
+        </div><!-- end .navbar-collapse -->
+      </div><!-- end .container-fluid -->
+    </nav><!-- end .navbar -->
+
+    <!-- Build images -->
+    <div id="background-canvas">
+      <div id="background-image" class="fade-in" alt="background images sourced from unsplash.com" style="background-image: url(https://openei.org/w/skins/OpenEI/images/unsplash/backgrounds/turbine-sunflowers.jpeg); opacity: 0;"></div>    </div>
+
+    <!-- Begin mediawiki body -->
+    <div id="mw-wrapper">
+      <div class="mw-body" role="main">
+        <a name="top" id="top"></a>
+        <div id="siteNotice"></div>
+        <div id="wikiIndicators"><div class="mw-indicators">
+<div id="mw-indicator-smw-entity-examiner" class="mw-indicator"><div class="smw-entity-examiner smw-indicator-vertical-bar-loader" data-subject="Main_Page#0##" data-dir="ltr" data-uselang="" title="Running an examiner in the background"></div></div>
+</div>
+</div>
+
+        <h1 class="firstHeading" lang=""><span class="mw-page-title-main">Main Page</span></h1>
+
+        <div id="siteSub">From Open Energy Information</div>
+
+        <div id="bodyContent" class="mw-body-content">
+          <div id="contentSub">
+            <p class="wiki-subtitle"><div id="mw-content-subtitle"></div></p>
+            <p></p>
+          </div>
+          <div id="mw-content-text"><div class="mw-content-ltr mw-parser-output" lang="en" dir="ltr"><p><!-- Start NOTITLE -->
+<!--Widget:NOTITLE--><style type='text/css'>h1.firstHeading { display:none; } #siteSub { display: none !important; } .content { padding: 6px 12px; } #contentSub { display: none; } </style>
+<!-- End NOTITLE --><!-- Start MainPageHelper -->
+<!--Widget:MainPageHelper-->
+<style>
+/*home page specific css*/
+#catlinks {
+    display: none !important;
+}
+
+@media screen and (max-width: 768px) {
+  body {
+    /*css to help prevent ios overscroll/elastic flickering*/
+    -webkit-backface-visibility: hidden;
+    -webkit-transform: translate3d(0,0,0);
+    transform: initial;
+  }
+}
+
+.mw-body {
+    margin-top: -11px;
+}
+
+#mw-wrapper {
+  max-width: 100%;
+  padding: 0;
+  margin-top: -20px;
+}
+
+#mw-wrapper.fixed {
+  position: fixed;
+  overflow: hidden;
+}
+
+.mw-body-content {
+  padding: 0 0 5px 0;
+  background: transparent;
+}
+
+#background-image {
+  transition: all 0.25s ease-in-out, transform 1s, filter 1s;
+  -webkit-transition: all 0.25s ease-in-out, -webkit-transform 1s, -webkit-filter 1s;
+}
+
+#background-image.zoomBlur {
+  transform: scale3d(1.5,1.5,1);
+  filter: blur(10px);
+  -webkit-transform: scale3d(1.5,1.5,1);
+  -webkit-filter: blur(10px);
+}
+
+#intro-home {
+  width: 100vw;
+  padding-bottom: 2.5vh;
+}
+
+.full-vh {
+  min-height: 100vh;
+}
+
+@media screen and (max-width: 768px) {
+  #intro-home {
+    padding-top: 0;
+  }
+}
+
+#jumbotron-home {
+  margin: 0;
+  padding: 1vh 0;
+  background-color: rgba(255,255,255,0.8);
+}
+
+#jumbotron-home h1 {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+#jumbotron-home p {
+  font-size: 1em;
+}
+
+#jumbotron-home .motto {
+  width: 66%;
+  margin: 10px auto;
+  font-size: 1em;
+  text-align: center;
+}
+
+#jumbotron-home .venn-diagram {
+  position: relative;
+  height: 280px;
+  width: 100%;
+  margin: 20px 0;
+}
+
+#jumbotron-home .venn-diagram .venn-logo {
+  position: absolute;
+  left: calc(50% - 35px);
+  top: 35%;
+  height: 70px;
+  width: 70px;
+  background: url(/w/skins/OpenEI/images/openei-circle-white.svg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  opacity: 0.85;
+  z-index: 101;
+}
+
+#jumbotron-home .venn-diagram .circle {
+  height: 180px;
+  width: 180px;
+  border-radius: 50%;
+  position: absolute;
+  text-align: center;
+  font-family: Ubuntu;
+  font-weight: 100;
+}
+
+#jumbotron-home .venn-diagram .circle:hover {
+  z-index: 100 !important;
+  border: dotted 2px rgba(255,255,255,0.5);
+}
+
+#jumbotron-home .venn-diagram .circle p {
+  margin-top: 40%;
+  font-size: 2em;
+  color: white;
+  text-align: center;
+}
+
+#jumbotron-home .venn-diagram .circle a {
+  display: inline-block;
+  height: 100%;
+  width: 100%;
+  text-decoration: none;
+}
+
+#jumbotron-home .venn-diagram .circle.data {
+  left: calc(50% - 150px);
+  z-index: 2;
+  /* background gradient */
+  /* IE10+ */
+  background-image: -ms-linear-gradient(top left, rgba(7,70,141,0.5) 0%, rgba(0,128,128,0.5) 100%);
+
+  /* Mozilla Firefox */
+  background-image: -moz-linear-gradient(top left, rgba(7,70,141,0.5) 0%, rgba(0,128,128,0.5) 100%);
+
+  /* Opera */
+  background-image: -o-linear-gradient(top left, rgba(7,70,141,0.5) 0%, rgba(0,128,128,0.5) 100%);
+
+  /* Webkit (Safari/Chrome 10) */
+  background-image: -webkit-gradient(linear, left top, right bottom, color-stop(0, rgba(7,70,141,0.5)), color-stop(100, rgba(0,128,128,0.5)));
+
+  /* Webkit (Chrome 11+) */
+  background-image: -webkit-linear-gradient(top left, rgba(7,70,141,0.5) 0%, rgba(0,128,128,0.5) 100%);
+
+  /* W3C Markup */
+  background-image: linear-gradient(to bottom right, rgba(7,70,141,0.5) 0%, rgba(0,128,128,0.5) 100%);
+}
+
+#jumbotron-home .venn-diagram .circle.data.background {
+  background: url(/w/images/9/93/USRDB-json.png);
+  background-size: cover;
+  z-index: 1;
+}
+
+#jumbotron-home .venn-diagram .circle.data p {
+  padding-right: 1.5em;
+}
+
+#jumbotron-home .venn-diagram .circle.analysis {
+  left: calc(50% - 30px);
+  z-index: 1;
+  /* background gradient */
+  /* IE10+ */
+  background-image: -ms-linear-gradient(top right, rgba(0,141,65,0.5) 0%, rgba(0,128,128,0.5) 100%);
+
+  /* Mozilla Firefox */
+  background-image: -moz-linear-gradient(top right, rgba(0,141,65,0.5) 0%, rgba(0,128,128,0.5) 100%);
+
+  /* Opera */
+  background-image: -o-linear-gradient(top right, rgba(0,141,65,0.5) 0%, rgba(0,128,128,0.5) 100%);
+
+  /* Webkit (Safari/Chrome 10) */
+  background-image: -webkit-gradient(linear, right top, left bottom, color-stop(0, rgba(0,141,65,0.5)), color-stop(100, rgba(0,128,128,0.5)));
+
+  /* Webkit (Chrome 11+) */
+  background-image: -webkit-linear-gradient(top right, rgba(0,141,65,0.5) 0%, rgba(0,128,128,0.5) 100%);
+
+  /* W3C Markup */
+  background-image: linear-gradient(to bottom left, rgba(0,141,65,0.5) 0%, rgba(0,128,128,0.5) 100%);
+}
+
+#jumbotron-home .venn-diagram .circle.analysis.background {
+  background: url(/w/images/f/ff/CEMAC-chart-2.png);
+  background-position: -4px 0px;
+  background-size: cover;
+}
+
+#jumbotron-home .venn-diagram .circle.analysis p {
+  padding-left: 2em;
+}
+
+#jumbotron-home .venn-diagram .circle.people {
+  bottom: 0px;
+  left: calc(50% - 90px);
+  z-index: 3;
+  /* background gradient */
+  /* IE10+ */
+  background-image: -ms-linear-gradient(bottom, rgba(0,0,0,0.1) 0%, rgba(0,128,128,0.1) 75%);
+
+  /* Mozilla Firefox */
+  background-image: -moz-linear-gradient(bottom, rgba(0,0,0,0.1) 0%, rgba(0,128,128,0.1) 75%);
+
+  /* Opera */
+  background-image: -o-linear-gradient(bottom, rgba(0,0,0,0.1) 0%, rgba(0,128,128,0.5) 200%);
+
+  /* Webkit (Safari/Chrome 10) */
+  background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, rgba(0,0,0,0.1)), color-stop(200, rgba(0,128,128,0.5)));
+
+  /* Webkit (Chrome 11+) */
+  background-image: -webkit-linear-gradient(bottom, rgba(0,0,0,0.1) 0%, rgba(0,128,128,0.5) 200%);
+
+  /* W3C Markup */
+  background-image: linear-gradient(to top, rgba(0,0,0,0.1) 0%, rgba(0,128,128,0.5) 200%);
+}
+
+#jumbotron-home .venn-diagram .circle.people.background {
+  background: url(https://cdn2.webdamdb.com/md_6dX7r7XQnnFD.jpg?1464279599);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  opacity: .6;
+}
+
+#jumbotron-home .venn-diagram .circle.people p {
+  margin-top: 50%;
+}
+
+#jumbotron-home .dashboard-link {
+  display: block;
+  width: 50%;
+  margin: 0 auto;
+  text-align: center;
+  font-size: smaller;
+}
+
+#jumbotron-home .dashboard-link a {
+  color: teal;
+}
+
+.fp-searchbar {
+  width: 33%;
+  min-width: 180px;
+  margin: 0 auto;
+}
+
+.openei-search input {
+  width: 75%;
+  border-radius: 4px 0 0 4px;
+}
+
+.openei-search button {
+  border-radius: 0 4px 4px 0;
+}
+
+.upload-link {
+  display: block;
+  font-size: larger;
+  text-align: center;
+}
+
+.mw-body .upload-link a, .mw-body .upload-link a:visited {
+  color: teal;
+  background: none;
+  text-decoration: none;
+}
+
+.mw-body .upload-link a:focus, .mw-body .upload-link a:hover {
+  color: #006069;
+}
+
+.upload-link .fa-cloud-upload {
+  font-size: 1.5em;
+  vertical-align: middle;
+}
+
+#app-yard {
+  padding: 2.5vh 2.5vw;
+  padding: 1vh 2.5vw;
+}
+
+#app-yard a {
+  margin: auto;
+}
+
+#explore-more {
+  padding: 2.5vh 0 10vh;
+  padding: 1vh 0;
+}
+
+#explore-more a {
+  position: relative;
+  display: block;
+  height: 125px;
+  width: 125px;
+  margin: 0 auto;
+  padding-top: 25px;
+  border-radius: 50%;
+  border: solid 2px #eee;
+  background-color: rgba(0, 178, 185, .8);
+  box-shadow: 0 3px 1px 0 rgba(0,0,0,0.3);
+  text-align: center;
+  text-decoration: none;
+  font-size: 1.6em;
+  color: #eee;
+  cursor: pointer;
+}
+
+#explore-more a:focus, #explore-more a:hover {
+  background-color: #007680;
+}
+
+#explore-more a i.fa {
+  width: 100%;
+  font-size: 2em;
+}
+
+#explore-img {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: url(/w/skins/OpenEI/images/openei-circle-white.svg);
+  background-size: 100%;
+  opacity: 0.1;
+  z-index: 0;
+}
+
+@-webkit-keyframes pulse {
+  0% {-webkit-transform: scale(0); opacity: 0;}
+  25% {-webkit-transform: scale(0.25); opacity: 0;}
+  50% {-webkit-transform: scale(0.5); opacity: 0;}
+  75% {-webkit-transform: scale(0.75); opacity: 0;}
+  90% {-webkit-transform: scale(0.9); opacity: 0.5;}
+  100% {opacity: 0; -webkit-transform: scale(1);}
+}
+
+@-moz-keyframes pulse {
+  0% {-moz-transform: scale(0); opacity: 0;}
+  25% {-moz-transform: scale(0.25); opacity: 0;}
+  50% {-moz-transform: scale(0.5); opacity: 0;}
+  75% {-moz-transform: scale(0.75); opacity: 0;}
+  90% {-moz-transform: scale(0.9); opacity: 0.5;}
+  100% {opacity: 0; -moz-transform: scale(1);}
+}
+
+@keyframes pulse {
+  0% {transform: scale(0); opacity: 0;}
+  25% {transform: scale(0.25); opacity: 0;}
+  50% {transform: scale(0.5); opacity: 0;}
+  75% {transform: scale(0.75); opacity: 0;}
+  90% {transform: scale(0.9); opacity: 0.5;}
+  100% {opacity: 0; transform: scale(1);}
+}
+
+#explore-more a .sonar-effect {
+  position: absolute;
+  right: -30px;
+  top: -30px;
+  width: 180px;
+  height: 180px;
+  border: 20px solid rgba(100, 205, 198, 0.35);
+  border-radius: 50%;
+  /* Giving Animation Function */
+  -webkit-animation: pulse 5s linear infinite;
+  -moz-animation: pulse 5s linear infinite;
+  animation: pulse 5s linear infinite;
+}
+
+#explore-openei {
+  min-height: 85vh;
+  width: 100vw;
+  padding: 1vh 2vw;
+  background: rgba(255,255,255,0.5);
+}
+
+#explore-links a {
+  margin: auto;
+}
+
+/* Adjustment for menu when background image is blurred */
+#pageLinks .dropdown-menu {
+  height: 100vh;
+}
+</style>
+<script>
+//main page js
+$(document).ready(function(){
+  //should initial container be fixed?
+  fixedWrapper();
+
+  //prevent "elastic scroll bump" on mobile devices
+  if($(window).width() < 768){
+    noOverflowHeight = $('#intro-home').height() + $('.navbar').height();
+    $('#mw-wrapper').css({'height':noOverflowHeight , 'overflow':'hidden'});
+  }
+});
+
+//SUPPORTING FUNCTIONS
+
+//limit initial page scroll to extent of #intro-home.full-vh
+$(window).scroll(function(){
+  if($('#intro-home').hasClass('full-vh')){
+    limit = $('#intro-home').height() - $(window).height() + $('#intro-home').offset().top + $('.navbar').height();
+    if($(window).scrollTop() >= limit) {
+      $(window).scrollTop(limit);
+      return false;
+    }
+  }
+});
+
+//explore button click action
+$(function zoomBlur() {
+  $('a[href*="#"]:not([href="#"])').click(function() {
+    $('#background-image').addClass('zoomBlur');
+    $('#intro-home').removeClass('full-vh');
+    $('#mw-wrapper').removeClass('fixed').css({'height':'inherit','overflow':'auto'});
+    if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
+      var target = $(this.hash);
+      target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
+      if (target.length) {
+        $('html, body').animate({
+          scrollTop: target.offset().top
+        }, 500);
+        return false;
+      }
+    }
+  });
+});
+
+//resizing #mw-wrapper #intro-home.full-vh
+$(window).resize(function(){
+  fixedWrapper();
+});
+
+function fixedWrapper() {
+  if($(window).height() > ($('#intro-home').height() + $('.navbar').height()) && $('#intro-home').hasClass('full-vh')){
+    $('#mw-wrapper').addClass('fixed');
+  } else {
+    $('#mw-wrapper').removeClass('fixed');
+  }
+}
+
+</script>
+
+<!-- End MainPageHelper --></p><div id="intro-home" class="full-vh">
+<div id="jumbotron-home" class="jumbotron">
+<h1><span class="mw-headline" id="Open_Energy_Information">Open Energy Information</span></h1>
+<div class="venn-diagram">
+<div class="venn-logo"></div>
+<div class="circle data background"></div>
+<div class="circle data"><a href="/wiki/Data" title="Data"><p>Data</p></a></div>
+<div class="circle analysis background"></div>
+<div class="circle analysis"><a href="/wiki/Apps" title="Apps"><p>Analysis</p></a></div>
+<div class="circle people background"></div>
+<div class="circle people"><a href="/wiki/OpenEI:Get_Involved" title="OpenEI:Get Involved"><p>People</p></a></div>
+</div>
+<p class="motto">Linked energy information on hundreds of topics crowdsourced from industry and government agencies.</p>
+<p><span class="upload-link"><a target="_blank" rel="nofollow noreferrer noopener" class="external text" href="https://openei.org/apps/upload/"><i class="fa fa-cloud-upload" aria-hidden="true"></i> Share Data</a></span>
+</p>
+</div>
+<div id="app-yard" class="flexbox flex-wrap"><!-- Start ImageAnchor -->
+<!--Widget:Image Anchor-->
+<style>
+.img-a.btn {
+  width: 240px;
+  height: 60px;
+  margin: 5px;
+  border: solid 1px #007680;
+  border-radius: 3px;
+  background-color: rgba(255,255,255,0.8);
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: 90%;
+}
+
+a:focus .img-a.btn, .img-a.btn:hover {
+  border-color: #00b2b9;
+  background-color: #fff;
+}
+
+a:focus .img-a.tile, a:hover .img-a.tile, a:active .img-a.tile {
+  filter: saturate(2);
+}
+
+a:focus .tile .tile-label, a:hover .tile .tile-label, a:active .tile .tile-label {
+  background: rgba(0, 118, 128, 0.5);
+  color: #eee;
+}
+</style>
+<script>
+//touch screen event
+document.addEventListener("touchstart", function(){}, true);
+
+$(document).ready(function(){
+  //construct buttons
+  $('.img-a').each(function(){
+    elementImg = 'url('+$(this).attr("data-image")+')';
+    $(this).css('background-image', elementImg);
+    elementStyle = $(this).data("style");
+    if(typeof elementStyle !== typeof undefined && elementStyle !== false){
+      styleArray = elementStyle.split(";");
+      for(var i=0; i< styleArray.length; i++) {
+        styleRule = styleArray[i].split(":");
+        for(var r=0; r < styleRule.length; r++) {
+          $(this).css(styleRule[0],styleRule[1]);
+        }
+      }
+    }
+    elementLnk = $(this).data("link");
+    elementAlt = $(this).data("alt");
+    $(this).wrap('<a href="'+elementLnk+'" alt="'+elementAlt+'"></a>');
+  });
+});
+</script>
+
+<!-- End ImageAnchor -->
+<p><span class="img-a btn" data-image="https&#58;//openei.org/w/images/2/21/GDR-logo.png" data-link="https&#58;//gdr.openei.org/" data-alt="Geothermal Data Repository" data-style="background-size:57%;background-position:center 5px;"></span><span class="img-a btn" data-image="https&#58;//openei.org/w/images/4/4c/PRIMRE_Tile_Blue.png" data-link="https&#58;//openei.org/wiki/PRIMRE" data-alt="Portal and Repository for Information on Marine Renewable Energy" data-style="background-size:67%;"></span><span class="img-a btn" data-image="https&#58;//openei.org/w/images/d/de/MHKDR-logo.png" data-link="https&#58;//mhkdr.openei.org/" data-alt="Marine and Hydrokinetic" data-style="background-size:67%;"></span><span class="img-a btn" data-image="/w/images/c/cc/RAPID-logo.png" data-link="RAPID" data-alt="Regulatory and Permitting Information Desktop" data-style="background-size:85%;"></span><span class="img-a btn" data-image="/w/images/6/69/URDB-logo.png" data-link="Utility_Rate_Database" data-alt="Utility Rate Database"></span>
+<span class="img-a btn" data-image="/w/images/4/40/Foundry-logo.png" data-link="https&#58;//foundry.openei.org" data-alt="Data Foundry"></span><span class="img-a btn" data-image="/w/images/5/5f/OEDI-logo-wide.png" data-link="https&#58;//data.openei.org/" data-alt="Open Energy Data Initiative"></span>
+</p>
+</div>
+<div id="explore-more"><a class="mw-selflink-fragment" href="#explore-openei">Explore<i class="fa fa-chevron-down" aria-hidden="true"></i><span id="explore-img"></span><div class="sonar-effect"></div></a></div>
+</div>
+<div id="explore-openei">
+<h2><span id="Explore_open_energy_information.2C_data.2C_and_applications_on_OpenEI"></span><span class="mw-headline" id="Explore_open_energy_information,_data,_and_applications_on_OpenEI">Explore open energy information, data, and applications on OpenEI</span></h2>
+<h4><span class="mw-headline" id="Use_gateways_to_learn_more_about_renewable_energy_technologies_and_related_OpenEI_applications.">Use <span style="color:teal"><b>gateways</b></span> to learn more about renewable energy technologies and related OpenEI applications.</span></h4>
+<div id="explore-links" class="flexbox flex-wrap"><span class="box img-a tile" data-image="/w/images/d/d0/Yellowstone-hotsprings.png" data-link="Gateway%3aGeothermal" data-alt="OpenEI Geothermal Gateway" data-style="background-size:105%;"><span class="tile-label">Geothermal</span></span><span class="box img-a tile" data-image="/w/images/7/7e/PV-sunflowers.png" data-link="Gateway%3aSolar" data-alt="OpenEI Solar Gateway" data-style="background-size:105%;"><span class="tile-label">Solar</span></span><span class="box img-a tile" data-image="/w/images/b/bd/Gavins-point-dam.jpg" data-link="Gateway%3aWater_Power" data-alt="OpenEI Water Power Gateway" data-style="background-size:105%;"><span class="tile-label">Water</span></span><span class="box img-a tile" data-image="/w/images/0/0a/Turbines-field.png" data-link="Gateway%3aWind" data-alt="OpenEI Wind Gateway" data-style="background-size:105%;"><span class="tile-label">Wind</span></span><span class="box img-a tile" data-image="/w/images/e/e5/Test-tube.png" data-link="Gateway%3aHydrogen" data-alt="OpenEI Hydrogen Gateway" data-style="background-size:105%;"><span class="tile-label">Hydrogen</span></span><span class="box img-a tile" data-image="/w/images/e/e2/Transmission-line.png" data-link="Gateway%3aUtilities" data-alt="OpenEI Utilities Gateway" data-style="background-size:120%;"><span class="tile-label">Utilities</span></span><span class="box img-a tile" data-image="/w/images/8/89/New_York_buildings.png" data-link="Gateway%3aBuildings" data-alt="OpenEI Buildings Gateway" data-style="background-size:105%;"><span class="tile-label">Buildings</span></span><span class="box img-a tile" data-image="/w/images/6/6a/Manhatten_by_NASA.png" data-link="Gateway%3aSmart_Grid" data-alt="OpenEI Smart Grid Gateway" data-style="background-size:110%;"><span class="tile-label">Smart Grid</span></span>
+</div>
+<p><br /><br />
+</p>
+<h4><span id="Applications_on_OpenEI_may_be_used_for_education.2C_exploring_data_and_empowering_industry_to_make_informed_decisions."></span><span class="mw-headline" id="Applications_on_OpenEI_may_be_used_for_education,_exploring_data_and_empowering_industry_to_make_informed_decisions."><span style="color:teal"><b>Applications</b></span> on OpenEI may be used for education, exploring data and empowering industry to make informed decisions.</span></h4>
+<div id="explore-links" class="flexbox flex-wrap"><span class="box img-a tile" data-image="/w/images/5/5f/OEDI-logo-wide.png" data-link="https&#58;//data.openei.org/" data-alt="Open Energy Data Initiative" data-style="background-size:80%;"><span class="tile-label white-bg">Open Energy Data Initiative</span></span><span class="box img-a tile" data-image="/w/images/9/96/GeoBridge_Tile.png" data-link="https&#58;//openei.org/wiki/GeoBridge" data-alt="GeoBridge" data-style="background-size:130%;"><span class="tile-label white-bg">GeoBridge</span></span><span class="box img-a tile" data-image="/w/images/7/7a/GDR-DOE.png" data-link="https&#58;//gdr.openei.org/" data-alt="Geothermal Data Repository" data-style="background-size:80%;"><span class="tile-label white-bg">Geothermal Data Repository</span></span><span class="box img-a tile" data-image="/w/images/6/6f/PRIMRE_LOGO.png" data-link="PRIMRE" data-alt="Portal and Repository for Information on Marine Renewable Energy" data-style="background-size:105%;"><span class="tile-label">PRIMRE</span></span><span class="box img-a tile" data-image="/w/images/4/42/REDi_logo_Blue_Text_%281%29.png" data-link="https&#58;//redi.openei.org" data-alt="Renewable energy discovery island" data-style="background-size:75%;"><span class="tile-label">REDi Island</span></span><span class="box img-a tile" data-image="/w/images/0/03/MHK-logo.png" data-link="https&#58;//mhkdr.openei.org/" data-alt="Marine and Hydrokinetic Data Repository" data-style="background-size:60%;"><span class="tile-label white-bg">MHK Data Repository</span></span><span class="box img-a tile" data-image="/w/images/5/5f/InSPIRE_Icon_Navy.png" data-link="InSPIRE" data-alt="InSPIRE Innovative Solar Practices Integrated with Rural Economies and Ecosystems" data-style="background-size:90%;"><span class="tile-label">InSPIRE</span></span><span class="box img-a tile" data-image="/w/images/9/9c/PVDAQ_Logo.png" data-link="PVDAQ" data-alt="Photo Voltaic DataAcQuisition" data-style="background-size:105%;background-color:#3D6321"><span class="tile-label">PVDAQ</span></span><span class="box img-a tile" data-image="/w/images/f/f9/NCSP_Home_Hero.png" data-link="NCSP_Hub" data-alt="NCSP+ Data Hub" data-style="background-size:125%;background-color:#3D6321"><span class="tile-label">NCSP+ Data Hub</span></span><span class="box img-a tile" data-image="/w/images/3/30/84170.jpeg" data-link="Wind_Workforce" data-alt="Wind Workforce" data-style="background-size:105%;"><span class="tile-label">Wind Workforce</span></span><span class="box img-a tile" data-image="/w/images/2/24/Wind_for_Schools_screen_capture.png" data-link="Wind_for_Schools_Portal" data-alt="Wind for Schools Portal" data-style="background-size:105%;"><span class="tile-label">Wind for Schools</span></span><span class="box img-a tile" data-image="/w/images/6/69/URDB-logo.png" data-link="Utility_Rate_Database" data-alt="Utility Rate Database" data-style="background-size:90%;"><span class="tile-label">Utility Rate Database</span></span><span class="box img-a tile" data-image="/w/images/4/40/Foundry-logo.png" data-link="https&#58;//foundry.openei.org" data-alt="Data Foundry" data-style="background-size:90%;"><span class="tile-label">Data Foundry</span></span><span class="box img-a tile" data-image="/w/images/6/6b/DISCOVR_card.png" data-link="https&#58;//openei.org/apps/DISCOVR/" data-alt="Development of Integrated Screening, Cultivar Optimization, and Verification Research" data-style="background-size:105%;"><span class="tile-label">DISCOVR</span></span><span class="box img-a tile" data-image="/w/images/c/cc/RAPID-logo.png" data-link="RAPID" data-alt="RAPID Toolit" data-style="background-size:80%;"><span class="tile-label white-bg">RAPID Toolkit</span></span><span class="box img-a tile" data-image="/w/images/9/92/FACES_Logo_2025_2.png" data-link="FACES" data-alt="Faculty-Applied Clean Energy Sciences" data-style="background-size:90%;"><span class="tile-label white-bg">FACES</span></span>
+</div>
+</div>
+<div style="display:none">
+</div>
+<!-- 
+NewPP limit report
+Cached time: 20260302193227
+Cache expiry: 86400
+Reduced expiry: false
+Complications: [no‐toc]
+[SMW] In‐text annotation parser time: 0 seconds
+CPU time usage: 0.031 seconds
+Real time usage: 0.048 seconds
+Preprocessor visited node count: 131/1000000
+Post‐expand include size: 523/8388608 bytes
+Template argument size: 402/8388608 bytes
+Highest expansion depth: 6/50000
+Expensive parser function count: 0/100
+Unstrip recursion depth: 0/20
+Unstrip post‐expand size: 0/5000000 bytes
+ExtLoops count: 0/100
+-->
+<!--
+Transclusion expansion time report (%,ms,calls,template)
+100.00%   15.691      1 Template:PageMeta
+100.00%   15.691      1 -total
+-->
+
+<!-- Saved in parser cache with key wikidb:pcache:idhash:1-0!canonical and timestamp 20260302193227 and revision id 1104564. Rendering was triggered because: page-view
+ -->
+</div></div><div class="visualClear"></div>           <div class="printfooter">
+             Retrieved from "<a dir="ltr" href="https://openei.org/w/index.php?title=Main_Page&amp;oldid=1104564">https://openei.org/w/index.php?title=Main_Page&amp;oldid=1104564</a>"           </div>
+           <div class="noprintpdf">
+             <div id="catlinks" class="catlinks catlinks-allhidden" data-mw="interface"></div>           </div>
+
+        </div>
+      </div>
+
+      <div id="mw-footer" role="contentinfo">
+        <!-- Feedback Button -->
+        <div id="feedbackBtn">
+          <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
+        </div>
+
+        <!-- Contents configured by MediaWiki:SideBar -->
+        <div class="footers-nav-links"><div class="footer-links">
+  <ul>
+<li id="n-About-OpenEI" class="mw-list-item"><a href="/wiki/OpenEI:About">About OpenEI</a></li><li id="n-Get-Involved" class="mw-list-item"><a href="/wiki/OpenEI:Get_Involved">Get Involved</a></li><li id="n-Contact" class="mw-list-item"><a href="/wiki/OpenEI:About">Contact</a></li><li id="n-Disclaimers" class="mw-list-item"><a href="/wiki/OpenEI:General_disclaimer">Disclaimers</a></li><li id="n-Help" class="mw-list-item"><a href="/wiki/Help:Contents">Help</a></li><li id="n-Upload-File" class="mw-list-item"><a href="https://openei.org/apps/upload/" rel="nofollow" target="_blank">Upload File</a></li><li id="n-Developer-Services" class="mw-list-item"><a href="https://openei.org/services/" rel="nofollow" target="_blank">Developer Services</a></li>  </ul>
+</div></div>
+
+        
+        <div class="credits">OpenEI is developed and maintained by the <a href="https://www.nrel.gov/">National Laboratory of the Rockies</a> with funding and support from the <a href="https://energy.gov/">U.S. Department of Energy</a> and a network of <a href="/wiki/OpenEI_International_Sponsors_and_Partners">International Partners & Sponsors</a>.
+        </div>
+
+        <ul id="footer-info"><li id="footer-info-lastmod"> This page was last edited on 2 March 2026, at 12:32.</li><li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="https://creativecommons.org/publicdomain/zero/1.0/">Creative Commons Zero</a> unless otherwise noted.</li></ul><ul id="footer-places"><li id="footer-places-privacy"><a href="/wiki/OpenEI:Privacy_policy">Privacy policy</a></li><li id="footer-places-about"><a href="/wiki/OpenEI:About">About Us</a></li><li id="footer-places-disclaimers"><a href="/wiki/OpenEI:General_disclaimer">Disclaimers</a></li></ul><div class="visualClear"></div>
+      </div> <!-- end footer -->
+
+    </div><!-- end mw-wrapper -->
+
+    <!-- Feedback Mechanism -->
+    <!-- begin Feedback modal -->
+ <div id="feedbackModal" class="modal fade" role="dialog" tabindex="-1" aria-labelledby="feedbackHeader" aria-hidden="true">
+   <div class="modal-dialog" role="document">
+     <div class="modal-content">
+       <div class="modal-header">
+         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+         <h3 id="feedbackHeader" class="modal-title">Feedback</h3>
+       </div><!-- end .modal-header -->
+       <div class="modal-body">
+
+         <form id="feedbackForm" name="feedbackForm" onsubmit="saveFeedback()">
+           <div class="form-group">
+            <div id="feedbackCheckContainer">
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" id="feedbackCheckContacts" name="issues" value="contact needs updating"> Contact needs updating
+                </label>
+              </div>
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" id="feedbackCheckContent" name="issues" value="out of date content"> Out of date content
+                </label>
+              </div>
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" id="feedbackCheckLink" name="issues" value="broken link"> Broken link
+                </label>
+              </div>
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" id="feedbackCheckOther" name="issues" value="other"> Other
+                </label>
+              </div>
+             </div>
+
+             <div class="form-group">
+              <div id="feedbackCommentsContainer">
+               <label class="text-area" for="feedbackComments">Comments (required)</label>
+               <textarea class="form-control" rows="3" name="comments" id="feedbackComments" required></textarea>
+              </div>
+             </div>
+           </div>
+         </form>
+
+         <!--feedbackAlert is deprecated, now using pageAlert -->
+         <div class="alert alert-danger" id="feedbackAlert" style="display:none; margin-bottom:0;" role="alert">
+           <button type="button" class="close" data-dismiss="alert" aria-label="Close">&times;</button>
+           <span></span>
+         </div>
+
+       </div><!-- end .modal-body -->
+       <div class="modal-footer">
+         <button class="btn btn-default" data-dismiss="modal">Close</button>
+         <button class="btn btn-primary" id="saveFeedbackBtn" data-loading-text="Submiting...">Submit</button>
+       </div><!-- end .modal-footer -->
+     </div><!-- end .modal-content -->
+   </div><!-- end .modal-dialog -->
+ </div><!-- end .modal -->
+ <!-- end Feedback modal -->
+<style>
+    #privacyModal {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      max-width: 50rem;
+      border-radius: 0;
+      margin-bottom: 0;
+      z-index: 1059;
+    }
+    .pp-modal-content {
+      position: relative;
+      background-color: #2f3337;
+      color: white;
+      border: none;
+      border-radius: 7px;
+      outline: 0;
+    }
+  
+    .pp-modal-content h3, 
+    .pp-link a, .pp-link a:visited {
+      color: #659ccc;
+    }
+  
+    @media only screen and (min-width: 801px) {
+      .pp-link {
+        margin: 1em 0;
+      }
+      .pp-link.right {
+        float: right;
+      }
+    }
+  
+    @media only screen and (max-width: 800px) {
+    .pp-link {
+        margin: 1em 0;
+      }
+      .pp-link {
+        display: block;
+      }
+    }
+  
+    #savePrivacyBtn {
+      width: 100%;
+    }
+  </style>
+  
+  <!-- begin Privacy modal -->
+  <div id="privacyModal" class="alert" role="dialog" tabindex="1" aria-labelledby="privacyHeader">
+    <div class="pp-modal-content">
+      <div class="modal-header">
+          <h3 id="privacyHeader" class="modal-title"><i class="fas fa-user-shield"></i> Privacy Policy Notification</h3>
+      </div>
+      <div class="modal-body">
+        <p>
+          This site uses cookies to store and share user preferences with other OpenEI sites, and uses Google Analytics to collect anonymous user information such as which pages are visited, for how often, and what searches or other webpages may have led users here.
+          You can prevent Google Analytics from recognizing you on return visits to this site by disabling cookies on your browser or by installing a Google Analytics Opt-out Browser Add-on.
+          By clicking "Accept" you agree this site can store cookies on your device and disclose information to OpenEI and Google Analytics in accordance with our privacy policy.
+        </p>
+        <p>
+          <span class="pp-link left"><a href="https://openei.org/wiki/OpenEI:General_disclaimer" rel="noopener" target="_blank">OpenEI Privacy Policy</a></span>
+          <span class="pp-link right"><a href="https://marketingplatform.google.com/about/analytics/terms/us/" rel="noopener noreferrer" target="_blank">Google Analytics Terms of Service</a></span>
+        </p>
+        <button class="btn btn-primary test" id="savePrivacyBtn" data-loading-text="Submiting..." tabindex="1">Accept</button>
+      </div>
+    </div><!-- end .pp-modal-content -->
+  </div>
+  <!-- end Privacy modal -->
+  
+  <script>
+   $(document).ready(function(){
+    $('#savePrivacyBtn').click(function(){
+      $.ajax({
+        url: "https://auth.openei.org/privacy_policy_set",
+        type: "POST",
+        crossDomain: true,
+        xhrFields: {
+          withCredentials: true
+        },
+        dataType: "json",
+        data: {
+          action: 'setAcceptedPrivacyPolicy',
+        },
+        error: function(jqXHR) {
+          //showPageAlert('Something went wrong! Error: ' + jqXHR.statusText, 'alert-error');
+          console.log('Something went wrong! Error: ' + jqXHR.statusText);
+          $('#privacyModal').hide();
+          return;
+        },
+        success: function(result) {
+          $('#privacyModal').hide();
+        }
+      });
+    });
+  });
+  </script>
+  
+    <!-- Page Alert -->
+            <div id="pageAlert" class="alert lead" style="display:none;">
+          <button type="button" class="close" onclick="hideAlert(this.parentElement)">&times;</button>
+          <span><!-- Alert text goes here, populated by main.js --></span>
+        </div>
+
+    
+    </body>
+    </html>
+
+    <script>(RLQ=window.RLQ||[]).push(function(){mw.log.warn("This page is using the deprecated ResourceLoader module \"mediawiki.skinning.interface\".\n[1.43] The use of the `interface-message-box` feature with SkinModule is deprecated in favor of CodexModule. Please remove this feature.More information can be found at [[mw:Manual:ResourceLoaderSkinModule]]. ");mw.config.set({"wgBackendResponseTime":131,"wgPageParseReport":{"smw":{"limitreport-intext-parsertime":0},"limitreport":{"cputime":"0.031","walltime":"0.048","ppvisitednodes":{"value":131,"limit":1000000},"postexpandincludesize":{"value":523,"limit":8388608},"templateargumentsize":{"value":402,"limit":8388608},"expansiondepth":{"value":6,"limit":50000},"expensivefunctioncount":{"value":0,"limit":100},"unstrip-depth":{"value":0,"limit":20},"unstrip-size":{"value":0,"limit":5000000},"timingprofile":["100.00%   15.691      1 Template:PageMeta","100.00%   15.691      1 -total"]},"loops":{"limitreport-count-limited":{"value":0,"limit":100}},"cachereport":{"timestamp":"20260302193227","ttl":86400,"transientcontent":false}}});});</script>
+</body>
+</html>

@@ -1,0 +1,112 @@
+{
+  "axis": "ECONOMY_WORK_REVIEW",
+  "fetched_at": "2026-05-17T16:40:41.802473+00:00",
+  "smart_query": "economy unemployment poverty wages",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 0,
+    "github": 3,
+    "youtube_transcripts": 3,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "Robert paid £726 to skip the driving test waiting list. New laws mean others won't be able to",
+      "snippet": "The government is cracking down on third parties who use bots to buy tests and resell them at inflated prices. ",
+      "url": "https://www.bbc.com/news/articles/cx219pn5g70o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Swatch shuts stores after crowds queue for new watch",
+      "snippet": "Hundreds of people queue outside branches across the UK to get the £335 item.",
+      "url": "https://www.bbc.com/news/articles/c1d2qldr0yko?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "'They took £20,000 I didn't owe': Parents hit by child maintenance errors",
+      "snippet": "John Hammond is one of 30 parents who told BBC Your Voice they'd experienced problems with the CMS.",
+      "url": "https://www.bbc.com/news/articles/cq8wjn98y85o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "AmirhosseinHonardoust/Economic-DNA-Repair",
+      "snippet": "A deep research study introducing the concept of Economic DNA Repair for smart contracts, designing self-correcting tokenomics that detect anomalies, repair unstable parameters, rebalance incentives, ",
+      "stars": 19,
+      "url": "https://github.com/AmirhosseinHonardoust/Economic-DNA-Repair",
+      "updated": "2026-05-15",
+      "source": "GitHub"
+    },
+    {
+      "title": "AmirhosseinHonardoust/Pricing-Negotiation-Intelligence",
+      "snippet": "This article reframes pricing as a negotiation rather than a prediction, showing how price emerges from tensions between product reality, market dynamics, and buyer behavior. It introduces negotiation",
+      "stars": 18,
+      "url": "https://github.com/AmirhosseinHonardoust/Pricing-Negotiation-Intelligence",
+      "updated": "2026-02-23",
+      "source": "GitHub"
+    },
+    {
+      "title": "AmirhosseinHonardoust/Metabolic-Tokenomics",
+      "snippet": "A scientific exploration of Metabolic Tokenomics, the framework that models token economies as living metabolic systems. Examines how tokens burn, store, and circulate energy like biological cells, ma",
+      "stars": 17,
+      "url": "https://github.com/AmirhosseinHonardoust/Metabolic-Tokenomics",
+      "updated": "2026-02-23",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [],
+  "podcast": "[Jerome Powell and the Future of Fed Independence] If you have a credit card, hope to buy a house, or just want stable grocery prices – let’s talk about the future of Fed independence!It’s impossibly important for the Federal Reserve to steer monetary policy without political interference – an ideal pushed to its brink during Jerome Powell’s time as Fed Chair.Powell’s Fed faced a once-in-a-century pandemic, oversaw the economy as inflation spiked ",
+  "wiki": null,
+  "youtube_items": [
+    {
+      "title": "[YT] 2025 now weakest job growth year since pandemic",
+      "summary": "All right, breaking just a few minutes ago, brand&nbsp; new data on jobs. The economy added just 50,000&nbsp;&nbsp; jobs in December. You can see that right there.&nbsp; And jobs growth was revised lower in both October&nbsp;&nbsp; and November. You can see what a bad month October&nbsp; was right there. 2025 now the weakest year of jobs&nbsp;&nbsp; growth since the pandemic. Now, on the other&nbsp; hand, the unemployment rate dipped to 4.4%.&nbsp;&nbsp; 4% in December. A lot more on this coming up.&nbsp; These jobs numbers painting an interesting&nbsp;&nbsp; picture of the economy. People digging into it&nbsp; right now. The final jobs report for 2025 shows&nbsp;&nbsp; the economy added just 50,000 jobs in December.&nbsp; CNN senior reporter Matt Egan joining us now.&nbsp;&nbsp; Is this w",
+      "link": "https://www.youtube.com/watch?v=u-WIdZMgpIY",
+      "source_type": "youtube",
+      "channel": "CNN",
+      "video_id": "u-WIdZMgpIY",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] What is a Recession? Recession Explained 2025 | How to prepare for a recession 2025",
+      "summary": "Welcome to Illustrate to Educate! Don’t&nbsp; forget to subscribe and ring the bell&nbsp;&nbsp; for more simple and objective&nbsp; videos on topics that matter. Have you ever wondered what a&nbsp; recession is? In this video,&nbsp;&nbsp; we’ll cover everything you need to know about a&nbsp; recession and ways to prepare for a recession. What is recession? A recession is a period of economic&nbsp;&nbsp; decline characterized by a decrease in gross&nbsp; domestic product (GDP) which is a measure of the&nbsp;&nbsp; total value of goods and services produced by an&nbsp; economy. It can also include decreases in income,&nbsp;&nbsp; employment, and trade, usually lasting&nbsp; for at least two consecutive quarters.&nbsp;&nbsp; Recessions are generally caused by a&nbsp; variety of factors, such ",
+      "link": "https://www.youtube.com/watch?v=TktFwy6uWnA",
+      "source_type": "youtube",
+      "channel": "Illustrate to Educate",
+      "video_id": "TktFwy6uWnA",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Economy Was Already Horrible. New Global Crisis Just Made It Worse.",
+      "summary": "My husband and I finally made the difficult decision to leave the United States. This economy is so bad. $33 for toilet paper? We can't even afford to America has become completely unaffordable and I don't know why more people are not talking about this. I just got laid off from my job after 12 years. The way that the world is right now, how do you lay someone off? The gas was 289. Last time I got gas, after you filled it up, I said, \"Oh, gas must have went up.\" It was 315, it's 350. 92,000 jobs disappeared last month. The same month the US government started spending $891 million per day of taxpayer money to fund their conflict in Iran. You know the economy is already bad when the CEO of McDonald's is taking the world's smallest bite of a burger he's trying to promote on social media. The",
+      "link": "https://www.youtube.com/watch?v=SHySrxXWkg0",
+      "source_type": "youtube",
+      "channel": "Vanessa Wingårdh",
+      "video_id": "SHySrxXWkg0",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ],
+  "summary": "Економиката показва слаб рост на работните места, но намалява безработицата. Нови закони и практики във финансовия сектор подчертават несправедността в достъпа до ресурси.",
+  "urgency": "HIGH",
+  "sentiment": "CRITICAL",
+  "key_developments": [
+    "Robert плати £726, за да прескочи опашката за изпита по шофьорство",
+    "Swatch затваря магазини след дълги опашки за нови часовници",
+    "Economic-DNA-Repair получава 19 звезди на GitHub",
+    "Pricing-Negotiation-Intelligence получава 18 звезди на GitHub",
+    "Metabolic-Tokenomics получава 17 звезди на GitHub"
+  ],
+  "open_source_momentum": "Positive momentum with multiple projects gaining traction on GitHub",
+  "scientific_frontier": "No data",
+  "relevance_to_goal": "CRITICAL"
+}

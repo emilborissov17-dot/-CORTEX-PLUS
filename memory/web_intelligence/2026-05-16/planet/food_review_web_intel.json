@@ -1,0 +1,96 @@
+{
+  "axis": "FOOD_REVIEW",
+  "domain": "planet",
+  "timestamp": "2026-05-16T18:41:46.900874+00:00",
+  "sources_count": 7,
+  "rss_count": 0,
+  "ddg_count": 6,
+  "youtube_count": 1,
+  "youtube_items": [
+    {
+      "title": "[YT] I Didn’t Eat Food For 30 Days - YouTube",
+      "summary": "I am not eating any food for the next 30 days. Wait, I want to be hungry. This is what I currently look like, and I weigh 220 pounds. And when I say no food, I really mean it. This was the hardest I've ever pushed my body in my entire life. Seriously, do not try this at home. I had a whole team of doctors watching me every single day. They kept track of all my vitals like these. To ensure I didn't have a heart attack or worse. Thanks doctors. And if I've heard any reason eat food in the next 30 days, Chris, you get a shape my head. No. There's no ways going to 30 days. We're shaving this head. The towel should have officially begun. Guess who I'll need these. You're right. And since I'm not eating for the next 30 days, I might as well get rid of all the food in my house. Are you eating? I'",
+      "link": "https://www.youtube.com/watch?v=vaIgyRoUkQI",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "vaIgyRoUkQI",
+      "transcript_method": "whisper",
+      "transcript_chars": 14722,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "Над 85 милиона души в Африка са с висок уровень на хранителна неустойчивост",
+    "root_cause": "Климатични, икономически и конфликтни фактори, довели до засуха, неурожай и разстройство на хранителните вериги",
+    "severity": "HIGH",
+    "leverage_points": [
+      "Международната общност трябва да предостави координирана помощ и инвестиции за решаване на проблема",
+      "Развитието на устойчиви земеделски практики и поддържане на хранителните вериги"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Повишаване на производителността на местните ферми чрез технологии и устойчиви практики",
+        "measurable_goal": "Увеличение на хранителната продукция с 20% в рамките на 2 години",
+        "timeframe": "средносрочно"
+      }
+    ],
+    "evidence": [
+      "Данните от ReliefWeb показват, че над 85 милиона души в Африка са с висок уровень на хранителна неустойчивост",
+      "Статията в The Guardian съобщава, че климатичните промени и низките доходи правят достъпа до храна уязвим във Великобритания"
+    ],
+    "generalization": "Този проблем е свързан с домейна на ЧОВЕКА и ЦИВИЛИЗАЦИЯТА, тъй като хранителната неустойчивост има сериозни последствия за здравето и благосъстоянието на населението",
+    "summary": "Над 85 милиона души в Африка са с висок уровень на хранителна неустойчивост поради климатични, икономически и конфликтни фактори. Необходими са координирана международна помощ и инвестиции за решаване на проблема.",
+    "risk_level": "HIGH"
+  },
+  "raw_items": [
+    {
+      "title": "Confronting alarming food insecurity trends in Africa: An... | ReliefWeb",
+      "summary": "Two other key Africa-wide analyses, from the Integrated Food Security Phase Classification and the Global Report on Food Crises 2025 add that over 85 million people are highly food insecure in the East and Horn of Africa (including Sudan and South Sudan).",
+      "link": "https://reliefweb.int/report/world/confronting-alarming-food-insecurity-trends-africa-experts-view-ifrc",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Confronting Alarming Food Insecurity Trends in Africa: Expert...",
+      "summary": "He highlights the worsening hunger and malnutrition trends across Africa in 2025, driven by interconnected climate, economic, and conflict factors. Without coordinated global action and investment in resilient food systems, millions risk chronic hunger and life-threatening...",
+      "link": "https://news.fundsforngos.org/2025/09/02/confronting-alarming-food-insecurity-trends-in-africa-expert-analysis-and-solutions/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "GNAFC Key Messages and Analysis on the 2026 Conflict in the Middle...",
+      "summary": "Food crisis countries should not be assessed only through maritime trade exposure. The countries of greatest concern are those where multiple vulnerabilities overlap. Policy responses should be targeted, time-bound and sequenced; poorly designed measures may be costly and ineffective.",
+      "link": "https://www.fightfoodcrises.net/articles/gnafc-key-messages-and-analysis-2026-conflict-middle-east-acute-food-insecurity-and",
+      "source_type": "ddg"
+    },
+    {
+      "title": "‘Tinderbox’ UK may be one shock away from food riots... | The Guardian",
+      "summary": "The climate crisis, low incomes, poor farming policy and fragile just-in-time supply chains are making access to food vulnerable in the UK.",
+      "link": "https://www.theguardian.com/food/2026/feb/23/uk-food-security-cyber-attack-riots-tinderbox-analysis",
+      "source_type": "ddg"
+    },
+    {
+      "title": "How climate change could make our food less nutritious - YouTube",
+      "summary": "© 2026 Google LLC.",
+      "link": "https://www.youtube.com/watch?v=wzjVT07bcYA",
+      "source_type": "ddg"
+    },
+    {
+      "title": "US supply chains face biggest jump in ‘weather shocks’ due to...",
+      "summary": "The authors urge countries to “include effective measures to build resilience against weather-induced supply-chain disruptions” in their plans. Hallegatte tells Carbon Brief that the study highlights the importance of helping countries to adapt to climate change, adding",
+      "link": "https://www.carbonbrief.org/us-supply-chains-face-biggest-jump-in-weather-shocks-due-to-climate-change/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "[YT] I Didn’t Eat Food For 30 Days - YouTube",
+      "summary": "I am not eating any food for the next 30 days. Wait, I want to be hungry. This is what I currently look like, and I weigh 220 pounds. And when I say no food, I really mean it. This was the hardest I've ever pushed my body in my entire life. Seriously, do not try this at home. I had a whole team of doctors watching me every single day. They kept track of all my vitals like these. To ensure I didn't have a heart attack or worse. Thanks doctors. And if I've heard any reason eat food in the next 30 days, Chris, you get a shape my head. No. There's no ways going to 30 days. We're shaving this head. The towel should have officially begun. Guess who I'll need these. You're right. And since I'm not eating for the next 30 days, I might as well get rid of all the food in my house. Are you eating? I'",
+      "link": "https://www.youtube.com/watch?v=vaIgyRoUkQI",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "vaIgyRoUkQI",
+      "transcript_method": "whisper",
+      "transcript_chars": 14722,
+      "has_full_transcript": true
+    }
+  ]
+}

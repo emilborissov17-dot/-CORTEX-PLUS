@@ -1,0 +1,90 @@
+{
+  "axis": "COGNITION_LEARNING_REVIEW",
+  "fetched_at": "2026-03-29T11:48:45.171659+00:00",
+  "smart_query": "education learning children schools",
+  "sources_count": {
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 0,
+    "github": 3,
+    "web_search": 5
+  },
+  "rss": [
+    {
+      "title": "Scientists just solved a major mystery about how your brain stores memories",
+      "snippet": "Scientists have found that your brain separates memories into “what” and “where/when” using two different groups of neurons. One set responds to specific objects or people, while another tracks the context or situation. When you remember something correctly, these groups briefly connect and reconstr",
+      "url": "https://www.sciencedaily.com/releases/2026/03/260324024247.htm",
+      "source": "RSS"
+    },
+    {
+      "title": "Scientists link childhood stress to lifelong digestive issues",
+      "snippet": "Early life stress may set the stage for long-term digestive problems by disrupting the gut-brain connection. Studies in both mice and thousands of children found links to symptoms like pain, constipation, and IBS. Scientists discovered that different biological pathways control different gut issues,",
+      "url": "https://www.sciencedaily.com/releases/2026/03/260317064444.htm",
+      "source": "RSS"
+    },
+    {
+      "title": "Cannabis study finds THC can create false memories",
+      "snippet": "THC doesn’t just blur memories—it can create new ones that never happened. In a controlled experiment, cannabis users were much more likely to recall words that were never shown and struggled with tasks like remembering to do something later. Researchers found that THC disrupted many different memor",
+      "url": "https://www.sciencedaily.com/releases/2026/03/260311004711.htm",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "AFLucas-UOM/AI-Early-Detection-System-for-Dyslexia-ADHD",
+      "snippet": "Proof-of-concept behavioural analysis system for early detection of dyslexia and ADHD using spelling pattern evaluation, sentence rewriting similarity analysis, and keyboard/mouse interaction monitori",
+      "stars": 6,
+      "url": "https://github.com/AFLucas-UOM/AI-Early-Detection-System-for-Dyslexia-ADHD",
+      "updated": "2026-03-06",
+      "source": "GitHub"
+    },
+    {
+      "title": "ShubhamMahajan880/studyAlpha-Ai-Agent",
+      "snippet": "🎓 StudyAlpha is an intelligent, end-to-end AI Study Coach powered by multi-agent collaboration, memory-augmented reasoning, adaptive quizzes, and ML weakness prediction.  Built for the Google × Kaggle",
+      "stars": 5,
+      "url": "https://github.com/ShubhamMahajan880/studyAlpha-Ai-Agent",
+      "updated": "2026-01-29",
+      "source": "GitHub"
+    },
+    {
+      "title": "Adityavanjre/Project-K",
+      "snippet": "K.A.L.I. — Universal Multi-Modal Teacher: Absolute Doubt-Solving, 3D Logic Visualization, and Sovereign AI Learning Engine.",
+      "stars": 2,
+      "url": "https://github.com/Adityavanjre/Project-K",
+      "updated": "2026-03-29",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [],
+  "web_search": [
+    {
+      "title": "The Whole Child Approach to Education - ASCD",
+      "url": "https://www.ascd.org/whole-child",
+      "source": "WEB"
+    },
+    {
+      "title": "PDF STRATEGY Every Child Learns - UNICEF",
+      "url": "https://www.unicef.org/media/59856/file/UNICEF-education-strategy-2019-2030.pdf",
+      "source": "WEB"
+    },
+    {
+      "title": "About Early Learning at ED | U.S. Department of Education",
+      "url": "https://www.ed.gov/birth-grade-12-education/early-childhood-education/about-early-learning-ed",
+      "source": "WEB"
+    },
+    {
+      "title": "Children&#x27;S Education | Unicef Usa",
+      "url": "https://www.unicefusa.org/what-unicef-does/childrens-education",
+      "source": "WEB"
+    },
+    {
+      "title": "Four Ways Schools Can Support the Whole Child - Greater Good",
+      "url": "https://greatergood.berkeley.edu/article/item/four_ways_schools_can_support_the_whole_child",
+      "source": "WEB"
+    }
+  ],
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL"
+}

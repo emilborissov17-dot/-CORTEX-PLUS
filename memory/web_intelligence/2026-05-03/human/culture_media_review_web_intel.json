@@ -1,0 +1,109 @@
+{
+  "axis": "CULTURE_MEDIA_REVIEW",
+  "domain": "human",
+  "timestamp": "2026-05-03T08:47:43.889798+00:00",
+  "sources_count": 13,
+  "rss_count": 12,
+  "ddg_count": 0,
+  "youtube_count": 1,
+  "youtube_items": [
+    {
+      "title": "[YT] How Does Misinformation Impact Freedom Of Speech In America ... - YouTube",
+      "summary": "[Music] How does misinformation impact freedom of speech in America? Imagine a world where everyone's voice is heard, but some voices spread false stories that can cause real harm. That's what misinformation can do to the right to free speech in America. Freedom of speech is protected by the first amendment which means people can share their ideas without fear of government punishment. But when false information spreads, it can distort what people believe and trust. This can lead to confusion, distrust in institutions, and even violence. So the challenge is how to keep free speech alive while stopping harmful lies from spreading. In America, many believe that fighting misinformation is necessary to protect social justice and civil rights. When false stories target groups based on race, rel",
+      "link": "https://www.youtube.com/watch?v=BjfETRzlsyI",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "BjfETRzlsyI",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 2618,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "summary": "- Actors From ‘The Pitt,’ ‘The Bear’ and More Take Over Broadway: Audiences are flocking to shows starring Patrick Ball of “The Pitt,” Jon Bernthal and Ayo Edebiri of “The Bear,” Ben Ahlers of “The Gilded Age” and more.\n- How 7 Looks for ‘The Devil Wears Prada 2’ Came Together: The film’s costume de",
+    "risk_level": "UNKNOWN",
+    "trend": "UNKNOWN",
+    "key_events": [
+      "Actors From ‘The Pitt,’ ‘The Bear’ and More Take Over Broadway",
+      "How 7 Looks for ‘The Devil Wears Prada 2’ Came Together",
+      "Francisco de Zurbarán: Paintings So Real, You Can Hardly Resist Believing"
+    ],
+    "insights": [],
+    "youtube_insights": [],
+    "relevance_to_goal": "",
+    "generalization": ""
+  },
+  "raw_items": [
+    {
+      "title": "Actors From ‘The Pitt,’ ‘The Bear’ and More Take Over Broadway",
+      "summary": "Audiences are flocking to shows starring Patrick Ball of “The Pitt,” Jon Bernthal and Ayo Edebiri of “The Bear,” Ben Ahlers of “The Gilded Age” and more.",
+      "link": "https://www.nytimes.com/2026/05/02/theater/patrick-ball-pitt-bear-hacks-gilded-age-broadway.html",
+      "published": "Sat, 02 May 2026 22:13:37 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "How 7 Looks for ‘The Devil Wears Prada 2’ Came Together",
+      "summary": "The film’s costume designer, Molly Rogers, who also worked on the original, shared the inspirations for some of her favorite designs.",
+      "link": "https://www.nytimes.com/2026/05/02/movies/devil-wears-prada-2-costumes.html",
+      "published": "Sat, 02 May 2026 12:31:53 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Francisco de Zurbarán: Paintings So Real, You Can Hardly Resist Believing",
+      "summary": "An exhibition of works by Francisco de Zurbarán at London’s National Gallery highlights the painter’s ability to draw in the viewer with detail and drama.",
+      "link": "https://www.nytimes.com/2026/05/02/arts/design/francisco-de-zurbaran-national-gallery-london.html",
+      "published": "Sat, 02 May 2026 09:02:04 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Ashley McBryde Saved Her Own Life. Now She’s Rocking Out Her Way.",
+      "summary": "The prolific country singer and songwriter has never quite fit the country music mold. Her upcoming album, “Wild,” revels in her individuality, and her sobriety.",
+      "link": "https://www.nytimes.com/2026/05/02/arts/music/ashley-mcbryde-wild.html",
+      "published": "Sat, 02 May 2026 13:17:23 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "‘Our rivalry with Take That was always tongue in cheek’: Tony Mortimer’s honest playlist",
+      "summary": "<p>The East 17 man knows his 90s bangers but once inadvertently cleared a dancefloor. And what song gets him on the exercise bike in a morning?</p><p><strong>The first single I bought</strong><br />\n Shut Up by Madness, from a record shop on&nbsp;Hoe Street in Walthamstow, London. It gave me a kind of independence in the world when I could choose what I wanted. And as a nine-year-old, you could find 10p down the back of the sofa and get a Madness badge at the market to stick on your coat.</p><p>",
+      "link": "https://www.theguardian.com/music/2026/may/03/honest-playlist-tony-mortimer-east-17-madness-take-that-adele",
+      "published": "Sun, 03 May 2026 08:00:48 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "‘Men are so frightened of being too cuddly or affectionate’: Danny Dyer on going from hardman to heart-throb in Rivals",
+      "summary": "<p>The actor has always been full of surprises – and now thanks to Jilly Cooper’s bonkbuster he’s become a romantic lead. As the series returns, he talks about marriage, masculinity and meditation</p><p>Danny Dyer is dressed in white and carrying a huge bouquet of flowers when I drop in on his Guardian photoshoot. “Hello, baby,” he says to me in a voice so bad-boy East End, so fabulously filthy, that he sounds like a parody of Danny Dyer. We’ve never met before, but you wouldn’t guess.</p><p>Dye",
+      "link": "https://www.theguardian.com/film/2026/may/02/danny-dyer-rivals-interview-hardman-to-heart-throb-in-rivals",
+      "published": "Sat, 02 May 2026 11:00:25 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "‘We have to mock the site’s insanity’: comedian Tim Heidecker on the allure of becoming Infowars’ new boss",
+      "summary": "<p>As the Onion waits for a court to approve its takeover, creative director Heidecker previews his ambitious plan to parody the site – already sending Jones into a fury</p><p>If you’ve tuned in to Infowars over the years, you might have heard a very angry man screaming about the 2020 election being stolen for “<a href=\"https://www.splcenter.org/resources/extremist-files/alex-jones/\">reanimated corpse</a>” Joe Biden, or <a href=\"https://www.cnbc.com/2018/09/14/alex-jones-5-most-disturbing-ridicu",
+      "link": "https://www.theguardian.com/culture/ng-interactive/2026/may/02/infowars-onion-tim-heidecker",
+      "published": "Sat, 02 May 2026 11:00:26 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "TV tonight: let the David Attenborough 100th birthday celebrations begin!",
+      "summary": "<p>The broadcaster relives his landmark series that changed everything. Plus, gritty casino drama The Cage continues. Here’s everything to watch this evening</p><p><strong>8pm, BBC One</strong></p> <a href=\"https://www.theguardian.com/tv-and-radio/2026/may/03/tv-tonight-let-the-david-attenborough-100th-birthday-celebrations-begin\">Continue reading...</a>",
+      "link": "https://www.theguardian.com/tv-and-radio/2026/may/03/tv-tonight-let-the-david-attenborough-100th-birthday-celebrations-begin",
+      "published": "Sun, 03 May 2026 05:15:45 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Laufey on making jazz cool again (and the fish that brought out her inner rage)",
+      "summary": "The Icelandic star reflects on a phenomenal year, and the music video that let her go \"primal\".",
+      "link": "https://www.bbc.com/news/articles/c99lvggdy4jo?at_medium=RSS&at_campaign=rss",
+      "published": "Sat, 02 May 2026 23:05:34 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "There was one way we'd agree to do Devil Wears Prada 2, says Meryl Streep",
+      "summary": "The sequel's stars on what's changed since the original, and why the film still resonates with women.",
+      "link": "https://www.bbc.com/news/articles/c62638ne6n7o?at_medium=RSS&at_campaign=rss",
+      "published": "Fri, 01 May 2026 23:52:21 GMT",
+      "source_type": "rss"
+    }
+  ]
+}

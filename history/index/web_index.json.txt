@@ -1,0 +1,8 @@
+[
+  {
+    "url": "https://bg.wikipedia.org/wiki/Жак_Фреско",
+    "domain": "wikipedia.org",
+    "first_seen": "2026-01-25T13:25:00",
+    "path": "../web/example_web_01.json"
+  }
+]

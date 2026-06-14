@@ -1,0 +1,123 @@
+{
+  "axis": "EDUCATION_CULTURE_REVIEW",
+  "domain": "civilization",
+  "timestamp": "2026-05-16T21:48:43.338026+00:00",
+  "sources_count": 10,
+  "rss_count": 4,
+  "ddg_count": 5,
+  "youtube_count": 1,
+  "youtube_items": [
+    {
+      "title": "[YT] The benefits of a bilingual brain - Mia Nacamulli - YouTube",
+      "summary": "Abla Sespignal? Paul A. Rufensei? Yujui Shorjong Emma? If you answered, see, we, or we, and you're watching this in English, chances are you belong to the world's bilingual and multilingual majority. And besides having an easier time traveling or watching movies without subtitles, knowing two or more languages means that your brain may actually look and work differently than those of your monolingual friends. So what does it really mean to know a language? Language ability is typically measured in two active parts, speaking and writing, and two passive parts, listening and reading. While a balanced bilingual has near-equal abilities across the board in two languages, most bilinguals around the world know and use their languages in varying proportions. And depending on their situation and h",
+      "link": "https://www.youtube.com/watch?v=MMmOLN5zBLY",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "MMmOLN5zBLY",
+      "transcript_method": "whisper",
+      "transcript_chars": 4539,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "Недостатъчна защита на данни в образователните платформи довежда до кибератаки и уязвимост на училищата",
+    "root_cause": "Училищата използват слабо защитени дигитални платформи, които са уязвими за кибератаки, което предизвиква загуба на данни и компрометиране на ученически информация",
+    "severity": "HIGH",
+    "leverage_points": [
+      "Разработване и внедряване на стандартни протоколи за киберсигурност в образователните институции",
+      "Повишаване на осведомеността за киберсигурност сред преподавателски и административни персонал"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Внедряване на киберсигурностни стандарти във всички образователни платформи",
+        "measurable_goal": "Повишение на степента на защита на данните в образователните системи с минимум 70% в рамките на 18 месеца",
+        "timeframe": "дългосрочно"
+      },
+      {
+        "action": "Провеждане на регулярни обучавания за киберсигурност в училищата",
+        "measurable_goal": "Достъп до обучение за киберсигърност за 90% от преподавателския и административен персонал в рамките на 12 месеца",
+        "timeframe": "средносрочно"
+      }
+    ],
+    "evidence": [
+      "Latest Canvas Attack Shows Schools Still Struggle With Cybersecurity: A cyberattack against one of the world’s largest digital education platforms has forced attention onto the vulnerability of U.S. schools’ data.",
+      "Screen Time Concerns Lead to Backlash Against Edtech Vetting Process: Legislators have pushed back against cellphones in the classroom but are now focused on ensuring school software on devices"
+    ],
+    "generalization": "Проблемът е свързан с домейна на цивилизацията, тъй като уязвимостта на образователните системи влияе върху сигурността на информацията и устойчивостта на държавните институции",
+    "summary": "Училищата са уязвими за кибератаки поради слаба защита на данните, което изисква по-строги стандарти и обучение за киберсигурност.",
+    "risk_level": "HIGH"
+  },
+  "raw_items": [
+    {
+      "title": "The Pandemic Hindered English Learners' Literacy. This Ohio District Is Turning the Tide.",
+      "summary": "&quot;We want to help the students continue to thrive, and really everything that we're thinking about with our student services is equitable learning ...",
+      "link": "https://www.edsurge.com/news/2026-05-13-the-pandemic-hindered-english-learners-literacy-this-ohio-district-is-turning-the-tide",
+      "published": "Wed, 13 May 2026 20:43:32 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "Latest Canvas Attack Shows Schools Still Struggle With Cybersecurity",
+      "summary": "A cyberattack against one of the world’s largest digital education platforms has forced attention onto the vulnerability of U.S. schools’ data. ...",
+      "link": "https://www.edsurge.com/news/2026-05-12-latest-canvas-attack-shows-schools-still-struggle-with-cybersecurity",
+      "published": "Tue, 12 May 2026 14:29:33 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "LGBTQ+ Youth Mental Health Is Suffering, but Schools Are Poised to Help",
+      "summary": "“One of the most important findings is that when adults, institutions, and communities become more affirming, the suicide risk of LGBTQ+ young people ...",
+      "link": "https://www.edsurge.com/news/2026-05-08-lgbtq-youth-mental-health-is-suffering-but-schools-are-poised-to-help",
+      "published": "Fri, 08 May 2026 19:30:50 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "Screen Time Concerns Lead to Backlash Against Edtech Vetting Process",
+      "summary": "SCHOOL SOFTWARE SCRUTINY: Legislators have pushed back against cellphones in the classroom but are now focused on ensuring school software on devices ...",
+      "link": "https://www.edsurge.com/news/2026-05-07-screen-time-concerns-lead-to-backlash-against-edtech-vetting-process",
+      "published": "Thu, 07 May 2026 16:07:40 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "Global education",
+      "summary": "Global education is a mental development program that seeks to improve global human development based on the understanding of global dynamics, through the various sectors of human development delivery. In formal education, as a mode of human development delivery, it is integrated into formal educational programs, as an advanced program where global dimensions to local problems are appreciated thro",
+      "link": "https://en.wikipedia.org/wiki/Global_education",
+      "source_type": "ddg"
+    },
+    {
+      "title": "primarysource.org/about-us/what-is-global-education",
+      "summary": "A global education is one that incorporates learning about the cultures, geographies, histories, and current issues of all the world’s regions.",
+      "link": "https://primarysource.org/about-us/what-is-global-education/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Literacy",
+      "summary": "Literacy is the ability to read and write, and illiteracy is the inability to read and write. Some researchers suggest that the study of literacy as a concept can be divided into two periods: the period before 1950, when literacy was understood solely as alphabetical literacy (understanding the meanings of words without necessarily being able to use words); and the period after 1950, when literacy",
+      "link": "https://en.wikipedia.org/wiki/Literacy",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Literacy in the United States - Wikipedia",
+      "summary": "Literacy in the United States was categorized by the National Center for Education Statistics into different literacy levels, with 92% of American ...",
+      "link": "https://en.wikipedia.org/wiki/Literacy_in_the_United_States",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Literacy in India - Wikipedia",
+      "summary": "The National Literacy Mission defines literacy as acquiring the skills of reading, writing and arithmetic and the ability to apply them to one's day ...",
+      "link": "https://en.wikipedia.org/wiki/Literacy_in_India",
+      "source_type": "ddg"
+    },
+    {
+      "title": "[YT] The benefits of a bilingual brain - Mia Nacamulli - YouTube",
+      "summary": "Abla Sespignal? Paul A. Rufensei? Yujui Shorjong Emma? If you answered, see, we, or we, and you're watching this in English, chances are you belong to the world's bilingual and multilingual majority. And besides having an easier time traveling or watching movies without subtitles, knowing two or more languages means that your brain may actually look and work differently than those of your monolingual friends. So what does it really mean to know a language? Language ability is typically measured in two active parts, speaking and writing, and two passive parts, listening and reading. While a balanced bilingual has near-equal abilities across the board in two languages, most bilinguals around the world know and use their languages in varying proportions. And depending on their situation and h",
+      "link": "https://www.youtube.com/watch?v=MMmOLN5zBLY",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "MMmOLN5zBLY",
+      "transcript_method": "whisper",
+      "transcript_chars": 4539,
+      "has_full_transcript": true
+    }
+  ]
+}

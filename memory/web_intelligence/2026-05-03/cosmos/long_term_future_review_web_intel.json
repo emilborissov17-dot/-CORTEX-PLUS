@@ -1,0 +1,137 @@
+{
+  "axis": "LONG_TERM_FUTURE_REVIEW",
+  "domain": "cosmos",
+  "timestamp": "2026-05-03T09:00:39.577192+00:00",
+  "sources_count": 9,
+  "rss_count": 7,
+  "ddg_count": 0,
+  "youtube_count": 2,
+  "youtube_items": [
+    {
+      "title": "[YT] All Tomorrows: the future of humanity? - YouTube",
+      "summary": "All Tomorrows: A Billion Year Chronicle of the Myriad Species and Mixed Fortunes of Man. Long ago, in the distant past, humans colonised Mars. It took centuries to terraform the red planet. First, they made oceans using the ice from comets. Then they sent microbes to create breathable air, then introduced genetically modified plants and animals. It was only after Mars was transformed into a habitable world that the first people came to Mars, in colony ships. So “The first steps on Mars were taken not by astronauts, but by barefoot children on lush, green grass”. The people of Mars developed their own culture and identity, separate to Earth. The low gravity made Martians tall and spindly, and they became almost a different species to the Earthlings. For hundreds of years, the two planets co",
+      "link": "https://www.youtube.com/watch?v=imNtSPM3-r4",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "imNtSPM3-r4",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] THE FUTURE OF HUMANITY: A.I Predicts 400 Years In 3 Minutes (4K)",
+      "summary": "Tasked with designing 400 years into the future, 2 Arcadians set out with the mission to both warn humanity of the dangers of the current climate conditions and show our species its great potential should we&nbsp; work together, and so we begin known to the&nbsp;&nbsp; arcadians as the Reckoning in the year 2040&nbsp; where society's efforts to push initiatives&nbsp;&nbsp; and agendas of sustainability failed due to&nbsp; Humanity's obsession with over consumerism Next we have, the dystopian era, in the year 2070, where the living conditions are inconceivably depressing, unhygienic and inhumane. Also with the sheer mismanagement of waste dumping around our beloved planet in space, leading world governments to assemble the people of the nations. after much trial and tribulation we move on t",
+      "link": "https://www.youtube.com/watch?v=-UBaW1OIgTo",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "-UBaW1OIgTo",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 2375,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "summary": "The analysis of current trends and events shows a mixed but generally improving trajectory in terms of human progress and AI safety. Key developments include a focus on long-term future planning, ethical considerations in AI, and the impact of AI on society.",
+    "risk_level": "MEDIUM",
+    "trend": "IMPROVING",
+    "key_events": [
+      "A group of people stand together at a point in the playing field. Each of them is pursuing a target.",
+      "Paraphrasing Is (At Best) a Partial Defence Against Steganography in LLMs.",
+      "Notes on equanimity from the inside.",
+      "Psychopathy: The Substrate.",
+      "AI Risk Agility Plans - v0.1.",
+      "Examples Of People Striving For Impact And Valuing Their Own Joy.",
+      "Should we end animal testing? A utilitarian analysis."
+    ],
+    "insights": [
+      "Paraphrasing offers some protection against steganography in LLMs.",
+      "Meditation and equanimity are important for mental well-being.",
+      "AI risk planning is essential for future safety.",
+      "Ethical considerations in AI are crucial for societal progress.",
+      "Humanity's potential for progress is significant if guided wisely."
+    ],
+    "youtube_insights": [
+      "[VIDEO] [YT] All Tomorrows: the future of humanity? - YouTube",
+      "[VIDEO] [YT] THE FUTURE OF HUMANITY: A.I Predicts 400 YEARS IN 3 MINUTES (4K) - YouTube"
+    ],
+    "relevance_to_goal": "High",
+    "generalization": "The analysis suggests that a balanced approach to AI development, ethical considerations, and long-term planning is essential for achieving a sustainable and prosperous future for humanity."
+  },
+  "raw_items": [
+    {
+      "title": "Pursuing the target",
+      "summary": "<p><span>A group of people stand together at a point in the playing field. Each of them is pursuing a target.</span></p><hr /><p><span>Alice is pursuing the wrong target. This leads to her aiming in the wrong direction.</span></p><img alt=\"Screenshot 2026-05-02 at 11.42.23 PM.png\" src=\"https://res.cloudinary.com/lesswrong-2-0/image/upload/v1777790549/lexical_client_uploads/vd5iu7p9ue7tytfckevo.png\" /><p><span>Bob is pursuing the right target. He has a lot of horsepower and is capable of blazing ",
+      "link": "https://www.lesswrong.com/posts/FwFwHkp4EtEj7Cop9/pursuing-the-target",
+      "published": "Sun, 03 May 2026 07:59:02 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Paraphrasing Is (At Best) a Partial Defence Against Steganography in LLMs",
+      "summary": "<p><span>Within the AI Safety community, paraphrasing, which, in the context of this post, simply means using another LLM (with nonzero temperature) to rewrite a given piece of content, is generally </span><a href=\"https://www.lesswrong.com/posts/9Fdd9N7Escg3tcymb/preventing-language-models-from-hiding-their-reasoning\"><span>considered</span></a><span> a </span><a href=\"https://www.lesswrong.com/posts/TecsCZ7w8s4e2umm4/5-ways-to-improve-cot-faithfulness\"><span>viable</span></a><span> </span><a h",
+      "link": "https://www.lesswrong.com/posts/vf6ocxgHCSsDwC7H8/paraphrasing-is-at-best-a-partial-defence-against",
+      "published": "Sun, 03 May 2026 07:53:57 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Notes on equanimity from the inside",
+      "summary": "<p><span>I've always thought of myself as even-keeled and equanimous; that my mind is still. In hindsight, I had no idea what I was talking about. Halfway through my second ten-day meditation retreat, I experienced a depth of equanimity that broke my existing frame of reference.</span></p><p><span>It’s hard to convey in words. My reflection afterwards was something like “What the fuck was that?” More poetically: it felt deep and dark, like my entire experience was submerged in a deep sea trench.",
+      "link": "https://www.lesswrong.com/posts/MNFEhMHpEsgqxjBa2/notes-on-equanimity-from-the-inside",
+      "published": "Sun, 03 May 2026 01:59:58 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Psychopathy: The Substrate",
+      "summary": "<div class=\"llm-content-block\"><div class=\"llm-content-block-content\"><p><a href=\"https://substackcdn.com/image/fetch/$s_!9ble!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F6b3d9e33-626f-4848-a86d-2097c13c1aa5_1024x1024.png\" target=\"_blank\"><img alt=\"\" src=\"https://res.cloudinary.com/lesswrong-2-0/image/upload/f_auto,q_auto/v1/mirroredImages/S9PLmqAZY8PgeLKdR/w4sa2rfm9xwvjcnh8mxl\" /></a></p><p><i><span>Genes and brain: the biologi",
+      "link": "https://www.lesswrong.com/posts/S9PLmqAZY8PgeLKdR/psychopathy-the-substrate",
+      "published": "Sat, 02 May 2026 22:48:48 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "AI Risk Agility Plans - v0.1",
+      "summary": "Published on May 3, 2026 8:47 AM GMT<br /><br /><p><i>Epistemic status: Quick write-up to get the idea out there.</i></p><blockquote><p>“Plans are worthless, planning is everything” - Dwight D. Eisenhower</p></blockquote><p>Many governments say they want to be agile, I’ve seen this in many different policy documents, but words are cheap. If you want to be agile, you can’t just say you want to be agile, you need to design mechanisms to make it happen. I don’t want to be too prescriptive about the",
+      "link": "https://forum.effectivealtruism.org/posts/J6EmFaipkeRCnLwaD/ai-risk-agility-plans-v0-1",
+      "published": "Sun, 03 May 2026 08:47:39 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Examples Of People Striving For Impact And Valuing Their Own Joy",
+      "summary": "Published on May 2, 2026 8:58 PM GMT<br /><br /><figure class=\"image\"><img src=\"https://res.cloudinary.com/cea/image/upload/f_auto,q_auto/v1/mirroredImages/62pgw3dWyqniSExQN/t2sg5hcto9lgz0c1hntt\" /></figure><p>(Image by Henri Cartier-Bresson, France, 1938)</p><p>&nbsp;</p><p>I recently revisited this&nbsp;<a href=\"https://forum.effectivealtruism.org/posts/WuWDS4SmtLNd6sKtb/helen-toner-sustainable-motivation\"><u>EAG talk</u></a> by Helen Toner in 2019 about sustainable motivation, and in it, she ",
+      "link": "https://forum.effectivealtruism.org/posts/62pgw3dWyqniSExQN/examples-of-people-striving-for-impact-and-valuing-their-own",
+      "published": "Sat, 02 May 2026 20:58:42 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Should we end animal testing? A utilitarian analysis",
+      "summary": "Published on May 2, 2026 7:54 PM GMT<br /><br /><p>In recent months, I twice traveled to Wisconsin to join attempts to break into Ridglan Farms and rescue dogs from tiny wire cages where they would otherwise spend the majority of their lives before being subjected to horrific experiments and killed.&nbsp;</p><p><a href=\"https://abiepigsty.substack.com/p/please-prosecute-me\">The first time</a>, we were successful – around 100 humans rescued 22 beagles who have been adopted out to loving homes. I ",
+      "link": "https://forum.effectivealtruism.org/posts/sMKz7d2fHiXDyLno6/should-we-end-animal-testing-a-utilitarian-analysis",
+      "published": "Sat, 02 May 2026 20:37:53 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] All Tomorrows: the future of humanity? - YouTube",
+      "summary": "All Tomorrows: A Billion Year Chronicle of the Myriad Species and Mixed Fortunes of Man. Long ago, in the distant past, humans colonised Mars. It took centuries to terraform the red planet. First, they made oceans using the ice from comets. Then they sent microbes to create breathable air, then introduced genetically modified plants and animals. It was only after Mars was transformed into a habitable world that the first people came to Mars, in colony ships. So “The first steps on Mars were taken not by astronauts, but by barefoot children on lush, green grass”. The people of Mars developed their own culture and identity, separate to Earth. The low gravity made Martians tall and spindly, and they became almost a different species to the Earthlings. For hundreds of years, the two planets co",
+      "link": "https://www.youtube.com/watch?v=imNtSPM3-r4",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "imNtSPM3-r4",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] THE FUTURE OF HUMANITY: A.I Predicts 400 Years In 3 Minutes (4K)",
+      "summary": "Tasked with designing 400 years into the future, 2 Arcadians set out with the mission to both warn humanity of the dangers of the current climate conditions and show our species its great potential should we&nbsp; work together, and so we begin known to the&nbsp;&nbsp; arcadians as the Reckoning in the year 2040&nbsp; where society's efforts to push initiatives&nbsp;&nbsp; and agendas of sustainability failed due to&nbsp; Humanity's obsession with over consumerism Next we have, the dystopian era, in the year 2070, where the living conditions are inconceivably depressing, unhygienic and inhumane. Also with the sheer mismanagement of waste dumping around our beloved planet in space, leading world governments to assemble the people of the nations. after much trial and tribulation we move on t",
+      "link": "https://www.youtube.com/watch?v=-UBaW1OIgTo",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "-UBaW1OIgTo",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 2375,
+      "has_full_transcript": true
+    }
+  ]
+}

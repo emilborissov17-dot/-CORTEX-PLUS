@@ -1,0 +1,90 @@
+{
+  "axis": "GOVERNANCE_INSTITUTIONS_REVIEW",
+  "fetched_at": "2026-04-03T14:15:37.647149+00:00",
+  "smart_query": "government corruption institutions",
+  "sources_count": {
+    "rss": 0,
+    "gdelt": 3,
+    "arxiv": 0,
+    "github": 3,
+    "web_search": 5
+  },
+  "rss": [],
+  "gdelt": [
+    {
+      "title": "Banteras rasuah kekal keutamaan kerajaan – PM",
+      "snippet": "Banteras rasuah kekal keutamaan kerajaan – PM",
+      "url": "https://www.sinarharian.com.my/article/763494/berita/nasional/banteras-rasuah-kekal-keutamaan-kerajaan-ndash-pm",
+      "source": "sinarharian.com.my"
+    },
+    {
+      "title": "Δημοσκόπηση Alco : 6 στους 10 δεν είναι καθόλου ικανοποιημένοι με την κυβέρνηση – Ακρίβεια και διαφθορά τα μεγάλα « αγκάθια » ",
+      "snippet": "Δημοσκόπηση Alco : 6 στους 10 δεν είναι καθόλου ικανοποιημένοι με την κυβέρνηση – Ακρίβεια και διαφθορά τα μεγάλα « αγκάθια » ",
+      "url": "https://www.topontiki.gr/2026/02/03/dimoskopisi-alco-6-stous-10-den-ine-katholou-ikanopiimeni-me-tin-kivernisi-ta-simantikotera-provlimata-tis-choras/",
+      "source": "topontiki.gr"
+    },
+    {
+      "title": "Mahama vows to fight corruption as Ghana marks 69th independence",
+      "snippet": "Mahama vows to fight corruption as Ghana marks 69th independence",
+      "url": "https://www.myjoyonline.com/mahama-vows-to-fight-corruption-as-ghana-marks-69th-independence/",
+      "source": "myjoyonline.com"
+    }
+  ],
+  "github_repos": [
+    {
+      "title": "github/government.github.com",
+      "snippet": "Gather, curate, and feature stories of public servants and civic hackers using GitHub as part of their open government innovations",
+      "stars": 1928,
+      "url": "https://github.com/github/government.github.com",
+      "updated": "2026-04-02",
+      "source": "GitHub"
+    },
+    {
+      "title": "consuldemocracy/consuldemocracy",
+      "snippet": "Consul Democracy - Open Government and E-Participation Web Software",
+      "stars": 1529,
+      "url": "https://github.com/consuldemocracy/consuldemocracy",
+      "updated": "2026-04-01",
+      "source": "GitHub"
+    },
+    {
+      "title": "datagouv/data.gouv.fr",
+      "snippet": "Ce dépôt rassemble les tickets techniques qui portent sur data.gouv.fr.",
+      "stars": 114,
+      "url": "https://github.com/datagouv/data.gouv.fr",
+      "updated": "2026-04-02",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [],
+  "web_search": [
+    {
+      "title": "Nine Solutions for Political Corruption - Brennan Center for Justice",
+      "url": "https://www.brennancenter.org/our-work/research-reports/nine-solutions-political-corruption",
+      "source": "WEB"
+    },
+    {
+      "title": "Public Corruption — FBI",
+      "url": "https://www.fbi.gov/investigate/public-corruption",
+      "source": "WEB"
+    },
+    {
+      "title": "US democracy at risk as corruption threats grow - Brookings",
+      "url": "https://www.brookings.edu/articles/us-democracy-at-risk-as-corruption-threats-grow/",
+      "source": "WEB"
+    },
+    {
+      "title": "Transparency, Governance, and Anti-Corruption - United States ...",
+      "url": "https://www.state.gov/bureau-of-economic-and-business-affairs/transparency-governance-and-anti-corruption",
+      "source": "WEB"
+    },
+    {
+      "title": "PDF 4. Corruption and democratic institutions: a review and synthesis",
+      "url": "https://faculty.law.harvard.edu/matthew-stephenson/wp-content/uploads/sites/18/2023/09/stephenson_-_corruption_and_democratic_institutions.pdf",
+      "source": "WEB"
+    }
+  ],
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL"
+}

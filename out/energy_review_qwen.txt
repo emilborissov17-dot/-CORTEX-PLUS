@@ -1,0 +1,32 @@
+To determine the total energy production from each source, we need to aggregate the production values for each unique energy source name (`source_name`) across all entries in the dataset. The `renewable` field is not required for this calculation, as the task focuses on total production per source regardless of its renewable status.
+
+### Steps:
+1. **Collect all entries** from the `energy_sources` arrays.
+2. **Group entries by `source_name`**.
+3. **Sum the `production` values** for each group.
+
+### Final Result:
+```json
+{
+  "Coal": 1000,
+  "Natural Gas": 800,
+  "Nuclear": 1200,
+  "Hydro": 600,
+  "Geothermal": 400,
+  "Biomass": 300,
+  "Wind": 300,
+  "Solar": 500
+}
+```
+
+### Explanation:
+- **Coal**: 1000 (from the first `energy_sources` array).
+- **Natural Gas**: 800 (from the first array).
+- **Nuclear**: 1200 (from the first array).
+- **Hydro**: 600 (from the first array).
+- **Geothermal**: 400 (from the first array).
+- **Biomass**: 300 (from the first array).
+- **Wind**: 300 (from the first array).
+- **Solar**: 500 (from the second `energy_sources` array).
+
+This result assumes all entries are part of the same dataset and no duplicates exist for the same `source_name`. If duplicates are present, they would be summed accordingly.

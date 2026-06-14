@@ -1,0 +1,157 @@
+{
+  "axis": "HUMAN_WELL_BEING_REVIEW",
+  "domain": "human",
+  "timestamp": "2026-05-08T09:43:08.441111+00:00",
+  "sources_count": 11,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] Practice Being Broke Before Quitting Your Job — Michelle Khare",
+      "summary": "When did you take action towards realizing the dream? Could have been a very small thing, I don't know, but like what was the kind of defining first step that kind of set you on the actual path to realizing what you laid out? I took action pretty immediately, but it took me a year to quit my job. And I'll define what the difference is. I took action immediately by This might be crazy. This was a Tim Ferriss experiment. I really resonated with what you wrote about coming to terms with the worst possible outcome. Mhm. And so I decided, I'm going to train myself for the worst possible outcome. &gt;&gt; it. So I moved into a studio apartment with a roommate. I cut like like financially stripped down I mean, I didn't have much anyways, but stripped as much as I could to simulate if if I'm truly",
+      "link": "https://www.youtube.com/watch?v=UOyDS1vakL8",
+      "published": "2026-04-30T17:44:22+00:00",
+      "source_type": "youtube",
+      "channel": "Tim Ferriss",
+      "video_id": "UOyDS1vakL8",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] The AI Frontier and How to Spot Billion-Dollar Companies Before Everyone Else — Elad Gil",
+      "summary": "Има моменти във времето, в които е много умно да бъдеш противоречив. И има моменти, в които постигането на консенсус е най-умното възможно нещо, което можете да направите.  И мисля, че в момента се намираме в момент, в който консенсусът е много правилен.  Знаеш ли, наистина можеш да прекалиш с това.  И какво е противоречиво нещо?  Трябва да се заемем с куп хардуерни неща, защото бла бла бла.  Може би искате да си купите още изкуствен интелект. Разбираш ли какво имам предвид?  Мисля, че хората правят тези неща твърде сложни. Да.  Вярно.  Вероятно във всеки аспект от живота .  Радвам се да ви видя.  Благодаря, че отделихте време.  оценявам го. Да, както винаги, и си помислих, че можем да започнем с нещо, за което си говорихме или което ти обясняваше, преди да започнем да записваме, което е е",
+      "link": "https://www.youtube.com/watch?v=HutNi2cNsCg",
+      "published": "2026-04-29T22:04:02+00:00",
+      "source_type": "youtube",
+      "channel": "Tim Ferriss",
+      "video_id": "HutNi2cNsCg",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] From 9th-Grade Dropout to DC's Longest-Serving Police Chief — Cathy Lanier",
+      "summary": "I would say the two things that have helped me in that exam that have helped me most of my law enforcement career my grandmother instilled in me two things problem solving being a big part of that is is like you never make excuses when bad things happen don't make excuses you put yourself in that position you found yourself here it is nobody else's fault but yours you know I'm not an excuse person I don't make excuses if I find myself in a bad situation I did something to get myself here and I'm going to get myself out and that was the way she taught. The other thing she taught me was she's like, \"You're going to be damned if you do and damned if you don't. You better be damned for doing [clears throat] like so [laughter] you act. You always act. You don't let your circumstances dictate fo",
+      "link": "https://www.youtube.com/watch?v=ItmGtrEhuek",
+      "published": "2026-04-23T15:57:55+00:00",
+      "source_type": "youtube",
+      "channel": "Tim Ferriss",
+      "video_id": "ItmGtrEhuek",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "Разпространението на хантавируса сред пътници на круизен кораб",
+    "root_cause": "Отсъствие на ефективни мерки за профилактика и контрол на болестите при международните пътувания",
+    "severity": "MEDIUM",
+    "leverage_points": [
+      "Световната здравна организация (WHO) и местните власти имат най-голям ефект върху проблема",
+      "Уучастниците в международните пътувания и туристическите оператори"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Увеличаване на контрола и профилактичните мерки при международните пътувания",
+        "measurable_goal": "Снижаване на броя на хантавирусните случаи сред пътници с 50% през следващите 6 месеца",
+        "timeframe": "краткосрочно"
+      },
+      {
+        "action": "Разработка на нови протоколи за реакция при изключителни ситуации, включително и разпространение на болести",
+        "measurable_goal": "Създаване на протоколите в рамките на 3 месеца и тяхното внедряване в международните аерогари и пристанища",
+        "timeframe": "средносрочно"
+      }
+    ],
+    "evidence": [
+      "Докладът на WHO за изразходване на хантавируса сред пътници на круизен кораб МВ Хондий",
+      "Информацията за хантавируса и начина, по който се разпространява, предоставена от WHO"
+    ],
+    "generalization": "Проблемът е свързан с домейна на цивилизацията, тъй като международните пътувания и туризъм са важни за глобалната икономика и култура, но също така могат да допринесат за разпространението на болестите",
+    "summary": "Разпространението на хантавируса сред пътници на круизен кораб и необходимостта от увеличаване на контрола и профилактичните мерки за предотвратяване на болестите при международните пътувания",
+    "risk_level": "MEDIUM"
+  },
+  "raw_items": [
+    {
+      "title": "WHO’s response to hantavirus cases linked to a cruise ship",
+      "summary": "<p>Dr Tedros Adhanom Ghebreyesus, WHO Director-General, briefed media today on a cluster of hantavirus cases linked to a cruise ship, the MV Hondius.</p><p>Eight cases have been reported so far, including three deaths. Five of the 8 cases have been confirmed as hantavirus.</p><p>The hantavirus involved is the <em>Andes</em> virus, the only species known to be capable of limited transmission between humans, linked to close and prolonged contact.</p><p>Describing the situation, Dr Tedros said, &ld",
+      "link": "https://www.who.int/news/item/07-05-2026-who-s-response-to-hantavirus-cases-linked-to-a-cruise-ship",
+      "published": "Thu, 07 May 2026 17:21:37 Z",
+      "source_type": "rss"
+    },
+    {
+      "title": "Joint call by the President of the ICRC, the Director-General of WHO and the International President of MSF",
+      "summary": "Ten years ago, the UN Security Council unanimously adopted Resolution 2286 on health care in armed conflicts. The situation is even worse compared to 10 years ago. Today, we mark not an achievement – we mark a failure.  As violence affecting medical facilities, transport and personnel continues unabated, the harm this resolution sought to prevent has not diminished. It has continued and, in many contexts, intensified.  As the heads of the International Committee of the Red Cross (ICRC), the Worl",
+      "link": "https://www.who.int/news/item/04-05-2026-joint-call-by-the-president-of-the-icrc--the-director-general-of-who-and-the-international-president-of-msf",
+      "published": "Mon, 04 May 2026 06:44:57 Z",
+      "source_type": "rss"
+    },
+    {
+      "title": "WHO Member States agree to extend negotiations on Pathogen Access and Benefit Sharing annex",
+      "summary": "<p>Member States of the World Health Organization (WHO) have progressed work on the Pathogen Access and Benefit Sharing (PABS) annex, a key part of the WHO Pandemic Agreement, and today agreed additional time was needed to finalize the framework for ensuring a better, more equitable, response to future pandemics.</p><p>Countries today ended the resumed session of the sixth meeting of the Intergovernmental Working Group (IGWG) on the WHO Pandemic Agreement in Geneva, focused on the PABS system. T",
+      "link": "https://www.who.int/news/item/01-05-2026-who-member-states-agree-to-extend-negotiations-on-pathogen-access-and-benefit-sharing-annex",
+      "published": "Fri, 01 May 2026 16:52:42 Z",
+      "source_type": "rss"
+    },
+    {
+      "title": "Australia becomes the 30th country to eliminate trachoma as a public health problem",
+      "summary": "The World Health Organization (WHO) has validated Australia for eliminating trachoma as a public health problem, marking a significant milestone in the health of indigenous peoples and in global efforts to combat neglected tropical diseases (NTDs). Trachoma, the world’s leading infectious cause of blindness, no longer represents a public health problem in the country.",
+      "link": "https://www.who.int/news/item/29-04-2026-australia-becomes-the-30th-country-to-eliminate-trachoma-as-a-public-health-problem",
+      "published": "Wed, 29 Apr 2026 06:10:07 Z",
+      "source_type": "rss"
+    },
+    {
+      "title": "Ethiopian woman's joy at rare quintuplets after 12 years trying for a baby",
+      "summary": "The woman, 35, says she was praying for a baby and was \"overjoyed\" to be \"blessed with five at once\".",
+      "link": "https://www.bbc.com/news/articles/c893y34zlv0o?at_medium=RSS&at_campaign=rss",
+      "published": "Fri, 08 May 2026 06:48:20 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "How worried should we be about hantavirus?",
+      "summary": "Some passengers potentially exposed to hantavirus have already taken flights to numerous countries.",
+      "link": "https://www.bbc.com/news/articles/c98r199e195o?at_medium=RSS&at_campaign=rss",
+      "published": "Thu, 07 May 2026 15:01:07 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Hantavirus-hit cruise ship on way to Canary Islands after three evacuated",
+      "summary": "A British man is among three evacuees sent to the Netherlands after displaying symptoms while aboard the MV Hondius.",
+      "link": "https://www.bbc.com/news/articles/c5y093d5n9ko?at_medium=RSS&at_campaign=rss",
+      "published": "Thu, 07 May 2026 09:40:24 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "What is hantavirus and how does it spread?",
+      "summary": "The Andes strain of the virus, which can rarely be passed from person to person,  has been confirmed in some passengers.",
+      "link": "https://www.bbc.com/news/articles/c8r8j1l6j0go?at_medium=RSS&at_campaign=rss",
+      "published": "Thu, 07 May 2026 04:16:41 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] Practice Being Broke Before Quitting Your Job — Michelle Khare",
+      "summary": "When did you take action towards realizing the dream? Could have been a very small thing, I don't know, but like what was the kind of defining first step that kind of set you on the actual path to realizing what you laid out? I took action pretty immediately, but it took me a year to quit my job. And I'll define what the difference is. I took action immediately by This might be crazy. This was a Tim Ferriss experiment. I really resonated with what you wrote about coming to terms with the worst possible outcome. Mhm. And so I decided, I'm going to train myself for the worst possible outcome. &gt;&gt; it. So I moved into a studio apartment with a roommate. I cut like like financially stripped down I mean, I didn't have much anyways, but stripped as much as I could to simulate if if I'm truly",
+      "link": "https://www.youtube.com/watch?v=UOyDS1vakL8",
+      "published": "2026-04-30T17:44:22+00:00",
+      "source_type": "youtube",
+      "channel": "Tim Ferriss",
+      "video_id": "UOyDS1vakL8",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] The AI Frontier and How to Spot Billion-Dollar Companies Before Everyone Else — Elad Gil",
+      "summary": "Има моменти във времето, в които е много умно да бъдеш противоречив. И има моменти, в които постигането на консенсус е най-умното възможно нещо, което можете да направите.  И мисля, че в момента се намираме в момент, в който консенсусът е много правилен.  Знаеш ли, наистина можеш да прекалиш с това.  И какво е противоречиво нещо?  Трябва да се заемем с куп хардуерни неща, защото бла бла бла.  Може би искате да си купите още изкуствен интелект. Разбираш ли какво имам предвид?  Мисля, че хората правят тези неща твърде сложни. Да.  Вярно.  Вероятно във всеки аспект от живота .  Радвам се да ви видя.  Благодаря, че отделихте време.  оценявам го. Да, както винаги, и си помислих, че можем да започнем с нещо, за което си говорихме или което ти обясняваше, преди да започнем да записваме, което е е",
+      "link": "https://www.youtube.com/watch?v=HutNi2cNsCg",
+      "published": "2026-04-29T22:04:02+00:00",
+      "source_type": "youtube",
+      "channel": "Tim Ferriss",
+      "video_id": "HutNi2cNsCg",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ]
+}

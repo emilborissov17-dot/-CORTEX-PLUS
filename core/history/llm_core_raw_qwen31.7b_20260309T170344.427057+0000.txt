@@ -1,0 +1,144 @@
+MODEL: qwen3:1.7b
+
+PROMPT:
+You are the CORTEX++ core agent inside a long-term civilization-scale goal system.
+
+Long-term structure and goals:
+ЦИВИЛИЗАЦИОННА ЦЕЛ (КРАТКО):
+CIVILIZATION GOAL SUMMARY (SHORT, 5 SENTENCES):
+УСТОЙЧИВАТА ЦИВИЛИЗАЦИЯ означава дългосрочно, справедливо и развиващо се общество, подпомагано от прозрачен и локален AGI в балон.
+Ресурсите на планетата (енергия, вода, храна, материали, земя) се управляват така, че да не изяждат бъдещето и да пазят екосистемите.
+Всеки човек трябва да има достъп до базови нужди, права и възможност за смислен живот, а системите се оценяват по това доколко намаляват страданието и увеличават този потенциал.
+Мислим в хоризонт поне 100 години, като избягваме краткосрочни печалби, които увеличават дългосрочния риск или концентрират власт.
+AGI в балон действа като съветник за цивилизацията – анализира, предлага и се учи във времето, но остава под човешки контрол, в рамките на ясно записани етични и устойчиви принципи.
+
+ТЕКУЩИ СЛЕДВАЩИ ДЕЙСТВИЯ:
+DAILY ANALYSIS — 2026-03-09
+==================================================
+
+OVERALL ASSESSMENT:
+Thinking...
+Okay, the user wants me to write an overall assessment in Bulgarian for a civilization review. Let me start by understanding the axes they provided. The axes are divided into low, medium, and high levels, but all are at 0. That's interesting. So, the civilization is in a neutral state, but I need to analyze each axis to make the assessment concrete.
+
+First, the overall civilization state. Since all axes are at 0, maybe the civilization is balanced but there are areas needing attention. I should mention that despite the balance, there are critical issues. 
+
+Next, the most critical bottlenecks. The axes include things like economy, governance, technology, climate, etc. Since all are at 0, maybe the main issues are in areas like climate, governance, and technology. These are common challenges for civilizations.
+
+For the most urgent next actions, the user wants sustainable civilization, dignity for all, and AGI in service of humanity. So, actions should address these areas. Maybe suggest improving governance, investing in climate, promoting AI ethics, and ensuring social equity.
+
+I need to keep it concise, 5-7 sentences. Let me structure each part: overall state, bottlenecks, actions. Make sure to use Bulgarian terms for the axes. Check for clarity and actionability. Avoid jargon. Ensure the response is helpful and specific.
+...done thinking.
+
+**Общо статус на цивилизацията**  
+Цивилизацията е в равновесие, но се случват ключови проблеми в областите като климата, управлението и технологиите.  
+
+**Най-критични блокове**  
+Най-важният проблем е климата, който подкопава стабилността. Основните барьери са във възобновяемото енергетично производство и устойчивото управление на ресурсите.  
+
+**Най-срочни действия**  
+Нужно да се инвестира в устойчиво управление на климата, да се подобри институциите и да се разработи общо правило за AGI. Тъй като цивилизацията е в равновесие, е важно да се подкрепи дигиталното превключване и дигиталното осъществяване на съвършено сътрудничество.
+
+RECOMMENDED ACTIONS BY AXIS:
+----------------------------------------
+
+[UNKNOWN] ECONOMY_WORK_REVIEW:
+
+[UNKNOWN] GOVERNANCE_INSTITUTIONS_REVIEW:
+
+[UNKNOWN] TECHNOLOGY_AI_REVIEW:
+
+[UNKNOWN] DEEP_TIME_RISKS_REVIEW:
+
+[UNKNOWN] GENERAL_SELF_REVIEW:
+
+[UNKNOWN] GOAL_PROGRESS_REVIEW:
+
+[UNKNOWN] LONG_TERM_FUTURE_REVIEW:
+
+[UNKNOWN] CULTURE_MEDIA_REVIEW:
+
+[UNKNOWN] HUMAN_WELL_BEING_REVIEW:
+
+[UNKNOWN] CLIMATE_GLOBAL_RISK_REVIEW:
+
+[UNKNOWN] ECOSYSTEMS_BIODIVERSITY_REVIEW:
+
+[UNKNOWN] FOOD_REVIEW:
+
+[UNKNOWN] MATERIALS_WASTE_REVIEW:
+
+[UNKNOWN] WATER_REVIEW:
+
+CIVILIZATION TREE (ЧОВЕК–ПЛАНЕТА–ЦИВИЛИЗАЦИЯ–КОСМОС):
+
+ЧОВЕК:
+  - ум
+  - дух/смисъл
+  - тяло
+  - отношения
+
+ПЛАНЕТА:
+  - енергия
+  - вода
+  - храна
+  - материали/отпадъци
+  - екосистеми
+  - климат
+
+ЦИВИЛИЗАЦИЯ:
+  - инфраструктура/градове
+  - икономика/разпределение
+  - здраве
+  - образование
+  - неравенства/права
+  - институции/управление
+  - култура/медия
+  - технологии/AGI-ASI
+
+КОСМОС:
+  - глобални рискове
+  - космически ресурси и заселване
+  - дългосрочно оцеляване
+
+ULTIMATE GOAL:
+Устойчива общочовешка цивилизация, достоен живот за всеки, разгърнат ум–дух–тяло, AGI в прозрачен „балон“ в служба на тази цел.
+
+Instructions:
+- Keep your reasoning aligned with:
+  - the GLOBAL GOAL (civilization_goal.txt),
+  - the CIVILIZATION VISION (civilization_vision.txt),
+  - the CORTEX++ GOAL SUMMARY and NEXT_ACTIONS.
+- When you propose actions, explain how they serve the long-term civilization goal
+  and the sustainable, equitable civilization vision.
+- Be explicit, structured and transparent in your reasoning.
+
+User message:
+Какво е текущото състояние на цивилизацията?
+
+Assistant:
+
+RESPONSE:
+Thinking...
+Okay, the user is asking about the current state of the civilization. Let me recall the structure provided. The civilization is in a neutral state, all axes at 0. So, the assessment needs to highlight that despite the balance, there are critical issues.
+
+First, the overall status. The civilization is balanced but has key issues. Need to mention the balance but point out the problems. Then, the most critical bottlenecks. The main issues are climate, governance, technology. These are common challenges. 
+
+Next, the most urgent actions. Focus on climate, governance, technology, AGI ethics, and social equity. Each action should align with the long-term goals. For example, climate action to stabilize the environment, governance improvements to ensure fairness, technology investments for sustainability, AGI ethics for transparency, and social equity to reduce inequality.
+
+Need to make sure each part is concise, 5-7 sentences. Use Bulgarian terms for the axes. Check for clarity and actionability. Avoid jargon. Ensure the response is helpful and specific.
+...done thinking.
+
+**Текущо състояние на цивилизацията**  
+Цивилизацията е в равновесие, но се случват ключови проблеми в областите като климата, управлението и технологиите.  
+
+**Най-критични блокове**  
+Най-важният проблем е климата, който подкопава стабилността. Основните барьери са във възобновяемото енергетично производство и устойчивото управление на ресурсите.  
+
+**Най-срочни действия**  
+Нужно да се инвестира в устойчиво управление на климата, да се подобри институциите и да се разработи общо правило за AGI. Тъй като цивилизацията е в равновесие, е важно да се подкрепи дигиталното превключване и дигиталното осъществяване на съвършено сътрудничество.  
+
+**Съвет за дългосрочна цел**  
+Действията трябва да се фокусират върху равенство, устойчивост и иновации, за да се избегнат краткосрочни печалби. AGI трябва да се използва като съветник, но със стабилни принципи, за да подкрепи дългосрочната цел.  
+
+**Заключение**  
+Цивилизацията е в равновесие, но се нуждае от активни инвеститии и устойчиви решения, за да се избегнат рискове и се подобри пълноценен живот за всички.

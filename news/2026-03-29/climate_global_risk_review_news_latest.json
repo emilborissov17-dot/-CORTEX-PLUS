@@ -1,0 +1,90 @@
+{
+  "axis": "CLIMATE_GLOBAL_RISK_REVIEW",
+  "fetched_at": "2026-03-29T11:42:24.991458+00:00",
+  "smart_query": "climate change CO2 emissions",
+  "sources_count": {
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 0,
+    "github": 3,
+    "web_search": 5
+  },
+  "rss": [
+    {
+      "title": "Trail hunt ban moves closer as consultation begins",
+      "snippet": "Animal welfare campaigners welcome a \"pivotal moment\" in the move towards a ban on trail hunting.",
+      "url": "https://www.bbc.com/news/articles/ckger0kxy75o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "England sewage spills nearly halved in 2025 due mostly to drier weather",
+      "snippet": "Water companies said the country was also seeing the effect of greater infrastructure investment.",
+      "url": "https://www.bbc.com/news/articles/cwyjp2d3x12o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Dogs became man's best friend far earlier than thought, scientists find",
+      "snippet": "A jawbone found in a Somerset cave rewrites the story of when and how dogs became our best friends.",
+      "url": "https://www.bbc.com/news/articles/cn0ky1n791go?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "ESCOMP/CESM",
+      "snippet": "The Community Earth System Model",
+      "stars": 454,
+      "url": "https://github.com/ESCOMP/CESM",
+      "updated": "2026-03-27",
+      "source": "GitHub"
+    },
+    {
+      "title": "xgcm/xgcm",
+      "snippet": "python package for analyzing general circulation model output data",
+      "stars": 251,
+      "url": "https://github.com/xgcm/xgcm",
+      "updated": "2026-03-20",
+      "source": "GitHub"
+    },
+    {
+      "title": "climlab/climlab",
+      "snippet": "Python package for process-oriented climate modeling",
+      "stars": 242,
+      "url": "https://github.com/climlab/climlab",
+      "updated": "2026-03-18",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [],
+  "web_search": [
+    {
+      "title": "Climate change: atmospheric carbon dioxide - NOAA Climate.gov",
+      "url": "https://www.climate.gov/news-features/understanding-climate/climate-change-atmospheric-carbon-dioxide",
+      "source": "WEB"
+    },
+    {
+      "title": "CO₂ emissions - Our World in Data",
+      "url": "https://ourworldindata.org/co2-emissions",
+      "source": "WEB"
+    },
+    {
+      "title": "Carbon Dioxide Emissions | US EPA",
+      "url": "https://www.epa.gov/ghgemissions/carbon-dioxide-emissions",
+      "source": "WEB"
+    },
+    {
+      "title": "Carbon Dioxide - Earth Indicator - NASA Science",
+      "url": "https://science.nasa.gov/earth/explore/earth-indicators/carbon-dioxide/",
+      "source": "WEB"
+    },
+    {
+      "title": "Global warming - Carbon Dioxide, Climate Change, Greenhouse Gases ...",
+      "url": "https://www.britannica.com/science/global-warming/Carbon-dioxide",
+      "source": "WEB"
+    }
+  ],
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL"
+}

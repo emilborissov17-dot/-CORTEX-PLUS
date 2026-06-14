@@ -1,0 +1,38 @@
+{
+  "axis": "GOAL_PROGRESS_REVIEW",
+  "fetched_at": "2026-05-08T09:03:07.653695+00:00",
+  "smart_query": "sustainable development goals SDG",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 0,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [],
+  "gdelt": [],
+  "github_repos": [],
+  "arxiv_papers": [
+    {
+      "title": "Unveiling the Nexus Between Economic Complexity and Environmental Sustainability: Evidence from BRICS-T Countries",
+      "snippet": "This study analyses the impacts of economic complexity on environmental performance in BRICS-T countries. Annual data for the period 1999-2021, Durbin-Hausman cointegration test and Augmented Mean Group (AMG) estimator are used in the analysis. The robustness of the Panel AMG results is tested with ",
+      "url": "https://arxiv.org/abs/2604.13150v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "AI Agents for Sustainable SMEs: A Green ESG Assessment Framework",
+      "snippet": "This study presents a novel, AI-driven framework for assessing Environmental, Social, and Governance (ESG) performance in European small and medium-sized enterprises (SMEs). An initial phase established expert-validated ESG baseline scores from a subset of the Flash Eurobarometer FL549 survey data. ",
+      "url": "https://arxiv.org/abs/2605.00841v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[Village gossip, pesticide bans, and gene drives: 17 experts on the future of global health] What does it really take to lift millions out of poverty and prevent needless deaths?In this special compilation episode, 17 past guests — including economists, nonprofit founders, and policy advisors — share their most powerful and actionable insights from the front lines of global health and development. You’ll hear about the critical need to boost agricultural productivity in sub-Saharan Africa",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

@@ -1,0 +1,103 @@
+{
+  "axis": "ENERGY_REVIEW",
+  "fetched_at": "2026-04-03T14:12:19.631557+00:00",
+  "smart_query": "renewable energy solar wind",
+  "sources_count": {
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "web_search": 5
+  },
+  "rss": [
+    {
+      "title": "How utilities are rethinking resiliency with AI planning tools",
+      "snippet": "Mishal Thadani, CEO of Rhizome, discusses how utilities are shifting to proactive, data-driven resilience planning to address climate threats.",
+      "url": "https://www.renewableenergyworld.com/power-grid/grid-modernization/how-utilities-are-rethinking-resiliency-with-ai-planning-tools/",
+      "source": "RSS"
+    },
+    {
+      "title": "Arizona hires high-powered law firm, setting the stage for a legal battle over Colorado River water",
+      "snippet": "Arizona is preparing for a legal battle over its rights to Colorado River water amid dry conditions and record high temperatures.",
+      "url": "https://www.renewableenergyworld.com/hydro-power/arizona-hires-high-powered-law-firm-setting-the-stage-for-a-legal-battle-over-colorado-river-water/",
+      "source": "RSS"
+    },
+    {
+      "title": "DOE-funded hydropower competitions offer cash prizes for solving nagging industry problems",
+      "snippet": "The U.S. Department of Energy's Hydropower Collegiate Competition and Marine Energy Collegiate Competition accept applications until May 1, 2026.",
+      "url": "https://www.renewableenergyworld.com/hydro-power/doe-funded-hydropower-competitions-offer-cash-prizes-for-solving-nagging-industry-problems/",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "protontypes/open-sustainable-technology",
+      "snippet": "A directory and analysis of the open source ecosystem in the areas of climate change, sustainable energy, biodiversity and natural resources.  https://docs.getgrist.com/gSscJkc5Rb1R/OpenSustaintech",
+      "stars": 2476,
+      "url": "https://github.com/protontypes/open-sustainable-technology",
+      "updated": "2026-04-03",
+      "source": "GitHub"
+    },
+    {
+      "title": "PyPSA/PyPSA",
+      "snippet": "PyPSA: Python for Power System Analysis",
+      "stars": 1920,
+      "url": "https://github.com/PyPSA/PyPSA",
+      "updated": "2026-04-03",
+      "source": "GitHub"
+    },
+    {
+      "title": "pvlib/pvlib-python",
+      "snippet": "A set of documented functions for simulating the performance of photovoltaic energy systems.",
+      "stars": 1530,
+      "url": "https://github.com/pvlib/pvlib-python",
+      "updated": "2026-04-03",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Dynamic resource coordination can increase grid hosting capacity to support more renewables, storage, and electrified load growth",
+      "snippet": "We show that dynamic coordination of distributed energy resources (DERs) can increase the capacity of low- and medium-voltage grids, improve reliability and power quality, and reduce solar curtailment. We develop three approaches to compute hosting capacity on a representative distribution grid with",
+      "url": "https://arxiv.org/abs/2604.02170v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Dispatch-Embedded Long-Term Tail Risk Assessment and Mitigation via CVaR for Renewable Power Systems",
+      "snippet": "Renewable energy (RE) generation exhibits pronounced seasonality and variability, and neglecting these features can lead to significant underestimation of long-term power system risks in power supply. While long-term dispatch strategies are essential for evaluating and mitigating tail risks, they ar",
+      "url": "https://arxiv.org/abs/2604.00926v1",
+      "source": "arXiv"
+    }
+  ],
+  "web_search": [
+    {
+      "title": "Solar Energy Vs Wind Energy: Complete 2025 Comparison Guide",
+      "url": "https://solartechonline.com/blog/solar-energy-vs-wind-energy-comparison-guide/",
+      "source": "WEB"
+    },
+    {
+      "title": "Solar Energy vs Wind Energy: Cost, Efficiency, Applicability, and ...",
+      "url": "https://nrgcleanpower.com/learning-center/solar-energy-vs-wind-energy/",
+      "source": "WEB"
+    },
+    {
+      "title": "Renewable Energy Explained - Education",
+      "url": "https://education.nationalgeographic.org/resource/renewable-energy-explained/",
+      "source": "WEB"
+    },
+    {
+      "title": "Renewables - Energy System - IEA",
+      "url": "https://www.iea.org/energy-system/renewables",
+      "source": "WEB"
+    },
+    {
+      "title": "Renewable energy explained - U.S. Energy Information Administration (EIA)",
+      "url": "https://www.eia.gov/energyexplained/renewable-sources/",
+      "source": "WEB"
+    }
+  ],
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL"
+}

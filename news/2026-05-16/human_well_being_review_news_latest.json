@@ -1,0 +1,57 @@
+{
+  "axis": "HUMAN_WELL_BEING_REVIEW",
+  "fetched_at": "2026-05-16T13:31:02.802020+00:00",
+  "smart_query": "mental health wellbeing global",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "'We're right on track,' says Streeting as key target for hospital waiting times hit",
+      "snippet": "Government his its interim target of 65% of patients in England being treated within 18 weeks.",
+      "url": "https://www.bbc.com/news/articles/cvgzv0j19vvo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Posh sandwich has more salt than nearly five cheeseburgers",
+      "snippet": "Action on Salt & Sugar said people should not be exposed to a \"hidden health risk every time they buy lunch\".",
+      "url": "https://www.bbc.com/news/articles/c4g4l54g2ppo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "MPs call for sunbed advertising ban to help prevent skin cancer",
+      "snippet": "A report by a cross-party group of MPs has found the majority of skin cancer cases are preventable.",
+      "url": "https://www.bbc.com/news/articles/c142g8567xko?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [],
+  "arxiv_papers": [
+    {
+      "title": "Global stability of a Hebbian/anti-Hebbian network for principal subspace learning",
+      "snippet": "Biological neural networks self-organize according to local synaptic modifications to produce stable computations. How modifications at the synaptic level give rise to such computations at the network level remains an open question. Pehlevan et al. [Neur. Comp. 27 (2015), 1461--1495] proposed a mode",
+      "url": "https://arxiv.org/abs/2601.13170v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "On graphical domination for threshold-linear networks with recurrent excitation and global inhibition",
+      "snippet": "Graphical domination was first introduced in [1] in the context of combinatorial threshold-linear networks (CTLNs). There it was shown that when a domination relationship exists between a pair of vertices in a graph, certain fixed points in the corresponding CTLN can be ruled out. Here we prove two ",
+      "url": "https://arxiv.org/abs/2510.05098v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[Tools to Bolster Your Mental Health & Confidence | Dr. Paul Conti] Dr. Paul Conti, MD, is a board-certified psychiatrist and an expert in how to improve mental health and increase your sense of agency and wellbeing. He is also an expert in trauma treatment. We discuss practical tools you can use to gain insight into your natural strengths and to make better life choices on your own behalf. We explore how these tools can help overcome low motivation, intrusive tho",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

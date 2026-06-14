@@ -1,0 +1,57 @@
+{
+  "axis": "WATER_REVIEW",
+  "fetched_at": "2026-05-04T08:10:57.967604+00:00",
+  "smart_query": "water scarcity drinking water",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "‘We don’t hear the frogs, we don’t see the birds’: government repeatedly delayed water to NSW wetlands, documents reveal",
+      "snippet": "Exclusive: A grazier has released emails that reveal the state’s environment and water department prioritised harvesting of winter cereal crops over wetlandsSign up for climate and environment editor Adam Morton’s free Clear Air newsletter hereFollow our Australia news live blog for latest updatesGe",
+      "url": "https://www.theguardian.com/environment/2026/may/02/nsw-government-delayed-water-wetlands-documents-reveal",
+      "source": "RSS"
+    },
+    {
+      "title": "Critical minerals are ‘oil of 21st century’ as demand fuels poverty and pollution in poorer countries",
+      "snippet": "Rush for lithium, cobalt and nickel is ravaging livelihoods, water and health of world’s most vulnerable, UN study says Critical minerals such as lithium, cobalt and nickel are becoming the “oil of the 21st century” as the scramble for precious metals deepens poverty and creates public health crises",
+      "url": "https://www.theguardian.com/global-development/2026/apr/29/critical-minerals-are-oil-of-21st-century-as-demand-fuels-poverty-and-pollution-in-poorer-countries",
+      "source": "RSS"
+    },
+    {
+      "title": "Urban areas host 80% of England’s homes at high risk of flooding, study finds",
+      "snippet": "Exclusive: 839,000 homes in urban areas face threat of surface-water flooding, with social housing tenants most vulnerable to costsEight in 10 of the homes that are at high risk of flooding in England are now in towns and cities, according to analysis by the National Housing Federation (NHF), which ",
+      "url": "https://www.theguardian.com/environment/2026/apr/29/england-homes-high-risk-flooding-towns-cities-urban-environment-study",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [],
+  "arxiv_papers": [
+    {
+      "title": "Can hot water discharged from industrial processes enhance the likelihood of waterspouts?",
+      "snippet": "Italy and the surrounding seas are recognised as one of the European hotspots for tornadoes and waterspouts. In recent years, the town of Rosignano Solvay (on the Northern Tyrrhenian coast) experienced repeated waterspouts affecting the same areas, raising local concern about the possible influence ",
+      "url": "https://arxiv.org/abs/2603.24233v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "End-to-End Optical Propagation Modeling for Water-to-Air Channels under Sea Surface and UAV Effects",
+      "snippet": "Underwater observatories have recently emerged as an efficient solution for marine biodiversity monitoring. The primary objective of this work is to enable efficient and cost-effective data muling from underwater sensors by investigating the use of optical wireless communications to transmit data fr",
+      "url": "https://arxiv.org/abs/2603.23727v2",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[The Resistance of a Cow] There’s something rotten in the cows of Denmark. And Minnesota. And Wisconsin. And Idaho. What could cause a previously thriving herd of majestic dairy cattle to stop drinking water and start drinking … urine? A Danish farmer calls a special investigator, who takes one look at his farm and nopes the heck out of there, refusing to return, citing “bad energy” coming from something nearby … a big bui",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

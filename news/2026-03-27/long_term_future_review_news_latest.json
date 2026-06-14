@@ -1,0 +1,103 @@
+{
+  "axis": "LONG_TERM_FUTURE_REVIEW",
+  "fetched_at": "2026-03-27T09:45:09.504699+00:00",
+  "smart_query": "existential risk future civilization",
+  "sources_count": {
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "web_search": 5
+  },
+  "rss": [
+    {
+      "title": "Just Eat and Autotrader among firms investigated in fake reviews probe",
+      "snippet": "The UK's competition watchdog says it is looking at five firms in its investigation into misleading online reviews.",
+      "url": "https://www.bbc.com/news/articles/cj37eeyz0epo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Judge rejects Pentagon's attempt to 'cripple' Anthropic",
+      "snippet": "A federal judge told the government it could not immediately enforce a ban on Anthropic’s tools.\n",
+      "url": "https://www.bbc.com/news/articles/cvg4p02lvd0o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Elon Musk's X advertising boycott lawsuit dismissed by US judge",
+      "snippet": "US District Judge Jane Boyle said the company had failed to show it had suffered any harm under federal competition laws.",
+      "url": "https://www.bbc.com/news/articles/c05dlm0l0jgo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "emcie-co/parlant",
+      "snippet": "The conversational control layer for customer-facing AI agents - Parlant is a context-engineering framework optimized for controlling customer interactions.",
+      "stars": 17852,
+      "url": "https://github.com/emcie-co/parlant",
+      "updated": "2026-03-27",
+      "source": "GitHub"
+    },
+    {
+      "title": "agencyenterprise/PromptInject",
+      "snippet": "PromptInject is a framework that assembles prompts in a modular fashion to provide a quantitative analysis of the robustness of LLMs to adversarial prompt attacks. 🏆 Best Paper Awards @ NeurIPS ML Saf",
+      "stars": 469,
+      "url": "https://github.com/agencyenterprise/PromptInject",
+      "updated": "2026-03-26",
+      "source": "GitHub"
+    },
+    {
+      "title": "MinghuiChen43/awesome-trustworthy-deep-learning",
+      "snippet": "A curated list of trustworthy deep learning papers. Daily updating...",
+      "stars": 384,
+      "url": "https://github.com/MinghuiChen43/awesome-trustworthy-deep-learning",
+      "updated": "2026-03-27",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "AI Survival Stories: a Taxonomic Analysis of AI Existential Risk",
+      "snippet": "Since the release of ChatGPT, there has been a lot of debate about whether AI systems pose an existential risk to humanity. This paper develops a general framework for thinking about the existential risk of AI systems. We analyze a two premise argument that AI systems pose a threat to humanity. Prem",
+      "url": "https://arxiv.org/abs/2601.09765v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Humanity in the Age of AI: Reassessing 2025's Existential-Risk Narratives",
+      "snippet": "Two 2025 publications, \"AI 2027\" (Kokotajlo et al., 2025) and \"If Anyone Builds It, Everyone Dies\" (Yudkowsky & Soares, 2025), assert that superintelligent artificial intelligence will almost certainly destroy or render humanity obsolete within the next decade. Both rest on the classic chain formula",
+      "url": "https://arxiv.org/abs/2512.04119v1",
+      "source": "arXiv"
+    }
+  ],
+  "web_search": [
+    {
+      "title": "Existential Risks: Threats to Humanity&#x27;s Survival",
+      "url": "https://existential-risk.com/concept",
+      "source": "WEB"
+    },
+    {
+      "title": "Global catastrophic risk - Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Global_catastrophic_risk",
+      "source": "WEB"
+    },
+    {
+      "title": "Existential Risks: Analyzing Human Extinction Scenarios",
+      "url": "https://nickbostrom.com/existential/risks",
+      "source": "WEB"
+    },
+    {
+      "title": "Existential Risks: What Threatens Humanity&#x27;s Future - Globaïa",
+      "url": "https://globaia.org/risks/",
+      "source": "WEB"
+    },
+    {
+      "title": "Existential Risks Initiative",
+      "url": "https://seri.stanford.edu/",
+      "source": "WEB"
+    }
+  ],
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL"
+}

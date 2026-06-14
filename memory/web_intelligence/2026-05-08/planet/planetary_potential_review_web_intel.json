@@ -1,0 +1,92 @@
+{
+  "axis": "PLANETARY_POTENTIAL_REVIEW",
+  "domain": "planet",
+  "timestamp": "2026-05-08T10:28:48.153033+00:00",
+  "sources_count": 10,
+  "rss_count": 4,
+  "ddg_count": 6,
+  "youtube_count": 0,
+  "youtube_items": [],
+  "analysis": {
+    "problem": "Анализ на PLANETARY_POTENTIAL_REVIEW — данни получени но LLM грешка",
+    "root_cause": "LLM parsing грешка",
+    "severity": "UNKNOWN",
+    "leverage_points": [],
+    "proposed_actions": [],
+    "evidence": [
+      "What scientists found inside coral reefs could change the future of medicine",
+      "This town found clean energy deep inside old coal mines",
+      "NASA captures wild swirling clouds and rare arctic storm over Alaska"
+    ],
+    "generalization": "",
+    "summary": "- What scientists found inside coral reefs could change the future of medicine: Beneath the beauty of coral reefs lies a hidden universe of microbes unlike anything scientists expected. Each coral spe",
+    "risk_level": "UNKNOWN",
+    "trend": "UNKNOWN"
+  },
+  "raw_items": [
+    {
+      "title": "What scientists found inside coral reefs could change the future of medicine",
+      "summary": "Beneath the beauty of coral reefs lies a hidden universe of microbes unlike anything scientists expected. Each coral species supports its own specialized microbial partners, many of which have never been studied before. These microbes produce a stunning variety of chemical compounds with potential uses in medicine and biotech. The discovery highlights just how much is at stake as coral reefs face growing threats.",
+      "link": "https://www.sciencedaily.com/releases/2026/05/260506225229.htm",
+      "published": "Fri, 08 May 2026 00:10:10 EDT",
+      "source_type": "rss"
+    },
+    {
+      "title": "This town found clean energy deep inside old coal mines",
+      "summary": "Cumberland, B.C. is reimagining its coal mining past as a clean energy opportunity. Water trapped in abandoned mine tunnels could be used in a geothermal system to heat and cool buildings efficiently and with minimal emissions. The project could lower energy costs, support new development, and attract businesses. It’s a striking example of turning industrial leftovers into a sustainable community asset.",
+      "link": "https://www.sciencedaily.com/releases/2026/05/260505234631.htm",
+      "published": "Wed, 06 May 2026 19:10:20 EDT",
+      "source_type": "rss"
+    },
+    {
+      "title": "NASA captures wild swirling clouds and rare arctic storm over Alaska",
+      "summary": "Southern Alaska’s winter finale delivered a spectacular atmospheric display, captured by a NASA satellite. Cold Arctic air flowing over warmer ocean waters created long bands of clouds, swirling vortex patterns, and even a compact polar storm with powerful winds. As the air traveled offshore, it evolved into increasingly complex cloud formations. The result was a dramatic, ever-changing sky that highlighted the raw energy of the season’s end.",
+      "link": "https://www.sciencedaily.com/releases/2026/05/260505234614.htm",
+      "published": "Wed, 06 May 2026 18:14:19 EDT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Greenland ice melt has surged sixfold and scientists are alarmed",
+      "summary": "Greenland’s ice sheet is now melting in ways never seen before, with extreme events becoming more frequent, widespread, and intense. Since 1990, meltwater production has skyrocketed, and most record-breaking events have occurred in recent years. Scientists say warming temperatures are supercharging these episodes beyond natural climate patterns.",
+      "link": "https://www.sciencedaily.com/releases/2026/05/260504023852.htm",
+      "published": "Mon, 04 May 2026 10:23:46 EDT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Geoengineering",
+      "summary": "Geoengineering (also known as climate engineering or climate intervention) is the deliberate large-scale interventions in the Earth’s climate system intended to counteract human-caused climate change. The term commonly encompasses two broad categories: large-scale carbon dioxide removal (CDR) and solar radiation modification (SRM). CDR involves techniques to remove carbon dioxide from the atmosphe",
+      "link": "https://en.wikipedia.org/wiki/Geoengineering",
+      "source_type": "ddg"
+    },
+    {
+      "title": "About Geoengineering | US EPA",
+      "summary": "April 3, 2026 - Geoengineering refers to activities intended to cool the Earth or remove greenhouse gases from the air and has health and environmental impacts. This page summarizes geoengineering and potential impacts.",
+      "link": "https://www.epa.gov/geoengineering/about-geoengineering",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Geoengineering | US EPA",
+      "summary": "February 26, 2026 - Geoengineering encompasses a broad range of activities that intentionally attempt to cool the Earth or remove certain gases from the atmosphere. This web area provides an overview of the basics of geoengineering, potential impacts of solar ...",
+      "link": "https://www.epa.gov/geoengineering",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Planetary boundaries",
+      "summary": "Planetary boundaries are a framework to describe limits to the impacts of human activities on the Earth system. Beyond these limits, the environment may not be able to continue to self-regulate. This would mean the Earth system would leave the period of stability of the Holocene, in which human society developed.These nine boundaries are climate change, ocean acidification, stratospheric ozone dep",
+      "link": "https://en.wikipedia.org/wiki/Planetary_boundaries",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Planetary Boundaries: Earth's 9 Safe Operating Limits",
+      "summary": "November 13, 2024 - The Planetary Boundaries framework is a groundbreaking scientific concept introduced in 2009 by a group of Earth system and environmental scientists led by Johan Rockström, who was then the director of the Stockholm Resilience Centre.",
+      "link": "https://globaia.org/boundaries/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Planetary boundaries - Stockholm Resilience Centre",
+      "summary": "2 weeks ago - The planetary boundaries framework highlights the rising risks from human pressure on nine critical global processes that regulate the stability and resilience of the Earth",
+      "link": "https://www.stockholmresilience.org/research/planetary-boundaries.html",
+      "source_type": "ddg"
+    }
+  ]
+}

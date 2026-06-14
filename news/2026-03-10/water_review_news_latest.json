@@ -1,0 +1,83 @@
+{
+  "axis": "WATER_REVIEW",
+  "fetched_at": "2026-03-10T12:27:10.942730+00:00",
+  "smart_query": "water review",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 3,
+    "arxiv": 2,
+    "github": 3
+  },
+  "analysis": {
+    "summary": "Водата е ключов фактор за устойчивото развитие, като изпълнението на правилата за контрол и качеството на водата се подчертава чрез санкции и технологии. Откритието на проблеми в доставките и маркироването на продуктите показва необходимостта от по-строги регулации. Откритието на нови инструменти за мониторинг на водата подчертава ролята на отворените източници.",
+    "key_developments": [
+      "South East Water е наказан с £22.5m за повторени недостатъци в доставката на вода в Кент и Съсекс",
+      "Виробника „Карпатської Джерельної“ е оштрафуван за неправилно маркиране",
+      "Каква е зелеността на млякото? Сравнение на околната цена на дъйските и растителни алтернативи"
+    ],
+    "sentiment": "CRITICAL",
+    "urgency": "HIGH",
+    "open_source_momentum": [
+      "wilsto/pool-monitor-card: Инструмент за мониторинг на химичния баланс в басейни",
+      "DOI-USGS/EGRET: Пакет за анализ на промените в качеството на водата",
+      "KnowFlow/KnowFlow_AWM: Отворен инструмент за автоматичен мониторинг на водата"
+    ],
+    "scientific_frontier": "No data",
+    "relevance_to_goal": "HIGH"
+  },
+  "sentiment": "CRITICAL",
+  "urgency": "HIGH",
+  "summary": "Водата е ключов фактор за устойчивото развитие, като изпълнението на правилата за контрол и качеството на водата се подчертава чрез санкции и технологии. Откритието на проблеми в доставките и маркироването на продуктите показва необходимостта от по-строги регулации. Откритието на нови инструменти за мониторинг на водата подчертава ролята на отворените източници.",
+  "key_developments": [
+    "South East Water е наказан с £22.5m за повторени недостатъци в доставката на вода в Кент и Съсекс",
+    "Виробника „Карпатської Джерельної“ е оштрафуван за неправилно маркиране",
+    "Каква е зелеността на млякото? Сравнение на околната цена на дъйските и растителни алтернативи"
+  ],
+  "open_source_momentum": [
+    "wilsto/pool-monitor-card: Инструмент за мониторинг на химичния баланс в басейни",
+    "DOI-USGS/EGRET: Пакет за анализ на промените в качеството на водата",
+    "KnowFlow/KnowFlow_AWM: Отворен инструмент за автоматичен мониторинг на водата"
+  ],
+  "scientific_frontier": "No data",
+  "github_repos": [
+    {
+      "title": "wilsto/pool-monitor-card",
+      "snippet": "Keep your swimming pool safe and crystal clear by monitoring up to 25 water chemistry parameters at a glance.",
+      "stars": 105,
+      "url": "https://github.com/wilsto/pool-monitor-card",
+      "updated": "2026-03-09",
+      "source": "GitHub"
+    },
+    {
+      "title": "DOI-USGS/EGRET",
+      "snippet": "An R-package for the analysis of long-term changes in water quality and streamflow, including the water-quality method Weighted Regressions on Time, Discharge, and Season (WRTDS). https://doi-usgs.git",
+      "stars": 96,
+      "url": "https://github.com/DOI-USGS/EGRET",
+      "updated": "2026-02-10",
+      "source": "GitHub"
+    },
+    {
+      "title": "KnowFlow/KnowFlow_AWM",
+      "snippet": "KnowFlow Automatic Water Monitoring device is an open sourced tool enable everyone having access to first hand water quality data with low cost.",
+      "stars": 95,
+      "url": "https://github.com/KnowFlow/KnowFlow_AWM",
+      "updated": "2025-12-19",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "FVG-PT: Adaptive Foreground View-Guided Prompt Tuning for Vision-Language Models",
+      "snippet": "CLIP-based prompt tuning enables pretrained Vision-Language Models (VLMs) to efficiently adapt to downstream tasks. Although existing studies have made significant progress, they pay limited attention to changes in the internal attention representations of VLMs during the tuning process. In this pap",
+      "url": "https://arxiv.org/abs/2603.08708v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "HiAR: Efficient Autoregressive Long Video Generation via Hierarchical Denoising",
+      "snippet": "Autoregressive (AR) diffusion offers a promising framework for generating videos of theoretically infinite length. However, a major challenge is maintaining temporal continuity while preventing the progressive quality degradation caused by error accumulation. To ensure continuity, existing methods t",
+      "url": "https://arxiv.org/abs/2603.08703v1",
+      "source": "arXiv"
+    }
+  ]
+}

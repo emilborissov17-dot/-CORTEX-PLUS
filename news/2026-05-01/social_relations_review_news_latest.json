@@ -1,0 +1,57 @@
+{
+  "axis": "SOCIAL_RELATIONS_REVIEW",
+  "fetched_at": "2026-05-01T13:12:15.763810+00:00",
+  "smart_query": "social inequality conflict trust",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "Billions of meals at risk due to Iran war, says fertiliser boss",
+      "snippet": "A shortage of fertiliser due to the Iran conflict could reduce crop yields and push prices higher, says the boss of Yara.",
+      "url": "https://www.bbc.com/news/articles/cpwp50v4ye7o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Hegseth says clock paused on deadline to seek approval for Iran war",
+      "snippet": "The US defence secretary says the timer for the president to report to Congress \"pauses or stops\" in a ceasefire.",
+      "url": "https://www.bbc.com/news/articles/cvgz7l5v03po?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Violence in Australian town after arrest of man over girl's murder",
+      "snippet": "Unrest took place outside hospital where man suspected of murdering a five-year-old girl was being treated.",
+      "url": "https://www.bbc.com/news/articles/cddp4j7p8pzo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [],
+  "arxiv_papers": [
+    {
+      "title": "Social Media Data Toolkit: Standardization and Anonymization of Social Network Datasets",
+      "snippet": "The rapid diversification of social media platforms and the increasing restrictions on official APIs have significantly complicated cross-platform analysis. Researchers are often forced to rely on heterogeneous datasets obtained through web scraping and historical archives; however they often lack s",
+      "url": "https://arxiv.org/abs/2604.27710v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Temporal and Content Coupling Analysis of Social Media User Behavior",
+      "snippet": "News consumption behavior is shaped by the coupling between temporal dynamics and content selection. This study proposes a multi-scale temporal-content framework and validates it on two large real-world news datasets, MIND and Adressa. Results reveal hierarchical temporal patterns. At the macroscale",
+      "url": "https://arxiv.org/abs/2604.27530v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[Snail Sex Tape] In this episode, we consider a creature we often don’t think much about—the snail. And not just snails, but their sex lives. Which, as it turns out, is epic. There is persuasion and subterfuge, spaghetti penises and co-copulation. And this very surprising habit—erm kink—of making tiny arrows (actually!) and stabbing each other with them. Known as a “love dart,” these limestone daggers aren’t just ",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

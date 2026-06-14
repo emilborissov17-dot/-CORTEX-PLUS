@@ -1,0 +1,81 @@
+{
+  "axis": "EDUCATION_CULTURE_REVIEW",
+  "fetched_at": "2026-03-14T07:07:33.044845+00:00",
+  "smart_query": "education access schools literacy",
+  "sources_count": {
+    "wiki": 0,
+    "gdelt": 3,
+    "arxiv": 2,
+    "github": 3,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [],
+  "gdelt": [
+    {
+      "title": "विद्यालयहरूमा डिजिटल साक्षरताको अभियानमा  डिजी स्कुल  – Online Khabar",
+      "snippet": "विद्यालयहरूमा डिजिटल साक्षरताको अभियानमा  डिजी स्कुल  – Online Khabar",
+      "url": "https://www.onlinekhabar.com/2026/01/1839893/digi-school-in-the-campaign-for-digital-literacy-in-schools",
+      "source": "onlinekhabar.com"
+    },
+    {
+      "title": "Five years of  Nominate to Educate  | 2026 AVBOB Road To Literacy nominations are open",
+      "snippet": "Five years of  Nominate to Educate  | 2026 AVBOB Road To Literacy nominations are open",
+      "url": "https://www.enca.com/promotions/five-years-nominate-educate-2026-avbob-road-literacy-nominations-are-open",
+      "source": "enca.com"
+    },
+    {
+      "title": "Road to Literacy : nominate a school to win one of 2 , 000 trolley libraries",
+      "snippet": "Road to Literacy : nominate a school to win one of 2 , 000 trolley libraries",
+      "url": "https://www.timeslive.co.za/news/2026-02-13-road-to-literacy-nominate-a-school-to-win-one-of-2000-trolley-libraries/",
+      "source": "timeslive.co.za"
+    }
+  ],
+  "github_repos": [
+    {
+      "title": "upb-lea/reinforcement_learning_course_materials",
+      "snippet": "Lecture notes, tutorial tasks including solutions as well as online videos for the reinforcement learning course hosted by Paderborn University",
+      "stars": 1017,
+      "url": "https://github.com/upb-lea/reinforcement_learning_course_materials",
+      "updated": "2026-02-23",
+      "source": "GitHub"
+    },
+    {
+      "title": "spatialaudio/signals-and-systems-lecture",
+      "snippet": "Continuous- and Discrete-Time Signals and Systems - Theory and Computational Examples",
+      "stars": 371,
+      "url": "https://github.com/spatialaudio/signals-and-systems-lecture",
+      "updated": "2026-03-11",
+      "source": "GitHub"
+    },
+    {
+      "title": "merely-useful/py-rse",
+      "snippet": "Research Software Engineering with Python course material",
+      "stars": 261,
+      "url": "https://github.com/merely-useful/py-rse",
+      "updated": "2026-03-06",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "AI Misuse in Education Is a Measurement Problem: Toward a Learning Visibility Framework",
+      "snippet": "The rapid integration of conversational AI systems into educational settings has intensified ethical concerns about academic integrity, fairness, and students' cognitive development. Institutional responses have largely centered on AI detection tools and restrictive policies, yet such approaches hav",
+      "url": "https://arxiv.org/abs/2603.07834v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "SuperSkillsStack: Agency, Domain Knowledge, Imagination, and Taste in Human-AI Design Education",
+      "snippet": "This study examines how students integrate generative artificial intelligence (AI) into design projects through the lens of the SuperSkillsStack framework, which identifies four key human competencies for effective human-AI collaboration: Agency, Domain Knowledge, Imagination, and Taste. As generati",
+      "url": "https://arxiv.org/abs/2603.07016v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[The Impact of AI in Education: Navigating the Imminent Future] What must be considered to build a safe but effective future for AI in education, and for children to be safe online?",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

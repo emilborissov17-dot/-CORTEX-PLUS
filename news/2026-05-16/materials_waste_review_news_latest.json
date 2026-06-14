@@ -1,0 +1,38 @@
+{
+  "axis": "MATERIALS_WASTE_REVIEW",
+  "fetched_at": "2026-05-16T13:34:40.470694+00:00",
+  "smart_query": "plastic waste pollution recycling",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 0,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [],
+  "gdelt": [],
+  "github_repos": [],
+  "arxiv_papers": [
+    {
+      "title": "Circularity in Perovskite-Based Tandem Photovoltaics for Terawatt-Scale Deployment",
+      "snippet": "As photovoltaics (PVs) scale from one to multiple terawatts over the next decade, ensuring sustainable deployment is urgently required. Crystalline silicon (c-Si) PVs, the current industry standard, will generate an estimated 160 million tonnes of waste by 2050, and there remains complex technoecono",
+      "url": "https://arxiv.org/abs/2605.13991v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Deterministic positioning of circular Bragg gratings using atomic force lithography for high-performance quantum dot light sources",
+      "snippet": "Semiconductor quantum dots (QDs) grown by molecular beam epitaxy are excellent quantum emitters, but their random spatial distribution hinders deterministic coupling to optical microcavities. We demonstrate a room-temperature atomic force microscopy (AFM)-assisted nano-oxidation lithography techniqu",
+      "url": "https://arxiv.org/abs/2605.03672v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[FLI’s President and CEO on Trump’s support for an AI ‘kill switch’] President Trump said during an interview aired yesterday by Fox Business that &#8220;there should be&#8221; when asked if AI needs [&#8230;]",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

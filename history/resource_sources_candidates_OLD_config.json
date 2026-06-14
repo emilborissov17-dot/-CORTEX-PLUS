@@ -1,0 +1,1022 @@
+{
+  "energysupply": [
+    {
+      "name": "International Energy Agency (IEA)",
+      "url": "https://www.iea.org",
+      "docs": "https://www.iea.org/data-and-statistics",
+      "notes": "Глобални данни за енергийни ресурси, производство, потребление и технологии (всички региони).",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:12:03.362716"
+    },
+    {
+      "name": "U.S. Energy Information Administration (EIA)",
+      "url": "https://www.eia.gov",
+      "docs": "https://www.eia.gov/energy-cf.html",
+      "notes": "Данни за енергийни източници, цени и пазари в САЩ и глобално.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:12:03.362716"
+    },
+    {
+      "name": "World Bank Energy Statistics",
+      "url": "https://data.worldbank.org/topic/energy",
+      "docs": "https://datahelpdesk.worldbank.org",
+      "notes": "Статистика за енергийна достъпност, инвестиции и устойчивост (много региони).",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:12:03.362716"
+    },
+    {
+      "name": "European Commission - Joint Research Centre (JRC)",
+      "url": "https://ec.europa.eu/jrc",
+      "docs": "https://ec.europa.eu/jrc/en/research/areas/energy",
+      "notes": "Данни за енергия в ЕС, включително възобновяеми източници и пълзящи технологии.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:12:03.362716"
+    },
+    {
+      "name": "National Renewable Energy Laboratory (NREL)",
+      "url": "https://www.nrel.gov",
+      "docs": "https://www.nrel.gov/energy-analysis.html",
+      "notes": "Дендротехнологии за слънчеви, ветрови и хидроенергия (САЩ).",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:12:03.362716"
+    },
+    {
+      "name": "International Renewable Energy Agency (IRENA)",
+      "url": "https://www.irena.org",
+      "docs": "https://www.irena.org/statistics",
+      "notes": "Глобални данни за възобновяеми източници във всички региони.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:12:03.362716"
+    },
+    {
+      "name": "Global Energy Observatory (GEO) - University of Texas",
+      "url": "https://geo.utexas.edu",
+      "docs": "https://geo.utexas.edu/data",
+      "notes": "Статистика за геоложки енергийни ресурси (пълзящи и възобновяеми).",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:12:03.362716"
+    },
+    {
+      "name": "World Resources Institute (WRI) Energy Access",
+      "url": "https://www.wri.org/programs/energy-access",
+      "docs": "https://climatewatch.wri.org",
+      "notes": "Данни за енергийна достъпност и устойчивост (включва региони по света).",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:12:03.362716"
+    },
+    {
+      "name": "Energy Information Administration (EIA) API",
+      "url": "https://www.eia.gov/developers/api-documentation",
+      "docs": "https://www.eia.gov/developers/api-documentation",
+      "notes": "API за достъп до актуални данни за енергиен пазар (сАЩ).",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:12:03.362716"
+    },
+    {
+      "name": "International Energy Forum (IEF)",
+      "url": "https://www.ief.org",
+      "docs": "https://www.ief.org/data-and-reports",
+      "notes": "Глобални данни за енергийни ресурси и стратегии (включва ОПЕК и непринадлежащи държави).",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:12:03.362716"
+    },
+    {
+      "name": "Global Carbon Project",
+      "url": "https://globalcarbonproject.org",
+      "docs": "https://www.globalcarbonproject.org/data",
+      "notes": "Данни за въглеродни емисии и възобновяеми източници (свързани с енергия).",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:12:03.362716"
+    },
+    {
+      "name": "National Agency for Energy Efficiency (NAEE) - Turkey",
+      "url": "https://www.enerji.gov.tr",
+      "docs": "https://www.enerji.gov.tr/tr/anaSayfa",
+      "notes": "Данни за енергийна ефективност и устойчивост в Турция.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:12:03.362716"
+    },
+    {
+      "name": "European Environment Agency (EEA) Energy Data",
+      "url": "https://www.eea.europa.eu",
+      "docs": "https://www.eea.europa.eu/data-and-maps/data",
+      "notes": "Данни за енергийна ползваност и климатични въздействия в Европа.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:12:03.362716"
+    },
+    {
+      "name": "International Energy Outlook (IEO) - U.S. Energy Information Administration",
+      "url": "https://www.eia.gov/outlooks/ieo",
+      "docs": "https://www.eia.gov/outlooks/ieo/",
+      "notes": "Оптово прогнозиране на глобалните енергийни тренди (включва региони).",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:12:03.362716"
+    },
+    {
+      "name": "Global Energy Transition Index (GETI) - World Economic Forum",
+      "url": "https://www.weforum.org",
+      "docs": "https://www.weforum.org/energy",
+      "notes": "Индекс за устойчивост на енергийната промяна (всички региони).",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:12:03.362716"
+    },
+    {
+      "name": "Energy Data Initiative (EDI) - World Bank",
+      "url": "https://data.worldbank.org",
+      "docs": "https://datahelpdesk.worldbank.org",
+      "notes": "База данни за енергийни инфраструктури и транспорт (много региони).",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:12:03.362716"
+    },
+    {
+      "name": "Energy Storage Association (ESA)",
+      "url": "https://www.energystorage.org",
+      "docs": "https://www.energystorage.org/data",
+      "notes": "Данни за батерии, хранителни системи и енергийна съхранение (сАЩ).",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:12:03.362716"
+    },
+    {
+      "name": "Global Energy System (GES) - Stanford University",
+      "url": "https://energy.stanford.edu",
+      "docs": "https://energy.stanford.edu/research",
+      "notes": "Академични данни за дългосрочно развитие на енергийната система.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:12:03.362716"
+    },
+    {
+      "name": "International Energy Statistics Database (IESD)",
+      "url": "https://iesd.org",
+      "docs": "https://iesd.org/energy-statistics",
+      "notes": "Глобални данни за енергийни източници и потребление.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:12:03.362716"
+    },
+    {
+      "name": "Energy Markets and Policy Research (EMPR) - University of Cambridge",
+      "url": "https://www.energy.cam.ac.uk",
+      "docs": "https://www.energy.cam.ac.uk/research",
+      "notes": "Академични анализи и данни за енергийни пазари (включва региони).",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:12:03.362716"
+    },
+    {
+      "name": "International Energy Agency (IEA)",
+      "url": "https://www.iea.org/data-and-statistics",
+      "docs": "https://www.iea.org/data-and-statistics/",
+      "notes": "Глобални данни за производство, потребление и тенденции на нефт, газ, вода и въглища. Критични за региони като Европа, Азия и Америка.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:21:00.394474"
+    },
+    {
+      "name": "U.S. Energy Information Administration (EIA)",
+      "url": "https://www.eia.gov/data-and-models",
+      "docs": "https://www.eia.gov/developers/api/",
+      "notes": "Детайлирана информация за световните и регионални пазари, включително телекоммуникационни данни за въглища, нефт и енергия.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:21:00.394474"
+    },
+    {
+      "name": "European Union Energy Data Portal",
+      "url": "https://ec.europa.eu/eurostat/cache/estat/energy/databrowser_en.html",
+      "docs": "https://ec.europa.eu/eurostat/web/energy",
+      "notes": "Държавни и регионални данни за ЕС, включително въглища, ветерен енергия и електричество.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:21:00.394474"
+    },
+    {
+      "name": "World Bank Energy Statistics",
+      "url": "https://data.worldbank.org/topic/energy",
+      "docs": "https://datacatalog.worldbank.org/dataset/energy",
+      "notes": "Глобални данни за енергийни ресурси, ръководство и икономически индикатори за 180+ държави.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:21:00.394474"
+    },
+    {
+      "name": "International Renewable Energy Agency (IRENA)",
+      "url": "https://www.irena.org/data-and-statistics",
+      "docs": "https://www.irena.org/renaissance",
+      "notes": "Данни за възобновяеми източници на енергия (солнечна, вятърна, гидроенерация) в 100+ държави.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:21:00.394474"
+    },
+    {
+      "name": "National Renewable Energy Laboratory (NREL)",
+      "url": "https://www.nrel.gov/",
+      "docs": "https://www.nrel.gov/analysis.html",
+      "notes": "Данни за солнечна и вятърна енергия, включително модели и технически отчети за САЩ.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:21:00.394474"
+    },
+    {
+      "name": "Global Energy Observatory (GEO)",
+      "url": "https://www.worldenergy.org/",
+      "docs": "https://www.worldenergy.org/our-work/energy-data/",
+      "notes": "Световни данни за енергийни ресурси, включително рискови зони за нефт и газ.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:21:00.394474"
+    },
+    {
+      "name": "Open Energy Markets (OEM)",
+      "url": "https://open-energy-markets.org/",
+      "docs": "https://open-energy-markets.org/data/",
+      "notes": "Платформа за разпространение на данни за трансгранични енергийни пазари (САЩ, ЕС, Китай).",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:21:00.394474"
+    },
+    {
+      "name": "World Resources Institute (WRI)",
+      "url": "https://www.wri.org/energy",
+      "docs": "https://climatewatch.wri.org/",
+      "notes": "Данни за въглища, електричество и възобновяеми източници, фокусирана на глобалните и регионални тенденции.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:21:00.394474"
+    },
+    {
+      "name": "International Energy Forum (IEF)",
+      "url": "https://www.ief.org/",
+      "docs": "https://www.ief.org/data-and-research/",
+      "notes": "Регионални и световни данни за енергийни пазари, включително арабски и Азийски региони.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:21:00.394474"
+    },
+    {
+      "name": "Energy Data Initiative (EDi)",
+      "url": "https://www.edi.org.uk/",
+      "docs": "https://www.edi.org.uk/data/",
+      "notes": "Данни за енергийна ефективност и инвестиции в Европа и Великобритания.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:21:00.394474"
+    },
+    {
+      "name": "Global Energy Statistical Database (GESDB)",
+      "url": "https://www.ief.org/",
+      "docs": "https://www.ief.org/data-and-research/",
+      "notes": "Глобални данни за енергийни източници в 140+ държави, включително нефт, газ и въглища.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:21:00.394474"
+    },
+    {
+      "name": "European Energy Agency (EU Emissions Trading System)",
+      "url": "https://www.eea.europa.eu/data-and-maps/",
+      "docs": "https://www.eea.europa.eu/data-and-maps/data/",
+      "notes": "Данни за емисии и енергийни ресурси в ЕС, включително сектори като промишленост и транспорти.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:21:00.394474"
+    },
+    {
+      "name": "African Energy Outlook (AEO)",
+      "url": "https://www.africanenergy.org/",
+      "docs": "https://www.africanenergy.org/data/",
+      "notes": "Данни за енергийни източници в Африка, включително петрол, газ и възобновяеми източници.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:21:00.394474"
+    },
+    {
+      "name": "International Energy Outlook (IEO)",
+      "url": "https://www.iea.org/reports/international-energy-outlook",
+      "docs": "https://www.iea.org/reports",
+      "notes": "Сценарии и прогнози за световни енергийни пазари до 2050, включително нефт, газ и въглища.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:21:00.394474"
+    },
+    {
+      "name": "International Energy Agency (IEA) Energy Statistics",
+      "url": "https://www.iea.org/data-and-statistics",
+      "docs": "https://www.iea.org/data-and-statistics/",
+      "notes": "Глобални данни за енергия, включително производство, потребление и ископаеми горива, с фокус върху развитието на зелена енергия, с покриване на повечето държави.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T10:05:20.983801"
+    },
+    {
+      "name": "U.S. Energy Information Administration (EIA)",
+      "url": "https://www.eia.gov",
+      "docs": "https://www.eia.gov/programmatic-data/",
+      "notes": "Държавни данни за енергия в САЩ, включително изкопаеми горива, ветер, слънце и електричество, с дetaили за производство и транспорт.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T10:05:20.983801"
+    },
+    {
+      "name": "European Commission Energy Data Portal",
+      "url": "https://ec.europa.eu/energy/data_en",
+      "docs": "https://ec.europa.eu/energy/data_en",
+      "notes": "Данни за енергия в ЕС, включително производство, транспорт, въглища и възобновими източници, с фокус върху членството на ЕС и неговите региони.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T10:05:20.983801"
+    },
+    {
+      "name": "International Renewable Energy Agency (IRENA)",
+      "url": "https://www.irena.org/data-and-statistics",
+      "docs": "https://www.irena.org/Statistics",
+      "notes": "данни за възобновими източници, включително слънце, ветер, хидро, с фокус върху развитието на зелена енергия в 150+ държави.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T10:05:20.983801"
+    },
+    {
+      "name": "World Bank Energy Statistics",
+      "url": "https://data.worldbank.org/indicator",
+      "docs": "https://data.worldbank.org/data-collections",
+      "notes": "Глобални данни за енергия, включително доступност, цени и източници, с покриване на 200+ държави и региони.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T10:05:20.983801"
+    },
+    {
+      "name": "National Renewable Energy Laboratory (NREL)",
+      "url": "https://www.nrel.gov",
+      "docs": "https://www.nrel.gov/analysis.html",
+      "notes": "ДАННИ за възобновими източници, ветер и слънце в САЩ, включително моделни изчисления и държавни статистики.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T10:05:20.983801"
+    },
+    {
+      "name": "OpenEI (Open Energy Information)",
+      "url": "https://openei.org/",
+      "docs": "https://openei.org/energy-data-sets",
+      "notes": "Платформа за открити данни за енергия, включително пълнотекстови документи, енергийни картографии и регионални статистики.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T10:05:20.983801"
+    },
+    {
+      "name": "Global Electricity Dataset (GloE)",
+      "url": "https://www.global-energy.org/",
+      "docs": "https://www.global-energy.org/data",
+      "notes": "Глобални данни за електрическа мрежа, включително преминаване на енергия, с покриване на 180+ държави и региони.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T10:05:20.983801"
+    },
+    {
+      "name": "International Energy Forum (IEF) API",
+      "url": "https://www.ief.org/",
+      "docs": "https://www.ief.org/energy-data",
+      "notes": "Данни за глобален енергийен пазар, включително производство, търговия и ископаеми горива, с фокус върху ОПЕК+ и региони.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T10:05:20.983801"
+    },
+    {
+      "name": "World Energy Council (WEC) Energy Data",
+      "url": "https://www.worldenergy.org/",
+      "docs": "https://www.worldenergy.org/energy-data",
+      "notes": "Данни за глобална енергия, включително потребление, емисии и източници, с покриване на 130+ държави и региони.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T10:05:20.983801"
+    },
+    {
+      "name": "National Geospatial-Intelligence Agency (NGA)",
+      "url": "https://www.nga.gov/",
+      "docs": "https://www.nga.gov/data-sets",
+      "notes": "ДАННИ за енергийни инфраструктури, включително петролни и газови линии, с фокус върху военни и стратегически маршрути.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T10:05:20.983801"
+    },
+    {
+      "name": "Asian Development Bank (ADB) Energy Data Portal",
+      "url": "https://www.adb.org/energy",
+      "docs": "https://www.adb.org/energy/data",
+      "notes": "Данни за енергия в Азия, с фокус върху инвестиции и източници, с покриване на 40+ държави.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T10:05:20.983801"
+    },
+    {
+      "name": "African Development Bank (AfDB) Energy Data",
+      "url": "https://www.afdb.org/energy",
+      "docs": "https://www.afdb.org/energy/data",
+      "notes": "Данни за енергия в Африка, включително достъпност и инвестиции, с фокус върху развитието на енергията.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T10:05:20.983801"
+    },
+    {
+      "name": "Global Petrol and Gas Data (GlobalPetrol)",
+      "url": "https://www.globalpetrol.org/",
+      "docs": "https://www.globalpetrol.org/data",
+      "notes": "Данни за изкопаеми горива, включително добыча, транспорт и изгаряне, с фокус върху глобални тенденции.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T10:05:20.983801"
+    },
+    {
+      "name": "European Environment Agency (EEA) Energy Data",
+      "url": "https://www.eea.europa.eu/data-and-maps/",
+      "docs": "https://www.eea.europa.eu/data-and-maps/",
+      "notes": "Данни за енергия в Европа, включително емисии, източници и устойчивост, с покриване на 34 държави.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T10:05:20.983801"
+    },
+    {
+      "name": "Energy Information Portal (EIP)",
+      "url": "https://www.energyportal.org/",
+      "docs": "https://www.energyportal.org/energy-data-sets",
+      "notes": "Платформа за глобална енергия, включително източници, ценове и технологии, с поддръжка за 200+ региони.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T10:05:20.983801"
+    },
+    {
+      "name": "International Energy Statistics (IES)",
+      "url": "https://www.ies.org/",
+      "docs": "https://www.ies.org/data",
+      "notes": "Данни за енергия, включително ископаеми горива, възобновими източници и промишленост, с покриване на 150+ държави.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T10:05:20.983801"
+    },
+    {
+      "name": "Energy Storage Database (ESDB)",
+      "url": "https://www.energystorage.org/",
+      "docs": "https://www.energystorage.org/data",
+      "notes": "Данни за енергийна запазване, включително технологии, производство и потребление, с фокус върху иновации.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T10:05:20.983801"
+    },
+    {
+      "name": "Global Wind Energy Council (GWEC)",
+      "url": "https://gwec.net/",
+      "docs": "https://gwec.net/energy-data",
+      "notes": "Данни за ветровата енергия, включително присъствието, мощност и инвестиции, с покриване на 100+ държави.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T10:05:20.983801"
+    },
+    {
+      "name": "International Solar Energy Society (ISES)",
+      "url": "https://www.solarsystem.org/",
+      "docs": "https://www.solarsystem.org/data",
+      "notes": "Данни за слънчевата енергия, включително технологични иновации, производство и потребление, с фокус върху глобални тенденции.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T10:05:20.983801"
+    },
+    {
+      "name": "Global Energy Transition Index (GEC)",
+      "url": "https://www.genevainstitute.org",
+      "docs": "https://www.genevainstitute.org/geneva-index",
+      "notes": "Източник на данни за енергийните промени, включващ обновими източници, CO2 и инвестиции.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-03-01T11:10:04.049121"
+    }
+  ],
+  "energyrenewables": [
+    {
+      "url": "https://www.irena.org",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:17:11.722388"
+    },
+    {
+      "docs": "https://www.irena.org/publications",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:17:11.722388"
+    },
+    {
+      "notes": "Глобални данни за производство, инвестиции, технологии и политики в обновяеми енергии.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:17:11.722388"
+    },
+    {
+      "url": "https://www.iea.org",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:17:11.722388"
+    },
+    {
+      "docs": "https://www.iea.org/renewables",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:17:11.722388"
+    },
+    {
+      "notes": "Детайлни статистики за източници, консумация и тенденции в световен мащаб.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:17:11.722388"
+    },
+    {
+      "url": "https://data.worldbank.org/topic/energy",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:17:11.722388"
+    },
+    {
+      "docs": "https://datacatalog.worldbank.org/dataset/energy",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:17:11.722388"
+    },
+    {
+      "notes": "Глобални данни за енергия, включително обновяеми източници, краен потребител и инвестиции.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:17:11.722388"
+    },
+    {
+      "url": "https://nrel.gov",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:17:11.722388"
+    },
+    {
+      "docs": "https://www.nrel.gov/research.html",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:17:11.722388"
+    },
+    {
+      "notes": "Детайли за сончево, вятърно и други технологии в САЩ и световен мащаб.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:17:11.722388"
+    },
+    {
+      "url": "https://ec.europa.eu/eurostat",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:17:11.722388"
+    },
+    {
+      "docs": "https://ec.europa.eu/eurostat/web/energy",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:17:11.722388"
+    },
+    {
+      "notes": "Данни за ЕС и Европейския съюз за източници, въглищни депозити и енергийни пазари.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:17:11.722388"
+    },
+    {
+      "url": "https://www.eia.gov",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:17:11.722388"
+    },
+    {
+      "docs": "https://www.eia.gov/energy-census",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:17:11.722388"
+    },
+    {
+      "notes": "Детайли за консумация, производство и инвестиции в САЩ включително обновяеми енергии.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:17:11.722388"
+    },
+    {
+      "url": "https://www.energy.gov/eere",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:17:11.722388"
+    },
+    {
+      "docs": "https://www.energy.gov/eere/research-topics",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:17:11.722388"
+    },
+    {
+      "notes": "Дизайн, иновации и тенденции в обновяеми технологии национален и световен мащаб.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:17:11.722388"
+    },
+    {
+      "url": "https://gwec.net",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:17:11.722388"
+    },
+    {
+      "docs": "https://www.gwec.net/resources",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:17:11.722388"
+    },
+    {
+      "notes": "Глобални данни за вятърна енергия, включително инсталации, производство и инвестиции.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:17:11.722388"
+    },
+    {
+      "url": "https://www.seia.org",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:17:11.722388"
+    },
+    {
+      "docs": "https://www.seia.org/resources",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:17:11.722388"
+    },
+    {
+      "notes": "Данни за сончево развитие, инсталации и пазари в САЩ и глобално.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:17:11.722388"
+    },
+    {
+      "url": "https://globalcarbonproject.org",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:17:11.722388"
+    },
+    {
+      "docs": "https://www.globalcarbonproject.org/data",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:17:11.722388"
+    },
+    {
+      "notes": "Данни за въглеродните емисии и техния връзка с обновяеми източници.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:17:11.722388"
+    },
+    {
+      "url": "https://www.unep.org/resources/publications",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:17:11.722388"
+    },
+    {
+      "docs": "https://www.unep.org/programmes/energy",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:17:11.722388"
+    },
+    {
+      "notes": "Глобални политики, данни и анализ за устойчиви енергийни решения.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:17:11.722388"
+    },
+    {
+      "url": "https://www.wri.org/energy",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:17:11.722388"
+    },
+    {
+      "docs": "https://www.wri.org/research/energy-data",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:17:11.722388"
+    },
+    {
+      "notes": "Данни за обновяеми източници, ефективност и инвестиции в държави по целия свят.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:17:11.722388"
+    },
+    {
+      "url": "https://ises.org",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:17:11.722388"
+    },
+    {
+      "docs": "https://ises.org/publications",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:17:11.722388"
+    },
+    {
+      "notes": "Публикации и данни за сончево развитие и технологии.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:17:11.722388"
+    },
+    {
+      "url": "https://www.neb.gov.ca",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:17:11.722388"
+    },
+    {
+      "docs": "https://www.neb.gov.ca/energy-data",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:17:11.722388"
+    },
+    {
+      "notes": "Данни за канадски енергийни източници, включително обновяеми.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:17:11.722388"
+    },
+    {
+      "url": "https://www.ofgem.gov.uk",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:17:11.722388"
+    },
+    {
+      "docs": "https://www.ofgem.gov.uk/energy-data",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:17:11.722388"
+    },
+    {
+      "notes": "Данни за енергийни пазари и инфраструктура във Великобритания.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:17:11.722388"
+    },
+    {
+      "url": "https://www.cemcleanenergyministerial.org",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:17:11.722388"
+    },
+    {
+      "docs": "https://www.cemcleanenergyministerial.org/data-portal",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:17:11.722388"
+    },
+    {
+      "notes": "Глобални данни за международни инициативи по чиста енергия.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:17:11.722388"
+    },
+    {
+      "url": "https://www.eea.europa.eu",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:17:11.722388"
+    },
+    {
+      "docs": "https://www.eea.europa.eu/data-and-maps/energy",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:17:11.722388"
+    },
+    {
+      "notes": "Данни за екологични и енергийни аспекти в Европа.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:17:11.722388"
+    },
+    {
+      "url": "https://ief.org",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:17:11.722388"
+    },
+    {
+      "docs": "https://ief.org/publications",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:17:11.722388"
+    },
+    {
+      "notes": "Глобални данни за енергийни пазари и тенденции.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:17:11.722388"
+    },
+    {
+      "url": "https://www.irena.org/renewables-watch",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:17:11.722388"
+    },
+    {
+      "docs": "https://www.irena.org/publications",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:17:11.722388"
+    },
+    {
+      "notes": "Потокови данни за обновяеми източници, включително сектора на енергията.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:17:11.722388"
+    },
+    {
+      "url": "https://www.irena.org/publications",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:17:11.722388"
+    },
+    {
+      "docs": "https://www.irena.org/publications/2021/07/global-renewables-outlook-2021",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:17:11.722388"
+    },
+    {
+      "notes": "Тенденции, прогнози и политики за обновяеми енергии в световен мащаб.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-02-28T09:17:11.722388"
+    },
+    {
+      "name": "IRENA Renewable Energy Statistics",
+      "url": "https://data.irena.org",
+      "docs": "https://www.irena.org/publications",
+      "notes": "Глобални данни за възобновяеми енергии, включващи производство и инвестиции, за 170+ държави.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-03-01T11:19:10.556637"
+    },
+    {
+      "name": "IEA Renewable Energy Statistics",
+      "url": "https://www.iea.org/data-and-statistics",
+      "docs": "https://www.iea.org/renewables",
+      "notes": "Държавни и глобални статистики за възобновяеми източници, включващи слънце, вятър и биомаса.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-03-01T11:19:10.556637"
+    },
+    {
+      "name": "UNEP EPD (Emissions Database for Global Atmospheric Research)",
+      "url": "https://epd.unep.org",
+      "docs": "https://www.eea.europa.eu/data-and-maps/",
+      "notes": "Данни за въглеродните емисии и възобновяеми източници, включващи регионални и глобални измервания.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-03-01T11:19:10.556637"
+    },
+    {
+      "name": "EU JRC Energy Data Portal",
+      "url": "https://ec.europa.eu/jrc/en/energy",
+      "docs": "https://ec.europa.eu/jrc/en/energy/data",
+      "notes": "Данни за възобновяеми енергии в ЕС, включващи производство, инвестиции и планировки.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-03-01T11:19:10.556637"
+    },
+    {
+      "name": "U.S. NREL REmap Database",
+      "url": "https://remap.nrel.gov",
+      "docs": "https://www.nrel.gov/",
+      "notes": "Глобални измервания за възобновяеми енергии, фокус върху слънчева и вятърна енергия, с регионални държавни датасети.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-03-01T11:19:10.556637"
+    },
+    {
+      "name": "World Bank Energy Statistics",
+      "url": "https://data.worldbank.org/indicator",
+      "docs": "https://data.worldbank.org/documentation",
+      "notes": "Глобални данни за енергийни ресурси, включващи възобновяеми източници и достъп, за над 200 държави.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-03-01T11:19:10.556637"
+    },
+    {
+      "name": "Global Carbon Project",
+      "url": "https://www.globalcarbonproject.org",
+      "docs": "https://www.globalcarbonproject.org/data",
+      "notes": "Данни за въглеродни емисии и възобновяеми източници, с фокус върху глобални тенденции.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-03-01T11:19:10.556637"
+    },
+    {
+      "name": "World Resources Institute (WRI) Energy Data",
+      "url": "https://www.wri.org/energy",
+      "docs": "https://climateknowledgeportal.worldbank.org",
+      "notes": "Данни за възобновяеми енергии и енергийната структура, с регионални и глобални измервания.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-03-01T11:19:10.556637"
+    },
+    {
+      "name": "Open Energy Dataset (EU Energy Data Hub)",
+      "url": "https://www.energydata.info",
+      "docs": "https://www.energydata.info/data",
+      "notes": "Отворени данни за възобновяеми енергии в ЕС, включващи инфраструктура и инвестиции.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-03-01T11:19:10.556637"
+    },
+    {
+      "name": "National Renewable Energy Laboratory (NREL)",
+      "url": "https://www.nrel.gov",
+      "docs": "https://www.nrel.gov/working-with-us/data.html",
+      "notes": "Отворени данни за слънчева и вятърна енергия, включващи модели и регионални измервания.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-03-01T11:19:10.556637"
+    },
+    {
+      "name": "Global Solar Atlas (IRENA)",
+      "url": "https://globalsolaratlas.info",
+      "docs": "https://globalsolaratlas.info/data",
+      "notes": "Глобални данни за слънчева енергия, включващи потенциал и инсталации, за над 100 държави.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-03-01T11:19:10.556637"
+    },
+    {
+      "name": "Wind Atlas (NREL)",
+      "url": "https://www.nrel.gov/research/wind.html",
+      "docs": "https://www.nrel.gov/working-with-us/data.html",
+      "notes": "Данни за вятърна енергия, включващи климатични модели и потенциал, за регионални зони.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-03-01T11:19:10.556637"
+    },
+    {
+      "name": "IEA Wind Power Data",
+      "url": "https://www.iea.org/data-and-statistics",
+      "docs": "https://www.iea.org/renewables",
+      "notes": "Държавни данни за вятърна енергия, включващи производство и инсталации.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-03-01T11:19:10.556637"
+    },
+    {
+      "name": "IEA Solar Power Data",
+      "url": "https://www.iea.org/data-and-statistics",
+      "docs": "https://www.iea.org/renewables",
+      "notes": "Данни за слънчева енергия, включващи глобални и държавни измервания.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-03-01T11:19:10.556637"
+    },
+    {
+      "name": "Energy Transition Matrix (European Environment Agency)",
+      "url": "https://www.eea.europa.eu",
+      "docs": "https://www.eea.europa.eu/data-and-maps",
+      "notes": "Данни за преминаване към възобновяеми енергии, включващи ЕС и регионални държави.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-03-01T11:19:10.556637"
+    },
+    {
+      "name": "World Energy Council (WEC) Energy Data",
+      "url": "https://www.worldenergy.org",
+      "docs": "https://www.worldenergy.org/our-work/energy-data",
+      "notes": "Глобални данни за възобновяеми енергии, включващи статистиката и прогнози.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-03-01T11:19:10.556637"
+    },
+    {
+      "url": "https://www.energytransitionmatrix.com",
+      "docs": "https://www.energytransitionmatrix.com/data",
+      "notes": "Интегрирана база данни за възобновяеми източници, включително инфраструктура, инвеститиции и статистика.",
+      "status": "candidate",
+      "type": "dataset_or_api",
+      "added_at": "2026-03-02T18:22:34.419933"
+    }
+  ]
+}

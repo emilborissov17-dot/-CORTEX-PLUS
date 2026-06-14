@@ -1,0 +1,132 @@
+{
+  "axis": "SOCIAL_RELATIONS_REVIEW",
+  "fetched_at": "2026-03-12T18:28:17.651936+00:00",
+  "smart_query": "Assessing friendships through social media metrics",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 2,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "analysis": {
+    "summary": "Анализът на социалните отношения показва недоволство сред иранците, които подкрепяха войната, както и победа на рапър-политик в изборите в Непал. Тези събития имат потенциално положително влияние върху устойчивостта на цивилизацията. Целта за достойнство за всички все още е предизвикателство.",
+    "key_developments": [
+      "'What if we're left with ruins?': Doubts creep in for Iranians who supported war",
+      "Rapper-politician Balendra Shah's party wins Nepal election"
+    ],
+    "sentiment": "NEUTRAL",
+    "urgency": "MEDIUM",
+    "open_source_momentum": "CBanafo/twitter_api, Fr4nz83/AuditMovementFairness",
+    "scientific_frontier": "COMIC: Agentic Sketch Comedy Generation, Neural Field Thermal Tomography: A Differentiable Physics Framework for Non-Destructive Evaluation",
+    "relevance_to_goal": "MEDIUM"
+  },
+  "sentiment": "NEUTRAL",
+  "urgency": "MEDIUM",
+  "summary": "Анализът на социалните отношения показва недоволство сред иранците, които подкрепяха войната, както и победа на рапър-политик в изборите в Непал. Тези събития имат потенциално положително влияние върху устойчивостта на цивилизацията. Целта за достойнство за всички все още е предизвикателство.",
+  "key_developments": [
+    "'What if we're left with ruins?': Doubts creep in for Iranians who supported war",
+    "Rapper-politician Balendra Shah's party wins Nepal election"
+  ],
+  "open_source_momentum": "CBanafo/twitter_api, Fr4nz83/AuditMovementFairness",
+  "scientific_frontier": "COMIC: Agentic Sketch Comedy Generation, Neural Field Thermal Tomography: A Differentiable Physics Framework for Non-Destructive Evaluation",
+  "github_repos": [
+    {
+      "title": "CBanafo/twitter_api",
+      "snippet": "Wrangling the dataset on a popular twitter account (WeRateDogs), analyzing and visualizing the output.",
+      "stars": 0,
+      "url": "https://github.com/CBanafo/twitter_api",
+      "updated": "2022-07-27",
+      "source": "GitHub"
+    },
+    {
+      "title": "Fr4nz83/AuditMovementFairness",
+      "snippet": "Code behind the paper \"Assessing the Fairness of Predictive Models Based on Movement Patterns\"",
+      "stars": 0,
+      "url": "https://github.com/Fr4nz83/AuditMovementFairness",
+      "updated": "2026-03-11",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "COMIC: Agentic Sketch Comedy Generation",
+      "snippet": "We propose a fully automated AI system that produces short comedic videos similar to sketch shows such as Saturday Night Live. Starting with character references, the system employs a population of agents loosely based on real production studio roles, structured to optimize the quality and diversity",
+      "url": "https://arxiv.org/abs/2603.11048v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Neural Field Thermal Tomography: A Differentiable Physics Framework for Non-Destructive Evaluation",
+      "snippet": "We propose Neural Field Thermal Tomography (NeFTY), a differentiable physics framework for the quantitative 3D reconstruction of material properties from transient surface temperature measurements. While traditional thermography relies on pixel-wise 1D approximations that neglect lateral diffusion, ",
+      "url": "https://arxiv.org/abs/2603.11045v1",
+      "source": "arXiv"
+    }
+  ],
+  "youtube_transcripts": [],
+  "podcast": "We're so entangled with our devices that online has started to feel more real than IRL, says journalist Nayeema Raza. As screens reshape how we connect and relate, she offers three practical habits to reignite curiosity, restore presence and break free from our phones.(Following the talk, Elise Hu, host of TED Talks Daily, interviews Raza on the best approach to discussing difficult topics — wheth | Where's the best free comedy show in town? Tom Sullam, cofounder of the annual Comedy Wildlife Photography Awards, shares hilarious animal photos that dissolve the distance between humans and nature. The result? A joyful case for caring about what we're at risk of losing.Learn more about our flagship conference happening this April at&nbsp;attend.ted.com/podcast Hosted on Acast. See acast.com/priv",
+  "youtube_videos": [
+    {
+      "title": "YouTube:SU_lxSStpAA",
+      "video_id": "SU_lxSStpAA",
+      "url": "https://www.youtube.com/watch?v=SU_lxSStpAA",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:qxJLAnSCnHA",
+      "video_id": "qxJLAnSCnHA",
+      "url": "https://www.youtube.com/watch?v=qxJLAnSCnHA",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:5hR3xkKM8RM",
+      "video_id": "5hR3xkKM8RM",
+      "url": "https://www.youtube.com/watch?v=5hR3xkKM8RM",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:aIKAu9QMI9g",
+      "video_id": "aIKAu9QMI9g",
+      "url": "https://www.youtube.com/watch?v=aIKAu9QMI9g",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:Kdc17GQtDRk",
+      "video_id": "Kdc17GQtDRk",
+      "url": "https://www.youtube.com/watch?v=Kdc17GQtDRk",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:sL3Trlv2dNs",
+      "video_id": "sL3Trlv2dNs",
+      "url": "https://www.youtube.com/watch?v=sL3Trlv2dNs",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:0RAvd-ng8Ew",
+      "video_id": "0RAvd-ng8Ew",
+      "url": "https://www.youtube.com/watch?v=0RAvd-ng8Ew",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:fBWQTb5WLg4",
+      "video_id": "fBWQTb5WLg4",
+      "url": "https://www.youtube.com/watch?v=fBWQTb5WLg4",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:9FVejXaV4Ys",
+      "video_id": "9FVejXaV4Ys",
+      "url": "https://www.youtube.com/watch?v=9FVejXaV4Ys",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:QW3pvfOdaoI",
+      "video_id": "QW3pvfOdaoI",
+      "url": "https://www.youtube.com/watch?v=QW3pvfOdaoI",
+      "source": "YouTube"
+    }
+  ]
+}

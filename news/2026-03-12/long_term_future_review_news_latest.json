@@ -1,0 +1,140 @@
+{
+  "axis": "LONG_TERM_FUTURE_REVIEW",
+  "fetched_at": "2026-03-12T18:25:16.884184+00:00",
+  "smart_query": "Assessing long term investment strategy metrics",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "analysis": {
+    "summary": "Целта е да се постигне устойчива цивилизация и достойнство за всички. Текущите разработки в сферата на изкуствения интелект и финансите показват потенциал за постигане на тази цел. Но съществуват и предизвикателства, свързани с поверителността и сигурността на данните.",
+    "key_developments": [
+      "Grammarly pulls AI author-impersonation tool after backlash",
+      "Lloyds, Bank of Scotland and Halifax apps showed customers other users' transactions"
+    ],
+    "sentiment": "NEUTRAL",
+    "urgency": "MEDIUM",
+    "open_source_momentum": "The conversational control layer for customer-facing AI agents - Parlant is gaining traction with 17822 stars on GitHub.",
+    "scientific_frontier": "A Semi-Structural Model with Household Debt for Israel and Task-Aware Delegation Cues for LLM Agents are pushing the boundaries of research on arXiv.",
+    "relevance_to_goal": "The developments in AI, finance, and data security are relevant to the goal of achieving a sustainable civilization and dignity for all, as they can impact the way we interact with technology and manage our personal data."
+  },
+  "sentiment": "NEUTRAL",
+  "urgency": "MEDIUM",
+  "summary": "Целта е да се постигне устойчива цивилизация и достойнство за всички. Текущите разработки в сферата на изкуствения интелект и финансите показват потенциал за постигане на тази цел. Но съществуват и предизвикателства, свързани с поверителността и сигурността на данните.",
+  "key_developments": [
+    "Grammarly pulls AI author-impersonation tool after backlash",
+    "Lloyds, Bank of Scotland and Halifax apps showed customers other users' transactions"
+  ],
+  "open_source_momentum": "The conversational control layer for customer-facing AI agents - Parlant is gaining traction with 17822 stars on GitHub.",
+  "scientific_frontier": "A Semi-Structural Model with Household Debt for Israel and Task-Aware Delegation Cues for LLM Agents are pushing the boundaries of research on arXiv.",
+  "github_repos": [
+    {
+      "title": "emcie-co/parlant",
+      "snippet": "The conversational control layer for customer-facing AI agents - Parlant is a context-engineering framework optimized for controlling customer interactions.",
+      "stars": 17822,
+      "url": "https://github.com/emcie-co/parlant",
+      "updated": "2026-03-12",
+      "source": "GitHub"
+    },
+    {
+      "title": "agencyenterprise/PromptInject",
+      "snippet": "PromptInject is a framework that assembles prompts in a modular fashion to provide a quantitative analysis of the robustness of LLMs to adversarial prompt attacks. 🏆 Best Paper Awards @ NeurIPS ML Saf",
+      "stars": 463,
+      "url": "https://github.com/agencyenterprise/PromptInject",
+      "updated": "2026-03-12",
+      "source": "GitHub"
+    },
+    {
+      "title": "MinghuiChen43/awesome-trustworthy-deep-learning",
+      "snippet": "A curated list of trustworthy deep learning papers. Daily updating...",
+      "stars": 382,
+      "url": "https://github.com/MinghuiChen43/awesome-trustworthy-deep-learning",
+      "updated": "2026-02-21",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "A Semi-Structural Model with Household Debt for Israel",
+      "snippet": "We propose a semi-structural DSGE model for the Israeli economy, as a small open economy, which contains a financial friction in the household sector credit market. Such a friction is reflected in a positive relationship between households' leverage ratio and their interest rate (credit spread) on d",
+      "url": "https://arxiv.org/abs/2603.11013v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Task-Aware Delegation Cues for LLM Agents",
+      "snippet": "LLM agents increasingly present as conversational collaborators, yet human--agent teamwork remains brittle due to information asymmetry: users lack task-specific reliability cues, and agents rarely surface calibrated uncertainty or rationale. We propose a task-aware collaboration signaling layer tha",
+      "url": "https://arxiv.org/abs/2603.11011v1",
+      "source": "arXiv"
+    }
+  ],
+  "youtube_transcripts": [],
+  "podcast": "The collaboration will produce a Crisis Counselor Training Curriculum and a statewide AI Harms Reporting Form targeting dangerous AI companion applications | \"Our safety and basic rights must not be at the mercy of a company's internal policy; lawmakers must work to codify these overwhelmingly popular red lines into law.\"",
+  "youtube_videos": [
+    {
+      "title": "YouTube:5woO0OmKaJ8",
+      "video_id": "5woO0OmKaJ8",
+      "url": "https://www.youtube.com/watch?v=5woO0OmKaJ8",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:dod3FUCf6Ec",
+      "video_id": "dod3FUCf6Ec",
+      "url": "https://www.youtube.com/watch?v=dod3FUCf6Ec",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:S16CebqMqJs",
+      "video_id": "S16CebqMqJs",
+      "url": "https://www.youtube.com/watch?v=S16CebqMqJs",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:QISI9aTvp38",
+      "video_id": "QISI9aTvp38",
+      "url": "https://www.youtube.com/watch?v=QISI9aTvp38",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:4jBF932gMMs",
+      "video_id": "4jBF932gMMs",
+      "url": "https://www.youtube.com/watch?v=4jBF932gMMs",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:FViHDKb8TrM",
+      "video_id": "FViHDKb8TrM",
+      "url": "https://www.youtube.com/watch?v=FViHDKb8TrM",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:kXYvRR7gV2E",
+      "video_id": "kXYvRR7gV2E",
+      "url": "https://www.youtube.com/watch?v=kXYvRR7gV2E",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:HKB2H7IM6NY",
+      "video_id": "HKB2H7IM6NY",
+      "url": "https://www.youtube.com/watch?v=HKB2H7IM6NY",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:37HErhv0PDw",
+      "video_id": "37HErhv0PDw",
+      "url": "https://www.youtube.com/watch?v=37HErhv0PDw",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:tmryHfunyQ4",
+      "video_id": "tmryHfunyQ4",
+      "url": "https://www.youtube.com/watch?v=tmryHfunyQ4",
+      "source": "YouTube"
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "axis": "TECHNOLOGY_AI_REVIEW",
+  "fetched_at": "2026-04-30T08:26:17.375934+00:00",
+  "smart_query": "artificial intelligence AI regulation",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "Musk accuses OpenAI lawyer of trying to 'trick' him in combative testimony",
+      "snippet": "Elon Musk was cross-examined on the third day of the trial over his lawsuit against Sam Altman and OpenAI.",
+      "url": "https://www.bbc.com/news/articles/czj29yygyzgo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Why friendly AI chatbots might be less trustworthy",
+      "snippet": "Researchers found adjusting AI systems to be more warm and friendly to users would result in an \"accuracy trade-off\".",
+      "url": "https://www.bbc.com/news/articles/cd9pdjgvxj8o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Musk accuses Altman of stealing a charity as courtroom battle begins",
+      "snippet": "The case over OpenAI's history and public commitments could have major implications for the future of AI.",
+      "url": "https://www.bbc.com/news/articles/cz027nyz529o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [],
+  "arxiv_papers": [
+    {
+      "title": "Interoceptive machine framework: Toward interoception-inspired regulatory architectures in artificial intelligence",
+      "snippet": "This review proposes an integrative framework grounded on interoception and embodied AI-termed the interoceptive machine framework-that translates biologically inspired principles of internal-state regulation into computational architectures for adaptive autonomy. Interoception, conceived as the mon",
+      "url": "https://arxiv.org/abs/2604.24527v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Align Generative Artificial Intelligence with Human Preferences: A Novel Large Language Model Fine-Tuning Method for Online Review Management",
+      "snippet": "Online reviews have played a pivotal role in consumers' decision-making processes. Existing research has highlighted the significant impact of managerial review responses on customer relationship management and firm performance. However, a large portion of online reviews remains unaddressed due to t",
+      "url": "https://arxiv.org/abs/2604.21209v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[#486 – Michael Levin: Hidden Reality of Alien Intelligence & Biological Life] Michael Levin is a biologist at Tufts University working on novel ways to understand and control complex pattern formation in biological systems.\nThank you for listening ❤ Check out our sponsors: https://lexfridman.com/sponsors/ep486-sc\nSee below for timestamps, transcript, and to give feedback, submit questions, contact Lex, etc.\nTranscript:\nhttps://lexfridman.com/michael-levin-2-transcript\nCONTA",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

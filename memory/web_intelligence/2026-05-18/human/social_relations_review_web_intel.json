@@ -1,0 +1,96 @@
+{
+  "axis": "SOCIAL_RELATIONS_REVIEW",
+  "domain": "human",
+  "timestamp": "2026-05-18T08:29:14.747555+00:00",
+  "sources_count": 8,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 0,
+  "youtube_items": [],
+  "analysis": {
+    "problem": "Erosion of trust in political leadership and institutions among key demographic groups",
+    "root_cause": "Polarization, misinformation, and declining public confidence in the ability of leaders to address critical issues like climate change, public health, and social equity",
+    "severity": "HIGH",
+    "leverage_points": [
+      "Media and information ecosystems that amplify polarization and misinformation",
+      "Political leaders and their ability to communicate transparently and act on public concerns"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Implement media literacy programs in schools and public institutions",
+        "measurable_goal": "Increase public understanding of misinformation and critical thinking skills by 30% within 5 years",
+        "timeframe": "long-term"
+      },
+      {
+        "action": "Create independent oversight bodies to monitor political communication and transparency",
+        "measurable_goal": "Reduce instances of misleading public statements by political leaders by 40% within 3 years",
+        "timeframe": "medium-term"
+      }
+    ],
+    "evidence": [
+      "Two-thirds of Latino Trump voters (66%) approve of his job performance, down 27 percentage points since the start of his second term",
+      "A majority of Americans (44%) say the country’s best years are behind us, and are more pessimistic about the future than optimistic"
+    ],
+    "generalization": "This issue connects to the broader domain of social cohesion and trust in institutions, which are foundational for sustainable civilization and peace",
+    "summary": "Public trust in political leadership is eroding, driven by polarization and misinformation, threatening social cohesion and long-term stability.",
+    "risk_level": "HIGH"
+  },
+  "raw_items": [
+    {
+      "title": "Trump’s approval rating hits second-term low among his Latino voters, though many still approve",
+      "summary": "About two-thirds of Latino Trump voters (66%) approve of his job performance. That’s down 27 percentage points since the start of his second term.",
+      "link": "https://www.pewresearch.org/short-reads/2026/05/15/trumps-approval-rating-hits-second-term-low-among-his-latino-voters-though-many-still-approve/",
+      "published": "Fri, 15 May 2026 14:53:24 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "A majority of Americans say the country’s best years are behind us",
+      "summary": "Americans are also much more pessimistic (44%) than optimistic (28%) when asked to think about what things will be like in the U.S. 50 years from now.",
+      "link": "https://www.pewresearch.org/short-reads/2026/05/15/a-majority-of-americans-say-the-countrys-best-years-are-behind-us/",
+      "published": "Fri, 15 May 2026 13:55:16 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "What Americans think it takes to be a good news consumer",
+      "summary": "One of the most common things Americans associate with being a good news consumer is a sense of skepticism or discernment.",
+      "link": "https://www.pewresearch.org/short-reads/2026/05/14/what-americans-think-it-takes-to-be-a-good-news-consumer/",
+      "published": "Thu, 14 May 2026 13:57:51 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "How Americans Feel About Religion’s Influence in Government and Public Life",
+      "summary": "A growing share of U.S. adults say religion is gaining influence, but most still want churches to stay out of politics, a 2026 survey finds.",
+      "link": "https://www.pewresearch.org/religion/2026/05/14/how-americans-feel-about-religions-influence-in-government-and-public-life/",
+      "published": "Thu, 14 May 2026 13:51:51 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Trump warns 'clock is ticking' for Iran as peace progress stalls",
+      "summary": "Iranian media reports the US has not made concrete concessions in response to Tehran's latest proposals.",
+      "link": "https://www.bbc.com/news/articles/cd0p4y9y48xo?at_medium=RSS&at_campaign=rss",
+      "published": "Mon, 18 May 2026 03:53:36 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Driver of crashed train tested positive for drugs, Thai police say",
+      "summary": "The freight train collided with a bus in Bangkok, killing eight people and injuring dozens of others.",
+      "link": "https://www.bbc.com/news/articles/c3v2ngnpgl9o?at_medium=RSS&at_campaign=rss",
+      "published": "Mon, 18 May 2026 07:03:56 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "WHO declares Ebola outbreak in DR Congo an international emergency",
+      "summary": "The agency added that the outbreak, with around 246 cases and 80 deaths, does not meet the criteria of pandemic emergency.",
+      "link": "https://www.bbc.com/news/articles/c2l2p0wwzzdo?at_medium=RSS&at_campaign=rss",
+      "published": "Mon, 18 May 2026 06:15:40 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "How worrying is the Ebola outbreak in DR Congo?",
+      "summary": "An outbreak in DR Congo has been declared a health emergency, with almost 250 suspected cases reported.",
+      "link": "https://www.bbc.com/news/articles/c9q311nj5r3o?at_medium=RSS&at_campaign=rss",
+      "published": "Sun, 17 May 2026 18:06:31 GMT",
+      "source_type": "rss"
+    }
+  ]
+}

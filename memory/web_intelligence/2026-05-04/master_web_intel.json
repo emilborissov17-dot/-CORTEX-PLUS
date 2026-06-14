@@ -1,0 +1,705 @@
+{
+  "timestamp": "2026-05-04T08:29:53.712571+00:00",
+  "date": "2026-05-04",
+  "axes_covered": 25,
+  "total_sources": 260,
+  "youtube_videos_total": 47,
+  "critical_axes": [],
+  "deteriorating_axes": [],
+  "problems_found": [
+    {
+      "axis": "SOCIAL_RELATIONS_REVIEW",
+      "problem": "Анализ на SOCIAL_RELATIONS_REVIEW — данни получени но LLM грешка",
+      "severity": "UNKNOWN",
+      "actions": []
+    },
+    {
+      "axis": "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL",
+      "problem": "Недостатък в правителствената гъвкавост и устойчивост на държавата във възстановяването на демократията и правителствената гъвкавост",
+      "severity": "MEDIUM",
+      "actions": [
+        {
+          "action": "Публични дискусии и възстановяване на демократия",
+          "measurable_goal": "Повишаване на възможността за възстановяване на демократия чрез публични дискусии и прозрачни политически процеси",
+          "timeframe": "средносрочно"
+        },
+        {
+          "action": "Възстановяване на правителствената гъвкавост",
+          "measurable_goal": "Повишаване на възможността за възстановяване на правителствената гъвкавост чрез прозрачни политически процеси и възстановяване на демократия",
+          "timeframe": "дългосрочно"
+        }
+      ]
+    },
+    {
+      "axis": "ECONOMY_WORK_REVIEW",
+      "problem": "Анализ на ECONOMY_WORK_REVIEW — данни получени но LLM грешка",
+      "severity": "UNKNOWN",
+      "actions": []
+    },
+    {
+      "axis": "INEQUALITY_POVERTY_REVIEW",
+      "problem": "Анализ на INEQUALITY_POVERTY_REVIEW — данни получени но LLM грешка",
+      "severity": "UNKNOWN",
+      "actions": []
+    },
+    {
+      "axis": "INFRASTRUCTURE_CITIES_REVIEW",
+      "problem": "Повишено ниво на непрекъснато движение и неразрешен проблем със стари пътища, които не са поддържани и не са интегрирани в новите технологии в градовете.",
+      "severity": "MEDIUM",
+      "actions": [
+        {
+          "action": "Интегриране на старите пътища в новите маршрути и поддръжка на тези пътища",
+          "measurable_goal": "Измерението на поддръжката на старите пътища и нивото на непрекъснато движение",
+          "timeframe": "дългосрочно"
+        }
+      ]
+    },
+    {
+      "axis": "GOVERNANCE_INSTITUTIONS_REVIEW",
+      "problem": "Анализ на GOVERNANCE_INSTITUTIONS_REVIEW — данни получени но LLM грешка",
+      "severity": "UNKNOWN",
+      "actions": []
+    },
+    {
+      "axis": "EDUCATION_CULTURE_REVIEW",
+      "problem": "Global math gender gap is shrinking, but quality of programs remains a concern.",
+      "severity": "MEDIUM",
+      "actions": [
+        {
+          "action": "Implement quality-assessment frameworks for preschool programs.",
+          "measurable_goal": "Increase program quality assessment scores by 20% within the next 12 months.",
+          "timeframe": "short-term"
+        },
+        {
+          "action": "Integrate gender-sensitive data analysis into gifted education programs.",
+          "measurable_goal": "Increase the percentage of girls identified as gifted by 15% within the next 12 months.",
+          "timeframe": "short-term"
+        }
+      ]
+    },
+    {
+      "axis": "TECHNOLOGY_INFRA_REVIEW",
+      "problem": "Анализ на TECHNOLOGY_INFRA_REVIEW — данни получени но LLM грешка",
+      "severity": "UNKNOWN",
+      "actions": []
+    },
+    {
+      "axis": "TECHNOLOGY_AI_REVIEW",
+      "problem": "Анализ на TECHNOLOGY_AI_REVIEW — данни получени но LLM грешка",
+      "severity": "UNKNOWN",
+      "actions": []
+    },
+    {
+      "axis": "SPACE_INFRASTRUCTURE_REVIEW",
+      "problem": "Анализ на SPACE_INFRASTRUCTURE_REVIEW — данни получени но LLM грешка",
+      "severity": "UNKNOWN",
+      "actions": []
+    },
+    {
+      "axis": "COSMIC_RESOURCES_REVIEW",
+      "problem": "Asteroid mining is moving from fiction to fact, but the regulatory framework is still incomplete and lacks clear guidelines for resource extraction and utilization.",
+      "severity": "MEDIUM",
+      "actions": [
+        {
+          "action": "Establish a regulatory body for asteroid mining and resource utilization",
+          "measurable_goal": "Create a legally binding framework for asteroid mining and resource extraction",
+          "timeframe": "Dългосрочно"
+        },
+        {
+          "action": "Promote international collaboration on space resource laws and regulations",
+          "measurable_goal": "Achieve agreement on shared space resource governance and legal frameworks",
+          "timeframe": "Средносрочно"
+        }
+      ]
+    },
+    {
+      "axis": "LONG_TERM_FUTURE_REVIEW",
+      "problem": "Анализ на LONG_TERM_FUTURE_REVIEW — данни получени но LLM грешка",
+      "severity": "UNKNOWN",
+      "actions": []
+    },
+    {
+      "axis": "DEEP_TIME_RISKS_REVIEW",
+      "problem": "Астероидната катастрофа: рисковете от астероидни катастрофи във всички планетарни системи",
+      "severity": "MEDIUM",
+      "actions": [
+        {
+          "action": "Предсказване на астероидни катастрофи с помощта на астрономически инструменти",
+          "measurable_goal": "Измеряване на точността на предсказването на астероидните катастрофи",
+          "timeframe": "дългосрочно"
+        },
+        {
+          "action": "Провеждане на предпазване и обучение на населението за астероидни катастрофи",
+          "measurable_goal": "Измеряване на нивото на обучението и предпазването на населението",
+          "timeframe": "краткосрочно"
+        }
+      ]
+    },
+    {
+      "axis": "GENERAL_SELF_REVIEW",
+      "problem": "Анализ на GENERAL_SELF_REVIEW — данни получени но LLM грешка",
+      "severity": "UNKNOWN",
+      "actions": []
+    },
+    {
+      "axis": "GOAL_PROGRESS_REVIEW",
+      "problem": "Анализ на GOAL_PROGRESS_REVIEW — данни получени но LLM грешка",
+      "severity": "UNKNOWN",
+      "actions": []
+    },
+    {
+      "axis": "PLANETARY_POTENTIAL_REVIEW",
+      "problem": "Planetary boundaries are being exceeded due to human activities, particularly in the context of climate change and biodiversity loss, as evidenced by the emergence of tipping points and the increasing risks highlighted by the Stockholm Resilience Centre.",
+      "severity": "MEDIUM",
+      "actions": [
+        {
+          "action": "Implement a coordinated planetary boundary monitoring system",
+          "measurable_goal": "Establish a real-time monitoring framework for key planetary boundaries, including climate change, biodiversity loss, and human health risks.",
+          "timeframe": "Short-term"
+        },
+        {
+          "action": "Promote interdisciplinary research and collaboration",
+          "measurable_goal": "Encourage collaboration between climate scientists, geologists, and policymakers to develop integrated strategies for mitigating tipping points.",
+          "timeframe": "Medium-term"
+        }
+      ]
+    }
+  ],
+  "cross_domain_insights": [
+    {
+      "from_axis": "CLIMATE_GLOBAL_RISK_REVIEW",
+      "insight": "The world is moving toward a more sustainable future, but climate models still have limitations, and there is a global consensus on transitioning away from fossil fuels."
+    },
+    {
+      "from_axis": "FOOD_REVIEW",
+      "insight": "Пълното събитие на 8.2% глад е по-добро, но няма значително улучшение. Регионалното събитие остава неравно. Следователно, събитието на 8.2% глад е по-добро, но няма значително улучшение."
+    },
+    {
+      "from_axis": "MATERIALS_WASTE_REVIEW",
+      "insight": "The data supports the idea that a circular economy is a viable solution to plastic pollution, but systemic and collaborative efforts are needed to achieve meaningful change."
+    },
+    {
+      "from_axis": "HUMAN_WELL_BEING_REVIEW",
+      "insight": "The WHO's efforts demonstrate the importance of addressing social determinants of health and the need for continued global cooperation to achieve equitable health outcomes and pandemic preparedness."
+    },
+    {
+      "from_axis": "COGNITION_LEARNING_REVIEW",
+      "insight": "Развитие на интегрирани системи за обучение, които съдържат динамични и съветни методи за устойчиво развитие."
+    },
+    {
+      "from_axis": "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL",
+      "insight": "Този проблем е свързан с домейна 'human' чрез низката възможност за възстановяване на демократия и устойчиво правителство, което влияе на възстановяването на демократия във Вселената."
+    },
+    {
+      "from_axis": "INFRASTRUCTURE_CITIES_REVIEW",
+      "insight": "Този проблем е свързан с домейните 'YOUTUBE' и 'SMART CITIES', където старите пътища са важни за поддръжката и интегрирането в нови технологии."
+    },
+    {
+      "from_axis": "EDUCATION_CULTURE_REVIEW",
+      "insight": "This issue is interconnected with education and civilization domains, as quality of programs directly impacts learning outcomes and gender equity in education."
+    },
+    {
+      "from_axis": "COSMIC_RESOURCES_REVIEW",
+      "insight": "This issue is closely tied to the development of space resource laws and the integration of AI and automation in space resource management, which are critical for the sustainability and governance of space activities."
+    },
+    {
+      "from_axis": "DEEP_TIME_RISKS_REVIEW",
+      "insight": "Астероидните катастрофи са важни рискове за планетарни системи, включително Земята, и изискват предсказване и предпазване."
+    },
+    {
+      "from_axis": "PLANETARY_POTENTIAL_REVIEW",
+      "insight": "The problem of exceeding planetary boundaries is closely linked to the emergence of tipping points and the interconnectedness of natural systems. It requires coordinated efforts across scientific, policy, and technological domains."
+    }
+  ],
+  "civilization_goal_alignment": {
+    "critical_count": 0,
+    "problems_with_actions": 6,
+    "status": "MONITORING"
+  },
+  "axes": {
+    "CLIMATE_GLOBAL_RISK_REVIEW": {
+      "summary": "2-3 ключови събития, които подчертават тенденцията към устойчиво развитие и умерено рисковане на планетата.",
+      "risk_level": "MEDIUM",
+      "trend": "IMPROVING",
+      "key_events": [
+        "NASA announces retirement of Janet Petro",
+        "Artemis II crew and NASDAQ",
+        "HEPA modules arrive at Kennedy Space Center",
+        "STORIE mission on Earth's ring current",
+        "Debriefed 1 May 2026"
+      ],
+      "insights": [
+        "NASA is moving toward a more sustainable future",
+        "Climate models are improving but still have limitations",
+        "There is a global consensus on transitioning away from fossil fuels"
+      ],
+      "youtube_insights": [
+        "YouTube video on NASA retirement",
+        "RSS feed on climate trends"
+      ],
+      "relevance_to_goal": "Moderate relevance. The global effort to reduce fossil fuels and improve climate models is aligned with the goal of a sustainable planet, but there is still significant risk.",
+      "generalization": "The world is moving toward a more sustainable future, but climate models still have limitations, and there is a global consensus on transitioning away from fossil fuels."
+    },
+    "ENERGY_REVIEW": {
+      "summary": "- BYD Has Another Tough Month of Sales Decline: <p>The numbers for the 4th month of the year have come in, and BYD keeps getting into a deeper hole. Its passenger vehicle sales were down significantly year over year — its plugin hybrid sales were d\n- Solid-State EV Batteries Will Crush The Fossil Fu",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN",
+      "key_events": [
+        "BYD Has Another Tough Month of Sales Decline",
+        "Solid-State EV Batteries Will Crush The Fossil Fuel Fantasy",
+        "The New England Fishing Industry Is Helping Scientists To Understand Ocean Changes"
+      ],
+      "insights": [],
+      "youtube_insights": [],
+      "relevance_to_goal": "",
+      "generalization": ""
+    },
+    "WATER_REVIEW": {
+      "summary": "- Supreme Court Rules For Public Interest in Line 5 Case: <figure><img alt=\"\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"584\" src=\"https://i0.wp.com/www.circleofblue.org/wp-content/uploads/2019/01/2013-07-Mackinac-Bridge-Mich\n- Northern Michigan’s Extreme Climate Dis",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN",
+      "key_events": [
+        "Supreme Court Rules For Public Interest in Line 5 Case",
+        "Northern Michigan’s Extreme Climate Disaster",
+        "Corpus Christi Plans to Declare a ‘Water Emergency.’ What Does That Mean?"
+      ],
+      "insights": [],
+      "youtube_insights": [],
+      "relevance_to_goal": "",
+      "generalization": ""
+    },
+    "FOOD_REVIEW": {
+      "summary": "Всеки година, се наблюдава по-малко глад в световното население, но неравенство и пропорционално събитие остават. Първо, събитието на 8.2% глад в 2024 г. е по-добро от 8.5% в 2023 г., но няма значително улучшение. Второ, пълното събитие на 638–720 млн. гладни хора е по-добро, но няма значително улучшение в регионалното събитие. Трето, събитието на 80-годишната история на Всемирната организация по селскотводство е по-добро, но също няма значително улучшение.",
+      "risk_level": "MEDIUM",
+      "trend": "IMPROVING",
+      "key_events": [
+        "2024 г. – 8.2% глад",
+        "638–720 млн. гладни хора",
+        "80-годишна история на Всемирната организация по селскотводство"
+      ],
+      "insights": [
+        "Пълното събитие на 8.2% глад е по-добро, но няма значително улучшение",
+        "Регионалното събитие остава неравно"
+      ],
+      "youtube_insights": [
+        "State of Food Security and Nutrition in The World 2025",
+        "The State of Food and Agriculture 2025",
+        "SDG 2 | Zero Hunger 2025"
+      ],
+      "relevance_to_goal": "Пълното събитие на 8.2% глад е по-добро, но няма значително улучшение. Регионалното събитие остава неравно. Това означава, че събитието на 8.2% глад е по-добро, но няма значително улучшение. Следователно, събитието на 8.2% глад е по-добро, но няма значително улучшение.",
+      "generalization": "Пълното събитие на 8.2% глад е по-добро, но няма значително улучшение. Регионалното събитие остава неравно. Следователно, събитието на 8.2% глад е по-добро, но няма значително улучшение."
+    },
+    "MATERIALS_WASTE_REVIEW": {
+      "summary": "The data highlights a growing awareness of plastic pollution and the potential for a circular economy to address it. Key trends indicate a shift toward more sustainable practices, though challenges remain in implementation and systemic change.",
+      "risk_level": "MEDIUM",
+      "trend": "IMPROVING",
+      "key_events": [
+        "Lytx’s 2026 Road Safety Report highlights declining severe collisions but rising crash rates due to inattentive driving and handheld device use.",
+        "GFL Environmental reports strong Q1 results, signaling potential for full-year growth.",
+        "Jerseyville, IL and Jersey County, IL approve new recycling partnerships for a regional program."
+      ],
+      "insights": [
+        "The circular economy offers a pathway to sustainable growth by reducing plastic waste and promoting material reuse.",
+        "There is a clear need for systemic change, including policy support, industry collaboration, and consumer behavior shifts."
+      ],
+      "youtube_insights": [
+        "Video on tackling plastic pollution through the circular economy highlights the potential for systemic change.",
+        "Video on ending trash pollution emphasizes the need to treat waste differently and adopt a circular approach."
+      ],
+      "relevance_to_goal": "The goal of reducing plastic waste and promoting sustainable practices is aligned with the insights and trends presented.",
+      "generalization": "The data supports the idea that a circular economy is a viable solution to plastic pollution, but systemic and collaborative efforts are needed to achieve meaningful change."
+    },
+    "ECOSYSTEMS_BIODIVERSITY_REVIEW": {
+      "summary": "- Global: <span class=\"field field--name-title field--type-string field--label-hidden\">Global</span>\n<span class=\"field field--name-uid field--type-entity-reference field--label-hidden\"><span>integrations</span\n- Inside IUCN: <span class=\"field field--name-title field--type-string field--label-hidde",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN",
+      "key_events": [
+        "Global",
+        "Inside IUCN",
+        "DG Speech Node"
+      ],
+      "insights": [],
+      "youtube_insights": [],
+      "relevance_to_goal": "",
+      "generalization": ""
+    },
+    "HUMAN_WELL_BEING_REVIEW": {
+      "summary": "The WHO has made significant progress in addressing global health challenges, including the elimination of trachoma in Australia, the reduction of hepatitis infections, and the simulation of disease outbreaks. These efforts highlight both the progress and the ongoing challenges in achieving health equity and public health resilience.",
+      "risk_level": "MEDIUM",
+      "trend": "IMPROVING",
+      "key_events": [
+        "Australia becomes the 30th country to eliminate trachoma as a public health problem",
+        "Global efforts to combat viral hepatitis deliver measurable progress",
+        "WHO simulates a fictional disease outbreak to test global preparedness"
+      ],
+      "insights": [
+        "Social determinants of health, such as education and housing, significantly impact life expectancy and health outcomes.",
+        "Global health initiatives are making strides in disease prevention and elimination, but challenges remain in achieving equitable access and preparedness."
+      ],
+      "youtube_insights": [
+        "Video on WHO report highlighting health inequities and the impact of social determinants",
+        "Video on WHO's 2025 global health achievements and the role of multilateralism"
+      ],
+      "relevance_to_goal": "High",
+      "generalization": "The WHO's efforts demonstrate the importance of addressing social determinants of health and the need for continued global cooperation to achieve equitable health outcomes and pandemic preparedness."
+    },
+    "CULTURE_MEDIA_REVIEW": {
+      "summary": "- Actors From ‘The Pitt,’ ‘The Bear’ and More Take Over Broadway: Audiences are flocking to shows starring Patrick Ball of “The Pitt,” Jon Bernthal and Ayo Edebiri of “The Bear,” Ben Ahlers of “The Gilded Age” and more.\n- How 7 Looks for ‘The Devil Wears Prada 2’ Came Together: The film’s costume de",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN",
+      "key_events": [
+        "Actors From ‘The Pitt,’ ‘The Bear’ and More Take Over Broadway",
+        "How 7 Looks for ‘The Devil Wears Prada 2’ Came Together",
+        "Francisco de Zurbarán: Paintings So Real, You Can Hardly Resist Believing"
+      ],
+      "insights": [],
+      "youtube_insights": [],
+      "relevance_to_goal": "",
+      "generalization": ""
+    },
+    "COGNITION_LEARNING_REVIEW": {
+      "summary": "2-3 ключови събития, които показват трансформация в образованието и възможности за устойчиво развитие",
+      "risk_level": "MEDIUM",
+      "trend": "IMPROVING",
+      "key_events": [
+        "Повишено внимание към приспособяването на обучението към AI-та, с увеличение на динамичните методи и индивидуални подходи.",
+        "Повтарящо се събитие на възможности за инклюзивно обучение и използване на данни за определяне на кандидати за генични програми.",
+        "Развитие на интегрирани системи за обучение, които съдържат динамични и съветни методи за устойчиво развитие."
+      ],
+      "insights": [
+        "Значително повишено внимание към индивидуалното обучение и съветване, което е ключови за успешното развитие в AI-ориентирани училища.",
+        "Развитие на интегрирани системи, които съдържат динамични и съветни методи за устойчиво развитие."
+      ],
+      "youtube_insights": [
+        "Развитие на AI-ориентирани училища, които съдържат динамични и съветни методи за устойчиво развитие.",
+        "Повишено внимание към индивидуалното обучение и съветване, което е ключови за успешното развитие в AI-ориентирани училища."
+      ],
+      "relevance_to_goal": "Високо",
+      "generalization": "Развитие на интегрирани системи за обучение, които съдържат динамични и съветни методи за устойчиво развитие."
+    },
+    "SOCIAL_RELATIONS_REVIEW": {
+      "problem": "Анализ на SOCIAL_RELATIONS_REVIEW — данни получени но LLM грешка",
+      "root_cause": "LLM parsing грешка",
+      "severity": "UNKNOWN",
+      "leverage_points": [],
+      "proposed_actions": [],
+      "evidence": [
+        "Acknowledgments",
+        "Methodology",
+        "Appendix: Additional charts"
+      ],
+      "generalization": "",
+      "summary": "- Acknowledgments: This report is a collaborative effort based on the input and analysis of the following individuals: Research team Jocelyn Kiley, Director, Political ResearchSteven Shepard, Associat",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN"
+    },
+    "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL": {
+      "problem": "Недостатък в правителствената гъвкавост и устойчивост на държавата във възстановяването на демократията и правителствената гъвкавост",
+      "root_cause": "Публични изказвания и дискусии върху правителствената гъвкавост и устойчивост са изчезнали, което подчертава низка възможност за възстановяване на демократия и устойчиво правителство.",
+      "severity": "MEDIUM",
+      "leverage_points": [
+        "EU Parliament Confirms That 'Only Yes Means Yes' — показано, че възстановяването на демократия е независимо от политическите агресии",
+        "Political Prisoner Spotlight: The Struggle for Pastor Ezra Jin’s Freedom in China — показано, че свободата на хората е ключова за устойчивост на демократията"
+      ],
+      "proposed_actions": [
+        {
+          "action": "Публични дискусии и възстановяване на демократия",
+          "measurable_goal": "Повишаване на възможността за възстановяване на демократия чрез публични дискусии и прозрачни политически процеси",
+          "timeframe": "средносрочно"
+        },
+        {
+          "action": "Възстановяване на правителствената гъвкавост",
+          "measurable_goal": "Повишаване на възможността за възстановяване на правителствената гъвкавост чрез прозрачни политически процеси и възстановяване на демократия",
+          "timeframe": "дългосрочно"
+        }
+      ],
+      "evidence": [
+        "EU Parliament Confirms That 'Only Yes Means Yes' — показано, че възстановяването на демократия е независимо от политическите агресии",
+        "Political Prisoner Spotlight: The Struggle for Pastor Ezra Jin’s Freedom in China — показано, че свободата на хората е ключова за устойчивост на демократията"
+      ],
+      "generalization": "Този проблем е свързан с домейна 'human' чрез низката възможност за възстановяване на демократия и устойчиво правителство, което влияе на възстановяването на демократия във Вселената.",
+      "summary": "Недостатък в правителствената гъвкавост и устойчивост на държавата във възстановяването на демократията и правителствената гъвкавост е независимо от политическите агресии и възстановяване на демократия.",
+      "risk_level": "MEDIUM"
+    },
+    "ECONOMY_WORK_REVIEW": {
+      "problem": "Анализ на ECONOMY_WORK_REVIEW — данни получени но LLM грешка",
+      "root_cause": "LLM parsing грешка",
+      "severity": "UNKNOWN",
+      "leverage_points": [],
+      "proposed_actions": [],
+      "evidence": [
+        "Trump says US to 'guide' stranded ships through Strait of Hormuz",
+        "GameStop makes $55.5bn takeover offer for eBay",
+        "Samsung family pays off record $8bn inheritance tax bill"
+      ],
+      "generalization": "",
+      "summary": "- Trump says US to 'guide' stranded ships through Strait of Hormuz: More than 100 aircraft and 15,000 personnel will be part of the operation due to start on Monday, the US military says.\n- GameStop m",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN"
+    },
+    "INEQUALITY_POVERTY_REVIEW": {
+      "problem": "Анализ на INEQUALITY_POVERTY_REVIEW — данни получени но LLM грешка",
+      "root_cause": "LLM parsing грешка",
+      "severity": "UNKNOWN",
+      "leverage_points": [],
+      "proposed_actions": [],
+      "evidence": [
+        "Poverty",
+        "Poverty in the United States - Wikipedia",
+        "Income inequality"
+      ],
+      "generalization": "",
+      "summary": "- Poverty: Poverty is a state or condition in which an individual lacks the financial resources and essentials for a basic standard of living. Poverty can have diverse environmental, legal, social, ec",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN"
+    },
+    "INFRASTRUCTURE_CITIES_REVIEW": {
+      "problem": "Повишено ниво на непрекъснато движение и неразрешен проблем със стари пътища, които не са поддържани и не са интегрирани в новите технологии в градовете.",
+      "root_cause": "Повече от градовете използват стари пътища, които не са поддържани и не са интегрирани в новите технологии. Това довежда до непрекъснато движение, неразрешени проблеми и нисърни ресурси за поддръжка.",
+      "severity": "MEDIUM",
+      "leverage_points": [
+        "Градовете са най-големите инвеститори в старите пътища и неразрешени проблеми.",
+        "Някои градове вече вършат превод на старите пътища в нови, интегрирани маршрути."
+      ],
+      "proposed_actions": [
+        {
+          "action": "Интегриране на старите пътища в новите маршрути и поддръжка на тези пътища",
+          "measurable_goal": "Измерението на поддръжката на старите пътища и нивото на непрекъснато движение",
+          "timeframe": "дългосрочно"
+        }
+      ],
+      "evidence": [
+        "Данни от YouTube: '15-minute city' и 'Smart cities' показат, че старите пътища са важни за поддръжката на градовете.",
+        "Данни от Smart Cities Mission: Някои градове вече вършат превод на старите пътища в нови, интегрирани маршрути."
+      ],
+      "generalization": "Този проблем е свързан с домейните 'YOUTUBE' и 'SMART CITIES', където старите пътища са важни за поддръжката и интегрирането в нови технологии.",
+      "summary": "Повишено ниво на непрекъснато движение в старите пътища е проблем, който може да бъде решен чрез интегриране и поддръжка на тези пътища в нови маршрути.",
+      "risk_level": "MEDIUM"
+    },
+    "GOVERNANCE_INSTITUTIONS_REVIEW": {
+      "problem": "Анализ на GOVERNANCE_INSTITUTIONS_REVIEW — данни получени но LLM грешка",
+      "root_cause": "LLM parsing грешка",
+      "severity": "UNKNOWN",
+      "leverage_points": [],
+      "proposed_actions": [],
+      "evidence": [
+        "Daily Press Briefing by the Office of the Spokesperson for the Secretary-General",
+        "Fifth Committee, 28th Meeting (AM)",
+        "Press Conference by Security Council President on Work Programme for May"
+      ],
+      "generalization": "",
+      "summary": "- Daily Press Briefing by the Office of the Spokesperson for the Secretary-General: In Cuba, the humanitarian situation continues to worsen as the energy crisis deepens, the Office for the Coordinatio",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN"
+    },
+    "EDUCATION_CULTURE_REVIEW": {
+      "problem": "Global math gender gap is shrinking, but quality of programs remains a concern.",
+      "root_cause": "While there is increased investment in preschool programs, the quality of these programs is not being adequately addressed, leading to a decline in math gains for girls.",
+      "severity": "MEDIUM",
+      "leverage_points": [
+        "States are investing more in preschool programs, but the quality of these programs remains a concern.",
+        "Data-driven approaches are being used to identify gifted students, but these approaches are not being applied to address the gender gap in math education."
+      ],
+      "proposed_actions": [
+        {
+          "action": "Implement quality-assessment frameworks for preschool programs.",
+          "measurable_goal": "Increase program quality assessment scores by 20% within the next 12 months.",
+          "timeframe": "short-term"
+        },
+        {
+          "action": "Integrate gender-sensitive data analysis into gifted education programs.",
+          "measurable_goal": "Increase the percentage of girls identified as gifted by 15% within the next 12 months.",
+          "timeframe": "short-term"
+        }
+      ],
+      "evidence": [
+        "Global math gender gap report: 'Whatever we do, the action we take to address the issue must start quite early and must be very targeted.'",
+        "Report: 'Quality Concerns Remain as States Invest More Than Ever in Preschool Programs' "
+      ],
+      "generalization": "This issue is interconnected with education and civilization domains, as quality of programs directly impacts learning outcomes and gender equity in education.",
+      "summary": "While there is increased investment in preschool programs, the quality of these programs is not being adequately addressed, leading to a decline in math gains for girls. Implementing quality-assessment frameworks and integrating gender-sensitive data analysis into gifted education programs can help address this issue.",
+      "risk_level": "MEDIUM"
+    },
+    "TECHNOLOGY_INFRA_REVIEW": {
+      "problem": "Анализ на TECHNOLOGY_INFRA_REVIEW — данни получени но LLM грешка",
+      "root_cause": "LLM parsing грешка",
+      "severity": "UNKNOWN",
+      "leverage_points": [],
+      "proposed_actions": [],
+      "evidence": [
+        "How I Get Free Traffic from ChatGPT in 2025 (AIO vs SEO)",
+        "Top 10 AI Tools That Will Transform Your Content Creation in 2025",
+        "LimeWire AI Studio Review 2023: Details, Pricing & Features"
+      ],
+      "generalization": "",
+      "summary": "- How I Get Free Traffic from ChatGPT in 2025 (AIO vs SEO): <p style=\"text-align: left;\">Three weeks ago, I tested something that completely changed how I think about organic traffic. I opened ChatGPT",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN"
+    },
+    "TECHNOLOGY_AI_REVIEW": {
+      "problem": "Анализ на TECHNOLOGY_AI_REVIEW — данни получени но LLM грешка",
+      "root_cause": "LLM parsing грешка",
+      "severity": "UNKNOWN",
+      "leverage_points": [],
+      "proposed_actions": [],
+      "evidence": [
+        "Musk v. Altman week 1: Elon Musk says he was duped, warns AI could kill us all, and admits that xAI distills OpenAI’s models",
+        "Cyber-Insecurity in the AI Era",
+        "Operationalizing AI for Scale and Sovereignty"
+      ],
+      "generalization": "",
+      "summary": "- Musk v. Altman week 1: Elon Musk says he was duped, warns AI could kill us all, and admits that xAI distills OpenAI’s models: In the first week of the landmark trial between Elon Musk and OpenAI, Mu",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN"
+    },
+    "SPACE_INFRASTRUCTURE_REVIEW": {
+      "problem": "Анализ на SPACE_INFRASTRUCTURE_REVIEW — данни получени но LLM грешка",
+      "root_cause": "LLM parsing грешка",
+      "severity": "UNKNOWN",
+      "leverage_points": [],
+      "proposed_actions": [],
+      "evidence": [
+        "Falcon 9 launches South Korean satellite and 45 rideshare payloads",
+        "National Geospatial-Intelligence Agency to open programs to more vendors",
+        "NGA pushes AI adoption as demand grows for ‘always-on’ intelligence"
+      ],
+      "generalization": "",
+      "summary": "- Falcon 9 launches South Korean satellite and 45 rideshare payloads: <figure><img alt=\"F9 CAS500-2 launch\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"683\" src=\"https:",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN"
+    },
+    "COSMIC_RESOURCES_REVIEW": {
+      "problem": "Asteroid mining is moving from fiction to fact, but the regulatory framework is still incomplete and lacks clear guidelines for resource extraction and utilization.",
+      "root_cause": "The lack of comprehensive regulatory frameworks and legal frameworks for asteroid mining is preventing the full realization of its potential as a sustainable resource extraction method.",
+      "severity": "MEDIUM",
+      "leverage_points": [
+        "European Space Resources Innovation Centre (ESRIC) - responsible for research and innovation in space resource utilization",
+        "National Geospatial-Intelligence Agency (NGA) - pushing AI adoption for space intelligence and resource management"
+      ],
+      "proposed_actions": [
+        {
+          "action": "Establish a regulatory body for asteroid mining and resource utilization",
+          "measurable_goal": "Create a legally binding framework for asteroid mining and resource extraction",
+          "timeframe": "Dългосрочно"
+        },
+        {
+          "action": "Promote international collaboration on space resource laws and regulations",
+          "measurable_goal": "Achieve agreement on shared space resource governance and legal frameworks",
+          "timeframe": "Средносрочно"
+        }
+      ],
+      "evidence": [
+        "Asteroid mining is the hypothetical and technically possible extraction of materials from asteroids and other minor planets, including near-Earth objects.",
+        "The Space Resource Exploration and Utilization Act of 2015 (H.R. 1508) was a bill (which never became law) introduced in the 114th Congress of the U.S. on March 19, 2015, by Rep. Bill Posey, Republica"
+      ],
+      "generalization": "This issue is closely tied to the development of space resource laws and the integration of AI and automation in space resource management, which are critical for the sustainability and governance of space activities.",
+      "summary": "Asteroid mining is becoming a reality, but the lack of clear regulatory frameworks is a major obstacle. Establishing a regulatory body and promoting international collaboration is essential for the sustainable development of space resource utilization.",
+      "risk_level": "MEDIUM"
+    },
+    "LONG_TERM_FUTURE_REVIEW": {
+      "problem": "Анализ на LONG_TERM_FUTURE_REVIEW — данни получени но LLM грешка",
+      "root_cause": "LLM parsing грешка",
+      "severity": "UNKNOWN",
+      "leverage_points": [],
+      "proposed_actions": [],
+      "evidence": [
+        "Enneagram Epicycles",
+        "Auto-review of agent actions without synchronous human oversight",
+        "How did ‘large’ language models get that way? The role of Transformers and Pretraining in GPT"
+      ],
+      "generalization": "",
+      "summary": "- Enneagram Epicycles: <div><figure><a class=\"image-link image2\" href=\"https://substackcdn.com/image/fetch/$s_!2iLC!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazon",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN"
+    },
+    "DEEP_TIME_RISKS_REVIEW": {
+      "problem": "Астероидната катастрофа: рисковете от астероидни катастрофи във всички планетарни системи",
+      "root_cause": "Астероидните катастрофи се съдържат във всички планетарни системи, но са непрекъснато се случват, възможността за предсказане и предпазване е ниска.",
+      "severity": "MEDIUM",
+      "leverage_points": [
+        "Астероидните катастрофи са най-голям риск за планетарни системи, включително Земята",
+        "Предсказването и предпазването от астероидни катастрофи е непрекъснато изискване"
+      ],
+      "proposed_actions": [
+        {
+          "action": "Предсказване на астероидни катастрофи с помощта на астрономически инструменти",
+          "measurable_goal": "Измеряване на точността на предсказването на астероидните катастрофи",
+          "timeframe": "дългосрочно"
+        },
+        {
+          "action": "Провеждане на предпазване и обучение на населението за астероидни катастрофи",
+          "measurable_goal": "Измеряване на нивото на обучението и предпазването на населението",
+          "timeframe": "краткосрочно"
+        }
+      ],
+      "evidence": [
+        "Астероидни катастрофи са непрекъснато се случват в планетарни системи",
+        "Предсказването на астероидните катастрофи е непрекъснато изискване"
+      ],
+      "generalization": "Астероидните катастрофи са важни рискове за планетарни системи, включително Земята, и изискват предсказване и предпазване.",
+      "summary": "Астероидните катастрофи са важни рискове за планетарни системи, включително Земята, и изискват предсказване и предпазване. Пълно предпазване и обучение на населението е важен етап за минимизиране на риска.",
+      "risk_level": "MEDIUM"
+    },
+    "GENERAL_SELF_REVIEW": {
+      "problem": "Анализ на GENERAL_SELF_REVIEW — данни получени но LLM грешка",
+      "root_cause": "LLM parsing грешка",
+      "severity": "UNKNOWN",
+      "leverage_points": [],
+      "proposed_actions": [],
+      "evidence": [
+        "Musk v. Altman week 1: Elon Musk says he was duped, warns AI could kill us all, and admits that xAI distills OpenAI’s models",
+        "Cyber-Insecurity in the AI Era",
+        "Operationalizing AI for Scale and Sovereignty"
+      ],
+      "generalization": "",
+      "summary": "- Musk v. Altman week 1: Elon Musk says he was duped, warns AI could kill us all, and admits that xAI distills OpenAI’s models: In the first week of the landmark trial between Elon Musk and OpenAI, Mu",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN"
+    },
+    "GOAL_PROGRESS_REVIEW": {
+      "problem": "Анализ на GOAL_PROGRESS_REVIEW — данни получени но LLM грешка",
+      "root_cause": "LLM parsing грешка",
+      "severity": "UNKNOWN",
+      "leverage_points": [],
+      "proposed_actions": [],
+      "evidence": [
+        "Media Advisory | UN Forum to showcase practical, inclusive and scalable solutions to pressing global challenges",
+        "‘Real impact on the ground’ needed as Indonesia backs UN reform",
+        "Iran crisis shows fossil fuels-based energy system ‘is inherently volatile and unstable’"
+      ],
+      "generalization": "",
+      "summary": "- Media Advisory | UN Forum to showcase practical, inclusive and scalable solutions to pressing global challenges: <p>Media Advisory UN Forum to showcase practical, inclusive and scalable solutions to",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN"
+    },
+    "PLANETARY_POTENTIAL_REVIEW": {
+      "problem": "Planetary boundaries are being exceeded due to human activities, particularly in the context of climate change and biodiversity loss, as evidenced by the emergence of tipping points and the increasing risks highlighted by the Stockholm Resilience Centre.",
+      "root_cause": "Human activities are pushing the Earth's systems beyond the planetary boundaries, leading to the potential triggering of tipping points that could destabilize ecosystems and climate systems. This is exacerbated by the increasing interconnectedness of fault systems and the spread of climate-related threats.",
+      "severity": "MEDIUM",
+      "leverage_points": [
+        "The United States Environmental Protection Agency (EPA) and the Stockholm Resilience Centre are key actors in monitoring and reporting on planetary boundaries and tipping points.",
+        "The interconnectedness of fault systems (e.g., Cascadia and San Andreas) highlights the need for coordinated risk management and geoengineering interventions."
+      ],
+      "proposed_actions": [
+        {
+          "action": "Implement a coordinated planetary boundary monitoring system",
+          "measurable_goal": "Establish a real-time monitoring framework for key planetary boundaries, including climate change, biodiversity loss, and human health risks.",
+          "timeframe": "Short-term"
+        },
+        {
+          "action": "Promote interdisciplinary research and collaboration",
+          "measurable_goal": "Encourage collaboration between climate scientists, geologists, and policymakers to develop integrated strategies for mitigating tipping points.",
+          "timeframe": "Medium-term"
+        }
+      ],
+      "evidence": [
+        "The Planetary Boundaries framework highlights rising risks from human pressure on nine critical global processes.",
+        "New research suggests the Cascadia and San Andreas fault systems may be more interconnected than previously thought, increasing the risk of large-scale earthquakes."
+      ],
+      "generalization": "The problem of exceeding planetary boundaries is closely linked to the emergence of tipping points and the interconnectedness of natural systems. It requires coordinated efforts across scientific, policy, and technological domains.",
+      "summary": "The risk of exceeding planetary boundaries is significant, particularly in the context of climate change and biodiversity loss. A coordinated monitoring system and interdisciplinary collaboration are essential to mitigate this risk.",
+      "risk_level": "MEDIUM"
+    }
+  },
+  "ready_for_self_observer": true
+}

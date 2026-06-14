@@ -1,0 +1,138 @@
+{
+  "axis": "COGNITION_LEARNING_REVIEW",
+  "domain": "human",
+  "timestamp": "2026-05-04T15:07:54.545189+00:00",
+  "sources_count": 9,
+  "rss_count": 7,
+  "ddg_count": 0,
+  "youtube_count": 2,
+  "youtube_items": [
+    {
+      "title": "[YT] How I'd Learn AI (if I could start over) - YouTube",
+      "summary": "So you want to learn artificial intelligence, then this video is for you. I'm going to provide you with a complete roadmap that I would follow if I had to start over today on my artificial intelligence journey. And now for context, I started studying artificial intelligence back in 2013, 10 years ago, and over the past years I've been working as a freelance data scientist, helping my clients with various end-to-end data science and artificial intelligence solutions and applications. I also share all of this knowledge and my journey on this YouTube channel, which as of today has over 25,000 subscribers. At the end of this video, I will also provide you with a resource completely for free, where you can follow all of these steps to complete roadmap, even with training videos and instructions",
+      "link": "https://www.youtube.com/watch?v=h2FDq3agImI",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "h2FDq3agImI",
+      "transcript_method": "whisper",
+      "transcript_chars": 17730,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] You’re Not Behind (Yet): How to Learn AI in 29 Minutes - YouTube",
+      "summary": "AI is becoming more powerful and more deeply woven into everything we do. Some people try to ignore it, but it's not going away. If you're watching this, you already knew that. You're not asking if you should learn AI, you're asking how. Whether you want to work smarter, spark new ideas, automate parts of your business, or just buy back your time, this video will give you the full roadmap. You'll learn the key concepts, the right tools, and a clear step-by-step action plan. It's simpler than you think. And by the end, you'll be ahead of 99% of people trying to figure this out. But I also know the AI landscape can feel overwhelming. So before we dive in, let's break down the biggest barriers that keep most people stuck. I'm not technical. That's totally fine. Most modern AI tools are built ",
+      "link": "https://www.youtube.com/watch?v=9c7zh2MkslY",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "9c7zh2MkslY",
+      "transcript_method": "whisper",
+      "transcript_chars": 32068,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "Global math gender gap is widening, despite increased investment in preschool programs and data-driven approaches to identifying gifted students.",
+    "root_cause": "The widening math gender gap is linked to systemic educational inequities, lack of early intervention, and the persistent underrepresentation of girls in STEM fields. While states are investing more in preschool and using data to identify gifted students, these efforts are not addressing the root causes of gender disparities in math education.",
+    "severity": "MEDIUM",
+    "leverage_points": [
+      "Education systems and policymakers are the primary actors influencing the gender gap in math education.",
+      "Data-driven approaches alone are insufficient without systemic changes to support girls' learning and participation."
+    ],
+    "proposed_actions": [
+      {
+        "action": "Implement targeted early childhood education programs that focus on girls' engagement and development in math.",
+        "measurable_goal": "Increase girls' participation in math education by 20% within 3 years through inclusive, gender-sensitive curricula.",
+        "timeframe": "Sредносрочно"
+      },
+      {
+        "action": "Integrate gender-aware teaching strategies in gifted education programs.",
+        "measurable_goal": "Reduce gender disparities in math achievement by 15% in high-achieving schools within 5 years.",
+        "timeframe": "Дългосрочно"
+      }
+    ],
+    "evidence": [
+      "Global math gender gap report: 'Whatever we do, the action we take to address the issue must start quite early and must be very targeted.'",
+      "Report on preschool programs: 'Quality of programs remains a concern despite increased investment.'"
+    ],
+    "generalization": "This problem is connected to broader issues of educational equity, gender disparities, and the need for systemic reforms in education systems to support girls' learning and participation in STEM fields.",
+    "summary": "The widening math gender gap highlights the need for targeted early education programs and gender-aware teaching strategies to address systemic inequities in math education. Systemic changes are essential to reduce gender disparities and ensure equitable access to STEM education.",
+    "risk_level": "MEDIUM"
+  },
+  "raw_items": [
+    {
+      "title": "Global Math Gains for Girls Are Slipping, Report Finds",
+      "summary": "The global math gender gap: “Whatever we do, the action we take to address the issue must start quite early and must be very targeted.”",
+      "link": "https://www.edsurge.com/news/2026-05-01-girls-around-the-globe-are-losing-gains-in-math-data-shows",
+      "published": "Fri, 01 May 2026 04:00:00 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "Quality Concerns Remain as States Invest More Than Ever in Preschool Programs",
+      "summary": "A new report found states hit an all-time high for both spending and enrollment, but the quality of the programs remains a concern.",
+      "link": "https://www.edsurge.com/news/2026-04-30-quality-concerns-remain-as-states-invest-more-than-ever-in-preschool-programs",
+      "published": "Thu, 30 Apr 2026 12:21:04 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "I Built Radical Possibility in Schools — and It Nearly Broke Me",
+      "summary": "What does it mean to “save your own life” in education? Former Voices of Change fellow Dee Watson reflects on burnout, resistance and radical ...",
+      "link": "https://www.edsurge.com/news/2026-04-29-i-built-radical-possibility-in-schools-and-it-nearly-broke-me",
+      "published": "Wed, 29 Apr 2026 04:00:00 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "Districts Relying More on Data to Identify Gifted Students",
+      "summary": "Schools are finding new, data-driven ways to re-approach gifted and talented programs -- with a focus on inclusivity.",
+      "link": "https://www.edsurge.com/news/2026-04-23-districts-relying-more-on-data-to-identify-gifted-students",
+      "published": "Thu, 23 Apr 2026 04:02:00 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "The Taboo of…Money, Love and Power",
+      "summary": "DOCUMENTARY FILM In the documentary educational film &#8220;The Taboo of Sovereignty, Money, Love and Power,&#8221; Mr. Liberty explores the taboos seldom discussed in polite conversation. He reveals the nature of global power structures, money as a control system and the futility of elections. He is empowering people with popular sovereignty as a key to unlocking [&#8230;]",
+      "link": "https://mindshiftentertainment.wordpress.com/2005/04/01/hello-world/",
+      "published": "Fri, 01 Apr 2005 21:27:39 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Lotus: A Woman’s Journey of Empowerment",
+      "summary": "CLAIRE GAILLARD &#8211; DANCE IS LIFE! &#8220;From the revelation that disconnectedness between people and their passion, between individuals and their communities, reflect agonized personal wounds in each of us, her Empower Moves was birthed. It builds community and honors the People with Transcendance through story telling and interpretive forms of dance, allowing ecstatic communion, reconnection [&#8230;]",
+      "link": "https://mindshiftentertainment.wordpress.com/2003/03/23/lotus-a-womans-journey-of-empowerment/",
+      "published": "Sun, 23 Mar 2003 23:15:05 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Fresh Wave",
+      "summary": "JOHNNY LIGHT For over three decades, Johnny Light has been guided by a vision of a new world coming, the “fresh wave” is coming. These twelve songs are professionally produced and arranged, an album of his finest original compositions recorded with Michael Cooper at Rising Star Studios in Eugene, Oregon. Songs like Yes, Nobody’s Gonna [&#8230;]",
+      "link": "https://mindshiftentertainment.wordpress.com/1988/09/09/fresh-wave/",
+      "published": "Fri, 09 Sep 1988 23:17:22 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] How I'd Learn AI (if I could start over) - YouTube",
+      "summary": "So you want to learn artificial intelligence, then this video is for you. I'm going to provide you with a complete roadmap that I would follow if I had to start over today on my artificial intelligence journey. And now for context, I started studying artificial intelligence back in 2013, 10 years ago, and over the past years I've been working as a freelance data scientist, helping my clients with various end-to-end data science and artificial intelligence solutions and applications. I also share all of this knowledge and my journey on this YouTube channel, which as of today has over 25,000 subscribers. At the end of this video, I will also provide you with a resource completely for free, where you can follow all of these steps to complete roadmap, even with training videos and instructions",
+      "link": "https://www.youtube.com/watch?v=h2FDq3agImI",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "h2FDq3agImI",
+      "transcript_method": "whisper",
+      "transcript_chars": 17730,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] You’re Not Behind (Yet): How to Learn AI in 29 Minutes - YouTube",
+      "summary": "AI is becoming more powerful and more deeply woven into everything we do. Some people try to ignore it, but it's not going away. If you're watching this, you already knew that. You're not asking if you should learn AI, you're asking how. Whether you want to work smarter, spark new ideas, automate parts of your business, or just buy back your time, this video will give you the full roadmap. You'll learn the key concepts, the right tools, and a clear step-by-step action plan. It's simpler than you think. And by the end, you'll be ahead of 99% of people trying to figure this out. But I also know the AI landscape can feel overwhelming. So before we dive in, let's break down the biggest barriers that keep most people stuck. I'm not technical. That's totally fine. Most modern AI tools are built ",
+      "link": "https://www.youtube.com/watch?v=9c7zh2MkslY",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "9c7zh2MkslY",
+      "transcript_method": "whisper",
+      "transcript_chars": 32068,
+      "has_full_transcript": true
+    }
+  ]
+}

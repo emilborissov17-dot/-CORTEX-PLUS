@@ -1,0 +1,139 @@
+{
+  "axis": "MATERIALS_WASTE_REVIEW",
+  "fetched_at": "2026-03-13T13:53:22.814303+00:00",
+  "smart_query": "Reducing municipal waste in urban areas",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 0,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "analysis": {
+    "summary": "Анализът на осигуряването на материалите и минимизирането на отпадъците е от решаващо значение за постигане на устойчива общочовешка цивилизация. Това включва разработването на нови технологии и материали, които да намалят въздействието върху околната среда. Интеграцията на устойчиви практики в производството и потреблението е важен етап в този процес.",
+    "key_developments": [
+      "PV_ICE - инструмент за оценка на енергията и потоците от маса на слънчеви фотovoltaични панели"
+    ],
+    "sentiment": "POSITIVE",
+    "urgency": "MEDIUM",
+    "open_source_momentum": "Нарастващото значение на отворения код в областта на устойчивостта е видно от проектите като PV_ICE и electra.",
+    "scientific_frontier": "Изследванията в областта на кръглата дихроизъм и йонната миграция в полимерите и спин-crossover материалите предлагат нови възможности за развитието на устойчивите технологии.",
+    "relevance_to_goal": "Продукцията и потреблението на материалите са ключови фактори за постигане на целите за устойчива цивилизация, тъй като това директно влияе на околната среда и изтощаемостта на ресурсите."
+  },
+  "sentiment": "POSITIVE",
+  "urgency": "MEDIUM",
+  "summary": "Анализът на осигуряването на материалите и минимизирането на отпадъците е от решаващо значение за постигане на устойчива общочовешка цивилизация. Това включва разработването на нови технологии и материали, които да намалят въздействието върху околната среда. Интеграцията на устойчиви практики в производството и потреблението е важен етап в този процес.",
+  "key_developments": [
+    "PV_ICE - инструмент за оценка на енергията и потоците от маса на слънчеви фотovoltaични панели"
+  ],
+  "open_source_momentum": "Нарастващото значение на отворения код в областта на устойчивостта е видно от проектите като PV_ICE и electra.",
+  "scientific_frontier": "Изследванията в областта на кръглата дихроизъм и йонната миграция в полимерите и спин-crossover материалите предлагат нови възможности за развитието на устойчивите технологии.",
+  "news_items": [],
+  "github_repos": [
+    {
+      "title": "pogopaule/awesome-sustainability-jobs",
+      "snippet": "Dev jobs in the sustainability sector - be part of the solution, not the problem",
+      "stars": 504,
+      "url": "https://github.com/pogopaule/awesome-sustainability-jobs",
+      "updated": "2026-02-23",
+      "source": "GitHub"
+    },
+    {
+      "title": "Alkia/electra",
+      "snippet": "This is Electra blockchain's repository for a decentralized micro-grid electricity exchange solution",
+      "stars": 72,
+      "url": "https://github.com/Alkia/electra",
+      "updated": "2026-01-28",
+      "source": "GitHub"
+    },
+    {
+      "title": "NatLabRockies/PV_ICE",
+      "snippet": "An open-source tool to quantify Solar Photovoltaics (PV) Energy and Mass Flows in the Circular Economy, from a Reliability and Lifetime approach",
+      "stars": 43,
+      "url": "https://github.com/NatLabRockies/PV_ICE",
+      "updated": "2026-01-28",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Switchable circular dichroism and ionic migration dominated charge transport in a chiral spin crossover polymer",
+      "snippet": "We demonstrate thermally switchable chiroptical activity in a chiral spin crossover (SCO) material, where circular dichroism is significant in the low spin state but quenched in the high-spin state for both enantiomers. With magnetometry we establish a cooperative transition with hysteresis near roo",
+      "url": "https://arxiv.org/abs/2603.11261v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Electronic Structure and Resonant Circular Dichroism of La$_{0.7}$Sr$_{0.3}$MnO$_3$ from Soft X-ray Angle-Resolved Photoemission",
+      "snippet": "Coupling between spin, orbital, charge, and lattice degrees of freedom in transition-metal oxides produces a variety of electronic and magnetic phenomena of importance for future technologies. Here, we explore the electronic band structure of a (111)-oriented La0.7Sr0.3MnO3 thin film through soft X-",
+      "url": "https://arxiv.org/abs/2603.10794v1",
+      "source": "arXiv"
+    }
+  ],
+  "youtube_transcripts": [],
+  "podcast": "[Betty Boop, Excel Olympics, Penny-isms: Our 2026 Valentines] Book tour event details and ticket info here.An iconic cartoon character liberated from copyright, journalism from the world of competitive spreadsheeting, a controversial piece of US currency. Each year the Planet Money team dedicates an episode to the things we simply love and think you, our audience, will also love.In this year’s Valentine’s Day episode:The Public Domain Day list from Jennifer ",
+  "youtube_videos": [
+    {
+      "title": "YouTube:ar-z9F4IwiI",
+      "video_id": "ar-z9F4IwiI",
+      "url": "https://www.youtube.com/watch?v=ar-z9F4IwiI",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:GgQPXQobEuI",
+      "video_id": "GgQPXQobEuI",
+      "url": "https://www.youtube.com/watch?v=GgQPXQobEuI",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:zewegWZD0dU",
+      "video_id": "zewegWZD0dU",
+      "url": "https://www.youtube.com/watch?v=zewegWZD0dU",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:u45I61B6UMI",
+      "video_id": "u45I61B6UMI",
+      "url": "https://www.youtube.com/watch?v=u45I61B6UMI",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:3Xm7wyvRHNU",
+      "video_id": "3Xm7wyvRHNU",
+      "url": "https://www.youtube.com/watch?v=3Xm7wyvRHNU",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:0ZiD_Lb3Tm0",
+      "video_id": "0ZiD_Lb3Tm0",
+      "url": "https://www.youtube.com/watch?v=0ZiD_Lb3Tm0",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:tZEM5K72aVs",
+      "video_id": "tZEM5K72aVs",
+      "url": "https://www.youtube.com/watch?v=tZEM5K72aVs",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:pZnQtwE6S_k",
+      "video_id": "pZnQtwE6S_k",
+      "url": "https://www.youtube.com/watch?v=pZnQtwE6S_k",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:ggfadwNAv5o",
+      "video_id": "ggfadwNAv5o",
+      "url": "https://www.youtube.com/watch?v=ggfadwNAv5o",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:cIJs6amjoDw",
+      "video_id": "cIJs6amjoDw",
+      "url": "https://www.youtube.com/watch?v=cIJs6amjoDw",
+      "source": "YouTube"
+    }
+  ]
+}

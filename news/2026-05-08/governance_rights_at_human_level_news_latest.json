@@ -1,0 +1,37 @@
+{
+  "axis": "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL",
+  "fetched_at": "2026-05-08T09:05:51.570779+00:00",
+  "smart_query": "human rights democracy freedom",
+  "sources_count": {
+    "wiki": 0,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [],
+  "gdelt": [],
+  "github_repos": [],
+  "arxiv_papers": [
+    {
+      "title": "LLMorphism: When humans come to see themselves as language models",
+      "snippet": "LLMorphism is the biased belief that human cognition works like a large language model. I argue that the rise of conversational LLMs may make this bias increasingly psychologically available. When artificial systems produce human-like language, people may draw a reverse inference: if LLMs can speak ",
+      "url": "https://arxiv.org/abs/2605.05419v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Human-AI Co-Mentorship in Project-Based Learning: A Case Study in Financial Forecasting",
+      "snippet": "This paper reflects on a AI research project carried out by a team of high-school and early-undergraduate students under the mentorship of graduate researchers and ably assisted by AI tools. We share our experience in not only on the learning experience for the high school students, but also on how ",
+      "url": "https://arxiv.org/abs/2605.05144v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[#239 – Rose Hadshar on why automating all human labour will break our political system] The most important political question in the age of advanced AI might not be who wins elections. It might be whether elections continue to matter at all.That’s the view of Rose Hadshar, researcher at Forethought, who believes we could see extreme, AI-enabled power concentration without a coup or dramatic ‘end of democracy’ moment.She foresees something more insidious: an elite group with access to",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

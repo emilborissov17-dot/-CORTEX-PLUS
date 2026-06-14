@@ -1,0 +1,109 @@
+{
+  "axis": "ENERGY_REVIEW",
+  "domain": "planet",
+  "timestamp": "2026-05-03T12:04:19.389837+00:00",
+  "sources_count": 13,
+  "rss_count": 12,
+  "ddg_count": 0,
+  "youtube_count": 1,
+  "youtube_items": [
+    {
+      "title": "[YT] What is Solar Wind and how affect the Earth - YouTube",
+      "summary": "The space in which the planet's orbit seems to be empty. However, it's not. It's full of matter from the sun. The sun generates powerful magnetic fields that rise above the surface in giant loops. When they clash, it triggers a storm of super hot, highly charged particles blasting out into space. It's called the solo wind. Astronauts in space can see it, but only when they close their eyes. Occasionally you see a little flash with your eyes shut. And that is an energetic particle coming through your head and interacting with the fluid inside your eye. And it makes a little light flash. And you see these every couple of minutes or so that you're awake with your eyes shut. If the astronauts were exposed to a lot more of the solo wind, it could kill them. During the Apollo program, in between",
+      "link": "https://www.youtube.com/watch?v=2zOlkIyg3iE",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "2zOlkIyg3iE",
+      "transcript_method": "whisper",
+      "transcript_chars": 1344,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "summary": "- Top Selling Electric Vehicles in the World — March 2026: <p>Tesla wins gold and silver in a market running at different speeds. BEVs vs. PHEVs Plugin vehicle registrations were up 5% year over year (YoY) in March, ending the month at around 1.7 million unit\n- Living Without Fossil Fuel Is Harder T",
+    "risk_level": "UNKNOWN",
+    "trend": "UNKNOWN",
+    "key_events": [
+      "Top Selling Electric Vehicles in the World — March 2026",
+      "Living Without Fossil Fuel Is Harder Than We Think",
+      "$3.2 Million Awarded For Tribal Solar Projects"
+    ],
+    "insights": [],
+    "youtube_insights": [],
+    "relevance_to_goal": "",
+    "generalization": ""
+  },
+  "raw_items": [
+    {
+      "title": "Top Selling Electric Vehicles in the World — March 2026",
+      "summary": "<p>Tesla wins gold and silver in a market running at different speeds. BEVs vs. PHEVs Plugin vehicle registrations were up 5% year over year (YoY) in March, ending the month at around 1.7 million units. Interestingly, BEVs (+12% YoY) and PHEVs (-8% YoY) behaved very differently, with pure electrics back   ... [continued]</p>\n<p>The post <a href=\"https://cleantechnica.com/2026/05/02/top-selling-electric-vehicles-in-the-world-march-2026/\">Top Selling Electric Vehicles in the World — March 2026</a>",
+      "link": "https://cleantechnica.com/2026/05/02/top-selling-electric-vehicles-in-the-world-march-2026/",
+      "published": "Sun, 03 May 2026 00:25:16 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Living Without Fossil Fuel Is Harder Than We Think",
+      "summary": "<p>Caitlin Cassidy is a journalist in Sydney, Australia, home to two of the world&#8217;s most iconic buildings. The first is the Queen Victoria Building &#8212; known to city residents as the QVB. Opened in 1898, it contains five stories of shops and restaurants and occupies an entire city block. The   ... [continued]</p>\n<p>The post <a href=\"https://cleantechnica.com/2026/05/02/living-without-fossil-fuel-is-harder-than-we-think/\">Living Without Fossil Fuel Is Harder Than We Think</a> appeared ",
+      "link": "https://cleantechnica.com/2026/05/02/living-without-fossil-fuel-is-harder-than-we-think/",
+      "published": "Sat, 02 May 2026 21:07:24 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "$3.2 Million Awarded For Tribal Solar Projects",
+      "summary": "<p>Tribal Energy Alternatives recently awarded $3.2 million in grant funding to 14 Tribal Nations, plus Tribal-serving organizations and community-serving entities. The grants will support solar energy access, workforce development, and long-term energy resilience. Tribal Energy Alternatives is a Tribal-led affiliate of GRID Alternatives. Solar power is a clean, renewable source   ... [continued]</p>\n<p>The post <a href=\"https://cleantechnica.com/2026/05/02/3-2-million-awarded-for-tribal-solar-p",
+      "link": "https://cleantechnica.com/2026/05/02/3-2-million-awarded-for-tribal-solar-projects/",
+      "published": "Sat, 02 May 2026 19:57:16 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Maritime Decarbonization Is Closer, Cheaper, And More Practical Than It Looks",
+      "summary": "<p>The IMO’s Net-Zero Framework came out of the latest Marine Environment Protection Committee meeting bruised, delayed, and still alive. For maritime climate policy, that matters. The International Maritime Organization has spent decades moving at the pace of the most cautious flag states, the most exposed bulk exporters, and the most   ... [continued]</p>\n<p>The post <a href=\"https://cleantechnica.com/2026/05/02/maritime-decarbonization-is-closer-cheaper-and-more-practical-than-it-looks/\">Mari",
+      "link": "https://cleantechnica.com/2026/05/02/maritime-decarbonization-is-closer-cheaper-and-more-practical-than-it-looks/",
+      "published": "Sat, 02 May 2026 19:28:41 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Non-compliance with a looming NERC deadline could cost clean energy owners and operators, big time",
+      "summary": "Owners of inverter-based resources (IBRs) have been required to register with NERC by May 15, 2026, or face steep penalties.",
+      "link": "https://www.renewableenergyworld.com/energy-business/policy-and-regulation/non-compliance-with-a-looming-nerc-deadline-could-cost-clean-energy-owners-and-operators-big-time/",
+      "published": "Fri, 01 May 2026 15:06:03 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "How VPPs could improve grid reliability and save utilities 40% over gas peaker plants",
+      "summary": "A new report outlines how virtual power plants can free up capacity on the existing grid while highlighting how VPPs can also help meet new load growth driven by data centers.",
+      "link": "https://www.renewableenergyworld.com/power-grid/how-vpps-could-improve-grid-reliability-and-save-utilities-40-over-gas-peaker-plants/",
+      "published": "Fri, 01 May 2026 11:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Are Trump’s efforts against clean energy in vain? – This Week in Cleantech",
+      "summary": "On this episode of the This Week in Cleantech podcast, Oliver Milman from The Guardian discusses how the clean energy industry is pushing forward despite Trump's aggressive efforts to suppress it.",
+      "link": "https://www.renewableenergyworld.com/podcasts/are-trumps-efforts-against-clean-energy-in-vain-this-week-in-cleantech/",
+      "published": "Fri, 01 May 2026 10:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Iron flow and sodium-ion battery manufacturers to join forces",
+      "summary": "ESS Tech has signed a letter of intent with Alsym Energy to add sodium-ion batteries to its iron flow-focused portfolio.",
+      "link": "https://www.renewableenergyworld.com/energy-storage/long-duration/iron-flow-and-sodium-ion-battery-manufacturers-to-join-forces/",
+      "published": "Thu, 30 Apr 2026 19:39:20 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Hormuz Deadlock Persists as Trump Faces War-Powers Deadline at Home",
+      "summary": "Two months after the Iran war began, the Strait of Hormuz remains severely restricted for tanker traffic while U.S. President Donald Trump faces a key legal deadline at home under the 1973 War Powers Resolution. As of early Friday, May 1, the deadlock at the world’s most vital oil chokepoint, the Strait of Hormuz, doesn’t appear close to being resolved. The U.S. is doubling down on the naval blockade outside the Strait aimed at stopping Iranian oil exports. But Iran controls most vessel movement",
+      "link": "https://oilprice.com/Energy/Crude-Oil/Hormuz-Deadlock-Persists-as-Trump-Faces-War-Powers-Deadline-at-Home.html",
+      "published": "Sat, 02 May 2026 18:00:00 -0500",
+      "source_type": "rss"
+    },
+    {
+      "title": "China Flips the Switch on Fuel Exports as Asia Runs Short",
+      "summary": "Beijing is reversing its curbs on refined fuel exports after halting shipments in the opening days of the U.S.-Iran conflict. This move suggests that Chinese domestic inventories are now at comfortable levels, allowing state refiners to reopen the export spigot, even as much of Asia remains gripped by a fuel shock caused by disrupted Gulf energy flows through the Hormuz chokepoint. There was chatter earlier this week that China's state-owned refiners were applying for government permits to resum",
+      "link": "https://oilprice.com/Energy/Crude-Oil/China-Flips-the-Switch-on-Fuel-Exports-as-Asia-Runs-Short.html",
+      "published": "Sat, 02 May 2026 16:00:00 -0500",
+      "source_type": "rss"
+    }
+  ]
+}

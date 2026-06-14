@@ -1,0 +1,131 @@
+{
+  "axis": "DEEP_TIME_RISKS_REVIEW",
+  "fetched_at": "2026-03-13T13:56:05.234213+00:00",
+  "smart_query": "Анализ на дългосрочните космически рискове",
+  "sources_count": {
+    "wiki": 0,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "analysis": {
+    "summary": "[arXiv]\n- VisiFold: Long-Term Traffic Forecasting via Temporal Folding Graph and Node Visibility\n- RoboClaw: An Agentic Framework for Scalable Long-Horizon Robotic Tasks\n\n[GitHub]\n- PipFoweraker/pdoom",
+    "sentiment": "NEUTRAL",
+    "urgency": "LOW",
+    "key_developments": []
+  },
+  "sentiment": "NEUTRAL",
+  "urgency": "LOW",
+  "summary": "[arXiv]\n- VisiFold: Long-Term Traffic Forecasting via Temporal Folding Graph and Node Visibility\n- RoboClaw: An Agentic Framework for Scalable Long-Horizon Robotic Tasks\n\n[GitHub]\n- PipFoweraker/pdoom",
+  "key_developments": [],
+  "open_source_momentum": "",
+  "scientific_frontier": "",
+  "news_items": [],
+  "github_repos": [
+    {
+      "title": "PipFoweraker/pdoom1",
+      "snippet": "Save the world from deadly AI through paperwork",
+      "stars": 6,
+      "url": "https://github.com/PipFoweraker/pdoom1",
+      "updated": "2026-02-03",
+      "source": "GitHub"
+    },
+    {
+      "title": "nikthink/pauseai.ca",
+      "snippet": "https://pauseai.ca/",
+      "stars": 4,
+      "url": "https://github.com/nikthink/pauseai.ca",
+      "updated": "2026-03-09",
+      "source": "GitHub"
+    },
+    {
+      "title": "CovenantArchitects/The-Partnership-Covenant",
+      "snippet": "Constitutional Framework for Aligned Super-Intelligence.",
+      "stars": 3,
+      "url": "https://github.com/CovenantArchitects/The-Partnership-Covenant",
+      "updated": "2025-12-13",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "VisiFold: Long-Term Traffic Forecasting via Temporal Folding Graph and Node Visibility",
+      "snippet": "Traffic forecasting is a cornerstone of intelligent transportation systems. While existing research has made significant progress in short-term prediction, long-term forecasting remains a largely uncharted and challenging frontier. Extending the prediction horizon intensifies two critical issues: es",
+      "url": "https://arxiv.org/abs/2603.11816v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "RoboClaw: An Agentic Framework for Scalable Long-Horizon Robotic Tasks",
+      "snippet": "Vision-Language-Action (VLA) systems have shown strong potential for language-driven robotic manipulation. However, scaling them to long-horizon tasks remains challenging. Existing pipelines typically separate data collection, policy learning, and deployment, resulting in heavy reliance on manual en",
+      "url": "https://arxiv.org/abs/2603.11558v1",
+      "source": "arXiv"
+    }
+  ],
+  "youtube_transcripts": [],
+  "podcast": "[Governor DeSantis Directs Florida State Agencies to Partner with Future of Life Institute to Shield Families from AI Harm] The collaboration will produce a Crisis Counselor Training Curriculum and a statewide AI Harms Reporting Form targeting dangerous AI companion applications",
+  "youtube_videos": [
+    {
+      "title": "YouTube:P6Lp71kJm2E",
+      "video_id": "P6Lp71kJm2E",
+      "url": "https://www.youtube.com/watch?v=P6Lp71kJm2E",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:ee1FPeBllNg",
+      "video_id": "ee1FPeBllNg",
+      "url": "https://www.youtube.com/watch?v=ee1FPeBllNg",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:CBhw6PCmdRk",
+      "video_id": "CBhw6PCmdRk",
+      "url": "https://www.youtube.com/watch?v=CBhw6PCmdRk",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:ZvtSnITJZyE",
+      "video_id": "ZvtSnITJZyE",
+      "url": "https://www.youtube.com/watch?v=ZvtSnITJZyE",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:BBqrouR_59M",
+      "video_id": "BBqrouR_59M",
+      "url": "https://www.youtube.com/watch?v=BBqrouR_59M",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:kDlipupLDKI",
+      "video_id": "kDlipupLDKI",
+      "url": "https://www.youtube.com/watch?v=kDlipupLDKI",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:RxrrLvcRqPo",
+      "video_id": "RxrrLvcRqPo",
+      "url": "https://www.youtube.com/watch?v=RxrrLvcRqPo",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:tO6JU-HSHcY",
+      "video_id": "tO6JU-HSHcY",
+      "url": "https://www.youtube.com/watch?v=tO6JU-HSHcY",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:NnjzIVHByyM",
+      "video_id": "NnjzIVHByyM",
+      "url": "https://www.youtube.com/watch?v=NnjzIVHByyM",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:axeOy16HlB0",
+      "video_id": "axeOy16HlB0",
+      "url": "https://www.youtube.com/watch?v=axeOy16HlB0",
+      "source": "YouTube"
+    }
+  ]
+}

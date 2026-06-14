@@ -1,0 +1,140 @@
+{
+  "axis": "ECONOMY_WORK_REVIEW",
+  "fetched_at": "2026-03-12T18:27:32.994529+00:00",
+  "smart_query": "Average employee salary and company revenue.",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "analysis": {
+    "summary": "Икономическият сектор се изправя пред предизвикателства, сред които колебанията в цените на петрола. Новини като тези за Джо Малон и колаборацията ѝ с Zara подчертават важността на честните практики в бизнеса. Тези събития могат да окажат влияние върху устойчивостта на цивилизацията и достойнството на всички.",
+    "key_developments": [
+      "What on earth is going on with the oil price?",
+      "Jo Malone sued for using her own name in collaboration with Zara"
+    ],
+    "sentiment": "NEUTRAL",
+    "urgency": "MEDIUM",
+    "open_source_momentum": "everget/tradingview-pinescript-indicators, Limych/ha-average, luukdv/color.js",
+    "scientific_frontier": "Measurement-Driven O-RAN Diagnostics with Tail Latency and Scheduler Indicators, Learning Adaptive Force Control for Contact-Rich Sample Scraping with Heterogeneous Materials",
+    "relevance_to_goal": "The economic developments and technological advancements can impact the goal of sustainable civilization and dignity for all, as they influence the stability and fairness of the global economy."
+  },
+  "sentiment": "NEUTRAL",
+  "urgency": "MEDIUM",
+  "summary": "Икономическият сектор се изправя пред предизвикателства, сред които колебанията в цените на петрола. Новини като тези за Джо Малон и колаборацията ѝ с Zara подчертават важността на честните практики в бизнеса. Тези събития могат да окажат влияние върху устойчивостта на цивилизацията и достойнството на всички.",
+  "key_developments": [
+    "What on earth is going on with the oil price?",
+    "Jo Malone sued for using her own name in collaboration with Zara"
+  ],
+  "open_source_momentum": "everget/tradingview-pinescript-indicators, Limych/ha-average, luukdv/color.js",
+  "scientific_frontier": "Measurement-Driven O-RAN Diagnostics with Tail Latency and Scheduler Indicators, Learning Adaptive Force Control for Contact-Rich Sample Scraping with Heterogeneous Materials",
+  "github_repos": [
+    {
+      "title": "everget/tradingview-pinescript-indicators",
+      "snippet": "A collection of various technical indicators implemented in Pine Script for the TradingView platform",
+      "stars": 785,
+      "url": "https://github.com/everget/tradingview-pinescript-indicators",
+      "updated": "2026-03-11",
+      "source": "GitHub"
+    },
+    {
+      "title": "Limych/ha-average",
+      "snippet": "Average Sensor for Home Assistant",
+      "stars": 413,
+      "url": "https://github.com/Limych/ha-average",
+      "updated": "2026-03-11",
+      "source": "GitHub"
+    },
+    {
+      "title": "luukdv/color.js",
+      "snippet": "Extract colors from an image (0.75 KB) 🎨",
+      "stars": 396,
+      "url": "https://github.com/luukdv/color.js",
+      "updated": "2026-03-12",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Measurement-Driven O-RAN Diagnostics with Tail Latency and Scheduler Indicators",
+      "snippet": "We investigate cross-layer performance diagnostics for an O-RAN instance by jointly analyzing application-level latency and radio-layer behavior from a real measurement campaign. Measurements were conducted at multiple link distances (2, 6 and 11 meters) using two representative UE configurations (a",
+      "url": "https://arxiv.org/abs/2603.11023v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Learning Adaptive Force Control for Contact-Rich Sample Scraping with Heterogeneous Materials",
+      "snippet": "The increasing demand for accelerated scientific discovery, driven by global challenges, highlights the need for advanced AI-driven robotics. Deploying robotic chemists in human-centric labs is key for the next horizon of autonomous discovery, as complex tasks still demand the dexterity of human sci",
+      "url": "https://arxiv.org/abs/2603.10979v1",
+      "source": "arXiv"
+    }
+  ],
+  "youtube_transcripts": [],
+  "podcast": "Live event info and tickets here.If something is going wrong in your workplace, there's probably a law that explains why. Meetings always seem long, and never end early? There’s Parkinson’s Law, which says work expands to the time allotted, or, restated: meetings will always take up all the time blocked on Outlook calendars. Is your boss bad at managing? Check the Peter Principle, which says peopl | What do we want from sports? The very best athletes competing as hard as they know how, putting all their effort and training and natural ability to the test against their opponents. But this time of year, that’s not the product the NBA is putting on the court. Instead, teams at the bottom of the league are competing … to lose, because it could help them get a top pick in next year’s draft. It’s c",
+  "youtube_videos": [
+    {
+      "title": "YouTube:DDVtxcF6TJA",
+      "video_id": "DDVtxcF6TJA",
+      "url": "https://www.youtube.com/watch?v=DDVtxcF6TJA",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:lCK2HIVjkWo",
+      "video_id": "lCK2HIVjkWo",
+      "url": "https://www.youtube.com/watch?v=lCK2HIVjkWo",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:A5RGwao7vpg",
+      "video_id": "A5RGwao7vpg",
+      "url": "https://www.youtube.com/watch?v=A5RGwao7vpg",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:0iCSt8bDbkY",
+      "video_id": "0iCSt8bDbkY",
+      "url": "https://www.youtube.com/watch?v=0iCSt8bDbkY",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:UAUae6FDQC4",
+      "video_id": "UAUae6FDQC4",
+      "url": "https://www.youtube.com/watch?v=UAUae6FDQC4",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:1GbUNlk4E38",
+      "video_id": "1GbUNlk4E38",
+      "url": "https://www.youtube.com/watch?v=1GbUNlk4E38",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:tS047mPR960",
+      "video_id": "tS047mPR960",
+      "url": "https://www.youtube.com/watch?v=tS047mPR960",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:uEMPmeaI_5s",
+      "video_id": "uEMPmeaI_5s",
+      "url": "https://www.youtube.com/watch?v=uEMPmeaI_5s",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:XQzt5KQWf68",
+      "video_id": "XQzt5KQWf68",
+      "url": "https://www.youtube.com/watch?v=XQzt5KQWf68",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:UdlcmRbAoGw",
+      "video_id": "UdlcmRbAoGw",
+      "url": "https://www.youtube.com/watch?v=UdlcmRbAoGw",
+      "source": "YouTube"
+    }
+  ]
+}

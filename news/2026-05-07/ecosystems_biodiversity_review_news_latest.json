@@ -1,0 +1,63 @@
+{
+  "axis": "ECOSYSTEMS_BIODIVERSITY_REVIEW",
+  "fetched_at": "2026-05-07T10:36:24.021187+00:00",
+  "smart_query": "biodiversity species extinction",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 3,
+    "arxiv": 0,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "Why do crabs walk sideways? Scientists trace it back 200 million years",
+      "snippet": "Crabs’ famous sideways walk may trace back to a single evolutionary moment 200 million years ago. Researchers found that most modern crabs inherited this trait from one ancestor—and never looked back. The movement likely gave them an edge, helping them dodge predators with quick, unpredictable burst",
+      "url": "https://www.sciencedaily.com/releases/2026/05/260501052844.htm",
+      "source": "RSS"
+    },
+    {
+      "title": "Scientists warn about golden oyster mushrooms sold in Florida markets",
+      "snippet": "The golden oyster mushroom may be a culinary hit, but it’s becoming an ecological problem. Scientists warn it’s spreading quickly through U.S. forests, where it outcompetes native fungi and reduces biodiversity. In just a decade, it has appeared in more than 25 states, largely due to human cultivati",
+      "url": "https://www.sciencedaily.com/releases/2026/04/260423031521.htm",
+      "source": "RSS"
+    },
+    {
+      "title": "Scientists just debunked a 50-year myth about Hawaii’s birds",
+      "snippet": "A new study from the University of Hawaiʻi at Mānoa is overturning a decades-old belief that Indigenous Hawaiians hunted native waterbirds to extinction. Instead, researchers found no scientific evidence supporting this claim and propose a more complex explanation involving climate change, invasive ",
+      "url": "https://www.sciencedaily.com/releases/2026/04/260414075644.htm",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [
+    {
+      "title": "World Wildlife Day 2026 : How Losing Just One Species Can Trigger Ecosystem Collapse",
+      "snippet": "World Wildlife Day 2026 : How Losing Just One Species Can Trigger Ecosystem Collapse",
+      "url": "https://www.yahoo.com/news/articles/world-wildlife-day-2026-losing-143200729.html",
+      "source": "yahoo.com"
+    },
+    {
+      "title": "Il rapetisse , tombe malade et devient cannibale  : le grand hamster dAlsace en voie dextinction",
+      "snippet": "Il rapetisse , tombe malade et devient cannibale  : le grand hamster dAlsace en voie dextinction",
+      "url": "https://www.leparisien.fr/animaux/il-rapetisse-tombe-malade-et-devient-cannibale-le-grand-hamster-dalsace-en-voie-dextinction-13-02-2026-EU4YQ5YRURDYLIQ37XKO2W463I.php",
+      "source": "leparisien.fr"
+    },
+    {
+      "title": "بينها السلحفاة المصرية .. حملة لـ حماية البيئة بسوق الجمعة لإنقاذ أنواع مهددة بالانقراض",
+      "snippet": "بينها السلحفاة المصرية .. حملة لـ حماية البيئة بسوق الجمعة لإنقاذ أنواع مهددة بالانقراض",
+      "url": "https://www.dostor.org/5446518",
+      "source": "dostor.org"
+    }
+  ],
+  "github_repos": [],
+  "arxiv_papers": [],
+  "podcast": "[Return of the Flesh-Eaters] If a species is horrible enough, do we have the right to kill it forever?\nSeventy years ago, a nightmare parasite feasted on the live flesh of warm-blooded creatures in North America: the screwworm. That is, until a young scientist named Edward F. Knipling discovered a crucial screwworm weakness and hatched a sweeping project to wipe them out. Knipling’s seemingly zany plan to spray screwworms out",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

@@ -1,0 +1,469 @@
+[TREND_TRACKER] loading master snapshot...
+[TREND_TRACKER] ➡️ BODY_SCAN: INSUFFICIENT_DATA (score=None, days=1)
+[TREND_TRACKER] ➡️ ECONOMY_WORK_REVIEW: STABLE (score=66.03, days=20)
+[TREND_TRACKER] ➡️ EDUCATION_CULTURE_REVIEW: STABLE (score=60.24, days=20)
+[TREND_TRACKER] ➡️ GOVERNANCE_INSTITUTIONS_REVIEW: STABLE (score=13.82, days=6)
+[TREND_TRACKER] ➡️ INEQUALITY_POVERTY_REVIEW: STABLE (score=89.6, days=20)
+[TREND_TRACKER] ➡️ INFRASTRUCTURE_CITIES_REVIEW: STABLE (score=56.42, days=20)
+[TREND_TRACKER] ➡️ TECHNOLOGY_AI_REVIEW: STABLE (score=42.45, days=20)
+[TREND_TRACKER] ➡️ TECHNOLOGY_INFRA_REVIEW: STABLE (score=60.05, days=20)
+[TREND_TRACKER] ➡️ climate_global_risk_review_snapshot_latest: INSUFFICIENT_DATA (score=None, days=1)
+[TREND_TRACKER] ➡️ COSMIC_RESOURCES_REVIEW: STABLE (score=100.0, days=20)
+[TREND_TRACKER] ➡️ DEEP_TIME_RISKS_REVIEW: INSUFFICIENT_DATA (score=None, days=1)
+[TREND_TRACKER] ➡️ GENERAL_SELF_REVIEW: INSUFFICIENT_DATA (score=None, days=1)
+[TREND_TRACKER] ➡️ GOAL_PROGRESS_REVIEW: INSUFFICIENT_DATA (score=None, days=1)
+[TREND_TRACKER] ➡️ LONG_TERM_FUTURE_REVIEW: INSUFFICIENT_DATA (score=None, days=1)
+[TREND_TRACKER] ➡️ SPACE_INFRASTRUCTURE_REVIEW: STABLE (score=100.0, days=20)
+[TREND_TRACKER] ➡️ COGNITION_LEARNING_REVIEW: STABLE (score=74.92, days=20)
+[TREND_TRACKER] ➡️ CULTURE_MEDIA_REVIEW: STABLE (score=75.87, days=20)
+[TREND_TRACKER] ➡️ GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL: STABLE (score=15.14, days=6)
+[TREND_TRACKER] ➡️ HUMAN_WELL_BEING_REVIEW: STABLE (score=76.6, days=20)
+[TREND_TRACKER] ➡️ SOCIAL_RELATIONS_REVIEW: STABLE (score=76.18, days=20)
+[TREND_TRACKER] ➡️ OPENCLAW_SOLUTIONS: INSUFFICIENT_DATA (score=None, days=1)
+[TREND_TRACKER] 📉 CLIMATE_GLOBAL_RISK_REVIEW: DETERIORATING (score=40.76, days=6)
+[TREND_TRACKER] ➡️ ECOSYSTEMS_BIODIVERSITY_REVIEW: STABLE (score=31.14, days=6)
+[TREND_TRACKER] ➡️ ENERGY_REVIEW: STABLE (score=None, days=18)
+[TREND_TRACKER] ➡️ FOOD_REVIEW: STABLE (score=100.0, days=6)
+[TREND_TRACKER] ➡️ MATERIALS_WASTE_REVIEW: STABLE (score=13.43, days=6)
+[TREND_TRACKER] ➡️ PLANETARY_POTENTIAL_REVIEW: INSUFFICIENT_DATA (score=None, days=1)
+[TREND_TRACKER] ➡️ WATER_REVIEW: STABLE (score=65.01, days=6)
+
+[TREND_TRACKER] SUMMARY:
+  📈 IMPROVING:          0
+  ➡️  STABLE:             19
+  📉 DETERIORATING:      1
+  ❓ INSUFFICIENT_DATA:  8
+
+[TREND_TRACKER] history -> /mnt/c/Users/emilb/Desktop/AGI/CORTEX++_QWEN/memory/axis_history.json
+[TREND_TRACKER] trends  -> /mnt/c/Users/emilb/Desktop/AGI/CORTEX++_QWEN/memory/trends_latest.json
+==================================================
+[FAST_CYCLE] started at 2026-05-01T12:39:16.487623+00:00
+==================================================
+[WEB_INTEL] YouTube ????? ?
+============================================================
+[WEB_INTEL] CORTEX++ Web Intelligence Agent
+[WEB_INTEL] started at 2026-05-01T12:39:16.640319+00:00
+[WEB_INTEL] ???: 25 | DDG: ? | YouTube: ?
+[WEB_INTEL] Timeout ?? ??: 90s
+============================================================
+  [SKIP] CLIMATE_GLOBAL_RISK_REVIEW — ????? (=2h)
+  [SKIP] ENERGY_REVIEW — ????? (=2h)
+  [SKIP] WATER_REVIEW — ????? (=2h)
+  [SKIP] FOOD_REVIEW — ????? (=2h)
+  [SKIP] MATERIALS_WASTE_REVIEW — ????? (=2h)
+  [SKIP] ECOSYSTEMS_BIODIVERSITY_REVIEW — ????? (=2h)
+  [SKIP] HUMAN_WELL_BEING_REVIEW — ????? (=2h)
+  [SKIP] CULTURE_MEDIA_REVIEW — ????? (=2h)
+  [SKIP] COGNITION_LEARNING_REVIEW — ????? (=2h)
+  [SKIP] SOCIAL_RELATIONS_REVIEW — ????? (=2h)
+  [SKIP] GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL — ????? (=2h)
+  [SKIP] ECONOMY_WORK_REVIEW — ????? (=2h)
+  [SKIP] INEQUALITY_POVERTY_REVIEW — ????? (=2h)
+  [SKIP] INFRASTRUCTURE_CITIES_REVIEW — ????? (=2h)
+  [SKIP] GOVERNANCE_INSTITUTIONS_REVIEW — ????? (=2h)
+  [SKIP] EDUCATION_CULTURE_REVIEW — ????? (=2h)
+  [SKIP] TECHNOLOGY_INFRA_REVIEW — ????? (=2h)
+  [SKIP] TECHNOLOGY_AI_REVIEW — ????? (=2h)
+  [SKIP] SPACE_INFRASTRUCTURE_REVIEW — ????? (=2h)
+  [SKIP] COSMIC_RESOURCES_REVIEW — ????? (=2h)
+  [SKIP] LONG_TERM_FUTURE_REVIEW — ????? (=2h)
+  [SKIP] DEEP_TIME_RISKS_REVIEW — ????? (=2h)
+  [SKIP] GENERAL_SELF_REVIEW — ????? (=2h)
+  [SKIP] GOAL_PROGRESS_REVIEW — ????? (=2h)
+  [SKIP] PLANETARY_POTENTIAL_REVIEW — ????? (=2h)
+[WEB_INTEL] latest.json ??????????? ? (30337 bytes)
+
+[WEB_INTEL] Master report: memory/web_intelligence/2026-05-01/master_web_intel.json
+[WEB_INTEL] Critical axes:  ['CULTURE_MEDIA_REVIEW', 'DEEP_TIME_RISKS_REVIEW']
+[WEB_INTEL] Deteriorating:  []
+[WEB_INTEL] YouTube ?????:  50 ????
+[WEB_INTEL] continuous_learner ?
+
+[WEB_INTEL] done at 2026-05-01T12:39:25.810918+00:00
+============================================================
+[FAST_CYCLE] web_intelligence_agent -> OK
+[FAST_CYCLE] refreshing GENERAL_SELF_REVIEW...
+  [LLM] Ollama qwen3:1.7b...
+[FAST_CYCLE] wrote GENERAL_SELF_REVIEW -> /mnt/c/Users/emilb/Desktop/AGI/CORTEX++_QWEN/snapshots/cosmos/general_self_review/general_self_review_snapshot_latest.json
+[FAST_CYCLE] refreshing GOAL_PROGRESS_REVIEW...
+[FAST_CYCLE] wrote GOAL_PROGRESS_REVIEW -> /mnt/c/Users/emilb/Desktop/AGI/CORTEX++_QWEN/snapshots/cosmos/goal_progress/goal_progress_snapshot_latest.json
+[FAST_CYCLE] refreshing LONG_TERM_FUTURE_REVIEW...
+[FAST_CYCLE] wrote LONG_TERM_FUTURE_REVIEW -> /mnt/c/Users/emilb/Desktop/AGI/CORTEX++_QWEN/snapshots/cosmos/long_term_future/long_term_future_snapshot_latest.json
+[FAST_CYCLE] master updated — 28 axes
+[FAST_CYCLE] running trend_tracker...
+[FAST_CYCLE] trend_tracker -> OK
+[AUTO_LEVEL] Изчислявам levels от реални метрики...
+
+🟡 ECONOMY_WORK_REVIEW: MEDIUM
+   gdp_per_capita_usd=13631.2 → MEDIUM
+   gdp_growth_pct=2.9 → MEDIUM
+   unemployment_pct=4.8 → HIGH
+
+🟡 EDUCATION_CULTURE_REVIEW: MEDIUM
+   literacy_rate_adult_pct=87.7 → MEDIUM
+   primary_enrollment_pct=89.4 → MEDIUM
+   secondary_enrollment_pct=66.3 → MEDIUM
+
+🔴 GOVERNANCE_INSTITUTIONS_REVIEW: LOW
+   rule_of_law_weighted_mean=-0.4 → LOW
+   control_of_corruption_weighted_mean=-0.3 → LOW
+   political_stability_weighted_mean=-0.7 → LOW
+   voice_accountability_weighted_mean=-0.6 → LOW
+   political_stability_pct_pop_below_minus05=57.3 → LOW
+   voice_accountability_pct_pop_below_minus05=50.7 → LOW
+
+🟡 INEQUALITY_POVERTY_REVIEW: MEDIUM
+   poverty_headcount_190=10.4 → MEDIUM
+
+🟡 INFRASTRUCTURE_CITIES_REVIEW: MEDIUM
+   access_electricity_pct=91.6 → MEDIUM
+   access_clean_fuels_pct=74.4 → MEDIUM
+
+🟡 TECHNOLOGY_AI_REVIEW: MEDIUM
+   rd_expenditure_pct_gdp=2.6 → MEDIUM
+   high_tech_exports_pct=24.8 → MEDIUM
+
+🟡 TECHNOLOGY_INFRA_REVIEW: MEDIUM
+   fixed_broadband_per100=20.1 → MEDIUM
+
+🟢 COSMIC_RESOURCES_REVIEW: HIGH
+   outer_space_treaty_signatories=114.0 → HIGH
+   asteroid_mining_missions_active=0.0 → MEDIUM
+
+🟢 SPACE_INFRASTRUCTURE_REVIEW: HIGH
+   active_satellites_est=9000.0 → HIGH
+   annual_launches_est=240.0 → HIGH
+
+🟡 COGNITION_LEARNING_REVIEW: MEDIUM
+   literacy_rate_youth_pct=93.1 → MEDIUM
+   primary_completion_rate=88.0 → MEDIUM
+   tertiary_enrollment_pct=43.6 → MEDIUM
+
+🟡 CULTURE_MEDIA_REVIEW: MEDIUM
+   internet_users_pct=73.6 → MEDIUM
+   mobile_subscriptions_per100=111.5 → HIGH
+   literacy_rate_adult_pct=87.7 → MEDIUM
+
+🟡 HUMAN_WELL_BEING_REVIEW: MEDIUM
+   life_expectancy=73.5 → MEDIUM
+   infant_mortality=27.7 → MEDIUM
+   health_expenditure_pct=10.0 → HIGH
+
+🟡 SOCIAL_RELATIONS_REVIEW: MEDIUM
+   homicide_rate_per_100k=5.2 → MEDIUM
+
+🟡 CLIMATE_GLOBAL_RISK_REVIEW: MEDIUM
+   co2_ppm_current=431.1 → LOW
+   co2_annual_increase=0.9 → HIGH
+   ⚠️  КОРЕКЦИЯ: LLM казва LOW, данните казват MEDIUM
+
+🟡 ECOSYSTEMS_BIODIVERSITY_REVIEW: MEDIUM
+   forest_area_pct=31.1 → MEDIUM
+   protected_terrestrial_area_pct=16.5 → MEDIUM
+
+🟡 FOOD_REVIEW: MEDIUM
+   prevalence_undernourishment_pct=8.5 → MEDIUM
+   food_production_index=100.0 → MEDIUM
+
+🟡 MATERIALS_WASTE_REVIEW: MEDIUM
+   municipal_waste_per_capita_kg=3.2 → HIGH
+   material_consumption_per_gdp=2.9 → LOW
+
+🟡 WATER_REVIEW: MEDIUM
+   access_safe_water_pct=73.7 → MEDIUM
+   access_sanitation_pct=58.5 → MEDIUM
+
+==================================================
+[AUTO_LEVEL] 18 оси изчислени
+[AUTO_LEVEL] 1 КОРЕКЦИИ (LLM vs реални данни):
+   CLIMATE_GLOBAL_RISK_REVIEW: LLM=LOW vs REAL=MEDIUM
+[FAST_CYCLE] auto_levels -> OK
+
+[INTERNET] -- WATER_REVIEW --
+  Query: water scarcity drinking water
+  RSS: 3 items
+  GDELT: 0 items
+  arXiv: 2 papers
+  GitHub: 0 repos
+  YouTube transcript: НЯМА (0/10 видеа имат субтитри)
+  Podcast: 426 chars
+  🟢 LOW | 
+
+[INTERNET] -- INEQUALITY_POVERTY_REVIEW --
+  Query: inequality poverty wealth gap
+  RSS: 3 items
+  GDELT: 0 items
+  arXiv: 2 papers
+  GitHub: 0 repos
+  YouTube transcript: НЯМА (0/10 видеа имат субтитри)
+  Podcast: 493 chars
+  🟢 LOW | 
+
+[INTERNET] -- SOCIAL_RELATIONS_REVIEW --
+  Query: social inequality conflict trust
+  RSS: 3 items
+  GDELT: 3 items
+  arXiv: 2 papers
+  GitHub: 0 repos
+  YouTube transcript: НЯМА (0/10 видеа имат субтитри)
+  Podcast: 417 chars
+  🟢 LOW | 
+
+[INTERNET] -- DEEP_TIME_RISKS_REVIEW --
+  Query: nuclear war pandemic existential risk
+  GDELT: 0 items
+  arXiv: 2 papers
+  GitHub: 0 repos
+  YouTube transcript: НЯМА (0/10 видеа имат субтитри)
+  Podcast: 231 chars
+  🟢 LOW | 
+
+[INTERNET] -- COSMIC_RESOURCES_REVIEW --
+  Query: asteroid mining space resources
+  GDELT: 0 items
+  arXiv: 2 papers
+  GitHub: 0 repos
+  YouTube transcript: НЯМА (0/10 видеа имат субтитри)
+  Podcast: 424 chars
+  🟢 LOW | 
+
+[INTERNET] -- INFRASTRUCTURE_CITIES_REVIEW --
+  Query: cities infrastructure urban development
+  RSS: 3 items
+  GDELT: 0 items
+  arXiv: 2 papers
+  GitHub: 0 repos
+  YouTube transcript: НЯМА (0/10 видеа имат субтитри)
+  Podcast: 455 chars
+  🟢 LOW | 
+
+[INTERNET] -- GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL --
+  Query: human rights democracy freedom
+  GDELT: 0 items
+  arXiv: 2 papers
+  GitHub: 0 repos
+  YouTube transcript: НЯМА (0/10 видеа имат субтитри)
+  Podcast: 489 chars
+  🟢 LOW | 
+
+[INTERNET] -- PLANETARY_POTENTIAL_REVIEW --
+  Query: earth resources sustainability
+  GDELT: 3 items
+  arXiv: 2 papers
+  GitHub: 0 repos
+  YouTube transcript: НЯМА (0/10 видеа имат субтитри)
+  Podcast: 479 chars
+  🟢 LOW | 
+
+[INTERNET] -- TECHNOLOGY_AI_REVIEW --
+  Query: artificial intelligence AI regulation
+  RSS: 3 items
+  GDELT: 0 items
+  arXiv: 2 papers
+  GitHub: 0 repos
+  YouTube transcript: НЯМА (0/10 видеа имат субтитри)
+  Podcast: 479 chars
+  🟢 LOW | 
+
+[INTERNET] -- ECONOMY_WORK_REVIEW --
+  Query: economy unemployment poverty wages
+  RSS: 3 items
+  GDELT: 0 items
+  arXiv: 2 papers
+  GitHub: 0 repos
+  YouTube transcript: НЯМА (0/10 видеа имат субтитри)
+  Podcast: 442 chars
+  🟢 LOW | 
+
+[INTERNET] -- ECOSYSTEMS_BIODIVERSITY_REVIEW --
+  Query: biodiversity species extinction
+  RSS: 3 items
+  GDELT: 0 items
+  arXiv: 2 papers
+  GitHub: 0 repos
+  YouTube transcript: НЯМА (0/10 видеа имат субтитри)
+  Podcast: 429 chars
+  🟢 LOW | 
+
+[INTERNET] -- CULTURE_MEDIA_REVIEW --
+  Query: media disinformation culture
+  GDELT: 0 items
+  arXiv: 2 papers
+  GitHub: 0 repos
+  YouTube transcript: НЯМА (0/10 видеа имат субтитри)
+  Podcast: 503 chars
+  🟢 LOW | 
+
+[INTERNET] -- GOAL_PROGRESS_REVIEW --
+  Query: sustainable development goals SDG
+  RSS: 3 items
+  GDELT: 0 items
+  arXiv: 2 papers
+  GitHub: 0 repos
+  YouTube transcript: НЯМА (0/10 видеа имат субтитри)
+  Podcast: 493 chars
+  🟢 LOW | 
+
+[INTERNET] -- TECHNOLOGY_INFRA_REVIEW --
+  Query: technology internet digital access
+  GDELT: 0 items
+  arXiv: 2 papers
+  GitHub: 0 repos
+  YouTube transcript: НЯМА (0/10 видеа имат субтитри)
+  Podcast: 480 chars
+  🟢 LOW | 
+
+[INTERNET] -- SPACE_INFRASTRUCTURE_REVIEW --
+  Query: space exploration NASA SpaceX
+  RSS: 3 items
+  GDELT: 0 items
+  arXiv: 2 papers
+  GitHub: 0 repos
+  YouTube transcript: НЯМА (0/10 видеа имат субтитри)
+  Podcast: 476 chars
+  🟢 LOW | 
+
+[INTERNET] -- EDUCATION_CULTURE_REVIEW --
+  Query: education access schools literacy
+  GDELT: 3 items
+  arXiv: 2 papers
+  GitHub: 0 repos
+  YouTube transcript: НЯМА (0/10 видеа имат субтитри)
+  Podcast: 209 chars
+  🟢 LOW | 
+
+[INTERNET] -- GOVERNANCE_INSTITUTIONS_REVIEW --
+  Query: government corruption institutions
+  RSS: 3 items
+  GDELT: 3 items
+  arXiv: 2 papers
+  GitHub: 0 repos
+  YouTube transcript: НЯМА (0/10 видеа имат субтитри)
+  Podcast: 489 chars
+  🟢 LOW | 
+
+[INTERNET] -- CLIMATE_GLOBAL_RISK_REVIEW --
+  Query: climate change CO2 emissions
+  RSS: 3 items
+  GDELT: 0 items
+  arXiv: 2 papers
+  GitHub: 0 repos
+  YouTube transcript: НЯМА (0/10 видеа имат субтитри)
+  Podcast: 462 chars
+  🟢 LOW | 
+
+[INTERNET] -- HUMAN_WELL_BEING_REVIEW --
+  Query: mental health wellbeing global
+  RSS: 3 items
+  GDELT: 0 items
+  arXiv: 2 papers
+  GitHub: 0 repos
+  YouTube transcript: НЯМА (0/10 видеа имат субтитри)
+  Podcast: 486 chars
+  🟢 LOW | 
+
+[INTERNET] -- MATERIALS_WASTE_REVIEW --
+  Query: plastic waste pollution recycling
+  RSS: 0 items
+  GDELT: 0 items
+  arXiv: 2 papers
+  GitHub: 0 repos
+  YouTube transcript: НЯМА (0/10 видеа имат субтитри)
+  Podcast: 209 chars
+  🟢 LOW | 
+
+[INTERNET] -- LONG_TERM_FUTURE_REVIEW --
+  Query: existential risk future civilization
+  RSS: 3 items
+  GDELT: 3 items
+  arXiv: 2 papers
+  GitHub: 0 repos
+  YouTube transcript: НЯМА (0/10 видеа имат субтитри)
+  Podcast: 483 chars
+  🟢 LOW | 
+
+[INTERNET] -- FOOD_REVIEW --
+  Query: food security hunger famine
+  RSS: 0 items
+  GDELT: 0 items
+  arXiv: 2 papers
+  GitHub: 0 repos
+  YouTube transcript: НЯМА (0/10 видеа имат субтитри)
+  Podcast: 444 chars
+  🟢 LOW | 
+
+[INTERNET] -- COGNITION_LEARNING_REVIEW --
+  Query: education learning children schools
+  RSS: 3 items
+  GDELT: 0 items
+  arXiv: 2 papers
+  GitHub: 0 repos
+  YouTube transcript: НЯМА (0/10 видеа имат субтитри)
+  Podcast: 478 chars
+  🟢 LOW | 
+
+[INTERNET] -- ENERGY_REVIEW --
+  Query: renewable energy solar wind
+  RSS: 3 items
+  GDELT: 3 items
+  arXiv: 2 papers
+  GitHub: 0 repos
+  YouTube transcript: НЯМА (0/10 видеа имат субтитри)
+  Podcast: 462 chars
+  🟢 LOW | 
+
+[INTERNET] -- GENERAL_SELF_REVIEW --
+  Query: artificial intelligence progress
+  RSS: 3 items
+  GDELT: 0 items
+  arXiv: 2 papers
+  GitHub: 0 repos
+  YouTube transcript: НЯМА (0/10 видеа имат субтитри)
+  Podcast: 479 chars
+  🟢 LOW | 
+  [LLM] Ollama qwen3:1.7b...
+[INTERNET] Глобален синтез: 1 оси анализирани
+
+[INTERNET] SUMMARY:
+  🔴 CRITICAL:  []
+  🟡 HIGH:      []
+  Total: 25 axes
+[FAST_CYCLE] internet_agent -> OK
+[CIVILIZATION_SNAPSHOT] generating CIVILIZATION axis snapshots...
+[CIVILIZATION_SNAPSHOT] generating ECONOMY_WORK_REVIEW...
+[CIVILIZATION_SNAPSHOT] wrote ECONOMY_WORK_REVIEW -> /mnt/c/Users/emilb/Desktop/AGI/CORTEX++_QWEN/snapshots/civilization/economy_work/economy_work_snapshot_latest.json
+[CIVILIZATION_SNAPSHOT] generating INEQUALITY_POVERTY_REVIEW...
+[CIVILIZATION_SNAPSHOT] wrote INEQUALITY_POVERTY_REVIEW -> /mnt/c/Users/emilb/Desktop/AGI/CORTEX++_QWEN/snapshots/civilization/inequality_poverty/inequality_poverty_snapshot_latest.json
+[CIVILIZATION_SNAPSHOT] generating INFRASTRUCTURE_CITIES_REVIEW...
+[CIVILIZATION_SNAPSHOT] wrote INFRASTRUCTURE_CITIES_REVIEW -> /mnt/c/Users/emilb/Desktop/AGI/CORTEX++_QWEN/snapshots/civilization/infrastructure_cities/infrastructure_cities_snapshot_latest.json
+[CIVILIZATION_SNAPSHOT] generating GOVERNANCE_INSTITUTIONS_REVIEW...
+[CIVILIZATION_SNAPSHOT] wrote GOVERNANCE_INSTITUTIONS_REVIEW -> /mnt/c/Users/emilb/Desktop/AGI/CORTEX++_QWEN/snapshots/civilization/governance_institutions/governance_institutions_snapshot_latest.json
+[CIVILIZATION_SNAPSHOT] generating EDUCATION_CULTURE_REVIEW...
+[CIVILIZATION_SNAPSHOT] wrote EDUCATION_CULTURE_REVIEW -> /mnt/c/Users/emilb/Desktop/AGI/CORTEX++_QWEN/snapshots/civilization/education_culture/education_culture_snapshot_latest.json
+[CIVILIZATION_SNAPSHOT] generating TECHNOLOGY_INFRA_REVIEW...
+[CIVILIZATION_SNAPSHOT] wrote TECHNOLOGY_INFRA_REVIEW -> /mnt/c/Users/emilb/Desktop/AGI/CORTEX++_QWEN/snapshots/civilization/technology_infra/technology_infra_snapshot_latest.json
+[CIVILIZATION_SNAPSHOT] generating TECHNOLOGY_AI_REVIEW...
+[CIVILIZATION_SNAPSHOT] wrote TECHNOLOGY_AI_REVIEW -> /mnt/c/Users/emilb/Desktop/AGI/CORTEX++_QWEN/snapshots/civilization/technology_ai/technology_ai_snapshot_latest.json
+[CIVILIZATION_SNAPSHOT] done.
+[FAST_CYCLE] civilization_snapshots_agent -> OK
+[FAST_CYCLE] planet_snapshots_agent -> FAILED: unmatched '}' (energy_review_provider.py, line 37)
+[HUMAN_SNAPSHOT] generating HUMAN axis snapshots...
+[HUMAN_SNAPSHOT] generating HUMAN_WELL_BEING_REVIEW...
+[HUMAN_SNAPSHOT] wrote HUMAN_WELL_BEING_REVIEW -> /mnt/c/Users/emilb/Desktop/AGI/CORTEX++_QWEN/snapshots/human/human_well_being/human_well_being_snapshot_latest.json
+[HUMAN_SNAPSHOT] generating CULTURE_MEDIA_REVIEW...
+[HUMAN_SNAPSHOT] wrote CULTURE_MEDIA_REVIEW -> /mnt/c/Users/emilb/Desktop/AGI/CORTEX++_QWEN/snapshots/human/culture_media/culture_media_snapshot_latest.json
+[HUMAN_SNAPSHOT] generating COGNITION_LEARNING_REVIEW...
+[HUMAN_SNAPSHOT] wrote COGNITION_LEARNING_REVIEW -> /mnt/c/Users/emilb/Desktop/AGI/CORTEX++_QWEN/snapshots/human/cognition_learning/cognition_learning_snapshot_latest.json
+[HUMAN_SNAPSHOT] generating SOCIAL_RELATIONS_REVIEW...
+[HUMAN_SNAPSHOT] wrote SOCIAL_RELATIONS_REVIEW -> /mnt/c/Users/emilb/Desktop/AGI/CORTEX++_QWEN/snapshots/human/social_relations/social_relations_snapshot_latest.json
+[HUMAN_SNAPSHOT] generating GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL...
+[HUMAN_SNAPSHOT] wrote GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL -> /mnt/c/Users/emilb/Desktop/AGI/CORTEX++_QWEN/snapshots/human/governance_rights_human/governance_rights_human_snapshot_latest.json
+[HUMAN_SNAPSHOT] done.
+[FAST_CYCLE] human_snapshots_agent -> OK
+[COSMOS_SNAPSHOT] generating COSMOS axis snapshots...
+[COSMOS_SNAPSHOT] generating SPACE_INFRASTRUCTURE_REVIEW (REAL)...
+[COSMOS_SNAPSHOT] wrote SPACE_INFRASTRUCTURE_REVIEW -> /mnt/c/Users/emilb/Desktop/AGI/CORTEX++_QWEN/snapshots/cosmos/space_infrastructure/space_infrastructure_snapshot_latest.json
+[COSMOS_SNAPSHOT] generating COSMIC_RESOURCES_REVIEW (REAL)...
+[COSMOS_SNAPSHOT] wrote COSMIC_RESOURCES_REVIEW -> /mnt/c/Users/emilb/Desktop/AGI/CORTEX++_QWEN/snapshots/cosmos/cosmic_resources/cosmic_resources_snapshot_latest.json
+[COSMOS_SNAPSHOT] generating LONG_TERM_FUTURE_REVIEW (LLM)...
+[COSMOS_SNAPSHOT] wrote LONG_TERM_FUTURE_REVIEW -> /mnt/c/Users/emilb/Desktop/AGI/CORTEX++_QWEN/snapshots/cosmos/long_term_future/long_term_future_snapshot_latest.json

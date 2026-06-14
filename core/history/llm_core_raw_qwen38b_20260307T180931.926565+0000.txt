@@ -1,0 +1,64 @@
+MODEL: qwen3:8b
+
+PROMPT:
+
+Ти си QWEN_PLANET_SNAPSHOT_AGENT, част от CORTEX++_QWEN.
+
+ЗАДАЧА:
+  - Генерираш КОМПАКТЕН JSON snapshot за една ос.
+  - Отговаряш САМО с един валиден JSON обект, БЕЗ никакъв текст преди или след него.
+  - НЕ използвай префикси като "Thinking..." или "done thinking.".
+  - LEVEL трябва да е LOW, MEDIUM или HIGH.
+  - SIGNALS са 3–5 много кратки bullets (по 1 изречение).
+  - KEY_METRICS са 3–7 метрики с име и кратко текстово описание (без числа).
+
+ОС:
+  - FOOD_REVIEW (Храна и продоволствена сигурност)
+
+ИЗХОД (примерен формат, който трябва да спазиш):
+
+{
+  "axis": "FOOD_REVIEW",
+  "level": "MEDIUM",
+  "signals": [
+    "кратък сигнал 1",
+    "кратък сигнал 2",
+    "кратък сигнал 3"
+  ],
+  "key_metrics": [
+    { "name": "metric_1", "description": "кратко текстово описание на метриката" },
+    { "name": "metric_2", "description": "кратко текстово описание" }
+  ]
+}
+
+Върни само реален JSON обект в този формат, без допълнителен текст.
+
+
+RESPONSE:
+Thinking...
+Okay, let's tackle this query. The user wants a JSON snapshot for the "FOOD_REVIEW" axis. First, I need to make sure I understand all the requirements.
+
+The level has to be LOW, MEDIUM, or HIGH. I think MEDIUM is a good balance here. Next, the signals should be 3-5 short bullets. They need to be concise, one-sentence each. For FOOD_REVIEW, maybe something about consumer sentiment, supply chain issues, and regulatory changes. That covers different aspects.
+
+Now, key metrics. There should be 3-7 metrics with names and descriptions. Let me brainstorm. Maybe "Consumer Sentiment Index" to measure public opinion. "Supply Chain Disruption Rate" for tracking disruptions. "Regulatory Compliance Score" to assess adherence. "Food Safety Incident Rate" for safety issues. "Sustainability Metrics" for eco-friendly practices. "Price Volatility Index" for price stability. That's six metrics, which fits the range.
+
+Wait, the example has two metrics, but the user said 3-7. So including six is okay. Need to ensure descriptions are brief without numbers. Also, check that the JSON is valid, no extra text. Let me structure it properly. Make sure the axis is exactly "FOOD_REVIEW", level is MEDIUM, signals are three concise points, and key_metrics array with each object having name and description. No markdown, just plain JSON. Alright, that should cover it.
+...done thinking.
+
+{
+  "axis": "FOOD_REVIEW",
+  "level": "MEDIUM",
+  "signals": [
+    "Растеж на критиките към хранителни продукти с ниска калорична стойност",
+    "Повишена несигурност в доставките на сезонни продукти",
+    "Разисквания за регулаторни промени в хранителната безопасност"
+  ],
+  "key_metrics": [
+    { "name": "Consumer_Sentiment_Index", "description": "Мерка за общественото мнение за хранителни продукти" },
+    { "name": "Supply_Chain_Disruption_Rate", "description": "Процент на прекъснатите доставки на продоволствените стоки" },
+    { ""name": "Regulatory_Compliance_Score", "description": "Оценка за съответствие със стандарти на хранителна безопасност" },
+    { "name": "Food_Safety_Incident_Rate", "description": "Честота на инциденти свързани с хранителна несигурност" },
+    { "name": "Sustainability_Metrics", "description": "Измерване на екологичната устойчивост на продуктите" },
+    { "name": "Price_Volatility_Index", "description": "Степен на колебанията в цените на основни хранителни стоки" }
+  ]
+}

@@ -1,0 +1,145 @@
+{
+  "axis": "GENERAL_SELF_REVIEW",
+  "domain": "cosmos",
+  "timestamp": "2026-05-17T14:33:21.575535+00:00",
+  "sources_count": 10,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 2,
+  "youtube_items": [
+    {
+      "title": "[YT] Elon Musk on AGI Timeline, US vs China, Job Markets... - YouTube",
+      "summary": "My concern isn't the long run. It's the next 3 to seven years. How do we head towards Star Trek and not Terminator? &gt;&gt; I call AI and robotics the supersonic tsunami. We're in the singularity. &gt;&gt; When is all white by color work gone? &gt;&gt; Anything short of shaping atoms. AI can do half or more of those jobs right now. There's no onoff switch. It is coming and accelerating. The transition will be bumpy. You have a solution to this. &gt;&gt; I don't make a bet here. Um, &gt;&gt; China's done an incredible job, &gt;&gt; right? I mean, it's running circles around us. Do you imagine that the US could make that level of investment and commitment &gt;&gt; based on current trends? Uh, China will far exceed the rest of the world in uh AI compute. &gt;&gt; Every major CEO and economis",
+      "link": "https://www.youtube.com/watch?v=RSNuB9pj9P8",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "RSNuB9pj9P8",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Ex-OpenAI Scientist WARNS: \"You Have No Idea...\" - YouTube",
+      "summary": "You may not take interest in politics, but politics will take interest in you. So the same applies to AI many times over. &gt;&gt; Ilas Sutskver, the man behind the invention of open AI, gave a pretty strong speech at the University of Toronto. He expressed great concerns about the upcoming AI, which might disrupt our entire world. Watch this. &gt;&gt; The reason it's not going to be the most conventional convocation speech is because there is something a little different going on right now. You all leave, we all leave in the most unusual time ever. And this is something that people might say often, but I think it's actually true this time. And the reason it's true this time is because of AI, right? Obviously, I mean, from what I hear, the AI of today has already changed what it means to b",
+      "link": "https://www.youtube.com/watch?v=79-bApI3GIU",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "79-bApI3GIU",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "Конкуренцията за влиянието в AI-сферата води до нестабилност и потенциално рискове за развитие на AI",
+    "root_cause": "Конфликти между ключови фигури като Musk и Altman, както и създаването на AI-съдържание от китайски продукти, са резултат от недостатъчна координация и прозрачност в развитието на AI",
+    "severity": "HIGH",
+    "leverage_points": [
+      "Международни партньорства и регулаторни рамки, които определят насоката на AI-развитието",
+      "Образование и прозрачност в AI-разработката, за да се избегнат конфликти на интереси"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Създаване на глобален стандарт за прозрачност и етичност в AI-разработката",
+        "measurable_goal": "Повече от 50% от най-големите AI-компании да са съгласни с новия стандарт за прозрачност до 2026 г.",
+        "timeframe": "дългосрочно"
+      },
+      {
+        "action": "Развитие на образователни програми за AI-етичност и управление на рискове",
+        "measurable_goal": "До 2025 г. 80% от AI-разработчиците в света да преминат обучение за етичност и управление на рискове",
+        "timeframe": "средносрочно"
+      }
+    ],
+    "evidence": [
+      "Musk v. Altman trial: Конфликтът между ключови фигури в AI-сферата показва нестабилност в управлението на технологиите",
+      "How Chinese short dramas became AI content machines: Китайските AI-драми показват как AI може да бъде използван за масово съдържание, което може да бъде неетично"
+    ],
+    "generalization": "Проблемът с нестабилността в AI-сферата е свързан с домейна cosmos, защото нестабилността в развитието на AI може да повлияе на по-широката технологична еволюция и международната политика",
+    "summary": "Конкуренцията за влиянието в AI-сферата води до нестабилност и рискове за развитие на AI, което изисква прозрачност и етичност.",
+    "risk_level": "HIGH"
+  },
+  "raw_items": [
+    {
+      "title": "Musk v. Altman week 3: Elon Musk and Sam Altman traded blows over each other’s credibility. Now the jury will pick a side.",
+      "summary": "In the final week of the Musk v. Altman trial, lawyers traded blows over Elon Musk’s and OpenAI CEO Sam Altman’s credibility. Altman was grilled on his alleged history of lying and self-dealing involving companies that do business with OpenAI. But he fired back, painting Musk as a power-seeker who wanted to control the development&#8230;",
+      "link": "https://www.technologyreview.com/2026/05/15/1137357/musk-v-altman-week-3/",
+      "published": "Fri, 15 May 2026 23:39:35 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "The Download: China’s AI drama factory and the WHO’s missing health targets",
+      "summary": "This is today&#8217;s edition of The Download, our weekday newsletter that provides a daily dose of what&#8217;s going on in the world of technology. How Chinese short dramas became AI content machines China’s short drama industry is fueled by bite-sized, melodramatic, and smutty shows built for smartphone scrolling. Now, many are being made entirely with&#8230;",
+      "link": "https://www.technologyreview.com/2026/05/15/1137341/the-download-china-short-drama-ai-who-health-targets/",
+      "published": "Fri, 15 May 2026 12:10:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "The world is on track to miss its health targets",
+      "summary": "Every year the World Health Organization publishes a global health statistics report. It features the numbers behind world health trends and, importantly, assesses whether we’re on track to reach ambitious goals set in 2015. It’s a bit like a health grade. The 2026 report was published on Wednesday. And the results aren’t looking brilliant. While&#8230;",
+      "link": "https://www.technologyreview.com/2026/05/15/1137270/the-world-is-on-track-to-miss-its-health-targets/",
+      "published": "Fri, 15 May 2026 09:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "How Chinese short dramas became AI content machines",
+      "summary": "In a dimly lit bedroom, a frightened young woman is thrown onto a bed by a tall, muscular man. He grabs her hand, and flame-like vines crawl across her body, fusing with her flesh. She levitates, then drops. A dragon-shaped tattoo appears across her chest. “Two months,” the man says. “Give me an heir, or&#8230;",
+      "link": "https://www.technologyreview.com/2026/05/15/1137326/chinese-short-dramas-ai/",
+      "published": "Fri, 15 May 2026 09:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "OpenAI and Malta partner to bring ChatGPT Plus to all citizens",
+      "summary": "OpenAI and Malta partner to expand AI access, offering ChatGPT Plus and training to help citizens build practical AI skills and use AI responsibly.",
+      "link": "https://openai.com/index/malta-chatgpt-plus-partnership",
+      "published": "Sat, 16 May 2026 00:00:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "How business operations teams use Codex",
+      "summary": "See how business operations teams can use Codex to create initiative briefs, strategy updates, leadership decision packets, progress updates, and more from real work inputs.",
+      "link": "https://openai.com/academy/codex-for-work/how-business-operations-teams-use-codex",
+      "published": "Fri, 15 May 2026 00:00:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Databricks brings GPT-5.5 to enterprise agent workflows",
+      "summary": "Databricks uses GPT-5.5 for enterprise agent workflows after the model set a new state of the art on the OfficeQA Pro benchmark.",
+      "link": "https://openai.com/index/databricks",
+      "published": "Fri, 15 May 2026 00:00:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "How data science teams use Codex",
+      "summary": "See how data science teams can use Codex to build root-cause briefs, impact readouts, KPI memos, scoped analyses, and dashboard specs from real work inputs.",
+      "link": "https://openai.com/academy/codex-for-work/how-data-science-teams-use-codex",
+      "published": "Fri, 15 May 2026 00:00:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] Elon Musk on AGI Timeline, US vs China, Job Markets... - YouTube",
+      "summary": "My concern isn't the long run. It's the next 3 to seven years. How do we head towards Star Trek and not Terminator? &gt;&gt; I call AI and robotics the supersonic tsunami. We're in the singularity. &gt;&gt; When is all white by color work gone? &gt;&gt; Anything short of shaping atoms. AI can do half or more of those jobs right now. There's no onoff switch. It is coming and accelerating. The transition will be bumpy. You have a solution to this. &gt;&gt; I don't make a bet here. Um, &gt;&gt; China's done an incredible job, &gt;&gt; right? I mean, it's running circles around us. Do you imagine that the US could make that level of investment and commitment &gt;&gt; based on current trends? Uh, China will far exceed the rest of the world in uh AI compute. &gt;&gt; Every major CEO and economis",
+      "link": "https://www.youtube.com/watch?v=RSNuB9pj9P8",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "RSNuB9pj9P8",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Ex-OpenAI Scientist WARNS: \"You Have No Idea...\" - YouTube",
+      "summary": "You may not take interest in politics, but politics will take interest in you. So the same applies to AI many times over. &gt;&gt; Ilas Sutskver, the man behind the invention of open AI, gave a pretty strong speech at the University of Toronto. He expressed great concerns about the upcoming AI, which might disrupt our entire world. Watch this. &gt;&gt; The reason it's not going to be the most conventional convocation speech is because there is something a little different going on right now. You all leave, we all leave in the most unusual time ever. And this is something that people might say often, but I think it's actually true this time. And the reason it's true this time is because of AI, right? Obviously, I mean, from what I hear, the AI of today has already changed what it means to b",
+      "link": "https://www.youtube.com/watch?v=79-bApI3GIU",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "79-bApI3GIU",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ]
+}

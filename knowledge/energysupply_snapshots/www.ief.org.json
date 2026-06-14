@@ -1,0 +1,629 @@
+
+<!DOCTYPE html>
+
+<html data-scroll="0" lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0" />
+
+    
+            <!-- Global site tag (gtag.js) - Google Analytics -->
+            <script async src="https://www.googletagmanager.com/gtag/js?id=G-HE6T4VXPJR"></script>
+            <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() { dataLayer.push(arguments); }
+            gtag('js', new Date());
+
+            gtag('config', 'G-HE6T4VXPJR');
+            </script>
+    
+
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://www.ief.org/" />
+    <meta name="twitter:domain" content="www.ief.org" />
+
+        <title>International Energy Forum - IEF | Energy Security through Dialogue</title>
+        <meta property="og:locale" content="en_GB" />
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta property="og:title" content="International Energy Forum - IEF | Energy Security through Dialogue" />
+            <meta name="twitter:title" content="International Energy Forum - IEF | Energy Security through Dialogue" />
+            <meta name="description" content="The IEF, as the neutral facilitator of open dialogue on energy with key global oil and gas actors, helps ensure energy security and transparency" />
+            <meta property="og:description" content="The IEF, as the neutral facilitator of open dialogue on energy with key global oil and gas actors, helps ensure energy security and transparency" />
+            <meta name="twitter:description" content="The IEF, as the neutral facilitator of open dialogue on energy with key global oil and gas actors, helps ensure energy security and transparency" />
+            <meta property="og:site_name" content="International Energy Forum" />
+            <meta property="og:image" content="https://www.ief.org/_resources/files/template/ief-social.png" />
+            <meta name="twitter:image:src" content="https://www.ief.org/_resources/files/template/ief-social.png" />
+                <meta property="og:image:alt" content="IEF Social" />
+                <meta name="twitter:image:alt" content="IEF Social" />
+            <meta property="og:author" content="https://www.facebook.com/IEFdialogue" />
+            <meta name="twitter:site" content="@ief_dialogue" />
+            <meta name="twitter:creator" content="@ief_dialogue" />
+
+    <link rel="shortcut icon" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/favicon.png" />
+    <link rel="apple-touch-icon" sizes="512x512" href="/_resources/files/template/ief-512.png" />
+    <link rel="apple-touch-icon" sizes="192x192" href="/_resources/files/template/ief-192.png" />
+    <meta name="apple-mobile-web-app-title" content="jodidata.org">
+
+    
+    
+        <link rel="stylesheet" href="/_resources/css/core.min.css?v=1NCj9sIxLm6yZiTj2L7e0ErETKMc2Kp0KrjMSkM8d6s" />
+        <link rel="stylesheet" href="/_resources/css/layout.min.css?v=0XrZUIBBSrUm8G1MelH4a1nslnlJIhjqRZ-58JN8nwM" />
+        <script src="/_resources/js/wc.min.js?v=VTJA6kqruDWcMHtk2XmShXZHwV0hGwFukjE6fsFdMPA"></script>
+    
+    
+
+<!-- Twitter conversion tracking base code -->
+<script>
+!function(e,t,n,s,u,a){e.twq||(s=e.twq=function(){s.exe?s.exe.apply(s,arguments):s.queue.push(arguments);
+},s.version='1.1',s.queue=[],u=t.createElement(n),u.async=!0,u.src='https://static.ads-twitter.com/uwt.js',
+a=t.getElementsByTagName(n)[0],a.parentNode.insertBefore(u,a))}(window,document,'script');
+twq('config','ofstr');
+</script>
+<!-- End Twitter conversion tracking base code -->
+
+</head>
+<body>
+    <header>
+        <div class="inner">
+            <div class="flex">
+                <a href="/" class="logo">
+                    <picture>
+                        <source type="image/svg+xml" srcset="/_resources/files/template/ief.svg" />
+                        <img srcset="/_resources/files/template/ief.png 1x,/_resources/files/template/ief2x.png 2x" src="/_resources/files/template/ief.png" alt="IEF" title="International Energy Forum (IEF)" />
+                    </picture>
+                </a>
+                <span class="energy-dialogue">
+                    <a href="/focus/global-dialogue">The Global Home of <span><br /></span>Energy Dialogue</a>
+                </span>
+                <nav>
+                    <ul class="flex">
+                        <li class="social li">
+    <a href="https://www.linkedin.com/company/ief-international-energy-forum" target="_blank" class="hovers">
+        <picture class="hover">
+            <source type="image/svg+xml" srcset="/_resources/files/icons/li.svg" />
+            <img srcset="/_resources/files/icons/li.png 1x,/_resources/files/icons/li2x.png 2x" src="/_resources/files/icons/li.png" alt="LinkedIn" />
+        </picture>
+        <picture>
+            <source type="image/svg+xml" srcset="/_resources/files/icons/li.svg" />
+            <img srcset="/_resources/files/icons/li.png 1x,/_resources/files/icons/li2x.png 2x" src="/_resources/files/icons/li.png" alt="LinkedIn" />
+        </picture>
+    </a>
+</li>
+<li class="social tw">
+    <a href="https://twitter.com/ief_dialogue" target="_blank" class="hovers">
+        <picture class="hover">
+            <source type="image/svg+xml" srcset="/_resources/files/icons/tw.svg" />
+            <img srcset="/_resources/files/icons/tw.png 1x,/_resources/files/icons/tw2x.png 2x" src="/_resources/files/icons/tw.png" alt="Twitter" />
+        </picture>
+        <picture>
+            <source type="image/svg+xml" srcset="/_resources/files/icons/tw.svg" />
+            <img srcset="/_resources/files/icons/tw.png 1x,/_resources/files/icons/tw2x.png 2x" src="/_resources/files/icons/tw.png" alt="Twitter" />
+        </picture>
+    </a>
+</li>
+<li class="social fb">
+    <a href="https://www.facebook.com/IEFdialogue" target="_blank" class="hovers">
+        <picture class="hover">
+            <source type="image/svg+xml" srcset="/_resources/files/icons/fb.svg" />
+            <img srcset="/_resources/files/icons/fb.png 1x,/_resources/files/icons/fb2x.png 2x" src="/_resources/files/icons/fb.png" alt="Facebook" />
+        </picture>
+        <picture>
+            <source type="image/svg+xml" srcset="/_resources/files/icons/fb.svg" />
+            <img srcset="/_resources/files/icons/fb.png 1x,/_resources/files/icons/fb2x.png 2x" src="/_resources/files/icons/fb.png" alt="Facebook" />
+        </picture>
+    </a>
+</li>
+<li class="social tv">
+    <a href="https://www.youtube.com/IEFSHQ" target="_blank" class="hovers">
+        <picture class="hover">
+            <source type="image/svg+xml" srcset="/_resources/files/icons/ief-tv.svg" />
+            <img srcset="/_resources/files/icons/ief-tv.png 1x,/_resources/files/icons/ief-tv2x.png 2x" src="/_resources/files/icons/ief-tv.png" alt="IEF TV" />
+        </picture>
+        <picture>
+            <source type="image/svg+xml" srcset="/_resources/files/icons/ief-tv.svg" />
+            <img srcset="/_resources/files/icons/ief-tv.png 1x,/_resources/files/icons/ief-tv2x.png 2x" src="/_resources/files/icons/ief-tv.png" alt="IEF TV" />
+        </picture>
+    </a>
+</li>
+
+                        <li class="jodi">
+                            <a href="https://www.jodidata.org" target="_blank" title="JODI Oil & Gas World Databases">
+                                <picture>
+                                    <source type="image/svg+xml" srcset="/_resources/files/template/jodi-better.svg" />
+                                    <img srcset="/_resources/files/template/jodi.png 1x,/_resources/files/template/jodi-better2x.png 2x" src="/_resources/files/template/jodi-better.png" alt="JODI" />
+                                </picture>
+                            </a>
+                        </li>
+                        <li class="flex">
+                            <button type="button" id="btnMenu" class="flex menu" aria-label="Open Menu"><span class="text">Menu</span><span class="hamburger"><span></span></span></button>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            
+        </div>
+            <nav id="searchResults" role="navigation" class="linksmenu inner">
+
+        <section class="find">
+            <div class="inner">
+                <div class="search-box flex">
+                    <label for="txtFind">
+                        <picture>
+                            <source type="image/svg+xml" srcset="/_resources/files/icons/mg.svg">
+                            <img srcset="/_resources/files/icons/mg.png 1x,/_resources/files/icons/mg2x.png 2x" src="/_resources/files/icons/mg.png" alt="Find">
+                        </picture>
+                    </label>
+                    <input type="text" id="txtFind" name="txtFind" placeholder="Search the site" data-bind="textInput: searchText" />
+                    <span class="no-results" data-bind="visible: showNoResults()">No matches found</span>
+                </div>
+
+                <span class="loader" data-bind="visible: loading() === true"></span>
+
+                <ul data-bind="visible: list().length > 0 && loading() === false">
+                    <li class="title flex"><span>Search Results</span><button type="button" data-bind="click: closeResults"><span><span></span></span></button></li>
+                    <!-- ko foreach: list -->
+                    <li><a data-bind="text: title, attr: { href: path }"></a></li>
+                    <!-- /ko -->
+                </ul>
+            </div>
+        </section>
+
+        <ul id="navMenu" class="flex" data-bind="visible: list().length == 0">
+                    <li class="flex subnav">
+                        <a href="/about">About</a>
+                            <ul>
+                                    <li><a href="/about/the-ief">The IEF</a></li>
+                                    <li><a href="/about/global-energy-dialogue">Global Energy Dialogue</a></li>
+                                    <li><a href="/about/leadership">Leadership</a></li>
+                                    <li><a href="/about/secretary-general">Secretary General</a></li>
+                                    <li><a href="/about/member-countries">Member Countries</a></li>
+                                    <li><a href="/about/executive-board">Executive Board</a></li>
+                                    <li><a href="/about/industry-advisory-council">Industry Advisory Council</a></li>
+                                    <li><a href="/about/history">History</a></li>
+                                    <li><a href="/about/ief-charter">IEF Charter</a></li>
+                                    <li><a href="/about/contact">Contact</a></li>
+                                    <li><a href="/about/careers">Careers</a></li>
+                                    <li><a href="/about/jodi">JODI</a></li>
+                                    <li><a href="/about/subscribe">Subscribe</a></li>
+                            </ul>
+                    </li>
+                    <li class="flex subnav">
+                        <a href="/focus">Focus</a>
+                            <ul>
+                                    <li><a href="/focus/energy-security">Energy Security</a></li>
+                                    <li><a href="/focus/energy-market-transparency">Energy Market Transparency</a></li>
+                                    <li><a href="/focus/climate-and-energy-transitions">Climate and Energy Transitions</a></li>
+                                    <li><a href="/focus/ief-trilateral-work-program">IEF Trilateral Work Program</a></li>
+                            </ul>
+                    </li>
+                    <li class="flex subnav">
+                        <a href="/programs">Programs</a>
+                            <ul>
+                                    <li><a href="/programs/global-energy-solutions-initiative">Global Energy Solutions Initiative</a></li>
+                                    <li><a href="/programs/investment">Investment</a></li>
+                                    <li><a href="/programs/energy-for-all">Energy For All</a></li>
+                                    <li><a href="/programs/methane-initiative">Methane Initiative</a></li>
+                                    <li><a href="/programs/circular-carbon-economy">Circular Carbon Economy</a></li>
+                                    <li><a href="/programs/energy-efficiency">Energy Efficiency</a></li>
+                                    <li><a href="/programs/oil-gas">Oil &amp; Gas</a></li>
+                                    <li><a href="/programs/hydrogen-market-pathways">Hydrogen Market Pathways</a></li>
+                                    <li><a href="/programs/infrastructure">Infrastructure</a></li>
+                                    <li><a href="/programs/power">Power</a></li>
+                                    <li><a href="/focus/smart-energy-transitions-technology">Smart Energy</a></li>
+                                    <li><a href="/programs/transport">Transport</a></li>
+                                    <li><a href="/programs/sustainability">Sustainability</a></li>
+                                    <li><a href="/programs/resilience">Resilience</a></li>
+                            </ul>
+                    </li>
+                    <li class="flex subnav">
+                        <a href="/ief-events">Events</a>
+                            <ul>
+                                    <li><a href="/ief-events/ief-events">IEF Events</a></li>
+                                    <li><a href="/ief-events/ministerial-meetings">Ministerial Meetings</a></li>
+                                    <li><a href="/ief-events/energy-markets-outlook-symposium">Outlooks Symposium</a></li>
+                                    <li><a href="/ief-events/jodi">JODI</a></li>
+                                    <li><a href="/ief-events/trilateral-program">Trilateral Work Program</a></li>
+                            </ul>
+                    </li>
+                    <li class="flex subnav">
+                        <a href="/ief-news">News</a>
+                            <ul>
+                                    <li><a href="/ief-news/press-releases">Press Releases</a></li>
+                                    <li><a href="/ief-news/articles-commentary">Articles &amp; Commentary</a></li>
+                                    <li><a href="/ief-news/in-the-news">In the News</a></li>
+                                    <li><a href="/ief-news/ief-tv">IEF TV</a></li>
+                                    <li><a href="/ief-events/recent-events">Recent Events</a></li>
+                            </ul>
+                    </li>
+                    <li class="flex">
+                        <a href="/reports">Reports</a>
+                    </li>
+                    <li class="flex subnav">
+                        <a href="/data">Analysis &amp; Reviews</a>
+                            <ul>
+                                    <li><a href="/data/comparative-analysis">IEF Comparative Analysis</a></li>
+                                    <li><a href="/data/oil-gas-data-review">IEF Oil &amp; Gas Data Review</a></li>
+                            </ul>
+                    </li>
+        </ul>
+
+    </nav>
+
+    </header>
+    <span class="loader"></span>
+    
+    
+
+    <main>
+        
+
+<div id="ocms_Main" class="inner">
+    
+    <section class="filesliderbanner e2e separation divider scrollshow" id="homesliderbanner">
+        <button type="button" class="attr-slider-button-left" disabled="disabled"><img src="/_resources/files/icons/double-arrow-left.svg" /></button>
+        <button type="button" class="attr-slider-button-right"><img src="/_resources/files/icons/double-arrow-left.svg" /></button>
+        <div class="fileslider">
+            <figure class="flex" data-show="2">
+                    <a><img src="/_resources/files/pages/home-banner/ministerial-save-the-datex2.jpg" alt="Ministerial Save The Datex2" /></a>
+                    <a href="/events/16th-iea-ief-opec-symposium-on-energy-outlooks"><img src="/_resources/files/pages/home-banner/recent-event-web-2800.jpg" alt="Recent Event Web 2800" /></a>
+                    <a href="/events/industry-advisory-council-meeting-scaling-energy-investment-innovation-and-resilience"><img src="/_resources/files/pages/home-banner/recent-event-iac.jpg" alt="Recent Event IAC" /></a>
+                    <a href="/events/global-perspectives-on-energy-market-transparency-and-energy-data-reporting-jodi-and-beyond"><img src="/_resources/files/pages/home-banner/recent-event-25-nov.jpg" alt="Recent Event 25 Nov" /></a>
+                    <a href="/events/ief-roundtable-on-building-carbon-management-and-hydrogen-markets"><img src="/_resources/files/pages/home-banner/recent-event-26-nov.jpg" alt="Recent Event 26 Nov" /></a>
+            </figure>
+        </div>
+    </section>
+    <script type="text/javascript" src="/_resources/js/attrslider.min.js"></script>
+    <script type="text/javascript">
+        useAttrSlider(document.getElementById("homesliderbanner"));
+    </script>
+    <section id="featured" class="featured e2e tilelist divider scrollshow">
+        <ul data-bind="foreach: snippets, visible: snippets().length > 0" class="grid">
+            <li class="multiply flex link" data-bind="class: Css">
+                <img data-bind="attr: { src: Img, alt: Imgalt }" />
+                <div class="flex column" data-bind="click: Url, html: Description">
+                </div>
+            </li>
+        </ul>
+
+        <script type="text/javascript">
+            var featdta = [{"ID":4103,"ParentID":3231,"Number":11,"Name":"Featured","Description":null,"Tags":[{"ID":4168,"ParentID":4103,"Number":1,"Name":"Test","Description":null,"Tags":[],"Items":[{"ID":1637,"Number":280,"Title":"Monthly Comparative Analysis","SubTitle":"Analysis","Date":null,"Description":"<div>\n  <picture>\n    <source type=\"image/svg+xml\" srcset=\"/_resources/files/icons/ief.svg\" />\n    <img srcset=\"/_resources/files/icons/ief.png 1x,/_resources/files/icons/ief2x.png 2x\" src=\"/_resources/files/icons/ief.png\" alt=\"IEF\" />\n  </picture>\n  <span data-bind=\"text: SubTitle\">Analysis</span>\n</div>\n<h2><span>Monthly </span>Comparative Analysis</h2>\n  <picture>\n    <source type=\"image/svg+xml\" srcset=\"/_resources/files/template/iea-opec-eia.svg\">\n    <img srcset=\"/_resources/files/template/iea-opec-eia.png 1x,/_resources/files/template/iea-opec-eia2x.png 2x\" src=\"/_resources/files/template/iea-opec-eia.png\" alt=\"IEA OPEC EIA\">\n  </picture>","Link":"/data/comparative-analysis","Files":[{"ID":183885,"Name":"Map Only","Description":null,"Path":"/snippets/monthly-comparative-analysis/map-only.svg","Type":"i","URL":null,"FilePath":"/_resources/files/snippets/monthly-comparative-analysis/map-only.svg","FileExt":"svg","Tags":[]}],"Tags":[{"Number":1,"Name":"Test"},{"Number":11,"Name":"Featured"}]},{"ID":1642,"Number":281,"Title":"Oil Gas Data Review","SubTitle":"Analysis","Date":null,"Description":"<div>\n  <picture>\n    <source type=\"image/svg+xml\" srcset=\"/_resources/files/icons/ief.svg\" />\n    <img srcset=\"/_resources/files/icons/ief.png 1x,/_resources/files/icons/ief2x.png 2x\" src=\"/_resources/files/icons/ief.png\" alt=\"IEF\" />\n  </picture>\n  <span data-bind=\"text: SubTitle\">Analysis</span>\n</div>\n<h2><span>Monthly </span>Oil &amp; Gas Data Review</h2>\n<picture>\n  <source type=\"image/svg+xml\" srcset=\"/_resources/files/template/jodi-partners.svg\" />\n  <img srcset=\"/_resources/files/template/jodi-partners.png 1x,/_resources/files/template/jodi-partners2x.png 2x\" src=\"/_resources/files/template/jodi-partners.png\" alt=\"JODI Partners\" />\n</picture>","Link":"/data/oil-gas-data-review","Files":[{"ID":183886,"Name":"Chart Only","Description":null,"Path":"/snippets/oil-gas-data-review/chart-only.svg","Type":"i","URL":null,"FilePath":"/_resources/files/snippets/oil-gas-data-review/chart-only.svg","FileExt":"svg","Tags":[]}],"Tags":[{"Number":1,"Name":"Test"},{"Number":11,"Name":"Featured"}]},{"ID":1639,"Number":282,"Title":"Trilateral Work Program","SubTitle":"Focus","Date":null,"Description":"<div>\n<picture>\n  <source type=\"image/svg+xml\" srcset=\"/_resources/files/template/iea-ief-opec.svg\" />\n  <img srcset=\"/_resources/files/template/iea-ief-opec.png 1x,/_resources/files/template/iea-ief-opec2x.png 2x\" src=\"/_resources/files/template/iea-ief-opec.png\" alt=\"IEA IEF OPEC\" />\n</picture>\n<span>Focus</span>\n</div>\n<h2>Trilateral Work Program</h2>","Link":"/focus/ief-trilateral-work-program","Files":[],"Tags":[{"Number":1,"Name":"Test"},{"Number":11,"Name":"Featured"}]},{"ID":1640,"Number":286,"Title":"Energy Security","SubTitle":"Focus","Date":null,"Description":"<div>\n  <picture>\n    <source type=\"image/svg+xml\" srcset=\"/_resources/files/icons/ief.svg\" />\n    <img srcset=\"/_resources/files/icons/ief.png 1x,/_resources/files/icons/ief2x.png 2x\" src=\"/_resources/files/icons/ief.png\" alt=\"IEF\" />\n  </picture>\n  <span>Focus</span>\n</div>\n<h2>Energy Security</h2>","Link":"/focus/energy-security","Files":[],"Tags":[{"Number":1,"Name":"Test"},{"Number":11,"Name":"Featured"}]},{"ID":1641,"Number":288,"Title":"Market Transparency","SubTitle":"Focus","Date":null,"Description":"<div>\n  <picture>\n    <source type=\"image/svg+xml\" srcset=\"/_resources/files/icons/ief.svg\" />\n    <img srcset=\"/_resources/files/icons/ief.png 1x,/_resources/files/icons/ief2x.png 2x\" src=\"/_resources/files/icons/ief.png\" alt=\"IEF\" />\n  </picture>\n  <span>Focus</span>\n</div>\n<h2>Market Transparency</h2>","Link":"/focus/energy-market-transparency","Files":[],"Tags":[{"Number":1,"Name":"Test"},{"Number":11,"Name":"Featured"}]}]}],"Items":[{"ID":1651,"Number":274,"Title":"16th IEA-IEF-OPEC Symposium on Energy Outlooks","SubTitle":"Event","Date":"2026-02-04T00:00:00","Description":"<div>\n<span>Event</span>\n</div>\n<h2><strong>16th IEA-IEF-OPEC</strong> Symposium on Energy Outlooks</h2>","Link":"/events/16th-iea-ief-opec-symposium-on-energy-outlooks","Files":[{"ID":184454,"Name":"Website Feature 930X455  1","Description":null,"Path":"/snippets/16th-iea-ief-opec-symposium-on-energy-outlooks/website-feature-930x455-_1.jpg","Type":"i","URL":null,"FilePath":"/_resources/files/snippets/16th-iea-ief-opec-symposium-on-energy-outlooks/website-feature-930x455-_1.jpg","FileExt":"jpg","Tags":[]}],"Tags":[{"Number":11,"Name":"Featured"}]},{"ID":1637,"Number":280,"Title":"Monthly Comparative Analysis","SubTitle":"Analysis","Date":null,"Description":"<div>\n  <picture>\n    <source type=\"image/svg+xml\" srcset=\"/_resources/files/icons/ief.svg\" />\n    <img srcset=\"/_resources/files/icons/ief.png 1x,/_resources/files/icons/ief2x.png 2x\" src=\"/_resources/files/icons/ief.png\" alt=\"IEF\" />\n  </picture>\n  <span data-bind=\"text: SubTitle\">Analysis</span>\n</div>\n<h2><span>Monthly </span>Comparative Analysis</h2>\n  <picture>\n    <source type=\"image/svg+xml\" srcset=\"/_resources/files/template/iea-opec-eia.svg\">\n    <img srcset=\"/_resources/files/template/iea-opec-eia.png 1x,/_resources/files/template/iea-opec-eia2x.png 2x\" src=\"/_resources/files/template/iea-opec-eia.png\" alt=\"IEA OPEC EIA\">\n  </picture>","Link":"/data/comparative-analysis","Files":[{"ID":183885,"Name":"Map Only","Description":null,"Path":"/snippets/monthly-comparative-analysis/map-only.svg","Type":"i","URL":null,"FilePath":"/_resources/files/snippets/monthly-comparative-analysis/map-only.svg","FileExt":"svg","Tags":[]}],"Tags":[{"Number":1,"Name":"Test"},{"Number":11,"Name":"Featured"}]},{"ID":1642,"Number":281,"Title":"Oil Gas Data Review","SubTitle":"Analysis","Date":null,"Description":"<div>\n  <picture>\n    <source type=\"image/svg+xml\" srcset=\"/_resources/files/icons/ief.svg\" />\n    <img srcset=\"/_resources/files/icons/ief.png 1x,/_resources/files/icons/ief2x.png 2x\" src=\"/_resources/files/icons/ief.png\" alt=\"IEF\" />\n  </picture>\n  <span data-bind=\"text: SubTitle\">Analysis</span>\n</div>\n<h2><span>Monthly </span>Oil &amp; Gas Data Review</h2>\n<picture>\n  <source type=\"image/svg+xml\" srcset=\"/_resources/files/template/jodi-partners.svg\" />\n  <img srcset=\"/_resources/files/template/jodi-partners.png 1x,/_resources/files/template/jodi-partners2x.png 2x\" src=\"/_resources/files/template/jodi-partners.png\" alt=\"JODI Partners\" />\n</picture>","Link":"/data/oil-gas-data-review","Files":[{"ID":183886,"Name":"Chart Only","Description":null,"Path":"/snippets/oil-gas-data-review/chart-only.svg","Type":"i","URL":null,"FilePath":"/_resources/files/snippets/oil-gas-data-review/chart-only.svg","FileExt":"svg","Tags":[]}],"Tags":[{"Number":1,"Name":"Test"},{"Number":11,"Name":"Featured"}]},{"ID":1639,"Number":282,"Title":"Trilateral Work Program","SubTitle":"Focus","Date":null,"Description":"<div>\n<picture>\n  <source type=\"image/svg+xml\" srcset=\"/_resources/files/template/iea-ief-opec.svg\" />\n  <img srcset=\"/_resources/files/template/iea-ief-opec.png 1x,/_resources/files/template/iea-ief-opec2x.png 2x\" src=\"/_resources/files/template/iea-ief-opec.png\" alt=\"IEA IEF OPEC\" />\n</picture>\n<span>Focus</span>\n</div>\n<h2>Trilateral Work Program</h2>","Link":"/focus/ief-trilateral-work-program","Files":[],"Tags":[{"Number":1,"Name":"Test"},{"Number":11,"Name":"Featured"}]},{"ID":1640,"Number":286,"Title":"Energy Security","SubTitle":"Focus","Date":null,"Description":"<div>\n  <picture>\n    <source type=\"image/svg+xml\" srcset=\"/_resources/files/icons/ief.svg\" />\n    <img srcset=\"/_resources/files/icons/ief.png 1x,/_resources/files/icons/ief2x.png 2x\" src=\"/_resources/files/icons/ief.png\" alt=\"IEF\" />\n  </picture>\n  <span>Focus</span>\n</div>\n<h2>Energy Security</h2>","Link":"/focus/energy-security","Files":[],"Tags":[{"Number":1,"Name":"Test"},{"Number":11,"Name":"Featured"}]},{"ID":1641,"Number":288,"Title":"Market Transparency","SubTitle":"Focus","Date":null,"Description":"<div>\n  <picture>\n    <source type=\"image/svg+xml\" srcset=\"/_resources/files/icons/ief.svg\" />\n    <img srcset=\"/_resources/files/icons/ief.png 1x,/_resources/files/icons/ief2x.png 2x\" src=\"/_resources/files/icons/ief.png\" alt=\"IEF\" />\n  </picture>\n  <span>Focus</span>\n</div>\n<h2>Market Transparency</h2>","Link":"/focus/energy-market-transparency","Files":[],"Tags":[{"Number":1,"Name":"Test"},{"Number":11,"Name":"Featured"}]}]}];
+            _bs.onloadAdd("_bs.taggedsnippets.init(featdta, \"featured\", true)");
+        </script>
+    </section>
+    <section id="analysis" class="analysis e2e separation tilelist divider scrollshow">
+        <header class="flex">
+            <h1>Energy Spotlights</h1>
+        </header>
+        <ul data-bind="foreach: snippets, visible: snippets().length > 0" class="flex slider">
+            <li class="flex slide multiply img link">
+                <img data-bind="attr: { src: Img, alt: Imgalt }" />
+                <div class="tile flex column" data-bind="click: Url">
+                    <h2 data-bind="html: Title"></h2>
+                    <h3 data-bind="text: SubTitle"></h3>
+                    <p data-bind="html: Description, visible: Description() !== null"></p>
+                </div>
+            </li>
+        </ul>
+
+        <script type="text/javascript">
+            var analsdta = [{"ID":3238,"ParentID":3231,"Number":3,"Name":"Analysis","Description":null,"Tags":[],"Items":[{"ID":1638,"Number":277,"Title":"A Critical Minerals Enabled Energy Future","SubTitle":"A report by the International Energy Forum","Date":null,"Description":" ","Link":"/reports/a-critical-minerals-enabled-energy-future","Files":[{"ID":184445,"Name":"Website Spotlight","Description":null,"Path":"/snippets/a-critical-minerals-enabled-energy-future/website-spotlight.jpg","Type":"i","URL":null,"FilePath":"/_resources/files/snippets/a-critical-minerals-enabled-energy-future/website-spotlight.jpg","FileExt":"jpg","Tags":[]}],"Tags":[{"Number":3,"Name":"Analysis"},{"Number":8,"Name":"Analysis 2"}]},{"ID":1621,"Number":291,"Title":"6th IEF-EU Energy and Climate Day","SubTitle":"An exclusive high-level event co-hosted by the IEF","Date":null,"Description":null,"Link":"/events/6th-ief-eu-energy-and-climate-day-forum","Files":[{"ID":182985,"Name":"Climate Day 2025 736Px","Description":null,"Path":"/snippets/6th-ief-eubr-energy-and-climate-day/climate-day-2025-736px.jpg","Type":"i","URL":null,"FilePath":"/_resources/files/snippets/6th-ief-eubr-energy-and-climate-day/climate-day-2025-736px.jpg","FileExt":"jpg","Tags":[]}],"Tags":[{"Number":3,"Name":"Analysis"},{"Number":8,"Name":"Analysis 2"}]},{"ID":1622,"Number":292,"Title":"Building Markets to Scale Carbon Management Solutions","SubTitle":"A report by the International Energy Forum","Date":null,"Description":null,"Link":"/reports/building-markets-to-scale-carbon-management-solutions","Files":[{"ID":182986,"Name":"Carbon Mgmt Scale 736Px","Description":null,"Path":"/snippets/building-markets-tobr-scale-carbon-management-solutions/carbon-mgmt-scale-736px.jpg","Type":"i","URL":null,"FilePath":"/_resources/files/snippets/building-markets-tobr-scale-carbon-management-solutions/carbon-mgmt-scale-736px.jpg","FileExt":"jpg","Tags":[]}],"Tags":[{"Number":3,"Name":"Analysis"},{"Number":8,"Name":"Analysis 2"}]},{"ID":1530,"Number":294,"Title":"Global Energy<br />Solutions Initiative","SubTitle":"Shaping a multidimensional approach to energy transitions","Date":null,"Description":null,"Link":"/programs/global-energy-solutions-initiative","Files":[{"ID":180405,"Name":"Gesi Spotlight","Description":null,"Path":"/snippets/global-energybr-solutions-initiative/gesi-spotlight.jpg","Type":"i","URL":null,"FilePath":"/_resources/files/snippets/global-energybr-solutions-initiative/gesi-spotlight.jpg","FileExt":"jpg","Tags":[]}],"Tags":[{"Number":3,"Name":"Analysis"},{"Number":8,"Name":"Analysis 2"}]}]}];
+            _bs.onloadAdd("_bs.taggedsnippets.init(analsdta, \"analysis\", true)");
+        </script>
+    </section>
+    <section id="latestnews" class="reports e2e separation divider scrollshow">
+        <header class="flex">
+            <h1><a href="/ief-news">Latest</a></h1>
+            <button type="button" class="view" onclick="window.location.href='/ief-news'">View all</button>
+        </header>
+        <span class="loader" data-bind="visible: items().length === 0"></span>
+        <ul data-bind="foreach: items, visible: items().length > 0" class="flex">
+            <li data-bind="click: go" class="flex column">
+                <div>
+                    <strong data-bind="text: newsType"></strong>
+                    <h2><a data-bind="html: newsTitle, attr: { href: url }"></a></h2>
+                    <p><span data-bind="text: formattedDate"></span></p>
+                </div>
+            </li>
+        </ul>
+        <script type="text/javascript">
+            var latestnewsdta = [{"id":15585,"created":"2026-02-19T11:40:00","date":"2026-02-19T00:00:00","title":"Monthly Oil & Gas Data Review","summary":"Summary of findings from the latest JODI oil & gas database update in February 2026.","details":null,"path":"monthly-oil--gas-data-review-46","link":"/_resources/files/news/monthly-oil--gas-review/02-26.pdf","category":"Oil & Gas Data Review","files":[],"tags":[]},{"id":15584,"created":"2026-02-12T20:32:00","date":"2026-02-13T00:00:00","title":"Comparative Analysis of Monthly Reports on the Oil Market","summary":"February 2026 summary findings from a comparison of data and forecasts on the oil market by IEA, OPEC and EIA.","details":null,"path":"comparative-analysis-of-monthly-reports-on-the-oil-market-72","link":null,"category":"Comparative Analysis","files":[],"tags":[{"number":6,"name":"News > Comparative Analysis IEA OPEC EIA"}]},{"id":15573,"created":"2026-02-04T14:02:00","date":"2026-02-04T00:00:00","title":"IEA, IEF, And OPEC Convene Industry Leaders for Critical Dialogue on Energy Security","summary":"The IEA, IEF, and OPEC today convened the world's most influential policymakers in the global energy transformation at the 16th IEA-IEF-OPEC Symposium on Energy Outlooks, held under the patronage of His Royal Highness Prince Abdulaziz bin Salman bin Abdulaziz, Minister of Energy of Saudi Arabia.","details":null,"path":"iea-ief-and-opec-convene-industry-leaders-for-critical-dialogue-on-energy-security-1","link":null,"category":"Press Releases","files":[],"tags":[]},{"id":15572,"created":"2026-02-03T13:28:00","date":"2026-02-03T00:00:00","title":"IEF and OGDC Announce Agreement to Strengthen Collaboration","summary":"The Oil and Gas Decarbonization Charter (OGDC) and the International Energy Forum (IEF) today signed a Memorandum of Understanding (MoU) to deepen public–private collaboration and accelerate practical decarbonization across the global oil and gas sector.","details":null,"path":"ief-and-ogdc-announce-agreement-to-strengthen-collaboration","link":null,"category":"Press Releases","files":[],"tags":[]},{"id":15565,"created":"2025-12-23T17:27:00","date":"2025-12-23T00:00:00","title":"SMM: US Fed Governor Urges Interest Rate Cut, LME Copper Fluctuates and Closes Higher Overnight","summary":"On December 21, the International Energy Forum (IEF) reported that over 60% of global demand for critical minerals relies on international trade. With the development of clean energy, demand for copper, lithium, nickel, cobalt, etc., continues to grow, while supply is highly concentrated. Geopolitical factors, export restrictions, and processing bottlenecks increase risks. Countries are strengthening supply chain security and international coordination.","details":null,"path":"smm-us-fed-governor-urges-interest-rate-cut-lme-copper-fluctuates-and-closes-higher-overnight","link":"https://news.metal.com/newscontent/103684371/US-Fed-Governor-Urges-Interest-Rate-Cut,-LME-Copper-Fluctuates-and-Closes-Higher-Overnight-[SMM-Copper-Morning-Meeting-Minutes]/","category":"In the News","files":[],"tags":[]},{"id":15556,"created":"2025-12-23T17:27:00","date":"2025-12-23T00:00:00","title":"Banzinga: Global Critical Minerals Rely On International Trade, Study Shows Critical Vulnerabilities","summary":"More than 60% of global demand for critical minerals is met through international trade, according to a recent study. While cross-border trade has helped scale supply, it has also increased exposure to geopolitical tensions, export controls, and processing bottlenecks, making mineral supply chains far more vulnerable to disruption amid surging demand.","details":null,"path":"banzinga-global-critical-minerals-rely-on-international-trade-study-shows-critical-vulnerabilities","link":"https://www.benzinga.com/markets/commodities/25/12/49556534/global-critical-minerals-rely-on-international-trade-study-shows-critical-vulnerabilities","category":"In the News","files":[],"tags":[]}];
+            _bs.onloadAdd("_bs.latestnews.init(latestnewsdta, \"latestnews\", true)");
+        </script>
+    </section>
+    <section id="ibmc" class="separation ibmc tilelist divider scrollshow">
+        <header class="flex">
+            <h1><a href="/reports">Analysis &amp; Reports</a></h1>
+            <button type="button" class="view" onclick="window.location.href = '/reports'">View all</button>
+        </header>
+        <ul data-bind="foreach: news, visible: news().length > 0" class="flex slider">
+            <li class="slide img link" data-bind="click: go">
+                <img data-bind="attr: { src: img, alt: imgalt }" />
+            </li>
+        </ul>
+
+        <script type="text/javascript">
+        var insgtsdta = [{"id":15571,"created":"2026-01-30T15:01:00","date":"2026-01-30T00:00:00","title":"Outlooks Comparison Report 2026","summary":"IEF Outlooks Comparison Report 2026","details":"","path":"outlooks-comparison-report-2026","link":"/events/16th-iea-ief-opec-symposium-on-energy-outlooks#report","category":"Analysis & Reports","files":[{"id":184493,"name":"Analysts & Reports Tile","description":null,"path":"/news/outlooks-comparison-report-2026/analysts--reports-tile.jpg","type":"i","url":null,"filePath":"/_resources/files/news/outlooks-comparison-report-2026/analysts--reports-tile.jpg","fileExt":"jpg","tags":[]}],"tags":[]},{"id":15548,"created":"2025-12-18T08:17:00","date":"2025-12-18T00:00:00","title":"A Critical Minerals Enabled Energy Future","summary":"Critical minerals are vital to AI, digitalisation and the clean-energy transition. This IEF report explores rising demand, supply-chain constraints, the need for diversification and circularity, and how producer–consumer dialogue and better data can improve stability, affordability and market confidence.","details":"","path":"a-critical-minerals-enabled-energy-future","link":"/reports/a-critical-minerals-enabled-energy-future","category":"Analysis & Reports","files":[{"id":184324,"name":"596 Web Tile 1","description":null,"path":"/news/a-critical-minerals-enabled-energy-future/596-web-tile_1.jpg","type":"i","url":null,"filePath":"/_resources/files/news/a-critical-minerals-enabled-energy-future/596-web-tile_1.jpg","fileExt":"jpg","tags":[]},{"id":149245,"name":"Reports Tile","description":null,"path":"/banners/reports-tile.jpg","type":"i","url":null,"filePath":"/_resources/files/banners/reports-tile.jpg","fileExt":"jpg","tags":[]}],"tags":[]},{"id":15486,"created":"2025-06-16T15:56:00","date":"2025-06-16T00:00:00","title":"Building Markets to Scale Carbon Management Solutions","summary":"As the world transitions toward net-zero emissions, this IEF report explores how Carbon Management Solutions (CMS), including Carbon Capture, Utilization and Storage (CCUS), can be scaled through stronger policy frameworks, commercial market development, and investment incentives.","details":"","path":"building-markets-to-scale-carbon-management-solutions","link":"/reports/building-markets-to-scale-carbon-management-solutions","category":"Analysis & Reports","files":[{"id":182916,"name":"Web Tile","description":null,"path":"/news/building-markets-to-scale-carbon-management-solutions/web-tile.jpg","type":"i","url":null,"filePath":"/_resources/files/news/building-markets-to-scale-carbon-management-solutions/web-tile.jpg","fileExt":"jpg","tags":[]},{"id":149245,"name":"Reports Tile","description":null,"path":"/banners/reports-tile.jpg","type":"i","url":null,"filePath":"/_resources/files/banners/reports-tile.jpg","fileExt":"jpg","tags":[]}],"tags":[]}];
+        _bs.onloadAdd("_bs.newslist.init(insgtsdta, \"ibmc\", true)");
+        </script>
+    </section>
+    <section class="latestevents e2e separation slideouter divider scrollshow" id="latestevents">
+        <span class="loader" data-bind="visible: events().length === 0"></span>
+        <header class="flex">
+            <h1><a href="/ief-events/recent-events">Recent Events</a></h1>
+            <button type="button" class="view" onclick="window.location.href = '/ief-events/recent-events'">View all</button>
+        </header>
+        <div class="slidecontainer textover" id="latesteventsslider">
+            <div class="flex slider" data-bind="foreach: events, visible: events().length > 0, style: { left: pagePosition }">
+                <article class="slide">
+                    <figure class="flex" data-bind="css: { active: $parent.cpage() === $index() + 1 }">
+                        <img data-bind="attr: { src: Img, alt: Imgalt }" />
+                        <figcaption class="link flex" data-bind="click: Url">
+                            <span>Read More</span>
+                        </figcaption>
+                    </figure>
+                </article>
+            </div>
+            <nav class="charms">
+                <a href="javascript:;" class="prev" data-bind="click: $root.changePage.bind($data, 'p')">
+                    <picture>
+                        <source type="image/svg+xml" srcset="/_resources/files/icons/arrows/left.svg" />
+                        <img srcset="/_resources/files/icons/arrows/left.png 1x,/_resources/files/icons/arrows/left2x.png 2x" src="/_resources/files/icons/arrows/left.png" alt="Prev" />
+                    </picture>
+                </a>
+                <ul data-bind="foreach: events, visible: events().length > 0">
+                    <li data-bind="css: { active: $index() === ($root.cpage() - 1) }, click: $root.changePage.bind($data, $index)"></li>
+                </ul>
+                <a href="javascript:;" class="next" data-bind="click: $root.changePage.bind($data, 'n')">
+                    <picture>
+                        <source type="image/svg+xml" srcset="/_resources/files/icons/arrows/right.svg" />
+                        <img srcset="/_resources/files/icons/arrows/right.png 1x,/_resources/files/icons/arrows/right2x.png 2x" src="/_resources/files/icons/arrows/right.png" alt="Next" />
+                    </picture>
+                </a>
+            </nav>
+        </div>
+        <script type="text/javascript">
+            var ltevntsdta = [{"ID":1838,"Starts":"2026-02-04T09:00:00","Ends":"2026-02-04T17:00:00","Title":"16th IEA-IEF-OPEC Symposium on Energy Outlooks","Summary":"The 16th IEA-IEF-OPEC Symposium on Energy Outlooks will gather in Riyadh, Saudi Arabia on 04 February 2026 under the theme \"Megatrends, Resilience, and Change\". The joint producer—consumer dialogue is co-hosted by Jassim Isa Alshirawi, Secretary General of the International Energy Forum; Haitham Al Ghais, Secretary General of the Organization of the Petroleum Exporting Countries and Fatih Birol, Executive Director of the of the International Energy Agency.","Details":"","Venue":"KAPSARC","Address1":null,"Address2":null,"Address3":null,"City":"Riyadh","County":null,"Postcode":null,"Country":"Saudi Arabia","Latitude":null,"Longitude":null,"Path":"16th-iea-ief-opec-symposium-on-energy-outlooks","Link":null,"Private":false,"Pinned":false,"Files":[{"ID":184395,"Name":"16Th Symp Web Banner","Description":null,"Path":"/events/16th-iea-ief-opec-symposium-on-energy-outlooks/16th-symp-web-banner.jpg","Type":"i","URL":null,"FilePath":"/_resources/files/events/16th-iea-ief-opec-symposium-on-energy-outlooks/16th-symp-web-banner.jpg","FileExt":"jpg","Tags":[]}],"Tags":[{"Number":4,"Name":"Energy Markets Outlooks Symposium"},{"Number":10,"Name":"Energy For All"},{"Number":11,"Name":"Trilateral Programme"},{"Number":32,"Name":"16th IEA-IEF-OPEC Symposium on Energy Outlooks"}]},{"ID":1842,"Starts":"2026-02-03T09:00:00","Ends":"2026-02-03T16:15:00","Title":"Industry Advisory Council Meeting: Scaling Energy Investment, Innovation, and Resilience","Summary":"Against a backdrop of progressive technology breakthroughs and policy evolutions, the IEF’s Industry Advisory Council (IAC), meeting will provide a vital arena for open exchange, helping bridge perspectives and strengthen producer–consumer cooperation to manage historic energy system and market transformations.","Details":"","Venue":"IEF Headquarters","Address1":null,"Address2":null,"Address3":null,"City":"Riyadh","County":null,"Postcode":null,"Country":"Saudi Arabia","Latitude":null,"Longitude":null,"Path":"industry-advisory-council-meeting-scaling-energy-investment-innovation-and-resilience","Link":null,"Private":false,"Pinned":false,"Files":[{"ID":184354,"Name":"IAC Meeting 2","Description":null,"Path":"/events/industry-advisory-council-meeting-scaling-energy-investment-innovation-and-resilience/iac-meeting_2.jpg","Type":"i","URL":null,"FilePath":"/_resources/files/events/industry-advisory-council-meeting-scaling-energy-investment-innovation-and-resilience/iac-meeting_2.jpg","FileExt":"jpg","Tags":[]}],"Tags":[{"Number":23,"Name":"IAC"},{"Number":34,"Name":"IAC Meetings"}]},{"ID":1841,"Starts":"2025-11-26T09:00:00","Ends":"2025-11-26T17:00:00","Title":"JODI Inter-Secretariat meeting November 2025","Summary":"The IEF chaired the third 2025 JODI Inter-Secretariat Meeting in person on 26 November 2025 with the participation of six JODI partner organizations including  APEC, GECF, IEA, IEF, OLADE and OPEC.","Details":"","Venue":null,"Address1":null,"Address2":null,"Address3":null,"City":"Riyadh","County":null,"Postcode":null,"Country":"Saudi Arabia","Latitude":null,"Longitude":null,"Path":"jodi-inter-secretariat-meeting-november-2025","Link":null,"Private":false,"Pinned":false,"Files":[{"ID":184291,"Name":"Amira Jodi Group","Description":null,"Path":"/events/jodi-inter-secretariat-meeting-november-2025/amira-jodi-group.jpg","Type":"i","URL":null,"FilePath":"/_resources/files/events/jodi-inter-secretariat-meeting-november-2025/amira-jodi-group.jpg","FileExt":"jpg","Tags":[]}],"Tags":[{"Number":6,"Name":"JODI"}]},{"ID":1831,"Starts":"2025-11-26T09:00:00","Ends":"2025-11-26T15:30:00","Title":"IEF Roundtable on Building Carbon Management and Hydrogen Markets","Summary":"The IEF Roundtable on Building Carbon Management and Hydrogen Markets invites IEF government and industry thought leaders to take stock and reinforce pathways for the affordable, secure, and sustainable deployment of carbon and hydrogen value chains.","Details":"","Venue":"IEF Headquarters","Address1":null,"Address2":null,"Address3":null,"City":"Riyadh","County":null,"Postcode":null,"Country":null,"Latitude":null,"Longitude":null,"Path":"ief-roundtable-on-building-carbon-management-and-hydrogen-markets","Link":null,"Private":false,"Pinned":false,"Files":[{"ID":183337,"Name":"C Mgmt Rrtable Event Banner","Description":null,"Path":"/events/ief-roundtable-on-building-carbon-management-and-hydrogen-markets/c-mgmt-rrtable-event-banner.jpg","Type":"i","URL":null,"FilePath":"/_resources/files/events/ief-roundtable-on-building-carbon-management-and-hydrogen-markets/c-mgmt-rrtable-event-banner.jpg","FileExt":"jpg","Tags":[]}],"Tags":[]},{"ID":1832,"Starts":"2025-11-25T09:00:00","Ends":"2025-11-25T17:30:00","Title":"Global Perspectives on Energy Market Transparency and Energy Data Reporting: JODI and Beyond","Summary":"The objective of the Energy Market Transparency Seminar is to share global perspectives on Energy Market Transparency and Energy Data Reporting requirements considering the challenges and opportunities for global energy market transparency in the age of global energy market shifts, transitions, and digitalization.","Details":"","Venue":"IEF Headquarters","Address1":null,"Address2":null,"Address3":null,"City":"Riyadh","County":null,"Postcode":null,"Country":null,"Latitude":null,"Longitude":null,"Path":"global-perspectives-on-energy-market-transparency-and-energy-data-reporting-jodi-and-beyond","Link":null,"Private":false,"Pinned":false,"Files":[{"ID":183650,"Name":"Energy Transparency Banner0","Description":null,"Path":"/events/global-perspectives-on-energy-market-transparency-and-energy-data-reporting-jodi-and-beyond/energy-transparency-banner0.jpg","Type":"i","URL":null,"FilePath":"/_resources/files/events/global-perspectives-on-energy-market-transparency-and-energy-data-reporting-jodi-and-beyond/energy-transparency-banner0.jpg","FileExt":"jpg","Tags":[]}],"Tags":[{"Number":6,"Name":"JODI"}]}];
+            _bs.onloadAdd("_bs.latestevents.init(ltevntsdta, \"latestevents\")");
+        </script>
+    </section>
+    <section class="videobanner separation divider scrollshow">
+        <figure class="flex">
+            <video loop="" muted="" playsinline="" preload="metadata"><source src= "/_resources/files/pages/home-video/1920x768-home-v3.mp4" type="video/mp4"></video>
+                <figcaption><p>Important Role <br />of the IEF</p><p><button type="button" class="play" onclick="javascript:_pvd.playvideo();">Full Video</button></p></figcaption>
+        </figure>
+    </section>
+    <section id="ieftv" class="ieftv separation e2e tilelist scrollshow">
+        <header class="flex">
+            <h1><a href="https://www.youtube.com/IEFSHQ" target="_blank">IEF TV</a></h1>
+            <a href="https://www.youtube.com/IEFSHQ" target="_blank" class="hovers">
+                <picture class="hover">
+                    <source type="image/svg+xml" srcset="/_resources/files/icons/ief-tv.svg" />
+                    <img srcset="/_resources/files/icons/ief-tv.png 1x,/_resources/files/icons/ief-tv2x.png 2x" src="/_resources/files/icons/ief-tv.png" alt="IEF TV" />
+                </picture>
+                <picture>
+                    <source type="image/svg+xml" srcset="/_resources/files/icons/ief-tv.svg" />
+                    <img srcset="/_resources/files/icons/ief-tv.png 1x,/_resources/files/icons/ief-tv2x.png 2x" src="/_resources/files/icons/ief-tv.png" alt="IEF TV" />
+                </picture>
+            </a>
+        </header>
+        <span class="loader" data-bind="visible: snippets().length === 0"></span>
+        <ul data-bind="foreach: snippets, visible: snippets().length > 0" class="flex slider">
+            <li class="slide flex">
+                <div class="yt" data-bind="visible: isYouTube()">
+                        <iframe data-bind="attr: { src: ytSource, title: Title }" frameborder="0" enablejsapi="true" allowfullscreen="1"></iframe>
+                </div>
+                <div class="im" data-bind="visible: !isYouTube()">
+                    <a data-bind="attr: { href: Link }" target="_blank"><img data-bind="attr: { src: Img, alt: Title }" /></a>
+                </div>
+                <div class="flex">
+                    <div>
+                        <h2 data-bind="text: Title, click: open"></h2>
+                        <time data-bind="visible: Date() != null, attr: { datetime: Date }, text: YearMonth"></time>
+                    </div>
+                    <p data-bind="text: Description"></p>
+                </div>
+            </li>
+        </ul>
+        <script type="text/javascript">
+            var ieftvdta = [{"ID":3242,"ParentID":3312,"Number":4,"Name":"IEFTV","Description":null,"Tags":[],"Items":[{"ID":1670,"Number":7,"Title":"Highlights of the 16th IEA-IEF-OPEC Symposium on Energy Outlooks","SubTitle":null,"Date":"2026-02-04T00:00:00","Description":"Highlights from the 16th IEA-IEF-OPEC Symposium on Energy Outlooks at IEF headquarters in Riyadh on the 04 February 2026.\n","Link":"https://www.youtube.com/embed/_2JGNWERzJU","Files":[],"Tags":[{"Number":4,"Name":"IEFTV"},{"Number":9,"Name":"IEFTV Top"}]},{"ID":1669,"Number":8,"Title":"Highlights of the Industry Advisory Council Meeting: Scaling Energy Investment, Innovation, and Resilience","SubTitle":null,"Date":"2026-02-03T00:00:00","Description":"Highlights from the IEF Industry Advisory Council Meeting: Scaling Energy Investment, Innovation, and Resilience at IEF headquarters in Riyadh on the 03 February 2026.\n","Link":"https://www.youtube.com/embed/MBAo20DYlpA","Files":[],"Tags":[{"Number":4,"Name":"IEFTV"},{"Number":9,"Name":"IEFTV Top"}]},{"ID":1646,"Number":9,"Title":"Highlights of the Global Perspectives on Energy Market Transparency and Energy Data Reporting Seminar","SubTitle":null,"Date":"2025-11-25T00:00:00","Description":"Highlights from the IEF energy market transparency seminar Global Perspectives on Energy Market Transparency and Energy Data Reporting: JODI and Beyond at IEF headquarters in Riyadh on the 25 November 2025.\n","Link":"https://www.youtube.com/embed/Kfw4deFJDig","Files":[],"Tags":[{"Number":4,"Name":"IEFTV"}]}]}];
+            _bs.onloadAdd("_bs.taggedsnippets.init(ieftvdta, \"ieftv\", true)");
+        </script>
+    </section>
+
+
+
+</div>
+
+
+
+
+        
+    </main>
+    <div class="backtop separation bottom">
+        <a href="javascript:;" onclick="window.scroll({top: 0, left: 0, behavior: 'smooth'});">
+            <picture>
+                <source type="image/svg+xml" srcset="/_resources/files/icons/arrows/back-top.svg" />
+                <img srcset="/_resources/files/icons/arrows/back-top.png 1x,/_resources/files/icons/arrows/back-top2x.png 2x" src="/_resources/files/icons/arrows/back-top.png" alt="Back to top" />
+            </picture>
+        </a>
+    </div>
+    <footer>
+        <section id="notifications" class="notifications">
+            <div class="inner">
+                <h1>Subscribe</h1>
+                <p data-bind="text: message">Select your preferences for push notifications</p>
+                <span class="loader" data-bind="visible: loading() === true"></span>
+                <div class="options flex" data-bind="visible: loading() === false">
+                    <!-- ko foreach: subscriptions -->
+                    <button class="option" type="button" data-bind="text: name, css: { selected: subscribed() === true }, click: toggleOption"></button>
+                    <!-- /ko -->
+                    <button class="subscribe" type="button" data-bind="click: subscribe, text: btnText">Subscribe</button>
+                </div>
+            </div>
+        </section>
+        <section class="copy">
+            <div class="inner flex">
+                <nav class="notices">
+                        <ul class="flex links">
+                <li><a href="/terms-conditions">Terms &amp; Conditions</a></li>
+                <li><a href="/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/about/careers">Careers</a></li>
+                <li><a href="/sitemap">Sitemap</a></li>
+                <li><a href="/about/contact">Contact</a></li>
+    </ul>
+
+                </nav>
+                <div class="social">
+                    <ul class="flex">
+                        <li class="social li">
+    <a href="https://www.linkedin.com/company/ief-international-energy-forum" target="_blank" class="hovers">
+        <picture class="hover">
+            <source type="image/svg+xml" srcset="/_resources/files/icons/li.svg" />
+            <img srcset="/_resources/files/icons/li.png 1x,/_resources/files/icons/li2x.png 2x" src="/_resources/files/icons/li.png" alt="LinkedIn" />
+        </picture>
+        <picture>
+            <source type="image/svg+xml" srcset="/_resources/files/icons/li.svg" />
+            <img srcset="/_resources/files/icons/li.png 1x,/_resources/files/icons/li2x.png 2x" src="/_resources/files/icons/li.png" alt="LinkedIn" />
+        </picture>
+    </a>
+</li>
+<li class="social tw">
+    <a href="https://twitter.com/ief_dialogue" target="_blank" class="hovers">
+        <picture class="hover">
+            <source type="image/svg+xml" srcset="/_resources/files/icons/tw.svg" />
+            <img srcset="/_resources/files/icons/tw.png 1x,/_resources/files/icons/tw2x.png 2x" src="/_resources/files/icons/tw.png" alt="Twitter" />
+        </picture>
+        <picture>
+            <source type="image/svg+xml" srcset="/_resources/files/icons/tw.svg" />
+            <img srcset="/_resources/files/icons/tw.png 1x,/_resources/files/icons/tw2x.png 2x" src="/_resources/files/icons/tw.png" alt="Twitter" />
+        </picture>
+    </a>
+</li>
+<li class="social fb">
+    <a href="https://www.facebook.com/IEFdialogue" target="_blank" class="hovers">
+        <picture class="hover">
+            <source type="image/svg+xml" srcset="/_resources/files/icons/fb.svg" />
+            <img srcset="/_resources/files/icons/fb.png 1x,/_resources/files/icons/fb2x.png 2x" src="/_resources/files/icons/fb.png" alt="Facebook" />
+        </picture>
+        <picture>
+            <source type="image/svg+xml" srcset="/_resources/files/icons/fb.svg" />
+            <img srcset="/_resources/files/icons/fb.png 1x,/_resources/files/icons/fb2x.png 2x" src="/_resources/files/icons/fb.png" alt="Facebook" />
+        </picture>
+    </a>
+</li>
+<li class="social tv">
+    <a href="https://www.youtube.com/IEFSHQ" target="_blank" class="hovers">
+        <picture class="hover">
+            <source type="image/svg+xml" srcset="/_resources/files/icons/ief-tv.svg" />
+            <img srcset="/_resources/files/icons/ief-tv.png 1x,/_resources/files/icons/ief-tv2x.png 2x" src="/_resources/files/icons/ief-tv.png" alt="IEF TV" />
+        </picture>
+        <picture>
+            <source type="image/svg+xml" srcset="/_resources/files/icons/ief-tv.svg" />
+            <img srcset="/_resources/files/icons/ief-tv.png 1x,/_resources/files/icons/ief-tv2x.png 2x" src="/_resources/files/icons/ief-tv.png" alt="IEF TV" />
+        </picture>
+    </a>
+</li>
+
+                    </ul>
+                </div>
+                <p>
+                    <span>International Energy Forum</span><br />
+                    &copy; IEF 2026
+                </p>
+            </div>
+        </section>
+    </footer>
+    <input name="__RequestVerificationToken" type="hidden" value="CfDJ8OgxhC8N5fZEqH-JRMnqwPmqW0ybBy6wHL75eAuofGHlyQbqH5D_tCOx3k1CUAPsIRTFt-2guPk9_KR3mhz3TninchvcH_-CHdIC52zncOSR5HqVI3FuVY3uG-9O_tUtETiVNZ2-IiEW4YdTNHmWcck" />
+    <link rel="stylesheet" href="https://use.typekit.net/kip0eub.css" />
+    <script type="text/javascript" src="/_resources/js/smoothscroll.js"></script>
+    <script type="text/javascript" src="/_resources/js/ko-3.5.1.js"></script>
+    
+    
+        <script src="/_resources/js/viewmodels/search/header.min.js?v=IDbbIX-WVij9Ixj0_wc-aeqdIwEbAj1IJDou35rw5Wc"></script>
+        <script src="/_resources/js/viewmodels/subscriptions/subscriptions.min.js?v=h5BXguzpAnJOKHM9e23Enm3YL38pybO4n2C0IR4omx4"></script>
+    
+    <script src="/_resources/js/swi.js"></script>
+    <script type="text/javascript">
+        _bs.headersearch.init("searchResults");
+    </script>
+    
+    
+    
+        <link rel="stylesheet" href="/_resources/css/home.min.css?v=jUE96pVzF1nHQ_RrEDgH15magJ-1EsU2FncSF9b4NDw" />
+        <script type="text/javascript" src="/_resources/js/viewmodels/snippets/tagged.min.js?v=IWNsQDqrh39a6QQ1cWk55BJMP6_q3ljeVvyHvbcQrRc"></script>
+        <script type="text/javascript" src="/_resources/js/viewmodels/events/latest.min.js?v=WyxPUuYZ-U7Cz7XTwfMeo_35RJ_5hPOkYUPct-vtVCE"></script>
+        <script type="text/javascript" src="/_resources/js/viewmodels/news/home.min.js?v=awQ0_QaITpl-cqhkTxLMNq87H3kfrE1krqts1D79AdY"></script>
+        <script type="text/javascript" src="/_resources/js/viewmodels/news/latest.min.js?v=qFYZVvYvPTehpkAfVkTL6ZvRosxImOdujOG393o52lw"></script>
+        <script type="text/javascript" src="/_resources/js/viewmodels/news/newsroom.min.js?v=kZIl3T6lTJnFo0T79rMBSC9lfAWk-D6FBl403-TA9yg"></script>
+        <script type="text/javascript" src="/_resources/js/viewmodels/files/banners.min.js?v=y6Dr_gpBIgRyTAPR3Vk-PHj4NDGfZvQJVARr2VmvcxY"></script>
+        <script type="text/javascript" src="/_resources/js/viewmodels/items/tagged.min.js?v=OHHllmeGaAhEDDikTs90lhoTgtZK2aguVJ62sz_bzS8"></script>
+        <script type="text/javascript" src="/_resources/js/home.min.js?v=0CYcoPI3i3fM3cQt_zeMJFr6VoIiOgJgUVu0NQvZz_g"></script>
+    
+    
+        <script type="text/javascript" src="/_resources/js/viewmodels/files/home.min.js?v=2"></script><style>section.two-column.newsroom.e2e{display:block}.slidecontainer.textover figcaption{top:80% !important;}@media screen and (min-width: 800px){.mainbanner.slidecontainer.textover nav {top:auto !important;bottom:20% !important;}}</style>
+    
+
+    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" style="display: block; height: 0; visibility: hidden;">
+        <defs>
+            <filter id="aqua">
+                <feColorMatrix color-interpolation-filters="sRGB" type="matrix" values="0 0 0 0 0
+                0 0.65 0 0 0
+                0 0 0.7 0 0
+                0 0 0 1 0" />
+            </filter>
+            <filter id="grey">
+                <feColorMatrix color-interpolation-filters="sRGB" type="matrix" values="0.7 0 0 0 0
+                0 0.7 0 0 0
+                0 0 0.7 0 0
+                0 0 0 1 0" />
+            </filter>
+            <filter id="darkgrey">
+                <feColorMatrix color-interpolation-filters="sRGB" type="matrix" values="0.24 0 0 0 0
+                0 0.24 0 0 0
+                0 0 0.24 0 0
+                0 0 0 1 0" />
+            </filter>
+            <filter id="yellow">
+                <feColorMatrix color-interpolation-filters="sRGB" type="matrix" values="0.96 0 0 0 0
+                0 0.59 0 0 0
+                0 0 0 0 0
+                0 0 0 1 0" />
+            </filter>
+            <filter id="orange">
+                <feColorMatrix color-interpolation-filters="sRGB" type="matrix" values="0.91 0 0 0 0
+                0 0.31 0 0 0
+                0 0 0.11 0 0
+                0 0 0 1 0" />
+            </filter>
+            <filter id="blue">
+                <feColorMatrix color-interpolation-filters="sRGB" type="matrix" values="0 0 0 0 0
+                0 0.62 0 0 0
+                0 0 0.89 0 0
+                0 0 0 1 0" />
+            </filter>
+        </defs>
+    </svg>
+    <script type="text/javascript">
+        _linkedin_partner_id = "5158786";
+        window._linkedin_data_partner_ids = window._linkedin_data_partner_ids || [];
+        window._linkedin_data_partner_ids.push(_linkedin_partner_id);
+    </script>
+    <script type="text/javascript">
+        (function (l) {
+            if (!l) {
+                window.lintrk = function (a, b) { window.lintrk.q.push([a, b]) };
+                window.lintrk.q = []
+            }
+            var s = document.getElementsByTagName("script")[0];
+            var b = document.createElement("script");
+            b.type = "text/javascript"; b.async = true;
+            b.src = "https://snap.licdn.com/li.lms-analytics/insight.min.js";
+            s.parentNode.insertBefore(b, s);
+        })(window.lintrk);
+    </script>
+    <noscript>
+        <img height="1" width="1" style="display:none;" alt="" src="https://px.ads.linkedin.com/collect/?pid=5158786&fmt=gif" />
+    </noscript>
+</body>
+</html>

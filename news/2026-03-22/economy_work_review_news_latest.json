@@ -1,0 +1,82 @@
+{
+  "axis": "ECONOMY_WORK_REVIEW",
+  "fetched_at": "2026-03-22T17:25:03.796210+00:00",
+  "smart_query": "economy unemployment poverty wages",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "Energy bills rise 'inescapable' if oil prices stay high, says British Gas boss",
+      "snippet": "The boss of Centrica says it is \"too early\" to speculate but if oil costs continue to rise, homes will be hit.  ",
+      "url": "https://www.bbc.com/news/articles/c77mx575k4vo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "'Club vibes without the hangover': The twenty-somethings going out - in the gym",
+      "snippet": "Young people are driving a gym boom as more fitness spaces are transformed into vibrant hangouts.",
+      "url": "https://www.bbc.com/news/articles/cly0krjy57lo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Home working, long leases and rise of parking apps - what went wrong for NCP",
+      "snippet": "How could a company that charged as much as £65 for a day's parking fail to turn a profit?",
+      "url": "https://www.bbc.com/news/articles/cgl5rwgr5l2o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "AmirhosseinHonardoust/Economic-DNA-Repair",
+      "snippet": "A deep research study introducing the concept of Economic DNA Repair for smart contracts, designing self-correcting tokenomics that detect anomalies, repair unstable parameters, rebalance incentives, ",
+      "stars": 18,
+      "url": "https://github.com/AmirhosseinHonardoust/Economic-DNA-Repair",
+      "updated": "2026-02-23",
+      "source": "GitHub"
+    },
+    {
+      "title": "AmirhosseinHonardoust/Pricing-Negotiation-Intelligence",
+      "snippet": "This article reframes pricing as a negotiation rather than a prediction, showing how price emerges from tensions between product reality, market dynamics, and buyer behavior. It introduces negotiation",
+      "stars": 18,
+      "url": "https://github.com/AmirhosseinHonardoust/Pricing-Negotiation-Intelligence",
+      "updated": "2026-02-23",
+      "source": "GitHub"
+    },
+    {
+      "title": "AmirhosseinHonardoust/Workforce-Disruption-Equilibrium-Engine",
+      "snippet": "An interpretable system that models the future of work as an equilibrium under AI-driven forces. Instead of predicting job loss, it decomposes workforce disruption into automation pressure, adaptabili",
+      "stars": 17,
+      "url": "https://github.com/AmirhosseinHonardoust/Workforce-Disruption-Equilibrium-Engine",
+      "updated": "2026-02-23",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "A Survey of Reinforcement Learning For Economics",
+      "snippet": "This survey (re)introduces reinforcement learning methods to economists. The curse of dimensionality limits how far exact dynamic programming can be effectively applied, forcing us to rely on suitably \"small\" problems or our ability to convert \"big\" problems into smaller ones. While this reduction h",
+      "url": "https://arxiv.org/abs/2603.08956v3",
+      "source": "arXiv"
+    },
+    {
+      "title": "The Data-Dollars Tradeoff: Privacy Harms vs. Economic Risk in Personalized AI Adoption",
+      "snippet": "Privacy concerns significantly impact AI adoption, yet little is known about how information environments shape user responses to data leak threats. We conducted a 2 x 3 between-subjects experiment (N=610) examining how risk versus ambiguity about privacy leaks affects the adoption of AI personaliza",
+      "url": "https://arxiv.org/abs/2603.08848v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[The little pet fish that saved a town in the Amazon] The cardinal tetra is one of the most popular pet fish in the world. They look like little red and blue sequins. You've almost certainly seen them at the pet store or the fish tank at your dentist's office. They're everywhere. Not so long ago, most of the world's supply of cardinals came from just one place. It's a little town deep in the rainforests of Brazil, where locals still catch these fish ",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

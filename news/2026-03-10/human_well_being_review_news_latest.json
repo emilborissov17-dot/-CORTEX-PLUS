@@ -1,0 +1,75 @@
+{
+  "axis": "HUMAN_WELL_BEING_REVIEW",
+  "fetched_at": "2026-03-10T11:34:20.861490+00:00",
+  "smart_query": "Human Well-Being Review Metrics Levels Analysis",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3
+  },
+  "analysis": {
+    "summary": "Във връзка с здравеопазването се наблюдават важни промени, като NHS England приключва нови рецепции на кръстополови хормони за подрастващи, което предизвиква критика. Съществува и сериозно внимание към здравето на майките, като случаят с жена, изпратена на 90 миля след раждане.",
+    "key_developments": [
+      "NHS England приключва нови рецепции на кръстополови хормони за подрастващи",
+      "Случай с майка, изпратена на 90 миля след раждане",
+      "Изследвания в квантови изчисления и гама-лъчи от ускорени потоци"
+    ],
+    "sentiment": "CRITICAL",
+    "urgency": "HIGH",
+    "open_source_momentum": "Силно развитие на отворени източници в здравеопазването (openemr, HospitalRun, getodk/collect)",
+    "scientific_frontier": "Квантови изчисления и астрофизика с високи енергии",
+    "relevance_to_goal": "Висока релевантност към целта за достойнство на всички, особено в здравеопазването и социалната справедливост"
+  },
+  "sentiment": "CRITICAL",
+  "urgency": "HIGH",
+  "summary": "Във връзка с здравеопазването се наблюдават важни промени, като NHS England приключва нови рецепции на кръстополови хормони за подрастващи, което предизвиква критика. Съществува и сериозно внимание към здравето на майките, като случаят с жена, изпратена на 90 миля след раждане.",
+  "key_developments": [
+    "NHS England приключва нови рецепции на кръстополови хормони за подрастващи",
+    "Случай с майка, изпратена на 90 миля след раждане",
+    "Изследвания в квантови изчисления и гама-лъчи от ускорени потоци"
+  ],
+  "open_source_momentum": "Силно развитие на отворени източници в здравеопазването (openemr, HospitalRun, getodk/collect)",
+  "scientific_frontier": "Квантови изчисления и астрофизика с високи енергии",
+  "github_repos": [
+    {
+      "title": "openemr/openemr",
+      "snippet": "The most popular open source electronic health records and medical practice management solution.",
+      "stars": 5003,
+      "url": "https://github.com/openemr/openemr",
+      "updated": "2026-03-10",
+      "source": "GitHub"
+    },
+    {
+      "title": "HospitalRun/hospitalrun",
+      "snippet": "Monorepo that holds all of HospitalRun's v2 projects.",
+      "stars": 982,
+      "url": "https://github.com/HospitalRun/hospitalrun",
+      "updated": "2026-03-06",
+      "source": "GitHub"
+    },
+    {
+      "title": "getodk/collect",
+      "snippet": "ODK Collect is an Android app for filling out forms. It's been used to collect billions of data points in challenging environments around the world. Contribute and make the world a better place! ✨📋✨",
+      "stars": 761,
+      "url": "https://github.com/getodk/collect",
+      "updated": "2026-03-09",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Approximate QCAs in one dimension using approximate algebras",
+      "snippet": "Quantum cellular automata (QCAs) are automorphisms of tensor product algebras that preserve locality, with local quantum circuits as a simple example. We study approximate QCAs, where the locality condition is only satisfied up to a small error, as occurs for local quantum dynamics on the lattice. A",
+      "url": "https://arxiv.org/abs/2603.08702v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Very High Energy Gamma Rays from Ultra Fast Outflows",
+      "snippet": "Context. Ultra fast outflows (UFOs) from active galactic nuclei (AGN) are expected to lead to the formation of sub-relativistic strong shocks expanding in a dense circumnuclear medium, and thus have the potential for being efficient particle accelerators, and to be proficient sources of gamma rays a",
+      "url": "https://arxiv.org/abs/2603.08701v1",
+      "source": "arXiv"
+    }
+  ]
+}

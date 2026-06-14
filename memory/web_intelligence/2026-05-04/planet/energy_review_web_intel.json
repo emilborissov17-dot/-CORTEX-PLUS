@@ -1,0 +1,123 @@
+{
+  "axis": "ENERGY_REVIEW",
+  "domain": "planet",
+  "timestamp": "2026-05-04T14:11:04.524001+00:00",
+  "sources_count": 14,
+  "rss_count": 12,
+  "ddg_count": 0,
+  "youtube_count": 2,
+  "youtube_items": [
+    {
+      "title": "[YT] Will Renewable Energy Dominate in 2025? - YouTube",
+      "summary": "Welcome to Renée Energy.com on YouTube, the hub for all things renewable energy and sustainability. Our channel is dedicated to bringing you the latest innovations and insights in green energy, including cutting-edge developments like green hydrogen. Whether you're a sustainability veteran or just beginning your journey, we have something for everyone. Join us on this channel to explore inspiring projects for a sustainable tomorrow. We bring you the latest in renewable energy, sustainability, and cutting-edge technologies. And don't forget, for more in-depth information and resources, visit our website and subscribe to our newsletter for the latest updates and exclusive content. Welcome to Renée Energy.com, your go-to source for the latest insights and renewable energy and sustainable tech",
+      "link": "https://www.youtube.com/watch?v=N43dSWuYF3Y",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "N43dSWuYF3Y",
+      "transcript_method": "whisper",
+      "transcript_chars": 10040,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] The Green Energy Revolution: How Solar & Wind Are Changing ... - YouTube",
+      "summary": "The numbers tell a story that seemed impossible just a decade ago. In 2024, for the first time in history, the world invested more in solar energy than in all fossil fuels combined. Solar power installations are now growing at a pace that consistently shatters expert predictions. What we are witnessing is not merely an energy transition. It is the fastest global technological and industrial transformation in human history. This is the story of how solar and wind energy went from expensive, subsidized alternatives to the cheapest sources of electricity humanity has ever known. And how this shift is fundamentally rewriting the rules of global power. The revolution began with a simple, relentless curve. Swanson's law, named after the founder of SunPower, had observed that the price of solar, ",
+      "link": "https://www.youtube.com/watch?v=xBWMi5m662M",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "xBWMi5m662M",
+      "transcript_method": "whisper",
+      "transcript_chars": 8601,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "Анализ на ENERGY_REVIEW — данни получени но LLM грешка",
+    "root_cause": "LLM parsing грешка",
+    "severity": "UNKNOWN",
+    "leverage_points": [],
+    "proposed_actions": [],
+    "evidence": [
+      "18 EV Fast Chargers Running On 100% Renewable Electricity Installed In Germany",
+      "Understanding Anti-EV Myths & Misinformation",
+      "BYD Has Another Tough Month of Sales Decline"
+    ],
+    "generalization": "",
+    "summary": "- 18 EV Fast Chargers Running On 100% Renewable Electricity Installed In Germany: <p>Eighteen new EV fast chargers that can charge up to 400 kW have been installed in Germany at these locations: A6 in",
+    "risk_level": "UNKNOWN",
+    "trend": "UNKNOWN"
+  },
+  "raw_items": [
+    {
+      "title": "18 EV Fast Chargers Running On 100% Renewable Electricity Installed In Germany",
+      "summary": "<p>Eighteen new EV fast chargers that can charge up to 400 kW have been installed in Germany at these locations: A6 in Landstuhl, Rheinland-Pfalz, and the A7 in Ellwangen Jagst, Bavaria. “Our fast charging parks are ideally suited for short charging stops on long-distance journeys due to their convenient location   ... [continued]</p>\n<p>The post <a href=\"https://cleantechnica.com/2026/05/04/18-ev-fast-chargers-running-on-100-renewable-electricity-installed-in-germany/\">18 EV Fast Chargers Runni",
+      "link": "https://cleantechnica.com/2026/05/04/18-ev-fast-chargers-running-on-100-renewable-electricity-installed-in-germany/",
+      "published": "Mon, 04 May 2026 13:58:24 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Understanding Anti-EV Myths & Misinformation",
+      "summary": "<p>Researchers have determined that about a third of people believe EV myths that are not true. The question is why? </p>\n<p>The post <a href=\"https://cleantechnica.com/2026/05/04/understanding-anti-ev-myths-misinformation/\">Understanding Anti-EV Myths &#038; Misinformation</a> appeared first on <a href=\"https://cleantechnica.com\">CleanTechnica</a>.</p>",
+      "link": "https://cleantechnica.com/2026/05/04/understanding-anti-ev-myths-misinformation/",
+      "published": "Mon, 04 May 2026 09:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "BYD Has Another Tough Month of Sales Decline",
+      "summary": "<p>The numbers for the 4th month of the year have come in, and BYD keeps getting into a deeper hole. Its passenger vehicle sales were down significantly year over year — its plugin hybrid sales were down, and its BEV sales were down even more. Its commercial vehicle business wasn&#8217;t   ... [continued]</p>\n<p>The post <a href=\"https://cleantechnica.com/2026/05/04/byd-has-another-tough-month-of-sales-decline/\">BYD Has Another Tough Month of Sales Decline</a> appeared first on <a href=\"https://",
+      "link": "https://cleantechnica.com/2026/05/04/byd-has-another-tough-month-of-sales-decline/",
+      "published": "Mon, 04 May 2026 04:03:19 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Solid-State EV Batteries Will Crush The Fossil Fuel Fantasy",
+      "summary": "<p>The US startup Factorial Energy is aiming its new solid-state EV battery at the up-and-coming market for electric military drones and robotics.</p>\n<p>The post <a href=\"https://cleantechnica.com/2026/05/03/solid-state-ev-batteries-will-crush-the-fossil-fuel-fantasy/\">Solid-State EV Batteries Will Crush The Fossil Fuel Fantasy</a> appeared first on <a href=\"https://cleantechnica.com\">CleanTechnica</a>.</p>",
+      "link": "https://cleantechnica.com/2026/05/03/solid-state-ev-batteries-will-crush-the-fossil-fuel-fantasy/",
+      "published": "Sun, 03 May 2026 21:28:22 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Clarion Events North America names new EVP of Energy",
+      "summary": "Wayne Bishop Jr. has joined Clarion Events North America as Executive Vice President of Energy, overseeing POWERGEN, DTECH, and Factor This.",
+      "link": "https://www.renewableenergyworld.com/energy-business/clarion-events-north-america-names-new-evp-of-energy/",
+      "published": "Mon, 04 May 2026 13:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "It’s getting expensive to gas up | Factor This Brief",
+      "summary": "It's getting awfully expensive to fill your tank in the United States. Meanwhile, solar energy runs rampant; The Orange County Convention Center doubles its rooftop generation, SunPower clears debt, Energea starts construction in Texas, and Georgia Power helps Kia with a solar canopy.",
+      "link": "https://www.renewableenergyworld.com/energy-business/new-project-development/its-getting-expensive-to-gas-up-factor-this-brief/",
+      "published": "Mon, 04 May 2026 09:59:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Non-compliance with a looming NERC deadline could cost clean energy owners and operators, big time",
+      "summary": "Owners of inverter-based resources (IBRs) have been required to register with NERC by May 15, 2026, or face steep penalties.",
+      "link": "https://www.renewableenergyworld.com/energy-business/policy-and-regulation/non-compliance-with-a-looming-nerc-deadline-could-cost-clean-energy-owners-and-operators-big-time/",
+      "published": "Fri, 01 May 2026 15:06:03 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "How VPPs could improve grid reliability and save utilities 40% over gas peaker plants",
+      "summary": "A new report outlines how virtual power plants can free up capacity on the existing grid while highlighting how VPPs can also help meet new load growth driven by data centers.",
+      "link": "https://www.renewableenergyworld.com/power-grid/how-vpps-could-improve-grid-reliability-and-save-utilities-40-over-gas-peaker-plants/",
+      "published": "Fri, 01 May 2026 11:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Will the U.S. Curtail Oil Exports as Global Prices Surge?",
+      "summary": "President Donald Trump may soon feel the need to \"blockade\" U. S. crude oil exports after those exports hit a record high recently, a trend which, if it continues, will increase the price U. S. consumers pay for gasoline, diesel, and other petroleum-related products. Nations around the world are scrambling to secure oil supplies that have been dramatically reduced by Iran's closing of the Strait of Hormuz to oil tankers of \"hostile\" countries, which include major oil exporters such as Kuwait, Sa",
+      "link": "https://oilprice.com/Energy/Energy-General/Will-the-US-Curtail-Oil-Exports-as-Global-Prices-Surge.html",
+      "published": "Mon, 04 May 2026 09:00:00 -0500",
+      "source_type": "rss"
+    },
+    {
+      "title": "UAE: OPEC Exit 'Not Directed Against Anyone'",
+      "summary": "The United Arab Emirates has not directed at anyone its decision to leave OPEC and the broader OPEC+ alliance, Sultan al Jaber, the chief executive of Abu Dhabi’s national oil company ADNOC, said on Monday.  “The United Arab Emirates' sovereign decision to reposition itself within the global energy landscape, and to exit OPEC and OPEC+, is not a decision directed against anyone,” Al Jaber, who is also UAE Minister of Industry and Advanced Technology, said in a speech at the ‘Make It In The Emira",
+      "link": "https://oilprice.com/Latest-Energy-News/World-News/UAE-OPEC-Exit-Not-Directed-Against-Anyone.html",
+      "published": "Mon, 04 May 2026 08:30:00 -0500",
+      "source_type": "rss"
+    }
+  ]
+}

@@ -1,0 +1,162 @@
+{
+  "axis": "SPACE_INFRASTRUCTURE_REVIEW",
+  "fetched_at": "2026-03-13T13:51:46.251610+00:00",
+  "smart_query": "Space infrastructure development global investment trends",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "analysis": {
+    "summary": "Актуалните развития в космическата инфраструктура включват нови технологии за наблюдение и детекция. Проектите като Low Boom Flight Demonstrator и Structural Design и Performance Analysis на Laser Transmitting Telescope за космическа гравитационна вълна детекция показват напредък в тази област. Тези разработки са важен стъпка към създаването на устойчива общочовешка цивилизация.",
+    "key_developments": [
+      "Low Boom Flight Demonstrator (LBFD) Project",
+      "Structural Design and Performance Analysis of Laser Transmitting Telescope for Space Gravitational Wave Detection",
+      "Evaluating the spatial intra-pixel sensitivity variations and influence based on space observation"
+    ],
+    "sentiment": "POSITIVE",
+    "urgency": "MEDIUM",
+    "open_source_momentum": "Проектите като Stable-Pi-Core и EZ-RASSOR показват наличие на иновативни решения в космическата инфраструктура, но моментът е все още в ранна фаза на развитие.",
+    "scientific_frontier": "Изследванията върху космическата гравитационна вълна детекция и пространствените интра-пикселни чувствителности вариации показват напредък в научната област.",
+    "relevance_to_goal": "Дългосрочната цель на устойчива цивилизация е свързана с развитието на космическата инфраструктура, тъй като тя може да предостави ресурси и възможности за оцеляване и разширяване на човечеството в космоса."
+  },
+  "sentiment": "POSITIVE",
+  "urgency": "MEDIUM",
+  "summary": "Актуалните развития в космическата инфраструктура включват нови технологии за наблюдение и детекция. Проектите като Low Boom Flight Demonstrator и Structural Design и Performance Analysis на Laser Transmitting Telescope за космическа гравитационна вълна детекция показват напредък в тази област. Тези разработки са важен стъпка към създаването на устойчива общочовешка цивилизация.",
+  "key_developments": [
+    "Low Boom Flight Demonstrator (LBFD) Project",
+    "Structural Design and Performance Analysis of Laser Transmitting Telescope for Space Gravitational Wave Detection",
+    "Evaluating the spatial intra-pixel sensitivity variations and influence based on space observation"
+  ],
+  "open_source_momentum": "Проектите като Stable-Pi-Core и EZ-RASSOR показват наличие на иновативни решения в космическата инфраструктура, но моментът е все още в ранна фаза на развитие.",
+  "scientific_frontier": "Изследванията върху космическата гравитационна вълна детекция и пространствените интра-пикселни чувствителности вариации показват напредък в научната област.",
+  "news_items": [
+    {
+      "title": "Eruption at Mayon",
+      "snippet": "Activity at the volcano in the Philippines sent lava and pyroclastic flows down the volcano’s flanks and prompted evacuations in nearby communities.",
+      "url": "https://science.nasa.gov/earth/earth-observatory/eruption-at-mayon/",
+      "source": "RSS"
+    },
+    {
+      "title": "About Low Boom Flight Demonstrator (LBFD) Project",
+      "snippet": "The Low Boom Flight Demonstrator project (LBFD) is part of NASA&#8217;s effort to help enable new aircraft noise standards that are required to open the market to commercial supersonic flight over land. The federal government banned all civilian supersonic flights over land more than fifty years ago",
+      "url": "https://www.nasa.gov/directorates/armd/iasp/armd-iasp-lbfd/about-lbfd/",
+      "source": "RSS"
+    },
+    {
+      "title": "NASA to Cover Upcoming US Spacewalks 94, 95 Outside Space Station",
+      "snippet": "NASA astronauts will conduct a pair of spacewalks beginning Wednesday, March 18, outside of the International Space Station to prepare for the installation of two roll-out solar arrays. Experts from NASA will preview the spacewalks during a news conference at 2 p.m. EDT, Monday, March 16, at the age",
+      "url": "https://www.nasa.gov/news-release/nasa-to-cover-upcoming-us-spacewalks-94-95-outside-space-station/",
+      "source": "RSS"
+    }
+  ],
+  "github_repos": [
+    {
+      "title": "KOSASIH/stable-pi-core",
+      "snippet": "Stable-Pi-Core is a next-generation decentralized ecosystem that integrates blockchain, quantum AI, IoT, edge computing, and AR/VR to deliver secure, scalable, and personalized solutions for payments,",
+      "stars": 111,
+      "url": "https://github.com/KOSASIH/stable-pi-core",
+      "updated": "2026-02-25",
+      "source": "GitHub"
+    },
+    {
+      "title": "FlaSpaceInst/EZ-RASSOR",
+      "snippet": "An inexpensive, autonomous, regolith-mining robot",
+      "stars": 62,
+      "url": "https://github.com/FlaSpaceInst/EZ-RASSOR",
+      "updated": "2026-02-18",
+      "source": "GitHub"
+    },
+    {
+      "title": "BarthPaleologue/CosmosJourneyer",
+      "snippet": "Cosmos Journeyer is a space exploration game running directly in the browser! Take your spaceship and witness the beauty of this virtually infinite universe.",
+      "stars": 36,
+      "url": "https://github.com/BarthPaleologue/CosmosJourneyer",
+      "updated": "2026-03-13",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Evaluating the spatial intra-pixel sensitivity variations and influence based on space observation",
+      "snippet": "Intra-pixel sensitivity variations (IPSVs) in charge-coupled devices (CCDs) and complementary metal-oxide-semiconductor (CMOS) detectors constitute a significant source of astrometric error for undersampled stellar observations. Since laboratory-based IPSV measurements suffer from limited applicabil",
+      "url": "https://arxiv.org/abs/2603.10355v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Structural Design and Performance Analysis of Laser Transmitting Telescope for Space Gravitational Wave Detection",
+      "snippet": "The spaceborne laser emission telescope is a core and critical component of the space gravitational wave detection system.Compared with ground-based telescopes, the on-orbit space environment is more complex and harsh, presenting higher technical challenges for the design of the optical system and s",
+      "url": "https://arxiv.org/abs/2603.07967v1",
+      "source": "arXiv"
+    }
+  ],
+  "youtube_transcripts": [],
+  "podcast": "[#490 – State of AI in 2026: LLMs, Coding, Scaling Laws, China, Agents, GPUs, AGI] Nathan Lambert and Sebastian Raschka are machine learning researchers, engineers, and educators. Nathan is the post-training lead at the Allen Institute for AI (Ai2) and the author of The RLHF Book. Sebastian Raschka is the author of Build a Large Language Model (From Scratch) and Build a Reasoning Model (From Scratch).\nThank you for listening ❤ Check out our sponsors: https://lexfridman.com/spons",
+  "youtube_videos": [
+    {
+      "title": "YouTube:Q4sZH5ljZIM",
+      "video_id": "Q4sZH5ljZIM",
+      "url": "https://www.youtube.com/watch?v=Q4sZH5ljZIM",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:S94Q3QxTrug",
+      "video_id": "S94Q3QxTrug",
+      "url": "https://www.youtube.com/watch?v=S94Q3QxTrug",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:VPYnu_SVF1M",
+      "video_id": "VPYnu_SVF1M",
+      "url": "https://www.youtube.com/watch?v=VPYnu_SVF1M",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:YdjgNVlOD20",
+      "video_id": "YdjgNVlOD20",
+      "url": "https://www.youtube.com/watch?v=YdjgNVlOD20",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:Fr_83Z1WQvs",
+      "video_id": "Fr_83Z1WQvs",
+      "url": "https://www.youtube.com/watch?v=Fr_83Z1WQvs",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:LeqwZnsV8MA",
+      "video_id": "LeqwZnsV8MA",
+      "url": "https://www.youtube.com/watch?v=LeqwZnsV8MA",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:HHsQBHcUhgI",
+      "video_id": "HHsQBHcUhgI",
+      "url": "https://www.youtube.com/watch?v=HHsQBHcUhgI",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:-C9JXohpXdE",
+      "video_id": "-C9JXohpXdE",
+      "url": "https://www.youtube.com/watch?v=-C9JXohpXdE",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:3DyffrDd1XM",
+      "video_id": "3DyffrDd1XM",
+      "url": "https://www.youtube.com/watch?v=3DyffrDd1XM",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:l5zQxC8yJtQ",
+      "video_id": "l5zQxC8yJtQ",
+      "url": "https://www.youtube.com/watch?v=l5zQxC8yJtQ",
+      "source": "YouTube"
+    }
+  ]
+}

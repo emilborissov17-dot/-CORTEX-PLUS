@@ -1,0 +1,133 @@
+{
+  "axis": "SOCIAL_RELATIONS_REVIEW",
+  "domain": "human",
+  "timestamp": "2026-05-04T12:30:57.970968+00:00",
+  "sources_count": 10,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 2,
+  "youtube_items": [
+    {
+      "title": "[YT] The Loneliness Epidemic: How America Lost Its Community - YouTube",
+      "summary": "There's a strange paradox in our modern world. We are connected to thousands of people online. Yet many of us have never felt more alone. We live in crowded neighborhoods, but we don't know our neighbor's names. This isn't just a feeling of sadness. It's an epidemic. The epidemic of loneliness. And it's eating away at the soul of America, from the inside out. It wasn't always like this. America was built on a foundation of community. Life revolved around what sociologists call third places. The spaces outside of home and work were life actually happened. The church, the social club, the Union Hall, the local bar. That was the connective tissue that held society together. It's where friendships were forged. Deals were made. And a real social safety net was formed, not by the government, but",
+      "link": "https://www.youtube.com/watch?v=jugTWMBSK_Y",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "jugTWMBSK_Y",
+      "transcript_method": "whisper",
+      "transcript_chars": 2193,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] The Loneliness Epidemic: Why We're More Connected But More ... - YouTube",
+      "summary": "We live in a hyper-connected world. Technology allows us to communicate with anyone anywhere at any time. Social media platforms buzz with activity. We share our thoughts, our photos, and our lives with a global network. Yet despite this constant connection, many of us feel profoundly alone. The rise of the Internet and social media promised a world of greater connection. We could connect with friends and family across continents, build communities around shared interests, and expand our social circles with a few clicks. While these platforms have undoubtedly brought many benefits, they have also contributed to the loneliness epidemic in unexpected ways. Loneliness is not a new phenomenon. Throughout history, humans have grappled with feelings of isolation and disconnection. However, the d",
+      "link": "https://www.youtube.com/watch?v=Y3svpAjqb_Q",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "Y3svpAjqb_Q",
+      "transcript_method": "whisper",
+      "transcript_chars": 894,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "Анализ на SOCIAL_RELATIONS_REVIEW — данни получени но LLM грешка",
+    "root_cause": "LLM parsing грешка",
+    "severity": "UNKNOWN",
+    "leverage_points": [],
+    "proposed_actions": [],
+    "evidence": [
+      "Acknowledgments",
+      "Methodology",
+      "Appendix: Additional charts"
+    ],
+    "generalization": "",
+    "summary": "- Acknowledgments: This report is a collaborative effort based on the input and analysis of the following individuals: Research team Jocelyn Kiley, Director, Political ResearchSteven Shepard, Associat",
+    "risk_level": "UNKNOWN",
+    "trend": "UNKNOWN"
+  },
+  "raw_items": [
+    {
+      "title": "Acknowledgments",
+      "summary": "This report is a collaborative effort based on the input and analysis of the following individuals: Research team Jocelyn Kiley, Director, Political ResearchSteven Shepard, Associate Director, Political ResearchHannah Hartig, Senior ResearcherBaxter Oliphant, Senior ResearcherGabe Borelli, Research AssociateAndrew Daniller, Research AssociateAndy Cerda, Research Analyst      Shanay Gracia, Research AnalystTed Van Green, Research Analyst Communications and editorial Nida [&#8230;]",
+      "link": "https://www.pewresearch.org/politics/2026/05/01/trump-approval-may-2026-acknowledgments/",
+      "published": "Fri, 01 May 2026 16:00:41 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Methodology",
+      "summary": "The American Trends Panel survey methodology Overview Data in this report comes from Wave 192 of the American Trends Panel (ATP), Pew Research Center’s nationally representative panel of randomly selected U.S. adults. The survey was conducted April 20-26, 2026. A total of 5,103 panelists responded out of 5,898 who were sampled, for a survey-level response [&#8230;]",
+      "link": "https://www.pewresearch.org/politics/2026/05/01/trump-approval-may-2026-methodology/",
+      "published": "Fri, 01 May 2026 16:00:41 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Appendix: Additional charts",
+      "summary": "",
+      "link": "https://www.pewresearch.org/politics/2026/05/01/trump-approval-may-2026-appendix/",
+      "published": "Fri, 01 May 2026 16:00:40 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Democrats and Republicans place more importance on advancing own policies than finding common ground",
+      "summary": "Republicans and Republican leaning independents overwhelmingly (76%) say Trump is doing an excellent or good job pushing for his policies, regardless of whether Democratic officials agree with them. By comparison, Democrats and Democratic leaners continue to be more critical of the job their elected officials have done at pushing against Trump’s policies when they disagree. [&#8230;]",
+      "link": "https://www.pewresearch.org/politics/2026/05/01/democrats-and-republicans-place-more-importance-on-advancing-own-policies-than-finding-common-ground/",
+      "published": "Fri, 01 May 2026 16:00:39 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Ukrainian drone hits upmarket Moscow high-rise ahead of Victory Day celebrations",
+      "summary": "The attack comes as the Kremlin prepares to hold a scaled-back military parade on Saturday.",
+      "link": "https://www.bbc.com/news/articles/cwy234llx3vo?at_medium=RSS&at_campaign=rss",
+      "published": "Mon, 04 May 2026 09:49:05 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Three dead in suspected virus outbreak on Atlantic cruise ship",
+      "summary": "The World Health Organization said one case of hantavirus infection had been confirmed, with five more suspected cases under investigation.",
+      "link": "https://www.bbc.com/news/articles/cy0294829ndo?at_medium=RSS&at_campaign=rss",
+      "published": "Mon, 04 May 2026 09:29:37 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Former New York City mayor Rudy Giuliani in critical condition in hospital",
+      "summary": "The long-time champion of Trump and former New York mayor is in hospital, according to his spokesman.",
+      "link": "https://www.bbc.com/news/articles/c7941rgy4lyo?at_medium=RSS&at_campaign=rss",
+      "published": "Mon, 04 May 2026 08:43:06 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Modi's BJP conquers Bengal, one of India's toughest political frontiers",
+      "summary": "West Bengal’s verdict could reshape not just the state’s politics, but the future trajectory of Modi’s BJP.",
+      "link": "https://www.bbc.com/news/articles/ce8pdvp5x5ro?at_medium=RSS&at_campaign=rss",
+      "published": "Mon, 04 May 2026 11:59:58 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] The Loneliness Epidemic: How America Lost Its Community - YouTube",
+      "summary": "There's a strange paradox in our modern world. We are connected to thousands of people online. Yet many of us have never felt more alone. We live in crowded neighborhoods, but we don't know our neighbor's names. This isn't just a feeling of sadness. It's an epidemic. The epidemic of loneliness. And it's eating away at the soul of America, from the inside out. It wasn't always like this. America was built on a foundation of community. Life revolved around what sociologists call third places. The spaces outside of home and work were life actually happened. The church, the social club, the Union Hall, the local bar. That was the connective tissue that held society together. It's where friendships were forged. Deals were made. And a real social safety net was formed, not by the government, but",
+      "link": "https://www.youtube.com/watch?v=jugTWMBSK_Y",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "jugTWMBSK_Y",
+      "transcript_method": "whisper",
+      "transcript_chars": 2193,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] The Loneliness Epidemic: Why We're More Connected But More ... - YouTube",
+      "summary": "We live in a hyper-connected world. Technology allows us to communicate with anyone anywhere at any time. Social media platforms buzz with activity. We share our thoughts, our photos, and our lives with a global network. Yet despite this constant connection, many of us feel profoundly alone. The rise of the Internet and social media promised a world of greater connection. We could connect with friends and family across continents, build communities around shared interests, and expand our social circles with a few clicks. While these platforms have undoubtedly brought many benefits, they have also contributed to the loneliness epidemic in unexpected ways. Loneliness is not a new phenomenon. Throughout history, humans have grappled with feelings of isolation and disconnection. However, the d",
+      "link": "https://www.youtube.com/watch?v=Y3svpAjqb_Q",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "Y3svpAjqb_Q",
+      "transcript_method": "whisper",
+      "transcript_chars": 894,
+      "has_full_transcript": true
+    }
+  ]
+}

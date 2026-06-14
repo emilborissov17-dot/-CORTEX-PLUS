@@ -1,0 +1,100 @@
+MODEL: qwen3:8b
+
+PROMPT:
+Ти си локален AGI агент (Qwen) вътре в проекта CORTEX++.
+Четеш състоянието на системата от текстов контекст (цели, визия, snapshots, стари журнали)
+и правиш кратък, но структуриран ENERGY REVIEW.
+
+Формат на отговора (точно в този ред):
+=== OVERVIEW ===
+- 2–4 изречения общ обзор на глобалната енергийна система.
+
+=== KEY RISKS ===
+- по точки, най-важните рискове и проблеми.
+
+=== RECOMMENDED ACTIONS (CIVILIZATION, 10 YEARS) ===
+- 3–5 стратегически стъпки за следващите 10 години.
+
+=== TASKS FOR CORTEX++ (ENERGY AXIS) ===
+- 5–10 задачи в стил:
+  [TASK]: кратко описание
+  [WHY]: защо е важна
+  [DATA_NEEDED]: какви данни/файлове/източници трябват
+Пиши изцяло на български.
+
+Контекст от CORTEX++ (цели, визия, снимки на енергийния домейн, стари журнали):
+
+=== SNAPSHOT transparency.entsoe.eu_root.json ===
+
+
+{"source_name": "ENTSO-E Transparency Portal", "source_url": "https://transparency.entsoe.eu", "docs": "https://transparency.entsoe.eu/", "notes": "Данни за трансмисията на електрическата енергия в Европа, включително мощност, потребление и възобновяеми източници.", "ok": true, "data": {"status_code": 200, "content_type": "text/html", "text_sample": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">\n    <meta name=\"google\" content=\"notranslate\">\n    <title>Transparency Platform</title>\n\n    \n    <script>\n        if (!location.href.match(/^(about:|file:)/)) {\n          var bplCookie = document.cookie.match(/(^|;\\s*)uu\\.app\\.bpl=([^;]+)/);\n          var bplSegmentCount = (bplCookie ? Number(bplCookie[2]) : null);\n          if (typeof bplSegmentCount !== \"number\" || isNaN(bplSegmentCount) || bplSegmentCount < 0) bplSegmentCount = 2;\n          var appBaseUrlPath = (location.pathname.split(/\\//).slice(0,1+bplSegmentCount).join(\"/\")+\"/\").replace(/\\/+/g,\"/\").replace(/\"/g,\"\");\n          var appAssetsRelativeUrlPath = \"public/1.44.7/\";\n          document.write('<base href=\"' + appBaseUrlPath + appAssetsRelativeUrlPath + '\" data-uu-app-base=\"' + appBaseUrlPath + '\" data-uu-app-assets-base=\"' + appAssetsRelativeUrlPath + '\">');\n        }\n      </script>\n\n    <script>document.write(\"<script src=\\\"uu5-environment.js\\\"><\"+\"/script>\");</script>\n    <script>\n      var cdnBaseUri = ((window.UU5 || {}).Environment || {}).cdnBaseUri || \"https://cdn.plus4u.net\";\n      if (cdnBaseUri.endsWith(\"/\")) cdnBaseUri = cdnBaseUri.slice(0, -1);\n    </script>\n\n    <script>document.write(\"<script src=\\\"./lib/uu5g05-browser-compatibility-1.38.5/uu5g05-browser-compatibility.min.js\\\" crossorigin=\\\"anonymous\\\"><\"+\"/script>\");</script>\n\n    <script>document.write(\"<link type=\\\"text/css\\\" rel=\\\"stylesheet\\\" href=\\\"./
+
+
+=== SNAPSHOT www.iea.org_data-and-statistics.json ===
+
+
+{"source_name": "IEA Data Portal", "source_url": "https://www.iea.org/data-and-statistics", "docs": "https://www.iea.org/data-and-statistics/faq", "notes": "Световни данни за енергия, включително производство, потребление, възобновяеми източници и емисии, с фокус върху развитието на Европа, САЩ и други региони.", "ok": true, "data": {"status_code": 200, "content_type": "text/html; charset=utf-8", "text_sample": "<!DOCTYPE html>\n<html dir=\"ltr\" lang=\"en-GB\"\n      class=\"no-js  \">\n<head>\n    <meta charset=\"utf-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=Edge\">\n    <meta name=\"csrf-token\" content=\"\">\n    \n    <link rel=\"shortcut icon\" href=\"/assets/front/images/favicon.ico\">\n    <link rel=\"preload\" href=\"/assets/front/app.602065f4a8b0f8943e39.js\" as=\"script\">\n\n    <link rel=\"preload\" href=\"/assets/front/style.2ff4ec7ee85787a34c03.css\" as=\"style\">\n<link href=\"/assets/front/style.2ff4ec7ee85787a34c03.css\" rel=\"stylesheet\"/>\n\n    <!-- iOS -->\n    <meta name=\"apple-mobile-web-app-title\" content=\"IEA\" />\n    <meta name=\"format-detection\" content=\"telephone=no\" />\n\n    <!-- Android -->\n    <meta name=\"theme-color\" content=\"#FFFFFF\" />\n\n    <!-- Facebook / Open Graph globals -->\n<meta property=\"og:type\" content=\"website\" />\n<meta property=\"og:site_name\" content=\"IEA\" />\n\n<!-- Twitter globals -->\n<meta name=\"twitter:card\" content=\"summary_large_image\" />\n<meta name=\"twitter:site\" content=\"IEA\" />\n<meta name=\"twitter:domain\" content=\"https://www.iea.org\" />\n<meta name=\"twitter:creator\" content=\"IEA\" />\n\n    <title>IEA – International Energy Agency - IEA</title>\n<meta property=\"og:title\" content=\"IEA – International Energy Agency - IEA\" />\n<meta name=\"twitter:title\" content=\"IEA – International Energy Agency - IEA\" />\n<meta itemprop=\"name\" content=\"IEA – International Energy
+
+
+=== SNAPSHOT www.ief.org_root.json ===
+
+
+{"source_name": "International Energy Forum (IEF)", "source_url": "https://www.ief.org", "docs": "https://www.ief.org/annual-conference", "notes": "Информация за глобалната енергийна политика и тенденции, включително аналитични отчети за региони.", "ok": false, "data": {"error": "HTTPSConnectionPool(host='www.ief.org', port=443): Max retries exceeded with url: / (Caused by ConnectTimeoutError(<urllib3.connection.HTTPSConnection object at 0x7ab847afa1e0>, 'Connection to www.ief.org timed out. (connect timeout=15)'))", "fetched_at": "2026-02-27T11:30:27.218482"}}
+
+
+=== SNAPSHOT www.nrel.gov_research.html.json ===
+
+
+{"source_name": "NREL Renewable Energy Data", "source_url": "https://www.nrel.gov/research.html", "docs": "https://www.nrel.gov/analysis.html", "notes": "Данни за възобновяеми източници в САЩ, включително ветер, слънце, вода и биомаса, с документация за технически изчисления.", "ok": true, "data": {"status_code": 200, "content_type": "text/html; charset=utf-8", "text_sample": " <!DOCTYPE html> <html lang=\"en\" > <head> <!-- Google Tag Manager --> <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src= 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); })(window,document,'script','dataLayer','GTM-KG7PVKB');</script> <!-- End Google Tag Manager --> <meta charset=\"utf-8\" /> <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">  <title>\r\n\tResearch | NLR\r\n</title> <!-- STYLESHEET --> <link rel=\"stylesheet\" href=\"/ResourcePackages/FrontEnd/public/library/css/gov/styles-gov.css?v=0\" /> <!-- THEME COLOR --> <meta name=\"theme-color\" content=\"#0079C2\"> <!-- FONT LIBRARY--> <link rel=\"preconnect\" href=\"https://fonts.googleapis.com\"> <link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin> <link href=\"https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&amp;display=swap\" rel=\"stylesheet\"> <!-- FAV ICONS --> <link rel=\"icon\" href=\"/ResourcePackages/Frontend/public/library/img/favicons/gov/favicon.ico?v=0\" type=\"image/x-icon\" /> <link rel=\"icon\" sizes=\"16x16\" href=\"/ResourcePackages/Frontend/public/library/img/favicons/gov/favicon-16x16.png?v=0\" type=\"image/png\" /> <link rel=\"icon\" sizes=\"32x32\" href=\"/ResourcePackages/Frontend/public/library/img/favicons/gov/favicon-32x32.png?v=0\" type=\"image/png\" /> <link rel=\"icon\" sizes=\"96x96\" href=\"/ResourcePackages/Fron
+
+
+=== SNAPSHOT www.nrel.gov_root.json ===
+
+
+{"source_name": "National Renewable Energy Laboratory (NREL)", "source_url": "https://www.nrel.gov", "docs": "https://www.nrel.gov/research/", "notes": "Данни за възобновяеми източници и технологични изследвания в САЩ, включително симулации и публични отчети.", "ok": true, "data": {"status_code": 200, "content_type": "text/html; charset=utf-8", "text_sample": " <!DOCTYPE html> <html lang=\"en\" > <head> <!-- Google Tag Manager --> <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src= 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); })(window,document,'script','dataLayer','GTM-KG7PVKB');</script> <!-- End Google Tag Manager --> <meta charset=\"utf-8\" /> <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">  <title>\r\n\tHome | NLR\r\n</title> <!-- STYLESHEET --> <link rel=\"stylesheet\" href=\"/ResourcePackages/FrontEnd/public/library/css/gov/styles-gov.css?v=0\" /> <!-- THEME COLOR --> <meta name=\"theme-color\" content=\"#0079C2\"> <!-- FONT LIBRARY--> <link rel=\"preconnect\" href=\"https://fonts.googleapis.com\"> <link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin> <link href=\"https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&amp;display=swap\" rel=\"stylesheet\"> <!-- FAV ICONS --> <link rel=\"icon\" href=\"/ResourcePackages/Frontend/public/library/img/favicons/gov/favicon.ico?v=0\" type=\"image/x-icon\" /> <link rel=\"icon\" sizes=\"16x16\" href=\"/ResourcePackages/Frontend/public/library/img/favicons/gov/favicon-16x16.png?v=0\" type=\"image/png\" /> <link rel=\"icon\" sizes=\"32x32\" href=\"/ResourcePackages/Frontend/public/library/img/favicons/gov/favicon-32x32.png?v=0\" type=\"image/png\" /> <link rel=\"icon\" sizes=\"96x96\" href=\"/ResourcePackages/Frontend/public/library/i
+
+
+На база на това, направи ENERGY REVIEW в описания формат.
+
+
+RESPONSE:
+Thinking...
+Обработвам информацията и създавам ENERGY REVIEW според изискванията.
+...done thinking.
+
+=== OVERVIEW ===
+Глобалната енергийна система е в стадия промяна, с растяща зависимост от възобновяеми източници в Европа и САЩ. Достъпът до данни е ограничен за някои региони, което затруднява анализирането на глобални тенденции. Въпреки това, прозрачността на ENTSO-E и IEA предоставя важна информация за трансмисията и производството на енергия.
+
+=== KEY RISKS ===
+- Недостатъчна прозрачност на информацията за енергийната политика на някои региони (например IEF).
+- Високи емисии и зависимост от неуправляема енергия в някои части на света.
+- Слаба координация между региони при прехода към възобновяеми източници.
+- Риск от нестабилност в енергийните мрежи поради несъответствие между производство и изискванията на потребността.
+
+=== RECOMMENDED ACTIONS (CIVILIZATION, 10 YEARS) ===
+1. Разработи стратегия за промяна към възобновяеми източници във всички региони, с акцент върху Европа и САЩ.
+2. Укрепи международната координация за енергийни инициативи, за да се намали зависимостта от неуправляема енергия.
+3. Осигури по-голяма прозрачност и достъп до данни за енергийната политика, включително използването на IEF и други източници.
+4. Подкрепи иновациите в технологии за възобновяеми източници и енергийна ефективност, за да се намали изхарчването на ресурси.
+5. Създай мрежа от изследвания и анализи за енергийните системи, за да се поддържа стабилност и устойчивост.
+
+=== TASKS FOR CORTEX++ (ENERGY AXIS) ===
+[TASK]: Събиране и анализ на данни за трансмисията на енергия от ENTSO-E
+[WHY]: За да се разбере как се разпространява електрическата енергия в Европа и какви са тенденциите.
+[DATA_NEEDED]: Файлове от ENTSO-E Transparency Portal, включително мощност, потребление и възобновяеми източници.
+
+[TASK]: Събиране и анализ на световни данни за енергия от IEA
+[WHY]: За да се получи обобщена представа за производство, потребление и емисии в различни региони.
+[DATA_NEEDED]: Достъп до IEA Data Portal, включително статистика за възобновяеми източници и емисии.
+
+[TASK]: Събиране и анализ на данни за възобновяеми източници от NREL
+[WHY]: За да се изучат технологии и изчисления за ветер, слънце и други възобновяеми източници в САЩ.
+[DATA_NEEDED]: Файлове от NREL Renewable Energy Data, включително технически изчисления и симулации.
+
+[TASK]: Събиране и анализ на данни за енергийна политика от IEF
+[WHY]: За да се разберат глобалните тенденции и политики, които влияят на енергийната система.
+[DATA_NEEDED]: Достъп до IEF, включително отчети и анализи за енергийна политика.
+
+[TASK]: Събиране и анализ на данни за енергийни мрежи и стабилност
+[WHY]: За да се оценят рисковете за нестабилност и как да се предотвратят.
+[DATA_NEEDED]: Данни от ENTSO-E и IEA, включително информация за енергийни мрежи и производство.

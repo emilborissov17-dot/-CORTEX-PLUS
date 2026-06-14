@@ -1,0 +1,101 @@
+{
+  "axis": "FOOD_REVIEW",
+  "domain": "planet",
+  "timestamp": "2026-05-17T13:56:03.295549+00:00",
+  "sources_count": 7,
+  "rss_count": 0,
+  "ddg_count": 6,
+  "youtube_count": 1,
+  "youtube_items": [
+    {
+      "title": "[YT] The ONLY 8 YouTube Shorts Niches That Will Make You Rich In 2025",
+      "summary": "I'm about to show you eight viral YouTube shorts niches that can make you rich from channels that you can literally start printing with right now to a sevenf figureure channel idea that could change your life and I'll be ranking them on this ladder. The higher we go, the more profitable the niches become. The catch is that the niches get harder and harder to pull off. So, not only will I be giving you the exact road map and details to make this work, but at the very top of the ladder, I'll be showing you what I believe is the best YouTube shorts niche with insane potential for any of you watching to make a generational amount of money. That might sound like I'm overselling, but I am genuinely serious. Now, I know when I tell you this first niche, a lot of you are going to spam hundreds of ",
+      "link": "https://www.youtube.com/watch?v=MEZuuEgz7pU",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "MEZuuEgz7pU",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "Повече от 85 милиона души в Африка са в критично положение за хранене в 2025 г.",
+    "root_cause": "Съчетание от климатични, икономически и конфликтни фактори, които усилват гладта и недостатъка от храна.",
+    "severity": "CRITICAL",
+    "leverage_points": [
+      "Глобални партньорства и инвестиции в устойчиви хранителни системи",
+      "Политики, които насочват помощта към най-уязвимите региони"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Създаване на международен фонд за устойчиво хранене в региона на Африка",
+        "measurable_goal": "Повече от 50 милиона души да получат стабилно хранение до 2027 г.",
+        "timeframe": "дългосрочно"
+      },
+      {
+        "action": "Изграждане на локални хранителни системи в най-уязвимите зони",
+        "measurable_goal": "Увеличение на производството на храна с 30% в 10 ключови държави до 2026 г.",
+        "timeframe": "средносрочно"
+      }
+    ],
+    "evidence": [
+      "Confronting alarming food insecurity trends in Africa: An... | ReliefWeb: Two other key Africa-wide analyses, from the Integrated Food Security Phase Classification and the Global Report on Food Crises 2025 add that over 85 million people are highly food insecure in the East.",
+      "Confronting Alarming Food Insecurity Trends in Africa: Expert...: He highlights the worsening hunger and malnutrition trends across Africa in 2025, driven by interconnected climate, economic, and conflict factors."
+    ],
+    "generalization": "Проблемът е свързан с домейна planet, но влияе и върху домейните civilization (достойнство, стабилност) и cooperation (мир и сътрудничество).",
+    "summary": "В 2025 г. над 85 милиона души в Африка са в критично положение за хранене поради комбиниране на климатични, икономически и конфликтни фактори.",
+    "risk_level": "CRITICAL"
+  },
+  "raw_items": [
+    {
+      "title": "Confronting alarming food insecurity trends in Africa: An... | ReliefWeb",
+      "summary": "Two other key Africa-wide analyses, from the Integrated Food Security Phase Classification and the Global Report on Food Crises 2025 add that over 85 million people are highly food insecure in the East and Horn of Africa (including Sudan and South Sudan).",
+      "link": "https://reliefweb.int/report/world/confronting-alarming-food-insecurity-trends-africa-experts-view-ifrc",
+      "source_type": "ddg"
+    },
+    {
+      "title": "GNAFC Key Messages and Analysis on the 2026 Conflict in the Middle...",
+      "summary": "Food crisis countries should not be assessed only through maritime trade exposure. The countries of greatest concern are those where multiple vulnerabilities overlap. Policy responses should be targeted, time-bound and sequenced; poorly designed measures may be costly and ineffective.",
+      "link": "https://www.fightfoodcrises.net/articles/gnafc-key-messages-and-analysis-2026-conflict-middle-east-acute-food-insecurity-and",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Confronting Alarming Food Insecurity Trends in Africa: Expert...",
+      "summary": "He highlights the worsening hunger and malnutrition trends across Africa in 2025, driven by interconnected climate, economic, and conflict factors. Without coordinated global action and investment in resilient food systems, millions risk chronic hunger and life-threatening...",
+      "link": "https://news.fundsforngos.org/2025/09/02/confronting-alarming-food-insecurity-trends-in-africa-expert-analysis-and-solutions/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "How the world can avoid millions going hungry when supply chains...",
+      "summary": "Yet the alternative is to remain exposed to repeated shocks. Climate change and geopolitical tensions will continue to disrupt global supply chains.Global food security is threatened by supply chain disruptions, rising energy and fertilizer costs, and geopolitical instability.",
+      "link": "https://phys.org/news/2026-05-world-millions-hungry-chains-collapse.html",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Hormuz tensions expose global food supply... | Miller Magazine",
+      "summary": "Every major supply chain crisis of the last decade, from COVID in 2020 to Ukraine in 2022, the Red Sea disruptions in 2023-24 and now this, has nudged governments and corporates one step further toward supply chain shortening and regional self-reliance.",
+      "link": "https://millermagazine.com/blog/hormuz-tensions-expose-global-food-supply-vulnerabilities-6792",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Right, Washington Post, Banning Hamburger Ads Won’t Stop Climate...",
+      "summary": "Climate Realism has noted on multiple occasions that targeting cattle and meat eating will not change the weather or slow global warming. Amsterdam, according to WaPo, “has set a totally unrealistic goal for residents to get 60 percent of their protein from plant-based sources by 2030.”",
+      "link": "https://wattsupwiththat.com/2026/05/11/right-washington-post-banning-hamburger-ads-wont-stop-climate-change/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "[YT] The ONLY 8 YouTube Shorts Niches That Will Make You Rich In 2025",
+      "summary": "I'm about to show you eight viral YouTube shorts niches that can make you rich from channels that you can literally start printing with right now to a sevenf figureure channel idea that could change your life and I'll be ranking them on this ladder. The higher we go, the more profitable the niches become. The catch is that the niches get harder and harder to pull off. So, not only will I be giving you the exact road map and details to make this work, but at the very top of the ladder, I'll be showing you what I believe is the best YouTube shorts niche with insane potential for any of you watching to make a generational amount of money. That might sound like I'm overselling, but I am genuinely serious. Now, I know when I tell you this first niche, a lot of you are going to spam hundreds of ",
+      "link": "https://www.youtube.com/watch?v=MEZuuEgz7pU",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "MEZuuEgz7pU",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ]
+}

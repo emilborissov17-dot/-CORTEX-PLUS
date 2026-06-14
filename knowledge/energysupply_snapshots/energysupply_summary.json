@@ -1,0 +1,401 @@
+{
+  "domain": "energysupply",
+  "run_at": "2026-03-02T19:35:10.106343",
+  "active_sources": 56,
+  "ok_sources": 33,
+  "failed_sources": 23,
+  "sources": [
+    {
+      "name": "International Energy Agency (IEA)",
+      "url": "https://www.iea.org",
+      "file": "www.iea.org.json",
+      "status": 200,
+      "error": null
+    },
+    {
+      "name": "U.S. Energy Information Administration (EIA)",
+      "url": "https://www.eia.gov",
+      "file": "www.eia.gov.json",
+      "status": 200,
+      "error": null
+    },
+    {
+      "name": "World Bank Energy Statistics",
+      "url": "https://data.worldbank.org/topic/energy",
+      "file": "data.worldbank.org_topic_energy.json",
+      "status": 403,
+      "error": "HTTP 403"
+    },
+    {
+      "name": "European Commission - Joint Research Centre (JRC)",
+      "url": "https://ec.europa.eu/jrc",
+      "file": "ec.europa.eu_jrc.json",
+      "status": 200,
+      "error": null
+    },
+    {
+      "name": "National Renewable Energy Laboratory (NREL)",
+      "url": "https://www.nrel.gov",
+      "file": "www.nrel.gov.json",
+      "status": 200,
+      "error": null
+    },
+    {
+      "name": "International Renewable Energy Agency (IRENA)",
+      "url": "https://www.irena.org",
+      "file": "www.irena.org.json",
+      "status": 403,
+      "error": "HTTP 403"
+    },
+    {
+      "name": "Global Energy Observatory (GEO) - University of Texas",
+      "url": "https://geo.utexas.edu",
+      "file": "geo.utexas.edu.json",
+      "status": null,
+      "error": "[ERROR] ConnectionError(MaxRetryError('HTTPSConnectionPool(host=\\'geo.utexas.edu\\', port=443): Max retries exceeded with url: / (Caused by NameResolutionError(\"HTTPSConnection(host=\\'geo.utexas.edu\\', port=443): Failed to resolve \\'geo.utexas.edu\\' ([Errno 11001] getaddrinfo failed)\"))'))"
+    },
+    {
+      "name": "World Resources Institute (WRI) Energy Access",
+      "url": "https://www.wri.org/programs/energy-access",
+      "file": "www.wri.org_programs_energy-access.json",
+      "status": 404,
+      "error": "HTTP 404"
+    },
+    {
+      "name": "Energy Information Administration (EIA) API",
+      "url": "https://www.eia.gov/developers/api-documentation",
+      "file": "www.eia.gov_developers_api-documentation.json",
+      "status": 404,
+      "error": "HTTP 404"
+    },
+    {
+      "name": "International Energy Forum (IEF)",
+      "url": "https://www.ief.org",
+      "file": "www.ief.org.json",
+      "status": 200,
+      "error": null
+    },
+    {
+      "name": "Global Carbon Project",
+      "url": "https://globalcarbonproject.org",
+      "file": "globalcarbonproject.org.json",
+      "status": null,
+      "error": "[ERROR] ConnectionError(MaxRetryError('HTTPSConnectionPool(host=\\'globalcarbonproject.org\\', port=443): Max retries exceeded with url: / (Caused by NameResolutionError(\"HTTPSConnection(host=\\'globalcarbonproject.org\\', port=443): Failed to resolve \\'globalcarbonproject.org\\' ([Errno 11001] getaddrinfo failed)\"))'))"
+    },
+    {
+      "name": "National Agency for Energy Efficiency (NAEE) - Turkey",
+      "url": "https://www.enerji.gov.tr",
+      "file": "www.enerji.gov.tr.json",
+      "status": 200,
+      "error": null
+    },
+    {
+      "name": "European Environment Agency (EEA) Energy Data",
+      "url": "https://www.eea.europa.eu",
+      "file": "www.eea.europa.eu.json",
+      "status": 200,
+      "error": null
+    },
+    {
+      "name": "International Energy Outlook (IEO) - U.S. Energy Information Administration",
+      "url": "https://www.eia.gov/outlooks/ieo",
+      "file": "www.eia.gov_outlooks_ieo.json",
+      "status": 200,
+      "error": null
+    },
+    {
+      "name": "Global Energy Transition Index (GETI) - World Economic Forum",
+      "url": "https://www.weforum.org",
+      "file": "www.weforum.org.json",
+      "status": 403,
+      "error": "HTTP 403"
+    },
+    {
+      "name": "Energy Data Initiative (EDI) - World Bank",
+      "url": "https://data.worldbank.org",
+      "file": "data.worldbank.org.json",
+      "status": 200,
+      "error": null
+    },
+    {
+      "name": "Energy Storage Association (ESA)",
+      "url": "https://www.energystorage.org",
+      "file": "www.energystorage.org.json",
+      "status": 200,
+      "error": null
+    },
+    {
+      "name": "Global Energy System (GES) - Stanford University",
+      "url": "https://energy.stanford.edu",
+      "file": "energy.stanford.edu.json",
+      "status": 200,
+      "error": null
+    },
+    {
+      "name": "International Energy Statistics Database (IESD)",
+      "url": "https://iesd.org",
+      "file": "iesd.org.json",
+      "status": 200,
+      "error": null
+    },
+    {
+      "name": "Energy Markets and Policy Research (EMPR) - University of Cambridge",
+      "url": "https://www.energy.cam.ac.uk",
+      "file": "www.energy.cam.ac.uk.json",
+      "status": 200,
+      "error": null
+    },
+    {
+      "name": "International Energy Agency (IEA)",
+      "url": "https://www.iea.org/data-and-statistics",
+      "file": "www.iea.org_data-and-statistics.json",
+      "status": 200,
+      "error": null
+    },
+    {
+      "name": "U.S. Energy Information Administration (EIA)",
+      "url": "https://www.eia.gov/data-and-models",
+      "file": "www.eia.gov_data-and-models.json",
+      "status": 404,
+      "error": "HTTP 404"
+    },
+    {
+      "name": "European Union Energy Data Portal",
+      "url": "https://ec.europa.eu/eurostat/cache/estat/energy/databrowser_en.html",
+      "file": "ec.europa.eu_eurostat_cache_estat_energy_databrowser_en.html.json",
+      "status": 404,
+      "error": "HTTP 404"
+    },
+    {
+      "name": "World Bank Energy Statistics",
+      "url": "https://data.worldbank.org/topic/energy",
+      "file": "data.worldbank.org_topic_energy.json",
+      "status": 403,
+      "error": "HTTP 403"
+    },
+    {
+      "name": "International Renewable Energy Agency (IRENA)",
+      "url": "https://www.irena.org/data-and-statistics",
+      "file": "www.irena.org_data-and-statistics.json",
+      "status": 403,
+      "error": "HTTP 403"
+    },
+    {
+      "name": "National Renewable Energy Laboratory (NREL)",
+      "url": "https://www.nrel.gov/",
+      "file": "www.nrel.gov_.json",
+      "status": 200,
+      "error": null
+    },
+    {
+      "name": "Global Energy Observatory (GEO)",
+      "url": "https://www.worldenergy.org/",
+      "file": "www.worldenergy.org_.json",
+      "status": 200,
+      "error": null
+    },
+    {
+      "name": "Open Energy Markets (OEM)",
+      "url": "https://open-energy-markets.org/",
+      "file": "open-energy-markets.org_.json",
+      "status": null,
+      "error": "[ERROR] ConnectionError(MaxRetryError('HTTPSConnectionPool(host=\\'open-energy-markets.org\\', port=443): Max retries exceeded with url: / (Caused by NameResolutionError(\"HTTPSConnection(host=\\'open-energy-markets.org\\', port=443): Failed to resolve \\'open-energy-markets.org\\' ([Errno 11001] getaddrinfo failed)\"))'))"
+    },
+    {
+      "name": "World Resources Institute (WRI)",
+      "url": "https://www.wri.org/energy",
+      "file": "www.wri.org_energy.json",
+      "status": 200,
+      "error": null
+    },
+    {
+      "name": "International Energy Forum (IEF)",
+      "url": "https://www.ief.org/",
+      "file": "www.ief.org_.json",
+      "status": 200,
+      "error": null
+    },
+    {
+      "name": "Energy Data Initiative (EDi)",
+      "url": "https://www.edi.org.uk/",
+      "file": "www.edi.org.uk_.json",
+      "status": 436,
+      "error": "HTTP 436"
+    },
+    {
+      "name": "Global Energy Statistical Database (GESDB)",
+      "url": "https://www.ief.org/",
+      "file": "www.ief.org_.json",
+      "status": 200,
+      "error": null
+    },
+    {
+      "name": "European Energy Agency (EU Emissions Trading System)",
+      "url": "https://www.eea.europa.eu/data-and-maps/",
+      "file": "www.eea.europa.eu_data-and-maps_.json",
+      "status": 200,
+      "error": null
+    },
+    {
+      "name": "African Energy Outlook (AEO)",
+      "url": "https://www.africanenergy.org/",
+      "file": "www.africanenergy.org_.json",
+      "status": null,
+      "error": "[ERROR] ConnectionError(MaxRetryError('HTTPSConnectionPool(host=\\'www.africanenergy.org\\', port=443): Max retries exceeded with url: / (Caused by NameResolutionError(\"HTTPSConnection(host=\\'www.africanenergy.org\\', port=443): Failed to resolve \\'www.africanenergy.org\\' ([Errno 11001] getaddrinfo failed)\"))'))"
+    },
+    {
+      "name": "International Energy Outlook (IEO)",
+      "url": "https://www.iea.org/reports/international-energy-outlook",
+      "file": "www.iea.org_reports_international-energy-outlook.json",
+      "status": 404,
+      "error": "HTTP 404"
+    },
+    {
+      "name": "International Energy Agency (IEA) Energy Statistics",
+      "url": "https://www.iea.org/data-and-statistics",
+      "file": "www.iea.org_data-and-statistics.json",
+      "status": 200,
+      "error": null
+    },
+    {
+      "name": "U.S. Energy Information Administration (EIA)",
+      "url": "https://www.eia.gov",
+      "file": "www.eia.gov.json",
+      "status": 200,
+      "error": null
+    },
+    {
+      "name": "European Commission Energy Data Portal",
+      "url": "https://ec.europa.eu/energy/data_en",
+      "file": "ec.europa.eu_energy_data_en.json",
+      "status": 200,
+      "error": null
+    },
+    {
+      "name": "International Renewable Energy Agency (IRENA)",
+      "url": "https://www.irena.org/data-and-statistics",
+      "file": "www.irena.org_data-and-statistics.json",
+      "status": 403,
+      "error": "HTTP 403"
+    },
+    {
+      "name": "World Bank Energy Statistics",
+      "url": "https://data.worldbank.org/indicator",
+      "file": "data.worldbank.org_indicator.json",
+      "status": 200,
+      "error": null
+    },
+    {
+      "name": "National Renewable Energy Laboratory (NREL)",
+      "url": "https://www.nrel.gov",
+      "file": "www.nrel.gov.json",
+      "status": 200,
+      "error": null
+    },
+    {
+      "name": "OpenEI (Open Energy Information)",
+      "url": "https://openei.org/",
+      "file": "openei.org_.json",
+      "status": 200,
+      "error": null
+    },
+    {
+      "name": "Global Electricity Dataset (GloE)",
+      "url": "https://www.global-energy.org/",
+      "file": "www.global-energy.org_.json",
+      "status": 200,
+      "error": null
+    },
+    {
+      "name": "International Energy Forum (IEF) API",
+      "url": "https://www.ief.org/",
+      "file": "www.ief.org_.json",
+      "status": 200,
+      "error": null
+    },
+    {
+      "name": "World Energy Council (WEC) Energy Data",
+      "url": "https://www.worldenergy.org/",
+      "file": "www.worldenergy.org_.json",
+      "status": 200,
+      "error": null
+    },
+    {
+      "name": "National Geospatial-Intelligence Agency (NGA)",
+      "url": "https://www.nga.gov/",
+      "file": "www.nga.gov_.json",
+      "status": 403,
+      "error": "HTTP 403"
+    },
+    {
+      "name": "Asian Development Bank (ADB) Energy Data Portal",
+      "url": "https://www.adb.org/energy",
+      "file": "www.adb.org_energy.json",
+      "status": 200,
+      "error": null
+    },
+    {
+      "name": "African Development Bank (AfDB) Energy Data",
+      "url": "https://www.afdb.org/energy",
+      "file": "www.afdb.org_energy.json",
+      "status": 403,
+      "error": "HTTP 403"
+    },
+    {
+      "name": "Global Petrol and Gas Data (GlobalPetrol)",
+      "url": "https://www.globalpetrol.org/",
+      "file": "www.globalpetrol.org_.json",
+      "status": null,
+      "error": "[ERROR] ConnectionError(MaxRetryError('HTTPSConnectionPool(host=\\'www.globalpetrol.org\\', port=443): Max retries exceeded with url: / (Caused by NameResolutionError(\"HTTPSConnection(host=\\'www.globalpetrol.org\\', port=443): Failed to resolve \\'www.globalpetrol.org\\' ([Errno 11001] getaddrinfo failed)\"))'))"
+    },
+    {
+      "name": "European Environment Agency (EEA) Energy Data",
+      "url": "https://www.eea.europa.eu/data-and-maps/",
+      "file": "www.eea.europa.eu_data-and-maps_.json",
+      "status": 200,
+      "error": null
+    },
+    {
+      "name": "Energy Information Portal (EIP)",
+      "url": "https://www.energyportal.org/",
+      "file": "www.energyportal.org_.json",
+      "status": null,
+      "error": "[ERROR] ConnectionError(MaxRetryError('HTTPSConnectionPool(host=\\'www.energyportal.org\\', port=443): Max retries exceeded with url: / (Caused by NameResolutionError(\"HTTPSConnection(host=\\'www.energyportal.org\\', port=443): Failed to resolve \\'www.energyportal.org\\' ([Errno 11001] getaddrinfo failed)\"))'))"
+    },
+    {
+      "name": "International Energy Statistics (IES)",
+      "url": "https://www.ies.org/",
+      "file": "www.ies.org_.json",
+      "status": 403,
+      "error": "HTTP 403"
+    },
+    {
+      "name": "Energy Storage Database (ESDB)",
+      "url": "https://www.energystorage.org/",
+      "file": "www.energystorage.org_.json",
+      "status": 200,
+      "error": null
+    },
+    {
+      "name": "Global Wind Energy Council (GWEC)",
+      "url": "https://gwec.net/",
+      "file": "gwec.net_.json",
+      "status": 200,
+      "error": null
+    },
+    {
+      "name": "International Solar Energy Society (ISES)",
+      "url": "https://www.solarsystem.org/",
+      "file": "www.solarsystem.org_.json",
+      "status": 436,
+      "error": "HTTP 436"
+    },
+    {
+      "name": "Global Energy Transition Index (GEC)",
+      "url": "https://www.genevainstitute.org",
+      "file": "www.genevainstitute.org.json",
+      "status": null,
+      "error": "[ERROR] SSLError(MaxRetryError('HTTPSConnectionPool(host=\\'www.genevainstitute.org\\', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerificationError(1, \"[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for \\'www.genevainstitute.org\\'. (_ssl.c:1081)\")))'))"
+    }
+  ]
+}

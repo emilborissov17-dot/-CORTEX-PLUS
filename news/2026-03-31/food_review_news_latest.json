@@ -1,0 +1,84 @@
+{
+  "axis": "FOOD_REVIEW",
+  "fetched_at": "2026-03-31T07:33:01.363353+00:00",
+  "smart_query": "food security hunger famine",
+  "sources_count": {
+    "rss": 0,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "web_search": 5
+  },
+  "rss": [],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "meyerls/FruitNeRF",
+      "snippet": "[IROS24] Offical Code for \"FruitNeRF: A Unified Neural Radiance Field based Fruit Counting Framework\" - Inegrated into Nerfstudio",
+      "stars": 324,
+      "url": "https://github.com/meyerls/FruitNeRF",
+      "updated": "2026-03-11",
+      "source": "GitHub"
+    },
+    {
+      "title": "px39n/Awesome-Precision-Agriculture",
+      "snippet": "Advancement of UAV, deep Learning and cutting edged technologies and papers in Precision Agriculture. ",
+      "stars": 133,
+      "url": "https://github.com/px39n/Awesome-Precision-Agriculture",
+      "updated": "2026-03-23",
+      "source": "GitHub"
+    },
+    {
+      "title": "nesl/agrobot",
+      "snippet": "Neural-Kalman GNSS/INS Navigation for Precision Agriculture",
+      "stars": 80,
+      "url": "https://github.com/nesl/agrobot",
+      "updated": "2026-03-14",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "How adaptation to food resources and death rates shape oscillatory dynamics in a microbial population",
+      "snippet": "Microbes constantly interact with their environment by depleting and transforming food sources. Theoretical studies have mainly focused on Lotka-Volterra models, which do not account for food source dynamics. In contrast, consumer-resource models, which consider food source dynamics, are less explor",
+      "url": "https://arxiv.org/abs/2601.22967v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "An additional food driven biological control patch model, incorporating generalized competition",
+      "snippet": "Additional food sources for an introduced predator are known to increase its efficiency on a target pest. In this context, inhibiting factors such as interference, predator competition, and the introduction of temporally dependent quantity and quality of additional food are all known to enable pest ",
+      "url": "https://arxiv.org/abs/2510.06111v1",
+      "source": "arXiv"
+    }
+  ],
+  "web_search": [
+    {
+      "title": "Global Report on Food Crises (GRFC) 2025 - World Food Programme",
+      "url": "https://www.wfp.org/publications/global-report-food-crises-grfc",
+      "source": "WEB"
+    },
+    {
+      "title": "The State of Food Security and Nutrition in the World 2025",
+      "url": "https://data.unicef.org/resources/sofi-2025/",
+      "source": "WEB"
+    },
+    {
+      "title": "Millions of lives at risk, warn UN food agencies, as hunger crisis ...",
+      "url": "https://news.un.org/en/story/2025/11/1166342",
+      "source": "WEB"
+    },
+    {
+      "title": "Famine and food security: new trends and systems or politics as usual ...",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11627203/",
+      "source": "WEB"
+    },
+    {
+      "title": "Food Security | Food Insecurity Statistics &amp; Solutions - World Bank Group",
+      "url": "https://www.worldbank.org/en/topic/agriculture/brief/food-security-update",
+      "source": "WEB"
+    }
+  ],
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL"
+}

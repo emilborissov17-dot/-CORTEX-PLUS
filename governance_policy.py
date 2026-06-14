@@ -1,0 +1,1 @@
+{"WB_GOV-effectiveness": 0.8, "WB_GOV-regulatory-quality": 0.7, "WB_GOV-rule-of-law": 0.9, "WB_GOV-control-of-corruption": 0.6}

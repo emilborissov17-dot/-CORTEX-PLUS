@@ -1,0 +1,101 @@
+{
+  "axis": "INEQUALITY_POVERTY_REVIEW",
+  "fetched_at": "2026-03-21T11:47:17.797672+00:00",
+  "smart_query": "inequality poverty wealth gap",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 3,
+    "arxiv": 2,
+    "github": 3,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "Iranian strikes on bases used by US caused $800m in damage, new analysis shows",
+      "snippet": "Much of the damage was caused in initial retaliatory strikes by Iran in the week after the US and Israel launched its operation.",
+      "url": "https://www.bbc.com/news/articles/cddq7j48p35o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Fans elated as BTS play first gig together in nearly four years",
+      "snippet": "RM, Jin, Suga, J-Hope, Jimin, V and Jung Kook perform together for the first time since October 2022.",
+      "url": "https://www.bbc.com/news/articles/cge0dyjwezgo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Russian drone attack kills two in Ukraine ahead of talks in US, officials say",
+      "snippet": "Two children, aged 11 and 15 were also injured in the attack which took place in Zaporizhzhia.",
+      "url": "https://www.bbc.com/news/articles/crl18nwjzzzo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [
+    {
+      "title": "Map Reveals States With Worst Wealth Inequality",
+      "snippet": "Map Reveals States With Worst Wealth Inequality",
+      "url": "https://www.newsweek.com/map-states-worst-wealth-inequality-11428950",
+      "source": "newsweek.com"
+    },
+    {
+      "title": "Sí , presidente , en España también hay pobreza y desigualdad",
+      "snippet": "Sí , presidente , en España también hay pobreza y desigualdad",
+      "url": "https://cincodias.elpais.com/opinion/2026-03-02/si-presidente-en-espana-tambien-hay-pobreza-y-desigualdad.html",
+      "source": "cincodias.elpais.com"
+    },
+    {
+      "title": "Küresel eşitsizlik derinleşiyor -  Sen çalış , ben yiyeyim  düzenine tepki",
+      "snippet": "Küresel eşitsizlik derinleşiyor -  Sen çalış , ben yiyeyim  düzenine tepki",
+      "url": "https://www.yeniasya.com.tr/ekonomi/kuresel-esitsizlik-derinlesiyor-sen-calis-ben-yiyeyim-duzenine-tepki_618505",
+      "source": "yeniasya.com.tr"
+    }
+  ],
+  "github_repos": [
+    {
+      "title": "thinkingmachines/ph-poverty-mapping",
+      "snippet": "Mapping Philippine Poverty using Machine Learning, Satellite Imagery, and Crowd-sourced Geospatial Information",
+      "stars": 85,
+      "url": "https://github.com/thinkingmachines/ph-poverty-mapping",
+      "updated": "2026-03-06",
+      "source": "GitHub"
+    },
+    {
+      "title": "rs-anderson/Clustering-Ward-Level-Poverty-Using-Satellite-Imagery",
+      "snippet": "Combing satellite imagery and machine learning methods to cluster ward-level povery in Gauteng, South Africa.",
+      "stars": 4,
+      "url": "https://github.com/rs-anderson/Clustering-Ward-Level-Poverty-Using-Satellite-Imagery",
+      "updated": "2024-04-06",
+      "source": "GitHub"
+    },
+    {
+      "title": "ejanalysis/EJAM",
+      "snippet": "Environmental Justice Analysis Multisite tool for summarizing environmental and residential population information for multiple locations. This detached fork of the package and this repository are not",
+      "stars": 2,
+      "url": "https://github.com/ejanalysis/EJAM",
+      "updated": "2026-02-12",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Poverty traps are rare, but trappedness isn't",
+      "snippet": "The persistence of poverty is not well explained by who is poor. We argue the relevant object of measurement is trappedness--expected escape time from deprivation--which varies systematically across institutional environments and is invisible to standard poverty indices. Using Markov chains estimate",
+      "url": "https://arxiv.org/abs/2603.18716v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Measuring the depth of multidimensional poverty with ordinal data",
+      "snippet": "This paper proposes a positional poverty gap measure of multidimensional poverty within the Alkire-Foster counting framework. The measure captures the depth of deprivations even when indicators are ordinal, unlike the standard poverty gap, which requires cardinal variables. The proposed method draws",
+      "url": "https://arxiv.org/abs/2603.15149v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[Inside a BOOK auction] In the age of TikTok and Polymarket, it can be easy to overlook the humble book. But books are one of the most influential technologies ever invented. From “The Wealth of Nations” to “Das Kapital,” books have the power to shape whole economic systems… and everything else in our world. The market for books can determine which ideas make it to the masses. So when Planet Money was approached to make ",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

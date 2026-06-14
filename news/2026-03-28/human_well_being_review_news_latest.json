@@ -1,0 +1,103 @@
+{
+  "axis": "HUMAN_WELL_BEING_REVIEW",
+  "fetched_at": "2026-03-28T10:48:26.418197+00:00",
+  "smart_query": "mental health wellbeing global",
+  "sources_count": {
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "web_search": 5
+  },
+  "rss": [
+    {
+      "title": "Are UK students at risk of more deadly meningitis outbreaks?",
+      "snippet": "The worst seems to be over, but questions remain about why this happened and whether it could happen again.",
+      "url": "https://www.bbc.com/news/articles/c93eqvxydzqo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Ultrasound delays putting pregnant women and cancer patients at risk, sonographers say",
+      "snippet": "Demand for ultrasound has increased but too few people are being trained for the job, sonographers warn. ",
+      "url": "https://www.bbc.com/news/articles/cd7jdp9gxjdo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Our daughter battled Meningitis B despite being vaccinated in 'very rare' case",
+      "snippet": "After Noa-Rose became critically ill, the four-year-old spent two weeks fighting for her life. ",
+      "url": "https://www.bbc.com/news/articles/c3ex3j0w53yo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "openemr/openemr",
+      "snippet": "The most popular open source electronic health records and medical practice management solution.",
+      "stars": 5053,
+      "url": "https://github.com/openemr/openemr",
+      "updated": "2026-03-28",
+      "source": "GitHub"
+    },
+    {
+      "title": "HospitalRun/hospitalrun",
+      "snippet": "Monorepo that holds all of HospitalRun's v2 projects.",
+      "stars": 984,
+      "url": "https://github.com/HospitalRun/hospitalrun",
+      "updated": "2026-03-27",
+      "source": "GitHub"
+    },
+    {
+      "title": "getodk/collect",
+      "snippet": "ODK Collect is an Android app for filling out forms. It's been used to collect billions of data points in challenging environments around the world. Contribute and make the world a better place! ✨📋✨",
+      "stars": 764,
+      "url": "https://github.com/getodk/collect",
+      "updated": "2026-03-27",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Global stability of a Hebbian/anti-Hebbian network for principal subspace learning",
+      "snippet": "Biological neural networks self-organize according to local synaptic modifications to produce stable computations. How modifications at the synaptic level give rise to such computations at the network level remains an open question. Pehlevan et al. [Neur. Comp. 27 (2015), 1461--1495] proposed a mode",
+      "url": "https://arxiv.org/abs/2601.13170v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "On graphical domination for threshold-linear networks with recurrent excitation and global inhibition",
+      "snippet": "Graphical domination was first introduced in [1] in the context of combinatorial threshold-linear networks (CTLNs). There it was shown that when a domination relationship exists between a pair of vertices in a graph, certain fixed points in the corresponding CTLN can be ruled out. Here we prove two ",
+      "url": "https://arxiv.org/abs/2510.05098v1",
+      "source": "arXiv"
+    }
+  ],
+  "web_search": [
+    {
+      "title": "Mental Health and Wellbeing | United Nations",
+      "url": "https://www.un.org/en/global-issues/mental-health",
+      "source": "WEB"
+    },
+    {
+      "title": "Global Mental Health: Where We Are and Where We Are Going",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10230139/",
+      "source": "WEB"
+    },
+    {
+      "title": "Mental health - World Health Organization (WHO)",
+      "url": "https://www.who.int/health-topics/mental-health",
+      "source": "WEB"
+    },
+    {
+      "title": "Global Mental Health",
+      "url": "https://globalhealth.harvard.edu/focus-areas/global-mental-health/",
+      "source": "WEB"
+    },
+    {
+      "title": "Global well-being in 2025: A multidimensional analysis of mental ...",
+      "url": "https://www.researchgate.net/publication/402199608_Global_well-being_in_2025_A_multidimensional_analysis_of_mental_financial_and_social_health_in_92_countries",
+      "source": "WEB"
+    }
+  ],
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL"
+}

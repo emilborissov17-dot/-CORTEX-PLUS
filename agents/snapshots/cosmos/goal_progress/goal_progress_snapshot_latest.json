@@ -1,0 +1,24 @@
+{
+  "current_level": "MEDIUM",
+  "progress_by_axis": {
+    "HUMAN": "Advancements in technology and education are increasing, but inequality and misinformation persist.",
+    "PLANET": "Renewable energy adoption is rising, but deforestation and pollution remain critical challenges.",
+    "CIVILIZATION": "Global cooperation on issues like climate change is growing, yet geopolitical tensions hinder unified action.",
+    "COSMOS": "Space exploration is expanding, but lack of international coordination limits long-term sustainability."
+  },
+  "main_bottlenecks": [
+    "Geopolitical fragmentation",
+    "Short-term economic interests over long-term sustainability",
+    "Inadequate global governance structures",
+    "Limited public awareness and engagement"
+  ],
+  "next_actions": [
+    "Strengthen international agreements on climate and resource management",
+    "Invest in education and media literacy to combat misinformation",
+    "Promote decentralized, sustainable energy systems",
+    "Foster cross-border collaboration in space exploration and research"
+  ],
+  "source_type": "LLM_GENERATED",
+  "snapshot_timestamp": "2026-04-13T06:09:36.519959+00:00",
+  "axis": "GOAL_PROGRESS_REVIEW"
+}

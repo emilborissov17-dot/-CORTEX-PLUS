@@ -1,0 +1,10 @@
+{
+  "domain": "food",
+  "sources": [
+    "data.worldbank.org_topic_agriculture-and-rural-development.json",
+    "ec.europa.eu_eurostat_databrowser.json",
+    "www.fao.org_faostat_en.json",
+    "dataviz.vam.wfp.org_.json",
+    "ourworldindata.org_food-agriculture.json"
+  ]
+}

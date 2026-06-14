@@ -1,0 +1,112 @@
+{
+  "axis": "TECHNOLOGY_AI_REVIEW",
+  "fetched_at": "2026-05-17T16:35:39.266247+00:00",
+  "smart_query": "artificial intelligence AI regulation",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 0,
+    "github": 3,
+    "youtube_transcripts": 2,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "X pledges quicker action on hate and terror content in the UK",
+      "snippet": "Ofcom said the commitments were of particular importance after recent crimes targeting Jewish communities in the UK.",
+      "url": "https://www.bbc.com/news/articles/clyp9652v18o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Claim, counter-claim and tech's seedy side exposed: Five things we learned in the Musk-Altman trial",
+      "snippet": "As the jury deliberates, this is what we found out during the weeks-long trial with two tech titans at its heart.",
+      "url": "https://www.bbc.com/news/articles/cg7pj8p5mv4o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Inside the secretive and lucrative world of orchid breeding",
+      "snippet": "It can take a decade to bring a new orchid to market, so breeders keep their hi-tech processes secret.",
+      "url": "https://www.bbc.com/news/articles/cly039rr2mgo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "swarm-ai-safety/swarm",
+      "snippet": "SWARM: System-Wide Assessment of Risk in Multi-agent systems",
+      "stars": 29,
+      "url": "https://github.com/swarm-ai-safety/swarm",
+      "updated": "2026-05-17",
+      "source": "GitHub"
+    },
+    {
+      "title": "Jakobovski/ai-safety-cheatsheet",
+      "snippet": "A compilation of AI safety ideas, problems, and solutions.",
+      "stars": 20,
+      "url": "https://github.com/Jakobovski/ai-safety-cheatsheet",
+      "updated": "2026-03-18",
+      "source": "GitHub"
+    },
+    {
+      "title": "shin4141/decision-os-paper",
+      "snippet": "Public gateway for the Decision-OS series (V4–V9). Canonical artifacts on Zenodo (DOI).",
+      "stars": 4,
+      "url": "https://github.com/shin4141/decision-os-paper",
+      "updated": "2026-05-10",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [],
+  "podcast": "[Prominent Scientists, Faith Leaders, Policymakers and Artists Call for a Prohibition on Superintelligence, as Poll Shows Americans Don’t Want It] Initial signatories include AI pioneers Yoshua Bengio and Geoffrey Hinton, leading media voices Steve Bannon and Glenn Beck, Obama's National Security Advisor Susan Rice, business trailblazers Steve Wozniak and Richard Branson, five Nobel Laureates, former Irish President Mary Robinson, actors Stephen Fry and Joseph Gordon-Levitt, and hundreds of others.",
+  "wiki": null,
+  "youtube_items": [
+    {
+      "title": "[YT] Roadmap to Become a Generative AI Expert for Beginners in 2025",
+      "summary": "[DESCRIPTION FALLBACK] Check out this roadmap to become an expert Data Scientist in 2025!",
+      "link": "https://www.youtube.com/watch?v=39zbC_PrNQs",
+      "source_type": "youtube",
+      "channel": "Analytics Vidhya",
+      "video_id": "39zbC_PrNQs",
+      "transcript_method": "description",
+      "transcript_chars": 89,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Artificial Intelligence in 2025 | 60 Minutes Full Episodes",
+      "summary": "If you're a major artificial intelligence company worth $183 billion, it might seem like bad business to reveal that in testing your AI models resorted to blackmail to avoid being shut down and in real life were recently used by Chinese hackers in a cyber attack on foreign governments. But those disclosures aren't unusual for Anthropic. CEO Dario Amade has centered his company's brand around transparency and safety, which doesn't seem to have hurt its bottom line. 80% of Anthropic's revenue now comes from businesses. 300,000 of them use its AI models called Clawed. Dario Amade talks a lot about the potential dangers of AI and has repeatedly called for its regulation. But is also engaged in a multi-trillion dollar arms race, a cutthroat competition to develop a form of intelligence the worl",
+      "link": "https://www.youtube.com/watch?v=KpOcUrPdx-4",
+      "source_type": "youtube",
+      "channel": "60 Minutes",
+      "video_id": "KpOcUrPdx-4",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] AI, Machine Learning, Deep Learning and Generative AI Explained",
+      "summary": "everybody's talking about artificial intelligence these days AI machine learning is another Hot Topic are they the same thing or are they different and if so what are those differences and deep learning is another one that comes into play I actually did a video on these three artificial intelligence machine learning and deep learning and talked about where they fit and there were a lot of comments on that and I read those comments and I'd like to address some of the most frequently asked questions so that we clear up some of the myths and misconceptions around this in addition something else has happened since that video was recorded and that is this the absolute explosion of this area of generative AI things like large language models and chat Bots have seemed to be taking over the world ",
+      "link": "https://www.youtube.com/watch?v=qYNweeDHiyU",
+      "source_type": "youtube",
+      "channel": "IBM Technology",
+      "video_id": "qYNweeDHiyU",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ],
+  "summary": "Технологичните разработки в AI продължават да бъдат в центъра на дискуссии за безопасност и прозрачност, но съществува рисик от използване на AI в кибератаки и неетични цели.",
+  "urgency": "HIGH",
+  "sentiment": "CRITICAL",
+  "key_developments": [
+    "X обещава по-бързи действия срещу контент, свързан с ненавист и терор",
+    "Musk-Altman процесът разкрива проблеми с техноложията и нейната нечиста страна",
+    "SWARM: System-Wide Assessment of Risk in Multi-agent systems (GitHub, 29 звезди)",
+    "AI Safety Cheatsheet (Jakobovski, 20 звезди)",
+    "Decision-OS series (shin4141, 4 звезди)"
+  ],
+  "open_source_momentum": "Добър",
+  "scientific_frontier": "Няма данни",
+  "relevance_to_goal": "Средно"
+}

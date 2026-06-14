@@ -1,0 +1,139 @@
+{
+  "axis": "SPACE_INFRASTRUCTURE_REVIEW",
+  "domain": "cosmos",
+  "timestamp": "2026-05-01T12:05:56.920970+00:00",
+  "sources_count": 15,
+  "rss_count": 12,
+  "ddg_count": 0,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] Six Years of NASA's Mars Curiosity Rover",
+      "summary": "[DESCRIPTION FALLBACK] This time-lapse video tracks images taken by NASA's Curiosity Mars Rover between 2020 and 2026. These photos were used by Curiosity's science team to select rocks to study as the rover rolled its way across the Red Planet.\n\nLearn more: https://go.nasa.gov/3QI7Npc",
+      "link": "https://www.youtube.com/watch?v=l6PAhdKxa2c",
+      "published": "2026-04-30T14:46:14+00:00",
+      "source_type": "youtube",
+      "channel": "NASA",
+      "video_id": "l6PAhdKxa2c",
+      "transcript_method": "description",
+      "transcript_chars": 286,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] NASA Astronaut Anil Menon Prelaunch News Conference (April 29, 2026)",
+      "summary": "[DESCRIPTION FALLBACK] NASA astronaut Anil Menon is discussing his upcoming mission to the International Space Station — Menon's first spaceflight — in a live news conference at NASA's Johnson Space Center.\n\nThe Soyuz MS-29 mission, targeted to launch Tuesday, July 14, will carry Menon and his crewmates, Roscosmos cosmonauts Pyotr Dubrov and Anna Kikina, to the International Space Station for an eight-month stay as part of Expeditions 74/75. \n\nSelected as a NASA astronaut in 2021, Menon graduated with the 23rd astrona",
+      "link": "https://www.youtube.com/watch?v=eshK9LS8I5w",
+      "published": "2026-04-29T18:35:53+00:00",
+      "source_type": "youtube",
+      "channel": "NASA",
+      "video_id": "eshK9LS8I5w",
+      "transcript_method": "description",
+      "transcript_chars": 523,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Progress 95 Cargo Ship Docking",
+      "summary": "[DESCRIPTION FALLBACK] Watch live as the unpiloted Progress 95 resupply spacecraft docks autonomously to the International Space Station. Docking is set to happen at about 8:00 p.m. EDT (0000 UTC April 28).\n\nProgress 95 will remain docked for about seven months before departing for a reentry into Earth's atmosphere to dispose of trash loaded by the space station crew.\n\nFor more than 25 years, people have lived and worked continuously aboard the International Space Station, advancing scientific knowledge and making res",
+      "link": "https://www.youtube.com/watch?v=hUpVpUw3rkM",
+      "published": "2026-04-28T00:15:32+00:00",
+      "source_type": "youtube",
+      "channel": "NASA",
+      "video_id": "hUpVpUw3rkM",
+      "transcript_method": "description",
+      "transcript_chars": 523,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "summary": "The key events and insights from the latest space news highlight ongoing advancements in space exploration, satellite technology, and international collaboration. The trend appears to be **IMPROVING**, with increasing focus on lunar missions, satellite testing, and space station operations.",
+    "risk_level": "LOW",
+    "trend": "IMPROVING",
+    "key_events": [
+      "DARPA selects three companies for lunar orbiter studies",
+      "Space Force taps K2 satellites to test laser communications for missile-defense",
+      "SpaceComputer to conduct on-orbit test of secure computing infrastructure"
+    ],
+    "insights": [
+      "The integration of advanced satellite systems and laser communication technologies is progressing rapidly.",
+      "International collaboration (e.g., NASA, Roscosmos, ESA) is strengthening in space exploration and satellite deployment."
+    ],
+    "youtube_insights": [
+      "NASA's Mars Curiosity Rover continues its mission with time-lapse footage of its journey across the Red Planet.",
+      "Progress 95 cargo ship docks with the International Space Station, highlighting the importance of resupply missions."
+    ],
+    "relevance_to_goal": "The information is highly relevant to the goal of understanding space exploration, satellite technology, and international cooperation in space. It provides insights into future missions, technological advancements, and collaborative efforts.",
+    "generalization": "The data reflects a positive trend in space innovation and international collaboration, with ongoing efforts to enhance satellite capabilities, test new technologies, and expand human presence in space."
+  },
+  "raw_items": [
+    {
+      "title": "Cyclone Rains Spur Papua New Guinea Landslides",
+      "summary": "Heavy rains from Tropical Cyclone Maila triggered a deadly landslide in the mountains of East New Britain.",
+      "link": "https://science.nasa.gov/earth/earth-observatory/cyclone-rains-spur-papua-new-guinea-landslides/",
+      "published": "Fri, 01 May 2026 04:01:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "NASA Invites Media to Ireland Artemis Accords Signing",
+      "summary": "Ireland will sign the Artemis Accords during a ceremony at 3 p.m. EDT Monday, May 4, at NASA Headquarters in Washington. NASA Administrator Jared Isaacman will host Ambassador of Ireland to the United States of America Geraldine Byrne Nason; Minister for Enterprise, Tourism and Employment Peter Burke, T.D., of Ireland; and U.S. Department of State [&#8230;]",
+      "link": "https://www.nasa.gov/news-release/nasa-invites-media-to-ireland-artemis-accords-signing/",
+      "published": "Thu, 30 Apr 2026 20:45:59 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Odyssey Team Celebrates on a Global Map of Mars",
+      "summary": "Description Team members past and present from NASA’s 2001 Mars Odyssey orbiter mission gathered on April 15, 2026, to celebrate 25 years since the spacecraft’s launch, which took place April 7, 2001. For the occasion, the team rolled out a giant global map of Mars created using imagery from Odyssey’s THEMIS (Thermal Emission Imaging System) […]",
+      "link": "https://science.nasa.gov/photojournal/odyssey-team-celebrates-on-a-global-map-of-mars/",
+      "published": "Thu, 30 Apr 2026 18:19:29 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "What’s Up: May 2026 Skywatching Tips from NASA",
+      "summary": "Shooting stars before dawn, a brilliant meetup between the Moon and Venus and a rare blue moon to end the month.",
+      "link": "https://science.nasa.gov/solar-system/whats-up-may-2026-skywatching-tips-from-nasa/",
+      "published": "Thu, 30 Apr 2026 18:13:34 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Amazon Leo passes 300 satellites with Atlas and Ariane launches",
+      "summary": "<figure><img alt=\"Ariane 64 launch\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"734\" src=\"https://i0.wp.com/spacenews.com/wp-content/uploads/2026/05/ariane6-va268.jpeg?fit=1024%2C734&amp;ssl=1\" width=\"1024\" /></figure>\n<p>A pair of launches this week pushed the number of Amazon Leo satellites deployed to more than 300, but the company is still far short of a looming FCC milestone.</p>\n<p>The post <a href=\"https://spacenews.com/amazon-leo-passes-300-satellites-with",
+      "link": "https://spacenews.com/amazon-leo-passes-300-satellites-with-atlas-and-ariane-launches/",
+      "published": "Fri, 01 May 2026 12:01:08 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "DARPA selects three companies for lunar orbiter studies",
+      "summary": "<figure><img alt=\"LASSO\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"752\" src=\"https://i0.wp.com/spacenews.com/wp-content/uploads/2026/05/benchmark-lasso.jpeg?fit=1000%2C752&amp;ssl=1\" width=\"1000\" /></figure>\n<p>The Defense Advanced Research Projects Agency has awarded contracts to three companies to study concepts for a lunar mission to search for water ice in very low orbits.</p>\n<p>The post <a href=\"https://spacenews.com/darpa-selects-three-companies-for-lunar",
+      "link": "https://spacenews.com/darpa-selects-three-companies-for-lunar-orbiter-studies/",
+      "published": "Fri, 01 May 2026 10:53:12 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Space Force taps K2 satellites to test laser communications for missile-defense",
+      "summary": "<figure><img alt=\"\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"411\" src=\"https://i0.wp.com/spacenews.com/wp-content/uploads/2026/04/HEdIiA1aIAAgaCR-scaled.jpeg?fit=1024%2C411&amp;ssl=1\" width=\"1024\" /></figure>\n<p>Experiments will attempt to establish crosslinks from medium Earth orbit satellites</p>\n<p>The post <a href=\"https://spacenews.com/space-force-taps-k2-satellites-to-test-laser-communications-for-missile-defense/\">Space Force taps K2 satellites to test l",
+      "link": "https://spacenews.com/space-force-taps-k2-satellites-to-test-laser-communications-for-missile-defense/",
+      "published": "Fri, 01 May 2026 00:30:54 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "SpaceComputer to conduct on-orbit test of secure computing infrastructure",
+      "summary": "<figure><img alt=\"\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"491\" src=\"https://i0.wp.com/spacenews.com/wp-content/uploads/2026/04/rsz_filip_rezabek_left_and_daniel_bar_right_872725e8-a849-4ccf-b33b-b1464f90f204.jpg?fit=879%2C491&amp;ssl=1\" width=\"879\" /></figure>\n<p>SAN FRANCISCO &#8212; SpaceComputer, a Singapore-based startup developing distributed computing infrastructure, is preparing to test its hardware and software in orbit later this year. The startup’s",
+      "link": "https://spacenews.com/spacecomputer-to-conduct-on-orbit-test-of-secure-computing-infrastructure/",
+      "published": "Thu, 30 Apr 2026 23:38:09 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Live coverage: SpaceX marks May Day with Starlink mission on a Falcon 9 rocket from Cape Canaveral",
+      "summary": "The Starlink 10-38 mission will see SpaceX deploy 29 broadband internet satellites into low Earth orbit. Liftoff from pad 40 at Cape Canaveral Space Force Station is scheduled for 1:35 p.m. EDT (1735 UTC). <a class=\"mh-excerpt-more\" href=\"https://spaceflightnow.com/2026/05/01/live-coverage-spacex-marks-may-day-with-starlink-mission-on-a-falcon-9-rocket-from-cape-canaveral/\" title=\"Live coverage: SpaceX marks May Day with Starlink mission on a Falcon 9 rocket from Cape Canaveral\"></a>",
+      "link": "https://spaceflightnow.com/2026/05/01/live-coverage-spacex-marks-may-day-with-starlink-mission-on-a-falcon-9-rocket-from-cape-canaveral/",
+      "published": "Fri, 01 May 2026 11:57:18 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "SpaceX launches 24 Starlink satellites on Falcon 9 rocket from Vandenberg SFB",
+      "summary": "The Starlink 17-36 mission was SpaceX’s 51st Falcon 9 launch of 2026. Liftoff from pad 4E happened at 7:42:49 pm PDT (10:42:49 pm EDT / 0242:49 UTC). <a class=\"mh-excerpt-more\" href=\"https://spaceflightnow.com/2026/04/29/live-coverage-spacex-to-launch-24-starlink-satellites-on-falcon-9-rocket-from-vandenberg-sfb-6/\" title=\"SpaceX launches 24 Starlink satellites on Falcon 9 rocket from Vandenberg SFB\"></a>",
+      "link": "https://spaceflightnow.com/2026/04/29/live-coverage-spacex-to-launch-24-starlink-satellites-on-falcon-9-rocket-from-vandenberg-sfb-6/",
+      "published": "Wed, 29 Apr 2026 23:28:46 +0000",
+      "source_type": "rss"
+    }
+  ]
+}

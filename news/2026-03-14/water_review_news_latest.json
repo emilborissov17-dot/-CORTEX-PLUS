@@ -1,0 +1,82 @@
+{
+  "axis": "WATER_REVIEW",
+  "fetched_at": "2026-03-14T07:14:47.923830+00:00",
+  "smart_query": "water scarcity drinking water",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "‘Drinking from a fetid pond’: superbug-creating genes found in UK’s largest lake",
+      "snippet": "Exclusive: Lough Neagh, which supplies drinking water for 40% of NI, contains genes resistant to last-resort antibioticsGenes capable of creating antibiotic-resistant superbugs have been detected in the UK’s largest lake, which supplies drinking water to about 40% of Northern Ireland.Testing of wate",
+      "url": "https://www.theguardian.com/environment/2026/mar/14/lough-neagh-northern-ireland-genes-antibiotic-resistance-superbugs",
+      "source": "RSS"
+    },
+    {
+      "title": "Who are the key figures in the sewage crisis, and where are they now?",
+      "snippet": "With anger stoked by Channel 4’s drama Dirty Business, we look at what has happened to some of the main playersWater companies have been in the public eye for the wrong reasons again recently. South West Water was in the dock pleading guilty to supplying water unfit for human consumption, while the ",
+      "url": "https://www.theguardian.com/environment/2026/mar/13/who-are-the-key-figures-in-the-sewage-crisis-and-where-are-they-now",
+      "source": "RSS"
+    },
+    {
+      "title": "Water inspectors shut out of Alcoa mine sites in Perth drinking water catchment, documents show",
+      "snippet": "Fencing installed around Alcoa’s bauxite mine sites in 2025 blocked rangers conducting inspections, Water Corporation documents sayFollow our Australia news live blog for latest updatesGet our breaking news email, free app or daily news podcastConservation groups have accused the US mining company A",
+      "url": "https://www.theguardian.com/australia-news/2026/mar/12/alcoa-mine-perth-water-inspectors-shut-out",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "wilsto/pool-monitor-card",
+      "snippet": "Keep your swimming pool safe and crystal clear by monitoring up to 25 water chemistry parameters at a glance.",
+      "stars": 106,
+      "url": "https://github.com/wilsto/pool-monitor-card",
+      "updated": "2026-03-14",
+      "source": "GitHub"
+    },
+    {
+      "title": "DOI-USGS/EGRET",
+      "snippet": "An R-package for the analysis of long-term changes in water quality and streamflow, including the water-quality method Weighted Regressions on Time, Discharge, and Season (WRTDS). https://doi-usgs.git",
+      "stars": 97,
+      "url": "https://github.com/DOI-USGS/EGRET",
+      "updated": "2026-03-12",
+      "source": "GitHub"
+    },
+    {
+      "title": "KnowFlow/KnowFlow_AWM",
+      "snippet": "KnowFlow Automatic Water Monitoring device is an open sourced tool enable everyone having access to first hand water quality data with low cost.",
+      "stars": 95,
+      "url": "https://github.com/KnowFlow/KnowFlow_AWM",
+      "updated": "2025-12-19",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Causal Attribution of Coastal Water Clarity Degradation to Nickel Processing Expansion at the Indonesia Morowali Industrial Park, Sulawesi",
+      "snippet": "Indonesia's nickel ore export ban has driven rapid expansion of smelting and hydrometallurgical processing capacity at the Indonesia Morowali Industrial Park (IMIP), now the world's largest integrated nickel processing complex, on the coast of Central Sulawesi. Whether this industrialization has deg",
+      "url": "https://arxiv.org/abs/2603.07331v2",
+      "source": "arXiv"
+    },
+    {
+      "title": "Modelling the long-term impacts of artificial warming on the Martian water cycle and surface ice distribution",
+      "snippet": "Recent papers by Ansari et al. (2024, Science Advances 10, eadn4650) and Richardson et al. (2025, arXiv eprint 2504.01455) have suggested that global warming of the Martian surface ('terraforming') by 35 K to sustain local habitats above the melting point of water could be achieved through the injec",
+      "url": "https://arxiv.org/abs/2603.01539v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[Kleptotherms] In this episode, we break the thermometer and watch the mercury spill out as we discover that temperature is far stranger than it seems. We first ran this episode in 2021: Five stories that run the gamut from snakes to stars. We start out underwater, with a species of snake that has evolved a devious trick for keeping warm. Then we hear the tale of a young man whose seemingly simple method of warm",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

@@ -1,0 +1,103 @@
+{
+  "axis": "HUMAN_WELL_BEING_REVIEW",
+  "fetched_at": "2026-03-27T09:45:23.947257+00:00",
+  "smart_query": "mental health wellbeing global",
+  "sources_count": {
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "web_search": 5
+  },
+  "rss": [
+    {
+      "title": "Our daughter battled Meningitis B despite being vaccinated in 'very rare' case",
+      "snippet": "After Noa-Rose became critically ill, the four-year-old spent two weeks fighting for her life. ",
+      "url": "https://www.bbc.com/news/articles/c3ex3j0w53yo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Screen time for under-fives should be limited to one hour a day, parents told",
+      "snippet": "New government guidance also suggests children under-two should not be watching screens alone.",
+      "url": "https://www.bbc.com/news/articles/c1d936n7445o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Doctors announce six-day strike in England as talks break down",
+      "snippet": "The walkout over jobs and pay is one of the longest yet in the dispute, and will begin on 7 April in England.",
+      "url": "https://www.bbc.com/news/articles/c62j7jx910go?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "openemr/openemr",
+      "snippet": "The most popular open source electronic health records and medical practice management solution.",
+      "stars": 5051,
+      "url": "https://github.com/openemr/openemr",
+      "updated": "2026-03-27",
+      "source": "GitHub"
+    },
+    {
+      "title": "HospitalRun/hospitalrun",
+      "snippet": "Monorepo that holds all of HospitalRun's v2 projects.",
+      "stars": 984,
+      "url": "https://github.com/HospitalRun/hospitalrun",
+      "updated": "2026-03-27",
+      "source": "GitHub"
+    },
+    {
+      "title": "getodk/collect",
+      "snippet": "ODK Collect is an Android app for filling out forms. It's been used to collect billions of data points in challenging environments around the world. Contribute and make the world a better place! ✨📋✨",
+      "stars": 764,
+      "url": "https://github.com/getodk/collect",
+      "updated": "2026-03-25",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Global stability of a Hebbian/anti-Hebbian network for principal subspace learning",
+      "snippet": "Biological neural networks self-organize according to local synaptic modifications to produce stable computations. How modifications at the synaptic level give rise to such computations at the network level remains an open question. Pehlevan et al. [Neur. Comp. 27 (2015), 1461--1495] proposed a mode",
+      "url": "https://arxiv.org/abs/2601.13170v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "On graphical domination for threshold-linear networks with recurrent excitation and global inhibition",
+      "snippet": "Graphical domination was first introduced in [1] in the context of combinatorial threshold-linear networks (CTLNs). There it was shown that when a domination relationship exists between a pair of vertices in a graph, certain fixed points in the corresponding CTLN can be ruled out. Here we prove two ",
+      "url": "https://arxiv.org/abs/2510.05098v1",
+      "source": "arXiv"
+    }
+  ],
+  "web_search": [
+    {
+      "title": "Mental Health and Wellbeing | United Nations",
+      "url": "https://www.un.org/en/global-issues/mental-health",
+      "source": "WEB"
+    },
+    {
+      "title": "Global Mental Health: Where We Are and Where We Are Going",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10230139/",
+      "source": "WEB"
+    },
+    {
+      "title": "Mental health - World Health Organization (WHO)",
+      "url": "https://www.who.int/health-topics/mental-health",
+      "source": "WEB"
+    },
+    {
+      "title": "Global Mental Health",
+      "url": "https://globalhealth.harvard.edu/focus-areas/global-mental-health/",
+      "source": "WEB"
+    },
+    {
+      "title": "PDF Countdown Global Mental Health 2030: - UNICEF DATA",
+      "url": "https://data.unicef.org/wp-content/uploads/2023/09/Countdown-Mental-Health-Report-2030-FINAL.pdf",
+      "source": "WEB"
+    }
+  ],
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL"
+}

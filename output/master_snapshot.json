@@ -1,0 +1,961 @@
+{
+  "timestamp": "2026-04-13T14:03:01.512936+00:00",
+  "health": "MODERATE",
+  "capacity_pct": 31.0,
+  "cpu": {
+    "percent": 0.1,
+    "count_logical": 16,
+    "count_physical": 8,
+    "freq_mhz": 3193.9,
+    "load_avg_1m": 4.38
+  },
+  "ram": {
+    "total_gb": 7.19,
+    "available_gb": 2.23,
+    "used_gb": 4.96,
+    "percent": 69.0,
+    "swap_used_gb": 0.0,
+    "swap_percent": 0.1
+  },
+  "disk": {
+    "total_gb": 1081.1,
+    "free_gb": 1004.57,
+    "percent": 2.1,
+    "read_mb": 7254.3,
+    "write_mb": 44.7
+  },
+  "network": {
+    "bytes_sent_mb": 3.7,
+    "bytes_recv_mb": 7.6,
+    "connections": 21
+  },
+  "temperatures": {},
+  "processes": {
+    "total": 27,
+    "top_cpu": [
+      {
+        "name": "systemd",
+        "cpu_pct": 0.0
+      },
+      {
+        "name": "init-systemd(Ub",
+        "cpu_pct": 0.0
+      },
+      {
+        "name": "init",
+        "cpu_pct": 0.0
+      },
+      {
+        "name": "systemd-journald",
+        "cpu_pct": 0.0
+      },
+      {
+        "name": "systemd-udevd",
+        "cpu_pct": 0.0
+      }
+    ]
+  },
+  "ollama": {
+    "running": true,
+    "loaded_models": [
+      "qwen3:8b"
+    ]
+  },
+  "snapshots_count": 40,
+  "uptime": "0h 54m",
+  "bottleneck": "RAM — ограничен капацитет за паралелни задачи",
+  "axis": "WATER_REVIEW",
+  "source_type": "REAL_DATA",
+  "metrics": {
+    "access_safe_water_pct": 73.6686144265244,
+    "access_sanitation_pct": 58.4951883486035,
+    "water_productivity_usd_m3": 23.3061933923877,
+    "annual_freshwater_withdrawal_pct": 9.2339298524297,
+    "rural_water_access_pct": 60.4017547264604,
+    "urban_water_access_pct": 83.4072338315247
+  },
+  "raw": {
+    "axis": "SOCIAL_RELATIONS_REVIEW",
+    "source": "world_bank_api",
+    "fetched_date": "2026-04-13",
+    "metrics": {
+      "homicide_rate_per_100k": 5.2,
+      "refugee_population": null,
+      "internally_displaced": null,
+      "conflict_deaths_per_100k": null,
+      "urbanization_pct": 57.5634797111357
+    },
+    "data_quality": "2/5 fetched"
+  },
+  "snapshot_timestamp": "2026-03-28T10:55:01.446304+00:00",
+  "current_level": "LOW",
+  "key_metrics": [],
+  "main_risks": [
+    "Potential overfitting in complex task scenarios",
+    "Limited real-time adaptability in dynamic environments",
+    "Dependency on external data sources for continuous learning"
+  ],
+  "trends": [
+    "Increased demand for multi-modal reasoning capabilities",
+    "Growing emphasis on ethical and transparent decision-making",
+    "Integration of real-time feedback loops for improved adaptability"
+  ],
+  "strengths": [
+    "basic functionality is operational",
+    "some tasks are being processed"
+  ],
+  "weaknesses": [
+    "low prediction accuracy",
+    "most proposals fail to execute",
+    "overall performance is below threshold"
+  ],
+  "improvement_suggestions": [
+    "increase prediction accuracy through better data and models",
+    "optimize proposal execution process",
+    "prioritize critical tasks to improve overall performance"
+  ],
+  "progress_by_axis": {
+    "HUMAN": "Increasing awareness and cooperation on global issues, with growing emphasis on equity and inclusion.",
+    "PLANET": "Significant progress in renewable energy adoption and conservation efforts, but ecological degradation persists.",
+    "CIVILIZATION": "Technological advancement and knowledge-sharing fostered global collaboration, yet inequality and conflict remain challenges.",
+    "COSMOS": "Limited exploration and understanding of the universe, with growing interest in space sustainability and interstellar ethics."
+  },
+  "main_bottlenecks": [
+    "Political fragmentation and lack of global governance",
+    "Resource inequality and environmental degradation",
+    "Short-term economic priorities over long-term sustainability",
+    "Limited public engagement in cosmic and civilizational issues"
+  ],
+  "next_actions": [
+    "Strengthen international cooperation frameworks",
+    "Accelerate transition to circular economies and regenerative systems",
+    "Promote education and media for global citizenship",
+    "Invest in space ethics and sustainable space exploration"
+  ],
+  "report_type": "MASTER_CIVILIZATION_SNAPSHOT",
+  "cycle_type": "FAST_CYCLE",
+  "axes_count": 27,
+  "axes": [
+    "BODY_SCAN",
+    "ECONOMY_WORK_REVIEW",
+    "EDUCATION_CULTURE_REVIEW",
+    "GOVERNANCE_INSTITUTIONS_REVIEW",
+    "INEQUALITY_POVERTY_REVIEW",
+    "INFRASTRUCTURE_CITIES_REVIEW",
+    "TECHNOLOGY_AI_REVIEW",
+    "TECHNOLOGY_INFRA_REVIEW",
+    "COSMIC_RESOURCES_REVIEW",
+    "DEEP_TIME_RISKS_REVIEW",
+    "GENERAL_SELF_REVIEW",
+    "GOAL_PROGRESS_REVIEW",
+    "LONG_TERM_FUTURE_REVIEW",
+    "SPACE_INFRASTRUCTURE_REVIEW",
+    "COGNITION_LEARNING_REVIEW",
+    "CULTURE_MEDIA_REVIEW",
+    "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL",
+    "HUMAN_WELL_BEING_REVIEW",
+    "SOCIAL_RELATIONS_REVIEW",
+    "OPENCLAW_SOLUTIONS",
+    "CLIMATE_GLOBAL_RISK_REVIEW",
+    "ECOSYSTEMS_BIODIVERSITY_REVIEW",
+    "ENERGY_REVIEW",
+    "FOOD_REVIEW",
+    "MATERIALS_WASTE_REVIEW",
+    "PLANETARY_POTENTIAL_REVIEW",
+    "WATER_REVIEW"
+  ],
+  "snapshots": {
+    "BODY_SCAN": {
+      "timestamp": "2026-03-27T08:14:36.239700+00:00",
+      "health": "MODERATE",
+      "capacity_pct": 30.9,
+      "cpu": {
+        "percent": 0.0,
+        "count_logical": 16,
+        "count_physical": 8,
+        "freq_mhz": 3193.9,
+        "load_avg_1m": 3.99
+      },
+      "ram": {
+        "total_gb": 7.19,
+        "available_gb": 2.23,
+        "used_gb": 4.97,
+        "percent": 69.1,
+        "swap_used_gb": 0.01,
+        "swap_percent": 0.3
+      },
+      "disk": {
+        "total_gb": 1081.1,
+        "free_gb": 1004.58,
+        "percent": 2.1,
+        "read_mb": 12728.9,
+        "write_mb": 77.9
+      },
+      "network": {
+        "bytes_sent_mb": 9.0,
+        "bytes_recv_mb": 562.6,
+        "connections": 21
+      },
+      "temperatures": {},
+      "processes": {
+        "total": 30,
+        "top_cpu": [
+          {
+            "name": "systemd",
+            "cpu_pct": 0.0
+          },
+          {
+            "name": "init-systemd(Ub",
+            "cpu_pct": 0.0
+          },
+          {
+            "name": "init",
+            "cpu_pct": 0.0
+          },
+          {
+            "name": "systemd-journald",
+            "cpu_pct": 0.0
+          },
+          {
+            "name": "systemd-udevd",
+            "cpu_pct": 0.0
+          }
+        ]
+      },
+      "ollama": {
+        "running": true,
+        "loaded_models": [
+          "qwen3:8b"
+        ]
+      },
+      "snapshots_count": 39,
+      "uptime": "0h 27m",
+      "bottleneck": "RAM — ограничен капацитет за паралелни задачи",
+      "axis": "BODY_SCAN",
+      "source_type": "BODY_SCANNER"
+    },
+    "ECONOMY_WORK_REVIEW": {
+      "source_type": "REAL_DATA",
+      "metrics": {
+        "axis": "ECONOMY_WORK_REVIEW",
+        "source": "world_bank_api",
+        "fetched_date": "2026-03-28",
+        "metrics": {
+          "gdp_per_capita_usd": 13631.2043097215,
+          "gdp_growth_pct": 2.87194964204313,
+          "unemployment_pct": 4.79097241077406,
+          "gini_index": null,
+          "income_share_bottom20": null,
+          "income_share_top10": null,
+          "labor_force_participation": 60.9792598100467
+        },
+        "data_quality": "4/7 indicators fetched"
+      },
+      "raw": {
+        "axis": "ECONOMY_WORK_REVIEW",
+        "source": "world_bank_api",
+        "fetched_date": "2026-03-28",
+        "metrics": {
+          "gdp_per_capita_usd": 13631.2043097215,
+          "gdp_growth_pct": 2.87194964204313,
+          "unemployment_pct": 4.79097241077406,
+          "gini_index": null,
+          "income_share_bottom20": null,
+          "income_share_top10": null,
+          "labor_force_participation": 60.9792598100467
+        },
+        "data_quality": "4/7 indicators fetched"
+      },
+      "snapshot_timestamp": "2026-03-28T10:48:59.659968+00:00",
+      "axis": "ECONOMY_WORK_REVIEW"
+    },
+    "EDUCATION_CULTURE_REVIEW": {
+      "source_type": "REAL_DATA",
+      "metrics": {
+        "axis": "EDUCATION_CULTURE_REVIEW",
+        "source": "world_bank_api",
+        "fetched_date": "2026-03-28",
+        "metrics": {
+          "literacy_rate_adult_pct": 87.7406997680664,
+          "primary_enrollment_pct": 89.4124,
+          "secondary_enrollment_pct": 66.27183,
+          "tertiary_enrollment_pct": 43.6151390075684,
+          "govt_education_spend_pct_gdp": 3.51483161383978,
+          "internet_users_pct": 73.6
+        },
+        "data_quality": "6/6 fetched"
+      },
+      "raw": {
+        "axis": "EDUCATION_CULTURE_REVIEW",
+        "source": "world_bank_api",
+        "fetched_date": "2026-03-28",
+        "metrics": {
+          "literacy_rate_adult_pct": 87.7406997680664,
+          "primary_enrollment_pct": 89.4124,
+          "secondary_enrollment_pct": 66.27183,
+          "tertiary_enrollment_pct": 43.6151390075684,
+          "govt_education_spend_pct_gdp": 3.51483161383978,
+          "internet_users_pct": 73.6
+        },
+        "data_quality": "6/6 fetched"
+      },
+      "snapshot_timestamp": "2026-03-28T10:49:10.365067+00:00",
+      "axis": "EDUCATION_CULTURE_REVIEW"
+    },
+    "GOVERNANCE_INSTITUTIONS_REVIEW": {
+      "source_type": "REAL_DATA",
+      "metrics": {
+        "rule_of_law_weighted_mean": -0.136,
+        "rule_of_law_weighted_median": -0.04,
+        "rule_of_law_pct_pop_below_minus05": 29.6,
+        "control_of_corruption_weighted_mean": -0.286,
+        "control_of_corruption_weighted_median": -0.366,
+        "control_of_corruption_pct_pop_below_minus05": 35.3,
+        "government_effectiveness_weighted_mean": 0.098,
+        "government_effectiveness_weighted_median": 0.475,
+        "government_effectiveness_pct_pop_below_minus05": 28.7,
+        "voice_accountability_weighted_mean": -0.411,
+        "voice_accountability_weighted_median": -0.375,
+        "voice_accountability_pct_pop_below_minus05": 48.3,
+        "political_stability_weighted_mean": -0.627,
+        "political_stability_weighted_median": -0.517,
+        "political_stability_pct_pop_below_minus05": 67.7,
+        "regulatory_quality_weighted_mean": -0.216,
+        "regulatory_quality_weighted_median": -0.296,
+        "regulatory_quality_pct_pop_below_minus05": 28.8
+      },
+      "raw": {
+        "rule_of_law_weighted_mean": -0.136,
+        "rule_of_law_weighted_median": -0.04,
+        "rule_of_law_pct_pop_below_minus05": 29.6,
+        "control_of_corruption_weighted_mean": -0.286,
+        "control_of_corruption_weighted_median": -0.366,
+        "control_of_corruption_pct_pop_below_minus05": 35.3,
+        "government_effectiveness_weighted_mean": 0.098,
+        "government_effectiveness_weighted_median": 0.475,
+        "government_effectiveness_pct_pop_below_minus05": 28.7,
+        "voice_accountability_weighted_mean": -0.411,
+        "voice_accountability_weighted_median": -0.375,
+        "voice_accountability_pct_pop_below_minus05": 48.3,
+        "political_stability_weighted_mean": -0.627,
+        "political_stability_weighted_median": -0.517,
+        "political_stability_pct_pop_below_minus05": 67.7,
+        "regulatory_quality_weighted_mean": -0.216,
+        "regulatory_quality_weighted_median": -0.296,
+        "regulatory_quality_pct_pop_below_minus05": 28.8
+      },
+      "snapshot_timestamp": "2026-03-28T10:49:08.706479+00:00",
+      "axis": "GOVERNANCE_INSTITUTIONS_REVIEW"
+    },
+    "INEQUALITY_POVERTY_REVIEW": {
+      "source_type": "REAL_DATA",
+      "metrics": {
+        "axis": "INEQUALITY_POVERTY_REVIEW",
+        "source": "world_bank_api",
+        "fetched_date": "2026-03-28",
+        "metrics": {
+          "gini_index": null,
+          "poverty_headcount_190": 10.3,
+          "income_share_bottom40": null,
+          "income_share_top10": null,
+          "multidimensional_poverty_pct": null,
+          "social_protection_coverage": 56.2646598815918
+        },
+        "data_quality": "2/6 fetched"
+      },
+      "raw": {
+        "axis": "INEQUALITY_POVERTY_REVIEW",
+        "source": "world_bank_api",
+        "fetched_date": "2026-03-28",
+        "metrics": {
+          "gini_index": null,
+          "poverty_headcount_190": 10.3,
+          "income_share_bottom40": null,
+          "income_share_top10": null,
+          "multidimensional_poverty_pct": null,
+          "social_protection_coverage": 56.2646598815918
+        },
+        "data_quality": "2/6 fetched"
+      },
+      "snapshot_timestamp": "2026-03-28T10:49:01.501709+00:00",
+      "axis": "INEQUALITY_POVERTY_REVIEW"
+    },
+    "INFRASTRUCTURE_CITIES_REVIEW": {
+      "source_type": "REAL_DATA",
+      "metrics": {
+        "axis": "INFRASTRUCTURE_CITIES_REVIEW",
+        "source": "world_bank_api",
+        "fetched_date": "2026-03-28",
+        "metrics": {
+          "access_electricity_pct": 91.5991774421991,
+          "access_clean_fuels_pct": 74.4233687014423,
+          "urban_population_pct": 57.5634797111357,
+          "roads_paved_pct": null,
+          "mobile_subscriptions_per100": 111.5,
+          "fixed_broadband_per100": 20.11
+        },
+        "data_quality": "5/6 fetched"
+      },
+      "raw": {
+        "axis": "INFRASTRUCTURE_CITIES_REVIEW",
+        "source": "world_bank_api",
+        "fetched_date": "2026-03-28",
+        "metrics": {
+          "access_electricity_pct": 91.5991774421991,
+          "access_clean_fuels_pct": 74.4233687014423,
+          "urban_population_pct": 57.5634797111357,
+          "roads_paved_pct": null,
+          "mobile_subscriptions_per100": 111.5,
+          "fixed_broadband_per100": 20.11
+        },
+        "data_quality": "5/6 fetched"
+      },
+      "snapshot_timestamp": "2026-03-28T10:49:03.517975+00:00",
+      "axis": "INFRASTRUCTURE_CITIES_REVIEW"
+    },
+    "TECHNOLOGY_AI_REVIEW": {
+      "source_type": "REAL_DATA",
+      "metrics": {
+        "axis": "TECHNOLOGY_AI_REVIEW",
+        "source": "world_bank_api",
+        "fetched_date": "2026-03-28",
+        "metrics": {
+          "rd_expenditure_pct_gdp": 2.66992090554305,
+          "high_tech_exports_pct": 24.7260601019906,
+          "patent_applications": 2385200.0,
+          "secure_internet_servers": 16379.6369660674,
+          "individuals_internet_pct": 73.6
+        },
+        "data_quality": "5/5 indicators fetched",
+        "notes": "R&D spend, high-tech exports, patents, internet security — World Bank proxies for tech/AI axis."
+      },
+      "raw": {
+        "axis": "TECHNOLOGY_AI_REVIEW",
+        "source": "world_bank_api",
+        "fetched_date": "2026-03-28",
+        "metrics": {
+          "rd_expenditure_pct_gdp": 2.66992090554305,
+          "high_tech_exports_pct": 24.7260601019906,
+          "patent_applications": 2385200.0,
+          "secure_internet_servers": 16379.6369660674,
+          "individuals_internet_pct": 73.6
+        },
+        "data_quality": "5/5 indicators fetched",
+        "notes": "R&D spend, high-tech exports, patents, internet security — World Bank proxies for tech/AI axis."
+      },
+      "snapshot_timestamp": "2026-03-28T10:49:13.862979+00:00",
+      "axis": "TECHNOLOGY_AI_REVIEW"
+    },
+    "TECHNOLOGY_INFRA_REVIEW": {
+      "source_type": "REAL_DATA",
+      "metrics": {
+        "axis": "TECHNOLOGY_INFRA_REVIEW",
+        "source": "world_bank_api",
+        "fetched_date": "2026-03-28",
+        "metrics": {
+          "secure_internet_servers_per1m": 16379.6369660674,
+          "fixed_broadband_per100": 20.11,
+          "mobile_subscriptions_per100": 111.5,
+          "air_transport_passengers": 4268984474.03796,
+          "container_port_traffic": 839847482.0,
+          "logistics_performance_index": 3.0
+        },
+        "data_quality": "6/6 fetched"
+      },
+      "raw": {
+        "axis": "TECHNOLOGY_INFRA_REVIEW",
+        "source": "world_bank_api",
+        "fetched_date": "2026-03-28",
+        "metrics": {
+          "secure_internet_servers_per1m": 16379.6369660674,
+          "fixed_broadband_per100": 20.11,
+          "mobile_subscriptions_per100": 111.5,
+          "air_transport_passengers": 4268984474.03796,
+          "container_port_traffic": 839847482.0,
+          "logistics_performance_index": 3.0
+        },
+        "data_quality": "6/6 fetched"
+      },
+      "snapshot_timestamp": "2026-03-28T10:49:12.327680+00:00",
+      "axis": "TECHNOLOGY_INFRA_REVIEW"
+    },
+    "COSMIC_RESOURCES_REVIEW": {
+      "source_type": "REAL_DATA",
+      "raw": {
+        "axis": "COSMIC_RESOURCES_REVIEW",
+        "source": "llm_estimates",
+        "fetched_date": "2026-03-22",
+        "metrics": {
+          "asteroid_mining_missions_active": 0,
+          "lunar_resource_agreements": 2,
+          "outer_space_treaty_signatories": 114,
+          "commercial_space_resource_companies": 12
+        },
+        "data_quality": "static_estimates_2025",
+        "notes": "Static estimates — no public real-time API for cosmic resources."
+      },
+      "snapshot_timestamp": "2026-03-22T08:51:35.921630+00:00",
+      "axis": "COSMIC_RESOURCES_REVIEW"
+    },
+    "DEEP_TIME_RISKS_REVIEW": {
+      "error": "LLM returned non-JSON",
+      "raw_text": "Thinking...\nOkay, the user wants me to generate a JSON snapshot for DEEP_TIME_RISKS_REVIEW, covering asteroid impact, supervolcano, and astrophysical events. Let me start by recalling the schema they provided. The JSON should have current_level, key_metrics, main_risks, and trends.\n\nFirst, current_level. I need to decide if it's LOW, MEDIUM, or HIGH. Considering that while these are rare, their potential impact is catastrophic, but current monitoring and mitigation efforts might keep the level moderate. Maybe MEDIUM?\n\nNext, key_metrics. The user wants metric names and short descriptions. Let me think of relevant metrics. For asteroid impact, maybe \"Asteroid Detection Rate\" – how many asteroids are detected each year. Then \"Supervolcano Activity Monitoring\" – how well we're tracking supervolcanoes. For astrophysical events, \"Gamma-Ray Burst Frequency\" could be a metric. Also, \"Planetary Defense Readiness\" to measure preparedness for impacts. That's four metrics. Let me check if those are accurate and concise.\n\nMain_risks: The three mentioned – asteroid impact, supervolcano eruption, astrophysical events like gamma-ray bursts or supernovae. Maybe also include something like \"Climate Disruption from Volcanic Eruptions\" as a risk related to supervolcanoes. Wait, the user specified the three, but maybe the main_risks should be the three main ones. Let me confirm. The user said \"asteroid impact, supervolcano, astrophysical events\" as the three, so main_risks should list those three. But maybe split astrophysical events into specific events? Or keep it as a single risk. Probably better to list them as three main risks.\n\nTrends: What are the current trends? For asteroid impact, maybe increased detection capabilities. For supervolcanoes, improved monitoring technologies. For astrophysical events, maybe more frequent observations due to advanced telescopes. Also, maybe trends like \"Enhanced Global Collaboration\" for planetary defense. Or \"Advancements in Early Warning Systems",
+      "stderr": "\u001b[?2026h\u001b[?25l\u001b[1G⠋ \u001b[K\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[1G⠹ \u001b[K\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[1G⠸ \u001b[K\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[1G⠼ \u001b[K\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[1G⠴ \u001b[K\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[1G⠦ \u001b[K\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[1G⠧ \u001b[K\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[1G⠇ \u001b[K\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[1G⠇ \u001b[K\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[1G⠏ \u001b[K\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[1G⠋ \u001b[K\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[1G⠙ \u001b[K\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[1G⠹ \u001b[K\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[1G⠼ \u001b[K\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[1G⠴ \u001b[K\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[1G⠴ \u001b[K\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[1G⠦ \u001b[K\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[1G⠧ \u001b[K\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[1G⠏ \u001b[K\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[1G⠋ \u001b[K\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[1G⠙ \u001b[K\u001b[?25h\u001b[?2026l\u001b[?25l\u001b[?2026h\u001b[?25l\u001b[1G\u001b[K\u001b[?25h\u001b[?2026l\u001b[2K\u001b[1G\u001b[?25h\u001b[?25l\u001b[?25h\u001b[?25l\u001b[?25h\u001b[?25l\u001b[?25h\u001b[?25l\u001b[?25h\u001b[?25l\u001b[?25h\u001b[?25l\u001b[?25h\u001b[?25l\u001b[?25h\u001b[?25l\u001b[?25h\u001b[?25l\u001b[?25h\u001b[?25l\u001b[?25h\u001b[?25l\u001b[?25h\u001b[?25l\u001b[?25h\u001b[?25l\u001b[?25h\u001b[?25l\u001b[?25h",
+      "source_type": "LLM_GENERATED",
+      "snapshot_timestamp": "2026-03-22T08:54:33.717857+00:00",
+      "axis": "DEEP_TIME_RISKS_REVIEW"
+    },
+    "GENERAL_SELF_REVIEW": {
+      "current_level": "MEDIUM",
+      "real_state": "Активна семантична памет,Groq reasoning и Autonomic pulse. Налични са 105 спомена в ChromaDB и 29 снимки в паметта.",
+      "strengths": [
+        "Активна семантична памет с 105 спомена",
+        "Функциониращ Groq reasoning",
+        "Активен Autonomic pulse",
+        "Наличност на реални данни от World Bank"
+      ],
+      "weaknesses": [
+        "Отсъствие на Dashboard визуализация",
+        "Неспособност за действие в света (Ниво 4)",
+        "Отсъствие на самоподобрение (Ниво 5)"
+      ],
+      "improvement_suggestions": [
+        "Разработка на Dashboard визуализация за по-добра представяне на данните",
+        "Разработка на функционалност за действие в света (Ниво 4)",
+        "Реализация на самоподобрение (Ниво 5) за подобряване на способностите"
+      ],
+      "honest_assessment": "Системата показва добри резултати в някои области, но има ясни слабости, които трябва да бъдат адресирани за достигане на по-високи нива на ефективност.",
+      "cycle_timestamp": "2026-03-28T10:44:07Z",
+      "snapshot_timestamp": "2026-03-28T10:44:10.083893+00:00",
+      "axis": "GENERAL_SELF_REVIEW",
+      "source_type": "LLM_FAST_CYCLE"
+    },
+    "GOAL_PROGRESS_REVIEW": {
+      "current_level": "MEDIUM",
+      "overall_progress_pct": 45,
+      "progress_by_domain": {
+        "HUMAN": 50,
+        "PLANET": 40,
+        "CIVILIZATION": 55,
+        "COSMOS": 30
+      },
+      "main_bottlenecks": [
+        "Global cooperation disparities hinder unified sustainability efforts",
+        "Resource scarcity limits scalable solutions for planetary health",
+        "Technological complexity delays civilization-wide systemic shifts",
+        "Ethical frameworks for AGI alignment remain underdeveloped"
+      ],
+      "next_actions": [
+        "Launch cross-border collaboration hubs for equitable resource distribution",
+        "Accelerate breakthroughs in renewable energy storage technologies",
+        "Develop open-source AGI governance protocols with stakeholder input",
+        "Establish cosmic resource exploration frameworks prioritizing sustainability"
+      ],
+      "snapshot_timestamp": "2026-03-28T10:45:44.331388+00:00",
+      "axis": "GOAL_PROGRESS_REVIEW",
+      "source_type": "LLM_FAST_CYCLE"
+    },
+    "LONG_TERM_FUTURE_REVIEW": {
+      "current_level": "medium",
+      "xrisk_score": 45,
+      "main_risks": [
+        "nuclear",
+        "AGI misalignment",
+        "biorisks",
+        "climate collapse"
+      ],
+      "trends": [
+        "Nuclear risk decreasing due to international treaties but potential for accidents remains",
+        "AGI misalignment concerns rising with rapid development and lack of alignment research",
+        "Biorisks increasing due to advancements in genetic engineering and synthetic biology",
+        "Climate collapse risk remains high with mixed trends in mitigation efforts"
+      ],
+      "snapshot_timestamp": "2026-03-28T10:47:10.666772+00:00",
+      "axis": "LONG_TERM_FUTURE_REVIEW",
+      "source_type": "LLM_FAST_CYCLE"
+    },
+    "SPACE_INFRASTRUCTURE_REVIEW": {
+      "source_type": "REAL_DATA",
+      "raw": {
+        "axis": "SPACE_INFRASTRUCTURE_REVIEW",
+        "source": "llm_estimates",
+        "fetched_date": "2026-03-22",
+        "metrics": {
+          "active_satellites_est": 9000,
+          "space_agencies_count": 72,
+          "annual_launches_est": 240,
+          "iss_operational": true,
+          "lunar_missions_active": 3
+        },
+        "data_quality": "static_estimates_2025",
+        "notes": "Static estimates — real-time space data API TODO (SpaceTrack requires registration)."
+      },
+      "snapshot_timestamp": "2026-03-22T08:51:35.914691+00:00",
+      "axis": "SPACE_INFRASTRUCTURE_REVIEW"
+    },
+    "COGNITION_LEARNING_REVIEW": {
+      "source_type": "REAL_DATA",
+      "raw": {
+        "axis": "COGNITION_LEARNING_REVIEW",
+        "source": "world_bank_api",
+        "fetched_date": "2026-03-28",
+        "metrics": {
+          "literacy_rate_youth_pct": 93.1071014404297,
+          "primary_completion_rate": 88.0215835571289,
+          "tertiary_enrollment_pct": 43.6151390075684,
+          "govt_expenditure_education_pct": 3.51483161383978,
+          "pupil_teacher_ratio_primary": null
+        },
+        "data_quality": "4/5 fetched"
+      },
+      "snapshot_timestamp": "2026-03-28T10:49:35.239479+00:00",
+      "axis": "COGNITION_LEARNING_REVIEW"
+    },
+    "CULTURE_MEDIA_REVIEW": {
+      "source_type": "REAL_DATA",
+      "raw": {
+        "axis": "CULTURE_MEDIA_REVIEW",
+        "source": "world_bank_api",
+        "fetched_date": "2026-03-28",
+        "metrics": {
+          "internet_users_pct": 73.6,
+          "mobile_subscriptions_per100": 111.5,
+          "literacy_rate_adult_pct": 87.7406997680664,
+          "primary_school_enrollment": 89.4124,
+          "secondary_school_enrollment": 66.27183,
+          "fixed_broadband_per100": 20.11
+        },
+        "data_quality": "6/6 indicators fetched"
+      },
+      "snapshot_timestamp": "2026-03-28T10:49:33.913509+00:00",
+      "axis": "CULTURE_MEDIA_REVIEW"
+    },
+    "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL": {
+      "source_type": "REAL_DATA",
+      "raw": {
+        "axis": "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL",
+        "source": "world_bank_api",
+        "fetched_date": "2026-03-28",
+        "metrics": {
+          "rule_of_law": null,
+          "voice_accountability": null,
+          "political_stability": null,
+          "gender_inequality_index": 27.0344977100892,
+          "child_labor_pct": null,
+          "access_justice_score": 3.03896103896104
+        },
+        "data_quality": "2/6 fetched"
+      },
+      "snapshot_timestamp": "2026-03-28T10:49:39.320663+00:00",
+      "axis": "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL"
+    },
+    "HUMAN_WELL_BEING_REVIEW": {
+      "source_type": "REAL_DATA",
+      "raw": {
+        "axis": "HUMAN_WELL_BEING_REVIEW",
+        "source": "world_bank_who_api",
+        "fetched_date": "2026-03-28",
+        "metrics": {
+          "life_expectancy": 73.3289501544845,
+          "health_expenditure_pct": 10.0162846684385,
+          "infant_mortality": 27.1,
+          "physicians_per_1000": 1.86069862599317,
+          "poverty_headcount": 10.3,
+          "suicide_rate_per_100k": 9.157418121,
+          "uhc_service_coverage_index": 71.0
+        },
+        "data_quality": "7/7 indicators fetched"
+      },
+      "snapshot_timestamp": "2026-03-28T10:49:32.285950+00:00",
+      "axis": "HUMAN_WELL_BEING_REVIEW"
+    },
+    "SOCIAL_RELATIONS_REVIEW": {
+      "source_type": "REAL_DATA",
+      "raw": {
+        "axis": "SOCIAL_RELATIONS_REVIEW",
+        "source": "world_bank_api",
+        "fetched_date": "2026-03-28",
+        "metrics": {
+          "homicide_rate_per_100k": 5.2,
+          "refugee_population": null,
+          "internally_displaced": null,
+          "conflict_deaths_per_100k": null,
+          "urbanization_pct": 57.5634797111357
+        },
+        "data_quality": "2/5 fetched"
+      },
+      "snapshot_timestamp": "2026-03-28T10:49:36.547790+00:00",
+      "axis": "SOCIAL_RELATIONS_REVIEW"
+    },
+    "OPENCLAW_SOLUTIONS": {
+      "system_health": "FAIR",
+      "mission_alignment_pct": 60,
+      "critical_gaps": [
+        {
+          "gap": "Global cooperation for equitable resource distribution",
+          "impact": "HIGH",
+          "fix": "Integrate agents/civilization/civilization_snapshots_agent_qwen.py into fast_cycle_runner.py"
+        },
+        {
+          "gap": "Resource scarcity and pollution",
+          "impact": "HIGH",
+          "fix": "Implement planetary_potential_review_agent_qwen.py to monitor and suggest solutions for resource management"
+        },
+        {
+          "gap": "Political resistance to systemic reform",
+          "impact": "MEDIUM",
+          "fix": "Develop a governance_institutions_review agent to analyze and provide recommendations for systemic changes"
+        }
+      ],
+      "immediate_actions": [
+        {
+          "action": "Integrate missing agents into fast_cycle_runner.py",
+          "file": "fast_cycle_runner.py",
+          "why": "To ensure all agents are executed and contributing to the system's overall functionality"
+        },
+        {
+          "action": "Implement data validation and error handling in _safe_read function",
+          "file": "core/cortex_llm_resource.py",
+          "why": "To prevent potential crashes and ensure data integrity"
+        },
+        {
+          "action": "Update civilization_state_review_agent_qwen.py to reflect current mission goals",
+          "file": "civilization_state_review_agent_qwen.py",
+          "why": "To align the agent's functionality with the system's overall mission"
+        }
+      ],
+      "missing_agents_to_build": [
+        {
+          "name": "ResourceDistributionAgent",
+          "role": "Equitable resource allocation and management",
+          "priority": "HIGH"
+        },
+        {
+          "name": "PoliticalReformAgent",
+          "role": "Analyzing and recommending systemic changes for governance institutions",
+          "priority": "MEDIUM"
+        },
+        {
+          "name": "EnvironmentalMonitorAgent",
+          "role": "Tracking and mitigating the effects of pollution and climate change",
+          "priority": "MEDIUM"
+        }
+      ],
+      "fast_cycle_improvements": [
+        "Implement a more efficient trend tracking system",
+        "Optimize the self-review process for the LLM",
+        "Integrate the self_awareness_agent into the fast cycle"
+      ],
+      "fresco_alignment_notes": "The system aligns with the Venus Project's goals of achieving a resource-based economy and promoting global cooperation. However, more emphasis is needed on implementing a holistic approach to system design and resource management.",
+      "next_milestone": "Integrate the missing agents and implement the recommended fixes to achieve a more comprehensive and aligned system",
+      "openclaw_self_assessment": "OpenClaw should focus on integrating the missing agents, improving the trend tracking system, and optimizing the self-review process to enhance the overall system's performance and alignment with the mission",
+      "snapshot_timestamp": "2026-03-27T08:14:47.404894+00:00",
+      "axis": "OPENCLAW_SOLUTIONS",
+      "source_type": "OPENCLAW_FULL_SCAN"
+    },
+    "CLIMATE_GLOBAL_RISK_REVIEW": {
+      "axis": "CLIMATE_GLOBAL_RISK_REVIEW",
+      "timestamp": "2026-03-28T10:49:19.031324+00:00",
+      "level": "LOW",
+      "signals": [
+        "Средните температури остават относително стабилни във времето.",
+        "Делът на дните с екстремни температури остава нисък.",
+        "Валежите остават без ясно изразен тренд."
+      ],
+      "key_metrics": [
+        {
+          "name": "temperature_trend",
+          "description": "Дългосрочен тренд на средните температури според климатичните модели."
+        },
+        {
+          "name": "extreme_temperature_days_share",
+          "description": "Относителен дял на дните с екстремни температурни стойности."
+        },
+        {
+          "name": "precipitation_change",
+          "description": "Промяна във валежите спрямо дългосрочната база."
+        },
+        {
+          "name": "climate_risk_score",
+          "description": "Обобщен индикатор за климатичен риск, комбиниращ няколко климатични фактори."
+        }
+      ],
+      "model": "CLIMATE_GLOBAL_RISK_MULTI_REAL_DATA",
+      "source_type": "REAL_DATA",
+      "metrics": {
+        "co2_ppm_current": 429.46,
+        "co2_ppm_year_ago": 428.03,
+        "co2_annual_increase": 1.43,
+        "co2_date": "2026-03-15",
+        "co2_annual_mean": 427.35,
+        "archive_precipitation_variability": 2.1825398892247443,
+        "forecast_forecast_max_temp_7d": 11.3,
+        "forecast_forecast_heavy_rain_days_7d": 0.0,
+        "wb_wb_country_code_mentions": 0.0
+      },
+      "data_quality": "REAL_NOAA",
+      "fetched_date": "2026-03-28"
+    },
+    "ECOSYSTEMS_BIODIVERSITY_REVIEW": {
+      "axis": "ECOSYSTEMS_BIODIVERSITY_REVIEW",
+      "timestamp": "2026-03-28T10:49:27.461283+00:00",
+      "level": "MEDIUM",
+      "signals": [],
+      "key_metrics": [],
+      "model": "WORLD_BANK_API",
+      "source_type": "REAL_DATA",
+      "metrics": {
+        "forest_area_pct": 31.1430410787403,
+        "protected_terrestrial_area_pct": 16.4442551348079,
+        "marine_protected_area_pct": 14.0148284435104,
+        "annual_deforestation_pct": 40398387.316,
+        "threatened_species_count": 3434.0,
+        "co2_emissions_per_capita": null
+      },
+      "data_quality": "5/6 indicators fetched",
+      "fetched_date": "2026-03-28"
+    },
+    "ENERGY_REVIEW": {
+      "axis": "ENERGY_REVIEW",
+      "timestamp": "2026-03-28T10:49:20.646472+00:00",
+      "level": "MEDIUM",
+      "signals": [],
+      "key_metrics": [],
+      "model": "QWEN_PLANET_SNAPSHOT_AGENT",
+      "source_type": "REAL_DATA",
+      "metrics": {
+        "renewable_energy_pct": 19.7355641050053,
+        "energy_intensity_per_gdp": 4.54728002400977,
+        "co2_emissions_per_capita": null,
+        "access_to_electricity_pct": 91.5991774421991,
+        "fossil_fuel_consumption_pct": 75.5509946876187,
+        "energy_use_per_capita_kg": 1853.66774677224
+      },
+      "data_quality": "5/6 indicators fetched",
+      "fetched_date": "2026-03-28"
+    },
+    "FOOD_REVIEW": {
+      "axis": "FOOD_REVIEW",
+      "timestamp": "2026-03-28T10:49:23.956010+00:00",
+      "level": "MEDIUM",
+      "signals": [],
+      "key_metrics": [],
+      "model": "WORLD_BANK_API",
+      "source_type": "REAL_DATA",
+      "metrics": {
+        "prevalence_undernourishment_pct": 8.5,
+        "food_production_index": 100.0,
+        "cereal_yield_kg_per_ha": 4182.38297042313,
+        "agricultural_land_pct": 36.8835927730766,
+        "food_imports_pct_merch": 8.85667574107544,
+        "arable_land_per_person_ha": 0.171655156755891
+      },
+      "data_quality": "6/6 indicators fetched",
+      "fetched_date": "2026-03-28"
+    },
+    "MATERIALS_WASTE_REVIEW": {
+      "axis": "MATERIALS_WASTE_REVIEW",
+      "timestamp": "2026-03-28T10:49:25.540617+00:00",
+      "level": "MEDIUM",
+      "signals": [],
+      "key_metrics": [],
+      "model": "WORLD_BANK_API",
+      "source_type": "REAL_DATA",
+      "metrics": {
+        "municipal_waste_per_capita_kg": 3.18969961013975,
+        "recycling_rate_pct": null,
+        "material_consumption_per_gdp": 2.87194964204313,
+        "co2_emissions_total_kt": null,
+        "forest_area_pct": 31.1430410787403,
+        "protected_areas_pct": 16.4442551348079
+      },
+      "data_quality": "4/6 indicators fetched",
+      "fetched_date": "2026-03-28"
+    },
+    "PLANETARY_POTENTIAL_REVIEW": {
+      "axis": "PLANETARY_POTENTIAL_REVIEW",
+      "timestamp": "2026-03-28T10:49:29.844633+00:00",
+      "level": "MEDIUM",
+      "signals": [],
+      "key_metrics": [],
+      "model": "QWEN_PLANET_SNAPSHOT_AGENT",
+      "source_type": "LLM_COMPOSITE",
+      "metrics": {},
+      "data_quality": "",
+      "fetched_date": ""
+    },
+    "WATER_REVIEW": {
+      "axis": "WATER_REVIEW",
+      "timestamp": "2026-03-28T10:49:22.325222+00:00",
+      "level": "MEDIUM",
+      "signals": [],
+      "key_metrics": [],
+      "model": "WORLD_BANK_API",
+      "source_type": "REAL_DATA",
+      "metrics": {
+        "access_safe_water_pct": 73.6686144265244,
+        "access_sanitation_pct": 58.4951883486035,
+        "water_productivity_usd_m3": 23.3061933923877,
+        "annual_freshwater_withdrawal_pct": 9.2339298524297,
+        "rural_water_access_pct": 60.4017547264604,
+        "urban_water_access_pct": 83.4072338315247
+      },
+      "data_quality": "6/6 indicators fetched",
+      "fetched_date": "2026-03-28"
+    }
+  },
+  "system_health": "POOR",
+  "mission_alignment_pct": 30,
+  "critical_gaps": [
+    {
+      "gap": "Lack of integration with external data sources for real-time updates",
+      "impact": "HIGH",
+      "fix": "Implement API connections in hypercortex_runner.py to fetch real-time data"
+    },
+    {
+      "gap": "Incomplete agent integrations in fast_cycle_runner.py",
+      "impact": "MEDIUM",
+      "fix": "Integrate missing agents from AGENTS NOT IN fast_cycle_runner list into fast_cycle_runner.py"
+    },
+    {
+      "gap": "Insufficient error handling and logging mechanisms",
+      "impact": "LOW",
+      "fix": "Add try-except blocks and logging statements in critical sections of the code, such as in _llm function in fast_cycle_runner.py"
+    }
+  ],
+  "immediate_actions": [
+    {
+      "action": "Update _safe_read function in core/cortex_llm_resource.py to handle file reading errors",
+      "file": "core/cortex_llm_resource.py",
+      "why": "To prevent crashes due to file not found errors"
+    },
+    {
+      "action": "Implement a patch to fix the missing 'r' attribute in _safe_read function in core/cortex_llm_resource.py",
+      "file": "core/cortex_llm_resource.py",
+      "why": "To fix the syntax error and prevent crashes"
+    }
+  ],
+  "missing_agents_to_build": [
+    {
+      "name": "DataValidatorAgent",
+      "role": "Validate data from external sources",
+      "priority": "HIGH"
+    },
+    {
+      "name": "ErrorLoggerAgent",
+      "role": "Log errors and exceptions",
+      "priority": "MEDIUM"
+    }
+  ],
+  "fast_cycle_improvements": [
+    "Add a check to ensure all agents are properly integrated before running the fast cycle"
+  ],
+  "fresco_alignment_notes": "The system aligns with the Venus Project's goals of abundance and ecological balance, but lacks a clear plan for achieving these goals. The system's focus on data analysis and trend tracking is a good start, but it needs to be complemented with a more comprehensive approach to achieving the mission.",
+  "next_milestone": "Integrate DataValidatorAgent and ErrorLoggerAgent into the system to improve data quality and robustness",
+  "openclaw_self_assessment": "OpenClaw should focus on identifying key performance indicators (KPIs) for the system and developing a plan to track and improve these KPIs over time.",
+  "level": "MEDIUM",
+  "signals": [],
+  "model": "WORLD_BANK_API",
+  "data_quality": "6/6 indicators fetched",
+  "fetched_date": "2026-04-13"
+}

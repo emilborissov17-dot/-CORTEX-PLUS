@@ -1,0 +1,112 @@
+[
+  {
+    "name": "Global Water & Environment (IEA proxy)",
+    "url": "https://www.iea.org/data-and-statistics",
+    "docs": "https://www.iea.org/data-and-statistics/faq",
+    "notes": "Използва се като временен източник за връзка между енергия, вода и околна среда, докато се намерят по-добри water-специфични данни.",
+    "status": "active",
+    "type": "dataset_or_api",
+    "added_at": "2026-02-26T19:01:00",
+    "last_checked_status": 200,
+    "last_checked_at": "2026-02-26T19:01:00"
+  },
+  {
+    "name": "EU Water & Resources (Eurostat proxy)",
+    "url": "https://ec.europa.eu/eurostat/databrowser",
+    "docs": "https://ec.europa.eu/eurostat/cache/energy/index.htm",
+    "notes": "Временен източник за данни, свързани с ресурси и околна среда в ЕС, включително индиректно свързани с вода показатели.",
+    "status": "active",
+    "type": "dataset_or_api",
+    "added_at": "2026-02-26T19:01:00",
+    "last_checked_status": 200,
+    "last_checked_at": "2026-02-26T19:01:00"
+  },
+  {
+    "name": "US Renewable & Water-related Research (NREL proxy)",
+    "url": "https://www.nrel.gov/research.html",
+    "docs": "https://www.nrel.gov/analysis.html",
+    "notes": "Технически данни и анализи за възобновяеми ресурси, част от които са свързани с водни потоци и хидроенергия.",
+    "status": "active",
+    "type": "dataset_or_api",
+    "added_at": "2026-02-26T19:01:00",
+    "last_checked_status": 200,
+    "last_checked_at": "2026-02-26T19:01:00"
+  },
+  {
+    "name": "World Bank Water & Energy (proxy)",
+    "url": "https://data.worldbank.org/topic/energy",
+    "docs": "https://datahelpdesk.worldbank.org/",
+    "notes": "Глобални индикатори за достъп до ресурси и инфраструктура; засега се използва като общ ресурсен индикатор, включително за вода.",
+    "status": "active",
+    "type": "dataset_or_api",
+    "added_at": "2026-02-26T19:01:00",
+    "last_checked_status": 200,
+    "last_checked_at": "2026-02-26T19:01:00"
+  },
+  {
+    "name": "European Grid & Water-linked Infrastructure (OPSD proxy)",
+    "url": "https://open-power-system-data.org",
+    "docs": "https://open-power-system-data.org/docs",
+    "notes": "Електрическа инфраструктура и натоварване, ползвана като прокси за натиск върху водни ресурси чрез енергийни системи.",
+    "status": "active",
+    "type": "dataset_or_api",
+    "added_at": "2026-02-26T19:01:00",
+    "last_checked_status": 200,
+    "last_checked_at": "2026-02-26T19:01:00"
+  },
+  {
+    "name": "US Resources & Hydrology-related (USGS/EERE proxy)",
+    "url": "https://energy.gov/eere/",
+    "docs": "https://www.usgs.gov/programs/energy",
+    "notes": "Ресурсни и екологични данни, включително индиректно свързани с вода системи и хидрология.",
+    "status": "active",
+    "type": "dataset_or_api",
+    "added_at": "2026-02-26T19:01:00",
+    "last_checked_status": 200,
+    "last_checked_at": "2026-02-26T19:01:00"
+  },
+  {
+    "name": "ENTSO-E & Water-stressed Infrastructure (proxy)",
+    "url": "https://transparency.entsoe.eu",
+    "docs": "https://transparency.entsoe.eu/",
+    "notes": "Електроенергиен товар и производство, разглеждан като индиректен драйвер за натиск върху водни ресурси в Европа.",
+    "status": "active",
+    "type": "dataset_or_api",
+    "added_at": "2026-02-26T19:01:00",
+    "last_checked_status": 200,
+    "last_checked_at": "2026-02-26T19:01:00"
+  },
+  {
+    "name": "Global Energy-Water Nexus (IEF proxy)",
+    "url": "https://www.ief.org",
+    "docs": "https://www.ief.org/annual-conference",
+    "notes": "Аналитични материали за глобалната енергийна политика, използвани за контекст на енерго-водния nexus.",
+    "status": "active",
+    "type": "dataset_or_api",
+    "added_at": "2026-02-26T19:01:00",
+    "last_checked_status": 200,
+    "last_checked_at": "2026-02-26T19:01:00"
+  },
+  {
+    "name": "UNEP Environment & Water",
+    "url": "https://data.unep.org",
+    "docs": "https://data.unep.org/faq",
+    "notes": "Данни за околната среда, климат и ресурси, част от които са директно свързани с водни системи и качество на водата.",
+    "status": "active",
+    "type": "dataset_or_api",
+    "added_at": "2026-02-26T19:01:00",
+    "last_checked_status": 200,
+    "last_checked_at": "2026-02-26T19:01:00"
+  },
+  {
+    "name": "NREL – Water-linked Renewable Systems",
+    "url": "https://www.nrel.gov",
+    "docs": "https://www.nrel.gov/research/",
+    "notes": "Изследвания и данни за възобновяеми системи, включително водно-интензивни технологии и хидроенергийни сценарии.",
+    "status": "active",
+    "type": "dataset_or_api",
+    "added_at": "2026-02-26T19:01:00",
+    "last_checked_status": 200,
+    "last_checked_at": "2026-02-26T19:01:00"
+  }
+]

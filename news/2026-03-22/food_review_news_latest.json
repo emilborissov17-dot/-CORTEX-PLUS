@@ -1,0 +1,63 @@
+{
+  "axis": "FOOD_REVIEW",
+  "fetched_at": "2026-03-22T17:27:48.938514+00:00",
+  "smart_query": "food security hunger famine",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 0,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "meyerls/FruitNeRF",
+      "snippet": "[IROS24] Offical Code for \"FruitNeRF: A Unified Neural Radiance Field based Fruit Counting Framework\" - Inegrated into Nerfstudio",
+      "stars": 324,
+      "url": "https://github.com/meyerls/FruitNeRF",
+      "updated": "2026-03-11",
+      "source": "GitHub"
+    },
+    {
+      "title": "px39n/Awesome-Precision-Agriculture",
+      "snippet": "Advancement of UAV, deep Learning and cutting edged technologies and papers in Precision Agriculture. ",
+      "stars": 132,
+      "url": "https://github.com/px39n/Awesome-Precision-Agriculture",
+      "updated": "2026-02-15",
+      "source": "GitHub"
+    },
+    {
+      "title": "nesl/agrobot",
+      "snippet": "Neural-Kalman GNSS/INS Navigation for Precision Agriculture",
+      "stars": 80,
+      "url": "https://github.com/nesl/agrobot",
+      "updated": "2026-03-14",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "How adaptation to food resources and death rates shape oscillatory dynamics in a microbial population",
+      "snippet": "Microbes constantly interact with their environment by depleting and transforming food sources. Theoretical studies have mainly focused on Lotka-Volterra models, which do not account for food source dynamics. In contrast, consumer-resource models, which consider food source dynamics, are less explor",
+      "url": "https://arxiv.org/abs/2601.22967v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "An additional food driven biological control patch model, incorporating generalized competition",
+      "snippet": "Additional food sources for an introduced predator are known to increase its efficiency on a target pest. In this context, inhibiting factors such as interference, predator competition, and the introduction of temporally dependent quantity and quality of additional food are all known to enable pest ",
+      "url": "https://arxiv.org/abs/2510.06111v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[Chef vs. Robot] Robby the chef has lots of endearing qualities. He can make over 5000 dishes, he’s a consistent cook, and he’s never late for work. But he’s not a human. It is a 750 lb. stainless steel robot. With a rotating wok at its center. It’s a wok-bot. Automation has changed many industries. But automation only started entering restaurant kitchens in the past couple decades. Which raises the question – wha",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

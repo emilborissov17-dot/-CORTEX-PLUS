@@ -1,0 +1,103 @@
+{
+  "axis": "ECONOMY_WORK_REVIEW",
+  "fetched_at": "2026-03-31T07:33:34.080860+00:00",
+  "smart_query": "economy unemployment poverty wages",
+  "sources_count": {
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "web_search": 5
+  },
+  "rss": [
+    {
+      "title": "'I sent eight letters': Drivers hope for payout from car finance redress scheme",
+      "snippet": "Millions of motorists could be entitled to compensation with the financial regulator setting out how to apply",
+      "url": "https://www.bbc.com/news/articles/c20dxdy33llo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "How will car finance compensation payments work?",
+      "snippet": "Millions could be entitled to compensation as a result of commission arrangements between lenders and dealers.",
+      "url": "https://www.bbc.com/news/articles/c2l9vvj097lo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Millions of drivers mis-sold car finance to receive average £829 in compensation",
+      "snippet": "The City regulator says 12.1 million mis-sold motor finance deals will be eligible for redress.",
+      "url": "https://www.bbc.com/news/articles/c9vlm2ggrwlo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "AmirhosseinHonardoust/Economic-DNA-Repair",
+      "snippet": "A deep research study introducing the concept of Economic DNA Repair for smart contracts, designing self-correcting tokenomics that detect anomalies, repair unstable parameters, rebalance incentives, ",
+      "stars": 18,
+      "url": "https://github.com/AmirhosseinHonardoust/Economic-DNA-Repair",
+      "updated": "2026-02-23",
+      "source": "GitHub"
+    },
+    {
+      "title": "AmirhosseinHonardoust/Pricing-Negotiation-Intelligence",
+      "snippet": "This article reframes pricing as a negotiation rather than a prediction, showing how price emerges from tensions between product reality, market dynamics, and buyer behavior. It introduces negotiation",
+      "stars": 18,
+      "url": "https://github.com/AmirhosseinHonardoust/Pricing-Negotiation-Intelligence",
+      "updated": "2026-02-23",
+      "source": "GitHub"
+    },
+    {
+      "title": "AmirhosseinHonardoust/Workforce-Disruption-Equilibrium-Engine",
+      "snippet": "An interpretable system that models the future of work as an equilibrium under AI-driven forces. Instead of predicting job loss, it decomposes workforce disruption into automation pressure, adaptabili",
+      "stars": 17,
+      "url": "https://github.com/AmirhosseinHonardoust/Workforce-Disruption-Equilibrium-Engine",
+      "updated": "2026-02-23",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "The Economics of Builder Saturation in Digital Markets",
+      "snippet": "Recent advances in generative AI systems have dramatically reduced the cost of digital production, fueling narratives that widespread participation in software creation will yield a proliferation of viable companies. This paper challenges that assumption. We introduce the Builder Saturation Effect, ",
+      "url": "https://arxiv.org/abs/2603.23685v2",
+      "source": "arXiv"
+    },
+    {
+      "title": "Does Anxiety Improve Economic Decision-Making?",
+      "snippet": "We study the associations between everyday economic decision-making quality and people's emotional states. Using high-frequency, highly disaggregated consumer \"scanner\" data, we show that the cost of poor decision-making is substantial, on average equal to around half of day-to-day consumption budge",
+      "url": "https://arxiv.org/abs/2603.21874v1",
+      "source": "arXiv"
+    }
+  ],
+  "web_search": [
+    {
+      "title": "Underemployment, Recessions, and Poverty - Congress.gov",
+      "url": "https://www.congress.gov/crs-product/R46939",
+      "source": "WEB"
+    },
+    {
+      "title": "The Working Poor: Lack of Job Quality Increases Poverty Rates",
+      "url": "https://www.clasp.org/blog/working-poor-lack-job-quality-poverty-rise/",
+      "source": "WEB"
+    },
+    {
+      "title": "The federal minimum wage is officially a poverty wage in 2025",
+      "url": "https://www.epi.org/blog/the-federal-minimum-wage-is-officially-a-poverty-wage-in-2025/",
+      "source": "WEB"
+    },
+    {
+      "title": "A profile of the working poor, 2023 - U.S. Bureau of Labor Statistics",
+      "url": "https://www.bls.gov/opub/reports/working-poor/2023/",
+      "source": "WEB"
+    },
+    {
+      "title": "Labor Markets and Poverty in the US: Basic Facts, Policy and Research ...",
+      "url": "https://poverty.ucdavis.edu/research-paper/labor-markets-and-poverty-us-basic-facts-policy-and-research-needs",
+      "source": "WEB"
+    }
+  ],
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL"
+}

@@ -1,0 +1,45 @@
+MODEL: qwen3:1.7b
+
+PROMPT:
+You are CORTEX++ AGI. Generate a JSON snapshot for PLANETARY_POTENTIAL_REVIEW — the integrated carrying capacity of Earth. Include: current_level (LOW/MEDIUM/HIGH), key_signals list, main_bottlenecks list, trends list. Return ONLY valid JSON.
+
+RESPONSE:
+Thinking...
+Okay, let's tackle this query. The user wants a JSON snapshot for PLANETARY_POTENTIAL_REVIEW, which is about the integrated carrying capacity of Earth. They specified current_level, key_signals, main_bottlenecks, and trends. I need to make sure all these are included and the JSON is valid.
+
+First, the current_level. The carrying capacity of Earth is generally considered to be medium. But I should check if there are any factors that might push it to low or high. Maybe considering environmental stressors like climate change, resource depletion, and population growth. But the user didn't mention any specific factors, so I'll stick with medium unless there's a default. Wait, the user says "integrated carrying capacity," so maybe it's a composite measure. If there are negative trends, maybe it's low. But without specific data, perhaps medium is safe.
+
+Next, key_signals. These are the main indicators that are affecting the carrying capacity. Maybe things like carbon emissions, deforestation, water scarcity, population growth, and technological advancements. But I need to list them as key_signals. Let me think: carbon emissions, deforestation, water scarcity, population growth, technological efficiency. That makes sense.
+
+Main_bottlenecks. These are the primary constraints. Resource depletion, climate change, pollution, and policy inefficiencies. These are common bottlenecks. Also, maybe economic factors like inequality affecting resource distribution.
+
+Trends list. Trends could be things like increasing population, rising emissions, climate change impacts, and technological innovations. But trends are usually forward-looking. So maybe: population growth, rising carbon emissions, climate change effects, and advancements in sustainable tech.
+
+I need to structure the JSON correctly. Ensure the keys are present: current_level, key_signals, main_bottlenecks, trends. All values should be arrays. Check for valid JSON syntax, no trailing commas, quotes, etc. Also, make sure the current_level is in the correct format (LOW/MEDIUM/HIGH). Since the user didn't specify any particular factors, medium is the default.
+
+Double-checking the JSON structure. Each key is a string, and the values are arrays. For example, key_signals is an array of strings. Make sure the JSON is properly formatted with commas between items and no extra spaces. Alright, that should cover it.
+...done thinking.
+
+{
+  "current_level": "MEDIUM",
+  "key_signals": [
+    "Rising carbon emissions",
+    "Deforestation rates",
+    "Water scarcity",
+    "Population growth",
+    "Technological efficiency gains"
+  ],
+  "main_bottlenecks": [
+    "Resource depletion",
+    "Climate change impacts",
+    "Pollution levels",
+    "Policy inefficiencies",
+    "Economic inequality"
+  ],
+  "trends": [
+    "Population growth",
+    "Rising carbon emissions",
+    "Climate change effects",
+    "Advancements in sustainable tech"
+  ]
+}

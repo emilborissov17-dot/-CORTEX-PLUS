@@ -1,0 +1,123 @@
+{
+  "axis": "ENERGY_REVIEW",
+  "domain": "planet",
+  "timestamp": "2026-05-16T21:35:07.971139+00:00",
+  "sources_count": 13,
+  "rss_count": 12,
+  "ddg_count": 0,
+  "youtube_count": 1,
+  "youtube_items": [
+    {
+      "title": "[YT] What is Solar Wind and how affect the Earth - YouTube",
+      "summary": "The space in which the planet's orbit seems to be empty. However, it's not. It's full of matter from the sun. The sun generates powerful magnetic fields that rise above the surface in giant loops. When they clash, it triggers a storm of super hot, highly charged particles blasting out into space. It's called the solo wind. Astronauts in space can see it, but only when they close their eyes. Occasionally you see a little flash with your eyes shut. And that is an energetic particle coming through your head and interacting with the fluid inside your eye. And it makes a little light flash. And you see these every couple of minutes or so that you're awake with your eyes shut. If the astronauts were exposed to a lot more of the solo wind, it could kill them. During the Apollo program, in between",
+      "link": "https://www.youtube.com/watch?v=2zOlkIyg3iE",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "2zOlkIyg3iE",
+      "transcript_method": "whisper",
+      "transcript_chars": 1344,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "Некоректна прогнозиране и реална по-бавна построява на ядрената енергия, което води до нереалистични оценки за бъдещата енергетична стабилност.",
+    "root_cause": "Публикациите показват, че прогнозите за ядрената енергия не отговарят на реалните темпи на строеж и инвестиции, което води до несъответствие между очакванията и реалността.",
+    "severity": "HIGH",
+    "leverage_points": [
+      "Инвестиционните стратегии и политики на правителствата и частния сектор",
+      "Публичната информация и прозрачност около строежа и разработката на ядрени технологии"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Разработване на прозрачни и обновяеми прогнози за ядрената енергия, базирани на реални данни за строеж и инвестиции",
+        "measurable_goal": "Повишаване на точността на прогнозите за ядрената енергия с минимум 20% в сравнение с текущите модели",
+        "timeframe": "дългосрочно"
+      },
+      {
+        "action": "Създаване на платформа за динамични данни за строежа на ядрени електрически централи във всички страни",
+        "measurable_goal": "Повишаване на прозрачността и достъпа до данни за строежа на ядрени електрически централи с минимум 50% в сравнение с текущите източници",
+        "timeframe": "средносрочно"
+      }
+    ],
+    "evidence": [
+      "Nuclear Imaginaries, Hydrogen Assumptions, And The Grid Reality Models Still Miss: Публикацията показва, че прогнозите за ядрената енергия не отговарят на реалните темпи на строеж.",
+      "EV Marketing Failure in USA — and a Honda & Auto Industry Financial Crisis: Следствие от нестабилност в енергетичните модели влияе и на автомобилната индустрия."
+    ],
+    "generalization": "Този проблем е свързан с несъответствието между прогнозирането на енергетичните ресурси и реалната инфраструктура, което влияе и на икономиката, промишлеността и климатичната политика.",
+    "summary": "Прогнозите за ядрената енергия не отговарят на реалните темпи на строеж, което води до несигурност в енергетичната стабилност.",
+    "risk_level": "HIGH"
+  },
+  "raw_items": [
+    {
+      "title": "Nuclear Imaginaries, Hydrogen Assumptions, And The Grid Reality Models Still Miss",
+      "summary": "<p>An Energy Research &#38; Social Science paper crossed my screen recently that put structure around something visible to anyone who has compared nuclear forecasts with build rates. Nuclear power has been projected to grow faster, cheaper and more broadly than it actually has, not once or twice, but across decades,   ... [continued]</p>\n<p>The post <a href=\"https://cleantechnica.com/2026/05/16/nuclear-imaginaries-hydrogen-assumptions-and-the-grid-reality-models-still-miss/\">Nuclear Imaginaries,",
+      "link": "https://cleantechnica.com/2026/05/16/nuclear-imaginaries-hydrogen-assumptions-and-the-grid-reality-models-still-miss/",
+      "published": "Sat, 16 May 2026 20:34:40 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Elon Musk Gets A Whole New York Times Article For Making Faces At A Chinese Luncheon",
+      "summary": "<p>Ah, it&#8217;s the important stuff. Titans of industry are in China this week with Donald Trump to meet with the most powerful man in the world, Xi Jinping. Something is afoot. Maybe. I&#8217;ll get to that in a moment. But first, what gets attention from one of the biggest newspapers   ... [continued]</p>\n<p>The post <a href=\"https://cleantechnica.com/2026/05/16/elon-musk-gets-a-whole-new-york-times-article-for-making-faces-at-a-chinese-luncheon/\">Elon Musk Gets A Whole New York Times Articl",
+      "link": "https://cleantechnica.com/2026/05/16/elon-musk-gets-a-whole-new-york-times-article-for-making-faces-at-a-chinese-luncheon/",
+      "published": "Sat, 16 May 2026 19:31:33 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Have You Seen A Paywall Recently? Support Cleantech Media Here",
+      "summary": "<p>How many news articles do you go to now that are behind a paywall? This is the era of media we&#8217;re in — news sites need subscribers. There are sites, like The Guardian, that want to make sure content is accessible and important news and discussions get out there to   ... [continued]</p>\n<p>The post <a href=\"https://cleantechnica.com/2026/05/16/have-you-seen-a-paywall-recently-support-cleantech-media-here/\">Have You Seen A Paywall Recently? Support Cleantech Media Here</a> appeared first ",
+      "link": "https://cleantechnica.com/2026/05/16/have-you-seen-a-paywall-recently-support-cleantech-media-here/",
+      "published": "Sat, 16 May 2026 17:28:02 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "EV Marketing Failure in USA — and a Honda & Auto Industry Financial Crisis",
+      "summary": "<p>I just saw the following headline from the Wall Street Journal: &#8220;Honda’s Never Faced a Crisis Like This—and a Comeback Won’t Be Easy.&#8221; The subheading is as follows: &#8220;The Japanese automaker reported a $2.7 billion loss amid EV whiplash in the U.S., its biggest market.&#8221; My first thought was basically   ... [continued]</p>\n<p>The post <a href=\"https://cleantechnica.com/2026/05/16/ev-marketing-failure-in-usa-and-a-honda-auto-industry-financial-crisis/\">EV Marketing Failure",
+      "link": "https://cleantechnica.com/2026/05/16/ev-marketing-failure-in-usa-and-a-honda-auto-industry-financial-crisis/",
+      "published": "Sat, 16 May 2026 15:40:45 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "xAI grows data center gas fleet despite legal scrutiny – This Week in Cleantech",
+      "summary": "On this episode of the This Week in Cleantech podcast, Molly Taft from WIRED discusses Elon Musk's AI company xAI's decision to add 19 natural gas turbines to its Colossus 2 data center in Southaven, Mississippi.",
+      "link": "https://www.renewableenergyworld.com/podcasts/xai-grows-data-center-gas-fleet-despite-legal-scrutiny-this-week-in-cleantech/",
+      "published": "Fri, 15 May 2026 18:34:58 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "The EPA is expediting clean air permits for power plants to remove ‘unnecessary delays’",
+      "summary": "The U.S. Environmental Protection Agency is expediting Clean Air Act permit reviews to eliminate delays, allowing concurrent public comment and review.",
+      "link": "https://www.renewableenergyworld.com/energy-business/policy-and-regulation/the-epa-is-expediting-clean-air-permits-for-power-plants-to-remove-unnecessary-delays/",
+      "published": "Thu, 14 May 2026 19:15:05 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Elective pay explained as key IRS deadline approaches | Q&A with tax credit specialist Bryen Alperin",
+      "summary": "Municipalities, schools, and first-time applicants are accelerating projects under the IRS's elective pay provision before the May 15 deadline.",
+      "link": "https://www.renewableenergyworld.com/energy-business/policy-and-regulation/elective-pay-explained-as-key-irs-deadline-approaches-qa-with-tax-credit-specialist-bryen-alperin/",
+      "published": "Thu, 14 May 2026 13:25:35 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Amazon turns to geothermal, solar and storage to power Nevada data center growth",
+      "summary": "The 700 MW portfolio includes Zanskar’s 20-year agreement to deliver 100 MW of baseload geothermal power to NV Energy by 2030.",
+      "link": "https://www.renewableenergyworld.com/energy-business/new-project-development/amazon-turns-to-geothermal-solar-and-storage-to-power-nevada-data-center-growth/",
+      "published": "Tue, 12 May 2026 19:50:54 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Big Oil Rushes Into Argentina’s Vaca Muerta Shale",
+      "summary": "Local and international energy companies are vying for additional exploration blocks in Argentina’s Vaca Muerta shale basin as the Middle East crisis and the blocked Strait of Hormuz are reigniting a global race to tap resources outside conflict zones.     What was a predominantly U.S. business until a few years ago, shale exploration and production is now gaining momentum outside North America. And Argentina’s Vaca Muerta is top of the list of oil and gas companies, including U.S. shale giants,",
+      "link": "https://oilprice.com/Energy/Crude-Oil/Big-Oil-Rushes-Into-Argentinas-Vaca-Muerta-Shale.html",
+      "published": "Sat, 16 May 2026 16:00:00 -0500",
+      "source_type": "rss"
+    },
+    {
+      "title": "China’s Battery Breakthrough Could Challenge Lithium-Ion Dominance",
+      "summary": "Researchers have been exploring the use of different technologies to improve battery storage as part of the race to accelerate the deployment of renewable energy and shift away from fossil fuels. While lithium-ion batteries have significant potential to support utility-scale energy storage, their heavy reliance on lithium has encouraged researchers worldwide to explore other avenues to make battery storage cheaper and more sustainable. Batteries have been vital components in the rollout of renew",
+      "link": "https://oilprice.com/Energy/Energy-General/Chinas-Battery-Breakthrough-Could-Challenge-Lithium-Ion-Dominance.html",
+      "published": "Sat, 16 May 2026 14:00:00 -0500",
+      "source_type": "rss"
+    }
+  ]
+}

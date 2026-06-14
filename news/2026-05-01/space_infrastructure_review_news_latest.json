@@ -1,0 +1,57 @@
+{
+  "axis": "SPACE_INFRASTRUCTURE_REVIEW",
+  "fetched_at": "2026-05-01T13:09:05.647291+00:00",
+  "smart_query": "space exploration NASA SpaceX",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "Hubble Spots a Starry Spiral",
+      "snippet": "In this new picture from NASA’s Hubble Space Telescope, a spiral galaxy glittering with star clusters is the center of attention. NGC 3137 is located 53 million light-years away in the constellation Antlia (the Air Pump). As a nearby spiral galaxy, this target offers astronomers an excellent opportu",
+      "url": "https://science.nasa.gov/missions/hubble/hubble-spots-a-starry-spiral/",
+      "source": "RSS"
+    },
+    {
+      "title": "Cyclone Rains Spur Papua New Guinea Landslides",
+      "snippet": "Heavy rains from Tropical Cyclone Maila triggered a deadly landslide in the mountains of East New Britain.",
+      "url": "https://science.nasa.gov/earth/earth-observatory/cyclone-rains-spur-papua-new-guinea-landslides/",
+      "source": "RSS"
+    },
+    {
+      "title": "NASA Invites Media to Ireland Artemis Accords Signing",
+      "snippet": "Ireland will sign the Artemis Accords during a ceremony at 3 p.m. EDT Monday, May 4, at NASA Headquarters in Washington. NASA Administrator Jared Isaacman will host Ambassador of Ireland to the United States of America Geraldine Byrne Nason; Minister for Enterprise, Tourism and Employment Peter Burk",
+      "url": "https://www.nasa.gov/news-release/nasa-invites-media-to-ireland-artemis-accords-signing/",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [],
+  "arxiv_papers": [
+    {
+      "title": "Bayesian power spectrum estimation with modelling of systematic effects in delay-fringe rate space",
+      "snippet": "Observing the Epoch of Reionisation using 21cm radio interferometry has proven to be a challenging task. Extraction of the extremely faint redshifted signal is complicated by the presence of bright foregrounds, radio frequency interference (RFI), and systematic artefacts. We discuss the challenge of",
+      "url": "https://arxiv.org/abs/2604.26885v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Charge diffusion and modulation transfer function in a Nancy Grace Roman Space Telescope detector",
+      "snippet": "The Nancy Grace Roman Space Telescope (Roman) is an observatory motivated by the search to understand dark energy, exoplanets, and general astrophysics. Roman will bring unprecedented amounts of precision to weak gravitational lensing measurements, which necessitates an improved understanding of ins",
+      "url": "https://arxiv.org/abs/2604.26114v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[#494 – Jensen Huang: NVIDIA – The $4 Trillion Company & the AI Revolution] Jensen Huang is the co-founder and CEO of NVIDIA, the world&#8217;s most valuable company and the engine powering the AI computing revolution.\nThank you for listening ❤ Check out our sponsors: https://lexfridman.com/sponsors/ep494-sc\nSee below for timestamps, transcript, and to give feedback, submit questions, contact Lex, etc.\nTranscript:\nhttps://lexfridman.com/jensen-huang-transcript\nCONTACT LEX",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

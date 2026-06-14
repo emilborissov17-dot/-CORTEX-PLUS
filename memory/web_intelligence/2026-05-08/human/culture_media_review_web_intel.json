@@ -1,0 +1,145 @@
+{
+  "axis": "CULTURE_MEDIA_REVIEW",
+  "domain": "human",
+  "timestamp": "2026-05-08T09:43:36.693819+00:00",
+  "sources_count": 10,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 2,
+  "youtube_items": [
+    {
+      "title": "[YT] Maria Ressa on Social Media and Democracy - YouTube",
+      "summary": "[Music] Welcome to Top Point, your trusted source for the latest USA and world headlines. Pay clear and reliable updates every 2 hours. In a world increasingly influenced by digital platforms, Nobel Prize literate Mario Rea warns of the growing threat to democracy post by authoritarian immigrants and the unchecked power of social media algorithms. Risa, co-founder of the Philippines based news site, Ripple, has long been a vocal critic on the weaponization of social media to spread disinformation and suppress distance. Her concerns have gained renewed ungracy urgency as a global political landscape shift to toward populism and unauthoriz. In recent interview, REA highlighted the parallels between the practice used by formal Philippine President Rodrigo Dutert and those employed by politica",
+      "link": "https://www.youtube.com/watch?v=Y5t_uCGNCjo",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "Y5t_uCGNCjo",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] How Does Misinformation Impact Freedom Of Speech In America ... - YouTube",
+      "summary": "[Music] How does misinformation impact freedom of speech in America? Imagine a world where everyone's voice is heard, but some voices spread false stories that can cause real harm. That's what misinformation can do to the right to free speech in America. Freedom of speech is protected by the first amendment which means people can share their ideas without fear of government punishment. But when false information spreads, it can distort what people believe and trust. This can lead to confusion, distrust in institutions, and even violence. So the challenge is how to keep free speech alive while stopping harmful lies from spreading. In America, many believe that fighting misinformation is necessary to protect social justice and civil rights. When false stories target groups based on race, rel",
+      "link": "https://www.youtube.com/watch?v=BjfETRzlsyI",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "BjfETRzlsyI",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 2618,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "Разпространението на дезинформация и фалшиви новини в социалните медии и интернет пространството",
+    "root_cause": "Отсъствие на достатъчна регулираност и контрол върху социалните медии и алгоритмите за избор на информация, както и липса на критично мислено ниво сред потребителите",
+    "severity": "MEDIUM",
+    "leverage_points": [
+      "Социалните медии компании и техните алгоритми за препоръчване на съдържание",
+      "Учредбите и институциите, отговорни за образованието и критичното мислене"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Изработване и имплементиране на стриктни правила и регулации за социалните медии, насочени към намаляване на дезинформацията",
+        "measurable_goal": "Редуциране с 30% на броя на фалшивите новини, разпространени през социалните медии през следващите 12 месеца",
+        "timeframe": "средносрочно"
+      },
+      {
+        "action": "Въвеждане на образователни програми в училищата и университетите за критично мислене и медиен литератизъм",
+        "measurable_goal": "Увеличение с 25% на броя на учениците, способни да определят и критизират фалшиви новини през следващите 2 години",
+        "timeframe": "дългосрочно"
+      }
+    ],
+    "evidence": [
+      "Maria Ressa, носител на Нобелова награда, предупреждава за растящата заплаха от авторитарни влади и неконтролираната власт на социалните медии алгоритми",
+      "YouTube видеото 'How Does Misinformation Impact Freedom Of Speech In America' показва как фалшивите новини могат да навредят на свободата на словото в САЩ"
+    ],
+    "generalization": "Този проблем е свързан с домейна на цивилизацията, където социалните медии играят важна роля в формулирането на общественото мнение и вземането на решения. Той също има връзка с човешкия домейн, където критичното мислене и медиен литератизмът са необходими умения за навигация в информационното пространство",
+    "summary": "Разпространението на дезинформация и фалшиви новини е сериозен проблем, засягащ свободата на словото и демокрацията. Регулираност на социалните медии и образование за критично мислене са необходими действия за решаване на този проблем",
+    "risk_level": "MEDIUM"
+  },
+  "raw_items": [
+    {
+      "title": "Matthew Wong’s Grieving Mother Protects His Artistic Legacy",
+      "summary": "The troubled painter Matthew Wong’s star was on the rise when he died at 35. His mother, Monita Wong, is making sure his work can still be seen.",
+      "link": "https://www.nytimes.com/2026/05/08/arts/design/matthew-wong-venice-exhibition.html",
+      "published": "Fri, 08 May 2026 09:01:52 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Billie Eilish and James Cameron on ‘Hit Me Hard and Soft: The Tour’",
+      "summary": "The musician and director teamed up to bring Hit Me Hard and Soft: The Tour — with poignant moments onstage and off — to theaters.",
+      "link": "https://www.nytimes.com/2026/05/08/arts/music/billie-eilish-james-cameron-hit-me-hard-and-soft-movie.html",
+      "published": "Fri, 08 May 2026 09:00:51 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "The Hopelessness of ‘The Audacity’",
+      "summary": "In AMC’s merciless satire, the tech lords are extracting all they can from the business (and us) before everything goes to hell.",
+      "link": "https://www.nytimes.com/2026/05/08/arts/television/the-audacity.html",
+      "published": "Fri, 08 May 2026 09:02:15 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "How ‘The Sheep Detectives’ Brought its Ovine Sleuths to Life",
+      "summary": "The filmmakers behind this adaptation of a best-selling novel were adamant that their ovine sleuths not seem like humans in, well, sheep’s clothing.",
+      "link": "https://www.nytimes.com/2026/05/08/movies/the-sheep-detectives-hugh-jackman-julia-louis-dreyfus.html",
+      "published": "Fri, 08 May 2026 09:03:36 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Happy centenary, David! Attenborough’s 100 most spectacular TV moments",
+      "summary": "<p>He has been besieged by birds, had 120m crabs try to crawl up his trouser leg and stayed cool beside an erupting Icelandic volcano. As David Attenborough turns 100, we celebrate his most extraordinary adventures</p><p>Today, David Attenborough turns 100. He is, without question, Britain’s greatest national treasure; a man who has devoted his career to helping the public engage with the natural world. But his story is also the story of television. Attenborough joined the BBC just as television",
+      "link": "https://www.theguardian.com/tv-and-radio/ng-interactive/2026/may/08/david-attenborough-100-most-spectacular-screen-moments",
+      "published": "Fri, 08 May 2026 04:00:35 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "‘We’re not Lady Gaga and Elton John’: unmasking Angine de Poitrine, the year’s buzziest, dottiest band",
+      "summary": "<p>Their microtonal rock has been a huge viral hit – but are they really 333-year-old aliens inspired by Borneo monkeys? The Quebecois duo tell all</p><p>Recently, Angine de Poitrine had to get new heads. The alien-looking rock duo were not in fact born with the monochrome polka-dotted complexions and extruded faces that millions of listeners have obsessed over since they went viral this spring. Guitarist Khn has a long, twangable nose and double-necked guitar/bass; drummer Klek’s dangly probosc",
+      "link": "https://www.theguardian.com/music/2026/may/08/unmasking-angine-de-poitrine-rock-duo-quebec-khn-klek",
+      "published": "Fri, 08 May 2026 04:00:37 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "‘I told his family he was HIV positive’: Keith Haring’s best friend on life with the artist as unseen works go on show",
+      "summary": "<p>For nearly four decades, the artist Kermit Oswald lived with some of the most intimate works Haring ever made. Now the pieces are going up for auction</p><p>The story of how <a href=\"https://www.theguardian.com/artanddesign/keith-haring\">Keith Haring</a> came to paint a crib began on a quiet, ordinary afternoon in 1986. His best friend’s wife was pregnant, and the couple didn’t have the money to buy a new crib for their home in New York City’s Greenpoint neighborhood. “I called my parents to ",
+      "link": "https://www.theguardian.com/artanddesign/2026/may/08/keith-haring-sothebys-kermit-oswald-interview",
+      "published": "Fri, 08 May 2026 09:00:41 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Olof Dreijer: Loud Bloom review – the Knife star’s debut solo album is a garden of earthly delights",
+      "summary": "<p><strong>(DH2)<br /></strong>On a floral-themed LP, squiggling melodies and quizzical distortion banish the winter gloom Dreijer brought to the Knife and his tracks with Fever Ray</p><p>Swedish producer Olof Dreijer is best known for projects with his sibling Karin: namely their duo the Knife, plus Karin’s solo act <a href=\"https://www.theguardian.com/music/2023/feb/17/fever-ray-karin-dreijer-romance-ageing-kink-dangerous-route\">Fever Ray</a>, with whom he created four brilliant tracks on 2023",
+      "link": "https://www.theguardian.com/music/2026/may/08/olof-dreijer-loud-bloom-review",
+      "published": "Fri, 08 May 2026 08:30:40 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] Maria Ressa on Social Media and Democracy - YouTube",
+      "summary": "[Music] Welcome to Top Point, your trusted source for the latest USA and world headlines. Pay clear and reliable updates every 2 hours. In a world increasingly influenced by digital platforms, Nobel Prize literate Mario Rea warns of the growing threat to democracy post by authoritarian immigrants and the unchecked power of social media algorithms. Risa, co-founder of the Philippines based news site, Ripple, has long been a vocal critic on the weaponization of social media to spread disinformation and suppress distance. Her concerns have gained renewed ungracy urgency as a global political landscape shift to toward populism and unauthoriz. In recent interview, REA highlighted the parallels between the practice used by formal Philippine President Rodrigo Dutert and those employed by politica",
+      "link": "https://www.youtube.com/watch?v=Y5t_uCGNCjo",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "Y5t_uCGNCjo",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] How Does Misinformation Impact Freedom Of Speech In America ... - YouTube",
+      "summary": "[Music] How does misinformation impact freedom of speech in America? Imagine a world where everyone's voice is heard, but some voices spread false stories that can cause real harm. That's what misinformation can do to the right to free speech in America. Freedom of speech is protected by the first amendment which means people can share their ideas without fear of government punishment. But when false information spreads, it can distort what people believe and trust. This can lead to confusion, distrust in institutions, and even violence. So the challenge is how to keep free speech alive while stopping harmful lies from spreading. In America, many believe that fighting misinformation is necessary to protect social justice and civil rights. When false stories target groups based on race, rel",
+      "link": "https://www.youtube.com/watch?v=BjfETRzlsyI",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "BjfETRzlsyI",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 2618,
+      "has_full_transcript": true
+    }
+  ]
+}

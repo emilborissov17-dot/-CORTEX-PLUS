@@ -1,0 +1,4 @@
+[USER INPUT] python cortex4_v2.py
+[AGENT RESPONSE] Все още нямам реална логика за обработка на интерактивни задачи.
+На този етап само логвам входа ти и връщам това съобщение.
+Специално: можеш да използваш командата 'REFLECT LAST_LOG' за запис в self_improvement_suggestions.

@@ -1,0 +1,37 @@
+{
+  "axis": "CULTURE_MEDIA_REVIEW",
+  "fetched_at": "2026-04-30T08:30:50.781667+00:00",
+  "smart_query": "media disinformation culture",
+  "sources_count": {
+    "wiki": 0,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [],
+  "gdelt": [],
+  "github_repos": [],
+  "arxiv_papers": [
+    {
+      "title": "MediaGraph: A Network Theoretic Framework to Analyze Reporting Preferences in Indian News Media",
+      "snippet": "We present MediaGraph, a network-theoretic framework for analyzing reporting preferences in news media through entity co-occurrence networks. Using articles from four Indian news-sources, two mainstream (The Times of India and The Indian Express) and two fringe outlets (dna and firstpost), we constr",
+      "url": "https://arxiv.org/abs/2604.20982v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Assessing Capabilities of Large Language Models in Social Media Analytics: A Multi-task Quest",
+      "snippet": "In this study, we present the first comprehensive evaluation of modern LLMs - including GPT-4, GPT-4o, GPT-3.5-Turbo, Gemini 1.5 Pro, DeepSeek-V3, Llama 3.2, and BERT - across three core social media analytics tasks on a Twitter (X) dataset: (I) Social Media Authorship Verification, (II) Social Medi",
+      "url": "https://arxiv.org/abs/2604.18955v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[Prominent Scientists, Faith Leaders, Policymakers and Artists Call for a Prohibition on Superintelligence, as Poll Shows Americans Don’t Want It] Initial signatories include AI pioneers Yoshua Bengio and Geoffrey Hinton, leading media voices Steve Bannon and Glenn Beck, Obama's National Security Advisor Susan Rice, business trailblazers Steve Wozniak and Richard Branson, five Nobel Laureates, former Irish President Mary Robinson, actors Stephen Fry and Joseph Gordon-Levitt, and hundreds of others.",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

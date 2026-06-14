@@ -1,0 +1,63 @@
+{
+  "axis": "LONG_TERM_FUTURE_REVIEW",
+  "fetched_at": "2026-05-04T08:07:18.767620+00:00",
+  "smart_query": "existential risk future civilization",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 3,
+    "arxiv": 0,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "Oscars says AI actors and writing cannot win awards",
+      "snippet": "The academy that controls the Oscars on Friday issued new award eligibility requirements around the use of artificial intelligence in film. ",
+      "url": "https://www.bbc.com/news/articles/cx21dl3v7d3o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Bright idea? UK firm pioneers data centres using lampposts",
+      "snippet": "The solar-powered iLamps will have a built-in Nvidia chip but there are questions over their security and scalability. ",
+      "url": "https://www.bbc.com/news/articles/c98r4e594p7o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Pentagon says US military to be an 'AI-first' fighting force",
+      "snippet": "The US military has agreed eight new contracts with big tech firms as it expands its artificial intelligence capabilities.",
+      "url": "https://www.bbc.com/news/articles/cy02gjq2987o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [
+    {
+      "title": " « Lhumanité pourrait ne pas survivre au - delà des 50 prochaines années », affirme le prix Nobel de physique David Gross qui suggère que confier le c",
+      "snippet": " « Lhumanité pourrait ne pas survivre au - delà des 50 prochaines années », affirme le prix Nobel de physique David Gross qui suggère que confier le contrôle nucléaire à lIA représente un risque existentiel",
+      "url": "https://www.developpez.com/actu/382403/-L-humanite-pourrait-ne-pas-survivre-au-dela-des-50-prochaines-annees-affirme-le-prix-Nobel-de-physique-David-Gross-qui-suggere-que-confier-le-controle-nucleaire-a-l-IA-represente-un-risque-existentiel/",
+      "source": "developpez.com"
+    },
+    {
+      "title": "تجليات الوطنية المصرية | المصري اليوم",
+      "snippet": "تجليات الوطنية المصرية | المصري اليوم",
+      "url": "https://www.almasryalyoum.com/news/details/4222164",
+      "source": "almasryalyoum.com"
+    },
+    {
+      "title": "LPOI Dorong Rekalibrasi Spiritual untuk Wujudkan Dunia Lebih Baik : Okezone News",
+      "snippet": "LPOI Dorong Rekalibrasi Spiritual untuk Wujudkan Dunia Lebih Baik : Okezone News",
+      "url": "https://news.okezone.com/read/2026/04/24/337/3214365/lpoi-dorong-rekalibrasi-spiritual-untuk-wujudkan-dunia-lebih-baik",
+      "source": "news.okezone.com"
+    }
+  ],
+  "github_repos": [],
+  "arxiv_papers": [],
+  "podcast": "[#490 – State of AI in 2026: LLMs, Coding, Scaling Laws, China, Agents, GPUs, AGI] Nathan Lambert and Sebastian Raschka are machine learning researchers, engineers, and educators. Nathan is the post-training lead at the Allen Institute for AI (Ai2) and the author of The RLHF Book. Sebastian Raschka is the author of Build a Large Language Model (From Scratch) and Build a Reasoning Model (From Scratch).\nThank you for listening ❤ Check out our sponsors: https://lexfridman.com/spons",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

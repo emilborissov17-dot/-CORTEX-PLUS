@@ -1,0 +1,39 @@
+{
+  "run_at": "2026-02-27T11:30:52.525325",
+  "active_sources": 5,
+  "ok_sources": 2,
+  "failed_sources": 3,
+  "sources": [
+    {
+      "name": "FAO Food and Agriculture Data",
+      "url": "https://www.fao.org/faostat/en",
+      "file": "www.fao.org_faostat_en.json",
+      "status": 404
+    },
+    {
+      "name": "World Bank – Food Security & Nutrition",
+      "url": "https://data.worldbank.org/topic/agriculture-and-rural-development",
+      "file": "data.worldbank.org_topic_agriculture-and-rural-development.json",
+      "status": 200
+    },
+    {
+      "name": "Our World in Data – Food & Agriculture",
+      "url": "https://ourworldindata.org/food-agriculture",
+      "file": "ourworldindata.org_food-agriculture.json",
+      "status": 404
+    },
+    {
+      "name": "UN WFP Hunger Map & Food Security",
+      "url": "https://dataviz.vam.wfp.org/",
+      "file": "dataviz.vam.wfp.org_.json",
+      "status": null,
+      "error": "[ERROR] HTTPSConnectionPool(host='dataviz.vam.wfp.org', port=443): Max retries exceeded with url: / (Caused by ConnectTimeoutError(<urllib3.connection.HTTPSConnection object at 0x773e6e4342f0>, 'Connection to dataviz.vam.wfp.org timed out. (connect timeout=30)'))"
+    },
+    {
+      "name": "EUROSTAT – Agriculture, forestry and fisheries",
+      "url": "https://ec.europa.eu/eurostat/databrowser",
+      "file": "ec.europa.eu_eurostat_databrowser.json",
+      "status": 200
+    }
+  ]
+}

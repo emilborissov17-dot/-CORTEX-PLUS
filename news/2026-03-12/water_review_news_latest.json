@@ -1,0 +1,140 @@
+{
+  "axis": "WATER_REVIEW",
+  "fetched_at": "2026-03-12T18:26:48.791038+00:00",
+  "smart_query": "Countries with limited access to sanitation",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "analysis": {
+    "summary": "Водните инспектори са изключени от минните сайтове на Alcoa в пертските водоснабдявани места, документите показват. Уелската вода трябва да плати £44.7м след „неприемливи“ неуспехи в канализационните работи.",
+    "key_developments": [
+      "Water inspectors shut out of Alcoa mine sites in Perth drinking water catchment, documents show",
+      "Welsh Water to pay £44.7m after ‘unacceptable’ sewage works failings"
+    ],
+    "sentiment": "NEGATIVE",
+    "urgency": "MEDIUM",
+    "open_source_momentum": "Projects like wilsto/pool-monitor-card, DOI-USGS/EGRET, and KnowFlow/KnowFlow_AWM are contributing to open-source water monitoring and management solutions.",
+    "scientific_frontier": "No data",
+    "relevance_to_goal": "The contamination of drinking water and unacceptable sewage works failings pose a significant threat to the goal of sustainable civilization and dignity for all."
+  },
+  "sentiment": "NEGATIVE",
+  "urgency": "MEDIUM",
+  "summary": "Водните инспектори са изключени от минните сайтове на Alcoa в пертските водоснабдявани места, документите показват. Уелската вода трябва да плати £44.7м след „неприемливи“ неуспехи в канализационните работи.",
+  "key_developments": [
+    "Water inspectors shut out of Alcoa mine sites in Perth drinking water catchment, documents show",
+    "Welsh Water to pay £44.7m after ‘unacceptable’ sewage works failings"
+  ],
+  "open_source_momentum": "Projects like wilsto/pool-monitor-card, DOI-USGS/EGRET, and KnowFlow/KnowFlow_AWM are contributing to open-source water monitoring and management solutions.",
+  "scientific_frontier": "No data",
+  "github_repos": [
+    {
+      "title": "wilsto/pool-monitor-card",
+      "snippet": "Keep your swimming pool safe and crystal clear by monitoring up to 25 water chemistry parameters at a glance.",
+      "stars": 105,
+      "url": "https://github.com/wilsto/pool-monitor-card",
+      "updated": "2026-03-09",
+      "source": "GitHub"
+    },
+    {
+      "title": "DOI-USGS/EGRET",
+      "snippet": "An R-package for the analysis of long-term changes in water quality and streamflow, including the water-quality method Weighted Regressions on Time, Discharge, and Season (WRTDS). https://doi-usgs.git",
+      "stars": 97,
+      "url": "https://github.com/DOI-USGS/EGRET",
+      "updated": "2026-03-12",
+      "source": "GitHub"
+    },
+    {
+      "title": "KnowFlow/KnowFlow_AWM",
+      "snippet": "KnowFlow Automatic Water Monitoring device is an open sourced tool enable everyone having access to first hand water quality data with low cost.",
+      "stars": 95,
+      "url": "https://github.com/KnowFlow/KnowFlow_AWM",
+      "updated": "2025-12-19",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "LiTo: Surface Light Field Tokenization",
+      "snippet": "We propose a 3D latent representation that jointly models object geometry and view-dependent appearance. Most prior works focus on either reconstructing 3D geometry or predicting view-independent diffuse appearance, and thus struggle to capture realistic view-dependent effects. Our approach leverage",
+      "url": "https://arxiv.org/abs/2603.11047v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "DynVLA: Learning World Dynamics for Action Reasoning in Autonomous Driving",
+      "snippet": "We propose DynVLA, a driving VLA model that introduces a new CoT paradigm termed Dynamics CoT. DynVLA forecasts compact world dynamics before action generation, enabling more informed and physically grounded decision-making. To obtain compact dynamics representations, DynVLA introduces a Dynamics To",
+      "url": "https://arxiv.org/abs/2603.11041v1",
+      "source": "arXiv"
+    }
+  ],
+  "youtube_transcripts": [],
+  "podcast": "In this episode, we consider a creature we often don’t think much about—the snail. And not just snails, but their sex lives. Which, as it turns out, is epic. There is persuasion and subterfuge, spaghetti penises and co-copulation. And this very surprising habit—erm kink—of making tiny arrows (actually!) and stabbing each other with them. Known as a “love dart,” these limestone daggers aren’t just  | In this episode, first aired in 2014, we examine three very different kinds of black boxes—spaces where we know what’s going in, we know what’s coming out, but can’t see what happens in-between.\nFrom the darkest parts of metamorphosis to a sixty-year-old secret among magicians, and the nature of consciousness itself, we shine some light on three questions. But for each, we contend with an answerle",
+  "youtube_videos": [
+    {
+      "title": "YouTube:isJNqosfX6w",
+      "video_id": "isJNqosfX6w",
+      "url": "https://www.youtube.com/watch?v=isJNqosfX6w",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:zkDjz7XJB9g",
+      "video_id": "zkDjz7XJB9g",
+      "url": "https://www.youtube.com/watch?v=zkDjz7XJB9g",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:LS-iojgq-dQ",
+      "video_id": "LS-iojgq-dQ",
+      "url": "https://www.youtube.com/watch?v=LS-iojgq-dQ",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:KihgZDYSfks",
+      "video_id": "KihgZDYSfks",
+      "url": "https://www.youtube.com/watch?v=KihgZDYSfks",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:JIoiCaiXeVs",
+      "video_id": "JIoiCaiXeVs",
+      "url": "https://www.youtube.com/watch?v=JIoiCaiXeVs",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:LCKsU4bPFOQ",
+      "video_id": "LCKsU4bPFOQ",
+      "url": "https://www.youtube.com/watch?v=LCKsU4bPFOQ",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:LSLls84KnRs",
+      "video_id": "LSLls84KnRs",
+      "url": "https://www.youtube.com/watch?v=LSLls84KnRs",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:-LbkzyDEe_4",
+      "video_id": "-LbkzyDEe_4",
+      "url": "https://www.youtube.com/watch?v=-LbkzyDEe_4",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:gczxiZTJue8",
+      "video_id": "gczxiZTJue8",
+      "url": "https://www.youtube.com/watch?v=gczxiZTJue8",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:9y3yuhmJQiE",
+      "video_id": "9y3yuhmJQiE",
+      "url": "https://www.youtube.com/watch?v=9y3yuhmJQiE",
+      "source": "YouTube"
+    }
+  ]
+}

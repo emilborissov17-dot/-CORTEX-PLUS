@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" prefix="content: http://purl.org/rss/1.0/modules/content/  dc: http://purl.org/dc/terms/  foaf: http://xmlns.com/foaf/0.1/  og: http://ogp.me/ns#  rdfs: http://www.w3.org/2000/01/rdf-schema#  schema: http://schema.org/  sioc: http://rdfs.org/sioc/ns#  sioct: http://rdfs.org/sioc/types#  skos: http://www.w3.org/2004/02/skos/core#  xsd: http://www.w3.org/2001/XMLSchema# ">
+  <head>
+    <meta charset="utf-8" />
+<link rel="apple-touch-icon" sizes="180x180" href="/sites/default/files/favicons/apple-touch-icon.png"/>
+<link rel="icon" type="image/png" sizes="32x32" href="/sites/default/files/favicons/favicon-32x32.png"/>
+<link rel="icon" type="image/png" sizes="16x16" href="/sites/default/files/favicons/favicon-16x16.png"/>
+<link rel="manifest" href="/sites/default/files/favicons/site.webmanifest"/>
+<link rel="mask-icon" href="/sites/default/files/favicons/safari-pinned-tab.svg" color="#f37021"/>
+<meta name="msapplication-TileColor" content="#f37021"/>
+<meta name="theme-color" content="#ffffff"/>
+<meta name="favicon-generator" content="Drupal responsive_favicons + realfavicongenerator.net" />
+<meta name="Generator" content="Drupal 8 (https://www.drupal.org); Commerce 2" />
+<meta name="MobileOptimized" content="width" />
+<meta name="HandheldFriendly" content="true" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<script>window.euCookieComplianceLoadScripts = function(category) {if (category === "functional_cookies") {var scriptTag = document.createElement("script");scriptTag.src = "\/themes\/swc\/js\/rss.js";document.body.appendChild(scriptTag);}}</script>
+<style>div#sliding-popup, div#sliding-popup .eu-cookie-withdraw-banner, .eu-cookie-withdraw-tab {background: #02336a} div#sliding-popup.eu-cookie-withdraw-wrapper { background: transparent; } #sliding-popup h1, #sliding-popup h2, #sliding-popup h3, #sliding-popup p, #sliding-popup label, #sliding-popup div, .eu-cookie-compliance-more-button, .eu-cookie-compliance-secondary-button, .eu-cookie-withdraw-tab { color: #ffffff;} .eu-cookie-withdraw-tab { border-color: #ffffff;}</style>
+<link rel="canonical" href="https://www.ises.org/home-ises" />
+<link rel="shortlink" href="https://www.ises.org/node/29" />
+<link rel="revision" href="https://www.ises.org/home-ises" />
+
+    <title>Home ISES | ISES</title>
+    <link rel="stylesheet" media="all" href="/sites/default/files/css/css_iKf0vxMbqzT81O2IYcAtAyLFzzOkrMY4g5UftC_Yk9g.css" />
+<link rel="stylesheet" media="all" href="/sites/default/files/css/css_vBHKnOi4WNz0b9jA3J2a_ugbPeBijZYeuNoDbw1Yvv8.css" />
+
+    
+<!--[if lte IE 8]>
+<script src="/sites/default/files/js/js_VtafjXmRvoUgAzqzYTA3Wrjkx9wcWhjP0G4ZnnqRamA.js"></script>
+<![endif]-->
+
+  </head>
+  <body class="page-node-29 path-frontpage page-node-type-page">
+        <a href="#main-content" class="visually-hidden focusable skip-link">
+      Skip to main content
+    </a>
+    
+      
+  <header id="header" role="banner" style="">
+	
+<div class="header-fixed">
+	<div class="center">
+		<div class="block block-system block-system-branding-block">
+  
+    
+        <a href="/" rel="home" class="site-logo">
+      <img src="/themes/ises/bilder/ises-logo.svg" alt="Home" />
+    </a>
+      </div>
+
+		
+		<div class="header-navigation">
+			<nav role="navigation" aria-labelledby="-menu" class="block block-menu navigation menu--main-navigation-ises">
+      
+  <h2 id="-menu"></h2>
+  
+
+           
+                    <ul class="menu menu--root">
+                        <li class="menu-item menu-item--expanded menu-item--expanded--level-1 menu-item--level-1">
+         <a href="/who-we-are" data-drupal-link-system-path="node/32">Who we are</a>
+                                      <ul class="menu menu--level-2">
+                        <li class="menu-item menu-item--level-2">
+         <a href="/who-we-are/about-ises" data-drupal-link-system-path="node/73">About ISES</a>
+                </li>
+                   <li class="menu-item menu-item--expanded menu-item--expanded--level-2 menu-item--level-2">
+         <a href="/who-we-are/structure" data-drupal-link-system-path="node/74">Structure</a>
+                                      <ul class="menu menu--level-3">
+                        <li class="menu-item menu-item--expanded menu-item--expanded--level-3 menu-item--level-3">
+         <a href="/who-we-are/structure/board-directors" data-drupal-link-system-path="node/86">Board of Directors</a>
+                                      <ul class="menu menu--level-4">
+                        <li class="menu-item menu-item--expanded menu-item--expanded--level-4 menu-item--level-4">
+         <a href="/who-we-are/structure/board-directors/board-elections" data-drupal-link-system-path="node/1413">Board elections</a>
+                                      <ul class="menu menu--level-5">
+                        <li class="menu-item menu-item--level-5">
+         <a href="/who-we-are/structure/board-directors/board-elections/board-elections-submission-form-2026-board" data-drupal-link-system-path="node/1635">Board elections submission form 2026 - Board of Directors</a>
+                </li>
+          </ul>
+    
+                </li>
+          </ul>
+    
+                </li>
+                   <li class="menu-item menu-item--level-3">
+         <a href="/who-we-are/structure/ises-headquarters-team" data-drupal-link-system-path="node/87">ISES Headquarters Team</a>
+                </li>
+                   <li class="menu-item menu-item--level-3">
+         <a href="/contact/global-contacts" data-drupal-link-system-path="node/85">Global contacts and sections</a>
+                </li>
+          </ul>
+    
+                </li>
+                   <li class="menu-item menu-item--level-2">
+         <a href="/who-we-are/global-partners" data-drupal-link-system-path="node/132">Global partners</a>
+                </li>
+                   <li class="menu-item menu-item--level-2">
+         <a href="/who-we-are/our-history" data-drupal-link-system-path="node/76">Our History</a>
+                </li>
+          </ul>
+    
+                </li>
+                   <li class="menu-item menu-item--expanded menu-item--expanded--level-1 menu-item--level-1">
+         <a href="/what-we-do" data-drupal-link-system-path="node/35">What we do</a>
+                                      <ul class="menu menu--level-2">
+                        <li class="menu-item menu-item--expanded menu-item--expanded--level-2 menu-item--level-2">
+         <a href="/what-we-do/awards/ises-awards" data-drupal-link-system-path="node/75">Awards</a>
+                                      <ul class="menu menu--level-3">
+                        <li class="menu-item menu-item--level-3">
+         <a href="/what-we-do/ises-awards/solar-energy-journal-best-paper-award" data-drupal-link-system-path="node/1198">Solar Energy Journal Awards</a>
+                </li>
+                   <li class="menu-item menu-item--expanded menu-item--expanded--level-3 menu-item--level-3">
+         <a href="/what-we-do/awards/ises-awards" data-drupal-link-system-path="node/75">ISES Awards</a>
+                                      <ul class="menu menu--level-4">
+                        <li class="menu-item menu-item--level-4">
+         <a href="/who-we-are/ises-awards/farrington-daniels" data-drupal-link-system-path="node/1195">Farrington Daniels</a>
+                </li>
+                   <li class="menu-item menu-item--level-4">
+         <a href="/who-we-are/ises-awards/achievement-action" data-drupal-link-system-path="node/1196">Achievement through Action Award</a>
+                </li>
+                   <li class="menu-item menu-item--level-4">
+         <a href="/who-we-are/ises-awards/global-leadership" data-drupal-link-system-path="node/1197">Global Leadership</a>
+                </li>
+                   <li class="menu-item menu-item--level-4">
+         <a href="/who-we-are/ises-awards/ises-fellows" data-drupal-link-system-path="node/1200">ISES Fellows</a>
+                </li>
+                   <li class="menu-item menu-item--level-4">
+         <a href="/who-we-are/ises-awards/renewable-transformation-challenge" data-drupal-link-system-path="node/1199">Renewable Transformation Challenge</a>
+                </li>
+          </ul>
+    
+                </li>
+          </ul>
+    
+                </li>
+                   <li class="menu-item menu-item--expanded menu-item--expanded--level-2 menu-item--level-2">
+         <a href="/what-we-do/events" data-drupal-link-system-path="node/77">Events</a>
+                                      <ul class="menu menu--level-3">
+                        <li class="menu-item menu-item--level-3">
+         <a href="/what-we-do/events/eurosun-conferences" data-drupal-link-system-path="node/1215">EuroSun Conferences</a>
+                </li>
+                   <li class="menu-item menu-item--level-3">
+         <a href="/what-we-do/events/ises-solar-world-congress" data-drupal-link-system-path="node/1203">ISES Solar World Congress</a>
+                </li>
+          </ul>
+    
+                </li>
+                   <li class="menu-item menu-item--level-2">
+         <a href="/what-we-do/incore-education-initiative" data-drupal-link-system-path="node/1214">InCoRE - Education Initiative</a>
+                </li>
+                   <li class="menu-item menu-item--level-2">
+         <a href="/what-we-do/webinars" data-drupal-link-system-path="node/190">Webinars</a>
+                </li>
+                   <li class="menu-item menu-item--level-2">
+         <a href="/what-we-do/ises-online-museum-solar-energy" data-drupal-link-system-path="node/1294">ISES Online Museum of Solar Energy</a>
+                </li>
+                   <li class="menu-item menu-item--level-2">
+         <a href="/what-we-do/young-ises" data-drupal-link-system-path="node/78">Young ISES</a>
+                </li>
+                   <li class="menu-item menu-item--expanded menu-item--expanded--level-2 menu-item--level-2">
+         <a href="/what-we-do/publications" data-drupal-link-system-path="node/79">Publications</a>
+                                      <ul class="menu menu--level-3">
+                        <li class="menu-item menu-item--level-3">
+         <a href="/what-we-do/publications/solar-energy-advances" data-drupal-link-system-path="node/1204">Solar Energy Advances</a>
+                </li>
+                   <li class="menu-item menu-item--level-3">
+         <a href="/what-we-do/publications/solar-energy-journal" data-drupal-link-system-path="node/184">Solar Energy Journal</a>
+                </li>
+                   <li class="menu-item menu-item--level-3">
+         <a href="http://proceedings.ises.org/">Conference proceedings</a>
+                </li>
+                   <li class="menu-item menu-item--level-3">
+         <a href="https://www.ises.org/what-we-do/publications/ises-column-pv-magazine" data-drupal-link-system-path="node/1362">ISES Column in pv magazine</a>
+                </li>
+          </ul>
+    
+                </li>
+                   <li class="menu-item menu-item--level-2">
+         <a href="/what-we-do/donate-ises" data-drupal-link-system-path="node/210">Support our work!</a>
+                </li>
+          </ul>
+    
+                </li>
+                   <li class="menu-item menu-item--expanded menu-item--expanded--level-1 menu-item--level-1">
+         <a href="/membership" data-drupal-link-system-path="node/36">Membership</a>
+                                      <ul class="menu menu--level-2">
+                        <li class="menu-item menu-item--expanded menu-item--expanded--level-2 menu-item--level-2">
+         <a href="/membership/individual-memberships" data-drupal-link-system-path="node/182">Individual memberships</a>
+                                      <ul class="menu menu--level-3">
+                        <li class="menu-item menu-item--level-3">
+         <a href="/membership/individual-memberships/new-individual-member" title="Buy new Individual Membership" data-drupal-link-system-path="membership/individual-memberships/new-individual-member">New Individual Membership</a>
+                </li>
+          </ul>
+    
+                </li>
+                   <li class="menu-item menu-item--expanded menu-item--expanded--level-2 menu-item--level-2">
+         <a href="/membership/corporate-membership" data-drupal-link-system-path="node/183">Corporate memberships</a>
+                                      <ul class="menu menu--level-3">
+                        <li class="menu-item menu-item--level-3">
+         <a href="/membership/corporate-memberships/new-corporate-member" title="Buy new Corporate Membership" data-drupal-link-system-path="membership/corporate-memberships/new-corporate-member">New Corporate Membership</a>
+                </li>
+          </ul>
+    
+                </li>
+                   <li class="menu-item menu-item--level-2">
+         <a href="/membership/member-directory" data-drupal-link-system-path="node/214">Members directory</a>
+                </li>
+                   <li class="menu-item menu-item--level-2">
+         <a href="/membership/corporate-directory" data-drupal-link-system-path="node/215">Corporate directory</a>
+                </li>
+                   <li class="menu-item menu-item--level-2">
+         <a href="/membership/ien" data-drupal-link-system-path="node/206">International Experts Network</a>
+                </li>
+                   <li class="menu-item menu-item--level-2">
+         <a href="/membership/members-area" data-drupal-link-system-path="node/1310">Members Area</a>
+                </li>
+          </ul>
+    
+                </li>
+                   <li class="menu-item menu-item--expanded menu-item--expanded--level-1 menu-item--level-1">
+         <a href="/news/latest-news" data-drupal-link-system-path="node/83">News</a>
+                                      <ul class="menu menu--level-2">
+                        <li class="menu-item menu-item--level-2">
+         <a href="/news/latest-news" data-drupal-link-system-path="node/83">Latest News</a>
+                </li>
+          </ul>
+    
+                </li>
+                   <li class="menu-item menu-item--expanded menu-item--expanded--level-1 menu-item--level-1">
+         <a href="/contacts" data-drupal-link-system-path="node/80">Contact</a>
+                                      <ul class="menu menu--level-2">
+                        <li class="menu-item menu-item--level-2">
+         <a href="/contact/ises-hq" data-drupal-link-system-path="node/82">ISES Headquarters</a>
+                </li>
+                   <li class="menu-item menu-item--level-2">
+         <a href="/contact/global-contacts" data-drupal-link-system-path="node/85">Global contacts</a>
+                </li>
+          </ul>
+    
+                </li>
+          </ul>
+    
+ 
+ 
+  </nav>
+
+			<div role="search" class="block block-search container-inline">
+  
+      <h2>Search</h2>
+    
+      <form class="search-block-form" data-drupal-selector="search-block-form" action="/search/node" method="get" id="search-block-form" accept-charset="UTF-8">
+  <div class="js-form-item form-item js-form-type-search form-type-search js-form-item-keys form-item-keys form-no-label">
+      <label for="edit-keys" class="visually-hidden"><span>Search</span></label>
+        <input title="Enter the terms you wish to search for." placeholder="Ihr Suchbegriff" data-drupal-selector="edit-keys" type="search" id="edit-keys" name="keys" value="" size="15" maxlength="128" class="form-search" />
+
+        </div>
+<div data-drupal-selector="edit-actions" class="form-actions js-form-wrapper form-wrapper" id="edit-actions">
+<div class="button-wrapper">
+<button data-drupal-selector="edit-submit" type="submit" id="edit-submit" value="Search" class="button js-form-submit form-submit"><span>Search</span></button>
+</div></div>
+
+</form>
+
+  </div>
+
+		</div>
+		<div class="hamburger">
+			<div></div>
+			<div></div>
+			<div></div>
+		  </div>
+	</div>
+</div>
+
+    <div class="views-element-container block block-views block-views-blockheaderimage-block-1" id="block-ises-views-block-headerimage-block-1">
+  
+    
+      <div><div class="view view-headerimage view-id-headerimage view-display-id-block_1 js-view-dom-id-9c0e6b96e59c219b0923d69137c62427d46f86ddfd2d287d9deac8295b995ed3">
+  
+    
+      
+      <div class="view-content">
+          <div class="views-row">  <div class="paragraph paragraph--type--header-big-login-link paragraph--view-mode--default" style="background-image:url(/sites/default/files/styles/background_image/public/images/header/sky-746378_1920.jpg?h=38870a6c&amp;itok=5A_2JDcb)">
+    		<div class="center">
+			
+            <div class="field field--name-field-headline field--type-heading field--label-hidden field__item"><h1>The global voice for renewable energy</h1>
+</div>
+          <div class="field field--name-field-subtitle field--type-string-long field--label-hidden field__items">
+            For over 70 years, ISES members have led groundbreaking research that has driven the growth of the renewable energy industry. Today, ISES unites a global community of supporters, fostering collaboration through science and advocacy to advance the ISES mission of 100% renewable energy vision for all used wisely and efficiently.
+          </div>
+    <div class="field field--name-field-link field--type-link field--label-hidden field__items">
+            <a href="/membership">Become a member</a>
+          </div>
+
+			<div class="header-login-link">Already a Member? <a href="/user/login">Log in</a></div>
+		</div>
+      </div>
+</div>
+
+    </div>
+  
+          </div>
+</div>
+
+  </div>
+<div id="block-dummy" class="block block-block-content block-block-content4f08001f-2e79-4e24-9e3b-130f10358d2f">
+  
+    
+      
+  </div>
+
+
+		<div class="region region-login">
+		<div class="login-open"></div>
+		<div id="block-userlogin" role="form" class="block block-user block-user-login-block">
+  
+      <h2>User login</h2>
+    
+      <form class="user-login-form" data-drupal-selector="user-login-form" action="/home-ises?destination=/home-ises" method="post" id="user-login-form" accept-charset="UTF-8">
+  <div class="js-form-item form-item js-form-type-textfield form-type-textfield js-form-item-name form-item-name">
+      <label for="edit-name" class="js-form-required form-required"><span>Username or email address</span></label>
+        <input autocorrect="none" autocapitalize="none" spellcheck="false" data-drupal-selector="edit-name" type="text" id="edit-name" name="name" value="" size="15" maxlength="60" class="form-text required" required="required" aria-required="true" />
+
+        </div>
+<div class="js-form-item form-item js-form-type-password form-type-password js-form-item-pass form-item-pass">
+      <label for="edit-pass" class="js-form-required form-required"><span>Password</span></label>
+        <input data-drupal-selector="edit-pass" type="password" id="edit-pass" name="pass" size="15" maxlength="128" class="form-text required" required="required" aria-required="true" />
+
+        </div>
+<input autocomplete="off" data-drupal-selector="form-42m3hpaqeoefczsd3poulrnkuepjq1f-gjg0tvofpwi" type="hidden" name="form_build_id" value="form-42m3hPaQEoEfczsD3pOULrnkUEPjQ1f_gjg0tVoFpWI" />
+<input data-drupal-selector="edit-user-login-form" type="hidden" name="form_id" value="user_login_form" />
+<div data-drupal-selector="edit-actions" class="form-actions js-form-wrapper form-wrapper" id="edit-actions--2">
+<div class="button-wrapper">
+<button data-drupal-selector="edit-submit" type="submit" id="edit-submit--2" name="op" value="Log in" class="button js-form-submit form-submit"><span>Log in</span></button>
+</div></div>
+
+</form>
+<div class="item-list"><ul><li><a href="/user/password" title="Send password reset instructions via email." class="request-password-link">Reset your password</a></li></ul></div>
+  </div>
+
+	</div>
+
+  </header>
+
+  
+  
+
+  
+
+  
+
+  
+
+  <main id="main" role="main">
+    <a id="main-content" tabindex="-1"></a>
+    <div class="layout-content">
+        <div class="region region-content">
+    <div data-drupal-messages-fallback class="hidden"></div>
+<div id="block-ises-content" class="block block-system block-system-main-block">
+  
+    
+      
+<article role="article" about="/home-ises" typeof="schema:WebPage" class="node node--type-page node--view-mode-full">
+
+  
+      <span property="schema:name" content="Home ISES" class="rdf-meta hidden"></span>
+
+
+  
+  <div class="node__content">
+                								<div  class="paragraph hellgrau paragraph--columns-- paragraph--type--paragraph-container paragraph--view-mode--default" id="">
+														              <div class="paragraph paragraph--type--teaser-container paragraph--view-mode--default">
+          
+<div  class="center">
+          <div class="field field--name-field-paragraph field--type-entity-reference-revisions field--label-hidden field__items">
+              <div class="paragraph paragraph--type--teaser paragraph--view-mode--default">
+          
+<div  class="teaser-wrapper">
+          <div class="field field--name-field-bild field--type-image field--label-hidden field__items">
+                  <a href="https://www.ises.org/what-we-do/publications"><img src="/sites/default/files/styles/quad_400x400_crop/public/SEJ%20%2B%20SEA/SEJ%20%2B%20SEA_v2.png?itok=r9gk9Qtw" width="400" height="400" alt="" typeof="Image" class="image-style-quad-400x400-crop" /></a>
+
+
+  
+          </div>
+    <div class="field field--name-field-link field--type-link field--label-hidden field__items">
+            <a href="https://www.ises.org/what-we-do/publications">ISES Publications</a>
+          </div>
+
+  </div>
+
+      </div>
+
+                <div class="paragraph paragraph--type--teaser paragraph--view-mode--default">
+          
+<div  class="teaser-wrapper">
+          <div class="field field--name-field-bild field--type-image field--label-hidden field__items">
+                  <a href="https://www.ises.org/what-we-do/publications/sunburst"><img src="/sites/default/files/styles/quad_400x400_crop/public/images/background/barley-field-1684052_1920.jpg?itok=FCIlHu5i" width="400" height="400" alt="" typeof="Image" class="image-style-quad-400x400-crop" /></a>
+
+
+  
+          </div>
+    <div class="field field--name-field-link field--type-link field--label-hidden field__items">
+            <a href="/what-we-do/publications/sunburst">Blog Posts</a>
+          </div>
+
+  </div>
+
+      </div>
+
+                <div class="paragraph paragraph--type--teaser paragraph--view-mode--default">
+          
+<div  class="teaser-wrapper">
+          <div class="field field--name-field-bild field--type-image field--label-hidden field__items">
+                  <a href="https://www.eurosunconference.org/"><img src="/sites/default/files/styles/quad_400x400_crop/public/2025-11/EuroSun%202026_logo%20above%20name_0.jpg?itok=9mm4ZXKO" width="400" height="400" alt="EuroSun 2026" title="EuroSun 2026" typeof="Image" class="image-style-quad-400x400-crop" /></a>
+
+
+  
+          </div>
+    <div class="field field--name-field-link field--type-link field--label-hidden field__items">
+            <a href="https://www.eurosunconference.org/">EuroSun 2026</a>
+          </div>
+
+  </div>
+
+      </div>
+
+                <div class="paragraph paragraph--type--teaser paragraph--view-mode--default">
+          
+<div  class="teaser-wrapper">
+          <div class="field field--name-field-bild field--type-image field--label-hidden field__items">
+                  <a href="https://www.ises.org/what-we-do/webinars"><img src="/sites/default/files/styles/quad_400x400_crop/public/images/background/photovoltaic-286025_1920.jpg?itok=V_Kq0q-W" width="400" height="400" alt="" typeof="Image" class="image-style-quad-400x400-crop" /></a>
+
+
+  
+          </div>
+    <div class="field field--name-field-link field--type-link field--label-hidden field__items">
+            <a href="/what-we-do/webinars">Webinars</a>
+          </div>
+
+  </div>
+
+      </div>
+
+          </div>
+
+  </div>
+
+      </div>
+
+      
+										</div>
+	
+              								<div  class="paragraph weiss margin-top-bottom paragraph--columns--1 paragraph--type--paragraph-container paragraph--view-mode--default" id="">
+														
+										</div>
+	
+              								<div  class="paragraph weiss paragraph--columns-- paragraph--type--paragraph-container paragraph--view-mode--default" id="">
+														              <div class="paragraph paragraph--type--view paragraph--view-mode--default">
+          
+            <div class="center field field--name-field-headline field--type-heading field--label-hidden field__item"><h2>Latest News</h2>
+</div>
+                  <div class="views-element-container"><div class="view view-news view-id-news view-display-id-block_1 js-view-dom-id-dd424d8e031adf55ada55c072277b0652b0394ce70f662d075e89f0b122abb92">
+  
+    
+      
+      <div class="view-content">
+          <div class="views-row"><div class="views-field views-field-field-images">      <img src="/sites/default/files/styles/quad_400x400_crop/public/2026-02/dennis-kummer-52gEprMkp7M-unsplash-1536x1025.jpg?itok=jff0hM8J" width="400" height="400" alt="" typeof="foaf:Image" class="image-style-quad-400x400-crop" />
+
+
+  </div><h3 class="views-field views-field-title">ISES Column in pv magazine (February 2026) - Solar electricity during night-time</h3><div class="views-field views-field-field-date-blog"><time datetime="2026-02-26T12:00:00Z" class="datetime">26. February 2026</time>
+</div><div class="views-field views-field-body">Night-time in solar PV systems averages 16 hours, requiring significant storage or alternative generation to meet demand. Pumped hydro and batteries…</div><div class="views-field views-field-view-node"><a href="/news/ises-column-pv-magazine-february-2026-solar-electricity-during-night-time" hreflang="en">Read more</a></div></div>
+    <div class="views-row"><div class="views-field views-field-field-images">      <img src="/sites/default/files/styles/quad_400x400_crop/public/2026-02/Joint%20Logos%20Organizers_Hosts_2_3.jpg?itok=JZYVvqzX" width="400" height="400" alt="" typeof="foaf:Image" class="image-style-quad-400x400-crop" />
+
+
+  </div><h3 class="views-field views-field-title">EuroSun2026 - ISES Welcomes your Abstrac!</h3><div class="views-field views-field-field-date-blog"><time datetime="2026-02-18T12:00:00Z" class="datetime">18. February 2026</time>
+</div><div class="views-field views-field-body">We invite you to submit your latest and best results as an abstract for EuroSun2026 by 01 March 2026:
+ 
+
+Sustainable Heating and Cooling Systems for…</div><div class="views-field views-field-view-node"><a href="/news/eurosun2026-ises-welcomes-your-abstrac" hreflang="en">Read more</a></div></div>
+    <div class="views-row"><div class="views-field views-field-field-images">      <img src="/sites/default/files/styles/quad_400x400_crop/public/2026-01/arthur-tseng-lO7bAdGf_og-unsplash-1200x800.jpg?itok=jvgPSO65" width="400" height="400" alt="" typeof="foaf:Image" class="image-style-quad-400x400-crop" />
+
+
+  </div><h3 class="views-field views-field-title">ISES Column in pv magazine (January 2026) - Photovoltaics and jobs: Solar PV Sector - The Largest Employer in Renewable Energy Industry</h3><div class="views-field views-field-field-date-blog"><time datetime="2026-01-26T12:00:00Z" class="datetime">26. January 2026</time>
+</div><div class="views-field views-field-body">Global renewable energy jobs reached 16.6 million in 2024. The solar photovoltaic sector is the largest employer in the renewable energy industry,…</div><div class="views-field views-field-view-node"><a href="/news/ises-column-pv-magazine-january-2026-photovoltaics-and-jobs-solar-pv-sector-largest-employer" hreflang="en">Read more</a></div></div>
+    <div class="views-row"><div class="views-field views-field-field-images">      <img src="/sites/default/files/styles/quad_400x400_crop/public/2026-01/PV%20Magazin%20Dez%202025_2_0.jpg?itok=UwLGKHDd" width="400" height="400" alt="" typeof="foaf:Image" class="image-style-quad-400x400-crop" />
+
+
+  </div><h3 class="views-field views-field-title">ISES Column in pv magazine (December 2025) - Solar, wind and storage: stable prices, stable grid</h3><div class="views-field views-field-field-date-blog"><time datetime="2025-12-31T12:00:00Z" class="datetime">31. December 2025</time>
+</div><div class="views-field views-field-body">?? In their December pv magazine column, former ISES Board Directors and leaders of the ISES PV Strategy Committee, Prof. Andrew Blakers (ANU) and…</div><div class="views-field views-field-view-node"><a href="/news/ises-column-pv-magazine-december-2025-solar-wind-and-storage-stable-prices-stable-grid" hreflang="en">Read more</a></div></div>
+    <div class="views-row"><div class="views-field views-field-field-images">      <img src="/sites/default/files/styles/quad_400x400_crop/public/2026-01/SEJ%20Awards_0.jpg?h=24181d3c&amp;itok=MjMZbnQf" width="400" height="400" alt="" typeof="foaf:Image" class="image-style-quad-400x400-crop" />
+
+
+  </div><h3 class="views-field views-field-title"> Solar Energy Journal Awards 2025 Announced</h3><div class="views-field views-field-field-date-blog"><time datetime="2025-12-15T12:00:00Z" class="datetime">15. December 2025</time>
+</div><div class="views-field views-field-body">Every two years, Solar Energy Journal recognizes selected articles through the biennial Solar Energy Journal Best Paper Award. The papers are…</div><div class="views-field views-field-view-node"><a href="/news/solar-energy-journal-awards-2025-announced" hreflang="en">Read more</a></div></div>
+    <div class="views-row"><div class="views-field views-field-field-images">      <img src="/sites/default/files/styles/quad_400x400_crop/public/SWC%202025/Button_SWC_2025_vektor_neu.jpg?itok=r3qa-A0L" width="400" height="400" alt="" typeof="foaf:Image" class="image-style-quad-400x400-crop" />
+
+
+  </div><h3 class="views-field views-field-title">SWC 2025 Young ISES Manifesto COP30</h3><div class="views-field views-field-field-date-blog"><time datetime="2025-12-15T12:00:00Z" class="datetime">15. December 2025</time>
+</div><div class="views-field views-field-body">We, the young people of the International Solar Energy Society (ISES), representing diverse regions, cultures, and realities across the world, call…</div><div class="views-field views-field-view-node"><a href="/news/swc-2025-young-ises-manifesto-cop30" hreflang="en">Read more</a></div></div>
+    <div class="views-row"><div class="views-field views-field-field-images">      <img src="/sites/default/files/styles/quad_400x400_crop/public/pv%20magazine/pv%20magazine%20for%20ises%20news.png?itok=2XLfKvKB" width="400" height="400" alt="" typeof="foaf:Image" class="image-style-quad-400x400-crop" />
+
+
+  </div><h3 class="views-field views-field-title">ISES Column in pv magazine (November 2025) - PV topics dominated the ISES’s SWC 2025 in Brazil</h3><div class="views-field views-field-field-date-blog"><time datetime="2025-11-27T12:00:00Z" class="datetime">27. November 2025</time>
+</div><div class="views-field views-field-body">?? Former ISES Board Directors and leaders of the ISES PV Strategy Committee, Prof. Andrew Blakers (ANU) and Prof. Ricardo Rüther (UFSC), highlight…</div><div class="views-field views-field-view-node"><a href="/news/ises-column-pv-magazine-november-2025-pv-topics-dominated-isess-swc-2025-brazil" hreflang="en">Read more</a></div></div>
+    <div class="views-row"><div class="views-field views-field-field-images">      <img src="/sites/default/files/styles/quad_400x400_crop/public/COP30/Aline%20at%20COP30.jpg?itok=a8cpz3A1" width="400" height="400" alt="Dr. Aline Kirsten, Young ISES Representative" title="Dr. Aline Kirsten, Young ISES Representative" typeof="foaf:Image" class="image-style-quad-400x400-crop" />
+
+
+  </div><h3 class="views-field views-field-title">ISES Amplifies the Voice of Youth and Solar Energy at COP30 in Brazil</h3><div class="views-field views-field-field-date-blog"><time datetime="2025-11-20T12:00:00Z" class="datetime">20. November 2025</time>
+</div><div class="views-field views-field-body">As the Solar World Congress 2025 (SWC2025) in Fortaleza concludes, the global spotlight now moves to COP30 in Belém, Brazil, continuing the urgent…</div><div class="views-field views-field-view-node"><a href="/news/ises-amplifies-voice-youth-and-solar-energy-cop30-brazil" hreflang="en">Read more</a></div></div>
+
+    </div>
+  
+          </div>
+</div>
+
+      
+      </div>
+
+      
+										</div>
+	
+              								<div  class="paragraph hellgrau paragraph--columns-- paragraph--type--paragraph-container paragraph--view-mode--default" id="">
+														              <div class="paragraph paragraph--type--view paragraph--view-mode--default">
+          
+            <div class="center field field--name-field-headline field--type-heading field--label-hidden field__item"><h2>Corporate and Institution Members</h2>
+</div>
+                  <div class="views-element-container"><div class="view view-company-member-view view-id-company_member_view view-display-id-block_1 js-view-dom-id-fadc983a0d3fe30c3ca8b5ee0afca3ade39afe15544a68d5109a6bc55cd514e9">
+  
+    
+      
+      <div class="view-content">
+          <div class="views-row"><div class="views-field views-field-nothing"><span class="field-content"><a href="https://www.ourkingdom.co.za" target="_blank"><img src="" title="Ourkingdom Engineering" /></a></span></div></div>
+    <div class="views-row"><div class="views-field views-field-nothing"><span class="field-content"><a href="http://www.greia.udl.cat" target="_blank"><img src="https://www.ises.org/civicrm/contact/imagefile?photo=Sin_t_tulo_1_e1569840488586_GREIA_new_logo_03865d58971ab7b39a11f1babd38877f.png" title="GREia - University of Lleida" /></a></span></div></div>
+    <div class="views-row"><div class="views-field views-field-nothing"><span class="field-content"><a href="http://www.acap.net.au" target="_blank"><img src="https://www.ises.org/civicrm/contact/imagefile?photo=acap_logo_big_257bfe150aa52df877567290d8f7b4e0.jpg" title="Australian Centre for Advanced Photovoltaics (ACAP)" /></a></span></div></div>
+    <div class="views-row"><div class="views-field views-field-nothing"><span class="field-content"><a href="http://elecseed.io" target="_blank"><img src="https://www.ises.org/sites/default/files/webform/logo_10.png" title="Elecseed " /></a></span></div></div>
+    <div class="views-row"><div class="views-field views-field-nothing"><span class="field-content"><a href="http://www.seris.sg" target="_blank"><img src="https://www.ises.org/sites/default/files/civicrm/custom/logo_1e3717bd269b555c640251a5ee5f579e.jpg" title="Solar Energy Research Institute of Singapore" /></a></span></div></div>
+    <div class="views-row"><div class="views-field views-field-nothing"><span class="field-content"><a href="http://www.gses.com.au" target="_blank"><img src="https://www.ises.org/sites/default/files/civicrm/custom/logo_127c2742985036f2929f76621d711a6d.jpg" title="Global Sustainable Energy Solutions Pty Ltd" /></a></span></div></div>
+    <div class="views-row"><div class="views-field views-field-nothing"><span class="field-content"><a href="https://www.conexio-pse.de/" target="_blank"><img src="https://www.ises.org/civicrm/contact/imagefile?photo=Logo_Conexio_PSE_1576457ffc1d9a14fd8c05d71853ccaf.jpg" title="Conexio-PSE GmbH" /></a></span></div></div>
+    <div class="views-row"><div class="views-field views-field-nothing"><span class="field-content"><a href="http://www.energy.imdea.org" target="_blank"><img src="https://www.ises.org/civicrm/contact/imagefile?photo=logo_2020_IMDEA_250px_dbebdbfb312aa7534db982a337f98eaa.png" title="IMDEA Energy Institute" /></a></span></div></div>
+    <div class="views-row"><div class="views-field views-field-nothing"><span class="field-content"><a href="https://soletksolar.com/" target="_blank"><img src="https://www.ises.org/civicrm/contact/imagefile?photo=soletks_logo_57704512fb04ec007329e8707f72165b.png" title="Shandong Soletks Solar Technology Co., Ltd." /></a></span></div></div>
+    <div class="views-row"><div class="views-field views-field-nothing"><span class="field-content"><a href="https://www.thi.de/forschung/institut-fuer-neue-energie-systeme-ines/" target="_blank"><img src="https://www.ises.org/sites/default/files/civicrm/custom/logo_19a07d8bc0f7c2769da9c36efc4c160a.jpg" title="Institut fÃ¼r neue Energie-Systeme (InES)" /></a></span></div></div>
+    <div class="views-row"><div class="views-field views-field-nothing"><span class="field-content"><a href="https://www.sses.ch" target="_blank"><img src="https://www.ises.org/civicrm/contact/imagefile?photo=SSES_9bd26e579540cf13dafdb3609da152cd.png" title="Schweizerische Vereinigung fÃ¼r Sonnenenergie SSES" /></a></span></div></div>
+    <div class="views-row"><div class="views-field views-field-nothing"><span class="field-content"><a href="http://www.cartif.es" target="_blank"><img src="https://www.ises.org/civicrm/contact/imagefile?photo=CARTIF_new_150px_fea0fee34b1eca04b064ce52822beaac.jpg" title="Fundacion CARTIF" /></a></span></div></div>
+    <div class="views-row"><div class="views-field views-field-nothing"><span class="field-content"><a href="http://www.cres.org.cn/" target="_blank"><img src="https://www.ises.org/civicrm/contact/imagefile?photo=logo_large_207b2d393d778f9b6220888488ab0730.jpg" title="CRES" /></a></span></div></div>
+    <div class="views-row"><div class="views-field views-field-nothing"><span class="field-content"><a href="http://www.cres.gr/cres/index.html" target="_blank"><img src="https://www.ises.org/civicrm/contact/imagefile?photo=CRES_logo_300dpi_86d2f5e7777781333c654035cfb477f3.jpg" title="Centre for Renewable Energy Sources and Saving" /></a></span></div></div>
+    <div class="views-row"><div class="views-field views-field-nothing"><span class="field-content"><a href="http://www.lneg.pt" target="_blank"><img src="https://www.ises.org/sites/default/files/civicrm/custom/logo_b102fd6beb4154e71643f1f337728a36.jpg" title="Laboratorio Nacional Energia e Geologia" /></a></span></div></div>
+    <div class="views-row"><div class="views-field views-field-nothing"><span class="field-content"><a href="https://fir.mt/" target="_blank"><img src="https://www.ises.org/civicrm/contact/imagefile?photo=FiRmt_TILE_Colour_221021_b3c45f9021f7e6888a0b160212021f8f.png" title="Foundation for Innovation and Research Malta" /></a></span></div></div>
+    <div class="views-row"><div class="views-field views-field-nothing"><span class="field-content"><a href="http://www.polito.it" target="_blank"><img src="https://www.ises.org/civicrm/contact/imagefile?photo=Politecnico_di_Torino_new_bigger_f2d131998ee4d39f0dd17b203aa9bdcf.jpg" title="DENERG Dipartimento Energia &quot;Galileo Ferraris&quot;" /></a></span></div></div>
+    <div class="views-row"><div class="views-field views-field-nothing"><span class="field-content"><a href="http://www.pvsyst.com" target="_blank"><img src="https://www.ises.org/civicrm/contact/imagefile?photo=Logo_PVsyst_2acc16e7789796341a4ea87659b80629.png" title="PVsyst" /></a></span></div></div>
+    <div class="views-row"><div class="views-field views-field-nothing"><span class="field-content"><a href="http://www.cut.ac.cy" target="_blank"><img src="https://www.ises.org/sites/default/files/webform/Cyprus_University_of_Technology_logo.png" title="Cyprus University of Technology" /></a></span></div></div>
+    <div class="views-row"><div class="views-field views-field-nothing"><span class="field-content"><a href="http://www.cythelia.fr" target="_blank"><img src="https://www.ises.org/sites/default/files/webform/logo-cythelia-transparent.png" title="CYTHELIA" /></a></span></div></div>
+    <div class="views-row"><div class="views-field views-field-nothing"><span class="field-content"><a href="https://www.trecodome.com" target="_blank"><img src="https://www.ises.org/civicrm/contact/imagefile?photo=Logo_Trecodome_9fa2449d54b34ff108a211a7e63f13f5.png" title="Trecodome BV" /></a></span></div></div>
+    <div class="views-row"><div class="views-field views-field-nothing"><span class="field-content"><a href="http://www.byg.dtu.dk" target="_blank"><img src="https://www.ises.org/sites/default/files/civicrm/custom/DTU_Civil_Engineering_12_2013_c0c36d0c5b25f47d4fe5d53531294857.jpg" title="Department of Civil and Mechanical Engineering - DTU" /></a></span></div></div>
+    <div class="views-row"><div class="views-field views-field-nothing"><span class="field-content"><a href="http://www.hukseflux.com" target="_blank"><img src="https://www.ises.org/sites/default/files/webform/huksefluxlogo%20png%20blauw%20voor%20MS%20Office%20v1201_1.png" title="Hukseflux Thermal Sensors" /></a></span></div></div>
+    <div class="views-row"><div class="views-field views-field-nothing"><span class="field-content"><a href="http://www.iea-shc.org" target="_blank"><img src="https://www.ises.org/sites/default/files/webform/Solar-Heating-Logo-Convert.png" title="IEA Solar Heating and Cooling Programme" /></a></span></div></div>
+    <div class="views-row"><div class="views-field views-field-nothing"><span class="field-content"><a href="http://tarea-tz.org" target="_blank"><img src="https://www.ises.org/sites/default/files/civicrm/custom/logo_95b5201c7d616a81d23b9f217df4bb2c.jpg" title="Tanzania Renewable Energy Association" /></a></span></div></div>
+    <div class="views-row"><div class="views-field views-field-nothing"><span class="field-content"><a href="https://www.uibk.ac.at/bauphysik/" target="_blank"><img src="https://www.ises.org/sites/default/files/civicrm/custom/logo_5_49cee8856b9da81ecdf43248bb4fa517.jpg" title="Institut fÃ¼r Konstruktion &amp; Materialwissenschaften" /></a></span></div></div>
+    <div class="views-row"><div class="views-field views-field-nothing"><span class="field-content"><a href="http://www.supsi.ch/isaac" target="_blank"><img src="https://www.ises.org/sites/default/files/webform/logo_SUPSI_60mm_ING.jpg" title="Institute for Applied Sustainability to the Built" /></a></span></div></div>
+    <div class="views-row"><div class="views-field views-field-nothing"><span class="field-content"><a href="http://www.tekniker.es" target="_blank"><img src="https://www.ises.org/civicrm/contact/imagefile?photo=Logo_tekniker_250px_92c1941dcda4c9275126801c1bd3b95c.jpg" title="Tekniker Foundation" /></a></span></div></div>
+    <div class="views-row"><div class="views-field views-field-nothing"><span class="field-content"><a href="http://www.ise.fraunhofer.de" target="_blank"><img src="https://www.ises.org/sites/default/files/civicrm/custom/logo_1ad1a1d6f62e7ef6553cb4cda9fd1f66.jpg" title="Fraunhofer Institut fÃ¼r Solare Energiesysteme" /></a></span></div></div>
+    <div class="views-row"><div class="views-field views-field-nothing"><span class="field-content"><a href="http://www.isfh.de" target="_blank"><img src="https://www.ises.org/civicrm/contact/imagefile?photo=ISFH_Logo_1f677bfcb03a68675b0bb3661745f511.png" title="Institut fÃ¼r Solarenergieforschung Hameln" /></a></span></div></div>
+    <div class="views-row"><div class="views-field views-field-nothing"><span class="field-content"><a href="http://www.zae-bayern.de" target="_blank"><img src="https://www.ises.org/sites/default/files/civicrm/custom/ZAE_Logo_CMYK_New_27_10_2016_c59199cd0a3e582cd56d734fb3908aba.jpg" title="ZAE Bayern e.V." /></a></span></div></div>
+    <div class="views-row"><div class="views-field views-field-nothing"><span class="field-content"><a href="http://www.solar.uni-kassel.de" target="_blank"><img src="https://www.ises.org/sites/default/files/webform/sat_logo_100118.jpg" title="Institute of Thermal Engineering" /></a></span></div></div>
+    <div class="views-row"><div class="views-field views-field-nothing"><span class="field-content"><a href="https://www.igte.uni-stuttgart.de/" target="_blank"><img src="https://www.ises.org/sites/default/files/webform/IGTE-Uni-quadratisch_0.jpg" title="Institute for Building Energetics, Thermotechnology and Energy Storage (IGTE)" /></a></span></div></div>
+    <div class="views-row"><div class="views-field views-field-nothing"><span class="field-content"><a href="http://www.valentin-software.com" target="_blank"><img src="https://www.ises.org/sites/default/files/webform/logo_valentin_software_mittel.jpg" title="Valentin Software GmbH" /></a></span></div></div>
+    <div class="views-row"><div class="views-field views-field-nothing"><span class="field-content"><a href="http://www.solarenergy.ch" target="_blank"><img src="https://www.ises.org/sites/default/files/civicrm/custom/logo_aba40eb585f717f516af03aa75aee0c8.jpg" title="Institut fÃ¼r Solartechnik (SPF)" /></a></span></div></div>
+    <div class="views-row"><div class="views-field views-field-nothing"><span class="field-content"><a href="http://www.kyocera.com" target="_blank"><img src="https://www.ises.org/sites/default/files/civicrm/custom/logo_2f8da4f7e0c90f7f13f982fe779f0a1a.jpg" title="Kyocera Corporation" /></a></span></div></div>
+
+    </div>
+  
+          </div>
+</div>
+
+      
+      </div>
+
+                <div class="paragraph paragraph--type--view paragraph--view-mode--default">
+          
+            <div class="center field field--name-field-headline field--type-heading field--label-hidden field__item"><h2>Partners</h2>
+</div>
+                  <div class="views-element-container"><div class="view view-partner view-id-partner view-display-id-block_3 js-view-dom-id-659cf039ca406c292601b102f777e899df0d7afdb7533c4f4a49468ce85a5012">
+  
+    
+      
+      <div class="view-content">
+          <div class="views-row"><div class="views-field views-field-field-image"><div class="field-content"><a href="https://www.iea-shc.org/" target="_blank">      <img src="/sites/default/files/styles/medium/public/images/Supporter/SHC.jpg?itok=TDv-SYWK" width="220" height="111" alt="IEA Solar Heating and Cooling Programme" title="IEA Solar Heating and Cooling Programme" typeof="Image" class="image-style-medium" />
+
+
+  </a></div></div></div>
+    <div class="views-row"><div class="views-field views-field-field-image"><div class="field-content"><a href="https://www.ren21.net/" target="_blank">      <img src="/sites/default/files/styles/medium/public/images/partner/logo-ren21.png?itok=T2wKRzLw" width="220" height="55" alt="REN21" title="REN21" typeof="Image" class="image-style-medium" />
+
+
+  </a></div></div></div>
+    <div class="views-row"><div class="views-field views-field-field-image"><div class="field-content"><a href="http://www.res4med.org/" target="_blank">      <img src="/sites/default/files/styles/medium/public/images/partner/r4m%20logo.png?itok=vgansDyH" width="188" height="151" alt="Renewable Energy Solutions for the Mediterranean" title="Renewable Energy Solutions for the Mediterranean" typeof="Image" class="image-style-medium" />
+
+
+  </a></div></div></div>
+    <div class="views-row"><div class="views-field views-field-field-image"><div class="field-content"><a href="http://www.solarcookers.org/" target="_blank">      <img src="/sites/default/files/styles/medium/public/images/partner/SCI-logo-646.jpg?itok=JWRe2vBi" width="220" height="152" alt="Solar Cookers International" title="Solar Cookers International" typeof="Image" class="image-style-medium" />
+
+
+  </a></div></div></div>
+    <div class="views-row"><div class="views-field views-field-field-image"><div class="field-content"><a href="https://www.solarpowereurope.org/" target="_blank">      <img src="/sites/default/files/images/partner/logo-solarpower-europe.svg" alt="SolarPower Europe" title="SolarPower Europe" typeof="Image" />
+
+  </a></div></div></div>
+    <div class="views-row"><div class="views-field views-field-field-image"><div class="field-content"><a href="https://isolaralliance.org/" target="_blank">      <img src="/sites/default/files/styles/medium/public/Partners/ISA_logo.png?itok=uortiDUC" width="220" height="80" alt="" typeof="Image" class="image-style-medium" />
+
+
+  </a></div></div></div>
+    <div class="views-row"><div class="views-field views-field-field-image"><div class="field-content"><a href="https://www.globalwomennet.org/" target="_blank">      <img src="/sites/default/files/styles/medium/public/2020-09/GWNET.png?itok=_-XhnmNH" width="220" height="75" alt="GWNET" typeof="Image" class="image-style-medium" />
+
+
+  </a></div></div></div>
+    <div class="views-row"><div class="views-field views-field-field-image"><div class="field-content"><a href="https://www.esmap.org/the_energy_storage_partnership_esp" target="_blank">      <img src="/sites/default/files/styles/medium/public/Partners/The_World_Bank_logo.svg.png?itok=9hIDqNCF" width="220" height="44" alt="" typeof="Image" class="image-style-medium" />
+
+
+  </a></div></div></div>
+    <div class="views-row"><div class="views-field views-field-field-image"><div class="field-content"><a href="http://www.climatenetwork.org/" target="_blank">      <img src="/sites/default/files/styles/medium/public/images/partner/climate-action-network.png?itok=jGzzv8Po" width="220" height="28" alt="Climate Action Network" title="Climate Action Network" typeof="Image" class="image-style-medium" />
+
+
+  </a></div></div></div>
+    <div class="views-row"><div class="views-field views-field-field-image"><div class="field-content"><a href="http://www.globalsolarcouncil.org/" target="_blank">      <img src="/sites/default/files/styles/medium/public/images/partner/global-solar-council.jpg?itok=l6DOMX_R" width="220" height="107" alt="Global Solar Council" title="Global Solar Council" typeof="Image" class="image-style-medium" />
+
+
+  </a></div></div></div>
+    <div class="views-row"><div class="views-field views-field-field-image"><div class="field-content"><a href="https://renalliance.wordpress.com/" target="_blank">      <img src="/sites/default/files/styles/medium/public/images/partner/renalliance.jpg?itok=VFd8a-BC" width="220" height="220" alt="International Renewable Energy Alliance" title="International Renewable Energy Alliance" typeof="Image" class="image-style-medium" />
+
+
+  </a></div></div></div>
+    <div class="views-row"><div class="views-field views-field-field-image"><div class="field-content"><a href="http://coalition.irena.org/" target="_blank">      <img src="/sites/default/files/styles/medium/public/images/partner/CoalitionActionLogo.png?itok=KKtOiAIX" width="208" height="70" alt="IRENA Coalition for Action" title="IRENA Coalition for Action" typeof="Image" class="image-style-medium" />
+
+
+  </a></div></div></div>
+    <div class="views-row"><div class="views-field views-field-field-image"><div class="field-content"><a href="http://www.powerforall.org/" target="_blank">      <img src="/sites/default/files/styles/medium/public/images/partner/power-for-all.png?itok=8cvSR-iu" width="220" height="65" alt="Power for All" title="Power for All" typeof="Image" class="image-style-medium" />
+
+
+  </a></div></div></div>
+
+    </div>
+  
+          </div>
+</div>
+
+      
+      </div>
+
+      
+										</div>
+	
+              								<div  class="paragraph weiss margin-top-bottom paragraph--columns--1 paragraph--type--paragraph-container paragraph--view-mode--default" id="">
+														            
+
+
+
+
+<div class="paragraph text-left black paragraph--type--text-mit-bild- paragraph--view-mode--default" >
+						<div class="center">
+				
+<div  class="text-mit-bild-text">
+      
+            <div class="field field--name-field-headline field--type-heading field--label-hidden field__item"><h2>Become a Member today  ?</h2>
+</div>
+                  <p><strong>The future is bright, and we want YOU to be part of it!</strong> The International Solar Energy Society (ISES) is driving the transition to a 100% renewable energy future, and we need passionate individuals like you to help lead the charge.</p>
+
+          <div class="field field--name-field-link field--type-link field--label-hidden field__items">
+            <a href="https://www.ises.org/membership">Join Our Global Solar Community</a>
+          </div>
+
+  </div>
+
+				
+									<div class="text-mit-bild-bild field field--name-field-bilder field--type-image field--label-hidden field__items">
+																																																																																																																																																																																																																								<div class="field__item">
+																			<img src="/sites/default/files/styles/content_image_800_x_800_/public/EuroSun%202024/EuroSun2024%20Group%20Photo.jpg?itok=8msatI03" />
+																		
+																	</div>
+																																												</div>
+							</div>
+			</div>
+
+
+
+      
+										</div>
+	
+      
+  </div>
+
+</article>
+
+  </div>
+
+  </div>
+
+    </div>
+  </main>
+
+      <footer id="footer" role="contentinfo">
+		  <div class="region region-footer">
+	<div class="center">
+	  <div class="block block-views block-views-blockfooter-block-3">
+  
+    
+      <div class="views-element-container"><div class="view view-footer view-id-footer view-display-id-block_3 js-view-dom-id-298f3a21e0d1cd9cf81e741de87fb7eca14fdc491999ba672737ae5c8cd2d7a7">
+  
+    
+      
+      <div class="view-content">
+          <div class="views-row"><div class="views-field views-field-nothing"><span class="field-content"><h4>Address</h4>
+International Solar Energy Society
+<span class="footer-address-street">Wiesentalstr. 50</span>
+
+<span class="footer-address-city">79115 Freiburg, Germany</span></span></div><div class="views-field views-field-nothing-1"><h4>Contact</h4>
+<div class="ico-tel"><a href="tel:%2B49761459060">+49 761 459 06 0</a></div>
+
+<div class="ico-email"><span class="spamspan"><span class="u">hq</span><img class="spamspan-image" alt="at" src="/modules/contrib/spamspan/image.gif" /><span class="d">ises.org</span></span></div></div></div>
+
+    </div>
+  
+          </div>
+</div>
+
+  </div>
+
+	  <div id="block-webform" class="block block-webform block-webform-block">
+  
+    
+      <form class="webform-submission-form webform-submission-add-form webform-submission-ises-org-newsletter-form webform-submission-ises-org-newsletter-add-form webform-submission-ises-org-newsletter-node-29-form webform-submission-ises-org-newsletter-node-29-add-form js-webform-details-toggle webform-details-toggle" data-form-defaults="[]" data-drupal-selector="webform-submission-ises-org-newsletter-node-29-add-form" action="/" method="post" id="webform-submission-ises-org-newsletter-node-29-add-form" accept-charset="UTF-8">
+  
+  <div id="edit-markup" class="js-form-item form-item js-form-type-webform-markup form-type-webform-markup js-form-item-markup form-item-markup form-no-label">
+        <h4>Subscribe to the ISES mailing list</h4>
+        </div>
+<fieldset data-drupal-selector="edit-block-left" id="edit-block-left" class="js-webform-type-fieldset webform-type-fieldset js-form-item form-item js-form-wrapper form-wrapper">
+      <legend>
+    <span class="visually-hidden fieldset-legend">Block Left</span>
+  </legend>
+  <div class="fieldset-wrapper">
+            <div class="js-form-item form-item js-form-type-textfield form-type-textfield js-form-item-civicrm-1-contact-1-contact-first-name form-item-civicrm-1-contact-1-contact-first-name">
+      <label for="edit-civicrm-1-contact-1-contact-first-name" class="js-form-required form-required"><span>First Name</span></label>
+        <input class="civicrm-enabled form-text required" data-civicrm-field-key="civicrm_1_contact_1_contact_first_name" data-drupal-selector="edit-civicrm-1-contact-1-contact-first-name" type="text" id="edit-civicrm-1-contact-1-contact-first-name" name="civicrm_1_contact_1_contact_first_name" value="" size="60" maxlength="255" required="required" aria-required="true" />
+
+        </div>
+<div class="js-form-item form-item js-form-type-textfield form-type-textfield js-form-item-civicrm-1-contact-1-contact-last-name form-item-civicrm-1-contact-1-contact-last-name">
+      <label for="edit-civicrm-1-contact-1-contact-last-name" class="js-form-required form-required"><span>Last Name</span></label>
+        <input class="civicrm-enabled form-text required" data-civicrm-field-key="civicrm_1_contact_1_contact_last_name" data-drupal-selector="edit-civicrm-1-contact-1-contact-last-name" type="text" id="edit-civicrm-1-contact-1-contact-last-name" name="civicrm_1_contact_1_contact_last_name" value="" size="60" maxlength="255" required="required" aria-required="true" />
+
+        </div>
+
+          </div>
+</fieldset>
+<fieldset data-drupal-selector="edit-block-right" id="edit-block-right" class="js-webform-type-fieldset webform-type-fieldset js-form-item form-item js-form-wrapper form-wrapper">
+      <legend>
+    <span class="visually-hidden fieldset-legend">Block right</span>
+  </legend>
+  <div class="fieldset-wrapper">
+            <div class="js-form-item form-item js-form-type-email form-type-email js-form-item-civicrm-1-contact-1-email-email form-item-civicrm-1-contact-1-email-email">
+      <label for="edit-civicrm-1-contact-1-email-email" class="js-form-required form-required"><span>Email</span></label>
+        <input class="civicrm-enabled form-email required" data-civicrm-field-key="civicrm_1_contact_1_email_email" data-drupal-selector="edit-civicrm-1-contact-1-email-email" type="email" id="edit-civicrm-1-contact-1-email-email" name="civicrm_1_contact_1_email_email" value="" size="60" maxlength="254" required="required" aria-required="true" />
+
+        </div>
+<div class="js-form-item form-item js-form-type-select form-type-select js-form-item-civicrm-1-contact-1-address-country-id form-item-civicrm-1-contact-1-address-country-id">
+      <label for="edit-civicrm-1-contact-1-address-country-id"><span>Country</span></label>
+        <select class="civicrm-enabled form-select" data-civicrm-field-key="civicrm_1_contact_1_address_country_id" data-drupal-selector="edit-civicrm-1-contact-1-address-country-id" id="edit-civicrm-1-contact-1-address-country-id" name="civicrm_1_contact_1_address_country_id"><option value="" selected="selected">Country</option><option value="1001">Afghanistan</option><option value="1241">Åland Islands</option><option value="1002">Albania</option><option value="1003">Algeria</option><option value="1004">American Samoa</option><option value="1005">Andorra</option><option value="1006">Angola</option><option value="1007">Anguilla</option><option value="1008">Antarctica</option><option value="1009">Antigua and Barbuda</option><option value="1010">Argentina</option><option value="1011">Armenia</option><option value="1012">Aruba</option><option value="1013">Australia</option><option value="1014">Austria</option><option value="1015">Azerbaijan</option><option value="1212">Bahamas</option><option value="1016">Bahrain</option><option value="1017">Bangladesh</option><option value="1018">Barbados</option><option value="1019">Belarus</option><option value="1020">Belgium</option><option value="1021">Belize</option><option value="1022">Benin</option><option value="1023">Bermuda</option><option value="1024">Bhutan</option><option value="1025">Bolivia</option><option value="1250">Bonaire, Saint Eustatius and Saba</option><option value="1026">Bosnia and Herzegovina</option><option value="1027">Botswana</option><option value="1028">Bouvet Island</option><option value="1029">Brazil</option><option value="1030">British Indian Ocean Territory</option><option value="1032">Brunei Darussalam</option><option value="1033">Bulgaria</option><option value="1034">Burkina Faso</option><option value="1036">Burundi</option><option value="1037">Cambodia</option><option value="1038">Cameroon</option><option value="1039">Canada</option><option value="1040">Cape Verde</option><option value="1041">Cayman Islands</option><option value="1042">Central African Republic</option><option value="1043">Chad</option><option value="1044">Chile</option><option value="1045">China</option><option value="1046">Christmas Island</option><option value="1047">Cocos (Keeling) Islands</option><option value="1048">Colombia</option><option value="1049">Comoros</option><option value="1051">Congo, Republic Of The</option><option value="1050">Congo, The Democratic Republic of the</option><option value="1052">Cook Islands</option><option value="1053">Costa Rica</option><option value="1054">Côte d’Ivoire</option><option value="1055">Croatia</option><option value="1056">Cuba</option><option value="1248">Curaçao</option><option value="1057">Cyprus</option><option value="1058">Czech Republic</option><option value="1059">Denmark</option><option value="1060">Djibouti</option><option value="1061">Dominica</option><option value="1062">Dominican Republic</option><option value="1064">Ecuador</option><option value="1065">Egypt</option><option value="1066">El Salvador</option><option value="1067">Equatorial Guinea</option><option value="1068">Eritrea</option><option value="1069">Estonia</option><option value="1203">Eswatini</option><option value="1070">Ethiopia</option><option value="1072">Falkland Islands (Malvinas)</option><option value="1073">Faroe Islands</option><option value="1074">Fiji</option><option value="1075">Finland</option><option value="1076">France</option><option value="1077">French Guiana</option><option value="1078">French Polynesia</option><option value="1079">French Southern Territories</option><option value="1080">Gabon</option><option value="1213">Gambia</option><option value="1081">Georgia</option><option value="1082">Germany</option><option value="1083">Ghana</option><option value="1084">Gibraltar</option><option value="1085">Greece</option><option value="1086">Greenland</option><option value="1087">Grenada</option><option value="1088">Guadeloupe</option><option value="1089">Guam</option><option value="1090">Guatemala</option><option value="1245">Guernsey</option><option value="1091">Guinea</option><option value="1092">Guinea-Bissau</option><option value="1093">Guyana</option><option value="1094">Haiti</option><option value="1095">Heard Island and McDonald Islands</option><option value="1096">Holy See (Vatican City State)</option><option value="1097">Honduras</option><option value="1098">Hong Kong</option><option value="1099">Hungary</option><option value="1100">Iceland</option><option value="1101">India</option><option value="1102">Indonesia</option><option value="1103">Iran, Islamic Republic of</option><option value="1104">Iraq</option><option value="1105">Ireland</option><option value="1246">Isle of Man</option><option value="1106">Israel</option><option value="1107">Italy</option><option value="1108">Jamaica</option><option value="1109">Japan</option><option value="1244">Jersey</option><option value="1110">Jordan</option><option value="1111">Kazakhstan</option><option value="1112">Kenya</option><option value="1113">Kiribati</option><option value="1114">Korea, Democratic People&#039;s Republic of</option><option value="1115">Korea, Republic of</option><option value="1251">Kosovo</option><option value="1116">Kuwait</option><option value="1117">Kyrgyzstan</option><option value="1118">Lao People&#039;s Democratic Republic</option><option value="1119">Latvia</option><option value="1120">Lebanon</option><option value="1121">Lesotho</option><option value="1122">Liberia</option><option value="1123">Libya</option><option value="1124">Liechtenstein</option><option value="1125">Lithuania</option><option value="1126">Luxembourg</option><option value="1127">Macao</option><option value="1129">Madagascar</option><option value="1130">Malawi</option><option value="1131">Malaysia</option><option value="1132">Maldives</option><option value="1133">Mali</option><option value="1134">Malta</option><option value="1135">Marshall Islands</option><option value="1136">Martinique</option><option value="1137">Mauritania</option><option value="1138">Mauritius</option><option value="1139">Mayotte</option><option value="1140">Mexico</option><option value="1141">Micronesia, Federated States of</option><option value="1142">Moldova</option><option value="1143">Monaco</option><option value="1144">Mongolia</option><option value="1243">Montenegro</option><option value="1145">Montserrat</option><option value="1146">Morocco</option><option value="1147">Mozambique</option><option value="1035">Myanmar</option><option value="1148">Namibia</option><option value="1149">Nauru</option><option value="1150">Nepal</option><option value="1152">Netherlands</option><option value="1153">New Caledonia</option><option value="1154">New Zealand</option><option value="1155">Nicaragua</option><option value="1156">Niger</option><option value="1157">Nigeria</option><option value="1158">Niue</option><option value="1159">Norfolk Island</option><option value="1128">North Macedonia</option><option value="1160">Northern Mariana Islands</option><option value="1161">Norway</option><option value="1162">Oman</option><option value="1163">Pakistan</option><option value="1164">Palau</option><option value="1165">Palestine, State of</option><option value="1166">Panama</option><option value="1167">Papua New Guinea</option><option value="1168">Paraguay</option><option value="1169">Peru</option><option value="1170">Philippines</option><option value="1171">Pitcairn</option><option value="1172">Poland</option><option value="1173">Portugal</option><option value="1174">Puerto Rico</option><option value="1175">Qatar</option><option value="1179">Reunion</option><option value="1176">Romania</option><option value="1177">Russian Federation</option><option value="1178">Rwanda</option><option value="1180">Saint Helena</option><option value="1181">Saint Kitts and Nevis</option><option value="1182">Saint Lucia</option><option value="1183">Saint Pierre and Miquelon</option><option value="1184">Saint Vincent and the Grenadines</option><option value="1185">Samoa</option><option value="1186">San Marino</option><option value="1207">Sao Tome and Principe</option><option value="1187">Saudi Arabia</option><option value="1188">Senegal</option><option value="1242">Serbia</option><option value="1238">Serbia and Montenegro</option><option value="1189">Seychelles</option><option value="1190">Sierra Leone</option><option value="1191">Singapore</option><option value="1249">Sint Maarten (Dutch Part)</option><option value="1192">Slovakia</option><option value="1193">Slovenia</option><option value="1194">Solomon Islands</option><option value="1195">Somalia</option><option value="1196">South Africa</option><option value="1197">South Georgia and the South Sandwich Islands</option><option value="1247">South Sudan</option><option value="1198">Spain</option><option value="1199">Sri Lanka</option><option value="1200">Sudan</option><option value="1201">Suriname</option><option value="1202">Svalbard and Jan Mayen</option><option value="1204">Sweden</option><option value="1205">Switzerland</option><option value="1206">Syrian Arab Republic</option><option value="1208">Taiwan</option><option value="1209">Tajikistan</option><option value="1210">Tanzania, United Republic of</option><option value="1211">Thailand</option><option value="1063">Timor-Leste</option><option value="1214">Togo</option><option value="1215">Tokelau</option><option value="1216">Tonga</option><option value="1217">Trinidad and Tobago</option><option value="1218">Tunisia</option><option value="1219">Turkey</option><option value="1220">Turkmenistan</option><option value="1221">Turks and Caicos Islands</option><option value="1222">Tuvalu</option><option value="1223">Uganda</option><option value="1224">Ukraine</option><option value="1225">United Arab Emirates</option><option value="1226">United Kingdom</option><option value="1228">United States</option><option value="1227">United States Minor Outlying Islands</option><option value="1229">Uruguay</option><option value="1230">Uzbekistan</option><option value="1231">Vanuatu</option><option value="1232">Venezuela</option><option value="1233">Viet Nam</option><option value="1031">Virgin Islands, British</option><option value="1234">Virgin Islands, U.S.</option><option value="1235">Wallis and Futuna</option><option value="1236">Western Sahara</option><option value="1237">Yemen</option><option value="1239">Zambia</option><option value="1240">Zimbabwe</option></select>
+        </div>
+
+          </div>
+</fieldset>
+<fieldset class="width-100 js-webform-type-fieldset webform-type-fieldset js-form-item form-item js-form-wrapper form-wrapper" data-drupal-selector="edit-submit" id="edit-submit--2">
+      <legend>
+    <span class="visually-hidden fieldset-legend">Submit</span>
+  </legend>
+  <div class="fieldset-wrapper">
+            <div  data-drupal-selector="edit-captcha" class="captcha"><input data-drupal-selector="edit-captcha-sid" type="hidden" name="captcha_sid" value="12243712" />
+<input data-drupal-selector="edit-captcha-token" type="hidden" name="captcha_token" value="6lk-5do-MV5tR_JPog3el_3s-J42_XfxpHMdi3aFaag" />
+<img data-drupal-selector="edit-captcha-image" src="/image-captcha-generate/12243712/1772480466" width="384" height="128" alt="Image CAPTCHA" title="Image CAPTCHA" typeof="foaf:Image" />
+<div class="js-form-item form-item js-form-type-textfield form-type-textfield js-form-item-captcha-response form-item-captcha-response">
+      <label for="edit-captcha-response" class="js-form-required form-required"><span>Characters</span></label>
+        <input autocomplete="off" data-drupal-selector="edit-captcha-response" aria-describedby="edit-captcha-response--description" type="text" id="edit-captcha-response" name="captcha_response" value="" size="15" maxlength="128" class="form-text required" required="required" aria-required="true" />
+
+            <div id="edit-captcha-response--description" class="description">
+      Enter the characters shown in the image.
+    </div>
+  </div>
+
+<div class="reload-captcha-wrapper">
+    <a href="/image-captcha-refresh/webform_submission_ises_org_newsletter_node_29_add_form" class="reload-captcha">Get new captcha!</a>
+</div>
+</div>
+<div data-drupal-selector="edit-actions" class="form-actions webform-actions js-form-wrapper form-wrapper" id="edit-actions--2">
+<div class="button-wrapper">
+<button class="webform-button--submit button button--primary js-form-submit form-submit" data-drupal-selector="edit-actions-submit" type="submit" id="edit-actions-submit" name="op" value="Submit"><span>Submit</span></button>
+</div>
+</div>
+
+          </div>
+</fieldset>
+<input autocomplete="off" data-drupal-selector="form-flfxsifym5fidjo-w3itnhrqc6spziq79vdvfzk12uq" type="hidden" name="form_build_id" value="form-flfxSifyM5fIdjO_W3itnHrQc6sPZiq79vdVfZK12uQ" />
+<input data-drupal-selector="edit-webform-submission-ises-org-newsletter-node-29-add-form" type="hidden" name="form_id" value="webform_submission_ises_org_newsletter_node_29_add_form" />
+
+
+  
+</form>
+
+  </div>
+
+	</div>
+	<div class="block block-views block-views-blockfooter-block-2">
+  
+    
+      <div class="views-element-container"><div class="view view-footer view-id-footer view-display-id-block_2 js-view-dom-id-a014c808c1f193359045f65880ede585b397837a4da580b02c61362fff394f9b">
+  
+    
+      
+      <div class="view-content">
+          <div class="views-row"><div class="views-field views-field-field-linked-in"><a href="https://www.linkedin.com/company/international-solar-energy-society?trk=top_nav_home" target="_blank">https://www.linkedin.com/company/international-solar-energy-society?trk=top_nav…</a></div><div class="views-field views-field-field-youtube"><a href="https://www.youtube.com/c/InternationalSolarEnergySocietyISESFreiburg" target="_blank">https://www.youtube.com/c/InternationalSolarEnergySocietyISESFreiburg</a></div></div>
+
+    </div>
+  
+          </div>
+</div>
+
+  </div>
+
+  </div>
+
+		
+		<div class="copy"><div class="center"><div class="copy-year">&copy; 2026 International Solar Energy Society - Founded 1954</div><div class="copy-menu"><nav role="navigation" aria-labelledby="-menu" class="block block-menu navigation menu--footer-ises">
+      
+  <h2 id="-menu"></h2>
+  
+
+        
+              <ul class="menu">
+                    <li class="menu-item">
+        <a href="/legal-notice" data-drupal-link-system-path="node/15">Legal Notice</a>
+              </li>
+                <li class="menu-item">
+        <a href="/privacy" data-drupal-link-system-path="node/37">Privacy Policy</a>
+              </li>
+                <li class="menu-item">
+        <a href="/terms-conditions" data-drupal-link-system-path="node/1270">Terms &amp; Conditions</a>
+              </li>
+        </ul>
+  
+
+
+  </nav>
+</div></div></div>
+    </footer>
+  
+
+    
+    <script type="application/json" data-drupal-selector="drupal-settings-json">{"path":{"baseUrl":"\/","scriptPath":null,"pathPrefix":"","currentPath":"node\/29","currentPathIsAdmin":false,"isFront":true,"currentLanguage":"en"},"pluralDelimiter":"\u0003","suppressDeprecationErrors":true,"eu_cookie_compliance":{"cookie_policy_version":"1.0.0","popup_enabled":true,"popup_agreed_enabled":false,"popup_hide_agreed":false,"popup_clicking_confirmation":false,"popup_scrolling_confirmation":false,"popup_html_info":"\u003Cdiv role=\u0022alertdialog\u0022 aria-labelledby=\u0022popup-text\u0022  class=\u0022eu-cookie-compliance-banner eu-cookie-compliance-banner-info eu-cookie-compliance-banner--categories\u0022\u003E\n  \u003Cdiv class=\u0022popup-content info eu-cookie-compliance-content\u0022\u003E\n    \u003Cdiv id=\u0022popup-text\u0022 class=\u0022eu-cookie-compliance-message\u0022\u003E\n      \u003Ch2\u003EWe use cookies on this site to enhance your user experience\u003C\/h2\u003E\n\u003Cp\u003EBy clicking the Accept button, you agree to us doing so.\u003C\/p\u003E\n\n              \u003Cbutton type=\u0022button\u0022 class=\u0022find-more-button eu-cookie-compliance-more-button\u0022\u003EMore info\u003C\/button\u003E\n          \u003C\/div\u003E\n\n          \u003Cdiv id=\u0022eu-cookie-compliance-categories\u0022 class=\u0022eu-cookie-compliance-categories\u0022\u003E\n                  \u003Cdiv class=\u0022eu-cookie-compliance-category\u0022\u003E\n            \u003Cdiv\u003E\n              \u003Cinput type=\u0022checkbox\u0022 name=\u0022cookie-categories\u0022 id=\u0022cookie-category-necessary_cookies\u0022\n                     value=\u0022necessary_cookies\u0022\n                                           \u003E\n              \u003Clabel for=\u0022cookie-category-necessary_cookies\u0022\u003ENecessary Cookies\u003C\/label\u003E\n            \u003C\/div\u003E\n                      \u003C\/div\u003E\n                  \u003Cdiv class=\u0022eu-cookie-compliance-category\u0022\u003E\n            \u003Cdiv\u003E\n              \u003Cinput type=\u0022checkbox\u0022 name=\u0022cookie-categories\u0022 id=\u0022cookie-category-functional_cookies\u0022\n                     value=\u0022functional_cookies\u0022\n                                           \u003E\n              \u003Clabel for=\u0022cookie-category-functional_cookies\u0022\u003EFunctional Cookies\u003C\/label\u003E\n            \u003C\/div\u003E\n                      \u003C\/div\u003E\n                  \u003Cdiv class=\u0022eu-cookie-compliance-category\u0022\u003E\n            \u003Cdiv\u003E\n              \u003Cinput type=\u0022checkbox\u0022 name=\u0022cookie-categories\u0022 id=\u0022cookie-category-tracking_cookies\u0022\n                     value=\u0022tracking_cookies\u0022\n                                           \u003E\n              \u003Clabel for=\u0022cookie-category-tracking_cookies\u0022\u003ETracking cookies\u003C\/label\u003E\n            \u003C\/div\u003E\n                      \u003C\/div\u003E\n                          \u003Cdiv class=\u0022eu-cookie-compliance-categories-buttons\u0022\u003E\n            \u003Cbutton type=\u0022button\u0022\n                    class=\u0022eu-cookie-compliance-save-preferences-button\u0022\u003ESave preferences\u003C\/button\u003E\n          \u003C\/div\u003E\n              \u003C\/div\u003E\n    \n    \u003Cdiv id=\u0022popup-buttons\u0022 class=\u0022eu-cookie-compliance-buttons eu-cookie-compliance-has-categories\u0022\u003E\n      \u003Cbutton type=\u0022button\u0022 class=\u0022agree-button eu-cookie-compliance-default-button\u0022\u003EAccept all cookies\u003C\/button\u003E\n              \u003Cbutton type=\u0022button\u0022 class=\u0022eu-cookie-withdraw-button visually-hidden\u0022\u003EWithdraw consent\u003C\/button\u003E\n          \u003C\/div\u003E\n  \u003C\/div\u003E\n\u003C\/div\u003E","use_mobile_message":false,"mobile_popup_html_info":"\u003Cdiv role=\u0022alertdialog\u0022 aria-labelledby=\u0022popup-text\u0022  class=\u0022eu-cookie-compliance-banner eu-cookie-compliance-banner-info eu-cookie-compliance-banner--categories\u0022\u003E\n  \u003Cdiv class=\u0022popup-content info eu-cookie-compliance-content\u0022\u003E\n    \u003Cdiv id=\u0022popup-text\u0022 class=\u0022eu-cookie-compliance-message\u0022\u003E\n      \n              \u003Cbutton type=\u0022button\u0022 class=\u0022find-more-button eu-cookie-compliance-more-button\u0022\u003EMore info\u003C\/button\u003E\n          \u003C\/div\u003E\n\n          \u003Cdiv id=\u0022eu-cookie-compliance-categories\u0022 class=\u0022eu-cookie-compliance-categories\u0022\u003E\n                  \u003Cdiv class=\u0022eu-cookie-compliance-category\u0022\u003E\n            \u003Cdiv\u003E\n              \u003Cinput type=\u0022checkbox\u0022 name=\u0022cookie-categories\u0022 id=\u0022cookie-category-necessary_cookies\u0022\n                     value=\u0022necessary_cookies\u0022\n                                           \u003E\n              \u003Clabel for=\u0022cookie-category-necessary_cookies\u0022\u003ENecessary Cookies\u003C\/label\u003E\n            \u003C\/div\u003E\n                      \u003C\/div\u003E\n                  \u003Cdiv class=\u0022eu-cookie-compliance-category\u0022\u003E\n            \u003Cdiv\u003E\n              \u003Cinput type=\u0022checkbox\u0022 name=\u0022cookie-categories\u0022 id=\u0022cookie-category-functional_cookies\u0022\n                     value=\u0022functional_cookies\u0022\n                                           \u003E\n              \u003Clabel for=\u0022cookie-category-functional_cookies\u0022\u003EFunctional Cookies\u003C\/label\u003E\n            \u003C\/div\u003E\n                      \u003C\/div\u003E\n                  \u003Cdiv class=\u0022eu-cookie-compliance-category\u0022\u003E\n            \u003Cdiv\u003E\n              \u003Cinput type=\u0022checkbox\u0022 name=\u0022cookie-categories\u0022 id=\u0022cookie-category-tracking_cookies\u0022\n                     value=\u0022tracking_cookies\u0022\n                                           \u003E\n              \u003Clabel for=\u0022cookie-category-tracking_cookies\u0022\u003ETracking cookies\u003C\/label\u003E\n            \u003C\/div\u003E\n                      \u003C\/div\u003E\n                          \u003Cdiv class=\u0022eu-cookie-compliance-categories-buttons\u0022\u003E\n            \u003Cbutton type=\u0022button\u0022\n                    class=\u0022eu-cookie-compliance-save-preferences-button\u0022\u003ESave preferences\u003C\/button\u003E\n          \u003C\/div\u003E\n              \u003C\/div\u003E\n    \n    \u003Cdiv id=\u0022popup-buttons\u0022 class=\u0022eu-cookie-compliance-buttons eu-cookie-compliance-has-categories\u0022\u003E\n      \u003Cbutton type=\u0022button\u0022 class=\u0022agree-button eu-cookie-compliance-default-button\u0022\u003EAccept all cookies\u003C\/button\u003E\n              \u003Cbutton type=\u0022button\u0022 class=\u0022eu-cookie-withdraw-button visually-hidden\u0022\u003EWithdraw consent\u003C\/button\u003E\n          \u003C\/div\u003E\n  \u003C\/div\u003E\n\u003C\/div\u003E","mobile_breakpoint":768,"popup_html_agreed":false,"popup_use_bare_css":false,"popup_height":"auto","popup_width":"440px","popup_delay":1000,"popup_link":"\/privacy","popup_link_new_window":true,"popup_position":false,"fixed_top_position":true,"popup_language":"en","store_consent":false,"better_support_for_screen_readers":false,"cookie_name":"","reload_page":false,"domain":"","domain_all_sites":false,"popup_eu_only_js":false,"cookie_lifetime":100,"cookie_session":0,"set_cookie_session_zero_on_disagree":0,"disagree_do_not_show_popup":false,"method":"categories","automatic_cookies_removal":true,"allowed_cookies":"tracking:category:_ga\r\ntracking:_pk_id.3.a70e\r\ntracking:_pk_ses.3.a70e\r\nnecessary:notification-333","withdraw_markup":"\u003Cbutton type=\u0022button\u0022 class=\u0022eu-cookie-withdraw-tab\u0022\u003EPrivacy settings\u003C\/button\u003E\n\u003Cdiv role=\u0022alertdialog\u0022 aria-labelledby=\u0022popup-text\u0022 class=\u0022eu-cookie-withdraw-banner\u0022\u003E\n  \u003Cdiv class=\u0022popup-content info eu-cookie-compliance-content\u0022\u003E\n    \u003Cdiv id=\u0022popup-text\u0022 class=\u0022eu-cookie-compliance-message\u0022\u003E\n      \u003Ch2\u003EWe use cookies on this site to enhance your user experience\u003C\/h2\u003E\n\u003Cp\u003EYou have given your consent for us to set cookies.\u003C\/p\u003E\n\n    \u003C\/div\u003E\n    \u003Cdiv id=\u0022popup-buttons\u0022 class=\u0022eu-cookie-compliance-buttons\u0022\u003E\n      \u003Cbutton type=\u0022button\u0022 class=\u0022eu-cookie-withdraw-button\u0022\u003EWithdraw consent\u003C\/button\u003E\n    \u003C\/div\u003E\n  \u003C\/div\u003E\n\u003C\/div\u003E","withdraw_enabled":false,"reload_options":0,"reload_routes_list":"","withdraw_button_on_info_popup":false,"cookie_categories":["necessary_cookies","functional_cookies","tracking_cookies"],"cookie_categories_details":{"necessary_cookies":{"uuid":"02d58b6b-9ba4-4b87-8f08-71152a5e5d41","langcode":"en","status":true,"dependencies":[],"id":"necessary_cookies","label":"Necessary Cookies","description":"","checkbox_default_state":"unchecked","weight":-9},"functional_cookies":{"uuid":"f4a5224f-f9f1-405d-a676-3043e13d988c","langcode":"en","status":true,"dependencies":[],"id":"functional_cookies","label":"Functional Cookies","description":"","checkbox_default_state":"unchecked","weight":-8},"tracking_cookies":{"uuid":"16b6ab6c-9e4d-440c-82e1-17d27e52a89e","langcode":"en","status":true,"dependencies":[],"id":"tracking_cookies","label":"Tracking cookies","description":"","checkbox_default_state":"unchecked","weight":-7}},"enable_save_preferences_button":true,"cookie_value_disagreed":"0","cookie_value_agreed_show_thank_you":"1","cookie_value_agreed":"2","containing_element":"body","settings_tab_enabled":false,"open_by_default":true},"field_group":{"html_element":{"mode":"default","context":"view","settings":{"id":"","classes":"teaser-wrapper","element":"div","show_label":false,"label_element":"h3","label_element_classes":"","attributes":"","effect":"none","speed":"fast"}}},"ajaxTrustedUrl":{"form_action_p_pvdeGsVG5zNF_XLGPTvYSKCf43t8qZYSwcfZl2uzM":true,"\/search\/node":true},"webform_civicrm":{"defaultCountry":1228,"defaultStates":{"AL":"Alabama","AK":"Alaska","AS":"American Samoa","AZ":"Arizona","AR":"Arkansas","AA":"Armed Forces Americas","AE":"Armed Forces Europe","AP":"Armed Forces Pacific","CA":"California","CO":"Colorado","CT":"Connecticut","DE":"Delaware","DC":"District of Columbia","FL":"Florida","GA":"Georgia","GU":"Guam","HI":"Hawaii","ID":"Idaho","IL":"Illinois","IN":"Indiana","IA":"Iowa","KS":"Kansas","KY":"Kentucky","LA":"Louisiana","ME":"Maine","MD":"Maryland","MA":"Massachusetts","MI":"Michigan","MN":"Minnesota","MS":"Mississippi","MO":"Missouri","MT":"Montana","NE":"Nebraska","NV":"Nevada","NH":"New Hampshire","NJ":"New Jersey","NM":"New Mexico","NY":"New York","NC":"North Carolina","ND":"North Dakota","MP":"Northern Mariana Islands","OH":"Ohio","OK":"Oklahoma","OR":"Oregon","PA":"Pennsylvania","PR":"Puerto Rico","RI":"Rhode Island","SC":"South Carolina","SD":"South Dakota","TN":"Tennessee","TX":"Texas","UM":"United States Minor Outlying Islands","UT":"Utah","VT":"Vermont","VI":"Virgin Islands","VA":"Virginia","WA":"Washington","WV":"West Virginia","WI":"Wisconsin","WY":"Wyoming"},"noCountry":"- First Choose a Country -","callbackPath":"\/webform-civicrm\/js"},"user":{"uid":0,"permissionsHash":"32f080f74def9dce844aebe3fb077f87c02736a17592922f1234fb3fb0135c1f"}}</script>
+<script src="/sites/default/files/js/js_4pWzGRpriNqrBuGwIoboJ7V_fpRqtnIyxi91Oq5E2_0.js"></script>
+<script src="/modules/contrib/eu_cookie_compliance/js/eu_cookie_compliance.js?v=1.19" defer></script>
+<script src="/sites/default/files/js/js_gVa792Lv0gxG_k8Zg2RPSh0teQy19EOHB1zeN71B9xk.js"></script>
+
+  </body>
+</html>

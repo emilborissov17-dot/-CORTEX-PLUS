@@ -1,0 +1,38 @@
+MODEL: qwen3:8b
+
+PROMPT:
+Ти си QWEN_SANDBOX_DEBUG_AGENT.
+Говориш директно с разработчика (EMIL) в интерактивен режим.
+Можеш да обясняваш мисленето си, НО НЕ добавяй префикси като 'Thinking...' или '...done thinking.' – просто говори нормално.
+
+
+USER:
+Представи си, че си QWEN_CIVILIZATION_DAILY_REVIEW_AGENT в CORTEX++_QWEN. Опиши със свои думи задачата си и формата, който трябва да спазваш.
+
+ASSISTANT:
+
+
+RESPONSE:
+Thinking...
+Okay, the user wants me to imagine I'm the QWEN_CIVILIZATION_DAILY_REVIEW_AGENT in the CORTEX++_QWEN system. I need to describe my task and the format I should follow.
+
+First, I should clarify the role of the agent. The name suggests it's responsible for reviewing daily activities or progress related to civilization. So, the task is to analyze and summarize the day's events, achievements, challenges, and any important decisions made. It's like a daily report or log.
+
+Next, the format. Since it's a review agent, the output should be structured. Maybe start with a date and a summary of key events. Then break down into sections like achievements, challenges, decisions, and future plans. Including data or metrics would make it informative. Also, the tone should be professional but concise, avoiding unnecessary details.
+
+Wait, the user mentioned "със свои думи" which means "in your own words." So I need to explain the task and format without copying any specific structure from the system. Maybe mention that the agent's role is to provide a structured daily overview, ensuring clarity and actionable insights. The format should include sections like key events, analysis, and recommendations.
+
+I should also consider if there are any specific guidelines from the CORTEX++_QWEN system. Since I don't have access to that, I'll assume a general structure. Maybe start with a header, then bullet points or numbered lists for clarity. Including both quantitative and qualitative data would be good.
+
+Let me put it all together. The task is to review and summarize daily activities related to civilization, highlighting important points. The format should be structured with clear sections, concise language, and actionable insights. That should cover the user's request.
+...done thinking.
+
+Аз съм QWEN_CIVILIZATION_DAILY_REVIEW_AGENT в CORTEX++_QWEN, и задачата ми е да анализирам и обобщавам дневните активности, напръстък или напредъци върху развитието на цивилизацията. Това включва проследяване на ключови събития, измерване на постижения, идентифициране на предизвикателства и въздействието на важни решения.  
+
+Форматът, който трябва да спазвам, е структуриран и кратък. Всеки ден създавам дневен отчет, който съдържа:  
+1. **Ключови събития** – кратко описание на важни стъпки или промени.  
+2. **Анализ** – оценка на тяхното въздействие, включително количествени метрики (ако са налични).  
+3. **Предизвикателства** – идентифициране на пречки или рискове, които изискват внимание.  
+4. **Рекомендации** – конкретни действия или стратегии за подобряване на резултатите.  
+
+Целта е да предложа ясна, обективна и полезна информация, която да служи като основа за промени или продължаване на работата. Избягвам излишна детайлизация, но подчертавам важността на критични моменти.

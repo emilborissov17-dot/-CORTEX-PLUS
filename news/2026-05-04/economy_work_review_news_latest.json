@@ -1,0 +1,44 @@
+{
+  "axis": "ECONOMY_WORK_REVIEW",
+  "fetched_at": "2026-05-04T08:07:44.235787+00:00",
+  "smart_query": "economy unemployment poverty wages",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 0,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "Trump says US to 'guide' stranded ships through Strait of Hormuz",
+      "snippet": "More than 100 aircraft and 15,000 personnel will be part of the operation due to start on Monday, the US military says.",
+      "url": "https://www.bbc.com/news/articles/c775jevkyv2o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "GameStop makes $55.5bn takeover offer for eBay",
+      "snippet": "GameStop's boss Ryan Cohen says he sees potential to make eBay a much bigger rival to Amazon.",
+      "url": "https://www.bbc.com/news/articles/cn0p8yled1do?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Samsung family pays off record $8bn inheritance tax bill",
+      "snippet": "The bill is tied to the estate left by the firm's late chairman Lee Kun-hee, who died in  October 2020.",
+      "url": "https://www.bbc.com/news/articles/cn0px8g13xgo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [],
+  "arxiv_papers": [],
+  "podcast": "[How to get through the Strait of Hormuz] The United States has been at war with Iran since February 28th. And for a month and a half, Iran’s main leverage over the U.S. has been their control over the Strait of Hormuz — a key global shipping route. Iran has attacked ships that try to pass without approval. And recently they’ve insinuated that one part of the Strait — the part near Oman — is not safe. Which means that captains had to go r",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

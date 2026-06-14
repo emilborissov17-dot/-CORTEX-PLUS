@@ -1,0 +1,90 @@
+{
+  "axis": "ECONOMY_WORK_REVIEW",
+  "fetched_at": "2026-03-29T11:44:23.044081+00:00",
+  "smart_query": "economy unemployment poverty wages",
+  "sources_count": {
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 0,
+    "github": 3,
+    "web_search": 5
+  },
+  "rss": [
+    {
+      "title": "Cut taxes on energy bills before giving bailouts, Badenoch says",
+      "snippet": "The Tory leader refuses to rule out direct payments to households if bills spike but says this would come at a cost.",
+      "url": "https://www.bbc.com/news/articles/c1d941vw172o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Agent begged Epstein to have sex with model, emails show",
+      "snippet": "Ramsey Elkholy introduced the financier to women as young as 18 in correspondence over almost a decade.",
+      "url": "https://www.bbc.com/news/articles/cm2kn7nj00ro?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "How Trump and the oil markets move in sync: a tango in five charts",
+      "snippet": "Oil markets have been sensitive to Donald Trump's comments on the war. But are traders growing less responsive?",
+      "url": "https://www.bbc.com/news/articles/cvgk8zk9epgo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "AmirhosseinHonardoust/Economic-DNA-Repair",
+      "snippet": "A deep research study introducing the concept of Economic DNA Repair for smart contracts, designing self-correcting tokenomics that detect anomalies, repair unstable parameters, rebalance incentives, ",
+      "stars": 18,
+      "url": "https://github.com/AmirhosseinHonardoust/Economic-DNA-Repair",
+      "updated": "2026-02-23",
+      "source": "GitHub"
+    },
+    {
+      "title": "AmirhosseinHonardoust/Pricing-Negotiation-Intelligence",
+      "snippet": "This article reframes pricing as a negotiation rather than a prediction, showing how price emerges from tensions between product reality, market dynamics, and buyer behavior. It introduces negotiation",
+      "stars": 18,
+      "url": "https://github.com/AmirhosseinHonardoust/Pricing-Negotiation-Intelligence",
+      "updated": "2026-02-23",
+      "source": "GitHub"
+    },
+    {
+      "title": "AmirhosseinHonardoust/Workforce-Disruption-Equilibrium-Engine",
+      "snippet": "An interpretable system that models the future of work as an equilibrium under AI-driven forces. Instead of predicting job loss, it decomposes workforce disruption into automation pressure, adaptabili",
+      "stars": 17,
+      "url": "https://github.com/AmirhosseinHonardoust/Workforce-Disruption-Equilibrium-Engine",
+      "updated": "2026-02-23",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [],
+  "web_search": [
+    {
+      "title": "Underemployment, Recessions, and Poverty - Congress.gov",
+      "url": "https://www.congress.gov/crs-product/R46939",
+      "source": "WEB"
+    },
+    {
+      "title": "County-level Data Sets | Economic Research Service - USDA ERS",
+      "url": "https://www.ers.usda.gov/data-products/county-level-data-sets",
+      "source": "WEB"
+    },
+    {
+      "title": "Topics - EPI Data Library",
+      "url": "https://data.epi.org/",
+      "source": "WEB"
+    },
+    {
+      "title": "A profile of the working poor, 2023 - U.S. Bureau of Labor Statistics",
+      "url": "https://www.bls.gov/opub/reports/working-poor/2023/",
+      "source": "WEB"
+    },
+    {
+      "title": "Income &amp; Poverty Data Tables - Census.gov",
+      "url": "https://www.census.gov/topics/income-poverty/data/tables.html",
+      "source": "WEB"
+    }
+  ],
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL"
+}

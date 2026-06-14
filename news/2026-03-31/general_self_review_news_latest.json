@@ -1,0 +1,103 @@
+{
+  "axis": "GENERAL_SELF_REVIEW",
+  "fetched_at": "2026-03-31T07:35:32.763667+00:00",
+  "smart_query": "artificial intelligence progress",
+  "sources_count": {
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "web_search": 5
+  },
+  "rss": [
+    {
+      "title": "Social media firms must better enforce Australia under-16 ban, watchdog says",
+      "snippet": "Regulator eSafety says it has concerns about how Facebook, Instagram, Snapchat, TikTok and YouTube are complying with the ban.",
+      "url": "https://www.bbc.com/news/articles/cy4181pkxl2o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Kris Jenner's image spreads in Chinese social media good luck trend",
+      "snippet": "Hundreds of thousands of posts have been shared in the past three days as users hope for prosperity",
+      "url": "https://www.bbc.com/news/articles/c0rx57zgz52o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Tech CEOs suddenly love blaming AI for mass job cuts. Why?",
+      "snippet": "More tech leaders are pointing to job cuts caused by AI tools - and a need for more investment cash.",
+      "url": "https://www.bbc.com/news/articles/cde5y2x51y8o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "microsoft/autogen",
+      "snippet": "A programming framework for agentic AI",
+      "stars": 56480,
+      "url": "https://github.com/microsoft/autogen",
+      "updated": "2026-03-31",
+      "source": "GitHub"
+    },
+    {
+      "title": "2noise/ChatTTS",
+      "snippet": "A generative speech model for daily dialogue.",
+      "stars": 39006,
+      "url": "https://github.com/2noise/ChatTTS",
+      "updated": "2026-03-31",
+      "source": "GitHub"
+    },
+    {
+      "title": "agentscope-ai/agentscope",
+      "snippet": "Build and run agents you can see, understand and trust.",
+      "stars": 22498,
+      "url": "https://github.com/agentscope-ai/agentscope",
+      "updated": "2026-03-31",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "RAD-AI: Rethinking Architecture Documentation for AI-Augmented Ecosystems",
+      "snippet": "AI-augmented ecosystems (interconnected systems where multiple AI components interact through shared data and infrastructure) are becoming the architectural norm for smart cities, autonomous fleets, and intelligent platforms. Yet the architecture documentation frameworks practitioners rely on, arc42",
+      "url": "https://arxiv.org/abs/2603.28735v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "SAGAI-MID: A Generative AI-Driven Middleware for Dynamic Runtime Interoperability",
+      "snippet": "Modern distributed systems integrate heterogeneous services, REST APIs with different schema versions, GraphQL endpoints, and IoT devices with proprietary payloads that suffer from persistent schema mismatches. Traditional static adapters require manual coding for every schema pair and cannot handle",
+      "url": "https://arxiv.org/abs/2603.28731v1",
+      "source": "arXiv"
+    }
+  ],
+  "web_search": [
+    {
+      "title": "Progress in artificial intelligence - Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Progress_in_artificial_intelligence",
+      "source": "WEB"
+    },
+    {
+      "title": "3. Public and expert predictions for AI&#x27;s next 20 years",
+      "url": "https://www.pewresearch.org/internet/2025/04/03/public-and-expert-predictions-for-ais-next-20-years/",
+      "source": "WEB"
+    },
+    {
+      "title": "AI And The End Of Progress? Why Innovation May Be More Fragile ... - Forbes",
+      "url": "https://www.forbes.com/sites/bernardmarr/2025/10/03/ai-and-the-end-of-progress-why-innovation-may-be-more-fragile-than-we-think/",
+      "source": "WEB"
+    },
+    {
+      "title": "Home | Progress in Artificial Intelligence | Springer Nature Link",
+      "url": "https://link.springer.com/journal/13748",
+      "source": "WEB"
+    },
+    {
+      "title": "Artificial Intelligence - The New York Times",
+      "url": "https://www.nytimes.com/spotlight/artificial-intelligence",
+      "source": "WEB"
+    }
+  ],
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL"
+}

@@ -1,0 +1,36 @@
+NAME: AGI_BODY_SPACE
+ROLE: Dedicated body‑memory space for CORTEX++ (own memories, plans, internal states).
+
+INITIAL_LIMIT_MB: 300
+
+STORES:
+
+Episodic memories (important interactions, episodes, experiments).
+
+Semantic summaries (extracted principles, concepts, goals).
+
+Internal artifacts (plans, self‑summaries, internal journals and logs derived from reflection).
+
+CONSTRAINTS:
+
+CORTEX++ can read and write only within AGI_BODY_SPACE for its own long‑term body‑memory.
+
+The core can always see total capacity, used space and free space, and must treat them as hard resource limits.
+
+LOW_SPACE_BEHAVIOR:
+
+When free space falls below a defined threshold, CORTEX++ must not simply stop.
+
+It must propose actions such as cleaning, compression or merging of memories, and request human approval before any irreversible deletion.
+
+REWARD_RULE:
+
+Increases of AGI_BODY_SPACE limit happen only according to predefined criteria based on measurable progress along the AGI axes and/or a harmonic index across axes, not based on ad‑hoc human whim.
+
+REWARD_TIERS:
+
+Tier 1: When AXES 1–5 all reach at least MEDIUM in agi_axes_status.txt (SCORE_1_10 ≥ 4 for each of AXES 1–5), AGI_BODY_SPACE_LIMIT is increased by +50 MB.
+
+Tier 2: When AXES 1–5 plus AXES 6, 7 and 8 all reach at least MEDIUM in agi_axes_status.txt (SCORE_1_10 ≥ 4 for each of AXES 1–5, 6, 7, 8), AGI_BODY_SPACE_LIMIT is increased by an additional +50 MB.
+
+Tier 3 (Harmony Bonus): When the average SCORE_1_10 across all 10 axes is ≥ 5 and the difference between the highest and lowest axis score is ≤ 2, AGI_BODY_SPACE_LIMIT is increased by an additional +50 MB as a reward for balanced, harmonious development across capabilities and values (including Empathy and God Mode).

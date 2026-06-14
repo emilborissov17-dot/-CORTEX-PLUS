@@ -1,0 +1,129 @@
+{
+  "axis": "DEEP_TIME_RISKS_REVIEW",
+  "domain": "cosmos",
+  "timestamp": "2026-05-04T14:08:43.847595+00:00",
+  "sources_count": 13,
+  "rss_count": 4,
+  "ddg_count": 6,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] Humanity's End: 10 Real Threats to Our Survival - YouTube",
+      "summary": "For the vast span of recorded history, humanity has lived with a fundamental illusion, our permanence. We built civilizations, cured plagues, reached for the moon. We saw ourselves as masters of this tiny blue sphere, resilient forever. We charted the stars, mapped the oceans, and tamed the wilderness. But beneath the veneer of progress, a stark truth whispers, resilience is not immortality. And to the universe, in its indifferent majesty, cares nothing for our aspirations, our dreams, or our very existence. Every species, every civilization, every fleeting moment of consciousness, exists on borrowed time. For us, that time could end not with a whimper, but a bang, or a freeze. Or a slow, agonizing suffocation that strips away everything we call life. This isn't about cultivating fear. It'",
+      "link": "https://www.youtube.com/watch?v=XT7uQ0jXGhw",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "XT7uQ0jXGhw",
+      "transcript_method": "whisper",
+      "transcript_chars": 7891,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] The Biggest Eruptions That Changed Earth Forever - YouTube",
+      "summary": "The Earth is a gigantic ball of semi-multan rock, with a heart of iron as heart is the surface of the sun. Taitenic amounts of heat left over from its birth and the radioactive decay of trillions of tons of radioactive elements find no escape. Butab, currents of rock spanning thousands of kilometers carry this energy to the surface. Earth's crust is the only thing in their way. It feels solid to us, but it's only a fragile barrier, an apple skin, a round of flaming behemoth. True apocalypse can break through, and unleash eruptions tens of times more powerful than all of our nuclear weapons combined, subjecting the climate to centuries' worth of change in a single year, while drowning continents in toxic ash and gases. Super volcanoes. Help it can they get, and will they put an end to human",
+      "link": "https://www.youtube.com/watch?v=fXb02MQ78yQ",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "fXb02MQ78yQ",
+      "transcript_method": "whisper",
+      "transcript_chars": 9213,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Nuclear War vs. Asteroid Strike: Which Apocalypse is Worse?",
+      "summary": "Humanity has long been haunted by visions of its own demise, from ancient myths to modern day movies the end of the world has always been a topic of fascination and fear. We tell stories of plagues, wars, and natural disasters that could wipe us off the face of the earth. These tales serve as both warnings and reflections of our deepest anxieties. But among all these apocalyptic scenarios, two stand out as particularly terrifying, nuclear war, and asteroid impact. These events are not just figments of our imagination, they are grounded in scientific reality. These aren't just fantasies from science fiction, they are real threats that could have devastating consequences for our planet and all life on it. Scientists around the world are constantly monitoring these dangers, trying to predict ",
+      "link": "https://www.youtube.com/watch?v=Tn8ayBQA4Pc",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "Tn8ayBQA4Pc",
+      "transcript_method": "whisper",
+      "transcript_chars": 10350,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "Анализ на DEEP_TIME_RISKS_REVIEW — данни получени но LLM грешка",
+    "root_cause": "LLM parsing грешка",
+    "severity": "UNKNOWN",
+    "leverage_points": [],
+    "proposed_actions": [],
+    "evidence": [
+      "WHO Member States agree to extend negotiations on Pathogen Access and Benefit Sharing annex",
+      "Australia becomes the 30th country to eliminate trachoma as a public health problem",
+      "Efforts to eliminate hepatitis delivers gains but more action needed to meet 2030 targets"
+    ],
+    "generalization": "",
+    "summary": "- WHO Member States agree to extend negotiations on Pathogen Access and Benefit Sharing annex: <p>Member States of the World Health Organization (WHO) have progressed work on the Pathogen Access and B",
+    "risk_level": "UNKNOWN",
+    "trend": "UNKNOWN"
+  },
+  "raw_items": [
+    {
+      "title": "WHO Member States agree to extend negotiations on Pathogen Access and Benefit Sharing annex",
+      "summary": "<p>Member States of the World Health Organization (WHO) have progressed work on the Pathogen Access and Benefit Sharing (PABS) annex, a key part of the WHO Pandemic Agreement, and today agreed additional time was needed to finalize the framework for ensuring a better, more equitable, response to future pandemics.</p><p>Countries today ended the resumed session of the sixth meeting of the Intergovernmental Working Group (IGWG) on the WHO Pandemic Agreement in Geneva, focused on the PABS system. T",
+      "link": "https://www.who.int/news/item/01-05-2026-who-member-states-agree-to-extend-negotiations-on-pathogen-access-and-benefit-sharing-annex",
+      "published": "Fri, 01 May 2026 16:52:42 Z",
+      "source_type": "rss"
+    },
+    {
+      "title": "Australia becomes the 30th country to eliminate trachoma as a public health problem",
+      "summary": "The World Health Organization (WHO) has validated Australia for eliminating trachoma as a public health problem, marking a significant milestone in the health of indigenous peoples and in global efforts to combat neglected tropical diseases (NTDs). Trachoma, the world’s leading infectious cause of blindness, no longer represents a public health problem in the country.",
+      "link": "https://www.who.int/news/item/29-04-2026-australia-becomes-the-30th-country-to-eliminate-trachoma-as-a-public-health-problem",
+      "published": "Wed, 29 Apr 2026 06:10:07 Z",
+      "source_type": "rss"
+    },
+    {
+      "title": "Efforts to eliminate hepatitis delivers gains but more action needed to meet 2030 targets",
+      "summary": "<p>Global efforts to combat viral hepatitis are delivering measurable progress in reducing infections and deaths, but the disease remains a major global health challenge, according to a new World Health Organization (WHO) <a href=\"https://www.who.int/publications/i/item/9789240122383\">report</a> released today at the World Hepatitis Summit.</p><p>Viral hepatitis B and C &ndash; the two infections responsible for 95% of hepatitis-related deaths worldwide &ndash; claimed 1.34&nbsp;million lives in",
+      "link": "https://www.who.int/news/item/28-04-2026-efforts-to-eliminate-hepatitis-delivers-gains-but-more-action-needed-to-meet-2030-targets",
+      "published": "Tue, 28 Apr 2026 05:37:30 Z",
+      "source_type": "rss"
+    },
+    {
+      "title": "Practicing today for tomorrow’s emergencies – WHO convenes countries and partners to simulate response to major disease outbreak",
+      "summary": "<p>The World Health Organization (WHO) wrapped up Exercise Polaris II, a 2-day high-level simulation exercise, based around an outbreak of a fictional new bacterium spreading across the world. Bringing together 26 countries and territories, 600 health emergency experts and over 25 partners, the exercise, which took place on 22 and 23 April, allowed countries to test their preparedness for pandemics and other major health emergencies, including activating their emergency workforce structures, inf",
+      "link": "https://www.who.int/news/item/27-04-2026-practicing-today-for-tomorrow-s-emergencies-who-convenes-countries-and-partners-to-simulate-response-to-major-disease-outbreak",
+      "published": "Mon, 27 Apr 2026 13:12:09 Z",
+      "source_type": "rss"
+    },
+    {
+      "title": "Asteroid impact",
+      "summary": "An impact event is a collision between astronomical objects causing measurable effects. Impact events have been found to regularly occur in planetary systems, though the most frequent involve asteroids, comets or meteoroids and have minimal effect. When large objects impact terrestrial planets such as the Earth, there can be significant physical and biospheric consequences, as the impacting body i",
+      "link": "https://en.wikipedia.org/wiki/Asteroid_impact",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Impact event - Wikipedia",
+      "summary": "2 weeks ago - An impact event is a collision between astronomical objects causing measurable effects. Impact events have been found to regularly occur in planetary systems, though the most frequent involve asteroids, comets or meteoroids and have minimal effect.",
+      "link": "https://en.wikipedia.org/wiki/Impact_event",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Asteroid impact prediction - Wikipedia",
+      "summary": "1 week ago - Asteroid impact prediction is the prediction of the dates and times of asteroids impacting Earth, along with the locations and severities of the impacts. The process of impact prediction follows three major steps: Discovery of an asteroid and initial assessment of its orbit which is generally ...",
+      "link": "https://en.wikipedia.org/wiki/Asteroid_impact_prediction",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Pandemic Response Accountability Committee",
+      "summary": "The Pandemic Response Accountability Committee (PRAC) is an independent oversight committee within the Council of the Inspectors General on Integrity and Efficiency, created by the Coronavirus Aid, Relief, and Economic Security (CARES) Act of 2020 to ensure that the $2.2 trillion of the CARES act, plus 5 other pandemic-related pieces of legislation totaling over $5 trillion in government funds, we",
+      "link": "https://en.wikipedia.org/wiki/Pandemic_Response_Accountability_Committee",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Tool for Influenza Pandemic Risk Assessment",
+      "summary": "The Tool for Influenza Pandemic Risk Assessment (TIPRA) is a standardized framework developed by the World Health Organization (WHO) to evaluate the pandemic potential of influenza A viruses, focusing on their ability to acquire sustained human-to-h…",
+      "link": "https://grokipedia.com/page/tool_for_influenza_pandemic_risk_assessment",
+      "source_type": "ddg"
+    },
+    {
+      "title": "The effect of the definition of ‘pandemic’ on quantitative assessments of infectious disease outbreak risk | Scientific Reports",
+      "summary": "January 28, 2021 - In the early stages of an outbreak, the term ‘pandemic’ can be used to communicate about infectious disease risk, particularly by those who wish to encourage a large-scale public health response.",
+      "link": "https://www.nature.com/articles/s41598-021-81814-3",
+      "source_type": "ddg"
+    }
+  ]
+}

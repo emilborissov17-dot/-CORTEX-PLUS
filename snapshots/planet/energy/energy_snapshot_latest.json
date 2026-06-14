@@ -1,0 +1,19 @@
+{
+  "axis": "ENERGY_REVIEW",
+  "timestamp": "2026-06-11T19:06:09.959692+00:00",
+  "level": "MEDIUM",
+  "signals": [],
+  "key_metrics": [],
+  "model": "QWEN_PLANET_SNAPSHOT_AGENT",
+  "source_type": "REAL_DATA",
+  "metrics": {
+    "renewable_energy_pct": 19.7355641050053,
+    "energy_intensity_per_gdp": 4.54728002400977,
+    "co2_emissions_per_capita": null,
+    "access_to_electricity_pct": 91.5991774421991,
+    "fossil_fuel_consumption_pct": 74.8319994480172,
+    "energy_use_per_capita_kg": 1866.16463634635
+  },
+  "data_quality": "5/6 indicators fetched",
+  "fetched_date": "2026-06-11"
+}

@@ -1,0 +1,109 @@
+{
+  "axis": "ECOSYSTEMS_BIODIVERSITY_REVIEW",
+  "fetched_at": "2026-04-03T14:13:42.064074+00:00",
+  "smart_query": "biodiversity species extinction",
+  "sources_count": {
+    "rss": 3,
+    "gdelt": 3,
+    "arxiv": 0,
+    "github": 3,
+    "web_search": 5
+  },
+  "rss": [
+    {
+      "title": "Strange “elephant skin” rocks reveal ancient life in the dark ocean",
+      "snippet": "A puzzling wrinkled rock formation in Morocco has led scientists to rethink where ancient microbes could live. Instead of shallow, sunlit waters, these microbes may have thrived deep in the ocean, fueled by chemicals delivered by underwater landslides. The discovery suggests that dark, nutrient-rich",
+      "url": "https://www.sciencedaily.com/releases/2026/04/260402042807.htm",
+      "source": "RSS"
+    },
+    {
+      "title": "How squid survived Earth’s biggest extinction and took over the oceans",
+      "snippet": "Scientists have finally cracked a long-standing mystery about squid and cuttlefish evolution by analyzing newly sequenced genomes alongside global datasets. The research reveals that these bizarre, intelligent creatures likely originated deep in the ocean over 100 million years ago, surviving mass e",
+      "url": "https://www.sciencedaily.com/releases/2026/03/260331001100.htm",
+      "source": "RSS"
+    },
+    {
+      "title": "Freshwater fish populations plunge 81% as river migrations collapse",
+      "snippet": "A sweeping global report finds that migratory freshwater fish are in steep decline, with populations down roughly 81% since 1970. These species depend on long, connected rivers, but dams and human pressures are cutting off their routes. Hundreds of species now need coordinated international protecti",
+      "url": "https://www.sciencedaily.com/releases/2026/03/260326064157.htm",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [
+    {
+      "title": "Royal Society study finds no evidence of climate - driven mass EXTINCTION in the past 200 years – NaturalNews . com",
+      "snippet": "Royal Society study finds no evidence of climate - driven mass EXTINCTION in the past 200 years – NaturalNews . com",
+      "url": "https://www.naturalnews.com/2026-01-25-study-no-evidence-climate-driven-mass-extinction.html",
+      "source": "naturalnews.com"
+    },
+    {
+      "title": "World Wildlife Day 2026 : How Losing Just One Species Can Trigger Ecosystem Collapse",
+      "snippet": "World Wildlife Day 2026 : How Losing Just One Species Can Trigger Ecosystem Collapse",
+      "url": "https://www.yahoo.com/news/articles/world-wildlife-day-2026-losing-143200729.html",
+      "source": "yahoo.com"
+    },
+    {
+      "title": "Revelan cómo una extinción masiva favoreció la evolución de antepasados de tiburones y humanos",
+      "snippet": "Revelan cómo una extinción masiva favoreció la evolución de antepasados de tiburones y humanos",
+      "url": "https://www.infobae.com/america/ciencia-america/2026/01/12/revelan-como-una-extincion-masiva-favorecio-la-evolucion-de-antepasados-de-tiburones-y-humanos/",
+      "source": "infobae.com"
+    }
+  ],
+  "github_repos": [
+    {
+      "title": "protontypes/open-sustainable-technology",
+      "snippet": "A directory and analysis of the open source ecosystem in the areas of climate change, sustainable energy, biodiversity and natural resources.  https://docs.getgrist.com/gSscJkc5Rb1R/OpenSustaintech",
+      "stars": 2476,
+      "url": "https://github.com/protontypes/open-sustainable-technology",
+      "updated": "2026-04-03",
+      "source": "GitHub"
+    },
+    {
+      "title": "treflehq/trefle-api",
+      "snippet": "🍀 Trefle is a botanical JSON REST API for plants species, allowing you to search and query over all the registered species, and build the next gardening apps and farming robots.",
+      "stars": 570,
+      "url": "https://github.com/treflehq/trefle-api",
+      "updated": "2026-03-26",
+      "source": "GitHub"
+    },
+    {
+      "title": "blutjens/awesome-forests",
+      "snippet": "🌳 A curated list of ground-truth forest datasets for the machine learning and forestry community.",
+      "stars": 362,
+      "url": "https://github.com/blutjens/awesome-forests",
+      "updated": "2026-03-26",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [],
+  "web_search": [
+    {
+      "title": "How many species are we losing? | WWF",
+      "url": "https://wwf.panda.org/discover/our_focus/biodiversity/biodiversity/",
+      "source": "WEB"
+    },
+    {
+      "title": "The biodiversity of species and their rates of extinction, distribution ...",
+      "url": "https://www.science.org/doi/10.1126/science.1246752",
+      "source": "WEB"
+    },
+    {
+      "title": "Unpacking the extinction crisis: rates, patterns and causes of recent ...",
+      "url": "https://royalsocietypublishing.org/rspb/article/292/2057/20251717/234788/Unpacking-the-extinction-crisis-rates-patterns-and",
+      "source": "WEB"
+    },
+    {
+      "title": "Past and future decline and extinction of species - Royal Society",
+      "url": "https://royalsociety.org/news-resources/projects/biodiversity/decline-and-extinction/",
+      "source": "WEB"
+    },
+    {
+      "title": "Biodiversity - World Health Organization (WHO)",
+      "url": "https://www.who.int/news-room/fact-sheets/detail/biodiversity",
+      "source": "WEB"
+    }
+  ],
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL"
+}

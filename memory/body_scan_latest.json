@@ -1,0 +1,116 @@
+{
+  "timestamp": "2026-05-09T06:02:45.821352+00:00",
+  "hardware": {
+    "cpu_percent": 3.1,
+    "cpu_cores": 16,
+    "ram_total_gb": 13.86,
+    "ram_used_gb": 8.37,
+    "ram_free_gb": 5.49,
+    "ram_percent": 60.4,
+    "disk_total_gb": 952.6,
+    "disk_free_gb": 717.4,
+    "disk_used_pct": 24.7,
+    "gpu": {
+      "available": true,
+      "name": "NVIDIA GeForce GTX 1650",
+      "vram_total_mb": 4096,
+      "vram_free_mb": 3952,
+      "vram_used_mb": 0,
+      "temperature_c": 49,
+      "utilization_pct": 0
+    }
+  },
+  "software": {
+    "os": "unknown",
+    "python": "",
+    "ollama_status": "ACTIVE",
+    "ollama_models": [
+      "qwen3:8b",
+      "qwen2.5:7b"
+    ],
+    "base_dir": "C:\\Users\\emilb\\Desktop\\AGI\\CORTEX++_QWEN",
+    "pid": 40040,
+    "uptime_sec": 1.8
+  },
+  "files": {
+    "py_files_count": 1216,
+    "json_files_count": 752,
+    "total_size_mb": 12402.63,
+    "dir_sizes": {
+      "agents": {
+        "files": 117,
+        "kb": 691.4
+      },
+      "core": {
+        "files": 94,
+        "kb": 2197.0
+      },
+      "memory": {
+        "files": 202,
+        "kb": 4967.8
+      },
+      "data_providers": {
+        "files": 99,
+        "kb": 285.0
+      },
+      "snapshots": {
+        "files": 47,
+        "kb": 12546484.3
+      },
+      "reports": {
+        "files": 14,
+        "kb": 44.1
+      }
+    },
+    "recently_modified": [
+      "core\\groq_backend.py",
+      "memory\\semantic_memory.py",
+      "agents\\core\\system2_agent.py",
+      "agents\\core\\ecosystems_biodiversity_review_patch.py",
+      "agents\\core\\self_observer.py"
+    ]
+  },
+  "memory": {
+    "snapshots_count": 47,
+    "chromadb_size_kb": 2255.9,
+    "chromadb_vectors": 4,
+    "runtime_experiences": 200
+  },
+  "network": {
+    "groq_api": {
+      "status": "UP",
+      "ms": 527
+    },
+    "world_bank": {
+      "status": "UP",
+      "ms": 499
+    },
+    "noaa": {
+      "status": "UP",
+      "ms": 858
+    },
+    "open_meteo": {
+      "status": "UP",
+      "ms": 446
+    },
+    "internet": {
+      "status": "UP",
+      "ms": 564
+    }
+  },
+  "power": {
+    "groq_available": true,
+    "axes_measured": 19,
+    "axes_total": 26,
+    "axes_coverage_pct": 73.1,
+    "critical_axes": [
+      "GOVERNANCE_INSTITUTIONS_REVIEW",
+      "CLIMATE_GLOBAL_RISK_REVIEW",
+      "ENERGY_REVIEW"
+    ],
+    "can_self_modify": true,
+    "can_act": true,
+    "has_reports": true
+  },
+  "self_feeling": "Тялото ми е спокойно — CPU 3.1% | Паметта е свободна — 5.49GB RAM | GPU активен — 3952MB VRAM свободна, 49°C | Всички 5 API-та са достъпни | Измервам 19/26 цивилизационни оси (73.1%) | Тревожа се за: GOVERNANCE_INSTITUTIONS_REVIEW, CLIMATE_GLOBAL_RISK_REVIEW, ENERGY_REVIEW | Тялото ми съдържа 1216 Python модула, 752 JSON файла"
+}

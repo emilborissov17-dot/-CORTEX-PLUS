@@ -1,0 +1,90 @@
+{
+  "axis": "INFRASTRUCTURE_CITIES_REVIEW",
+  "fetched_at": "2026-04-03T14:19:17.397801+00:00",
+  "smart_query": "cities infrastructure urban development",
+  "sources_count": {
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 0,
+    "github": 3,
+    "web_search": 5
+  },
+  "rss": [
+    {
+      "title": "Fewer UK adults posting on social media, Ofcom finds",
+      "snippet": "Some experts believe it highlights a social media shift as platforms boost short video.",
+      "url": "https://www.bbc.com/news/articles/cgqk718l4neo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Elon Musk's SpaceX set to be worth $1 trillion with planned public listing",
+      "snippet": "The company’s public stock debut is set to be one of the most valuable in history, and could make Musk the world's first trillionaire.",
+      "url": "https://www.bbc.com/news/articles/c2k35lg92dpo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Peppa Pig and Transformers owner Hasbro hit by cyber-attack",
+      "snippet": "The firm says its operations remain open but says the hack \"may result in some delays\". ",
+      "url": "https://www.bbc.com/news/articles/cx24e1nryn9o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "opendatacam/opendatacam",
+      "snippet": "An open source tool to quantify the world",
+      "stars": 1707,
+      "url": "https://github.com/opendatacam/opendatacam",
+      "updated": "2026-04-02",
+      "source": "GitHub"
+    },
+    {
+      "title": "buds-lab/building-data-genome-project-2",
+      "snippet": "Whole building non-residential hourly energy meter data from the Great Energy Predictor III competition",
+      "stars": 274,
+      "url": "https://github.com/buds-lab/building-data-genome-project-2",
+      "updated": "2026-03-28",
+      "source": "GitHub"
+    },
+    {
+      "title": "OpenVisualCloud/Smart-City-Sample",
+      "snippet": "The smart city reference pipeline shows how to integrate various media building blocks, with analytics powered by the OpenVINO™ Toolkit, for traffic or stadium sensing, analytics and management tasks.",
+      "stars": 216,
+      "url": "https://github.com/OpenVisualCloud/Smart-City-Sample",
+      "updated": "2026-03-29",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [],
+  "web_search": [
+    {
+      "title": "Designing for What Comes Next: How Cities Are Rewriting the Rules of ...",
+      "url": "https://urbanland.uli.org/design-planning/designing-for-what-comes-next-how-cities-are-rewriting-the-rules-of-urban-development",
+      "source": "WEB"
+    },
+    {
+      "title": "Building Smart Cities and Infrastructure - CWRU Online Engineering",
+      "url": "https://online-engineering.case.edu/blog/building-smart-cities-and-infrastructure",
+      "source": "WEB"
+    },
+    {
+      "title": "Urban Development - World Bank Group",
+      "url": "https://www.worldbank.org/ext/en/topic/urban-development",
+      "source": "WEB"
+    },
+    {
+      "title": "Urbanization and sustainable cities development: A critical examination",
+      "url": "https://www.developmentaid.org/news-stream/post/186952/urbanization-and-sustainable-cities-development",
+      "source": "WEB"
+    },
+    {
+      "title": "Cities are tackling urbanization challenges with bold regeneration",
+      "url": "https://www.weforum.org/stories/2025/01/cities-tackling-urban-challenges-bold-regeneration/",
+      "source": "WEB"
+    }
+  ],
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL"
+}

@@ -1,0 +1,38 @@
+{
+  "axis": "MATERIALS_WASTE_REVIEW",
+  "fetched_at": "2026-05-08T09:08:00.861246+00:00",
+  "smart_query": "plastic waste pollution recycling",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 0,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [],
+  "gdelt": [],
+  "github_repos": [],
+  "arxiv_papers": [
+    {
+      "title": "Deterministic positioning of circular Bragg gratings using atomic force lithography for high-performance quantum dot light sources",
+      "snippet": "Semiconductor quantum dots (QDs) grown by molecular beam epitaxy are excellent quantum emitters, but their random spatial distribution hinders deterministic coupling to optical microcavities. We demonstrate a room-temperature atomic force microscopy (AFM)-assisted nano-oxidation lithography techniqu",
+      "url": "https://arxiv.org/abs/2605.03672v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "A step-by-step workflow to extract the genuine circular dichroism of thin films",
+      "snippet": "Circular Dichroism (CD) spectroscopy has evolved from a purely solution based method towards a powerful tool in the analysis of chiral thin films. Although a straightforward technique, the genuine CD signal is often accompanied by artifacts arising from optical anisotropy and instrumental imperfecti",
+      "url": "https://arxiv.org/abs/2604.24653v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[FLI’s President and CEO on Trump’s support for an AI ‘kill switch’] President Trump said during an interview aired yesterday by Fox Business that &#8220;there should be&#8221; when asked if AI needs [&#8230;]",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

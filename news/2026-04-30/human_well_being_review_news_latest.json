@@ -1,0 +1,76 @@
+{
+  "axis": "HUMAN_WELL_BEING_REVIEW",
+  "fetched_at": "2026-04-30T08:30:26.882398+00:00",
+  "smart_query": "mental health wellbeing global",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 3,
+    "arxiv": 2,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "'Amazing' moment for communities given right to buy for the first time",
+      "snippet": "Ministers say the new law in England gives power to local people who want to help others. ",
+      "url": "https://www.bbc.com/news/articles/clypwyzk71po?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Women can wait years for an endometriosis diagnosis. New tech could change that",
+      "snippet": "A new scan technique could spot areas of endometriosis missed by conventional scans, scientists say.",
+      "url": "https://www.bbc.com/news/articles/clyplwvgxjvo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Claimants in Johnson & Johnson talcum powder case rise to 7,000",
+      "snippet": "The case, which opened in the High Court on Wednesday, originally involved 3,000 claimants and is set to become the largest product liability case in UK history.",
+      "url": "https://www.bbc.com/news/articles/c4g05q08y02o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [
+    {
+      "title": "Manulife Partners with Mind HK to Establish New Wellbeing Consultation Hub in Mong Kok",
+      "snippet": "Manulife Partners with Mind HK to Establish New Wellbeing Consultation Hub in Mong Kok",
+      "url": "https://portal.sina.com.hk/finance/finance-prnewswire/prnasia/2026/04/09/1680884/manulife-partners-with-mind-hk-to-establish-new-wellbeing-consultation-hub-in-mong-kok/",
+      "source": "portal.sina.com.hk"
+    },
+    {
+      "title": "What is mental wellbeing , really ? New study offers a clear answer",
+      "snippet": "What is mental wellbeing , really ? New study offers a clear answer",
+      "url": "https://www.thenews.com.pk/latest/1398536-is-mental-wellbeing-finally-defined-study-offers-new-answer",
+      "source": "thenews.com.pk"
+    },
+    {
+      "title": "Enlight Fellowship for Youth Mental Wellbeing Leaders",
+      "snippet": "Enlight Fellowship for Youth Mental Wellbeing Leaders",
+      "url": "https://www2.fundsforngos.org/innovation/enlight-fellowship-for-youth-mental-wellbeing-leaders/",
+      "source": "fundsforngos.org"
+    }
+  ],
+  "github_repos": [],
+  "arxiv_papers": [
+    {
+      "title": "Global stability of a Hebbian/anti-Hebbian network for principal subspace learning",
+      "snippet": "Biological neural networks self-organize according to local synaptic modifications to produce stable computations. How modifications at the synaptic level give rise to such computations at the network level remains an open question. Pehlevan et al. [Neur. Comp. 27 (2015), 1461--1495] proposed a mode",
+      "url": "https://arxiv.org/abs/2601.13170v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "On graphical domination for threshold-linear networks with recurrent excitation and global inhibition",
+      "snippet": "Graphical domination was first introduced in [1] in the context of combinatorial threshold-linear networks (CTLNs). There it was shown that when a domination relationship exists between a pair of vertices in a graph, certain fixed points in the corresponding CTLN can be ruled out. Here we prove two ",
+      "url": "https://arxiv.org/abs/2510.05098v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[Male Roles, Obligations and Options for Building a Fulfilling Life | Scott Galloway] Scott Galloway is a professor of marketing at New York University's Stern School of Business. We discuss masculine roles and obligations of past, present and future. We explore which are timeless and which are changing, and positive steps boys and men can take to create meaning and stability in their lives. We cover work, finances, health and relationships to build a grounded, purposeful life. We ",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

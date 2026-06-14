@@ -1,0 +1,49 @@
+{
+  "axis": "GOAL_PROGRESS_REVIEW",
+  "domain": "cosmos",
+  "timestamp": "2026-05-08T10:25:24.150055+00:00",
+  "sources_count": 3,
+  "rss_count": 3,
+  "ddg_count": 0,
+  "youtube_count": 0,
+  "youtube_items": [],
+  "analysis": {
+    "problem": "Анализ на GOAL_PROGRESS_REVIEW — данни получени но LLM грешка",
+    "root_cause": "LLM parsing грешка",
+    "severity": "UNKNOWN",
+    "leverage_points": [],
+    "proposed_actions": [],
+    "evidence": [
+      "Press Release | United Nations proposes new global dashboard to measure progress beyond GDP",
+      "Media Advisory | New UN report urges accelerated forest action before 2030",
+      "Hello world!"
+    ],
+    "generalization": "",
+    "summary": "- Press Release | United Nations proposes new global dashboard to measure progress beyond GDP: <p>Press release United Nations proposes new global dashboard to measure progress beyond GDP Secretary-Ge",
+    "risk_level": "UNKNOWN",
+    "trend": "UNKNOWN"
+  },
+  "raw_items": [
+    {
+      "title": "Press Release | United Nations proposes new global dashboard to measure progress beyond GDP",
+      "summary": "<p>Press release United Nations proposes new global dashboard to measure progress beyond GDP Secretary-General’s High-Level Expert Group sets out a set of indicators to put people and planet at the centre of decision-making New York, 7 May 2026 — The UN Secretary-General’s Independent High-Level Expert Group on Beyond GDP today released a report proposing the  [...]</p>\n<p>The post <a href=\"https://www.un.org/sustainabledevelopment/blog/2026/05/press-release-united-nations-proposes-new-global-da",
+      "link": "https://www.un.org/sustainabledevelopment/blog/2026/05/press-release-united-nations-proposes-new-global-dashboard-to-measure-progress-beyond-gdp/",
+      "published": "Thu, 07 May 2026 19:00:17 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Media Advisory | New UN report urges accelerated forest action before 2030",
+      "summary": "<p>The post <a href=\"https://www.un.org/sustainabledevelopment/blog/2026/05/media-advisory-new-un-report-urges-accelerated-forest-action-before-2030/\">Media Advisory | New UN report urges accelerated forest action before 2030</a> appeared first on <a href=\"https://www.un.org/sustainabledevelopment\">United Nations Sustainable Development</a>.</p>",
+      "link": "https://www.un.org/sustainabledevelopment/blog/2026/05/media-advisory-new-un-report-urges-accelerated-forest-action-before-2030/",
+      "published": "Thu, 07 May 2026 18:03:58 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Hello world!",
+      "summary": "Welcome to WordPress. This is your first post. Edit or delete it, then start writing!",
+      "link": "https://sdg.iisd.org/hello-world/",
+      "published": "Thu, 18 May 2023 15:00:19 +0000",
+      "source_type": "rss"
+    }
+  ]
+}

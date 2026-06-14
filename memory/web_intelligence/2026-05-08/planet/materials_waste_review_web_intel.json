@@ -1,0 +1,153 @@
+{
+  "axis": "MATERIALS_WASTE_REVIEW",
+  "domain": "planet",
+  "timestamp": "2026-05-08T09:41:46.552481+00:00",
+  "sources_count": 11,
+  "rss_count": 4,
+  "ddg_count": 4,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] Tackling Plastic Pollution Through The Circular Economy - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] How can we combat the growing issue of plastic pollution? The hashtag#circulareconomy offers a solution in which plastic is designed to be reused, recycled, ... Published May 21, 2024 Views 191",
+      "link": "https://www.youtube.com/watch?v=-OxI_Cth5fs",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "-OxI_Cth5fs",
+      "transcript_method": "description",
+      "transcript_chars": 216,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Ending Trash Pollution by Reusing all Materials in a Circular ...",
+      "summary": "California has a trash problem even after recycling billions of products we still throw out 40 million tons of garbage a year turning limited materials into pollution that piles up in landfills and in our streets rivers and ocean the solution is to stop treating our waste like trash as our population grows we can keep our convenient lives by reusing materials in a circular economy cutting plastic pollution by having industry use less plastic and recycle the rest there's about 1.3 1.4 million pounds of trash in this yard that would have ended up in our landfill it's going to become products adding Wine and Liquor to the Redemption program to reuse more glass one of the great things about glass is it's 100% infinitely recyclable cutting climate pollution from rotting food and yard waste by t",
+      "link": "https://www.youtube.com/watch?v=uW8ed5xBlEo",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "uW8ed5xBlEo",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 1056,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] What’s next for the plastics industry? - YouTube",
+      "summary": "You need to focus, right? If if [music] you if you want to implement, you need to focus. One company can't move the mark by themselves. &gt;&gt; This is why [music] it is a system solution to deal with that. &gt;&gt; We need to again work differently and be able to leverage one another's strengths. &gt;&gt; That makes me really optimistic about what we can achieve in [music] the next 5 years. Welcome to the Circular Economy Show. I'm your host, Finn, and in today's episode, we'll be discussing the Ella MacArthur Foundation's bold new action plan to tackle the plastics crisis over the next 5 years. I was lucky enough to visit one of the foundation's plastics workshops last year in Barcelona, where leading businesses in the plastics and packaging value chain joined us to dive into the 2030 p",
+      "link": "https://www.youtube.com/watch?v=1vv8tifZIlc",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "1vv8tifZIlc",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "Намерило се е, че 19-23 милиона тона отпадъци от пластика навлизат в акватичните екосистеми всяка година",
+    "root_cause": "Отсъствието на ефективни системы за рециклиране и управление на отпадъците, както и незнанието на जनतата относно важността на разделянето на отпадъците",
+    "severity": "HIGH",
+    "leverage_points": [
+      "Правителствените политики и регулации относно управлението на отпадъците и рециклирането",
+      "Образованието и осведомеността на потребителите относно важността на разделянето и рециклирането на отпадъците"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Изработване на комплексни програми за образование и осведоменост на обществеността относно важността на разделянето и рециклирането на отпадъците",
+        "measurable_goal": "Увеличение на процента на разделени и рециклирани отпадъци с 20% в рамките на следващите 2 години",
+        "timeframe": "средносрочно"
+      },
+      {
+        "action": "Разработване на нови технологии и инфрастуктура за рециклиране на пластмаси",
+        "measurable_goal": "Увеличение на капацитета за рециклиране на пластмаси с 30% в рамките на следващите 5 години",
+        "timeframe": "дългосрочно"
+      }
+    ],
+    "evidence": [
+      "Every year 19-23 million tonnes of plastic waste leaks into aquatic ecosystems, polluting lakes, rivers and seas",
+      "California has a trash problem even after recycling billions of products we still throw out 40 million tons of garbage a year"
+    ],
+    "generalization": "Проблемът със захващането на пластмаси в акватичните екосистеми е свързан с домейна 'човек' и 'цивилизация', тъй като отразява начина, по който хората отращат, използват и рециклират материали",
+    "summary": "Намерило се е, че огромни количества пластмаси навлизат в акватичните екосистеми всяка година, което представлява сериозен проблем за околната среда и човешкото здраве. Необходимо е да се разработят комплексни програми за образование и осведоменост на обществеността, както и да се разработват нови технологии и инфрастуктура за рециклиране на пластмаси.",
+    "risk_level": "HIGH"
+  },
+  "raw_items": [
+    {
+      "title": "CARE Names 2025 Person, Recycler of the Year: Champions of Progress in the Carpet Recycling Industry",
+      "summary": "CARE announced winners of the Person and Recycler of the Year Awards for 2025 on May 5th in conjunction with the organization’s 24th Annual Conference in Chattanooga, Tennessee. The 2025 Person of the Year is David Bender, CEO of Circular Polymers by Ascend in Lincoln, California. The 2025 Recycler of the Year is California carpet manufacturer Bentley Mills. In addition, a Special Recognition Award went to Doug Mancosh, CEO of RISE Composite Technologies (now RISE® by CertainTeed).",
+      "link": "https://www.waste360.com/industry-insights/care-names-2025-person-recycler-of-the-year-champions-of-progress-in-the-carpet-recycling-industry",
+      "published": "Thu, 07 May 2026 03:09:49 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "What Does Sustainability Look Like at Chick-fil-A?",
+      "summary": "Chick-fil-A has exceeded its sustainability goals, reaching its original 2025 target of diverting 25 million pounds of food waste early.  All total, the 3,000-plus store chain has kept over 59 million pounds of food waste out of landfills since 2020.",
+      "link": "https://www.waste360.com/industry-insights/what-does-sustainability-look-like-at-chick-fil-a-",
+      "published": "Thu, 07 May 2026 02:59:53 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "WRA Urges Waste Wood Segregation to Boost Recycling Rates",
+      "summary": "The Wood Recyclers' Association (WRA) is calling on waste producers to segregate waste wood at source, warning that contamination is limiting recycling potential and narrowing offtake options.",
+      "link": "https://www.waste360.com/waste-recycling/wra-urges-waste-wood-segregation-to-boost-recycling-rates",
+      "published": "Thu, 07 May 2026 02:56:23 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Environmental Advocates to Challenge Plastics Regulations in Court",
+      "summary": "CalRecycle, the state agency charged with protecting public health and the environment by reducing plastic pollution and increasing recycling, finalized weakened regulations for the state’s landmark packaging law, creating giant loopholes that undermine the law’s recycling and plastic reduction goals. Environmental groups plan to challenge the regulations.",
+      "link": "https://www.waste360.com/industry-insights/environmental-advocates-to-challenge-plastics-regulations-in-court",
+      "published": "Thu, 07 May 2026 02:50:04 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Plastic pollution",
+      "summary": "Plastic pollution is the accumulation of plastic objects and particles (e.g. plastic bottles, bags and microbeads) in the Earth's environment that adversely affects humans, wildlife and their habitat. Plastics that act as pollutants are categorized by size into micro-, meso-, or macro debris. Plastics are inexpensive and durable, making them very adaptable for different uses; as a result, manufact",
+      "link": "https://en.wikipedia.org/wiki/Plastic_pollution",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Plastic Pollution",
+      "summary": "Every day, the equivalent of 2,000 ... pollution is a global problem. Every year 19-23 million tonnes of plastic waste leaks into aquatic ecosystems, polluting lakes, rivers and seas....",
+      "link": "https://www.unep.org/plastic-pollution",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Recycling",
+      "summary": "Recycling is the process of converting waste materials into new materials and objects. This concept often includes the recovery of energy from waste materials. The recyclability of a material depends on its ability to reacquire the properties it had in its original state. It is an alternative to \"conventional\" waste disposal that can save material and help lower greenhouse gas emissions. It can al",
+      "link": "https://en.wikipedia.org/wiki/Recycling",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Find and save ideas about recycling for beginners on Pinterest.",
+      "summary": "easy recycled crafts. earth day recycling. recycling ideas for school projects. When autocomplete results are available use up and down arrows to review and enter to select.",
+      "link": "https://www.pinterest.com/ideas/recycling-for-beginners/895360181701/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "[YT] Tackling Plastic Pollution Through The Circular Economy - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] How can we combat the growing issue of plastic pollution? The hashtag#circulareconomy offers a solution in which plastic is designed to be reused, recycled, ... Published May 21, 2024 Views 191",
+      "link": "https://www.youtube.com/watch?v=-OxI_Cth5fs",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "-OxI_Cth5fs",
+      "transcript_method": "description",
+      "transcript_chars": 216,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Ending Trash Pollution by Reusing all Materials in a Circular ...",
+      "summary": "California has a trash problem even after recycling billions of products we still throw out 40 million tons of garbage a year turning limited materials into pollution that piles up in landfills and in our streets rivers and ocean the solution is to stop treating our waste like trash as our population grows we can keep our convenient lives by reusing materials in a circular economy cutting plastic pollution by having industry use less plastic and recycle the rest there's about 1.3 1.4 million pounds of trash in this yard that would have ended up in our landfill it's going to become products adding Wine and Liquor to the Redemption program to reuse more glass one of the great things about glass is it's 100% infinitely recyclable cutting climate pollution from rotting food and yard waste by t",
+      "link": "https://www.youtube.com/watch?v=uW8ed5xBlEo",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "uW8ed5xBlEo",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 1056,
+      "has_full_transcript": true
+    }
+  ]
+}

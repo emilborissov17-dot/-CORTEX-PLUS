@@ -1,0 +1,82 @@
+{
+  "axis": "GOVERNANCE_INSTITUTIONS_REVIEW",
+  "fetched_at": "2026-03-14T07:12:51.608665+00:00",
+  "smart_query": "government corruption institutions",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "Venezuela’s repressive State apparatus ‘intact’ despite leadership change",
+      "snippet": "Venezuela’s repressive State apparatus remains operational despite the seizure of former President Nicolás Maduro by United States forces on 3 January, according to independent UN human rights investigators.",
+      "url": "https://news.un.org/feed/view/en/story/2026/03/1167126",
+      "source": "RSS"
+    },
+    {
+      "title": "Russia deportation of Ukraine children is crime against humanity: independent probe",
+      "snippet": "Scores of Ukrainian children are still missing after being deported far and wide across Russia and occupied territories while their families continue to search for them, human rights investigators said on Thursday.",
+      "url": "https://news.un.org/feed/view/en/story/2026/03/1167122",
+      "source": "RSS"
+    },
+    {
+      "title": "Nicaragua: Rights experts uncover State corruption fuelling repression, spying on exiles",
+      "snippet": "Nicaragua’s Government is financing the repression of its opponents through illegal misuse of public funds and targeting exiles through a transnational surveillance and intelligence network, the UN Group of Independent Human Rights Experts on Nicaragua warned in its latest report on Tuesday.",
+      "url": "https://news.un.org/feed/view/en/story/2026/03/1167108",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "github/government.github.com",
+      "snippet": "Gather, curate, and feature stories of public servants and civic hackers using GitHub as part of their open government innovations",
+      "stars": 1915,
+      "url": "https://github.com/github/government.github.com",
+      "updated": "2026-03-13",
+      "source": "GitHub"
+    },
+    {
+      "title": "consuldemocracy/consuldemocracy",
+      "snippet": "Consul Democracy - Open Government and E-Participation Web Software",
+      "stars": 1528,
+      "url": "https://github.com/consuldemocracy/consuldemocracy",
+      "updated": "2026-03-13",
+      "source": "GitHub"
+    },
+    {
+      "title": "datagouv/data.gouv.fr",
+      "snippet": "Ce dépôt rassemble les tickets techniques qui portent sur data.gouv.fr.",
+      "stars": 112,
+      "url": "https://github.com/datagouv/data.gouv.fr",
+      "updated": "2026-03-07",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Can AI mediation improve democratic deliberation?",
+      "snippet": "The strength of democracy lies in the free and equal exchange of diverse viewpoints. Living up to this ideal at scale faces inherent tensions: broad participation, meaningful deliberation, and political equality often trade off with one another (Fishkin, 2011). We ask whether and how artificial inte",
+      "url": "https://arxiv.org/abs/2601.05904v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Fair Voting Methods as a Catalyst for Democratic Resilience: A Trilogy on Legitimacy, Impact and AI Safeguarding",
+      "snippet": "This article shows how fair voting methods can be a catalyst for change in the way we make collective decisions, and how such change can promote long-awaited upgrades of democracy. Based on real-world evidence from democratic innovations in participatory budgeting, in Switzerland and beyond, I highl",
+      "url": "https://arxiv.org/abs/2512.17461v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[#234 – David Duvenaud on why 'aligned AI' would still kill democracy] Democracy might be a brief historical blip. That’s the unsettling thesis of a recent paper, which argues AI that can do all the work a human can do inevitably leads to the “gradual disempowerment” of humanity.For most of history, ordinary people had almost no control over their governments. Liberal democracy emerged only recently, and probably not coincidentally around the Industrial Revolution.To",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

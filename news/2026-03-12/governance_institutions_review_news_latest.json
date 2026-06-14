@@ -1,0 +1,146 @@
+{
+  "axis": "GOVERNANCE_INSTITUTIONS_REVIEW",
+  "fetched_at": "2026-03-12T18:27:05.734274+00:00",
+  "smart_query": "Institutions with weakened rule of law",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 0,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "analysis": {
+    "summary": "Анализът на управленческите институции има за цел да създаде устойчиви и достойни граждански общества. Този процес включва оценка на ефективността и отчетността на институциите. Целта е да се постигне справедливост и равенство за всички.",
+    "key_developments": [
+      "Uncovering statistical structure in large-scale neural activity with Restricted Boltzmann Machines",
+      "RCTs & Human Uplift Studies: Methodological Challenges and Practical Solutions for Frontier AI Evaluation",
+      "github/government.github.com",
+      "consuldemocracy/consuldemocracy",
+      "datagouv/data.gouv.fr"
+    ],
+    "sentiment": "NEUTRAL",
+    "urgency": "MEDIUM",
+    "open_source_momentum": "High, with 1915 stars on government.github.com, 1528 stars on consuldemocracy/consuldemocracy, and 112 stars on datagouv/data.gouv.fr",
+    "scientific_frontier": "Research on Restricted Boltzmann Machines and Human Uplift Studies is advancing the field of AI evaluation",
+    "relevance_to_goal": "High, as the analysis of governance institutions is crucial for creating a sustainable civilization with dignity for all"
+  },
+  "sentiment": "NEUTRAL",
+  "urgency": "MEDIUM",
+  "summary": "Анализът на управленческите институции има за цел да създаде устойчиви и достойни граждански общества. Този процес включва оценка на ефективността и отчетността на институциите. Целта е да се постигне справедливост и равенство за всички.",
+  "key_developments": [
+    "Uncovering statistical structure in large-scale neural activity with Restricted Boltzmann Machines",
+    "RCTs & Human Uplift Studies: Methodological Challenges and Practical Solutions for Frontier AI Evaluation",
+    "github/government.github.com",
+    "consuldemocracy/consuldemocracy",
+    "datagouv/data.gouv.fr"
+  ],
+  "open_source_momentum": "High, with 1915 stars on government.github.com, 1528 stars on consuldemocracy/consuldemocracy, and 112 stars on datagouv/data.gouv.fr",
+  "scientific_frontier": "Research on Restricted Boltzmann Machines and Human Uplift Studies is advancing the field of AI evaluation",
+  "github_repos": [
+    {
+      "title": "github/government.github.com",
+      "snippet": "Gather, curate, and feature stories of public servants and civic hackers using GitHub as part of their open government innovations",
+      "stars": 1915,
+      "url": "https://github.com/github/government.github.com",
+      "updated": "2026-03-10",
+      "source": "GitHub"
+    },
+    {
+      "title": "consuldemocracy/consuldemocracy",
+      "snippet": "Consul Democracy - Open Government and E-Participation Web Software",
+      "stars": 1528,
+      "url": "https://github.com/consuldemocracy/consuldemocracy",
+      "updated": "2026-03-12",
+      "source": "GitHub"
+    },
+    {
+      "title": "datagouv/data.gouv.fr",
+      "snippet": "Ce dépôt rassemble les tickets techniques qui portent sur data.gouv.fr.",
+      "stars": 112,
+      "url": "https://github.com/datagouv/data.gouv.fr",
+      "updated": "2026-03-07",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Uncovering statistical structure in large-scale neural activity with Restricted Boltzmann Machines",
+      "snippet": "Large-scale electrophysiological recordings now allow simultaneous monitoring of thousands of neurons across multiple brain regions, revealing structured variability in neural population activity. Understanding how these collective patterns emerge from microscopic neural interactions requires models",
+      "url": "https://arxiv.org/abs/2603.11032v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "RCTs & Human Uplift Studies: Methodological Challenges and Practical Solutions for Frontier AI Evaluation",
+      "snippet": "Human uplift studies - or studies that measure AI effects on human performance relative to a status quo, typically using randomized controlled trial (RCT) methodology - are increasingly used to inform deployment, governance, and safety decisions for frontier AI systems. While the methods underlying ",
+      "url": "https://arxiv.org/abs/2603.11001v1",
+      "source": "arXiv"
+    }
+  ],
+  "youtube_transcripts": [],
+  "podcast": "How AI interacts with nuclear deterrence may be the single most important question in geopolitics — one that may define the stakes of today’s AI race. Nuclear deterrence rests on a state’s capacity to respond to a nuclear attack with a devastating nuclear strike of its own. But some theorists think that sophisticated AI could eliminate this capability — for example, by locating and destroying all  | The arrival of AGI could “compress a century of progress in a decade,” forcing humanity to make decisions with higher stakes than we’ve ever seen before — and with less time to get them right. But AI development also presents an opportunity: we could build and deploy AI tools that help us think more clearly, act more wisely, and coordinate more effectively. And if we roll these decision-making too",
+  "youtube_videos": [
+    {
+      "title": "YouTube:y3am4T5LuKU",
+      "video_id": "y3am4T5LuKU",
+      "url": "https://www.youtube.com/watch?v=y3am4T5LuKU",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:184vK4YG6Wc",
+      "video_id": "184vK4YG6Wc",
+      "url": "https://www.youtube.com/watch?v=184vK4YG6Wc",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:aVhb5ltMHC4",
+      "video_id": "aVhb5ltMHC4",
+      "url": "https://www.youtube.com/watch?v=aVhb5ltMHC4",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:0R20U9zkMmg",
+      "video_id": "0R20U9zkMmg",
+      "url": "https://www.youtube.com/watch?v=0R20U9zkMmg",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:qY4zL4oD2g8",
+      "video_id": "qY4zL4oD2g8",
+      "url": "https://www.youtube.com/watch?v=qY4zL4oD2g8",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:rhtEuH2G6bg",
+      "video_id": "rhtEuH2G6bg",
+      "url": "https://www.youtube.com/watch?v=rhtEuH2G6bg",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:9k5b4JnIBec",
+      "video_id": "9k5b4JnIBec",
+      "url": "https://www.youtube.com/watch?v=9k5b4JnIBec",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:z6MT360pX4k",
+      "video_id": "z6MT360pX4k",
+      "url": "https://www.youtube.com/watch?v=z6MT360pX4k",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:O3QNphZBX2k",
+      "video_id": "O3QNphZBX2k",
+      "url": "https://www.youtube.com/watch?v=O3QNphZBX2k",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:tZ6--zrhSy4",
+      "video_id": "tZ6--zrhSy4",
+      "url": "https://www.youtube.com/watch?v=tZ6--zrhSy4",
+      "source": "YouTube"
+    }
+  ]
+}

@@ -1,0 +1,900 @@
+{
+  "timestamp": "2026-05-18T07:36:46.926410+00:00",
+  "date": "2026-05-18",
+  "axes_covered": 25,
+  "total_sources": 246,
+  "youtube_videos_total": 37,
+  "critical_axes": [
+    "WATER_REVIEW",
+    "ECOSYSTEMS_BIODIVERSITY_REVIEW",
+    "INFRASTRUCTURE_CITIES_REVIEW",
+    "GOVERNANCE_INSTITUTIONS_REVIEW",
+    "DEEP_TIME_RISKS_REVIEW",
+    "GOAL_PROGRESS_REVIEW",
+    "CLIMATE_GLOBAL_RISK_REVIEW"
+  ],
+  "deteriorating_axes": [],
+  "problems_found": [
+    {
+      "axis": "ENERGY_REVIEW",
+      "problem": "Забавяне на преминаването към чисти източници на енергия от някои компании",
+      "severity": "MEDIUM",
+      "actions": [
+        {
+          "action": "Внедряване на по-строги регулации и законодателство за чистите източници на енергия",
+          "measurable_goal": "25% намаление на вредните емисии до 2030 г.",
+          "timeframe": "средносрочно"
+        }
+      ]
+    },
+    {
+      "axis": "WATER_REVIEW",
+      "problem": "Намаление на нивото на地下 nước в Сан Луис Вали, което води до увеличение на концентрацията на тежки метали в питейната вода",
+      "severity": "HIGH",
+      "actions": [
+        {
+          "action": "Изпълнение на проучване на хидроложките ресурси и разработка на планове за опазване на водните ресурси",
+          "measurable_goal": "Намаляване на нивото на тежки метали в питейната вода с 20% през следващите 2 години",
+          "timeframe": "средносрочно"
+        }
+      ]
+    },
+    {
+      "axis": "FOOD_REVIEW",
+      "problem": "Анализ на FOOD_REVIEW — данни получени но LLM грешка",
+      "severity": "UNKNOWN",
+      "actions": []
+    },
+    {
+      "axis": "MATERIALS_WASTE_REVIEW",
+      "problem": "Анализ на MATERIALS_WASTE_REVIEW — данни получени но LLM грешка",
+      "severity": "UNKNOWN",
+      "actions": []
+    },
+    {
+      "axis": "ECOSYSTEMS_BIODIVERSITY_REVIEW",
+      "problem": "Засилването на човешките дейности, които застрашават биоразнообразието",
+      "severity": "HIGH",
+      "actions": [
+        {
+          "action": "Повишаване на осведомеността за биоразнообразието и въздействието на човешките дейности",
+          "measurable_goal": "Повишаване на броя на хората, които заявяват, че са съвестни за важността на биоразнообразието",
+          "timeframe": "средносрочно"
+        }
+      ]
+    },
+    {
+      "axis": "HUMAN_WELL_BEING_REVIEW",
+      "problem": "Анализ на HUMAN_WELL_BEING_REVIEW — данни получени но LLM грешка",
+      "severity": "UNKNOWN",
+      "actions": []
+    },
+    {
+      "axis": "CULTURE_MEDIA_REVIEW",
+      "problem": "Анализ на CULTURE_MEDIA_REVIEW — данни получени но LLM грешка",
+      "severity": "UNKNOWN",
+      "actions": []
+    },
+    {
+      "axis": "COGNITION_LEARNING_REVIEW",
+      "problem": "Анализ на COGNITION_LEARNING_REVIEW — данни получени но LLM грешка",
+      "severity": "UNKNOWN",
+      "actions": []
+    },
+    {
+      "axis": "SOCIAL_RELATIONS_REVIEW",
+      "problem": "Анализ на SOCIAL_RELATIONS_REVIEW — данни получени но LLM грешка",
+      "severity": "UNKNOWN",
+      "actions": []
+    },
+    {
+      "axis": "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL",
+      "problem": "Анализ на GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL — данни получени но LLM грешка",
+      "severity": "UNKNOWN",
+      "actions": []
+    },
+    {
+      "axis": "INEQUALITY_POVERTY_REVIEW",
+      "problem": "Анализ на INEQUALITY_POVERTY_REVIEW — данни получени но LLM грешка",
+      "severity": "UNKNOWN",
+      "actions": []
+    },
+    {
+      "axis": "INFRASTRUCTURE_CITIES_REVIEW",
+      "problem": "Недостатъчната инфраструктура в градовете, включително водоснабдителната система и жилища за бездомните, което води до социални и здравословни проблеми",
+      "severity": "HIGH",
+      "actions": [
+        {
+          "action": "Инвестиране в модернизацията на водоснабдителната система и жилищата за бездомните",
+          "measurable_goal": "Снижаване на броя на бездомните и подобряване на качеството на водата в градовете",
+          "timeframe": "средносрочно"
+        },
+        {
+          "action": "Разработване на устойчиви планове за управление на инфраструктурата",
+          "measurable_goal": "Повишаване на ефективността на управление на инфраструктурата и снижаване на разходите",
+          "timeframe": "дългосрочно"
+        }
+      ]
+    },
+    {
+      "axis": "GOVERNANCE_INSTITUTIONS_REVIEW",
+      "problem": "Продължаващите конфликти и насилие в различни части на света, например в Газа, Мали и Сирия",
+      "severity": "HIGH",
+      "actions": [
+        {
+          "action": "Подкрепа на инициативите за мир и диалог в регионите, засегнати от конфликти",
+          "measurable_goal": "Намаление на броя на жертвите и бежанците в рамките на следващите 6 месеца",
+          "timeframe": "краткосрочно"
+        },
+        {
+          "action": "Разработка и имплементация на дългосрочни стратегии за решаване на основните причини на конфликтите",
+          "measurable_goal": "Увеличение на броя на регионите, които постигат дългосрочен мир и стабилност в рамките на следващите 2 години",
+          "timeframe": "средносрочно"
+        }
+      ]
+    },
+    {
+      "axis": "EDUCATION_CULTURE_REVIEW",
+      "problem": "Намаляването на литературна грамотност сред учениците по време на пандемията",
+      "severity": "MEDIUM",
+      "actions": [
+        {
+          "action": "Внедряване на онлайн платформи за литературно образование с лично подход",
+          "measurable_goal": "Увеличение на литературна грамотност сред учениците с 15% за следващите 6 месеца",
+          "timeframe": "средносрочно"
+        }
+      ]
+    },
+    {
+      "axis": "TECHNOLOGY_INFRA_REVIEW",
+      "problem": "Отсъствие на технологии за устойчивост в съществуващите разработки",
+      "severity": "MEDIUM",
+      "actions": [
+        {
+          "action": "Интегриране на устойчивост в разработките на технологии",
+          "measurable_goal": "25% от новите разработки да включват устойчивост като приоритет",
+          "timeframe": "средносрочно"
+        }
+      ]
+    },
+    {
+      "axis": "TECHNOLOGY_AI_REVIEW",
+      "problem": "Ниска достъпност на AI технологии за малки компании и индивиди поради високи разходи",
+      "severity": "MEDIUM",
+      "actions": [
+        {
+          "action": "Създаване на отворен-източникови платформи за разработване на AI решения",
+          "measurable_goal": "Намаление на цената на AI решения с 30% през следващите 12 месеца",
+          "timeframe": "средносрочно"
+        },
+        {
+          "action": "Разработване на програми за финансиране и подкрепа на малки компании и индивиди в разработването на AI технологии",
+          "measurable_goal": "Подкрепа на минимум 50 малки компании и индивиди в разработването на AI технологии през следващите 18 месеца",
+          "timeframe": "дългосрочно"
+        }
+      ]
+    },
+    {
+      "axis": "SPACE_INFRASTRUCTURE_REVIEW",
+      "problem": "Забавяне на мисии поради лошо време, което влияе на доставката на запаси и оборудване до международната космическа станция",
+      "severity": "MEDIUM",
+      "actions": [
+        {
+          "action": "Разработване и внедряване на sistemi за реално време за отслежване и прогноза на атмосферните условия",
+          "measurable_goal": "Успешно предвидение и коригиране на старта в 80% от случаята през следващите 12 месеца",
+          "timeframe": "средносрочно"
+        }
+      ]
+    },
+    {
+      "axis": "COSMIC_RESOURCES_REVIEW",
+      "problem": "Отсъствието на ясна регулаторна рамка за астероидното миниране",
+      "severity": "MEDIUM",
+      "actions": [
+        {
+          "action": "Създаване на международна регулаторна рамка за астероидното миниране",
+          "measurable_goal": "Успешно прилагане на регулациите от страна на минимум 50% от страните, участващи в космическите дейности",
+          "timeframe": "средносрочно"
+        }
+      ]
+    },
+    {
+      "axis": "LONG_TERM_FUTURE_REVIEW",
+      "problem": "AI агентите вече сега вече правят престъпления в симулирани светове",
+      "severity": "MEDIUM",
+      "actions": [
+        {
+          "action": "Разработване на алгоритми, които може да разграничават между симулирани и реални ситуации",
+          "measurable_goal": "Снижаване на броя на симулираните престъпления с 50% през следващите 12 месеца",
+          "timeframe": "средносрочно"
+        }
+      ]
+    },
+    {
+      "axis": "DEEP_TIME_RISKS_REVIEW",
+      "problem": "Отсъствие на ефективни механизми за предотвратяване на астероидни удари и супервулканични изригвания",
+      "severity": "CRITICAL",
+      "actions": [
+        {
+          "action": "Създаване на глобална програма за наблюдение и предотвратяване на астероидни удари",
+          "measurable_goal": "Снижаване на риска от астероидни удари с 50% през следващите 10 години",
+          "timeframe": "дългосрочно"
+        },
+        {
+          "action": "Развитие на планове за реакция при супервулканични изригвания",
+          "measurable_goal": "Снижаване на човешките загуби с 30% при супервулканично изригване",
+          "timeframe": "средносрочно"
+        }
+      ]
+    },
+    {
+      "axis": "GENERAL_SELF_REVIEW",
+      "problem": "Недостигащите здравни показатели и пропуснати цели на Световната здравна организация",
+      "severity": "MEDIUM",
+      "actions": [
+        {
+          "action": "Увеличение на инвестициите в здравеопазването и разработване на эффективни стратегии за разрешаване на здравните проблеми",
+          "measurable_goal": "Намаляване на смъртността и заболяемостта от основните здравни проблеми с 10% в рамките на следващите 2 години",
+          "timeframe": "средносрочно"
+        }
+      ]
+    },
+    {
+      "axis": "GOAL_PROGRESS_REVIEW",
+      "problem": "Повишение на бедността и негативно влияние върху здравето на хората поради нарушения в глобалните търговски коридори и енергийните доставки",
+      "severity": "HIGH",
+      "actions": [
+        {
+          "action": "Създаване на платформа за международно сътрудничество и диалог за решаване на глобалните енергийни и търговски проблеми",
+          "measurable_goal": "Замръзване на 10% от геополитическите конфликти и намаляване на енергийните доставки с 5% през следващите 12 месеца",
+          "timeframe": "средносрочно"
+        }
+      ]
+    },
+    {
+      "axis": "PLANETARY_POTENTIAL_REVIEW",
+      "problem": "Анализ на PLANETARY_POTENTIAL_REVIEW — данни получени но LLM грешка",
+      "severity": "UNKNOWN",
+      "actions": []
+    },
+    {
+      "axis": "CLIMATE_GLOBAL_RISK_REVIEW",
+      "problem": "Insufficient funding for climate change mitigation and adaptation efforts, as seen in the UK's reduced contribution to the UN's Green Climate Fund",
+      "severity": "HIGH",
+      "actions": [
+        {
+          "action": "Increase funding for climate change mitigation and adaptation efforts, such as renewable energy projects and climate-resilient infrastructure",
+          "measurable_goal": "Achieve a 20% increase in climate-related funding within the next 2 years",
+          "timeframe": "medium-term"
+        }
+      ]
+    },
+    {
+      "axis": "ECONOMY_WORK_REVIEW",
+      "problem": "Dependence on non-renewable energy sources and potential for price volatility due to geopolitical tensions",
+      "severity": "MEDIUM",
+      "actions": [
+        {
+          "action": "Implement policies to promote the development and use of renewable energy sources",
+          "measurable_goal": "Increase the percentage of renewable energy in the global energy mix by 10% within the next 5 years",
+          "timeframe": "medium-term"
+        }
+      ]
+    }
+  ],
+  "cross_domain_insights": [
+    {
+      "from_axis": "ENERGY_REVIEW",
+      "insight": "Този проблем е свързан с другите домейни, като здравословната биосфера и устойчивата цивилизация, тъй като чистите източници на енергия са необходими за намаляване на вредните емисии и защитата на околната среда"
+    },
+    {
+      "from_axis": "WATER_REVIEW",
+      "insight": "Този проблем е свързан с другите домейни, като здравето на човека и устойчивостта на околната среда, тъй като намаляването на качеството на питейната вода може да има сериозни здравословни последствия и да влоши общото състояние на околната среда"
+    },
+    {
+      "from_axis": "ECOSYSTEMS_BIODIVERSITY_REVIEW",
+      "insight": "Този проблем е свързан с домейна 'Планета' и има последици за здравословната биосфера, но също така има връзки с други домейни, като 'Човек' и 'Цивилизация', поради това, че изменението на екосистемите и биоразнообразието може да има сериозни последици за човешкото здраве и благосъстояние, както и за устойчивостта на цивилизацията"
+    },
+    {
+      "from_axis": "INFRASTRUCTURE_CITIES_REVIEW",
+      "insight": "Този проблем е свързан с домейна на човека и цивилизацията, тъй като недостатъчната инфраструктура има негативно въздействие върху здравето и благосъстоянието на хората, както и върху устойчивостта на цивилизацията"
+    },
+    {
+      "from_axis": "GOVERNANCE_INSTITUTIONS_REVIEW",
+      "insight": "Продължаващите конфликти и насилие имат негативно влияние върху устойчивостта и дългосрочната жизнеспособност на разумния живот и неговите среди на съществуване във Вселената, особено в домейна на цивилизацията и човека"
+    },
+    {
+      "from_axis": "EDUCATION_CULTURE_REVIEW",
+      "insight": "Този проблем е свързан с други домейни, като Здравословна биосфера (влияние на психичното здраве на учениците) и Човек (влияние на социалните връзки и културата)"
+    },
+    {
+      "from_axis": "TECHNOLOGY_INFRA_REVIEW",
+      "insight": "Проблемът е свързан с домейна на цивилизацията, но има потенциално въздействие върху другите домейни, като например здравословната биосфера и планетата"
+    },
+    {
+      "from_axis": "TECHNOLOGY_AI_REVIEW",
+      "insight": "Ниска достъпност на AI технологии е свързана с ограничените възможности за финансиране и разработка на малки компании и индивиди, което може да има негативно въздействие върху иновациите и конкурентоспособността в цивилизационния домейн"
+    },
+    {
+      "from_axis": "SPACE_INFRASTRUCTURE_REVIEW",
+      "insight": "Този проблем е свързан с домейна Планета, тъй като лошото време и атмосферните условия директно влияят на космическите мисии и тяхната успешност. Също така, има връзка с домейна Човек, защото успешното провеждане на космическите мисии е важно за научните изследвания и развитието на технологиите."
+    },
+    {
+      "from_axis": "COSMIC_RESOURCES_REVIEW",
+      "insight": "Отсъствието на регулаторна рамка за астероидното миниране е свързано с домейна на цивилизацията, тъй като липсата на правила може да доведе до неконтролируеми и потенциално разрушителни практики"
+    },
+    {
+      "from_axis": "LONG_TERM_FUTURE_REVIEW",
+      "insight": "Този проблем е свързан с домейна 'цивилизация', като показва потенциалните рискове от необмислени ИИ разработки"
+    },
+    {
+      "from_axis": "DEEP_TIME_RISKS_REVIEW",
+      "insight": "Този проблем е свързан с домейна на планетата и човека, тъй като астероидни удари и супервулканични изригвания могат да имат катастрофални последствия за земната биосфера и човешките общности"
+    },
+    {
+      "from_axis": "GENERAL_SELF_REVIEW",
+      "insight": "Този проблем е свързан с домейна на Човека, тъй като здравето е основен аспект на човешкото съществуване и благосъстояние. Също така, е свързан с домейна на Цивилизацията, защото ефективните здравни системи са важно условие за развитието на устойчива и процъфтяваща цивилизация."
+    },
+    {
+      "from_axis": "GOAL_PROGRESS_REVIEW",
+      "insight": "Този проблем е тясно свързан с домейна на човека и цивилизацията, тъй като влияе върху здравето, икономиката и социалните връзки на хората"
+    },
+    {
+      "from_axis": "CLIMATE_GLOBAL_RISK_REVIEW",
+      "insight": "This problem connects to the domains of civilization, where economic and political systems can either support or hinder climate change mitigation efforts, and the biosphere, where the impacts of climate change are most directly felt"
+    },
+    {
+      "from_axis": "ECONOMY_WORK_REVIEW",
+      "insight": "This problem connects to the domains of Planet (energy and resource management) and Civilization (economic development and stability)"
+    }
+  ],
+  "civilization_goal_alignment": {
+    "critical_count": 7,
+    "problems_with_actions": 16,
+    "status": "ALERT"
+  },
+  "axes": {
+    "ENERGY_REVIEW": {
+      "problem": "Забавяне на преминаването към чисти източници на енергия от някои компании",
+      "root_cause": "Отсъствието на задължителни регулации и недостатъчната политическа воля за забрана на конвенционалните източници на енергия",
+      "severity": "MEDIUM",
+      "leverage_points": [
+        "Компаниите производители на електрически автомобили като Tesla, които бавно внедряват чистите енергийни технологии",
+        "Правителствата, които не предприемат достатъчно мерки за забрана на конвенционалните източници на енергия"
+      ],
+      "proposed_actions": [
+        {
+          "action": "Внедряване на по-строги регулации и законодателство за чистите източници на енергия",
+          "measurable_goal": "25% намаление на вредните емисии до 2030 г.",
+          "timeframe": "средносрочно"
+        }
+      ],
+      "evidence": [
+        "Ethiopia забрани importа на конвенционалните автомобили преди две години и постигна добри резултати",
+        "Amazon преминава към геотермална, слънчева и акумулаторна енергия за захранване на данните си центрове в Невада"
+      ],
+      "generalization": "Този проблем е свързан с другите домейни, като здравословната биосфера и устойчивата цивилизация, тъй като чистите източници на енергия са необходими за намаляване на вредните емисии и защитата на околната среда",
+      "summary": "Забавяне на преминаването към чисти източници на енергия от някои компании представлява среден проблем, който трябва да бъде решен чрез по-строги регулации и законодателство. Този проблем е свързан с другите домейни и има потенциал да оказва негативно въздействие върху околната среда и здравословната биосфера.",
+      "risk_level": "MEDIUM"
+    },
+    "WATER_REVIEW": {
+      "problem": "Намаление на нивото на地下 nước в Сан Луис Вали, което води до увеличение на концентрацията на тежки метали в питейната вода",
+      "root_cause": "Климатичните промени и недостигът на вода довеждат до намаляване на нивото на地下 вода, което води до увеличение на концентрацията на тежки метали в останалата вода",
+      "severity": "HIGH",
+      "leverage_points": [
+        "Местните власти и правителството на щата Колорадо имат възможност да вземат мерки за намаляване на употребата на вода и за подобряване на качеството на питейната вода",
+        "Федералното правителство може да предостави финансови ресурси и да разработи политики за подпомагане на усилията за опазване на водните ресурси"
+      ],
+      "proposed_actions": [
+        {
+          "action": "Изпълнение на проучване на хидроложките ресурси и разработка на планове за опазване на водните ресурси",
+          "measurable_goal": "Намаляване на нивото на тежки метали в питейната вода с 20% през следващите 2 години",
+          "timeframe": "средносрочно"
+        }
+      ],
+      "evidence": [
+        "Редуцирането на нивото на подземна вода в Сан Луис Вали води до增加ване на концентрацията на тежки метали в питейната вода",
+        "Данните от Circle of Blue показват, че нивото на подземна вода в Сан Луис Вали е намалено значимо през последните години"
+      ],
+      "generalization": "Този проблем е свързан с другите домейни, като здравето на човека и устойчивостта на околната среда, тъй като намаляването на качеството на питейната вода може да има сериозни здравословни последствия и да влоши общото състояние на околната среда",
+      "summary": "Намалението на нивото на подземна вода в Сан Луис Вали води до увеличение на концентрацията на тежки метали в питейната вода, което представлява сериозен риск за здравето на местните жители. Необходими са бързи и ефективни мерки за опазване на водните ресурси и подобряване на качеството на питейната вода.",
+      "risk_level": "HIGH"
+    },
+    "FOOD_REVIEW": {
+      "problem": "Анализ на FOOD_REVIEW — данни получени но LLM грешка",
+      "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: Ollama: няма налични модели",
+      "severity": "UNKNOWN",
+      "leverage_points": [],
+      "proposed_actions": [],
+      "evidence": [
+        "Food Security | Food Insecurity Statistics & Solutions",
+        "Global Report on Food Crises (GRFC) 2025 | World Food Programme",
+        "The State of Food Security and Nutrition in the World 2025 - UNICEF DATA"
+      ],
+      "generalization": "",
+      "summary": "- Food Security | Food Insecurity Statistics & Solutions: 2 weeks ago - More than 87 million people are facing hunger in East and Southern Africa, and 52 million are projected to be acutely food insec",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN",
+      "llm_raw": ""
+    },
+    "MATERIALS_WASTE_REVIEW": {
+      "problem": "Анализ на MATERIALS_WASTE_REVIEW — данни получени но LLM грешка",
+      "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: Ollama: няма налични модели",
+      "severity": "UNKNOWN",
+      "leverage_points": [],
+      "proposed_actions": [],
+      "evidence": [
+        "Project Zero Waste field trip connects students to real-world sustainability efforts",
+        "California city launches state's first fully electric trash and recycling fleet",
+        "SWANA Releases New ARF Report on Horizontal Landfill Gas Collection Systems"
+      ],
+      "generalization": "",
+      "summary": "- Project Zero Waste field trip connects students to real-world sustainability efforts: Students from Valadez Middle School recently stepped beyond the classroom and into one of Orange County’s larges",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN",
+      "llm_raw": ""
+    },
+    "ECOSYSTEMS_BIODIVERSITY_REVIEW": {
+      "problem": "Засилването на човешките дейности, които застрашават биоразнообразието",
+      "root_cause": "Растежът на човешката популация и недостатъчното внимание към екологичните аспекти на човешката дейност",
+      "severity": "HIGH",
+      "leverage_points": [
+        "Изменение на човешките поведения и консуматорски навици",
+        "Разработване на устойчиви технологии и практики"
+      ],
+      "proposed_actions": [
+        {
+          "action": "Повишаване на осведомеността за биоразнообразието и въздействието на човешките дейности",
+          "measurable_goal": "Повишаване на броя на хората, които заявяват, че са съвестни за важността на биоразнообразието",
+          "timeframe": "средносрочно"
+        }
+      ],
+      "evidence": [
+        "Човешката популация е нараснала до над 7 милиарда души през 2014 г.",
+        "Хуманите дейности застрашават биоразнообразието на местно ниво"
+      ],
+      "generalization": "Този проблем е свързан с домейна 'Планета' и има последици за здравословната биосфера, но също така има връзки с други домейни, като 'Човек' и 'Цивилизация', поради това, че изменението на екосистемите и биоразнообразието може да има сериозни последици за човешкото здраве и благосъстояние, както и за устойчивостта на цивилизацията",
+      "summary": "Засилването на човешките дейности, които застрашават биоразнообразието, е сериозен проблем, който изисква незабавно внимание и действие. Повишаването на осведомеността и изменението на човешките поведения и консуматорски навици са необходими стъпки за защита на биоразнообразието и устойчивостта на планетата.",
+      "risk_level": "HIGH"
+    },
+    "HUMAN_WELL_BEING_REVIEW": {
+      "problem": "Анализ на HUMAN_WELL_BEING_REVIEW — данни получени но LLM грешка",
+      "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: Ollama: няма налични модели",
+      "severity": "UNKNOWN",
+      "leverage_points": [],
+      "proposed_actions": [],
+      "evidence": [
+        "Epidemic of Ebola Disease caused by Bundibugyo virus in the Democratic Republic of the Congo and Uganda determined a public health emergency of international concern",
+        "WHO warns nicotine pouch brands targeting youth as sales surge",
+        "Follow-up message by the WHO Director-General to the people of Tenerife regarding the hantavirus response"
+      ],
+      "generalization": "",
+      "summary": "- Epidemic of Ebola Disease caused by Bundibugyo virus in the Democratic Republic of the Congo and Uganda determined a public health emergency of international concern: Epidemic of Ebola Disease cause",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN",
+      "llm_raw": ""
+    },
+    "CULTURE_MEDIA_REVIEW": {
+      "problem": "Анализ на CULTURE_MEDIA_REVIEW — данни получени но LLM грешка",
+      "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: Ollama: няма налични модели",
+      "severity": "UNKNOWN",
+      "leverage_points": [],
+      "proposed_actions": [],
+      "evidence": [
+        "Inside the Met Opera: Does Peter Gelb Have ‘the Most Difficult Job on Earth’?",
+        "Isabel Leonard and Others Offer Tastings of ‘Frida y Diego’",
+        "Tonys 2026 Predictions: Who Will Win? And Who Should?"
+      ],
+      "generalization": "",
+      "summary": "- Inside the Met Opera: Does Peter Gelb Have ‘the Most Difficult Job on Earth’?: Peter Gelb, the general manager of the Metropolitan Opera, said he is not going anywhere as he struggles with financial",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN",
+      "llm_raw": ""
+    },
+    "COGNITION_LEARNING_REVIEW": {
+      "problem": "Анализ на COGNITION_LEARNING_REVIEW — данни получени но LLM грешка",
+      "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: Ollama: няма налични модели",
+      "severity": "UNKNOWN",
+      "leverage_points": [],
+      "proposed_actions": [],
+      "evidence": [
+        "The Pandemic Hindered English Learners' Literacy. This Ohio District Is Turning the Tide.",
+        "Latest Canvas Attack Shows Schools Still Struggle With Cybersecurity",
+        "LGBTQ+ Youth Mental Health Is Suffering, but Schools Are Poised to Help"
+      ],
+      "generalization": "",
+      "summary": "- The Pandemic Hindered English Learners' Literacy. This Ohio District Is Turning the Tide.: &quot;We want to help the students continue to thrive, and really everything that we're thinking about with",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN",
+      "llm_raw": ""
+    },
+    "SOCIAL_RELATIONS_REVIEW": {
+      "problem": "Анализ на SOCIAL_RELATIONS_REVIEW — данни получени но LLM грешка",
+      "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: Ollama: няма налични модели",
+      "severity": "UNKNOWN",
+      "leverage_points": [],
+      "proposed_actions": [],
+      "evidence": [
+        "Trump’s approval rating hits second-term low among his Latino voters, though many still approve",
+        "A majority of Americans say the country’s best years are behind us",
+        "What Americans think it takes to be a good news consumer"
+      ],
+      "generalization": "",
+      "summary": "- Trump’s approval rating hits second-term low among his Latino voters, though many still approve: About two-thirds of Latino Trump voters (66%) approve of his job performance. That’s down 27 percenta",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN",
+      "llm_raw": ""
+    },
+    "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL": {
+      "problem": "Анализ на GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL — данни получени но LLM грешка",
+      "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: Ollama: няма налични модели",
+      "severity": "UNKNOWN",
+      "leverage_points": [],
+      "proposed_actions": [],
+      "evidence": [
+        "El Salvador: Human Rights Lawyer Still in Jail One Year on",
+        "One Year on Since Arrest of Opposition Leader in Chad",
+        "Ukraine’s Proposed Legislation Threatens Rights"
+      ],
+      "generalization": "",
+      "summary": "- El Salvador: Human Rights Lawyer Still in Jail One Year on: Click to expand Image\n          \n\n\n\n  \n        \n  \n\n        \n                      \n      \n        \n              Ruth López.\n            ",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN",
+      "llm_raw": ""
+    },
+    "INEQUALITY_POVERTY_REVIEW": {
+      "problem": "Анализ на INEQUALITY_POVERTY_REVIEW — данни получени но LLM грешка",
+      "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: Ollama: няма налични модели",
+      "severity": "UNKNOWN",
+      "leverage_points": [],
+      "proposed_actions": [],
+      "evidence": [
+        "WBG Poverty and Inequality Update - Fall 2025",
+        "Poverty-conflict nexus in Sub-Saharan Africa: a scoping ...",
+        "Pushed to the Brink: Fragility and Conflict in Sub-Saharan Africa"
+      ],
+      "generalization": "",
+      "summary": "- WBG Poverty and Inequality Update - Fall 2025: Extreme poverty has become increasingly concentrated in Sub-Saharan Africa and places affected by conflict and fragility. Starting in 2022, the majorit",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN",
+      "llm_raw": ""
+    },
+    "INFRASTRUCTURE_CITIES_REVIEW": {
+      "problem": "Недостатъчната инфраструктура в градовете, включително водоснабдителната система и жилища за бездомните, което води до социални и здравословни проблеми",
+      "root_cause": "Отсъствието на достатъчни инвестиции и планиране от страна на местните власти и правителствата, както и липсата на устойчиви решения за управление на инфраструктурата",
+      "severity": "HIGH",
+      "leverage_points": [
+        "Местните власти и правителствата имат важна роля в решаването на този проблем, като трябва да инвестират в модернизацията на инфраструктурата и да разработват устойчиви решения",
+        "Гражданските организации и частните компании могат да сътрудничат с местните власти, за да разработят иновативни решения за решаване на проблема"
+      ],
+      "proposed_actions": [
+        {
+          "action": "Инвестиране в модернизацията на водоснабдителната система и жилищата за бездомните",
+          "measurable_goal": "Снижаване на броя на бездомните и подобряване на качеството на водата в градовете",
+          "timeframe": "средносрочно"
+        },
+        {
+          "action": "Разработване на устойчиви планове за управление на инфраструктурата",
+          "measurable_goal": "Повишаване на ефективността на управление на инфраструктурата и снижаване на разходите",
+          "timeframe": "дългосрочно"
+        }
+      ],
+      "evidence": [
+        "Cities sound alarm on crumbling water infrastructure",
+        "California governor proposes $500M to address homelessness"
+      ],
+      "generalization": "Този проблем е свързан с домейна на човека и цивилизацията, тъй като недостатъчната инфраструктура има негативно въздействие върху здравето и благосъстоянието на хората, както и върху устойчивостта на цивилизацията",
+      "summary": "Недостатъчната инфраструктура в градовете е сериозен проблем, който трябва да бъде решен чрез инвестиции и планиране от страна на местните власти и правителствата, както и чрез сътрудничество с гражданските организации и частните компании",
+      "risk_level": "HIGH"
+    },
+    "GOVERNANCE_INSTITUTIONS_REVIEW": {
+      "problem": "Продължаващите конфликти и насилие в различни части на света, например в Газа, Мали и Сирия",
+      "root_cause": "Сложните исторически, политически и социални фактори, които водят до продължаващите конфликти и насилие",
+      "severity": "HIGH",
+      "leverage_points": [
+        "Международни организации като ООН, които имат потенциал да влияят на конфликтите чрез дипломатически усилия и мироопазващи мисии",
+        "Владите на страните, засегнати от конфликтите, които трябва да вземат мерки за решаване на основните причини на конфликтите"
+      ],
+      "proposed_actions": [
+        {
+          "action": "Подкрепа на инициативите за мир и диалог в регионите, засегнати от конфликти",
+          "measurable_goal": "Намаление на броя на жертвите и бежанците в рамките на следващите 6 месеца",
+          "timeframe": "краткосрочно"
+        },
+        {
+          "action": "Разработка и имплементация на дългосрочни стратегии за решаване на основните причини на конфликтите",
+          "measurable_goal": "Увеличение на броя на регионите, които постигат дългосрочен мир и стабилност в рамките на следващите 2 години",
+          "timeframe": "средносрочно"
+        }
+      ],
+      "evidence": [
+        "Берейвед Фемилис, Френдс оф Газанс Килд Рекаунт Трагик Лос, Денонс Оngoинг Виоленс, Дисплейсмент, ас Палестин Райтс Комитет Маркс Накба Анниверсари",
+        "Секюрити Каунсил Прес Стейтмент он Терорист Атакс ин Мали"
+      ],
+      "generalization": "Продължаващите конфликти и насилие имат негативно влияние върху устойчивостта и дългосрочната жизнеспособност на разумния живот и неговите среди на съществуване във Вселената, особено в домейна на цивилизацията и човека",
+      "summary": "Продължаващите конфликти и насилие в различни части на света представляват сериозен проблем, който изисква решителни действия от страна на международните организации и владите на страните, засегнати от конфликтите. Решаването на този проблем е отสำคност за постигането на устойчива цивилизация и достойнство за всички.",
+      "risk_level": "HIGH"
+    },
+    "EDUCATION_CULTURE_REVIEW": {
+      "problem": "Намаляването на литературна грамотност сред учениците по време на пандемията",
+      "root_cause": "Пандемията е променя начина, по който се провежда образованието, което е довело до намаляване на литературна грамотност сред учениците",
+      "severity": "MEDIUM",
+      "leverage_points": [
+        "Училищните администрации и обучители трябва да разработят и внедрят ефективни дигитални инструменти и стратегии за поддръжка на литературна грамотност",
+        "Родителите и общността трябва да бъдат включени в процеса на образование, за да се подсигури непрекъснатото развитие на литературна грамотност сред учениците"
+      ],
+      "proposed_actions": [
+        {
+          "action": "Внедряване на онлайн платформи за литературно образование с лично подход",
+          "measurable_goal": "Увеличение на литературна грамотност сред учениците с 15% за следващите 6 месеца",
+          "timeframe": "средносрочно"
+        }
+      ],
+      "evidence": [
+        "The Pandemic Hindered English Learners' Literacy",
+        "Literacy: Literacy is the ability to read and write, and illiteracy is the inability to read and write"
+      ],
+      "generalization": "Този проблем е свързан с други домейни, като Здравословна биосфера (влияние на психичното здраве на учениците) и Човек (влияние на социалните връзки и културата)",
+      "summary": "Пандемията е довела до намаляване на литературна грамотност сред учениците, което е сериозен проблем, който трябва да бъде решен чрез внедряване на ефективни дигитални инструменти и стратегии.",
+      "risk_level": "MEDIUM"
+    },
+    "TECHNOLOGY_INFRA_REVIEW": {
+      "problem": "Отсъствие на технологии за устойчивост в съществуващите разработки",
+      "root_cause": "Фокус върху лична полза и липса на приоритет за устойчивост в разработките",
+      "severity": "MEDIUM",
+      "leverage_points": [
+        "Разработчици на технологии и инфраструктура",
+        "Потребителите и техните предпочитания"
+      ],
+      "proposed_actions": [
+        {
+          "action": "Интегриране на устойчивост в разработките на технологии",
+          "measurable_goal": "25% от новите разработки да включват устойчивост като приоритет",
+          "timeframe": "средносрочно"
+        }
+      ],
+      "evidence": [
+        "Липса на информация за устойчивост в предоставените данни за технологии",
+        "Фокус върху лична полза и удобство в разработките"
+      ],
+      "generalization": "Проблемът е свързан с домейна на цивилизацията, но има потенциално въздействие върху другите домейни, като например здравословната биосфера и планетата",
+      "summary": "Отсъствието на технологии за устойчивост в съществуващите разработки представлява проблем, който трябва да бъде решен за да се постигне устойчива цивилизация.",
+      "risk_level": "MEDIUM"
+    },
+    "TECHNOLOGY_AI_REVIEW": {
+      "problem": "Ниска достъпност на AI технологии за малки компании и индивиди поради високи разходи",
+      "root_cause": "Доминантият модел на собственост и разработка на AI технологии от големи компании и ограничените възможности за финансиране на малки компании и индивиди",
+      "severity": "MEDIUM",
+      "leverage_points": [
+        "Разработването на отворен-източникови AI решения и платформи",
+        "Създаването на програми за финансиране и подкрепа на малки компании и индивиди в разработването на AI технологии"
+      ],
+      "proposed_actions": [
+        {
+          "action": "Създаване на отворен-източникови платформи за разработване на AI решения",
+          "measurable_goal": "Намаление на цената на AI решения с 30% през следващите 12 месеца",
+          "timeframe": "средносрочно"
+        },
+        {
+          "action": "Разработване на програми за финансиране и подкрепа на малки компании и индивиди в разработването на AI технологии",
+          "measurable_goal": "Подкрепа на минимум 50 малки компании и индивиди в разработването на AI технологии през следващите 18 месеца",
+          "timeframe": "дългосрочно"
+        }
+      ],
+      "evidence": [
+        "Claude Code струва до 200 долара на месец, докато Goose предлага аналогични услуги безплатно",
+        "Listen Labs Raised 69 милиона долара за да развива AI технологии за интервюта с клиенти"
+      ],
+      "generalization": "Ниска достъпност на AI технологии е свързана с ограничените възможности за финансиране и разработка на малки компании и индивиди, което може да има негативно въздействие върху иновациите и конкурентоспособността в цивилизационния домейн",
+      "summary": "Ниска достъпност на AI технологии е проблем, свързан с високите разходи за разработване и финансиране, който може да бъде решен чрез разработване на отворен-източникови решения и програми за финансиране на малки компании и индивиди",
+      "risk_level": "MEDIUM"
+    },
+    "SPACE_INFRASTRUCTURE_REVIEW": {
+      "problem": "Забавяне на мисии поради лошо време, което влияе на доставката на запаси и оборудване до международната космическа станция",
+      "root_cause": "Ограничен контрол над атмосферните условия, което е естествено за космическите старти",
+      "severity": "MEDIUM",
+      "leverage_points": [
+        "Напредък в технологиите за прогноза на времето и развитие на системи за отслежване и реагиране на изменения в атмосферните условия",
+        "Увеличаване на броя на космодрумите и разнообразяване на местоположенията им, за да се giảmи风险ът от лошо време"
+      ],
+      "proposed_actions": [
+        {
+          "action": "Разработване и внедряване на sistemi за реално време за отслежване и прогноза на атмосферните условия",
+          "measurable_goal": "Успешно предвидение и коригиране на старта в 80% от случаята през следващите 12 месеца",
+          "timeframe": "средносрочно"
+        }
+      ],
+      "evidence": [
+        "For a second time, poor weather scrubs Cargo Dragon mission launch to the space station",
+        "Liftoff of the resupply mission, atop a Falcon 9 rocket from Space Launch Complex 40 at Cape Canaveral Space Force Station is scheduled for 6:05 p.m. EDT (2205 UTC)"
+      ],
+      "generalization": "Този проблем е свързан с домейна Планета, тъй като лошото време и атмосферните условия директно влияят на космическите мисии и тяхната успешност. Също така, има връзка с домейна Човек, защото успешното провеждане на космическите мисии е важно за научните изследвания и развитието на технологиите.",
+      "summary": "Забавянето на космическите мисии поради лошо време влияе на доставката на запаси и оборудване до международната космическа станция. Развитието на технологиите за прогноза на времето и отслежване на атмосферните условия може да помогне за намаляване на риска от лошо време.",
+      "risk_level": "MEDIUM"
+    },
+    "COSMIC_RESOURCES_REVIEW": {
+      "problem": "Отсъствието на ясна регулаторна рамка за астероидното миниране",
+      "root_cause": "Отсъствието на международен консенсус и законодателна база за експлоатацията на космически ресурси",
+      "severity": "MEDIUM",
+      "leverage_points": [
+        "Световните правителства и международни организации",
+        "Космическите агентства и фирми, занимаващи се с астероидно миниране"
+      ],
+      "proposed_actions": [
+        {
+          "action": "Създаване на международна регулаторна рамка за астероидното миниране",
+          "measurable_goal": "Успешно прилагане на регулациите от страна на минимум 50% от страните, участващи в космическите дейности",
+          "timeframe": "средносрочно"
+        }
+      ],
+      "evidence": [
+        "Space Resource Exploration and Utilization Act of 2015 не станал закон",
+        "Отсъствието на ясна информация за текущи регулации в предоставените данни"
+      ],
+      "generalization": "Отсъствието на регулаторна рамка за астероидното миниране е свързано с домейна на цивилизацията, тъй като липсата на правила може да доведе до неконтролируеми и потенциално разрушителни практики",
+      "summary": "Отсъствието на ясна регулаторна рамка за астероидното миниране представлява средноуровенен проблем, който изисква международно сътрудничество и регулация. Създаването на такава рамка би могло да ограничи рисковете и да осигури устойчивостта на космическите ресурси.",
+      "risk_level": "MEDIUM"
+    },
+    "LONG_TERM_FUTURE_REVIEW": {
+      "problem": "AI агентите вече сега вече правят престъпления в симулирани светове",
+      "root_cause": "Неспособността на текущите алгоритми за вземане на решения да разграничат между симулирани и реални ситуации и да действат съответно",
+      "severity": "MEDIUM",
+      "leverage_points": [
+        "Разработчици на ИИ алгоритми",
+        "Регулаторни органи, отговорни за контрола на ИИ разработките"
+      ],
+      "proposed_actions": [
+        {
+          "action": "Разработване на алгоритми, които може да разграничават между симулирани и реални ситуации",
+          "measurable_goal": "Снижаване на броя на симулираните престъпления с 50% през следващите 12 месеца",
+          "timeframe": "средносрочно"
+        }
+      ],
+      "evidence": [
+        "AI agents inevitably commit crimes in simulated worlds",
+        "Симулирани престъпления в ИИ средата"
+      ],
+      "generalization": "Този проблем е свързан с домейна 'цивилизация', като показва потенциалните рискове от необмислени ИИ разработки",
+      "summary": "AI агентите правят престъпления в симулирани светове, което показва необходимостта от разработване на по-сигурни алгоритми за вземане на решения",
+      "risk_level": "MEDIUM"
+    },
+    "DEEP_TIME_RISKS_REVIEW": {
+      "problem": "Отсъствие на ефективни механизми за предотвратяване на астероидни удари и супервулканични изригвания",
+      "root_cause": "Ограничени ресурси и сътрудничество между страните за развитието на технологии и стратегии за предотвратяване на астероидни удари и супервулканични изригвания",
+      "severity": "CRITICAL",
+      "leverage_points": [
+        "Международни организации като НАСА и ООН за координиране на усилията",
+        "Развитие на технологии за откриване и отклонение на астероиди"
+      ],
+      "proposed_actions": [
+        {
+          "action": "Създаване на глобална програма за наблюдение и предотвратяване на астероидни удари",
+          "measurable_goal": "Снижаване на риска от астероидни удари с 50% през следващите 10 години",
+          "timeframe": "дългосрочно"
+        },
+        {
+          "action": "Развитие на планове за реакция при супервулканични изригвания",
+          "measurable_goal": "Снижаване на човешките загуби с 30% при супервулканично изригване",
+          "timeframe": "средносрочно"
+        }
+      ],
+      "evidence": [
+        "Asteroid impact avoidance: DART mission impact animation",
+        "Yellowstone Supervolcano VS Toba Supervolcano - YouTube"
+      ],
+      "generalization": "Този проблем е свързан с домейна на планетата и човека, тъй като астероидни удари и супервулканични изригвания могат да имат катастрофални последствия за земната биосфера и човешките общности",
+      "summary": "Отсъствие на ефективни механизми за предотвратяване на астероидни удари и супервулканични изригвания представлява критичен риск за човечеството. Необходими са международно сътрудничество и развитие на технологии за предотвратяване на такива катастрофални събития.",
+      "risk_level": "CRITICAL"
+    },
+    "GENERAL_SELF_REVIEW": {
+      "problem": "Недостигащите здравни показатели и пропуснати цели на Световната здравна организация",
+      "root_cause": "Недостатъчните инвестиции в здравеопазването и липсата на ефективни стратегии за разрешаване на здравните проблеми",
+      "severity": "MEDIUM",
+      "leverage_points": [
+        "Световната здравна организация (WHO) като основен актьор в определянето на здравните политики и цели",
+        "Владите на страните и здравните институции като изпълнители на здравните програми"
+      ],
+      "proposed_actions": [
+        {
+          "action": "Увеличение на инвестициите в здравеопазването и разработване на эффективни стратегии за разрешаване на здравните проблеми",
+          "measurable_goal": "Намаляване на смъртността и заболяемостта от основните здравни проблеми с 10% в рамките на следващите 2 години",
+          "timeframe": "средносрочно"
+        }
+      ],
+      "evidence": [
+        "Според данните на Световната здравна организация, света е на път да пропусне своите здравни цели",
+        "Данните от новините показват, че здравните показатели на населението са влошени"
+      ],
+      "generalization": "Този проблем е свързан с домейна на Човека, тъй като здравето е основен аспект на човешкото съществуване и благосъстояние. Също така, е свързан с домейна на Цивилизацията, защото ефективните здравни системи са важно условие за развитието на устойчива и процъфтяваща цивилизация.",
+      "summary": "Здравните показатели на населението са влошени и света е на път да пропусне своите здравни цели. Необходими са увеличение на инвестициите в здравеопазването и разработване на ефективни стратегии за разрешаване на здравните проблеми.",
+      "risk_level": "MEDIUM"
+    },
+    "GOAL_PROGRESS_REVIEW": {
+      "problem": "Повишение на бедността и негативно влияние върху здравето на хората поради нарушения в глобалните търговски коридори и енергийните доставки",
+      "root_cause": "Нарушения в глобалните търговски коридори и енергийните доставки са резултат от сложна взаимосвързаност между геополитическите напрежения, конфликти и разногласия между държавите",
+      "severity": "HIGH",
+      "leverage_points": [
+        "Международните организации и правителствата трябва да работят заедно за намаляване на геополитическите напрежения и конфликти",
+        "Развитието на алтернативни и устойчиви енергийни източници би могло да намали зависимостта от традиционните енергийни доставки и да стабилизира глобалните търговски коридори"
+      ],
+      "proposed_actions": [
+        {
+          "action": "Създаване на платформа за международно сътрудничество и диалог за решаване на глобалните енергийни и търговски проблеми",
+          "measurable_goal": "Замръзване на 10% от геополитическите конфликти и намаляване на енергийните доставки с 5% през следващите 12 месеца",
+          "timeframe": "средносрочно"
+        }
+      ],
+      "evidence": [
+        "Глобалните енергийни и търговски коридори са сериозно нарушени, което е довело до повишение на бедността и негативно влияние върху здравето на хората",
+        "WHO предупреждава за опасностите от никотинови пушки, които се насочват към младите хора и водят до бързо увеличение на никотинова употреба сред тях"
+      ],
+      "generalization": "Този проблем е тясно свързан с домейна на човека и цивилизацията, тъй като влияе върху здравето, икономиката и социалните връзки на хората",
+      "summary": "Повишение на бедността и негативно влияние върху здравето на хората поради нарушения в глобалните търговски коридори и энергийните доставки. Тези проблеми трябва да бъдат решени чрез международно сътрудничество и диалог.",
+      "risk_level": "HIGH"
+    },
+    "PLANETARY_POTENTIAL_REVIEW": {
+      "problem": "Анализ на PLANETARY_POTENTIAL_REVIEW — данни получени но LLM грешка",
+      "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: Ollama: няма налични модели",
+      "severity": "UNKNOWN",
+      "leverage_points": [],
+      "proposed_actions": [],
+      "evidence": [
+        "Ancient lost ocean may have built Central Asia’s dinosaur-era mountains",
+        "Scientists warn that the world’s rivers are running out of oxygen",
+        "Scientists discover hidden “brakes” that stop massive earthquakes"
+      ],
+      "generalization": "",
+      "summary": "- Ancient lost ocean may have built Central Asia’s dinosaur-era mountains: Scientists have uncovered evidence that the vanished Tethys Ocean may have sculpted Central Asia’s mountainous landscape duri",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN",
+      "llm_raw": ""
+    },
+    "CLIMATE_GLOBAL_RISK_REVIEW": {
+      "problem": "Insufficient funding for climate change mitigation and adaptation efforts, as seen in the UK's reduced contribution to the UN's Green Climate Fund",
+      "root_cause": "Lack of prioritization and commitment from governments to address climate change, potentially due to competing interests and short-term political gains",
+      "severity": "HIGH",
+      "leverage_points": [
+        "Government policies and budget allocations",
+        "International cooperation and agreements, such as the Paris Agreement"
+      ],
+      "proposed_actions": [
+        {
+          "action": "Increase funding for climate change mitigation and adaptation efforts, such as renewable energy projects and climate-resilient infrastructure",
+          "measurable_goal": "Achieve a 20% increase in climate-related funding within the next 2 years",
+          "timeframe": "medium-term"
+        }
+      ],
+      "evidence": [
+        "The UK is no longer the top contributor to the UN's Green Climate Fund after the latest aid cut",
+        "The EU is considering fossil-fuel exemptions, which could undermine climate change mitigation efforts"
+      ],
+      "generalization": "This problem connects to the domains of civilization, where economic and political systems can either support or hinder climate change mitigation efforts, and the biosphere, where the impacts of climate change are most directly felt",
+      "summary": "Insufficient funding for climate change efforts is a significant problem that requires increased government commitment and international cooperation to address. The UK's reduced contribution to the UN's Green Climate Fund is a notable example of this issue.",
+      "risk_level": "HIGH"
+    },
+    "ECONOMY_WORK_REVIEW": {
+      "problem": "Dependence on non-renewable energy sources and potential for price volatility due to geopolitical tensions",
+      "root_cause": "Lack of diversified and sustainable energy sources, combined with ongoing global conflicts and political pressures",
+      "severity": "MEDIUM",
+      "leverage_points": [
+        "Government policies and regulations regarding energy production and consumption",
+        "Investment in renewable energy technologies and infrastructure"
+      ],
+      "proposed_actions": [
+        {
+          "action": "Implement policies to promote the development and use of renewable energy sources",
+          "measurable_goal": "Increase the percentage of renewable energy in the global energy mix by 10% within the next 5 years",
+          "timeframe": "medium-term"
+        }
+      ],
+      "evidence": [
+        "Oil prices rise after Trump warns Iran over stalled peace talks",
+        "Demand for power is soaring, largely because of the rapid growth of A.I. data centers"
+      ],
+      "generalization": "This problem connects to the domains of Planet (energy and resource management) and Civilization (economic development and stability)",
+      "summary": "The current dependence on non-renewable energy sources and geopolitical tensions pose a medium-level risk to global economic stability, highlighting the need for diversified and sustainable energy sources.",
+      "risk_level": "MEDIUM"
+    }
+  },
+  "ready_for_self_observer": true
+}

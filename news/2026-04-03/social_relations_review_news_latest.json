@@ -1,0 +1,90 @@
+{
+  "axis": "SOCIAL_RELATIONS_REVIEW",
+  "fetched_at": "2026-04-03T14:18:32.616760+00:00",
+  "smart_query": "social inequality conflict trust",
+  "sources_count": {
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 0,
+    "github": 3,
+    "web_search": 5
+  },
+  "rss": [
+    {
+      "title": "Artemis II leaves Earth's orbit on track for far side of the Moon",
+      "snippet": "The mission's last, big push on its lunar journey takes humans out of the Earth's orbit for the first time since 1972.",
+      "url": "https://www.bbc.com/news/articles/c937g7nd5x4o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Trump removes US Attorney General Pam Bondi",
+      "snippet": "Bondi's time as top US law enforcement officer was overshadowed by her handling of the Epstein files.",
+      "url": "https://www.bbc.com/news/articles/ce843ge47z4o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "France's Muslim gathering ban overturned by courts",
+      "snippet": "The Paris police department had argued that the four-day gathering was a security threat because it could be a target of terrorism.",
+      "url": "https://www.bbc.com/news/articles/cwyjekvwww0o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "briatte/awesome-network-analysis",
+      "snippet": "A curated list of awesome network analysis resources.",
+      "stars": 3976,
+      "url": "https://github.com/briatte/awesome-network-analysis",
+      "updated": "2026-04-03",
+      "source": "GitHub"
+    },
+    {
+      "title": "obsei/obsei",
+      "snippet": "Obsei is a low code AI powered automation tool. It can be used in various business flows like social listening, AI based alerting, brand image analysis, comparative study and more .",
+      "stars": 1387,
+      "url": "https://github.com/obsei/obsei",
+      "updated": "2026-04-02",
+      "source": "GitHub"
+    },
+    {
+      "title": "shaypal5/awesome-twitter-data",
+      "snippet": "A list of Twitter datasets and related resources.",
+      "stars": 1099,
+      "url": "https://github.com/shaypal5/awesome-twitter-data",
+      "updated": "2026-03-20",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [],
+  "web_search": [
+    {
+      "title": "Exploring the effects of inequality on social trust in the United ...",
+      "url": "https://link.springer.com/article/10.1007/s44202-025-00344-5",
+      "source": "WEB"
+    },
+    {
+      "title": "New UN Report Warns of Global Social Crisis Driven by Insecurity ...",
+      "url": "https://unu.edu/press-release/new-un-report-warns-global-social-crisis-driven-insecurity-inequality-and-distrust",
+      "source": "WEB"
+    },
+    {
+      "title": "Why do inequality and deprivation produce high crime and low trust?",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7820585/",
+      "source": "WEB"
+    },
+    {
+      "title": "Key elements of social cohesion in conflict-affected societies: a ...",
+      "url": "https://www.tandfonline.com/doi/full/10.1080/23311886.2025.2586176",
+      "source": "WEB"
+    },
+    {
+      "title": "Income inequality and social trust - ScienceDirect",
+      "url": "https://www.sciencedirect.com/science/article/pii/S0165176525005129",
+      "source": "WEB"
+    }
+  ],
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL"
+}

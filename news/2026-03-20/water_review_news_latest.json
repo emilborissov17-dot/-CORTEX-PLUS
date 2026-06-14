@@ -1,0 +1,82 @@
+{
+  "axis": "WATER_REVIEW",
+  "fetched_at": "2026-03-20T08:16:28.680958+00:00",
+  "smart_query": "water scarcity drinking water",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube": 10,
+    "youtube_transcripts": 1,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "Women and girls bearing brunt of water shortages globally, UN warns",
+      "snippet": "Unesco calls for action as lack of access and sanitation hit health, education and food security of womenWomen and girls are bearing the brunt of water shortages and a lack of sanitation around the world, hindering the economic and social development of poorer countries, the UN has warned.Women are ",
+      "url": "https://www.theguardian.com/society/2026/mar/19/women-and-girls-bearing-brunt-of-water-shortages-globally-un-warns",
+      "source": "RSS"
+    },
+    {
+      "title": "‘They called me a water terrorist’: exiled Iranian scientist wins global prize",
+      "snippet": "Prof Kaveh Madani, winner of the Stockholm water prize, was accused of sabotage with his environmental work Eight years before he got the call telling him he had won the Stockholm water prize, Prof Kaveh Madani was being interrogated by Iran’s Revolutionary Guards, accused of being a spy for the CIA",
+      "url": "https://www.theguardian.com/environment/2026/mar/18/iran-scientist-exile-wins-stockholm-water-prize-kaveh-madani",
+      "source": "RSS"
+    },
+    {
+      "title": "Thames Water rescue deal talks rumble on interminably but its future remains unclear | Nils Pratley",
+      "snippet": "As negotiations enter a ninth month, an outcome is thought to be weeks away and the devil is still in the detailIt is two years since the shareholders of Thames Water threw in the towel, declared the company “uninvestible” and accepted their shares were worthless. Yet the water torture goes on and o",
+      "url": "https://www.theguardian.com/business/2026/mar/16/thames-water-rescue-deal-talks-rumbles-on-interminably-but-its-future-remains-unclear",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "wilsto/pool-monitor-card",
+      "snippet": "Keep your swimming pool safe and crystal clear by monitoring up to 25 water chemistry parameters at a glance.",
+      "stars": 114,
+      "url": "https://github.com/wilsto/pool-monitor-card",
+      "updated": "2026-03-15",
+      "source": "GitHub"
+    },
+    {
+      "title": "DOI-USGS/EGRET",
+      "snippet": "An R-package for the analysis of long-term changes in water quality and streamflow, including the water-quality method Weighted Regressions on Time, Discharge, and Season (WRTDS). https://doi-usgs.git",
+      "stars": 97,
+      "url": "https://github.com/DOI-USGS/EGRET",
+      "updated": "2026-03-12",
+      "source": "GitHub"
+    },
+    {
+      "title": "KnowFlow/KnowFlow_AWM",
+      "snippet": "KnowFlow Automatic Water Monitoring device is an open sourced tool enable everyone having access to first hand water quality data with low cost.",
+      "stars": 95,
+      "url": "https://github.com/KnowFlow/KnowFlow_AWM",
+      "updated": "2025-12-19",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Causal Attribution of Coastal Water Clarity Degradation to Nickel Processing Expansion at the Indonesia Morowali Industrial Park, Sulawesi",
+      "snippet": "Indonesia's nickel ore export ban has driven rapid expansion of smelting and hydrometallurgical processing capacity at the Indonesia Morowali Industrial Park (IMIP), now the world's largest integrated nickel processing complex, on the coast of Central Sulawesi. Whether this industrialization has deg",
+      "url": "https://arxiv.org/abs/2603.07331v2",
+      "source": "arXiv"
+    },
+    {
+      "title": "Modelling the long-term impacts of artificial warming on the Martian water cycle and surface ice distribution",
+      "snippet": "Recent papers by Ansari et al. (2024, Science Advances 10, eadn4650) and Richardson et al. (2025, arXiv eprint 2504.01455) have suggested that global warming of the Martian surface ('terraforming') by 35 K to sustain local habitats above the melting point of water could be achieved through the injec",
+      "url": "https://arxiv.org/abs/2603.01539v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[Kleptotherms] In this episode, we break the thermometer and watch the mercury spill out as we discover that temperature is far stranger than it seems. We first ran this episode in 2021: Five stories that run the gamut from snakes to stars. We start out underwater, with a species of snake that has evolved a devious trick for keeping warm. Then we hear the tale of a young man whose seemingly simple method of warm",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

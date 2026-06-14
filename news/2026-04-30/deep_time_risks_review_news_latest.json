@@ -1,0 +1,37 @@
+{
+  "axis": "DEEP_TIME_RISKS_REVIEW",
+  "fetched_at": "2026-04-30T08:29:18.622481+00:00",
+  "smart_query": "nuclear war pandemic existential risk",
+  "sources_count": {
+    "wiki": 0,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [],
+  "gdelt": [],
+  "github_repos": [],
+  "arxiv_papers": [
+    {
+      "title": "ATLAS: An Annotation Tool for Long-horizon Robotic Action Segmentation",
+      "snippet": "Annotating long-horizon robotic demonstrations with precise temporal action boundaries is crucial for training and evaluating action segmentation and manipulation policy learning methods. Existing annotation tools, however, are often limited: they are designed primarily for vision-only data, do not ",
+      "url": "https://arxiv.org/abs/2604.26637v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "SG-UniBuc-NLP at SemEval-2026 Task 6: Multi-Head RoBERTa with Chunking for Long-Context Evasion Detection",
+      "snippet": "We describe our system for SemEval-2026 Task 6 (CLARITY: Unmasking Political Question Evasions), which classifies English political interview responses by coarse-grained clarity (3-way) and fine-grained evasion strategy (9-way). Since responses frequently exceed the 512-token limit of standard Trans",
+      "url": "https://arxiv.org/abs/2604.26375v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[Statement from Max Tegmark on the Department of War’s ultimatum] \"Our safety and basic rights must not be at the mercy of a company's internal policy; lawmakers must work to codify these overwhelmingly popular red lines into law.\"",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

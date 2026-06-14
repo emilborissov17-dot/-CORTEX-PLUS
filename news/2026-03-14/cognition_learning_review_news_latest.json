@@ -1,0 +1,82 @@
+{
+  "axis": "COGNITION_LEARNING_REVIEW",
+  "fetched_at": "2026-03-14T07:10:23.003116+00:00",
+  "smart_query": "education learning children schools",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "Cannabis study finds THC can create false memories",
+      "snippet": "THC doesn’t just blur memories—it can create new ones that never happened. In a controlled experiment, cannabis users were much more likely to recall words that were never shown and struggled with tasks like remembering to do something later. Researchers found that THC disrupted many different memor",
+      "url": "https://www.sciencedaily.com/releases/2026/03/260311004711.htm",
+      "source": "RSS"
+    },
+    {
+      "title": "New drug cuts seizures by up to 91% in children with rare epilepsy",
+      "snippet": "A new experimental drug is showing remarkable promise for children with Dravet syndrome, a severe genetic form of epilepsy. In clinical trials, the treatment zorevunersen cut seizures by as much as 91% while also improving quality of life for many patients. The therapy works by boosting the function",
+      "url": "https://www.sciencedaily.com/releases/2026/03/260304184215.htm",
+      "source": "RSS"
+    },
+    {
+      "title": "Why some kids struggle with math even when they try hard",
+      "snippet": "A new Stanford study suggests math struggles may be about more than numbers. Children who had difficulty with math were less likely to adjust their thinking after making mistakes during number comparison tasks. Brain imaging showed weaker activity in regions that help monitor errors and guide behavi",
+      "url": "https://www.sciencedaily.com/releases/2026/02/260213020416.htm",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "AFLucas-UOM/AI-Early-Detection-System-for-Dyslexia-ADHD",
+      "snippet": "Proof-of-concept behavioural analysis system for early detection of dyslexia and ADHD using spelling pattern evaluation, sentence rewriting similarity analysis, and keyboard/mouse interaction monitori",
+      "stars": 6,
+      "url": "https://github.com/AFLucas-UOM/AI-Early-Detection-System-for-Dyslexia-ADHD",
+      "updated": "2026-03-06",
+      "source": "GitHub"
+    },
+    {
+      "title": "ShubhamMahajan880/studyAlpha-Ai-Agent",
+      "snippet": "🎓 StudyAlpha is an intelligent, end-to-end AI Study Coach powered by multi-agent collaboration, memory-augmented reasoning, adaptive quizzes, and ML weakness prediction.  Built for the Google × Kaggle",
+      "stars": 5,
+      "url": "https://github.com/ShubhamMahajan880/studyAlpha-Ai-Agent",
+      "updated": "2026-01-29",
+      "source": "GitHub"
+    },
+    {
+      "title": "Kuldeep-Padshala/genai-capstone-study-agent",
+      "snippet": "A Capstone Project Demonstrating LLM-Powered Agents, Parallel Execution, Session Memory, Observability & Long-Running Operations",
+      "stars": 1,
+      "url": "https://github.com/Kuldeep-Padshala/genai-capstone-study-agent",
+      "updated": "2025-12-02",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "AI Misuse in Education Is a Measurement Problem: Toward a Learning Visibility Framework",
+      "snippet": "The rapid integration of conversational AI systems into educational settings has intensified ethical concerns about academic integrity, fairness, and students' cognitive development. Institutional responses have largely centered on AI detection tools and restrictive policies, yet such approaches hav",
+      "url": "https://arxiv.org/abs/2603.07834v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "SuperSkillsStack: Agency, Domain Knowledge, Imagination, and Taste in Human-AI Design Education",
+      "snippet": "This study examines how students integrate generative artificial intelligence (AI) into design projects through the lens of the SuperSkillsStack framework, which identifies four key human competencies for effective human-AI collaboration: Agency, Domain Knowledge, Imagination, and Taste. As generati",
+      "url": "https://arxiv.org/abs/2603.07016v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[The Impact of AI in Education: Navigating the Imminent Future] What must be considered to build a safe but effective future for AI in education, and for children to be safe online?",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

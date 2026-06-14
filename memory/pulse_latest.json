@@ -1,0 +1,13 @@
+{
+  "ts": "2026-03-12T09:06:56.240742+00:00",
+  "cpu_pct": 0.0,
+  "ram_pct": 14.2,
+  "ram_free_gb": 5.75,
+  "disk_free_gb": 763.2,
+  "proc_threads": 2,
+  "groq_alive": true,
+  "snap_count": 29,
+  "last_log": "",
+  "state": "IDLE",
+  "feeling": "почивам"
+}

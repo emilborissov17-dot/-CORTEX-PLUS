@@ -1,0 +1,62 @@
+{
+  "axis": "TECHNOLOGY_INFRA_REVIEW",
+  "fetched_at": "2026-03-21T11:44:24.993569+00:00",
+  "smart_query": "technology internet digital access",
+  "sources_count": {
+    "wiki": 0,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "Snailclimb/JavaGuide",
+      "snippet": "Java 面试 & 后端通用面试指南，覆盖计算机基础、数据库、分布式、高并发与系统设计。准备后端技术面试，首选 JavaGuide！",
+      "stars": 154374,
+      "url": "https://github.com/Snailclimb/JavaGuide",
+      "updated": "2026-03-21",
+      "source": "GitHub"
+    },
+    {
+      "title": "doocs/advanced-java",
+      "snippet": "😮 Core Interview Questions & Answers For Experienced Java(Backend) Developers | 互联网 Java 工程师进阶知识完全扫盲：涵盖高并发、分布式、高可用、微服务、海量数据处理等领域知识",
+      "stars": 78908,
+      "url": "https://github.com/doocs/advanced-java",
+      "updated": "2026-03-21",
+      "source": "GitHub"
+    },
+    {
+      "title": "redis/redis",
+      "snippet": "For developers, who are building real-time data-driven applications, Redis is the preferred, fastest, and most feature-rich cache, data structure server, and document and vector query engine.",
+      "stars": 73509,
+      "url": "https://github.com/redis/redis",
+      "updated": "2026-03-21",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Optimizing Reinforcement Learning Training over Digital Twin Enabled Multi-fidelity Networks",
+      "snippet": "In this paper, we investigate a novel digital network twin (DNT) assisted deep learning (DL) model training framework. In particular, we consider a physical network where a base station (BS) uses several antennas to serve multiple mobile users, and a DNT that is a virtual representation of the physi",
+      "url": "https://arxiv.org/abs/2603.08931v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "A Lightweight Digital-Twin-Based Framework for Edge-Assisted Vehicle Tracking and Collision Prediction",
+      "snippet": "Vehicle tracking, motion estimation, and collision prediction are fundamental components of traffic safety and management in Intelligent Transportation Systems (ITS). Many recent approaches rely on computationally intensive prediction models, which limits their practical deployment on resource-const",
+      "url": "https://arxiv.org/abs/2603.07338v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[#491 – OpenClaw: The Viral AI Agent that Broke the Internet – Peter Steinberger] Peter Steinberger is the creator of OpenClaw, an open-source AI agent framework that&#8217;s the fastest-growing project in GitHub history.\nThank you for listening ❤ Check out our sponsors: https://lexfridman.com/sponsors/ep491-sc\nSee below for timestamps, transcript, and to give feedback, submit questions, contact Lex, etc.\nTranscript:\nhttps://lexfridman.com/peter-steinberger-transcript\nCONTACT L",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

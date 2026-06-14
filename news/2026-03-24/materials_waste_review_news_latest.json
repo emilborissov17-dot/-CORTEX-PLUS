@@ -1,0 +1,63 @@
+{
+  "axis": "MATERIALS_WASTE_REVIEW",
+  "fetched_at": "2026-03-24T09:39:22.037316+00:00",
+  "smart_query": "plastic waste pollution recycling",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 0,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "pogopaule/awesome-sustainability-jobs",
+      "snippet": "Dev jobs in the sustainability sector - be part of the solution, not the problem",
+      "stars": 505,
+      "url": "https://github.com/pogopaule/awesome-sustainability-jobs",
+      "updated": "2026-03-23",
+      "source": "GitHub"
+    },
+    {
+      "title": "Alkia/electra",
+      "snippet": "This is Electra blockchain's repository for a decentralized micro-grid electricity exchange solution",
+      "stars": 72,
+      "url": "https://github.com/Alkia/electra",
+      "updated": "2026-01-28",
+      "source": "GitHub"
+    },
+    {
+      "title": "NatLabRockies/PV_ICE",
+      "snippet": "An open-source tool to quantify Solar Photovoltaics (PV) Energy and Mass Flows in the Circular Economy, from a Reliability and Lifetime approach",
+      "stars": 43,
+      "url": "https://github.com/NatLabRockies/PV_ICE",
+      "updated": "2026-01-28",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Switchable circular dichroism and ionic migration dominated charge transport in a chiral spin crossover polymer",
+      "snippet": "We demonstrate thermally switchable chiroptical activity in a chiral spin crossover (SCO) material, where circular dichroism is significant in the low spin state but quenched in the high-spin state for both enantiomers. With magnetometry we establish a cooperative transition with hysteresis near roo",
+      "url": "https://arxiv.org/abs/2603.11261v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Electronic Structure and Resonant Circular Dichroism of La$_{0.7}$Sr$_{0.3}$MnO$_3$ from Soft X-ray Angle-Resolved Photoemission",
+      "snippet": "Coupling between spin, orbital, charge, and lattice degrees of freedom in transition-metal oxides produces a variety of electronic and magnetic phenomena of importance for future technologies. Here, we explore the electronic band structure of a (111)-oriented La0.7Sr0.3MnO3 thin film through soft X-",
+      "url": "https://arxiv.org/abs/2603.10794v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[Governor DeSantis Directs Florida State Agencies to Partner with Future of Life Institute to Shield Families from AI Harm] The collaboration will produce a Crisis Counselor Training Curriculum and a statewide AI Harms Reporting Form targeting dangerous AI companion applications",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

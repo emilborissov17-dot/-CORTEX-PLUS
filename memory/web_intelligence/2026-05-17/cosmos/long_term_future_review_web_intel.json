@@ -1,0 +1,121 @@
+{
+  "axis": "LONG_TERM_FUTURE_REVIEW",
+  "domain": "cosmos",
+  "timestamp": "2026-05-17T14:29:38.900550+00:00",
+  "sources_count": 9,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 1,
+  "youtube_items": [
+    {
+      "title": "[YT] Deciphering Secrets of Ancient Civilizations, Noah's Ark... - YouTube",
+      "summary": "- The following is a conversation with Irving Finkel, who is a scholar of ancient languages. He's a curator at the British Museum for over 45 years, and is a much admired and respected world expert. He's an expert on cuneiform script and more generally, on ancient languages like Sumerian, Akkadian, and Babylonian. He's also an expert on ancient board games, Mesopotamia magic, medicine, literature, and culture. I should also mention that both on and off the mic, Irving was a super kind and fun person to talk to. He has an infectious enthusiasm for ancient history that of course I already love, but fell in love with even more. This is the Lex Fridman Podcast. To support it, please check out our sponsors in the description. You can also find links to contact me, ask questions, get feedback, a",
+      "link": "https://www.youtube.com/watch?v=_bBRVNkAfkQ",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "_bBRVNkAfkQ",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "Недостигът на критично мислене и рационално разрешаване на проблеми в контекста на здравеопазване и технологични рискове.",
+    "root_cause": "Липсата на способността за критичен анализ и разбиране на сложни системи води до грешки в личното здраве и неадекватни стратегии за управление на рискове, включително в AI и технологични угрози.",
+    "severity": "HIGH",
+    "leverage_points": [
+      "Образователни институции и професионални организации, които разработват критично мислене като основен компетентностен стандарт",
+      "Разработчици на AI и рискови изследователи, които включват критично мислене в процесите за изследване и управление на рискове"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Въвеждане на критичен анализ в учебната програма по здравеопазване и медицина",
+        "measurable_goal": "Повишаване на точността на диагностичните изводи на студенти-медici с 20% в сравнение с текущите стандарти",
+        "timeframe": "дългосрочно"
+      },
+      {
+        "action": "Разработка на критични обучения за рискови изследователи в AI и технологични системи",
+        "measurable_goal": "Повишаване на умението за разпознаване на сложни рискови сценарии с 30% в сравнение с текущите подходи",
+        "timeframe": "средносрочно"
+      }
+    ],
+    "evidence": [
+      "How to Reason about Your Health Issues: Many people make costly mistakes when reasoning about their health. Even most doctors make this mistake, because it's not a mistake that's caused by a lack of medical knowledge. Rather, it's caused by flawed reasoning.",
+      "How useful is hardware knowledge in AI s-risks research?: Recently I'm thinking on major in Electrical engineering(EE) vs CS, I think hardware knowledge is less relevant to AI s-risks research, however, it"
+    ],
+    "generalization": "Този проблем се проявява в няколко домейна: здравеопазване, AI-създаване, политика и управление на рискове. Всички изискват критично мислене за правилно разбиране на сложни системи и избягване на грешки.",
+    "summary": "Липсата на критично мислене води до грешки в здравеопазването и управлението на технологични рискове. Това е сериозен проблем, който изисква системни промени в образованието и професионалните стандарти.",
+    "risk_level": "CRITICAL"
+  },
+  "raw_items": [
+    {
+      "title": "Next Token Prediction is a Misleading Term",
+      "summary": "<p><span>I’m fed up of hearing about how LLMs are next token predictors, and therefore they &lt;cannot do some task&gt; &lt;aren’t </span><i><span>really</span></i><span> doing cognition&gt; &lt;are just guessing&gt;.</span></p><p><span>There’s lots of philosophical objections, but fundamentally, framing AI as next token predictors in the first places is just misleading and inaccurate. Here’s why LLMs </span><i><span>aren’t</span></i><span> naive next token predictors.</span></p><h2><span>What i",
+      "link": "https://www.lesswrong.com/posts/9FWuxzTqvzMa3TqCF/next-token-prediction-is-a-misleading-term",
+      "published": "Sun, 17 May 2026 11:58:58 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Can ELK be brute-forced? Intertheoretic reduction",
+      "summary": "<p><a href=\"https://www.lesswrong.com/w/eliciting-latent-knowledge\"><span>Eliciting Latent Knowledge</span></a><span> problem for the unfamiliar:</span></p><blockquote><p><span>Suppose we train a model to predict what the future will look like according to cameras and other sensors. We then use planning algorithms to find a sequence of actions that lead to predicted futures that look good to us.</span></p></blockquote><blockquote><p><span>But some action sequences could tamper with the cameras s",
+      "link": "https://www.lesswrong.com/posts/gZMLnaTYTwwrjmgfa/can-elk-be-brute-forced-intertheoretic-reduction",
+      "published": "Sun, 17 May 2026 10:21:29 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "James C. Scott: Seeing Like a State",
+      "summary": "<p><i>Don't get me wrong, but metis is YOLO.</i></p>\n<p>In 1932-33, Soviet collectivization destroyed local farming knowledge and produced a famine that killed somewhere between five and nine million people. It was one of the twentieth century’s great tragedies, and James Scott’s <em>Seeing Like a State</em> draws a straight line from the ideology that caused it — High Modernism, the belief that society can be rationally reorganized from above — to the disaster that followed.</p><p>But here’s a ",
+      "link": "https://www.lesswrong.com/posts/iiDzt5qhesmQZiNAj/james-c-scott-seeing-like-a-state",
+      "published": "Sun, 17 May 2026 08:40:40 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "How to Reason about Your Health Issues",
+      "summary": "<p>Many people make costly mistakes when reasoning about their health. Even most doctors make this mistake, because it's not a mistake that's caused by a lack of medical knowledge. Rather, it's caused by a lack of clear thinking.</p>\n<p>People experience symptoms, and then they look for the root cause of their symptoms. For example, somone with heartburn or pain in their stomach might decide the root cause of their issues is excess stomach acid/GERD (GastroEsophageal Reflux Disease -- a disease ",
+      "link": "https://www.lesswrong.com/posts/WiRrHDd3EiaRd6gsu/how-to-reason-about-your-health-issues",
+      "published": "Sun, 17 May 2026 05:10:35 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "On getting unstuck",
+      "summary": "Published on May 17, 2026 1:00 AM GMT<br /><br /><p>After more than a year of trials and new models, Anthropic's Claude AI has finally managed to beat Pokémon Red. The <a href=\"https://www.lesswrong.com/posts/sehJYg5Yny9fvpbpt/a-year-late-claude-finally-beats-pokemon\">writeup</a> that clued me in to this is worth a read; the story of Claude's many failures leading up to its success are frankly hilarious. There's even a catchy <a href=\"https://www.youtube.com/watch?v=fxI8PNMcl10\">song</a>.</p><p>",
+      "link": "https://forum.effectivealtruism.org/posts/qa8kHRjGFCHGLWkgz/on-getting-unstuck",
+      "published": "Sun, 17 May 2026 01:00:21 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "A Framework for EA Investment Decisions",
+      "summary": "Published on May 16, 2026 9:47 PM GMT<br /><br /><p>(<a href=\"https://open.substack.com/pub/brianfoerster/p/a-framework-for-ea-investment-decisions?r=834pmy&amp;utm_campaign=post&amp;utm_medium=web&amp;showWelcomeOnShare=true\">crossposted</a> to Substack)</p><p>Decisions about whether to donate now or to invest and donate later can be very impactful. Despite this, there’s&nbsp;little public EA writing about investing relative to writing on other important considerations, like object level foreca",
+      "link": "https://forum.effectivealtruism.org/posts/maoJeD9PC5Cf58uuP/a-framework-for-ea-investment-decisions",
+      "published": "Sat, 16 May 2026 21:47:22 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Salary Sacrifices Are Donations. Let's Treat Them as Such.",
+      "summary": "Published on May 16, 2026 1:44 PM GMT<br /><br /><h3><strong>TLDR</strong></h3><ul><li>NGOs pay less than for-profits.</li><li>Employees accept this because they have impact.</li><li>This makes employees implicit donors to the NGOs</li><li>NGOs should account for this in cost-effectiveness calculations</li><li>This is a coordination problem and can only be solved as a movement</li><li>Salary sacrifice is more tax-efficient than donating the money</li><li>This would make finding talent for pressi",
+      "link": "https://forum.effectivealtruism.org/posts/emzoKk4RS3aGEgyJF/salary-sacrifices-are-donations-let-s-treat-them-as-such",
+      "published": "Sat, 16 May 2026 13:44:14 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "How useful is hardware knowledge in AI s-risks research?",
+      "summary": "Published on May 16, 2026 12:45 PM GMT<br /><br /><p>Recently I'm thinking on major in Electrical engineering(EE) vs CS, I think hardware knowledge is less relevant to AI s-risks research, however, it seems EE engineers would have more expected earnings than CS, which is better for earning to give(since hardware would be replaced later by AI than&nbsp;software).</p><p>80000 hours has put \" AI hardware engineer\" as a&nbsp; career path[1], but there isn't much other discussion about it now.</p><p>",
+      "link": "https://forum.effectivealtruism.org/posts/Zhh3poarPymz6fA6A/how-useful-is-hardware-knowledge-in-ai-s-risks-research",
+      "published": "Sat, 16 May 2026 12:45:35 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] Deciphering Secrets of Ancient Civilizations, Noah's Ark... - YouTube",
+      "summary": "- The following is a conversation with Irving Finkel, who is a scholar of ancient languages. He's a curator at the British Museum for over 45 years, and is a much admired and respected world expert. He's an expert on cuneiform script and more generally, on ancient languages like Sumerian, Akkadian, and Babylonian. He's also an expert on ancient board games, Mesopotamia magic, medicine, literature, and culture. I should also mention that both on and off the mic, Irving was a super kind and fun person to talk to. He has an infectious enthusiasm for ancient history that of course I already love, but fell in love with even more. This is the Lex Fridman Podcast. To support it, please check out our sponsors in the description. You can also find links to contact me, ask questions, get feedback, a",
+      "link": "https://www.youtube.com/watch?v=_bBRVNkAfkQ",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "_bBRVNkAfkQ",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ]
+}

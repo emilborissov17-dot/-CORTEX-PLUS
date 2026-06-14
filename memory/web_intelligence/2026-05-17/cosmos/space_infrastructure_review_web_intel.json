@@ -1,0 +1,159 @@
+{
+  "axis": "SPACE_INFRASTRUCTURE_REVIEW",
+  "domain": "cosmos",
+  "timestamp": "2026-05-17T14:26:06.230810+00:00",
+  "sources_count": 10,
+  "rss_count": 4,
+  "ddg_count": 3,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] NASA's SpaceX 34th Commercial Resupply Services Rendezvous and Docking",
+      "summary": "Hallelujah. Good morning from mission control in Houston in the International Space Station flight control room at NASA's Johnson Space center as we are monitoring live the arrival of NASA's SpaceX 34th commercial resupply services mission heading towards the International Space Station. At this hour, flight director Diana Trillo, Capcom Alex Konolakos, and the SOS flight team are working closely with SpaceX mission control in Hawthorne, California to monitor the cargo craft as it makes its way towards the orbiting laboratory. In about 5 minutes from now, the approach initiation burn for the Dragon spacecraft will be initiated and that will begin the final approach for the vehicle, moving from 2.5 km below the station to about 400 m directly underneath it. Integrated operations between the",
+      "link": "https://www.youtube.com/watch?v=MiNbfSt3JzY",
+      "published": "2026-05-17T10:58:44+00:00",
+      "source_type": "youtube",
+      "channel": "NASA",
+      "video_id": "MiNbfSt3JzY",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] NASA's SpaceX 34th Commercial Resupply Services Launch",
+      "summary": "[music] &gt;&gt; Dragon is in countdown. Falcon 9 is in startup. Dragon, SpaceX, go for launch. Good evening, and thank you for joining us for SpaceX and NASA's live coverage of the launch of the 34th commercial resupply services mission to the International Space Station. Falcon 9 is standing ready on the launch pad at Space Launch Complex 40, just minutes away from liftoff at 6:05 p.m. Eastern from Cape Canaveral Space Force Station in Florida. Since 2012, Falcon 9 and Dragon have delivered critical supplies and science experiments that help the crew conduct important research while in orbit. Today, we're carrying more than 6,000 lb of cargo, food, equipment, and scientific investigations. I'm Ronnie Furman, director of the rideshare program here at SpaceX. Thanks for being with us tonig",
+      "link": "https://www.youtube.com/watch?v=9J8pbaLkRuE",
+      "published": "2026-05-15T22:33:37+00:00",
+      "source_type": "youtube",
+      "channel": "NASA",
+      "video_id": "9J8pbaLkRuE",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] NASA's SpaceX 34th Commercial Resupply Services Launch (May 13, 2026 Attempt)",
+      "summary": "Heat. Heat. Thank you. Good evening. Thank you for joining us for SpaceX and NASA's live coverage of the launch of the 34th commercial resupply services mission to the International Space Station. Falcon 9, as you can see on your screen, is standing ready on the launch pad at Space Launch Complex 40, just minutes away from liftoff at 6:50 p.m. Eastern time from Cape Canaveral Space Force Station in Florida. Since 2012, Falcon 9 and Dragon have delivered critical supplies and science experiments that help the crew conduct important research in orbit. Today, we're carrying more than 6,000 pounds of cargo, food, equipment, and scientific investigations. I'm Ronnie Foreman, director of the ride share program here at SpaceX. Thanks for being with us tonight. At just under t-minus 20 minutes, th",
+      "link": "https://www.youtube.com/watch?v=dF-GsJmqJA8",
+      "published": "2026-05-13T22:54:49+00:00",
+      "source_type": "youtube",
+      "channel": "NASA",
+      "video_id": "dF-GsJmqJA8",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "Нестабилност в графика на стартирането на Falcon 9 за доставка на Dragon към ISS, поради погодни условия",
+    "root_cause": "Повторени опити за стартиране поради неподходяща погода, което създава задържания в графика и въздействие върху планираните мисии",
+    "severity": "MEDIUM",
+    "leverage_points": [
+      "NASA и SpaceX като основни актьори в управлението на мисиите и създаването на графика",
+      "Метеорологични служби и прогнози като ключови точки за подобряване на планирането"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Разработване на алгоритми за прогнозиране на погодни условия с по-висока точност",
+        "measurable_goal": "Увеличаване на успешните стартирания с поне 20% в следващите 6 месеца",
+        "timeframe": "средносрочно"
+      },
+      {
+        "action": "Използване на алтернативни стартови площадки при неподходяща погода",
+        "measurable_goal": "Създаване на резервни стартови площадки за 90% от мисиите в следващия квартал",
+        "timeframe": "дългосрочно"
+      }
+    ],
+    "evidence": [
+      "For a second time, poor weather scrubs Cargo Dragon mission launch to the space station",
+      "SpaceX targets May 19 for debut of Starship Version 3, Launch Pad 2"
+    ],
+    "generalization": "Проблемът е свързан с домейна на космическите мисии, където погодни условия влияят директно върху графика и изпълнение на задачи, което може да има последици и в домейна на логистиката и планирането на ресурси",
+    "summary": "Повторени опити за стартиране поради неподходяща погода са причинили задържания в графика на доставки към ISS.",
+    "risk_level": "MEDIUM"
+  },
+  "raw_items": [
+    {
+      "title": "NASA, SpaceX launch Dragon mission with 6,500 pounds of science and supplies to the space station",
+      "summary": "Liftoff of the resupply mission, atop a Falcon 9 rocket from Space Launch Complex 40 at Cape Canaveral Space Force Station is scheduled for 6:05 p.m. EDT (2205 UTC). The Cargo Dragon is loaded with 6,500 pounds of science and supplies for the space station. <a class=\"mh-excerpt-more\" href=\"https://spaceflightnow.com/2026/05/15/live-coverage-spacex-makes-another-attempt-to-launch-space-station-cargo-mission/\" title=\"NASA, SpaceX launch Dragon mission with 6,500 pounds of science and supplies to t",
+      "link": "https://spaceflightnow.com/2026/05/15/live-coverage-spacex-makes-another-attempt-to-launch-space-station-cargo-mission/",
+      "published": "Fri, 15 May 2026 17:36:05 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "ULA confirms successful solid rocket booster test as Vulcan anomaly investigation continues",
+      "summary": "The static fire test was conducted by Northrop Grumman, the manufacturer of the GEM 63XL solid rocket booster that can be used to help power United Launch Alliance’s Vulcan rockets. An in-flight anomaly was observed on one of those back in mid-February. <a class=\"mh-excerpt-more\" href=\"https://spaceflightnow.com/2026/05/14/ula-confirms-successful-solid-rocket-booster-test-as-vulcan-anomaly-investigation-continues/\" title=\"ULA confirms successful solid rocket booster test as Vulcan anomaly invest",
+      "link": "https://spaceflightnow.com/2026/05/14/ula-confirms-successful-solid-rocket-booster-test-as-vulcan-anomaly-investigation-continues/",
+      "published": "Thu, 14 May 2026 21:20:57 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "SpaceX targets May 19 for debut of Starship Version 3, Launch Pad 2",
+      "summary": "The mission will test a host of changes made to both the launch vehicle and the launch infrastructure as SpaceX prepares to support the Artemis 3 mission in 2027. <a class=\"mh-excerpt-more\" href=\"https://spaceflightnow.com/2026/05/12/spacex-targets-may-19-for-debut-of-starship-super-heavy-version-3-launch-pad-2/\" title=\"SpaceX targets May 19 for debut of Starship Version 3, Launch Pad 2\"></a>",
+      "link": "https://spaceflightnow.com/2026/05/12/spacex-targets-may-19-for-debut-of-starship-super-heavy-version-3-launch-pad-2/",
+      "published": "Tue, 12 May 2026 23:15:22 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "For a second time, poor weather scrubs Cargo Dragon mission launch to the space station",
+      "summary": "SpaceX’s 34th mission as part of the Commercial Resupply Services 2 contract with NASA will deliver 6,500 pounds of science and supplies to the International Space Station. Liftoff of the Falcon 9 rocket from pad 40 at Cape Canaveral Space Force Station is scheduled for Friday, May 15, at 6:05 p.m. EDT (2205 UTC). <a class=\"mh-excerpt-more\" href=\"https://spaceflightnow.com/2026/05/12/live-coverage-nasa-spacex-to-launch-34th-cargo-dragon-mission-to-the-space-station/\" title=\"For a second time, po",
+      "link": "https://spaceflightnow.com/2026/05/12/live-coverage-nasa-spacex-to-launch-34th-cargo-dragon-mission-to-the-space-station/",
+      "published": "Tue, 12 May 2026 12:20:19 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Space exploration",
+      "summary": "Space exploration is the physical investigation of outer space by uncrewed robotic space probes and through human spaceflight.While the observation of objects in space, known as astronomy, predates reliable recorded history, it was the development of large and relatively efficient rockets during the mid-twentieth century that allowed physical space exploration to become a reality. Common rationale",
+      "link": "https://en.wikipedia.org/wiki/Space_exploration",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Space exploration | History, Definition, & Facts | BritannicaSpace Exploration - Scientific AmericanSpace Exploration: Timeline and Technologies | HISTORYSpace.com: NASA, Space Exploration and Astronomy NewsSpace - NPRTop Stories",
+      "summary": "Space exploration is investigation, by means of crewed and uncrewed spacecraft, of the reaches of the universe beyond Earth’s atmosphere and the use of the information so gained to increase knowledge of the cosmos and benefit humanity. Should humans colonize space? Space colonization is widely debated. Some argue humans have a moral duty to save our species from extinction, and space colonization ",
+      "link": "https://www.britannica.com/science/space-exploration",
+      "source_type": "ddg"
+    },
+    {
+      "title": "SpaceX",
+      "summary": "Space Exploration Technologies Corporation, doing business as SpaceX, is a private American aerospace and artificial intelligence company headquartered at the Starbase development site in Starbase, Texas. Since its founding in 2002, the company has made numerous advances in rocket propulsion, reusable launch vehicles, human spaceflight and satellite constellation technology. As of 2026, SpaceX con",
+      "link": "https://en.wikipedia.org/wiki/SpaceX",
+      "source_type": "ddg"
+    },
+    {
+      "title": "[YT] NASA's SpaceX 34th Commercial Resupply Services Rendezvous and Docking",
+      "summary": "Hallelujah. Good morning from mission control in Houston in the International Space Station flight control room at NASA's Johnson Space center as we are monitoring live the arrival of NASA's SpaceX 34th commercial resupply services mission heading towards the International Space Station. At this hour, flight director Diana Trillo, Capcom Alex Konolakos, and the SOS flight team are working closely with SpaceX mission control in Hawthorne, California to monitor the cargo craft as it makes its way towards the orbiting laboratory. In about 5 minutes from now, the approach initiation burn for the Dragon spacecraft will be initiated and that will begin the final approach for the vehicle, moving from 2.5 km below the station to about 400 m directly underneath it. Integrated operations between the",
+      "link": "https://www.youtube.com/watch?v=MiNbfSt3JzY",
+      "published": "2026-05-17T10:58:44+00:00",
+      "source_type": "youtube",
+      "channel": "NASA",
+      "video_id": "MiNbfSt3JzY",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] NASA's SpaceX 34th Commercial Resupply Services Launch",
+      "summary": "[music] &gt;&gt; Dragon is in countdown. Falcon 9 is in startup. Dragon, SpaceX, go for launch. Good evening, and thank you for joining us for SpaceX and NASA's live coverage of the launch of the 34th commercial resupply services mission to the International Space Station. Falcon 9 is standing ready on the launch pad at Space Launch Complex 40, just minutes away from liftoff at 6:05 p.m. Eastern from Cape Canaveral Space Force Station in Florida. Since 2012, Falcon 9 and Dragon have delivered critical supplies and science experiments that help the crew conduct important research while in orbit. Today, we're carrying more than 6,000 lb of cargo, food, equipment, and scientific investigations. I'm Ronnie Furman, director of the rideshare program here at SpaceX. Thanks for being with us tonig",
+      "link": "https://www.youtube.com/watch?v=9J8pbaLkRuE",
+      "published": "2026-05-15T22:33:37+00:00",
+      "source_type": "youtube",
+      "channel": "NASA",
+      "video_id": "9J8pbaLkRuE",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] NASA's SpaceX 34th Commercial Resupply Services Launch (May 13, 2026 Attempt)",
+      "summary": "Heat. Heat. Thank you. Good evening. Thank you for joining us for SpaceX and NASA's live coverage of the launch of the 34th commercial resupply services mission to the International Space Station. Falcon 9, as you can see on your screen, is standing ready on the launch pad at Space Launch Complex 40, just minutes away from liftoff at 6:50 p.m. Eastern time from Cape Canaveral Space Force Station in Florida. Since 2012, Falcon 9 and Dragon have delivered critical supplies and science experiments that help the crew conduct important research in orbit. Today, we're carrying more than 6,000 pounds of cargo, food, equipment, and scientific investigations. I'm Ronnie Foreman, director of the ride share program here at SpaceX. Thanks for being with us tonight. At just under t-minus 20 minutes, th",
+      "link": "https://www.youtube.com/watch?v=dF-GsJmqJA8",
+      "published": "2026-05-13T22:54:49+00:00",
+      "source_type": "youtube",
+      "channel": "NASA",
+      "video_id": "dF-GsJmqJA8",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ]
+}

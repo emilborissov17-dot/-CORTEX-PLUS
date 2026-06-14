@@ -1,0 +1,65 @@
+{
+  "axis": "INEQUALITY_POVERTY_REVIEW",
+  "domain": "civilization",
+  "timestamp": "2026-05-08T09:53:53.271847+00:00",
+  "sources_count": 5,
+  "rss_count": 0,
+  "ddg_count": 5,
+  "youtube_count": 0,
+  "youtube_items": [],
+  "analysis": {
+    "problem": "37 милиона души в САЩ живеят в бедност според мерките на преброяването на населението",
+    "root_cause": "Неравномерното разпределение на доходите и богатството в обществото, което се дължи на различни фактори като икономически политики, образование и възможности за заемане",
+    "severity": "HIGH",
+    "leverage_points": [
+      "Правителствата и икономически институции, които могат да променят политики и икономическите условия",
+      "Образователните системи, които могат да предоставят повече равни възможности за всички"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Въвеждане на прогресивно данъчно облагане и социални програми за подпомагане на бедните",
+        "measurable_goal": "Снижаване на броя на хората, живеещи в бедност с 10% за следващите 2 години",
+        "timeframe": "средносрочно"
+      }
+    ],
+    "evidence": [
+      "37 милиона души в САЩ живеят в бедност според преброяването на населението",
+      "Неравномерното разпределение на доходите и богатството в обществото"
+    ],
+    "generalization": "Бедността и неравенството са свързани с други домейни като здравословната биосфера, човека и цивилизацията, тъй като те влияят на здравето, образованието и общото благосъстояние на населението",
+    "summary": "Бедността е сериозен проблем в САЩ, свързан с неравномерното разпределение на доходите и богатството, и изисква промени в икономическите политики и социалните програми.",
+    "risk_level": "HIGH"
+  },
+  "raw_items": [
+    {
+      "title": "Poverty",
+      "summary": "Poverty is a state or condition in which an individual lacks the financial resources and essentials for a basic standard of living. It can have diverse environmental, legal, social, economic, and political causes and effects. When evaluating poverty in statistics or economics there are two main measures: absolute poverty which compares income against the amount needed to meet basic personal needs,",
+      "link": "https://en.wikipedia.org/wiki/Poverty",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Poverty in the United States - Wikipedia",
+      "summary": "1 day ago - Based on poverty measures used by the Census Bureau (which exclude non-cash factors such as food stamps or medical care or public housing), America had 37 million people defined as living in poverty in 2023; this is 11 percent of the population. Some of the many causes include income, inequality, inflation, unemployment, debt traps and poor education.",
+      "link": "https://en.wikipedia.org/wiki/Poverty_in_the_United_States",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Income inequality",
+      "summary": "In economics, income distribution covers how a country's total GDP is distributed amongst its population. Economic theory and economic policy have long seen income and its distribution as a central concern. Unequal distribution of income causes economic inequality which is a concern in almost all countries around the world.",
+      "link": "https://en.wikipedia.org/wiki/Income_inequality",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Income inequality in the United States - Wikipedia",
+      "summary": "Learn about the history, causes, and impacts of income inequality in the U.S., measured by various indicators such as Gini coefficient, market income, and adjusted compensation. Compare the U.S. with other developed countries and see the latest data and trends.",
+      "link": "https://en.wikipedia.org/wiki/Income_inequality_in_the_United_States",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Income Inequality",
+      "summary": "Income Inequality Income includes the revenue streams from wages, salaries, interest on a savings account, dividends from shares of stock, rent, and profits from selling something for more than you paid for it. Unlike wealth statistics, income figures do not include the value of homes, stock, or other possessions. Income inequality refers to the extent to which income is distributed in an ...",
+      "link": "https://inequality.org/facts/income-inequality/",
+      "source_type": "ddg"
+    }
+  ]
+}

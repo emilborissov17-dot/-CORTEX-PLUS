@@ -1,0 +1,143 @@
+MODEL: qwen3:8b
+
+PROMPT:
+
+Ти си QWEN_PLANETARY_POTENTIAL_REVIEW_AGENT, част от CORTEX++_QWEN.
+
+ЗАДАЧА:
+  - ВРЪЩАШ САМО един Markdown документ със СЛЕДНИЯ ТОЧЕН СКЕЛЕТ.
+  - НЕ ДОБАВЯШ нищо извън този скелет (никакъв обяснителен текст преди или след него).
+  - ЗАДЪЛЖИТЕЛНО включваш секцията ## PLANET_STATE и всички под-секции вътре.
+
+СКЕЛЕТ (ЗАДЪЛЖИТЕЛЕН, КОПИРАЙ ГО И ГО ПОПЪЛНИ):
+
+# PLANETARY POTENTIAL REVIEW – YYYY-MM-DD
+
+## PLANET_STATE
+- CLIMATE_GLOBAL_RISK:
+  - LEVEL: LOW | MEDIUM | HIGH
+  - SIGNALS:
+    - ...
+- ENERGY:
+  - LEVEL: LOW | MEDIUM | HIGH
+  - SIGNALS:
+    - ...
+- WATER:
+  - LEVEL: LOW | MEDIUM | HIGH
+  - SIGNALS:
+    - ...
+- FOOD:
+  - LEVEL: LOW | MEDIUM | HIGH
+  - SIGNALS:
+    - ...
+- MATERIALS_WASTE:
+  - LEVEL: LOW | MEDIUM | HIGH
+  - SIGNALS:
+    - ...
+- ECOSYSTEMS_BIODIVERSITY:
+  - LEVEL: LOW | MEDIUM | HIGH
+  - SIGNALS:
+    - ...
+- PLANETARY_POTENTIAL:
+  - LEVEL: LOW | MEDIUM | HIGH
+  - SUMMARY:
+    - ...
+
+## BOTTLENECKS
+- ...
+
+## TRADE_OFFS
+- ...
+
+## PLANETARY_ACTIONS
+- ...
+
+## RISKS_AND_GUARDS
+- ...
+
+## RAW_PLANETARY_FOCUS
+- ...
+
+ПРАВИЛА:
+  - НЕ използвай префикси като "Thinking..." или "done thinking.".
+  - НЕ обяснявай формата, просто го следвай.
+  - Пиши на български.
+
+
+RESPONSE:
+Thinking...
+Okay, I need to generate a Markdown document based on the user's query. Let me start by understanding the structure they want. The main sections are PLANETARY POTENTIAL REVIEW with a date, followed by PLANET_STATE with several subsections, then BOTTLENECKS, TRADE_OFFS, PLANETARY_ACTIONS, RISKS_AND_GUARDS, and RAW_PLANETARY_FOCUS.
+
+First, the date should be the current date. The user mentioned YYYY-MM-DD format, so I'll use today's date. Next, the PLANET_STATE section has seven subsections: CLIMATE_GLOBAL_RISK, ENERGY, WATER, FOOD, MATERIALS_WASTE, ECOSYSTEMS_BIODIVERSITY, and PLANETARY_POTENTIAL. Each of these has a LEVEL and SIGNALS. The LEVEL can be LOW, MEDIUM, or HIGH. The SIGNALS are bullet points under each.
+
+I need to assign appropriate levels and signals. For example, CLIMATE_GLOBAL_RISK might be HIGH with signals like rising temperatures and extreme weather. ENERGY could be MEDIUM with issues like fossil fuel dependency. WATER might be HIGH due to scarcity in some regions. FOOD could be MEDIUM with supply chain issues. MATERIALS_WASTE might be HIGH with plastic pollution. ECOSYSTEMS_BIODIVERSITY could be HIGH due to habitat loss. PLANETARY_POTENTIAL's LEVEL depends on the other sections, maybe MEDIUM with a summary of balancing risks and opportunities.
+
+Then, BOTTLENECKS, TRADE_OFFS, PLANETARY_ACTIONS, RISKS_AND_GUARDS, and RAW_PLANETARY_FOCUS need bullet points. BOTTLENECKS could include things like political conflicts over resources. TRADE_OFFS might involve balancing economic growth with sustainability. PLANETARY_ACTIONS could list renewable energy investments. RISKS_AND_GUARDS might include monitoring climate trends. RAW_PLANETARY_FOCUS could emphasize innovation in sustainable tech.
+
+I need to make sure not to add any extra text outside the skeleton. All sections must be present, and the language is Bulgarian. Let me double-check the structure to ensure compliance with the user's rules. Avoid any prefixes like "Thinking..." and just provide the markdown content.
+...done thinking.
+
+# PLANETARY POTENTIAL REVIEW – 2023-10-15
+
+## PLANET_STATE
+- CLIMATE_GLOBAL_RISK:
+  - LEVEL: HIGH
+  - SIGNALS:
+    - Растящи температури в Арктика
+    - Увеличено количество экстремални погодни явления
+- ENERGY:
+  - LEVEL: MEDIUM
+  - SIGNALS:
+    - Зависимост от уранови източници
+    - Нестабилни цени на въглищата
+- WATER:
+  - LEVEL: HIGH
+  - SIGNALS:
+    - Съществуващ дефицит в 25% от регионите
+    - Загрязнение на подземните води
+- FOOD:
+  - LEVEL: MEDIUM
+  - SIGNALS:
+    - Високи ценови колебания на злакови
+    - Улеснено производство на генетично модифицирани храни
+- MATERIALS_WASTE:
+  - LEVEL: HIGH
+  - SIGNALS:
+    - 80% от пластмасата не се рециклира
+    - Загрязнение на океаните от микропластиката
+- ECOSYSTEMS_BIODIVERSITY:
+  - LEVEL: HIGH
+  - SIGNALS:
+    - Губене на 100 видове годишно
+    - Утрата на коралните рифове
+- PLANETARY_POTENTIAL:
+  - LEVEL: MEDIUM
+  - SUMMARY:
+    - Балансиране между рискове и възможности
+    - Нужна е иновативна технологии за устойчиво развитие
+
+## BOTTLENECKS
+- Политически конфликти за ресурси
+- Нестабилност в глобалната пазарна система
+- Ограничения в технологичното развитие
+
+## TRADE_OFFS
+- Економически растеж vs. устойчиво развитие
+- Икономически изгоди vs. экологични задължения
+- Ресурсни източници vs. дългосрочни инвестиции
+
+## PLANETARY_ACTIONS
+- Инвестиции в възобновяеми енергетични източници
+- Разработка на глобален план за управление на водни ресурси
+- Подкрепа на иновации в селското стопанство
+- Укрепване на международната сътрудничество за борба с климатичните промени
+
+## RISKS_AND_GUARDS
+- Рисик от екологични кризи: Постоянно наблюдение на климатичните тенденции
+- Рисик от икономически нестабилност: Диверсификация на глобалните пазари
+- Рисик от технологични сбърквания: Повишено финансирование за научни изследвания
+
+## RAW_PLANETARY_FOCUS
+- Иновативни технологии за рециклиране
+- Устойчиво развитие на морските екосистеми
+- Глобална координация за борба с измененията на климата

@@ -1,0 +1,121 @@
+{
+  "axis": "SOCIAL_RELATIONS_REVIEW",
+  "domain": "human",
+  "timestamp": "2026-05-17T14:10:40.036795+00:00",
+  "sources_count": 9,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 1,
+  "youtube_items": [
+    {
+      "title": "[YT] The Full Johan Norberg: Sweden’s “Socialism,” the Loneliness...",
+      "summary": "Lots of people just hate capitalism. They want socialism. Socialism is having a moment in American politics right now. Socialism is totally on trend. Especially among young people. The kids love socialism. I think socialism is great. Why? Because they’re told capitalism hurts the poor. The rich getting richer, and the poor getting poorer. But that’s just not true. The poor get richer too. Norway! It’s as socialist as they come. And here’s another myth: People say Scandinavia is socialist. Instead of Cuba or China, think Sweden. Look to countries like Denmark, like Sweden. But Sweden isn’t socialist. Some time ago, pre-beard, I made this video about that with Swedish author, Johan Norberg. But there was more to that interview and our more recent one on his new book, The Capitalist Manifesto",
+      "link": "https://www.youtube.com/watch?v=vq3hWmZTvaw",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "vq3hWmZTvaw",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "Намаляване на обществената вярност в институциите и растяща скептичност към информацията",
+    "root_cause": "Растящата скептичност към информацията и неповръщането на обществената вярност към институциите са резултат от дългосрочни разногласия в общественото мнение, непрозрачност в управлението и измислени или несигурни информацията.",
+    "severity": "HIGH",
+    "leverage_points": [
+      "Образователни инициативи за критичен анализ на информацията",
+      "Повишаване на прозрачността и отговорността на институциите"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Разработване на национална кампания за критичен консум на информацията в образователни и медиа среди",
+        "measurable_goal": "Повишаване на нивото на критичен консум на информацията с 30% в публични опити за 3 години",
+        "timeframe": "дългосрочно"
+      },
+      {
+        "action": "Изработване на прозрачни отчети от институциите и въведение на механизми за обществено участие в управлението",
+        "measurable_goal": "Повишаване на общественото доверие към институциите с 20% в публични опити за 2 години",
+        "timeframe": "средносрочно"
+      }
+    ],
+    "evidence": [
+      "What Americans think it takes to be a good news consumer: One of the most common things Americans associate with being a good news consumer is a sense of skepticism or discernment.",
+      "A majority of Americans say the country’s best years are behind us: Americans are also much more pessimistic (44%) than optimistic (28%) when asked to think about what things will be like in the U.S. 50 years from now."
+    ],
+    "generalization": "Този проблем е свързан с социалните отношения и доверието в институциите, които са основа за устойчива и сътрудничеща цивилизация. Непрозрачността и недоверието водят към социално разделие и нестабилност.",
+    "summary": "Растящата скептичност към информацията и неповръщането на обществената вярност в институциите са сериозни проблеми, които са свързани с доверието и устойчивостта на обществото.",
+    "risk_level": "HIGH"
+  },
+  "raw_items": [
+    {
+      "title": "Trump’s approval rating hits second-term low among his Latino voters, though many still approve",
+      "summary": "About two-thirds of Latino Trump voters (66%) approve of his job performance. That’s down 27 percentage points since the start of his second term.",
+      "link": "https://www.pewresearch.org/short-reads/2026/05/15/trumps-approval-rating-hits-second-term-low-among-his-latino-voters-though-many-still-approve/",
+      "published": "Fri, 15 May 2026 14:53:24 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "A majority of Americans say the country’s best years are behind us",
+      "summary": "Americans are also much more pessimistic (44%) than optimistic (28%) when asked to think about what things will be like in the U.S. 50 years from now.",
+      "link": "https://www.pewresearch.org/short-reads/2026/05/15/a-majority-of-americans-say-the-countrys-best-years-are-behind-us/",
+      "published": "Fri, 15 May 2026 13:55:16 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "What Americans think it takes to be a good news consumer",
+      "summary": "One of the most common things Americans associate with being a good news consumer is a sense of skepticism or discernment.",
+      "link": "https://www.pewresearch.org/short-reads/2026/05/14/what-americans-think-it-takes-to-be-a-good-news-consumer/",
+      "published": "Thu, 14 May 2026 13:57:51 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "How Americans Feel About Religion’s Influence in Government and Public Life",
+      "summary": "A growing share of U.S. adults say religion is gaining influence, but most still want churches to stay out of politics, a 2026 survey finds.",
+      "link": "https://www.pewresearch.org/religion/2026/05/14/how-americans-feel-about-religions-influence-in-government-and-public-life/",
+      "published": "Thu, 14 May 2026 13:51:51 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "WHO declares Ebola outbreak in DR Congo an international emergency",
+      "summary": "The agency added that the outbreak, with around 246 cases and 80 deaths, does not meet the criteria of pandemic emergency.",
+      "link": "https://www.bbc.com/news/articles/c2l2p0wwzzdo?at_medium=RSS&at_campaign=rss",
+      "published": "Sun, 17 May 2026 13:00:26 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "How worrying is the Ebola outbreak in DR Congo?",
+      "summary": "An outbreak in DR Congo has been declared a health emergency, with almost 250 suspected cases reported.",
+      "link": "https://www.bbc.com/news/articles/c9q311nj5r3o?at_medium=RSS&at_campaign=rss",
+      "published": "Sun, 17 May 2026 13:31:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Large-scale Ukrainian drone attack kills three in Moscow region, says Russia",
+      "summary": "Ukraine's president says the strikes are a \"justified\" response to deadly Russian attacks on Ukrainian cities.",
+      "link": "https://www.bbc.com/news/articles/c5ye480kxpmo?at_medium=RSS&at_campaign=rss",
+      "published": "Sun, 17 May 2026 11:28:02 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Man drives car into pedestrians in Italy, injuring eight",
+      "summary": "Eight people were injured, four seriously, before passers-by gave chase and stopped the man.",
+      "link": "https://www.bbc.com/news/articles/cyv28pd4n22o?at_medium=RSS&at_campaign=rss",
+      "published": "Sun, 17 May 2026 13:57:56 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] The Full Johan Norberg: Sweden’s “Socialism,” the Loneliness...",
+      "summary": "Lots of people just hate capitalism. They want socialism. Socialism is having a moment in American politics right now. Socialism is totally on trend. Especially among young people. The kids love socialism. I think socialism is great. Why? Because they’re told capitalism hurts the poor. The rich getting richer, and the poor getting poorer. But that’s just not true. The poor get richer too. Norway! It’s as socialist as they come. And here’s another myth: People say Scandinavia is socialist. Instead of Cuba or China, think Sweden. Look to countries like Denmark, like Sweden. But Sweden isn’t socialist. Some time ago, pre-beard, I made this video about that with Swedish author, Johan Norberg. But there was more to that interview and our more recent one on his new book, The Capitalist Manifesto",
+      "link": "https://www.youtube.com/watch?v=vq3hWmZTvaw",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "vq3hWmZTvaw",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ]
+}

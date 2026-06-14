@@ -1,0 +1,134 @@
+{
+  "generated_at_utc": "2026-03-04 16:45:03",
+  "axis": "ENERGY",
+  "gaps": [
+    {
+      "id": "gap_001",
+      "axis": "ENERGY",
+      "source_region": "GLOBAL",
+      "what_missing": "- IEA reports and archived IEF materials (if available) - List of key international institutions and their public APIs/annual reports - Logs of failed requests (e.g., timeouts, 404 errors) for IEF and other restricted sources  ---",
+      "why_important": "- IEA reports and archived IEF materials (if available) - List of key international institutions and their public APIs/annual reports - Logs of failed requests (e.g., timeouts, 404 errors) for IEF and other restricted sources  ---",
+      "impact_if_ignored": "",
+      "suggested_sources": [
+        "IEA",
+        "IEF"
+      ],
+      "priority": "MEDIUM",
+      "notes": "Inaccessible International Energy Forum (IEF) Data"
+    },
+    {
+      "id": "gap_002",
+      "axis": "ENERGY",
+      "source_region": "UNSPECIFIED",
+      "what_missing": "- National and international energy poverty indicators - Household energy cost data by region - Income distribution statistics and subsidy policies  ---",
+      "why_important": "- National and international energy poverty indicators - Household energy cost data by region - Income distribution statistics and subsidy policies  ---",
+      "impact_if_ignored": "",
+      "suggested_sources": [],
+      "priority": "MEDIUM",
+      "notes": "Lack of Regional Energy Poverty Indicators"
+    },
+    {
+      "id": "gap_003",
+      "axis": "ENERGY",
+      "source_region": "UNSPECIFIED",
+      "what_missing": "- Installed and planned storage capacity by technology - Charge/discharge profiles and regulatory frameworks for storage - Regional maps of storage infrastructure  ---",
+      "why_important": "- Installed and planned storage capacity by technology - Charge/discharge profiles and regulatory frameworks for storage - Regional maps of storage infrastructure  ---",
+      "impact_if_ignored": "",
+      "suggested_sources": [],
+      "priority": "MEDIUM",
+      "notes": "Incomplete Data on Energy Storage Systems"
+    },
+    {
+      "id": "gap_004",
+      "axis": "ENERGY",
+      "source_region": "UNSPECIFIED",
+      "what_missing": "- Metadata for all fields (e.g., date, region, resource type) - Time-series examples from each source (hourly, daily, monthly) - Documentation of API formats (CSV, Excel, JSON)  ---",
+      "why_important": "- Metadata for all fields (e.g., date, region, resource type) - Time-series examples from each source (hourly, daily, monthly) - Documentation of API formats (CSV, Excel, JSON)  ---",
+      "impact_if_ignored": "",
+      "suggested_sources": [],
+      "priority": "MEDIUM",
+      "notes": "Fragmented Metadata for Energy Data Sources"
+    },
+    {
+      "id": "gap_005",
+      "axis": "ENERGY",
+      "source_region": "UNSPECIFIED",
+      "what_missing": "- Logs of failed access attempts to critical sources - List of high-priority data sources and their current accessibility status - Alternatives (e.g., secondary sources, diplomatic channels)  ---",
+      "why_important": "- Logs of failed access attempts to critical sources - List of high-priority data sources and their current accessibility status - Alternatives (e.g., secondary sources, diplomatic channels)  ---",
+      "impact_if_ignored": "",
+      "suggested_sources": [],
+      "priority": "MEDIUM",
+      "notes": "Unstable or Non-Public Data Sources"
+    },
+    {
+      "id": "gap_006",
+      "axis": "ENERGY",
+      "source_region": "UNSPECIFIED",
+      "what_missing": "- ENTSO-E and national TSO KPIs (e.g., outage frequency, reserve capacity) - Historical outage data and regulatory targets - Time-series data on grid performance  ---",
+      "why_important": "- ENTSO-E and national TSO KPIs (e.g., outage frequency, reserve capacity) - Historical outage data and regulatory targets - Time-series data on grid performance  ---",
+      "impact_if_ignored": "",
+      "suggested_sources": [
+        "ENTSO-E",
+        "TSO"
+      ],
+      "priority": "MEDIUM",
+      "notes": "Missing Grid Stability KPIs"
+    },
+    {
+      "id": "gap_007",
+      "axis": "ENERGY",
+      "source_region": "UNSPECIFIED",
+      "what_missing": "- IEA and other reports on investment trends - National budget allocations for energy projects - Data from financial institutions (e.g., World Bank, regional banks)  ---",
+      "why_important": "- IEA and other reports on investment trends - National budget allocations for energy projects - Data from financial institutions (e.g., World Bank, regional banks)  ---",
+      "impact_if_ignored": "",
+      "suggested_sources": [
+        "IEA",
+        "World Bank"
+      ],
+      "priority": "MEDIUM",
+      "notes": "Limited Investment Data in Renewables and Infrastructure"
+    },
+    {
+      "id": "gap_008",
+      "axis": "ENERGY",
+      "source_region": "UNSPECIFIED",
+      "what_missing": "- Consolidated datasets from ENTSO-E, IEA, NREL, and other sources - Defined set of KPIs for the dashboard - JSON/Markdown templates for reporting  ---",
+      "why_important": "- Consolidated datasets from ENTSO-E, IEA, NREL, and other sources - Defined set of KPIs for the dashboard - JSON/Markdown templates for reporting  ---",
+      "impact_if_ignored": "",
+      "suggested_sources": [
+        "ENTSO-E",
+        "IEA",
+        "NREL",
+        "TSO"
+      ],
+      "priority": "MEDIUM",
+      "notes": "Absence of Public Energy Dashboards"
+    },
+    {
+      "id": "gap_009",
+      "axis": "ENERGY",
+      "source_region": "UNSPECIFIED",
+      "what_missing": "- Metadata on temporal resolution (e.g., hourly, daily, monthly) - Time-zone alignment information for cross-source analysis - Examples of time-series data from each source  ---",
+      "why_important": "- Metadata on temporal resolution (e.g., hourly, daily, monthly) - Time-zone alignment information for cross-source analysis - Examples of time-series data from each source  ---",
+      "impact_if_ignored": "",
+      "suggested_sources": [],
+      "priority": "MEDIUM",
+      "notes": "Inconsistent Temporal Resolution Across Sources"
+    },
+    {
+      "id": "gap_010",
+      "axis": "ENERGY",
+      "source_region": "UNSPECIFIED",
+      "what_missing": "- Public projects and case studies (e.g., NREL, TSOs, universities) - Technical reports on AI applications in grid management - Standards for smart grid technologies  ---  ### Summary of Key Gaps | **Gap** | **Impact** | **Priority** | |---------|------------|--------------| | IEF Data Inaccessibility | Hinders global policy coordination | High | | Energy Poverty Indicators | Limits socio-economic analysis | High | | Storage System Data | Impedes renewable integration | High | | Metadata Fragmentation | Complicates data integration | Medium | | Unstable Data Sources | Risks data loss | High | | Grid Stability KPIs | No standardized metrics | High | | Investment Data | Poor correlation with grid stress | Medium | | Public Dashboard | Limited transparency | Medium | | Temporal Resolution Mismatch | Flawed trend analysis | Medium | | AI/Algorithm Usage Data | No benchmarking | Medium |  This structured list highlights critical data gaps that must be addressed to improve energy system analysis, policy-making, and infrastructure planning.",
+      "why_important": "- Public projects and case studies (e.g., NREL, TSOs, universities) - Technical reports on AI applications in grid management - Standards for smart grid technologies  ---  ### Summary of Key Gaps | **Gap** | **Impact** | **Priority** | |---------|------------|--------------| | IEF Data Inaccessibility | Hinders global policy coordination | High | | Energy Poverty Indicators | Limits socio-economic analysis | High | | Storage System Data | Impedes renewable integration | High | | Metadata Fragmentation | Complicates data integration | Medium | | Unstable Data Sources | Risks data loss | High | | Grid Stability KPIs | No standardized metrics | High | | Investment Data | Poor correlation with grid stress | Medium | | Public Dashboard | Limited transparency | Medium | | Temporal Resolution Mismatch | Flawed trend analysis | Medium | | AI/Algorithm Usage Data | No benchmarking | Medium |  This structured list highlights critical data gaps that must be addressed to improve energy system analysis, policy-making, and infrastructure planning.",
+      "impact_if_ignored": "",
+      "suggested_sources": [
+        "IEF",
+        "NREL",
+        "TSO"
+      ],
+      "priority": "MEDIUM",
+      "notes": "Lack of AI/Algorithm Usage Data in Grid Management"
+    }
+  ]
+}

@@ -1,0 +1,109 @@
+{
+  "axis": "WATER_REVIEW",
+  "domain": "planet",
+  "timestamp": "2026-05-01T13:37:36.044458+00:00",
+  "sources_count": 10,
+  "rss_count": 4,
+  "ddg_count": 5,
+  "youtube_count": 1,
+  "youtube_items": [
+    {
+      "title": "[YT] World Water Crisis Explained | Why the Planet Is ... - YouTubeDrought affecting more than half of U.S. as water scarcity ...Talks on water | TED PlaylistVIDEO: Water scarcity is a global challenge requiring local ...Fighting water scarcity creatively - dw.comWorld Leaders on How We Can Tackle the Global Water CrisisWater Crisis Documentaries That Everyone Should Watch",
+      "summary": "Can we do about it? Earth's surface is covered in water, but here's the catch, only 2.5% is fresh water. And of that tiny amount, most is locked away in glaciers and ice caps, far beyond our reach. The water we rely on for drinking, farming, and industry. Humans from just a fraction of rivers, lakes, and underground sources. Without it, life as we know it, cannot exist. Agriculture uses about 70% of all freshwater, and traditional irrigation waste huge amounts through evaporation and runoff. Pollution adds another layer, chemicals, plastics, untreated waste, or poisoning rivers and groundwater faster than they can recover. Then comes climate change, melting glaciers, rising temperatures, shifting rainfall, all of it disrupts the planet's natural water cycles. Some regions face longer, harc",
+      "link": "https://www.youtube.com/watch?v=TA1helRSrMY",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "TA1helRSrMY",
+      "transcript_method": "whisper",
+      "transcript_chars": 2592,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "summary": "- Proposed Michigan Bill Would Tie State Wetland Protections to a Recently Narrowed Federal Standard: <figure><img alt=\"\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"682\" src=\"https://i0.wp.com/www.circleofblue.org/wp-content/uploads/2023/05/2022-10-22-Michigan-Lovell",
+    "risk_level": "UNKNOWN",
+    "trend": "UNKNOWN",
+    "key_events": [
+      "Proposed Michigan Bill Would Tie State Wetland Protections to a Recently Narrowed Federal Standard",
+      "Glen Canyon Dam Faces Its Existential Moment",
+      "Senate Overturns Ban On Mining Near Boundary Waters Wilderness"
+    ],
+    "insights": [],
+    "youtube_insights": [],
+    "relevance_to_goal": "",
+    "generalization": ""
+  },
+  "raw_items": [
+    {
+      "title": "Proposed Michigan Bill Would Tie State Wetland Protections to a Recently Narrowed Federal Standard",
+      "summary": "<figure><img alt=\"\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"682\" src=\"https://i0.wp.com/www.circleofblue.org/wp-content/uploads/2023/05/2022-10-22-Michigan-Lovells-marshland-sunrise-JGanter-DJI_0621.DNG-dng_DXO-Edit2500.jpg?fit=1024%2C682&amp;ssl=1\" width=\"1024\" /></figure>\n<p>LANSING, Mich. — A bill introduced last month in the Michigan House proposes changing the state’s definition of “wetland” to more closely align with recently narrowed federal standards. ",
+      "link": "https://www.circleofblue.org/2026/water-policy-politics/proposed-michigan-bill-would-tie-state-wetland-protections-to-a-recently-narrowed-federal-standard/",
+      "published": "Thu, 30 Apr 2026 10:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Glen Canyon Dam Faces Its Existential Moment",
+      "summary": "<figure><img alt=\"\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"683\" src=\"https://i0.wp.com/www.circleofblue.org/wp-content/uploads/2026/04/2026-03-22-Lake-Powell-Glen-Canyon-BWalton-IMG_7046a-Edit-2500.jpg?fit=1024%2C683&amp;ssl=1\" width=\"1024\" /></figure>\n<p>PAGE, Ariz. – In the span of U.S. history certain years are turning points, milestones in the nation’s story. 1776. 1865. 1929. 1968. Circumstance and consequence conspire to make it so. For the Colorado Riv",
+      "link": "https://www.circleofblue.org/2026/supply/glen-canyon-dam-faces-its-existential-moment/",
+      "published": "Wed, 29 Apr 2026 11:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Senate Overturns Ban On Mining Near Boundary Waters Wilderness",
+      "summary": "<figure><img alt=\"\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"768\" src=\"https://i0.wp.com/www.circleofblue.org/wp-content/uploads/2026/04/BWCA_-_FALL_08-scaled.jpg?fit=1024%2C768&amp;ssl=1\" width=\"1024\" /></figure>\n<p>The U.S. Senate in April 16 voted to overturn a 20-year ban on mining on federal forest near the Boundary Waters Canoe Area. The vote draws Chilean-owned Twin Metals a step closer to gaining permits to open an underground copper mine near Ely, Minn",
+      "link": "https://www.circleofblue.org/2026/water-policy-politics/senate-overturns-ban-on-mining-near-boundary-waters-wilderness/",
+      "published": "Tue, 28 Apr 2026 20:22:08 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Stalled Farm Bill, Slashed Grants Undercut Farmers’ Water Protection Efforts",
+      "summary": "<figure><img alt=\"\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"683\" src=\"https://i0.wp.com/www.circleofblue.org/wp-content/uploads/2024/08/2022-08-17-Great-Lakes-Algae-Baker-Farm-JGanter-3508-2500.jpg?fit=1024%2C683&amp;ssl=1\" width=\"1024\" /></figure>\n<p>More than two years have passed since the Agriculture Improvement Act — better known as the Farm Bill — expired, leaving the nation’s primary agricultural policy framework in a state of prolonged uncertainty. The",
+      "link": "https://www.circleofblue.org/2026/agriculture/stalled-farm-bill-slashed-grants-undercut-farmers-water-protection-efforts/",
+      "published": "Mon, 27 Apr 2026 16:46:21 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Water scarcity",
+      "summary": "Water scarcity (closely related to water stress or water crisis) is the lack of any, local or economically viably transportable, sources of fresh water resources to meet the standard water demand in a region. There are two types of water scarcity. One is physical. The other is economic water scarcity. Physical water scarcity is where there is not enough water to meet all demands. This includes wat",
+      "link": "https://en.wikipedia.org/wiki/Water_scarcity",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Water scarcity | Description, Mechanisms, Effects, & Solutions | Britannica",
+      "summary": "Water scarcity occurs when there are insufficient freshwater resources to meet the human and environmental demands of a certain area. Given the challenges of population growth, profligate use, growing pollution, and global warming, many countries and major cities worldwide are faced with increasing water scarcity.",
+      "link": "https://www.britannica.com/topic/water-scarcity",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Fresh water",
+      "summary": "Fresh water or freshwater is any naturally occurring liquid or frozen water containing low concentrations of dissolved salts and other total dissolved solids. The term excludes seawater and brackish water, but it does include non-salty mineral-rich waters, such as chalybeate springs. Fresh water may encompass frozen and meltwater in ice sheets, ice caps, glaciers, snowfields and icebergs, natural ",
+      "link": "https://en.wikipedia.org/wiki/Fresh_water",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Freshwater Biome: Types, Location, Climate, Animals & Plants",
+      "summary": "Aug 7, 2025 · Freshwater biomes support an astonishing diversity of life. Though they make up only about 3% of Earth’s water, they host 10% of all known animal species and 40% of all fish species.",
+      "link": "https://www.globalbioenergy.org/freshwater-biome/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Freshwater Ecosystem - Education",
+      "summary": "Apr 3, 2025 · Learn about the importance, diversity, and threats of freshwater ecosystems, which are home to more than 100,000 species and provide vital resources for humans and wildlife. Explore how scientists study and conserve these precious habitats and how humans can be more responsible with fresh water.",
+      "link": "https://education.nationalgeographic.org/resource/freshwater-ecosystem/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "[YT] World Water Crisis Explained | Why the Planet Is ... - YouTubeDrought affecting more than half of U.S. as water scarcity ...Talks on water | TED PlaylistVIDEO: Water scarcity is a global challenge requiring local ...Fighting water scarcity creatively - dw.comWorld Leaders on How We Can Tackle the Global Water CrisisWater Crisis Documentaries That Everyone Should Watch",
+      "summary": "Can we do about it? Earth's surface is covered in water, but here's the catch, only 2.5% is fresh water. And of that tiny amount, most is locked away in glaciers and ice caps, far beyond our reach. The water we rely on for drinking, farming, and industry. Humans from just a fraction of rivers, lakes, and underground sources. Without it, life as we know it, cannot exist. Agriculture uses about 70% of all freshwater, and traditional irrigation waste huge amounts through evaporation and runoff. Pollution adds another layer, chemicals, plastics, untreated waste, or poisoning rivers and groundwater faster than they can recover. Then comes climate change, melting glaciers, rising temperatures, shifting rainfall, all of it disrupts the planet's natural water cycles. Some regions face longer, harc",
+      "link": "https://www.youtube.com/watch?v=TA1helRSrMY",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "TA1helRSrMY",
+      "transcript_method": "whisper",
+      "transcript_chars": 2592,
+      "has_full_transcript": true
+    }
+  ]
+}

@@ -1,0 +1,121 @@
+{
+  "axis": "PLANETARY_POTENTIAL_REVIEW",
+  "fetched_at": "2026-05-17T16:57:26.016569+00:00",
+  "smart_query": "earth resources sustainability",
+  "sources_count": {
+    "wiki": 0,
+    "gdelt": 3,
+    "arxiv": 2,
+    "github": 3,
+    "youtube_transcripts": 3,
+    "podcast": 1
+  },
+  "rss": [],
+  "gdelt": [
+    {
+      "title": "جامعة أسيوط تشارك في  ساعة الأرض  دعمًا للاستدامة البيئية",
+      "snippet": "جامعة أسيوط تشارك في  ساعة الأرض  دعمًا للاستدامة البيئية",
+      "url": "https://www.vetogate.com/5623994",
+      "source": "vetogate.com"
+    },
+    {
+      "title": "Bumi Resources Luncurkan Logo Baru , Tandai Babak Baru Transformasi Perseroan",
+      "snippet": "Bumi Resources Luncurkan Logo Baru , Tandai Babak Baru Transformasi Perseroan",
+      "url": "https://www.merdeka.com/uang/bumi-resources-luncurkan-logo-baru-tandai-babak-baru-transformasi-perseroan-548111-mvk.html",
+      "source": "merdeka.com"
+    },
+    {
+      "title": "Bumi Resources ( BUMI ) Ganti Logo , Gaungkan Pesan Diversifikasi Non - Batu Bara",
+      "snippet": "Bumi Resources ( BUMI ) Ganti Logo , Gaungkan Pesan Diversifikasi Non - Batu Bara",
+      "url": "https://market.bisnis.com/read/20260312/192/1960017/bumi-resources-bumi-ganti-logo-gaungkan-pesan-diversifikasi-non-batu-bara",
+      "source": "market.bisnis.com"
+    }
+  ],
+  "github_repos": [
+    {
+      "title": "satellite-image-deep-learning/techniques",
+      "snippet": "Techniques for deep learning with satellite & aerial imagery",
+      "stars": 10145,
+      "url": "https://github.com/satellite-image-deep-learning/techniques",
+      "updated": "2026-05-15",
+      "source": "GitHub"
+    },
+    {
+      "title": "sacridini/Awesome-Geospatial",
+      "snippet": "Long list of geospatial tools and resources",
+      "stars": 5046,
+      "url": "https://github.com/sacridini/Awesome-Geospatial",
+      "updated": "2026-05-17",
+      "source": "GitHub"
+    },
+    {
+      "title": "torchgeo/torchgeo",
+      "snippet": "TorchGeo: datasets, samplers, transforms, and pre-trained models for geospatial data",
+      "stars": 4033,
+      "url": "https://github.com/torchgeo/torchgeo",
+      "updated": "2026-05-17",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Assessing foundational atomistic models for iron alloys under Earth's core conditions",
+      "snippet": "We assess the capability of recently developed foundational atomistic models (FAMs) to simulate iron alloys under the extreme pressures and temperatures of Earth's core. Static equations of state of hexagonal close-packed (hcp) and body-centered cubic (bcc) iron computed by 17 FAMs are benchmarked a",
+      "url": "https://arxiv.org/abs/2605.13594v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Metal Saturation and the Redistribution of Hydrogen in Earth's Mantle",
+      "snippet": "Iron disproportionation reactions in mantle silicates can produce metallic iron that drives Earth's deep mantle toward metal saturation under reduced conditions. Subducting slabs transport hydrated silicates to these depths, where interactions with metallic iron can reduce structurally bound hydroge",
+      "url": "https://arxiv.org/abs/2605.11245v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[The wildlife sanctuary you can visit from anywhere | Maya Higa] Creator Maya Higa is on a mission to use the internet to build the next generation of conservationists. Her virtual education center, Alveus Sanctuary, is one of the most-watched sanctuaries on Earth, with dozens of rescued animals and cameras livestreaming to a community of millions inspired to help protect the wildlife. Visit with Bean the Hawk, Winnie the Moo and more — and see what the future ",
+  "wiki": null,
+  "youtube_items": [
+    {
+      "title": "[YT] FILE 007: Climate Engineering — Hubris or Necessity?",
+      "summary": "File number 0007. Topic: Climate engineering. Hubris or necessity. Parties. The engineer versus the ecologist. The planet [music] is warming. 1.5° C above pre-industrial levels. Glacias melting. Coral reefs bleaching. [music] Extreme weather intensifying. We set targets. We missed them. We made promises. We broke them. Carbon reduction isn't happening fast enough. The math is brutal. We're out of time. So, some scientists propose a different solution. If we can't stop warming the planet, [music] what if we call it manually? Climate engineering, geoengineering, planetary scale intervention. We could inject sulfur dioxide into the stratosphere, dimming the sun. We could brighten &gt;&gt; planet cooling, temperature stabilizing, glaciers recovering, harvest succeeding, &gt;&gt; to absorb carb",
+      "link": "https://www.youtube.com/watch?v=SAqQG39RyuY",
+      "source_type": "youtube",
+      "channel": "Spectrum Archivist",
+      "video_id": "SAqQG39RyuY",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] A Climate Scientist Reviews: Project Hail Mary",
+      "summary": "[music] By releasing a lot of methane into the atmosphere,&nbsp;&nbsp; it would be highly risky as you can&nbsp; see from our climate simulations. I'm Levke Caesar. I'm a climate physicist&nbsp; and I'm also [music] a science fiction lover.&nbsp;&nbsp; And this book, Project Hail Mary by Andy Weir,&nbsp; you might have heard about it because it just came&nbsp;&nbsp; out as a movie with Ryan Gosling, [music] really&nbsp; made me wonder, does the climate physics check out&nbsp;&nbsp; what would happen if this scenario were to happen&nbsp; in real life? Now, to just basically for those&nbsp;&nbsp; of you who haven't watched the movie yet or read&nbsp; the book, to get you into the story. What happens&nbsp;&nbsp; is the sun is dying and Earth basically sends out&nbsp; an astronaut to find a cu",
+      "link": "https://www.youtube.com/watch?v=GJsouT2HV9g",
+      "source_type": "youtube",
+      "channel": "Planetary Boundaries Science",
+      "video_id": "GJsouT2HV9g",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Does cleaner air make the planet hotter?",
+      "summary": "[music] This is Climate Watch. [music] I'm Jaoyang. Welcome to the show. [music] China has seen a massive rapid cleanup of its skies over the past decade. By slashing coal use and upgrading power plants, the country has cleared the smog that once defined many of its cities, significantly improving public health. But lately, a startling counternarrative has emerged in the headlines. An article in The Economist argued that China's air quality improvements have hastened global warming. Meanwhile, research cited by Australia's ABC News suggests the cleanup may even be driving hotter and drier conditions in Australia. But how could cleaning up pollution possibly make the planet warmer? Well, this has everything to do with aerosols, the tiny particles in the atmosphere that play a complex role i",
+      "link": "https://www.youtube.com/watch?v=1FYxkX2egLY",
+      "source_type": "youtube",
+      "channel": "CGTN Podcasts",
+      "video_id": "1FYxkX2egLY",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ],
+  "summary": "Планетарният потенциал показва развитие в областта на устойчивостта и технологични иновации, но съществува рисик от човешко вмешателство в екосистемите.",
+  "urgency": "MEDIUM",
+  "sentiment": "NEUTRAL",
+  "key_developments": [
+    "جامعة أسيوط участва в Световния ден на Земята за подкрепа на екологичната устойчивост",
+    "Bumi Resources представя нов логотип, обявявайки нова ера на трансформацията на компанията"
+  ],
+  "open_source_momentum": "satellite-image-deep-learning/techniques, sacridini/Awesome-Geospatial, torchgeo/torchgeo",
+  "scientific_frontier": "Assessing foundational atomistic models for iron alloys under Earth's core conditions, Metal Saturation and the Redistribution of Hydrogen in Earth's Mantle",
+  "relevance_to_goal": "ПОЗИТИВЕН"
+}

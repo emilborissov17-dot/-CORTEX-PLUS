@@ -1,0 +1,145 @@
+{
+  "axis": "ECOSYSTEMS_BIODIVERSITY_REVIEW",
+  "domain": "planet",
+  "timestamp": "2026-05-17T14:03:40.431319+00:00",
+  "sources_count": 10,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 2,
+  "youtube_items": [
+    {
+      "title": "[YT] The Turning Point - YouTube",
+      "summary": "My heart is free, my heart is free No place where I would rather be My heart is free, my heart is free Until you come to rescue me You find me here, you find me here, you try my eyes Shed it here, you turn me bad, you turn me cool But get to hope and let's appear Tell me that it's cool, if we do something Believe it's something, I don't think I should If it ain't nothing, if it ain't nothing Who would you know? My heart is free, my heart is free No place where I would rather be You find me here, you find me here You try my eyes, Shed it here, you turn me, you turn me You find me here, you turn me cool If we do something, I don't think I should If it ain't nothing, if it ain't nothing Who would you know? My heart is free, my heart is free I don't think I should be I don't think I should be ",
+      "link": "https://www.youtube.com/watch?v=p7LDk4D3Q3U",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "p7LDk4D3Q3U",
+      "transcript_method": "whisper",
+      "transcript_chars": 825,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Human activities that threaten biodiversity - YouTube",
+      "summary": "Защо биоразнообразието е застрашено? Ще разгледаме т.нар. „местни фактори“ спрямо „глобалнoто въздействие на човека“. Преди да ги разгледаме обаче, трябва да кажем, че човешкото население ресте бързо. През 2014 г. на Земята е имало малко над 7 милиарда души. Ръстът на населението е експоненциален. Колкото повече са хората, толкова по-голямо е възпроизвеждането. При тези условия кривата на населението спрямо времето ще става все по-стръмна. Като до 2050 г. ще стигнем до 9 милиарда души. През 1798 г. Томас Малтус въвежда идеята за пределен капацитет. Той обяснява, че Земята не може да поддържа непрекъснато растящо население – нещо, което за нас е очевидно. Но Малтус е активист за социална промяна по това време. Според Църквата Земята е създадена, за да се използва от хората и те да се множат",
+      "link": "https://www.youtube.com/watch?v=2RC3Hsk90t8",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "2RC3Hsk90t8",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "Недостатъчна координация между научни изследвания и политически действия за защита на биоразнообразието",
+    "root_cause": "Изследванията на биоразнообразието продължават, но липсва централна институция, която да синхронизира научните открития с политически и промишлени решения, което води до разрив между знанието и действието",
+    "severity": "HIGH",
+    "leverage_points": [
+      "Създаването на глобална институция за здраве на дивата природа, както е предложен в статията 'It is time for a Global Wildlife Health Authority'",
+      "Интеграция на научни изследвания в общински и национални стратегии за устойчиво развитие"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Създаване на междинна институция, която да синхронизира научни изследвания с политически действия за защита на биоразнообразието",
+        "measurable_goal": "Институцията да създаде минимум 5 национални стратегии за защита на биоразнообразието в рамките на 3 години",
+        "timeframe": "дългосрочно"
+      },
+      {
+        "action": "Интегриране на научни изследвания в общински и национални стратегии за устойчиво развитие",
+        "measurable_goal": "Минимум 20% от общинските стратегии да включват научни изследвания за защита на биоразнообразието до 2027 г.",
+        "timeframe": "средносрочно"
+      }
+    ],
+    "evidence": [
+      "Статията 'It is time for a Global Wildlife Health Authority' подчертава необходимостта от централна институция, която да координира действията в този домейн",
+      "Видео на YouTube обсъжда как човешките дейности ускоряват загубата на биоразнообразие, но не предлага конкретни политически решения"
+    ],
+    "generalization": "Този проблем е свързан с другите домейни, тъй като липсата на политическа координация затруднява защитата на екосистемите, които са критични за климата, хранителните ресурси и здравето на хората",
+    "summary": "Липсата на централна институция за координация между научни изследвания и политически действия за защита на биоразнообразието е критична проблемна зона.",
+    "risk_level": "CRITICAL"
+  },
+  "raw_items": [
+    {
+      "title": "Global",
+      "summary": "<span class=\"field field--name-title field--type-string field--label-hidden\">Global</span>\n<span class=\"field field--name-uid field--type-entity-reference field--label-hidden\"><span>integrations</span></span>\n<span class=\"field field--name-created field--type-created field--label-hidden\"><time class=\"datetime\" datetime=\"2022-02-21T08:14:38+01:00\" title=\"Monday, February 21, 2022 - 08:14\">Mon, 02/21/2022 - 08:14</time>\n</span>\n<span class=\"a2a_kit a2a_kit_size_20 addtoany_list\"><a class=\"a2a_butt",
+      "link": "https://iucn.org/our-work/region/global",
+      "published": "Mon, 21 Feb 2022 07:14:38 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Inside IUCN",
+      "summary": "<span class=\"field field--name-title field--type-string field--label-hidden\">Inside IUCN</span>\n<span class=\"field field--name-uid field--type-entity-reference field--label-hidden\"><span>review.sm</span></span>\n<span class=\"field field--name-created field--type-created field--label-hidden\"><time class=\"datetime\" datetime=\"2021-11-18T11:17:35+01:00\" title=\"Thursday, November 18, 2021 - 11:17\">Thu, 11/18/2021 - 11:17</time>\n</span>\n\n\n<span class=\"a2a_kit a2a_kit_size_20 addtoany_list\"><a class=\"a2",
+      "link": "https://iucn.org/content/inside-iucn",
+      "published": "Thu, 18 Nov 2021 10:17:35 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "DG Speech Node",
+      "summary": "<span class=\"field field--name-title field--type-string field--label-hidden\">DG Speech Node</span>\n<span class=\"field field--name-uid field--type-entity-reference field--label-hidden\"><span>review.webtf</span></span>\n<span class=\"field field--name-created field--type-created field--label-hidden\"><time class=\"datetime\" datetime=\"2021-11-18T10:56:51+01:00\" title=\"Thursday, November 18, 2021 - 10:56\">Thu, 11/18/2021 - 10:56</time>\n</span>\n\n\n<span class=\"a2a_kit a2a_kit_size_20 addtoany_list\"><a cla",
+      "link": "https://iucn.org/content/dg-speech-node",
+      "published": "Thu, 18 Nov 2021 09:56:51 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "It is time for a Global Wildlife Health Authority",
+      "summary": "<span class=\"field field--name-title field--type-string field--label-hidden\">It is time for a Global Wildlife Health Authority</span>\n<span class=\"field field--name-uid field--type-entity-reference field--label-hidden\"><span>integrations</span></span>\n<span class=\"field field--name-created field--type-created field--label-hidden\"><time class=\"datetime\" datetime=\"2021-10-20T09:48:06+02:00\" title=\"Wednesday, October 20, 2021 - 09:48\">Wed, 10/20/2021 - 09:48</time>\n</span>\n\n\n<span class=\"a2a_kit a2",
+      "link": "https://iucn.org/content/it-time-global-wildlife-health-authority",
+      "published": "Wed, 20 Oct 2021 07:48:06 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Giant squid discovery uncovers a hidden deep-sea world off Australia",
+      "summary": "Scientists exploring deep underwater canyons off the coast of Western Australia uncovered a hidden world packed with bizarre and elusive marine life — including signs of the legendary giant squid. By analyzing traces of DNA floating in seawater from depths exceeding 4 kilometers, researchers identified 226 species ranging from deep-diving whales to strange fish rarely or never seen in the region before. Some of the creatures may even be unknown to science.",
+      "link": "https://www.sciencedaily.com/releases/2026/05/260513221807.htm",
+      "published": "Thu, 14 May 2026 08:46:07 EDT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Deep diving fur seals experience delayed heart surges after returning to land",
+      "summary": "Fur seals may look like they’re simply resting after exhausting hunting trips at sea, but their bodies are secretly working overtime. Scientists discovered that hours after returning to land, the seals’ heart rates suddenly surge — sometimes doubling — as they recover from the intense physical stress of deep diving. The findings suggest that seals postpone much of their recovery until they’re safely ashore, likely flushing out lactic acid and rebuilding oxygen stores after days of nonstop diving",
+      "link": "https://www.sciencedaily.com/releases/2026/05/260508003119.htm",
+      "published": "Sat, 09 May 2026 07:35:27 EDT",
+      "source_type": "rss"
+    },
+    {
+      "title": "240-million-year-old giant “sand creeper” found hidden in retaining wall",
+      "summary": "A forgotten fossil hidden inside a garden wall has turned out to be one of Australia’s most remarkable prehistoric discoveries. Scientists have now identified the 240-million-year-old amphibian, Arenaerpeton supinatus, revealing an almost perfectly preserved skeleton—complete with rare traces of skin. This ancient river predator, about 1.2 meters long, looked somewhat like a giant salamander but was bulkier and armed with fearsome fang-like teeth.",
+      "link": "https://www.sciencedaily.com/releases/2026/05/260504154028.htm",
+      "published": "Wed, 06 May 2026 02:47:27 EDT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Scientists think they finally know why Neanderthals vanished",
+      "summary": "A new study suggests Neanderthals didn’t go extinct simply because of climate change or competition with Homo sapiens. Instead, the key difference may have been social connectivity—Homo sapiens formed stronger, more flexible networks that helped them survive environmental shocks. Neanderthals had connections too, but they were more fragile and regionally limited. This made them less resilient as conditions became increasingly unpredictable.",
+      "link": "https://www.sciencedaily.com/releases/2026/04/260427050609.htm",
+      "published": "Tue, 28 Apr 2026 04:42:03 EDT",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] The Turning Point - YouTube",
+      "summary": "My heart is free, my heart is free No place where I would rather be My heart is free, my heart is free Until you come to rescue me You find me here, you find me here, you try my eyes Shed it here, you turn me bad, you turn me cool But get to hope and let's appear Tell me that it's cool, if we do something Believe it's something, I don't think I should If it ain't nothing, if it ain't nothing Who would you know? My heart is free, my heart is free No place where I would rather be You find me here, you find me here You try my eyes, Shed it here, you turn me, you turn me You find me here, you turn me cool If we do something, I don't think I should If it ain't nothing, if it ain't nothing Who would you know? My heart is free, my heart is free I don't think I should be I don't think I should be ",
+      "link": "https://www.youtube.com/watch?v=p7LDk4D3Q3U",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "p7LDk4D3Q3U",
+      "transcript_method": "whisper",
+      "transcript_chars": 825,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Human activities that threaten biodiversity - YouTube",
+      "summary": "Защо биоразнообразието е застрашено? Ще разгледаме т.нар. „местни фактори“ спрямо „глобалнoто въздействие на човека“. Преди да ги разгледаме обаче, трябва да кажем, че човешкото население ресте бързо. През 2014 г. на Земята е имало малко над 7 милиарда души. Ръстът на населението е експоненциален. Колкото повече са хората, толкова по-голямо е възпроизвеждането. При тези условия кривата на населението спрямо времето ще става все по-стръмна. Като до 2050 г. ще стигнем до 9 милиарда души. През 1798 г. Томас Малтус въвежда идеята за пределен капацитет. Той обяснява, че Земята не може да поддържа непрекъснато растящо население – нещо, което за нас е очевидно. Но Малтус е активист за социална промяна по това време. Според Църквата Земята е създадена, за да се използва от хората и те да се множат",
+      "link": "https://www.youtube.com/watch?v=2RC3Hsk90t8",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "2RC3Hsk90t8",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ]
+}

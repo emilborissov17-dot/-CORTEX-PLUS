@@ -1,0 +1,192 @@
+[
+  {
+    "axis": "TEST",
+    "prediction": "тест предсказание",
+    "predicted_urgency": "HIGH",
+    "made_at": "2026-03-20T07:55:18.763095+00:00",
+    "verify_after": "2026-03-27",
+    "verified": false,
+    "was_correct": null,
+    "lesson": ""
+  },
+  {
+    "axis": "HUMAN_WELL_BEING_REVIEW",
+    "prediction": "ситуацията ще продължи",
+    "predicted_urgency": "LOW",
+    "made_at": "2026-03-20T08:05:02.907972+00:00",
+    "verify_after": "2026-03-27",
+    "verified": true,
+    "was_correct": true,
+    "lesson": "Предсказах LOW, реалността: LOW. ПРАВИЛНО"
+  },
+  {
+    "axis": "EDUCATION_CULTURE_REVIEW",
+    "prediction": "ситуацията ще продължи",
+    "predicted_urgency": "LOW",
+    "made_at": "2026-03-20T08:05:02.920700+00:00",
+    "verify_after": "2026-03-27",
+    "verified": true,
+    "was_correct": true,
+    "lesson": "Предсказах LOW, реалността: LOW. ПРАВИЛНО"
+  },
+  {
+    "axis": "LONG_TERM_FUTURE_REVIEW",
+    "prediction": "ситуацията ще продължи",
+    "predicted_urgency": "HIGH",
+    "made_at": "2026-03-20T08:05:02.932323+00:00",
+    "verify_after": "2026-03-27",
+    "verified": true,
+    "was_correct": false,
+    "lesson": "Предсказах HIGH, реалността: LOW. ГРЕШНО"
+  },
+  {
+    "axis": "INEQUALITY_POVERTY_REVIEW",
+    "prediction": "ситуацията ще продължи",
+    "predicted_urgency": "CRITICAL",
+    "made_at": "2026-03-20T08:06:07.814883+00:00",
+    "verify_after": "2026-03-27",
+    "verified": true,
+    "was_correct": false,
+    "lesson": "Предсказах CRITICAL, реалността: LOW. ГРЕШНО"
+  },
+  {
+    "axis": "CLIMATE_GLOBAL_RISK_REVIEW",
+    "prediction": "ситуацията ще продължи",
+    "predicted_urgency": "CRITICAL",
+    "made_at": "2026-03-20T08:06:07.830770+00:00",
+    "verify_after": "2026-03-27",
+    "verified": true,
+    "was_correct": false,
+    "lesson": "Предсказах CRITICAL, реалността: LOW. ГРЕШНО"
+  },
+  {
+    "axis": "DEEP_TIME_RISKS_REVIEW",
+    "prediction": "ситуацията ще продължи",
+    "predicted_urgency": "CRITICAL",
+    "made_at": "2026-03-20T08:06:07.844472+00:00",
+    "verify_after": "2026-03-27",
+    "verified": true,
+    "was_correct": false,
+    "lesson": "Предсказах CRITICAL, реалността: LOW. ГРЕШНО"
+  },
+  {
+    "axis": "HUMAN_WELL_BEING_REVIEW",
+    "prediction": "ситуацията ще продължи",
+    "predicted_urgency": "CRITICAL",
+    "made_at": "2026-03-21T08:54:42.371076+00:00",
+    "verify_after": "2026-03-21",
+    "verified": true,
+    "was_correct": false,
+    "lesson": "Предсказах CRITICAL, реалността: HIGH. ГРЕШНО"
+  },
+  {
+    "axis": "INEQUALITY_POVERTY_REVIEW",
+    "prediction": "ситуацията ще продължи",
+    "predicted_urgency": "CRITICAL",
+    "made_at": "2026-03-21T08:54:42.382104+00:00",
+    "verify_after": "2026-03-21",
+    "verified": true,
+    "was_correct": false,
+    "lesson": "Предсказах CRITICAL, реалността: HIGH. ГРЕШНО"
+  },
+  {
+    "axis": "CLIMATE_GLOBAL_RISK_REVIEW",
+    "prediction": "ситуацията ще продължи",
+    "predicted_urgency": "CRITICAL",
+    "made_at": "2026-03-21T08:54:42.392798+00:00",
+    "verify_after": "2026-03-21",
+    "verified": true,
+    "was_correct": true,
+    "lesson": "Предсказах CRITICAL, реалността: CRITICAL. ПРАВИЛНО"
+  },
+  {
+    "axis": "CLIMATE_GLOBAL_RISK_REVIEW",
+    "prediction": "ситуацията ще продължи",
+    "predicted_urgency": "CRITICAL",
+    "made_at": "2026-03-21T10:21:52.582812+00:00",
+    "verify_after": "2026-03-21",
+    "verified": true,
+    "was_correct": false,
+    "lesson": "Предсказах CRITICAL, реалността: LOW. ГРЕШНО"
+  },
+  {
+    "axis": "INEQUALITY_POVERTY_REVIEW",
+    "prediction": "ситуацията ще продължи",
+    "predicted_urgency": "HIGH",
+    "made_at": "2026-03-21T10:21:52.594019+00:00",
+    "verify_after": "2026-03-21",
+    "verified": true,
+    "was_correct": false,
+    "lesson": "Предсказах HIGH, реалността: CRITICAL. ГРЕШНО"
+  },
+  {
+    "axis": "HUMAN_WELL_BEING_REVIEW",
+    "prediction": "ситуацията ще продължи",
+    "predicted_urgency": "HIGH",
+    "made_at": "2026-03-21T10:21:52.604369+00:00",
+    "verify_after": "2026-03-21",
+    "verified": true,
+    "was_correct": true,
+    "lesson": "Предсказах HIGH, реалността: HIGH. ПРАВИЛНО"
+  },
+  {
+    "axis": "WATER_REVIEW",
+    "prediction": "ситуацията ще продължи",
+    "predicted_urgency": "CRITICAL",
+    "made_at": "2026-03-21T11:28:53.136778+00:00",
+    "verify_after": "2026-03-21",
+    "verified": true,
+    "was_correct": false,
+    "lesson": "Предсказах CRITICAL, реалността: HIGH. ГРЕШНО"
+  },
+  {
+    "axis": "INEQUALITY_POVERTY_REVIEW",
+    "prediction": "ситуацията ще продължи",
+    "predicted_urgency": "CRITICAL",
+    "made_at": "2026-03-21T11:28:53.147227+00:00",
+    "verify_after": "2026-03-21",
+    "verified": true,
+    "was_correct": false,
+    "lesson": "Предсказах CRITICAL, реалността: HIGH. ГРЕШНО"
+  },
+  {
+    "axis": "FOOD_REVIEW",
+    "prediction": "ситуацията ще продължи",
+    "predicted_urgency": "CRITICAL",
+    "made_at": "2026-03-21T11:28:53.157223+00:00",
+    "verify_after": "2026-03-21",
+    "verified": true,
+    "was_correct": false,
+    "lesson": "Предсказах CRITICAL, реалността: HIGH. ГРЕШНО"
+  },
+  {
+    "axis": "CLIMATE_GLOBAL_RISK_REVIEW",
+    "prediction": "ситуацията ще продължи",
+    "predicted_urgency": "HIGH",
+    "made_at": "2026-03-21T11:58:15.054359+00:00",
+    "verify_after": "2026-03-21",
+    "verified": true,
+    "was_correct": false,
+    "lesson": "Предсказах HIGH, реалността: LOW. ГРЕШНО"
+  },
+  {
+    "axis": "INEQUALITY_POVERTY_REVIEW",
+    "prediction": "ситуацията ще продължи",
+    "predicted_urgency": "HIGH",
+    "made_at": "2026-03-21T11:58:15.065446+00:00",
+    "verify_after": "2026-03-21",
+    "verified": true,
+    "was_correct": false,
+    "lesson": "Предсказах HIGH, реалността: LOW. ГРЕШНО"
+  },
+  {
+    "axis": "FOOD_REVIEW",
+    "prediction": "ситуацията ще продължи",
+    "predicted_urgency": "HIGH",
+    "made_at": "2026-03-21T11:58:15.075520+00:00",
+    "verify_after": "2026-03-21",
+    "verified": true,
+    "was_correct": false,
+    "lesson": "Предсказах HIGH, реалността: LOW. ГРЕШНО"
+  }
+]

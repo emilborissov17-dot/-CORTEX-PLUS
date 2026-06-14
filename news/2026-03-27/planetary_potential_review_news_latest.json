@@ -1,0 +1,62 @@
+{
+  "axis": "PLANETARY_POTENTIAL_REVIEW",
+  "fetched_at": "2026-03-27T07:55:57.453705+00:00",
+  "smart_query": "earth resources sustainability",
+  "sources_count": {
+    "wiki": 0,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube": 10,
+    "youtube_transcripts": 1,
+    "podcast": 1
+  },
+  "rss": [],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "satellite-image-deep-learning/techniques",
+      "snippet": "Techniques for deep learning with satellite & aerial imagery",
+      "stars": 10070,
+      "url": "https://github.com/satellite-image-deep-learning/techniques",
+      "updated": "2026-03-27",
+      "source": "GitHub"
+    },
+    {
+      "title": "sacridini/Awesome-Geospatial",
+      "snippet": "Long list of geospatial tools and resources",
+      "stars": 4815,
+      "url": "https://github.com/sacridini/Awesome-Geospatial",
+      "updated": "2026-03-27",
+      "source": "GitHub"
+    },
+    {
+      "title": "torchgeo/torchgeo",
+      "snippet": "TorchGeo: datasets, samplers, transforms, and pre-trained models for geospatial data",
+      "stars": 3934,
+      "url": "https://github.com/torchgeo/torchgeo",
+      "updated": "2026-03-26",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Interaction between vegetation and Snowball phases in the late Proterozoic Earth",
+      "snippet": "Between 2.4 and 0.6 Gy ago, our planet underwent several episodes of global glaciations, including the Snowball Earth case that ended 635 My ago. Causes of this last Snowball event presumably included a decreased greenhouse gas concentration and high continental albedo, both associated with the pass",
+      "url": "https://arxiv.org/abs/2603.25321v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "GeoNDC: A Queryable Neural Data Cube for Planetary-Scale Earth Observation",
+      "snippet": "Satellite Earth observation has accumulated massive spatiotemporal archives essential for monitoring environmental change, yet these remain organized as discrete raster files, making them costly to store, transmit, and query. We present GeoNDC, a queryable neural data cube that encodes planetary-sca",
+      "url": "https://arxiv.org/abs/2603.25037v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[#486 – Michael Levin: Hidden Reality of Alien Intelligence & Biological Life] Michael Levin is a biologist at Tufts University working on novel ways to understand and control complex pattern formation in biological systems.\nThank you for listening ❤ Check out our sponsors: https://lexfridman.com/sponsors/ep486-sc\nSee below for timestamps, transcript, and to give feedback, submit questions, contact Lex, etc.\nTranscript:\nhttps://lexfridman.com/michael-levin-2-transcript\nCONTA",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

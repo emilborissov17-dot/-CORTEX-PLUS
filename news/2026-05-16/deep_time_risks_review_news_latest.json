@@ -1,0 +1,37 @@
+{
+  "axis": "DEEP_TIME_RISKS_REVIEW",
+  "fetched_at": "2026-05-16T13:27:57.850549+00:00",
+  "smart_query": "nuclear war pandemic existential risk",
+  "sources_count": {
+    "wiki": 0,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [],
+  "gdelt": [],
+  "github_repos": [],
+  "arxiv_papers": [
+    {
+      "title": "EntityBench: Towards Entity-Consistent Long-Range Multi-Shot Video Generation",
+      "snippet": "Multi-shot video generation extends single-shot generation to coherent visual narratives, yet maintaining consistent characters, objects, and locations across shots remains a challenge over long sequences. Existing evaluations typically use independently generated prompt sets with limited entity cov",
+      "url": "https://arxiv.org/abs/2605.15199v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "BiFedKD: Bidirectional Federated Knowledge Distillation Framework for Non-IID and Long-Tailed ECG Monitoring",
+      "snippet": "Electrocardiogram (ECG) monitoring in Internet of Medical Things (IoMT) networks is constrained by strict data-sharing regulations and privacy concerns. Federated learning (FL) enables collaborative learning by keeping raw ECG data on devices, but frequent transmissions of high-dimensional model upd",
+      "url": "https://arxiv.org/abs/2605.14886v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[Your Friendly Neighborhood Hookworms] For most of human history, people went about their daily lives with a worm or two (or fifty) in their guts. Only in the past century, with pharmaceuticals and sanitation practices, have we made significant strides towards deworming the whole of humanity. And that’s typically been thought of as a good thing, because having too many worms in your body can–quite literally–suck the life out of you.\nBu",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

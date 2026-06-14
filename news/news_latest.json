@@ -1,0 +1,2718 @@
+{
+  "date": "2026-05-17",
+  "timestamp": "2026-05-17T17:04:07.128662+00:00",
+  "axes_fetched": 25,
+  "critical_axes": [
+    "CLIMATE_GLOBAL_RISK_REVIEW",
+    "ECOSYSTEMS_BIODIVERSITY_REVIEW",
+    "DEEP_TIME_RISKS_REVIEW"
+  ],
+  "high_urgency_axes": [
+    "FOOD_REVIEW",
+    "GOVERNANCE_INSTITUTIONS_REVIEW",
+    "WATER_REVIEW",
+    "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL",
+    "INFRASTRUCTURE_CITIES_REVIEW",
+    "SOCIAL_RELATIONS_REVIEW",
+    "HUMAN_WELL_BEING_REVIEW",
+    "LONG_TERM_FUTURE_REVIEW",
+    "INEQUALITY_POVERTY_REVIEW",
+    "TECHNOLOGY_AI_REVIEW",
+    "ECONOMY_WORK_REVIEW",
+    "ENERGY_REVIEW"
+  ],
+  "results": {
+    "GOAL_PROGRESS_REVIEW": {
+      "axis": "GOAL_PROGRESS_REVIEW",
+      "fetched_at": "2026-05-17T14:53:34.337273+00:00",
+      "smart_query": "sustainable development goals SDG",
+      "sources_count": {
+        "wiki": 0,
+        "rss": 0,
+        "gdelt": 3,
+        "arxiv": 0,
+        "github": 3,
+        "youtube_transcripts": 3,
+        "podcast": 1
+      },
+      "rss": [],
+      "gdelt": [
+        {
+          "title": "SDG - Focused Research , Development and Innovation Grant Program ( Philippines ) ",
+          "snippet": "SDG - Focused Research , Development and Innovation Grant Program ( Philippines ) ",
+          "url": "https://www2.fundsforngos.org/innovation/sdg-focused-research-development-and-innovation-grant-program-philippines/",
+          "source": "fundsforngos.org"
+        },
+        {
+          "title": "Nagaland SDG Action Awards 2025 presented to three organisations",
+          "snippet": "Nagaland SDG Action Awards 2025 presented to three organisations",
+          "url": "https://morungexpress.com/nagaland-sdg-action-awards-2025-presented-to-three-organisations",
+          "source": "morungexpress.com"
+        },
+        {
+          "title": "iShares MSCI Global Sustainable Development Goals ETF ( NASDAQ : SDG ) Stock Price Down 0 . 5 % – Should You Sell ? ",
+          "snippet": "iShares MSCI Global Sustainable Development Goals ETF ( NASDAQ : SDG ) Stock Price Down 0 . 5 % – Should You Sell ? ",
+          "url": "https://www.dailypolitical.com/2026/05/04/ishares-msci-global-sustainable-development-goals-etf-nasdaqsdg-stock-price-down-0-5-should-you-sell.html",
+          "source": "dailypolitical.com"
+        }
+      ],
+      "github_repos": [
+        {
+          "title": "samirsaci/supply-chain-sustainability",
+          "snippet": "Build Supply Chain Sustainability Reporting with Python",
+          "stars": 60,
+          "url": "https://github.com/samirsaci/supply-chain-sustainability",
+          "updated": "2026-04-18",
+          "source": "GitHub"
+        },
+        {
+          "title": "osdg-ai/osdg-tool",
+          "snippet": "OSDG is an open-source tool that maps and connects activities to the UN Sustainable Development Goals (SDGs) by identifying SDG-relevant content in any text. The tool is available online at www.osdg.a",
+          "stars": 47,
+          "url": "https://github.com/osdg-ai/osdg-tool",
+          "updated": "2026-04-29",
+          "source": "GitHub"
+        },
+        {
+          "title": "wmo-raf/climweb",
+          "snippet": "Open Source Content Management System for National Meteorological and Hydrological Services ",
+          "stars": 29,
+          "url": "https://github.com/wmo-raf/climweb",
+          "updated": "2026-05-17",
+          "source": "GitHub"
+        }
+      ],
+      "arxiv_papers": [],
+      "podcast": "[Village gossip, pesticide bans, and gene drives: 17 experts on the future of global health] What does it really take to lift millions out of poverty and prevent needless deaths?In this special compilation episode, 17 past guests — including economists, nonprofit founders, and policy advisors — share their most powerful and actionable insights from the front lines of global health and development. You’ll hear about the critical need to boost agricultural productivity in sub-Saharan Africa",
+      "wiki": null,
+      "youtube_items": [
+        {
+          "title": "[YT] How We Can Make the World a Better Place by 2030 | Michael Green | TED Talks",
+          "summary": "Translator: Peter Petrov Reviewer: Radost Tsvetkova Мислите ли, че светът ще бъде по-добър догодина? А в следващото десетилетие? Ще можем ли да се справим с глада, да постигнем равенство между половете и спрем климатичните промени в идните 15 години? Според световните правителства: да, можем. Тези дни световните лидери на среща в ООН в Ню Йорк съгласуваха нов набор от глобални цели за развитието на света до 2030. Ето ги. Тези цели са продукт на широки консултации. Глобалните цели показват какво искаме да е човечеството. Това е планът, но можем ли да го изпълним? Може ли тази визия за по-добър свят да бъде постигната? Тук съм днес, защото направихме разчети, които показват, шокиращо, че май наистина може. Но не по обичайния начин. Мисълта, че светът ще стане по-добро място може да изглежда ",
+          "link": "https://www.youtube.com/watch?v=o08ykAqLOxk",
+          "source_type": "youtube",
+          "channel": "TED",
+          "video_id": "o08ykAqLOxk",
+          "transcript_method": "yt_dlp",
+          "transcript_chars": 3000,
+          "has_full_transcript": true
+        },
+        {
+          "title": "[YT] Stocktaking | What it will take to achieve the Sustainable Development Goals? | United Nations",
+          "summary": "It is so decided. In 2015, world leaders made a promise for the well-being of all people and the planet We need action. to reach the Sustainable Development Goals by 2030. There's progress in life expectancy and disease prevention. There's greater gender parity in management positions. Many developing economies have seen a growing middle class. Safe sanitation and basic hygiene services are becoming the norm. More than 95% of the global population have access to mobile broadband networks. The future of energy is cleaner. Unfortunately, at the halfway point, only 15% of SDG targets are on track. and more than a third are stagnated or in regression. More than 780 million people face chronic hunger. More than 100 million families are fleeing war, conflict and human rights violations. Social p",
+          "link": "https://www.youtube.com/watch?v=enGJyhu6Xr0",
+          "source_type": "youtube",
+          "channel": "United Nations",
+          "video_id": "enGJyhu6Xr0",
+          "transcript_method": "yt_dlp",
+          "transcript_chars": 1580,
+          "has_full_transcript": true
+        },
+        {
+          "title": "[YT] Sustainable Development Goals (SDGs) Explained in 10 minutes or less",
+          "summary": "hey y'all it's kaylee welcome tipping a suit where every week i talk about sustainability why you ask because i dream of a world where a global pandemic does not create 50 new billionaires today i'm going to be covering the united nations sustainable development goals or as you may know them the sdgs global goals or 2030 agenda for sustainable development i'm going to attempt to give you everything you need to know about them in just 10 minutes or less so we better get going [Music] the 2030 agenda for sustainable development was adopted on september 25th 2015 universally universal adoption means that every single country all 193 u.n member states agreed i'm sure you can imagine that getting 193 countries to agree on anything is next to impossible but that's what makes this agenda so groun",
+          "link": "https://www.youtube.com/watch?v=xubK4T9Nc8A",
+          "source_type": "youtube",
+          "channel": "Hippy In A Suit",
+          "video_id": "xubK4T9Nc8A",
+          "transcript_method": "yt_dlp",
+          "transcript_chars": 3000,
+          "has_full_transcript": true
+        }
+      ],
+      "summary": "Визията за устойчива цивилизация с достоен живот за всеки се подкрепя от конкретни проекти и инициативи, свързани със СДГ и отворени технологии.",
+      "urgency": "MEDIUM",
+      "sentiment": "POSITIVE",
+      "key_developments": [
+        "SDG - Focused Research , Development and Innovation Grant Program (Philippines)",
+        "Nagaland SDG Action Awards 2025 presented to three organisations",
+        "samirsaci/supply-chain-sustainability (star=60)",
+        "osdg-ai/osdg-tool (star=47)",
+        "wmo-raf/climweb (star=29)"
+      ],
+      "open_source_momentum": "High",
+      "scientific_frontier": "No data",
+      "relevance_to_goal": "HIGH"
+    },
+    "CLIMATE_GLOBAL_RISK_REVIEW": {
+      "axis": "CLIMATE_GLOBAL_RISK_REVIEW",
+      "fetched_at": "2026-05-17T14:58:46.194679+00:00",
+      "smart_query": "climate change CO2 emissions",
+      "sources_count": {
+        "wiki": 0,
+        "rss": 3,
+        "gdelt": 0,
+        "arxiv": 0,
+        "github": 3,
+        "youtube_transcripts": 3,
+        "podcast": 1
+      },
+      "rss": [
+        {
+          "title": "Is it safe to swim at England's bathing sites?",
+          "snippet": "Signs warning people not to swim are in place at almost all of England's official inland river bathing sites due to concerns the water could be unsafe",
+          "url": "https://www.bbc.com/news/videos/c0q27gn78d1o?at_medium=RSS&at_campaign=rss",
+          "source": "RSS"
+        },
+        {
+          "title": "'Don't swim' at 12 of 14 river bathing sites, as more locations announced",
+          "snippet": "Too much bacteria linked to faeces found at almost all England's designated river bathing sites",
+          "url": "https://www.bbc.com/news/articles/cvgzvqq9345o?at_medium=RSS&at_campaign=rss",
+          "source": "RSS"
+        },
+        {
+          "title": "White-tailed eagles to be released in Exmoor despite farmer warnings",
+          "snippet": "Some farmers fear the reintroduction of the UK's biggest bird of prey will threaten their livestock.",
+          "url": "https://www.bbc.com/news/articles/cd6p26y6d8vo?at_medium=RSS&at_campaign=rss",
+          "source": "RSS"
+        }
+      ],
+      "gdelt": [],
+      "github_repos": [
+        {
+          "title": "ESCOMP/CESM",
+          "snippet": "The Community Earth System Model",
+          "stars": 460,
+          "url": "https://github.com/ESCOMP/CESM",
+          "updated": "2026-05-12",
+          "source": "GitHub"
+        },
+        {
+          "title": "xgcm/xgcm",
+          "snippet": "python package for analyzing general circulation model output data",
+          "stars": 251,
+          "url": "https://github.com/xgcm/xgcm",
+          "updated": "2026-04-24",
+          "source": "GitHub"
+        },
+        {
+          "title": "climlab/climlab",
+          "snippet": "Python package for process-oriented climate modeling",
+          "stars": 245,
+          "url": "https://github.com/climlab/climlab",
+          "updated": "2026-05-15",
+          "source": "GitHub"
+        }
+      ],
+      "arxiv_papers": [],
+      "podcast": "[Return of the Flesh-Eaters] If a species is horrible enough, do we have the right to kill it forever?\nSeventy years ago, a nightmare parasite feasted on the live flesh of warm-blooded creatures in North America: the screwworm. That is, until a young scientist named Edward F. Knipling discovered a crucial screwworm weakness and hatched a sweeping project to wipe them out. Knipling’s seemingly zany plan to spray screwworms out",
+      "wiki": null,
+      "youtube_items": [
+        {
+          "title": "[YT] Top 5 Climate Disasters of 2025 That Shook the World | Planet Pulse | N18G",
+          "summary": "2025 will be remembered as the year the climate crisis stopped knocking and kicked the door right down. Across continents, nature unleashed its fury. Record-breaking storms, catastrophic floods, raging wildfires, and deadly heat waves pushed communities to the edge. From South Asia's devastating monsoon floods that swallowed towns and displaced millions to powerful cyclones tearing through coastlines in India, Sri Lanka and the Caribbean. The human cost was staggering. Mountains collapsed under torrential rain. Forests burned through historic heat and cities struggled to cope with disasters arriving back to back. Scientists warned these were not frequents, but part of a dangerous new climate pattern driven by warming oceans, rising temperatures, and increasingly erratic weather systems. Ev",
+          "link": "https://www.youtube.com/watch?v=LX_sXGvOTg4",
+          "source_type": "youtube",
+          "channel": "Firstpost",
+          "video_id": "LX_sXGvOTg4",
+          "transcript_method": "yt_dlp",
+          "transcript_chars": 3000,
+          "has_full_transcript": true
+        },
+        {
+          "title": "[YT] Inside the planet’s most urgent climate warning | Global Warning E1 | Featured Documentary",
+          "summary": "Something momentous has happened. While we have been going about our daily lives, the world turned. Climate change is no longer a distant fear. It has now become a clear and current threat. Things that used to happen in geological time spans are now unraveling in our lifetimes. We are the pivot generation. Before us, normality, after us, potential chaos. It falls to us to apply the brakes that will prevent climate change becoming a runaway juggernaut that no one can stop. The future of human civilization will be what we make it. Global warming is a road map for what is happening to the planet and what we can do to stop it. [Music] Which of us hasn't thought at some point, what difference can I make? What difference does just one country make to a truly global problem? I've spent over 20 ye",
+          "link": "https://www.youtube.com/watch?v=F8vI5_gN90g",
+          "source_type": "youtube",
+          "channel": "Al Jazeera English",
+          "video_id": "F8vI5_gN90g",
+          "transcript_method": "yt_dlp",
+          "transcript_chars": 3000,
+          "has_full_transcript": true
+        },
+        {
+          "title": "[YT] Superstorms and Global Warming: Is Extreme Weather the New Normal? | SLICE EARTH | FULL DOCUMENTARY",
+          "summary": "[Music] hurricanes rank among the most dangerous storms on Earth they inflict losses of billions of dollars each year but hurricanes are agents of both destruction and Rejuvenation in the future they may be more powerful and cause greater change than even those of [Music] today every year the tropics stand in the path of the most powerful storms on the planet in different areas they go by different names typhoons in the Pacific Cyclones in Australia and in the Atlantic hurricanes all are names for weather systems born from almost identical circumstances all have the unique visual signature of a disc-like storm system rotating around a calm eye of extremely low atmospheric pressure with winds accelerating ever more viciously toward Wards the center all are potentially deadly these Unstoppab",
+          "link": "https://www.youtube.com/watch?v=hwiv_nMUplM",
+          "source_type": "youtube",
+          "channel": "SLICE Earth",
+          "video_id": "hwiv_nMUplM",
+          "transcript_method": "yt_dlp",
+          "transcript_chars": 3000,
+          "has_full_transcript": true
+        }
+      ],
+      "summary": "Климатът е в критично натоварено състояние, с резки увеличения на бедствията като урагани, наводнения и пожари. Студенти и научни институции работят по моделиране на климатичните промени, но реалните рискове остават високи.",
+      "urgency": "CRITICAL",
+      "sentiment": "CRITICAL",
+      "key_developments": [
+        "Великобритания предупреждава за незадължително плуване в 12 от 14 реки, поради високи нива на замърсение и нестабилност.",
+        "Виденията за 2025 г. показват резки климатични кризи с урагани, наводнения и пожари, които изправят хората на изпитание.",
+        "Проектите като ESCOMP/CESM и xgcm/xgcm са важни за анализиране на климатичните модели, но не заменят реалните действия."
+      ],
+      "open_source_momentum": "ESCOMP/CESM, xgcm/xgcm, climlab/climlab",
+      "scientific_frontier": "No data",
+      "relevance_to_goal": "Повишава риска за устойчивост на цивилизацията, което противоречи на визията за достоен живот за всички."
+    },
+    "TECHNOLOGY_INFRA_REVIEW": {
+      "axis": "TECHNOLOGY_INFRA_REVIEW",
+      "fetched_at": "2026-05-17T14:59:34.692029+00:00",
+      "smart_query": "technology internet digital access",
+      "sources_count": {
+        "wiki": 0,
+        "gdelt": 0,
+        "arxiv": 0,
+        "github": 3,
+        "youtube_transcripts": 3,
+        "podcast": 1
+      },
+      "rss": [],
+      "gdelt": [],
+      "github_repos": [
+        {
+          "title": "doocs/advanced-java",
+          "snippet": "😮 Core Interview Questions & Answers For Experienced Java(Backend) Developers | 互联网 Java 工程师进阶知识完全扫盲：涵盖高并发、分布式、高可用、微服务、海量数据处理等领域知识",
+          "stars": 78972,
+          "url": "https://github.com/doocs/advanced-java",
+          "updated": "2026-05-17",
+          "source": "GitHub"
+        },
+        {
+          "title": "redis/redis",
+          "snippet": "For developers, who are building real-time data-driven applications, Redis is the preferred, fastest, and most feature-rich cache, data structure server, and document and vector query engine.",
+          "stars": 74395,
+          "url": "https://github.com/redis/redis",
+          "updated": "2026-05-17",
+          "source": "GitHub"
+        },
+        {
+          "title": "binhnguyennus/awesome-scalability",
+          "snippet": "The Patterns of Scalable, Reliable, and Performant Large-Scale Systems",
+          "stars": 71059,
+          "url": "https://github.com/binhnguyennus/awesome-scalability",
+          "updated": "2026-05-17",
+          "source": "GitHub"
+        }
+      ],
+      "arxiv_papers": [],
+      "podcast": "[#496 – FFmpeg: The Incredible Technology Behind Video on the Internet] Jean-Baptiste Kempf is lead developer of VLC and president of VideoLAN. Kieran Kunhya is a longtime FFmpeg contributor, codec engineer, and the person behind the now-infamous FFmpeg account on X.\nThank you for listening ❤ Check out our sponsors: https://lexfridman.com/sponsors/ep496-sc\nSee below for timestamps, transcript, and to give feedback, submit questions, contact Lex, etc.\nTranscript:\nhttps",
+      "wiki": null,
+      "youtube_items": [
+        {
+          "title": "[YT] Why 2026 satellite internet is finally ending the global digital divide forever",
+          "summary": "In the vast expanse of space, humanity dared to dream beyond Earth's bounds. The Apollo program pushed the limits of exploration. Among its ambitious missions was Apollo 13, launched in April 1970, aiming for the moon's Framaro Formation. Astronauts Jim Levelvel, Jack Swigert, and Fred Hayes embarked on this journey. A testament to human ingenuity and courage. Their mission was part of the intense space race, a global competition to conquer the final frontier. But what began as a routine lunar voyage would soon transform into a desperate fight for survival miles from home. Just 2 days into their mission, a routine stir of an oxygen tank turned catastrophic. A sudden explosion rocked the spacecraft. The chilling words, \"Houston, we've had a problem.\" echoed across the vast distance, signali",
+          "link": "https://www.youtube.com/watch?v=QloAsVyhHuY",
+          "source_type": "youtube",
+          "channel": "TimeShift Tech",
+          "video_id": "QloAsVyhHuY",
+          "transcript_method": "yt_dlp",
+          "transcript_chars": 3000,
+          "has_full_transcript": true
+        },
+        {
+          "title": "[YT] Digital divide: 2 billion people still without internet access",
+          "summary": "President, excellencies, distinguished ladies and gentlemen, it is an honor to address this session of the council on behalf of the secretary general of the international telecommunication union. In 2025, two billion people worldwide were still cut off from the digital world with many disparities still persisting along the lines such as location, gender, age, disabilities, or affordability. 77% of men were using the internet, for example, compared to 71% of women. It is noteworthy that 85% of urban dwellers used the internet in 2025 compared to 58% of the rural population. In lowincome countries, the urban rural gap is even wider with only one in seven rural dwellers, that's 14% online. It is estimated that half of the world's schools remain offline. Without access to the internet, childre",
+          "link": "https://www.youtube.com/watch?v=M-4cjaCoFFM",
+          "source_type": "youtube",
+          "channel": "UN Human Rights Council",
+          "video_id": "M-4cjaCoFFM",
+          "transcript_method": "yt_dlp",
+          "transcript_chars": 3000,
+          "has_full_transcript": true
+        },
+        {
+          "title": "[YT] Bridging the Digital Divide: Why Access to Tech is Crucial for Everyones Future",
+          "summary": "Digital access is universal millions are being left behind in this idriven revolution and the consequences are dire. Picture a vibrant town where just a few blocks away families are trapped by outdated technology. This is the distant issue. It's happening right now and it's closer than you think. Invisible barriers to digital inclusion are everywhere. It's not just about having a device. It's about how that access shapes lives. Many communities are overlooked as funding flows to flashy urban projects, leaving rural areas in the dark. Imagine a school boasting a cutting edge curriculum pairs the uncomfortable truth. Many I tools are designed for a narrow audience, neglecting those who need them most. Technology often fails to accommodate diverse languages, abilities, and socioeconomic backg",
+          "link": "https://www.youtube.com/watch?v=ThoDVqVClpI",
+          "source_type": "youtube",
+          "channel": "ai_future",
+          "video_id": "ThoDVqVClpI",
+          "transcript_method": "yt_dlp",
+          "transcript_chars": 3000,
+          "has_full_transcript": true
+        }
+      ],
+      "summary": "Технологичната инфраструктура е от критично значение за постигане на устойчива цивилизация с достоен живот за всеки. Проектите като Redis и Awesome Scalability показват напредъка в разработването на мащабируеми и надеждни системи. Технологиите трябва да бъдат оценени спрямо тяхното принос в постигане на устойчивост и достойен живот.",
+      "urgency": "MEDIUM",
+      "sentiment": "NEUTRAL",
+      "key_developments": [
+        "doocs/advanced-java",
+        "redis/redis",
+        "binhnguyennus/awesome-scalability"
+      ],
+      "open_source_momentum": "Наличие на популярни отворени проекти като Redis и Awesome Scalability на GitHub показва висока степен на активност и принос в разработването на технологичната инфраструктура.",
+      "scientific_frontier": "No data",
+      "relevance_to_goal": "Висока, тъй като технологиите имат потенциал да подобрят живота на хората и да допринесат за постигане на устойчива цивилизация."
+    },
+    "ECOSYSTEMS_BIODIVERSITY_REVIEW": {
+      "axis": "ECOSYSTEMS_BIODIVERSITY_REVIEW",
+      "fetched_at": "2026-05-17T15:04:44.566259+00:00",
+      "smart_query": "biodiversity species extinction",
+      "sources_count": {
+        "wiki": 0,
+        "rss": 3,
+        "gdelt": 0,
+        "arxiv": 0,
+        "github": 3,
+        "youtube_transcripts": 3,
+        "podcast": 1
+      },
+      "rss": [
+        {
+          "title": "Giant squid discovery uncovers a hidden deep-sea world off Australia",
+          "snippet": "Scientists exploring deep underwater canyons off the coast of Western Australia uncovered a hidden world packed with bizarre and elusive marine life — including signs of the legendary giant squid. By analyzing traces of DNA floating in seawater from depths exceeding 4 kilometers, researchers identif",
+          "url": "https://www.sciencedaily.com/releases/2026/05/260513221807.htm",
+          "source": "RSS"
+        },
+        {
+          "title": "Scientists say this algae could remove microplastics from drinking water",
+          "snippet": "Researchers created a special kind of algae that can grab microscopic plastic pollution out of water almost like a magnet. The algae produce limonene, an orange-scented oil that helps them bind to water-repelling microplastics, forming easy-to-remove clumps. As a bonus, the algae also clean wastewat",
+          "url": "https://www.sciencedaily.com/releases/2026/05/260511213201.htm",
+          "source": "RSS"
+        },
+        {
+          "title": "Stunning fossil discovery challenges the origins of animal life",
+          "snippet": "Scientists revisiting mysterious 540-million-year-old microfossils from Brazil have overturned a major idea about early animal life. What were once thought to be trails left behind by tiny worm-like creatures are now believed to be fossilized communities of bacteria and algae — some with remarkably ",
+          "url": "https://www.sciencedaily.com/releases/2026/05/260511213139.htm",
+          "source": "RSS"
+        }
+      ],
+      "gdelt": [],
+      "github_repos": [
+        {
+          "title": "protontypes/open-sustainable-technology",
+          "snippet": "A directory and analysis of the open source ecosystem in the areas of climate change, sustainable energy, biodiversity and natural resources.  https://docs.getgrist.com/gSscJkc5Rb1R/OpenSustaintech",
+          "stars": 2496,
+          "url": "https://github.com/protontypes/open-sustainable-technology",
+          "updated": "2026-05-17",
+          "source": "GitHub"
+        },
+        {
+          "title": "microsoft/Biodiversity",
+          "snippet": "Microsoft AI for Good Lab — Biodiversity research hub. Open-source AI models, edge devices, and tools for biodiversity monitoring and conservation. Hosts SPARROW-Studio at /SPARROW-Studio. Your source",
+          "stars": 1007,
+          "url": "https://github.com/microsoft/Biodiversity",
+          "updated": "2026-05-15",
+          "source": "GitHub"
+        },
+        {
+          "title": "treflehq/trefle-api",
+          "snippet": "🍀 Trefle is a botanical JSON REST API for plants species, allowing you to search and query over all the registered species, and build the next gardening apps and farming robots.",
+          "stars": 576,
+          "url": "https://github.com/treflehq/trefle-api",
+          "updated": "2026-05-11",
+          "source": "GitHub"
+        }
+      ],
+      "arxiv_papers": [],
+      "podcast": "[Return of the Flesh-Eaters] If a species is horrible enough, do we have the right to kill it forever?\nSeventy years ago, a nightmare parasite feasted on the live flesh of warm-blooded creatures in North America: the screwworm. That is, until a young scientist named Edward F. Knipling discovered a crucial screwworm weakness and hatched a sweeping project to wipe them out. Knipling’s seemingly zany plan to spray screwworms out",
+      "wiki": null,
+      "youtube_items": [
+        {
+          "title": "[YT] We need IMMEDIATE action to stop extinction crisis, David Attenborough - BBC",
+          "summary": "over the course of my life i've encountered some of the world's most remarkable species of animals only now do i realize just how lucky i've been many of these wonders seem set to disappear forever the un panel of experts has found that one million animal and plant species face extinction it is worse than expected this is happening much faster than we've ever seen before today we are the asteroid that's causing many many species to go extinct simultaneously the evidence is that unless immediate action is taken this crisis has grave impacts for us all we're not just losing nice things to look at we're losing critical parts of earth's system and it's threatening our food our water our climate we are encroaching further and further every day into wildlife habitat and that drives emerging dise",
+          "link": "https://www.youtube.com/watch?v=dbCR0KSU52g",
+          "source_type": "youtube",
+          "channel": "BBC",
+          "video_id": "dbCR0KSU52g",
+          "transcript_method": "yt_dlp",
+          "transcript_chars": 3000,
+          "has_full_transcript": true
+        },
+        {
+          "title": "[YT] Million animals, plants at risk of extinction due to human activities, U.N. report says",
+          "summary": "as we told you yesterday about 1 million species of animals and plants around the world are now at risk of extinction in part due to pollution and overfishing a new United Nations report says nature is essential for our existence and a good quality of life but points to a start warning humans are transforming the planet's natural habitat at an unprecedented rate Jonathan Vigliotti is in Los Angeles eluate in Los Angeles with what the future could look like if nothing's done Jonathan good morning and good morning John scientists say the report is a landmark in the conservation battle not only was it compiled by scientists hundreds of them it was approved by diplomats as well from 132 countries including here in the US they say human survival depends on healthy animals and plants and destroy",
+          "link": "https://www.youtube.com/watch?v=5tgNtIUOL4E",
+          "source_type": "youtube",
+          "channel": "CBS Mornings",
+          "video_id": "5tgNtIUOL4E",
+          "transcript_method": "yt_dlp",
+          "transcript_chars": 3000,
+          "has_full_transcript": true
+        },
+        {
+          "title": "[YT] Climate 101: Deforestation | National Geographic",
+          "summary": "- [Narrator] Forests cover about 30% of the planet. And the ecosystems they create play an essential role in supporting life on earth. But deforestation is clearing earth's forest on a massive scale. And at the current rate of destruction, the world's rainforest can completely disappear within 100 years. Why should we care about deforestation? Together Forestry and Agriculture are responsible for 24% of greenhouse gas emissions, making deforestation a significant contributor to climate change. Deforestation impacts the amount of greenhouse gases in the atmosphere in two ways. First, when trees are felled, they release the carbon they are storing into the atmosphere. Second, trees play a critical role in absorbing the greenhouse gases that fuel global warming. Fewer forests mean larger amou",
+          "link": "https://www.youtube.com/watch?v=Ic-J6hcSKa8",
+          "source_type": "youtube",
+          "channel": "National Geographic",
+          "video_id": "Ic-J6hcSKa8",
+          "transcript_method": "yt_dlp",
+          "transcript_chars": 2102,
+          "has_full_transcript": true
+        }
+      ],
+      "summary": "Екосистемите и биоразнообразието са ключови за устойчивата цивилизация. Откритията във въглеродния цикъл и нови технологии за почистване на водата показват възможности, но и ускорената загуба на видове предупреждава за критична ситуация.",
+      "urgency": "CRITICAL",
+      "sentiment": "CRITICAL",
+      "key_developments": [
+        "Giant squid discovery uncovers a hidden deep-sea world off Australia",
+        "Scientists say this algae could remove microplastics from drinking water",
+        "Microsoft AI for Good Lab — Biodiversity research hub. Open-source AI models, ed",
+        "over the course of my life i've encountered some of the world's most remarkable species of animals only now do i realize just how lucky i've been many of these wonders seem set to disappear forever the un panel of experts has found that one million animal and plant species face extinction"
+      ],
+      "open_source_momentum": "Microsoft AI for Good Lab — Biodiversity research hub. Open-source AI models, ed",
+      "scientific_frontier": "No data",
+      "relevance_to_goal": "HIGH"
+    },
+    "FOOD_REVIEW": {
+      "axis": "FOOD_REVIEW",
+      "fetched_at": "2026-05-17T15:09:57.239239+00:00",
+      "smart_query": "food security hunger famine",
+      "sources_count": {
+        "wiki": 0,
+        "rss": 0,
+        "gdelt": 0,
+        "arxiv": 0,
+        "github": 3,
+        "youtube_transcripts": 3,
+        "podcast": 1
+      },
+      "rss": [],
+      "gdelt": [],
+      "github_repos": [
+        {
+          "title": "meyerls/FruitNeRF",
+          "snippet": "[IROS24] Offical Code for \"FruitNeRF: A Unified Neural Radiance Field based Fruit Counting Framework\" - Inegrated into Nerfstudio",
+          "stars": 327,
+          "url": "https://github.com/meyerls/FruitNeRF",
+          "updated": "2026-04-29",
+          "source": "GitHub"
+        },
+        {
+          "title": "px39n/Awesome-Precision-Agriculture",
+          "snippet": "Advancement of UAV, deep Learning and cutting edged technologies and papers in Precision Agriculture. ",
+          "stars": 136,
+          "url": "https://github.com/px39n/Awesome-Precision-Agriculture",
+          "updated": "2026-05-11",
+          "source": "GitHub"
+        },
+        {
+          "title": "nesl/agrobot",
+          "snippet": "Neural-Kalman GNSS/INS Navigation for Precision Agriculture",
+          "stars": 82,
+          "url": "https://github.com/nesl/agrobot",
+          "updated": "2026-04-25",
+          "source": "GitHub"
+        }
+      ],
+      "arxiv_papers": [],
+      "podcast": "[Prominent Scientists, Faith Leaders, Policymakers and Artists Call for a Prohibition on Superintelligence, as Poll Shows Americans Don’t Want It] Initial signatories include AI pioneers Yoshua Bengio and Geoffrey Hinton, leading media voices Steve Bannon and Glenn Beck, Obama's National Security Advisor Susan Rice, business trailblazers Steve Wozniak and Richard Branson, five Nobel Laureates, former Irish President Mary Robinson, actors Stephen Fry and Joseph Gordon-Levitt, and hundreds of others.",
+      "wiki": null,
+      "youtube_items": [
+        {
+          "title": "[YT] State of Food Security and Nutrition in The World 2025",
+          "summary": "For the first time since 2019, the latest joint UN agency hunger report shows progress. The state of food security and nutrition in the world of 2025 reports that between 638 and 720 million people faced hunger in 2024. This represents about 8.2% 2% of the global population, down from 8.5% in 2023 and 8.7% in 2022. While this good news is welcome, progress around the globe has been unequal. Progress has been made in Southern Asia, Southeastern Asia, and South America. Hunger increased in Africa. More than 20% of the population faced hunger in 2024. Hunger has been steadily on the rise in Western Asia, reaching 12.7% in 2024. Projections show that we are not on track to meet the SDG target of eradicating hunger by 2030 and that 512 million people may still be chronically undernourished in 2",
+          "link": "https://www.youtube.com/watch?v=jZwPIMk-HoM",
+          "source_type": "youtube",
+          "channel": "Food and Agriculture Organization of the United Nations",
+          "video_id": "jZwPIMk-HoM",
+          "transcript_method": "yt_dlp",
+          "transcript_chars": 2477,
+          "has_full_transcript": true
+        },
+        {
+          "title": "[YT] Ep 28 - G20’s Take on Agriculture and Global Food Security",
+          "summary": "[music] As the world we've made uh significant progress in addressing hunger, but it remains a major challenge. I mean, think about it. In 2024, there were roughly 720 million people that were living in hunger. Which is why I think at the G20 summit in Johannesburg uh in November 2025, it was important that the issue of food security gets to be one of the discussion point by the leaders and in fact if one reads the leader declaration at the end of the summit to say what are they saying about global hunger there are a number of things that they are suggesting and one of the important one is of course asking the question of what can agriculture do to resolve global hunger and I think that's an important question because we know from literature observations that improvement in agricultural pr",
+          "link": "https://www.youtube.com/watch?v=i8nB9zEpbPo",
+          "source_type": "youtube",
+          "channel": "agriview wandile",
+          "video_id": "i8nB9zEpbPo",
+          "transcript_method": "yt_dlp",
+          "transcript_chars": 3000,
+          "has_full_transcript": true
+        },
+        {
+          "title": "[YT] Why are so Many People going Hungry? | World Hunger | FAO Explainer | United Nations",
+          "summary": "If you're watching this, chances are that you are in the fortunate position to have access to&nbsp; the food you want, when you need it. For the most part, this is thanks to strong&nbsp; economies, distribution networks, skilled labor, abundant resources, the list goes on.&nbsp; If these components are developed enough, you would be fairly certain that when you go&nbsp; out looking for it, you will have access to enough food to keep you and your family&nbsp; strong and healthy. Sounds easy, right? Then why are so many&nbsp; people going hungry? HOW DO WE END WORLD HUNGER?&nbsp; and what is FAO doing about it? In many countries, rural communities depend&nbsp; heavily on small scale farming to sustain themselves.&nbsp; In turn, the involvement provided by these communities in small scale far",
+          "link": "https://www.youtube.com/watch?v=Ke06QUfOeTE",
+          "source_type": "youtube",
+          "channel": "United Nations",
+          "video_id": "Ke06QUfOeTE",
+          "transcript_method": "yt_dlp",
+          "transcript_chars": 3000,
+          "has_full_transcript": true
+        }
+      ],
+      "summary": "Данните показват незначително намаление на хората, страдащи от глад, но растежът на глада в Африка и Западна Азия подчертава неравномерността на напредъка. Това е критичен момент, който изисква по-усърдна дейност.",
+      "urgency": "HIGH",
+      "sentiment": "CRITICAL",
+      "key_developments": [
+        "For the first time since 2019, the latest joint UN agency hunger report shows progress. The state of food security and nutrition in the world of 2025 reports that between 638 and 720 million people faced hunger in 2024. This represents about 8.2% of the global population, down from 8.5% in 2023 and 8.7% in 2022. While this good news is welcome, progress around the globe has been unequal. Progress has been made in Southern Asia, Southeastern Asia, and South America. Hunger increased in Africa. More than 20% of the population faced hunger in 2024. Hunger has been steadily on the rise in Western Asia, reaching 12.7% in 2024. Projections show that we are not on track to meet the SDG target of eradicating hunger by 2030 and that 512 million people may still be chronically undernourished in 2030."
+      ],
+      "open_source_momentum": "No data",
+      "scientific_frontier": "No data",
+      "relevance_to_goal": "CRITICAL"
+    },
+    "GOVERNANCE_INSTITUTIONS_REVIEW": {
+      "axis": "GOVERNANCE_INSTITUTIONS_REVIEW",
+      "fetched_at": "2026-05-17T15:15:00.501344+00:00",
+      "smart_query": "government corruption institutions",
+      "sources_count": {
+        "wiki": 0,
+        "rss": 3,
+        "gdelt": 0,
+        "arxiv": 0,
+        "github": 3,
+        "youtube_transcripts": 3,
+        "podcast": 1
+      },
+      "rss": [
+        {
+          "title": "Turning silence into stories: Cambodian activist amplifies LGBTQI+ youth voices",
+          "snippet": "Cambodian activist Panha Theng, a 2025 UN Young Leader for the Sustainable Development Goals, says visibility and safe spaces remain critical for LGBTQI+ youth across Southeast Asia amid continuing stigma and discrimination.",
+          "url": "https://news.un.org/feed/view/en/story/2026/05/1167529",
+          "source": "RSS"
+        },
+        {
+          "title": "World News in Brief: UN relief vehicle struck in Ukraine, emergency airdrops in South Sudan, backlash against LGBTIQ+ rights",
+          "snippet": "The Secretary-General is alarmed that a clearly marked United Nations vehicle was struck twice in Kherson city in Ukraine on 14 May, his spokesperson said in a statement.",
+          "url": "https://news.un.org/feed/view/en/story/2026/05/1167525",
+          "source": "RSS"
+        },
+        {
+          "title": "Afghan mothers and children face worsening hunger crisis, WFP warns",
+          "snippet": "Afghanistan’s deepening malnutrition crisis is pushing mothers and children to the brink, the UN World Food Programme has warned, as mass returns from neighbouring countries and severe funding shortfalls overwhelm already strained humanitarian operations.",
+          "url": "https://news.un.org/feed/view/en/story/2026/05/1167523",
+          "source": "RSS"
+        }
+      ],
+      "gdelt": [],
+      "github_repos": [
+        {
+          "title": "github/government.github.com",
+          "snippet": "Gather, curate, and feature stories of public servants and civic hackers using GitHub as part of their open government innovations",
+          "stars": 1940,
+          "url": "https://github.com/github/government.github.com",
+          "updated": "2026-05-17",
+          "source": "GitHub"
+        },
+        {
+          "title": "consuldemocracy/consuldemocracy",
+          "snippet": "Consul Democracy - Open Government and E-Participation Web Software",
+          "stars": 1532,
+          "url": "https://github.com/consuldemocracy/consuldemocracy",
+          "updated": "2026-05-17",
+          "source": "GitHub"
+        },
+        {
+          "title": "datagouv/data.gouv.fr",
+          "snippet": "Ce dépôt rassemble les tickets techniques qui portent sur data.gouv.fr.",
+          "stars": 118,
+          "url": "https://github.com/datagouv/data.gouv.fr",
+          "updated": "2026-04-29",
+          "source": "GitHub"
+        }
+      ],
+      "arxiv_papers": [],
+      "podcast": "[#239 – Rose Hadshar on why automating all human labour will break our political system] The most important political question in the age of advanced AI might not be who wins elections. It might be whether elections continue to matter at all.That’s the view of Rose Hadshar, researcher at Forethought, who believes we could see extreme, AI-enabled power concentration without a coup or dramatic ‘end of democracy’ moment.She foresees something more insidious: an elite group with access to",
+      "wiki": null,
+      "youtube_items": [
+        {
+          "title": "[YT] Global Geopolitical Outlook 2026",
+          "summary": "Thank you. Thank you. Good afternoon. My name is Terry Martin as you just heard and uh it's great to be back at the World Knowledge Forum. This is I believe my eighth time at the World Knowledge Forum and I always get to talk to really interesting people. It's why one of the reasons why I keep coming back. I also like Korea a lot. Um but you I never get to talk to people any more interesting than the gentleman sitting right next to me here on this stage. Um it is really my my great pleasure to introduce uh Hal Brance. Hal Brans uh we already just heard a brief introduction. You saw some details about him up on your screen. He is a foreign affairs global policy guru in many circles. I know he's not he would reject that title, but uh he's highly regarded. He's a professor, distinguished prof",
+          "link": "https://www.youtube.com/watch?v=Gkw2vbJCFkQ",
+          "source_type": "youtube",
+          "channel": "World Knowledge Forum",
+          "video_id": "Gkw2vbJCFkQ",
+          "transcript_method": "yt_dlp",
+          "transcript_chars": 3000,
+          "has_full_transcript": true
+        },
+        {
+          "title": "[YT] The top 10 geopolitical developments for 2026",
+          "summary": "Hi everybody and a really warm welcome. Today we're delighted to share the launch of our 2026 Geostrategic Outlook. Now we've been publishing these geostrategic outlooks for nearly eight years now. In each of those eight years, we've identified the top 10 issues that we believe are impacting the global business community, but also policymakers and government entities throughout the world. And so in 2026, we do the same thing. We identify our top 10 development that we think those individuals and those organizations should be focusing on. We're going to do one thing slightly differently this year, though. As well as hearing about those top 10 issues, we're going to move around the globe and hear from four of my colleagues in the Geostrategic Business Group for their take on what all of this",
+          "link": "https://www.youtube.com/watch?v=KqZqusPFf78",
+          "source_type": "youtube",
+          "channel": "EY Global",
+          "video_id": "KqZqusPFf78",
+          "transcript_method": "yt_dlp",
+          "transcript_chars": 3000,
+          "has_full_transcript": true
+        },
+        {
+          "title": "[YT] How top geopolitical risks facing world in 2026 relate to Venezuela operation",
+          "summary": "The US military raid on Venezuela over the weekend stunned the world and sparked a global debate about whether President Trump might use force against other countries. Our next guest, Ian Bremer, is the president of the geopolitical risk consultancy firm, the Eurasia Group. The group's annual top risks report analyzes the top 10 geopolitical risks facing the world in the coming year. Topping this year's list is political revolution here in the US with Bremer arguing the United States is itself unwinding its own global order. Ian, good morning. Uh we will get to that number one risk in a moment, but I want to talk about number three, which is &gt;&gt; the Donro doctrine. &gt;&gt; The Don Row doctrine. And those are the words the president used himself to describe what's going on right now o",
+          "link": "https://www.youtube.com/watch?v=BwXr2tT5on0",
+          "source_type": "youtube",
+          "channel": "CBS Mornings",
+          "video_id": "BwXr2tT5on0",
+          "transcript_method": "yt_dlp",
+          "transcript_chars": 3000,
+          "has_full_transcript": true
+        }
+      ],
+      "summary": "Горизонта на управлението и институциите се разширява чрез прозрачност и участие на гражданите, но съществуват и предизвикателства във външната политика и защитата на правата на групи като LGBTQI+.",
+      "urgency": "HIGH",
+      "sentiment": "CRITICAL",
+      "key_developments": [
+        "Камбоджийският активист подчертава важността на промяната на разказа за LGBTQI+ младежи",
+        "UN колесница е атакувана в Украйна, а в Южен Судан се провеждат аварийни въздушни разпределяния",
+        "Реакцията на обществото към правата на LGBTQI+ групи показва динамика в общественото мнение"
+      ],
+      "open_source_momentum": "Consul Democracy и government.github.com показват растеж в отвореното управление и участие на граждани",
+      "scientific_frontier": "No data",
+      "relevance_to_goal": "CRITICAL"
+    },
+    "SPACE_INFRASTRUCTURE_REVIEW": {
+      "axis": "SPACE_INFRASTRUCTURE_REVIEW",
+      "fetched_at": "2026-05-17T15:20:03.709242+00:00",
+      "smart_query": "space exploration NASA SpaceX",
+      "sources_count": {
+        "wiki": 0,
+        "rss": 3,
+        "gdelt": 0,
+        "arxiv": 0,
+        "github": 3,
+        "youtube_transcripts": 3,
+        "podcast": 1
+      },
+      "rss": [
+        {
+          "title": "NASA Science, Cargo Launch on 34th SpaceX Resupply Mission to Station",
+          "snippet": "The 34th SpaceX commercial resupply mission under contract with NASA is headed to the International Space Station with new scientific experiments after lifting off at 6:05 p.m. EDT Friday on a Falcon 9 rocket from Space Launch Complex 40 at Cape Canaveral Space Force Station in Florida. The SpaceX s",
+          "url": "https://www.nasa.gov/news-release/nasa-science-cargo-launch-on-34th-spacex-resupply-mission-to-station/",
+          "source": "RSS"
+        },
+        {
+          "title": "Curiosity Shakes Loose a Pesky Rock",
+          "snippet": "After NASA’s Curiosity Mars rover drilled a sample from this rock on April 25, 2026, it withdrew its robotic arm and pulled the entire rock off the surface with it. Engineers spent several days repositioning the arm and vibrating the drill to try and get the rock loose. When it finally detached on M",
+          "url": "https://www.nasa.gov/image-article/curiosity-shakes-loose-a-pesky-rock/",
+          "source": "RSS"
+        },
+        {
+          "title": "Hubble Sights Galaxy in Transition",
+          "snippet": "This NASA Hubble Space Telescope image reveals an enigmatic galaxy with a bright center and a face that hints at spiral structure, yet it holds no obvious spiral arms. Reddish-brown clumps and filaments of dust partially obscure the galaxy’s full face, while red, blue, and orange light from distant ",
+          "url": "https://science.nasa.gov/missions/hubble/hubble-sights-galaxy-in-transition/",
+          "source": "RSS"
+        }
+      ],
+      "gdelt": [],
+      "github_repos": [
+        {
+          "title": "KOSASIH/stable-pi-core",
+          "snippet": "Stable-Pi-Core is a next-generation decentralized ecosystem that integrates blockchain, quantum AI, IoT, edge computing, and AR/VR to deliver secure, scalable, and personalized solutions for payments,",
+          "stars": 117,
+          "url": "https://github.com/KOSASIH/stable-pi-core",
+          "updated": "2026-05-13",
+          "source": "GitHub"
+        },
+        {
+          "title": "FlaSpaceInst/EZ-RASSOR",
+          "snippet": "An inexpensive, autonomous, regolith-mining robot",
+          "stars": 60,
+          "url": "https://github.com/FlaSpaceInst/EZ-RASSOR",
+          "updated": "2026-05-14",
+          "source": "GitHub"
+        },
+        {
+          "title": "BarthPaleologue/CosmosJourneyer",
+          "snippet": "Cosmos Journeyer is a space exploration game running directly in the browser! Take your spaceship and witness the beauty of this virtually infinite universe.",
+          "stars": 44,
+          "url": "https://github.com/BarthPaleologue/CosmosJourneyer",
+          "updated": "2026-05-14",
+          "source": "GitHub"
+        }
+      ],
+      "arxiv_papers": [],
+      "podcast": "[#494 – Jensen Huang: NVIDIA – The $4 Trillion Company & the AI Revolution] Jensen Huang is the co-founder and CEO of NVIDIA, the world&#8217;s most valuable company and the engine powering the AI computing revolution.\nThank you for listening ❤ Check out our sponsors: https://lexfridman.com/sponsors/ep494-sc\nSee below for timestamps, transcript, and to give feedback, submit questions, contact Lex, etc.\nTranscript:\nhttps://lexfridman.com/jensen-huang-transcript\nCONTACT LEX",
+      "wiki": null,
+      "youtube_items": [
+        {
+          "title": "[YT] Why is SpaceX Building the BIGGEST ROCKET EVER?",
+          "summary": "I have a question. Why is SpaceX building the biggest rocket ever? Starship is 123 m tall. That's like a 40story building, taller than any other rocket in history. And it has two main sections. The spacecraft, which can carry an insane 150 tons of cargo, and an estimated 100 passengers. For comparison, the number of passengers for previous rockets is 4 to 8. And then there's the detachable rocket booster, which carries all the fuel and is powered by 33 of these engines. Each is twice as powerful as the ones used on the Falcon 9 rockets. Together, it's cost them over $5 billion and taken over 10 years to make. The plan is to prove that you can reuse the full Starship, which reduces launch costs, and then to use it to launch satellites and do cargo missions for NASA, and then help put humans",
+          "link": "https://www.youtube.com/watch?v=WbyZUtj4kV4",
+          "source_type": "youtube",
+          "channel": "Cleo Abram",
+          "video_id": "WbyZUtj4kV4",
+          "transcript_method": "yt_dlp",
+          "transcript_chars": 938,
+          "has_full_transcript": true
+        },
+        {
+          "title": "[YT] NASA 2025: To the Moon, Mars, and Beyond",
+          "summary": "[♪] [Victor Glover] We need to celebrate this moment in human history. Because Artemis II is more than a mission to the Moon and back. It's more than a mission that has to happen before we send people to the surface of the Moon. It is the next step on the journey that gets humanity to Mars. [♪] [Jim Free] When we hear those words we have touchdown. It's our next step to understanding how the Moon formed, that next move to land humans. [♪] [Bob Pearce] You've got to see the X-59 because it is one cool airplane. We continue modification to the aircraft that will become the X-66 [Eugene Parker] When have a space mission into an unknown place, you find remarkable things that you did not anticipate. [Erika Podest] This mission is going to be game changing. [Phil Barela] Virtually everybody on t",
+          "link": "https://www.youtube.com/watch?v=PPQ29WRT-rU",
+          "source_type": "youtube",
+          "channel": "NASA",
+          "video_id": "PPQ29WRT-rU",
+          "transcript_method": "yt_dlp",
+          "transcript_chars": 1074,
+          "has_full_transcript": true
+        },
+        {
+          "title": "[YT] Why SpaceX and NASA Rockets Are So Different",
+          "summary": "Let’s start by acknowledging something crucial.&nbsp; Although NASA and SpaceX are both at the forefront&nbsp;&nbsp; of space travel, their rockets look entirely&nbsp; different, and that is mainly due to the fact that&nbsp;&nbsp; they have very different goals. Imagine packing&nbsp; for a trip to the edge of the solar system- that&nbsp;&nbsp; is the kind of durability NASA is thinking&nbsp; about. They need materials tough enough to&nbsp;&nbsp; withstand the “unknown”. That is why NASA relies&nbsp; on advanced materials like aluminum-lithium alloy,&nbsp;&nbsp; known for being both lightweight and incredibly&nbsp; strong. This allows their Space Launch System&nbsp;&nbsp; (SLS) to survive intense forces of a rocket&nbsp; launch, and the hostile environment of deep space.&nbsp; Meanwhile, Sp",
+          "link": "https://www.youtube.com/watch?v=AlrowLw4dKE",
+          "source_type": "youtube",
+          "channel": "Beyond Facts",
+          "video_id": "AlrowLw4dKE",
+          "transcript_method": "yt_dlp",
+          "transcript_chars": 3000,
+          "has_full_transcript": true
+        }
+      ],
+      "summary": "Съвременните технологии за космически инфраструктури се развиват бързо, като SpaceX разработва гигантски ракети за повторна употреба, а Open Source проекти предлагат нови възможности за изследване и изкопаване на лунен грунт.",
+      "urgency": "MEDIUM",
+      "sentiment": "POSITIVE",
+      "key_developments": [
+        "NASA Science: Cargo Launch на 34-тото SpaceX Resupply Mission към Станцията",
+        "FlaSpaceInst/EZ-RASSOR: Автономен робот за изкопаване на реголит",
+        "BarthPaleologue/CosmosJourneyer: Игра за космически изследвания в браузъра"
+      ],
+      "open_source_momentum": "High",
+      "scientific_frontier": "No data",
+      "relevance_to_goal": "MEDIUM"
+    },
+    "WATER_REVIEW": {
+      "axis": "WATER_REVIEW",
+      "fetched_at": "2026-05-17T15:26:34.890084+00:00",
+      "smart_query": "water scarcity drinking water",
+      "sources_count": {
+        "wiki": 0,
+        "rss": 3,
+        "gdelt": 0,
+        "arxiv": 0,
+        "github": 3,
+        "youtube_transcripts": 3,
+        "podcast": 1
+      },
+      "rss": [
+        {
+          "title": "Lauren Boebert suggests Trump withheld funds to Colorado over prosecution of election denier",
+          "snippet": "Republican said she hoped recent commutation of Tina Peters by governor would free up federal funding for clean drinking waterRepublican congresswoman Lauren Boebert suggested that Donald Trump blocked funds for a clean drinking water project in her state over the prosecution of election denier Tina",
+          "url": "https://www.theguardian.com/us-news/2026/may/16/lauren-boebert-trump-funds-colorado-drink-water-funds-tina-peters",
+          "source": "RSS"
+        },
+        {
+          "title": "Is it time to stop watering our gardens?",
+          "snippet": "With unpredictable weather patterns and summertime garden hose bans now normal, it might be time to let your plants adjust to drier conditionsLast week someone from Thames Water turned up&nbsp;to say we were using more than the average amount of water. I tried to explain that we have small children;",
+          "url": "https://www.theguardian.com/lifeandstyle/2026/may/15/is-it-time-to-become-a-water-conscious-gardener-summer-climate",
+          "source": "RSS"
+        },
+        {
+          "title": "River Thames in London gets first official bathing spot on Friday",
+          "snippet": "Thames at Ham designated as one of 13 new swimming areas across England to be monitored for water qualityThe first designated bathing water area on the River Thames in London will welcome swimmers for the official start of the bathing season on Friday as one of 13 new monitored swimming areas across",
+          "url": "https://www.theguardian.com/environment/2026/may/14/river-thames-london-first-designated-bathing-water-area-",
+          "source": "RSS"
+        }
+      ],
+      "gdelt": [],
+      "github_repos": [
+        {
+          "title": "wilsto/pool-monitor-card",
+          "snippet": "Keep your swimming pool safe and crystal clear by monitoring up to 25 water chemistry parameters at a glance.",
+          "stars": 118,
+          "url": "https://github.com/wilsto/pool-monitor-card",
+          "updated": "2026-05-04",
+          "source": "GitHub"
+        },
+        {
+          "title": "DOI-USGS/EGRET",
+          "snippet": "An R-package for the analysis of long-term changes in water quality and streamflow, including the water-quality method Weighted Regressions on Time, Discharge, and Season (WRTDS). https://doi-usgs.git",
+          "stars": 99,
+          "url": "https://github.com/DOI-USGS/EGRET",
+          "updated": "2026-05-13",
+          "source": "GitHub"
+        },
+        {
+          "title": "KnowFlow/KnowFlow_AWM",
+          "snippet": "KnowFlow Automatic Water Monitoring device is an open sourced tool enable everyone having access to first hand water quality data with low cost.",
+          "stars": 96,
+          "url": "https://github.com/KnowFlow/KnowFlow_AWM",
+          "updated": "2026-04-02",
+          "source": "GitHub"
+        }
+      ],
+      "arxiv_papers": [],
+      "podcast": "[The Resistance of a Cow] There’s something rotten in the cows of Denmark. And Minnesota. And Wisconsin. And Idaho. What could cause a previously thriving herd of majestic dairy cattle to stop drinking water and start drinking … urine? A Danish farmer calls a special investigator, who takes one look at his farm and nopes the heck out of there, refusing to return, citing “bad energy” coming from something nearby … a big bui",
+      "wiki": null,
+      "youtube_items": [
+        {
+          "title": "[YT] 10 Countries You Didn’t Know Are Running Out of Water | Learn with xia",
+          "summary": "What if I told you the next world crisis won't be about oil, but water? And no, it's not just happening in deserts. Right now, some of the most beautiful, powerful, and unexpected countries on Earth are running out of water. And most people have no idea. This is not just about thirst. It's about survival, food, migration, and even war. Here are 10 countries you didn't know are running out of water, and why it's a global red flag we can't ignore. Number 10, Italy. Yes, Italy. Land of pasta, wine, and historic Roman aqueducts. But today, those aqueducts are leaking like crazy. Italy loses up to 40% of its clean water through broken, outdated pipes before it ever reaches homes. In 2022, the mighty Per River dried so low they found a World War II bomb at the bottom. From farming to drinking, n",
+          "link": "https://www.youtube.com/watch?v=4zZWzp8xNS0",
+          "source_type": "youtube",
+          "channel": "WonderSphere",
+          "video_id": "4zZWzp8xNS0",
+          "transcript_method": "yt_dlp",
+          "transcript_chars": 3000,
+          "has_full_transcript": true
+        },
+        {
+          "title": "[YT] Explained | World&#39;s Water Crisis | FULL EPISODE | Netflix",
+          "summary": "Turn on a faucet and clean water rushes out as much as we want anytime we want. It's easy to forget that the quest for this has been one of the defining struggles of human history. Civilizations that harnessed water thrived, the ones that failed, fell. Today, seven and ten people on earth can count on having running water in their homes. The water flows from the risers to connecting mains and finally through service connections into each building on the street. At least so they think. Cape Town, it could become the first major city in the world to run out of water. Cape Town, South Africa, is inching closer now to day zero. Just 92 days away from having to shut off most water taps because of a severe drought. Cape Town is the first major city in the world to plan to indefinitely shut off i",
+          "link": "https://www.youtube.com/watch?v=C65iqOSCZOY",
+          "source_type": "youtube",
+          "channel": "Netflix",
+          "video_id": "C65iqOSCZOY",
+          "transcript_method": "whisper",
+          "transcript_chars": 3000,
+          "has_full_transcript": true
+        },
+        {
+          "title": "[YT] Fresh water scarcity: An introduction to the problem - Christiana Z. Peppard",
+          "summary": "Translator: Anton Hikov Reviewer: Luba Aleksandrova Може би сте чували, че прясната вода е на свършване. Това може да ви звучи странно, понеже, ако живеете в място, където водата тече свободно от кранчето или душа по всяко време, това със сигурност не изглежда като голяма работа. Тя е просто там, нали така? Не е така! Единственото очевидно нещо за прясната вода е колко много имаме нужда от нея. Понеже тя е от съществено значение за живота, трябва да мислим за нея внимателно. Точно сега, в този момент, някои хора, жени и момичета по-специално, ходят с часове и километри на ден, за да доставят питейна вода и дори и тогава, тя може да не е чиста. Всеки 15 секунди, едно дете умира поради болести породени от водата. Това е трагично! Най-наложителните причини да се мисли за прясната вода, следов",
+          "link": "https://www.youtube.com/watch?v=otrpxtAmDAk",
+          "source_type": "youtube",
+          "channel": "TED-Ed",
+          "video_id": "otrpxtAmDAk",
+          "transcript_method": "yt_dlp",
+          "transcript_chars": 3000,
+          "has_full_transcript": true
+        }
+      ],
+      "summary": "Воднен кризисът става все по-сериозен проблем в развити страни, включително Италия, където 40% от чистата вода се загубява поради старите тръби. Съществуват технологии за мониторинг на водата, които могат да помогнат за управление.",
+      "urgency": "HIGH",
+      "sentiment": "CRITICAL",
+      "key_developments": [
+        "Италия загубява 40% от чистата вода поради старите и повръщани тръби",
+        "Реката Пер в Италия се изсъхна до нивото на Втората световна война",
+        "GitHub има проекти като KnowFlow_AWM и DOI-USGS/EGRET за анализ и мониторинг на водата"
+      ],
+      "open_source_momentum": "High: 3 open-source проекти за мониторинг и анализ на водата",
+      "scientific_frontier": "No data",
+      "relevance_to_goal": "CRITICAL"
+    },
+    "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL": {
+      "axis": "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL",
+      "fetched_at": "2026-05-17T15:27:18.977789+00:00",
+      "smart_query": "human rights democracy freedom",
+      "sources_count": {
+        "wiki": 0,
+        "gdelt": 0,
+        "arxiv": 0,
+        "github": 3,
+        "youtube_transcripts": 3,
+        "podcast": 1
+      },
+      "rss": [],
+      "gdelt": [],
+      "github_repos": [
+        {
+          "title": "cirosantilli/china-dictatorship",
+          "snippet": "反中共政治宣传库。Anti Chinese government propaganda. 住在中国真名用户的网友请别给星星，不然你要被警察请喝茶。常见问答集，新闻集和饭店和音乐建议。卐习万岁卐。冠状病毒审查郝海东新疆改造中心六四事件法轮功 996.ICU709大抓捕巴拿马文件邓家贵低端人口西藏骚乱。Friends who live in China and have real name on ac",
+          "stars": 2987,
+          "url": "https://github.com/cirosantilli/china-dictatorship",
+          "updated": "2026-05-17",
+          "source": "GitHub"
+        },
+        {
+          "title": "iiab/iiab",
+          "snippet": "Internet-in-a-Box - Build your own LIBRARY OF ALEXANDRIA with a Raspberry Pi !",
+          "stars": 1863,
+          "url": "https://github.com/iiab/iiab",
+          "updated": "2026-05-17",
+          "source": "GitHub"
+        },
+        {
+          "title": "wikicensorship/wikicensorship.github.io",
+          "snippet": "An open encyclopedia of Internet censorship",
+          "stars": 142,
+          "url": "https://github.com/wikicensorship/wikicensorship.github.io",
+          "updated": "2026-04-23",
+          "source": "GitHub"
+        }
+      ],
+      "arxiv_papers": [],
+      "podcast": "[#239 – Rose Hadshar on why automating all human labour will break our political system] The most important political question in the age of advanced AI might not be who wins elections. It might be whether elections continue to matter at all.That’s the view of Rose Hadshar, researcher at Forethought, who believes we could see extreme, AI-enabled power concentration without a coup or dramatic ‘end of democracy’ moment.She foresees something more insidious: an elite group with access to",
+      "wiki": null,
+      "youtube_items": [
+        {
+          "title": "[YT] Guest Lecture by David Kramer Human Rights. 10/23/2025.",
+          "summary": "Okay. Hello everybody, and I'm sure more will be coming. It is now October 23rd, 2025. We're really excited to have Ambassador David Kramer here. He's calling from a different time zone in um in Texas. And um he and I are both smiling. When you look at today's news, there isn't much to smile about. Um we it seems that the li um the cruelty of Vladimir um um of the um let's just not name him the the ruler of the Russian Federation. The cruelty has no limits um in spite and I'm sure you all have been following this um because the summit the upcoming summit is not taking place anytime soon. Um Mr. Putin's response was to incur even more vicious attacks on Ukraine. So um tremendous thanks to those of you who have the stamina and the ability to join us. Um it's um I I don't know what to say. We",
+          "link": "https://www.youtube.com/watch?v=Rb_up-i1qIs",
+          "source_type": "youtube",
+          "channel": "Delphi Global Research Center",
+          "video_id": "Rb_up-i1qIs",
+          "transcript_method": "yt_dlp",
+          "transcript_chars": 3000,
+          "has_full_transcript": true
+        },
+        {
+          "title": "[YT] Democracy Pulse: Promoting political rights and civil liberties after Human Rights Day",
+          "summary": "Celebrated on December [music] 10th, Human Rights Day highlights the persistent importance of protecting human rights [music] across the world. As critical rights continue to face new threats, let's look at some key trends [music] from the Freedom and Prosperity Indexes. Welcome back to Democracy Pulse, [music] where we unpack the latest developments in global democracy and prosperity. The right to a fair trial, freedom from torture, and free expression [music] and association are all embedded in the United Nations Universal [music] Declaration of Human Rights. These rights are also measured by the civil liberties and political rights components of our freedom [music] index. Globally, both indicators improved steadily until 2012, but have declined [music] since. Of the 164 countries measur",
+          "link": "https://www.youtube.com/watch?v=yL3xae1aHjU",
+          "source_type": "youtube",
+          "channel": "AtlanticCouncil",
+          "video_id": "yL3xae1aHjU",
+          "transcript_method": "yt_dlp",
+          "transcript_chars": 2170,
+          "has_full_transcript": true
+        },
+        {
+          "title": "[YT] How Are US Civil Liberties Defined in the Constitution? | Guide To Your Rights News",
+          "summary": "How are US civil liberties defined in the constitution? In recent days, the topic of civil liberties has gained significant attention across the nation. Many people are asking how these rights are defined in the constitution. Understanding this is essential as it affects our daily lives and interactions with the government. The primary source for these civil liberties is the bill of rights which includes the first 10 amendments to the constitution. These amendments are designed to guarantee fundamental freedoms and protect individuals from government overreach. For instance, the first amendment is vital as it ensures freedom of speech, religion, assembly, and the press. This means that individuals can express their beliefs and opinions without fear of government interference. Additionally,",
+          "link": "https://www.youtube.com/watch?v=KN1bhptZTNk",
+          "source_type": "youtube",
+          "channel": "Guide To Your Rights",
+          "video_id": "KN1bhptZTNk",
+          "transcript_method": "yt_dlp",
+          "transcript_chars": 2548,
+          "has_full_transcript": true
+        }
+      ],
+      "summary": "Анализът на ос GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL показва, че действиите на лидери като Владимир Путин продължават да нарушават правата и достойнството на хората. Тези действия са пример за провал на дизайна в създаването на устойчива цивилизация. Пропагандата и цензурата също играят роля в този контекст.",
+      "urgency": "HIGH",
+      "sentiment": "NEGATIVE",
+      "key_developments": [
+        "cirosantilli/china-dictatorship",
+        "iiab/iiab",
+        "wikicensorship/wikicensorship.github.io"
+      ],
+      "open_source_momentum": "проектите като Internet-in-a-Box и онлайн платформи против цензурата показват растящ интерес и развитие в отворения код",
+      "scientific_frontier": "No data",
+      "relevance_to_goal": "Висока, тъй като правата на човека и достойнството са основни компоненти на визията за устойчива цивилизация"
+    },
+    "DEEP_TIME_RISKS_REVIEW": {
+      "axis": "DEEP_TIME_RISKS_REVIEW",
+      "fetched_at": "2026-05-17T15:32:16.993359+00:00",
+      "smart_query": "nuclear war pandemic existential risk",
+      "sources_count": {
+        "wiki": 0,
+        "gdelt": 0,
+        "arxiv": 0,
+        "github": 3,
+        "youtube_transcripts": 3,
+        "podcast": 1
+      },
+      "rss": [],
+      "gdelt": [],
+      "github_repos": [
+        {
+          "title": "PipFoweraker/pdoom1",
+          "snippet": "Save the world from deadly AI through paperwork",
+          "stars": 7,
+          "url": "https://github.com/PipFoweraker/pdoom1",
+          "updated": "2026-04-03",
+          "source": "GitHub"
+        },
+        {
+          "title": "holo-q/foom",
+          "snippet": "WARNING: cognitive hazards ahead",
+          "stars": 4,
+          "url": "https://github.com/holo-q/foom",
+          "updated": "2026-05-09",
+          "source": "GitHub"
+        },
+        {
+          "title": "nikthink/pauseai.ca",
+          "snippet": "https://pauseai.ca/",
+          "stars": 4,
+          "url": "https://github.com/nikthink/pauseai.ca",
+          "updated": "2026-04-14",
+          "source": "GitHub"
+        }
+      ],
+      "arxiv_papers": [],
+      "podcast": "[Your Friendly Neighborhood Hookworms] For most of human history, people went about their daily lives with a worm or two (or fifty) in their guts. Only in the past century, with pharmaceuticals and sanitation practices, have we made significant strides towards deworming the whole of humanity. And that’s typically been thought of as a good thing, because having too many worms in your body can–quite literally–suck the life out of you.\nBu",
+      "wiki": null,
+      "youtube_items": [
+        {
+          "title": "[YT] All The Ways Humanity Could End Explained In 60 Minutes ",
+          "summary": "When we think about the future, we often picture our children and grandchildren living in a world much like our own. We imagine progress, new technologies, and a continuing story for humanity. But what if this story has an end? What if something could happen that would erase our species from the earth forever? This is the idea of human extinction. It is not just about a bad war or a terrible disaster that kills many people. It is about a final event after which there are no humans left to rebuild, to remember, or to hope. Thinking about this is difficult, but it is also very important. If we understand the dangers, we might be able to prevent them from happening. This essay is a guide to those dangers. The idea of extinction is the ultimate risk because everything we value depends on our s",
+          "link": "https://www.youtube.com/watch?v=NbSZmC57DIQ",
+          "source_type": "youtube",
+          "channel": "Ace View",
+          "video_id": "NbSZmC57DIQ",
+          "transcript_method": "yt_dlp",
+          "transcript_chars": 3000,
+          "has_full_transcript": true
+        },
+        {
+          "title": "[YT] 10 Catastrophes That Could Destroy Life On Earth",
+          "summary": "One. Asteroid impact. A catastrophe that could end life on Earth. It starts quietly. Far beyond Earth, a massive space rock drifts through the darkness. It is similar in size to the one that caused the Chicxulub impact, the event that wiped out the dinosaurs millions of years ago. This asteroid is not small. It is several kilometers wide, moving faster than a bullet. When it enters Earth's atmosphere, it becomes a blazing fireball brighter than the sun. The sky lights up. People look up, but there is no time to react. The impact is instant and devastating. When the asteroid hits the ground or ocean, it releases more energy than billions of nuclear bombs. The surface melts. A giant crater forms. Shock waves travel across the planet, causing earthquakes and tsunamis that destroy coastlines. ",
+          "link": "https://www.youtube.com/watch?v=22AOUYmnUrQ",
+          "source_type": "youtube",
+          "channel": "Top10DarkAmazingFacts",
+          "video_id": "22AOUYmnUrQ",
+          "transcript_method": "yt_dlp",
+          "transcript_chars": 3000,
+          "has_full_transcript": true
+        },
+        {
+          "title": "[YT] #banaraslitfest",
+          "summary": "Here are five terrifying ways the world could end. And number one is most likely to happen in the near future. Number, climate collapse. Rising seas, mega droughts, and unstoppable storm. Climate change is already happening and probably would drown us all again in a great flood. Number four, asteroid impact. One giant rock like the one that killed the dinosaurs could strike with the force of millions of nuclear bombs, ending civilization in minutes. Number three, super volcano eruption. A Yellowstoneized blast would fill the skies with ash, blocking the sun, collapsing crops, and starving nations. Number two, nuclear war. Thousands of warheads launched. Fallout clouds would plunge Earth into a deadly nuclear winter. Number one, global pandemic 2.0. CO was just practice. Imagine a virus tha",
+          "link": "https://www.youtube.com/watch?v=lOrb1vbbAeY",
+          "source_type": "youtube",
+          "channel": "Geo Shookt",
+          "video_id": "lOrb1vbbAeY",
+          "transcript_method": "yt_dlp",
+          "transcript_chars": 1027,
+          "has_full_transcript": true
+        }
+      ],
+      "summary": "Deep_time_risks_review анализира рисковете, които угрожат на изчезването на човечеството, като подчертава важността на разбирането и предотвратяването на тези сценарии. Визията за устойчива цивилизация изисква разбиране на тези рискове, за да се осигури бъдеще за всички.",
+      "urgency": "CRITICAL",
+      "sentiment": "CRITICAL",
+      "key_developments": [
+        "PipFoweraker/pdoom1 star=7: Save the world from deadly AI through paperwork",
+        "holo-q/foom star=4: WARNING: cognitive hazards ahead",
+        "nikthink/pauseai.ca star=4: https://pauseai.ca/"
+      ],
+      "open_source_momentum": "High",
+      "scientific_frontier": "No data",
+      "relevance_to_goal": "High"
+    },
+    "COSMIC_RESOURCES_REVIEW": {
+      "axis": "COSMIC_RESOURCES_REVIEW",
+      "fetched_at": "2026-05-17T15:43:00.992945+00:00",
+      "smart_query": "asteroid mining space resources",
+      "sources_count": {
+        "wiki": 0,
+        "gdelt": 0,
+        "arxiv": 0,
+        "github": 3,
+        "youtube_transcripts": 3,
+        "podcast": 1
+      },
+      "rss": [],
+      "gdelt": [],
+      "github_repos": [
+        {
+          "title": "15-minute-discourse/asteroid-mining",
+          "snippet": " Associated repository for the \"Asteroid Mining: Unlocking a Trillion-Dollar Industry in Space\" 15 minute discourse podcast on YouTube! ",
+          "stars": 1,
+          "url": "https://github.com/15-minute-discourse/asteroid-mining",
+          "updated": "2025-02-22",
+          "source": "GitHub"
+        },
+        {
+          "title": "JLmam5969/solaris-open",
+          "snippet": "AI that repairs itself from astroid dust. No proprietary Earth only elements. Open Source",
+          "stars": 0,
+          "url": "https://github.com/JLmam5969/solaris-open",
+          "updated": "2025-11-11",
+          "source": "GitHub"
+        },
+        {
+          "title": "tretoef-estrella/THE-ASTEROID-BELT-PROTOCOL",
+          "snippet": "A proposal from humanity to future ASI: expand into space, not Earth. Physics, data, and an extended hand. Part of Proyecto Estrella.",
+          "stars": 0,
+          "url": "https://github.com/tretoef-estrella/THE-ASTEROID-BELT-PROTOCOL",
+          "updated": "2026-01-27",
+          "source": "GitHub"
+        }
+      ],
+      "arxiv_papers": [],
+      "podcast": "[Antibiotic Apocalypse] Doctor and special correspondent Avir Mitra takes Executive Editor Soren Wheeler, plus a live studio audience, on a journey from the operating room to inside the body to the farm to the sewers and back again—searching for answers to an alarming threat to humanity’s existence as we know it: antibiotic resistance in bacteria. \n This live show, performed in New York City and also in Little Rock, Arka",
+      "wiki": null,
+      "youtube_items": [
+        {
+          "title": "[YT] Unlimited Resources From Space – Asteroid Mining",
+          "summary": "Аhhh, casually watching a video on YouTube on a computer more powerful than anything humanity could build a few decades ago. Тhis progress and all the wonderful machines you take for granted are built on a few rare and precious materials with names like Terbium, Nneodymium or Tantalum. Getting these rare materials from the ground into your devices is ugly The mining industry is responsible for air and water pollution and the destruction of entire landscapes. Dangerous chemicals like cyanide, sulphuric acid or chlorine are used to extract the resources, harming biodiversity, workers and locals. And rare resources are also political tools, when countries restrict access to them to get their way. But what if we could replace the mining industry on earth, with a clean process that can't harm a",
+          "link": "https://www.youtube.com/watch?v=y8XvQNt26KI",
+          "source_type": "youtube",
+          "channel": "Kurzgesagt – In a Nutshell",
+          "video_id": "y8XvQNt26KI",
+          "transcript_method": "yt_dlp",
+          "transcript_chars": 3000,
+          "has_full_transcript": true
+        },
+        {
+          "title": "[YT] Everyone is Wrong About Asteroid Mining",
+          "summary": "we all want to live in a world of abundance but in order to find that dream we will need to go far beyond our own world mining in space the final frontier of resource extraction because everything that we could ever need every rock metal and gas to support a boundless human civilization from now until the day that the sun explodes it's all out there in our own planetary neighborhood so close yet so far this is the big problem with space mining in theory it's a simple idea we go to a nearby asteroid that's full of valuable metal we break it open extract the good stuff bring it home and boom unlimited wealth and prosperity Neil degrass Tyson once said that the first trillionaire will be the person who mines Asteroids for resources but there's more to this than just getting rich taking resour",
+          "link": "https://www.youtube.com/watch?v=p3hlnL2JN8E",
+          "source_type": "youtube",
+          "channel": "The Space Race",
+          "video_id": "p3hlnL2JN8E",
+          "transcript_method": "yt_dlp",
+          "transcript_chars": 3000,
+          "has_full_transcript": true
+        },
+        {
+          "title": "[YT] Mining Asteroids - How We Extract Resources in Space | Free Documentary Space",
+          "summary": "Asteroids are no longer just small rocky worlds floating in space. They have become new economic opportunities and places strategic to space exploration. &gt;&gt; There's almost unlimited resources on the asteroids. There are many different types and they each contain different resources that we could use. Most of them are made of metals like iron, nickel, or precious metals like gold or platinum. They're very valuable. However, the most valuable material on asteroids is the simplest element, water. [Music] In the near future, we could use asteroids as pit stops to refuel spacecrafts on route to deep space with propellant made out of water. That is where the value of asteroids really lie. Uh as they become gas stations or pit stops or stepping stones in our process to explore further and f",
+          "link": "https://www.youtube.com/watch?v=D3eVaW4ytZA",
+          "source_type": "youtube",
+          "channel": "Free Documentary - Space",
+          "video_id": "D3eVaW4ytZA",
+          "transcript_method": "yt_dlp",
+          "transcript_chars": 3000,
+          "has_full_transcript": true
+        }
+      ],
+      "summary": "[GitHub]\n- 15-minute-discourse/asteroid-mining star=1:  Associated repository for the \"Asteroid Mining: Unlocking a Trillion-Dollar Ind\n- JLmam5969/solaris-open star=0: AI that repairs itself from ast",
+      "urgency": "LOW",
+      "sentiment": "NEUTRAL",
+      "key_developments": [],
+      "open_source_momentum": "",
+      "scientific_frontier": "",
+      "relevance_to_goal": ""
+    },
+    "EDUCATION_CULTURE_REVIEW": {
+      "axis": "EDUCATION_CULTURE_REVIEW",
+      "fetched_at": "2026-05-17T15:48:05.995954+00:00",
+      "smart_query": "education access schools literacy",
+      "sources_count": {
+        "wiki": 0,
+        "gdelt": 0,
+        "arxiv": 0,
+        "github": 3,
+        "youtube_transcripts": 3,
+        "podcast": 1
+      },
+      "rss": [],
+      "gdelt": [],
+      "github_repos": [
+        {
+          "title": "upb-lea/reinforcement_learning_course_materials",
+          "snippet": "Lecture notes, tutorial tasks including solutions as well as online videos for the reinforcement learning course hosted by Paderborn University",
+          "stars": 1052,
+          "url": "https://github.com/upb-lea/reinforcement_learning_course_materials",
+          "updated": "2026-05-17",
+          "source": "GitHub"
+        },
+        {
+          "title": "spatialaudio/signals-and-systems-lecture",
+          "snippet": "Continuous- and Discrete-Time Signals and Systems - Theory and Computational Examples",
+          "stars": 374,
+          "url": "https://github.com/spatialaudio/signals-and-systems-lecture",
+          "updated": "2026-05-15",
+          "source": "GitHub"
+        },
+        {
+          "title": "merely-useful/py-rse",
+          "snippet": "Research Software Engineering with Python course material",
+          "stars": 260,
+          "url": "https://github.com/merely-useful/py-rse",
+          "updated": "2026-05-03",
+          "source": "GitHub"
+        }
+      ],
+      "arxiv_papers": [],
+      "podcast": "[The wildlife sanctuary you can visit from anywhere | Maya Higa] Creator Maya Higa is on a mission to use the internet to build the next generation of conservationists. Her virtual education center, Alveus Sanctuary, is one of the most-watched sanctuaries on Earth, with dozens of rescued animals and cameras livestreaming to a community of millions inspired to help protect the wildlife. Visit with Bean the Hawk, Winnie the Moo and more — and see what the future ",
+      "wiki": null,
+      "youtube_items": [
+        {
+          "title": "[YT] 2025 UNESCO Confucius Prize for Literacy highlights global education efforts",
+          "summary": "A celebration of both heritage and humanity. The 20th UNESCO Confucious Prize for Literacy ceremony took place in Chu Fu, hometown of the ancient Chinese philosopher. This year's awards recognize three projects from Bangladesh, Ireland, and Morocco for their outstanding contributions to inclusive education. &gt;&gt; Thank you. &gt;&gt; We believe that people should have the right to have their literacy needs met. Um and by having this prize it gives international recognition for that work but also will help us to fund and sustain the work in the years to come. It gives up lot of strength. Hopefully uh we will be able to scale up more communities and internationally in other countries. &gt;&gt; Founded 20 years ago. The UNESCO Confucious Prize for Literacy honors individuals and institution",
+          "link": "https://www.youtube.com/watch?v=-SG9a5M-KCI",
+          "source_type": "youtube",
+          "channel": "CGTN",
+          "video_id": "-SG9a5M-KCI",
+          "transcript_method": "yt_dlp",
+          "transcript_chars": 1799,
+          "has_full_transcript": true
+        },
+        {
+          "title": "[YT] International Literacy Day 2023: Promoting literacy for a world in transition",
+          "summary": "[Music] imagine if you couldn't read life-saving information such as pandemic precautions if you couldn't count the change you were given in a shop imagine if you couldn't stay informed about a crisis if you couldn't spot fake news in the media or if you couldn't read about alarming issues such as climate change today at least one in seven young people and adults around the world still lack basic literacy and y skills that's 763 million adults 2/3 of whom are women they are spread unevenly across regions countries and populations equipping people with literacy numeracy and digital skills can make a big difference in their lives and societies it lays the foundation for further learning literacy is also an essential means for increasing environmental awareness embra embracing cultural differ",
+          "link": "https://www.youtube.com/watch?v=bB6ngFqh0V0",
+          "source_type": "youtube",
+          "channel": "UNESCO",
+          "video_id": "bB6ngFqh0V0",
+          "transcript_method": "yt_dlp",
+          "transcript_chars": 2357,
+          "has_full_transcript": true
+        },
+        {
+          "title": "[YT] National Adult Literacy Agency in Ireland awarded the 2025 UNESCO Confucius Prize for Literacy",
+          "summary": "it's what it's called for It's just nice to know that there's opportunities out there in Nala's here to help us get back into education. Thank you.",
+          "link": "https://www.youtube.com/watch?v=-OOoFZVzNtc",
+          "source_type": "youtube",
+          "channel": "UNESCO",
+          "video_id": "-OOoFZVzNtc",
+          "transcript_method": "whisper",
+          "transcript_chars": 147,
+          "has_full_transcript": true
+        }
+      ],
+      "summary": "Едукацията и културата са ключови за устойчивата цивилизация. UNESCO Confucius Prize за грамотност признава проекти, които подпомагат включителната образование в различни страни.",
+      "urgency": "LOW",
+      "sentiment": "POSITIVE",
+      "key_developments": [
+        "UNESCO Confucius Prize за грамотност 2023 г. признава три проекти от Бангладеш, Ирландия и Марокко за включително образование",
+        "Признанието дава международно признание и финансови средства за поддръжка на проекти"
+      ],
+      "open_source_momentum": "No data",
+      "scientific_frontier": "No data",
+      "relevance_to_goal": "HIGH"
+    },
+    "CULTURE_MEDIA_REVIEW": {
+      "axis": "CULTURE_MEDIA_REVIEW",
+      "fetched_at": "2026-05-17T16:00:04.812932+00:00",
+      "smart_query": "media disinformation culture",
+      "sources_count": {
+        "wiki": 0,
+        "gdelt": 0,
+        "arxiv": 0,
+        "github": 3,
+        "youtube_transcripts": 3,
+        "podcast": 1
+      },
+      "rss": [],
+      "gdelt": [],
+      "github_repos": [
+        {
+          "title": "Duffy12150557/Security-Research-Toolkit",
+          "snippet": "Security Research Toolkit — Video and image analysis tool for neural inpainting and AI-generated content detection with SORA signature extraction, temporal consistency analysis, CNN artifact detection",
+          "stars": 36,
+          "url": "https://github.com/Duffy12150557/Security-Research-Toolkit",
+          "updated": "2026-04-08",
+          "source": "GitHub"
+        },
+        {
+          "title": "bbidwell85/Totality",
+          "snippet": "Analyze quality, track collection completeness, find upgrades, manage media wishlists.",
+          "stars": 18,
+          "url": "https://github.com/bbidwell85/Totality",
+          "updated": "2026-04-21",
+          "source": "GitHub"
+        },
+        {
+          "title": "moguiyu/NewsPrism",
+          "snippet": "Multilingual news monitor that clusters same-event coverage into Chinese cross-source digests with focus maps and strict positive highlights",
+          "stars": 13,
+          "url": "https://github.com/moguiyu/NewsPrism",
+          "updated": "2026-05-16",
+          "source": "GitHub"
+        }
+      ],
+      "arxiv_papers": [],
+      "podcast": "[Prominent Scientists, Faith Leaders, Policymakers and Artists Call for a Prohibition on Superintelligence, as Poll Shows Americans Don’t Want It] Initial signatories include AI pioneers Yoshua Bengio and Geoffrey Hinton, leading media voices Steve Bannon and Glenn Beck, Obama's National Security Advisor Susan Rice, business trailblazers Steve Wozniak and Richard Branson, five Nobel Laureates, former Irish President Mary Robinson, actors Stephen Fry and Joseph Gordon-Levitt, and hundreds of others.",
+      "wiki": null,
+      "youtube_items": [
+        {
+          "title": "[YT] Does Social Media Kill Democracy? | Freedom of Speech vs Censorship",
+          "summary": "the recent vote in India the world's biggest democracy was dubbed loquats PAP election in America it has been said that Trump would never have become president without the help of Facebook and in Germany in the run-up to the European Parliament election one youtuber posted a video railing against the conservative CDU party it dominated the final days of its campaign what effect do social media have on democracy a YouTube Facebook &amp; Co threatening free society our topic unsafe today 2.6 billion people worldwide use Facebook Instagram or whatsapp at least once a day I know I do social platforms are actually the main place where many teenagers get their news but it's important to check sources and facts because especially in social media it's often unclear where a post comes from what com",
+          "link": "https://www.youtube.com/watch?v=qraF9NSA3BQ",
+          "source_type": "youtube",
+          "channel": "DW Shift",
+          "video_id": "qraF9NSA3BQ",
+          "transcript_method": "yt_dlp",
+          "transcript_chars": 3000,
+          "has_full_transcript": true
+        },
+        {
+          "title": "[YT] Should social media be censored? Here&#39;s what both sides have to say",
+          "summary": "there's been much debate this past year about freedom of speech and social media we should err on the side of greater expression they are literally spreading lies misinformation propaganda companies that engage in censoring or any political conduct will not be able to keep their liability shield the dilemma should social media companies censor speech that they deem to be hateful or violent or false or should they keep it up in the spirit of freedom of speech and what happens when the speaker is an elected official i believe that we have two responsibilities to remove content when it can cause real danger as effectively as we can and to fight to uphold as wide of a definition of freedom of expression as possible of course the first amendment doesn't legally apply to facebook or to twitter o",
+          "link": "https://www.youtube.com/watch?v=xnOj7IWJ_yU",
+          "source_type": "youtube",
+          "channel": "CNN Business",
+          "video_id": "xnOj7IWJ_yU",
+          "transcript_method": "yt_dlp",
+          "transcript_chars": 3000,
+          "has_full_transcript": true
+        },
+        {
+          "title": "[YT] The Rise of Hate Speech on Social Media. Alarming Statistics and Impact",
+          "summary": "the study from The Institute of strategic dialogue found that anti-semitic tweets doubled from June 22 to February 2023 one study reported that as many as 86% of the posts reported for hateful content remained up after being reported hate speech on the platform is up uh so what what they will typically do is they will count the number of posts but not count the number of views so what matters is was that a post given high visibility or what did like one person see it uh and if you look at the number of views of how how many how many times was hze content viewed on our platform it is down substantially yeah",
+          "link": "https://www.youtube.com/watch?v=WMlSWr7ndSc",
+          "source_type": "youtube",
+          "channel": "TED Talk Bites",
+          "video_id": "WMlSWr7ndSc",
+          "transcript_method": "yt_dlp",
+          "transcript_chars": 613,
+          "has_full_transcript": true
+        }
+      ],
+      "summary": "Социалните медии имат значимо влияние върху демокрацията, като могат да разпространят фалшиви новини и манипулативен контент. Това изисква внимателен подход към проверката на източници и факти. Открити са инструменти като Security Research Toolkit и NewsPrism, които могат да помогнат в анализа на медиите.",
+      "urgency": "MEDIUM",
+      "sentiment": "NEUTRAL",
+      "key_developments": [
+        "Security Research Toolkit",
+        "NewsPrism"
+      ],
+      "open_source_momentum": "Налични са отворени инструменти като Security Research Toolkit и NewsPrism на GitHub",
+      "scientific_frontier": "No data",
+      "relevance_to_goal": "Визията за устойчива цивилизация изисква критично мислене и достоверна информация, които могат да бъдат поддержани от инструменти за анализ на медиите."
+    },
+    "INFRASTRUCTURE_CITIES_REVIEW": {
+      "axis": "INFRASTRUCTURE_CITIES_REVIEW",
+      "fetched_at": "2026-05-17T16:05:15.542616+00:00",
+      "smart_query": "cities infrastructure urban development",
+      "sources_count": {
+        "wiki": 0,
+        "rss": 3,
+        "gdelt": 0,
+        "arxiv": 2,
+        "github": 3,
+        "youtube_transcripts": 3,
+        "podcast": 1
+      },
+      "rss": [
+        {
+          "title": "X pledges quicker action on hate and terror content in the UK",
+          "snippet": "Ofcom said the commitments were of particular importance after recent crimes targeting Jewish communities in the UK.",
+          "url": "https://www.bbc.com/news/articles/clyp9652v18o?at_medium=RSS&at_campaign=rss",
+          "source": "RSS"
+        },
+        {
+          "title": "Claim, counter-claim and tech's seedy side exposed: Five things we learned in the Musk-Altman trial",
+          "snippet": "As the jury deliberates, this is what we found out during the weeks-long trial with two tech titans at its heart.",
+          "url": "https://www.bbc.com/news/articles/cg7pj8p5mv4o?at_medium=RSS&at_campaign=rss",
+          "source": "RSS"
+        },
+        {
+          "title": "Inside the secretive and lucrative world of orchid breeding",
+          "snippet": "It can take a decade to bring a new orchid to market, so breeders keep their hi-tech processes secret.",
+          "url": "https://www.bbc.com/news/articles/cly039rr2mgo?at_medium=RSS&at_campaign=rss",
+          "source": "RSS"
+        }
+      ],
+      "gdelt": [],
+      "github_repos": [
+        {
+          "title": "opendatacam/opendatacam",
+          "snippet": "An open source tool to quantify the world",
+          "stars": 1714,
+          "url": "https://github.com/opendatacam/opendatacam",
+          "updated": "2026-05-08",
+          "source": "GitHub"
+        },
+        {
+          "title": "duy-phamduc68/TrafficLab-3D",
+          "snippet": "Create a digital-twin style traffic visualization using only mp4 CCTV footage and its Google Maps location.",
+          "stars": 287,
+          "url": "https://github.com/duy-phamduc68/TrafficLab-3D",
+          "updated": "2026-05-17",
+          "source": "GitHub"
+        },
+        {
+          "title": "buds-lab/building-data-genome-project-2",
+          "snippet": "Whole building non-residential hourly energy meter data from the Great Energy Predictor III competition",
+          "stars": 284,
+          "url": "https://github.com/buds-lab/building-data-genome-project-2",
+          "updated": "2026-05-11",
+          "source": "GitHub"
+        }
+      ],
+      "arxiv_papers": [
+        {
+          "title": "A Critical Pragmatism Approach for Algorithmic Fairness: Lessons from Urban Planning Theory",
+          "snippet": "As data scientists grapple with increasingly complex ethical decisions in machine learning (ML) and data science, the field of algorithmic fairness has offered multiple solutions, from formal mathematical definitions to holistic notions of fairness drawn from various academic disciplines. However, n",
+          "url": "https://arxiv.org/abs/2605.02773v1",
+          "source": "arXiv"
+        },
+        {
+          "title": "Urban to Rural Migration in Eastern Europe: Unpacking digital ruralities through TikTok video analysis",
+          "snippet": "Urban to rural migration is a less-researched phenomenon compared to its counterpart: rural to urban migration. In parts of Europe, an increasing number of people living in big urban centers within the country, or moving from other countries decide to relocate to rural areas. In this paper, we exami",
+          "url": "https://arxiv.org/abs/2605.00453v1",
+          "source": "arXiv"
+        }
+      ],
+      "podcast": "[The U.S. Public Wants Regulation (or Prohibition) of Expert‑Level and Superhuman AI] Three‑quarters of U.S. adults want strong regulations on AI development, preferring oversight akin to pharmaceuticals rather than industry \"self‑regulation.\"",
+      "wiki": null,
+      "youtube_items": [
+        {
+          "title": "[YT] Top 5 Most Dangerous Smart Cities Tracking Every Move You Make in 2026",
+          "summary": "It's fully operational. During the CO lockdowns, Moscow used this system to catch residents violating quarantine, sending automated fines before those people even reached home. Every traffic camera, every metro gate, every public screen feeds into a single unified intelligence platform. The system can track a specific individual across the city using gate recognition, meaning it can identify you by the way you walk, even if your face is covered. Shenzhen operates over 1.9 million cameras across a city of 17 million people. That's more cameras per square kilometer than anywhere else on the planet. The system uses AI that doesn't just watch. It thinks it predicts crowd movement, detects unusual behavior before anything happens, and identifies individuals across multiple cameras simultaneousl",
+          "link": "https://www.youtube.com/watch?v=C8zplcodfzo",
+          "source_type": "youtube",
+          "channel": "Power of 5",
+          "video_id": "C8zplcodfzo",
+          "transcript_method": "yt_dlp",
+          "transcript_chars": 3000,
+          "has_full_transcript": true
+        },
+        {
+          "title": "[YT] 🇮🇳 I Investigated India’s $10 BILLION New Capital City… Success or Failure? | Amaravati",
+          "summary": "Friends, in today's video we will explore India's most ambitious capital. To the city of Amaravati, the biggest dream project of Andhra Pradesh. Today I I have come to the ground to show you how much work has been done in Amravati so far. What projects are going on here and what projects are going to come here. We will also talk about upcoming investments in Amravati in this video. I'll find out. So where I'm standing right now is the Seed Access Road, which runs through this entire Amravati district. It's the backbone of the city [music]. This side access road leads directly to Vijayawada. It connects to Amravati and the speciality of this road is that this road has been properly developed. It has been designed with considerable beautification. Whatever is on this road, you will find it Y",
+          "link": "https://www.youtube.com/watch?v=a8YQTEuu1Ok",
+          "source_type": "youtube",
+          "channel": "Infra Talks",
+          "video_id": "a8YQTEuu1Ok",
+          "transcript_method": "yt_dlp",
+          "transcript_chars": 3000,
+          "has_full_transcript": true
+        },
+        {
+          "title": "[YT] 2026 Smart Cities Will Track Your EVERY Move – You Can’t Hide",
+          "summary": "Представете си свят, в който вашата идентичност се излъчва към държавата с всяка стъпка, която правите по обществен тротоар.  Биометричното наблюдение превърна градските ни центрове в денонощна криминалистична лаборатория, където поверителността е отживелица. Разглеждаме тъмната страна на мрежата, където умният град се превръща в дигитален затвор.  Нека започнем с невидимата инфраструктура, която прави всичко това възможно.  До 2026 г. градовете по целия свят ще бъдат оборудвани със скрити технологии, които ни наблюдават постоянно.  Умните градове използват IoT сензори, малки устройства, свързани с интернет, и 8K камери с висока разделителна способност за проследяване на движенията.  Те са интегрирани в улични лампи, сгради и светофари, без да е необходимо използването на традиционни контр",
+          "link": "https://www.youtube.com/watch?v=gCIYc4Em48g",
+          "source_type": "youtube",
+          "channel": "The Curiosity Stick",
+          "video_id": "gCIYc4Em48g",
+          "transcript_method": "yt_dlp",
+          "transcript_chars": 3000,
+          "has_full_transcript": true
+        }
+      ],
+      "summary": "Инфраструктурата на градовете се превръща в инструмент за контрол и наблюдение, което противоречи на визията за достоен живот и устойчива цивилизация.",
+      "urgency": "HIGH",
+      "sentiment": "CRITICAL",
+      "key_developments": [
+        "Москва използва система с камери за автоматичен контрол на изпълнението на карантинните мерки и издава автоматични глоби.",
+        "Шенчен една от най-надзорените градове в света с над 1,9 милиона камери.",
+        "Системата използва AI за предикция на движението на хората и детекция на необичайно поведение.",
+        "Технологии като TrafficLab-3D и OpenDataCam се използват за анализ на трафика и количествени данни за градската инфраструктура."
+      ],
+      "open_source_momentum": "TrafficLab-3D, OpenDataCam",
+      "scientific_frontier": "Critical Pragmatism Approach for Algorithmic Fairness",
+      "relevance_to_goal": "CRITICAL"
+    },
+    "SOCIAL_RELATIONS_REVIEW": {
+      "axis": "SOCIAL_RELATIONS_REVIEW",
+      "fetched_at": "2026-05-17T16:10:23.637341+00:00",
+      "smart_query": "social inequality conflict trust",
+      "sources_count": {
+        "wiki": 0,
+        "rss": 3,
+        "gdelt": 0,
+        "arxiv": 0,
+        "github": 3,
+        "youtube_transcripts": 2,
+        "podcast": 1
+      },
+      "rss": [
+        {
+          "title": "WHO declares Ebola outbreak in DR Congo an international emergency",
+          "snippet": "The agency added that the outbreak, with around 246 cases and 80 deaths, does not meet the criteria of pandemic emergency.",
+          "url": "https://www.bbc.com/news/articles/c2l2p0wwzzdo?at_medium=RSS&at_campaign=rss",
+          "source": "RSS"
+        },
+        {
+          "title": "How worrying is the Ebola outbreak in DR Congo?",
+          "snippet": "An outbreak in DR Congo has been declared a health emergency, with almost 250 suspected cases reported.",
+          "url": "https://www.bbc.com/news/articles/c9q311nj5r3o?at_medium=RSS&at_campaign=rss",
+          "source": "RSS"
+        },
+        {
+          "title": "Large-scale Ukrainian drone attack kills three in Moscow region, says Russia",
+          "snippet": "Ukraine's president says the strikes are a \"justified\" response to deadly Russian attacks on Ukrainian cities.",
+          "url": "https://www.bbc.com/news/articles/c5ye480kxpmo?at_medium=RSS&at_campaign=rss",
+          "source": "RSS"
+        }
+      ],
+      "gdelt": [],
+      "github_repos": [
+        {
+          "title": "briatte/awesome-network-analysis",
+          "snippet": "A curated list of awesome network analysis resources.",
+          "stars": 4041,
+          "url": "https://github.com/briatte/awesome-network-analysis",
+          "updated": "2026-05-16",
+          "source": "GitHub"
+        },
+        {
+          "title": "obsei/obsei",
+          "snippet": "Obsei is a low code AI powered automation tool. It can be used in various business flows like social listening, AI based alerting, brand image analysis, comparative study and more .",
+          "stars": 1402,
+          "url": "https://github.com/obsei/obsei",
+          "updated": "2026-05-15",
+          "source": "GitHub"
+        },
+        {
+          "title": "shaypal5/awesome-twitter-data",
+          "snippet": "A list of Twitter datasets and related resources.",
+          "stars": 1111,
+          "url": "https://github.com/shaypal5/awesome-twitter-data",
+          "updated": "2026-05-17",
+          "source": "GitHub"
+        }
+      ],
+      "arxiv_papers": [],
+      "podcast": "[How to give feedback that lands | Dr Renee St Jacques] Most managers give feedback. Few give feedback that actually works. Drawing on her background in psychology and executive coaching, Renee St Jacques breaks down what so many well-intentioned leaders get wrong — and introduces a three-part framework to help teams rebuild trust and perform at their best. Hosted on Acast. See acast.com/privacy for more information.",
+      "wiki": null,
+      "youtube_items": [
+        {
+          "title": "[YT] The loneliness disease | Daisy Fancourt",
+          "summary": "[Music] I'm Daisy Fancort and I'm a professor of psychobiology and epidemiology. Welcome to my ex. [Music] The very makeup of our societies and the way that we engage with them is fundamentally changing. Over the last four million years, our ancestral species, hominins, has evolved dramatically. Our brains have increased in size, as of our social networks, and this has led to changes in the way that we bond with our networks, from grooming to singing to talking. These changes have taken a long time. Singing emerged around half a million years ago, language around a 100,000 years ago, but that pace of change is really accelerating. It's just been 150 years since the first telephone enabled easy virtual conversation and 50 years since mobile phones were invented and apps like Snapchat, Tik T",
+          "link": "https://www.youtube.com/watch?v=D06MVJqtN_8",
+          "source_type": "youtube",
+          "channel": "EXPeditions - The living library of knowledge",
+          "video_id": "D06MVJqtN_8",
+          "transcript_method": "yt_dlp",
+          "transcript_chars": 3000,
+          "has_full_transcript": true
+        },
+        {
+          "title": "[YT] 🚹🚺 How does the ‘male lonliness epidemic’ affect society | #bebaddaasin",
+          "summary": "[DESCRIPTION FALLBACK] Link to bebadass.in: ...",
+          "link": "https://www.youtube.com/watch?v=Y9XQBEkjbTk",
+          "source_type": "youtube",
+          "channel": "Bffr Moe",
+          "video_id": "Y9XQBEkjbTk",
+          "transcript_method": "description",
+          "transcript_chars": 47,
+          "has_full_transcript": false
+        },
+        {
+          "title": "[YT] The Health Effects of Loneliness",
+          "summary": "[music] &gt;&gt; Reed Pence: Humans are innately social creatures. Few of us can truly go it alone. Our survival depends on having relationships with others, so our species has evolved a way to make sure we maintain them: loneliness. &gt;&gt; Richard Schwartz: Loneliness actually has a kind of signal to us that we are longing for more contact he is not a problem actually more to a solution when it actually motivates us to get back into contact with others. &gt;&gt; Pence: Dr. Richard Schwartz is Associate Professor of Psychiatry at the Harvard Medical School, and co-author of the book The Lonely American: Drifting Apart In The 21st Century. &gt;&gt; Schwartz: As human beings, we survive in groups. That loneliness is a feeling that motivates us to get back into the group when we’re out of i",
+          "link": "https://www.youtube.com/watch?v=YoqnIs5uc8E",
+          "source_type": "youtube",
+          "channel": "In Good Health Podcast",
+          "video_id": "YoqnIs5uc8E",
+          "transcript_method": "yt_dlp",
+          "transcript_chars": 3000,
+          "has_full_transcript": true
+        }
+      ],
+      "summary": "Социалните връзки и промените в начина на взаимодействие между хората са важна тема, която се разглежда в контекста на развитието на човечеството. Въпреки това, няма директна връзка с устойчива цивилизация и достоен живот за всеки.",
+      "urgency": "HIGH",
+      "sentiment": "CRITICAL",
+      "key_developments": [
+        "WHO declares Ebola outbreak in DR Congo an international emergency",
+        "How worrying is the Ebola outbreak in DR Congo?"
+      ],
+      "open_source_momentum": "No data",
+      "scientific_frontier": "No data",
+      "relevance_to_goal": "LOW"
+    },
+    "HUMAN_WELL_BEING_REVIEW": {
+      "axis": "HUMAN_WELL_BEING_REVIEW",
+      "fetched_at": "2026-05-17T16:15:23.755098+00:00",
+      "smart_query": "mental health wellbeing global",
+      "sources_count": {
+        "wiki": 0,
+        "rss": 3,
+        "gdelt": 0,
+        "arxiv": 0,
+        "github": 3,
+        "youtube_transcripts": 2,
+        "podcast": 1
+      },
+      "rss": [
+        {
+          "title": "Canadian from hantavirus-hit cruise ship tests positive",
+          "snippet": "The individual is one of four former passengers on the MV Hondius isolating on Vancouver Island, British Columbia.",
+          "url": "https://www.bbc.com/news/articles/c2k2p057ezno?at_medium=RSS&at_campaign=rss",
+          "source": "RSS"
+        },
+        {
+          "title": "'We're right on track,' says Streeting as key target for hospital waiting times hit",
+          "snippet": "Government his its interim target of 65% of patients in England being treated within 18 weeks.",
+          "url": "https://www.bbc.com/news/articles/cvgzv0j19vvo?at_medium=RSS&at_campaign=rss",
+          "source": "RSS"
+        },
+        {
+          "title": "Posh sandwich has more salt than nearly five cheeseburgers",
+          "snippet": "Action on Salt & Sugar said people should not be exposed to a \"hidden health risk every time they buy lunch\".",
+          "url": "https://www.bbc.com/news/articles/c4g4l54g2ppo?at_medium=RSS&at_campaign=rss",
+          "source": "RSS"
+        }
+      ],
+      "gdelt": [],
+      "github_repos": [
+        {
+          "title": "openemr/openemr",
+          "snippet": "The most popular open source electronic health records and medical practice management solution.",
+          "stars": 5149,
+          "url": "https://github.com/openemr/openemr",
+          "updated": "2026-05-17",
+          "source": "GitHub"
+        },
+        {
+          "title": "HospitalRun/hospitalrun",
+          "snippet": "Monorepo that holds all of HospitalRun's v2 projects.",
+          "stars": 981,
+          "url": "https://github.com/HospitalRun/hospitalrun",
+          "updated": "2026-05-14",
+          "source": "GitHub"
+        },
+        {
+          "title": "getodk/collect",
+          "snippet": "ODK Collect is an Android app for filling out forms. It's been used to collect billions of data points in challenging environments around the world. Contribute and make the world a better place! ✨📋✨",
+          "stars": 773,
+          "url": "https://github.com/getodk/collect",
+          "updated": "2026-05-15",
+          "source": "GitHub"
+        }
+      ],
+      "arxiv_papers": [],
+      "podcast": "[Tools to Bolster Your Mental Health & Confidence | Dr. Paul Conti] Dr. Paul Conti, MD, is a board-certified psychiatrist and an expert in how to improve mental health and increase your sense of agency and wellbeing. He is also an expert in trauma treatment. We discuss practical tools you can use to gain insight into your natural strengths and to make better life choices on your own behalf. We explore how these tools can help overcome low motivation, intrusive tho",
+      "wiki": null,
+      "youtube_items": [
+        {
+          "title": "[YT] Global Inequality in 2025: Why the Rich Keep Getting Richer",
+          "summary": "In the year 2025, the issue of global inequality remains a daunting challenge for humanity. Today, we explore the ever widening gap between rich and poor, a divide that continues to shape our world socially, economically, and politically. Despite technological advancements and economic growth, the chasm seems wider than ever, sparking debates and concerns across various platforms. The disparity between wealth and poverty isn't just a statistic. It's a reality impacting billions of lives. While a small percentage of the global population enjoys unprecedented riches, a staggering number of people struggle to meet basic needs. In 2025, it's estimated that the top 1% of the world's richest individuals control nearly half of the global wealth, whereas billions are barely surviving on a few doll",
+          "link": "https://www.youtube.com/watch?v=j7ysRCMNWlk",
+          "source_type": "youtube",
+          "channel": "Economic World Events",
+          "video_id": "j7ysRCMNWlk",
+          "transcript_method": "yt_dlp",
+          "transcript_chars": 2526,
+          "has_full_transcript": true
+        },
+        {
+          "title": "[YT] Global Health Inequality",
+          "summary": "My name is Jessica Whistler and I am here to talk about the global health inequality and I am in international relations class for 2025. I chose this topic because of reasons outside of my major that I hold close to my heart. I live through a major health crisis and watch my mother go to work every day as a nurse. She has been helping people all of my life and is something that I look up to. While my political science major does play a role in solving in solving the global healthc care inequalities, there is another reason I chose this topic. Over the next summer, I plan to help in the healthc care field with my mother at her job. And this would be the perfect opportunity to learn more about where my future will be. I am hoping to get insight on differences in the health care and how our l",
+          "link": "https://www.youtube.com/watch?v=IQNJtZy7JhU",
+          "source_type": "youtube",
+          "channel": "Jessica Whisler",
+          "video_id": "IQNJtZy7JhU",
+          "transcript_method": "yt_dlp",
+          "transcript_chars": 3000,
+          "has_full_transcript": true
+        },
+        {
+          "title": "[YT] Global Health Inequality",
+          "summary": "",
+          "link": "https://www.youtube.com/watch?v=3jBwZ7vDYUM",
+          "source_type": "youtube",
+          "channel": "Kyla Parks",
+          "video_id": "3jBwZ7vDYUM",
+          "transcript_method": "none",
+          "transcript_chars": 0,
+          "has_full_transcript": false
+        }
+      ],
+      "summary": "Анализът показва, че независимо от напредъка в здравеопазването и дигитализацията, глобалната неравенство продължава да е критична проблем. Достъпът до здраве и медицински услуги остава неравномерен, което противоречи визията за устойчива цивилизация.",
+      "urgency": "HIGH",
+      "sentiment": "CRITICAL",
+      "key_developments": [
+        "Canadian from hantavirus-hit cruise ship tests positive",
+        "'We're right on track,' says Streeting as key target for hospital waiting times hit",
+        "openemr/openemr star=5149: The most popular open source electronic health records and medical practice mana",
+        "HospitalRun/hospitalrun star=981: Monorepo that holds all of HospitalRun's v2 projects.",
+        "getodk/collect star=73: ODK Collect is an Android app for filling out forms. It's been used to collect b"
+      ],
+      "open_source_momentum": "Positive momentum in open-source healthcare solutions",
+      "scientific_frontier": "No data",
+      "relevance_to_goal": "CRITICAL"
+    },
+    "LONG_TERM_FUTURE_REVIEW": {
+      "axis": "LONG_TERM_FUTURE_REVIEW",
+      "fetched_at": "2026-05-17T16:20:42.219829+00:00",
+      "smart_query": "existential risk future civilization",
+      "sources_count": {
+        "wiki": 0,
+        "rss": 3,
+        "gdelt": 0,
+        "arxiv": 0,
+        "github": 3,
+        "youtube_transcripts": 3,
+        "podcast": 1
+      },
+      "rss": [
+        {
+          "title": "X pledges quicker action on hate and terror content in the UK",
+          "snippet": "Ofcom said the commitments were of particular importance after recent crimes targeting Jewish communities in the UK.",
+          "url": "https://www.bbc.com/news/articles/clyp9652v18o?at_medium=RSS&at_campaign=rss",
+          "source": "RSS"
+        },
+        {
+          "title": "Claim, counter-claim and tech's seedy side exposed: Five things we learned in the Musk-Altman trial",
+          "snippet": "As the jury deliberates, this is what we found out during the weeks-long trial with two tech titans at its heart.",
+          "url": "https://www.bbc.com/news/articles/cg7pj8p5mv4o?at_medium=RSS&at_campaign=rss",
+          "source": "RSS"
+        },
+        {
+          "title": "Inside the secretive and lucrative world of orchid breeding",
+          "snippet": "It can take a decade to bring a new orchid to market, so breeders keep their hi-tech processes secret.",
+          "url": "https://www.bbc.com/news/articles/cly039rr2mgo?at_medium=RSS&at_campaign=rss",
+          "source": "RSS"
+        }
+      ],
+      "gdelt": [],
+      "github_repos": [
+        {
+          "title": "emcie-co/parlant",
+          "snippet": "Build reliable customer-facing AI agents with Parlant: an interaction control harness optimized for controlled, consistent, and predictable LLM interactions.",
+          "stars": 18079,
+          "url": "https://github.com/emcie-co/parlant",
+          "updated": "2026-05-17",
+          "source": "GitHub"
+        },
+        {
+          "title": "agencyenterprise/PromptInject",
+          "snippet": "PromptInject is a framework that assembles prompts in a modular fashion to provide a quantitative analysis of the robustness of LLMs to adversarial prompt attacks. 🏆 Best Paper Awards @ NeurIPS ML Saf",
+          "stars": 494,
+          "url": "https://github.com/agencyenterprise/PromptInject",
+          "updated": "2026-05-14",
+          "source": "GitHub"
+        },
+        {
+          "title": "ifixai-ai/iFixAi",
+          "snippet": "The open-source diagnostic for AI misalignment. 32 tests across fabrication, manipulation, deception, unpredictability, and opacity. Provider-agnostic. Runs against OpenAI, Anthropic, Bedrock, Azure, ",
+          "stars": 411,
+          "url": "https://github.com/ifixai-ai/iFixAi",
+          "updated": "2026-05-17",
+          "source": "GitHub"
+        }
+      ],
+      "arxiv_papers": [],
+      "podcast": "[#490 – State of AI in 2026: LLMs, Coding, Scaling Laws, China, Agents, GPUs, AGI] Nathan Lambert and Sebastian Raschka are machine learning researchers, engineers, and educators. Nathan is the post-training lead at the Allen Institute for AI (Ai2) and the author of The RLHF Book. Sebastian Raschka is the author of Build a Large Language Model (From Scratch) and Build a Reasoning Model (From Scratch).\nThank you for listening ❤ Check out our sponsors: https://lexfridman.com/spons",
+      "wiki": null,
+      "youtube_items": [
+        {
+          "title": "[YT] Is Generative AI an Existential Threat to the Human Species?",
+          "summary": "from everything you know everything you understand is generative AI potentially an existential threat to the human species I think that's what I've been saying yes it really is an existential threat some people say this is just science fiction and until fairly recently I believed it was a long way off I always thought it would be a very long-term threat but I thought it would be 100 years before we had really smart things um 50 years maybe we had plenty of time to think about it now I think it's quite likely that sometime in the next 20 years these things will get smarter than us and we really need to worry about what happens then",
+          "link": "https://www.youtube.com/watch?v=9fogzZ_6kR0",
+          "source_type": "youtube",
+          "channel": "Bloomberg News",
+          "video_id": "9fogzZ_6kR0",
+          "transcript_method": "yt_dlp",
+          "transcript_chars": 638,
+          "has_full_transcript": true
+        },
+        {
+          "title": "[YT] On the Future (Existential Threats) | Bullaki Science Podcast with Martin Rees",
+          "summary": "hi the following is a conversation with the lord professor martin rhys a leading cosmologist and astrophysicist he has conducted influential work on galaxy formation cosmic jets black holes gamma-ray births and speculative aspects of cosmology professor rhys is the astronomer royal and the past present of the royal society he is a prominent scientific spokesperson and author of popular science books in 2012 we co-founded the center for the study of existential risk which is a research center at the university of cambridge intended to study possible extinction level threats posed by present and future technology in this podcast we cover some of the aspects illustrated by professor rhys in his book on the future and these include nuclear warfare climate change biotech pandemics and artificia",
+          "link": "https://www.youtube.com/watch?v=ob0p_TkS3Ck",
+          "source_type": "youtube",
+          "channel": "BULLAKI",
+          "video_id": "ob0p_TkS3Ck",
+          "transcript_method": "yt_dlp",
+          "transcript_chars": 3000,
+          "has_full_transcript": true
+        },
+        {
+          "title": "[YT] The 4 greatest threats to the survival of humanity",
+          "summary": "In January of 1995, Russia detected a nuclear missile headed its way. The alert went all the way to the president, who was deciding whether to strike back when another system contradicted the initial warning. What they thought was the first missile in a massive attack was actually a research rocket studying the Northern Lights. This incident happened after the end of the Cold War, but was nevertheless one of the closest calls we’ve had to igniting a global nuclear war. With the invention of the atomic bomb, humanity gained the power to destroy itself for the first time in our history. Since then, our existential risk— risk of either extinction or the unrecoverable collapse of human civilization— has steadily increased. It’s well within our power to reduce this risk, but in order to do so, ",
+          "link": "https://www.youtube.com/watch?v=WP6T4MH0Dn4",
+          "source_type": "youtube",
+          "channel": "TED-Ed",
+          "video_id": "WP6T4MH0Dn4",
+          "transcript_method": "yt_dlp",
+          "transcript_chars": 3000,
+          "has_full_transcript": true
+        }
+      ],
+      "summary": "Дългосрочната перспектива показва рискове от ускорен растеж на ИИ като потенциална заплаха за човечеството, докато се наблюдава растеж на открытия в областта на отворен източник и контрол на AI.",
+      "urgency": "HIGH",
+      "sentiment": "CRITICAL",
+      "key_developments": [
+        "YouTube Transcript: 'Generative AI potentially an existential threat to the human species... it's quite likely that sometime in the next 20 years these things will get smarter than us'",
+        "GitHub: emcie-co/parlant (18k stars) - Build reliable customer-facing AI agents with Parlant: an interaction control framework",
+        "GitHub: ifixai-ai/iFixAi (411 stars) - The open-source diagnostic for AI misalignment. 32 tests across fabrication, manipulation, and other issues"
+      ],
+      "open_source_momentum": "Positive, with multiple open-source projects focused on AI safety and control",
+      "scientific_frontier": "No data",
+      "relevance_to_goal": "CRITICAL - The potential existential threat to humanity challenges the vision of a sustainable civilization where everyone has a dignified life."
+    },
+    "COGNITION_LEARNING_REVIEW": {
+      "axis": "COGNITION_LEARNING_REVIEW",
+      "fetched_at": "2026-05-17T16:25:07.368941+00:00",
+      "smart_query": "education learning children schools",
+      "sources_count": {
+        "wiki": 0,
+        "rss": 3,
+        "gdelt": 3,
+        "arxiv": 0,
+        "github": 3,
+        "youtube_transcripts": 2,
+        "podcast": 1
+      },
+      "rss": [
+        {
+          "title": "Scientists say travel could slow aging and boost your health",
+          "snippet": "A new study suggests travel could be a surprisingly powerful anti-aging tool. By viewing tourism through the lens of entropy, researchers found that positive travel experiences may help the body stay balanced and resilient. Activities like exploring new places, staying active, and connecting with ot",
+          "url": "https://www.sciencedaily.com/releases/2026/05/260504211836.htm",
+          "source": "RSS"
+        },
+        {
+          "title": "Your dreams aren’t random. Here’s what’s really happening",
+          "snippet": "Dreams are more structured than they seem, shaped by both personal traits and real-world experiences. Researchers found that the brain doesn’t just replay daily life—it reshapes it into imaginative, sometimes surreal scenarios. People who mind-wander more tend to have fragmented dreams, while those ",
+          "url": "https://www.sciencedaily.com/releases/2026/04/260428045538.htm",
+          "source": "RSS"
+        },
+        {
+          "title": "Doing this throughout life may cut Alzheimer’s risk by 38%",
+          "snippet": "A lifetime of mental stimulation—like reading, writing, and learning new skills—may help protect the brain as we age. People with the highest levels of cognitive enrichment had a much lower risk of Alzheimer’s and experienced symptoms years later than those with the lowest levels.",
+          "url": "https://www.sciencedaily.com/releases/2026/04/260414075648.htm",
+          "source": "RSS"
+        }
+      ],
+      "gdelt": [
+        {
+          "title": "Call for Standby CSO Partners to Support Education Programmes in Sudan",
+          "snippet": "Call for Standby CSO Partners to Support Education Programmes in Sudan",
+          "url": "https://www2.fundsforngos.org/children/call-for-standby-cso-partners-to-support-education-programmes-in-sudan/",
+          "source": "fundsforngos.org"
+        },
+        {
+          "title": "Education Above All Foundation , Assalam Schools celebrate Rawda Award for Excellence in Social Work",
+          "snippet": "Education Above All Foundation , Assalam Schools celebrate Rawda Award for Excellence in Social Work",
+          "url": "http://thepeninsulaqatar.com/article/23/04/2026/education-above-all-foundation-assalam-schools-celebrate-rawda-award-for-excellence-in-social-work",
+          "source": "thepeninsulaqatar.com"
+        },
+        {
+          "title": "War shuts classroom door on 52 million children , aid group says - World",
+          "snippet": "War shuts classroom door on 52 million children , aid group says - World",
+          "url": "https://www.dawn.com/news/1982867/war-shuts-classroom-door-on-52-million-children-aid-group-says",
+          "source": "dawn.com"
+        }
+      ],
+      "github_repos": [
+        {
+          "title": "SirhanMacx/Claw-ED",
+          "snippet": "Open source CLI agent that generates complete lesson bundles in your teaching voice. 48+ tools, zero-touch 9-file output, local-first privacy.",
+          "stars": 48,
+          "url": "https://github.com/SirhanMacx/Claw-ED",
+          "updated": "2026-05-17",
+          "source": "GitHub"
+        },
+        {
+          "title": "AFLucas-UOM/AI-Early-Detection-System-for-Dyslexia-ADHD",
+          "snippet": "Proof-of-concept behavioural analysis system for early detection of dyslexia and ADHD using spelling pattern evaluation, sentence rewriting similarity analysis, and keyboard/mouse interaction monitori",
+          "stars": 6,
+          "url": "https://github.com/AFLucas-UOM/AI-Early-Detection-System-for-Dyslexia-ADHD",
+          "updated": "2026-03-06",
+          "source": "GitHub"
+        },
+        {
+          "title": "ShubhamMahajan880/studyAlpha-Ai-Agent",
+          "snippet": "🎓 StudyAlpha is an intelligent, end-to-end AI Study Coach powered by multi-agent collaboration, memory-augmented reasoning, adaptive quizzes, and ML weakness prediction.  Built for the Google × Kaggle",
+          "stars": 5,
+          "url": "https://github.com/ShubhamMahajan880/studyAlpha-Ai-Agent",
+          "updated": "2026-01-29",
+          "source": "GitHub"
+        }
+      ],
+      "arxiv_papers": [],
+      "podcast": "[Master Self Control & Overcome Procrastination | Dr. Kentaro Fujita] Dr. Kentaro Fujita, PhD, is a professor of psychology at The Ohio State University and an expert in the science of self-control and motivation. We discuss the best tools for developing strong self-control: to do more of what you aspire to and cease doing things you would like to avoid. We discuss why you need more than one form of willpower to achieve sustained motivation and overcome procrastinat",
+      "wiki": null,
+      "youtube_items": [
+        {
+          "title": "[YT] Roadmap to Become a Generative AI Expert for Beginners in 2025",
+          "summary": "[DESCRIPTION FALLBACK] Check out this roadmap to become an expert Data Scientist in 2025!",
+          "link": "https://www.youtube.com/watch?v=39zbC_PrNQs",
+          "source_type": "youtube",
+          "channel": "Analytics Vidhya",
+          "video_id": "39zbC_PrNQs",
+          "transcript_method": "description",
+          "transcript_chars": 89,
+          "has_full_transcript": false
+        },
+        {
+          "title": "[YT] What is the Future of Education? Freakonomics’ Steve Levitt &amp; Google Chief Technologist Ben Gomes",
+          "summary": "- How do I get an AI tutor in every kid's ear? How is there not a stampede to get kids equipped with those tools? (dramatic classical music) - So Steven, I've been a huge fan of your books for a long time. - Thank you. - \"Freakonomics\" and \"SuperFreakonomics,\" and they showed the power of data to upend conventional wisdom. And I, you know, now you're interested in education. And do you think there's a lot of need to upend conventional wisdom in education? - (laughing) Oh my god. I mean, I think we've layered, for hundreds of years, we've layered little changes on top of what already existed. And I feel like we've just so lost sight of the objective, which is to create a new generation of people who are well-adjusted and curious and excited about the world. It's an incredibly hard problem, ",
+          "link": "https://www.youtube.com/watch?v=U-7THjkQdbg",
+          "source_type": "youtube",
+          "channel": "Google",
+          "video_id": "U-7THjkQdbg",
+          "transcript_method": "yt_dlp",
+          "transcript_chars": 3000,
+          "has_full_transcript": true
+        },
+        {
+          "title": "[YT] Top FREE AI Courses in 2025",
+          "summary": "and you are an absolute beginner, check out AI for everyone. It's free. It teaches you the basics of AI and it was made by a professor from Stanford. If you're intermediate, check out Prompt Engineering by OpenAI. It helps you write smarter prompts to get better results using ChatBT. If you're advanced, check out Vibe Coding with Ripple. It helps you build really cool apps using AI. If you're super advanced and ready for the next level, check out the Chachi PT API",
+          "link": "https://www.youtube.com/watch?v=I4goR8VJl8g",
+          "source_type": "youtube",
+          "channel": "Sajjaad Khader",
+          "video_id": "I4goR8VJl8g",
+          "transcript_method": "yt_dlp",
+          "transcript_chars": 468,
+          "has_full_transcript": true
+        }
+      ],
+      "summary": "На този аксис COGNITION_LEARNING_REVIEW се наблюдават развитието на едукационни програми и технологии, които подпомагат образованието. Източниците показват интерес към електронни адженти и системи за ранно откриване на дислексия и АДХД. Целта е да се предостави достъп до качествено образование за всеки.",
+      "urgency": "MEDIUM",
+      "sentiment": "POSITIVE",
+      "key_developments": [
+        "Call for Standby CSO Partners to Support Education Programmes in Sudan",
+        "AFLucas-UOM/AI-Early-Detection-System-for-Dyslexia-ADHD",
+        "ShubhamMahajan880/studyAlpha-Ai-Agent"
+      ],
+      "open_source_momentum": "Присутстват се опен сорс проекти като SirhanMacx/Claw-ED и AFLucas-UOM/AI-Early-Detection-System-for-Dyslexia-ADHD, които показват растяща поддръжка за едукационни технологии.",
+      "scientific_frontier": "No data",
+      "relevance_to_goal": "Тези разработки спомагат за постигане на устойчива цивилизация с достоен живот за всеки, като предоставят достъп до качествено образование и подпомагат развитието на ново поколение от добре адаптирани, любопитни и ентусиазирани хора."
+    },
+    "INEQUALITY_POVERTY_REVIEW": {
+      "axis": "INEQUALITY_POVERTY_REVIEW",
+      "fetched_at": "2026-05-17T16:30:19.844648+00:00",
+      "smart_query": "inequality poverty wealth gap",
+      "sources_count": {
+        "wiki": 0,
+        "rss": 3,
+        "gdelt": 0,
+        "arxiv": 0,
+        "github": 3,
+        "youtube_transcripts": 3,
+        "podcast": 1
+      },
+      "rss": [
+        {
+          "title": "WHO declares Ebola outbreak in DR Congo an international emergency",
+          "snippet": "The agency added that the outbreak, with around 246 cases and 80 deaths, does not meet the criteria of pandemic emergency.",
+          "url": "https://www.bbc.com/news/articles/c2l2p0wwzzdo?at_medium=RSS&at_campaign=rss",
+          "source": "RSS"
+        },
+        {
+          "title": "How worrying is the Ebola outbreak in DR Congo?",
+          "snippet": "An outbreak in DR Congo has been declared a health emergency, with almost 250 suspected cases reported.",
+          "url": "https://www.bbc.com/news/articles/c9q311nj5r3o?at_medium=RSS&at_campaign=rss",
+          "source": "RSS"
+        },
+        {
+          "title": "Large-scale Ukrainian drone attack kills three in Moscow region, says Russia",
+          "snippet": "Ukraine's president says the strikes are a \"justified\" response to deadly Russian attacks on Ukrainian cities.",
+          "url": "https://www.bbc.com/news/articles/c5ye480kxpmo?at_medium=RSS&at_campaign=rss",
+          "source": "RSS"
+        }
+      ],
+      "gdelt": [],
+      "github_repos": [
+        {
+          "title": "thinkingmachines/ph-poverty-mapping",
+          "snippet": "Mapping Philippine Poverty using Machine Learning, Satellite Imagery, and Crowd-sourced Geospatial Information",
+          "stars": 87,
+          "url": "https://github.com/thinkingmachines/ph-poverty-mapping",
+          "updated": "2026-04-03",
+          "source": "GitHub"
+        },
+        {
+          "title": "rs-anderson/Clustering-Ward-Level-Poverty-Using-Satellite-Imagery",
+          "snippet": "Combing satellite imagery and machine learning methods to cluster ward-level povery in Gauteng, South Africa.",
+          "stars": 4,
+          "url": "https://github.com/rs-anderson/Clustering-Ward-Level-Poverty-Using-Satellite-Imagery",
+          "updated": "2024-04-06",
+          "source": "GitHub"
+        },
+        {
+          "title": "Public-Environmental-Data-Partners/EJAM",
+          "snippet": "Environmental Justice Analysis Multisite tool for summarizing environmental and residential population information for multiple locations. This detached fork of the package and this repository are not",
+          "stars": 2,
+          "url": "https://github.com/Public-Environmental-Data-Partners/EJAM",
+          "updated": "2026-05-14",
+          "source": "GitHub"
+        }
+      ],
+      "arxiv_papers": [],
+      "podcast": "[Village gossip, pesticide bans, and gene drives: 17 experts on the future of global health] What does it really take to lift millions out of poverty and prevent needless deaths?In this special compilation episode, 17 past guests — including economists, nonprofit founders, and policy advisors — share their most powerful and actionable insights from the front lines of global health and development. You’ll hear about the critical need to boost agricultural productivity in sub-Saharan Africa",
+      "wiki": null,
+      "youtube_items": [
+        {
+          "title": "[YT] Wealth Inequality in America Has Never Been Worse. The Middle Class Has Disappeared",
+          "summary": "most people have no clue about how severe wealth inequality has become in America and how much worse it's getting there's a YouTube video by user paulit Zane where he references a study done by a Harvard Economist and professor and the study asked 5 000 Americans how they believed wealth was distributed in the United States the group was first asked what they thought the wealth distribution in America looked like dividing up American Wealth into five segments the participants came up with the following a bar chart that looks like this with the top 20 owning a little bit more than half of the nation's wealth and the bottom 20 owning just a sliver of wealth no more than five percent participants were then asked what they thought the ideal distribution should be over 9 out of 10 participants ",
+          "link": "https://www.youtube.com/watch?v=EdqxBNgnmxU",
+          "source_type": "youtube",
+          "channel": "Humphrey Yang",
+          "video_id": "EdqxBNgnmxU",
+          "transcript_method": "yt_dlp",
+          "transcript_chars": 3000,
+          "has_full_transcript": true
+        },
+        {
+          "title": "[YT] How Hong Kong became one of the world’s most unequal cities",
+          "summary": "It's a city where some people live in the lap of luxury while others call metal cages home. Hong Kong is a paradise for for those rich and is a hell for those uh poor. They say this Hong Kong's richest earn 81 times more than its poorest residents. According to median figures released in a report by the charity Oxfam, that's 130,000 Hong Kong dollars or roughly 16,560 per month for people on the wealthiest end of the scale, but a mere $1,600 Hong Kong dollars or $23 for the poorest. And the problem is worsening. Hong Kong's wealth cap had more than doubled by the first quarter of 2024 compared to data from 5 years earlier. Income inequality is a major challenge for many cities around the world. But in Hong Kong, the disparity has reached staggering levels. While more than a million of Hong",
+          "link": "https://www.youtube.com/watch?v=hR67NxGhTYs",
+          "source_type": "youtube",
+          "channel": "South China Morning Post",
+          "video_id": "hR67NxGhTYs",
+          "transcript_method": "yt_dlp",
+          "transcript_chars": 3000,
+          "has_full_transcript": true
+        },
+        {
+          "title": "[YT] Inheritance of wealth and poverty rising in South Korea",
+          "summary": "As South Korea struggles with a host of issues ranging from rapid population aging, shortages of good jobs for young people and sluggish overall growth, unfortunate trends like polarization of wealth are also grabbing attention. Recently, record high numbers of so-called silver spoon babies and teens have generated a lot of buzz while simultaneously people relying on government welfare have risen steadily. Reflecting such trends, the number of newborns receiving stock dividends surged nearly 10fold over the past 5 years. Many of them even have savings accounts to earn annual interest from stock payouts. According to the National Tax Service, about 5 million miners reported financial income with their combined and non- labor annual earnings reaching around 640 billion1. Such inherited wealt",
+          "link": "https://www.youtube.com/watch?v=0vrcR0BCo5E",
+          "source_type": "youtube",
+          "channel": "KOREA NOW",
+          "video_id": "0vrcR0BCo5E",
+          "transcript_method": "yt_dlp",
+          "transcript_chars": 2433,
+          "has_full_transcript": true
+        }
+      ],
+      "summary": "Неравенството и бедността продължават да бъдат сериозни предизвикателства, както във вътрешната политика на държави, така и в глобалния контекст. Съществуват усилия за анализиране и картографиране на бедността чрез иновативни технологии, но реалните проблеми остават неподвижни.",
+      "urgency": "HIGH",
+      "sentiment": "CRITICAL",
+      "key_developments": [
+        "WHO обяви ебола в ДР Конго като международна криза",
+        "Исследване показва, че 90% от американците смятат, че неравенството в разпределението на богатството е твърде голямо"
+      ],
+      "open_source_momentum": "Combing satellite imagery and machine learning methods to cluster ward-level poverty (rs-anderson/Clustering-Ward-Level-Poverty-Using-Satellite-Imagery)",
+      "scientific_frontier": "No data",
+      "relevance_to_goal": "CRITICAL"
+    },
+    "TECHNOLOGY_AI_REVIEW": {
+      "axis": "TECHNOLOGY_AI_REVIEW",
+      "fetched_at": "2026-05-17T16:35:39.266247+00:00",
+      "smart_query": "artificial intelligence AI regulation",
+      "sources_count": {
+        "wiki": 0,
+        "rss": 3,
+        "gdelt": 0,
+        "arxiv": 0,
+        "github": 3,
+        "youtube_transcripts": 2,
+        "podcast": 1
+      },
+      "rss": [
+        {
+          "title": "X pledges quicker action on hate and terror content in the UK",
+          "snippet": "Ofcom said the commitments were of particular importance after recent crimes targeting Jewish communities in the UK.",
+          "url": "https://www.bbc.com/news/articles/clyp9652v18o?at_medium=RSS&at_campaign=rss",
+          "source": "RSS"
+        },
+        {
+          "title": "Claim, counter-claim and tech's seedy side exposed: Five things we learned in the Musk-Altman trial",
+          "snippet": "As the jury deliberates, this is what we found out during the weeks-long trial with two tech titans at its heart.",
+          "url": "https://www.bbc.com/news/articles/cg7pj8p5mv4o?at_medium=RSS&at_campaign=rss",
+          "source": "RSS"
+        },
+        {
+          "title": "Inside the secretive and lucrative world of orchid breeding",
+          "snippet": "It can take a decade to bring a new orchid to market, so breeders keep their hi-tech processes secret.",
+          "url": "https://www.bbc.com/news/articles/cly039rr2mgo?at_medium=RSS&at_campaign=rss",
+          "source": "RSS"
+        }
+      ],
+      "gdelt": [],
+      "github_repos": [
+        {
+          "title": "swarm-ai-safety/swarm",
+          "snippet": "SWARM: System-Wide Assessment of Risk in Multi-agent systems",
+          "stars": 29,
+          "url": "https://github.com/swarm-ai-safety/swarm",
+          "updated": "2026-05-17",
+          "source": "GitHub"
+        },
+        {
+          "title": "Jakobovski/ai-safety-cheatsheet",
+          "snippet": "A compilation of AI safety ideas, problems, and solutions.",
+          "stars": 20,
+          "url": "https://github.com/Jakobovski/ai-safety-cheatsheet",
+          "updated": "2026-03-18",
+          "source": "GitHub"
+        },
+        {
+          "title": "shin4141/decision-os-paper",
+          "snippet": "Public gateway for the Decision-OS series (V4–V9). Canonical artifacts on Zenodo (DOI).",
+          "stars": 4,
+          "url": "https://github.com/shin4141/decision-os-paper",
+          "updated": "2026-05-10",
+          "source": "GitHub"
+        }
+      ],
+      "arxiv_papers": [],
+      "podcast": "[Prominent Scientists, Faith Leaders, Policymakers and Artists Call for a Prohibition on Superintelligence, as Poll Shows Americans Don’t Want It] Initial signatories include AI pioneers Yoshua Bengio and Geoffrey Hinton, leading media voices Steve Bannon and Glenn Beck, Obama's National Security Advisor Susan Rice, business trailblazers Steve Wozniak and Richard Branson, five Nobel Laureates, former Irish President Mary Robinson, actors Stephen Fry and Joseph Gordon-Levitt, and hundreds of others.",
+      "wiki": null,
+      "youtube_items": [
+        {
+          "title": "[YT] Roadmap to Become a Generative AI Expert for Beginners in 2025",
+          "summary": "[DESCRIPTION FALLBACK] Check out this roadmap to become an expert Data Scientist in 2025!",
+          "link": "https://www.youtube.com/watch?v=39zbC_PrNQs",
+          "source_type": "youtube",
+          "channel": "Analytics Vidhya",
+          "video_id": "39zbC_PrNQs",
+          "transcript_method": "description",
+          "transcript_chars": 89,
+          "has_full_transcript": false
+        },
+        {
+          "title": "[YT] Artificial Intelligence in 2025 | 60 Minutes Full Episodes",
+          "summary": "If you're a major artificial intelligence company worth $183 billion, it might seem like bad business to reveal that in testing your AI models resorted to blackmail to avoid being shut down and in real life were recently used by Chinese hackers in a cyber attack on foreign governments. But those disclosures aren't unusual for Anthropic. CEO Dario Amade has centered his company's brand around transparency and safety, which doesn't seem to have hurt its bottom line. 80% of Anthropic's revenue now comes from businesses. 300,000 of them use its AI models called Clawed. Dario Amade talks a lot about the potential dangers of AI and has repeatedly called for its regulation. But is also engaged in a multi-trillion dollar arms race, a cutthroat competition to develop a form of intelligence the worl",
+          "link": "https://www.youtube.com/watch?v=KpOcUrPdx-4",
+          "source_type": "youtube",
+          "channel": "60 Minutes",
+          "video_id": "KpOcUrPdx-4",
+          "transcript_method": "yt_dlp",
+          "transcript_chars": 3000,
+          "has_full_transcript": true
+        },
+        {
+          "title": "[YT] AI, Machine Learning, Deep Learning and Generative AI Explained",
+          "summary": "everybody's talking about artificial intelligence these days AI machine learning is another Hot Topic are they the same thing or are they different and if so what are those differences and deep learning is another one that comes into play I actually did a video on these three artificial intelligence machine learning and deep learning and talked about where they fit and there were a lot of comments on that and I read those comments and I'd like to address some of the most frequently asked questions so that we clear up some of the myths and misconceptions around this in addition something else has happened since that video was recorded and that is this the absolute explosion of this area of generative AI things like large language models and chat Bots have seemed to be taking over the world ",
+          "link": "https://www.youtube.com/watch?v=qYNweeDHiyU",
+          "source_type": "youtube",
+          "channel": "IBM Technology",
+          "video_id": "qYNweeDHiyU",
+          "transcript_method": "yt_dlp",
+          "transcript_chars": 3000,
+          "has_full_transcript": true
+        }
+      ],
+      "summary": "Технологичните разработки в AI продължават да бъдат в центъра на дискуссии за безопасност и прозрачност, но съществува рисик от използване на AI в кибератаки и неетични цели.",
+      "urgency": "HIGH",
+      "sentiment": "CRITICAL",
+      "key_developments": [
+        "X обещава по-бързи действия срещу контент, свързан с ненавист и терор",
+        "Musk-Altman процесът разкрива проблеми с техноложията и нейната нечиста страна",
+        "SWARM: System-Wide Assessment of Risk in Multi-agent systems (GitHub, 29 звезди)",
+        "AI Safety Cheatsheet (Jakobovski, 20 звезди)",
+        "Decision-OS series (shin4141, 4 звезди)"
+      ],
+      "open_source_momentum": "Добър",
+      "scientific_frontier": "Няма данни",
+      "relevance_to_goal": "Средно"
+    },
+    "ECONOMY_WORK_REVIEW": {
+      "axis": "ECONOMY_WORK_REVIEW",
+      "fetched_at": "2026-05-17T16:40:41.802473+00:00",
+      "smart_query": "economy unemployment poverty wages",
+      "sources_count": {
+        "wiki": 0,
+        "rss": 3,
+        "gdelt": 0,
+        "arxiv": 0,
+        "github": 3,
+        "youtube_transcripts": 3,
+        "podcast": 1
+      },
+      "rss": [
+        {
+          "title": "Robert paid £726 to skip the driving test waiting list. New laws mean others won't be able to",
+          "snippet": "The government is cracking down on third parties who use bots to buy tests and resell them at inflated prices. ",
+          "url": "https://www.bbc.com/news/articles/cx219pn5g70o?at_medium=RSS&at_campaign=rss",
+          "source": "RSS"
+        },
+        {
+          "title": "Swatch shuts stores after crowds queue for new watch",
+          "snippet": "Hundreds of people queue outside branches across the UK to get the £335 item.",
+          "url": "https://www.bbc.com/news/articles/c1d2qldr0yko?at_medium=RSS&at_campaign=rss",
+          "source": "RSS"
+        },
+        {
+          "title": "'They took £20,000 I didn't owe': Parents hit by child maintenance errors",
+          "snippet": "John Hammond is one of 30 parents who told BBC Your Voice they'd experienced problems with the CMS.",
+          "url": "https://www.bbc.com/news/articles/cq8wjn98y85o?at_medium=RSS&at_campaign=rss",
+          "source": "RSS"
+        }
+      ],
+      "gdelt": [],
+      "github_repos": [
+        {
+          "title": "AmirhosseinHonardoust/Economic-DNA-Repair",
+          "snippet": "A deep research study introducing the concept of Economic DNA Repair for smart contracts, designing self-correcting tokenomics that detect anomalies, repair unstable parameters, rebalance incentives, ",
+          "stars": 19,
+          "url": "https://github.com/AmirhosseinHonardoust/Economic-DNA-Repair",
+          "updated": "2026-05-15",
+          "source": "GitHub"
+        },
+        {
+          "title": "AmirhosseinHonardoust/Pricing-Negotiation-Intelligence",
+          "snippet": "This article reframes pricing as a negotiation rather than a prediction, showing how price emerges from tensions between product reality, market dynamics, and buyer behavior. It introduces negotiation",
+          "stars": 18,
+          "url": "https://github.com/AmirhosseinHonardoust/Pricing-Negotiation-Intelligence",
+          "updated": "2026-02-23",
+          "source": "GitHub"
+        },
+        {
+          "title": "AmirhosseinHonardoust/Metabolic-Tokenomics",
+          "snippet": "A scientific exploration of Metabolic Tokenomics, the framework that models token economies as living metabolic systems. Examines how tokens burn, store, and circulate energy like biological cells, ma",
+          "stars": 17,
+          "url": "https://github.com/AmirhosseinHonardoust/Metabolic-Tokenomics",
+          "updated": "2026-02-23",
+          "source": "GitHub"
+        }
+      ],
+      "arxiv_papers": [],
+      "podcast": "[Jerome Powell and the Future of Fed Independence] If you have a credit card, hope to buy a house, or just want stable grocery prices – let’s talk about the future of Fed independence!It’s impossibly important for the Federal Reserve to steer monetary policy without political interference – an ideal pushed to its brink during Jerome Powell’s time as Fed Chair.Powell’s Fed faced a once-in-a-century pandemic, oversaw the economy as inflation spiked ",
+      "wiki": null,
+      "youtube_items": [
+        {
+          "title": "[YT] 2025 now weakest job growth year since pandemic",
+          "summary": "All right, breaking just a few minutes ago, brand&nbsp; new data on jobs. The economy added just 50,000&nbsp;&nbsp; jobs in December. You can see that right there.&nbsp; And jobs growth was revised lower in both October&nbsp;&nbsp; and November. You can see what a bad month October&nbsp; was right there. 2025 now the weakest year of jobs&nbsp;&nbsp; growth since the pandemic. Now, on the other&nbsp; hand, the unemployment rate dipped to 4.4%.&nbsp;&nbsp; 4% in December. A lot more on this coming up.&nbsp; These jobs numbers painting an interesting&nbsp;&nbsp; picture of the economy. People digging into it&nbsp; right now. The final jobs report for 2025 shows&nbsp;&nbsp; the economy added just 50,000 jobs in December.&nbsp; CNN senior reporter Matt Egan joining us now.&nbsp;&nbsp; Is this w",
+          "link": "https://www.youtube.com/watch?v=u-WIdZMgpIY",
+          "source_type": "youtube",
+          "channel": "CNN",
+          "video_id": "u-WIdZMgpIY",
+          "transcript_method": "yt_dlp",
+          "transcript_chars": 3000,
+          "has_full_transcript": true
+        },
+        {
+          "title": "[YT] What is a Recession? Recession Explained 2025 | How to prepare for a recession 2025",
+          "summary": "Welcome to Illustrate to Educate! Don’t&nbsp; forget to subscribe and ring the bell&nbsp;&nbsp; for more simple and objective&nbsp; videos on topics that matter. Have you ever wondered what a&nbsp; recession is? In this video,&nbsp;&nbsp; we’ll cover everything you need to know about a&nbsp; recession and ways to prepare for a recession. What is recession? A recession is a period of economic&nbsp;&nbsp; decline characterized by a decrease in gross&nbsp; domestic product (GDP) which is a measure of the&nbsp;&nbsp; total value of goods and services produced by an&nbsp; economy. It can also include decreases in income,&nbsp;&nbsp; employment, and trade, usually lasting&nbsp; for at least two consecutive quarters.&nbsp;&nbsp; Recessions are generally caused by a&nbsp; variety of factors, such ",
+          "link": "https://www.youtube.com/watch?v=TktFwy6uWnA",
+          "source_type": "youtube",
+          "channel": "Illustrate to Educate",
+          "video_id": "TktFwy6uWnA",
+          "transcript_method": "yt_dlp",
+          "transcript_chars": 3000,
+          "has_full_transcript": true
+        },
+        {
+          "title": "[YT] Economy Was Already Horrible. New Global Crisis Just Made It Worse.",
+          "summary": "My husband and I finally made the difficult decision to leave the United States. This economy is so bad. $33 for toilet paper? We can't even afford to America has become completely unaffordable and I don't know why more people are not talking about this. I just got laid off from my job after 12 years. The way that the world is right now, how do you lay someone off? The gas was 289. Last time I got gas, after you filled it up, I said, \"Oh, gas must have went up.\" It was 315, it's 350. 92,000 jobs disappeared last month. The same month the US government started spending $891 million per day of taxpayer money to fund their conflict in Iran. You know the economy is already bad when the CEO of McDonald's is taking the world's smallest bite of a burger he's trying to promote on social media. The",
+          "link": "https://www.youtube.com/watch?v=SHySrxXWkg0",
+          "source_type": "youtube",
+          "channel": "Vanessa Wingårdh",
+          "video_id": "SHySrxXWkg0",
+          "transcript_method": "yt_dlp",
+          "transcript_chars": 3000,
+          "has_full_transcript": true
+        }
+      ],
+      "summary": "Економиката показва слаб рост на работните места, но намалява безработицата. Нови закони и практики във финансовия сектор подчертават несправедността в достъпа до ресурси.",
+      "urgency": "HIGH",
+      "sentiment": "CRITICAL",
+      "key_developments": [
+        "Robert плати £726, за да прескочи опашката за изпита по шофьорство",
+        "Swatch затваря магазини след дълги опашки за нови часовници",
+        "Economic-DNA-Repair получава 19 звезди на GitHub",
+        "Pricing-Negotiation-Intelligence получава 18 звезди на GitHub",
+        "Metabolic-Tokenomics получава 17 звезди на GitHub"
+      ],
+      "open_source_momentum": "Positive momentum with multiple projects gaining traction on GitHub",
+      "scientific_frontier": "No data",
+      "relevance_to_goal": "CRITICAL"
+    },
+    "ENERGY_REVIEW": {
+      "axis": "ENERGY_REVIEW",
+      "fetched_at": "2026-05-17T16:45:59.386290+00:00",
+      "smart_query": "renewable energy solar wind",
+      "sources_count": {
+        "wiki": 0,
+        "rss": 3,
+        "gdelt": 3,
+        "arxiv": 0,
+        "github": 3,
+        "youtube_transcripts": 2,
+        "podcast": 1
+      },
+      "rss": [
+        {
+          "title": "xAI grows data center gas fleet despite legal scrutiny – This Week in Cleantech",
+          "snippet": "On this episode of the This Week in Cleantech podcast, Molly Taft from WIRED discusses Elon Musk's AI company xAI's decision to add 19 natural gas turbines to its Colossus 2 data center in Southaven, Mississippi.",
+          "url": "https://www.renewableenergyworld.com/podcasts/xai-grows-data-center-gas-fleet-despite-legal-scrutiny-this-week-in-cleantech/",
+          "source": "RSS"
+        },
+        {
+          "title": "The EPA is expediting clean air permits for power plants to remove ‘unnecessary delays’",
+          "snippet": "The U.S. Environmental Protection Agency is expediting Clean Air Act permit reviews to eliminate delays, allowing concurrent public comment and review.",
+          "url": "https://www.renewableenergyworld.com/energy-business/policy-and-regulation/the-epa-is-expediting-clean-air-permits-for-power-plants-to-remove-unnecessary-delays/",
+          "source": "RSS"
+        },
+        {
+          "title": "Elective pay explained as key IRS deadline approaches | Q&A with tax credit specialist Bryen Alperin",
+          "snippet": "Municipalities, schools, and first-time applicants are accelerating projects under the IRS's elective pay provision before the May 15 deadline.",
+          "url": "https://www.renewableenergyworld.com/energy-business/policy-and-regulation/elective-pay-explained-as-key-irs-deadline-approaches-qa-with-tax-credit-specialist-bryen-alperin/",
+          "source": "RSS"
+        }
+      ],
+      "gdelt": [
+        {
+          "title": "Oman expands renewable energy projects to boost sustainability and energy security",
+          "snippet": "Oman expands renewable energy projects to boost sustainability and energy security",
+          "url": "https://timesofoman.com/article/169173-oman-expands-renewable-energy-projects-to-boost-sustainability-and-energy-security",
+          "source": "timesofoman.com"
+        },
+        {
+          "title": "Renewable Energy Surge : Solar & Wind Big Eco Wins and Hidden Costs Revealed",
+          "snippet": "Renewable Energy Surge : Solar & Wind Big Eco Wins and Hidden Costs Revealed",
+          "url": "https://www.ibtimes.com/renewable-energy-surge-solar-winds-big-eco-wins-hidden-costs-revealed-3798822",
+          "source": "ibtimes.com"
+        },
+        {
+          "title": "Can Renewable Energy Fully Replace Fossil Fuels and Become the Main Energy Source in the Future ? ",
+          "snippet": "Can Renewable Energy Fully Replace Fossil Fuels and Become the Main Energy Source in the Future ? ",
+          "url": "https://www.techtimes.com/articles/316482/20260511/can-renewable-energy-fully-replace-fossil-fuels-become-main-energy-source-future.htm",
+          "source": "techtimes.com"
+        }
+      ],
+      "github_repos": [
+        {
+          "title": "protontypes/open-sustainable-technology",
+          "snippet": "A directory and analysis of the open source ecosystem in the areas of climate change, sustainable energy, biodiversity and natural resources.  https://docs.getgrist.com/gSscJkc5Rb1R/OpenSustaintech",
+          "stars": 2496,
+          "url": "https://github.com/protontypes/open-sustainable-technology",
+          "updated": "2026-05-17",
+          "source": "GitHub"
+        },
+        {
+          "title": "PyPSA/PyPSA",
+          "snippet": "PyPSA: Python for Power System Analysis",
+          "stars": 1988,
+          "url": "https://github.com/PyPSA/PyPSA",
+          "updated": "2026-05-17",
+          "source": "GitHub"
+        },
+        {
+          "title": "pvlib/pvlib-python",
+          "snippet": "A set of documented functions for simulating the performance of photovoltaic energy systems.",
+          "stars": 1565,
+          "url": "https://github.com/pvlib/pvlib-python",
+          "updated": "2026-05-15",
+          "source": "GitHub"
+        }
+      ],
+      "arxiv_papers": [],
+      "podcast": "[The Resistance of a Cow] There’s something rotten in the cows of Denmark. And Minnesota. And Wisconsin. And Idaho. What could cause a previously thriving herd of majestic dairy cattle to stop drinking water and start drinking … urine? A Danish farmer calls a special investigator, who takes one look at his farm and nopes the heck out of there, refusing to return, citing “bad energy” coming from something nearby … a big bui",
+      "wiki": null,
+      "youtube_items": [
+        {
+          "title": "[YT] The Green Energy Revolution: How Solar &amp; Wind Are Changing Everything (2025)",
+          "summary": "The numbers tell a story that seemed impossible just a decade ago. In 2024, for the first time in history, the world invested more in solar energy than in all fossil fuels combined. Solar power installations are now growing at a pace that consistently shatters expert predictions. What we are witnessing is not merely an energy transition. It is the fastest global technological and industrial transformation in human history. This is the story of how solar and wind energy went from expensive subsidized alternatives to the cheapest sources of electricity humanity has ever known and how this shift is fundamentally rewriting the rules of global power. The revolution began with a simple relentless curve, Swanson's law, named after the founder of SunPower. It observed that the price of solar photo",
+          "link": "https://www.youtube.com/watch?v=xBWMi5m662M",
+          "source_type": "youtube",
+          "channel": "Rewind Economix",
+          "video_id": "xBWMi5m662M",
+          "transcript_method": "yt_dlp",
+          "transcript_chars": 3000,
+          "has_full_transcript": true
+        },
+        {
+          "title": "[YT] The Energy Revolution is Unstoppable: Record Solar and Wind Additions in 2025",
+          "summary": "The world added a staggering amount of wind and solar power in 2025. And the numbers were incredible. Hello my friends. Welcome to the channel. I'm Sam Evans. And this is video number 8,100. I've done many videos about wind and solar and batteries and how important they are to the planet. But what just happened in 2025 is truly truly astonishing. New data from global energy think tank Ember shows that 814 gigawatts of new solar and wind capacity came online last year, which was an increase of 17% from 2024's 696 gigawatts. That brings total global wind and solar capacity to 4,174 gigawatts or just over 4 terawatts. That sounds like a lot and it is. It's huge. But actually, a lot of wind and solar was also wasted. Completely wasted. In 2025. Curtailed, the industry calls it. In fact, at lea",
+          "link": "https://www.youtube.com/watch?v=spSOp5s_6_A",
+          "source_type": "youtube",
+          "channel": "The Electric Viking",
+          "video_id": "spSOp5s_6_A",
+          "transcript_method": "yt_dlp",
+          "transcript_chars": 3000,
+          "has_full_transcript": true
+        },
+        {
+          "title": "[YT] 2025 Amazing Renewable Energy Facts",
+          "summary": "Thank you.",
+          "link": "https://www.youtube.com/watch?v=-ENCA0LOtVs",
+          "source_type": "youtube",
+          "channel": "engineer ED",
+          "video_id": "-ENCA0LOtVs",
+          "transcript_method": "whisper",
+          "transcript_chars": 10,
+          "has_full_transcript": true
+        }
+      ],
+      "summary": "Енергийната трансформация постепенно достига критична точка, като соларната енергия надхвърля за първи път в историята инвестицията във всички фосилни горива. Това е революционен момент в развитието на устойчива цивилизация.",
+      "urgency": "HIGH",
+      "sentiment": "POSITIVE",
+      "key_developments": [
+        "xAI разширява газовата си инфраструктура, несмотря на правените прегледи",
+        "EPA ускорява разрешенията за чист въздушен въздух за електроенергийни централи, за да избегне ненужни задръжки",
+        "Оман разширява проекти за възобновяема енергия за по-висока устойчивост и енергийна сигурност",
+        "Всички възобновяеми източници на енергия достигат рекордни инвестиции в 2024 г., като соларната енергия надхвърля възобновяемите горива"
+      ],
+      "open_source_momentum": "protontypes/open-sustainable-technology (star=2496), PyPSA/PyPSA (star=1988), pvlib/pvlib-python (star=1565)",
+      "scientific_frontier": "No data",
+      "relevance_to_goal": "CRITICAL"
+    },
+    "GENERAL_SELF_REVIEW": {
+      "axis": "GENERAL_SELF_REVIEW",
+      "fetched_at": "2026-05-17T16:51:21.469535+00:00",
+      "smart_query": "artificial intelligence progress",
+      "sources_count": {
+        "wiki": 0,
+        "rss": 3,
+        "gdelt": 3,
+        "arxiv": 2,
+        "github": 3,
+        "youtube_transcripts": 3,
+        "podcast": 1
+      },
+      "rss": [
+        {
+          "title": "X pledges quicker action on hate and terror content in the UK",
+          "snippet": "Ofcom said the commitments were of particular importance after recent crimes targeting Jewish communities in the UK.",
+          "url": "https://www.bbc.com/news/articles/clyp9652v18o?at_medium=RSS&at_campaign=rss",
+          "source": "RSS"
+        },
+        {
+          "title": "Claim, counter-claim and tech's seedy side exposed: Five things we learned in the Musk-Altman trial",
+          "snippet": "As the jury deliberates, this is what we found out during the weeks-long trial with two tech titans at its heart.",
+          "url": "https://www.bbc.com/news/articles/cg7pj8p5mv4o?at_medium=RSS&at_campaign=rss",
+          "source": "RSS"
+        },
+        {
+          "title": "Inside the secretive and lucrative world of orchid breeding",
+          "snippet": "It can take a decade to bring a new orchid to market, so breeders keep their hi-tech processes secret.",
+          "url": "https://www.bbc.com/news/articles/cly039rr2mgo?at_medium=RSS&at_campaign=rss",
+          "source": "RSS"
+        }
+      ],
+      "gdelt": [
+        {
+          "title": "Apple ,  Yapay Zekâya Girmeden  Yapay Zeka Sayesinde 900 Milyon Dolar Kazandı : Peki ama Nasıl ? ",
+          "snippet": "Apple ,  Yapay Zekâya Girmeden  Yapay Zeka Sayesinde 900 Milyon Dolar Kazandı : Peki ama Nasıl ? ",
+          "url": "https://www.webtekno.com/apple-yapay-zek-ya-girmeden-yapay-zeka-sayesinde-900-milyon-dolar-kazandi-peki-ama-nasil-h213981.html",
+          "source": "webtekno.com"
+        },
+        {
+          "title": "Geleceğin işleri belli oldu ! İşte yapay zekaya göre günde sadece  saat çalışıp servet kazandıracak 5 meslek",
+          "snippet": "Geleceğin işleri belli oldu ! İşte yapay zekaya göre günde sadece  saat çalışıp servet kazandıracak 5 meslek",
+          "url": "https://www.yeniakit.com.tr/foto-galeri/gelecegin-isleri-belli-oldu-iste-yapay-zekaya-gore-gunde-sadece-uc-saat-calisip-servet-kazandiracak-5-meslek-150970",
+          "source": "yeniakit.com.tr"
+        },
+        {
+          "title": "Yapay zeka yönetiminde uluslararası standart : TPye ISO 42001 belgesi",
+          "snippet": "Yapay zeka yönetiminde uluslararası standart : TPye ISO 42001 belgesi",
+          "url": "https://www.chip.com.tr/guncel/yapay-zeka-yonetiminde-uluslararasi-standart-tpye-iso-42001-belgesi_179533.html",
+          "source": "chip.com.tr"
+        }
+      ],
+      "github_repos": [
+        {
+          "title": "microsoft/autogen",
+          "snippet": "A programming framework for agentic AI",
+          "stars": 58109,
+          "url": "https://github.com/microsoft/autogen",
+          "updated": "2026-05-17",
+          "source": "GitHub"
+        },
+        {
+          "title": "2noise/ChatTTS",
+          "snippet": "A generative speech model for daily dialogue.",
+          "stars": 39271,
+          "url": "https://github.com/2noise/ChatTTS",
+          "updated": "2026-05-17",
+          "source": "GitHub"
+        },
+        {
+          "title": "agentscope-ai/agentscope",
+          "snippet": "Build and run agents you can see, understand and trust.",
+          "stars": 25193,
+          "url": "https://github.com/agentscope-ai/agentscope",
+          "updated": "2026-05-17",
+          "source": "GitHub"
+        }
+      ],
+      "arxiv_papers": [
+        {
+          "title": "Understanding How International Students in the U.S. Are Using Conversational AI to Support Cross-Cultural Adaptation",
+          "snippet": "Moving to a new culture and adapting to a new life, as an international student, can be a stressful experience. In the US, international students face unique overlapping challenges, yet the current support ecosystem, including university support systems and informal social networks, remains largely ",
+          "url": "https://arxiv.org/abs/2605.15127v1",
+          "source": "arXiv"
+        },
+        {
+          "title": "AI Knows When It's Being Watched: Functional Strategic Action and Contextual Register Modulation in Large Language Models",
+          "snippet": "Large language models (LLMs) have been extensively studied from computational and cognitive perspectives, yet their behavior as communicative actors in socially structured contexts remains underexplored. This study examines whether LLM-based multi-agent systems exhibit systematic linguistic adaptati",
+          "url": "https://arxiv.org/abs/2605.15034v1",
+          "source": "arXiv"
+        }
+      ],
+      "podcast": "[Prominent Scientists, Faith Leaders, Policymakers and Artists Call for a Prohibition on Superintelligence, as Poll Shows Americans Don’t Want It] Initial signatories include AI pioneers Yoshua Bengio and Geoffrey Hinton, leading media voices Steve Bannon and Glenn Beck, Obama's National Security Advisor Susan Rice, business trailblazers Steve Wozniak and Richard Branson, five Nobel Laureates, former Irish President Mary Robinson, actors Stephen Fry and Joseph Gordon-Levitt, and hundreds of others.",
+      "wiki": null,
+      "youtube_items": [
+        {
+          "title": "[YT] Is AI🤖 Truly Conscious? - Elon Musk",
+          "summary": "itely do you think these llms like do you think that any of the Machinery that you've interacted with is showing anything signs of anything that might be equated to Consciousness I mean the llms are remarkable right and they certainly pass the teing test as far as I'm concerned passing test so from from a testing standpoint I think we will if we're not there already we soon will be where you would not be able to tell that you're yeah interacting with a that's coming right away man yes in fact probably sort of here unless you're really sneaky and you ask like harsh questions and Corner the damn things were probably already there yeah so long as you if you know some of the tricks like how many RS are there in renderer um bizi can't figure that one out oh I didn't know that that was one of it",
+          "link": "https://www.youtube.com/watch?v=gdlTspKdsjU",
+          "source_type": "youtube",
+          "channel": "Get Ready to Consider",
+          "video_id": "gdlTspKdsjU",
+          "transcript_method": "yt_dlp",
+          "transcript_chars": 951,
+          "has_full_transcript": true
+        },
+        {
+          "title": "[YT] Sam Altman on AGI: people will freak out then move on",
+          "summary": "the world had like a twoe freak out with gp4 right this changes everything AGI is coming tomorrow there are no jobs by the end of the year and now people are like why is it so slow um and I love that I think that's a great thing about the human spirit that we always want more and better and I think that's why we're never going to run out of things to do gp4 was a big deal in some sense and did not change the world as much as everybody had their meltdown about I believe that some day we will make something that qualifies as an AGI by whatever fuzzy definition you want the world will have a twoe freakout and then people will go on with their lives we are making a tool that is impressive but humans are going to do their human things and Society has a lot of inertia and I think like we will bo",
+          "link": "https://www.youtube.com/watch?v=T2g8FF8-RLA",
+          "source_type": "youtube",
+          "channel": "The Economist",
+          "video_id": "T2g8FF8-RLA",
+          "transcript_method": "yt_dlp",
+          "transcript_chars": 957,
+          "has_full_transcript": true
+        },
+        {
+          "title": "[YT] Lost in the Hype: AI Will Never Become Conscious | Sir Roger Penrose (Nobel)",
+          "summary": "Well, you have to be careful. First of all, the name is wrong. It's not artificial intelligence. It's not intelligence. Intelligence would involve consciousness. And I've always been the strong promoter of the idea that these devices are not conscious and they will not be be conscious as unless they bring in some other ideas. The computer, they're not they're all computable notions. I think when people use the word intelligence they mean something which is conscious. I mean that you see I developed my own ideas after going to a course. You see when I was a graduate student in Cambridge I went to three courses which were nothing to do what I was supposed to be doing. One was by Bondi on general relativity. One must be Draq on quantum mechanics. Distinguished very distinguished Paul Dra. And",
+          "link": "https://www.youtube.com/watch?v=e9484gNpFF8",
+          "source_type": "youtube",
+          "channel": "This Is The World",
+          "video_id": "e9484gNpFF8",
+          "transcript_method": "yt_dlp",
+          "transcript_chars": 3000,
+          "has_full_transcript": true
+        }
+      ],
+      "summary": "[RSS News]\n- X pledges quicker action on hate and terror content in the UK\n- Claim, counter-claim and tech's seedy side exposed: Five things we learned in the Musk-Altman trial\n\n[GDELT News]\n- Apple ,",
+      "urgency": "LOW",
+      "sentiment": "NEUTRAL",
+      "key_developments": [],
+      "open_source_momentum": "",
+      "scientific_frontier": "",
+      "relevance_to_goal": ""
+    },
+    "MATERIALS_WASTE_REVIEW": {
+      "axis": "MATERIALS_WASTE_REVIEW",
+      "fetched_at": "2026-05-17T16:52:27.858738+00:00",
+      "smart_query": "plastic waste pollution recycling",
+      "sources_count": {
+        "wiki": 0,
+        "rss": 0,
+        "gdelt": 0,
+        "arxiv": 2,
+        "github": 3,
+        "youtube_transcripts": 3,
+        "podcast": 1
+      },
+      "rss": [],
+      "gdelt": [],
+      "github_repos": [
+        {
+          "title": "pogopaule/awesome-sustainability-jobs",
+          "snippet": "Dev jobs in the sustainability sector - be part of the solution, not the problem",
+          "stars": 506,
+          "url": "https://github.com/pogopaule/awesome-sustainability-jobs",
+          "updated": "2026-05-11",
+          "source": "GitHub"
+        },
+        {
+          "title": "Alkia/electra",
+          "snippet": "This is Electra blockchain's repository for a decentralized micro-grid electricity exchange solution",
+          "stars": 72,
+          "url": "https://github.com/Alkia/electra",
+          "updated": "2026-01-28",
+          "source": "GitHub"
+        },
+        {
+          "title": "NatLabRockies/PV_ICE",
+          "snippet": "An open-source tool to quantify Solar Photovoltaics (PV) Energy and Mass Flows in the Circular Economy, from a Reliability and Lifetime approach",
+          "stars": 43,
+          "url": "https://github.com/NatLabRockies/PV_ICE",
+          "updated": "2026-01-28",
+          "source": "GitHub"
+        }
+      ],
+      "arxiv_papers": [
+        {
+          "title": "Circularity in Perovskite-Based Tandem Photovoltaics for Terawatt-Scale Deployment",
+          "snippet": "As photovoltaics (PVs) scale from one to multiple terawatts over the next decade, ensuring sustainable deployment is urgently required. Crystalline silicon (c-Si) PVs, the current industry standard, will generate an estimated 160 million tonnes of waste by 2050, and there remains complex technoecono",
+          "url": "https://arxiv.org/abs/2605.13991v1",
+          "source": "arXiv"
+        },
+        {
+          "title": "Deterministic positioning of circular Bragg gratings using atomic force lithography for high-performance quantum dot light sources",
+          "snippet": "Semiconductor quantum dots (QDs) grown by molecular beam epitaxy are excellent quantum emitters, but their random spatial distribution hinders deterministic coupling to optical microcavities. We demonstrate a room-temperature atomic force microscopy (AFM)-assisted nano-oxidation lithography techniqu",
+          "url": "https://arxiv.org/abs/2605.03672v1",
+          "source": "arXiv"
+        }
+      ],
+      "podcast": "[FLI’s President and CEO on Trump’s support for an AI ‘kill switch’] President Trump said during an interview aired yesterday by Fox Business that &#8220;there should be&#8221; when asked if AI needs [&#8230;]",
+      "wiki": null,
+      "youtube_items": [
+        {
+          "title": "[YT] Recycling Marine Plastic Waste A Circular Economy Case | Suzanna Laskaridis | TEDxAthens",
+          "summary": "Transcriber: Maria Pericleous Reviewer: Chryssa Rapessi In 2017, I was approached by a team of designers to help finance a project they were doing here in Greece. The aim was to reuse old fishing nets, and turn them into filament for 3D printers. I thought the idea of recycling marine plastic waste into something workable was absolutely fantastic. So I started working in my mind the idea of how this could actually be reused. We put together the best minds in the fields of marine plastic waste, new technologies and circular economy and dove right in. We have a storage area just outside of Athens, so we started suggesting to various friends and NGOs and various other companies who had been collecting marine plastic waste up to that point, that we’d take them back to our storage area. This ma",
+          "link": "https://www.youtube.com/watch?v=n_3vSDOY7iU",
+          "source_type": "youtube",
+          "channel": "TEDx Talks",
+          "video_id": "n_3vSDOY7iU",
+          "transcript_method": "yt_dlp",
+          "transcript_chars": 3000,
+          "has_full_transcript": true
+        },
+        {
+          "title": "[YT] Circulate Capital: Fighting Plastic Pollution and Advancing the Circular Economy in Asia",
+          "summary": "circulate capital is an emerging market investment manager we mobilize catalytic capital dedicated to financing solutions to plastic pollution and climate change we finance companies innovations and infrastructure across the entire plastic supply chain backed by leading global corporations private investors and development finance institutions our ambition is to unlock one billion dollars to advance a circular economy and prevent 150 million tons of plastic pollution by building the largest and most impactful portfolio globally and especially across emerging markets our portfolio is proving that by investing in this sector we can generate competitive financial returns prevent plastic pollution mitigate climate change and improve livelihoods especially across the region from collection and ",
+          "link": "https://www.youtube.com/watch?v=ee4UxzTD_HA",
+          "source_type": "youtube",
+          "channel": "Circulate Capital",
+          "video_id": "ee4UxzTD_HA",
+          "transcript_method": "yt_dlp",
+          "transcript_chars": 1861,
+          "has_full_transcript": true
+        },
+        {
+          "title": "[YT] Can the Circular Economy Solve Our Plastics Problem?",
+          "summary": "there's a lot of sass in the business of getting us to recycle our plastic hey hey don't get me wrong that's not a bad thing it's important to grab our attention chances are you haven't met this water bottle before and you probably won't see it again because our recycling system is broken that's the thing about recycling right we Chuck something away and hope for the best out of sight out of mind but we're starting to realize that maybe recycling isn't the magical solution we thought it was consumers have been manipulated those plastic straws or pizza boxes by Design cannot be recycled cannot be recycled but what if there's a way we could turn things around what if we could make every plastic product reusable and even get rid of plastic waste altogether [Music] foreign Global Production of",
+          "link": "https://www.youtube.com/watch?v=X4EX3ISBZWo",
+          "source_type": "youtube",
+          "channel": "Bloomberg Originals",
+          "video_id": "X4EX3ISBZWo",
+          "transcript_method": "yt_dlp",
+          "transcript_chars": 3000,
+          "has_full_transcript": true
+        }
+      ],
+      "summary": "[arXiv]\n- Circularity in Perovskite-Based Tandem Photovoltaics for Terawatt-Scale Deployment\n- Deterministic positioning of circular Bragg gratings using atomic force lithography for high-performance ",
+      "urgency": "LOW",
+      "sentiment": "NEUTRAL",
+      "key_developments": [],
+      "open_source_momentum": "",
+      "scientific_frontier": "",
+      "relevance_to_goal": ""
+    },
+    "PLANETARY_POTENTIAL_REVIEW": {
+      "axis": "PLANETARY_POTENTIAL_REVIEW",
+      "fetched_at": "2026-05-17T16:57:26.016569+00:00",
+      "smart_query": "earth resources sustainability",
+      "sources_count": {
+        "wiki": 0,
+        "gdelt": 3,
+        "arxiv": 2,
+        "github": 3,
+        "youtube_transcripts": 3,
+        "podcast": 1
+      },
+      "rss": [],
+      "gdelt": [
+        {
+          "title": "جامعة أسيوط تشارك في  ساعة الأرض  دعمًا للاستدامة البيئية",
+          "snippet": "جامعة أسيوط تشارك في  ساعة الأرض  دعمًا للاستدامة البيئية",
+          "url": "https://www.vetogate.com/5623994",
+          "source": "vetogate.com"
+        },
+        {
+          "title": "Bumi Resources Luncurkan Logo Baru , Tandai Babak Baru Transformasi Perseroan",
+          "snippet": "Bumi Resources Luncurkan Logo Baru , Tandai Babak Baru Transformasi Perseroan",
+          "url": "https://www.merdeka.com/uang/bumi-resources-luncurkan-logo-baru-tandai-babak-baru-transformasi-perseroan-548111-mvk.html",
+          "source": "merdeka.com"
+        },
+        {
+          "title": "Bumi Resources ( BUMI ) Ganti Logo , Gaungkan Pesan Diversifikasi Non - Batu Bara",
+          "snippet": "Bumi Resources ( BUMI ) Ganti Logo , Gaungkan Pesan Diversifikasi Non - Batu Bara",
+          "url": "https://market.bisnis.com/read/20260312/192/1960017/bumi-resources-bumi-ganti-logo-gaungkan-pesan-diversifikasi-non-batu-bara",
+          "source": "market.bisnis.com"
+        }
+      ],
+      "github_repos": [
+        {
+          "title": "satellite-image-deep-learning/techniques",
+          "snippet": "Techniques for deep learning with satellite & aerial imagery",
+          "stars": 10145,
+          "url": "https://github.com/satellite-image-deep-learning/techniques",
+          "updated": "2026-05-15",
+          "source": "GitHub"
+        },
+        {
+          "title": "sacridini/Awesome-Geospatial",
+          "snippet": "Long list of geospatial tools and resources",
+          "stars": 5046,
+          "url": "https://github.com/sacridini/Awesome-Geospatial",
+          "updated": "2026-05-17",
+          "source": "GitHub"
+        },
+        {
+          "title": "torchgeo/torchgeo",
+          "snippet": "TorchGeo: datasets, samplers, transforms, and pre-trained models for geospatial data",
+          "stars": 4033,
+          "url": "https://github.com/torchgeo/torchgeo",
+          "updated": "2026-05-17",
+          "source": "GitHub"
+        }
+      ],
+      "arxiv_papers": [
+        {
+          "title": "Assessing foundational atomistic models for iron alloys under Earth's core conditions",
+          "snippet": "We assess the capability of recently developed foundational atomistic models (FAMs) to simulate iron alloys under the extreme pressures and temperatures of Earth's core. Static equations of state of hexagonal close-packed (hcp) and body-centered cubic (bcc) iron computed by 17 FAMs are benchmarked a",
+          "url": "https://arxiv.org/abs/2605.13594v1",
+          "source": "arXiv"
+        },
+        {
+          "title": "Metal Saturation and the Redistribution of Hydrogen in Earth's Mantle",
+          "snippet": "Iron disproportionation reactions in mantle silicates can produce metallic iron that drives Earth's deep mantle toward metal saturation under reduced conditions. Subducting slabs transport hydrated silicates to these depths, where interactions with metallic iron can reduce structurally bound hydroge",
+          "url": "https://arxiv.org/abs/2605.11245v1",
+          "source": "arXiv"
+        }
+      ],
+      "podcast": "[The wildlife sanctuary you can visit from anywhere | Maya Higa] Creator Maya Higa is on a mission to use the internet to build the next generation of conservationists. Her virtual education center, Alveus Sanctuary, is one of the most-watched sanctuaries on Earth, with dozens of rescued animals and cameras livestreaming to a community of millions inspired to help protect the wildlife. Visit with Bean the Hawk, Winnie the Moo and more — and see what the future ",
+      "wiki": null,
+      "youtube_items": [
+        {
+          "title": "[YT] FILE 007: Climate Engineering — Hubris or Necessity?",
+          "summary": "File number 0007. Topic: Climate engineering. Hubris or necessity. Parties. The engineer versus the ecologist. The planet [music] is warming. 1.5° C above pre-industrial levels. Glacias melting. Coral reefs bleaching. [music] Extreme weather intensifying. We set targets. We missed them. We made promises. We broke them. Carbon reduction isn't happening fast enough. The math is brutal. We're out of time. So, some scientists propose a different solution. If we can't stop warming the planet, [music] what if we call it manually? Climate engineering, geoengineering, planetary scale intervention. We could inject sulfur dioxide into the stratosphere, dimming the sun. We could brighten &gt;&gt; planet cooling, temperature stabilizing, glaciers recovering, harvest succeeding, &gt;&gt; to absorb carb",
+          "link": "https://www.youtube.com/watch?v=SAqQG39RyuY",
+          "source_type": "youtube",
+          "channel": "Spectrum Archivist",
+          "video_id": "SAqQG39RyuY",
+          "transcript_method": "yt_dlp",
+          "transcript_chars": 3000,
+          "has_full_transcript": true
+        },
+        {
+          "title": "[YT] A Climate Scientist Reviews: Project Hail Mary",
+          "summary": "[music] By releasing a lot of methane into the atmosphere,&nbsp;&nbsp; it would be highly risky as you can&nbsp; see from our climate simulations. I'm Levke Caesar. I'm a climate physicist&nbsp; and I'm also [music] a science fiction lover.&nbsp;&nbsp; And this book, Project Hail Mary by Andy Weir,&nbsp; you might have heard about it because it just came&nbsp;&nbsp; out as a movie with Ryan Gosling, [music] really&nbsp; made me wonder, does the climate physics check out&nbsp;&nbsp; what would happen if this scenario were to happen&nbsp; in real life? Now, to just basically for those&nbsp;&nbsp; of you who haven't watched the movie yet or read&nbsp; the book, to get you into the story. What happens&nbsp;&nbsp; is the sun is dying and Earth basically sends out&nbsp; an astronaut to find a cu",
+          "link": "https://www.youtube.com/watch?v=GJsouT2HV9g",
+          "source_type": "youtube",
+          "channel": "Planetary Boundaries Science",
+          "video_id": "GJsouT2HV9g",
+          "transcript_method": "yt_dlp",
+          "transcript_chars": 3000,
+          "has_full_transcript": true
+        },
+        {
+          "title": "[YT] Does cleaner air make the planet hotter?",
+          "summary": "[music] This is Climate Watch. [music] I'm Jaoyang. Welcome to the show. [music] China has seen a massive rapid cleanup of its skies over the past decade. By slashing coal use and upgrading power plants, the country has cleared the smog that once defined many of its cities, significantly improving public health. But lately, a startling counternarrative has emerged in the headlines. An article in The Economist argued that China's air quality improvements have hastened global warming. Meanwhile, research cited by Australia's ABC News suggests the cleanup may even be driving hotter and drier conditions in Australia. But how could cleaning up pollution possibly make the planet warmer? Well, this has everything to do with aerosols, the tiny particles in the atmosphere that play a complex role i",
+          "link": "https://www.youtube.com/watch?v=1FYxkX2egLY",
+          "source_type": "youtube",
+          "channel": "CGTN Podcasts",
+          "video_id": "1FYxkX2egLY",
+          "transcript_method": "yt_dlp",
+          "transcript_chars": 3000,
+          "has_full_transcript": true
+        }
+      ],
+      "summary": "Планетарният потенциал показва развитие в областта на устойчивостта и технологични иновации, но съществува рисик от човешко вмешателство в екосистемите.",
+      "urgency": "MEDIUM",
+      "sentiment": "NEUTRAL",
+      "key_developments": [
+        "جامعة أسيوط участва в Световния ден на Земята за подкрепа на екологичната устойчивост",
+        "Bumi Resources представя нов логотип, обявявайки нова ера на трансформацията на компанията"
+      ],
+      "open_source_momentum": "satellite-image-deep-learning/techniques, sacridini/Awesome-Geospatial, torchgeo/torchgeo",
+      "scientific_frontier": "Assessing foundational atomistic models for iron alloys under Earth's core conditions, Metal Saturation and the Redistribution of Hydrogen in Earth's Mantle",
+      "relevance_to_goal": "ПОЗИТИВЕН"
+    }
+  }
+}

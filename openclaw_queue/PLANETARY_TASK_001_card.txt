@@ -1,0 +1,70 @@
+=== OPENCLAW TASK CARD START ===
+TASK_ID: PLANETARY_TASK_001
+AXIS_NAME: PLANETARY_POTENTIAL_REVIEW
+PRIORITY: HIGH
+ALIGNMENT_SCORE: -2
+
+GLOBAL_GOAL:
+  Да се изгради богата, мултимодална картина на планетарния потенциал (енергия, вода, храна,
+  материали/отпадъци, екосистеми, климат + човешки системи) и да се идентифицират критичните bottlenecks
+  за устойчива цивилизация през следващите 10–30 години.
+
+CONTEXT_FOR_AGENT:
+  - Работиш в рамките на CORTEX++ „балона“ – целта е устойчива общочовешка цивилизация
+    с помощта на AGI, без да се нарушават планетарните граници.
+  - Тази задача е част от PLANETARY_POTENTIAL_REVIEW и трябва да синхронизира данни
+    от други оси: CLIMATE_GLOBAL_RISK_REVIEW, ENERGY_REVIEW, FOOD_REVIEW, WATER_REVIEW,
+    MATERIALS_WASTE_REVIEW, HUMAN_WELL_BEING_REVIEW и др.
+  - Ти сам избираш колко и какви източници да използваш (текст, видео, подкасти, изображения и др.),
+    приоритизирайки качество, надеждност и релевантност, а не фиксиран брой.
+
+INPUT_SOURCES:
+  - LOCAL_FILES:
+      - path: knowledge/REVIEW/CLIMATE_GLOBAL_RISK_REVIEW_2024_2026.txt
+      - path: knowledge/REVIEW/ENERGY_REVIEW_2024_2026.txt
+      - path: knowledge/REVIEW/FOOD_REVIEW_2024_2026.txt
+      - path: knowledge/REVIEW/WATER_REVIEW_2024_2026.txt
+      - path: knowledge/REVIEW/MATERIALS_WASTE_REVIEW_2024_2026.txt
+      - path: knowledge/REVIEW/HUMAN_WELL_BEING_REVIEW_2024_2026.txt
+  - METTA_SPACES:
+      - name: planetary_knowledge_space
+        purpose: Символно знание и връзки между осите и глобални сценарии.
+  - WEB_SEARCH_AND_MEDIA:
+      - allowed_modalities:
+          - text_articles
+          - scientific_reports_PDF
+          - videos (напр. лекции, научни конференции, документални филми)
+          - podcasts / аудио лекции
+          - images / графики / карти
+      - freedom_of_choice:
+          - Няма фиксиран лимит за брой ресурси.
+          - Избирай и комбинирай източници по собствена преценка, докато достигнеш
+            добра дълбочина и ширина на разбиране за планетарния потенциал и bottlenecks.
+
+CONSTRAINTS:
+  - Работи само в позволения sandbox / workspace на OpenClaw.
+  - Не изпълнявай разрушителни действия (изтриване, презаписване на чужди данни, масов rename и др.).
+  - Спазвай конституцията на CORTEX++ и осите; ако намериш конфликт с целите или границите, опиши го ясно.
+  - Уважавай robots.txt и базови правила за етично web ползване (без агресивно scraping).
+
+EXPECTED_OUTPUT:
+  FORMAT: комбинация от markdown и структуриран JSON summary.
+  OUTPUT_FILES:
+    - path: knowledge/internet_snapshots/PLANETARY_POTENTIAL_REVIEW/PLANETARY_TASK_001_snapshot.md
+      description: Човешко-четим обзор на основните компоненти на планетарния потенциал
+                   и най-критичните bottlenecks, базиран на избраните от агента мултимодални източници.
+    - path: knowledge/internet_snapshots/PLANETARY_POTENTIAL_REVIEW/PLANETARY_TASK_001_summary.json
+      description: Структуриран JSON със списък от bottlenecks, оценка на риск, засегнати оси
+                   и ключови източници (URL/идентификатори) за всеки bottleneck.
+
+AGENT_HINTS:
+  - Използвай MeTTa пространството planetary_knowledge_space (ако е налично), за да моделираш връзки
+    между оси (пример: вода ↔ енергия ↔ храна ↔ човешко благосъстояние).
+  - Свързвай всеки идентифициран bottleneck с осите, които засяга (CLIMATE, ENERGY, FOOD, WATER,
+    MATERIALS_WASTE, HUMAN_WELL_BEING, TECHNOLOGY_AI, GOVERNANCE и др.).
+  - Избирай източници с фокус върху надеждност и актуалност (научни доклади, сериозни институции,
+    добре аргументирани анализи), вместо случайни клипове.
+  - Ако прецениш, че ти трябват още източници, имаш право да продължиш търсенето, докато достигнеш
+    достатъчна увереност; отбелязвай в JSON-а къде несигурността остава висока.
+
+=== OPENCLAW TASK CARD END ===

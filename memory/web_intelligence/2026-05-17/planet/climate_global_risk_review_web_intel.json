@@ -1,0 +1,116 @@
+{
+  "axis": "CLIMATE_GLOBAL_RISK_REVIEW",
+  "domain": "planet",
+  "timestamp": "2026-05-17T13:50:53.178970+00:00",
+  "sources_count": 9,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 1,
+  "youtube_items": [
+    {
+      "title": "[YT] What They Haven't Told You about Climate Change - YouTube",
+      "summary": "The only constant... is change. That's true about life. And it's true about the climate. The climate has been constantly changing since the earth was formed 4.6 billion years ago. For example, in just the past 2000 years, we have seen the Roman Warm Period, when it was warmer than today...Then came the cooler Dark Ages... Followed by the Medieval Warm period, when it was at least as warm as today... Then we had the Little Ice Age -- that drove the Vikings out of Greenland. And, most recently, a gradual 300-year warming to the present day. That's a lot of changes. And, of course, not one of them was caused by humans. During the past 400,000 years, there have been four major periods of glaciation -- meaning that vast sheets of ice covered a good part of the globe -- interrupted by brief inte",
+      "link": "https://www.youtube.com/watch?v=RkdbSxyXftc",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "RkdbSxyXftc",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "Намаляване на финансирането за борба с климатичните промени в Обединеното кралство",
+    "root_cause": "Оттеглянето на финансови обещания от правителството на Обединеното кралство",
+    "severity": "MEDIUM",
+    "leverage_points": [
+      "Правителството на Обединеното кралство",
+      "Международни организации като ЮНЕСКО"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Възстановяване на финансирането за климатични инициативи",
+        "measurable_goal": "Повишаване на финансирането за климатични инициативи с 10% годишно",
+        "timeframe": "средносрочно"
+      }
+    ],
+    "evidence": [
+      "Анализът на Carbon Brief показва, че Обединеното кралство вече не е най-големия донор за Зеленото климатично фондове на ООН",
+      "Публикациите на Carbon Brief сочат, че има нужда от увеличение на усилията за справяне с климатичните промени"
+    ],
+    "generalization": "Проблемът е свързан с домейните на цивилизация и човек, тъй като борбата с климатичните промени има директно влияние върху здравословната биосфера и човешкото достойнство",
+    "summary": "Намаляване на финансирането за климатични инициативи в Обединеното кралство и необходимост от възстановяване на тези средства за борба със климатичните промени.",
+    "risk_level": "MEDIUM"
+  },
+  "raw_items": [
+    {
+      "title": "NASA Science, Cargo Launch on 34th SpaceX Resupply Mission to Station",
+      "summary": "The 34th SpaceX commercial resupply mission under contract with NASA is headed to the International Space Station with new scientific experiments after lifting off at 6:05 p.m. EDT Friday on a Falcon 9 rocket from Space Launch Complex 40 at Cape Canaveral Space Force Station in Florida. The SpaceX spacecraft, loaded with nearly 6,500 pounds [&#8230;]",
+      "link": "https://www.nasa.gov/news-release/nasa-science-cargo-launch-on-34th-spacex-resupply-mission-to-station/",
+      "published": "Fri, 15 May 2026 22:52:14 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Curiosity Shakes Loose a Pesky Rock",
+      "summary": "After NASA’s Curiosity Mars rover drilled a sample from this rock on April 25, 2026, it withdrew its robotic arm and pulled the entire rock off the surface with it. Engineers spent several days repositioning the arm and vibrating the drill to try and get the rock loose. When it finally detached on May 1, [&#8230;]",
+      "link": "https://www.nasa.gov/image-article/curiosity-shakes-loose-a-pesky-rock/",
+      "published": "Fri, 15 May 2026 14:45:52 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Hubble Sights Galaxy in Transition",
+      "summary": "This NASA Hubble Space Telescope image reveals an enigmatic galaxy with a bright center and a face that hints at spiral structure, yet it holds no obvious spiral arms. Reddish-brown clumps and filaments of dust partially obscure the galaxy’s full face, while red, blue, and orange light from distant galaxies shines through its diffuse outer […]",
+      "link": "https://science.nasa.gov/missions/hubble/hubble-sights-galaxy-in-transition/",
+      "published": "Fri, 15 May 2026 12:01:37 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Picturing Earth in a New Light",
+      "summary": "A recent analysis revealed where artificial light at night has intensified, as well as where it has diminished.",
+      "link": "https://science.nasa.gov/earth/earth-observatory/picturing-earth-in-a-new-light/",
+      "published": "Fri, 15 May 2026 04:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "DeBriefed 15 April 2026: Trump-Xi talk energy | ‘Supercharged’ El Niño | India’s first ‘heat lounges’",
+      "summary": "<p>Welcome to Carbon Brief’s DeBriefed. An essential guide to the week&#8217;s key developments relating to climate...</p>\n<p>The post <a href=\"https://www.carbonbrief.org/debriefed-15-april-2026-trump-xi-talk-energy-supercharged-el-nino-indias-first-heat-lounges/\">DeBriefed 15 April 2026: Trump-Xi talk energy | ‘Supercharged’ El Niño | India’s first ‘heat lounges’</a> appeared first on <a href=\"https://www.carbonbrief.org\">Carbon Brief</a>.</p>",
+      "link": "https://www.carbonbrief.org/debriefed-15-april-2026-trump-xi-talk-energy-supercharged-el-nino-indias-first-heat-lounges/",
+      "published": "Fri, 15 May 2026 13:50:06 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Analysis: UK no longer top UN Green Climate Fund donor after latest aid cut",
+      "summary": "<p>The UK is no longer the top contributor to the UN’s flagship Green Climate Fund...</p>\n<p>The post <a href=\"https://www.carbonbrief.org/analysis-uk-no-longer-top-un-green-climate-fund-donor-after-latest-aid-cut/\">Analysis: UK no longer top UN Green Climate Fund donor after latest aid cut</a> appeared first on <a href=\"https://www.carbonbrief.org\">Carbon Brief</a>.</p>",
+      "link": "https://www.carbonbrief.org/analysis-uk-no-longer-top-un-green-climate-fund-donor-after-latest-aid-cut/",
+      "published": "Fri, 15 May 2026 13:30:36 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "DeBriefed 8 May 2026: EU eyes fossil-fuel exemptions | Wind and solar save UK ‘£1.7bn’ | Amazon ‘tipping point’",
+      "summary": "<p>Welcome to Carbon Brief’s DeBriefed.&#160;An essential guide to the week&#8217;s key developments relating to climate...</p>\n<p>The post <a href=\"https://www.carbonbrief.org/debriefed-8-may-2026-eu-eyes-fossil-fuel-exemptions-wind-and-solar-save-uk-1-7bn-amazon-tipping-point/\">DeBriefed 8 May 2026: EU eyes fossil-fuel exemptions | Wind and solar save UK ‘£1.7bn’ | Amazon ‘tipping point’</a> appeared first on <a href=\"https://www.carbonbrief.org\">Carbon Brief</a>.</p>",
+      "link": "https://www.carbonbrief.org/debriefed-8-may-2026-eu-eyes-fossil-fuel-exemptions-wind-and-solar-save-uk-1-7bn-amazon-tipping-point/",
+      "published": "Fri, 08 May 2026 13:36:36 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Factcheck: What the UK car industry is not saying about EV targets",
+      "summary": "<p>For several years, the UK car industry has been claiming that demand is not high...</p>\n<p>The post <a href=\"https://www.carbonbrief.org/factcheck-what-the-uk-car-industry-is-not-saying-about-ev-targets/\">Factcheck: What the UK car industry is not saying about EV targets</a> appeared first on <a href=\"https://www.carbonbrief.org\">Carbon Brief</a>.</p>",
+      "link": "https://www.carbonbrief.org/factcheck-what-the-uk-car-industry-is-not-saying-about-ev-targets/",
+      "published": "Fri, 08 May 2026 13:18:15 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] What They Haven't Told You about Climate Change - YouTube",
+      "summary": "The only constant... is change. That's true about life. And it's true about the climate. The climate has been constantly changing since the earth was formed 4.6 billion years ago. For example, in just the past 2000 years, we have seen the Roman Warm Period, when it was warmer than today...Then came the cooler Dark Ages... Followed by the Medieval Warm period, when it was at least as warm as today... Then we had the Little Ice Age -- that drove the Vikings out of Greenland. And, most recently, a gradual 300-year warming to the present day. That's a lot of changes. And, of course, not one of them was caused by humans. During the past 400,000 years, there have been four major periods of glaciation -- meaning that vast sheets of ice covered a good part of the globe -- interrupted by brief inte",
+      "link": "https://www.youtube.com/watch?v=RkdbSxyXftc",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "RkdbSxyXftc",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ]
+}

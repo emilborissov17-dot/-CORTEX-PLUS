@@ -1,0 +1,157 @@
+{
+  "axis": "HUMAN_WELL_BEING_REVIEW",
+  "domain": "human",
+  "timestamp": "2026-05-18T08:23:35.365004+00:00",
+  "sources_count": 11,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] The Most Incredible Transformation I’ve Ever Seen — Jerzy Gregorek on Cerebral Palsy and Coaching",
+      "summary": "[DESCRIPTION FALLBACK] Jerzy Gregorek is a 4x World Weightlifting Champion, co-founder of UCLA’s weightlifting team, and co-creator, with his wife Aniela, of the Happy Body program. You can watch Prisoner No More for free here: https://tim.blog/hardchoices. To fill out the form on Cerebral Palsy Research Project, visit https://tim.blog/cp.\n\nThis episode is brought to you by:\nMatic the intelligent robot vacuum and mop that navigates obstacles and needs no babysitting: https://MaticRobots.com/Tim\nOur Place’s Titanium Al",
+      "link": "https://www.youtube.com/watch?v=fBujS3ACNQY",
+      "published": "2026-05-14T13:43:28+00:00",
+      "source_type": "youtube",
+      "channel": "Tim Ferriss",
+      "video_id": "fBujS3ACNQY",
+      "transcript_method": "description",
+      "transcript_chars": 523,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] PRISONER NO MORE: The True Story of Tae Jin Park",
+      "summary": "[DESCRIPTION FALLBACK] Prisoner No More follows Tae Jin Park, a young man diagnosed with cerebral palsy, who dismantled every physical limitation medical science predicted for him. Through athletic training under Olympian strength coach Jerzy Gregorek—and an uncompromising commitment to identity transformation—Tae Jin's story redefines what the human body and mind are capable of.\n\nLearn more: https://wolfeprideproductions.com/\n\nDirected By Jeff Wolfe\nStarring Jerzy Gregorek & Tae Jin Park\nProduced By Carole Middleton ",
+      "link": "https://www.youtube.com/watch?v=FcQ3ELLLgqc",
+      "published": "2026-05-14T13:40:09+00:00",
+      "source_type": "youtube",
+      "channel": "Tim Ferriss",
+      "video_id": "FcQ3ELLLgqc",
+      "transcript_method": "description",
+      "transcript_chars": 523,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] My Current Longevity Stack",
+      "summary": "[DESCRIPTION FALLBACK] Elad Gil is CEO of Gil & Co, a multi-stage investment firm, holding company, and operating company working on the world’s most advanced technologies. Elad is a serial entrepreneur, operating executive, and investor or advisor to private companies, including AirBnB, Anduril, Coinbase, Figma, Instacart, OpenAI, SpaceX, and Stripe. He was previously VP of Corporate Strategy at Twitter and started mobile at Google. He was the founder and CEO of Mixerlabs and Color. Elad is the author of the bestsell",
+      "link": "https://www.youtube.com/watch?v=TmgG7WC-U4A",
+      "published": "2026-05-11T14:00:49+00:00",
+      "source_type": "youtube",
+      "channel": "Tim Ferriss",
+      "video_id": "TmgG7WC-U4A",
+      "transcript_method": "description",
+      "transcript_chars": 523,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "problem": "A public health crisis involving the spread of infectious diseases such as Ebola, hantavirus, and nicotine-related health risks is affecting vulnerable populations globally.",
+    "root_cause": "Lack of global health equity, limited regulatory oversight, and insufficient public health infrastructure in low-resource regions are enabling the spread of infectious diseases and the proliferation of harmful products like nicotine pouches.",
+    "severity": "CRITICAL",
+    "leverage_points": [
+      "Global health organizations like the WHO and national governments must strengthen regulatory frameworks and public health infrastructure.",
+      "Community-based health education and early intervention programs are critical to addressing preventable diseases and health risks."
+    ],
+    "proposed_actions": [
+      {
+        "action": "Expand WHO-led initiatives to improve disease surveillance and response in low-resource countries, with a focus on Ebola and hantavirus outbreaks.",
+        "measurable_goal": "Reduce the number of new cases in affected regions by 30% within 12 months.",
+        "timeframe": "short-term"
+      },
+      {
+        "action": "Implement stricter regulations on nicotine product marketing, particularly targeting youth, with global coordination.",
+        "measurable_goal": "Decrease youth nicotine pouch sales by 20% within 18 months.",
+        "time,frame": "medium-term"
+      }
+    ],
+    "evidence": [
+      "Epidemic of Ebola Disease caused by Bundibugyo virus in the Democratic Republic of the Congo and Uganda determined a public health emergency of international concern.",
+      "WHO warns nicotine pouch brands targeting youth as sales surge."
+    ],
+    "generalization": "This problem reflects broader systemic failures in global health governance, public health equity, and the regulation of health-related products, which impact both human well-being and the long-term sustainability of intelligent life on Earth.",
+    "summary": "A critical public health crisis is emerging due to infectious disease outbreaks and harmful product proliferation, requiring urgent global action and regulatory reform.",
+    "risk_level": "CRITICAL"
+  },
+  "raw_items": [
+    {
+      "title": "Epidemic of Ebola Disease caused by Bundibugyo virus in the Democratic Republic of the Congo and Uganda determined a public health emergency of international concern",
+      "summary": "Epidemic of Ebola Disease caused by Bundibugyo virus in the Democratic Republic of the Congo and Uganda determined a public health emergency of international concern",
+      "link": "https://www.who.int/news/item/17-05-2026-epidemic-of-ebola-disease-in-the-democratic-republic-of-the-congo-and-uganda-determined-a-public-health-emergency-of-international-concern",
+      "published": "Sat, 16 May 2026 23:21:17 Z",
+      "source_type": "rss"
+    },
+    {
+      "title": "WHO warns nicotine pouch brands targeting youth as sales surge",
+      "summary": "The World Health Organization (WHO) warns about the rapid growth and aggressive marketing of nicotine pouches, especially targeting youth, amid limited regulation worldwide. Nicotine pouches pose significant health risks and governments are urged to implement strong regulatory measures to prevent addiction and protect young people.",
+      "link": "https://www.who.int/news/item/15-05-2026-who-warns-nicotine-pouch-brands-targeting-youth-as-sales-surge",
+      "published": "Thu, 14 May 2026 17:26:02 Z",
+      "source_type": "rss"
+    },
+    {
+      "title": "Follow-up message by the WHO Director-General to the people of Tenerife regarding the hantavirus response",
+      "summary": "A message from the Director-General of the World Health Organization expressing gratitude to the people of Tenerife for their solidarity and successful cooperation during the operation to safely disembark and care for over 120 passengers from 23 countries amid an outbreak of hantavirus.",
+      "link": "https://www.who.int/news/item/14-05-2026-follow-up-message-by-the-who-director-general-to-the-people-of-tenerife-regarding-the-hantavirus-response",
+      "published": "Thu, 14 May 2026 13:27:15 Z",
+      "source_type": "rss"
+    },
+    {
+      "title": "Tunisia validated by WHO as having eliminated trachoma as a public health problem",
+      "summary": "Tunisia has been officially validated by the World Health Organization (WHO) as having eliminated trachoma as a public health problem, marking a significant achievement after decades of sustained effort.",
+      "link": "https://www.who.int/news/item/14-05-2026-tunisia-validated-by-who-as-having-eliminated-trachoma-as-a-public-health-problem",
+      "published": "Thu, 14 May 2026 09:23:04 Z",
+      "source_type": "rss"
+    },
+    {
+      "title": "Canadian from hantavirus-hit cruise ship tests positive",
+      "summary": "The individual is one of four former passengers on the MV Hondius isolating on Vancouver Island, British Columbia.",
+      "link": "https://www.bbc.com/news/articles/c2k2p057ezno?at_medium=RSS&at_campaign=rss",
+      "published": "Sun, 17 May 2026 12:07:54 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "'We're right on track,' says Streeting as key target for hospital waiting times hit",
+      "summary": "Government his its interim target of 65% of patients in England being treated within 18 weeks.",
+      "link": "https://www.bbc.com/news/articles/cvgzv0j19vvo?at_medium=RSS&at_campaign=rss",
+      "published": "Thu, 14 May 2026 14:26:20 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Posh sandwich has more salt than nearly five cheeseburgers",
+      "summary": "Action on Salt & Sugar said people should not be exposed to a \"hidden health risk every time they buy lunch\".",
+      "link": "https://www.bbc.com/news/articles/c4g4l54g2ppo?at_medium=RSS&at_campaign=rss",
+      "published": "Wed, 13 May 2026 10:57:35 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "MPs call for sunbed advertising ban to help prevent skin cancer",
+      "summary": "A report by a cross-party group of MPs has found the majority of skin cancer cases are preventable.",
+      "link": "https://www.bbc.com/news/articles/c142g8567xko?at_medium=RSS&at_campaign=rss",
+      "published": "Wed, 13 May 2026 10:37:30 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] The Most Incredible Transformation I’ve Ever Seen — Jerzy Gregorek on Cerebral Palsy and Coaching",
+      "summary": "[DESCRIPTION FALLBACK] Jerzy Gregorek is a 4x World Weightlifting Champion, co-founder of UCLA’s weightlifting team, and co-creator, with his wife Aniela, of the Happy Body program. You can watch Prisoner No More for free here: https://tim.blog/hardchoices. To fill out the form on Cerebral Palsy Research Project, visit https://tim.blog/cp.\n\nThis episode is brought to you by:\nMatic the intelligent robot vacuum and mop that navigates obstacles and needs no babysitting: https://MaticRobots.com/Tim\nOur Place’s Titanium Al",
+      "link": "https://www.youtube.com/watch?v=fBujS3ACNQY",
+      "published": "2026-05-14T13:43:28+00:00",
+      "source_type": "youtube",
+      "channel": "Tim Ferriss",
+      "video_id": "fBujS3ACNQY",
+      "transcript_method": "description",
+      "transcript_chars": 523,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] PRISONER NO MORE: The True Story of Tae Jin Park",
+      "summary": "[DESCRIPTION FALLBACK] Prisoner No More follows Tae Jin Park, a young man diagnosed with cerebral palsy, who dismantled every physical limitation medical science predicted for him. Through athletic training under Olympian strength coach Jerzy Gregorek—and an uncompromising commitment to identity transformation—Tae Jin's story redefines what the human body and mind are capable of.\n\nLearn more: https://wolfeprideproductions.com/\n\nDirected By Jeff Wolfe\nStarring Jerzy Gregorek & Tae Jin Park\nProduced By Carole Middleton ",
+      "link": "https://www.youtube.com/watch?v=FcQ3ELLLgqc",
+      "published": "2026-05-14T13:40:09+00:00",
+      "source_type": "youtube",
+      "channel": "Tim Ferriss",
+      "video_id": "FcQ3ELLLgqc",
+      "transcript_method": "description",
+      "transcript_chars": 523,
+      "has_full_transcript": false
+    }
+  ]
+}

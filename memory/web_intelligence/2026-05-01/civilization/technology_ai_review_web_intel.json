@@ -1,0 +1,175 @@
+{
+  "axis": "TECHNOLOGY_AI_REVIEW",
+  "domain": "civilization",
+  "timestamp": "2026-05-01T12:05:05.566237+00:00",
+  "sources_count": 22,
+  "rss_count": 16,
+  "ddg_count": 0,
+  "youtube_count": 6,
+  "youtube_items": [
+    {
+      "title": "[YT] Nelson Dellis | Everyday Genius: Hacks to Boost Your Memory, Focus... | Talks at Google",
+      "summary": "[DESCRIPTION FALLBACK] Six-time USA Memory Champion, two-time Guinness World Record holder, Grandmaster of Memory, keynote speaker, and world-renowned memory coach, Nelson Dellis, discusses his book \"Everyday Genius: Hacks to Boost Your Memory, Focus, Problem-Solving, and Much More,\" where he shows you how to reclaim and strengthen your most valuable asset: your brain.\n\nEveryday Genius teaches you to memorize names and faces instantly, speed-read with deep comprehension, calculate mentally with surprising accuracy, an",
+      "link": "https://www.youtube.com/watch?v=MGY_OM8u42A",
+      "published": "2026-04-29T16:00:40+00:00",
+      "source_type": "youtube",
+      "channel": "Talks at Google",
+      "video_id": "MGY_OM8u42A",
+      "transcript_method": "description",
+      "transcript_chars": 523,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Nir Eyal | Beyond Belief | Talks at Google",
+      "summary": "[DESCRIPTION FALLBACK] Bestselling author and leading thinker on the psychology of behavior change and human potential, Nir Eyal, discusses his New York Times bestselling book Beyond Belief: The Science-Backed Way to Stop Limiting Yourself and Achieve Breakthrough Results, which reveals how the hidden assumptions you carry shape what you see, how you feel, and what you do—and how to replace them with beliefs that unlock your true potential.\n\nUnlike the vague ‘just believe’ mantras, Nir offers a pragmatic, research-dri",
+      "link": "https://www.youtube.com/watch?v=057mnWzLBcA",
+      "published": "2026-04-03T16:00:01+00:00",
+      "source_type": "youtube",
+      "channel": "Talks at Google",
+      "video_id": "057mnWzLBcA",
+      "transcript_method": "description",
+      "transcript_chars": 523,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Julia Minson | How to Disagree Better  | Talks at Google",
+      "summary": "[DESCRIPTION FALLBACK] Professor and behavioral scientist, Julia Minson, discusses her book How to Disagree Better, which reveals the counterintuitive secret to a life of less drama and more impact.\n\nJulia brings to bear her decades of research into understanding the psychology of disagreement and its relevance to negotiations, conflict resolution, and decision-making, revealing the hidden skill that all the best mediators and negotiators share: displaying receptiveness to opposing views.\n\nGet the book here: https://g",
+      "link": "https://www.youtube.com/watch?v=GigRB6bZ0MI",
+      "published": "2026-03-31T16:00:27+00:00",
+      "source_type": "youtube",
+      "channel": "Talks at Google",
+      "video_id": "GigRB6bZ0MI",
+      "transcript_method": "description",
+      "transcript_chars": 523,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Apply for the Affine Superintelligence Alignment Seminar #shorts",
+      "summary": "[DESCRIPTION FALLBACK] http://minily.org/affine",
+      "link": "https://www.youtube.com/watch?v=74dLBpQuhJM",
+      "published": "2026-03-14T21:06:15+00:00",
+      "source_type": "youtube",
+      "channel": "Robert Miles AI Safety",
+      "video_id": "74dLBpQuhJM",
+      "transcript_method": "description",
+      "transcript_chars": 47,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Tech is Good, AI Will Be Different",
+      "summary": "[DESCRIPTION FALLBACK] Why is technology good? Are there any exceptions to the rule?\n\nCheck out AISafety.info!\nhttp://aisafety.info\n\nSources:\nLarge Language Models can Strategically Deceive their Users when Put Under Pressure: https://arxiv.org/abs/2311.07590\nhttps://www.apolloresearch.ai/research/our-research-on-strategic-deception-presented-at-the-uks-ai-safety-summit\nLarge Language Models Often Know When They Are Being Evaluated: https://arxiv.org/abs/2505.23836\nFrontier Models are Capable of In-context Scheming: h",
+      "link": "https://www.youtube.com/watch?v=zATXsGm_xJo",
+      "published": "2025-08-22T02:28:42+00:00",
+      "source_type": "youtube",
+      "channel": "Robert Miles AI Safety",
+      "video_id": "zATXsGm_xJo",
+      "transcript_method": "description",
+      "transcript_chars": 523,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Robot Dog! Unitree Go2 review #shorts #robot #dog",
+      "summary": "[DESCRIPTION FALLBACK] I'm joking of course. If you're physically fighting robots you've already lost.",
+      "link": "https://www.youtube.com/watch?v=nivfBcUPZ4E",
+      "published": "2025-07-23T00:28:20+00:00",
+      "source_type": "youtube",
+      "channel": "Robert Miles AI Safety",
+      "video_id": "nivfBcUPZ4E",
+      "transcript_method": "description",
+      "transcript_chars": 102,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "summary": "The content highlights emerging trends in AI technology, scientific exploration, and cognitive enhancement, with a focus on memory improvement, behavioral psychology, and ethical AI startups.",
+    "risk_level": "MEDIUM",
+    "trend": "IMPROVING",
+    "key_events": [
+      "Nelson Dellis discusses memory enhancement techniques in his book 'Everyday Genius'.",
+      "Nir Eyal explores the psychology of behavior change in 'Beyond Belief'.",
+      "Julia Minson presents insights on effective disagreement in 'How to Disagree Better'."
+    ],
+    "insights": [
+      "The intersection of AI and cognitive science is growing, with applications in memory training and behavioral psychology.",
+      "Ethical AI and human enhancement are becoming increasingly relevant, especially in fields like neuroscience and technology."
+    ],
+    "youtube_insights": [
+      "YouTube content on memory and cognitive enhancement is gaining traction.",
+      "RSS feeds on AI and scientific research are being accessed by a growing audience."
+    ],
+    "relevance_to_goal": "The content is relevant to the goal of exploring cognitive enhancement, AI ethics, and scientific research, particularly in the areas of memory and behavioral psychology.",
+    "generalization": "The insights from these resources suggest a trend toward integrating AI and cognitive science for personal development and ethical innovation."
+  },
+  "raw_items": [
+    {
+      "title": "How I Get Free Traffic from ChatGPT in 2025 (AIO vs SEO)",
+      "summary": "<p style=\"text-align: left;\">Three weeks ago, I tested something that completely changed how I think about organic traffic. I opened ChatGPT and asked a simple question: \"What's the best course on building SaaS with WordPress?\" The answer that appeared stopped me cold. My course showed up as the first result, recommended directly by the AI with specific reasons why it was valuable.</p><p style=\"text-align: left;\">I hadn't paid for advertising. I hadn't done any special promotion. The AI simply d",
+      "link": "https://techncruncher.blogspot.com/2025/12/how-i-get-free-traffic-from-chatgpt-in.html",
+      "published": "Thu, 04 Dec 2025 05:37:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Top 10 AI Tools That Will Transform Your Content Creation in 2025",
+      "summary": "<div style=\"text-align: left;\"><a href=\"https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEge5QgwLKWbavTUhIedQLI79z5BGD4h0ZoH4YMK6bGBL6fY4Je8R3GZurMZaJmtYirFS6pS-GgZD3xFAqfln8w8faEY2iDehndQNeez57DoiDsgYFJrIwMOLBjzcZiOJrqYDktm6pmRkwtprJChag0yQoeEZx1Pa_eKnt3kKzz69f-FSPWu_JXQxFq5Z8WZ/s1920/Blue%20Purple%20Futuristic%20Modern%203D%20Tech%20Company%20Business%20Presentation.jpg\" style=\"clear: left; margin-bottom: 1em;\"><span style=\"font-family: Coda;\"><img alt=\"Top 10 AI Tools That Will Trans",
+      "link": "https://techncruncher.blogspot.com/2025/01/top-10-ai-tools-that-will-transform.html",
+      "published": "Thu, 02 Jan 2025 09:26:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "LimeWire AI Studio Review 2023: Details, Pricing & Features",
+      "summary": "<p style=\"text-align: left;\"><span style=\"font-family: Oxygen;\">&nbsp;</span></p><p style=\"text-align: left;\"><span style=\"font-family: Oxygen;\">In the rapidly advancing landscape of AI technology and innovation, LimeWire emerges as a unique platform in the realm of generative AI tools. This platform not only stands out from the multitude of existing AI tools but also brings a fresh approach to content generation. LimeWire not only empowers users to create AI content but also provides creators w",
+      "link": "https://techncruncher.blogspot.com/2023/12/limewire-ai-studio-review-2023-details.html",
+      "published": "Tue, 12 Dec 2023 16:10:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Top 10 AI Tools in 2023 That Will Make Your Life Easier",
+      "summary": "<p><span style=\"font-family: Montserrat;\"><br /></span></p><div class=\"separator\" style=\"clear: both; text-align: center;\"><a href=\"https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiu91xnR3LQV62WoiA0scuFOTa-Xx9vIwouaceeyosFtZrJB0UivYIWtbcF3TCWEjKhRQVBiSeB00RQI0-cO_eBG6d05_6UV7zYw9qzyHMJ6u2m9_itNW2mFAS8LChEhhJQ14aJbI3GrkEsY9xCTExAT-qxUSh5asVFMAmX-ceWufpgV_DrG9tk3Y4umw/s1920/Blue%20Purple%20Futuristic%20Modern%203D%20Tech%20Company%20Business%20Presentation-min.jpg\" style=\"margin-left: 1",
+      "link": "https://techncruncher.blogspot.com/2023/01/top-10-ai-tools-in-2023-that-will-make.html",
+      "published": "Wed, 25 Jan 2023 19:52:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Inexpensive seafloor-hopping submersibles could stoke deep-sea science—and mining",
+      "summary": "Smack dab between Australia and South America, the US National Oceanic and Atmospheric Administration (NOAA) research vessel Rainier is currently on a mission to map more than 8,000 square nautical miles of the Pacific seafloor in search of critical mineral deposits. But it isn’t doing it alone; for a month starting this week, it will&#8230;",
+      "link": "https://www.technologyreview.com/2026/05/01/1136734/inexpensive-seafloor-hopping-submersibles-could-stoke-deep-sea-science-and-mining/",
+      "published": "Fri, 01 May 2026 10:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Trump’s mass firing just dealt another blow to American science",
+      "summary": "This past week delivered another gut punch for science in the US. This time, the target was the National Science Foundation—a federal agency that funds major research projects to the tune of around $9 billion. The foundation’s efforts were overseen by a board of 22 prominent scientists. On Friday last week, they were all fired.&#8230;",
+      "link": "https://www.technologyreview.com/2026/05/01/1136722/mass-firing-trump-fresh-blow-american-science-nsf-nsb/",
+      "published": "Fri, 01 May 2026 09:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "A new US phone network for Christians aims to block porn and gender-related content",
+      "summary": "A new US-wide cell phone network marketed to Christians is set to launch next week. It blocks porn, which experts in network security say marks the first time a US cell plan has used network-level blocking for such content that can’t be turned off even by adult account owners. It’s also rolling out a filter&#8230;",
+      "link": "https://www.technologyreview.com/2026/05/01/1136739/a-new-t-mobile-network-for-christians-aims-to-block-porn-and-gender-related-content/",
+      "published": "Fri, 01 May 2026 09:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Exclusive eBook: Inside the stealthy startup that pitched brainless human clones",
+      "summary": "The ultimate plan to live forever is a brand new body. This subscriber-only eBook explores R3 Bio, a small startup that has pitched a startling and ethically charged vision for &#8220;brainless clones&#8221; to serve the role of backup human bodies. by Antonio Regalado March 20, 2026 Related Stories: Access all subscriber-only eBooks:",
+      "link": "https://www.technologyreview.com/2026/04/30/1136684/exclusive-ebook-inside-the-stealthy-startup-that-pitched-brainless-human-clones/",
+      "published": "Thu, 30 Apr 2026 18:42:50 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Railway secures $100 million to challenge AWS with AI-native cloud infrastructure",
+      "summary": "<p><a href=\"https://railway.com/\">Railway</a>, a San Francisco-based cloud platform that has quietly amassed two million developers without spending a dollar on marketing, announced Thursday that it raised $100 million in a Series B funding round, as surging demand for artificial intelligence applications exposes the limitations of legacy cloud infrastructure.</p><p><a href=\"https://tq.vc/\">TQ Ventures</a> led the round, with participation from <a href=\"https://fpvventures.com/\">FPV Ventures</a>",
+      "link": "https://venturebeat.com/infrastructure/railway-secures-usd100-million-to-challenge-aws-with-ai-native-cloud",
+      "published": "Thu, 22 Jan 2026 14:00:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Claude Code costs up to $200 a month. Goose does the same thing for free.",
+      "summary": "<p>The artificial intelligence coding revolution comes with a catch: it&#x27;s expensive.</p><p><a href=\"https://claude.com/product/claude-code\">Claude Code</a>, Anthropic&#x27;s terminal-based AI agent that can write, debug, and deploy code autonomously, has captured the imagination of software developers worldwide. But its <a href=\"https://claude.com/pricing\">pricing</a> — ranging from $20 to $200 per month depending on usage — has sparked a growing rebellion among the very programmers it aims",
+      "link": "https://venturebeat.com/infrastructure/claude-code-costs-up-to-usd200-a-month-goose-does-the-same-thing-for-free",
+      "published": "Mon, 19 Jan 2026 14:00:00 GMT",
+      "source_type": "rss"
+    }
+  ]
+}

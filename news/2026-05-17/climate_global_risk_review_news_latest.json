@@ -1,0 +1,110 @@
+{
+  "axis": "CLIMATE_GLOBAL_RISK_REVIEW",
+  "fetched_at": "2026-05-17T14:58:46.194679+00:00",
+  "smart_query": "climate change CO2 emissions",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 0,
+    "github": 3,
+    "youtube_transcripts": 3,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "Is it safe to swim at England's bathing sites?",
+      "snippet": "Signs warning people not to swim are in place at almost all of England's official inland river bathing sites due to concerns the water could be unsafe",
+      "url": "https://www.bbc.com/news/videos/c0q27gn78d1o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "'Don't swim' at 12 of 14 river bathing sites, as more locations announced",
+      "snippet": "Too much bacteria linked to faeces found at almost all England's designated river bathing sites",
+      "url": "https://www.bbc.com/news/articles/cvgzvqq9345o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "White-tailed eagles to be released in Exmoor despite farmer warnings",
+      "snippet": "Some farmers fear the reintroduction of the UK's biggest bird of prey will threaten their livestock.",
+      "url": "https://www.bbc.com/news/articles/cd6p26y6d8vo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "ESCOMP/CESM",
+      "snippet": "The Community Earth System Model",
+      "stars": 460,
+      "url": "https://github.com/ESCOMP/CESM",
+      "updated": "2026-05-12",
+      "source": "GitHub"
+    },
+    {
+      "title": "xgcm/xgcm",
+      "snippet": "python package for analyzing general circulation model output data",
+      "stars": 251,
+      "url": "https://github.com/xgcm/xgcm",
+      "updated": "2026-04-24",
+      "source": "GitHub"
+    },
+    {
+      "title": "climlab/climlab",
+      "snippet": "Python package for process-oriented climate modeling",
+      "stars": 245,
+      "url": "https://github.com/climlab/climlab",
+      "updated": "2026-05-15",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [],
+  "podcast": "[Return of the Flesh-Eaters] If a species is horrible enough, do we have the right to kill it forever?\nSeventy years ago, a nightmare parasite feasted on the live flesh of warm-blooded creatures in North America: the screwworm. That is, until a young scientist named Edward F. Knipling discovered a crucial screwworm weakness and hatched a sweeping project to wipe them out. Knipling’s seemingly zany plan to spray screwworms out",
+  "wiki": null,
+  "youtube_items": [
+    {
+      "title": "[YT] Top 5 Climate Disasters of 2025 That Shook the World | Planet Pulse | N18G",
+      "summary": "2025 will be remembered as the year the climate crisis stopped knocking and kicked the door right down. Across continents, nature unleashed its fury. Record-breaking storms, catastrophic floods, raging wildfires, and deadly heat waves pushed communities to the edge. From South Asia's devastating monsoon floods that swallowed towns and displaced millions to powerful cyclones tearing through coastlines in India, Sri Lanka and the Caribbean. The human cost was staggering. Mountains collapsed under torrential rain. Forests burned through historic heat and cities struggled to cope with disasters arriving back to back. Scientists warned these were not frequents, but part of a dangerous new climate pattern driven by warming oceans, rising temperatures, and increasingly erratic weather systems. Ev",
+      "link": "https://www.youtube.com/watch?v=LX_sXGvOTg4",
+      "source_type": "youtube",
+      "channel": "Firstpost",
+      "video_id": "LX_sXGvOTg4",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Inside the planet’s most urgent climate warning | Global Warning E1 | Featured Documentary",
+      "summary": "Something momentous has happened. While we have been going about our daily lives, the world turned. Climate change is no longer a distant fear. It has now become a clear and current threat. Things that used to happen in geological time spans are now unraveling in our lifetimes. We are the pivot generation. Before us, normality, after us, potential chaos. It falls to us to apply the brakes that will prevent climate change becoming a runaway juggernaut that no one can stop. The future of human civilization will be what we make it. Global warming is a road map for what is happening to the planet and what we can do to stop it. [Music] Which of us hasn't thought at some point, what difference can I make? What difference does just one country make to a truly global problem? I've spent over 20 ye",
+      "link": "https://www.youtube.com/watch?v=F8vI5_gN90g",
+      "source_type": "youtube",
+      "channel": "Al Jazeera English",
+      "video_id": "F8vI5_gN90g",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Superstorms and Global Warming: Is Extreme Weather the New Normal? | SLICE EARTH | FULL DOCUMENTARY",
+      "summary": "[Music] hurricanes rank among the most dangerous storms on Earth they inflict losses of billions of dollars each year but hurricanes are agents of both destruction and Rejuvenation in the future they may be more powerful and cause greater change than even those of [Music] today every year the tropics stand in the path of the most powerful storms on the planet in different areas they go by different names typhoons in the Pacific Cyclones in Australia and in the Atlantic hurricanes all are names for weather systems born from almost identical circumstances all have the unique visual signature of a disc-like storm system rotating around a calm eye of extremely low atmospheric pressure with winds accelerating ever more viciously toward Wards the center all are potentially deadly these Unstoppab",
+      "link": "https://www.youtube.com/watch?v=hwiv_nMUplM",
+      "source_type": "youtube",
+      "channel": "SLICE Earth",
+      "video_id": "hwiv_nMUplM",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ],
+  "summary": "Климатът е в критично натоварено състояние, с резки увеличения на бедствията като урагани, наводнения и пожари. Студенти и научни институции работят по моделиране на климатичните промени, но реалните рискове остават високи.",
+  "urgency": "CRITICAL",
+  "sentiment": "CRITICAL",
+  "key_developments": [
+    "Великобритания предупреждава за незадължително плуване в 12 от 14 реки, поради високи нива на замърсение и нестабилност.",
+    "Виденията за 2025 г. показват резки климатични кризи с урагани, наводнения и пожари, които изправят хората на изпитание.",
+    "Проектите като ESCOMP/CESM и xgcm/xgcm са важни за анализиране на климатичните модели, но не заменят реалните действия."
+  ],
+  "open_source_momentum": "ESCOMP/CESM, xgcm/xgcm, climlab/climlab",
+  "scientific_frontier": "No data",
+  "relevance_to_goal": "Повишава риска за устойчивост на цивилизацията, което противоречи на визията за достоен живот за всички."
+}

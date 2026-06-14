@@ -1,0 +1,149 @@
+{
+  "axis": "FOOD_REVIEW",
+  "domain": "planet",
+  "timestamp": "2026-05-18T08:51:21.340986+00:00",
+  "sources_count": 9,
+  "rss_count": 0,
+  "ddg_count": 6,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] A world going hungry? How conflict and climate change disrupt global food supply | Business Beyond",
+      "summary": "[DESCRIPTION FALLBACK] The battle against hunger is quite literally, an existential one. But there was a time when winning that battle seemed within reach ...",
+      "link": "https://www.youtube.com/watch?v=5YcvKvxWaCE",
+      "published": "2022-07-05T15:15:16Z",
+      "source_type": "youtube",
+      "channel": "DW News",
+      "video_id": "5YcvKvxWaCE",
+      "transcript_method": "description",
+      "transcript_chars": 158,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Food security - A growing dilemma | DW Documentary",
+      "summary": "[DESCRIPTION FALLBACK] Many countries, particularly in the West, have long taken reliable food supplies for granted. But climate change, conflict and ...",
+      "link": "https://www.youtube.com/watch?v=wu7PjKawjwI",
+      "published": "2022-10-25T16:00:44Z",
+      "source_type": "youtube",
+      "channel": "DW Documentary",
+      "video_id": "wu7PjKawjwI",
+      "transcript_method": "description",
+      "transcript_chars": 153,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Why are so Many People going Hungry? | World Hunger | FAO Explainer | United Nations",
+      "summary": "[DESCRIPTION FALLBACK] If you're watching this, chances are that you are in the fortunate position to have access to the food you want, when you need it.",
+      "link": "https://www.youtube.com/watch?v=Ke06QUfOeTE",
+      "published": "2022-12-10T14:00:08Z",
+      "source_type": "youtube",
+      "channel": "United Nations",
+      "video_id": "Ke06QUfOeTE",
+      "transcript_method": "description",
+      "transcript_chars": 153,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "problem": "Over 85 million people in Africa are highly food insecure due to climate change, financing gaps, and post-harvest loss.",
+    "root_cause": "Climate change is disrupting agricultural productivity, while financing gaps and inefficient post-harvest systems are exacerbating food insecurity and reducing availability.",
+    "severity": "CRITICAL",
+    "leverage_points": [
+      "Global supply chain disruptions and geopolitical tensions that affect food distribution and access",
+      "Climate change and its impact on agricultural output in key food-producing regions"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Invest in climate-resilient agricultural practices and infrastructure in Africa",
+        "measurable_goal": "Reduce post-harvest losses by 30% in target regions within 5 years",
+        "timeframe": "long-term"
+      },
+      {
+        "action": "Establish regional food reserves and improve food distribution networks",
+        "measurable_goal": "Ensure food reaches 90% of food-insecure populations within 2 years",
+        "timeframe": "medium-term"
+      }
+    ],
+    "evidence": [
+      "Confronting alarming food insecurity trends in Africa: An... | ReliefWeb: Two other key Africa-wide analyses, from the Integrated Food Security Phase Classification and the Global Report on Food Crises 2025 add that over 85 million people are highly food insecure in the East.",
+      "Insights: Food Insecurity Trends in Africa: An insightful look into food insecurity trends in Africa caused by climate change, financing gaps, and post-harvest loss."
+    ],
+    "generalization": "This problem connects to the planet domain through climate change and agricultural sustainability, and to the domain of peace and cooperation through geopolitical tensions affecting food supply chains.",
+    "summary": "Africa faces a critical food insecurity crisis driven by climate change and systemic inefficiencies, requiring urgent investment in resilient agriculture and improved distribution.",
+    "risk_level": "CRITICAL"
+  },
+  "raw_items": [
+    {
+      "title": "Confronting alarming food insecurity trends in Africa: An... | ReliefWeb",
+      "summary": "Two other key Africa-wide analyses, from the Integrated Food Security Phase Classification and the Global Report on Food Crises 2025 add that over 85 million people are highly food insecure in the East and Horn of Africa (including Sudan and South Sudan).",
+      "link": "https://reliefweb.int/report/world/confronting-alarming-food-insecurity-trends-africa-experts-view-ifrc",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Insights: Food Insecurity Trends in Africa",
+      "summary": "An insightful look into food insecurity trends in Africa caused by climate change, financing gaps, and post-harvest loss.",
+      "link": "https://www.linkedin.com/pulse/high-production-low-consumption-food-insecurity-trends-africa-3rf7f",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Food Insecurity Report: Global Impacts of Heat and Water Stress on...",
+      "summary": "Regions like China and ASEAN countries, traditionally net food exporters, might become importers by 2050, as their agricultural output suffers. This shift in global food production could have significant implications for global trade dynamics and food prices. Impact on India.",
+      "link": "https://currentaffairs.khanglobalstudies.com/global-impacts-of-heat-and-water-stress-on-food-production-and-severe-food-insecurity-report/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "How the world can avoid millions going hungry when supply chains...",
+      "summary": "Yet the alternative is to remain exposed to repeated shocks. Climate change and geopolitical tensions will continue to disrupt global supply chains.Global food security is threatened by supply chain disruptions, rising energy and fertilizer costs, and geopolitical instability.",
+      "link": "https://phys.org/news/2026-05-world-millions-hungry-chains-collapse.html",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Hormuz tensions expose global food supply... | Miller Magazine",
+      "summary": "Every major supply chain crisis of the last decade, from COVID in 2020 to Ukraine in 2022, the Red Sea disruptions in 2023-24 and now this, has nudged governments and corporates one step further toward supply chain shortening and regional self-reliance.",
+      "link": "https://millermagazine.com/blog/hormuz-tensions-expose-global-food-supply-vulnerabilities-6792",
+      "source_type": "ddg"
+    },
+    {
+      "title": "The Coming Food Crisis in South Asia – The Diplomat",
+      "summary": "Oil disruptions are cascading into fertilizer markets, weakening agriculture and putting South Asia’s food security at risk. We’ve seen this pattern before.",
+      "link": "https://thediplomat.com/2026/05/the-coming-food-crisis-in-south-asia/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "[YT] A world going hungry? How conflict and climate change disrupt global food supply | Business Beyond",
+      "summary": "[DESCRIPTION FALLBACK] The battle against hunger is quite literally, an existential one. But there was a time when winning that battle seemed within reach ...",
+      "link": "https://www.youtube.com/watch?v=5YcvKvxWaCE",
+      "published": "2022-07-05T15:15:16Z",
+      "source_type": "youtube",
+      "channel": "DW News",
+      "video_id": "5YcvKvxWaCE",
+      "transcript_method": "description",
+      "transcript_chars": 158,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Food security - A growing dilemma | DW Documentary",
+      "summary": "[DESCRIPTION FALLBACK] Many countries, particularly in the West, have long taken reliable food supplies for granted. But climate change, conflict and ...",
+      "link": "https://www.youtube.com/watch?v=wu7PjKawjwI",
+      "published": "2022-10-25T16:00:44Z",
+      "source_type": "youtube",
+      "channel": "DW Documentary",
+      "video_id": "wu7PjKawjwI",
+      "transcript_method": "description",
+      "transcript_chars": 153,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Why are so Many People going Hungry? | World Hunger | FAO Explainer | United Nations",
+      "summary": "[DESCRIPTION FALLBACK] If you're watching this, chances are that you are in the fortunate position to have access to the food you want, when you need it.",
+      "link": "https://www.youtube.com/watch?v=Ke06QUfOeTE",
+      "published": "2022-12-10T14:00:08Z",
+      "source_type": "youtube",
+      "channel": "United Nations",
+      "video_id": "Ke06QUfOeTE",
+      "transcript_method": "description",
+      "transcript_chars": 153,
+      "has_full_transcript": false
+    }
+  ]
+}

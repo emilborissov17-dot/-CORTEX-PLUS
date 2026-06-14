@@ -1,0 +1,57 @@
+{
+  "axis": "WATER_REVIEW",
+  "fetched_at": "2026-05-08T09:04:10.779278+00:00",
+  "smart_query": "water scarcity drinking water",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "Water flows to parched NSW wetlands could be turned back on within weeks as drought fears loom",
+      "snippet": "Water minister Rose Jackson calls drying in Gwydir region ‘devastating’ as bill passes upper house Sign up for climate and environment editor Adam Morton’s free Clear Air newsletter hereWater flows to parched New South Wales wetlands where an urgent rescue mission to save dying wildlife unfolded are",
+      "url": "https://www.theguardian.com/australia-news/2026/may/08/water-flows-nsw-wetlands-drought-gwydir-australia",
+      "source": "RSS"
+    },
+    {
+      "title": "Up to 2cm a month: Nasa keeps track as Mexico City sinks into the ground",
+      "snippet": "Powerful radar system is providing new data on city’s subsidence, which experts hope will draw more attention to itWalking into Mexico City’s sprawling central Zócalo is a dizzying experience. At one end of the plaza, the capital’s cathedral, with its soaring spires, slumps in one direction. An atta",
+      "url": "https://www.theguardian.com/world/2026/may/07/mexico-city-sinking-subsidence-2cm-a-month-nasa-nisar",
+      "source": "RSS"
+    },
+    {
+      "title": "From V2 rocket-scarred London to Ukraine: how nature thrives in bomb craters",
+      "snippet": "In the UK capital, Bomb Crater Pond is full of wildlife, while scientists studying land obliterated by recent Russian blasts 1,500 miles away have seen ‘how quickly nature begins to heal itself’In February 1945, towards the end of the second world war, a German V2 rocket struck Walthamstow Marshes i",
+      "url": "https://www.theguardian.com/environment/2026/may/06/london-to-ukraine-how-nature-is-thriving-in-bomb-craters",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [],
+  "arxiv_papers": [
+    {
+      "title": "Can hot water discharged from industrial processes enhance the likelihood of waterspouts?",
+      "snippet": "Italy and the surrounding seas are recognised as one of the European hotspots for tornadoes and waterspouts. In recent years, the town of Rosignano Solvay (on the Northern Tyrrhenian coast) experienced repeated waterspouts affecting the same areas, raising local concern about the possible influence ",
+      "url": "https://arxiv.org/abs/2603.24233v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "End-to-End Optical Propagation Modeling for Water-to-Air Channels under Sea Surface and UAV Effects",
+      "snippet": "Underwater observatories have recently emerged as an efficient solution for marine biodiversity monitoring. The primary objective of this work is to enable efficient and cost-effective data muling from underwater sensors by investigating the use of optical wireless communications to transmit data fr",
+      "url": "https://arxiv.org/abs/2603.23727v2",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[The Resistance of a Cow] There’s something rotten in the cows of Denmark. And Minnesota. And Wisconsin. And Idaho. What could cause a previously thriving herd of majestic dairy cattle to stop drinking water and start drinking … urine? A Danish farmer calls a special investigator, who takes one look at his farm and nopes the heck out of there, refusing to return, citing “bad energy” coming from something nearby … a big bui",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

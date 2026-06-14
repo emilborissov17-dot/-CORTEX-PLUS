@@ -1,0 +1,110 @@
+{
+  "axis": "SPACE_INFRASTRUCTURE_REVIEW",
+  "fetched_at": "2026-05-17T15:20:03.709242+00:00",
+  "smart_query": "space exploration NASA SpaceX",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 0,
+    "github": 3,
+    "youtube_transcripts": 3,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "NASA Science, Cargo Launch on 34th SpaceX Resupply Mission to Station",
+      "snippet": "The 34th SpaceX commercial resupply mission under contract with NASA is headed to the International Space Station with new scientific experiments after lifting off at 6:05 p.m. EDT Friday on a Falcon 9 rocket from Space Launch Complex 40 at Cape Canaveral Space Force Station in Florida. The SpaceX s",
+      "url": "https://www.nasa.gov/news-release/nasa-science-cargo-launch-on-34th-spacex-resupply-mission-to-station/",
+      "source": "RSS"
+    },
+    {
+      "title": "Curiosity Shakes Loose a Pesky Rock",
+      "snippet": "After NASA’s Curiosity Mars rover drilled a sample from this rock on April 25, 2026, it withdrew its robotic arm and pulled the entire rock off the surface with it. Engineers spent several days repositioning the arm and vibrating the drill to try and get the rock loose. When it finally detached on M",
+      "url": "https://www.nasa.gov/image-article/curiosity-shakes-loose-a-pesky-rock/",
+      "source": "RSS"
+    },
+    {
+      "title": "Hubble Sights Galaxy in Transition",
+      "snippet": "This NASA Hubble Space Telescope image reveals an enigmatic galaxy with a bright center and a face that hints at spiral structure, yet it holds no obvious spiral arms. Reddish-brown clumps and filaments of dust partially obscure the galaxy’s full face, while red, blue, and orange light from distant ",
+      "url": "https://science.nasa.gov/missions/hubble/hubble-sights-galaxy-in-transition/",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "KOSASIH/stable-pi-core",
+      "snippet": "Stable-Pi-Core is a next-generation decentralized ecosystem that integrates blockchain, quantum AI, IoT, edge computing, and AR/VR to deliver secure, scalable, and personalized solutions for payments,",
+      "stars": 117,
+      "url": "https://github.com/KOSASIH/stable-pi-core",
+      "updated": "2026-05-13",
+      "source": "GitHub"
+    },
+    {
+      "title": "FlaSpaceInst/EZ-RASSOR",
+      "snippet": "An inexpensive, autonomous, regolith-mining robot",
+      "stars": 60,
+      "url": "https://github.com/FlaSpaceInst/EZ-RASSOR",
+      "updated": "2026-05-14",
+      "source": "GitHub"
+    },
+    {
+      "title": "BarthPaleologue/CosmosJourneyer",
+      "snippet": "Cosmos Journeyer is a space exploration game running directly in the browser! Take your spaceship and witness the beauty of this virtually infinite universe.",
+      "stars": 44,
+      "url": "https://github.com/BarthPaleologue/CosmosJourneyer",
+      "updated": "2026-05-14",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [],
+  "podcast": "[#494 – Jensen Huang: NVIDIA – The $4 Trillion Company & the AI Revolution] Jensen Huang is the co-founder and CEO of NVIDIA, the world&#8217;s most valuable company and the engine powering the AI computing revolution.\nThank you for listening ❤ Check out our sponsors: https://lexfridman.com/sponsors/ep494-sc\nSee below for timestamps, transcript, and to give feedback, submit questions, contact Lex, etc.\nTranscript:\nhttps://lexfridman.com/jensen-huang-transcript\nCONTACT LEX",
+  "wiki": null,
+  "youtube_items": [
+    {
+      "title": "[YT] Why is SpaceX Building the BIGGEST ROCKET EVER?",
+      "summary": "I have a question. Why is SpaceX building the biggest rocket ever? Starship is 123 m tall. That's like a 40story building, taller than any other rocket in history. And it has two main sections. The spacecraft, which can carry an insane 150 tons of cargo, and an estimated 100 passengers. For comparison, the number of passengers for previous rockets is 4 to 8. And then there's the detachable rocket booster, which carries all the fuel and is powered by 33 of these engines. Each is twice as powerful as the ones used on the Falcon 9 rockets. Together, it's cost them over $5 billion and taken over 10 years to make. The plan is to prove that you can reuse the full Starship, which reduces launch costs, and then to use it to launch satellites and do cargo missions for NASA, and then help put humans",
+      "link": "https://www.youtube.com/watch?v=WbyZUtj4kV4",
+      "source_type": "youtube",
+      "channel": "Cleo Abram",
+      "video_id": "WbyZUtj4kV4",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 938,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] NASA 2025: To the Moon, Mars, and Beyond",
+      "summary": "[♪] [Victor Glover] We need to celebrate this moment in human history. Because Artemis II is more than a mission to the Moon and back. It's more than a mission that has to happen before we send people to the surface of the Moon. It is the next step on the journey that gets humanity to Mars. [♪] [Jim Free] When we hear those words we have touchdown. It's our next step to understanding how the Moon formed, that next move to land humans. [♪] [Bob Pearce] You've got to see the X-59 because it is one cool airplane. We continue modification to the aircraft that will become the X-66 [Eugene Parker] When have a space mission into an unknown place, you find remarkable things that you did not anticipate. [Erika Podest] This mission is going to be game changing. [Phil Barela] Virtually everybody on t",
+      "link": "https://www.youtube.com/watch?v=PPQ29WRT-rU",
+      "source_type": "youtube",
+      "channel": "NASA",
+      "video_id": "PPQ29WRT-rU",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 1074,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Why SpaceX and NASA Rockets Are So Different",
+      "summary": "Let’s start by acknowledging something crucial.&nbsp; Although NASA and SpaceX are both at the forefront&nbsp;&nbsp; of space travel, their rockets look entirely&nbsp; different, and that is mainly due to the fact that&nbsp;&nbsp; they have very different goals. Imagine packing&nbsp; for a trip to the edge of the solar system- that&nbsp;&nbsp; is the kind of durability NASA is thinking&nbsp; about. They need materials tough enough to&nbsp;&nbsp; withstand the “unknown”. That is why NASA relies&nbsp; on advanced materials like aluminum-lithium alloy,&nbsp;&nbsp; known for being both lightweight and incredibly&nbsp; strong. This allows their Space Launch System&nbsp;&nbsp; (SLS) to survive intense forces of a rocket&nbsp; launch, and the hostile environment of deep space.&nbsp; Meanwhile, Sp",
+      "link": "https://www.youtube.com/watch?v=AlrowLw4dKE",
+      "source_type": "youtube",
+      "channel": "Beyond Facts",
+      "video_id": "AlrowLw4dKE",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ],
+  "summary": "Съвременните технологии за космически инфраструктури се развиват бързо, като SpaceX разработва гигантски ракети за повторна употреба, а Open Source проекти предлагат нови възможности за изследване и изкопаване на лунен грунт.",
+  "urgency": "MEDIUM",
+  "sentiment": "POSITIVE",
+  "key_developments": [
+    "NASA Science: Cargo Launch на 34-тото SpaceX Resupply Mission към Станцията",
+    "FlaSpaceInst/EZ-RASSOR: Автономен робот за изкопаване на реголит",
+    "BarthPaleologue/CosmosJourneyer: Игра за космически изследвания в браузъра"
+  ],
+  "open_source_momentum": "High",
+  "scientific_frontier": "No data",
+  "relevance_to_goal": "MEDIUM"
+}

@@ -1,0 +1,109 @@
+{
+  "axis": "SOCIAL_RELATIONS_REVIEW",
+  "domain": "human",
+  "timestamp": "2026-05-01T11:36:07.144118+00:00",
+  "sources_count": 13,
+  "rss_count": 12,
+  "ddg_count": 0,
+  "youtube_count": 1,
+  "youtube_items": [
+    {
+      "title": "[YT] The Loneliness Epidemic: How America Lost Its Community - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] This isn't just a feeling—it's a silent epidemic hollowing out the heart of America. We explore the deep, spiritual crisis of loneliness that is redefining the American experience.",
+      "link": "https://www.youtube.com/watch?v=jugTWMBSK_Y",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "jugTWMBSK_Y",
+      "transcript_method": "description",
+      "transcript_chars": 203,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "summary": "- Methodology: The American Trends Panel survey methodology Overview Data in this report comes from Wave 190 of the American Trends Panel (ATP), Pew Research Center’s nationally representative panel of randomly sele\n- Acknowledgments: This report is a collaborative effort based on the input and anal",
+    "risk_level": "UNKNOWN",
+    "trend": "UNKNOWN",
+    "key_events": [
+      "Methodology",
+      "Acknowledgments",
+      "Which countries do Americans consider global ‘superpowers,’ and how many are there?"
+    ],
+    "insights": [],
+    "youtube_insights": [],
+    "relevance_to_goal": "",
+    "generalization": ""
+  },
+  "raw_items": [
+    {
+      "title": "Methodology",
+      "summary": "The American Trends Panel survey methodology Overview Data in this report comes from Wave 190 of the American Trends Panel (ATP), Pew Research Center’s nationally representative panel of randomly selected U.S. adults. The survey was conducted from March 23 to March 29, 2026. A total of 3,507 panelists responded out of 4,046 who were sampled, [&#8230;]",
+      "link": "https://www.pewresearch.org/global/2026/04/28/methodology-us-role-world/",
+      "published": "Tue, 28 Apr 2026 17:56:30 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Acknowledgments",
+      "summary": "This report is a collaborative effort based on the input and analysis of the following individuals. Richard Wike, Director, Global Attitudes Research Jonathan Schulman, Research AssociateLaura Clancy, Research AnalystJordan Lippert, Research AnalystSofia Hernandez Ramones, Research Assistant Julia Armeli, Research AssistantDorene Asare-Marfo, Senior Panel ManagerPeter Bell, Associate Director, Design and UXEthan Charlip, Communications AssociateJanakee Chavda, Associate [&#8230;]",
+      "link": "https://www.pewresearch.org/global/2026/04/28/acknowledgments-us-role-world/",
+      "published": "Tue, 28 Apr 2026 17:56:29 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Which countries do Americans consider global ‘superpowers,’ and how many are there?",
+      "summary": "Americans most often name the U.S., China and Russia when listing global superpowers, but there's no consensus on how many superpowers there are.",
+      "link": "https://www.pewresearch.org/global/2026/04/28/which-countries-do-americans-consider-global-superpowers-and-how-many-are-there/",
+      "published": "Tue, 28 Apr 2026 17:56:28 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "What countries do Americans think are gaining and losing influence in today’s world?",
+      "summary": "On balance, Americans believe the global influence of China and Israel are getting stronger while U.S. influence is weakening.",
+      "link": "https://www.pewresearch.org/global/2026/04/28/what-countries-do-americans-think-are-gaining-and-losing-influence-in-todays-world/",
+      "published": "Tue, 28 Apr 2026 17:56:27 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Billions of meals at risk due to Iran war, says fertiliser boss",
+      "summary": "A shortage of fertiliser due to the Iran conflict could reduce crop yields and push prices higher, says the boss of Yara.",
+      "link": "https://www.bbc.com/news/articles/cpwp50v4ye7o?at_medium=RSS&at_campaign=rss",
+      "published": "Fri, 01 May 2026 08:41:52 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Violence in Australian town after arrest of man over girl's murder",
+      "summary": "Unrest took place outside hospital where man suspected of murdering a five-year-old girl was being treated.",
+      "link": "https://www.bbc.com/news/articles/cddp4j7p8pzo?at_medium=RSS&at_campaign=rss",
+      "published": "Fri, 01 May 2026 04:08:19 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "British couple jailed in Iran: 'We're likely to be here for a long time'",
+      "summary": "Lindsay and Craig Foreman are facing the reality of a 10-year prison sentence following their arrest in Iran while on a motorcycle tour last year.",
+      "link": "https://www.bbc.com/news/articles/c202pl60kv9o?at_medium=RSS&at_campaign=rss",
+      "published": "Fri, 01 May 2026 05:04:08 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Israel releases all but two activists in Greece after intercepting Gaza aid flotilla",
+      "summary": "The Global Sumud Flotilla denounced the interception as \"piracy\", while Israel's foreign ministry called the flotilla a \"PR stunt\".",
+      "link": "https://www.bbc.com/news/articles/c0m2z0k1gngo?at_medium=RSS&at_campaign=rss",
+      "published": "Fri, 01 May 2026 10:12:57 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "What the End of Saudi Arabia’s Big-Spending Era Means for the Kingdom and Beyond",
+      "summary": "The kingdom is pulling back from a costly and high-profile golf venture amid mounting financial concerns, raising questions about its plans.",
+      "link": "https://www.nytimes.com/2026/05/01/world/middleeast/saudi-arabia-spending-sports-liv-golf.html",
+      "published": "Fri, 01 May 2026 10:39:16 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Myanmar’s Junta Claims ‘Benevolence’ for Aung San Suu Kyi. It Still Rules Cruelly.",
+      "summary": "Moving the deposed civilian leader to a “designated residence” for the rest of her prison sentence is part of an effort by Myanmar’s regime to portray legitimacy.",
+      "link": "https://www.nytimes.com/2026/05/01/world/asia/suu-kyi-myanmar-house-arrest-junta.html",
+      "published": "Fri, 01 May 2026 08:52:24 +0000",
+      "source_type": "rss"
+    }
+  ]
+}

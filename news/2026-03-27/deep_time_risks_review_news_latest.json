@@ -1,0 +1,62 @@
+{
+  "axis": "DEEP_TIME_RISKS_REVIEW",
+  "fetched_at": "2026-03-27T07:55:09.049383+00:00",
+  "smart_query": "nuclear war pandemic existential risk",
+  "sources_count": {
+    "wiki": 0,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube": 10,
+    "youtube_transcripts": 1,
+    "podcast": 1
+  },
+  "rss": [],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "PipFoweraker/pdoom1",
+      "snippet": "Save the world from deadly AI through paperwork",
+      "stars": 6,
+      "url": "https://github.com/PipFoweraker/pdoom1",
+      "updated": "2026-02-03",
+      "source": "GitHub"
+    },
+    {
+      "title": "nikthink/pauseai.ca",
+      "snippet": "https://pauseai.ca/",
+      "stars": 4,
+      "url": "https://github.com/nikthink/pauseai.ca",
+      "updated": "2026-03-09",
+      "source": "GitHub"
+    },
+    {
+      "title": "CovenantArchitects/The-Partnership-Covenant",
+      "snippet": "Constitutional Framework for Aligned Super-Intelligence.",
+      "stars": 3,
+      "url": "https://github.com/CovenantArchitects/The-Partnership-Covenant",
+      "updated": "2025-12-13",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "PackForcing: Short Video Training Suffices for Long Video Sampling and Long Context Inference",
+      "snippet": "Autoregressive video diffusion models have demonstrated remarkable progress, yet they remain bottlenecked by intractable linear KV-cache growth, temporal repetition, and compounding errors during long-video generation. To address these challenges, we present PackForcing, a unified framework that eff",
+      "url": "https://arxiv.org/abs/2603.25730v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "CHIRP dataset: towards long-term, individual-level, behavioral monitoring of bird populations in the wild",
+      "snippet": "Long-term behavioral monitoring of individual animals is crucial for studying behavioral changes that occur over different time scales, especially for conservation and evolutionary biology. Computer vision methods have proven to benefit biodiversity monitoring, but automated behavior monitoring in w",
+      "url": "https://arxiv.org/abs/2603.25524v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[Statement from Max Tegmark on the Department of War’s ultimatum] \"Our safety and basic rights must not be at the mercy of a company's internal policy; lawmakers must work to codify these overwhelmingly popular red lines into law.\"",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

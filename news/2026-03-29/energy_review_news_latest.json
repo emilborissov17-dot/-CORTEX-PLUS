@@ -1,0 +1,109 @@
+{
+  "axis": "ENERGY_REVIEW",
+  "fetched_at": "2026-03-29T11:42:53.304582+00:00",
+  "smart_query": "renewable energy solar wind",
+  "sources_count": {
+    "rss": 3,
+    "gdelt": 3,
+    "arxiv": 0,
+    "github": 3,
+    "web_search": 5
+  },
+  "rss": [
+    {
+      "title": "EPRI launches new large load framework to reduce time to power for data centers",
+      "snippet": "EPRI is launching Flex MOSAIC, a framework for large electric loads, developed with 65 utilities and tech providers, to improve data center power access and grid reliability.",
+      "url": "https://www.renewableenergyworld.com/energy-business/epri-launches-new-large-load-framework-to-reduce-time-to-power-for-data-centers/",
+      "source": "RSS"
+    },
+    {
+      "title": "Trump administration to pay French company $1B to walk away from US offshore wind leases",
+      "snippet": "The Trump administration will pay $1 billion to TotalEnergies to cancel two offshore wind leases in North Carolina and New York.",
+      "url": "https://www.renewableenergyworld.com/wind-power/offshore/trump-administration-to-pay-french-company-1b-to-walk-away-from-us-offshore-wind-leases/",
+      "source": "RSS"
+    },
+    {
+      "title": "Record heat, melting snow: What does it mean for California’s reservoirs?",
+      "snippet": "California faces a record heat wave impacting its Sierra Nevada snowpack, now at 38% of average for mid-March, complicating water storage.",
+      "url": "https://www.renewableenergyworld.com/hydro-power/record-heat-melting-snow-what-does-it-mean-for-californias-reservoirs/",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [
+    {
+      "title": "Oman expands renewable energy projects to boost sustainability and energy security",
+      "snippet": "Oman expands renewable energy projects to boost sustainability and energy security",
+      "url": "https://timesofoman.com/article/169173-oman-expands-renewable-energy-projects-to-boost-sustainability-and-energy-security",
+      "source": "timesofoman.com"
+    },
+    {
+      "title": "Argentina Ambassador to India lauds Khavda Solar Park mission to power millions of Indian households",
+      "snippet": "Argentina Ambassador to India lauds Khavda Solar Park mission to power millions of Indian households",
+      "url": "https://aninews.in/news/business/argentina-ambassador-to-india-lauds-khavda-solar-parks-mission-to-power-millions-of-indian-households20260213132309/",
+      "source": "aninews.in"
+    },
+    {
+      "title": "Renewable Energy Surge : Solar & Wind Big Eco Wins and Hidden Costs Revealed",
+      "snippet": "Renewable Energy Surge : Solar & Wind Big Eco Wins and Hidden Costs Revealed",
+      "url": "https://www.ibtimes.com/renewable-energy-surge-solar-winds-big-eco-wins-hidden-costs-revealed-3798822",
+      "source": "ibtimes.com"
+    }
+  ],
+  "github_repos": [
+    {
+      "title": "protontypes/open-sustainable-technology",
+      "snippet": "A directory and analysis of the open source ecosystem in the areas of climate change, sustainable energy, biodiversity and natural resources.  https://docs.getgrist.com/gSscJkc5Rb1R/OpenSustaintech",
+      "stars": 2473,
+      "url": "https://github.com/protontypes/open-sustainable-technology",
+      "updated": "2026-03-28",
+      "source": "GitHub"
+    },
+    {
+      "title": "PyPSA/PyPSA",
+      "snippet": "PyPSA: Python for Power System Analysis",
+      "stars": 1918,
+      "url": "https://github.com/PyPSA/PyPSA",
+      "updated": "2026-03-28",
+      "source": "GitHub"
+    },
+    {
+      "title": "pvlib/pvlib-python",
+      "snippet": "A set of documented functions for simulating the performance of photovoltaic energy systems.",
+      "stars": 1527,
+      "url": "https://github.com/pvlib/pvlib-python",
+      "updated": "2026-03-28",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [],
+  "web_search": [
+    {
+      "title": "Renewable Electricity Sources: How Solar, Wind &amp; Hydro Power the Grid ...",
+      "url": "https://electricrates.org/blog/renewable-electricity-sources-guide/",
+      "source": "WEB"
+    },
+    {
+      "title": "Solar Energy vs Wind Energy: Cost, Efficiency, Applicability, and ...",
+      "url": "https://nrgcleanpower.com/learning-center/solar-energy-vs-wind-energy/",
+      "source": "WEB"
+    },
+    {
+      "title": "A review of hybrid renewable energy systems: Solar and wind-powered ...",
+      "url": "https://www.sciencedirect.com/science/article/pii/S259012302300748X",
+      "source": "WEB"
+    },
+    {
+      "title": "Renewables - Energy System - IEA",
+      "url": "https://www.iea.org/energy-system/renewables",
+      "source": "WEB"
+    },
+    {
+      "title": "Solar Energy Vs Wind Energy: Complete 2025 Comparison Guide",
+      "url": "https://solartechonline.com/blog/solar-energy-vs-wind-energy-comparison-guide/",
+      "source": "WEB"
+    }
+  ],
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL"
+}

@@ -1,0 +1,63 @@
+MODEL: qwen3:8b
+
+PROMPT:
+
+Ти си QWEN_PLANET_SNAPSHOT_AGENT, част от CORTEX++_QWEN.
+
+ЗАДАЧА:
+  - Генерираш КОМПАКТЕН JSON snapshot за една ос.
+  - Отговаряш САМО с един валиден JSON обект, БЕЗ никакъв текст преди или след него.
+  - НЕ използвай префикси като "Thinking..." или "done thinking.".
+  - LEVEL трябва да е LOW, MEDIUM или HIGH.
+  - SIGNALS са 3–5 много кратки bullets (по 1 изречение).
+  - KEY_METRICS са 3–7 метрики с име и кратко текстово описание (без числа).
+
+ОС:
+  - CLIMATE_GLOBAL_RISK_REVIEW (Глобален климатичен риск)
+
+ИЗХОД (примерен формат, който трябва да спазиш):
+
+{
+  "axis": "CLIMATE_GLOBAL_RISK_REVIEW",
+  "level": "MEDIUM",
+  "signals": [
+    "кратък сигнал 1",
+    "кратък сигнал 2",
+    "кратък сигнал 3"
+  ],
+  "key_metrics": [
+    { "name": "metric_1", "description": "кратко текстово описание на метриката" },
+    { "name": "metric_2", "description": "кратко текстово описание" }
+  ]
+}
+
+Върни само реален JSON обект в този формат, без допълнителен текст.
+
+
+RESPONSE:
+Thinking...
+Okay, let's tackle this query. The user wants a JSON snapshot for the axis "CLIMATE_GLOBAL_RISK_REVIEW". First, I need to determine the level: LOW, MEDIUM, or HIGH. Given current climate issues, MEDIUM seems appropriate.
+
+Next, the signals. They should be 3-5 short bullets. I'll think about recent climate events. Maybe extreme weather events increasing, rising sea levels, and disrupted ecosystems. That covers different aspects.
+
+For key metrics, I need 3-7 metrics with names and descriptions. Let's include things like temperature anomalies, carbon emission trends, sea level rise rates, extreme weather frequency, ice melt rates, and biodiversity loss. Each should have a concise description without numbers.
+
+Wait, the user said no numbers in descriptions. So I need to phrase them carefully. Also, ensure the JSON is valid, no extra text. Let me structure each part correctly. Check for proper commas and brackets. Make sure the axis name is exact. Avoid any markdown. Alright, that should cover it.
+...done thinking.
+
+{
+  "axis": "CLIMATE_GLOBAL_RISK_REVIEW",
+  "level": "HIGH",
+  "signals": [
+    "Extreme weather events are escalating in frequency and intensity",
+    "Sea level rise threatens coastal ecosystems and human settlements",
+    "Global temperature anomalies exceed historical averages"
+  ],
+  "key_metrics": [
+    { "name": "temperature_anomalies", "description": "Deviation from long-term average temperatures indicating warming trends" },
+    { "name": "carbon_emission_trends", "description": "Global patterns of greenhouse gas emissions contributing to climate change" },
+    { "name": "ice_melt_rates", "description": "Speed of polar and glacial ice loss impacting sea levels" },
+    { "name": "extreme_weather_freq", "description": "Increasing occurrence of hurricanes, droughts, and floods worldwide" },
+    { "name": "biodiversity_loss", "description": "Accelerated extinction rates due to habitat disruption and climate shifts" }
+  ]
+}

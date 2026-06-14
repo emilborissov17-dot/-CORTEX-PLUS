@@ -1,0 +1,57 @@
+{
+  "axis": "ECONOMY_WORK_REVIEW",
+  "fetched_at": "2026-05-03T09:11:21.429491+00:00",
+  "smart_query": "economy unemployment poverty wages",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "Airlines can cancel flights in advance over fuel shortages under new plans",
+      "snippet": "Ministers hope move would help avoid last-minute flight cancellations for passengers this summer over Middle East fuel supplies.",
+      "url": "https://www.bbc.com/news/articles/c794zd1vqn4o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Spirit Airlines shutting down after rescue talks collapse",
+      "snippet": "The airline had been in talks with the Trump administration about a $500m bailout. ",
+      "url": "https://www.bbc.com/news/articles/cqxlnrqjvzyo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Voters will judge Trump on the economy - how is it doing?",
+      "snippet": "How much Donald Trump can do with the time he has left as president will depend massively on the cost of living.",
+      "url": "https://www.bbc.com/news/articles/cgepyv20vrpo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [],
+  "arxiv_papers": [
+    {
+      "title": "Ideological Bias in LLMs' Economic Causal Reasoning",
+      "snippet": "Do large language models (LLMs) exhibit systematic ideological bias when reasoning about economic causal effects? As LLMs are increasingly used in policy analysis and economic reporting, where directionally correct causal judgments are essential, this question has direct practical stakes. We present",
+      "url": "https://arxiv.org/abs/2604.21334v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Self-referentiality and asymmetric knowledge flows between journals. The case of economics",
+      "snippet": "This paper investigates the evolution of self-referentiality and knowledge flows in economics journals before and after the 2008 financial crisis. Using a multi-level approach, we analyze patterns at the discipline, cluster, and journal levels, combining citational measures with a classification of ",
+      "url": "https://arxiv.org/abs/2604.18144v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[How to get through the Strait of Hormuz] The United States has been at war with Iran since February 28th. And for a month and a half, Iran’s main leverage over the U.S. has been their control over the Strait of Hormuz — a key global shipping route. Iran has attacked ships that try to pass without approval. And recently they’ve insinuated that one part of the Strait — the part near Oman — is not safe. Which means that captains had to go r",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

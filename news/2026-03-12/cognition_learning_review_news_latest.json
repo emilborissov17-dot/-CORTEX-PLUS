@@ -1,0 +1,142 @@
+{
+  "axis": "COGNITION_LEARNING_REVIEW",
+  "fetched_at": "2026-03-12T18:26:00.122226+00:00",
+  "smart_query": "Cognitive learning strategies for student success",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "analysis": {
+    "summary": "Изследванията показват, че ТХК може да създава фалшиви спомени, което може да бъде проблем за развитието на устойчива цивилизация. Новите лекарства и технологии обаче могат да помогнат за подобряване на жизнения стандарт на хората. Тези разработки могат да имат положително въздействие върху достойнството на всички.",
+    "key_developments": [
+      "Cannabis study finds THC can create false memories",
+      "New drug cuts seizures by up to 91% in children with rare epilepsy",
+      "AFLucas-UOM/AI-Early-Detection-System-for-Dyslexia-ADHD"
+    ],
+    "sentiment": "NEUTRAL",
+    "urgency": "MEDIUM",
+    "open_source_momentum": "Projects like AFLucas-UOM/AI-Early-Detection-System-for-Dyslexia-ADHD and ShubhamMahajan880/studyAlpha-Ai-Agent are gaining traction",
+    "scientific_frontier": "COMIC: Agentic Sketch Comedy Generation and LiTo: Surface Light Field Tokenization are pushing the boundaries of AI research",
+    "relevance_to_goal": "The developments in medical research and AI-powered tools can contribute to improving the quality of life and dignity for all, aligning with the goal of sustainable civilization"
+  },
+  "sentiment": "NEUTRAL",
+  "urgency": "MEDIUM",
+  "summary": "Изследванията показват, че ТХК може да създава фалшиви спомени, което може да бъде проблем за развитието на устойчива цивилизация. Новите лекарства и технологии обаче могат да помогнат за подобряване на жизнения стандарт на хората. Тези разработки могат да имат положително въздействие върху достойнството на всички.",
+  "key_developments": [
+    "Cannabis study finds THC can create false memories",
+    "New drug cuts seizures by up to 91% in children with rare epilepsy",
+    "AFLucas-UOM/AI-Early-Detection-System-for-Dyslexia-ADHD"
+  ],
+  "open_source_momentum": "Projects like AFLucas-UOM/AI-Early-Detection-System-for-Dyslexia-ADHD and ShubhamMahajan880/studyAlpha-Ai-Agent are gaining traction",
+  "scientific_frontier": "COMIC: Agentic Sketch Comedy Generation and LiTo: Surface Light Field Tokenization are pushing the boundaries of AI research",
+  "github_repos": [
+    {
+      "title": "AFLucas-UOM/AI-Early-Detection-System-for-Dyslexia-ADHD",
+      "snippet": "Proof-of-concept behavioural analysis system for early detection of dyslexia and ADHD using spelling pattern evaluation, sentence rewriting similarity analysis, and keyboard/mouse interaction monitori",
+      "stars": 6,
+      "url": "https://github.com/AFLucas-UOM/AI-Early-Detection-System-for-Dyslexia-ADHD",
+      "updated": "2026-03-06",
+      "source": "GitHub"
+    },
+    {
+      "title": "ShubhamMahajan880/studyAlpha-Ai-Agent",
+      "snippet": "🎓 StudyAlpha is an intelligent, end-to-end AI Study Coach powered by multi-agent collaboration, memory-augmented reasoning, adaptive quizzes, and ML weakness prediction.  Built for the Google × Kaggle",
+      "stars": 5,
+      "url": "https://github.com/ShubhamMahajan880/studyAlpha-Ai-Agent",
+      "updated": "2026-01-29",
+      "source": "GitHub"
+    },
+    {
+      "title": "Kuldeep-Padshala/genai-capstone-study-agent",
+      "snippet": "A Capstone Project Demonstrating LLM-Powered Agents, Parallel Execution, Session Memory, Observability & Long-Running Operations",
+      "stars": 1,
+      "url": "https://github.com/Kuldeep-Padshala/genai-capstone-study-agent",
+      "updated": "2025-12-02",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "COMIC: Agentic Sketch Comedy Generation",
+      "snippet": "We propose a fully automated AI system that produces short comedic videos similar to sketch shows such as Saturday Night Live. Starting with character references, the system employs a population of agents loosely based on real production studio roles, structured to optimize the quality and diversity",
+      "url": "https://arxiv.org/abs/2603.11048v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "LiTo: Surface Light Field Tokenization",
+      "snippet": "We propose a 3D latent representation that jointly models object geometry and view-dependent appearance. Most prior works focus on either reconstructing 3D geometry or predicting view-independent diffuse appearance, and thus struggle to capture realistic view-dependent effects. Our approach leverage",
+      "url": "https://arxiv.org/abs/2603.11047v1",
+      "source": "arXiv"
+    }
+  ],
+  "youtube_transcripts": [],
+  "podcast": "In this Huberman Lab Essentials episode, I discuss the mechanisms through which deliberate heat exposure enhances both physical and mental health.\n\nI outline specific protocols for deliberate heat exposure, including recommended temperature ranges, frequency, timing, duration and sauna alternatives. In addition, I explain how to tailor your heat protocols to support your specific goals, such as in | Dr. Alex Marson, MD, PhD, is a Senior Investigator at the Gladstone Institutes and a professor of medicine at the University of California, San Francisco. We discuss the biology of the immune system and cancer, and everyday choices that can increase or decrease your cancer risk, several of which are surprising but all of which are actionable. We also discuss immunotherapy, including how engineered",
+  "youtube_videos": [
+    {
+      "title": "YouTube:SkJnHixPGsU",
+      "video_id": "SkJnHixPGsU",
+      "url": "https://www.youtube.com/watch?v=SkJnHixPGsU",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:2E-oxXG3rVU",
+      "video_id": "2E-oxXG3rVU",
+      "url": "https://www.youtube.com/watch?v=2E-oxXG3rVU",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:HKFOhd5sMEc",
+      "video_id": "HKFOhd5sMEc",
+      "url": "https://www.youtube.com/watch?v=HKFOhd5sMEc",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:NVa7xOwhsEA",
+      "video_id": "NVa7xOwhsEA",
+      "url": "https://www.youtube.com/watch?v=NVa7xOwhsEA",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:UpA6RdE0aYo",
+      "video_id": "UpA6RdE0aYo",
+      "url": "https://www.youtube.com/watch?v=UpA6RdE0aYo",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:7KsC9CktCno",
+      "video_id": "7KsC9CktCno",
+      "url": "https://www.youtube.com/watch?v=7KsC9CktCno",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:hw7B5s2cSfM",
+      "video_id": "hw7B5s2cSfM",
+      "url": "https://www.youtube.com/watch?v=hw7B5s2cSfM",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:jMhhaAQK1NQ",
+      "video_id": "jMhhaAQK1NQ",
+      "url": "https://www.youtube.com/watch?v=jMhhaAQK1NQ",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:Df9cp0Bu2fE",
+      "video_id": "Df9cp0Bu2fE",
+      "url": "https://www.youtube.com/watch?v=Df9cp0Bu2fE",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:fm3SDn7pUGk",
+      "video_id": "fm3SDn7pUGk",
+      "url": "https://www.youtube.com/watch?v=fm3SDn7pUGk",
+      "source": "YouTube"
+    }
+  ]
+}

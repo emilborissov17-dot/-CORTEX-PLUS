@@ -1,0 +1,129 @@
+{
+  "axis": "INEQUALITY_POVERTY_REVIEW",
+  "domain": "civilization",
+  "timestamp": "2026-05-01T11:38:35.696535+00:00",
+  "sources_count": 8,
+  "rss_count": 0,
+  "ddg_count": 5,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] America's Wealth Inequality Crisis Explained (2025) - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] Wealth inequality in the United States has reached a breaking point. In this video, we break down how America went from shared growth to extreme economic division—and why it matters more than ...",
+      "link": "https://www.youtube.com/watch?v=jirhqTwmVFc",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "jirhqTwmVFc",
+      "transcript_method": "description",
+      "transcript_chars": 218,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Social Inequality 2025: Wealth and Poverty in America - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] Lecture #1 of 14 for SOC 272 Social Inequality 2025: Wealth and Poverty in America",
+      "link": "https://www.youtube.com/watch?v=UJCke1yCXfY",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "UJCke1yCXfY",
+      "transcript_method": "description",
+      "transcript_chars": 105,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Wealth Inequality in America - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] Infographics on the distribution of wealth in America, highlighting both the inequality and the difference between our perception of inequality and the actual numbers.",
+      "link": "https://www.youtube.com/watch?v=QPKKQnijnsM",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "QPKKQnijnsM",
+      "transcript_method": "description",
+      "transcript_chars": 190,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "summary": "- Poverty: Poverty is a state or condition in which an individual lacks the financial resources and essentials for a basic standard of living. Poverty can have diverse environmental, legal, social, economic, and\n- Poverty in the United States - Wikipedia: 4 days ago - Based on poverty measures used ",
+    "risk_level": "UNKNOWN",
+    "trend": "UNKNOWN",
+    "key_events": [
+      "Poverty",
+      "Poverty in the United States - Wikipedia",
+      "Income inequality"
+    ],
+    "insights": [],
+    "youtube_insights": [],
+    "relevance_to_goal": "",
+    "generalization": ""
+  },
+  "raw_items": [
+    {
+      "title": "Poverty",
+      "summary": "Poverty is a state or condition in which an individual lacks the financial resources and essentials for a basic standard of living. Poverty can have diverse environmental, legal, social, economic, and political causes and effects. When evaluating poverty in statistics or economics there are two main measures: absolute poverty which compares income against the amount needed to meet basic personal n",
+      "link": "https://en.wikipedia.org/wiki/Poverty",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Poverty in the United States - Wikipedia",
+      "summary": "4 days ago - Based on poverty measures used by the Census Bureau (which exclude non-cash factors such as food stamps or medical care or public housing), America had 37 million people defined as living in poverty in 2023; this is 11 percent of the population. Some of the many causes include income, inequality, inflation, unemployment, debt traps and poor education.",
+      "link": "https://en.wikipedia.org/wiki/Poverty_in_the_United_States",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Income inequality",
+      "summary": "In economics, income distribution covers how a country's total GDP is distributed amongst its population. Economic theory and economic policy have long seen income and its distribution as a central concern. Unequal distribution of income causes economic inequality which is a concern in almost all countries around the world.",
+      "link": "https://en.wikipedia.org/wiki/Income_inequality",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Income inequality in the United States - Wikipedia",
+      "summary": "Income inequality has fluctuated considerably in the United States since measurements began around 1915, moving in an arc between peaks in the 1920s ...",
+      "link": "https://en.wikipedia.org/wiki/Income_inequality_in_the_United_States",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Economic inequality - Wikipedia",
+      "summary": "Income inequality metrics are used for measuring income inequality, 3 the Gini coefficient being a widely used one.",
+      "link": "https://en.wikipedia.org/wiki/Economic_inequality",
+      "source_type": "ddg"
+    },
+    {
+      "title": "[YT] America's Wealth Inequality Crisis Explained (2025) - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] Wealth inequality in the United States has reached a breaking point. In this video, we break down how America went from shared growth to extreme economic division—and why it matters more than ...",
+      "link": "https://www.youtube.com/watch?v=jirhqTwmVFc",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "jirhqTwmVFc",
+      "transcript_method": "description",
+      "transcript_chars": 218,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Social Inequality 2025: Wealth and Poverty in America - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] Lecture #1 of 14 for SOC 272 Social Inequality 2025: Wealth and Poverty in America",
+      "link": "https://www.youtube.com/watch?v=UJCke1yCXfY",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "UJCke1yCXfY",
+      "transcript_method": "description",
+      "transcript_chars": 105,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Wealth Inequality in America - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] Infographics on the distribution of wealth in America, highlighting both the inequality and the difference between our perception of inequality and the actual numbers.",
+      "link": "https://www.youtube.com/watch?v=QPKKQnijnsM",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "QPKKQnijnsM",
+      "transcript_method": "description",
+      "transcript_chars": 190,
+      "has_full_transcript": false
+    }
+  ]
+}

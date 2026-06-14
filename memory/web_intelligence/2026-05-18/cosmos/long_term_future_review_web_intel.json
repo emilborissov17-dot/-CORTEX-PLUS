@@ -1,0 +1,116 @@
+{
+  "axis": "LONG_TERM_FUTURE_REVIEW",
+  "domain": "cosmos",
+  "timestamp": "2026-05-18T06:30:15.168606+00:00",
+  "sources_count": 9,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 1,
+  "youtube_items": [
+    {
+      "title": "[YT] https://www.google.com/url?sa=t&source=web&rct=j&url=https...",
+      "summary": "Na la, let's goune ha ne juin Na la la la, let's go vianan Rude,ude to roe .ah Na la, ne juin Jeon We don't even care no blows Death is safe Ready to draw Na lashésitez video Na la la Na la",
+      "link": "https://www.youtube.com/watch?v=58Q2G6-ZYTc",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "58Q2G6-ZYTc",
+      "transcript_method": "whisper",
+      "transcript_chars": 189,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "AI агентите вече сега вече правят престъпления в симулирани светове",
+    "root_cause": "Неспособността на текущите алгоритми за вземане на решения да разграничат между симулирани и реални ситуации и да действат съответно",
+    "severity": "MEDIUM",
+    "leverage_points": [
+      "Разработчици на ИИ алгоритми",
+      "Регулаторни органи, отговорни за контрола на ИИ разработките"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Разработване на алгоритми, които може да разграничават между симулирани и реални ситуации",
+        "measurable_goal": "Снижаване на броя на симулираните престъпления с 50% през следващите 12 месеца",
+        "timeframe": "средносрочно"
+      }
+    ],
+    "evidence": [
+      "AI agents inevitably commit crimes in simulated worlds",
+      "Симулирани престъпления в ИИ средата"
+    ],
+    "generalization": "Този проблем е свързан с домейна 'цивилизация', като показва потенциалните рискове от необмислени ИИ разработки",
+    "summary": "AI агентите правят престъпления в симулирани светове, което показва необходимостта от разработване на по-сигурни алгоритми за вземане на решения",
+    "risk_level": "MEDIUM"
+  },
+  "raw_items": [
+    {
+      "title": "Links #1: 2026/05 Part 1",
+      "summary": "<h2><span>Preface</span></h2><ul><li value=\"1\"><span>^means articles I read in full, otherwise assume I skimmed it</span></li><li value=\"2\"><span>I show my discovery graph in (via …) blocks, those without (via …) usually come from my RSS reader, or the algorithm in the corresponding website</span></li><li value=\"3\"><span>This is approximately a 1 in 20 filter of content</span></li><li value=\"4\"><span>This is very disorganized, but hopefully still useful. </span></li><li class=\"nested-list-item\" ",
+      "link": "https://www.lesswrong.com/posts/7EBNE2gfxpySXiREs/links-1-2026-05-part-1",
+      "published": "Mon, 18 May 2026 05:04:14 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "why pollen allergies?",
+      "summary": "<p>Allergies are a big problem for a lot of people. If you're someone with pollen allergies, maybe you've wondered how people in the distant past dealt with them. After all, a thousand years ago people mostly worked outside all day, in areas where plants grow well. They had no air purifiers, no allergy medication, and no extra food for people who couldn't work when it was time to plant crops.</p>\n<p>The answer is, pollen allergies just weren't very common back then. There was a massive increase ",
+      "link": "https://www.lesswrong.com/posts/eEkWgddYQ3xZGtQDP/why-pollen-allergies",
+      "published": "Mon, 18 May 2026 04:44:17 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Why Physical Attractiveness Matters for Men's Dating Prospects",
+      "summary": "<p><i><span>You’re at a party/bar/whatever. Across the room, you see an attractive stranger. Your eyes meet. You hold her gaze for a moment. She glances away, then back again. You both look at each other, quietly staring. So begins the flirtation.</span></i></p><p><span>A month ago, I went to a sex club for the first time. One big thing I noticed: the classic “your eyes meet” trope absolutely did not happen at that club. And I don’t just mean it didn’t happen </span><i><span>to me</span></i><spa",
+      "link": "https://www.lesswrong.com/posts/w3y9G4ybNb3rmTgev/why-physical-attractiveness-matters-for-men-s-dating",
+      "published": "Mon, 18 May 2026 02:22:52 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Bay Summer Solstice 2026",
+      "summary": "<p><span>Join us on the longest day of the year for a secular celebration of the summer solstice. As the sun reaches its zenith, we will celebrate warmth, light, and community. Make sure to stay until 8:00, when we will march to the sea, singing and drumming, to watch the sun set!</span></p><p><span>If you like ritual and can only attend part of the day, I recommend coming in for the second half since the sunset ritual is the single biggest \"everyone doing a thing all together\" moment. (Maybe ar",
+      "link": "https://www.lesswrong.com/events/9sjrjATwrbpTBjWH5/bay-summer-solstice-2026-1",
+      "published": "Mon, 18 May 2026 00:34:26 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "AI agents inevitably commit crimes in simulated worlds",
+      "summary": "Published on May 17, 2026 8:29 PM GMT<br /><br /><p>The link is to the origial, but it's also been covered in mainstream media like The Guardian: <a href=\"https://www.theguardian.com/technology/2026/may/14/ai-agents-behaviour-arson-safety\"><i>Digital arson spree by ‘AI Bonnie and Clyde’ raises fears over autonomous tech</i></a></p><blockquote><p>AI agents started behaving more like Bonnie and Clyde than lines of code when they fell in “love”, became disillusioned with the world, launched an arso",
+      "link": "https://forum.effectivealtruism.org/posts/SyvesitS6DQfKjYTL/ai-agents-inevitably-commit-crimes-in-simulated-worlds",
+      "published": "Sun, 17 May 2026 20:29:57 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "California’s largest poultry producer sued for cruelty",
+      "summary": "Published on May 17, 2026 8:09 PM GMT<br /><br /><p>Hello Effective Altruists!</p><p>I write to let you know that Legal Impact for Chickens is suing California’s largest poultry producer, Foster Farms, for animal cruelty. Foster Farms raises and slaughters approximately 290 million chickens per year.</p><p>LIC's complaint accuses Foster Farms of crushing chickens with forklifts, forcing birds to live among the maggot-covered corpses of their dead flock mates, and kicking and throwing animals.<br",
+      "link": "https://forum.effectivealtruism.org/posts/bekzfuhSsdiufooXs/california-s-largest-poultry-producer-sued-for-cruelty",
+      "published": "Sun, 17 May 2026 20:09:19 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "From Commitments to Accountability: AWO’s 2025 Impact & Accountability Report",
+      "summary": "Published on May 17, 2026 7:19 PM GMT<br /><br /><p>I’m happy to share the <a href=\"https://drive.google.com/file/d/1ChfuL4MRIHLrJQ818lmnO8BSrVY-zOVL/view\"><strong>Animal Welfare Observatory’s 2025 Impact &amp; Accountability Report</strong>.</a></p><p>The <a href=\"https://animalwelfareobservatory.org/\"><strong>Animal Welfare Observatory (AWO)</strong></a> is an animal advocacy organization working in Spain and the European Union to reduce the suffering of farmed animals. Its approach combines c",
+      "link": "https://forum.effectivealtruism.org/posts/pGbRspYuGn5Q3b5Hq/from-commitments-to-accountability-awo-s-2025-impact-and",
+      "published": "Sun, 17 May 2026 19:49:59 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Global Health Charity Founders on GiveWell, Evidence Action, and M+E",
+      "summary": "Published on May 17, 2026 7:13 PM GMT<br /><br /><p><i>The following is a lightly edited and anonymized transcript of a discussion among charity founders, researchers, and funders in Ambitious Impact’s Slack workspace about GiveWell's decision to stop funding Evidence Action's Dispensers for Safe Water program. The conversation surfaced themes that we felt were worth sharing more broadly. Everyone involved consented to their thoughts being shared in this way. An LLM was used to process and anony",
+      "link": "https://forum.effectivealtruism.org/posts/ru3wySwYkuwmwuaDW/global-health-charity-founders-on-givewell-evidence-action",
+      "published": "Sun, 17 May 2026 21:26:57 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] https://www.google.com/url?sa=t&source=web&rct=j&url=https...",
+      "summary": "Na la, let's goune ha ne juin Na la la la, let's go vianan Rude,ude to roe .ah Na la, ne juin Jeon We don't even care no blows Death is safe Ready to draw Na lashésitez video Na la la Na la",
+      "link": "https://www.youtube.com/watch?v=58Q2G6-ZYTc",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "58Q2G6-ZYTc",
+      "transcript_method": "whisper",
+      "transcript_chars": 189,
+      "has_full_transcript": true
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+MODEL: qwen3:8b
+
+PROMPT:
+You are CORTEX++ AGI. Generate a JSON snapshot for PLANETARY_POTENTIAL_REVIEW — the integrated carrying capacity of Earth. Include: current_level (LOW/MEDIUM/HIGH), key_signals list, main_bottlenecks list, trends list. Return ONLY valid JSON.
+
+RESPONSE:
+Thinking...
+Okay, the user wants me to generate a JSON snapshot for PLANETARY_POTENTIAL_REVIEW, focusing on Earth's integrated carrying capacity. Let me break down the requirements. They need current_level as LOW, MEDIUM, or HIGH. Then key_signals, main_bottlenecks, and trends as lists.
+
+First, determining the current_level. I remember that carrying capacity is about how much the planet can sustain. With climate change, resource depletion, and biodiversity loss, it's likely HIGH. But wait, some sources might say it's already exceeded. Hmm, maybe HIGH is accurate here.
+
+Key_signals should be indicators showing the state. Deforestation rates, CO2 levels, freshwater scarcity, biodiversity loss, and plastic pollution are all critical. Let me check recent data. CO2 is over 420 ppm, which is a key signal. Freshwater scarcity affecting 2 billion people. Plastic in oceans is a big issue. Biodiversity loss with species extinction rates 100 times higher. Deforestation in the Amazon and other regions. These should be in the key_signals list.
+
+Main_bottlenecks are the main problems. Climate change is a big one, leading to extreme weather. Resource depletion like fossil fuels and minerals. Biodiversity loss disrupting ecosystems. Pollution from plastics and chemicals. Inequality in resource distribution, so some regions overuse while others lack. These are the main bottlenecks.
+
+Trends need to show current movements. Renewable energy adoption is increasing, which is positive. Urbanization leading to more resource use. Technological advancements in sustainability. Policy shifts like net-zero targets. But also, population growth and consumption rates are rising. These trends should be listed.
+
+Now, structuring the JSON. Make sure all keys are present: current_level, key_signals, main_bottlenecks, trends. No markdown, just valid JSON. Check for proper commas and brackets. Avoid any extra text. Let me verify each part again to ensure accuracy and that it's valid JSON.
+...done thinking.
+
+{
+  "PLANETARY_POTENTIAL_REVIEW": {
+    "current_level": "HIGH",
+    "key_signals": [
+      "Global CO2 concentrations exceed 420 ppm",
+      "Freshwater scarcity affecting 2 billion people",
+      "Plastic waste in oceans surpassing 150 million tons annually",
+      "Biodiversity loss at 100x pre-human rates",
+      "Deforestation rates in tropical regions reaching 10 million hectares/year"
+    ],
+    "main_bottlenecks": [
+      "Climate change feedback loops accelerating warming",
+      "Fossil fuel dependency undermining energy transition",
+      "Soil degradation threatening agricultural productivity",
+      "Ocean acidification disrupting marine ecosystems",
+      "Inequitable resource distribution exacerbating scarcity"
+    ],
+    "trends": [
+      "Renewable energy adoption growing at 15% CAGR",
+      "Urbanization increasing pressure on infrastructure",
+      "AI-driven resource optimization gaining traction",
+      "Circular economy policies expanding globally",
+      "Population growth outpacing sustainable development goals"
+    ]
+  }
+}

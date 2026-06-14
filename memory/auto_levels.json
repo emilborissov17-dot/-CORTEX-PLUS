@@ -1,0 +1,160 @@
+{
+  "ECONOMY_WORK_REVIEW": {
+    "level": "MEDIUM",
+    "details": [
+      "gdp_per_capita_usd=13631.2 → MEDIUM",
+      "gdp_growth_pct=2.9 → MEDIUM",
+      "unemployment_pct=4.8 → HIGH"
+    ],
+    "computed_at": "2026-05-16T13:51:18.482958+00:00"
+  },
+  "EDUCATION_CULTURE_REVIEW": {
+    "level": "MEDIUM",
+    "details": [
+      "literacy_rate_adult_pct=87.7 → MEDIUM",
+      "primary_enrollment_pct=89.4 → MEDIUM",
+      "secondary_enrollment_pct=66.3 → MEDIUM"
+    ],
+    "computed_at": "2026-05-16T13:51:18.483272+00:00"
+  },
+  "GOVERNANCE_INSTITUTIONS_REVIEW": {
+    "level": "LOW",
+    "details": [
+      "rule_of_law_weighted_mean=-0.4 → LOW",
+      "control_of_corruption_weighted_mean=-0.3 → LOW",
+      "political_stability_weighted_mean=-0.7 → LOW",
+      "voice_accountability_weighted_mean=-0.6 → LOW",
+      "political_stability_pct_pop_below_minus05=57.3 → LOW",
+      "voice_accountability_pct_pop_below_minus05=50.7 → LOW"
+    ],
+    "computed_at": "2026-05-16T13:51:18.483565+00:00"
+  },
+  "INEQUALITY_POVERTY_REVIEW": {
+    "level": "MEDIUM",
+    "details": [
+      "poverty_headcount_190=10.4 → MEDIUM"
+    ],
+    "computed_at": "2026-05-16T13:51:18.483978+00:00"
+  },
+  "INFRASTRUCTURE_CITIES_REVIEW": {
+    "level": "MEDIUM",
+    "details": [
+      "access_electricity_pct=91.6 → MEDIUM",
+      "access_clean_fuels_pct=74.4 → MEDIUM"
+    ],
+    "computed_at": "2026-05-16T13:51:18.484144+00:00"
+  },
+  "TECHNOLOGY_AI_REVIEW": {
+    "level": "MEDIUM",
+    "details": [
+      "rd_expenditure_pct_gdp=2.6 → MEDIUM",
+      "high_tech_exports_pct=24.8 → MEDIUM"
+    ],
+    "computed_at": "2026-05-16T13:51:18.484371+00:00"
+  },
+  "TECHNOLOGY_INFRA_REVIEW": {
+    "level": "MEDIUM",
+    "details": [
+      "fixed_broadband_per100=20.1 → MEDIUM"
+    ],
+    "computed_at": "2026-05-16T13:51:18.484782+00:00"
+  },
+  "CLIMATE_GLOBAL_RISK_REVIEW": {
+    "level": "LOW",
+    "details": [
+      "co2_ppm_current=432.2 → LOW",
+      "co2_annual_increase=1.5 → MEDIUM"
+    ],
+    "computed_at": "2026-05-16T13:51:18.485018+00:00"
+  },
+  "COSMIC_RESOURCES_REVIEW": {
+    "level": "HIGH",
+    "details": [
+      "outer_space_treaty_signatories=114.0 → HIGH",
+      "asteroid_mining_missions_active=0.0 → MEDIUM"
+    ],
+    "computed_at": "2026-05-16T13:51:18.485233+00:00"
+  },
+  "SPACE_INFRASTRUCTURE_REVIEW": {
+    "level": "HIGH",
+    "details": [
+      "active_satellites_est=9000.0 → HIGH",
+      "annual_launches_est=240.0 → HIGH"
+    ],
+    "computed_at": "2026-05-16T13:51:18.485493+00:00"
+  },
+  "COGNITION_LEARNING_REVIEW": {
+    "level": "MEDIUM",
+    "details": [
+      "literacy_rate_youth_pct=93.1 → MEDIUM",
+      "primary_completion_rate=88.0 → MEDIUM",
+      "tertiary_enrollment_pct=43.6 → MEDIUM"
+    ],
+    "computed_at": "2026-05-16T13:51:18.485714+00:00"
+  },
+  "CULTURE_MEDIA_REVIEW": {
+    "level": "MEDIUM",
+    "details": [
+      "internet_users_pct=73.6 → MEDIUM",
+      "mobile_subscriptions_per100=111.5 → HIGH",
+      "literacy_rate_adult_pct=87.7 → MEDIUM"
+    ],
+    "computed_at": "2026-05-16T13:51:18.486011+00:00"
+  },
+  "HUMAN_WELL_BEING_REVIEW": {
+    "level": "MEDIUM",
+    "details": [
+      "life_expectancy=73.5 → MEDIUM",
+      "infant_mortality=27.7 → MEDIUM",
+      "health_expenditure_pct=10.0 → HIGH"
+    ],
+    "computed_at": "2026-05-16T13:51:18.486346+00:00"
+  },
+  "SOCIAL_RELATIONS_REVIEW": {
+    "level": "MEDIUM",
+    "details": [
+      "homicide_rate_per_100k=5.2 → MEDIUM"
+    ],
+    "computed_at": "2026-05-16T13:51:18.486652+00:00"
+  },
+  "ECOSYSTEMS_BIODIVERSITY_REVIEW": {
+    "level": "MEDIUM",
+    "details": [
+      "forest_area_pct=31.1 → MEDIUM",
+      "protected_terrestrial_area_pct=16.5 → MEDIUM"
+    ],
+    "computed_at": "2026-05-16T13:51:18.486847+00:00"
+  },
+  "ENERGY_REVIEW": {
+    "level": "LOW",
+    "details": [
+      "renewable_energy_pct=19.7 → LOW",
+      "fossil_fuel_consumption_pct=74.8 → MEDIUM"
+    ],
+    "computed_at": "2026-05-16T13:51:18.487096+00:00"
+  },
+  "FOOD_REVIEW": {
+    "level": "MEDIUM",
+    "details": [
+      "prevalence_undernourishment_pct=8.5 → MEDIUM",
+      "food_production_index=100.0 → MEDIUM"
+    ],
+    "computed_at": "2026-05-16T13:51:18.487379+00:00"
+  },
+  "MATERIALS_WASTE_REVIEW": {
+    "level": "MEDIUM",
+    "details": [
+      "municipal_waste_per_capita_kg=3.2 → HIGH",
+      "material_consumption_per_gdp=2.9 → LOW"
+    ],
+    "computed_at": "2026-05-16T13:51:18.487614+00:00"
+  },
+  "WATER_REVIEW": {
+    "level": "MEDIUM",
+    "details": [
+      "access_safe_water_pct=73.7 → MEDIUM",
+      "access_sanitation_pct=58.5 → MEDIUM"
+    ],
+    "computed_at": "2026-05-16T13:51:18.487830+00:00"
+  }
+}

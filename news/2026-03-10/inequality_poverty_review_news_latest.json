@@ -1,0 +1,75 @@
+{
+  "axis": "INEQUALITY_POVERTY_REVIEW",
+  "fetched_at": "2026-03-10T11:27:35.132896+00:00",
+  "smart_query": "Inequality Poverty Review Level Metrics Analysis",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube": 2,
+    "youtube_transcripts": 1
+  },
+  "analysis": {
+    "summary": "В ЮАР най-бедните 90% притежават по-малко от 30% от богатството, докато най-бедните 1% притежават почти 30%, което показва изключително неравенство. Проектите за картиране на бедността чрез машинно обучение и спътнически изображения показват потенциал за промяна, но изследванията показват, че неравенството е неизбежно, което предизвиква критика.",
+    "key_developments": [
+      "Неравенството в ЮАР достига до 30% богатство на 1%",
+      "Проектите за картиране на бедността са високи в отворен източник"
+    ],
+    "sentiment": "CRITICAL",
+    "urgency": "HIGH",
+    "open_source_momentum": "Високи активности в GitHub за картиране на бедността",
+    "scientific_frontier": "Оптимизация на AI за устойчиво предпринимане и изследвания върху хиперграфове",
+    "relevance_to_goal": "Висока връзка към целта за достойнството на всички"
+  },
+  "sentiment": "CRITICAL",
+  "urgency": "HIGH",
+  "summary": "В ЮАР най-бедните 90% притежават по-малко от 30% от богатството, докато най-бедните 1% притежават почти 30%, което показва изключително неравенство. Проектите за картиране на бедността чрез машинно обучение и спътнически изображения показват потенциал за промяна, но изследванията показват, че неравенството е неизбежно, което предизвиква критика.",
+  "key_developments": [
+    "Неравенството в ЮАР достига до 30% богатство на 1%",
+    "Проектите за картиране на бедността са високи в отворен източник"
+  ],
+  "open_source_momentum": "Високи активности в GitHub за картиране на бедността",
+  "scientific_frontier": "Оптимизация на AI за устойчиво предпринимане и изследвания върху хиперграфове",
+  "github_repos": [
+    {
+      "title": "thinkingmachines/ph-poverty-mapping",
+      "snippet": "Mapping Philippine Poverty using Machine Learning, Satellite Imagery, and Crowd-sourced Geospatial Information",
+      "stars": 85,
+      "url": "https://github.com/thinkingmachines/ph-poverty-mapping",
+      "updated": "2026-03-06",
+      "source": "GitHub"
+    },
+    {
+      "title": "rs-anderson/Clustering-Ward-Level-Poverty-Using-Satellite-Imagery",
+      "snippet": "Combing satellite imagery and machine learning methods to cluster ward-level povery in Gauteng, South Africa.",
+      "stars": 4,
+      "url": "https://github.com/rs-anderson/Clustering-Ward-Level-Poverty-Using-Satellite-Imagery",
+      "updated": "2024-04-06",
+      "source": "GitHub"
+    },
+    {
+      "title": "ejanalysis/EJAM",
+      "snippet": "Environmental Justice Analysis Multisite tool for summarizing environmental and residential population information for multiple locations. This detached fork of the package and this repository are not",
+      "stars": 2,
+      "url": "https://github.com/ejanalysis/EJAM",
+      "updated": "2026-02-12",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Improved Certificates for Independence Number in Semirandom Hypergraphs",
+      "snippet": "We study the problem of efficiently certifying upper bounds on the independence number of $\\ell$-uniform hypergraphs. This is a notoriously hard problem, with efficient algorithms failing to approximate the independence number within $n^{1-ε}$ factor in the worst case [Has99, Zuc07]. We study the pr",
+      "url": "https://arxiv.org/abs/2603.08693v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "A Multi-Objective Optimization Approach for Sustainable AI-Driven Entrepreneurship in Resilient Economies",
+      "snippet": "The rapid advancement of artificial intelligence (AI) technologies presents both unprecedented opportunities and significant challenges for sustainable economic development. While AI offers transformative potential for addressing environmental challenges and enhancing economic resilience, its deploy",
+      "url": "https://arxiv.org/abs/2603.08692v1",
+      "source": "arXiv"
+    }
+  ]
+}

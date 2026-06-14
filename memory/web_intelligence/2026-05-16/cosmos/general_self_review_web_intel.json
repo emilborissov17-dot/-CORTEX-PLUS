@@ -1,0 +1,145 @@
+{
+  "axis": "GENERAL_SELF_REVIEW",
+  "domain": "cosmos",
+  "timestamp": "2026-05-16T22:13:41.345311+00:00",
+  "sources_count": 10,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 2,
+  "youtube_items": [
+    {
+      "title": "[YT] Elon Musk on AGI Timeline, US vs China, Job Markets... - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] Get access to metatrends 10+ years before anyone else - https://qr.diamandis.com/metatrends Elon Musk is the cofounder and CEO of Tesla, cofounder of SpaceX...",
+      "link": "https://www.youtube.com/watch?v=RSNuB9pj9P8",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "RSNuB9pj9P8",
+      "transcript_method": "description",
+      "transcript_chars": 182,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Ex-OpenAI Scientist WARNS: \"You Have No Idea...\" - YouTube",
+      "summary": "You may not take interest in politics, but politics will take interest in you. So the same applies to AI many times over. Billious Satskiver, the man behind the invention of Open AI, gave a pretty strong speech at the University of Toronto. He expressed great concerns about the upcoming AI, which might disrupt our entire world. Watch this. The reason it's not going to be the most conventional convocation speech is because there is something a different going on. Right now you all leave, you all leave in the most unusual time ever. And this is something that people might say often, but I think it's actually true this time. And the reason it's true this time is because of AI, right, obviously. I mean, from what I hear the AI of today has already changed what it means to be a student by prett",
+      "link": "https://www.youtube.com/watch?v=79-bApI3GIU",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "79-bApI3GIU",
+      "transcript_method": "whisper",
+      "transcript_chars": 17033,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "Конкуренцията и конфликтът между гигантите на ИИ (Musk, OpenAI) подкопават доверието и сътрудничеството, което е критично за устойчивата разработка на AGI.",
+    "root_cause": "Липсата на прозрачност и доверие между ключови актьори в ИИ индустрията води до конфликти и ограничава сътрудничеството, което е необходимо за разработка на безопасен и етичен AGI.",
+    "severity": "HIGH",
+    "leverage_points": [
+      "OpenAI и нейните партньори, включително Malta, които опитват да разпространи AI технологии в широката публика",
+      "Институции като Всемирна здравна организация, които следят напредъка на технологиите и здравето на обществото"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Създаване на международна платформа за прозрачност и сътрудничество в разработката на AGI",
+        "measurable_goal": "Увеличаване на броя на страните и институциите, участващи в платформата на 50% за следващия години",
+        "timeframe": "дългосрочно"
+      },
+      {
+        "action": "Разпространение на образователни програми за отговорна употреба на AI",
+        "measurable_goal": "Достъп до обучение за 10 милиона хора в следващите 3 години",
+        "timeframe": "средносрочно"
+      }
+    ],
+    "evidence": [
+      "Musk v. Altman trial: конфликтът между ключови фигури в ИИ",
+      "OpenAI и Malta партньорство: опит за разпространение на AI технологии"
+    ],
+    "generalization": "Проблемът е свързан с домейна Cosmos, защото доверието и сътрудничеството са критични за устойчивото развитие на AGI, което е важна част от бъдещето на човечеството.",
+    "summary": "Конкуренцията и липсата на доверие между ключови актьори в ИИ индустрията угрожат устойчивото развитие на AGI.",
+    "risk_level": "HIGH"
+  },
+  "raw_items": [
+    {
+      "title": "Musk v. Altman week 3: Elon Musk and Sam Altman traded blows over each other’s credibility. Now the jury will pick a side.",
+      "summary": "In the final week of the Musk v. Altman trial, lawyers traded blows over Elon Musk’s and OpenAI CEO Sam Altman’s credibility. Altman was grilled on his alleged history of lying and self-dealing involving companies that do business with OpenAI. But he fired back, painting Musk as a power-seeker who wanted to control the development&#8230;",
+      "link": "https://www.technologyreview.com/2026/05/15/1137357/musk-v-altman-week-3/",
+      "published": "Fri, 15 May 2026 23:39:35 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "The Download: China’s AI drama factory and the WHO’s missing health targets",
+      "summary": "This is today&#8217;s edition of The Download, our weekday newsletter that provides a daily dose of what&#8217;s going on in the world of technology. How Chinese short dramas became AI content machines China’s short drama industry is fueled by bite-sized, melodramatic, and smutty shows built for smartphone scrolling. Now, many are being made entirely with&#8230;",
+      "link": "https://www.technologyreview.com/2026/05/15/1137341/the-download-china-short-drama-ai-who-health-targets/",
+      "published": "Fri, 15 May 2026 12:10:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "The world is on track to miss its health targets",
+      "summary": "Every year the World Health Organization publishes a global health statistics report. It features the numbers behind world health trends and, importantly, assesses whether we’re on track to reach ambitious goals set in 2015. It’s a bit like a health grade. The 2026 report was published on Wednesday. And the results aren’t looking brilliant. While&#8230;",
+      "link": "https://www.technologyreview.com/2026/05/15/1137270/the-world-is-on-track-to-miss-its-health-targets/",
+      "published": "Fri, 15 May 2026 09:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "How Chinese short dramas became AI content machines",
+      "summary": "In a dimly lit bedroom, a frightened young woman is thrown onto a bed by a tall, muscular man. He grabs her hand, and flame-like vines crawl across her body, fusing with her flesh. She levitates, then drops. A dragon-shaped tattoo appears across her chest. “Two months,” the man says. “Give me an heir, or&#8230;",
+      "link": "https://www.technologyreview.com/2026/05/15/1137326/chinese-short-dramas-ai/",
+      "published": "Fri, 15 May 2026 09:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "OpenAI and Malta partner to bring ChatGPT Plus to all citizens",
+      "summary": "OpenAI and Malta partner to expand AI access, offering ChatGPT Plus and training to help citizens build practical AI skills and use AI responsibly.",
+      "link": "https://openai.com/index/malta-chatgpt-plus-partnership",
+      "published": "Sat, 16 May 2026 00:00:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "How business operations teams use Codex",
+      "summary": "See how business operations teams can use Codex to create initiative briefs, strategy updates, leadership decision packets, progress updates, and more from real work inputs.",
+      "link": "https://openai.com/academy/codex-for-work/how-business-operations-teams-use-codex",
+      "published": "Fri, 15 May 2026 00:00:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Databricks brings GPT-5.5 to enterprise agent workflows",
+      "summary": "Databricks uses GPT-5.5 for enterprise agent workflows after the model set a new state of the art on the OfficeQA Pro benchmark.",
+      "link": "https://openai.com/index/databricks",
+      "published": "Fri, 15 May 2026 00:00:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "How data science teams use Codex",
+      "summary": "See how data science teams can use Codex to build root-cause briefs, impact readouts, KPI memos, scoped analyses, and dashboard specs from real work inputs.",
+      "link": "https://openai.com/academy/codex-for-work/how-data-science-teams-use-codex",
+      "published": "Fri, 15 May 2026 00:00:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] Elon Musk on AGI Timeline, US vs China, Job Markets... - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] Get access to metatrends 10+ years before anyone else - https://qr.diamandis.com/metatrends Elon Musk is the cofounder and CEO of Tesla, cofounder of SpaceX...",
+      "link": "https://www.youtube.com/watch?v=RSNuB9pj9P8",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "RSNuB9pj9P8",
+      "transcript_method": "description",
+      "transcript_chars": 182,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Ex-OpenAI Scientist WARNS: \"You Have No Idea...\" - YouTube",
+      "summary": "You may not take interest in politics, but politics will take interest in you. So the same applies to AI many times over. Billious Satskiver, the man behind the invention of Open AI, gave a pretty strong speech at the University of Toronto. He expressed great concerns about the upcoming AI, which might disrupt our entire world. Watch this. The reason it's not going to be the most conventional convocation speech is because there is something a different going on. Right now you all leave, you all leave in the most unusual time ever. And this is something that people might say often, but I think it's actually true this time. And the reason it's true this time is because of AI, right, obviously. I mean, from what I hear the AI of today has already changed what it means to be a student by prett",
+      "link": "https://www.youtube.com/watch?v=79-bApI3GIU",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "79-bApI3GIU",
+      "transcript_method": "whisper",
+      "transcript_chars": 17033,
+      "has_full_transcript": true
+    }
+  ]
+}

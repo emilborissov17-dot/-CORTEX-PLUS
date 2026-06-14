@@ -1,0 +1,143 @@
+{
+  "axis": "LONG_TERM_FUTURE_REVIEW",
+  "domain": "cosmos",
+  "timestamp": "2026-05-01T12:07:12.998601+00:00",
+  "sources_count": 11,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] Existential Risk and the Future of Humanity: Lessons from AI, Pandemics & Nuclear Threats | Toby Ord - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] How close are we to the end of humanity? Toby Ord, Senior Researcher at Oxford University’s AI Governance Initiative and author of The Precipice, argues that... Published June 24, 2025",
+      "link": "https://www.youtube.com/watch?v=8CeplhPjVSI",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "8CeplhPjVSI",
+      "transcript_method": "description",
+      "transcript_chars": 207,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] The Precipice: Existential Risk and the Future of Humanity - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] Philosopher and philanthropist Toby Ord, author of the new book \"The Precipice: Existential Risk and the Future of Humanity,\" hosts our October 7, 2020 NTI S... Published October 8, 2020",
+      "link": "https://www.youtube.com/watch?v=3jxhPRnqKaE",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "3jxhPRnqKaE",
+      "transcript_method": "description",
+      "transcript_chars": 209,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] The 4 greatest threats to the survival of humanity - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] Dig into the 4 biggest existential risks that threaten the survival of humanity, and explore how we can safeguard our future.--With the invention of the atom... Published July 19, 2022",
+      "link": "https://www.youtube.com/watch?v=WP6T4MH0Dn4",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "WP6T4MH0Dn4",
+      "transcript_method": "description",
+      "transcript_chars": 207,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "summary": "- Qualia are internal variables but they are taken from different realm: <p><span>Consider a simple example: E = mc². The law describes a relation between mass and energy, but notice that \"E\" isn't a physical object. It's a letter of the Latin alphabet, as are the other sy\n- Open strategic questions",
+    "risk_level": "UNKNOWN",
+    "trend": "UNKNOWN",
+    "key_events": [
+      "Qualia are internal variables but they are taken from different realm",
+      "Open strategic questions for digital minds",
+      "Juriscription: finding the medicines missing somewhere"
+    ],
+    "insights": [],
+    "youtube_insights": [],
+    "relevance_to_goal": "",
+    "generalization": ""
+  },
+  "raw_items": [
+    {
+      "title": "Qualia are internal variables but they are taken from different realm",
+      "summary": "<p><span>Consider a simple example: E = mc². The law describes a relation between mass and energy, but notice that \"E\" isn't a physical object. It's a letter of the Latin alphabet, as are the other symbols in the equation. The Latin alphabet emerged at a particular moment in human history and reflects the features of human language (which decomposes into roughly thirty sounds), as well as the physical conditions of writing. Different alphabets evolved alongside different instruments and surfaces",
+      "link": "https://www.lesswrong.com/posts/fBar4uzzJx5d8CuWB/qualia-are-internal-variables-but-they-are-taken-from",
+      "published": "Fri, 01 May 2026 10:43:09 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Open strategic questions for digital minds",
+      "summary": "<p><span>These are strategic questions about digital minds and AI welfare that I think are especially important, and where I’d like to see more progress. A common theme is that they matter for what we should do concretely under uncertainty about AI moral status.</span></p><p><span>This is a current snapshot of my views and I expect them to change.</span></p><p><span>What do you think? Any questions you’d add?</span></p><h1><span>Approach</span></h1><h2><span>What’s robustly good to do now, under",
+      "link": "https://www.lesswrong.com/posts/4jLceojXtPTHnN2bn/open-strategic-questions-for-digital-minds",
+      "published": "Fri, 01 May 2026 09:56:45 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Juriscription: finding the medicines missing somewhere",
+      "summary": "<p><i><span>An </span></i><a href=\"https://arbresearch.com/\" rel=\"noreferrer\"><i><b><span>Arb Research</span></b></i></a><i><span> project</span></i></p><img alt=\"image.png\" src=\"https://res.cloudinary.com/lesswrong-2-0/image/upload/v1777628703/lexical_client_uploads/hewzbtf6ejkxzlyuoupm.png\" /><p><br /><span>You can't buy melatonin in the UK.</span><span class=\"footnote-reference\" id=\"fnrefx2veep5qidq\"><sup><a href=\"https://www.lesswrong.com/feed.xml#fnx2veep5qidq\">[1]</a></sup></span><span> In",
+      "link": "https://www.lesswrong.com/posts/9io39ejoL7EhoyXi7/juriscription-finding-the-medicines-missing-somewhere",
+      "published": "Fri, 01 May 2026 09:55:21 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Self driving interview",
+      "summary": "<p>In honor of <a href=\"https://worldspiritsockpuppet.substack.com/p/self-driving\">yesterday’s</a> nonspecific point in the gradual arrival of self-driving cars, an interview with myself.</p>\n\n<hr />\n\n<p><strong>Interviewer</strong>: It sounds like you’re pretty excited about self-driving cars. Weren’t you <a href=\"https://worldspiritsockpuppet.substack.com/p/ai-unemployment-and-ai-extinction\">just saying</a> that unemployment from AI is on some kind of very overlapping continuum with extinction",
+      "link": "https://www.lesswrong.com/posts/6pFTX2Lw94XkAfwbz/self-driving-interview",
+      "published": "Fri, 01 May 2026 08:30:41 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "The Case for a Grantmaking Fellowship",
+      "summary": "Published on May 1, 2026 2:56 AM GMT<br /><br /><h3>A Conversation on the final day of&nbsp;<a href=\"https://www.inkhaven.blog/about\">Inkhaven</a></h3><p>A lot of money is about to flood into AI safety philanthropy and almost nobody knows how to give it away well.&nbsp;</p><p>On their final day in the sunny Bay Area, three Inkhaven residents - let’s call them Adam, James, and Sam - were reflecting on the state of grantmaking after lunch. Sam has spent a lot of time investigating the upcoming IPO",
+      "link": "https://forum.effectivealtruism.org/posts/8dkXFGhcsvpbfwAS4/the-case-for-a-grantmaking-fellowship",
+      "published": "Fri, 01 May 2026 02:56:10 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Winners of the Manifund Essay Prize",
+      "summary": "Published on May 1, 2026 2:21 AM GMT<br /><br /><p><i>Twelve essays we liked on EA funding, SF fieldbuilding, and decision-relevant forecasting</i></p><p>So, when we launched the <a href=\"https://manifund.org/essay\"><u>Manifund Essay Prize</u></a>, I was looking for a winner for each of three categories. Unfortunately, I liked the submissions too much to choose just three, so here are 12 winners:</p><h2><strong>The </strong><a href=\"https://manifund.org/\"><strong><u>Manifund</u></strong></a><str",
+      "link": "https://forum.effectivealtruism.org/posts/z7vsgwRmwn4Mkrk4z/winners-of-the-manifund-essay-prize",
+      "published": "Fri, 01 May 2026 02:21:33 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "SFF's HSEE grant round; human intelligence amplification projects I'd like to see",
+      "summary": "Published on April 30, 2026 9:42 PM GMT<br /><br /><h1>Summary</h1>\n<p><strong>If you are interested in doing ambitious scientific research in areas listed below, and have a relevant project that needs funding, consider reaching out.</strong> My interest is in human intelligence amplification, though I believe that a variety of scientific projects are relevant, many of which are not specifically related to that goal.</p>\n<p>Some areas, discussed below:</p>\n<ul>\n<li>Soft questions: <a href=\"https",
+      "link": "https://forum.effectivealtruism.org/posts/HEtWKgamae8Yi4pgx/sff-s-hsee-grant-round-human-intelligence-amplification",
+      "published": "Thu, 30 Apr 2026 21:42:54 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "How to actually give money away",
+      "summary": "Published on April 30, 2026 6:15 PM GMT<br /><br /><p><i>This was originally posted </i><a href=\"https://www.linkedin.com/pulse/how-actually-give-money-away-nick-allardice-4ppqe/\"><i>here</i></a><i>. It's written for an audience that's not deep in the weeds of EA giving theory/culture, but a few people suggested I post here as there's much that's additive to or divergent from some common EA practices. Feedback / disagreements welcome! &nbsp;Also my first time posting here. Hi!</i></p><p>--</p><p",
+      "link": "https://forum.effectivealtruism.org/posts/fRLt59FNXxmCaAkYF/how-to-actually-give-money-away",
+      "published": "Thu, 30 Apr 2026 18:16:53 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] Existential Risk and the Future of Humanity: Lessons from AI, Pandemics & Nuclear Threats | Toby Ord - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] How close are we to the end of humanity? Toby Ord, Senior Researcher at Oxford University’s AI Governance Initiative and author of The Precipice, argues that... Published June 24, 2025",
+      "link": "https://www.youtube.com/watch?v=8CeplhPjVSI",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "8CeplhPjVSI",
+      "transcript_method": "description",
+      "transcript_chars": 207,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] The Precipice: Existential Risk and the Future of Humanity - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] Philosopher and philanthropist Toby Ord, author of the new book \"The Precipice: Existential Risk and the Future of Humanity,\" hosts our October 7, 2020 NTI S... Published October 8, 2020",
+      "link": "https://www.youtube.com/watch?v=3jxhPRnqKaE",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "3jxhPRnqKaE",
+      "transcript_method": "description",
+      "transcript_chars": 209,
+      "has_full_transcript": false
+    }
+  ]
+}

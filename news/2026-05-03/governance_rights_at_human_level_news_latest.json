@@ -1,0 +1,56 @@
+{
+  "axis": "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL",
+  "fetched_at": "2026-05-03T09:10:05.600967+00:00",
+  "smart_query": "human rights democracy freedom",
+  "sources_count": {
+    "wiki": 0,
+    "gdelt": 3,
+    "arxiv": 2,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [],
+  "gdelt": [
+    {
+      "title": "Scholarship Fund for Human Rights Journalism ( Norway ) ",
+      "snippet": "Scholarship Fund for Human Rights Journalism ( Norway ) ",
+      "url": "https://www2.fundsforngos.org/individuals/scholarship-fund-for-human-rights-journalism-norway/",
+      "source": "fundsforngos.org"
+    },
+    {
+      "title": "Altenkamp : Religionsfreiheit ist Gradmesser für Demokratie und Rechtsstaatlichkeit",
+      "snippet": "Altenkamp : Religionsfreiheit ist Gradmesser für Demokratie und Rechtsstaatlichkeit",
+      "url": "https://www.finanznachrichten.de/nachrichten-2026-03/68050343-altenkamp-religionsfreiheit-ist-gradmesser-fuer-demokratie-und-rechtsstaatlichkeit-007.htm",
+      "source": "finanznachrichten.de"
+    },
+    {
+      "title": "Silencing Citizens Threatens Democracy in Nigeria , NHRC Warn",
+      "snippet": "Silencing Citizens Threatens Democracy in Nigeria , NHRC Warn",
+      "url": "https://punchng.com/silencing-citizens-threatens-democracy-nhrc/",
+      "source": "punchng.com"
+    }
+  ],
+  "github_repos": [],
+  "arxiv_papers": [
+    {
+      "title": "Mapping how LLMs debate societal issues when shadowing human personality traits, sociodemographics and social media behavior",
+      "snippet": "Large Language Models (LLMs) can strongly shape social discourse, yet datasets investigating how LLM outputs vary across controlled social and contextual prompting remain sparse. Cognitive Digital Shadows (CDS) is a 190,000-record synthetic corpus supporting analyses of LLM-generated discourse. Each",
+      "url": "https://arxiv.org/abs/2604.27624v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Leading Across the Spectrum of Human-AI Relationships: A Conceptual Framework for Increasingly Heterogeneous Teams",
+      "snippet": "What shapes a consequential decision when human and artificial intelligence work on it together? The answer is becoming harder to see. A decision may look human-led after AI has set the frame, or appear automated while human judgment still carries decisive force. This paper offers a leadership-facin",
+      "url": "https://arxiv.org/abs/2604.27392v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[#239 – Rose Hadshar on why automating all human labour will break our political system] The most important political question in the age of advanced AI might not be who wins elections. It might be whether elections continue to matter at all.That’s the view of Rose Hadshar, researcher at Forethought, who believes we could see extreme, AI-enabled power concentration without a coup or dramatic ‘end of democracy’ moment.She foresees something more insidious: an elite group with access to",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

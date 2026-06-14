@@ -1,0 +1,33 @@
+{
+  "axis": "ECONOMY_WORK_REVIEW",
+  "fetched_at": "2026-03-10T11:24:41.109530+00:00",
+  "smart_query": "economy work review",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0
+  },
+  "analysis": {
+    "summary": "Енергийните цени падат, а акциите нарастват след изявление на Тръмп за 'извънредно' завършената война с Иран, което предизвиква промени в пазара. Въздействието върху личните бюджети и разходи е предмет на анализ.",
+    "key_developments": [
+      "d1",
+      "d2"
+    ],
+    "sentiment": "POSITIVE",
+    "urgency": "MEDIUM",
+    "open_source_momentum": "increasing",
+    "scientific_frontier": "energy efficiency and economic modeling",
+    "relevance_to_goal": "moderate"
+  },
+  "sentiment": "POSITIVE",
+  "urgency": "MEDIUM",
+  "summary": "Енергийните цени падат, а акциите нарастват след изявление на Тръмп за 'извънредно' завършената война с Иран, което предизвиква промени в пазара. Въздействието върху личните бюджети и разходи е предмет на анализ.",
+  "key_developments": [
+    "d1",
+    "d2"
+  ],
+  "open_source_momentum": "increasing",
+  "scientific_frontier": "energy efficiency and economic modeling",
+  "github_repos": [],
+  "arxiv_papers": []
+}

@@ -1,0 +1,138 @@
+{
+  "axis": "MATERIALS_WASTE_REVIEW",
+  "fetched_at": "2026-03-12T18:27:46.548704+00:00",
+  "smart_query": "Municipal waste management strategies for cities",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 0,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "analysis": {
+    "summary": "Този анализ на ос MATERIALS_WASTE_REVIEW цели да постигне устойчивост в материалите и отходите. Целта е да се постигне устойчивост и да се гарантира достойнство за всички. Този анализ е важен за бъдещето на човечеството.",
+    "key_developments": [
+      "PV_ICE"
+    ],
+    "sentiment": "POSITIVE",
+    "urgency": "MEDIUM",
+    "open_source_momentum": "pogopaule/awesome-sustainability-jobs, Alkia/electra, NatLabRockies/PV_ICE",
+    "scientific_frontier": "On Utility Maximization under Multivariate Fake Stationary Affine Volterra Models",
+    "relevance_to_goal": "HIGH"
+  },
+  "sentiment": "POSITIVE",
+  "urgency": "MEDIUM",
+  "summary": "Този анализ на ос MATERIALS_WASTE_REVIEW цели да постигне устойчивост в материалите и отходите. Целта е да се постигне устойчивост и да се гарантира достойнство за всички. Този анализ е важен за бъдещето на човечеството.",
+  "key_developments": [
+    "PV_ICE"
+  ],
+  "open_source_momentum": "pogopaule/awesome-sustainability-jobs, Alkia/electra, NatLabRockies/PV_ICE",
+  "scientific_frontier": "On Utility Maximization under Multivariate Fake Stationary Affine Volterra Models",
+  "github_repos": [
+    {
+      "title": "pogopaule/awesome-sustainability-jobs",
+      "snippet": "Dev jobs in the sustainability sector - be part of the solution, not the problem",
+      "stars": 504,
+      "url": "https://github.com/pogopaule/awesome-sustainability-jobs",
+      "updated": "2026-02-23",
+      "source": "GitHub"
+    },
+    {
+      "title": "Alkia/electra",
+      "snippet": "This is Electra blockchain's repository for a decentralized micro-grid electricity exchange solution",
+      "stars": 72,
+      "url": "https://github.com/Alkia/electra",
+      "updated": "2026-01-28",
+      "source": "GitHub"
+    },
+    {
+      "title": "NatLabRockies/PV_ICE",
+      "snippet": "An open-source tool to quantify Solar Photovoltaics (PV) Energy and Mass Flows in the Circular Economy, from a Reliability and Lifetime approach",
+      "stars": 43,
+      "url": "https://github.com/NatLabRockies/PV_ICE",
+      "updated": "2026-01-28",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "On Utility Maximization under Multivariate Fake Stationary Affine Volterra Models",
+      "snippet": "This paper is concerned with Merton's portfolio optimization problem in a Volterra stochastic environment described by a multivariate fake stationary Volterra--Heston model. Due to the non-Markovianity and non-semimartingality of the underlying processes, the classical stochastic control approach ca",
+      "url": "https://arxiv.org/abs/2603.11046v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Agentar-Fin-OCR",
+      "snippet": "In this paper, we propose Agentar-Fin-OCR, a document parsing system tailored to financial-domain documents, transforming ultra-long financial PDFs into semantically consistent, highly accurate, structured outputs with auditing-grade provenance. To address finance-specific challenges such as complex",
+      "url": "https://arxiv.org/abs/2603.11044v1",
+      "source": "arXiv"
+    }
+  ],
+  "youtube_transcripts": [],
+  "podcast": "We're so entangled with our devices that online has started to feel more real than IRL, says journalist Nayeema Raza. As screens reshape how we connect and relate, she offers three practical habits to reignite curiosity, restore presence and break free from our phones.(Following the talk, Elise Hu, host of TED Talks Daily, interviews Raza on the best approach to discussing difficult topics — wheth | Where's the best free comedy show in town? Tom Sullam, cofounder of the annual Comedy Wildlife Photography Awards, shares hilarious animal photos that dissolve the distance between humans and nature. The result? A joyful case for caring about what we're at risk of losing.Learn more about our flagship conference happening this April at&nbsp;attend.ted.com/podcast Hosted on Acast. See acast.com/priv",
+  "youtube_videos": [
+    {
+      "title": "YouTube:-m74YoshU7s",
+      "video_id": "-m74YoshU7s",
+      "url": "https://www.youtube.com/watch?v=-m74YoshU7s",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:vzdenImoiuE",
+      "video_id": "vzdenImoiuE",
+      "url": "https://www.youtube.com/watch?v=vzdenImoiuE",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:KxEIjwmYuc0",
+      "video_id": "KxEIjwmYuc0",
+      "url": "https://www.youtube.com/watch?v=KxEIjwmYuc0",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:ggfadwNAv5o",
+      "video_id": "ggfadwNAv5o",
+      "url": "https://www.youtube.com/watch?v=ggfadwNAv5o",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:ar-z9F4IwiI",
+      "video_id": "ar-z9F4IwiI",
+      "url": "https://www.youtube.com/watch?v=ar-z9F4IwiI",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:zYNAeYv558Q",
+      "video_id": "zYNAeYv558Q",
+      "url": "https://www.youtube.com/watch?v=zYNAeYv558Q",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:f2iw2GLXv8Q",
+      "video_id": "f2iw2GLXv8Q",
+      "url": "https://www.youtube.com/watch?v=f2iw2GLXv8Q",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:zewegWZD0dU",
+      "video_id": "zewegWZD0dU",
+      "url": "https://www.youtube.com/watch?v=zewegWZD0dU",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:9YmeWVE9S6Y",
+      "video_id": "9YmeWVE9S6Y",
+      "url": "https://www.youtube.com/watch?v=9YmeWVE9S6Y",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:3Xm7wyvRHNU",
+      "video_id": "3Xm7wyvRHNU",
+      "url": "https://www.youtube.com/watch?v=3Xm7wyvRHNU",
+      "source": "YouTube"
+    }
+  ]
+}

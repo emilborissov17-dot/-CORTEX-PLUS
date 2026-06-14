@@ -1,0 +1,82 @@
+{
+  "axis": "TECHNOLOGY_AI_REVIEW",
+  "fetched_at": "2026-03-22T17:32:09.511849+00:00",
+  "smart_query": "artificial intelligence AI regulation",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "AI videos of sexualised black women removed from TikTok after BBC investigation",
+      "snippet": "Dozens of Instagram and TikTok accounts have used AI avatars to promote explicit content, the BBC finds.",
+      "url": "https://www.bbc.com/news/articles/c070e283k8vo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Luke Littler applies to trademark his face to combat AI fakes",
+      "snippet": "The darts star's image has been used legally on darts merchandise, snacks and fashion brands.",
+      "url": "https://www.bbc.com/news/articles/c5y7374x9n4o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Hargreaves Lansdown says IT issues which affected thousands are over",
+      "snippet": "The finance firm has apologised for the disruption to its website and app, which has angered many customers.",
+      "url": "https://www.bbc.com/news/articles/cx2reyjdyjzo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "swarm-ai-safety/swarm",
+      "snippet": "SWARM: System-Wide Assessment of Risk in Multi-agent systems",
+      "stars": 22,
+      "url": "https://github.com/swarm-ai-safety/swarm",
+      "updated": "2026-03-20",
+      "source": "GitHub"
+    },
+    {
+      "title": "Jakobovski/ai-safety-cheatsheet",
+      "snippet": "A compilation of AI safety ideas, problems, and solutions.",
+      "stars": 20,
+      "url": "https://github.com/Jakobovski/ai-safety-cheatsheet",
+      "updated": "2026-03-18",
+      "source": "GitHub"
+    },
+    {
+      "title": "shin4141/decision-os-paper",
+      "snippet": "Public gateway for the Decision-OS series (V4–V9). Canonical artifacts on Zenodo (DOI).",
+      "stars": 3,
+      "url": "https://github.com/shin4141/decision-os-paper",
+      "updated": "2026-03-22",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Man and machine: artificial intelligence and judicial decision making",
+      "snippet": "The integration of artificial intelligence (AI) technologies into judicial decision-making - particularly in pretrial, sentencing, and parole contexts - has generated substantial concerns about transparency, reliability, and accountability. At the same time, these developments have brought the limit",
+      "url": "https://arxiv.org/abs/2603.19042v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Proceedings of the 2nd Workshop on Advancing Artificial Intelligence through Theory of Mind",
+      "snippet": "This volume includes a selection of papers presented at the 2nd Workshop on Advancing Artificial Intelligence through Theory of Mind held at AAAI 2026 in Singapore on 26th January 2026. The purpose of this volume is to provide an open access and curated anthology for the ToM and AI research communit",
+      "url": "https://arxiv.org/abs/2603.18786v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[#486 – Michael Levin: Hidden Reality of Alien Intelligence & Biological Life] Michael Levin is a biologist at Tufts University working on novel ways to understand and control complex pattern formation in biological systems.\nThank you for listening ❤ Check out our sponsors: https://lexfridman.com/sponsors/ep486-sc\nSee below for timestamps, transcript, and to give feedback, submit questions, contact Lex, etc.\nTranscript:\nhttps://lexfridman.com/michael-levin-2-transcript\nCONTA",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

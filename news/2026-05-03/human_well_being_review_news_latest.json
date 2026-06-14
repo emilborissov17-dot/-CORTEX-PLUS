@@ -1,0 +1,57 @@
+{
+  "axis": "HUMAN_WELL_BEING_REVIEW",
+  "fetched_at": "2026-05-03T09:13:04.869973+00:00",
+  "smart_query": "mental health wellbeing global",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "What death doulas can teach us about dying",
+      "snippet": "Death doulas or soul midwives have increased in popularity in recent years. What do they do?",
+      "url": "https://www.bbc.com/news/articles/cp9vp0ld1leo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "The struggle to get hold of medication in England is set to get worse",
+      "snippet": "People living with conditions include heart problems, stroke risks, eye infections and bipolar are unable to get hold of the drugs they rely on. ",
+      "url": "https://www.bbc.com/news/articles/c202jqn3jzro?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Martha's Rule helplines get more than 1,700 calls from worried NHS staff",
+      "snippet": "The scheme encourages staff and families to seek an urgent second opinion if they fear a patient's condition is worsening. ",
+      "url": "https://www.bbc.com/news/articles/c4g9drqn2l3o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [],
+  "arxiv_papers": [
+    {
+      "title": "Global stability of a Hebbian/anti-Hebbian network for principal subspace learning",
+      "snippet": "Biological neural networks self-organize according to local synaptic modifications to produce stable computations. How modifications at the synaptic level give rise to such computations at the network level remains an open question. Pehlevan et al. [Neur. Comp. 27 (2015), 1461--1495] proposed a mode",
+      "url": "https://arxiv.org/abs/2601.13170v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "On graphical domination for threshold-linear networks with recurrent excitation and global inhibition",
+      "snippet": "Graphical domination was first introduced in [1] in the context of combinatorial threshold-linear networks (CTLNs). There it was shown that when a domination relationship exists between a pair of vertices in a graph, certain fixed points in the corresponding CTLN can be ruled out. Here we prove two ",
+      "url": "https://arxiv.org/abs/2510.05098v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[Male Roles, Obligations and Options for Building a Fulfilling Life | Scott Galloway] Scott Galloway is a professor of marketing at New York University's Stern School of Business. We discuss masculine roles and obligations of past, present and future. We explore which are timeless and which are changing, and positive steps boys and men can take to create meaning and stability in their lives. We cover work, finances, health and relationships to build a grounded, purposeful life. We ",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

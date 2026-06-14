@@ -1,0 +1,44 @@
+{
+  "axis": "CLIMATE_GLOBAL_RISK_REVIEW",
+  "fetched_at": "2026-05-07T10:28:05.071550+00:00",
+  "smart_query": "climate change CO2 emissions",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 0,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "Massive Alaska megatsunami was second largest ever recorded",
+      "snippet": "New research suggests glacier melt driven by climate change is increasing the risk of giant waves.",
+      "url": "https://www.bbc.com/news/articles/c1m253033m4o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Is this the real face of Anne Boleyn?",
+      "snippet": "A computer science team believes they have discovered a previously unknown sketch of King Henry VIII's second wife - but not everyone is convinced. ",
+      "url": "https://www.bbc.com/news/articles/cp9pz53e891o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Is this actually what Anne Boleyn looked like?",
+      "snippet": "An algorithm has suggested images of what were thought to be Anne Boleyn might not be.",
+      "url": "https://www.bbc.com/news/videos/c3d2e581k7do?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [],
+  "arxiv_papers": [],
+  "podcast": "[Return of the Flesh-Eaters] If a species is horrible enough, do we have the right to kill it forever?\nSeventy years ago, a nightmare parasite feasted on the live flesh of warm-blooded creatures in North America: the screwworm. That is, until a young scientist named Edward F. Knipling discovered a crucial screwworm weakness and hatched a sweeping project to wipe them out. Knipling’s seemingly zany plan to spray screwworms out",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

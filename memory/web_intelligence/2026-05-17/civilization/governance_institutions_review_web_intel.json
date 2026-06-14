@@ -1,0 +1,101 @@
+{
+  "axis": "GOVERNANCE_INSTITUTIONS_REVIEW",
+  "domain": "civilization",
+  "timestamp": "2026-05-17T14:17:56.721781+00:00",
+  "sources_count": 13,
+  "rss_count": 12,
+  "ddg_count": 0,
+  "youtube_count": 1,
+  "youtube_items": [
+    {
+      "title": "[YT] Angela Merkel's revelation on Minsk Agreements - YouTube",
+      "summary": "foreign must be aware of this interview given by former German Chancellor Angela Merkel to a German National weekly newspaper on 7th December 2022. I have searched the entire internet I couldn't find that video for obvious reasons it has been taken down I found one link but this video is taking forever to load and it's not playing anyhow here are some screenshots of Western news media articles from these headlines you can assume what that interview must have been about although these articles do not speak the whole truth these articles have been carefully crafted with the right choice of words nevertheless in this video I'll tell you the whole story here is one article it says former German Chancellor criticized her own government's defense policy here's another one it says cold war never ",
+      "link": "https://www.youtube.com/watch?v=0-57KOwG9co",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "0-57KOwG9co",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "action": "Създаване на независима международна петиция за преследване на престъпни групи, включително терористи, в рамките на правосъдна система, която включва всички страни в конфликта",
+    "measurable_goal": "Повишаване на уважението към правосъдие и международно право с 50% в регионални конфликти за 24 месеца",
+    "time,frame": "дългосрочно",
+    "severity": "UNKNOWN"
+  },
+  "raw_items": [
+    {
+      "title": "Bereaved Families, Friends of Gazans Killed Recount Tragic Loss, Denounce Ongoing Violence, Displacement, as Palestinian Rights Committee Marks Nakba Anniversary",
+      "summary": "At a special event today marking the seventy-eighth anniversary of the Nakba, the United Nations Palestinian Rights Committee heard testimonies from bereaved families and friends of victims — those killed during the events of 78 years ago, as well as in the ongoing conflict — including the mother of Hind Rajab, a five-year-old girl from Gaza, who has become a symbol of innocent lives lost amidst violence and war.",
+      "link": "https://press.un.org/en/2026/gapal1493.doc.htm",
+      "published": "Fri, 15 May 2026 16:15:01 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "Security Council Press Statement on Terrorist Attacks in Mali",
+      "summary": "The members of the Security Council condemned in the strongest terms the heinous and cowardly terrorist attacks in several locations across Mali on 25 April 2026 and in the days that followed, including 6 May 2026, which resulted in the loss of life and injury.",
+      "link": "https://press.un.org/en/2026/sc16360.doc.htm",
+      "published": "Fri, 15 May 2026 16:13:35 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "From Tragedy to Opportunity, ‘New Syria’ Is Writing Its Own Story, Security Council Hears, as Speakers Laud Progress, Call for Sustained Recovery",
+      "summary": "While Syria has seen progress towards accountability and sustained international engagement, the Security Council heard today that unresolved tensions, economic hardship and repeated violations of Syria’s sovereignty persist as the country charts its path forward in a volatile region.",
+      "link": "https://press.un.org/en/2026/sc16358.doc.htm",
+      "published": "Fri, 15 May 2026 16:00:41 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "Security Council Sanctions Committee Concerning South Sudan Discusses Final Report of Panel of Experts",
+      "summary": "On 27 March 2026, the Panel of Experts on South Sudan briefed the members of the Security Council Committee established pursuant to resolution 2206 (2015), in connection with the Panel’s final report submitted in pursuance of paragraph 18 of resolution 2781 (2025).",
+      "link": "https://press.un.org/en/2026/sc16359.doc.htm",
+      "published": "Fri, 15 May 2026 14:48:19 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "CIA Director Ratcliffe’s Trip to Havana",
+      "summary": "The United States is offering to turn Cuba’s lights back on—for a price.",
+      "link": "https://foreignpolicy.com/2026/05/15/cuba-ratcliffe-cia-regime-change-us-blockade-oil-fuel-blackouts-china-russia/",
+      "published": "Fri, 15 May 2026 20:02:14 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "What in the World?",
+      "summary": "Test yourself on the week of May 9: U.S. President Donald Trump visits China, India and Kenya host summits, and several prime ministers have a rough time.",
+      "link": "https://foreignpolicy.com/2026/05/15/foreign-policy-news-quiz-philippines-africa-summit-macron-trump-china-starmer/",
+      "published": "Fri, 15 May 2026 19:15:07 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "A ‘Lord of the Flies’ for Our Time",
+      "summary": "This is the perfect project for the creator of ‘Adolescence.’",
+      "link": "https://foreignpolicy.com/2026/05/15/lord-of-the-flies-netflix-bbc-adolescence/",
+      "published": "Fri, 15 May 2026 19:00:02 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "The 156,000 and the 1.4 Billion",
+      "summary": "What Curaçao figured out about World Cup soccer that India still hasn’t.",
+      "link": "https://foreignpolicy.com/2026/05/15/world-cup-soccer-football-india-curacao-citizenship/",
+      "published": "Fri, 15 May 2026 18:40:32 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "WHO declares Ebola outbreak in DR Congo an international emergency",
+      "summary": "The agency added that the outbreak, with around 246 cases and 80 deaths, does not meet the criteria of pandemic emergency.",
+      "link": "https://www.bbc.com/news/articles/c2l2p0wwzzdo?at_medium=RSS&at_campaign=rss",
+      "published": "Sun, 17 May 2026 13:00:26 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "How worrying is the Ebola outbreak in DR Congo?",
+      "summary": "An outbreak in DR Congo has been declared a health emergency, with almost 250 suspected cases reported.",
+      "link": "https://www.bbc.com/news/articles/c9q311nj5r3o?at_medium=RSS&at_campaign=rss",
+      "published": "Sun, 17 May 2026 13:31:00 GMT",
+      "source_type": "rss"
+    }
+  ]
+}

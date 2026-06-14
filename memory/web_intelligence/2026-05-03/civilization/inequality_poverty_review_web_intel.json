@@ -1,0 +1,129 @@
+{
+  "axis": "INEQUALITY_POVERTY_REVIEW",
+  "domain": "civilization",
+  "timestamp": "2026-05-03T08:52:25.470149+00:00",
+  "sources_count": 8,
+  "rss_count": 0,
+  "ddg_count": 5,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] Wealth Inequality in America - YouTube",
+      "summary": "there's a chart I saw recently that I can't get out of my head a Harvard Business professor and economist asked more than 5,000 Americans how they thought wealth was distributed in the United States this is what they said they thought it was dividing the country into five RUF groups of the top bottom and middle three 20% groups they asked people how they thought the wealth in this country was divided then he asked them what they thought was the ideal distribution and 92% that's at least nine out of ten of them said it should be more like this in other words more equitable than they think it is now that fact is telling admittedly the notion that most Americans know that the system is already skewed unfairly but what's most interesting to me is the reality compared to our perception the idea",
+      "link": "https://www.youtube.com/watch?v=QPKKQnijnsM",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "QPKKQnijnsM",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] How Wealth Inequality Spiraled Out of Control | Robert Reich - YouTube",
+      "summary": "elon musk's wealth has surpassed 200 billion dollars it would take the median u.s worker over 4 million years to make that much wealth inequality is eating this country alive we're now in america's second gilded age just like the late 19th century when a handful of robber barons monopolized the economy kept wages down and bribed lawmakers while today's robber barons take joy rides into space the distance between their gargantuan wealth and the financial struggles of working americans has never been clearer during the first 19 months of the pandemic u.s billionaires added 2.1 trillion dollars to their collective wealth and the rich have enough political power to cut their taxes to almost nothing sometimes literally nothing in fact jeff bezos paid no federal income taxes in 2007 or in 2011. ",
+      "link": "https://www.youtube.com/watch?v=wOI8RuhW7q0",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "wOI8RuhW7q0",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] The UK’s Generational Wealth Gap - Mike Brewer - YouTube",
+      "summary": "please welcome to the stage Professor Mike [Applause] Brewer uh thank you very much and thank you uh for coming I work now for the resolution Foundation which is a london-based think tank devoted to increasing the living standards of of low to Middle income households we think about all aspects of economic and social policy um and we like to say that we achieve social change by drawing charts and Excel so you're going to get quite a few of them tonight so uh be warned um I'm going to uh this is an outline what we're going to talk about I'm going to talk a little bit about uh different things that people might mean when they say the UK has high or Rising inequality because actually the story on income inequality is a bit less interesting than you might think um I'm going to argue that actua",
+      "link": "https://www.youtube.com/watch?v=Gv1YfAND3es",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "Gv1YfAND3es",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "summary": "- Poverty: Poverty is a state or condition in which an individual lacks the financial resources and essentials for a basic standard of living. Poverty can have diverse environmental, legal, social, economic, and\n- Poverty | Definition, Causes, Types, & Facts | Britannica: Poverty, the state of one w",
+    "risk_level": "UNKNOWN",
+    "trend": "UNKNOWN",
+    "key_events": [
+      "Poverty",
+      "Poverty | Definition, Causes, Types, & Facts | Britannica",
+      "Income inequality"
+    ],
+    "insights": [],
+    "youtube_insights": [],
+    "relevance_to_goal": "",
+    "generalization": ""
+  },
+  "raw_items": [
+    {
+      "title": "Poverty",
+      "summary": "Poverty is a state or condition in which an individual lacks the financial resources and essentials for a basic standard of living. Poverty can have diverse environmental, legal, social, economic, and political causes and effects. When evaluating poverty in statistics or economics there are two main measures: absolute poverty which compares income against the amount needed to meet basic personal n",
+      "link": "https://en.wikipedia.org/wiki/Poverty",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Poverty | Definition, Causes, Types, & Facts | Britannica",
+      "summary": "Poverty, the state of one who lacks a usual or socially acceptable amount of money or material possessions. Poverty is said to exist when people lack the means to satisfy their basic needs. Learn more about types and causes of poverty in this article.",
+      "link": "https://www.britannica.com/topic/poverty",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Income inequality",
+      "summary": "In economics, income distribution covers how a country's total GDP is distributed amongst its population. Economic theory and economic policy have long seen income and its distribution as a central concern. Unequal distribution of income causes economic inequality which is a concern in almost all countries around the world.",
+      "link": "https://en.wikipedia.org/wiki/Income_inequality",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Income Inequality",
+      "summary": "Income disparities are now so pronounced that America’s richest 1 percent of households averaged 139 times as much income as the bottom 20 percent in 2021, according to the Congressional Budget Office.",
+      "link": "https://inequality.org/facts/income-inequality/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Understanding Income Inequality: Key Causes and Measurements",
+      "summary": "Aug 8, 2025 · Discover what income inequality is, its primary causes, and how it's measured. Learn about its impact on society and explore ways to address this growing issue.",
+      "link": "https://www.investopedia.com/terms/i/income-inequality.asp",
+      "source_type": "ddg"
+    },
+    {
+      "title": "[YT] Wealth Inequality in America - YouTube",
+      "summary": "there's a chart I saw recently that I can't get out of my head a Harvard Business professor and economist asked more than 5,000 Americans how they thought wealth was distributed in the United States this is what they said they thought it was dividing the country into five RUF groups of the top bottom and middle three 20% groups they asked people how they thought the wealth in this country was divided then he asked them what they thought was the ideal distribution and 92% that's at least nine out of ten of them said it should be more like this in other words more equitable than they think it is now that fact is telling admittedly the notion that most Americans know that the system is already skewed unfairly but what's most interesting to me is the reality compared to our perception the idea",
+      "link": "https://www.youtube.com/watch?v=QPKKQnijnsM",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "QPKKQnijnsM",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] How Wealth Inequality Spiraled Out of Control | Robert Reich - YouTube",
+      "summary": "elon musk's wealth has surpassed 200 billion dollars it would take the median u.s worker over 4 million years to make that much wealth inequality is eating this country alive we're now in america's second gilded age just like the late 19th century when a handful of robber barons monopolized the economy kept wages down and bribed lawmakers while today's robber barons take joy rides into space the distance between their gargantuan wealth and the financial struggles of working americans has never been clearer during the first 19 months of the pandemic u.s billionaires added 2.1 trillion dollars to their collective wealth and the rich have enough political power to cut their taxes to almost nothing sometimes literally nothing in fact jeff bezos paid no federal income taxes in 2007 or in 2011. ",
+      "link": "https://www.youtube.com/watch?v=wOI8RuhW7q0",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "wOI8RuhW7q0",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] The UK’s Generational Wealth Gap - Mike Brewer - YouTube",
+      "summary": "please welcome to the stage Professor Mike [Applause] Brewer uh thank you very much and thank you uh for coming I work now for the resolution Foundation which is a london-based think tank devoted to increasing the living standards of of low to Middle income households we think about all aspects of economic and social policy um and we like to say that we achieve social change by drawing charts and Excel so you're going to get quite a few of them tonight so uh be warned um I'm going to uh this is an outline what we're going to talk about I'm going to talk a little bit about uh different things that people might mean when they say the UK has high or Rising inequality because actually the story on income inequality is a bit less interesting than you might think um I'm going to argue that actua",
+      "link": "https://www.youtube.com/watch?v=Gv1YfAND3es",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "Gv1YfAND3es",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ]
+}

@@ -1,0 +1,147 @@
+{
+  "axis": "GOAL_PROGRESS_REVIEW",
+  "fetched_at": "2026-03-13T13:51:07.084944+00:00",
+  "smart_query": "\"Global poverty rates over past decade\"",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 0,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "analysis": {
+    "summary": "Целта е да се разработи истински AGI, който да подпомага изграждането на устойчива общочовешка цивилизация, в която всеки човек има достоен живот и е свободен да разгърне своя потенциал без страх от лишения и унижение. Този модел цели към гарантиран достъп до базови нужди като храна, вода, здравеопазване и образование за всички хора. ",
+    "key_developments": [
+      "An Agnostic Approach to Sustainability: From Capitals Substitutability to Non-Collapse Dynamics",
+      "Modelling the Index of Sustainable Economic Welfare (ISEW) and its response to policies",
+      "samirsaci/supply-chain-sustainability",
+      "osdg-ai/osdg-tool",
+      "dwulff/text2sdg"
+    ],
+    "sentiment": "POSITIVE",
+    "urgency": "MEDIUM",
+    "open_source_momentum": "Наблюдава се растеж в разработката на отворен код, свързан с устойчивостта на веригите на доставки и възможностите за отчитане, както и инструменти за отчитане на устойчивостта в контекста на Целите за устойчиво развитие на ООН.",
+    "scientific_frontier": "Изследванията в областта на устойчивостта се развиват, включващи агностични подходи към устойчивостта и моделиране на индекса за устойчиво икономическо благосъстояние, което показва продължаващ интерес към научни методи за оценка и подобряване на устойчивостта.",
+    "relevance_to_goal": "Висок, тъй като изследванията и разработките в тази област са насочени към създаването на по-устойчива и справедлива цивилизация, която е в съответствие с крайната цел на разработването на истински AGI."
+  },
+  "sentiment": "POSITIVE",
+  "urgency": "MEDIUM",
+  "summary": "Целта е да се разработи истински AGI, който да подпомага изграждането на устойчива общочовешка цивилизация, в която всеки човек има достоен живот и е свободен да разгърне своя потенциал без страх от лишения и унижение. Този модел цели към гарантиран достъп до базови нужди като храна, вода, здравеопазване и образование за всички хора. ",
+  "key_developments": [
+    "An Agnostic Approach to Sustainability: From Capitals Substitutability to Non-Collapse Dynamics",
+    "Modelling the Index of Sustainable Economic Welfare (ISEW) and its response to policies",
+    "samirsaci/supply-chain-sustainability",
+    "osdg-ai/osdg-tool",
+    "dwulff/text2sdg"
+  ],
+  "open_source_momentum": "Наблюдава се растеж в разработката на отворен код, свързан с устойчивостта на веригите на доставки и възможностите за отчитане, както и инструменти за отчитане на устойчивостта в контекста на Целите за устойчиво развитие на ООН.",
+  "scientific_frontier": "Изследванията в областта на устойчивостта се развиват, включващи агностични подходи към устойчивостта и моделиране на индекса за устойчиво икономическо благосъстояние, което показва продължаващ интерес към научни методи за оценка и подобряване на устойчивостта.",
+  "news_items": [],
+  "github_repos": [
+    {
+      "title": "samirsaci/supply-chain-sustainability",
+      "snippet": "Build Supply Chain Sustainability Reporting with Python",
+      "stars": 58,
+      "url": "https://github.com/samirsaci/supply-chain-sustainability",
+      "updated": "2026-02-24",
+      "source": "GitHub"
+    },
+    {
+      "title": "osdg-ai/osdg-tool",
+      "snippet": "OSDG is an open-source tool that maps and connects activities to the UN Sustainable Development Goals (SDGs) by identifying SDG-relevant content in any text. The tool is available online at www.osdg.a",
+      "stars": 46,
+      "url": "https://github.com/osdg-ai/osdg-tool",
+      "updated": "2026-03-04",
+      "source": "GitHub"
+    },
+    {
+      "title": "dwulff/text2sdg",
+      "snippet": "Detect UN Sustainable Development Goals in Text",
+      "stars": 23,
+      "url": "https://github.com/dwulff/text2sdg",
+      "updated": "2025-12-10",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "An Agnostic Approach to Sustainability: From Capitals Substitutability to Non-Collapse Dynamics",
+      "snippet": "We construct a stochastic dynamical systems theory in which sustainability is a structural boundary property of a fully coupled Earth--Human--Production system. Each subsystem is modelled as a vector-valued process governed by stochastic differential equations with multiplicative noise and absolute ",
+      "url": "https://arxiv.org/abs/2602.23402v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Modelling the Index of Sustainable Economic Welfare (ISEW) and its response to policies",
+      "snippet": "Given the challenge of achieving societal welfare in an environmentally sustainable way, the Index of Sustainable Economic Welfare (ISEW) has emerged as an alternative indicator of progress in response to critiques of Gross Domestic Product (GDP). The ISEW compares the benefits of economic activity ",
+      "url": "https://arxiv.org/abs/2602.21971v1",
+      "source": "arXiv"
+    }
+  ],
+  "youtube_transcripts": [],
+  "podcast": "[#236 – Max Harms on why teaching AI right from wrong could get everyone killed] Most people in AI are trying to give AIs ‘good’ values. Max Harms wants us to give them no values at all. According to Max, the only safe design is an AGI that defers entirely to its human operators, has no views about how the world ought to be, is willingly modifiable, and completely indifferent to being shut down — a strategy no AI company is working on at all.In Max’s view any grander preferenc",
+  "youtube_videos": [
+    {
+      "title": "YouTube:cRjOePff5kQ",
+      "video_id": "cRjOePff5kQ",
+      "url": "https://www.youtube.com/watch?v=cRjOePff5kQ",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:kB85FYBH_M4",
+      "video_id": "kB85FYBH_M4",
+      "url": "https://www.youtube.com/watch?v=kB85FYBH_M4",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:zwIEZDMDBo4",
+      "video_id": "zwIEZDMDBo4",
+      "url": "https://www.youtube.com/watch?v=zwIEZDMDBo4",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:XRdEquU0thU",
+      "video_id": "XRdEquU0thU",
+      "url": "https://www.youtube.com/watch?v=XRdEquU0thU",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:c6BNedtLNIY",
+      "video_id": "c6BNedtLNIY",
+      "url": "https://www.youtube.com/watch?v=c6BNedtLNIY",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:lEuG7cKA-tE",
+      "video_id": "lEuG7cKA-tE",
+      "url": "https://www.youtube.com/watch?v=lEuG7cKA-tE",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:5-pf_U1XCDw",
+      "video_id": "5-pf_U1XCDw",
+      "url": "https://www.youtube.com/watch?v=5-pf_U1XCDw",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:ABOBxOzV2OE",
+      "video_id": "ABOBxOzV2OE",
+      "url": "https://www.youtube.com/watch?v=ABOBxOzV2OE",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:4tE9l3LhNU8",
+      "video_id": "4tE9l3LhNU8",
+      "url": "https://www.youtube.com/watch?v=4tE9l3LhNU8",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:S0Xwxh7FgNc",
+      "video_id": "S0Xwxh7FgNc",
+      "url": "https://www.youtube.com/watch?v=S0Xwxh7FgNc",
+      "source": "YouTube"
+    }
+  ]
+}

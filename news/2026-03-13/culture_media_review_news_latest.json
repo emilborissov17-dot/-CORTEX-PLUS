@@ -1,0 +1,159 @@
+{
+  "axis": "CULTURE_MEDIA_REVIEW",
+  "fetched_at": "2026-03-13T13:52:59.620652+00:00",
+  "smart_query": "Критика на българските филми онлайн",
+  "sources_count": {
+    "wiki": 0,
+    "gdelt": 3,
+    "arxiv": 2,
+    "github": 3,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "analysis": {
+    "summary": "Семинарът по медиаграмотност в ДУ и усилието за обучение на финландските деца от 3-годишна възраст да разпознават медиа манипулации, показват нарастващото внимание към тази област. Целта е да се подобри способността на хората да разпознават и оценяват информацията от медийните източници. Тези инициативи са важни за развитие на критическото мислене и предпазване от дезинформация.",
+    "key_developments": [
+      "В ДУ состоится семинар по медиаграмотности для сениоров « Понимай информацию !»",
+      "Finnish children learn media literacy at 3 years old -- for protection against Russian propaganda"
+    ],
+    "sentiment": "POSITIVE",
+    "urgency": "MEDIUM",
+    "open_source_momentum": "Duffy12150557/Security-Research-Toolkit star=33, bbidwell85/Totality star=11, AFLucas-UOM/Accurate-Name-Extraction star=3",
+    "scientific_frontier": "Uncertainty-Aware Estimation of Mis/Disinformation Prevalence on Social Media, Behavior Change as a Signal for Identifying Social Media Manipulation",
+    "relevance_to_goal": "HIGH"
+  },
+  "sentiment": "POSITIVE",
+  "urgency": "MEDIUM",
+  "summary": "Семинарът по медиаграмотност в ДУ и усилието за обучение на финландските деца от 3-годишна възраст да разпознават медиа манипулации, показват нарастващото внимание към тази област. Целта е да се подобри способността на хората да разпознават и оценяват информацията от медийните източници. Тези инициативи са важни за развитие на критическото мислене и предпазване от дезинформация.",
+  "key_developments": [
+    "В ДУ состоится семинар по медиаграмотности для сениоров « Понимай информацию !»",
+    "Finnish children learn media literacy at 3 years old -- for protection against Russian propaganda"
+  ],
+  "open_source_momentum": "Duffy12150557/Security-Research-Toolkit star=33, bbidwell85/Totality star=11, AFLucas-UOM/Accurate-Name-Extraction star=3",
+  "scientific_frontier": "Uncertainty-Aware Estimation of Mis/Disinformation Prevalence on Social Media, Behavior Change as a Signal for Identifying Social Media Manipulation",
+  "news_items": [
+    {
+      "title": "В ДУ состоится семинар по медиаграмотности для сениоров « Понимай информацию !» ",
+      "snippet": "В ДУ состоится семинар по медиаграмотности для сениоров « Понимай информацию !» ",
+      "url": "https://www.gorod.lv/novosti/364092-v-du-sostoitsya-seminar-po-mediagramotnosti-dlya-seniorov-ponimai-informatsiu",
+      "source": "gorod.lv"
+    },
+    {
+      "title": "Finnish children learn media literacy at 3 years old -- for protection against Russian propaganda",
+      "snippet": "Finnish children learn media literacy at 3 years old -- for protection against Russian propaganda",
+      "url": "https://nypost.com/2026/01/05/world-news/finnish-children-learn-media-literacy-at-3-years-old-for-protection-against-russian-propaganda/",
+      "source": "nypost.com"
+    },
+    {
+      "title": "Švicarski glasači odbacili plan smanjenja financiranja za državnu televiziju",
+      "snippet": "Švicarski glasači odbacili plan smanjenja financiranja za državnu televiziju",
+      "url": "https://www.index.hr/vijesti/clanak/svicarski-glasaci-odbacili-plan-smanjenja-financiranja-za-drzavnu-televiziju/2768917.aspx",
+      "source": "index.hr"
+    }
+  ],
+  "github_repos": [
+    {
+      "title": "Duffy12150557/Security-Research-Toolkit",
+      "snippet": "Security Research Toolkit — Video and image analysis tool for neural inpainting and AI-generated content detection with SORA signature extraction, temporal consistency analysis, CNN artifact detection",
+      "stars": 33,
+      "url": "https://github.com/Duffy12150557/Security-Research-Toolkit",
+      "updated": "2026-03-13",
+      "source": "GitHub"
+    },
+    {
+      "title": "bbidwell85/Totality",
+      "snippet": "Analyze quality, track collection completeness, find upgrades, manage media wishlists.",
+      "stars": 11,
+      "url": "https://github.com/bbidwell85/Totality",
+      "updated": "2026-03-12",
+      "source": "GitHub"
+    },
+    {
+      "title": "AFLucas-UOM/Accurate-Name-Extraction",
+      "snippet": "2026 IEEE Conference on Artificial Intelligence (CAI26) · A modular computer vision and NLP pipeline for automated extraction of personal names from broadcast news videos, combining YOLOv12-based news",
+      "stars": 3,
+      "url": "https://github.com/AFLucas-UOM/Accurate-Name-Extraction",
+      "updated": "2026-03-06",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Uncertainty-Aware Estimation of Mis/Disinformation Prevalence on Social Media",
+      "snippet": "Estimation of mis/disinformation prevalence in social media is crucial for designing mitigation strategies to limit its impact. Yet, such estimations are subject to several uncertainties that are rarely quantified jointly. In this study, we present a methodological contribution in which confidence i",
+      "url": "https://arxiv.org/abs/2603.11058v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Behavior Change as a Signal for Identifying Social Media Manipulation",
+      "snippet": "Social media accounts engaging in online manipulation can change their behaviors for re-purposing or to evade detection. Existing detection systems are built on features that do not exploit such behavioral patterns. Here we investigate the degree to which change in behavior can serve as a signal for",
+      "url": "https://arxiv.org/abs/2603.03128v1",
+      "source": "arXiv"
+    }
+  ],
+  "youtube_transcripts": [],
+  "podcast": "[Governor DeSantis Directs Florida State Agencies to Partner with Future of Life Institute to Shield Families from AI Harm] The collaboration will produce a Crisis Counselor Training Curriculum and a statewide AI Harms Reporting Form targeting dangerous AI companion applications",
+  "youtube_videos": [
+    {
+      "title": "YouTube:t839w_gzN88",
+      "video_id": "t839w_gzN88",
+      "url": "https://www.youtube.com/watch?v=t839w_gzN88",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:TgBZiAciERY",
+      "video_id": "TgBZiAciERY",
+      "url": "https://www.youtube.com/watch?v=TgBZiAciERY",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:GdxZxRWqPUs",
+      "video_id": "GdxZxRWqPUs",
+      "url": "https://www.youtube.com/watch?v=GdxZxRWqPUs",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:f8bFAwi-r4g",
+      "video_id": "f8bFAwi-r4g",
+      "url": "https://www.youtube.com/watch?v=f8bFAwi-r4g",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:nrY5QOmQ6oE",
+      "video_id": "nrY5QOmQ6oE",
+      "url": "https://www.youtube.com/watch?v=nrY5QOmQ6oE",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:C110lYvj8CQ",
+      "video_id": "C110lYvj8CQ",
+      "url": "https://www.youtube.com/watch?v=C110lYvj8CQ",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:BmV7Vq_WYLY",
+      "video_id": "BmV7Vq_WYLY",
+      "url": "https://www.youtube.com/watch?v=BmV7Vq_WYLY",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:HIraRHRn1xQ",
+      "video_id": "HIraRHRn1xQ",
+      "url": "https://www.youtube.com/watch?v=HIraRHRn1xQ",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:FtqrYvq8lc4",
+      "video_id": "FtqrYvq8lc4",
+      "url": "https://www.youtube.com/watch?v=FtqrYvq8lc4",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:AsbbZPGzX_s",
+      "video_id": "AsbbZPGzX_s",
+      "url": "https://www.youtube.com/watch?v=AsbbZPGzX_s",
+      "source": "YouTube"
+    }
+  ]
+}

@@ -1,0 +1,91 @@
+{
+  "axis": "ECONOMY_WORK_REVIEW",
+  "domain": "civilization",
+  "timestamp": "2026-05-08T09:53:38.422008+00:00",
+  "sources_count": 8,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 0,
+  "youtube_items": [],
+  "analysis": {
+    "problem": "Войната между САЩ и Иран увеличава цените на петрола и нарушава глобалната икономика",
+    "root_cause": "Конфликтът между САЩ и Иран е причинен от политическа несъгодба и интереси, които водят до военни действия",
+    "severity": "HIGH",
+    "leverage_points": [
+      "САЩ и Иран имат най-голям ефект върху проблема, тъй като са основните страни, включени в конфликта",
+      "Международни организации като ООН и ЕС имат втора точка на лост, тъй като могат да помагат за посредничество и постигане на мирно разрешение"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Започване на преговори между САЩ и Иран за постигане на мирно разрешение",
+        "measurable_goal": "Снижение на военните действия и намаляване на цените на петрола",
+        "timeframe": "краткосрочно"
+      }
+    ],
+    "evidence": [
+      "Oil prices rise after US and Iran exchange fire in Hormuz strait",
+      "The companies making billions from the Iran war"
+    ],
+    "generalization": "Този проблем е свързан с домейна на планетата, тъй като войната и увеличението на цените на петрола могат да имат негативно въздействие върху околната среда и световната икономика",
+    "summary": "Войната между САЩ и Иран увеличава цените на петрола и нарушава глобалната икономика. За разрешение на проблема е необходимо да се почнат преговори между страните.",
+    "risk_level": "HIGH"
+  },
+  "raw_items": [
+    {
+      "title": "Oil prices rise after US and Iran exchange fire in Hormuz strait",
+      "summary": "US President Donald Trump says the ceasefire between Washington and Tehran is still in place.",
+      "link": "https://www.bbc.com/news/articles/c86dp85g59xo?at_medium=RSS&at_campaign=rss",
+      "published": "Fri, 08 May 2026 08:43:55 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "The companies making billions from the Iran war",
+      "summary": "Through surging profits or soaring share prices, the war has been a boon for some firms.",
+      "link": "https://www.bbc.com/news/articles/ce8pyyz5e0ro?at_medium=RSS&at_campaign=rss",
+      "published": "Fri, 08 May 2026 08:13:07 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "South East Water boss quits after supply failures",
+      "summary": "David Hinton faced criticism after outages affected tens of thousands of people in Kent and Sussex.",
+      "link": "https://www.bbc.com/news/articles/cn7pxm13lrro?at_medium=RSS&at_campaign=rss",
+      "published": "Fri, 08 May 2026 09:17:34 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Instagram privacy tech is turned off today - what does this mean for your DMs?",
+      "summary": "The platform said it would remove end-to-end encrypted messages, a major U‑turn by parent company Meta.",
+      "link": "https://www.bbc.com/news/articles/clypzxl3lvqo?at_medium=RSS&at_campaign=rss",
+      "published": "Fri, 08 May 2026 01:31:55 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "‘Fired From Retirement’: Financially Insecure, Older Americans Return to the Grind",
+      "summary": "People return to work for many reasons, but the biggest is financial need. As costs remain high, more retirees could be looking to re-enter the job market.",
+      "link": "https://www.nytimes.com/2026/05/08/business/retirees-back-to-work-money.html",
+      "published": "Fri, 08 May 2026 09:01:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Oil Prices Rise as U.S. and Iran Test Truce With Military Strikes",
+      "summary": "Oil prices rose after the United States attacked Iranian military sites in retaliation for Iran firing on U.S. warships in the Strait of Hormuz",
+      "link": "https://www.nytimes.com/2026/05/08/business/oil-gas-price-iran.html",
+      "published": "Fri, 08 May 2026 07:37:28 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "How Energy Prices Are Driving Demand for Solar Panels and Heat Pumps",
+      "summary": "Already having faced an energy crisis five years ago, more European consumers believe they are “one Trump-ignited war away” from crushing costs.",
+      "link": "https://www.nytimes.com/2026/05/08/business/europe-solar-panels-iran-war.html",
+      "published": "Fri, 08 May 2026 04:00:09 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Trade Court Rules Trump’s 10% Global Tariff Is Illegal",
+      "summary": "A panel of federal judges found that President Trump could not legally impose the tariff on most imports.",
+      "link": "https://www.nytimes.com/2026/05/07/business/economy/trump-global-tariff-ruled-illegal.html",
+      "published": "Fri, 08 May 2026 00:26:57 +0000",
+      "source_type": "rss"
+    }
+  ]
+}

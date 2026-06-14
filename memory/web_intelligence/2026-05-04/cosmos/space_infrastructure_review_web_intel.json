@@ -1,0 +1,152 @@
+{
+  "axis": "SPACE_INFRASTRUCTURE_REVIEW",
+  "domain": "cosmos",
+  "timestamp": "2026-05-04T13:53:01.822373+00:00",
+  "sources_count": 11,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] Six Years of NASA's Mars Curiosity Rover",
+      "summary": "you you you",
+      "link": "https://www.youtube.com/watch?v=l6PAhdKxa2c",
+      "published": "2026-04-30T14:46:14+00:00",
+      "source_type": "youtube",
+      "channel": "NASA",
+      "video_id": "l6PAhdKxa2c",
+      "transcript_method": "whisper",
+      "transcript_chars": 11,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] NASA Astronaut Anil Menon Prelaunch News Conference (April 29, 2026)",
+      "summary": "Miracle Good afternoon and welcome to NASA's Johnson Space Center. I am Chelsea Byarté here joined by our guests, NASA astronaut, a new men in. He's getting ready to launch to the International Space Station on the Soyuz MS-29 mission in July alongside his two crewmates, Piotr Dubrov and Anna Keakina. They're not joining us here today as they're back in Star City for training. But, a meal here is going to be taking your questions in three ways. So we have reporters here in the room. We've got reporters on our phone bridge dialed in and we're taking some questions pre-submitted on social media as well that we're ready for. If you're joining us on the phone, please go ahead and press star 1 to enter the question queue. If your questions aren't even asked or you want to exit the question queu",
+      "link": "https://www.youtube.com/watch?v=eshK9LS8I5w",
+      "published": "2026-04-29T18:35:53+00:00",
+      "source_type": "youtube",
+      "channel": "NASA",
+      "video_id": "eshK9LS8I5w",
+      "transcript_method": "whisper",
+      "transcript_chars": 40068,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Progress 95 Cargo Ship Docking",
+      "summary": "Good evening, from Michigan, in Houston, in the International Space Station flight control room here at NASA's Johnson Space Center. Here's a look at the orbit 3 team, led by flight director Diane Daley and her team of flight controllers working in Tando at the Russian Mission Control Center on the outskirts of Moscow. Teams are monitoring the automated arrival of the Uncrewed Progress 95 spacecraft. It'll talk to the airport of the Thursday service module here in about 45 minutes. This is the final leg of its two-day 33 orbit journey, carrying nearly three tons of food fuel and supplies to the exhibition for crew of seven living and working on the International Space Station. Here you see on your screen just activated at the time we began coverage with a view from the external television ",
+      "link": "https://www.youtube.com/watch?v=hUpVpUw3rkM",
+      "published": "2026-04-28T00:15:32+00:00",
+      "source_type": "youtube",
+      "channel": "NASA",
+      "video_id": "hUpVpUw3rkM",
+      "transcript_method": "whisper",
+      "transcript_chars": 18513,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "SpaceX launches multiple Earth observation satellites on Falcon 9 and Falcon Heavy rockets, which may contribute to increased satellite debris in low Earth orbit.",
+    "root_cause": "The repeated launches of satellites, including Earth observation satellites, increase the number of objects in low Earth orbit, potentially leading to orbital debris.",
+    "severity": "MEDIUM",
+    "leverage_points": [
+      "SpaceX as the primary launcher of Earth observation satellites, contributing to orbital debris.",
+      "The frequency of launches on Falcon 9 and Falcon Heavy rockets, which are used for multiple payloads."
+    ],
+    "proposed_actions": [
+      {
+        "action": "Implement satellite debris tracking and mitigation protocols for all launches.",
+        "measurable_goal": "Reduce the number of debris objects in low Earth orbit by 30% within 12 months.",
+        "timeframe": "short_term"
+      }
+    ],
+    "evidence": [
+      "SpaceX launches 24 Starlink satellites on Falcon 9 rockets from Vandenberg SFB in 2026.",
+      "The CAS500-2 mission launched a South Korean Earth observation satellite on a Falcon 9 rocket."
+    ],
+    "generalization": "This problem is related to the increasing number of satellites in low Earth orbit, which impacts space operations and sustainability.",
+    "summary": "SpaceX's frequent launches of Earth observation satellites contribute to orbital debris, requiring mitigation strategies to reduce debris accumulation.",
+    "risk_level": "MEDIUM"
+  },
+  "raw_items": [
+    {
+      "title": "Space’s missing half",
+      "summary": "<figure><img alt=\"An illustration of Outpost’s CarryAll, a reusable return vehicle designed for on-orbit warehousing, in-space manufacturing and precision delivery anywhere on Earth within 60 minutes. Credit: Outpost\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"572\" src=\"https://i0.wp.com/spacenews.com/wp-content/uploads/2026/05/Outpost-CarryAll-Hero.jpg?fit=1024%2C572&amp;ssl=1\" width=\"1024\" /></figure>\n<p>Every generation reshapes how civilization moves goods. C",
+      "link": "https://spacenews.com/spaces-missing-half/",
+      "published": "Mon, 04 May 2026 13:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Lawsuit claims Starship launches damage homes",
+      "summary": "<figure><img alt=\"Super Heavy\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"576\" src=\"https://i0.wp.com/spacenews.com/wp-content/uploads/2026/05/starship-superheavy-flt12.jpeg?fit=1024%2C576&amp;ssl=1\" width=\"1024\" /></figure>\n<p>As SpaceX prepares for the first flight of version 3 of Starship, the company is facing a new legal challenge from local residents who claim launches damage their homes.</p>\n<p>The post <a href=\"https://spacenews.com/lawsuit-claims-starshi",
+      "link": "https://spacenews.com/lawsuit-claims-starship-launches-damage-homes/",
+      "published": "Mon, 04 May 2026 12:05:32 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "IonQ to offer ground-movement monitoring via Capella radar satellites",
+      "summary": "<figure><img alt=\"\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"945\" src=\"https://i0.wp.com/spacenews.com/wp-content/uploads/2026/05/Miami_Florida.png?fit=1024%2C945&amp;ssl=1\" width=\"1024\" /></figure>\n<p>Interferometric Synthetic Aperture Radar, or InSAR, enables automated detection of surface changes</p>\n<p>The post <a href=\"https://spacenews.com/ionq-to-offer-ground-movement-monitoring-via-capella-radar-satellites/\">IonQ to offer ground-movement monitoring via ",
+      "link": "https://spacenews.com/ionq-to-offer-ground-movement-monitoring-via-capella-radar-satellites/",
+      "published": "Mon, 04 May 2026 12:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Taylor Geospatial unveils global field dataset",
+      "summary": "<figure><img alt=\"\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"500\" src=\"https://i0.wp.com/spacenews.com/wp-content/uploads/2026/05/Imagery-from-the-global-agricultural-dataset-Fields-of-the-World-Credit-Taylor-Geospatial-.png?fit=879%2C500&amp;ssl=1\" width=\"879\" /></figure>\n<p>SAN FRANCISCO – The first global dataset showing the boundaries of agricultural fields was released in late April, after an 18-month campaign by geospatial experts in industry and academia",
+      "link": "https://spacenews.com/taylor-geospatial-unveils-global-field-dataset/",
+      "published": "Mon, 04 May 2026 12:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "SpaceX launches South Korean Earth observation satellite, plus 44 more payloads on midnight Falcon 9 rideshare mission",
+      "summary": "The CAS500-2 mission lifted off from pad 4E at Vandenberg Space Force Base at 12 a.m. PDT (3 a.m. EDT / 0700 UTC). The Korea Aerospace Industries’ Compact Advanced Satellite 500 (CAS500) satellite was the first to deploy about an hour after liftoff. <a class=\"mh-excerpt-more\" href=\"https://spaceflightnow.com/2026/05/02/live-coverage-spacex-to-launch-south-korean-earth-observation-satellite-44-more-payloads-on-overnight-falcon-9-rideshare-mission/\" title=\"SpaceX launches South Korean Earth observ",
+      "link": "https://spaceflightnow.com/2026/05/02/live-coverage-spacex-to-launch-south-korean-earth-observation-satellite-44-more-payloads-on-overnight-falcon-9-rideshare-mission/",
+      "published": "Sat, 02 May 2026 19:59:11 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "SpaceX marks May Day, National Space Day with Starlink mission on a Falcon 9 rocket from Cape Canaveral",
+      "summary": "The Starlink 10-38 mission saw SpaceX deploy 29 broadband internet satellites into low Earth orbit. Liftoff from pad 40 at Cape Canaveral Space Force Station happened at 2:06:10 p.m. EDT (1806:10 UTC). <a class=\"mh-excerpt-more\" href=\"https://spaceflightnow.com/2026/05/01/live-coverage-spacex-marks-may-day-with-starlink-mission-on-a-falcon-9-rocket-from-cape-canaveral/\" title=\"SpaceX marks May Day, National Space Day with Starlink mission on a Falcon 9 rocket from Cape Canaveral\"></a>",
+      "link": "https://spaceflightnow.com/2026/05/01/live-coverage-spacex-marks-may-day-with-starlink-mission-on-a-falcon-9-rocket-from-cape-canaveral/",
+      "published": "Fri, 01 May 2026 11:57:18 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "SpaceX launches 24 Starlink satellites on Falcon 9 rocket from Vandenberg SFB",
+      "summary": "The Starlink 17-36 mission was SpaceX’s 51st Falcon 9 launch of 2026. Liftoff from pad 4E happened at 7:42:49 pm PDT (10:42:49 pm EDT / 0242:49 UTC). <a class=\"mh-excerpt-more\" href=\"https://spaceflightnow.com/2026/04/29/live-coverage-spacex-to-launch-24-starlink-satellites-on-falcon-9-rocket-from-vandenberg-sfb-6/\" title=\"SpaceX launches 24 Starlink satellites on Falcon 9 rocket from Vandenberg SFB\"></a>",
+      "link": "https://spaceflightnow.com/2026/04/29/live-coverage-spacex-to-launch-24-starlink-satellites-on-falcon-9-rocket-from-vandenberg-sfb-6/",
+      "published": "Wed, 29 Apr 2026 23:28:46 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "SpaceX launches 6-ton ViaSat-3 F3 satellite on Falcon Heavy rocket",
+      "summary": "The mission was the 12th launch of a Falcon Heavy rocket to date. The rocket lifted off from pad 39A at NASA’s Kennedy Space Center at 10:13 a.m. EDT (1413 UTC) on Wednesday, April 29. <a class=\"mh-excerpt-more\" href=\"https://spaceflightnow.com/2026/04/29/spacex-launches-6-ton-viasat-3-f3-satellite-on-falcon-heavy-rocket/\" title=\"SpaceX launches 6-ton ViaSat-3 F3 satellite on Falcon Heavy rocket\"></a>",
+      "link": "https://spaceflightnow.com/2026/04/29/spacex-launches-6-ton-viasat-3-f3-satellite-on-falcon-heavy-rocket/",
+      "published": "Wed, 29 Apr 2026 17:27:22 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] Six Years of NASA's Mars Curiosity Rover",
+      "summary": "you you you",
+      "link": "https://www.youtube.com/watch?v=l6PAhdKxa2c",
+      "published": "2026-04-30T14:46:14+00:00",
+      "source_type": "youtube",
+      "channel": "NASA",
+      "video_id": "l6PAhdKxa2c",
+      "transcript_method": "whisper",
+      "transcript_chars": 11,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] NASA Astronaut Anil Menon Prelaunch News Conference (April 29, 2026)",
+      "summary": "Miracle Good afternoon and welcome to NASA's Johnson Space Center. I am Chelsea Byarté here joined by our guests, NASA astronaut, a new men in. He's getting ready to launch to the International Space Station on the Soyuz MS-29 mission in July alongside his two crewmates, Piotr Dubrov and Anna Keakina. They're not joining us here today as they're back in Star City for training. But, a meal here is going to be taking your questions in three ways. So we have reporters here in the room. We've got reporters on our phone bridge dialed in and we're taking some questions pre-submitted on social media as well that we're ready for. If you're joining us on the phone, please go ahead and press star 1 to enter the question queue. If your questions aren't even asked or you want to exit the question queu",
+      "link": "https://www.youtube.com/watch?v=eshK9LS8I5w",
+      "published": "2026-04-29T18:35:53+00:00",
+      "source_type": "youtube",
+      "channel": "NASA",
+      "video_id": "eshK9LS8I5w",
+      "transcript_method": "whisper",
+      "transcript_chars": 40068,
+      "has_full_transcript": true
+    }
+  ]
+}

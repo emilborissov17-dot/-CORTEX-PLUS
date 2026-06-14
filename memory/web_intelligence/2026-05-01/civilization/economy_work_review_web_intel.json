@@ -1,0 +1,143 @@
+{
+  "axis": "ECONOMY_WORK_REVIEW",
+  "domain": "civilization",
+  "timestamp": "2026-05-01T11:37:36.585811+00:00",
+  "sources_count": 11,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] IMF warns of global recession, inflation over 6% if strait stays closed | ABC NEWS - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] The IMF says the fallout from the US and Israel's strikes on Iran will likely push growth down from 2025. It has recommended central banks raise interest rat... Published 2 weeks ago",
+      "link": "https://www.youtube.com/watch?v=0w5_KA6Uvxo",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "0w5_KA6Uvxo",
+      "transcript_method": "description",
+      "transcript_chars": 205,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Economy Was Already Horrible. New Global Crisis Just Made It Worse. - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] The US lost 1.27 million jobs in 2025. Only 181,000 new jobs were created for the entire year. We haven’t seen job numbers this bad since 2010. Inflation was... Published March 22, 2026",
+      "link": "https://www.youtube.com/watch?v=SHySrxXWkg0",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "SHySrxXWkg0",
+      "transcript_method": "description",
+      "transcript_chars": 208,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] State of the Economy: Unemployment rate, inflation and recession concerns - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] Tom Fitzgerald chats with Alex Salter, an economics professor at Texas Tech University to discuss the status of unemployment, inflation and if there are any ... Published June 29, 2025",
+      "link": "https://www.youtube.com/watch?v=Pu9Nbg07HeY",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "Pu9Nbg07HeY",
+      "transcript_method": "description",
+      "transcript_chars": 207,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "summary": "- No evidence of widespread fuel price-gouging, watchdog says: Profit margins were \"broadly unchanged\" between February and March, the UK's competition watchdog says.\n- Billions of meals at risk due to Iran war, says fertiliser boss: A shortage of fertiliser due to the Iran conflict could reduce cro",
+    "risk_level": "UNKNOWN",
+    "trend": "UNKNOWN",
+    "key_events": [
+      "No evidence of widespread fuel price-gouging, watchdog says",
+      "Billions of meals at risk due to Iran war, says fertiliser boss",
+      "'There were letters I didn't want to open': Rise in unpaid debt court cases"
+    ],
+    "insights": [],
+    "youtube_insights": [],
+    "relevance_to_goal": "",
+    "generalization": ""
+  },
+  "raw_items": [
+    {
+      "title": "No evidence of widespread fuel price-gouging, watchdog says",
+      "summary": "Profit margins were \"broadly unchanged\" between February and March, the UK's competition watchdog says.",
+      "link": "https://www.bbc.com/news/articles/c62djjj0z09o?at_medium=RSS&at_campaign=rss",
+      "published": "Fri, 01 May 2026 11:10:23 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Billions of meals at risk due to Iran war, says fertiliser boss",
+      "summary": "A shortage of fertiliser due to the Iran conflict could reduce crop yields and push prices higher, says the boss of Yara.",
+      "link": "https://www.bbc.com/news/articles/cpwp50v4ye7o?at_medium=RSS&at_campaign=rss",
+      "published": "Fri, 01 May 2026 08:41:52 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "'There were letters I didn't want to open': Rise in unpaid debt court cases",
+      "summary": "The number of county court judgements rose by 17.5% in the first quarter of this year compared to last, data suggests.",
+      "link": "https://www.bbc.com/news/articles/cwy2ldl1k7do?at_medium=RSS&at_campaign=rss",
+      "published": "Thu, 30 Apr 2026 23:07:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Apple says iPhone 17 'most popular ever' as sales soar",
+      "summary": "The record results come as boss Tim Cook is preparing to bow out after 15 years at the helm.",
+      "link": "https://www.bbc.com/news/articles/ce8pdk3l4d2o?at_medium=RSS&at_campaign=rss",
+      "published": "Fri, 01 May 2026 09:33:43 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Why U.S. Oil Companies Are Not Plugging the World’s Energy Gap",
+      "summary": "American producers are under pressure from investors to keep spending in check, and they are wary of drilling more wells because they are not sure oil prices will stay high.",
+      "link": "https://www.nytimes.com/2026/05/01/business/energy-environment/exxon-mobile-chevron-oil-iran-war.html",
+      "published": "Fri, 01 May 2026 10:31:34 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Reporters at McClatchy Withhold Bylines in A.I. Dispute",
+      "summary": "Journalists at newspapers like The Miami Herald and The Sacramento Bee are refusing to let the chain use their names on summarized articles generated by a new A.I. tool.",
+      "link": "https://www.nytimes.com/2026/05/01/business/media/mcclatchy-ai-newsroom-byline-strike.html",
+      "published": "Fri, 01 May 2026 09:07:19 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "The World’s Central Banks Are Wrestling With a Gigantic Problem",
+      "summary": "Inflationary surges and economic slowdowns set off by the war in Iran, tariffs and other Trump policies have forced monetary officials to adjust, our columnist says.",
+      "link": "https://www.nytimes.com/2026/05/01/business/iran-war-interest-rates-central-banks.html",
+      "published": "Fri, 01 May 2026 09:02:24 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "As Kentucky Derby Becomes a Bigger Business, Locals Feel Left Behind",
+      "summary": "Locals say rising ticket prices and a late start time for the Oaks race on Friday are hurting residents and restaurants. “The only thing I see is greed,” one steakhouse owner said.",
+      "link": "https://www.nytimes.com/2026/05/01/business/kentucky-derby-churchill-downs.html",
+      "published": "Fri, 01 May 2026 09:02:15 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] IMF warns of global recession, inflation over 6% if strait stays closed | ABC NEWS - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] The IMF says the fallout from the US and Israel's strikes on Iran will likely push growth down from 2025. It has recommended central banks raise interest rat... Published 2 weeks ago",
+      "link": "https://www.youtube.com/watch?v=0w5_KA6Uvxo",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "0w5_KA6Uvxo",
+      "transcript_method": "description",
+      "transcript_chars": 205,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Economy Was Already Horrible. New Global Crisis Just Made It Worse. - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] The US lost 1.27 million jobs in 2025. Only 181,000 new jobs were created for the entire year. We haven’t seen job numbers this bad since 2010. Inflation was... Published March 22, 2026",
+      "link": "https://www.youtube.com/watch?v=SHySrxXWkg0",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "SHySrxXWkg0",
+      "transcript_method": "description",
+      "transcript_chars": 208,
+      "has_full_transcript": false
+    }
+  ]
+}

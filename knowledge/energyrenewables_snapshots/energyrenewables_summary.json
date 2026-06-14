@@ -1,0 +1,268 @@
+{
+  "domain": "energyrenewables",
+  "run_at": "2026-03-02T19:41:40.039764",
+  "active_sources": 37,
+  "ok_sources": 22,
+  "failed_sources": 15,
+  "sources": [
+    {
+      "name": "https://www.irena.org",
+      "url": "https://www.irena.org",
+      "file": "www.irena.org.json",
+      "status": 403,
+      "error": "HTTP 403"
+    },
+    {
+      "name": "https://www.iea.org",
+      "url": "https://www.iea.org",
+      "file": "www.iea.org.json",
+      "status": 200,
+      "error": null
+    },
+    {
+      "name": "https://data.worldbank.org/topic/energy",
+      "url": "https://data.worldbank.org/topic/energy",
+      "file": "data.worldbank.org_topic_energy.json",
+      "status": 403,
+      "error": "HTTP 403"
+    },
+    {
+      "name": "https://nrel.gov",
+      "url": "https://nrel.gov",
+      "file": "nrel.gov.json",
+      "status": 200,
+      "error": null
+    },
+    {
+      "name": "https://ec.europa.eu/eurostat",
+      "url": "https://ec.europa.eu/eurostat",
+      "file": "ec.europa.eu_eurostat.json",
+      "status": 200,
+      "error": null
+    },
+    {
+      "name": "https://www.eia.gov",
+      "url": "https://www.eia.gov",
+      "file": "www.eia.gov.json",
+      "status": 200,
+      "error": null
+    },
+    {
+      "name": "https://www.energy.gov/eere",
+      "url": "https://www.energy.gov/eere",
+      "file": "www.energy.gov_eere.json",
+      "status": 200,
+      "error": null
+    },
+    {
+      "name": "https://gwec.net",
+      "url": "https://gwec.net",
+      "file": "gwec.net.json",
+      "status": 200,
+      "error": null
+    },
+    {
+      "name": "https://www.seia.org",
+      "url": "https://www.seia.org",
+      "file": "www.seia.org.json",
+      "status": 403,
+      "error": "HTTP 403"
+    },
+    {
+      "name": "https://globalcarbonproject.org",
+      "url": "https://globalcarbonproject.org",
+      "file": "globalcarbonproject.org.json",
+      "status": null,
+      "error": "[ERROR] ConnectionError(MaxRetryError('HTTPSConnectionPool(host=\\'globalcarbonproject.org\\', port=443): Max retries exceeded with url: / (Caused by NameResolutionError(\"HTTPSConnection(host=\\'globalcarbonproject.org\\', port=443): Failed to resolve \\'globalcarbonproject.org\\' ([Errno 11001] getaddrinfo failed)\"))'))"
+    },
+    {
+      "name": "https://www.unep.org/resources/publications",
+      "url": "https://www.unep.org/resources/publications",
+      "file": "www.unep.org_resources_publications.json",
+      "status": 403,
+      "error": "HTTP 403"
+    },
+    {
+      "name": "https://www.wri.org/energy",
+      "url": "https://www.wri.org/energy",
+      "file": "www.wri.org_energy.json",
+      "status": 200,
+      "error": null
+    },
+    {
+      "name": "https://ises.org",
+      "url": "https://ises.org",
+      "file": "ises.org.json",
+      "status": 200,
+      "error": null
+    },
+    {
+      "name": "https://www.neb.gov.ca",
+      "url": "https://www.neb.gov.ca",
+      "file": "www.neb.gov.ca.json",
+      "status": null,
+      "error": "[ERROR] ConnectionError(MaxRetryError('HTTPSConnectionPool(host=\\'www.neb.gov.ca\\', port=443): Max retries exceeded with url: / (Caused by NameResolutionError(\"HTTPSConnection(host=\\'www.neb.gov.ca\\', port=443): Failed to resolve \\'www.neb.gov.ca\\' ([Errno 11001] getaddrinfo failed)\"))'))"
+    },
+    {
+      "name": "https://www.ofgem.gov.uk",
+      "url": "https://www.ofgem.gov.uk",
+      "file": "www.ofgem.gov.uk.json",
+      "status": 200,
+      "error": null
+    },
+    {
+      "name": "https://www.cemcleanenergyministerial.org",
+      "url": "https://www.cemcleanenergyministerial.org",
+      "file": "www.cemcleanenergyministerial.org.json",
+      "status": null,
+      "error": "[ERROR] ConnectionError(MaxRetryError('HTTPSConnectionPool(host=\\'www.cemcleanenergyministerial.org\\', port=443): Max retries exceeded with url: / (Caused by NameResolutionError(\"HTTPSConnection(host=\\'www.cemcleanenergyministerial.org\\', port=443): Failed to resolve \\'www.cemcleanenergyministerial.org\\' ([Errno 11001] getaddrinfo failed)\"))'))"
+    },
+    {
+      "name": "https://www.eea.europa.eu",
+      "url": "https://www.eea.europa.eu",
+      "file": "www.eea.europa.eu.json",
+      "status": 200,
+      "error": null
+    },
+    {
+      "name": "https://ief.org",
+      "url": "https://ief.org",
+      "file": "ief.org.json",
+      "status": 200,
+      "error": null
+    },
+    {
+      "name": "https://www.irena.org/renewables-watch",
+      "url": "https://www.irena.org/renewables-watch",
+      "file": "www.irena.org_renewables-watch.json",
+      "status": 403,
+      "error": "HTTP 403"
+    },
+    {
+      "name": "https://www.irena.org/publications",
+      "url": "https://www.irena.org/publications",
+      "file": "www.irena.org_publications.json",
+      "status": 403,
+      "error": "HTTP 403"
+    },
+    {
+      "name": "IRENA Renewable Energy Statistics",
+      "url": "https://data.irena.org",
+      "file": "data.irena.org.json",
+      "status": null,
+      "error": "[ERROR] ConnectionError(MaxRetryError('HTTPSConnectionPool(host=\\'data.irena.org\\', port=443): Max retries exceeded with url: / (Caused by NameResolutionError(\"HTTPSConnection(host=\\'data.irena.org\\', port=443): Failed to resolve \\'data.irena.org\\' ([Errno 11001] getaddrinfo failed)\"))'))"
+    },
+    {
+      "name": "IEA Renewable Energy Statistics",
+      "url": "https://www.iea.org/data-and-statistics",
+      "file": "www.iea.org_data-and-statistics.json",
+      "status": 200,
+      "error": null
+    },
+    {
+      "name": "UNEP EPD (Emissions Database for Global Atmospheric Research)",
+      "url": "https://epd.unep.org",
+      "file": "epd.unep.org.json",
+      "status": null,
+      "error": "[ERROR] ConnectionError(MaxRetryError('HTTPSConnectionPool(host=\\'epd.unep.org\\', port=443): Max retries exceeded with url: / (Caused by NameResolutionError(\"HTTPSConnection(host=\\'epd.unep.org\\', port=443): Failed to resolve \\'epd.unep.org\\' ([Errno 11001] getaddrinfo failed)\"))'))"
+    },
+    {
+      "name": "EU JRC Energy Data Portal",
+      "url": "https://ec.europa.eu/jrc/en/energy",
+      "file": "ec.europa.eu_jrc_en_energy.json",
+      "status": 403,
+      "error": "HTTP 403"
+    },
+    {
+      "name": "U.S. NREL REmap Database",
+      "url": "https://remap.nrel.gov",
+      "file": "remap.nrel.gov.json",
+      "status": null,
+      "error": "[ERROR] ConnectionError(MaxRetryError('HTTPSConnectionPool(host=\\'remap.nrel.gov\\', port=443): Max retries exceeded with url: / (Caused by NameResolutionError(\"HTTPSConnection(host=\\'remap.nrel.gov\\', port=443): Failed to resolve \\'remap.nrel.gov\\' ([Errno 11001] getaddrinfo failed)\"))'))"
+    },
+    {
+      "name": "World Bank Energy Statistics",
+      "url": "https://data.worldbank.org/indicator",
+      "file": "data.worldbank.org_indicator.json",
+      "status": 200,
+      "error": null
+    },
+    {
+      "name": "Global Carbon Project",
+      "url": "https://www.globalcarbonproject.org",
+      "file": "www.globalcarbonproject.org.json",
+      "status": 200,
+      "error": null
+    },
+    {
+      "name": "World Resources Institute (WRI) Energy Data",
+      "url": "https://www.wri.org/energy",
+      "file": "www.wri.org_energy.json",
+      "status": 200,
+      "error": null
+    },
+    {
+      "name": "Open Energy Dataset (EU Energy Data Hub)",
+      "url": "https://www.energydata.info",
+      "file": "www.energydata.info.json",
+      "status": 200,
+      "error": null
+    },
+    {
+      "name": "National Renewable Energy Laboratory (NREL)",
+      "url": "https://www.nrel.gov",
+      "file": "www.nrel.gov.json",
+      "status": 200,
+      "error": null
+    },
+    {
+      "name": "Global Solar Atlas (IRENA)",
+      "url": "https://globalsolaratlas.info",
+      "file": "globalsolaratlas.info.json",
+      "status": 200,
+      "error": null
+    },
+    {
+      "name": "Wind Atlas (NREL)",
+      "url": "https://www.nrel.gov/research/wind.html",
+      "file": "www.nrel.gov_research_wind.html.json",
+      "status": 404,
+      "error": "HTTP 404"
+    },
+    {
+      "name": "IEA Wind Power Data",
+      "url": "https://www.iea.org/data-and-statistics",
+      "file": "www.iea.org_data-and-statistics.json",
+      "status": 200,
+      "error": null
+    },
+    {
+      "name": "IEA Solar Power Data",
+      "url": "https://www.iea.org/data-and-statistics",
+      "file": "www.iea.org_data-and-statistics.json",
+      "status": 200,
+      "error": null
+    },
+    {
+      "name": "Energy Transition Matrix (European Environment Agency)",
+      "url": "https://www.eea.europa.eu",
+      "file": "www.eea.europa.eu.json",
+      "status": 200,
+      "error": null
+    },
+    {
+      "name": "World Energy Council (WEC) Energy Data",
+      "url": "https://www.worldenergy.org",
+      "file": "www.worldenergy.org.json",
+      "status": 200,
+      "error": null
+    },
+    {
+      "name": "https://www.energytransitionmatrix.com",
+      "url": "https://www.energytransitionmatrix.com",
+      "file": "www.energytransitionmatrix.com.json",
+      "status": null,
+      "error": "[ERROR] ConnectionError(MaxRetryError('HTTPSConnectionPool(host=\\'www.energytransitionmatrix.com\\', port=443): Max retries exceeded with url: / (Caused by NameResolutionError(\"HTTPSConnection(host=\\'www.energytransitionmatrix.com\\', port=443): Failed to resolve \\'www.energytransitionmatrix.com\\' ([Errno 11001] getaddrinfo failed)\"))'))"
+    }
+  ]
+}

@@ -1,0 +1,142 @@
+{
+  "axis": "INFRASTRUCTURE_CITIES_REVIEW",
+  "domain": "civilization",
+  "timestamp": "2026-05-04T12:49:34.737595+00:00",
+  "sources_count": 12,
+  "rss_count": 4,
+  "ddg_count": 5,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] How Smart Cities Are Quietly Changing the Way We Live - YouTube",
+      "summary": "Welcome to Creative Media. Today, we explore the future of urban living smart cities. These cities don't just use technology, they redefine how we live, work and connect. From sustainable energy solutions to AI-driven services, smart cities are shaping tomorrow. A smart city is more than just high-tech gadgets. It's an ecosystem designed to make life easier and more efficient. Did you know that by 2050, over 68% of the global population will live in urban areas? Smart cities use IOS, internet of things, AI, and big data to manage resources efficiently. For example, Barcelona uses smart streetlights that reduce energy consumption by 30%. While Tokyo employs earthquake sensors to ensure safety for its residents. Let's explore some of the world's smartest cities. Dubai A global hub for innova",
+      "link": "https://www.youtube.com/watch?v=NNR9ziy4xRg",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "NNR9ziy4xRg",
+      "transcript_method": "whisper",
+      "transcript_chars": 1995,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Every City Future Model Explained in 9 Minutes - YouTube",
+      "summary": "15-minute city? Paris wants everything you need within 15 minutes of your home. Groceries, work, schools, doctors, all accessible by walking or cycling. Mayor Anne Hidalgo transformed car lanes into bike paths across 1,000 kilometers of streets. Property values near new bike lanes increased 30% while car ownership dropped 15%. The concept sounds perfect until you realize it requires demolishing suburban sprawl entirely. Melbourne adopted this model and resumed entire districts, allowing mixed use buildings where single family homes once stood. Residents can now walk to cafes, offices, and parks without touching a car. Critics call it authoritarian because it restricts where businesses can operate. But traffic deaths dropped 40% in pilot neighborhoods, while emergency response times improve",
+      "link": "https://www.youtube.com/watch?v=l90sqZMU9Gw",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "l90sqZMU9Gw",
+      "transcript_method": "whisper",
+      "transcript_chars": 9723,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] What is a Smart City? - YouTube",
+      "summary": "Some scholars have compared the significance of information and communication technology in the 21st century to the impact of automobile in the previous century in urban form and urban life. Cars brought convenience accessibility and mobility, but at the same time the uninterrupted consequences of cars was increased in greenhouse gas emission congestion and urban sprawl. So it is wise to adopt any technology with extra cautious steps. It can be started by defining what smart cities are and what are the impacts of digital technology in cities. So what is a smart city? Smart city has been defined differently by organizations, agency, scholars and practitioners. Smart cities console has defined smart cities as a city that uses information and communication technology to enhance its livability",
+      "link": "https://www.youtube.com/watch?v=vCzmxg9y7gA",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "vCzmxg9y7gA",
+      "transcript_method": "whisper",
+      "transcript_chars": 4302,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "Недостатък в управляването на бюджети в някои градове, които влияе на ефективността на урбаничните решения",
+    "root_cause": "Недостатък в участието на местни власти и обществени интереси в определение на бюджети, което води до неправилно използване на ресурси и низка ефективност в урбаничните програми",
+    "severity": "MEDIUM",
+    "leverage_points": [
+      "Градове, които са по-дълбоко участват в урбаничното управление, имат по-високо ефективност",
+      "Възможност за разпространение на модели, които включват делегиране на бюджети"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Разпространение на моделите с делегиране на бюджети в градовете",
+        "measurable_goal": "Повишаване на участието на местни власти в определение на бюджети, което води до повишена ефективност в урбаничните програми",
+        "timeframe": "средносрочно"
+      }
+    ],
+    "evidence": [
+      "Факт 1: Някои градове са започнали да делегират бюджети, което повишава участието на местни власти",
+      "Факт 2: Градове, които са по-дълбоко участват в урбаничното управление, имат по-високо ефективност в програми"
+    ],
+    "generalization": "Недостатък в управляването на бюджети в градовете влияе на ефективността на урбаничните решения, и това може да се реши чрез разпространение на моделите с делегиране на бюджети.",
+    "summary": "Проблемът с недостатък в управляването на бюджети в градовете влияе на ефективността на урбаничните решения. Решението е разпространение на моделите с делегиране на бюджети, които повишават участието на местни власти и улесняват урбаничното управление.",
+    "risk_level": "MEDIUM"
+  },
+  "raw_items": [
+    {
+      "title": "What a city of 25,000 can teach others about modernizing infrastructure",
+      "summary": "<p>Reduced costs. Stronger services for the community. See how one city did it.</p>",
+      "link": "https://www.smartcitiesdive.com/spons/what-a-city-of-25000-can-teach-others-about-modernizing-infrastructure/818511/",
+      "published": "Mon, 04 May 2026 05:00:00 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "Autonomous VW buses to begin microtransit service in Florida community",
+      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.com/yvBE8nr82dJTbUxPSBbAjel2vxAjyHj_nnLgCH-bDOA/g:nowe:143:0/c:2336:1319/rs:fill:1600:900:1/Z3M6Ly9kaXZlc2l0ZS1zdG9yYWdlL2RpdmVpbWFnZS9KT04tRklYX1ZXX0JFRVAxNjM5MjkuanBlZw==.webp\" /></div></figure><p>Beep and Moia plan to expand on-demand and scheduled circulator services throughout the country, Beep&rsquo;s CEO said.</p>",
+      "link": "https://www.smartcitiesdive.com/news/beep-moia-volkswagen-microtransit-florida/819065/",
+      "published": "Fri, 01 May 2026 11:46:00 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "Mayors look to shape AI policy — and the technology itself — in new coalition",
+      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.com/Fii9UiNARsCKDPEsBQTF6cSnWVT271VV222GYLmSh5o/g:ce/rs:fill:1600:900:1/Z3M6Ly9kaXZlc2l0ZS1zdG9yYWdlL2RpdmVpbWFnZS9HZXR0eUltYWdlcy0yMjAzMjk5MTM2LmpwZw==.webp\" /></div></figure><p>&ldquo;Local governments must set the frameworks to shape the use and impacts of these technologies,&rdquo; said Boston Mayor Michelle Wu, a member of the global Mayors AI Forum.</p>",
+      "link": "https://www.smartcitiesdive.com/news/mayors-ai-policy-forum-bloomberg-johns-hopkins/819084/",
+      "published": "Fri, 01 May 2026 11:01:07 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "Who should decide budgets? Some cities are starting to share the power.",
+      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.com/8xdQfCJtFC9dJ60CW1krau_rGOq7hh2d6cYQWXjyfus/g:ce/rs:fill:1600:900:1/Z3M6Ly9kaXZlc2l0ZS1zdG9yYWdlL2RpdmVpbWFnZS9HZXR0eUltYWdlcy0xMTg4OTA4Njk3LmpwZw==.webp\" /></div></figure><p>Participatory budgeting is reshaping how funds are allocated, bringing residents into decisions that elected officials and staff traditionally controlled, an expert says.</p>",
+      "link": "https://www.smartcitiesdive.com/news/participatory-budgeting-celina-su/819080/",
+      "published": "Fri, 01 May 2026 10:50:22 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "Smart cities",
+      "summary": "A smart city is an urban model that leverages technology, human capital, and governance to improve sustainability, efficiency, and social inclusion, which are considered goals for cities of the future. Smart cities use digital technology to collect data and operate services. Data is collected from citizens, devices, buildings, or cameras. Smart city applications are diverse and include, but are no",
+      "link": "https://en.wikipedia.org/wiki/Smart_cities",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Smart city - Wikipedia",
+      "summary": "Notable disparities among smart city definitions include the relative focus on economic advantages versus environmental or social benefits and specific technology choices.[29].",
+      "link": "https://en.wikipedia.org/wiki/Smart_city",
+      "source_type": "ddg"
+    },
+    {
+      "title": "List of Smart and AMRUT Cities in Telangana",
+      "summary": "The Smart and AMRUT cities in Telangana comprise urban local bodies selected under the Government of India's Smart Cities Mission, launched in 2015 to...",
+      "link": "https://grokipedia.com/page/List_of_Smart_and_AMRUT_Cities_in_Telangana",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Urban planning",
+      "summary": "Urban planning (also called city planning or town planning in some contexts) is the process of developing and designing land use and the built environment, including air, water, and the infrastructure passing into and out of urban areas, such as transportation, communications, and distribution networks, and their accessibility. Traditionally, urban planning followed a top-down approach in master p",
+      "link": "https://en.wikipedia.org/wiki/Urban_planning",
+      "source_type": "ddg"
+    },
+    {
+      "title": "What Is Urban Planning?. The art of shaping cities, and letting | Medium",
+      "summary": "Urban planning, sometimes also “city planning” or “town planning,” is an interdisciplinary field that studies urban areas and how we can purposefully direct their development...",
+      "link": "https://medium.com/the-urban-condition/what-is-urban-planning-97b1b9f40efa",
+      "source_type": "ddg"
+    },
+    {
+      "title": "[YT] How Smart Cities Are Quietly Changing the Way We Live - YouTube",
+      "summary": "Welcome to Creative Media. Today, we explore the future of urban living smart cities. These cities don't just use technology, they redefine how we live, work and connect. From sustainable energy solutions to AI-driven services, smart cities are shaping tomorrow. A smart city is more than just high-tech gadgets. It's an ecosystem designed to make life easier and more efficient. Did you know that by 2050, over 68% of the global population will live in urban areas? Smart cities use IOS, internet of things, AI, and big data to manage resources efficiently. For example, Barcelona uses smart streetlights that reduce energy consumption by 30%. While Tokyo employs earthquake sensors to ensure safety for its residents. Let's explore some of the world's smartest cities. Dubai A global hub for innova",
+      "link": "https://www.youtube.com/watch?v=NNR9ziy4xRg",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "NNR9ziy4xRg",
+      "transcript_method": "whisper",
+      "transcript_chars": 1995,
+      "has_full_transcript": true
+    }
+  ]
+}

@@ -1,0 +1,110 @@
+{
+  "axis": "GOVERNANCE_INSTITUTIONS_REVIEW",
+  "domain": "civilization",
+  "timestamp": "2026-05-08T09:54:15.595478+00:00",
+  "sources_count": 12,
+  "rss_count": 12,
+  "ddg_count": 0,
+  "youtube_count": 0,
+  "youtube_items": [],
+  "analysis": {
+    "problem": "Финансовата нестабилност на Организацията на обединените нации (ОН) поради неплатени членски вноски от държавите членки",
+    "root_cause": "Неизпълнението на финансовите задължения от страните членки, както и потенциално несъответствието между финансовите нужди и реалните средства на ОН",
+    "severity": "MEDIUM",
+    "leverage_points": [
+      "Държавите членки на ОН",
+      "Системата за финансиране на ОН"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Изискване на държавите членки да изплатят членските вноски навреме",
+        "measurable_goal": "100% изплащане на членските вноски от държавите членки",
+        "timeframe": "краткосрочно"
+      },
+      {
+        "action": "Проверка и оптимизиране на системата за финансиране на ОН",
+        "measurable_goal": "Значително намаляване на финансовите затруднения на ОН",
+        "timeframe": "средносрочно"
+      }
+    ],
+    "evidence": [
+      "Текущият паричен баланс на ОН е достатъчен само за отговора на юридическите задължения до средата на август",
+      "Финансовата нестабилност на ОН е предупредена от висши чиновници"
+    ],
+    "generalization": "Финансовата стабилност на ОН е от съществено значение за устойчивостта и развитието на цивилизацията, като влияе върху способността на организацията да решава глобалните проблеми и да поддържа мира и сигурността",
+    "summary": "Финансовата нестабилност на ОН е сериозен проблем, който изисква незабавни действия от държавите членки и организацията herself, за да се гарантира продължаването на нейната работа и способността да решава глобалните извънредни ситуации",
+    "risk_level": "MEDIUM"
+  },
+  "raw_items": [
+    {
+      "title": "Member States Must Pay Assessed Contributions in Full, on Time to Avert Financial Collapse by Mid-August, Senior UN Official Warns Fifth Committee",
+      "summary": "The current cash balance for the United Nations regular budget is “only sufficient to meet legal obligations through the middle of August” — not through December — the Organization’s top management official told the Fifth Committee (Administrative and Budgetary), urging Member States either to pay their assessed contributions in full and on time or to fundamentally overhaul the UN’s financial rules to avert imminent collapse.",
+      "link": "https://press.un.org/en/2026/gaab4511.doc.htm",
+      "published": "Thu, 07 May 2026 19:14:00 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "Secretary-General, at Launch of Beyond GDP Expert Group Report, Hails ‘Landmark Step’ to Correct Chronic Blindspot in Measuring Economic Progress, Societal Well-Being",
+      "summary": "Following are UN Secretary-General António Guterres’ remarks to the plenary meeting of the General Assembly to launch the Expert Group Report on “Beyond GDP”, in New York today:",
+      "link": "https://press.un.org/en/2026/sgsm23117.doc.htm",
+      "published": "Thu, 07 May 2026 17:57:23 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "Security Council Speakers Urge Sudan, South Sudan to Revive Abyei Political Process amid Rising Violence, Reduced UN Presence on Ground",
+      "summary": "The conflict in Sudan and instability in South Sudan are delaying agreement on Abyei’s final status and degrading conditions in the demilitarized area, United Nations officials warned the Security Council today, as delegates called for the urgent revival of stalled joint oversight mechanisms and diplomatic resolve to advance a durable political solution.",
+      "link": "https://press.un.org/en/2026/sc16356.doc.htm",
+      "published": "Thu, 07 May 2026 17:53:59 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "Advocating ‘Science Diplomacy’, Speakers Underscore Need to Safeguard Open Access for Emerging Technologies to Support Sustainable Development, as Forum Concludes",
+      "summary": "Safeguard open access for emerging technologies, leading scientists from around the world underscored today at a United Nations forum on how their work can support development.",
+      "link": "https://press.un.org/en/2026/ecosoc7231.doc.htm",
+      "published": "Thu, 07 May 2026 17:32:36 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "What’s in Trump’s New Counterterrorism Strategy?",
+      "summary": "The White House ignores the threat of far-right groups.",
+      "link": "https://foreignpolicy.com/2026/05/07/trump-counterterrorism-strategy-gorka-iran-lebanon-israel/",
+      "published": "Thu, 07 May 2026 22:02:17 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "How the Abraham Accords Fueled a New Era of Conflict",
+      "summary": "Despite promising peace, Israeli-Gulf cooperation paved the path to war with Iran.",
+      "link": "https://foreignpolicy.com/2026/05/07/trump-iran-israel-saudi-arabia-uae-abraham-accords-conflict-palestine/",
+      "published": "Thu, 07 May 2026 21:11:27 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Starmer Braces for Upsets in U.K. Local Elections",
+      "summary": "British voters are expected to abandon the Labour Party for nonmainstream alternatives.",
+      "link": "https://foreignpolicy.com/2026/05/07/uk-local-elections-labour-starmer-reform-uk-farage-greens/",
+      "published": "Thu, 07 May 2026 20:51:21 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Who Is Xi’s Real No. 2?",
+      "summary": "The Chinese leader isn’t willing to give anybody else power.",
+      "link": "https://foreignpolicy.com/2026/05/07/china-cai-qi-li-qiang-leadership/",
+      "published": "Thu, 07 May 2026 19:49:15 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Trump says US-Iran ceasefire still in place after exchange of fire in Strait of Hormuz",
+      "summary": "Iran accuses the US of violating the truce, alleging it targeted an oil tanker and carried out attacks on coastal areas.",
+      "link": "https://www.bbc.com/news/articles/c626zyywxjno?at_medium=RSS&at_campaign=rss",
+      "published": "Fri, 08 May 2026 05:57:08 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Oil prices rise after US and Iran exchange fire in Hormuz strait",
+      "summary": "US President Donald Trump says the ceasefire between Washington and Tehran is still in place.",
+      "link": "https://www.bbc.com/news/articles/c86dp85g59xo?at_medium=RSS&at_campaign=rss",
+      "published": "Fri, 08 May 2026 08:43:55 GMT",
+      "source_type": "rss"
+    }
+  ]
+}

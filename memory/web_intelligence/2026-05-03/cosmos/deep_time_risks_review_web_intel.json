@@ -1,0 +1,115 @@
+{
+  "axis": "DEEP_TIME_RISKS_REVIEW",
+  "domain": "cosmos",
+  "timestamp": "2026-05-03T09:01:20.918156+00:00",
+  "sources_count": 10,
+  "rss_count": 4,
+  "ddg_count": 5,
+  "youtube_count": 1,
+  "youtube_items": [
+    {
+      "title": "[YT] Scientists may need to use nuclear weapons to defend earth from asteroid - YouTube",
+      "summary": "don't look up the European Space Agency says the space Rock has a 1 in 83 chance of hitting Us in just over 7 years time astronomer David White House joining us now hi David how worried should we be I think this has the potential to be very serious indeed the current odds on this rock striking Us in 2032 are down to 1 in 67 which is unacceptable to ignore we only have another couple of months to observe this rock before it goes out of sight now what will probably happen is that the orbit will be refined and it'll go down to a very very low probability it it won't hit us at all but should it remain somewhere around about one in 67 or even one in 100 then we Face a problem because we will not see this rock again until 2028 and that's the time we will have to take measures to deflect it so we",
+      "link": "https://www.youtube.com/watch?v=oyMmxzcDLoI",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "oyMmxzcDLoI",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "summary": "Global health initiatives are making progress in disease control and access. The risk of asteroid impacts remains, though the probability is decreasing.",
+    "risk_level": "MEDIUM",
+    "trend": "IMPROVING",
+    "key_events": [
+      "WHO extends negotiations on Pathogen Access and Benefit Sharing",
+      "Australia eliminates trachoma as a public health problem",
+      "Global efforts to combat hepatitis deliver measurable progress"
+    ],
+    "insights": [
+      "Global health initiatives are making progress in disease control and access.",
+      "The risk of asteroid impacts remains, though the probability is decreasing."
+    ],
+    "youtube_insights": [
+      "Video highlights the potential threat of asteroid impacts and the need for planetary defense.",
+      "The WHO's simulation exercise emphasizes the importance of preparedness for future health crises."
+    ],
+    "relevance_to_goal": "Relevant to global health preparedness and planetary defense.",
+    "generalization": "The risk of natural disasters and the need for global cooperation in health and security are critical areas of focus."
+  },
+  "raw_items": [
+    {
+      "title": "WHO Member States agree to extend negotiations on Pathogen Access and Benefit Sharing annex",
+      "summary": "<p>Member States of the World Health Organization (WHO) have progressed work on the Pathogen Access and Benefit Sharing (PABS) annex, a key part of the WHO Pandemic Agreement, and today agreed additional time was needed to finalize the framework for ensuring a better, more equitable, response to future pandemics.</p><p>Countries today ended the resumed session of the sixth meeting of the Intergovernmental Working Group (IGWG) on the WHO Pandemic Agreement in Geneva, focused on the PABS system. T",
+      "link": "https://www.who.int/news/item/01-05-2026-who-member-states-agree-to-extend-negotiations-on-pathogen-access-and-benefit-sharing-annex",
+      "published": "Fri, 01 May 2026 16:52:42 Z",
+      "source_type": "rss"
+    },
+    {
+      "title": "Australia becomes the 30th country to eliminate trachoma as a public health problem",
+      "summary": "The World Health Organization (WHO) has validated Australia for eliminating trachoma as a public health problem, marking a significant milestone in the health of indigenous peoples and in global efforts to combat neglected tropical diseases (NTDs). Trachoma, the world’s leading infectious cause of blindness, no longer represents a public health problem in the country.",
+      "link": "https://www.who.int/news/item/29-04-2026-australia-becomes-the-30th-country-to-eliminate-trachoma-as-a-public-health-problem",
+      "published": "Wed, 29 Apr 2026 06:10:07 Z",
+      "source_type": "rss"
+    },
+    {
+      "title": "Efforts to eliminate hepatitis delivers gains but more action needed to meet 2030 targets",
+      "summary": "<p>Global efforts to combat viral hepatitis are delivering measurable progress in reducing infections and deaths, but the disease remains a major global health challenge, according to a new World Health Organization (WHO) <a href=\"https://www.who.int/publications/i/item/9789240122383\">report</a> released today at the World Hepatitis Summit.</p><p>Viral hepatitis B and C &ndash; the two infections responsible for 95% of hepatitis-related deaths worldwide &ndash; claimed 1.34&nbsp;million lives in",
+      "link": "https://www.who.int/news/item/28-04-2026-efforts-to-eliminate-hepatitis-delivers-gains-but-more-action-needed-to-meet-2030-targets",
+      "published": "Tue, 28 Apr 2026 05:37:30 Z",
+      "source_type": "rss"
+    },
+    {
+      "title": "Practicing today for tomorrow’s emergencies – WHO convenes countries and partners to simulate response to major disease outbreak",
+      "summary": "<p>The World Health Organization (WHO) wrapped up Exercise Polaris II, a 2-day high-level simulation exercise, based around an outbreak of a fictional new bacterium spreading across the world. Bringing together 26 countries and territories, 600 health emergency experts and over 25 partners, the exercise, which took place on 22 and 23 April, allowed countries to test their preparedness for pandemics and other major health emergencies, including activating their emergency workforce structures, inf",
+      "link": "https://www.who.int/news/item/27-04-2026-practicing-today-for-tomorrow-s-emergencies-who-convenes-countries-and-partners-to-simulate-response-to-major-disease-outbreak",
+      "published": "Mon, 27 Apr 2026 13:12:09 Z",
+      "source_type": "rss"
+    },
+    {
+      "title": "Asteroid impact",
+      "summary": "An impact event is a collision between astronomical objects causing measurable effects. Impact events have been found to regularly occur in planetary systems, though the most frequent involve asteroids, comets or meteoroids and have minimal effect. When large objects impact terrestrial planets such as the Earth, there can be significant physical and biospheric consequences, as the impacting body i",
+      "link": "https://en.wikipedia.org/wiki/Asteroid_impact",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Impact event - Wikipedia",
+      "summary": "An impact event is a collision between astronomical objects causing measurable effects. [1] Impact events have been found to regularly occur in planetary systems, though the most frequent involve asteroids, comets or meteoroids and have minimal effect.",
+      "link": "https://en.wikipedia.org/wiki/Impact_event",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Asteroid impact avoidance",
+      "summary": "DART mission impact animation Asteroid impact avoidance, commonly termed planetary defense, involves systematic detection, tracking, and trajectory alteration of...",
+      "link": "https://grokipedia.com/page/Asteroid_impact_avoidance",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Supervolcano",
+      "summary": "A supervolcano is a volcano that has had an eruption with a volcanic explosivity index (VEI) of 8, the largest recorded value on the index. This means the volume of deposits for such an eruption is greater than 1,000 cubic kilometers (240 cubic miles).Supervolcanoes occur when magma in the mantle rises into the crust but is unable to break through it. Pressure builds in a large and growing magma p",
+      "link": "https://en.wikipedia.org/wiki/Supervolcano",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Supervolcano (film) - Wikipedia",
+      "summary": "Supervolcano is a 2005 disaster drama television film directed by Tony Mitchell and written by Edward Canfor-Dumas. It is based on the speculated and potential eruption of the volcanic...",
+      "link": "https://en.wikipedia.org/wiki/Supervolcano_(film)",
+      "source_type": "ddg"
+    },
+    {
+      "title": "[YT] Scientists may need to use nuclear weapons to defend earth from asteroid - YouTube",
+      "summary": "don't look up the European Space Agency says the space Rock has a 1 in 83 chance of hitting Us in just over 7 years time astronomer David White House joining us now hi David how worried should we be I think this has the potential to be very serious indeed the current odds on this rock striking Us in 2032 are down to 1 in 67 which is unacceptable to ignore we only have another couple of months to observe this rock before it goes out of sight now what will probably happen is that the orbit will be refined and it'll go down to a very very low probability it it won't hit us at all but should it remain somewhere around about one in 67 or even one in 100 then we Face a problem because we will not see this rock again until 2028 and that's the time we will have to take measures to deflect it so we",
+      "link": "https://www.youtube.com/watch?v=oyMmxzcDLoI",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "oyMmxzcDLoI",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ]
+}

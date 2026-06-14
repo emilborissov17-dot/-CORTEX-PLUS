@@ -1,0 +1,58 @@
+{
+  "axis": "INFRASTRUCTURE_CITIES_REVIEW",
+  "fetched_at": "2026-03-10T11:51:54.798646+00:00",
+  "smart_query": "Infrastructure City Review Level Metrics Analysis",
+  "sources_count": {
+    "wiki": 0,
+    "gdelt": 3,
+    "github": 3
+  },
+  "analysis": {
+    "summary": "Утah има високи показатели по инфраструктурата, докато Mercedes CLA EV предлага конкурентна алтернатива на Tesla Model 3. Отворените източници за умни градове и енергийни данни подкрепят устойчивото развитие на инфраструктурата.",
+    "key_developments": [
+      "Мерцедес CLA EV с 434 миля започва да конкурира с Tesla Model 3",
+      "Проекти за умни градове и енергийни данни се разпространяват чрез отворени източници"
+    ],
+    "sentiment": "POSITIVE",
+    "urgency": "MEDIUM",
+    "open_source_momentum": "Висока активност в разработката на инструменти за умни градове и енергийни данни",
+    "scientific_frontier": "Интеграция на умни технологии и енергийна ефективност в инфраструктурата",
+    "relevance_to_goal": "Висока релевантност към целта за устойчиво развитие и достойнство на всички"
+  },
+  "sentiment": "POSITIVE",
+  "urgency": "MEDIUM",
+  "summary": "Утah има високи показатели по инфраструктурата, докато Mercedes CLA EV предлага конкурентна алтернатива на Tesla Model 3. Отворените източници за умни градове и енергийни данни подкрепят устойчивото развитие на инфраструктурата.",
+  "key_developments": [
+    "Мерцедес CLA EV с 434 миля започва да конкурира с Tesla Model 3",
+    "Проекти за умни градове и енергийни данни се разпространяват чрез отворени източници"
+  ],
+  "open_source_momentum": "Висока активност в разработката на инструменти за умни градове и енергийни данни",
+  "scientific_frontier": "Интеграция на умни технологии и енергийна ефективност в инфраструктурата",
+  "github_repos": [
+    {
+      "title": "opendatacam/opendatacam",
+      "snippet": "An open source tool to quantify the world",
+      "stars": 1704,
+      "url": "https://github.com/opendatacam/opendatacam",
+      "updated": "2026-03-04",
+      "source": "GitHub"
+    },
+    {
+      "title": "buds-lab/building-data-genome-project-2",
+      "snippet": "Whole building non-residential hourly energy meter data from the Great Energy Predictor III competition",
+      "stars": 267,
+      "url": "https://github.com/buds-lab/building-data-genome-project-2",
+      "updated": "2026-03-07",
+      "source": "GitHub"
+    },
+    {
+      "title": "OpenVisualCloud/Smart-City-Sample",
+      "snippet": "The smart city reference pipeline shows how to integrate various media building blocks, with analytics powered by the OpenVINO™ Toolkit, for traffic or stadium sensing, analytics and management tasks.",
+      "stars": 215,
+      "url": "https://github.com/OpenVisualCloud/Smart-City-Sample",
+      "updated": "2026-02-06",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": []
+}

@@ -1,0 +1,63 @@
+{
+  "axis": "GOVERNANCE_INSTITUTIONS_REVIEW",
+  "fetched_at": "2026-03-21T11:49:44.325705+00:00",
+  "smart_query": "government corruption institutions",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 0,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "github/government.github.com",
+      "snippet": "Gather, curate, and feature stories of public servants and civic hackers using GitHub as part of their open government innovations",
+      "stars": 1919,
+      "url": "https://github.com/github/government.github.com",
+      "updated": "2026-03-19",
+      "source": "GitHub"
+    },
+    {
+      "title": "consuldemocracy/consuldemocracy",
+      "snippet": "Consul Democracy - Open Government and E-Participation Web Software",
+      "stars": 1529,
+      "url": "https://github.com/consuldemocracy/consuldemocracy",
+      "updated": "2026-03-20",
+      "source": "GitHub"
+    },
+    {
+      "title": "datagouv/data.gouv.fr",
+      "snippet": "Ce dépôt rassemble les tickets techniques qui portent sur data.gouv.fr.",
+      "stars": 113,
+      "url": "https://github.com/datagouv/data.gouv.fr",
+      "updated": "2026-03-17",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Can AI mediation improve democratic deliberation?",
+      "snippet": "The strength of democracy lies in the free and equal exchange of diverse viewpoints. Living up to this ideal at scale faces inherent tensions: broad participation, meaningful deliberation, and political equality often trade off with one another (Fishkin, 2011). We ask whether and how artificial inte",
+      "url": "https://arxiv.org/abs/2601.05904v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Fair Voting Methods as a Catalyst for Democratic Resilience: A Trilogy on Legitimacy, Impact and AI Safeguarding",
+      "snippet": "This article shows how fair voting methods can be a catalyst for change in the way we make collective decisions, and how such change can promote long-awaited upgrades of democracy. Based on real-world evidence from democratic innovations in participatory budgeting, in Switzerland and beyond, I highl",
+      "url": "https://arxiv.org/abs/2512.17461v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[Why automating human labour will break our political system | Rose Hadshar, Forethought] The most important political question in the age of advanced AI might not be who wins elections. It might be whether elections continue to matter at all.That’s the view of Rose Hadshar, researcher at Forethought, who believes we could see extreme, AI-enabled power concentration without a coup or dramatic ‘end of democracy’ moment.She foresees something more insidious: an elite group with access to",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

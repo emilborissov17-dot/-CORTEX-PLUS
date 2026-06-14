@@ -1,0 +1,75 @@
+{
+  "run_at": "2026-02-27T11:30:28.734565",
+  "sources": [
+    {
+      "name": "IEA Data Portal",
+      "url": "https://www.iea.org/data-and-statistics",
+      "file": "www.iea.org_data-and-statistics.json",
+      "ok": true,
+      "status": "OK 200"
+    },
+    {
+      "name": "Eurostat Energy Statistics",
+      "url": "https://ec.europa.eu/eurostat/databrowser",
+      "file": "ec.europa.eu_eurostat_databrowser.json",
+      "ok": true,
+      "status": "OK 200"
+    },
+    {
+      "name": "NREL Renewable Energy Data",
+      "url": "https://www.nrel.gov/research.html",
+      "file": "www.nrel.gov_research.html.json",
+      "ok": true,
+      "status": "OK 200"
+    },
+    {
+      "name": "World Bank Energy Data",
+      "url": "https://data.worldbank.org/topic/energy",
+      "file": "data.worldbank.org_topic_energy.json",
+      "ok": true,
+      "status": "OK 403"
+    },
+    {
+      "name": "Open Power System Data (OPSD)",
+      "url": "https://open-power-system-data.org",
+      "file": "open-power-system-data.org_root.json",
+      "ok": false,
+      "status": "FAIL HTTPSConnectionPool(host='open-power-system-data.org', port=443): Max retries exceeded with url: / (Caused by ConnectTimeoutError(<urllib3.connection.HTTPSConnection object at 0x7ab847af9ac0>, 'Connection to open-power-system-data.org timed out. (connect timeout=15)'))"
+    },
+    {
+      "name": "USGS Energy Resources",
+      "url": "https://energy.gov/eere/",
+      "file": "energy.gov_eere.json",
+      "ok": true,
+      "status": "OK 200"
+    },
+    {
+      "name": "ENTSO-E Transparency Portal",
+      "url": "https://transparency.entsoe.eu",
+      "file": "transparency.entsoe.eu_root.json",
+      "ok": true,
+      "status": "OK 200"
+    },
+    {
+      "name": "International Energy Forum (IEF)",
+      "url": "https://www.ief.org",
+      "file": "www.ief.org_root.json",
+      "ok": false,
+      "status": "FAIL HTTPSConnectionPool(host='www.ief.org', port=443): Max retries exceeded with url: / (Caused by ConnectTimeoutError(<urllib3.connection.HTTPSConnection object at 0x7ab847afa1e0>, 'Connection to www.ief.org timed out. (connect timeout=15)'))"
+    },
+    {
+      "name": "UNEP Data Portal",
+      "url": "https://data.unep.org",
+      "file": "data.unep.org_root.json",
+      "ok": true,
+      "status": "OK 200"
+    },
+    {
+      "name": "National Renewable Energy Laboratory (NREL)",
+      "url": "https://www.nrel.gov",
+      "file": "www.nrel.gov_root.json",
+      "ok": true,
+      "status": "OK 200"
+    }
+  ]
+}

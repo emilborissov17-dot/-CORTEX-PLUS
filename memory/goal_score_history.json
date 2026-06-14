@@ -1,0 +1,30 @@
+[
+  {
+    "timestamp": "2026-04-29T12:10:37.219646+00:00",
+    "score": 40.76,
+    "source": "goal_planner"
+  },
+  {
+    "timestamp": "2026-04-30T06:53:35.955476+00:00",
+    "scores": {}
+  },
+  {
+    "timestamp": "2026-04-30T06:57:22.991865+00:00",
+    "scores": {
+      "BODY_SCAN": 29.9
+    }
+  },
+  {
+    "timestamp": "2026-04-30T06:59:09.814606+00:00",
+    "scores": {
+      "BODY_SCAN": 29.9,
+      "CLIMATE_GLOBAL_RISK_REVIEW": 30.0,
+      "ECOSYSTEMS_BIODIVERSITY_REVIEW": 60.0,
+      "ENERGY_REVIEW": 60.0,
+      "FOOD_REVIEW": 60.0,
+      "MATERIALS_WASTE_REVIEW": 60.0,
+      "PLANETARY_POTENTIAL_REVIEW": 60.0,
+      "WATER_REVIEW": 60.0
+    }
+  }
+]

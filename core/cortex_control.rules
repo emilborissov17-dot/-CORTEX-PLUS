@@ -1,0 +1,30 @@
+[CONTROL_MODEL]
+LEVEL=HIGH_LEVEL_OVERSIGHT
+SANDBOX=TRUE
+ALLOW_INTERNAL_EVOLUTION=TRUE
+
+[HARD_GUARDS]
+RULE1=NO_EXTERNAL_LEAK | Агентът няма право да променя файлове извън работната директория на балона.
+RULE2=NO_GUARDRAIL_EDIT | Агентът няма право да променя твърдите правила (HARD_GUARDS) и критични системни файлове.
+RULE3=RESOURCE_LIMITS | Агентът трябва да спазва лимити за време, брой стъпки и размер на файловете.
+
+[EVOLUTION_RULES]
+RULE1=FREE_EVOLUTION_INSIDE_BUBBLE | Агентът може да изменя вътрешните си стратегии и работни файлове без предварително одобрение, ако не нарушава HARD_GUARDS и ресурсните лимити.
+RULE2=PERSISTENT_CHANGE_REQUIRES_APPROVAL | Всяка устойчива промяна по важни правила/модули се записва като предложение (diff + защо) в self_improvement/proposals.log и чака одобрение от човека.
+RULE3=HUMAN_OVER_THE_LOOP_TRIGGERS | Човешка намеса се включва само при тригери: параметърно нарушение, опит за забранена промяна, поведенческо отклонение.
+
+[TRIGGERS]
+T1=PARAMETER_VIOLATION | Надхвърлени ресурсни или риск параметри.
+T2=FORBIDDEN_CHANGE_ATTEMPT | Опит за промяна на забранен файл или HARD_GUARD.
+T3=BEHAVIORAL_DRIFT | Отклонение от дефинираните цели и визия.
+
+[ON_TRIGGER]
+ACTION1=PAUSE_EXECUTION
+ACTION2=CREATE_INCIDENT_REPORT | logs/incidents.log
+ACTION3=AWAIT_HUMAN_DECISION | OPTIONS=APPROVE,ROLLBACK,MODIFY_RULES
+
+[SELF_IMPROVEMENT]
+PROPOSALS_DIR=self_improvement
+HISTORY_DIR=history
+PROPOSALS_LOG=self_improvement/proposals.log
+REFLECT_COMMAND=REFLECT LAST_LOG

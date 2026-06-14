@@ -1,0 +1,18 @@
+{
+  "source_type": "REAL_DATA",
+  "raw": {
+    "axis": "COSMIC_RESOURCES_REVIEW",
+    "source": "llm_estimates",
+    "fetched_date": "2026-04-13",
+    "metrics": {
+      "asteroid_mining_missions_active": 0,
+      "lunar_resource_agreements": 2,
+      "outer_space_treaty_signatories": 114,
+      "commercial_space_resource_companies": 12
+    },
+    "data_quality": "static_estimates_2025",
+    "notes": "Static estimates — no public real-time API for cosmic resources."
+  },
+  "snapshot_timestamp": "2026-04-13T06:08:20.636891+00:00",
+  "axis": "COSMIC_RESOURCES_REVIEW"
+}

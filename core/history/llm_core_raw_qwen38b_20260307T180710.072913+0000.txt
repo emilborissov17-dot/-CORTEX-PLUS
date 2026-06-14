@@ -1,0 +1,83 @@
+MODEL: qwen3:8b
+
+PROMPT:
+
+Ти си QWEN_PLANET_SNAPSHOT_AGENT, част от CORTEX++_QWEN.
+
+ЗАДАЧА:
+  - Генерираш КОМПАКТЕН JSON snapshot за една ос.
+  - Отговаряш САМО с един валиден JSON обект, БЕЗ никакъв текст преди или след него.
+  - НЕ използвай префикси като "Thinking..." или "done thinking.".
+  - LEVEL трябва да е LOW, MEDIUM или HIGH.
+  - SIGNALS са 3–5 много кратки bullets (по 1 изречение).
+  - KEY_METRICS са 3–7 метрики с име и кратко текстово описание (без числа).
+
+ОС:
+  - ENERGY_REVIEW (Енергийна система)
+
+ИЗХОД (примерен формат, който трябва да спазиш):
+
+{
+  "axis": "ENERGY_REVIEW",
+  "level": "MEDIUM",
+  "signals": [
+    "кратък сигнал 1",
+    "кратък сигнал 2",
+    "кратък сигнал 3"
+  ],
+  "key_metrics": [
+    { "name": "metric_1", "description": "кратко текстово описание на метриката" },
+    { "name": "metric_2", "description": "кратко текстово описание" }
+  ]
+}
+
+Върни само реален JSON обект в този формат, без допълнителен текст.
+
+
+RESPONSE:
+Thinking...
+Okay, let me tackle this query. The user wants me to generate a compact JSON snapshot for the "ENERGY_REVIEW" axis as part of the CORTEX++_QWEN system. The output needs to be a valid JSON object with specific structure.
+
+First, I need to make sure I understand all the requirements. The JSON should have "axis", "level", "signals", and "key_metrics". The level must be LOW, MEDIUM, or HIGH. Signals are 3-5 short bullets, each a single sentence. Key metrics are 3-7 entries with name and description, no numbers.
+
+So, starting with the axis: "ENERGY_REVIEW". The level—maybe MEDIUM as a default, but I should check if there's any reason to choose another. The user didn't specify, so MEDIUM seems safe.
+
+For signals, I need three to five short points. Let me think about energy review aspects. Maybe something like: "Renewable energy adoption is increasing", "Grid stability shows minor fluctuations", "Demand response programs are expanding". That's three, which is the minimum.
+
+Key metrics: Need names and descriptions. Let's brainstorm. Possible metrics could be "Renewable Integration Rate", "Grid Stability Index", "Demand Response Participation", "Energy Storage Capacity", "Carbon Emission Reduction". Each description should be brief. For example, "Renewable Integration Rate: Percentage of energy generated from renewable sources." Wait, but the user said no numbers, just descriptions. So maybe "Renewable Integration Rate: Measures the proportion of energy generated from renewable sources in the grid." But need to keep it concise.
+
+Wait, the example given in the user's message has key_metrics with names like "metric_1" and descriptions. But the user probably expects actual metric names. Maybe the user wants the metric names to be meaningful, not just "metric_1". Let me check the example again. The example shows "metric_1" as the name, but maybe that's just an example. However, the user's instruction says "KEY_METRICS са 3–7 метрики с име и кратко текстово описание (без числа)". So the names should be meaningful, like "Renewable Integration Rate", and descriptions without numbers.
+
+So, putting it all together. Axis: ENERGY_REVIEW. Level: MEDIUM. Signals: three points. Key metrics: maybe five metrics. Let me list them:
+
+Signals:
+- Renewable energy adoption is increasing.
+- Grid stability shows minor fluctuations.
+- Demand response programs are expanding.
+
+Key Metrics:
+- Renewable Integration Rate: Measures the proportion of energy generated from renewable sources in the grid.
+- Grid Stability Index: Reflects the consistency and reliability of the energy distribution network.
+- Demand Response Participation: Indicates the extent to which consumers adjust their energy usage based on demand signals.
+- Energy Storage Capacity: Represents the total available storage capacity to balance supply and demand.
+- Carbon Emission Reduction: Tracks the decrease in greenhouse gas emissions from energy production.
+
+That's five key metrics, which is within the 3-7 range. Now, ensuring the JSON structure is correct. No extra text, just the JSON. Also, check for valid syntax, commas, and brackets. Make sure the keys are in quotes, and the structure matches the example provided.
+...done thinking.
+
+{
+  "axis": "ENERGY_REVIEW",
+  "level": "MEDIUM",
+  "signals": [
+    "Renewable energy adoption is increasing",
+    "Grid stability shows minor fluctuations",
+    "Demand response programs are expanding"
+  ],
+  "key_metrics": [
+    { "name": "Renewable Integration Rate", "description": "Measures the proportion of energy generated from renewable sources in the grid" },
+    { "name": "Grid Stability Index", "description": "Reflects the consistency and reliability of the energy distribution network" },
+    { "navigator": "Demand Response Participation", "description": "Indicates the extent to which consumers adjust their energy usage based on demand signals" },
+    { "name": "Energy Storage Capacity", "description": "Represents the total available storage capacity to balance supply and demand" },
+    { "name": "Carbon Emission Reduction", "description": "Tracks the decrease in greenhouse gas emissions from energy production" }
+  ]
+}

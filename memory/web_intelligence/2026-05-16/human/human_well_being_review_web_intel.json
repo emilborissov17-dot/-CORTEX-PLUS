@@ -1,0 +1,157 @@
+{
+  "axis": "HUMAN_WELL_BEING_REVIEW",
+  "domain": "human",
+  "timestamp": "2026-05-16T19:17:29.902143+00:00",
+  "sources_count": 11,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] The Most Incredible Transformation I’ve Ever Seen — Jerzy Gregorek on Cerebral Palsy and Coaching",
+      "summary": "I come from Olympic weightlifting, athletics, focus always on progress and that's what the athletes are about. When you think about physical therapists, guy of directors, we call them recovers, so helping us to recover. The return to the person who was before, we've to Jan, there's not a case or a service of a possible people because they are already that and they cannot return them that way. So they have to progress the same way as athletes. Jersey, nice to see you. As always. Pleasure. I don't get to talk to you. Yeah, I always love spending time with you and I have wanted to have this conversation for doing the math more than 10 years because you told me of this transformation that we're going to be discussing in detail a long time ago. And it blew my mind to the extent that you may not",
+      "link": "https://www.youtube.com/watch?v=fBujS3ACNQY",
+      "published": "2026-05-14T13:43:28+00:00",
+      "source_type": "youtube",
+      "channel": "Tim Ferriss",
+      "video_id": "fBujS3ACNQY",
+      "transcript_method": "whisper",
+      "transcript_chars": 51795,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] PRISONER NO MORE: The True Story of Tae Jin Park",
+      "summary": "Throughout the years, I learned one thing that everybody can get better. It's just where to start, find the starting point. My name is Tim Ferris, and I'm here to share a story with you about what can happen when you believe meets action. Many of us take things for granted, things that feel second nature, automatic, easy. But for some people, even the simplest tasks are challenges that must be overcome each and every day. Things like walking, talking, bathing, interacting with the group in general can feel like barriers. It can make someone feel like they're a prisoner in their own body. But with a little help from the right people, the very things that wants to present us can actually become the fire that sets us free. They use us because this applies to all of us. Oh, hey, this is Ren. Y",
+      "link": "https://www.youtube.com/watch?v=FcQ3ELLLgqc",
+      "published": "2026-05-14T13:40:09+00:00",
+      "source_type": "youtube",
+      "channel": "Tim Ferriss",
+      "video_id": "FcQ3ELLLgqc",
+      "transcript_method": "whisper",
+      "transcript_chars": 19903,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] My Current Longevity Stack",
+      "summary": "It's kind of quaint how, you know, I went to the first quantified self-meat up and whatever it was 2008 or something with 12 people sitting around in Kevin Kelly's house talking about measuring things with Excel spreadsheets. The world has changed so there are armies of tens of thousands of self-described biohackers and so on. Talking about longevity, there's a lot of nonsense. For yourself personally, where have you landed in terms of interventions or thinking about interventions for yourself? I haven't done a ton, you know, it feels like a lot collapses into like sleep well, exercise a lot, you know, etc., like does that handful of things that kind of matter? E-well, and so it kind of collapsed on that stuff. I think there's one or two things that maybe you can take that are helpful and ",
+      "link": "https://www.youtube.com/watch?v=TmgG7WC-U4A",
+      "published": "2026-05-11T14:00:49+00:00",
+      "source_type": "youtube",
+      "channel": "Tim Ferriss",
+      "video_id": "TmgG7WC-U4A",
+      "transcript_method": "whisper",
+      "transcript_chars": 11153,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "Недостатъчно регулиране и маркетинг на никотинови торби, насочени към младежта.",
+    "root_cause": "Липсата на строги регулации и активният маркетинг на никотинови торби от страна на производителите, които целенасочено привличат младежи.",
+    "severity": "HIGH",
+    "leverage_points": [
+      "Международните здравни организации като ВОЗ, които могат да налагат стандартни регулации и контроли",
+      "Национални здравни власти, които могат да ужасяват и да регулират доставката и рекламата на никотинови торби"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Въвеждане на строги регулации за маркетинга на никотинови торби във всички страни",
+        "measurable_goal": "Разработване и прилагане на законодателни рамки, които ограничават рекламата и доставката на никотинови торби към младежи",
+        "timeframe": "дългосрочно"
+      },
+      {
+        "action": "Интензивна кампания за осведомяване за рисковете на никотинови торби, насочена към младежи",
+        "measurable_goal": "Повишаване на осведомеността сред младежи за здравни рискове от никотинови торби чрез социални медии и образователни програми",
+        "timeframe": "средносрочно"
+      }
+    ],
+    "evidence": [
+      "WHO warns nicotine pouch brands targeting youth as sales surge",
+      "Follow-up message by the WHO Director-General to the people of Tenerife regarding the hantavirus response"
+    ],
+    "generalization": "Този проблем е свързан с здравето на населението и със стратегиите за здравен контрол, като здравни рискове от никотинови торби могат да имат дългосрочни последици върху общественото здраве.",
+    "summary": "Липсата на регулации и активен маркетинг на никотинови торби към младежи представлява голям риск за здравето и нуждае от строга контрола и осведомяване.",
+    "risk_level": "CRITICAL"
+  },
+  "raw_items": [
+    {
+      "title": "WHO warns nicotine pouch brands targeting youth as sales surge",
+      "summary": "The World Health Organization (WHO) warns about the rapid growth and aggressive marketing of nicotine pouches, especially targeting youth, amid limited regulation worldwide. Nicotine pouches pose significant health risks and governments are urged to implement strong regulatory measures to prevent addiction and protect young people.",
+      "link": "https://www.who.int/news/item/15-05-2026-who-warns-nicotine-pouch-brands-targeting-youth-as-sales-surge",
+      "published": "Thu, 14 May 2026 17:26:02 Z",
+      "source_type": "rss"
+    },
+    {
+      "title": "Follow-up message by the WHO Director-General to the people of Tenerife regarding the hantavirus response",
+      "summary": "A message from the Director-General of the World Health Organization expressing gratitude to the people of Tenerife for their solidarity and successful cooperation during the operation to safely disembark and care for over 120 passengers from 23 countries amid an outbreak of hantavirus.",
+      "link": "https://www.who.int/news/item/14-05-2026-follow-up-message-by-the-who-director-general-to-the-people-of-tenerife-regarding-the-hantavirus-response",
+      "published": "Thu, 14 May 2026 13:27:15 Z",
+      "source_type": "rss"
+    },
+    {
+      "title": "Tunisia validated by WHO as having eliminated trachoma as a public health problem",
+      "summary": "Tunisia has been officially validated by the World Health Organization (WHO) as having eliminated trachoma as a public health problem, marking a significant achievement after decades of sustained effort.",
+      "link": "https://www.who.int/news/item/14-05-2026-tunisia-validated-by-who-as-having-eliminated-trachoma-as-a-public-health-problem",
+      "published": "Thu, 14 May 2026 09:23:04 Z",
+      "source_type": "rss"
+    },
+    {
+      "title": "Global health gains face threat of reversal",
+      "summary": "The world is falling short on health targets, with progress uneven, slowing, and in some areas reversing, according to the World Health Statistics 2026 report, published today by the World Health Organization (WHO).",
+      "link": "https://www.who.int/news/item/13-05-2026-global-health-gains-face-threat-of-reversal",
+      "published": "Wed, 13 May 2026 13:02:54 Z",
+      "source_type": "rss"
+    },
+    {
+      "title": "'We're right on track,' says Streeting as key target for hospital waiting times hit",
+      "summary": "Government his its interim target of 65% of patients in England being treated within 18 weeks.",
+      "link": "https://www.bbc.com/news/articles/cvgzv0j19vvo?at_medium=RSS&at_campaign=rss",
+      "published": "Thu, 14 May 2026 14:26:20 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Posh sandwich has more salt than nearly five cheeseburgers",
+      "summary": "Action on Salt & Sugar said people should not be exposed to a \"hidden health risk every time they buy lunch\".",
+      "link": "https://www.bbc.com/news/articles/c4g4l54g2ppo?at_medium=RSS&at_campaign=rss",
+      "published": "Wed, 13 May 2026 10:57:35 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "MPs call for sunbed advertising ban to help prevent skin cancer",
+      "summary": "A report by a cross-party group of MPs has found the majority of skin cancer cases are preventable.",
+      "link": "https://www.bbc.com/news/articles/c142g8567xko?at_medium=RSS&at_campaign=rss",
+      "published": "Wed, 13 May 2026 10:37:30 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "How are countries responding to hantavirus?",
+      "summary": "The UK, US and EU are asking all citizens returning home from the virus-hit MV Hondius to self-isolate for about six weeks.",
+      "link": "https://www.bbc.com/news/articles/c4g8318v4yzo?at_medium=RSS&at_campaign=rss",
+      "published": "Wed, 13 May 2026 08:36:54 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] The Most Incredible Transformation I’ve Ever Seen — Jerzy Gregorek on Cerebral Palsy and Coaching",
+      "summary": "I come from Olympic weightlifting, athletics, focus always on progress and that's what the athletes are about. When you think about physical therapists, guy of directors, we call them recovers, so helping us to recover. The return to the person who was before, we've to Jan, there's not a case or a service of a possible people because they are already that and they cannot return them that way. So they have to progress the same way as athletes. Jersey, nice to see you. As always. Pleasure. I don't get to talk to you. Yeah, I always love spending time with you and I have wanted to have this conversation for doing the math more than 10 years because you told me of this transformation that we're going to be discussing in detail a long time ago. And it blew my mind to the extent that you may not",
+      "link": "https://www.youtube.com/watch?v=fBujS3ACNQY",
+      "published": "2026-05-14T13:43:28+00:00",
+      "source_type": "youtube",
+      "channel": "Tim Ferriss",
+      "video_id": "fBujS3ACNQY",
+      "transcript_method": "whisper",
+      "transcript_chars": 51795,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] PRISONER NO MORE: The True Story of Tae Jin Park",
+      "summary": "Throughout the years, I learned one thing that everybody can get better. It's just where to start, find the starting point. My name is Tim Ferris, and I'm here to share a story with you about what can happen when you believe meets action. Many of us take things for granted, things that feel second nature, automatic, easy. But for some people, even the simplest tasks are challenges that must be overcome each and every day. Things like walking, talking, bathing, interacting with the group in general can feel like barriers. It can make someone feel like they're a prisoner in their own body. But with a little help from the right people, the very things that wants to present us can actually become the fire that sets us free. They use us because this applies to all of us. Oh, hey, this is Ren. Y",
+      "link": "https://www.youtube.com/watch?v=FcQ3ELLLgqc",
+      "published": "2026-05-14T13:40:09+00:00",
+      "source_type": "youtube",
+      "channel": "Tim Ferriss",
+      "video_id": "FcQ3ELLLgqc",
+      "transcript_method": "whisper",
+      "transcript_chars": 19903,
+      "has_full_transcript": true
+    }
+  ]
+}

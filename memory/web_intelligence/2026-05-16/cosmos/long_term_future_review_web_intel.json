@@ -1,0 +1,121 @@
+{
+  "axis": "LONG_TERM_FUTURE_REVIEW",
+  "domain": "cosmos",
+  "timestamp": "2026-05-16T22:02:30.119500+00:00",
+  "sources_count": 9,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 1,
+  "youtube_items": [
+    {
+      "title": "[YT] What's the Matter, Martha? (A Musical Existential Crisis) - YouTube",
+      "summary": "What's the matter, what's the matter, Manta? Keep your own old one, hope come of me, ladies. Everybody has their bad days, but it's been so long since we've seen that smile like a face. Couldn't fit a couldn't be like it's just not quite when it's correct to me. It broke your mind and did it in the warranty. It's been to him, babe. You never had the thought, but I don't get what it is. He calls for you, what's wrong with you. What's the matter, what's the matter, what's the matter? He's the status quo, my child must be right. Everyone gets stuck with the right, but it's been so long since we've seen that spark in your eyes. Couldn't fit a couldn't be like it's just not quite when it's wrong. Couldn't fit a couldn't be like it's just not quite when it's wrong. Couldn't fit a couldn't be lik",
+      "link": "https://www.youtube.com/watch?v=_iZBMKtOIy4",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "_iZBMKtOIy4",
+      "transcript_method": "whisper",
+      "transcript_chars": 1022,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "Недостатъчно внимание към несигурността на AI-управляемите системи в контекста на възможни купи след Mythos",
+    "root_cause": "Непълнотата на аналитиката и недостатъчната подготовка за AI-индуцирани купи, особено след Mythos, води до неправилни стратегии за управление на рискове",
+    "severity": "HIGH",
+    "leverage_points": [
+      "Изследователи и гувернърски органи, които разработват рамки за управление на AI-купи",
+      "Образователни програми за AI-етични и правни аспекти в университетите"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Разработка на специализирана рамка за анализ и отчитане на AI-купи след Mythos",
+        "measurable_goal": "Изготвяне на минимален набор от критерии за оценка на рискове от AI-купи в рамките на 6 месеца",
+        "timeframe": "средносрочно"
+      },
+      {
+        "action": "Интегриране на AI-етични и правни курсове в програмите по компютърни науки и инженерство",
+        "measurable_goal": "Повишаване на броя студенти, които са изучили AI-етични аспекти, с 30% в рамките на 2 години",
+        "time,frame": "дългосрочно"
+      }
+    ],
+    "evidence": [
+      "Публикацията 'How should we update on AI-enabled coups post-Mythos?' от 16 май 2026 г. подчертава липсата на обсъждане на рисковете след Mythos",
+      "Статията 'Critique Systems, Not Reality' от същия период също подчертава недостатъчната критика към системите, които не са учитвали AI-купи"
+    ],
+    "generalization": "Този проблем е свързан с другите домейни, като управлението на рискове, етичното използване на AI и изследването на дългосрочни последици от технологични промени",
+    "summary": "Недостатъчната аналитика и подготовка за AI-купи след Mythos са критични проблеми, които изискват специализирана рамка и образователни реформи.",
+    "risk_level": "CRITICAL"
+  },
+  "raw_items": [
+    {
+      "title": "A relatively brief explanation of Boltzmann Brains",
+      "summary": "<p><i><span>(Initially written for the LW Wiki, but then I realized it was looking more like a post instead.)</span></i></p><p><span>In 1895, the physicist Ignaz Robert Schütz, who worked as an assistant to the more eminent physicist Ludwig Boltzmann, wondered if our observed universe had simply assembled by a random fluctuation of order from a universe otherwise in thermal equilibrium. The idea was published by Boltzmann in 1896, properly credited to Schütz, and has been associated with Boltzma",
+      "link": "https://www.lesswrong.com/posts/v8MSczS3CuoqMmTFw/a-relatively-brief-explanation-of-boltzmann-brains",
+      "published": "Sat, 16 May 2026 21:19:34 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Benchmarking Real Work",
+      "summary": "<p><i><span>Thanks to Megan Kinniment for helpful comments and discussion.</span></i></p><p><b><span>TL;DR:</span></b><span> Benchmarks like HCAST undersample fuzzy (hard to evaluate) tasks, meaning they might overestimate capability on long-horizon work. To sample fuzzy tasks we need to increase judge capacity: we can either try to build automated judges that match human judgment, or reduce the human effort per grade. To do this, we propose generating fuzzy tasks as a byproduct of real SWE work",
+      "link": "https://www.lesswrong.com/posts/NbDjD47u6WmthgiDC/benchmarking-real-work",
+      "published": "Sat, 16 May 2026 20:43:44 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Critique Systems, Not Reality",
+      "summary": "<p><i><span>This is a crosspost, made with permission from </span></i><a href=\"https://thothhermes.substack.com/p/critique-systems-not-reality\" rel=\"noreferrer\"><i><span>Unfairly Maligned</span></i></a><i><span> (Thoth). Thoth is not on Lesswrong, so I will relay replies from them, clearly marking those as \"From Thoth:\". Any reply or comment without that marking is from me. This was originally posted on January 1st, 2025.</span></i></p><hr /><p><i><span>[Epistemic status is that if anyone quoted",
+      "link": "https://www.lesswrong.com/posts/nTzeETyf8MJGxa9Wz/critique-systems-not-reality",
+      "published": "Sat, 16 May 2026 19:11:21 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Trying to use NLAs to find out how Qwen 2.5 7B does multiplication",
+      "summary": "<p><span>Neural language autoencoders were just introduced by Anthropic. In a fascinating </span><a href=\"https://transformer-circuits.pub/2026/nla/index.html#measuring-behavioral-properties-of-nlas\"><span>paper</span></a><span>, they showed that you can take the residual stream activations of a language model and then train two instantiations of that same model (an encoder and a decoder) to translate those activations into a natural language verbalisation of them and back. In theory, this is gr",
+      "link": "https://www.lesswrong.com/posts/XN6CrJDiZvphGCC2e/trying-to-use-nlas-to-find-out-how-qwen-2-5-7b-does",
+      "published": "Sat, 16 May 2026 19:05:04 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "A Framework for EA Investment Decisions",
+      "summary": "Published on May 16, 2026 9:47 PM GMT<br /><br /><p>(<a href=\"https://open.substack.com/pub/brianfoerster/p/a-framework-for-ea-investment-decisions?r=834pmy&amp;utm_campaign=post&amp;utm_medium=web&amp;showWelcomeOnShare=true\">crossposted</a> to Substack)</p><p>Decisions about whether to donate now or to invest and donate later can be very impactful. Despite this, there’s&nbsp;little public EA writing about investing relative to writing on other important considerations, like object level foreca",
+      "link": "https://forum.effectivealtruism.org/posts/maoJeD9PC5Cf58uuP/a-framework-for-ea-investment-decisions",
+      "published": "Sat, 16 May 2026 21:47:22 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Salary Sacrifices Are Donations. Let's Treat Them as Such.",
+      "summary": "Published on May 16, 2026 1:44 PM GMT<br /><br /><h3><strong>TLDR</strong></h3><ul><li>NGOs pay less than for-profits.</li><li>Employees accept this because they have impact.</li><li>This makes employees implicit donors to the NGOs</li><li>NGOs should account for this in cost-effectiveness calculations</li><li>This is a coordination problem and can only be solved as a movement</li><li>Salary sacrifice is more tax-efficient than donating the money</li><li>This would make finding talent for pressi",
+      "link": "https://forum.effectivealtruism.org/posts/emzoKk4RS3aGEgyJF/salary-sacrifices-are-donations-let-s-treat-them-as-such",
+      "published": "Sat, 16 May 2026 13:44:14 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "How useful is hardware knowledge in AI s-risks research?",
+      "summary": "Published on May 16, 2026 12:45 PM GMT<br /><br /><p>Recently I'm thinking on major in Electrical engineering(EE) vs CS, I think hardware knowledge is less relevant to AI s-risks research, however, it seems EE engineers would have more expected earnings than CS, which is better for earning to give(since hardware would be replaced later by AI than&nbsp;software).</p><p>80000 hours has put \" AI hardware engineer\" as a&nbsp; career path[1], but there isn't much other discussion about it now.</p><p>",
+      "link": "https://forum.effectivealtruism.org/posts/Zhh3poarPymz6fA6A/how-useful-is-hardware-knowledge-in-ai-s-risks-research",
+      "published": "Sat, 16 May 2026 12:45:35 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "How should we update on AI-enabled coups post-Mythos?",
+      "summary": "Published on May 16, 2026 8:46 AM GMT<br /><br /><p><i>This is my first post here, and my first not-UK-politics-specific post on AI governance, so I particularly welcome thoughts, feedback, criticism, coffee invites, whatever.&nbsp;</i></p><p>--</p><p>Last month, Anthropic developed Claude Mythos, a model they considered too dangerous for public release.</p><p>As per Anthropic (and via testing from AISI), we know that Mythos:</p><ul><li>Found thousands of previously unknown vulnerabilities in ev",
+      "link": "https://forum.effectivealtruism.org/posts/dCTyYpo2FFasHXjyr/how-should-we-update-on-ai-enabled-coups-post-mythos",
+      "published": "Sat, 16 May 2026 16:02:15 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] What's the Matter, Martha? (A Musical Existential Crisis) - YouTube",
+      "summary": "What's the matter, what's the matter, Manta? Keep your own old one, hope come of me, ladies. Everybody has their bad days, but it's been so long since we've seen that smile like a face. Couldn't fit a couldn't be like it's just not quite when it's correct to me. It broke your mind and did it in the warranty. It's been to him, babe. You never had the thought, but I don't get what it is. He calls for you, what's wrong with you. What's the matter, what's the matter, what's the matter? He's the status quo, my child must be right. Everyone gets stuck with the right, but it's been so long since we've seen that spark in your eyes. Couldn't fit a couldn't be like it's just not quite when it's wrong. Couldn't fit a couldn't be like it's just not quite when it's wrong. Couldn't fit a couldn't be lik",
+      "link": "https://www.youtube.com/watch?v=_iZBMKtOIy4",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "_iZBMKtOIy4",
+      "transcript_method": "whisper",
+      "transcript_chars": 1022,
+      "has_full_transcript": true
+    }
+  ]
+}

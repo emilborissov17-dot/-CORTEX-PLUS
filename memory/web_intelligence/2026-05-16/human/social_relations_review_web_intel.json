@@ -1,0 +1,157 @@
+{
+  "axis": "SOCIAL_RELATIONS_REVIEW",
+  "domain": "human",
+  "timestamp": "2026-05-16T19:46:15.235578+00:00",
+  "sources_count": 11,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] The Full Johan Norberg: Sweden’s “Socialism,” the Loneliness...",
+      "summary": "Lots of people just hate capitalism. They want socialism. Socialism is having a moment in American politics right now. Socialism is totally on trend, especially among young people. The kids love socialism. I think socialism is great. Why? Because they're told capitalism hurts the poor. The rich getting richer and the poor getting poorer. But that's just not true. The poor get richer too. Norway! It's a socialist this they come. And here's another myth. People say Scandinavia's socialist. Instead of Cuba or China, think, sweet and flutty countries like Denmark, like Sweden. But Sweden isn't socialist. Some time ago, pre-beard. I made this video about that with Swedish author Yohan Norberg. But there was more to that interview and our more recent one on his new book, the capitalist manifesto",
+      "link": "https://www.youtube.com/watch?v=vq3hWmZTvaw",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "vq3hWmZTvaw",
+      "transcript_method": "whisper",
+      "transcript_chars": 35772,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Loneliness - The Silent Struggle We All Feel - YouTube",
+      "summary": "I want to talk to you all today about one of the biggest problems I see in the world, loneliness. This is a problem that I think is getting worse and worse and we're starting to see almost a silent epidemic of it. The real challenge with loneliness is that a lot of people who are lonely will try really hard to no longer be lonely. They'll do everything from watching like YouTube videos and stuff like that, right? To stuff like taking courses and they'll even try to do things like just go out there in meet people. And the real troubling thing is that the more people that we work with, the more that we're actually learning that people are putting in a ton of effort, but it doesn't seem to be yielding anything. There are a lot of people out there who will give advice to lonely people like jus",
+      "link": "https://www.youtube.com/watch?v=dWS3A2EAwTk",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "dWS3A2EAwTk",
+      "transcript_method": "whisper",
+      "transcript_chars": 13972,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] “Men Deserve To Be Lonely!” Responding To Backlash Over ‘The Male...",
+      "summary": "If you guys are unaware, my last video was the one I've been working on for a while called the male loneliness epidemic. If you haven't watched that video, please go watch it first before you watch this one, so this all makes a lot more sense, and then come back to this one. Link in the description. Now although there was a lot of support for this video, there was also a lot of hate, a lot of hate. In fact, the most hate that I've probably ever received on a video ever, and if you're a familiar with the content I make on this channel, that should be shocking. From angry fem cells, calling me ugly to angry in cells, saying I'm a grifter who only wants to make money or something ridiculous. So before we get into those extremely untrue criticisms, let's get into today's sponsor. Today's spons",
+      "link": "https://www.youtube.com/watch?v=qVKvEaokV6I",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "qVKvEaokV6I",
+      "transcript_method": "whisper",
+      "transcript_chars": 25974,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "Растящата социална изолация и липсата на доверие в институциите водят към растяща лонетнест и незадоволеност с общественото мнение.",
+    "root_cause": "Ниското доверие към институциите, както и растящата социална изолация, са резултат на дългосрочни процеси на политическа нестабилност, економическа неувереност и усилена поляризация в обществото.",
+    "severity": "HIGH",
+    "leverage_points": [
+      "Повишаване на социалните програми и подкрепа за психично здраве",
+      "Разкриване на прозрачността и укрепване на доверието към институциите"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Инвестиране в обществени проекти за подкрепа на социалните връзки и психично здраве",
+        "measurable_goal": "Повишаване на нивото на доверие към институциите с 10% в рамките на 3 години",
+        "timeframe": "дългосрочно"
+      },
+      {
+        "action": "Разработване на образователни кампании за подобряване на критичното мислене и уважение към различията",
+        "measurable_goal": "Повишаване на степента на критичен подход към информацията с 15% в рамките на 2 години",
+        "timeframe": "средносрочно"
+      }
+    ],
+    "evidence": [
+      "44% от американците са пессимистични за бъдещето на страната, докато само 28% са оптимистични.",
+      "Съществува растяща лонетнест и недоверие към институциите, както и подчертаване на проблема от страна на YouTube видеа."
+    ],
+    "generalization": "Този проблем е свързан с домейните на политика, психично здраве и обществени отношения, тъй като липсата на доверие и социална изолация влияят върху политическата устойчивост и психичното благополучие на обществото.",
+    "summary": "Растящата социална изолация и низкото доверие към институциите са ключови проблеми, които изискват дългосрочни действия за подобряване на общественото доверие и психично здраве.",
+    "risk_level": "HIGH"
+  },
+  "raw_items": [
+    {
+      "title": "Trump’s approval rating hits second-term low among his Latino voters, though many still approve",
+      "summary": "About two-thirds of Latino Trump voters (66%) approve of his job performance. That’s down 27 percentage points since the start of his second term.",
+      "link": "https://www.pewresearch.org/short-reads/2026/05/15/trumps-approval-rating-hits-second-term-low-among-his-latino-voters-though-many-still-approve/",
+      "published": "Fri, 15 May 2026 14:53:24 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "A majority of Americans say the country’s best years are behind us",
+      "summary": "Americans are also much more pessimistic (44%) than optimistic (28%) when asked to think about what things will be like in the U.S. 50 years from now.",
+      "link": "https://www.pewresearch.org/short-reads/2026/05/15/a-majority-of-americans-say-the-countrys-best-years-are-behind-us/",
+      "published": "Fri, 15 May 2026 13:55:16 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "What Americans think it takes to be a good news consumer",
+      "summary": "One of the most common things Americans associate with being a good news consumer is a sense of skepticism or discernment.",
+      "link": "https://www.pewresearch.org/short-reads/2026/05/14/what-americans-think-it-takes-to-be-a-good-news-consumer/",
+      "published": "Thu, 14 May 2026 13:57:51 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "How Americans Feel About Religion’s Influence in Government and Public Life",
+      "summary": "A growing share of U.S. adults say religion is gaining influence, but most still want churches to stay out of politics, a 2026 survey finds.",
+      "link": "https://www.pewresearch.org/religion/2026/05/14/how-americans-feel-about-religions-influence-in-government-and-public-life/",
+      "published": "Thu, 14 May 2026 13:51:51 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Taiwan insists it is independent after Trump warning",
+      "summary": "Fresh from his summit in Beijing, the US president warned against a formal declaration of independence by the island.",
+      "link": "https://www.bbc.com/news/articles/cx2132w81jqo?at_medium=RSS&at_campaign=rss",
+      "published": "Sat, 16 May 2026 17:01:53 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Man drives car into pedestrians in Italy, injuring eight",
+      "summary": "Seven people were injured, two seriously, before passers-by gave chase and stopped the man.",
+      "link": "https://www.bbc.com/news/articles/cyv28pd4n22o?at_medium=RSS&at_campaign=rss",
+      "published": "Sat, 16 May 2026 18:21:52 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Senior IS leader killed in joint operation, US and Nigeria say",
+      "summary": "President Donald Trump said the operation eliminated \"the most active terrorist in the world\", Abu-Bilal al-Minuki.",
+      "link": "https://www.bbc.com/news/articles/cy72p2kpd03o?at_medium=RSS&at_campaign=rss",
+      "published": "Sat, 16 May 2026 11:44:54 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Rescue diver dies during search for bodies of Italians who drowned in Maldives caves",
+      "summary": "Staff Sgt Mohamed Mahdhee died while diving in the search-and-rescue operation, the Maldives government tells the BBC.",
+      "link": "https://www.bbc.com/news/articles/c1w2gv1gdnjo?at_medium=RSS&at_campaign=rss",
+      "published": "Sat, 16 May 2026 15:01:40 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] The Full Johan Norberg: Sweden’s “Socialism,” the Loneliness...",
+      "summary": "Lots of people just hate capitalism. They want socialism. Socialism is having a moment in American politics right now. Socialism is totally on trend, especially among young people. The kids love socialism. I think socialism is great. Why? Because they're told capitalism hurts the poor. The rich getting richer and the poor getting poorer. But that's just not true. The poor get richer too. Norway! It's a socialist this they come. And here's another myth. People say Scandinavia's socialist. Instead of Cuba or China, think, sweet and flutty countries like Denmark, like Sweden. But Sweden isn't socialist. Some time ago, pre-beard. I made this video about that with Swedish author Yohan Norberg. But there was more to that interview and our more recent one on his new book, the capitalist manifesto",
+      "link": "https://www.youtube.com/watch?v=vq3hWmZTvaw",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "vq3hWmZTvaw",
+      "transcript_method": "whisper",
+      "transcript_chars": 35772,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Loneliness - The Silent Struggle We All Feel - YouTube",
+      "summary": "I want to talk to you all today about one of the biggest problems I see in the world, loneliness. This is a problem that I think is getting worse and worse and we're starting to see almost a silent epidemic of it. The real challenge with loneliness is that a lot of people who are lonely will try really hard to no longer be lonely. They'll do everything from watching like YouTube videos and stuff like that, right? To stuff like taking courses and they'll even try to do things like just go out there in meet people. And the real troubling thing is that the more people that we work with, the more that we're actually learning that people are putting in a ton of effort, but it doesn't seem to be yielding anything. There are a lot of people out there who will give advice to lonely people like jus",
+      "link": "https://www.youtube.com/watch?v=dWS3A2EAwTk",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "dWS3A2EAwTk",
+      "transcript_method": "whisper",
+      "transcript_chars": 13972,
+      "has_full_transcript": true
+    }
+  ]
+}

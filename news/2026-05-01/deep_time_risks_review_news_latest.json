@@ -1,0 +1,37 @@
+{
+  "axis": "DEEP_TIME_RISKS_REVIEW",
+  "fetched_at": "2026-05-01T13:11:05.149105+00:00",
+  "smart_query": "nuclear war pandemic existential risk",
+  "sources_count": {
+    "wiki": 0,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [],
+  "gdelt": [],
+  "github_repos": [],
+  "arxiv_papers": [
+    {
+      "title": "Synthetic Computers at Scale for Long-Horizon Productivity Simulation",
+      "snippet": "Realistic long-horizon productivity work is strongly conditioned on user-specific computer environments, where much of the work context is stored and organized through directory structures and content-rich artifacts. To scale synthetic data creation for such productivity scenarios, we introduce Synt",
+      "url": "https://arxiv.org/abs/2604.28181v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "KellyBench: A Benchmark for Long-Horizon Sequential Decision Making",
+      "snippet": "Language models are saturating benchmarks for procedural tasks with narrow objectives. But they are increasingly being deployed in long-horizon, non-stationary environments with open-ended goals. In this paper we introduce KellyBench, an environment for evaluating sequential decision-making in sport",
+      "url": "https://arxiv.org/abs/2604.27865v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[Statement from Max Tegmark on the Department of War’s ultimatum] \"Our safety and basic rights must not be at the mercy of a company's internal policy; lawmakers must work to codify these overwhelmingly popular red lines into law.\"",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

@@ -1,0 +1,119 @@
+{
+  "axis": "WATER_REVIEW",
+  "domain": "planet",
+  "timestamp": "2026-05-16T18:39:57.691748+00:00",
+  "sources_count": 11,
+  "rss_count": 4,
+  "ddg_count": 6,
+  "youtube_count": 1,
+  "youtube_items": [
+    {
+      "title": "[YT] Flint's water crisis, explained in 3 minutes - YouTube",
+      "summary": "The images of the water are shocking enough. Would you drink that? People have dumped in this river forever. It's like we're in a cesspool. My tub is just to see it is brown. And then come the headlines. An American city failed to provide basic protections to its citizens, and now the children of Flint have much higher than normal levels of lead in their blood. Rick Snyder, Governor of Michigan, has apologized. I'm sorry, and I will fix it. President Obama declared a national emergency. You can't shortchange basic services that we provide to our people. And now 2016 presidential candidates are starting to weigh in. The governor of that state, after it is all, he didn't really care. Lead poisoning is terrible and terrifying. No amount of exposure is safe. And there's evidence that years aft",
+      "link": "https://www.youtube.com/watch?v=NUSiLOwkrIw",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "NUSiLOwkrIw",
+      "transcript_method": "whisper",
+      "transcript_chars": 3338,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "Ниските нива на подземни води и загрязнени водни източници угрожат здравето на населението и достъпа до чиста вода в Мичиган и Флорида",
+    "root_cause": "Непрекъснатото изгаряне на подземните водни запаси, загрязненията от тяжки метали и дългосрочните проблеми с дъждовните периоди",
+    "severity": "CRITICAL",
+    "leverage_points": [
+      "Регионални власти и местни власти, отговорни за управлението на водни ресурси",
+      "Национални и международни организации, работещи в областта на околната среда и водни ресурси"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Изработка на стратегия за възстановяване на подземните водни запаси в Мичиган и Флорида",
+        "measurable_goal": "Повишаване на нивата на подземните води с 10% в рамките на 5 години",
+        "timeframe": "дългосрочно"
+      },
+      {
+        "action": "Изграждане на инфраструктура за филтриране и рециклиране на вода в засегнатите региони",
+        "measurable_goal": "Повишаване на достъпа до чиста вода за 90% от населението в засегнатите райони в рамките на 3 години",
+        "timeframe": "средносрочно"
+      }
+    ],
+    "evidence": [
+      "Michigan lawmakers may fund last-ditch effort to save whitefish",
+      "Groundwater levels are dropping fast all over the world | New Scientist",
+      "Drought continues to impact water quality and river levels across...",
+      "Florida is building the world's largest environmental restoration project"
+    ],
+    "generalization": "Проблемът с водата е свързан със здравето на биосферата, промените в климата и устойчивото развитие на цивилизацията",
+    "summary": "В Мичиган и Флорида ниските нива на подземната вода и загрязненията угрожат здравето на хората и източниците на вода. Това е критичен проблем, изискващ бързи и устойчиви действия.",
+    "risk_level": "CRITICAL"
+  },
+  "raw_items": [
+    {
+      "title": "Utah’s Big Nuclear Bet – Feasible or Fantasy?",
+      "summary": "<figure><img alt=\"\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"682\" src=\"https://www.circleofblue.org/wp-content/uploads/2026/05/SPPCAAU6CZFIHLJPCXQGCRJLR4.avif\" width=\"1024\" /></figure>\n<p>A version of this&#160; article was first published by the Salt Lake Tribune on April 28, 2026. It was reported and edited&#160; in collaboration with Main Street Media Cooperative, which assigns veteran New York Times correspondents to assist local news organizations in repor",
+      "link": "https://www.circleofblue.org/2026/water-energy/utahs-big-nuclear-bet-feasible-or-fantasy/",
+      "published": "Thu, 14 May 2026 10:48:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "As a Colorado Aquifer Runs Low, Dangerous Heavy Metals Threaten Rural Communities’ Drinking Water",
+      "summary": "<figure><img alt=\"a woman sits on a couch looking towards a light coming from a window\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"626\" src=\"https://i0.wp.com/www.circleofblue.org/wp-content/uploads/2026/05/ICN_ClimateDrought_SanLuisValley_JacobSpetzler-2048x1252-1.jpg?fit=1024%2C626&amp;ssl=1\" width=\"1024\" /></figure>\n<p>By Emily Payne, Inside Climate News This article originally appeared on&#160;Inside Climate News&#160;(hyperlink to the original story), a nonp",
+      "link": "https://www.circleofblue.org/2026/supply/water-quality/pollution/as-a-colorado-aquifer-runs-low-dangerous-heavy-metals-threaten-rural-communities-drinking-water/",
+      "published": "Mon, 11 May 2026 18:20:39 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Michigan lawmakers may fund last-ditch effort to save whitefish",
+      "summary": "<figure><img alt=\"\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"683\" src=\"https://i0.wp.com/www.circleofblue.org/wp-content/uploads/2023/05/Whitefish-4-1.jpg?fit=1024%2C683&amp;ssl=1\" width=\"1024\" /></figure>\n<p>Originally published by Bridge Michigan As lake whitefish teeter on the brink of collapse in the lower Great Lakes, Michigan lawmakers are considering investing in a last-ditch effort to save the iconic species before it’s too late. An appropriations bill&",
+      "link": "https://www.circleofblue.org/2026/great-lakes/michigan-lawmakers-may-fund-last-ditch-effort-to-save-whitefish/",
+      "published": "Mon, 11 May 2026 17:57:48 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "As affordability issues surge, is it finally time for offshore wind?",
+      "summary": "<figure><img alt=\"\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"683\" src=\"https://i0.wp.com/www.circleofblue.org/wp-content/uploads/2026/05/2025-12-07-MI-Ludington-Lake-Winds-JGanter-_MG_9681-Edit-2500.jpg?fit=1024%2C683&amp;ssl=1\" width=\"1024\" /></figure>\n<p>By Stephen Starr, Great Lakes Now Covering an area the size of the United Kingdom and surrounded by half a dozen large, energy-hungry metropolitan regions, the Great Lakes, surprisingly, boasts not a single o",
+      "link": "https://www.circleofblue.org/2026/water-energy/as-affordability-issues-surge-is-it-finally-time-for-offshore-wind/",
+      "published": "Wed, 06 May 2026 13:18:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Drought continues to impact water quality and river levels across...",
+      "summary": "The recent drought has taken a toll on groundwater levels and water quality across Florida. Despite this, drinking water supply for residents and water supply used to extinguish recent wildfires has had little to no impact.",
+      "link": "https://www.wmnf.org/drought-continues-impact-water-quality-river-levels-florida-wmnf/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Florida is building the world's largest environmental restoration project",
+      "summary": "The ecosystem recharges the water supply for all of South Florida – a population approaching nine million. South Florida's primary source of drinking water comes from groundwater stored in aquifers, mainly the Biscayne Aquifer, which is replenished by the Everglades.",
+      "link": "https://www.bbc.com/future/article/20240815-floridas-everglades-reservoir-will-clean-the-states-water",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Groundwater levels are dropping fast all over the world | New Scientist",
+      "summary": "Groundwater levels in many parts of the world are declining at concerning rates, according to the most detailed view of the problem yet. This threatens an essential supply of water for people, agriculture and ecosystems.",
+      "link": "https://www.newscientist.com/article/2413652-groundwater-levels-are-dropping-fast-all-over-the-world/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Michigan Drought Dashboard - National Weather Service",
+      "summary": "Welcome to the Michigan Drought Dashboard. This page hosts information and resources about current drought conditions and impacts as well as forecast and historical information.",
+      "link": "https://www.weather.gov/dtx/drought",
+      "source_type": "ddg"
+    },
+    {
+      "title": "A Groundwater Strategy for Michigan",
+      "summary": "ichigan’s groundwater management. Policy analysis reveals that Michigan lacks a dedicated groundwater protection statute, and its management of the resource is a layered application of federal, regional, state, and loca.",
+      "link": "https://forloveofwater-wp-uploads.s3.us-east-2.amazonaws.com/wp-content/uploads/2026/04/Groundwater_Report_2026.pdf",
+      "source_type": "ddg"
+    },
+    {
+      "title": "From dry to drenched: How Michigan flipped the script on drought",
+      "summary": "Apr 10, 2026 · Just at the start of 2026, nearly two-thirds of Michigan was at least abnormally dry, following a warm, precipitation-deficient fall and early winter.",
+      "link": "https://www.clickondetroit.com/weather/2026/04/10/from-dry-to-drenched-how-michigan-flipped-the-script-on-drought/",
+      "source_type": "ddg"
+    }
+  ]
+}

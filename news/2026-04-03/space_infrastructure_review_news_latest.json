@@ -1,0 +1,90 @@
+{
+  "axis": "SPACE_INFRASTRUCTURE_REVIEW",
+  "fetched_at": "2026-04-03T14:16:10.663226+00:00",
+  "smart_query": "space exploration NASA SpaceX",
+  "sources_count": {
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 0,
+    "github": 3,
+    "web_search": 5
+  },
+  "rss": [
+    {
+      "title": "Hello, World",
+      "snippet": "NASA astronaut and Artemis II Commander Reid Wiseman took this picture of Earth from the Orion spacecraft&#8217;s window after completing the translunar injection burn. There are two auroras (top right and bottom left) and zodiacal light (bottom right) is visible as the Earth eclipses the Sun. This ",
+      "url": "https://www.nasa.gov/image-article/hello-world/",
+      "source": "RSS"
+    },
+    {
+      "title": "Barents Sea Tied to Low Arctic Sea Ice",
+      "snippet": "Patches of open water in the region contributed to low sea ice extent across the Arctic in March 2026, which tied with the lowest maximum observed in the satellite record.",
+      "url": "https://science.nasa.gov/earth/earth-observatory/barents-sea-tied-to-low-arctic-sea-ice/",
+      "source": "RSS"
+    },
+    {
+      "title": "NASA’s Artemis II Mission Leaves Earth Orbit for Flight around Moon",
+      "snippet": "For the first time in more than 50 years, astronauts on a NASA mission are bound to fly around the Moon after successfully completing a key burn of Orion’s main engine. With the approximately six-minute firing of the spacecraft’s service module engine on Thursday, known as the translunar injection b",
+      "url": "https://www.nasa.gov/news-release/nasas-artemis-ii-mission-leaves-earth-orbit-for-flight-around-moon/",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "KOSASIH/stable-pi-core",
+      "snippet": "Stable-Pi-Core is a next-generation decentralized ecosystem that integrates blockchain, quantum AI, IoT, edge computing, and AR/VR to deliver secure, scalable, and personalized solutions for payments,",
+      "stars": 113,
+      "url": "https://github.com/KOSASIH/stable-pi-core",
+      "updated": "2026-04-01",
+      "source": "GitHub"
+    },
+    {
+      "title": "FlaSpaceInst/EZ-RASSOR",
+      "snippet": "An inexpensive, autonomous, regolith-mining robot",
+      "stars": 61,
+      "url": "https://github.com/FlaSpaceInst/EZ-RASSOR",
+      "updated": "2026-03-23",
+      "source": "GitHub"
+    },
+    {
+      "title": "BarthPaleologue/CosmosJourneyer",
+      "snippet": "Cosmos Journeyer is a space exploration game running directly in the browser! Take your spaceship and witness the beauty of this virtually infinite universe.",
+      "stars": 38,
+      "url": "https://github.com/BarthPaleologue/CosmosJourneyer",
+      "updated": "2026-04-02",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [],
+  "web_search": [
+    {
+      "title": "NASA&#x27;s SpaceX Crew-11 Launches to International Space Station",
+      "url": "https://www.nasa.gov/news-release/nasas-spacex-crew-11-launches-to-international-space-station/",
+      "source": "WEB"
+    },
+    {
+      "title": "SpaceX&#x27;s next astronaut launch for NASA is officially on for Feb. 13 as ...",
+      "url": "https://www.space.com/space-exploration/launches-spacecraft/spacexs-next-astronaut-launch-for-nasa-is-officially-on-for-feb-11-as-faa-clears-falcon-9-rocket-to-fly-again",
+      "source": "WEB"
+    },
+    {
+      "title": "NASA and SpaceX to launch Artemis and Crew 12 in February - Deseret News",
+      "url": "https://www.deseret.com/u-s-world/2026/01/30/nasa-spacex-launches-in-february/",
+      "source": "WEB"
+    },
+    {
+      "title": "Space Exploration - Scientific American",
+      "url": "https://www.scientificamerican.com/space-exploration/",
+      "source": "WEB"
+    },
+    {
+      "title": "SpaceX - Launches",
+      "url": "https://www.spacex.com/launches",
+      "source": "WEB"
+    }
+  ],
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL"
+}

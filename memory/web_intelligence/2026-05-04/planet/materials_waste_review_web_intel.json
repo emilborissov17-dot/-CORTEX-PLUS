@@ -1,0 +1,105 @@
+{
+  "axis": "MATERIALS_WASTE_REVIEW",
+  "domain": "planet",
+  "timestamp": "2026-05-04T14:44:22.926632+00:00",
+  "sources_count": 9,
+  "rss_count": 4,
+  "ddg_count": 4,
+  "youtube_count": 1,
+  "youtube_items": [
+    {
+      "title": "[YT] Plastic Recycling is an Actual Scam | Climate Town - YouTube",
+      "summary": "Hey, I was supposed to jump out of this to kind of scare you, but it turns out that's funnier on paper than it is in practice. So I hope you don't mind too much. Boy, I got a lot of plastic here, and don't worry, I'm going to be putting it in a recycling bin, because I'm not a sociopath or some kind of libertarian, but here's the thing. Most of this plastic will end up in a landfill, or burned, or in the ocean. And that's because most plastic is not recyclable. Oh, but it's got the recycling symbol right on it! This is the recycling symbol created in 1970. And this is a resin identification code created by the plastic industry in 1988 to trick people into thinking plastic was recyclable, and therefore maybe okay for the environment. Plastic recycling is a lie to sell more plastic. I'm Rall",
+      "link": "https://www.youtube.com/watch?v=PJnJ8mK3Q3g",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "PJnJ8mK3Q3g",
+      "transcript_method": "whisper",
+      "transcript_chars": 8698,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "Анализ на MATERIALS_WASTE_REVIEW — данни получени но LLM грешка",
+    "root_cause": "LLM parsing грешка",
+    "severity": "UNKNOWN",
+    "leverage_points": [],
+    "proposed_actions": [],
+    "evidence": [
+      "Ecowaste Solutions Completes Gulf Coast Corridor with Adams Sanitation Acquisition",
+      "Casella Reports Strong Q1 Results, Updates Full Year Outlook",
+      "NSAC Statement on Approval of California’s SB 54 Regulations"
+    ],
+    "generalization": "",
+    "summary": "- Ecowaste Solutions Completes Gulf Coast Corridor with Adams Sanitation Acquisition: Ecowaste Solutions, a regional waste and recycling company operating across ten states, announced today the acquis",
+    "risk_level": "UNKNOWN",
+    "trend": "UNKNOWN"
+  },
+  "raw_items": [
+    {
+      "title": "Ecowaste Solutions Completes Gulf Coast Corridor with Adams Sanitation Acquisition",
+      "summary": "Ecowaste Solutions, a regional waste and recycling company operating across ten states, announced today the acquisition of Adams Sanitation, completing a contiguous collection and disposal corridor stretching from the Mississippi Gulf Coast through the sugar-white beaches of the Florida Panhandle.",
+      "link": "https://www.waste360.com/mergers-acquisitions/ecowaste-solutions-completes-gulf-coast-corridor-with-adams-sanitation-acquisition",
+      "published": "Mon, 04 May 2026 13:40:01 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Casella Reports Strong Q1 Results, Updates Full Year Outlook",
+      "summary": "Casella Waste Systems (Casella) reported its 2026 Q1 earnings last week, noting solid revenue growth, margin expansion, and increased cash flow while raising its full-year outlook based on early acquisition activity and continued pricing strength.",
+      "link": "https://www.waste360.com/industry-insights/casella-reports-strong-q1-results-updates-full-year-outlook",
+      "published": "Mon, 04 May 2026 13:33:53 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "NSAC Statement on Approval of California’s SB 54 Regulations",
+      "summary": "NSAC applauds OAL and CalRecycle and calls for cost-effective implementation that delivers real-world outcomes across the value chain.",
+      "link": "https://www.waste360.com/industry-insights/nsac-statement-on-approval-of-california-s-sb-54-regulations",
+      "published": "Mon, 04 May 2026 13:07:55 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Machinex Unveils MIND™ at IFAT 2026: A Unified AI for System-Wide Recycling Performance",
+      "summary": "",
+      "link": "https://www.waste360.com/product-news/machinex-unveils-mind-at-ifat-2026-a-unified-ai-for-system-wide-recycling-performance",
+      "published": "Mon, 04 May 2026 12:51:24 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Plastic pollution",
+      "summary": "Plastic pollution is the accumulation of plastic objects and particles (e.g. plastic bottles, bags and microbeads) in the Earth's environment that adversely affects humans, wildlife and their habitat. Plastics that act as pollutants are categorized by size into micro-, meso-, or macro debris. Plastics are inexpensive and durable, making them very adaptable for different uses; as a result, manufact",
+      "link": "https://en.wikipedia.org/wiki/Plastic_pollution",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Plastic Pollution - Our World in Data",
+      "summary": "Originally published in November 2023; substantially updated in February 2026.Plastic pollution is mostly about how waste is managed, not how much is producedLow- to middle-income countries tend to produce much more plastic pollution",
+      "link": "https://ourworldindata.org/plastic-pollution",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Recycling",
+      "summary": "Recycling is the process of converting waste materials into new materials and objects. This concept often includes the recovery of energy from waste materials. The recyclability of a material depends on its ability to reacquire the properties it had in its original state. It is an alternative to \"conventional\" waste disposal that can save material and help lower greenhouse gas emissions. It can al",
+      "link": "https://en.wikipedia.org/wiki/Recycling",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Recycling Basics and Benefits | US EPA",
+      "summary": "September 2, 2025 - Recycling is the process of collecting and processing materials that would otherwise be thrown away as trash and turning them into new products. Recycling can benefit your community, the economy, and the environment.",
+      "link": "https://www.epa.gov/recycle/recycling-basics-and-benefits",
+      "source_type": "ddg"
+    },
+    {
+      "title": "[YT] Plastic Recycling is an Actual Scam | Climate Town - YouTube",
+      "summary": "Hey, I was supposed to jump out of this to kind of scare you, but it turns out that's funnier on paper than it is in practice. So I hope you don't mind too much. Boy, I got a lot of plastic here, and don't worry, I'm going to be putting it in a recycling bin, because I'm not a sociopath or some kind of libertarian, but here's the thing. Most of this plastic will end up in a landfill, or burned, or in the ocean. And that's because most plastic is not recyclable. Oh, but it's got the recycling symbol right on it! This is the recycling symbol created in 1970. And this is a resin identification code created by the plastic industry in 1988 to trick people into thinking plastic was recyclable, and therefore maybe okay for the environment. Plastic recycling is a lie to sell more plastic. I'm Rall",
+      "link": "https://www.youtube.com/watch?v=PJnJ8mK3Q3g",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "PJnJ8mK3Q3g",
+      "transcript_method": "whisper",
+      "transcript_chars": 8698,
+      "has_full_transcript": true
+    }
+  ]
+}

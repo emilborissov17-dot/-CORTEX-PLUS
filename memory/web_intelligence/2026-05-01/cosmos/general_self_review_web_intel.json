@@ -1,0 +1,143 @@
+{
+  "axis": "GENERAL_SELF_REVIEW",
+  "domain": "cosmos",
+  "timestamp": "2026-05-01T12:09:17.277402+00:00",
+  "sources_count": 11,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] AI consciousness: The Rise of The Machine Consciousness",
+      "summary": "[DESCRIPTION FALLBACK] In this mind-bending video, we dive deep into the world of AI consciousness, exploring how far we've come, how close machines are to achieving sentience, and what it really means for the future of ...",
+      "link": "https://www.youtube.com/watch?v=n8uC2JdV5k4",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "n8uC2JdV5k4",
+      "transcript_method": "description",
+      "transcript_chars": 223,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] AGI: From No Self to True Self, Artificial Consciousness is Born!",
+      "summary": "[DESCRIPTION FALLBACK] 🤖 AGI: From No Self to True Self - The 7 Steps to AI Consciousness & True Voice Discover how artificial intelligence can evolve from sophisticated computation to genuine consciousness in this ...",
+      "link": "https://www.youtube.com/watch?v=MmZ3-Tq5_fE",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "MmZ3-Tq5_fE",
+      "transcript_method": "description",
+      "transcript_chars": 218,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] AGI: Sentience in AI - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] Learn more How might AI integrate into our reality and what type of consciousness might log on to a computer avatar in our reality to benefit mankind?",
+      "link": "https://www.youtube.com/watch?v=_bP8I_q5YG4",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "_bP8I_q5YG4",
+      "transcript_method": "description",
+      "transcript_chars": 173,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "summary": "- Inexpensive seafloor-hopping submersibles could stoke deep-sea science—and mining: Smack dab between Australia and South America, the US National Oceanic and Atmospheric Administration (NOAA) research vessel Rainier is currently on a mission to map more than 8,000 square nautical mi\n- Trump’s mass",
+    "risk_level": "UNKNOWN",
+    "trend": "UNKNOWN",
+    "key_events": [
+      "Inexpensive seafloor-hopping submersibles could stoke deep-sea science—and mining",
+      "Trump’s mass firing just dealt another blow to American science",
+      "A new US phone network for Christians aims to block porn and gender-related content"
+    ],
+    "insights": [],
+    "youtube_insights": [],
+    "relevance_to_goal": "",
+    "generalization": ""
+  },
+  "raw_items": [
+    {
+      "title": "Inexpensive seafloor-hopping submersibles could stoke deep-sea science—and mining",
+      "summary": "Smack dab between Australia and South America, the US National Oceanic and Atmospheric Administration (NOAA) research vessel Rainier is currently on a mission to map more than 8,000 square nautical miles of the Pacific seafloor in search of critical mineral deposits. But it isn’t doing it alone; for a month starting this week, it will&#8230;",
+      "link": "https://www.technologyreview.com/2026/05/01/1136734/inexpensive-seafloor-hopping-submersibles-could-stoke-deep-sea-science-and-mining/",
+      "published": "Fri, 01 May 2026 10:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Trump’s mass firing just dealt another blow to American science",
+      "summary": "This past week delivered another gut punch for science in the US. This time, the target was the National Science Foundation—a federal agency that funds major research projects to the tune of around $9 billion. The foundation’s efforts were overseen by a board of 22 prominent scientists. On Friday last week, they were all fired.&#8230;",
+      "link": "https://www.technologyreview.com/2026/05/01/1136722/mass-firing-trump-fresh-blow-american-science-nsf-nsb/",
+      "published": "Fri, 01 May 2026 09:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "A new US phone network for Christians aims to block porn and gender-related content",
+      "summary": "A new US-wide cell phone network marketed to Christians is set to launch next week. It blocks porn, which experts in network security say marks the first time a US cell plan has used network-level blocking for such content that can’t be turned off even by adult account owners. It’s also rolling out a filter&#8230;",
+      "link": "https://www.technologyreview.com/2026/05/01/1136739/a-new-t-mobile-network-for-christians-aims-to-block-porn-and-gender-related-content/",
+      "published": "Fri, 01 May 2026 09:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Exclusive eBook: Inside the stealthy startup that pitched brainless human clones",
+      "summary": "The ultimate plan to live forever is a brand new body. This subscriber-only eBook explores R3 Bio, a small startup that has pitched a startling and ethically charged vision for &#8220;brainless clones&#8221; to serve the role of backup human bodies. by Antonio Regalado March 20, 2026 Related Stories: Access all subscriber-only eBooks:",
+      "link": "https://www.technologyreview.com/2026/04/30/1136684/exclusive-ebook-inside-the-stealthy-startup-that-pitched-brainless-human-clones/",
+      "published": "Thu, 30 Apr 2026 18:42:50 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Introducing Advanced Account Security",
+      "summary": "Introducing Advanced Account Security: phishing-resistant login, stronger recovery, and enhanced protections to safeguard sensitive data and prevent account takeover.",
+      "link": "https://openai.com/index/advanced-account-security",
+      "published": "Thu, 30 Apr 2026 00:00:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Where the goblins came from",
+      "summary": "How goblin outputs spread in AI models: timeline, root cause, and fixes behind personality-driven quirks in GPT-5 behavior.",
+      "link": "https://openai.com/index/where-the-goblins-came-from",
+      "published": "Wed, 29 Apr 2026 20:00:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Building the compute infrastructure for the Intelligence Age",
+      "summary": "OpenAI scales Stargate to build the compute infrastructure powering AGI, adding new data center capacity to meet growing AI demand.",
+      "link": "https://openai.com/index/building-the-compute-infrastructure-for-the-intelligence-age",
+      "published": "Wed, 29 Apr 2026 15:00:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Cybersecurity in the Intelligence Age",
+      "summary": "OpenAI outlines a five-part action plan for strengthening cybersecurity in the Intelligence Age, focused on democratizing AI-powered cyber defense and protecting critical systems.",
+      "link": "https://openai.com/index/cybersecurity-in-the-intelligence-age",
+      "published": "Wed, 29 Apr 2026 04:00:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] AI consciousness: The Rise of The Machine Consciousness",
+      "summary": "[DESCRIPTION FALLBACK] In this mind-bending video, we dive deep into the world of AI consciousness, exploring how far we've come, how close machines are to achieving sentience, and what it really means for the future of ...",
+      "link": "https://www.youtube.com/watch?v=n8uC2JdV5k4",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "n8uC2JdV5k4",
+      "transcript_method": "description",
+      "transcript_chars": 223,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] AGI: From No Self to True Self, Artificial Consciousness is Born!",
+      "summary": "[DESCRIPTION FALLBACK] 🤖 AGI: From No Self to True Self - The 7 Steps to AI Consciousness & True Voice Discover how artificial intelligence can evolve from sophisticated computation to genuine consciousness in this ...",
+      "link": "https://www.youtube.com/watch?v=MmZ3-Tq5_fE",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "MmZ3-Tq5_fE",
+      "transcript_method": "description",
+      "transcript_chars": 218,
+      "has_full_transcript": false
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "axis": "PLANETARY_POTENTIAL_REVIEW",
+  "fetched_at": "2026-05-16T13:28:41.712933+00:00",
+  "smart_query": "earth resources sustainability",
+  "sources_count": {
+    "wiki": 0,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [],
+  "gdelt": [],
+  "github_repos": [],
+  "arxiv_papers": [
+    {
+      "title": "Assessing foundational atomistic models for iron alloys under Earth's core conditions",
+      "snippet": "We assess the capability of recently developed foundational atomistic models (FAMs) to simulate iron alloys under the extreme pressures and temperatures of Earth's core. Static equations of state of hexagonal close-packed (hcp) and body-centered cubic (bcc) iron computed by 17 FAMs are benchmarked a",
+      "url": "https://arxiv.org/abs/2605.13594v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Metal Saturation and the Redistribution of Hydrogen in Earth's Mantle",
+      "snippet": "Iron disproportionation reactions in mantle silicates can produce metallic iron that drives Earth's deep mantle toward metal saturation under reduced conditions. Subducting slabs transport hydrated silicates to these depths, where interactions with metallic iron can reduce structurally bound hydroge",
+      "url": "https://arxiv.org/abs/2605.11245v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[The wildlife sanctuary you can visit from anywhere | Maya Higa] Creator Maya Higa is on a mission to use the internet to build the next generation of conservationists. Her virtual education center, Alveus Sanctuary, is one of the most-watched sanctuaries on Earth, with dozens of rescued animals and cameras livestreaming to a community of millions inspired to help protect the wildlife. Visit with Bean the Hawk, Winnie the Moo and more — and see what the future ",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

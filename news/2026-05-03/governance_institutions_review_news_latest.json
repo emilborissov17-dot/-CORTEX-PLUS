@@ -1,0 +1,76 @@
+{
+  "axis": "GOVERNANCE_INSTITUTIONS_REVIEW",
+  "fetched_at": "2026-05-03T09:11:07.656541+00:00",
+  "smart_query": "government corruption institutions",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 3,
+    "arxiv": 2,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "Gang-controlled streets, shuttered newsrooms: How violence is eroding Haiti’s media",
+      "snippet": "Journalists working in Haiti are under constant threat of death or injury from rapidly expanding criminal gangs, as they continue to report news and information which they hope will help keep fellow citizens safe.",
+      "url": "https://news.un.org/feed/view/en/story/2026/05/1167414",
+      "source": "RSS"
+    },
+    {
+      "title": "Attacks on media workers must end, UN urges",
+      "snippet": "War in the Middle East has made Lebanon the deadliest country for media workers so far this year, but practically no country offers a safe environment in which to be a journalist, according to the UN High Commissioner for Human Rights.&nbsp;",
+      "url": "https://news.un.org/feed/view/en/story/2026/05/1167424",
+      "source": "RSS"
+    },
+    {
+      "title": "World News in Brief: Syria human rights update, Cuba post-hurricane support still vital, impunity and violence in Myanmar",
+      "snippet": "Three mass graves were recently uncovered in northeastern Syria, including one reportedly at the site of a former detention centre run by the Kurdish-backed Syrian Armed Forces (SDF).&nbsp;",
+      "url": "https://news.un.org/feed/view/en/story/2026/04/1167399",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [
+    {
+      "title": "Mahama vows to fight corruption as Ghana marks 69th independence",
+      "snippet": "Mahama vows to fight corruption as Ghana marks 69th independence",
+      "url": "https://www.myjoyonline.com/mahama-vows-to-fight-corruption-as-ghana-marks-69th-independence/",
+      "source": "myjoyonline.com"
+    },
+    {
+      "title": "LBH LMP Desak KPK Usut Tuntas Dugaan Jual Beli Jabatan di Pemkab Cianjur",
+      "snippet": "LBH LMP Desak KPK Usut Tuntas Dugaan Jual Beli Jabatan di Pemkab Cianjur",
+      "url": "https://www.jpnn.com/news/lbh-lmp-desak-kpk-usut-tuntas-dugaan-jual-beli-jabatan-di-pemkab-cianjur",
+      "source": "jpnn.com"
+    },
+    {
+      "title": "Николовска : Владата презема чекори за унапредување и вреднување на трудот на здравствените работници",
+      "snippet": "Николовска : Владата презема чекори за унапредување и вреднување на трудот на здравствените работници",
+      "url": "https://kurir.mk/vesti/makedonija/nikolovska-vladata-prezema-chekori-za-unapreduvane-i-vrednuvane-na-trudot-na-zdravstvenite-rabotnitsi/",
+      "source": "kurir.mk"
+    }
+  ],
+  "github_repos": [],
+  "arxiv_papers": [
+    {
+      "title": "Peer Identity Bias in Multi-Agent LLM Evaluation: An Empirical Study Using the TRUST Democratic Discourse Analysis Pipeline",
+      "snippet": "The TRUST democratic discourse analysis pipeline exposes its large language model (LLM) components to peer model identity through multiple structural channels -- a design feature whose bias implications have not previously been empirically tested. We provide the first systematic measurement of ident",
+      "url": "https://arxiv.org/abs/2604.22971v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Trajectory-Aware Reliability Modeling of Democratic Systems",
+      "snippet": "Failures in complex systems often emerge through gradual degradation and the propagation of stress across interacting components rather than through isolated shocks. Democratic systems exhibit similar dynamics, where weakening institutions can trigger cascading deterioration in related institutional",
+      "url": "https://arxiv.org/abs/2604.20127v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[#239 – Rose Hadshar on why automating all human labour will break our political system] The most important political question in the age of advanced AI might not be who wins elections. It might be whether elections continue to matter at all.That’s the view of Rose Hadshar, researcher at Forethought, who believes we could see extreme, AI-enabled power concentration without a coup or dramatic ‘end of democracy’ moment.She foresees something more insidious: an elite group with access to",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

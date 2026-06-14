@@ -1,0 +1,108 @@
+Thinking...
+Okay, I need to evaluate the global energy system based on the given constitutional priorities and axes. Let's start by understanding each axis and how they relate to the priorities.
+
+First, the basic_needs_energy axis. The user wants to know if current and projected energy supply can meet basic human needs. But wait, the RAW_CONTEXT says there's no real data provided. So I can't use any numbers here. I should note that data is missing and explain how that affects the assessment. Maybe mention that without data on energy access per capita or infrastructure coverage, it's hard to determine if basic needs are met.
+
+Next, justice_equity. This involves who benefits and who pays the costs. Again, without specific data on energy poverty, regional inequalities, or just transition efforts, I can't give a precise status. I should point out that there's a lack of data on these factors, which limits the ability to assess equity.
+
+For climate_environment, the impact of the energy mix. If there's no data on GHG emissions or pollution levels, I can't evaluate this. I need to state that the absence of such metrics makes it impossible to assess the environmental impact accurately.
+
+Future_generations axis: Are we locking in risks or expanding options? Without data on long-term infrastructure debts or irreversible risks, I can't determine this. Highlight that missing data on future liabilities or sustainable practices is a barrier.
+
+Space_expansion: How the energy system affects space exploration. Without data on energy sources that support space tech or current space-related energy use, this is unclear. Mention the lack of data on energy trajectories for space expansion.
+
+Now, the output requires a JSON object with specific fields. All text must be in Bulgarian. Since there's no real data, I have to note that in each axis assessment. The status might be UNKNOWN due to insufficient data. The summary should reflect the overall uncertainty. Key findings would list the data gaps. Metrics interpretation and data quality sections need to explain the lack of data. Recommendations should suggest gathering specific OWID CSV data for each axis. The action plan should include steps to request those datasets, categorized by level, actor, etc.
+
+I need to make sure all the action plan items are in Bulgarian, specify the OWID CSV requests, and format them correctly. Also, ensure that each axis assessment has a status of UNKNOWN and comments explaining the data absence. Avoid making up numbers or assumptions. Finally, structure everything into the required JSON format without any explanations outside the JSON.
+...done thinking.
+
+{
+  "status": "UNKNOWN",
+  "summary_bg": "Няма достъпни реални данни за енергийната система, което ограничава възможността за обективна оценка на всички оси. Статусът на системата е неопределен поради липса на ключови метрики.",
+  "key_findings_bg": [
+    "Липса на актуални данни за покриването на основни нужди, регионални неравенства, климатически изпълнения и дългосрочни рискове.",
+    "Не са налични статистики за енергийна бедност, справедливост на преминаване и въздействия върху екосистемите.",
+    "Недостига на информация за дългосрочни инвестиции и потенциални рискове за бъдещите поколения."
+  ],
+  "axes_assessment": [
+    {
+      "axis": "basic_needs_energy",
+      "status": "UNKNOWN",
+      "comment_bg": "Няма данни за покриване на основни нужди, като достъп до енергия, вода и здраве. Липсва информация за регионални неравенства и динамика на източниците."
+    },
+    {
+      "axis": "justice_equity",
+      "status": "UNKNOWN",
+      "comment_bg": "Липса на статистика за енергийна бедност, регионални разлики и справедливост на преминаване. Не са налични данни за разпределение на разходи и ползи."
+    },
+    {
+      "axis": "climate_environment",
+      "status": "UNKNOWN",
+      "comment_bg": "Няма метрики за въглеродни емисии, замърнения или екологични вреди. Липса на данни за устойчивост на източниците и транзиционни стратегии."
+    },
+    {
+      "axis": "future_generations",
+      "status": "UNKNOWN",
+      "comment_bg": "Недостига на информация за дългосрочни инвестиции, дългове или нереверсибилни рискове. Липса на данни за баланс между текущи и бъдещи нужди."
+    },
+    {
+      "axis": "space_expansion",
+      "status": "UNKNOWN",
+      "comment_bg": "Не са налични данни за връзка между енергийната система и потенциал за космическо развитие. Липса на информация за технологии, които подпомагат извънземното присъствие."
+    }
+  ],
+  "metrics_interpretation_bg": [
+    "Данните за основни нужди са критични за оценка на стабилността на системата, но липсват.",
+    "Справедливостта и екологичното въздействие са основни за конституционните цели, но са неизмерими без конкретни метрики.",
+    "Дългосрочните рискове и възможностите за бъдещи поколения са ключови, но не са измерени."
+  ],
+  "data_quality_bg": [
+    "Недостига на актуални и детайлни метрики за енергийната система по държави, региони и източници.",
+    "Липса на статистика за енергийна бедност, справедливост на преминаване и климатични изпълнения.",
+    "Недостига на информация за дългосрочни инвестиции и въздействия върху екосистемите."
+  ],
+  "recommendations_bg": [
+    "Потърсете данни за енергийна бедност и достъп до енергия по региони и държави.",
+    "Събери статистика за въглеродни емисии и екологични вреди на различните източници.",
+    "Анализирай дългосрочни инвестиции и рискове за бъдещи поколения.",
+    "Изследвайте връзката между енергийната система и потенциал за космическо развитие."
+  ],
+  "action_plan": [
+    {
+      "id": "ENERGY-TACTIC-001",
+      "level": "POLITICAL",
+      "actor": "CORTEX++",
+      "scope": "ENERGY_SYSTEM",
+      "time_horizon": "long",
+      "description_bg": "Изискване на достъп до OWID CSV данни за енергийна бедност и достъп до енергия по региони.",
+      "expected_effect_bg": "Повишава прозрачността и справедливостта в разпределението на енергията, като подпомага конституционната ос 2."
+    },
+    {
+      "id": "ENERGY-TACTIC-002",
+      "level": "TECHNICAL",
+      "actor": "human_collective",
+      "scope": "CLIMATE",
+      "time_horizon": "medium",
+      "description_bg": "Събиране на данни за въглеродни емисии на основните енергийни източници.",
+      "expected_effect_bg": "Позволява оценка на климатичното въздействие и подпомага ос 3 за защита на екосистемите."
+    },
+    {
+      "id": "ENERGY-TACTIC-003",
+      "level": "CIVILIZATIONAL",
+      "actor": "diplomacy_agent",
+      "scope": "FUTURE_GENERATIONS",
+      "time_horizon": "long",
+      "description_bg": "Разработка на глобален мониторинг на дългосрочни инвестиции и рискове за бъдещи поколения.",
+      "expected_effect_bg": "Увеличава опциите за бъдещи поколения и подпомага ос 4 за справедливост."
+    },
+    {
+      "id": "ENERGY-TACTIC-004",
+      "level": "ORGANIZATIONAL",
+      "actor": "CORTEX++",
+      "scope": "SPACE",
+      "time_horizon": "long",
+      "description_bg": "Изискване на данни за енергийни технологии, които подпомагат космическото развитие.",
+      "expected_effect_bg": "Подпомага ос 5 за безопасно разширяване на цивилизацията в космоса."
+    }
+  ]
+}

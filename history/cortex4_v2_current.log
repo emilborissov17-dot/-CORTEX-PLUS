@@ -1,0 +1,77 @@
+[INFO] Старт на Cortex4_V2 сесия.
+[CONTROL_MODEL] LEVEL=DEVELOPMENT, SANDBOX=TRUE, ALLOW_INTERNAL_EVOLUTION=LIMITED
+[INFO] Заредени HARD_GUARDS от cortex_control.rules.
+[INFO] Заредени EVOLUTION_RULES от cortex_control.rules.
+[INFO] Зареждане на принципи (Jacque Fresco ch1–3).
+Избран принцип за сесията: ГЛАВА 1 – FROM YESTERDAY TO TOMORROW – ПРИНЦИПИ ЗА CORTEX
+=== СТАРТ НА CORTEX4_V2 СЕСИЯ (BATCH) ===
+[SOURCE] fresco_designing_future RAW_DIR=C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\01_raw SUMMARY_DIR=C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\02_summary_bg
+[SOURCE] fresco_designing_future FOUND_RAW_FILES=['fresco_ch00_intro_raw.txt', 'fresco_ch01_raw.txt', 'fresco_ch02_raw.txt', 'fresco_ch03_raw.txt', 'fresco_ch04_raw.txt', 'fresco_ch05_raw.txt', 'fresco_ch06_raw.txt', 'fresco_ch07_raw.txt', 'fresco_ch08_raw.txt', 'fresco_ch09_raw.txt', 'fresco_ch10_raw.txt', 'fresco_ch11_raw.txt', 'fresco_ch12_conclusion_raw.txt']
+[METRIC] RAW_FILE_SIZE bytes 7420 | C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\01_raw\fresco_ch00_intro_raw.txt
+[SUMMARY] SOURCE=fresco_designing_future C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\01_raw\fresco_ch00_intro_raw.txt -> C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\02_summary_bg\fresco_ch00_intro_raw_auto_summary_bg.txt
+[METRIC] SUMMARY_FILE_SIZE bytes 554 | C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\02_summary_bg\fresco_ch00_intro_raw_auto_summary_bg.txt
+[OK SUMMARY] SOURCE=fresco_designing_future PATH=C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\02_summary_bg\fresco_ch00_intro_raw_auto_summary_bg.txt
+[METRIC] RAW_FILE_SIZE bytes 9422 | C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\01_raw\fresco_ch01_raw.txt
+[SUMMARY] SOURCE=fresco_designing_future C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\01_raw\fresco_ch01_raw.txt -> C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\02_summary_bg\fresco_ch01_raw_auto_summary_bg.txt
+[METRIC] SUMMARY_FILE_SIZE bytes 558 | C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\02_summary_bg\fresco_ch01_raw_auto_summary_bg.txt
+[OK SUMMARY] SOURCE=fresco_designing_future PATH=C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\02_summary_bg\fresco_ch01_raw_auto_summary_bg.txt
+[METRIC] RAW_FILE_SIZE bytes 3349 | C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\01_raw\fresco_ch02_raw.txt
+[SUMMARY] SOURCE=fresco_designing_future C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\01_raw\fresco_ch02_raw.txt -> C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\02_summary_bg\fresco_ch02_raw_auto_summary_bg.txt
+[METRIC] SUMMARY_FILE_SIZE bytes 548 | C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\02_summary_bg\fresco_ch02_raw_auto_summary_bg.txt
+[OK SUMMARY] SOURCE=fresco_designing_future PATH=C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\02_summary_bg\fresco_ch02_raw_auto_summary_bg.txt
+[METRIC] RAW_FILE_SIZE bytes 6932 | C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\01_raw\fresco_ch03_raw.txt
+[SUMMARY] SOURCE=fresco_designing_future C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\01_raw\fresco_ch03_raw.txt -> C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\02_summary_bg\fresco_ch03_raw_auto_summary_bg.txt
+[METRIC] SUMMARY_FILE_SIZE bytes 548 | C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\02_summary_bg\fresco_ch03_raw_auto_summary_bg.txt
+[OK SUMMARY] SOURCE=fresco_designing_future PATH=C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\02_summary_bg\fresco_ch03_raw_auto_summary_bg.txt
+[METRIC] RAW_FILE_SIZE bytes 14692 | C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\01_raw\fresco_ch04_raw.txt
+[SUMMARY] SOURCE=fresco_designing_future C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\01_raw\fresco_ch04_raw.txt -> C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\02_summary_bg\fresco_ch04_raw_auto_summary_bg.txt
+[METRIC] SUMMARY_FILE_SIZE bytes 548 | C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\02_summary_bg\fresco_ch04_raw_auto_summary_bg.txt
+[OK SUMMARY] SOURCE=fresco_designing_future PATH=C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\02_summary_bg\fresco_ch04_raw_auto_summary_bg.txt
+[METRIC] RAW_FILE_SIZE bytes 2181 | C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\01_raw\fresco_ch05_raw.txt
+[SUMMARY] SOURCE=fresco_designing_future C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\01_raw\fresco_ch05_raw.txt -> C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\02_summary_bg\fresco_ch05_raw_auto_summary_bg.txt
+[METRIC] SUMMARY_FILE_SIZE bytes 550 | C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\02_summary_bg\fresco_ch05_raw_auto_summary_bg.txt
+[OK SUMMARY] SOURCE=fresco_designing_future PATH=C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\02_summary_bg\fresco_ch05_raw_auto_summary_bg.txt
+[METRIC] RAW_FILE_SIZE bytes 8713 | C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\01_raw\fresco_ch06_raw.txt
+[SUMMARY] SOURCE=fresco_designing_future C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\01_raw\fresco_ch06_raw.txt -> C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\02_summary_bg\fresco_ch06_raw_auto_summary_bg.txt
+[METRIC] SUMMARY_FILE_SIZE bytes 552 | C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\02_summary_bg\fresco_ch06_raw_auto_summary_bg.txt
+[OK SUMMARY] SOURCE=fresco_designing_future PATH=C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\02_summary_bg\fresco_ch06_raw_auto_summary_bg.txt
+[METRIC] RAW_FILE_SIZE bytes 33055 | C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\01_raw\fresco_ch07_raw.txt
+[SUMMARY] SOURCE=fresco_designing_future C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\01_raw\fresco_ch07_raw.txt -> C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\02_summary_bg\fresco_ch07_raw_auto_summary_bg.txt
+[METRIC] SUMMARY_FILE_SIZE bytes 548 | C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\02_summary_bg\fresco_ch07_raw_auto_summary_bg.txt
+[OK SUMMARY] SOURCE=fresco_designing_future PATH=C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\02_summary_bg\fresco_ch07_raw_auto_summary_bg.txt
+[METRIC] RAW_FILE_SIZE bytes 2466 | C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\01_raw\fresco_ch08_raw.txt
+[SUMMARY] SOURCE=fresco_designing_future C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\01_raw\fresco_ch08_raw.txt -> C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\02_summary_bg\fresco_ch08_raw_auto_summary_bg.txt
+[METRIC] SUMMARY_FILE_SIZE bytes 552 | C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\02_summary_bg\fresco_ch08_raw_auto_summary_bg.txt
+[OK SUMMARY] SOURCE=fresco_designing_future PATH=C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\02_summary_bg\fresco_ch08_raw_auto_summary_bg.txt
+[METRIC] RAW_FILE_SIZE bytes 18053 | C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\01_raw\fresco_ch09_raw.txt
+[SUMMARY] SOURCE=fresco_designing_future C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\01_raw\fresco_ch09_raw.txt -> C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\02_summary_bg\fresco_ch09_raw_auto_summary_bg.txt
+[METRIC] SUMMARY_FILE_SIZE bytes 548 | C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\02_summary_bg\fresco_ch09_raw_auto_summary_bg.txt
+[OK SUMMARY] SOURCE=fresco_designing_future PATH=C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\02_summary_bg\fresco_ch09_raw_auto_summary_bg.txt
+[METRIC] RAW_FILE_SIZE bytes 10892 | C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\01_raw\fresco_ch10_raw.txt
+[SUMMARY] SOURCE=fresco_designing_future C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\01_raw\fresco_ch10_raw.txt -> C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\02_summary_bg\fresco_ch10_raw_auto_summary_bg.txt
+[METRIC] SUMMARY_FILE_SIZE bytes 548 | C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\02_summary_bg\fresco_ch10_raw_auto_summary_bg.txt
+[OK SUMMARY] SOURCE=fresco_designing_future PATH=C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\02_summary_bg\fresco_ch10_raw_auto_summary_bg.txt
+[METRIC] RAW_FILE_SIZE bytes 10427 | C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\01_raw\fresco_ch11_raw.txt
+[SUMMARY] SOURCE=fresco_designing_future C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\01_raw\fresco_ch11_raw.txt -> C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\02_summary_bg\fresco_ch11_raw_auto_summary_bg.txt
+[METRIC] SUMMARY_FILE_SIZE bytes 548 | C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\02_summary_bg\fresco_ch11_raw_auto_summary_bg.txt
+[OK SUMMARY] SOURCE=fresco_designing_future PATH=C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\02_summary_bg\fresco_ch11_raw_auto_summary_bg.txt
+[METRIC] RAW_FILE_SIZE bytes 1826 | C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\01_raw\fresco_ch12_conclusion_raw.txt
+[SUMMARY] SOURCE=fresco_designing_future C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\01_raw\fresco_ch12_conclusion_raw.txt -> C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\02_summary_bg\fresco_ch12_conclusion_raw_auto_summary_bg.txt
+[METRIC] SUMMARY_FILE_SIZE bytes 548 | C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\02_summary_bg\fresco_ch12_conclusion_raw_auto_summary_bg.txt
+[OK SUMMARY] SOURCE=fresco_designing_future PATH=C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\02_summary_bg\fresco_ch12_conclusion_raw_auto_summary_bg.txt
+[SOURCE] other_sources RAW_DIR=C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\other_sources\01_raw SUMMARY_DIR=C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\other_sources\02_summary_bg
+[SOURCE] other_sources FOUND_RAW_FILES=['agi_balloon_manifesto_v1_raw.txt']
+[METRIC] RAW_FILE_SIZE bytes 2073 | C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\other_sources\01_raw\agi_balloon_manifesto_v1_raw.txt
+[SUMMARY] SOURCE=other_sources C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\other_sources\01_raw\agi_balloon_manifesto_v1_raw.txt -> C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\other_sources\02_summary_bg\agi_balloon_manifesto_v1_raw_auto_summary_bg.txt
+[METRIC] SUMMARY_FILE_SIZE bytes 926 | C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\other_sources\02_summary_bg\agi_balloon_manifesto_v1_raw_auto_summary_bg.txt
+[OK SUMMARY] SOURCE=other_sources PATH=C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\other_sources\02_summary_bg\agi_balloon_manifesto_v1_raw_auto_summary_bg.txt
+[METRIC] BATCH_DURATION_SEC 0.101
+[METRIC] TOTAL_RAW_FILES 14
+=== КРАЙ НА ОБРАБОТКАТА НА ФАЙЛОВЕТЕ (BATCH) ===
+[INFO] Край на партидната част. Преминаване към интерактивен режим.
+[INFO] Стартиран е интерактивният режим на CORTEX4_V2.
+[USER INPUT] MODE FRESCO
+[MODE] Зареден режим: FRESCO_DESIGNING_FUTURE_BG
+[USER INPUT] ENERGY REVIEW
+[INFO] Прекъснат интерактивен режим (EOF/KeyboardInterrupt).
+[INFO] Край на CORTEX4_V2 сесия.

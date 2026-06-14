@@ -1,0 +1,113 @@
+{
+  "axis": "ENERGY_REVIEW",
+  "fetched_at": "2026-05-16T16:47:45.257667+00:00",
+  "smart_query": "renewable energy solar wind",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 3,
+    "arxiv": 2,
+    "github": 0,
+    "youtube_transcripts": 3,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "xAI grows data center gas fleet despite legal scrutiny – This Week in Cleantech",
+      "snippet": "On this episode of the This Week in Cleantech podcast, Molly Taft from WIRED discusses Elon Musk's AI company xAI's decision to add 19 natural gas turbines to its Colossus 2 data center in Southaven, Mississippi.",
+      "url": "https://www.renewableenergyworld.com/podcasts/xai-grows-data-center-gas-fleet-despite-legal-scrutiny-this-week-in-cleantech/",
+      "source": "RSS"
+    },
+    {
+      "title": "The EPA is expediting clean air permits for power plants to remove ‘unnecessary delays’",
+      "snippet": "The U.S. Environmental Protection Agency is expediting Clean Air Act permit reviews to eliminate delays, allowing concurrent public comment and review.",
+      "url": "https://www.renewableenergyworld.com/energy-business/policy-and-regulation/the-epa-is-expediting-clean-air-permits-for-power-plants-to-remove-unnecessary-delays/",
+      "source": "RSS"
+    },
+    {
+      "title": "Elective pay explained as key IRS deadline approaches | Q&A with tax credit specialist Bryen Alperin",
+      "snippet": "Municipalities, schools, and first-time applicants are accelerating projects under the IRS's elective pay provision before the May 15 deadline.",
+      "url": "https://www.renewableenergyworld.com/energy-business/policy-and-regulation/elective-pay-explained-as-key-irs-deadline-approaches-qa-with-tax-credit-specialist-bryen-alperin/",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [
+    {
+      "title": "Oman expands renewable energy projects to boost sustainability and energy security",
+      "snippet": "Oman expands renewable energy projects to boost sustainability and energy security",
+      "url": "https://timesofoman.com/article/169173-oman-expands-renewable-energy-projects-to-boost-sustainability-and-energy-security",
+      "source": "timesofoman.com"
+    },
+    {
+      "title": "Renewable Energy Surge : Solar & Wind Big Eco Wins and Hidden Costs Revealed",
+      "snippet": "Renewable Energy Surge : Solar & Wind Big Eco Wins and Hidden Costs Revealed",
+      "url": "https://www.ibtimes.com/renewable-energy-surge-solar-winds-big-eco-wins-hidden-costs-revealed-3798822",
+      "source": "ibtimes.com"
+    },
+    {
+      "title": "Can Renewable Energy Fully Replace Fossil Fuels and Become the Main Energy Source in the Future ? ",
+      "snippet": "Can Renewable Energy Fully Replace Fossil Fuels and Become the Main Energy Source in the Future ? ",
+      "url": "https://www.techtimes.com/articles/316482/20260511/can-renewable-energy-fully-replace-fossil-fuels-become-main-energy-source-future.htm",
+      "source": "techtimes.com"
+    }
+  ],
+  "github_repos": [],
+  "arxiv_papers": [
+    {
+      "title": "Price Distortions in Korea's Electricity Market: Barriers to Renewable Integration and Reform Pathways",
+      "snippet": "Structural distortions in price signals within the Korean electricity market, governed by a cost-based pool (CBP) and a uniform pricing mechanism, fundamentally undermine the nation's energy transition goals. The current market design fails to reflect transmission constraints, real-time supply and d",
+      "url": "https://arxiv.org/abs/2605.09318v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Robust Capacity Expansion under Wildfire Ignition Risk and High Renewable Penetration",
+      "snippet": "In power systems, the risk of wildfire ignition has increased significantly in recent years. The impact and severity of these events on energy dispatch, as well as their societal ramifications, make wildfire prevention critical for power system planning and operation. A common intervention by system",
+      "url": "https://arxiv.org/abs/2605.07880v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[The Resistance of a Cow] There’s something rotten in the cows of Denmark. And Minnesota. And Wisconsin. And Idaho. What could cause a previously thriving herd of majestic dairy cattle to stop drinking water and start drinking … urine? A Danish farmer calls a special investigator, who takes one look at his farm and nopes the heck out of there, refusing to return, citing “bad energy” coming from something nearby … a big bui",
+  "wiki": null,
+  "youtube_items": [
+    {
+      "title": "[YT] The Green Energy Revolution: How Solar &amp; Wind Are Changing Everything (2025)",
+      "summary": "The numbers tell a story that seemed impossible just a decade ago. In 2024, for the first time in history, the world invested more in solar energy than in all fossil fuels combined. Solar power installations are now growing at a pace that consistently shatters expert predictions. What we are witnessing is not merely an energy transition. It is the fastest global technological and industrial transformation in human history. This is the story of how solar and wind energy went from expensive, subsidized alternatives to the cheapest sources of electricity humanity has ever known. And how this shift is fundamentally rewriting the rules of global power. The revolution began with a simple, relentless curve. Swanson's law, named after the founder of SunPower, had observed that the price of solar, ",
+      "link": "https://www.youtube.com/watch?v=xBWMi5m662M",
+      "source_type": "youtube",
+      "channel": "Rewind Economix",
+      "video_id": "xBWMi5m662M",
+      "transcript_method": "whisper",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] The Energy Revolution is Unstoppable: Record Solar and Wind Additions in 2025",
+      "summary": "The world added a staggering amount of wind and solar power in 2025 and the numbers were incredible. Hello my friends, welcome to the channel, I'm Sam Evans and this is video number 8100. I've done many videos about wind and solar and batteries and how important they are to the planet, but what just happened in 2025 is truly, truly astonishing. New data from global energy think tank embers shows that 814 gigawatts of new solar and wind capacity came one line last year, which was an increase of 17% from 2024's 696 gigawatts. That brings total global wind and solar capacity to 4,170 gigawatts or just over 4 terawatts. That sounds like a lot and it is, it's huge. But actually, a lot of wind and solar was also wasted, completely wasted in 2025, curtailed the industry calls. In fact, at least $",
+      "link": "https://www.youtube.com/watch?v=spSOp5s_6_A",
+      "source_type": "youtube",
+      "channel": "The Electric Viking",
+      "video_id": "spSOp5s_6_A",
+      "transcript_method": "whisper",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Why Crude Oil Is So Important If Solar Energy is Growing Fast? | Renewable Energy Vs Fossil Fuels",
+      "summary": "onceale VihaliaLove, greedy talentsarine NEG Rajya Kap in 4 basis coolest 50-150% khrik viewers, tôi face最小 viva trahini chav Mai ki 3 main sithezi th 700-12н Ck 1 quantity 25-12 priorities jhkok� ABB catch up mode mayam But Runeemball and Runeemball is so fast growing Take solar energy 6x6 crew here 2017 445 teravotar say birth year 2025 made 2779 teravotar But UCEP rate Mina coal may be 800 teravotar adhya gas may be 950 teravotar But Runeemball electricity demand may be explored It, J note2017 with 39.400 teravotarava 2345 teravotar 2850 teravotar Matlabsear R15 masjar 55 pouk TI Tanz sporty So pura Shift So 1 siar Cause electricity demand But petrol elder female lowered energy a tubes in electricity demand Within Omar And the 2nd process Photography output Senses 45% Thições 50% causin",
+      "link": "https://www.youtube.com/watch?v=q7oXrqM8F8I",
+      "source_type": "youtube",
+      "channel": "INDmoney",
+      "video_id": "q7oXrqM8F8I",
+      "transcript_method": "whisper",
+      "transcript_chars": 1993,
+      "has_full_transcript": true
+    }
+  ],
+  "summary": "[RSS News]\n- xAI grows data center gas fleet despite legal scrutiny – This Week in Cleantech\n- The EPA is expediting clean air permits for power plants to remove ‘unnecessary delays’\n\n[GDELT News]\n- O",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": [],
+  "open_source_momentum": "",
+  "scientific_frontier": "",
+  "relevance_to_goal": ""
+}

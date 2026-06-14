@@ -1,0 +1,135 @@
+{
+  "axis": "GOVERNANCE_INSTITUTIONS_REVIEW",
+  "domain": "civilization",
+  "timestamp": "2026-05-04T12:57:50.905653+00:00",
+  "sources_count": 15,
+  "rss_count": 12,
+  "ddg_count": 0,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] Making sense of geopolitics in 2025 - YouTube",
+      "summary": "appreciate that you can't drive history and that you can only control what you can do, but then the other side just might surprise you. Welcome to Radio Davos, the podcast from the World Economic Forum. The looks of the biggest challenges and how we might solve them this week, war and peace and international relations can a greater understanding of history, help us end and avoid wars. And what is the future for geopolitics? On this episode, we hear from three experts. History doesn't repeat it rhymes. So if you have a pretty good sense of history, you'll make better decisions. You'll have a better understanding of the dynamics that play. In 2025, are we living in a safer or a more dangerous world? This India-based experts says this about a potential return to nuclear proliferation. This ha",
+      "link": "https://www.youtube.com/watch?v=gzJyuPlYhK0",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "gzJyuPlYhK0",
+      "transcript_method": "whisper",
+      "transcript_chars": 48467,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] 2025: NATO vs. Russia: The Great War Prophecy & The End of History - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] For the first time in 1400 years, this exclusive investigation unlocks the Quran’s hidden geopolitical prophecy regarding Russia and the West. In this comple... Published January 25, 2026",
+      "link": "https://www.youtube.com/watch?v=YC2yWCMgDkI",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "YC2yWCMgDkI",
+      "transcript_method": "description",
+      "transcript_chars": 210,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] US Wants to Kick Spain out of NATO & Other News | Geopolitical News Update 🔴 LIVE STREAM - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] Breaking geopolitical updates from ATP Geopolitics! President Zelensky met with Crown Prince Mohammed bin Salman in Jeddah, while Donald Tusk warned Europe a... Published 1 week ago",
+      "link": "https://www.youtube.com/watch?v=_bL9AioGvZE",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "_bL9AioGvZE",
+      "transcript_method": "description",
+      "transcript_chars": 204,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "problem": "Анализ на GOVERNANCE_INSTITUTIONS_REVIEW — данни получени но LLM грешка",
+    "root_cause": "LLM parsing грешка",
+    "severity": "UNKNOWN",
+    "leverage_points": [],
+    "proposed_actions": [],
+    "evidence": [
+      "Daily Press Briefing by the Office of the Spokesperson for the Secretary-General",
+      "Fifth Committee, 28th Meeting (AM)",
+      "Press Conference by Security Council President on Work Programme for May"
+    ],
+    "generalization": "",
+    "summary": "- Daily Press Briefing by the Office of the Spokesperson for the Secretary-General: In Cuba, the humanitarian situation continues to worsen as the energy crisis deepens, the Office for the Coordinatio",
+    "risk_level": "UNKNOWN",
+    "trend": "UNKNOWN"
+  },
+  "raw_items": [
+    {
+      "title": "Daily Press Briefing by the Office of the Spokesperson for the Secretary-General",
+      "summary": "In Cuba, the humanitarian situation continues to worsen as the energy crisis deepens, the Office for the Coordination of Humanitarian Affairs (OCHA) reports, noting that healthcare, waste collection, water deliveries to remote areas, food distribution and other essential services are being heavily disrupted.",
+      "link": "https://press.un.org/en/2026/db260501.doc.htm",
+      "published": "Fri, 01 May 2026 18:07:14 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "Fifth Committee, 28th Meeting (AM)",
+      "summary": "The Fifth Committee (Administrative and Budgetary) will begin the second part of its resumed session from 4 to29 May with a discussion on its organization of work for the session: A/C.5/80/L.31. Afterwards, it consider the Board of Auditor's reports on UN peacekeeping operations as well as various reports related to the administrative &amp; budgetary aspects of financing peacekeeping operations, namely: the support account; Regional Service Centre in Entebbe, Uganda; United Nations Logistics Bas",
+      "link": "https://press.un.org/en/blog/8",
+      "published": "Fri, 01 May 2026 17:31:34 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "Press Conference by Security Council President on Work Programme for May",
+      "summary": "China’s presidency of the Security Council this month will focus on upholding the United Nations Charter, advancing political settlements in the Middle East, supporting stability and development in Africa and strengthening protection of civilians in armed conflict, the country’s representative said at a Headquarters press conference today.",
+      "link": "https://press.un.org/en/2026/260501_sc.doc.htm",
+      "published": "Fri, 01 May 2026 16:42:05 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "Secretary-General Celebrates Power of Portuguese to Unite 256 Million Voices around World, in World Language Day Message",
+      "summary": "Following is UN Secretary-General António Guterres’ message for World Portuguese Language Day, observed on 5 May:",
+      "link": "https://press.un.org/en/2026/sgsm23112.doc.htm",
+      "published": "Fri, 01 May 2026 15:58:53 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "Middle Powers Can’t Shape the Global Order",
+      "summary": "Trump’s war exposes the limits of collective action among the lesser powers.",
+      "link": "https://foreignpolicy.com/2026/05/04/middle-powers-geopolitics-global-order-trump-war-iran-china/",
+      "published": "Mon, 04 May 2026 10:56:02 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "The End of America’s Soft Power",
+      "summary": "The United States has given up on one of its core international strengths.",
+      "link": "https://foreignpolicy.com/2026/05/04/trump-soft-power-usa/",
+      "published": "Mon, 04 May 2026 09:37:27 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "This Energy Crisis Is Undoing the Last Ones",
+      "summary": "The Western-led order that emerged after the 20th century’s three energy shocks is losing its grip.",
+      "link": "https://foreignpolicy.com/2026/05/04/energy-crisis-history-20th-century-west-order/",
+      "published": "Mon, 04 May 2026 09:10:57 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Trump: 60-Day War Powers Deadline ‘Totally Unconstitutional’",
+      "summary": "The White House argues that the U.S.-Iran cease-fire paused the clock.",
+      "link": "https://foreignpolicy.com/2026/05/01/trump-60-days-war-powers-resolution-unconstitutional-iran-us-congress/",
+      "published": "Fri, 01 May 2026 20:58:38 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Ukrainian drone hits upmarket Moscow high-rise ahead of Victory Day celebrations",
+      "summary": "The attack comes as the Kremlin prepares to hold a scaled-back military parade on Saturday.",
+      "link": "https://www.bbc.com/news/articles/cwy234llx3vo?at_medium=RSS&at_campaign=rss",
+      "published": "Mon, 04 May 2026 09:49:05 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Three dead in suspected virus outbreak on Atlantic cruise ship",
+      "summary": "The World Health Organization said one case of hantavirus infection had been confirmed, with five more suspected cases under investigation.",
+      "link": "https://www.bbc.com/news/articles/cy0294829ndo?at_medium=RSS&at_campaign=rss",
+      "published": "Mon, 04 May 2026 09:29:37 GMT",
+      "source_type": "rss"
+    }
+  ]
+}

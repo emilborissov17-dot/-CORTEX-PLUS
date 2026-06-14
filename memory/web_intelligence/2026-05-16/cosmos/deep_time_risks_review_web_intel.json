@@ -1,0 +1,129 @@
+{
+  "axis": "DEEP_TIME_RISKS_REVIEW",
+  "domain": "cosmos",
+  "timestamp": "2026-05-16T22:06:48.226451+00:00",
+  "sources_count": 12,
+  "rss_count": 4,
+  "ddg_count": 6,
+  "youtube_count": 2,
+  "youtube_items": [
+    {
+      "title": "[YT] Yellowstone Supervolcano VS Toba Supervolcano - YouTube",
+      "summary": "In our previous video, we explained what would happen if the Yellowstone Supervolcano was going to erupt in our lifetime. As mentioned before, the total amount of underground volume of the Yellowstone Coldera is filled with 68% of molten rock. Even though this is about 2.5 times bigger than scientists imagined it to be, the percentage of molten rock in the Magma Chamber is much too low to allow another super-erruption. It is estimated that over the past 132 million years about 40 medical loss or super-erruption have occurred on our planet. One of the deadliest eruptions was that of the Toba Supervolcano about 75,000 years ago. This supervolcanic eruption was so deadly and devastating for numerous species, including our own, that scientists formed the Toba catastrophe theory to explain the ",
+      "link": "https://www.youtube.com/watch?v=-H050L8ilCQ",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "-H050L8ilCQ",
+      "transcript_method": "whisper",
+      "transcript_chars": 3307,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Nuclear Explosion Power Comparison - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] We take a look at the size and power of explosions created from a hand grenade to the Tsar Bomba and beyond. Its not just nvkes but supervolcano eruptions & ...",
+      "link": "https://www.youtube.com/watch?v=JFiBXFFzT5c",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "JFiBXFFzT5c",
+      "transcript_method": "description",
+      "transcript_chars": 183,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "problem": "Растежът на продажбите на никотинови торби с цел целенасочено привличане на младежи представлява реален проблем за здравето и устойчивостта на цивилизацията.",
+    "root_cause": "Недостатъчното регулиране и агресивната маркетингова стратегия на производителите на никотинови торби водят до увеличаване на консумацията сред младежи, което угрожа здравето и устойчивостта на биосферата.",
+    "severity": "HIGH",
+    "leverage_points": [
+      "Международните здравни организации като ВООЗ, които могат да налагат строги регулации и контроли",
+      "Производители на никотинови торби, които могат да променят маркетинговите си стратегии"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Разработка и внасяне на строги регулации за ограничаване на рекламата и продажбата на никотинови торби към младежи",
+        "measurable_goal": "Скоространно намаление на продажбите на никотинови торби среди младежи с 30% за 2 години",
+        "timeframe": "краткосрочно"
+      },
+      {
+        "action": "Информиране и образование на младежи за рисковете на никотиновите торби и въздействието им върху здравето",
+        "measurable_goal": "Повишаване на осведомеността сред младежи за рисковете на никотиновите торби с 50% за 1 година",
+        "timeframe": "краткосрочно"
+      }
+    ],
+    "evidence": [
+      "WHO warns nicotine pouch brands targeting youth as sales surge",
+      "Global health gains face threat of reversal"
+    ],
+    "generalization": "Този проблем е свързан с домейна на здравето, устойчивостта на цивилизацията и биосферата, като угрожа основните цели на AGI - здравословна биосфера, прозрачност и устойчивост.",
+    "summary": "Растежът на никотиновите торби сред младежи е сериозен проблем, свързан с здравето и устойчивостта на цивилизацията, изискващ строги регулации и образование.",
+    "risk_level": "HIGH"
+  },
+  "raw_items": [
+    {
+      "title": "WHO warns nicotine pouch brands targeting youth as sales surge",
+      "summary": "The World Health Organization (WHO) warns about the rapid growth and aggressive marketing of nicotine pouches, especially targeting youth, amid limited regulation worldwide. Nicotine pouches pose significant health risks and governments are urged to implement strong regulatory measures to prevent addiction and protect young people.",
+      "link": "https://www.who.int/news/item/15-05-2026-who-warns-nicotine-pouch-brands-targeting-youth-as-sales-surge",
+      "published": "Thu, 14 May 2026 17:26:02 Z",
+      "source_type": "rss"
+    },
+    {
+      "title": "Follow-up message by the WHO Director-General to the people of Tenerife regarding the hantavirus response",
+      "summary": "A message from the Director-General of the World Health Organization expressing gratitude to the people of Tenerife for their solidarity and successful cooperation during the operation to safely disembark and care for over 120 passengers from 23 countries amid an outbreak of hantavirus.",
+      "link": "https://www.who.int/news/item/14-05-2026-follow-up-message-by-the-who-director-general-to-the-people-of-tenerife-regarding-the-hantavirus-response",
+      "published": "Thu, 14 May 2026 13:27:15 Z",
+      "source_type": "rss"
+    },
+    {
+      "title": "Tunisia validated by WHO as having eliminated trachoma as a public health problem",
+      "summary": "Tunisia has been officially validated by the World Health Organization (WHO) as having eliminated trachoma as a public health problem, marking a significant achievement after decades of sustained effort.",
+      "link": "https://www.who.int/news/item/14-05-2026-tunisia-validated-by-who-as-having-eliminated-trachoma-as-a-public-health-problem",
+      "published": "Thu, 14 May 2026 09:23:04 Z",
+      "source_type": "rss"
+    },
+    {
+      "title": "Global health gains face threat of reversal",
+      "summary": "The world is falling short on health targets, with progress uneven, slowing, and in some areas reversing, according to the World Health Statistics 2026 report, published today by the World Health Organization (WHO).",
+      "link": "https://www.who.int/news/item/13-05-2026-global-health-gains-face-threat-of-reversal",
+      "published": "Wed, 13 May 2026 13:02:54 Z",
+      "source_type": "rss"
+    },
+    {
+      "title": "Asteroid impact",
+      "summary": "An impact event is a collision between astronomical objects causing measurable effects. Impact events have been found to regularly occur in planetary systems, though the most frequent involve asteroids, comets or meteoroids and have minimal effect. When large objects impact terrestrial planets such as the Earth, there can be significant physical and biospheric consequences, as the impacting body i",
+      "link": "https://en.wikipedia.org/wiki/Asteroid_impact",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Asteroids in fiction - Wikipedia",
+      "summary": "The threat of impact events by asteroids has been a recurring theme. It received successive boosts in popularity following the 1980 publication of the Alvarez hypothesis about the extinction of...",
+      "link": "https://en.wikipedia.org/wiki/Asteroids_in_fiction",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Asteroid impact avoidance",
+      "summary": "DART mission impact animation Asteroid impact avoidance, commonly termed planetary defense, involves systematic detection, tracking, and trajectory alteration of...",
+      "link": "https://grokipedia.com/page/Asteroid_impact_avoidance",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Pandemic Response Accountability Committee",
+      "summary": "The Pandemic Response Accountability Committee (PRAC) is an independent oversight committee within the Council of the Inspectors General on Integrity and Efficiency, created by the Coronavirus Aid, Relief, and Economic Security (CARES) Act of 2020 to ensure that the $2.2 trillion of the CARES act, plus 5 other pandemic-related pieces of legislation totaling over $5 trillion in government funds, we",
+      "link": "https://en.wikipedia.org/wiki/Pandemic_Response_Accountability_Committee",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Tool for Influenza Pandemic Risk Assessment",
+      "summary": "The Tool for Influenza Pandemic Risk Assessment (TIPRA) is a standardized framework developed by the World Health Organization (WHO) to evaluate the pandemic potential of influenza A viruses, focusing on their ability to acquire sustained human-to-h…",
+      "link": "https://grokipedia.com/page/tool_for_influenza_pandemic_risk_assessment",
+      "source_type": "ddg"
+    },
+    {
+      "title": "From Detection to Decision-Making: Understanding Pandemic Risk",
+      "summary": "Pandemic Risk Assessment is an emerging scientific toolkit designed to assess how pandemic risk is evolving over time. Rather than predicting the next outbreak...",
+      "link": "https://www.globaldispatches.org/p/understanding-pandemic-risk",
+      "source_type": "ddg"
+    }
+  ]
+}

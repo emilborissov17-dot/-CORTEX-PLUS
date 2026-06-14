@@ -1,0 +1,191 @@
+[
+  {
+    "name": "IEA Data Portal",
+    "url": "https://www.iea.org/data-and-statistics",
+    "docs": "https://www.iea.org/data-and-statistics/faq",
+    "notes": "Световни данни за енергия, включително производство, потребление, възобновяеми източници и емисии, с фокус върху развитието на Европа, САЩ и други региони.",
+    "status": "candidate",
+    "type": "dataset_or_api",
+    "added_at": "2026-02-25T18:12:46.782885"
+  },
+  {
+    "name": "US EIA API",
+    "url": "https://www.eia.gov/energy-census",
+    "docs": "https://www.eia.gov/developers/api",
+    "notes": "Достъп до данни за енергийния микс, производство и потребление в САЩ, включително икономически и емисионни показатели.",
+    "status": "broken",
+    "type": "dataset_or_api",
+    "added_at": "2026-02-25T18:12:46.782952",
+    "last_checked_status": 404,
+    "last_checked_at": "2026-02-25T16:40:25.554964"
+  },
+  {
+    "name": "Eurostat Energy Statistics",
+    "url": "https://ec.europa.eu/eurostat/databrowser",
+    "docs": "https://ec.europa.eu/eurostat/cache/energy/index.htm",
+    "notes": "Официални данни за Европейския съюз и Европейска икономическа зона, включително възобновяеми източници и енергийна политиката.",
+    "status": "candidate",
+    "type": "dataset_or_api",
+    "added_at": "2026-02-25T18:12:46.782955"
+  },
+  {
+    "name": "Open Energy Data (OED)",
+    "url": "https://open-energy-data.org",
+    "docs": "https://open-energy-data.org/faq",
+    "notes": "Глобални данни за енергия, включително възобновяеми източници и дистрибуция, с акцент върху Европа и Азия.",
+    "status": "broken",
+    "type": "dataset_or_api",
+    "added_at": "2026-02-25T18:12:46.782957",
+    "last_checked_status": "HTTPSConnectionPool(host='open-energy-data.org', port=443): Max retries exceeded with url: / (Caused by NameResolutionError(\"<urllib3.connection.HTTPSConnection object at 0x7c890ee97ec0>: Failed to resolve 'open-energy-data.org' ([Errno -2] Name or service not known)\"))",
+    "last_checked_at": "2026-02-25T16:40:26.604255"
+  },
+  {
+    "name": "NREL Renewable Energy Data",
+    "url": "https://www.nrel.gov/research.html",
+    "docs": "https://www.nrel.gov/analysis.html",
+    "notes": "Данни за възобновяеми източници в САЩ, включително ветер, слънце, вода и биомаса, с документация за технически изчисления.",
+    "status": "candidate",
+    "type": "dataset_or_api",
+    "added_at": "2026-02-25T18:12:46.782959"
+  },
+  {
+    "name": "World Bank Energy Data",
+    "url": "https://data.worldbank.org/topic/energy",
+    "docs": "https://datahelpdesk.worldbank.org/",
+    "notes": "Мирови данни за енергия, включително достъпност, производство и емисии, с изготвението за много региони, включително развойни държави.",
+    "status": "candidate",
+    "type": "dataset_or_api",
+    "added_at": "2026-02-25T18:12:46.782961"
+  },
+  {
+    "name": "International Energy Agency (IEA) World Energy Outlook",
+    "url": "https://www.iea.org/reports/world-energy-outlook",
+    "docs": "https://www.iea.org/data-and-statistics",
+    "notes": "Анализи и прогнози за глобалното енергийно развитие, включително сценарии за възобновяеми източници и транзицията към зелена енергия.",
+    "status": "broken",
+    "type": "dataset_or_api",
+    "added_at": "2026-02-25T18:12:46.782962",
+    "last_checked_status": 404,
+    "last_checked_at": "2026-02-25T16:40:28.171509"
+  },
+  {
+    "name": "Global Carbon Project",
+    "url": "https://globalcarbonproject.org",
+    "docs": "https://www.globalcarbonproject.org/data",
+    "notes": "Данни за въглеродни емисии и тенденции, включително регионални и глобални анализи.",
+    "status": "broken",
+    "type": "dataset_or_api",
+    "added_at": "2026-02-25T18:12:46.782964",
+    "last_checked_status": "HTTPSConnectionPool(host='globalcarbonproject.org', port=443): Max retries exceeded with url: / (Caused by NameResolutionError(\"<urllib3.connection.HTTPSConnection object at 0x7c890eed4e90>: Failed to resolve 'globalcarbonproject.org' ([Errno -5] No address associated with hostname)\"))",
+    "last_checked_at": "2026-02-25T16:40:29.220932"
+  },
+  {
+    "name": "Open Power System Data (OPSD)",
+    "url": "https://open-power-system-data.org",
+    "docs": "https://open-power-system-data.org/docs",
+    "notes": "Детайлни данни за електрическа генерация и дистрибуция в Европа, включително възобновяеми източници и резервни мощности.",
+    "status": "candidate",
+    "type": "dataset_or_api",
+    "added_at": "2026-02-25T18:12:46.782965"
+  },
+  {
+    "name": "International Renewable Energy Agency (IRENA)",
+    "url": "https://www.irena.org/data-and-statistics",
+    "docs": "https://www.irena.org/AboutIRENA/AboutIRENA",
+    "notes": "Данни за възобновяемите източници по целия свят, включително инвестиции, технологии и политики.",
+    "status": "broken",
+    "type": "dataset_or_api",
+    "added_at": "2026-02-25T18:12:46.782967",
+    "last_checked_status": 403,
+    "last_checked_at": "2026-02-25T16:40:30.541237"
+  },
+  {
+    "name": "Climate Watch (WRI)",
+    "url": "https://climatewatch.wri.org",
+    "docs": "https://climatewatch.wri.org/data",
+    "notes": "Достъп до климатични данни, включително енергийни емисии и възобновяеми източници, с фокус върху развитието.",
+    "status": "broken",
+    "type": "dataset_or_api",
+    "added_at": "2026-02-25T18:12:46.782974",
+    "last_checked_status": "HTTPSConnectionPool(host='climatewatch.wri.org', port=443): Max retries exceeded with url: / (Caused by NameResolutionError(\"<urllib3.connection.HTTPSConnection object at 0x7c890eed4d40>: Failed to resolve 'climatewatch.wri.org' ([Errno -2] Name or service not known)\"))",
+    "last_checked_at": "2026-02-25T16:40:31.580533"
+  },
+  {
+    "name": "USGS Energy Resources",
+    "url": "https://energy.gov/eere/",
+    "docs": "https://www.usgs.gov/programs/energy",
+    "notes": "Данни за нефт, газ, уран и възобновяеми източници в САЩ, включително геоложки и еко-оценки.",
+    "status": "candidate",
+    "type": "dataset_or_api",
+    "added_at": "2026-02-25T18:12:46.782976"
+  },
+  {
+    "name": "ENTSO-E Transparency Portal",
+    "url": "https://transparency.entsoe.eu",
+    "docs": "https://transparency.entsoe.eu/",
+    "notes": "Данни за трансмисията на електрическата енергия в Европа, включително мощност, потребление и възобновяеми източници.",
+    "status": "candidate",
+    "type": "dataset_or_api",
+    "added_at": "2026-02-25T18:12:46.782978"
+  },
+  {
+    "name": "International Energy Forum (IEF)",
+    "url": "https://www.ief.org",
+    "docs": "https://www.ief.org/annual-conference",
+    "notes": "Информация за глобалната енергийна политика и тенденции, включително аналитични отчети за региони.",
+    "status": "candidate",
+    "type": "dataset_or_api",
+    "added_at": "2026-02-25T18:12:46.782980"
+  },
+  {
+    "name": "Energy Information Administration (EIA) API",
+    "url": "https://www.eia.gov/developers/api",
+    "docs": "https://www.eia.gov/energy-census",
+    "notes": "API за документирани данни за енергия в САЩ, включително възобновяеми източници и транзакции.",
+    "status": "broken",
+    "type": "dataset_or_api",
+    "added_at": "2026-02-25T18:12:46.782981",
+    "last_checked_status": "HTTPSConnectionPool(host='www.eia.gov', port=443): Read timed out. (read timeout=10)",
+    "last_checked_at": "2026-02-25T16:40:42.161969"
+  },
+  {
+    "name": "Open Energy Markets (OEM)",
+    "url": "https://open-energy-markets.org",
+    "docs": "https://open-energy-markets.org/docs",
+    "notes": "Достъп до данни за пазари на енергия, включително цени и извършени транзакции в Европа и САЩ.",
+    "status": "broken",
+    "type": "dataset_or_api",
+    "added_at": "2026-02-25T18:12:46.782983",
+    "last_checked_status": "HTTPSConnectionPool(host='open-energy-markets.org', port=443): Max retries exceeded with url: / (Caused by NameResolutionError(\"<urllib3.connection.HTTPSConnection object at 0x7c890f7c12b0>: Failed to resolve 'open-energy-markets.org' ([Errno -2] Name or service not known)\"))",
+    "last_checked_at": "2026-02-25T16:40:43.229888"
+  },
+  {
+    "name": "Global Power Plant Database",
+    "url": "https://www.iea.org/data-and-statistics/tables/power-plant-database",
+    "docs": "https://www.iea.org/data-and-statistics/databases-and-statistics",
+    "notes": "База данни за генератори на електроенергия по целия свят, включително технологии и производствени капацитети.",
+    "status": "broken",
+    "type": "dataset_or_api",
+    "added_at": "2026-02-25T18:12:46.782984",
+    "last_checked_status": 404,
+    "last_checked_at": "2026-02-25T16:40:44.808213"
+  },
+  {
+    "name": "UNEP Data Portal",
+    "url": "https://data.unep.org",
+    "docs": "https://data.unep.org/faq",
+    "notes": "Достъп до данни за енергия и околната среда, включително емисии и климатични проекции.",
+    "status": "candidate",
+    "type": "dataset_or_api",
+    "added_at": "2026-02-25T18:12:46.782986"
+  },
+  {
+    "name": "National Renewable Energy Laboratory (NREL)",
+    "url": "https://www.nrel.gov",
+    "docs": "https://www.nrel.gov/research/",
+    "notes": "Данни за възобновяеми източници и технологични изследвания в САЩ, включително симулации и публични отчети.",
+    "status": "candidate",
+    "type": "dataset_or_api",
+    "added_at": "2026-02-25T18:12:46.782987"
+  }
+]

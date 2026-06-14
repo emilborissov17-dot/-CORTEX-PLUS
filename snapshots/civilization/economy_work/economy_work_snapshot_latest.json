@@ -1,0 +1,35 @@
+{
+  "source_type": "REAL_DATA",
+  "metrics": {
+    "axis": "ECONOMY_WORK_REVIEW",
+    "source": "world_bank_api",
+    "fetched_date": "2026-06-11",
+    "metrics": {
+      "gdp_per_capita_usd": 13631.2043097215,
+      "gdp_growth_pct": 2.87194964204316,
+      "unemployment_pct": 4.79097241077406,
+      "gini_index": null,
+      "income_share_bottom20": null,
+      "income_share_top10": null,
+      "labor_force_participation": 60.9792598100467
+    },
+    "data_quality": "4/7 indicators fetched"
+  },
+  "raw": {
+    "axis": "ECONOMY_WORK_REVIEW",
+    "source": "world_bank_api",
+    "fetched_date": "2026-06-11",
+    "metrics": {
+      "gdp_per_capita_usd": 13631.2043097215,
+      "gdp_growth_pct": 2.87194964204316,
+      "unemployment_pct": 4.79097241077406,
+      "gini_index": null,
+      "income_share_bottom20": null,
+      "income_share_top10": null,
+      "labor_force_participation": 60.9792598100467
+    },
+    "data_quality": "4/7 indicators fetched"
+  },
+  "snapshot_timestamp": "2026-06-11T19:06:34.007055+00:00",
+  "axis": "ECONOMY_WORK_REVIEW"
+}

@@ -1,0 +1,135 @@
+{
+  "axis": "INFRASTRUCTURE_CITIES_REVIEW",
+  "domain": "civilization",
+  "timestamp": "2026-05-16T21:58:11.355567+00:00",
+  "sources_count": 11,
+  "rss_count": 4,
+  "ddg_count": 5,
+  "youtube_count": 2,
+  "youtube_items": [
+    {
+      "title": "[YT] City of the Future: Singapore – Full Episode | National... - YouTube",
+      "summary": "The paradigm has shifted. The world is accelerating. The science fiction of yesterday is rapidly becoming the science fiction of right now. How do we withstand the tectonic shifts in the world around us? How does a society thrive when the world economy is undergoing constant disruption? How do we continue to learn when information is moving at the speed of light? There are places that are ahead of the curve. City is building the tools for tomorrow. We want to create innovations that have a real way back. One day, Singapore can be self-sustained in food production. We are looking at the development of Singapore 40 years ahead of time. This city could be a model that wants to come. This is the city of the future. Singapore. The future of the world lies in its urban environments. More than ha",
+      "link": "https://www.youtube.com/watch?v=xi6r3hZe5Tg",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "xi6r3hZe5Tg",
+      "transcript_method": "whisper",
+      "transcript_chars": 32954,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] The REAL Problem with Floating Cities - YouTube",
+      "summary": "In the last few years, we started seeing these proposals for floating cities all over the world. They're post-assolutions to the sea level rise, which will affect about 40-years-old. This is a high-tech self-sustaining floating city where every day is beach day. Everything we eat or drink is recycled here. In fact, just by living here, you are saving the planet. But what if this place sucks? Not again. Hey, my boy, I got a portion of this video sponsored by Dropbox. This is one of the very first comprehensive floating city concepts, Triton City, developed in the 60s by the architect Buckminster Forder. Each of these tetrahedral platforms anchor into the sea bed, and it's got all the technologies and the social amenities for it to be a completely self-sustaining community. And you could add",
+      "link": "https://www.youtube.com/watch?v=vJP7I_QMXY0",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "vJP7I_QMXY0",
+      "transcript_method": "whisper",
+      "transcript_chars": 13542,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "Инфраструктурата за водоподем и управление на градски води е в критично състояние в някои градове, което води до загуба на водни ресурси и уязвимост към катастрофи.",
+    "root_cause": "Повечето градове имат стара и неефективна инфраструктура за водоподем, която не може да отговаря на растящата нужда от вода и не поддържа устойчиво управление на ресурсите.",
+    "severity": "CRITICAL",
+    "leverage_points": [
+      "Инвестиции в модерна инфраструктура за управление на води и рециклиране",
+      "Разработване на умни градове с интегрирана система за управление на водни ресурси"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Инвестиции в инфраструктура за рециклиране и управление на води в градове с критични проблеми",
+        "measurable_goal": "Увеличение на ефективността на водоподема с минимум 30% в избраните градове",
+        "timeframe": "дългосрочно"
+      },
+      {
+        "action": "Разработване на умни градове с интегрирана система за управление на водни ресурси",
+        "measurable_goal": "Изграждане на поне 5 умни града в рамките на 10 години",
+        "timeframe": "дългосрочно"
+      }
+    ],
+    "evidence": [
+      "Cities sound alarm on crumbling water infrastructure",
+      "Smart meters have saved Austin, Texas, more than a billion of gallons of water, utility says"
+    ],
+    "generalization": "Този проблем е свързан с домейна на устойчивото развитие, умните градове и управлението на ресурси, като е част от по-голямата тенденция към загубата на водни ресурси и необходимостта от иновации в управлението им.",
+    "summary": "Инфраструктурата за води в някои градове е в критично състояние, което изисква инвестиции в модерна система за управление и рециклиране на води.",
+    "risk_level": "CRITICAL"
+  },
+  "raw_items": [
+    {
+      "title": "California governor proposes $500M to address homelessness — with new strings",
+      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.com/3gLiQjZ7Cd5mvWJVZVLX8hvExh0hjFhJZBKQhR-F3mQ/g:nowe:0:0/c:2560:1446/rs:fill:1600:900:1/Z3M6Ly9kaXZlc2l0ZS1zdG9yYWdlL2RpdmVpbWFnZS9obzQtc2NhbGVkLmpwZWc=.webp\" /></div></figure><p>Localities seeking Homeless Housing Assistance and Prevention funding would have to demonstrate efforts to address homeless encampments in Gov. Gavin Newsom&rsquo;s revised state budget proposal.</p>",
+      "link": "https://www.smartcitiesdive.com/news/california-governor-proposes-500m-for-homelessness-with-new-strings/820380/",
+      "published": "Fri, 15 May 2026 12:05:11 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "Dallas suburb exits regional transit agency",
+      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.com/bRLykXr-FxFy-pb9SAkaGl6aIgL3jeNWHoYy7ZVHKsc/g:ce/rs:fill:1600:900:1/Z3M6Ly9kaXZlc2l0ZS1zdG9yYWdlL2RpdmVpbWFnZS9HZXR0eUltYWdlcy0yMjQzMjg5MjY3LmpwZw==.webp\" /></div></figure><p>Highland Park, Texas, lost bus, paratransit and on-demand services after voters chose to withdraw from the Dallas Area Rapid Transit system.</p>",
+      "link": "https://www.smartcitiesdive.com/news/dallas-highland-park-exits-dart/820332/",
+      "published": "Fri, 15 May 2026 12:00:00 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "Cities sound alarm on crumbling water infrastructure",
+      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.com/T023RwuYKAqy_bBX6QBQVvUImyOo7DN60KmJStOeqoI/g:ce/rs:fill:1600:900:1/Z3M6Ly9kaXZlc2l0ZS1zdG9yYWdlL2RpdmVpbWFnZS9HZXR0eUltYWdlcy0yMTYwNTAzMjYyLmpwZw==.webp\" /></div></figure><p>Aging assets, stricter regulations, climate risks and fiscal restraints are contributing to problems long hidden underground, a new National League of Cities report finds.</p>",
+      "link": "https://www.smartcitiesdive.com/news/declining-water-infrastructure-national-league-of-cities/820370/",
+      "published": "Fri, 15 May 2026 11:33:07 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "Smart meters have saved Austin, Texas, more than a billion of gallons of water, utility says",
+      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.com/0j_X3JLM1aQRX_iCibVTBjQGGYUlo1I-FJ6BLgObp2w/g:ce/rs:fill:1600:900:1/Z3M6Ly9kaXZlc2l0ZS1zdG9yYWdlL2RpdmVpbWFnZS9HZXR0eUltYWdlcy0xMzg3MzYwOTM3X0dRNndsSmguanBn.webp\" /></div></figure><p>The meters, which detect leaks and provide daily water-use reports, are helping to build &ldquo;a more sustainable water future for generations to come,&rdquo; the city&rsquo;s water chief says.</p>",
+      "link": "https://www.smartcitiesdive.com/news/austin-texas-water-smart-meters/820248/",
+      "published": "Thu, 14 May 2026 10:43:00 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "Smart cities",
+      "summary": "A smart city is an urban model that leverages technology, human capital, and governance to improve sustainability, efficiency, and social inclusion, which are considered goals for cities of the future. Smart cities use digital technology to collect data and operate services. Data is collected from citizens, devices, buildings, or cameras. Smart city applications are diverse and include, but are no",
+      "link": "https://en.wikipedia.org/wiki/Smart_cities",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Smart city - Wikipedia",
+      "summary": "ASEAN Smart Cities Network (ASCN) is a collaborative platform which aims to synergise Smart city development efforts across ASEAN by facilitating ...",
+      "link": "https://en.wikipedia.org/wiki/Smart_city",
+      "source_type": "ddg"
+    },
+    {
+      "title": "List of Smart and AMRUT Cities in Telangana",
+      "summary": "The Smart and AMRUT cities in Telangana comprise urban local bodies selected under the Government of India's Smart Cities Mission, launched in 2015 to...",
+      "link": "https://grokipedia.com/page/List_of_Smart_and_AMRUT_Cities_in_Telangana",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Urban planning",
+      "summary": "Urban planning (also called city planning or town planning in some contexts) is the process of developing and designing land use and the built environment, including air, water, and the infrastructure passing into and out of urban areas, such as transportation, communications, and distribution networks, and their accessibility. Traditionally, urban planning followed a top-down approach in master p",
+      "link": "https://en.wikipedia.org/wiki/Urban_planning",
+      "source_type": "ddg"
+    },
+    {
+      "title": "What Is Urban Planning?. The art of shaping cities, and letting | Medium",
+      "summary": "Urban planning, sometimes also “city planning” or “town planning,” is an interdisciplinary field that studies urban areas and how we can purposefully direct their development...",
+      "link": "https://medium.com/the-urban-condition/what-is-urban-planning-97b1b9f40efa",
+      "source_type": "ddg"
+    },
+    {
+      "title": "[YT] City of the Future: Singapore – Full Episode | National... - YouTube",
+      "summary": "The paradigm has shifted. The world is accelerating. The science fiction of yesterday is rapidly becoming the science fiction of right now. How do we withstand the tectonic shifts in the world around us? How does a society thrive when the world economy is undergoing constant disruption? How do we continue to learn when information is moving at the speed of light? There are places that are ahead of the curve. City is building the tools for tomorrow. We want to create innovations that have a real way back. One day, Singapore can be self-sustained in food production. We are looking at the development of Singapore 40 years ahead of time. This city could be a model that wants to come. This is the city of the future. Singapore. The future of the world lies in its urban environments. More than ha",
+      "link": "https://www.youtube.com/watch?v=xi6r3hZe5Tg",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "xi6r3hZe5Tg",
+      "transcript_method": "whisper",
+      "transcript_chars": 32954,
+      "has_full_transcript": true
+    }
+  ]
+}

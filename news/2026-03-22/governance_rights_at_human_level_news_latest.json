@@ -1,0 +1,62 @@
+{
+  "axis": "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL",
+  "fetched_at": "2026-03-22T17:31:46.395217+00:00",
+  "smart_query": "human rights democracy freedom",
+  "sources_count": {
+    "wiki": 0,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "cirosantilli/china-dictatorship",
+      "snippet": "反中共政治宣传库。Anti Chinese government propaganda. 住在中国真名用户的网友请别给星星，不然你要被警察请喝茶。常见问答集，新闻集和饭店和音乐建议。卐习万岁卐。冠状病毒审查郝海东新疆改造中心六四事件法轮功 996.ICU709大抓捕巴拿马文件邓家贵低端人口西藏骚乱。Friends who live in China and have real name on ac",
+      "stars": 2893,
+      "url": "https://github.com/cirosantilli/china-dictatorship",
+      "updated": "2026-03-22",
+      "source": "GitHub"
+    },
+    {
+      "title": "iiab/iiab",
+      "snippet": "Internet-in-a-Box - Build your own LIBRARY OF ALEXANDRIA with a Raspberry Pi !",
+      "stars": 1781,
+      "url": "https://github.com/iiab/iiab",
+      "updated": "2026-03-22",
+      "source": "GitHub"
+    },
+    {
+      "title": "namecoin/ncdns",
+      "snippet": ":globe_with_meridians: Namecoin to DNS bridge daemon",
+      "stars": 141,
+      "url": "https://github.com/namecoin/ncdns",
+      "updated": "2026-02-27",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Constitutive vs. Corrective: A Causal Taxonomy of Human Runtime Involvement in AI Systems",
+      "snippet": "As AI systems increasingly permeate high-stakes decision-making, the terminology regarding human involvement - Human-in-the-Loop (HITL), Human-on-the-Loop (HOTL), and Human Oversight - has become vexingly ambiguous. This ambiguity complicates interdisciplinary collaboration between computer science,",
+      "url": "https://arxiv.org/abs/2603.19213v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Cognitive Amplification vs Cognitive Delegation in Human-AI Systems: A Metric Framework",
+      "snippet": "Artificial intelligence is increasingly embedded in human decision-making, where it can either enhance human reasoning or induce excessive cognitive dependence. This paper introduces a conceptual and mathematical framework for distinguishing cognitive amplification, in which AI improves hybrid human",
+      "url": "https://arxiv.org/abs/2603.18677v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[#234 – David Duvenaud on why 'aligned AI' would still kill democracy] Democracy might be a brief historical blip. That’s the unsettling thesis of a recent paper, which argues AI that can do all the work a human can do inevitably leads to the “gradual disempowerment” of humanity.For most of history, ordinary people had almost no control over their governments. Liberal democracy emerged only recently, and probably not coincidentally around the Industrial Revolution.To",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

@@ -1,0 +1,81 @@
+{
+  "axis": "DEEP_TIME_RISKS_REVIEW",
+  "fetched_at": "2026-03-21T11:48:16.222633+00:00",
+  "smart_query": "nuclear war pandemic existential risk",
+  "sources_count": {
+    "wiki": 0,
+    "gdelt": 3,
+    "arxiv": 2,
+    "github": 3,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [],
+  "gdelt": [
+    {
+      "title": "Според учените , не шарлатаните : Човечеството е на 85 сек . от глобална катастрофа",
+      "snippet": "Според учените , не шарлатаните : Човечеството е на 85 сек . от глобална катастрофа",
+      "url": "https://www.focus-news.net/novini/interesno/Spored-uchenite-ne-sharlatanite-Chovechestvoto-e-na-85-sek-ot-globalna-kat-2874223",
+      "source": "focus-news.net"
+    },
+    {
+      "title": "Andreas Kluth : Dismiss the Doomsday Clock at your own peril",
+      "snippet": "Andreas Kluth : Dismiss the Doomsday Clock at your own peril",
+      "url": "https://www.timesleader.com/opinion/1728640/andreas-kluth-dismiss-the-doomsday-clock-at-your-own-peril",
+      "source": "timesleader.com"
+    },
+    {
+      "title": "Se acaban los segundos del reloj del apocalipsis",
+      "snippet": "Se acaban los segundos del reloj del apocalipsis",
+      "url": "https://www.eldiariodechihuahua.mx/internacional/2026/jan/28/se-acaban-los-segundos-del-reloj-del-apocalipsis-767502.html",
+      "source": "eldiariodechihuahua.mx"
+    }
+  ],
+  "github_repos": [
+    {
+      "title": "PipFoweraker/pdoom1",
+      "snippet": "Save the world from deadly AI through paperwork",
+      "stars": 6,
+      "url": "https://github.com/PipFoweraker/pdoom1",
+      "updated": "2026-02-03",
+      "source": "GitHub"
+    },
+    {
+      "title": "nikthink/pauseai.ca",
+      "snippet": "https://pauseai.ca/",
+      "stars": 4,
+      "url": "https://github.com/nikthink/pauseai.ca",
+      "updated": "2026-03-09",
+      "source": "GitHub"
+    },
+    {
+      "title": "CovenantArchitects/The-Partnership-Covenant",
+      "snippet": "Constitutional Framework for Aligned Super-Intelligence.",
+      "stars": 3,
+      "url": "https://github.com/CovenantArchitects/The-Partnership-Covenant",
+      "updated": "2025-12-13",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "HiMu: Hierarchical Multimodal Frame Selection for Long Video Question Answering",
+      "snippet": "Long-form video question answering requires reasoning over extended temporal contexts, making frame selection critical for large vision-language models (LVLMs) bound by finite context windows. Existing methods face a sharp trade-off: similarity-based selectors are fast but collapse compositional que",
+      "url": "https://arxiv.org/abs/2603.18558v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "An SO(3)-equivariant reciprocal-space neural potential for long-range interactions",
+      "snippet": "Long-range electrostatic and polarization interactions play a central role in molecular and condensed-phase systems, yet remain fundamentally incompatible with locality-based machine-learning interatomic potentials. Although modern SO(3)-equivariant neural potentials achieve high accuracy for short-",
+      "url": "https://arxiv.org/abs/2603.18389v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[The award for best comedy wildlife photo goes to... | Tom Sullam] Where's the best free comedy show in town? Tom Sullam, cofounder of the annual Comedy Wildlife Photography Awards, shares hilarious animal photos that dissolve the distance between humans and nature. The result? A joyful case for caring about what we're at risk of losing.Learn more about our flagship conference happening this April at&nbsp;attend.ted.com/podcast Hosted on Acast. See acast.com/priv",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

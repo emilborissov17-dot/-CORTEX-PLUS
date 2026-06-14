@@ -1,0 +1,37 @@
+{
+  "axis": "DEEP_TIME_RISKS_REVIEW",
+  "fetched_at": "2026-05-08T09:06:34.204838+00:00",
+  "smart_query": "nuclear war pandemic existential risk",
+  "sources_count": {
+    "wiki": 0,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [],
+  "gdelt": [],
+  "github_repos": [],
+  "arxiv_papers": [
+    {
+      "title": "Can RL Teach Long-Horizon Reasoning to LLMs? Expressiveness Is Key",
+      "snippet": "Reinforcement learning (RL) has been applied to improve large language model (LLM) reasoning, yet the systematic study of how training scales with task difficulty has been hampered by the lack of controlled, scalable environments. We introduce ScaleLogic, a synthetic logical reasoning framework that",
+      "url": "https://arxiv.org/abs/2605.06638v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Price of Fairness in Short-Term and Long-Term Algorithmic Selections",
+      "snippet": "Algorithmic decision-making in high-stakes settings can have profound impacts on individuals and populations. While much prior work studies fairness in static settings, recent results show that enforcing static fairness constraints may exacerbate long-run disparities. Motivated by this tension, we s",
+      "url": "https://arxiv.org/abs/2605.06227v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[Statement from Max Tegmark on the Department of War’s ultimatum] \"Our safety and basic rights must not be at the mercy of a company's internal policy; lawmakers must work to codify these overwhelmingly popular red lines into law.\"",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

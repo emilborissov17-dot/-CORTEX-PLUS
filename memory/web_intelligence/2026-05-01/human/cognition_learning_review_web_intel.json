@@ -1,0 +1,124 @@
+{
+  "axis": "COGNITION_LEARNING_REVIEW",
+  "domain": "human",
+  "timestamp": "2026-05-01T11:35:32.093399+00:00",
+  "sources_count": 9,
+  "rss_count": 7,
+  "ddg_count": 0,
+  "youtube_count": 2,
+  "youtube_items": [
+    {
+      "title": "[YT] You’re Not Behind (Yet): How to Learn AI in 29 Minutes - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] Download the free ChatGPT at Work PDFs: https://clickhubspot.com/2d0715More from Futurepedia: Join the fastest-growing AI education platform!",
+      "link": "https://www.youtube.com/watch?v=9c7zh2MkslY",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "9c7zh2MkslY",
+      "transcript_method": "description",
+      "transcript_chars": 164,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] How I'd Learn AI (if I could start over) - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] I’ve now released a free Python for AI course that’s the best place to start your AI journey.Watch it here: https://youtu.be/ygXn5nV5qFc Need help with a p...",
+      "link": "https://www.youtube.com/watch?v=h2FDq3agImI",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "h2FDq3agImI",
+      "transcript_method": "description",
+      "transcript_chars": 181,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "summary": "- Quality Concerns Remain as States Invest More Than Ever in Preschool Programs: A new report found states hit an all-time high for both spending and enrollment, but the quality of the programs remains a concern.\n- I Built Radical Possibility in Schools — and It Nearly Broke Me: What does it mean to",
+    "risk_level": "UNKNOWN",
+    "trend": "UNKNOWN",
+    "key_events": [
+      "Quality Concerns Remain as States Invest More Than Ever in Preschool Programs",
+      "I Built Radical Possibility in Schools — and It Nearly Broke Me",
+      "Districts Relying More on Data to Identify Gifted Students"
+    ],
+    "insights": [],
+    "youtube_insights": [],
+    "relevance_to_goal": "",
+    "generalization": ""
+  },
+  "raw_items": [
+    {
+      "title": "Quality Concerns Remain as States Invest More Than Ever in Preschool Programs",
+      "summary": "A new report found states hit an all-time high for both spending and enrollment, but the quality of the programs remains a concern.",
+      "link": "https://www.edsurge.com/news/2026-04-30-quality-concerns-remain-as-states-invest-more-than-ever-in-preschool-programs",
+      "published": "Thu, 30 Apr 2026 09:21:04 -0700",
+      "source_type": "rss"
+    },
+    {
+      "title": "I Built Radical Possibility in Schools — and It Nearly Broke Me",
+      "summary": "What does it mean to “save your own life” in education? Former Voices of Change fellow Dee Watson reflects on burnout, resistance and radical ...",
+      "link": "https://www.edsurge.com/news/2026-04-29-i-built-radical-possibility-in-schools-and-it-nearly-broke-me",
+      "published": "Wed, 29 Apr 2026 01:00:00 -0700",
+      "source_type": "rss"
+    },
+    {
+      "title": "Districts Relying More on Data to Identify Gifted Students",
+      "summary": "Schools are finding new, data-driven ways to re-approach gifted and talented programs -- with a focus on inclusivity.",
+      "link": "https://www.edsurge.com/news/2026-04-23-districts-relying-more-on-data-to-identify-gifted-students",
+      "published": "Thu, 23 Apr 2026 01:02:00 -0700",
+      "source_type": "rss"
+    },
+    {
+      "title": "Returning to What it Means to Make School Human Again",
+      "summary": "After years of disruption, what does it mean to make schools human again? One educator reflects on moving from demoralization to renewal and why ...",
+      "link": "https://www.edsurge.com/news/2026-04-22-returning-to-what-it-means-to-make-school-human-again",
+      "published": "Wed, 22 Apr 2026 01:00:00 -0700",
+      "source_type": "rss"
+    },
+    {
+      "title": "The Taboo ofnullnull",
+      "summary": "DOCUMENTARY FILM In the documentary educational film &#8220;The Taboo of Sovereignty, Money, Love and Power,&#8221; Mr. Liberty explores the taboos seldom discussed in polite conversation. He reveals the nature of global power structures, money as a control system and the futility of elections. He is empowering people with popular sovereignty as a key to unlocking [&#8230;]",
+      "link": "https://mindshiftentertainment.wordpress.com/2005/04/01/hello-world/",
+      "published": "Fri, 01 Apr 2005 21:27:39 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Lotus: A Woman’s Journey of Empowerment",
+      "summary": "CLAIRE GAILLARD &#8211; DANCE IS LIFE! &#8220;From the revelation that disconnectedness between people and their passion, between individuals and their communities, reflect agonized personal wounds in each of us, her Empower Moves was birthed. It builds community and honors the People with Transcendance through story telling and interpretive forms of dance, allowing ecstatic communion, reconnection [&#8230;]",
+      "link": "https://mindshiftentertainment.wordpress.com/2003/03/23/lotus-a-womans-journey-of-empowerment/",
+      "published": "Sun, 23 Mar 2003 23:15:05 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Fresh Wave",
+      "summary": "JOHNNY LIGHT For over three decades, Johnny Light has been guided by a vision of a new world coming, the “fresh wave” is coming. These twelve songs are professionally produced and arranged, an album of his finest original compositions recorded with Michael Cooper at Rising Star Studios in Eugene, Oregon. Songs like Yes, Nobody’s Gonna [&#8230;]",
+      "link": "https://mindshiftentertainment.wordpress.com/1988/09/09/fresh-wave/",
+      "published": "Fri, 09 Sep 1988 23:17:22 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] You’re Not Behind (Yet): How to Learn AI in 29 Minutes - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] Download the free ChatGPT at Work PDFs: https://clickhubspot.com/2d0715More from Futurepedia: Join the fastest-growing AI education platform!",
+      "link": "https://www.youtube.com/watch?v=9c7zh2MkslY",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "9c7zh2MkslY",
+      "transcript_method": "description",
+      "transcript_chars": 164,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] How I'd Learn AI (if I could start over) - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] I’ve now released a free Python for AI course that’s the best place to start your AI journey.Watch it here: https://youtu.be/ygXn5nV5qFc Need help with a p...",
+      "link": "https://www.youtube.com/watch?v=h2FDq3agImI",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "h2FDq3agImI",
+      "transcript_method": "description",
+      "transcript_chars": 181,
+      "has_full_transcript": false
+    }
+  ]
+}

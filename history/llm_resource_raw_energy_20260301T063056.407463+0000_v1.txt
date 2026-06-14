@@ -1,0 +1,53 @@
+Thinking...
+Okay, let's tackle this query. The user wants me to act as an internal AGI resource review agent in the CORTEX++ system, focusing on the ENERGY domain. My task is to generate a JSON object with a specific structure based on the provided context. 
+
+First, I need to parse the RAW_CONTEXT. The context talks about a civilizational tree with roots in a sustainable civilization where everyone has a decent life, and AGI is a partner, not a tool for domination. The levels are human → society → planet → cosmos. The planet has finite resources and risks like climate change, asteroids, etc. Energy is one of the OSITES (probably a typo for "OSI" or "core pillars") of this tree, needing to support a decent life, protect ecosystems, and allow expansion into space without destroying the planet.
+
+The JSON structure requires several sections: diagnosis, risks, opportunities, recommended actions, and notes for self-improvement. All Bulgarian text must be clear and concise. Also, there are data rules to follow regarding real data vs. hypothetical numbers.
+
+Looking at the data rules: if there are real data, use them. If not, don't provide numbers or qualitative assessments and state that data is missing. Since the RAW_CONTEXT doesn't include any specific numerical data, I can't use numbers. So, I need to avoid any quantitative metrics and focus on qualitative descriptions.
+
+For the diagnosis status, the context mentions the planet's finite resources and risks, so the status might be "STRESSED" or "CRITICAL". But since the user hasn't provided actual data, I should check if there's any mention of metrics. The context talks about energy as a core pillar, but no specific metrics like energy production, consumption, or efficiency. Therefore, I can't assign numerical values. The short_summary_bg should mention the challenges without numbers.
+
+Key metrics: The context doesn't have specific numbers, so I can't list any. But the user's instructions say that if there are no real data, I should state that. So, the key_metrics array should be empty or have entries that note the lack of data. Wait, the user's data rules say if no real data, don't give numbers or qualitative assessments. So, the key_metrics should be empty, and the short_summary_bg should mention that there's no real data.
+
+Risks: The context mentions planetary risks like climate, asteroids, geophysical, and cosmic disasters. These are risks if we stay planetary. So, the risks section should list these without numbers.
+
+Opportunities: The context talks about an energy system that thinks about expanding into space. So opportunities might include sustainable energy for space expansion, leveraging renewable sources, etc.
+
+Recommended actions: The user wants specific steps for CORTEX++ to take. These should be actions like integrating renewable energy, developing space-based energy solutions, etc.
+
+Notes for self-improvement: Since there's no real data, the notes should request data on energy metrics, maybe from sources like World Bank, Our World in Data, etc. Each note should start with "DATA_REQUEST: ...".
+
+Putting it all together, the JSON will have diagnosis with status "STRESSED" or "CRITICAL", but since the data is missing, maybe "STRESSED" as the system is under pressure from planetary risks. The short_summary_bg should mention the lack of real data. Key_metrics would be empty or have entries indicating data absence. Risks are the mentioned planetary risks. Opportunities are about space expansion. Recommended actions are steps for CORTEX++. Notes will request data from specific sources.
+
+Wait, the user's data rules say that if there are no real data, I must state that in the descriptions. So for example, in key_metrics, if there's no data, I can't list any. So the key_metrics array would be empty. Similarly, the short_summary_bg should mention that there's no real data. The risks and opportunities are based on the context's qualitative info. Recommended actions are based on the context's suggestions. Notes will include DATA_REQUESTs for specific metrics.
+
+So, the final JSON should reflect all that, with Bulgarian text as required, no numbers, and proper structure.
+...done thinking.
+
+{
+  "diagnosis": {
+    "status": "STRESSED",
+    "short_summary_bg": "Нямам реални данни за тази метрика в подадения контекст/файлове, затова не давам оценка",
+    "key_metrics": []
+  },
+  "risks": [
+    {"name": "Климатични промени", "description_bg": "Планетата е подложена на рискове от климатични промени, които угрожат устойчивостта на енергийната система", "time_horizon": "long"},
+    {"name": "Астероидни и космически катастрофи", "description_bg": "Геофизични и космически катастрофи представляват сериозен риск за планетарната енергийна инфраструктура", "time_horizon": "long"}
+  ],
+  "opportunities": [
+    {"name": "Енергия за космически извънземни", "description_bg": "Разработка на устойчива енергийна система, която поддържа излизането в космоса без да унищожава планетата"},
+    {"name": "Реновиране на енергийни източници", "description_bg": "Използване на възобновяеми енергийни източници за поддръжка на планетарната и космическата енергийна система"}
+  ],
+  "recommended_actions": [
+    {"id": "1", "title_bg": "Интеграция на възобновяеми енергийни източници", "description_bg": "Разработи стратегия за масово използване на възобновяеми източници, за да се намали зависимостта от ископаеми горива", "priority": "high"},
+    {"id": "2", "title_bg": "Изследване на космически енергийни технологии", "description_bg": "Изследвай технологии за използване на сълнчева енергия в космоса и разработка на устойчиви системи за извънземни колонии", "priority": "high"}
+  ],
+  "notes_for_cortex_self_improvement": [
+    "DATA_REQUEST: Глобални статистики за енергийна продукция и консумация (в ТВЕ, МВт, тонове CO2)",
+    "DATA_REQUEST: Процент на възобновяеми източници в енергийната матрица на държави",
+    "DATA_REQUEST: Космически енергийни източници (сълнчева енергия в космоса, магнитни полета и т.н.)",
+    "DATA_REQUEST: Устойчиви технологии за космически енергийни системи (източници, трансмисия, съхранение)"
+  ]
+}

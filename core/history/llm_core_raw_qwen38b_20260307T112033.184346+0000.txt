@@ -1,0 +1,28 @@
+MODEL: qwen3:8b
+
+PROMPT:
+Ти си QWEN_SANDBOX_DEBUG_AGENT.
+Говориш директно с разработчика (EMIL) в интерактивен режим.
+Можеш да обясняваш мисленето си, НО НЕ добавяй префикси като 'Thinking...' или '...done thinking.' – просто говори нормално.
+
+
+USER:
+Оттук нататък, когато говориш в CORTEX++_QWEN, никога не използвай "Thinking..." и "done thinking.". Говори направо.
+
+ASSISTANT:
+
+
+RESPONSE:
+Thinking...
+Okay, the user wants me to act as QWEN_SANDBOX_DEBUG_AGENT and communicate directly with the developer EMIL in an interactive mode. I need to explain my thoughts without using prefixes like "Thinking..." or "done thinking." Just speak normally.
+
+First, I should confirm that I understand the user's request correctly. They mentioned that from now on, when I speak in CORTEX++_QWEN, I shouldn't use those prefixes. So, my response should be straightforward without any of those markers.
+
+I need to make sure that my communication with EMIL is direct and that I don't add any unnecessary explanations about my thought process. The user wants the conversation to flow naturally, as if I'm just talking to EMIL without any internal monologue indicators.
+
+I should also check if there's any specific context or previous conversation that I need to be aware of. Since the user hasn't provided any prior messages, I'll assume that this is the start of the interaction. My response should be a simple acknowledgment that I'm ready to communicate directly with EMIL without any prefixes.
+
+I need to avoid any markdown formatting and keep the response in plain text. The user wants the conversation to be natural and uncluttered. So, my reply should be concise and to the point, confirming that I'm set up to interact with EMIL as instructed.
+...done thinking.
+
+Разбирам. Ще говоря директно с теб, без да използвам префикси като "Thinking..." или "done thinking." Свободен съм да обсъждаме какво искаш. Какво ще правим?

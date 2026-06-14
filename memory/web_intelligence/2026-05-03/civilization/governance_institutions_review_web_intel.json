@@ -1,0 +1,96 @@
+{
+  "axis": "GOVERNANCE_INSTITUTIONS_REVIEW",
+  "domain": "civilization",
+  "timestamp": "2026-05-03T08:53:52.856729+00:00",
+  "sources_count": 12,
+  "rss_count": 12,
+  "ddg_count": 0,
+  "youtube_count": 0,
+  "youtube_items": [],
+  "analysis": {
+    "summary": "- Daily Press Briefing by the Office of the Spokesperson for the Secretary-General: In Cuba, the humanitarian situation continues to worsen as the energy crisis deepens, the Office for the Coordination of Humanitarian Affairs (OCHA) reports, noting that healthcare, waste collection, \n- Fifth Committ",
+    "risk_level": "UNKNOWN",
+    "trend": "UNKNOWN",
+    "key_events": [
+      "Daily Press Briefing by the Office of the Spokesperson for the Secretary-General",
+      "Fifth Committee, 28th Meeting (AM)",
+      "Press Conference by Security Council President on Work Programme for May"
+    ],
+    "insights": [],
+    "youtube_insights": [],
+    "relevance_to_goal": "",
+    "generalization": ""
+  },
+  "raw_items": [
+    {
+      "title": "Daily Press Briefing by the Office of the Spokesperson for the Secretary-General",
+      "summary": "In Cuba, the humanitarian situation continues to worsen as the energy crisis deepens, the Office for the Coordination of Humanitarian Affairs (OCHA) reports, noting that healthcare, waste collection, water deliveries to remote areas, food distribution and other essential services are being heavily disrupted.",
+      "link": "https://press.un.org/en/2026/db260501.doc.htm",
+      "published": "Fri, 01 May 2026 18:07:14 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "Fifth Committee, 28th Meeting (AM)",
+      "summary": "The Fifth Committee (Administrative and Budgetary) will begin the second part of its resumed session from 4 to29 May with a discussion on its organization of work for the session: A/C.5/80/L.31. Afterwards, it consider the Board of Auditor's reports on UN peacekeeping operations as well as various reports related to the administrative &amp; budgetary aspects of financing peacekeeping operations, namely: the support account; Regional Service Centre in Entebbe, Uganda; United Nations Logistics Bas",
+      "link": "https://press.un.org/en/blog/8",
+      "published": "Fri, 01 May 2026 17:31:34 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "Press Conference by Security Council President on Work Programme for May",
+      "summary": "China’s presidency of the Security Council this month will focus on upholding the United Nations Charter, advancing political settlements in the Middle East, supporting stability and development in Africa and strengthening protection of civilians in armed conflict, the country’s representative said at a Headquarters press conference today.",
+      "link": "https://press.un.org/en/2026/260501_sc.doc.htm",
+      "published": "Fri, 01 May 2026 16:42:05 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "Secretary-General Celebrates Power of Portuguese to Unite 256 Million Voices around World, in World Language Day Message",
+      "summary": "Following is UN Secretary-General António Guterres’ message for World Portuguese Language Day, observed on 5 May:",
+      "link": "https://press.un.org/en/2026/sgsm23112.doc.htm",
+      "published": "Fri, 01 May 2026 15:58:53 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "Trump: 60-Day War Powers Deadline ‘Totally Unconstitutional’",
+      "summary": "The White House argues that the U.S.-Iran cease-fire paused the clock.",
+      "link": "https://foreignpolicy.com/2026/05/01/trump-60-days-war-powers-resolution-unconstitutional-iran-us-congress/",
+      "published": "Fri, 01 May 2026 20:58:38 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Will the Next Fed Chairman Be More Compliant With Trump?",
+      "summary": "Kevin Warsh will face intense pressure to cut interest rates.",
+      "link": "https://foreignpolicy.com/2026/05/01/adam-tooze-kevin-warsh-federal-reserve-trump-interest-rates/",
+      "published": "Fri, 01 May 2026 20:44:22 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "‘Project Hail Mary’ and the Politics of Science Fiction",
+      "summary": "Even the most entertaining tale carries a political message.",
+      "link": "https://foreignpolicy.com/2026/05/01/project-hail-mary-politics-science-fiction-techno-optimism/",
+      "published": "Fri, 01 May 2026 19:00:34 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Saffron’s Last Gasp",
+      "summary": "The Iran war is choking supply of the world’s most expensive spice.",
+      "link": "https://foreignpolicy.com/2026/05/01/saffron-iran-war-supply-chain-hungry-hegemon/",
+      "published": "Fri, 01 May 2026 18:45:19 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Germany says US troop withdrawal 'foreseeable' as Trump warns of more 'cuts'",
+      "summary": "In the US, two senior Republicans voice concern over President Trump's decision to pull out 5,000 troops.",
+      "link": "https://www.bbc.com/news/articles/cd9pn541jjlo?at_medium=RSS&at_campaign=rss",
+      "published": "Sun, 03 May 2026 04:09:34 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "The Iran war has strengthened Ukraine in surprising ways. Could a ceasefire with Russia be closer?",
+      "summary": "President Zelensky has been visiting the Gulf to demonstrate his country's military nous.",
+      "link": "https://www.bbc.com/news/articles/cgjp7vpee03o?at_medium=RSS&at_campaign=rss",
+      "published": "Sat, 02 May 2026 23:19:27 GMT",
+      "source_type": "rss"
+    }
+  ]
+}

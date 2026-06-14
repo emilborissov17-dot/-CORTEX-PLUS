@@ -1,0 +1,121 @@
+{
+  "axis": "ECONOMY_WORK_REVIEW",
+  "domain": "civilization",
+  "timestamp": "2026-05-18T07:57:44.810984+00:00",
+  "sources_count": 9,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 1,
+  "youtube_items": [
+    {
+      "title": "[YT] The Global Economic Impact of Climate Change - YouTubeLabor Impacts of Climate Change – MIT Climate ...Impact of climate change on global economy: A comprehensive ...Jobs in a Changing Climate - World Bank GroupEconomic Consequences of Climate Change: Productivity Decline ...What is the Economic Impact of Climate Change on Global GDP?Climate change impact on productivity and other health news",
+      "summary": "[DESCRIPTION FALLBACK] Apr 3, 2021 · Adequate domestic policies and a strong global financial safety net, with the IMF at its center, are key to containing the economic fallout and preserving global financial stability. Jan 21, 2025 · The research project I worked on aims to identify optimal strategies for minimizing productivity losses by adjusting work hours and preparing governments, firms, and individuals to adapt to the impacts of climate change. Dec 1, 2025 · This article explores various aspects of climate chan",
+      "link": "https://www.youtube.com/watch?v=GHACDpba6Nk",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "GHACDpba6Nk",
+      "transcript_method": "description",
+      "transcript_chars": 523,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "problem": "Economic instability and resource mismanagement are exacerbating humanitarian crises in vulnerable regions.",
+    "root_cause": "The combination of geopolitical tensions, inadequate humanitarian relief funding, and rising costs for essential resources like food and fuel are creating unsustainable conditions in conflict-affected areas.",
+    "severity": "CRITICAL",
+    "leverage_points": [
+      "Global financial institutions and governments failing to provide adequate funding for humanitarian relief",
+      "Corporate control over energy and resource markets prioritizing profit over human need"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Establish a global humanitarian relief fund backed by the IMF and major economies",
+        "measurable_goal": "Ensure 100% funding coverage for food, fuel, and medical aid in conflict zones within 12 months",
+        "timeframe": "short-term"
+      },
+      {
+        "action": "Implement price caps on essential goods in conflict zones",
+        "measurable_goal": "Reduce the cost of food and fuel by 30% in affected regions within 6 months",
+        "timeframe": "medium-term"
+      }
+    ],
+    "evidence": [
+      "Catastrophe Is Emerging in the World’s Most Vulnerable Places: The humanitarian relief system, decimated by cuts, faces a grave challenge as the Middle East war causes soaring costs for food, fuel and fertilizer.",
+      "Oil Prices Edge Higher as Cease-Fire Remains Tenuous: Oil prices rose after President Trump issued a new warning to Iran, calling into question the tenuous cease-fire in the war."
+    ],
+    "generalization": "This problem connects to the broader domain of economic inequality, where corporate and political power distorts market mechanisms to prioritize profit over human survival, creating systemic crises in vulnerable regions.",
+    "summary": "Humanitarian crises are being worsened by economic mismanagement and geopolitical tensions, requiring urgent global intervention to stabilize affected regions.",
+    "risk_level": "CRITICAL"
+  },
+  "raw_items": [
+    {
+      "title": "Oil prices rise after Trump warns Iran over stalled peace talks",
+      "summary": "Energy markets have been on a wild ride as the key Strait of Hormuz waterway remains effectively closed.",
+      "link": "https://www.bbc.com/news/articles/czx2ne2ryppo?at_medium=RSS&at_campaign=rss",
+      "published": "Mon, 18 May 2026 07:20:34 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "HS2 failings blamed on high-speed focus and political pressure",
+      "summary": "A new reviews confirms the high-speed rail line's \"original sins\" include a technical design, changing political priorities and ballooning costs.",
+      "link": "https://www.bbc.com/news/articles/c936xeeye41o?at_medium=RSS&at_campaign=rss",
+      "published": "Sun, 17 May 2026 23:07:57 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Instant AI answers can trivialise human intelligence, warns Royal Observatory",
+      "summary": "Paddy Rodgers said the Observatory's rich history showed the power of human knowledge and the need to avoid \"dependence\" on AI.",
+      "link": "https://www.bbc.com/news/articles/c2023l60370o?at_medium=RSS&at_campaign=rss",
+      "published": "Mon, 18 May 2026 05:19:27 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Robert paid £726 to skip the driving test waiting list. New laws mean others won't be able to",
+      "summary": "The government is cracking down on third parties who use bots to buy tests and resell them at inflated prices.",
+      "link": "https://www.bbc.com/news/articles/cx219pn5g70o?at_medium=RSS&at_campaign=rss",
+      "published": "Sat, 16 May 2026 23:27:55 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Oil Prices Edge Higher as Cease-Fire Remains Tenuous",
+      "summary": "Oil prices rose after President Trump issued a new warning to Iran, calling into question the tenuous cease-fire in the war.",
+      "link": "https://www.nytimes.com/2026/05/18/business/oil-gas-price-iran.html",
+      "published": "Mon, 18 May 2026 05:21:08 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Catastrophe Is Emerging in the World’s Most Vulnerable Places",
+      "summary": "The humanitarian relief system, decimated by cuts, faces a grave challenge as the Middle East war causes soaring costs for food, fuel and fertilizer.",
+      "link": "https://www.nytimes.com/2026/05/18/business/iran-war-somalia-usaid.html",
+      "published": "Mon, 18 May 2026 04:01:18 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "NextEra Energy Said to Be in Talks to Acquire Dominion, Creating a Utility Giant",
+      "summary": "A deal, involving the utilities in Florida and Virginia, would come as demand for power is soaring, largely because of the rapid growth of A.I. data centers.",
+      "link": "https://www.nytimes.com/2026/05/17/business/nextera-dominion-deal.html",
+      "published": "Sun, 17 May 2026 23:01:01 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Peter G. Neumann, Who Warned of Computer Security Risks, Dies at 93",
+      "summary": "For decades, he criticized the industry’s lax attitudes toward both computer security and individual digital privacy. And he developed solutions.",
+      "link": "https://www.nytimes.com/2026/05/17/obituaries/peter-g-neumann-dead.html",
+      "published": "Sun, 17 May 2026 22:38:13 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] The Global Economic Impact of Climate Change - YouTubeLabor Impacts of Climate Change – MIT Climate ...Impact of climate change on global economy: A comprehensive ...Jobs in a Changing Climate - World Bank GroupEconomic Consequences of Climate Change: Productivity Decline ...What is the Economic Impact of Climate Change on Global GDP?Climate change impact on productivity and other health news",
+      "summary": "[DESCRIPTION FALLBACK] Apr 3, 2021 · Adequate domestic policies and a strong global financial safety net, with the IMF at its center, are key to containing the economic fallout and preserving global financial stability. Jan 21, 2025 · The research project I worked on aims to identify optimal strategies for minimizing productivity losses by adjusting work hours and preparing governments, firms, and individuals to adapt to the impacts of climate change. Dec 1, 2025 · This article explores various aspects of climate chan",
+      "link": "https://www.youtube.com/watch?v=GHACDpba6Nk",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "GHACDpba6Nk",
+      "transcript_method": "description",
+      "transcript_chars": 523,
+      "has_full_transcript": false
+    }
+  ]
+}

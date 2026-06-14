@@ -1,0 +1,33 @@
+{
+  "source_type": "REAL_DATA",
+  "metrics": {
+    "axis": "TECHNOLOGY_AI_REVIEW",
+    "source": "world_bank_api",
+    "fetched_date": "2026-06-11",
+    "metrics": {
+      "rd_expenditure_pct_gdp": 2.59056888571504,
+      "high_tech_exports_pct": 24.758870073466,
+      "patent_applications": 2385200.0,
+      "secure_internet_servers": 16379.6369660674,
+      "individuals_internet_pct": 73.6
+    },
+    "data_quality": "5/5 indicators fetched",
+    "notes": "R&D spend, high-tech exports, patents, internet security — World Bank proxies for tech/AI axis."
+  },
+  "raw": {
+    "axis": "TECHNOLOGY_AI_REVIEW",
+    "source": "world_bank_api",
+    "fetched_date": "2026-06-11",
+    "metrics": {
+      "rd_expenditure_pct_gdp": 2.59056888571504,
+      "high_tech_exports_pct": 24.758870073466,
+      "patent_applications": 2385200.0,
+      "secure_internet_servers": 16379.6369660674,
+      "individuals_internet_pct": 73.6
+    },
+    "data_quality": "5/5 indicators fetched",
+    "notes": "R&D spend, high-tech exports, patents, internet security — World Bank proxies for tech/AI axis."
+  },
+  "snapshot_timestamp": "2026-06-11T19:06:45.596689+00:00",
+  "axis": "TECHNOLOGY_AI_REVIEW"
+}

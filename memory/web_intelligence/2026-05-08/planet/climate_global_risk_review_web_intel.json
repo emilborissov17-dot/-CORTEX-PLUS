@@ -1,0 +1,121 @@
+{
+  "axis": "CLIMATE_GLOBAL_RISK_REVIEW",
+  "domain": "planet",
+  "timestamp": "2026-05-08T09:39:32.497494+00:00",
+  "sources_count": 9,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 1,
+  "youtube_items": [
+    {
+      "title": "[YT] Climate Change 2025: Global Warming Breaking Records, Extreme Weather ...",
+      "summary": "Welcome back to our channel. Today we're diving deep into the state of our planet in 2025. It's a critical moment and understanding what's happening is the first step toward making a difference. Let's get straight into the latest developments, the impacts we're seeing, and the innovative solutions that bring us hope. First, the headlines. Devastating news has emerged from South Asia, where India and Nepal have been hit by deadly floods. These aren't just isolated incidents. Scientists are linking the increased intensity and frequency of these events directly to shifts in our global climate. The human cost is immense with communities displaced and lives tragically lost. This serves as a stark and immediate reminder of the vulnerability we all share in the face of a changing climate. It's a ",
+      "link": "https://www.youtube.com/watch?v=r7TEZpijf7k",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "r7TEZpijf7k",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "Увеличаване на засегнатите от климатични промени територии и последствията от тях",
+    "root_cause": "Човешката дейност, като увеличavanе на парниковите газове и изменение на земеползването, води до повишение на глобалните температури и промени в климата",
+    "severity": "HIGH",
+    "leverage_points": [
+      "Ускоряване на прехода към възобновяеми източници на енергия, като ветро- и слънчева енергия",
+      "Увеличаване на ефикасността и намаляване на потреблението на енергия в различните сектори на икономиката"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Разработване и внедряване на политики и програми за намаляване на парниковите газове",
+        "measurable_goal": "Намаляване на емисиите с минимум 50% до 2030 г.",
+        "timeframe": "средносрочно"
+      },
+      {
+        "action": "Инвестиции в изследвания и разработки на технологии за намаляване на климатичните промени",
+        "measurable_goal": "Повишение на бюджета за изследвания с 20% годишно",
+        "timeframe": "краткосрочно"
+      }
+    ],
+    "evidence": [
+      "Devastating news has emerged from South Asia, where India experienced extreme weather events",
+      "Wind and solar have saved UK from gas imports worth £1.7bn since the start of the Iran war"
+    ],
+    "generalization": "Проблемът е свързан с домейна 'Човек', тъй като увеличаването на климатичните промени има пряко въздействие върху здравето и благосъстоянието на хората, както и върху домейна 'Цивилизация', тъй като намаляването на емисиите и преходът към възобновяеми източници на енергия имат важно значение за постигане на устойчива цивилизация",
+    "summary": "Климатичните промени се увеличават и имат сериозни последствия, които изискват бързи и ефективни действия за намаляване на парниковите газове и преход към възобновяеми източници на енергия.",
+    "risk_level": "HIGH"
+  },
+  "raw_items": [
+    {
+      "title": "Tracy Arm’s Post-Tsunami Landscape",
+      "summary": "A landslide-triggered tsunami stripped vegetation from the shore of the glacial fjord in summer 2025.",
+      "link": "https://science.nasa.gov/earth/earth-observatory/tracy-arms-post-tsunami-landscape/",
+      "published": "Fri, 08 May 2026 04:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Meet the Fleet: NASA Armstrong Continues Legacy of Flight Research",
+      "summary": "NASA’s home for experimental flight is welcoming more flyers to its already high-performing fleet as it continues to support science and aeronautics test missions – continuing the legacy of pioneers like Neil Armstrong. NASA’s Armstrong Flight Research Center in Edwards, California, added multiple aircraft this year: two F-15s supersonic jets, a Pilatus PC-12 utility plane, [&#8230;]",
+      "link": "https://www.nasa.gov/centers-and-facilities/armstrong/meet-the-fleet-nasa-armstrong-continues-legacy-of-flight-research/",
+      "published": "Thu, 07 May 2026 23:45:41 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "NASA Welcomes Paraguay as 67th Artemis Accords Signatory",
+      "summary": "The Republic of Paraguay signed the Artemis Accords on Thursday during a ceremony in Asunción, becoming the latest nation to commit to the shared principles guiding civil space exploration. “Today, I am proud to welcome Paraguay as the 67th signatory to the Artemis Accords,” said NASA Administrator Jared Isaacman. “They join an ever-growing coalition of [&#8230;]",
+      "link": "https://www.nasa.gov/organizations/oiir/artemis-accords/nasa-welcomes-paraguay-as-67th-artemis-accords-signatory/",
+      "published": "Thu, 07 May 2026 20:41:48 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "NASA Sends Mars Helicopter Blades Beyond Mach 1",
+      "summary": "Description Engineer Fernando Mier-Hicks inspects a test stand used to investigate the performance of next-generation Mars helicopter rotor blades at high speeds inside the 25-Foot Space Simulator at NASA’s Jet Propulsion Laboratory in Southern California in November 2025. Data from the tests indicate that the rotors could surpass the sound barrier without breaking apart. The […]",
+      "link": "https://science.nasa.gov/photojournal/nasa-sends-mars-helicopter-blades-beyond-mach-1/",
+      "published": "Thu, 07 May 2026 18:33:32 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Analysis: Wind and solar have saved UK from gas imports worth £1.7bn since Iran war began",
+      "summary": "<p>The UK has avoided the need for gas imports worth £1.7bn since the start of...</p>\n<p>The post <a href=\"https://www.carbonbrief.org/analysis-wind-and-solar-have-saved-uk-from-gas-imports-worth-1-7bn-since-iran-war-began/\">Analysis: Wind and solar have saved UK from gas imports worth £1.7bn since Iran war began</a> appeared first on <a href=\"https://www.carbonbrief.org\">Carbon Brief</a>.</p>",
+      "link": "https://www.carbonbrief.org/analysis-wind-and-solar-have-saved-uk-from-gas-imports-worth-1-7bn-since-iran-war-began/",
+      "published": "Thu, 07 May 2026 13:02:57 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Cropped 6 May 2026: Forest loss falls | Deforestation regulations | Saving ‘India’s Galapagos’",
+      "summary": "<p>We handpick and explain the most important stories at the intersection of climate, land, food...</p>\n<p>The post <a href=\"https://www.carbonbrief.org/cropped-6-may-2026-forest-loss-falls-deforestation-regulations-saving-indias-galapagos/\">Cropped 6 May 2026: Forest loss falls | Deforestation regulations | Saving ‘India’s Galapagos’</a> appeared first on <a href=\"https://www.carbonbrief.org\">Carbon Brief</a>.</p>",
+      "link": "https://www.carbonbrief.org/cropped-6-may-2026-forest-loss-falls-deforestation-regulations-saving-indias-galapagos/",
+      "published": "Wed, 06 May 2026 15:57:04 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Vacancy: Three-week summer journalism internship at Carbon Brief",
+      "summary": "<p>Carbon Brief is offering an exciting opportunity for students, or recent graduates, to work with...</p>\n<p>The post <a href=\"https://www.carbonbrief.org/vacancy-three-week-summer-journalism-internship-at-carbon-brief-3/\">Vacancy: Three-week summer journalism internship at Carbon Brief</a> appeared first on <a href=\"https://www.carbonbrief.org\">Carbon Brief</a>.</p>",
+      "link": "https://www.carbonbrief.org/vacancy-three-week-summer-journalism-internship-at-carbon-brief-3/",
+      "published": "Wed, 06 May 2026 14:13:16 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Q&A: How countries got the global ‘net-zero’ shipping deal ‘back on track’",
+      "summary": "<p>Nations are “back on track” to adopt a framework for curbing global shipping emissions, following...</p>\n<p>The post <a href=\"https://www.carbonbrief.org/qa-how-countries-got-the-global-net-zero-shipping-deal-back-on-track/\">Q&amp;A: How countries got the global &#8216;net-zero&#8217; shipping deal ‘back on track’</a> appeared first on <a href=\"https://www.carbonbrief.org\">Carbon Brief</a>.</p>",
+      "link": "https://www.carbonbrief.org/qa-how-countries-got-the-global-net-zero-shipping-deal-back-on-track/",
+      "published": "Tue, 05 May 2026 07:55:20 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] Climate Change 2025: Global Warming Breaking Records, Extreme Weather ...",
+      "summary": "Welcome back to our channel. Today we're diving deep into the state of our planet in 2025. It's a critical moment and understanding what's happening is the first step toward making a difference. Let's get straight into the latest developments, the impacts we're seeing, and the innovative solutions that bring us hope. First, the headlines. Devastating news has emerged from South Asia, where India and Nepal have been hit by deadly floods. These aren't just isolated incidents. Scientists are linking the increased intensity and frequency of these events directly to shifts in our global climate. The human cost is immense with communities displaced and lives tragically lost. This serves as a stark and immediate reminder of the vulnerability we all share in the face of a changing climate. It's a ",
+      "link": "https://www.youtube.com/watch?v=r7TEZpijf7k",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "r7TEZpijf7k",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ]
+}

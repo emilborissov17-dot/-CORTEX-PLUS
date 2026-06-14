@@ -1,0 +1,128 @@
+{
+  "axis": "SOCIAL_RELATIONS_REVIEW",
+  "domain": "human",
+  "timestamp": "2026-05-03T08:49:30.547989+00:00",
+  "sources_count": 14,
+  "rss_count": 12,
+  "ddg_count": 0,
+  "youtube_count": 2,
+  "youtube_items": [
+    {
+      "title": "[YT] The Loneliness Epidemic: How America Lost Its Community - YouTube",
+      "summary": "There's a strange paradox in our modern world. We are connected to thousands of people online. Yet, many of us have never felt more alone. We live in crowded neighborhoods, but we don't know our neighbors names. This isn't just a feeling of sadness. It's an epidemic. The epidemic of loneliness, and it's eating away at the soul of America from the inside out. It wasn't always like this. America was built on a foundation of community. Life revolved around what sociologists call third places. The spaces outside of home and work where life actually happened. The church, the social club, the union hall, the local bar. That was the connective tissue that held society together. It's where friendships were forged, deals were made, and a real social safety net was formed, not by the government, but",
+      "link": "https://www.youtube.com/watch?v=jugTWMBSK_Y",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "jugTWMBSK_Y",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 2170,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] How Declining Social Capital Is Driving the Loneliness Epidemic",
+      "summary": "New research suggests that America has a loneliness problem. The 2024 American Social Capital Survey revealed a country longing for connection. Among its findings: 17% of Americans say they have no close friends. And another 18% say they have only one or two close friends. Even people with bigger friendship networks often see them weakened by distance. 44% of Americans say few or none of their friends are within a short distance. Despite that, Americans miss out on a lot of opportunities to connect with others. The study found that only 47% Americans speak with neighbors they don’t know. Only 44% say they attend events in their community. And only about 28% volunteer. Perhaps the study’s most provocative finding, however... ...was that the loneliness epidemic isn’t hitting all Americans eq",
+      "link": "https://www.youtube.com/watch?v=BnVw_r32_g4",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "BnVw_r32_g4",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 1676,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "summary": "Събитията във връзка с обществената структура и социалната позиция на хората включват по-голям интерес към политическите и външните връзки, но също и по-висок риск за социално изолиране и неравенство. Възможно е да се наблюдава устойчиво промяна в обществената динамика.",
+    "risk_level": "MEDIUM",
+    "trend": "STABLE",
+    "key_events": [
+      "Повишено внимание към политическите връзки",
+      "Повишено неравенство в обществената структура",
+      "Риск за социално изолиране"
+    ],
+    "insights": [
+      "Съществуват по-големи връзки между политически групи",
+      "Съществуват по-големи връзки между индивиди",
+      "Повишено неравенство в обществената структура"
+    ],
+    "youtube_insights": [
+      "Разпространената тема на изолацията и социално неравенство",
+      "Съществуват по-големи връзки между политически групи"
+    ],
+    "relevance_to_goal": "Съществуват по-големи връзки между политически групи, но също се наблюдава по-високо неравенство и изолация. Това се отразява в обществената структура и възможно е да се наблюдава устойчиво промяна.",
+    "generalization": "Съществуват по-големи връзки между политически групи, но също се наблюдава по-високо неравенство и изолация. Това се отразява в обществената структура и възможно е да се наблюдава устойчиво промяна."
+  },
+  "raw_items": [
+    {
+      "title": "Acknowledgments",
+      "summary": "This report is a collaborative effort based on the input and analysis of the following individuals: Research team Jocelyn Kiley, Director, Political ResearchSteven Shepard, Associate Director, Political ResearchHannah Hartig, Senior ResearcherBaxter Oliphant, Senior ResearcherGabe Borelli, Research AssociateAndrew Daniller, Research AssociateAndy Cerda, Research Analyst      Shanay Gracia, Research AnalystTed Van Green, Research Analyst Communications and editorial Nida [&#8230;]",
+      "link": "https://www.pewresearch.org/politics/2026/05/01/trump-approval-may-2026-acknowledgments/",
+      "published": "Fri, 01 May 2026 16:00:41 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Methodology",
+      "summary": "The American Trends Panel survey methodology Overview Data in this report comes from Wave 192 of the American Trends Panel (ATP), Pew Research Center’s nationally representative panel of randomly selected U.S. adults. The survey was conducted April 20-26, 2026. A total of 5,103 panelists responded out of 5,898 who were sampled, for a survey-level response [&#8230;]",
+      "link": "https://www.pewresearch.org/politics/2026/05/01/trump-approval-may-2026-methodology/",
+      "published": "Fri, 01 May 2026 16:00:41 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Appendix: Additional charts",
+      "summary": "",
+      "link": "https://www.pewresearch.org/politics/2026/05/01/trump-approval-may-2026-appendix/",
+      "published": "Fri, 01 May 2026 16:00:40 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Democrats and Republicans place more importance on advancing own policies than finding common ground",
+      "summary": "Republicans and Republican leaning independents overwhelmingly (76%) say Trump is doing an excellent or good job pushing for his policies, regardless of whether Democratic officials agree with them. By comparison, Democrats and Democratic leaners continue to be more critical of the job their elected officials have done at pushing against Trump’s policies when they disagree. [&#8230;]",
+      "link": "https://www.pewresearch.org/politics/2026/05/01/democrats-and-republicans-place-more-importance-on-advancing-own-policies-than-finding-common-ground/",
+      "published": "Fri, 01 May 2026 16:00:39 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Germany says US troop withdrawal 'foreseeable' as Trump warns of more 'cuts'",
+      "summary": "In the US, two senior Republicans voice concern over President Trump's decision to pull out 5,000 troops.",
+      "link": "https://www.bbc.com/news/articles/cd9pn541jjlo?at_medium=RSS&at_campaign=rss",
+      "published": "Sun, 03 May 2026 04:09:34 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "The Iran war has strengthened Ukraine in surprising ways. Could a ceasefire with Russia be closer?",
+      "summary": "President Zelensky has been visiting the Gulf to demonstrate his country's military nous.",
+      "link": "https://www.bbc.com/news/articles/cgjp7vpee03o?at_medium=RSS&at_campaign=rss",
+      "published": "Sat, 02 May 2026 23:19:27 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "The clandestine network smuggling Starlink tech into Iran to beat internet blackout",
+      "summary": "Sahand tells the BBC World Service he sends satellite internet terminals into Iran to help show \"the real picture\".",
+      "link": "https://www.bbc.com/news/articles/cvgzk91leweo?at_medium=RSS&at_campaign=rss",
+      "published": "Sat, 02 May 2026 23:17:17 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Man charged with murder and sexual assault of 5-year-old Australian girl",
+      "summary": "The girl's death sparked an outbreak of violence in the central Australian town from where she disappeared.",
+      "link": "https://www.bbc.com/news/articles/cy92qennznjo?at_medium=RSS&at_campaign=rss",
+      "published": "Sun, 03 May 2026 05:52:09 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "How A.I. Is Transforming China’s Entertainment Industry",
+      "summary": "A.I.-generated microdramas have taken off. Celebrities have threatened legal action against the use of their likeness, while actors say jobs have dried up.",
+      "link": "https://www.nytimes.com/2026/05/03/world/asia/china-microdrama-ai-backlash.html",
+      "published": "Sun, 03 May 2026 05:41:27 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "An Insurgency Threatens U.S. Mining Ambitions in Pakistan",
+      "summary": "Attacks by the Baloch Liberation Army could derail Pakistan’s plans for a billion-dollar mining deal with the Trump administration.",
+      "link": "https://www.nytimes.com/2026/05/03/world/asia/pakistan-balochistan-insurgency-reko-diq.html",
+      "published": "Sun, 03 May 2026 04:01:15 +0000",
+      "source_type": "rss"
+    }
+  ]
+}

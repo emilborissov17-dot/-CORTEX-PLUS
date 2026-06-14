@@ -1,0 +1,101 @@
+{
+  "axis": "ECOSYSTEMS_BIODIVERSITY_REVIEW",
+  "fetched_at": "2026-03-14T07:14:33.543094+00:00",
+  "smart_query": "biodiversity species extinction",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 3,
+    "arxiv": 2,
+    "github": 3,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "Ocean warming may supercharge a tiny microbe that controls marine nutrients",
+      "snippet": "As deep-sea waters warm, scientists expected trouble for the microbes that help keep ocean chemistry in balance. Instead, researchers found that Nitrosopumilus maritimus can adapt to warmer, iron-limited conditions by using iron more efficiently. Because these microbes control key nitrogen reactions",
+      "url": "https://www.sciencedaily.com/releases/2026/03/260311004708.htm",
+      "source": "RSS"
+    },
+    {
+      "title": "Scientists stunned to find signs of ancient life in a place no one expected",
+      "snippet": "While exploring ancient seabeds in Morocco, scientists discovered strange wrinkle-like textures in deep-water sediments that shouldn’t have been there. These structures are usually made by sunlight-loving microbial mats in shallow waters. But the rocks formed far below the reach of light, suggesting",
+      "url": "https://www.sciencedaily.com/releases/2026/03/260307213247.htm",
+      "source": "RSS"
+    },
+    {
+      "title": "Scientists discover tiny ocean fungus that kills toxic algae",
+      "snippet": "Scientists have discovered a newly identified marine fungus that can infect and kill toxic algae responsible for harmful blooms. The microscopic parasite, named Algophthora mediterranea, attacks algae such as Ostreopsis cf. ovata, which produces toxins that can irritate the lungs, skin, and eyes of ",
+      "url": "https://www.sciencedaily.com/releases/2026/03/260305223223.htm",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [
+    {
+      "title": "Royal Society study finds no evidence of climate - driven mass EXTINCTION in the past 200 years – NaturalNews . com",
+      "snippet": "Royal Society study finds no evidence of climate - driven mass EXTINCTION in the past 200 years – NaturalNews . com",
+      "url": "https://www.naturalnews.com/2026-01-25-study-no-evidence-climate-driven-mass-extinction.html",
+      "source": "naturalnews.com"
+    },
+    {
+      "title": "World Wildlife Day 2026 : How Losing Just One Species Can Trigger Ecosystem Collapse",
+      "snippet": "World Wildlife Day 2026 : How Losing Just One Species Can Trigger Ecosystem Collapse",
+      "url": "https://www.yahoo.com/news/articles/world-wildlife-day-2026-losing-143200729.html",
+      "source": "yahoo.com"
+    },
+    {
+      "title": "Harimau Malaya di ambang kepupusan",
+      "snippet": "Harimau Malaya di ambang kepupusan",
+      "url": "https://www.astroawani.com/berita-malaysia/harimau-malaya-di-ambang-kepupusan-554662",
+      "source": "astroawani.com"
+    }
+  ],
+  "github_repos": [
+    {
+      "title": "protontypes/open-sustainable-technology",
+      "snippet": "A directory and analysis of the open source ecosystem in the areas of climate change, sustainable energy, biodiversity and natural resources.  https://docs.getgrist.com/gSscJkc5Rb1R/OpenSustaintech",
+      "stars": 2458,
+      "url": "https://github.com/protontypes/open-sustainable-technology",
+      "updated": "2026-03-11",
+      "source": "GitHub"
+    },
+    {
+      "title": "treflehq/trefle-api",
+      "snippet": "🍀 Trefle is a botanical JSON REST API for plants species, allowing you to search and query over all the registered species, and build the next gardening apps and farming robots.",
+      "stars": 567,
+      "url": "https://github.com/treflehq/trefle-api",
+      "updated": "2026-03-08",
+      "source": "GitHub"
+    },
+    {
+      "title": "blutjens/awesome-forests",
+      "snippet": "🌳 A curated list of ground-truth forest datasets for the machine learning and forestry community.",
+      "stars": 358,
+      "url": "https://github.com/blutjens/awesome-forests",
+      "updated": "2026-02-21",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Modulating biodiversity through higher-order interactions and intraspecific competition in rock-paper-scissors dynamics",
+      "snippet": "Understanding the mechanisms that govern species coexistence and biodiversity represents a fundamental challenge in ecology. This study extends the classic rock-paper-scissors model by introducing a context-dependent higher-order interaction mechanism where intraspecific competition is dynamically r",
+      "url": "https://arxiv.org/abs/2603.00566v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Properties of biodiversity indices that model future extinction risk",
+      "snippet": "The loss of biodiversity due to the likely widespread extinction of species in the near future is a focus of current concern in conservation biology. One approach to measure the impact of this extinction is based on the predicted loss of phylogenetic diversity. These predictions have become a focus ",
+      "url": "https://arxiv.org/abs/2602.16059v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[Return of the Flesh-Eaters] If a species is horrible enough, do we have the right to kill it forever?\nSeventy years ago, a nightmare parasite feasted on the live flesh of warm-blooded creatures in North America: the screwworm. That is, until a young scientist named Edward F. Knipling discovered a crucial screwworm weakness and hatched a sweeping project to wipe them out. Knipling’s seemingly zany plan to spray screwworms out",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

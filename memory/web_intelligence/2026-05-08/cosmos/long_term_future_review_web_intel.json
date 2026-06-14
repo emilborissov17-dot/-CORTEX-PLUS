@@ -1,0 +1,84 @@
+{
+  "axis": "LONG_TERM_FUTURE_REVIEW",
+  "domain": "cosmos",
+  "timestamp": "2026-05-08T10:17:10.432137+00:00",
+  "sources_count": 8,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 0,
+  "youtube_items": [],
+  "analysis": {
+    "problem": "Анализ на LONG_TERM_FUTURE_REVIEW — данни получени но LLM грешка",
+    "root_cause": "LLM parsing грешка",
+    "severity": "UNKNOWN",
+    "leverage_points": [],
+    "proposed_actions": [],
+    "evidence": [
+      "The Jailbroken Boy of Rushmore",
+      "Investigating the consequences of accidentally grading CoT during RL",
+      "Uncertain Updates: May 2026"
+    ],
+    "generalization": "",
+    "summary": "- The Jailbroken Boy of Rushmore: <p><span>This is my type of people, shown in my type of movie.</span></p><p><span>“What is my type?” you may ask.</span></p><p><span>Jack Kerouac did a good job expla",
+    "risk_level": "UNKNOWN",
+    "trend": "UNKNOWN"
+  },
+  "raw_items": [
+    {
+      "title": "The Jailbroken Boy of Rushmore",
+      "summary": "<p><span>This is my type of people, shown in my type of movie.</span></p><p><span>“What is my type?” you may ask.</span></p><p><span>Jack Kerouac did a good job explaining:</span></p><blockquote><p><span>The only people for me are the mad ones, the ones who are mad to live, mad to talk, mad to be saved, desirous of everything at the same time, the ones who never yawn or say a commonplace thing, but burn, burn, burn like fabulous yellow roman candles exploding like spiders across the stars and in",
+      "link": "https://www.lesswrong.com/posts/d7F6Wn3uxTMTjMap9/the-jailbroken-boy-of-rushmore",
+      "published": "Fri, 08 May 2026 06:29:25 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Investigating the consequences of accidentally grading CoT during RL",
+      "summary": "<p><em>This is an unofficial <a href=\"https://gist.github.com/Glinte/5c3fa2f6bcecb7c573664b19bb76eaaf\">automated</a> linkpost.</em></p>\n\n<p>Monitoring our models’ chains of thought (CoT) has proven to be an effective way to detect and track model misalignment, both <a href=\"https://openai.com/index/chain-of-thought-monitoring/\" rel=\"noopener\" target=\"_blank\">during RL training</a> and <a href=\"https://openai.com/index/how-we-monitor-internal-coding-agents-misalignment/\" rel=\"noopener\" target=\"_b",
+      "link": "https://www.lesswrong.com/posts/kSMXPdf3NDi9jkHm3/investigating-the-consequences-of-accidentally-grading-cot",
+      "published": "Fri, 08 May 2026 06:17:28 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Uncertain Updates: May 2026",
+      "summary": "<p>I delayed posting an update last month because I have more big news: <em><a href=\"https://fundamentaluncertainty.com/\">Fundamental Uncertainty</a></em> will be out in print and ebook on May 15th! It’s available for pre-order now wherever books are sold.</p><div><figure><a class=\"image-link image2 is-viewable-img\" href=\"https://substackcdn.com/image/fetch/$s_!ZA6f!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F1f8d5e34-4bf2-4209-",
+      "link": "https://www.lesswrong.com/posts/ifLycBisfpuxdkGKA/uncertain-updates-may-2026",
+      "published": "Fri, 08 May 2026 01:20:41 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "The Frictionless Double",
+      "summary": "<p><span>First of all. I am not a researcher. This is just a bunch of isolated observations from working inside a different frame than what a lot of people working in AI alignment posess.</span></p><p><span>The AI alignment field is staffed for formal and mechanistic competencies. </span><i><span>This is not a controversial observation</span></i><span>. The field demands a very narrow set of skills. Some are very defined: mathematical literacy. On a looser, higher level: the ability to condense ",
+      "link": "https://www.lesswrong.com/posts/tXp5sAPvEiwzCoXqB/the-frictionless-double",
+      "published": "Fri, 08 May 2026 02:29:33 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Smallpox could still have existed today",
+      "summary": "Published on May 8, 2026 6:54 AM GMT<br /><br /><p><i>I am not a historian of public health. The facts here come primarily from D.A. Henderson's autobiography</i><a href=\"https://www.amazon.com/Smallpox-Disease-Inside-Eradicating-Worldwide/dp/1591027225\"><i>&nbsp;<u>Smallpox: The Death of a Disease</u></i></a><i> (2009).&nbsp; I used an LLM to help draft sections of this post, but I’ve edited/rewritten it extensively.</i></p><p>Forty-six years ago today, on May 8, 1980, the World Health Assembly",
+      "link": "https://forum.effectivealtruism.org/posts/XFLWNkrawkGHSgtcH/smallpox-could-still-have-existed-today",
+      "published": "Fri, 08 May 2026 07:15:48 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Climate Stabilization: A Draft ITN Update",
+      "summary": "Published on May 7, 2026 11:36 PM GMT<br /><br /><p>By&nbsp;<a href=\"https://www.linkedin.com/in/craig-segall-a691701a5/\"><u>Craig Segall</u></a> &amp;&nbsp;<a href=\"https://www.linkedin.com/in/benmargetts/\"><u>Ben Margetts</u></a></p><p>Major earth systems are now on the brink of irreversible change as a result of climate change, in ways that will substantially increase near-term human suffering and long-term risk, but almost no government capacity is dedicated to interventions that could stabi",
+      "link": "https://forum.effectivealtruism.org/posts/B7dkgWfeqhojF8FJq/climate-stabilization-a-draft-itn-update",
+      "published": "Thu, 07 May 2026 23:37:11 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "The AI industry is where banking was in 2006. (We're hiring)",
+      "summary": "Published on May 7, 2026 7:30 PM GMT<br /><br /><p><strong>TL;DR;</strong> CeSIA, the French Center for AI Safety is <a href=\"https://cesia.org/careers\">recruiting</a>. French not necessary. Apply by 22 May 2026; Paris or remote in Europe/UK.</p><p>&nbsp;</p><p>On August 27, 2005, at an annual symposium in Jackson Hole, Raghuram Rajan, then chief economist of the International Monetary Fund, argued in front of central bank governors and top officials that&nbsp;<a href=\"https://www.kansascityfed.",
+      "link": "https://forum.effectivealtruism.org/posts/7nq5vK2xo85e9GZjC/the-ai-industry-is-where-banking-was-in-2006-we-re-hiring",
+      "published": "Fri, 08 May 2026 00:09:43 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "The tables have turned on AI sceptics",
+      "summary": "Published on May 7, 2026 5:53 PM GMT<br /><br /><p>Could we have human-level AI within the next few decades? For a long time, many people have dismissed this idea as armchair speculation. In their view, we shouldn’t ground our beliefs about transformative technologies in vague hunches and fragile multi-step arguments. We need more solid evidence, like clear empirical trends. We need to be epistemically conservative.</p><p>I have some conservative instincts myself, but I’m not sure they favour lo",
+      "link": "https://forum.effectivealtruism.org/posts/qtfX67cC4tij2zoKC/the-tables-have-turned-on-ai-sceptics",
+      "published": "Thu, 07 May 2026 17:53:24 GMT",
+      "source_type": "rss"
+    }
+  ]
+}

@@ -1,0 +1,109 @@
+{
+  "axis": "COGNITION_LEARNING_REVIEW",
+  "domain": "human",
+  "timestamp": "2026-05-08T09:48:18.333117+00:00",
+  "sources_count": 8,
+  "rss_count": 7,
+  "ddg_count": 0,
+  "youtube_count": 1,
+  "youtube_items": [
+    {
+      "title": "[YT] How I'd Learn AI (if I could start over) - YouTube",
+      "summary": "So you want to learn artificial intelligence, then this video is for you. I'm going to provide you with a complete roadmap that I would follow if I had to start over today on my artificial intelligence journey. And now for context, I started studying artificial intelligence back in 2013, 10 years ago, and over the past years I've been working as a freelance data scientist, helping my clients with various end-to-end data science and artificial intelligence solutions and applications. I also share all of this knowledge and my journey on this YouTube channel, which as of today has over 25,000 subscribers. At the end of this video, I will also provide you with a resource completely for free, where you can follow all of these steps to complete roadmap, even with training videos and instructions",
+      "link": "https://www.youtube.com/watch?v=h2FDq3agImI",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "h2FDq3agImI",
+      "transcript_method": "whisper",
+      "transcript_chars": 17730,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "Нарастващата preocupация за употребата на технологии в обучението и потенциалното им влияние върху развитието на децата",
+    "root_cause": "Отсъствието на ефективен процес за оценка и одобрение на образователни софтуери и приложения",
+    "severity": "MEDIUM",
+    "leverage_points": [
+      "Легислаторите и образователните институции, които трябва да разработят по-строги правила за оценка и одобрение на образователни софтуери",
+      "Родителите и учители, които трябва да бъдат по-информирани и ангажирани в процеса на оценка и одобрение на образователни софтуери"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Разработване на национални стандарти за оценка и одобрение на образователни софтуери",
+        "measurable_goal": "Увеличаване на процента на одобрени образователни софтуери, които отговарят на националните стандарти",
+        "timeframe": "средносрочно"
+      }
+    ],
+    "evidence": [
+      "Screen Time Concerns Lead to Backlash Against Edtech Vetting Process",
+      "ISTE+ASCD Names 2026-27 Voices of Change Fellows"
+    ],
+    "generalization": "Този проблем е свързан с домейните на планетата (екосистеми и материали), човека (здраве и познание), цивилизацията (икономика и образование) и космоса (дългосрочното оцеляване и разширяване)",
+    "summary": "Нарастващата preocupация за употребата на технологии в обучението и потенциалното им влияние върху развитието на децата. Легислаторите и образователните институции трябва да разработят по-строги правила за оценка и одобрение на obrazovателни софтуери.",
+    "risk_level": "MEDIUM"
+  },
+  "raw_items": [
+    {
+      "title": "Screen Time Concerns Lead to Backlash Against Edtech Vetting Process",
+      "summary": "SCHOOL SOFTWARE SCRUTINY: Legislators have pushed back against cellphones in the classroom but are now focused on ensuring school software on devices ...",
+      "link": "https://www.edsurge.com/news/2026-05-07-screen-time-concerns-lead-to-backlash-against-edtech-vetting-process",
+      "published": "Thu, 07 May 2026 13:07:40 -0700",
+      "source_type": "rss"
+    },
+    {
+      "title": "ISTE+ASCD Names 2026-27 Voices of Change Fellows",
+      "summary": "Six educators from across the country are joining the 2026-27 ISTE+ASCD Voices of Change Fellowship to share how schools are navigating AI, digital ...",
+      "link": "https://www.edsurge.com/news/2026-05-06-iste-ascd-names-2026-27-voices-of-change-fellows",
+      "published": "Wed, 06 May 2026 05:00:00 -0700",
+      "source_type": "rss"
+    },
+    {
+      "title": "Educators: Why Are You Thinking of Leaving the Field?",
+      "summary": "EdSurge wants to hear from educators who have recently left or plan to leave their jobs for another sector.",
+      "link": "https://www.edsurge.com/news/2026-05-05-educators-why-are-you-thinking-of-leaving-the-field",
+      "published": "Tue, 05 May 2026 11:47:02 -0700",
+      "source_type": "rss"
+    },
+    {
+      "title": "Global Math Gains for Girls Are Slipping, Report Finds",
+      "summary": "The global math gender gap: “Whatever we do, the action we take to address the issue must start quite early and must be very targeted.”",
+      "link": "https://www.edsurge.com/news/2026-05-01-girls-around-the-globe-are-losing-gains-in-math-data-shows",
+      "published": "Fri, 01 May 2026 01:00:00 -0700",
+      "source_type": "rss"
+    },
+    {
+      "title": "The Taboo of…Money, Love and Power",
+      "summary": "DOCUMENTARY FILM In the documentary educational film &#8220;The Taboo of Sovereignty, Money, Love and Power,&#8221; Mr. Liberty explores the taboos seldom discussed in polite conversation. He reveals the nature of global power structures, money as a control system and the futility of elections. He is empowering people with popular sovereignty as a key to unlocking [&#8230;]",
+      "link": "https://mindshiftentertainment.wordpress.com/2005/04/01/hello-world/",
+      "published": "Fri, 01 Apr 2005 21:27:39 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Lotus: A Woman’s Journey of Empowerment",
+      "summary": "CLAIRE GAILLARD &#8211; DANCE IS LIFE! &#8220;From the revelation that disconnectedness between people and their passion, between individuals and their communities, reflect agonized personal wounds in each of us, her Empower Moves was birthed. It builds community and honors the People with Transcendance through story telling and interpretive forms of dance, allowing ecstatic communion, reconnection [&#8230;]",
+      "link": "https://mindshiftentertainment.wordpress.com/2003/03/23/lotus-a-womans-journey-of-empowerment/",
+      "published": "Sun, 23 Mar 2003 23:15:05 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Fresh Wave",
+      "summary": "JOHNNY LIGHT For over three decades, Johnny Light has been guided by a vision of a new world coming, the “fresh wave” is coming. These twelve songs are professionally produced and arranged, an album of his finest original compositions recorded with Michael Cooper at Rising Star Studios in Eugene, Oregon. Songs like Yes, Nobody’s Gonna [&#8230;]",
+      "link": "https://mindshiftentertainment.wordpress.com/1988/09/09/fresh-wave/",
+      "published": "Fri, 09 Sep 1988 23:17:22 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] How I'd Learn AI (if I could start over) - YouTube",
+      "summary": "So you want to learn artificial intelligence, then this video is for you. I'm going to provide you with a complete roadmap that I would follow if I had to start over today on my artificial intelligence journey. And now for context, I started studying artificial intelligence back in 2013, 10 years ago, and over the past years I've been working as a freelance data scientist, helping my clients with various end-to-end data science and artificial intelligence solutions and applications. I also share all of this knowledge and my journey on this YouTube channel, which as of today has over 25,000 subscribers. At the end of this video, I will also provide you with a resource completely for free, where you can follow all of these steps to complete roadmap, even with training videos and instructions",
+      "link": "https://www.youtube.com/watch?v=h2FDq3agImI",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "h2FDq3agImI",
+      "transcript_method": "whisper",
+      "transcript_chars": 17730,
+      "has_full_transcript": true
+    }
+  ]
+}

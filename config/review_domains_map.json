@@ -1,0 +1,114 @@
+{
+  "meta": {
+    "description": "Мапинг между REVIEW агенти и data-домейни от domainstree.json.",
+    "principles_bg": [
+      "1) Всеки REVIEW агент използва един или няколко data-домейна като основни източници.",
+      "2) Ако наличните източници за даден домейн са недостатъчни за смислен анализ, REVIEW агентът е длъжен да:",
+      "   - декларира в диагностика, че анализът е частичен или ограничен;",
+      "   - добави бележка в notes_for_cortex_self_improvement какви данни липсват;",
+      "   - предложи стартиране на SOURCE_DISCOVERY_AGENT за съответните домейни.",
+      "3) SOURCE_DISCOVERY_AGENT има право да предлага нови източници (open data, APIs, портали),",
+      "   стига те да подпомагат крайната цивилизационна цел и да не нарушават защитите на системата."
+    ]
+  },
+
+  "planet": {
+    "ENERGY_REVIEW": {
+      "domains": ["energysupply", "energyrenewables"]
+    },
+    "WATER_REVIEW": {
+      "domains": ["wateravailability", "waterquality"]
+    },
+    "FOOD_REVIEW": {
+      "domains": ["foodproduction", "foodaccess"]
+    },
+    "MATERIALS_WASTE_REVIEW": {
+      "domains": ["materialsresources", "materialscircularity", "climatestate", "biodiversity"]
+    }
+  },
+
+  "human": {
+    "HUMAN_WELL_BEING_REVIEW": {
+      "domains": [
+        "healthphysical",
+        "healthmental",
+        "nutritionwater",
+        "educationbasic",
+        "educationadvanced",
+        "freedomautonomy",
+        "communitybelonging",
+        "meaningspirituality"
+      ]
+    },
+    "INEQUALITY_POVERTY_REVIEW": {
+      "domains": [
+        "economydistribution",
+        "nutritionwater",
+        "housingsafety"
+      ]
+    }
+  },
+
+  "civilization": {
+    "INFRASTRUCTURE_CITIES_REVIEW": {
+      "domains": [
+        "infratransport",
+        "infraenergygrid",
+        "infradigital"
+      ]
+    },
+    "ECONOMY_WORK_REVIEW": {
+      "domains": [
+        "economyreal",
+        "economydistribution"
+      ]
+    },
+    "GOVERNANCE_RIGHTS_REVIEW": {
+      "domains": [
+        "governance",
+        "justicehumanrights"
+      ]
+    },
+    "TECHNOLOGY_AI_REVIEW": {
+      "domains": [
+        "technologyai",
+        "scienceresearch"
+      ]
+    }
+  },
+
+  "cosmos": {
+    "CLIMATE_GLOBAL_RISK_REVIEW": {
+      "domains": [
+        "climatestate",
+        "riskglobal",
+        "biodiversity"
+      ]
+    },
+    "LONG_TERM_FUTURE_REVIEW": {
+      "domains": [
+        "riskglobal",
+        "spaceexploration",
+        "spacesettlement",
+        "spaceresources"
+      ]
+    }
+  },
+
+  "meta_brain": {
+    "GENERAL_SELF_REVIEW": {
+      "domains": [
+        "all_resource_domains",
+        "internal_logs",
+        "self_improvement_history"
+      ]
+    },
+    "GOAL_PROGRESS_REVIEW": {
+      "domains": [
+        "all_resource_domains",
+        "goalsummary",
+        "civilizationvision"
+      ]
+    }
+  }
+}

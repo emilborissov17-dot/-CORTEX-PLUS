@@ -1,0 +1,17 @@
+{
+  "session_id": "example_session_01",
+  "start_time": "2026-01-25T13:20:00",
+  "end_time": null,
+  "events": [
+    {
+      "role": "user",
+      "content": "Здравей, Cortex.",
+      "time": "2026-01-25T13:20:01"
+    },
+    {
+      "role": "agent",
+      "content": "Здравей, готов съм да работим.",
+      "time": "2026-01-25T13:20:02"
+    }
+  ]
+}

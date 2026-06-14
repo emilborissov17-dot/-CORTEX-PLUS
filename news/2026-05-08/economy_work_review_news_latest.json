@@ -1,0 +1,76 @@
+{
+  "axis": "ECONOMY_WORK_REVIEW",
+  "fetched_at": "2026-05-08T09:07:19.315489+00:00",
+  "smart_query": "economy unemployment poverty wages",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 3,
+    "arxiv": 2,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "Oil prices rise after US and Iran exchange fire in Hormuz strait",
+      "snippet": "US President Donald Trump says the ceasefire between Washington and Tehran is still in place.",
+      "url": "https://www.bbc.com/news/articles/c86dp85g59xo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "The companies making billions from the Iran war",
+      "snippet": "Through surging profits or soaring share prices, the war has been a boon for some firms.",
+      "url": "https://www.bbc.com/news/articles/ce8pyyz5e0ro?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "South East Water boss quits after supply failures",
+      "snippet": "David Hinton faced criticism after outages affected tens of thousands of people in Kent and Sussex.",
+      "url": "https://www.bbc.com/news/articles/cn7pxm13lrro?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [
+    {
+      "title": "Workers mark Labour Day amid rising unemployment and poverty in Afghanistan",
+      "snippet": "Workers mark Labour Day amid rising unemployment and poverty in Afghanistan",
+      "url": "https://www.khaama.com/workers-mark-labour-day-amid-rising-unemployment-and-poverty-in-afghanistan/",
+      "source": "khaama.com"
+    },
+    {
+      "title": "خبير اقتصادي : 700 مليون إنسان يعيشون بأقل من 2 . 15 دولار يومياً",
+      "snippet": "خبير اقتصادي : 700 مليون إنسان يعيشون بأقل من 2 . 15 دولار يومياً",
+      "url": "https://www.azzaman.com/%D8%AE%D8%A8%D9%8A%D8%B1-%D8%A7%D9%82%D8%AA%D8%B5%D8%A7%D8%AF%D9%8A-700-%D9%85%D9%84%D9%8A%D9%88%D9%86-%D8%A5%D9%86%D8%B3%D8%A7%D9%86-%D9%8A%D8%B9%D9%8A%D8%B4%D9%88%D9%86-%D8%A8%D8%A3%D9%82%D9%84/",
+      "source": "azzaman.com"
+    },
+    {
+      "title": "最新数据显示 ， 新西兰七分之一的儿童生活在贫困中",
+      "snippet": "最新数据显示 ， 新西兰七分之一的儿童生活在贫困中",
+      "url": "https://baijiahao.baidu.com/s?id=1858169624334283859",
+      "source": "baijiahao.baidu.com"
+    }
+  ],
+  "github_repos": [],
+  "arxiv_papers": [
+    {
+      "title": "Artificial Aesthetics: The Implicit Economics of Valuing AI-Generated Text",
+      "snippet": "Aesthetic qualities command measurable premiums in traditional goods markets. However, it remains unclear whether users are willing to pay for such qualities in AI-generated text. This paper estimates the willingness to pay for aesthetic attributes in large language model outputs using an online exp",
+      "url": "https://arxiv.org/abs/2605.05578v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Ideological Bias in LLMs' Economic Causal Reasoning",
+      "snippet": "Do large language models (LLMs) exhibit systematic ideological bias when reasoning about economic causal effects? As LLMs are increasingly used in policy analysis and economic reporting, where directionally correct causal judgments are essential, this question has direct practical stakes. We present",
+      "url": "https://arxiv.org/abs/2604.21334v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[How to get through the Strait of Hormuz] The United States has been at war with Iran since February 28th. And for a month and a half, Iran’s main leverage over the U.S. has been their control over the Strait of Hormuz — a key global shipping route. Iran has attacked ships that try to pass without approval. And recently they’ve insinuated that one part of the Strait — the part near Oman — is not safe. Which means that captains had to go r",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

@@ -1,0 +1,103 @@
+{
+  "axis": "CLIMATE_GLOBAL_RISK_REVIEW",
+  "fetched_at": "2026-03-31T07:32:14.357267+00:00",
+  "smart_query": "climate change CO2 emissions",
+  "sources_count": {
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "web_search": 5
+  },
+  "rss": [
+    {
+      "title": "The personal items the Artemis II crew are taking to the Moon",
+      "snippet": "The crew, who are accomplished pilots, engineers and scientists, reveal their hopes, fears and family sacrifices.",
+      "url": "https://www.bbc.com/news/articles/cdj7e11pw10o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "First stop, the Moon. Next stop, Mars? Why Nasa's mission matters",
+      "snippet": "From a race with China to lunar discoveries, the US is investing time, effort and money to head to the Moon - and beyond. ",
+      "url": "https://www.bbc.com/news/articles/cd6wp6xenv0o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Trail hunt ban moves closer as consultation begins",
+      "snippet": "Animal welfare campaigners welcome a \"pivotal moment\" in the move towards a ban on trail hunting.",
+      "url": "https://www.bbc.com/news/articles/ckger0kxy75o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "ESCOMP/CESM",
+      "snippet": "The Community Earth System Model",
+      "stars": 454,
+      "url": "https://github.com/ESCOMP/CESM",
+      "updated": "2026-03-27",
+      "source": "GitHub"
+    },
+    {
+      "title": "xgcm/xgcm",
+      "snippet": "python package for analyzing general circulation model output data",
+      "stars": 251,
+      "url": "https://github.com/xgcm/xgcm",
+      "updated": "2026-03-20",
+      "source": "GitHub"
+    },
+    {
+      "title": "climlab/climlab",
+      "snippet": "Python package for process-oriented climate modeling",
+      "stars": 242,
+      "url": "https://github.com/climlab/climlab",
+      "updated": "2026-03-18",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Stochastic coupling of climate variables and ice volume over the Late Pleistocene glacial cycles",
+      "snippet": "Understanding the interactions between ice sheets and global climate forcings over geological timescales is essential for projecting their future. Previous studies have highlighted the role of ice dynamics and climate interactions in establishing the 100,000-year glacial cycles, particularly regardi",
+      "url": "https://arxiv.org/abs/2603.26937v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Do Climate Models Need Microphysical and Convective Parameterizations to Generate Accurate Precipitation Fields?",
+      "snippet": "Accurately representing surface precipitation is crucial for the operational use of weather and climate models. Presently, global numerical weather prediction (NWP) models struggle to accurately generate precipitation due to their parametrization of unresolved deep convective clouds and, in regions ",
+      "url": "https://arxiv.org/abs/2603.25936v1",
+      "source": "arXiv"
+    }
+  ],
+  "web_search": [
+    {
+      "title": "Climate change: atmospheric carbon dioxide - NOAA Climate.gov",
+      "url": "https://www.climate.gov/news-features/understanding-climate/climate-change-atmospheric-carbon-dioxide",
+      "source": "WEB"
+    },
+    {
+      "title": "CO₂ emissions - Our World in Data",
+      "url": "https://ourworldindata.org/co2-emissions",
+      "source": "WEB"
+    },
+    {
+      "title": "Carbon Dioxide Emissions | US EPA",
+      "url": "https://www.epa.gov/ghgemissions/carbon-dioxide-emissions",
+      "source": "WEB"
+    },
+    {
+      "title": "Greenhouse gases&#x27; effect on climate - U.S. Energy Information ...",
+      "url": "https://www.eia.gov/energyexplained/energy-and-the-environment/greenhouse-gases-and-the-climate.php",
+      "source": "WEB"
+    },
+    {
+      "title": "Carbon Dioxide - Earth Indicator - NASA Science",
+      "url": "https://science.nasa.gov/earth/explore/earth-indicators/carbon-dioxide/",
+      "source": "WEB"
+    }
+  ],
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL"
+}

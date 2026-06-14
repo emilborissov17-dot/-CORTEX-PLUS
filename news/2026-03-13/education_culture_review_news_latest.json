@@ -1,0 +1,146 @@
+{
+  "axis": "EDUCATION_CULTURE_REVIEW",
+  "fetched_at": "2026-03-13T13:49:38.304456+00:00",
+  "smart_query": "Качеството на образованието в България",
+  "sources_count": {
+    "wiki": 0,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "analysis": {
+    "summary": "Образователната ос на CORTEX++ AGI се фокусира върху създаването на система, която подпомага развитието на човешкия потенциал чрез образование и култура. Целта е да се осигури достъп до качествено образование за всички, което е от крайна важност за изграждането на устойчива общочовешка цивилизация. Това включва разработването на иновативни образователни модели и технологии, които да подпомагат човешкото обучение и растеж.",
+    "key_developments": [
+      "AI Misuse in Education Is a Measurement Problem: Toward a Learning Visibility Framework",
+      "SuperSkillsStack: Agency, Domain Knowledge, Imagination, and Taste in Human-AI Design Education",
+      "upb-lea/reinforcement_learning_course_materials",
+      "spatialaudio/signals-and-systems-lecture",
+      "merely-useful/py-rse"
+    ],
+    "sentiment": "POSITIVE",
+    "urgency": "MEDIUM",
+    "open_source_momentum": "GitHub проектите като upb-lea/reinforcement_learning_course_materials, spatialaudio/signals-and-systems-lecture и merely-useful/py-rse показват растяща趨勢 в отворен код и образование.",
+    "scientific_frontier": "Изследванията на arXiv като AI Misuse in Education Is a Measurement Problem: Toward a Learning Visibility Framework и SuperSkillsStack: Agency, Domain Knowledge, Imagination, and Taste in Human-AI Design Education допринасят за научния прогрес в образователната област.",
+    "relevance_to_goal": "Изключително важен, тъй като качественото образование е фундаментален стълб за изграждането на устойчива и развитта цивилизация."
+  },
+  "sentiment": "POSITIVE",
+  "urgency": "MEDIUM",
+  "summary": "Образователната ос на CORTEX++ AGI се фокусира върху създаването на система, която подпомага развитието на човешкия потенциал чрез образование и култура. Целта е да се осигури достъп до качествено образование за всички, което е от крайна важност за изграждането на устойчива общочовешка цивилизация. Това включва разработването на иновативни образователни модели и технологии, които да подпомагат човешкото обучение и растеж.",
+  "key_developments": [
+    "AI Misuse in Education Is a Measurement Problem: Toward a Learning Visibility Framework",
+    "SuperSkillsStack: Agency, Domain Knowledge, Imagination, and Taste in Human-AI Design Education",
+    "upb-lea/reinforcement_learning_course_materials",
+    "spatialaudio/signals-and-systems-lecture",
+    "merely-useful/py-rse"
+  ],
+  "open_source_momentum": "GitHub проектите като upb-lea/reinforcement_learning_course_materials, spatialaudio/signals-and-systems-lecture и merely-useful/py-rse показват растяща趨勢 в отворен код и образование.",
+  "scientific_frontier": "Изследванията на arXiv като AI Misuse in Education Is a Measurement Problem: Toward a Learning Visibility Framework и SuperSkillsStack: Agency, Domain Knowledge, Imagination, and Taste in Human-AI Design Education допринасят за научния прогрес в образователната област.",
+  "news_items": [],
+  "github_repos": [
+    {
+      "title": "upb-lea/reinforcement_learning_course_materials",
+      "snippet": "Lecture notes, tutorial tasks including solutions as well as online videos for the reinforcement learning course hosted by Paderborn University",
+      "stars": 1017,
+      "url": "https://github.com/upb-lea/reinforcement_learning_course_materials",
+      "updated": "2026-02-23",
+      "source": "GitHub"
+    },
+    {
+      "title": "spatialaudio/signals-and-systems-lecture",
+      "snippet": "Continuous- and Discrete-Time Signals and Systems - Theory and Computational Examples",
+      "stars": 371,
+      "url": "https://github.com/spatialaudio/signals-and-systems-lecture",
+      "updated": "2026-03-11",
+      "source": "GitHub"
+    },
+    {
+      "title": "merely-useful/py-rse",
+      "snippet": "Research Software Engineering with Python course material",
+      "stars": 261,
+      "url": "https://github.com/merely-useful/py-rse",
+      "updated": "2026-03-06",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "AI Misuse in Education Is a Measurement Problem: Toward a Learning Visibility Framework",
+      "snippet": "The rapid integration of conversational AI systems into educational settings has intensified ethical concerns about academic integrity, fairness, and students' cognitive development. Institutional responses have largely centered on AI detection tools and restrictive policies, yet such approaches hav",
+      "url": "https://arxiv.org/abs/2603.07834v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "SuperSkillsStack: Agency, Domain Knowledge, Imagination, and Taste in Human-AI Design Education",
+      "snippet": "This study examines how students integrate generative artificial intelligence (AI) into design projects through the lens of the SuperSkillsStack framework, which identifies four key human competencies for effective human-AI collaboration: Agency, Domain Knowledge, Imagination, and Taste. As generati",
+      "url": "https://arxiv.org/abs/2603.07016v1",
+      "source": "arXiv"
+    }
+  ],
+  "youtube_transcripts": [],
+  "podcast": "[Governor DeSantis Directs Florida State Agencies to Partner with Future of Life Institute to Shield Families from AI Harm] The collaboration will produce a Crisis Counselor Training Curriculum and a statewide AI Harms Reporting Form targeting dangerous AI companion applications",
+  "youtube_videos": [
+    {
+      "title": "YouTube:WeKeACELNgI",
+      "video_id": "WeKeACELNgI",
+      "url": "https://www.youtube.com/watch?v=WeKeACELNgI",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:Momq-WhIpZg",
+      "video_id": "Momq-WhIpZg",
+      "url": "https://www.youtube.com/watch?v=Momq-WhIpZg",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:pQb7jJWyJUI",
+      "video_id": "pQb7jJWyJUI",
+      "url": "https://www.youtube.com/watch?v=pQb7jJWyJUI",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:tyUyDo8lgvw",
+      "video_id": "tyUyDo8lgvw",
+      "url": "https://www.youtube.com/watch?v=tyUyDo8lgvw",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:hWsFKTQP1Ls",
+      "video_id": "hWsFKTQP1Ls",
+      "url": "https://www.youtube.com/watch?v=hWsFKTQP1Ls",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:AiC4chZefso",
+      "video_id": "AiC4chZefso",
+      "url": "https://www.youtube.com/watch?v=AiC4chZefso",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:UDPLBJUCLNU",
+      "video_id": "UDPLBJUCLNU",
+      "url": "https://www.youtube.com/watch?v=UDPLBJUCLNU",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:aBjBuekuyxI",
+      "video_id": "aBjBuekuyxI",
+      "url": "https://www.youtube.com/watch?v=aBjBuekuyxI",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:EQ9VqFC87fc",
+      "video_id": "EQ9VqFC87fc",
+      "url": "https://www.youtube.com/watch?v=EQ9VqFC87fc",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:hmxWHPciKqI",
+      "video_id": "hmxWHPciKqI",
+      "url": "https://www.youtube.com/watch?v=hmxWHPciKqI",
+      "source": "YouTube"
+    }
+  ]
+}

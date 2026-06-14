@@ -1,0 +1,618 @@
+{
+  "ECONOMY_WORK_REVIEW": {
+    "gdp_per_capita_usd": {
+      "p25": 13631.2043,
+      "p50": 13631.2043,
+      "p75": 13631.2043,
+      "min": 13631.2043,
+      "max": 13631.2043,
+      "n": 23
+    },
+    "gdp_growth_pct": {
+      "p25": 2.8719,
+      "p50": 2.8719,
+      "p75": 2.8719,
+      "min": 2.8719,
+      "max": 2.8719,
+      "n": 23
+    },
+    "unemployment_pct": {
+      "p25": 4.791,
+      "p50": 4.791,
+      "p75": 4.791,
+      "min": 4.791,
+      "max": 4.791,
+      "n": 23
+    }
+  },
+  "EDUCATION_CULTURE_REVIEW": {
+    "literacy_rate_adult_pct": {
+      "p25": 87.7407,
+      "p50": 87.7407,
+      "p75": 87.7407,
+      "min": 87.74,
+      "max": 87.7407,
+      "n": 23
+    },
+    "primary_enrollment_pct": {
+      "p25": 89.4124,
+      "p50": 89.4124,
+      "p75": 89.4124,
+      "min": 89.4124,
+      "max": 89.4124,
+      "n": 23
+    },
+    "govt_education_spend_pct_gdp": {
+      "p25": 3.5148,
+      "p50": 3.5148,
+      "p75": 3.5148,
+      "min": 3.5148,
+      "max": 3.5693,
+      "n": 23
+    }
+  },
+  "GOVERNANCE_INSTITUTIONS_REVIEW": {
+    "rule_of_law_weighted_mean": {
+      "p25": -0.355,
+      "p50": -0.355,
+      "p75": -0.136,
+      "min": -0.355,
+      "max": -0.136,
+      "n": 9
+    },
+    "rule_of_law_weighted_median": {
+      "p25": -0.571,
+      "p50": -0.571,
+      "p75": -0.04,
+      "min": -0.571,
+      "max": -0.04,
+      "n": 9
+    },
+    "rule_of_law_pct_pop_below_minus05": {
+      "p25": 29.6,
+      "p50": 52.2,
+      "p75": 52.2,
+      "min": 29.6,
+      "max": 52.2,
+      "n": 9
+    },
+    "control_of_corruption_weighted_mean": {
+      "p25": -0.286,
+      "p50": -0.253,
+      "p75": -0.253,
+      "min": -0.286,
+      "max": -0.253,
+      "n": 9
+    },
+    "control_of_corruption_weighted_median": {
+      "p25": -0.366,
+      "p50": -0.295,
+      "p75": -0.295,
+      "min": -0.366,
+      "max": -0.295,
+      "n": 9
+    },
+    "control_of_corruption_pct_pop_below_minus05": {
+      "p25": 35.3,
+      "p50": 37.1,
+      "p75": 37.1,
+      "min": 35.3,
+      "max": 37.1,
+      "n": 9
+    },
+    "government_effectiveness_weighted_mean": {
+      "p25": 0.098,
+      "p50": 0.182,
+      "p75": 0.182,
+      "min": 0.098,
+      "max": 0.182,
+      "n": 9
+    },
+    "government_effectiveness_weighted_median": {
+      "p25": 0.405,
+      "p50": 0.405,
+      "p75": 0.475,
+      "min": 0.405,
+      "max": 0.475,
+      "n": 9
+    },
+    "government_effectiveness_pct_pop_below_minus05": {
+      "p25": 23.6,
+      "p50": 23.6,
+      "p75": 28.7,
+      "min": 23.6,
+      "max": 28.7,
+      "n": 9
+    },
+    "voice_accountability_weighted_mean": {
+      "p25": -0.552,
+      "p50": -0.552,
+      "p75": -0.411,
+      "min": -0.552,
+      "max": -0.411,
+      "n": 9
+    },
+    "voice_accountability_weighted_median": {
+      "p25": -0.56,
+      "p50": -0.56,
+      "p75": -0.375,
+      "min": -0.56,
+      "max": -0.375,
+      "n": 9
+    },
+    "voice_accountability_pct_pop_below_minus05": {
+      "p25": 48.3,
+      "p50": 50.7,
+      "p75": 50.7,
+      "min": 48.3,
+      "max": 50.7,
+      "n": 9
+    },
+    "political_stability_weighted_mean": {
+      "p25": -0.651,
+      "p50": -0.651,
+      "p75": -0.627,
+      "min": -0.651,
+      "max": -0.627,
+      "n": 9
+    },
+    "political_stability_weighted_median": {
+      "p25": -0.617,
+      "p50": -0.617,
+      "p75": -0.517,
+      "min": -0.617,
+      "max": -0.517,
+      "n": 9
+    },
+    "political_stability_pct_pop_below_minus05": {
+      "p25": 57.3,
+      "p50": 57.3,
+      "p75": 67.7,
+      "min": 57.3,
+      "max": 67.7,
+      "n": 9
+    },
+    "regulatory_quality_weighted_mean": {
+      "p25": -0.216,
+      "p50": -0.137,
+      "p75": -0.137,
+      "min": -0.216,
+      "max": -0.137,
+      "n": 9
+    },
+    "regulatory_quality_weighted_median": {
+      "p25": -0.296,
+      "p50": -0.096,
+      "p75": -0.096,
+      "min": -0.296,
+      "max": -0.096,
+      "n": 9
+    },
+    "regulatory_quality_pct_pop_below_minus05": {
+      "p25": 27.2,
+      "p50": 27.2,
+      "p75": 28.8,
+      "min": 27.2,
+      "max": 28.8,
+      "n": 9
+    }
+  },
+  "INEQUALITY_POVERTY_REVIEW": {
+    "poverty_headcount_190": {
+      "p25": 10.3,
+      "p50": 10.3,
+      "p75": 10.3,
+      "min": 10.3,
+      "max": 10.4,
+      "n": 23
+    }
+  },
+  "INFRASTRUCTURE_CITIES_REVIEW": {
+    "access_electricity_pct": {
+      "p25": 91.5992,
+      "p50": 91.5992,
+      "p75": 91.5992,
+      "min": 91.5992,
+      "max": 91.5992,
+      "n": 23
+    },
+    "urban_population_pct": {
+      "p25": 57.5635,
+      "p50": 57.5635,
+      "p75": 57.5635,
+      "min": 57.5635,
+      "max": 57.5635,
+      "n": 23
+    },
+    "fixed_broadband_per100": {
+      "p25": 20.11,
+      "p50": 20.11,
+      "p75": 20.11,
+      "min": 20.11,
+      "max": 20.11,
+      "n": 23
+    }
+  },
+  "TECHNOLOGY_AI_REVIEW": {
+    "rd_expenditure_pct_gdp": {
+      "p25": 2.6699,
+      "p50": 2.6699,
+      "p75": 2.6699,
+      "min": 2.5906,
+      "max": 2.6699,
+      "n": 23
+    },
+    "high_tech_exports_pct": {
+      "p25": 24.7261,
+      "p50": 24.7261,
+      "p75": 24.7261,
+      "min": 24.7261,
+      "max": 24.7589,
+      "n": 23
+    },
+    "patent_applications": {
+      "p25": 2385200.0,
+      "p50": 2385200.0,
+      "p75": 2385200.0,
+      "min": 2385200.0,
+      "max": 2385200.0,
+      "n": 23
+    }
+  },
+  "TECHNOLOGY_INFRA_REVIEW": {
+    "fixed_broadband_per100": {
+      "p25": 20.11,
+      "p50": 20.11,
+      "p75": 20.11,
+      "min": 20.11,
+      "max": 20.11,
+      "n": 23
+    },
+    "mobile_subscriptions_per100": {
+      "p25": 111.5,
+      "p50": 111.5,
+      "p75": 111.5,
+      "min": 111.5,
+      "max": 111.5,
+      "n": 23
+    }
+  },
+  "COSMIC_RESOURCES_REVIEW": {
+    "outer_space_treaty_signatories": {
+      "p25": 114.0,
+      "p50": 114.0,
+      "p75": 114.0,
+      "min": 114.0,
+      "max": 114.0,
+      "n": 23
+    }
+  },
+  "SPACE_INFRASTRUCTURE_REVIEW": {
+    "active_satellites_est": {
+      "p25": 9000.0,
+      "p50": 9000.0,
+      "p75": 9000.0,
+      "min": 9000.0,
+      "max": 9000.0,
+      "n": 23
+    },
+    "annual_launches_est": {
+      "p25": 240.0,
+      "p50": 240.0,
+      "p75": 240.0,
+      "min": 240.0,
+      "max": 240.0,
+      "n": 23
+    }
+  },
+  "COGNITION_LEARNING_REVIEW": {
+    "literacy_rate_youth_pct": {
+      "p25": 93.1071,
+      "p50": 93.1071,
+      "p75": 93.1071,
+      "min": 93.1071,
+      "max": 93.11,
+      "n": 23
+    },
+    "primary_completion_rate": {
+      "p25": 88.0216,
+      "p50": 88.0216,
+      "p75": 88.0216,
+      "min": 88.0216,
+      "max": 88.0216,
+      "n": 23
+    },
+    "tertiary_enrollment_pct": {
+      "p25": 43.6151,
+      "p50": 43.6151,
+      "p75": 43.6151,
+      "min": 43.6151,
+      "max": 43.6151,
+      "n": 23
+    }
+  },
+  "CULTURE_MEDIA_REVIEW": {
+    "internet_users_pct": {
+      "p25": 73.6,
+      "p50": 73.6,
+      "p75": 73.6,
+      "min": 73.6,
+      "max": 73.6,
+      "n": 23
+    },
+    "literacy_rate_adult_pct": {
+      "p25": 87.7407,
+      "p50": 87.7407,
+      "p75": 87.7407,
+      "min": 87.74,
+      "max": 87.7407,
+      "n": 23
+    },
+    "secondary_school_enrollment": {
+      "p25": 66.2718,
+      "p50": 66.2718,
+      "p75": 66.2718,
+      "min": 66.2718,
+      "max": 66.2718,
+      "n": 23
+    }
+  },
+  "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL": {
+    "gender_inequality_index": {
+      "p25": 27.0345,
+      "p50": 27.2486,
+      "p75": 27.2486,
+      "min": 27.0345,
+      "max": 27.2486,
+      "n": 9
+    },
+    "access_justice_score": {
+      "p25": 3.039,
+      "p50": 3.039,
+      "p75": 3.039,
+      "min": 3.039,
+      "max": 3.039,
+      "n": 9
+    }
+  },
+  "HUMAN_WELL_BEING_REVIEW": {
+    "life_expectancy": {
+      "p25": 73.329,
+      "p50": 73.329,
+      "p75": 73.329,
+      "min": 73.329,
+      "max": 73.4804,
+      "n": 23
+    },
+    "infant_mortality": {
+      "p25": 27.1,
+      "p50": 27.1,
+      "p75": 27.1,
+      "min": 27.1,
+      "max": 27.7,
+      "n": 23
+    },
+    "poverty_headcount": {
+      "p25": 10.3,
+      "p50": 10.3,
+      "p75": 10.3,
+      "min": 10.3,
+      "max": 10.4,
+      "n": 23
+    },
+    "uhc_service_coverage_index": {
+      "p25": 71.0,
+      "p50": 71.0,
+      "p75": 71.0,
+      "min": 71.0,
+      "max": 71.0,
+      "n": 23
+    }
+  },
+  "SOCIAL_RELATIONS_REVIEW": {
+    "homicide_rate_per_100k": {
+      "p25": 5.2,
+      "p50": 5.2,
+      "p75": 5.2,
+      "min": 5.2,
+      "max": 5.2,
+      "n": 23
+    },
+    "urbanization_pct": {
+      "p25": 57.5635,
+      "p50": 57.5635,
+      "p75": 57.5635,
+      "min": 57.5635,
+      "max": 57.5635,
+      "n": 23
+    }
+  },
+  "CLIMATE_GLOBAL_RISK_REVIEW": {
+    "co2_ppm_current": {
+      "p25": 429.46,
+      "p50": 431.15,
+      "p75": 432.44,
+      "min": 429.46,
+      "max": 432.44,
+      "n": 9
+    },
+    "co2_ppm_year_ago": {
+      "p25": 428.03,
+      "p50": 430.29,
+      "p75": 430.29,
+      "min": 428.03,
+      "max": 430.29,
+      "n": 9
+    },
+    "co2_annual_increase": {
+      "p25": 1.145,
+      "p50": 1.43,
+      "p75": 2.15,
+      "min": 0.86,
+      "max": 2.15,
+      "n": 9
+    },
+    "co2_annual_mean": {
+      "p25": 427.35,
+      "p50": 427.35,
+      "p75": 427.35,
+      "min": 427.35,
+      "max": 427.35,
+      "n": 9
+    },
+    "archive_precipitation_variability": {
+      "p25": 2.1825,
+      "p50": 2.1825,
+      "p75": 2.1825,
+      "min": 2.1825,
+      "max": 2.1825,
+      "n": 9
+    },
+    "forecast_forecast_max_temp_7d": {
+      "p25": 11.3,
+      "p50": 22.9,
+      "p75": 24.1,
+      "min": 11.3,
+      "max": 25.8,
+      "n": 9
+    },
+    "forecast_forecast_heavy_rain_days_7d": {
+      "p25": 0.0,
+      "p50": 0.0,
+      "p75": 0.0,
+      "min": 0.0,
+      "max": 1.0,
+      "n": 9
+    },
+    "wb_wb_country_code_mentions": {
+      "p25": 0.0,
+      "p50": 0.0,
+      "p75": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "n": 9
+    }
+  },
+  "ECOSYSTEMS_BIODIVERSITY_REVIEW": {
+    "forest_area_pct": {
+      "p25": 31.143,
+      "p50": 31.143,
+      "p75": 31.143,
+      "min": 31.143,
+      "max": 31.143,
+      "n": 9
+    }
+  },
+  "ENERGY_REVIEW": {
+    "renewable_energy_pct": {
+      "p25": 19.7356,
+      "p50": 19.7356,
+      "p75": 19.7356,
+      "min": 19.7356,
+      "max": 19.7356,
+      "n": 20
+    },
+    "access_to_electricity_pct": {
+      "p25": 91.5992,
+      "p50": 91.5992,
+      "p75": 91.5992,
+      "min": 91.5992,
+      "max": 91.5992,
+      "n": 20
+    }
+  },
+  "FOOD_REVIEW": {
+    "cereal_yield_kg_per_ha": {
+      "p25": 4182.383,
+      "p50": 4243.5311,
+      "p75": 4243.5311,
+      "min": 4182.383,
+      "max": 4243.5311,
+      "n": 9
+    }
+  },
+  "MATERIALS_WASTE_REVIEW": {
+    "municipal_waste_per_capita_kg": {
+      "p25": 3.1897,
+      "p50": 3.1897,
+      "p75": 3.1897,
+      "min": 3.1897,
+      "max": 3.1897,
+      "n": 9
+    },
+    "material_consumption_per_gdp": {
+      "p25": 2.8719,
+      "p50": 2.8719,
+      "p75": 2.8719,
+      "min": 2.8719,
+      "max": 2.8719,
+      "n": 9
+    },
+    "forest_area_pct": {
+      "p25": 31.143,
+      "p50": 31.143,
+      "p75": 31.143,
+      "min": 31.143,
+      "max": 31.143,
+      "n": 9
+    },
+    "protected_areas_pct": {
+      "p25": 16.4443,
+      "p50": 16.5117,
+      "p75": 16.5117,
+      "min": 16.4443,
+      "max": 16.5117,
+      "n": 9
+    }
+  },
+  "WATER_REVIEW": {
+    "access_safe_water_pct": {
+      "p25": 73.6686,
+      "p50": 73.6686,
+      "p75": 73.6686,
+      "min": 73.6686,
+      "max": 73.6686,
+      "n": 9
+    },
+    "access_sanitation_pct": {
+      "p25": 58.4952,
+      "p50": 58.4952,
+      "p75": 58.4952,
+      "min": 58.4952,
+      "max": 58.4952,
+      "n": 9
+    },
+    "water_productivity_usd_m3": {
+      "p25": 23.3062,
+      "p50": 23.3062,
+      "p75": 23.3062,
+      "min": 23.3062,
+      "max": 23.3062,
+      "n": 9
+    },
+    "annual_freshwater_withdrawal_pct": {
+      "p25": 9.2339,
+      "p50": 9.2339,
+      "p75": 9.2339,
+      "min": 9.2339,
+      "max": 9.2339,
+      "n": 9
+    },
+    "rural_water_access_pct": {
+      "p25": 60.4018,
+      "p50": 60.4018,
+      "p75": 60.4018,
+      "min": 60.4018,
+      "max": 60.4018,
+      "n": 9
+    },
+    "urban_water_access_pct": {
+      "p25": 83.4072,
+      "p50": 83.4072,
+      "p75": 83.4072,
+      "min": 83.4072,
+      "max": 83.4072,
+      "n": 9
+    }
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "axis": "LONG_TERM_FUTURE_REVIEW",
+  "fetched_at": "2026-04-30T08:33:44.887227+00:00",
+  "smart_query": "existential risk future civilization",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "Musk accuses OpenAI lawyer of trying to 'trick' him in combative testimony",
+      "snippet": "Elon Musk was cross-examined on the third day of the trial over his lawsuit against Sam Altman and OpenAI.",
+      "url": "https://www.bbc.com/news/articles/czj29yygyzgo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Why friendly AI chatbots might be less trustworthy",
+      "snippet": "Researchers found adjusting AI systems to be more warm and friendly to users would result in an \"accuracy trade-off\".",
+      "url": "https://www.bbc.com/news/articles/cd9pdjgvxj8o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Musk accuses Altman of stealing a charity as courtroom battle begins",
+      "snippet": "The case over OpenAI's history and public commitments could have major implications for the future of AI.",
+      "url": "https://www.bbc.com/news/articles/cz027nyz529o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [],
+  "arxiv_papers": [
+    {
+      "title": "Fundamental Physics, Existential Risks and Human Futures",
+      "snippet": "Over the past 25 years, I have been involved in some intriguing developments in the foundations of physics, exploring the quantum reality problem, the relationship between quantum theory and gravity and the interplay between consciousness and physical laws. These investigations make it plausible tha",
+      "url": "https://arxiv.org/abs/2604.26530v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "The Existential Theory of Research: Why Discovery Is Hard",
+      "snippet": "Can scientific discovery be made arbitrarily easy by choosing the right representation, collecting enough data, and deploying sufficiently powerful algorithms? This paper argues that the answer is fundamentally negative. We introduce the Existential Theory of Research (ETR), a formal framework that ",
+      "url": "https://arxiv.org/abs/2604.19810v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[#490 – State of AI in 2026: LLMs, Coding, Scaling Laws, China, Agents, GPUs, AGI] Nathan Lambert and Sebastian Raschka are machine learning researchers, engineers, and educators. Nathan is the post-training lead at the Allen Institute for AI (Ai2) and the author of The RLHF Book. Sebastian Raschka is the author of Build a Large Language Model (From Scratch) and Build a Reasoning Model (From Scratch).\nThank you for listening ❤ Check out our sponsors: https://lexfridman.com/spons",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

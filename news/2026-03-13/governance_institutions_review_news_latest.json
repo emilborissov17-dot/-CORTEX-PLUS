@@ -1,0 +1,164 @@
+{
+  "axis": "GOVERNANCE_INSTITUTIONS_REVIEW",
+  "fetched_at": "2026-03-13T13:53:39.084403+00:00",
+  "smart_query": "\"Governance institutions review global corruption ratings\"",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "analysis": {
+    "summary": "Изучаваме текущите разработки в областта на управленческите институции и тяхното въздействие върху устойчивостта на човешката цивилизация. Правителствените институции трябва да гарантират достъп до базови потребности и свобода за личен растеж. Следим за прояви на репресивни практики и усилията за демократизация.",
+    "key_developments": [
+      "Venezuela’s repressive State apparatus ‘intact’ despite leadership change",
+      "Russia deportation of Ukraine children is crime against humanity: independent probe",
+      "Can AI mediation improve democratic deliberation?",
+      "Fair Voting Methods as a Catalyst for Democratic Resilience: A Trilogy on Legitimacy, Impact and AI Safeguarding"
+    ],
+    "sentiment": "NEGATIVE",
+    "urgency": "HIGH",
+    "open_source_momentum": "github/government.github.com star=1915, consuldemocracy/consuldemocracy star=1528, datagouv/data.gouv.fr star=112",
+    "scientific_frontier": "Can AI mediation improve democratic deliberation?, Fair Voting Methods as a Catalyst for Democratic Resilience: A Trilogy on Legitimacy, Impact and AI Safeguarding",
+    "relevance_to_goal": "Висока, тъй като ефективните управленчески институции са крайно важни за постигане на устойчива човешка цивилизация с достъп до базови потребности и свобода за личен растеж."
+  },
+  "sentiment": "NEGATIVE",
+  "urgency": "HIGH",
+  "summary": "Изучаваме текущите разработки в областта на управленческите институции и тяхното въздействие върху устойчивостта на човешката цивилизация. Правителствените институции трябва да гарантират достъп до базови потребности и свобода за личен растеж. Следим за прояви на репресивни практики и усилията за демократизация.",
+  "key_developments": [
+    "Venezuela’s repressive State apparatus ‘intact’ despite leadership change",
+    "Russia deportation of Ukraine children is crime against humanity: independent probe",
+    "Can AI mediation improve democratic deliberation?",
+    "Fair Voting Methods as a Catalyst for Democratic Resilience: A Trilogy on Legitimacy, Impact and AI Safeguarding"
+  ],
+  "open_source_momentum": "github/government.github.com star=1915, consuldemocracy/consuldemocracy star=1528, datagouv/data.gouv.fr star=112",
+  "scientific_frontier": "Can AI mediation improve democratic deliberation?, Fair Voting Methods as a Catalyst for Democratic Resilience: A Trilogy on Legitimacy, Impact and AI Safeguarding",
+  "news_items": [
+    {
+      "title": "Venezuela’s repressive State apparatus ‘intact’ despite leadership change",
+      "snippet": "Venezuela’s repressive State apparatus remains operational despite the seizure of former President Nicolás Maduro by United States forces on 3 January, according to independent UN human rights investigators.",
+      "url": "https://news.un.org/feed/view/en/story/2026/03/1167126",
+      "source": "RSS"
+    },
+    {
+      "title": "Russia deportation of Ukraine children is crime against humanity: independent probe",
+      "snippet": "Scores of Ukrainian children are still missing after being deported far and wide across Russia and occupied territories while their families continue to search for them, human rights investigators said on Thursday.",
+      "url": "https://news.un.org/feed/view/en/story/2026/03/1167122",
+      "source": "RSS"
+    },
+    {
+      "title": "Nicaragua: Rights experts uncover State corruption fuelling repression, spying on exiles",
+      "snippet": "Nicaragua’s Government is financing the repression of its opponents through illegal misuse of public funds and targeting exiles through a transnational surveillance and intelligence network, the UN Group of Independent Human Rights Experts on Nicaragua warned in its latest report on Tuesday.",
+      "url": "https://news.un.org/feed/view/en/story/2026/03/1167108",
+      "source": "RSS"
+    }
+  ],
+  "github_repos": [
+    {
+      "title": "github/government.github.com",
+      "snippet": "Gather, curate, and feature stories of public servants and civic hackers using GitHub as part of their open government innovations",
+      "stars": 1915,
+      "url": "https://github.com/github/government.github.com",
+      "updated": "2026-03-13",
+      "source": "GitHub"
+    },
+    {
+      "title": "consuldemocracy/consuldemocracy",
+      "snippet": "Consul Democracy - Open Government and E-Participation Web Software",
+      "stars": 1528,
+      "url": "https://github.com/consuldemocracy/consuldemocracy",
+      "updated": "2026-03-12",
+      "source": "GitHub"
+    },
+    {
+      "title": "datagouv/data.gouv.fr",
+      "snippet": "Ce dépôt rassemble les tickets techniques qui portent sur data.gouv.fr.",
+      "stars": 112,
+      "url": "https://github.com/datagouv/data.gouv.fr",
+      "updated": "2026-03-07",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Can AI mediation improve democratic deliberation?",
+      "snippet": "The strength of democracy lies in the free and equal exchange of diverse viewpoints. Living up to this ideal at scale faces inherent tensions: broad participation, meaningful deliberation, and political equality often trade off with one another (Fishkin, 2011). We ask whether and how artificial inte",
+      "url": "https://arxiv.org/abs/2601.05904v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Fair Voting Methods as a Catalyst for Democratic Resilience: A Trilogy on Legitimacy, Impact and AI Safeguarding",
+      "snippet": "This article shows how fair voting methods can be a catalyst for change in the way we make collective decisions, and how such change can promote long-awaited upgrades of democracy. Based on real-world evidence from democratic innovations in participatory budgeting, in Switzerland and beyond, I highl",
+      "url": "https://arxiv.org/abs/2512.17461v1",
+      "source": "arXiv"
+    }
+  ],
+  "youtube_transcripts": [],
+  "podcast": "[Iran, protests, and sanctions] Book tour tickets and details here.The recent protests in Iran are about so many things. Human rights, corruption, freedom. But this time – they are also motivated by economic hardship. Hardship caused, in part, by US sanctions. The US has been sanctioning Iran in one way or another for 47 years. But sanctions, as a tool, only work some of the time, and US sanctions on Iran have not always conform",
+  "youtube_videos": [
+    {
+      "title": "YouTube:-dxTn0fXFyk",
+      "video_id": "-dxTn0fXFyk",
+      "url": "https://www.youtube.com/watch?v=-dxTn0fXFyk",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:pa-hXJPBvnA",
+      "video_id": "pa-hXJPBvnA",
+      "url": "https://www.youtube.com/watch?v=pa-hXJPBvnA",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:VFVQ2exF1wg",
+      "video_id": "VFVQ2exF1wg",
+      "url": "https://www.youtube.com/watch?v=VFVQ2exF1wg",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:5cWOKKAydYI",
+      "video_id": "5cWOKKAydYI",
+      "url": "https://www.youtube.com/watch?v=5cWOKKAydYI",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:B--sYp8JPZ0",
+      "video_id": "B--sYp8JPZ0",
+      "url": "https://www.youtube.com/watch?v=B--sYp8JPZ0",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:8uJPy3qK2VY",
+      "video_id": "8uJPy3qK2VY",
+      "url": "https://www.youtube.com/watch?v=8uJPy3qK2VY",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:x8_I7hyWjCw",
+      "video_id": "x8_I7hyWjCw",
+      "url": "https://www.youtube.com/watch?v=x8_I7hyWjCw",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:-Mb56bZLv5s",
+      "video_id": "-Mb56bZLv5s",
+      "url": "https://www.youtube.com/watch?v=-Mb56bZLv5s",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:I70C4gijNls",
+      "video_id": "I70C4gijNls",
+      "url": "https://www.youtube.com/watch?v=I70C4gijNls",
+      "source": "YouTube"
+    },
+    {
+      "title": "YouTube:z1LIzLRPnYA",
+      "video_id": "z1LIzLRPnYA",
+      "url": "https://www.youtube.com/watch?v=z1LIzLRPnYA",
+      "source": "YouTube"
+    }
+  ]
+}

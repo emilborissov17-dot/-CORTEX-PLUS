@@ -1,0 +1,103 @@
+{
+  "axis": "COGNITION_LEARNING_REVIEW",
+  "fetched_at": "2026-03-28T10:48:43.158737+00:00",
+  "smart_query": "education learning children schools",
+  "sources_count": {
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "web_search": 5
+  },
+  "rss": [
+    {
+      "title": "Scientists just solved a major mystery about how your brain stores memories",
+      "snippet": "Scientists have found that your brain separates memories into “what” and “where/when” using two different groups of neurons. One set responds to specific objects or people, while another tracks the context or situation. When you remember something correctly, these groups briefly connect and reconstr",
+      "url": "https://www.sciencedaily.com/releases/2026/03/260324024247.htm",
+      "source": "RSS"
+    },
+    {
+      "title": "Scientists link childhood stress to lifelong digestive issues",
+      "snippet": "Early life stress may set the stage for long-term digestive problems by disrupting the gut-brain connection. Studies in both mice and thousands of children found links to symptoms like pain, constipation, and IBS. Scientists discovered that different biological pathways control different gut issues,",
+      "url": "https://www.sciencedaily.com/releases/2026/03/260317064444.htm",
+      "source": "RSS"
+    },
+    {
+      "title": "Cannabis study finds THC can create false memories",
+      "snippet": "THC doesn’t just blur memories—it can create new ones that never happened. In a controlled experiment, cannabis users were much more likely to recall words that were never shown and struggled with tasks like remembering to do something later. Researchers found that THC disrupted many different memor",
+      "url": "https://www.sciencedaily.com/releases/2026/03/260311004711.htm",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "AFLucas-UOM/AI-Early-Detection-System-for-Dyslexia-ADHD",
+      "snippet": "Proof-of-concept behavioural analysis system for early detection of dyslexia and ADHD using spelling pattern evaluation, sentence rewriting similarity analysis, and keyboard/mouse interaction monitori",
+      "stars": 6,
+      "url": "https://github.com/AFLucas-UOM/AI-Early-Detection-System-for-Dyslexia-ADHD",
+      "updated": "2026-03-06",
+      "source": "GitHub"
+    },
+    {
+      "title": "ShubhamMahajan880/studyAlpha-Ai-Agent",
+      "snippet": "🎓 StudyAlpha is an intelligent, end-to-end AI Study Coach powered by multi-agent collaboration, memory-augmented reasoning, adaptive quizzes, and ML weakness prediction.  Built for the Google × Kaggle",
+      "stars": 5,
+      "url": "https://github.com/ShubhamMahajan880/studyAlpha-Ai-Agent",
+      "updated": "2026-01-29",
+      "source": "GitHub"
+    },
+    {
+      "title": "brahm-ai-official/brahm-ai",
+      "snippet": "Brahm-Ai source code, modules & updates",
+      "stars": 1,
+      "url": "https://github.com/brahm-ai-official/brahm-ai",
+      "updated": "2026-03-11",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Visual or Textual: Effects of Explanation Format and Personal Characteristics on the Perception of Explanations in an Educational Recommender System",
+      "snippet": "Explanations are central to improving transparency, trust, and user satisfaction in recommender systems (RS), yet it remains unclear how different explanation formats (visual vs. textual) are suited to users with different personal characteristics (PCs). To this end, we report a within-subject user ",
+      "url": "https://arxiv.org/abs/2603.25624v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Group-Differentiated Discourse on Generative AI in High School Education: A Case Study of Reddit Communities",
+      "snippet": "In this paper, we study how different Reddit communities discuss generative AI in high school education, focusing on learning, academic integrity, AI detection, and emotional framing. Using 3,789 posts from five education-related subreddits, we compare student, teacher, and mixed communities using a",
+      "url": "https://arxiv.org/abs/2603.24972v1",
+      "source": "arXiv"
+    }
+  ],
+  "web_search": [
+    {
+      "title": "Edutopia - What Works in Education",
+      "url": "https://www.edutopia.org/",
+      "source": "WEB"
+    },
+    {
+      "title": "PDF STRATEGY Every Child Learns - UNICEF",
+      "url": "https://www.unicef.org/media/59856/file/UNICEF-education-strategy-2019-2030.pdf",
+      "source": "WEB"
+    },
+    {
+      "title": "Early childhood care and education - UNESCO",
+      "url": "https://www.unesco.org/en/early-childhood-education",
+      "source": "WEB"
+    },
+    {
+      "title": "Education | Definition, Development, History, Types, &amp; Facts | Britannica",
+      "url": "https://www.britannica.com/topic/education",
+      "source": "WEB"
+    },
+    {
+      "title": "Early Learning | U.S. Department of Education",
+      "url": "https://www.ed.gov/birth-to-grade-12-education/early-childhood-education/early-learning-home-page",
+      "source": "WEB"
+    }
+  ],
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL"
+}

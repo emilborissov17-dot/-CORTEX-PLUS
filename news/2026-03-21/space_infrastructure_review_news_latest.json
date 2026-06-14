@@ -1,0 +1,82 @@
+{
+  "axis": "SPACE_INFRASTRUCTURE_REVIEW",
+  "fetched_at": "2026-03-21T11:50:04.274082+00:00",
+  "smart_query": "space exploration NASA SpaceX",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "NASA’s X-59 Experimental Supersonic Aircraft Makes Second Flight",
+      "snippet": "NASA&#8217;s quiet supersonic X-59 aircraft&#160;made&#160;its&#160;second flight on Friday, kicking off a&#160;series of dozens of&#160;test&#160;flights in&#160;2026.&#160; Although the flight duration was&#160;abbreviated&#160;due to a&#160;technical issue,&#160;the team was able to&#160;collect ",
+      "url": "https://www.nasa.gov/missions/quesst/nasas-x-59-experimental-supersonic-aircraft-makes-second-flight/",
+      "source": "RSS"
+    },
+    {
+      "title": "Hangar One Restoration Project",
+      "snippet": "Editor&#8217;s Note: This article was originally published on April 25, 2022 and has been updated to reflect changes including the completion of Hangar One&#8217;s restoration. Restoration has been completed on Hangar One, a historic landmark in the&#160;San Francisco&#160;Bay Area and a key part of",
+      "url": "https://www.nasa.gov/centers-and-facilities/ames/hangar-one-restoration-project/",
+      "source": "RSS"
+    },
+    {
+      "title": "NASA Selects University Finalists for Technology Concepts Competition",
+      "snippet": "NASA selected 14 university teams from across the nation as finalists in the 2026 Revolutionary Aerospace Systems Concepts – Academic Linkage (RASC-AL) Competition. This NASA challenge tasks students to design innovative concepts that could further human life and work on the Moon, Mars, and beyond. ",
+      "url": "https://www.nasa.gov/directorates/stmd/prizes-challenges-crowdsourcing-program/nasa-selects-university-finalists-for-technology-concepts-competition/",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "KOSASIH/stable-pi-core",
+      "snippet": "Stable-Pi-Core is a next-generation decentralized ecosystem that integrates blockchain, quantum AI, IoT, edge computing, and AR/VR to deliver secure, scalable, and personalized solutions for payments,",
+      "stars": 112,
+      "url": "https://github.com/KOSASIH/stable-pi-core",
+      "updated": "2026-03-14",
+      "source": "GitHub"
+    },
+    {
+      "title": "FlaSpaceInst/EZ-RASSOR",
+      "snippet": "An inexpensive, autonomous, regolith-mining robot",
+      "stars": 62,
+      "url": "https://github.com/FlaSpaceInst/EZ-RASSOR",
+      "updated": "2026-02-18",
+      "source": "GitHub"
+    },
+    {
+      "title": "BarthPaleologue/CosmosJourneyer",
+      "snippet": "Cosmos Journeyer is a space exploration game running directly in the browser! Take your spaceship and witness the beauty of this virtually infinite universe.",
+      "stars": 37,
+      "url": "https://github.com/BarthPaleologue/CosmosJourneyer",
+      "updated": "2026-03-21",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Quantifying the Scientific Potential of Intermediate and Extreme Mass Ratio Inspirals with the Laser Interferometer Space Antenna",
+      "snippet": "The Laser Interferometer Space Antenna (LISA) will enable precision studies of Extreme and Intermediate Mass Ratio Inspirals (EMRIs/IMRIs), providing unique probes of astrophysical environments of galactic nuclei and strong-field gravity. Using a fully relativistic pipeline across primary masses $m_",
+      "url": "https://arxiv.org/abs/2603.17072v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Optimizing the Roman Space Telescope High-Latitude Wide Area Survey for mitigating chromatic PSF effects on shear measurement",
+      "snippet": "Chromatic point-spread-function (PSF) effects arise from differences between the spectral energy distributions (SEDs) of stars, used to model the PSF, and galaxies, used to measure shape distortions due to weak gravitational lensing, or shear. For the Roman Space Telescope, these effects can bias sh",
+      "url": "https://arxiv.org/abs/2603.15763v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[Black Box] In this episode, first aired in 2014, we examine three very different kinds of black boxes—spaces where we know what’s going in, we know what’s coming out, but can’t see what happens in-between.\nFrom the darkest parts of metamorphosis to a sixty-year-old secret among magicians, and the nature of consciousness itself, we shine some light on three questions. But for each, we contend with an answerle",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

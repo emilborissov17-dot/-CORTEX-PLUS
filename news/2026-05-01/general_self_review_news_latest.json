@@ -1,0 +1,57 @@
+{
+  "axis": "GENERAL_SELF_REVIEW",
+  "fetched_at": "2026-05-01T13:08:28.986633+00:00",
+  "smart_query": "artificial intelligence progress",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "Spotify adds 'Verified' badges to distinguish human artists from AI",
+      "snippet": "The music streaming platform will review criteria such as artists' live dates and social media presence.",
+      "url": "https://www.bbc.com/news/articles/c5yerr4m1yno?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Apple says iPhone 17 'most popular ever' as sales soar",
+      "snippet": "The record results come as boss Tim Cook is preparing to bow out after 15 years at the helm.",
+      "url": "https://www.bbc.com/news/articles/ce8pdk3l4d2o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Will AI lead to more accurate opinion polls?",
+      "snippet": "It's cheaper and faster to collect people's opinions using AI, but will it make polls more accurate?",
+      "url": "https://www.bbc.com/news/articles/cwyw6rylzepo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [],
+  "arxiv_papers": [
+    {
+      "title": "Intern-Atlas: A Methodological Evolution Graph as Research Infrastructure for AI Scientists",
+      "snippet": "Existing research infrastructure is fundamentally document-centric, providing citation links between papers but lacking explicit representations of methodological evolution. In particular, it does not capture the structured relationships that explain how and why research methods emerge, adapt, and b",
+      "url": "https://arxiv.org/abs/2604.28158v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Normativity and Productivism: Ableist Intelligence? A Degrowth Analysis of AI Sign Language Translation Tools for Deaf People",
+      "snippet": "Sign languages, of any geographical or accentual variation, understandably face continuous scrutiny under the ever present popularity of verbal dictation and audism. Through this, many potential problems arise with the current lack of accessible communication for those who rely on such sign language",
+      "url": "https://arxiv.org/abs/2604.28125v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[#486 – Michael Levin: Hidden Reality of Alien Intelligence & Biological Life] Michael Levin is a biologist at Tufts University working on novel ways to understand and control complex pattern formation in biological systems.\nThank you for listening ❤ Check out our sponsors: https://lexfridman.com/sponsors/ep486-sc\nSee below for timestamps, transcript, and to give feedback, submit questions, contact Lex, etc.\nTranscript:\nhttps://lexfridman.com/michael-levin-2-transcript\nCONTA",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

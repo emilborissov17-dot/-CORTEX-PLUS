@@ -1,0 +1,20 @@
+{
+  "source_type": "REAL_DATA",
+  "raw": {
+    "axis": "HUMAN_WELL_BEING_REVIEW",
+    "source": "world_bank_who_api",
+    "fetched_date": "2026-06-11",
+    "metrics": {
+      "life_expectancy": 73.480380292779,
+      "health_expenditure_pct": 10.0162846684385,
+      "infant_mortality": 27.7,
+      "physicians_per_1000": 1.86069862599317,
+      "poverty_headcount": 10.4,
+      "suicide_rate_per_100k": 9.157418121,
+      "uhc_service_coverage_index": 71.0
+    },
+    "data_quality": "7/7 indicators fetched"
+  },
+  "snapshot_timestamp": "2026-06-11T19:06:23.632706+00:00",
+  "axis": "HUMAN_WELL_BEING_REVIEW"
+}

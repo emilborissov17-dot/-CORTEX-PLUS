@@ -1,0 +1,103 @@
+{
+  "axis": "SPACE_INFRASTRUCTURE_REVIEW",
+  "fetched_at": "2026-03-27T09:45:02.533603+00:00",
+  "smart_query": "space exploration NASA SpaceX",
+  "sources_count": {
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "web_search": 5
+  },
+  "rss": [
+    {
+      "title": "Satellite Spots a Spawn",
+      "snippet": "The activity of herring around Vancouver Island in British Columbia brightened coastal waters enough to be detectable from space.",
+      "url": "https://science.nasa.gov/earth/earth-observatory/satellite-spots-a-spawn/",
+      "source": "RSS"
+    },
+    {
+      "title": "What’s Up: April 2026 Skywatching Tips from NASA",
+      "snippet": "Mercury shines at its brightest for the year, the Lyrid meteor shower peaks, and a bright new comet makes an appearance in April’s night sky.",
+      "url": "https://science.nasa.gov/solar-system/whats-up-april-2026-skywatching-tips-from-nasa/",
+      "source": "RSS"
+    },
+    {
+      "title": "La NASA presentará el telescopio Roman completo y ofrecerá una conferencia de prensa",
+      "snippet": "Se invita a los medios de comunicación el martes 21 de abril al Centro de Vuelo Espacial Goddard de la NASA en Greenbelt, Maryland, para conocer el telescopio espacial Nancy Grace Roman de la agencia, cuya construcción terminó recientemente y el cual se encuentra ultimando las pruebas previas a su l",
+      "url": "https://www.nasa.gov/news-release/la-nasa-presentara-el-telescopio-roman-completo-y-ofrecera-una-conferencia-de-prensa/",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "KOSASIH/stable-pi-core",
+      "snippet": "Stable-Pi-Core is a next-generation decentralized ecosystem that integrates blockchain, quantum AI, IoT, edge computing, and AR/VR to deliver secure, scalable, and personalized solutions for payments,",
+      "stars": 112,
+      "url": "https://github.com/KOSASIH/stable-pi-core",
+      "updated": "2026-03-14",
+      "source": "GitHub"
+    },
+    {
+      "title": "FlaSpaceInst/EZ-RASSOR",
+      "snippet": "An inexpensive, autonomous, regolith-mining robot",
+      "stars": 61,
+      "url": "https://github.com/FlaSpaceInst/EZ-RASSOR",
+      "updated": "2026-03-23",
+      "source": "GitHub"
+    },
+    {
+      "title": "BarthPaleologue/CosmosJourneyer",
+      "snippet": "Cosmos Journeyer is a space exploration game running directly in the browser! Take your spaceship and witness the beauty of this virtually infinite universe.",
+      "stars": 38,
+      "url": "https://github.com/BarthPaleologue/CosmosJourneyer",
+      "updated": "2026-03-27",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Exoplanet Search and Characterization with the Proposed POET Canadian Space Mission",
+      "snippet": "The Photometric Observations of Exoplanet Transits (POET) is a proposed micro-satellite mission dedicated to the characterization and discovery of transiting exoplanets. POET has been identified as a top priority small-sat space mission in the Canadian Astronomy Long Range Plan 2020-2030. POET is be",
+      "url": "https://arxiv.org/abs/2603.24485v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Quantifying the Scientific Potential of Intermediate and Extreme Mass Ratio Inspirals with the Laser Interferometer Space Antenna",
+      "snippet": "The Laser Interferometer Space Antenna (LISA) will enable precision studies of Extreme and Intermediate Mass Ratio Inspirals (EMRIs/IMRIs), providing unique probes of astrophysical environments of galactic nuclei and strong-field gravity. Using a fully relativistic pipeline across primary masses $m_",
+      "url": "https://arxiv.org/abs/2603.17072v1",
+      "source": "arXiv"
+    }
+  ],
+  "web_search": [
+    {
+      "title": "NASA&#x27;s SpaceX Crew-11 Launches to International Space Station",
+      "url": "https://www.nasa.gov/news-release/nasas-spacex-crew-11-launches-to-international-space-station/",
+      "source": "WEB"
+    },
+    {
+      "title": "SpaceX&#x27;s next astronaut launch for NASA is officially on for Feb. 13 as ...",
+      "url": "https://www.space.com/space-exploration/launches-spacecraft/spacexs-next-astronaut-launch-for-nasa-is-officially-on-for-feb-11-as-faa-clears-falcon-9-rocket-to-fly-again",
+      "source": "WEB"
+    },
+    {
+      "title": "SpaceX - Launches",
+      "url": "https://www.spacex.com/launches",
+      "source": "WEB"
+    },
+    {
+      "title": "Space Explored - Space News and Launch Views",
+      "url": "https://spaceexplored.com/",
+      "source": "WEB"
+    },
+    {
+      "title": "NASA and SpaceX to launch Artemis and Crew 12 in February - Deseret News",
+      "url": "https://www.deseret.com/u-s-world/2026/01/30/nasa-spacex-launches-in-february/",
+      "source": "WEB"
+    }
+  ],
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL"
+}

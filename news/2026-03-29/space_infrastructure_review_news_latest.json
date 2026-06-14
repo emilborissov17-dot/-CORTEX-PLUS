@@ -1,0 +1,109 @@
+{
+  "axis": "SPACE_INFRASTRUCTURE_REVIEW",
+  "fetched_at": "2026-03-29T11:46:17.765335+00:00",
+  "smart_query": "space exploration NASA SpaceX",
+  "sources_count": {
+    "rss": 3,
+    "gdelt": 3,
+    "arxiv": 0,
+    "github": 3,
+    "web_search": 5
+  },
+  "rss": [
+    {
+      "title": "I Am Artemis: Erik Richards",
+      "snippet": "Listen to this audio excerpt from Erik Richards, Near Space Network Mission Manager: For Erik Richards, supporting&#160;NASA’s&#160;first crewed Artemis&#160;mission&#160;to the Moon and back&#160;is the culmination of a career spent helping spacecraft communicate&#160;with Earth.&#160; Like many ki",
+      "url": "https://www.nasa.gov/missions/artemis/i-am-artemis/i-am-artemis-erik-richards/",
+      "source": "RSS"
+    },
+    {
+      "title": "NASA Selects Intuitive Machines to Deliver Artemis Science, Tech to Moon",
+      "snippet": "NASA has awarded Intuitive Machines of Houston, $180.4 million to deliver NASA-funded science and technology to the lunar surface as part of the agency’s CLPS (Commercial Lunar Payload Services) initiative and Artemis program. This lunar delivery, which includes seven payloads — five of them NASA’s ",
+      "url": "https://www.nasa.gov/missions/artemis/clps/nasa-selects-intuitive-machines-to-deliver-artemis-science-tech-to-moon/",
+      "source": "RSS"
+    },
+    {
+      "title": "NASA’s Environment and Energy “Blue Marble” Awards Categories",
+      "snippet": "Category I: NASA Environmental Quality Award Recognizes excellence in environmental management and planning, including stewardship of natural and cultural resources. This category highlights achievements in compliance, conservation, remediation, communication, and environmental information managemen",
+      "url": "https://www.nasa.gov/general/nasas-environment-and-energy-blue-marble-awards-categories/",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [
+    {
+      "title": "NASA first - ever medical evacuation : SpaceX Dragon to bring back Crew - 11 from ISS on Jan 14 what we know so far",
+      "snippet": "NASA first - ever medical evacuation : SpaceX Dragon to bring back Crew - 11 from ISS on Jan 14 what we know so far",
+      "url": "https://www.livemint.com/science/news/nasas-first-ever-medical-evacuation-spacex-dragon-to-bring-back-crew-11-from-iss-on-jan-14-what-we-know-so-far-11768012552126.html",
+      "source": "livemint.com"
+    },
+    {
+      "title": "NASA , SpaceX target Jan . 14 undocking for Crew - 11 return to Earth",
+      "snippet": "NASA , SpaceX target Jan . 14 undocking for Crew - 11 return to Earth",
+      "url": "https://www.aa.com.tr/en/americas/nasa-spacex-target-jan-14-undocking-for-crew-11-return-to-earth/3795462",
+      "source": "aa.com.tr"
+    },
+    {
+      "title": "Florida Space Coast Gears Up for Rapid - Fire Rocket Launches in January and February",
+      "snippet": "Florida Space Coast Gears Up for Rapid - Fire Rocket Launches in January and February",
+      "url": "https://spacecoastdaily.com/2026/01/floridas-space-coast-gears-up-for-rapid-fire-rocket-launches-in-january-and-february/",
+      "source": "spacecoastdaily.com"
+    }
+  ],
+  "github_repos": [
+    {
+      "title": "KOSASIH/stable-pi-core",
+      "snippet": "Stable-Pi-Core is a next-generation decentralized ecosystem that integrates blockchain, quantum AI, IoT, edge computing, and AR/VR to deliver secure, scalable, and personalized solutions for payments,",
+      "stars": 112,
+      "url": "https://github.com/KOSASIH/stable-pi-core",
+      "updated": "2026-03-14",
+      "source": "GitHub"
+    },
+    {
+      "title": "FlaSpaceInst/EZ-RASSOR",
+      "snippet": "An inexpensive, autonomous, regolith-mining robot",
+      "stars": 61,
+      "url": "https://github.com/FlaSpaceInst/EZ-RASSOR",
+      "updated": "2026-03-23",
+      "source": "GitHub"
+    },
+    {
+      "title": "BarthPaleologue/CosmosJourneyer",
+      "snippet": "Cosmos Journeyer is a space exploration game running directly in the browser! Take your spaceship and witness the beauty of this virtually infinite universe.",
+      "stars": 38,
+      "url": "https://github.com/BarthPaleologue/CosmosJourneyer",
+      "updated": "2026-03-27",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [],
+  "web_search": [
+    {
+      "title": "Space.com: NASA, Space Exploration and Astronomy News",
+      "url": "https://www.space.com/",
+      "source": "WEB"
+    },
+    {
+      "title": "SpaceX - Launches",
+      "url": "https://www.spacex.com/launches",
+      "source": "WEB"
+    },
+    {
+      "title": "SpaceX vs NASA: Key Differences Between Private and Government Space ...",
+      "url": "https://www.sciencetimes.com/articles/61166/20260121/spacex-vs-nasa-key-differences-between-private-government-space-missions-explained.htm",
+      "source": "WEB"
+    },
+    {
+      "title": "NASA",
+      "url": "https://www.nasa.gov/",
+      "source": "WEB"
+    },
+    {
+      "title": "SpaceX - Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/SpaceX",
+      "source": "WEB"
+    }
+  ],
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL"
+}

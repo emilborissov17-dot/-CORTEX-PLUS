@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CORTEX++ Dashboard</title>
+<meta http-equiv="refresh" content="600">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+       background: #0f0f0f; color: #e0e0e0; padding: 1.5rem; }
+h1 { font-size: 18px; font-weight: 500; color: #fff; }
+.ts { font-size: 12px; color: #666; }
+.header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; }
+.summary { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 1.5rem; }
+.metric { background: #1a1a1a; border-radius: 10px; padding: 0.875rem 1rem; border: 0.5px solid #2a2a2a; }
+.metric-label { font-size: 11px; color: #666; margin-bottom: 4px; }
+.metric-value { font-size: 22px; font-weight: 500; }
+.metric-sub { font-size: 11px; color: #555; margin-top: 2px; }
+.legend { display: flex; gap: 16px; margin-bottom: 1rem; }
+.legend-item { display: flex; align-items: center; gap: 5px; font-size: 11px; color: #666; }
+.legend-dot { width: 8px; height: 8px; border-radius: 50%; }
+.domains { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+.domain-card { background: #1a1a1a; border: 0.5px solid #2a2a2a; border-radius: 12px; padding: 1rem 1.25rem; }
+.domain-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.domain-title { font-size: 12px; font-weight: 500; letter-spacing: 0.06em; }
+.domain-avg { font-size: 22px; font-weight: 500; }
+.domain-bar { height: 3px; border-radius: 2px; background: #2a2a2a; margin-bottom: 14px; overflow: hidden; }
+.domain-bar-fill { height: 100%; border-radius: 2px; }
+.axis-row { display: flex; align-items: center; gap: 8px; padding: 6px 0 2px; border-top: 0.5px solid #222; cursor: default; }
+.axis-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+.axis-name { font-size: 12px; color: #aaa; flex: 1; }
+.axis-bar { width: 50px; height: 4px; border-radius: 2px; background: #2a2a2a; overflow: hidden; flex-shrink: 0; }
+.axis-bar-fill { height: 100%; border-radius: 2px; }
+.axis-score { font-size: 12px; font-weight: 500; color: #ddd; min-width: 28px; text-align: right; }
+.axis-level { font-size: 10px; min-width: 44px; text-align: right; }
+.signals { padding: 0 0 6px 15px; }
+.signals ul { list-style: none; }
+.signals li { font-size: 10px; color: #555; line-height: 1.5; }
+.signals li:before { content: "· "; }
+.overall-color { color: #EF9F27; }
+</style>
+</head>
+<body>
+<div class="header">
+  <div>
+    <h1>CORTEX++ civilization dashboard</h1>
+    <div class="ts">last run: 2026-04-13 14:29 UTC · auto-refresh: 10 min</div>
+  </div>
+</div>
+
+<div class="summary">
+  <div class="metric">
+    <div class="metric-label">Overall score</div>
+    <div class="metric-value overall-color">0.49</div>
+    <div class="metric-sub">MEDIUM state</div>
+  </div>
+  <div class="metric">
+    <div class="metric-label">Critical axes</div>
+    <div class="metric-value" style="color:#E24B4A;">0</div>
+    <div class="metric-sub">score &lt; 0.35</div>
+  </div>
+  <div class="metric">
+    <div class="metric-label">Axes tracked</div>
+    <div class="metric-value">28</div>
+    <div class="metric-sub">across 4 domains</div>
+  </div>
+  <div class="metric">
+    <div class="metric-label">Planet avg</div>
+    <div class="metric-value" style="color:#EF9F27;">0.49</div>
+    <div class="metric-sub">PLANET domain</div>
+  </div>
+</div>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:#E24B4A;"></div>LOW (&lt;0.35)</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#EF9F27;"></div>MEDIUM (0.35–0.65)</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#639922;"></div>HIGH (&gt;0.65)</div>
+</div>
+
+<div class="domains">
+        <div class="domain-card">
+          <div class="domain-header">
+            <div class="domain-title" style="color:#1D9E75;">PLANET</div>
+            <div class="domain-avg" style="color:#EF9F27;">0.49</div>
+          </div>
+          <div class="domain-bar">
+            <div class="domain-bar-fill" style="width:49%; background:#1D9E75;"></div>
+          </div>
+          
+            <div class="axis-row" title="CLIMATE_GLOBAL_RISK_REVIEW">
+              <div class="axis-dot" style="background:#EF9F27;"></div>
+              <div class="axis-name">Climate global risk</div>
+              <div class="axis-bar"><div class="axis-bar-fill" style="width:45%; background:#EF9F27;"></div></div>
+              <div class="axis-score">0.45</div>
+              <div class="axis-level" style="color:#EF9F27;">MEDIUM</div>
+            </div>
+            <div class="signals"><ul><li>⚠️ CO2 431.87 ppm — опасно над 420 ppm (пред-индустриален: 280 ppm)</li><li>⚡ Годишен ръст на CO2: +2.98 ppm — над нормата</li></ul></div>
+            <div class="axis-row" title="ENERGY_REVIEW">
+              <div class="axis-dot" style="background:#EF9F27;"></div>
+              <div class="axis-name">Energy</div>
+              <div class="axis-bar"><div class="axis-bar-fill" style="width:50%; background:#EF9F27;"></div></div>
+              <div class="axis-score">0.50</div>
+              <div class="axis-level" style="color:#EF9F27;">MEDIUM</div>
+            </div>
+            <div class="signals"><ul><li>⚡ Липсват данни за дял на възобновяеми</li></ul></div>
+            <div class="axis-row" title="FOOD_REVIEW">
+              <div class="axis-dot" style="background:#EF9F27;"></div>
+              <div class="axis-name">Food</div>
+              <div class="axis-bar"><div class="axis-bar-fill" style="width:50%; background:#EF9F27;"></div></div>
+              <div class="axis-score">0.50</div>
+              <div class="axis-level" style="color:#EF9F27;">MEDIUM</div>
+            </div>
+            <div class="signals"><ul><li>⚡ Generic scorer — няма специфични прагове за тази ос</li></ul></div>
+            <div class="axis-row" title="WATER_REVIEW">
+              <div class="axis-dot" style="background:#EF9F27;"></div>
+              <div class="axis-name">Water</div>
+              <div class="axis-bar"><div class="axis-bar-fill" style="width:50%; background:#EF9F27;"></div></div>
+              <div class="axis-score">0.50</div>
+              <div class="axis-level" style="color:#EF9F27;">MEDIUM</div>
+            </div>
+            <div class="signals"><ul><li>⚡ Generic scorer — няма специфични прагове за тази ос</li></ul></div>
+            <div class="axis-row" title="MATERIALS_WASTE_REVIEW">
+              <div class="axis-dot" style="background:#EF9F27;"></div>
+              <div class="axis-name">Materials & waste</div>
+              <div class="axis-bar"><div class="axis-bar-fill" style="width:50%; background:#EF9F27;"></div></div>
+              <div class="axis-score">0.50</div>
+              <div class="axis-level" style="color:#EF9F27;">MEDIUM</div>
+            </div>
+            <div class="signals"><ul><li>⚡ Generic scorer — няма специфични прагове за тази ос</li></ul></div>
+            <div class="axis-row" title="ECOSYSTEMS_BIODIVERSITY_REVIEW">
+              <div class="axis-dot" style="background:#EF9F27;"></div>
+              <div class="axis-name">Ecosystems & biodiversity</div>
+              <div class="axis-bar"><div class="axis-bar-fill" style="width:50%; background:#EF9F27;"></div></div>
+              <div class="axis-score">0.50</div>
+              <div class="axis-level" style="color:#EF9F27;">MEDIUM</div>
+            </div>
+            <div class="signals"><ul><li>⚡ Generic scorer — няма специфични прагове за тази ос</li></ul></div>
+            <div class="axis-row" title="PLANETARY_POTENTIAL_REVIEW">
+              <div class="axis-dot" style="background:#EF9F27;"></div>
+              <div class="axis-name">Planetary potential</div>
+              <div class="axis-bar"><div class="axis-bar-fill" style="width:50%; background:#EF9F27;"></div></div>
+              <div class="axis-score">0.50</div>
+              <div class="axis-level" style="color:#EF9F27;">MEDIUM</div>
+            </div>
+            <div class="signals"><ul><li>⚡ Generic scorer — няма специфични прагове за тази ос</li></ul></div>
+        </div>
+        <div class="domain-card">
+          <div class="domain-header">
+            <div class="domain-title" style="color:#378ADD;">HUMAN</div>
+            <div class="domain-avg" style="color:#EF9F27;">0.49</div>
+          </div>
+          <div class="domain-bar">
+            <div class="domain-bar-fill" style="width:49%; background:#378ADD;"></div>
+          </div>
+          
+            <div class="axis-row" title="HUMAN_WELL_BEING_REVIEW">
+              <div class="axis-dot" style="background:#EF9F27;"></div>
+              <div class="axis-name">Human well-being</div>
+              <div class="axis-bar"><div class="axis-bar-fill" style="width:45%; background:#EF9F27;"></div></div>
+              <div class="axis-score">0.45</div>
+              <div class="axis-level" style="color:#EF9F27;">MEDIUM</div>
+            </div>
+            <div class="signals"><ul><li>⚡ UHC индекс: 71.0 — средно покритие</li><li>✅ Самоубийства: 9.2/100k — под средното</li><li>⚡ Бедност: 10.4% — значително ниво</li></ul></div>
+            <div class="axis-row" title="CULTURE_MEDIA_REVIEW">
+              <div class="axis-dot" style="background:#EF9F27;"></div>
+              <div class="axis-name">Culture & media</div>
+              <div class="axis-bar"><div class="axis-bar-fill" style="width:50%; background:#EF9F27;"></div></div>
+              <div class="axis-score">0.50</div>
+              <div class="axis-level" style="color:#EF9F27;">MEDIUM</div>
+            </div>
+            <div class="signals"><ul><li>⚡ Generic scorer — няма специфични прагове за тази ос</li></ul></div>
+            <div class="axis-row" title="COGNITION_LEARNING_REVIEW">
+              <div class="axis-dot" style="background:#EF9F27;"></div>
+              <div class="axis-name">Cognition & learning</div>
+              <div class="axis-bar"><div class="axis-bar-fill" style="width:50%; background:#EF9F27;"></div></div>
+              <div class="axis-score">0.50</div>
+              <div class="axis-level" style="color:#EF9F27;">MEDIUM</div>
+            </div>
+            <div class="signals"><ul><li>⚡ Generic scorer — няма специфични прагове за тази ос</li></ul></div>
+            <div class="axis-row" title="SOCIAL_RELATIONS_REVIEW">
+              <div class="axis-dot" style="background:#EF9F27;"></div>
+              <div class="axis-name">Social relations</div>
+              <div class="axis-bar"><div class="axis-bar-fill" style="width:50%; background:#EF9F27;"></div></div>
+              <div class="axis-score">0.50</div>
+              <div class="axis-level" style="color:#EF9F27;">MEDIUM</div>
+            </div>
+            <div class="signals"><ul><li>⚡ Generic scorer — няма специфични прагове за тази ос</li></ul></div>
+            <div class="axis-row" title="GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL">
+              <div class="axis-dot" style="background:#EF9F27;"></div>
+              <div class="axis-name">Governance rights</div>
+              <div class="axis-bar"><div class="axis-bar-fill" style="width:50%; background:#EF9F27;"></div></div>
+              <div class="axis-score">0.50</div>
+              <div class="axis-level" style="color:#EF9F27;">MEDIUM</div>
+            </div>
+            <div class="signals"><ul><li>⚡ Generic scorer — няма специфични прагове за тази ос</li></ul></div>
+        </div>
+        <div class="domain-card">
+          <div class="domain-header">
+            <div class="domain-title" style="color:#7F77DD;">CIVILIZATION</div>
+            <div class="domain-avg" style="color:#EF9F27;">0.50</div>
+          </div>
+          <div class="domain-bar">
+            <div class="domain-bar-fill" style="width:50%; background:#7F77DD;"></div>
+          </div>
+          
+            <div class="axis-row" title="ECONOMY_WORK_REVIEW">
+              <div class="axis-dot" style="background:#EF9F27;"></div>
+              <div class="axis-name">Economy & work</div>
+              <div class="axis-bar"><div class="axis-bar-fill" style="width:50%; background:#EF9F27;"></div></div>
+              <div class="axis-score">0.50</div>
+              <div class="axis-level" style="color:#EF9F27;">MEDIUM</div>
+            </div>
+            <div class="signals"><ul><li>⚡ Generic scorer — няма специфични прагове за тази ос</li></ul></div>
+            <div class="axis-row" title="INEQUALITY_POVERTY_REVIEW">
+              <div class="axis-dot" style="background:#EF9F27;"></div>
+              <div class="axis-name">Inequality & poverty</div>
+              <div class="axis-bar"><div class="axis-bar-fill" style="width:50%; background:#EF9F27;"></div></div>
+              <div class="axis-score">0.50</div>
+              <div class="axis-level" style="color:#EF9F27;">MEDIUM</div>
+            </div>
+            <div class="signals"><ul><li>⚡ Generic scorer — няма специфични прагове за тази ос</li></ul></div>
+            <div class="axis-row" title="GOVERNANCE_INSTITUTIONS_REVIEW">
+              <div class="axis-dot" style="background:#EF9F27;"></div>
+              <div class="axis-name">Governance & institutions</div>
+              <div class="axis-bar"><div class="axis-bar-fill" style="width:50%; background:#EF9F27;"></div></div>
+              <div class="axis-score">0.50</div>
+              <div class="axis-level" style="color:#EF9F27;">MEDIUM</div>
+            </div>
+            <div class="signals"><ul><li>⚡ Generic scorer — няма специфични прагове за тази ос</li></ul></div>
+            <div class="axis-row" title="TECHNOLOGY_AI_REVIEW">
+              <div class="axis-dot" style="background:#EF9F27;"></div>
+              <div class="axis-name">Technology & AI</div>
+              <div class="axis-bar"><div class="axis-bar-fill" style="width:50%; background:#EF9F27;"></div></div>
+              <div class="axis-score">0.50</div>
+              <div class="axis-level" style="color:#EF9F27;">MEDIUM</div>
+            </div>
+            <div class="signals"><ul><li>⚡ Generic scorer — няма специфични прагове за тази ос</li></ul></div>
+            <div class="axis-row" title="INFRASTRUCTURE_CITIES_REVIEW">
+              <div class="axis-dot" style="background:#EF9F27;"></div>
+              <div class="axis-name">Infrastructure & cities</div>
+              <div class="axis-bar"><div class="axis-bar-fill" style="width:50%; background:#EF9F27;"></div></div>
+              <div class="axis-score">0.50</div>
+              <div class="axis-level" style="color:#EF9F27;">MEDIUM</div>
+            </div>
+            <div class="signals"><ul><li>⚡ Generic scorer — няма специфични прагове за тази ос</li></ul></div>
+            <div class="axis-row" title="EDUCATION_CULTURE_REVIEW">
+              <div class="axis-dot" style="background:#EF9F27;"></div>
+              <div class="axis-name">Education & culture</div>
+              <div class="axis-bar"><div class="axis-bar-fill" style="width:50%; background:#EF9F27;"></div></div>
+              <div class="axis-score">0.50</div>
+              <div class="axis-level" style="color:#EF9F27;">MEDIUM</div>
+            </div>
+            <div class="signals"><ul><li>⚡ Generic scorer — няма специфични прагове за тази ос</li></ul></div>
+            <div class="axis-row" title="TECHNOLOGY_INFRA_REVIEW">
+              <div class="axis-dot" style="background:#EF9F27;"></div>
+              <div class="axis-name">Technology infra</div>
+              <div class="axis-bar"><div class="axis-bar-fill" style="width:50%; background:#EF9F27;"></div></div>
+              <div class="axis-score">0.50</div>
+              <div class="axis-level" style="color:#EF9F27;">MEDIUM</div>
+            </div>
+            <div class="signals"><ul><li>⚡ Generic scorer — няма специфични прагове за тази ос</li></ul></div>
+        </div>
+        <div class="domain-card">
+          <div class="domain-header">
+            <div class="domain-title" style="color:#888780;">COSMOS</div>
+            <div class="domain-avg" style="color:#EF9F27;">0.50</div>
+          </div>
+          <div class="domain-bar">
+            <div class="domain-bar-fill" style="width:50%; background:#888780;"></div>
+          </div>
+          
+            <div class="axis-row" title="LONG_TERM_FUTURE_REVIEW">
+              <div class="axis-dot" style="background:#EF9F27;"></div>
+              <div class="axis-name">Long-term future</div>
+              <div class="axis-bar"><div class="axis-bar-fill" style="width:50%; background:#EF9F27;"></div></div>
+              <div class="axis-score">0.50</div>
+              <div class="axis-level" style="color:#EF9F27;">MEDIUM</div>
+            </div>
+            <div class="signals"><ul><li>⚡ Generic scorer — няма специфични прагове за тази ос</li></ul></div>
+            <div class="axis-row" title="DEEP_TIME_RISKS_REVIEW">
+              <div class="axis-dot" style="background:#EF9F27;"></div>
+              <div class="axis-name">Deep time risks</div>
+              <div class="axis-bar"><div class="axis-bar-fill" style="width:50%; background:#EF9F27;"></div></div>
+              <div class="axis-score">0.50</div>
+              <div class="axis-level" style="color:#EF9F27;">MEDIUM</div>
+            </div>
+            <div class="signals"><ul><li>⚡ Generic scorer — няма специфични прагове за тази ос</li></ul></div>
+            <div class="axis-row" title="SPACE_INFRASTRUCTURE_REVIEW">
+              <div class="axis-dot" style="background:#EF9F27;"></div>
+              <div class="axis-name">Space infrastructure</div>
+              <div class="axis-bar"><div class="axis-bar-fill" style="width:50%; background:#EF9F27;"></div></div>
+              <div class="axis-score">0.50</div>
+              <div class="axis-level" style="color:#EF9F27;">MEDIUM</div>
+            </div>
+            <div class="signals"><ul><li>⚡ Generic scorer — няма специфични прагове за тази ос</li></ul></div>
+            <div class="axis-row" title="COSMIC_RESOURCES_REVIEW">
+              <div class="axis-dot" style="background:#EF9F27;"></div>
+              <div class="axis-name">Cosmic resources</div>
+              <div class="axis-bar"><div class="axis-bar-fill" style="width:50%; background:#EF9F27;"></div></div>
+              <div class="axis-score">0.50</div>
+              <div class="axis-level" style="color:#EF9F27;">MEDIUM</div>
+            </div>
+            <div class="signals"><ul><li>⚡ Generic scorer — няма специфични прагове за тази ос</li></ul></div>
+            <div class="axis-row" title="GENERAL_SELF_REVIEW">
+              <div class="axis-dot" style="background:#EF9F27;"></div>
+              <div class="axis-name">Self review</div>
+              <div class="axis-bar"><div class="axis-bar-fill" style="width:50%; background:#EF9F27;"></div></div>
+              <div class="axis-score">0.50</div>
+              <div class="axis-level" style="color:#EF9F27;">MEDIUM</div>
+            </div>
+            <div class="signals"><ul><li>⚡ Generic scorer — няма специфични прагове за тази ос</li></ul></div>
+            <div class="axis-row" title="GOAL_PROGRESS_REVIEW">
+              <div class="axis-dot" style="background:#EF9F27;"></div>
+              <div class="axis-name">Goal progress</div>
+              <div class="axis-bar"><div class="axis-bar-fill" style="width:50%; background:#EF9F27;"></div></div>
+              <div class="axis-score">0.50</div>
+              <div class="axis-level" style="color:#EF9F27;">MEDIUM</div>
+            </div>
+            <div class="signals"><ul><li>⚡ Generic scorer — няма специфични прагове за тази ос</li></ul></div>
+        </div></div>
+<div style='margin-top:1.5rem;'><h2 style='font-size:13px;font-weight:500;color:#fff;margin-bottom:0.75rem;'>IMPROVEMENT PROPOSALS</h2><div style='background:#1a1a1a;border:0.5px solid #2a2a2a;border-radius:12px;overflow:hidden;'><table style='width:100%;border-collapse:collapse;'><thead><tr style='border-bottom:0.5px solid #2a2a2a;'><th style='text-align:left;padding:8px 12px;font-size:10px;color:#555;font-weight:400;'>COMPONENT</th><th style='text-align:left;padding:8px 12px;font-size:10px;color:#555;font-weight:400;'>PROBLEM</th><th style='text-align:left;padding:8px 12px;font-size:10px;color:#555;font-weight:400;'>PRIORITY</th><th style='text-align:left;padding:8px 12px;font-size:10px;color:#555;font-weight:400;'>STATUS</th></tr></thead><tbody><tr><td style='color:#aaa;font-size:11px;padding:6px 12px;border-top:0.5px solid #222;'>economy_work_review</td><td style='font-size:11px;padding:6px 12px;border-top:0.5px solid #222;'>Грешката в предсказанието за ECONOMY_WORK_REVIEW е 24.0, което е над средната гр</td><td style='font-size:11px;padding:6px 12px;border-top:0.5px solid #222;'>HIGH</td><td style='color:#639922;font-size:11px;padding:6px 12px;border-top:0.5px solid #222;'>approved</td></tr><tr><td style='color:#aaa;font-size:11px;padding:6px 12px;border-top:0.5px solid #222;'>governance_institutions_review</td><td style='font-size:11px;padding:6px 12px;border-top:0.5px solid #222;'>Моделът за прогнозиране на институциите на управление показва значителна грешка </td><td style='font-size:11px;padding:6px 12px;border-top:0.5px solid #222;'>HIGH</td><td style='color:#639922;font-size:11px;padding:6px 12px;border-top:0.5px solid #222;'>approved</td></tr></tbody></table></div></div>
+</body>
+</html>

@@ -1,0 +1,119 @@
+{
+  "axis": "COSMIC_RESOURCES_REVIEW",
+  "domain": "cosmos",
+  "timestamp": "2026-05-16T22:04:23.483486+00:00",
+  "sources_count": 7,
+  "rss_count": 0,
+  "ddg_count": 5,
+  "youtube_count": 2,
+  "youtube_items": [
+    {
+      "title": "[YT] Mokey's show - 424 - Asteroids - YouTube",
+      "summary": "What? Yeah. Yeah. Yeah. Boom! Boom! What? What? What are you doing? Ah! What are you doing? Where? I want to know what you're doing. What do I exercise? That's all. That's all. That's all. What? Well, I am really strong. No, you're not. Help! That's right, book. You will be strong, so smokey. Have you checked some asteroids, mokey? Tee! Astroy? But the asteroids are bad. I really, really, really, really. That's all, by the book, you said the fuck up. Ah! Ah! Astroy is good. They're healthy. You can be strong, mokey. Okey! I will try some. Ah! Ah! Ah! Come. Uh! Yes! Yes, I've been strong. Ah! Don't wanna do this, mokey. Don't wanna do this, mokey. Yes, yes! Yeah! Don't wanna get them, mokey. Yeah! Oh! Ah! Ah! Ah! Ah! Ah! Ah! That's this! I don't know, mokey. Ah! Ah! What's you, mokey? I'm g",
+      "link": "https://www.youtube.com/watch?v=yLuVhRiSWac",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "yLuVhRiSWac",
+      "transcript_method": "whisper",
+      "transcript_chars": 1296,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Electromagnet Machine (Tutorial) [Ultimate Mining Tycoon] - YouTube",
+      "summary": "Hello, welcome back to another video. So in this video we're going to make an electric magnet, because I saw some of you wanted me to make that. I'm not sure if it's better than the serpent maker, but we're gonna make that. So for that we're gonna need a magnetic machine. A casing machine, a frame maker, we're also going to need at least one for nice. I'm gonna include two in mine. I'm gonna also get another for nice. And then bring the force, because we force your net as. Then yeah, I think we got to main material. So I'm gonna put a bit force where I have space to build. I'm gonna go check what else I need to make this. Okay, so we need the metal coil. So the coiler there, and we got an automatic, we need. So like usual, we're gonna start off by some conveyor. And then after that we're g",
+      "link": "https://www.youtube.com/watch?v=P9w7iwaJN0s",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "P9w7iwaJN0s",
+      "transcript_method": "whisper",
+      "transcript_chars": 4446,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "Астероидното изкопаване е представено като технически възможно, но няма ясна политика за регулиране и устойчиво използване на космически ресурси.",
+    "root_cause": "Няма международно споразумение или закона, който да регулира използването на космически ресурси, което води до потенциални конфликти и неравенство в достъпа.",
+    "severity": "HIGH",
+    "leverage_points": [
+      "Международната координация и споразумения за космически ресурси",
+      "Развитие на технологии за устойчиво и етично използване на ресурси"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Създаване на международен договор за устойчиво използване на космически ресурси",
+        "measurable_goal": "Договорът да включва стандарти за екологична безопасност и равен достъп за всички държави",
+        "timeframe": "дългосрочно"
+      },
+      {
+        "action": "Инвестиции в изследвания за устойчиви технологии за изкопаване на астероидни ресурси",
+        "measurable_goal": "Разработване на технологии, които минимизират отпадъците и вредите за космическата среда",
+        "timeframe": "средносрочно"
+      }
+    ],
+    "evidence": [
+      "The Space Resource Exploration and Utilization Act of 2015 (H.R. 1508) was a bill (which never became law)",
+      "The European Space Resources Innovation Centre (ESRIC) is a research, business, and innovation hub based in Luxembourg, established in August 2020 as the world's first center dedicated exclusively to space resources"
+    ],
+    "generalization": "Този проблем е свързан с домейна на космоса и етичната устойчивост, както и с домейна на политика и международно сътрудничество, тъй като липсата на регулации може да доведе до конфликти и неравенство.",
+    "summary": "Астероидното изкопаване е технически възможно, но липсата на международни регулации и устойчиви технологии предизвиква риски за екологична и социална стабилност.",
+    "risk_level": "HIGH"
+  },
+  "raw_items": [
+    {
+      "title": "Asteroid mining",
+      "summary": "Asteroid mining is the hypothetical and technically possible extraction of materials from asteroids and other minor planets, including near-Earth objects.Research missions focused on asteroid sample return, including Hayabusa, Hayabusa2, OSIRIS-REx, and Tianwen-2, illustrate the challenges of collecting ore from space using current technology. As of 2024, around 127 grams of asteroid material have",
+      "link": "https://en.wikipedia.org/wiki/Asteroid_mining",
+      "source_type": "ddg"
+    },
+    {
+      "title": "The Astronomical Potential of Asteroid Mining | by 13th... | Medium",
+      "summary": "Researchers are now saying that a space elevator is feasible with today’s technology. Having a space elevator would mitigate most of the foreseeable risks associated with asteroid mining.",
+      "link": "https://medium.com/@pythagoreanism/the-astronomical-potential-of-asteroid-mining-3a9ed4975740",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Space Resource Exploration and Utilization Act of 2015",
+      "summary": "The Space Resource Exploration and Utilization Act of 2015 (H.R. 1508) was a bill (which never became law) introduced in the 114th Congress of the U.S. on March 19, 2015, by Rep. Bill Posey, Republican of Florida. It is identical to the Senate bill by the same name (S. 976). The bill would have expanded Presidential power regarding space resources, and regulated US-based space exploration companie",
+      "link": "https://en.wikipedia.org/wiki/Space_Resource_Exploration_and_Utilization_Act_of_2015",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Lunar resources - Wikipedia",
+      "summary": "Although its applicability on exploiting natural resources remains in contention, leading experts generally agree with the position issued in 2015 by the International Institute of Space...",
+      "link": "https://en.wikipedia.org/wiki/Lunar_resources",
+      "source_type": "ddg"
+    },
+    {
+      "title": "European Space Resources Innovation Centre",
+      "summary": "The European Space Resources Innovation Centre (ESRIC) is a research, business, and innovation hub based in Luxembourg, established in August 2020 as the world's first center dedicated exclusively to the utilization of space resources in support of…",
+      "link": "https://grokipedia.com/page/european_space_resources_innovation_centre",
+      "source_type": "ddg"
+    },
+    {
+      "title": "[YT] Mokey's show - 424 - Asteroids - YouTube",
+      "summary": "What? Yeah. Yeah. Yeah. Boom! Boom! What? What? What are you doing? Ah! What are you doing? Where? I want to know what you're doing. What do I exercise? That's all. That's all. That's all. What? Well, I am really strong. No, you're not. Help! That's right, book. You will be strong, so smokey. Have you checked some asteroids, mokey? Tee! Astroy? But the asteroids are bad. I really, really, really, really. That's all, by the book, you said the fuck up. Ah! Ah! Astroy is good. They're healthy. You can be strong, mokey. Okey! I will try some. Ah! Ah! Ah! Come. Uh! Yes! Yes, I've been strong. Ah! Don't wanna do this, mokey. Don't wanna do this, mokey. Yes, yes! Yeah! Don't wanna get them, mokey. Yeah! Oh! Ah! Ah! Ah! Ah! Ah! Ah! That's this! I don't know, mokey. Ah! Ah! What's you, mokey? I'm g",
+      "link": "https://www.youtube.com/watch?v=yLuVhRiSWac",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "yLuVhRiSWac",
+      "transcript_method": "whisper",
+      "transcript_chars": 1296,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Electromagnet Machine (Tutorial) [Ultimate Mining Tycoon] - YouTube",
+      "summary": "Hello, welcome back to another video. So in this video we're going to make an electric magnet, because I saw some of you wanted me to make that. I'm not sure if it's better than the serpent maker, but we're gonna make that. So for that we're gonna need a magnetic machine. A casing machine, a frame maker, we're also going to need at least one for nice. I'm gonna include two in mine. I'm gonna also get another for nice. And then bring the force, because we force your net as. Then yeah, I think we got to main material. So I'm gonna put a bit force where I have space to build. I'm gonna go check what else I need to make this. Okay, so we need the metal coil. So the coiler there, and we got an automatic, we need. So like usual, we're gonna start off by some conveyor. And then after that we're g",
+      "link": "https://www.youtube.com/watch?v=P9w7iwaJN0s",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "P9w7iwaJN0s",
+      "transcript_method": "whisper",
+      "transcript_chars": 4446,
+      "has_full_transcript": true
+    }
+  ]
+}

@@ -1,0 +1,112 @@
+{
+  "axis": "GOAL_PROGRESS_REVIEW",
+  "fetched_at": "2026-05-17T14:53:34.337273+00:00",
+  "smart_query": "sustainable development goals SDG",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 0,
+    "gdelt": 3,
+    "arxiv": 0,
+    "github": 3,
+    "youtube_transcripts": 3,
+    "podcast": 1
+  },
+  "rss": [],
+  "gdelt": [
+    {
+      "title": "SDG - Focused Research , Development and Innovation Grant Program ( Philippines ) ",
+      "snippet": "SDG - Focused Research , Development and Innovation Grant Program ( Philippines ) ",
+      "url": "https://www2.fundsforngos.org/innovation/sdg-focused-research-development-and-innovation-grant-program-philippines/",
+      "source": "fundsforngos.org"
+    },
+    {
+      "title": "Nagaland SDG Action Awards 2025 presented to three organisations",
+      "snippet": "Nagaland SDG Action Awards 2025 presented to three organisations",
+      "url": "https://morungexpress.com/nagaland-sdg-action-awards-2025-presented-to-three-organisations",
+      "source": "morungexpress.com"
+    },
+    {
+      "title": "iShares MSCI Global Sustainable Development Goals ETF ( NASDAQ : SDG ) Stock Price Down 0 . 5 % – Should You Sell ? ",
+      "snippet": "iShares MSCI Global Sustainable Development Goals ETF ( NASDAQ : SDG ) Stock Price Down 0 . 5 % – Should You Sell ? ",
+      "url": "https://www.dailypolitical.com/2026/05/04/ishares-msci-global-sustainable-development-goals-etf-nasdaqsdg-stock-price-down-0-5-should-you-sell.html",
+      "source": "dailypolitical.com"
+    }
+  ],
+  "github_repos": [
+    {
+      "title": "samirsaci/supply-chain-sustainability",
+      "snippet": "Build Supply Chain Sustainability Reporting with Python",
+      "stars": 60,
+      "url": "https://github.com/samirsaci/supply-chain-sustainability",
+      "updated": "2026-04-18",
+      "source": "GitHub"
+    },
+    {
+      "title": "osdg-ai/osdg-tool",
+      "snippet": "OSDG is an open-source tool that maps and connects activities to the UN Sustainable Development Goals (SDGs) by identifying SDG-relevant content in any text. The tool is available online at www.osdg.a",
+      "stars": 47,
+      "url": "https://github.com/osdg-ai/osdg-tool",
+      "updated": "2026-04-29",
+      "source": "GitHub"
+    },
+    {
+      "title": "wmo-raf/climweb",
+      "snippet": "Open Source Content Management System for National Meteorological and Hydrological Services ",
+      "stars": 29,
+      "url": "https://github.com/wmo-raf/climweb",
+      "updated": "2026-05-17",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [],
+  "podcast": "[Village gossip, pesticide bans, and gene drives: 17 experts on the future of global health] What does it really take to lift millions out of poverty and prevent needless deaths?In this special compilation episode, 17 past guests — including economists, nonprofit founders, and policy advisors — share their most powerful and actionable insights from the front lines of global health and development. You’ll hear about the critical need to boost agricultural productivity in sub-Saharan Africa",
+  "wiki": null,
+  "youtube_items": [
+    {
+      "title": "[YT] How We Can Make the World a Better Place by 2030 | Michael Green | TED Talks",
+      "summary": "Translator: Peter Petrov Reviewer: Radost Tsvetkova Мислите ли, че светът ще бъде по-добър догодина? А в следващото десетилетие? Ще можем ли да се справим с глада, да постигнем равенство между половете и спрем климатичните промени в идните 15 години? Според световните правителства: да, можем. Тези дни световните лидери на среща в ООН в Ню Йорк съгласуваха нов набор от глобални цели за развитието на света до 2030. Ето ги. Тези цели са продукт на широки консултации. Глобалните цели показват какво искаме да е човечеството. Това е планът, но можем ли да го изпълним? Може ли тази визия за по-добър свят да бъде постигната? Тук съм днес, защото направихме разчети, които показват, шокиращо, че май наистина може. Но не по обичайния начин. Мисълта, че светът ще стане по-добро място може да изглежда ",
+      "link": "https://www.youtube.com/watch?v=o08ykAqLOxk",
+      "source_type": "youtube",
+      "channel": "TED",
+      "video_id": "o08ykAqLOxk",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Stocktaking | What it will take to achieve the Sustainable Development Goals? | United Nations",
+      "summary": "It is so decided. In 2015, world leaders made a promise for the well-being of all people and the planet We need action. to reach the Sustainable Development Goals by 2030. There's progress in life expectancy and disease prevention. There's greater gender parity in management positions. Many developing economies have seen a growing middle class. Safe sanitation and basic hygiene services are becoming the norm. More than 95% of the global population have access to mobile broadband networks. The future of energy is cleaner. Unfortunately, at the halfway point, only 15% of SDG targets are on track. and more than a third are stagnated or in regression. More than 780 million people face chronic hunger. More than 100 million families are fleeing war, conflict and human rights violations. Social p",
+      "link": "https://www.youtube.com/watch?v=enGJyhu6Xr0",
+      "source_type": "youtube",
+      "channel": "United Nations",
+      "video_id": "enGJyhu6Xr0",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 1580,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Sustainable Development Goals (SDGs) Explained in 10 minutes or less",
+      "summary": "hey y'all it's kaylee welcome tipping a suit where every week i talk about sustainability why you ask because i dream of a world where a global pandemic does not create 50 new billionaires today i'm going to be covering the united nations sustainable development goals or as you may know them the sdgs global goals or 2030 agenda for sustainable development i'm going to attempt to give you everything you need to know about them in just 10 minutes or less so we better get going [Music] the 2030 agenda for sustainable development was adopted on september 25th 2015 universally universal adoption means that every single country all 193 u.n member states agreed i'm sure you can imagine that getting 193 countries to agree on anything is next to impossible but that's what makes this agenda so groun",
+      "link": "https://www.youtube.com/watch?v=xubK4T9Nc8A",
+      "source_type": "youtube",
+      "channel": "Hippy In A Suit",
+      "video_id": "xubK4T9Nc8A",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ],
+  "summary": "Визията за устойчива цивилизация с достоен живот за всеки се подкрепя от конкретни проекти и инициативи, свързани със СДГ и отворени технологии.",
+  "urgency": "MEDIUM",
+  "sentiment": "POSITIVE",
+  "key_developments": [
+    "SDG - Focused Research , Development and Innovation Grant Program (Philippines)",
+    "Nagaland SDG Action Awards 2025 presented to three organisations",
+    "samirsaci/supply-chain-sustainability (star=60)",
+    "osdg-ai/osdg-tool (star=47)",
+    "wmo-raf/climweb (star=29)"
+  ],
+  "open_source_momentum": "High",
+  "scientific_frontier": "No data",
+  "relevance_to_goal": "HIGH"
+}

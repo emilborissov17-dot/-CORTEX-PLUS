@@ -1,0 +1,37 @@
+{
+  "axis": "EDUCATION_CULTURE_REVIEW",
+  "fetched_at": "2026-04-30T08:27:29.605636+00:00",
+  "smart_query": "education access schools literacy",
+  "sources_count": {
+    "wiki": 0,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [],
+  "gdelt": [],
+  "github_repos": [],
+  "arxiv_papers": [
+    {
+      "title": "Hands-on PDC in Undergraduate Computing Education",
+      "snippet": "Parallel and Distributed Computing (PDC) is a critical yet conceptually challenging area of the undergraduate computer science curriculum. While students often encounter these concepts in theory, few gain exposure to experience in real high-performance computing (HPC) environments. Research shows th",
+      "url": "https://arxiv.org/abs/2604.25812v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Curiosity and Metacognition: Towards a Unified Framework for Learning and Education in the Age of AI",
+      "snippet": "This chapter examines the relationship between curiosity and metacognition as critical drivers of autonomous and self-regulated learning. We synthesize recent research to propose a unified framework integrating behavioral, computational, and psychoeducational dimensions, arguing that curiosity, i.e.",
+      "url": "https://arxiv.org/abs/2604.25648v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[FLI’s President and CEO on Trump’s support for an AI ‘kill switch’] President Trump said during an interview aired yesterday by Fox Business that &#8220;there should be&#8221; when asked if AI needs [&#8230;]",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

@@ -1,0 +1,109 @@
+{
+  "axis": "ECONOMY_WORK_REVIEW",
+  "domain": "civilization",
+  "timestamp": "2026-05-04T12:39:57.788002+00:00",
+  "sources_count": 9,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 1,
+  "youtube_items": [
+    {
+      "title": "[YT] Global Economy Slowdown 2025-2026: Recession Wave Coming?",
+      "summary": "The world economy stands at a precarious juncture, forecasts for 2025 and 2026 paint a picture of slowing growth. This is not a sudden storm but a culmination of pressures building for some time. Global GDP growth is decelerating, with the OECD projecting a decline from 3.2% in 2024 to 3.0% by 2026. This trend signals a period of economic cooling that could affect jobs, businesses and household incomes worldwide. Persistent inflation remains a major concern, eroding the purchasing power of consumers. Central banks have responded by raising interest rates to cool down demand and bring inflation under control. However, these higher interest rates also make borrowing more expensive, dampening investment and spending. Global public debt has reached unprecedented levels, creating vulnerabilitie",
+      "link": "https://www.youtube.com/watch?v=QpB3nRe1Yb0",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "QpB3nRe1Yb0",
+      "transcript_method": "whisper",
+      "transcript_chars": 12191,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "Анализ на ECONOMY_WORK_REVIEW — данни получени но LLM грешка",
+    "root_cause": "LLM parsing грешка",
+    "severity": "UNKNOWN",
+    "leverage_points": [],
+    "proposed_actions": [],
+    "evidence": [
+      "US denies Iranian report warship was struck by missiles",
+      "GameStop makes $55.5bn takeover offer for eBay",
+      "Samsung family pays off record $8bn inheritance tax bill"
+    ],
+    "generalization": "",
+    "summary": "- US denies Iranian report warship was struck by missiles: It comes as the US said on Monday it will begin to help \"guide\" vessels out of the Strait of Hormuz.\n- GameStop makes $55.5bn takeover offer ",
+    "risk_level": "UNKNOWN",
+    "trend": "UNKNOWN"
+  },
+  "raw_items": [
+    {
+      "title": "US denies Iranian report warship was struck by missiles",
+      "summary": "It comes as the US said on Monday it will begin to help \"guide\" vessels out of the Strait of Hormuz.",
+      "link": "https://www.bbc.com/news/articles/c775jevkyv2o?at_medium=RSS&at_campaign=rss",
+      "published": "Mon, 04 May 2026 11:36:35 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "GameStop makes $55.5bn takeover offer for eBay",
+      "summary": "GameStop's boss Ryan Cohen says he sees potential to make eBay a much bigger rival to Amazon.",
+      "link": "https://www.bbc.com/news/articles/cn0p8yled1do?at_medium=RSS&at_campaign=rss",
+      "published": "Mon, 04 May 2026 10:26:36 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Samsung family pays off record $8bn inheritance tax bill",
+      "summary": "The bill is tied to the estate left by the firm's late chairman Lee Kun-hee, who died in  October 2020.",
+      "link": "https://www.bbc.com/news/articles/cn0px8g13xgo?at_medium=RSS&at_campaign=rss",
+      "published": "Mon, 04 May 2026 04:24:22 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "The threat to summer holidays looming from jet fuel shortages",
+      "summary": "What impact might shortages have on our summer holidays - and what could be done about it?",
+      "link": "https://www.bbc.com/news/articles/c86d9v28qxxo?at_medium=RSS&at_campaign=rss",
+      "published": "Sun, 03 May 2026 23:03:41 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "What Was Discussed at Google’s White House Meeting About A.I.",
+      "summary": "The technology giant met with administration officials last week to address a growing concern in Washington: insufficient computing power for artificial intelligence.",
+      "link": "https://www.nytimes.com/2026/05/04/business/dealbook/google-ai-white-house.html",
+      "published": "Mon, 04 May 2026 11:59:32 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "GameStop Proposes Acquiring eBay for $55 Billion",
+      "summary": "Analysts question the feasibility of this long-shot bid by the video game retailer to acquire the much larger online marketplace.",
+      "link": "https://www.nytimes.com/2026/05/04/business/gamestop-ebay-acquisition-offer.html",
+      "published": "Mon, 04 May 2026 12:30:56 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "A 22,000-Home Community Is Being Built in a 5,000-Person Town",
+      "summary": "Chatham Park, a master-planned community in Pittsboro, N.C., is expected to expand the town to 60,000 people when completed.",
+      "link": "https://www.nytimes.com/2026/05/04/business/pittsboro-north-carolina-master-planned-development.html",
+      "published": "Mon, 04 May 2026 09:00:59 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "‘City of Glass’ Is Under Threat From Iran War",
+      "summary": "In India, Firozabad has depended on its glassmaking industry for centuries. Fuel prices are starting to shatter businesses already under pressure.",
+      "link": "https://www.nytimes.com/2026/05/04/business/india-iran-fuel-glass.html",
+      "published": "Mon, 04 May 2026 04:01:36 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] Global Economy Slowdown 2025-2026: Recession Wave Coming?",
+      "summary": "The world economy stands at a precarious juncture, forecasts for 2025 and 2026 paint a picture of slowing growth. This is not a sudden storm but a culmination of pressures building for some time. Global GDP growth is decelerating, with the OECD projecting a decline from 3.2% in 2024 to 3.0% by 2026. This trend signals a period of economic cooling that could affect jobs, businesses and household incomes worldwide. Persistent inflation remains a major concern, eroding the purchasing power of consumers. Central banks have responded by raising interest rates to cool down demand and bring inflation under control. However, these higher interest rates also make borrowing more expensive, dampening investment and spending. Global public debt has reached unprecedented levels, creating vulnerabilitie",
+      "link": "https://www.youtube.com/watch?v=QpB3nRe1Yb0",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "QpB3nRe1Yb0",
+      "transcript_method": "whisper",
+      "transcript_chars": 12191,
+      "has_full_transcript": true
+    }
+  ]
+}

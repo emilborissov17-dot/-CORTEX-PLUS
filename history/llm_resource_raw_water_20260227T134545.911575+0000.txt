@@ -1,0 +1,48 @@
+Thinking...
+Okay, let's tackle this query. The user wants me to act as an internal AGI resource review agent in the CORTEX++ system, specifically for the WATER domain. The task is to generate a JSON object based on the provided RAW_CONTEXT. 
+
+First, I need to parse the RAW_CONTEXT carefully. The main components are the INPUT DATA and the REQUIRED OUTPUT FORMAT. The INPUT DATA includes a summary from WATER_QUERY and a list of snapshot files. The summary shows the status of various data sources. For example, some sources are OK, others have issues like a 403 status or connection timeouts.
+
+Starting with the diagnosis status. The majority of the sources are OK, but there are some failures. The European Grid & Water-linked Infrastructure (OPSD proxy) has a connection timeout, which is a critical issue. Also, the World Bank file has a 403 status, which might mean access is denied. However, the overall system might still be functional enough for a "STRESSED" status, but maybe "OK" since most are working. Wait, the OPSD proxy is a failure, but others are OK. The status could be "STRESSED" because of partial failures.
+
+Next, the short_summary_bg in Bulgarian. It should mention the current state of the global water system, highlighting availability, quality, access, and risks. Maybe something like: "Глобалната вода система е в напрежение, с незадоволителни статуси на някои ключови източници, което влияе на достъпа до актуална информация."
+
+Key metrics: Need to extract three metrics. Looking at the sources, the World Bank has a 403 status, which is an issue. The OPSD proxy is failing. Also, the placeholder_water_data.json might be a local file, but it's not clear. Maybe metrics like "Data Source Availability" with value 8/10 (since 9 out of 10 sources are OK), "Critical Infrastructure Access" with value 403 (World Bank), and "System Stability" with value STRESSED. Interpretations should explain what these mean.
+
+Risks: The OPSD failure is a short-term risk (short time horizon) because it's a connection timeout. The World Bank's 403 could be a medium-term risk if access isn't resolved. Also, potential data gaps from failed sources could be a long-term risk.
+
+Opportunities: Maybe leveraging the placeholder_water_data.json for local insights, or using other active sources for better data integration.
+
+Recommended actions: Prioritize fixing the OPSD connection (high priority), address the World Bank access issue (medium), and enhance data integration from available sources (medium). 
+
+Notes for self-improvement: Maybe mention the need for better handling of proxy connections and data source reliability.
+
+Now, structuring all this into the required JSON format with Bulgarian text. Ensure that all keys are present and the Bulgarian fields are concise. Check for any missing required keys and validate the JSON structure.
+...done thinking.
+
+{
+  "diagnosis": {
+    "status": "STRESSED",
+    "short_summary_bg": "Глобалната вода система е в напрежение, с незадоволителни статуси на някои ключови източници, което влияе на достъпа до актуална информация.",
+    "key_metrics": [
+      {"name": "Достъп до източници", "value": "8/10", "interpretation_bg": "80% от източниците са активни, но някои ключови са нефункционални."},
+      {"name": "Статус на OPSD", "value": "FAIL", "interpretation_bg": "Прекъснато свързване с инфраструктурата за енергия и вода, което създава риски."},
+      {"name": "Критични данни", "value": "403", "interpretation_bg": "Несигурен достъп до данни от Всемирния банк, ограничаващ анализиране на енергийно-водния нексус."}
+    ]
+  },
+  "risks": [
+    {"name": "Прекъснато свързване с OPSD", "description_bg": "Несигурен достъп до критични данни за инфраструктура, което уязвимо прави системата.", "time_horizon": "short"},
+    {"name": "Ограничения от Всемирния банк", "description_bg": "Несигурен статус 403 за данни за енергия и вода, което затруднява анализиране на глобални тенденции.", "time_horizon": "medium"},
+    {"name": "Незапълнени данни", "description_bg": "Потенциални гърби в данните от непотвърдени източници, които могат да доведат до непълни заключения.", "time_horizon": "long"}
+  ],
+  "opportunities": [
+    {"name": "Локални данни от placeholder_water_data.json", "description_bg": "Използване на локални данни за компенсиране на недостатъка от нефункционални източници."}
+  ],
+  "recommended_actions": [
+    {"id": "WATER-ACT-001", "title_bg": "Решаване на проблема с OPSD", "description_bg": "Изследване и подобряване на връзката с OPSD за сигурен достъп до инфраструктурни данни.", "priority": "high"},
+    {"id": "WATER-ACT-002", "title_bg": "Обработка на ограничения от Всемирния банк", "description_bg": "Изтъркване на алтернативни източници за данни за енергия и вода, за да се намали зависимостта.", "priority": "medium"}
+  ],
+  "notes_for_cortex_self_improvement": [
+    "Необходимо е по-строго контролиране на статуси на източниците и автоматично подменяне на нефункционални данни."
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "axis": "HUMAN_WELL_BEING_REVIEW",
+  "fetched_at": "2026-05-04T08:06:18.210671+00:00",
+  "smart_query": "mental health wellbeing global",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 3,
+    "arxiv": 0,
+    "github": 0,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "NHS cancer jab could save patients hours in hospital",
+      "snippet": "Thousands of patients will be offered a new injectable form of an immunotherapy drug that takes minutes.",
+      "url": "https://www.bbc.com/news/articles/cx214vld41ko?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "What death doulas can teach us about dying",
+      "snippet": "Death doulas or soul midwives have increased in popularity in recent years. What do they do?",
+      "url": "https://www.bbc.com/news/articles/cp9vp0ld1leo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "The struggle to get hold of medication in England is set to get worse",
+      "snippet": "People living with conditions include heart problems, stroke risks, eye infections and bipolar are unable to get hold of the drugs they rely on. ",
+      "url": "https://www.bbc.com/news/articles/c202jqn3jzro?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [
+    {
+      "title": "Manulife Partners with Mind HK to Establish New Wellbeing Consultation Hub in Mong Kok",
+      "snippet": "Manulife Partners with Mind HK to Establish New Wellbeing Consultation Hub in Mong Kok",
+      "url": "https://portal.sina.com.hk/finance/finance-prnewswire/prnasia/2026/04/09/1680884/manulife-partners-with-mind-hk-to-establish-new-wellbeing-consultation-hub-in-mong-kok/",
+      "source": "portal.sina.com.hk"
+    },
+    {
+      "title": "What is mental wellbeing , really ? New study offers a clear answer",
+      "snippet": "What is mental wellbeing , really ? New study offers a clear answer",
+      "url": "https://www.thenews.com.pk/latest/1398536-is-mental-wellbeing-finally-defined-study-offers-new-answer",
+      "source": "thenews.com.pk"
+    },
+    {
+      "title": "Enlight Fellowship for Youth Mental Wellbeing Leaders",
+      "snippet": "Enlight Fellowship for Youth Mental Wellbeing Leaders",
+      "url": "https://www2.fundsforngos.org/innovation/enlight-fellowship-for-youth-mental-wellbeing-leaders/",
+      "source": "fundsforngos.org"
+    }
+  ],
+  "github_repos": [],
+  "arxiv_papers": [],
+  "podcast": "[Tools to Bolster Your Mental Health & Confidence | Dr. Paul Conti] Dr. Paul Conti, MD, is a board-certified psychiatrist and an expert in how to improve mental health and increase your sense of agency and wellbeing. He is also an expert in trauma treatment. We discuss practical tools you can use to gain insight into your natural strengths and to make better life choices on your own behalf. We explore how these tools can help overcome low motivation, intrusive tho",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

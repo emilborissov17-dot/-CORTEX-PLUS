@@ -1,0 +1,82 @@
+{
+  "axis": "LONG_TERM_FUTURE_REVIEW",
+  "fetched_at": "2026-03-14T07:08:00.633961+00:00",
+  "smart_query": "existential risk future civilization",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube": 10,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "Games with loot boxes to get minimum 16 age rating across Europe",
+      "snippet": "The new changes by the Pan-European Game Information age-ratings body (PEGI) will start from June.",
+      "url": "https://www.bbc.com/news/articles/cge84xqjg5lo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "AI toys for children misread emotions and respond inappropriately, researchers warn",
+      "snippet": "In first study of its kind, Cambridge researchers found AI toys could misread some children's emotions.",
+      "url": "https://www.bbc.com/news/articles/clyg4wx6nxgo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Grammarly pulls AI author-impersonation tool after backlash",
+      "snippet": "Writers criticised the feature which used their names and styles as \"AI personas\" without consent.",
+      "url": "https://www.bbc.com/news/articles/cx28v08jpe7o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "emcie-co/parlant",
+      "snippet": "The conversational control layer for customer-facing AI agents - Parlant is a context-engineering framework optimized for controlling customer interactions.",
+      "stars": 17824,
+      "url": "https://github.com/emcie-co/parlant",
+      "updated": "2026-03-13",
+      "source": "GitHub"
+    },
+    {
+      "title": "agencyenterprise/PromptInject",
+      "snippet": "PromptInject is a framework that assembles prompts in a modular fashion to provide a quantitative analysis of the robustness of LLMs to adversarial prompt attacks. 🏆 Best Paper Awards @ NeurIPS ML Saf",
+      "stars": 465,
+      "url": "https://github.com/agencyenterprise/PromptInject",
+      "updated": "2026-03-13",
+      "source": "GitHub"
+    },
+    {
+      "title": "MinghuiChen43/awesome-trustworthy-deep-learning",
+      "snippet": "A curated list of trustworthy deep learning papers. Daily updating...",
+      "stars": 383,
+      "url": "https://github.com/MinghuiChen43/awesome-trustworthy-deep-learning",
+      "updated": "2026-03-13",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "AI Survival Stories: a Taxonomic Analysis of AI Existential Risk",
+      "snippet": "Since the release of ChatGPT, there has been a lot of debate about whether AI systems pose an existential risk to humanity. This paper develops a general framework for thinking about the existential risk of AI systems. We analyze a two premise argument that AI systems pose a threat to humanity. Prem",
+      "url": "https://arxiv.org/abs/2601.09765v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Humanity in the Age of AI: Reassessing 2025's Existential-Risk Narratives",
+      "snippet": "Two 2025 publications, \"AI 2027\" (Kokotajlo et al., 2025) and \"If Anyone Builds It, Everyone Dies\" (Yudkowsky & Soares, 2025), assert that superintelligent artificial intelligence will almost certainly destroy or render humanity obsolete within the next decade. Both rest on the classic chain formula",
+      "url": "https://arxiv.org/abs/2512.04119v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[#490 – State of AI in 2026: LLMs, Coding, Scaling Laws, China, Agents, GPUs, AGI] Nathan Lambert and Sebastian Raschka are machine learning researchers, engineers, and educators. Nathan is the post-training lead at the Allen Institute for AI (Ai2) and the author of The RLHF Book. Sebastian Raschka is the author of Build a Large Language Model (From Scratch) and Build a Reasoning Model (From Scratch).\nThank you for listening ❤ Check out our sponsors: https://lexfridman.com/spons",
+  "wiki": null,
+  "summary": "",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": []
+}

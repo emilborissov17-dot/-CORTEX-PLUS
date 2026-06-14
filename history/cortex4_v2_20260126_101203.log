@@ -1,0 +1,19 @@
+Стъпка 1: зареждане/избор на принцип за сесията.
+Избран принцип за сесията: ГЛАВА 1 – FROM YESTERDAY TO TOMORROW – ПРИНЦИПИ ЗА CORTEX
+Стъпка 2: започвам автоматично резюмиране на суровите глави в 01_raw.
+=== СТАРТ НА CORTEX4_V2 СЕСИЯ ===
+Намерени сурови файлове в C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\01_raw: ['ch01_from_yesterday_to_tomorrow_raw.txt', 'ch02_all_things_change_raw.txt', 'ch03_using_the_scientific_method_raw.txt']
+Брой сурови файлове: 3
+Обработвам суров файл: C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\01_raw\ch01_from_yesterday_to_tomorrow_raw.txt -> C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\02_summary_bg\ch01_from_yesterday_to_tomorrow_raw_auto_summary_bg.txt
+[OK SUMMARY] C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\02_summary_bg\ch01_from_yesterday_to_tomorrow_raw_auto_summary_bg.txt
+Обработвам суров файл: C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\01_raw\ch02_all_things_change_raw.txt -> C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\02_summary_bg\ch02_all_things_change_raw_auto_summary_bg.txt
+[OK SUMMARY] C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\02_summary_bg\ch02_all_things_change_raw_auto_summary_bg.txt
+Обработвам суров файл: C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\01_raw\ch03_using_the_scientific_method_raw.txt -> C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\02_summary_bg\ch03_using_the_scientific_method_raw_auto_summary_bg.txt
+[OK SUMMARY] C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\02_summary_bg\ch03_using_the_scientific_method_raw_auto_summary_bg.txt
+Завършена обработка на суровите файлове. Резюмета в: C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\02_summary_bg
+=== КРАЙ НА ОБРАБОТКАТА НА ФАЙЛОВЕТЕ ===
+Край на партидната част на Cortex 4 v2.
+Папка сурови глави: C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\01_raw
+Папка резюмета: C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\02_summary_bg
+Очакван файл с принципи: C:\Users\emilb\Desktop\AGI\CORTEX++\knowledge\fresco_designing_future\principles_ch01_03_bg.txt
+=== СТАРТ НА ИНТЕРАКТИВЕН РЕЖИМ ===

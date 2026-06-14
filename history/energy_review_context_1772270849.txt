@@ -1,0 +1,65 @@
+ENERGY_REVIEW CONTEXT
+Generated at: 2026-02-28T09:27:29.379246+00:00
+
+=== DOMAIN SUMMARY: energysupply ===
+- run_at: 2026-02-28T09:21:30.870042, active_sources: 35, ok_sources: 20, failed_sources: 15
+- sources:
+  * International Energy Agency (IEA) | https://www.iea.org | status=200 | error=None
+  * U.S. Energy Information Administration (EIA) | https://www.eia.gov | status=200 | error=None
+  * World Bank Energy Statistics | https://data.worldbank.org/topic/energy | status=403 | error=HTTP 403
+  * European Commission - Joint Research Centre (JRC) | https://ec.europa.eu/jrc | status=200 | error=None
+  * National Renewable Energy Laboratory (NREL) | https://www.nrel.gov | status=200 | error=None
+  * International Renewable Energy Agency (IRENA) | https://www.irena.org | status=403 | error=HTTP 403
+  * Global Energy Observatory (GEO) - University of Texas | https://geo.utexas.edu | status=None | error=[ERROR] ConnectionError(MaxRetryError('HTTPSConnectionPool(host=\'geo.utexas.edu\', port=443): Max retries exceeded with url: / (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x7935d832c1a0>: Failed to resolve \'geo.utexas.edu\' ([Errno -5] No address associated with hostname)"))'))
+  * World Resources Institute (WRI) Energy Access | https://www.wri.org/programs/energy-access | status=404 | error=HTTP 404
+  * Energy Information Administration (EIA) API | https://www.eia.gov/developers/api-documentation | status=404 | error=HTTP 404
+  * International Energy Forum (IEF) | https://www.ief.org | status=200 | error=None
+  * Global Carbon Project | https://globalcarbonproject.org | status=None | error=[ERROR] ConnectionError(MaxRetryError('HTTPSConnectionPool(host=\'globalcarbonproject.org\', port=443): Max retries exceeded with url: / (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x7935d832d970>: Failed to resolve \'globalcarbonproject.org\' ([Errno -5] No address associated with hostname)"))'))
+  * National Agency for Energy Efficiency (NAEE) - Turkey | https://www.enerji.gov.tr | status=200 | error=None
+  * European Environment Agency (EEA) Energy Data | https://www.eea.europa.eu | status=200 | error=None
+  * International Energy Outlook (IEO) - U.S. Energy Information Administration | https://www.eia.gov/outlooks/ieo | status=200 | error=None
+  * Global Energy Transition Index (GETI) - World Economic Forum | https://www.weforum.org | status=403 | error=HTTP 403
+  * Energy Data Initiative (EDI) - World Bank | https://data.worldbank.org | status=200 | error=None
+  * Energy Storage Association (ESA) | https://www.energystorage.org | status=200 | error=None
+  * Global Energy System (GES) - Stanford University | https://energy.stanford.edu | status=200 | error=None
+  * International Energy Statistics Database (IESD) | https://iesd.org | status=200 | error=None
+  * Energy Markets and Policy Research (EMPR) - University of Cambridge | https://www.energy.cam.ac.uk | status=200 | error=None
+  * International Energy Agency (IEA) | https://www.iea.org/data-and-statistics | status=200 | error=None
+  * U.S. Energy Information Administration (EIA) | https://www.eia.gov/data-and-models | status=404 | error=HTTP 404
+  * European Union Energy Data Portal | https://ec.europa.eu/eurostat/cache/estat/energy/databrowser_en.html | status=404 | error=HTTP 404
+  * World Bank Energy Statistics | https://data.worldbank.org/topic/energy | status=403 | error=HTTP 403
+  * International Renewable Energy Agency (IRENA) | https://www.irena.org/data-and-statistics | status=403 | error=HTTP 403
+  * National Renewable Energy Laboratory (NREL) | https://www.nrel.gov/ | status=200 | error=None
+  * Global Energy Observatory (GEO) | https://www.worldenergy.org/ | status=200 | error=None
+  * Open Energy Markets (OEM) | https://open-energy-markets.org/ | status=None | error=[ERROR] ConnectionError(MaxRetryError('HTTPSConnectionPool(host=\'open-energy-markets.org\', port=443): Max retries exceeded with url: / (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x7935d832e810>: Failed to resolve \'open-energy-markets.org\' ([Errno -2] Name or service not known)"))'))
+  * World Resources Institute (WRI) | https://www.wri.org/energy | status=200 | error=None
+  * International Energy Forum (IEF) | https://www.ief.org/ | status=200 | error=None
+  * Energy Data Initiative (EDi) | https://www.edi.org.uk/ | status=436 | error=HTTP 436
+  * Global Energy Statistical Database (GESDB) | https://www.ief.org/ | status=200 | error=None
+  * European Energy Agency (EU Emissions Trading System) | https://www.eea.europa.eu/data-and-maps/ | status=200 | error=None
+  * African Energy Outlook (AEO) | https://www.africanenergy.org/ | status=None | error=[ERROR] ConnectionError(MaxRetryError('HTTPSConnectionPool(host=\'www.africanenergy.org\', port=443): Max retries exceeded with url: / (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x7935d84ffb30>: Failed to resolve \'www.africanenergy.org\' ([Errno -2] Name or service not known)"))'))
+  * International Energy Outlook (IEO) | https://www.iea.org/reports/international-energy-outlook | status=404 | error=HTTP 404
+
+=== DOMAIN SUMMARY: energyrenewables ===
+- run_at: 2026-02-28T09:27:29.349002, active_sources: 20, ok_sources: 11, failed_sources: 9
+- sources:
+  * https://www.irena.org | https://www.irena.org | status=403 | error=HTTP 403
+  * https://www.iea.org | https://www.iea.org | status=200 | error=None
+  * https://data.worldbank.org/topic/energy | https://data.worldbank.org/topic/energy | status=403 | error=HTTP 403
+  * https://nrel.gov | https://nrel.gov | status=200 | error=None
+  * https://ec.europa.eu/eurostat | https://ec.europa.eu/eurostat | status=200 | error=None
+  * https://www.eia.gov | https://www.eia.gov | status=200 | error=None
+  * https://www.energy.gov/eere | https://www.energy.gov/eere | status=200 | error=None
+  * https://gwec.net | https://gwec.net | status=200 | error=None
+  * https://www.seia.org | https://www.seia.org | status=403 | error=HTTP 403
+  * https://globalcarbonproject.org | https://globalcarbonproject.org | status=None | error=[ERROR] ConnectionError(MaxRetryError('HTTPSConnectionPool(host=\'globalcarbonproject.org\', port=443): Max retries exceeded with url: / (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x763fd41bcbf0>: Failed to resolve \'globalcarbonproject.org\' ([Errno -5] No address associated with hostname)"))'))
+  * https://www.unep.org/resources/publications | https://www.unep.org/resources/publications | status=403 | error=HTTP 403
+  * https://www.wri.org/energy | https://www.wri.org/energy | status=200 | error=None
+  * https://ises.org | https://ises.org | status=200 | error=None
+  * https://www.neb.gov.ca | https://www.neb.gov.ca | status=None | error=[ERROR] ConnectionError(MaxRetryError('HTTPSConnectionPool(host=\'www.neb.gov.ca\', port=443): Max retries exceeded with url: / (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x763fd4391b50>: Failed to resolve \'www.neb.gov.ca\' ([Errno -2] Name or service not known)"))'))
+  * https://www.ofgem.gov.uk | https://www.ofgem.gov.uk | status=200 | error=None
+  * https://www.cemcleanenergyministerial.org | https://www.cemcleanenergyministerial.org | status=None | error=[ERROR] ConnectionError(MaxRetryError('HTTPSConnectionPool(host=\'www.cemcleanenergyministerial.org\', port=443): Max retries exceeded with url: / (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x763fd41bce30>: Failed to resolve \'www.cemcleanenergyministerial.org\' ([Errno -2] Name or service not known)"))'))
+  * https://www.eea.europa.eu | https://www.eea.europa.eu | status=200 | error=None
+  * https://ief.org | https://ief.org | status=200 | error=None
+  * https://www.irena.org/renewables-watch | https://www.irena.org/renewables-watch | status=403 | error=HTTP 403
+  * https://www.irena.org/publications | https://www.irena.org/publications | status=403 | error=HTTP 403

@@ -1,0 +1,84 @@
+{
+  "axis": "FOOD_REVIEW",
+  "domain": "planet",
+  "timestamp": "2026-05-08T09:41:05.787233+00:00",
+  "sources_count": 5,
+  "rss_count": 0,
+  "ddg_count": 4,
+  "youtube_count": 1,
+  "youtube_items": [
+    {
+      "title": "[YT] How the UN is Holding Back the Sahara Desert - YouTube",
+      "summary": "Two years ago, before the work, this was a barren wasteland. Nothing had been grown here for 40 years. When the UN World Food Programme told the villagers that they were going to bring this land back as part of the Great Green Wall, they said it was impossible. But here we are in Africa in the desert at the northern edge of Senegal, and life has returned. The stakes couldn't be higher because when the soil washes away and land becomes a desert then people leave. They head to the cities and places like this just fall apart, but thanks to the work of the villagers and the World Food Programme, using techniques and systems I'm going to tell you about in this video the tides have changed and natural wealth is growing back, and growing the livelihoods of the people here. Welcome to Senegal. I'm",
+      "link": "https://www.youtube.com/watch?v=WCli0gyNwL0",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "WCli0gyNwL0",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "Хората в някои части на света, като пустинята Сахара, изпитват глад и несигурност при храната поради неблагоприятните условия",
+    "root_cause": "Една от основните причини е деградацията на природната среда и недостигът на ресурси за земеделие в тези области",
+    "severity": "HIGH",
+    "leverage_points": [
+      "Организацията на обединените нации (ООН) и световната програма за храна имат големи възможности да повлияват положението чрез прояви като голямата зелена стена",
+      "Местното население и местните власти имат direktно участие и интерес в подобряването на своята социална и икономическа среда"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Въвеждането на устойчиви земеделски практики и реализация на проекти за възстановяване на деградиралите земи",
+        "measurable_goal": "Повишаване на производството на храна и намаляване на броя на хората изпитващи глад с 30% през следващите 5 години",
+        "timeframe": "средносрочно"
+      }
+    ],
+    "evidence": [
+      "Действията на ООН в Сахара, споменати в видеото",
+      "Определението на глад и хранителна несигурност от организациите за храна"
+    ],
+    "generalization": "Този проблем е тясно свързан с домейна на планетата, но има и влияние върху здравето и благосъстоянието на хората, както и върху общата устойчивост на цивилизацията",
+    "summary": "Несигурността при храната и гладът представляват сериозни проблеми в някои области, особено в пустинните региони. Ефективни мерки и проекти могат да подобрят ситуацията.",
+    "risk_level": "HIGH"
+  },
+  "raw_items": [
+    {
+      "title": "Food security",
+      "summary": "Food security is the state of having reliable access to a sufficient quantity of affordable, healthy food. The availability of food for people of any class, gender, status, ethnicity, or religion is another element of food protection. Similarly, household food security is considered to exist when all the members of a family have consistent access to enough food for an active, healthy life. Food-se",
+      "link": "https://en.wikipedia.org/wiki/Food_security",
+      "source_type": "ddg"
+    },
+    {
+      "title": "What is food security? | World Food Programme",
+      "summary": "Learn what food security means and why it matters for people's well-being and stability. Find out how WFP collects and uses data to measure food insecurity and improve access to food in crisis-affected areas.",
+      "link": "https://www.wfp.org/stories/food-security-what-it-means-and-why-it-matters",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Hunger",
+      "summary": "In politics, humanitarian aid, and the social sciences, hunger is defined as a condition in which an individual does not have the physical or financial capability to consume sufficient food to meet basic nutritional needs for a sustained period. In the field of hunger relief, the term hunger is used in a sense that surpasses the typical desire for food that all humans experience, also referred to ",
+      "link": "https://en.wikipedia.org/wiki/Hunger",
+      "source_type": "ddg"
+    },
+    {
+      "title": "What Is Hunger? | Action Against Hunger",
+      "summary": "January 13, 2026 - Hunger is defined by the United Nations as the periods when people experience severe food insecurity—meaning that they go for entire days without eating due to lack of money, access to food, or other resources.",
+      "link": "https://www.actionagainsthunger.org/the-hunger-crisis/world-hunger-facts/what-is-hunger/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "[YT] How the UN is Holding Back the Sahara Desert - YouTube",
+      "summary": "Two years ago, before the work, this was a barren wasteland. Nothing had been grown here for 40 years. When the UN World Food Programme told the villagers that they were going to bring this land back as part of the Great Green Wall, they said it was impossible. But here we are in Africa in the desert at the northern edge of Senegal, and life has returned. The stakes couldn't be higher because when the soil washes away and land becomes a desert then people leave. They head to the cities and places like this just fall apart, but thanks to the work of the villagers and the World Food Programme, using techniques and systems I'm going to tell you about in this video the tides have changed and natural wealth is growing back, and growing the livelihoods of the people here. Welcome to Senegal. I'm",
+      "link": "https://www.youtube.com/watch?v=WCli0gyNwL0",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "WCli0gyNwL0",
+      "transcript_method": "yt_dlp",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ]
+}

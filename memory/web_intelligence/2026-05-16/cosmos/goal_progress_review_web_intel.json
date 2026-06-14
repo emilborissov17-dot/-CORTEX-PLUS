@@ -1,0 +1,124 @@
+{
+  "axis": "GOAL_PROGRESS_REVIEW",
+  "domain": "cosmos",
+  "timestamp": "2026-05-16T22:12:05.330662+00:00",
+  "sources_count": 7,
+  "rss_count": 5,
+  "ddg_count": 0,
+  "youtube_count": 2,
+  "youtube_items": [
+    {
+      "title": "[YT] Sustainable Development Goals (SDGs) Explained: 2026 Reality...",
+      "summary": "Hi folks, Alex here. In 2015, the United Nations set up 17 sustainable development goals, also known as SDGs, that were adopted by 100 and 93 countries. An admission is to achieve these goals by 2030. In this video, we are going to talk about DSDG wedding cake and two other interesting ways you can use these goals to see if your country or your business is sustainable. Okay, let's get drawing. On this channel, we share tools to help you change the world. So, subscribe if that's of interest to you. To be totally honest, the problem with the 17 goals is that, well, there's 17 of them, which can make them look complicated and not easy to remember. But the good thing about them is that there are the result of many public consultations and they provide a shared language for all countries to rep",
+      "link": "https://www.youtube.com/watch?v=qfOgdj4Okdw",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "qfOgdj4Okdw",
+      "transcript_method": "whisper",
+      "transcript_chars": 5829,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Agenda 2030 translation - New World Order disguised as Sustainable...",
+      "summary": "[DESCRIPTION FALLBACK] About Press Copyright Contact us Creators Advertise Developers Terms Privacy Policy & Safety How YouTube works Test new features.",
+      "link": "https://www.youtube.com/watch?v=FIdmr04qk50",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "FIdmr04qk50",
+      "transcript_method": "description",
+      "transcript_chars": 152,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "problem": "Нарушаване на целите на SDG и Agenda 2030 поради намаление на донорските средства за HIV-превенция и лечение, което ускорява връщането към високи нива на заразяване.",
+    "root_cause": "Намалени донорски фондове и колапс на местните здравни системи в уязвими държави, които подкопават усилията за борба със СПИД.",
+    "severity": "HIGH",
+    "leverage_points": [
+      "Международните донори и фондации, които подкрепят здравни инициативи",
+      "Националните правителства и местни органи, отговорни за изпълнението на SDG"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Увеличаване на донорските средства за HIV-превенция и лечение в уязвими държави",
+        "measurable_goal": "Донорските средства да се увеличат с 20% до 2027 г.",
+        "timeframe": "средносрочно"
+      },
+      {
+        "action": "Разработване на местни здравни системи с участие на общността",
+        "measurable_goal": "Установяване на 50 нови местни центра за здравеопазване до 2028 г.",
+        "timeframe": "дългосрочно"
+      }
+    ],
+    "evidence": [
+      "HIV prevention and treatment services faltering, warns UNAIDS",
+      "Media Advisory | United Nations to launch 2026 mid-year update on the global economy"
+    ],
+    "generalization": "Проблемът е свързан с домейна на цивилизацията и здравословната биосфера, тъй като съкращението на донорските средства и колапсът на здравните системи подкопават основните цели на устойчиво развитие и мир.",
+    "summary": "Намалени донорски средства за HIV-превенция и лечение в уязвими държави ускоряват връщането към високи нива на заразяване, което подкопава усилията за устойчиво развитие.",
+    "risk_level": "HIGH"
+  },
+  "raw_items": [
+    {
+      "title": "WHO sounds alarm over nicotine pouches targeting young people",
+      "summary": "<p>Brightly coloured nicotine pouches promoted through social media influencers, music festivals and youth-oriented advertising are driving a rapid rise in nicotine use among young people worldwide, the World Health Organization (WHO) warned on Friday. Read Full Story on UN News</p>\n<p>The post <a href=\"https://news.un.org/feed/view/en/story/2026/05/1167520\">WHO sounds alarm over nicotine pouches targeting young people</a> appeared first on <a href=\"https://www.un.org/sustainabledevelopment\">Uni",
+      "link": "https://news.un.org/feed/view/en/story/2026/05/1167520",
+      "published": "Fri, 15 May 2026 12:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Media Advisory | United Nations to launch 2026 mid-year update on the global economy",
+      "summary": "<p>The post <a href=\"https://www.un.org/sustainabledevelopment/blog/2026/05/media-advisory-united-nations-to-launch-2026-mid-year-update-on-the-global-economy/\">Media Advisory | United Nations to launch 2026 mid-year update on the global economy</a> appeared first on <a href=\"https://www.un.org/sustainabledevelopment\">United Nations Sustainable Development</a>.</p>",
+      "link": "https://www.un.org/sustainabledevelopment/blog/2026/05/media-advisory-united-nations-to-launch-2026-mid-year-update-on-the-global-economy/",
+      "published": "Thu, 14 May 2026 13:00:44 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Media Advisory | United Nations to launch 2026 mid-year update  on the global economy",
+      "summary": "<p>Media Advisory  United Nations to launch 2026 mid-year update on the global economy Press briefing live on UN WebTV The report is under embargo until 19 May 2026, 12:45 pm EDT The crisis in the Middle East has delivered another major shock to the world economy, heightening uncertainty, stoking inflationary pressures and testing the resilience of global  [...]</p>\n<p>The post <a href=\"https://www.un.org/sustainabledevelopment/blog/2026/05/media-advisory-united-nations-to-launch-2026-mid-year-u",
+      "link": "https://www.un.org/sustainabledevelopment/blog/2026/05/media-advisory-united-nations-to-launch-2026-mid-year-update-on-the-global-economy/",
+      "published": "Thu, 14 May 2026 13:00:32 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "HIV prevention and treatment services faltering, warns UNAIDS",
+      "summary": "<p>Decades of gains in the fight against AIDS are under growing threat as donor funding declines and community-based health services collapse in some of the world’s most vulnerable countries, the head of the joint UN programme on HIV/AIDS warned on Thursday. Read Full Story on UN News</p>\n<p>The post <a href=\"https://news.un.org/feed/view/en/story/2026/05/1167515\">HIV prevention and treatment services faltering, warns UNAIDS</a> appeared first on <a href=\"https://www.un.org/sustainabledevelopmen",
+      "link": "https://news.un.org/feed/view/en/story/2026/05/1167515",
+      "published": "Thu, 14 May 2026 12:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Hello world!",
+      "summary": "Welcome to WordPress. This is your first post. Edit or delete it, then start writing!",
+      "link": "https://sdg.iisd.org/hello-world/",
+      "published": "Thu, 18 May 2023 15:00:19 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] Sustainable Development Goals (SDGs) Explained: 2026 Reality...",
+      "summary": "Hi folks, Alex here. In 2015, the United Nations set up 17 sustainable development goals, also known as SDGs, that were adopted by 100 and 93 countries. An admission is to achieve these goals by 2030. In this video, we are going to talk about DSDG wedding cake and two other interesting ways you can use these goals to see if your country or your business is sustainable. Okay, let's get drawing. On this channel, we share tools to help you change the world. So, subscribe if that's of interest to you. To be totally honest, the problem with the 17 goals is that, well, there's 17 of them, which can make them look complicated and not easy to remember. But the good thing about them is that there are the result of many public consultations and they provide a shared language for all countries to rep",
+      "link": "https://www.youtube.com/watch?v=qfOgdj4Okdw",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "qfOgdj4Okdw",
+      "transcript_method": "whisper",
+      "transcript_chars": 5829,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Agenda 2030 translation - New World Order disguised as Sustainable...",
+      "summary": "[DESCRIPTION FALLBACK] About Press Copyright Contact us Creators Advertise Developers Terms Privacy Policy & Safety How YouTube works Test new features.",
+      "link": "https://www.youtube.com/watch?v=FIdmr04qk50",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "FIdmr04qk50",
+      "transcript_method": "description",
+      "transcript_chars": 152,
+      "has_full_transcript": false
+    }
+  ]
+}
