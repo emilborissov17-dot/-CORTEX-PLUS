@@ -108,37 +108,60 @@ def _get_axis_rationale(axis_name: str) -> str:
 # YouTube search
 # ---------------------------------------------------------------------------
 
+def _yt_search_one(query: str, max_results: int, api_key: str,
+                   duration: str, published_after: str) -> list[dict]:
+    """Single YouTube Data API search call. duration: 'long' | 'medium'."""
+    import requests
+    params = {
+        "part":            "snippet",
+        "q":               query,
+        "type":            "video",
+        "order":           "relevance",   # explicit; also the API default
+        "videoDuration":   duration,      # 'long' >20 min | 'medium' 4-20 min
+        "publishedAfter":  published_after,
+        "maxResults":      max_results,
+        "key":             api_key,
+        "relevanceLanguage": "en",
+        "videoEmbeddable": "true",
+    }
+    r = requests.get(YOUTUBE_SEARCH_URL, params=params, timeout=15)
+    r.raise_for_status()
+    return r.json().get("items", [])
+
+
 def youtube_search(query: str, max_results: int = 5) -> list[dict]:
-    """Search YouTube. Returns list of {video_id, title, description, url, channel}."""
+    """
+    Search YouTube for substantive videos (medium 4-20 min + long >20 min).
+    Short clips (<4 min) are excluded. order=relevance, content from last 3 years.
+    Returns list of {video_id, title, description, url, channel, published}.
+    """
     import requests
     api_key = _load_env("YOUTUBE_API_KEY")
     if not api_key:
         print("[YT] YOUTUBE_API_KEY missing")
         return []
 
-    params = {
-        "part":             "snippet",
-        "q":                query,
-        "type":             "video",
-        "videoDuration":    "short",   # <4 min — safe for Whisper 25 MB limit
-        "maxResults":       max_results,
-        "key":              api_key,
-        "relevanceLanguage": "en",
-        "videoEmbeddable":  "true",
-    }
-    try:
-        r = requests.get(YOUTUBE_SEARCH_URL, params=params, timeout=15)
-        r.raise_for_status()
-        items = r.json().get("items", [])
-    except Exception as e:
-        print(f"[YT] Search error: {e}")
-        return []
+    # Cutoff: 3 years back for fresh scientific content
+    from datetime import datetime, timezone, timedelta
+    cutoff = (datetime.now(timezone.utc) - timedelta(days=3 * 365)).strftime("%Y-%m-%dT00:00:00Z")
+
+    seen_ids: set[str] = set()
+    items: list = []
+
+    for duration in ("long", "medium"):
+        try:
+            batch = _yt_search_one(query, max_results, api_key, duration, cutoff)
+            for item in batch:
+                vid_id = item.get("id", {}).get("videoId")
+                if vid_id and vid_id not in seen_ids:
+                    seen_ids.add(vid_id)
+                    items.append(item)
+        except Exception as e:
+            print(f"[YT] Search error ({duration}): {e}")
 
     results = []
     for item in items:
-        vid_id = item.get("id", {}).get("videoId")
-        if not vid_id:
-            continue
+        vid_id = item["id"]["videoId"]
         sn = item.get("snippet", {})
         results.append({
             "video_id":    vid_id,
@@ -148,8 +171,9 @@ def youtube_search(query: str, max_results: int = 5) -> list[dict]:
             "channel":     sn.get("channelTitle", ""),
             "published":   sn.get("publishedAt", ""),
         })
-    print(f"[YT] Found {len(results)} results for: {query!r}")
-    return results
+
+    print(f"[YT] Found {len(results)} results (long+medium, last 3y) for: {query!r}")
+    return results[:max_results * 2]  # cap total across both duration buckets
 
 
 # ---------------------------------------------------------------------------

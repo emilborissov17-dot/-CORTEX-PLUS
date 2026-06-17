@@ -45,14 +45,19 @@ def _extract_key_terms(text: str) -> list[str]:
     return list(dict.fromkeys(terms))[:10]         # deduplicated, order-preserved
 
 
-def _get_low_relevance_terms(axis_name: str, media_seen: dict) -> set[str]:
-    """Collect individual words from keyword phrases that repeatedly returned low relevance."""
-    bad: set[str] = set()
+def _get_used_phrases(axis_name: str, media_seen: dict) -> set[str]:
+    """
+    Return the exact search phrases already used for this axis (any outcome).
+    Used to avoid regenerating the exact same phrase on the next run.
+    Phrase-level deduplication only — individual terms are never blacklisted,
+    so a core rationale word (e.g. "ceiling") is not poisoned by one bad result.
+    """
+    used: set[str] = set()
     for record in media_seen.values():
-        if record.get("axis") == axis_name and record.get("relevance_score", 1.0) < 0.35:
+        if record.get("axis") == axis_name:
             for phrase in record.get("keywords_used", []):
-                bad.update(phrase.lower().split())
-    return bad
+                used.add(phrase.lower().strip())
+    return used
 
 
 def generate_search_keywords(axis_name: str) -> list[str]:
@@ -71,50 +76,53 @@ def generate_search_keywords(axis_name: str) -> list[str]:
 
     axis_cfg  = _find_axis_config(axis_name, config)
     rationale = axis_cfg.get("rationale", "")
-    terms     = _extract_key_terms(rationale)
+    # terms extraction is fully deterministic: same rationale → same list, always
+    terms = _extract_key_terms(rationale)
 
-    bad_terms = _get_low_relevance_terms(axis_name, media_seen)
-    terms     = [t for t in terms if t not in bad_terms]
+    # phrase-level deduplication: avoid regenerating exact phrases already used
+    used_phrases = _get_used_phrases(axis_name, media_seen)
 
-    weak_domains = [w.lower().replace("_", " ") for w in profile.get("weak_domains", [])]
-    known_gaps   = [g.lower().replace("_", " ") for g in profile.get("known_gaps", [])]
+    weak_domains = sorted(w.lower().replace("_", " ") for w in profile.get("weak_domains", []))
+    known_gaps   = sorted(g.lower().replace("_", " ") for g in profile.get("known_gaps", []))
 
-    # Human-readable base label from axis name
+    # Human-readable base label — deterministic
     base_label = axis_name.replace("_REVIEW", "").replace("_", " ").lower()
 
-    phrases: list[str] = []
+    # Candidate phrases in fixed priority order
+    candidates: list[str] = []
 
     # Phrase 1 — broad: top 2 rationale terms + axis label
     if len(terms) >= 2:
-        phrases.append(f"{terms[0]} {terms[1]} {base_label} 2024")
+        candidates.append(f"{terms[0]} {terms[1]} {base_label} 2024")
     elif terms:
-        phrases.append(f"{terms[0]} {base_label} 2024")
+        candidates.append(f"{terms[0]} {base_label} 2024")
     else:
-        phrases.append(f"{base_label} science 2024")
+        candidates.append(f"{base_label} science 2024")
 
-    # Phrase 2 — specific: next rationale terms + "science update"
+    # Phrase 2 — specific: terms[2]+[3] or terms[2] alone
     if len(terms) >= 4:
-        phrases.append(f"{terms[2]} {terms[3]} science update")
-    elif len(terms) >= 3:
-        phrases.append(f"{terms[2]} {base_label} explained")
+        candidates.append(f"{terms[2]} {terms[3]} science update")
+    if len(terms) >= 3:
+        candidates.append(f"{terms[2]} {base_label} explained")
+        candidates.append(f"{base_label} {terms[2]} research")
 
-    # Phrase 3 — domain gap or fallback
+    # Phrase 3 — domain gap
     if weak_domains:
-        phrases.append(f"{base_label} {weak_domains[0]} research")
-    elif known_gaps:
-        phrases.append(f"{known_gaps[0]} {base_label} explained")
-    elif len(terms) >= 3:
-        phrases.append(f"{base_label} {terms[2]} latest")
-    else:
-        phrases.append(f"{base_label} research overview")
+        candidates.append(f"{base_label} {weak_domains[0]} research")
+    if known_gaps:
+        candidates.append(f"{known_gaps[0]} {base_label} explained")
 
-    # Deduplicate and cap at 3
-    seen: set[str] = set()
+    # Fallbacks
+    candidates.append(f"{base_label} science lecture")
+    candidates.append(f"{base_label} research overview")
+
+    # Pick first 3 that haven't been used before
     unique: list[str] = []
-    for p in phrases:
-        if p not in seen:
-            seen.add(p)
+    for p in candidates:
+        if p not in used_phrases and p not in unique:
             unique.append(p)
+        if len(unique) == 3:
+            break
 
     print(f"[SEARCH] Axis '{axis_name}' -> phrases: {unique}")
-    return unique[:3]
+    return unique
