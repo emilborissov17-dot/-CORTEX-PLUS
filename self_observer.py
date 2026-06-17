@@ -12,11 +12,13 @@ from dataclasses import dataclass, asdict
 from datetime import datetime
 from typing import Any
 
+import os
+
 import aiohttp
 
 log = logging.getLogger("SelfObserver")
 
-NASA_API_KEY = "YqLuYCSD6iN2XXYWj4z9fhOe9CrAeIFtSnUgamDR"  # замени с реален ключ от api.nasa.gov
+NASA_API_KEY = os.environ.get("NASA_API_KEY", "DEMO_KEY")
 
 _cache: dict = {}
 CACHE_TTL = 3600  # 1 час за бавно-променящи се данни
@@ -274,7 +276,12 @@ class SelfObserver:
     # ─────────────────────────────────────────────────────────────────────────
 
     async def _observe_unhcr_refugees(self) -> list[Signal]:
-        """UNHCR API — глобален брой бежанци (последна година)."""
+        """UNHCR API — глобален брой бежанци (последна налична година).
+
+        API v1 вече връща данни в items[], не в total{}.
+        Заявяваме последните 3 години и взимаме най-новия запис.
+        forcibly_displaced = refugees + asylum_seekers + idps
+        """
         cache_key = "unhcr_refugees"
         if cache_key in _cache:
             ct, cd = _cache[cache_key]
@@ -282,23 +289,39 @@ class SelfObserver:
                 return cd
 
         url = "https://api.unhcr.org/population/v1/population/"
-        params = {"limit": 1, "yearFrom": 2022, "yearTo": 2022}
+        current_year = datetime.utcnow().year
+        # NOTE: добавянето на coo/coa params унищожава year filter-а — не ги слагай
+        params = {
+            "limit": 10,
+            "yearFrom": current_year - 3,
+            "yearTo": current_year,
+        }
         try:
             async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=10)) as s:
                 async with s.get(url, params=params) as r:
-                    text = await r.text(encoding="latin-1", errors="replace")
+                    text = await r.text(encoding="utf-8", errors="replace")
             import json as _j; data = _j.loads(text)
 
-            total_obj = data.get("total", {}) or {}
-            raw_refugees  = total_obj.get("refugees", 0)
-            raw_displaced = total_obj.get("forcibly_displaced", 0)
+            items = data.get("items") or []
+            if not items:
+                log.warning("UNHCR: няма данни")
+                return []
 
-            # Guard against bool/None from API (Invalid variable type bug)
+            # API връща глобален агрегат (coo_id="-") — вземи най-новата година
+            rec = max(items, key=lambda x: int(x.get("year", 0)))
+
             def _safe_num(v):
-                return float(v) if isinstance(v, (int, float)) and not isinstance(v, bool) else 0.0
+                try:
+                    return float(v)
+                except (TypeError, ValueError):
+                    return 0.0
 
-            total_refugees  = _safe_num(raw_refugees)
-            total_displaced = _safe_num(raw_displaced)
+            total_refugees  = _safe_num(rec.get("refugees", 0))
+            asylum_seekers  = _safe_num(rec.get("asylum_seekers", 0))
+            idps            = _safe_num(rec.get("idps", 0))
+            # forcibly displaced = всички принудително разселени категории
+            total_displaced = total_refugees + asylum_seekers + idps
+            year = rec.get("year", "?")
 
             signals = [
                 Signal(
@@ -309,7 +332,7 @@ class SelfObserver:
                     value=total_refugees,
                     delta=self._delta("unhcr_refugees", total_refugees),
                     timestamp=datetime.utcnow().isoformat(),
-                    raw=total_obj,
+                    raw={"year": year, **rec},
                 ),
                 Signal(
                     source="UNHCR API",
@@ -319,11 +342,14 @@ class SelfObserver:
                     value=total_displaced,
                     delta=self._delta("unhcr_displaced", total_displaced),
                     timestamp=datetime.utcnow().isoformat(),
-                    raw=total_obj,
+                    raw={"year": year, "refugees": total_refugees,
+                         "asylum_seekers": asylum_seekers, "idps": idps},
                 ),
             ]
             _cache[cache_key] = (time.time(), signals)
-            log.info(f"UNHCR: бежанци={total_refugees:,.0f}, разселени={total_displaced:,.0f}")
+            log.info(f"UNHCR ({year}): бежанци={total_refugees:,.0f}, "
+                     f"asylum={asylum_seekers:,.0f}, IDPs={idps:,.0f}, "
+                     f"всичко разселени={total_displaced:,.0f}")
             return signals
         except Exception as e:
             log.warning(f"unhcr_refugees failed: {e}")
