@@ -1,0 +1,291 @@
+{
+  "_meta": {
+    "description": "Scientific targets and weights for all 25 CORTEX++ review axes",
+    "vision_ref": "civilization_vision.txt",
+    "weight_scale": "1-10 (10=highest priority per civilization vision)",
+    "weight_principles": [
+      "Climate/CO2 and basic needs (water, food) highest — direct civilizational threats",
+      "Human dignity axes (poverty, refugees, health) next tier",
+      "Governance, education, technology lower — important but derivative",
+      "Cosmos/long-term lowest — critical but further horizon",
+      "Technology trends (GitHub) minimal weight — proxy, not goal"
+    ]
+  },
+  "PLANET": {
+    "CLIMATE_GLOBAL_RISK_REVIEW": {
+      "primary_metric": "co2_ppm_mauna_loa",
+      "target_value": 350.0,
+      "direction": "lower_better",
+      "weight": 10,
+      "unit": "ppm",
+      "rationale": "IPCC safe CO2 ceiling (pre-industrial ~280, safe boundary ~350)",
+      "verification_status": "PARTIALLY_VERIFIED",
+      "verification_date": "2026-06-17",
+      "verification_url": "https://en.wikipedia.org/wiki/Planetary_boundaries",
+      "verification_fix": "Manual check: Rockström et al. 2009, Nature 461:472. DOI:10.1038/461472a"
+    },
+    "ECOSYSTEMS_BIODIVERSITY_REVIEW": {
+      "primary_metric": "forest_area_pct",
+      "target_value": 35.0,
+      "direction": "higher_better",
+      "weight": 8,
+      "unit": "percent of land area",
+      "rationale": "Planetary boundary for forest cover; current ~31% is below safe threshold",
+      "verification_status": "UNVERIFIED",
+      "verification_date": "2026-06-17",
+      "verification_url": "https://en.wikipedia.org/wiki/Planetary_boundaries",
+      "verification_fix": "Option A: Change metric to 'forest_remaining_pct_of_original' with biome-specific targets from Steffen et al. 2015. Option B: Keep 35% target but correct rationale to: 'Aspirational restoration target above current ~31% global forest cover (FAO Global Forest Resources Assessment 2020); inspired by P"
+    },
+    "ENERGY_REVIEW": {
+      "primary_metric": "renewable_energy_pct",
+      "target_value": 80.0,
+      "direction": "higher_better",
+      "weight": 8,
+      "unit": "percent of total energy",
+      "rationale": "IEA Net Zero 2050 requires 80%+ renewables by 2050",
+      "verification_status": "PARTIALLY_VERIFIED",
+      "verification_date": "2026-06-17",
+      "verification_url": "https://www.iea.org/reports/net-zero-by-2050",
+      "verification_fix": "Clarify metric definition and update accordingly: If renewable_energy_pct = share of electricity generation → target_value: 90 (IEA NZE: 'almost 90% of electricity from renewables by 2050'). If renewable_energy_pct = share of total final energy → target_value: 67 (IEA NZE: 'two-thirds of total energ"
+    },
+    "FOOD_REVIEW": {
+      "primary_metric": "food_insecurity_pct",
+      "target_value": 2.5,
+      "direction": "lower_better",
+      "weight": 9,
+      "unit": "percent of population",
+      "rationale": "SDG2: near-zero hunger; current ~10% severely food insecure",
+      "verification_status": "PARTIALLY_VERIFIED",
+      "verification_date": "2026-06-17",
+      "verification_url": "https://en.wikipedia.org/wiki/Sustainable_Development_Goal_2",
+      "verification_fix": "The 2.5% figure has a defensible interpretation: FAO defines <2.5% undernourishment as 'negligible/very low prevalence' threshold. If that is the intent, update rationale to: 'FAO defines <2.5% undernourishment as negligible; current global rate ~9.1% (SOFI 2023). SDG2 target is zero hunger.' Also u"
+    },
+    "MATERIALS_WASTE_REVIEW": {
+      "primary_metric": "co2_ppm_mauna_loa",
+      "target_value": 350.0,
+      "direction": "lower_better",
+      "weight": 9,
+      "unit": "ppm",
+      "rationale": "Atmospheric CO2 as proxy for material throughput sustainability",
+      "verification_status": "PARTIALLY_VERIFIED",
+      "verification_date": "2026-06-17"
+    },
+    "PLANETARY_POTENTIAL_REVIEW": {
+      "primary_metric": "protected_terrestrial_area_pct",
+      "target_value": 30.0,
+      "direction": "higher_better",
+      "weight": 7,
+      "unit": "percent of land area",
+      "rationale": "30x30 global target (CBD Kunming-Montreal 2022)",
+      "verification_status": "VERIFIED",
+      "verification_date": "2026-06-17",
+      "verification_url": "https://en.wikipedia.org/wiki/30_by_30"
+    },
+    "WATER_REVIEW": {
+      "primary_metric": "safe_water_access_pct",
+      "target_value": 100.0,
+      "direction": "higher_better",
+      "weight": 9,
+      "unit": "percent of population",
+      "rationale": "SDG6: universal safe water access; current ~74%",
+      "verification_status": "VERIFIED",
+      "verification_date": "2026-06-17",
+      "verification_url": "https://en.wikipedia.org/wiki/Sustainable_Development_Goal_6"
+    }
+  },
+  "HUMAN": {
+    "COGNITION_LEARNING_REVIEW": {
+      "primary_metric": "literacy_rate_youth_pct",
+      "target_value": 100.0,
+      "direction": "higher_better",
+      "weight": 7,
+      "unit": "percent",
+      "rationale": "Universal literacy as foundation for human autonomy (SDG4)",
+      "verification_status": "VERIFIED",
+      "verification_date": "2026-06-17",
+      "verification_url": "https://en.wikipedia.org/wiki/Sustainable_Development_Goal_4"
+    },
+    "CULTURE_MEDIA_REVIEW": {
+      "primary_metric": null,
+      "target_value": null,
+      "direction": "higher_better",
+      "weight": 5,
+      "unit": "qualitative score",
+      "rationale": "No single numeric threshold; LLM-assessed cultural health",
+      "verification_status": "NO_NUMERIC_CLAIM",
+      "verification_date": "2026-06-17"
+    },
+    "GOVERNANCE_RIGHTS_HUMAN_REVIEW": {
+      "primary_metric": null,
+      "target_value": null,
+      "direction": "higher_better",
+      "weight": 7,
+      "unit": "qualitative score",
+      "rationale": "Human rights protection; composite of democracy and rights indices",
+      "verification_status": "NO_NUMERIC_CLAIM",
+      "verification_date": "2026-06-17"
+    },
+    "HUMAN_WELL_BEING_REVIEW": {
+      "primary_metric": "child_mortality_per_1000",
+      "target_value": 5.0,
+      "reference_worst": 100.0,
+      "direction": "lower_better",
+      "weight": 9,
+      "unit": "deaths per 1000 live births",
+      "rationale": "SDG3: <5/1000 target; reference_worst=100 (pre-modern baseline)",
+      "verification_status": "FAILED",
+      "verification_date": "2026-06-17",
+      "verification_url": "https://www.who.int/data/gho/data/themes/topics/indicator-groups/indicator-group-details/GHO/sdg-target-3.2-newborn-and-child-mortality",
+      "verification_fix": "Consider increasing reference_worst from 100 to 200 to better reflect actual historical child mortality baselines (pre-1900). If 100 is kept as a 'worst modern scenario' (not historical), update rationale: 'reference_worst=100: worst plausible modern scenario (historical pre-industrial rates were 20"
+    },
+    "SOCIAL_RELATIONS_REVIEW": {
+      "primary_metric": "refugee_population",
+      "target_value": 1000000.0,
+      "reference_worst": 120000000.0,
+      "direction": "lower_better",
+      "weight": 8,
+      "unit": "persons",
+      "rationale": "Pre-2011 baseline ~10M; reference_worst=120M (UNHCR 2023 peak: ~117M forcibly displaced globally)",
+      "verification_status": "VERIFIED",
+      "verification_date": "2026-06-17",
+      "verification_url": "https://www.unhcr.org/publications/global-trends-2023"
+    }
+  },
+  "CIVILIZATION": {
+    "ECONOMY_WORK_REVIEW": {
+      "primary_metric": "gdp_growth_pct",
+      "target_value": null,
+      "direction": "stable_better",
+      "weight": 5,
+      "unit": "percent",
+      "rationale": "Resource-based model de-emphasizes GDP; stable sustainable activity preferred",
+      "verification_status": "NO_NUMERIC_CLAIM",
+      "verification_date": "2026-06-17"
+    },
+    "EDUCATION_CULTURE_REVIEW": {
+      "primary_metric": "primary_completion_rate",
+      "target_value": 100.0,
+      "direction": "higher_better",
+      "weight": 7,
+      "unit": "percent",
+      "rationale": "Universal primary education completion (SDG4)",
+      "verification_status": "VERIFIED",
+      "verification_date": "2026-06-17",
+      "verification_url": "https://en.wikipedia.org/wiki/Sustainable_Development_Goal_4"
+    },
+    "GOVERNANCE_INSTITUTIONS_REVIEW": {
+      "primary_metric": null,
+      "target_value": null,
+      "direction": "higher_better",
+      "weight": 7,
+      "unit": "qualitative score",
+      "rationale": "Institutional transparency and rule of law — no single global metric",
+      "verification_status": "NO_NUMERIC_CLAIM",
+      "verification_date": "2026-06-17"
+    },
+    "INEQUALITY_POVERTY_REVIEW": {
+      "primary_metric": "extreme_poverty_rate_pct",
+      "target_value": 0.0,
+      "reference_worst": 60.0,
+      "direction": "lower_better",
+      "weight": 9,
+      "unit": "percent below $2.15/day",
+      "rationale": "SDG1: end extreme poverty; reference_worst=60% (World Bank est. ~60% poverty rate pre-1980 at $2.15/day threshold)",
+      "verification_status": "PARTIALLY_VERIFIED",
+      "verification_date": "2026-06-17",
+      "verification_url": "https://en.wikipedia.org/wiki/Extreme_poverty"
+    },
+    "INFRASTRUCTURE_CITIES_REVIEW": {
+      "primary_metric": "urbanization_pct",
+      "target_value": null,
+      "direction": "stable_better",
+      "weight": 5,
+      "unit": "percent urban",
+      "rationale": "Urbanization itself not a goal; sustainable city design matters more",
+      "verification_status": "NO_NUMERIC_CLAIM",
+      "verification_date": "2026-06-17"
+    },
+    "TECHNOLOGY_AI_REVIEW": {
+      "primary_metric": null,
+      "target_value": null,
+      "direction": "higher_better",
+      "weight": 6,
+      "unit": "qualitative score",
+      "rationale": "Beneficial AI adoption; no numeric global threshold exists",
+      "verification_status": "NO_NUMERIC_CLAIM",
+      "verification_date": "2026-06-17"
+    },
+    "TECHNOLOGY_INFRA_REVIEW": {
+      "primary_metric": null,
+      "target_value": null,
+      "direction": "higher_better",
+      "weight": 5,
+      "unit": "qualitative score",
+      "rationale": "Digital infrastructure access — approximate only",
+      "verification_status": "NO_NUMERIC_CLAIM",
+      "verification_date": "2026-06-17"
+    }
+  },
+  "COSMOS": {
+    "COSMIC_RESOURCES_REVIEW": {
+      "primary_metric": null,
+      "target_value": null,
+      "direction": "higher_better",
+      "weight": 3,
+      "unit": "qualitative score",
+      "rationale": "Long-horizon; no near-term threshold applicable",
+      "verification_status": "NO_NUMERIC_CLAIM",
+      "verification_date": "2026-06-17"
+    },
+    "DEEP_TIME_RISKS_REVIEW": {
+      "primary_metric": null,
+      "target_value": null,
+      "direction": "lower_better",
+      "weight": 5,
+      "unit": "qualitative risk level",
+      "rationale": "Asteroid/supervolcano risk — no actionable threshold at current tech level",
+      "verification_status": "NO_NUMERIC_CLAIM",
+      "verification_date": "2026-06-17"
+    },
+    "GENERAL_SELF_REVIEW": {
+      "primary_metric": null,
+      "target_value": null,
+      "direction": "higher_better",
+      "weight": 6,
+      "unit": "qualitative AGI score",
+      "rationale": "CORTEX++ self-assessment across 10 AGI axes",
+      "verification_status": "NO_NUMERIC_CLAIM",
+      "verification_date": "2026-06-17"
+    },
+    "GOAL_PROGRESS_REVIEW": {
+      "primary_metric": "goal_score",
+      "target_value": 1.0,
+      "direction": "higher_better",
+      "weight": 8,
+      "unit": "composite 0-1 score",
+      "rationale": "Overall civilization goal progress — central meta-metric",
+      "verification_status": "NO_NUMERIC_CLAIM",
+      "verification_date": "2026-06-17"
+    },
+    "LONG_TERM_FUTURE_REVIEW": {
+      "primary_metric": null,
+      "target_value": null,
+      "direction": "lower_better",
+      "weight": 7,
+      "unit": "qualitative risk level",
+      "rationale": "Existential risk (nuclear, AGI misalignment, bio) — no single threshold",
+      "verification_status": "NO_NUMERIC_CLAIM",
+      "verification_date": "2026-06-17"
+    },
+    "SPACE_INFRASTRUCTURE_REVIEW": {
+      "primary_metric": null,
+      "target_value": null,
+      "direction": "higher_better",
+      "weight": 4,
+      "unit": "qualitative score",
+      "rationale": "Space redundancy goal — critical long-term, not short-term",
+      "verification_status": "NO_NUMERIC_CLAIM",
+      "verification_date": "2026-06-17"
+    }
+  }
+}
