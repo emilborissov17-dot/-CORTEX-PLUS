@@ -1,0 +1,229 @@
+{
+  "_meta": {
+    "description": "Scientific targets and weights for all 25 CORTEX++ review axes",
+    "vision_ref": "civilization_vision.txt",
+    "weight_scale": "1-10 (10=highest priority per civilization vision)",
+    "weight_principles": [
+      "Climate/CO2 and basic needs (water, food) highest — direct civilizational threats",
+      "Human dignity axes (poverty, refugees, health) next tier",
+      "Governance, education, technology lower — important but derivative",
+      "Cosmos/long-term lowest — critical but further horizon",
+      "Technology trends (GitHub) minimal weight — proxy, not goal"
+    ]
+  },
+
+  "PLANET": {
+    "CLIMATE_GLOBAL_RISK_REVIEW": {
+      "primary_metric": "co2_ppm_mauna_loa",
+      "target_value": 350.0,
+      "direction": "lower_better",
+      "weight": 10,
+      "unit": "ppm",
+      "rationale": "IPCC safe CO2 ceiling (pre-industrial ~280, safe boundary ~350)"
+    },
+    "ECOSYSTEMS_BIODIVERSITY_REVIEW": {
+      "primary_metric": "forest_area_pct",
+      "target_value": 35.0,
+      "direction": "higher_better",
+      "weight": 8,
+      "unit": "percent of land area",
+      "rationale": "Planetary boundary for forest cover; current ~31% is below safe threshold"
+    },
+    "ENERGY_REVIEW": {
+      "primary_metric": "renewable_energy_pct",
+      "target_value": 80.0,
+      "direction": "higher_better",
+      "weight": 8,
+      "unit": "percent of total energy",
+      "rationale": "IEA Net Zero 2050 requires 80%+ renewables by 2050"
+    },
+    "FOOD_REVIEW": {
+      "primary_metric": "food_insecurity_pct",
+      "target_value": 2.5,
+      "direction": "lower_better",
+      "weight": 9,
+      "unit": "percent of population",
+      "rationale": "SDG2: near-zero hunger; current ~10% severely food insecure"
+    },
+    "MATERIALS_WASTE_REVIEW": {
+      "primary_metric": "co2_ppm_mauna_loa",
+      "target_value": 350.0,
+      "direction": "lower_better",
+      "weight": 9,
+      "unit": "ppm",
+      "rationale": "Atmospheric CO2 as proxy for material throughput sustainability"
+    },
+    "PLANETARY_POTENTIAL_REVIEW": {
+      "primary_metric": "protected_terrestrial_area_pct",
+      "target_value": 30.0,
+      "direction": "higher_better",
+      "weight": 7,
+      "unit": "percent of land area",
+      "rationale": "30x30 global target (CBD Kunming-Montreal 2022)"
+    },
+    "WATER_REVIEW": {
+      "primary_metric": "safe_water_access_pct",
+      "target_value": 100.0,
+      "direction": "higher_better",
+      "weight": 9,
+      "unit": "percent of population",
+      "rationale": "SDG6: universal safe water access; current ~74%"
+    }
+  },
+
+  "HUMAN": {
+    "COGNITION_LEARNING_REVIEW": {
+      "primary_metric": "literacy_rate_youth_pct",
+      "target_value": 100.0,
+      "direction": "higher_better",
+      "weight": 7,
+      "unit": "percent",
+      "rationale": "Universal literacy as foundation for human autonomy (SDG4)"
+    },
+    "CULTURE_MEDIA_REVIEW": {
+      "primary_metric": null,
+      "target_value": null,
+      "direction": "higher_better",
+      "weight": 5,
+      "unit": "qualitative score",
+      "rationale": "No single numeric threshold; LLM-assessed cultural health"
+    },
+    "GOVERNANCE_RIGHTS_HUMAN_REVIEW": {
+      "primary_metric": null,
+      "target_value": null,
+      "direction": "higher_better",
+      "weight": 7,
+      "unit": "qualitative score",
+      "rationale": "Human rights protection; composite of democracy and rights indices"
+    },
+    "HUMAN_WELL_BEING_REVIEW": {
+      "primary_metric": "child_mortality_per_1000",
+      "target_value": 5.0,
+      "reference_worst": 100.0,
+      "direction": "lower_better",
+      "weight": 9,
+      "unit": "deaths per 1000 live births",
+      "rationale": "SDG3: <5/1000 target; reference_worst=100 (pre-modern baseline)"
+    },
+    "SOCIAL_RELATIONS_REVIEW": {
+      "primary_metric": "refugee_population",
+      "target_value": 1000000.0,
+      "reference_worst": 100000000.0,
+      "direction": "lower_better",
+      "weight": 8,
+      "unit": "persons",
+      "rationale": "Pre-2011 baseline ~10M; reference_worst=100M (worst recorded)"
+    }
+  },
+
+  "CIVILIZATION": {
+    "ECONOMY_WORK_REVIEW": {
+      "primary_metric": "gdp_growth_pct",
+      "target_value": null,
+      "direction": "stable_better",
+      "weight": 5,
+      "unit": "percent",
+      "rationale": "Resource-based model de-emphasizes GDP; stable sustainable activity preferred"
+    },
+    "EDUCATION_CULTURE_REVIEW": {
+      "primary_metric": "primary_completion_rate",
+      "target_value": 100.0,
+      "direction": "higher_better",
+      "weight": 7,
+      "unit": "percent",
+      "rationale": "Universal primary education completion (SDG4)"
+    },
+    "GOVERNANCE_INSTITUTIONS_REVIEW": {
+      "primary_metric": null,
+      "target_value": null,
+      "direction": "higher_better",
+      "weight": 7,
+      "unit": "qualitative score",
+      "rationale": "Institutional transparency and rule of law — no single global metric"
+    },
+    "INEQUALITY_POVERTY_REVIEW": {
+      "primary_metric": "extreme_poverty_rate_pct",
+      "target_value": 0.0,
+      "reference_worst": 50.0,
+      "direction": "lower_better",
+      "weight": 9,
+      "unit": "percent below $2.15/day",
+      "rationale": "SDG1: end extreme poverty; reference_worst=50% (1990s global baseline)"
+    },
+    "INFRASTRUCTURE_CITIES_REVIEW": {
+      "primary_metric": "urbanization_pct",
+      "target_value": null,
+      "direction": "stable_better",
+      "weight": 5,
+      "unit": "percent urban",
+      "rationale": "Urbanization itself not a goal; sustainable city design matters more"
+    },
+    "TECHNOLOGY_AI_REVIEW": {
+      "primary_metric": null,
+      "target_value": null,
+      "direction": "higher_better",
+      "weight": 6,
+      "unit": "qualitative score",
+      "rationale": "Beneficial AI adoption; no numeric global threshold exists"
+    },
+    "TECHNOLOGY_INFRA_REVIEW": {
+      "primary_metric": null,
+      "target_value": null,
+      "direction": "higher_better",
+      "weight": 5,
+      "unit": "qualitative score",
+      "rationale": "Digital infrastructure access — approximate only"
+    }
+  },
+
+  "COSMOS": {
+    "COSMIC_RESOURCES_REVIEW": {
+      "primary_metric": null,
+      "target_value": null,
+      "direction": "higher_better",
+      "weight": 3,
+      "unit": "qualitative score",
+      "rationale": "Long-horizon; no near-term threshold applicable"
+    },
+    "DEEP_TIME_RISKS_REVIEW": {
+      "primary_metric": null,
+      "target_value": null,
+      "direction": "lower_better",
+      "weight": 5,
+      "unit": "qualitative risk level",
+      "rationale": "Asteroid/supervolcano risk — no actionable threshold at current tech level"
+    },
+    "GENERAL_SELF_REVIEW": {
+      "primary_metric": null,
+      "target_value": null,
+      "direction": "higher_better",
+      "weight": 6,
+      "unit": "qualitative AGI score",
+      "rationale": "CORTEX++ self-assessment across 10 AGI axes"
+    },
+    "GOAL_PROGRESS_REVIEW": {
+      "primary_metric": "goal_score",
+      "target_value": 1.0,
+      "direction": "higher_better",
+      "weight": 8,
+      "unit": "composite 0-1 score",
+      "rationale": "Overall civilization goal progress — central meta-metric"
+    },
+    "LONG_TERM_FUTURE_REVIEW": {
+      "primary_metric": null,
+      "target_value": null,
+      "direction": "lower_better",
+      "weight": 7,
+      "unit": "qualitative risk level",
+      "rationale": "Existential risk (nuclear, AGI misalignment, bio) — no single threshold"
+    },
+    "SPACE_INFRASTRUCTURE_REVIEW": {
+      "primary_metric": null,
+      "target_value": null,
+      "direction": "higher_better",
+      "weight": 4,
+      "unit": "qualitative score",
+      "rationale": "Space redundancy goal — critical long-term, not short-term"
+    }
+  }
+}
