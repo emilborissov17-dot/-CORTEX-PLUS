@@ -32,7 +32,14 @@ def _inject_memory(axis: str, prompt: str) -> str:
         from memory.continuous_learner import before_llm_call
         block = before_llm_call(axis)
         if block:
-            return block + "\n\n" + prompt
+            prompt = block + "\n\n" + prompt
+    except Exception:
+        pass
+    try:
+        from media_transcript_injector import get_media_context_block
+        media_block = get_media_context_block(axis)
+        if media_block:
+            prompt = media_block + "\n\n" + prompt
     except Exception:
         pass
     return prompt
