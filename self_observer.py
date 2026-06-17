@@ -307,8 +307,13 @@ class SelfObserver:
                 log.warning("UNHCR: няма данни")
                 return []
 
-            # API връща глобален агрегат (coo_id="-") — вземи най-новата година
-            rec = max(items, key=lambda x: int(x.get("year", 0)))
+            # API връща глобален агрегат (coo_id="-") — вземи най-новата ПЪЛНА година.
+            # Текущата година (2026) може да е непубликувана → refugees=0; филтрираме я.
+            valid_items = [i for i in items if _safe_num(i.get("refugees")) > 0]
+            if not valid_items:
+                log.warning("UNHCR: всички записи имат refugees=0, използваме непроверени данни")
+                valid_items = items
+            rec = max(valid_items, key=lambda x: int(x.get("year", 0)))
 
             def _safe_num(v):
                 try:
@@ -323,6 +328,14 @@ class SelfObserver:
             total_displaced = total_refugees + asylum_seekers + idps
             year = rec.get("year", "?")
 
+            # Само актуализираме last_values ако стойностите са реални (>0)
+            refugees_delta  = self._delta("unhcr_refugees",  total_refugees)  if total_refugees  > 0 else None
+            displaced_delta = self._delta("unhcr_displaced", total_displaced) if total_displaced > 0 else None
+            if total_refugees > 0:
+                self.last_values["unhcr_refugees"]  = total_refugees
+            if total_displaced > 0:
+                self.last_values["unhcr_displaced"] = total_displaced
+
             signals = [
                 Signal(
                     source="UNHCR API",
@@ -330,7 +343,7 @@ class SelfObserver:
                     domain="refugees",
                     metric="total_refugees",
                     value=total_refugees,
-                    delta=self._delta("unhcr_refugees", total_refugees),
+                    delta=refugees_delta,
                     timestamp=datetime.utcnow().isoformat(),
                     raw={"year": year, **rec},
                 ),
@@ -340,7 +353,7 @@ class SelfObserver:
                     domain="refugees",
                     metric="total_forcibly_displaced",
                     value=total_displaced,
-                    delta=self._delta("unhcr_displaced", total_displaced),
+                    delta=displaced_delta,
                     timestamp=datetime.utcnow().isoformat(),
                     raw={"year": year, "refugees": total_refugees,
                          "asylum_seekers": asylum_seekers, "idps": idps},
