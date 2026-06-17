@@ -1,0 +1,47 @@
+[
+  {
+    "id": "goal_score_20260617_183543",
+    "axis": "goal_score",
+    "hypothesis_text": "Ако текущият темп продължи, goal_score ще нарасне до 1 до 2026-06-16 [BOUNDED 0.0–1.0 | ЛОГИСТИЧЕН МОДЕЛ | линейна проекция=2.35 → извън допустимите граници]",
+    "predicted_value": 0.999987,
+    "prediction_date": "2026-06-16",
+    "horizon_days": 30,
+    "model_type": "logistic",
+    "bounds": [
+      0.0,
+      1.0
+    ],
+    "linear_projection": 2.35,
+    "slope_per_cycle": 0.05,
+    "n_points": 3,
+    "r_squared": 0.9969,
+    "confidence": 0.399,
+    "created_at": "2026-06-17T18:35:43.522486+00:00",
+    "status": "resolved",
+    "actual_value": 0.85,
+    "accuracy": 0.8235,
+    "error_pct": 17.65,
+    "evaluated_at": "2026-06-17T18:35:43.783728+00:00"
+  },
+  {
+    "id": "co2_ppm_20260617_183543",
+    "axis": "co2_ppm",
+    "hypothesis_text": "Ако текущият темп продължи, co2_ppm ще остане стабилен на 432.4 ppm до 2026-06-16",
+    "predicted_value": 432.44,
+    "prediction_date": "2026-06-16",
+    "horizon_days": 30,
+    "model_type": "linear",
+    "bounds": null,
+    "linear_projection": 432.44,
+    "slope_per_cycle": 0.0,
+    "n_points": 3,
+    "r_squared": 1.0,
+    "confidence": 0.4,
+    "created_at": "2026-06-17T18:35:43.604457+00:00",
+    "status": "resolved",
+    "actual_value": 432.44,
+    "accuracy": 1.0,
+    "error_pct": 0.0,
+    "evaluated_at": "2026-06-17T18:35:43.783914+00:00"
+  }
+]

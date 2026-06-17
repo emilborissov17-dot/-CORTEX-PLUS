@@ -1,0 +1,22 @@
+[
+  {
+    "id": "kp_index_20260617_183543",
+    "axis": "kp_index",
+    "hypothesis_text": "Ако текущият темп продължи, kp_index ще остане стабилен на 2.67 до 2026-07-17 [BOUNDED 0.0–9.0 | ЛОГИСТИЧЕН МОДЕЛ | линейна проекция=2.67]",
+    "predicted_value": 2.67,
+    "prediction_date": "2026-07-17",
+    "horizon_days": 30,
+    "model_type": "logistic",
+    "bounds": [
+      0.0,
+      9.0
+    ],
+    "linear_projection": 2.67,
+    "slope_per_cycle": 0.0,
+    "n_points": 3,
+    "r_squared": 1.0,
+    "confidence": 0.4,
+    "created_at": "2026-06-17T18:35:43.692011+00:00",
+    "status": "pending"
+  }
+]
