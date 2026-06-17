@@ -13,8 +13,7 @@ if hasattr(sys.stdout, "reconfigure"):
 if hasattr(sys.stderr, "reconfigure"):
     sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
-BASE  = pathlib.Path(__file__).resolve().parent
-MODEL = "qwen3:8b"
+BASE = pathlib.Path(__file__).resolve().parent
 import os
 os.environ["CORTEX_BASE"] = str(BASE)
 
@@ -22,28 +21,18 @@ def _utc_now():
     return datetime.now(timezone.utc).isoformat()
 
 def _free_ollama():
-    try:
-        subprocess.run(["ollama", "stop", MODEL], capture_output=True, timeout=10, check=False)
-        gc.collect()
-        time.sleep(2)
-    except Exception:
-        pass
+    gc.collect()
 
 def _llm(prompt):
     try:
-        r = subprocess.run(["ollama", "run", MODEL],
-            input=prompt.encode("utf-8"),
-            stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-            timeout=120, check=False)
-        text = r.stdout.decode("utf-8", errors="ignore").strip()
-        if "...done thinking." in text:
-            text = text.split("...done thinking.")[-1].strip()
-        if "</think>" in text:
-            text = text.split("</think>")[-1].strip()
+        from core.groq_backend import call_groq
+        text = call_groq(prompt, max_tokens=1024)
         if "```json" in text:
             text = text.split("```json")[1].split("```")[0].strip()
         elif "```" in text:
             text = text.split("```")[1].split("```")[0].strip()
+        if "</think>" in text:
+            text = text.split("</think>")[-1].strip()
         return json.loads(text)
     except Exception as e:
         return {"error": str(e)}
@@ -216,6 +205,23 @@ def main():
         print(f"[FAST_CYCLE] auto_levels -> {len(levels)} оси | {len(corrections)} корекции | {len(alerts)} alerts")
     except Exception as e:
         print(f"[FAST_CYCLE] auto_levels -> FAILED: {e}")
+
+    # ── 12.6. Goal score calculator ──
+    try:
+        from goal_score_calculator import compute_goal_score
+        gs_result = compute_goal_score()
+        composite  = gs_result["composite_score"]
+        print(f"[FAST_CYCLE] goal_score_calculator -> composite={composite:.4f}")
+        # Persist result as snapshot so master + MerkleMemory can read it
+        gs_snap = BASE / "snapshots" / "master" / "goal_score_latest.json"
+        gs_snap.parent.mkdir(parents=True, exist_ok=True)
+        gs_snap.write_text(
+            json.dumps({**gs_result, "axis": "GOAL_SCORE", "source_type": "CALCULATED"},
+                       ensure_ascii=False, indent=2),
+            encoding="utf-8",
+        )
+    except Exception as e:
+        print(f"[FAST_CYCLE] goal_score_calculator -> FAILED: {e}")
 
     # ── 13. Body scan ──
     _run("body_scanner", lambda: __import__(
