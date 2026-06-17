@@ -85,13 +85,15 @@ def _scan_software():
     except:
         py_ver = "unknown"
 
-    try:
-        ollama = subprocess.run(["ollama", "list"], capture_output=True, text=True, timeout=3)
-        ollama_status = "ACTIVE" if ollama.returncode == 0 else "INACTIVE"
-        ollama_models = [l.split()[0] for l in ollama.stdout.strip().splitlines()[1:] if l]
-    except:
-        ollama_status = "INACTIVE"
-        ollama_models = []
+    groq_key = os.environ.get("GROQ_API_KEY", "")
+    if not groq_key:
+        env_path = BASE_DIR / ".env"
+        if env_path.exists():
+            for line in env_path.read_text(encoding="utf-8", errors="ignore").splitlines():
+                if line.startswith("GROQ_API_KEY="):
+                    groq_key = line.split("=", 1)[1].strip()
+    ollama_status = "ACTIVE" if groq_key else "INACTIVE"
+    ollama_models = ["groq:llama-3.3-70b"] if groq_key else []
 
     return {
         "os":            os_info[:80],

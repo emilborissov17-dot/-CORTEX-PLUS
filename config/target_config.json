@@ -108,11 +108,11 @@
     "SOCIAL_RELATIONS_REVIEW": {
       "primary_metric": "refugee_population",
       "target_value": 1000000.0,
-      "reference_worst": 100000000.0,
+      "reference_worst": 120000000.0,
       "direction": "lower_better",
       "weight": 8,
       "unit": "persons",
-      "rationale": "Pre-2011 baseline ~10M; reference_worst=100M (worst recorded)"
+      "rationale": "Pre-2011 baseline ~10M; reference_worst=120M (UNHCR 2023 peak: ~117M forcibly displaced globally)"
     }
   },
 
@@ -144,11 +144,11 @@
     "INEQUALITY_POVERTY_REVIEW": {
       "primary_metric": "extreme_poverty_rate_pct",
       "target_value": 0.0,
-      "reference_worst": 50.0,
+      "reference_worst": 60.0,
       "direction": "lower_better",
       "weight": 9,
       "unit": "percent below $2.15/day",
-      "rationale": "SDG1: end extreme poverty; reference_worst=50% (1990s global baseline)"
+      "rationale": "SDG1: end extreme poverty; reference_worst=60% (World Bank est. ~60% poverty rate pre-1980 at $2.15/day threshold)"
     },
     "INFRASTRUCTURE_CITIES_REVIEW": {
       "primary_metric": "urbanization_pct",

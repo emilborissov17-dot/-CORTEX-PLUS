@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
 from __future__ import annotations
-import json, pathlib, subprocess, sys
+import json, pathlib, sys
 from datetime import datetime, timezone
 from typing import Any, Dict
 BASE_DIR     = pathlib.Path(__file__).resolve().parents[2]
 SNAPSHOT_DIR = BASE_DIR / "snapshots" / "civilization"
-MODEL        = "qwen3:1.7b"
 sys.path.insert(0, str(BASE_DIR))
 from data_providers.civilization.economy_work_provider import EconomyWorkProvider
 from data_providers.civilization.governance_institutions_provider import GovernanceInstitutionsProvider
@@ -40,11 +39,11 @@ def _inject_memory(axis: str, prompt: str) -> str:
 def _llm_fallback(prompt, axis="CIVILIZATION"):
     prompt = _inject_memory(axis, prompt)
     try:
-        r = subprocess.run(["ollama", "run", MODEL], input=prompt.encode(),
-            stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=120, check=False)
-        text = r.stdout.decode("utf-8", errors="ignore").strip()
+        from core.groq_backend import call_groq
+        text = call_groq(prompt, max_tokens=1024)
         if "```json" in text: text = text.split("```json")[1].split("```")[0].strip()
-        elif "```" in text: text = text.split("```")[1].split("```")[0].strip()
+        elif "```" in text:   text = text.split("```")[1].split("```")[0].strip()
+        if "</think>" in text: text = text.split("</think>")[-1].strip()
         return json.loads(text)
     except Exception as e:
         return {"error": str(e)}

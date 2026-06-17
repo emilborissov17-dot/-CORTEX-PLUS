@@ -9,7 +9,7 @@ agents/body/growth_planner.py
 Принцип: "Расти само ако можеш да го направиш безопасно."
 """
 from __future__ import annotations
-import json, subprocess, pathlib, sys
+import json, pathlib, sys
 from datetime import datetime, timezone
 
 BASE = pathlib.Path(__file__).resolve().parent.parent.parent
@@ -31,20 +31,6 @@ def _groq(prompt):
         print(f"[GROWTH] Groq failed: {e}")
         return None
 
-def _llm(prompt, timeout=300):
-    try:
-        r = subprocess.run(["ollama", "run", MODEL],
-            input=prompt.encode("utf-8"),
-            stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-            timeout=timeout, check=False)
-        text = r.stdout.decode("utf-8", errors="ignore").strip()
-        if "...done thinking." in text: text = text.split("...done thinking.")[-1].strip()
-        if "</think>" in text: text = text.split("</think>")[-1].strip()
-        if "```json" in text: text = text.split("```json")[1].split("```")[0].strip()
-        elif "```" in text: text = text.split("```")[1].split("```")[0].strip()
-        return json.loads(text)
-    except Exception as e:
-        return {"error": str(e)}
 
 # Известни външни капацитети за закачане
 EXTERNAL_CAPACITIES = {
@@ -167,7 +153,7 @@ Return ONLY valid JSON."""
     if result and "error" not in result:
         print("[GROWTH] LLM: Groq ✅")
         return result
-    return _llm(prompt)
+    return {"error": "All LLM backends failed"}
 
 def run():
     # Зареди последния body scan

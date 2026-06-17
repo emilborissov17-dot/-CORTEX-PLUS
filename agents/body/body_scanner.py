@@ -138,16 +138,26 @@ def _processes():
         return {}
 
 def _ollama_status():
-    """Проверява дали Ollama работи и кои модели са заредени."""
-    try:
-        r = subprocess.run(["ollama", "ps"], capture_output=True, text=True, timeout=5)
-        lines = [l for l in r.stdout.splitlines() if l.strip() and "NAME" not in l]
-        return {
-            "running": r.returncode == 0,
-            "loaded_models": [l.split()[0] for l in lines if l.strip()],
-        }
-    except Exception:
-        return {"running": False, "loaded_models": []}
+    """Проверява Groq/Gemini API конфигурация (Ollama заменен с cloud backends)."""
+    import os
+    from pathlib import Path as _P
+    def _key(name):
+        k = os.environ.get(name, "")
+        if not k:
+            env = BASE / ".env"
+            if env.exists():
+                for line in env.read_text(encoding="utf-8").splitlines():
+                    if line.startswith(name + "="):
+                        k = line.split("=", 1)[1].strip()
+        return k
+    groq_ok   = bool(_key("GROQ_API_KEY"))
+    gemini_ok = bool(_key("GEMINI_API_KEY"))
+    backends  = [b for b, ok in [("groq", groq_ok), ("gemini", gemini_ok)] if ok]
+    return {
+        "running": groq_ok or gemini_ok,
+        "backend": "groq+gemini" if (groq_ok and gemini_ok) else (backends[0] if backends else "none"),
+        "loaded_models": backends,
+    }
 
 def _snapshots_count():
     snap_dir = BASE / "snapshots"

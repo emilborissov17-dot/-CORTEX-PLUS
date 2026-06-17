@@ -13,7 +13,7 @@ OpenClaw — Сканира ЦЕЛИЯ проект CORTEX++_QWEN:
 """
 
 from __future__ import annotations
-import json, subprocess, pathlib, sys
+import json, pathlib, sys
 from datetime import datetime, timezone
 
 BASE = pathlib.Path(__file__).resolve().parent.parent.parent
@@ -39,23 +39,6 @@ EXCLUDE_DIRS = {"venv", "__pycache__", ".git", "OLD", "LEGACY", ".npm-global"}
 
 def _utc_now():
     return datetime.now(timezone.utc).isoformat()
-
-def _llm(prompt, timeout=240):
-    try:
-        r = subprocess.run(["ollama", "run", MODEL],
-            input=prompt.encode("utf-8"),
-            stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-            timeout=timeout, check=False)
-        text = r.stdout.decode("utf-8", errors="ignore").strip()
-        if "...done thinking." in text: text = text.split("...done thinking.")[-1].strip()
-        if "</think>" in text: text = text.split("</think>")[-1].strip()
-        if "```json" in text: text = text.split("```json")[1].split("```")[0].strip()
-        elif "```" in text: text = text.split("```")[1].split("```")[0].strip()
-        return json.loads(text)
-    except json.JSONDecodeError:
-        return {"error": "JSON parse failed", "raw": text[:800]}
-    except Exception as e:
-        return {"error": str(e)}
 
 def scan_project():
     ctx = {
@@ -195,13 +178,11 @@ Return ONLY this JSON:
 
 Be specific. Reference actual filenames. Return ONLY valid JSON."""
 
-    # Groq първо, Ollama fallback
     result = _groq(prompt)
     if result and "error" not in result:
         print("[OPENCLAW] LLM: Groq ✅")
         return result
-    print("[OPENCLAW] LLM: Ollama fallback")
-    return _llm(prompt)
+    return {"error": "All LLM backends failed"}
 
 def save(result):
     out_dir = BASE / "snapshots" / "openclaw"
