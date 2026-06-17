@@ -19,7 +19,7 @@
       "direction": "lower_better",
       "weight": 10,
       "unit": "ppm",
-      "rationale": "IPCC safe CO2 ceiling (pre-industrial ~280, safe boundary ~350)"
+      "rationale": "Planetary Boundaries safe CO2 ceiling (Rockström et al. 2009, Nature 461:472; pre-industrial ~280 ppm, safe boundary ~350 ppm)"
     },
     "ECOSYSTEMS_BIODIVERSITY_REVIEW": {
       "primary_metric": "forest_area_pct",
@@ -98,12 +98,12 @@
     },
     "HUMAN_WELL_BEING_REVIEW": {
       "primary_metric": "child_mortality_per_1000",
-      "target_value": 5.0,
+      "target_value": 25.0,
       "reference_worst": 100.0,
       "direction": "lower_better",
       "weight": 9,
       "unit": "deaths per 1000 live births",
-      "rationale": "SDG3: <5/1000 target; reference_worst=100 (pre-modern baseline)"
+      "rationale": "SDG 3.2 official target: ≤25/1,000 under-5 mortality by 2030 (WHO SDG metadata); reference_worst=100 (conservative floor; pre-industrial rates were 200-300/1,000)"
     },
     "SOCIAL_RELATIONS_REVIEW": {
       "primary_metric": "refugee_population",
