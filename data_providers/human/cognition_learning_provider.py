@@ -11,7 +11,7 @@ INDICATORS = {
     "primary_completion_rate":       "SE.PRM.CMPT.ZS",
     "tertiary_enrollment_pct":       "SE.TER.ENRR",
     "govt_expenditure_education_pct":"SE.XPD.TOTL.GD.ZS",
-    "pupil_teacher_ratio_primary":   "SE.PRM.PTRT.ZS",
+    "pupil_teacher_ratio_primary":   "SE.PRM.ENRL.TC.ZS",
 }
 
 def _wb(ind):
