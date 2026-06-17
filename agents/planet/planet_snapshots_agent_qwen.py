@@ -203,6 +203,14 @@ def generate_axis_snapshot_llm(axis: str, cfg: Dict[str, Any]) -> None:
 
     prompt = BASE_PROMPT.format(axis=axis, label=label)
 
+    try:
+        from media_transcript_injector import get_media_context_block
+        media_block = get_media_context_block(axis)
+        if media_block:
+            prompt = media_block + "\n\n" + prompt
+    except Exception:
+        pass
+
     print(f"[PLANET_SNAPSHOT] generating snapshot via LLM for {axis} ({short})...")
     try:
         raw = call_internal_llm(prompt)
@@ -252,6 +260,14 @@ def generate_axis_snapshot_real(axis: str, cfg: Dict[str, Any]) -> None:
                 payload["metrics"] = {}
             payload["metrics"].update(noaa)
             payload["data_quality"] = "REAL_NOAA"
+        try:
+            from media_transcript_injector import get_media_signals
+            media_sigs = get_media_signals(axis)
+            if media_sigs:
+                payload.setdefault("signals", [])
+                payload["signals"].extend(media_sigs)
+        except Exception:
+            pass
         write_axis_snapshot(axis, short, payload)
         return
 
