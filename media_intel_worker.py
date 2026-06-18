@@ -38,6 +38,12 @@ WHISPER_MODEL      = "whisper-large-v3"
 PRE_RELEVANCE_THRESHOLD  = 0.40   # before transcription (title+description only)
 POST_RELEVANCE_THRESHOLD = 0.45   # after transcription (full text)
 
+# Patterns in yt-dlp stderr that indicate IP/geo block rather than a generic error
+_IP_BLOCK_PATTERNS = (
+    "429", "403", "blocked", "bot", "sign in to confirm",
+    "unavailable in your country", "access denied", "too many requests",
+)
+
 PYTHON_EXE = Path(sys.executable)
 
 
@@ -237,8 +243,11 @@ def full_relevance_check(axis_name: str, rationale: str, transcript: str) -> tup
 # Audio download + transcription
 # ---------------------------------------------------------------------------
 
-def download_audio(url: str, video_id: str, output_dir: Path) -> Path | None:
-    """Download audio-only from YouTube via yt-dlp. Returns path to .mp3 file."""
+def download_audio(url: str, video_id: str, output_dir: Path) -> tuple[Path | None, str]:
+    """Download audio-only from YouTube via yt-dlp.
+    Returns (audio_path, status) where status is one of:
+      'OK' | 'IP_BLOCKED' | 'TIMEOUT' | 'DL_FAILED'
+    """
     output_dir.mkdir(parents=True, exist_ok=True)
     output_template = str(output_dir / "%(id)s.%(ext)s")
 
@@ -257,43 +266,47 @@ def download_audio(url: str, video_id: str, output_dir: Path) -> Path | None:
         if result.returncode != 0:
             err = result.stderr.decode("utf-8", errors="ignore")[:400]
             print(f"  [DL]  yt-dlp error (rc={result.returncode}): {err}")
-            return None
-        # yt-dlp names file as {id}.{ext} — search all supported audio exts
+            err_lower = err.lower()
+            if any(p in err_lower for p in _IP_BLOCK_PATTERNS):
+                return None, "IP_BLOCKED"
+            return None, "DL_FAILED"
         for ext in ("webm", "m4a", "opus", "ogg", "mp3", "mp4"):
             expected = output_dir / f"{video_id}.{ext}"
             if expected.exists():
                 print(f"  [DL]  {expected.name}  ({expected.stat().st_size // 1024} KB)")
-                return expected
-        # Last resort: any audio file in the dir
+                return expected, "OK"
         for ext in ("webm", "m4a", "opus", "ogg", "mp3", "mp4"):
             found = list(output_dir.glob(f"*.{ext}"))
             if found:
                 print(f"  [DL]  {found[0].name}  ({found[0].stat().st_size // 1024} KB)")
-                return found[0]
+                return found[0], "OK"
         print("  [DL]  No audio file found after yt-dlp")
-        return None
+        return None, "DL_FAILED"
     except subprocess.TimeoutExpired:
         print("  [DL]  Timeout (180s)")
-        return None
+        return None, "TIMEOUT"
     except Exception as e:
         print(f"  [DL]  Exception: {e}")
-        return None
+        return None, "DL_FAILED"
 
 
-def transcribe_audio(audio_path: Path) -> str | None:
-    """Transcribe audio file using Groq Whisper API."""
+def transcribe_audio(audio_path: Path) -> tuple[str | None, str]:
+    """Transcribe audio file using Groq Whisper API.
+    Returns (transcript_text, status) where status is one of:
+      'OK' | 'NO_KEY' | 'FILE_TOO_LARGE' | 'WHISPER_UNAVAILABLE' | 'API_ERROR'
+    """
     import requests
     api_key = _load_env("GROQ_API_KEY")
     if not api_key:
         print("  [TR]  GROQ_API_KEY missing")
-        return None
+        return None, "NO_KEY"
 
     file_size = audio_path.stat().st_size
     print(f"  [TR]  Sending {audio_path.name} ({file_size // 1024} KB) to Groq Whisper...")
 
     if file_size > 24 * 1024 * 1024:
         print("  [TR]  File > 24 MB — skipping (Whisper API limit)")
-        return None
+        return None, "FILE_TOO_LARGE"
 
     _MIME = {
         "webm": "audio/webm", "m4a": "audio/mp4", "mp4": "audio/mp4",
@@ -313,12 +326,16 @@ def transcribe_audio(audio_path: Path) -> str | None:
         text = resp.json().get("text", "").strip()
         if not text:
             print("  [TR]  Empty transcript returned")
-            return None
+            return None, "API_ERROR"
         print(f"  [TR]  Transcript OK — {len(text)} chars")
-        return text
+        return text, "OK"
+    except (FileNotFoundError, OSError) as e:
+        # WinError 2 / file not found — Whisper endpoint or audio file unreachable
+        print(f"  [TR]  System error (WinError/OSError): {e}")
+        return None, "WHISPER_UNAVAILABLE"
     except Exception as e:
         print(f"  [TR]  Error: {e}")
-        return None
+        return None, "API_ERROR"
 
 
 # ---------------------------------------------------------------------------
@@ -425,9 +442,14 @@ def _process_podcasts_for_axis(
                 "url":             audio_url,
                 "source":          "podcast",
                 "podcast_name":    ep["podcast_name"],
+                "transcript_status": "NO_TRANSCRIPT",
+                "fallback_type":     "description_only",
             }
             _save_media_seen(media_seen)
-            summary.append({"url": audio_url, "action": "skipped_pre", "score": pre_score, "source": "podcast"})
+            summary.append({
+                "url": audio_url, "action": "skipped_pre", "score": pre_score, "source": "podcast",
+                "transcript_status": "NO_TRANSCRIPT", "fallback_type": "description_only",
+            })
             continue
 
         # ── Download audio ───────────────────────────────────────────
@@ -435,12 +457,15 @@ def _process_podcasts_for_axis(
         audio_path = download_podcast_audio(audio_url, ep["title"], tmp_dir)
 
         if not audio_path:
-            summary.append({"url": audio_url, "action": "download_failed", "source": "podcast"})
+            summary.append({
+                "url": audio_url, "action": "download_failed", "source": "podcast",
+                "transcript_status": "NO_TRANSCRIPT", "fallback_type": "description_only",
+            })
             _try_rmdir(tmp_dir)
             continue
 
         # ── Transcribe ───────────────────────────────────────────────
-        transcript = transcribe_audio(audio_path)
+        transcript, tr_status = transcribe_audio(audio_path)
 
         try:
             audio_path.unlink()
@@ -449,7 +474,13 @@ def _process_podcasts_for_axis(
         _try_rmdir(tmp_dir)
 
         if not transcript:
-            summary.append({"url": audio_url, "action": "transcription_failed", "source": "podcast"})
+            ts_status = tr_status if tr_status in (
+                "WHISPER_UNAVAILABLE", "NO_KEY", "FILE_TOO_LARGE"
+            ) else "NO_TRANSCRIPT"
+            summary.append({
+                "url": audio_url, "action": "transcription_failed", "source": "podcast",
+                "transcript_status": ts_status, "fallback_type": "description_only",
+            })
             continue
 
         # ── Save transcript ──────────────────────────────────────────
@@ -486,6 +517,8 @@ def _process_podcasts_for_axis(
             "podcast_name":    ep["podcast_name"],
             "transcript_file": str(ts_file),
             "key_insights":    insights,
+            "transcript_status": "OK",
+            "fallback_type":     "full_transcript",
         }
         _save_media_seen(media_seen)
         summary.append({
@@ -497,6 +530,8 @@ def _process_podcasts_for_axis(
             "transcript":  str(ts_file),
             "source":      "podcast",
             "podcast_name": ep["podcast_name"],
+            "transcript_status": "OK",
+            "fallback_type":     "full_transcript",
         })
         time.sleep(1)
 
@@ -554,24 +589,33 @@ def process_axis(axis_name: str, max_videos_per_phrase: int = 2) -> dict:
                     "axis":            axis_name,
                     "title":           video["title"],
                     "url":             url,
+                    "transcript_status": "NO_TRANSCRIPT",
+                    "fallback_type":     "description_only",
                 }
                 _save_media_seen(media_seen)
-                summary.append({"url": url, "action": "skipped_pre", "score": pre_score})
+                summary.append({
+                    "url": url, "action": "skipped_pre", "score": pre_score,
+                    "transcript_status": "NO_TRANSCRIPT", "fallback_type": "description_only",
+                })
                 processed += 1
                 continue
 
             # ── Step 2: Download audio ───────────────────────────────────
             tmp_dir = Path(tempfile.mkdtemp(prefix="cortex_media_"))
-            audio_path = download_audio(url, video["video_id"], tmp_dir)
+            audio_path, dl_status = download_audio(url, video["video_id"], tmp_dir)
 
             if not audio_path:
-                summary.append({"url": url, "action": "download_failed"})
+                ts_status = "IP_BLOCKED" if dl_status == "IP_BLOCKED" else "NO_TRANSCRIPT"
+                summary.append({
+                    "url": url, "action": "download_failed",
+                    "transcript_status": ts_status, "fallback_type": "description_only",
+                })
                 _try_rmdir(tmp_dir)
                 processed += 1
                 continue
 
             # ── Step 3: Transcribe ───────────────────────────────────────
-            transcript = transcribe_audio(audio_path)
+            transcript, tr_status = transcribe_audio(audio_path)
 
             try:
                 audio_path.unlink()
@@ -580,7 +624,13 @@ def process_axis(axis_name: str, max_videos_per_phrase: int = 2) -> dict:
             _try_rmdir(tmp_dir)
 
             if not transcript:
-                summary.append({"url": url, "action": "transcription_failed"})
+                ts_status = tr_status if tr_status in (
+                    "WHISPER_UNAVAILABLE", "NO_KEY", "FILE_TOO_LARGE"
+                ) else "NO_TRANSCRIPT"
+                summary.append({
+                    "url": url, "action": "transcription_failed",
+                    "transcript_status": ts_status, "fallback_type": "description_only",
+                })
                 processed += 1
                 continue
 
@@ -616,6 +666,8 @@ def process_axis(axis_name: str, max_videos_per_phrase: int = 2) -> dict:
                 "url":             url,
                 "transcript_file": str(ts_file),
                 "key_insights":    insights,
+                "transcript_status": "OK",
+                "fallback_type":     "full_transcript",
             }
             _save_media_seen(media_seen)
             summary.append({
@@ -625,6 +677,8 @@ def process_axis(axis_name: str, max_videos_per_phrase: int = 2) -> dict:
                 "score":      post_score,
                 "insights":   insights,
                 "transcript": str(ts_file),
+                "transcript_status": "OK",
+                "fallback_type":     "full_transcript",
             })
             processed += 1
             time.sleep(2)   # courtesy pause between videos
