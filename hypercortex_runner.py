@@ -1,15 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-hypercortex_runner.py
-Главен оркестратор на CORTEX++_QWEN.
-Пуска всички snapshot агенти и генерира финален GOAL_PROGRESS_REVIEW.
-"""
 from __future__ import annotations
 import json, pathlib, subprocess, sys
 from datetime import datetime, timezone
 
-# Fix Windows console encoding for UTF-8 / emoji / Cyrillic
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 if hasattr(sys.stderr, "reconfigure"):
@@ -76,9 +70,36 @@ def _notify_learner(results: dict, snapshots: dict):
             "agents_failed": [a for a, ok in results.items() if not ok],
             "axes_count": len(snapshots),
         })
-        print("[HYPERCORTEX] continuous_learner ✅")
+        print("[HYPERCORTEX] continuous_learner ")
     except Exception as e:
-        print(f"[HYPERCORTEX] learner пропуснат: {e}")
+        print(f"[HYPERCORTEX] learner : {e}")
+
+def run_agents():
+    results = {}
+    for agent in AGENTS:
+        try:
+            results[agent] = _run_agent(agent)
+        except subprocess.TimeoutExpired:
+            print(f"[HYPERCORTEX] TIMEOUT: {agent} — 180s")
+            results[agent] = False
+        except Exception as e:
+            print(f"[HYPERCORTEX] ERROR running {agent}: {e}")
+            results[agent] = False
+    return results
+
+def collect_and_write_snapshots():
+    print("\n[HYPERCORTEX] collecting all snapshots...")
+    snapshots = _collect_snapshots()
+    print(f"[HYPERCORTEX] {len(snapshots)} axis snapshots collected.")
+    out_path = _write_master_report(snapshots)
+    print(f"[HYPERCORTEX] master report -> {out_path}")
+    return snapshots
+
+def print_summary(results: dict):
+    print("\n[HYPERCORTEX] SUMMARY:")
+    for agent, ok in results.items():
+        status = "" if ok else ""
+        print(f"  {status} {agent}")
 
 def main():
     print("=" * 60)
@@ -86,30 +107,10 @@ def main():
     print(f"[HYPERCORTEX] started at {_utc_now()}")
     print("=" * 60)
 
-    results = {}
-    for agent in AGENTS:
-        try:
-            results[agent] = _run_agent(agent)
-        except subprocess.TimeoutExpired:
-            print(f"[HYPERCORTEX] TIMEOUT: {agent} — пропуснат след 180s")
-            results[agent] = False
-        except Exception as e:
-            print(f"[HYPERCORTEX] ERROR running {agent}: {e}")
-            results[agent] = False
-
-    print("\n[HYPERCORTEX] collecting all snapshots...")
-    snapshots = _collect_snapshots()
-
-    print(f"[HYPERCORTEX] {len(snapshots)} axis snapshots collected.")
-    out_path = _write_master_report(snapshots)
-    print(f"[HYPERCORTEX] master report -> {out_path}")
-
+    results = run_agents()
+    snapshots = collect_and_write_snapshots()
     _notify_learner(results, snapshots)
-
-    print("\n[HYPERCORTEX] SUMMARY:")
-    for agent, ok in results.items():
-        status = "✅" if ok else "❌"
-        print(f"  {status} {agent}")
+    print_summary(results)
     print(f"\n[HYPERCORTEX] done at {_utc_now()}")
     print("=" * 60)
 

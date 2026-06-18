@@ -1,13 +1,15 @@
 #!/usr/bin/env python3
 import argparse
 import json
-import subprocess
 import csv
 from pathlib import Path
 from datetime import datetime, timezone
 
+try:
+    from .groq_backend import call_groq
+except ImportError:
+    from groq_backend import call_groq
 
-MODEL_NAME = "qwen3:1.7b"  # локалният модел през Ollama
 ENERGY_DATA_PATH = Path("data/energy/owid-energy-data.csv")
 
 
@@ -143,7 +145,7 @@ def build_dummy_json_generic(domain: str, raw_context: str, error_message: str) 
             "Да се прегледат raw LLM файловете в history/ и да се подобрят prompt-овете/моделът."
         ],
         "error_info": {
-            "type": "ollama_failure",
+            "type": "llm_failure",
             "message": error_message,
             "timestamp_utc": utc_iso(),
         }
@@ -151,35 +153,14 @@ def build_dummy_json_generic(domain: str, raw_context: str, error_message: str) 
 
 
 # ======================================================================
-#  OLLAMA ВИКАНЕ + JSON ЕКСТРАКЦИЯ
+#  GROQ API ВИКАНЕ + JSON ЕКСТРАКЦИЯ (Groq → Gemini → Ollama fallback)
 # ======================================================================
 
-def _ollama_run(prompt: str) -> str:
+def _llm_run(prompt: str) -> str:
     """
-    Вика локален Ollama модел (MODEL_NAME), подава prompt като UTF-8 байтове.
+    Вика LLM чрез groq_backend (fallback chain: Groq → Gemini → Ollama).
     """
-    try:
-        result = subprocess.run(
-            ["ollama", "run", MODEL_NAME],
-            input=prompt.encode("utf-8"),
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            check=False,
-        )
-    except Exception as e:
-        raise RuntimeError(f"Ollama call failed: {e}")
-
-    if result.returncode != 0:
-        raise RuntimeError(
-            f"Ollama exited with code {result.returncode}: "
-            f"{result.stderr.decode('utf-8', errors='ignore').strip()}"
-        )
-
-    content = result.stdout.decode("utf-8", errors="ignore").strip()
-    if not content:
-        raise RuntimeError("Empty content from Ollama")
-
-    return content
+    return call_groq(prompt, max_tokens=2048)
 
 
 def _extract_json_object(text: str) -> str:
@@ -350,7 +331,7 @@ def build_generic_prompt(domain: str, raw_context: str) -> str:
 
 def call_ollama_json(domain: str, raw_context: str) -> dict:
     """
-    Вика qwen3:1.7b през Ollama със system+user prompt.
+    Вика LLM (Groq → Gemini → Ollama fallback) със system+user prompt.
     ENERGY: новият формат с оси + action_plan; други домейни: старият generic формат.
     """
     base_dir = Path(__file__).resolve().parent
@@ -363,7 +344,7 @@ def call_ollama_json(domain: str, raw_context: str) -> dict:
         full_prompt = build_generic_prompt(domain, raw_context)
 
     # --- Първи опит ---
-    content = _ollama_run(full_prompt)
+    content = _llm_run(full_prompt)
 
     ts = utc_iso().replace(":", "").replace("-", "")
     raw_path_1 = history_dir / f"llm_resource_raw_{domain}_{ts}_v1.txt"
@@ -396,7 +377,7 @@ def call_ollama_json(domain: str, raw_context: str) -> dict:
         )
         repair_prompt = repair_system + "\n\n" + repair_user
 
-        content_repaired = _ollama_run(repair_prompt)
+        content_repaired = _llm_run(repair_prompt)
 
         raw_path_2 = history_dir / f"llm_resource_raw_{domain}_{ts}_v2_repaired.txt"
         try:
