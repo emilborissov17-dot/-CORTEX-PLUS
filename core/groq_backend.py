@@ -51,6 +51,9 @@ _cooldowns:     dict = {}
 _cooldown_hits: dict = {}     # брои колко пъти е hit-нат всеки backend
 _cd_lock = threading.Lock()
 
+# Adaptive sleep — overridden by body_scanner directives at cycle start
+_SLEEP_SECS: float = 2.0
+
 
 # ---------------------------------------------------------------------------
 # Helpers
@@ -128,7 +131,7 @@ def _call_groq(prompt: str, max_tokens: int) -> str:
         ],
         "max_tokens": max_tokens,
     }
-    time.sleep(2)  # 2s пауза → max 30 req/min → не изчерпваме лимита при 25-осен цикъл
+    time.sleep(_SLEEP_SECS)  # adaptive: set by body_scanner directives (default 2s)
     r = requests.post(GROQ_API_URL, headers=headers, json=payload, timeout=60)
 
     if r.status_code == 429:
