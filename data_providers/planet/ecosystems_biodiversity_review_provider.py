@@ -19,9 +19,11 @@ WB_INDICATORS = {
 
 def _wb(ind: str) -> float | None:
     try:
-        r = requests.get(f"{WB_API}/{ind}?format=json&mrv=1&per_page=1", timeout=15)
-        v = r.json()[1][0].get("value")
-        return float(v) if v is not None else None
+        r = requests.get(f"{WB_API}/{ind}?format=json&mrv=5&per_page=5", timeout=15)
+        for item in r.json()[1]:
+            if item.get("value") is not None:
+                return float(item["value"])
+        return None
     except:
         return None
 
