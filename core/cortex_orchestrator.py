@@ -54,72 +54,125 @@ def load_latest_intelligence():
     
     return state
 
+def _rule_based_attention(state: dict) -> dict:
+    """
+    Derive priority axes directly from snapshot data — no LLM needed.
+    Rules: xrisk_score > 0.6, progress_pct < 20, trend DETERIORATING.
+    """
+    scored = []
+    for snap in state.get("snapshots", {}).values():
+        if not isinstance(snap, dict):
+            continue
+        axis  = snap.get("axis", "")
+        xrisk = float(snap.get("xrisk_score") or 0)
+        prog  = float(snap.get("progress_pct") or snap.get("overall_progress_pct") or 50)
+        trend = snap.get("trend", snap.get("current_level", "STABLE"))
+        score = 0
+        if xrisk > 0.6:
+            score += 3
+        if xrisk > 0.4:
+            score += 1
+        if prog < 20:
+            score += 3
+        if prog < 40:
+            score += 1
+        if "DETERIOR" in str(trend).upper():
+            score += 2
+        if score > 0:
+            scored.append((score, axis, xrisk, prog))
+
+    scored.sort(reverse=True)
+    priority_axes = [a for _, a, _, _ in scored[:3]]
+
+    # Highest xrisk = main threat
+    by_xrisk = sorted(
+        ((float(s.get("xrisk_score") or 0), s.get("axis", ""))
+         for s in state.get("snapshots", {}).values() if isinstance(s, dict)),
+        reverse=True,
+    )
+    main_threat = (
+        f"{by_xrisk[0][1]} (xrisk={by_xrisk[0][0]:.2f})" if by_xrisk else "unknown"
+    )
+
+    # Highest progress + positive trend = main opportunity
+    by_prog = sorted(
+        ((float(s.get("progress_pct") or s.get("overall_progress_pct") or 0),
+          s.get("axis", ""))
+         for s in state.get("snapshots", {}).values() if isinstance(s, dict)),
+        reverse=True,
+    )
+    main_opportunity = by_prog[0][1] if by_prog else "unknown"
+
+    action = (
+        f"Focus on {priority_axes[0]}" if priority_axes else "Collect more real data"
+    )
+
+    return {
+        "priority_axes":    priority_axes,
+        "main_threat":      main_threat,
+        "main_opportunity": main_opportunity,
+        "immediate_action": action,
+        "reasoning":        "Rule-based AMP (xrisk + progress + trend)",
+        "method":           "rule-based",
+    }
+
+
 def assess_attention(state):
     """
-    Attentional Meta Protocol:
-    Решава кои оси изискват внимание и с какъв приоритет.
+    Attentional Meta Protocol.
+    Step 1: rule-based priority from snapshot metrics (always works, no LLM).
+    Step 2: LLM narrative enrichment (best-effort, skipped on rate limit).
     """
-    internet = state.get("internet", {})
-    
-    critical = internet.get("critical_axes", [])
-    high     = internet.get("high_urgency_axes", internet.get("high_axes", []))
-    
-    # Изгради контекст за Groq
-    ctx = f"КРИТИЧНИ ОСИ: {critical}\nВИСОКИ ОСИ: {high}\n\n"
-    try:
-        from memory.semantic_memory import query as mem_query
-        past = mem_query("критични оси заплахи стратегия", n=5)
-        if past:
-            ctx += "\nМИНАЛИ РЕШЕНИЯ:\n"
-            for m in past:
-                ctx += f"[{m.get('date','')}] {m.get('text','')[:150]}\n"
-    except Exception:
-        pass
-    
-    # Добави последни новини
+    # Load snapshots into state if not already there
+    if "snapshots" not in state:
+        snap_dir = BASE / "snapshots"
+        state["snapshots"] = {}
+        if snap_dir.exists():
+            for jf in snap_dir.rglob("*_snapshot_latest.json"):
+                try:
+                    d = json.loads(jf.read_text(encoding="utf-8"))
+                    state["snapshots"][d.get("axis", jf.stem)] = d
+                except Exception:
+                    pass
+
+    base = _rule_based_attention(state)
+
+    # Best-effort LLM enrichment — adds narrative context if LLM is available
+    internet  = state.get("internet", {})
     axes_data = internet.get("axes", internet.get("results", {}))
-    for axis in (critical + high)[:5]:
+    ctx = (
+        f"PRIORITY AXES (rule-based): {base['priority_axes']}\n"
+        f"MAIN THREAT: {base['main_threat']}\n"
+        f"OPPORTUNITY: {base['main_opportunity']}\n\n"
+    )
+    for axis in base["priority_axes"]:
         if axis in axes_data:
-            summary = axes_data[axis].get("summary", "")
-            ctx += f"{axis}: {summary[:200]}\n"
-    
-    prompt = f"""
-Анализирай текущото състояние на CORTEX++ системата.
+            ctx += f"{axis}: {axes_data[axis].get('summary','')[:200]}\n"
 
-ДАННИ:
-{ctx}
-
-ВИЗИЯ:
-{VISION[:500]}
-
-ЗАДАЧА — Attentional Protocol:
-1. Кои 3 оси изискват НЕЗАБАВНО внимание и защо?
-2. Каква е ОСНОВНАТА заплаха за визията в момента?
-3. Каква е ОСНОВНАТА възможност за напредък?
-4. Какво трябва да направи CORTEX++ СЕГА?
-
-Отговори като JSON:
-{{"priority_axes": ["ос1", "ос2", "ос3"],
-  "main_threat": "...",
-  "main_opportunity": "...", 
-  "immediate_action": "...",
-  "reasoning": "..."}}
-"""
+    prompt = (
+        f"You are CORTEX++ Attentional Meta Protocol.\n\n"
+        f"Pre-computed priorities from snapshot data:\n{ctx}\n"
+        f"VISION:\n{VISION[:400]}\n\n"
+        "Enrich the analysis: why are these axes critical? What is the key threat "
+        "and opportunity? Return JSON only:\n"
+        '{"priority_axes": [...], "main_threat": "...", '
+        '"main_opportunity": "...", "immediate_action": "...", "reasoning": "..."}'
+    )
     try:
-        response = call_groq(prompt, max_tokens=1500)
+        response = call_groq(prompt, max_tokens=600)
         if "```json" in response:
             response = response.split("```json")[1].split("```")[0]
         elif "```" in response:
             response = response.split("```")[1].split("```")[0]
-        return json.loads(response.strip())
-    except Exception as e:
-        return {
-            "priority_axes": critical[:3] or high[:3],
-            "main_threat": "Insufficient data",
-            "main_opportunity": "Continue monitoring",
-            "immediate_action": "Gather more data",
-            "reasoning": str(e)
-        }
+        enriched = json.loads(response.strip())
+        # Keep rule-based priority_axes if LLM returns empty list
+        if not enriched.get("priority_axes"):
+            enriched["priority_axes"] = base["priority_axes"]
+        enriched["method"] = "llm-enriched"
+        return enriched
+    except Exception:
+        # LLM unavailable — rule-based result is still useful
+        return base
 
 def generate_strategic_plan(attention, state):
     """
@@ -157,7 +210,19 @@ def generate_strategic_plan(attention, state):
             response = response.split("```")[1].split("```")[0]
         return json.loads(response.strip())
     except Exception as e:
-        print(f"[ORCHESTRATOR] Plan error: {e}"); return {"error": str(e), "plan_24h": [], "key_insight": "Planning failed"}
+        # Minimal rule-based plan when LLM unavailable
+        axes = attention.get("priority_axes", [])
+        return {
+            "plan_24h": [
+                {"axis": ax, "action": f"Collect real metrics for {ax}",
+                 "lever": "data_providers", "allies": []}
+                for ax in axes
+            ],
+            "key_insight": f"Focus on {axes[0] if axes else 'data collection'}",
+            "civilization_impact": "NEUTRAL",
+            "next_evolution_step": "Improve real data coverage for priority axes",
+            "method": "rule-based-fallback",
+        }
 
 def save_orchestration_result(attention, plan, state={}):
     """Записва резултата от оркестрацията."""
