@@ -139,6 +139,17 @@ def synthesize(ctx):
     vision_file = BASE / "core" / "civilization_vision.txt"
     vision_text = vision_file.read_text(encoding="utf-8", errors="ignore") if vision_file.exists() else "(vision not found)"
 
+    # Load real global indicators if available this cycle
+    gi_block = ""
+    gi_path = BASE / "snapshots" / "master" / "global_indicators_latest.json"
+    if gi_path.exists():
+        try:
+            from core.global_indicators import as_prompt_block
+            gi_data = json.loads(gi_path.read_text(encoding="utf-8"))
+            gi_block = as_prompt_block(gi_data)
+        except Exception:
+            gi_block = "(global indicators file exists but could not be loaded)"
+
     prompt = f"""You are OpenClaw — strategic intelligence of CORTEX++ AGI.
 
 MISSION:
@@ -160,6 +171,8 @@ You scanned the ENTIRE CORTEX++_QWEN project. Full context:
 
 ── GOAL SCORE (composite from real data) ──
 {goal_score_str}
+
+{gi_block}
 
 ── AGENTS NOT IN fast_cycle_runner (missing integrations) ──
 {missing_str}

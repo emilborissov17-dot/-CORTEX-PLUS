@@ -297,6 +297,20 @@ def main():
     refresh_llm_axes()
     update_master()
 
+    # ── 2.5. Global indicators — реални данни от 7 источника ──
+    try:
+        from core.global_indicators import fetch_all as _gi_fetch
+        gi_data = _gi_fetch()
+        gi_path = BASE / "snapshots" / "master" / "global_indicators_latest.json"
+        gi_path.parent.mkdir(parents=True, exist_ok=True)
+        gi_path.write_text(json.dumps(gi_data, ensure_ascii=False, indent=2), encoding="utf-8")
+        co2  = gi_data.get("co2", {}).get("co2_ppm", "?")
+        temp = gi_data.get("temperature", {}).get("temp_anomaly_c", "?")
+        conf = gi_data.get("conflicts", {}).get("active_armed_conflicts", "?")
+        print(f"[FAST_CYCLE] global_indicators -> CO2={co2}ppm | +{temp}°C | conflicts={conf}")
+    except Exception as e:
+        print(f"[FAST_CYCLE] global_indicators -> FAILED: {e}")
+
     # ── 3. Trend tracker ──
     run_trend_tracker()
 
