@@ -126,10 +126,13 @@ def synthesize(ctx):
     snap_str = json.dumps(ctx["snapshots_summary"], ensure_ascii=False, indent=2)[:2000]
     missing_str = "\n".join(f"  - {m}" for m in ctx["missing_integrations"][:20]) or "(none)"
 
+    vision_file = BASE / "core" / "civilization_vision.txt"
+    vision_text = vision_file.read_text(encoding="utf-8", errors="ignore") if vision_file.exists() else "(vision not found)"
+
     prompt = f"""You are OpenClaw — strategic intelligence of CORTEX++ AGI.
 
-MISSION: Устойчива общочовешка цивилизация. Jacque Fresco / Venus Project.
-Dignity, abundance, ecological balance for all humanity.
+MISSION:
+{vision_text}
 
 You scanned the ENTIRE CORTEX++_QWEN project. Full context:
 
@@ -171,7 +174,6 @@ Return ONLY this JSON:
     {{"name": "<AgentName>", "role": "<what it does>", "priority": "HIGH|MEDIUM"}}
   ],
   "fast_cycle_improvements": ["<improvement>"],
-  "fresco_alignment_notes": "<how aligned with Venus Project>",
   "next_milestone": "<what brings system to next level>",
   "openclaw_self_assessment": "<what OpenClaw should do next>"
 }}
