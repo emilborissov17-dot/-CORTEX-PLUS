@@ -50,6 +50,7 @@ def scan_project():
         "self_modifier_patches": [],
         "missing_integrations": [],
         "cycle_structure": "",
+        "goal_score": {},
     }
 
     # Goals
@@ -108,6 +109,14 @@ def scan_project():
     if pd.exists():
         ctx["self_modifier_patches"] = [f.name for f in pd.glob("*.py")]
 
+    # Goal score
+    gs = BASE / "snapshots" / "master" / "goal_score_latest.json"
+    if gs.exists():
+        try:
+            ctx["goal_score"] = json.loads(gs.read_text(encoding="utf-8"))
+        except Exception:
+            pass
+
     # Cycle structure
     rf = BASE / "fast_cycle_runner.py"
     if rf.exists():
@@ -125,6 +134,7 @@ def synthesize(ctx):
     agents_list = "\n".join(f"  - {a['file']} ({a['lines']} lines)" for a in ctx["agents"][:50])
     snap_str = json.dumps(ctx["snapshots_summary"], ensure_ascii=False, indent=2)[:2000]
     missing_str = "\n".join(f"  - {m}" for m in ctx["missing_integrations"][:20]) or "(none)"
+    goal_score_str = json.dumps(ctx.get("goal_score", {}), ensure_ascii=False, indent=2)[:500] or "(not available)"
 
     vision_file = BASE / "core" / "civilization_vision.txt"
     vision_text = vision_file.read_text(encoding="utf-8", errors="ignore") if vision_file.exists() else "(vision not found)"
@@ -147,6 +157,9 @@ You scanned the ENTIRE CORTEX++_QWEN project. Full context:
 
 ── SNAPSHOTS STATE ──
 {snap_str}
+
+── GOAL SCORE (composite from real data) ──
+{goal_score_str}
 
 ── AGENTS NOT IN fast_cycle_runner (missing integrations) ──
 {missing_str}

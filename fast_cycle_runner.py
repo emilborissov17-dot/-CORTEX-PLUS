@@ -144,6 +144,58 @@ def update_master():
     print(f"[FAST_CYCLE] master updated — {len(snapshots)} axes")
 
 
+def _openclaw_to_proposals():
+    snap_path     = BASE / "snapshots" / "openclaw" / "openclaw_snapshot_latest.json"
+    proposals_path = BASE / "memory" / "improvement_proposals.json"
+    if not snap_path.exists():
+        print("[FAST_CYCLE] openclaw_to_proposals -> no snapshot yet")
+        return
+    try:
+        data = json.loads(snap_path.read_text(encoding="utf-8"))
+        new_proposals = []
+        for act in data.get("immediate_actions", []):
+            new_proposals.append({
+                "component":       "unknown",
+                "problem":         act.get("why", "OpenClaw action"),
+                "solution":        act.get("action", ""),
+                "measurable_goal": act.get("action", "")[:80],
+                "root_cause":      f"OpenClaw scan → {act.get('file', 'unknown')}",
+                "priority":        "HIGH",
+                "real_world_signal": True,
+                "generated_by":    "OPENCLAW",
+                "timestamp":       _utc_now(),
+            })
+        for gap in data.get("critical_gaps", []):
+            if gap.get("impact") == "HIGH":
+                new_proposals.append({
+                    "component":       "unknown",
+                    "problem":         gap.get("gap", ""),
+                    "solution":        gap.get("fix", ""),
+                    "measurable_goal": gap.get("gap", "")[:80],
+                    "root_cause":      "Critical gap — OpenClaw full-scan",
+                    "priority":        "HIGH",
+                    "real_world_signal": True,
+                    "generated_by":    "OPENCLAW",
+                    "timestamp":       _utc_now(),
+                })
+        if not new_proposals:
+            print("[FAST_CYCLE] openclaw_to_proposals -> 0 HIGH proposals")
+            return
+        try:
+            existing = json.loads(proposals_path.read_text(encoding="utf-8"))
+            existing_list = existing.get("proposals", existing) if isinstance(existing, dict) else existing
+        except Exception:
+            existing_list = []
+        merged = new_proposals + [p for p in existing_list if p.get("generated_by") != "OPENCLAW"]
+        proposals_path.write_text(
+            json.dumps({"proposals": merged}, ensure_ascii=False, indent=2),
+            encoding="utf-8",
+        )
+        print(f"[FAST_CYCLE] openclaw_to_proposals -> {len(new_proposals)} proposals injected")
+    except Exception as e:
+        print(f"[FAST_CYCLE] openclaw_to_proposals -> FAILED: {e}")
+
+
 def main():
     print("=" * 50)
     print(f"[FAST_CYCLE] started at {_utc_now()}")
@@ -234,6 +286,13 @@ def main():
     # ── 15. OpenClaw ──
     _run("openclaw_agent", lambda: __import__(
         "agents.openclaw.openclaw_agent", fromlist=["run"]).run(), free_after=True)
+
+    # ── 15.5. OpenClaw actions → improvement proposals ──
+    _openclaw_to_proposals()
+
+    # ── 15.6. HyperClaw — multi-axis 24-72h plan ──
+    _run("hyperclaw_orchestrator", lambda: __import__(
+        "agents.hyperclaw.hyperclaw_orchestrator", fromlist=["main"]).main(), free_after=True)
 
     # ── 16. Action recommendations ──
     try:
