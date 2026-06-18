@@ -1,0 +1,724 @@
+{
+  "cycle_id": "full_test_003",
+  "timestamp": "2026-06-14T07:54:10.853988+00:00",
+  "count": 50,
+  "signals": [
+    {
+      "source": "USGS Earthquake Feed",
+      "category": "THREATS",
+      "domain": "geological",
+      "metric": "earthquake_magnitude",
+      "value": 5,
+      "delta": null,
+      "timestamp": "2026-06-13T20:51:55.063000",
+      "raw": {
+        "place": "33 km ESE of Sarangani, Philippines",
+        "mag": 5,
+        "lon": 125.7394,
+        "lat": 5.2843,
+        "depth_km": 35,
+        "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000ssqy"
+      }
+    },
+    {
+      "source": "USGS Earthquake Feed",
+      "category": "THREATS",
+      "domain": "geological",
+      "metric": "earthquake_magnitude",
+      "value": 5.1,
+      "delta": null,
+      "timestamp": "2026-06-13T18:20:42.423000",
+      "raw": {
+        "place": "2 km S of Cerro de Piedra, Mexico",
+        "mag": 5.1,
+        "lon": -99.6335,
+        "lat": 16.7529,
+        "depth_km": 10,
+        "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000ssq9"
+      }
+    },
+    {
+      "source": "USGS Earthquake Feed",
+      "category": "THREATS",
+      "domain": "geological",
+      "metric": "earthquake_magnitude",
+      "value": 5.1,
+      "delta": null,
+      "timestamp": "2026-06-13T12:05:34.332000",
+      "raw": {
+        "place": "118 km ESE of Bitung, Indonesia",
+        "mag": 5.1,
+        "lon": 126.1267,
+        "lat": 1.0796,
+        "depth_km": 35,
+        "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000ssp2"
+      }
+    },
+    {
+      "source": "USGS Earthquake Feed",
+      "category": "THREATS",
+      "domain": "geological",
+      "metric": "earthquake_magnitude",
+      "value": 5,
+      "delta": null,
+      "timestamp": "2026-06-13T12:04:14.390000",
+      "raw": {
+        "place": "24 km W of Ovalle, Chile",
+        "mag": 5,
+        "lon": -71.4544,
+        "lat": -30.6288,
+        "depth_km": 60.576,
+        "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000ssp1"
+      }
+    },
+    {
+      "source": "USGS Earthquake Feed",
+      "category": "THREATS",
+      "domain": "geological",
+      "metric": "earthquake_magnitude",
+      "value": 5.1,
+      "delta": null,
+      "timestamp": "2026-06-13T11:24:54.194000",
+      "raw": {
+        "place": "207 km WSW of Adak, Alaska",
+        "mag": 5.1,
+        "lon": -179.5103,
+        "lat": 51.3511,
+        "depth_km": 28.374,
+        "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000ssnz"
+      }
+    },
+    {
+      "source": "USGS Earthquake Feed",
+      "category": "THREATS",
+      "domain": "geological",
+      "metric": "earthquake_magnitude",
+      "value": 5,
+      "delta": null,
+      "timestamp": "2026-06-13T10:38:47.612000",
+      "raw": {
+        "place": "93 km SSW of Unalaska, Alaska",
+        "mag": 5,
+        "lon": -166.9697,
+        "lat": 53.0785,
+        "depth_km": 41.492,
+        "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000ssnv"
+      }
+    },
+    {
+      "source": "USGS Earthquake Feed",
+      "category": "THREATS",
+      "domain": "geological",
+      "metric": "earthquake_magnitude",
+      "value": 5.1,
+      "delta": null,
+      "timestamp": "2026-06-13T06:35:39.650000",
+      "raw": {
+        "place": "0 km ESE of Suyo, Peru",
+        "mag": 5.1,
+        "lon": -79.9986,
+        "lat": -4.5157,
+        "depth_km": 72.251,
+        "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000ssms"
+      }
+    },
+    {
+      "source": "USGS Earthquake Feed",
+      "category": "THREATS",
+      "domain": "geological",
+      "metric": "earthquake_magnitude",
+      "value": 5.2,
+      "delta": null,
+      "timestamp": "2026-06-13T02:05:53.272000",
+      "raw": {
+        "place": "2 km WSW of Kablalan, Philippines",
+        "mag": 5.2,
+        "lon": 125.1803,
+        "lat": 5.774,
+        "depth_km": 69.522,
+        "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000ssls"
+      }
+    },
+    {
+      "source": "USGS Earthquake Feed",
+      "category": "THREATS",
+      "domain": "geological",
+      "metric": "earthquake_magnitude",
+      "value": 5.2,
+      "delta": null,
+      "timestamp": "2026-06-12T19:10:03.582000",
+      "raw": {
+        "place": "65 km S of Sarangani, Philippines",
+        "mag": 5.2,
+        "lon": 125.3914,
+        "lat": 4.8121,
+        "depth_km": 10,
+        "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000ssje"
+      }
+    },
+    {
+      "source": "USGS Earthquake Feed",
+      "category": "THREATS",
+      "domain": "geological",
+      "metric": "earthquake_magnitude",
+      "value": 5,
+      "delta": null,
+      "timestamp": "2026-06-12T17:58:40.438000",
+      "raw": {
+        "place": "30 km SSW of Daliao, Philippines",
+        "mag": 5,
+        "lon": 124.8728,
+        "lat": 5.5979,
+        "depth_km": 65.816,
+        "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000ssit"
+      }
+    },
+    {
+      "source": "NASA NeoWs",
+      "category": "THREATS",
+      "domain": "space",
+      "metric": "asteroid_miss_distance_lunar",
+      "value": 26.85,
+      "delta": null,
+      "timestamp": "2026-06-14T07:54:04.449160",
+      "raw": {
+        "name": "(2013 BO27)",
+        "diameter_km_max": 0.09,
+        "miss_distance_lunar": 26.85,
+        "velocity_kmh": "52896.2445654246",
+        "hazardous": false
+      }
+    },
+    {
+      "source": "NASA NeoWs",
+      "category": "THREATS",
+      "domain": "space",
+      "metric": "asteroid_miss_distance_lunar",
+      "value": 28.07,
+      "delta": null,
+      "timestamp": "2026-06-14T07:54:04.449176",
+      "raw": {
+        "name": "(2019 TA)",
+        "diameter_km_max": 0.008,
+        "miss_distance_lunar": 28.07,
+        "velocity_kmh": "25102.5009213643",
+        "hazardous": false
+      }
+    },
+    {
+      "source": "NASA NeoWs",
+      "category": "THREATS",
+      "domain": "space",
+      "metric": "asteroid_miss_distance_lunar",
+      "value": 30.73,
+      "delta": null,
+      "timestamp": "2026-06-14T07:54:04.449187",
+      "raw": {
+        "name": "(2003 LW2)",
+        "diameter_km_max": 0.041,
+        "miss_distance_lunar": 30.73,
+        "velocity_kmh": "37223.349207066",
+        "hazardous": false
+      }
+    },
+    {
+      "source": "NASA NeoWs",
+      "category": "THREATS",
+      "domain": "space",
+      "metric": "asteroid_miss_distance_lunar",
+      "value": 43.87,
+      "delta": null,
+      "timestamp": "2026-06-14T07:54:04.449195",
+      "raw": {
+        "name": "510190 (2011 CX7)",
+        "diameter_km_max": 0.488,
+        "miss_distance_lunar": 43.87,
+        "velocity_kmh": "33625.1699974237",
+        "hazardous": false
+      }
+    },
+    {
+      "source": "NASA NeoWs",
+      "category": "THREATS",
+      "domain": "space",
+      "metric": "asteroid_miss_distance_lunar",
+      "value": 48.26,
+      "delta": null,
+      "timestamp": "2026-06-14T07:54:04.449203",
+      "raw": {
+        "name": "(2018 LU2)",
+        "diameter_km_max": 0.026,
+        "miss_distance_lunar": 48.26,
+        "velocity_kmh": "47214.770678744",
+        "hazardous": false
+      }
+    },
+    {
+      "source": "WHO RSS",
+      "category": "THREATS",
+      "domain": "pandemic",
+      "metric": "outbreak_headline",
+      "value": "Africa CDC and WHO launch joint continental Ebola response plan",
+      "delta": null,
+      "timestamp": "2026-06-14T07:54:04.651615",
+      "raw": {
+        "title": "Africa CDC and WHO launch joint continental Ebola response plan"
+      }
+    },
+    {
+      "source": "WHO RSS",
+      "category": "THREATS",
+      "domain": "pandemic",
+      "metric": "outbreak_headline",
+      "value": "Joint statement by the Government of the Democratic Republic of the Congo and WHO concerning the outbreak of Ebola disease caused by the Bundibugyo virus",
+      "delta": null,
+      "timestamp": "2026-06-14T07:54:04.651630",
+      "raw": {
+        "title": "Joint statement by the Government of the Democratic Republic of the Congo and WHO concerning the outbreak of Ebola disease caused by the Bundibugyo virus"
+      }
+    },
+    {
+      "source": "WHO RSS",
+      "category": "THREATS",
+      "domain": "pandemic",
+      "metric": "outbreak_headline",
+      "value": "Experts convened by WHO advise on candidate treatments and vaccines for Ebola disease caused by Bundibugyo virus",
+      "delta": null,
+      "timestamp": "2026-06-14T07:54:04.651636",
+      "raw": {
+        "title": "Experts convened by WHO advise on candidate treatments and vaccines for Ebola disease caused by Bundibugyo virus"
+      }
+    },
+    {
+      "source": "WHO RSS",
+      "category": "THREATS",
+      "domain": "pandemic",
+      "metric": "outbreak_headline",
+      "value": "First meeting of the IHR Emergency Committee regarding the epidemic of Ebola Bundibugyo virus disease in the Democratic Republic of the Congo and Uganda 2026 – Temporary recommendations",
+      "delta": null,
+      "timestamp": "2026-06-14T07:54:04.651640",
+      "raw": {
+        "title": "First meeting of the IHR Emergency Committee regarding the epidemic of Ebola Bundibugyo virus disease in the Democratic Republic of the Congo and Uganda 2026 – Temporary recommendations"
+      }
+    },
+    {
+      "source": "WHO RSS",
+      "category": "THREATS",
+      "domain": "pandemic",
+      "metric": "outbreak_headline",
+      "value": "Epidemic of Ebola Disease caused by Bundibugyo virus in the Democratic Republic of the Congo and Uganda determined a public health emergency of international concern",
+      "delta": null,
+      "timestamp": "2026-06-14T07:54:04.651644",
+      "raw": {
+        "title": "Epidemic of Ebola Disease caused by Bundibugyo virus in the Democratic Republic of the Congo and Uganda determined a public health emergency of international concern"
+      }
+    },
+    {
+      "source": "UNHCR API",
+      "category": "HUMAN_HEALTH",
+      "domain": "refugees",
+      "metric": "total_refugees",
+      "value": 28461306.0,
+      "delta": 28461306.0,
+      "timestamp": "2026-06-14T07:54:06.026259",
+      "raw": {
+        "year": 2025,
+        "coo_id": "-",
+        "coo_name": "-",
+        "coo": "-",
+        "coo_iso": "-",
+        "coa_id": "-",
+        "coa_name": "-",
+        "coa": "-",
+        "coa_iso": "-",
+        "refugees": 28461306,
+        "asylum_seekers": 8998091,
+        "returned_refugees": 4362272,
+        "idps": 64239352,
+        "returned_idps": 10308567,
+        "stateless": 4477220,
+        "ooc": 2957025,
+        "oip": 7177473,
+        "hst": 26670162
+      }
+    },
+    {
+      "source": "UNHCR API",
+      "category": "HUMAN_HEALTH",
+      "domain": "refugees",
+      "metric": "total_forcibly_displaced",
+      "value": 101698749.0,
+      "delta": 101698749.0,
+      "timestamp": "2026-06-14T07:54:06.026274",
+      "raw": {
+        "year": 2025,
+        "refugees": 28461306.0,
+        "asylum_seekers": 8998091.0,
+        "idps": 64239352.0
+      }
+    },
+    {
+      "source": "World Bank API",
+      "category": "HUMAN_HEALTH",
+      "domain": "demography",
+      "metric": "world_population",
+      "value": 8141808945.0,
+      "delta": 0.0,
+      "timestamp": "2026-06-14T07:54:06.173905",
+      "raw": {
+        "indicator": "SP.POP.TOTL",
+        "year": "2024",
+        "value": 8141808945
+      }
+    },
+    {
+      "source": "World Bank API",
+      "category": "HUMAN_HEALTH",
+      "domain": "inequality",
+      "metric": "extreme_poverty_rate_pct",
+      "value": 10.4,
+      "delta": 0.0,
+      "timestamp": "2026-06-14T07:54:06.218922",
+      "raw": {
+        "indicator": "SI.POV.DDAY",
+        "year": "2024",
+        "value": 10.4
+      }
+    },
+    {
+      "source": "World Bank API",
+      "category": "HUMAN_HEALTH",
+      "domain": "health",
+      "metric": "child_mortality_per_1000",
+      "value": 37.4,
+      "delta": 0.0,
+      "timestamp": "2026-06-14T07:54:06.265515",
+      "raw": {
+        "indicator": "SH.DYN.MORT",
+        "year": "2024",
+        "value": 37.4
+      }
+    },
+    {
+      "source": "World Bank API",
+      "category": "HUMAN_HEALTH",
+      "domain": "health",
+      "metric": "safe_water_access_pct",
+      "value": 73.6686144265244,
+      "delta": 0.0,
+      "timestamp": "2026-06-14T07:54:06.320085",
+      "raw": {
+        "indicator": "SH.H2O.SMDW.ZS",
+        "year": "2024",
+        "value": 73.6686144265244
+      }
+    },
+    {
+      "source": "FEWS NET",
+      "category": "HUMAN_HEALTH",
+      "domain": "famine",
+      "metric": "famine_alert",
+      "value": "ReliefWeb - World Health Organization (WHO) Updates",
+      "delta": null,
+      "timestamp": "2026-06-14T07:54:08.066210",
+      "raw": {
+        "title": "ReliefWeb - World Health Organization (WHO) Updates"
+      }
+    },
+    {
+      "source": "FEWS NET",
+      "category": "HUMAN_HEALTH",
+      "domain": "famine",
+      "metric": "famine_alert",
+      "value": "Lebanon: World Health Organization - Middle East Escalation of Conflict, Global Situation report #9 - 11 June 2026",
+      "delta": null,
+      "timestamp": "2026-06-14T07:54:08.066222",
+      "raw": {
+        "title": "Lebanon: World Health Organization - Middle East Escalation of Conflict, Global Situation report #9 - 11 June 2026"
+      }
+    },
+    {
+      "source": "FEWS NET",
+      "category": "HUMAN_HEALTH",
+      "domain": "famine",
+      "metric": "famine_alert",
+      "value": "Lebanon: MHPSS Emergency Response Update (March 2 - June 5, 2026)",
+      "delta": null,
+      "timestamp": "2026-06-14T07:54:08.066227",
+      "raw": {
+        "title": "Lebanon: MHPSS Emergency Response Update (March 2 - June 5, 2026)"
+      }
+    },
+    {
+      "source": "FEWS NET",
+      "category": "HUMAN_HEALTH",
+      "domain": "famine",
+      "metric": "famine_alert",
+      "value": "DR Congo: RDC Health Cluster - Analyse des gaps dans les Zones de Santé (ZS) touchées et menacées par la MVD au 01 juin 2026",
+      "delta": null,
+      "timestamp": "2026-06-14T07:54:08.066230",
+      "raw": {
+        "title": "DR Congo: RDC Health Cluster - Analyse des gaps dans les Zones de Santé (ZS) touchées et menacées par la MVD au 01 juin 2026"
+      }
+    },
+    {
+      "source": "FEWS NET",
+      "category": "HUMAN_HEALTH",
+      "domain": "famine",
+      "metric": "famine_alert",
+      "value": "WHO Rapid Risk Assessment - Ebola disease caused by Bundibugyo virus, Democratic Republic of the Congo, Uganda and countries with land borders adjoining countries with documented BDBV detection (06 June 2026, v3)",
+      "delta": null,
+      "timestamp": "2026-06-14T07:54:08.066233",
+      "raw": {
+        "title": "WHO Rapid Risk Assessment - Ebola disease caused by Bundibugyo virus, Democratic Republic of the Congo, Uganda and countries with land borders adjoining countries with documented BDBV detection (06 June 2026, v3)"
+      }
+    },
+    {
+      "source": "arXiv API",
+      "category": "PROGRESS",
+      "domain": "ai",
+      "metric": "arxiv_artificial_intelligence_paper",
+      "value": "Learning to Reason by Analogy via Retrieval-Augmented Reinforcement Fine-Tuning",
+      "delta": null,
+      "timestamp": "2026-06-14T07:54:08.271932",
+      "raw": {
+        "category": "cs.AI",
+        "title": "Learning to Reason by Analogy via Retrieval-Augmented Reinforcement Fine-Tuning"
+      }
+    },
+    {
+      "source": "arXiv API",
+      "category": "PROGRESS",
+      "domain": "ai",
+      "metric": "arxiv_artificial_intelligence_paper",
+      "value": "Mana: Dexterous Manipulation of Articulated Tools",
+      "delta": null,
+      "timestamp": "2026-06-14T07:54:08.271950",
+      "raw": {
+        "category": "cs.AI",
+        "title": "Mana: Dexterous Manipulation of Articulated Tools"
+      }
+    },
+    {
+      "source": "arXiv API",
+      "category": "PROGRESS",
+      "domain": "ai",
+      "metric": "arxiv_artificial_intelligence_paper",
+      "value": "SpatialClaw: Rethinking Action Interface for Agentic Spatial Reasoning",
+      "delta": null,
+      "timestamp": "2026-06-14T07:54:08.271960",
+      "raw": {
+        "category": "cs.AI",
+        "title": "SpatialClaw: Rethinking Action Interface for Agentic Spatial Reasoning"
+      }
+    },
+    {
+      "source": "arXiv API",
+      "category": "PROGRESS",
+      "domain": "energy",
+      "metric": "arxiv_energy_systems_paper",
+      "value": "Aerial Wildfire Suppression Planning with a Hybrid CNN-Cellular Automata Fire Model",
+      "delta": null,
+      "timestamp": "2026-06-14T07:54:08.378204",
+      "raw": {
+        "category": "eess.SY",
+        "title": "Aerial Wildfire Suppression Planning with a Hybrid CNN-Cellular Automata Fire Model"
+      }
+    },
+    {
+      "source": "arXiv API",
+      "category": "PROGRESS",
+      "domain": "energy",
+      "metric": "arxiv_energy_systems_paper",
+      "value": "Distribution-Agnostic Robust Trajectory Optimization via Chance-Constrained Reinforcement Learning",
+      "delta": null,
+      "timestamp": "2026-06-14T07:54:08.378221",
+      "raw": {
+        "category": "eess.SY",
+        "title": "Distribution-Agnostic Robust Trajectory Optimization via Chance-Constrained Reinforcement Learning"
+      }
+    },
+    {
+      "source": "arXiv API",
+      "category": "PROGRESS",
+      "domain": "energy",
+      "metric": "arxiv_energy_systems_paper",
+      "value": "MCR-Bionic Hand: Anatomical Structural Priors for Dexterous Manipulation",
+      "delta": null,
+      "timestamp": "2026-06-14T07:54:08.378230",
+      "raw": {
+        "category": "eess.SY",
+        "title": "MCR-Bionic Hand: Anatomical Structural Priors for Dexterous Manipulation"
+      }
+    },
+    {
+      "source": "arXiv API",
+      "category": "PROGRESS",
+      "domain": "medicine",
+      "metric": "arxiv_quantitative_biology_paper",
+      "value": "Balancing label resolution and computational cost in dynamical models of lipid metabolism",
+      "delta": null,
+      "timestamp": "2026-06-14T07:54:08.484813",
+      "raw": {
+        "category": "q-bio.QM",
+        "title": "Balancing label resolution and computational cost in dynamical models of lipid metabolism"
+      }
+    },
+    {
+      "source": "arXiv API",
+      "category": "PROGRESS",
+      "domain": "medicine",
+      "metric": "arxiv_quantitative_biology_paper",
+      "value": "A likelihood-based framework for simultaneously learning both noise and growth dynamics using biologically-informed neural networks",
+      "delta": null,
+      "timestamp": "2026-06-14T07:54:08.484833",
+      "raw": {
+        "category": "q-bio.QM",
+        "title": "A likelihood-based framework for simultaneously learning both noise and growth dynamics using biologically-informed neural networks"
+      }
+    },
+    {
+      "source": "arXiv API",
+      "category": "PROGRESS",
+      "domain": "medicine",
+      "metric": "arxiv_quantitative_biology_paper",
+      "value": "Mathematical Modeling of HDV RNA, HBV DNA, and HBsAg Dynamics during Lonafarnib-Based Therapy: Insights from the LOWR HDV-1 Study",
+      "delta": null,
+      "timestamp": "2026-06-14T07:54:08.484851",
+      "raw": {
+        "category": "q-bio.QM",
+        "title": "Mathematical Modeling of HDV RNA, HBV DNA, and HBsAg Dynamics during Lonafarnib-Based Therapy: Insights from the LOWR HDV-1 Study"
+      }
+    },
+    {
+      "source": "GitHub Trending",
+      "category": "PROGRESS",
+      "domain": "technology",
+      "metric": "trending_repo",
+      "value": "apple/container",
+      "delta": null,
+      "timestamp": "2026-06-14T07:54:08.814812",
+      "raw": {
+        "repo": "apple/container"
+      }
+    },
+    {
+      "source": "GitHub Trending",
+      "category": "PROGRESS",
+      "domain": "technology",
+      "metric": "trending_repo",
+      "value": "andrewyng/aisuite",
+      "delta": null,
+      "timestamp": "2026-06-14T07:54:08.814824",
+      "raw": {
+        "repo": "andrewyng/aisuite"
+      }
+    },
+    {
+      "source": "GitHub Trending",
+      "category": "PROGRESS",
+      "domain": "technology",
+      "metric": "trending_repo",
+      "value": "x1xhlol/system-prompts-and-models-of-ai-tools",
+      "delta": null,
+      "timestamp": "2026-06-14T07:54:08.814830",
+      "raw": {
+        "repo": "x1xhlol/system-prompts-and-models-of-ai-tools"
+      }
+    },
+    {
+      "source": "GitHub Trending",
+      "category": "PROGRESS",
+      "domain": "technology",
+      "metric": "trending_repo",
+      "value": "iptv-org/iptv",
+      "delta": null,
+      "timestamp": "2026-06-14T07:54:08.814837",
+      "raw": {
+        "repo": "iptv-org/iptv"
+      }
+    },
+    {
+      "source": "GitHub Trending",
+      "category": "PROGRESS",
+      "domain": "technology",
+      "metric": "trending_repo",
+      "value": "addyosmani/agent-skills",
+      "delta": null,
+      "timestamp": "2026-06-14T07:54:08.814842",
+      "raw": {
+        "repo": "addyosmani/agent-skills"
+      }
+    },
+    {
+      "source": "NOAA Mauna Loa",
+      "category": "EARTH_HEALTH",
+      "domain": "atmosphere",
+      "metric": "co2_ppm",
+      "value": 432.3,
+      "delta": 0.0,
+      "timestamp": "2026-06-07",
+      "raw": {
+        "year": "2026",
+        "month": "6",
+        "day": "7",
+        "co2_ppm": 432.3
+      }
+    },
+    {
+      "source": "NOAA SWPC",
+      "category": "EARTH_HEALTH",
+      "domain": "solar",
+      "metric": "kp_index",
+      "value": 2.33,
+      "delta": 0.33,
+      "timestamp": "2026-06-13T21:00:00",
+      "raw": {
+        "timestamp": "2026-06-13T21:00:00",
+        "kp": 2.33,
+        "storm_level": "G0-quiet"
+      }
+    },
+    {
+      "source": "NOAA SWPC",
+      "category": "EARTH_HEALTH",
+      "domain": "solar",
+      "metric": "kp_index",
+      "value": 2.33,
+      "delta": 0.0,
+      "timestamp": "2026-06-14T00:00:00",
+      "raw": {
+        "timestamp": "2026-06-14T00:00:00",
+        "kp": 2.33,
+        "storm_level": "G0-quiet"
+      }
+    },
+    {
+      "source": "NOAA SWPC",
+      "category": "EARTH_HEALTH",
+      "domain": "solar",
+      "metric": "kp_index",
+      "value": 2.0,
+      "delta": -0.33,
+      "timestamp": "2026-06-14T03:00:00",
+      "raw": {
+        "timestamp": "2026-06-14T03:00:00",
+        "kp": 2.0,
+        "storm_level": "G0-quiet"
+      }
+    },
+    {
+      "source": "GBIF API",
+      "category": "EARTH_HEALTH",
+      "domain": "biodiversity",
+      "metric": "species_observations_30d",
+      "value": 3692304,
+      "delta": 0.0,
+      "timestamp": "2026-06-14T07:54:10.778838",
+      "raw": {
+        "count": 3692304,
+        "period": "2026-05-15/2026-06-14"
+      }
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "cycle_id": "full_test_001",
+  "count": 1,
+  "decisions": [
+    {
+      "action": "observe",
+      "priority": "HIGH"
+    }
+  ]
+}

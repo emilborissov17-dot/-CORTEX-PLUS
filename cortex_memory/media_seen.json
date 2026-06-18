@@ -46,5 +46,176 @@
     "url": "https://www.youtube.com/watch?v=j5eyFAxtXc4",
     "transcript_file": "C:\\Users\\emilb\\Desktop\\AGI\\CORTEX++_MERGED\\data\\media_transcripts\\CLIMATE_GLOBAL_RISK_REVIEW\\The_Nexus_of_Climate_and_Monetary_Policy__Evidence_13425ebe.txt",
     "key_insights": "Climate change affects food prices and monetary policy"
+  },
+  "ed58ba21baed9d79852146a8daf3ec56": {
+    "keywords_used": [
+      "climate global risk research overview"
+    ],
+    "relevance_score": 0.2,
+    "stage": "pre_check_skipped",
+    "timestamp": "2026-06-17T18:19:17.941795+00:00",
+    "axis": "CLIMATE_GLOBAL_RISK_REVIEW",
+    "title": "WSA Webinar - How does climate change affect stroke risk?",
+    "url": "https://www.youtube.com/watch?v=Mx6W1u3VWzo"
+  },
+  "24b72341b8427667b27da6aeb96f4af4": {
+    "keywords_used": [
+      "hunger severely food 2024"
+    ],
+    "relevance_score": 0.2,
+    "stage": "pre_check_skipped",
+    "timestamp": "2026-06-17T18:19:50.937867+00:00",
+    "axis": "FOOD_REVIEW",
+    "title": "The People Who Can&#39;t Stop Eating | Full Documentary",
+    "url": "https://www.youtube.com/watch?v=D_PZNpp34bU"
+  },
+  "8da2769949a0d57a21f46fe930642886": {
+    "keywords_used": [
+      "food food explained"
+    ],
+    "relevance_score": 0.2,
+    "stage": "pre_check_skipped",
+    "timestamp": "2026-06-17T18:20:43.147427+00:00",
+    "axis": "FOOD_REVIEW",
+    "title": "How Foods &amp; Nutrients Control Our Moods | Huberman Lab Essentials",
+    "url": "https://www.youtube.com/watch?v=Q4qWzbP0q7I"
+  },
+  "c575bf35d2d7082de1ed3371bc5ce568": {
+    "keywords_used": [
+      "food food explained"
+    ],
+    "relevance_score": 0.2,
+    "stage": "pre_check_skipped",
+    "timestamp": "2026-06-17T18:20:44.691357+00:00",
+    "axis": "FOOD_REVIEW",
+    "title": "50 Food Mistakes You Need To Avoid",
+    "url": "https://www.youtube.com/watch?v=9msDfJR-ct4"
+  },
+  "3aeff21818413235afb5300137179735": {
+    "keywords_used": [
+      "atmospheric proxy materials waste 2024"
+    ],
+    "relevance_score": 0.0,
+    "stage": "pre_check_skipped",
+    "timestamp": "2026-06-17T18:21:17.965057+00:00",
+    "axis": "MATERIALS_WASTE_REVIEW",
+    "title": "Debating Trump&#39;s victory over Iran claim... from April to June",
+    "url": "https://www.youtube.com/watch?v=CEiAUaQ6Qv4"
+  },
+  "6f9af2c2ddf2439ddff8fbae0f7ca41a": {
+    "keywords_used": [
+      "atmospheric proxy materials waste 2024"
+    ],
+    "relevance_score": 0.0,
+    "stage": "pre_check_skipped",
+    "timestamp": "2026-06-17T18:21:19.490120+00:00",
+    "axis": "MATERIALS_WASTE_REVIEW",
+    "title": "USCC_Compromised-Server_Recording",
+    "url": "https://www.youtube.com/watch?v=V205r7KE_QM"
+  },
+  "a7df88feb0469925a45fdddaf740d767": {
+    "keywords_used": [
+      "material throughput science update"
+    ],
+    "relevance_score": 0.1,
+    "stage": "pre_check_skipped",
+    "timestamp": "2026-06-17T18:21:22.706772+00:00",
+    "axis": "MATERIALS_WASTE_REVIEW",
+    "title": "Supercomputing and The Scientist: How High-Performance Computing is Transforming Science",
+    "url": "https://www.youtube.com/watch?v=ofel7wMfPHo"
+  },
+  "dd1c5aff116569ec321e306dee8fe017": {
+    "keywords_used": [
+      "material throughput science update"
+    ],
+    "relevance_score": 0.2,
+    "stage": "pre_check_skipped",
+    "timestamp": "2026-06-17T18:21:24.300936+00:00",
+    "axis": "MATERIALS_WASTE_REVIEW",
+    "title": "The New Science of Surfaces: How to Optimize Manufacturing Performance Beyond Ra",
+    "url": "https://www.youtube.com/watch?v=424mhZEJAaQ"
+  },
+  "c1063eb4030fe4201c0f7a80f3547e92": {
+    "keywords_used": [
+      "universal water water 2024"
+    ],
+    "relevance_score": 0.0,
+    "stage": "pre_check_skipped",
+    "timestamp": "2026-06-17T18:22:17.335016+00:00",
+    "axis": "WATER_REVIEW",
+    "title": "Ultimate 4K Tour of Universal Studios Orlando Volcano Bay 2024",
+    "url": "https://www.youtube.com/watch?v=H3za7uain1I"
+  },
+  "a8abf377007a8d622f536f922724036a": {
+    "keywords_used": [
+      "universal water water 2024"
+    ],
+    "relevance_score": 0.0,
+    "stage": "pre_check_skipped",
+    "timestamp": "2026-06-17T18:22:18.903660+00:00",
+    "axis": "WATER_REVIEW",
+    "title": "2024 WATER WORLD Full Show at Universal Studios Hollywood, The World&#39;s Best Theme Park Stunt Show!",
+    "url": "https://www.youtube.com/watch?v=k1HaCKr-4l4"
+  },
+  "ef2186b9858666256381d99fa6b4064c": {
+    "keywords_used": [
+      "access water explained"
+    ],
+    "relevance_score": 0.8,
+    "stage": "transcribed",
+    "timestamp": "2026-06-17T18:22:48.196365+00:00",
+    "axis": "WATER_REVIEW",
+    "title": "Why Is Desalination So Difficult?",
+    "url": "https://www.youtube.com/watch?v=mxqOPdEUNTs",
+    "transcript_file": "C:\\Users\\emilb\\Desktop\\AGI\\CORTEX++_MERGED\\data\\media_transcripts\\WATER_REVIEW\\Why_Is_Desalination_So_Difficult__ef2186b9.txt",
+    "key_insights": "Desalination provides <1% global water needs"
+  },
+  "2429f0c452cce3e76a4a184e122e6940": {
+    "keywords_used": [
+      "official under human well being 2024"
+    ],
+    "relevance_score": 0.0,
+    "stage": "transcribed",
+    "timestamp": "2026-06-17T18:24:56.795521+00:00",
+    "axis": "HUMAN_WELL_BEING_REVIEW",
+    "title": "Micael Dahlen | Science of Wellbeing &amp; Happiness | Talks at Google",
+    "url": "https://www.youtube.com/watch?v=FAiQOlf7aTY",
+    "transcript_file": "C:\\Users\\emilb\\Desktop\\AGI\\CORTEX++_MERGED\\data\\media_transcripts\\HUMAN_WELL_BEING_REVIEW\\Micael_Dahlen___Science_of_Wellbeing__amp__Happine_2429f0c4.txt",
+    "key_insights": "No direct relation to under-5 mortality or SDG 3.2 target"
+  },
+  "943ac5fdeef33d2b604c008cf4cf3db6": {
+    "keywords_used": [
+      "mortality human well being explained"
+    ],
+    "relevance_score": 0.0,
+    "stage": "transcribed",
+    "timestamp": "2026-06-17T18:25:34.693782+00:00",
+    "axis": "HUMAN_WELL_BEING_REVIEW",
+    "title": "What is the secret of a good life? Lessons from the longest study on happiness",
+    "url": "https://www.youtube.com/watch?v=vSQjk9jKarg",
+    "transcript_file": "C:\\Users\\emilb\\Desktop\\AGI\\CORTEX++_MERGED\\data\\media_transcripts\\HUMAN_WELL_BEING_REVIEW\\What_is_the_secret_of_a_good_life__Lessons_from_th_943ac5fd.txt",
+    "key_insights": "No direct relation to under-5 mortality rates."
+  },
+  "a38d1e499e091f4aa46799ce61e4b87b": {
+    "keywords_used": [
+      "mortality human well being explained"
+    ],
+    "relevance_score": 0.2,
+    "stage": "pre_check_skipped",
+    "timestamp": "2026-06-17T18:25:38.500347+00:00",
+    "axis": "HUMAN_WELL_BEING_REVIEW",
+    "title": "Do We Have To Die? With Venki Ramakrishnan",
+    "url": "https://www.youtube.com/watch?v=O35KGzkS4VA"
+  },
+  "ae62911c5414372cc2f16a7ac8c039d3": {
+    "keywords_used": [
+      "human well being mortality research"
+    ],
+    "relevance_score": 0.1,
+    "stage": "pre_check_skipped",
+    "timestamp": "2026-06-17T18:25:41.773806+00:00",
+    "axis": "HUMAN_WELL_BEING_REVIEW",
+    "title": "Paul B. Baltes Lecture 2024 by Laura L. Carstensen",
+    "url": "https://www.youtube.com/watch?v=wML87HqRQiI"
   }
 }
