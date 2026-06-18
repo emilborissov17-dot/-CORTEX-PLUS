@@ -194,15 +194,15 @@ def _call_ollama(prompt: str, max_tokens: int) -> str:
 
 def call_groq(prompt: str, max_tokens: int = 1024) -> str:
     """
-    Fallback chain: Groq → Gemini → Ollama
+    Fallback chain: Groq → Gemini
 
     При rate limit на даден backend → веднага следващ (без дълго чакане).
     Backend с cooldown се прескача докато cooldown-ът не изтече.
+    Ollama е премахнат — изисква локален сървър, добавя 5s timeout при всяка грешка.
     """
     backends = [
         ("Groq",   _call_groq),
         ("Gemini", _call_gemini),
-        ("Ollama", _call_ollama),
     ]
 
     last_error = None
