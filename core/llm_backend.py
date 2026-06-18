@@ -34,11 +34,6 @@ def call_ollama_fallback(prompt: str) -> str:
     return text
 
 def call_internal_llm(prompt: str) -> str:
-    """Primary: Groq. Fallback: Ollama."""
-    try:
-        result = call_groq_primary(prompt)
-        print("[LLM] Groq ✅")
-        return result
-    except Exception as e:
-        print(f"[LLM] Groq failed ({e}) → fallback to Ollama")
-        return call_ollama_fallback(prompt)
+    """Groq → Gemini fallback via groq_backend. Ollama removed."""
+    from core.groq_backend import call_groq
+    return call_groq(prompt, max_tokens=1024)
