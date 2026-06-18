@@ -372,23 +372,26 @@ def main():
     workers    = directives.get("max_parallel_workers", 3)
     print(f"[FAST_CYCLE] adaptive mode={cycle_mode} | workers={workers} | llm_sleep={llm_sleep}s")
 
-    # ── RAM guard — защита на лаптопа ──
+    # ── Homeostatic assessment — самопознание преди старт ──
     try:
-        import psutil as _ps
-        ram = _ps.virtual_memory()
-        swap = _ps.swap_memory()
-        if ram.percent > 90:
-            print(f"[FAST_CYCLE] СПРЯН — RAM {ram.percent:.0f}% заета ({ram.available/1e9:.1f}GB свободни).")
-            print("[FAST_CYCLE] Изчакай да се освободи памет и пусни отново.")
+        from core.homeostasis import assess as _homeo_assess, as_prompt_block as _homeo_block
+        homeo = _homeo_assess(verbose=True)
+        if not homeo.get("can_start"):
+            print(f"[FAST_CYCLE] СПРЯН — {homeo.get('abort_reason')}")
+            print(f"[FAST_CYCLE] Нужди: {homeo.get('resource_needs')}")
             return
-        if swap.percent > 50:
-            print(f"[FAST_CYCLE] ВНИМАНИЕ — SWAP {swap.percent:.0f}% ({swap.used/1e9:.1f}GB). SSD износване.")
-            print("[FAST_CYCLE] Продължавам в MINIMAL mode.")
+        # Override cycle_mode if homeostasis is more conservative
+        h_mode = homeo.get("cycle_mode", "FULL")
+        if h_mode == "MINIMAL" and cycle_mode != "MINIMAL":
             cycle_mode = "MINIMAL"
             workers    = 1
             llm_sleep  = 4
-    except Exception:
-        pass
+            print(f"[FAST_CYCLE] homeostasis overrides to MINIMAL mode")
+        # Apply skip directives
+        _skip_steps = set(homeo.get("skip_steps", []))
+    except Exception as e:
+        print(f"[FAST_CYCLE] homeostasis -> FAILED: {e}")
+        _skip_steps = set()
 
     # Apply LLM sleep directive to groq_backend globally
     try:

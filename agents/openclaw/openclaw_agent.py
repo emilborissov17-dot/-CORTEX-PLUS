@@ -139,6 +139,14 @@ def synthesize(ctx):
     vision_file = BASE / "core" / "civilization_vision.txt"
     vision_text = vision_file.read_text(encoding="utf-8", errors="ignore") if vision_file.exists() else "(vision not found)"
 
+    # Load homeostatic self-awareness block
+    homeo_block = ""
+    try:
+        from core.homeostasis import as_prompt_block as _homeo_block
+        homeo_block = _homeo_block()
+    except Exception:
+        pass
+
     # Load Attentional Meta Protocol output (cortex_orchestrator runs at Step 12.7)
     attention_block = ""
     orch_path = BASE / "memory" / "orchestration_latest.json"
@@ -191,6 +199,8 @@ You scanned the ENTIRE CORTEX++_QWEN project. Full context:
 
 ── GOAL SCORE (composite from real data) ──
 {goal_score_str}
+
+{homeo_block}
 
 {attention_block}
 
