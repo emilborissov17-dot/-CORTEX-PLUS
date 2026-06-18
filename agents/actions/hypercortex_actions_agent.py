@@ -6,11 +6,10 @@ import pathlib
 import re
 import shutil
 import subprocess
-import time
 from datetime import datetime, timezone
 from typing import Any, Dict, Optional
 
-import requests  # за Ollama HTTP API
+from core.groq_backend import call_groq
 
 BASE_DIR = pathlib.Path(__file__).resolve().parents[2]
 REPORTS_DIR = BASE_DIR / "reports"
@@ -38,12 +37,6 @@ ALLOWED_REFACTOR_TARGETS = {
     "agents/planet/planet_snapshot_agent_qwen.py",
     "agents/civilization/civilization_snapshot_agent_qwen.py",
 }
-
-OLLAMA_URL = "http://localhost:11434/api/generate"
-OLLAMA_MODEL = "qwen3:1.7b"
-OLLAMA_RETRY_COUNT = 3
-OLLAMA_RETRY_DELAY = 5  # секунди между retries
-
 
 def _utc_now() -> str:
     return datetime.now(timezone.utc).isoformat()
@@ -77,47 +70,10 @@ def _strip_markdown_code(text: str) -> str:
     return text.strip()
 
 
-# ---------- LLM helper (Ollama / qwen3:1.7b) ----------
+# ---------- LLM helper (Groq → Gemini → Ollama fallback chain) ----------
 
-def call_llm_refactor(model: str, prompt: str, max_tokens: int = 4096) -> str:
-    """
-    LLM помощник през локален Ollama (qwen3:1.7b).
-    - Ползва num_predict за контрол на дължината
-    - think: false за по-бързо изпълнение (без reasoning tokens)
-    - Retry логика при timeout или грешка
-    """
-    payload = {
-        "model": model,
-        "prompt": prompt,
-        "stream": False,
-        "options": {
-            "num_predict": max_tokens,
-        },
-        "think": False,  # изключва reasoning tokens при qwen3
-    }
-
-    last_error: Exception = RuntimeError("no attempts made")
-    for attempt in range(1, OLLAMA_RETRY_COUNT + 1):
-        try:
-            resp = requests.post(
-                OLLAMA_URL,
-                headers={"Content-Type": "application/json"},
-                data=json.dumps(payload, ensure_ascii=False).encode("utf-8"),
-                timeout=600,
-            )
-            resp.raise_for_status()
-            data = resp.json()
-            text = data.get("response", "")
-            if not isinstance(text, str):
-                raise RuntimeError("unexpected Ollama response format")
-            return text
-        except Exception as e:
-            last_error = e
-            print(f"[ACTIONS] LLM attempt {attempt}/{OLLAMA_RETRY_COUNT} failed: {e}")
-            if attempt < OLLAMA_RETRY_COUNT:
-                time.sleep(OLLAMA_RETRY_DELAY)
-
-    raise last_error
+def call_llm_refactor(prompt: str, max_tokens: int = 4096) -> str:
+    return call_groq(prompt, max_tokens=max_tokens)
 
 
 # ---------- Actions: run_script / modify_config / llm_refactor ----------
@@ -208,7 +164,6 @@ def _llm_refactor(action: Dict[str, Any]) -> Dict[str, Any]:
         return {"status": "skipped", "reason": f"target_not_whitelisted: {rel_path}"}
 
     instructions = action.get("instructions") or "Improve structure and readability without changing behavior."
-    model = action.get("model", OLLAMA_MODEL)
     max_tokens = int(action.get("max_tokens", 4096))
     backup_enabled = bool(action.get("backup", True))
 
@@ -247,7 +202,7 @@ def _llm_refactor(action: Dict[str, Any]) -> Dict[str, Any]:
     )
 
     try:
-        raw_output = call_llm_refactor(model=model, prompt=prompt, max_tokens=max_tokens)
+        raw_output = call_llm_refactor(prompt=prompt, max_tokens=max_tokens)
     except Exception as e:
         return {"status": "error", "reason": f"llm_call_failed: {e}"}
 
