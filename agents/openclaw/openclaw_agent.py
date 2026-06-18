@@ -139,6 +139,26 @@ def synthesize(ctx):
     vision_file = BASE / "core" / "civilization_vision.txt"
     vision_text = vision_file.read_text(encoding="utf-8", errors="ignore") if vision_file.exists() else "(vision not found)"
 
+    # Load Attentional Meta Protocol output (cortex_orchestrator runs at Step 12.7)
+    attention_block = ""
+    orch_path = BASE / "memory" / "orchestration_latest.json"
+    if orch_path.exists():
+        try:
+            orch = json.loads(orch_path.read_text(encoding="utf-8"))
+            att = orch.get("attention", {})
+            plan = orch.get("strategic_plan", {})
+            attention_block = (
+                "── ATTENTIONAL META PROTOCOL (this cycle) ──\n"
+                f"Priority axes: {att.get('priority_axes', [])}\n"
+                f"Main threat:   {att.get('main_threat', '?')}\n"
+                f"Opportunity:   {att.get('main_opportunity', '?')}\n"
+                f"Action now:    {att.get('immediate_action', '?')}\n"
+                f"Key insight:   {plan.get('key_insight', '?')}\n"
+                "────────────────────────────────────────────"
+            )
+        except Exception:
+            pass
+
     # Load real global indicators if available this cycle
     gi_block = ""
     gi_path = BASE / "snapshots" / "master" / "global_indicators_latest.json"
@@ -171,6 +191,8 @@ You scanned the ENTIRE CORTEX++_QWEN project. Full context:
 
 ── GOAL SCORE (composite from real data) ──
 {goal_score_str}
+
+{attention_block}
 
 {gi_block}
 

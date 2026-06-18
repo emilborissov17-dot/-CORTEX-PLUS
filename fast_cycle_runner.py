@@ -278,6 +278,68 @@ def _openclaw_to_proposals():
         print(f"[FAST_CYCLE] openclaw_to_proposals -> FAILED: {e}")
 
 
+def _hyperclaw_to_proposals():
+    """Convert the latest HyperClaw markdown plan to improvement proposals."""
+    plans_dir = BASE / "plans"
+    proposals_path = BASE / "memory" / "improvement_proposals.json"
+    if not plans_dir.exists():
+        return
+    plan_files = sorted(plans_dir.glob("plan-*.md"), key=lambda p: p.name, reverse=True)
+    if not plan_files:
+        print("[FAST_CYCLE] hyperclaw_to_proposals -> no plan file found")
+        return
+    plan_text = plan_files[0].read_text(encoding="utf-8", errors="ignore")
+    new_proposals = []
+    current_axis = None
+    for line in plan_text.splitlines():
+        line = line.strip()
+        for marker in ("HUMAN_AXIS_FOCUS", "PLANET_AXIS_FOCUS", "CIVILIZATION_AXIS_FOCUS", "COSMOS_AXIS_FOCUS"):
+            if marker in line:
+                current_axis = marker.replace("_AXIS_FOCUS", "")
+        if line.startswith("OBJECTIVE:") and current_axis:
+            objective = line.replace("OBJECTIVE:", "").strip()
+            if objective and objective != "<цел>" and len(objective) > 10:
+                new_proposals.append({
+                    "component":        current_axis,
+                    "problem":          f"{current_axis} axis needs progress",
+                    "solution":         objective,
+                    "measurable_goal":  objective[:80],
+                    "root_cause":       f"HyperClaw plan — {plan_files[0].name}",
+                    "priority":         "MEDIUM",
+                    "real_world_signal": True,
+                    "generated_by":     "HYPERCLAW",
+                    "timestamp":        _utc_now(),
+                })
+        if line.startswith("- STEP") and current_axis:
+            step = line.split(":", 1)[-1].strip()
+            if step and "<" not in step and len(step) > 10:
+                new_proposals.append({
+                    "component":        current_axis,
+                    "problem":          f"Action required for {current_axis}",
+                    "solution":         step,
+                    "measurable_goal":  step[:80],
+                    "root_cause":       f"HyperClaw step — {plan_files[0].name}",
+                    "priority":         "MEDIUM",
+                    "real_world_signal": True,
+                    "generated_by":     "HYPERCLAW",
+                    "timestamp":        _utc_now(),
+                })
+    if not new_proposals:
+        print("[FAST_CYCLE] hyperclaw_to_proposals -> 0 concrete steps extracted")
+        return
+    try:
+        existing = json.loads(proposals_path.read_text(encoding="utf-8"))
+        existing_list = existing.get("proposals", existing) if isinstance(existing, dict) else existing
+    except Exception:
+        existing_list = []
+    merged = new_proposals + [p for p in existing_list if p.get("generated_by") != "HYPERCLAW"]
+    proposals_path.write_text(
+        json.dumps({"proposals": merged}, ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
+    print(f"[FAST_CYCLE] hyperclaw_to_proposals -> {len(new_proposals)} proposals injected")
+
+
 def main():
     print("=" * 50)
     print(f"[FAST_CYCLE] started at {_utc_now()}")
@@ -378,6 +440,15 @@ def main():
     except Exception as e:
         print(f"[FAST_CYCLE] goal_score_calculator -> FAILED: {e}")
 
+    # ── 12.7. Cognitive Orchestrator — Attentional Meta Protocol ──
+    # Runs BEFORE OpenClaw/HyperClaw so they can use its priority_axes assessment.
+    try:
+        from core.cortex_orchestrator import run as _orchestrate
+        _orchestrate()
+        print("[FAST_CYCLE] cortex_orchestrator -> OK")
+    except Exception as e:
+        print(f"[FAST_CYCLE] cortex_orchestrator -> FAILED: {e}")
+
     # ── 13. Body scan ──
     _run("body_scanner", lambda: __import__(
         "agents.body.body_scanner", fromlist=["run"]).run())
@@ -396,6 +467,9 @@ def main():
     # ── 15.6. HyperClaw — multi-axis 24-72h plan ──
     _run("hyperclaw_orchestrator", lambda: __import__(
         "agents.hyperclaw.hyperclaw_orchestrator", fromlist=["main"]).main(), free_after=True)
+
+    # ── 15.7. HyperClaw plan → improvement proposals ──
+    _hyperclaw_to_proposals()
 
     # ── 16. Action recommendations ──
     try:
@@ -436,13 +510,11 @@ def main():
     _run("feedback_loop", lambda: __import__(
         "agents.core.feedback_loop", fromlist=["run"]).run())
 
-    # ── 21. Orchestrator + session ──
+    # ── 21. Session update ──
     try:
-        from core.cortex_orchestrator import run as _orchestrate
         from core.session_updater import update as _update
-        _orchestrate()
         _update()
-        print("[FAST_CYCLE] orchestrator + session -> OK")
+        print("[FAST_CYCLE] session_updater -> OK")
     except Exception as e:
         print(f"[SESSION] Грешка: {e}")
 
