@@ -25,6 +25,7 @@ sys.path.insert(0, str(BASE))
 
 from search_logic import generate_search_keywords
 from core.groq_backend import call_groq
+from podcast_source import find_podcast_episodes
 
 TARGET_CONFIG    = BASE / "config" / "target_config.json"
 MEDIA_SEEN       = BASE / "cortex_memory" / "media_seen.json"
@@ -73,6 +74,11 @@ def _save_media_seen(data: dict) -> None:
 
 def _url_hash(url: str) -> str:
     return hashlib.md5(url.encode()).hexdigest()
+
+
+def _podcast_url_hash(audio_url: str) -> str:
+    """Separate namespace from YouTube hashes — prefix with 'podcast:'."""
+    return hashlib.md5(f"podcast:{audio_url}".encode()).hexdigest()
 
 
 def _parse_llm_json(text: str) -> dict:
@@ -316,6 +322,188 @@ def transcribe_audio(audio_path: Path) -> str | None:
 
 
 # ---------------------------------------------------------------------------
+# Podcast audio download
+# ---------------------------------------------------------------------------
+
+_PODCAST_DL_HEADERS = {"User-Agent": "Mozilla/5.0 (compatible; CORTEX-MediaBot/1.0)"}
+_MAX_PODCAST_BYTES   = 24 * 1024 * 1024   # 24 MB — Groq Whisper hard limit
+
+
+def download_podcast_audio(audio_url: str, episode_title: str, output_dir: Path) -> Path | None:
+    """Download podcast MP3/M4A directly via HTTP. No yt-dlp needed."""
+    import requests as _req
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    url_clean = audio_url.split("?")[0]
+    ext = url_clean.rsplit(".", 1)[-1].lower()
+    if ext not in ("mp3", "m4a", "ogg", "opus", "aac", "wav"):
+        ext = "mp3"
+
+    safe_name = re.sub(r"[^\w\-]", "_", episode_title)[:40]
+    out_file  = output_dir / f"{safe_name}.{ext}"
+
+    print(f"  [POD-DL] {safe_name}.{ext} — fetching...")
+    try:
+        resp = _req.get(audio_url, stream=True, headers=_PODCAST_DL_HEADERS, timeout=60)
+        resp.raise_for_status()
+
+        # Skip if server reports file is too large
+        content_length = int(resp.headers.get("content-length", 0))
+        if content_length > _MAX_PODCAST_BYTES:
+            print(f"  [POD-DL] Content-Length {content_length // 1024 // 1024} MB > 24 MB — skip")
+            return None
+
+        downloaded = 0
+        with open(out_file, "wb") as f:
+            for chunk in resp.iter_content(chunk_size=65536):
+                if not chunk:
+                    continue
+                downloaded += len(chunk)
+                if downloaded > _MAX_PODCAST_BYTES:
+                    print("  [POD-DL] Streamed > 24 MB — aborting")
+                    out_file.unlink(missing_ok=True)
+                    return None
+                f.write(chunk)
+
+        print(f"  [POD-DL] {out_file.name} ({downloaded // 1024} KB)")
+        return out_file
+    except Exception as e:
+        print(f"  [POD-DL] Error: {e}")
+        out_file.unlink(missing_ok=True)
+        return None
+
+
+# ---------------------------------------------------------------------------
+# Podcast pipeline phase
+# ---------------------------------------------------------------------------
+
+def _process_podcasts_for_axis(
+    axis_name: str,
+    rationale: str,
+    keywords: list[str],
+    media_seen: dict,
+    max_per_feed: int = 1,
+) -> list[dict]:
+    """
+    Podcast intelligence phase — same LLM scoring as YouTube but different source.
+    Hash namespace is 'podcast:{url}' so no collision with YouTube hashes.
+    """
+    print(f"\n{'─'*62}")
+    print(f"[PODCAST] Axis: {axis_name} — scanning RSS feeds")
+    print(f"{'─'*62}")
+
+    episodes = find_podcast_episodes(keywords, axis_name, max_per_feed=max_per_feed)
+    print(f"[PODCAST] {len(episodes)} episodes matched keywords across all feeds")
+
+    summary: list[dict] = []
+
+    for ep in episodes:
+        audio_url = ep["audio_url"]
+        uhash     = _podcast_url_hash(audio_url)
+
+        if uhash in media_seen:
+            print(f"  [SKIP] Already seen: {ep['title'][:60]}")
+            continue
+
+        print(f"\n  [POD-EP] {ep['title'][:72]}")
+        print(f"           {ep['podcast_name']} | {ep['published_date'][:16]}")
+
+        # ── Pre-score: title + description ──────────────────────────
+        pre_score = quick_relevance_check(
+            axis_name, rationale, ep["title"], ep["description"]
+        )
+
+        if pre_score < PRE_RELEVANCE_THRESHOLD:
+            print(f"  [SKIP] Pre-score {pre_score:.2f} < {PRE_RELEVANCE_THRESHOLD}")
+            media_seen[uhash] = {
+                "keywords_used":   keywords,
+                "relevance_score": pre_score,
+                "stage":           "pre_check_skipped",
+                "timestamp":       _utc_now(),
+                "axis":            axis_name,
+                "title":           ep["title"],
+                "url":             audio_url,
+                "source":          "podcast",
+                "podcast_name":    ep["podcast_name"],
+            }
+            _save_media_seen(media_seen)
+            summary.append({"url": audio_url, "action": "skipped_pre", "score": pre_score, "source": "podcast"})
+            continue
+
+        # ── Download audio ───────────────────────────────────────────
+        tmp_dir    = Path(tempfile.mkdtemp(prefix="cortex_pod_"))
+        audio_path = download_podcast_audio(audio_url, ep["title"], tmp_dir)
+
+        if not audio_path:
+            summary.append({"url": audio_url, "action": "download_failed", "source": "podcast"})
+            _try_rmdir(tmp_dir)
+            continue
+
+        # ── Transcribe ───────────────────────────────────────────────
+        transcript = transcribe_audio(audio_path)
+
+        try:
+            audio_path.unlink()
+        except Exception:
+            pass
+        _try_rmdir(tmp_dir)
+
+        if not transcript:
+            summary.append({"url": audio_url, "action": "transcription_failed", "source": "podcast"})
+            continue
+
+        # ── Save transcript ──────────────────────────────────────────
+        axis_dir   = TRANSCRIPTS_DIR / axis_name
+        axis_dir.mkdir(parents=True, exist_ok=True)
+        safe_title = re.sub(r"[^\w\-]", "_", ep["title"])[:50]
+        ts_file    = axis_dir / f"POD_{safe_title}_{uhash[:8]}.txt"
+        ts_file.write_text(
+            f"SOURCE: podcast\n"
+            f"Podcast: {ep['podcast_name']}\n"
+            f"Title: {ep['title']}\n"
+            f"Audio URL: {audio_url}\n"
+            f"Published: {ep['published_date']}\n"
+            f"Timestamp: {_utc_now()}\n"
+            f"Axis: {axis_name}\n\n"
+            f"{transcript}",
+            encoding="utf-8",
+        )
+        print(f"  [SAVE] → {ts_file.relative_to(BASE)}")
+
+        # ── Post-score on full transcript ────────────────────────────
+        post_score, insights = full_relevance_check(axis_name, rationale, transcript)
+
+        # ── Log to media_seen ────────────────────────────────────────
+        media_seen[uhash] = {
+            "keywords_used":   keywords,
+            "relevance_score": post_score,
+            "stage":           "transcribed",
+            "timestamp":       _utc_now(),
+            "axis":            axis_name,
+            "title":           ep["title"],
+            "url":             audio_url,
+            "source":          "podcast",
+            "podcast_name":    ep["podcast_name"],
+            "transcript_file": str(ts_file),
+            "key_insights":    insights,
+        }
+        _save_media_seen(media_seen)
+        summary.append({
+            "url":         audio_url,
+            "title":       ep["title"],
+            "action":      "transcribed",
+            "score":       post_score,
+            "insights":    insights,
+            "transcript":  str(ts_file),
+            "source":      "podcast",
+            "podcast_name": ep["podcast_name"],
+        })
+        time.sleep(1)
+
+    return summary
+
+
+# ---------------------------------------------------------------------------
 # Main pipeline
 # ---------------------------------------------------------------------------
 
@@ -441,11 +629,17 @@ def process_axis(axis_name: str, max_videos_per_phrase: int = 2) -> dict:
             processed += 1
             time.sleep(2)   # courtesy pause between videos
 
+    # ── Phase 2: Podcast RSS sources (same keywords, separate hash namespace) ──
+    pod_results = _process_podcasts_for_axis(
+        axis_name, rationale, keywords, media_seen, max_per_feed=1
+    )
+    summary.extend(pod_results)
+
     return {
-        "axis":         axis_name,
+        "axis":           axis_name,
         "search_phrases": keywords,
-        "results":      summary,
-        "timestamp":    _utc_now(),
+        "results":        summary,
+        "timestamp":      _utc_now(),
     }
 
 
