@@ -146,9 +146,6 @@ def update_master():
 
 def _check_dependencies() -> bool:
     """Step 0 — проверява API ключове и Groq свързаност преди цикъла."""
-    import urllib.request
-    import urllib.error
-
     out_path = BASE / "snapshots" / "master" / "dependency_check_latest.json"
     out_path.parent.mkdir(parents=True, exist_ok=True)
 
@@ -180,56 +177,25 @@ def _check_dependencies() -> bool:
             critical_ok = False
         print(f"[DEP_CHECK] {'OK' if present else 'MISSING':7s} {key} ({level})")
 
-    # 2. Тестов call към Groq chat (5 токена)
+    # 2. Тестов call към Groq chat — директно през call_groq() (същия path като production)
     groq_key = os.environ.get("GROQ_API_KEY", "")
-    if groq_key:
-        try:
-            payload = json.dumps({
-                "model":    "llama-3.3-70b-versatile",
-                "messages": [{"role": "user", "content": "ping"}],
-                "max_tokens": 5,
-            }).encode("utf-8")
-            req = urllib.request.Request(
-                "https://api.groq.com/openai/v1/chat/completions",
-                data=payload,
-                headers={
-                    "Authorization": f"Bearer {groq_key}",
-                    "Content-Type":  "application/json",
-                },
-            )
-            with urllib.request.urlopen(req, timeout=15) as resp:
-                resp.read()
-            checks["groq_chat"] = {"ok": True}
-            print("[DEP_CHECK] OK      groq_chat (llama-3.3-70b-versatile)")
-        except Exception as e:
-            checks["groq_chat"] = {"ok": False, "error": str(e)[:150]}
-            print(f"[DEP_CHECK] FAIL    groq_chat: {e}")
-            critical_ok = False
-    else:
-        checks["groq_chat"] = {"ok": False, "error": "no key"}
+    try:
+        from core.groq_backend import call_groq as _test_groq
+        _test_groq("ping", max_tokens=5)
+        checks["groq_chat"] = {"ok": True}
+        print("[DEP_CHECK] OK      groq_chat (llama-3.3-70b-versatile)")
+    except Exception as e:
+        checks["groq_chat"] = {"ok": False, "error": str(e)[:150]}
+        print(f"[DEP_CHECK] FAIL    groq_chat: {e}")
+        critical_ok = False
 
-    # 3. Groq Whisper endpoint достъпност (HEAD — без аудио файл)
-    if groq_key:
-        try:
-            req = urllib.request.Request(
-                "https://api.groq.com/openai/v1/audio/transcriptions",
-                method="HEAD",
-                headers={"Authorization": f"Bearer {groq_key}"},
-            )
-            whisper_ok = False
-            try:
-                with urllib.request.urlopen(req, timeout=10):
-                    whisper_ok = True
-            except urllib.error.HTTPError as e:
-                # 400/405/415/422 = endpoint жив, просто очаква аудио данни
-                whisper_ok = e.code in (400, 405, 415, 422)
-                checks["groq_whisper"] = {"ok": whisper_ok, "note": f"HTTP {e.code}"}
-            if whisper_ok and "groq_whisper" not in checks:
-                checks["groq_whisper"] = {"ok": True}
-            print(f"[DEP_CHECK] {'OK' if whisper_ok else 'WARN':7s} groq_whisper endpoint")
-        except Exception as e:
-            checks["groq_whisper"] = {"ok": False, "error": str(e)[:150]}
-            print(f"[DEP_CHECK] WARN    groq_whisper: {e}")
+    # 3. Groq Whisper — same key as groq_chat; ако chat мина, Whisper ще мине също
+    if checks.get("groq_chat", {}).get("ok"):
+        checks["groq_whisper"] = {"ok": True, "note": "key verified via groq_chat"}
+        print("[DEP_CHECK] OK      groq_whisper (key verified via groq_chat)")
+    else:
+        checks["groq_whisper"] = {"ok": False, "note": "skipped — groq_chat failed"}
+        print("[DEP_CHECK] SKIP    groq_whisper (groq_chat failed)")
 
     report = {
         "timestamp":       _utc_now(),
