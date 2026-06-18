@@ -182,9 +182,62 @@ def _extract_json(raw: str) -> dict:
 
 # ── MAIN RUN ─────────────────────────────────────────────────────────────────
 
+def _propose_dependency_fixes() -> list:
+    """Чете dependency_check_latest.json и създава HIGH proposals за всяко FAIL/MISSING."""
+    dep_path = BASE_DIR / "snapshots" / "master" / "dependency_check_latest.json"
+    if not dep_path.exists():
+        return []
+    try:
+        report = json.loads(dep_path.read_text(encoding="utf-8"))
+    except Exception:
+        return []
+
+    proposals = []
+    for name, info in report.get("checks", {}).items():
+        level = info.get("level", "optional")
+        # Липсващ API ключ
+        if "present" in info and not info["present"] and level in ("critical", "important"):
+            proposals.append({
+                "component":         "DEPENDENCY_CHECK",
+                "problem":           f"API ключ {name} липсва в .env",
+                "solution":          (
+                    f"Добавете {name}=<your-key> в {BASE_DIR / '.env'}. "
+                    "Рестартирайте fast_cycle_runner.py след промяната."
+                ),
+                "measurable_goal":   f"dependency_check_latest.json checks.{name}.present == true",
+                "root_cause":        "DEPENDENCY_CHECK / .env",
+                "priority":          "HIGH",
+                "real_world_signal": True,
+                "generated_by":      "SELF_OBSERVER",
+            })
+        # Неуспешен connectivity тест
+        if "ok" in info and not info["ok"] and name in ("groq_chat", "groq_whisper"):
+            error = info.get("error", info.get("note", "unknown"))[:100]
+            proposals.append({
+                "component":         "DEPENDENCY_CHECK",
+                "problem":           f"{name} тест неуспешен: {error}",
+                "solution":          (
+                    "Проверете GROQ_API_KEY на https://console.groq.com. "
+                    "Ако ключът е валиден — проверете мрежова свързаност към api.groq.com."
+                ),
+                "measurable_goal":   f"dependency_check_latest.json checks.{name}.ok == true",
+                "root_cause":        "DEPENDENCY_CHECK / network or invalid key",
+                "priority":          "HIGH",
+                "real_world_signal": True,
+                "generated_by":      "SELF_OBSERVER",
+            })
+    return proposals
+
+
 def run():
     print("[SELF_OBSERVER] Започвам наблюдение — търся проблеми, не score-ове...")
     print()
+
+    # Dependency failures → proposals (преди всичко останало)
+    dep_proposals = _propose_dependency_fixes()
+    if dep_proposals:
+        print(f"[SELF_OBSERVER] {len(dep_proposals)} dependency issue(s) → proposals")
+        save_proposals(dep_proposals)
 
     web_intel     = _load_web_intelligence()
     problems_str  = _format_problems_for_prompt(web_intel)
