@@ -177,17 +177,34 @@ def _check_dependencies() -> bool:
             critical_ok = False
         print(f"[DEP_CHECK] {'OK' if present else 'MISSING':7s} {key} ({level})")
 
-    # 2. Тестов call към Groq chat — директно през call_groq() (същия path като production)
+    # 2. Тестов call към Groq chat — директна HTTP заявка с requests.
+    #    429 (rate limit) = ключът е валиден, API достъпно → третираме като OK.
+    #    Не викаме call_groq() за да не задействаме 60s cooldown в главния цикъл.
     groq_key = os.environ.get("GROQ_API_KEY", "")
-    try:
-        from core.groq_backend import call_groq as _test_groq
-        _test_groq("ping", max_tokens=5)
-        checks["groq_chat"] = {"ok": True}
-        print("[DEP_CHECK] OK      groq_chat (llama-3.3-70b-versatile)")
-    except Exception as e:
-        checks["groq_chat"] = {"ok": False, "error": str(e)[:150]}
-        print(f"[DEP_CHECK] FAIL    groq_chat: {e}")
-        critical_ok = False
+    if groq_key:
+        try:
+            import requests as _req
+            from core.groq_backend import GROQ_API_URL, GROQ_MODEL
+            r = _req.post(
+                GROQ_API_URL,
+                headers={"Authorization": f"Bearer {groq_key}", "Content-Type": "application/json"},
+                json={"model": GROQ_MODEL, "messages": [{"role": "user", "content": "ping"}], "max_tokens": 3},
+                timeout=15,
+            )
+            # 200 = success, 429 = rate limited but key is valid and endpoint reachable
+            if r.status_code in (200, 429):
+                checks["groq_chat"] = {"ok": True, "http": r.status_code}
+                print(f"[DEP_CHECK] OK      groq_chat (HTTP {r.status_code})")
+            else:
+                checks["groq_chat"] = {"ok": False, "error": f"HTTP {r.status_code}"}
+                print(f"[DEP_CHECK] FAIL    groq_chat: HTTP {r.status_code}")
+                critical_ok = False
+        except Exception as e:
+            checks["groq_chat"] = {"ok": False, "error": str(e)[:150]}
+            print(f"[DEP_CHECK] FAIL    groq_chat: {e}")
+            critical_ok = False
+    else:
+        checks["groq_chat"] = {"ok": False, "error": "no key"}
 
     # 3. Groq Whisper — same key as groq_chat; ако chat мина, Whisper ще мине също
     if checks.get("groq_chat", {}).get("ok"):
