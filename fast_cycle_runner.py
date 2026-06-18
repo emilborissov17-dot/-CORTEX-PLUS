@@ -340,20 +340,60 @@ def _hyperclaw_to_proposals():
     print(f"[FAST_CYCLE] hyperclaw_to_proposals -> {len(new_proposals)} proposals injected")
 
 
+def _load_directives() -> dict:
+    """Read adaptive_directives.json written by body_scanner. Safe fallback to defaults."""
+    p = BASE / "memory" / "adaptive_directives.json"
+    if p.exists():
+        try:
+            return json.loads(p.read_text(encoding="utf-8"))
+        except Exception:
+            pass
+    return {"cycle_mode": "FULL", "max_parallel_workers": 3, "llm_sleep_secs": 2}
+
+
 def main():
     print("=" * 50)
     print(f"[FAST_CYCLE] started at {_utc_now()}")
     print("=" * 50)
 
-    # ── 0. Dependency check ──
-    print("[FAST_CYCLE] Step 0: dependency check...")
+    # ── 0. Body scan → adaptive directives (runs FIRST, before everything) ──
+    print("[FAST_CYCLE] Step 0: body scan + dependency check...")
+    try:
+        from agents.body.body_scanner import run as _body_run
+        _body_run()
+    except Exception as e:
+        print(f"[FAST_CYCLE] body_scan -> FAILED: {e}")
+
+    directives = _load_directives()
+    cycle_mode = directives.get("cycle_mode", "FULL")
+    llm_sleep  = directives.get("llm_sleep_secs", 2)
+    workers    = directives.get("max_parallel_workers", 3)
+    print(f"[FAST_CYCLE] adaptive mode={cycle_mode} | workers={workers} | llm_sleep={llm_sleep}s")
+
+    # Apply LLM sleep directive to groq_backend globally
+    try:
+        import core.groq_backend as _gb
+        _gb._SLEEP_SECS = llm_sleep
+    except Exception:
+        pass
+
+    # ── 0.5. Dependency check ──
     if not _check_dependencies():
         print("\n[FAST_CYCLE] СПРЯН — dependency check failed.")
         print("[FAST_CYCLE] Отчет: snapshots/master/dependency_check_latest.json")
         return
 
+    # Skip web intel if offline
+    if directives.get("skip_web_intel"):
+        print("[FAST_CYCLE] OFFLINE — skipping web intelligence")
+    else:
+        pass  # falls through to Step 1 below
+
     # ── 1. Web Intelligence ──
-    run_web_intelligence()
+    if not directives.get("skip_web_intel"):
+        run_web_intelligence()
+    else:
+        print("[FAST_CYCLE] Step 1: web_intelligence SKIPPED (offline)")
 
     # ── 2. LLM self-review оси ──
     refresh_llm_axes()
