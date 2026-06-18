@@ -450,6 +450,20 @@ def main():
     _run("daily_analysis", lambda: __import__(
         "agents.core.daily_analysis_agent", fromlist=["main"]).main())
 
+    # ── 22.5. Data Scout — автономно търсене на нови реални данни ──
+    # Пуска се ПОСЛЕДНО — не се бие с основния цикъл за LLM rate limit.
+    # Кешира предложенията; пита LLM само когато ги няма или са >7 дни.
+    try:
+        from core.data_scout import run as _scout_run
+        scout_summary = _scout_run(max_axes=2)
+        print(
+            f"[FAST_CYCLE] data_scout -> "
+            f"scanned={scout_summary.get('scanned',0)} | "
+            f"validated={scout_summary.get('validated',0)} new sources"
+        )
+    except Exception as e:
+        print(f"[FAST_CYCLE] data_scout -> FAILED: {e}")
+
     # ── 23. Continuous learning ──
     try:
         from memory.continuous_learner import learn_from_cycle
