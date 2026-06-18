@@ -144,6 +144,105 @@ def update_master():
     print(f"[FAST_CYCLE] master updated — {len(snapshots)} axes")
 
 
+def _check_dependencies() -> bool:
+    """Step 0 — проверява API ключове и Groq свързаност преди цикъла."""
+    import urllib.request
+    import urllib.error
+
+    out_path = BASE / "snapshots" / "master" / "dependency_check_latest.json"
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+
+    # Зарежда .env в os.environ (само ако ключът не е вече зареден)
+    env_path = BASE / ".env"
+    if env_path.exists():
+        for line in env_path.read_text(encoding="utf-8", errors="ignore").splitlines():
+            line = line.strip()
+            if "=" in line and not line.startswith("#"):
+                k, _, v = line.partition("=")
+                k = k.strip()
+                if k and k not in os.environ:
+                    os.environ[k] = v.strip()
+
+    checks      = {}
+    critical_ok = True
+
+    # 1. Проверка на ключове
+    key_levels = {
+        "GROQ_API_KEY":    "critical",
+        "GEMINI_API_KEY":  "important",
+        "YOUTUBE_API_KEY": "optional",
+        "NASA_API_KEY":    "optional",
+    }
+    for key, level in key_levels.items():
+        present = bool(os.environ.get(key))
+        checks[key] = {"present": present, "level": level}
+        if not present and level == "critical":
+            critical_ok = False
+        print(f"[DEP_CHECK] {'OK' if present else 'MISSING':7s} {key} ({level})")
+
+    # 2. Тестов call към Groq chat (5 токена)
+    groq_key = os.environ.get("GROQ_API_KEY", "")
+    if groq_key:
+        try:
+            payload = json.dumps({
+                "model":    "llama-3.3-70b-versatile",
+                "messages": [{"role": "user", "content": "ping"}],
+                "max_tokens": 5,
+            }).encode("utf-8")
+            req = urllib.request.Request(
+                "https://api.groq.com/openai/v1/chat/completions",
+                data=payload,
+                headers={
+                    "Authorization": f"Bearer {groq_key}",
+                    "Content-Type":  "application/json",
+                },
+            )
+            with urllib.request.urlopen(req, timeout=15) as resp:
+                resp.read()
+            checks["groq_chat"] = {"ok": True}
+            print("[DEP_CHECK] OK      groq_chat (llama-3.3-70b-versatile)")
+        except Exception as e:
+            checks["groq_chat"] = {"ok": False, "error": str(e)[:150]}
+            print(f"[DEP_CHECK] FAIL    groq_chat: {e}")
+            critical_ok = False
+    else:
+        checks["groq_chat"] = {"ok": False, "error": "no key"}
+
+    # 3. Groq Whisper endpoint достъпност (HEAD — без аудио файл)
+    if groq_key:
+        try:
+            req = urllib.request.Request(
+                "https://api.groq.com/openai/v1/audio/transcriptions",
+                method="HEAD",
+                headers={"Authorization": f"Bearer {groq_key}"},
+            )
+            whisper_ok = False
+            try:
+                with urllib.request.urlopen(req, timeout=10):
+                    whisper_ok = True
+            except urllib.error.HTTPError as e:
+                # 400/405/415/422 = endpoint жив, просто очаква аудио данни
+                whisper_ok = e.code in (400, 405, 415, 422)
+                checks["groq_whisper"] = {"ok": whisper_ok, "note": f"HTTP {e.code}"}
+            if whisper_ok and "groq_whisper" not in checks:
+                checks["groq_whisper"] = {"ok": True}
+            print(f"[DEP_CHECK] {'OK' if whisper_ok else 'WARN':7s} groq_whisper endpoint")
+        except Exception as e:
+            checks["groq_whisper"] = {"ok": False, "error": str(e)[:150]}
+            print(f"[DEP_CHECK] WARN    groq_whisper: {e}")
+
+    report = {
+        "timestamp":       _utc_now(),
+        "all_critical_ok": critical_ok,
+        "checks":          checks,
+        "note":            "" if critical_ok else (
+            "ЦИКЪЛЪТ Е СПРЯН. Провери горните грешки и рестартирай fast_cycle_runner.py."
+        ),
+    }
+    out_path.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
+    return critical_ok
+
+
 def _openclaw_to_proposals():
     snap_path     = BASE / "snapshots" / "openclaw" / "openclaw_snapshot_latest.json"
     proposals_path = BASE / "memory" / "improvement_proposals.json"
@@ -200,6 +299,13 @@ def main():
     print("=" * 50)
     print(f"[FAST_CYCLE] started at {_utc_now()}")
     print("=" * 50)
+
+    # ── 0. Dependency check ──
+    print("[FAST_CYCLE] Step 0: dependency check...")
+    if not _check_dependencies():
+        print("\n[FAST_CYCLE] СПРЯН — dependency check failed.")
+        print("[FAST_CYCLE] Отчет: snapshots/master/dependency_check_latest.json")
+        return
 
     # ── 1. Web Intelligence ──
     run_web_intelligence()
