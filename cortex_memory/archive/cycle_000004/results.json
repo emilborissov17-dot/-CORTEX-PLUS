@@ -1,0 +1,11 @@
+{
+  "cycle_id": "live_test_001",
+  "goal_score": 0.75,
+  "count": 1,
+  "results": [
+    {
+      "status": "ok",
+      "signal_count": 50
+    }
+  ]
+}

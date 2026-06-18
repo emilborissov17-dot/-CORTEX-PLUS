@@ -1,6 +1,6 @@
 {
-  "error": "[WinError 2] The system cannot find the file specified",
+  "error": "'charmap' codec can't encode characters in position 13-21: character maps to <undefined>",
   "source_type": "LLM_GENERATED",
-  "snapshot_timestamp": "2026-06-11T19:06:47.416186+00:00",
+  "snapshot_timestamp": "2026-06-18T07:01:19.937732+00:00",
   "axis": "GOAL_PROGRESS_REVIEW"
 }

@@ -1,0 +1,10 @@
+{
+  "cycle_id": "live_test_001",
+  "count": 1,
+  "decisions": [
+    {
+      "action": "observe_and_record",
+      "priority": "NORMAL"
+    }
+  ]
+}
