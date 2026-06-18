@@ -128,7 +128,7 @@ def _call_groq(prompt: str, max_tokens: int) -> str:
         ],
         "max_tokens": max_tokens,
     }
-    time.sleep(1)  # минимална пауза
+    time.sleep(2)  # 2s пауза → max 30 req/min → не изчерпваме лимита при 25-осен цикъл
     r = requests.post(GROQ_API_URL, headers=headers, json=payload, timeout=60)
 
     if r.status_code == 429:
