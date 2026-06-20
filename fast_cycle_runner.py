@@ -556,7 +556,9 @@ def main():
         conf = gi_data.get("conflicts", {}).get("active_armed_conflicts", "?")
         print(f"[FAST_CYCLE] global_indicators -> CO2={co2}ppm | +{temp}°C | conflicts={conf}")
     except Exception as e:
+        import traceback as _tb
         print(f"[FAST_CYCLE] global_indicators -> FAILED: {e}")
+        _tb.print_exc()
 
     # ── 3. Trend tracker ──
     run_trend_tracker()
