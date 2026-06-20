@@ -312,7 +312,6 @@ def run():
             'или: {"action":"DONE","param":null,"reason":"открити проблеми и предложени решения"}'
         )
 
-        time.sleep(2)
         try:
             raw = call_groq(prompt, max_tokens=300)
         except Exception as e:
