@@ -71,19 +71,26 @@ def read_last_actions():
 
 def attribute_effects(delta, actions):
     attributed = []
-    total_pos = sum(v for v in delta.values() if v > 0)
-    total_neg = sum(v for v in delta.values() if v < 0)
-    n = max(len(actions), 1)
     for action in actions:
-        net = round((total_pos + total_neg) / n, 2)
+        if "delta" in action and action["delta"] is not None:
+            net = round(float(action["delta"]), 2)
+        elif action.get("score_before") is not None and action.get("score_after") is not None:
+            net = round(float(action["score_after"]) - float(action["score_before"]), 2)
+        else:
+            net = None  # no score data recorded for this action → unattributable
+
+        verdict = ("BENEFICIAL" if net is not None and net > 0.5
+                   else "HARMFUL"  if net is not None and net < -0.5
+                   else "NEUTRAL")
+
         attributed.append({
-            "action": action.get("action", "?")[:80],
-            "problem": action.get("problem_solved", "")[:80],
-            "timestamp": action.get("timestamp", _now()),
-            "net_effect": net,
+            "action":        action.get("action", "?")[:80],
+            "problem":       action.get("problem_solved", "")[:80],
+            "timestamp":     action.get("timestamp", _now()),
+            "net_effect":    net,
             "axes_improved": [k for k, v in delta.items() if v > 0.5],
             "axes_degraded": [k for k, v in delta.items() if v < -0.5],
-            "verdict": "BENEFICIAL" if net > 0.5 else "HARMFUL" if net < -0.5 else "NEUTRAL",
+            "verdict":       verdict,
         })
     return attributed
 

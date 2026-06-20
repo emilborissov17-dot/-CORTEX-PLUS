@@ -18,6 +18,9 @@ except ImportError:
 
 BASE = pathlib.Path(__file__).resolve().parent.parent.parent
 
+_BODY_SNAP = BASE / "snapshots" / "body" / "body_snapshot_latest.json"
+_SMOOTH_ALPHA = 0.3  # EMA weight for new reading; lower = more smoothing
+
 def _utc_now():
     return datetime.now(timezone.utc).isoformat()
 
@@ -414,9 +417,25 @@ def _detect_bottleneck(cpu: dict, ram: dict) -> str:
         return "RAM — ограничен капацитет за паралелни задачи"
     return "NONE"
 
+def _smooth_capacity(raw: float) -> float:
+    """EMA against the previous smoothed value — dampens per-cycle RAM/CPU spikes."""
+    try:
+        prev = json.loads(_BODY_SNAP.read_text(encoding="utf-8"))
+        prev_val = prev.get("capacity_pct_smoothed", prev.get("capacity_pct", raw))
+        return round(_SMOOTH_ALPHA * raw + (1 - _SMOOTH_ALPHA) * float(prev_val), 1)
+    except Exception:
+        return raw
+
+
 def run():
     """Записва snapshot + adaptive_directives за fast_cycle_runner."""
     body = scan()
+
+    # Smooth capacity_pct to reduce per-cycle RAM oscillation
+    raw_cap = body["capacity_pct"]
+    body["capacity_pct_raw"]      = raw_cap
+    body["capacity_pct_smoothed"] = _smooth_capacity(raw_cap)
+    body["capacity_pct"]          = body["capacity_pct_smoothed"]
 
     # Snapshot (пълен)
     out_dir = BASE / "snapshots" / "body"
