@@ -275,6 +275,14 @@ def _measure_progress(initiative: dict, indicators: dict) -> dict:
 
     if needs_explanation:
         try:
+            from core.groq_backend import _is_cooling
+            if _is_cooling("groq") and _is_cooling("gemini"):
+                needs_explanation = False
+        except Exception:
+            pass
+
+    if needs_explanation:
+        try:
             sys.path.insert(0, str(BASE))
             from hypothesis_generator import generate_causal_hypothesis
             causal = generate_causal_hypothesis(
