@@ -135,7 +135,7 @@ def main() -> None:
 
     try:
         from core.groq_backend import call_groq
-        plan_md = call_groq(prompt, max_tokens=2000)
+        plan_md = call_groq(prompt, max_tokens=4000)
     except Exception as e:
         print(f"[HYPERCLAW] LLM error: {e}")
         return
