@@ -1,0 +1,141 @@
+{
+  "axis": "MATERIALS_WASTE_REVIEW",
+  "domain": "planet",
+  "timestamp": "2026-06-19T17:36:41.835176+00:00",
+  "sources_count": 13,
+  "rss_count": 4,
+  "ddg_count": 6,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] How to solve the world&#39;s plastic problem | BBC Ideas",
+      "summary": "[DESCRIPTION FALLBACK] Plastic is one of the most incredible materials in the modern world - but the way we use it damages the environment. What's the ...",
+      "link": "https://www.youtube.com/watch?v=W1wmSJsxk3w",
+      "published": "2024-03-14T12:00:32Z",
+      "source_type": "youtube",
+      "channel": "BBC Ideas",
+      "video_id": "W1wmSJsxk3w",
+      "transcript_method": "description",
+      "transcript_chars": 154,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] (PLASTIK) – A wake up call to end plastic pollution",
+      "summary": "[DESCRIPTION FALLBACK] This World Environment Day 2022, view the plastic pollution crisis through the eyes and imagination of a child in South-East Asia.",
+      "link": "https://www.youtube.com/watch?v=voPkttQKe70",
+      "published": "2022-06-03T09:07:32Z",
+      "source_type": "youtube",
+      "channel": "UN Environment Programme",
+      "video_id": "voPkttQKe70",
+      "transcript_method": "description",
+      "transcript_chars": 153,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Zero Plastic Packaging? Challenge Accepted",
+      "summary": "[DESCRIPTION FALLBACK] Watch this video to see how Petzl is reducing single-use plastics. It's a complex challenge, but every step forward helps us reduce ...",
+      "link": "https://www.youtube.com/watch?v=NWr20JdJX6k",
+      "published": "2026-06-08T16:00:03Z",
+      "source_type": "youtube",
+      "channel": "Petzl Sport",
+      "video_id": "NWr20JdJX6k",
+      "transcript_method": "description",
+      "transcript_chars": 158,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "problem": "Inadequate waste management and plastic pollution",
+    "root_cause": "Lack of coordinated approaches and insufficient infrastructure for waste management and recycling",
+    "severity": "HIGH",
+    "leverage_points": [
+      "Government policies and regulations",
+      "Corporate investments in sustainable practices and innovations"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Implement extended producer responsibility for plastics",
+        "measurable_goal": "Reduce plastic waste by 30% within the next 2 years",
+        "timeframe": "medium-term"
+      },
+      {
+        "action": "Increase funding for waste management and recycling research",
+        "measurable_goal": "Develop and deploy 2 new recycling technologies within the next 3 years",
+        "timeframe": "medium-term"
+      }
+    ],
+    "evidence": [
+      "The Environmental Research & Education Foundation (EREF) raised over $4 million for waste and recycling research",
+      "Climate change is reshaping global plastic pollution, and a systems-level challenge requires coordinated approaches"
+    ],
+    "generalization": "Inadequate waste management and plastic pollution contribute to environmental degradation, human health risks, and economic losses, affecting the dignity of all individuals and the sustainability of the planet",
+    "summary": "Inadequate waste management and plastic pollution are critical problems requiring immediate attention, and coordinated approaches from governments, corporations, and individuals are necessary to address these issues",
+    "risk_level": "HIGH"
+  },
+  "raw_items": [
+    {
+      "title": "EREF Auction Raises More Than $4 Million to Advance Waste and Recycling Research",
+      "summary": "The Environmental Research &amp; Education Foundation (EREF) raised over $4 million during its 2026 Annual Charitable Auction, held during the inaugural Waste Leadership Summit in Washington, D.C.",
+      "link": "https://www.waste360.com/industry-insights/eref-auction-raises-more-than-4-million-to-advance-waste-and-recycling-research",
+      "published": "Thu, 18 Jun 2026 12:32:49 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Casella’s Roadmap for Renewable Energy and Driving a Circular Economy",
+      "summary": "In this Waste360 Q&amp;A, Casella CEO Ned Coletta catches us up to speed on facility projects and shares what his team learned from testing electric trucks in the real world. He takes us behind the scenes of some exciting partnerships, including work with the University of Vermont to advance a circular economy.",
+      "link": "https://www.waste360.com/industry-insights/casella-s-roadmap-for-renewable-energy-and-driving-a-circular-economy",
+      "published": "Thu, 18 Jun 2026 12:00:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "June 2026 Business Report—Business Highlights from the Waste Leadership Summit",
+      "summary": "In this edition of the Business Report, we recap the highlights of the Investor Summit, as well as several of the education sessions from the Waste Leadership Summit.",
+      "link": "https://www.waste360.com/industry-insights/june-2026-business-report-business-highlights-from-the-waste-leadership-summit",
+      "published": "Thu, 18 Jun 2026 11:30:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Meet the 2026 Waste360 Women Who Inspire",
+      "summary": "Waste360 is proud to announce its fourth annual Women Who Inspire award winners. Our program, sponsored by Wastequip, recognizes incredible women who are making a difference across waste, recycling, and sustainability.",
+      "link": "https://www.waste360.com/industry-insights/meet-the-2026-waste360-women-who-inspire",
+      "published": "Wed, 17 Jun 2026 12:00:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Why 2026 is a Pivotal Year for Global Waste Governance - ISWA World Congress 2026 | Nov 09-11 | London UK",
+      "summary": "1 week ago - From a global plastics treaty and emerging science-policy frameworks to persistent health, safety and governance challenges on the ground, 2026 marks a critical convergence point for how waste is managed worldwide, writes Circular Online editor, Darrel Moore As we move deeper into the third decade of the 21st century, the global community faces accelerating environmental […]",
+      "link": "https://www.iswa2026.org/why-2026-is-a-pivotal-year-for-global-waste-governance/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "2026 Trends to Watch: From Red Tape to a Circular Plastics Renaissance",
+      "summary": "December 22, 2025 - Packaging structures that are overly ... definitive trend to watch in 2026 for plastics and recycling is a shift toward radical simplification: Mono-Material designs....",
+      "link": "https://www.scgchemicals.com/en/articles/stories/2026-trends-watch-red-tape-circular-plastics-renaissance",
+      "source_type": "ddg"
+    },
+    {
+      "title": "How climate change is reshaping the global plastic pollution | World Economic Forum",
+      "summary": "February 11, 2026 - Viewed through this lens, plastic ... face a systems-level challenge that calls for coordinated approaches across climate action, materials design and environmental governance....",
+      "link": "https://www.weforum.org/stories/2026/02/climate-change-reshaping-global-plastic-pollution-crisis/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Environmental and health implications of improper waste ...",
+      "summary": "World Journal of Advanced Research and Reviews, 2025, 25(03), 757-760 ... Waste accumulation creates breeding spaces for disease-carrying vectors, which include mosquitoes above all others. Malaria and dengue fever become more common in environments where waste materials are improperly disposed",
+      "link": "https://journalwjarr.com/sites/default/files/fulltext_pdf/WJARR-2025-0713.pdf",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Intelligent waste sorting for urban sustainability using deep learning | Scientific Reports",
+      "summary": "July 25, 2025 - The improper management of waste significantly contributes to environmental pollution, including the emission of greenhouse gases, soil contamination, and the spread of diseases resulting from the accumulation of waste in urban areas.",
+      "link": "https://www.nature.com/articles/s41598-025-08461-w",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Current scenario of solid waste management techniques and challenges in Covid-19 – A review - PMC",
+      "summary": "Another reason behind the waste ... 2016). Hence, improper management of waste can impose negative impact on public health, environment, productivity, tourism, economic status and damages associated with floods....",
+      "link": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9249431/",
+      "source_type": "ddg"
+    }
+  ]
+}

@@ -1,0 +1,123 @@
+{
+  "axis": "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL",
+  "domain": "human",
+  "timestamp": "2026-06-18T20:53:18.342355+00:00",
+  "sources_count": 9,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 1,
+  "youtube_items": [
+    {
+      "title": "[YT] Human Rights in 2025: The 75th International Human Rights DayYouTubePromoting political rights and civil liberties after Human ...USA Watchlist 2025 - Civicus MonitorUnited States: Freedom in the World 2025 Country Report ...Democracy Watch 2025 - Human Rights FirstWorld Report 2025 - Human Rights Watch",
+      "summary": "[DESCRIPTION FALLBACK] On the 75th International Human Rights Day, Andrew Friedman and Anne Frederick share the history the day, why we observe it, and the state of human rights in the world today. Enjoy the videos and music you love, upload original content, and share it all with friends, family, and the world on YouTube. With political rights and civil liberties under threat in countries across the world, Annie Lee uses the Freedom and Prosperity Indexes to examine recent declines and highlight countries that have m",
+      "link": "https://www.youtube.com/watch?v=gweWnhmdcbc",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "gweWnhmdcbc",
+      "transcript_method": "description",
+      "transcript_chars": 523,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "problem": "Human rights are being threatened and undermined in various countries, including the United States, Canada, Uzbekistan, and Georgia, with issues such as corporate accountability, crimes against humanity, and political prisoners",
+    "root_cause": "Weak governance, lack of accountability, and corruption are contributing to the erosion of human rights, as well as the influence of powerful interest groups and political agendas",
+    "severity": "HIGH",
+    "leverage_points": [
+      "International human rights organizations and advocacy groups, such as Human Rights Watch and Freedom House",
+      "Government agencies and policymakers responsible for upholding human rights and the rule of law"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Strengthen international cooperation and solidarity to promote human rights and hold governments accountable",
+        "measurable_goal": "Increase the number of countries that adopt and implement robust human rights standards and mechanisms",
+        "timeframe": "medium-term"
+      },
+      {
+        "action": "Support and amplify the work of human rights defenders and advocacy groups",
+        "measurable_goal": "Increase the visibility and impact of human rights campaigns and initiatives",
+        "timeframe": "short-term"
+      }
+    ],
+    "evidence": [
+      "Canada Delivering a Blow to Corporate Accountability",
+      "Support Builds to Protect Children from Crimes Against Humanity",
+      "Uzbekistan: Activist Held in Trumped-Up Case",
+      "US: Federal Government Terrorized Minnesota Communities"
+    ],
+    "generalization": "This problem connects to other domains, such as the health of the biosphere, as human rights are closely linked to environmental degradation and climate change, and the erosion of human rights can exacerbate environmental issues",
+    "summary": "Human rights are under threat in various countries, and international cooperation and solidarity are needed to promote and protect human rights. Weak governance, corruption, and powerful interest groups are contributing to this problem.",
+    "risk_level": "HIGH"
+  },
+  "raw_items": [
+    {
+      "title": "Canada Delivers a Blow to Corporate Accountability",
+      "summary": "Click to expand Image\n          \n\n\n\n  \n        \n  \n\n        \n                      \n      \n        \n              In this file image from undated video footage run by China's CCTV via AP Video, Muslim trainees work in a garment factory at the Hotan Vocational Education and Training Center in Hotan, Xinjiang, northwest China.\n                    © CCTV via AP Video, File\n          \n    \n\n\n  \n<p>The Canadian government’s&nbsp;elimination of the&nbsp;Canadian Ombudsperson for Responsible Enterprise",
+      "link": "https://www.hrw.org/news/2026/06/18/canada-delivers-a-blow-to-corporate-accountability",
+      "published": "Thu, 18 Jun 2026 16:03:50 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "Support Builds to Protect Children from Crimes Against Humanity",
+      "summary": "Click to expand Image\n          \n\n\n\n  \n        \n  \n\n        \n                      \n      \n        \n              Children wait near the site of Okhmatdyt children’s hospital hit by Russian missiles, in Kyiv, Ukraine, Monday, July 8, 2024.\n                    © 2024 Evgeniy Maloletka/AP Photo\n          \n    \n\n\n  \n<p>In the process leading toward a new international treaty to prevent and punish crimes against humanity, there is already growing, cross-regional support to ensure the final effort in",
+      "link": "https://www.hrw.org/news/2026/06/18/support-builds-to-protect-children-from-crimes-against-humanity",
+      "published": "Thu, 18 Jun 2026 14:50:47 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "Uzbekistan: Activist Held in Trumped-Up Case",
+      "summary": "Click to expand Image\n          \n\n\n\n  \n        \n  \n\n        \n                      \n      \n        \n              Javokhir Muminov (left) and Djura Akbarov (right) at the Kashkadarya Regional Prosecutor's Office, Uzbekistan.&nbsp;\n                    © 2025 Elena Urlaeva\n          \n    \n\n\n  \n<p>(Berlin, June 18, 2026) – Uzbek authorities should release a local human rights activist accused of extortion and investigate his allegations of abuse in police custody, Human Rights Watch said today. Jav",
+      "link": "https://www.hrw.org/news/2026/06/18/uzbekistan-activist-held-in-trumped-up-case",
+      "published": "Thu, 18 Jun 2026 03:19:51 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "US: Federal Government Terrorized Minnesota Communities",
+      "summary": "Click to expand Image\n          \n\n\n\n  \n        \n  \n\n        \n                      \n      \n        \n              A protester sits on the street with his arms up in front of federal agents and Minneapolis Police on W. 27th St and Nicollet Avenue in south Minneapolis after Alex Pretti was fatally shot by federal agents in the area early Saturday morning, January 24, 2026.\n                    © 2026 Richard Tsong-Taatarii/The Minnesota Star Tribune via Getty Images\n          \n    \n\n\n  \nThe Trump a",
+      "link": "https://www.hrw.org/news/2026/06/18/us-federal-government-terrorized-minnesota-communities",
+      "published": "Thu, 18 Jun 2026 01:00:00 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "No Reset Without Releases: Georgia’s Political Prisoners and the Price of Better Relations with Washington",
+      "summary": "<span class=\"field field--name-title field--type-string field--label-hidden\">No Reset Without Releases: Georgia’s Political Prisoners and the Price of Better Relations with Washington</span>\n<span class=\"field field--name-uid field--type-entity-reference field--label-hidden\"><span lang=\"lang\">zevans@freedom…</span></span>\n<span class=\"field field--name-created field--type-created field--label-hidden\"><time class=\"datetime\" datetime=\"2026-06-10T01:00:39-04:00\" title=\"Wednesday, June 10, 2026 - 01",
+      "link": "https://freedomhouse.org/article/no-reset-without-releases-georgias-political-prisoners-and-price-better-relations",
+      "published": "Wed, 10 Jun 2026 05:00:39 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "The 2026 Mark Palmer Prize: Honoring H.E. Salome Zourabichvili",
+      "summary": "<div class=\"node node--type-event node--view-mode-rss ds-1col clearfix hero-no-header share-buttons-on\">\n\n\n        \n\n\n\n  <div class=\"no-header-wrapper\">\n    <span class=\"hr\"></span>\n    <div class=\"grid header\">\n      <div class=\"text-wrapper\">\n\n        \n        \n        <h1 class=\"basic-h1 dark-text\"><span class=\"field field--name-title field--type-string field--label-hidden\">The 2026 Mark Palmer Prize: Honoring H.E. Salome Zourabichvili</span>\n</h1>\n\n                </div>\n    </div>\n  </div>\n",
+      "link": "https://freedomhouse.org/event/2026-mark-palmer-prize-honoring-he-salome-zourabichvili",
+      "published": "Tue, 09 Jun 2026 15:07:39 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Freedom House Welcomes New Board Members Margaret Hoover, David Pressman",
+      "summary": "<span class=\"field field--name-title field--type-string field--label-hidden\">Freedom House Welcomes New Board Members Margaret Hoover, David Pressman </span>\n<span class=\"field field--name-uid field--type-entity-reference field--label-hidden\"><span lang=\"lang\">zevans@freedom…</span></span>\n<span class=\"field field--name-created field--type-created field--label-hidden\"><time class=\"datetime\" datetime=\"2026-06-04T00:01:01-04:00\" title=\"Thursday, June 4, 2026 - 00:01\">Thu, 06/04/2026 - 00:01</time>",
+      "link": "https://freedomhouse.org/article/freedom-house-welcomes-new-board-members-margaret-hoover-david-pressman",
+      "published": "Thu, 04 Jun 2026 04:01:01 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "David Pressman",
+      "summary": "<span class=\"field field--name-title field--type-string field--label-hidden\">David Pressman</span>\n<span class=\"field field--name-uid field--type-entity-reference field--label-hidden\"><span lang=\"lang\">zevans@freedom…</span></span>\n<span class=\"field field--name-created field--type-created field--label-hidden\"><time class=\"datetime\" datetime=\"2026-05-29T14:56:26-04:00\" title=\"Friday, May 29, 2026 - 14:56\">Fri, 05/29/2026 - 14:56</time>\n</span>\n\n  <div class=\"field field--name-field-person-type f",
+      "link": "https://freedomhouse.org/expert/david-pressman",
+      "published": "Fri, 29 May 2026 18:56:26 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] Human Rights in 2025: The 75th International Human Rights DayYouTubePromoting political rights and civil liberties after Human ...USA Watchlist 2025 - Civicus MonitorUnited States: Freedom in the World 2025 Country Report ...Democracy Watch 2025 - Human Rights FirstWorld Report 2025 - Human Rights Watch",
+      "summary": "[DESCRIPTION FALLBACK] On the 75th International Human Rights Day, Andrew Friedman and Anne Frederick share the history the day, why we observe it, and the state of human rights in the world today. Enjoy the videos and music you love, upload original content, and share it all with friends, family, and the world on YouTube. With political rights and civil liberties under threat in countries across the world, Annie Lee uses the Freedom and Prosperity Indexes to examine recent declines and highlight countries that have m",
+      "link": "https://www.youtube.com/watch?v=gweWnhmdcbc",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "gweWnhmdcbc",
+      "transcript_method": "description",
+      "transcript_chars": 523,
+      "has_full_transcript": false
+    }
+  ]
+}

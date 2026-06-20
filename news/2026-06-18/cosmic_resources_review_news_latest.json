@@ -1,0 +1,99 @@
+{
+  "axis": "COSMIC_RESOURCES_REVIEW",
+  "fetched_at": "2026-06-18T20:01:17.796816+00:00",
+  "smart_query": "asteroid mining space resources",
+  "sources_count": {
+    "wiki": 0,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube_transcripts": 3,
+    "podcast": 1
+  },
+  "rss": [],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "the-potential-dropout/Dyson-Swarm",
+      "snippet": "I am advancing humanity to Level II on the Kardashev Scale with my community of engineers, physicists, and people who dare to dream.",
+      "stars": 3,
+      "url": "https://github.com/the-potential-dropout/Dyson-Swarm",
+      "updated": "2026-05-31",
+      "source": "GitHub"
+    },
+    {
+      "title": "15-minute-discourse/asteroid-mining",
+      "snippet": " Associated repository for the \"Asteroid Mining: Unlocking a Trillion-Dollar Industry in Space\" 15 minute discourse podcast on YouTube! ",
+      "stars": 1,
+      "url": "https://github.com/15-minute-discourse/asteroid-mining",
+      "updated": "2025-02-22",
+      "source": "GitHub"
+    },
+    {
+      "title": "tretoef-estrella/THE-ASTEROID-BELT-PROTOCOL",
+      "snippet": "A proposal from humanity to future ASI: expand into space, not Earth. Physics, data, and an extended hand. Part of Proyecto Estrella.",
+      "stars": 0,
+      "url": "https://github.com/tretoef-estrella/THE-ASTEROID-BELT-PROTOCOL",
+      "updated": "2026-01-27",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Shape, Orientation and Colors Combined approach for Asteroids (SOCCA)",
+      "snippet": "Large photometric surveys provide sparse multi-band photometry for millions of Solar System objects, offering an opportunity to jointly constrain their physical and compositional properties. However, current phase function models do not account for rotational variability, limiting their ability to r",
+      "url": "https://arxiv.org/abs/2606.17734v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Simultaneous Tricolor Video Observations of Three Tiny Near-Earth Asteroids with Sub-Minute Rotation Periods",
+      "snippet": "Studying the physical properties of near-Earth asteroids (NEAs) is crucial for understanding their dynamical histories and origins, and assessing impact hazards to Earth. Tiny NEAs with diameters smaller than 100 m are intrinsically faint and are typically observable only during close approaches, re",
+      "url": "https://arxiv.org/abs/2606.17047v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[Reddit's model for a better internet | Steve Huffman] The internet was created to connect us, yet many people feel more alone than ever. Reddit cofounder and CEO Steve Huffman explores how social media rewards performance over participation — and offers a timely case for an internet built like a city, with thriving online \"neighborhoods\" that make space for real human connection. Ready to find your community? Hosted on Acast. See acast.com/privacy fo",
+  "wiki": null,
+  "youtube_items": [
+    {
+      "title": "[YT] Unlimited Resources From Space – Asteroid Mining",
+      "summary": "[DESCRIPTION FALLBACK] Get Merch designed with ❤ from https://kgs.link/shop-127 Join the Patreon Bird Army https://kgs.link/patreon ▽▽ More infos ...",
+      "link": "https://www.youtube.com/watch?v=y8XvQNt26KI",
+      "source_type": "youtube",
+      "channel": "Kurzgesagt – In a Nutshell",
+      "video_id": "y8XvQNt26KI",
+      "transcript_method": "description",
+      "transcript_chars": 149,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] The Space Mining Boom - How Resources Will Shape the Future Economy",
+      "summary": "[DESCRIPTION FALLBACK] From lunar regolith to metal-rich asteroids, this episode examines how off-world resources could spark the largest economic boom ...",
+      "link": "https://www.youtube.com/watch?v=0l5Sv54pgYI",
+      "source_type": "youtube",
+      "channel": "Isaac Arthur",
+      "video_id": "0l5Sv54pgYI",
+      "transcript_method": "description",
+      "transcript_chars": 155,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] How Will Asteroid Mining Build Space Infrastructure? - Space Tech Insider",
+      "summary": "[DESCRIPTION FALLBACK] How Will Asteroid Mining Build Space Infrastructure? Have you ever wondered how future space missions might become more ...",
+      "link": "https://www.youtube.com/watch?v=uo4uGd93lLQ",
+      "source_type": "youtube",
+      "channel": "Space Tech Insider",
+      "video_id": "uo4uGd93lLQ",
+      "transcript_method": "description",
+      "transcript_chars": 146,
+      "has_full_transcript": false
+    }
+  ],
+  "summary": "[arXiv]\n- Shape, Orientation and Colors Combined approach for Asteroids (SOCCA)\n- Simultaneous Tricolor Video Observations of Three Tiny Near-Earth Asteroids with Sub-Minute Rotation Periods\n\n[GitHub]",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": [],
+  "open_source_momentum": "",
+  "scientific_frontier": "",
+  "relevance_to_goal": ""
+}

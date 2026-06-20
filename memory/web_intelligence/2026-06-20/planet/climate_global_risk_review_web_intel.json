@@ -1,0 +1,130 @@
+{
+  "axis": "CLIMATE_GLOBAL_RISK_REVIEW",
+  "domain": "planet",
+  "timestamp": "2026-06-20T05:35:10.574384+00:00",
+  "sources_count": 12,
+  "rss_count": 4,
+  "ddg_count": 6,
+  "youtube_count": 2,
+  "youtube_items": [
+    {
+      "title": "[YT] Extreme Weather 2025: Fires, Floods, Heatwaves & Cyclones ...EXPLAINED: How Climate Change is Fueling Extreme Weather ...Climate Extremes Documentary | Climate Science2025 Europe Climate Review: Extreme Weather Toll and Outlook ...Year in Review: The Biggest Climate Headlines of 2025Wildfires, floods and extreme heat: These are the biggest ...World slammed by extreme weather in 2025, one of the hottest ...Tackle Climate Change - Munich Re | Climate change",
+      "summary": "[DESCRIPTION FALLBACK] 🌍 Starkon International presents a detailed global climate report for 2025, covering every continent and every major climate event. Jul 21, 2025 · This video compiles shocking footage from extreme weather events around the world between 2024 and 2025 — from devastating hurricanes and deadly floods to intense droughts and wildfires. Through expert insights, the documentary highlights the interconnected nature of climate, ecosystems and agriculture, revealing how extreme weather events, soil degra",
+      "link": "https://www.youtube.com/watch?v=jrLBkuyQgKs",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "jrLBkuyQgKs",
+      "transcript_method": "description",
+      "transcript_chars": 523,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] EXPLAINED: How Climate Change is Fueling Extreme Weather ...Climate Extremes Documentary | Climate Science2025 Europe Climate Review: Extreme Weather Toll and Outlook ...Year in Review: The Biggest Climate Headlines of 2025Wildfires, floods and extreme heat: These are the biggest ...World slammed by extreme weather in 2025, one of the hottest ...",
+      "summary": "[DESCRIPTION FALLBACK] Jul 21, 2025 · This video compiles shocking footage from extreme weather events around the world between 2024 and 2025 — from devastating hurricanes and deadly floods to intense droughts and wildfires. Through expert insights, the documentary highlights the interconnected nature of climate, ecosystems and agriculture, revealing how extreme weather events, soil degradation, and resource scarcity are impacting both farmers and global supply chains. Dec 27, 2025 · An analysis of the defining climat",
+      "link": "https://www.youtube.com/watch?v=UhxhDsVzFmU",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "UhxhDsVzFmU",
+      "transcript_method": "description",
+      "transcript_chars": 523,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "problem": "Insufficient progress in reducing global emissions and adapting to climate change, as evident from the gridlock in Bonn talks and the need for a major scale-up of carbon removal",
+    "root_cause": "Inadequate global cooperation, lack of decisive action, and insufficient investment in climate change mitigation and adaptation measures",
+    "severity": "CRITICAL",
+    "leverage_points": [
+      "International agreements and global climate governance",
+      "National and local governments' policies and implementation"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Implement and strengthen global climate agreements, such as the Paris Agreement",
+        "measurable_goal": "Reduce global greenhouse gas emissions by 45% by 2030 and achieve net-zero by 2050",
+        "timeframe": "medium-term"
+      },
+      {
+        "action": "Invest in climate-resilient infrastructure and climate-smart agriculture",
+        "measurable_goal": "Increase climate-resilient infrastructure investment by 20% annually and achieve 30% climate-resilient agriculture practices by 2030",
+        "timeframe": "long-term"
+      }
+    ],
+    "evidence": [
+      "The Bonn climate talks ended in gridlock, with few tangible outcomes",
+      "Experts emphasize the need for a major scale-up of carbon removal to return warming to 1.5C",
+      "The Global Risks Report 2026 highlights climate hazards as a dominant concern"
+    ],
+    "generalization": "This problem is connected to the domains of civilization (global governance and economic systems), human (health and well-being), and cosmos (long-term sustainability of the planet)",
+    "summary": "The current pace of global climate action is insufficient, and decisive action is needed to reduce emissions and adapt to climate change. International cooperation, national policies, and investment in climate-resilient infrastructure are crucial leverage points.",
+    "risk_level": "CRITICAL"
+  },
+  "raw_items": [
+    {
+      "title": "DeBriefed 19 June 2026: Bonn talks end in ‘gridlock’ | Energy’s ‘new era’ | Oceans in climate negotiations",
+      "summary": "<p>Welcome to Carbon Brief’s DeBriefed.&#160;An essential guide to the week&#8217;s key developments relating to climate...</p>\n<p>The post <a href=\"https://www.carbonbrief.org/debriefed-19-june-2026-bonn-talks-end-in-gridlock-energys-new-era-oceans-in-climate-negotiations/\">DeBriefed 19 June 2026: Bonn talks end in ‘gridlock’ | Energy’s ‘new era’ | Oceans in climate negotiations</a> appeared first on <a href=\"https://www.carbonbrief.org\">Carbon Brief</a>.</p>",
+      "link": "https://www.carbonbrief.org/debriefed-19-june-2026-bonn-talks-end-in-gridlock-energys-new-era-oceans-in-climate-negotiations/",
+      "published": "Fri, 19 Jun 2026 15:39:05 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Bonn climate talks: Key outcomes from the June 2026 UN climate conference",
+      "summary": "<p>Two weeks of tense UN climate talks in Bonn, Germany, have produced few tangible outcomes...</p>\n<p>The post <a href=\"https://www.carbonbrief.org/bonn-climate-talks-key-outcomes-from-the-june-2026-un-climate-conference/\">Bonn climate talks: Key outcomes from the June 2026 UN climate conference</a> appeared first on <a href=\"https://www.carbonbrief.org\">Carbon Brief</a>.</p>",
+      "link": "https://www.carbonbrief.org/bonn-climate-talks-key-outcomes-from-the-june-2026-un-climate-conference/",
+      "published": "Fri, 19 Jun 2026 15:16:42 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Experts: Why carbon removal needs a ‘major scale up’ to return warming to 1.5C",
+      "summary": "<p>Last week, more than 260 researchers convened in Milan to discuss the opportunities, challenges and...</p>\n<p>The post <a href=\"https://www.carbonbrief.org/experts-why-carbon-removal-needs-a-major-scale-up-to-return-warming-to-1-5c/\">Experts: Why carbon removal needs a ‘major scale up’ to return warming to 1.5C</a> appeared first on <a href=\"https://www.carbonbrief.org\">Carbon Brief</a>.</p>",
+      "link": "https://www.carbonbrief.org/experts-why-carbon-removal-needs-a-major-scale-up-to-return-warming-to-1-5c/",
+      "published": "Fri, 19 Jun 2026 10:02:15 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Q&A: What do China’s provincial five-year plans say about climate and energy?",
+      "summary": "<p>China’s provincial-level governments have now all published their 15th five-year plans – economic and social...</p>\n<p>The post <a href=\"https://www.carbonbrief.org/qa-what-do-chinas-provincial-five-year-plans-say-about-climate-and-energy/\">Q&amp;A: What do China’s provincial five-year plans say about climate and energy?</a> appeared first on <a href=\"https://www.carbonbrief.org\">Carbon Brief</a>.</p>",
+      "link": "https://www.carbonbrief.org/qa-what-do-chinas-provincial-five-year-plans-say-about-climate-and-energy/",
+      "published": "Thu, 18 Jun 2026 10:00:27 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Climate Risk Index 2026 | Germanwatch e.V.",
+      "summary": "... global ambition gaps, as the CRI 2026 results illustrate: Global emissions must be reduced immediately, adaptation efforts must be accelerated, ...",
+      "link": "https://www.germanwatch.org/en/cri",
+      "source_type": "ddg"
+    },
+    {
+      "title": "What the Global Risks Report 2026 really warns about climate",
+      "summary": "The Global Risks Report 2026 sets out its findings across short, medium and long time horizons, and climate hazards dominate the far end of that ...",
+      "link": "https://morningoverview.com/what-the-global-risks-report-2026-really-warns-about-climate-urgency/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Global Risks Report 2026: Economic, climate shocks are",
+      "summary": "The WEF’s Global Risks Report 2026 shows how geoeconomic conflict, climate stress, and trust deficits are reinforcing each other.",
+      "link": "https://www.policycircle.org/economy/global-risks-report-2026/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Review: Climate Security in the 2025 State of Food Security and Nutrition in the World Report « The Center for Climate & Security",
+      "summary": "September 16, 2025 - This has led to increased food insecurity in particularly vulnerable demographics such as women, children, rural households, and the poor. Combined with gender-based income inequality and other systemic inequalities, food price inflation compounds ...",
+      "link": "https://climateandsecurity.org/2025/08/review-climate-security-in-the-2025-state-of-food-security-and-nutrition-in-the-world-report/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Climate Change, Global Food Security, and the U.S. Food System | USDA",
+      "summary": "Effective beginning 5/20/2025: ... is likely to diminish continued progress on global food security through production disruptions that lead to local availability limitations and price increases, interrupted transport conduits, and diminished food safety, among other ...",
+      "link": "https://www.usda.gov/about-usda/general-information/priorities/climate-solutions/climate-change-global-food-security-and-us-food-system",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Full article: Enhancing food security amid climate change: assessing impacts and developing adaptive strategies",
+      "summary": "View PDF (open in a new window) ... poses significant challenges to global food security, impacting food availability, accessibility, utilization, and stability....",
+      "link": "https://www.tandfonline.com/doi/full/10.1080/23311932.2025.2519800",
+      "source_type": "ddg"
+    }
+  ]
+}

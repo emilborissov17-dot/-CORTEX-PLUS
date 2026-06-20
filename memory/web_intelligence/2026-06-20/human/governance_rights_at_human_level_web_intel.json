@@ -1,0 +1,122 @@
+{
+  "axis": "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL",
+  "domain": "human",
+  "timestamp": "2026-06-20T05:37:56.149905+00:00",
+  "sources_count": 9,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 1,
+  "youtube_items": [
+    {
+      "title": "[YT] LIVE: UN Forum on Human Rights, Democracy and Rule ... - YouTubeUN Watch | Holding the United Nations AccountableMeeting Trump’s Challenge to Human Rights | Human Rights WatchWorld Report 2026: Peru | Human Rights WatchIndia Human Rights: A Comprehensive Analysis Report - Human ...Human rights and democracy in the world: Annual report 2025",
+      "summary": "[DESCRIPTION FALLBACK] It aims to provide factual, up-to-date news, analysis, and insights from India and around the world. The channel delivers a mix of content, including political news, business updates,... UN Watch is a Geneva-based NGO that monitors the UN by the yardstick of its own Charter. We expose double standards, defend human rights, and stand up for democracy inside the UN system. Feb 4, 2026 · In the 529-page World Report 2026, its 36th edition, Human Rights Watch reviews human rights practices in more t",
+      "link": "https://www.youtube.com/watch?v=WH92-ILCrrQ",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "WH92-ILCrrQ",
+      "transcript_method": "description",
+      "transcript_chars": 523,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "problem": "Lack of accountability for human rights violations and discriminatory practices against marginalized groups, including child refugees and political prisoners",
+    "root_cause": "Inadequate governance and lack of effective mechanisms for holding individuals and institutions accountable for human rights abuses",
+    "severity": "HIGH",
+    "leverage_points": [
+      "International human rights organizations and NGOs, such as Human Rights Watch and UN Watch",
+      "Government agencies and policymakers responsible for implementing and enforcing human rights laws and regulations"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Establish independent investigation mechanisms to hold individuals and institutions accountable for human rights abuses",
+        "measurable_goal": "Increase in number of investigations and prosecutions of human rights abuses by 20% within the next 12 months",
+        "timeframe": "medium-term"
+      },
+      {
+        "action": "Provide training and resources to government agencies and policymakers on human rights laws and regulations",
+        "measurable_goal": "90% of government officials report feeling confident in their understanding of human rights laws and regulations within the next 6 months",
+        "timeframe": "short-term"
+      }
+    ],
+    "evidence": [
+      "The UK's discriminatory AI experiment on child refugees",
+      "Canada's failure to hold corporations accountable for human rights abuses",
+      "The detention of activists and political prisoners in Uzbekistan and Georgia"
+    ],
+    "generalization": "This problem connects to other domains, including the biosphere, as human rights abuses can have devastating impacts on the environment and public health, and the cosmos, as a lack of accountability can undermine trust in institutions and hinder global cooperation",
+    "summary": "The lack of accountability for human rights violations and discriminatory practices against marginalized groups is a critical problem that requires immediate attention and action from international human rights organizations, governments, and policymakers.",
+    "risk_level": "HIGH"
+  },
+  "raw_items": [
+    {
+      "title": "The UK’s Discriminatory  AI Experiment on Child  Refugees",
+      "summary": "Click to expand Image\n          \n\n\n\n  \n        \n  \n\n        \n                      \n      \n        \n              Migrants walk towards a bus to be taken for processing after disembarking from a Royal National Lifeboat Institution (RNLI) lifeboat on a beach after crossing the English Channel, in Dungeness, England, on June 15, 2022.\n                    © 2022 Ben Stansall/AFP via Getty Images\n          \n    \n\n\n  \n<p>The UK Home Office&nbsp;is pushing ahead with&nbsp;plans to use AI technology to",
+      "link": "https://www.hrw.org/news/2026/06/19/the-uks-discriminatory-ai-experiment-on-child-refugees",
+      "published": "Fri, 19 Jun 2026 10:15:00 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "Canada Delivers a Blow to Corporate Accountability",
+      "summary": "Click to expand Image\n          \n\n\n\n  \n        \n  \n\n        \n                      \n      \n        \n              In this file image from undated video footage run by China's CCTV via AP Video, Muslim trainees work in a garment factory at the Hotan Vocational Education and Training Center in Hotan, Xinjiang, northwest China.\n                    © CCTV via AP Video, File\n          \n    \n\n\n  \n<p>The Canadian government’s&nbsp;elimination of the&nbsp;Canadian Ombudsperson for Responsible Enterprise",
+      "link": "https://www.hrw.org/news/2026/06/18/canada-delivers-a-blow-to-corporate-accountability",
+      "published": "Thu, 18 Jun 2026 16:03:50 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "Support Builds to Protect Children from Crimes Against Humanity",
+      "summary": "Click to expand Image\n          \n\n\n\n  \n        \n  \n\n        \n                      \n      \n        \n              Children wait near the site of Okhmatdyt children’s hospital hit by Russian missiles, in Kyiv, Ukraine, Monday, July 8, 2024.\n                    © 2024 Evgeniy Maloletka/AP Photo\n          \n    \n\n\n  \n<p>In the process leading toward a new international treaty to prevent and punish crimes against humanity, there is already growing, cross-regional support to ensure the final effort in",
+      "link": "https://www.hrw.org/news/2026/06/18/support-builds-to-protect-children-from-crimes-against-humanity",
+      "published": "Thu, 18 Jun 2026 14:50:47 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "Uzbekistan: Activist Held in Trumped-Up Case",
+      "summary": "Click to expand Image\n          \n\n\n\n  \n        \n  \n\n        \n                      \n      \n        \n              Javokhir Muminov (left) and Djura Akbarov (right) at the Kashkadarya Regional Prosecutor's Office, Uzbekistan.&nbsp;\n                    © 2025 Elena Urlaeva\n          \n    \n\n\n  \n<p>(Berlin, June 18, 2026) – Uzbek authorities should release a local human rights activist accused of extortion and investigate his allegations of abuse in police custody, Human Rights Watch said today. Jav",
+      "link": "https://www.hrw.org/news/2026/06/18/uzbekistan-activist-held-in-trumped-up-case",
+      "published": "Thu, 18 Jun 2026 03:19:51 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "No Reset Without Releases: Georgia’s Political Prisoners and the Price of Better Relations with Washington",
+      "summary": "<span class=\"field field--name-title field--type-string field--label-hidden\">No Reset Without Releases: Georgia’s Political Prisoners and the Price of Better Relations with Washington</span>\n<span class=\"field field--name-uid field--type-entity-reference field--label-hidden\"><span lang=\"lang\">zevans@freedom…</span></span>\n<span class=\"field field--name-created field--type-created field--label-hidden\"><time class=\"datetime\" datetime=\"2026-06-10T01:00:39-04:00\" title=\"Wednesday, June 10, 2026 - 01",
+      "link": "https://freedomhouse.org/article/no-reset-without-releases-georgias-political-prisoners-and-price-better-relations",
+      "published": "Wed, 10 Jun 2026 05:00:39 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "The 2026 Mark Palmer Prize: Honoring H.E. Salome Zourabichvili",
+      "summary": "<div class=\"node node--type-event node--view-mode-rss ds-1col clearfix hero-no-header share-buttons-on\">\n\n\n        \n\n\n\n  <div class=\"no-header-wrapper\">\n    <span class=\"hr\"></span>\n    <div class=\"grid header\">\n      <div class=\"text-wrapper\">\n\n        \n        \n        <h1 class=\"basic-h1 dark-text\"><span class=\"field field--name-title field--type-string field--label-hidden\">The 2026 Mark Palmer Prize: Honoring H.E. Salome Zourabichvili</span>\n</h1>\n\n                </div>\n    </div>\n  </div>\n",
+      "link": "https://freedomhouse.org/event/2026-mark-palmer-prize-honoring-he-salome-zourabichvili",
+      "published": "Tue, 09 Jun 2026 15:07:39 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Freedom House Welcomes New Board Members Margaret Hoover, David Pressman",
+      "summary": "<span class=\"field field--name-title field--type-string field--label-hidden\">Freedom House Welcomes New Board Members Margaret Hoover, David Pressman </span>\n<span class=\"field field--name-uid field--type-entity-reference field--label-hidden\"><span lang=\"lang\">zevans@freedom…</span></span>\n<span class=\"field field--name-created field--type-created field--label-hidden\"><time class=\"datetime\" datetime=\"2026-06-04T00:01:01-04:00\" title=\"Thursday, June 4, 2026 - 00:01\">Thu, 06/04/2026 - 00:01</time>",
+      "link": "https://freedomhouse.org/article/freedom-house-welcomes-new-board-members-margaret-hoover-david-pressman",
+      "published": "Thu, 04 Jun 2026 04:01:01 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "David Pressman",
+      "summary": "<span class=\"field field--name-title field--type-string field--label-hidden\">David Pressman</span>\n<span class=\"field field--name-uid field--type-entity-reference field--label-hidden\"><span lang=\"lang\">zevans@freedom…</span></span>\n<span class=\"field field--name-created field--type-created field--label-hidden\"><time class=\"datetime\" datetime=\"2026-05-29T14:56:26-04:00\" title=\"Friday, May 29, 2026 - 14:56\">Fri, 05/29/2026 - 14:56</time>\n</span>\n\n  <div class=\"field field--name-field-person-type f",
+      "link": "https://freedomhouse.org/expert/david-pressman",
+      "published": "Fri, 29 May 2026 18:56:26 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] LIVE: UN Forum on Human Rights, Democracy and Rule ... - YouTubeUN Watch | Holding the United Nations AccountableMeeting Trump’s Challenge to Human Rights | Human Rights WatchWorld Report 2026: Peru | Human Rights WatchIndia Human Rights: A Comprehensive Analysis Report - Human ...Human rights and democracy in the world: Annual report 2025",
+      "summary": "[DESCRIPTION FALLBACK] It aims to provide factual, up-to-date news, analysis, and insights from India and around the world. The channel delivers a mix of content, including political news, business updates,... UN Watch is a Geneva-based NGO that monitors the UN by the yardstick of its own Charter. We expose double standards, defend human rights, and stand up for democracy inside the UN system. Feb 4, 2026 · In the 529-page World Report 2026, its 36th edition, Human Rights Watch reviews human rights practices in more t",
+      "link": "https://www.youtube.com/watch?v=WH92-ILCrrQ",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "WH92-ILCrrQ",
+      "transcript_method": "description",
+      "transcript_chars": 523,
+      "has_full_transcript": false
+    }
+  ]
+}

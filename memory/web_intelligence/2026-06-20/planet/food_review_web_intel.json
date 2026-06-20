@@ -1,0 +1,101 @@
+{
+  "axis": "FOOD_REVIEW",
+  "domain": "planet",
+  "timestamp": "2026-06-20T05:35:48.779533+00:00",
+  "sources_count": 7,
+  "rss_count": 0,
+  "ddg_count": 6,
+  "youtube_count": 1,
+  "youtube_items": [
+    {
+      "title": "[YT] I Didn't Eat Food for 7 days. This is what happened to my... - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] Go to https://DrinkLMNT.com/WhatIveLearned to get a free sampler pack with any purchase!Learn my optimized Fasting protocol here: https://bit.ly/FastToLas...",
+      "link": "https://www.youtube.com/watch?v=KSSBiNPZs8Q",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "KSSBiNPZs8Q",
+      "transcript_method": "description",
+      "transcript_chars": 180,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "problem": "673 million people experienced hunger in 2024, and the global food supply chain is vulnerable to climate change-induced disruptions",
+    "root_cause": "Conflict, economic shocks, climate extremes, and forced displacement drive food insecurity and malnutrition, while rising food prices and brittle supply chains exacerbate the issue",
+    "severity": "CRITICAL",
+    "leverage_points": [
+      "Global food governance and policy-making mechanisms",
+      "Climate-resilient agricultural practices and supply chain management"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Implement climate-resilient agricultural practices and improve supply chain management",
+        "measurable_goal": "Reduce the number of people experiencing hunger by 20% within the next 2 years",
+        "timeframe": "medium-term"
+      },
+      {
+        "action": "Develop and implement policies to address the root causes of food insecurity, such as conflict and economic shocks",
+        "measurable_goal": "Reduce the number of people affected by food crises by 15% within the next 3 years",
+        "timeframe": "long-term"
+      }
+    ],
+    "evidence": [
+      "673 million people experienced hunger in 2024",
+      "The vulnerability assessment methods and adaptation measures have been employed to alleviate the impact of climate change in the food supply chain"
+    ],
+    "generalization": "This problem connects to the domains of Civilization (economic shocks, conflict), Human (food insecurity, malnutrition), and Planet (climate extremes, environmental degradation)",
+    "summary": "The global food supply chain is vulnerable to climate change-induced disruptions, and 673 million people experienced hunger in 2024, requiring immediate attention to address the root causes and implement climate-resilient agricultural practices. The problem is critical and requires a multi-faceted approach to ensure food security and sustainability.",
+    "risk_level": "CRITICAL"
+  },
+  "raw_items": [
+    {
+      "title": "Global Report on Food Crises (GRFC) 2025 - World Food Programme",
+      "summary": "The Global Report on Food Crises (GRFC) 2025 shows conflict, economic shocks, climate extremes and forced displacement continued to drive food insecurity and malnutrition around the world, with a catastrophic impact on many already fragile regions. In 2024, more than 295 million people across 53 countries and territories experienced acute levels of hunger - an increase of 13.7 million from ...",
+      "link": "https://www.wfp.org/publications/global-report-food-crises-grfc",
+      "source_type": "ddg"
+    },
+    {
+      "title": "The State of Food Security and Nutrition in the World 2025",
+      "summary": "The 2025 SOFI report from FAO, IFAD, UNICEF, WFP and WHO examines how rising food prices are shaping access to healthy diets and driving food insecurity and malnutrition. Global hunger declined slightly for a second year, but the gains are modest and uneven. Africa and Western Asia continue to see hunger rise. High and persistent prices for nutritious foods are putting quality diets further ...",
+      "link": "https://data.unicef.org/resources/sofi-2025/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Hunger Map 2025 | FAO | Food and Agriculture Organization of the United ...",
+      "summary": "About 673 million people, experienced hunger in 2024. Explore @FAO's hunger map and navigate through regions, subregions and countries to discover the state of the prevalence of undernourishment and food insecurity.",
+      "link": "https://www.fao.org/interactive/hunger-map/en/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "The world is running out of time. Inside the 2026 food crisis. | foodfacts.org",
+      "summary": "May 11, 2026 - A study published in the journal ... escalate through brittle, just-in-time supply chains into food shortages, price spikes, public health crises, and ultimately social unrest....",
+      "link": "https://www.foodfacts.org/articles/global-food-crisis-2026",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Assessing the vulnerability of food supply chains to climate change-induced disruptions - PubMed",
+      "summary": "April 10, 2024 - The vulnerability assessment methods as well as the adaptation and resilience measures that have been employed to alleviate the impact of climate change in the food supply chain were discussed. The results revealed a growing number of publications providing evidence of the weakening of the food supply chain due to climate change and extreme weather events.",
+      "link": "https://pubmed.ncbi.nlm.nih.gov/38373458/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Assessing the vulnerability of food supply chains to climate change-induced disruptions - ScienceDirect",
+      "summary": "February 17, 2024 - The vulnerability assessment methods as well as the adaptation and resilience measures that have been employed to alleviate the impact of climate change in the food supply chain were discussed. The results revealed a growing number of publications providing evidence of the weakening of the food supply chain due to climate change and extreme weather events.",
+      "link": "https://www.sciencedirect.com/science/article/pii/S0048969724011860",
+      "source_type": "ddg"
+    },
+    {
+      "title": "[YT] I Didn't Eat Food for 7 days. This is what happened to my... - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] Go to https://DrinkLMNT.com/WhatIveLearned to get a free sampler pack with any purchase!Learn my optimized Fasting protocol here: https://bit.ly/FastToLas...",
+      "link": "https://www.youtube.com/watch?v=KSSBiNPZs8Q",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "KSSBiNPZs8Q",
+      "transcript_method": "description",
+      "transcript_chars": 180,
+      "has_full_transcript": false
+    }
+  ]
+}

@@ -1,0 +1,141 @@
+{
+  "axis": "DEEP_TIME_RISKS_REVIEW",
+  "domain": "cosmos",
+  "timestamp": "2026-06-19T17:43:52.342514+00:00",
+  "sources_count": 13,
+  "rss_count": 4,
+  "ddg_count": 6,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] The Asteroid Terrestrial-impact Last Alert System (ATLAS)",
+      "summary": "[DESCRIPTION FALLBACK] Armin Rest, Physics, Harvard University https://simons.berkeley.edu/talks/armin-rest-3-2-18 Applications in the Natural Sciences ...",
+      "link": "https://www.youtube.com/watch?v=ljA_VyHYKLs",
+      "published": "2018-03-02T21:23:12Z",
+      "source_type": "youtube",
+      "channel": "Simons Institute for the Theory of Computing",
+      "video_id": "ljA_VyHYKLs",
+      "transcript_method": "description",
+      "transcript_chars": 155,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] NASA downgrades a large asteroid&#39;s risk of impact in 2880",
+      "summary": "[DESCRIPTION FALLBACK] A fresh assessment of a distantly risky asteroid brings good news: it's even less of a threat than astronomers had feared.",
+      "link": "https://www.youtube.com/watch?v=gPiwimDtml0",
+      "published": "2022-04-04T18:30:35Z",
+      "source_type": "youtube",
+      "channel": "WONDER WORLD",
+      "video_id": "gPiwimDtml0",
+      "transcript_method": "description",
+      "transcript_chars": 145,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Can asteroids be veered away from Earth? New NASA spacecraft aims to find out",
+      "summary": "[DESCRIPTION FALLBACK] NASA has launched a satellite into orbit on a mission to smash itself into an asteroid, in a test to see whether it is possible to knock ...",
+      "link": "https://www.youtube.com/watch?v=WUt53v_DU3g",
+      "published": "2021-11-24T23:37:06Z",
+      "source_type": "youtube",
+      "channel": "PBS NewsHour",
+      "video_id": "WUt53v_DU3g",
+      "transcript_method": "description",
+      "transcript_chars": 163,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "problem": "Insufficient global preparedness and coordination for asteroid impact threats and pandemic responses",
+    "root_cause": "Lack of international cooperation, inadequate funding, and insufficient scientific research",
+    "severity": "MEDIUM",
+    "leverage_points": [
+      "United Nations and international organizations like WHO and NASA",
+      "Global governments and their space agencies"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Establish a global asteroid tracking and warning system",
+        "measurable_goal": "Reduce the average response time to asteroid threats by 30%",
+        "timeframe": "medium-term"
+      },
+      {
+        "action": "Develop and implement a comprehensive pandemic response plan",
+        "measurable_goal": "Increase the percentage of countries with functional pandemic response plans to 90%",
+        "timeframe": "long-term"
+      }
+    ],
+    "evidence": [
+      "WHO issues comprehensive guidelines on filovirus disease, including Ebola and Marburg disease",
+      "NASA downgrades a large asteroid's risk of impact in 2880, but emphasizes the need for continued monitoring"
+    ],
+    "generalization": "This problem connects to the domains of Planet (asteroid impact), Human (pandemic response), and Civilization (global cooperation and governance)",
+    "summary": "The world faces significant threats from asteroid impacts and pandemics, and a coordinated global response is necessary to address these risks. Establishing a global asteroid tracking system and developing comprehensive pandemic response plans are critical steps towards mitigating these threats.",
+    "risk_level": "MEDIUM"
+  },
+  "raw_items": [
+    {
+      "title": "WHO issues comprehensive guidelines on filovirus disease, including Ebola and Marburg disease",
+      "summary": "As the Democratic Republic of the Congo is battling an Ebola disease outbreak caused by the Bundibugyo virus, the World Health Organization (WHO) has released its first comprehensive guidelines for the clinical management of filovirus disease which include all types of Ebola and Marburg viruses. The new guidelines highlight the importance of early supportive care to improve patient survival and health outcomes, outlining 16 evidence-based recommendations.",
+      "link": "https://www.who.int/news/item/17-06-2026-who-issues-comprehensive-guidelines-on-filovirus-disease--including-ebola-and-marburg-disease",
+      "published": "Wed, 17 Jun 2026 13:30:57 Z",
+      "source_type": "rss"
+    },
+    {
+      "title": "Open letter to leaders of G7, G20, BRICS and all nations on finalizing the WHO Pandemic Agreement’s Pathogen Access and Benefit Sharing annex",
+      "summary": "<p>Dear Leaders of the G7, the G20, BRICS and of all nations,</p><p>We write to you together, from Geneva and from Bras&iacute;lia, with one shared conviction: that the world must finish what it started, and that you can help it do so.</p><p>We begin not with an institution or an annex, but with a memory the whole world shares. Not so long ago, our hospitals overflowed. Families said goodbye to the people they loved through glass, or by telephone, or not at all. Children lost grandparents. Docto",
+      "link": "https://www.who.int/news/item/15-06-2026-open-letter-to-leaders-of-g7-g20-brics-and-all-nations-on-finalizing-the-who-pandemic-agreement-s-pathogen-access-and-benefit-sharing-annex",
+      "published": "Mon, 15 Jun 2026 09:05:36 Z",
+      "source_type": "rss"
+    },
+    {
+      "title": "Safe blood supply improves as voluntary donations exceed 85%, but many people still lack access",
+      "summary": "New data from the World Health Organization (WHO) show sustained progress towards safer blood supplies globally but also highlight persistent inequalities in access to safe blood and weaknesses in governance, financing and regulation of blood systems.",
+      "link": "https://www.who.int/news/item/12-06-2026-safe-blood-supply-improves-as-voluntary-donations-exceed-85---but-many-people-still-lack-access",
+      "published": "Fri, 12 Jun 2026 12:35:26 Z",
+      "source_type": "rss"
+    },
+    {
+      "title": "Africa CDC and WHO launch joint continental Ebola response plan",
+      "summary": "<p>The Africa Centres for Disease Control and Prevention (Africa CDC) and the World Health Organization (WHO) today launched a joint <a href=\"https://www.afro.who.int/publications/bundibugyo-ebola-virus-continental-preparedness-and-response-plan-june-november-2026\">continental preparedness and response plan</a> on the ongoing Ebola outbreak caused by the Bundibugyo virus. The plan aims to raise US$&nbsp;518&nbsp;million to support African countries together with partners to prepare for, rapidly ",
+      "link": "https://www.who.int/news/item/05-06-2026-africa-cdc-and-who-launch-joint-continental-ebola-response-plan",
+      "published": "Fri, 05 Jun 2026 12:28:26 Z",
+      "source_type": "rss"
+    },
+    {
+      "title": "Asteroid impact",
+      "summary": "An impact event is a collision between astronomical objects causing measurable effects. Impact events have been found to regularly occur in planetary systems, though the most frequent involve asteroids, comets or meteoroids and have minimal effect. When large objects impact terrestrial planets such as the Earth, there can be significant physical and biospheric consequences, as the impacting body i",
+      "link": "https://en.wikipedia.org/wiki/Asteroid_impact",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Asteroids in fiction - Wikipedia",
+      "summary": "The threat of impact events by asteroids has been a recurring theme. It received successive boosts in popularity following the 1980 publication of the Alvarez hypothesis about the extinction of...",
+      "link": "https://en.wikipedia.org/wiki/Asteroids_in_fiction",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Asteroid impact avoidance",
+      "summary": "DART mission impact animation Asteroid impact avoidance, commonly termed planetary defense, involves systematic detection, tracking, and trajectory alteration of...",
+      "link": "https://grokipedia.com/page/Asteroid_impact_avoidance",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Pandemic Response Accountability Committee",
+      "summary": "The Pandemic Response Accountability Committee (PRAC) is an independent oversight committee within the Council of the Inspectors General on Integrity and Efficiency, created by the Coronavirus Aid, Relief, and Economic Security (CARES) Act of 2020 to ensure that the $2.2 trillion of the CARES act, plus 5 other pandemic-related pieces of legislation totaling over $5 trillion in government funds, we",
+      "link": "https://en.wikipedia.org/wiki/Pandemic_Response_Accountability_Committee",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Tool for Influenza Pandemic Risk Assessment",
+      "summary": "The Tool for Influenza Pandemic Risk Assessment (TIPRA) is a standardized framework developed by the World Health Organization (WHO) to evaluate the pandemic potential of influenza A viruses, focusing on their ability to acquire sustained human-to-h…",
+      "link": "https://grokipedia.com/page/tool_for_influenza_pandemic_risk_assessment",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Risk Perceptions and Protective Behaviors: Evidence from COVID-19 Pandemic",
+      "summary": "We analyze data from a survey we administered during the COVID-19 pandemic to investigate the relationship between people's subjective risk beliefs and their protective behaviors. We report three main findings. First, on average, people substantially overestimate the absolute level of risk associated with economic activity, but have correct signals about their relative risk. Second, people who bel",
+      "link": "https://siepr.stanford.edu/publications/working-paper/risk-perceptions-and-protective-behaviors-evidence-covid-19-pandemic",
+      "source_type": "ddg"
+    }
+  ]
+}

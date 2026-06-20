@@ -1,0 +1,100 @@
+{
+  "axis": "GOVERNANCE_INSTITUTIONS_REVIEW",
+  "fetched_at": "2026-06-20T07:31:08.072503+00:00",
+  "smart_query": "government corruption institutions",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 0,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube_transcripts": 3,
+    "podcast": 1
+  },
+  "rss": [],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "github/government.github.com",
+      "snippet": "Gather, curate, and feature stories of public servants and civic hackers using GitHub as part of their open government innovations",
+      "stars": 1963,
+      "url": "https://github.com/github/government.github.com",
+      "updated": "2026-06-18",
+      "source": "GitHub"
+    },
+    {
+      "title": "consuldemocracy/consuldemocracy",
+      "snippet": "Consul Democracy - Open Government and E-Participation Web Software",
+      "stars": 1536,
+      "url": "https://github.com/consuldemocracy/consuldemocracy",
+      "updated": "2026-06-19",
+      "source": "GitHub"
+    },
+    {
+      "title": "datagouv/data.gouv.fr",
+      "snippet": "Ce dépôt rassemble les tickets techniques qui portent sur data.gouv.fr.",
+      "stars": 121,
+      "url": "https://github.com/datagouv/data.gouv.fr",
+      "updated": "2026-06-12",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Programmable Participatory Governance -- A Formal Framework for Transparent, Accountable, and Citizen-Responsive Democratic Systems: From Deliberative Theory to Decentralised Architecture",
+      "snippet": "Public confidence in democratic institutions has declined across many OECD countries over recent decades, while political participation and policy influence remain unevenly distributed across socioeconomic groups. Concurrently, democratic backsliding, declining electoral participation, and persisten",
+      "url": "https://arxiv.org/abs/2605.20261v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Sustainable Intelligence for the Wild: Democratizing Ecological Monitoring via Knowledge-Adaptive Edge Expert Agents",
+      "snippet": "Rapid biodiversity loss underscore the urgency of effective monitoring, yet manual surveys remain resource-intensive. While on-device AI offers a scalable alternative, its performance in the wild is often challenged by environmental variability. Current methods rely heavily on cloud resource, which ",
+      "url": "https://arxiv.org/abs/2605.16671v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[We’re updating our career advice for the strangest time in history | Benjamin Todd, author of 80,000 Hours] The average career is 80,000 hours long. With AI advancing so rapidly, the hours you have left in your career matter more than ever.Some leading AI researchers think there’s a 10% chance that AI systems begin automating AI research itself this year — and a 60% chance by the end of 2028. This could introduce aggressive feedback loops that completely reshape every industry, institution, and career.I",
+  "wiki": null,
+  "youtube_items": [
+    {
+      "title": "[YT] Global Geopolitical Outlook 2026",
+      "summary": "[DESCRIPTION FALLBACK] Emerging geopolitics expert and co-author of Danger Zone, Professor Hal Brands, takes audiences on a global tour of today's ...",
+      "link": "https://www.youtube.com/watch?v=Gkw2vbJCFkQ",
+      "source_type": "youtube",
+      "channel": "World Knowledge Forum",
+      "video_id": "Gkw2vbJCFkQ",
+      "transcript_method": "description",
+      "transcript_chars": 150,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] The top 10 geopolitical developments for 2026",
+      "summary": "[DESCRIPTION FALLBACK] Geopolitics #GeostrategicOutlook 2026 Geostrategic Outlook: Key Developments Shaping Global Business Welcome to our latest ...",
+      "link": "https://www.youtube.com/watch?v=KqZqusPFf78",
+      "source_type": "youtube",
+      "channel": "EY Global",
+      "video_id": "KqZqusPFf78",
+      "transcript_method": "description",
+      "transcript_chars": 149,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Why the world&#39;s superpowers are racing to control the Arctic - BBC World Service",
+      "summary": "[DESCRIPTION FALLBACK] Tensions are rising at the top of the world as the Arctic warms faster than anywhere else on earth. Click here to subscribe to our ...",
+      "link": "https://www.youtube.com/watch?v=TkRmrPQDPFw",
+      "source_type": "youtube",
+      "channel": "BBC World Service",
+      "video_id": "TkRmrPQDPFw",
+      "transcript_method": "description",
+      "transcript_chars": 157,
+      "has_full_transcript": false
+    }
+  ],
+  "summary": "[arXiv]\n- Programmable Participatory Governance -- A Formal Framework for Transparent, Accountable, and Citizen-Responsive Democratic Systems: From Deliberative Theory to Decentralised Architecture\n- ",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": [],
+  "open_source_momentum": "",
+  "scientific_frontier": "",
+  "relevance_to_goal": ""
+}

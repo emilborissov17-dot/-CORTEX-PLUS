@@ -1,0 +1,99 @@
+{
+  "axis": "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL",
+  "fetched_at": "2026-06-18T19:58:55.553715+00:00",
+  "smart_query": "human rights democracy freedom",
+  "sources_count": {
+    "wiki": 0,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "cirosantilli/china-dictatorship",
+      "snippet": "反中共政治宣传库。Anti Chinese government propaganda. 住在中国真名用户的网友请别给星星，不然你要被警察请喝茶。常见问答集，新闻集和饭店和音乐建议。卐习万岁卐。冠状病毒审查郝海东新疆改造中心六四事件法轮功 996.ICU709大抓捕巴拿马文件邓家贵低端人口西藏骚乱。Friends who live in China and have real name on ac",
+      "stars": 3053,
+      "url": "https://github.com/cirosantilli/china-dictatorship",
+      "updated": "2026-06-18",
+      "source": "GitHub"
+    },
+    {
+      "title": "iiab/iiab",
+      "snippet": "Internet-in-a-Box - Build your own LIBRARY OF ALEXANDRIA with a Raspberry Pi !",
+      "stars": 1887,
+      "url": "https://github.com/iiab/iiab",
+      "updated": "2026-06-18",
+      "source": "GitHub"
+    },
+    {
+      "title": "wikicensorship/wikicensorship.github.io",
+      "snippet": "An open encyclopedia of Internet censorship",
+      "stars": 142,
+      "url": "https://github.com/wikicensorship/wikicensorship.github.io",
+      "updated": "2026-05-28",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "AI-Driven Assessment of Human Tutors: Linking Training Performance to Real-Life Practice",
+      "snippet": "There exist numerous tutor training platforms. However, few provide AI-driven training and evaluation for human tutors based on real-life performance. We present an AI-driven system that assesses both open responses during training and authentic real-life tutoring. Unlike platforms that only assess ",
+      "url": "https://arxiv.org/abs/2606.18617v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "AI systems out-persuade expert humans",
+      "snippet": "Many societal decisions are settled by contests of persuasion. Conversational AI is a powerful new entrant in these contests, but whether it can out-persuade skilled and highly incentivized humans has remained unclear. Here, in a series of four preregistered experiments (n = 18,978 conversations fro",
+      "url": "https://arxiv.org/abs/2606.16475v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[We can guess what intergalactic war would look like. And strangely, it matters.] Intergalactic war is probably billions of years away — yet physics can already tell us how it ends. And strangely that conclusion is relevant to decisions people have to make today.In this video, Rob Wiblin walks through a fascinating analysis from researcher Beren Millidge that uses known physics — no wormholes or faster-than-light travel — to identify the only three weapons that could work at an",
+  "wiki": null,
+  "youtube_items": [
+    {
+      "title": "[YT] YouTube:Rb_up-i1qIs",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=Rb_up-i1qIs",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "Rb_up-i1qIs",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] YouTube:YcEzdCQbZaU",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=YcEzdCQbZaU",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "YcEzdCQbZaU",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] YouTube:yL3xae1aHjU",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=yL3xae1aHjU",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "yL3xae1aHjU",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    }
+  ],
+  "summary": "[arXiv]\n- AI-Driven Assessment of Human Tutors: Linking Training Performance to Real-Life Practice\n- AI systems out-persuade expert humans\n\n[GitHub]\n- cirosantilli/china-dictatorship star=3053: 反中共政治宣",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": [],
+  "open_source_momentum": "",
+  "scientific_frontier": "",
+  "relevance_to_goal": ""
+}

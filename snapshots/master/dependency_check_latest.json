@@ -1,0 +1,31 @@
+{
+  "timestamp": "2026-06-20T07:25:57.695825+00:00",
+  "all_critical_ok": true,
+  "checks": {
+    "GROQ_API_KEY": {
+      "present": true,
+      "level": "critical"
+    },
+    "GEMINI_API_KEY": {
+      "present": true,
+      "level": "important"
+    },
+    "YOUTUBE_API_KEY": {
+      "present": true,
+      "level": "optional"
+    },
+    "NASA_API_KEY": {
+      "present": true,
+      "level": "optional"
+    },
+    "groq_chat": {
+      "ok": true,
+      "http": 200
+    },
+    "groq_whisper": {
+      "ok": true,
+      "note": "key verified via groq_chat"
+    }
+  },
+  "note": ""
+}

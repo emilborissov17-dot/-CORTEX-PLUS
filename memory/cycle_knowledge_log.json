@@ -1,17 +1,5 @@
 [
   {
-    "timestamp": "2026-04-30T08:18:40.110249+00:00",
-    "axes_updated": 20,
-    "total_axes_in_kb": 20,
-    "axes_with_trend": 0
-  },
-  {
-    "timestamp": "2026-05-01T07:54:56.140391+00:00",
-    "axes_updated": 19,
-    "total_axes_in_kb": 20,
-    "axes_with_trend": 2
-  },
-  {
     "timestamp": "2026-05-01T08:14:10.111075+00:00",
     "axes_updated": 21,
     "total_axes_in_kb": 21,
@@ -579,5 +567,181 @@
     "problems_tracked": 294,
     "web_intel_problems": 25,
     "source": "hypercortex"
+  },
+  {
+    "timestamp": "2026-06-18T18:22:59.237710+00:00",
+    "axes_updated": 25,
+    "total_axes_in_kb": 28,
+    "problems_tracked": 309,
+    "web_intel_problems": 25,
+    "source": "web_intelligence_agent"
+  },
+  {
+    "timestamp": "2026-06-18T19:19:05.069818+00:00",
+    "axes_updated": 25,
+    "total_axes_in_kb": 28,
+    "problems_tracked": 324,
+    "web_intel_problems": 25,
+    "source": "web_intelligence_agent"
+  },
+  {
+    "timestamp": "2026-06-18T19:30:48.442307+00:00",
+    "axes_updated": 25,
+    "total_axes_in_kb": 28,
+    "problems_tracked": 339,
+    "web_intel_problems": 25,
+    "source": "web_intelligence_agent"
+  },
+  {
+    "timestamp": "2026-06-18T19:40:20.884641+00:00",
+    "axes_updated": 25,
+    "total_axes_in_kb": 28,
+    "problems_tracked": 355,
+    "web_intel_problems": 25,
+    "source": "web_intelligence_agent"
+  },
+  {
+    "timestamp": "2026-06-18T19:48:45.958125+00:00",
+    "axes_updated": 25,
+    "total_axes_in_kb": 28,
+    "problems_tracked": 371,
+    "web_intel_problems": 25,
+    "source": "web_intelligence_agent"
+  },
+  {
+    "timestamp": "2026-06-18T19:54:03.768734+00:00",
+    "axes_updated": 25,
+    "total_axes_in_kb": 28,
+    "problems_tracked": 387,
+    "web_intel_problems": 25,
+    "source": "web_intelligence_agent"
+  },
+  {
+    "timestamp": "2026-06-18T20:31:08.963137+00:00",
+    "axes_updated": 25,
+    "total_axes_in_kb": 28,
+    "problems_tracked": 403,
+    "web_intel_problems": 25,
+    "source": "self_modifier"
+  },
+  {
+    "timestamp": "2026-06-18T20:31:14.903284+00:00",
+    "axes_updated": 25,
+    "total_axes_in_kb": 28,
+    "problems_tracked": 419,
+    "web_intel_problems": 25,
+    "source": "execute_patches"
+  },
+  {
+    "timestamp": "2026-06-18T20:31:21.554273+00:00",
+    "axes_updated": 25,
+    "total_axes_in_kb": 28,
+    "problems_tracked": 435,
+    "web_intel_problems": 25,
+    "source": "execute_patches"
+  },
+  {
+    "timestamp": "2026-06-18T20:31:29.608156+00:00",
+    "axes_updated": 25,
+    "total_axes_in_kb": 28,
+    "problems_tracked": 449,
+    "web_intel_problems": 25,
+    "source": "fast_cycle_runner"
+  },
+  {
+    "timestamp": "2026-06-18T20:54:20.903428+00:00",
+    "axes_updated": 25,
+    "total_axes_in_kb": 28,
+    "problems_tracked": 461,
+    "web_intel_problems": 25,
+    "source": "web_intelligence_agent"
+  },
+  {
+    "timestamp": "2026-06-18T21:12:20.540051+00:00",
+    "axes_updated": 25,
+    "total_axes_in_kb": 28,
+    "problems_tracked": 472,
+    "web_intel_problems": 25,
+    "source": "web_intelligence_agent"
+  },
+  {
+    "timestamp": "2026-06-19T17:45:02.593675+00:00",
+    "axes_updated": 25,
+    "total_axes_in_kb": 28,
+    "problems_tracked": 485,
+    "web_intel_problems": 25,
+    "source": "web_intelligence_agent"
+  },
+  {
+    "timestamp": "2026-06-19T18:29:59.412408+00:00",
+    "axes_updated": 25,
+    "total_axes_in_kb": 28,
+    "problems_tracked": 489,
+    "web_intel_problems": 25,
+    "source": "self_modifier"
+  },
+  {
+    "timestamp": "2026-06-19T18:30:05.431599+00:00",
+    "axes_updated": 25,
+    "total_axes_in_kb": 28,
+    "problems_tracked": 493,
+    "web_intel_problems": 25,
+    "source": "execute_patches"
+  },
+  {
+    "timestamp": "2026-06-19T18:30:17.235734+00:00",
+    "axes_updated": 25,
+    "total_axes_in_kb": 28,
+    "problems_tracked": 497,
+    "web_intel_problems": 25,
+    "source": "fast_cycle_runner"
+  },
+  {
+    "timestamp": "2026-06-20T05:42:11.907514+00:00",
+    "axes_updated": 25,
+    "total_axes_in_kb": 28,
+    "problems_tracked": 500,
+    "web_intel_problems": 25,
+    "source": "web_intelligence_agent"
+  },
+  {
+    "timestamp": "2026-06-20T05:42:56.364790+00:00",
+    "axes_updated": 25,
+    "total_axes_in_kb": 28,
+    "problems_tracked": 503,
+    "web_intel_problems": 25,
+    "source": "execute_patches"
+  },
+  {
+    "timestamp": "2026-06-20T06:56:16.690694+00:00",
+    "axes_updated": 25,
+    "total_axes_in_kb": 28,
+    "problems_tracked": 506,
+    "web_intel_problems": 25,
+    "source": "execute_patches"
+  },
+  {
+    "timestamp": "2026-06-20T07:26:38.382818+00:00",
+    "axes_updated": 25,
+    "total_axes_in_kb": 28,
+    "problems_tracked": 509,
+    "web_intel_problems": 25,
+    "source": "web_intelligence_agent"
+  },
+  {
+    "timestamp": "2026-06-20T07:36:35.607512+00:00",
+    "axes_updated": 25,
+    "total_axes_in_kb": 28,
+    "problems_tracked": 512,
+    "web_intel_problems": 25,
+    "source": "self_modifier"
+  },
+  {
+    "timestamp": "2026-06-20T07:39:22.105575+00:00",
+    "axes_updated": 25,
+    "total_axes_in_kb": 28,
+    "problems_tracked": 515,
+    "web_intel_problems": 25,
+    "source": "fast_cycle_runner"
   }
 ]

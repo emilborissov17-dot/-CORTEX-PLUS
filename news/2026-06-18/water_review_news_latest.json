@@ -1,0 +1,119 @@
+{
+  "axis": "WATER_REVIEW",
+  "fetched_at": "2026-06-18T20:59:10.763544+00:00",
+  "smart_query": "water scarcity drinking water",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "‘I had sewage in my bath’: row erupts over lock on Huddersfield narrow canal",
+      "snippet": "Boaters say low water levels cause them to run aground, while residents say the lock needs to be drained to prevent waste running into their propertiesEarlier this month, signs began appearing pinned to a lock on the Huddersfield narrow canal: “Canel [sic] And River Trust,” they read. “Please leave ",
+      "url": "https://www.theguardian.com/uk-news/2026/jun/18/sewage-bath-row-lock-huddersfield-narrow-canal",
+      "source": "RSS"
+    },
+    {
+      "title": "Rising temperatures may increase flood risk through river ‘whiplash’, study finds",
+      "snippet": "Sudden shifts from wet to dry weather, or vice versa, may foil typical drought- and flood-prevention measuresRising temperatures may trigger a dangerous increase in “hydroclimatic whiplash” in rivers that would make traditional approaches to flood and drought planning insufficient, a study has found",
+      "url": "https://www.theguardian.com/environment/2026/jun/17/rising-temperatures-may-increase-flood-risk-through-river-whiplash-study-finds",
+      "source": "RSS"
+    },
+    {
+      "title": "Half of world’s children exposed to at least three climate hazards, Unicef says",
+      "snippet": "Almost every child, including those from high-income countries, is now exposed to at least one hazardHalf of the world’s children are exposed to at least three overlapping climate hazards threatening their health, education and survival, according to a Unicef report.Globally, children face increasin",
+      "url": "https://www.theguardian.com/environment/2026/jun/16/half-of-worlds-children-exposed-to-at-least-three-climate-hazards-unicef-says",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "wilsto/pool-monitor-card",
+      "snippet": "Keep your swimming pool safe and crystal clear by monitoring up to 25 water chemistry parameters at a glance.",
+      "stars": 122,
+      "url": "https://github.com/wilsto/pool-monitor-card",
+      "updated": "2026-06-17",
+      "source": "GitHub"
+    },
+    {
+      "title": "DOI-USGS/EGRET",
+      "snippet": "An R-package for the analysis of long-term changes in water quality and streamflow, including the water-quality method Weighted Regressions on Time, Discharge, and Season (WRTDS). https://doi-usgs.git",
+      "stars": 99,
+      "url": "https://github.com/DOI-USGS/EGRET",
+      "updated": "2026-05-26",
+      "source": "GitHub"
+    },
+    {
+      "title": "KnowFlow/KnowFlow_AWM",
+      "snippet": "KnowFlow Automatic Water Monitoring device is an open sourced tool enable everyone having access to first hand water quality data with low cost.",
+      "stars": 96,
+      "url": "https://github.com/KnowFlow/KnowFlow_AWM",
+      "updated": "2026-06-15",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Water vapor buoyancy and the African easterly jet",
+      "snippet": "The African easterly jet (AEJ) is a prominent circulation feature in the tropical atmosphere. It transports mineral dust and generates easterly waves that serve as seeds for hurricanes. Conventional wisdom holds that the AEJ is in thermal wind balance with the positive meridional temperature gradien",
+      "url": "https://arxiv.org/abs/2605.21875v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Acidification of Water by CO2",
+      "snippet": "Fundamental inorganic chemistry shows that increasing concentrations of atmospheric CO2 will have no harmful effect on organisms that live in the natural waters of the Earths, and may well benefit them. Alkalinity and dissolved CO2 give high buffering capacity to most natural waters and minimize the",
+      "url": "https://arxiv.org/abs/2605.12311v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[The Resistance of a Cow] There’s something rotten in the cows of Denmark. And Minnesota. And Wisconsin. And Idaho. What could cause a previously thriving herd of majestic dairy cattle to stop drinking water and start drinking … urine? A Danish farmer calls a special investigator, who takes one look at his farm and nopes the heck out of there, refusing to return, citing “bad energy” coming from something nearby … a big bui",
+  "wiki": null,
+  "youtube_items": [
+    {
+      "title": "[YT] YouTube:ndjOWflLbVo",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=ndjOWflLbVo",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "ndjOWflLbVo",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] YouTube:Q8q5kjhWW9s",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=Q8q5kjhWW9s",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "Q8q5kjhWW9s",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] YouTube:EGe67oi8Fd0",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=EGe67oi8Fd0",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "EGe67oi8Fd0",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    }
+  ],
+  "summary": "[RSS News]\n- ‘I had sewage in my bath’: row erupts over lock on Huddersfield narrow canal\n- Rising temperatures may increase flood risk through river ‘whiplash’, study finds\n\n[arXiv]\n- Water vapor buo",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": [],
+  "open_source_momentum": "",
+  "scientific_frontier": "",
+  "relevance_to_goal": ""
+}

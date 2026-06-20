@@ -1,6 +1,6 @@
 {
   "axis": "MATERIALS_WASTE_REVIEW",
-  "timestamp": "2026-06-11T19:06:15.996976+00:00",
+  "timestamp": "2026-06-20T07:36:06.267325+00:00",
   "level": "MEDIUM",
   "signals": [],
   "key_metrics": [],
@@ -8,12 +8,12 @@
   "source_type": "REAL_DATA",
   "metrics": {
     "municipal_waste_per_capita_kg": 3.18969961013975,
-    "recycling_rate_pct": null,
     "material_consumption_per_gdp": 2.87194964204316,
-    "co2_emissions_total_kt": null,
     "forest_area_pct": 31.1430410787403,
-    "protected_areas_pct": 16.511660312023
+    "protected_areas_pct": 16.511660312023,
+    "co2_emissions_total_kt": 38598578.0,
+    "recycling_rate_pct": 13.5
   },
-  "data_quality": "4/6 indicators fetched",
-  "fetched_date": "2026-06-11"
+  "data_quality": "6/6 indicators fetched",
+  "fetched_date": "2026-06-20"
 }

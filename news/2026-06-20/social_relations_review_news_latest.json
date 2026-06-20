@@ -1,0 +1,119 @@
+{
+  "axis": "SOCIAL_RELATIONS_REVIEW",
+  "fetched_at": "2026-06-20T07:27:05.758148+00:00",
+  "smart_query": "social inequality conflict trust",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube_transcripts": 2,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "Israel and Hezbollah agree ceasefire, US says, as more Lebanon strikes reported",
+      "snippet": "The agreement followed concerns that continued clashes would undermine the deal to end the war between the US and Iran. ",
+      "url": "https://www.bbc.com/news/articles/cwyk7kkygj5o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Italy's Meloni says Trump 'made up' story that she 'begged' him for photo at G7",
+      "snippet": "The highly public exchange is an indication that their earlier close ties have frayed  since Trump's decision to go to war with Iran.",
+      "url": "https://www.bbc.com/news/articles/c20y1ygn707o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "US to stop funding HIV programmes in South Africa",
+      "snippet": "More than eight million South Africans are living with HIV – the highest number of any country in the world.",
+      "url": "https://www.bbc.com/news/articles/cdr457lxr71o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "briatte/awesome-network-analysis",
+      "snippet": "A curated list of awesome network analysis resources.",
+      "stars": 4068,
+      "url": "https://github.com/briatte/awesome-network-analysis",
+      "updated": "2026-06-18",
+      "source": "GitHub"
+    },
+    {
+      "title": "obsei/obsei",
+      "snippet": "Obsei is a low code AI powered automation tool. It can be used in various business flows like social listening, AI based alerting, brand image analysis, comparative study and more .",
+      "stars": 1411,
+      "url": "https://github.com/obsei/obsei",
+      "updated": "2026-06-16",
+      "source": "GitHub"
+    },
+    {
+      "title": "shaypal5/awesome-twitter-data",
+      "snippet": "A list of Twitter datasets and related resources.",
+      "stars": 1120,
+      "url": "https://github.com/shaypal5/awesome-twitter-data",
+      "updated": "2026-06-19",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Networks of agglomeration: how population density rewires social networks and reshapes contagion dynamics",
+      "snippet": "From ancient Mesopotamia to modern cities, dense human settlements coincide with bursts of economic productivity, cultural innovation, and social change. But how does packing people more tightly together alter social organization in ways that reshape collective outcomes? Here, I use a minimal agent-",
+      "url": "https://arxiv.org/abs/2606.19488v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Opinion Polarization in LLM-Based Social Networks: Manipulation and Mitigation",
+      "snippet": "How vulnerable are online social networks to adversaries who seek to amplify opinion polarization by manipulating opinions, and how difficult is it to mitigate such manipulation? Existing studies have examined this question using mathematical models of opinion dynamics. While these models offer valu",
+      "url": "https://arxiv.org/abs/2606.18795v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[The real horror of ‘Alien’ and how it explains why we’re not paid enough] Maybe the real monster in the Alien franchise isn’t actually the killer alien. Because behind the acid blood and jump scares is an even more insidious horror: a single employer with unchecked power. That employer is named Weyland-Yutani, a mega-corporation that dominates workers across the galaxy.Weyland-Yutani is a sort of extreme example of what economists call a monopsony — when one employer do",
+  "wiki": null,
+  "youtube_items": [
+    {
+      "title": "[YT] 🚹🚺 How does the ‘male lonliness epidemic’ affect society | #bebaddaasin",
+      "summary": "[DESCRIPTION FALLBACK] Link to bebadass.in: ...",
+      "link": "https://www.youtube.com/watch?v=Y9XQBEkjbTk",
+      "source_type": "youtube",
+      "channel": "Bffr Moe",
+      "video_id": "Y9XQBEkjbTk",
+      "transcript_method": "description",
+      "transcript_chars": 47,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] The Health Effects of Loneliness",
+      "summary": "[DESCRIPTION FALLBACK] Studies are now showing that loneliness and social isolation not only affect our mental health but also have profound effects on ...",
+      "link": "https://www.youtube.com/watch?v=YoqnIs5uc8E",
+      "source_type": "youtube",
+      "channel": "In Good Health Podcast",
+      "video_id": "YoqnIs5uc8E",
+      "transcript_method": "description",
+      "transcript_chars": 155,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Virtually Alone: The Future of Human Connection",
+      "summary": "[DESCRIPTION FALLBACK] 2020 has been a challenging year across the globe. As a result of the pandemic, economic instability, and societal reckoning with ...",
+      "link": "https://www.youtube.com/watch?v=sXm_xLORb6c",
+      "source_type": "youtube",
+      "channel": "The Aspen Institute",
+      "video_id": "sXm_xLORb6c",
+      "transcript_method": "description",
+      "transcript_chars": 156,
+      "has_full_transcript": false
+    }
+  ],
+  "summary": "[RSS News]\n- Israel and Hezbollah agree ceasefire, US says, as more Lebanon strikes reported\n- Italy's Meloni says Trump 'made up' story that she 'begged' him for photo at G7\n\n[arXiv]\n- Networks of ag",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": [],
+  "open_source_momentum": "",
+  "scientific_frontier": "",
+  "relevance_to_goal": ""
+}

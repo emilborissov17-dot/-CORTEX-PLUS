@@ -1,0 +1,102 @@
+{
+  "axis": "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL",
+  "fetched_at": "2026-06-19T17:48:17.121774+00:00",
+  "smart_query": "human rights democracy freedom",
+  "sources_count": {
+    "wiki": 0,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube_transcripts": 2,
+    "podcast": 1
+  },
+  "rss": [],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "cirosantilli/china-dictatorship",
+      "snippet": "反中共政治宣传库。Anti Chinese government propaganda. 住在中国真名用户的网友请别给星星，不然你要被警察请喝茶。常见问答集，新闻集和饭店和音乐建议。卐习万岁卐。冠状病毒审查郝海东新疆改造中心六四事件法轮功 996.ICU709大抓捕巴拿马文件邓家贵低端人口西藏骚乱。Friends who live in China and have real name on ac",
+      "stars": 3056,
+      "url": "https://github.com/cirosantilli/china-dictatorship",
+      "updated": "2026-06-19",
+      "source": "GitHub"
+    },
+    {
+      "title": "iiab/iiab",
+      "snippet": "Internet-in-a-Box - Build your own LIBRARY OF ALEXANDRIA with a Raspberry Pi !",
+      "stars": 1889,
+      "url": "https://github.com/iiab/iiab",
+      "updated": "2026-06-19",
+      "source": "GitHub"
+    },
+    {
+      "title": "wikicensorship/wikicensorship.github.io",
+      "snippet": "An open encyclopedia of Internet censorship",
+      "stars": 142,
+      "url": "https://github.com/wikicensorship/wikicensorship.github.io",
+      "updated": "2026-05-28",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "The Algorithmic-Human Manager: AI, Apps, and Workers in the Indian Gig Economy",
+      "snippet": "This paper examines the impact of artificial intelligence and digital technologies on the blue-collar gig economy in India, focusing on algorithmic management. This paper examines the impact of artificial intelligence and digital technologies on the blue collar gig economy in India, focusing on algo",
+      "url": "https://arxiv.org/abs/2606.19975v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Forecasting AI-Era Productivity: The Intellectually Converged Human Framework and a Missing Cognitive Mediator in Production Function Theory",
+      "snippet": "Why does massive AI investment fail to generate commensurate productivity gains? We argue the paradox is theoretically generated: prevailing production function frameworks encounter a structural boundary by treating AI as a separable factor of production without modeling the cognitive mediation thro",
+      "url": "https://arxiv.org/abs/2606.19794v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[We can guess what intergalactic war would look like. And strangely, it matters.] Intergalactic war is probably billions of years away — yet physics can already tell us how it ends. And strangely that conclusion is relevant to decisions people have to make today.In this video, Rob Wiblin walks through a fascinating analysis from researcher Beren Millidge that uses known physics — no wormholes or faster-than-light travel — to identify the only three weapons that could work at an",
+  "wiki": null,
+  "youtube_items": [
+    {
+      "title": "[YT] Democracy Pulse: Promoting political rights and civil liberties after Human Rights Day",
+      "summary": "[DESCRIPTION FALLBACK] December 10th is designated by the United Nation as Human Rights Day to call attention to the persistent importance of ...",
+      "link": "https://www.youtube.com/watch?v=yL3xae1aHjU",
+      "source_type": "youtube",
+      "channel": "AtlanticCouncil",
+      "video_id": "yL3xae1aHjU",
+      "transcript_method": "description",
+      "transcript_chars": 145,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Guest Lecture by David Kramer Human Rights. 10/23/2025.",
+      "summary": "[DESCRIPTION FALLBACK] Guest Lecture by David Kramer Human Rights. 10/23/2025.",
+      "link": "https://www.youtube.com/watch?v=Rb_up-i1qIs",
+      "source_type": "youtube",
+      "channel": "Delphi Global Research Center",
+      "video_id": "Rb_up-i1qIs",
+      "transcript_method": "description",
+      "transcript_chars": 78,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Are US Civil Liberties Under Threat in 2025? | Guide To Your Rights News",
+      "summary": "[DESCRIPTION FALLBACK] Are US Civil Liberties Under Threat in 2025? Are you aware of the current state of civil liberties in the United States?",
+      "link": "https://www.youtube.com/watch?v=SFwGiQ_2DJ0",
+      "source_type": "youtube",
+      "channel": "Guide To Your Rights",
+      "video_id": "SFwGiQ_2DJ0",
+      "transcript_method": "description",
+      "transcript_chars": 143,
+      "has_full_transcript": false
+    }
+  ],
+  "summary": "Аксът GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL е свързан с осигуряването на достоен живот за всеки човек, като се гарантират човешките права и се предотвратяват войната, бедността и изкуственият недостиг. Този_axis оценява развитието на управление, което да осигури тези права на човешко ниво. Правителствата и учрежденията трябва да работят заедно, за да постигнат тази цел.",
+  "urgency": "MEDIUM",
+  "sentiment": "NEUTRAL",
+  "key_developments": [
+    "The Algorithmic-Human Manager: AI, Apps, and Workers in the Indian Gig Economy",
+    "cirosantilli/china-dictatorship"
+  ],
+  "open_source_momentum": "GitHub проекти като cirosantilli/china-dictatorship и iiab/iiab показват растеж на отворения код и антицензурни усилия",
+  "scientific_frontier": "arXiv публикации като The Algorithmic-Human Manager и Forecasting AI-Era Productivity развиват теоретичните основи за оценката на продуктивността и ролята на AI в управлението",
+  "relevance_to_goal": "Висока, тъй като осигуряването на човешки права и достоен живот е основна част от визията за устойчива цивилизация"
+}

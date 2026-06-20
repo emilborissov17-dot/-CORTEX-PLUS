@@ -1,0 +1,119 @@
+{
+  "axis": "SOCIAL_RELATIONS_REVIEW",
+  "fetched_at": "2026-06-19T18:08:21.984000+00:00",
+  "smart_query": "social inequality conflict trust",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "Italy's Meloni says Trump 'made up' story that she 'begged' him for photo at G7",
+      "snippet": "The highly public exchange is an indication that their earlier close ties have frayed  since Trump's decision to go to war with Iran.",
+      "url": "https://www.bbc.com/news/articles/c20y1ygn707o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "US to end funding of South Africa's HIV programmes over claims of Afrikaner persecution",
+      "snippet": "The US says South Africa is not doing enough to protect the white-minority Afrikaner community.",
+      "url": "https://www.bbc.com/news/articles/cdr457lxr71o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Do it at home too, women tell Japanese fans who cleaned World Cup stadium",
+      "snippet": "Some see a double standard: Japanese men who clean in public while their wives do all the housework.",
+      "url": "https://www.bbc.com/news/articles/crel9xlp8r1o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "briatte/awesome-network-analysis",
+      "snippet": "A curated list of awesome network analysis resources.",
+      "stars": 4068,
+      "url": "https://github.com/briatte/awesome-network-analysis",
+      "updated": "2026-06-18",
+      "source": "GitHub"
+    },
+    {
+      "title": "obsei/obsei",
+      "snippet": "Obsei is a low code AI powered automation tool. It can be used in various business flows like social listening, AI based alerting, brand image analysis, comparative study and more .",
+      "stars": 1411,
+      "url": "https://github.com/obsei/obsei",
+      "updated": "2026-06-16",
+      "source": "GitHub"
+    },
+    {
+      "title": "shaypal5/awesome-twitter-data",
+      "snippet": "A list of Twitter datasets and related resources.",
+      "stars": 1119,
+      "url": "https://github.com/shaypal5/awesome-twitter-data",
+      "updated": "2026-06-18",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Networks of agglomeration: how population density rewires social networks and reshapes contagion dynamics",
+      "snippet": "From ancient Mesopotamia to modern cities, dense human settlements coincide with bursts of economic productivity, cultural innovation, and social change. But how does packing people more tightly together alter social organization in ways that reshape collective outcomes? Here, I use a minimal agent-",
+      "url": "https://arxiv.org/abs/2606.19488v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Opinion Polarization in LLM-Based Social Networks: Manipulation and Mitigation",
+      "snippet": "How vulnerable are online social networks to adversaries who seek to amplify opinion polarization by manipulating opinions, and how difficult is it to mitigate such manipulation? Existing studies have examined this question using mathematical models of opinion dynamics. While these models offer valu",
+      "url": "https://arxiv.org/abs/2606.18795v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[Reddit's model for a better internet | Steve Huffman] The internet was created to connect us, yet many people feel more alone than ever. Reddit cofounder and CEO Steve Huffman explores how social media rewards performance over participation — and offers a timely case for an internet built like a city, with thriving online \"neighborhoods\" that make space for real human connection. Ready to find your community? Hosted on Acast. See acast.com/privacy fo",
+  "wiki": null,
+  "youtube_items": [
+    {
+      "title": "[YT] YouTube:lCwHWH8T2ck",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=lCwHWH8T2ck",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "lCwHWH8T2ck",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] YouTube:XSwCHgcAY3w",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=XSwCHgcAY3w",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "XSwCHgcAY3w",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] YouTube:I19btmIBhx0",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=I19btmIBhx0",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "I19btmIBhx0",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    }
+  ],
+  "summary": "[RSS News]\n- Italy's Meloni says Trump 'made up' story that she 'begged' him for photo at G7\n- US to end funding of South Africa's HIV programmes over claims of Afrikaner persecution\n\n[arXiv]\n- Networ",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": [],
+  "open_source_momentum": "",
+  "scientific_frontier": "",
+  "relevance_to_goal": ""
+}

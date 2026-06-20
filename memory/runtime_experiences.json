@@ -1,136 +1,6 @@
 {
   "experiences": [
     {
-      "timestamp": "2026-03-21T11:57:35.950058+00:00",
-      "event_type": "SUCCESS",
-      "data": {
-        "message": "Код написан: agents/core/trend_tracker_patch.py",
-        "problem": "12 оси имат INSUFFICIENT_DATA защото нямат метрики в TRACKED"
-      },
-      "body_state": {
-        "ram_mb": 150.0,
-        "cpu_pct": 0.0,
-        "open_files": 6
-      }
-    },
-    {
-      "timestamp": "2026-03-21T11:57:38.444900+00:00",
-      "event_type": "SUCCESS",
-      "data": {
-        "message": "Код написан: agents/core/climate_global_risk_review_patch.py",
-        "problem": "Недостатъчен анализ на климатичните рискове и техните въздей"
-      },
-      "body_state": {
-        "ram_mb": 150.0,
-        "cpu_pct": 0.0,
-        "open_files": 6
-      }
-    },
-    {
-      "timestamp": "2026-03-22T11:16:33.702790+00:00",
-      "event_type": "ERROR",
-      "data": {
-        "message": "Синтаксис: Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    im",
-        "problem": "12 оси имат INSUFFICIENT_DATA защото нямат метрики в TRACKED"
-      },
-      "body_state": {
-        "ram_mb": 36.4,
-        "cpu_pct": 0.0,
-        "open_files": 2
-      }
-    },
-    {
-      "timestamp": "2026-03-22T11:16:36.093002+00:00",
-      "event_type": "SUCCESS",
-      "data": {
-        "message": "Код написан: agents/core/climate_global_risk_review_patch.py",
-        "problem": "Недостатъчен анализ на климатичните рискове и техните въздей"
-      },
-      "body_state": {
-        "ram_mb": 36.5,
-        "cpu_pct": 0.0,
-        "open_files": 2
-      }
-    },
-    {
-      "timestamp": "2026-03-22T12:02:00.014281+00:00",
-      "event_type": "SUCCESS",
-      "data": {
-        "message": "Код написан: agents/core/trend_tracker_patch.py",
-        "problem": "12 оси имат INSUFFICIENT_DATA защото нямат метрики в TRACKED"
-      },
-      "body_state": {
-        "ram_mb": 36.3,
-        "cpu_pct": 0.0,
-        "open_files": 2
-      }
-    },
-    {
-      "timestamp": "2026-03-22T12:02:03.026326+00:00",
-      "event_type": "SUCCESS",
-      "data": {
-        "message": "Код написан: agents/core/climate_global_risk_review_patch.py",
-        "problem": "Недостатъчен анализ на климатичните рискове и техните въздей"
-      },
-      "body_state": {
-        "ram_mb": 36.4,
-        "cpu_pct": 0.0,
-        "open_files": 2
-      }
-    },
-    {
-      "timestamp": "2026-03-24T08:11:21.715657+00:00",
-      "event_type": "SUCCESS",
-      "data": {
-        "message": "Код написан: agents/core/trend_tracker_patch.py",
-        "problem": "12 оси имат INSUFFICIENT_DATA защото нямат метрики в TRACKED"
-      },
-      "body_state": {
-        "ram_mb": 36.3,
-        "cpu_pct": 0.0,
-        "open_files": 2
-      }
-    },
-    {
-      "timestamp": "2026-03-24T08:11:24.088872+00:00",
-      "event_type": "SUCCESS",
-      "data": {
-        "message": "Код написан: agents/core/climate_global_risk_review_patch.py",
-        "problem": "Недостатъчен анализ на климатичните рискове и техните въздей"
-      },
-      "body_state": {
-        "ram_mb": 36.4,
-        "cpu_pct": 0.0,
-        "open_files": 2
-      }
-    },
-    {
-      "timestamp": "2026-03-25T10:07:24.041686+00:00",
-      "event_type": "SUCCESS",
-      "data": {
-        "message": "Код написан: agents/core/trend_tracker_patch.py",
-        "problem": "12 оси имат INSUFFICIENT_DATA защото нямат метрики в TRACKED"
-      },
-      "body_state": {
-        "ram_mb": 36.5,
-        "cpu_pct": 0.0,
-        "open_files": 2
-      }
-    },
-    {
-      "timestamp": "2026-03-25T10:07:27.790115+00:00",
-      "event_type": "SUCCESS",
-      "data": {
-        "message": "Код написан: agents/core/climate_global_risk_review_patch.py",
-        "problem": "Недостатъчен анализ на климатичните рискове и техните въздей"
-      },
-      "body_state": {
-        "ram_mb": 36.5,
-        "cpu_pct": 0.0,
-        "open_files": 2
-      }
-    },
-    {
       "timestamp": "2026-03-25T11:51:55.119388+00:00",
       "event_type": "SUCCESS",
       "data": {
@@ -2599,16 +2469,146 @@
         "cpu_pct": 0.0,
         "open_files": 9
       }
+    },
+    {
+      "timestamp": "2026-06-18T20:31:01.604877+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Groq грешка: Всички LLM backends неуспешни. Последна грешка: None",
+        "problem": "Lack of integration between agents and fast_cycle_runner.py"
+      },
+      "body_state": {
+        "ram_mb": 195.0,
+        "cpu_pct": 0.0,
+        "open_files": 9
+      }
+    },
+    {
+      "timestamp": "2026-06-18T20:31:02.153914+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Groq грешка: Всички LLM backends неуспешни. Последна грешка: None",
+        "problem": "To enable accurate system monitoring"
+      },
+      "body_state": {
+        "ram_mb": 195.1,
+        "cpu_pct": 0.0,
+        "open_files": 9
+      }
+    },
+    {
+      "timestamp": "2026-06-18T20:31:02.509769+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Groq грешка: Всички LLM backends неуспешни. Последна грешка: None",
+        "problem": "To enable full system functionality"
+      },
+      "body_state": {
+        "ram_mb": 194.9,
+        "cpu_pct": 0.0,
+        "open_files": 9
+      }
+    },
+    {
+      "timestamp": "2026-06-18T20:31:02.861331+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Groq грешка: Всички LLM backends неуспешни. Последна грешка: None",
+        "problem": "Недостатък в правителствената гъвкавост и устойчивост на дър"
+      },
+      "body_state": {
+        "ram_mb": 196.0,
+        "cpu_pct": 0.0,
+        "open_files": 9
+      }
+    },
+    {
+      "timestamp": "2026-06-18T20:31:03.206233+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Groq грешка: Всички LLM backends неуспешни. Последна грешка: None",
+        "problem": "Отсутствие на точни данни за неравенство и бедност"
+      },
+      "body_state": {
+        "ram_mb": 196.2,
+        "cpu_pct": 0.0,
+        "open_files": 9
+      }
+    },
+    {
+      "timestamp": "2026-06-19T18:29:52.085037+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Groq грешка: Всички LLM backends неуспешни. Последна грешка: None",
+        "problem": "Lack of integration between agents and fast_cycle_runner.py"
+      },
+      "body_state": {
+        "ram_mb": 202.1,
+        "cpu_pct": 0.0,
+        "open_files": 9
+      }
+    },
+    {
+      "timestamp": "2026-06-19T18:29:52.611346+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Groq грешка: Всички LLM backends неуспешни. Последна грешка: None",
+        "problem": "To enable accurate system monitoring"
+      },
+      "body_state": {
+        "ram_mb": 203.3,
+        "cpu_pct": 0.0,
+        "open_files": 9
+      }
+    },
+    {
+      "timestamp": "2026-06-19T18:29:53.005393+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Groq грешка: Всички LLM backends неуспешни. Последна грешка: None",
+        "problem": "To enable full system functionality"
+      },
+      "body_state": {
+        "ram_mb": 202.9,
+        "cpu_pct": 0.0,
+        "open_files": 9
+      }
+    },
+    {
+      "timestamp": "2026-06-19T18:29:53.384089+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Groq грешка: Всички LLM backends неуспешни. Последна грешка: None",
+        "problem": "Недостатък в правителствената гъвкавост и устойчивост на дър"
+      },
+      "body_state": {
+        "ram_mb": 203.1,
+        "cpu_pct": 0.0,
+        "open_files": 9
+      }
+    },
+    {
+      "timestamp": "2026-06-19T18:29:53.754869+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Groq грешка: Всички LLM backends неуспешни. Последна грешка: None",
+        "problem": "Отсутствие на точни данни за неравенство и бедност"
+      },
+      "body_state": {
+        "ram_mb": 203.2,
+        "cpu_pct": 0.0,
+        "open_files": 9
+      }
     }
   ],
   "summary": {
     "total_experiences": 200,
-    "success_rate_pct": 66.0,
-    "error_count": 68,
+    "success_rate_pct": 61.5,
+    "error_count": 77,
     "timeout_count": 0,
     "api_calls": 0,
-    "avg_ram_mb_last10": 146.0,
-    "last_error": "Синтаксис: Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    im",
-    "last_updated": "2026-05-08T08:59:47.797040+00:00"
+    "avg_ram_mb_last10": 199.2,
+    "last_error": "Groq грешка: Всички LLM backends неуспешни. Последна грешка: None",
+    "last_updated": "2026-06-19T18:29:53.940930+00:00"
   }
 }

@@ -1,0 +1,119 @@
+{
+  "axis": "TECHNOLOGY_AI_REVIEW",
+  "fetched_at": "2026-06-18T21:01:09.933553+00:00",
+  "smart_query": "artificial intelligence AI regulation",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "GTA 6 pre-order date and cover art revealed by Rockstar",
+      "snippet": "The developer has said pre-sales of the hugely anticipated game will begin on 25 June.",
+      "url": "https://www.bbc.com/news/articles/ce8j1yj64g3o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "AI will create more jobs for humans, not replace them, Amazon founder Bezos says",
+      "snippet": "The Amazon founder, who now has robotics and space travel companies, thinks AI will create a labour shortage.",
+      "url": "https://www.bbc.com/news/articles/ceqdrw2yy3vo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "What to study in the AI age - from big tech bosses",
+      "snippet": "Sundar Pichai, Jensen Huang and Jack Clark share their advice with the BBC.",
+      "url": "https://www.bbc.com/news/videos/cewqg4qwq1wo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "swarm-ai-research/swarm",
+      "snippet": "SWARM: System-Wide Assessment of Risk in Multi-agent systems",
+      "stars": 36,
+      "url": "https://github.com/swarm-ai-research/swarm",
+      "updated": "2026-06-15",
+      "source": "GitHub"
+    },
+    {
+      "title": "Jakobovski/ai-safety-cheatsheet",
+      "snippet": "A compilation of AI safety ideas, problems, and solutions.",
+      "stars": 20,
+      "url": "https://github.com/Jakobovski/ai-safety-cheatsheet",
+      "updated": "2026-03-18",
+      "source": "GitHub"
+    },
+    {
+      "title": "shin4141/decision-os-paper",
+      "snippet": "Public gateway for the Decision-OS series (V4–V9). Canonical artifacts on Zenodo (DOI).",
+      "stars": 4,
+      "url": "https://github.com/shin4141/decision-os-paper",
+      "updated": "2026-06-11",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "A Link between Shock-wave Theory and Symmetry-reduced Stochastic Gradient Descent for Artificial Neural Networks",
+      "snippet": "We develop a mathematically explicit link between shock-wave theory and the symmetry-quotiented learning dynamics of stochastic gradient descent, drawing on differential geometry, Lie group theory, and fluid mechanics. Specifically, after quotienting parameter symmetries and applying local-entropy c",
+      "url": "https://arxiv.org/abs/2606.18303v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "A Causal Model of Theory of Mind in Conflict for Artificial Intelligence",
+      "snippet": "Theory of mind (ToM), the capacity to ascribe mental states to others and use those ascriptions for prediction and inference, is widely assumed to be essential for effective human-machine integration. Existing AI-ToM models address \\emph{how} to mentalize, but leave the question of when largely unad",
+      "url": "https://arxiv.org/abs/2606.16944v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[Prominent Scientists, Faith Leaders, Policymakers and Artists Call for a Prohibition on Superintelligence, as Poll Shows Americans Don’t Want It] Initial signatories include AI pioneers Yoshua Bengio and Geoffrey Hinton, leading media voices Steve Bannon and Glenn Beck, Obama's National Security Advisor Susan Rice, business trailblazers Steve Wozniak and Richard Branson, five Nobel Laureates, former Irish President Mary Robinson, actors Stephen Fry and Joseph Gordon-Levitt, and hundreds of others.",
+  "wiki": null,
+  "youtube_items": [
+    {
+      "title": "[YT] YouTube:pNt4p7TExmY",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=pNt4p7TExmY",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "pNt4p7TExmY",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] YouTube:dGdSK4lD1bU",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=dGdSK4lD1bU",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "dGdSK4lD1bU",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] YouTube:wWoSx73g1DI",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=wWoSx73g1DI",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "wWoSx73g1DI",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    }
+  ],
+  "summary": "[RSS News]\n- GTA 6 pre-order date and cover art revealed by Rockstar\n- AI will create more jobs for humans, not replace them, Amazon founder Bezos says\n\n[arXiv]\n- A Link between Shock-wave Theory and ",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": [],
+  "open_source_momentum": "",
+  "scientific_frontier": "",
+  "relevance_to_goal": ""
+}

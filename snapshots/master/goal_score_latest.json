@@ -1,5 +1,5 @@
 {
-  "composite_score": 0.5242,
+  "composite_score": 0.5539,
   "axis_scores": {
     "CLIMATE_GLOBAL_RISK_REVIEW": 0.8094,
     "ECOSYSTEMS_BIODIVERSITY_REVIEW": 0.5,
@@ -11,12 +11,12 @@
     "COGNITION_LEARNING_REVIEW": 0.5,
     "CULTURE_MEDIA_REVIEW": 0.5,
     "GOVERNANCE_RIGHTS_HUMAN_REVIEW": 0.5,
-    "HUMAN_WELL_BEING_REVIEW": 0.1337,
+    "HUMAN_WELL_BEING_REVIEW": 0.6684,
     "SOCIAL_RELATIONS_REVIEW": 0.023,
     "ECONOMY_WORK_REVIEW": 0.5,
     "EDUCATION_CULTURE_REVIEW": 0.5,
     "GOVERNANCE_INSTITUTIONS_REVIEW": 0.5,
-    "INEQUALITY_POVERTY_REVIEW": 0.792,
+    "INEQUALITY_POVERTY_REVIEW": 0.8267,
     "INFRASTRUCTURE_CITIES_REVIEW": 0.5,
     "TECHNOLOGY_AI_REVIEW": 0.5,
     "TECHNOLOGY_INFRA_REVIEW": 0.5,
@@ -101,10 +101,10 @@
     "child_mortality_per_1000": {
       "axis": "HUMAN_WELL_BEING_REVIEW",
       "current": 37.4,
-      "target": 5.0,
+      "target": 25.0,
       "unit": "deaths per 1000 live births",
       "direction": "lower_better",
-      "score": 0.1337,
+      "score": 0.6684,
       "weight": 9.0,
       "tti_cycles": null
     },
@@ -144,7 +144,7 @@
       "target": 0.0,
       "unit": "percent below $2.15/day",
       "direction": "lower_better",
-      "score": 0.792,
+      "score": 0.8267,
       "weight": 9.0,
       "tti_cycles": null
     },
@@ -170,7 +170,7 @@
     }
   },
   "total_weight": 173.0,
-  "timestamp": "2026-06-17T15:07:01.786462+00:00",
+  "timestamp": "2026-06-20T07:36:26.546190+00:00",
   "axis": "GOAL_SCORE",
   "source_type": "CALCULATED"
 }

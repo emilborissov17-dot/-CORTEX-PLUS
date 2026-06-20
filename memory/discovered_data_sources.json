@@ -1,0 +1,36 @@
+{
+  "_updated": "2026-06-20T07:39:16.563337+00:00",
+  "CLIMATE_GLOBAL_RISK_REVIEW": {
+    "sources": [],
+    "last_asked_llm": "2026-06-19T18:30:07.739534+00:00"
+  },
+  "COSMIC_RESOURCES_REVIEW": {
+    "sources": [],
+    "last_asked_llm": "2026-06-19T18:30:09.740734+00:00"
+  },
+  "DEEP_TIME_RISKS_REVIEW": {
+    "sources": [
+      {
+        "url": "https://climate.nasa.gov/vital-signs/ice-sheets/csv",
+        "format": "csv",
+        "metric": "ice sheet mass balance",
+        "org": "NASA",
+        "discovered_at": "2026-06-20T07:36:44.111674+00:00",
+        "status": "active"
+      },
+      {
+        "url": "https://www.ncdc.noaa.gov/cag/global/time-series/globe/land_ocean/ytd/12/1880-2022.json",
+        "format": "json",
+        "metric": "global temperature anomalies",
+        "org": "NOAA",
+        "discovered_at": "2026-06-20T07:39:10.804422+00:00",
+        "status": "active"
+      }
+    ],
+    "last_asked_llm": "2026-06-20T07:36:41.014394+00:00"
+  },
+  "LONG_TERM_FUTURE_REVIEW": {
+    "sources": [],
+    "last_asked_llm": "2026-06-20T07:39:14.562678+00:00"
+  }
+}

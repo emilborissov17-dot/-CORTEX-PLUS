@@ -1,0 +1,148 @@
+{
+  "axis": "COSMIC_RESOURCES_REVIEW",
+  "domain": "cosmos",
+  "timestamp": "2026-06-18T18:20:51.374275+00:00",
+  "sources_count": 12,
+  "rss_count": 4,
+  "ddg_count": 5,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] Unlimited Resources From Space – Asteroid Mining",
+      "summary": "[DESCRIPTION FALLBACK] Get Merch designed with ❤ from https://kgs.link/shop-127 Join the Patreon Bird Army https://kgs.link/patreon ▽▽ More infos ...",
+      "link": "https://www.youtube.com/watch?v=y8XvQNt26KI",
+      "published": "2020-08-16T12:29:23Z",
+      "source_type": "youtube",
+      "channel": "Kurzgesagt – In a Nutshell",
+      "video_id": "y8XvQNt26KI",
+      "transcript_method": "description",
+      "transcript_chars": 149,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] What Happened To Space Mining?",
+      "summary": "[DESCRIPTION FALLBACK] Just a couple of years ago, it seemed that space mining was inevitable. Analysts, tech visionaries and even renowned ...",
+      "link": "https://www.youtube.com/watch?v=HZPy8hH86LY",
+      "published": "2022-10-09T14:00:08Z",
+      "source_type": "youtube",
+      "channel": "CNBC",
+      "video_id": "HZPy8hH86LY",
+      "transcript_method": "description",
+      "transcript_chars": 143,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] The Space Mining Boom - How Resources Will Shape the Future Economy",
+      "summary": "[DESCRIPTION FALLBACK] From lunar regolith to metal-rich asteroids, this episode examines how off-world resources could spark the largest economic boom ...",
+      "link": "https://www.youtube.com/watch?v=0l5Sv54pgYI",
+      "published": "2025-11-06T13:59:00Z",
+      "source_type": "youtube",
+      "channel": "Isaac Arthur",
+      "video_id": "0l5Sv54pgYI",
+      "transcript_method": "description",
+      "transcript_chars": 155,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "problem": "Lack of regulatory framework for space mining and resource utilization",
+    "root_cause": "Insufficient international cooperation and agreement on space resource utilization policies",
+    "severity": "MEDIUM",
+    "leverage_points": [
+      "International Space Agency cooperation and policy development",
+      "Private sector investment in space resource utilization technologies"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Establish an international framework for space resource utilization",
+        "measurable_goal": "Develop and ratify an international treaty on space resource utilization within 5 years",
+        "timeframe": "medium-term"
+      },
+      {
+        "action": "Invest in research and development of sustainable space resource utilization technologies",
+        "measurable_goal": "Increase private sector investment in space resource utilization by 20% annually for the next 3 years",
+        "timeframe": "short-term"
+      }
+    ],
+    "evidence": [
+      "The Space Resource Exploration and Utilization Act of 2015 was introduced but never became law",
+      "The European Space Resources Innovation Centre was established to promote space resource utilization",
+      "Private companies such as Planetary Resources are investing in asteroid mining technologies"
+    ],
+    "generalization": "The lack of a regulatory framework for space mining and resource utilization connects to other domains, such as the development of sustainable technologies and the need for international cooperation on environmental issues",
+    "summary": "The lack of a regulatory framework for space mining and resource utilization poses a medium-level problem, which can be addressed through international cooperation and private sector investment. Establishing an international framework and investing in sustainable technologies can help mitigate this issue.",
+    "risk_level": "MEDIUM"
+  },
+  "raw_items": [
+    {
+      "title": "Space Force’s rapid acquisition office director moves to Air Force Nuclear Weapons Center",
+      "summary": "<figure><img alt=\"\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"683\" src=\"https://i0.wp.com/spacenews.com/wp-content/uploads/2026/06/9696869-scaled.jpg?fit=1024%2C683&amp;ssl=1\" width=\"1024\" /></figure>\n<p>Kelly Hammett’s departure comes as the Space Rapid Capabilities Office is being realigned under the Space Force </p>\n<p>The post <a href=\"https://spacenews.com/space-forces-rapid-acquisition-office-director-moves-to-air-force-nuclear-weapons-center/\">Space Force",
+      "link": "https://spacenews.com/space-forces-rapid-acquisition-office-director-moves-to-air-force-nuclear-weapons-center/",
+      "published": "Thu, 18 Jun 2026 17:57:55 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Chinese startup Spark Space tests engine, raises funds for electric-pump rocket",
+      "summary": "<figure><img alt=\"\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"573\" src=\"https://i0.wp.com/spacenews.com/wp-content/uploads/2026/06/Lieyan2-pump-fed-engine-hotfire-2026-SparkSpace.jpg?fit=1024%2C573&amp;ssl=1\" width=\"1024\" /></figure>\n<p>Chinese startup Spark Space has secured a series of funding rounds for what it claims will be the world's largest electric-pump-fed rocket, following engine tests.</p>\n<p>The post <a href=\"https://spacenews.com/chinese-startup-sp",
+      "link": "https://spacenews.com/chinese-startup-spark-space-tests-engine-raises-funds-for-electric-pump-rocket/",
+      "published": "Thu, 18 Jun 2026 14:37:46 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "A legacy to help solve the space workforce pipeline",
+      "summary": "<figure><img alt=\"\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"768\" src=\"https://i0.wp.com/spacenews.com/wp-content/uploads/2026/06/space-minds-challenger-center-spacenews-2000-1500.jpg?fit=1024%2C768&amp;ssl=1\" width=\"1024\" /></figure>\n<p>In this episode of Space Minds, David Ariosto talks with Mike Kincaid, president and chief executive of the Challenger Center. They discuss the space workforce pipeline and the center’s role [&#8230;]</p>\n<p>The post <a href=\"h",
+      "link": "https://spacenews.com/a-legacy-to-help-solve-the-space-workforce-pipeline/",
+      "published": "Thu, 18 Jun 2026 14:37:23 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "What the satellite servicing economy can borrow from carbon credits",
+      "summary": "<figure><img alt=\"Artist rendition of ESA’s Destructive Reentry Assessment Container Object (DRACO), a spacecraft loaded with sensors that will break up in orbit in order to gather data on uncontrolled reentry.\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"649\" src=\"https://i0.wp.com/spacenews.com/wp-content/uploads/2024/11/ESA_Space_Debris_project_-_DRACO-scaled.webp?fit=1024%2C649&amp;ssl=1\" width=\"1024\" /></figure>\n<p>In January 2026 alone, the Federal Communica",
+      "link": "https://spacenews.com/what-the-satellite-servicing-economy-can-borrow-from-carbon-credits/",
+      "published": "Thu, 18 Jun 2026 13:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Asteroid mining",
+      "summary": "Asteroid mining is the hypothetical and technically possible extraction of materials from asteroids and other minor planets, including near-Earth objects.Research missions focused on asteroid sample return, including Hayabusa, Hayabusa2, OSIRIS-REx, and Tianwen-2, illustrate the challenges of collecting ore from space using current technology. As of 2024, around 127 grams of asteroid material have",
+      "link": "https://en.wikipedia.org/wiki/Asteroid_mining",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Asteroid Mining Venture Backed by Google Execs | Space",
+      "summary": "... is set to announce plans to mine near-Earth asteroids for ... Planetary Resources is officially unveiling its asteroid-mining plans at 1:30 p.m.",
+      "link": "https://www.space.com/15395-asteroid-mining-planetary-resources.html",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Space Resource Exploration and Utilization Act of 2015",
+      "summary": "The Space Resource Exploration and Utilization Act of 2015 (H.R. 1508) was a bill (which never became law) introduced in the 114th Congress of the U.S. on March 19, 2015, by Rep. Bill Posey, Republican of Florida. It is identical to the Senate bill by the same name (S. 976). The bill would have expanded Presidential power regarding space resources, and regulated US-based space exploration companie",
+      "link": "https://en.wikipedia.org/wiki/Space_Resource_Exploration_and_Utilization_Act_of_2015",
+      "source_type": "ddg"
+    },
+    {
+      "title": "European Space Resources Innovation Centre",
+      "summary": "The European Space Resources Innovation Centre (ESRIC) is a research, business, and innovation hub based in Luxembourg, established in August 2020 as the world's first center dedicated exclusively to the utilization of space resources in support of…",
+      "link": "https://grokipedia.com/page/european_space_resources_innovation_centre",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Home - Space Resources Program - Colorado School of Mines",
+      "summary": "June 7, 2025 - In recent years, growing interest in space resources by space agencies and the private sector has been driven by an awareness that further exploration and growth of commercial opportunities in space will require extraction of materials, production of propellants, and power generation from extraterrestrial resources for more affordable and flexible transportation, facilities construc",
+      "link": "https://space.mines.edu/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "[YT] Unlimited Resources From Space – Asteroid Mining",
+      "summary": "[DESCRIPTION FALLBACK] Get Merch designed with ❤ from https://kgs.link/shop-127 Join the Patreon Bird Army https://kgs.link/patreon ▽▽ More infos ...",
+      "link": "https://www.youtube.com/watch?v=y8XvQNt26KI",
+      "published": "2020-08-16T12:29:23Z",
+      "source_type": "youtube",
+      "channel": "Kurzgesagt – In a Nutshell",
+      "video_id": "y8XvQNt26KI",
+      "transcript_method": "description",
+      "transcript_chars": 149,
+      "has_full_transcript": false
+    }
+  ]
+}

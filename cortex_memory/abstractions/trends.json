@@ -27,7 +27,8 @@
   "goal_score": [
     0.75,
     0.8,
-    0.85
+    0.85,
+    0.5539
   ],
-  "cycle_count": 3
+  "cycle_count": 4
 }

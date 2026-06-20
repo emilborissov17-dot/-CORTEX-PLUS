@@ -1,0 +1,116 @@
+{
+  "axis": "SOCIAL_RELATIONS_REVIEW",
+  "domain": "human",
+  "timestamp": "2026-06-19T17:38:48.970977+00:00",
+  "sources_count": 9,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 1,
+  "youtube_items": [
+    {
+      "title": "[YT] Is Technology Killing Empathy? A Deep Dive into the Loneliness Epidemic",
+      "summary": "[DESCRIPTION FALLBACK] \"We are more 'connected' than ever, yet a global crisis of loneliness is silently taking hold. In this special full-hour feature on ...",
+      "link": "https://www.youtube.com/watch?v=anj0iyliWQo",
+      "published": "2026-05-07T08:15:51Z",
+      "source_type": "youtube",
+      "channel": "Mimi Nicklin, Empathy Advocate",
+      "video_id": "anj0iyliWQo",
+      "transcript_method": "description",
+      "transcript_chars": 158,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "problem": "Loneliness epidemic despite increased technological connectivity",
+    "root_cause": "Misuse of technology leading to social isolation and decreased face-to-face interactions",
+    "severity": "HIGH",
+    "leverage_points": [
+      "Social media companies and their algorithms",
+      "Individuals' behavior and awareness of technology use"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Implementing measures to promote responsible technology use and digital literacy",
+        "measurable_goal": "Reduction in screen time and increase in face-to-face social interactions",
+        "timeframe": "medium-term"
+      }
+    ],
+    "evidence": [
+      "We are more 'connected' than ever, yet a global crisis of loneliness is silently taking hold",
+      "Japanese men who clean in public while their wives do all the housework, indicating a potential lack of empathy and social connection"
+    ],
+    "generalization": "This problem connects to the human domain, specifically social relations, and has implications for mental and physical health, as well as the overall well-being of individuals and society",
+    "summary": "The misuse of technology is contributing to a loneliness epidemic, and addressing this issue requires a multifaceted approach that involves both individual behavior change and systemic changes in how technology is designed and used. The problem of loneliness has significant implications for human social relations and overall well-being.",
+    "risk_level": "HIGH"
+  },
+  "raw_items": [
+    {
+      "title": "Catholics in Latin America generally have positive views of Pope Leo",
+      "summary": "In six Latin American countries surveyed, most Catholics view Pope Leo XIV favorably, though his ratings trail those Pope Francis received early in his papacy.",
+      "link": "https://www.pewresearch.org/short-reads/2026/06/18/catholics-in-latin-america-generally-have-positive-views-of-pope-leo/",
+      "published": "Thu, 18 Jun 2026 17:41:43 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Most U.S. Catholics view Pope Leo favorably; many think Trump has been too critical of him",
+      "summary": "About eight-in-ten U.S. Catholics view Pope Leo XIV favorably, though opinions on the tension between Leo and President Trump split sharply along party lines.",
+      "link": "https://www.pewresearch.org/short-reads/2026/06/18/most-us-catholics-view-pope-leo-favorably-many-think-trump-has-been-too-critical-of-him/",
+      "published": "Thu, 18 Jun 2026 17:41:09 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Is U.S. fertility at an all-time low? It depends how you measure it",
+      "summary": "U.S. fertility rates have hit historic lows, but three common measures tell different stories about whether American families are truly shrinking.",
+      "link": "https://www.pewresearch.org/short-reads/2026/06/17/is-us-fertility-at-an-all-time-low-it-depends-how-you-measure-it/",
+      "published": "Wed, 17 Jun 2026 18:52:43 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "What the data says about abortion in the U.S.",
+      "summary": "Six-in-ten US adults say abortion should be legal in all or most cases. Here's a look at data on abortion rates, providers, demographics and more.",
+      "link": "https://www.pewresearch.org/short-reads/2026/06/17/what-the-data-says-about-abortion-in-the-us/",
+      "published": "Wed, 17 Jun 2026 16:02:33 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Italy's Meloni says Trump 'made up' story that she 'begged' him for photo at G7",
+      "summary": "The highly public exchange is an indication that their earlier close ties have frayed  since Trump's decision to go to war with Iran.",
+      "link": "https://www.bbc.com/news/articles/c20y1ygn707o?at_medium=RSS&at_campaign=rss",
+      "published": "Fri, 19 Jun 2026 13:42:47 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "US to end funding of South Africa's HIV programmes over claims of Afrikaner persecution",
+      "summary": "The US says South Africa is not doing enough to protect the white-minority Afrikaner community.",
+      "link": "https://www.bbc.com/news/articles/cdr457lxr71o?at_medium=RSS&at_campaign=rss",
+      "published": "Fri, 19 Jun 2026 17:02:02 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Do it at home too, women tell Japanese fans who cleaned World Cup stadium",
+      "summary": "Some see a double standard: Japanese men who clean in public while their wives do all the housework.",
+      "link": "https://www.bbc.com/news/articles/crel9xlp8r1o?at_medium=RSS&at_campaign=rss",
+      "published": "Fri, 19 Jun 2026 04:30:47 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Six-year-old Ebola patient taken from DR Congo hospital found and 'doing well'",
+      "summary": "Health facilities have come under attack during the current outbreak as a result of misinformation and fear.",
+      "link": "https://www.bbc.com/news/articles/c0qyg29wpk2o?at_medium=RSS&at_campaign=rss",
+      "published": "Fri, 19 Jun 2026 14:45:57 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] Is Technology Killing Empathy? A Deep Dive into the Loneliness Epidemic",
+      "summary": "[DESCRIPTION FALLBACK] \"We are more 'connected' than ever, yet a global crisis of loneliness is silently taking hold. In this special full-hour feature on ...",
+      "link": "https://www.youtube.com/watch?v=anj0iyliWQo",
+      "published": "2026-05-07T08:15:51Z",
+      "source_type": "youtube",
+      "channel": "Mimi Nicklin, Empathy Advocate",
+      "video_id": "anj0iyliWQo",
+      "transcript_method": "description",
+      "transcript_chars": 158,
+      "has_full_transcript": false
+    }
+  ]
+}

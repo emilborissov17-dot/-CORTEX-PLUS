@@ -188,5 +188,25 @@
     "verified": true,
     "was_correct": false,
     "lesson": "Предсказах HIGH, реалността: LOW. ГРЕШНО"
+  },
+  {
+    "axis": "BODY_SCAN",
+    "prediction": "Очакваме продължаване (delta=20.2)",
+    "predicted_urgency": "MEDIUM",
+    "made_at": "2026-06-18T20:31:21.594999+00:00",
+    "verify_after": "2026-06-18",
+    "verified": false,
+    "was_correct": null,
+    "lesson": ""
+  },
+  {
+    "axis": "BODY_SCAN",
+    "prediction": "Очакваме продължаване (delta=61.9)",
+    "predicted_urgency": "LOW",
+    "made_at": "2026-06-20T07:36:35.738953+00:00",
+    "verify_after": "2026-06-20",
+    "verified": false,
+    "was_correct": null,
+    "lesson": ""
   }
 ]

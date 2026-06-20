@@ -1,0 +1,121 @@
+{
+  "axis": "ECONOMY_WORK_REVIEW",
+  "domain": "civilization",
+  "timestamp": "2026-06-20T05:38:07.870671+00:00",
+  "sources_count": 9,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 1,
+  "youtube_items": [
+    {
+      "title": "[YT] The AI Safety Expert: These Are The Only 5 Jobs That Will... - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] WARNING: AI could end humanity, and we’re completely unprepared. Dr. Roman Yampolskiy reveals how AI will take 99% of jobs, why Sam Altman is ignoring safety...",
+      "link": "https://www.youtube.com/watch?v=UclrVWafRAI",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "UclrVWafRAI",
+      "transcript_method": "description",
+      "transcript_chars": 183,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "problem": "Rising public borrowing and increasing interest rates on student loans may exacerbate economic inequality and limit access to education",
+    "root_cause": "Inadequate fiscal planning and management of public finances, combined with rising costs and inflation",
+    "severity": "MEDIUM",
+    "leverage_points": [
+      "Government economic policies and budget allocation",
+      "Central bank monetary policy and interest rate decisions"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Implement fiscal responsibility measures to reduce public borrowing",
+        "measurable_goal": "Achieve a 10% reduction in public borrowing within the next 12 months",
+        "timeframe": "medium-term"
+      },
+      {
+        "action": "Introduce income-based repayment plans for student loans",
+        "measurable_goal": "Increase the number of students able to repay their loans on time by 20% within the next 2 years",
+        "timeframe": "medium-term"
+      }
+    ],
+    "evidence": [
+      "The UK borrowed £23.3bn in May, up almost a third on the same month last year",
+      "Rates on New Student Loans Will Rise on July 1"
+    ],
+    "generalization": "This problem connects to the domains of PLANET (resource management) and HUMAN (education and social mobility), as economic instability and limited access to education can have far-reaching consequences for individual well-being and societal prosperity",
+    "summary": "Rising public borrowing and increasing interest rates on student loans pose a medium-severity problem, requiring fiscal responsibility measures and income-based repayment plans to mitigate economic inequality and promote access to education",
+    "risk_level": "MEDIUM"
+  },
+  "raw_items": [
+    {
+      "title": "Plans to end gazumping with binding agreements in house sales shake-up",
+      "summary": "Sales agreements will be legally binding sooner and making sellers provide more home information up front are part of the planned changes.",
+      "link": "https://www.bbc.com/news/articles/c6216g52p8wo?at_medium=RSS&at_campaign=rss",
+      "published": "Fri, 19 Jun 2026 11:41:14 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "O'Leary extends Ryanair contract in deal that could net him over £130m",
+      "summary": "The Ryanair boss extends his contract to 2032, in a deal featuring a bonus scheme that could earn him more than €150m (£130m).",
+      "link": "https://www.bbc.com/news/articles/c4gyejpy221o?at_medium=RSS&at_campaign=rss",
+      "published": "Fri, 19 Jun 2026 15:27:27 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Warning over 'fragile' public finances as borrowing rises",
+      "summary": "The UK borrowed £23.3bn in May, according to official figures, up almost a third on the same month last year.",
+      "link": "https://www.bbc.com/news/articles/cqx1e8nrwgvo?at_medium=RSS&at_campaign=rss",
+      "published": "Fri, 19 Jun 2026 08:37:31 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "'I'd be put off if he asked to split it': Who should pay on a first date?",
+      "summary": "Some insist on splitting the bill, others say the asker should pay, while many still see a man paying as romantic.",
+      "link": "https://www.bbc.com/news/articles/c74yl4gknzno?at_medium=RSS&at_campaign=rss",
+      "published": "Fri, 19 Jun 2026 06:52:40 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Amazon’s Movie Arm Abandons Film About OpenAI",
+      "summary": "The company, which invested $50 billion in the artificial intelligence start-up this year, will let the team behind the film, “Artificial,” try to sell the project to another studio.",
+      "link": "https://www.nytimes.com/2026/06/19/business/media/amazon-openai-artificial-movie-sam-altman.html",
+      "published": "Sat, 20 Jun 2026 00:11:02 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "For India, the Return of Iranian Oil Cannot Come Soon Enough",
+      "summary": "After months of shortages and uncertainty, India sees an opportunity to restore a once-crucial energy relationship.",
+      "link": "https://www.nytimes.com/2026/06/19/business/india-iran-oil-imports.html",
+      "published": "Fri, 19 Jun 2026 13:17:59 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Rates on New Student Loans Will Rise on July 1",
+      "summary": "Higher interest rates take effect on July 1 for the next school year. Borrowers are already dealing with rising college costs and inflation elsewhere.",
+      "link": "https://www.nytimes.com/2026/06/19/your-money/student-loans-interest-rates-changes.html",
+      "published": "Fri, 19 Jun 2026 13:00:04 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Oil Prices Rise as U.S.-Iran Deal Faces Tests",
+      "summary": "Oil remains on track for a second straight weekly decline, but signs of cracks in the agreement to end the war have given traders pause.",
+      "link": "https://www.nytimes.com/2026/06/19/business/oil-gas-prices-iran.html",
+      "published": "Fri, 19 Jun 2026 23:51:26 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] The AI Safety Expert: These Are The Only 5 Jobs That Will... - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] WARNING: AI could end humanity, and we’re completely unprepared. Dr. Roman Yampolskiy reveals how AI will take 99% of jobs, why Sam Altman is ignoring safety...",
+      "link": "https://www.youtube.com/watch?v=UclrVWafRAI",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "UclrVWafRAI",
+      "transcript_method": "description",
+      "transcript_chars": 183,
+      "has_full_transcript": false
+    }
+  ]
+}

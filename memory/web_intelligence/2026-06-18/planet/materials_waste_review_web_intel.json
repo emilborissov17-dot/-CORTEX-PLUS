@@ -1,0 +1,141 @@
+{
+  "axis": "MATERIALS_WASTE_REVIEW",
+  "domain": "planet",
+  "timestamp": "2026-06-18T18:15:47.783678+00:00",
+  "sources_count": 13,
+  "rss_count": 4,
+  "ddg_count": 6,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] Recycling Marine Plastic Waste A Circular Economy Case | Suzanna Laskaridis | TEDxAthens",
+      "summary": "Transcriber: Maria Pericleous\nReviewer: Chryssa Rapessi In 2017, I was approached\nby a team of designers to help finance a project\nthey were doing here in Greece. The aim was to reuse old fishing nets, and turn them into filament\nfor 3D printers. I thought the idea of recycling marine\nplastic waste into something workable was absolutely fantastic. So I started working in my mind the idea\nof how this could actually be reused. We put together the best minds\nin the fields of marine plastic waste, new technologies and circular economy and dove right in. We have a storage area\njust outside of Athens, so we started suggesting\nto various friends and NGOs and various other companies who had been collecting\nmarine plastic waste up to that point, that we’d take them\nback to our storage area. This ma",
+      "link": "https://www.youtube.com/watch?v=n_3vSDOY7iU",
+      "published": "2022-07-27T15:35:19Z",
+      "source_type": "youtube",
+      "channel": "TEDx Talks",
+      "video_id": "n_3vSDOY7iU",
+      "transcript_method": "youtube_transcript_api",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Circular Plastics: the challenges of plastic recycling",
+      "summary": "We are here today at the Brightlands Chemelot campus\nwhere Maastricht University has a Circular Chemical Engineering Departement. I am Kim Ragaert. I am professor Circular Plastics and my research group is\ntackling all those challenges this industry is facing... ...to recycle plastics more and better. And it's thanks to our research that you can turn\nplastic waste like this into new products like this. My colleagues are going to tell you about some\nof the main challenges we are facing to actually do that. When we discard plastics there\nwill be a mix of different plastic types... ...as well as contaminants like inks and paper. We have to separate the different materials and try to\neliminate these contaminants, but this is almost impossible. So in the end the presence of these small amounts ",
+      "link": "https://www.youtube.com/watch?v=MDHrUGTL6mM",
+      "published": "2023-02-07T13:57:44Z",
+      "source_type": "youtube",
+      "channel": "Maastricht University",
+      "video_id": "MDHrUGTL6mM",
+      "transcript_method": "youtube_transcript_api",
+      "transcript_chars": 1954,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Circular economy for plastics",
+      "summary": "Since 1950 approximately 8.3\nbillion tons of plastics have been produced globally and 5-13 million tons\nof plastic waste seeps into our environment\nand oceans every year. The danish cleantech mechanical\nrecycling company PLASTIX is specializing in\nconverting plastic fibres primarily used fishnets,\ntrawls and ropes that would previously have\nended up in the ocean or landfill into high-quality and virgin-like\nGreen Plastic raw materials. PLASTIX received a feasibility\nstudy grant from Nopef, a fund financed by the Nordic Council\nof Ministers and managed by Nefco to assess the\nSouth African market and, as a result, established\na local subsidiary in 2017. Today, it obtains post-use discarded\nnets, trawls and other fishing gear from the South African market. PLASTIX is currently expanding its\np",
+      "link": "https://www.youtube.com/watch?v=cZwRG7sXCKw",
+      "published": "2021-03-17T21:13:10Z",
+      "source_type": "youtube",
+      "channel": "Nefco - the Nordic Green Bank",
+      "video_id": "cZwRG7sXCKw",
+      "transcript_method": "youtube_transcript_api",
+      "transcript_chars": 1553,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "Plastic waste is not being effectively recycled and is polluting the environment, harming ecosystems and human health",
+    "root_cause": "Lack of effective waste management systems and inadequate recycling technologies",
+    "severity": "HIGH",
+    "leverage_points": [
+      "Development of new recycling technologies and infrastructure",
+      "Implementation of circular economy practices by governments and industries"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Invest in research and development of new plastic recycling technologies",
+        "measurable_goal": "Increase plastic recycling rate by 20% within the next 5 years",
+        "timeframe": "medium-term"
+      },
+      {
+        "action": "Implement extended producer responsibility for plastic waste",
+        "measurable_goal": "Reduce plastic waste in landfills by 30% within the next 3 years",
+        "timeframe": "short-term"
+      }
+    ],
+    "evidence": [
+      "Since 1950, approximately 8.3 billion tons of plastics have been produced globally, with 5-13 million tons of plastic waste seeping into the environment and oceans every year",
+      "Poor waste disposal devastates ecosystems, pollutes water, harms wildlife, and threatens human health"
+    ],
+    "generalization": "This problem connects to the domains of human health, ecosystem preservation, and resource management, as plastic pollution affects not only the environment but also human well-being and the economy",
+    "summary": "Plastic waste is a significant environmental problem that requires immediate attention and action, including the development of new recycling technologies and the implementation of circular economy practices. Effective waste management is crucial to mitigate the harmful effects of plastic pollution on ecosystems and human health.",
+    "risk_level": "HIGH"
+  },
+  "raw_items": [
+    {
+      "title": "EREF Auction Raises More Than $4 Million to Advance Waste and Recycling Research",
+      "summary": "The Environmental Research &amp; Education Foundation (EREF) raised over $4 million during its 2026 Annual Charitable Auction, held during the inaugural Waste Leadership Summit in Washington, D.C.",
+      "link": "https://www.waste360.com/industry-insights/eref-auction-raises-more-than-4-million-to-advance-waste-and-recycling-research",
+      "published": "Thu, 18 Jun 2026 12:32:49 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Casella’s Roadmap for Renewable Energy and Driving a Circular Economy",
+      "summary": "In this Waste360 Q&amp;A, Casella CEO Ned Coletta catches us up to speed on facility projects and shares what his team learned from testing electric trucks in the real world. He takes us behind the scenes of some exciting partnerships, including work with the University of Vermont to advance a circular economy.",
+      "link": "https://www.waste360.com/industry-insights/casella-s-roadmap-for-renewable-energy-and-driving-a-circular-economy",
+      "published": "Thu, 18 Jun 2026 12:00:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "June 2026 Business Report—Business Highlights from the Waste Leadership Summit",
+      "summary": "In this edition of the Business Report, we recap the highlights of the Investor Summit, as well as several of the education sessions from the Waste Leadership Summit.",
+      "link": "https://www.waste360.com/industry-insights/june-2026-business-report-business-highlights-from-the-waste-leadership-summit",
+      "published": "Thu, 18 Jun 2026 11:30:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Meet the 2026 Waste360 Women Who Inspire",
+      "summary": "Waste360 is proud to announce its fourth annual Women Who Inspire award winners. Our program, sponsored by Wastequip, recognizes incredible women who are making a difference across waste, recycling, and sustainability.",
+      "link": "https://www.waste360.com/industry-insights/meet-the-2026-waste360-women-who-inspire",
+      "published": "Wed, 17 Jun 2026 12:00:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "16 Biggest Environmental Problems of 2026 | Earth.Org",
+      "summary": "From the rise of AI and plastic pollution to fast fashion, here are 16 of the biggest environmental problems of 2026.",
+      "link": "https://earth.org/the-biggest-environmental-problems-of-our-lifetime/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "What really happens to the plastic you throw away - Emma... - YouTube",
+      "summary": "© 2026 Google LLC.",
+      "link": "https://www.youtube.com/watch?v=_6xlNyWPpB8",
+      "source_type": "ddg"
+    },
+    {
+      "title": "The world’s plastic pollution crisis, explained | National Geographic",
+      "summary": "Why was plastic invented? Plastics made from fossil fuels are just over a century old. Belgian chemist Leo Baekeland created the first fully synthetic plastic in 1907.",
+      "link": "https://www.nationalgeographic.com/environment/article/plastic-pollution",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Environmental Consequences Of Poor Waste Disposal: A Growing ...",
+      "summary": "Oct 18, 2025 · Poor waste disposal devastates ecosystems, pollutes water, harms wildlife, and threatens human health. Learn about this growing environmental crisis.",
+      "link": "https://shunwaste.com/article/how-does-improper-waste-management-affect-the-environment",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Impact of Improper Waste Sorting on Environment and Health",
+      "summary": "Apr 17, 2025 · Discover how improper waste sorting impacts your health, wallet, and the planet—and how simple actions can lead to big environmental benefits.",
+      "link": "https://mwc.lv/impact-of-improper-waste-sorting-on-environment-and-health/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Environmental and health implications of improper waste ...",
+      "summary": "While astounding cities promise employment and opportunities, they do not seem to be able to keep up with the magnifying concern of waste management. This research looks at the implications of poor waste management on the demography as well as on the environment’s state and public health.",
+      "link": "https://wjarr.com/sites/default/files/fulltext_pdf/WJARR-2025-0713.pdf",
+      "source_type": "ddg"
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 {
   "axis": "WATER_REVIEW",
-  "timestamp": "2026-06-11T19:06:11.966822+00:00",
+  "timestamp": "2026-06-20T07:35:58.852182+00:00",
   "level": "MEDIUM",
   "signals": [],
   "key_metrics": [],
@@ -15,5 +15,5 @@
     "urban_water_access_pct": 83.4072338315247
   },
   "data_quality": "6/6 indicators fetched",
-  "fetched_date": "2026-06-11"
+  "fetched_date": "2026-06-20"
 }

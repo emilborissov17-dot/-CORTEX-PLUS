@@ -1,0 +1,8 @@
+{
+  "file": "broken_test_patch.py",
+  "success": false,
+  "stage": "syntax",
+  "error": "SyntaxError на ред 1: invalid non-printable character U+FEFF",
+  "backup_path": null,
+  "timestamp": "2026-06-20T06:56:09.510920"
+}

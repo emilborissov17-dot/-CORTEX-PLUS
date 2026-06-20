@@ -1,0 +1,119 @@
+{
+  "axis": "INFRASTRUCTURE_CITIES_REVIEW",
+  "fetched_at": "2026-06-18T20:02:25.136360+00:00",
+  "smart_query": "cities infrastructure urban development",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "GTA 6 pre-order date and cover art revealed by Rockstar",
+      "snippet": "The developer has said pre-sales of the hugely anticipated game will begin on 25 June.",
+      "url": "https://www.bbc.com/news/articles/ce8j1yj64g3o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "AI will create more jobs for humans, not replace them, Amazon founder Bezos says",
+      "snippet": "The Amazon founder, who now has robotics and space travel companies, thinks AI will create a labour shortage.",
+      "url": "https://www.bbc.com/news/articles/ceqdrw2yy3vo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "What to study in the AI age - from big tech bosses",
+      "snippet": "Sundar Pichai, Jensen Huang and Jack Clark share their advice with the BBC.",
+      "url": "https://www.bbc.com/news/videos/cewqg4qwq1wo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "opendatacam/opendatacam",
+      "snippet": "An open source tool to quantify the world",
+      "stars": 1717,
+      "url": "https://github.com/opendatacam/opendatacam",
+      "updated": "2026-06-09",
+      "source": "GitHub"
+    },
+    {
+      "title": "duy-phamduc68/TrafficLab-3D",
+      "snippet": "Create a digital-twin style traffic visualization using only mp4 CCTV footage and its Google Maps location.",
+      "stars": 311,
+      "url": "https://github.com/duy-phamduc68/TrafficLab-3D",
+      "updated": "2026-06-01",
+      "source": "GitHub"
+    },
+    {
+      "title": "buds-lab/building-data-genome-project-2",
+      "snippet": "Whole building non-residential hourly energy meter data from the Great Energy Predictor III competition",
+      "stars": 287,
+      "url": "https://github.com/buds-lab/building-data-genome-project-2",
+      "updated": "2026-06-15",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Calibrating Urban Traffic Simulation from Sparse Road Observations via Genetic Optimization",
+      "snippet": "Urban traffic simulation is a critical tool for infrastructure planning, including the placement of electric vehicle charging stations. However, realistic traffic simulation across many cities is hindered by two fundamental data limitations: detailed real-world traffic measurements are available for",
+      "url": "https://arxiv.org/abs/2606.03823v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Generative AI impacts on intra-urban inequality and skill premium in Beijing",
+      "snippet": "Generative artificial intelligence (GenAI) is the first automation wave to reach high-cognitive tasks at scale, yet its effects on intra-urban inequality remain largely unknown. Using 5 million job postings from Beijing (2018--2024), we construct a neighborhood-level GenAI Exposure Index by aggregat",
+      "url": "https://arxiv.org/abs/2605.25505v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[How to raise kids who question AI | Randi Williams] AI education researcher Randi Williams has spent years studying how kids interact with technology and toys, and what she's found should make every parent stop and think. She reveals how, as tech companies embed AI inside toys, children are forming strong emotional bonds with machines. Explore what this means for their development — and why a playful fix might start with teaching kids to break the ",
+  "wiki": null,
+  "youtube_items": [
+    {
+      "title": "[YT] YouTube:NDtoPSgWHzw",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=NDtoPSgWHzw",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "NDtoPSgWHzw",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] YouTube:C8zplcodfzo",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=C8zplcodfzo",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "C8zplcodfzo",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] YouTube:zlT5Y0hH04Y",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=zlT5Y0hH04Y",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "zlT5Y0hH04Y",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    }
+  ],
+  "summary": "[RSS News]\n- GTA 6 pre-order date and cover art revealed by Rockstar\n- AI will create more jobs for humans, not replace them, Amazon founder Bezos says\n\n[arXiv]\n- Calibrating Urban Traffic Simulation ",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": [],
+  "open_source_momentum": "",
+  "scientific_frontier": "",
+  "relevance_to_goal": ""
+}

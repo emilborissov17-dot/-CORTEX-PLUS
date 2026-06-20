@@ -1,0 +1,141 @@
+{
+  "axis": "CLIMATE_GLOBAL_RISK_REVIEW",
+  "domain": "planet",
+  "timestamp": "2026-06-18T18:15:37.120813+00:00",
+  "sources_count": 13,
+  "rss_count": 4,
+  "ddg_count": 6,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] When Will Extreme Heat Become Unlivable?",
+      "summary": "- Most of the deadliest heat waves to date have been dry heat waves. But as our climate warms\na possibly even deadlier heat is on the rise. - It doesn't matter how breezy it is, it doesn't matter how\nmuch shade you're under. It doesn't matter how much\nwater you're drinking. - These are extreme humid\nheat waves, often referred to as wet-bulb events. And these are, in my opinion, one of the scariest byproducts\nof climate change. They've been relatively rare historically, but a new study shows that\nby two degrees Celsius of global warming, many of the most populated\nplaces on Earth are likely to experience them. And the only way to protect ourselves from\nthese dangerous wet-bulb temperatures is to cool our environment. But what happens if that's not possible? - The time of year that always ha",
+      "link": "https://www.youtube.com/watch?v=7hBMbQ9de1g",
+      "published": "2025-06-18T18:00:07Z",
+      "source_type": "youtube",
+      "channel": "PBS Terra",
+      "video_id": "7hBMbQ9de1g",
+      "transcript_method": "youtube_transcript_api",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Climate Extremes:  Extreme Weather (Full Documentary)",
+      "summary": "The range of weather extremes that we're experiencing\ntoday is already noticeably different. Detectable, scientifically different\nthan it was in the 20th century. And of course, the problem with that is that most of our cities,\nmost of our infrastructure, the way we live our lives, is largely\npredicated on the range of events that we've experienced in the era\nwhen a lot of the world was, as it is today, was engineered\nand built and designed. But we're no longer\nliving in that world. We're already living in a world\nwhere the likelihood of seeing extreme heat events or really heavy downpours,\nis different than it used to be. Typically,\nthe weather is boring, right? It is basically average,\nnot affecting our life a lot. But the extremes is\nwhen we are far away from that, when suddenly it gets",
+      "link": "https://www.youtube.com/watch?v=X6VCTfzl1DU",
+      "published": "2025-07-10T15:00:06Z",
+      "source_type": "youtube",
+      "channel": "OoS Pictures",
+      "video_id": "X6VCTfzl1DU",
+      "transcript_method": "youtube_transcript_api",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Climate change or just crazy weather? The Climate Question | BBC World Service",
+      "summary": "The psychology of it is very complicated. People switch off, and I think you have to pick your moments of discussing climate change where it really, really does matter. Try making a weekly programme about climate change, Matt! Today we're going to answer one of the most searched climate questions. What's the difference between weather and the climate? From the BBC World Service, I'm Jordan Dunbar and a few weeks ago, Graihagh Jackson and I got to find out. Our guest today is Matt Taylor, lead weather forecaster at the BBC, and I'd say one of the UK's most recognisable forecasters. Welcome Matt, thanks so much. Thank you very much for having me.\nPleasure to be here. Matt, my question is, you've been doing this for 20 years. Weather presenters are quite famous for getting themselves into sti",
+      "link": "https://www.youtube.com/watch?v=b3NmhxUDt-4",
+      "published": "2026-05-04T12:01:44Z",
+      "source_type": "youtube",
+      "channel": "BBC World Service",
+      "video_id": "b3NmhxUDt-4",
+      "transcript_method": "youtube_transcript_api",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "Increasing frequency and severity of extreme humid heat waves, making some areas unlivable",
+    "root_cause": "Global warming due to climate change, primarily caused by human activities such as burning fossil fuels and deforestation",
+    "severity": "CRITICAL",
+    "leverage_points": [
+      "Transition to renewable energy sources and increased energy efficiency",
+      "Implementation of climate-resilient infrastructure and urban planning"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Develop and deploy more energy-efficient air conditioning units and climate-resilient buildings",
+        "measurable_goal": "Reduce the number of heat-related illnesses and deaths by 20% within the next 5 years",
+        "timeframe": "medium-term"
+      },
+      {
+        "action": "Invest in renewable energy sources, such as solar and wind power, to reduce greenhouse gas emissions",
+        "measurable_goal": "Increase the share of renewable energy in the global energy mix to 50% by 2030",
+        "timeframe": "long-term"
+      }
+    ],
+    "evidence": [
+      "The deadliest heat waves to date have been dry heat waves, but extreme humid heat waves are becoming more frequent and deadly",
+      "According to the Children's Climate Risk Report 2026, nearly every child on Earth faces fossil-fueled climate danger"
+    ],
+    "generalization": "This problem connects to the domains of civilization (infrastructure and urban planning), human (health and well-being), and planet (climate and ecosystems)",
+    "summary": "The increasing frequency and severity of extreme humid heat waves pose a critical threat to human health and well-being, and require immediate attention and action to transition to renewable energy sources and develop climate-resilient infrastructure",
+    "risk_level": "CRITICAL"
+  },
+  "raw_items": [
+    {
+      "title": "Q&A: What do China’s provincial five-year plans say about climate and energy?",
+      "summary": "<p>China’s provincial-level governments have now all published their 15th five-year plans – economic and social...</p>\n<p>The post <a href=\"https://www.carbonbrief.org/qa-what-do-chinas-provincial-five-year-plans-say-about-climate-and-energy/\">Q&amp;A: What do China’s provincial five-year plans say about climate and energy?</a> appeared first on <a href=\"https://www.carbonbrief.org\">Carbon Brief</a>.</p>",
+      "link": "https://www.carbonbrief.org/qa-what-do-chinas-provincial-five-year-plans-say-about-climate-and-energy/",
+      "published": "Thu, 18 Jun 2026 10:00:27 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Cropped 17 June 2026: Coral reef ‘hope’ | Ocean talks | Plant flowering times ‘shift’",
+      "summary": "<p>We handpick and explain the most important stories at the intersection of climate, land, food...</p>\n<p>The post <a href=\"https://www.carbonbrief.org/cropped-17-june-2026-coral-reef-hope-ocean-talks-plant-flowering-times-shift/\">Cropped 17 June 2026: Coral reef ‘hope’ | Ocean talks | Plant flowering times ‘shift’</a> appeared first on <a href=\"https://www.carbonbrief.org\">Carbon Brief</a>.</p>",
+      "link": "https://www.carbonbrief.org/cropped-17-june-2026-coral-reef-hope-ocean-talks-plant-flowering-times-shift/",
+      "published": "Wed, 17 Jun 2026 14:26:39 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Analysis: Energy-efficient air conditioning could save Indian homes 69bn rupees a year",
+      "summary": "<p>More energy-efficient air-conditioning units could, together, save Indian households ₹69bn ($724m) a year, according to...</p>\n<p>The post <a href=\"https://www.carbonbrief.org/analysis-energy-efficient-air-conditioning-could-save-indian-homes-69bn-rupees-a-year/\">Analysis: Energy-efficient air conditioning could save Indian homes 69bn rupees a year</a> appeared first on <a href=\"https://www.carbonbrief.org\">Carbon Brief</a>.</p>",
+      "link": "https://www.carbonbrief.org/analysis-energy-efficient-air-conditioning-could-save-indian-homes-69bn-rupees-a-year/",
+      "published": "Tue, 16 Jun 2026 11:09:23 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Analysis: UK’s EV drivers are now saving £1,100 each a year – and £3bn in total",
+      "summary": "<p>Amid reports that the government could weaken the UK’s electric vehicle (EV) targets, Carbon Brief...</p>\n<p>The post <a href=\"https://www.carbonbrief.org/analysis-uks-ev-drivers-are-now-saving-1100-each-a-year-and-3bn-in-total/\">Analysis: UK’s EV drivers are now saving £1,100 each a year – and £3bn in total</a> appeared first on <a href=\"https://www.carbonbrief.org\">Carbon Brief</a>.</p>",
+      "link": "https://www.carbonbrief.org/analysis-uks-ev-drivers-are-now-saving-1100-each-a-year-and-3bn-in-total/",
+      "published": "Mon, 15 Jun 2026 15:26:38 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "The Global Risks Report 2026 | World Economic Forum",
+      "summary": "The report analyses global risks through three timeframes to support decision-makers in balancing current crises and longer-term priorities. Chapter 1 presents the findings of this year’s Global Risks Perception Survey (GRPS), which captures insights from over 1,300 experts worldwide.",
+      "link": "https://www.weforum.org/publications/global-risks-report-2026/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Nearly every child on Earth now faces fossil-fueled climate danger",
+      "summary": "The Children’s Climate Risk Report 2026, released Tuesday by the UN Children’s Fund, provides what UNICEF described as “the most detailed global picture to date” of how children are being affected by climate hazards across low-, middle-, and high-income countries.",
+      "link": "https://www.nationofchange.org/2026/06/16/nearly-every-child-on-earth-now-faces-fossil-fueled-climate-danger/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "thelancet.com/countdown-health-climate",
+      "summary": "the Lancet Global Countdown report S’ouvre dans une nouvelle fenêtre.",
+      "link": "https://www.thelancet.com/countdown-health-climate",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Review: Climate Security in the 2025 State of Food Security and Nutrition in the World Report « The Center for Climate & Security",
+      "summary": "September 16, 2025 - This has led to increased food insecurity in particularly vulnerable demographics such as women, children, rural households, and the poor. Combined with gender-based income inequality and other systemic inequalities, food price inflation compounds ...",
+      "link": "https://climateandsecurity.org/2025/08/review-climate-security-in-the-2025-state-of-food-security-and-nutrition-in-the-world-report/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Climate Change, Global Food Security, and the U.S. Food System | USDA",
+      "summary": "Effective beginning 5/20/2025: ... is likely to diminish continued progress on global food security through production disruptions that lead to local availability limitations and price increases, interrupted transport conduits, and diminished food safety, among other ...",
+      "link": "https://www.usda.gov/about-usda/general-information/priorities/climate-solutions/climate-change-global-food-security-and-us-food-system",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Full article: Enhancing food security amid climate change: assessing impacts and developing adaptive strategies",
+      "summary": "View PDF (open in a new window) ... poses significant challenges to global food security, impacting food availability, accessibility, utilization, and stability....",
+      "link": "https://www.tandfonline.com/doi/full/10.1080/23311932.2025.2519800",
+      "source_type": "ddg"
+    }
+  ]
+}

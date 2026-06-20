@@ -1,0 +1,119 @@
+{
+  "axis": "ECONOMY_WORK_REVIEW",
+  "fetched_at": "2026-06-18T20:59:45.242445+00:00",
+  "smart_query": "economy unemployment poverty wages",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "Interest rates held as Bank warns of impact of high energy prices",
+      "snippet": "The Bank last cut interest rates in December but upheaval in the Middle East has stalled any further reductions.",
+      "url": "https://www.bbc.com/news/articles/c33yzm5mdjpo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Heathrow's 'critical' expansion blueprint released",
+      "snippet": "A consultation is launched on the Heathrow expansion, outlining conditions for the project to go ahead.",
+      "url": "https://www.bbc.com/news/articles/cx2dem7y78no?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "'Do not travel' advice for Dubai dropped",
+      "snippet": "Thousands of Brits were left stranded in the Middle East when the US-Iran war broke out in early 2026.",
+      "url": "https://www.bbc.com/news/articles/cddl29lg5gro?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "AmirhosseinHonardoust/Economic-DNA-Repair",
+      "snippet": "A deep research study introducing the concept of Economic DNA Repair for smart contracts, designing self-correcting tokenomics that detect anomalies, repair unstable parameters, rebalance incentives, ",
+      "stars": 19,
+      "url": "https://github.com/AmirhosseinHonardoust/Economic-DNA-Repair",
+      "updated": "2026-05-15",
+      "source": "GitHub"
+    },
+    {
+      "title": "AmirhosseinHonardoust/Pricing-Negotiation-Intelligence",
+      "snippet": "This article reframes pricing as a negotiation rather than a prediction, showing how price emerges from tensions between product reality, market dynamics, and buyer behavior. It introduces negotiation",
+      "stars": 18,
+      "url": "https://github.com/AmirhosseinHonardoust/Pricing-Negotiation-Intelligence",
+      "updated": "2026-02-23",
+      "source": "GitHub"
+    },
+    {
+      "title": "AmirhosseinHonardoust/Metabolic-Tokenomics",
+      "snippet": "A scientific exploration of Metabolic Tokenomics, the framework that models token economies as living metabolic systems. Examines how tokens burn, store, and circulate energy like biological cells, ma",
+      "stars": 17,
+      "url": "https://github.com/AmirhosseinHonardoust/Metabolic-Tokenomics",
+      "updated": "2026-02-23",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "An economic geography dataset of U.S. skill specialization, relatedness, and complexity",
+      "snippet": "We release a new dataset of U.S. skill specialization, relatedness, and complexity, derived from 433.6 million job postings between 2010 and 2024. The panel covers 3,194 counties across 15 years and reports 201 variables that describe the volume of job postings (e.g., labor demand), the modality and",
+      "url": "https://arxiv.org/abs/2606.09918v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Can AI Refute Economic Theory? Evidence from Beyond the Knowledge Cutoff",
+      "snippet": "Can artificial intelligence (AI) refute economic theory? I document experiments in which I asked several AI models (Gemini, Refine, Claude, and ChatGPT) to check the correctness of four published papers in economic theory, each containing an error that I helped identify or correct. ChatGPT Pro perfo",
+      "url": "https://arxiv.org/abs/2606.05383v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[Jerome Powell and the Future of Fed Independence] If you have a credit card, hope to buy a house, or just want stable grocery prices – let’s talk about the future of Fed independence!It’s impossibly important for the Federal Reserve to steer monetary policy without political interference – an ideal pushed to its brink during Jerome Powell’s time as Fed Chair.Powell’s Fed faced a once-in-a-century pandemic, oversaw the economy as inflation spiked ",
+  "wiki": null,
+  "youtube_items": [
+    {
+      "title": "[YT] YouTube:KkNE_doanao",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=KkNE_doanao",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "KkNE_doanao",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] YouTube:zxYcbZfipjQ",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=zxYcbZfipjQ",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "zxYcbZfipjQ",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] YouTube:n3_bUTCEdWA",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=n3_bUTCEdWA",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "n3_bUTCEdWA",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    }
+  ],
+  "summary": "[RSS News]\n- Interest rates held as Bank warns of impact of high energy prices\n- Heathrow's 'critical' expansion blueprint released\n\n[arXiv]\n- An economic geography dataset of U.S. skill specializatio",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": [],
+  "open_source_momentum": "",
+  "scientific_frontier": "",
+  "relevance_to_goal": ""
+}

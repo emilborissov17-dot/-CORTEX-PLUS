@@ -1,67 +1,54 @@
 {
-  "timestamp": "2026-06-01T13:29:25.203186+00:00",
+  "timestamp": "2026-06-20T07:36:27.084667+00:00",
   "health": "HEALTHY",
-  "capacity_pct": 50.1,
-  "cpu": {
-    "percent": 10.2,
-    "count_logical": 16,
-    "count_physical": 8,
-    "freq_mhz": 2555.0,
-    "load_avg_1m": 0.0
-  },
-  "ram": {
-    "total_gb": 14.88,
-    "available_gb": 7.45,
-    "used_gb": 7.43,
-    "percent": 49.9,
-    "swap_used_gb": 3.38,
-    "swap_percent": 7.9
-  },
-  "disk": {
-    "total_gb": 1022.87,
-    "free_gb": 718.44,
-    "percent": 29.8,
-    "read_mb": 417775.0,
-    "write_mb": 460032.9
-  },
-  "network": {
-    "bytes_sent_mb": 2855.8,
-    "bytes_recv_mb": 8104.6,
-    "connections": 286
+  "capacity_pct": 100,
+  "cpu": {},
+  "ram": {},
+  "disk": {},
+  "network_hw": {},
+  "network_latency": {
+    "groq_api": 42.2,
+    "google_dns": 52.8,
+    "worldbank": 20.3,
+    "noaa": 180.5,
+    "reachable_count": 4,
+    "connectivity": "FULL"
   },
   "temperatures": {},
-  "processes": {
-    "total": 217,
-    "top_cpu": [
-      {
-        "name": "System Idle Process",
-        "cpu_pct": 0.0
-      },
-      {
-        "name": "System",
-        "cpu_pct": 0.0
-      },
-      {
-        "name": "",
-        "cpu_pct": 0.0
-      },
-      {
-        "name": "Registry",
-        "cpu_pct": 0.0
-      },
-      {
-        "name": "SecurityHealthService.exe",
-        "cpu_pct": 0.0
-      }
+  "battery": {},
+  "time_context": {
+    "utc_hour": 7,
+    "utc_weekday": "Saturday",
+    "time_of_day": "MORNING",
+    "season": "SUMMER",
+    "iso_date": "2026-06-20"
+  },
+  "data_freshness": {
+    "global_indicators": 0.2,
+    "master_snapshot": 0.0,
+    "goal_score": 0.0,
+    "orchestration": 0.0,
+    "oldest_hours": 0.2,
+    "freshness": "FRESH"
+  },
+  "processes": {},
+  "llm_backends": {
+    "running": true,
+    "backend": "groq+gemini",
+    "loaded_models": [
+      "groq",
+      "gemini"
     ]
   },
-  "ollama": {
-    "running": true,
-    "loaded_models": []
-  },
-  "snapshots_count": 64,
+  "snapshots_count": 68,
   "uptime": "unknown",
   "bottleneck": "NONE",
+  "adaptive_directives": {
+    "max_parallel_workers": 3,
+    "llm_sleep_secs": 2,
+    "cycle_mode": "FULL",
+    "reasons": []
+  },
   "axis": "BODY_SCAN",
   "source_type": "BODY_SCANNER"
 }

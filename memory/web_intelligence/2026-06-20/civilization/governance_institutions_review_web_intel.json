@@ -1,0 +1,135 @@
+{
+  "axis": "GOVERNANCE_INSTITUTIONS_REVIEW",
+  "domain": "civilization",
+  "timestamp": "2026-06-20T05:39:11.701486+00:00",
+  "sources_count": 14,
+  "rss_count": 12,
+  "ddg_count": 0,
+  "youtube_count": 2,
+  "youtube_items": [
+    {
+      "title": "[YT] Angela Merkel's revelation on Minsk Agreements - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] About Press Copyright Contact us Creators Advertise Developers Terms Privacy Policy & Safety How YouTube works Test new features.",
+      "link": "https://www.youtube.com/watch?v=0-57KOwG9co",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "0-57KOwG9co",
+      "transcript_method": "description",
+      "transcript_chars": 152,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Беларусь нападет на Украину? | Встреча Лукашенко... - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] О сервисе Прессе Авторские права Связаться с нами Авторам Рекламодателям Разработчикам Условия использования Конфиденциальность Правила и безопасность Как работает YouTube Тестирование новых функций.",
+      "link": "https://www.youtube.com/watch?v=NBgcn11jRMc",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "NBgcn11jRMc",
+      "transcript_method": "description",
+      "transcript_chars": 222,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "problem": "Lack of effective governance and international cooperation to address humanitarian crises, such as the situation in Gaza and war crimes in Syria",
+    "root_cause": "Insufficient commitment to and enforcement of international laws and agreements, including the United Nations Convention on the Law of the Sea and human rights treaties",
+    "severity": "HIGH",
+    "leverage_points": [
+      "The United Nations and its agencies, such as the Security Council and the Human Rights Council",
+      "National governments and their leaders, particularly those with significant global influence"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Strengthening the United Nations' ability to enforce international law and hold perpetrators of humanitarian crises accountable",
+        "measurable_goal": "Increase in the number of successful prosecutions of war crimes and improvement in humanitarian access to affected areas",
+        "timeframe": "medium-term"
+      },
+      {
+        "action": "Encouraging national governments to prioritize human rights and international cooperation",
+        "measurable_goal": "Increase in the number of countries ratifying and implementing key human rights treaties and participating in international efforts to address humanitarian crises",
+        "timeframe": "long-term"
+      }
+    ],
+    "evidence": [
+      "The Daily Press Briefing by the Office of the Spokesperson for the Secretary-General highlighted the International Day for the Elimination of Sexual Violence in Conflict",
+      "The Security Council heard briefings on the humanitarian situation in Gaza, emphasizing the need for unhindered aid access and respect for the peace plan"
+    ],
+    "generalization": "This problem connects to the domains of human biosphere and cosmos, as humanitarian crises can have long-term consequences for the environment, global health, and stability, ultimately affecting the sustainability of intelligent life on Earth and beyond",
+    "summary": "The lack of effective governance and international cooperation exacerbates humanitarian crises, and strengthening the United Nations and encouraging national governments to prioritize human rights can help address these issues.",
+    "risk_level": "HIGH"
+  },
+  "raw_items": [
+    {
+      "title": "Daily Press Briefing by the Office of the Spokesperson for the Secretary-General",
+      "summary": "Today is the International Day for the Elimination of Sexual Violence in Conflict. Sexual violence against children is one of the six grave violations against children identified and condemned by the Security Council. Ending this abomination, the Secretary-General says, requires protection, accountability and prevention.",
+      "link": "https://press.un.org/en/2026/db260619.doc.htm",
+      "published": "Fri, 19 Jun 2026 13:49:44 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "With Fundamental Freedoms under Assault, Work of Human Rights Council ‘More Vital Than Ever’, Secretary-General Says in Anniversary Video Message",
+      "summary": "Following is the text of UN Secretary-General António Guterres’ video message to the informal high-level discussion on the occasion of the twentieth anniversary of the Human Rights Council, in Geneva today:",
+      "link": "https://press.un.org/en/2026/sgsm23186.doc.htm",
+      "published": "Fri, 19 Jun 2026 12:21:09 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "Meeting of States Parties to United Nations Convention on Law of Sea, United Nations Headquarters, 15-18 June",
+      "summary": "The thirty-sixth Meeting of States Parties to the United Nations Convention on the Law of the Sea was held at Headquarters from 15 to 18 June.",
+      "link": "https://press.un.org/en/2026/sea2251.doc.htm",
+      "published": "Fri, 19 Jun 2026 12:15:13 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "Despite Ceasefire Gains, Gazans Trapped in Humanitarian Nightmare, Briefers Warn, as Security Council Speakers Demand Unhindered Aid Access, Respect for Peace Plan",
+      "summary": "While a limited ceasefire has improved life in Gaza somewhat, millions of its residents still face tremendous daily difficulties, the Security Council heard today, as speakers underscored the need to provide immediate humanitarian help to a population that can ill afford to wait.",
+      "link": "https://press.un.org/en/2026/sc16390.doc.htm",
+      "published": "Thu, 18 Jun 2026 19:09:43 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "A Tale of Two AI Policy Regimes",
+      "summary": "Brazil wants regulation. Argentina rejects it.",
+      "link": "https://foreignpolicy.com/2026/06/19/brazil-argentina-ai-policy-data-centers-milei/",
+      "published": "Fri, 19 Jun 2026 12:00:27 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Syria’s War Crimes Dilemma",
+      "summary": "The government can execute war criminals or get full international support—but not both.",
+      "link": "https://foreignpolicy.com/2026/06/19/syrias-war-crimes-assad-trial-sharaa-justice/",
+      "published": "Fri, 19 Jun 2026 12:00:15 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Foreign Pressure, American Freedom",
+      "summary": "How other countries and their citizens helped the United States live up to its ideals.",
+      "link": "https://foreignpolicy.com/2026/06/19/america-250-foreign-pressure-american-freedom-ideals/",
+      "published": "Fri, 19 Jun 2026 10:00:10 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Orban’s Defeat Is Being Dangerously Misread",
+      "summary": "Panicking strongmen will turn to more extreme measures.",
+      "link": "https://foreignpolicy.com/2026/06/19/orban-defeat-strongman-playbook-erdogan/",
+      "published": "Fri, 19 Jun 2026 06:52:13 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Israel and Hezbollah agree ceasefire, US says, as more Lebanon strikes reported",
+      "summary": "The agreement followed concerns that continued clashes would undermine the deal to end the war between the US and Iran.",
+      "link": "https://www.bbc.com/news/articles/cwyk7kkygj5o?at_medium=RSS&at_campaign=rss",
+      "published": "Fri, 19 Jun 2026 19:27:12 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Italy's Meloni says Trump 'made up' story that she 'begged' him for photo at G7",
+      "summary": "The highly public exchange is an indication that their earlier close ties have frayed  since Trump's decision to go to war with Iran.",
+      "link": "https://www.bbc.com/news/articles/c20y1ygn707o?at_medium=RSS&at_campaign=rss",
+      "published": "Fri, 19 Jun 2026 19:36:10 GMT",
+      "source_type": "rss"
+    }
+  ]
+}

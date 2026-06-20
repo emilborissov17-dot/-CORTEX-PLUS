@@ -1,0 +1,135 @@
+{
+  "axis": "COSMIC_RESOURCES_REVIEW",
+  "domain": "cosmos",
+  "timestamp": "2026-06-20T05:40:29.215454+00:00",
+  "sources_count": 11,
+  "rss_count": 4,
+  "ddg_count": 5,
+  "youtube_count": 2,
+  "youtube_items": [
+    {
+      "title": "[YT] Mining Asteroids for Resources: The Future of Space Economy ...ASTEROID MINING & THE TRILLION-DOLLAR SPACE ECONOMY - YouTubePBS Space Time | How Asteroid Mining Will Save Earth | Season ...What is asteroid mining and how close are we to making it a ...How Asteroid Mining Could Change Earth Forever | Watch - MSNThe Asteroid Economy: Reshaping Global Industries and MarketsAre we on the verge of mining metals from the asteroids ... - BBC",
+      "summary": "[DESCRIPTION FALLBACK] Oct 11, 2025 · Learn how scientists and private companies plan to extract materials from asteroids to support space exploration and Earth’s growing demand. Discover the technology, challenges, and... Feb 6, 2026 · What if the key to Earth’s future resources lies not on our planet—but in space? Asteroid mining is emerging as one of the most exciting and profitable frontiers of the 21st century. Jun 27, 2018 · Money talks, and tens of billions or even trillions of dollars per asteroid speaks very ",
+      "link": "https://www.youtube.com/watch?v=Edf7XCHRHLw",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "Edf7XCHRHLw",
+      "transcript_method": "description",
+      "transcript_chars": 523,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] ASTEROID MINING & THE TRILLION-DOLLAR SPACE ECONOMY - YouTubePBS Space Time | How Asteroid Mining Will Save Earth | Season ...What is asteroid mining and how close are we to making it a ...How Asteroid Mining Could Change Earth Forever | Watch - MSNThe Asteroid Economy: Reshaping Global Industries and MarketsAre we on the verge of mining metals from the asteroids ... - BBC",
+      "summary": "[DESCRIPTION FALLBACK] Feb 6, 2026 · What if the key to Earth’s future resources lies not on our planet—but in space? Asteroid mining is emerging as one of the most exciting and profitable frontiers of the 21st century. Jun 27, 2018 · Money talks, and tens of billions or even trillions of dollars per asteroid speaks very loudly. Perhaps in just a few decades we'll have mining outposts in the asteroid belt. Nov 5, 2025 · Asteroid mining is moving from fiction to fact, here’s how missions and startups are redefining res",
+      "link": "https://www.youtube.com/watch?v=R3igSQ71z-I",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "R3igSQ71z-I",
+      "transcript_method": "description",
+      "transcript_chars": 523,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "problem": "Insufficient legal frameworks and regulations for asteroid mining, hindering its development and potential benefits",
+    "root_cause": "Lack of international agreements and national laws governing asteroid mining, leading to uncertainty and barriers to investment",
+    "severity": "MEDIUM",
+    "leverage_points": [
+      "Governments and international organizations, such as the United Nations, can establish and enforce regulations and laws for asteroid mining",
+      "Private companies and industry leaders can invest in asteroid mining and advocate for clear regulations"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Develop and implement international laws and regulations for asteroid mining",
+        "measurable_goal": "Establish a clear legal framework for asteroid mining within the next 2 years",
+        "timeframe": "medium-term"
+      },
+      {
+        "action": "Increase investment in asteroid mining research and development",
+        "measurable_goal": "Allocate at least $100 million in funding for asteroid mining research and development within the next 5 years",
+        "timeframe": "long-term"
+      }
+    ],
+    "evidence": [
+      "The Space Resource Exploration and Utilization Act of 2015 (H.R. 1508) was introduced but never became law, indicating a lack of progress in establishing regulations for asteroid mining",
+      "The European Space Resources Innovation Centre (ESRIC) is a research, business, and innovation hub dedicated to space resources, but its efforts may be hindered by the lack of clear regulations"
+    ],
+    "generalization": "The development of asteroid mining connects to the domain of COSMIC_RESOURCES_REVIEW, as it has the potential to provide a new source of resources for space exploration and development, but also raises concerns about environmental impact, economic inequality, and international cooperation",
+    "summary": "The lack of regulations and laws for asteroid mining hinders its development, but establishing a clear legal framework and increasing investment in research and development can help unlock its potential benefits",
+    "risk_level": "MEDIUM"
+  },
+  "raw_items": [
+    {
+      "title": "India’s Jio lays out sovereign LEO constellation plan ahead of IPO",
+      "summary": "<figure><img alt=\"\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"683\" src=\"https://i0.wp.com/spacenews.com/wp-content/uploads/2025/05/India-scaled.jpeg?fit=1024%2C683&amp;ssl=1\" width=\"1024\" /></figure>\n<p>Jio Platforms, which owns India’s largest telco, is looking to lease broadband capacity from satellite constellations to jumpstart its own sovereign LEO network in the country.</p>\n<p>The post <a href=\"https://spacenews.com/indias-jio-lays-out-sovereign-leo-const",
+      "link": "https://spacenews.com/indias-jio-lays-out-sovereign-leo-constellation-plan-ahead-of-ipo/",
+      "published": "Fri, 19 Jun 2026 19:27:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "MDA Space to buy Blue Canyon Technologies to gain foothold in U.S. market",
+      "summary": "<figure><img alt=\"Blue Canyon Technologies is using the 150-kilogram X-SAT bus for DARPA&#039;s Blackjack program.\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"601\" src=\"https://i0.wp.com/spacenews.com/wp-content/uploads/2020/07/Blackjack_Space_Image-copy.png?fit=1024%2C601&amp;ssl=1\" width=\"1024\" /></figure>\n<p>MDA Space is buying smallsat manufacturer Blue Canyon Technologies (BCT) for $620 million, giving the Canadian company greater access to the lucrative U.S",
+      "link": "https://spacenews.com/mda-space-to-buy-blue-canyon-technologies-to-gain-foothold-in-u-s-market/",
+      "published": "Fri, 19 Jun 2026 16:03:50 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "ElevationSpace Secures US $40 Million in Series B Funding, Bringing Total Raised to US $63.5 Million",
+      "summary": "<figure><img alt=\"elevationspace logo\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"1024\" src=\"https://i0.wp.com/spacenews.com/wp-content/uploads/2026/06/ELS_01_logo_white.png?fit=1024%2C1024&amp;ssl=1\" width=\"1024\" /></figure>\n<p>ElevationSpace Inc. (CEO: Ryohei Kobayashi), a company developing Space-to-Earth transportation as well as a Space Environment Utilization and Recovery Platform, has raised a total of US $40 million in its [&#8230;]</p>\n<p>The post <a hre",
+      "link": "https://spacenews.com/elevationspace-secures-us-40-million-in-series-b-funding-bringing-total-raised-to-us-63-5-million/",
+      "published": "Fri, 19 Jun 2026 14:52:11 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Northrop Grumman says industry ready to scale solid rocket production, with longer contracts",
+      "summary": "<figure><img alt=\"\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"683\" src=\"https://i0.wp.com/spacenews.com/wp-content/uploads/2026/06/Accelerating-Tomorrow-How-Northrop-Grumman-Leads-in-Solid-Rocket-Motor-Innovation_1-scaled.jpg?fit=1024%2C683&amp;ssl=1\" width=\"1024\" /></figure>\n<p>Billions in private investment have created room for growth, but suppliers need predictable demand, says the head of Northrop Grumman’s solid rocket motor business</p>\n<p>The post <a hre",
+      "link": "https://spacenews.com/northrop-grumman-says-industry-ready-to-scale-solid-rocket-production-with-longer-contracts/",
+      "published": "Fri, 19 Jun 2026 14:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Asteroid mining",
+      "summary": "Asteroid mining is the hypothetical and technically possible extraction of materials from asteroids and other minor planets, including near-Earth objects.Research missions focused on asteroid sample return, including Hayabusa, Hayabusa2, OSIRIS-REx, and Tianwen-2, illustrate the challenges of collecting ore from space using current technology. As of 2024, around 127 grams of asteroid material have",
+      "link": "https://en.wikipedia.org/wiki/Asteroid_mining",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Asteroid Mining Venture Backed by Google Execs | Space",
+      "summary": "... is set to announce plans to mine near-Earth asteroids for ... Planetary Resources is officially unveiling its asteroid-mining plans at 1:30 p.m.",
+      "link": "https://www.space.com/15395-asteroid-mining-planetary-resources.html",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Space Resource Exploration and Utilization Act of 2015",
+      "summary": "The Space Resource Exploration and Utilization Act of 2015 (H.R. 1508) was a bill (which never became law) introduced in the 114th Congress of the U.S. on March 19, 2015, by Rep. Bill Posey, Republican of Florida. It is identical to the Senate bill by the same name (S. 976). The bill would have expanded Presidential power regarding space resources, and regulated US-based space exploration companie",
+      "link": "https://en.wikipedia.org/wiki/Space_Resource_Exploration_and_Utilization_Act_of_2015",
+      "source_type": "ddg"
+    },
+    {
+      "title": "European Space Resources Innovation Centre",
+      "summary": "The European Space Resources Innovation Centre (ESRIC) is a research, business, and innovation hub based in Luxembourg, established in August 2020 as the world's first center dedicated exclusively to the utilization of space resources in support of…",
+      "link": "https://grokipedia.com/page/european_space_resources_innovation_centre",
+      "source_type": "ddg"
+    },
+    {
+      "title": "52 Space Resources ideas | space resources, space activities for...",
+      "summary": "May 25, 2020 - Explore Twinkl Scotland's board \"Space Resources\" on Pinterest. See more ideas about space resources, space activities for kids, space activities.",
+      "link": "https://www.pinterest.com/twinklscotland/space-resources/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "[YT] Mining Asteroids for Resources: The Future of Space Economy ...ASTEROID MINING & THE TRILLION-DOLLAR SPACE ECONOMY - YouTubePBS Space Time | How Asteroid Mining Will Save Earth | Season ...What is asteroid mining and how close are we to making it a ...How Asteroid Mining Could Change Earth Forever | Watch - MSNThe Asteroid Economy: Reshaping Global Industries and MarketsAre we on the verge of mining metals from the asteroids ... - BBC",
+      "summary": "[DESCRIPTION FALLBACK] Oct 11, 2025 · Learn how scientists and private companies plan to extract materials from asteroids to support space exploration and Earth’s growing demand. Discover the technology, challenges, and... Feb 6, 2026 · What if the key to Earth’s future resources lies not on our planet—but in space? Asteroid mining is emerging as one of the most exciting and profitable frontiers of the 21st century. Jun 27, 2018 · Money talks, and tens of billions or even trillions of dollars per asteroid speaks very ",
+      "link": "https://www.youtube.com/watch?v=Edf7XCHRHLw",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "Edf7XCHRHLw",
+      "transcript_method": "description",
+      "transcript_chars": 523,
+      "has_full_transcript": false
+    }
+  ]
+}

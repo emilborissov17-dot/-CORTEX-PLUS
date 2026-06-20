@@ -1,0 +1,110 @@
+{
+  "axis": "ECONOMY_WORK_REVIEW",
+  "domain": "civilization",
+  "timestamp": "2026-06-18T21:11:34.326050+00:00",
+  "sources_count": 9,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 1,
+  "youtube_items": [
+    {
+      "title": "[YT] German Lawyer Sues The World Over Coronavirus - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] Patrick Bet-David has a virtual sit down with consumer protection trial lawyer Reiner Fuellmich to talk about the Coronavirus and his work on the German Coro...",
+      "link": "https://www.youtube.com/watch?v=ZpOzHHJmy7g",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "ZpOzHHJmy7g",
+      "transcript_method": "description",
+      "transcript_chars": 183,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "problem": "Анализ на ECONOMY_WORK_REVIEW — данни получени но LLM грешка",
+    "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: None",
+    "severity": "UNKNOWN",
+    "leverage_points": [],
+    "proposed_actions": [],
+    "evidence": [
+      "Interest rates held as Bank warns of impact of high energy prices",
+      "Heathrow's 'critical' expansion blueprint released",
+      "'Do not travel' advice for Dubai dropped"
+    ],
+    "generalization": "",
+    "summary": "- Interest rates held as Bank warns of impact of high energy prices: The Bank last cut interest rates in December but upheaval in the Middle East has stalled any further reductions.\n- Heathrow's 'crit",
+    "risk_level": "UNKNOWN",
+    "trend": "UNKNOWN",
+    "llm_raw": ""
+  },
+  "raw_items": [
+    {
+      "title": "Interest rates held as Bank warns of impact of high energy prices",
+      "summary": "The Bank last cut interest rates in December but upheaval in the Middle East has stalled any further reductions.",
+      "link": "https://www.bbc.com/news/articles/c33yzm5mdjpo?at_medium=RSS&at_campaign=rss",
+      "published": "Thu, 18 Jun 2026 12:50:33 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Heathrow's 'critical' expansion blueprint released",
+      "summary": "A consultation is launched on the Heathrow expansion, outlining conditions for the project to go ahead.",
+      "link": "https://www.bbc.com/news/articles/cx2dem7y78no?at_medium=RSS&at_campaign=rss",
+      "published": "Thu, 18 Jun 2026 15:07:21 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "'Do not travel' advice for Dubai dropped",
+      "summary": "Thousands of Brits were left stranded in the Middle East when the US-Iran war broke out in early 2026.",
+      "link": "https://www.bbc.com/news/articles/cddl29lg5gro?at_medium=RSS&at_campaign=rss",
+      "published": "Thu, 18 Jun 2026 15:36:42 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Number of job vacancies hits five year-low",
+      "summary": "Latest figures suggest companies are becoming more cautious about taking on new staff.",
+      "link": "https://www.bbc.com/news/articles/cm203nn7lzro?at_medium=RSS&at_campaign=rss",
+      "published": "Thu, 18 Jun 2026 11:25:44 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Federal Energy Regulator Seeks to Limit Conflicts Over Data Centers",
+      "summary": "The Federal Energy Regulatory Commission directed grid managers to make changes that protect individuals from higher electricity bills while giving data centers access to power faster.",
+      "link": "https://www.nytimes.com/2026/06/18/business/data-centers-power-regulation.html",
+      "published": "Thu, 18 Jun 2026 20:16:25 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Penske Media Is Buying What’s Left of Vox Media",
+      "summary": "The deal will put online publications like Popsugar and Eater under the same roof as Rolling Stone and Variety.",
+      "link": "https://www.nytimes.com/2026/06/18/business/media/penske-vox-media.html",
+      "published": "Thu, 18 Jun 2026 18:38:26 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Education Department Lowers Student Loan Interest Rates for Two Years",
+      "summary": "The department, citing high defaults, is reducing interest rates by up to one percentage point for two years if borrowers pay automatically.",
+      "link": "https://www.nytimes.com/2026/06/18/business/student-loans-interest-rate.html",
+      "published": "Thu, 18 Jun 2026 20:59:01 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Warsh Wants the Fed to Send Fewer Signals. That Comes With Risks.",
+      "summary": "Investors piled on bets for higher borrowing costs after Kevin Warsh opted against providing policy guidance at his first meeting as Federal Reserve chairman.",
+      "link": "https://www.nytimes.com/2026/06/18/business/federal-reserve-warsh-interest-rates.html",
+      "published": "Thu, 18 Jun 2026 18:28:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] German Lawyer Sues The World Over Coronavirus - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] Patrick Bet-David has a virtual sit down with consumer protection trial lawyer Reiner Fuellmich to talk about the Coronavirus and his work on the German Coro...",
+      "link": "https://www.youtube.com/watch?v=ZpOzHHJmy7g",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "ZpOzHHJmy7g",
+      "transcript_method": "description",
+      "transcript_chars": 183,
+      "has_full_transcript": false
+    }
+  ]
+}

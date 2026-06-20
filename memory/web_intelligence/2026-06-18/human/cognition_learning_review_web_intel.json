@@ -1,0 +1,147 @@
+{
+  "axis": "COGNITION_LEARNING_REVIEW",
+  "domain": "human",
+  "timestamp": "2026-06-18T21:12:14.782597+00:00",
+  "sources_count": 10,
+  "rss_count": 3,
+  "ddg_count": 4,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] Future of Education: How to Get Ahead before AI Changes Everything - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] Download the FREE Guide + Prompts: 20 Ways to Boost Your Professional Value with AI: https://clickhubspot.com/6aac42 Watch full episodes of the podcast: Arav... Published December 5, 2025",
+      "link": "https://www.youtube.com/watch?v=eaZ2R1K-SjQ",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "eaZ2R1K-SjQ",
+      "transcript_method": "description",
+      "transcript_chars": 210,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] The Future Of Education In An AI-Powered World - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] In this groundbreaking keynote delivered at AT&T Stadium in Dallas (October 2025), CEO and consumer trends expert Matt Britton explores how artificial intell... Published October 23, 2025 Views 44K",
+      "link": "https://www.youtube.com/watch?v=BX-K0PIls2I",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "BX-K0PIls2I",
+      "transcript_method": "description",
+      "transcript_chars": 220,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] AI and Education: What's Changing, What Kids Must Learn, and the Path Forward | SXSW - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] In this episode, Sinead takes the stage at SXSW EDU 2025 in conversation with moderator and tech entrepreneur Natalie Monbiot for a thought-provoking discuss... Published February 19, 2026",
+      "link": "https://www.youtube.com/watch?v=dXxZwwCoO04",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "dXxZwwCoO04",
+      "transcript_method": "description",
+      "transcript_chars": 211,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "problem": "Анализ на COGNITION_LEARNING_REVIEW — данни получени но LLM грешка",
+    "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: None",
+    "severity": "UNKNOWN",
+    "leverage_points": [],
+    "proposed_actions": [],
+    "evidence": [
+      "Lotus: A Woman’s Journey oLotus: A Woman’s Journey of Empowerment",
+      "Lotus: A Woman’s Journey of Empowerment",
+      "Fresh Wave"
+    ],
+    "generalization": "",
+    "summary": "- Lotus: A Woman’s Journey oLotus: A Woman’s Journey of Empowerment: DOCUMENTARY FILM In the documentary educational film &#8220;The Taboo of Sovereignty, Money, Love and Power,&#8221; Mr. Liberty exp",
+    "risk_level": "UNKNOWN",
+    "trend": "UNKNOWN",
+    "llm_raw": ""
+  },
+  "raw_items": [
+    {
+      "title": "Lotus: A Woman’s Journey oLotus: A Woman’s Journey of Empowerment",
+      "summary": "DOCUMENTARY FILM In the documentary educational film &#8220;The Taboo of Sovereignty, Money, Love and Power,&#8221; Mr. Liberty explores the taboos seldom discussed in polite conversation. He reveals the nature of global power structures, money as a control system and the futility of elections. He is empowering people with popular sovereignty as a key to unlocking [&#8230;]",
+      "link": "https://mindshiftentertainment.wordpress.com/2005/04/01/hello-world/",
+      "published": "Fri, 01 Apr 2005 21:27:39 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Lotus: A Woman’s Journey of Empowerment",
+      "summary": "CLAIRE GAILLARD &#8211; DANCE IS LIFE! &#8220;From the revelation that disconnectedness between people and their passion, between individuals and their communities, reflect agonized personal wounds in each of us, her Empower Moves was birthed. It builds community and honors the People with Transcendance through story telling and interpretive forms of dance, allowing ecstatic communion, reconnection [&#8230;]",
+      "link": "https://mindshiftentertainment.wordpress.com/2003/03/23/lotus-a-womans-journey-of-empowerment/",
+      "published": "Sun, 23 Mar 2003 23:15:05 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Fresh Wave",
+      "summary": "JOHNNY LIGHT For over three decades, Johnny Light has been guided by a vision of a new world coming, the “fresh wave” is coming. These twelve songs are professionally produced and arranged, an album of his finest original compositions recorded with Michael Cooper at Rising Star Studios in Eugene, Oregon. Songs like Yes, Nobody’s Gonna [&#8230;]",
+      "link": "https://mindshiftentertainment.wordpress.com/1988/09/09/fresh-wave/",
+      "published": "Fri, 09 Sep 1988 23:17:22 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Education",
+      "summary": "Education is the transmission of knowledge and skills and the development of character traits. Formal education happens in a complex institutional framework, like public schools. Non-formal education is also structured but occurs outside the formal schooling system, while informal education is unstructured learning through daily experiences. Formal and non-formal education are divided into levels ",
+      "link": "https://en.wikipedia.org/wiki/Education",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Tertiary education - Wikipedia",
+      "summary": "Tertiary education , also referred to as third-level , third-stage or post-secondary education , is the educational level following the completion of ...",
+      "link": "https://en.wikipedia.org/wiki/Tertiary_education",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Learning",
+      "summary": "Learning is the process of acquiring new understanding, knowledge, behavior, skills, values, attitudes, and preferences. The ability to learn is possessed by humans, other animals, and some machines. There is also evidence for some kind of learning in certain plants. Some learning is immediate, induced by a single event (e.g. being burned by a hot stove), but much skill and knowledge accumulate fr",
+      "link": "https://en.wikipedia.org/wiki/Learning",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Log in to Learning.com",
+      "summary": "Welcome to Learning.com! Login information. Username (Required).",
+      "link": "https://login.learning.com/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "[YT] Future of Education: How to Get Ahead before AI Changes Everything - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] Download the FREE Guide + Prompts: 20 Ways to Boost Your Professional Value with AI: https://clickhubspot.com/6aac42 Watch full episodes of the podcast: Arav... Published December 5, 2025",
+      "link": "https://www.youtube.com/watch?v=eaZ2R1K-SjQ",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "eaZ2R1K-SjQ",
+      "transcript_method": "description",
+      "transcript_chars": 210,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] The Future Of Education In An AI-Powered World - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] In this groundbreaking keynote delivered at AT&T Stadium in Dallas (October 2025), CEO and consumer trends expert Matt Britton explores how artificial intell... Published October 23, 2025 Views 44K",
+      "link": "https://www.youtube.com/watch?v=BX-K0PIls2I",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "BX-K0PIls2I",
+      "transcript_method": "description",
+      "transcript_chars": 220,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] AI and Education: What's Changing, What Kids Must Learn, and the Path Forward | SXSW - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] In this episode, Sinead takes the stage at SXSW EDU 2025 in conversation with moderator and tech entrepreneur Natalie Monbiot for a thought-provoking discuss... Published February 19, 2026",
+      "link": "https://www.youtube.com/watch?v=dXxZwwCoO04",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "dXxZwwCoO04",
+      "transcript_method": "description",
+      "transcript_chars": 211,
+      "has_full_transcript": false
+    }
+  ]
+}

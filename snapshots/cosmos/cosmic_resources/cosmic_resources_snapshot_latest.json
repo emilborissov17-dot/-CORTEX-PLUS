@@ -3,7 +3,7 @@
   "raw": {
     "axis": "COSMIC_RESOURCES_REVIEW",
     "source": "llm_estimates",
-    "fetched_date": "2026-06-18",
+    "fetched_date": "2026-06-20",
     "metrics": {
       "asteroid_mining_missions_active": 0,
       "lunar_resource_agreements": 2,
@@ -13,6 +13,6 @@
     "data_quality": "static_estimates_2025",
     "notes": "Static estimates — no public real-time API for cosmic resources."
   },
-  "snapshot_timestamp": "2026-06-18T07:01:09.200299+00:00",
+  "snapshot_timestamp": "2026-06-20T07:36:25.191757+00:00",
   "axis": "COSMIC_RESOURCES_REVIEW"
 }

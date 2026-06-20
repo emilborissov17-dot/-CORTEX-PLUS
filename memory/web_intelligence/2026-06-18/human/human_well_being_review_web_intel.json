@@ -1,0 +1,157 @@
+{
+  "axis": "HUMAN_WELL_BEING_REVIEW",
+  "domain": "human",
+  "timestamp": "2026-06-18T18:15:58.315851+00:00",
+  "sources_count": 11,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] Global Health &amp; Tropical Medicine Explained | Diseases, Poverty &amp; Health Systems",
+      "summary": "Welcome to the learning studio. You're watching \nthe health sciences series where we break down   the most important fields in medicine in a \nway that's easy to understand and exciting   to learn. In today's episode, we're traveling \nacross borders, continents, and climate zones.   Because today, we're diving into global health \nand tropical medicine, the field where doctors,   scientists, and health workers fight diseases \nthat affect millions in some of the world's   most vulnerable regions. What is global health and \ntropical medicine? Imagine if you were a doctor,   not just in one hospital, but in a world full \nof different countries, cultures, climates,   and diseases. Global health is about solving \nhealth problems that go beyond borders. From   pandemics like CO 19 to childhood mal",
+      "link": "https://www.youtube.com/watch?v=d8kgxtOHv74",
+      "published": "2025-08-04T03:16:18Z",
+      "source_type": "youtube",
+      "channel": "The Learning Studio",
+      "video_id": "d8kgxtOHv74",
+      "transcript_method": "youtube_transcript_api",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Is inequality inevitable?",
+      "summary": "In South Africa, one of the most\nunequal countries in the world, the richest one-tenth of 1%, owns \nalmost 30% of all the country’s wealth, more than double what the bottom 90% owns. Income and wealth inequality are not new. In fact, economists and historians \nwho’ve charted economic inequality throughout history haven’t found \na single society without it. Which raises a bleak question: is inequality inevitable? One way to estimate inequality is \nwith a number called the Gini index, which is calculated by comparing \nthe income or wealth distribution of a perfectly equal society to the \nactual income or wealth distribution. The area of this shape multiplied\nby 2 is the Gini index. A Gini of 1 indicates\nperfect inequality— one person has everything \nand everyone else has nothing. You’d never",
+      "link": "https://www.youtube.com/watch?v=rEnf_CFoyv0",
+      "published": "2022-10-11T15:01:01Z",
+      "source_type": "youtube",
+      "channel": "TED-Ed",
+      "video_id": "rEnf_CFoyv0",
+      "transcript_method": "youtube_transcript_api",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Why More Americans Are Being Pushed Into Poverty | CNBC Marathon",
+      "summary": "63% of workers say they wouldn't be able to cover a\n$500 emergency expense. Most people don't have $1,000 in the bank. Most people cannot handle a tire blowout, or they're\ngoing to put it on credit. Americans now carry more than $1 trillion in credit\ncard debt. The official poverty measure in the US today is based\non calculations from the mid 1960s. It's also a system that is pervasive in actually\ncreating poverty situations. Poverty leads to more anxiety. It leads to more stress. It leads to more health problems. 37.9 million. That's the number of Americans currently living in\npoverty, accounting for 11.6% of the total population. That's despite the fact that America ranks first as\nthe richest nation in the world in terms of GDP. The United States is known for having this great\nabundance,",
+      "link": "https://www.youtube.com/watch?v=uYY_ytPi83E",
+      "published": "2025-02-06T17:01:00Z",
+      "source_type": "youtube",
+      "channel": "CNBC",
+      "video_id": "uYY_ytPi83E",
+      "transcript_method": "youtube_transcript_api",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "Many people still lack access to safe blood and weaknesses in government blood systems persist",
+    "root_cause": "Inequities in access to healthcare and weaknesses in government systems",
+    "severity": "MEDIUM",
+    "leverage_points": [
+      "World Health Organization (WHO)",
+      "National governments and healthcare systems"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Improve blood donation infrastructure and increase voluntary donations",
+        "measurable_goal": "Increase voluntary blood donations to 90% and reduce blood-related fatalities by 20%",
+        "timeframe": "medium-term"
+      },
+      {
+        "action": "Strengthen government blood systems and address weaknesses",
+        "measurable_goal": "Reduce weaknesses in government blood systems by 30% and increase access to safe blood by 25%",
+        "timeframe": "long-term"
+      }
+    ],
+    "evidence": [
+      "New data from the World Health Organization (WHO) show sustained progress towards safer blood supplies globally but also highlight persistent inequalities in access to safe blood and weaknesses in government blood systems",
+      "Voluntary donations exceed 85%, but many people still lack access to safe blood"
+    ],
+    "generalization": "This problem connects to the domain of PLANET (healthcare and access to resources) and HUMAN (well-being and dignity)",
+    "summary": "Many people lack access to safe blood due to inequities in healthcare and weaknesses in government systems, requiring improvements in blood donation infrastructure and government systems. The proposed actions aim to increase voluntary donations and strengthen government blood systems.",
+    "risk_level": "MEDIUM"
+  },
+  "raw_items": [
+    {
+      "title": "WHO issues comprehensive guidelines on filovirus disease, including Ebola and Marburg disease",
+      "summary": "As the Democratic Republic of the Congo is battling an Ebola disease outbreak caused by the Bundibugyo virus, the World Health Organization (WHO) has released its first comprehensive guidelines for the clinical management of filovirus disease which include all types of Ebola and Marburg viruses. The new guidelines highlight the importance of early supportive care to improve patient survival and health outcomes, outlining 16 evidence-based recommendations.",
+      "link": "https://www.who.int/news/item/17-06-2026-who-issues-comprehensive-guidelines-on-filovirus-disease--including-ebola-and-marburg-disease",
+      "published": "Wed, 17 Jun 2026 13:30:57 Z",
+      "source_type": "rss"
+    },
+    {
+      "title": "Open letter to leaders of G7, G20, BRICS and all nations on finalizing the WHO Pandemic Agreement’s Pathogen Access and Benefit Sharing annex",
+      "summary": "<p>Dear Leaders of the G7, the G20, BRICS and of all nations,</p><p>We write to you together, from Geneva and from Bras&iacute;lia, with one shared conviction: that the world must finish what it started, and that you can help it do so.</p><p>We begin not with an institution or an annex, but with a memory the whole world shares. Not so long ago, our hospitals overflowed. Families said goodbye to the people they loved through glass, or by telephone, or not at all. Children lost grandparents. Docto",
+      "link": "https://www.who.int/news/item/15-06-2026-open-letter-to-leaders-of-g7-g20-brics-and-all-nations-on-finalizing-the-who-pandemic-agreement-s-pathogen-access-and-benefit-sharing-annex",
+      "published": "Mon, 15 Jun 2026 09:05:36 Z",
+      "source_type": "rss"
+    },
+    {
+      "title": "Safe blood supply improves as voluntary donations exceed 85%, but many people still lack access",
+      "summary": "New data from the World Health Organization (WHO) show sustained progress towards safer blood supplies globally but also highlight persistent inequalities in access to safe blood and weaknesses in governance, financing and regulation of blood systems.",
+      "link": "https://www.who.int/news/item/12-06-2026-safe-blood-supply-improves-as-voluntary-donations-exceed-85---but-many-people-still-lack-access",
+      "published": "Fri, 12 Jun 2026 12:35:26 Z",
+      "source_type": "rss"
+    },
+    {
+      "title": "Africa CDC and WHO launch joint continental Ebola response plan",
+      "summary": "<p>The Africa Centres for Disease Control and Prevention (Africa CDC) and the World Health Organization (WHO) today launched a joint <a href=\"https://www.afro.who.int/publications/bundibugyo-ebola-virus-continental-preparedness-and-response-plan-june-november-2026\">continental preparedness and response plan</a> on the ongoing Ebola outbreak caused by the Bundibugyo virus. The plan aims to raise US$&nbsp;518&nbsp;million to support African countries together with partners to prepare for, rapidly ",
+      "link": "https://www.who.int/news/item/05-06-2026-africa-cdc-and-who-launch-joint-continental-ebola-response-plan",
+      "published": "Fri, 05 Jun 2026 12:28:26 Z",
+      "source_type": "rss"
+    },
+    {
+      "title": "Young women now have 'close to zero' risk of cervical cancer death after HPV jab",
+      "summary": "A new study finds that hundreds of lives have been saved since school-age girls were offered the HPV jab in 2008.",
+      "link": "https://www.bbc.com/news/articles/c621z28z138o?at_medium=RSS&at_campaign=rss",
+      "published": "Thu, 18 Jun 2026 08:14:34 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "'We travel 530 miles so our son can have a haircut'",
+      "summary": "How a very special hairdressing salon in Lowestoft is cutting it when it comes to neurodivergence.",
+      "link": "https://www.bbc.com/news/articles/cwyd9yzg46yo?at_medium=RSS&at_campaign=rss",
+      "published": "Wed, 17 Jun 2026 06:13:43 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Why you might not be buying the right pain relief for period cramps",
+      "summary": "Many women are buying less effective pain medication for period cramps, supermarket data suggests.",
+      "link": "https://www.bbc.com/news/articles/c932pex1vpwo?at_medium=RSS&at_campaign=rss",
+      "published": "Sun, 14 Jun 2026 23:10:57 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Resident doctors cancel strike after new offer from government",
+      "summary": "The walkout had been due to start at 07:00 BST on Monday and last until Friday.",
+      "link": "https://www.bbc.com/news/articles/cj9g1wgxng2o?at_medium=RSS&at_campaign=rss",
+      "published": "Sat, 13 Jun 2026 20:46:11 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] Global Health &amp; Tropical Medicine Explained | Diseases, Poverty &amp; Health Systems",
+      "summary": "Welcome to the learning studio. You're watching \nthe health sciences series where we break down   the most important fields in medicine in a \nway that's easy to understand and exciting   to learn. In today's episode, we're traveling \nacross borders, continents, and climate zones.   Because today, we're diving into global health \nand tropical medicine, the field where doctors,   scientists, and health workers fight diseases \nthat affect millions in some of the world's   most vulnerable regions. What is global health and \ntropical medicine? Imagine if you were a doctor,   not just in one hospital, but in a world full \nof different countries, cultures, climates,   and diseases. Global health is about solving \nhealth problems that go beyond borders. From   pandemics like CO 19 to childhood mal",
+      "link": "https://www.youtube.com/watch?v=d8kgxtOHv74",
+      "published": "2025-08-04T03:16:18Z",
+      "source_type": "youtube",
+      "channel": "The Learning Studio",
+      "video_id": "d8kgxtOHv74",
+      "transcript_method": "youtube_transcript_api",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Is inequality inevitable?",
+      "summary": "In South Africa, one of the most\nunequal countries in the world, the richest one-tenth of 1%, owns \nalmost 30% of all the country’s wealth, more than double what the bottom 90% owns. Income and wealth inequality are not new. In fact, economists and historians \nwho’ve charted economic inequality throughout history haven’t found \na single society without it. Which raises a bleak question: is inequality inevitable? One way to estimate inequality is \nwith a number called the Gini index, which is calculated by comparing \nthe income or wealth distribution of a perfectly equal society to the \nactual income or wealth distribution. The area of this shape multiplied\nby 2 is the Gini index. A Gini of 1 indicates\nperfect inequality— one person has everything \nand everyone else has nothing. You’d never",
+      "link": "https://www.youtube.com/watch?v=rEnf_CFoyv0",
+      "published": "2022-10-11T15:01:01Z",
+      "source_type": "youtube",
+      "channel": "TED-Ed",
+      "video_id": "rEnf_CFoyv0",
+      "transcript_method": "youtube_transcript_api",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ]
+}

@@ -1,0 +1,119 @@
+{
+  "axis": "HUMAN_WELL_BEING_REVIEW",
+  "fetched_at": "2026-06-20T07:32:12.622368+00:00",
+  "smart_query": "mental health wellbeing global",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube_transcripts": 1,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "Minimum age of 11 set for UK puberty blocker trial",
+      "snippet": "Gender-questioning children will have to be at least 11 years old to take part in a clinical trial of puberty-blocking drugs.",
+      "url": "https://www.bbc.com/news/articles/c892p2qdjjxo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Five tips to keep your kids cool this weekend",
+      "snippet": "Temperatures are set to rise over the next few days, and children can be especially vulnerable - so read on for tips to protect them. ",
+      "url": "https://www.bbc.com/news/articles/c862j9vy746o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Young women now have 'close to zero' risk of cervical cancer death after HPV jab",
+      "snippet": "A new study finds that hundreds of lives have been saved since school-age girls were offered the HPV jab in 2008.",
+      "url": "https://www.bbc.com/news/articles/c621z28z138o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "openemr/openemr",
+      "snippet": "The most popular open source electronic health records and medical practice management solution.",
+      "stars": 5231,
+      "url": "https://github.com/openemr/openemr",
+      "updated": "2026-06-20",
+      "source": "GitHub"
+    },
+    {
+      "title": "HospitalRun/hospitalrun",
+      "snippet": "Monorepo that holds all of HospitalRun's v2 projects.",
+      "stars": 987,
+      "url": "https://github.com/HospitalRun/hospitalrun",
+      "updated": "2026-06-17",
+      "source": "GitHub"
+    },
+    {
+      "title": "getodk/collect",
+      "snippet": "ODK Collect is an Android app for filling out forms. It's been used to collect billions of data points in challenging environments around the world. Contribute and make the world a better place! ✨📋✨",
+      "stars": 775,
+      "url": "https://github.com/getodk/collect",
+      "updated": "2026-06-19",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "VLMs May Not Globally Enhance Human Alignment over LLMs During Natural Reading",
+      "snippet": "Large language models (LLMs) have become increasingly useful computational models of human language processing, but it remains unclear whether vision-language learning makes text representations more human-like during natural reading. Here, we address this question by comparing tightly matched LLM a",
+      "url": "https://arxiv.org/abs/2605.28818v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Global stability of a Hebbian/anti-Hebbian network for principal subspace learning",
+      "snippet": "Biological neural networks self-organize according to local synaptic modifications to produce stable computations. How modifications at the synaptic level give rise to such computations at the network level remains an open question. Pehlevan et al. [Neur. Comp. 27 (2015), 1461--1495] proposed a mode",
+      "url": "https://arxiv.org/abs/2601.13170v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[The Mental Frame & Specific Daily Actions to Succeed | Andy Stumpf] Andy Stumpf is a retired Navy SEAL, world-record-holding wingsuit BASE jumper, martial artist, and author. We discuss the mental framework and moment-to-moment decision-making process that can allow anyone to build discipline and resilience and better navigate both everyday life and life's most challenging moments. Andy explains several simple-yet-powerful tools gleaned from his time in — and afte",
+  "wiki": null,
+  "youtube_items": [
+    {
+      "title": "[YT] Global Inequality in 2025: Why the Rich Keep Getting Richer",
+      "summary": "[DESCRIPTION FALLBACK] In 2025, the gap between the rich and the poor is wider than ever. While some enjoy record-breaking wealth, billions still ...",
+      "link": "https://www.youtube.com/watch?v=j7ysRCMNWlk",
+      "source_type": "youtube",
+      "channel": "Economic World Events",
+      "video_id": "j7ysRCMNWlk",
+      "transcript_method": "description",
+      "transcript_chars": 149,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Global Health Inequality",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=IQNJtZy7JhU",
+      "source_type": "youtube",
+      "channel": "Jessica Whisler",
+      "video_id": "IQNJtZy7JhU",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Global Health Inequality",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=3jBwZ7vDYUM",
+      "source_type": "youtube",
+      "channel": "Kyla Parks",
+      "video_id": "3jBwZ7vDYUM",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    }
+  ],
+  "summary": "[RSS News]\n- Minimum age of 11 set for UK puberty blocker trial\n- Five tips to keep your kids cool this weekend\n\n[arXiv]\n- VLMs May Not Globally Enhance Human Alignment over LLMs During Natural Readin",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": [],
+  "open_source_momentum": "",
+  "scientific_frontier": "",
+  "relevance_to_goal": ""
+}

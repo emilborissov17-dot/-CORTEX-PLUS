@@ -1,0 +1,157 @@
+{
+  "axis": "HUMAN_WELL_BEING_REVIEW",
+  "domain": "human",
+  "timestamp": "2026-06-19T17:37:46.696967+00:00",
+  "sources_count": 11,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] Global Health &amp; Tropical Medicine Explained | Diseases, Poverty &amp; Health Systems",
+      "summary": "[DESCRIPTION FALLBACK] S27: Global Health & Tropical Medicine – Fighting Diseases Without Borders Why do certain diseases continue to affect millions ...",
+      "link": "https://www.youtube.com/watch?v=d8kgxtOHv74",
+      "published": "2025-08-04T03:16:18Z",
+      "source_type": "youtube",
+      "channel": "The Learning Studio",
+      "video_id": "d8kgxtOHv74",
+      "transcript_method": "description",
+      "transcript_chars": 153,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Is inequality inevitable?",
+      "summary": "[DESCRIPTION FALLBACK] Explore how economic inequality can be measured and how it is impacted by different governmental policy choices. -- Income ...",
+      "link": "https://www.youtube.com/watch?v=rEnf_CFoyv0",
+      "published": "2022-10-11T15:01:01Z",
+      "source_type": "youtube",
+      "channel": "TED-Ed",
+      "video_id": "rEnf_CFoyv0",
+      "transcript_method": "description",
+      "transcript_chars": 149,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Why More Americans Are Being Pushed Into Poverty | CNBC Marathon",
+      "summary": "[DESCRIPTION FALLBACK] CNBC Marathon examines causes of poverty in the U.S., including rising credit card debt and lifestyle creep. 37.9 million ...",
+      "link": "https://www.youtube.com/watch?v=uYY_ytPi83E",
+      "published": "2025-02-06T17:01:00Z",
+      "source_type": "youtube",
+      "channel": "CNBC",
+      "video_id": "uYY_ytPi83E",
+      "transcript_method": "description",
+      "transcript_chars": 148,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "problem": "Many people still lack access to safe blood supplies globally, despite progress towards safer blood supplies",
+    "root_cause": "Persistent inequalities in access to healthcare and weaknesses in government infrastructure",
+    "severity": "MEDIUM",
+    "leverage_points": [
+      "World Health Organization (WHO) and national governments",
+      "International organizations and non-governmental organizations (NGOs) providing healthcare support"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Increase funding and support for WHO and national healthcare infrastructure development",
+        "measurable_goal": "Increase access to safe blood supplies by 20% within the next 2 years",
+        "timeframe": "medium-term"
+      },
+      {
+        "action": "Implement targeted programs to address Healthcare access disparities in low-income communities",
+        "measurable_goal": "Reduce healthcare access disparities by 15% within the next 3 years",
+        "timeframe": "long-term"
+      }
+    ],
+    "evidence": [
+      "New data from the World Health Organization (WHO) show sustained progress towards safer blood supplies globally but also highlight persistent inequalities in access to safe blood and weaknesses in government infrastructure",
+      "Voluntary donations exceed 85%, but many people still lack access to safe blood supplies"
+    ],
+    "generalization": "This problem connects to the domains of PLANET (healthcare infrastructure and access to resources), HUMAN (human well-being and dignity), and CIVILIZATION (global health governance and cooperation)",
+    "summary": "Despite progress towards safer blood supplies, many people still lack access to safe blood, highlighting persistent inequalities in healthcare access and infrastructure weaknesses. Increasing funding and support for WHO and national healthcare infrastructure development can help address this issue.",
+    "risk_level": "MEDIUM"
+  },
+  "raw_items": [
+    {
+      "title": "WHO issues comprehensive guidelines on filovirus disease, including Ebola and Marburg disease",
+      "summary": "As the Democratic Republic of the Congo is battling an Ebola disease outbreak caused by the Bundibugyo virus, the World Health Organization (WHO) has released its first comprehensive guidelines for the clinical management of filovirus disease which include all types of Ebola and Marburg viruses. The new guidelines highlight the importance of early supportive care to improve patient survival and health outcomes, outlining 16 evidence-based recommendations.",
+      "link": "https://www.who.int/news/item/17-06-2026-who-issues-comprehensive-guidelines-on-filovirus-disease--including-ebola-and-marburg-disease",
+      "published": "Wed, 17 Jun 2026 13:30:57 Z",
+      "source_type": "rss"
+    },
+    {
+      "title": "Open letter to leaders of G7, G20, BRICS and all nations on finalizing the WHO Pandemic Agreement’s Pathogen Access and Benefit Sharing annex",
+      "summary": "<p>Dear Leaders of the G7, the G20, BRICS and of all nations,</p><p>We write to you together, from Geneva and from Bras&iacute;lia, with one shared conviction: that the world must finish what it started, and that you can help it do so.</p><p>We begin not with an institution or an annex, but with a memory the whole world shares. Not so long ago, our hospitals overflowed. Families said goodbye to the people they loved through glass, or by telephone, or not at all. Children lost grandparents. Docto",
+      "link": "https://www.who.int/news/item/15-06-2026-open-letter-to-leaders-of-g7-g20-brics-and-all-nations-on-finalizing-the-who-pandemic-agreement-s-pathogen-access-and-benefit-sharing-annex",
+      "published": "Mon, 15 Jun 2026 09:05:36 Z",
+      "source_type": "rss"
+    },
+    {
+      "title": "Safe blood supply improves as voluntary donations exceed 85%, but many people still lack access",
+      "summary": "New data from the World Health Organization (WHO) show sustained progress towards safer blood supplies globally but also highlight persistent inequalities in access to safe blood and weaknesses in governance, financing and regulation of blood systems.",
+      "link": "https://www.who.int/news/item/12-06-2026-safe-blood-supply-improves-as-voluntary-donations-exceed-85---but-many-people-still-lack-access",
+      "published": "Fri, 12 Jun 2026 12:35:26 Z",
+      "source_type": "rss"
+    },
+    {
+      "title": "Africa CDC and WHO launch joint continental Ebola response plan",
+      "summary": "<p>The Africa Centres for Disease Control and Prevention (Africa CDC) and the World Health Organization (WHO) today launched a joint <a href=\"https://www.afro.who.int/publications/bundibugyo-ebola-virus-continental-preparedness-and-response-plan-june-november-2026\">continental preparedness and response plan</a> on the ongoing Ebola outbreak caused by the Bundibugyo virus. The plan aims to raise US$&nbsp;518&nbsp;million to support African countries together with partners to prepare for, rapidly ",
+      "link": "https://www.who.int/news/item/05-06-2026-africa-cdc-and-who-launch-joint-continental-ebola-response-plan",
+      "published": "Fri, 05 Jun 2026 12:28:26 Z",
+      "source_type": "rss"
+    },
+    {
+      "title": "Five tips to keep your kids cool this weekend",
+      "summary": "Temperatures are set to rise over the next few days, and children can be especially vulnerable - so read on for tips to protect them.",
+      "link": "https://www.bbc.com/news/articles/c862j9vy746o?at_medium=RSS&at_campaign=rss",
+      "published": "Fri, 19 Jun 2026 00:07:22 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Young women now have 'close to zero' risk of cervical cancer death after HPV jab",
+      "summary": "A new study finds that hundreds of lives have been saved since school-age girls were offered the HPV jab in 2008.",
+      "link": "https://www.bbc.com/news/articles/c621z28z138o?at_medium=RSS&at_campaign=rss",
+      "published": "Thu, 18 Jun 2026 08:14:34 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "'We travel 530 miles so our son can have a haircut'",
+      "summary": "How a very special hairdressing salon in Lowestoft is cutting it when it comes to neurodivergence.",
+      "link": "https://www.bbc.com/news/articles/cwyd9yzg46yo?at_medium=RSS&at_campaign=rss",
+      "published": "Wed, 17 Jun 2026 06:13:43 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Why you might not be buying the right pain relief for period cramps",
+      "summary": "Many women are buying less effective pain medication for period cramps, supermarket data suggests.",
+      "link": "https://www.bbc.com/news/articles/c932pex1vpwo?at_medium=RSS&at_campaign=rss",
+      "published": "Sun, 14 Jun 2026 23:10:57 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] Global Health &amp; Tropical Medicine Explained | Diseases, Poverty &amp; Health Systems",
+      "summary": "[DESCRIPTION FALLBACK] S27: Global Health & Tropical Medicine – Fighting Diseases Without Borders Why do certain diseases continue to affect millions ...",
+      "link": "https://www.youtube.com/watch?v=d8kgxtOHv74",
+      "published": "2025-08-04T03:16:18Z",
+      "source_type": "youtube",
+      "channel": "The Learning Studio",
+      "video_id": "d8kgxtOHv74",
+      "transcript_method": "description",
+      "transcript_chars": 153,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Is inequality inevitable?",
+      "summary": "[DESCRIPTION FALLBACK] Explore how economic inequality can be measured and how it is impacted by different governmental policy choices. -- Income ...",
+      "link": "https://www.youtube.com/watch?v=rEnf_CFoyv0",
+      "published": "2022-10-11T15:01:01Z",
+      "source_type": "youtube",
+      "channel": "TED-Ed",
+      "video_id": "rEnf_CFoyv0",
+      "transcript_method": "description",
+      "transcript_chars": 149,
+      "has_full_transcript": false
+    }
+  ]
+}

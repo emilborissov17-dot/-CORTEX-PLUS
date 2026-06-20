@@ -1,0 +1,157 @@
+{
+  "axis": "SPACE_INFRASTRUCTURE_REVIEW",
+  "domain": "cosmos",
+  "timestamp": "2026-06-18T18:20:16.238351+00:00",
+  "sources_count": 11,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] SpaceX IPO: Here&#39;s What Retail Investors Need To Know",
+      "summary": "[DESCRIPTION FALLBACK] Retail brokerages are lining up to offer SpaceX shares to retail investors who are salivating to buy day one of trade. However, any ...",
+      "link": "https://www.youtube.com/watch?v=LIVGZoUN9D0",
+      "published": "2026-06-12T14:00:02Z",
+      "source_type": "youtube",
+      "channel": "CNBC",
+      "video_id": "LIVGZoUN9D0",
+      "transcript_method": "description",
+      "transcript_chars": 158,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] How The U.S. Became So Dependent On SpaceX",
+      "summary": "[DESCRIPTION FALLBACK] SpaceX has grown from a small startup founded by Elon Musk in 2002 to one of the world's most valuable private firms. But this ...",
+      "link": "https://www.youtube.com/watch?v=wE2Zcq0CP48",
+      "published": "2025-08-24T15:01:27Z",
+      "source_type": "youtube",
+      "channel": "CNBC",
+      "video_id": "wE2Zcq0CP48",
+      "transcript_method": "description",
+      "transcript_chars": 153,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Why the SpaceX IPO Is Unlike Any Other",
+      "summary": "[DESCRIPTION FALLBACK] SpaceX is preparing for the biggest initial public offering in history, one that could reshape markets. What began as a rocket ...",
+      "link": "https://www.youtube.com/watch?v=F5OFTtX0x04",
+      "published": "2026-05-29T08:00:05Z",
+      "source_type": "youtube",
+      "channel": "Bloomberg Originals",
+      "video_id": "F5OFTtX0x04",
+      "transcript_method": "description",
+      "transcript_chars": 153,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "problem": "Over-reliance on private companies like SpaceX for space infrastructure development and satellite launches",
+    "root_cause": "Lack of significant public investment in space infrastructure and research, leading to a reliance on private companies for advancements",
+    "severity": "MEDIUM",
+    "leverage_points": [
+      "Government space agencies and regulatory bodies",
+      "Private space companies like SpaceX and Arianespace"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Increase public investment in space infrastructure and research",
+        "measurable_goal": "Increase the number of publicly funded space missions and research projects by 20% within the next 2 years",
+        "timeframe": "medium-term"
+      },
+      {
+        "action": "Develop and implement regulations to ensure diversity and competition in the space industry",
+        "measurable_goal": "Reduce the market share of the top 3 private space companies by 10% within the next 3 years",
+        "timeframe": "long-term"
+      }
+    ],
+    "evidence": [
+      "SpaceX launches 3 Block 2 BlueBird satellites for AST SpaceMobile, demonstrating the company's significant role in the industry",
+      "Arianespace launches its heaviest payload to date with Amazon Leo flight, highlighting the growing reliance on private companies for satellite launches"
+    ],
+    "generalization": "This problem connects to the domains of civilization and cosmos, as the development of space infrastructure has significant implications for the long-term sustainability and viability of human civilization",
+    "summary": "The over-reliance on private companies like SpaceX for space infrastructure development and satellite launches poses a medium-severity problem, requiring increased public investment and regulation to ensure diversity and competition in the industry",
+    "risk_level": "MEDIUM"
+  },
+  "raw_items": [
+    {
+      "title": "Space Force’s rapid acquisition office director moves to Air Force Nuclear Weapons Center",
+      "summary": "<figure><img alt=\"\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"683\" src=\"https://i0.wp.com/spacenews.com/wp-content/uploads/2026/06/9696869-scaled.jpg?fit=1024%2C683&amp;ssl=1\" width=\"1024\" /></figure>\n<p>Kelly Hammett’s departure comes as the Space Rapid Capabilities Office is being realigned under the Space Force </p>\n<p>The post <a href=\"https://spacenews.com/space-forces-rapid-acquisition-office-director-moves-to-air-force-nuclear-weapons-center/\">Space Force",
+      "link": "https://spacenews.com/space-forces-rapid-acquisition-office-director-moves-to-air-force-nuclear-weapons-center/",
+      "published": "Thu, 18 Jun 2026 17:57:55 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Chinese startup Spark Space tests engine, raises funds for electric-pump rocket",
+      "summary": "<figure><img alt=\"\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"573\" src=\"https://i0.wp.com/spacenews.com/wp-content/uploads/2026/06/Lieyan2-pump-fed-engine-hotfire-2026-SparkSpace.jpg?fit=1024%2C573&amp;ssl=1\" width=\"1024\" /></figure>\n<p>Chinese startup Spark Space has secured a series of funding rounds for what it claims will be the world's largest electric-pump-fed rocket, following engine tests.</p>\n<p>The post <a href=\"https://spacenews.com/chinese-startup-sp",
+      "link": "https://spacenews.com/chinese-startup-spark-space-tests-engine-raises-funds-for-electric-pump-rocket/",
+      "published": "Thu, 18 Jun 2026 14:37:46 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "A legacy to help solve the space workforce pipeline",
+      "summary": "<figure><img alt=\"\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"768\" src=\"https://i0.wp.com/spacenews.com/wp-content/uploads/2026/06/space-minds-challenger-center-spacenews-2000-1500.jpg?fit=1024%2C768&amp;ssl=1\" width=\"1024\" /></figure>\n<p>In this episode of Space Minds, David Ariosto talks with Mike Kincaid, president and chief executive of the Challenger Center. They discuss the space workforce pipeline and the center’s role [&#8230;]</p>\n<p>The post <a href=\"h",
+      "link": "https://spacenews.com/a-legacy-to-help-solve-the-space-workforce-pipeline/",
+      "published": "Thu, 18 Jun 2026 14:37:23 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "What the satellite servicing economy can borrow from carbon credits",
+      "summary": "<figure><img alt=\"Artist rendition of ESA’s Destructive Reentry Assessment Container Object (DRACO), a spacecraft loaded with sensors that will break up in orbit in order to gather data on uncontrolled reentry.\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"649\" src=\"https://i0.wp.com/spacenews.com/wp-content/uploads/2024/11/ESA_Space_Debris_project_-_DRACO-scaled.webp?fit=1024%2C649&amp;ssl=1\" width=\"1024\" /></figure>\n<p>In January 2026 alone, the Federal Communica",
+      "link": "https://spacenews.com/what-the-satellite-servicing-economy-can-borrow-from-carbon-credits/",
+      "published": "Thu, 18 Jun 2026 13:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Live coverage: SpaceX to launch intelligence-gathering satellites for the National Reconnaissance Office",
+      "summary": "The Falcon 9 rocket will launch an undisclosed number of satellites, which are believed to be Starshield satellites, a government variant of Starlink. Liftoff from pad 4E at Vandenberg Space Force Base is scheduled during a 35-minute window that opens on Friday, June 19, at 1:40 a.m. PDT (4:40 a.m. EDT / 0840 UTC). <a class=\"mh-excerpt-more\" href=\"https://spaceflightnow.com/2026/06/18/live-coverage-spacex-to-launch-intelligence-gathering-satellites-for-the-national-reconnaissance-office-2/\" titl",
+      "link": "https://spaceflightnow.com/2026/06/18/live-coverage-spacex-to-launch-intelligence-gathering-satellites-for-the-national-reconnaissance-office-2/",
+      "published": "Thu, 18 Jun 2026 13:13:12 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Arianespace launches its heaviest payload to date with Amazon Leo flight",
+      "summary": "The Leo Europe 03 mission will see Arianespace send a batch of 36 Amazon Leo satellites into low Earth orbit. Liftoff from Europe’s Spaceport in French Guiana is scheduled during a window that opens up at 8:53 a.m. Kourou time (7:53 a.m. EDT / 1153 UTC). <a class=\"mh-excerpt-more\" href=\"https://spaceflightnow.com/2026/06/17/live-coverage-arianespace-to-launch-its-heaviest-payload-to-date-with-amazon-leo-flight/\" title=\"Arianespace launches its heaviest payload to date with Amazon Leo flight\"></a",
+      "link": "https://spaceflightnow.com/2026/06/17/live-coverage-arianespace-to-launch-its-heaviest-payload-to-date-with-amazon-leo-flight/",
+      "published": "Wed, 17 Jun 2026 11:12:23 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "SpaceX launches 3 Block 2 BlueBird satellites for AST SpaceMobile",
+      "summary": "The mission is third time SpaceX will launch satellites for AST SpaceMobile and its first of the Block 2 iteration of the BlueBird satellites. Liftoff from pad 40 at Cape Canaveral Space Force Station is scheduled for 2:39 a.m. EDT (0639 UTC). <a class=\"mh-excerpt-more\" href=\"https://spaceflightnow.com/2026/06/16/live-coverage-spacex-to-launch-3-block-2-bluebird-satellites-for-ast-spacemobile/\" title=\"SpaceX launches 3 Block 2 BlueBird satellites for AST SpaceMobile\"></a>",
+      "link": "https://spaceflightnow.com/2026/06/16/live-coverage-spacex-to-launch-3-block-2-bluebird-satellites-for-ast-spacemobile/",
+      "published": "Tue, 16 Jun 2026 21:45:21 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Astrobotic showcases Griffin-1 lander ahead of environmental testing in California",
+      "summary": "The mission, originally billed as Griffin-1 for NASA’s Commercial Lunar Payload Services (CLPS) program was rebranded as Moon Base 2 by the agency. Launch is scheduled for late 2026. <a class=\"mh-excerpt-more\" href=\"https://spaceflightnow.com/2026/06/16/astrobotic-showcases-griffin-1-lander-ahead-of-environmental-testing-in-california/\" title=\"Astrobotic showcases Griffin-1 lander ahead of environmental testing in California\"></a>",
+      "link": "https://spaceflightnow.com/2026/06/16/astrobotic-showcases-griffin-1-lander-ahead-of-environmental-testing-in-california/",
+      "published": "Tue, 16 Jun 2026 01:08:24 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] SpaceX IPO: Here&#39;s What Retail Investors Need To Know",
+      "summary": "[DESCRIPTION FALLBACK] Retail brokerages are lining up to offer SpaceX shares to retail investors who are salivating to buy day one of trade. However, any ...",
+      "link": "https://www.youtube.com/watch?v=LIVGZoUN9D0",
+      "published": "2026-06-12T14:00:02Z",
+      "source_type": "youtube",
+      "channel": "CNBC",
+      "video_id": "LIVGZoUN9D0",
+      "transcript_method": "description",
+      "transcript_chars": 158,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] How The U.S. Became So Dependent On SpaceX",
+      "summary": "[DESCRIPTION FALLBACK] SpaceX has grown from a small startup founded by Elon Musk in 2002 to one of the world's most valuable private firms. But this ...",
+      "link": "https://www.youtube.com/watch?v=wE2Zcq0CP48",
+      "published": "2025-08-24T15:01:27Z",
+      "source_type": "youtube",
+      "channel": "CNBC",
+      "video_id": "wE2Zcq0CP48",
+      "transcript_method": "description",
+      "transcript_chars": 153,
+      "has_full_transcript": false
+    }
+  ]
+}

@@ -1,0 +1,119 @@
+{
+  "axis": "SPACE_INFRASTRUCTURE_REVIEW",
+  "fetched_at": "2026-06-20T07:31:33.374609+00:00",
+  "smart_query": "space exploration NASA SpaceX",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 0,
+    "gdelt": 3,
+    "arxiv": 2,
+    "github": 3,
+    "youtube_transcripts": 3,
+    "podcast": 1
+  },
+  "rss": [],
+  "gdelt": [
+    {
+      "title": "With new patch design , the Crew - 13 astronauts clearly arent superstitious",
+      "snippet": "With new patch design , the Crew - 13 astronauts clearly arent superstitious",
+      "url": "https://arstechnica.com/space/2026/04/nasas-spacex-crew-13-pays-homage-to-apollo-13-on-mission-patch/",
+      "source": "arstechnica.com"
+    },
+    {
+      "title": "NASA reveals Crew - 13 mission astronauts heading to ISS",
+      "snippet": "NASA reveals Crew - 13 mission astronauts heading to ISS",
+      "url": "https://www.wesh.com/article/nasa-spacex-crew-13-astronauts-iss-launch-florida/71122121",
+      "source": "wesh.com"
+    },
+    {
+      "title": "NASA schimbă planul pentru Artemis III . Aselenizarea este amânată pentru următoarea misiune",
+      "snippet": "NASA schimbă planul pentru Artemis III . Aselenizarea este amânată pentru următoarea misiune",
+      "url": "https://www.mediafax.ro/externe/nasa-schimba-planul-pentru-artemis-iii-aselenizarea-este-amanata-pentru-urmatoarea-misiune-23737036",
+      "source": "mediafax.ro"
+    }
+  ],
+  "github_repos": [
+    {
+      "title": "KOSASIH/stable-pi-core",
+      "snippet": "Stable-Pi-Core is a next-generation decentralized ecosystem that integrates blockchain, quantum AI, IoT, edge computing, and AR/VR to deliver secure, scalable, and personalized solutions for payments,",
+      "stars": 116,
+      "url": "https://github.com/KOSASIH/stable-pi-core",
+      "updated": "2026-06-18",
+      "source": "GitHub"
+    },
+    {
+      "title": "FlaSpaceInst/EZ-RASSOR",
+      "snippet": "An inexpensive, autonomous, regolith-mining robot",
+      "stars": 62,
+      "url": "https://github.com/FlaSpaceInst/EZ-RASSOR",
+      "updated": "2026-06-02",
+      "source": "GitHub"
+    },
+    {
+      "title": "BarthPaleologue/CosmosJourneyer",
+      "snippet": "Cosmos Journeyer is a space exploration game running directly in the browser! Take your spaceship and witness the beauty of this virtually infinite universe.",
+      "stars": 46,
+      "url": "https://github.com/BarthPaleologue/CosmosJourneyer",
+      "updated": "2026-06-19",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "The Lazuli Space Observatory: Opportunities for time-domain and multi-messenger astronomy",
+      "snippet": "Advancing time-domain and multi-messenger astronomy requires a multi-wavelength network of observatories capable of rapidly discovering, classifying, and characterizing transient phenomena. A critical gap in current capabilities is the inability to follow up faint, fast-evolving transients with sens",
+      "url": "https://arxiv.org/abs/2606.17136v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Revealing Cosmic Ecosystems with the Hubble Space Telescope in 2030s and Beyond",
+      "snippet": "Ultraviolet spectroscopy with the Hubble Space Telescope (HST) provides the most direct and sensitive probe of the disk-circumgalactic medium (CGM) interface at radii of 20 kpc, where galaxies exchange gas, metals, and energy with their surroundings. Many of the key diagnostics of the multiphase cir",
+      "url": "https://arxiv.org/abs/2606.11506v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[#497 – Biggest Mysteries in Physics: Antimatter, Dark Energy & ToE – Don Lincoln] Don Lincoln is a particle physicist at Fermilab who has spent decades working at the frontiers of high energy physics.\nThank you for listening ❤ Check out our sponsors: https://lexfridman.com/sponsors/ep497-sc\nSee below for timestamps, and to give feedback, submit questions, contact Lex, etc.\nCONTACT LEX:\nFeedback &#8211; give feedback to Lex: https://lexfridman.com/survey\nAMA &#8211; submit quest",
+  "wiki": null,
+  "youtube_items": [
+    {
+      "title": "[YT] NASA vs SpaceX vs China — The Final Race for Space Supremacy (1957 – 2025)",
+      "summary": "[DESCRIPTION FALLBACK] From NASA's Cold War dominance to SpaceX's private revolution and China's rising space ambitions, the world has witnessed an ...",
+      "link": "https://www.youtube.com/watch?v=Gt24_T56km8",
+      "source_type": "youtube",
+      "channel": "Timelapse World TV",
+      "video_id": "Gt24_T56km8",
+      "transcript_method": "description",
+      "transcript_chars": 151,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Why SpaceX and NASA Rockets Are So Different",
+      "summary": "[DESCRIPTION FALLBACK] In this video, we delve into the fascinating world of rocket design philosophy, specifically looking at the pros and cons of two ...",
+      "link": "https://www.youtube.com/watch?v=AlrowLw4dKE",
+      "source_type": "youtube",
+      "channel": "Beyond Facts",
+      "video_id": "AlrowLw4dKE",
+      "transcript_method": "description",
+      "transcript_chars": 155,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Why is SpaceX Building the BIGGEST ROCKET EVER?",
+      "summary": "[DESCRIPTION FALLBACK] Starship is 123 meters tall - that's about as tall as a 40 story building! The plan is to prove you can reuse Starship, reducing launch ...",
+      "link": "https://www.youtube.com/watch?v=WbyZUtj4kV4",
+      "source_type": "youtube",
+      "channel": "Cleo Abram",
+      "video_id": "WbyZUtj4kV4",
+      "transcript_method": "description",
+      "transcript_chars": 162,
+      "has_full_transcript": false
+    }
+  ],
+  "summary": "[GDELT News]\n- With new patch design , the Crew - 13 astronauts clearly arent superstitious\n- NASA reveals Crew - 13 mission astronauts heading to ISS\n\n[arXiv]\n- The Lazuli Space Observatory: Opportun",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": [],
+  "open_source_momentum": "",
+  "scientific_frontier": "",
+  "relevance_to_goal": ""
+}

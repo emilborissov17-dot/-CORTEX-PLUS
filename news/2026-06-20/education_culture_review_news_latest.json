@@ -1,0 +1,118 @@
+{
+  "axis": "EDUCATION_CULTURE_REVIEW",
+  "fetched_at": "2026-06-20T07:30:16.531194+00:00",
+  "smart_query": "education access schools literacy",
+  "sources_count": {
+    "wiki": 0,
+    "gdelt": 3,
+    "arxiv": 2,
+    "github": 3,
+    "youtube_transcripts": 3,
+    "podcast": 1
+  },
+  "rss": [],
+  "gdelt": [
+    {
+      "title": "Kid Spark Education and Bridgestone Americas Expand Partnership to Fund Six Cost - Free Elementary STEM Programs in Communities Across the U . S . ",
+      "snippet": "Kid Spark Education and Bridgestone Americas Expand Partnership to Fund Six Cost - Free Elementary STEM Programs in Communities Across the U . S . ",
+      "url": "https://www.prnewswire.com/news-releases/kid-spark-education-and-bridgestone-americas-expand-partnership-to-fund-six-cost-free-elementary-stem-programs-in-communities-across-the-us-302781924.html",
+      "source": "prnewswire.com"
+    },
+    {
+      "title": "Literacy initiative expands further with a donation of 2 , 010 trolley libraries , including braille books to cater for different learner abilities",
+      "snippet": "Literacy initiative expands further with a donation of 2 , 010 trolley libraries , including braille books to cater for different learner abilities",
+      "url": "https://www.enca.com/promotions/literacy-initiative-expands-further-donation-2010-trolley-libraries-including-braille",
+      "source": "enca.com"
+    },
+    {
+      "title": "Discovery Education Highlights Commitment to Financial Literacy Month With Free , Real - World Learning Resources",
+      "snippet": "Discovery Education Highlights Commitment to Financial Literacy Month With Free , Real - World Learning Resources",
+      "url": "https://www.finanznachrichten.de/nachrichten-2026-04/68221126-discovery-education-highlights-commitment-to-financial-literacy-month-with-free-real-world-learning-resources-200.htm",
+      "source": "finanznachrichten.de"
+    }
+  ],
+  "github_repos": [
+    {
+      "title": "upb-lea/reinforcement_learning_course_materials",
+      "snippet": "Lecture notes, tutorial tasks including solutions as well as online videos for the reinforcement learning course hosted by Paderborn University",
+      "stars": 1134,
+      "url": "https://github.com/upb-lea/reinforcement_learning_course_materials",
+      "updated": "2026-06-19",
+      "source": "GitHub"
+    },
+    {
+      "title": "spatialaudio/signals-and-systems-lecture",
+      "snippet": "Continuous- and Discrete-Time Signals and Systems - Theory and Computational Examples",
+      "stars": 375,
+      "url": "https://github.com/spatialaudio/signals-and-systems-lecture",
+      "updated": "2026-06-09",
+      "source": "GitHub"
+    },
+    {
+      "title": "merely-useful/py-rse",
+      "snippet": "Research Software Engineering with Python course material",
+      "stars": 261,
+      "url": "https://github.com/merely-useful/py-rse",
+      "updated": "2026-06-09",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Measuring Whether LLM Tutors Teach or Solve: A Diagnostic for Educational Impact",
+      "snippet": "Large language models are increasingly proposed as educational tutors, yet stronger task-solving ability does not necessarily imply stronger learning support. Motivated by recent calls to measure the social impact of NLP systems in practice, we study whether public LLM tutoring benchmarks distinguis",
+      "url": "https://arxiv.org/abs/2606.16206v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "\"Stuck in a Spiral\": Shame and Guilt as Social Regulators of AI Use in Computing Education",
+      "snippet": "While prior work has examined patterns of adoption and social norms around AI use, less is known about how emotional factors, such as shame and guilt, shape students use of AI tools. We present an interview study with 19 computing students through a functionalist perspective of shame and guilt, whic",
+      "url": "https://arxiv.org/abs/2606.14920v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[How to raise kids who question AI | Randi Williams] AI education researcher Randi Williams has spent years studying how kids interact with technology and toys, and what she's found should make every parent stop and think. She reveals how, as tech companies embed AI inside toys, children are forming strong emotional bonds with machines. Explore what this means for their development — and why a playful fix might start with teaching kids to break the ",
+  "wiki": null,
+  "youtube_items": [
+    {
+      "title": "[YT] 2025 UNESCO Confucius Prize for Literacy highlights global education efforts",
+      "summary": "[DESCRIPTION FALLBACK] For more: https://www.cgtn.com/video In Qufu, the birthplace of Confucius in east China's Shandong Province, the 20th UNESCO ...",
+      "link": "https://www.youtube.com/watch?v=-SG9a5M-KCI",
+      "source_type": "youtube",
+      "channel": "CGTN",
+      "video_id": "-SG9a5M-KCI",
+      "transcript_method": "description",
+      "transcript_chars": 151,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] National Adult Literacy Agency in Ireland awarded the 2025 UNESCO Confucius Prize for Literacy",
+      "summary": "[DESCRIPTION FALLBACK] The Learn with NALA eLearning website by the National Adult Literacy Agency (NALA) is recognized for its accessible approach ...",
+      "link": "https://www.youtube.com/watch?v=-OOoFZVzNtc",
+      "source_type": "youtube",
+      "channel": "UNESCO",
+      "video_id": "-OOoFZVzNtc",
+      "transcript_method": "description",
+      "transcript_chars": 151,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Shidhulai Swanirvar Sangstha in Bangladesh awarded the 2025 UNESCO Confucius Prize for Literacy",
+      "summary": "[DESCRIPTION FALLBACK] The Solar-powered Floating Schools programme by the Non-Governmental Organization Shidhulai Swanirvar Sangstha is ...",
+      "link": "https://www.youtube.com/watch?v=WBMQBxfy2QA",
+      "source_type": "youtube",
+      "channel": "UNESCO",
+      "video_id": "WBMQBxfy2QA",
+      "transcript_method": "description",
+      "transcript_chars": 140,
+      "has_full_transcript": false
+    }
+  ],
+  "summary": "[GDELT News]\n- Kid Spark Education and Bridgestone Americas Expand Partnership to Fund Six Cost - Free Elementary STEM Programs in Communities Across the U . S . \n- Literacy initiative expands further",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": [],
+  "open_source_momentum": "",
+  "scientific_frontier": "",
+  "relevance_to_goal": ""
+}

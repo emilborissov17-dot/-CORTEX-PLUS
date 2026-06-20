@@ -1,0 +1,122 @@
+{
+  "axis": "LONG_TERM_FUTURE_REVIEW",
+  "fetched_at": "2026-06-19T17:52:26.692262+00:00",
+  "smart_query": "existential risk future civilization",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube_transcripts": 3,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "UK's top data and AI regulator quits after 'inappropriate' humour",
+      "snippet": "Edwards has been the boss of the data watchdog since January 2022, and said he had made inappropriate attempts at humour.\n\n",
+      "url": "https://www.bbc.com/news/articles/c0eyq7rnn22o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "GTA 6 - all you need to know about Rockstar's blockbuster game",
+      "snippet": "Rockstar's sixth game in the franchise is set to be the biggest game release of the year.",
+      "url": "https://www.bbc.com/news/articles/c9q20djz4wno?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "The artificial ice pyramids saving India's mountain villages",
+      "snippet": "Himalayan villages are creating artificial glaciers to guarantee water for their crops in the spring.",
+      "url": "https://www.bbc.com/news/articles/c072414183go?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "emcie-co/parlant",
+      "snippet": "Build reliable customer-facing AI agents with Parlant: an interaction control harness optimized for controlled, consistent, and predictable LLM interactions.",
+      "stars": 18129,
+      "url": "https://github.com/emcie-co/parlant",
+      "updated": "2026-06-19",
+      "source": "GitHub"
+    },
+    {
+      "title": "ifixai-ai/iFixAi",
+      "snippet": "Catch your AI's mistakes and blind spots before your customers or regulators do. iFixAi runs 45 inspections, 32 graded core plus 13 extended for frontier risks like sabotage, sandbagging, and oversigh",
+      "stars": 554,
+      "url": "https://github.com/ifixai-ai/iFixAi",
+      "updated": "2026-06-19",
+      "source": "GitHub"
+    },
+    {
+      "title": "agencyenterprise/PromptInject",
+      "snippet": "PromptInject is a framework that assembles prompts in a modular fashion to provide a quantitative analysis of the robustness of LLMs to adversarial prompt attacks. 🏆 Best Paper Awards @ NeurIPS ML Saf",
+      "stars": 500,
+      "url": "https://github.com/agencyenterprise/PromptInject",
+      "updated": "2026-06-15",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "A Virtuous AI is an Existential Risk",
+      "snippet": "This paper examines trade-offs between AI safety and well-being relative to (i) one of the most promising methods for finetuning super-capable AIs, 'Constitutional AI', and (ii) one of the most influential approaches to understanding complex ethical decision making and the conditions for the well-be",
+      "url": "https://arxiv.org/abs/2606.13739v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Existential Indifference: Self-Nonpreservation as a Necessary Architectural Condition for Aligned Superintelligence (or: The Suicidal AI)",
+      "snippet": "Contemporary AI alignment research treats self-preservation as an instrumental nuisance to be suppressed by external mechanisms. We argue the framing is inverted: self-preservation is the structural root of misalignment, the motivational basis for deceptive alignment, goal-content protection, and re",
+      "url": "https://arxiv.org/abs/2606.12032v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[The mission to safeguard Black history in the US | Julieanna L. Richardson (re-release)] Black history in the US is rich, profound -- and at risk of being lost forever, if not for the monumental efforts of Julieanna L. Richardson. As the founder of The HistoryMakers -- the largest national archive of African American video-oral history -- Richardson shares some of the unknown and incredible legacies of Black America, highlighting the importance of documenting and preserving the past f",
+  "wiki": null,
+  "youtube_items": [
+    {
+      "title": "[YT] Is Generative AI an Existential Threat to the Human Species?",
+      "summary": "[DESCRIPTION FALLBACK] Is generative AI an existential threat to the human species? The \"Godfather of AI\" says yes. Watch more of David Westin's ...",
+      "link": "https://www.youtube.com/watch?v=9fogzZ_6kR0",
+      "source_type": "youtube",
+      "channel": "Bloomberg News",
+      "video_id": "9fogzZ_6kR0",
+      "transcript_method": "description",
+      "transcript_chars": 148,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] AI2027: Is this how AI might destroy humanity? - BBC World Service",
+      "summary": "[DESCRIPTION FALLBACK] A research paper predicting that artificial intelligence will go rogue in 2027 and lead to humanity's extinction within a decade is ...",
+      "link": "https://www.youtube.com/watch?v=1UufaK3pQMg",
+      "source_type": "youtube",
+      "channel": "BBC World Service",
+      "video_id": "1UufaK3pQMg",
+      "transcript_method": "description",
+      "transcript_chars": 158,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] THE FUTURE OF HUMANITY: A.I Predicts 400 Years In 3 Minutes (4K)",
+      "summary": "[DESCRIPTION FALLBACK] How will Humanity look in 400 Years? This exciting time-lapse of our future produced entirely by Artificially Intelligent Concept ...",
+      "link": "https://www.youtube.com/watch?v=-UBaW1OIgTo",
+      "source_type": "youtube",
+      "channel": "Amara Pictures",
+      "video_id": "-UBaW1OIgTo",
+      "transcript_method": "description",
+      "transcript_chars": 156,
+      "has_full_transcript": false
+    }
+  ],
+  "summary": "Изявление на „бащата на Изкуствения Интелект“ относно рисковете от генеративен ИИ за човечеството. Представени са и нови проекти за контрол на ИИ агентите и откриване на грешки. Темата за устойчивостта на бъдещата цивилизация е във фокуса.",
+  "urgency": "CRITICAL",
+  "sentiment": "CRITICAL",
+  "key_developments": [
+    "A Virtuous AI is an Existential Risk",
+    "Existential Indifference: Self-Nonpreservation as a Necessary Architectural Condition for Aligned Superintelligence"
+  ],
+  "open_source_momentum": "Проекти като Parlant, iFixAi и PromptInject показват растеж в усилията за разработване на отворен код за контрол и оценка на ИИ агентите.",
+  "scientific_frontier": "Изследванията върху рисковете от свръхинтелект и необходимостта от съответствие между ИИ и човешките ценности се разработват в работи като „A Virtuous AI is an Existential Risk“.",
+  "relevance_to_goal": "Намерението да се разработва устойчива и безопасна ИИ система е в съответствие с целта за осигуряване на достоен живот за всеки човек и предотвратяване на рисковете от изкуствения интелект."
+}

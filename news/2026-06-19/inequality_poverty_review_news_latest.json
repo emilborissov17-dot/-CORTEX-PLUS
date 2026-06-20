@@ -1,0 +1,138 @@
+{
+  "axis": "INEQUALITY_POVERTY_REVIEW",
+  "fetched_at": "2026-06-19T18:01:29.950656+00:00",
+  "smart_query": "inequality poverty wealth gap",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 3,
+    "arxiv": 2,
+    "github": 3,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "Italy's Meloni says Trump 'made up' story that she 'begged' him for photo at G7",
+      "snippet": "The highly public exchange is an indication that their earlier close ties have frayed  since Trump's decision to go to war with Iran.",
+      "url": "https://www.bbc.com/news/articles/c20y1ygn707o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "US to end funding of South Africa's HIV programmes over claims of Afrikaner persecution",
+      "snippet": "The US says South Africa is not doing enough to protect the white-minority Afrikaner community.",
+      "url": "https://www.bbc.com/news/articles/cdr457lxr71o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Do it at home too, women tell Japanese fans who cleaned World Cup stadium",
+      "snippet": "Some see a double standard: Japanese men who clean in public while their wives do all the housework.",
+      "url": "https://www.bbc.com/news/articles/crel9xlp8r1o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [
+    {
+      "title": " ¿ Qué estados lideran la desigualdad racial en riqueza y oportunidades en 2026 ? ",
+      "snippet": " ¿ Qué estados lideran la desigualdad racial en riqueza y oportunidades en 2026 ? ",
+      "url": "https://eldiariony.com/2026/04/07/brecha-racial-en-ee-uu-los-estados-con-mayor-desigualdad-economica-en-2026/",
+      "source": "eldiariony.com"
+    },
+    {
+      "title": "La Jornada : Desigualdad : un acercamiento",
+      "snippet": "La Jornada : Desigualdad : un acercamiento",
+      "url": "https://www.jornada.com.mx/2026/04/06/economia/017a1eco",
+      "source": "jornada.com.mx"
+    },
+    {
+      "title": "La desigualdad social en España se mantiene en niveles alarmantes",
+      "snippet": "La desigualdad social en España se mantiene en niveles alarmantes",
+      "url": "https://www.lahaine.org/est_espanol.php/la-desigualdad-social-en-espana-se-mantiene",
+      "source": "lahaine.org"
+    }
+  ],
+  "github_repos": [
+    {
+      "title": "thinkingmachines/ph-poverty-mapping",
+      "snippet": "Mapping Philippine Poverty using Machine Learning, Satellite Imagery, and Crowd-sourced Geospatial Information",
+      "stars": 87,
+      "url": "https://github.com/thinkingmachines/ph-poverty-mapping",
+      "updated": "2026-04-03",
+      "source": "GitHub"
+    },
+    {
+      "title": "rs-anderson/Clustering-Ward-Level-Poverty-Using-Satellite-Imagery",
+      "snippet": "Combing satellite imagery and machine learning methods to cluster ward-level povery in Gauteng, South Africa.",
+      "stars": 4,
+      "url": "https://github.com/rs-anderson/Clustering-Ward-Level-Poverty-Using-Satellite-Imagery",
+      "updated": "2024-04-06",
+      "source": "GitHub"
+    },
+    {
+      "title": "Public-Environmental-Data-Partners/EJAM",
+      "snippet": "Environmental Justice Analysis Multisite tool for summarizing environmental and residential population information for multiple locations. This detached fork of the package and this repository are not",
+      "stars": 2,
+      "url": "https://github.com/Public-Environmental-Data-Partners/EJAM",
+      "updated": "2026-06-17",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Poverty traps are rare, but trappedness isn't",
+      "snippet": "The persistence of poverty is not well explained by who is poor. We argue the relevant object of measurement is trappedness--expected escape time from deprivation--which varies systematically across institutional environments and is invisible to standard poverty indices. Using Markov chains estimate",
+      "url": "https://arxiv.org/abs/2603.18716v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Measuring the depth of multidimensional poverty with ordinal data",
+      "snippet": "This paper proposes a positional poverty gap measure of multidimensional poverty within the Alkire-Foster counting framework. The measure captures the depth of deprivations even when indicators are ordinal, unlike the standard poverty gap, which requires cardinal variables. The proposed method draws",
+      "url": "https://arxiv.org/abs/2603.15149v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[The leaked tapes that show how the rich avoid taxes] Tax avoidance -- that is, legally reducing your tax bill -- is as American as apple pie. But the line between tax avoidance and tax evasion is often a grey one. On today’s show, a collaboration with Tax Notes, we listen in on the secret tapes that show how the wealthiest Americans avoid taxes. We trace the lifecycle of a tax loophole: how it was born (in Malta), how it grew, how the Feds cracked d",
+  "wiki": null,
+  "youtube_items": [
+    {
+      "title": "[YT] YouTube:rEnf_CFoyv0",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=rEnf_CFoyv0",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "rEnf_CFoyv0",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] YouTube:j7ysRCMNWlk",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=j7ysRCMNWlk",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "j7ysRCMNWlk",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] YouTube:MTAzQtrcfiM",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=MTAzQtrcfiM",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "MTAzQtrcfiM",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    }
+  ],
+  "summary": "[RSS News]\n- Italy's Meloni says Trump 'made up' story that she 'begged' him for photo at G7\n- US to end funding of South Africa's HIV programmes over claims of Afrikaner persecution\n\n[GDELT News]\n-  ",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": [],
+  "open_source_momentum": "",
+  "scientific_frontier": "",
+  "relevance_to_goal": ""
+}

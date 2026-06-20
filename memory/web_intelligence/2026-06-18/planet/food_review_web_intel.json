@@ -1,0 +1,149 @@
+{
+  "axis": "FOOD_REVIEW",
+  "domain": "planet",
+  "timestamp": "2026-06-18T18:16:05.786646+00:00",
+  "sources_count": 9,
+  "rss_count": 0,
+  "ddg_count": 6,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] A world going hungry? How conflict and climate change disrupt global food supply | Business Beyond",
+      "summary": "[DESCRIPTION FALLBACK] The battle against hunger is quite literally, an existential one. But there was a time when winning that battle seemed within reach ...",
+      "link": "https://www.youtube.com/watch?v=5YcvKvxWaCE",
+      "published": "2022-07-05T15:15:16Z",
+      "source_type": "youtube",
+      "channel": "DW News",
+      "video_id": "5YcvKvxWaCE",
+      "transcript_method": "description",
+      "transcript_chars": 158,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Food security - A growing dilemma | DW Documentary",
+      "summary": "Fresh food galore. In Germany, we're used to\nsupermarkets brimming with produce. But often it has come from far away.\nThat makes our supply chains vulnerable. The war in Ukraine is\nrevealing our limitations. We can tell from the empty shelves\nwhat didnít come from Germany. We need to feed more\nand more people globally. But intensive farming\nthreatens the environment and our survival. If we use traditional\nagriculture practices - the next two billion people\nthat will be here in the year 2050, we will need a land\narea the size of Brazil. Itís time to switch to sustainable\nfarming practices and new food sources. If we want to support the global\nfood chain and offer an alternative then we need to\ngrow a lot of seaweed. What food will we\neat in the future? Farmer Jonas Schulze Niehoff has\nbeen ",
+      "link": "https://www.youtube.com/watch?v=wu7PjKawjwI",
+      "published": "2022-10-25T16:00:44Z",
+      "source_type": "youtube",
+      "channel": "DW Documentary",
+      "video_id": "wu7PjKawjwI",
+      "transcript_method": "youtube_transcript_api",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Why are so Many People going Hungry? | World Hunger | FAO Explainer | United Nations",
+      "summary": "If you're watching this, chances are that you\nare in the fortunate position to have access to  the food you want, when you need it.\nFor the most part, this is thanks to strong  economies, distribution networks, skilled\nlabor, abundant resources, the list goes on.  If these components are developed enough,\nyou would be fairly certain that when you go  out looking for it, you will have access to\nenough food to keep you and your family  strong and healthy.\nSounds easy, right? Then why are so many  people going hungry?\nHOW DO WE END WORLD HUNGER?  and what is FAO doing about it?\nIn many countries, rural communities depend  heavily on small scale farming to sustain\nthemselves.  In turn, the involvement provided by these\ncommunities in small scale farming models  helps alleviate poverty.\nThe mon",
+      "link": "https://www.youtube.com/watch?v=Ke06QUfOeTE",
+      "published": "2022-12-10T14:00:08Z",
+      "source_type": "youtube",
+      "channel": "United Nations",
+      "video_id": "Ke06QUfOeTE",
+      "transcript_method": "youtube_transcript_api",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "Conflict, economic shocks, climate extremes, and forced displacement are driving food insecurity and malnutrition around the world",
+    "root_cause": "The underlying cause of this problem is the complex interplay between human activities, such as conflict and economic inequality, and environmental factors, like climate change, which disrupt food supply chains and limit access to nutritious food",
+    "severity": "HIGH",
+    "leverage_points": [
+      "International organizations, such as the World Food Programme and the Food and Agriculture Organization, have the greatest effect on addressing this problem",
+      "National governments and their policies on food security, trade, and climate change mitigation"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Implement sustainable agriculture practices and climate-resilient food systems",
+        "measurable_goal": "Reduce the number of people suffering from hunger and malnutrition by 20% within the next 5 years",
+        "timeframe": "medium-term"
+      },
+      {
+        "action": "Establish emergency food aid programs and support small-scale farmers",
+        "measurable_goal": "Increase the availability of nutritious food in conflict-affected areas by 30% within the next 2 years",
+        "timeframe": "short-term"
+      }
+    ],
+    "evidence": [
+      "The Global Report on Food Crises 2025 shows that conflict, economic shocks, climate extremes, and forced displacement continued to drive food insecurity and malnutrition around the world",
+      "The 2025 SOFI report from FAO, IFAD, UNICEF, WFP, and WHO examines how rising food prices are shaping access to healthy diets and driving food insecurity and malnutrition"
+    ],
+    "generalization": "This problem connects to the domains of civilization, where economic inequality and conflict contribute to food insecurity, and the biosphere, where climate change affects food production and availability",
+    "summary": "Food insecurity and malnutrition are driven by conflict, economic shocks, climate extremes, and forced displacement, and require a multifaceted approach to address the root causes and support those affected",
+    "risk_level": "HIGH"
+  },
+  "raw_items": [
+    {
+      "title": "Global Report on Food Crises (GRFC) 2025 - World Food Programme",
+      "summary": "Jul 11, 2025 · The Global Report on Food Crises (GRFC) 2025 shows conflict, economic shocks, climate extremes and forced displacement continued to drive food insecurity and malnutrition around the world, with a catastrophic impact on many already fragile regions.",
+      "link": "https://www.wfp.org/publications/global-report-food-crises-grfc",
+      "source_type": "ddg"
+    },
+    {
+      "title": "The State of Food Security and Nutrition in the World 2025",
+      "summary": "Aug 8, 2025 · The 2025 SOFI report from FAO, IFAD, UNICEF, WFP and WHO examines how rising food prices are shaping access to healthy diets and driving food insecurity and malnutrition.",
+      "link": "https://data.unicef.org/resources/sofi-2025/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Hunger Map 2025 | FAO | Food and Agriculture Organization of ...",
+      "summary": "Explore @FAO's hunger map and navigate through regions, subregions and countries to discover the state of the prevalence of undernourishment and food insecurity.",
+      "link": "https://www.fao.org/interactive/hunger-map/en/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Supply Chain Disruptions May Accelerate... - Responsibleus",
+      "summary": "Rising supply chain risks linked to conflict, climate change and trade disruptions could drive greater investment in regenerative agriculture and sustainable food production, according to Ecovia Intelligence. Responsible Us Bureau Jun 17, 2026 Add to Reading List.",
+      "link": "https://responsibleus.com/supply-chain-disruptions-may-accelerate-investment-in-sustainable-food-production",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Soros vs India – Trying to Change Foreign Countries – The Burning...",
+      "summary": "India has stated that the conflict has had a “debilitating impact on the global economy and energy supplies.” As a major importer of oil, India is vulnerable to price shocks and supply chain disruptions. The rupee hit an all-time low primarily due to the war.",
+      "link": "https://www.theburningplatform.com/2026/06/14/soros-vs-india-trying-to-change-foreign-countries/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Beef-steak.Com | The Global Effects of Weather on Food Prices: The...",
+      "summary": "Explore how weather and climate change disrupt food supply chains, impact global prices, and reshape restaurant menus worldwide.",
+      "link": "https://beef-steak.com/the-global-effects-of-weather-on-food-prices-the-impacts-on-",
+      "source_type": "ddg"
+    },
+    {
+      "title": "[YT] A world going hungry? How conflict and climate change disrupt global food supply | Business Beyond",
+      "summary": "[DESCRIPTION FALLBACK] The battle against hunger is quite literally, an existential one. But there was a time when winning that battle seemed within reach ...",
+      "link": "https://www.youtube.com/watch?v=5YcvKvxWaCE",
+      "published": "2022-07-05T15:15:16Z",
+      "source_type": "youtube",
+      "channel": "DW News",
+      "video_id": "5YcvKvxWaCE",
+      "transcript_method": "description",
+      "transcript_chars": 158,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Food security - A growing dilemma | DW Documentary",
+      "summary": "Fresh food galore. In Germany, we're used to\nsupermarkets brimming with produce. But often it has come from far away.\nThat makes our supply chains vulnerable. The war in Ukraine is\nrevealing our limitations. We can tell from the empty shelves\nwhat didnít come from Germany. We need to feed more\nand more people globally. But intensive farming\nthreatens the environment and our survival. If we use traditional\nagriculture practices - the next two billion people\nthat will be here in the year 2050, we will need a land\narea the size of Brazil. Itís time to switch to sustainable\nfarming practices and new food sources. If we want to support the global\nfood chain and offer an alternative then we need to\ngrow a lot of seaweed. What food will we\neat in the future? Farmer Jonas Schulze Niehoff has\nbeen ",
+      "link": "https://www.youtube.com/watch?v=wu7PjKawjwI",
+      "published": "2022-10-25T16:00:44Z",
+      "source_type": "youtube",
+      "channel": "DW Documentary",
+      "video_id": "wu7PjKawjwI",
+      "transcript_method": "youtube_transcript_api",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Why are so Many People going Hungry? | World Hunger | FAO Explainer | United Nations",
+      "summary": "If you're watching this, chances are that you\nare in the fortunate position to have access to  the food you want, when you need it.\nFor the most part, this is thanks to strong  economies, distribution networks, skilled\nlabor, abundant resources, the list goes on.  If these components are developed enough,\nyou would be fairly certain that when you go  out looking for it, you will have access to\nenough food to keep you and your family  strong and healthy.\nSounds easy, right? Then why are so many  people going hungry?\nHOW DO WE END WORLD HUNGER?  and what is FAO doing about it?\nIn many countries, rural communities depend  heavily on small scale farming to sustain\nthemselves.  In turn, the involvement provided by these\ncommunities in small scale farming models  helps alleviate poverty.\nThe mon",
+      "link": "https://www.youtube.com/watch?v=Ke06QUfOeTE",
+      "published": "2022-12-10T14:00:08Z",
+      "source_type": "youtube",
+      "channel": "United Nations",
+      "video_id": "Ke06QUfOeTE",
+      "transcript_method": "youtube_transcript_api",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ]
+}

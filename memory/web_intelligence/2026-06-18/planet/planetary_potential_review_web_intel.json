@@ -1,0 +1,153 @@
+{
+  "axis": "PLANETARY_POTENTIAL_REVIEW",
+  "domain": "planet",
+  "timestamp": "2026-06-18T18:22:50.272192+00:00",
+  "sources_count": 11,
+  "rss_count": 4,
+  "ddg_count": 4,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] A Climate Scientist Reviews: Project Hail Mary",
+      "summary": "[DESCRIPTION FALLBACK] 00:00 Intro 00:36 Book plot (spoiler alert) 01:18 The Earth's Energy Balance (simplified) 02:38 Greenhouse gases explained ...",
+      "link": "https://www.youtube.com/watch?v=GJsouT2HV9g",
+      "published": "2026-03-18T12:15:28Z",
+      "source_type": "youtube",
+      "channel": "Planetary Boundaries Science",
+      "video_id": "GJsouT2HV9g",
+      "transcript_method": "description",
+      "transcript_chars": 149,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Climate Change acceleration: Do we need an emergency brake? | Dr Pete Sudbury (ex-Green Party)",
+      "summary": "[DESCRIPTION FALLBACK] Climate Change acceleration and the need for an emergency brake.” Bio : Dr. Pete Sudbury is an ex-Green Party Councillor for ...",
+      "link": "https://www.youtube.com/watch?v=37szoWu3nEA",
+      "published": "2026-06-03T23:00:06Z",
+      "source_type": "youtube",
+      "channel": "Climate Emergency Centres",
+      "video_id": "37szoWu3nEA",
+      "transcript_method": "description",
+      "transcript_chars": 151,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] What if Living Clouds Controlled the Climate? | The Biology of Atmospheric Sentience",
+      "summary": "[DESCRIPTION FALLBACK] What if the cure for runaway climate change wasn't a static chemical shield, but an active, thinking biology engineered directly into ...",
+      "link": "https://www.youtube.com/watch?v=63EvX1S8l3g",
+      "published": "2026-06-02T18:30:06Z",
+      "source_type": "youtube",
+      "channel": "mind traps",
+      "video_id": "63EvX1S8l3g",
+      "transcript_method": "description",
+      "transcript_chars": 160,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "problem": "Inaccurate emissions data in the Climate TRACE database",
+    "root_cause": "Methodological errors and lack of robust data validation",
+    "severity": "MEDIUM",
+    "leverage_points": [
+      "The Climate TRACE consortium and its data contributors",
+      "Regulatory bodies overseeing emissions data quality"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Conduct an independent audit and validation of the Climate TRACE database",
+        "measurable_goal": "Reduce errors in emissions data by 30% within 6 months",
+        "timeframe": "short-term"
+      },
+      {
+        "action": "Establish stricter data validation protocols for emissions reporting",
+        "measurable_goal": "Achieve 95% data accuracy within 1 year",
+        "timeframe": "medium-term"
+      }
+    ],
+    "evidence": [
+      "Major errors found in Al Gore-founded Climate TRACE database",
+      "Researchers found that the database contained significant inaccuracies"
+    ],
+    "generalization": "This problem connects to the domains of civilization and human, as accurate emissions data is essential for informed decision-making and policy development, which in turn affects the well-being of individuals and the planet",
+    "summary": "Inaccurate emissions data in the Climate TRACE database poses a medium-level problem, requiring immediate attention to ensure data quality and inform effective climate change mitigation strategies. The problem can be addressed through independent audits, stricter data validation protocols, and regulatory oversight.",
+    "risk_level": "MEDIUM"
+  },
+  "raw_items": [
+    {
+      "title": "Major errors found in Al Gore-founded Climate TRACE database",
+      "summary": "A new study from Northern Arizona University is raising red flags about a widely used global emissions database from Climate TRACE, a consortium co-founded by Al Gore. Researchers found that the database may be dramatically undercounting carbon dioxide emissions from cars and trucks in cities—by an average of 70% across 260 U.S. cities, with some cities showing gaps of more than 90%.",
+      "link": "https://www.sciencedaily.com/releases/2026/06/260618041519.htm",
+      "published": "Thu, 18 Jun 2026 04:15:19 EDT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Arizona reservoir nearly vanishes after snowpack collapse triggers massive fish kill",
+      "summary": "A historic lack of snow in the Gila River watershed has left Arizona’s San Carlos Reservoir less than 1% full, triggering a massive fish kill and an indefinite closure. Despite the bleak conditions, heavy summer rains could help the reservoir rebound.",
+      "link": "https://www.sciencedaily.com/releases/2026/06/260618041458.htm",
+      "published": "Thu, 18 Jun 2026 09:53:38 EDT",
+      "source_type": "rss"
+    },
+    {
+      "title": "These bees have nowhere to hide from extreme heat",
+      "summary": "A major study of Australian native bees found that stem-nesting species may be the first to feel the impact of climate change. Unlike bees that nest underground, they have few ways to escape dangerous heat. Researchers also discovered that tropical bees are particularly vulnerable, even when they are already adapted to hot environments. The findings suggest bee behavior could be a key factor in determining which species survive a warming world.",
+      "link": "https://www.sciencedaily.com/releases/2026/06/260617032157.htm",
+      "published": "Thu, 18 Jun 2026 03:59:03 EDT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Scientists discover an earthquake gate as California faults reach their highest stress levels in 1,000 years",
+      "summary": "A new study suggests Southern California's major fault system is more stressed than at any point in the last 1,000 years. Researchers found that the Cajon Pass, where the San Andreas and San Jacinto faults meet, could act as an “earthquake gate” that determines whether a future rupture spreads across both faults. Current conditions resemble those that preceded some of the region’s largest historical earthquakes.",
+      "link": "https://www.sciencedaily.com/releases/2026/06/260617032155.htm",
+      "published": "Thu, 18 Jun 2026 12:19:47 EDT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Geoengineering",
+      "summary": "Geoengineering (also known as climate engineering or climate intervention) is the deliberate large-scale interventions in the Earth’s climate system intended to counteract human-caused climate change. The term commonly encompasses two broad categories: large-scale carbon dioxide removal (CDR) and solar radiation modification (SRM). CDR involves techniques to remove carbon dioxide from the atmosphe",
+      "link": "https://en.wikipedia.org/wiki/Geoengineering",
+      "source_type": "ddg"
+    },
+    {
+      "title": "About Geoengineering | US EPA",
+      "summary": "April 3, 2026 - Geoengineering refers to activities intended to cool the Earth or remove greenhouse gases from the air and has health and environmental impacts. This page summarizes geoengineering and potential impacts.",
+      "link": "https://www.epa.gov/geoengineering/about-geoengineering",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Planetary boundaries",
+      "summary": "Planetary boundaries are a framework to describe limits to the impacts of human activities on the Earth system. Beyond these limits, the environment may not be able to continue to self-regulate. This would mean the Earth system would leave the period of stability of the Holocene, in which human society developed.These nine boundaries are climate change, ocean acidification, stratospheric ozone dep",
+      "link": "https://en.wikipedia.org/wiki/Planetary_boundaries",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Planetary boundary layer - Wikipedia",
+      "summary": "Not to be confused with planetary boundaries . ... A convective planetary boundary layer is a type of planetary boundary layer where positive ...",
+      "link": "https://en.wikipedia.org/wiki/Planetary_boundary_layer",
+      "source_type": "ddg"
+    },
+    {
+      "title": "[YT] A Climate Scientist Reviews: Project Hail Mary",
+      "summary": "[DESCRIPTION FALLBACK] 00:00 Intro 00:36 Book plot (spoiler alert) 01:18 The Earth's Energy Balance (simplified) 02:38 Greenhouse gases explained ...",
+      "link": "https://www.youtube.com/watch?v=GJsouT2HV9g",
+      "published": "2026-03-18T12:15:28Z",
+      "source_type": "youtube",
+      "channel": "Planetary Boundaries Science",
+      "video_id": "GJsouT2HV9g",
+      "transcript_method": "description",
+      "transcript_chars": 149,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Climate Change acceleration: Do we need an emergency brake? | Dr Pete Sudbury (ex-Green Party)",
+      "summary": "[DESCRIPTION FALLBACK] Climate Change acceleration and the need for an emergency brake.” Bio : Dr. Pete Sudbury is an ex-Green Party Councillor for ...",
+      "link": "https://www.youtube.com/watch?v=37szoWu3nEA",
+      "published": "2026-06-03T23:00:06Z",
+      "source_type": "youtube",
+      "channel": "Climate Emergency Centres",
+      "video_id": "37szoWu3nEA",
+      "transcript_method": "description",
+      "transcript_chars": 151,
+      "has_full_transcript": false
+    }
+  ]
+}

@@ -1,0 +1,110 @@
+{
+  "axis": "CULTURE_MEDIA_REVIEW",
+  "domain": "human",
+  "timestamp": "2026-06-18T21:11:28.249648+00:00",
+  "sources_count": 9,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 1,
+  "youtube_items": [
+    {
+      "title": "[YT] Social media's role in fueling extremism and misinformation in a divided political climate - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] Half of U.S. adults say they sometimes get their news from social media. However, almost two-thirds of adults say they view social media as a bad thing for d... Published September 11, 2024",
+      "link": "https://www.youtube.com/watch?v=3vpfKZ-7ir4",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "3vpfKZ-7ir4",
+      "transcript_method": "description",
+      "transcript_chars": 212,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "problem": "Анализ на CULTURE_MEDIA_REVIEW — данни получени но LLM грешка",
+    "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: Gemini rate limit",
+    "severity": "UNKNOWN",
+    "leverage_points": [],
+    "proposed_actions": [],
+    "evidence": [
+      "Can a Federal Plan Fix Dismal Penn Station? There’s Hope.",
+      "Mariska Hargitay on ‘Every Brilliant Thing’ and Finding Inspiration From Jalen Brunson",
+      "‘Toy Story 5’ Review: The Machines Have Come for the Children"
+    ],
+    "generalization": "",
+    "summary": "- Can a Federal Plan Fix Dismal Penn Station? There’s Hope.: Everyone agrees that Penn Station is a disaster, but not on how to fix it. Now a Trump-backed, multibillion-dollar plan to rebuild it offer",
+    "risk_level": "UNKNOWN",
+    "trend": "UNKNOWN",
+    "llm_raw": ""
+  },
+  "raw_items": [
+    {
+      "title": "Can a Federal Plan Fix Dismal Penn Station? There’s Hope.",
+      "summary": "Everyone agrees that Penn Station is a disaster, but not on how to fix it. Now a Trump-backed, multibillion-dollar plan to rebuild it offers a promising step forward.",
+      "link": "https://www.nytimes.com/2026/06/18/arts/design/penn-station-renovation-plan-trump.html",
+      "published": "Thu, 18 Jun 2026 11:09:53 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Mariska Hargitay on ‘Every Brilliant Thing’ and Finding Inspiration From Jalen Brunson",
+      "summary": "The “Law & Order: SVU” actress “was really scared” about starring in “Every Brilliant Thing.” Who does she look to for inspiration? The Knicks, of course.",
+      "link": "https://www.nytimes.com/2026/06/18/theater/mariska-hargitay-broadway-every-brilliant-thing.html",
+      "published": "Thu, 18 Jun 2026 15:00:17 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "‘Toy Story 5’ Review: The Machines Have Come for the Children",
+      "summary": "In this latest installment of the popular franchise, Woody and Buzz Lightyear are back and must contend with Bonnie’s mesmerizing new toy.",
+      "link": "https://www.nytimes.com/2026/06/18/movies/toy-story-5-review.html",
+      "published": "Thu, 18 Jun 2026 09:01:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Giacometti’s Goddesses Have Entered the Temple",
+      "summary": "You may stand a little straighter after visiting the Met’s Temple of Dendur, which has been reanimated with sculptures by the Swiss master of figurative tension.",
+      "link": "https://www.nytimes.com/2026/06/18/arts/giacometti-dendur-met-review.html",
+      "published": "Thu, 18 Jun 2026 13:56:18 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "‘Ordinary people are being erased’: one director’s audacious fightback against AI – featuring Frinton",
+      "summary": "<p>Marc Isaacs’ film Synthetic Sincerity may look like a documentary, but its fictional premise – a lab that scrapes movies  to harvest human emotions – shines a hard light on just how far AI can go</p><p>In Marc Isaacs’ latest film, the subversive documentary maker reveals that an AI research laboratory recently licensed his entire body of work. That’s a quarter-century of droll, deadpan studies of ordinary life in Britain – from the poetic <a href=\"https://www.youtube.com/watch?v=FJNAvyLCTik\">",
+      "link": "https://www.theguardian.com/film/2026/jun/18/marc-isaacs-synthetic-sincerity-ai",
+      "published": "Thu, 18 Jun 2026 14:33:27 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Soul classics and stepmother celebrations: Alicia Keys’ 20 best songs – ranked!",
+      "summary": "<p>Twenty-five years after she released her debut album, we pick the best of an artist pairing Chopin-inspired piano with pop, soul and powerful emotion</p><p>Two different takes on the same album – one traditional, the other more beat-heavy – packaged together, Keys was an experiment that didn’t quite work, but Skydive, co-written with Raphael Saadiq, is a fine song: both versions are great but Mike WiLL Made-It’s bumping rework wins by a fraction.</p> <a href=\"https://www.theguardian.com/music",
+      "link": "https://www.theguardian.com/music/2026/jun/18/soul-classics-and-stepmother-celebrations-alicia-keys-20-best-songs-ranked",
+      "published": "Thu, 18 Jun 2026 13:15:03 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "‘You learn how to be idiotic artists’: Gilbert & George on fame, rebellion and their mystery new collaborator",
+      "summary": "<p>The Britart mavericks have now teamed up with an unlikely artist. Is their odd throuple an elaborate prank – or are the duo passing down their legacy?</p><p>‘Hello girls,” greets 82-year-old Gilbert Prousch, one half of art duo Gilbert &amp; George, as he shakes my hand when I arrive at his house with a very important guest in tow. He kisses his other guest on the cheek. Gilbert <em>is</em> Italian after all.</p><p>“This way,” he says, ushering us into the four-storey, 18th-century Georgian t",
+      "link": "https://www.theguardian.com/artanddesign/2026/jun/18/gilbert-and-george-endless-interview-our-george-crompton",
+      "published": "Thu, 18 Jun 2026 07:00:04 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Post your questions for Martha Reeves of Martha and the Vandellas",
+      "summary": "<p>The voice behind Dancing in the Street, Heat Wave and many more is releasing her first album in 22 years – and will take on your questions</p><p>Martha Reeves is one of the defining voices of 1960s pop, someone who embodied the romance and euphoria of Motown Records at its peak. And at the age of 84, she is preparing to release a new album – her first in 22 years. To mark the occasion, she’ll be joining us to answer your questions.</p><p>Born in Alabama and raised in Detroit, Reeves started o",
+      "link": "https://www.theguardian.com/music/2026/jun/18/post-your-questions-for-martha-reeves-of-martha-and-the-vandellas",
+      "published": "Thu, 18 Jun 2026 14:10:05 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] Social media's role in fueling extremism and misinformation in a divided political climate - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] Half of U.S. adults say they sometimes get their news from social media. However, almost two-thirds of adults say they view social media as a bad thing for d... Published September 11, 2024",
+      "link": "https://www.youtube.com/watch?v=3vpfKZ-7ir4",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "3vpfKZ-7ir4",
+      "transcript_method": "description",
+      "transcript_chars": 212,
+      "has_full_transcript": false
+    }
+  ]
+}

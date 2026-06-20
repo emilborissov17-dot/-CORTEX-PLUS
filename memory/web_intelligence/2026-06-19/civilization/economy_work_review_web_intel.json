@@ -1,0 +1,158 @@
+{
+  "axis": "ECONOMY_WORK_REVIEW",
+  "domain": "civilization",
+  "timestamp": "2026-06-19T17:39:14.315837+00:00",
+  "sources_count": 11,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] 2025 now weakest job growth year since pandemic",
+      "summary": "[DESCRIPTION FALLBACK] The US economy added just 50000 jobs in December, according to the latest monthly report from the Bureau of Labor Statistics.",
+      "link": "https://www.youtube.com/watch?v=u-WIdZMgpIY",
+      "published": "2026-01-09T16:35:55Z",
+      "source_type": "youtube",
+      "channel": "CNN",
+      "video_id": "u-WIdZMgpIY",
+      "transcript_method": "description",
+      "transcript_chars": 148,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Goldman&#39;s Hatzius and Snider on the Outlook for 2026 | Odd Lots",
+      "summary": "[DESCRIPTION FALLBACK] 2025 was an extraordinary year, with the real economy defying recession worries, and equity markets putting up monster returns.",
+      "link": "https://www.youtube.com/watch?v=7WrpqjcMCWI",
+      "published": "2025-12-29T09:00:18Z",
+      "source_type": "youtube",
+      "channel": "Bloomberg Podcasts",
+      "video_id": "7WrpqjcMCWI",
+      "transcript_method": "description",
+      "transcript_chars": 150,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Stagflation",
+      "summary": "[DESCRIPTION FALLBACK] Get a special 35% discount* on an annual digital subscription to The Economist at https://www.economist.com/explained *20% in ...",
+      "link": "https://www.youtube.com/watch?v=x-Q47erm5MI",
+      "published": "2025-09-28T15:01:38Z",
+      "source_type": "youtube",
+      "channel": "Economics Explained",
+      "video_id": "x-Q47erm5MI",
+      "transcript_method": "description",
+      "transcript_chars": 152,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "problem": "Rising public debt and uncertain economic growth",
+    "root_cause": "Increased borrowing and potential instability in global energy markets",
+    "severity": "MEDIUM",
+    "leverage_points": [
+      "Government fiscal policy and regulation of energy markets",
+      "Central banks' monetary policy and interest rates"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Implement sustainable fiscal policies to reduce public debt",
+        "measurable_goal": "Achieve a deficit-to-GDP ratio below 3% within the next 2 years",
+        "timeframe": "medium-term"
+      },
+      {
+        "action": "Diversify energy sources and invest in renewable energy",
+        "measurable_goal": "Increase the share of renewable energy in the energy mix by 10% within the next 5 years",
+        "timeframe": "long-term"
+      }
+    ],
+    "evidence": [
+      "The UK borrowed £23.3bn in May, up almost a third on the same month last year",
+      "Oil prices rise as U.S.-Iran deal faces tests",
+      "2025 was the weakest job growth year since the pandemic"
+    ],
+    "generalization": "This problem connects to the domains of Planet (energy and resource management) and Human (economic well-being and social stability)",
+    "summary": "Rising public debt and uncertain economic growth pose a medium-severity problem, requiring sustainable fiscal policies and diversification of energy sources.",
+    "risk_level": "MEDIUM"
+  },
+  "raw_items": [
+    {
+      "title": "Plans to end gazumping with binding agreements in house sales shake-up",
+      "summary": "Sales agreements will be legally binding sooner and making sellers provide more home information up front are part of the planned changes.",
+      "link": "https://www.bbc.com/news/articles/c6216g52p8wo?at_medium=RSS&at_campaign=rss",
+      "published": "Fri, 19 Jun 2026 11:41:14 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "O'Leary extends Ryanair contract in deal that could net him over £130m",
+      "summary": "The Ryanair boss extends his contract to 2032, in a deal featuring a bonus scheme that could earn him more than €150m (£130m).",
+      "link": "https://www.bbc.com/news/articles/c4gyejpy221o?at_medium=RSS&at_campaign=rss",
+      "published": "Fri, 19 Jun 2026 15:27:27 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Warning over 'fragile' public finances as borrowing rises",
+      "summary": "The UK borrowed £23.3bn in May, according to official figures, up almost a third on the same month last year.",
+      "link": "https://www.bbc.com/news/articles/cqx1e8nrwgvo?at_medium=RSS&at_campaign=rss",
+      "published": "Fri, 19 Jun 2026 08:37:31 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "'I'd be put off if he asked to split it': Who should pay on a first date?",
+      "summary": "Some insist on splitting the bill, others say the asker should pay, while many still see a man paying as romantic.",
+      "link": "https://www.bbc.com/news/articles/c74yl4gknzno?at_medium=RSS&at_campaign=rss",
+      "published": "Fri, 19 Jun 2026 06:52:40 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "For India, the Return of Iranian Oil Cannot Come Soon Enough",
+      "summary": "After months of shortages and uncertainty, India sees an opportunity to restore a once-crucial energy relationship.",
+      "link": "https://www.nytimes.com/2026/06/19/business/india-iran-oil-imports.html",
+      "published": "Fri, 19 Jun 2026 13:17:59 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Rates on New Student Loans Will Rise on July 1",
+      "summary": "Higher interest rates take effect on July 1 for the next school year. Borrowers are already dealing with rising college costs and inflation elsewhere.",
+      "link": "https://www.nytimes.com/2026/06/19/your-money/student-loans-interest-rates-changes.html",
+      "published": "Fri, 19 Jun 2026 13:00:04 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Oil Prices Rise as U.S.-Iran Deal Faces Tests",
+      "summary": "Oil remains on track for a second straight weekly decline, but signs of cracks in the agreement to end the war have given traders pause.",
+      "link": "https://www.nytimes.com/2026/06/19/business/oil-gas-prices-iran.html",
+      "published": "Fri, 19 Jun 2026 17:15:17 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Stranded Ships Hoping for Escape Find a Turbulent Strait of Hormuz",
+      "summary": "Shipping companies had hoped to get their vessels out after this week’s U.S.-Iran deal but faced uncertainty on Friday as violence flared again in the region.",
+      "link": "https://www.nytimes.com/2026/06/19/business/iran-us-hormuz-shipping.html",
+      "published": "Fri, 19 Jun 2026 16:55:03 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] 2025 now weakest job growth year since pandemic",
+      "summary": "[DESCRIPTION FALLBACK] The US economy added just 50000 jobs in December, according to the latest monthly report from the Bureau of Labor Statistics.",
+      "link": "https://www.youtube.com/watch?v=u-WIdZMgpIY",
+      "published": "2026-01-09T16:35:55Z",
+      "source_type": "youtube",
+      "channel": "CNN",
+      "video_id": "u-WIdZMgpIY",
+      "transcript_method": "description",
+      "transcript_chars": 148,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Goldman&#39;s Hatzius and Snider on the Outlook for 2026 | Odd Lots",
+      "summary": "[DESCRIPTION FALLBACK] 2025 was an extraordinary year, with the real economy defying recession worries, and equity markets putting up monster returns.",
+      "link": "https://www.youtube.com/watch?v=7WrpqjcMCWI",
+      "published": "2025-12-29T09:00:18Z",
+      "source_type": "youtube",
+      "channel": "Bloomberg Podcasts",
+      "video_id": "7WrpqjcMCWI",
+      "transcript_method": "description",
+      "transcript_chars": 150,
+      "has_full_transcript": false
+    }
+  ]
+}

@@ -1,0 +1,99 @@
+{
+  "axis": "DEEP_TIME_RISKS_REVIEW",
+  "fetched_at": "2026-06-19T18:02:38.532320+00:00",
+  "smart_query": "nuclear war pandemic existential risk",
+  "sources_count": {
+    "wiki": 0,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "PipFoweraker/pdoom1",
+      "snippet": "Save the world from deadly AI through paperwork",
+      "stars": 8,
+      "url": "https://github.com/PipFoweraker/pdoom1",
+      "updated": "2026-06-15",
+      "source": "GitHub"
+    },
+    {
+      "title": "nikthink/pauseai.ca",
+      "snippet": "https://pauseai.ca/",
+      "stars": 4,
+      "url": "https://github.com/nikthink/pauseai.ca",
+      "updated": "2026-04-14",
+      "source": "GitHub"
+    },
+    {
+      "title": "holo-q/foom",
+      "snippet": "WARNING: cognitive hazards ahead",
+      "stars": 4,
+      "url": "https://github.com/holo-q/foom",
+      "updated": "2026-05-09",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "FlowMaps: Modeling Long-Term Multimodal Object Dynamics with Flow Matching",
+      "snippet": "Joint spatial and temporal understanding of 3D scenes is a crucial requirement for robots deployed in everyday household environments. Such agents must not only comprehend and navigate spatial layouts, but also reason about how these spaces evolve over time. In particular, humans interact with objec",
+      "url": "https://arxiv.org/abs/2606.20209v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "MedRLM: Recursive Multimodal Health Intelligence for Long-Context Clinical Reasoning, Sensor-Guided Screening, Evidence-Grounded Decision Support, and Community-to-Tertiary Referral Optimization",
+      "snippet": "Real-world clinical decision support requires reasoning over heterogeneous and longitudinal patient information rather than answering isolated medical questions. However, current medical large language models and retrieval-augmented generation systems often rely on single-step prompting or retrieval",
+      "url": "https://arxiv.org/abs/2606.20164v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[Your Friendly Neighborhood Hookworms] For most of human history, people went about their daily lives with a worm or two (or fifty) in their guts. Only in the past century, with pharmaceuticals and sanitation practices, have we made significant strides towards deworming the whole of humanity. And that’s typically been thought of as a good thing, because having too many worms in your body can–quite literally–suck the life out of you.\nBu",
+  "wiki": null,
+  "youtube_items": [
+    {
+      "title": "[YT] YouTube:K-u-b7Ttdms",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=K-u-b7Ttdms",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "K-u-b7Ttdms",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] YouTube:20eDWMnZxuA",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=20eDWMnZxuA",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "20eDWMnZxuA",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] YouTube:CccWBQJnIr4",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=CccWBQJnIr4",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "CccWBQJnIr4",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    }
+  ],
+  "summary": "[arXiv]\n- FlowMaps: Modeling Long-Term Multimodal Object Dynamics with Flow Matching\n- MedRLM: Recursive Multimodal Health Intelligence for Long-Context Clinical Reasoning, Sensor-Guided Screening, Ev",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": [],
+  "open_source_momentum": "",
+  "scientific_frontier": "",
+  "relevance_to_goal": ""
+}

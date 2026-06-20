@@ -1,0 +1,117 @@
+{
+  "axis": "WATER_REVIEW",
+  "domain": "planet",
+  "timestamp": "2026-06-20T05:35:11.891952+00:00",
+  "sources_count": 11,
+  "rss_count": 4,
+  "ddg_count": 6,
+  "youtube_count": 1,
+  "youtube_items": [
+    {
+      "title": "[YT] The Yamuna, India's most polluted river - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] Guardian India correspondent Michael Safi takes a journey along the Yamuna river. Subscribe to The Guardian on YouTube https://www.youtube.com/user/theguar...",
+      "link": "https://www.youtube.com/watch?v=eHCaIvPN2rY",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "eHCaIvPN2rY",
+      "transcript_method": "description",
+      "transcript_chars": 181,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "problem": "Groundwater depletion and decline in water levels due to drought and unsustainable use",
+    "root_cause": "Over-extraction of groundwater for agricultural and human consumption purposes, exacerbated by climate change and lack of effective water management systems",
+    "severity": "HIGH",
+    "leverage_points": [
+      "Government agencies and water management authorities",
+      "Agricultural industries and practices"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Implement efficient irrigation systems and water-saving technologies in agriculture",
+        "measurable_goal": "Reduce groundwater extraction by 20% within the next 2 years",
+        "timeframe": "medium-term"
+      },
+      {
+        "action": "Develop and enforce sustainable water management policies and regulations",
+        "measurable_goal": "Increase water recycling and reuse by 30% within the next 5 years",
+        "timeframe": "long-term"
+      }
+    ],
+    "evidence": [
+      "Groundwater levels have reached critical lows in Florida, impacting human populations and ecosystems",
+      "The U.S. Geological Survey reports long-term water-level declines caused by sustained groundwater pumping in many areas of the United States"
+    ],
+    "generalization": "This problem connects to the domains of Civilization (agriculture, human consumption, and economic activities) and Planet (ecosystems, climate change, and natural resources)",
+    "summary": "Groundwater depletion and decline in water levels pose a significant threat to the sustainability of human populations and ecosystems, requiring immediate attention and action from government agencies, agricultural industries, and other stakeholders",
+    "risk_level": "HIGH"
+  },
+  "raw_items": [
+    {
+      "title": "Setting Fires On Purpose to Cut Risk of Catastrophic Wildfires",
+      "summary": "<figure><img alt=\"Firefighters ignite a prescribed burn.\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"681\" src=\"https://i0.wp.com/www.circleofblue.org/wp-content/uploads/2026/06/PRESCRIBED-BURN-scaled.jpg?fit=1024%2C681&amp;ssl=1\" width=\"1024\" /></figure>\n<p>Wildfire risk is predicted to stay elevated through June in the Upper Midwest from drought and high winds. That’s risky for the region’s pristine inland lakes, but land managers are working to reduce wildfire ",
+      "link": "https://www.circleofblue.org/2026/great-lakes/setting-fires-on-purpose-to-cut-risk-of-catastrophic-wildfires/",
+      "published": "Thu, 18 Jun 2026 10:02:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "When Forests Burn, Lakes Suffer",
+      "summary": "<figure><img alt=\"A Smokey Bear sign with &quot;fire danger high&quot; in front of a landscape on fire. A firefighter walks in the background.\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"768\" src=\"https://i0.wp.com/www.circleofblue.org/wp-content/uploads/2026/06/SMOKEYBEAR-scaled.jpg?fit=1024%2C768&amp;ssl=1\" width=\"1024\" /></figure>\n<p>Wildfire risk is high in the upper Great Lakes, and research shows that large, scorching wildfires spell trouble for lakes in th",
+      "link": "https://www.circleofblue.org/2026/great-lakes/when-forests-burn-lakes-suffer/",
+      "published": "Wed, 17 Jun 2026 10:04:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Ethanol Was Marketed to Help Agriculture. But It Fouled Our Water and Injured Our Health.",
+      "summary": "<figure><img alt=\"\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"667\" src=\"https://i0.wp.com/www.circleofblue.org/wp-content/uploads/2014/06/20131104_AERIAL_CORN_HARVEST_0153.jpg?fit=1000%2C667&amp;ssl=1\" width=\"1000\" /></figure>\n<p>Just like his presidential predecessors – George Bush, Barack Obama, and Joe Biden – Donald Trump has a thing for ethanol. But why? Inordinately expensive to taxpayers, monstrously polluting, and now linked to mounting cancer incidence ",
+      "link": "https://www.circleofblue.org/2026/opinion/ethanol-was-marketed-to-help-agriculture-but-it-fouled-our-water-and-injured-our-health/",
+      "published": "Tue, 16 Jun 2026 10:30:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "On Menominee Lakes, Wild Rice Is Coming Back. It Isn’t Easy.",
+      "summary": "<figure><img alt=\"\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"683\" src=\"https://i0.wp.com/www.circleofblue.org/wp-content/uploads/2026/06/DSCF4326-scaled.jpg?fit=1024%2C683&amp;ssl=1\" width=\"1024\" /></figure>\n<p>MENOMINEE, Wisc. — On a cool bluebird morning, DJ Micik guides his canoe through the narrow channel connecting Little Rice Lake with Rice Lake, two of the largest bodies of water on the Menominee reservation in northern Wisconsin.&#160; Sitting behind Mi",
+      "link": "https://www.circleofblue.org/2026/agriculture/on-menominee-lakes-wild-rice-is-coming-back-it-isnt-easy/",
+      "published": "Sun, 14 Jun 2026 11:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Drought Grips Florida: Groundwater Levels Reach Critical Low - ZetBit",
+      "summary": "These areas have seen a significant drop in water levels, impacting both human populations and ecosystems. Impact on Daily Life. The drought has severe implications for agriculture, drinking water supplies, wildlife habitats, and local economies across the state.",
+      "link": "https://zetbit.tech/science/drought-grips-florida-groundwater-levels-reach-critical-low",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Groundwater Decline and Depletion | U.S. Geological Survey",
+      "summary": "Groundwater depletion, a term often defined as long-term water-level declines caused by sustained groundwater pumping, is a key issue associated with groundwater use. Many areas of the United States are experiencing groundwater depletion.",
+      "link": "https://www.usgs.gov/special-topics/water-science-school/science/groundwater-decline-and-depletion",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Florida is building the world's largest environmental restoration project",
+      "summary": "The ecosystem recharges the water supply for all of South Florida – a population approaching nine million. South Florida's primary source of drinking water comes from groundwater stored in aquifers, mainly the Biscayne Aquifer, which is replenished by the Everglades.",
+      "link": "https://www.bbc.com/future/article/20240815-floridas-everglades-reservoir-will-clean-the-states-water",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Michigan Drought Dashboard - National Weather Service",
+      "summary": "Welcome to the Michigan Drought Dashboard. This page hosts information and resources about current drought conditions and impacts as well as forecast and historical information.",
+      "link": "https://www.weather.gov/dtx/drought",
+      "source_type": "ddg"
+    },
+    {
+      "title": "A Groundwater Strategy for Michigan - seas.umich.edu",
+      "summary": "Feb 16, 2026 · ichigan’s groundwater management. Policy analysis reveals that Michigan lacks a dedicated groundwater protection statute, and its management of the resource is a layered application of federal, regional, state, and loca.",
+      "link": "https://seas.umich.edu/sites/default/files/2026-04/Groundwater_Report_2026.pdf",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Michigan - Drought.gov",
+      "summary": "Below, you can look back at past drought conditions for Michigan according to 3 historical drought indices. The U.S. Drought Monitor is a weekly map that shows the location and intensity of drought across the country since 2000.",
+      "link": "https://www.drought.gov/states/michigan",
+      "source_type": "ddg"
+    }
+  ]
+}

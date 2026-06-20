@@ -1,0 +1,118 @@
+{
+  "axis": "CULTURE_MEDIA_REVIEW",
+  "fetched_at": "2026-06-20T07:29:21.877932+00:00",
+  "smart_query": "media disinformation culture",
+  "sources_count": {
+    "wiki": 0,
+    "gdelt": 3,
+    "arxiv": 2,
+    "github": 3,
+    "youtube_transcripts": 2,
+    "podcast": 1
+  },
+  "rss": [],
+  "gdelt": [
+    {
+      "title": "Фонд поддержки медиа будет финансировать проекты , укрепляющие устойчивость к дезинформации",
+      "snippet": "Фонд поддержки медиа будет финансировать проекты , укрепляющие устойчивость к дезинформации",
+      "url": "https://www.lrt.lt/ru/novosti/17/2965183/fond-podderzhki-media-budet-finansirovat-proekty-ukrepliaiushchie-ustoichivost-k-dezinformatsii",
+      "source": "lrt.lt"
+    },
+    {
+      "title": "Исследование медиаграмотности : половина жителей игнорирует дезинформацию",
+      "snippet": "Исследование медиаграмотности : половина жителей игнорирует дезинформацию",
+      "url": "https://www.lrt.lt/ru/novosti/17/2916156/issledovanie-mediagramotnosti-polovina-zhitelei-ignoriruet-dezinformatsiiu",
+      "source": "lrt.lt"
+    },
+    {
+      "title": "Минкультуры и BBC обсудили сотрудничество в медиасфере и освещение Всемирных игр кочевников",
+      "snippet": "Минкультуры и BBC обсудили сотрудничество в медиасфере и освещение Всемирных игр кочевников",
+      "url": "https://culture.akipress.org/news:2474296",
+      "source": "culture.akipress.org"
+    }
+  ],
+  "github_repos": [
+    {
+      "title": "bbidwell85/Totality",
+      "snippet": "Analyze quality, track collection completeness, find upgrades, manage media wishlists.",
+      "stars": 19,
+      "url": "https://github.com/bbidwell85/Totality",
+      "updated": "2026-06-17",
+      "source": "GitHub"
+    },
+    {
+      "title": "moguiyu/NewsPrism",
+      "snippet": "Multilingual news monitor that clusters same-event coverage into Chinese cross-source digests with focus maps and strict positive highlights",
+      "stars": 14,
+      "url": "https://github.com/moguiyu/NewsPrism",
+      "updated": "2026-06-20",
+      "source": "GitHub"
+    },
+    {
+      "title": "TonF1917/Trace",
+      "snippet": "An open-source, local-first analytical web application to compare how different media frame the same event.",
+      "stars": 6,
+      "url": "https://github.com/TonF1917/Trace",
+      "updated": "2026-06-10",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "MIDSim: Simulating Multi-Channel Information Diffusion in Social Media with LLM-Powered Multi-Agent System",
+      "snippet": "Information diffusion in social media shapes public opinion and collective behavior, making its modeling and simulation an important research problem. Existing studies have investigated information diffusion through epidemic-based, cascade-based, and point process models. However, they predominantly",
+      "url": "https://arxiv.org/abs/2606.13140v2",
+      "source": "arXiv"
+    },
+    {
+      "title": "RELIANCE: Curating and Evaluating Reproductive Health Information on Social Media",
+      "snippet": "Social media platforms like TikTok have become a key source of health information, with studies reporting inaccuracies in posts. As Large Language Model (LLM) providers increasingly integrate LLMs into digital platforms to fact-check content (e.g., Grok and Perplexity on X and WhatsApp, respectively",
+      "url": "https://arxiv.org/abs/2606.18285v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[Prominent Scientists, Faith Leaders, Policymakers and Artists Call for a Prohibition on Superintelligence, as Poll Shows Americans Don’t Want It] Initial signatories include AI pioneers Yoshua Bengio and Geoffrey Hinton, leading media voices Steve Bannon and Glenn Beck, Obama's National Security Advisor Susan Rice, business trailblazers Steve Wozniak and Richard Branson, five Nobel Laureates, former Irish President Mary Robinson, actors Stephen Fry and Joseph Gordon-Levitt, and hundreds of others.",
+  "wiki": null,
+  "youtube_items": [
+    {
+      "title": "[YT] Does Social Media Kill Democracy? | Freedom of Speech vs Censorship",
+      "summary": "[DESCRIPTION FALLBACK] Social media has become an integral part of our everyday lives. Accordingly, it also plays an important role for politics. How do ...",
+      "link": "https://www.youtube.com/watch?v=qraF9NSA3BQ",
+      "source_type": "youtube",
+      "channel": "DW Shift",
+      "video_id": "qraF9NSA3BQ",
+      "transcript_method": "description",
+      "transcript_chars": 156,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] How false news can spread - Noah Tavlin",
+      "summary": "[DESCRIPTION FALLBACK] Dive into the phenomenon known as circular reporting and how it contributes to the spread of false news and misinformation.",
+      "link": "https://www.youtube.com/watch?v=cSKGa_7XJkg",
+      "source_type": "youtube",
+      "channel": "TED-Ed",
+      "video_id": "cSKGa_7XJkg",
+      "transcript_method": "description",
+      "transcript_chars": 146,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Jon explains how the right confuses the profit/hate-driven social media algorithm with &quot;free&quot; speech",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=Z64qjMCoeS8",
+      "source_type": "youtube",
+      "channel": "The Daily Show",
+      "video_id": "Z64qjMCoeS8",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    }
+  ],
+  "summary": "[GDELT News]\n- Фонд поддержки медиа будет финансировать проекты , укрепляющие устойчивость к дезинформации\n- Исследование медиаграмотности : половина жителей игнорирует дезинформацию\n\n[arXiv]\n- MIDSim",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": [],
+  "open_source_momentum": "",
+  "scientific_frontier": "",
+  "relevance_to_goal": ""
+}

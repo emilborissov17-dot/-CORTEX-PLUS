@@ -1,0 +1,118 @@
+{
+  "axis": "ENERGY_REVIEW",
+  "domain": "planet",
+  "timestamp": "2026-06-20T05:35:26.567279+00:00",
+  "sources_count": 13,
+  "rss_count": 12,
+  "ddg_count": 0,
+  "youtube_count": 1,
+  "youtube_items": [
+    {
+      "title": "[YT] Why Norway is Becoming the World's Richest Country - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] Go to https://brilliant.org/RealLifeLore/ to get a 30-day free trial + the first 200 people will get 20% off their annual subscriptionWatch more than 25 addi...",
+      "link": "https://www.youtube.com/watch?v=RO8vWJfmY88",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "RO8vWJfmY88",
+      "transcript_method": "description",
+      "transcript_chars": 183,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "problem": "Inefficient grid modernization efforts and lack of investment in renewable energy may hinder the transition to a sustainable energy system",
+    "root_cause": "The root cause of this problem is the lack of coordination and investment in grid communication infrastructure, as well as the prioritization of fossil fuel projects over renewable energy",
+    "severity": "MEDIUM",
+    "leverage_points": [
+      "Utility companies and grid operators have the greatest effect on the problem",
+      "Government policies and regulations"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Increase investment in grid communication infrastructure and renewable energy projects",
+        "measurable_goal": "Achieve a 20% increase in renewable energy capacity and a 15% reduction in grid interference within the next 2 years",
+        "timeframe": "medium-term"
+      }
+    ],
+    "evidence": [
+      "The Utility Broadband Alliance is expanding its membership to enhance grid communication infrastructure",
+      "The Trump administration is buying back offshore wind leases and redirecting funds to fossil fuel projects"
+    ],
+    "generalization": "This problem connects to the domains of Civilization and Cosmos, as a sustainable energy system is crucial for the long-term viability of intelligent life and its environments",
+    "summary": "Inefficient grid modernization efforts and lack of investment in renewable energy may hinder the transition to a sustainable energy system, and increasing investment in grid communication infrastructure and renewable energy projects can help address this problem",
+    "risk_level": "MEDIUM"
+  },
+  "raw_items": [
+    {
+      "title": "Rivian To Challenge Tesla FSD Later This Year, CEO Thinks",
+      "summary": "<p>I&#8217;ve been writing a bit lately on why robotaxis are not going to be as disruptive as many people expect. (See here and here and here.) A big core of the critique is the expectation that personal vehicles will have self-driving tech in them, and people would still rather have   ... [continued]</p>\n<p>The post <a href=\"https://cleantechnica.com/2026/06/19/rivian-to-challenge-tesla-fsd-later-this-year-ceo-thinks/\">Rivian To Challenge Tesla FSD Later This Year, CEO Thinks</a> appeared first",
+      "link": "https://cleantechnica.com/2026/06/19/rivian-to-challenge-tesla-fsd-later-this-year-ceo-thinks/",
+      "published": "Sat, 20 Jun 2026 03:50:16 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "ComEd, Metropolitan Mayors Caucus Honor 9 Communities Advancing EV Readiness Across Northern Illinois",
+      "summary": "<p>ComEd, in partnership with the Metropolitan Mayors Caucus (Caucus), recognized nine communities that graduated from the 2026 EV Readiness Program during an award ceremony this week in Northbrook, Illinois. The program supports municipalities as they prepare for the continued growth of electric vehicles (EVs) through improved local policies, permitting, and   ... [continued]</p>\n<p>The post <a href=\"https://cleantechnica.com/2026/06/19/comed-metropolitan-mayors-caucus-honor-9-communities-advan",
+      "link": "https://cleantechnica.com/2026/06/19/comed-metropolitan-mayors-caucus-honor-9-communities-advancing-ev-readiness-across-northern-illinois/",
+      "published": "Sat, 20 Jun 2026 00:45:50 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Despite All The Smack Talk, Tesla Copied BYD",
+      "summary": "<p>Tesla fans criticized BYD electric vehicles for years. Supposedly, they were cheap, boring, and poorly made. However, BYD has grown and grown over the past several years, now produces far more cars than Tesla, and has about the same number of R&#38;D engineers as Tesla has total employees. Now we   ... [continued]</p>\n<p>The post <a href=\"https://cleantechnica.com/2026/06/19/despite-all-the-smack-talk-tesla-copied-byd/\">Despite All The Smack Talk, Tesla Copied BYD</a> appeared first on <a hre",
+      "link": "https://cleantechnica.com/2026/06/19/despite-all-the-smack-talk-tesla-copied-byd/",
+      "published": "Sat, 20 Jun 2026 00:15:59 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "BYD Datang Comparison Reveals Accelerating EV Progress",
+      "summary": "<p>BYD&#8217;s Datang EV launched this week. While impressive on its own, the premium SUV becomes more impressive compared to other vehicles in China. RWD Datang models start at 239,900 RMB ($35,502 USD) for 800 km up to 269,900 RMB ($39,941 USD) for Flagship trim with 950 km of class-leading range   ... [continued]</p>\n<p>The post <a href=\"https://cleantechnica.com/2026/06/19/byd-datang-comparison-reveals-accelerating-ev-progress/\">BYD Datang Comparison Reveals Accelerating EV Progress</a> appe",
+      "link": "https://cleantechnica.com/2026/06/19/byd-datang-comparison-reveals-accelerating-ev-progress/",
+      "published": "Sat, 20 Jun 2026 00:06:38 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "New UBBA members showcase why communication networks are foundational to grid modernization efforts",
+      "summary": "The Utility Broadband Alliance expanded its membership with organizations like Eversource Energy and Hawaiian Electric to enhance grid communication infrastructure.",
+      "link": "https://www.renewableenergyworld.com/power-grid/grid-modernization/new-ubba-members-communication-networks-grid-modernization-efforts/",
+      "published": "Fri, 19 Jun 2026 14:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "What does global energy trade look like after US-Iran deal? – This Week in Cleantech",
+      "summary": "On this episode of the This Week in Cleantech podcast, Tim McDonnell from Semafor discusses the potential future of the Strait of Hormuz and energy markets if the US-Iran de-escalation deal holds.",
+      "link": "https://www.renewableenergyworld.com/energy-business/policy-and-regulation/what-does-global-energy-trade-look-like-after-us-iran-deal-this-week-in-cleantech/",
+      "published": "Fri, 19 Jun 2026 10:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Trump administration to buy back another energy company’s offshore wind leases for 4 more projects",
+      "summary": "The Trump administration is buying back Invenergy's four offshore wind leases for $765 million, redirecting funds to fossil fuel projects.",
+      "link": "https://www.renewableenergyworld.com/wind-power/offshore/trump-administration-to-buy-back-another-energy-companys-offshore-wind-leases-for-4-more-projects/",
+      "published": "Thu, 18 Jun 2026 19:10:40 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "FERC takes historic action, orders US grid operators to ‘defend or revise’ large load interconnection tariffs",
+      "summary": "FERC has issued tailored show-cause orders under section 206 of the Federal Power Act to each of the six regional grid operators within its jurisdiction, directing them to either justify or reform the rules governing how large energy users like data centers connect to the electric grid.",
+      "link": "https://www.renewableenergyworld.com/energy-business/policy-and-regulation/ferc-takes-historic-action-orders-us-grid-operators-to-defend-or-revise-large-load-interconnection-tariffs/",
+      "published": "Thu, 18 Jun 2026 17:46:28 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Solar Is the Cheapest Power in History, But States Are Retreating From It",
+      "summary": "A high-stakes push-and-pull is taking place in the United States clean energy sector as state-level laws, federal-level policy, and that infamous invisible hand all tug in different directions. A staggering amount of different legal actions on the part of the Trump administration, the judicial system, and state politicians have created an incredibly complex landscape for clean energy adoption across the country. And while the economics of renewables are looking better than ever, the political po",
+      "link": "https://oilprice.com/Alternative-Energy/Solar-Energy/Solar-Is-the-Cheapest-Power-in-History-But-States-Are-Retreating-From-It.html",
+      "published": "Fri, 19 Jun 2026 17:00:00 -0500",
+      "source_type": "rss"
+    },
+    {
+      "title": "Why Lunar Helium-3 Mining Still Can't Compete With Earth",
+      "summary": "When it comes to Helium-3, the biggest cost divide is between Earth and the Moon. Potential sources range from tritium decay and terrestrial helium wells on Earth to lunar regolith on the Moon. Today, Earth-based sources remain far easier and cheaper to access. This graphic, created by Visual Capitalist's Cody Good in partnership with Pulsar Helium, compares major potential sources of Helium-3 by cost, scalability, and accessibility. It’s part three of four in the Helium 3: From Theory to Opport",
+      "link": "https://oilprice.com/Energy/Energy-General/Why-Lunar-Helium-3-Mining-Still-Cant-Compete-With-Earth.html",
+      "published": "Fri, 19 Jun 2026 15:00:00 -0500",
+      "source_type": "rss"
+    }
+  ]
+}

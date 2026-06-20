@@ -1,0 +1,149 @@
+{
+  "axis": "INEQUALITY_POVERTY_REVIEW",
+  "domain": "civilization",
+  "timestamp": "2026-06-19T17:40:06.133619+00:00",
+  "sources_count": 9,
+  "rss_count": 0,
+  "ddg_count": 6,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] Class 1: “What’s Happened to Income &amp; Wealth” by UC Berkeley Professor Reich",
+      "summary": "[DESCRIPTION FALLBACK] Welcome to my undergraduate course on Wealth and Poverty. This is the first of fourteen classes. The questions we'll focus on ...",
+      "link": "https://www.youtube.com/watch?v=1f2blKai7HA",
+      "published": "2023-07-07T15:04:32Z",
+      "source_type": "youtube",
+      "channel": "Robert Reich",
+      "video_id": "1f2blKai7HA",
+      "transcript_method": "description",
+      "transcript_chars": 152,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Income and Wealth Inequality: Crash Course Economics #17",
+      "summary": "[DESCRIPTION FALLBACK] Inequality is a big, big subject. There's racial inequality, gender inequality, and lots and lots of other kinds of inequality. This is ...",
+      "link": "https://www.youtube.com/watch?v=0xMCWr0O3Hs",
+      "published": "2015-12-06T20:36:25Z",
+      "source_type": "youtube",
+      "channel": "CrashCourse",
+      "video_id": "0xMCWr0O3Hs",
+      "transcript_method": "description",
+      "transcript_chars": 162,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Class 5: “Monopoly, Labor, and Antitrust” by UC Berkeley Professor Reich",
+      "summary": "[DESCRIPTION FALLBACK] Our fifth class begins our focus on power — and on the relative power of workers and the corporations that hire or contract with ...",
+      "link": "https://www.youtube.com/watch?v=zokSkRNqZBM",
+      "published": "2023-07-07T15:12:29Z",
+      "source_type": "youtube",
+      "channel": "Robert Reich",
+      "video_id": "zokSkRNqZBM",
+      "transcript_method": "description",
+      "transcript_chars": 155,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "problem": "High poverty rates persist in Sub-Saharan Africa and Latin America, with over 25% of the population in Latin America and the Caribbean projected to live in poverty in 2025",
+    "root_cause": "Inequality and unequal distribution of wealth and resources, exacerbated by factors such as colonialism, corruption, and lack of access to education and job opportunities",
+    "severity": "HIGH",
+    "leverage_points": [
+      "Governments and policymakers in Sub-Saharan Africa and Latin America",
+      "International organizations and development agencies"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Implement progressive taxation and social welfare policies to reduce income inequality",
+        "measurable_goal": "Reduce the Gini coefficient by 10% within the next 5 years",
+        "timeframe": "medium-term"
+      },
+      {
+        "action": "Invest in education and job training programs to increase access to opportunities",
+        "measurable_goal": "Increase the percentage of population with access to secondary education by 20% within the next 10 years",
+        "timeframe": "long-term"
+      }
+    ],
+    "evidence": [
+      "Sub-Saharan Africa produces over 70% of the world's cobalt, but many countries in the region struggle with high poverty rates",
+      "The poverty rate in Latin America and the Caribbean is projected to fall to 25.2 percent in 2025, but this is still a significant proportion of the population"
+    ],
+    "generalization": "This problem is connected to the domains of planet (resource distribution) and human (access to education and opportunities), and has implications for the long-term sustainability of civilizations",
+    "summary": "High poverty rates in Sub-Saharan Africa and Latin America are a major concern, and addressing the root causes of inequality and unequal distribution of resources is crucial to reducing poverty and promoting sustainable development",
+    "risk_level": "HIGH"
+  },
+  "raw_items": [
+    {
+      "title": "Sub-Saharan Africa - Wikipedia",
+      "summary": "Sub-Saharan Africa is a key player in the global minerals market, producing over 70% of the world's cobalt and hosting about 50% of its reserves in the Democratic Republic of the Congo (DRC).",
+      "link": "https://en.wikipedia.org/wiki/Sub-Saharan_Africa",
+      "source_type": "ddg"
+    },
+    {
+      "title": "The Inequality Trap: Why Sub-Saharan Africa Struggles to Escape...",
+      "summary": "(2007): Trends in poverty and inequality in seven African countries.Thorbecke, Erik (2013): The interrelationship linking growth, inequality and poverty in sub-Saharan Africa. Journal of African Economies, vol. 22 (1), pp. i15–i48.",
+      "link": "https://mpra.ub.uni-muenchen.de/125930/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Poverty Rate by Country 2026 | World Population Review",
+      "summary": "For example, a person earning $25,000 a year in the United States would have different opportunities than a person who earned $25,000 a year in Somalia. Top 10 Countries With the Highest Poverty Rate.",
+      "link": "https://worldpopulationreview.com/country-rankings/poverty-rate-by-country",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Nine key facts about poverty and inequality in Latin America",
+      "summary": "July 16, 2024 - GDP in Latin America & the Caribbean will expand by 1.6% in 2024 and a growth of 2.7% and 2.6% are expected for 2025 and 2026. These rates are the lowest compared to all other regions in the world, and insufficient to drive prosperity.",
+      "link": "https://blogs.worldbank.org/en/opendata/key-facts-about-poverty-and-inequality-in-latin-america",
+      "source_type": "ddg"
+    },
+    {
+      "title": "On Progress, Deceleration and Sticky Deprivations: Insights From the Multidimensional Poverty Index for Latin America | United Nations Development Programme",
+      "summary": "This #GraphForThought highlights trends to watch in the development space in LAC in 2026, revealing not only the risks ahead, but also where new opportunities… Read more · The latest UNDP Regional Human Development Report 2025 – Under Pressure highlights how the region’s persistent inequality, climatic threats, polarization, and…",
+      "link": "https://www.undp.org/latin-america/blog/progress-deceleration-and-sticky-deprivations-insights-multidimensional-poverty-index-latin-america",
+      "source_type": "ddg"
+    },
+    {
+      "title": "/27 1 POVERTY AND INEQUALITY /27 1 Regional Poverty and Inequality Update",
+      "summary": "Poverty in Latin America and the Caribbean (LAC) is projected to fall to 25.2 percent in 2025,",
+      "link": "https://documents1.worldbank.org/curated/en/099102225164046802/pdf/P506095-c44a6c5f-7f81-4351-a4f9-2d7bb81895c7.pdf",
+      "source_type": "ddg"
+    },
+    {
+      "title": "[YT] Class 1: “What’s Happened to Income &amp; Wealth” by UC Berkeley Professor Reich",
+      "summary": "[DESCRIPTION FALLBACK] Welcome to my undergraduate course on Wealth and Poverty. This is the first of fourteen classes. The questions we'll focus on ...",
+      "link": "https://www.youtube.com/watch?v=1f2blKai7HA",
+      "published": "2023-07-07T15:04:32Z",
+      "source_type": "youtube",
+      "channel": "Robert Reich",
+      "video_id": "1f2blKai7HA",
+      "transcript_method": "description",
+      "transcript_chars": 152,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Income and Wealth Inequality: Crash Course Economics #17",
+      "summary": "[DESCRIPTION FALLBACK] Inequality is a big, big subject. There's racial inequality, gender inequality, and lots and lots of other kinds of inequality. This is ...",
+      "link": "https://www.youtube.com/watch?v=0xMCWr0O3Hs",
+      "published": "2015-12-06T20:36:25Z",
+      "source_type": "youtube",
+      "channel": "CrashCourse",
+      "video_id": "0xMCWr0O3Hs",
+      "transcript_method": "description",
+      "transcript_chars": 162,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Class 5: “Monopoly, Labor, and Antitrust” by UC Berkeley Professor Reich",
+      "summary": "[DESCRIPTION FALLBACK] Our fifth class begins our focus on power — and on the relative power of workers and the corporations that hire or contract with ...",
+      "link": "https://www.youtube.com/watch?v=zokSkRNqZBM",
+      "published": "2023-07-07T15:12:29Z",
+      "source_type": "youtube",
+      "channel": "Robert Reich",
+      "video_id": "zokSkRNqZBM",
+      "transcript_method": "description",
+      "transcript_chars": 155,
+      "has_full_transcript": false
+    }
+  ]
+}

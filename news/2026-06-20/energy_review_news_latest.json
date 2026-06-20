@@ -1,0 +1,119 @@
+{
+  "axis": "ENERGY_REVIEW",
+  "fetched_at": "2026-06-20T07:28:45.777496+00:00",
+  "smart_query": "renewable energy solar wind",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube_transcripts": 3,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "New UBBA members showcase why communication networks are foundational to grid modernization efforts",
+      "snippet": "The Utility Broadband Alliance expanded its membership with organizations like Eversource Energy and Hawaiian Electric to enhance grid communication infrastructure.",
+      "url": "https://www.renewableenergyworld.com/power-grid/grid-modernization/new-ubba-members-communication-networks-grid-modernization-efforts/",
+      "source": "RSS"
+    },
+    {
+      "title": "What does global energy trade look like after US-Iran deal? – This Week in Cleantech",
+      "snippet": "On this episode of the This Week in Cleantech podcast, Tim McDonnell from Semafor discusses the potential future of the Strait of Hormuz and energy markets if the US-Iran de-escalation deal holds. ",
+      "url": "https://www.renewableenergyworld.com/energy-business/policy-and-regulation/what-does-global-energy-trade-look-like-after-us-iran-deal-this-week-in-cleantech/",
+      "source": "RSS"
+    },
+    {
+      "title": "Trump administration to buy back another energy company’s offshore wind leases for 4 more projects",
+      "snippet": "The Trump administration is buying back Invenergy's four offshore wind leases for $765 million, redirecting funds to fossil fuel projects.",
+      "url": "https://www.renewableenergyworld.com/wind-power/offshore/trump-administration-to-buy-back-another-energy-companys-offshore-wind-leases-for-4-more-projects/",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "protontypes/open-sustainable-technology",
+      "snippet": "A directory and analysis of the open source ecosystem in the areas of climate change, sustainable energy, biodiversity and natural resources.  https://docs.getgrist.com/doc/gSscJkc5Rb1Rw45gh1o1Yc",
+      "stars": 2520,
+      "url": "https://github.com/protontypes/open-sustainable-technology",
+      "updated": "2026-06-19",
+      "source": "GitHub"
+    },
+    {
+      "title": "PyPSA/PyPSA",
+      "snippet": "PyPSA: Python for Power System Analysis",
+      "stars": 2024,
+      "url": "https://github.com/PyPSA/PyPSA",
+      "updated": "2026-06-19",
+      "source": "GitHub"
+    },
+    {
+      "title": "pvlib/pvlib-python",
+      "snippet": "A set of documented functions for simulating the performance of photovoltaic energy systems.",
+      "stars": 1593,
+      "url": "https://github.com/pvlib/pvlib-python",
+      "updated": "2026-06-17",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Nodal Frequency Stability-Constrained UC & ED for Renewable-Dominated Power Systems",
+      "snippet": "In modern power systems with high shares of renewable, inverter-based resources (IBRs), frequency stability becomes more complex due to the fast dynamics of IBRs and frequency trajectories that vary significantly from bus to bus. In this paper, we present an optimization framework for unit commitmen",
+      "url": "https://arxiv.org/abs/2606.15706v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Mitigating business risks from renewable PPA power sourcing uncertainties for European green hydrogen production: Robust system design, regulatory adjustments and offtake flexibility",
+      "snippet": "As energy prices surge for the second time in recent years driven by the ongoing crisis in the Middle East, the European Union's continuing reliance on fossil energy imports is becoming increasingly apparent. However, despite offering an intriguing prospect of improved energy resilience, the ramp-up",
+      "url": "https://arxiv.org/abs/2606.13215v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[Vacation and why Americans take so little] Do you work more for more money? Or work less for more time? For some, this is the ultimate economic choice. Every single worker in the European Union is guaranteed four weeks of paid vacation. No matter how long they’ve been at a company. No matter how low paying the job is. Vacation is a right. In fact, all but one of the richest countries in the world guarantees paid vacation, except: the U.S. ",
+  "wiki": null,
+  "youtube_items": [
+    {
+      "title": "[YT] The Energy Revolution is Unstoppable: Record Solar and Wind Additions in 2025",
+      "summary": "[DESCRIPTION FALLBACK] The Energy Revolution is Unstoppable: Record Solar and Wind Additions in 2025 - The energy revolution is unstoppable as solar ...",
+      "link": "https://www.youtube.com/watch?v=spSOp5s_6_A",
+      "source_type": "youtube",
+      "channel": "The Electric Viking",
+      "video_id": "spSOp5s_6_A",
+      "transcript_method": "description",
+      "transcript_chars": 152,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] New energy storage technology on the verge of a breakthrough? | Transforming Business",
+      "summary": "[DESCRIPTION FALLBACK] Correction: 06:40 In the graphic, we show the investment costs in Lithium-ion batteries versus Vanadium redox flow systems.",
+      "link": "https://www.youtube.com/watch?v=U1FPbDhJV0A",
+      "source_type": "youtube",
+      "channel": "DW News",
+      "video_id": "U1FPbDhJV0A",
+      "transcript_method": "description",
+      "transcript_chars": 146,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Humanity’s Race to 100% Renewable Energy",
+      "summary": "[DESCRIPTION FALLBACK] Solar and wind energy are growing rapidly! In 2023, the world added 50% more renewable energy capacity than the year before.",
+      "link": "https://www.youtube.com/watch?v=cWUNAL-7MSM",
+      "source_type": "youtube",
+      "channel": "Good News",
+      "video_id": "cWUNAL-7MSM",
+      "transcript_method": "description",
+      "transcript_chars": 147,
+      "has_full_transcript": false
+    }
+  ],
+  "summary": "[RSS News]\n- New UBBA members showcase why communication networks are foundational to grid modernization efforts\n- What does global energy trade look like after US-Iran deal? – This Week in Cleantech\n",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": [],
+  "open_source_momentum": "",
+  "scientific_frontier": "",
+  "relevance_to_goal": ""
+}

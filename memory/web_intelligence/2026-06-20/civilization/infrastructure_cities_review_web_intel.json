@@ -1,0 +1,123 @@
+{
+  "axis": "INFRASTRUCTURE_CITIES_REVIEW",
+  "domain": "civilization",
+  "timestamp": "2026-06-20T05:38:50.538812+00:00",
+  "sources_count": 10,
+  "rss_count": 4,
+  "ddg_count": 5,
+  "youtube_count": 1,
+  "youtube_items": [
+    {
+      "title": "[YT] How UK housing segregates residents - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] New residential developments in the UK are often segregating people based on those who own their homes and those that live in social housing.Subscribe to The...",
+      "link": "https://www.youtube.com/watch?v=oLSAm2szdjM",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "oLSAm2szdjM",
+      "transcript_method": "description",
+      "transcript_chars": 183,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "problem": "Housing segregation and potential loss of homes in urban areas",
+    "root_cause": "Inadequate urban planning and housing policies, leading to segregation and unaffordability",
+    "severity": "MEDIUM",
+    "leverage_points": [
+      "Government policies and regulations on urban planning and housing",
+      "Real estate developers and their investment strategies"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Implement inclusive zoning policies to promote mixed-income housing",
+        "measurable_goal": "Increase the number of affordable housing units by 20% within the next 2 years",
+        "timeframe": "medium-term"
+      },
+      {
+        "action": "Provide incentives for real estate developers to build affordable housing",
+        "measurable_goal": "Increase the number of affordable housing units by 30% within the next 5 years",
+        "timeframe": "long-term"
+      }
+    ],
+    "evidence": [
+      "New residential developments in the UK are often segregating people based on those who own their homes and those that live in social housing",
+      "We can’t build our way out of the housing crisis while losing homes every day"
+    ],
+    "generalization": "This problem connects to the domains of civilization, human dignity, and biosphere, as it affects the well-being and quality of life of urban residents and the sustainability of urban ecosystems",
+    "summary": "Housing segregation and potential loss of homes in urban areas is a significant problem that requires immediate attention and action from policymakers and real estate developers. Inclusive zoning policies and incentives for affordable housing can help address this issue.",
+    "risk_level": "MEDIUM"
+  },
+  "raw_items": [
+    {
+      "title": "Chicago to buy, renovate Greyhound bus terminal",
+      "summary": "<p>The city&rsquo;s action, aimed at improving the customer experience for some 450,000 riders each year, saves the bus station from possible closure or demolition.</p>",
+      "link": "https://www.smartcitiesdive.com/news/chicago-buy-renovate-greyhound-bus-terminal/823261/",
+      "published": "Thu, 18 Jun 2026 11:47:00 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "As a Maryland city mulls upzoning, a Realtor association study touts its benefits",
+      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.com/SdilQhaMkIMWS6urkZkKCWVYtRU0lUedMMnFqGG8Hfc/g:ce/rs:fill:1600:900:1/Z3M6Ly9kaXZlc2l0ZS1zdG9yYWdlL2RpdmVpbWFnZS9HZXR0eUltYWdlcy02MjQyODkzMzIuanBn.webp\" /></div></figure><p>A &ldquo;missing middle&rdquo; housing proposal in Rockville, Maryland, would boost the city&rsquo;s housing stock 4.5%, the local Realtor association said.</p>",
+      "link": "https://www.smartcitiesdive.com/news/rockville-maryland-missing-middle-zoning-realtor-study-gcaar/823161/",
+      "published": "Wed, 17 Jun 2026 11:49:15 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "Biking in US cities is getting better, 2026 report says",
+      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.com/ZRJiSJzN_EbsN-H_CtQ5m5FXTaZ9ENhL4esB-qCaZ5k/g:ce/rs:fill:1600:900:1/Z3M6Ly9kaXZlc2l0ZS1zdG9yYWdlL2RpdmVpbWFnZS9HZXR0eUltYWdlcy0yMjcxMzY3MjY1LmpwZw==.webp\" /></div></figure><p>In PeopleForBikes&rsquo; annual rating, the number of cities with bike infrastructure that scored 50 or higher on a 100-point scale more than doubled this year.</p>",
+      "link": "https://www.smartcitiesdive.com/news/peopleforbikes-us-cities-biking-2026-rankings/823116/",
+      "published": "Wed, 17 Jun 2026 11:28:00 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "We can’t build our way out of the housing crisis while losing homes every day",
+      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.com/oU-feK5uw7bMxIiHc3_pfsTC-3owwTwqoMF5IarfBus/g:ce/rs:fill:1600:900:1/Z3M6Ly9kaXZlc2l0ZS1zdG9yYWdlL2RpdmVpbWFnZS9HZXR0eUltYWdlcy05NTMwOTA5NTIuanBn.webp\" /></div></figure><p>The path forward is not just about adding supply. It is also about protecting it.</p>",
+      "link": "https://www.smartcitiesdive.com/news/cant-build-way-out-housing-crisis-while-losing-homes/823117/",
+      "published": "Wed, 17 Jun 2026 08:16:21 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "Smart cities",
+      "summary": "A smart city is an urban model that leverages technology, human capital, and governance to improve sustainability, efficiency, and social inclusion, which are considered goals for cities of the future. Smart cities use digital technology to collect data and operate services. Data is collected from citizens, devices, buildings, or cameras. Smart city applications are diverse and include, but are no",
+      "link": "https://en.wikipedia.org/wiki/Smart_cities",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Smart city - Wikipedia",
+      "summary": "ASEAN Smart Cities Network (ASCN) is a collaborative platform which aims to synergise Smart city development efforts across ASEAN by facilitating ...",
+      "link": "https://en.wikipedia.org/wiki/Smart_city",
+      "source_type": "ddg"
+    },
+    {
+      "title": "List of Smart and AMRUT Cities in Telangana",
+      "summary": "The Smart and AMRUT cities in Telangana comprise urban local bodies selected under the Government of India's Smart Cities Mission, launched in 2015 to...",
+      "link": "https://grokipedia.com/page/List_of_Smart_and_AMRUT_Cities_in_Telangana",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Urban planning",
+      "summary": "Urban planning (also called city planning or town planning in some contexts) is the process of developing and designing plans for land use and the built environment, including air, water, and the infrastructure passing into and out of urban areas, such as transportation, communications, and distribution networks, and their accessibility. Traditionally, urban planning followed a top-down approach i",
+      "link": "https://en.wikipedia.org/wiki/Urban_planning",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Urban planning | Definition, History, Examples, Importance ...What is Urban Planning? – Sustainable Urban DevelopmentThe Fundamentals of Urban Planning: Key Concepts ExplainedWhat is Urban Planning? Its Meaning, Importance, and Key ...What Is Urban Planning? - ArchDailyUrban Planning - an overview | ScienceDirect Topics",
+      "summary": "urban planning, design and regulation of the uses of space that focus on the physical form, economic functions, and social impacts of the urban environment and on the location of different activities within it. Because urban planning draws upon engineering, architectural, and social and political concerns, it is variously a technical profession, an endeavour involving political will and public par",
+      "link": "https://www.britannica.com/topic/urban-planning",
+      "source_type": "ddg"
+    },
+    {
+      "title": "[YT] How UK housing segregates residents - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] New residential developments in the UK are often segregating people based on those who own their homes and those that live in social housing.Subscribe to The...",
+      "link": "https://www.youtube.com/watch?v=oLSAm2szdjM",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "oLSAm2szdjM",
+      "transcript_method": "description",
+      "transcript_chars": 183,
+      "has_full_transcript": false
+    }
+  ]
+}

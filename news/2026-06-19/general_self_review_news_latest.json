@@ -1,0 +1,138 @@
+{
+  "axis": "GENERAL_SELF_REVIEW",
+  "fetched_at": "2026-06-19T18:09:18.260772+00:00",
+  "smart_query": "artificial intelligence progress",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 3,
+    "arxiv": 2,
+    "github": 3,
+    "youtube_transcripts": 3,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "UK's top data and AI regulator quits after 'inappropriate' humour",
+      "snippet": "Edwards has been the boss of the data watchdog since January 2022, and said he had made inappropriate attempts at humour.\n\n",
+      "url": "https://www.bbc.com/news/articles/c0eyq7rnn22o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "GTA 6 - all you need to know about Rockstar's blockbuster game",
+      "snippet": "Rockstar's sixth game in the franchise is set to be the biggest game release of the year.",
+      "url": "https://www.bbc.com/news/articles/c9q20djz4wno?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "The artificial ice pyramids saving India's mountain villages",
+      "snippet": "Himalayan villages are creating artificial glaciers to guarantee water for their crops in the spring.",
+      "url": "https://www.bbc.com/news/articles/c072414183go?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [
+    {
+      "title": "Geleceğin işleri belli oldu ! İşte yapay zekaya göre günde sadece  saat çalışıp servet kazandıracak 5 meslek",
+      "snippet": "Geleceğin işleri belli oldu ! İşte yapay zekaya göre günde sadece  saat çalışıp servet kazandıracak 5 meslek",
+      "url": "https://www.yeniakit.com.tr/foto-galeri/gelecegin-isleri-belli-oldu-iste-yapay-zekaya-gore-gunde-sadece-uc-saat-calisip-servet-kazandiracak-5-meslek-150970",
+      "source": "yeniakit.com.tr"
+    },
+    {
+      "title": "Yapay zeka yönetiminde uluslararası standart : TPye ISO 42001 belgesi",
+      "snippet": "Yapay zeka yönetiminde uluslararası standart : TPye ISO 42001 belgesi",
+      "url": "https://www.chip.com.tr/guncel/yapay-zeka-yonetiminde-uluslararasi-standart-tpye-iso-42001-belgesi_179533.html",
+      "source": "chip.com.tr"
+    },
+    {
+      "title": "  Yapay zekayı durdurma  çağrılarına yenileri ekleniyor",
+      "snippet": "  Yapay zekayı durdurma  çağrılarına yenileri ekleniyor",
+      "url": "https://www.aa.com.tr/tr/bilim-teknoloji/yapay-zekayi-durdurma-cagrilarina-yenileri-ekleniyor/3958899",
+      "source": "aa.com.tr"
+    }
+  ],
+  "github_repos": [
+    {
+      "title": "microsoft/autogen",
+      "snippet": "A programming framework for agentic AI",
+      "stars": 59075,
+      "url": "https://github.com/microsoft/autogen",
+      "updated": "2026-06-19",
+      "source": "GitHub"
+    },
+    {
+      "title": "2noise/ChatTTS",
+      "snippet": "A generative speech model for daily dialogue.",
+      "stars": 39480,
+      "url": "https://github.com/2noise/ChatTTS",
+      "updated": "2026-06-19",
+      "source": "GitHub"
+    },
+    {
+      "title": "agentscope-ai/agentscope",
+      "snippet": "Build and run agents you can see, understand and trust.",
+      "stars": 27004,
+      "url": "https://github.com/agentscope-ai/agentscope",
+      "updated": "2026-06-19",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Efficient and Sound Probabilistic Verification for AI Agents",
+      "snippet": "Securing AI agents that operate in complex digital environments has become a critical need, and runtime monitoring approaches that formulate and enforce policies expressed in a formal language like Datalog offer a promising solution. However, existing approaches are restricted to deterministic polic",
+      "url": "https://arxiv.org/abs/2606.20510v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Analyzing Defensive Misdirection Against Model-Guided Automated Attacks on Agentic AI Systems",
+      "snippet": "Agentic AI systems increasingly rely on language-model components to interpret instructions, process external data, invoke tools, and coordinate with other agents. These capabilities make prompt-injection and jailbreak attacks more consequential, especially as attackers adopt model-guided automation",
+      "url": "https://arxiv.org/abs/2606.20470v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[Prominent Scientists, Faith Leaders, Policymakers and Artists Call for a Prohibition on Superintelligence, as Poll Shows Americans Don’t Want It] Initial signatories include AI pioneers Yoshua Bengio and Geoffrey Hinton, leading media voices Steve Bannon and Glenn Beck, Obama's National Security Advisor Susan Rice, business trailblazers Steve Wozniak and Richard Branson, five Nobel Laureates, former Irish President Mary Robinson, actors Stephen Fry and Joseph Gordon-Levitt, and hundreds of others.",
+  "wiki": null,
+  "youtube_items": [
+    {
+      "title": "[YT] Is AI🤖 Truly Conscious? - Elon Musk",
+      "summary": "[DESCRIPTION FALLBACK] Aa small part of the conversation between Elon Musk and Dr. Jordan B. Peterson. Full Video ...",
+      "link": "https://www.youtube.com/watch?v=gdlTspKdsjU",
+      "source_type": "youtube",
+      "channel": "Get Ready to Consider",
+      "video_id": "gdlTspKdsjU",
+      "transcript_method": "description",
+      "transcript_chars": 117,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Sam Altman on AGI: people will freak out then move on",
+      "summary": "[DESCRIPTION FALLBACK] If artificial general intelligence is achieved, it will be able to outperform humans on most intellectual tasks. The Economist asks ...",
+      "link": "https://www.youtube.com/watch?v=T2g8FF8-RLA",
+      "source_type": "youtube",
+      "channel": "The Economist",
+      "video_id": "T2g8FF8-RLA",
+      "transcript_method": "description",
+      "transcript_chars": 158,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Why AI Isn’t Going to Become Conscious | Anil Seth | TED",
+      "summary": "[DESCRIPTION FALLBACK] We see consciousness in AI the same way we see faces in clouds, says neuroscientist Anil Seth. He explores the all-too-human ...",
+      "link": "https://www.youtube.com/watch?v=tJV-vdbZ388",
+      "source_type": "youtube",
+      "channel": "TED",
+      "video_id": "tJV-vdbZ388",
+      "transcript_method": "description",
+      "transcript_chars": 151,
+      "has_full_transcript": false
+    }
+  ],
+  "summary": "[RSS News]\n- UK's top data and AI regulator quits after 'inappropriate' humour\n- GTA 6 - all you need to know about Rockstar's blockbuster game\n\n[GDELT News]\n- Geleceğin işleri belli oldu ! İşte yapay",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": [],
+  "open_source_momentum": "",
+  "scientific_frontier": "",
+  "relevance_to_goal": ""
+}

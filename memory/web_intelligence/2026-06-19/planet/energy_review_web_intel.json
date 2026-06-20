@@ -1,0 +1,147 @@
+{
+  "axis": "ENERGY_REVIEW",
+  "domain": "planet",
+  "timestamp": "2026-06-19T17:35:23.927617+00:00",
+  "sources_count": 15,
+  "rss_count": 12,
+  "ddg_count": 0,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] Why Europe Can’t Escape the Energy Crisis in 2025",
+      "summary": "[DESCRIPTION FALLBACK] Europe is facing a major energy crisis in 2025. Sky-high electricity prices, disrupted supply chains, and heavy reliance on imports ...",
+      "link": "https://www.youtube.com/watch?v=xf9v4SadoWw",
+      "published": "2025-01-24T18:44:23Z",
+      "source_type": "youtube",
+      "channel": "Macro Moments",
+      "video_id": "xf9v4SadoWw",
+      "transcript_method": "description",
+      "transcript_chars": 158,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] USA CAVES: Canada Officially Named World&#39;s New Energy Supplier — TRUMP BACKS IT",
+      "summary": "[DESCRIPTION FALLBACK] USA CAVES: Canada named world's new energy supplier at G7 Évian 2026 — Trump BACKS IT. The Strait of Hormuz crisis ...",
+      "link": "https://www.youtube.com/watch?v=K-353tdwzT4",
+      "published": "2026-06-18T12:56:24Z",
+      "source_type": "youtube",
+      "channel": "The Planet D",
+      "video_id": "K-353tdwzT4",
+      "transcript_method": "description",
+      "transcript_chars": 141,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] What The Iran War Means For China’s Energy Supply",
+      "summary": "[DESCRIPTION FALLBACK] The Strait of Hormuz has become the focal point of escalating U.S.-Iran tensions, and global energy markets are reacting.",
+      "link": "https://www.youtube.com/watch?v=Gts1ZYljpoc",
+      "published": "2026-03-04T19:00:30Z",
+      "source_type": "youtube",
+      "channel": "CNBC",
+      "video_id": "Gts1ZYljpoc",
+      "transcript_method": "description",
+      "transcript_chars": 144,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "problem": "Inconsistent energy policy and investment in renewable energy sources, hindering the transition to a sustainable energy system",
+    "root_cause": "Lack of coordinated and consistent energy policy, influenced by political and economic interests",
+    "severity": "MEDIUM",
+    "leverage_points": [
+      "Government agencies and regulatory bodies, such as FERC",
+      "Private investment firms and companies, like Origis Energy and Graphite One"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Implement a comprehensive and consistent national energy policy, prioritizing renewable energy sources",
+        "measurable_goal": "Increase the share of renewable energy in the national energy mix by 20% within the next 5 years",
+        "timeframe": "medium-term"
+      },
+      {
+        "action": "Provide incentives for private investment in renewable energy projects, such as tax credits and grants",
+        "measurable_goal": "Increase private investment in renewable energy by 30% within the next 3 years",
+        "timeframe": "short-term"
+      }
+    ],
+    "evidence": [
+      "Origis Energy is accelerating its solar power plant pipeline with a new round of $900 million in financing, despite the sharp U-turn in federal energy policy",
+      "The Trump administration is buying back Invenergy's four offshore wind leases for $765 million, redirecting funds to fossil fuel projects"
+    ],
+    "generalization": "This problem connects to the domain of Civilization, as it affects the economy, infrastructure, and social well-being, and to the domain of Cosmos, as it impacts the long-term sustainability of energy resources and the environment",
+    "summary": "Inconsistent energy policy and investment in renewable energy sources hinder the transition to a sustainable energy system, requiring a comprehensive and consistent national energy policy and private investment incentives",
+    "risk_level": "MEDIUM"
+  },
+  "raw_items": [
+    {
+      "title": "Trump Whacks Wind But Can’t Sack Solar Power",
+      "summary": "<p>The Florida-based firm Origis Energy is accelerating its solar power plant pipeline with a new round of $900 million in financing, despite the sharp U-turn in federal energy policy.</p>\n<p>The post <a href=\"https://cleantechnica.com/2026/06/19/solar-power-plants-us-texas-financing-faster/\">Trump Whacks Wind But Can&#8217;t Sack Solar Power</a> appeared first on <a href=\"https://cleantechnica.com\">CleanTechnica</a>.</p>",
+      "link": "https://cleantechnica.com/2026/06/19/solar-power-plants-us-texas-financing-faster/",
+      "published": "Fri, 19 Jun 2026 15:52:04 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Climate Solutions Need To Pass Three Tests Before They Deserve Policy Or Capital",
+      "summary": "<p>A lot of transition analysis gives too much credit to technologies that can be made to work and not enough scrutiny to whether they matter. The difference shows up across carbon capture hubs, synthetic fuel claims, small modular reactor schedules, cement decarbonization pathways, aviation fuel projections, ammonia shipping forecasts, grid   ... [continued]</p>\n<p>The post <a href=\"https://cleantechnica.com/2026/06/19/climate-solutions-three-tests-policy-capital/\">Climate Solutions Need To Pas",
+      "link": "https://cleantechnica.com/2026/06/19/climate-solutions-three-tests-policy-capital/",
+      "published": "Fri, 19 Jun 2026 14:48:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "9,000 Miles Of Proof: Electric Trucks Can Tow, But Battery Size Is Everything",
+      "summary": "<p>A couple of years ago, I wrote an article titled &#8220;We May Have Been Wrong To Mock GM&#8217;s Big Battery Approach To Electric Trucks.&#8221; Back then, it was incredibly easy to point and laugh at vehicles like the Hummer EV for carrying around absurdly massive battery packs just to go   ... [continued]</p>\n<p>The post <a href=\"https://cleantechnica.com/2026/06/19/9000-miles-of-proof-electric-trucks-can-tow-but-battery-size-is-everything/\">9,000 Miles Of Proof: Electric Trucks Can Tow, B",
+      "link": "https://cleantechnica.com/2026/06/19/9000-miles-of-proof-electric-trucks-can-tow-but-battery-size-is-everything/",
+      "published": "Fri, 19 Jun 2026 14:24:59 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Here Comes Another New Addition To The US EV Battery Ecosystem",
+      "summary": "<p>The Canadian firm Graphite One has a plan in the works to onshore the graphite supply for EV batteries and other energy storage applications, with a mine in Alaska and a processing facility in Ohio.</p>\n<p>The post <a href=\"https://cleantechnica.com/2026/06/19/ev-battery-supply-chain-us-graphite-alaska-ohio/\">Here Comes Another New Addition To The US EV Battery Ecosystem</a> appeared first on <a href=\"https://cleantechnica.com\">CleanTechnica</a>.</p>",
+      "link": "https://cleantechnica.com/2026/06/19/ev-battery-supply-chain-us-graphite-alaska-ohio/",
+      "published": "Fri, 19 Jun 2026 04:53:03 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "New UBBA members showcase why communication networks are foundational to grid modernization efforts",
+      "summary": "The Utility Broadband Alliance expanded its membership with organizations like Eversource Energy and Hawaiian Electric to enhance grid communication infrastructure.",
+      "link": "https://www.renewableenergyworld.com/power-grid/grid-modernization/new-ubba-members-communication-networks-grid-modernization-efforts/",
+      "published": "Fri, 19 Jun 2026 14:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "What does global energy trade look like after US-Iran deal? – This Week in Cleantech",
+      "summary": "On this episode of the This Week in Cleantech podcast, Tim McDonnell from Semafor discusses the potential future of the Strait of Hormuz and energy markets if the US-Iran de-escalation deal holds.",
+      "link": "https://www.renewableenergyworld.com/energy-business/policy-and-regulation/what-does-global-energy-trade-look-like-after-us-iran-deal-this-week-in-cleantech/",
+      "published": "Fri, 19 Jun 2026 10:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Trump administration to buy back another energy company’s offshore wind leases for 4 more projects",
+      "summary": "The Trump administration is buying back Invenergy's four offshore wind leases for $765 million, redirecting funds to fossil fuel projects.",
+      "link": "https://www.renewableenergyworld.com/wind-power/offshore/trump-administration-to-buy-back-another-energy-companys-offshore-wind-leases-for-4-more-projects/",
+      "published": "Thu, 18 Jun 2026 19:10:40 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "FERC takes historic action, orders US grid operators to ‘defend or revise’ large load interconnection tariffs",
+      "summary": "FERC has issued tailored show-cause orders under section 206 of the Federal Power Act to each of the six regional grid operators within its jurisdiction, directing them to either justify or reform the rules governing how large energy users like data centers connect to the electric grid.",
+      "link": "https://www.renewableenergyworld.com/energy-business/policy-and-regulation/ferc-takes-historic-action-orders-us-grid-operators-to-defend-or-revise-large-load-interconnection-tariffs/",
+      "published": "Thu, 18 Jun 2026 17:46:28 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Russia Is Rationing Fuel in Moscow After Drone Strikes",
+      "summary": "Russia, one of the world's largest oil producers and exporters, is now rationing gasoline in its own capital. After months of increasingly successful Ukrainian drone strikes on Russian oil infrastructure, gasoline shortages have emerged in Moscow, forcing major fuel retailers to limit sales while authorities scramble to keep supplies flowing. The shortages follow repeated attacks on refineries and fuel infrastructure that have steadily chipped away at Russia's refining system. The latest blow ca",
+      "link": "https://oilprice.com/Latest-Energy-News/World-News/Russia-Is-Rationing-Fuel-in-Moscow-After-Drone-Strikes.html",
+      "published": "Fri, 19 Jun 2026 12:30:00 -0500",
+      "source_type": "rss"
+    },
+    {
+      "title": "Kuwait Says Oil Output Could Hit 2 Million Bpd Within a Week",
+      "summary": "Kuwait expects to raise its oil production to 2 million barrels per day (bpd) within a week, up from an average of 573,000 bpd in May, amid the reopening of the Strait of Hormuz. This estimate was given by Sheikh Nawaf Saud Al-Sabah, deputy chairman and CEO of Kuwait Petroleum Corporation (KPC), to Kuwait News Agency, before the collapse of the talks between the U.S. and Iran on Friday. “Prewar production levels could be restored within weeks once regular international commercial shipping to Kuw",
+      "link": "https://oilprice.com/Latest-Energy-News/World-News/Kuwait-Says-Oil-Output-Could-Hit-2-Million-Bpd-Within-a-Week.html",
+      "published": "Fri, 19 Jun 2026 11:30:00 -0500",
+      "source_type": "rss"
+    }
+  ]
+}

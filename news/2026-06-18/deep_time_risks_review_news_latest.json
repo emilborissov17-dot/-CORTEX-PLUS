@@ -1,0 +1,99 @@
+{
+  "axis": "DEEP_TIME_RISKS_REVIEW",
+  "fetched_at": "2026-06-18T20:55:47.160004+00:00",
+  "smart_query": "nuclear war pandemic existential risk",
+  "sources_count": {
+    "wiki": 0,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "PipFoweraker/pdoom1",
+      "snippet": "Save the world from deadly AI through paperwork",
+      "stars": 8,
+      "url": "https://github.com/PipFoweraker/pdoom1",
+      "updated": "2026-06-15",
+      "source": "GitHub"
+    },
+    {
+      "title": "holo-q/foom",
+      "snippet": "WARNING: cognitive hazards ahead",
+      "stars": 4,
+      "url": "https://github.com/holo-q/foom",
+      "updated": "2026-05-09",
+      "source": "GitHub"
+    },
+    {
+      "title": "nikthink/pauseai.ca",
+      "snippet": "https://pauseai.ca/",
+      "stars": 4,
+      "url": "https://github.com/nikthink/pauseai.ca",
+      "updated": "2026-04-14",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Human-AI Coevolution Dynamics: A Formal Theory of Social Intelligence Emergence Through Long-Term Interaction",
+      "snippet": "Current conversational AI systems have made significant progress in language generation, personalization, and long-context interaction. However, most existing methods model social behavior through isolated components such as emotion modeling, memory retrieval, or persona conditioning, lacking a unif",
+      "url": "https://arxiv.org/abs/2606.19144v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "WorldLines: Benchmarking and Modeling Long-Horizon Stateful Embodied Agents",
+      "snippet": "To assist humans over extended periods in real homes, embodied agents must remember user routines, world states, and past interactions. Existing long-term memory benchmarks mainly evaluate language-centric retrieval and question answering, while embodied benchmarks often focus on short-horizon task ",
+      "url": "https://arxiv.org/abs/2606.18847v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[Your Friendly Neighborhood Hookworms] For most of human history, people went about their daily lives with a worm or two (or fifty) in their guts. Only in the past century, with pharmaceuticals and sanitation practices, have we made significant strides towards deworming the whole of humanity. And that’s typically been thought of as a good thing, because having too many worms in your body can–quite literally–suck the life out of you.\nBu",
+  "wiki": null,
+  "youtube_items": [
+    {
+      "title": "[YT] YouTube:K-u-b7Ttdms",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=K-u-b7Ttdms",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "K-u-b7Ttdms",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] YouTube:lOrb1vbbAeY",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=lOrb1vbbAeY",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "lOrb1vbbAeY",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] YouTube:SIzPoVWga4I",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=SIzPoVWga4I",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "SIzPoVWga4I",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    }
+  ],
+  "summary": "[arXiv]\n- Human-AI Coevolution Dynamics: A Formal Theory of Social Intelligence Emergence Through Long-Term Interaction\n- WorldLines: Benchmarking and Modeling Long-Horizon Stateful Embodied Agents\n\n[",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": [],
+  "open_source_momentum": "",
+  "scientific_frontier": "",
+  "relevance_to_goal": ""
+}

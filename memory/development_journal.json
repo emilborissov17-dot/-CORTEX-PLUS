@@ -1841,5 +1841,241 @@
     ],
     "causal_chain": "Ниското ниво на CLIMATE_GLOBAL_RISK_REVIEW води до повишаване на възможностите за ENERGY преход, което може да има положителен ефект върху INFRASTRUCTURE_CITIES_REVIEW и TECHNOLOGY_AI_REVIEW.",
     "timestamp": "2026-05-08T08:59:56.217220+00:00"
+  },
+  "2026-06-18": {
+    "auto_modifications": [
+      {
+        "timestamp": "2026-06-18T20:31:03.380237+00:00",
+        "action": "FAILED",
+        "problem": "Lack of integration between agents and fast_cycle_runner.py",
+        "reason": "Groq грешка: Всички LLM backends неуспешни. Последна грешка: None",
+        "executed_by": "SELF_MODIFIER_AUTONOMOUS"
+      },
+      {
+        "timestamp": "2026-06-18T20:31:03.380248+00:00",
+        "action": "FAILED",
+        "problem": "To enable accurate system monitoring",
+        "reason": "Groq грешка: Всички LLM backends неуспешни. Последна грешка: None",
+        "executed_by": "SELF_MODIFIER_AUTONOMOUS"
+      },
+      {
+        "timestamp": "2026-06-18T20:31:03.380252+00:00",
+        "action": "FAILED",
+        "problem": "To enable full system functionality",
+        "reason": "Groq грешка: Всички LLM backends неуспешни. Последна грешка: None",
+        "executed_by": "SELF_MODIFIER_AUTONOMOUS"
+      },
+      {
+        "timestamp": "2026-06-18T20:31:03.380256+00:00",
+        "action": "FAILED",
+        "problem": "Недостатък в правителствената гъвкавост и устойчивост на държавата във възстановяването на демокраци",
+        "reason": "Groq грешка: Всички LLM backends неуспешни. Последна грешка: None",
+        "executed_by": "SELF_MODIFIER_AUTONOMOUS"
+      },
+      {
+        "timestamp": "2026-06-18T20:31:03.380260+00:00",
+        "action": "FAILED",
+        "problem": "Отсутствие на точни данни за неравенство и бедност",
+        "reason": "Groq грешка: Всички LLM backends неуспешни. Последна грешка: None",
+        "executed_by": "SELF_MODIFIER_AUTONOMOUS"
+      }
+    ],
+    "patch_executions": [
+      {
+        "timestamp": "2026-06-18T20:31:09.224247+00:00",
+        "patch": "climate_patch.py",
+        "success": false,
+        "stdout": "",
+        "stderr": "Traceback (most recent call last):\n  File \"C:\\Users\\emilb\\Desktop\\AGI\\CORTEX++_MERGED\\agents\\core\\climate_patch.py\", line 5, in <module>\n    BASE_DIR = pathlib.Path(os.environ['CORTEX_BASE'])\n                            ^^\nNameError: name 'os' is not defined. Did you forget to import 'os'?\n",
+        "score_before": 50.26,
+        "score_after": null,
+        "delta": null,
+        "verdict": "NEUTRAL",
+        "changed_axes": [
+          "GOVERNANCE_INSTITUTIONS_REVIEW: LOW → None",
+          "COGNITION_LEARNING_REVIEW: MEDIUM → None",
+          "SPACE_INFRASTRUCTURE_REVIEW: HIGH → None",
+          "ECOSYSTEMS_BIODIVERSITY_REVIEW: MEDIUM → None",
+          "MATERIALS_WASTE_REVIEW: LOW → None",
+          "CULTURE_MEDIA_REVIEW: MEDIUM → None",
+          "ENERGY_REVIEW: LOW → None",
+          "COSMIC_RESOURCES_REVIEW: HIGH → None",
+          "INFRASTRUCTURE_CITIES_REVIEW: MEDIUM → None",
+          "CLIMATE_GLOBAL_RISK_REVIEW: LOW → None",
+          "INEQUALITY_POVERTY_REVIEW: MEDIUM → None",
+          "HUMAN_WELL_BEING_REVIEW: MEDIUM → None",
+          "TECHNOLOGY_AI_REVIEW: MEDIUM → None",
+          "EDUCATION_CULTURE_REVIEW: MEDIUM → None",
+          "SOCIAL_RELATIONS_REVIEW: MEDIUM → None",
+          "ECONOMY_WORK_REVIEW: MEDIUM → None",
+          "FOOD_REVIEW: MEDIUM → None",
+          "TECHNOLOGY_INFRA_REVIEW: MEDIUM → None",
+          "WATER_REVIEW: MEDIUM → None"
+        ]
+      },
+      {
+        "timestamp": "2026-06-18T20:31:15.951589+00:00",
+        "patch": "ecosystems_biodiversity_review_patch.py",
+        "success": true,
+        "stdout": "Patch applied\n",
+        "stderr": "",
+        "score_before": 50.26,
+        "score_after": 50.26,
+        "delta": 0.0,
+        "verdict": "NEUTRAL",
+        "changed_axes": []
+      }
+    ]
+  },
+  "2026-06-19": {
+    "auto_modifications": [
+      {
+        "timestamp": "2026-06-19T18:29:53.943059+00:00",
+        "action": "FAILED",
+        "problem": "Lack of integration between agents and fast_cycle_runner.py",
+        "reason": "Groq грешка: Всички LLM backends неуспешни. Последна грешка: None",
+        "executed_by": "SELF_MODIFIER_AUTONOMOUS"
+      },
+      {
+        "timestamp": "2026-06-19T18:29:53.943068+00:00",
+        "action": "FAILED",
+        "problem": "To enable accurate system monitoring",
+        "reason": "Groq грешка: Всички LLM backends неуспешни. Последна грешка: None",
+        "executed_by": "SELF_MODIFIER_AUTONOMOUS"
+      },
+      {
+        "timestamp": "2026-06-19T18:29:53.943072+00:00",
+        "action": "FAILED",
+        "problem": "To enable full system functionality",
+        "reason": "Groq грешка: Всички LLM backends неуспешни. Последна грешка: None",
+        "executed_by": "SELF_MODIFIER_AUTONOMOUS"
+      },
+      {
+        "timestamp": "2026-06-19T18:29:53.943074+00:00",
+        "action": "FAILED",
+        "problem": "Недостатък в правителствената гъвкавост и устойчивост на държавата във възстановяването на демокраци",
+        "reason": "Groq грешка: Всички LLM backends неуспешни. Последна грешка: None",
+        "executed_by": "SELF_MODIFIER_AUTONOMOUS"
+      },
+      {
+        "timestamp": "2026-06-19T18:29:53.943077+00:00",
+        "action": "FAILED",
+        "problem": "Отсутствие на точни данни за неравенство и бедност",
+        "reason": "Groq грешка: Всички LLM backends неуспешни. Последна грешка: None",
+        "executed_by": "SELF_MODIFIER_AUTONOMOUS"
+      }
+    ],
+    "patch_executions": [
+      {
+        "timestamp": "2026-06-19T18:29:59.794951+00:00",
+        "patch": "climate_patch.py",
+        "success": false,
+        "stdout": "",
+        "stderr": "Traceback (most recent call last):\n  File \"C:\\Users\\emilb\\Desktop\\AGI\\CORTEX++_MERGED\\agents\\core\\climate_patch.py\", line 5, in <module>\n    BASE_DIR = pathlib.Path(os.environ['CORTEX_BASE'])\n                            ^^\nNameError: name 'os' is not defined. Did you forget to import 'os'?\n",
+        "score_before": 50.26,
+        "score_after": null,
+        "delta": null,
+        "verdict": "NEUTRAL",
+        "changed_axes": [
+          "HUMAN_WELL_BEING_REVIEW: MEDIUM → None",
+          "CLIMATE_GLOBAL_RISK_REVIEW: LOW → None",
+          "MATERIALS_WASTE_REVIEW: LOW → None",
+          "COSMIC_RESOURCES_REVIEW: HIGH → None",
+          "ECOSYSTEMS_BIODIVERSITY_REVIEW: MEDIUM → None",
+          "FOOD_REVIEW: MEDIUM → None",
+          "TECHNOLOGY_INFRA_REVIEW: MEDIUM → None",
+          "TECHNOLOGY_AI_REVIEW: MEDIUM → None",
+          "ENERGY_REVIEW: LOW → None",
+          "CULTURE_MEDIA_REVIEW: MEDIUM → None",
+          "SPACE_INFRASTRUCTURE_REVIEW: HIGH → None",
+          "INFRASTRUCTURE_CITIES_REVIEW: MEDIUM → None",
+          "WATER_REVIEW: MEDIUM → None",
+          "INEQUALITY_POVERTY_REVIEW: MEDIUM → None",
+          "EDUCATION_CULTURE_REVIEW: MEDIUM → None",
+          "GOVERNANCE_INSTITUTIONS_REVIEW: LOW → None",
+          "ECONOMY_WORK_REVIEW: MEDIUM → None",
+          "COGNITION_LEARNING_REVIEW: MEDIUM → None",
+          "SOCIAL_RELATIONS_REVIEW: MEDIUM → None"
+        ]
+      }
+    ]
+  },
+  "2026-06-20": {
+    "patch_executions": [
+      {
+        "timestamp": "2026-06-20T05:42:48.225754+00:00",
+        "patch": "climate_patch.py",
+        "success": true,
+        "stdout": "CO2 Metrics (local simulation):\n  Current: 420.5 ppm\n  Year Ago: 415.3 ppm\n  Increase: 5.2 ppm/year\n  Date: 2024-04-15\n",
+        "stderr": "",
+        "score_before": null,
+        "score_after": null,
+        "delta": null,
+        "verdict": "NEUTRAL",
+        "changed_axes": []
+      },
+      {
+        "timestamp": "2026-06-20T06:56:09.519949+00:00",
+        "patch": "broken_test_patch.py",
+        "success": false,
+        "stdout": "",
+        "stderr": "СИНТАКСИС ГРЕШКА: SyntaxError на ред 1: invalid non-printable character U+FEFF",
+        "score_before": 50.26,
+        "score_after": null,
+        "delta": null,
+        "verdict": "NEUTRAL",
+        "changed_axes": [
+          "ENERGY_REVIEW: LOW → None",
+          "COSMIC_RESOURCES_REVIEW: HIGH → None",
+          "FOOD_REVIEW: MEDIUM → None",
+          "INEQUALITY_POVERTY_REVIEW: MEDIUM → None",
+          "ECOSYSTEMS_BIODIVERSITY_REVIEW: MEDIUM → None",
+          "MATERIALS_WASTE_REVIEW: LOW → None",
+          "CULTURE_MEDIA_REVIEW: MEDIUM → None",
+          "EDUCATION_CULTURE_REVIEW: MEDIUM → None",
+          "SPACE_INFRASTRUCTURE_REVIEW: HIGH → None",
+          "ECONOMY_WORK_REVIEW: MEDIUM → None",
+          "TECHNOLOGY_AI_REVIEW: MEDIUM → None",
+          "HUMAN_WELL_BEING_REVIEW: MEDIUM → None",
+          "COGNITION_LEARNING_REVIEW: MEDIUM → None",
+          "GOVERNANCE_INSTITUTIONS_REVIEW: LOW → None",
+          "CLIMATE_GLOBAL_RISK_REVIEW: LOW → None",
+          "WATER_REVIEW: MEDIUM → None",
+          "INFRASTRUCTURE_CITIES_REVIEW: MEDIUM → None",
+          "SOCIAL_RELATIONS_REVIEW: MEDIUM → None",
+          "TECHNOLOGY_INFRA_REVIEW: MEDIUM → None"
+        ]
+      }
+    ],
+    "auto_modifications": [
+      {
+        "timestamp": "2026-06-20T07:36:29.933539+00:00",
+        "action": "FAILED",
+        "problem": "Lack of integration between agents and fast_cycle_runner.py",
+        "reason": "Groq грешка: Всички LLM backends неуспешни. Последна грешка: None",
+        "executed_by": "SELF_MODIFIER_AUTONOMOUS"
+      },
+      {
+        "timestamp": "2026-06-20T07:36:29.933548+00:00",
+        "action": "FAILED",
+        "problem": "To enable accurate system monitoring",
+        "reason": "Groq грешка: Всички LLM backends неуспешни. Последна грешка: None",
+        "executed_by": "SELF_MODIFIER_AUTONOMOUS"
+      },
+      {
+        "timestamp": "2026-06-20T07:36:29.933552+00:00",
+        "action": "FAILED",
+        "problem": "To enable full system functionality",
+        "reason": "Groq грешка: Всички LLM backends неуспешни. Последна грешка: None",
+        "executed_by": "SELF_MODIFIER_AUTONOMOUS"
+      },
+      {
+        "timestamp": "2026-06-20T07:36:29.933555+00:00",
+        "action": "FAILED",
+        "problem": "Повишено ниво на непрекъснато движение и неразрешен проблем със стари пътища, които не са поддържани",
+        "reason": "Groq грешка: Всички LLM backends неуспешни. Последна грешка: None",
+        "executed_by": "SELF_MODIFIER_AUTONOMOUS"
+      }
+    ]
   }
 }

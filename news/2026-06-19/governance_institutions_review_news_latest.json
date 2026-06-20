@@ -1,0 +1,119 @@
+{
+  "axis": "GOVERNANCE_INSTITUTIONS_REVIEW",
+  "fetched_at": "2026-06-19T18:05:10.142220+00:00",
+  "smart_query": "government corruption institutions",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "From ‘media deserts’ to the invisibility of women, rights experts spotlight latest trends",
+      "snippet": "From the invisibility of women and girls to “media deserts” amid an artificial intelligence (AI) tsunami, dozens of UN independent experts have been shedding light on the battle for equal rights worldwide as the Geneva-based Human Rights Council continued its 62nd session on Thursday.",
+      "url": "https://news.un.org/feed/view/en/story/2026/06/1167756",
+      "source": "RSS"
+    },
+    {
+      "title": "Rights defender killings hit record high as UN pushes to shore up humanitarian action",
+      "snippet": "Attacks against human right defenders have reached record levels over the past year, according to a new report issued on Wednesday by the UN human rights office, OHCHR.",
+      "url": "https://news.un.org/feed/view/en/story/2026/06/1167746",
+      "source": "RSS"
+    },
+    {
+      "title": "Hate speech is ‘first step down the path of dehumanisation’",
+      "snippet": "As online platforms continue to fuel a surge in real-world violence against vulnerable communities, UN Secretary-General António Guterres is warning that freedom of expression must never be used to justify hate speech.&nbsp;",
+      "url": "https://news.un.org/feed/view/en/story/2026/06/1167745",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "github/government.github.com",
+      "snippet": "Gather, curate, and feature stories of public servants and civic hackers using GitHub as part of their open government innovations",
+      "stars": 1963,
+      "url": "https://github.com/github/government.github.com",
+      "updated": "2026-06-18",
+      "source": "GitHub"
+    },
+    {
+      "title": "consuldemocracy/consuldemocracy",
+      "snippet": "Consul Democracy - Open Government and E-Participation Web Software",
+      "stars": 1536,
+      "url": "https://github.com/consuldemocracy/consuldemocracy",
+      "updated": "2026-06-19",
+      "source": "GitHub"
+    },
+    {
+      "title": "datagouv/data.gouv.fr",
+      "snippet": "Ce dépôt rassemble les tickets techniques qui portent sur data.gouv.fr.",
+      "stars": 121,
+      "url": "https://github.com/datagouv/data.gouv.fr",
+      "updated": "2026-06-12",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Programmable Participatory Governance -- A Formal Framework for Transparent, Accountable, and Citizen-Responsive Democratic Systems: From Deliberative Theory to Decentralised Architecture",
+      "snippet": "Public confidence in democratic institutions has declined across many OECD countries over recent decades, while political participation and policy influence remain unevenly distributed across socioeconomic groups. Concurrently, democratic backsliding, declining electoral participation, and persisten",
+      "url": "https://arxiv.org/abs/2605.20261v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Sustainable Intelligence for the Wild: Democratizing Ecological Monitoring via Knowledge-Adaptive Edge Expert Agents",
+      "snippet": "Rapid biodiversity loss underscore the urgency of effective monitoring, yet manual surveys remain resource-intensive. While on-device AI offers a scalable alternative, its performance in the wild is often challenged by environmental variability. Current methods rely heavily on cloud resource, which ",
+      "url": "https://arxiv.org/abs/2605.16671v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[We’re updating our career advice for the strangest time in history | Benjamin Todd, author of 80,000 Hours] The average career is 80,000 hours long. With AI advancing so rapidly, the hours you have left in your career matter more than ever.Some leading AI researchers think there’s a 10% chance that AI systems begin automating AI research itself this year — and a 60% chance by the end of 2028. This could introduce aggressive feedback loops that completely reshape every industry, institution, and career.I",
+  "wiki": null,
+  "youtube_items": [
+    {
+      "title": "[YT] YouTube:f-Ew4Nw7wwU",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=f-Ew4Nw7wwU",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "f-Ew4Nw7wwU",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] YouTube:VUnz8zTb3HU",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=VUnz8zTb3HU",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "VUnz8zTb3HU",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] YouTube:XPUQvhRxpj4",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=XPUQvhRxpj4",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "XPUQvhRxpj4",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    }
+  ],
+  "summary": "[RSS News]\n- From ‘media deserts’ to the invisibility of women, rights experts spotlight latest trends\n- Rights defender killings hit record high as UN pushes to shore up humanitarian action\n\n[arXiv]\n",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": [],
+  "open_source_momentum": "",
+  "scientific_frontier": "",
+  "relevance_to_goal": ""
+}

@@ -1,0 +1,119 @@
+{
+  "axis": "COGNITION_LEARNING_REVIEW",
+  "fetched_at": "2026-06-19T18:07:22.957548+00:00",
+  "smart_query": "education learning children schools",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "Scientists found an early depression clue hidden in children’s eyes",
+      "snippet": "Depression appears to change what children notice in the faces around them, but the effect depends on family history. Kids with a higher inherited risk became more focused on sadness, while lower-risk children lost some of their natural attention to happy expressions.",
+      "url": "https://www.sciencedaily.com/releases/2026/06/260616102214.htm",
+      "source": "RSS"
+    },
+    {
+      "title": "Why middle age is becoming a breaking point in the U.S.",
+      "snippet": "A new international study finds that middle-aged Americans are lonelier, more depressed, and experiencing worse memory and health than earlier generations. Researchers say growing financial strain, weaker social supports, and chronic stress may explain why the U.S. is falling behind other wealthy na",
+      "url": "https://www.sciencedaily.com/releases/2026/06/260613215430.htm",
+      "source": "RSS"
+    },
+    {
+      "title": "Learning a musical instrument in your 70s could help protect memory",
+      "snippet": "Learning a musical instrument later in life may help keep the brain younger for longer. In a four-year study, older adults who continued practicing maintained their memory performance and showed less age-related brain shrinkage than those who quit. The benefits were especially noticeable in brain re",
+      "url": "https://www.sciencedaily.com/releases/2026/06/260613034217.htm",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "JuneYaooo/lineage-skill",
+      "snippet": " Distill videos, PDFs, transcripts, and notes into source-backed Agent Skills.",
+      "stars": 164,
+      "url": "https://github.com/JuneYaooo/lineage-skill",
+      "updated": "2026-06-19",
+      "source": "GitHub"
+    },
+    {
+      "title": "SirhanMacx/Claw-ED",
+      "snippet": "Open source CLI agent that generates complete lesson bundles in your teaching voice. 48+ tools, zero-touch 9-file output, local-first privacy.",
+      "stars": 50,
+      "url": "https://github.com/SirhanMacx/Claw-ED",
+      "updated": "2026-06-19",
+      "source": "GitHub"
+    },
+    {
+      "title": "DaoyuanLi2816/labelbank",
+      "snippet": "Retrieve + rerank over a closed label bank: LLM bi-encoders with self-mined hard negatives and a generative listwise reranker. Generalized from a silver-medal solution to Kaggle Eedi — Mining Misconce",
+      "stars": 20,
+      "url": "https://github.com/DaoyuanLi2816/labelbank",
+      "updated": "2026-06-11",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Measuring Whether LLM Tutors Teach or Solve: A Diagnostic for Educational Impact",
+      "snippet": "Large language models are increasingly proposed as educational tutors, yet stronger task-solving ability does not necessarily imply stronger learning support. Motivated by recent calls to measure the social impact of NLP systems in practice, we study whether public LLM tutoring benchmarks distinguis",
+      "url": "https://arxiv.org/abs/2606.16206v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "\"Stuck in a Spiral\": Shame and Guilt as Social Regulators of AI Use in Computing Education",
+      "snippet": "While prior work has examined patterns of adoption and social norms around AI use, less is known about how emotional factors, such as shame and guilt, shape students use of AI tools. We present an interview study with 19 computing students through a functionalist perspective of shame and guilt, whic",
+      "url": "https://arxiv.org/abs/2606.14920v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[How to raise kids who question AI | Randi Williams] AI education researcher Randi Williams has spent years studying how kids interact with technology and toys, and what she's found should make every parent stop and think. She reveals how, as tech companies embed AI inside toys, children are forming strong emotional bonds with machines. Explore what this means for their development — and why a playful fix might start with teaching kids to break the ",
+  "wiki": null,
+  "youtube_items": [
+    {
+      "title": "[YT] YouTube:U-7THjkQdbg",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=U-7THjkQdbg",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "U-7THjkQdbg",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] YouTube:ssZZJ5ArWLo",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=ssZZJ5ArWLo",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "ssZZJ5ArWLo",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] YouTube:k7PvscqGD24",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=k7PvscqGD24",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "k7PvscqGD24",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    }
+  ],
+  "summary": "[RSS News]\n- Scientists found an early depression clue hidden in children’s eyes\n- Why middle age is becoming a breaking point in the U.S.\n\n[arXiv]\n- Measuring Whether LLM Tutors Teach or Solve: A Dia",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": [],
+  "open_source_momentum": "",
+  "scientific_frontier": "",
+  "relevance_to_goal": ""
+}

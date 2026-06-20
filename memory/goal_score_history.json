@@ -26,5 +26,44 @@
       "PLANETARY_POTENTIAL_REVIEW": 60.0,
       "WATER_REVIEW": 60.0
     }
+  },
+  {
+    "timestamp": "2026-06-18T20:31:21.591447+00:00",
+    "scores": {
+      "BODY_SCAN": 50.1,
+      "CLIMATE_GLOBAL_RISK_REVIEW": 30.0,
+      "ECOSYSTEMS_BIODIVERSITY_REVIEW": 60.0,
+      "ENERGY_REVIEW": 60.0,
+      "FOOD_REVIEW": 60.0,
+      "MATERIALS_WASTE_REVIEW": 60.0,
+      "PLANETARY_POTENTIAL_REVIEW": 60.0,
+      "WATER_REVIEW": 60.0
+    }
+  },
+  {
+    "timestamp": "2026-06-19T18:30:05.542627+00:00",
+    "scores": {
+      "BODY_SCAN": 38.1,
+      "CLIMATE_GLOBAL_RISK_REVIEW": 30.0,
+      "ECOSYSTEMS_BIODIVERSITY_REVIEW": 60.0,
+      "ENERGY_REVIEW": 60.0,
+      "FOOD_REVIEW": 60.0,
+      "MATERIALS_WASTE_REVIEW": 60.0,
+      "PLANETARY_POTENTIAL_REVIEW": 60.0,
+      "WATER_REVIEW": 60.0
+    }
+  },
+  {
+    "timestamp": "2026-06-20T07:36:35.738250+00:00",
+    "scores": {
+      "BODY_SCAN": 100.0,
+      "CLIMATE_GLOBAL_RISK_REVIEW": 30.0,
+      "ECOSYSTEMS_BIODIVERSITY_REVIEW": 60.0,
+      "ENERGY_REVIEW": 60.0,
+      "FOOD_REVIEW": 60.0,
+      "MATERIALS_WASTE_REVIEW": 60.0,
+      "PLANETARY_POTENTIAL_REVIEW": 60.0,
+      "WATER_REVIEW": 60.0
+    }
   }
 ]

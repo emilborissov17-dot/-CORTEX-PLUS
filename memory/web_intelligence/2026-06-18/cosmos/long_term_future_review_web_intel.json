@@ -1,0 +1,157 @@
+{
+  "axis": "LONG_TERM_FUTURE_REVIEW",
+  "domain": "cosmos",
+  "timestamp": "2026-06-18T18:21:05.971411+00:00",
+  "sources_count": 11,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] AI2027: Is this how AI might destroy humanity? - BBC World Service",
+      "summary": "[DESCRIPTION FALLBACK] A research paper predicting that artificial intelligence will go rogue in 2027 and lead to humanity's extinction within a decade is ...",
+      "link": "https://www.youtube.com/watch?v=1UufaK3pQMg",
+      "published": "2025-08-01T23:00:03Z",
+      "source_type": "youtube",
+      "channel": "BBC World Service",
+      "video_id": "1UufaK3pQMg",
+      "transcript_method": "description",
+      "transcript_chars": 158,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] The Catastrophic Risks of AI — and a Safer Path | Yoshua Bengio | TED",
+      "summary": "[DESCRIPTION FALLBACK] Yoshua Bengio — the world's most-cited computer scientist and a \"godfather\" of artificial intelligence — is deadly concerned about ...",
+      "link": "https://www.youtube.com/watch?v=qe9QSCF-d88",
+      "published": "2025-05-21T15:01:24Z",
+      "source_type": "youtube",
+      "channel": "TED",
+      "video_id": "qe9QSCF-d88",
+      "transcript_method": "description",
+      "transcript_chars": 157,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] THE FUTURE OF HUMANITY: A.I Predicts 400 Years In 3 Minutes (4K)",
+      "summary": "[DESCRIPTION FALLBACK] How will Humanity look in 400 Years? This exciting time-lapse of our future produced entirely by Artificially Intelligent Concept ...",
+      "link": "https://www.youtube.com/watch?v=-UBaW1OIgTo",
+      "published": "2022-11-27T22:29:38Z",
+      "source_type": "youtube",
+      "channel": "Amara Pictures",
+      "video_id": "-UBaW1OIgTo",
+      "transcript_method": "description",
+      "transcript_chars": 156,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "problem": "Insufficient attention to AI safety and biosecurity could lead to catastrophic consequences for humanity",
+    "root_cause": "Lack of prioritization and funding for AI safety and biosecurity research, as well as limited awareness and cooperation among stakeholders",
+    "severity": "CRITICAL",
+    "leverage_points": [
+      "Governments and research institutions investing in AI safety and biosecurity",
+      "Industry leaders and experts collaborating on developing and implementing safe AI practices"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Establish a global research initiative on AI safety and biosecurity",
+        "measurable_goal": "Increase funding for AI safety research by 20% annually for the next 5 years",
+        "timeframe": "medium-term"
+      },
+      {
+        "action": "Develop and implement industry-wide standards for AI safety and biosecurity",
+        "measurable_goal": "Achieve 80% adoption of safe AI practices among leading tech companies within 3 years",
+        "timeframe": "medium-term"
+      }
+    ],
+    "evidence": [
+      "The BBC World Service video 'AI2027: Is this how AI might destroy humanity?' highlights the potential risks of unregulated AI development",
+      "The TED talk 'The Catastrophic Risks of AI — and a Safer Path' by Yoshua Bengio emphasizes the need for a safer approach to AI development"
+    ],
+    "generalization": "This problem connects to the domains of Cosmos (long-term sustainability of intelligent life), Civilization (global cooperation and governance), and Human (individual and collective well-being)",
+    "summary": "The lack of attention to AI safety and biosecurity poses a critical risk to humanity, requiring immediate prioritization and cooperation among stakeholders to prevent catastrophic consequences",
+    "risk_level": "CRITICAL"
+  },
+  "raw_items": [
+    {
+      "title": "GDM AI Control Roadmap",
+      "summary": "<p><span>GDM has published an </span><a href=\"https://storage.googleapis.com/deepmind-media/DeepMind.com/Blog/securing-the-future-of-ai-agents/gdm-ai-control-roadmap.pdf\" rel=\"noreferrer\"><span>AI Control Roadmap</span></a><span>! From the executive summary:</span></p><blockquote><p><br /><span>We present the </span><b><span>GDM AI Control Roadmap (v0.1)</span></b><span> – our plan for implementing and adopting internal guardrails designed to catch potential adversarial behaviour by AI agents, e",
+      "link": "https://www.lesswrong.com/posts/hEtkyKGoPpFeWnKkX/gdm-ai-control-roadmap",
+      "published": "Thu, 18 Jun 2026 16:50:59 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Contra Pace on When to Apologize",
+      "summary": "<blockquote>\n<p>BOJACK: Hey, I wanted to talk to you about—you know—I feel bad about what happened.<br />\nHERB: So, you're apologizing.<br />\nBOJACK: Yes. I'm sorry.<br />\nHERB: Okay. I don't forgive you.<br />\nBOJACK: Herb, I said I'm sorry.<br />\nHERB: Yeah. And I do not forgive you.<br />\nBOJACK: Uh, not sure you get what's happening here. This could be the last time that you—<br />\nHERB: No. I'm not going to give you closure. You don't get that. You have to live with the shitty thing you did",
+      "link": "https://www.lesswrong.com/posts/E9Ff3zkmjG99LBBJH/contra-pace-on-when-to-apologize",
+      "published": "Thu, 18 Jun 2026 16:49:55 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Your Model Organisms Might Be Fried",
+      "summary": "<p><i><span>Context: We are the ‘model motivations’ team at Arcadia Alignment. We aim to build a science of ‘</span></i><a href=\"https://www.lesswrong.com/posts/DTDoyDTtC8R3bCiTx/from-personas-to-intentions-towards-a-science-of-motivations\"><i><span>model intentions</span></i></a><i><span>’, unifying insights from </span></i><a href=\"https://www.lesswrong.com/posts/dfoty34sT7CSKeJNn/the-persona-selection-model\"><i><span>personas</span></i></a><i><span> and other empirical evidence. In this post,",
+      "link": "https://www.lesswrong.com/posts/WmEcgcstzYCcMpc7z/your-model-organisms-might-be-fried",
+      "published": "Thu, 18 Jun 2026 16:18:58 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Shard narcissism as delusion of unembededness",
+      "summary": "<p><i><span>Epistemic status: Speculative</span></i></p><p><i><span>TL;DR: Narcissism in </span></i><a href=\"https://en.wikipedia.org/wiki/The_Culture_of_Narcissism\" rel=\"noreferrer\"><i><span>Lasch</span></i></a><i><span>'s sense is unhappiness with the essential embeddedness of agency in our universe, \"solved\" by a denial of agency that leads to non-agency.</span></i></p><h1><span>Three examples</span></h1><p><span>Person A works long hours. For years, they've wanted to find a long-term relatio",
+      "link": "https://www.lesswrong.com/posts/ufhkFuykXoKiqnbsB/shard-narcissism-as-delusion-of-unembededness",
+      "published": "Thu, 18 Jun 2026 14:29:16 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "We can guess what intergalactic war would look like. And strangely, it matters.",
+      "summary": "Published on June 18, 2026 6:08 PM GMT<br /><br /><p>By <a href=\"https://80000hours.org/author/robert-wiblin/\">Robert Wiblin </a>| &nbsp;<a href=\"https://youtu.be/UDA8wNFfuhA\">Watch on Youtube</a> &nbsp;| &nbsp;<a href=\"https://open.spotify.com/episode/4B0DxlHzsuqdU8xSUJ5Sqo\">Listen on Spotify</a> &nbsp;| &nbsp;<a href=\"https://forum.effectivealtruism.org/posts/cCKKRjwNEazqtykpm/we-can-guess-what-intergalactic-war-would-look-like-and#Transcript1\">Read transcript</a></p><figure class=\"media\"><div",
+      "link": "https://forum.effectivealtruism.org/posts/cCKKRjwNEazqtykpm/we-can-guess-what-intergalactic-war-would-look-like-and",
+      "published": "Thu, 18 Jun 2026 18:08:51 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Looking for a co-founder in biosecurity startup (automated biosurveillance)",
+      "summary": "Published on June 18, 2026 2:54 PM GMT<br /><br /><p>Hi everyone,&nbsp;<br /><br />My name is Gian, the founder of HELGEN (biosecurity / biodefense), focusing on detecting biological threats in the environment. We have established partnerships with professorships in TUM and LMU (Munich, Germany), and looking for someone who could potentially join as member to apply for EXIST / other German and EU grants.<br /><br />I am<strong> <u>looking for a co-founder / founding employees with experiences in",
+      "link": "https://forum.effectivealtruism.org/posts/f4mxtq3qz2T9mvjp6/looking-for-a-co-founder-in-biosecurity-startup-automated",
+      "published": "Thu, 18 Jun 2026 17:57:24 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Plugging the generalist gap in AI safety with freelancers",
+      "summary": "Published on June 18, 2026 12:22 PM GMT<br /><br /><p>TLDR:</p><p>The field of AI safety is bottlenecked on talent. Running recruitment processes is expensive and time-consuming. Freelancers are overlooked. Hiring freelancers can provide a way to quickly and cheaply test a person's fit within an org, and vice versa. Plus, real work gets completed, and freelancers get both compensation and a portfolio piece.</p><hr /><p>Last week, I wrote about<a href=\"https://forum.effectivealtruism.org/posts/en",
+      "link": "https://forum.effectivealtruism.org/posts/K22hBEZFpkTH3p2su/plugging-the-generalist-gap-in-ai-safety-with-freelancers-1",
+      "published": "Thu, 18 Jun 2026 12:22:05 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Having Kids as an EA: What I Wish Someone Had Told Me",
+      "summary": "Published on June 18, 2026 9:54 AM GMT<br /><br /><p>At every EA conference I go to I end up having long conversations with attendees about my inside-view on what it is like to have kids.&nbsp;</p><p>Since I know that a lot of impact-oriented people have questions/interest here, I decided to write up my thoughts in a series of posts that address different angles of how to think about this from my perspective.</p><p>The link here is to the series where you can follow on to the first post - hope y",
+      "link": "https://forum.effectivealtruism.org/posts/GNZgMASKwnY7JYsB2/having-kids-as-an-ea-what-i-wish-someone-had-told-me",
+      "published": "Thu, 18 Jun 2026 09:54:09 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] AI2027: Is this how AI might destroy humanity? - BBC World Service",
+      "summary": "[DESCRIPTION FALLBACK] A research paper predicting that artificial intelligence will go rogue in 2027 and lead to humanity's extinction within a decade is ...",
+      "link": "https://www.youtube.com/watch?v=1UufaK3pQMg",
+      "published": "2025-08-01T23:00:03Z",
+      "source_type": "youtube",
+      "channel": "BBC World Service",
+      "video_id": "1UufaK3pQMg",
+      "transcript_method": "description",
+      "transcript_chars": 158,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] The Catastrophic Risks of AI — and a Safer Path | Yoshua Bengio | TED",
+      "summary": "[DESCRIPTION FALLBACK] Yoshua Bengio — the world's most-cited computer scientist and a \"godfather\" of artificial intelligence — is deadly concerned about ...",
+      "link": "https://www.youtube.com/watch?v=qe9QSCF-d88",
+      "published": "2025-05-21T15:01:24Z",
+      "source_type": "youtube",
+      "channel": "TED",
+      "video_id": "qe9QSCF-d88",
+      "transcript_method": "description",
+      "transcript_chars": 157,
+      "has_full_transcript": false
+    }
+  ]
+}

@@ -1,0 +1,138 @@
+{
+  "axis": "WATER_REVIEW",
+  "fetched_at": "2026-06-20T07:35:03.183363+00:00",
+  "smart_query": "water scarcity drinking water",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 3,
+    "arxiv": 2,
+    "github": 3,
+    "youtube_transcripts": 3,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "‘It’s Russian roulette’: alarm as Europe backs critical minerals mines in water-stressed regions",
+      "snippet": "Exclusive: European Commission planning to rewrite key law to allow water-intensive mines in regions suffering from droughtThe European Commission plans to rewrite the EU’s flagship water protection law to speed up the development of critical minerals mines, despite many being located in drying and ",
+      "url": "https://www.theguardian.com/environment/2026/jun/20/europe-backs-critical-minerals-mines-water-stressed-regions",
+      "source": "RSS"
+    },
+    {
+      "title": "‘I had sewage in my bath’: row erupts over lock on Huddersfield narrow canal",
+      "snippet": "Boaters say low water levels cause them to run aground, while residents say the lock needs to be drained to prevent waste running into their propertiesEarlier this month, signs began appearing pinned to a lock on the Huddersfield narrow canal: “Canel [sic] And River Trust,” they read. “Please leave ",
+      "url": "https://www.theguardian.com/uk-news/2026/jun/18/sewage-bath-row-lock-huddersfield-narrow-canal",
+      "source": "RSS"
+    },
+    {
+      "title": "Rising temperatures may increase flood risk through river ‘whiplash’, study finds",
+      "snippet": "Sudden shifts from wet to dry weather, or vice versa, may foil typical drought- and flood-prevention measuresRising temperatures may trigger a dangerous increase in “hydroclimatic whiplash” in rivers that would make traditional approaches to flood and drought planning insufficient, a study has found",
+      "url": "https://www.theguardian.com/environment/2026/jun/17/rising-temperatures-may-increase-flood-risk-through-river-whiplash-study-finds",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [
+    {
+      "title": "Climate Change , Drinking Water Security , and Public Health",
+      "snippet": "Climate Change , Drinking Water Security , and Public Health",
+      "url": "https://link.springer.com/book/10.1007/978-3-032-12074-8",
+      "source": "link.springer.com"
+    },
+    {
+      "title": "Gram panchayat elections in Karnataka will be held before end of 2026 , says Minister Priyank Kharge",
+      "snippet": "Gram panchayat elections in Karnataka will be held before end of 2026 , says Minister Priyank Kharge",
+      "url": "https://www.thehindu.com/news/national/karnataka/gram-panchayat-elections-in-karnataka-will-be-held-before-end-of-2026-says-minister-priyank-kharge/article70958996.ece",
+      "source": "thehindu.com"
+    },
+    {
+      "title": "Yadgir officials told to be on high alert to any emerging water supply crisis",
+      "snippet": "Yadgir officials told to be on high alert to any emerging water supply crisis",
+      "url": "https://www.thehindu.com/news/national/karnataka/yadgir-officials-told-to-be-on-high-alert-to-any-emerging-water-supply-crisis/article70969872.ece",
+      "source": "thehindu.com"
+    }
+  ],
+  "github_repos": [
+    {
+      "title": "wilsto/pool-monitor-card",
+      "snippet": "Keep your swimming pool safe and crystal clear by monitoring up to 25 water chemistry parameters at a glance.",
+      "stars": 122,
+      "url": "https://github.com/wilsto/pool-monitor-card",
+      "updated": "2026-06-17",
+      "source": "GitHub"
+    },
+    {
+      "title": "DOI-USGS/EGRET",
+      "snippet": "An R-package for the analysis of long-term changes in water quality and streamflow, including the water-quality method Weighted Regressions on Time, Discharge, and Season (WRTDS). https://doi-usgs.git",
+      "stars": 100,
+      "url": "https://github.com/DOI-USGS/EGRET",
+      "updated": "2026-06-19",
+      "source": "GitHub"
+    },
+    {
+      "title": "KnowFlow/KnowFlow_AWM",
+      "snippet": "KnowFlow Automatic Water Monitoring device is an open sourced tool enable everyone having access to first hand water quality data with low cost.",
+      "stars": 96,
+      "url": "https://github.com/KnowFlow/KnowFlow_AWM",
+      "updated": "2026-06-15",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Water vapor buoyancy and the African easterly jet",
+      "snippet": "The African easterly jet (AEJ) is a prominent circulation feature in the tropical atmosphere. It transports mineral dust and generates easterly waves that serve as seeds for hurricanes. Conventional wisdom holds that the AEJ is in thermal wind balance with the positive meridional temperature gradien",
+      "url": "https://arxiv.org/abs/2605.21875v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Acidification of Water by CO2",
+      "snippet": "Fundamental inorganic chemistry shows that increasing concentrations of atmospheric CO2 will have no harmful effect on organisms that live in the natural waters of the Earths, and may well benefit them. Alkalinity and dissolved CO2 give high buffering capacity to most natural waters and minimize the",
+      "url": "https://arxiv.org/abs/2605.12311v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[Sunday Pick: The Data Center Next Door with Dr. Jacoby Wilson | from TED Tech] Imagine if one day, your quiet neighborhood came alive with a steady hum… and it never went away? All throughout the United States, data centers are popping up next door and in your backyards. These buildings guzzle millions of water, cause noise pollution, and are raising homeowners’ utility bills. In this first episode of a four-part miniseries, Sherrell interviews environmental health scientist",
+  "wiki": null,
+  "youtube_items": [
+    {
+      "title": "[YT] The Surprising Solutions to the World&#39;s Water Crisis | The Future With Hannah Fry",
+      "summary": "[DESCRIPTION FALLBACK] Our survival depends on water, yet global reserves are rapidly shrinking. It's now replaced oil as the most likely cause of global ...",
+      "link": "https://www.youtube.com/watch?v=FDY2McKLvlM",
+      "source_type": "youtube",
+      "channel": "Bloomberg Originals",
+      "video_id": "FDY2McKLvlM",
+      "transcript_method": "description",
+      "transcript_chars": 157,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Explained | World&#39;s Water Crisis | FULL EPISODE | Netflix",
+      "summary": "[DESCRIPTION FALLBACK] In partnership with Vox Media Studios and Vox, this enlightening explainer series will take viewers deep inside a wide range of ...",
+      "link": "https://www.youtube.com/watch?v=C65iqOSCZOY",
+      "source_type": "youtube",
+      "channel": "Netflix",
+      "video_id": "C65iqOSCZOY",
+      "transcript_method": "description",
+      "transcript_chars": 154,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] The Day Earth Ran Out of Fresh Water 😨 #WaterCrisis, #FreshWater #ClimateChange #Drought",
+      "summary": "[DESCRIPTION FALLBACK] The Day Earth Ran Out of Fresh Water The Day Earth Ran Out of Fresh Water | Could Humanity Survive the Coming ...",
+      "link": "https://www.youtube.com/watch?v=obgy8-BgMPA",
+      "source_type": "youtube",
+      "channel": "GeoGyan Education",
+      "video_id": "obgy8-BgMPA",
+      "transcript_method": "description",
+      "transcript_chars": 136,
+      "has_full_transcript": false
+    }
+  ],
+  "summary": "[RSS News]\n- ‘It’s Russian roulette’: alarm as Europe backs critical minerals mines in water-stressed regions\n- ‘I had sewage in my bath’: row erupts over lock on Huddersfield narrow canal\n\n[GDELT New",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": [],
+  "open_source_momentum": "",
+  "scientific_frontier": "",
+  "relevance_to_goal": ""
+}

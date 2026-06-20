@@ -1,0 +1,147 @@
+{
+  "axis": "INFRASTRUCTURE_CITIES_REVIEW",
+  "domain": "civilization",
+  "timestamp": "2026-06-18T18:17:11.851596+00:00",
+  "sources_count": 12,
+  "rss_count": 4,
+  "ddg_count": 5,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] Smart Cities: How LiDAR Technology Enables Real‑Time Urban Intelligence",
+      "summary": " Welcome to Code the Future. Today on the show,\nwe're sitting down with Asad Lassani, VP of Smart Infrastructure at Ouster, a company that\nis redefining how the world uses LiDAR by bringing digital sensors to everything from traffic systems\nto industrial automation and more. Asad has been at the forefront of the company's push\nto apply advanced sensing to real-world infrastructure challenges And today on the show, we're going\nto be unpacking how LIDAR is being used by cities to make them safer, more efficient, and\nmore intelligent. Asad, welcome to the show. Thrilled to have you with us. Thank you. Thanks\nfor having me. So I think, you know, safer, more efficient, and more intelligent. I think\nevery city across the US East coast and Midwest could appreciate those three things this year,\npa",
+      "link": "https://www.youtube.com/watch?v=obwDCtxa73Y",
+      "published": "2026-05-19T15:30:29Z",
+      "source_type": "youtube",
+      "channel": "QNX",
+      "video_id": "obwDCtxa73Y",
+      "transcript_method": "youtube_transcript_api",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Top 10 MIND-BLOWING AI Advances You Need to See in 2026 🤖",
+      "summary": "New Topic 1: Top 10 Mind-Blowing \nAdvances in Artificial Intelligence   for 2025\nINTRO NUMBER 10: AI-Powered Creative Tools\nStarting off at number 10,   we have AI-powered creative tools. These \ninclude platforms that can generate music,   art, and even write content \nlike humans. With AI’s help,   creators can unlock their creative potential \nfaster and more efficiently than ever before. NUMBER 9: Autonomous Delivery Drones  Next up, at number 9, we have autonomous \ndelivery drones. By 2025, we’re expecting   drones to handle everything from food \ndeliveries to e-commerce packages. These   AI-powered flying machines will reduce delivery \ntimes and costs, reshaping logistics worldwide. NUMBER 8: AI in Personalized Healthcare\nComing in at number 8 is AI's role in   personalized healthcare. ",
+      "link": "https://www.youtube.com/watch?v=r9lFg7HktfU",
+      "published": "2026-06-02T13:12:17Z",
+      "source_type": "youtube",
+      "channel": "The Diverse Zone",
+      "video_id": "r9lFg7HktfU",
+      "transcript_method": "youtube_transcript_api",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Portugal Smart Cities Summit 2026 | WrapUp",
+      "summary": "[DESCRIPTION FALLBACK] The Portugal Smart Cities Summit 2026 brought together policymakers, researchers, companies, and citizens to reflect on the ...",
+      "link": "https://www.youtube.com/watch?v=5lTgFwb3PfQ",
+      "published": "2026-05-24T15:23:15Z",
+      "source_type": "youtube",
+      "channel": "NOVA Cidade",
+      "video_id": "5lTgFwb3PfQ",
+      "transcript_method": "description",
+      "transcript_chars": 150,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "problem": "Inefficient use of existing infrastructure and potential loss of homes and transportation hubs",
+    "root_cause": "Lack of effective urban planning and insufficient integration of technology to improve sustainability and social inclusion",
+    "severity": "MEDIUM",
+    "leverage_points": [
+      "City governments and urban planners",
+      "Technology companies and innovators"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Implement smart city initiatives that integrate technology, human capital, and governance to improve sustainability and social inclusion",
+        "measurable_goal": "Reduce energy consumption by 20% and increase public transportation usage by 30% within the next 2 years",
+        "timeframe": "medium-term"
+      },
+      {
+        "action": "Invest in LiDAR technology to enable real-time urban intelligence and improve traffic systems and infrastructure management",
+        "measurable_goal": "Reduce traffic congestion by 15% and improve emergency response times by 20% within the next 18 months",
+        "timeframe": "short-term"
+      }
+    ],
+    "evidence": [
+      "Chicago's renovation of the Greyhound bus terminal to improve customer experience",
+      "Implementation of smart city initiatives in various cities around the world"
+    ],
+    "generalization": "This problem connects to the domains of civilization, biosphere, and human dignity, as inefficient urban planning and infrastructure management can lead to negative impacts on the environment, public health, and social inequality",
+    "summary": "Inefficient use of existing infrastructure and lack of effective urban planning can lead to negative consequences, but implementing smart city initiatives and integrating technology can improve sustainability and social inclusion. City governments and technology companies must work together to address these challenges.",
+    "risk_level": "MEDIUM"
+  },
+  "raw_items": [
+    {
+      "title": "Chicago to buy, renovate Greyhound bus terminal",
+      "summary": "<p>The city&rsquo;s action, aimed at improving the customer experience for some 450,000 riders each year, saves the bus station from possible closure or demolition.</p>",
+      "link": "https://www.smartcitiesdive.com/news/chicago-buy-renovate-greyhound-bus-terminal/823261/",
+      "published": "Thu, 18 Jun 2026 11:47:00 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "As a Maryland city mulls upzoning, a Realtor association study touts its benefits",
+      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.com/SdilQhaMkIMWS6urkZkKCWVYtRU0lUedMMnFqGG8Hfc/g:ce/rs:fill:1600:900:1/Z3M6Ly9kaXZlc2l0ZS1zdG9yYWdlL2RpdmVpbWFnZS9HZXR0eUltYWdlcy02MjQyODkzMzIuanBn.webp\" /></div></figure><p>A &ldquo;missing middle&rdquo; housing proposal in Rockville, Maryland, would boost the city&rsquo;s housing stock 4.5%, the local Realtor association said.</p>",
+      "link": "https://www.smartcitiesdive.com/news/rockville-maryland-missing-middle-zoning-realtor-study-gcaar/823161/",
+      "published": "Wed, 17 Jun 2026 11:49:15 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "Biking in US cities is getting better, 2026 report says",
+      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.com/ZRJiSJzN_EbsN-H_CtQ5m5FXTaZ9ENhL4esB-qCaZ5k/g:ce/rs:fill:1600:900:1/Z3M6Ly9kaXZlc2l0ZS1zdG9yYWdlL2RpdmVpbWFnZS9HZXR0eUltYWdlcy0yMjcxMzY3MjY1LmpwZw==.webp\" /></div></figure><p>In PeopleForBikes&rsquo; annual rating, the number of cities with bike infrastructure that scored 50 or higher on a 100-point scale more than doubled this year.</p>",
+      "link": "https://www.smartcitiesdive.com/news/peopleforbikes-us-cities-biking-2026-rankings/823116/",
+      "published": "Wed, 17 Jun 2026 11:28:00 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "We can’t build our way out of the housing crisis while losing homes every day",
+      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.com/oU-feK5uw7bMxIiHc3_pfsTC-3owwTwqoMF5IarfBus/g:ce/rs:fill:1600:900:1/Z3M6Ly9kaXZlc2l0ZS1zdG9yYWdlL2RpdmVpbWFnZS9HZXR0eUltYWdlcy05NTMwOTA5NTIuanBn.webp\" /></div></figure><p>The path forward is not just about adding supply. It is also about protecting it.</p>",
+      "link": "https://www.smartcitiesdive.com/news/cant-build-way-out-housing-crisis-while-losing-homes/823117/",
+      "published": "Wed, 17 Jun 2026 08:16:21 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "Smart cities",
+      "summary": "A smart city is an urban model that leverages technology, human capital, and governance to improve sustainability, efficiency, and social inclusion, which are considered goals for cities of the future. Smart cities use digital technology to collect data and operate services. Data is collected from citizens, devices, buildings, or cameras. Smart city applications are diverse and include, but are no",
+      "link": "https://en.wikipedia.org/wiki/Smart_cities",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Smart city - Wikipedia",
+      "summary": "A smart city is powered by \"smart connections\" for various items such as street lighting, smart buildings, distributed energy resources, data analytics, and smart transportation.",
+      "link": "https://en.wikipedia.org/wiki/Smart_city",
+      "source_type": "ddg"
+    },
+    {
+      "title": "List of smart cities - Wikipedia",
+      "summary": "A comprehensive list of cities that have implemented smart city initiatives, organized by continent and then alphabetically. Learn about the projects, criteria, and rankings of these cities that use technology to improve living, work, and environment.",
+      "link": "https://en.wikipedia.org/wiki/List_of_smart_cities",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Urban planning",
+      "summary": "Urban planning (also called city planning or town planning in some contexts) is the process of developing and designing plans for land use and the built environment, including air, water, and the infrastructure passing into and out of urban areas, such as transportation, communications, and distribution networks, and their accessibility. Traditionally, urban planning followed a top-down approach i",
+      "link": "https://en.wikipedia.org/wiki/Urban_planning",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Urban planning | Definition, History, Examples, Importance, & Facts | Britannica",
+      "summary": "1 week ago - Urban planning, design and regulation of the uses of space that focus on the physical form, economic functions, and social impacts of the urban environment and on the location of different activities within it.",
+      "link": "https://www.britannica.com/topic/urban-planning",
+      "source_type": "ddg"
+    },
+    {
+      "title": "[YT] Smart Cities: How LiDAR Technology Enables Real‑Time Urban Intelligence",
+      "summary": " Welcome to Code the Future. Today on the show,\nwe're sitting down with Asad Lassani, VP of Smart Infrastructure at Ouster, a company that\nis redefining how the world uses LiDAR by bringing digital sensors to everything from traffic systems\nto industrial automation and more. Asad has been at the forefront of the company's push\nto apply advanced sensing to real-world infrastructure challenges And today on the show, we're going\nto be unpacking how LIDAR is being used by cities to make them safer, more efficient, and\nmore intelligent. Asad, welcome to the show. Thrilled to have you with us. Thank you. Thanks\nfor having me. So I think, you know, safer, more efficient, and more intelligent. I think\nevery city across the US East coast and Midwest could appreciate those three things this year,\npa",
+      "link": "https://www.youtube.com/watch?v=obwDCtxa73Y",
+      "published": "2026-05-19T15:30:29Z",
+      "source_type": "youtube",
+      "channel": "QNX",
+      "video_id": "obwDCtxa73Y",
+      "transcript_method": "youtube_transcript_api",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ]
+}

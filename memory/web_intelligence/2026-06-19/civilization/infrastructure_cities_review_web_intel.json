@@ -1,0 +1,147 @@
+{
+  "axis": "INFRASTRUCTURE_CITIES_REVIEW",
+  "domain": "civilization",
+  "timestamp": "2026-06-19T17:40:17.079162+00:00",
+  "sources_count": 12,
+  "rss_count": 4,
+  "ddg_count": 5,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] Smart Cities: How LiDAR Technology Enables Real‑Time Urban Intelligence",
+      "summary": "[DESCRIPTION FALLBACK] Asad Lesani, VP of Smart Infrastructure at Ouster, breaks down how lidar enhances existing smart city systems with real-time ...",
+      "link": "https://www.youtube.com/watch?v=obwDCtxa73Y",
+      "published": "2026-05-19T15:30:29Z",
+      "source_type": "youtube",
+      "channel": "QNX",
+      "video_id": "obwDCtxa73Y",
+      "transcript_method": "description",
+      "transcript_chars": 151,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Top 10 MIND-BLOWING AI Advances You Need to See in 2026 🤖",
+      "summary": "[DESCRIPTION FALLBACK] Top 10 Mind-Blowing Advances in Artificial Intelligence for 2026 The future of AI is here! In this video, we count down the TOP 10 ...",
+      "link": "https://www.youtube.com/watch?v=r9lFg7HktfU",
+      "published": "2026-06-02T13:12:17Z",
+      "source_type": "youtube",
+      "channel": "The Diverse Zone",
+      "video_id": "r9lFg7HktfU",
+      "transcript_method": "description",
+      "transcript_chars": 157,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Portugal Smart Cities Summit 2026 | WrapUp",
+      "summary": "[DESCRIPTION FALLBACK] The Portugal Smart Cities Summit 2026 brought together policymakers, researchers, companies, and citizens to reflect on the ...",
+      "link": "https://www.youtube.com/watch?v=5lTgFwb3PfQ",
+      "published": "2026-05-24T15:23:15Z",
+      "source_type": "youtube",
+      "channel": "NOVA Cidade",
+      "video_id": "5lTgFwb3PfQ",
+      "transcript_method": "description",
+      "transcript_chars": 150,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "problem": "Inadequate affordable housing and potential loss of existing homes in cities",
+    "root_cause": "Insufficient urban planning and lack of effective strategies to balance housing demand and supply",
+    "severity": "MEDIUM",
+    "leverage_points": [
+      "City governments and urban planning departments",
+      "Private real estate developers and investors"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Implement inclusive zoning policies and provide incentives for affordable housing development",
+        "measurable_goal": "Increase the number of affordable housing units by 20% within the next 2 years",
+        "timeframe": "medium-term"
+      },
+      {
+        "action": "Invest in smart city technologies to improve urban planning and optimize resource allocation",
+        "measurable_goal": "Reduce housing costs by 10% and increase resident satisfaction by 15% within the next 3 years",
+        "timeframe": "long-term"
+      }
+    ],
+    "evidence": [
+      "We can’t build our way out of the housing crisis while losing homes every day",
+      "Chicago to buy, renovate Greyhound bus terminal to improve customer experience"
+    ],
+    "generalization": "This problem is connected to the domains of civilization, human dignity, and the health of the biosphere, as it affects the well-being and quality of life of urban residents",
+    "summary": "Inadequate affordable housing and loss of existing homes in cities is a significant problem that requires effective urban planning and strategies to balance housing demand and supply. Implementing inclusive zoning policies and investing in smart city technologies can help address this issue.",
+    "risk_level": "MEDIUM"
+  },
+  "raw_items": [
+    {
+      "title": "Chicago to buy, renovate Greyhound bus terminal",
+      "summary": "<p>The city&rsquo;s action, aimed at improving the customer experience for some 450,000 riders each year, saves the bus station from possible closure or demolition.</p>",
+      "link": "https://www.smartcitiesdive.com/news/chicago-buy-renovate-greyhound-bus-terminal/823261/",
+      "published": "Thu, 18 Jun 2026 11:47:00 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "As a Maryland city mulls upzoning, a Realtor association study touts its benefits",
+      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.com/SdilQhaMkIMWS6urkZkKCWVYtRU0lUedMMnFqGG8Hfc/g:ce/rs:fill:1600:900:1/Z3M6Ly9kaXZlc2l0ZS1zdG9yYWdlL2RpdmVpbWFnZS9HZXR0eUltYWdlcy02MjQyODkzMzIuanBn.webp\" /></div></figure><p>A &ldquo;missing middle&rdquo; housing proposal in Rockville, Maryland, would boost the city&rsquo;s housing stock 4.5%, the local Realtor association said.</p>",
+      "link": "https://www.smartcitiesdive.com/news/rockville-maryland-missing-middle-zoning-realtor-study-gcaar/823161/",
+      "published": "Wed, 17 Jun 2026 11:49:15 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "Biking in US cities is getting better, 2026 report says",
+      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.com/ZRJiSJzN_EbsN-H_CtQ5m5FXTaZ9ENhL4esB-qCaZ5k/g:ce/rs:fill:1600:900:1/Z3M6Ly9kaXZlc2l0ZS1zdG9yYWdlL2RpdmVpbWFnZS9HZXR0eUltYWdlcy0yMjcxMzY3MjY1LmpwZw==.webp\" /></div></figure><p>In PeopleForBikes&rsquo; annual rating, the number of cities with bike infrastructure that scored 50 or higher on a 100-point scale more than doubled this year.</p>",
+      "link": "https://www.smartcitiesdive.com/news/peopleforbikes-us-cities-biking-2026-rankings/823116/",
+      "published": "Wed, 17 Jun 2026 11:28:00 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "We can’t build our way out of the housing crisis while losing homes every day",
+      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.com/oU-feK5uw7bMxIiHc3_pfsTC-3owwTwqoMF5IarfBus/g:ce/rs:fill:1600:900:1/Z3M6Ly9kaXZlc2l0ZS1zdG9yYWdlL2RpdmVpbWFnZS9HZXR0eUltYWdlcy05NTMwOTA5NTIuanBn.webp\" /></div></figure><p>The path forward is not just about adding supply. It is also about protecting it.</p>",
+      "link": "https://www.smartcitiesdive.com/news/cant-build-way-out-housing-crisis-while-losing-homes/823117/",
+      "published": "Wed, 17 Jun 2026 08:16:21 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "Smart cities",
+      "summary": "A smart city is an urban model that leverages technology, human capital, and governance to improve sustainability, efficiency, and social inclusion, which are considered goals for cities of the future. Smart cities use digital technology to collect data and operate services. Data is collected from citizens, devices, buildings, or cameras. Smart city applications are diverse and include, but are no",
+      "link": "https://en.wikipedia.org/wiki/Smart_cities",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Smart city - Wikipedia",
+      "summary": "2 days ago - A smart city is an urban model that leverages technology, human capital, and governance to improve sustainability, efficiency, and social inclusion, which are considered goals for cities of the future. Smart cities use digital technology to collect data and operate services.",
+      "link": "https://en.wikipedia.org/wiki/Smart_city",
+      "source_type": "ddg"
+    },
+    {
+      "title": "List of smart cities - Wikipedia",
+      "summary": "May 19, 2026 - In the Smart City Index 2023, the top 15 smart cities were, in order, Zürich, Oslo, Canberra, Copenhagen, Lausanne, London, Singapore, Helsinki, Geneva, Stockholm, Hamburg, Beijing, Abu Dhabi, Prague, and Amsterdam.",
+      "link": "https://en.wikipedia.org/wiki/List_of_smart_cities",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Urban planning",
+      "summary": "Urban planning (also called city planning or town planning in some contexts) is the process of developing and designing plans for land use and the built environment, including air, water, and the infrastructure passing into and out of urban areas, such as transportation, communications, and distribution networks, and their accessibility. Traditionally, urban planning followed a top-down approach i",
+      "link": "https://en.wikipedia.org/wiki/Urban_planning",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Urban planning | Definition, History, Examples, Importance, & Facts | Britannica",
+      "summary": "1 week ago - Urban planning, design and regulation of the uses of space that focus on the physical form, economic functions, and social impacts of the urban environment and on the location of different activities within it.",
+      "link": "https://www.britannica.com/topic/urban-planning",
+      "source_type": "ddg"
+    },
+    {
+      "title": "[YT] Smart Cities: How LiDAR Technology Enables Real‑Time Urban Intelligence",
+      "summary": "[DESCRIPTION FALLBACK] Asad Lesani, VP of Smart Infrastructure at Ouster, breaks down how lidar enhances existing smart city systems with real-time ...",
+      "link": "https://www.youtube.com/watch?v=obwDCtxa73Y",
+      "published": "2026-05-19T15:30:29Z",
+      "source_type": "youtube",
+      "channel": "QNX",
+      "video_id": "obwDCtxa73Y",
+      "transcript_method": "description",
+      "transcript_chars": 151,
+      "has_full_transcript": false
+    }
+  ]
+}

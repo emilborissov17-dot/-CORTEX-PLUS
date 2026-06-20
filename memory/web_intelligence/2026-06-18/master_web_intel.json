@@ -1,0 +1,1174 @@
+{
+  "timestamp": "2026-06-18T21:12:14.784706+00:00",
+  "date": "2026-06-18",
+  "axes_covered": 25,
+  "total_sources": 274,
+  "youtube_videos_total": 68,
+  "critical_axes": [
+    "CLIMATE_GLOBAL_RISK_REVIEW",
+    "WATER_REVIEW",
+    "FOOD_REVIEW",
+    "MATERIALS_WASTE_REVIEW",
+    "ECOSYSTEMS_BIODIVERSITY_REVIEW",
+    "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL",
+    "INEQUALITY_POVERTY_REVIEW",
+    "LONG_TERM_FUTURE_REVIEW",
+    "DEEP_TIME_RISKS_REVIEW",
+    "GOAL_PROGRESS_REVIEW"
+  ],
+  "deteriorating_axes": [],
+  "problems_found": [
+    {
+      "axis": "CLIMATE_GLOBAL_RISK_REVIEW",
+      "problem": "Increasing frequency and severity of extreme humid heat waves, making some areas unlivable",
+      "severity": "CRITICAL",
+      "actions": [
+        {
+          "action": "Develop and deploy more energy-efficient air conditioning units and climate-resilient buildings",
+          "measurable_goal": "Reduce the number of heat-related illnesses and deaths by 20% within the next 5 years",
+          "timeframe": "medium-term"
+        },
+        {
+          "action": "Invest in renewable energy sources, such as solar and wind power, to reduce greenhouse gas emissions",
+          "measurable_goal": "Increase the share of renewable energy in the global energy mix to 50% by 2030",
+          "timeframe": "long-term"
+        }
+      ]
+    },
+    {
+      "axis": "ENERGY_REVIEW",
+      "problem": "The energy transition is hindered by the lack of efficient energy storage solutions, which poses a challenge to the widespread adoption of renewable energy sources",
+      "severity": "MEDIUM",
+      "actions": [
+        {
+          "action": "Increase investment in energy storage research and development",
+          "measurable_goal": "Achieve a 20% reduction in the cost of energy storage technologies within the next 5 years",
+          "timeframe": "medium-term"
+        },
+        {
+          "action": "Implement policies that support the deployment of energy storage technologies, such as tax incentives and grid connection incentives",
+          "measurable_goal": "Increase the deployment of energy storage systems by 50% within the next 3 years",
+          "timeframe": "short-term"
+        }
+      ]
+    },
+    {
+      "axis": "WATER_REVIEW",
+      "problem": "Groundwater depletion due to unsustainable water use for farming in dry areas",
+      "severity": "CRITICAL",
+      "actions": [
+        {
+          "action": "Implement water-saving irrigation technologies and practices",
+          "measurable_goal": "Reduce groundwater depletion rate by 20% within the next 5 years",
+          "timeframe": "medium-term"
+        },
+        {
+          "action": "Develop and enforce policies to limit water usage for farming in dry areas",
+          "measurable_goal": "Decrease water usage for farming in dry areas by 30% within the next 10 years",
+          "timeframe": "long-term"
+        }
+      ]
+    },
+    {
+      "axis": "FOOD_REVIEW",
+      "problem": "Conflict, economic shocks, climate extremes, and forced displacement are driving food insecurity and malnutrition around the world",
+      "severity": "HIGH",
+      "actions": [
+        {
+          "action": "Implement sustainable agriculture practices and climate-resilient food systems",
+          "measurable_goal": "Reduce the number of people suffering from hunger and malnutrition by 20% within the next 5 years",
+          "timeframe": "medium-term"
+        },
+        {
+          "action": "Establish emergency food aid programs and support small-scale farmers",
+          "measurable_goal": "Increase the availability of nutritious food in conflict-affected areas by 30% within the next 2 years",
+          "timeframe": "short-term"
+        }
+      ]
+    },
+    {
+      "axis": "MATERIALS_WASTE_REVIEW",
+      "problem": "Plastic waste is not being effectively recycled and is polluting the environment, harming ecosystems and human health",
+      "severity": "HIGH",
+      "actions": [
+        {
+          "action": "Invest in research and development of new plastic recycling technologies",
+          "measurable_goal": "Increase plastic recycling rate by 20% within the next 5 years",
+          "timeframe": "medium-term"
+        },
+        {
+          "action": "Implement extended producer responsibility for plastic waste",
+          "measurable_goal": "Reduce plastic waste in landfills by 30% within the next 3 years",
+          "timeframe": "short-term"
+        }
+      ]
+    },
+    {
+      "axis": "ECOSYSTEMS_BIODIVERSITY_REVIEW",
+      "problem": "Deforestation is clearing Earth's forests on a massive scale, with the world's rainforest potentially disappearing within 100 years",
+      "severity": "CRITICAL",
+      "actions": [
+        {
+          "action": "Implement sustainable forest management practices and certification programs",
+          "measurable_goal": "Reduce deforestation rate by 50% within the next 10 years",
+          "timeframe": "medium-term"
+        },
+        {
+          "action": "Establish and expand protected areas, such as national parks and wildlife reserves",
+          "measurable_goal": "Increase global protected area coverage by 20% within the next 15 years",
+          "timeframe": "long-term"
+        }
+      ]
+    },
+    {
+      "axis": "HUMAN_WELL_BEING_REVIEW",
+      "problem": "Many people still lack access to safe blood and weaknesses in government blood systems persist",
+      "severity": "MEDIUM",
+      "actions": [
+        {
+          "action": "Improve blood donation infrastructure and increase voluntary donations",
+          "measurable_goal": "Increase voluntary blood donations to 90% and reduce blood-related fatalities by 20%",
+          "timeframe": "medium-term"
+        },
+        {
+          "action": "Strengthen government blood systems and address weaknesses",
+          "measurable_goal": "Reduce weaknesses in government blood systems by 30% and increase access to safe blood by 25%",
+          "timeframe": "long-term"
+        }
+      ]
+    },
+    {
+      "axis": "SOCIAL_RELATIONS_REVIEW",
+      "problem": "Increased social unrest and polarization due to conflicts and political tensions",
+      "severity": "MEDIUM",
+      "actions": [
+        {
+          "action": "Implement fact-checking and media literacy programs",
+          "measurable_goal": "Reduce the spread of misinformation by 20% within the next 6 months",
+          "timeframe": "medium-term"
+        },
+        {
+          "action": "Encourage bipartisan dialogue and cooperation",
+          "measurable_goal": "Increase the number of joint legislative initiatives by 30% within the next year",
+          "timeframe": "long-term"
+        }
+      ]
+    },
+    {
+      "axis": "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL",
+      "problem": "Human rights are being threatened and undermined in various countries, including the United States, Canada, Uzbekistan, and Georgia, with issues such as corporate accountability, crimes against humanity, and political prisoners",
+      "severity": "HIGH",
+      "actions": [
+        {
+          "action": "Strengthen international cooperation and solidarity to promote human rights and hold governments accountable",
+          "measurable_goal": "Increase the number of countries that adopt and implement robust human rights standards and mechanisms",
+          "timeframe": "medium-term"
+        },
+        {
+          "action": "Support and amplify the work of human rights defenders and advocacy groups",
+          "measurable_goal": "Increase the visibility and impact of human rights campaigns and initiatives",
+          "timeframe": "short-term"
+        }
+      ]
+    },
+    {
+      "axis": "INEQUALITY_POVERTY_REVIEW",
+      "problem": "839 million people live in poverty globally, with an increase in extreme poverty rate in Sub-Saharan Africa",
+      "severity": "HIGH",
+      "actions": [
+        {
+          "action": "Implement targeted poverty reduction programs, such as microfinance initiatives and vocational training",
+          "measurable_goal": "Reduce poverty rates by 10% in the next 2 years",
+          "timeframe": "medium-term"
+        },
+        {
+          "action": "Promote policies that address income inequality, such as progressive taxation and social welfare programs",
+          "measurable_goal": "Decrease the Gini coefficient by 5% in the next 5 years",
+          "timeframe": "long-term"
+        }
+      ]
+    },
+    {
+      "axis": "INFRASTRUCTURE_CITIES_REVIEW",
+      "problem": "Inefficient use of existing infrastructure and potential loss of homes and transportation hubs",
+      "severity": "MEDIUM",
+      "actions": [
+        {
+          "action": "Implement smart city initiatives that integrate technology, human capital, and governance to improve sustainability and social inclusion",
+          "measurable_goal": "Reduce energy consumption by 20% and increase public transportation usage by 30% within the next 2 years",
+          "timeframe": "medium-term"
+        },
+        {
+          "action": "Invest in LiDAR technology to enable real-time urban intelligence and improve traffic systems and infrastructure management",
+          "measurable_goal": "Reduce traffic congestion by 15% and improve emergency response times by 20% within the next 18 months",
+          "timeframe": "short-term"
+        }
+      ]
+    },
+    {
+      "axis": "GOVERNANCE_INSTITUTIONS_REVIEW",
+      "problem": "Inadequate representation of women in peace negotiations and governance institutions",
+      "severity": "MEDIUM",
+      "actions": [
+        {
+          "action": "Implement quotas for women's representation in peace negotiations and governance institutions",
+          "measurable_goal": "Increase women's representation in peace negotiations by 30% within the next 2 years",
+          "timeframe": "medium-term"
+        },
+        {
+          "action": "Develop and implement training programs for policymakers and diplomats on gender-sensitive decision-making",
+          "measurable_goal": "Train at least 50% of UN staff and national policymakers on gender-sensitive decision-making within the next year",
+          "timeframe": "short-term"
+        }
+      ]
+    },
+    {
+      "axis": "EDUCATION_CULTURE_REVIEW",
+      "problem": "Inequities in access to quality education and literacy rates persist globally, hindering human development and dignity",
+      "severity": "MEDIUM",
+      "actions": [
+        {
+          "action": "Implement targeted educational programs and resources to address literacy gaps and improve access to quality education",
+          "measurable_goal": "Increase global literacy rates by 10% within the next 5 years, as measured by UNESCO and World Bank data",
+          "timeframe": "medium-term"
+        }
+      ]
+    },
+    {
+      "axis": "TECHNOLOGY_INFRA_REVIEW",
+      "problem": "The digital divide persists in various regions, hindering access to high-speed internet and digital tools",
+      "severity": "MEDIUM",
+      "actions": [
+        {
+          "action": "Implement targeted investments in high-speed internet infrastructure in rural and underserved areas",
+          "measurable_goal": "Achieve a 50% increase in high-speed internet access within 2 years",
+          "timeframe": "medium-term"
+        },
+        {
+          "action": "Develop public-private partnerships to support digital inclusion initiatives",
+          "measurable_goal": "Establish at least 5 partnerships within 1 year, resulting in a 20% increase in digital access for underserved communities",
+          "timeframe": "short-term"
+        }
+      ]
+    },
+    {
+      "axis": "TECHNOLOGY_AI_REVIEW",
+      "problem": "High cost of AI coding tools, making them inaccessible to many developers",
+      "severity": "MEDIUM",
+      "actions": [
+        {
+          "action": "Develop open-source AI coding tools",
+          "measurable_goal": "Increase the number of developers using AI coding tools by 20% within the next 6 months",
+          "timeframe": "short-term"
+        },
+        {
+          "action": "Implement subsidies for AI development and usage",
+          "measurable_goal": "Reduce the cost of AI coding tools by 30% within the next year",
+          "timeframe": "medium-term"
+        }
+      ]
+    },
+    {
+      "axis": "SPACE_INFRASTRUCTURE_REVIEW",
+      "problem": "Over-reliance on private companies like SpaceX for space infrastructure development and satellite launches",
+      "severity": "MEDIUM",
+      "actions": [
+        {
+          "action": "Increase public investment in space infrastructure and research",
+          "measurable_goal": "Increase the number of publicly funded space missions and research projects by 20% within the next 2 years",
+          "timeframe": "medium-term"
+        },
+        {
+          "action": "Develop and implement regulations to ensure diversity and competition in the space industry",
+          "measurable_goal": "Reduce the market share of the top 3 private space companies by 10% within the next 3 years",
+          "timeframe": "long-term"
+        }
+      ]
+    },
+    {
+      "axis": "COSMIC_RESOURCES_REVIEW",
+      "problem": "Lack of regulatory framework for space mining and resource utilization",
+      "severity": "MEDIUM",
+      "actions": [
+        {
+          "action": "Establish an international framework for space resource utilization",
+          "measurable_goal": "Develop and ratify an international treaty on space resource utilization within 5 years",
+          "timeframe": "medium-term"
+        },
+        {
+          "action": "Invest in research and development of sustainable space resource utilization technologies",
+          "measurable_goal": "Increase private sector investment in space resource utilization by 20% annually for the next 3 years",
+          "timeframe": "short-term"
+        }
+      ]
+    },
+    {
+      "axis": "LONG_TERM_FUTURE_REVIEW",
+      "problem": "Insufficient attention to AI safety and biosecurity could lead to catastrophic consequences for humanity",
+      "severity": "CRITICAL",
+      "actions": [
+        {
+          "action": "Establish a global research initiative on AI safety and biosecurity",
+          "measurable_goal": "Increase funding for AI safety research by 20% annually for the next 5 years",
+          "timeframe": "medium-term"
+        },
+        {
+          "action": "Develop and implement industry-wide standards for AI safety and biosecurity",
+          "measurable_goal": "Achieve 80% adoption of safe AI practices among leading tech companies within 3 years",
+          "timeframe": "medium-term"
+        }
+      ]
+    },
+    {
+      "axis": "DEEP_TIME_RISKS_REVIEW",
+      "problem": "Insufficient global preparedness for pandemic outbreaks and asteroid impacts",
+      "severity": "HIGH",
+      "actions": [
+        {
+          "action": "Finalize and implement the WHO Pandemic Agreement's Pathogen Access and Benefit Sharing annex",
+          "measurable_goal": "Increase the number of countries that have implemented the agreement by 50% within the next 12 months",
+          "timeframe": "medium-term"
+        },
+        {
+          "action": "Increase funding for global health infrastructure and asteroid detection systems",
+          "measurable_goal": "Allocate an additional $1 billion to global health infrastructure and asteroid detection systems within the next 2 years",
+          "timeframe": "medium-term"
+        }
+      ]
+    },
+    {
+      "axis": "GENERAL_SELF_REVIEW",
+      "problem": "Lack of concrete progress in geoengineering and dark matter research despite increased attention",
+      "severity": "MEDIUM",
+      "actions": [
+        {
+          "action": "Establish a global geoengineering research initiative with coordinated funding and goals",
+          "measurable_goal": "Reduce carbon emissions by 10% within 5 years through geoengineering methods",
+          "timeframe": "medium-term"
+        },
+        {
+          "action": "Increase investment in dark matter research by 20% annually for the next 3 years",
+          "measurable_goal": "Discover and verify the existence of dark matter particles within 5 years",
+          "timeframe": "long-term"
+        }
+      ]
+    },
+    {
+      "axis": "GOAL_PROGRESS_REVIEW",
+      "problem": "Lack of trust in the community hinders the effective response to the Ebola outbreak in the Democratic Republic of Congo",
+      "severity": "HIGH",
+      "actions": [
+        {
+          "action": "Implement a community-based outreach and education program to build trust and provide accurate information about Ebola",
+          "measurable_goal": "Achieve a 20% increase in community-reported Ebola cases within 6 months",
+          "timeframe": "short-term"
+        },
+        {
+          "action": "Establish a regional cooperation framework to share best practices and coordinate responses to Ebola outbreaks",
+          "measurable_goal": "Conduct at least 2 regional workshops within the next 12 months, with participation from at least 5 countries",
+          "timeframe": "medium-term"
+        }
+      ]
+    },
+    {
+      "axis": "PLANETARY_POTENTIAL_REVIEW",
+      "problem": "Inaccurate emissions data in the Climate TRACE database",
+      "severity": "MEDIUM",
+      "actions": [
+        {
+          "action": "Conduct an independent audit and validation of the Climate TRACE database",
+          "measurable_goal": "Reduce errors in emissions data by 30% within 6 months",
+          "timeframe": "short-term"
+        },
+        {
+          "action": "Establish stricter data validation protocols for emissions reporting",
+          "measurable_goal": "Achieve 95% data accuracy within 1 year",
+          "timeframe": "medium-term"
+        }
+      ]
+    },
+    {
+      "axis": "CULTURE_MEDIA_REVIEW",
+      "problem": "Анализ на CULTURE_MEDIA_REVIEW — данни получени но LLM грешка",
+      "severity": "UNKNOWN",
+      "actions": []
+    },
+    {
+      "axis": "ECONOMY_WORK_REVIEW",
+      "problem": "Анализ на ECONOMY_WORK_REVIEW — данни получени но LLM грешка",
+      "severity": "UNKNOWN",
+      "actions": []
+    },
+    {
+      "axis": "COGNITION_LEARNING_REVIEW",
+      "problem": "Анализ на COGNITION_LEARNING_REVIEW — данни получени но LLM грешка",
+      "severity": "UNKNOWN",
+      "actions": []
+    }
+  ],
+  "cross_domain_insights": [
+    {
+      "from_axis": "CLIMATE_GLOBAL_RISK_REVIEW",
+      "insight": "This problem connects to the domains of civilization (infrastructure and urban planning), human (health and well-being), and planet (climate and ecosystems)"
+    },
+    {
+      "from_axis": "ENERGY_REVIEW",
+      "insight": "The energy transition is connected to other domains, such as the economy and the environment, and the lack of energy storage solutions has implications for the overall sustainability of the system"
+    },
+    {
+      "from_axis": "WATER_REVIEW",
+      "insight": "This problem connects to the domains of civilization (food production and security) and planet (water resources and ecosystems)"
+    },
+    {
+      "from_axis": "FOOD_REVIEW",
+      "insight": "This problem connects to the domains of civilization, where economic inequality and conflict contribute to food insecurity, and the biosphere, where climate change affects food production and availability"
+    },
+    {
+      "from_axis": "MATERIALS_WASTE_REVIEW",
+      "insight": "This problem connects to the domains of human health, ecosystem preservation, and resource management, as plastic pollution affects not only the environment but also human well-being and the economy"
+    },
+    {
+      "from_axis": "ECOSYSTEMS_BIODIVERSITY_REVIEW",
+      "insight": "This problem connects to the domains of human health, climate change, and biodiversity loss, as forests provide essential ecosystem services, including air and water filtration, soil conservation, and habitat for countless species"
+    },
+    {
+      "from_axis": "HUMAN_WELL_BEING_REVIEW",
+      "insight": "This problem connects to the domain of PLANET (healthcare and access to resources) and HUMAN (well-being and dignity)"
+    },
+    {
+      "from_axis": "SOCIAL_RELATIONS_REVIEW",
+      "insight": "This problem connects to the domain of Civilization, as social unrest and polarization can undermine social cohesion and destabilize institutions, ultimately affecting the planet's ecological and economic systems"
+    },
+    {
+      "from_axis": "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL",
+      "insight": "This problem connects to other domains, such as the health of the biosphere, as human rights are closely linked to environmental degradation and climate change, and the erosion of human rights can exacerbate environmental issues"
+    },
+    {
+      "from_axis": "INEQUALITY_POVERTY_REVIEW",
+      "insight": "This problem connects to the domains of PLANET (resource distribution), HUMAN (well-being and dignity), CIVILIZATION (economic systems and governance), and COSMOS (long-term sustainability and global cooperation)"
+    },
+    {
+      "from_axis": "INFRASTRUCTURE_CITIES_REVIEW",
+      "insight": "This problem connects to the domains of civilization, biosphere, and human dignity, as inefficient urban planning and infrastructure management can lead to negative impacts on the environment, public health, and social inequality"
+    },
+    {
+      "from_axis": "GOVERNANCE_INSTITUTIONS_REVIEW",
+      "insight": "This problem connects to the domains of civilization, human dignity, and the biosphere, as inadequate representation of women in governance institutions can perpetuate inequality, social unrest, and environmental degradation"
+    },
+    {
+      "from_axis": "EDUCATION_CULTURE_REVIEW",
+      "insight": "This problem is connected to the domains of PLANETA (through environmental factors influencing education), CHOVEK (through individual and community well-being), and CIVILIZATION (through economic and social structures affecting education)"
+    },
+    {
+      "from_axis": "TECHNOLOGY_INFRA_REVIEW",
+      "insight": "The digital divide is closely linked to the domains of PLANETA (access to resources and infrastructure) and CHOVEK (social and economic inequalities), and addressing it can have a positive impact on the overall sustainability of civilization"
+    },
+    {
+      "from_axis": "TECHNOLOGY_AI_REVIEW",
+      "insight": "This problem connects to the domain of economy and civilization, as the high cost of AI tools can hinder innovation and growth"
+    },
+    {
+      "from_axis": "SPACE_INFRASTRUCTURE_REVIEW",
+      "insight": "This problem connects to the domains of civilization and cosmos, as the development of space infrastructure has significant implications for the long-term sustainability and viability of human civilization"
+    },
+    {
+      "from_axis": "COSMIC_RESOURCES_REVIEW",
+      "insight": "The lack of a regulatory framework for space mining and resource utilization connects to other domains, such as the development of sustainable technologies and the need for international cooperation on environmental issues"
+    },
+    {
+      "from_axis": "LONG_TERM_FUTURE_REVIEW",
+      "insight": "This problem connects to the domains of Cosmos (long-term sustainability of intelligent life), Civilization (global cooperation and governance), and Human (individual and collective well-being)"
+    },
+    {
+      "from_axis": "DEEP_TIME_RISKS_REVIEW",
+      "insight": "This problem connects to the domains of Planet ( biosphere and health) and Civilization (global cooperation and governance)"
+    },
+    {
+      "from_axis": "GENERAL_SELF_REVIEW",
+      "insight": "This problem connects to the domains of Planet (climate change) and Civilization (sustainable energy and technology)"
+    },
+    {
+      "from_axis": "GOAL_PROGRESS_REVIEW",
+      "insight": "This problem connects to the domain of 'Planet' (healthy biosphere) and 'Human' (dignity for all), as it affects the well-being and livelihoods of individuals and communities, and highlights the need for effective global health governance and cooperation"
+    },
+    {
+      "from_axis": "PLANETARY_POTENTIAL_REVIEW",
+      "insight": "This problem connects to the domains of civilization and human, as accurate emissions data is essential for informed decision-making and policy development, which in turn affects the well-being of individuals and the planet"
+    }
+  ],
+  "civilization_goal_alignment": {
+    "critical_count": 10,
+    "problems_with_actions": 22,
+    "status": "ALERT"
+  },
+  "axes": {
+    "CLIMATE_GLOBAL_RISK_REVIEW": {
+      "problem": "Increasing frequency and severity of extreme humid heat waves, making some areas unlivable",
+      "root_cause": "Global warming due to climate change, primarily caused by human activities such as burning fossil fuels and deforestation",
+      "severity": "CRITICAL",
+      "leverage_points": [
+        "Transition to renewable energy sources and increased energy efficiency",
+        "Implementation of climate-resilient infrastructure and urban planning"
+      ],
+      "proposed_actions": [
+        {
+          "action": "Develop and deploy more energy-efficient air conditioning units and climate-resilient buildings",
+          "measurable_goal": "Reduce the number of heat-related illnesses and deaths by 20% within the next 5 years",
+          "timeframe": "medium-term"
+        },
+        {
+          "action": "Invest in renewable energy sources, such as solar and wind power, to reduce greenhouse gas emissions",
+          "measurable_goal": "Increase the share of renewable energy in the global energy mix to 50% by 2030",
+          "timeframe": "long-term"
+        }
+      ],
+      "evidence": [
+        "The deadliest heat waves to date have been dry heat waves, but extreme humid heat waves are becoming more frequent and deadly",
+        "According to the Children's Climate Risk Report 2026, nearly every child on Earth faces fossil-fueled climate danger"
+      ],
+      "generalization": "This problem connects to the domains of civilization (infrastructure and urban planning), human (health and well-being), and planet (climate and ecosystems)",
+      "summary": "The increasing frequency and severity of extreme humid heat waves pose a critical threat to human health and well-being, and require immediate attention and action to transition to renewable energy sources and develop climate-resilient infrastructure",
+      "risk_level": "CRITICAL"
+    },
+    "ENERGY_REVIEW": {
+      "problem": "The energy transition is hindered by the lack of efficient energy storage solutions, which poses a challenge to the widespread adoption of renewable energy sources",
+      "root_cause": "The current energy storage technologies are not yet cost-competitive with fossil fuels, and the development of new technologies is slow due to lack of investment and policy support",
+      "severity": "MEDIUM",
+      "leverage_points": [
+        "Government policies and regulations that support the development and deployment of energy storage technologies",
+        "Investment in research and development of new energy storage technologies"
+      ],
+      "proposed_actions": [
+        {
+          "action": "Increase investment in energy storage research and development",
+          "measurable_goal": "Achieve a 20% reduction in the cost of energy storage technologies within the next 5 years",
+          "timeframe": "medium-term"
+        },
+        {
+          "action": "Implement policies that support the deployment of energy storage technologies, such as tax incentives and grid connection incentives",
+          "measurable_goal": "Increase the deployment of energy storage systems by 50% within the next 3 years",
+          "timeframe": "short-term"
+        }
+      ],
+      "evidence": [
+        "The lack of energy storage solutions is a key challenge to the energy transition, as stated in the video 'New energy storage technology on the verge of a breakthrough?'",
+        "The development of new energy storage technologies, such as perovskites, is showing promise, but more investment is needed to bring them to market, as stated in the video 'What Solar's 2025 Breakthroughs Mean for 2026'"
+      ],
+      "generalization": "The energy transition is connected to other domains, such as the economy and the environment, and the lack of energy storage solutions has implications for the overall sustainability of the system",
+      "summary": "The energy transition is hindered by the lack of efficient energy storage solutions, and increased investment and policy support are needed to develop and deploy new technologies. This problem has implications for the overall sustainability of the system and is connected to other domains, such as the economy and the environment.",
+      "risk_level": "MEDIUM"
+    },
+    "WATER_REVIEW": {
+      "problem": "Groundwater depletion due to unsustainable water use for farming in dry areas",
+      "root_cause": " Unsustainable agricultural practices and lack of effective water management policies",
+      "severity": "CRITICAL",
+      "leverage_points": [
+        "Government policies and regulations on water usage",
+        "Agricultural practices and technologies"
+      ],
+      "proposed_actions": [
+        {
+          "action": "Implement water-saving irrigation technologies and practices",
+          "measurable_goal": "Reduce groundwater depletion rate by 20% within the next 5 years",
+          "timeframe": "medium-term"
+        },
+        {
+          "action": "Develop and enforce policies to limit water usage for farming in dry areas",
+          "measurable_goal": "Decrease water usage for farming in dry areas by 30% within the next 10 years",
+          "timeframe": "long-term"
+        }
+      ],
+      "evidence": [
+        "40% of wells hitting record lows in the past decade alone",
+        "80% of Florida faces extreme drought conditions",
+        "Groundwater provides about half of the world’s drinking water"
+      ],
+      "generalization": "This problem connects to the domains of civilization (food production and security) and planet (water resources and ecosystems)",
+      "summary": "Groundwater depletion due to unsustainable water use for farming in dry areas is a critical problem that requires immediate attention and action to ensure long-term water security and sustainability. Implementing water-saving technologies and practices, and developing effective policies to limit water usage, can help mitigate this issue.",
+      "risk_level": "CRITICAL"
+    },
+    "FOOD_REVIEW": {
+      "problem": "Conflict, economic shocks, climate extremes, and forced displacement are driving food insecurity and malnutrition around the world",
+      "root_cause": "The underlying cause of this problem is the complex interplay between human activities, such as conflict and economic inequality, and environmental factors, like climate change, which disrupt food supply chains and limit access to nutritious food",
+      "severity": "HIGH",
+      "leverage_points": [
+        "International organizations, such as the World Food Programme and the Food and Agriculture Organization, have the greatest effect on addressing this problem",
+        "National governments and their policies on food security, trade, and climate change mitigation"
+      ],
+      "proposed_actions": [
+        {
+          "action": "Implement sustainable agriculture practices and climate-resilient food systems",
+          "measurable_goal": "Reduce the number of people suffering from hunger and malnutrition by 20% within the next 5 years",
+          "timeframe": "medium-term"
+        },
+        {
+          "action": "Establish emergency food aid programs and support small-scale farmers",
+          "measurable_goal": "Increase the availability of nutritious food in conflict-affected areas by 30% within the next 2 years",
+          "timeframe": "short-term"
+        }
+      ],
+      "evidence": [
+        "The Global Report on Food Crises 2025 shows that conflict, economic shocks, climate extremes, and forced displacement continued to drive food insecurity and malnutrition around the world",
+        "The 2025 SOFI report from FAO, IFAD, UNICEF, WFP, and WHO examines how rising food prices are shaping access to healthy diets and driving food insecurity and malnutrition"
+      ],
+      "generalization": "This problem connects to the domains of civilization, where economic inequality and conflict contribute to food insecurity, and the biosphere, where climate change affects food production and availability",
+      "summary": "Food insecurity and malnutrition are driven by conflict, economic shocks, climate extremes, and forced displacement, and require a multifaceted approach to address the root causes and support those affected",
+      "risk_level": "HIGH"
+    },
+    "MATERIALS_WASTE_REVIEW": {
+      "problem": "Plastic waste is not being effectively recycled and is polluting the environment, harming ecosystems and human health",
+      "root_cause": "Lack of effective waste management systems and inadequate recycling technologies",
+      "severity": "HIGH",
+      "leverage_points": [
+        "Development of new recycling technologies and infrastructure",
+        "Implementation of circular economy practices by governments and industries"
+      ],
+      "proposed_actions": [
+        {
+          "action": "Invest in research and development of new plastic recycling technologies",
+          "measurable_goal": "Increase plastic recycling rate by 20% within the next 5 years",
+          "timeframe": "medium-term"
+        },
+        {
+          "action": "Implement extended producer responsibility for plastic waste",
+          "measurable_goal": "Reduce plastic waste in landfills by 30% within the next 3 years",
+          "timeframe": "short-term"
+        }
+      ],
+      "evidence": [
+        "Since 1950, approximately 8.3 billion tons of plastics have been produced globally, with 5-13 million tons of plastic waste seeping into the environment and oceans every year",
+        "Poor waste disposal devastates ecosystems, pollutes water, harms wildlife, and threatens human health"
+      ],
+      "generalization": "This problem connects to the domains of human health, ecosystem preservation, and resource management, as plastic pollution affects not only the environment but also human well-being and the economy",
+      "summary": "Plastic waste is a significant environmental problem that requires immediate attention and action, including the development of new recycling technologies and the implementation of circular economy practices. Effective waste management is crucial to mitigate the harmful effects of plastic pollution on ecosystems and human health.",
+      "risk_level": "HIGH"
+    },
+    "ECOSYSTEMS_BIODIVERSITY_REVIEW": {
+      "problem": "Deforestation is clearing Earth's forests on a massive scale, with the world's rainforest potentially disappearing within 100 years",
+      "root_cause": "Agriculture and forestry practices, driven by human demand for resources and land, are the primary drivers of deforestation",
+      "severity": "CRITICAL",
+      "leverage_points": [
+        "Government policies and regulations regarding land use and conservation",
+        "International cooperation and agreements to protect and restore forests"
+      ],
+      "proposed_actions": [
+        {
+          "action": "Implement sustainable forest management practices and certification programs",
+          "measurable_goal": "Reduce deforestation rate by 50% within the next 10 years",
+          "timeframe": "medium-term"
+        },
+        {
+          "action": "Establish and expand protected areas, such as national parks and wildlife reserves",
+          "measurable_goal": "Increase global protected area coverage by 20% within the next 15 years",
+          "timeframe": "long-term"
+        }
+      ],
+      "evidence": [
+        "Deforestation is clearing earth's forest on a massive scale, with the world's rainforest potentially disappearing within 100 years",
+        "Forests cover about 30% of the planet and play an essential role in supporting life on earth"
+      ],
+      "generalization": "This problem connects to the domains of human health, climate change, and biodiversity loss, as forests provide essential ecosystem services, including air and water filtration, soil conservation, and habitat for countless species",
+      "summary": "Deforestation poses a critical threat to the planet, with potentially devastating consequences for ecosystems, human health, and the climate. Immediate action is necessary to reduce deforestation rates and protect the world's forests.",
+      "risk_level": "CRITICAL"
+    },
+    "HUMAN_WELL_BEING_REVIEW": {
+      "problem": "Many people still lack access to safe blood and weaknesses in government blood systems persist",
+      "root_cause": "Inequities in access to healthcare and weaknesses in government systems",
+      "severity": "MEDIUM",
+      "leverage_points": [
+        "World Health Organization (WHO)",
+        "National governments and healthcare systems"
+      ],
+      "proposed_actions": [
+        {
+          "action": "Improve blood donation infrastructure and increase voluntary donations",
+          "measurable_goal": "Increase voluntary blood donations to 90% and reduce blood-related fatalities by 20%",
+          "timeframe": "medium-term"
+        },
+        {
+          "action": "Strengthen government blood systems and address weaknesses",
+          "measurable_goal": "Reduce weaknesses in government blood systems by 30% and increase access to safe blood by 25%",
+          "timeframe": "long-term"
+        }
+      ],
+      "evidence": [
+        "New data from the World Health Organization (WHO) show sustained progress towards safer blood supplies globally but also highlight persistent inequalities in access to safe blood and weaknesses in government blood systems",
+        "Voluntary donations exceed 85%, but many people still lack access to safe blood"
+      ],
+      "generalization": "This problem connects to the domain of PLANET (healthcare and access to resources) and HUMAN (well-being and dignity)",
+      "summary": "Many people lack access to safe blood due to inequities in healthcare and weaknesses in government systems, requiring improvements in blood donation infrastructure and government systems. The proposed actions aim to increase voluntary donations and strengthen government blood systems.",
+      "risk_level": "MEDIUM"
+    },
+    "SOCIAL_RELATIONS_REVIEW": {
+      "problem": "Increased social unrest and polarization due to conflicts and political tensions",
+      "root_cause": "Underlying ideological and political divisions, exacerbated by social media and biased information",
+      "severity": "MEDIUM",
+      "leverage_points": [
+        "Social media platforms and their algorithms",
+        "Political leaders and their rhetoric"
+      ],
+      "proposed_actions": [
+        {
+          "action": "Implement fact-checking and media literacy programs",
+          "measurable_goal": "Reduce the spread of misinformation by 20% within the next 6 months",
+          "timeframe": "medium-term"
+        },
+        {
+          "action": "Encourage bipartisan dialogue and cooperation",
+          "measurable_goal": "Increase the number of joint legislative initiatives by 30% within the next year",
+          "timeframe": "long-term"
+        }
+      ],
+      "evidence": [
+        "Six-in-ten US adults say abortion should be legal in all or most cases, indicating deep divisions on social issues",
+        "Opinions on the tension between Pope Leo and President Trump split sharply along party lines, highlighting partisan polarization"
+      ],
+      "generalization": "This problem connects to the domain of Civilization, as social unrest and polarization can undermine social cohesion and destabilize institutions, ultimately affecting the planet's ecological and economic systems",
+      "summary": "The data indicates increased social unrest and polarization due to conflicts and political tensions, which can be addressed through fact-checking programs and bipartisan dialogue. This problem has significant implications for the stability of human societies and the planet as a whole.",
+      "risk_level": "MEDIUM"
+    },
+    "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL": {
+      "problem": "Human rights are being threatened and undermined in various countries, including the United States, Canada, Uzbekistan, and Georgia, with issues such as corporate accountability, crimes against humanity, and political prisoners",
+      "root_cause": "Weak governance, lack of accountability, and corruption are contributing to the erosion of human rights, as well as the influence of powerful interest groups and political agendas",
+      "severity": "HIGH",
+      "leverage_points": [
+        "International human rights organizations and advocacy groups, such as Human Rights Watch and Freedom House",
+        "Government agencies and policymakers responsible for upholding human rights and the rule of law"
+      ],
+      "proposed_actions": [
+        {
+          "action": "Strengthen international cooperation and solidarity to promote human rights and hold governments accountable",
+          "measurable_goal": "Increase the number of countries that adopt and implement robust human rights standards and mechanisms",
+          "timeframe": "medium-term"
+        },
+        {
+          "action": "Support and amplify the work of human rights defenders and advocacy groups",
+          "measurable_goal": "Increase the visibility and impact of human rights campaigns and initiatives",
+          "timeframe": "short-term"
+        }
+      ],
+      "evidence": [
+        "Canada Delivering a Blow to Corporate Accountability",
+        "Support Builds to Protect Children from Crimes Against Humanity",
+        "Uzbekistan: Activist Held in Trumped-Up Case",
+        "US: Federal Government Terrorized Minnesota Communities"
+      ],
+      "generalization": "This problem connects to other domains, such as the health of the biosphere, as human rights are closely linked to environmental degradation and climate change, and the erosion of human rights can exacerbate environmental issues",
+      "summary": "Human rights are under threat in various countries, and international cooperation and solidarity are needed to promote and protect human rights. Weak governance, corruption, and powerful interest groups are contributing to this problem.",
+      "risk_level": "HIGH"
+    },
+    "INEQUALITY_POVERTY_REVIEW": {
+      "problem": "839 million people live in poverty globally, with an increase in extreme poverty rate in Sub-Saharan Africa",
+      "root_cause": "Inequality and lack of economic growth in poor regions, exacerbated by ineffective welfare programs and capitalist systems that reinforce generational poverty",
+      "severity": "HIGH",
+      "leverage_points": [
+        "International organizations such as the World Bank and United Nations Development Programme",
+        "Governments of countries with high poverty rates"
+      ],
+      "proposed_actions": [
+        {
+          "action": "Implement targeted poverty reduction programs, such as microfinance initiatives and vocational training",
+          "measurable_goal": "Reduce poverty rates by 10% in the next 2 years",
+          "timeframe": "medium-term"
+        },
+        {
+          "action": "Promote policies that address income inequality, such as progressive taxation and social welfare programs",
+          "measurable_goal": "Decrease the Gini coefficient by 5% in the next 5 years",
+          "timeframe": "long-term"
+        }
+      ],
+      "evidence": [
+        "The World Bank reports that 839 million people lived in poverty in 2024",
+        "Income inequality trends in Sub-Saharan Africa show a divergence in economic growth and poverty rates",
+        "The Multidimensional Poverty Index for Latin America reveals sticky deprivations and slow progress in reducing poverty"
+      ],
+      "generalization": "This problem connects to the domains of PLANET (resource distribution), HUMAN (well-being and dignity), CIVILIZATION (economic systems and governance), and COSMOS (long-term sustainability and global cooperation)",
+      "summary": "Poverty affects nearly 1 billion people worldwide, with increasing rates in some regions, and requires targeted and sustained efforts to reduce inequality and promote economic growth. International cooperation and effective governance are crucial to addressing this complex problem.",
+      "risk_level": "HIGH"
+    },
+    "INFRASTRUCTURE_CITIES_REVIEW": {
+      "problem": "Inefficient use of existing infrastructure and potential loss of homes and transportation hubs",
+      "root_cause": "Lack of effective urban planning and insufficient integration of technology to improve sustainability and social inclusion",
+      "severity": "MEDIUM",
+      "leverage_points": [
+        "City governments and urban planners",
+        "Technology companies and innovators"
+      ],
+      "proposed_actions": [
+        {
+          "action": "Implement smart city initiatives that integrate technology, human capital, and governance to improve sustainability and social inclusion",
+          "measurable_goal": "Reduce energy consumption by 20% and increase public transportation usage by 30% within the next 2 years",
+          "timeframe": "medium-term"
+        },
+        {
+          "action": "Invest in LiDAR technology to enable real-time urban intelligence and improve traffic systems and infrastructure management",
+          "measurable_goal": "Reduce traffic congestion by 15% and improve emergency response times by 20% within the next 18 months",
+          "timeframe": "short-term"
+        }
+      ],
+      "evidence": [
+        "Chicago's renovation of the Greyhound bus terminal to improve customer experience",
+        "Implementation of smart city initiatives in various cities around the world"
+      ],
+      "generalization": "This problem connects to the domains of civilization, biosphere, and human dignity, as inefficient urban planning and infrastructure management can lead to negative impacts on the environment, public health, and social inequality",
+      "summary": "Inefficient use of existing infrastructure and lack of effective urban planning can lead to negative consequences, but implementing smart city initiatives and integrating technology can improve sustainability and social inclusion. City governments and technology companies must work together to address these challenges.",
+      "risk_level": "MEDIUM"
+    },
+    "GOVERNANCE_INSTITUTIONS_REVIEW": {
+      "problem": "Inadequate representation of women in peace negotiations and governance institutions",
+      "root_cause": "Systemic gender bias and lack of inclusive decision-making processes",
+      "severity": "MEDIUM",
+      "leverage_points": [
+        "United Nations Security Council",
+        "National governments and policy-making bodies"
+      ],
+      "proposed_actions": [
+        {
+          "action": "Implement quotas for women's representation in peace negotiations and governance institutions",
+          "measurable_goal": "Increase women's representation in peace negotiations by 30% within the next 2 years",
+          "timeframe": "medium-term"
+        },
+        {
+          "action": "Develop and implement training programs for policymakers and diplomats on gender-sensitive decision-making",
+          "measurable_goal": "Train at least 50% of UN staff and national policymakers on gender-sensitive decision-making within the next year",
+          "timeframe": "short-term"
+        }
+      ],
+      "evidence": [
+        "Women's Role in Peace Processes More Urgent than Ever as Violent Conflicts Multiply, Rage across Globe, Speakers Tell Security Council",
+        "The Security Council's 10 non-permanent members requested a meeting on the Middle East and the Palestinian question, but no mention of women's representation"
+      ],
+      "generalization": "This problem connects to the domains of civilization, human dignity, and the biosphere, as inadequate representation of women in governance institutions can perpetuate inequality, social unrest, and environmental degradation",
+      "summary": "The inadequate representation of women in peace negotiations and governance institutions is a pressing issue that requires immediate attention and action to address systemic gender bias and promote inclusive decision-making processes.",
+      "risk_level": "MEDIUM"
+    },
+    "EDUCATION_CULTURE_REVIEW": {
+      "problem": "Inequities in access to quality education and literacy rates persist globally, hindering human development and dignity",
+      "root_cause": "Systemic issues such as inadequate funding, lack of infrastructure, and societal inequalities contribute to the persistence of educational disparities",
+      "severity": "MEDIUM",
+      "leverage_points": [
+        "Global and national education policies and funding mechanisms",
+        "Community and family support systems for education"
+      ],
+      "proposed_actions": [
+        {
+          "action": "Implement targeted educational programs and resources to address literacy gaps and improve access to quality education",
+          "measurable_goal": "Increase global literacy rates by 10% within the next 5 years, as measured by UNESCO and World Bank data",
+          "timeframe": "medium-term"
+        }
+      ],
+      "evidence": [
+        "The world has made progress in increasing basic education, but faces challenges in improving access and quality, as reported by Our World in Data",
+        "Literacy rates vary significantly across countries, with some having higher literacy rates than others, as shown in the Top 10 Countries with the Highest Literacy Rates in 2025 video"
+      ],
+      "generalization": "This problem is connected to the domains of PLANETA (through environmental factors influencing education), CHOVEK (through individual and community well-being), and CIVILIZATION (through economic and social structures affecting education)",
+      "summary": "Educational inequities persist globally, but targeted programs and policies can help address literacy gaps and improve access to quality education, ultimately enhancing human development and dignity. Addressing these issues is crucial for achieving a sustainable civilization and promoting dignity for all.",
+      "risk_level": "MEDIUM"
+    },
+    "TECHNOLOGY_INFRA_REVIEW": {
+      "problem": "The digital divide persists in various regions, hindering access to high-speed internet and digital tools",
+      "root_cause": "Insufficient investment and infrastructure development in rural and underserved areas",
+      "severity": "MEDIUM",
+      "leverage_points": [
+        "Government agencies and local authorities",
+        "Private companies and non-profit organizations investing in digital infrastructure"
+      ],
+      "proposed_actions": [
+        {
+          "action": "Implement targeted investments in high-speed internet infrastructure in rural and underserved areas",
+          "measurable_goal": "Achieve a 50% increase in high-speed internet access within 2 years",
+          "timeframe": "medium-term"
+        },
+        {
+          "action": "Develop public-private partnerships to support digital inclusion initiatives",
+          "measurable_goal": "Establish at least 5 partnerships within 1 year, resulting in a 20% increase in digital access for underserved communities",
+          "timeframe": "short-term"
+        }
+      ],
+      "evidence": [
+        "Bedford County received a $25 million boost in high-speed internet access, demonstrating the effectiveness of targeted investments",
+        "Partnerships between organizations like Wildanet, Nokia, and Human-I-T are helping to bridge the digital divide in regions like Cornwall"
+      ],
+      "generalization": "The digital divide is closely linked to the domains of PLANETA (access to resources and infrastructure) and CHOVEK (social and economic inequalities), and addressing it can have a positive impact on the overall sustainability of civilization",
+      "summary": "The digital divide remains a significant issue, but targeted investments and partnerships can help bridge the gap and increase access to digital tools and high-speed internet. By addressing this problem, we can promote more equitable social and economic development",
+      "risk_level": "MEDIUM"
+    },
+    "TECHNOLOGY_AI_REVIEW": {
+      "problem": "High cost of AI coding tools, making them inaccessible to many developers",
+      "root_cause": "The high cost of developing and maintaining AI-powered coding tools, which is then passed on to the consumers",
+      "severity": "MEDIUM",
+      "leverage_points": [
+        "AI companies and their pricing strategies",
+        "Government regulations and subsidies for AI development"
+      ],
+      "proposed_actions": [
+        {
+          "action": "Develop open-source AI coding tools",
+          "measurable_goal": "Increase the number of developers using AI coding tools by 20% within the next 6 months",
+          "timeframe": "short-term"
+        },
+        {
+          "action": "Implement subsidies for AI development and usage",
+          "measurable_goal": "Reduce the cost of AI coding tools by 30% within the next year",
+          "timeframe": "medium-term"
+        }
+      ],
+      "evidence": [
+        "Claude Code costs up to $200 a month, while Goose offers similar functionality for free",
+        "Railway secures $100 million to challenge AWS with AI-native cloud infrastructure"
+      ],
+      "generalization": "This problem connects to the domain of economy and civilization, as the high cost of AI tools can hinder innovation and growth",
+      "summary": "The high cost of AI coding tools is a significant problem, but it can be addressed through the development of open-source tools and government subsidies. This can increase accessibility and drive innovation in the field.",
+      "risk_level": "MEDIUM"
+    },
+    "SPACE_INFRASTRUCTURE_REVIEW": {
+      "problem": "Over-reliance on private companies like SpaceX for space infrastructure development and satellite launches",
+      "root_cause": "Lack of significant public investment in space infrastructure and research, leading to a reliance on private companies for advancements",
+      "severity": "MEDIUM",
+      "leverage_points": [
+        "Government space agencies and regulatory bodies",
+        "Private space companies like SpaceX and Arianespace"
+      ],
+      "proposed_actions": [
+        {
+          "action": "Increase public investment in space infrastructure and research",
+          "measurable_goal": "Increase the number of publicly funded space missions and research projects by 20% within the next 2 years",
+          "timeframe": "medium-term"
+        },
+        {
+          "action": "Develop and implement regulations to ensure diversity and competition in the space industry",
+          "measurable_goal": "Reduce the market share of the top 3 private space companies by 10% within the next 3 years",
+          "timeframe": "long-term"
+        }
+      ],
+      "evidence": [
+        "SpaceX launches 3 Block 2 BlueBird satellites for AST SpaceMobile, demonstrating the company's significant role in the industry",
+        "Arianespace launches its heaviest payload to date with Amazon Leo flight, highlighting the growing reliance on private companies for satellite launches"
+      ],
+      "generalization": "This problem connects to the domains of civilization and cosmos, as the development of space infrastructure has significant implications for the long-term sustainability and viability of human civilization",
+      "summary": "The over-reliance on private companies like SpaceX for space infrastructure development and satellite launches poses a medium-severity problem, requiring increased public investment and regulation to ensure diversity and competition in the industry",
+      "risk_level": "MEDIUM"
+    },
+    "COSMIC_RESOURCES_REVIEW": {
+      "problem": "Lack of regulatory framework for space mining and resource utilization",
+      "root_cause": "Insufficient international cooperation and agreement on space resource utilization policies",
+      "severity": "MEDIUM",
+      "leverage_points": [
+        "International Space Agency cooperation and policy development",
+        "Private sector investment in space resource utilization technologies"
+      ],
+      "proposed_actions": [
+        {
+          "action": "Establish an international framework for space resource utilization",
+          "measurable_goal": "Develop and ratify an international treaty on space resource utilization within 5 years",
+          "timeframe": "medium-term"
+        },
+        {
+          "action": "Invest in research and development of sustainable space resource utilization technologies",
+          "measurable_goal": "Increase private sector investment in space resource utilization by 20% annually for the next 3 years",
+          "timeframe": "short-term"
+        }
+      ],
+      "evidence": [
+        "The Space Resource Exploration and Utilization Act of 2015 was introduced but never became law",
+        "The European Space Resources Innovation Centre was established to promote space resource utilization",
+        "Private companies such as Planetary Resources are investing in asteroid mining technologies"
+      ],
+      "generalization": "The lack of a regulatory framework for space mining and resource utilization connects to other domains, such as the development of sustainable technologies and the need for international cooperation on environmental issues",
+      "summary": "The lack of a regulatory framework for space mining and resource utilization poses a medium-level problem, which can be addressed through international cooperation and private sector investment. Establishing an international framework and investing in sustainable technologies can help mitigate this issue.",
+      "risk_level": "MEDIUM"
+    },
+    "LONG_TERM_FUTURE_REVIEW": {
+      "problem": "Insufficient attention to AI safety and biosecurity could lead to catastrophic consequences for humanity",
+      "root_cause": "Lack of prioritization and funding for AI safety and biosecurity research, as well as limited awareness and cooperation among stakeholders",
+      "severity": "CRITICAL",
+      "leverage_points": [
+        "Governments and research institutions investing in AI safety and biosecurity",
+        "Industry leaders and experts collaborating on developing and implementing safe AI practices"
+      ],
+      "proposed_actions": [
+        {
+          "action": "Establish a global research initiative on AI safety and biosecurity",
+          "measurable_goal": "Increase funding for AI safety research by 20% annually for the next 5 years",
+          "timeframe": "medium-term"
+        },
+        {
+          "action": "Develop and implement industry-wide standards for AI safety and biosecurity",
+          "measurable_goal": "Achieve 80% adoption of safe AI practices among leading tech companies within 3 years",
+          "timeframe": "medium-term"
+        }
+      ],
+      "evidence": [
+        "The BBC World Service video 'AI2027: Is this how AI might destroy humanity?' highlights the potential risks of unregulated AI development",
+        "The TED talk 'The Catastrophic Risks of AI — and a Safer Path' by Yoshua Bengio emphasizes the need for a safer approach to AI development"
+      ],
+      "generalization": "This problem connects to the domains of Cosmos (long-term sustainability of intelligent life), Civilization (global cooperation and governance), and Human (individual and collective well-being)",
+      "summary": "The lack of attention to AI safety and biosecurity poses a critical risk to humanity, requiring immediate prioritization and cooperation among stakeholders to prevent catastrophic consequences",
+      "risk_level": "CRITICAL"
+    },
+    "DEEP_TIME_RISKS_REVIEW": {
+      "problem": "Insufficient global preparedness for pandemic outbreaks and asteroid impacts",
+      "root_cause": "Lack of effective international cooperation and inadequate investment in global health infrastructure and asteroid detection systems",
+      "severity": "HIGH",
+      "leverage_points": [
+        "World Health Organization (WHO) and national governments",
+        "International cooperation and agreements, such as the WHO Pandemic Agreement"
+      ],
+      "proposed_actions": [
+        {
+          "action": "Finalize and implement the WHO Pandemic Agreement's Pathogen Access and Benefit Sharing annex",
+          "measurable_goal": "Increase the number of countries that have implemented the agreement by 50% within the next 12 months",
+          "timeframe": "medium-term"
+        },
+        {
+          "action": "Increase funding for global health infrastructure and asteroid detection systems",
+          "measurable_goal": "Allocate an additional $1 billion to global health infrastructure and asteroid detection systems within the next 2 years",
+          "timeframe": "medium-term"
+        }
+      ],
+      "evidence": [
+        "The World Health Organization (WHO) has released comprehensive guidelines for filovirus disease, including Ebola and Marburg disease, but the Democratic Republic of the Congo is still battling an Ebola outbreak",
+        "The Africa Centres for Disease Control and Prevention (Africa CDC) and the WHO have launched a joint continental Ebola response plan, highlighting the need for improved global preparedness"
+      ],
+      "generalization": "This problem connects to the domains of Planet ( biosphere and health) and Civilization (global cooperation and governance)",
+      "summary": "The world is not adequately prepared for pandemic outbreaks and asteroid impacts, posing a high risk to human life and global sustainability. International cooperation and investment in global health infrastructure and asteroid detection systems are necessary to mitigate this risk.",
+      "risk_level": "HIGH"
+    },
+    "GENERAL_SELF_REVIEW": {
+      "problem": "Lack of concrete progress in geoengineering and dark matter research despite increased attention",
+      "root_cause": "Insufficient investment and coordination in these fields, leading to scattered and inefficient efforts",
+      "severity": "MEDIUM",
+      "leverage_points": [
+        "Government agencies and research institutions",
+        "Private investors and tech companies"
+      ],
+      "proposed_actions": [
+        {
+          "action": "Establish a global geoengineering research initiative with coordinated funding and goals",
+          "measurable_goal": "Reduce carbon emissions by 10% within 5 years through geoengineering methods",
+          "timeframe": "medium-term"
+        },
+        {
+          "action": "Increase investment in dark matter research by 20% annually for the next 3 years",
+          "measurable_goal": "Discover and verify the existence of dark matter particles within 5 years",
+          "timeframe": "long-term"
+        }
+      ],
+      "evidence": [
+        "Geoengineering still faces major practical challenges",
+        "The search for dark matter has been blown wide open with new research initiatives"
+      ],
+      "generalization": "This problem connects to the domains of Planet (climate change) and Civilization (sustainable energy and technology)",
+      "summary": "Despite growing attention, geoengineering and dark matter research lack concrete progress due to insufficient investment and coordination. A global initiative and increased investment could address these challenges.",
+      "risk_level": "MEDIUM"
+    },
+    "GOAL_PROGRESS_REVIEW": {
+      "problem": "Lack of trust in the community hinders the effective response to the Ebola outbreak in the Democratic Republic of Congo",
+      "root_cause": "Insufficient engagement and communication with local communities, leading to mistrust and misinformation",
+      "severity": "HIGH",
+      "leverage_points": [
+        "World Health Organization (WHO) and local health authorities",
+        "Community leaders and influencers"
+      ],
+      "proposed_actions": [
+        {
+          "action": "Implement a community-based outreach and education program to build trust and provide accurate information about Ebola",
+          "measurable_goal": "Achieve a 20% increase in community-reported Ebola cases within 6 months",
+          "timeframe": "short-term"
+        },
+        {
+          "action": "Establish a regional cooperation framework to share best practices and coordinate responses to Ebola outbreaks",
+          "measurable_goal": "Conduct at least 2 regional workshops within the next 12 months, with participation from at least 5 countries",
+          "timeframe": "medium-term"
+        }
+      ],
+      "evidence": [
+        "‘Some question if Ebola is real’: how trust is central in fighting DRC outbreak",
+        "WHO commends Uganda’s Ebola response, urges vigilance and regional cooperation"
+      ],
+      "generalization": "This problem connects to the domain of 'Planet' (healthy biosphere) and 'Human' (dignity for all), as it affects the well-being and livelihoods of individuals and communities, and highlights the need for effective global health governance and cooperation",
+      "summary": "The Ebola outbreak in the DRC is hindered by a lack of trust in the community, which can be addressed through community-based outreach and education programs, as well as regional cooperation and coordination. This issue has significant implications for global health security and the achievement of the Sustainable Development Goals.",
+      "risk_level": "HIGH"
+    },
+    "PLANETARY_POTENTIAL_REVIEW": {
+      "problem": "Inaccurate emissions data in the Climate TRACE database",
+      "root_cause": "Methodological errors and lack of robust data validation",
+      "severity": "MEDIUM",
+      "leverage_points": [
+        "The Climate TRACE consortium and its data contributors",
+        "Regulatory bodies overseeing emissions data quality"
+      ],
+      "proposed_actions": [
+        {
+          "action": "Conduct an independent audit and validation of the Climate TRACE database",
+          "measurable_goal": "Reduce errors in emissions data by 30% within 6 months",
+          "timeframe": "short-term"
+        },
+        {
+          "action": "Establish stricter data validation protocols for emissions reporting",
+          "measurable_goal": "Achieve 95% data accuracy within 1 year",
+          "timeframe": "medium-term"
+        }
+      ],
+      "evidence": [
+        "Major errors found in Al Gore-founded Climate TRACE database",
+        "Researchers found that the database contained significant inaccuracies"
+      ],
+      "generalization": "This problem connects to the domains of civilization and human, as accurate emissions data is essential for informed decision-making and policy development, which in turn affects the well-being of individuals and the planet",
+      "summary": "Inaccurate emissions data in the Climate TRACE database poses a medium-level problem, requiring immediate attention to ensure data quality and inform effective climate change mitigation strategies. The problem can be addressed through independent audits, stricter data validation protocols, and regulatory oversight.",
+      "risk_level": "MEDIUM"
+    },
+    "CULTURE_MEDIA_REVIEW": {
+      "problem": "Анализ на CULTURE_MEDIA_REVIEW — данни получени но LLM грешка",
+      "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: Gemini rate limit",
+      "severity": "UNKNOWN",
+      "leverage_points": [],
+      "proposed_actions": [],
+      "evidence": [
+        "Can a Federal Plan Fix Dismal Penn Station? There’s Hope.",
+        "Mariska Hargitay on ‘Every Brilliant Thing’ and Finding Inspiration From Jalen Brunson",
+        "‘Toy Story 5’ Review: The Machines Have Come for the Children"
+      ],
+      "generalization": "",
+      "summary": "- Can a Federal Plan Fix Dismal Penn Station? There’s Hope.: Everyone agrees that Penn Station is a disaster, but not on how to fix it. Now a Trump-backed, multibillion-dollar plan to rebuild it offer",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN",
+      "llm_raw": ""
+    },
+    "ECONOMY_WORK_REVIEW": {
+      "problem": "Анализ на ECONOMY_WORK_REVIEW — данни получени но LLM грешка",
+      "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: None",
+      "severity": "UNKNOWN",
+      "leverage_points": [],
+      "proposed_actions": [],
+      "evidence": [
+        "Interest rates held as Bank warns of impact of high energy prices",
+        "Heathrow's 'critical' expansion blueprint released",
+        "'Do not travel' advice for Dubai dropped"
+      ],
+      "generalization": "",
+      "summary": "- Interest rates held as Bank warns of impact of high energy prices: The Bank last cut interest rates in December but upheaval in the Middle East has stalled any further reductions.\n- Heathrow's 'crit",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN",
+      "llm_raw": ""
+    },
+    "COGNITION_LEARNING_REVIEW": {
+      "problem": "Анализ на COGNITION_LEARNING_REVIEW — данни получени но LLM грешка",
+      "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: None",
+      "severity": "UNKNOWN",
+      "leverage_points": [],
+      "proposed_actions": [],
+      "evidence": [
+        "Lotus: A Woman’s Journey oLotus: A Woman’s Journey of Empowerment",
+        "Lotus: A Woman’s Journey of Empowerment",
+        "Fresh Wave"
+      ],
+      "generalization": "",
+      "summary": "- Lotus: A Woman’s Journey oLotus: A Woman’s Journey of Empowerment: DOCUMENTARY FILM In the documentary educational film &#8220;The Taboo of Sovereignty, Money, Love and Power,&#8221; Mr. Liberty exp",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN",
+      "llm_raw": ""
+    }
+  },
+  "ready_for_self_observer": true
+}

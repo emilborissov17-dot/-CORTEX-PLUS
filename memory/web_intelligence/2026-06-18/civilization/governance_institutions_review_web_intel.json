@@ -1,0 +1,147 @@
+{
+  "axis": "GOVERNANCE_INSTITUTIONS_REVIEW",
+  "domain": "civilization",
+  "timestamp": "2026-06-18T18:18:21.077176+00:00",
+  "sources_count": 15,
+  "rss_count": 12,
+  "ddg_count": 0,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] The top 10 geopolitical developments for 2026",
+      "summary": "[DESCRIPTION FALLBACK] Geopolitics #GeostrategicOutlook 2026 Geostrategic Outlook: Key Developments Shaping Global Business Welcome to our latest ...",
+      "link": "https://www.youtube.com/watch?v=KqZqusPFf78",
+      "published": "2025-12-16T13:30:16Z",
+      "source_type": "youtube",
+      "channel": "EY Global",
+      "video_id": "KqZqusPFf78",
+      "transcript_method": "description",
+      "transcript_chars": 149,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] UN Chief on 2026 priorities | United Nations",
+      "summary": "Good afternoon. Afternoon. Yes. All right. Good uh good afternoon. Welcome \nuh to all of you. Just as a reminder,   we have our wonderful interpreters here for \nFrench and Spanish. Um the secretary general   will make some opening remarks and he may take a \nfew questions from you. Dear members of the press,   happy new year. This is an especially meaningful \nmoment for me since it is my final opportunity   for our customary exchange at the beginning \nof the year. So these are early days, but 2026   is already shaping up to be a year of constant \nsurprises and chaos. Before I entered public life,   I trained as a physicist. And in times of profound \nflux, I returned to some of the fixed principles   that explained how forces act upon the world. \nAnd one stands out, Newton's third law of mot",
+      "link": "https://www.youtube.com/watch?v=CoY-gy90EaQ",
+      "published": "2026-01-29T18:18:14Z",
+      "source_type": "youtube",
+      "channel": "United Nations",
+      "video_id": "CoY-gy90EaQ",
+      "transcript_method": "youtube_transcript_api",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] The Biggest Global Risks for 2026 | TED Explains the World with Ian Bremmer",
+      "summary": "[DESCRIPTION FALLBACK] 2026 is a tipping point year, says Ian Bremmer, founder of Eurasia Group. Highlighting the top risks that await the world, he breaks ...",
+      "link": "https://www.youtube.com/watch?v=dqVfnC_muaI",
+      "published": "2026-01-06T21:05:18Z",
+      "source_type": "youtube",
+      "channel": "TED",
+      "video_id": "dqVfnC_muaI",
+      "transcript_method": "description",
+      "transcript_chars": 159,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "problem": "Inadequate representation of women in peace negotiations and governance institutions",
+    "root_cause": "Systemic gender bias and lack of inclusive decision-making processes",
+    "severity": "MEDIUM",
+    "leverage_points": [
+      "United Nations Security Council",
+      "National governments and policy-making bodies"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Implement quotas for women's representation in peace negotiations and governance institutions",
+        "measurable_goal": "Increase women's representation in peace negotiations by 30% within the next 2 years",
+        "timeframe": "medium-term"
+      },
+      {
+        "action": "Develop and implement training programs for policymakers and diplomats on gender-sensitive decision-making",
+        "measurable_goal": "Train at least 50% of UN staff and national policymakers on gender-sensitive decision-making within the next year",
+        "timeframe": "short-term"
+      }
+    ],
+    "evidence": [
+      "Women's Role in Peace Processes More Urgent than Ever as Violent Conflicts Multiply, Rage across Globe, Speakers Tell Security Council",
+      "The Security Council's 10 non-permanent members requested a meeting on the Middle East and the Palestinian question, but no mention of women's representation"
+    ],
+    "generalization": "This problem connects to the domains of civilization, human dignity, and the biosphere, as inadequate representation of women in governance institutions can perpetuate inequality, social unrest, and environmental degradation",
+    "summary": "The inadequate representation of women in peace negotiations and governance institutions is a pressing issue that requires immediate attention and action to address systemic gender bias and promote inclusive decision-making processes.",
+    "risk_level": "MEDIUM"
+  },
+  "raw_items": [
+    {
+      "title": "Secretary-General Deeply Concerned over Escalation of Fighting in Sudan, Calls for Restraint",
+      "summary": "The following statement was issued today by the Spokesman for UN Secretary-General António Guterres:",
+      "link": "https://press.un.org/en/2026/sgsm23183.doc.htm",
+      "published": "Thu, 18 Jun 2026 13:24:04 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "Security Council, 10177th Meeting (PM) Middle East",
+      "summary": "At 3 p.m., the Security Council will hear a briefing on the Middle East and the Palestinian question. The Council's 10 non-permanent members requested the meeting, with support from four of the five permanent members -- China, France, Russian Federation and the United Kingdom -- and a focus on the humanitarian situation in Gaza. Under-Secretary-General for Humanitarian Affairs and Emergency Relief Coordinator Tom Fletcher and a representative of an international non-governmental organization are",
+      "link": "https://press.un.org/en/blog/sc16390",
+      "published": "Thu, 18 Jun 2026 10:13:00 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "Security Council, 10176th Meeting (AM) Libya",
+      "summary": "At 10 a.m., the Council hold its 60-day briefing on the situation in Libya. Special Representative of the Secretary-General and Head of the UN Support Mission in Libya (UNSMIL) Hanna Serwaa Tetteh will brief on recent political, security and humanitarian developments in the country.",
+      "link": "https://press.un.org/en/blog/sc16389",
+      "published": "Thu, 18 Jun 2026 06:54:49 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "Women’s Role in Peace Processes More Urgent than Ever as Violent Conflicts Multiply, Rage across Globe, Speakers Tell Security Council",
+      "summary": "As conflicts multiply and women remain largely absent from peace negotiations, senior United Nations officials, civil society and Member States today urged the Security Council to move beyond rhetoric and make women’s participation in peace processes funded and non-negotiable, warning that peace built without women is “only a pause in violence”.",
+      "link": "https://press.un.org/en/2026/sc16388.doc.htm",
+      "published": "Wed, 17 Jun 2026 17:53:05 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "The Iran War Damaged U.S.-India Ties",
+      "summary": "Diplomatic fractures between the two strategic partners are likely to outlast the conflict.",
+      "link": "https://foreignpolicy.com/2026/06/18/iran-war-us-india-ties-damage-economy-modi-rubio-trump/",
+      "published": "Thu, 18 Jun 2026 15:04:07 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "The United States Has a Kafala Problem",
+      "summary": "Qatar’s World Cup became known for migrant worker abuse. U.S. labor systems are similarly exploitative.",
+      "link": "https://foreignpolicy.com/2026/06/18/migrant-labor-exploitation-guest-worker-united-states-qatar-gulf-agriculture-world-cup-stadiums-trump/",
+      "published": "Thu, 18 Jun 2026 13:44:13 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Ireland Is Becoming a French Military Protectorate",
+      "summary": "Literally defenseless, Dublin is outsourcing security to Paris.",
+      "link": "https://foreignpolicy.com/2026/06/18/ireland-france-military-protectorate-outsourcing-defense-procurement/",
+      "published": "Thu, 18 Jun 2026 09:02:27 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Multilateralism Is Dead. Long Live Plurilateralism.",
+      "summary": "Coalitions of the willing are creating a “race to the top” on climate change, AI, and critical minerals.",
+      "link": "https://foreignpolicy.com/2026/06/18/multilateralism-plurilateralism-santa-marta-climate-action/",
+      "published": "Thu, 18 Jun 2026 04:01:49 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Bowen: US-Iran deal raises inescapable question of what the war was for",
+      "summary": "While the human cost is clear, the Iranian regime has not just survived the war, it has been empowered.",
+      "link": "https://www.bbc.com/news/articles/clyegr2mp8jo?at_medium=RSS&at_campaign=rss",
+      "published": "Thu, 18 Jun 2026 15:53:55 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Why Iran believes deal with US leaves it stronger than before",
+      "summary": "Iran has come out of the war's first chapter stronger than many expected, but its next challenge may be harder, the BBC Persian Service's Amir Azimi writes.",
+      "link": "https://www.bbc.com/news/articles/c932yqz8lggo?at_medium=RSS&at_campaign=rss",
+      "published": "Thu, 18 Jun 2026 15:38:18 GMT",
+      "source_type": "rss"
+    }
+  ]
+}
