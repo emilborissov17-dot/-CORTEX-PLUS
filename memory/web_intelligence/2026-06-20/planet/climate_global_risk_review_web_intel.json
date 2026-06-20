@@ -1,52 +1,28 @@
 {
   "axis": "CLIMATE_GLOBAL_RISK_REVIEW",
   "domain": "planet",
-  "timestamp": "2026-06-20T12:02:50.589289+00:00",
-  "sources_count": 13,
+  "timestamp": "2026-06-20T12:24:42.803816+00:00",
+  "sources_count": 11,
   "rss_count": 4,
   "ddg_count": 6,
-  "youtube_count": 3,
+  "youtube_count": 1,
   "youtube_items": [
     {
-      "title": "[YT] In what ways do extreme weather events result from climate change? | DW News - YouTube",
-      "summary": "In climate news, the planet is on track to log its second hottest year on record this year. That's according to Europe's global warming monitor. New data from the Capernicus Climate Change Service shows that at 200 to 2025 is currently tied with 2023 after a historic high recorded in 2024, making them the three hottest years ever recorded. The AY's latest report shows the 3-year average is on track to exceed 1 1/2° C above pre-industrial levels for the first time. You'll you'll recall that's the threshold targeted in the 2015 Paris Climate Accord. Well, Samantha Burgess is strategic lead for climate in the Capernicus Climate Change Service which produced that report. Welcome to DW. So is global warming accelerating or or how do you interpret this new data? &gt;&gt; Yes, the trajectory of g",
-      "link": "https://www.youtube.com/watch?v=B7Q8cw5JPiU",
+      "title": "[YT] When The World Gets 1 Hotter | Climate Change: The... - YouTube",
+      "summary": "What's striking is that warming trend cannot be explained by natural factors but is caused by human activities. In particular, by use of fossil fuels. The problem is that everything we do, our entire economy, from the moment you wake up in the morning and turn on the light or look at your cell phone to the moment you go to bed at night and even then because your cell phone is still drawing power at night. I mean, we're all using energy all the time and in the industrialized world, that energy is almost entirely fossil fuels. We burn fossil fuels, coal, gas, and oil to power our energy coal, gas, and oil to power our energy generation, to heat our homes, to drive our factories, to power our cars and our trains, and travel around the world. And when we burn fossil fuels, it produces carbon d",
+      "link": "https://www.youtube.com/watch?v=dIsjcG7hTmo",
       "published": "",
       "source_type": "youtube",
       "channel": "",
-      "video_id": "B7Q8cw5JPiU",
+      "video_id": "dIsjcG7hTmo",
       "transcript_method": "playwright_web",
-      "transcript_chars": 1207,
-      "has_full_transcript": true
-    },
-    {
-      "title": "[YT] What Climate Science Actually Says About Extreme Weather - YouTube",
-      "summary": "Welcome everyone. I'm David Lodge. I'm the director of the Cornell Atinson Center for Sustainability and it's my pleasure to introduce Dr. Roger Pilky Jr. to be uh the last in this year's climate speaker series. Um, Roger is a professor ameritus at the University of Colorado Boulder where he was a faculty member for 23 years. And while he was at Boulder, led the development there of the graduate program in environmental studies. And before becoming a faculty member, Roger was on the staff uh staff scientist at INCAR for a number of years. That is the National Center for Atmospheric Research. Our writer has taught and continues to write on a diverse range of policy and governance issues uh related to science, technology, environment, energy, climate, innovation, and sports. Uh since retirin",
-      "link": "https://www.youtube.com/watch?v=6bMG2Ds0sVA",
-      "published": "",
-      "source_type": "youtube",
-      "channel": "",
-      "video_id": "6bMG2Ds0sVA",
-      "transcript_method": "playwright_web",
-      "transcript_chars": 952,
-      "has_full_transcript": true
-    },
-    {
-      "title": "[YT] Watch Climate Extremes: Extreme Weather today! The full free documentary is now on YouTube! - YouTube",
-      "summary": "When you see these massive floods, we're talking of a completely new realarm. It's is a it's a new hydraological situation on planet Earth. Once you get to a warmer climate state, then the number of hot days and warmer longer periods increase and that has dramatically changed. So, what used to be basically impossible 20 years ago has become almost mainstream these days, including events that go far beyond anything we've seen in the past. with humancaused warming, this accumulation of heat trapping gases in the atmosphere. In some cases, we're unearthing some of these historical or even prehistorical extremes that modern civilization hasn't had to deal with. &gt;&gt; Heat extremes have become much much more frequent. They now occurs already five times more frequent in a 1°ree warmer world. ",
-      "link": "https://www.youtube.com/watch?v=bHkN7lC232U",
-      "published": "",
-      "source_type": "youtube",
-      "channel": "",
-      "video_id": "bHkN7lC232U",
-      "transcript_method": "playwright_web",
-      "transcript_chars": 1235,
+      "transcript_chars": 1198,
       "has_full_transcript": true
     }
   ],
   "analysis": {
     "problem": "Анализ на CLIMATE_GLOBAL_RISK_REVIEW — данни получени но LLM грешка",
-    "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: Gemini rate limit",
+    "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: None",
     "severity": "UNKNOWN",
     "leverage_points": [],
     "proposed_actions": [],
@@ -103,27 +79,27 @@
       "source_type": "ddg"
     },
     {
-      "title": "What are the major global threats facing society and the economy...",
-      "summary": "According to the World Economic Forum´s Global Risk Report 2026, geoeconomic confrontation, mis- and disinformation and societal polarization make up the top three short-term risks, while environmental risks dominate in the long term.",
-      "link": "https://www.santander.com/en/press-room/insights/what-are-the-major-global-threats-facing-society-and-the-economy-going-forward",
+      "title": "Triple climate threats affect nearly half the world’s children | UN News",
+      "summary": "15 June 2026 Climate and Environment.About 1.1 billion children now face at least three overlapping climate hazards, threatening their health, education and survival, according to the Children’s Climate Risk Report 2026.",
+      "link": "https://news.un.org/en/story/2026/06/1167723",
       "source_type": "ddg"
     },
     {
-      "title": "Review: Climate Security in the 2025 State of Food Security and Nutrition in the World Report « The Center for Climate & Security",
-      "summary": "September 16, 2025 - This has led to increased food insecurity in particularly vulnerable demographics such as women, children, rural households, and the poor. Combined with gender-based income inequality and other systemic inequalities, food price inflation compounds ...",
-      "link": "https://climateandsecurity.org/2025/08/review-climate-security-in-the-2025-state-of-food-security-and-nutrition-in-the-world-report/",
+      "title": "The Intersection of Climate Change Adaptation and Smallholder...",
+      "summary": "Global food security agendas must integrate smallholder needs, recognizing their critical importance to food systems and their vulnerability to climate change.Wheeler, T., & von Braun, J. (2013). Climate change impacts on global food security.",
+      "link": "https://www.scipublications.com/journal/index.php/UJFS/article/view/6126",
       "source_type": "ddg"
     },
     {
-      "title": "Climate Change, Global Food Security, and the U.S. Food System | USDA",
-      "summary": "Effective beginning 5/20/2025: ... is likely to diminish continued progress on global food security through production disruptions that lead to local availability limitations and price increases, interrupted transport conduits, and diminished food safety, among other ...",
-      "link": "https://www.usda.gov/about-usda/general-information/priorities/climate-solutions/climate-change-global-food-security-and-us-food-system",
+      "title": "Global Report on Food Crises (GRFC) 2025 | World Food Programme",
+      "summary": "Who we are. We bring life-saving relief in emergencies and use food assistance to build peace, stability and prosperity for people recovering from conflict, disasters and the impact of climate change.Analyses assessments and case studies Food security analysis (VAM).",
+      "link": "https://www.wfp.org/publications/global-report-food-crises-grfc",
       "source_type": "ddg"
     },
     {
-      "title": "Full article: Enhancing food security amid climate change: assessing impacts and developing adaptive strategies",
-      "summary": "View PDF (open in a new window) ... poses significant challenges to global food security, impacting food availability, accessibility, utilization, and stability....",
-      "link": "https://www.tandfonline.com/doi/full/10.1080/23311932.2025.2519800",
+      "title": "Global Food Security Index (GFSI)",
+      "summary": "Global Food Security Index 2022. Exploring challenges and developing solutions for food security across 113 countries.Assesses a country's exposure to the impacts of climate change; its susceptibility to natural resource risks; and how the country is adapting to these risks.",
+      "link": "https://insights.economistenterprise.com/sustainability/project/food-security-index/",
       "source_type": "ddg"
     }
   ]

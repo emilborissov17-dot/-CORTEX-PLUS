@@ -1,6 +1,6 @@
 {
   "axis": "COSMIC_RESOURCES_REVIEW",
-  "fetched_at": "2026-06-20T12:21:14.917382+00:00",
+  "fetched_at": "2026-06-20T12:37:30.858297+00:00",
   "smart_query": "asteroid mining space resources",
   "sources_count": {
     "wiki": 0,
@@ -67,25 +67,25 @@
       "has_full_transcript": true
     },
     {
-      "title": "[YT] YouTube:0l5Sv54pgYI",
-      "summary": "From the moon to the asteroids, [music] the race for space resources could spark the greatest economic boom in human the greatest economic boom in human history. Why mine in space? When we think about mining, our instinct is [music] to picture hard hats and tunnels. But the truth is that Earth is a planet that we've already dug deep. There's plenty more, though. Earth out masses our moon, every other moon, Mars, Mercury, and the entire asteroid belt combined. On Earth, the easy near surface veins of gold, silver, and copper were tapped centuries ago, and every year we're chasing ores that are lower in concentration, harder to reach, and more destructive to the environment to extract. Mining remains one of the most polluting and energyintensive industries [music] on the planet, and the cost",
-      "link": "https://www.youtube.com/watch?v=0l5Sv54pgYI",
+      "title": "[YT] YouTube:p3hlnL2JN8E",
+      "summary": "we all want to live in a world of abundance but in order to find that dream we will need to go far beyond our own world mining in space the final frontier of resource extraction because everything that we could ever need every rock metal and gas to support a boundless human civilization from now until the day that the sun explodes it's all out there in our own planetary neighborhood so close yet so far this is the big problem with space mining in theory it's a simple idea we go to a nearby asteroid that's full of valuable metal we break it open extract the good stuff bring it home and boom unlimited wealth and prosperity Neil degrass Tyson once said that the first trillionaire will be the person who mines Asteroids for resources but there's more to this than just getting rich taking resour",
+      "link": "https://www.youtube.com/watch?v=p3hlnL2JN8E",
       "source_type": "youtube",
       "channel": "",
-      "video_id": "0l5Sv54pgYI",
+      "video_id": "p3hlnL2JN8E",
       "transcript_method": "playwright_web",
-      "transcript_chars": 1223,
+      "transcript_chars": 1198,
       "has_full_transcript": true
     },
     {
-      "title": "[YT] YouTube:uo4uGd93lLQ",
-      "summary": "How will asteroid mining build space How will asteroid mining build space infrastructure? Imagine a future where the vastness of space is not just a destination, but a thriving hub of activity. That future is closer than you think, thanks to asteroid mining. This process involves extracting valuable resources from space rocks floating in the solar system. These resources include water, metals like iron and nickel, and rare materials such as platinum group metals. These materials are essential for building and maintaining space stations, habitats and maintaining space stations, habitats and spacecraft. One of the biggest advantages of asteroid mining is in situ resource utilization. This means using materials found in space instead of bringing everything from earth. For example, water mined",
-      "link": "https://www.youtube.com/watch?v=uo4uGd93lLQ",
+      "title": "[YT] YouTube:TRY1wqYvCK0",
+      "summary": "Hello everybody. I'm Serta and welcome back to spacecraft and my very very busy steel factory. Yeah, in this episode we are going to go and do some asteroid mining. But there's a lot to do before you get there. And I had a big problem with Malikas because I need a stronger drill to be able to mine the the asteroids. But if you go in and you have a look at the drill which is over here, you need hyper lenses. Now, hyperlenses over here need this particular one. M crystal matrix. M crystal matrix requires azurite stone analysis at the lab. Now, I couldn't do this because I couldn't mine azurite and I couldn't mine malikite. Now, malikite will also give you this if you go in the lab. But I couldn't mine it cuz I was using a simple miner. And I was getting frustrated because I found malikite no",
+      "link": "https://www.youtube.com/watch?v=TRY1wqYvCK0",
       "source_type": "youtube",
       "channel": "",
-      "video_id": "uo4uGd93lLQ",
+      "video_id": "TRY1wqYvCK0",
       "transcript_method": "playwright_web",
-      "transcript_chars": 1221,
+      "transcript_chars": 1220,
       "has_full_transcript": true
     }
   ],

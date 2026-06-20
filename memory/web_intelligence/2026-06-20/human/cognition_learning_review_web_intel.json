@@ -1,34 +1,34 @@
 {
   "axis": "COGNITION_LEARNING_REVIEW",
   "domain": "human",
-  "timestamp": "2026-06-20T12:04:18.148414+00:00",
+  "timestamp": "2026-06-20T12:27:15.971764+00:00",
   "sources_count": 9,
   "rss_count": 3,
   "ddg_count": 4,
   "youtube_count": 2,
   "youtube_items": [
     {
-      "title": "[YT] How I'd Learn AI (if I could start over) - YouTube",
-      "summary": "so you want to learn artificial intelligence then this video is for you I'm going to provide you with a complete roadmap that I would follow if I had to start over today on my artificial intelligence journey and now for context I started studying artificial intelligence back in 2013 10 years ago and over the past years I've been working as a freelance data scientist helping my clients with various end-to-end data science and artificial intelligence Solutions and applications I also share all of this knowledge and my journey on this YouTube channel which as of today has over 25 000 subscribers and at the end of this video I will also provide you with a resource completely for free where you can follow all of these steps to complete roadmap even with training videos and instructions so make ",
-      "link": "https://www.youtube.com/watch?v=h2FDq3agImI",
+      "title": "[YT] AI in Education 2025: The Smart Classroom RevolutionHow AI is Changing Learning and Development in 2025Top AI YouTube Channels to Watch for Smarter Learning in 2025The future of learning: AI is revolutionizing education 4.014 Educational AI YouTubers Teaching ML in 2025 - DigitalOceanHow AI could radically change schools by 2050 — Harvard GazetteThe Best YouTube Channels for AI Learning and Staying Updated ...",
+      "summary": "Hey everyone, welcome back to the Edgitech channel, your go-to place for futurep proof learning. Today we're diving into a topic that's flipping classrooms upside down and turning traditional education into something smarter, faster, and way more exciting. That's right. We're talking about artificial intelligence or AI in the classroom. Now, imagine this. Your homework isn't one sizefits-all anymore. Instead, it adjusts to match your pace. Your teacher has an AI assistant that grades your quizzes in seconds and spots exactly what you need to revise. And your lessons are no longer just about memorizing facts, but about understanding them at your own speed. Well, this isn't science fiction anymore. This is the classroom of 2025. But what exactly does AI in education mean? At its core, AI is ",
+      "link": "https://www.youtube.com/watch?v=mh6_KvJ991I",
       "published": "",
       "source_type": "youtube",
       "channel": "",
-      "video_id": "h2FDq3agImI",
+      "video_id": "mh6_KvJ991I",
       "transcript_method": "playwright_web",
-      "transcript_chars": 1204,
+      "transcript_chars": 1192,
       "has_full_transcript": true
     },
     {
-      "title": "[YT] Turn your skills + AI into a career in 2025 | 3 future-ready jobs you...",
-      "summary": "Hi all, my name is Shami Shonne, speaker, trainer, and your favorite digital cousin. Earlier today, I dropped a quick short about three AI powered jobs that are showing up right now. Where did I get them from? My head. And based on comments, DMs, and shares that quick, it's clear people are ready for a little bit more. So, let's break them down. These are people centered skill-based roles for folks who know how to connect, communicate, and adapt. And yes, AI is part of it. But the real value is you. Let's start with this one. AI augmented talent brand specialist. This is for the person who loves spotlighting other people. You help companies turn employee stories, behind the scenes moments, and everyday culture into real content. Think short form videos on LinkedIn ress showing day in the l",
-      "link": "https://www.youtube.com/watch?v=SoFuxCEKYi8",
+      "title": "[YT] How AI is Changing Learning and Development in 2025Top AI YouTube Channels to Watch for Smarter Learning in 2025The future of learning: AI is revolutionizing education 4.014 Educational AI YouTubers Teaching ML in 2025 - DigitalOceanHow AI could radically change schools by 2050 — Harvard GazetteThe Best YouTube Channels for AI Learning and Staying Updated ...",
+      "summary": "just prior to the covid people were more focused on the work the worker and workplace but with Future Ready organizations I think the challenge is completely different we are actually looking how do I futurize my uh work how do I personalize my worker and how do I humanize my workplace I I I guess HR needs a larger role to play in making organization future ready and definitely whether you call it recruitment learning Talent uh leadership engagement uh I think it needs to function together in order to bring that function together in order to bring that context [Music] back Andy welcome to the show how are you I'm good Chris how are you it's been a while how long has it been actually because you can't you joined us on the panel a while back right like is yeah yeah I I I think about about tw",
+      "link": "https://www.youtube.com/watch?v=cNdHps3O7mQ",
       "published": "",
       "source_type": "youtube",
       "channel": "",
-      "video_id": "SoFuxCEKYi8",
+      "video_id": "cNdHps3O7mQ",
       "transcript_method": "playwright_web",
-      "transcript_chars": 1192,
+      "transcript_chars": 1158,
       "has_full_transcript": true
     }
   ],
@@ -78,9 +78,9 @@
       "source_type": "ddg"
     },
     {
-      "title": "Study Abroad Programs at Top Universities... | educations.com",
-      "summary": "Unlock a world of learning with educations.com! Discover study abroad university programs and get inspired by real student stories.",
-      "link": "https://www.educations.com/",
+      "title": "Education - Simple English Wikipedia, the free encyclopedia",
+      "summary": "Learn about education as a process of learning skills and knowledge, and how it is categorized into formal, non-formal, and informal types. Find out about different teaching methods, learning theories, and educational assessment.",
+      "link": "https://simple.wikipedia.org/wiki/Education",
       "source_type": "ddg"
     },
     {
@@ -90,33 +90,33 @@
       "source_type": "ddg"
     },
     {
-      "title": "Machine learning - Wikipedia",
-      "summary": "Learning classifier systems (LCS) are a family of rule-based machine learning algorithms that combine a discovery component, typically a genetic ...",
-      "link": "https://en.wikipedia.org/wiki/Machine_learning",
+      "title": "LinkedIn Learning: Online Training Courses & Skill Building",
+      "summary": "Get guidance to develop the critical skills you need to advance your career from the only learning platform informed by the world’s largest talent marketplace. Set career goals and use Skill...",
+      "link": "https://www.linkedin.com/learning/",
       "source_type": "ddg"
     },
     {
-      "title": "[YT] How I'd Learn AI (if I could start over) - YouTube",
-      "summary": "so you want to learn artificial intelligence then this video is for you I'm going to provide you with a complete roadmap that I would follow if I had to start over today on my artificial intelligence journey and now for context I started studying artificial intelligence back in 2013 10 years ago and over the past years I've been working as a freelance data scientist helping my clients with various end-to-end data science and artificial intelligence Solutions and applications I also share all of this knowledge and my journey on this YouTube channel which as of today has over 25 000 subscribers and at the end of this video I will also provide you with a resource completely for free where you can follow all of these steps to complete roadmap even with training videos and instructions so make ",
-      "link": "https://www.youtube.com/watch?v=h2FDq3agImI",
+      "title": "[YT] AI in Education 2025: The Smart Classroom RevolutionHow AI is Changing Learning and Development in 2025Top AI YouTube Channels to Watch for Smarter Learning in 2025The future of learning: AI is revolutionizing education 4.014 Educational AI YouTubers Teaching ML in 2025 - DigitalOceanHow AI could radically change schools by 2050 — Harvard GazetteThe Best YouTube Channels for AI Learning and Staying Updated ...",
+      "summary": "Hey everyone, welcome back to the Edgitech channel, your go-to place for futurep proof learning. Today we're diving into a topic that's flipping classrooms upside down and turning traditional education into something smarter, faster, and way more exciting. That's right. We're talking about artificial intelligence or AI in the classroom. Now, imagine this. Your homework isn't one sizefits-all anymore. Instead, it adjusts to match your pace. Your teacher has an AI assistant that grades your quizzes in seconds and spots exactly what you need to revise. And your lessons are no longer just about memorizing facts, but about understanding them at your own speed. Well, this isn't science fiction anymore. This is the classroom of 2025. But what exactly does AI in education mean? At its core, AI is ",
+      "link": "https://www.youtube.com/watch?v=mh6_KvJ991I",
       "published": "",
       "source_type": "youtube",
       "channel": "",
-      "video_id": "h2FDq3agImI",
+      "video_id": "mh6_KvJ991I",
       "transcript_method": "playwright_web",
-      "transcript_chars": 1204,
+      "transcript_chars": 1192,
       "has_full_transcript": true
     },
     {
-      "title": "[YT] Turn your skills + AI into a career in 2025 | 3 future-ready jobs you...",
-      "summary": "Hi all, my name is Shami Shonne, speaker, trainer, and your favorite digital cousin. Earlier today, I dropped a quick short about three AI powered jobs that are showing up right now. Where did I get them from? My head. And based on comments, DMs, and shares that quick, it's clear people are ready for a little bit more. So, let's break them down. These are people centered skill-based roles for folks who know how to connect, communicate, and adapt. And yes, AI is part of it. But the real value is you. Let's start with this one. AI augmented talent brand specialist. This is for the person who loves spotlighting other people. You help companies turn employee stories, behind the scenes moments, and everyday culture into real content. Think short form videos on LinkedIn ress showing day in the l",
-      "link": "https://www.youtube.com/watch?v=SoFuxCEKYi8",
+      "title": "[YT] How AI is Changing Learning and Development in 2025Top AI YouTube Channels to Watch for Smarter Learning in 2025The future of learning: AI is revolutionizing education 4.014 Educational AI YouTubers Teaching ML in 2025 - DigitalOceanHow AI could radically change schools by 2050 — Harvard GazetteThe Best YouTube Channels for AI Learning and Staying Updated ...",
+      "summary": "just prior to the covid people were more focused on the work the worker and workplace but with Future Ready organizations I think the challenge is completely different we are actually looking how do I futurize my uh work how do I personalize my worker and how do I humanize my workplace I I I guess HR needs a larger role to play in making organization future ready and definitely whether you call it recruitment learning Talent uh leadership engagement uh I think it needs to function together in order to bring that function together in order to bring that context [Music] back Andy welcome to the show how are you I'm good Chris how are you it's been a while how long has it been actually because you can't you joined us on the panel a while back right like is yeah yeah I I I think about about tw",
+      "link": "https://www.youtube.com/watch?v=cNdHps3O7mQ",
       "published": "",
       "source_type": "youtube",
       "channel": "",
-      "video_id": "SoFuxCEKYi8",
+      "video_id": "cNdHps3O7mQ",
       "transcript_method": "playwright_web",
-      "transcript_chars": 1192,
+      "transcript_chars": 1158,
       "has_full_transcript": true
     }
   ]

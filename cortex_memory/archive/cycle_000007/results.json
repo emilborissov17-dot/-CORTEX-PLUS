@@ -1,10 +1,51 @@
 {
-  "cycle_id": "full_test_003",
-  "goal_score": 0.85,
-  "count": 1,
+  "cycle_id": "2026-06-20T13:00:35.892077+00:00",
+  "goal_score": 0.5395,
+  "count": 2,
   "results": [
     {
-      "score": 0.85
+      "timestamp": "2026-06-20T05:42:48.225754+00:00",
+      "patch": "climate_patch.py",
+      "success": true,
+      "stdout": "CO2 Metrics (local simulation):\n  Current: 420.5 ppm\n  Year Ago: 415.3 ppm\n  Increase: 5.2 ppm/year\n  Date: 2024-04-15\n",
+      "stderr": "",
+      "score_before": null,
+      "score_after": null,
+      "delta": null,
+      "verdict": "NEUTRAL",
+      "changed_axes": []
+    },
+    {
+      "timestamp": "2026-06-20T06:56:09.519949+00:00",
+      "patch": "broken_test_patch.py",
+      "success": false,
+      "stdout": "",
+      "stderr": "СИНТАКСИС ГРЕШКА: SyntaxError на ред 1: invalid non-printable character U+FEFF",
+      "score_before": 50.26,
+      "score_after": null,
+      "delta": null,
+      "verdict": "NEUTRAL",
+      "changed_axes": [
+        "ENERGY_REVIEW: LOW → None",
+        "COSMIC_RESOURCES_REVIEW: HIGH → None",
+        "FOOD_REVIEW: MEDIUM → None",
+        "INEQUALITY_POVERTY_REVIEW: MEDIUM → None",
+        "ECOSYSTEMS_BIODIVERSITY_REVIEW: MEDIUM → None",
+        "MATERIALS_WASTE_REVIEW: LOW → None",
+        "CULTURE_MEDIA_REVIEW: MEDIUM → None",
+        "EDUCATION_CULTURE_REVIEW: MEDIUM → None",
+        "SPACE_INFRASTRUCTURE_REVIEW: HIGH → None",
+        "ECONOMY_WORK_REVIEW: MEDIUM → None",
+        "TECHNOLOGY_AI_REVIEW: MEDIUM → None",
+        "HUMAN_WELL_BEING_REVIEW: MEDIUM → None",
+        "COGNITION_LEARNING_REVIEW: MEDIUM → None",
+        "GOVERNANCE_INSTITUTIONS_REVIEW: LOW → None",
+        "CLIMATE_GLOBAL_RISK_REVIEW: LOW → None",
+        "WATER_REVIEW: MEDIUM → None",
+        "INFRASTRUCTURE_CITIES_REVIEW: MEDIUM → None",
+        "SOCIAL_RELATIONS_REVIEW: MEDIUM → None",
+        "TECHNOLOGY_INFRA_REVIEW: MEDIUM → None"
+      ]
     }
   ]
 }

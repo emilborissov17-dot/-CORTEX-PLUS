@@ -1,22 +1,46 @@
 {
   "axis": "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL",
   "domain": "human",
-  "timestamp": "2026-06-20T12:04:32.430279+00:00",
-  "sources_count": 9,
+  "timestamp": "2026-06-20T12:27:14.196904+00:00",
+  "sources_count": 11,
   "rss_count": 8,
   "ddg_count": 0,
-  "youtube_count": 1,
+  "youtube_count": 3,
   "youtube_items": [
     {
-      "title": "[YT] Human Rights in 2025: The 75th International Human Rights DayYouTubePromoting political rights and civil liberties after Human ...United States: Freedom in the World 2025 Country Report ...World Report 2025 - Human Rights WatchTop Human Rights Videos of 2025 | Human Rights WatchUSA Watchlist 2025 - Civicus Monitor",
-      "summary": "Hello, I'm Andrew Freriedman, director and senior fellow of the human rights initiative here at CSIS. And along with my colleague Anne Frederick, in honor of this International Human Rights Day, we want to talk about the important origins of this day and the state of human rights, freedom, and democracy in the world. And &gt;&gt; today on International Human Rights Day, we do not celebrate because we've succeeded in protecting all human beings and human rights worldwide. We know this isn't the case and we know this goal hasn't been achieved at any point in history even when the United Nations first established the Universal Declaration of Human Rights in 1948. International Human Rights Day is however a celebration that across the globe there's an ongoing fight to realize the goals of the ",
-      "link": "https://www.youtube.com/watch?v=gweWnhmdcbc",
-      "published": "",
+      "title": "[YT] Defending Dignity: Safeguarding Human Rights in a Changing World | #SkollWF 2025",
+      "summary": "thank you all who are here I get the honor of introducing uh Leopoldo so I met Leopoldo Lopez recently but I've heard about Leopoldo Lopez for decades I think I first uh came across you when you were running for mayor um or maybe you were already mayor and in your first race you'd won 51% of the vote in the second race you won 81% of the vote which is a big deal and at the time I was running a political organization that trained politicians in America and I had so much respect for people who not just LED movements but put themselves on the line politically and so I started following you back then and saying anyone who can get 30 extra points really matters but then you started to lead movements for democracy and engage in real protest against the Chavez authoritarianism that was taking ove",
+      "link": "https://www.youtube.com/watch?v=IH1L0byLpZs",
+      "published": "2025-04-23T16:06:22Z",
       "source_type": "youtube",
-      "channel": "",
-      "video_id": "gweWnhmdcbc",
+      "channel": "Skoll.org",
+      "video_id": "IH1L0byLpZs",
       "transcript_method": "playwright_web",
-      "transcript_chars": 1191,
+      "transcript_chars": 954,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] What are the universal human rights? - Benedetta Berti",
+      "summary": "[Music] The idea of human rights is that each one of us, no matter who we are or where we are born, is entitled to the same basic rights and freedoms. Human rights are not privileges and they cannot be granted or revoked. They are inalienable and universal. That may sound straightforward enough, but it gets incredibly complicated as soon as anyone tries to put the idea into practice. What exactly are the basic human rights? Who gets to pick them? Who enforces them? And how? The history behind the concept of human rights is a long one. Throughout the centuries and across societies, religions, and cultures, we have struggled with defining notions of rightfulness, justice, and rights. But one of the most modern affirmations of universal human rights emerged from the ruins of World War II with",
+      "link": "https://www.youtube.com/watch?v=nDgIVseTkuE",
+      "published": "2015-10-15T15:02:31Z",
+      "source_type": "youtube",
+      "channel": "TED-Ed",
+      "video_id": "nDgIVseTkuE",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1120,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] E84: Silencing voices — the war on civil liberties",
+      "summary": "[Mehran] Hello, hello, hello, and welcome! I'm Mehran Khalili. We are DiEM25, a radical, political movement for Europe, and this is another live discussion with our coordinating team, featuring subversive ideas, you won't hear anywhere else. And today, we'll be asking: Is it ever okay for power to attack the civil liberties of its political opponents? Like, taking away their freedom of speech, their right to participate in political or economic life, their right to a fair trial? That sort of thing. In recent years we've seen a marked increase in such attacks, in the name of political disagreement, towards people from across the ideological Spectrum. Jeremy Corbyn, once leader of the Labour party in the UK, was a victim of a frivolous lawsuit to stop him from participating in public life. N",
+      "link": "https://www.youtube.com/watch?v=VBy5v0B671Q",
+      "published": "2023-09-27T05:14:03Z",
+      "source_type": "youtube",
+      "channel": "DiEM25",
+      "video_id": "VBy5v0B671Q",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1483,
       "has_full_transcript": true
     }
   ],
@@ -95,15 +119,27 @@
       "source_type": "rss"
     },
     {
-      "title": "[YT] Human Rights in 2025: The 75th International Human Rights DayYouTubePromoting political rights and civil liberties after Human ...United States: Freedom in the World 2025 Country Report ...World Report 2025 - Human Rights WatchTop Human Rights Videos of 2025 | Human Rights WatchUSA Watchlist 2025 - Civicus Monitor",
-      "summary": "Hello, I'm Andrew Freriedman, director and senior fellow of the human rights initiative here at CSIS. And along with my colleague Anne Frederick, in honor of this International Human Rights Day, we want to talk about the important origins of this day and the state of human rights, freedom, and democracy in the world. And &gt;&gt; today on International Human Rights Day, we do not celebrate because we've succeeded in protecting all human beings and human rights worldwide. We know this isn't the case and we know this goal hasn't been achieved at any point in history even when the United Nations first established the Universal Declaration of Human Rights in 1948. International Human Rights Day is however a celebration that across the globe there's an ongoing fight to realize the goals of the ",
-      "link": "https://www.youtube.com/watch?v=gweWnhmdcbc",
-      "published": "",
+      "title": "[YT] Defending Dignity: Safeguarding Human Rights in a Changing World | #SkollWF 2025",
+      "summary": "thank you all who are here I get the honor of introducing uh Leopoldo so I met Leopoldo Lopez recently but I've heard about Leopoldo Lopez for decades I think I first uh came across you when you were running for mayor um or maybe you were already mayor and in your first race you'd won 51% of the vote in the second race you won 81% of the vote which is a big deal and at the time I was running a political organization that trained politicians in America and I had so much respect for people who not just LED movements but put themselves on the line politically and so I started following you back then and saying anyone who can get 30 extra points really matters but then you started to lead movements for democracy and engage in real protest against the Chavez authoritarianism that was taking ove",
+      "link": "https://www.youtube.com/watch?v=IH1L0byLpZs",
+      "published": "2025-04-23T16:06:22Z",
       "source_type": "youtube",
-      "channel": "",
-      "video_id": "gweWnhmdcbc",
+      "channel": "Skoll.org",
+      "video_id": "IH1L0byLpZs",
       "transcript_method": "playwright_web",
-      "transcript_chars": 1191,
+      "transcript_chars": 954,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] What are the universal human rights? - Benedetta Berti",
+      "summary": "[Music] The idea of human rights is that each one of us, no matter who we are or where we are born, is entitled to the same basic rights and freedoms. Human rights are not privileges and they cannot be granted or revoked. They are inalienable and universal. That may sound straightforward enough, but it gets incredibly complicated as soon as anyone tries to put the idea into practice. What exactly are the basic human rights? Who gets to pick them? Who enforces them? And how? The history behind the concept of human rights is a long one. Throughout the centuries and across societies, religions, and cultures, we have struggled with defining notions of rightfulness, justice, and rights. But one of the most modern affirmations of universal human rights emerged from the ruins of World War II with",
+      "link": "https://www.youtube.com/watch?v=nDgIVseTkuE",
+      "published": "2015-10-15T15:02:31Z",
+      "source_type": "youtube",
+      "channel": "TED-Ed",
+      "video_id": "nDgIVseTkuE",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1120,
       "has_full_transcript": true
     }
   ]

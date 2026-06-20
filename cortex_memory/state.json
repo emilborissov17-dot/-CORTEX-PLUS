@@ -1,7 +1,7 @@
 {
-  "merkle_root": "e42b9393869e72fcc225a13c6cbb715351632006d2ea5e571b92d0061af2f894",
-  "last_cycle": "2026-06-20T11:56:52.016141+00:00",
-  "last_updated": "2026-06-20T11:56:52.019351+00:00",
-  "total_cycles": 6,
-  "essence_summary": "# CORTEX STATE ESSENCE\n> 2026-06-20 11:56 | цикъл: 2026-06-20T11:56:52.016141+00:00 | goal: 0.539\n\n## СИСТЕМА\n- Цикли: 6 | avg goal: 0.672 | best: 0.850\n- Merkle root: `f1901ea4fdf49b3735ada497694d5603cb9fd6975c6d09b2659d836f636c0db2`\n\n## ТРЕНД ВЕКТОРИ\n- CO₂: 432.44 ppm → (Δ+0.000)\n- Earthquake max M: 5.8 → (Δ+0.000)\n- Kp index: 2.67 → (Δ+0.000)\n- Бежанци: 43400000.0 → (Δ+0.000)\n- GBIF obs/30d: 4933538.0 → (Δ+0.000)\n- Goal score: 0.5395 ↓ (Δ-0.001)\n\n## СЕБЕПРОФИЛ\n- Силни домейни: GOVERNANCE_INST"
+  "merkle_root": "3726b3a2011b5406cd8aae5a2acd08624d3d875d895984c84b0432bd2194a1c2",
+  "last_cycle": "2026-06-20T13:00:35.892077+00:00",
+  "last_updated": "2026-06-20T13:00:35.894352+00:00",
+  "total_cycles": 7,
+  "essence_summary": "# CORTEX STATE ESSENCE\n> 2026-06-20 13:00 | цикъл: 2026-06-20T13:00:35.892077+00:00 | goal: 0.539\n\n## СИСТЕМА\n- Цикли: 7 | avg goal: 0.653 | best: 0.850\n- Merkle root: `e42b9393869e72fcc225a13c6cbb715351632006d2ea5e571b92d0061af2f894`\n\n## ТРЕНД ВЕКТОРИ\n- CO₂: 432.44 ppm → (Δ+0.000)\n- Earthquake max M: 5.8 → (Δ+0.000)\n- Kp index: 2.67 → (Δ+0.000)\n- Бежанци: 43400000.0 → (Δ+0.000)\n- GBIF obs/30d: 4933538.0 → (Δ+0.000)\n- Goal score: 0.5395 → (Δ+0.000)\n\n## СЕБЕПРОФИЛ\n- Силни домейни: GOVERNANCE_INST"
 }

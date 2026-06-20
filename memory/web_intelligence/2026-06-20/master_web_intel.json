@@ -1,14 +1,62 @@
 {
-  "timestamp": "2026-06-20T12:09:19.429231+00:00",
+  "timestamp": "2026-06-20T12:29:39.464302+00:00",
   "date": "2026-06-20",
   "axes_covered": 25,
-  "total_sources": 265,
-  "youtube_videos_total": 65,
+  "total_sources": 254,
+  "youtube_videos_total": 53,
   "critical_axes": [
     "LONG_TERM_FUTURE_REVIEW"
   ],
   "deteriorating_axes": [],
   "problems_found": [
+    {
+      "axis": "CLIMATE_GLOBAL_RISK_REVIEW",
+      "problem": "Анализ на CLIMATE_GLOBAL_RISK_REVIEW — данни получени но LLM грешка",
+      "severity": "UNKNOWN",
+      "actions": []
+    },
+    {
+      "axis": "ENERGY_REVIEW",
+      "problem": "Анализ на ENERGY_REVIEW — данни получени но LLM грешка",
+      "severity": "UNKNOWN",
+      "actions": []
+    },
+    {
+      "axis": "WATER_REVIEW",
+      "problem": "Анализ на WATER_REVIEW — данни получени но LLM грешка",
+      "severity": "UNKNOWN",
+      "actions": []
+    },
+    {
+      "axis": "FOOD_REVIEW",
+      "problem": "Анализ на FOOD_REVIEW — данни получени но LLM грешка",
+      "severity": "UNKNOWN",
+      "actions": []
+    },
+    {
+      "axis": "MATERIALS_WASTE_REVIEW",
+      "problem": "Анализ на MATERIALS_WASTE_REVIEW — данни получени но LLM грешка",
+      "severity": "UNKNOWN",
+      "actions": []
+    },
+    {
+      "axis": "ECOSYSTEMS_BIODIVERSITY_REVIEW",
+      "problem": "Анализ на ECOSYSTEMS_BIODIVERSITY_REVIEW — данни получени но LLM грешка",
+      "severity": "UNKNOWN",
+      "actions": []
+    },
+    {
+      "axis": "HUMAN_WELL_BEING_REVIEW",
+      "problem": "Анализ на HUMAN_WELL_BEING_REVIEW — данни получени но LLM грешка",
+      "severity": "UNKNOWN",
+      "actions": []
+    },
+    {
+      "axis": "CULTURE_MEDIA_REVIEW",
+      "problem": "Анализ на CULTURE_MEDIA_REVIEW — данни получени но LLM грешка",
+      "severity": "UNKNOWN",
+      "actions": []
+    },
     {
       "axis": "LONG_TERM_FUTURE_REVIEW",
       "problem": "Lack of concrete plans and actions to address potential existential risks from artificial intelligence",
@@ -85,50 +133,8 @@
       ]
     },
     {
-      "axis": "ENERGY_REVIEW",
-      "problem": "Анализ на ENERGY_REVIEW — данни получени но LLM грешка",
-      "severity": "UNKNOWN",
-      "actions": []
-    },
-    {
-      "axis": "CLIMATE_GLOBAL_RISK_REVIEW",
-      "problem": "Анализ на CLIMATE_GLOBAL_RISK_REVIEW — данни получени но LLM грешка",
-      "severity": "UNKNOWN",
-      "actions": []
-    },
-    {
-      "axis": "WATER_REVIEW",
-      "problem": "Анализ на WATER_REVIEW — данни получени но LLM грешка",
-      "severity": "UNKNOWN",
-      "actions": []
-    },
-    {
-      "axis": "FOOD_REVIEW",
-      "problem": "Анализ на FOOD_REVIEW — данни получени но LLM грешка",
-      "severity": "UNKNOWN",
-      "actions": []
-    },
-    {
-      "axis": "ECOSYSTEMS_BIODIVERSITY_REVIEW",
-      "problem": "Анализ на ECOSYSTEMS_BIODIVERSITY_REVIEW — данни получени но LLM грешка",
-      "severity": "UNKNOWN",
-      "actions": []
-    },
-    {
-      "axis": "MATERIALS_WASTE_REVIEW",
-      "problem": "Анализ на MATERIALS_WASTE_REVIEW — данни получени но LLM грешка",
-      "severity": "UNKNOWN",
-      "actions": []
-    },
-    {
-      "axis": "HUMAN_WELL_BEING_REVIEW",
-      "problem": "Анализ на HUMAN_WELL_BEING_REVIEW — данни получени но LLM грешка",
-      "severity": "UNKNOWN",
-      "actions": []
-    },
-    {
-      "axis": "CULTURE_MEDIA_REVIEW",
-      "problem": "Анализ на CULTURE_MEDIA_REVIEW — данни получени но LLM грешка",
+      "axis": "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL",
+      "problem": "Анализ на GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL — данни получени но LLM грешка",
       "severity": "UNKNOWN",
       "actions": []
     },
@@ -139,8 +145,8 @@
       "actions": []
     },
     {
-      "axis": "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL",
-      "problem": "Анализ на GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL — данни получени но LLM грешка",
+      "axis": "SOCIAL_RELATIONS_REVIEW",
+      "problem": "Анализ на SOCIAL_RELATIONS_REVIEW — данни получени но LLM грешка",
       "severity": "UNKNOWN",
       "actions": []
     },
@@ -151,26 +157,20 @@
       "actions": []
     },
     {
-      "axis": "SOCIAL_RELATIONS_REVIEW",
-      "problem": "Анализ на SOCIAL_RELATIONS_REVIEW — данни получени но LLM грешка",
-      "severity": "UNKNOWN",
-      "actions": []
-    },
-    {
       "axis": "INEQUALITY_POVERTY_REVIEW",
       "problem": "Анализ на INEQUALITY_POVERTY_REVIEW — данни получени но LLM грешка",
       "severity": "UNKNOWN",
       "actions": []
     },
     {
-      "axis": "GOVERNANCE_INSTITUTIONS_REVIEW",
-      "problem": "Анализ на GOVERNANCE_INSTITUTIONS_REVIEW — данни получени но LLM грешка",
+      "axis": "INFRASTRUCTURE_CITIES_REVIEW",
+      "problem": "Анализ на INFRASTRUCTURE_CITIES_REVIEW — данни получени но LLM грешка",
       "severity": "UNKNOWN",
       "actions": []
     },
     {
-      "axis": "INFRASTRUCTURE_CITIES_REVIEW",
-      "problem": "Анализ на INFRASTRUCTURE_CITIES_REVIEW — данни получени но LLM грешка",
+      "axis": "GOVERNANCE_INSTITUTIONS_REVIEW",
+      "problem": "Анализ на GOVERNANCE_INSTITUTIONS_REVIEW — данни получени но LLM грешка",
       "severity": "UNKNOWN",
       "actions": []
     },
@@ -233,6 +233,142 @@
     "status": "MONITORING"
   },
   "axes": {
+    "CLIMATE_GLOBAL_RISK_REVIEW": {
+      "problem": "Анализ на CLIMATE_GLOBAL_RISK_REVIEW — данни получени но LLM грешка",
+      "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: None",
+      "severity": "UNKNOWN",
+      "leverage_points": [],
+      "proposed_actions": [],
+      "evidence": [
+        "DeBriefed 19 June 2026: Bonn talks end in ‘gridlock’ | Energy’s ‘new era’ | Oceans in climate negotiations",
+        "Bonn climate talks: Key outcomes from the June 2026 UN climate conference",
+        "Experts: Why carbon removal needs a ‘major scale up’ to return warming to 1.5C"
+      ],
+      "generalization": "",
+      "summary": "- DeBriefed 19 June 2026: Bonn talks end in ‘gridlock’ | Energy’s ‘new era’ | Oceans in climate negotiations: <p>Welcome to Carbon Brief’s DeBriefed.&#160;An essential guide to the week&#8217;s key de",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN",
+      "llm_raw": ""
+    },
+    "ENERGY_REVIEW": {
+      "problem": "Анализ на ENERGY_REVIEW — данни получени но LLM грешка",
+      "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: None",
+      "severity": "UNKNOWN",
+      "leverage_points": [],
+      "proposed_actions": [],
+      "evidence": [
+        "Yup, China’s EV Price War Was Brutal, But It Drove Innovation",
+        "Uruguay EV Sales Report: ICEV Sales Start Melting Down as BEVs Surpass 40% Share in May!",
+        "Energy Access In Rural North Carolina Grows Through Solar"
+      ],
+      "generalization": "",
+      "summary": "- Yup, China’s EV Price War Was Brutal, But It Drove Innovation: <p>It&#8217;s been a popular topic lately to write about China&#8217;s EV sales slump in 2026, growing EV exports from China, and vario",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN",
+      "llm_raw": ""
+    },
+    "WATER_REVIEW": {
+      "problem": "Анализ на WATER_REVIEW — данни получени но LLM грешка",
+      "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: Gemini rate limit",
+      "severity": "UNKNOWN",
+      "leverage_points": [],
+      "proposed_actions": [],
+      "evidence": [
+        "Setting Fires On Purpose to Cut Risk of Catastrophic Wildfires",
+        "When Forests Burn, Lakes Suffer",
+        "Ethanol Was Marketed to Help Agriculture. But It Fouled Our Water and Injured Our Health."
+      ],
+      "generalization": "",
+      "summary": "- Setting Fires On Purpose to Cut Risk of Catastrophic Wildfires: <figure><img alt=\"Firefighters ignite a prescribed burn.\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN",
+      "llm_raw": ""
+    },
+    "FOOD_REVIEW": {
+      "problem": "Анализ на FOOD_REVIEW — данни получени но LLM грешка",
+      "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: Gemini rate limit",
+      "severity": "UNKNOWN",
+      "leverage_points": [],
+      "proposed_actions": [],
+      "evidence": [
+        "Global Report on Food Crises (GRFC) 2025 - World Food Programme",
+        "The State of Food Security and Nutrition in the World 2025",
+        "Hunger Map 2025 | FAO | Food and Agriculture Organization of ..."
+      ],
+      "generalization": "",
+      "summary": "- Global Report on Food Crises (GRFC) 2025 - World Food Programme: Jul 11, 2025 · The Global Report on Food Crises (GRFC) 2025 shows conflict, economic shocks, climate extremes and forced displacement",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN",
+      "llm_raw": ""
+    },
+    "MATERIALS_WASTE_REVIEW": {
+      "problem": "Анализ на MATERIALS_WASTE_REVIEW — данни получени но LLM грешка",
+      "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: None",
+      "severity": "UNKNOWN",
+      "leverage_points": [],
+      "proposed_actions": [],
+      "evidence": [
+        "EREF Auction Raises More Than $4 Million to Advance Waste and Recycling Research",
+        "Casella’s Roadmap for Renewable Energy and Driving a Circular Economy",
+        "June 2026 Business Report—Business Highlights from the Waste Leadership Summit"
+      ],
+      "generalization": "",
+      "summary": "- EREF Auction Raises More Than $4 Million to Advance Waste and Recycling Research: The Environmental Research &amp; Education Foundation (EREF) raised over $4 million during its 2026 Annual Charitabl",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN",
+      "llm_raw": ""
+    },
+    "ECOSYSTEMS_BIODIVERSITY_REVIEW": {
+      "problem": "Анализ на ECOSYSTEMS_BIODIVERSITY_REVIEW — данни получени но LLM грешка",
+      "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: None",
+      "severity": "UNKNOWN",
+      "leverage_points": [],
+      "proposed_actions": [],
+      "evidence": [
+        "Global",
+        "Inside IUCN",
+        "DG Speech Node"
+      ],
+      "generalization": "",
+      "summary": "- Global: <span class=\"field field--name-title field--type-string field--label-hidden\">Global</span>\n<span class=\"field field--name-uid field--type-entity-reference field--label-hidden\"><span>integrat",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN",
+      "llm_raw": ""
+    },
+    "HUMAN_WELL_BEING_REVIEW": {
+      "problem": "Анализ на HUMAN_WELL_BEING_REVIEW — данни получени но LLM грешка",
+      "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: None",
+      "severity": "UNKNOWN",
+      "leverage_points": [],
+      "proposed_actions": [],
+      "evidence": [
+        "WHO issues comprehensive guidelines on filovirus disease, including Ebola and Marburg disease",
+        "Open letter to leaders of G7, G20, BRICS and all nations on finalizing the WHO Pandemic Agreement’s Pathogen Access and Benefit Sharing annex",
+        "Safe blood supply improves as voluntary donations exceed 85%, but many people still lack access"
+      ],
+      "generalization": "",
+      "summary": "- WHO issues comprehensive guidelines on filovirus disease, including Ebola and Marburg disease: As the Democratic Republic of the Congo is battling an Ebola disease outbreak caused by the Bundibugyo ",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN",
+      "llm_raw": ""
+    },
+    "CULTURE_MEDIA_REVIEW": {
+      "problem": "Анализ на CULTURE_MEDIA_REVIEW — данни получени но LLM грешка",
+      "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: None",
+      "severity": "UNKNOWN",
+      "leverage_points": [],
+      "proposed_actions": [],
+      "evidence": [
+        "Joan Cusack, the Actress Behind Jessie in ‘Toy Story,’ Takes the Lead",
+        "Matt Smith Goes Dark on ‘House of the Dragon’",
+        "These Comics Can Barely Muster the Energy for a Joke. That’s Why They’re Funny."
+      ],
+      "generalization": "",
+      "summary": "- Joan Cusack, the Actress Behind Jessie in ‘Toy Story,’ Takes the Lead: After 27 years, the beloved cowgirl doll voiced by Cusack is finally in charge, but the actress played an important role in sha",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN",
+      "llm_raw": ""
+    },
     "LONG_TERM_FUTURE_REVIEW": {
       "problem": "Lack of concrete plans and actions to address potential existential risks from artificial intelligence",
       "root_cause": "Insufficient prioritization and coordination among developers, regulators, and stakeholders to address AI safety concerns",
@@ -363,138 +499,19 @@
       "summary": "The Climate TRACE database contains significant errors, which can impact climate change mitigation efforts. An independent review and revision of the database are necessary to ensure data accuracy.",
       "risk_level": "MEDIUM"
     },
-    "ENERGY_REVIEW": {
-      "problem": "Анализ на ENERGY_REVIEW — данни получени но LLM грешка",
+    "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL": {
+      "problem": "Анализ на GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL — данни получени но LLM грешка",
       "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: None",
       "severity": "UNKNOWN",
       "leverage_points": [],
       "proposed_actions": [],
       "evidence": [
-        "Yup, China’s EV Price War Was Brutal, But It Drove Innovation",
-        "Uruguay EV Sales Report: ICEV Sales Start Melting Down as BEVs Surpass 40% Share in May!",
-        "Energy Access In Rural North Carolina Grows Through Solar"
+        "The UK’s Discriminatory  AI Experiment on Child  Refugees",
+        "Canada Delivers a Blow to Corporate Accountability",
+        "Support Builds to Protect Children from Crimes Against Humanity"
       ],
       "generalization": "",
-      "summary": "- Yup, China’s EV Price War Was Brutal, But It Drove Innovation: <p>It&#8217;s been a popular topic lately to write about China&#8217;s EV sales slump in 2026, growing EV exports from China, and vario",
-      "risk_level": "UNKNOWN",
-      "trend": "UNKNOWN",
-      "llm_raw": ""
-    },
-    "CLIMATE_GLOBAL_RISK_REVIEW": {
-      "problem": "Анализ на CLIMATE_GLOBAL_RISK_REVIEW — данни получени но LLM грешка",
-      "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: Gemini rate limit",
-      "severity": "UNKNOWN",
-      "leverage_points": [],
-      "proposed_actions": [],
-      "evidence": [
-        "DeBriefed 19 June 2026: Bonn talks end in ‘gridlock’ | Energy’s ‘new era’ | Oceans in climate negotiations",
-        "Bonn climate talks: Key outcomes from the June 2026 UN climate conference",
-        "Experts: Why carbon removal needs a ‘major scale up’ to return warming to 1.5C"
-      ],
-      "generalization": "",
-      "summary": "- DeBriefed 19 June 2026: Bonn talks end in ‘gridlock’ | Energy’s ‘new era’ | Oceans in climate negotiations: <p>Welcome to Carbon Brief’s DeBriefed.&#160;An essential guide to the week&#8217;s key de",
-      "risk_level": "UNKNOWN",
-      "trend": "UNKNOWN",
-      "llm_raw": ""
-    },
-    "WATER_REVIEW": {
-      "problem": "Анализ на WATER_REVIEW — данни получени но LLM грешка",
-      "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: Gemini rate limit",
-      "severity": "UNKNOWN",
-      "leverage_points": [],
-      "proposed_actions": [],
-      "evidence": [
-        "Setting Fires On Purpose to Cut Risk of Catastrophic Wildfires",
-        "When Forests Burn, Lakes Suffer",
-        "Ethanol Was Marketed to Help Agriculture. But It Fouled Our Water and Injured Our Health."
-      ],
-      "generalization": "",
-      "summary": "- Setting Fires On Purpose to Cut Risk of Catastrophic Wildfires: <figure><img alt=\"Firefighters ignite a prescribed burn.\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"",
-      "risk_level": "UNKNOWN",
-      "trend": "UNKNOWN",
-      "llm_raw": ""
-    },
-    "FOOD_REVIEW": {
-      "problem": "Анализ на FOOD_REVIEW — данни получени но LLM грешка",
-      "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: None",
-      "severity": "UNKNOWN",
-      "leverage_points": [],
-      "proposed_actions": [],
-      "evidence": [
-        "Global Report on Food Crises (GRFC) 2025 | World Food Programme",
-        "Worsening food insecurity, waning response capacity: Options... | IFPRI",
-        "Global Food Insecurity: Trends and Policy... - The Borgen Project"
-      ],
-      "generalization": "",
-      "summary": "- Global Report on Food Crises (GRFC) 2025 | World Food Programme: 11 July 2025. Global Report on Food Crises (GRFC) 2025. Analyses assessments and case studies Food security analysis (VAM).In 2024, m",
-      "risk_level": "UNKNOWN",
-      "trend": "UNKNOWN",
-      "llm_raw": ""
-    },
-    "ECOSYSTEMS_BIODIVERSITY_REVIEW": {
-      "problem": "Анализ на ECOSYSTEMS_BIODIVERSITY_REVIEW — данни получени но LLM грешка",
-      "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: None",
-      "severity": "UNKNOWN",
-      "leverage_points": [],
-      "proposed_actions": [],
-      "evidence": [
-        "Global",
-        "Inside IUCN",
-        "DG Speech Node"
-      ],
-      "generalization": "",
-      "summary": "- Global: <span class=\"field field--name-title field--type-string field--label-hidden\">Global</span>\n<span class=\"field field--name-uid field--type-entity-reference field--label-hidden\"><span>integrat",
-      "risk_level": "UNKNOWN",
-      "trend": "UNKNOWN",
-      "llm_raw": ""
-    },
-    "MATERIALS_WASTE_REVIEW": {
-      "problem": "Анализ на MATERIALS_WASTE_REVIEW — данни получени но LLM грешка",
-      "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: None",
-      "severity": "UNKNOWN",
-      "leverage_points": [],
-      "proposed_actions": [],
-      "evidence": [
-        "EREF Auction Raises More Than $4 Million to Advance Waste and Recycling Research",
-        "Casella’s Roadmap for Renewable Energy and Driving a Circular Economy",
-        "June 2026 Business Report—Business Highlights from the Waste Leadership Summit"
-      ],
-      "generalization": "",
-      "summary": "- EREF Auction Raises More Than $4 Million to Advance Waste and Recycling Research: The Environmental Research &amp; Education Foundation (EREF) raised over $4 million during its 2026 Annual Charitabl",
-      "risk_level": "UNKNOWN",
-      "trend": "UNKNOWN",
-      "llm_raw": ""
-    },
-    "HUMAN_WELL_BEING_REVIEW": {
-      "problem": "Анализ на HUMAN_WELL_BEING_REVIEW — данни получени но LLM грешка",
-      "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: None",
-      "severity": "UNKNOWN",
-      "leverage_points": [],
-      "proposed_actions": [],
-      "evidence": [
-        "WHO issues comprehensive guidelines on filovirus disease, including Ebola and Marburg disease",
-        "Open letter to leaders of G7, G20, BRICS and all nations on finalizing the WHO Pandemic Agreement’s Pathogen Access and Benefit Sharing annex",
-        "Safe blood supply improves as voluntary donations exceed 85%, but many people still lack access"
-      ],
-      "generalization": "",
-      "summary": "- WHO issues comprehensive guidelines on filovirus disease, including Ebola and Marburg disease: As the Democratic Republic of the Congo is battling an Ebola disease outbreak caused by the Bundibugyo ",
-      "risk_level": "UNKNOWN",
-      "trend": "UNKNOWN",
-      "llm_raw": ""
-    },
-    "CULTURE_MEDIA_REVIEW": {
-      "problem": "Анализ на CULTURE_MEDIA_REVIEW — данни получени но LLM грешка",
-      "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: None",
-      "severity": "UNKNOWN",
-      "leverage_points": [],
-      "proposed_actions": [],
-      "evidence": [
-        "Joan Cusack, the Actress Behind Jessie in ‘Toy Story,’ Takes the Lead",
-        "Matt Smith Goes Dark on ‘House of the Dragon’",
-        "These Comics Can Barely Muster the Energy for a Joke. That’s Why They’re Funny."
-      ],
-      "generalization": "",
-      "summary": "- Joan Cusack, the Actress Behind Jessie in ‘Toy Story,’ Takes the Lead: After 27 years, the beloved cowgirl doll voiced by Cusack is finally in charge, but the actress played an important role in sha",
+      "summary": "- The UK’s Discriminatory  AI Experiment on Child  Refugees: Click to expand Image\n          \n\n\n\n  \n        \n  \n\n        \n                      \n      \n        \n              Migrants walk towards a b",
       "risk_level": "UNKNOWN",
       "trend": "UNKNOWN",
       "llm_raw": ""
@@ -516,19 +533,19 @@
       "trend": "UNKNOWN",
       "llm_raw": ""
     },
-    "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL": {
-      "problem": "Анализ на GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL — данни получени но LLM грешка",
-      "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: None",
+    "SOCIAL_RELATIONS_REVIEW": {
+      "problem": "Анализ на SOCIAL_RELATIONS_REVIEW — данни получени но LLM грешка",
+      "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: Gemini rate limit",
       "severity": "UNKNOWN",
       "leverage_points": [],
       "proposed_actions": [],
       "evidence": [
-        "The UK’s Discriminatory  AI Experiment on Child  Refugees",
-        "Canada Delivers a Blow to Corporate Accountability",
-        "Support Builds to Protect Children from Crimes Against Humanity"
+        "Catholics in Latin America generally have positive views of Pope Leo",
+        "Most U.S. Catholics view Pope Leo favorably; many think Trump has been too critical of him",
+        "Is U.S. fertility at an all-time low? It depends how you measure it"
       ],
       "generalization": "",
-      "summary": "- The UK’s Discriminatory  AI Experiment on Child  Refugees: Click to expand Image\n          \n\n\n\n  \n        \n  \n\n        \n                      \n      \n        \n              Migrants walk towards a b",
+      "summary": "- Catholics in Latin America generally have positive views of Pope Leo: In six Latin American countries surveyed, most Catholics view Pope Leo XIV favorably, though his ratings trail those Pope Franci",
       "risk_level": "UNKNOWN",
       "trend": "UNKNOWN",
       "llm_raw": ""
@@ -550,23 +567,6 @@
       "trend": "UNKNOWN",
       "llm_raw": ""
     },
-    "SOCIAL_RELATIONS_REVIEW": {
-      "problem": "Анализ на SOCIAL_RELATIONS_REVIEW — данни получени но LLM грешка",
-      "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: None",
-      "severity": "UNKNOWN",
-      "leverage_points": [],
-      "proposed_actions": [],
-      "evidence": [
-        "Catholics in Latin America generally have positive views of Pope Leo",
-        "Most U.S. Catholics view Pope Leo favorably; many think Trump has been too critical of him",
-        "Is U.S. fertility at an all-time low? It depends how you measure it"
-      ],
-      "generalization": "",
-      "summary": "- Catholics in Latin America generally have positive views of Pope Leo: In six Latin American countries surveyed, most Catholics view Pope Leo XIV favorably, though his ratings trail those Pope Franci",
-      "risk_level": "UNKNOWN",
-      "trend": "UNKNOWN",
-      "llm_raw": ""
-    },
     "INEQUALITY_POVERTY_REVIEW": {
       "problem": "Анализ на INEQUALITY_POVERTY_REVIEW — данни получени но LLM грешка",
       "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: None",
@@ -574,29 +574,12 @@
       "leverage_points": [],
       "proposed_actions": [],
       "evidence": [
-        "September 2025 global poverty update from the World Bank: New data and regional classifications",
-        "Income Inequality Trends in Sub-Saharan Africa: Divergence, Determinants and Consequences | United Nations Development Programme",
-        "Inequality and the impact of growth on poverty in sub‐Saharan Africa: A GMM estimator in a dynamic panel threshold model - ScienceDirect"
+        "The Inequality Trap: Why Sub-Saharan Africa Struggles to Escape...",
+        "Poverty Rate by Country 2026 | World Population Review",
+        "(PDF) Growth and Poverty in Sub-Saharan Africa"
       ],
       "generalization": "",
-      "summary": "- September 2025 global poverty update from the World Bank: New data and regional classifications: September 29, 2025 - As of 2024, 839 million people ... New document). This upward revision stems pri",
-      "risk_level": "UNKNOWN",
-      "trend": "UNKNOWN",
-      "llm_raw": ""
-    },
-    "GOVERNANCE_INSTITUTIONS_REVIEW": {
-      "problem": "Анализ на GOVERNANCE_INSTITUTIONS_REVIEW — данни получени но LLM грешка",
-      "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: None",
-      "severity": "UNKNOWN",
-      "leverage_points": [],
-      "proposed_actions": [],
-      "evidence": [
-        "Daily Press Briefing by the Office of the Spokesperson for the Secretary-General",
-        "With Fundamental Freedoms under Assault, Work of Human Rights Council ‘More Vital Than Ever’, Secretary-General Says in Anniversary Video Message",
-        "Meeting of States Parties to United Nations Convention on Law of Sea, United Nations Headquarters, 15-18 June"
-      ],
-      "generalization": "",
-      "summary": "- Daily Press Briefing by the Office of the Spokesperson for the Secretary-General: Today is the International Day for the Elimination of Sexual Violence in Conflict. Sexual violence against children ",
+      "summary": "- The Inequality Trap: Why Sub-Saharan Africa Struggles to Escape...: Poverty; inequality; economic growth; Sub-Saharan Africa; Nigeria, South Africa; DR CongoFosu, Augustin Kwasi (2015): Growth, ineq",
       "risk_level": "UNKNOWN",
       "trend": "UNKNOWN",
       "llm_raw": ""
@@ -614,6 +597,23 @@
       ],
       "generalization": "",
       "summary": "- Chicago to buy, renovate Greyhound bus terminal: <p>The city&rsquo;s action, aimed at improving the customer experience for some 450,000 riders each year, saves the bus station from possible closure",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN",
+      "llm_raw": ""
+    },
+    "GOVERNANCE_INSTITUTIONS_REVIEW": {
+      "problem": "Анализ на GOVERNANCE_INSTITUTIONS_REVIEW — данни получени но LLM грешка",
+      "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: None",
+      "severity": "UNKNOWN",
+      "leverage_points": [],
+      "proposed_actions": [],
+      "evidence": [
+        "Daily Press Briefing by the Office of the Spokesperson for the Secretary-General",
+        "With Fundamental Freedoms under Assault, Work of Human Rights Council ‘More Vital Than Ever’, Secretary-General Says in Anniversary Video Message",
+        "Meeting of States Parties to United Nations Convention on Law of Sea, United Nations Headquarters, 15-18 June"
+      ],
+      "generalization": "",
+      "summary": "- Daily Press Briefing by the Office of the Spokesperson for the Secretary-General: Today is the International Day for the Elimination of Sexual Violence in Conflict. Sexual violence against children ",
       "risk_level": "UNKNOWN",
       "trend": "UNKNOWN",
       "llm_raw": ""

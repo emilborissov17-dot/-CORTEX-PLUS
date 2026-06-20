@@ -1,6 +1,6 @@
 {
   "axis": "SOCIAL_RELATIONS_REVIEW",
-  "fetched_at": "2026-06-20T11:24:12.121813+00:00",
+  "fetched_at": "2026-06-20T12:36:05.010860+00:00",
   "smart_query": "social inequality conflict trust",
   "sources_count": {
     "wiki": 0,
@@ -13,8 +13,8 @@
   },
   "rss": [
     {
-      "title": "Several reported killed in Israeli strikes on Lebanon despite ceasefire",
-      "snippet": "The IDF said it struck \"Hezbollah terrorist targets\" after the group fired over 50 projectiles at Israeli forces in southern Lebanon.",
+      "title": "Israel and Hezbollah continue strikes despite ceasefire agreement",
+      "snippet": "Deaths are reported in southern Lebanon, with the IDF saying it hit \"Hezbollah terrorist targets\" after the group fired over 50 projectiles at Israeli forces.",
       "url": "https://www.bbc.com/news/articles/cx240k9l112o?at_medium=RSS&at_campaign=rss",
       "source": "RSS"
     },
@@ -88,28 +88,28 @@
     },
     {
       "title": "[YT] The Health Effects of Loneliness",
-      "summary": "[DESCRIPTION FALLBACK] Studies are now showing that loneliness and social isolation not only affect our mental health but also have profound effects on ...",
+      "summary": "humans are innately social creatures few of us can truly go it alone our survival depends on having relationships with others so our species has evolved a way to make sure we maintain them loneliness loneliness actually as a kind of signal to us that we are longing for more contact is not a problem it's actually mowed to a solution when it actually motivates us to get back into contact with others dr richard schwartz is associate professor of psychiatry at the harvard medical school and co-author of the book the lonely american drifting apart in the 21st century since as human beings we survive in groups that loneliness is a feeling that motivates us to get back into the group when we're out of it and that has positive survival value and it's a good thing if it gets us back into contact wi",
       "link": "https://www.youtube.com/watch?v=YoqnIs5uc8E",
       "source_type": "youtube",
       "channel": "In Good Health Podcast",
       "video_id": "YoqnIs5uc8E",
-      "transcript_method": "description",
-      "transcript_chars": 155,
-      "has_full_transcript": false
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1221,
+      "has_full_transcript": true
     },
     {
       "title": "[YT] Virtually Alone: The Future of Human Connection",
-      "summary": "[DESCRIPTION FALLBACK] 2020 has been a challenging year across the globe. As a result of the pandemic, economic instability, and societal reckoning with ...",
+      "summary": "hi everyone my name is vivian schiller and i'm the executive director of aspen digital which is a program of the aspen institute if you're familiar with aspen you would probably that no aspen institute event is that no aspen institute event is complete if we did not quote from an ancient greek philosopher so let me not disappoint you this is from aristotle man is by nature a social animal anyone who either cannot lead the common life or is so self-sufficient as not to need or is so self-sufficient as not to need to and therefore does not partake of society is either a beast or a god so thank you to aristotle for that although i actually prefer the way maya angelou said it instead she wrote we need joy as we need instead she wrote we need joy as we need air we need love as we need water we ",
       "link": "https://www.youtube.com/watch?v=sXm_xLORb6c",
       "source_type": "youtube",
       "channel": "The Aspen Institute",
       "video_id": "sXm_xLORb6c",
-      "transcript_method": "description",
-      "transcript_chars": 156,
-      "has_full_transcript": false
+      "transcript_method": "playwright_web",
+      "transcript_chars": 804,
+      "has_full_transcript": true
     }
   ],
-  "summary": "[RSS News]\n- Several reported killed in Israeli strikes on Lebanon despite ceasefire\n- Zelensky stripped of highest Polish honour over WW2 name of army unit\n\n[arXiv]\n- Networks of agglomeration: how p",
+  "summary": "[RSS News]\n- Israel and Hezbollah continue strikes despite ceasefire agreement\n- Zelensky stripped of highest Polish honour over WW2 name of army unit\n\n[arXiv]\n- Networks of agglomeration: how populat",
   "urgency": "LOW",
   "sentiment": "NEUTRAL",
   "key_developments": [],

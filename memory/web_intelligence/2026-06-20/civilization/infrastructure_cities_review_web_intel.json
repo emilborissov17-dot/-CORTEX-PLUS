@@ -1,24 +1,12 @@
 {
   "axis": "INFRASTRUCTURE_CITIES_REVIEW",
   "domain": "civilization",
-  "timestamp": "2026-06-20T12:06:08.961675+00:00",
-  "sources_count": 11,
+  "timestamp": "2026-06-20T12:28:02.660912+00:00",
+  "sources_count": 10,
   "rss_count": 4,
   "ddg_count": 5,
-  "youtube_count": 2,
+  "youtube_count": 1,
   "youtube_items": [
-    {
-      "title": "[YT] How UK housing segregates residents - YouTube",
-      "summary": "this is the latest in luxury london this is the latest in luxury london living but these developments like so many new developments in the uk have something missing from their glossy brochures it's the fact that all new uk developments must have a percentage of properties that are categorized as social housing so if you can afford to buy one of these flats outright you own it privately and this is your entrance but if your flat happens to be classified as social housing which includes shared ownership where you part own part rent then this is your entrance that's right same building different entrances this is what has been dubbed a poor door and it's how new housing developments are built all over the uk the segregation of new housing is not just limited to poor doors as we'll see there a",
-      "link": "https://www.youtube.com/watch?v=oLSAm2szdjM",
-      "published": "",
-      "source_type": "youtube",
-      "channel": "",
-      "video_id": "oLSAm2szdjM",
-      "transcript_method": "playwright_web",
-      "transcript_chars": 1146,
-      "has_full_transcript": true
-    },
     {
       "title": "[YT] How it Happened - The 2008 Financial Crisis: Crash... - YouTube",
       "summary": "welcome to crash course economics my name is Jacob Clifford and I'm Adrien Hill and today we're going to do something a little different we're going to explore One Moment in history in depth we're going to talk about how the 2008 financial crisis happened and the government response to it in the United States so let's get [Music] started the 2008 financial crisis was a big deal Ben banki said it could have resulted in a 1930 style Global Financial and economic meltdown with catastrophic implications but what happened why did it happen and why aren't we all huddled around burning trash cans forming a raiding party to go steal gas from other tribes in the Wasteland by the way if you're actually doing that you probably didn't hear we survived the financial crisis things got better seriously p",
@@ -86,14 +74,14 @@
     },
     {
       "title": "Smart city - Wikipedia",
-      "summary": "ASEAN Smart Cities Network (ASCN) is a collaborative platform which aims to synergise Smart city development efforts across ASEAN by facilitating ...",
+      "summary": "A smart city is an urban model that leverages technology, human capital, and governance to improve sustainability, efficiency, and social inclusion, which are considered goals for cities of the future. [1] Smart cities use digital technology to collect data and operate services. [2][3] Data is collected from citizens, devices, buildings, or cameras. Smart city applications are diverse and ...",
       "link": "https://en.wikipedia.org/wiki/Smart_city",
       "source_type": "ddg"
     },
     {
-      "title": "List of Smart and AMRUT Cities in Telangana",
-      "summary": "The Smart and AMRUT cities in Telangana comprise urban local bodies selected under the Government of India's Smart Cities Mission, launched in 2015 to...",
-      "link": "https://grokipedia.com/page/List_of_Smart_and_AMRUT_Cities_in_Telangana",
+      "title": "List of smart cities - Wikipedia",
+      "summary": "A comprehensive list of cities that have implemented smart city initiatives, organized by continent and then alphabetically. Learn about the projects, criteria, and rankings of these cities that use technology to improve living, work, and environment.",
+      "link": "https://en.wikipedia.org/wiki/List_of_smart_cities",
       "source_type": "ddg"
     },
     {
@@ -103,21 +91,21 @@
       "source_type": "ddg"
     },
     {
-      "title": "Urban planner - Wikipedia",
-      "summary": "... scholarship to an average student who is initially interested in becoming an architect, but later decides they are more interested in urban planning.",
-      "link": "https://en.wikipedia.org/wiki/Urban_planner",
+      "title": "Urbanization - Wikipedia",
+      "summary": "Urbanization is relevant to a range of disciplines, including urban planning, geography, sociology, architecture, economics, education, statistics, and public health.",
+      "link": "https://en.wikipedia.org/wiki/Urbanization",
       "source_type": "ddg"
     },
     {
-      "title": "[YT] How UK housing segregates residents - YouTube",
-      "summary": "this is the latest in luxury london this is the latest in luxury london living but these developments like so many new developments in the uk have something missing from their glossy brochures it's the fact that all new uk developments must have a percentage of properties that are categorized as social housing so if you can afford to buy one of these flats outright you own it privately and this is your entrance but if your flat happens to be classified as social housing which includes shared ownership where you part own part rent then this is your entrance that's right same building different entrances this is what has been dubbed a poor door and it's how new housing developments are built all over the uk the segregation of new housing is not just limited to poor doors as we'll see there a",
-      "link": "https://www.youtube.com/watch?v=oLSAm2szdjM",
+      "title": "[YT] How it Happened - The 2008 Financial Crisis: Crash... - YouTube",
+      "summary": "welcome to crash course economics my name is Jacob Clifford and I'm Adrien Hill and today we're going to do something a little different we're going to explore One Moment in history in depth we're going to talk about how the 2008 financial crisis happened and the government response to it in the United States so let's get [Music] started the 2008 financial crisis was a big deal Ben banki said it could have resulted in a 1930 style Global Financial and economic meltdown with catastrophic implications but what happened why did it happen and why aren't we all huddled around burning trash cans forming a raiding party to go steal gas from other tribes in the Wasteland by the way if you're actually doing that you probably didn't hear we survived the financial crisis things got better seriously p",
+      "link": "https://www.youtube.com/watch?v=GPOv72Awo68",
       "published": "",
       "source_type": "youtube",
       "channel": "",
-      "video_id": "oLSAm2szdjM",
+      "video_id": "GPOv72Awo68",
       "transcript_method": "playwright_web",
-      "transcript_chars": 1146,
+      "transcript_chars": 1158,
       "has_full_transcript": true
     }
   ]

@@ -1,34 +1,34 @@
 {
   "axis": "INEQUALITY_POVERTY_REVIEW",
   "domain": "civilization",
-  "timestamp": "2026-06-20T12:05:15.470980+00:00",
+  "timestamp": "2026-06-20T12:27:54.756526+00:00",
   "sources_count": 8,
   "rss_count": 0,
   "ddg_count": 6,
   "youtube_count": 2,
   "youtube_items": [
     {
-      "title": "[YT] The Untold Truth About Money: How to Build Wealth From... - YouTube",
-      "summary": "let this circle represent $1,000,000 this is what ten million dollars would look like this is what one hundred million dollars would look like and this is what 1 billion dollars would look like Jeff Bezos the founder of Amazon has a net worth of 117 times this number and then there's you you're probably working a job right now one that you got from the degree that you studied for in university you probably don't have much in savings your living expenses seem ridiculously high you feel as though you're not paid enough you have credit card debt that needs taking care of maybe your student studying for a degree that you ho can and your job that you hope can bring some good money you probably don't have any savings only a pesky student debt hanging above your head wealth getting rich that all ",
-      "link": "https://www.youtube.com/watch?v=6mRbDEtDoyA",
+      "title": "[YT] America’s Wealth Inequality Crisis Explained (2025 ... - YouTubeSocial Inequality 2025: Wealth and Poverty in America - YouTubeHow income inequality grows the wealth gap - Yahoo FinanceIncome Inequality news - Today’s latest updates - CBS NewsHome - WID - World Inequality DatabaseBillionaire wealth jumps three times faster in 2025 to ...WBG Poverty and Inequality Update - Fall 2025",
+      "summary": "Take a moment and picture this. Two families wake up on the same morning here in the United States. They live in the same country. They breathe the same air. They hear the same news. But their realities couldn't be more different. One family owns a home that has doubled in value. Their investments are quietly compounding in the background. Their savings act like a safety net no matter what life throws at them. A medical emergency covered. A job loss. Inconvenient but survivable. The other family wakes up anxious. Rent is due. Groceries cost more than last month. Credit card balances feel heavier every time the phone buzzes. One unexpected bill could unravel everything. Now, here's the uncomfortable question. How did a single nation drift so far apart? This is the story of wealth inequality",
+      "link": "https://www.youtube.com/watch?v=jirhqTwmVFc",
       "published": "",
       "source_type": "youtube",
       "channel": "",
-      "video_id": "6mRbDEtDoyA",
+      "video_id": "jirhqTwmVFc",
       "transcript_method": "playwright_web",
-      "transcript_chars": 1229,
+      "transcript_chars": 1238,
       "has_full_transcript": true
     },
     {
-      "title": "[YT] Liberal Hypocrisy is Fueling American Inequality. - YouTube",
-      "summary": "There is a question I've had for a very long time and it has to do with this long time and it has to do with this map. This is a map of the 18 states in the US where Democrats control the legislative and executive branches or else have some veto proof majority in the legislature. Democrats in DC often blame the GOP for foiling their progressive vision. When middle class families see their taxes go up, they'll know Republicans are to blame. But if you zoom into these 18 states, there's effectively no Republicans standing in the way. So my question is, what do Democrats actually do when they have all the power? To answer this question, I teamed up with the Times editorial board writer Bea Applebomb. Okay, you got my attention. He's been thinking about and writing books about and reporting on",
-      "link": "https://www.youtube.com/watch?v=hNDgcjVGHIw",
+      "title": "[YT] Social Inequality 2025: Wealth and Poverty in America - YouTube",
+      "summary": "Hello. Uh this is going to be the first uh of your video lectures for social uh of your video lectures for social inequality. Um I'm going to basically walk you through uh the PowerPoint presentations through uh the PowerPoint presentations that I posted on Canvas. They'll be really important for um your bi-weekly quizzes and assignments. Um so I'm going to go to the screen share mode and uh pull up the share mode and uh pull up the PowerPoints and we'll get started. and we'll get started. Um Um so I have uh want to make sure to take every opportunity I can to emphasize the importance of getting the books for this class. If you just can't pass the class without them, um they'll be important for both your writing assignments um and your",
+      "link": "https://www.youtube.com/watch?v=UJCke1yCXfY",
       "published": "",
       "source_type": "youtube",
       "channel": "",
-      "video_id": "hNDgcjVGHIw",
+      "video_id": "UJCke1yCXfY",
       "transcript_method": "playwright_web",
-      "transcript_chars": 1227,
+      "transcript_chars": 745,
       "has_full_transcript": true
     }
   ],
@@ -39,75 +39,75 @@
     "leverage_points": [],
     "proposed_actions": [],
     "evidence": [
-      "September 2025 global poverty update from the World Bank: New data and regional classifications",
-      "Income Inequality Trends in Sub-Saharan Africa: Divergence, Determinants and Consequences | United Nations Development Programme",
-      "Inequality and the impact of growth on poverty in sub‐Saharan Africa: A GMM estimator in a dynamic panel threshold model - ScienceDirect"
+      "The Inequality Trap: Why Sub-Saharan Africa Struggles to Escape...",
+      "Poverty Rate by Country 2026 | World Population Review",
+      "(PDF) Growth and Poverty in Sub-Saharan Africa"
     ],
     "generalization": "",
-    "summary": "- September 2025 global poverty update from the World Bank: New data and regional classifications: September 29, 2025 - As of 2024, 839 million people ... New document). This upward revision stems pri",
+    "summary": "- The Inequality Trap: Why Sub-Saharan Africa Struggles to Escape...: Poverty; inequality; economic growth; Sub-Saharan Africa; Nigeria, South Africa; DR CongoFosu, Augustin Kwasi (2015): Growth, ineq",
     "risk_level": "UNKNOWN",
     "trend": "UNKNOWN",
     "llm_raw": ""
   },
   "raw_items": [
     {
-      "title": "September 2025 global poverty update from the World Bank: New data and regional classifications",
-      "summary": "September 29, 2025 - As of 2024, 839 million people ... New document). This upward revision stems primarily from an increase in the extreme poverty rate of Sub-Saharan Africa....",
-      "link": "https://blogs.worldbank.org/en/opendata/september-2025-global-poverty-update-from-the-world-bank--new-da",
+      "title": "The Inequality Trap: Why Sub-Saharan Africa Struggles to Escape...",
+      "summary": "Poverty; inequality; economic growth; Sub-Saharan Africa; Nigeria, South Africa; DR CongoFosu, Augustin Kwasi (2015): Growth, inequality and poverty in Sub-Saharan Africa: recent progress in a global context. Oxford Development Studies, vol. 43(1), pp. 44-59.",
+      "link": "https://mpra.ub.uni-muenchen.de/125930/",
       "source_type": "ddg"
     },
     {
-      "title": "Income Inequality Trends in Sub-Saharan Africa: Divergence, Determinants and Consequences | United Nations Development Programme",
-      "summary": "The 2030 Agenda for Sustainable Development and its 17 Sustainable Development Goals (SDGs) underscore the need to address broad inequalities in their quest to ‘leave no-one behind.’ Income Inequality Trends in sub-Saharan Africa: Divergence, Determinants, and Consequences is a groundbreaking United Nations Development Programme (UNDP) study that provides policy guidance to reduce income inequalit",
-      "link": "https://www.undp.org/africa/publications/income-inequality-trends-sub-saharan-africa-divergence-determinants-and-consequences",
+      "title": "Poverty Rate by Country 2026 | World Population Review",
+      "summary": "More than 430 million of these people live in Sub-Saharan Africa, the poorest region in the world, where more than 40% of people lived in extreme poverty as of 2018. Many countries in which poverty is rising have been plagued by political instability or conflict.",
+      "link": "https://worldpopulationreview.com/country-rankings/poverty-rate-by-country",
       "source_type": "ddg"
     },
     {
-      "title": "Inequality and the impact of growth on poverty in sub‐Saharan Africa: A GMM estimator in a dynamic panel threshold model - ScienceDirect",
-      "summary": "September 25, 2023 - The need for a good understanding of the relationship among poverty, inequality, and economic growth has become a significant concern in poor countries. This paper, therefore, empirically analyzes the triangular relationship among extreme poverty, income inequality, and economic growth for the 45 middle and low‐income sub‐Saharan African countries over the period 2010–2021.",
-      "link": "https://www.sciencedirect.com/science/article/pii/S1757780223007448",
+      "title": "(PDF) Growth and Poverty in Sub-Saharan Africa",
+      "summary": "‘African Is On Time’, Journal of Economic Growth, 19(3): 311–38. 9 Growth and Poverty in Sub-Saharan Africa Radelet, S. (2010). Emerging Africa: How 17 Countries Are Leading the Way. Washington, DC: Center for Global Development.",
+      "link": "https://www.academia.edu/107330206/Growth_and_Poverty_in_Sub_Saharan_Africa",
       "source_type": "ddg"
     },
     {
-      "title": "The second roadshow of the 2026 Poverty Alleviation Challenge was...",
-      "summary": "the collaboration between Chinese and Latin American youth in poverty alleviation. The second roadshow attracted some young teams to participate online.",
-      "link": "https://lac.tsinghua.edu.cn/en/info/1012/3234.htm",
+      "title": "Regional Poverty and Inequality Update Latin America and the ...",
+      "summary": "This brief summarizes recent facts related to poverty and inequality in Latin America and the Caribbean (LAC) using the new wave of harmonized household surveys from the Socio-Economic Database for LAC (SEDLAC).",
+      "link": "https://documents1.worldbank.org/curated/en/099102225164046802/pdf/P506095-c44a6c5f-7f81-4351-a4f9-2d7bb81895c7.pdf",
       "source_type": "ddg"
     },
     {
-      "title": "Closing inequality gaps in Latin America and the Caribbean is possible",
-      "summary": "Poverty and inequality levels have worsened, public budgets remain strained due to the pandemic’s impact, and economic growth continues to fall short of its potential. Shockingly, nearly 18% of the population now lives on less than $3.1 a...",
-      "link": "https://acr.ippf.org/featured-perspective/closing-inequality-gaps-latin-america-and-caribbean-possible",
+      "title": "LAC Equity Lab: A Platform for Poverty and Inequality Analysis",
+      "summary": "The LAC Equity Lab is a comprehensive source of the latest data on poverty, inequality, and shared prosperity in the Latin America and the Caribbean region. The portal allows you to explore several welfare indicators for LAC countries and the region as a whole.",
+      "link": "https://www.worldbank.org/en/topic/poverty/lac-equity-lab1/overview",
       "source_type": "ddg"
     },
     {
-      "title": "Telegram: View @GAPS2026",
-      "summary": "Creator of the GAPS concept. View in Telegram. Preview channel.",
-      "link": "https://t.me/GAPS2026",
+      "title": "CEPALSTAT Statistical Data Portal and Publications",
+      "summary": "This draws two clear profiles of countries in the region: those in which multidimensional poverty is more linked to job insecurity, overcrowding and the digital divide, and those in which these shortcomings coexist with significant deficits in health infrastructure.",
+      "link": "https://statistics.cepal.org/portal/cepalstat/index.html?lang=en",
       "source_type": "ddg"
     },
     {
-      "title": "[YT] The Untold Truth About Money: How to Build Wealth From... - YouTube",
-      "summary": "let this circle represent $1,000,000 this is what ten million dollars would look like this is what one hundred million dollars would look like and this is what 1 billion dollars would look like Jeff Bezos the founder of Amazon has a net worth of 117 times this number and then there's you you're probably working a job right now one that you got from the degree that you studied for in university you probably don't have much in savings your living expenses seem ridiculously high you feel as though you're not paid enough you have credit card debt that needs taking care of maybe your student studying for a degree that you ho can and your job that you hope can bring some good money you probably don't have any savings only a pesky student debt hanging above your head wealth getting rich that all ",
-      "link": "https://www.youtube.com/watch?v=6mRbDEtDoyA",
+      "title": "[YT] America’s Wealth Inequality Crisis Explained (2025 ... - YouTubeSocial Inequality 2025: Wealth and Poverty in America - YouTubeHow income inequality grows the wealth gap - Yahoo FinanceIncome Inequality news - Today’s latest updates - CBS NewsHome - WID - World Inequality DatabaseBillionaire wealth jumps three times faster in 2025 to ...WBG Poverty and Inequality Update - Fall 2025",
+      "summary": "Take a moment and picture this. Two families wake up on the same morning here in the United States. They live in the same country. They breathe the same air. They hear the same news. But their realities couldn't be more different. One family owns a home that has doubled in value. Their investments are quietly compounding in the background. Their savings act like a safety net no matter what life throws at them. A medical emergency covered. A job loss. Inconvenient but survivable. The other family wakes up anxious. Rent is due. Groceries cost more than last month. Credit card balances feel heavier every time the phone buzzes. One unexpected bill could unravel everything. Now, here's the uncomfortable question. How did a single nation drift so far apart? This is the story of wealth inequality",
+      "link": "https://www.youtube.com/watch?v=jirhqTwmVFc",
       "published": "",
       "source_type": "youtube",
       "channel": "",
-      "video_id": "6mRbDEtDoyA",
+      "video_id": "jirhqTwmVFc",
       "transcript_method": "playwright_web",
-      "transcript_chars": 1229,
+      "transcript_chars": 1238,
       "has_full_transcript": true
     },
     {
-      "title": "[YT] Liberal Hypocrisy is Fueling American Inequality. - YouTube",
-      "summary": "There is a question I've had for a very long time and it has to do with this long time and it has to do with this map. This is a map of the 18 states in the US where Democrats control the legislative and executive branches or else have some veto proof majority in the legislature. Democrats in DC often blame the GOP for foiling their progressive vision. When middle class families see their taxes go up, they'll know Republicans are to blame. But if you zoom into these 18 states, there's effectively no Republicans standing in the way. So my question is, what do Democrats actually do when they have all the power? To answer this question, I teamed up with the Times editorial board writer Bea Applebomb. Okay, you got my attention. He's been thinking about and writing books about and reporting on",
-      "link": "https://www.youtube.com/watch?v=hNDgcjVGHIw",
+      "title": "[YT] Social Inequality 2025: Wealth and Poverty in America - YouTube",
+      "summary": "Hello. Uh this is going to be the first uh of your video lectures for social uh of your video lectures for social inequality. Um I'm going to basically walk you through uh the PowerPoint presentations through uh the PowerPoint presentations that I posted on Canvas. They'll be really important for um your bi-weekly quizzes and assignments. Um so I'm going to go to the screen share mode and uh pull up the share mode and uh pull up the PowerPoints and we'll get started. and we'll get started. Um Um so I have uh want to make sure to take every opportunity I can to emphasize the importance of getting the books for this class. If you just can't pass the class without them, um they'll be important for both your writing assignments um and your",
+      "link": "https://www.youtube.com/watch?v=UJCke1yCXfY",
       "published": "",
       "source_type": "youtube",
       "channel": "",
-      "video_id": "hNDgcjVGHIw",
+      "video_id": "UJCke1yCXfY",
       "transcript_method": "playwright_web",
-      "transcript_chars": 1227,
+      "transcript_chars": 745,
       "has_full_transcript": true
     }
   ]

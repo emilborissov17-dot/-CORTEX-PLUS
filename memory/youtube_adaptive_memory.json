@@ -273,6 +273,7 @@
       "existential risk humanity future civilization",
       "existential risk humanity future civilization",
       "existential risk humanity future civilization",
+      "existential risk humanity future civilization",
       "existential risk humanity future civilization"
     ],
     "scores": [
@@ -291,7 +292,8 @@
       0.021,
       0.021,
       0.02,
-      0.021
+      0.021,
+      0.708
     ],
     "failures": [
       "ZERO_RESULTS: query 'existential risk humanity future civilization' върна 0 видеа",
@@ -311,8 +313,8 @@
       "climate change extreme weather 2025",
       "climate change extreme weather 2025",
       "climate change extreme weather 2025",
-      "climate change extreme weather 2025",
       "Global climate risk report 2026",
+      "climate change extreme weather 2025",
       "climate change extreme weather 2025",
       "climate change extreme weather 2025",
       "climate change extreme weather 2025",
@@ -325,7 +327,6 @@
       "climate change extreme weather 2025"
     ],
     "scores": [
-      0.028,
       0.961,
       1.0,
       1.0,
@@ -344,7 +345,8 @@
       0.02,
       0.02,
       0.016,
-      0.0
+      0.0,
+      0.758
     ],
     "failures": [
       "NO_TRANSCRIPTS: никое видео няма транскрипция за 'climate change extreme weather 2025'",
@@ -410,8 +412,6 @@
       "renewable energy transition solar wind 2025",
       "renewable energy transition solar wind 2025",
       "renewable energy transition solar wind 2025",
-      "renewable energy transition solar wind 2025",
-      "renewable energy transition solar wind 2025",
       "renewable energy solar power expert analysis",
       "2025 global energy crisis updates: rising energy prices and supply chain disruptions",
       "renewable energy transition solar wind 2025",
@@ -426,11 +426,11 @@
       "renewable energy transition solar wind 2025",
       "renewable energy transition solar wind 2025",
       "renewable energy transition solar wind 2025",
+      "renewable energy transition solar wind 2025",
+      "renewable energy expert analysis",
       "renewable energy transition solar wind 2025"
     ],
     "scores": [
-      0.779,
-      0.02,
       0.779,
       0.02,
       0.867,
@@ -448,7 +448,9 @@
       0.02,
       0.02,
       0.755,
-      0.463
+      0.463,
+      0.757,
+      0.254
     ],
     "failures": [
       "NO_TRANSCRIPTS: никое видео няма транскрипция за 'renewable energy transition solar wind 2025'",
@@ -458,7 +460,8 @@
       "NO_TRANSCRIPTS: никое видео няма транскрипция за '2025 global energy crisis updates: rising energy prices and supply chain disruptions'",
       "LOW_CONTENT: 3 видеа с <500 chars съдържание",
       "NO_TRANSCRIPTS: никое видео няма транскрипция за '2025 global energy crisis updates: rising energy prices and supply chain disruptions'",
-      "LOW_CONTENT: 3 видеа с <500 chars съдържание"
+      "LOW_CONTENT: 3 видеа с <500 chars съдържание",
+      "ZERO_RESULTS: query 'renewable energy transition solar wind 2025' върна 0 видеа"
     ],
     "best_query": "renewable energy transition solar wind 2025",
     "best_score": 1.0
@@ -480,6 +483,7 @@
       "AI consciousness AGI progress machine sentience",
       "AI consciousness AGI progress machine sentience",
       "AI consciousness AGI progress machine sentience",
+      "AI consciousness AGI progress machine sentience",
       "AI consciousness AGI progress machine sentience"
     ],
     "scores": [
@@ -498,7 +502,8 @@
       0.019,
       0.019,
       0.019,
-      0.019
+      0.019,
+      0.677
     ],
     "failures": [
       "ZERO_RESULTS: query 'AI consciousness AGI progress machine sentience' върна 0 видеа",
@@ -512,7 +517,6 @@
   },
   "WATER_REVIEW": {
     "queries": [
-      "water scarcity freshwater 2026",
       "latest water scarcity research 2026",
       "water crisis drought freshwater scarcity",
       "water crisis drought freshwater scarcity",
@@ -531,10 +535,10 @@
       "water crisis drought freshwater scarcity",
       "water crisis drought freshwater scarcity",
       "water crisis drought freshwater scarcity",
+      "water crisis drought freshwater scarcity",
       "water crisis drought freshwater scarcity"
     ],
     "scores": [
-      0.028,
       1.0,
       1.0,
       1.0,
@@ -553,7 +557,8 @@
       0.024,
       0.02,
       0.021,
-      0.02
+      0.02,
+      0.766
     ],
     "failures": [
       "ZERO_RESULTS: query 'water crisis drought freshwater scarcity' върна 0 видеа",
@@ -634,7 +639,6 @@
       "food security global hunger agriculture 2025",
       "food security global hunger agriculture 2025",
       "food security global hunger agriculture 2025",
-      "food security global hunger agriculture 2025",
       "recent food security systemic failure",
       "food security global hunger agriculture 2025",
       "food security global hunger agriculture 2025",
@@ -647,10 +651,10 @@
       "food security global hunger agriculture 2025",
       "food security global hunger agriculture 2025",
       "food security global hunger agriculture 2025",
-      "2025 global food insecurity trends and impact on developing countries"
+      "2025 global food insecurity trends and impact on developing countries",
+      "food security global hunger agriculture 2025"
     ],
     "scores": [
-      0.729,
       0.717,
       1.0,
       1.0,
@@ -669,7 +673,8 @@
       0.021,
       0.021,
       0.021,
-      0.82
+      0.82,
+      0.755
     ],
     "failures": [
       "ZERO_RESULTS: query 'food security global hunger agriculture 2025' върна 0 видеа",
@@ -683,8 +688,6 @@
   },
   "MATERIALS_WASTE_REVIEW": {
     "queries": [
-      "plastic pollution circular economy recycling",
-      "plastic pollution circular economy recycling",
       "plastic pollution circular economy recycling",
       "plastic pollution circular economy recycling",
       "2026 global plastic waste management challenges and solutions",
@@ -701,11 +704,12 @@
       "plastic pollution circular economy recycling",
       "plastic pollution circular economy recycling",
       "plastic pollution circular economy recycling",
+      "plastic pollution circular economy recycling",
+      "plastic pollution circular economy recycling",
+      "2026 global plastic waste management challenges and solutions",
       "plastic pollution circular economy recycling"
     ],
     "scores": [
-      1.0,
-      0.59,
       0.979,
       1.0,
       0.787,
@@ -722,7 +726,10 @@
       0.02,
       0.02,
       0.02,
-      0.02
+      0.02,
+      0.743,
+      0.782,
+      0.743
     ],
     "failures": [
       "NO_TRANSCRIPTS: никое видео няма транскрипция за '2026 global plastic waste management challenges and solutions'",
@@ -742,6 +749,7 @@
       "biodiversity loss deforestation species extinction",
       "biodiversity loss deforestation species extinction",
       "biodiversity loss deforestation 2026",
+      "biodiversity loss deforestation species extinction",
       "biodiversity loss deforestation species extinction",
       "biodiversity loss deforestation species extinction",
       "biodiversity loss deforestation species extinction",
@@ -776,7 +784,8 @@
       0.0,
       0.02,
       0.02,
-      0.02
+      0.02,
+      0.756
     ],
     "failures": [
       "ZERO_RESULTS: query 'biodiversity loss deforestation species extinction' върна 0 видеа",
@@ -974,6 +983,8 @@
       "social inequality loneliness epidemic community",
       "social inequality loneliness epidemic community",
       "social inequality loneliness epidemic community",
+      "social inequality loneliness epidemic community",
+      "social cohesion loneliness epidemic community solutions",
       "social inequality loneliness epidemic community"
     ],
     "scores": [
@@ -993,7 +1004,9 @@
       0.016,
       0.016,
       0.016,
-      0.016
+      0.016,
+      0.768,
+      0.757
     ],
     "failures": [
       "ZERO_RESULTS: query 'social inequality loneliness epidemic community' върна 0 видеа",
@@ -1012,7 +1025,6 @@
       "human rights democracy civil liberties 2025",
       "human rights democracy civil liberties 2025",
       "human rights democracy civil liberties 2025",
-      "human rights democracy civil liberties 2025",
       "current state of human rights policy gap",
       "human rights democracy civil liberties 2025",
       "human rights democracy civil liberties 2025",
@@ -1024,10 +1036,10 @@
       "human rights democracy civil liberties 2025",
       "human rights democracy civil liberties 2025",
       "human rights democracy civil liberties 2025",
+      "human rights democracy civil liberties 2025",
       "human rights democracy civil liberties 2025"
     ],
     "scores": [
-      1.0,
       0.943,
       1.0,
       0.024,
@@ -1046,7 +1058,8 @@
       0.016,
       0.02,
       0.016,
-      0.756
+      0.756,
+      0.755
     ],
     "failures": [
       "NO_TRANSCRIPTS: никое видео няма транскрипция за 'human rights democracy civil liberties 2025'",
@@ -1064,7 +1077,6 @@
   },
   "ECONOMY_WORK_REVIEW": {
     "queries": [
-      "global economy GDP investigation",
       "2025 global economic impact of climate change on workforce productivity and labor markets",
       "global economy recession inflation unemployment 2025",
       "global economy recession inflation unemployment 2025",
@@ -1083,10 +1095,10 @@
       "global economy recession inflation unemployment 2025",
       "global economy recession inflation unemployment 2025",
       "global economy recession inflation unemployment 2025",
+      "global economy recession inflation unemployment 2025",
       "global economy recession inflation unemployment 2025"
     ],
     "scores": [
-      0.028,
       0.07,
       1.0,
       0.013,
@@ -1105,7 +1117,8 @@
       0.013,
       0.013,
       0.013,
-      0.712
+      0.712,
+      0.755
     ],
     "failures": [
       "NO_TRANSCRIPTS: никое видео няма транскрипция за 'global economy recession inflation unemployment 2025'",
@@ -1142,6 +1155,7 @@
       "income inequality wealth gap poverty 2025",
       "income inequality wealth gap poverty 2025",
       "income inequality wealth gap poverty 2025",
+      "income inequality wealth gap poverty 2025",
       "income inequality wealth gap poverty 2025"
     ],
     "scores": [
@@ -1163,7 +1177,8 @@
       0.02,
       0.019,
       0.021,
-      0.724
+      0.724,
+      0.732
     ],
     "failures": [
       "NO_TRANSCRIPTS: никое видео няма транскрипция за '2025 global inequality and poverty trends in sub-Saharan Africa'",
@@ -1247,6 +1262,8 @@
       "geopolitics UN 2026",
       "geopolitics UN 2026",
       "geopolitics UN 2026",
+      "geopolitics UN 2026",
+      "geopolitics UN 2026",
       "geopolitics UN 2026"
     ],
     "scores": [
@@ -1267,7 +1284,9 @@
       0.02,
       0.02,
       0.02,
-      0.754
+      0.754,
+      0.827,
+      0.794
     ],
     "failures": [
       "ZERO_RESULTS: query 'geopolitics war peace UN NATO 2025' върна 0 видеа",
@@ -1297,6 +1316,7 @@
       "geoengineering planetary boundaries 2026",
       "geoengineering planetary boundaries 2026",
       "geoengineering planetary boundaries 2026",
+      "geoengineering planetary boundaries 2026",
       "geoengineering planetary boundaries 2026"
     ],
     "scores": [
@@ -1318,7 +1338,8 @@
       0.02,
       0.02,
       0.02,
-      0.02
+      0.02,
+      0.749
     ],
     "failures": [
       "ZERO_RESULTS: query 'planetary boundaries geoengineering tipping points' върна 0 видеа",

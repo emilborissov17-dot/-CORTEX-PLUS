@@ -1,6 +1,6 @@
 {
   "axis": "FOOD_REVIEW",
-  "fetched_at": "2026-06-20T11:34:17.405524+00:00",
+  "fetched_at": "2026-06-20T12:28:50.012008+00:00",
   "smart_query": "food security hunger famine",
   "sources_count": {
     "wiki": 0,
@@ -57,37 +57,37 @@
   "wiki": null,
   "youtube_items": [
     {
-      "title": "[YT] State of Food Security and Nutrition in The World 2025",
-      "summary": "[DESCRIPTION FALLBACK] For the first time since 2019, the latest joint UN agency hunger report shows progress. The State of Food Security and Nutrition in ...",
+      "title": "[YT] YouTube:jZwPIMk-HoM",
+      "summary": "For the first time since 2019, the latest joint UN agency hunger report shows progress. The state of food security and nutrition in the world of security and nutrition in the world of 2025 reports that between 638 and 720 million people faced hunger in and 720 million people faced hunger in 2024. This represents about 8.2% 2% of the global population, down from 8.5% in 2023 and 8.7% in 2022. While this good news is welcome, progress around the globe has been unequal. Progress has been made in Southern Asia, Southeastern Asia, and South America. Hunger increased in Africa. More than 20% of the population faced hunger in 20% of the population faced hunger in 2024. Hunger has been steadily on the rise in Western Asia, reaching 12.7% in 2024. Projections show that we are not on track to meet t",
       "link": "https://www.youtube.com/watch?v=jZwPIMk-HoM",
       "source_type": "youtube",
-      "channel": "Food and Agriculture Organization of the United Nations",
+      "channel": "",
       "video_id": "jZwPIMk-HoM",
-      "transcript_method": "description",
-      "transcript_chars": 158,
-      "has_full_transcript": false
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1122,
+      "has_full_transcript": true
     },
     {
-      "title": "[YT] Ep 28 - G20’s Take on Agriculture and Global Food Security",
-      "summary": "[DESCRIPTION FALLBACK] Global hunger remains one of the world's greatest challenges — with more than 720 million people affected in 2024 alone. In this ...",
-      "link": "https://www.youtube.com/watch?v=i8nB9zEpbPo",
+      "title": "[YT] YouTube:1NPmXpahXNY",
+      "summary": "This year the Sophie brings important results in terms of the situation in terms of food security in the world. First, the number of hungry people has reduced. We're talking of 673 million people in hunger in 2024. Second, access to healthy diets is improved slightly to 2.6 billion people that cannot afford a healthy diet, the minimum cost healthy diet. Now if we project the number of hungry people to 2030, we will be in 512 million people in hunger by 2030. Now this number also captures heterogeneity across regions. From this 512 million in 2030, 60% of those will be in Africa. Which means that Africa has been deteriorated in terms of hunger while Latin America especially South America has been improving and Asia especially in South Asia driven by India has been significantly improving. S",
+      "link": "https://www.youtube.com/watch?v=1NPmXpahXNY",
       "source_type": "youtube",
-      "channel": "agriview wandile",
-      "video_id": "i8nB9zEpbPo",
-      "transcript_method": "description",
-      "transcript_chars": 155,
-      "has_full_transcript": false
+      "channel": "",
+      "video_id": "1NPmXpahXNY",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1219,
+      "has_full_transcript": true
     },
     {
-      "title": "[YT] Food security - A growing dilemma | DW Documentary",
-      "summary": "[DESCRIPTION FALLBACK] Many countries, particularly in the West, have long taken reliable food supplies for granted. But climate change, conflict and ...",
+      "title": "[YT] YouTube:wu7PjKawjwI",
+      "summary": "Fresh food galore. In Germany, we're used to supermarkets brimming with produce, but often it has come from far away. That makes our supply chains away. That makes our supply chains vulnerable. The war in Ukraine is revealing our limitations. We can tell from the empty shelves what didn't come from Germany. and come. We need to feed more and more people globally, but intensive farming threatens the environment and our threatens the environment and our survival. If we use traditional agriculture practices, the next 2 billion people that will be here in the year 2050, we will need an land area the size of will need an land area the size of Brazil. It's time to switch to sustainable farming practices and new food sources. If we want to support the global food chain and offer an alternative, t",
       "link": "https://www.youtube.com/watch?v=wu7PjKawjwI",
       "source_type": "youtube",
-      "channel": "DW Documentary",
+      "channel": "",
       "video_id": "wu7PjKawjwI",
-      "transcript_method": "description",
-      "transcript_chars": 153,
-      "has_full_transcript": false
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1155,
+      "has_full_transcript": true
     }
   ],
   "summary": "[arXiv]\n- How adaptation to food resources and death rates shape oscillatory dynamics in a microbial population\n- An additional food driven biological control patch model, incorporating generalized co",

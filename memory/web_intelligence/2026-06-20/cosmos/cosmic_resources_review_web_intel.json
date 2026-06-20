@@ -1,34 +1,46 @@
 {
   "axis": "COSMIC_RESOURCES_REVIEW",
   "domain": "cosmos",
-  "timestamp": "2026-06-20T12:07:02.471149+00:00",
-  "sources_count": 11,
+  "timestamp": "2026-06-20T12:29:15.758391+00:00",
+  "sources_count": 12,
   "rss_count": 4,
   "ddg_count": 5,
-  "youtube_count": 2,
+  "youtube_count": 3,
   "youtube_items": [
     {
-      "title": "[YT] Asteroid mining: Is space the new gold rush for resource ...Asteroid Mining and Space Resource Utilization | STEM to ...PBS Space Time | How Asteroid Mining Will Save Earth | Season ...What is asteroid mining and how close are we to making it a ...Are we on the verge of mining metals from the asteroids ... - BBCUnlimited Resources From Space – Asteroid Mining | Video ...15-minute-discourse/asteroid-mining - GitHub",
-      "summary": "[Music] Never collapsed too far. Welcome to a small fertile planet, a generous planet which has always given us what we needed to survive and grow. Today we are nearly 8 billion humans and we dream of abundance. Our use of digital and green technologies skyrockets. It devours gigantic quantities of metals. But what if we had gone too far in exploiting the earth? At the dawn of the 21st century, scarcity is threatening. Perhaps it is time to seek our metals in Perhaps it is time to seek our metals in space. How did we get here? Let's go back to the dawn of humanity. Man was a huntergatherer then, roaming vast territories. His daily life alternated between periods of scarcity and abundance. With the seasons, he found around him what he needed to survive. His impact on the earth was insignifi",
-      "link": "https://www.youtube.com/watch?v=Uiqet8E5Htc",
-      "published": "",
+      "title": "[YT] Unlimited Resources From Space – Asteroid Mining",
+      "summary": "ah casually watching a video on YouTube on a computer more powerful than anything Humanity could build a few decades ago this progress and all the wonderful machines you take for granted are built on a few rare and precious materials with names like turum neodymium or tantalum getting these rare materials from the ground into your devices is ugly the mining industry is responsible for air and water pollution and the destruction of entire Landscapes dangerous chemicals like cyanide sulfuric acid or chlorine are used to extract the resources harming biodiversity workers and locals and rare resources are also political tools when countries restrict access to them to get their way but what if we could replace the mining industry on Earth with a clean process that can't harm anyone well we can ",
+      "link": "https://www.youtube.com/watch?v=y8XvQNt26KI",
+      "published": "2020-08-16T12:29:23Z",
       "source_type": "youtube",
-      "channel": "",
-      "video_id": "Uiqet8E5Htc",
+      "channel": "Kurzgesagt – In a Nutshell",
+      "video_id": "y8XvQNt26KI",
       "transcript_method": "playwright_web",
-      "transcript_chars": 1096,
+      "transcript_chars": 1172,
       "has_full_transcript": true
     },
     {
-      "title": "[YT] Asteroid Mining and Space Resource Utilization | STEM to ...",
-      "summary": "Welcome STEM engineers to STEM to Stern, the podcast where curiosity meets critical thinking. Join Shantae and Jake as they discuss STEM topics that spark debate and exploration. Hello everyone. Welcome to STEM to Stern. I'm Jake. I'm Shante. Today we're talking about the intersection between STEM and the arts. And this is a conversation that we have had before, but this one I want to talk about how the arts helps with scientific innovation and creativity. Yeah. So you think about with your creativity like things that have been created, you need someone with a creative mind to start the conversation. Um because you have these black and white thinkers who are usually the scientific thinkers are pretty like these are the facts, especially mathematical thinkers. These are the facts. this is h",
-      "link": "https://www.youtube.com/watch?v=OQbnaip1nHU",
-      "published": "",
+      "title": "[YT] What Happened To Space Mining?",
+      "summary": "just a couple of years ago it seemed that space mining was inevitable analysts Tech Visionaries and even renowned astrophysicist Neil Degrassi Tyson predicted that space mining was going to be big business the first going to be big business the first trillionaire there will ever be is the person who exploits the natural resources on exploits the natural resources on asteroids in a 2017 note to investors a Goldman Sachs analyst wrote space mining could be more realistic than perceived a single asteroid the size of a football field could contain 25 billion to 50 billion dollars worth of platinum space mining companies like planetary resources and Deep Space Industries backed by the likes of Google's Larry Page and Eric Schmidt cropped up to take advantage of the predicted payoff after all th",
+      "link": "https://www.youtube.com/watch?v=HZPy8hH86LY",
+      "published": "2022-10-09T14:00:08Z",
       "source_type": "youtube",
-      "channel": "",
-      "video_id": "OQbnaip1nHU",
+      "channel": "CNBC",
+      "video_id": "HZPy8hH86LY",
       "transcript_method": "playwright_web",
-      "transcript_chars": 1194,
+      "transcript_chars": 1219,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Asteroid Mining Is No Longer Sci-Fi: TransAstra, AstroForge &amp; Karman+ Explained",
+      "summary": "Today I'm looking at the asteroid startup scene. I'll cover a few of the startups with plans to mine asteroids for metals or volatiles and return them to Earth orbit for sale. Several missions have demonstrated collecting and returning asteroidal material for study on Earth. Both Hayabusa 1 and 2 plus NASA's Osiris Rex were able to collect materials from the surface of an asteroid deep space. However, these missions were very expensive. Osiris Rex, for example, cost over $1.3 billion just to return 121 grams of material. Asteroids can provide fuel, water, and precious metals for use in space, perhaps as feed stockck in orbital manufacturing, or to fuel space tugs, commercial space stations, or satellites. I'll finish with my thoughts on the current state of the asteroid mining sector. Afte",
+      "link": "https://www.youtube.com/watch?v=DHHAedVxWzw",
+      "published": "2026-06-16T11:00:06Z",
+      "source_type": "youtube",
+      "channel": "Space Startup News",
+      "video_id": "DHHAedVxWzw",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1195,
       "has_full_transcript": true
     }
   ],
@@ -85,9 +97,9 @@
       "source_type": "ddg"
     },
     {
-      "title": "Asteroid Mining Venture Backed by Google Execs | Space",
-      "summary": "... is set to announce plans to mine near-Earth asteroids for ... Planetary Resources is officially unveiling its asteroid-mining plans at 1:30 p.m.",
-      "link": "https://www.space.com/15395-asteroid-mining-planetary-resources.html",
+      "title": "What Is Asteroid Mining and Is It Actually Possible?",
+      "summary": "Mar 20, 2026 · Asteroid mining is the concept of extracting useful materials, such as water, metals, and rare earth elements, from asteroids in space. It remains largely theoretical, but the industry is moving from PowerPoint slides to actual spacecraft.",
+      "link": "https://scienceinsights.org/what-is-asteroid-mining-and-is-it-actually-possible/",
       "source_type": "ddg"
     },
     {
@@ -103,21 +115,21 @@
       "source_type": "ddg"
     },
     {
-      "title": "Earth & Space Resources - Layers of Learning",
-      "summary": "Below you will find web links, extra printables, and other resources to use along with the Earth & Space units in the Layers of Learning curriculum.",
-      "link": "https://layers-of-learning.com/unit-resources/science-resources/earth-space-resources-for-layers-of-learning/",
+      "title": "52 Space Resources ideas | space resources, space activities for...",
+      "summary": "May 25, 2020 - Explore Twinkl Scotland's board \"Space Resources\" on Pinterest. See more ideas about space resources, space activities for kids, space activities.",
+      "link": "https://www.pinterest.com/twinklscotland/space-resources/",
       "source_type": "ddg"
     },
     {
-      "title": "[YT] Asteroid mining: Is space the new gold rush for resource ...Asteroid Mining and Space Resource Utilization | STEM to ...PBS Space Time | How Asteroid Mining Will Save Earth | Season ...What is asteroid mining and how close are we to making it a ...Are we on the verge of mining metals from the asteroids ... - BBCUnlimited Resources From Space – Asteroid Mining | Video ...15-minute-discourse/asteroid-mining - GitHub",
-      "summary": "[Music] Never collapsed too far. Welcome to a small fertile planet, a generous planet which has always given us what we needed to survive and grow. Today we are nearly 8 billion humans and we dream of abundance. Our use of digital and green technologies skyrockets. It devours gigantic quantities of metals. But what if we had gone too far in exploiting the earth? At the dawn of the 21st century, scarcity is threatening. Perhaps it is time to seek our metals in Perhaps it is time to seek our metals in space. How did we get here? Let's go back to the dawn of humanity. Man was a huntergatherer then, roaming vast territories. His daily life alternated between periods of scarcity and abundance. With the seasons, he found around him what he needed to survive. His impact on the earth was insignifi",
-      "link": "https://www.youtube.com/watch?v=Uiqet8E5Htc",
-      "published": "",
+      "title": "[YT] Unlimited Resources From Space – Asteroid Mining",
+      "summary": "ah casually watching a video on YouTube on a computer more powerful than anything Humanity could build a few decades ago this progress and all the wonderful machines you take for granted are built on a few rare and precious materials with names like turum neodymium or tantalum getting these rare materials from the ground into your devices is ugly the mining industry is responsible for air and water pollution and the destruction of entire Landscapes dangerous chemicals like cyanide sulfuric acid or chlorine are used to extract the resources harming biodiversity workers and locals and rare resources are also political tools when countries restrict access to them to get their way but what if we could replace the mining industry on Earth with a clean process that can't harm anyone well we can ",
+      "link": "https://www.youtube.com/watch?v=y8XvQNt26KI",
+      "published": "2020-08-16T12:29:23Z",
       "source_type": "youtube",
-      "channel": "",
-      "video_id": "Uiqet8E5Htc",
+      "channel": "Kurzgesagt – In a Nutshell",
+      "video_id": "y8XvQNt26KI",
       "transcript_method": "playwright_web",
-      "transcript_chars": 1096,
+      "transcript_chars": 1172,
       "has_full_transcript": true
     }
   ]

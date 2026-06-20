@@ -790,34 +790,6 @@
         "status": "PROPOSED"
       },
       {
-        "date": "2026-06-18",
-        "problem": "Insufficient global preparedness for pandemic outbreaks and asteroid impacts",
-        "action": "Finalize and implement the WHO Pandemic Agreement's Pathogen Access and Benefit Sharing annex",
-        "result": "Предложено: Increase the number of countries that have implemented the agreement by 50% within the next 12 months",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-18",
-        "problem": "Insufficient global preparedness for pandemic outbreaks and asteroid impacts",
-        "action": "Finalize and implement the WHO Pandemic Agreement's Pathogen Access and Benefit Sharing annex",
-        "result": "Предложено: Increase the number of countries that have implemented the agreement by 50% within the next 12 months",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-18",
-        "problem": "Insufficient global preparedness for pandemic outbreaks and asteroid impacts",
-        "action": "Finalize and implement the WHO Pandemic Agreement's Pathogen Access and Benefit Sharing annex",
-        "result": "Предложено: Increase the number of countries that have implemented the agreement by 50% within the next 12 months",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-18",
-        "problem": "Insufficient global preparedness for pandemic outbreaks and asteroid impacts",
-        "action": "Finalize and implement the WHO Pandemic Agreement's Pathogen Access and Benefit Sharing annex",
-        "result": "Предложено: Increase the number of countries that have implemented the agreement by 50% within the next 12 months",
-        "status": "PROPOSED"
-      },
-      {
         "date": "2026-06-19",
         "problem": "Insufficient global preparedness and coordination for asteroid impact threats and pandemic responses",
         "action": "Establish a global asteroid tracking and warning system",
@@ -843,6 +815,34 @@
         "problem": "Insufficient global preparedness and coordination for asteroid impact threats and pandemic responses",
         "action": "Establish a global asteroid tracking and warning system",
         "result": "Предложено: Reduce the average response time to asteroid threats by 30%",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-20",
+        "problem": "Insufficient access to safe blood supplies globally, with many people lacking access, despite progress in voluntary donations",
+        "action": "Implement targeted policies and programs to improve access to safe blood supplies in underserved areas",
+        "result": "Предложено: Increase access to safe blood supplies by 20% in the next 2 years",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-20",
+        "problem": "Insufficient access to safe blood supplies globally, with many people lacking access, despite progress in voluntary donations",
+        "action": "Implement targeted policies and programs to improve access to safe blood supplies in underserved areas",
+        "result": "Предложено: Increase access to safe blood supplies by 20% in the next 2 years",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-20",
+        "problem": "Insufficient access to safe blood supplies globally, with many people lacking access, despite progress in voluntary donations",
+        "action": "Implement targeted policies and programs to improve access to safe blood supplies in underserved areas",
+        "result": "Предложено: Increase access to safe blood supplies by 20% in the next 2 years",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-20",
+        "problem": "Insufficient access to safe blood supplies globally, with many people lacking access, despite progress in voluntary donations",
+        "action": "Implement targeted policies and programs to improve access to safe blood supplies in underserved areas",
+        "result": "Предложено: Increase access to safe blood supplies by 20% in the next 2 years",
         "status": "PROPOSED"
       },
       {
@@ -957,34 +957,6 @@
         "status": "PROPOSED"
       },
       {
-        "date": "2026-06-18",
-        "problem": "Inaccurate emissions data in the Climate TRACE database",
-        "action": "Conduct an independent audit and validation of the Climate TRACE database",
-        "result": "Предложено: Reduce errors in emissions data by 30% within 6 months",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-18",
-        "problem": "Inaccurate emissions data in the Climate TRACE database",
-        "action": "Conduct an independent audit and validation of the Climate TRACE database",
-        "result": "Предложено: Reduce errors in emissions data by 30% within 6 months",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-18",
-        "problem": "Inaccurate emissions data in the Climate TRACE database",
-        "action": "Conduct an independent audit and validation of the Climate TRACE database",
-        "result": "Предложено: Reduce errors in emissions data by 30% within 6 months",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-18",
-        "problem": "Inaccurate emissions data in the Climate TRACE database",
-        "action": "Conduct an independent audit and validation of the Climate TRACE database",
-        "result": "Предложено: Reduce errors in emissions data by 30% within 6 months",
-        "status": "PROPOSED"
-      },
-      {
         "date": "2026-06-19",
         "problem": "Inaccurate climate data due to errors in the Climate TRACE database",
         "action": "Conduct a thorough review and revision of the Climate TRACE database",
@@ -1010,6 +982,34 @@
         "problem": "Inaccurate climate data due to errors in the Climate TRACE database",
         "action": "Conduct a thorough review and revision of the Climate TRACE database",
         "result": "Предложено: Reduce error rate by 30% within the next 6 months",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-20",
+        "problem": "Inaccurate global emissions database",
+        "action": "Conduct an independent review and revision of the Climate TRACE database",
+        "result": "Предложено: Achieve a 20% reduction in data errors within the next 6 months",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-20",
+        "problem": "Inaccurate global emissions database",
+        "action": "Conduct an independent review and revision of the Climate TRACE database",
+        "result": "Предложено: Achieve a 20% reduction in data errors within the next 6 months",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-20",
+        "problem": "Inaccurate global emissions database",
+        "action": "Conduct an independent review and revision of the Climate TRACE database",
+        "result": "Предложено: Achieve a 20% reduction in data errors within the next 6 months",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-20",
+        "problem": "Inaccurate global emissions database",
+        "action": "Conduct an independent review and revision of the Climate TRACE database",
+        "result": "Предложено: Achieve a 20% reduction in data errors within the next 6 months",
         "status": "PROPOSED"
       },
       {
@@ -2980,34 +2980,6 @@
         "status": "PROPOSED"
       },
       {
-        "date": "2026-06-18",
-        "problem": "Lack of concrete progress in geoengineering and dark matter research despite increased attention",
-        "action": "Establish a global geoengineering research initiative with coordinated funding and goals",
-        "result": "Предложено: Reduce carbon emissions by 10% within 5 years through geoengineering methods",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-18",
-        "problem": "Lack of concrete progress in geoengineering and dark matter research despite increased attention",
-        "action": "Establish a global geoengineering research initiative with coordinated funding and goals",
-        "result": "Предложено: Reduce carbon emissions by 10% within 5 years through geoengineering methods",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-18",
-        "problem": "Lack of concrete progress in geoengineering and dark matter research despite increased attention",
-        "action": "Establish a global geoengineering research initiative with coordinated funding and goals",
-        "result": "Предложено: Reduce carbon emissions by 10% within 5 years through geoengineering methods",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-18",
-        "problem": "Lack of concrete progress in geoengineering and dark matter research despite increased attention",
-        "action": "Establish a global geoengineering research initiative with coordinated funding and goals",
-        "result": "Предложено: Reduce carbon emissions by 10% within 5 years through geoengineering methods",
-        "status": "PROPOSED"
-      },
-      {
         "date": "2026-06-19",
         "problem": "Lack of monitoring and understanding of AI consciousness and sentience",
         "action": "Establish a multidisciplinary research initiative to develop and standardize methods for detecting and measuring AI consciousness",
@@ -3033,6 +3005,34 @@
         "problem": "Lack of monitoring and understanding of AI consciousness and sentience",
         "action": "Establish a multidisciplinary research initiative to develop and standardize methods for detecting and measuring AI consciousness",
         "result": "Предложено: Development of a widely accepted framework for AI consciousness evaluation within the next 2 years",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-20",
+        "problem": "Lack of transparency in AI development and deployment, particularly in brain-computer interface trials and large language models",
+        "action": "Establish clear guidelines and regulations for AI development and deployment, with a focus on transparency and ethics",
+        "result": "Предложено: Number of AI projects that prioritize transparency and ethics, and number of incidents involving unethical AI use",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-20",
+        "problem": "Lack of transparency in AI development and deployment, particularly in brain-computer interface trials and large language models",
+        "action": "Establish clear guidelines and regulations for AI development and deployment, with a focus on transparency and ethics",
+        "result": "Предложено: Number of AI projects that prioritize transparency and ethics, and number of incidents involving unethical AI use",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-20",
+        "problem": "Lack of transparency in AI development and deployment, particularly in brain-computer interface trials and large language models",
+        "action": "Establish clear guidelines and regulations for AI development and deployment, with a focus on transparency and ethics",
+        "result": "Предложено: Number of AI projects that prioritize transparency and ethics, and number of incidents involving unethical AI use",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-20",
+        "problem": "Lack of transparency in AI development and deployment, particularly in brain-computer interface trials and large language models",
+        "action": "Establish clear guidelines and regulations for AI development and deployment, with a focus on transparency and ethics",
+        "result": "Предложено: Number of AI projects that prioritize transparency and ethics, and number of incidents involving unethical AI use",
         "status": "PROPOSED"
       },
       {
@@ -3564,34 +3564,6 @@
         "status": "PROPOSED"
       },
       {
-        "date": "2026-06-18",
-        "problem": "Insufficient attention to AI safety and biosecurity could lead to catastrophic consequences for humanity",
-        "action": "Establish a global research initiative on AI safety and biosecurity",
-        "result": "Предложено: Increase funding for AI safety research by 20% annually for the next 5 years",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-18",
-        "problem": "Insufficient attention to AI safety and biosecurity could lead to catastrophic consequences for humanity",
-        "action": "Establish a global research initiative on AI safety and biosecurity",
-        "result": "Предложено: Increase funding for AI safety research by 20% annually for the next 5 years",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-18",
-        "problem": "Insufficient attention to AI safety and biosecurity could lead to catastrophic consequences for humanity",
-        "action": "Establish a global research initiative on AI safety and biosecurity",
-        "result": "Предложено: Increase funding for AI safety research by 20% annually for the next 5 years",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-18",
-        "problem": "Insufficient attention to AI safety and biosecurity could lead to catastrophic consequences for humanity",
-        "action": "Establish a global research initiative on AI safety and biosecurity",
-        "result": "Предложено: Increase funding for AI safety research by 20% annually for the next 5 years",
-        "status": "PROPOSED"
-      },
-      {
         "date": "2026-06-19",
         "problem": "Lack of effective critiques and solutions to address the potential catastrophic risks of AI",
         "action": "Establish a global AI safety and ethics forum for experts and stakeholders to share research and solutions",
@@ -3617,6 +3589,34 @@
         "problem": "Lack of effective critiques and solutions to address the potential catastrophic risks of AI",
         "action": "Establish a global AI safety and ethics forum for experts and stakeholders to share research and solutions",
         "result": "Предложено: Increase the number of published research papers and implemented solutions by 20% within the next 12 months",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-20",
+        "problem": "Lack of concrete plans and actions to address potential existential risks from artificial intelligence",
+        "action": "Establish international standards and guidelines for AI development and deployment",
+        "result": "Предложено: 50% of AI developers adopt these standards within the next 2 years",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-20",
+        "problem": "Lack of concrete plans and actions to address potential existential risks from artificial intelligence",
+        "action": "Establish international standards and guidelines for AI development and deployment",
+        "result": "Предложено: 50% of AI developers adopt these standards within the next 2 years",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-20",
+        "problem": "Lack of concrete plans and actions to address potential existential risks from artificial intelligence",
+        "action": "Establish international standards and guidelines for AI development and deployment",
+        "result": "Предложено: 50% of AI developers adopt these standards within the next 2 years",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-20",
+        "problem": "Lack of concrete plans and actions to address potential existential risks from artificial intelligence",
+        "action": "Establish international standards and guidelines for AI development and deployment",
+        "result": "Предложено: 50% of AI developers adopt these standards within the next 2 years",
         "status": "PROPOSED"
       },
       {
@@ -3731,34 +3731,6 @@
         "status": "PROPOSED"
       },
       {
-        "date": "2026-06-18",
-        "problem": "Lack of trust in the community hinders the effective response to the Ebola outbreak in the Democratic Republic of Congo",
-        "action": "Implement a community-based outreach and education program to build trust and provide accurate information about Ebola",
-        "result": "Предложено: Achieve a 20% increase in community-reported Ebola cases within 6 months",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-18",
-        "problem": "Lack of trust in the community hinders the effective response to the Ebola outbreak in the Democratic Republic of Congo",
-        "action": "Implement a community-based outreach and education program to build trust and provide accurate information about Ebola",
-        "result": "Предложено: Achieve a 20% increase in community-reported Ebola cases within 6 months",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-18",
-        "problem": "Lack of trust in the community hinders the effective response to the Ebola outbreak in the Democratic Republic of Congo",
-        "action": "Implement a community-based outreach and education program to build trust and provide accurate information about Ebola",
-        "result": "Предложено: Achieve a 20% increase in community-reported Ebola cases within 6 months",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-18",
-        "problem": "Lack of trust in the community hinders the effective response to the Ebola outbreak in the Democratic Republic of Congo",
-        "action": "Implement a community-based outreach and education program to build trust and provide accurate information about Ebola",
-        "result": "Предложено: Achieve a 20% increase in community-reported Ebola cases within 6 months",
-        "status": "PROPOSED"
-      },
-      {
         "date": "2026-06-19",
         "problem": "Lack of trust in the community hinders the effective response to Ebola outbreaks in the Democratic Republic of the Congo",
         "action": "Implement community-based outreach and education programs to raise awareness about Ebola and build trust with local communities",
@@ -3784,6 +3756,34 @@
         "problem": "Lack of trust in the community hinders the effective response to Ebola outbreaks in the Democratic Republic of the Congo",
         "action": "Implement community-based outreach and education programs to raise awareness about Ebola and build trust with local communities",
         "result": "Предложено: Increase the number of community members seeking medical attention for suspected Ebola cases by 20% within the next 6 months",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-20",
+        "problem": "Lack of trust in healthcare systems hindering effective disease outbreak response",
+        "action": "Implement community-based health education programs",
+        "result": "Предложено: Increase community participation in health initiatives by 30% within 6 months",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-20",
+        "problem": "Lack of trust in healthcare systems hindering effective disease outbreak response",
+        "action": "Implement community-based health education programs",
+        "result": "Предложено: Increase community participation in health initiatives by 30% within 6 months",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-20",
+        "problem": "Lack of trust in healthcare systems hindering effective disease outbreak response",
+        "action": "Implement community-based health education programs",
+        "result": "Предложено: Increase community participation in health initiatives by 30% within 6 months",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-20",
+        "problem": "Lack of trust in healthcare systems hindering effective disease outbreak response",
+        "action": "Implement community-based health education programs",
+        "result": "Предложено: Increase community participation in health initiatives by 30% within 6 months",
         "status": "PROPOSED"
       },
       {

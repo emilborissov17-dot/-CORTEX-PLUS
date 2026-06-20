@@ -1,6 +1,6 @@
 {
   "axis": "COGNITION_LEARNING_REVIEW",
-  "fetched_at": "2026-06-20T11:15:04.566077+00:00",
+  "fetched_at": "2026-06-20T12:31:22.484169+00:00",
   "smart_query": "education learning children schools",
   "sources_count": {
     "wiki": 0,
@@ -8,7 +8,7 @@
     "gdelt": 0,
     "arxiv": 2,
     "github": 3,
-    "youtube_transcripts": 2,
+    "youtube_transcripts": 3,
     "podcast": 1
   },
   "rss": [
@@ -36,7 +36,7 @@
     {
       "title": "JuneYaooo/lineage-skill",
       "snippet": " Distill videos, PDFs, transcripts, and notes into source-backed Agent Skills.",
-      "stars": 180,
+      "stars": 181,
       "url": "https://github.com/JuneYaooo/lineage-skill",
       "updated": "2026-06-20",
       "source": "GitHub"
@@ -76,37 +76,37 @@
   "wiki": null,
   "youtube_items": [
     {
-      "title": "[YT] What is the Future of Education? Freakonomics’ Steve Levitt &amp; Google Chief Technologist Ben Gomes",
-      "summary": "[DESCRIPTION FALLBACK] What will the future of education look like in a world increasingly shaped by AI? Join Steve Levitt, Freakonomics co-author and ...",
+      "title": "[YT] YouTube:U-7THjkQdbg",
+      "summary": "How do I get an AI tutor in every kid's ear? How is there not a in every kid's ear? How is there not a stampede to get kids equipped with those tools? So, Stephen, I've been a huge fan of your books for a long time. Thank you. Freakonomics and Superfreakonomics, and Freakonomics and Superfreakonomics, and they they showed the power of data to upend conventional wisdom. And I you know, now you're interested in in education, and you think there's a a lot of need to upend conventional wisdom in education. Oh my god. I mean, I think we've layered for hundreds of years we've layered a little changes on top of what already existed, and and I feel like we've just so lost sight of the objective, which is to create a new generation of people who are well-adjusted and curious and excited about the w",
       "link": "https://www.youtube.com/watch?v=U-7THjkQdbg",
       "source_type": "youtube",
-      "channel": "Google",
+      "channel": "",
       "video_id": "U-7THjkQdbg",
-      "transcript_method": "description",
-      "transcript_chars": 154,
-      "has_full_transcript": false
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1203,
+      "has_full_transcript": true
     },
     {
-      "title": "[YT] Roadmap to Become a Generative AI Expert for Beginners in 2025",
-      "summary": "[DESCRIPTION FALLBACK] Check out this roadmap to become an expert Data Scientist in 2025!",
-      "link": "https://www.youtube.com/watch?v=39zbC_PrNQs",
-      "source_type": "youtube",
-      "channel": "Analytics Vidhya",
-      "video_id": "39zbC_PrNQs",
-      "transcript_method": "description",
-      "transcript_chars": 89,
-      "has_full_transcript": false
-    },
-    {
-      "title": "[YT] AI In Education: Shaping The Future Of Classrooms | Prof. Bharat N. Anand At #IndiaTodayConclave2025",
-      "summary": "[DESCRIPTION FALLBACK] In this compelling discussion from the India Today Conclave, Prof. Bharat N. Anand, Vice Provost for Advances in Learning at ...",
+      "title": "[YT] YouTube:ssZZJ5ArWLo",
+      "summary": "I need some more energy good morning it's a pleasure to be here with all of you uh today to talk about gen all of you uh today to talk about gen and education um for those who don't know what gen is imagine a person who's often wrong but never in doubt now be honest with me how many of you thought about your spouse I did not okay but that's gen um and what I I want to talk about is um what happens when we have large language models like chpt and generative AI intersect with institutions like Harvard where I sit and I've been there for the last 27 years currently overseeing teaching and learning for the University let me just um ask you a question how many of you think in the next 5 to 10 years generative AI will have a very large impact on education just raise your hands how many would say",
       "link": "https://www.youtube.com/watch?v=ssZZJ5ArWLo",
       "source_type": "youtube",
-      "channel": "Business Today",
+      "channel": "",
       "video_id": "ssZZJ5ArWLo",
-      "transcript_method": "description",
-      "transcript_chars": 151,
-      "has_full_transcript": false
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1148,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] YouTube:k7PvscqGD24",
+      "summary": "AI is changing everything, including the way we learn. I'm an adjunct professor, and the first time I saw it what a chatbot leveraging generative AI could do, I knew immediately there was no point in assigning essays to my students to write because I'd only be grading chatbot output, and I don't need the chatbot output, and I don't need the practice. Most educators took the position that AI should be prohibited from student use entirely on their assignments because it would do all the work, and the students wouldn't learn anything. Well, many have also tried to use AI to detect AI, but it's inevitable that chatbots will keep improving to the point where there's nothing left to detect. I'm thinking we need to do the exact opposite and figure out how to embrace this technology and use it to ",
+      "link": "https://www.youtube.com/watch?v=k7PvscqGD24",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "k7PvscqGD24",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1246,
+      "has_full_transcript": true
     }
   ],
   "summary": "[RSS News]\n- Scientists found an early depression clue hidden in children’s eyes\n- Why middle age is becoming a breaking point in the U.S.\n\n[arXiv]\n- Measuring Whether LLM Tutors Teach or Solve: A Dia",

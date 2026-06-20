@@ -100,5 +100,21 @@
     "top_degradations": [],
     "beneficial_actions": 10,
     "harmful_actions": 0
+  },
+  {
+    "timestamp": "2026-06-20T13:00:28.887150+00:00",
+    "avg_score": 54.92,
+    "axes_count": 8,
+    "axes_improved": 0,
+    "axes_degraded": 1,
+    "top_improvements": [],
+    "top_degradations": [
+      [
+        "BODY_SCAN",
+        -8.2
+      ]
+    ],
+    "beneficial_actions": 0,
+    "harmful_actions": 10
   }
 ]

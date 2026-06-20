@@ -1,39 +1,39 @@
 {
-  "timestamp": "2026-06-20T12:01:38.995170+00:00",
+  "timestamp": "2026-06-20T12:57:32.114415+00:00",
   "health": "HEALTHY",
-  "capacity_pct": 61.4,
+  "capacity_pct": 70.3,
   "cpu": {
-    "percent": 4.6,
+    "percent": 10.4,
     "count_logical": 16,
     "count_physical": 8,
     "freq_mhz": 2555.0,
-    "load_avg_1m": 0.0
+    "load_avg_1m": 0.01
   },
   "ram": {
     "total_gb": 14.88,
-    "available_gb": 9.13,
-    "used_gb": 5.75,
-    "percent": 38.6,
-    "swap_used_gb": 3.46,
-    "swap_percent": 7.7
+    "available_gb": 10.45,
+    "used_gb": 4.42,
+    "percent": 29.7,
+    "swap_used_gb": 5.08,
+    "swap_percent": 11.3
   },
   "disk": {
     "total_gb": 1022.87,
     "free_gb": 638.99,
     "percent": 37.5,
-    "read_mb": 1408050.1,
-    "write_mb": 1348082.9
+    "read_mb": 1700188.0,
+    "write_mb": 1619672.6
   },
   "network_hw": {
-    "bytes_sent_mb": 2582.6,
-    "bytes_recv_mb": 13075.5,
-    "connections": 116
+    "bytes_sent_mb": 2680.0,
+    "bytes_recv_mb": 14665.2,
+    "connections": 122
   },
   "network_latency": {
-    "groq_api": 33.3,
-    "google_dns": 47.7,
-    "worldbank": 60.2,
-    "noaa": 204.6,
+    "groq_api": 26.4,
+    "google_dns": 33.3,
+    "worldbank": 48.7,
+    "noaa": 210.6,
     "reachable_count": 4,
     "connectivity": "FULL"
   },
@@ -52,35 +52,35 @@
     "iso_date": "2026-06-20"
   },
   "data_freshness": {
-    "global_indicators": 0.9,
-    "master_snapshot": 0.1,
-    "goal_score": 0.1,
-    "orchestration": 0.1,
-    "oldest_hours": 0.9,
+    "global_indicators": 0.4,
+    "master_snapshot": 0.0,
+    "goal_score": 0.0,
+    "orchestration": 0.0,
+    "oldest_hours": 0.4,
     "freshness": "FRESH"
   },
   "processes": {
-    "total": 203,
+    "total": 197,
     "top_cpu": [
       {
         "name": "System Idle Process",
-        "cpu_pct": 0.0
+        "cpu_pct": 1409.5
       },
       {
         "name": "System",
-        "cpu_pct": 0.0
+        "cpu_pct": 38.3
       },
       {
-        "name": "",
-        "cpu_pct": 0.0
+        "name": "chrome.exe",
+        "cpu_pct": 32.9
       },
       {
-        "name": "Registry",
-        "cpu_pct": 0.0
+        "name": "python.exe",
+        "cpu_pct": 24.0
       },
       {
-        "name": "smss.exe",
-        "cpu_pct": 0.0
+        "name": "dwm.exe",
+        "cpu_pct": 16.9
       }
     ]
   },

@@ -1,52 +1,28 @@
 {
   "axis": "SOCIAL_RELATIONS_REVIEW",
   "domain": "human",
-  "timestamp": "2026-06-20T12:05:02.987619+00:00",
-  "sources_count": 11,
+  "timestamp": "2026-06-20T12:27:42.589549+00:00",
+  "sources_count": 9,
   "rss_count": 8,
   "ddg_count": 0,
-  "youtube_count": 3,
+  "youtube_count": 1,
   "youtube_items": [
     {
-      "title": "[YT] Promoting Social Connection During an Epidemic of Loneliness - YouTube",
-      "summary": "welcome everyone I'm Dr John White the chief medical officer at WebMD there's a lot of things that impact our health and we talk about them quite a bit at WebMD in terms of Lifestyle issues in terms of environment how diseases progress and develop but we're also starting to learn about the role of some other aspects such as loneliness disagreement with people in loneliness disagreement with people in our communities my guest today says we need to focus on how we all come together he's the CEO of Beyond Us and Them Jared side Jared thanks for joining me today it's great to be with you thanks so much for doing this I really appreciate it now some folks may not be aware of your organization so can you tell us a little bit about what you do and why you do it absolutely uh Beyond Us and Them is",
-      "link": "https://www.youtube.com/watch?v=-zJHk7TVAPM",
-      "published": "",
+      "title": "[YT] Is Technology Killing Empathy? A Deep Dive into the Loneliness Epidemic",
+      "summary": "It's night side with Dan Ray on WBZ Boston's news radio. &gt;&gt; All right, welcome. Welcome back. Thank you very much, Dan Watkins. We um we interviewed briefly um about a week and a half ago my next guest. Her name is Mimi Miklin. Uh Nick, uh she's an internationally best known best-selling author uh of a book called Softening the Edge, founder of the world's first organizational empathy platform. empathy organizational empathy platform. empathy everywhere.co.co. Uh Mimi Nicholan, welcome back to Nightsat. How are you? &gt;&gt; I am so happy to be back, Dan. Thank &gt;&gt; I am so happy to be back, Dan. Thank you. &gt;&gt; You're very welcome. Very welcome. So, since I see it's empathy everywhere.co. Uh I'm assuming that that is um uh European or perhaps even a British um European or pe",
+      "link": "https://www.youtube.com/watch?v=anj0iyliWQo",
+      "published": "2026-05-07T08:15:51Z",
       "source_type": "youtube",
-      "channel": "",
-      "video_id": "-zJHk7TVAPM",
+      "channel": "Mimi Nicklin, Empathy Advocate",
+      "video_id": "anj0iyliWQo",
       "transcript_method": "playwright_web",
-      "transcript_chars": 1205,
-      "has_full_transcript": true
-    },
-    {
-      "title": "[YT] The Loneliness Epidemic: The Impact of Social Connectedness on Our Health and Well-Being - YouTube",
-      "summary": "Welcome. We're so glad you're here. We're seeing folks uh greet us in the chat and we appreciate that you have joined the loneliness epidemic, the impact of social connectedness on our health and well-being with Aaron Ficker and Chris Gabrielson. This presentation was prepared for the Great Lakes PTTC under a cooperative agreement from the Substance Abuse and Mental Health Services Administration or Mental Health Services Administration or SAMA. The opinions expressed in this webinar are the views of the speakers and do not reflect the official position of the Department of Health and Human Services. The PTTC believes that words matter and uses affirming language in all our activities. I want to share a few housekeeping items with you. If you have technical issues, please individually mess",
-      "link": "https://www.youtube.com/watch?v=bKpSxziZDHk",
-      "published": "",
-      "source_type": "youtube",
-      "channel": "",
-      "video_id": "bKpSxziZDHk",
-      "transcript_method": "playwright_web",
-      "transcript_chars": 946,
-      "has_full_transcript": true
-    },
-    {
-      "title": "[YT] How is the loneliness epidemic affecting society? | The Stream - YouTube",
-      "summary": "hyperconnected yet disconnected it's the Paradox of our time why are we lonelier than ever in a world that's always online today we uncover the causes of the loneliness epidemic and ways to overcome it I'm anaise boures and this is the stream do you ever get lonely yeah I think everyone gets lonely uh that's almost like a daily struggle I often feel very lonely in the city what does it feel like feels like being lost like in a maze with no hand reaching out to you and you just don't really feel like climbing back out or you just can't climb back out it feels like that feeling of like you're about to cry but you just don't need to I live in a studio apartment so often times it's sort of trying to be comfortable with myself I think loneliness for me is not feeling understood and I definitely",
-      "link": "https://www.youtube.com/watch?v=lCwHWH8T2ck",
-      "published": "",
-      "source_type": "youtube",
-      "channel": "",
-      "video_id": "lCwHWH8T2ck",
-      "transcript_method": "playwright_web",
-      "transcript_chars": 1158,
+      "transcript_chars": 1257,
       "has_full_transcript": true
     }
   ],
   "analysis": {
     "problem": "Анализ на SOCIAL_RELATIONS_REVIEW — данни получени но LLM грешка",
-    "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: None",
+    "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: Gemini rate limit",
     "severity": "UNKNOWN",
     "leverage_points": [],
     "proposed_actions": [],
@@ -119,27 +95,15 @@
       "source_type": "rss"
     },
     {
-      "title": "[YT] Promoting Social Connection During an Epidemic of Loneliness - YouTube",
-      "summary": "welcome everyone I'm Dr John White the chief medical officer at WebMD there's a lot of things that impact our health and we talk about them quite a bit at WebMD in terms of Lifestyle issues in terms of environment how diseases progress and develop but we're also starting to learn about the role of some other aspects such as loneliness disagreement with people in loneliness disagreement with people in our communities my guest today says we need to focus on how we all come together he's the CEO of Beyond Us and Them Jared side Jared thanks for joining me today it's great to be with you thanks so much for doing this I really appreciate it now some folks may not be aware of your organization so can you tell us a little bit about what you do and why you do it absolutely uh Beyond Us and Them is",
-      "link": "https://www.youtube.com/watch?v=-zJHk7TVAPM",
-      "published": "",
+      "title": "[YT] Is Technology Killing Empathy? A Deep Dive into the Loneliness Epidemic",
+      "summary": "It's night side with Dan Ray on WBZ Boston's news radio. &gt;&gt; All right, welcome. Welcome back. Thank you very much, Dan Watkins. We um we interviewed briefly um about a week and a half ago my next guest. Her name is Mimi Miklin. Uh Nick, uh she's an internationally best known best-selling author uh of a book called Softening the Edge, founder of the world's first organizational empathy platform. empathy organizational empathy platform. empathy everywhere.co.co. Uh Mimi Nicholan, welcome back to Nightsat. How are you? &gt;&gt; I am so happy to be back, Dan. Thank &gt;&gt; I am so happy to be back, Dan. Thank you. &gt;&gt; You're very welcome. Very welcome. So, since I see it's empathy everywhere.co. Uh I'm assuming that that is um uh European or perhaps even a British um European or pe",
+      "link": "https://www.youtube.com/watch?v=anj0iyliWQo",
+      "published": "2026-05-07T08:15:51Z",
       "source_type": "youtube",
-      "channel": "",
-      "video_id": "-zJHk7TVAPM",
+      "channel": "Mimi Nicklin, Empathy Advocate",
+      "video_id": "anj0iyliWQo",
       "transcript_method": "playwright_web",
-      "transcript_chars": 1205,
-      "has_full_transcript": true
-    },
-    {
-      "title": "[YT] The Loneliness Epidemic: The Impact of Social Connectedness on Our Health and Well-Being - YouTube",
-      "summary": "Welcome. We're so glad you're here. We're seeing folks uh greet us in the chat and we appreciate that you have joined the loneliness epidemic, the impact of social connectedness on our health and well-being with Aaron Ficker and Chris Gabrielson. This presentation was prepared for the Great Lakes PTTC under a cooperative agreement from the Substance Abuse and Mental Health Services Administration or Mental Health Services Administration or SAMA. The opinions expressed in this webinar are the views of the speakers and do not reflect the official position of the Department of Health and Human Services. The PTTC believes that words matter and uses affirming language in all our activities. I want to share a few housekeeping items with you. If you have technical issues, please individually mess",
-      "link": "https://www.youtube.com/watch?v=bKpSxziZDHk",
-      "published": "",
-      "source_type": "youtube",
-      "channel": "",
-      "video_id": "bKpSxziZDHk",
-      "transcript_method": "playwright_web",
-      "transcript_chars": 946,
+      "transcript_chars": 1257,
       "has_full_transcript": true
     }
   ]

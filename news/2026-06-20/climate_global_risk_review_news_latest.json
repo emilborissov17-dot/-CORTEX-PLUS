@@ -1,14 +1,14 @@
 {
   "axis": "CLIMATE_GLOBAL_RISK_REVIEW",
-  "fetched_at": "2026-06-20T11:29:56.392129+00:00",
+  "fetched_at": "2026-06-20T12:33:15.954171+00:00",
   "smart_query": "climate change CO2 emissions",
   "sources_count": {
     "wiki": 0,
     "rss": 3,
     "gdelt": 0,
-    "arxiv": 2,
+    "arxiv": 0,
     "github": 3,
-    "youtube_transcripts": 0,
+    "youtube_transcripts": 3,
     "podcast": 1
   },
   "rss": [
@@ -58,58 +58,45 @@
       "source": "GitHub"
     }
   ],
-  "arxiv_papers": [
-    {
-      "title": "Optimal scenario design for climate emulation",
-      "snippet": "As deep learning for physical systems continues to grow in popularity, efforts to improve generalizability have primarily focused on designing architectures that embed physical constraints. However, for machine-learning surrogate climate models (emulators), we show that the low structural diversity ",
-      "url": "https://arxiv.org/abs/2606.19302v1",
-      "source": "arXiv"
-    },
-    {
-      "title": "Regional Climate Model Emulation with Diffusion Approaches: What is the Added Value of Generative Machine Learning?",
-      "snippet": "Emulators provide a cost-effective alternative to regional climate models (RCMs) by capturing their dynamical downscaling function. They link large-scale predictors simulated by global climate models (GCMs) to RCM-simulated high-resolution fields of the target variable, here precipitation. Machine l",
-      "url": "https://arxiv.org/abs/2606.14570v1",
-      "source": "arXiv"
-    }
-  ],
+  "arxiv_papers": [],
   "podcast": "[How to feng shui your fridge — and other happy climate hacks | Jiaying Zhao (re-release)] Is it possible for taking action on climate change to make you feel happy? Behavioral scientist Jiaying Zhao believes that's the only way we'll create lasting, sustainable change. From treat meals to feng shui fridges, she offers eight life hacks to lower your carbon emissions while increasing your joy and fulfillment. Hosted on Acast. See acast.com/privacy for more information.",
   "wiki": null,
   "youtube_items": [
     {
       "title": "[YT] YouTube:Vm9-huOzQN8",
-      "summary": "",
+      "summary": "Hurricane Melissa left entire communities in Jamaica underwater for weeks. One of the strongest storms ever to hit the Caribbean island, produced so much debris, the UN estimated it could fill nearly half a million trucks. Across Southeast Asia, floods cause staggering damage. This mother spoke of having to hold onto a tree just so that she and her son would survive. Even though I had no strength left, I could feel it. My child hugged me really tightly. I was weak, but how could I still breathe? I stood up again. PE Super Typhoon Fun Wong made landfall a day earlier than expected. &gt;&gt; We could not sleep last night because of the wind hitting our metal sheets and the tree branches falling. &gt;&gt; It was the 21st typhoon to hit the region this year, making landfall just after Typhoon ",
       "link": "https://www.youtube.com/watch?v=Vm9-huOzQN8",
       "source_type": "youtube",
       "channel": "",
       "video_id": "Vm9-huOzQN8",
-      "transcript_method": "none",
-      "transcript_chars": 0,
-      "has_full_transcript": false
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1190,
+      "has_full_transcript": true
     },
     {
       "title": "[YT] YouTube:fsBmhrT8ZEk",
-      "summary": "",
+      "summary": "As 2025 unfolded, extreme weather and natural disasters reshaped communities across the globe. The year began with devastation in Southern California. In January, fast-moving wildfires tore through Los Angeles and parts of Ventura County, fueled by extreme winds, drought, and low humidity. The Palisades in Eaten fires forced more than 100,000 evacuations [music] with later studies estimating 440 excess deaths, ranking them among the deadliest and most destructive wildfires in modern US history. By late January, the focus shifted across the Atlantic. Storm Aowin battered Ireland, the UK, and Norway, cutting [music] power to more than a million properties and grounding transport across the region. It became Northern Ireland's most severe storm since [music] 1998 and the UK's strongest in ove",
       "link": "https://www.youtube.com/watch?v=fsBmhrT8ZEk",
       "source_type": "youtube",
       "channel": "",
       "video_id": "fsBmhrT8ZEk",
-      "transcript_method": "none",
-      "transcript_chars": 0,
-      "has_full_transcript": false
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1160,
+      "has_full_transcript": true
     },
     {
       "title": "[YT] YouTube:B7Q8cw5JPiU",
-      "summary": "",
+      "summary": "In climate news, the planet is on track to log its second hottest year on record this year. That's according to Europe's global warming monitor. New data from the Capernicus Climate Change Service shows that at 200 to 2025 is currently tied with 2023 after a historic high recorded in 2024, making them the three hottest years ever recorded. The AY's latest report shows the 3-year average is on track to exceed 1 1/2° C above pre-industrial levels for the first time. You'll you'll recall that's the threshold targeted in the 2015 Paris Climate Accord. Well, Samantha Burgess is strategic lead for climate in the Capernicus Climate Change Service which produced that report. Welcome to DW. So is global warming accelerating or or how do you interpret this new data? &gt;&gt; Yes, the trajectory of g",
       "link": "https://www.youtube.com/watch?v=B7Q8cw5JPiU",
       "source_type": "youtube",
       "channel": "",
       "video_id": "B7Q8cw5JPiU",
-      "transcript_method": "none",
-      "transcript_chars": 0,
-      "has_full_transcript": false
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1207,
+      "has_full_transcript": true
     }
   ],
-  "summary": "[RSS News]\n- Simpler, older version of Stonehenge found three miles from famous site\n- What is El Niño and why could it mean record temperatures?\n\n[arXiv]\n- Optimal scenario design for climate emulati",
+  "summary": "[RSS News]\n- Simpler, older version of Stonehenge found three miles from famous site\n- What is El Niño and why could it mean record temperatures?\n\n[GitHub]\n- ESCOMP/CESM star=471: The Community Earth ",
   "urgency": "LOW",
   "sentiment": "NEUTRAL",
   "key_developments": [],

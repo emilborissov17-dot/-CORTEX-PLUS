@@ -1,12 +1,12 @@
 {
   "axis": "GOVERNANCE_INSTITUTIONS_REVIEW",
-  "fetched_at": "2026-06-20T12:16:49.511608+00:00",
+  "fetched_at": "2026-06-20T12:32:18.960242+00:00",
   "smart_query": "government corruption institutions",
   "sources_count": {
     "wiki": 0,
     "rss": 3,
     "gdelt": 0,
-    "arxiv": 2,
+    "arxiv": 0,
     "github": 3,
     "youtube_transcripts": 3,
     "podcast": 1
@@ -58,20 +58,7 @@
       "source": "GitHub"
     }
   ],
-  "arxiv_papers": [
-    {
-      "title": "Programmable Participatory Governance -- A Formal Framework for Transparent, Accountable, and Citizen-Responsive Democratic Systems: From Deliberative Theory to Decentralised Architecture",
-      "snippet": "Public confidence in democratic institutions has declined across many OECD countries over recent decades, while political participation and policy influence remain unevenly distributed across socioeconomic groups. Concurrently, democratic backsliding, declining electoral participation, and persisten",
-      "url": "https://arxiv.org/abs/2605.20261v1",
-      "source": "arXiv"
-    },
-    {
-      "title": "Sustainable Intelligence for the Wild: Democratizing Ecological Monitoring via Knowledge-Adaptive Edge Expert Agents",
-      "snippet": "Rapid biodiversity loss underscore the urgency of effective monitoring, yet manual surveys remain resource-intensive. While on-device AI offers a scalable alternative, its performance in the wild is often challenged by environmental variability. Current methods rely heavily on cloud resource, which ",
-      "url": "https://arxiv.org/abs/2605.16671v1",
-      "source": "arXiv"
-    }
-  ],
+  "arxiv_papers": [],
   "podcast": "[We’re updating our career advice for the strangest time in history | Benjamin Todd, author of 80,000 Hours] The average career is 80,000 hours long. With AI advancing so rapidly, the hours you have left in your career matter more than ever.Some leading AI researchers think there’s a 10% chance that AI systems begin automating AI research itself this year — and a 60% chance by the end of 2028. This could introduce aggressive feedback loops that completely reshape every industry, institution, and career.I",
   "wiki": null,
   "youtube_items": [
@@ -87,29 +74,29 @@
       "has_full_transcript": true
     },
     {
-      "title": "[YT] YouTube:VKIMeXestDE",
-      "summary": "President Trump said US oil firms will invest billions to restore Venezuela's oil infrastructure following a military operation that captured Nicholas Baduro. Now, under Trump 2.0, American firms are not only driving record domestic oil and gas output, but they are also asserting their influence globally. This is in keeping with Trump's expansive vision of US energy domination, which includes his plan for Venezuela. Preceding US air strikes and Maduro's capture, successive administrations used oil sanctions in 2019 and a partial blockade of oil vessels to put pressure on Maduro, but it was all in vain. Trude has played a central role in those moves for many years. Low oil and gasoline prices are important to the president because he wants to control inflation and address the cost of living",
-      "link": "https://www.youtube.com/watch?v=VKIMeXestDE",
+      "title": "[YT] YouTube:Gkw2vbJCFkQ",
+      "summary": "Thank you. Thank you. Good afternoon. My name is Terry Martin as you just heard and uh it's great to be back at the World Knowledge Forum. This is I believe my eighth time at the World Knowledge Forum and I always get to talk to really interesting people. It's why one of the reasons why I keep coming back. I also like Korea a lot. Um but you I never get to talk to people any more interesting than the gentleman sitting right next to me here on this stage. Um it is really my my great pleasure to introduce uh Hal Brance. Hal Brans uh we already just heard a brief introduction. You saw some details about him up on your screen. He is a foreign affairs global policy guru in many circles. I know he's not he would reject that title, but uh he's highly regarded. He's a professor, distinguished prof",
+      "link": "https://www.youtube.com/watch?v=Gkw2vbJCFkQ",
       "source_type": "youtube",
       "channel": "",
-      "video_id": "VKIMeXestDE",
+      "video_id": "Gkw2vbJCFkQ",
       "transcript_method": "playwright_web",
-      "transcript_chars": 1233,
+      "transcript_chars": 1239,
       "has_full_transcript": true
     },
     {
-      "title": "[YT] YouTube:XPUQvhRxpj4",
-      "summary": "চীন, রাশিয়া আর আমেরিকার মত পরাশক্তিগুলোকে ইশারায় নাচিয়ে বিশ্ব রাজনীতির পুরো মানচিত্রই বদলে দিয়েছেন কিম জং উন। দেড় শতাধিক পরমাণু অস্ত্র আর সাইবার বাহিনীর নিয়ন্ত্রণ নিয়ে কিম এখন বিশ্বমঞ্চের আসল জাদুকর। সব হিসাব উল্টে দিয়ে পরাশক্তিগুলো এখন তার দরবারে লাইন ধরে দাঁড়িয়েছে।",
-      "link": "https://www.youtube.com/watch?v=XPUQvhRxpj4",
+      "title": "[YT] YouTube:VUnz8zTb3HU",
+      "summary": "These are the three reasons why the FIFA Football World Cup is geopolitically relevant. First is North American relevant. First is North American disunity. When hosting rights were awarded in 2018, the joint bid of Canada, Mexico, and the United States was supposed to be a symbol of continental unity, but does not exist anymore in 2026. President Trump has suggested that Canada should join the United States and has declared a national emergency at the border with Mexico. Second, reverse sports washing. The World Cups of 2018 and 2022 in Russia and Qatar were about image management. That's not going to be the case this That's not going to be the case this year. 2026 will show America for what it is. Restrictive visa policy, travel bans, the threat of ICE outside stadiums, and tickets so exp",
+      "link": "https://www.youtube.com/watch?v=VUnz8zTb3HU",
       "source_type": "youtube",
       "channel": "",
-      "video_id": "XPUQvhRxpj4",
+      "video_id": "VUnz8zTb3HU",
       "transcript_method": "playwright_web",
-      "transcript_chars": 277,
+      "transcript_chars": 1183,
       "has_full_transcript": true
     }
   ],
-  "summary": "[RSS News]\n- From ‘media deserts’ to the invisibility of women, rights experts spotlight latest trends\n- Rights defender killings hit record high as UN pushes to shore up humanitarian action\n\n[arXiv]\n",
+  "summary": "[RSS News]\n- From ‘media deserts’ to the invisibility of women, rights experts spotlight latest trends\n- Rights defender killings hit record high as UN pushes to shore up humanitarian action\n\n[GitHub]",
   "urgency": "LOW",
   "sentiment": "NEUTRAL",
   "key_developments": [],

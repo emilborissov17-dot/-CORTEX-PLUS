@@ -1,6 +1,6 @@
 {
   "axis": "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL",
-  "fetched_at": "2026-06-20T12:14:33.074299+00:00",
+  "fetched_at": "2026-06-20T12:37:44.421846+00:00",
   "smart_query": "human rights democracy freedom",
   "sources_count": {
     "wiki": 0,
@@ -16,7 +16,7 @@
     {
       "title": "cirosantilli/china-dictatorship",
       "snippet": "反中共政治宣传库。Anti Chinese government propaganda. 住在中国真名用户的网友请别给星星，不然你要被警察请喝茶。常见问答集，新闻集和饭店和音乐建议。卐习万岁卐。冠状病毒审查郝海东新疆改造中心六四事件法轮功 996.ICU709大抓捕巴拿马文件邓家贵低端人口西藏骚乱。Friends who live in China and have real name on ac",
-      "stars": 3058,
+      "stars": 3059,
       "url": "https://github.com/cirosantilli/china-dictatorship",
       "updated": "2026-06-20",
       "source": "GitHub"
@@ -56,36 +56,36 @@
   "wiki": null,
   "youtube_items": [
     {
-      "title": "[YT] Democracy Pulse: Promoting political rights and civil liberties after Human Rights Day",
-      "summary": "Celebrated on December [music] 10th, Human Rights Day highlights the persistent importance of protecting human rights [music] across the world. As critical rights continue to face new threats, let's look at some key trends [music] from the Freedom and Prosperity Indexes. Welcome back to Democracy Pulse, [music] where we unpack the latest developments in global democracy and prosperity. The right to a fair trial, freedom from torture, and free expression [music] and association are all embedded in the United Nations Universal [music] Declaration of Human Rights. These rights are also measured by the civil liberties and political rights components of our freedom [music] index. Globally, both indicators improved steadily until 2012, but have declined [music] since. Of the 164 countries measur",
-      "link": "https://www.youtube.com/watch?v=yL3xae1aHjU",
-      "source_type": "youtube",
-      "channel": "AtlanticCouncil",
-      "video_id": "yL3xae1aHjU",
-      "transcript_method": "playwright_web",
-      "transcript_chars": 1158,
-      "has_full_transcript": true
-    },
-    {
-      "title": "[YT] Guest Lecture by David Kramer Human Rights. 10/23/2025.",
+      "title": "[YT] YouTube:Rb_up-i1qIs",
       "summary": "Okay. Hello everybody, and I'm sure more will be coming. It is now October 23rd, will be coming. It is now October 23rd, 2025. We're really excited to have Ambassador David Kramer here. He's calling from a different time zone in um in Texas. And um he and I are both smiling. When you look at today's news, there isn't much to smile about. Um we it seems that the li um the cruelty of Vladimir um um of the um let's just not name him the the ruler of the Russian Federation. The cruelty has no limits um in spite and I'm sure you all have been following this um because the summit the upcoming summit is not taking place anytime soon. Um Mr. Putin's response was to incur even more vicious attacks on Ukraine. So um tremendous thanks to those of you who have the stamina and the ability to join us. U",
       "link": "https://www.youtube.com/watch?v=Rb_up-i1qIs",
       "source_type": "youtube",
-      "channel": "Delphi Global Research Center",
+      "channel": "",
       "video_id": "Rb_up-i1qIs",
       "transcript_method": "playwright_web",
       "transcript_chars": 1196,
       "has_full_transcript": true
     },
     {
-      "title": "[YT] Are US Civil Liberties Under Threat in 2025? | Guide To Your Rights News",
-      "summary": "Are US civil liberties under threat in Are US civil liberties under threat in 2025? Breaking news as we look ahead to 2025. Many are asking if United States civil liberties are facing serious challenges as discussions heat up. Let's take a closer look at what is happening now. Recent developments indicate that civil liberties may be at risk. One major concern is the potential expansion of executive power. This is particularly relevant if a second Trump administration takes office. Project 2025 is a policy agenda that has raised alarms. It includes recommendations that could undermine First Amendment rights. This plan targets journalists and protesters, which is alarming four free speech which is alarming four free speech advocates. Additionally, there are worries about dismantling safeguar",
-      "link": "https://www.youtube.com/watch?v=SFwGiQ_2DJ0",
+      "title": "[YT] YouTube:kRsy59nAl7A",
+      "summary": "This was a state of emergency where they suspended certain constitutional rights like the right of free assembly like the rights of due process like the right to eat access to legal counsel. For a good purpose which was to crack down on gang violence but here's the thing he said it was going to be 30 days it's now over four years and by many credible reports. The prisons are filled with people who are not gang members. But people who are swept. In this state of exception. And they've used the state of exception to silence descent detaining political opponents. Anti-corruption advocates human rights defenders credible report in March of this year by Salvadoran human rights organization. That said that more than 500 people had died in state custody under the so-called state of exception. And",
+      "link": "https://www.youtube.com/watch?v=kRsy59nAl7A",
       "source_type": "youtube",
-      "channel": "Guide To Your Rights",
-      "video_id": "SFwGiQ_2DJ0",
+      "channel": "",
+      "video_id": "kRsy59nAl7A",
       "transcript_method": "playwright_web",
-      "transcript_chars": 1165,
+      "transcript_chars": 1125,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] YouTube:yL3xae1aHjU",
+      "summary": "Celebrated on December [music] 10th, Human Rights Day highlights the persistent importance of protecting human rights [music] across the world. As critical rights continue to face new threats, let's look at some key trends [music] from the Freedom and Prosperity Indexes. Welcome back to Democracy Pulse, [music] where we unpack the latest developments in global democracy and prosperity. The right to a fair trial, freedom from torture, and free expression [music] and association are all embedded in the United Nations Universal [music] Declaration of Human Rights. These rights are also measured by the civil liberties and political rights components of our freedom [music] index. Globally, both indicators improved steadily until 2012, but have declined [music] since. Of the 164 countries measur",
+      "link": "https://www.youtube.com/watch?v=yL3xae1aHjU",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "yL3xae1aHjU",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1158,
       "has_full_transcript": true
     }
   ],

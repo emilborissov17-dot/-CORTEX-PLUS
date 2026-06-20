@@ -1,22 +1,46 @@
 {
   "axis": "ECONOMY_WORK_REVIEW",
   "domain": "civilization",
-  "timestamp": "2026-06-20T12:04:36.261940+00:00",
-  "sources_count": 9,
+  "timestamp": "2026-06-20T12:27:53.810092+00:00",
+  "sources_count": 11,
   "rss_count": 8,
   "ddg_count": 0,
-  "youtube_count": 1,
+  "youtube_count": 3,
   "youtube_items": [
     {
-      "title": "[YT] STOP wasting your LIFE (2026) - YouTube",
-      "summary": "do you know what day of the week do you know what day of the week you are most likely to die from a heart are most likely to die from a heart attack take a guess i'll give you a second it's monday it's monday [Music] karen guess what time it is between 8 00 and 9 00 am do you know what else happens monday at do you know what else happens monday at 8 that is the same day and time people get ready to go into jobs they hate they hate coincidence i don't think so take a look at this chart take a look at this chart this is the lifespan of the average person on average we live about 80 years if we're lucky we start working at about 18 and we work work work and retire at about 67. now what does this tell you that for better or for worse the majority of your life will be spent at work do not spend",
-      "link": "https://www.youtube.com/watch?v=M2NDQOgGycg",
-      "published": "",
+      "title": "[YT] 2025 now weakest job growth year since pandemic",
+      "summary": "All right, breaking just a few minutes ago, brand&nbsp; new data on jobs. The economy added just 50,000&nbsp;&nbsp; jobs in December. You can see that right there.&nbsp; And jobs growth was revised lower in both October&nbsp;&nbsp; and November. You can see what a bad month October&nbsp; was right there. 2025 now the weakest year of jobs&nbsp;&nbsp; growth since the pandemic. Now, on the other&nbsp; hand, the unemployment rate dipped to 4.4%.&nbsp;&nbsp; 4% in December. A lot more on this coming up.&nbsp; These jobs numbers painting an interesting&nbsp;&nbsp; picture of the economy. People digging into it&nbsp; right now. The final jobs report for 2025 shows&nbsp;&nbsp; the economy added just 50,000 jobs in December.&nbsp; CNN senior reporter Matt Egan joining us now.&nbsp;&nbsp; Is this w",
+      "link": "https://www.youtube.com/watch?v=u-WIdZMgpIY",
+      "published": "2026-01-09T16:35:55Z",
       "source_type": "youtube",
-      "channel": "",
-      "video_id": "M2NDQOgGycg",
+      "channel": "CNN",
+      "video_id": "u-WIdZMgpIY",
       "transcript_method": "playwright_web",
-      "transcript_chars": 837,
+      "transcript_chars": 2372,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Goldman&#39;s Hatzius and Snider on the Outlook for 2026 | Odd Lots",
+      "summary": "One consistent pattern at the top of almost every equity bull market in the past has been tightening Fed policy instead of easing policy that we have today. And then of course, this is a very small and maybe silly example. But a couple of years ago, I remember when the GLP1 drugs were being rolled out, there was a very brief window where investors were talking about buying the airline stocks on the basis that fuel costs would be lower. Right. [laughter] &gt;&gt; Yeah. when this narrative, this type of narrative starts to emerge in my conversations, uh that's the kind of time where I think you will be seeing prices run ahead of earnings, which as I mentioned has really not been the case. I'll be a lot more nervous then. &gt;&gt; That's interesting. So when you just start to see investors st",
+      "link": "https://www.youtube.com/watch?v=7WrpqjcMCWI",
+      "published": "2025-12-29T09:00:18Z",
+      "source_type": "youtube",
+      "channel": "Bloomberg Podcasts",
+      "video_id": "7WrpqjcMCWI",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1195,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Stagflation",
+      "summary": "Stagflation is a word that for one reason or another is going to get thrown around a lot more over the coming months. But all it means is simply increasing unemployment and slow economic growth at the same time as there is persistently high inflation. None of these outcomes are ideal, even individually. But when they all happen together, they become one of the worst economic scenarios imaginable. Something that can and has in the past genuinely led to years of economic struggle or even the outright collapse of entire economic systems. The heart of what makes this so bad is that the treatment of these problems only makes the others worse in theory anyway. Low interest rates and lots of money printing can pump up market activity and at least on paper make growth look good for a little while,",
+      "link": "https://www.youtube.com/watch?v=x-Q47erm5MI",
+      "published": "2025-09-28T15:01:38Z",
+      "source_type": "youtube",
+      "channel": "Economics Explained",
+      "video_id": "x-Q47erm5MI",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1213,
       "has_full_transcript": true
     }
   ],
@@ -95,15 +119,27 @@
       "source_type": "rss"
     },
     {
-      "title": "[YT] STOP wasting your LIFE (2026) - YouTube",
-      "summary": "do you know what day of the week do you know what day of the week you are most likely to die from a heart are most likely to die from a heart attack take a guess i'll give you a second it's monday it's monday [Music] karen guess what time it is between 8 00 and 9 00 am do you know what else happens monday at do you know what else happens monday at 8 that is the same day and time people get ready to go into jobs they hate they hate coincidence i don't think so take a look at this chart take a look at this chart this is the lifespan of the average person on average we live about 80 years if we're lucky we start working at about 18 and we work work work and retire at about 67. now what does this tell you that for better or for worse the majority of your life will be spent at work do not spend",
-      "link": "https://www.youtube.com/watch?v=M2NDQOgGycg",
-      "published": "",
+      "title": "[YT] 2025 now weakest job growth year since pandemic",
+      "summary": "All right, breaking just a few minutes ago, brand&nbsp; new data on jobs. The economy added just 50,000&nbsp;&nbsp; jobs in December. You can see that right there.&nbsp; And jobs growth was revised lower in both October&nbsp;&nbsp; and November. You can see what a bad month October&nbsp; was right there. 2025 now the weakest year of jobs&nbsp;&nbsp; growth since the pandemic. Now, on the other&nbsp; hand, the unemployment rate dipped to 4.4%.&nbsp;&nbsp; 4% in December. A lot more on this coming up.&nbsp; These jobs numbers painting an interesting&nbsp;&nbsp; picture of the economy. People digging into it&nbsp; right now. The final jobs report for 2025 shows&nbsp;&nbsp; the economy added just 50,000 jobs in December.&nbsp; CNN senior reporter Matt Egan joining us now.&nbsp;&nbsp; Is this w",
+      "link": "https://www.youtube.com/watch?v=u-WIdZMgpIY",
+      "published": "2026-01-09T16:35:55Z",
       "source_type": "youtube",
-      "channel": "",
-      "video_id": "M2NDQOgGycg",
+      "channel": "CNN",
+      "video_id": "u-WIdZMgpIY",
       "transcript_method": "playwright_web",
-      "transcript_chars": 837,
+      "transcript_chars": 2372,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Goldman&#39;s Hatzius and Snider on the Outlook for 2026 | Odd Lots",
+      "summary": "One consistent pattern at the top of almost every equity bull market in the past has been tightening Fed policy instead of easing policy that we have today. And then of course, this is a very small and maybe silly example. But a couple of years ago, I remember when the GLP1 drugs were being rolled out, there was a very brief window where investors were talking about buying the airline stocks on the basis that fuel costs would be lower. Right. [laughter] &gt;&gt; Yeah. when this narrative, this type of narrative starts to emerge in my conversations, uh that's the kind of time where I think you will be seeing prices run ahead of earnings, which as I mentioned has really not been the case. I'll be a lot more nervous then. &gt;&gt; That's interesting. So when you just start to see investors st",
+      "link": "https://www.youtube.com/watch?v=7WrpqjcMCWI",
+      "published": "2025-12-29T09:00:18Z",
+      "source_type": "youtube",
+      "channel": "Bloomberg Podcasts",
+      "video_id": "7WrpqjcMCWI",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1195,
       "has_full_transcript": true
     }
   ]

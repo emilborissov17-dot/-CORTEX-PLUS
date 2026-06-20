@@ -9,7 +9,7 @@
       "priority": "HIGH",
       "real_world_signal": true,
       "generated_by": "OPENCLAW",
-      "timestamp": "2026-06-20T11:53:50.515171+00:00"
+      "timestamp": "2026-06-20T12:57:34.003606+00:00"
     },
     {
       "component": "unknown",
@@ -20,7 +20,7 @@
       "priority": "HIGH",
       "real_world_signal": true,
       "generated_by": "OPENCLAW",
-      "timestamp": "2026-06-20T11:53:50.515188+00:00"
+      "timestamp": "2026-06-20T12:57:34.003622+00:00"
     },
     {
       "component": "unknown",
@@ -31,7 +31,7 @@
       "priority": "HIGH",
       "real_world_signal": true,
       "generated_by": "OPENCLAW",
-      "timestamp": "2026-06-20T11:53:50.515196+00:00"
+      "timestamp": "2026-06-20T12:57:34.003631+00:00"
     },
     {
       "problem": "Недостатък в правителствената гъвкавост и устойчивост на държавата във възстановяването на демокрацията",
@@ -39,13 +39,13 @@
       "solution": "Разработване на платформа за гражданско участие и онлайнPETИЦИИ, интегрирана с данни от правителствени институции",
       "measurable_goal": "10 000 потписа на петицията за увеличаване на прозрачността на правителството за 6 месеца",
       "agi_characteristic": "REASONING",
-      "priority": "MEDIUM",
+      "priority": "LOW",
       "real_world_signal": true,
       "source": "self_observer_problem_solution",
       "approved": true,
       "rejected": false,
       "timestamp": "2026-05-07T10:20:08.774529+00:00",
-      "feedback_note": "Повишен — подобрение"
+      "feedback_note": "Понижен — влошаване"
     },
     {
       "problem": "Повишено ниво на непрекъснато движение и неразрешен проблем със стари пътища, които не са поддържани",
@@ -66,13 +66,13 @@
       "solution": "Разработване на модел за прогноза на неравенство и бедност, базиран на исторически данни и социални индикатори",
       "measurable_goal": "10% увеличение на точността на прогнозите за неравенство за 9 месеца",
       "agi_characteristic": "AUTONOMOUS_LEARNING",
-      "priority": "MEDIUM",
+      "priority": "LOW",
       "real_world_signal": true,
       "source": "self_observer_problem_solution",
       "approved": true,
       "rejected": false,
       "timestamp": "2026-05-07T10:20:08.774740+00:00",
-      "feedback_note": "Повишен — подобрение"
+      "feedback_note": "Понижен — влошаване"
     }
   ]
 }

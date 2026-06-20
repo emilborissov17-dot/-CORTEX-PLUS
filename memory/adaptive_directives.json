@@ -4,9 +4,9 @@
   "cycle_mode": "FULL",
   "reasons": [],
   "health": "HEALTHY",
-  "capacity_pct": 61.4,
+  "capacity_pct": 70.3,
   "connectivity": "FULL",
-  "cycle_timestamp": "2026-06-20T12:01:38.995170+00:00",
+  "cycle_timestamp": "2026-06-20T12:57:32.114415+00:00",
   "data_freshness": "FRESH",
   "time_of_day": "MIDDAY"
 }
