@@ -1,0 +1,124 @@
+{
+  "axis": "ECOSYSTEMS_BIODIVERSITY_REVIEW",
+  "fetched_at": "2026-06-19T17:49:59.881857+00:00",
+  "smart_query": "biodiversity species extinction",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "A hidden pollutant is changing how the world's forests breathe",
+      "snippet": "A massive global analysis found that nitrogen pollution can either speed up or dramatically slow the natural \"breathing\" of forest soils, depending on the ecosystem's condition. The results reveal hidden tipping points that could affect how forests store carbon and cope with climate change.",
+      "url": "https://www.sciencedaily.com/releases/2026/06/260602021659.htm",
+      "source": "RSS"
+    },
+    {
+      "title": "This newly discovered raptor may have hunted like a giant heron",
+      "snippet": "A newly discovered raptor-like dinosaur from Patagonia is changing how scientists think about ancient predators. Named Kank australis, the 70-million-year-old dinosaur appears to have hunted fish much like modern herons, using a long, flexible neck and specialized vertebrae adapted for swift, precis",
+      "url": "https://www.sciencedaily.com/releases/2026/05/260529043636.htm",
+      "source": "RSS"
+    },
+    {
+      "title": "Scientists say evolution may work differently than we thought",
+      "snippet": "A major research study is challenging one of evolution’s most influential ideas: that most genetic changes that become permanent are essentially neutral. Researchers at the University of Michigan found that beneficial mutations are actually far more common than scientists have long assumed. The puzz",
+      "url": "https://www.sciencedaily.com/releases/2026/05/260529030329.htm",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "protontypes/open-sustainable-technology",
+      "snippet": "A directory and analysis of the open source ecosystem in the areas of climate change, sustainable energy, biodiversity and natural resources.  https://docs.getgrist.com/doc/gSscJkc5Rb1Rw45gh1o1Yc",
+      "stars": 2520,
+      "url": "https://github.com/protontypes/open-sustainable-technology",
+      "updated": "2026-06-19",
+      "source": "GitHub"
+    },
+    {
+      "title": "microsoft/Biodiversity",
+      "snippet": "Microsoft AI for Good Lab — Biodiversity research hub. Open-source AI models, edge devices, and tools for biodiversity monitoring and conservation. Your source for MegaDetector, SPARROW, PytorchWildli",
+      "stars": 1015,
+      "url": "https://github.com/microsoft/Biodiversity",
+      "updated": "2026-06-17",
+      "source": "GitHub"
+    },
+    {
+      "title": "treflehq/trefle-api",
+      "snippet": "🍀 Trefle is a botanical JSON REST API for plants species, allowing you to search and query over all the registered species, and build the next gardening apps and farming robots.",
+      "stars": 580,
+      "url": "https://github.com/treflehq/trefle-api",
+      "updated": "2026-06-19",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "An information-geometric framework for mapping maximum potential biodiversity",
+      "snippet": "Biodiversity measures are often used descriptively: one computes a diversity index from an observed or estimated community composition and maps the resulting values across space. Conservation planning, however, also requires a site-specific benchmark against which the observed community can be compa",
+      "url": "https://arxiv.org/abs/2606.09906v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Disentangling the interactive effects of anthropogenic disturbances on biodiversity",
+      "snippet": "Anthropogenic activity threatens biodiversity through climate change, habitat fragmentation, and increasing frequency and scale of disturbance. Various theoretical studies have sought to shed light on how these factors could promote or hinder the coexistence of species. However, our understanding of",
+      "url": "https://arxiv.org/abs/2603.29116v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[Should AIs be people too?] The Dutch East India company was among the first modern companies to receive legal personhood. Should we reconsider what personhood means in the age of AI?",
+  "wiki": null,
+  "youtube_items": [
+    {
+      "title": "[YT] YouTube:dbCR0KSU52g",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=dbCR0KSU52g",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "dbCR0KSU52g",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] YouTube:Ic-J6hcSKa8",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=Ic-J6hcSKa8",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "Ic-J6hcSKa8",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] YouTube:5tgNtIUOL4E",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=5tgNtIUOL4E",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "5tgNtIUOL4E",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    }
+  ],
+  "summary": "Има нови открития относно биоразнообразието и здравето на световните гори, включително скрити замърсители и нов вид раптор. Тези изследвания са важни за устойчивото развитие на цивилизацията. Изучаването на взаимодействията между човешката дейност и биоразнообразието е от крайна важност.",
+  "urgency": "MEDIUM",
+  "sentiment": "NEUTRAL",
+  "key_developments": [
+    "A hidden pollutant is changing how the world's forests breathe",
+    "This newly discovered raptor may have hunted like a giant heron",
+    "An information-geometric framework for mapping maximum potential biodiversity",
+    "Disentangling the interactive effects of anthropogenic disturbances on biodiversity"
+  ],
+  "open_source_momentum": "protontypes/open-sustainable-technology с 2520 звезди, microsoft/Biodiversity с 1015 звезди и treflehq/trefle-api с 580 звезди",
+  "scientific_frontier": "An information-geometric framework for mapping maximum potential biodiversity и Disentangling the interactive effects of anthropogenic disturbances on biodiversity",
+  "relevance_to_goal": "Висока, тъй като устойчивото развитие на биоразнообразието е ключов фактор за достоен живот и целостност на екосистемите."
+}

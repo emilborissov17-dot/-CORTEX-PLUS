@@ -1,0 +1,144 @@
+{
+  "date": "2026-06-19",
+  "timestamp": "2026-06-19T18:30:07.628469+00:00",
+  "axes_analyzed": 27,
+  "analyses": {
+    "BODY_SCAN": {
+      "current_level": "UNKNOWN",
+      "summary": "[LLM ERROR: [WinError 2] The system cannot find the file specified]",
+      "error": "parse_failed"
+    },
+    "ECONOMY_WORK_REVIEW": {
+      "current_level": "UNKNOWN",
+      "summary": "[LLM ERROR: [WinError 2] The system cannot find the file specified]",
+      "error": "parse_failed"
+    },
+    "EDUCATION_CULTURE_REVIEW": {
+      "current_level": "UNKNOWN",
+      "summary": "[LLM ERROR: [WinError 2] The system cannot find the file specified]",
+      "error": "parse_failed"
+    },
+    "GOVERNANCE_INSTITUTIONS_REVIEW": {
+      "current_level": "UNKNOWN",
+      "summary": "[LLM ERROR: [WinError 2] The system cannot find the file specified]",
+      "error": "parse_failed"
+    },
+    "INEQUALITY_POVERTY_REVIEW": {
+      "current_level": "UNKNOWN",
+      "summary": "[LLM ERROR: [WinError 2] The system cannot find the file specified]",
+      "error": "parse_failed"
+    },
+    "INFRASTRUCTURE_CITIES_REVIEW": {
+      "current_level": "UNKNOWN",
+      "summary": "[LLM ERROR: [WinError 2] The system cannot find the file specified]",
+      "error": "parse_failed"
+    },
+    "TECHNOLOGY_AI_REVIEW": {
+      "current_level": "UNKNOWN",
+      "summary": "[LLM ERROR: [WinError 2] The system cannot find the file specified]",
+      "error": "parse_failed"
+    },
+    "TECHNOLOGY_INFRA_REVIEW": {
+      "current_level": "UNKNOWN",
+      "summary": "[LLM ERROR: [WinError 2] The system cannot find the file specified]",
+      "error": "parse_failed"
+    },
+    "CLIMATE_GLOBAL_RISK_REVIEW": {
+      "current_level": "UNKNOWN",
+      "summary": "[LLM ERROR: [WinError 2] The system cannot find the file specified]",
+      "error": "parse_failed"
+    },
+    "COSMIC_RESOURCES_REVIEW": {
+      "current_level": "UNKNOWN",
+      "summary": "[LLM ERROR: [WinError 2] The system cannot find the file specified]",
+      "error": "parse_failed"
+    },
+    "DEEP_TIME_RISKS_REVIEW": {
+      "current_level": "UNKNOWN",
+      "summary": "[LLM ERROR: [WinError 2] The system cannot find the file specified]",
+      "error": "parse_failed"
+    },
+    "GENERAL_SELF_REVIEW": {
+      "current_level": "UNKNOWN",
+      "summary": "[LLM ERROR: [WinError 2] The system cannot find the file specified]",
+      "error": "parse_failed"
+    },
+    "GOAL_PROGRESS_REVIEW": {
+      "current_level": "UNKNOWN",
+      "summary": "[LLM ERROR: [WinError 2] The system cannot find the file specified]",
+      "error": "parse_failed"
+    },
+    "LONG_TERM_FUTURE_REVIEW": {
+      "current_level": "UNKNOWN",
+      "summary": "[LLM ERROR: [WinError 2] The system cannot find the file specified]",
+      "error": "parse_failed"
+    },
+    "SPACE_INFRASTRUCTURE_REVIEW": {
+      "current_level": "UNKNOWN",
+      "summary": "[LLM ERROR: [WinError 2] The system cannot find the file specified]",
+      "error": "parse_failed"
+    },
+    "COGNITION_LEARNING_REVIEW": {
+      "current_level": "UNKNOWN",
+      "summary": "[LLM ERROR: [WinError 2] The system cannot find the file specified]",
+      "error": "parse_failed"
+    },
+    "CULTURE_MEDIA_REVIEW": {
+      "current_level": "UNKNOWN",
+      "summary": "[LLM ERROR: [WinError 2] The system cannot find the file specified]",
+      "error": "parse_failed"
+    },
+    "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL": {
+      "current_level": "UNKNOWN",
+      "summary": "[LLM ERROR: [WinError 2] The system cannot find the file specified]",
+      "error": "parse_failed"
+    },
+    "HUMAN_WELL_BEING_REVIEW": {
+      "current_level": "UNKNOWN",
+      "summary": "[LLM ERROR: [WinError 2] The system cannot find the file specified]",
+      "error": "parse_failed"
+    },
+    "SOCIAL_RELATIONS_REVIEW": {
+      "current_level": "UNKNOWN",
+      "summary": "[LLM ERROR: [WinError 2] The system cannot find the file specified]",
+      "error": "parse_failed"
+    },
+    "OPENCLAW_SOLUTIONS": {
+      "current_level": "UNKNOWN",
+      "summary": "[LLM ERROR: [WinError 2] The system cannot find the file specified]",
+      "error": "parse_failed"
+    },
+    "ECOSYSTEMS_BIODIVERSITY_REVIEW": {
+      "current_level": "UNKNOWN",
+      "summary": "[LLM ERROR: [WinError 2] The system cannot find the file specified]",
+      "error": "parse_failed"
+    },
+    "ENERGY_REVIEW": {
+      "current_level": "UNKNOWN",
+      "summary": "[LLM ERROR: [WinError 2] The system cannot find the file specified]",
+      "error": "parse_failed"
+    },
+    "FOOD_REVIEW": {
+      "current_level": "UNKNOWN",
+      "summary": "[LLM ERROR: [WinError 2] The system cannot find the file specified]",
+      "error": "parse_failed"
+    },
+    "MATERIALS_WASTE_REVIEW": {
+      "current_level": "UNKNOWN",
+      "summary": "[LLM ERROR: [WinError 2] The system cannot find the file specified]",
+      "error": "parse_failed"
+    },
+    "PLANETARY_POTENTIAL_REVIEW": {
+      "current_level": "UNKNOWN",
+      "summary": "[LLM ERROR: [WinError 2] The system cannot find the file specified]",
+      "error": "parse_failed"
+    },
+    "WATER_REVIEW": {
+      "current_level": "UNKNOWN",
+      "summary": "[LLM ERROR: [WinError 2] The system cannot find the file specified]",
+      "error": "parse_failed"
+    }
+  },
+  "overall_assessment": "[LLM ERROR: [WinError 2] The system cannot find the file specified]",
+  "pending_patches": []
+}

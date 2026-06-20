@@ -1,0 +1,89 @@
+{
+  "axis": "EDUCATION_CULTURE_REVIEW",
+  "domain": "civilization",
+  "timestamp": "2026-06-20T05:39:00.700465+00:00",
+  "sources_count": 5,
+  "rss_count": 0,
+  "ddg_count": 4,
+  "youtube_count": 1,
+  "youtube_items": [
+    {
+      "title": "[YT] 2025 UNESCO Confucius Prize for Literacy highlights global ...UNESCO - YouTubeLiteracy - UNESCOUNESCO in action: Education highlights in 2025 | UNESCOGlobal trends and the future of education in 2025 ... - OECDUNESCO strategy for youth and adult literacy (2020-2025)Reflection on the UNESCO Global Conference on Literacy 2025 - UEA",
+      "summary": "[DESCRIPTION FALLBACK] The ceremony marked two decades of honoring inclusive education and lifelong learning, while also opening this year's Confucius Cultural Festival. Building on collaboration among more than 20 leading research institutions, this report compiles data from all UNESCO-designated sites to assess their contributions to climate stability, human... Explore how multilingual education has profoundly impacted the development of diverse communities, fostering greater understanding, inclusion, and peace acro",
+      "link": "https://www.youtube.com/watch?v=-SG9a5M-KCI",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "-SG9a5M-KCI",
+      "transcript_method": "description",
+      "transcript_chars": 523,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "problem": "Insufficient progress in increasing access to quality education, with persistent inequalities in education outcomes across the world",
+    "root_cause": "Inadequate investment in education infrastructure, lack of qualified teachers, and socio-economic disparities",
+    "severity": "MEDIUM",
+    "leverage_points": [
+      "Government policies and funding for education",
+      "International organizations such as UNESCO and OECD"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Increase funding for education programs and infrastructure development",
+        "measurable_goal": "10% increase in education budget allocation within the next 2 years",
+        "timeframe": "medium-term"
+      },
+      {
+        "action": "Implement teacher training and qualification programs",
+        "measurable_goal": "25% increase in qualified teachers in underserved areas within the next 5 years",
+        "timeframe": "long-term"
+      }
+    ],
+    "evidence": [
+      "The world has made progress in increasing basic education, but also faces challenges in improving education quality and access",
+      "UNESCO strategy for youth and adult literacy (2020-2025) highlights the need for inclusive education and lifelong learning"
+    ],
+    "generalization": "This problem connects to the domains of PLANETA (as education is linked to environmental sustainability and resource management) and CHOVEK (as education is crucial for human development and dignity)",
+    "summary": "The world is facing challenges in improving access to quality education, with persistent inequalities in education outcomes, and requires increased investment and international cooperation to address these issues. Government policies and funding for education are key leverage points to drive progress.",
+    "risk_level": "MEDIUM"
+  },
+  "raw_items": [
+    {
+      "title": "Global education",
+      "summary": "Global education is a mental development program that seeks to improve global human development based on the understanding of global dynamics, through the various sectors of human development delivery. In formal education, as a mode of human development delivery, it is integrated into formal educational programs, as an advanced program where global dimensions to local problems are appreciated thro",
+      "link": "https://en.wikipedia.org/wiki/Global_education",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Global Education - Our World in Data",
+      "summary": "Explore data and insights on education outcomes, access, quality, and inequalities across the world. Learn how the world has made progress in increasing basic education, but also faces challenges in improving learning and reducing gaps.",
+      "link": "https://ourworldindata.org/global-education",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Literacy",
+      "summary": "Literacy is the ability to read and write, and illiteracy is the inability to read and write. Some researchers suggest that the study of literacy as a concept can be divided into two periods: the period before 1950, when literacy was understood solely as alphabetical literacy (understanding the meanings of words without necessarily being able to use words); and the period after 1950, when literacy",
+      "link": "https://en.wikipedia.org/wiki/Literacy",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Reflections On Literacy. When many people hear the word | ROVER",
+      "summary": "But literacy can indeed be defined as “the ability to read and write”, so most people are not wrong to think that literacy is about reading. Literacy is definitely about reading...",
+      "link": "https://rover.whoistheo.com/reflections-on-literacy-9e12d77232c2",
+      "source_type": "ddg"
+    },
+    {
+      "title": "[YT] 2025 UNESCO Confucius Prize for Literacy highlights global ...UNESCO - YouTubeLiteracy - UNESCOUNESCO in action: Education highlights in 2025 | UNESCOGlobal trends and the future of education in 2025 ... - OECDUNESCO strategy for youth and adult literacy (2020-2025)Reflection on the UNESCO Global Conference on Literacy 2025 - UEA",
+      "summary": "[DESCRIPTION FALLBACK] The ceremony marked two decades of honoring inclusive education and lifelong learning, while also opening this year's Confucius Cultural Festival. Building on collaboration among more than 20 leading research institutions, this report compiles data from all UNESCO-designated sites to assess their contributions to climate stability, human... Explore how multilingual education has profoundly impacted the development of diverse communities, fostering greater understanding, inclusion, and peace acro",
+      "link": "https://www.youtube.com/watch?v=-SG9a5M-KCI",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "-SG9a5M-KCI",
+      "transcript_method": "description",
+      "transcript_chars": 523,
+      "has_full_transcript": false
+    }
+  ]
+}

@@ -1,0 +1,100 @@
+{
+  "axis": "SPACE_INFRASTRUCTURE_REVIEW",
+  "fetched_at": "2026-06-19T17:57:36.137153+00:00",
+  "smart_query": "space exploration NASA SpaceX",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 0,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "KOSASIH/stable-pi-core",
+      "snippet": "Stable-Pi-Core is a next-generation decentralized ecosystem that integrates blockchain, quantum AI, IoT, edge computing, and AR/VR to deliver secure, scalable, and personalized solutions for payments,",
+      "stars": 116,
+      "url": "https://github.com/KOSASIH/stable-pi-core",
+      "updated": "2026-06-18",
+      "source": "GitHub"
+    },
+    {
+      "title": "FlaSpaceInst/EZ-RASSOR",
+      "snippet": "An inexpensive, autonomous, regolith-mining robot",
+      "stars": 62,
+      "url": "https://github.com/FlaSpaceInst/EZ-RASSOR",
+      "updated": "2026-06-02",
+      "source": "GitHub"
+    },
+    {
+      "title": "BarthPaleologue/CosmosJourneyer",
+      "snippet": "Cosmos Journeyer is a space exploration game running directly in the browser! Take your spaceship and witness the beauty of this virtually infinite universe.",
+      "stars": 46,
+      "url": "https://github.com/BarthPaleologue/CosmosJourneyer",
+      "updated": "2026-06-19",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "The Lazuli Space Observatory: Opportunities for time-domain and multi-messenger astronomy",
+      "snippet": "Advancing time-domain and multi-messenger astronomy requires a multi-wavelength network of observatories capable of rapidly discovering, classifying, and characterizing transient phenomena. A critical gap in current capabilities is the inability to follow up faint, fast-evolving transients with sens",
+      "url": "https://arxiv.org/abs/2606.17136v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Revealing Cosmic Ecosystems with the Hubble Space Telescope in 2030s and Beyond",
+      "snippet": "Ultraviolet spectroscopy with the Hubble Space Telescope (HST) provides the most direct and sensitive probe of the disk-circumgalactic medium (CGM) interface at radii of 20 kpc, where galaxies exchange gas, metals, and energy with their surroundings. Many of the key diagnostics of the multiphase cir",
+      "url": "https://arxiv.org/abs/2606.11506v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[#497 – Biggest Mysteries in Physics: Antimatter, Dark Energy & ToE – Don Lincoln] Don Lincoln is a particle physicist at Fermilab who has spent decades working at the frontiers of high energy physics.\nThank you for listening ❤ Check out our sponsors: https://lexfridman.com/sponsors/ep497-sc\nSee below for timestamps, and to give feedback, submit questions, contact Lex, etc.\nCONTACT LEX:\nFeedback &#8211; give feedback to Lex: https://lexfridman.com/survey\nAMA &#8211; submit quest",
+  "wiki": null,
+  "youtube_items": [
+    {
+      "title": "[YT] YouTube:enq62ldjbH4",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=enq62ldjbH4",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "enq62ldjbH4",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] YouTube:-t8d7ge6l_0",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=-t8d7ge6l_0",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "-t8d7ge6l_0",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] YouTube:CyXn_GjWf_w",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=CyXn_GjWf_w",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "CyXn_GjWf_w",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    }
+  ],
+  "summary": "[arXiv]\n- The Lazuli Space Observatory: Opportunities for time-domain and multi-messenger astronomy\n- Revealing Cosmic Ecosystems with the Hubble Space Telescope in 2030s and Beyond\n\n[GitHub]\n- KOSASI",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": [],
+  "open_source_momentum": "",
+  "scientific_frontier": "",
+  "relevance_to_goal": ""
+}

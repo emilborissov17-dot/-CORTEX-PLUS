@@ -1,0 +1,134 @@
+{
+  "axis": "COGNITION_LEARNING_REVIEW",
+  "domain": "human",
+  "timestamp": "2026-06-20T05:37:24.022228+00:00",
+  "sources_count": 9,
+  "rss_count": 3,
+  "ddg_count": 4,
+  "youtube_count": 2,
+  "youtube_items": [
+    {
+      "title": "[YT] How AI is Changing Learning and Development in 2025AI in Education 2025: The Smart Classroom RevolutionTop AI YouTube Channels to Watch for Smarter Learning in 2025The future of learning: AI is revolutionizing education 4.014 Educational AI YouTubers Teaching ML in 2025 - DigitalOceanHow AI could radically change schools by 2050 — Harvard GazetteThe Best YouTube Channels for AI Learning and Staying Updated ...",
+      "summary": "[DESCRIPTION FALLBACK] Jan 23, 2025 · In today’s episode of the HR Leaders Podcast, we’re joined by Anindyo Naskar, Deputy General Manager – COE – Learning and Leadership Development at Landmark Group, to explore how AI is ... 🧠💡 Welcome to the future of education! In this video, we explore how AI in the classroom is transforming the way students learn and teachers teach. May 15, 2025 · From programming to research, the best creators break down complex concepts for beginners and professionals alike. This article revie",
+      "link": "https://www.youtube.com/watch?v=cNdHps3O7mQ",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "cNdHps3O7mQ",
+      "transcript_method": "description",
+      "transcript_chars": 523,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] AI in Education 2025: The Smart Classroom RevolutionTop AI YouTube Channels to Watch for Smarter Learning in 2025The future of learning: AI is revolutionizing education 4.014 Educational AI YouTubers Teaching ML in 2025 - DigitalOceanHow AI could radically change schools by 2050 — Harvard GazetteThe Best YouTube Channels for AI Learning and Staying Updated ...",
+      "summary": "[DESCRIPTION FALLBACK] 🧠💡 Welcome to the future of education! In this video, we explore how AI in the classroom is transforming the way students learn and teachers teach. May 15, 2025 · From programming to research, the best creators break down complex concepts for beginners and professionals alike. This article reviews the top AI YouTube channels, their content, and their influence, presenting a guide for smarter learning. Apr 28, 2024 · AI is revolutionizing education 4.0, enhancing human-led teaching, promoting equ",
+      "link": "https://www.youtube.com/watch?v=mh6_KvJ991I",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "mh6_KvJ991I",
+      "transcript_method": "description",
+      "transcript_chars": 523,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "problem": "Lack of clarity on the difference between studying and learning in educational contexts",
+    "root_cause": "Insufficient emphasis on the process of acquiring new understanding and skills in formal education",
+    "severity": "MEDIUM",
+    "leverage_points": [
+      "Educational institutions and policymakers",
+      "Technology and AI-based learning platforms"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Develop and implement more interactive and immersive learning experiences",
+        "measurable_goal": "Increase student engagement and retention rates by 20% within the next 2 years",
+        "timeframe": "medium-term"
+      },
+      {
+        "action": "Integrate AI-powered tools to personalize learning paths and provide real-time feedback",
+        "measurable_goal": "Improve student outcomes by 15% within the next 3 years",
+        "timeframe": "long-term"
+      }
+    ],
+    "evidence": [
+      "The article 'Studying or Learning? Did You Know That There's a Huge...' highlights the difference between studying and learning",
+      "The YouTube transcript 'How AI is Changing Learning and Development in 2025' discusses the potential of AI in transforming education"
+    ],
+    "generalization": "This problem connects to the domains of cognition, social structures, and technology, as it affects how individuals acquire knowledge and skills, and how societies approach education and personal development",
+    "summary": "The lack of clarity between studying and learning hinders effective education, and addressing this issue can improve learning outcomes and student engagement. Implementing interactive learning experiences and AI-powered tools can help bridge this gap.",
+    "risk_level": "MEDIUM"
+  },
+  "raw_items": [
+    {
+      "title": "Lotus: A Woman’s Journey oLotus: A Woman’s Journey of Empowerment",
+      "summary": "DOCUMENTARY FILM In the documentary educational film &#8220;The Taboo of Sovereignty, Money, Love and Power,&#8221; Mr. Liberty explores the taboos seldom discussed in polite conversation. He reveals the nature of global power structures, money as a control system and the futility of elections. He is empowering people with popular sovereignty as a key to unlocking [&#8230;]",
+      "link": "https://mindshiftentertainment.wordpress.com/2005/04/01/hello-world/",
+      "published": "Fri, 01 Apr 2005 21:27:39 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Lotus: A Woman’s Journey of Empowerment",
+      "summary": "CLAIRE GAILLARD &#8211; DANCE IS LIFE! &#8220;From the revelation that disconnectedness between people and their passion, between individuals and their communities, reflect agonized personal wounds in each of us, her Empower Moves was birthed. It builds community and honors the People with Transcendance through story telling and interpretive forms of dance, allowing ecstatic communion, reconnection [&#8230;]",
+      "link": "https://mindshiftentertainment.wordpress.com/2003/03/23/lotus-a-womans-journey-of-empowerment/",
+      "published": "Sun, 23 Mar 2003 23:15:05 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Fresh Wave",
+      "summary": "JOHNNY LIGHT For over three decades, Johnny Light has been guided by a vision of a new world coming, the “fresh wave” is coming. These twelve songs are professionally produced and arranged, an album of his finest original compositions recorded with Michael Cooper at Rising Star Studios in Eugene, Oregon. Songs like Yes, Nobody’s Gonna [&#8230;]",
+      "link": "https://mindshiftentertainment.wordpress.com/1988/09/09/fresh-wave/",
+      "published": "Fri, 09 Sep 1988 23:17:22 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Education",
+      "summary": "Education is the transmission of knowledge and skills and the development of character traits. Formal education happens in a complex institutional framework, like public schools. Non-formal education is also structured but occurs outside the formal schooling system, while informal education is unstructured learning through daily experiences. Formal and non-formal education are divided into levels ",
+      "link": "https://en.wikipedia.org/wiki/Education",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Tertiary education - Wikipedia",
+      "summary": "Tertiary education , also referred to as third-level , third-stage or post-secondary education , is the educational level following the completion of ...",
+      "link": "https://en.wikipedia.org/wiki/Tertiary_education",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Learning",
+      "summary": "Learning is the process of acquiring new understanding, knowledge, behavior, skills, values, attitudes, and preferences. The ability to learn is possessed by humans, other animals, and some machines. There is also evidence for some kind of learning in certain plants. Some learning is immediate, induced by a single event (e.g. being burned by a hot stove), but much skill and knowledge accumulate fr",
+      "link": "https://en.wikipedia.org/wiki/Learning",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Studying or Learning? Did You Know That There's a Huge... | Educatly",
+      "summary": "After learning the difference between studying and learning, are you ready to study and learn? Educatly can connect you to more than 100,000 study abroad programs all over the world.",
+      "link": "https://www.educatly.com/blog/153/difference-between-studying-and-learning",
+      "source_type": "ddg"
+    },
+    {
+      "title": "[YT] How AI is Changing Learning and Development in 2025AI in Education 2025: The Smart Classroom RevolutionTop AI YouTube Channels to Watch for Smarter Learning in 2025The future of learning: AI is revolutionizing education 4.014 Educational AI YouTubers Teaching ML in 2025 - DigitalOceanHow AI could radically change schools by 2050 — Harvard GazetteThe Best YouTube Channels for AI Learning and Staying Updated ...",
+      "summary": "[DESCRIPTION FALLBACK] Jan 23, 2025 · In today’s episode of the HR Leaders Podcast, we’re joined by Anindyo Naskar, Deputy General Manager – COE – Learning and Leadership Development at Landmark Group, to explore how AI is ... 🧠💡 Welcome to the future of education! In this video, we explore how AI in the classroom is transforming the way students learn and teachers teach. May 15, 2025 · From programming to research, the best creators break down complex concepts for beginners and professionals alike. This article revie",
+      "link": "https://www.youtube.com/watch?v=cNdHps3O7mQ",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "cNdHps3O7mQ",
+      "transcript_method": "description",
+      "transcript_chars": 523,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] AI in Education 2025: The Smart Classroom RevolutionTop AI YouTube Channels to Watch for Smarter Learning in 2025The future of learning: AI is revolutionizing education 4.014 Educational AI YouTubers Teaching ML in 2025 - DigitalOceanHow AI could radically change schools by 2050 — Harvard GazetteThe Best YouTube Channels for AI Learning and Staying Updated ...",
+      "summary": "[DESCRIPTION FALLBACK] 🧠💡 Welcome to the future of education! In this video, we explore how AI in the classroom is transforming the way students learn and teachers teach. May 15, 2025 · From programming to research, the best creators break down complex concepts for beginners and professionals alike. This article reviews the top AI YouTube channels, their content, and their influence, presenting a guide for smarter learning. Apr 28, 2024 · AI is revolutionizing education 4.0, enhancing human-led teaching, promoting equ",
+      "link": "https://www.youtube.com/watch?v=mh6_KvJ991I",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "mh6_KvJ991I",
+      "transcript_method": "description",
+      "transcript_chars": 523,
+      "has_full_transcript": false
+    }
+  ]
+}

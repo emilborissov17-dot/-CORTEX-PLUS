@@ -1,0 +1,145 @@
+{
+  "axis": "SOCIAL_RELATIONS_REVIEW",
+  "domain": "human",
+  "timestamp": "2026-06-18T19:39:02.050315+00:00",
+  "sources_count": 10,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 2,
+  "youtube_items": [
+    {
+      "title": "[YT] ANRI - I Can't Stop The Loneliness - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] Enjoy the videos and music you love, upload original content, and share it all with friends, family, and the world on YouTube.",
+      "link": "https://www.youtube.com/watch?v=6bALJxjL8jw",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "6bALJxjL8jw",
+      "transcript_method": "description",
+      "transcript_chars": 149,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] I Was An MIT Educated Neurosurgeon Now... - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] Here, I share my story about how I spent the last two decades of my life as a neurosurgeon who went through a mid-life crisis and got through to the other si...",
+      "link": "https://www.youtube.com/watch?v=25LUF8GmbFU",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "25LUF8GmbFU",
+      "transcript_method": "description",
+      "transcript_chars": 183,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "problem": "Increased social unrest and polarization due to conflicts and political tensions",
+    "root_cause": "Underlying ideological and political divisions, exacerbated by social media and biased information",
+    "severity": "MEDIUM",
+    "leverage_points": [
+      "Social media platforms and their algorithms",
+      "Political leaders and their rhetoric"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Implement fact-checking and media literacy programs",
+        "measurable_goal": "Reduce the spread of misinformation by 20% within the next 6 months",
+        "timeframe": "medium-term"
+      },
+      {
+        "action": "Encourage bipartisan dialogue and cooperation",
+        "measurable_goal": "Increase the number of joint legislative initiatives by 30% within the next year",
+        "timeframe": "long-term"
+      }
+    ],
+    "evidence": [
+      "Six-in-ten US adults say abortion should be legal in all or most cases, indicating deep divisions on social issues",
+      "Opinions on the tension between Pope Leo and President Trump split sharply along party lines, highlighting partisan polarization"
+    ],
+    "generalization": "This problem connects to the domain of Civilization, as social unrest and polarization can undermine social cohesion and destabilize institutions, ultimately affecting the planet's ecological and economic systems",
+    "summary": "The data indicates increased social unrest and polarization due to conflicts and political tensions, which can be addressed through fact-checking programs and bipartisan dialogue. This problem has significant implications for the stability of human societies and the planet as a whole.",
+    "risk_level": "MEDIUM"
+  },
+  "raw_items": [
+    {
+      "title": "Catholics in Latin America generally have positive views of Pope Leo",
+      "summary": "In six Latin American countries surveyed, most Catholics view Pope Leo XIV favorably, though his ratings trail those Pope Francis received early in his papacy.",
+      "link": "https://www.pewresearch.org/short-reads/2026/06/18/catholics-in-latin-america-generally-have-positive-views-of-pope-leo/",
+      "published": "Thu, 18 Jun 2026 17:41:43 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Most U.S. Catholics view Pope Leo favorably; many think Trump has been too critical of him",
+      "summary": "About eight-in-ten U.S. Catholics view Pope Leo XIV favorably, though opinions on the tension between Leo and President Trump split sharply along party lines.",
+      "link": "https://www.pewresearch.org/short-reads/2026/06/18/most-us-catholics-view-pope-leo-favorably-many-think-trump-has-been-too-critical-of-him/",
+      "published": "Thu, 18 Jun 2026 17:41:09 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Is U.S. fertility at an all-time low? It depends how you measure it",
+      "summary": "U.S. fertility rates have hit historic lows, but three common measures tell different stories about whether American families are truly shrinking.",
+      "link": "https://www.pewresearch.org/short-reads/2026/06/17/is-us-fertility-at-an-all-time-low-it-depends-how-you-measure-it/",
+      "published": "Wed, 17 Jun 2026 18:52:43 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "What the data says about abortion in the U.S.",
+      "summary": "Six-in-ten US adults say abortion should be legal in all or most cases. Here's a look at data on abortion rates, providers, demographics and more.",
+      "link": "https://www.pewresearch.org/short-reads/2026/06/17/what-the-data-says-about-abortion-in-the-us/",
+      "published": "Wed, 17 Jun 2026 16:02:33 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Bowen: US-Iran deal raises inescapable question of what the war was for",
+      "summary": "While the human cost is clear, the Iranian regime has not just survived the war, it has been empowered.",
+      "link": "https://www.bbc.com/news/articles/clyegr2mp8jo?at_medium=RSS&at_campaign=rss",
+      "published": "Thu, 18 Jun 2026 15:53:55 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Why Iran believes deal with US leaves it stronger than before",
+      "summary": "Iran has come out of the war's first chapter stronger than many expected, but its next challenge may be harder, the BBC Persian Service's Amir Azimi writes.",
+      "link": "https://www.bbc.com/news/articles/c932yqz8lggo?at_medium=RSS&at_campaign=rss",
+      "published": "Thu, 18 Jun 2026 15:38:18 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Moscow residents complain of black rain after largest Ukrainian attack hits oil refinery",
+      "summary": "A refinery and a shopping centre burned after almost 200 Ukrainian drones struck an area to the south-east of the Russian capital.",
+      "link": "https://www.bbc.com/news/articles/c98291g5rr1o?at_medium=RSS&at_campaign=rss",
+      "published": "Thu, 18 Jun 2026 15:46:36 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Thirty-five killed as gunmen attack Niger's biggest airport",
+      "summary": "Niger has been fighting a militant Islamist insurgency for a decade and in January suspected jihadists attacked the same airport.",
+      "link": "https://www.bbc.com/news/articles/cdx7krkdqeno?at_medium=RSS&at_campaign=rss",
+      "published": "Thu, 18 Jun 2026 17:28:32 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] ANRI - I Can't Stop The Loneliness - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] Enjoy the videos and music you love, upload original content, and share it all with friends, family, and the world on YouTube.",
+      "link": "https://www.youtube.com/watch?v=6bALJxjL8jw",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "6bALJxjL8jw",
+      "transcript_method": "description",
+      "transcript_chars": 149,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] I Was An MIT Educated Neurosurgeon Now... - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] Here, I share my story about how I spent the last two decades of my life as a neurosurgeon who went through a mid-life crisis and got through to the other si...",
+      "link": "https://www.youtube.com/watch?v=25LUF8GmbFU",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "25LUF8GmbFU",
+      "transcript_method": "description",
+      "transcript_chars": 183,
+      "has_full_transcript": false
+    }
+  ]
+}

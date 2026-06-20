@@ -3,33 +3,33 @@
   "metrics": {
     "axis": "ECONOMY_WORK_REVIEW",
     "source": "world_bank_api",
-    "fetched_date": "2026-06-11",
+    "fetched_date": "2026-06-20",
     "metrics": {
       "gdp_per_capita_usd": 13631.2043097215,
       "gdp_growth_pct": 2.87194964204316,
       "unemployment_pct": 4.79097241077406,
-      "gini_index": null,
-      "income_share_bottom20": null,
-      "income_share_top10": null,
-      "labor_force_participation": 60.9792598100467
+      "labor_force_participation": 60.9792598100467,
+      "gini_index": 39.625,
+      "income_share_bottom20": 6.2,
+      "income_share_top10": 30.575
     },
-    "data_quality": "4/7 indicators fetched"
+    "data_quality": "7/7 indicators fetched"
   },
   "raw": {
     "axis": "ECONOMY_WORK_REVIEW",
     "source": "world_bank_api",
-    "fetched_date": "2026-06-11",
+    "fetched_date": "2026-06-20",
     "metrics": {
       "gdp_per_capita_usd": 13631.2043097215,
       "gdp_growth_pct": 2.87194964204316,
       "unemployment_pct": 4.79097241077406,
-      "gini_index": null,
-      "income_share_bottom20": null,
-      "income_share_top10": null,
-      "labor_force_participation": 60.9792598100467
+      "labor_force_participation": 60.9792598100467,
+      "gini_index": 39.625,
+      "income_share_bottom20": 6.2,
+      "income_share_top10": 30.575
     },
-    "data_quality": "4/7 indicators fetched"
+    "data_quality": "7/7 indicators fetched"
   },
-  "snapshot_timestamp": "2026-06-11T19:06:34.007055+00:00",
+  "snapshot_timestamp": "2026-06-20T07:35:26.248378+00:00",
   "axis": "ECONOMY_WORK_REVIEW"
 }

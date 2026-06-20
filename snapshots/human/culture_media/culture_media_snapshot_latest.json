@@ -3,7 +3,7 @@
   "raw": {
     "axis": "CULTURE_MEDIA_REVIEW",
     "source": "world_bank_api",
-    "fetched_date": "2026-06-11",
+    "fetched_date": "2026-06-20",
     "metrics": {
       "internet_users_pct": 73.6,
       "mobile_subscriptions_per100": 111.5,
@@ -14,6 +14,6 @@
     },
     "data_quality": "6/6 indicators fetched"
   },
-  "snapshot_timestamp": "2026-06-11T19:06:25.695785+00:00",
+  "snapshot_timestamp": "2026-06-20T07:36:16.411875+00:00",
   "axis": "CULTURE_MEDIA_REVIEW"
 }

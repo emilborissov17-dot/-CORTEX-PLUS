@@ -1,0 +1,157 @@
+{
+  "axis": "TECHNOLOGY_INFRA_REVIEW",
+  "domain": "civilization",
+  "timestamp": "2026-06-19T17:41:29.734166+00:00",
+  "sources_count": 11,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] How Digital Inequality can be solved",
+      "summary": "[DESCRIPTION FALLBACK] Evan Dixon, President, Global Fixed Broadband, Viasat, talks about the so-called digital divide and what companies like his are ...",
+      "link": "https://www.youtube.com/watch?v=jkdxU807Nww",
+      "published": "2022-07-29T16:00:02Z",
+      "source_type": "youtube",
+      "channel": "First Coast News",
+      "video_id": "jkdxU807Nww",
+      "transcript_method": "description",
+      "transcript_chars": 154,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] What is The Digital Divide? Mozilla Explains",
+      "summary": "[DESCRIPTION FALLBACK] What is the digital divide, and can we bridge it? Nearly half of the world is still offline, meaning half of the world is still unable to ...",
+      "link": "https://www.youtube.com/watch?v=Y2hEiMOgc1g",
+      "published": "2021-06-22T16:00:30Z",
+      "source_type": "youtube",
+      "channel": "Mozilla",
+      "video_id": "Y2hEiMOgc1g",
+      "transcript_method": "description",
+      "transcript_chars": 164,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] The &#39;Digital Divide&#39; and COVID-19&#39;s Impact on Internet Access | Mashable",
+      "summary": "[DESCRIPTION FALLBACK] Mashable's Rachel Kraus walks through the many ways the digital divide has intensified during the COVID-19 pandemic — and ...",
+      "link": "https://www.youtube.com/watch?v=xkbZPAJF88k",
+      "published": "2021-04-26T17:00:33Z",
+      "source_type": "youtube",
+      "channel": "Mashable",
+      "video_id": "xkbZPAJF88k",
+      "transcript_method": "description",
+      "transcript_chars": 148,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "problem": "Digital inequality persists, with nearly half of the world still offline, and the digital divide intensifying during the COVID-19 pandemic",
+    "root_cause": "Lack of access to affordable and reliable internet infrastructure, particularly in rural and underprivileged areas",
+    "severity": "HIGH",
+    "leverage_points": [
+      "Telecommunication companies and internet service providers",
+      "Government agencies and policymakers"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Implement low-cost, satellite-based internet services, such as those offered by Viasat",
+        "measurable_goal": "Increase the number of people with access to reliable internet by 20% within the next 2 years",
+        "timeframe": "medium-term"
+      },
+      {
+        "action": "Develop and deploy community-based internet infrastructure, such as mesh networks",
+        "measurable_goal": "Reduce the digital divide by 15% in targeted areas within the next 3 years",
+        "timeframe": "long-term"
+      }
+    ],
+    "evidence": [
+      "Nearly half of the world is still offline, meaning half of the world is still unable to access the internet",
+      "The digital divide has intensified during the COVID-19 pandemic, with many people unable to access online education, healthcare, and other essential services"
+    ],
+    "generalization": "This problem connects to other domains, such as education, healthcare, and economic development, as access to reliable internet is essential for participating in the modern economy and accessing essential services",
+    "summary": "The digital divide persists, with many people lacking access to reliable internet, and targeted actions are needed to address this issue and promote digital equality. Telecommunication companies and government agencies must work together to implement affordable and reliable internet infrastructure, particularly in rural and underprivileged areas.",
+    "risk_level": "HIGH"
+  },
+  "raw_items": [
+    {
+      "title": "How I Get Free Traffic from ChatGPT in 2025 (AIO vs SEO)",
+      "summary": "<p style=\"text-align: left;\">Three weeks ago, I tested something that completely changed how I think about organic traffic. I opened ChatGPT and asked a simple question: \"What's the best course on building SaaS with WordPress?\" The answer that appeared stopped me cold. My course showed up as the first result, recommended directly by the AI with specific reasons why it was valuable.</p><p style=\"text-align: left;\">I hadn't paid for advertising. I hadn't done any special promotion. The AI simply d",
+      "link": "https://techncruncher.blogspot.com/2025/12/how-i-get-free-traffic-from-chatgpt-in.html",
+      "published": "Thu, 04 Dec 2025 05:37:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Top 10 AI Tools That Will Transform Your Content Creation in 2025",
+      "summary": "<div style=\"text-align: left;\"><a href=\"https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEge5QgwLKWbavTUhIedQLI79z5BGD4h0ZoH4YMK6bGBL6fY4Je8R3GZurMZaJmtYirFS6pS-GgZD3xFAqfln8w8faEY2iDehndQNeez57DoiDsgYFJrIwMOLBjzcZiOJrqYDktm6pmRkwtprJChag0yQoeEZx1Pa_eKnt3kKzz69f-FSPWu_JXQxFq5Z8WZ/s1920/Blue%20Purple%20Futuristic%20Modern%203D%20Tech%20Company%20Business%20Presentation.jpg\" style=\"clear: left; margin-bottom: 1em;\"><span style=\"font-family: Coda;\"><img alt=\"Top 10 AI Tools That Will Trans",
+      "link": "https://techncruncher.blogspot.com/2025/01/top-10-ai-tools-that-will-transform.html",
+      "published": "Thu, 02 Jan 2025 09:26:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "LimeWire AI Studio Review 2023: Details, Pricing & Features",
+      "summary": "<p style=\"text-align: left;\"><span style=\"font-family: Oxygen;\">&nbsp;</span></p><p style=\"text-align: left;\"><span style=\"font-family: Oxygen;\">In the rapidly advancing landscape of AI technology and innovation, LimeWire emerges as a unique platform in the realm of generative AI tools. This platform not only stands out from the multitude of existing AI tools but also brings a fresh approach to content generation. LimeWire not only empowers users to create AI content but also provides creators w",
+      "link": "https://techncruncher.blogspot.com/2023/12/limewire-ai-studio-review-2023-details.html",
+      "published": "Tue, 12 Dec 2023 16:10:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Top 10 AI Tools in 2023 That Will Make Your Life Easier",
+      "summary": "<p><span style=\"font-family: Montserrat;\"><br /></span></p><div class=\"separator\" style=\"clear: both; text-align: center;\"><a href=\"https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiu91xnR3LQV62WoiA0scuFOTa-Xx9vIwouaceeyosFtZrJB0UivYIWtbcF3TCWEjKhRQVBiSeB00RQI0-cO_eBG6d05_6UV7zYw9qzyHMJ6u2m9_itNW2mFAS8LChEhhJQ14aJbI3GrkEsY9xCTExAT-qxUSh5asVFMAmX-ceWufpgV_DrG9tk3Y4umw/s1920/Blue%20Purple%20Futuristic%20Modern%203D%20Tech%20Company%20Business%20Presentation-min.jpg\" style=\"margin-left: 1",
+      "link": "https://techncruncher.blogspot.com/2023/01/top-10-ai-tools-in-2023-that-will-make.html",
+      "published": "Wed, 25 Jan 2023 19:52:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "The Most Promising Ebola Vaccine Has Been Sitting on the Shelf for 15 Years",
+      "summary": "Years after initial tests, researchers are now racing to see if a vaccine developed in 2011 can help fight the current Bundibugyo outbreak in Congo.",
+      "link": "https://www.wired.com/story/ebola-vaccine-sitting-on-shelf-for-15-years/",
+      "published": "Fri, 19 Jun 2026 14:23:43 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "The Best iPad to Buy (and Some to Avoid) in 2026: Compare the Air, Pro, Mini",
+      "summary": "We break down the current iPad lineup to help you figure out which of Apple’s tablets is best for you.",
+      "link": "https://www.wired.com/gallery/the-best-ipad/",
+      "published": "Fri, 19 Jun 2026 12:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Best Mesh Wi-Fi Systems (2026): Netgear, Asus, Amazon, and More",
+      "summary": "Forget about patchy internet connections and dead spots in the house. These WIRED-tested multiroom mesh systems will get you online in no time.",
+      "link": "https://www.wired.com/story/best-mesh-wifi-routers/",
+      "published": "Fri, 19 Jun 2026 11:31:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "The Best Art TVs",
+      "summary": "Even after your movies end, these art televisions look stunning on any wall.",
+      "link": "https://www.wired.com/story/best-art-tvs/",
+      "published": "Fri, 19 Jun 2026 11:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] How Digital Inequality can be solved",
+      "summary": "[DESCRIPTION FALLBACK] Evan Dixon, President, Global Fixed Broadband, Viasat, talks about the so-called digital divide and what companies like his are ...",
+      "link": "https://www.youtube.com/watch?v=jkdxU807Nww",
+      "published": "2022-07-29T16:00:02Z",
+      "source_type": "youtube",
+      "channel": "First Coast News",
+      "video_id": "jkdxU807Nww",
+      "transcript_method": "description",
+      "transcript_chars": 154,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] What is The Digital Divide? Mozilla Explains",
+      "summary": "[DESCRIPTION FALLBACK] What is the digital divide, and can we bridge it? Nearly half of the world is still offline, meaning half of the world is still unable to ...",
+      "link": "https://www.youtube.com/watch?v=Y2hEiMOgc1g",
+      "published": "2021-06-22T16:00:30Z",
+      "source_type": "youtube",
+      "channel": "Mozilla",
+      "video_id": "Y2hEiMOgc1g",
+      "transcript_method": "description",
+      "transcript_chars": 164,
+      "has_full_transcript": false
+    }
+  ]
+}

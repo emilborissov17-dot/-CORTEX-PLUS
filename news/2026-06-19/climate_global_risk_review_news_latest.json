@@ -1,0 +1,125 @@
+{
+  "axis": "CLIMATE_GLOBAL_RISK_REVIEW",
+  "fetched_at": "2026-06-19T17:46:54.101452+00:00",
+  "smart_query": "climate change CO2 emissions",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube_transcripts": 3,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "Simpler, older version of Stonehenge found three miles from famous site",
+      "snippet": "The structure consisted of two posts that lined up with the solstices 5,000 years ago. ",
+      "url": "https://www.bbc.com/news/articles/clyxw8550y8o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "What is El Niño and why could it mean record temperatures?",
+      "snippet": "Global temperatures are expected to rise in the coming months as El Niño begins.",
+      "url": "https://www.bbc.com/news/articles/cj97npgk92po?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "El Niño under way and threatens weather extremes, scientists say",
+      "snippet": "An El Niño event has officially started, say US scientists, raising fears of extreme weather and higher temperatures.",
+      "url": "https://www.bbc.com/news/articles/c75ylx7g00xo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "ESCOMP/CESM",
+      "snippet": "The Community Earth System Model",
+      "stars": 471,
+      "url": "https://github.com/ESCOMP/CESM",
+      "updated": "2026-06-19",
+      "source": "GitHub"
+    },
+    {
+      "title": "xgcm/xgcm",
+      "snippet": "python package for analyzing general circulation model output data",
+      "stars": 252,
+      "url": "https://github.com/xgcm/xgcm",
+      "updated": "2026-06-18",
+      "source": "GitHub"
+    },
+    {
+      "title": "climlab/climlab",
+      "snippet": "Python package for process-oriented climate modeling",
+      "stars": 245,
+      "url": "https://github.com/climlab/climlab",
+      "updated": "2026-06-16",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Optimal scenario design for climate emulation",
+      "snippet": "As deep learning for physical systems continues to grow in popularity, efforts to improve generalizability have primarily focused on designing architectures that embed physical constraints. However, for machine-learning surrogate climate models (emulators), we show that the low structural diversity ",
+      "url": "https://arxiv.org/abs/2606.19302v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Regional Climate Model Emulation with Diffusion Approaches: What is the Added Value of Generative Machine Learning?",
+      "snippet": "Emulators provide a cost-effective alternative to regional climate models (RCMs) by capturing their dynamical downscaling function. They link large-scale predictors simulated by global climate models (GCMs) to RCM-simulated high-resolution fields of the target variable, here precipitation. Machine l",
+      "url": "https://arxiv.org/abs/2606.14570v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[How to feng shui your fridge — and other happy climate hacks | Jiaying Zhao (re-release)] Is it possible for taking action on climate change to make you feel happy? Behavioral scientist Jiaying Zhao believes that's the only way we'll create lasting, sustainable change. From treat meals to feng shui fridges, she offers eight life hacks to lower your carbon emissions while increasing your joy and fulfillment. Hosted on Acast. See acast.com/privacy for more information.",
+  "wiki": null,
+  "youtube_items": [
+    {
+      "title": "[YT] Top 5 Climate Disasters of 2025 That Shook the World | Planet Pulse | N18G",
+      "summary": "[DESCRIPTION FALLBACK] 2025 marked a turning point in the global climate crisis, with extreme weather events leaving a trail of destruction across ...",
+      "link": "https://www.youtube.com/watch?v=LX_sXGvOTg4",
+      "source_type": "youtube",
+      "channel": "Firstpost",
+      "video_id": "LX_sXGvOTg4",
+      "transcript_method": "description",
+      "transcript_chars": 150,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Climate change or just crazy weather? The Climate Question | BBC World Service",
+      "summary": "[DESCRIPTION FALLBACK] It's one of the most commonly debated questions in the climate world: Is this weather we're experiencing natural, or is it linked to ...",
+      "link": "https://www.youtube.com/watch?v=b3NmhxUDt-4",
+      "source_type": "youtube",
+      "channel": "BBC World Service",
+      "video_id": "b3NmhxUDt-4",
+      "transcript_method": "description",
+      "transcript_chars": 159,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Inside the planet’s most urgent climate warning | Global Warning E1 | Featured Documentary",
+      "summary": "[DESCRIPTION FALLBACK] This decisive decade demands unprecedented action to address humanity's greatest challenge. With global access, this ...",
+      "link": "https://www.youtube.com/watch?v=F8vI5_gN90g",
+      "source_type": "youtube",
+      "channel": "Al Jazeera English",
+      "video_id": "F8vI5_gN90g",
+      "transcript_method": "description",
+      "transcript_chars": 143,
+      "has_full_transcript": false
+    }
+  ],
+  "summary": "Изследванията показват, че климатичните крайности се увеличават, а новите технологии и модели са разработвани за анализа и предсказването на климатичните промени. Възниква необходимост от по-устойчива цивилизация, която да защити човечеството от климатичните рискове. Климатичните промени са един от основните приоритети за постигане на устойчива цивилизация.",
+  "urgency": "CRITICAL",
+  "sentiment": "CRITICAL",
+  "key_developments": [
+    "Simpler, older version of Stonehenge found three miles from famous site",
+    "What is El Niño and why could it mean record temperatures?",
+    "The Community Earth System Model",
+    "python package for analyzing general circulation model output data",
+    "Python package for process-oriented climate modeling"
+  ],
+  "open_source_momentum": "ESCOMP/CESM, xgcm, climlab",
+  "scientific_frontier": "Optimal scenario design for climate emulation, Regional Climate Model Emulation with Diffusion Approaches: What is the Added Value of Generative Machine Learning?",
+  "relevance_to_goal": "Висока"
+}

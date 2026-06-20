@@ -1,0 +1,157 @@
+{
+  "axis": "ECOSYSTEMS_BIODIVERSITY_REVIEW",
+  "domain": "planet",
+  "timestamp": "2026-06-18T18:15:56.236319+00:00",
+  "sources_count": 11,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] Climate 101: Deforestation | National Geographic",
+      "summary": "- [Narrator] Forests cover\nabout 30% of the planet. And the ecosystems they\ncreate play an essential role in supporting life on earth. But deforestation is\nclearing earth's forest on a massive scale. And at the current rate of destruction, the world's rainforest\ncan completely disappear within 100 years. Why should we care about deforestation? Together Forestry and\nAgriculture are responsible for 24% of greenhouse gas\nemissions, making deforestation a significant contributor\nto climate change. Deforestation impacts the\namount of greenhouse gases in the atmosphere in two ways. First, when trees are felled, they release the carbon they are storing\ninto the atmosphere. Second, trees play a\ncritical role in absorbing the greenhouse gases\nthat fuel global warming. Fewer forests mean larger\namou",
+      "link": "https://www.youtube.com/watch?v=Ic-J6hcSKa8",
+      "published": "2017-08-21T17:00:03Z",
+      "source_type": "youtube",
+      "channel": "National Geographic",
+      "video_id": "Ic-J6hcSKa8",
+      "transcript_method": "youtube_transcript_api",
+      "transcript_chars": 2102,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Biodiversity Loss Emergency: The Silent Extinction Crisis Explained",
+      "summary": "Picture yourself walking through a lush rainforest, where the air is thick with humidity and the sounds of life surround you from every direction.  The vibrant calls of tropical birds echo above, while below, a myriad of insects buzz and rustle among the leaves.  Brightly colored flowers and plants of every imaginable shade create a mosaic of life and beauty.  This is biodiversity in action – the variety of life forms that make up our planet's ecosystems. Biodiversity is more than just an array of different species; it’s the intricate web of life that sustains ecosystems and, by extension, human life.  It encompasses the diversity within species, between species, and of ecosystems themselves.  Healthy biodiversity ensures ecosystem productivity, where each species, no matter how small, has",
+      "link": "https://www.youtube.com/watch?v=DjVU3kgmVBc",
+      "published": "2024-07-19T10:00:10Z",
+      "source_type": "youtube",
+      "channel": "The Knowledge Snack",
+      "video_id": "DjVU3kgmVBc",
+      "transcript_method": "youtube_transcript_api",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] How losing biodiversity could be killing us",
+      "summary": "What if a small cut like this could kill you? It could have – once upon a time. Now we have penicillin, an antibiotic that's saved countless lives.  Like many other drugs used to treat malaria, pain and cancer... Penicillin was made using substances that come from nature. But we're losing plants, animals and other species way too quickly. It's not only destroying our chances  to find more revolutionary drugs. It's also wrecking the ecosystems that keep us healthy in the first place. So by killing biodiversity, are we also putting our lives at risk? It's 1928 – and world-famous scientist – and slob – Alexander Fleming finds mold growing on bacteria-filled petri dishes he hasn't cleaned up. Amazingly, the area around the mold is free of bacteria. The fungus killed them. The discovery paved t",
+      "link": "https://www.youtube.com/watch?v=-608IrAFiOM",
+      "published": "2023-04-28T14:00:00Z",
+      "source_type": "youtube",
+      "channel": "DW Planet A",
+      "video_id": "-608IrAFiOM",
+      "transcript_method": "youtube_transcript_api",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "Deforestation is clearing Earth's forests on a massive scale, with the world's rainforest potentially disappearing within 100 years",
+    "root_cause": "Agriculture and forestry practices, driven by human demand for resources and land, are the primary drivers of deforestation",
+    "severity": "CRITICAL",
+    "leverage_points": [
+      "Government policies and regulations regarding land use and conservation",
+      "International cooperation and agreements to protect and restore forests"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Implement sustainable forest management practices and certification programs",
+        "measurable_goal": "Reduce deforestation rate by 50% within the next 10 years",
+        "timeframe": "medium-term"
+      },
+      {
+        "action": "Establish and expand protected areas, such as national parks and wildlife reserves",
+        "measurable_goal": "Increase global protected area coverage by 20% within the next 15 years",
+        "timeframe": "long-term"
+      }
+    ],
+    "evidence": [
+      "Deforestation is clearing earth's forest on a massive scale, with the world's rainforest potentially disappearing within 100 years",
+      "Forests cover about 30% of the planet and play an essential role in supporting life on earth"
+    ],
+    "generalization": "This problem connects to the domains of human health, climate change, and biodiversity loss, as forests provide essential ecosystem services, including air and water filtration, soil conservation, and habitat for countless species",
+    "summary": "Deforestation poses a critical threat to the planet, with potentially devastating consequences for ecosystems, human health, and the climate. Immediate action is necessary to reduce deforestation rates and protect the world's forests.",
+    "risk_level": "CRITICAL"
+  },
+  "raw_items": [
+    {
+      "title": "Global",
+      "summary": "<span class=\"field field--name-title field--type-string field--label-hidden\">Global</span>\n<span class=\"field field--name-uid field--type-entity-reference field--label-hidden\"><span>integrations</span></span>\n<span class=\"field field--name-created field--type-created field--label-hidden\"><time class=\"datetime\" datetime=\"2022-02-21T08:14:38+01:00\" title=\"Monday, February 21, 2022 - 08:14\">Mon, 02/21/2022 - 08:14</time>\n</span>\n<span class=\"a2a_kit a2a_kit_size_20 addtoany_list\"><a class=\"a2a_butt",
+      "link": "https://iucn.org/our-work/region/global",
+      "published": "Mon, 21 Feb 2022 07:14:38 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Inside IUCN",
+      "summary": "<span class=\"field field--name-title field--type-string field--label-hidden\">Inside IUCN</span>\n<span class=\"field field--name-uid field--type-entity-reference field--label-hidden\"><span>review.sm</span></span>\n<span class=\"field field--name-created field--type-created field--label-hidden\"><time class=\"datetime\" datetime=\"2021-11-18T11:17:35+01:00\" title=\"Thursday, November 18, 2021 - 11:17\">Thu, 11/18/2021 - 11:17</time>\n</span>\n\n\n<span class=\"a2a_kit a2a_kit_size_20 addtoany_list\"><a class=\"a2",
+      "link": "https://iucn.org/content/inside-iucn",
+      "published": "Thu, 18 Nov 2021 10:17:35 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "DG Speech Node",
+      "summary": "<span class=\"field field--name-title field--type-string field--label-hidden\">DG Speech Node</span>\n<span class=\"field field--name-uid field--type-entity-reference field--label-hidden\"><span>review.webtf</span></span>\n<span class=\"field field--name-created field--type-created field--label-hidden\"><time class=\"datetime\" datetime=\"2021-11-18T10:56:51+01:00\" title=\"Thursday, November 18, 2021 - 10:56\">Thu, 11/18/2021 - 10:56</time>\n</span>\n\n\n<span class=\"a2a_kit a2a_kit_size_20 addtoany_list\"><a cla",
+      "link": "https://iucn.org/content/dg-speech-node",
+      "published": "Thu, 18 Nov 2021 09:56:51 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "It is time for a Global Wildlife Health Authority",
+      "summary": "<span class=\"field field--name-title field--type-string field--label-hidden\">It is time for a Global Wildlife Health Authority</span>\n<span class=\"field field--name-uid field--type-entity-reference field--label-hidden\"><span>integrations</span></span>\n<span class=\"field field--name-created field--type-created field--label-hidden\"><time class=\"datetime\" datetime=\"2021-10-20T09:48:06+02:00\" title=\"Wednesday, October 20, 2021 - 09:48\">Wed, 10/20/2021 - 09:48</time>\n</span>\n\n\n<span class=\"a2a_kit a2",
+      "link": "https://iucn.org/content/it-time-global-wildlife-health-authority",
+      "published": "Wed, 20 Oct 2021 07:48:06 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "On the brink of extinction, the vaquita gets a digital lifeline",
+      "summary": "Scientists have digitally preserved the world’s most endangered marine mammal by creating highly detailed 3D models of a vaquita skeleton using advanced imaging technology. The virtual archive provides an unprecedented look at the species and could help inspire conservation efforts before the tiny porpoise disappears forever.",
+      "link": "https://www.sciencedaily.com/releases/2026/06/260616102223.htm",
+      "published": "Wed, 17 Jun 2026 08:01:37 EDT",
+      "source_type": "rss"
+    },
+    {
+      "title": "New study explores potential cross-species spread of chronic wasting disease",
+      "summary": "A new study found that chronic wasting disease can sometimes spread silently, with infectious prions present even in animals that show no symptoms. While there is no confirmed human risk, researchers say the disease’s ability to evolve and spread across species warrants close attention.",
+      "link": "https://www.sciencedaily.com/releases/2026/06/260615033841.htm",
+      "published": "Tue, 16 Jun 2026 10:06:24 EDT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Yellowstone wolves may not have reshaped the national park after all",
+      "summary": "One of the most celebrated claims about Yellowstone’s wolves is facing a major challenge. Scientists say the study behind the famous trophic cascade story relied on flawed methods that overstated the ecological impact of wolf recovery. Their reanalysis found no evidence for a dramatic, park-wide surge in willow growth. Instead, the effects appear smaller and vary from place to place.",
+      "link": "https://www.sciencedaily.com/releases/2026/06/260613215510.htm",
+      "published": "Sun, 14 Jun 2026 00:27:09 EDT",
+      "source_type": "rss"
+    },
+    {
+      "title": "A legendary golden fabric lost for 2,000 years has returned",
+      "summary": "Researchers in South Korea have recreated the legendary “sea silk” once prized by emperors, using fibers from a clam cultivated in Korean coastal waters. They discovered that its famous golden shine comes from tiny protein structures that reflect light rather than from pigments or dyes. Because the color is built into the fiber’s structure, it can remain vibrant for centuries.",
+      "link": "https://www.sciencedaily.com/releases/2026/06/260612021000.htm",
+      "published": "Fri, 12 Jun 2026 03:02:55 EDT",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] Climate 101: Deforestation | National Geographic",
+      "summary": "- [Narrator] Forests cover\nabout 30% of the planet. And the ecosystems they\ncreate play an essential role in supporting life on earth. But deforestation is\nclearing earth's forest on a massive scale. And at the current rate of destruction, the world's rainforest\ncan completely disappear within 100 years. Why should we care about deforestation? Together Forestry and\nAgriculture are responsible for 24% of greenhouse gas\nemissions, making deforestation a significant contributor\nto climate change. Deforestation impacts the\namount of greenhouse gases in the atmosphere in two ways. First, when trees are felled, they release the carbon they are storing\ninto the atmosphere. Second, trees play a\ncritical role in absorbing the greenhouse gases\nthat fuel global warming. Fewer forests mean larger\namou",
+      "link": "https://www.youtube.com/watch?v=Ic-J6hcSKa8",
+      "published": "2017-08-21T17:00:03Z",
+      "source_type": "youtube",
+      "channel": "National Geographic",
+      "video_id": "Ic-J6hcSKa8",
+      "transcript_method": "youtube_transcript_api",
+      "transcript_chars": 2102,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Biodiversity Loss Emergency: The Silent Extinction Crisis Explained",
+      "summary": "Picture yourself walking through a lush rainforest, where the air is thick with humidity and the sounds of life surround you from every direction.  The vibrant calls of tropical birds echo above, while below, a myriad of insects buzz and rustle among the leaves.  Brightly colored flowers and plants of every imaginable shade create a mosaic of life and beauty.  This is biodiversity in action – the variety of life forms that make up our planet's ecosystems. Biodiversity is more than just an array of different species; it’s the intricate web of life that sustains ecosystems and, by extension, human life.  It encompasses the diversity within species, between species, and of ecosystems themselves.  Healthy biodiversity ensures ecosystem productivity, where each species, no matter how small, has",
+      "link": "https://www.youtube.com/watch?v=DjVU3kgmVBc",
+      "published": "2024-07-19T10:00:10Z",
+      "source_type": "youtube",
+      "channel": "The Knowledge Snack",
+      "video_id": "DjVU3kgmVBc",
+      "transcript_method": "youtube_transcript_api",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ]
+}

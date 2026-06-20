@@ -1,0 +1,141 @@
+{
+  "axis": "WATER_REVIEW",
+  "domain": "planet",
+  "timestamp": "2026-06-19T17:35:22.985911+00:00",
+  "sources_count": 13,
+  "rss_count": 4,
+  "ddg_count": 6,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] Explained | World&#39;s Water Crisis | FULL EPISODE | Netflix",
+      "summary": "[DESCRIPTION FALLBACK] In partnership with Vox Media Studios and Vox, this enlightening explainer series will take viewers deep inside a wide range of ...",
+      "link": "https://www.youtube.com/watch?v=C65iqOSCZOY",
+      "published": "2020-04-17T13:00:00Z",
+      "source_type": "youtube",
+      "channel": "Netflix",
+      "video_id": "C65iqOSCZOY",
+      "transcript_method": "description",
+      "transcript_chars": 154,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Fresh water scarcity: An introduction to the problem - Christiana Z. Peppard",
+      "summary": "[DESCRIPTION FALLBACK] View full lesson: http://ed.ted.com/lessons/fresh-water-scarcity-an-introduction-to-the-problem-christiana-z-peppard Fresh water is ...",
+      "link": "https://www.youtube.com/watch?v=otrpxtAmDAk",
+      "published": "2013-02-14T16:02:00Z",
+      "source_type": "youtube",
+      "channel": "TED-Ed",
+      "video_id": "otrpxtAmDAk",
+      "transcript_method": "description",
+      "transcript_chars": 158,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Water scarcity - Innovation to combat drought | DW Documentary",
+      "summary": "[DESCRIPTION FALLBACK] While heat and drought reduce the groundwater in many places, water consumption continues to rise. Is it possible to reverse this ...",
+      "link": "https://www.youtube.com/watch?v=5zyxsOMw634",
+      "published": "2025-11-16T17:00:18Z",
+      "source_type": "youtube",
+      "channel": "DW Documentary",
+      "video_id": "5zyxsOMw634",
+      "transcript_method": "description",
+      "transcript_chars": 156,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "problem": "Groundwater depletion in Florida due to public use and agricultural activities",
+    "root_cause": "Over-extraction of groundwater for households, municipalities, businesses, and agriculture, exceeding the natural recharge rate",
+    "severity": "MEDIUM",
+    "leverage_points": [
+      "Government regulations and water management policies",
+      "Agricultural practices and water efficiency measures"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Implement water-saving technologies and practices in agriculture",
+        "measurable_goal": "Reduce groundwater extraction by 20% within the next 5 years",
+        "timeframe": "medium-term"
+      },
+      {
+        "action": "Develop and implement a comprehensive water conservation plan for households and municipalities",
+        "measurable_goal": "Reduce per-capita water consumption by 15% within the next 3 years",
+        "timeframe": "short-term"
+      }
+    ],
+    "evidence": [
+      "Public use by households, municipalities, and businesses accounts for the largest depletion of groundwater in Florida",
+      "Agriculture is responsible for at least a quarter of groundwater withdrawals in Florida"
+    ],
+    "generalization": "This problem connects to the domains of Civilization (water management and resource allocation) and Planet (ecosystem health and biodiversity)",
+    "summary": "Groundwater depletion in Florida poses a significant threat to the state's water security, and addressing this issue requires a multi-faceted approach that involves government regulations, agricultural practices, and water conservation efforts.",
+    "risk_level": "MEDIUM"
+  },
+  "raw_items": [
+    {
+      "title": "Setting Fires On Purpose to Cut Risk of Catastrophic Wildfires",
+      "summary": "<figure><img alt=\"Firefighters ignite a prescribed burn.\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"681\" src=\"https://i0.wp.com/www.circleofblue.org/wp-content/uploads/2026/06/PRESCRIBED-BURN-scaled.jpg?fit=1024%2C681&amp;ssl=1\" width=\"1024\" /></figure>\n<p>Wildfire risk is predicted to stay elevated through June in the Upper Midwest from drought and high winds. That’s risky for the region’s pristine inland lakes, but land managers are working to reduce wildfire ",
+      "link": "https://www.circleofblue.org/2026/great-lakes/setting-fires-on-purpose-to-cut-risk-of-catastrophic-wildfires/",
+      "published": "Thu, 18 Jun 2026 10:02:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "When Forests Burn, Lakes Suffer",
+      "summary": "<figure><img alt=\"A Smokey Bear sign with &quot;fire danger high&quot; in front of a landscape on fire. A firefighter walks in the background.\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"768\" src=\"https://i0.wp.com/www.circleofblue.org/wp-content/uploads/2026/06/SMOKEYBEAR-scaled.jpg?fit=1024%2C768&amp;ssl=1\" width=\"1024\" /></figure>\n<p>Wildfire risk is high in the upper Great Lakes, and research shows that large, scorching wildfires spell trouble for lakes in th",
+      "link": "https://www.circleofblue.org/2026/great-lakes/when-forests-burn-lakes-suffer/",
+      "published": "Wed, 17 Jun 2026 10:04:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Ethanol Was Marketed to Help Agriculture. But It Fouled Our Water and Injured Our Health.",
+      "summary": "<figure><img alt=\"\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"667\" src=\"https://i0.wp.com/www.circleofblue.org/wp-content/uploads/2014/06/20131104_AERIAL_CORN_HARVEST_0153.jpg?fit=1000%2C667&amp;ssl=1\" width=\"1000\" /></figure>\n<p>Just like his presidential predecessors – George Bush, Barack Obama, and Joe Biden – Donald Trump has a thing for ethanol. But why? Inordinately expensive to taxpayers, monstrously polluting, and now linked to mounting cancer incidence ",
+      "link": "https://www.circleofblue.org/2026/opinion/ethanol-was-marketed-to-help-agriculture-but-it-fouled-our-water-and-injured-our-health/",
+      "published": "Tue, 16 Jun 2026 10:30:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "On Menominee Lakes, Wild Rice Is Coming Back. It Isn’t Easy.",
+      "summary": "<figure><img alt=\"\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"683\" src=\"https://i0.wp.com/www.circleofblue.org/wp-content/uploads/2026/06/DSCF4326-scaled.jpg?fit=1024%2C683&amp;ssl=1\" width=\"1024\" /></figure>\n<p>MENOMINEE, Wisc. — On a cool bluebird morning, DJ Micik guides his canoe through the narrow channel connecting Little Rice Lake with Rice Lake, two of the largest bodies of water on the Menominee reservation in northern Wisconsin.&#160; Sitting behind Mi",
+      "link": "https://www.circleofblue.org/2026/agriculture/on-menominee-lakes-wild-rice-is-coming-back-it-isnt-easy/",
+      "published": "Sun, 14 Jun 2026 11:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Why Florida is running out of water | Grist",
+      "summary": "Jan 8, 2025 · Public use by households, municipalities, and businesses accounts for the largest depletion of groundwater in Florida, while agriculture is responsible for at least a quarter of withdrawals.",
+      "link": "https://grist.org/science/florida-population-boom-groundwater-crisis-climate-change/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "People are flocking to Florida. Will there be enough water ...",
+      "summary": "Jan 13, 2025 · Compared to places where groundwater is already severely depleted, like California, Mexico and Arizona, Florida has the luxury of one of the highest-producing aquifers in the world, and more time to prepare for a dearth of supply.",
+      "link": "https://www.theinvadingsea.com/2025/01/13/florida-water-supply-climate-change-development-agriculture-conservation-groundwater/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Could Central Florida run out of water? A pending plan seeks ...",
+      "summary": "Sep 13, 2025 · A twenty-year water supply plan for the Central Florida region is almost officially ready, following the Central Florida Water Initiative steering committee’s approval Friday of the plan’s latest draft.",
+      "link": "https://www.cfpublic.org/environment/2025-09-13/could-central-florida-run-out-of-water-a-pending-plan-seeks-to-avoid-that-outcome",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Why some regions are winning the fight against groundwater depletion",
+      "summary": "Declining water tables leave entire regions vulnerable to drought, land subsidence or seawater intrusion while damaging ecosystems and reducing water access. Properly securing this resource is a matter of social, humanitarian and environmental security.",
+      "link": "https://phys.org/news/2026-03-regions-groundwater-depletion.html",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Dry wells, salty crops forced Ottawa County to... | Bridge Michigan",
+      "summary": "Allendale Township instituted a six-month moratorium last month on new housing developments that plan to use wells. The county, meanwhile, is developing a strategy that will convert findings from the Michigan State study into actions to protect groundwater. Depletion worsens pollution.",
+      "link": "https://www.bridgemi.com/michigan-environment-watch/dry-wells-salty-crops-forced-ottawa-county-confront-groundwater-crisis",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Groundwater depletion is a looming crisis, Michigan needs proactive...",
+      "summary": "We should have addressed this crisis sooner. Neglecting gradual groundwater depletion was a mistake. In 2020, farmers and livestock operations in Michigan used 187 billion gallons of water, double the amount in 2009.",
+      "link": "https://www.votedrbob.com/post/groundwater-depletion-is-a-looming-crisis-michigan-needs-proactive-leaders",
+      "source_type": "ddg"
+    }
+  ]
+}

@@ -1,0 +1,100 @@
+{
+  "axis": "GOAL_PROGRESS_REVIEW",
+  "fetched_at": "2026-06-20T07:33:55.124030+00:00",
+  "smart_query": "sustainable development goals SDG",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 0,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube_transcripts": 3,
+    "podcast": 1
+  },
+  "rss": [],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "samirsaci/supply-chain-sustainability",
+      "snippet": "Build Supply Chain Sustainability Reporting with Python",
+      "stars": 60,
+      "url": "https://github.com/samirsaci/supply-chain-sustainability",
+      "updated": "2026-06-16",
+      "source": "GitHub"
+    },
+    {
+      "title": "osdg-ai/osdg-tool",
+      "snippet": "OSDG is an open-source tool that maps and connects activities to the UN Sustainable Development Goals (SDGs) by identifying SDG-relevant content in any text. The tool is available online at www.osdg.a",
+      "stars": 47,
+      "url": "https://github.com/osdg-ai/osdg-tool",
+      "updated": "2026-04-29",
+      "source": "GitHub"
+    },
+    {
+      "title": "wmo-raf/climweb",
+      "snippet": "Open Source Content Management System for National Meteorological and Hydrological Services ",
+      "stars": 30,
+      "url": "https://github.com/wmo-raf/climweb",
+      "updated": "2026-06-19",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Evaluating the Impact of Rhode Island's Self-Sustaining Reemployment Services and Eligibility Assessment (RESEA) Program on Employment Outcomes",
+      "snippet": "Prolonged unemployment carries serious economic, health, and wellbeing costs. With federal support, most U.S. states now operate a Reemployment Services and Eligibility Assessment (RESEA) program to help Unemployment Insurance (UI) claimants return to work faster. We report results from a large (N =",
+      "url": "https://arxiv.org/abs/2606.14621v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Sustainability by Design in Decentralized Autonomous Organizations: An Empirical Review of Governance, Innovation, and Institutional Design",
+      "snippet": "Recent innovation theories on economics remain largely grounded in assumptions of hierarchical firms and closed organizational boundaries, offering limited insight into how innovation unfolds within decentralized, digitally native organizations. Decentralized Autonomous Organizations (DAOs) represen",
+      "url": "https://arxiv.org/abs/2606.05667v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[Can computer hackers get inside your mind?] The cyber weapon that might have prevented nuclear war.The U.S. and Israel have long been in conflict with Iran over their nuclear development program. Some of that conflict has been out in the open, with bombs and blockades, but some of it has been invisible. Recently some security researchers discovered a cyberweapon likely tied to that invisible conflict. It looks like it was designed to hide o",
+  "wiki": null,
+  "youtube_items": [
+    {
+      "title": "[YT] How We Can Make the World a Better Place by 2030 | Michael Green | TED Talks",
+      "summary": "[DESCRIPTION FALLBACK] Can we end hunger and poverty, halt climate change and achieve gender equality in the next 15 years? The governments of the ...",
+      "link": "https://www.youtube.com/watch?v=o08ykAqLOxk",
+      "source_type": "youtube",
+      "channel": "TED",
+      "video_id": "o08ykAqLOxk",
+      "transcript_method": "description",
+      "transcript_chars": 150,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] The Sustainable Development Goals – Action Towards 2030 | CAFOD and SDGs",
+      "summary": "[DESCRIPTION FALLBACK] The Sustainable Development Goals (SDGs) were adopted by the United Nations in 2015 as part of Agenda 2030 – see: ...",
+      "link": "https://www.youtube.com/watch?v=9-xdy1Jr2eg",
+      "source_type": "youtube",
+      "channel": "CAFOD",
+      "video_id": "9-xdy1Jr2eg",
+      "transcript_method": "description",
+      "transcript_chars": 140,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Sustainable Development Goals (SDGs) Explained: 2026 Reality Check",
+      "summary": "[DESCRIPTION FALLBACK] With only 4 years left until the 2030 deadline, the UN Sustainable Development Goals remain the global framework for ...",
+      "link": "https://www.youtube.com/watch?v=qfOgdj4Okdw",
+      "source_type": "youtube",
+      "channel": "Sustainability Illustrated",
+      "video_id": "qfOgdj4Okdw",
+      "transcript_method": "description",
+      "transcript_chars": 143,
+      "has_full_transcript": false
+    }
+  ],
+  "summary": "[arXiv]\n- Evaluating the Impact of Rhode Island's Self-Sustaining Reemployment Services and Eligibility Assessment (RESEA) Program on Employment Outcomes\n- Sustainability by Design in Decentralized Au",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": [],
+  "open_source_momentum": "",
+  "scientific_frontier": "",
+  "relevance_to_goal": ""
+}

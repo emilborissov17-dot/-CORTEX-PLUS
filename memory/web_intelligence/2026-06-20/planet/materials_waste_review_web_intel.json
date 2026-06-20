@@ -1,0 +1,117 @@
+{
+  "axis": "MATERIALS_WASTE_REVIEW",
+  "domain": "planet",
+  "timestamp": "2026-06-20T05:36:05.148456+00:00",
+  "sources_count": 11,
+  "rss_count": 4,
+  "ddg_count": 6,
+  "youtube_count": 1,
+  "youtube_items": [
+    {
+      "title": "[YT] What really happens to the plastic you throw away - Emma... - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] About Press Copyright Contact us Creators Advertise Developers Terms Privacy Policy & Safety How YouTube works Test new features.",
+      "link": "https://www.youtube.com/watch?v=_6xlNyWPpB8",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "_6xlNyWPpB8",
+      "transcript_method": "description",
+      "transcript_chars": 152,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "problem": "Improper waste sorting and management of plastic waste",
+    "root_cause": "Lack of technical skills for managing hazardous waste, insufficient infrastructure, and inadequate education on proper waste sorting",
+    "severity": "MEDIUM",
+    "leverage_points": [
+      "Government and waste management organizations improving waste sorting infrastructure and education programs",
+      "Individuals and communities adopting proper waste sorting practices and promoting environmental awareness"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Implementing standardized waste sorting protocols and educating the public through awareness campaigns",
+        "measurable_goal": "Increase proper waste sorting rates by 20% within the next 12 months",
+        "timeframe": "short-term"
+      },
+      {
+        "action": "Investing in research and development of new technologies for efficient plastic waste management",
+        "measurable_goal": "Reduce plastic waste in landfills by 15% within the next 24 months",
+        "timeframe": "medium-term"
+      }
+    ],
+    "evidence": [
+      "The present world is now facing the challenge of proper management and resource recovery of the enormous amount of plastic waste",
+      "Improper waste sorting harms the environment and hinders recycling"
+    ],
+    "generalization": "This problem connects to the domains of Planet, Human, and Civilization, as it affects the health of the biosphere, human well-being, and the overall sustainability of civilization",
+    "summary": "Improper waste sorting and management of plastic waste pose a significant problem, requiring immediate attention and action from individuals, communities, and organizations to mitigate its environmental impacts",
+    "risk_level": "MEDIUM"
+  },
+  "raw_items": [
+    {
+      "title": "EREF Auction Raises More Than $4 Million to Advance Waste and Recycling Research",
+      "summary": "The Environmental Research &amp; Education Foundation (EREF) raised over $4 million during its 2026 Annual Charitable Auction, held during the inaugural Waste Leadership Summit in Washington, D.C.",
+      "link": "https://www.waste360.com/industry-insights/eref-auction-raises-more-than-4-million-to-advance-waste-and-recycling-research",
+      "published": "Thu, 18 Jun 2026 12:32:49 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Casella’s Roadmap for Renewable Energy and Driving a Circular Economy",
+      "summary": "In this Waste360 Q&amp;A, Casella CEO Ned Coletta catches us up to speed on facility projects and shares what his team learned from testing electric trucks in the real world. He takes us behind the scenes of some exciting partnerships, including work with the University of Vermont to advance a circular economy.",
+      "link": "https://www.waste360.com/industry-insights/casella-s-roadmap-for-renewable-energy-and-driving-a-circular-economy",
+      "published": "Thu, 18 Jun 2026 12:00:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "June 2026 Business Report—Business Highlights from the Waste Leadership Summit",
+      "summary": "In this edition of the Business Report, we recap the highlights of the Investor Summit, as well as several of the education sessions from the Waste Leadership Summit.",
+      "link": "https://www.waste360.com/industry-insights/june-2026-business-report-business-highlights-from-the-waste-leadership-summit",
+      "published": "Thu, 18 Jun 2026 11:30:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Meet the 2026 Waste360 Women Who Inspire",
+      "summary": "Waste360 is proud to announce its fourth annual Women Who Inspire award winners. Our program, sponsored by Wastequip, recognizes incredible women who are making a difference across waste, recycling, and sustainability.",
+      "link": "https://www.waste360.com/industry-insights/meet-the-2026-waste360-women-who-inspire",
+      "published": "Wed, 17 Jun 2026 12:00:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "2026 Trends to Watch: From Red Tape to a Circular Plastics Renaissance",
+      "summary": "December 22, 2025 - Packaging structures that are overly ... definitive trend to watch in 2026 for plastics and recycling is a shift toward radical simplification: Mono-Material designs....",
+      "link": "https://www.scgchemicals.com/en/articles/stories/2026-trends-watch-red-tape-circular-plastics-renaissance",
+      "source_type": "ddg"
+    },
+    {
+      "title": "How climate change is reshaping the global plastic pollution | World Economic Forum",
+      "summary": "February 11, 2026 - Viewed through this lens, plastic ... face a systems-level challenge that calls for coordinated approaches across climate action, materials design and environmental governance....",
+      "link": "https://www.weforum.org/stories/2026/02/climate-change-reshaping-global-plastic-pollution-crisis/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Plastic Waste: Challenges and Opportunities to Mitigate Pollution and Effective Management - PMC",
+      "summary": "The present world is now facing the challenge of proper management and resource recovery of the enormous amount of plastic waste. Lack of technical skills for managing hazardous waste, insufficient infrastructure development for recycling and ...",
+      "link": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9857911/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Environmental Impact of Improper Waste Sorting",
+      "summary": "Improper waste sorting harms the environment and hinders recycling.Think beyond your bin: Encourage others to sort their waste and treat public spaces as part of the shared environment, because small actions add up to a cleaner future for everyone.",
+      "link": "https://www.linkedin.com/top-content/engineering/environmental-engineering-waste-management/environmental-impact-of-improper-waste-sorting/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Impact of Improper Waste Sorting on Environment and Health...",
+      "summary": "How waste sorting helps the environment. When we sort, we allow materials to be reused. Fewer new resources need to be extracted, there’s less pollution, and less waste ends up in landfills. It’s a simple action with a huge impact.",
+      "link": "https://mwc.lv/impact-of-improper-waste-sorting-on-environment-and-health/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Frontiers | The impact of improper waste disposal on human health...",
+      "summary": "Environmentalists’ concern about improper waste disposal’s impact on human health and the environment has prompted studies in the United Kingdom.",
+      "link": "https://www.frontiersin.org/journals/sustainability/articles/10.3389/frsus.2024.1386047/full",
+      "source_type": "ddg"
+    }
+  ]
+}

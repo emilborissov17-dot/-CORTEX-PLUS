@@ -1,0 +1,147 @@
+{
+  "axis": "ENERGY_REVIEW",
+  "domain": "planet",
+  "timestamp": "2026-06-18T18:15:28.395952+00:00",
+  "sources_count": 15,
+  "rss_count": 12,
+  "ddg_count": 0,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] New energy storage technology on the verge of a breakthrough? | Transforming Business",
+      "summary": "All around the world, wind and\nsolar power plants are multiplying. Clear signs of the energy transition. But for it to succeed,\none key question remains. How do we store electricity? One option is in liquids. So how does that work? Can this technology compete? And why is China ahead? In late December 2024, Germany was\nblanketed by thick clouds with barely a breath of wind. A situation known\nas the Dark Doldrums. For renewable energy,\nit's a huge challenge. Under these conditions, solar and\nwind farms produce only a fraction of their usual output. The result is energy shortages\nand rising electricity prices. To balance these\nfluctuations, large-scale energy storage is essential. And that's where\nbattery technology comes in. By 2050, more than 1000 gigawatts\nof electricity will need to be st",
+      "link": "https://www.youtube.com/watch?v=U1FPbDhJV0A",
+      "published": "2025-10-11T14:15:02Z",
+      "source_type": "youtube",
+      "channel": "DW News",
+      "video_id": "U1FPbDhJV0A",
+      "transcript_method": "youtube_transcript_api",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] What Solar’s 2025 Breakthroughs Mean for 2026",
+      "summary": "I called 2024 the year of perovskites. We got our first commercial shipments and some record-breaking efficiencies. But 2025? Well, this was the year perovskites went from interesting lab tech to you can actually buy these. Oxford PV shipped the first commercial batch to a US [music] solar farm. California startups landed major infrastructure deals. And Chinese manufacturers started licensing the technology for mass production. More importantly, researchers solved problems that have plagued perovskites for years. We got self-healing materials that repaired damage from heat and moisture, cooling systems that boost efficiency by over 12%, >> [music] >> and manufacturing techniques that broke the 34% efficiency barrier, which shatters silicon's theoretical 30% limit. So, let's recap what actu",
+      "link": "https://www.youtube.com/watch?v=FffKMMnisu4",
+      "published": "2025-12-16T13:16:50Z",
+      "source_type": "youtube",
+      "channel": "Undecided with Matt Ferrell",
+      "video_id": "FffKMMnisu4",
+      "transcript_method": "youtube_transcript_api",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] How the U.S. Just Handed the Renewable Future to China",
+      "summary": "This summer, the United States made a $559 billion decision. The consequences of that decision could make your next car $7,500 more expensive and send your electricity bills soaring unpredictably if they aren't already. On July 4th, 2025, President Trump signed the One Big Beautiful Bill Act into law. But this bill that was evidently supposed to make states more self-sufficient really just gave our energy independence away. That's because 3.5 million people in the US work in clean energy jobs, representing 42% of all energy jobs in the country. Meanwhile, coal only employs about 42,000 people. So, solar employs nearly 7 times more US workers than coal. Yet, the current administration is cutting hundreds of billions of dollars from the sector creating jobs while keeping subsidies for the se",
+      "link": "https://www.youtube.com/watch?v=2tNp2vsxEzk",
+      "published": "2025-08-19T12:16:58Z",
+      "source_type": "youtube",
+      "channel": "Undecided with Matt Ferrell",
+      "video_id": "2tNp2vsxEzk",
+      "transcript_method": "youtube_transcript_api",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "The energy transition is hindered by the lack of efficient energy storage solutions, which poses a challenge to the widespread adoption of renewable energy sources",
+    "root_cause": "The current energy storage technologies are not yet cost-competitive with fossil fuels, and the development of new technologies is slow due to lack of investment and policy support",
+    "severity": "MEDIUM",
+    "leverage_points": [
+      "Government policies and regulations that support the development and deployment of energy storage technologies",
+      "Investment in research and development of new energy storage technologies"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Increase investment in energy storage research and development",
+        "measurable_goal": "Achieve a 20% reduction in the cost of energy storage technologies within the next 5 years",
+        "timeframe": "medium-term"
+      },
+      {
+        "action": "Implement policies that support the deployment of energy storage technologies, such as tax incentives and grid connection incentives",
+        "measurable_goal": "Increase the deployment of energy storage systems by 50% within the next 3 years",
+        "timeframe": "short-term"
+      }
+    ],
+    "evidence": [
+      "The lack of energy storage solutions is a key challenge to the energy transition, as stated in the video 'New energy storage technology on the verge of a breakthrough?'",
+      "The development of new energy storage technologies, such as perovskites, is showing promise, but more investment is needed to bring them to market, as stated in the video 'What Solar's 2025 Breakthroughs Mean for 2026'"
+    ],
+    "generalization": "The energy transition is connected to other domains, such as the economy and the environment, and the lack of energy storage solutions has implications for the overall sustainability of the system",
+    "summary": "The energy transition is hindered by the lack of efficient energy storage solutions, and increased investment and policy support are needed to develop and deploy new technologies. This problem has implications for the overall sustainability of the system and is connected to other domains, such as the economy and the environment.",
+    "risk_level": "MEDIUM"
+  },
+  "raw_items": [
+    {
+      "title": "Energy Independence is Becoming Solar’s Strongest Selling Point — TIME",
+      "summary": "<p>Energy independence is the new concern of voters everywhere, thanks to the Iran war that shattered all their illusions. </p>\n<p>The post <a href=\"https://cleantechnica.com/2026/06/18/energy-independence-is-becoming-solars-strongest-selling-point-time/\">Energy Independence is Becoming Solar&#8217;s Strongest Selling Point — TIME</a> appeared first on <a href=\"https://cleantechnica.com\">CleanTechnica</a>.</p>",
+      "link": "https://cleantechnica.com/2026/06/18/energy-independence-is-becoming-solars-strongest-selling-point-time/",
+      "published": "Thu, 18 Jun 2026 17:54:09 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "20 New Fast Chargers With Energy Storage Installed In Santa Barbara",
+      "summary": "<p>Electrify America recently opened a new, public EV charging station in Santa Barbara, California, with 20 fast chargers delivering up to 350 kW. The new charging station also possesses a 1.9 MW energy storage system, which is Electrify America’s largest battery system to date. The battery can be used to   ... [continued]</p>\n<p>The post <a href=\"https://cleantechnica.com/2026/06/18/20-new-fast-chargers-with-energy-storage-installed-in-santa-barbara/\">20 New Fast Chargers With Energy Storage I",
+      "link": "https://cleantechnica.com/2026/06/18/20-new-fast-chargers-with-energy-storage-installed-in-santa-barbara/",
+      "published": "Thu, 18 Jun 2026 17:00:28 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Molecules Do Not Disappear. Their Market Shrinks.",
+      "summary": "<p>A lot of energy-transition arguments begin with today’s fossil fuel demand. Coal, oil, and gas still dominate global primary energy, so it is tempting to draw a straight line from the current fuel system to a future molecule system. Replace natural gas with hydrogen. Replace bunker fuel with ammonia or   ... [continued]</p>\n<p>The post <a href=\"https://cleantechnica.com/2026/06/18/molecules-do-not-disappear-their-market-shrinks/\">Molecules Do Not Disappear. Their Market Shrinks.</a> appeared ",
+      "link": "https://cleantechnica.com/2026/06/18/molecules-do-not-disappear-their-market-shrinks/",
+      "published": "Thu, 18 Jun 2026 16:44:54 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Oh, The Other Big Reason Robotaxis Will Struggle To Replace Car Ownership",
+      "summary": "<p>Late last night and early this morning, I wrote an article outlining one big reason robotaxis won&#8217;t replace car ownership to a very significant degree. There&#8217;s another big reason, sort of related to that, that a reader pointed out and explained well, and some other readers backed up in additional   ... [continued]</p>\n<p>The post <a href=\"https://cleantechnica.com/2026/06/18/oh-the-other-big-reason-robotaxis-will-struggle-to-replace-car-ownership/\">Oh, The Other Big Reason Robotax",
+      "link": "https://cleantechnica.com/2026/06/18/oh-the-other-big-reason-robotaxis-will-struggle-to-replace-car-ownership/",
+      "published": "Thu, 18 Jun 2026 16:42:46 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "New clean energy policy podcast launched by Factor This and Advanced Energy United",
+      "summary": "Factor This is teaming up with the national multi-technology business association Advanced Energy United to launch a new podcast that explores the policy decisions impacting the energy transition.",
+      "link": "https://www.renewableenergyworld.com/energy-business/policy-and-regulation/new-clean-energy-policy-podcast-launched-by-factor-this-and-advanced-energy-united/",
+      "published": "Thu, 18 Jun 2026 10:01:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "How we benefit from transmission competition | Factor This Policycast",
+      "summary": "The first episode of the new Factor This Policycast, an energy policy-focused podcast partnership with Advanced Energy United, focuses on the benefits of competitively bidding large-scale transmission projects.",
+      "link": "https://www.renewableenergyworld.com/power-grid/transmission/how-we-benefit-from-transmission-competition-factor-this-policycast/",
+      "published": "Thu, 18 Jun 2026 10:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Can PJM’s new ‘fast track’ process accelerate interconnection?",
+      "summary": "The Federal Energy Regulatory Commission (FERC) has approved PJM's request to create an Expedited Interconnection Track (EIT), a temporary fast-track interconnection process designed to bring a handful of large \"shovel-ready\" generation projects online more quickly.",
+      "link": "https://www.renewableenergyworld.com/power-grid/can-pjms-new-fast-track-process-accelerate-interconnection/",
+      "published": "Wed, 17 Jun 2026 14:01:15 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "The largest wind project in the U.S. is almost online",
+      "summary": "The SunZia Wind project in New Mexico, developed by Pattern Energy Group, will generate 3,650 megawatts and export power to Arizona and California.",
+      "link": "https://www.renewableenergyworld.com/wind-power/the-largest-wind-project-in-the-u-s-is-almost-online/",
+      "published": "Tue, 16 Jun 2026 18:27:06 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Azerbaijan Moves Into Uzbekistan’s Fast-Growing Mining Sector",
+      "summary": "Azerbaijan and Uzbekistan are strengthening economic connections, signing a variety of agreements covering mining, banking and tourism. Uzbek Prime Minister Abdulla Aripov and his Azerbaijani counterpart, Ali Asadov, presided over a signing ceremony on June 16 in Tashkent of a cooperation agreement under which the two countries will jointly develop an Uzbek gold deposit as well as other mineral resources.  Ural Yusupov, Uzbekistan’s deputy mining minister, previously indicated that Tashkent was ",
+      "link": "https://oilprice.com/Geopolitics/Asia/Azerbaijan-Moves-Into-Uzbekistans-Fast-Growing-Mining-Sector.html",
+      "published": "Thu, 18 Jun 2026 13:00:00 -0500",
+      "source_type": "rss"
+    },
+    {
+      "title": "Oil Prices Are Crashing. Inventories Tell A Different Story.",
+      "summary": "Oil traders have gone from pricing in the worst supply disruption in modern history to pricing in a recovery that hasn't happened yet. Inventory data suggests they’re getting ahead of themselves. Brent crude fell below $77 per barrel on Thursday, the lowest level since the early days of the Middle East war, after the United States and Iran signed a memorandum of understanding aimed at reopening the Strait of Hormuz and launching 60 days of negotiations toward a broader agreement. The market's ve",
+      "link": "https://oilprice.com/Latest-Energy-News/World-News/Oil-Prices-Are-Crashing-Inventories-Tell-A-Different-Story.html",
+      "published": "Thu, 18 Jun 2026 12:30:00 -0500",
+      "source_type": "rss"
+    }
+  ]
+}

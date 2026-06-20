@@ -1,0 +1,119 @@
+{
+  "axis": "ENERGY_REVIEW",
+  "fetched_at": "2026-06-18T20:58:35.318193+00:00",
+  "smart_query": "renewable energy solar wind",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube_transcripts": 3,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "Trump administration to buy back another energy company’s offshore wind leases for 4 more projects",
+      "snippet": "The Trump administration is buying back Invenergy's four offshore wind leases for $765 million, redirecting funds to fossil fuel projects.",
+      "url": "https://www.renewableenergyworld.com/wind-power/offshore/trump-administration-to-buy-back-another-energy-companys-offshore-wind-leases-for-4-more-projects/",
+      "source": "RSS"
+    },
+    {
+      "title": "FERC takes historic action, orders US grid operators to ‘defend or revise’ large load interconnection tariffs",
+      "snippet": "FERC has issued tailored show-cause orders under section 206 of the Federal Power Act to each of the six regional grid operators within its jurisdiction, directing them to either justify or reform the rules governing how large energy users like data centers connect to the electric grid.",
+      "url": "https://www.renewableenergyworld.com/energy-business/policy-and-regulation/ferc-takes-historic-action-orders-us-grid-operators-to-defend-or-revise-large-load-interconnection-tariffs/",
+      "source": "RSS"
+    },
+    {
+      "title": "New clean energy policy podcast launched by Factor This and Advanced Energy United",
+      "snippet": "Factor This is teaming up with the national multi-technology business association Advanced Energy United to launch a new podcast that explores the policy decisions impacting the energy transition.",
+      "url": "https://www.renewableenergyworld.com/energy-business/policy-and-regulation/new-clean-energy-policy-podcast-launched-by-factor-this-and-advanced-energy-united/",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "protontypes/open-sustainable-technology",
+      "snippet": "A directory and analysis of the open source ecosystem in the areas of climate change, sustainable energy, biodiversity and natural resources.  https://docs.getgrist.com/doc/gSscJkc5Rb1Rw45gh1o1Yc",
+      "stars": 2519,
+      "url": "https://github.com/protontypes/open-sustainable-technology",
+      "updated": "2026-06-18",
+      "source": "GitHub"
+    },
+    {
+      "title": "PyPSA/PyPSA",
+      "snippet": "PyPSA: Python for Power System Analysis",
+      "stars": 2019,
+      "url": "https://github.com/PyPSA/PyPSA",
+      "updated": "2026-06-18",
+      "source": "GitHub"
+    },
+    {
+      "title": "pvlib/pvlib-python",
+      "snippet": "A set of documented functions for simulating the performance of photovoltaic energy systems.",
+      "stars": 1593,
+      "url": "https://github.com/pvlib/pvlib-python",
+      "updated": "2026-06-17",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Nodal Frequency Stability-Constrained UC & ED for Renewable-Dominated Power Systems",
+      "snippet": "In modern power systems with high shares of renewable, inverter-based resources (IBRs), frequency stability becomes more complex due to the fast dynamics of IBRs and frequency trajectories that vary significantly from bus to bus. In this paper, we present an optimization framework for unit commitmen",
+      "url": "https://arxiv.org/abs/2606.15706v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Mitigating business risks from renewable PPA power sourcing uncertainties for European green hydrogen production: Robust system design, regulatory adjustments and offtake flexibility",
+      "snippet": "As energy prices surge for the second time in recent years driven by the ongoing crisis in the Middle East, the European Union's continuing reliance on fossil energy imports is becoming increasingly apparent. However, despite offering an intriguing prospect of improved energy resilience, the ramp-up",
+      "url": "https://arxiv.org/abs/2606.13215v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[The Resistance of a Cow] There’s something rotten in the cows of Denmark. And Minnesota. And Wisconsin. And Idaho. What could cause a previously thriving herd of majestic dairy cattle to stop drinking water and start drinking … urine? A Danish farmer calls a special investigator, who takes one look at his farm and nopes the heck out of there, refusing to return, citing “bad energy” coming from something nearby … a big bui",
+  "wiki": null,
+  "youtube_items": [
+    {
+      "title": "[YT] The Green Energy Revolution: How Solar &amp; Wind Are Changing Everything (2025)",
+      "summary": "[DESCRIPTION FALLBACK] The world is undergoing the biggest energy transformation since the Industrial Revolution. In this 2-part documentary, we explore ...",
+      "link": "https://www.youtube.com/watch?v=xBWMi5m662M",
+      "source_type": "youtube",
+      "channel": "Rewind Economix",
+      "video_id": "xBWMi5m662M",
+      "transcript_method": "description",
+      "transcript_chars": 156,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] 2025 Amazing Renewable Energy Facts",
+      "summary": "[DESCRIPTION FALLBACK] Discover the incredible milestones in global renewable energy for 2025! ⚡ In this video, we explore how renewables have ...",
+      "link": "https://www.youtube.com/watch?v=-ENCA0LOtVs",
+      "source_type": "youtube",
+      "channel": "engineer ED",
+      "video_id": "-ENCA0LOtVs",
+      "transcript_method": "description",
+      "transcript_chars": 146,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] The Energy Revolution is Unstoppable: Record Solar and Wind Additions in 2025",
+      "summary": "[DESCRIPTION FALLBACK] The Energy Revolution is Unstoppable: Record Solar and Wind Additions in 2025 - The energy revolution is unstoppable as solar ...",
+      "link": "https://www.youtube.com/watch?v=spSOp5s_6_A",
+      "source_type": "youtube",
+      "channel": "The Electric Viking",
+      "video_id": "spSOp5s_6_A",
+      "transcript_method": "description",
+      "transcript_chars": 152,
+      "has_full_transcript": false
+    }
+  ],
+  "summary": "[RSS News]\n- Trump administration to buy back another energy company’s offshore wind leases for 4 more projects\n- FERC takes historic action, orders US grid operators to ‘defend or revise’ large load ",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": [],
+  "open_source_momentum": "",
+  "scientific_frontier": "",
+  "relevance_to_goal": ""
+}

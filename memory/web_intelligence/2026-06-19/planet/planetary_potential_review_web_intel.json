@@ -1,0 +1,141 @@
+{
+  "axis": "PLANETARY_POTENTIAL_REVIEW",
+  "domain": "planet",
+  "timestamp": "2026-06-19T17:44:54.999651+00:00",
+  "sources_count": 10,
+  "rss_count": 4,
+  "ddg_count": 4,
+  "youtube_count": 2,
+  "youtube_items": [
+    {
+      "title": "[YT] Geoengineering: A Horrible Idea We Might Have to Do - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] About Press Copyright Contact us Creators Advertise Developers Terms Privacy Policy & Safety How YouTube works Test new features.",
+      "link": "https://www.youtube.com/watch?v=dSu5sXmsur4",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "dSu5sXmsur4",
+      "transcript_method": "description",
+      "transcript_chars": 152,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Chemtrails, Here is your PROOF 100% Real... - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] Rosalind Peterson Confirms Chemtrails/Geoengineering/SRM Are Very real. If you are still in doubt that them lines in the sky are contrails or that the milky...",
+      "link": "https://www.youtube.com/watch?v=L5is16A8pfw",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "L5is16A8pfw",
+      "transcript_method": "description",
+      "transcript_chars": 182,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "problem": "Inaccurate climate data due to errors in the Climate TRACE database",
+    "root_cause": "Methodological flaws and lack of transparency in the database",
+    "severity": "MEDIUM",
+    "leverage_points": [
+      "Climate TRACE consortium",
+      "Research institutions using the database"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Conduct a thorough review and revision of the Climate TRACE database",
+        "measurable_goal": "Reduce error rate by 30% within the next 6 months",
+        "timeframe": "short-term"
+      },
+      {
+        "action": "Implement transparent data collection and validation procedures",
+        "measurable_goal": "Increase data accuracy by 25% within the next year",
+        "timeframe": "medium-term"
+      }
+    ],
+    "evidence": [
+      "Major errors found in Al Gore-founded Climate TRACE database",
+      "Researchers found that the database had significant methodological flaws"
+    ],
+    "generalization": "This problem connects to the Civilization domain, as inaccurate climate data can lead to inadequate policy decisions and ineffective mitigation strategies, ultimately affecting human dignity and well-being",
+    "summary": "Errors in the Climate TRACE database pose a significant problem for climate change research and policy, requiring immediate attention and revision. Inaccurate data can have far-reaching consequences for human dignity and well-being, making it essential to address this issue in the context of sustainable civilization.",
+    "risk_level": "MEDIUM"
+  },
+  "raw_items": [
+    {
+      "title": "Major errors found in Al Gore-founded Climate TRACE database",
+      "summary": "A new study from Northern Arizona University is raising red flags about a widely used global emissions database from Climate TRACE, a consortium co-founded by Al Gore. Researchers found that the database may be dramatically undercounting carbon dioxide emissions from cars and trucks in cities—by an average of 70% across 260 U.S. cities, with some cities showing gaps of more than 90%.",
+      "link": "https://www.sciencedaily.com/releases/2026/06/260618041519.htm",
+      "published": "Thu, 18 Jun 2026 04:15:19 EDT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Arizona reservoir nearly vanishes after snowpack collapse triggers massive fish kill",
+      "summary": "A historic lack of snow in the Gila River watershed has left Arizona’s San Carlos Reservoir less than 1% full, triggering a massive fish kill and an indefinite closure. Despite the bleak conditions, heavy summer rains could help the reservoir rebound.",
+      "link": "https://www.sciencedaily.com/releases/2026/06/260618041458.htm",
+      "published": "Thu, 18 Jun 2026 09:53:38 EDT",
+      "source_type": "rss"
+    },
+    {
+      "title": "These bees have nowhere to hide from extreme heat",
+      "summary": "A major study of Australian native bees found that stem-nesting species may be the first to feel the impact of climate change. Unlike bees that nest underground, they have few ways to escape dangerous heat. Researchers also discovered that tropical bees are particularly vulnerable, even when they are already adapted to hot environments. The findings suggest bee behavior could be a key factor in determining which species survive a warming world.",
+      "link": "https://www.sciencedaily.com/releases/2026/06/260617032157.htm",
+      "published": "Thu, 18 Jun 2026 03:59:03 EDT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Scientists discover an earthquake gate as California faults reach their highest stress levels in 1,000 years",
+      "summary": "A new study suggests Southern California's major fault system is more stressed than at any point in the last 1,000 years. Researchers found that the Cajon Pass, where the San Andreas and San Jacinto faults meet, could act as an “earthquake gate” that determines whether a future rupture spreads across both faults. Current conditions resemble those that preceded some of the region’s largest historical earthquakes.",
+      "link": "https://www.sciencedaily.com/releases/2026/06/260617032155.htm",
+      "published": "Thu, 18 Jun 2026 12:19:47 EDT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Geoengineering",
+      "summary": "Geoengineering (also known as climate engineering or climate intervention) is the deliberate large-scale interventions in the Earth’s climate system intended to counteract human-caused climate change. The term commonly encompasses two broad categories: large-scale carbon dioxide removal (CDR) and solar radiation modification (SRM). CDR involves techniques to remove carbon dioxide from the atmosphe",
+      "link": "https://en.wikipedia.org/wiki/Geoengineering",
+      "source_type": "ddg"
+    },
+    {
+      "title": "About Geoengineering | US EPA",
+      "summary": "April 3, 2026 - Geoengineering refers to activities intended to cool the Earth or remove greenhouse gases from the air and has health and environmental impacts. This page summarizes geoengineering and potential impacts.",
+      "link": "https://www.epa.gov/geoengineering/about-geoengineering",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Planetary boundaries",
+      "summary": "Planetary boundaries are a framework to describe limits to the impacts of human activities on the Earth system. Beyond these limits, the environment may not be able to continue to self-regulate. This would mean the Earth system would leave the period of stability of the Holocene, in which human society developed.These nine boundaries are climate change, ocean acidification, stratospheric ozone dep",
+      "link": "https://en.wikipedia.org/wiki/Planetary_boundaries",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Planetary Boundaries: Earth's 9 Safe Operating Limits",
+      "summary": "Planetary Boundaries 2024 (left) and Planetary Health Check 2024 (right) — the evolving framework for tracking Earth’s vital signs. As of 2025, seven of nine boundaries are transgressed.",
+      "link": "https://globaia.org/boundaries/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "[YT] Geoengineering: A Horrible Idea We Might Have to Do - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] About Press Copyright Contact us Creators Advertise Developers Terms Privacy Policy & Safety How YouTube works Test new features.",
+      "link": "https://www.youtube.com/watch?v=dSu5sXmsur4",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "dSu5sXmsur4",
+      "transcript_method": "description",
+      "transcript_chars": 152,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Chemtrails, Here is your PROOF 100% Real... - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] Rosalind Peterson Confirms Chemtrails/Geoengineering/SRM Are Very real. If you are still in doubt that them lines in the sky are contrails or that the milky...",
+      "link": "https://www.youtube.com/watch?v=L5is16A8pfw",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "L5is16A8pfw",
+      "transcript_method": "description",
+      "transcript_chars": 182,
+      "has_full_transcript": false
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 {
   "axis": "FOOD_REVIEW",
-  "timestamp": "2026-06-11T19:06:13.987888+00:00",
+  "timestamp": "2026-06-20T07:36:02.619989+00:00",
   "level": "MEDIUM",
   "signals": [],
   "key_metrics": [],
@@ -15,5 +15,5 @@
     "arable_land_per_person_ha": 0.171655156755891
   },
   "data_quality": "6/6 indicators fetched",
-  "fetched_date": "2026-06-11"
+  "fetched_date": "2026-06-20"
 }

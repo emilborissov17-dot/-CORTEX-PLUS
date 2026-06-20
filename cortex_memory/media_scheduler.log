@@ -1,0 +1,17 @@
+[2026-06-17T18:17:56.760728+00:00] --run-now flag: running immediately
+[2026-06-17T18:17:56.762735+00:00] Batch (5 axes): ['CLIMATE_GLOBAL_RISK_REVIEW', 'FOOD_REVIEW', 'MATERIALS_WASTE_REVIEW', 'WATER_REVIEW', 'HUMAN_WELL_BEING_REVIEW']
+[2026-06-17T18:17:56.923016+00:00] [1/5] Starting axis: CLIMATE_GLOBAL_RISK_REVIEW
+[2026-06-17T18:19:17.942693+00:00]   CLIMATE_GLOBAL_RISK_REVIEW -> transcribed=0  skipped_pre=1
+[2026-06-17T18:19:17.950379+00:00]   Sleeping 30s before next axis...
+[2026-06-17T18:19:47.950958+00:00] [2/5] Starting axis: FOOD_REVIEW
+[2026-06-17T18:20:44.692271+00:00]   FOOD_REVIEW -> transcribed=0  skipped_pre=3
+[2026-06-17T18:20:44.697817+00:00]   Sleeping 30s before next axis...
+[2026-06-17T18:21:14.698830+00:00] [3/5] Starting axis: MATERIALS_WASTE_REVIEW
+[2026-06-17T18:21:44.095796+00:00]   MATERIALS_WASTE_REVIEW -> transcribed=0  skipped_pre=4
+[2026-06-17T18:21:44.096413+00:00]   Sleeping 30s before next axis...
+[2026-06-17T18:22:14.097059+00:00] [4/5] Starting axis: WATER_REVIEW
+[2026-06-17T18:23:31.867579+00:00]   WATER_REVIEW -> transcribed=1  skipped_pre=2
+[2026-06-17T18:23:31.868187+00:00]   Sleeping 30s before next axis...
+[2026-06-17T18:24:01.868849+00:00] [5/5] Starting axis: HUMAN_WELL_BEING_REVIEW
+[2026-06-17T18:25:51.719216+00:00]   HUMAN_WELL_BEING_REVIEW -> transcribed=2  skipped_pre=2
+[2026-06-17T18:25:51.720474+00:00] Batch complete. Rotation index now at 5/25. Total runs: 1

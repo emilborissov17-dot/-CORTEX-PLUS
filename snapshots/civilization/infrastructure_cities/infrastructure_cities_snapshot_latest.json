@@ -3,31 +3,31 @@
   "metrics": {
     "axis": "INFRASTRUCTURE_CITIES_REVIEW",
     "source": "world_bank_api",
-    "fetched_date": "2026-06-11",
+    "fetched_date": "2026-06-20",
     "metrics": {
       "access_electricity_pct": 91.5991774421991,
       "access_clean_fuels_pct": 74.4233687014423,
       "urban_population_pct": 57.5634797111357,
-      "roads_paved_pct": null,
       "mobile_subscriptions_per100": 111.5,
-      "fixed_broadband_per100": 20.11
+      "fixed_broadband_per100": 20.11,
+      "roads_paved_pct": 77.1
     },
-    "data_quality": "5/6 fetched"
+    "data_quality": "6/6 fetched"
   },
   "raw": {
     "axis": "INFRASTRUCTURE_CITIES_REVIEW",
     "source": "world_bank_api",
-    "fetched_date": "2026-06-11",
+    "fetched_date": "2026-06-20",
     "metrics": {
       "access_electricity_pct": 91.5991774421991,
       "access_clean_fuels_pct": 74.4233687014423,
       "urban_population_pct": 57.5634797111357,
-      "roads_paved_pct": null,
       "mobile_subscriptions_per100": 111.5,
-      "fixed_broadband_per100": 20.11
+      "fixed_broadband_per100": 20.11,
+      "roads_paved_pct": 77.1
     },
-    "data_quality": "5/6 fetched"
+    "data_quality": "6/6 fetched"
   },
-  "snapshot_timestamp": "2026-06-11T19:06:38.045412+00:00",
+  "snapshot_timestamp": "2026-06-20T07:35:30.232713+00:00",
   "axis": "INFRASTRUCTURE_CITIES_REVIEW"
 }

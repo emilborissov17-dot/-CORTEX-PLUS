@@ -1,6 +1,6 @@
 {
-  "error": "'charmap' codec can't encode characters in position 13-21: character maps to <undefined>",
+  "error": "Всички LLM backends неуспешни. Последна грешка: None",
   "source_type": "LLM_GENERATED",
-  "snapshot_timestamp": "2026-06-18T07:01:12.658577+00:00",
+  "snapshot_timestamp": "2026-06-20T07:36:25.402148+00:00",
   "axis": "LONG_TERM_FUTURE_REVIEW"
 }

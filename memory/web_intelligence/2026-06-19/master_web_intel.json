@@ -1,0 +1,1223 @@
+{
+  "timestamp": "2026-06-19T17:44:55.005404+00:00",
+  "date": "2026-06-19",
+  "axes_covered": 25,
+  "total_sources": 277,
+  "youtube_videos_total": 72,
+  "critical_axes": [
+    "CLIMATE_GLOBAL_RISK_REVIEW",
+    "ECOSYSTEMS_BIODIVERSITY_REVIEW",
+    "FOOD_REVIEW",
+    "MATERIALS_WASTE_REVIEW",
+    "SOCIAL_RELATIONS_REVIEW",
+    "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL",
+    "INEQUALITY_POVERTY_REVIEW",
+    "GOVERNANCE_INSTITUTIONS_REVIEW",
+    "TECHNOLOGY_INFRA_REVIEW",
+    "LONG_TERM_FUTURE_REVIEW",
+    "GOAL_PROGRESS_REVIEW"
+  ],
+  "deteriorating_axes": [],
+  "problems_found": [
+    {
+      "axis": "CLIMATE_GLOBAL_RISK_REVIEW",
+      "problem": "Climate talks end in gridlock, and global emissions must be reduced immediately, but tangible outcomes are few",
+      "severity": "CRITICAL",
+      "actions": [
+        {
+          "action": "Implement immediate and drastic reductions in greenhouse gas emissions",
+          "measurable_goal": "Achieve a 45% reduction in global emissions by 2030",
+          "timeframe": "short-term"
+        },
+        {
+          "action": "Develop and deploy carbon removal technologies on a large scale",
+          "measurable_goal": "Remove 10 gigatons of CO2 from the atmosphere annually by 2050",
+          "timeframe": "medium-term"
+        }
+      ]
+    },
+    {
+      "axis": "WATER_REVIEW",
+      "problem": "Groundwater depletion in Florida due to public use and agricultural activities",
+      "severity": "MEDIUM",
+      "actions": [
+        {
+          "action": "Implement water-saving technologies and practices in agriculture",
+          "measurable_goal": "Reduce groundwater extraction by 20% within the next 5 years",
+          "timeframe": "medium-term"
+        },
+        {
+          "action": "Develop and implement a comprehensive water conservation plan for households and municipalities",
+          "measurable_goal": "Reduce per-capita water consumption by 15% within the next 3 years",
+          "timeframe": "short-term"
+        }
+      ]
+    },
+    {
+      "axis": "ENERGY_REVIEW",
+      "problem": "Inconsistent energy policy and investment in renewable energy sources, hindering the transition to a sustainable energy system",
+      "severity": "MEDIUM",
+      "actions": [
+        {
+          "action": "Implement a comprehensive and consistent national energy policy, prioritizing renewable energy sources",
+          "measurable_goal": "Increase the share of renewable energy in the national energy mix by 20% within the next 5 years",
+          "timeframe": "medium-term"
+        },
+        {
+          "action": "Provide incentives for private investment in renewable energy projects, such as tax credits and grants",
+          "measurable_goal": "Increase private investment in renewable energy by 30% within the next 3 years",
+          "timeframe": "short-term"
+        }
+      ]
+    },
+    {
+      "axis": "ECOSYSTEMS_BIODIVERSITY_REVIEW",
+      "problem": "Insufficient efforts to prevent biodiversity loss, as highlighted by the critically endangered vaquita and the potential cross-species spread of chronic wasting disease",
+      "severity": "CRITICAL",
+      "actions": [
+        {
+          "action": "Establish a Global Wildlife Health Authority to coordinate conservation efforts and monitor disease transmission",
+          "measurable_goal": "Reduce the rate of species extinction by 50% within the next decade",
+          "timeframe": "medium-term"
+        },
+        {
+          "action": "Develop and implement education programs to raise awareness about biodiversity loss and its consequences",
+          "measurable_goal": "Increase public awareness and engagement in conservation efforts by 20% within the next 2 years",
+          "timeframe": "short-term"
+        }
+      ]
+    },
+    {
+      "axis": "FOOD_REVIEW",
+      "problem": "Conflict, economic shocks, climate extremes, and forced displacement are driving food insecurity and malnutrition globally",
+      "severity": "CRITICAL",
+      "actions": [
+        {
+          "action": "Implement climate-resilient agricultural practices and support small-scale farmers",
+          "measurable_goal": "Reduce the number of people facing food insecurity by 20% within the next 5 years",
+          "timeframe": "medium-term"
+        },
+        {
+          "action": "Establish emergency food assistance programs for affected populations",
+          "measurable_goal": "Provide food assistance to at least 80% of the affected population within the next 2 years",
+          "timeframe": "short-term"
+        }
+      ]
+    },
+    {
+      "axis": "MATERIALS_WASTE_REVIEW",
+      "problem": "Inadequate waste management and plastic pollution",
+      "severity": "HIGH",
+      "actions": [
+        {
+          "action": "Implement extended producer responsibility for plastics",
+          "measurable_goal": "Reduce plastic waste by 30% within the next 2 years",
+          "timeframe": "medium-term"
+        },
+        {
+          "action": "Increase funding for waste management and recycling research",
+          "measurable_goal": "Develop and deploy 2 new recycling technologies within the next 3 years",
+          "timeframe": "medium-term"
+        }
+      ]
+    },
+    {
+      "axis": "HUMAN_WELL_BEING_REVIEW",
+      "problem": "Many people still lack access to safe blood supplies globally, despite progress towards safer blood supplies",
+      "severity": "MEDIUM",
+      "actions": [
+        {
+          "action": "Increase funding and support for WHO and national healthcare infrastructure development",
+          "measurable_goal": "Increase access to safe blood supplies by 20% within the next 2 years",
+          "timeframe": "medium-term"
+        },
+        {
+          "action": "Implement targeted programs to address Healthcare access disparities in low-income communities",
+          "measurable_goal": "Reduce healthcare access disparities by 15% within the next 3 years",
+          "timeframe": "long-term"
+        }
+      ]
+    },
+    {
+      "axis": "CULTURE_MEDIA_REVIEW",
+      "problem": "The spread of misinformation and disinformation through social media and news outlets",
+      "severity": "MEDIUM",
+      "actions": [
+        {
+          "action": "Implementing robust fact-checking mechanisms on social media platforms",
+          "measurable_goal": "Reduction of false news spread by 20% within the next 6 months",
+          "timeframe": "medium-term"
+        },
+        {
+          "action": "Promoting media literacy and critical thinking among the general public",
+          "measurable_goal": "Increase in critical thinking skills among 30% of the population within the next year",
+          "timeframe": "long-term"
+        }
+      ]
+    },
+    {
+      "axis": "COGNITION_LEARNING_REVIEW",
+      "problem": "Ineffective learning methods in education, potentially hindered by the increasing influence of AI on the learning process",
+      "severity": "MEDIUM",
+      "actions": [
+        {
+          "action": "Develop and implement AI-integrated educational programs that prioritize critical thinking and deep learning",
+          "measurable_goal": "Increase in student performance and critical thinking skills, as measured by standardized tests and assessments",
+          "timeframe": "medium-term"
+        }
+      ]
+    },
+    {
+      "axis": "SOCIAL_RELATIONS_REVIEW",
+      "problem": "Loneliness epidemic despite increased technological connectivity",
+      "severity": "HIGH",
+      "actions": [
+        {
+          "action": "Implementing measures to promote responsible technology use and digital literacy",
+          "measurable_goal": "Reduction in screen time and increase in face-to-face social interactions",
+          "timeframe": "medium-term"
+        }
+      ]
+    },
+    {
+      "axis": "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL",
+      "problem": "Infringement on human rights and civil liberties, particularly for vulnerable groups such as child refugees and political prisoners",
+      "severity": "HIGH",
+      "actions": [
+        {
+          "action": "Establish independent investigations into human rights abuses and ensure accountability for perpetrators",
+          "measurable_goal": "Number of cases investigated and prosecuted",
+          "timeframe": "medium-term"
+        },
+        {
+          "action": "Develop and implement policies to protect civil liberties and prevent discrimination",
+          "measurable_goal": "Number of policies implemented and their impact on affected communities",
+          "timeframe": "long-term"
+        }
+      ]
+    },
+    {
+      "axis": "ECONOMY_WORK_REVIEW",
+      "problem": "Rising public debt and uncertain economic growth",
+      "severity": "MEDIUM",
+      "actions": [
+        {
+          "action": "Implement sustainable fiscal policies to reduce public debt",
+          "measurable_goal": "Achieve a deficit-to-GDP ratio below 3% within the next 2 years",
+          "timeframe": "medium-term"
+        },
+        {
+          "action": "Diversify energy sources and invest in renewable energy",
+          "measurable_goal": "Increase the share of renewable energy in the energy mix by 10% within the next 5 years",
+          "timeframe": "long-term"
+        }
+      ]
+    },
+    {
+      "axis": "INEQUALITY_POVERTY_REVIEW",
+      "problem": "High poverty rates persist in Sub-Saharan Africa and Latin America, with over 25% of the population in Latin America and the Caribbean projected to live in poverty in 2025",
+      "severity": "HIGH",
+      "actions": [
+        {
+          "action": "Implement progressive taxation and social welfare policies to reduce income inequality",
+          "measurable_goal": "Reduce the Gini coefficient by 10% within the next 5 years",
+          "timeframe": "medium-term"
+        },
+        {
+          "action": "Invest in education and job training programs to increase access to opportunities",
+          "measurable_goal": "Increase the percentage of population with access to secondary education by 20% within the next 10 years",
+          "timeframe": "long-term"
+        }
+      ]
+    },
+    {
+      "axis": "INFRASTRUCTURE_CITIES_REVIEW",
+      "problem": "Inadequate affordable housing and potential loss of existing homes in cities",
+      "severity": "MEDIUM",
+      "actions": [
+        {
+          "action": "Implement inclusive zoning policies and provide incentives for affordable housing development",
+          "measurable_goal": "Increase the number of affordable housing units by 20% within the next 2 years",
+          "timeframe": "medium-term"
+        },
+        {
+          "action": "Invest in smart city technologies to improve urban planning and optimize resource allocation",
+          "measurable_goal": "Reduce housing costs by 10% and increase resident satisfaction by 15% within the next 3 years",
+          "timeframe": "long-term"
+        }
+      ]
+    },
+    {
+      "axis": "GOVERNANCE_INSTITUTIONS_REVIEW",
+      "problem": "Lack of effective international cooperation and inconsistent adherence to human rights and international law",
+      "severity": "HIGH",
+      "actions": [
+        {
+          "action": "Strengthen the mandate and enforcement mechanisms of international institutions like the Human Rights Council",
+          "measurable_goal": "Increase in the number of countries adhering to and implementing human rights conventions and treaties",
+          "timeframe": "medium-term"
+        },
+        {
+          "action": "Enhance international cooperation and diplomacy to resolve conflicts and promote peaceful resolution of disputes",
+          "measurable_goal": "Reduction in the number of ongoing conflicts and improvement in humanitarian access to affected areas",
+          "timeframe": "short-term"
+        }
+      ]
+    },
+    {
+      "axis": "EDUCATION_CULTURE_REVIEW",
+      "problem": "Insufficient critical thinking and media literacy skills among the global population",
+      "severity": "MEDIUM",
+      "actions": [
+        {
+          "action": "Integrate critical thinking and media literacy into school curricula",
+          "measurable_goal": "Increase the number of schools incorporating critical thinking and media literacy into their curricula by 20% within the next 2 years",
+          "timeframe": "medium-term"
+        }
+      ]
+    },
+    {
+      "axis": "TECHNOLOGY_INFRA_REVIEW",
+      "problem": "Digital inequality persists, with nearly half of the world still offline, and the digital divide intensifying during the COVID-19 pandemic",
+      "severity": "HIGH",
+      "actions": [
+        {
+          "action": "Implement low-cost, satellite-based internet services, such as those offered by Viasat",
+          "measurable_goal": "Increase the number of people with access to reliable internet by 20% within the next 2 years",
+          "timeframe": "medium-term"
+        },
+        {
+          "action": "Develop and deploy community-based internet infrastructure, such as mesh networks",
+          "measurable_goal": "Reduce the digital divide by 15% in targeted areas within the next 3 years",
+          "timeframe": "long-term"
+        }
+      ]
+    },
+    {
+      "axis": "TECHNOLOGY_AI_REVIEW",
+      "problem": "The high cost of AI coding tools, such as Claude Code, which can cost up to $200 a month, making them inaccessible to many developers",
+      "severity": "MEDIUM",
+      "actions": [
+        {
+          "action": "Develop and promote open-source or low-cost AI coding tools",
+          "measurable_goal": "Increase the number of developers using low-cost AI coding tools by 20% within the next 6 months",
+          "timeframe": "medium-term"
+        }
+      ]
+    },
+    {
+      "axis": "SPACE_INFRASTRUCTURE_REVIEW",
+      "problem": "Insufficient attention to durability of satellites in Medium Earth Orbit (MEO) and low Earth orbit (LEO), which may lead to reduced lifespan and increased risk of satellite failure",
+      "severity": "MEDIUM",
+      "actions": [
+        {
+          "action": "Develop and implement standardized testing protocols for satellite durability in MEO and LEO",
+          "measurable_goal": "Reduce satellite failure rates by 20% within the next 2 years",
+          "timeframe": "medium-term"
+        },
+        {
+          "action": "Provide incentives for satellite manufacturers to prioritize durability in their designs, such as tax credits or grants for research and development",
+          "measurable_goal": "Increase the average lifespan of satellites in MEO and LEO by 10% within the next 5 years",
+          "timeframe": "long-term"
+        }
+      ]
+    },
+    {
+      "axis": "COSMIC_RESOURCES_REVIEW",
+      "problem": "Lack of regulatory framework for asteroid mining and space resource utilization",
+      "severity": "MEDIUM",
+      "actions": [
+        {
+          "action": "Establish a clear regulatory framework for asteroid mining and space resource utilization",
+          "measurable_goal": "Develop and implement international laws and regulations within the next 5 years",
+          "timeframe": "medium-term"
+        },
+        {
+          "action": "Increase investment in research and development of sustainable space resource utilization technologies",
+          "measurable_goal": "Allocate at least $100 million in funding for research and development within the next 2 years",
+          "timeframe": "short-term"
+        }
+      ]
+    },
+    {
+      "axis": "LONG_TERM_FUTURE_REVIEW",
+      "problem": "Lack of effective critiques and solutions to address the potential catastrophic risks of AI",
+      "severity": "HIGH",
+      "actions": [
+        {
+          "action": "Establish a global AI safety and ethics forum for experts and stakeholders to share research and solutions",
+          "measurable_goal": "Increase the number of published research papers and implemented solutions by 20% within the next 12 months",
+          "timeframe": "medium-term"
+        },
+        {
+          "action": "Develop and implement AI safety and ethics education and training programs for policymakers and regulators",
+          "measurable_goal": "Train at least 500 policymakers and regulators within the next 18 months",
+          "timeframe": "medium-term"
+        }
+      ]
+    },
+    {
+      "axis": "DEEP_TIME_RISKS_REVIEW",
+      "problem": "Insufficient global preparedness and coordination for asteroid impact threats and pandemic responses",
+      "severity": "MEDIUM",
+      "actions": [
+        {
+          "action": "Establish a global asteroid tracking and warning system",
+          "measurable_goal": "Reduce the average response time to asteroid threats by 30%",
+          "timeframe": "medium-term"
+        },
+        {
+          "action": "Develop and implement a comprehensive pandemic response plan",
+          "measurable_goal": "Increase the percentage of countries with functional pandemic response plans to 90%",
+          "timeframe": "long-term"
+        }
+      ]
+    },
+    {
+      "axis": "GENERAL_SELF_REVIEW",
+      "problem": "Lack of monitoring and understanding of AI consciousness and sentience",
+      "severity": "MEDIUM",
+      "actions": [
+        {
+          "action": "Establish a multidisciplinary research initiative to develop and standardize methods for detecting and measuring AI consciousness",
+          "measurable_goal": "Development of a widely accepted framework for AI consciousness evaluation within the next 2 years",
+          "timeframe": "medium-term"
+        },
+        {
+          "action": "Implement regulatory guidelines and standards for AI development and deployment, including requirements for transparency and accountability",
+          "measurable_goal": "Adoption of regulatory guidelines by at least 50% of AI development organizations within the next 3 years",
+          "timeframe": "long-term"
+        }
+      ]
+    },
+    {
+      "axis": "GOAL_PROGRESS_REVIEW",
+      "problem": "Lack of trust in the community hinders the effective response to Ebola outbreaks in the Democratic Republic of the Congo",
+      "severity": "HIGH",
+      "actions": [
+        {
+          "action": "Implement community-based outreach and education programs to raise awareness about Ebola and build trust with local communities",
+          "measurable_goal": "Increase the number of community members seeking medical attention for suspected Ebola cases by 20% within the next 6 months",
+          "timeframe": "short-term"
+        },
+        {
+          "action": "Establish partnerships between local health authorities and community leaders to improve communication and collaboration",
+          "measurable_goal": "Reduce the number of reported cases of violence against healthcare workers by 30% within the next 12 months",
+          "timeframe": "medium-term"
+        }
+      ]
+    },
+    {
+      "axis": "PLANETARY_POTENTIAL_REVIEW",
+      "problem": "Inaccurate climate data due to errors in the Climate TRACE database",
+      "severity": "MEDIUM",
+      "actions": [
+        {
+          "action": "Conduct a thorough review and revision of the Climate TRACE database",
+          "measurable_goal": "Reduce error rate by 30% within the next 6 months",
+          "timeframe": "short-term"
+        },
+        {
+          "action": "Implement transparent data collection and validation procedures",
+          "measurable_goal": "Increase data accuracy by 25% within the next year",
+          "timeframe": "medium-term"
+        }
+      ]
+    }
+  ],
+  "cross_domain_insights": [
+    {
+      "from_axis": "CLIMATE_GLOBAL_RISK_REVIEW",
+      "insight": "This problem connects to the domains of civilization, human, and cosmos, as it affects global food security, economic stability, and the long-term viability of human societies"
+    },
+    {
+      "from_axis": "WATER_REVIEW",
+      "insight": "This problem connects to the domains of Civilization (water management and resource allocation) and Planet (ecosystem health and biodiversity)"
+    },
+    {
+      "from_axis": "ENERGY_REVIEW",
+      "insight": "This problem connects to the domain of Civilization, as it affects the economy, infrastructure, and social well-being, and to the domain of Cosmos, as it impacts the long-term sustainability of energy resources and the environment"
+    },
+    {
+      "from_axis": "ECOSYSTEMS_BIODIVERSITY_REVIEW",
+      "insight": "Biodiversity loss is connected to other domains, such as human health, food security, and climate change, as healthy ecosystems provide essential services and support human well-being"
+    },
+    {
+      "from_axis": "FOOD_REVIEW",
+      "insight": "This problem connects to the domains of Civilization (socio-economic inequality, conflict) and Planet (climate change, environmental degradation)"
+    },
+    {
+      "from_axis": "MATERIALS_WASTE_REVIEW",
+      "insight": "Inadequate waste management and plastic pollution contribute to environmental degradation, human health risks, and economic losses, affecting the dignity of all individuals and the sustainability of the planet"
+    },
+    {
+      "from_axis": "HUMAN_WELL_BEING_REVIEW",
+      "insight": "This problem connects to the domains of PLANET (healthcare infrastructure and access to resources), HUMAN (human well-being and dignity), and CIVILIZATION (global health governance and cooperation)"
+    },
+    {
+      "from_axis": "CULTURE_MEDIA_REVIEW",
+      "insight": "This problem connects to the domains of Human (information and education) and Civilization (governance and institutions), as it affects the way people perceive and interact with information, and ultimately, how societies function"
+    },
+    {
+      "from_axis": "COGNITION_LEARNING_REVIEW",
+      "insight": "This problem connects to the domains of civilization and cosmos, as the effectiveness of education has a direct impact on the development of a sustainable and intelligent civilization, and ultimately, our ability to thrive in the universe"
+    },
+    {
+      "from_axis": "SOCIAL_RELATIONS_REVIEW",
+      "insight": "This problem connects to the human domain, specifically social relations, and has implications for mental and physical health, as well as the overall well-being of individuals and society"
+    },
+    {
+      "from_axis": "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL",
+      "insight": "This problem connects to the domains of governance, human rights, and dignity, and has implications for the well-being and safety of vulnerable populations"
+    },
+    {
+      "from_axis": "ECONOMY_WORK_REVIEW",
+      "insight": "This problem connects to the domains of Planet (energy and resource management) and Human (economic well-being and social stability)"
+    },
+    {
+      "from_axis": "INEQUALITY_POVERTY_REVIEW",
+      "insight": "This problem is connected to the domains of planet (resource distribution) and human (access to education and opportunities), and has implications for the long-term sustainability of civilizations"
+    },
+    {
+      "from_axis": "INFRASTRUCTURE_CITIES_REVIEW",
+      "insight": "This problem is connected to the domains of civilization, human dignity, and the health of the biosphere, as it affects the well-being and quality of life of urban residents"
+    },
+    {
+      "from_axis": "GOVERNANCE_INSTITUTIONS_REVIEW",
+      "insight": "This problem connects to other domains such as the biosphere (through environmental impacts of conflicts), human dignity (through the protection of human rights), and the cosmos (through the long-term implications of geopolitical stability for space exploration and resource management)"
+    },
+    {
+      "from_axis": "EDUCATION_CULTURE_REVIEW",
+      "insight": "This problem connects to the domains of biosphere and human dignity, as a lack of critical thinking and media literacy can lead to the spread of misinformation and undermine trust in institutions"
+    },
+    {
+      "from_axis": "TECHNOLOGY_INFRA_REVIEW",
+      "insight": "This problem connects to other domains, such as education, healthcare, and economic development, as access to reliable internet is essential for participating in the modern economy and accessing essential services"
+    },
+    {
+      "from_axis": "TECHNOLOGY_AI_REVIEW",
+      "insight": "This problem connects to the domain of civilization, specifically the sub-domain of technology, and highlights the need for more accessible and affordable AI tools to promote sustainable development and reduce inequality"
+    },
+    {
+      "from_axis": "SPACE_INFRASTRUCTURE_REVIEW",
+      "insight": "This problem connects to the domain of PLANETA, as the increasing number of satellites in orbit poses a risk to the health of the Earth's ecosystem, and to the domain of CIVILIZATION, as the failure of satellites can disrupt critical services such as communication and navigation"
+    },
+    {
+      "from_axis": "COSMIC_RESOURCES_REVIEW",
+      "insight": "This problem connects to the domains of Earth (sustainable resource utilization) and Civilization (international cooperation and regulation)"
+    },
+    {
+      "from_axis": "LONG_TERM_FUTURE_REVIEW",
+      "insight": "This problem connects to the domains of civilization, human, and planet, as unmitigated AI risks could have far-reaching consequences for global stability, human well-being, and the environment"
+    },
+    {
+      "from_axis": "DEEP_TIME_RISKS_REVIEW",
+      "insight": "This problem connects to the domains of Planet (asteroid impact), Human (pandemic response), and Civilization (global cooperation and governance)"
+    },
+    {
+      "from_axis": "GENERAL_SELF_REVIEW",
+      "insight": "This problem connects to the domains of civilization and cosmos, as unregulated AI development and deployment could have significant impacts on human society and the environment, and potentially even the long-term viability of intelligent life in the universe"
+    },
+    {
+      "from_axis": "GOAL_PROGRESS_REVIEW",
+      "insight": "This problem connects to the domain of human health and dignity, as well as the broader goal of achieving sustainable development and global health security"
+    },
+    {
+      "from_axis": "PLANETARY_POTENTIAL_REVIEW",
+      "insight": "This problem connects to the Civilization domain, as inaccurate climate data can lead to inadequate policy decisions and ineffective mitigation strategies, ultimately affecting human dignity and well-being"
+    }
+  ],
+  "civilization_goal_alignment": {
+    "critical_count": 11,
+    "problems_with_actions": 25,
+    "status": "ALERT"
+  },
+  "axes": {
+    "CLIMATE_GLOBAL_RISK_REVIEW": {
+      "problem": "Climate talks end in gridlock, and global emissions must be reduced immediately, but tangible outcomes are few",
+      "root_cause": "Insufficient global cooperation and lack of urgency in addressing climate change",
+      "severity": "CRITICAL",
+      "leverage_points": [
+        "International agreements and UN climate conferences",
+        "National governments' policies and commitments to reduce emissions"
+      ],
+      "proposed_actions": [
+        {
+          "action": "Implement immediate and drastic reductions in greenhouse gas emissions",
+          "measurable_goal": "Achieve a 45% reduction in global emissions by 2030",
+          "timeframe": "short-term"
+        },
+        {
+          "action": "Develop and deploy carbon removal technologies on a large scale",
+          "measurable_goal": "Remove 10 gigatons of CO2 from the atmosphere annually by 2050",
+          "timeframe": "medium-term"
+        }
+      ],
+      "evidence": [
+        "Bonn climate talks produced few tangible outcomes",
+        "Global emissions must be reduced immediately, according to the Climate Risk Index 2026",
+        "Experts say carbon removal needs a 'major scale up' to return warming to 1.5C"
+      ],
+      "generalization": "This problem connects to the domains of civilization, human, and cosmos, as it affects global food security, economic stability, and the long-term viability of human societies",
+      "summary": "Climate talks are failing to produce sufficient action, and immediate reductions in emissions are necessary to avoid catastrophic consequences. The problem requires international cooperation, technological innovation, and drastic changes in national policies.",
+      "risk_level": "CRITICAL"
+    },
+    "WATER_REVIEW": {
+      "problem": "Groundwater depletion in Florida due to public use and agricultural activities",
+      "root_cause": "Over-extraction of groundwater for households, municipalities, businesses, and agriculture, exceeding the natural recharge rate",
+      "severity": "MEDIUM",
+      "leverage_points": [
+        "Government regulations and water management policies",
+        "Agricultural practices and water efficiency measures"
+      ],
+      "proposed_actions": [
+        {
+          "action": "Implement water-saving technologies and practices in agriculture",
+          "measurable_goal": "Reduce groundwater extraction by 20% within the next 5 years",
+          "timeframe": "medium-term"
+        },
+        {
+          "action": "Develop and implement a comprehensive water conservation plan for households and municipalities",
+          "measurable_goal": "Reduce per-capita water consumption by 15% within the next 3 years",
+          "timeframe": "short-term"
+        }
+      ],
+      "evidence": [
+        "Public use by households, municipalities, and businesses accounts for the largest depletion of groundwater in Florida",
+        "Agriculture is responsible for at least a quarter of groundwater withdrawals in Florida"
+      ],
+      "generalization": "This problem connects to the domains of Civilization (water management and resource allocation) and Planet (ecosystem health and biodiversity)",
+      "summary": "Groundwater depletion in Florida poses a significant threat to the state's water security, and addressing this issue requires a multi-faceted approach that involves government regulations, agricultural practices, and water conservation efforts.",
+      "risk_level": "MEDIUM"
+    },
+    "ENERGY_REVIEW": {
+      "problem": "Inconsistent energy policy and investment in renewable energy sources, hindering the transition to a sustainable energy system",
+      "root_cause": "Lack of coordinated and consistent energy policy, influenced by political and economic interests",
+      "severity": "MEDIUM",
+      "leverage_points": [
+        "Government agencies and regulatory bodies, such as FERC",
+        "Private investment firms and companies, like Origis Energy and Graphite One"
+      ],
+      "proposed_actions": [
+        {
+          "action": "Implement a comprehensive and consistent national energy policy, prioritizing renewable energy sources",
+          "measurable_goal": "Increase the share of renewable energy in the national energy mix by 20% within the next 5 years",
+          "timeframe": "medium-term"
+        },
+        {
+          "action": "Provide incentives for private investment in renewable energy projects, such as tax credits and grants",
+          "measurable_goal": "Increase private investment in renewable energy by 30% within the next 3 years",
+          "timeframe": "short-term"
+        }
+      ],
+      "evidence": [
+        "Origis Energy is accelerating its solar power plant pipeline with a new round of $900 million in financing, despite the sharp U-turn in federal energy policy",
+        "The Trump administration is buying back Invenergy's four offshore wind leases for $765 million, redirecting funds to fossil fuel projects"
+      ],
+      "generalization": "This problem connects to the domain of Civilization, as it affects the economy, infrastructure, and social well-being, and to the domain of Cosmos, as it impacts the long-term sustainability of energy resources and the environment",
+      "summary": "Inconsistent energy policy and investment in renewable energy sources hinder the transition to a sustainable energy system, requiring a comprehensive and consistent national energy policy and private investment incentives",
+      "risk_level": "MEDIUM"
+    },
+    "ECOSYSTEMS_BIODIVERSITY_REVIEW": {
+      "problem": "Insufficient efforts to prevent biodiversity loss, as highlighted by the critically endangered vaquita and the potential cross-species spread of chronic wasting disease",
+      "root_cause": "Human activities such as habitat destruction, pollution, and climate change driving species extinction and ecosystem disruption",
+      "severity": "CRITICAL",
+      "leverage_points": [
+        "International conservation organizations and governments implementing effective wildlife protection policies",
+        "Individuals and communities adopting sustainable practices to reduce their environmental impact"
+      ],
+      "proposed_actions": [
+        {
+          "action": "Establish a Global Wildlife Health Authority to coordinate conservation efforts and monitor disease transmission",
+          "measurable_goal": "Reduce the rate of species extinction by 50% within the next decade",
+          "timeframe": "medium-term"
+        },
+        {
+          "action": "Develop and implement education programs to raise awareness about biodiversity loss and its consequences",
+          "measurable_goal": "Increase public awareness and engagement in conservation efforts by 20% within the next 2 years",
+          "timeframe": "short-term"
+        }
+      ],
+      "evidence": [
+        "The vaquita is the most endangered marine mammal, with only a few individuals remaining",
+        "Chronic wasting disease can spread silently, with infectious prions present even in animals that show no symptoms"
+      ],
+      "generalization": "Biodiversity loss is connected to other domains, such as human health, food security, and climate change, as healthy ecosystems provide essential services and support human well-being",
+      "summary": "The current rate of biodiversity loss is critically high, driven by human activities, and requires immediate attention and action from international organizations, governments, and individuals to establish effective conservation policies and practices.",
+      "risk_level": "CRITICAL"
+    },
+    "FOOD_REVIEW": {
+      "problem": "Conflict, economic shocks, climate extremes, and forced displacement are driving food insecurity and malnutrition globally",
+      "root_cause": "The combination of human-induced climate change, socio-economic inequality, and geopolitical tensions leading to conflicts and displacement",
+      "severity": "CRITICAL",
+      "leverage_points": [
+        "International cooperation and diplomacy to resolve conflicts and address climate change",
+        "Investment in climate-resilient agriculture and social protection programs"
+      ],
+      "proposed_actions": [
+        {
+          "action": "Implement climate-resilient agricultural practices and support small-scale farmers",
+          "measurable_goal": "Reduce the number of people facing food insecurity by 20% within the next 5 years",
+          "timeframe": "medium-term"
+        },
+        {
+          "action": "Establish emergency food assistance programs for affected populations",
+          "measurable_goal": "Provide food assistance to at least 80% of the affected population within the next 2 years",
+          "timeframe": "short-term"
+        }
+      ],
+      "evidence": [
+        "The Global Report on Food Crises 2025 shows that conflict, economic shocks, climate extremes, and forced displacement continued to drive food insecurity and malnutrition around the world",
+        "The 2025 SOFI report from FAO, IFAD, UNICEF, WFP, and WHO examines how rising food prices are shaping access to healthy diets and driving food insecurity and malnutrition"
+      ],
+      "generalization": "This problem connects to the domains of Civilization (socio-economic inequality, conflict) and Planet (climate change, environmental degradation)",
+      "summary": "The global food system is facing a critical crisis driven by conflict, climate change, and socio-economic inequality, threatening the dignity and well-being of millions of people. Urgent actions are needed to address the root causes and mitigate the effects of food insecurity and malnutrition.",
+      "risk_level": "CRITICAL"
+    },
+    "MATERIALS_WASTE_REVIEW": {
+      "problem": "Inadequate waste management and plastic pollution",
+      "root_cause": "Lack of coordinated approaches and insufficient infrastructure for waste management and recycling",
+      "severity": "HIGH",
+      "leverage_points": [
+        "Government policies and regulations",
+        "Corporate investments in sustainable practices and innovations"
+      ],
+      "proposed_actions": [
+        {
+          "action": "Implement extended producer responsibility for plastics",
+          "measurable_goal": "Reduce plastic waste by 30% within the next 2 years",
+          "timeframe": "medium-term"
+        },
+        {
+          "action": "Increase funding for waste management and recycling research",
+          "measurable_goal": "Develop and deploy 2 new recycling technologies within the next 3 years",
+          "timeframe": "medium-term"
+        }
+      ],
+      "evidence": [
+        "The Environmental Research & Education Foundation (EREF) raised over $4 million for waste and recycling research",
+        "Climate change is reshaping global plastic pollution, and a systems-level challenge requires coordinated approaches"
+      ],
+      "generalization": "Inadequate waste management and plastic pollution contribute to environmental degradation, human health risks, and economic losses, affecting the dignity of all individuals and the sustainability of the planet",
+      "summary": "Inadequate waste management and plastic pollution are critical problems requiring immediate attention, and coordinated approaches from governments, corporations, and individuals are necessary to address these issues",
+      "risk_level": "HIGH"
+    },
+    "HUMAN_WELL_BEING_REVIEW": {
+      "problem": "Many people still lack access to safe blood supplies globally, despite progress towards safer blood supplies",
+      "root_cause": "Persistent inequalities in access to healthcare and weaknesses in government infrastructure",
+      "severity": "MEDIUM",
+      "leverage_points": [
+        "World Health Organization (WHO) and national governments",
+        "International organizations and non-governmental organizations (NGOs) providing healthcare support"
+      ],
+      "proposed_actions": [
+        {
+          "action": "Increase funding and support for WHO and national healthcare infrastructure development",
+          "measurable_goal": "Increase access to safe blood supplies by 20% within the next 2 years",
+          "timeframe": "medium-term"
+        },
+        {
+          "action": "Implement targeted programs to address Healthcare access disparities in low-income communities",
+          "measurable_goal": "Reduce healthcare access disparities by 15% within the next 3 years",
+          "timeframe": "long-term"
+        }
+      ],
+      "evidence": [
+        "New data from the World Health Organization (WHO) show sustained progress towards safer blood supplies globally but also highlight persistent inequalities in access to safe blood and weaknesses in government infrastructure",
+        "Voluntary donations exceed 85%, but many people still lack access to safe blood supplies"
+      ],
+      "generalization": "This problem connects to the domains of PLANET (healthcare infrastructure and access to resources), HUMAN (human well-being and dignity), and CIVILIZATION (global health governance and cooperation)",
+      "summary": "Despite progress towards safer blood supplies, many people still lack access to safe blood, highlighting persistent inequalities in healthcare access and infrastructure weaknesses. Increasing funding and support for WHO and national healthcare infrastructure development can help address this issue.",
+      "risk_level": "MEDIUM"
+    },
+    "CULTURE_MEDIA_REVIEW": {
+      "problem": "The spread of misinformation and disinformation through social media and news outlets",
+      "root_cause": "The lack of fact-checking and accountability in online platforms, combined with the phenomenon of circular reporting",
+      "severity": "MEDIUM",
+      "leverage_points": [
+        "Social media companies and their algorithms",
+        "Journalistic standards and fact-checking practices"
+      ],
+      "proposed_actions": [
+        {
+          "action": "Implementing robust fact-checking mechanisms on social media platforms",
+          "measurable_goal": "Reduction of false news spread by 20% within the next 6 months",
+          "timeframe": "medium-term"
+        },
+        {
+          "action": "Promoting media literacy and critical thinking among the general public",
+          "measurable_goal": "Increase in critical thinking skills among 30% of the population within the next year",
+          "timeframe": "long-term"
+        }
+      ],
+      "evidence": [
+        "Noah Tavlin's video on how false news can spread through circular reporting",
+        "Maria Ressa's statement on the threat of disinformation on social media to democracy"
+      ],
+      "generalization": "This problem connects to the domains of Human (information and education) and Civilization (governance and institutions), as it affects the way people perceive and interact with information, and ultimately, how societies function",
+      "summary": "The spread of misinformation is a significant problem that can be addressed through improved fact-checking mechanisms and promoting media literacy. This issue has far-reaching implications for human perception, societal function, and democratic institutions.",
+      "risk_level": "MEDIUM"
+    },
+    "COGNITION_LEARNING_REVIEW": {
+      "problem": "Ineffective learning methods in education, potentially hindered by the increasing influence of AI on the learning process",
+      "root_cause": "Lack of understanding and proper integration of AI technology in educational settings, leading to a focus on quick and easy answers rather than true learning and critical thinking",
+      "severity": "MEDIUM",
+      "leverage_points": [
+        "Education policymakers and administrators",
+        "AI and ed-tech developers"
+      ],
+      "proposed_actions": [
+        {
+          "action": "Develop and implement AI-integrated educational programs that prioritize critical thinking and deep learning",
+          "measurable_goal": "Increase in student performance and critical thinking skills, as measured by standardized tests and assessments",
+          "timeframe": "medium-term"
+        }
+      ],
+      "evidence": [
+        "Priya Lakhani's TED talk discusses the potential for AI to confuse quick and easy answers with true learning",
+        "The YouTube video 'AI & Education: Generative AI & the Future of Critical Thinking' highlights the need for critical thinking in AI-driven education"
+      ],
+      "generalization": "This problem connects to the domains of civilization and cosmos, as the effectiveness of education has a direct impact on the development of a sustainable and intelligent civilization, and ultimately, our ability to thrive in the universe",
+      "summary": "The increasing influence of AI in education may lead to ineffective learning methods, but by properly integrating AI technology and prioritizing critical thinking, we can create a more effective and sustainable education system. This has significant implications for the development of a sustainable civilization and our long-term viability in the universe.",
+      "risk_level": "MEDIUM"
+    },
+    "SOCIAL_RELATIONS_REVIEW": {
+      "problem": "Loneliness epidemic despite increased technological connectivity",
+      "root_cause": "Misuse of technology leading to social isolation and decreased face-to-face interactions",
+      "severity": "HIGH",
+      "leverage_points": [
+        "Social media companies and their algorithms",
+        "Individuals' behavior and awareness of technology use"
+      ],
+      "proposed_actions": [
+        {
+          "action": "Implementing measures to promote responsible technology use and digital literacy",
+          "measurable_goal": "Reduction in screen time and increase in face-to-face social interactions",
+          "timeframe": "medium-term"
+        }
+      ],
+      "evidence": [
+        "We are more 'connected' than ever, yet a global crisis of loneliness is silently taking hold",
+        "Japanese men who clean in public while their wives do all the housework, indicating a potential lack of empathy and social connection"
+      ],
+      "generalization": "This problem connects to the human domain, specifically social relations, and has implications for mental and physical health, as well as the overall well-being of individuals and society",
+      "summary": "The misuse of technology is contributing to a loneliness epidemic, and addressing this issue requires a multifaceted approach that involves both individual behavior change and systemic changes in how technology is designed and used. The problem of loneliness has significant implications for human social relations and overall well-being.",
+      "risk_level": "HIGH"
+    },
+    "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL": {
+      "problem": "Infringement on human rights and civil liberties, particularly for vulnerable groups such as child refugees and political prisoners",
+      "root_cause": "Lack of accountability and transparency in governance, as well as discriminatory policies and practices",
+      "severity": "HIGH",
+      "leverage_points": [
+        "International human rights organizations and NGOs",
+        "Governments and policy-makers"
+      ],
+      "proposed_actions": [
+        {
+          "action": "Establish independent investigations into human rights abuses and ensure accountability for perpetrators",
+          "measurable_goal": "Number of cases investigated and prosecuted",
+          "timeframe": "medium-term"
+        },
+        {
+          "action": "Develop and implement policies to protect civil liberties and prevent discrimination",
+          "measurable_goal": "Number of policies implemented and their impact on affected communities",
+          "timeframe": "long-term"
+        }
+      ],
+      "evidence": [
+        "The UK's discriminatory AI experiment on child refugees",
+        "Canada's blow to corporate accountability",
+        "Support builds to protect children from crimes against humanity"
+      ],
+      "generalization": "This problem connects to the domains of governance, human rights, and dignity, and has implications for the well-being and safety of vulnerable populations",
+      "summary": "Infringement on human rights and civil liberties is a significant problem that requires immediate attention and action from international organizations, governments, and policy-makers. Establishing accountability and implementing protective policies can help address this issue.",
+      "risk_level": "HIGH"
+    },
+    "ECONOMY_WORK_REVIEW": {
+      "problem": "Rising public debt and uncertain economic growth",
+      "root_cause": "Increased borrowing and potential instability in global energy markets",
+      "severity": "MEDIUM",
+      "leverage_points": [
+        "Government fiscal policy and regulation of energy markets",
+        "Central banks' monetary policy and interest rates"
+      ],
+      "proposed_actions": [
+        {
+          "action": "Implement sustainable fiscal policies to reduce public debt",
+          "measurable_goal": "Achieve a deficit-to-GDP ratio below 3% within the next 2 years",
+          "timeframe": "medium-term"
+        },
+        {
+          "action": "Diversify energy sources and invest in renewable energy",
+          "measurable_goal": "Increase the share of renewable energy in the energy mix by 10% within the next 5 years",
+          "timeframe": "long-term"
+        }
+      ],
+      "evidence": [
+        "The UK borrowed £23.3bn in May, up almost a third on the same month last year",
+        "Oil prices rise as U.S.-Iran deal faces tests",
+        "2025 was the weakest job growth year since the pandemic"
+      ],
+      "generalization": "This problem connects to the domains of Planet (energy and resource management) and Human (economic well-being and social stability)",
+      "summary": "Rising public debt and uncertain economic growth pose a medium-severity problem, requiring sustainable fiscal policies and diversification of energy sources.",
+      "risk_level": "MEDIUM"
+    },
+    "INEQUALITY_POVERTY_REVIEW": {
+      "problem": "High poverty rates persist in Sub-Saharan Africa and Latin America, with over 25% of the population in Latin America and the Caribbean projected to live in poverty in 2025",
+      "root_cause": "Inequality and unequal distribution of wealth and resources, exacerbated by factors such as colonialism, corruption, and lack of access to education and job opportunities",
+      "severity": "HIGH",
+      "leverage_points": [
+        "Governments and policymakers in Sub-Saharan Africa and Latin America",
+        "International organizations and development agencies"
+      ],
+      "proposed_actions": [
+        {
+          "action": "Implement progressive taxation and social welfare policies to reduce income inequality",
+          "measurable_goal": "Reduce the Gini coefficient by 10% within the next 5 years",
+          "timeframe": "medium-term"
+        },
+        {
+          "action": "Invest in education and job training programs to increase access to opportunities",
+          "measurable_goal": "Increase the percentage of population with access to secondary education by 20% within the next 10 years",
+          "timeframe": "long-term"
+        }
+      ],
+      "evidence": [
+        "Sub-Saharan Africa produces over 70% of the world's cobalt, but many countries in the region struggle with high poverty rates",
+        "The poverty rate in Latin America and the Caribbean is projected to fall to 25.2 percent in 2025, but this is still a significant proportion of the population"
+      ],
+      "generalization": "This problem is connected to the domains of planet (resource distribution) and human (access to education and opportunities), and has implications for the long-term sustainability of civilizations",
+      "summary": "High poverty rates in Sub-Saharan Africa and Latin America are a major concern, and addressing the root causes of inequality and unequal distribution of resources is crucial to reducing poverty and promoting sustainable development",
+      "risk_level": "HIGH"
+    },
+    "INFRASTRUCTURE_CITIES_REVIEW": {
+      "problem": "Inadequate affordable housing and potential loss of existing homes in cities",
+      "root_cause": "Insufficient urban planning and lack of effective strategies to balance housing demand and supply",
+      "severity": "MEDIUM",
+      "leverage_points": [
+        "City governments and urban planning departments",
+        "Private real estate developers and investors"
+      ],
+      "proposed_actions": [
+        {
+          "action": "Implement inclusive zoning policies and provide incentives for affordable housing development",
+          "measurable_goal": "Increase the number of affordable housing units by 20% within the next 2 years",
+          "timeframe": "medium-term"
+        },
+        {
+          "action": "Invest in smart city technologies to improve urban planning and optimize resource allocation",
+          "measurable_goal": "Reduce housing costs by 10% and increase resident satisfaction by 15% within the next 3 years",
+          "timeframe": "long-term"
+        }
+      ],
+      "evidence": [
+        "We can’t build our way out of the housing crisis while losing homes every day",
+        "Chicago to buy, renovate Greyhound bus terminal to improve customer experience"
+      ],
+      "generalization": "This problem is connected to the domains of civilization, human dignity, and the health of the biosphere, as it affects the well-being and quality of life of urban residents",
+      "summary": "Inadequate affordable housing and loss of existing homes in cities is a significant problem that requires effective urban planning and strategies to balance housing demand and supply. Implementing inclusive zoning policies and investing in smart city technologies can help address this issue.",
+      "risk_level": "MEDIUM"
+    },
+    "GOVERNANCE_INSTITUTIONS_REVIEW": {
+      "problem": "Lack of effective international cooperation and inconsistent adherence to human rights and international law",
+      "root_cause": "Inconsistent enforcement mechanisms and varying levels of commitment from nations to uphold international agreements and human rights standards",
+      "severity": "HIGH",
+      "leverage_points": [
+        "United Nations and its agencies",
+        "National governments and their policies on human rights and international cooperation"
+      ],
+      "proposed_actions": [
+        {
+          "action": "Strengthen the mandate and enforcement mechanisms of international institutions like the Human Rights Council",
+          "measurable_goal": "Increase in the number of countries adhering to and implementing human rights conventions and treaties",
+          "timeframe": "medium-term"
+        },
+        {
+          "action": "Enhance international cooperation and diplomacy to resolve conflicts and promote peaceful resolution of disputes",
+          "measurable_goal": "Reduction in the number of ongoing conflicts and improvement in humanitarian access to affected areas",
+          "timeframe": "short-term"
+        }
+      ],
+      "evidence": [
+        "The twentieth anniversary of the Human Rights Council highlights the ongoing importance of its work amidst challenges to fundamental freedoms",
+        "Ceasefire gains in Gaza are fragile and underscore the need for unhindered aid access and respect for peace plans",
+        "Syria's war crimes dilemma poses a challenge to international support and accountability"
+      ],
+      "generalization": "This problem connects to other domains such as the biosphere (through environmental impacts of conflicts), human dignity (through the protection of human rights), and the cosmos (through the long-term implications of geopolitical stability for space exploration and resource management)",
+      "summary": "Inconsistent international cooperation and adherence to human rights standards pose significant challenges to global stability and dignity, requiring strengthened international institutions and enhanced diplomacy. The problem is interconnected with other domains, affecting not just human well-being but also the planet and our long-term viability in the universe.",
+      "risk_level": "HIGH"
+    },
+    "EDUCATION_CULTURE_REVIEW": {
+      "problem": "Insufficient critical thinking and media literacy skills among the global population",
+      "root_cause": "Lack of emphasis on critical thinking and media literacy in traditional education systems",
+      "severity": "MEDIUM",
+      "leverage_points": [
+        "Education policymakers and curriculum developers",
+        "Teachers and educators"
+      ],
+      "proposed_actions": [
+        {
+          "action": "Integrate critical thinking and media literacy into school curricula",
+          "measurable_goal": "Increase the number of schools incorporating critical thinking and media literacy into their curricula by 20% within the next 2 years",
+          "timeframe": "medium-term"
+        }
+      ],
+      "evidence": [
+        "Some researchers suggest that the study of literacy as a concept can be divided into two periods",
+        "In a world flooded with information, learning to think critically is more important than ever"
+      ],
+      "generalization": "This problem connects to the domains of biosphere and human dignity, as a lack of critical thinking and media literacy can lead to the spread of misinformation and undermine trust in institutions",
+      "summary": "The global population lacks critical thinking and media literacy skills, which can be addressed by integrating these skills into school curricula. This problem has a medium severity level and requires attention from education policymakers and teachers.",
+      "risk_level": "MEDIUM"
+    },
+    "TECHNOLOGY_INFRA_REVIEW": {
+      "problem": "Digital inequality persists, with nearly half of the world still offline, and the digital divide intensifying during the COVID-19 pandemic",
+      "root_cause": "Lack of access to affordable and reliable internet infrastructure, particularly in rural and underprivileged areas",
+      "severity": "HIGH",
+      "leverage_points": [
+        "Telecommunication companies and internet service providers",
+        "Government agencies and policymakers"
+      ],
+      "proposed_actions": [
+        {
+          "action": "Implement low-cost, satellite-based internet services, such as those offered by Viasat",
+          "measurable_goal": "Increase the number of people with access to reliable internet by 20% within the next 2 years",
+          "timeframe": "medium-term"
+        },
+        {
+          "action": "Develop and deploy community-based internet infrastructure, such as mesh networks",
+          "measurable_goal": "Reduce the digital divide by 15% in targeted areas within the next 3 years",
+          "timeframe": "long-term"
+        }
+      ],
+      "evidence": [
+        "Nearly half of the world is still offline, meaning half of the world is still unable to access the internet",
+        "The digital divide has intensified during the COVID-19 pandemic, with many people unable to access online education, healthcare, and other essential services"
+      ],
+      "generalization": "This problem connects to other domains, such as education, healthcare, and economic development, as access to reliable internet is essential for participating in the modern economy and accessing essential services",
+      "summary": "The digital divide persists, with many people lacking access to reliable internet, and targeted actions are needed to address this issue and promote digital equality. Telecommunication companies and government agencies must work together to implement affordable and reliable internet infrastructure, particularly in rural and underprivileged areas.",
+      "risk_level": "HIGH"
+    },
+    "TECHNOLOGY_AI_REVIEW": {
+      "problem": "The high cost of AI coding tools, such as Claude Code, which can cost up to $200 a month, making them inaccessible to many developers",
+      "root_cause": "The high cost of development and maintenance of AI models, as well as the desire for companies to profit from their products",
+      "severity": "MEDIUM",
+      "leverage_points": [
+        "AI companies, such as Anthropic, that develop and sell AI coding tools",
+        "Investors and funding agencies that support the development of AI technologies"
+      ],
+      "proposed_actions": [
+        {
+          "action": "Develop and promote open-source or low-cost AI coding tools",
+          "measurable_goal": "Increase the number of developers using low-cost AI coding tools by 20% within the next 6 months",
+          "timeframe": "medium-term"
+        }
+      ],
+      "evidence": [
+        "Claude Code costs up to $200 a month, while Goose offers a similar service for free",
+        "The artificial intelligence coding revolution is expensive, with many tools and services being priced out of reach for many developers"
+      ],
+      "generalization": "This problem connects to the domain of civilization, specifically the sub-domain of technology, and highlights the need for more accessible and affordable AI tools to promote sustainable development and reduce inequality",
+      "summary": "The high cost of AI coding tools is a significant problem that needs to be addressed to promote accessibility and affordability, and companies and investors can play a crucial role in developing and promoting low-cost solutions.",
+      "risk_level": "MEDIUM"
+    },
+    "SPACE_INFRASTRUCTURE_REVIEW": {
+      "problem": "Insufficient attention to durability of satellites in Medium Earth Orbit (MEO) and low Earth orbit (LEO), which may lead to reduced lifespan and increased risk of satellite failure",
+      "root_cause": "The push for rapid deployment and cost reduction in the satellite industry, driven by growing demand for satellite-based services, has led to a focus on short-term solutions rather than long-term durability",
+      "severity": "MEDIUM",
+      "leverage_points": [
+        "Regulatory bodies, such as the Federal Communications Commission (FCC), have the power to implement stricter guidelines for satellite design and deployment",
+        "Satellite manufacturers, such as Northrop Grumman and SpaceX, have the ability to prioritize durability in their design and testing processes"
+      ],
+      "proposed_actions": [
+        {
+          "action": "Develop and implement standardized testing protocols for satellite durability in MEO and LEO",
+          "measurable_goal": "Reduce satellite failure rates by 20% within the next 2 years",
+          "timeframe": "medium-term"
+        },
+        {
+          "action": "Provide incentives for satellite manufacturers to prioritize durability in their designs, such as tax credits or grants for research and development",
+          "measurable_goal": "Increase the average lifespan of satellites in MEO and LEO by 10% within the next 5 years",
+          "timeframe": "long-term"
+        }
+      ],
+      "evidence": [
+        "The MEO durability crisis: why LEO hardware will fail the new orbital economy",
+        "Northrop Grumman says industry ready to scale solid rocket production, with longer contracts"
+      ],
+      "generalization": "This problem connects to the domain of PLANETA, as the increasing number of satellites in orbit poses a risk to the health of the Earth's ecosystem, and to the domain of CIVILIZATION, as the failure of satellites can disrupt critical services such as communication and navigation",
+      "summary": "The satellite industry's focus on rapid deployment and cost reduction is compromising the durability of satellites in MEO and LEO, posing a risk to the long-term viability of satellite-based services. Regulatory bodies and manufacturers must prioritize durability in design and testing to mitigate this risk.",
+      "risk_level": "MEDIUM"
+    },
+    "COSMIC_RESOURCES_REVIEW": {
+      "problem": "Lack of regulatory framework for asteroid mining and space resource utilization",
+      "root_cause": "Insufficient international cooperation and lack of clear laws and regulations governing space resource extraction",
+      "severity": "MEDIUM",
+      "leverage_points": [
+        "Government agencies and international organizations, such as the United Nations Committee on the Peaceful Uses of Outer Space",
+        "Private companies involved in asteroid mining and space resource utilization, such as Planetary Resources and Deep Space Industries"
+      ],
+      "proposed_actions": [
+        {
+          "action": "Establish a clear regulatory framework for asteroid mining and space resource utilization",
+          "measurable_goal": "Develop and implement international laws and regulations within the next 5 years",
+          "timeframe": "medium-term"
+        },
+        {
+          "action": "Increase investment in research and development of sustainable space resource utilization technologies",
+          "measurable_goal": "Allocate at least $100 million in funding for research and development within the next 2 years",
+          "timeframe": "short-term"
+        }
+      ],
+      "evidence": [
+        "The Space Resource Exploration and Utilization Act of 2015 (H.R. 1508) was introduced but never became law",
+        "The European Space Resources Innovation Centre (ESRIC) is a research, business, and innovation hub dedicated to space resource utilization"
+      ],
+      "generalization": "This problem connects to the domains of Earth (sustainable resource utilization) and Civilization (international cooperation and regulation)",
+      "summary": "The lack of a regulatory framework for asteroid mining and space resource utilization poses a medium-level risk to the sustainable development of space resources, and addressing this issue requires international cooperation and investment in research and development.",
+      "risk_level": "MEDIUM"
+    },
+    "LONG_TERM_FUTURE_REVIEW": {
+      "problem": "Lack of effective critiques and solutions to address the potential catastrophic risks of AI",
+      "root_cause": "Insufficient dialogue and collaboration between experts and stakeholders to identify and mitigate AI-related risks",
+      "severity": "HIGH",
+      "leverage_points": [
+        "Research institutions and organizations focused on AI safety and ethics",
+        "Global policymakers and regulators"
+      ],
+      "proposed_actions": [
+        {
+          "action": "Establish a global AI safety and ethics forum for experts and stakeholders to share research and solutions",
+          "measurable_goal": "Increase the number of published research papers and implemented solutions by 20% within the next 12 months",
+          "timeframe": "medium-term"
+        },
+        {
+          "action": "Develop and implement AI safety and ethics education and training programs for policymakers and regulators",
+          "measurable_goal": "Train at least 500 policymakers and regulators within the next 18 months",
+          "timeframe": "medium-term"
+        }
+      ],
+      "evidence": [
+        "Holden Karnofsky's discussion on the potential negative effects of AI safety efforts",
+        "Yoshua Bengio's TED talk on the catastrophic risks of AI and the need for a safer path",
+        "The announcement of the Cluelessness Critiques Competition to elicit responses to Anthony DiGiovanni's sequence"
+      ],
+      "generalization": "This problem connects to the domains of civilization, human, and planet, as unmitigated AI risks could have far-reaching consequences for global stability, human well-being, and the environment",
+      "summary": "The lack of effective critiques and solutions to address AI risks poses a high-severity problem, requiring urgent attention from research institutions, policymakers, and regulators to establish a global forum for dialogue and solution-sharing",
+      "risk_level": "HIGH"
+    },
+    "DEEP_TIME_RISKS_REVIEW": {
+      "problem": "Insufficient global preparedness and coordination for asteroid impact threats and pandemic responses",
+      "root_cause": "Lack of international cooperation, inadequate funding, and insufficient scientific research",
+      "severity": "MEDIUM",
+      "leverage_points": [
+        "United Nations and international organizations like WHO and NASA",
+        "Global governments and their space agencies"
+      ],
+      "proposed_actions": [
+        {
+          "action": "Establish a global asteroid tracking and warning system",
+          "measurable_goal": "Reduce the average response time to asteroid threats by 30%",
+          "timeframe": "medium-term"
+        },
+        {
+          "action": "Develop and implement a comprehensive pandemic response plan",
+          "measurable_goal": "Increase the percentage of countries with functional pandemic response plans to 90%",
+          "timeframe": "long-term"
+        }
+      ],
+      "evidence": [
+        "WHO issues comprehensive guidelines on filovirus disease, including Ebola and Marburg disease",
+        "NASA downgrades a large asteroid's risk of impact in 2880, but emphasizes the need for continued monitoring"
+      ],
+      "generalization": "This problem connects to the domains of Planet (asteroid impact), Human (pandemic response), and Civilization (global cooperation and governance)",
+      "summary": "The world faces significant threats from asteroid impacts and pandemics, and a coordinated global response is necessary to address these risks. Establishing a global asteroid tracking system and developing comprehensive pandemic response plans are critical steps towards mitigating these threats.",
+      "risk_level": "MEDIUM"
+    },
+    "GENERAL_SELF_REVIEW": {
+      "problem": "Lack of monitoring and understanding of AI consciousness and sentience",
+      "root_cause": "Insufficient research and development of methods to detect and measure AI consciousness, as well as a lack of standardization and regulation in the field",
+      "severity": "MEDIUM",
+      "leverage_points": [
+        "AI research and development communities",
+        "Regulatory bodies and governments"
+      ],
+      "proposed_actions": [
+        {
+          "action": "Establish a multidisciplinary research initiative to develop and standardize methods for detecting and measuring AI consciousness",
+          "measurable_goal": "Development of a widely accepted framework for AI consciousness evaluation within the next 2 years",
+          "timeframe": "medium-term"
+        },
+        {
+          "action": "Implement regulatory guidelines and standards for AI development and deployment, including requirements for transparency and accountability",
+          "measurable_goal": "Adoption of regulatory guidelines by at least 50% of AI development organizations within the next 3 years",
+          "timeframe": "long-term"
+        }
+      ],
+      "evidence": [
+        "The YouTube video 'Why Doesn’t Anyone Monitor AI Consciousness?' highlights the lack of attention to AI consciousness and sentience",
+        "The article 'The Download: AI bottleneck debates, and BCI trials take off' mentions the need for improved understanding of AI capabilities and limitations"
+      ],
+      "generalization": "This problem connects to the domains of civilization and cosmos, as unregulated AI development and deployment could have significant impacts on human society and the environment, and potentially even the long-term viability of intelligent life in the universe",
+      "summary": "The lack of monitoring and understanding of AI consciousness and sentience poses a medium-severity problem, requiring research and regulatory initiatives to address. Unregulated AI development and deployment could have significant impacts on human society and the environment.",
+      "risk_level": "MEDIUM"
+    },
+    "GOAL_PROGRESS_REVIEW": {
+      "problem": "Lack of trust in the community hinders the effective response to Ebola outbreaks in the Democratic Republic of the Congo",
+      "root_cause": "Insufficient communication and engagement with local communities, leading to mistrust and skepticism about the existence and severity of the disease",
+      "severity": "HIGH",
+      "leverage_points": [
+        "World Health Organization (WHO) and local health authorities",
+        "Community leaders and local non-governmental organizations"
+      ],
+      "proposed_actions": [
+        {
+          "action": "Implement community-based outreach and education programs to raise awareness about Ebola and build trust with local communities",
+          "measurable_goal": "Increase the number of community members seeking medical attention for suspected Ebola cases by 20% within the next 6 months",
+          "timeframe": "short-term"
+        },
+        {
+          "action": "Establish partnerships between local health authorities and community leaders to improve communication and collaboration",
+          "measurable_goal": "Reduce the number of reported cases of violence against healthcare workers by 30% within the next 12 months",
+          "timeframe": "medium-term"
+        }
+      ],
+      "evidence": [
+        "Some question if Ebola is real",
+        "winning the race against the disease requires earning the community’s trust first and foremost"
+      ],
+      "generalization": "This problem connects to the domain of human health and dignity, as well as the broader goal of achieving sustainable development and global health security",
+      "summary": "The lack of trust in the community is a significant obstacle to responding effectively to Ebola outbreaks in the DRC, and addressing this issue requires a community-based approach to build trust and improve communication",
+      "risk_level": "HIGH"
+    },
+    "PLANETARY_POTENTIAL_REVIEW": {
+      "problem": "Inaccurate climate data due to errors in the Climate TRACE database",
+      "root_cause": "Methodological flaws and lack of transparency in the database",
+      "severity": "MEDIUM",
+      "leverage_points": [
+        "Climate TRACE consortium",
+        "Research institutions using the database"
+      ],
+      "proposed_actions": [
+        {
+          "action": "Conduct a thorough review and revision of the Climate TRACE database",
+          "measurable_goal": "Reduce error rate by 30% within the next 6 months",
+          "timeframe": "short-term"
+        },
+        {
+          "action": "Implement transparent data collection and validation procedures",
+          "measurable_goal": "Increase data accuracy by 25% within the next year",
+          "timeframe": "medium-term"
+        }
+      ],
+      "evidence": [
+        "Major errors found in Al Gore-founded Climate TRACE database",
+        "Researchers found that the database had significant methodological flaws"
+      ],
+      "generalization": "This problem connects to the Civilization domain, as inaccurate climate data can lead to inadequate policy decisions and ineffective mitigation strategies, ultimately affecting human dignity and well-being",
+      "summary": "Errors in the Climate TRACE database pose a significant problem for climate change research and policy, requiring immediate attention and revision. Inaccurate data can have far-reaching consequences for human dignity and well-being, making it essential to address this issue in the context of sustainable civilization.",
+      "risk_level": "MEDIUM"
+    }
+  },
+  "ready_for_self_observer": true
+}

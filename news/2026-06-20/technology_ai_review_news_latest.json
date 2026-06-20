@@ -1,0 +1,119 @@
+{
+  "axis": "TECHNOLOGY_AI_REVIEW",
+  "fetched_at": "2026-06-20T07:32:54.183537+00:00",
+  "smart_query": "artificial intelligence AI regulation",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube_transcripts": 2,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "New video game console aims to get kids moving",
+      "snippet": "The cube-shaped console will cost £269 (€319) when it is released on 22 June in the UK and Ireland.",
+      "url": "https://www.bbc.com/news/articles/czx50rrz7zro?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "UK's top data and AI regulator quits after 'inappropriate' humour",
+      "snippet": "Edwards has been the boss of the data watchdog since January 2022, and said he had made inappropriate attempts at humour.\n\n",
+      "url": "https://www.bbc.com/news/articles/c0eyq7rnn22o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "GTA 6 - all you need to know about Rockstar's blockbuster game",
+      "snippet": "Rockstar's sixth game in the franchise is set to be the biggest game release of the year.",
+      "url": "https://www.bbc.com/news/articles/c9q20djz4wno?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "swarm-ai-research/swarm",
+      "snippet": "SWARM: System-Wide Assessment of Risk in Multi-agent systems",
+      "stars": 36,
+      "url": "https://github.com/swarm-ai-research/swarm",
+      "updated": "2026-06-19",
+      "source": "GitHub"
+    },
+    {
+      "title": "Jakobovski/ai-safety-cheatsheet",
+      "snippet": "A compilation of AI safety ideas, problems, and solutions.",
+      "stars": 20,
+      "url": "https://github.com/Jakobovski/ai-safety-cheatsheet",
+      "updated": "2026-03-18",
+      "source": "GitHub"
+    },
+    {
+      "title": "shin4141/decision-os-paper",
+      "snippet": "Public gateway for the Decision-OS series (V4–V9). Canonical artifacts on Zenodo (DOI).",
+      "stars": 4,
+      "url": "https://github.com/shin4141/decision-os-paper",
+      "updated": "2026-06-11",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "A Link between Shock-wave Theory and Symmetry-reduced Stochastic Gradient Descent for Artificial Neural Networks",
+      "snippet": "We develop a mathematically explicit link between shock-wave theory and the symmetry-quotiented learning dynamics of stochastic gradient descent, drawing on differential geometry, Lie group theory, and fluid mechanics. Specifically, after quotienting parameter symmetries and applying local-entropy c",
+      "url": "https://arxiv.org/abs/2606.18303v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "A Causal Model of Theory of Mind in Conflict for Artificial Intelligence",
+      "snippet": "Theory of mind (ToM), the capacity to ascribe mental states to others and use those ascriptions for prediction and inference, is widely assumed to be essential for effective human-machine integration. Existing AI-ToM models address \\emph{how} to mentalize, but leave the question of when largely unad",
+      "url": "https://arxiv.org/abs/2606.16944v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[Prominent Scientists, Faith Leaders, Policymakers and Artists Call for a Prohibition on Superintelligence, as Poll Shows Americans Don’t Want It] Initial signatories include AI pioneers Yoshua Bengio and Geoffrey Hinton, leading media voices Steve Bannon and Glenn Beck, Obama's National Security Advisor Susan Rice, business trailblazers Steve Wozniak and Richard Branson, five Nobel Laureates, former Irish President Mary Robinson, actors Stephen Fry and Joseph Gordon-Levitt, and hundreds of others.",
+  "wiki": null,
+  "youtube_items": [
+    {
+      "title": "[YT] Roadmap to Become a Generative AI Expert for Beginners in 2025",
+      "summary": "[DESCRIPTION FALLBACK] Check out this roadmap to become an expert Data Scientist in 2025!",
+      "link": "https://www.youtube.com/watch?v=39zbC_PrNQs",
+      "source_type": "youtube",
+      "channel": "Analytics Vidhya",
+      "video_id": "39zbC_PrNQs",
+      "transcript_method": "description",
+      "transcript_chars": 89,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] OpenAI’s Sam Altman Talks ChatGPT, AI Agents and Superintelligence — Live at TED2025",
+      "summary": "[DESCRIPTION FALLBACK] The AI revolution is here to stay, says Sam Altman, the CEO of OpenAI. In a probing, live conversation with head of TED Chris ...",
+      "link": "https://www.youtube.com/watch?v=5MWT_doo68k",
+      "source_type": "youtube",
+      "channel": "TED",
+      "video_id": "5MWT_doo68k",
+      "transcript_method": "description",
+      "transcript_chars": 152,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] The AI Safety Expert: These Are The Only 5 Jobs That Will Remain In 2030! - Dr. Roman Yampolskiy",
+      "summary": "[DESCRIPTION FALLBACK] WARNING: AI could end humanity, and we're completely unprepared. Dr. Roman Yampolskiy reveals how AI will take 99% of jobs ...",
+      "link": "https://www.youtube.com/watch?v=UclrVWafRAI",
+      "source_type": "youtube",
+      "channel": "The Diary Of A CEO",
+      "video_id": "UclrVWafRAI",
+      "transcript_method": "description",
+      "transcript_chars": 149,
+      "has_full_transcript": false
+    }
+  ],
+  "summary": "[RSS News]\n- New video game console aims to get kids moving\n- UK's top data and AI regulator quits after 'inappropriate' humour\n\n[arXiv]\n- A Link between Shock-wave Theory and Symmetry-reduced Stochas",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": [],
+  "open_source_momentum": "",
+  "scientific_frontier": "",
+  "relevance_to_goal": ""
+}

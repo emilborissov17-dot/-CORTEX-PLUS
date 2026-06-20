@@ -1,0 +1,148 @@
+{
+  "axis": "GOVERNANCE_INSTITUTIONS_REVIEW",
+  "domain": "civilization",
+  "timestamp": "2026-06-19T17:40:30.806643+00:00",
+  "sources_count": 15,
+  "rss_count": 12,
+  "ddg_count": 0,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] The top 10 geopolitical developments for 2026",
+      "summary": "[DESCRIPTION FALLBACK] Geopolitics #GeostrategicOutlook 2026 Geostrategic Outlook: Key Developments Shaping Global Business Welcome to our latest ...",
+      "link": "https://www.youtube.com/watch?v=KqZqusPFf78",
+      "published": "2025-12-16T13:30:16Z",
+      "source_type": "youtube",
+      "channel": "EY Global",
+      "video_id": "KqZqusPFf78",
+      "transcript_method": "description",
+      "transcript_chars": 149,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] The Biggest Global Risks for 2026 | TED Explains the World with Ian Bremmer",
+      "summary": "[DESCRIPTION FALLBACK] 2026 is a tipping point year, says Ian Bremmer, founder of Eurasia Group. Highlighting the top risks that await the world, he breaks ...",
+      "link": "https://www.youtube.com/watch?v=dqVfnC_muaI",
+      "published": "2026-01-06T21:05:18Z",
+      "source_type": "youtube",
+      "channel": "TED",
+      "video_id": "dqVfnC_muaI",
+      "transcript_method": "description",
+      "transcript_chars": 159,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Why the world&#39;s superpowers are racing to control the Arctic - BBC World Service",
+      "summary": "[DESCRIPTION FALLBACK] Tensions are rising at the top of the world as the Arctic warms faster than anywhere else on earth. Click here to subscribe to our ...",
+      "link": "https://www.youtube.com/watch?v=TkRmrPQDPFw",
+      "published": "2025-09-26T23:00:40Z",
+      "source_type": "youtube",
+      "channel": "BBC World Service",
+      "video_id": "TkRmrPQDPFw",
+      "transcript_method": "description",
+      "transcript_chars": 157,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "problem": "Lack of effective international cooperation and inconsistent adherence to human rights and international law",
+    "root_cause": "Inconsistent enforcement mechanisms and varying levels of commitment from nations to uphold international agreements and human rights standards",
+    "severity": "HIGH",
+    "leverage_points": [
+      "United Nations and its agencies",
+      "National governments and their policies on human rights and international cooperation"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Strengthen the mandate and enforcement mechanisms of international institutions like the Human Rights Council",
+        "measurable_goal": "Increase in the number of countries adhering to and implementing human rights conventions and treaties",
+        "timeframe": "medium-term"
+      },
+      {
+        "action": "Enhance international cooperation and diplomacy to resolve conflicts and promote peaceful resolution of disputes",
+        "measurable_goal": "Reduction in the number of ongoing conflicts and improvement in humanitarian access to affected areas",
+        "timeframe": "short-term"
+      }
+    ],
+    "evidence": [
+      "The twentieth anniversary of the Human Rights Council highlights the ongoing importance of its work amidst challenges to fundamental freedoms",
+      "Ceasefire gains in Gaza are fragile and underscore the need for unhindered aid access and respect for peace plans",
+      "Syria's war crimes dilemma poses a challenge to international support and accountability"
+    ],
+    "generalization": "This problem connects to other domains such as the biosphere (through environmental impacts of conflicts), human dignity (through the protection of human rights), and the cosmos (through the long-term implications of geopolitical stability for space exploration and resource management)",
+    "summary": "Inconsistent international cooperation and adherence to human rights standards pose significant challenges to global stability and dignity, requiring strengthened international institutions and enhanced diplomacy. The problem is interconnected with other domains, affecting not just human well-being but also the planet and our long-term viability in the universe.",
+    "risk_level": "HIGH"
+  },
+  "raw_items": [
+    {
+      "title": "With Fundamental Freedoms under Assault, Work of Human Rights Council ‘More Vital Than Ever’, Secretary-General Says in Anniversary Video Message",
+      "summary": "Following is the text of UN Secretary-General António Guterres’ video message to the informal high-level discussion on the occasion of the twentieth anniversary of the Human Rights Council, in Geneva today:",
+      "link": "https://press.un.org/en/2026/sgsm23186.doc.htm",
+      "published": "Fri, 19 Jun 2026 12:21:09 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "Meeting of States Parties to United Nations Convention on Law of Sea, United Nations Headquarters, 15-18 June",
+      "summary": "The thirty-sixth Meeting of States Parties to the United Nations Convention on the Law of the Sea was held at Headquarters from 15 to 18 June.",
+      "link": "https://press.un.org/en/2026/sea2251.doc.htm",
+      "published": "Fri, 19 Jun 2026 12:15:13 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "Despite Ceasefire Gains, Gazans Trapped in Humanitarian Nightmare, Briefers Warn, as Security Council Speakers Demand Unhindered Aid Access, Respect for Peace Plan",
+      "summary": "While a limited ceasefire has improved life in Gaza somewhat, millions of its residents still face tremendous daily difficulties, the Security Council heard today, as speakers underscored the need to provide immediate humanitarian help to a population that can ill afford to wait.",
+      "link": "https://press.un.org/en/2026/sc16390.doc.htm",
+      "published": "Thu, 18 Jun 2026 19:09:43 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "Congratulating Winners on Impressive Achievments, Secretary-General, at Opening of First UN 2.0 Awards, Urges Them to Think Big for People, Planet",
+      "summary": "Following is UN Secretary-General António Guterres’ message for the opening of the UN 2.0 Awards, in New York today:",
+      "link": "https://press.un.org/en/2026/sgsm23184.doc.htm",
+      "published": "Thu, 18 Jun 2026 16:59:44 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "A Tale of Two AI Policy Regimes",
+      "summary": "Brazil wants regulation. Argentina rejects it.",
+      "link": "https://foreignpolicy.com/2026/06/19/brazil-argentina-ai-policy-data-centers-milei/",
+      "published": "Fri, 19 Jun 2026 12:00:27 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Syria’s War Crimes Dilemma",
+      "summary": "The government can execute war criminals or get full international support—but not both.",
+      "link": "https://foreignpolicy.com/2026/06/19/syrias-war-crimes-assad-trial-sharaa-justice/",
+      "published": "Fri, 19 Jun 2026 12:00:15 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Foreign Pressure, American Freedom",
+      "summary": "How other countries and their citizens helped the United States live up to its ideals.",
+      "link": "https://foreignpolicy.com/2026/06/19/america-250-foreign-pressure-american-freedom-ideals/",
+      "published": "Fri, 19 Jun 2026 10:00:10 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Orban’s Defeat Is Being Dangerously Misread",
+      "summary": "Panicking strongmen will turn to more extreme measures.",
+      "link": "https://foreignpolicy.com/2026/06/19/orban-defeat-strongman-playbook-erdogan/",
+      "published": "Fri, 19 Jun 2026 06:52:13 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Italy's Meloni says Trump 'made up' story that she 'begged' him for photo at G7",
+      "summary": "The highly public exchange is an indication that their earlier close ties have frayed  since Trump's decision to go to war with Iran.",
+      "link": "https://www.bbc.com/news/articles/c20y1ygn707o?at_medium=RSS&at_campaign=rss",
+      "published": "Fri, 19 Jun 2026 13:42:47 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "US to end funding of South Africa's HIV programmes over claims of Afrikaner persecution",
+      "summary": "The US says South Africa is not doing enough to protect the white-minority Afrikaner community.",
+      "link": "https://www.bbc.com/news/articles/cdr457lxr71o?at_medium=RSS&at_campaign=rss",
+      "published": "Fri, 19 Jun 2026 17:02:02 GMT",
+      "source_type": "rss"
+    }
+  ]
+}

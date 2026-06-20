@@ -1,0 +1,163 @@
+{
+  "axis": "LONG_TERM_FUTURE_REVIEW",
+  "domain": "cosmos",
+  "timestamp": "2026-06-19T17:42:57.860590+00:00",
+  "sources_count": 10,
+  "rss_count": 7,
+  "ddg_count": 0,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] AI2027: Is this how AI might destroy humanity? - BBC World Service",
+      "summary": "[DESCRIPTION FALLBACK] A research paper predicting that artificial intelligence will go rogue in 2027 and lead to humanity's extinction within a decade is ...",
+      "link": "https://www.youtube.com/watch?v=1UufaK3pQMg",
+      "published": "2025-08-01T23:00:03Z",
+      "source_type": "youtube",
+      "channel": "BBC World Service",
+      "video_id": "1UufaK3pQMg",
+      "transcript_method": "description",
+      "transcript_chars": 158,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] THE FUTURE OF HUMANITY: A.I Predicts 400 Years In 3 Minutes (4K)",
+      "summary": "[DESCRIPTION FALLBACK] How will Humanity look in 400 Years? This exciting time-lapse of our future produced entirely by Artificially Intelligent Concept ...",
+      "link": "https://www.youtube.com/watch?v=-UBaW1OIgTo",
+      "published": "2022-11-27T22:29:38Z",
+      "source_type": "youtube",
+      "channel": "Amara Pictures",
+      "video_id": "-UBaW1OIgTo",
+      "transcript_method": "description",
+      "transcript_chars": 156,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] The Catastrophic Risks of AI — and a Safer Path | Yoshua Bengio | TED",
+      "summary": "[DESCRIPTION FALLBACK] Yoshua Bengio — the world's most-cited computer scientist and a \"godfather\" of artificial intelligence — is deadly concerned about ...",
+      "link": "https://www.youtube.com/watch?v=qe9QSCF-d88",
+      "published": "2025-05-21T15:01:24Z",
+      "source_type": "youtube",
+      "channel": "TED",
+      "video_id": "qe9QSCF-d88",
+      "transcript_method": "description",
+      "transcript_chars": 157,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "problem": "Lack of effective critiques and solutions to address the potential catastrophic risks of AI",
+    "root_cause": "Insufficient dialogue and collaboration between experts and stakeholders to identify and mitigate AI-related risks",
+    "severity": "HIGH",
+    "leverage_points": [
+      "Research institutions and organizations focused on AI safety and ethics",
+      "Global policymakers and regulators"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Establish a global AI safety and ethics forum for experts and stakeholders to share research and solutions",
+        "measurable_goal": "Increase the number of published research papers and implemented solutions by 20% within the next 12 months",
+        "timeframe": "medium-term"
+      },
+      {
+        "action": "Develop and implement AI safety and ethics education and training programs for policymakers and regulators",
+        "measurable_goal": "Train at least 500 policymakers and regulators within the next 18 months",
+        "timeframe": "medium-term"
+      }
+    ],
+    "evidence": [
+      "Holden Karnofsky's discussion on the potential negative effects of AI safety efforts",
+      "Yoshua Bengio's TED talk on the catastrophic risks of AI and the need for a safer path",
+      "The announcement of the Cluelessness Critiques Competition to elicit responses to Anthony DiGiovanni's sequence"
+    ],
+    "generalization": "This problem connects to the domains of civilization, human, and planet, as unmitigated AI risks could have far-reaching consequences for global stability, human well-being, and the environment",
+    "summary": "The lack of effective critiques and solutions to address AI risks poses a high-severity problem, requiring urgent attention from research institutions, policymakers, and regulators to establish a global forum for dialogue and solution-sharing",
+    "risk_level": "HIGH"
+  },
+  "raw_items": [
+    {
+      "title": "A brief list of ways AI safety efforts could be net negative",
+      "summary": "<p><span>Here’s </span><a href=\"https://80000hours.org/podcast/episodes/holden-karnofsky-concrete-ai-safety-frontier-ai-companies/\"><span>Holden Karnofsky</span></a><span>:</span></p><blockquote><p><span>I tend to think it’s worse than 51/49. I tend to think we’re always going to be prone to overestimate how robustly good our actions are. And the more we learn about all the galaxy-brained considerations that one should have had in one’s head, the more it’s going to be like 50+ε%. I think AI safe",
+      "link": "https://www.lesswrong.com/posts/sAfMCpWLfkHqF5Gix/a-brief-list-of-ways-ai-safety-efforts-could-be-net-negative",
+      "published": "Fri, 19 Jun 2026 16:12:38 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Online >> real life for spreading ideas",
+      "summary": "<p><span>I believe that internet culture influences real culture much more than the other way around. This is quite hard to prove, but I often see an idea start to come up in real-life conversations where I’ve seen it appear on Twitter a few weeks before. I’m not sure if ordinary people don’t realise this (that their ideas are workshopped and take root online), or if they just see it as that important.</span></p><p><span>Furthermore, the internet is still quite meritocratic. Often one random blo",
+      "link": "https://www.lesswrong.com/posts/Digfnw7yDo8vSDxZW/online-greater-than-greater-than-real-life-for-spreading",
+      "published": "Fri, 19 Jun 2026 15:44:44 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Typical Minds Aren’t",
+      "summary": "<p><span style=\"color: rgb(0, 0, 0);\">We all know the typical mind fallacy—the bias where we assume that other people’s minds are much like our own. It happens because most of our evidence for what minds are like comes from experiencing what our own mind is like, and thus we infer from that evidence that the minds of others are not so different from ours.</span></p><p><span style=\"color: rgb(0, 0, 0);\">The typical mind fallacy is deep-rooted and hard to change, since it’s difficult to get good e",
+      "link": "https://www.lesswrong.com/posts/GvHmvDaJ2CPoJpLjt/typical-minds-aren-t",
+      "published": "Fri, 19 Jun 2026 15:11:21 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "San Silvestro",
+      "summary": "<p><span>I will note that her relationship with the divine was inextricably sexual. Her carnal fantasies she revealed to me, as she revealed all her sins, for I was her confessor. It is in the nature of Man to sin and then sin again. And if they are of our flock, this cycle is unconstrained by repentance, which is to the temporal almost an appurtenance and to the spiritual anything but. I once expressed bitterness to others of my calling regarding this. I was told it is arrogance, approaching bl",
+      "link": "https://www.lesswrong.com/posts/2DhiEsYMZC9tg6eEz/san-silvestro",
+      "published": "Fri, 19 Jun 2026 14:54:20 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "QURI is moving into maintenance mode",
+      "summary": "Published on June 19, 2026 5:37 PM GMT<br /><br /><p>After about seven years, <a href=\"https://quantifieduncertainty.org/\">QURI</a> is moving into maintenance mode. This means we’ll ensure that key software (Guesstimate and SquiggleHub) is maintained, but we won’t be developing new software or doing new research.</p><p><strong>Background</strong></p><p>I started QURI in 2019. At that point I was excited about projects at the intersection of epistemics and software, primarily to be used by impact",
+      "link": "https://forum.effectivealtruism.org/posts/j3rbCdXg4eCbFf6AD/quri-is-moving-into-maintenance-mode",
+      "published": "Fri, 19 Jun 2026 17:37:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Cluelessness: Summary of the argument, why it matters, and counterarguments",
+      "summary": "Published on June 19, 2026 12:44 PM GMT<br /><br /><p>I’d like to elicit direct, productive critiques of the argument for <a href=\"https://forum.effectivealtruism.org/posts/GWya8sJzsy9xLpdX6/summary-maximal-cluelessness-andreas-mogensen\">cluelessness</a> from my <a href=\"https://forum.effectivealtruism.org/s/rHqdsrieinyhM5KDv\">sequence on “unawareness”</a>, which I’ll call the <em>unawareness argument</em>.</p>\n<p>To that end, this post will:</p>\n<ul>\n<li>break down the unawareness argument at a",
+      "link": "https://forum.effectivealtruism.org/posts/NesgdEY6yPrE9wDap/cluelessness-summary-of-the-argument-why-it-matters-and-1",
+      "published": "Fri, 19 Jun 2026 12:44:33 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Announcing: Cluelessness Critiques Competition",
+      "summary": "Published on June 19, 2026 12:44 PM GMT<br /><br /><h1>TL;DR</h1><ul><li>We’re hosting an essay competition to elicit responses to Anthony DiGiovanni’s sequence, ‘<a href=\"https://forum.effectivealtruism.org/s/rHqdsrieinyhM5KDv\"><u>The challenge of unawareness for impartial altruist action guidance</u></a>’—submit your entries <strong>by August 14th</strong></li><li>There will be cash prizes for the best essays and the best comments: <strong>$7k in total</strong><ul><li>Additionally, we're offer",
+      "link": "https://forum.effectivealtruism.org/posts/2aooibAEDSdreCqrJ/announcing-cluelessness-critiques-competition",
+      "published": "Fri, 19 Jun 2026 12:44:30 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] AI2027: Is this how AI might destroy humanity? - BBC World Service",
+      "summary": "[DESCRIPTION FALLBACK] A research paper predicting that artificial intelligence will go rogue in 2027 and lead to humanity's extinction within a decade is ...",
+      "link": "https://www.youtube.com/watch?v=1UufaK3pQMg",
+      "published": "2025-08-01T23:00:03Z",
+      "source_type": "youtube",
+      "channel": "BBC World Service",
+      "video_id": "1UufaK3pQMg",
+      "transcript_method": "description",
+      "transcript_chars": 158,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] THE FUTURE OF HUMANITY: A.I Predicts 400 Years In 3 Minutes (4K)",
+      "summary": "[DESCRIPTION FALLBACK] How will Humanity look in 400 Years? This exciting time-lapse of our future produced entirely by Artificially Intelligent Concept ...",
+      "link": "https://www.youtube.com/watch?v=-UBaW1OIgTo",
+      "published": "2022-11-27T22:29:38Z",
+      "source_type": "youtube",
+      "channel": "Amara Pictures",
+      "video_id": "-UBaW1OIgTo",
+      "transcript_method": "description",
+      "transcript_chars": 156,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] The Catastrophic Risks of AI — and a Safer Path | Yoshua Bengio | TED",
+      "summary": "[DESCRIPTION FALLBACK] Yoshua Bengio — the world's most-cited computer scientist and a \"godfather\" of artificial intelligence — is deadly concerned about ...",
+      "link": "https://www.youtube.com/watch?v=qe9QSCF-d88",
+      "published": "2025-05-21T15:01:24Z",
+      "source_type": "youtube",
+      "channel": "TED",
+      "video_id": "qe9QSCF-d88",
+      "transcript_method": "description",
+      "transcript_chars": 157,
+      "has_full_transcript": false
+    }
+  ]
+}

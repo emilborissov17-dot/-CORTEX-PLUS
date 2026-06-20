@@ -1,0 +1,152 @@
+{
+  "axis": "GENERAL_SELF_REVIEW",
+  "domain": "cosmos",
+  "timestamp": "2026-06-20T07:26:17.849953+00:00",
+  "sources_count": 11,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] Current AI Models have 3 Unfixable Problems",
+      "summary": "[DESCRIPTION FALLBACK] Use code sabine at https://incogni.com/sabine to get an exclusive 60% off an annual Incogni plan. If you've used current AI ...",
+      "link": "https://www.youtube.com/watch?v=984qBh164fo",
+      "published": "2025-10-19T15:00:15Z",
+      "source_type": "youtube",
+      "channel": "Sabine Hossenfelder",
+      "video_id": "984qBh164fo",
+      "transcript_method": "description",
+      "transcript_chars": 150,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Alternative Intelligence: The Other A.I.",
+      "summary": "[DESCRIPTION FALLBACK] We think very highly of the human brain, after all, it's what lets us think about anything in the first place, but Nature is vast, and our ...",
+      "link": "https://www.youtube.com/watch?v=ZIGaYw1dUfM",
+      "published": "2024-05-23T13:00:36Z",
+      "source_type": "youtube",
+      "channel": "Isaac Arthur",
+      "video_id": "ZIGaYw1dUfM",
+      "transcript_method": "description",
+      "transcript_chars": 165,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Consciousness, reasoning and the philosophy of AI | Murray Shanahan",
+      "summary": "[DESCRIPTION FALLBACK] In this episode, Hannah is once again joined by Murray Shanahan, Professor of Cognitive Robotics at Imperial College London ...",
+      "link": "https://www.youtube.com/watch?v=v1Py_hWcmkU",
+      "published": "2025-04-24T16:10:49Z",
+      "source_type": "youtube",
+      "channel": "Google DeepMind",
+      "video_id": "v1Py_hWcmkU",
+      "transcript_method": "description",
+      "transcript_chars": 150,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "problem": "Lack of transparency in AI development and deployment, particularly in brain-computer interface trials and large language models",
+    "root_cause": "Insufficient prioritization of ethics and transparency in AI research and development, driven by the pursuit of innovation and profit",
+    "severity": "MEDIUM",
+    "leverage_points": [
+      "AI researchers and developers",
+      "Regulatory bodies and government agencies"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Establish clear guidelines and regulations for AI development and deployment, with a focus on transparency and ethics",
+        "measurable_goal": "Number of AI projects that prioritize transparency and ethics, and number of incidents involving unethical AI use",
+        "timeframe": "medium-term"
+      }
+    ],
+    "evidence": [
+      "Brain-computer interface trials are taking off, but there is limited information available about the specifics of these trials and their potential risks and benefits",
+      "A startup claims to have broken through a bottleneck in large language models, but the details of this breakthrough are not publicly available"
+    ],
+    "generalization": "This problem connects to the domains of human dignity and civilization, as the lack of transparency in AI development and deployment can erode trust in these technologies and undermine their potential benefits for society",
+    "summary": "The lack of transparency in AI development and deployment poses a medium-level risk to the sustainability and long-term viability of intelligent life, and addressing this problem will require a focus on ethics and transparency in AI research and development",
+    "risk_level": "MEDIUM"
+  },
+  "raw_items": [
+    {
+      "title": "The Download: AI bottleneck debates, and BCI trials take off",
+      "summary": "This is today&#8217;s edition of The Download, our weekday newsletter that provides a daily dose of what&#8217;s going on in the world of technology. A startup claims it broke through a bottleneck that’s holding back LLMs AI startup Subquadratic came out of stealth last month with a huge claim: it had solved a mathematical bottleneck&#8230;",
+      "link": "https://www.technologyreview.com/2026/06/19/1139327/the-download-llms-bottleneck-breakthrough-bci-trials-take-off/",
+      "published": "Fri, 19 Jun 2026 12:10:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "A startup claims it broke through a bottleneck that’s holding back LLMs",
+      "summary": "Miami-based AI startup Subquadratic came out of stealth mode last month with a huge claim. It announced that it had solved a mathematical bottleneck that had been holding back large language models for almost a decade. The details were thin, and many people were unconvinced. But Subquadratic has started to bring the receipts, sharing the&#8230;",
+      "link": "https://www.technologyreview.com/2026/06/19/1139313/a-startup-claims-it-broke-through-a-bottleneck-thats-holding-back-llms/",
+      "published": "Fri, 19 Jun 2026 10:40:24 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "The inevitable weakness of metrics",
+      "summary": "There are plenty of useful things a metric can reveal. There are even more it can obscure or corrupt. It took me well over a decade of tracking my own life in ever greater detail to fully appreciate this duality, which probably reveals something about both me and the nature of measurement. Like a lot&#8230;",
+      "link": "https://www.technologyreview.com/2026/06/19/1138778/inevitable-weakness-metrics-quantified-life-book-review/",
+      "published": "Fri, 19 Jun 2026 09:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Brain-computer interface trials are taking off",
+      "summary": "This week, I covered the story of Casey Harrell—a man with ALS who is “the first power user” of a brain implant, according to the researchers who worked with him. Harrell is paralyzed and unable to speak coherently without the device. He has now spent almost three years using a brain-computer interface (BCI) that enables&#8230;",
+      "link": "https://www.technologyreview.com/2026/06/19/1139270/brain-computer-interface-trials-are-taking-off/",
+      "published": "Fri, 19 Jun 2026 09:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "New usage analytics and updated spend controls for enterprises",
+      "summary": "OpenAI introduces new spend controls and usage analytics for ChatGPT Enterprise, helping organizations manage costs and scale AI with confidence.",
+      "link": "https://openai.com/index/chatgpt-enterprise-spend-controls",
+      "published": "Thu, 18 Jun 2026 17:00:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Improving health intelligence in ChatGPT",
+      "summary": "Learn how GPT-5.5 Instant improves ChatGPT’s health and wellness responses with stronger reasoning, better context, clearer communication, and physician-informed evaluations.",
+      "link": "https://openai.com/index/improving-health-intelligence-in-chatgpt",
+      "published": "Thu, 18 Jun 2026 11:00:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Using AI to help physicians diagnose rare genetic diseases affecting children",
+      "summary": "Researchers used an OpenAI reasoning model to help diagnose rare diseases, identifying 18 new diagnoses in previously unsolved cases.",
+      "link": "https://openai.com/index/diagnose-rare-childhood-diseases",
+      "published": "Thu, 18 Jun 2026 08:00:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "A near-autonomous AI chemist improves a challenging reaction in medicinal chemistry",
+      "summary": "OpenAI and Molecule.one show how a near-autonomous AI chemist using GPT-5.4 improved a key drug-making reaction, advancing medicinal chemistry research.",
+      "link": "https://openai.com/index/ai-chemist-improves-reaction",
+      "published": "Wed, 17 Jun 2026 10:00:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] Current AI Models have 3 Unfixable Problems",
+      "summary": "[DESCRIPTION FALLBACK] Use code sabine at https://incogni.com/sabine to get an exclusive 60% off an annual Incogni plan. If you've used current AI ...",
+      "link": "https://www.youtube.com/watch?v=984qBh164fo",
+      "published": "2025-10-19T15:00:15Z",
+      "source_type": "youtube",
+      "channel": "Sabine Hossenfelder",
+      "video_id": "984qBh164fo",
+      "transcript_method": "description",
+      "transcript_chars": 150,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Alternative Intelligence: The Other A.I.",
+      "summary": "[DESCRIPTION FALLBACK] We think very highly of the human brain, after all, it's what lets us think about anything in the first place, but Nature is vast, and our ...",
+      "link": "https://www.youtube.com/watch?v=ZIGaYw1dUfM",
+      "published": "2024-05-23T13:00:36Z",
+      "source_type": "youtube",
+      "channel": "Isaac Arthur",
+      "video_id": "ZIGaYw1dUfM",
+      "transcript_method": "description",
+      "transcript_chars": 165,
+      "has_full_transcript": false
+    }
+  ]
+}

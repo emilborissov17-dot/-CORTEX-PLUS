@@ -1,13 +1,12 @@
 {
-  "date": "2026-05-18",
-  "timestamp": "2026-05-18T09:02:01.779249+00:00",
+  "date": "2026-06-20",
+  "timestamp": "2026-06-20T07:26:31.697456+00:00",
   "completed": [
-    "CLIMATE_GLOBAL_RISK_REVIEW",
-    "ENERGY_REVIEW",
-    "WATER_REVIEW",
-    "FOOD_REVIEW",
-    "MATERIALS_WASTE_REVIEW",
-    "ECOSYSTEMS_BIODIVERSITY_REVIEW"
+    "LONG_TERM_FUTURE_REVIEW",
+    "DEEP_TIME_RISKS_REVIEW",
+    "GENERAL_SELF_REVIEW",
+    "PLANETARY_POTENTIAL_REVIEW",
+    "GOAL_PROGRESS_REVIEW"
   ],
-  "done": false
+  "done": true
 }

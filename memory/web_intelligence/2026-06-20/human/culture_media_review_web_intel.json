@@ -1,0 +1,140 @@
+{
+  "axis": "CULTURE_MEDIA_REVIEW",
+  "domain": "human",
+  "timestamp": "2026-06-20T05:36:55.316668+00:00",
+  "sources_count": 10,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 2,
+  "youtube_items": [
+    {
+      "title": "[YT] What Is The Impact Of Online Misinformation On Free ... - YouTubeSocial media is how we fight misinformation - YouTubeBalance between fighting misinformation and protecting speech ...Social media and the spread of misinformation: infectious and ...How does YouTube balance free speech with the need to ...Free Speech and Social Media: Maintaining the Right BalanceFree Speech versus Public Health: The Role of Social Media ...",
+      "summary": "[DESCRIPTION FALLBACK] Sep 19, 2025 · In this informative video, we’ll explore the impact of false information spreading across social media platforms and how it influences free speech rights. We’ll start by explaining what... May 27, 2026 · I connect this problem to vaccine misinformation and the broader distrust of science, noting how decades of expertise can be dismissed by influencers. Mar 24, 2024 · Social media companies, lawmakers and the courts are grappling with the balance between stopping the spread of harm",
+      "link": "https://www.youtube.com/watch?v=Ha_S229Ygwk",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "Ha_S229Ygwk",
+      "transcript_method": "description",
+      "transcript_chars": 523,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Social media is how we fight misinformation - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] May 27, 2026 · I connect this problem to vaccine misinformation and the broader distrust of science, noting how decades of expertise can be dismissed by influencers.",
+      "link": "https://www.youtube.com/watch?v=CGPxNH-r2a4",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "CGPxNH-r2a4",
+      "transcript_method": "description",
+      "transcript_chars": 188,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "problem": "The spread of misinformation through social media platforms, as discussed in the YouTube transcripts, has the potential to influence free speech rights and public health",
+    "root_cause": "The lack of effective balance between fighting misinformation and protecting speech on social media platforms, leading to the spread of false information",
+    "severity": "MEDIUM",
+    "leverage_points": [
+      "Social media companies and their algorithms",
+      "Influencers and their role in spreading misinformation"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Implementing more effective fact-checking mechanisms on social media platforms",
+        "measurable_goal": "Reducing the spread of false information by 30% in the next 6 months",
+        "timeframe": "medium-term"
+      }
+    ],
+    "evidence": [
+      "The YouTube transcripts discuss the impact of online misinformation on free speech and public health",
+      "The need for a balance between fighting misinformation and protecting speech is highlighted"
+    ],
+    "generalization": "This problem connects to the domain of civilization, where the spread of misinformation can have significant impacts on public health, social cohesion, and democratic institutions",
+    "summary": "The spread of misinformation on social media poses a significant problem, requiring more effective balance between fighting misinformation and protecting speech. Implementing fact-checking mechanisms can help reduce the spread of false information.",
+    "risk_level": "MEDIUM"
+  },
+  "raw_items": [
+    {
+      "title": "Joan Cusack, the Actress Behind Jessie in ‘Toy Story,’ Takes the Lead",
+      "summary": "After 27 years, the beloved cowgirl doll voiced by Cusack is finally in charge, but the actress played an important role in shaping the character early on.",
+      "link": "https://www.nytimes.com/2026/06/19/arts/joan-cusack-jessie-toy-story-5.html",
+      "published": "Fri, 19 Jun 2026 14:30:23 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Matt Smith Goes Dark on ‘House of the Dragon’",
+      "summary": "“Doctor Who” made him beloved. He channeled that likability into a series of murderers and misanthropes, including in this “Game of Thrones” prequel.",
+      "link": "https://www.nytimes.com/2026/06/19/arts/television/matt-smith-house-of-the-dragon.html",
+      "published": "Fri, 19 Jun 2026 09:00:50 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "These Comics Can Barely Muster the Energy for a Joke. That’s Why They’re Funny.",
+      "summary": "Aaron Chen and Dan Mintz specialize in a muted form of stand-up that’s actually quite challenging. But they can get laughs just saying hello.",
+      "link": "https://www.nytimes.com/2026/06/19/arts/television/comedy-aaron-chen-dan-mintz.html",
+      "published": "Fri, 19 Jun 2026 09:01:58 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "To Take Us to the Heavens, James Turrell Went Underground",
+      "summary": "The American artist’s most ambitious “skyspace” installation, opening in Denmark on Friday, invites viewers to connect with the cosmos both inner and outer.",
+      "link": "https://www.nytimes.com/2026/06/19/arts/james-turrell-aros-aarhus.html",
+      "published": "Fri, 19 Jun 2026 08:23:51 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "‘It’s time for it to end’: Ebon Moss-Bachrach on the final, delicious season of The Bear",
+      "summary": "<p>It turned its cast into global stars, triggered fashion crazes and even made an omelette go viral. As The Bear bows out, ‘cousin’ Ebon Moss-Bachrach talks obsessive fans, fork tattoos and why he’s ‘dumbly proud’</p><p>Ebon Moss-Bachrach is currently starring in an acclaimed Broadway production of Dog Day Afternoon, but after he takes his bow, there’s only one thing audience members want to talk about. “Every time I leave through the stage door, there’s a couple of hundred people yelling ‘Cous",
+      "link": "https://www.theguardian.com/tv-and-radio/2026/jun/19/ebon-moss-bachrach-final-season-the-bear",
+      "published": "Fri, 19 Jun 2026 12:00:31 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "‘People like me needed Sinéad O’Connor’: how the singer and activist inspired a new dance work",
+      "summary": "<p>Tony-winning choreographer Sonya Tayeh was ‘broken up’ when she heard about the Irish singer-songwriter’s death three years ago. Now she and a group of over-40s female dancers are paying homage: ‘People love her, people need her’</p><p>Sonya Tayeh remembers watching <a href=\"https://www.theguardian.com/music/2023/jul/27/sinead-oconnor-ripped-up-the-popes-photo-on-tv-snl\">Saturday Night Live</a> in October 1992, at home in Detroit, when a young, shaven-headed woman behind a microphone tore a p",
+      "link": "https://www.theguardian.com/stage/2026/jun/19/sinead-oconnor-ode-dance-surge-sonya-tayeh-aviva-studios",
+      "published": "Fri, 19 Jun 2026 12:00:32 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Camdenwalla review – one long night of fear and defiance in 90s London",
+      "summary": "<p><strong>Camden People’s theatre, London <br /></strong>Jonny Khan’s debut play, about an uncle and niece manning phones at a rescue service during racist attacks, is well acted yet lacks tension</p><p>This theatre’s address was once the headquarters of the Camden Monitoring Project, a volunteer-run organisation established to provide safe transport home for South Asian restaurant workers at a time of rampant racist attacks. Built on four years of research with the local Bengali community, act",
+      "link": "https://www.theguardian.com/stage/2026/jun/19/camdenwalla-review-camden-peoples-theatre-london",
+      "published": "Fri, 19 Jun 2026 15:16:29 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "‘I’d listen to my body before it screamed for help’: Keith Richards on life as an 82-year-old great-grandad – and jousting with Mick Jagger",
+      "summary": "<p>He did every substance imaginable – and got punched by Chuck Berry – but Keef’s still going strong. As the Stones knock out another new album, he explains why he’s rejecting AI in favour of ‘the old ways’</p><p>Keith Richards has just become a great-grandfather. “This is true! This is true!” he enthuses, video-calling from somewhere in the depths of the Hit Factory, the New York studio first patronised by the Rolling Stones 46 years ago when they were making Emotional Rescue. “It’s been a cou",
+      "link": "https://www.theguardian.com/music/2026/jun/19/keith-richards-great-grandad-mick-jagger-rolling-stones-you-now",
+      "published": "Fri, 19 Jun 2026 04:00:23 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] What Is The Impact Of Online Misinformation On Free ... - YouTubeSocial media is how we fight misinformation - YouTubeBalance between fighting misinformation and protecting speech ...Social media and the spread of misinformation: infectious and ...How does YouTube balance free speech with the need to ...Free Speech and Social Media: Maintaining the Right BalanceFree Speech versus Public Health: The Role of Social Media ...",
+      "summary": "[DESCRIPTION FALLBACK] Sep 19, 2025 · In this informative video, we’ll explore the impact of false information spreading across social media platforms and how it influences free speech rights. We’ll start by explaining what... May 27, 2026 · I connect this problem to vaccine misinformation and the broader distrust of science, noting how decades of expertise can be dismissed by influencers. Mar 24, 2024 · Social media companies, lawmakers and the courts are grappling with the balance between stopping the spread of harm",
+      "link": "https://www.youtube.com/watch?v=Ha_S229Ygwk",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "Ha_S229Ygwk",
+      "transcript_method": "description",
+      "transcript_chars": 523,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Social media is how we fight misinformation - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] May 27, 2026 · I connect this problem to vaccine misinformation and the broader distrust of science, noting how decades of expertise can be dismissed by influencers.",
+      "link": "https://www.youtube.com/watch?v=CGPxNH-r2a4",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "CGPxNH-r2a4",
+      "transcript_method": "description",
+      "transcript_chars": 188,
+      "has_full_transcript": false
+    }
+  ]
+}

@@ -1,0 +1,99 @@
+{
+  "axis": "CULTURE_MEDIA_REVIEW",
+  "fetched_at": "2026-06-18T19:59:29.579231+00:00",
+  "smart_query": "media disinformation culture",
+  "sources_count": {
+    "wiki": 0,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "bbidwell85/Totality",
+      "snippet": "Analyze quality, track collection completeness, find upgrades, manage media wishlists.",
+      "stars": 19,
+      "url": "https://github.com/bbidwell85/Totality",
+      "updated": "2026-06-17",
+      "source": "GitHub"
+    },
+    {
+      "title": "moguiyu/NewsPrism",
+      "snippet": "Multilingual news monitor that clusters same-event coverage into Chinese cross-source digests with focus maps and strict positive highlights",
+      "stars": 13,
+      "url": "https://github.com/moguiyu/NewsPrism",
+      "updated": "2026-06-17",
+      "source": "GitHub"
+    },
+    {
+      "title": "TonF1917/Trace",
+      "snippet": "An open-source, local-first analytical web application to compare how different media frame the same event.",
+      "stars": 6,
+      "url": "https://github.com/TonF1917/Trace",
+      "updated": "2026-06-10",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "MIDSim: Simulating Multi-Channel Information Diffusion in Social Media with LLM-Powered Multi-Agent System",
+      "snippet": "Information diffusion in social media shapes public opinion and collective behavior, making its modeling and simulation an important research problem. Existing studies have investigated information diffusion through epidemic-based, cascade-based, and point process models. However, they predominantly",
+      "url": "https://arxiv.org/abs/2606.13140v2",
+      "source": "arXiv"
+    },
+    {
+      "title": "RELIANCE: Curating and Evaluating Reproductive Health Information on Social Media",
+      "snippet": "Social media platforms like TikTok have become a key source of health information, with studies reporting inaccuracies in posts. As Large Language Model (LLM) providers increasingly integrate LLMs into digital platforms to fact-check content (e.g., Grok and Perplexity on X and WhatsApp, respectively",
+      "url": "https://arxiv.org/abs/2606.18285v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[Prominent Scientists, Faith Leaders, Policymakers and Artists Call for a Prohibition on Superintelligence, as Poll Shows Americans Don’t Want It] Initial signatories include AI pioneers Yoshua Bengio and Geoffrey Hinton, leading media voices Steve Bannon and Glenn Beck, Obama's National Security Advisor Susan Rice, business trailblazers Steve Wozniak and Richard Branson, five Nobel Laureates, former Irish President Mary Robinson, actors Stephen Fry and Joseph Gordon-Levitt, and hundreds of others.",
+  "wiki": null,
+  "youtube_items": [
+    {
+      "title": "[YT] YouTube:z1tJaouDwVw",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=z1tJaouDwVw",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "z1tJaouDwVw",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] YouTube:cSKGa_7XJkg",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=cSKGa_7XJkg",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "cSKGa_7XJkg",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] YouTube:Z64qjMCoeS8",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=Z64qjMCoeS8",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "Z64qjMCoeS8",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    }
+  ],
+  "summary": "[arXiv]\n- MIDSim: Simulating Multi-Channel Information Diffusion in Social Media with LLM-Powered Multi-Agent System\n- RELIANCE: Curating and Evaluating Reproductive Health Information on Social Media",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": [],
+  "open_source_momentum": "",
+  "scientific_frontier": "",
+  "relevance_to_goal": ""
+}

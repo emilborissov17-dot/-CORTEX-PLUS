@@ -1,0 +1,149 @@
+{
+  "axis": "FOOD_REVIEW",
+  "domain": "planet",
+  "timestamp": "2026-06-19T17:36:37.334777+00:00",
+  "sources_count": 9,
+  "rss_count": 0,
+  "ddg_count": 6,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] A world going hungry? How conflict and climate change disrupt global food supply | Business Beyond",
+      "summary": "[DESCRIPTION FALLBACK] The battle against hunger is quite literally, an existential one. But there was a time when winning that battle seemed within reach ...",
+      "link": "https://www.youtube.com/watch?v=5YcvKvxWaCE",
+      "published": "2022-07-05T15:15:16Z",
+      "source_type": "youtube",
+      "channel": "DW News",
+      "video_id": "5YcvKvxWaCE",
+      "transcript_method": "description",
+      "transcript_chars": 158,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Food security - A growing dilemma | DW Documentary",
+      "summary": "[DESCRIPTION FALLBACK] Many countries, particularly in the West, have long taken reliable food supplies for granted. But climate change, conflict and ...",
+      "link": "https://www.youtube.com/watch?v=wu7PjKawjwI",
+      "published": "2022-10-25T16:00:44Z",
+      "source_type": "youtube",
+      "channel": "DW Documentary",
+      "video_id": "wu7PjKawjwI",
+      "transcript_method": "description",
+      "transcript_chars": 153,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Why are so Many People going Hungry? | World Hunger | FAO Explainer | United Nations",
+      "summary": "[DESCRIPTION FALLBACK] If you're watching this, chances are that you are in the fortunate position to have access to the food you want, when you need it.",
+      "link": "https://www.youtube.com/watch?v=Ke06QUfOeTE",
+      "published": "2022-12-10T14:00:08Z",
+      "source_type": "youtube",
+      "channel": "United Nations",
+      "video_id": "Ke06QUfOeTE",
+      "transcript_method": "description",
+      "transcript_chars": 153,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "problem": "Conflict, economic shocks, climate extremes, and forced displacement are driving food insecurity and malnutrition globally",
+    "root_cause": "The combination of human-induced climate change, socio-economic inequality, and geopolitical tensions leading to conflicts and displacement",
+    "severity": "CRITICAL",
+    "leverage_points": [
+      "International cooperation and diplomacy to resolve conflicts and address climate change",
+      "Investment in climate-resilient agriculture and social protection programs"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Implement climate-resilient agricultural practices and support small-scale farmers",
+        "measurable_goal": "Reduce the number of people facing food insecurity by 20% within the next 5 years",
+        "timeframe": "medium-term"
+      },
+      {
+        "action": "Establish emergency food assistance programs for affected populations",
+        "measurable_goal": "Provide food assistance to at least 80% of the affected population within the next 2 years",
+        "timeframe": "short-term"
+      }
+    ],
+    "evidence": [
+      "The Global Report on Food Crises 2025 shows that conflict, economic shocks, climate extremes, and forced displacement continued to drive food insecurity and malnutrition around the world",
+      "The 2025 SOFI report from FAO, IFAD, UNICEF, WFP, and WHO examines how rising food prices are shaping access to healthy diets and driving food insecurity and malnutrition"
+    ],
+    "generalization": "This problem connects to the domains of Civilization (socio-economic inequality, conflict) and Planet (climate change, environmental degradation)",
+    "summary": "The global food system is facing a critical crisis driven by conflict, climate change, and socio-economic inequality, threatening the dignity and well-being of millions of people. Urgent actions are needed to address the root causes and mitigate the effects of food insecurity and malnutrition.",
+    "risk_level": "CRITICAL"
+  },
+  "raw_items": [
+    {
+      "title": "Global Report on Food Crises (GRFC) 2025 - World Food Programme",
+      "summary": "Jul 11, 2025 · The Global Report on Food Crises (GRFC) 2025 shows conflict, economic shocks, climate extremes and forced displacement continued to drive food insecurity and malnutrition around the world, with a catastrophic impact on many already fragile regions.",
+      "link": "https://www.wfp.org/publications/global-report-food-crises-grfc",
+      "source_type": "ddg"
+    },
+    {
+      "title": "The State of Food Security and Nutrition in the World 2025",
+      "summary": "Aug 8, 2025 · The 2025 SOFI report from FAO, IFAD, UNICEF, WFP and WHO examines how rising food prices are shaping access to healthy diets and driving food insecurity and malnutrition.",
+      "link": "https://data.unicef.org/resources/sofi-2025/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Hunger Map 2025 | FAO | Food and Agriculture Organization of ...",
+      "summary": "Explore @FAO's hunger map and navigate through regions, subregions and countries to discover the state of the prevalence of undernourishment and food insecurity.",
+      "link": "https://www.fao.org/interactive/hunger-map/en/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "The world is running out of time. Inside the 2026 food crisis. | foodfacts.org",
+      "summary": "May 11, 2026 - A study published in the journal ... escalate through brittle, just-in-time supply chains into food shortages, price spikes, public health crises, and ultimately social unrest....",
+      "link": "https://www.foodfacts.org/articles/global-food-crisis-2026",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Assessing the vulnerability of food supply chains to climate change-induced disruptions - PubMed",
+      "summary": "April 10, 2024 - The vulnerability assessment methods as well as the adaptation and resilience measures that have been employed to alleviate the impact of climate change in the food supply chain were discussed. The results revealed a growing number of publications providing evidence of the weakening of the food supply chain due to climate change and extreme weather events.",
+      "link": "https://pubmed.ncbi.nlm.nih.gov/38373458/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Assessing the vulnerability of food supply chains to climate change-induced disruptions - ScienceDirect",
+      "summary": "February 17, 2024 - The vulnerability assessment methods as well as the adaptation and resilience measures that have been employed to alleviate the impact of climate change in the food supply chain were discussed. The results revealed a growing number of publications providing evidence of the weakening of the food supply chain due to climate change and extreme weather events.",
+      "link": "https://www.sciencedirect.com/science/article/pii/S0048969724011860",
+      "source_type": "ddg"
+    },
+    {
+      "title": "[YT] A world going hungry? How conflict and climate change disrupt global food supply | Business Beyond",
+      "summary": "[DESCRIPTION FALLBACK] The battle against hunger is quite literally, an existential one. But there was a time when winning that battle seemed within reach ...",
+      "link": "https://www.youtube.com/watch?v=5YcvKvxWaCE",
+      "published": "2022-07-05T15:15:16Z",
+      "source_type": "youtube",
+      "channel": "DW News",
+      "video_id": "5YcvKvxWaCE",
+      "transcript_method": "description",
+      "transcript_chars": 158,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Food security - A growing dilemma | DW Documentary",
+      "summary": "[DESCRIPTION FALLBACK] Many countries, particularly in the West, have long taken reliable food supplies for granted. But climate change, conflict and ...",
+      "link": "https://www.youtube.com/watch?v=wu7PjKawjwI",
+      "published": "2022-10-25T16:00:44Z",
+      "source_type": "youtube",
+      "channel": "DW Documentary",
+      "video_id": "wu7PjKawjwI",
+      "transcript_method": "description",
+      "transcript_chars": 153,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Why are so Many People going Hungry? | World Hunger | FAO Explainer | United Nations",
+      "summary": "[DESCRIPTION FALLBACK] If you're watching this, chances are that you are in the fortunate position to have access to the food you want, when you need it.",
+      "link": "https://www.youtube.com/watch?v=Ke06QUfOeTE",
+      "published": "2022-12-10T14:00:08Z",
+      "source_type": "youtube",
+      "channel": "United Nations",
+      "video_id": "Ke06QUfOeTE",
+      "transcript_method": "description",
+      "transcript_chars": 153,
+      "has_full_transcript": false
+    }
+  ]
+}

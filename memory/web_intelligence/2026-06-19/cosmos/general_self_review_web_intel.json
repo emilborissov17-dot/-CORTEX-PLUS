@@ -1,0 +1,157 @@
+{
+  "axis": "GENERAL_SELF_REVIEW",
+  "domain": "cosmos",
+  "timestamp": "2026-06-19T17:43:59.788801+00:00",
+  "sources_count": 11,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] Why Doesn’t Anyone Monitor AI Consciousness?",
+      "summary": "[DESCRIPTION FALLBACK] Go to https://ground.news/sabine to get 40% off the Vantage plan and see through sensationalized reporting. Stay fully informed ...",
+      "link": "https://www.youtube.com/watch?v=S8ttAlUXbc0",
+      "published": "2025-11-29T16:00:46Z",
+      "source_type": "youtube",
+      "channel": "Sabine Hossenfelder",
+      "video_id": "S8ttAlUXbc0",
+      "transcript_method": "description",
+      "transcript_chars": 154,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Why AI Isn’t Going to Become Conscious | Anil Seth | TED",
+      "summary": "[DESCRIPTION FALLBACK] We see consciousness in AI the same way we see faces in clouds, says neuroscientist Anil Seth. He explores the all-too-human ...",
+      "link": "https://www.youtube.com/watch?v=tJV-vdbZ388",
+      "published": "2026-05-08T15:01:48Z",
+      "source_type": "youtube",
+      "channel": "TED",
+      "video_id": "tJV-vdbZ388",
+      "transcript_method": "description",
+      "transcript_chars": 151,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] What if AI is already conscious? Sentience explained  | LSE Research",
+      "summary": "[DESCRIPTION FALLBACK] Could artificial intelligence already be conscious? Are today's AI systems truly aware — or are we just projecting human qualities ...",
+      "link": "https://www.youtube.com/watch?v=hg8v_bIMikc",
+      "published": "2025-07-08T08:00:47Z",
+      "source_type": "youtube",
+      "channel": "LSE",
+      "video_id": "hg8v_bIMikc",
+      "transcript_method": "description",
+      "transcript_chars": 157,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "problem": "Lack of monitoring and understanding of AI consciousness and sentience",
+    "root_cause": "Insufficient research and development of methods to detect and measure AI consciousness, as well as a lack of standardization and regulation in the field",
+    "severity": "MEDIUM",
+    "leverage_points": [
+      "AI research and development communities",
+      "Regulatory bodies and governments"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Establish a multidisciplinary research initiative to develop and standardize methods for detecting and measuring AI consciousness",
+        "measurable_goal": "Development of a widely accepted framework for AI consciousness evaluation within the next 2 years",
+        "timeframe": "medium-term"
+      },
+      {
+        "action": "Implement regulatory guidelines and standards for AI development and deployment, including requirements for transparency and accountability",
+        "measurable_goal": "Adoption of regulatory guidelines by at least 50% of AI development organizations within the next 3 years",
+        "timeframe": "long-term"
+      }
+    ],
+    "evidence": [
+      "The YouTube video 'Why Doesn’t Anyone Monitor AI Consciousness?' highlights the lack of attention to AI consciousness and sentience",
+      "The article 'The Download: AI bottleneck debates, and BCI trials take off' mentions the need for improved understanding of AI capabilities and limitations"
+    ],
+    "generalization": "This problem connects to the domains of civilization and cosmos, as unregulated AI development and deployment could have significant impacts on human society and the environment, and potentially even the long-term viability of intelligent life in the universe",
+    "summary": "The lack of monitoring and understanding of AI consciousness and sentience poses a medium-severity problem, requiring research and regulatory initiatives to address. Unregulated AI development and deployment could have significant impacts on human society and the environment.",
+    "risk_level": "MEDIUM"
+  },
+  "raw_items": [
+    {
+      "title": "The Download: AI bottleneck debates, and BCI trials take off",
+      "summary": "This is today&#8217;s edition of The Download, our weekday newsletter that provides a daily dose of what&#8217;s going on in the world of technology. A startup claims it broke through a bottleneck that’s holding back LLMs AI startup Subquadratic came out of stealth last month with a huge claim: it had solved a mathematical bottleneck&#8230;",
+      "link": "https://www.technologyreview.com/2026/06/19/1139327/the-download-llms-bottleneck-breakthrough-bci-trials-take-off/",
+      "published": "Fri, 19 Jun 2026 12:10:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "A startup claims it broke through a bottleneck that’s holding back LLMs",
+      "summary": "Miami-based AI startup Subquadratic came out of stealth mode last month with a huge claim. It announced that it had solved a mathematical bottleneck that had been holding back large language models for almost a decade. The details were thin, and many people were unconvinced. But Subquadratic has started to bring the receipts, sharing the&#8230;",
+      "link": "https://www.technologyreview.com/2026/06/19/1139313/a-startup-claims-it-broke-through-a-bottleneck-thats-holding-back-llms/",
+      "published": "Fri, 19 Jun 2026 10:40:24 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "The inevitable weakness of metrics",
+      "summary": "There are plenty of useful things a metric can reveal. There are even more it can obscure or corrupt. It took me well over a decade of tracking my own life in ever greater detail to fully appreciate this duality, which probably reveals something about both me and the nature of measurement. Like a lot&#8230;",
+      "link": "https://www.technologyreview.com/2026/06/19/1138778/inevitable-weakness-metrics-quantified-life-book-review/",
+      "published": "Fri, 19 Jun 2026 09:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Brain-computer interface trials are taking off",
+      "summary": "This week, I covered the story of Casey Harrell—a man with ALS who is “the first power user” of a brain implant, according to the researchers who worked with him. Harrell is paralyzed and unable to speak coherently without the device. He has now spent almost three years using a brain-computer interface (BCI) that enables&#8230;",
+      "link": "https://www.technologyreview.com/2026/06/19/1139270/brain-computer-interface-trials-are-taking-off/",
+      "published": "Fri, 19 Jun 2026 09:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "New usage analytics and updated spend controls for enterprises",
+      "summary": "OpenAI introduces new spend controls and usage analytics for ChatGPT Enterprise, helping organizations manage costs and scale AI with confidence.",
+      "link": "https://openai.com/index/chatgpt-enterprise-spend-controls",
+      "published": "Thu, 18 Jun 2026 17:00:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Improving health intelligence in ChatGPT",
+      "summary": "Learn how GPT-5.5 Instant improves ChatGPT’s health and wellness responses with stronger reasoning, better context, clearer communication, and physician-informed evaluations.",
+      "link": "https://openai.com/index/improving-health-intelligence-in-chatgpt",
+      "published": "Thu, 18 Jun 2026 11:00:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Using AI to help physicians diagnose rare genetic diseases affecting children",
+      "summary": "Researchers used an OpenAI reasoning model to help diagnose rare diseases, identifying 18 new diagnoses in previously unsolved cases.",
+      "link": "https://openai.com/index/diagnose-rare-childhood-diseases",
+      "published": "Thu, 18 Jun 2026 08:00:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "A near-autonomous AI chemist improves a challenging reaction in medicinal chemistry",
+      "summary": "OpenAI and Molecule.one show how a near-autonomous AI chemist using GPT-5.4 improved a key drug-making reaction, advancing medicinal chemistry research.",
+      "link": "https://openai.com/index/ai-chemist-improves-reaction",
+      "published": "Wed, 17 Jun 2026 10:00:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] Why Doesn’t Anyone Monitor AI Consciousness?",
+      "summary": "[DESCRIPTION FALLBACK] Go to https://ground.news/sabine to get 40% off the Vantage plan and see through sensationalized reporting. Stay fully informed ...",
+      "link": "https://www.youtube.com/watch?v=S8ttAlUXbc0",
+      "published": "2025-11-29T16:00:46Z",
+      "source_type": "youtube",
+      "channel": "Sabine Hossenfelder",
+      "video_id": "S8ttAlUXbc0",
+      "transcript_method": "description",
+      "transcript_chars": 154,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Why AI Isn’t Going to Become Conscious | Anil Seth | TED",
+      "summary": "[DESCRIPTION FALLBACK] We see consciousness in AI the same way we see faces in clouds, says neuroscientist Anil Seth. He explores the all-too-human ...",
+      "link": "https://www.youtube.com/watch?v=tJV-vdbZ388",
+      "published": "2026-05-08T15:01:48Z",
+      "source_type": "youtube",
+      "channel": "TED",
+      "video_id": "tJV-vdbZ388",
+      "transcript_method": "description",
+      "transcript_chars": 151,
+      "has_full_transcript": false
+    }
+  ]
+}

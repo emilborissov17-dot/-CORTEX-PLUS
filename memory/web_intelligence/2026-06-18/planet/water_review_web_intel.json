@@ -1,0 +1,142 @@
+{
+  "axis": "WATER_REVIEW",
+  "domain": "planet",
+  "timestamp": "2026-06-18T18:15:32.075199+00:00",
+  "sources_count": 13,
+  "rss_count": 4,
+  "ddg_count": 6,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] Explained | World&#39;s Water Crisis | FULL EPISODE | Netflix",
+      "summary": "Dreht man einen Wasserhahn auf, läuft zu jeder Zeit unbegrenzt\nsauberes Wasser heraus. Man vergisst leicht, dass das Streben danach eine\nder prägenden Mühen der Geschichte war. Zivilisationen, die Wasser\nnutzbar machten, gediehen. Die, die scheiterten... gingen unter. Heute können sich sieben von zehn Menschen\nzu Hause auf fließend Wasser verlassen. Das Wasser fließt von Steigleitungen zu Serviceanschlüssen\nund erreicht alle Gebäude in der Straße. Zumindest denkt man das. Kapstadt könnte die erste Großstadt\nweltweit sein, der das Wasser ausgeht. Kapstadt, Südafrika,\nbewegt sich auf Tag Null zu. In nur 92 Tagen\nmüssen sie aufgrund der Dürre die meisten Leitungen abdrehen. Kapstadt ist die erste Großstadt\nder Welt, die plant, die Wasserversorgung\nauf unbestimmte Zeit abzudrehen. Vier Million",
+      "link": "https://www.youtube.com/watch?v=C65iqOSCZOY",
+      "published": "2020-04-17T13:00:00Z",
+      "source_type": "youtube",
+      "channel": "Netflix",
+      "video_id": "C65iqOSCZOY",
+      "transcript_method": "youtube_transcript_api",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Fresh water scarcity: An introduction to the problem - Christiana Z. Peppard",
+      "summary": "Transcriber: Andrea McDonough\nReviewer: Bedirhan Cinar You might have heard that we're running out of fresh water. This might sound strange to you because, if you live in a place where water flows freely from the tap or shower at any time, it sure doesn't seem like a big deal. It's just there, right? Wrong! The only obvious thing about fresh water is how much we need it. Because it's essential to life, we need to think about it carefully. Right now, at this very moment, some people, women and girls in particular, walk hours and miles per day to get fresh water, and even then, it may not be clean. Every 15 seconds, a child dies due to water-born diseases. This is tragic! The most compelling reasons to think about fresh water, therefore, have to do with what we might call the global common g",
+      "link": "https://www.youtube.com/watch?v=otrpxtAmDAk",
+      "published": "2013-02-14T16:02:00Z",
+      "source_type": "youtube",
+      "channel": "TED-Ed",
+      "video_id": "otrpxtAmDAk",
+      "transcript_method": "youtube_transcript_api",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Our Water Crisis Is WAY WORSE than You Think...Here&#39;s Why",
+      "summary": "- We're about to fly over\nCalifornia's Central Valley to get a unique perspective\non climate change. This farmland used to be home to America's largest\nfreshwater lake west of the Mississippi. The lake disappeared for over\n100 years, and now it's back. But there's just one\nproblem. I have to admit. I got some butterflies in my\nstomach. I'm a nervous flyer. But I'm really excited\nto see this lake. - Okay, we are ready. - Okay, so Bill, how long\nhave you been flying sun? - I started flying in 1969. So that's one thing\non the order of 7,000 hours of flight time. - Wow! Well, I feel safe now.\nThe disappearance of this lake and its sudden return represents\nso many of the impacts of climate change on the\nmost important building block of life on earth: water. I Maiya May, and I'm fascinated\nby ou",
+      "link": "https://www.youtube.com/watch?v=7ALeNj7cp_s",
+      "published": "2025-02-12T16:00:12Z",
+      "source_type": "youtube",
+      "channel": "PBS Terra",
+      "video_id": "7ALeNj7cp_s",
+      "transcript_method": "youtube_transcript_api",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "Groundwater depletion due to unsustainable water use for farming in dry areas",
+    "root_cause": " Unsustainable agricultural practices and lack of effective water management policies",
+    "severity": "CRITICAL",
+    "leverage_points": [
+      "Government policies and regulations on water usage",
+      "Agricultural practices and technologies"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Implement water-saving irrigation technologies and practices",
+        "measurable_goal": "Reduce groundwater depletion rate by 20% within the next 5 years",
+        "timeframe": "medium-term"
+      },
+      {
+        "action": "Develop and enforce policies to limit water usage for farming in dry areas",
+        "measurable_goal": "Decrease water usage for farming in dry areas by 30% within the next 10 years",
+        "timeframe": "long-term"
+      }
+    ],
+    "evidence": [
+      "40% of wells hitting record lows in the past decade alone",
+      "80% of Florida faces extreme drought conditions",
+      "Groundwater provides about half of the world’s drinking water"
+    ],
+    "generalization": "This problem connects to the domains of civilization (food production and security) and planet (water resources and ecosystems)",
+    "summary": "Groundwater depletion due to unsustainable water use for farming in dry areas is a critical problem that requires immediate attention and action to ensure long-term water security and sustainability. Implementing water-saving technologies and practices, and developing effective policies to limit water usage, can help mitigate this issue.",
+    "risk_level": "CRITICAL"
+  },
+  "raw_items": [
+    {
+      "title": "Setting Fires On Purpose to Cut Risk of Catastrophic Wildfires",
+      "summary": "<figure><img alt=\"Firefighters ignite a prescribed burn.\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"681\" src=\"https://i0.wp.com/www.circleofblue.org/wp-content/uploads/2026/06/PRESCRIBED-BURN-scaled.jpg?fit=1024%2C681&amp;ssl=1\" width=\"1024\" /></figure>\n<p>Wildfire risk is predicted to stay elevated through June in the Upper Midwest from drought and high winds. That’s risky for the region’s pristine inland lakes, but land managers are working to reduce wildfire ",
+      "link": "https://www.circleofblue.org/2026/great-lakes/setting-fires-on-purpose-to-cut-risk-of-catastrophic-wildfires/",
+      "published": "Thu, 18 Jun 2026 10:02:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "When Forests Burn, Lakes Suffer",
+      "summary": "<figure><img alt=\"A Smokey Bear sign with &quot;fire danger high&quot; in front of a landscape on fire. A firefighter walks in the background.\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"768\" src=\"https://i0.wp.com/www.circleofblue.org/wp-content/uploads/2026/06/SMOKEYBEAR-scaled.jpg?fit=1024%2C768&amp;ssl=1\" width=\"1024\" /></figure>\n<p>Wildfire risk is high in the upper Great Lakes, and research shows that large, scorching wildfires spell trouble for lakes in th",
+      "link": "https://www.circleofblue.org/2026/great-lakes/when-forests-burn-lakes-suffer/",
+      "published": "Wed, 17 Jun 2026 10:04:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Ethanol Was Marketed to Help Agriculture. But It Fouled Our Water and Injured Our Health.",
+      "summary": "<figure><img alt=\"\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"667\" src=\"https://i0.wp.com/www.circleofblue.org/wp-content/uploads/2014/06/20131104_AERIAL_CORN_HARVEST_0153.jpg?fit=1000%2C667&amp;ssl=1\" width=\"1000\" /></figure>\n<p>Just like his presidential predecessors – George Bush, Barack Obama, and Joe Biden – Donald Trump has a thing for ethanol. But why? Inordinately expensive to taxpayers, monstrously polluting, and now linked to mounting cancer incidence ",
+      "link": "https://www.circleofblue.org/2026/opinion/ethanol-was-marketed-to-help-agriculture-but-it-fouled-our-water-and-injured-our-health/",
+      "published": "Tue, 16 Jun 2026 10:30:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "On Menominee Lakes, Wild Rice Is Coming Back. It Isn’t Easy.",
+      "summary": "<figure><img alt=\"\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"683\" src=\"https://i0.wp.com/www.circleofblue.org/wp-content/uploads/2026/06/DSCF4326-scaled.jpg?fit=1024%2C683&amp;ssl=1\" width=\"1024\" /></figure>\n<p>MENOMINEE, Wisc. — On a cool bluebird morning, DJ Micik guides his canoe through the narrow channel connecting Little Rice Lake with Rice Lake, two of the largest bodies of water on the Menominee reservation in northern Wisconsin.&#160; Sitting behind Mi",
+      "link": "https://www.circleofblue.org/2026/agriculture/on-menominee-lakes-wild-rice-is-coming-back-it-isnt-easy/",
+      "published": "Sun, 14 Jun 2026 11:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Drought Grips Florida: Groundwater Levels Reach Critical Low - ZetBit",
+      "summary": "Nearly 80% of Florida faces extreme drought conditions, as NASA satellite data reveals critical low groundwater levels.The drought has severe implications for agriculture, drinking water supplies, wildlife habitats, and local economies across the state.",
+      "link": "https://zetbit.tech/science/drought-grips-florida-groundwater-levels-reach-critical-low",
+      "source_type": "ddg"
+    },
+    {
+      "title": "America is Draining its Groundwater Supplies at an Alarming Rate",
+      "summary": "The rate of decline is accelerating, with 40% of wells hitting record lows in the past decade alone. The main culprit is unsustainable water use for farming in dry areas like Kansas, Arkansas, and California. Industrial-scale agriculture depends on irrigating crops with water pumped from aquifers.",
+      "link": "https://spotlessmaterials.com/blogs/the-spotlight/america-is-draining-its-groundwater-supplies-at-an-alarming-rate",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Humans are depleting groundwater worldwide, but there are ways to...",
+      "summary": "Scott Jasechko, Debra Perrone, Richard Taylor If you stand at practically any point on Earth, there is water moving through the ground beneath your feet. Groundwater provides about half of the world’s population with drinking water and nearly half of all water used to irrigate crops.",
+      "link": "https://smtcenter.net/en/archives/slider/humans-are-depleting-groundwater-worldwide-but-there-are-ways-to-replenish-it",
+      "source_type": "ddg"
+    },
+    {
+      "title": "From dry to drenched: How Michigan flipped the script on drought",
+      "summary": "April 10, 2026 - Repeated rounds of rain over the past several weeks, including widespread totals of a few inches or more, have replenished soil moisture and eliminated drought across the state, according to the U.S. Drought Monitor’s April 9 report.",
+      "link": "https://www.clickondetroit.com/weather/2026/04/10/from-dry-to-drenched-how-michigan-flipped-the-script-on-drought/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Drought Status Update for the Midwest | March 26, 2026 | Drought.gov",
+      "summary": "March 26, 2026 - Deeper soil moisture remains below normal across portions of Ohio, Illinois, Indiana, and Missouri, raising concerns about the amount of moisture available for the upcoming growing season. In addition, groundwater across north-central Indiana is heavily depleted, raising concerns for irrigated crops in the northern tier of Indiana.",
+      "link": "https://www.drought.gov/drought-status-updates/drought-status-update-midwest-2026-03-26",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Michigan | Drought.gov",
+      "summary": "Specifically, this map approximates ... 5 years. Long-term drought conditions (lasting months to years) can impact irrigated agriculture, groundwater, and reservoir levels, and can increase wildfire intensity and severity...",
+      "link": "https://www.drought.gov/states/michigan",
+      "source_type": "ddg"
+    }
+  ]
+}

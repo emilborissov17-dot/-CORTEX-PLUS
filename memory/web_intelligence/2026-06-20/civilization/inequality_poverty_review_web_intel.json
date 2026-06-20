@@ -1,0 +1,101 @@
+{
+  "axis": "INEQUALITY_POVERTY_REVIEW",
+  "domain": "civilization",
+  "timestamp": "2026-06-20T05:38:21.389890+00:00",
+  "sources_count": 7,
+  "rss_count": 0,
+  "ddg_count": 6,
+  "youtube_count": 1,
+  "youtube_items": [
+    {
+      "title": "[YT] The Untold Truth About Money: How to Build Wealth From... - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] There is an untold truth about money – an actual equation that allows you to build wealth from nothing.It’s an equation that is hardly taught in schools if a...",
+      "link": "https://www.youtube.com/watch?v=6mRbDEtDoyA",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "6mRbDEtDoyA",
+      "transcript_method": "description",
+      "transcript_chars": 183,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "problem": "Over 40% of people in Sub-Saharan Africa live in extreme poverty",
+    "root_cause": "Lack of economic growth and unequal distribution of resources in Sub-Saharan Africa",
+    "severity": "CRITICAL",
+    "leverage_points": [
+      "International organizations and governments investing in economic development in Sub-Saharan Africa",
+      "Local governments implementing policies to reduce inequality and promote economic growth"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Invest in education and job training programs in Sub-Saharan Africa",
+        "measurable_goal": "Reduce poverty rate by 10% in the next 5 years",
+        "timeframe": "medium-term"
+      },
+      {
+        "action": "Implement policies to promote fair trade and equal distribution of resources in Sub-Saharan Africa",
+        "measurable_goal": "Increase the GDP per capita by 20% in the next 10 years",
+        "timeframe": "long-term"
+      }
+    ],
+    "evidence": [
+      "More than 430 million people live in Sub-Saharan Africa, the poorest region in the world, where more than 40% of people lived in extreme poverty as of 2018",
+      "Poverty and inequality levels have worsened in Latin America and the Caribbean, and economic growth continues to fall short of its potential"
+    ],
+    "generalization": "This problem connects to the domains of planet, human, and cosmos, as poverty and inequality can have far-reaching consequences on the environment, human health, and the overall well-being of societies",
+    "summary": "Over 40% of people in Sub-Saharan Africa live in extreme poverty, and lack of economic growth and unequal distribution of resources are the root causes of this problem. Investing in education and job training programs, and implementing policies to promote fair trade and equal distribution of resources can help reduce poverty and promote economic growth in the region.",
+    "risk_level": "CRITICAL"
+  },
+  "raw_items": [
+    {
+      "title": "Sub-Saharan Africa - Wikipedia",
+      "summary": "Sub-Saharan Africa is a key player in the global minerals market, producing over 70% of the world's cobalt and hosting about 50% of its reserves in the Democratic Republic of the Congo (DRC). The region also harbors significant lithium deposits in Zimbabwe, DR Congo, and Mali.[100].",
+      "link": "https://en.wikipedia.org/wiki/Sub-Saharan_Africa",
+      "source_type": "ddg"
+    },
+    {
+      "title": "The Inequality Trap: Why Sub-Saharan Africa Struggles to Escape...",
+      "summary": "Poverty; inequality; economic growth; Sub-Saharan Africa; Nigeria, South Africa; DR CongoFosu, Augustin Kwasi (2015): Growth, inequality and poverty in Sub-Saharan Africa: recent progress in a global context. Oxford Development Studies, vol. 43(1), pp. 44-59.",
+      "link": "https://mpra.ub.uni-muenchen.de/125930/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Poverty Rate by Country 2026 | World Population Review",
+      "summary": "More than 430 million of these people live in Sub-Saharan Africa, the poorest region in the world, where more than 40% of people lived in extreme poverty as of 2018. Many countries in which poverty is rising have been plagued by political instability or conflict.",
+      "link": "https://worldpopulationreview.com/country-rankings/poverty-rate-by-country",
+      "source_type": "ddg"
+    },
+    {
+      "title": "The second roadshow of the 2026 Poverty Alleviation Challenge was...",
+      "summary": "the collaboration between Chinese and Latin American youth in poverty alleviation. The second roadshow attracted some young teams to participate online.",
+      "link": "https://lac.tsinghua.edu.cn/en/info/1012/3234.htm",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Closing inequality gaps in Latin America and the Caribbean is possible",
+      "summary": "Poverty and inequality levels have worsened, public budgets remain strained due to the pandemic’s impact, and economic growth continues to fall short of its potential. Shockingly, nearly 18% of the population now lives on less than $3.1 a...",
+      "link": "https://acr.ippf.org/featured-perspective/closing-inequality-gaps-latin-america-and-caribbean-possible",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Latin America and the Caribbean Population (2026) - Worldometer",
+      "summary": "The Population of Latin America and the Caribbean (1950 - 2026) chart plots the total population count as of July 1 of each year, from 1950 to 2026.",
+      "link": "https://www.worldometers.info/world-population/latin-america-and-the-caribbean-population/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "[YT] The Untold Truth About Money: How to Build Wealth From... - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] There is an untold truth about money – an actual equation that allows you to build wealth from nothing.It’s an equation that is hardly taught in schools if a...",
+      "link": "https://www.youtube.com/watch?v=6mRbDEtDoyA",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "6mRbDEtDoyA",
+      "transcript_method": "description",
+      "transcript_chars": 183,
+      "has_full_transcript": false
+    }
+  ]
+}

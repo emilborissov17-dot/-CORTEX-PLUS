@@ -1,0 +1,103 @@
+{
+  "axis": "COSMIC_RESOURCES_REVIEW",
+  "fetched_at": "2026-06-19T17:51:05.272478+00:00",
+  "smart_query": "asteroid mining space resources",
+  "sources_count": {
+    "wiki": 0,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "the-potential-dropout/Dyson-Swarm",
+      "snippet": "I am advancing humanity to Level II on the Kardashev Scale with my community of engineers, physicists, and people who dare to dream.",
+      "stars": 3,
+      "url": "https://github.com/the-potential-dropout/Dyson-Swarm",
+      "updated": "2026-05-31",
+      "source": "GitHub"
+    },
+    {
+      "title": "15-minute-discourse/asteroid-mining",
+      "snippet": " Associated repository for the \"Asteroid Mining: Unlocking a Trillion-Dollar Industry in Space\" 15 minute discourse podcast on YouTube! ",
+      "stars": 1,
+      "url": "https://github.com/15-minute-discourse/asteroid-mining",
+      "updated": "2025-02-22",
+      "source": "GitHub"
+    },
+    {
+      "title": "tretoef-estrella/THE-ASTEROID-BELT-PROTOCOL",
+      "snippet": "A proposal from humanity to future ASI: expand into space, not Earth. Physics, data, and an extended hand. Part of Proyecto Estrella.",
+      "stars": 0,
+      "url": "https://github.com/tretoef-estrella/THE-ASTEROID-BELT-PROTOCOL",
+      "updated": "2026-01-27",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Shape, Orientation and Colors Combined approach for Asteroids (SOCCA)",
+      "snippet": "Large photometric surveys provide sparse multi-band photometry for millions of Solar System objects, offering an opportunity to jointly constrain their physical and compositional properties. However, current phase function models do not account for rotational variability, limiting their ability to r",
+      "url": "https://arxiv.org/abs/2606.17734v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Simultaneous Tricolor Video Observations of Three Tiny Near-Earth Asteroids with Sub-Minute Rotation Periods",
+      "snippet": "Studying the physical properties of near-Earth asteroids (NEAs) is crucial for understanding their dynamical histories and origins, and assessing impact hazards to Earth. Tiny NEAs with diameters smaller than 100 m are intrinsically faint and are typically observable only during close approaches, re",
+      "url": "https://arxiv.org/abs/2606.17047v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[Reddit's model for a better internet | Steve Huffman] The internet was created to connect us, yet many people feel more alone than ever. Reddit cofounder and CEO Steve Huffman explores how social media rewards performance over participation — and offers a timely case for an internet built like a city, with thriving online \"neighborhoods\" that make space for real human connection. Ready to find your community? Hosted on Acast. See acast.com/privacy fo",
+  "wiki": null,
+  "youtube_items": [
+    {
+      "title": "[YT] YouTube:y8XvQNt26KI",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=y8XvQNt26KI",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "y8XvQNt26KI",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] YouTube:D3eVaW4ytZA",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=D3eVaW4ytZA",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "D3eVaW4ytZA",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] YouTube:MkpAsSf2bJs",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=MkpAsSf2bJs",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "MkpAsSf2bJs",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    }
+  ],
+  "summary": "Анализът на космически ресурси показва потенциал за развитие на човечеството чрез използване на астероиди и други небесни тела. Изследванията в тази област включват разработване на технологии за миниране и извличане на ресурси. Целта е да се намери начин за устойчиво развитие и достоен живот за всеки.",
+  "urgency": "MEDIUM",
+  "sentiment": "POSITIVE",
+  "key_developments": [
+    "Shape, Orientation and Colors Combined approach for Asteroids (SOCCA)",
+    "Simultaneous Tricolor Video Observations of Three Tiny Near-Earth Asteroids with Sub-Minute Rotation Periods",
+    "Asteroid Mining: Unlocking a Trillion-Dollar Industry"
+  ],
+  "open_source_momentum": "Наличие на проекти като Dyson-Swarm и asteroid-mining на GitHub показва растяща обществена поддержка и участие в развитие на космическите технологии.",
+  "scientific_frontier": "Изданията на arXiv показват напредък в научните изследвания, включително разработване на нови подходи за наблюдение и анализ на астероидите.",
+  "relevance_to_goal": "Използването на космически ресурси е от особено значение за развитието на устойчива цивилизация и постигане на достоен живот за всеки човек."
+}

@@ -1,0 +1,157 @@
+{
+  "axis": "ECOSYSTEMS_BIODIVERSITY_REVIEW",
+  "domain": "planet",
+  "timestamp": "2026-06-19T17:36:37.019068+00:00",
+  "sources_count": 11,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] Why is biodiversity so important? - Kim Preshoff",
+      "summary": "[DESCRIPTION FALLBACK] View full lesson: http://ed.ted.com/lessons/why-is-biodiversity-so-important-kim-preshoff Our planet's diverse, thriving ecosystems ...",
+      "link": "https://www.youtube.com/watch?v=GK_vRtHJZu4",
+      "published": "2015-04-20T15:04:28Z",
+      "source_type": "youtube",
+      "channel": "TED-Ed",
+      "video_id": "GK_vRtHJZu4",
+      "transcript_method": "description",
+      "transcript_chars": 158,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Biodiversity Loss Explained | Causes, Consequences &amp; Ecosystem Recovery",
+      "summary": "[DESCRIPTION FALLBACK] Biodiversity refers to the variety of life on Earth — from microorganisms and plants to animals and entire ecosystems. Healthy ...",
+      "link": "https://www.youtube.com/watch?v=zx96g_bvw0w",
+      "published": "2026-03-07T05:48:37Z",
+      "source_type": "youtube",
+      "channel": "The Learning Studio",
+      "video_id": "zx96g_bvw0w",
+      "transcript_method": "description",
+      "transcript_chars": 153,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] 7 CAUSES OF BIODIVERSITY LOSS",
+      "summary": "[DESCRIPTION FALLBACK] Biodiversity loss, the decline in the variety of life forms within a given ecosystem, region, or on the entire Earth, is driven by several ...",
+      "link": "https://www.youtube.com/watch?v=OA4H2e97Eoc",
+      "published": "2024-04-16T14:22:28Z",
+      "source_type": "youtube",
+      "channel": "GEOGRAPHY MASTERCLASS",
+      "video_id": "OA4H2e97Eoc",
+      "transcript_method": "description",
+      "transcript_chars": 165,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "problem": "Insufficient efforts to prevent biodiversity loss, as highlighted by the critically endangered vaquita and the potential cross-species spread of chronic wasting disease",
+    "root_cause": "Human activities such as habitat destruction, pollution, and climate change driving species extinction and ecosystem disruption",
+    "severity": "CRITICAL",
+    "leverage_points": [
+      "International conservation organizations and governments implementing effective wildlife protection policies",
+      "Individuals and communities adopting sustainable practices to reduce their environmental impact"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Establish a Global Wildlife Health Authority to coordinate conservation efforts and monitor disease transmission",
+        "measurable_goal": "Reduce the rate of species extinction by 50% within the next decade",
+        "timeframe": "medium-term"
+      },
+      {
+        "action": "Develop and implement education programs to raise awareness about biodiversity loss and its consequences",
+        "measurable_goal": "Increase public awareness and engagement in conservation efforts by 20% within the next 2 years",
+        "timeframe": "short-term"
+      }
+    ],
+    "evidence": [
+      "The vaquita is the most endangered marine mammal, with only a few individuals remaining",
+      "Chronic wasting disease can spread silently, with infectious prions present even in animals that show no symptoms"
+    ],
+    "generalization": "Biodiversity loss is connected to other domains, such as human health, food security, and climate change, as healthy ecosystems provide essential services and support human well-being",
+    "summary": "The current rate of biodiversity loss is critically high, driven by human activities, and requires immediate attention and action from international organizations, governments, and individuals to establish effective conservation policies and practices.",
+    "risk_level": "CRITICAL"
+  },
+  "raw_items": [
+    {
+      "title": "Global",
+      "summary": "<span class=\"field field--name-title field--type-string field--label-hidden\">Global</span>\n<span class=\"field field--name-uid field--type-entity-reference field--label-hidden\"><span>integrations</span></span>\n<span class=\"field field--name-created field--type-created field--label-hidden\"><time class=\"datetime\" datetime=\"2022-02-21T08:14:38+01:00\" title=\"Monday, February 21, 2022 - 08:14\">Mon, 02/21/2022 - 08:14</time>\n</span>\n<span class=\"a2a_kit a2a_kit_size_20 addtoany_list\"><a class=\"a2a_butt",
+      "link": "https://iucn.org/our-work/region/global",
+      "published": "Mon, 21 Feb 2022 07:14:38 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Inside IUCN",
+      "summary": "<span class=\"field field--name-title field--type-string field--label-hidden\">Inside IUCN</span>\n<span class=\"field field--name-uid field--type-entity-reference field--label-hidden\"><span>review.sm</span></span>\n<span class=\"field field--name-created field--type-created field--label-hidden\"><time class=\"datetime\" datetime=\"2021-11-18T11:17:35+01:00\" title=\"Thursday, November 18, 2021 - 11:17\">Thu, 11/18/2021 - 11:17</time>\n</span>\n\n\n<span class=\"a2a_kit a2a_kit_size_20 addtoany_list\"><a class=\"a2",
+      "link": "https://iucn.org/content/inside-iucn",
+      "published": "Thu, 18 Nov 2021 10:17:35 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "DG Speech Node",
+      "summary": "<span class=\"field field--name-title field--type-string field--label-hidden\">DG Speech Node</span>\n<span class=\"field field--name-uid field--type-entity-reference field--label-hidden\"><span>review.webtf</span></span>\n<span class=\"field field--name-created field--type-created field--label-hidden\"><time class=\"datetime\" datetime=\"2021-11-18T10:56:51+01:00\" title=\"Thursday, November 18, 2021 - 10:56\">Thu, 11/18/2021 - 10:56</time>\n</span>\n\n\n<span class=\"a2a_kit a2a_kit_size_20 addtoany_list\"><a cla",
+      "link": "https://iucn.org/content/dg-speech-node",
+      "published": "Thu, 18 Nov 2021 09:56:51 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "It is time for a Global Wildlife Health Authority",
+      "summary": "<span class=\"field field--name-title field--type-string field--label-hidden\">It is time for a Global Wildlife Health Authority</span>\n<span class=\"field field--name-uid field--type-entity-reference field--label-hidden\"><span>integrations</span></span>\n<span class=\"field field--name-created field--type-created field--label-hidden\"><time class=\"datetime\" datetime=\"2021-10-20T09:48:06+02:00\" title=\"Wednesday, October 20, 2021 - 09:48\">Wed, 10/20/2021 - 09:48</time>\n</span>\n\n\n<span class=\"a2a_kit a2",
+      "link": "https://iucn.org/content/it-time-global-wildlife-health-authority",
+      "published": "Wed, 20 Oct 2021 07:48:06 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "On the brink of extinction, the vaquita gets a digital lifeline",
+      "summary": "Scientists have digitally preserved the world’s most endangered marine mammal by creating highly detailed 3D models of a vaquita skeleton using advanced imaging technology. The virtual archive provides an unprecedented look at the species and could help inspire conservation efforts before the tiny porpoise disappears forever.",
+      "link": "https://www.sciencedaily.com/releases/2026/06/260616102223.htm",
+      "published": "Wed, 17 Jun 2026 08:01:37 EDT",
+      "source_type": "rss"
+    },
+    {
+      "title": "New study explores potential cross-species spread of chronic wasting disease",
+      "summary": "A new study found that chronic wasting disease can sometimes spread silently, with infectious prions present even in animals that show no symptoms. While there is no confirmed human risk, researchers say the disease’s ability to evolve and spread across species warrants close attention.",
+      "link": "https://www.sciencedaily.com/releases/2026/06/260615033841.htm",
+      "published": "Tue, 16 Jun 2026 10:06:24 EDT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Yellowstone wolves may not have reshaped the national park after all",
+      "summary": "One of the most celebrated claims about Yellowstone’s wolves is facing a major challenge. Scientists say the study behind the famous trophic cascade story relied on flawed methods that overstated the ecological impact of wolf recovery. Their reanalysis found no evidence for a dramatic, park-wide surge in willow growth. Instead, the effects appear smaller and vary from place to place.",
+      "link": "https://www.sciencedaily.com/releases/2026/06/260613215510.htm",
+      "published": "Sun, 14 Jun 2026 00:27:09 EDT",
+      "source_type": "rss"
+    },
+    {
+      "title": "A legendary golden fabric lost for 2,000 years has returned",
+      "summary": "Researchers in South Korea have recreated the legendary “sea silk” once prized by emperors, using fibers from a clam cultivated in Korean coastal waters. They discovered that its famous golden shine comes from tiny protein structures that reflect light rather than from pigments or dyes. Because the color is built into the fiber’s structure, it can remain vibrant for centuries.",
+      "link": "https://www.sciencedaily.com/releases/2026/06/260612021000.htm",
+      "published": "Fri, 12 Jun 2026 03:02:55 EDT",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] Why is biodiversity so important? - Kim Preshoff",
+      "summary": "[DESCRIPTION FALLBACK] View full lesson: http://ed.ted.com/lessons/why-is-biodiversity-so-important-kim-preshoff Our planet's diverse, thriving ecosystems ...",
+      "link": "https://www.youtube.com/watch?v=GK_vRtHJZu4",
+      "published": "2015-04-20T15:04:28Z",
+      "source_type": "youtube",
+      "channel": "TED-Ed",
+      "video_id": "GK_vRtHJZu4",
+      "transcript_method": "description",
+      "transcript_chars": 158,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Biodiversity Loss Explained | Causes, Consequences &amp; Ecosystem Recovery",
+      "summary": "[DESCRIPTION FALLBACK] Biodiversity refers to the variety of life on Earth — from microorganisms and plants to animals and entire ecosystems. Healthy ...",
+      "link": "https://www.youtube.com/watch?v=zx96g_bvw0w",
+      "published": "2026-03-07T05:48:37Z",
+      "source_type": "youtube",
+      "channel": "The Learning Studio",
+      "video_id": "zx96g_bvw0w",
+      "transcript_method": "description",
+      "transcript_chars": 153,
+      "has_full_transcript": false
+    }
+  ]
+}

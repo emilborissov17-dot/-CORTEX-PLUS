@@ -1,0 +1,12 @@
+{
+  "max_parallel_workers": 3,
+  "llm_sleep_secs": 2,
+  "cycle_mode": "FULL",
+  "reasons": [],
+  "health": "HEALTHY",
+  "capacity_pct": 100,
+  "connectivity": "FULL",
+  "cycle_timestamp": "2026-06-20T07:36:27.084667+00:00",
+  "data_freshness": "FRESH",
+  "time_of_day": "MORNING"
+}

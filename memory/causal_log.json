@@ -460,5 +460,60 @@
     "score_after": null,
     "delta": null,
     "verdict": "NEUTRAL"
+  },
+  {
+    "timestamp": "2026-06-18T20:31:09.226050+00:00",
+    "axis": "SELF_IMPROVEMENT",
+    "action": "execute_patch:climate_patch.py",
+    "effect": "verdict=NEUTRAL delta=None | GOVERNANCE_INSTITUTIONS_REVIEW: LOW → None; COGNITION_LEARNING_REVIEW: MEDIUM → None; SPACE_INFRASTRUCTURE_REVIEW: HIGH → None",
+    "why": "Self-modifier patch изпълнен",
+    "score_before": 50.26,
+    "score_after": null,
+    "delta": null,
+    "verdict": "NEUTRAL"
+  },
+  {
+    "timestamp": "2026-06-18T20:31:15.962507+00:00",
+    "axis": "SELF_IMPROVEMENT",
+    "action": "execute_patch:ecosystems_biodiversity_review_patch.py",
+    "effect": "verdict=NEUTRAL delta=0.0",
+    "why": "Self-modifier patch изпълнен",
+    "score_before": 50.26,
+    "score_after": 50.26,
+    "delta": 0.0,
+    "verdict": "NEUTRAL"
+  },
+  {
+    "timestamp": "2026-06-19T18:29:59.796952+00:00",
+    "axis": "SELF_IMPROVEMENT",
+    "action": "execute_patch:climate_patch.py",
+    "effect": "verdict=NEUTRAL delta=None | HUMAN_WELL_BEING_REVIEW: MEDIUM → None; CLIMATE_GLOBAL_RISK_REVIEW: LOW → None; MATERIALS_WASTE_REVIEW: LOW → None",
+    "why": "Self-modifier patch изпълнен",
+    "score_before": 50.26,
+    "score_after": null,
+    "delta": null,
+    "verdict": "NEUTRAL"
+  },
+  {
+    "timestamp": "2026-06-20T05:42:48.235946+00:00",
+    "axis": "SELF_IMPROVEMENT",
+    "action": "execute_patch:climate_patch.py",
+    "effect": "verdict=NEUTRAL delta=None",
+    "why": "Self-modifier patch изпълнен",
+    "score_before": null,
+    "score_after": null,
+    "delta": null,
+    "verdict": "NEUTRAL"
+  },
+  {
+    "timestamp": "2026-06-20T06:56:09.529832+00:00",
+    "axis": "SELF_IMPROVEMENT",
+    "action": "execute_patch:broken_test_patch.py",
+    "effect": "verdict=NEUTRAL delta=None | ENERGY_REVIEW: LOW → None; COSMIC_RESOURCES_REVIEW: HIGH → None; FOOD_REVIEW: MEDIUM → None",
+    "why": "Self-modifier patch изпълнен",
+    "score_before": 50.26,
+    "score_after": null,
+    "delta": null,
+    "verdict": "NEUTRAL"
   }
 ]

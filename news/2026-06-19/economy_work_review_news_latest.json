@@ -1,0 +1,119 @@
+{
+  "axis": "ECONOMY_WORK_REVIEW",
+  "fetched_at": "2026-06-19T18:06:28.042401+00:00",
+  "smart_query": "economy unemployment poverty wages",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "Plans to end gazumping with binding agreements in house sales shake-up",
+      "snippet": "Sales agreements will be legally binding sooner and making sellers provide more home information up front are part of the planned changes.",
+      "url": "https://www.bbc.com/news/articles/c6216g52p8wo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "O'Leary extends Ryanair contract in deal that could net him over £130m",
+      "snippet": "The Ryanair boss extends his contract to 2032, in a deal featuring a bonus scheme that could earn him more than €150m (£130m).",
+      "url": "https://www.bbc.com/news/articles/c4gyejpy221o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Warning over 'fragile' public finances as borrowing rises",
+      "snippet": "The UK borrowed £23.3bn in May, according to official figures, up almost a third on the same month last year.",
+      "url": "https://www.bbc.com/news/articles/cqx1e8nrwgvo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "AmirhosseinHonardoust/Economic-DNA-Repair",
+      "snippet": "A deep research study introducing the concept of Economic DNA Repair for smart contracts, designing self-correcting tokenomics that detect anomalies, repair unstable parameters, rebalance incentives, ",
+      "stars": 19,
+      "url": "https://github.com/AmirhosseinHonardoust/Economic-DNA-Repair",
+      "updated": "2026-05-15",
+      "source": "GitHub"
+    },
+    {
+      "title": "AmirhosseinHonardoust/Pricing-Negotiation-Intelligence",
+      "snippet": "This article reframes pricing as a negotiation rather than a prediction, showing how price emerges from tensions between product reality, market dynamics, and buyer behavior. It introduces negotiation",
+      "stars": 18,
+      "url": "https://github.com/AmirhosseinHonardoust/Pricing-Negotiation-Intelligence",
+      "updated": "2026-02-23",
+      "source": "GitHub"
+    },
+    {
+      "title": "AmirhosseinHonardoust/Metabolic-Tokenomics",
+      "snippet": "A scientific exploration of Metabolic Tokenomics, the framework that models token economies as living metabolic systems. Examines how tokens burn, store, and circulate energy like biological cells, ma",
+      "stars": 17,
+      "url": "https://github.com/AmirhosseinHonardoust/Metabolic-Tokenomics",
+      "updated": "2026-02-23",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "AI Economist Agent: An Agentic Framework for Model-Grounded Economic Analysis with RAG, Knowledge Graphs, and Large Language Models",
+      "snippet": "We propose a model-grounded RAG-based AI economist with an agentic framework for economic scenario analysis using large language models (LLMs) and knowledge graphs. While LLMs can generate fluent economic narratives, economists are often required to make economic claims grounded by economic theory a",
+      "url": "https://arxiv.org/abs/2606.20041v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "An economic geography dataset of U.S. skill specialization, relatedness, and complexity",
+      "snippet": "We release a new dataset of U.S. skill specialization, relatedness, and complexity, derived from 433.6 million job postings between 2010 and 2024. The panel covers 3,194 counties across 15 years and reports 201 variables that describe the volume of job postings (e.g., labor demand), the modality and",
+      "url": "https://arxiv.org/abs/2606.09918v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[Jerome Powell and the Future of Fed Independence] If you have a credit card, hope to buy a house, or just want stable grocery prices – let’s talk about the future of Fed independence!It’s impossibly important for the Federal Reserve to steer monetary policy without political interference – an ideal pushed to its brink during Jerome Powell’s time as Fed Chair.Powell’s Fed faced a once-in-a-century pandemic, oversaw the economy as inflation spiked ",
+  "wiki": null,
+  "youtube_items": [
+    {
+      "title": "[YT] YouTube:SHySrxXWkg0",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=SHySrxXWkg0",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "SHySrxXWkg0",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] YouTube:TktFwy6uWnA",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=TktFwy6uWnA",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "TktFwy6uWnA",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] YouTube:u-WIdZMgpIY",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=u-WIdZMgpIY",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "u-WIdZMgpIY",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    }
+  ],
+  "summary": "[RSS News]\n- Plans to end gazumping with binding agreements in house sales shake-up\n- O'Leary extends Ryanair contract in deal that could net him over £130m\n\n[arXiv]\n- AI Economist Agent: An Agentic F",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": [],
+  "open_source_momentum": "",
+  "scientific_frontier": "",
+  "relevance_to_goal": ""
+}

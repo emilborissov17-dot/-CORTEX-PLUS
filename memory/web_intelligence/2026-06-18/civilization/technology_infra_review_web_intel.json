@@ -1,0 +1,157 @@
+{
+  "axis": "TECHNOLOGY_INFRA_REVIEW",
+  "domain": "civilization",
+  "timestamp": "2026-06-18T18:19:34.476849+00:00",
+  "sources_count": 11,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] Bedford County closes digital divide with $25 million boost in high-speed internet",
+      "summary": "[DESCRIPTION FALLBACK] Bedford County is making big strides in closing the digital divide with a major boost in high-speed internet access. Thanks to a ...",
+      "link": "https://www.youtube.com/watch?v=3qAfCKfQIUc",
+      "published": "2026-01-07T00:08:12Z",
+      "source_type": "youtube",
+      "channel": "WSLS 10",
+      "video_id": "3qAfCKfQIUc",
+      "transcript_method": "description",
+      "transcript_chars": 155,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Closing the Digital Divide: How Upwork Supports Human-I-T’s Social Mission",
+      "summary": "[DESCRIPTION FALLBACK] Human-I-T is a nonprofit social enterprise committed to ensuring everybody in the world has access to the digital tools they need ...",
+      "link": "https://www.youtube.com/watch?v=cz-rOhiMxmo",
+      "published": "2026-02-27T19:47:23Z",
+      "source_type": "youtube",
+      "channel": "Upwork",
+      "video_id": "cz-rOhiMxmo",
+      "transcript_method": "description",
+      "transcript_chars": 156,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] How Wildanet and Nokia Are Helping Bridge Cornwall&#39;s Digital Divide",
+      "summary": "[DESCRIPTION FALLBACK] This film captures the beginning of a partnership between Wildanet and Nokia, bringing together two organisations that share a ...",
+      "link": "https://www.youtube.com/watch?v=gy0eENUGX6Y",
+      "published": "2026-06-16T09:29:47Z",
+      "source_type": "youtube",
+      "channel": "DCA PR",
+      "video_id": "gy0eENUGX6Y",
+      "transcript_method": "description",
+      "transcript_chars": 153,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "problem": "The digital divide persists in various regions, hindering access to high-speed internet and digital tools",
+    "root_cause": "Insufficient investment and infrastructure development in rural and underserved areas",
+    "severity": "MEDIUM",
+    "leverage_points": [
+      "Government agencies and local authorities",
+      "Private companies and non-profit organizations investing in digital infrastructure"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Implement targeted investments in high-speed internet infrastructure in rural and underserved areas",
+        "measurable_goal": "Achieve a 50% increase in high-speed internet access within 2 years",
+        "timeframe": "medium-term"
+      },
+      {
+        "action": "Develop public-private partnerships to support digital inclusion initiatives",
+        "measurable_goal": "Establish at least 5 partnerships within 1 year, resulting in a 20% increase in digital access for underserved communities",
+        "timeframe": "short-term"
+      }
+    ],
+    "evidence": [
+      "Bedford County received a $25 million boost in high-speed internet access, demonstrating the effectiveness of targeted investments",
+      "Partnerships between organizations like Wildanet, Nokia, and Human-I-T are helping to bridge the digital divide in regions like Cornwall"
+    ],
+    "generalization": "The digital divide is closely linked to the domains of PLANETA (access to resources and infrastructure) and CHOVEK (social and economic inequalities), and addressing it can have a positive impact on the overall sustainability of civilization",
+    "summary": "The digital divide remains a significant issue, but targeted investments and partnerships can help bridge the gap and increase access to digital tools and high-speed internet. By addressing this problem, we can promote more equitable social and economic development",
+    "risk_level": "MEDIUM"
+  },
+  "raw_items": [
+    {
+      "title": "How I Get Free Traffic from ChatGPT in 2025 (AIO vs SEO)",
+      "summary": "<p style=\"text-align: left;\">Three weeks ago, I tested something that completely changed how I think about organic traffic. I opened ChatGPT and asked a simple question: \"What's the best course on building SaaS with WordPress?\" The answer that appeared stopped me cold. My course showed up as the first result, recommended directly by the AI with specific reasons why it was valuable.</p><p style=\"text-align: left;\">I hadn't paid for advertising. I hadn't done any special promotion. The AI simply d",
+      "link": "https://techncruncher.blogspot.com/2025/12/how-i-get-free-traffic-from-chatgpt-in.html",
+      "published": "Thu, 04 Dec 2025 05:37:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Top 10 AI Tools That Will Transform Your Content Creation in 2025",
+      "summary": "<div style=\"text-align: left;\"><a href=\"https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEge5QgwLKWbavTUhIedQLI79z5BGD4h0ZoH4YMK6bGBL6fY4Je8R3GZurMZaJmtYirFS6pS-GgZD3xFAqfln8w8faEY2iDehndQNeez57DoiDsgYFJrIwMOLBjzcZiOJrqYDktm6pmRkwtprJChag0yQoeEZx1Pa_eKnt3kKzz69f-FSPWu_JXQxFq5Z8WZ/s1920/Blue%20Purple%20Futuristic%20Modern%203D%20Tech%20Company%20Business%20Presentation.jpg\" style=\"clear: left; margin-bottom: 1em;\"><span style=\"font-family: Coda;\"><img alt=\"Top 10 AI Tools That Will Trans",
+      "link": "https://techncruncher.blogspot.com/2025/01/top-10-ai-tools-that-will-transform.html",
+      "published": "Thu, 02 Jan 2025 09:26:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "LimeWire AI Studio Review 2023: Details, Pricing & Features",
+      "summary": "<p style=\"text-align: left;\"><span style=\"font-family: Oxygen;\">&nbsp;</span></p><p style=\"text-align: left;\"><span style=\"font-family: Oxygen;\">In the rapidly advancing landscape of AI technology and innovation, LimeWire emerges as a unique platform in the realm of generative AI tools. This platform not only stands out from the multitude of existing AI tools but also brings a fresh approach to content generation. LimeWire not only empowers users to create AI content but also provides creators w",
+      "link": "https://techncruncher.blogspot.com/2023/12/limewire-ai-studio-review-2023-details.html",
+      "published": "Tue, 12 Dec 2023 16:10:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Top 10 AI Tools in 2023 That Will Make Your Life Easier",
+      "summary": "<p><span style=\"font-family: Montserrat;\"><br /></span></p><div class=\"separator\" style=\"clear: both; text-align: center;\"><a href=\"https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiu91xnR3LQV62WoiA0scuFOTa-Xx9vIwouaceeyosFtZrJB0UivYIWtbcF3TCWEjKhRQVBiSeB00RQI0-cO_eBG6d05_6UV7zYw9qzyHMJ6u2m9_itNW2mFAS8LChEhhJQ14aJbI3GrkEsY9xCTExAT-qxUSh5asVFMAmX-ceWufpgV_DrG9tk3Y4umw/s1920/Blue%20Purple%20Futuristic%20Modern%203D%20Tech%20Company%20Business%20Presentation-min.jpg\" style=\"margin-left: 1",
+      "link": "https://techncruncher.blogspot.com/2023/01/top-10-ai-tools-in-2023-that-will-make.html",
+      "published": "Wed, 25 Jan 2023 19:52:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Trump Mocked Mark Zuckerberg and Jeff Bezos by Showing Off Fawning Texts",
+      "summary": "“You would not believe the texts I got from these tech guys,” NYT reporters Maggie Haberman and Jonathan Swan quote Donald Trump as telling associates in an upcoming book.",
+      "link": "https://www.wired.com/story/trump-mocked-mark-zuckerberg-and-jeff-bezos-by-showing-off-fawning-texts/",
+      "published": "Thu, 18 Jun 2026 17:58:30 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "3 Amazon Workers Say They’re Under Investigation for Speaking Out About Data Centers",
+      "summary": "The software engineers filed a complaint with Seattle’s civil rights office accusing Amazon of illegally retaliating against them for expressing their personal political beliefs.",
+      "link": "https://www.wired.com/story/amazon-workers-under-internal-investigation-after-speaking-out-about-data-centers/",
+      "published": "Thu, 18 Jun 2026 16:03:27 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Silicon Valley’s Elite Financial Advisers Say This Era of Wealth Is Different",
+      "summary": "The rich are getting richer. Here’s what wealth advisers are telling their tech clients right now.",
+      "link": "https://www.wired.com/story/silicon-valleys-elite-financial-advisers-say-this-era-of-wealth-is-different/",
+      "published": "Thu, 18 Jun 2026 15:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Waymo Recalls Robotaxis Over Risk They'll Drive at Speed Into Freeway Construction Zones",
+      "summary": "The company's latest recall of 3,871 vehicles follows incidents of its autonomous cars prioritizing other hazards or failing to recognize closed construction zones altogether.",
+      "link": "https://www.wired.com/story/waymo-recalls-robotaxis-over-risk-theyll-drive-at-speed-into-freeway-construction-zones/",
+      "published": "Thu, 18 Jun 2026 12:50:21 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] Bedford County closes digital divide with $25 million boost in high-speed internet",
+      "summary": "[DESCRIPTION FALLBACK] Bedford County is making big strides in closing the digital divide with a major boost in high-speed internet access. Thanks to a ...",
+      "link": "https://www.youtube.com/watch?v=3qAfCKfQIUc",
+      "published": "2026-01-07T00:08:12Z",
+      "source_type": "youtube",
+      "channel": "WSLS 10",
+      "video_id": "3qAfCKfQIUc",
+      "transcript_method": "description",
+      "transcript_chars": 155,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Closing the Digital Divide: How Upwork Supports Human-I-T’s Social Mission",
+      "summary": "[DESCRIPTION FALLBACK] Human-I-T is a nonprofit social enterprise committed to ensuring everybody in the world has access to the digital tools they need ...",
+      "link": "https://www.youtube.com/watch?v=cz-rOhiMxmo",
+      "published": "2026-02-27T19:47:23Z",
+      "source_type": "youtube",
+      "channel": "Upwork",
+      "video_id": "cz-rOhiMxmo",
+      "transcript_method": "description",
+      "transcript_chars": 156,
+      "has_full_transcript": false
+    }
+  ]
+}

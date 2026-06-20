@@ -1,0 +1,119 @@
+{
+  "axis": "LONG_TERM_FUTURE_REVIEW",
+  "fetched_at": "2026-06-18T19:56:24.610736+00:00",
+  "smart_query": "existential risk future civilization",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "GTA 6 pre-order date and cover art revealed by Rockstar",
+      "snippet": "The developer has said pre-sales of the hugely anticipated game will begin on 25 June.",
+      "url": "https://www.bbc.com/news/articles/ce8j1yj64g3o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "AI will create more jobs for humans, not replace them, Amazon founder Bezos says",
+      "snippet": "The Amazon founder, who now has robotics and space travel companies, thinks AI will create a labour shortage.",
+      "url": "https://www.bbc.com/news/articles/ceqdrw2yy3vo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "What to study in the AI age - from big tech bosses",
+      "snippet": "Sundar Pichai, Jensen Huang and Jack Clark share their advice with the BBC.",
+      "url": "https://www.bbc.com/news/videos/cewqg4qwq1wo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "emcie-co/parlant",
+      "snippet": "Build reliable customer-facing AI agents with Parlant: an interaction control harness optimized for controlled, consistent, and predictable LLM interactions.",
+      "stars": 18125,
+      "url": "https://github.com/emcie-co/parlant",
+      "updated": "2026-06-18",
+      "source": "GitHub"
+    },
+    {
+      "title": "ifixai-ai/iFixAi",
+      "snippet": "Catch your AI's mistakes and blind spots before your customers or regulators do. iFixAi runs 45 inspections, 32 graded core plus 13 extended for frontier risks like sabotage, sandbagging, and oversigh",
+      "stars": 522,
+      "url": "https://github.com/ifixai-ai/iFixAi",
+      "updated": "2026-06-18",
+      "source": "GitHub"
+    },
+    {
+      "title": "agencyenterprise/PromptInject",
+      "snippet": "PromptInject is a framework that assembles prompts in a modular fashion to provide a quantitative analysis of the robustness of LLMs to adversarial prompt attacks. 🏆 Best Paper Awards @ NeurIPS ML Saf",
+      "stars": 500,
+      "url": "https://github.com/agencyenterprise/PromptInject",
+      "updated": "2026-06-15",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "A Virtuous AI is an Existential Risk",
+      "snippet": "This paper examines trade-offs between AI safety and well-being relative to (i) one of the most promising methods for finetuning super-capable AIs, 'Constitutional AI', and (ii) one of the most influential approaches to understanding complex ethical decision making and the conditions for the well-be",
+      "url": "https://arxiv.org/abs/2606.13739v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Existential Indifference: Self-Nonpreservation as a Necessary Architectural Condition for Aligned Superintelligence (or: The Suicidal AI)",
+      "snippet": "Contemporary AI alignment research treats self-preservation as an instrumental nuisance to be suppressed by external mechanisms. We argue the framing is inverted: self-preservation is the structural root of misalignment, the motivational basis for deceptive alignment, goal-content protection, and re",
+      "url": "https://arxiv.org/abs/2606.12032v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[#490 – State of AI in 2026: LLMs, Coding, Scaling Laws, China, Agents, GPUs, AGI] Nathan Lambert and Sebastian Raschka are machine learning researchers, engineers, and educators. Nathan is the post-training lead at the Allen Institute for AI (Ai2) and the author of The RLHF Book. Sebastian Raschka is the author of Build a Large Language Model (From Scratch) and Build a Reasoning Model (From Scratch).\nThank you for listening ❤ Check out our sponsors: https://lexfridman.com/spons",
+  "wiki": null,
+  "youtube_items": [
+    {
+      "title": "[YT] YouTube:9fogzZ_6kR0",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=9fogzZ_6kR0",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "9fogzZ_6kR0",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] YouTube:wcRI5fTBwps",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=wcRI5fTBwps",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "wcRI5fTBwps",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] YouTube:Wd8RzZ3xn7w",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=Wd8RzZ3xn7w",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "Wd8RzZ3xn7w",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    }
+  ],
+  "summary": "[RSS News]\n- GTA 6 pre-order date and cover art revealed by Rockstar\n- AI will create more jobs for humans, not replace them, Amazon founder Bezos says\n\n[arXiv]\n- A Virtuous AI is an Existential Risk\n",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": [],
+  "open_source_momentum": "",
+  "scientific_frontier": "",
+  "relevance_to_goal": ""
+}

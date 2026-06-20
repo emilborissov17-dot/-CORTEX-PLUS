@@ -1,6 +1,6 @@
 {
   "axis": "ECOSYSTEMS_BIODIVERSITY_REVIEW",
-  "timestamp": "2026-06-11T19:06:18.217756+00:00",
+  "timestamp": "2026-06-20T07:36:10.048392+00:00",
   "level": "MEDIUM",
   "signals": [],
   "key_metrics": [],
@@ -10,10 +10,10 @@
     "forest_area_pct": 31.1430410787403,
     "protected_terrestrial_area_pct": 16.511660312023,
     "marine_protected_area_pct": 17.4641679954692,
-    "annual_deforestation_pct": 40398387.316,
-    "threatened_species_count": 3434.0,
-    "co2_emissions_per_capita": null
+    "threatened_mammal_species": 3434.0,
+    "co2_ppm_mauna_loa": 432.15,
+    "species_observations_30d_gbif": 2656172
   },
-  "data_quality": "5/6 indicators fetched",
-  "fetched_date": "2026-06-11"
+  "data_quality": "6/6 indicators fetched",
+  "fetched_date": "2026-06-20"
 }

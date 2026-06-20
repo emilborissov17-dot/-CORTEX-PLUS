@@ -1,0 +1,40 @@
+{
+  "timestamp": "2026-06-20T07:25:57.052428+00:00",
+  "identity": "CORTEX++ AGI — civilization monitor",
+  "hardware": {},
+  "apis": {
+    "groq": {
+      "available": true,
+      "limit": "30 req/min, free tier"
+    },
+    "gemini": {
+      "available": true,
+      "limit": "1500 req/day, free tier"
+    },
+    "youtube": {
+      "available": true,
+      "limit": "10000 units/day"
+    },
+    "nasa": {
+      "available": true,
+      "limit": "1000 req/hr"
+    }
+  },
+  "capabilities": [
+    "monitor 25 civilization axes via web intelligence",
+    "LLM synthesis via Groq (llama-3.3-70b) + Gemini fallback",
+    "audio transcription via Groq Whisper API",
+    "real data: NOAA CO2, NASA GISTEMP, World Bank WDI, GBIF",
+    "self-modification via self_modifier agent",
+    "autonomous data discovery via data_scout",
+    "snapshot history and trend tracking"
+  ],
+  "limitations": [
+    "Limited RAM (?GB) — cannot run local LLMs or ChromaDB at full load",
+    "RAM at ?% — parallel workers reduced to 1-2",
+    "Insufficient free RAM for ChromaDB — semantic memory degraded",
+    "No local GPU — all inference via cloud APIs (rate-limited)",
+    "No persistent process — cycle must be triggered manually or via scheduler"
+  ],
+  "current_vitals": {}
+}

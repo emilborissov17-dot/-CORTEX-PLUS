@@ -1,0 +1,100 @@
+{
+  "axis": "GOAL_PROGRESS_REVIEW",
+  "fetched_at": "2026-06-18T20:07:10.477157+00:00",
+  "smart_query": "sustainable development goals SDG",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 0,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "samirsaci/supply-chain-sustainability",
+      "snippet": "Build Supply Chain Sustainability Reporting with Python",
+      "stars": 60,
+      "url": "https://github.com/samirsaci/supply-chain-sustainability",
+      "updated": "2026-06-16",
+      "source": "GitHub"
+    },
+    {
+      "title": "osdg-ai/osdg-tool",
+      "snippet": "OSDG is an open-source tool that maps and connects activities to the UN Sustainable Development Goals (SDGs) by identifying SDG-relevant content in any text. The tool is available online at www.osdg.a",
+      "stars": 47,
+      "url": "https://github.com/osdg-ai/osdg-tool",
+      "updated": "2026-04-29",
+      "source": "GitHub"
+    },
+    {
+      "title": "wmo-raf/climweb",
+      "snippet": "Open Source Content Management System for National Meteorological and Hydrological Services ",
+      "stars": 29,
+      "url": "https://github.com/wmo-raf/climweb",
+      "updated": "2026-06-17",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Evaluating the Impact of Rhode Island's Self-Sustaining Reemployment Services and Eligibility Assessment (RESEA) Program on Employment Outcomes",
+      "snippet": "Prolonged unemployment carries serious economic, health, and wellbeing costs. With federal support, most U.S. states now operate a Reemployment Services and Eligibility Assessment (RESEA) program to help Unemployment Insurance (UI) claimants return to work faster. We report results from a large (N =",
+      "url": "https://arxiv.org/abs/2606.14621v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Sustainability by Design in Decentralized Autonomous Organizations: An Empirical Review of Governance, Innovation, and Institutional Design",
+      "snippet": "Recent innovation theories on economics remain largely grounded in assumptions of hierarchical firms and closed organizational boundaries, offering limited insight into how innovation unfolds within decentralized, digitally native organizations. Decentralized Autonomous Organizations (DAOs) represen",
+      "url": "https://arxiv.org/abs/2606.05667v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[Can computer hackers get inside your mind?] The cyber weapon that might have prevented nuclear war.The U.S. and Israel have long been in conflict with Iran over their nuclear development program. Some of that conflict has been out in the open, with bombs and blockades, but some of it has been invisible. Recently some security researchers discovered a cyberweapon likely tied to that invisible conflict. It looks like it was designed to hide o",
+  "wiki": null,
+  "youtube_items": [
+    {
+      "title": "[YT] YouTube:9-xdy1Jr2eg",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=9-xdy1Jr2eg",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "9-xdy1Jr2eg",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] YouTube:qfOgdj4Okdw",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=qfOgdj4Okdw",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "qfOgdj4Okdw",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] YouTube:enGJyhu6Xr0",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=enGJyhu6Xr0",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "enGJyhu6Xr0",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    }
+  ],
+  "summary": "[arXiv]\n- Evaluating the Impact of Rhode Island's Self-Sustaining Reemployment Services and Eligibility Assessment (RESEA) Program on Employment Outcomes\n- Sustainability by Design in Decentralized Au",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": [],
+  "open_source_momentum": "",
+  "scientific_frontier": "",
+  "relevance_to_goal": ""
+}

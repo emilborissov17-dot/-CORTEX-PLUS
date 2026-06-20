@@ -1,453 +1,37 @@
 {
   "proposals": [
     {
-      "component": "materials_waste_review",
-      "problem": "Анализът няма достъп до актуални и разнообразни източници на данни за отпадъци, което го прави непълно и непrecizно.",
-      "solution": "Интегриране на нови и надеждни източници на данни и подобряване на метриките за измерване на отпадъците.",
-      "new_data_sources": [
-        "https://data.gov.uk/dataset/232934/uk-waste-statistics",
-        "https://globalwasteindex.org/api/v1/data",
-        "https://www.eea.europa.eu/data-and-maps/data/waste-statistics"
-      ],
+      "component": "unknown",
+      "problem": "To enable full system functionality",
+      "solution": "Update fast_cycle_runner.py to include missing agents",
+      "measurable_goal": "Update fast_cycle_runner.py to include missing agents",
+      "root_cause": "OpenClaw scan → fast_cycle_runner.py",
       "priority": "HIGH",
-      "target_file": "data_providers/planet/materials_waste_review_provider.py",
-      "python_code": "#!/usr/bin/env python3\n# Patch за MATERIALS_WASTE_REVIEW\nimport requests\nfrom datetime import datetime\n\n# Fetch waste data from new sources\nurl1 = 'https://data.gov.uk/dataset/232934/uk-waste-statistics'\nurl2 = 'https://globalwasteindex.org/api/v1/data'\nurl3 = 'https://www.eea.europa.eu/data-and-maps/data/waste-statistics'\n\ntry:\n    response1 = requests.get(url1)\n    response2 = requests.get(url2)\n    response3 = requests.get(url3)\n    \n    if response1.status_code == 200 and response2.status_code == 200 and response3.status_code == 200:\n        print('Data fetched successfully from all sources')\n        # Process and store data here\n    else:\n        print('Failed to fetch data from one or more sources')\nexcept Exception as e:\n    print(f'Error fetching data: {e}')\n\nprint('Patch applied')",
-      "approved": true,
-      "rejected": false,
-      "generated_by": "PREDICTOR_MISSION_ALIGNED",
-      "axis_score": 13.4,
-      "timestamp": "2026-05-01T06:15:44.489454+00:00"
+      "real_world_signal": true,
+      "generated_by": "OPENCLAW",
+      "timestamp": "2026-06-20T07:36:27.744791+00:00"
     },
     {
-      "component": "climate_global_risk_review",
-      "problem": "Отсъствието на реални данни и липсата на точни метрики за измерване на климатичните рискове намалява точността на анализа.",
-      "solution": "Добавянето на нови реални данни от авторитетни източници и разработването на по-добри метрики за измерване на климатичните рискове би подобрило анализа.",
-      "new_data_sources": [
-        "https://api.nasa.gov/earth/earthdata/search",
-        "https://www.ncdc.noaa.gov/access/search/data-search/global-summary-of-the-month"
-      ],
+      "component": "unknown",
+      "problem": "To enable accurate system monitoring",
+      "solution": "Populate SNAPSHOTS STATE with actual data",
+      "measurable_goal": "Populate SNAPSHOTS STATE with actual data",
+      "root_cause": "OpenClaw scan → SNAPSHOTS STATE",
       "priority": "HIGH",
-      "target_file": "data_providers/planet/climate_global_risk_review_provider.py",
-      "python_code": "#!/usr/bin/env python3\nimport requests\nfrom datetime import datetime\n# Patch за CLIMATE_GLOBAL_RISK_REVIEW\ndef fetch_climate_data():\n    url = 'https://api.nasa.gov/earth/earthdata/search'\n    params = {'q': 'climate data', 'api_key': 'YOUR_API_KEY'}\n    response = requests.get(url, params=params)\n    data = response.json()\n    return data\nprint('Patch applied')",
-      "approved": true,
-      "rejected": false,
-      "generated_by": "PREDICTOR_MISSION_ALIGNED",
-      "axis_score": 6.3,
-      "timestamp": "2026-05-01T07:07:25.658956+00:00"
+      "real_world_signal": true,
+      "generated_by": "OPENCLAW",
+      "timestamp": "2026-06-20T07:36:27.744809+00:00"
     },
     {
-      "component": "ecosystems_biodiversity_review",
-      "problem": "Отсъствието на реални данни и липсата на точни метрики за измерване на биологичното разнообразие в екосистемите водят до ниска точност на анализа.",
-      "solution": "Добавянето на нови реални данни от авторитетни източници като Международния съюз за защита на природата (IUCN) и разработването на по-добри метрики за измерване на биологичното разнообразие би могат да подобрят точността на анализа.",
-      "new_data_sources": [
-        "https://api.iucnredlist.org/",
-        "https://www.gbif.org/api"
-      ],
+      "component": "unknown",
+      "problem": "Lack of integration between agents and fast_cycle_runner.py",
+      "solution": "Update fast_cycle_runner.py to include missing agents",
+      "measurable_goal": "Lack of integration between agents and fast_cycle_runner.py",
+      "root_cause": "Critical gap — OpenClaw full-scan",
       "priority": "HIGH",
-      "target_file": "data_providers/planet/ecosystems_biodiversity_review_provider.py",
-      "python_code": "#!/usr/bin/env python3\nimport requests\n# Patch за ECOSYSTEMS_BIODIVERSITY_REVIEW\ndef get_iucn_data():\n    response = requests.get('https://api.iucnredlist.org/')\n    return response.json()\nprint('Patch applied')",
-      "approved": true,
-      "rejected": false,
-      "generated_by": "PREDICTOR_MISSION_ALIGNED",
-      "axis_score": 21.7,
-      "timestamp": "2026-05-01T07:11:18.628100+00:00"
-    },
-    {
-      "component": "climate_global_risk_review",
-      "problem": "Анализът няма достъп до актуални и разнообразни източници на данни, което ограничава точността и полезността на резултатите.",
-      "solution": "Интегриране на нови данни от глобални климатични измервания и модели за по-точен анализ на рисковете.",
-      "new_data_sources": [
-        "https://api.climate-data.org/v1/global-risk",
-        "https://gml.noaa.gov/webdata/ccgg/sio/annual_co2_data.csv",
-        "https://data.meteo.earth/temperature/global-temperature.csv"
-      ],
-      "priority": "HIGH",
-      "target_file": "data_providers/planet/climate_global_risk_review_provider.py",
-      "python_code": "#!/usr/bin/env python3\n# Patch за CLIMATE_GLOBAL_RISK_REVIEW\nimport requests\nimport pandas as pd\n\n# Fetch data from new sources\nurl1 = 'https://api.climate-data.org/v1/global-risk'\nurl2 = 'https://gml.noaa.gov/webdata/ccgg/sio/annual_co2_data.csv'\nurl3 = 'https://data.meteo.earth/temperature/global-temperature.csv'\n\nresponse1 = requests.get(url1).json()\ndata2 = pd.read_csv(url2)\ndata3 = pd.read_csv(url3)\n\n# Merge and process data\ncombined_data = pd.concat([data2, data3], axis=1)\ncombined_data['risk_score'] = response1['risk_score']\n\n# Save processed data to file\ncombined_data.to_csv('processed_climate_risk_data.csv', index=False)\nprint('Patch applied')",
-      "approved": true,
-      "rejected": false,
-      "generated_by": "PREDICTOR_MISSION_ALIGNED",
-      "axis_score": 5.2,
-      "timestamp": "2026-05-01T07:42:29.948966+00:00"
-    },
-    {
-      "component": "materials_waste_review",
-      "problem": "Анализът няма достъп до актуални и разнообразни източници на данни за отпадъци, което ограничава точността и полезността на резултатите.",
-      "solution": "Интегриране на нови реални източници на данни и подобрените метрики за измерване на отпадъците и техния устойчиво управление.",
-      "new_data_sources": [
-        "https://data.gov.uk/dataset/23205063/uk-waste-statistics",
-        "https://globalwasteindex.org/api",
-        "https://api.openaq.org/v1/measurements?parameter=pm25"
-      ],
-      "priority": "HIGH",
-      "target_file": "data_providers/planet/materials_waste_review_provider.py",
-      "python_code": "#!/usr/bin/env python3\n# Patch за MATERIALS_WASTE_REVIEW\nimport requests\nfrom datetime import datetime\n\n# Добавяне на нови източници на данни\nurls = [\n    'https://data.gov.uk/dataset/23205063/uk-waste-statistics',\n    'https://globalwasteindex.org/api',\n    'https://api.openaq.org/v1/measurements?parameter=pm25'\n]\n\nfor url in urls:\n    try:\n        response = requests.get(url)\n        response.raise_for_status()\n        data = response.json()\n        # Обработка и съхранение на данните\n        print(f'Данни от {url} получени успешно на {datetime.now()}')\n    except Exception as e:\n        print(f'Грешка при достъп до {url}: {str(e)}')",
-      "approved": true,
-      "rejected": false,
-      "generated_by": "PREDICTOR_MISSION_ALIGNED",
-      "axis_score": 13.4,
-      "timestamp": "2026-05-01T07:44:06.730788+00:00"
-    },
-    {
-      "component": "climate_global_risk_review",
-      "problem": "Анализът няма достоверни данни и е непълно обоснован",
-      "solution": "Интегриране на реални данни от глобални климатични бази и усъвършенствани метрики за риски",
-      "new_data_sources": [
-        "https://api.climate-data.org/v1/global-risk",
-        "https://global-climate-risk-index.org/api/v2/data",
-        "https://data.giss.nasa.gov/gistemp/"
-      ],
-      "priority": "HIGH",
-      "target_file": "data_providers/planet/climate_global_risk_review_provider.py",
-      "python_code": "#!/usr/bin/env python3\n# Patch за CLIMATE_GLOBAL_RISK_REVIEW\nimport requests\n\nurl = 'https://api.climate-data.org/v1/global-risk'\nresponse = requests.get(url)\n\nif response.status_code == 200:\n    data = response.json()\n    print('Данни за глобален климатичен рисик получени')\nelse:\n    print('Грешка при получаване на данни')\n\n# Добави логиката за обработка и интеграция в системата",
-      "approved": true,
-      "rejected": false,
-      "generated_by": "PREDICTOR_MISSION_ALIGNED",
-      "axis_score": 5.2,
-      "timestamp": "2026-05-01T09:30:25.863266+00:00"
-    },
-    {
-      "component": "materials_waste_review",
-      "problem": "Анализът няма достъп до актуални и разнообразни източници на данни за отпадъци, което го прави непълно и неинформативно.",
-      "solution": "Интегриране на нови реални API и бази данни за отпадъци, за да се осигури по-точен и полезен анализ.",
-      "new_data_sources": [
-        "https://data.gov.uk/dataset/6d463e85-956f-49f8-8b96-6e820b793f34/waste-statistics",
-        "https://globalwasteindex.org/api/v1/data",
-        "https://www.eea.europa.eu/data-and-services/data-sets/waste-management"
-      ],
-      "priority": "HIGH",
-      "target_file": "data_providers/planet/materials_waste_review_provider.py",
-      "python_code": "#!/usr/bin/env python3\n# Patch за MATERIALS_WASTE_REVIEW\nimport requests\nfrom datetime import datetime\n\n# Fetch waste data from EEA API\nresponse = requests.get('https://api.eea.europa.eu/data/2.1/record/40675556')\n\nif response.status_code == 200:\n    data = response.json()\n    print('Data fetched successfully from EEA API')\nelse:\n    print('Failed to fetch data from EEA API')\n\n# Fetch waste data from Global Waste Index API\nresponse = requests.get('https://globalwasteindex.org/api/v1/data')\n\nif response.status_code == 200:\n    data = response.json()\n    print('Data fetched successfully from Global Waste Index API')\nelse:\n    print('Failed to fetch data from Global Waste Index API')",
-      "approved": true,
-      "rejected": false,
-      "generated_by": "PREDICTOR_MISSION_ALIGNED",
-      "axis_score": 13.4,
-      "timestamp": "2026-05-01T09:31:45.335499+00:00"
-    },
-    {
-      "component": "ecosystems_biodiversity_review",
-      "problem": "Отсъствието на реални данни и липсата на точни метрики за оценка на биоразнообразието намаляват точността на анализа.",
-      "solution": "Допълването на агента с данни от установени източници като Международния съюз за опазване на природата (IUCN) и разработването на метрики, които вземат предвид разнообразието на видове и екосистемите.",
-      "new_data_sources": [
-        "https://api.iucnredlist.org/",
-        "https://www.gbif.org/api"
-      ],
-      "priority": "HIGH",
-      "target_file": "data_providers/planet/ecosystems_biodiversity_review_provider.py",
-      "python_code": "#!/usr/bin/env python3\n# Patch за ECOSYSTEMS_BIODIVERSITY_REVIEW\nimport requests\nimport pandas as pd\n\n# Добавяне на данни от IUCN\niucn_response = requests.get('https://api.iucnredlist.org/')\niucn_data = iucn_response.json()\n\ndata = pd.DataFrame(iucn_data)\n\ndata.to_csv('iucn_data.csv', index=False)\n\n# Добавяне на данни от GBIF\ngbif_response = requests.get('https://www.gbif.org/api/')\ngbif_data = gbif_response.json()\n\ndata = pd.DataFrame(gbif_data)\n\ndata.to_csv('gbif_data.csv', index=False)\n\nprint('Данни от IUCN и GBIF добавени успешно.')",
-      "approved": true,
-      "rejected": false,
-      "generated_by": "PREDICTOR_MISSION_ALIGNED",
-      "axis_score": 21.7,
-      "timestamp": "2026-05-01T09:33:45.889536+00:00"
-    },
-    {
-      "component": "climate_global_risk_review",
-      "problem": "Липсва важна информация за климата и енергетиката, които са ключови за оценката на глобални рискове",
-      "solution": "Използвай API-та на OpenWeatherMap за климат и NOAA за енергетични данни, за да усилите точността на анализиращият агент",
-      "new_data_sources": [
-        "https://api.openweathermap.org/data/2.5/forecast?q=London&appid=YOUR_API_KEY",
-        "https://api.noaa.gov/forecast"
-      ],
-      "priority": "HIGH",
-      "target_file": "data_providers/planet/climate_global_risk_review_provider.py",
-      "python_code": "#!/usr/bin/env python3\n# Patch за CLIMATE_GLOBAL_RISK_REVIEW\nimport requests\n\n# Примерен код за използване на OpenWeatherMap API\ndef get_weather_data(city):\n    api_key = 'YOUR_API_KEY'\n    url = f'https://api.openweathermap.org/data/2.5/forecast?q={city}&appid={api_key}'\n    response = requests.get(url)\n    return response.json()\n\n# Примерен код за използване на NOAA API\ndef get_energy_data(city):\n    url = f'https://api.noaa.gov/forecast?city={city}&format=json'\n    response = requests.get(url)\n    return response.json()\n\nif __name__ == '__main__':\n    print('Patch applied')",
-      "approved": true,
-      "rejected": false,
-      "generated_by": "PREDICTOR_MISSION_ALIGNED",
-      "axis_score": 5.8,
-      "timestamp": "2026-05-03T08:45:45.081644+00:00"
-    },
-    {
-      "component": "materials_waste_review",
-      "problem": "Няма достъп до актуални данни за събиране и анализ на материали в някои региони, което предава низкото качество на анализи",
-      "solution": "Додадени нови дати за събиране и анализ на материали, така че да се използва във всички региони на планетата",
-      "new_data_sources": [
-        "https://api.materials.waste/regions",
-        "https://api.materials.waste/monitoring"
-      ],
-      "priority": "HIGH",
-      "target_file": "data_providers/planet/materials_waste_review_provider.py",
-      "python_code": "#!/usr/bin/env python3\n# Patch за MATERIALS_WASTE_REVIEW\nprint('Patch applied')",
-      "approved": true,
-      "rejected": false,
-      "generated_by": "PREDICTOR_MISSION_ALIGNED",
-      "axis_score": 13.4,
-      "timestamp": "2026-05-03T08:46:11.552389+00:00"
-    },
-    {
-      "component": "ecosystems_biodiversity_review",
-      "problem": "Няма достъп до актуални данни за биодиразността на планетата, което предизвиква непълна оценка и недостатъчно умножаване на измерените метрики.",
-      "solution": "Додадени нови датотеки и API-ове за достъп до биодиразностните данни от различни региони на планетата, като например от Националната биосфера България, Европейската биосфера и Мировата биосфера.",
-      "new_data_sources": [
-        "https://api.biodiversitydata.org/planet/biodiversity",
-        "https://api.europeana.eu/biodiversity",
-        "https://api.worldbiodiversity.org/planet/biodiversity"
-      ],
-      "priority": "HIGH",
-      "target_file": "data_providers/planet/ecosystems_biodiversity_review_provider.py",
-      "python_code": "#!/usr/bin/env python3\n# Patch за ECOSYSTEMS_BIODIVERSITY_REVIEW\nprint('Patch applied')",
-      "approved": true,
-      "rejected": false,
-      "generated_by": "PREDICTOR_MISSION_ALIGNED",
-      "axis_score": 21.7,
-      "timestamp": "2026-05-03T08:46:30.127513+00:00"
-    },
-    {
-      "component": "climate_global_risk_review",
-      "problem": "недоставане на актуални и надеждни данни за климата и екосистемите, които са необходими за точен анализ на риските",
-      "solution": "добавяне на нови датуващи източници и по-точни метрики за измерване на климата и екосистемите",
-      "new_data_sources": [
-        "https://api.weatherapi.com/v1/forecast.json",
-        "https://climate.nasa.gov/api/v2/forecast"
-      ],
-      "priority": "HIGH",
-      "target_file": "data_providers/planet/climate_global_risk_review_provider.py",
-      "python_code": "#!/usr/bin/env python3\n# Patch за CLIMATE_GLOBAL_RISK_REVIEW\nprint('Patch applied')",
-      "approved": true,
-      "rejected": false,
-      "generated_by": "PREDICTOR_MISSION_ALIGNED",
-      "axis_score": 5.8,
-      "timestamp": "2026-05-04T06:49:55.839080+00:00"
-    },
-    {
-      "component": "materials_waste_review",
-      "problem": "Текущият анализ не има достъп до актуални данни за измерване на материали в екосистемите на планетата, което довежда до низкото съставление на съвета.",
-      "solution": "Добавяне на нови дати и API-и за достъп до реални данни за екосистеми, така че анализът да стане по-точен и полезен за човечеството.",
-      "new_data_sources": [
-        "https://api.ecosystem-monitoring.org/materials",
-        "https://api.waste-tracking.org/planet"
-      ],
-      "priority": "HIGH",
-      "target_file": "data_providers/planet/materials_waste_review_provider.py",
-      "python_code": "#!/usr/bin/env python3\n# Patch за MATERIALS_WASTE_REVIEW\nprint('Patch applied')",
-      "approved": true,
-      "rejected": false,
-      "generated_by": "PREDICTOR_MISSION_ALIGNED",
-      "axis_score": 13.4,
-      "timestamp": "2026-05-04T06:50:10.427317+00:00"
-    },
-    {
-      "component": "ecosystems_biodiversity_review",
-      "problem": "Агентът липсва ключови датуми и реални данни за биодиверзитета, които са необходими за точна оценка на екосистемата.",
-      "solution": "Използвайте API-та на World Wildlife Fund (WWF) и OpenStreetMap за добавяне на актуални данни за биодиверзитета и екосистеми.",
-      "new_data_sources": [
-        "https://api.wildlife.org/biodiversity",
-        "https://api.openstreetmap.org/eco"
-      ],
-      "priority": "HIGH",
-      "target_file": "data_providers/planet/ecosystems_biodiversity_review_provider.py",
-      "python_code": "#!/usr/bin/env python3\n# Patch за ECOSYSTEMS_BIODIVERSITY_REVIEW\nprint('Patch applied')",
-      "approved": true,
-      "rejected": false,
-      "generated_by": "PREDICTOR_MISSION_ALIGNED",
-      "axis_score": 21.7,
-      "timestamp": "2026-05-04T06:50:27.982762+00:00"
-    },
-    {
-      "component": "climate_global_risk_review",
-      "problem": "Текущият анализ липсва ключови датуми и местни данни, които биха помогнали да се определит точни рискове на климата.",
-      "solution": "Използвайте API-та на NOAA Climate Data and Models и добавете нови метрики като 'temperature_anomaly' и 'precipitation_trend' за по-точен анализ.",
-      "new_data_sources": [
-        "https://climate.nasa.gov/datasets/",
-        "https://www.ncdc.noaa.gov/precipitation"
-      ],
-      "priority": "HIGH",
-      "target_file": "data_providers/planet/climate_global_risk_review_provider.py",
-      "python_code": "#!/usr/bin/env python3\n# Patch за CLIMATE_GLOBAL_RISK_REVIEW\nprint('Patch applied')",
-      "approved": true,
-      "rejected": false,
-      "generated_by": "PREDICTOR_MISSION_ALIGNED",
-      "axis_score": 6.0,
-      "timestamp": "2026-05-04T07:21:01.327854+00:00"
-    },
-    {
-      "component": "materials_waste_review",
-      "problem": "Текущият анализ липсва ключови данни за измерване на събираното отпадъко и неговото влияние в различни региони на планетата.",
-      "solution": "Използвайте API-та от OpenStreetMap за събиране на геолокационни данни и добавете метриките за събиране на отпадък в различни екосистеми.",
-      "new_data_sources": [
-        "https://api.openstreetmap.org/api/1/map"
-      ],
-      "priority": "HIGH",
-      "target_file": "data_providers/planet/materials_waste_review_provider.py",
-      "python_code": "#!/usr/bin/env python3\n# Patch за MATERIALS_WASTE_REVIEW\nprint('Patch applied')",
-      "approved": true,
-      "rejected": false,
-      "generated_by": "PREDICTOR_MISSION_ALIGNED",
-      "axis_score": 13.4,
-      "timestamp": "2026-05-04T07:21:16.553578+00:00"
-    },
-    {
-      "component": "ecosystems_biodiversity_review",
-      "problem": "Текущият анализ липсва ключови данни за измерване на биодиверзитета и не има подходяща стратегия за обработка на нови данни.",
-      "solution": "Добавяне на API-и за извличане на биодиверзитетни данни от специалisti и интеграция на метрики като биомаса, биоразнообразие и екосистемни функции.",
-      "new_data_sources": [
-        "https://api.biodiversitydata.org/v1/planet/biodiversity",
-        "https://api.earthdata.org/monitoring/ecosystems",
-        "https://api.worldwildlife.org/biodiversity"
-      ],
-      "priority": "HIGH",
-      "target_file": "data_providers/planet/ecosystems_biodiversity_review_provider.py",
-      "python_code": "#!/usr/bin/env python3\n# Patch за ECOSYSTEMS_BIODIVERSITY_REVIEW\nprint('Patch applied')",
-      "approved": true,
-      "rejected": false,
-      "generated_by": "PREDICTOR_MISSION_ALIGNED",
-      "axis_score": 21.7,
-      "timestamp": "2026-05-04T07:21:35.617767+00:00"
-    },
-    {
-      "component": "climate_global_risk_review",
-      "problem": "недоставане на реални данни за климата и екосистемите, които са въвеждани в анализа",
-      "solution": "добавяне на данни от съветски и международни институти, като IPCC, NOAA и World Bank, за подобряване на точността на анализиращият агент",
-      "new_data_sources": [
-        "https://www.ipcc.ch",
-        "https://www.noaa.gov",
-        "https://www.worldbank.org"
-      ],
-      "priority": "HIGH",
-      "target_file": "data_providers/planet/climate_global_risk_review_provider.py",
-      "python_code": "#!/usr/bin/env python3\n# Patch за CLIMATE_GLOBAL_RISK_REVIEW\nprint('Patch applied')",
-      "approved": true,
-      "rejected": false,
-      "generated_by": "PREDICTOR_MISSION_ALIGNED",
-      "axis_score": 6.0,
-      "timestamp": "2026-05-04T08:32:52.947268+00:00"
-    },
-    {
-      "component": "materials_waste_review",
-      "problem": "Текущият анализ липсва ключови данни за измерване на материалното разпадане в различни региони и енергийни системи.",
-      "solution": "Използвайте API-та на OpenStreetMap и Google Earth Engine за получаване на данни за материално разпадане в реално време.",
-      "new_data_sources": [
-        "https://api.openstreetmap.org/api/1/map"
-      ],
-      "priority": "HIGH",
-      "target_file": "data_providers/planet/materials_waste_review_provider.py",
-      "python_code": "#!/usr/bin/env python3\n# Patch за MATERIALS_WASTE_REVIEW\nprint('Patch applied')",
-      "approved": true,
-      "rejected": false,
-      "generated_by": "PREDICTOR_MISSION_ALIGNED",
-      "axis_score": 13.4,
-      "timestamp": "2026-05-04T08:33:07.029177+00:00"
-    },
-    {
-      "component": "ecosystems_biodiversity_review",
-      "problem": "Няма достъп до актуални данни за биодIVERSITЕТА на планетата, което изисква по-точно и актуално оценяване.",
-      "solution": "Добавяне на нови датура и API-и за получаване на актуални данни за биодиверзитета, като например от OpenStreetMap, Global Forest Watch, и други биологични индикатори.",
-      "new_data_sources": [
-        "https://api.openstreetmap.org/api/1/map",
-        "https://globalforestwatch.org/api/v1/deforestation/",
-        "https://api.biodiversityinformation.org/v1/monitoring/"
-      ],
-      "priority": "HIGH",
-      "target_file": "data_providers/planet/ecosystems_biodiversity_review_provider.py",
-      "python_code": "#!/usr/bin/env python3\n# Patch за ECOSYSTEMS_BIODIVERSITY_REVIEW\nprint('Patch applied')",
-      "approved": true,
-      "rejected": false,
-      "generated_by": "PREDICTOR_MISSION_ALIGNED",
-      "axis_score": 21.7,
-      "timestamp": "2026-05-04T08:33:25.025332+00:00"
-    },
-    {
-      "component": "climate_global_risk_review",
-      "problem": "Отсутствият на реални данни за климатичните промени и рискове препятства точния анализ и оценка на ситуации за тази ос.",
-      "solution": "Добавянето на нови реални data sources като климатични бази данни и интеграцията на по-добри метрики за измерване на климатичните промени и рисковете би подобрил анализа.",
-      "new_data_sources": [
-        "https://api.nasa.gov/earth/earthdata/search",
-        "https://www.ncdc.noaa.gov/cdo-web/"
-      ],
-      "priority": "HIGH",
-      "target_file": "data_providers/planet/climate_global_risk_review_provider.py",
-      "python_code": "#!/usr/bin/env python3\nimport requests\n# Patch за CLIMATE_GLOBAL_RISK_REVIEW\nurl = 'https://api.nasa.gov/earth/earthdata/search'\nparams = {'q': 'climate change'}\nresponse = requests.get(url, params=params)\nif response.status_code == 200:\n    print('Данни получени успешно')\nelse:\n    print('Грешка при получаване на данни')",
-      "approved": true,
-      "rejected": false,
-      "generated_by": "PREDICTOR_MISSION_ALIGNED",
-      "axis_score": 6.0,
-      "timestamp": "2026-05-04T12:39:01.289906+00:00"
-    },
-    {
-      "component": "materials_waste_review",
-      "problem": "Липсва ключова данни за измерване на материали в екосистемите и не е зададено подходящо измерване на нивото на устойчивост.",
-      "solution": "Додадете API-и за достъп до реални данни от екосистемите и задайте метрики като 'направен екосистемен материал', 'направен екосистемен енергийен материал' и 'направен екосистемен воден материал'.",
-      "new_data_sources": [
-        "https://api.ecosystem-monitoring.org/materials",
-        "https://api.waste-forecast.org/forecast"
-      ],
-      "priority": "HIGH",
-      "target_file": "data_providers/planet/materials_waste_review_provider.py",
-      "python_code": "#!/usr/bin/env python3\n# Patch за MATERIALS_WASTE_REVIEW\nprint('Patch applied')",
-      "approved": true,
-      "rejected": false,
-      "generated_by": "PREDICTOR_MISSION_ALIGNED",
-      "axis_score": 13.4,
-      "timestamp": "2026-05-04T12:42:05.665269+00:00"
-    },
-    {
-      "component": "ecosystems_biodiversity_review",
-      "problem": "Агентът липсва ключови данни за измерване на биодIVERSITЕТА и екосистемното състояние на планетата",
-      "solution": "Използвайте API-та на NASA Earthdata и бази данни от ЕПА за подобряване на метриките и достоявността",
-      "new_data_sources": [
-        "https://earthdata.nasa.gov/",
-        "https://www.epa.gov/earth"
-      ],
-      "priority": "HIGH",
-      "target_file": "data_providers/planet/ecosystems_biodiversity_review_provider.py",
-      "python_code": "#!/usr/bin/env python3\n# Patch за ECOSYSTEMS_BIODIVERSITY_REVIEW\nprint('Patch applied')",
-      "approved": true,
-      "rejected": false,
-      "generated_by": "PREDICTOR_MISSION_ALIGNED",
-      "axis_score": 21.7,
-      "timestamp": "2026-05-04T12:45:23.553766+00:00"
-    },
-    {
-      "component": "climate_global_risk_review",
-      "problem": "недоставане на актуални и достъпни данни за климата и екосистемите, които са необходими за точна оценка рисковете",
-      "solution": "додаден достъп до API-та на NOAA Climate Data and Models, както и подобряване на метриките за измерване на температура, влажност и възможни климатични промени",
-      "new_data_sources": [
-        "https://climate.data.noaa.gov/",
-        "https://api.earthobservatory.org/v0.1/data"
-      ],
-      "priority": "HIGH",
-      "target_file": "data_providers/planet/climate_global_risk_review_provider.py",
-      "python_code": "#!/usr/bin/env python3\n# Patch за CLIMATE_GLOBAL_RISK_REVIEW\nprint('Patch applied: NOAA Climate Data and Models added')\nprint('Data sources updated: NOAA Climate Data and Models')\nprint('New metrics added: temperature, humidity, climate change indicators')",
-      "approved": true,
-      "rejected": false,
-      "generated_by": "PREDICTOR_MISSION_ALIGNED",
-      "axis_score": 6.0,
-      "timestamp": "2026-05-04T14:05:32.338364+00:00"
-    },
-    {
-      "component": "materials_waste_review",
-      "problem": "Текущият анализ не има достъп до актуални данни за материали във физически форми, които са възможни за измерване на наклонността на земята и екосистемите.",
-      "solution": "Додаде се нова държава данни от API-та за съдържание на земята и от базата данни за екосистеми, които могат да бъдат използвани за по-точна оценка на материали във физически форми.",
-      "new_data_sources": [
-        "https://api.example.com/earth_materials",
-        "https://db.example.com/ecosystem_materials"
-      ],
-      "priority": "HIGH",
-      "target_file": "data_providers/planet/materials_waste_review_provider.py",
-      "python_code": "#!/usr/bin/env python3\n# Patch за MATERIALS_WASTE_REVIEW\nprint('Patch applied')",
-      "approved": true,
-      "rejected": false,
-      "generated_by": "PREDICTOR_MISSION_ALIGNED",
-      "axis_score": 13.4,
-      "timestamp": "2026-05-04T14:08:58.252955+00:00"
-    },
-    {
-      "component": "ecosystems_biodiversity_review",
-      "problem": "Текущият анализ липсва ключови данни за биодIVERSITЕТА и екосистеми, които са необходими за точна оценка на биоразнообразието и устойчивостта на планетата.",
-      "solution": "Използвайte API-та на World Wildlife Fund (WWF) и OpenStreetMap за получаване на реални данни за биоразнообразие и екосистеми, за да улучшите точността на анализиращият агент.",
-      "new_data_sources": [
-        "https://api.worldwildlife.org/biomes",
-        "https://api.openstreetmap.org/api/1.0/map"
-      ],
-      "priority": "HIGH",
-      "target_file": "data_providers/planet/ecosystems_biodiversity_review_provider.py",
-      "python_code": "#!/usr/bin/env python3\n# Patch за ECOSYSTEMS_BIODIVERSITY_REVIEW\nprint('Patch applied')",
-      "approved": true,
-      "rejected": false,
-      "generated_by": "PREDICTOR_MISSION_ALIGNED",
-      "axis_score": 21.7,
-      "timestamp": "2026-05-04T14:12:01.028168+00:00"
+      "real_world_signal": true,
+      "generated_by": "OPENCLAW",
+      "timestamp": "2026-06-20T07:36:27.744815+00:00"
     },
     {
       "problem": "Недостатък в правителствената гъвкавост и устойчивост на държавата във възстановяването на демокрацията",
@@ -455,12 +39,13 @@
       "solution": "Разработване на платформа за гражданско участие и онлайнPETИЦИИ, интегрирана с данни от правителствени институции",
       "measurable_goal": "10 000 потписа на петицията за увеличаване на прозрачността на правителството за 6 месеца",
       "agi_characteristic": "REASONING",
-      "priority": "HIGH",
+      "priority": "MEDIUM",
       "real_world_signal": true,
       "source": "self_observer_problem_solution",
       "approved": true,
       "rejected": false,
-      "timestamp": "2026-05-07T10:20:08.774529+00:00"
+      "timestamp": "2026-05-07T10:20:08.774529+00:00",
+      "feedback_note": "Повишен — подобрение"
     },
     {
       "problem": "Повишено ниво на непрекъснато движение и неразрешен проблем със стари пътища, които не са поддържани",
@@ -481,65 +66,13 @@
       "solution": "Разработване на модел за прогноза на неравенство и бедност, базиран на исторически данни и социални индикатори",
       "measurable_goal": "10% увеличение на точността на прогнозите за неравенство за 9 месеца",
       "agi_characteristic": "AUTONOMOUS_LEARNING",
-      "priority": "HIGH",
+      "priority": "MEDIUM",
       "real_world_signal": true,
       "source": "self_observer_problem_solution",
       "approved": true,
       "rejected": false,
-      "timestamp": "2026-05-07T10:20:08.774740+00:00"
-    },
-    {
-      "component": "climate_global_risk_review",
-      "problem": "Отсъствието на данни и липсата на точни метрики прави анализа критично нисък и неефективен.",
-      "solution": "Добавянето на нови реални източници на данни и разработването на по-добри метрики за измерване на климатичните рискове ще подобри точността и полезността на анализа.",
-      "new_data_sources": [
-        "https://api.nasa.gov/earth/earthdata/search",
-        "https://climateapi.org/"
-      ],
-      "priority": "HIGH",
-      "target_file": "data_providers/planet/climate_global_risk_review_provider.py",
-      "python_code": "#!/usr/bin/env python3\n# Patch за CLIMATE_GLOBAL_RISK_REVIEW\nimport requests\nimport json\n\n# Добавяне на нови източници на данни\nnew_data_sources = ['https://api.nasa.gov/earth/earthdata/search', 'https://climateapi.org/']\n\n# Извличане на данни от новите източници\nfor source in new_data_sources:\n    response = requests.get(source)\n    if response.status_code == 200:\n        data = json.loads(response.content)\n        # Обработване на данните\n        print('Данни получени успешно от:', source)\n    else:\n        print('Грешка при получаване на данни от:', source)\nprint('Patch applied')",
-      "approved": true,
-      "rejected": false,
-      "generated_by": "PREDICTOR_MISSION_ALIGNED",
-      "axis_score": 5.9,
-      "timestamp": "2026-05-07T10:20:44.555654+00:00"
-    },
-    {
-      "component": "materials_waste_review",
-      "problem": "Текущият анализ не разполага с достатъчно данни за оценка на управлението на отпадъци от материалите.",
-      "solution": "Добавяне на нови реални данни от устойчиви източници и разработка на по-добри метрики за измерване на ефективността на управлението на отпадъци.",
-      "new_data_sources": [
-        "https://api.unece.org/trade/HScodeAPI",
-        "https://data.un.org/Data.aspx?d=ENV&f=category:5"
-      ],
-      "priority": "HIGH",
-      "target_file": "data_providers/planet/materials_waste_review_provider.py",
-      "python_code": "#!/usr/bin/env python3\nimport requests\nfrom bs4 import BeautifulSoup\n\n# Изтегляне на данни от уебсайтове\ndef fetch_data(url):\n    response = requests.get(url)\n    soup = BeautifulSoup(response.text, 'html.parser')\n    return soup\n\n# Обновяване на данните за управление на отпадъци\ndef update_waste_data(data):\n    # Обновяване на данните\n    pass\n\n# Patch за MATERIALS_WASTE_REVIEW\nprint('Patch applied')",
-      "approved": true,
-      "rejected": false,
-      "generated_by": "PREDICTOR_MISSION_ALIGNED",
-      "axis_score": 13.4,
-      "timestamp": "2026-05-07T10:20:47.207795+00:00"
-    },
-    {
-      "component": "ecosystems_biodiversity_review",
-      "problem": "Отсъстват данни за биологичното разнообразие и екосистемните услуги, което ограничава точността на анализа.",
-      "solution": "Добавяне на нови данни от международни организации и изследователски институти за биологичното разнообразие и екосистемните услуги.",
-      "new_data_sources": [
-        "https://www.gbif.org/api/",
-        "https://www.iucnredlist.org/api/"
-      ],
-      "priority": "HIGH",
-      "target_file": "data_providers/planet/ecosystems_biodiversity_review_provider.py",
-      "python_code": "#!/usr/bin/env python3\nimport requests\nfrom gbif import GBIF\nfrom iucn import IUCN\n\ndef fetch_biodiversity_data():\n    gbif = GBIF()\n    iucn = IUCN()\n    gbif_data = gbif.search(species='Homo sapiens')\n    iucn_data = iucn.search(species='Homo sapiens')\n    return gbif_data, iucn_data\n\ndata = fetch_biodiversity_data()\nprint(data)",
-      "approved": true,
-      "rejected": false,
-      "generated_by": "PREDICTOR_MISSION_ALIGNED",
-      "axis_score": 21.7,
-      "timestamp": "2026-05-07T10:20:49.299144+00:00"
+      "timestamp": "2026-05-07T10:20:08.774740+00:00",
+      "feedback_note": "Повишен — подобрение"
     }
-  ],
-  "last_updated": "2026-05-07T10:20:49.302456+00:00",
-  "total": 32
+  ]
 }

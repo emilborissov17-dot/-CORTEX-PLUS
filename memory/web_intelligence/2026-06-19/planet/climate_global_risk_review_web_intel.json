@@ -1,0 +1,142 @@
+{
+  "axis": "CLIMATE_GLOBAL_RISK_REVIEW",
+  "domain": "planet",
+  "timestamp": "2026-06-19T17:35:20.529316+00:00",
+  "sources_count": 13,
+  "rss_count": 4,
+  "ddg_count": 6,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] Does Climate Change Cause Extreme Weather?",
+      "summary": "[DESCRIPTION FALLBACK] What role does climate change play in extreme weather? TEACHERS: Get your students in the discussion on KQED Learn, a safe ...",
+      "link": "https://www.youtube.com/watch?v=L4U4H5xLCoM",
+      "published": "2017-09-06T18:26:16Z",
+      "source_type": "youtube",
+      "channel": "Above The Noise",
+      "video_id": "L4U4H5xLCoM",
+      "transcript_method": "description",
+      "transcript_chars": 149,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] What Earth in 2050 could look like - Shannon Odell",
+      "summary": "[DESCRIPTION FALLBACK] What could our future world look like if we continue to do nothing about climate change? Take a look at the possibilities. -- While ...",
+      "link": "https://www.youtube.com/watch?v=2njn71TqkjA",
+      "published": "2024-03-28T15:01:38Z",
+      "source_type": "youtube",
+      "channel": "TED-Ed",
+      "video_id": "2njn71TqkjA",
+      "transcript_method": "description",
+      "transcript_chars": 158,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Climate change or just crazy weather? The Climate Question | BBC World Service",
+      "summary": "[DESCRIPTION FALLBACK] It's one of the most commonly debated questions in the climate world: Is this weather we're experiencing natural, or is it linked to ...",
+      "link": "https://www.youtube.com/watch?v=b3NmhxUDt-4",
+      "published": "2026-05-04T12:01:44Z",
+      "source_type": "youtube",
+      "channel": "BBC World Service",
+      "video_id": "b3NmhxUDt-4",
+      "transcript_method": "description",
+      "transcript_chars": 159,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "problem": "Climate talks end in gridlock, and global emissions must be reduced immediately, but tangible outcomes are few",
+    "root_cause": "Insufficient global cooperation and lack of urgency in addressing climate change",
+    "severity": "CRITICAL",
+    "leverage_points": [
+      "International agreements and UN climate conferences",
+      "National governments' policies and commitments to reduce emissions"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Implement immediate and drastic reductions in greenhouse gas emissions",
+        "measurable_goal": "Achieve a 45% reduction in global emissions by 2030",
+        "timeframe": "short-term"
+      },
+      {
+        "action": "Develop and deploy carbon removal technologies on a large scale",
+        "measurable_goal": "Remove 10 gigatons of CO2 from the atmosphere annually by 2050",
+        "timeframe": "medium-term"
+      }
+    ],
+    "evidence": [
+      "Bonn climate talks produced few tangible outcomes",
+      "Global emissions must be reduced immediately, according to the Climate Risk Index 2026",
+      "Experts say carbon removal needs a 'major scale up' to return warming to 1.5C"
+    ],
+    "generalization": "This problem connects to the domains of civilization, human, and cosmos, as it affects global food security, economic stability, and the long-term viability of human societies",
+    "summary": "Climate talks are failing to produce sufficient action, and immediate reductions in emissions are necessary to avoid catastrophic consequences. The problem requires international cooperation, technological innovation, and drastic changes in national policies.",
+    "risk_level": "CRITICAL"
+  },
+  "raw_items": [
+    {
+      "title": "DeBriefed 19 June 2026: Bonn talks end in ‘gridlock’ | Energy’s ‘new era’ | Oceans in climate negotiations",
+      "summary": "<p>Welcome to Carbon Brief’s DeBriefed.&#160;An essential guide to the week&#8217;s key developments relating to climate...</p>\n<p>The post <a href=\"https://www.carbonbrief.org/debriefed-19-june-2026-bonn-talks-end-in-gridlock-energys-new-era-oceans-in-climate-negotiations/\">DeBriefed 19 June 2026: Bonn talks end in ‘gridlock’ | Energy’s ‘new era’ | Oceans in climate negotiations</a> appeared first on <a href=\"https://www.carbonbrief.org\">Carbon Brief</a>.</p>",
+      "link": "https://www.carbonbrief.org/debriefed-19-june-2026-bonn-talks-end-in-gridlock-energys-new-era-oceans-in-climate-negotiations/",
+      "published": "Fri, 19 Jun 2026 15:39:05 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Bonn climate talks: Key outcomes from the June 2026 UN climate conference",
+      "summary": "<p>Two weeks of tense UN climate talks in Bonn, Germany, have produced few tangible outcomes...</p>\n<p>The post <a href=\"https://www.carbonbrief.org/bonn-climate-talks-key-outcomes-from-the-june-2026-un-climate-conference/\">Bonn climate talks: Key outcomes from the June 2026 UN climate conference</a> appeared first on <a href=\"https://www.carbonbrief.org\">Carbon Brief</a>.</p>",
+      "link": "https://www.carbonbrief.org/bonn-climate-talks-key-outcomes-from-the-june-2026-un-climate-conference/",
+      "published": "Fri, 19 Jun 2026 15:16:42 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Experts: Why carbon removal needs a ‘major scale up’ to return warming to 1.5C",
+      "summary": "<p>Last week, more than 260 researchers convened in Milan to discuss the opportunities, challenges and...</p>\n<p>The post <a href=\"https://www.carbonbrief.org/experts-why-carbon-removal-needs-a-major-scale-up-to-return-warming-to-1-5c/\">Experts: Why carbon removal needs a ‘major scale up’ to return warming to 1.5C</a> appeared first on <a href=\"https://www.carbonbrief.org\">Carbon Brief</a>.</p>",
+      "link": "https://www.carbonbrief.org/experts-why-carbon-removal-needs-a-major-scale-up-to-return-warming-to-1-5c/",
+      "published": "Fri, 19 Jun 2026 10:02:15 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Q&A: What do China’s provincial five-year plans say about climate and energy?",
+      "summary": "<p>China’s provincial-level governments have now all published their 15th five-year plans – economic and social...</p>\n<p>The post <a href=\"https://www.carbonbrief.org/qa-what-do-chinas-provincial-five-year-plans-say-about-climate-and-energy/\">Q&amp;A: What do China’s provincial five-year plans say about climate and energy?</a> appeared first on <a href=\"https://www.carbonbrief.org\">Carbon Brief</a>.</p>",
+      "link": "https://www.carbonbrief.org/qa-what-do-chinas-provincial-five-year-plans-say-about-climate-and-energy/",
+      "published": "Thu, 18 Jun 2026 10:00:27 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Climate Risk Index 2026 | Germanwatch e.V.",
+      "summary": "... global ambition gaps, as the CRI 2026 results illustrate: Global emissions must be reduced immediately, adaptation efforts must be accelerated, ...",
+      "link": "https://www.germanwatch.org/en/cri",
+      "source_type": "ddg"
+    },
+    {
+      "title": "What the Global Risks Report 2026 really warns about climate",
+      "summary": "The Global Risks Report 2026 sets out its findings across short, medium and long time horizons, and climate hazards dominate the far end of that ...",
+      "link": "https://morningoverview.com/what-the-global-risks-report-2026-really-warns-about-climate-urgency/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Global Risks Report 2026: Economic, climate shocks are",
+      "summary": "The WEF’s Global Risks Report 2026 shows how geoeconomic conflict, climate stress, and trust deficits are reinforcing each other.",
+      "link": "https://www.policycircle.org/economy/global-risks-report-2026/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Review: Climate Security in the 2025 State of Food Security and Nutrition in the World Report « The Center for Climate & Security",
+      "summary": "September 16, 2025 - This has led to increased food insecurity in particularly vulnerable demographics such as women, children, rural households, and the poor. Combined with gender-based income inequality and other systemic inequalities, food price inflation compounds ...",
+      "link": "https://climateandsecurity.org/2025/08/review-climate-security-in-the-2025-state-of-food-security-and-nutrition-in-the-world-report/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Climate Change, Global Food Security, and the U.S. Food System | USDA",
+      "summary": "Effective beginning 5/20/2025: ... is likely to diminish continued progress on global food security through production disruptions that lead to local availability limitations and price increases, interrupted transport conduits, and diminished food safety, among other ...",
+      "link": "https://www.usda.gov/about-usda/general-information/priorities/climate-solutions/climate-change-global-food-security-and-us-food-system",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Full article: Enhancing food security amid climate change: assessing impacts and developing adaptive strategies",
+      "summary": "View PDF (open in a new window) ... poses significant challenges to global food security, impacting food availability, accessibility, utilization, and stability....",
+      "link": "https://www.tandfonline.com/doi/full/10.1080/23311932.2025.2519800",
+      "source_type": "ddg"
+    }
+  ]
+}

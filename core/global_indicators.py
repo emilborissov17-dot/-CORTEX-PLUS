@@ -13,10 +13,15 @@ Sources:
   GBIF                     — species occurrence observations (30d)
   UCDP                     — active armed conflicts
   SIPRI 2024 (static)      — nuclear warheads estimate
+  UNHCR Population API     — forcibly displaced persons (refugees, IDPs, stateless)
+  NASA Exoplanet Archive   — confirmed exoplanet count (TAP, no key)
+  CelesTrak SATCAT         — active satellites in Earth orbit (no key)
+  EIA Open Data            — US total primary energy (optional EIA_API_KEY env var)
 """
 from __future__ import annotations
 
 import json
+import os
 from datetime import datetime, timedelta, timezone
 from typing import Any, Optional
 
@@ -218,6 +223,114 @@ def fetch_nuclear() -> dict:
 
 
 # ---------------------------------------------------------------------------
+# 8. Forcibly displaced persons — UNHCR Population API v1 (no key)
+# ---------------------------------------------------------------------------
+
+def fetch_unhcr() -> dict:
+    """Refugees, asylum seekers, IDPs and stateless persons (UNHCR, latest year)."""
+    data = _get(
+        "https://api.unhcr.org/population/v1/population/",
+        params={"yearFrom": 2022, "yearTo": 2023, "cf_type": "ISO", "limit": 1},
+        timeout=25,
+    )
+    if not data or not isinstance(data, dict):
+        return {}
+    items = data.get("items") or []
+    if not items:
+        return {}
+    row = items[0]
+    def _m(key: str) -> Optional[float]:
+        v = row.get(key)
+        return round(float(v) / 1e6, 3) if v else None
+    return {
+        "refugees_millions":       _m("refugees"),
+        "asylum_seekers_millions": _m("asylum_seekers"),
+        "idps_millions":           _m("idps"),
+        "stateless_millions":      _m("stateless"),
+        "unhcr_year":              row.get("year"),
+    }
+
+
+# ---------------------------------------------------------------------------
+# 9. Confirmed exoplanets — NASA Exoplanet Archive TAP (no key)
+# ---------------------------------------------------------------------------
+
+def fetch_exoplanets() -> dict:
+    """Count of confirmed exoplanets from NASA Exoplanet Archive (TAP service)."""
+    data = _get(
+        "https://exoplanetarchive.ipac.caltech.edu/TAP/sync",
+        params={
+            "query":  "select count(pl_name) from ps where default_flag=1",
+            "format": "json",
+        },
+        timeout=30,
+    )
+    if not data or not isinstance(data, list) or not data:
+        return {}
+    row = data[0]
+    count = next((v for v in row.values() if isinstance(v, (int, float))), None)
+    return {"confirmed_exoplanets": int(count)} if count is not None else {}
+
+
+# ---------------------------------------------------------------------------
+# 10. Active satellites — CelesTrak SATCAT (no key)
+# ---------------------------------------------------------------------------
+
+def fetch_satellites() -> dict:
+    """Active payload objects in Earth orbit — CelesTrak SATCAT."""
+    data = _get(
+        "https://celestrak.org/satcat/records.php",
+        params={"STATUS": "A", "OBJECT_TYPE": "PAYLOAD", "FORMAT": "JSON"},
+        timeout=30,
+    )
+    if not data or not isinstance(data, list):
+        return {}
+    return {
+        "active_satellites":        len(data),
+        "satellites_source":        "CelesTrak SATCAT",
+    }
+
+
+# ---------------------------------------------------------------------------
+# 11. Energy — EIA Open Data (free key via EIA_API_KEY env var; skips if absent)
+# ---------------------------------------------------------------------------
+
+def fetch_eia() -> dict:
+    """US total primary energy consumption (quadrillion BTU) — EIA API v2."""
+    key = os.environ.get("EIA_API_KEY", "").strip()
+    if not key:
+        return {}
+    data = _get(
+        "https://api.eia.gov/v2/total-energy/data/",
+        params={
+            "frequency":              "annual",
+            "data[0]":                "value",
+            "facets[msn][]":          "TPCIUS",   # Total Primary Energy Consumption, US
+            "sort[0][column]":        "period",
+            "sort[0][direction]":     "desc",
+            "offset":                 0,
+            "length":                 1,
+            "api_key":                key,
+        },
+        timeout=25,
+    )
+    if not data or not isinstance(data, dict):
+        return {}
+    rows = (data.get("response") or {}).get("data") or []
+    if not rows:
+        return {}
+    row = rows[0]
+    try:
+        return {
+            "us_primary_energy_quad_btu": round(float(row["value"]), 2),
+            "us_primary_energy_year":     int(row["period"]),
+            "eia_unit":                   row.get("unit", "Quadrillion Btu"),
+        }
+    except (KeyError, ValueError, TypeError):
+        return {}
+
+
+# ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
 
@@ -229,12 +342,16 @@ _SECTIONS = [
     ("biodiversity", fetch_gbif,         "GBIF"),
     ("conflicts",    fetch_ucdp,         "UCDP"),
     ("nuclear",      fetch_nuclear,      "SIPRI 2024"),
+    ("displaced",    fetch_unhcr,        "UNHCR Population API"),
+    ("exoplanets",   fetch_exoplanets,   "NASA Exoplanet Archive TAP"),
+    ("satellites",   fetch_satellites,   "CelesTrak SATCAT"),
+    ("energy",       fetch_eia,          "EIA Open Data"),
 ]
 
 
 def fetch_all() -> dict:
     """Fetch all global indicators. Prints progress. Returns full dict."""
-    print("[GI] Fetching global indicators from 7 sources...")
+    print("[GI] Fetching global indicators from 11 sources...")
     result: dict = {
         "timestamp": datetime.now(timezone.utc).isoformat(),
         "sources":   {},
@@ -306,6 +423,32 @@ def as_prompt_block(ind: dict) -> str:
             f"Nuclear warheads (SIPRI {nuc.get('source_year',2024)}): "
             f"{nuc['nuclear_warheads_total']:,} total, "
             f"{nuc.get('nuclear_warheads_on_alert',0):,} on alert"
+        )
+
+    dis = ind.get("displaced", {})
+    if dis.get("refugees_millions") is not None:
+        lines.append(
+            f"Forcibly displaced (UNHCR {dis.get('unhcr_year','')}): "
+            f"{dis['refugees_millions']:.1f}M refugees, "
+            f"{dis.get('idps_millions', 0) or 0:.1f}M IDPs, "
+            f"{dis.get('asylum_seekers_millions', 0) or 0:.1f}M asylum seekers"
+        )
+    if dis.get("stateless_millions") is not None:
+        lines.append(f"  Stateless persons: {dis['stateless_millions']:.2f}M")
+
+    exo = ind.get("exoplanets", {})
+    if exo.get("confirmed_exoplanets"):
+        lines.append(f"Confirmed exoplanets (NASA Archive): {exo['confirmed_exoplanets']:,}")
+
+    sat = ind.get("satellites", {})
+    if sat.get("active_satellites"):
+        lines.append(f"Active satellites in orbit (CelesTrak): {sat['active_satellites']:,}")
+
+    eia = ind.get("energy", {})
+    if eia.get("us_primary_energy_quad_btu"):
+        lines.append(
+            f"US primary energy ({eia.get('us_primary_energy_year','')}): "
+            f"{eia['us_primary_energy_quad_btu']} quad BTU (EIA)"
         )
 
     lines.append("──────────────────────────────────────────────────────────")

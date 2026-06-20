@@ -1,0 +1,137 @@
+{
+  "axis": "GOAL_PROGRESS_REVIEW",
+  "domain": "cosmos",
+  "timestamp": "2026-06-20T07:26:31.681624+00:00",
+  "sources_count": 8,
+  "rss_count": 5,
+  "ddg_count": 0,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] How We Can Make the World a Better Place by 2030 | Michael Green | TED Talks",
+      "summary": "[DESCRIPTION FALLBACK] Can we end hunger and poverty, halt climate change and achieve gender equality in the next 15 years? The governments of the ...",
+      "link": "https://www.youtube.com/watch?v=o08ykAqLOxk",
+      "published": "2015-11-03T16:33:59Z",
+      "source_type": "youtube",
+      "channel": "TED",
+      "video_id": "o08ykAqLOxk",
+      "transcript_method": "description",
+      "transcript_chars": 150,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Sustainable Development Goals (SDGs) Explained: 2026 Reality Check",
+      "summary": "[DESCRIPTION FALLBACK] With only 4 years left until the 2030 deadline, the UN Sustainable Development Goals remain the global framework for ...",
+      "link": "https://www.youtube.com/watch?v=qfOgdj4Okdw",
+      "published": "2020-11-20T16:37:01Z",
+      "source_type": "youtube",
+      "channel": "Sustainability Illustrated",
+      "video_id": "qfOgdj4Okdw",
+      "transcript_method": "description",
+      "transcript_chars": 143,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Stocktaking | What it will take to achieve the Sustainable Development Goals? | United Nations",
+      "summary": "[DESCRIPTION FALLBACK] We're at the halftime mark to achieve the Sustainable Development Goals, but we're down at halftime. The 2023 SDG Progress ...",
+      "link": "https://www.youtube.com/watch?v=enGJyhu6Xr0",
+      "published": "2023-09-17T15:00:33Z",
+      "source_type": "youtube",
+      "channel": "United Nations",
+      "video_id": "enGJyhu6Xr0",
+      "transcript_method": "description",
+      "transcript_chars": 149,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "problem": "Анализ на GOAL_PROGRESS_REVIEW — данни получени но LLM грешка",
+    "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: Gemini rate limit",
+    "severity": "UNKNOWN",
+    "leverage_points": [],
+    "proposed_actions": [],
+    "evidence": [
+      "Fermentation, flavour and the future of food: Making sustainability delicious",
+      "Ebola treatment capacity expands in DR Congo as WHO issues new guidelines",
+      "‘Some question if Ebola is real’: how trust is central in fighting DRC outbreak"
+    ],
+    "generalization": "",
+    "summary": "- Fermentation, flavour and the future of food: Making sustainability delicious: <p>Words like “sustainability” and “healthy” shouldn’t take the joy out of eating. As elite chef Jaume Biarnés has been",
+    "risk_level": "UNKNOWN",
+    "trend": "UNKNOWN",
+    "llm_raw": ""
+  },
+  "raw_items": [
+    {
+      "title": "Fermentation, flavour and the future of food: Making sustainability delicious",
+      "summary": "<p>Words like “sustainability” and “healthy” shouldn’t take the joy out of eating. As elite chef Jaume Biarnés has been explaining to UN News, sustainable gastronomy can be delicious, exciting and fun. Read Full Story on UN News</p>\n<p>The post <a href=\"https://news.un.org/feed/view/en/story/2026/06/1167755\">Fermentation, flavour and the future of food: Making sustainability delicious</a> appeared first on <a href=\"https://www.un.org/sustainabledevelopment\">United Nations Sustainable Development",
+      "link": "https://news.un.org/feed/view/en/story/2026/06/1167755",
+      "published": "Thu, 18 Jun 2026 12:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Ebola treatment capacity expands in DR Congo as WHO issues new guidelines",
+      "summary": "<p>Treatment capacity for the rare and deadly Bundibugyo species of Ebola is expanding in eastern Democratic Republic of the Congo (DRC), as the World Health Organization (WHO) warns that community mistrust remains a major challenge to ending the outbreak. Read Full Story on UN News</p>\n<p>The post <a href=\"https://news.un.org/feed/view/en/story/2026/06/1167738\">Ebola treatment capacity expands in DR Congo as WHO issues new guidelines</a> appeared first on <a href=\"https://www.un.org/sustainable",
+      "link": "https://news.un.org/feed/view/en/story/2026/06/1167738",
+      "published": "Wed, 17 Jun 2026 12:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "‘Some question if Ebola is real’: how trust is central in fighting DRC outbreak",
+      "summary": "<p>In Ebola-stricken Democratic Republic of the Congo (DRC), winning the race against the disease requires earning the community’s trust first and foremost, humanitarians said on Tuesday. Read Full Story on UN News</p>\n<p>The post <a href=\"https://news.un.org/feed/view/en/story/2026/06/1167725\">‘Some question if Ebola is real’: how trust is central in fighting DRC outbreak</a> appeared first on <a href=\"https://www.un.org/sustainabledevelopment\">United Nations Sustainable Development</a>.</p>",
+      "link": "https://news.un.org/feed/view/en/story/2026/06/1167725",
+      "published": "Tue, 16 Jun 2026 12:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "WHO and Brazil urge world leaders to finalise Pandemic Agreement to prevent future global health crises",
+      "summary": "<p>Global officials are calling on world leaders to finalise a crucial international agreement aimed at preventing future pandemics, according to a joint letter issued on Monday. Read Full Story on UN News</p>\n<p>The post <a href=\"https://news.un.org/feed/view/en/story/2026/06/1167721\">WHO and Brazil urge world leaders to finalise Pandemic Agreement to prevent future global health crises</a> appeared first on <a href=\"https://www.un.org/sustainabledevelopment\">United Nations Sustainable Developm",
+      "link": "https://news.un.org/feed/view/en/story/2026/06/1167721",
+      "published": "Mon, 15 Jun 2026 12:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Hello world!",
+      "summary": "Welcome to WordPress. This is your first post. Edit or delete it, then start writing!",
+      "link": "https://sdg.iisd.org/hello-world/",
+      "published": "Thu, 18 May 2023 15:00:19 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] How We Can Make the World a Better Place by 2030 | Michael Green | TED Talks",
+      "summary": "[DESCRIPTION FALLBACK] Can we end hunger and poverty, halt climate change and achieve gender equality in the next 15 years? The governments of the ...",
+      "link": "https://www.youtube.com/watch?v=o08ykAqLOxk",
+      "published": "2015-11-03T16:33:59Z",
+      "source_type": "youtube",
+      "channel": "TED",
+      "video_id": "o08ykAqLOxk",
+      "transcript_method": "description",
+      "transcript_chars": 150,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Sustainable Development Goals (SDGs) Explained: 2026 Reality Check",
+      "summary": "[DESCRIPTION FALLBACK] With only 4 years left until the 2030 deadline, the UN Sustainable Development Goals remain the global framework for ...",
+      "link": "https://www.youtube.com/watch?v=qfOgdj4Okdw",
+      "published": "2020-11-20T16:37:01Z",
+      "source_type": "youtube",
+      "channel": "Sustainability Illustrated",
+      "video_id": "qfOgdj4Okdw",
+      "transcript_method": "description",
+      "transcript_chars": 143,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Stocktaking | What it will take to achieve the Sustainable Development Goals? | United Nations",
+      "summary": "[DESCRIPTION FALLBACK] We're at the halftime mark to achieve the Sustainable Development Goals, but we're down at halftime. The 2023 SDG Progress ...",
+      "link": "https://www.youtube.com/watch?v=enGJyhu6Xr0",
+      "published": "2023-09-17T15:00:33Z",
+      "source_type": "youtube",
+      "channel": "United Nations",
+      "video_id": "enGJyhu6Xr0",
+      "transcript_method": "description",
+      "transcript_chars": 149,
+      "has_full_transcript": false
+    }
+  ]
+}

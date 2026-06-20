@@ -3,7 +3,7 @@
   "metrics": {
     "axis": "EDUCATION_CULTURE_REVIEW",
     "source": "world_bank_api",
-    "fetched_date": "2026-06-11",
+    "fetched_date": "2026-06-20",
     "metrics": {
       "literacy_rate_adult_pct": 87.7399978637695,
       "primary_enrollment_pct": 89.4124,
@@ -17,7 +17,7 @@
   "raw": {
     "axis": "EDUCATION_CULTURE_REVIEW",
     "source": "world_bank_api",
-    "fetched_date": "2026-06-11",
+    "fetched_date": "2026-06-20",
     "metrics": {
       "literacy_rate_adult_pct": 87.7399978637695,
       "primary_enrollment_pct": 89.4124,
@@ -28,6 +28,6 @@
     },
     "data_quality": "6/6 fetched"
   },
-  "snapshot_timestamp": "2026-06-11T19:06:41.857286+00:00",
+  "snapshot_timestamp": "2026-06-20T07:35:36.803667+00:00",
   "axis": "EDUCATION_CULTURE_REVIEW"
 }

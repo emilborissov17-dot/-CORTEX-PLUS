@@ -1,0 +1,153 @@
+{
+  "axis": "COGNITION_LEARNING_REVIEW",
+  "domain": "human",
+  "timestamp": "2026-06-19T17:38:03.516124+00:00",
+  "sources_count": 10,
+  "rss_count": 3,
+  "ddg_count": 4,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] What is the Future of Education? Freakonomics’ Steve Levitt &amp; Google Chief Technologist Ben Gomes",
+      "summary": "[DESCRIPTION FALLBACK] What will the future of education look like in a world increasingly shaped by AI? Join Steve Levitt, Freakonomics co-author and ...",
+      "link": "https://www.youtube.com/watch?v=U-7THjkQdbg",
+      "published": "2025-04-28T19:00:22Z",
+      "source_type": "youtube",
+      "channel": "Google",
+      "video_id": "U-7THjkQdbg",
+      "transcript_method": "description",
+      "transcript_chars": 154,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] AI &amp; Education: Generative AI &amp; the Future of Critical Thinking",
+      "summary": "[DESCRIPTION FALLBACK] Ready to become a certified watsonx AI Assistant Engineer? Register now and use code IBMTechYT20 for 20% off of your exam ...",
+      "link": "https://www.youtube.com/watch?v=k7PvscqGD24",
+      "published": "2026-01-20T12:01:21Z",
+      "source_type": "youtube",
+      "channel": "IBM Technology",
+      "video_id": "k7PvscqGD24",
+      "transcript_method": "description",
+      "transcript_chars": 148,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] This Is How Kids Should Be Learning with AI | Priya Lakhani | TED",
+      "summary": "[DESCRIPTION FALLBACK] As AI races into classrooms, we risk confusing quick and easy answers with true learning, says AI education entrepreneur Priya ...",
+      "link": "https://www.youtube.com/watch?v=YBH8rQv4aTQ",
+      "published": "2026-01-29T16:00:52Z",
+      "source_type": "youtube",
+      "channel": "TED",
+      "video_id": "YBH8rQv4aTQ",
+      "transcript_method": "description",
+      "transcript_chars": 153,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "problem": "Ineffective learning methods in education, potentially hindered by the increasing influence of AI on the learning process",
+    "root_cause": "Lack of understanding and proper integration of AI technology in educational settings, leading to a focus on quick and easy answers rather than true learning and critical thinking",
+    "severity": "MEDIUM",
+    "leverage_points": [
+      "Education policymakers and administrators",
+      "AI and ed-tech developers"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Develop and implement AI-integrated educational programs that prioritize critical thinking and deep learning",
+        "measurable_goal": "Increase in student performance and critical thinking skills, as measured by standardized tests and assessments",
+        "timeframe": "medium-term"
+      }
+    ],
+    "evidence": [
+      "Priya Lakhani's TED talk discusses the potential for AI to confuse quick and easy answers with true learning",
+      "The YouTube video 'AI & Education: Generative AI & the Future of Critical Thinking' highlights the need for critical thinking in AI-driven education"
+    ],
+    "generalization": "This problem connects to the domains of civilization and cosmos, as the effectiveness of education has a direct impact on the development of a sustainable and intelligent civilization, and ultimately, our ability to thrive in the universe",
+    "summary": "The increasing influence of AI in education may lead to ineffective learning methods, but by properly integrating AI technology and prioritizing critical thinking, we can create a more effective and sustainable education system. This has significant implications for the development of a sustainable civilization and our long-term viability in the universe.",
+    "risk_level": "MEDIUM"
+  },
+  "raw_items": [
+    {
+      "title": "Lotus: A Woman’s Journey oLotus: A Woman’s Journey of Empowerment",
+      "summary": "DOCUMENTARY FILM In the documentary educational film &#8220;The Taboo of Sovereignty, Money, Love and Power,&#8221; Mr. Liberty explores the taboos seldom discussed in polite conversation. He reveals the nature of global power structures, money as a control system and the futility of elections. He is empowering people with popular sovereignty as a key to unlocking [&#8230;]",
+      "link": "https://mindshiftentertainment.wordpress.com/2005/04/01/hello-world/",
+      "published": "Fri, 01 Apr 2005 21:27:39 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Lotus: A Woman’s Journey of Empowerment",
+      "summary": "CLAIRE GAILLARD &#8211; DANCE IS LIFE! &#8220;From the revelation that disconnectedness between people and their passion, between individuals and their communities, reflect agonized personal wounds in each of us, her Empower Moves was birthed. It builds community and honors the People with Transcendance through story telling and interpretive forms of dance, allowing ecstatic communion, reconnection [&#8230;]",
+      "link": "https://mindshiftentertainment.wordpress.com/2003/03/23/lotus-a-womans-journey-of-empowerment/",
+      "published": "Sun, 23 Mar 2003 23:15:05 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Fresh Wave",
+      "summary": "JOHNNY LIGHT For over three decades, Johnny Light has been guided by a vision of a new world coming, the “fresh wave” is coming. These twelve songs are professionally produced and arranged, an album of his finest original compositions recorded with Michael Cooper at Rising Star Studios in Eugene, Oregon. Songs like Yes, Nobody’s Gonna [&#8230;]",
+      "link": "https://mindshiftentertainment.wordpress.com/1988/09/09/fresh-wave/",
+      "published": "Fri, 09 Sep 1988 23:17:22 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Education",
+      "summary": "Education is the transmission of knowledge and skills and the development of character traits. Formal education happens in a complex institutional framework, like public schools. Non-formal education is also structured but occurs outside the formal schooling system, while informal education is unstructured learning through daily experiences. Formal and non-formal education are divided into levels ",
+      "link": "https://en.wikipedia.org/wiki/Education",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Get Minecraft for Your Classroom | Minecraft Education",
+      "summary": "Get Minecraft Education for your classroom. Find out how using this game will take your students’ learning to the next level.",
+      "link": "https://education.minecraft.net/en-us",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Learning",
+      "summary": "Learning is the process of acquiring new understanding, knowledge, behavior, skills, values, attitudes, and preferences. The ability to learn is possessed by humans, other animals, and some machines. There is also evidence for some kind of learning in certain plants. Some learning is immediate, induced by a single event (e.g. being burned by a hot stove), but much skill and knowledge accumulate fr",
+      "link": "https://en.wikipedia.org/wiki/Learning",
+      "source_type": "ddg"
+    },
+    {
+      "title": "LinkedIn Learning: Online Training Courses & Skill Building",
+      "summary": "Explore Role Guides to support your career advancement for over 35 different roles and 1,300+ hand-curated pathways for guided learning and deeper skill acquisition.",
+      "link": "https://www.linkedin.com/learning/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "[YT] What is the Future of Education? Freakonomics’ Steve Levitt &amp; Google Chief Technologist Ben Gomes",
+      "summary": "[DESCRIPTION FALLBACK] What will the future of education look like in a world increasingly shaped by AI? Join Steve Levitt, Freakonomics co-author and ...",
+      "link": "https://www.youtube.com/watch?v=U-7THjkQdbg",
+      "published": "2025-04-28T19:00:22Z",
+      "source_type": "youtube",
+      "channel": "Google",
+      "video_id": "U-7THjkQdbg",
+      "transcript_method": "description",
+      "transcript_chars": 154,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] AI &amp; Education: Generative AI &amp; the Future of Critical Thinking",
+      "summary": "[DESCRIPTION FALLBACK] Ready to become a certified watsonx AI Assistant Engineer? Register now and use code IBMTechYT20 for 20% off of your exam ...",
+      "link": "https://www.youtube.com/watch?v=k7PvscqGD24",
+      "published": "2026-01-20T12:01:21Z",
+      "source_type": "youtube",
+      "channel": "IBM Technology",
+      "video_id": "k7PvscqGD24",
+      "transcript_method": "description",
+      "transcript_chars": 148,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] This Is How Kids Should Be Learning with AI | Priya Lakhani | TED",
+      "summary": "[DESCRIPTION FALLBACK] As AI races into classrooms, we risk confusing quick and easy answers with true learning, says AI education entrepreneur Priya ...",
+      "link": "https://www.youtube.com/watch?v=YBH8rQv4aTQ",
+      "published": "2026-01-29T16:00:52Z",
+      "source_type": "youtube",
+      "channel": "TED",
+      "video_id": "YBH8rQv4aTQ",
+      "transcript_method": "description",
+      "transcript_chars": 153,
+      "has_full_transcript": false
+    }
+  ]
+}

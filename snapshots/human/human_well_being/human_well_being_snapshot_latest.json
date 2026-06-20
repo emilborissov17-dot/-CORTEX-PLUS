@@ -3,7 +3,7 @@
   "raw": {
     "axis": "HUMAN_WELL_BEING_REVIEW",
     "source": "world_bank_who_api",
-    "fetched_date": "2026-06-11",
+    "fetched_date": "2026-06-20",
     "metrics": {
       "life_expectancy": 73.480380292779,
       "health_expenditure_pct": 10.0162846684385,
@@ -15,6 +15,6 @@
     },
     "data_quality": "7/7 indicators fetched"
   },
-  "snapshot_timestamp": "2026-06-11T19:06:23.632706+00:00",
+  "snapshot_timestamp": "2026-06-20T07:36:14.457288+00:00",
   "axis": "HUMAN_WELL_BEING_REVIEW"
 }

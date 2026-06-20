@@ -1,0 +1,152 @@
+{
+  "axis": "TECHNOLOGY_AI_REVIEW",
+  "domain": "civilization",
+  "timestamp": "2026-06-19T17:41:45.390796+00:00",
+  "sources_count": 11,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] OpenAI’s Sam Altman Talks ChatGPT, AI Agents and Superintelligence — Live at TED2025",
+      "summary": "[DESCRIPTION FALLBACK] The AI revolution is here to stay, says Sam Altman, the CEO of OpenAI. In a probing, live conversation with head of TED Chris ...",
+      "link": "https://www.youtube.com/watch?v=5MWT_doo68k",
+      "published": "2025-04-12T11:00:06Z",
+      "source_type": "youtube",
+      "channel": "TED",
+      "video_id": "5MWT_doo68k",
+      "transcript_method": "description",
+      "transcript_chars": 152,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Ilya Sutskever – We&#39;re moving from the age of scaling to the age of research",
+      "summary": "[DESCRIPTION FALLBACK] Ilya & I discuss SSI's strategy, the problems with pre-training, how to improve the generalization of AI models, and how to ensure ...",
+      "link": "https://www.youtube.com/watch?v=aR20FWCCjAs",
+      "published": "2025-11-25T17:29:11Z",
+      "source_type": "youtube",
+      "channel": "Dwarkesh Patel",
+      "video_id": "aR20FWCCjAs",
+      "transcript_method": "description",
+      "transcript_chars": 157,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] The Catastrophic Risks of AI — and a Safer Path | Yoshua Bengio | TED",
+      "summary": "[DESCRIPTION FALLBACK] Yoshua Bengio — the world's most-cited computer scientist and a \"godfather\" of artificial intelligence — is deadly concerned about ...",
+      "link": "https://www.youtube.com/watch?v=qe9QSCF-d88",
+      "published": "2025-05-21T15:01:24Z",
+      "source_type": "youtube",
+      "channel": "TED",
+      "video_id": "qe9QSCF-d88",
+      "transcript_method": "description",
+      "transcript_chars": 157,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "problem": "The high cost of AI coding tools, such as Claude Code, which can cost up to $200 a month, making them inaccessible to many developers",
+    "root_cause": "The high cost of development and maintenance of AI models, as well as the desire for companies to profit from their products",
+    "severity": "MEDIUM",
+    "leverage_points": [
+      "AI companies, such as Anthropic, that develop and sell AI coding tools",
+      "Investors and funding agencies that support the development of AI technologies"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Develop and promote open-source or low-cost AI coding tools",
+        "measurable_goal": "Increase the number of developers using low-cost AI coding tools by 20% within the next 6 months",
+        "timeframe": "medium-term"
+      }
+    ],
+    "evidence": [
+      "Claude Code costs up to $200 a month, while Goose offers a similar service for free",
+      "The artificial intelligence coding revolution is expensive, with many tools and services being priced out of reach for many developers"
+    ],
+    "generalization": "This problem connects to the domain of civilization, specifically the sub-domain of technology, and highlights the need for more accessible and affordable AI tools to promote sustainable development and reduce inequality",
+    "summary": "The high cost of AI coding tools is a significant problem that needs to be addressed to promote accessibility and affordability, and companies and investors can play a crucial role in developing and promoting low-cost solutions.",
+    "risk_level": "MEDIUM"
+  },
+  "raw_items": [
+    {
+      "title": "The Download: AI bottleneck debates, and BCI trials take off",
+      "summary": "This is today&#8217;s edition of The Download, our weekday newsletter that provides a daily dose of what&#8217;s going on in the world of technology. A startup claims it broke through a bottleneck that’s holding back LLMs AI startup Subquadratic came out of stealth last month with a huge claim: it had solved a mathematical bottleneck&#8230;",
+      "link": "https://www.technologyreview.com/2026/06/19/1139327/the-download-llms-bottleneck-breakthrough-bci-trials-take-off/",
+      "published": "Fri, 19 Jun 2026 12:10:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "A startup claims it broke through a bottleneck that’s holding back LLMs",
+      "summary": "Miami-based AI startup Subquadratic came out of stealth mode last month with a huge claim. It announced that it had solved a mathematical bottleneck that had been holding back large language models for almost a decade. The details were thin, and many people were unconvinced. But Subquadratic has started to bring the receipts, sharing the&#8230;",
+      "link": "https://www.technologyreview.com/2026/06/19/1139313/a-startup-claims-it-broke-through-a-bottleneck-thats-holding-back-llms/",
+      "published": "Fri, 19 Jun 2026 10:40:24 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "The inevitable weakness of metrics",
+      "summary": "There are plenty of useful things a metric can reveal. There are even more it can obscure or corrupt. It took me well over a decade of tracking my own life in ever greater detail to fully appreciate this duality, which probably reveals something about both me and the nature of measurement. Like a lot&#8230;",
+      "link": "https://www.technologyreview.com/2026/06/19/1138778/inevitable-weakness-metrics-quantified-life-book-review/",
+      "published": "Fri, 19 Jun 2026 09:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Brain-computer interface trials are taking off",
+      "summary": "This week, I covered the story of Casey Harrell—a man with ALS who is “the first power user” of a brain implant, according to the researchers who worked with him. Harrell is paralyzed and unable to speak coherently without the device. He has now spent almost three years using a brain-computer interface (BCI) that enables&#8230;",
+      "link": "https://www.technologyreview.com/2026/06/19/1139270/brain-computer-interface-trials-are-taking-off/",
+      "published": "Fri, 19 Jun 2026 09:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Google just redesigned the search box for the first time in 25 years — here’s why it matters more than you think.",
+      "summary": "<p>For a quarter century, the Google search box has been one of the most recognizable interfaces in computing: a thin white rectangle, a blinking cursor, a few typed words, and a list of blue links. On Tuesday, Google will formally retire that paradigm.</p><p>At its annual <a href=\"https://io.google/2026/\">I/O developer conference</a>, Google announced a <a href=\"https://blog.google/products-and-platforms/products/search/search-io-2026/\">sweeping redesign</a> of the search box itself — the liter",
+      "link": "https://venturebeat.com/technology/google-just-redesigned-the-search-box-for-the-first-time-in-25-years-heres-why-it-matters-more-than-you-think",
+      "published": "Tue, 19 May 2026 17:45:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Railway secures $100 million to challenge AWS with AI-native cloud infrastructure",
+      "summary": "<p><a href=\"https://railway.com/\">Railway</a>, a San Francisco-based cloud platform that has quietly amassed two million developers without spending a dollar on marketing, announced Thursday that it raised $100 million in a Series B funding round, as surging demand for artificial intelligence applications exposes the limitations of legacy cloud infrastructure.</p><p><a href=\"https://tq.vc/\">TQ Ventures</a> led the round, with participation from <a href=\"https://fpvventures.com/\">FPV Ventures</a>",
+      "link": "https://venturebeat.com/infrastructure/railway-secures-usd100-million-to-challenge-aws-with-ai-native-cloud",
+      "published": "Thu, 22 Jan 2026 14:00:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Claude Code costs up to $200 a month. Goose does the same thing for free.",
+      "summary": "<p>The artificial intelligence coding revolution comes with a catch: it&#x27;s expensive.</p><p><a href=\"https://claude.com/product/claude-code\">Claude Code</a>, Anthropic&#x27;s terminal-based AI agent that can write, debug, and deploy code autonomously, has captured the imagination of software developers worldwide. But its <a href=\"https://claude.com/pricing\">pricing</a> — ranging from $20 to $200 per month depending on usage — has sparked a growing rebellion among the very programmers it aims",
+      "link": "https://venturebeat.com/infrastructure/claude-code-costs-up-to-usd200-a-month-goose-does-the-same-thing-for-free",
+      "published": "Mon, 19 Jan 2026 14:00:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Listen Labs raises $69M after viral billboard hiring stunt to scale AI customer interviews",
+      "summary": "<p>Alfred Wahlforss was running out of options. His startup, <a href=\"https://listenlabs.ai/\">Listen Labs</a>, needed to hire over 100 engineers, but competing against Mark Zuckerberg&#x27;s <a href=\"https://news.bloomberglaw.com/employee-benefits/zuckerbergs-100-million-ai-job-offers-pay-off-parmy-olson\">$100 million offers</a> seemed impossible. So he spent $5,000 — a fifth of his marketing budget — on a <a href=\"https://billboardinsider.com/ai-startup/\">billboard in San Francisco</a> displayi",
+      "link": "https://venturebeat.com/technology/listen-labs-raises-usd69m-after-viral-billboard-hiring-stunt-to-scale-ai",
+      "published": "Fri, 16 Jan 2026 14:01:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] OpenAI’s Sam Altman Talks ChatGPT, AI Agents and Superintelligence — Live at TED2025",
+      "summary": "[DESCRIPTION FALLBACK] The AI revolution is here to stay, says Sam Altman, the CEO of OpenAI. In a probing, live conversation with head of TED Chris ...",
+      "link": "https://www.youtube.com/watch?v=5MWT_doo68k",
+      "published": "2025-04-12T11:00:06Z",
+      "source_type": "youtube",
+      "channel": "TED",
+      "video_id": "5MWT_doo68k",
+      "transcript_method": "description",
+      "transcript_chars": 152,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Ilya Sutskever – We&#39;re moving from the age of scaling to the age of research",
+      "summary": "[DESCRIPTION FALLBACK] Ilya & I discuss SSI's strategy, the problems with pre-training, how to improve the generalization of AI models, and how to ensure ...",
+      "link": "https://www.youtube.com/watch?v=aR20FWCCjAs",
+      "published": "2025-11-25T17:29:11Z",
+      "source_type": "youtube",
+      "channel": "Dwarkesh Patel",
+      "video_id": "aR20FWCCjAs",
+      "transcript_method": "description",
+      "transcript_chars": 157,
+      "has_full_transcript": false
+    }
+  ]
+}

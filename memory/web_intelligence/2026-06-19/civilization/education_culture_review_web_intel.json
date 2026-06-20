@@ -1,0 +1,132 @@
+{
+  "axis": "EDUCATION_CULTURE_REVIEW",
+  "domain": "civilization",
+  "timestamp": "2026-06-19T17:41:27.086699+00:00",
+  "sources_count": 7,
+  "rss_count": 0,
+  "ddg_count": 4,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] Top 10 Countries with the Highest Literacy Rates in 2025",
+      "summary": "[DESCRIPTION FALLBACK] Discover the Top 10 Countries with the Highest Literacy Rates in 2025 — based on the latest UNESCO and World Bank data for ...",
+      "link": "https://www.youtube.com/watch?v=pJYV_b_QaIw",
+      "published": "2025-10-27T11:41:51Z",
+      "source_type": "youtube",
+      "channel": "Say Updates",
+      "video_id": "pJYV_b_QaIw",
+      "transcript_method": "description",
+      "transcript_chars": 149,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Global Media And Information Literacy Week",
+      "summary": "[DESCRIPTION FALLBACK] In a world flooded with information, learning to think critically is more important than ever. This Global Media & Information Literacy ...",
+      "link": "https://www.youtube.com/watch?v=97c-YZy0olk",
+      "published": "2025-10-26T05:45:00Z",
+      "source_type": "youtube",
+      "channel": "GLOBAL DAYS AWARENESS",
+      "video_id": "97c-YZy0olk",
+      "transcript_method": "description",
+      "transcript_chars": 162,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Keynote 2, Creativity, Global Citizenship, and Health for All | CES 2025, UNESCO Paris",
+      "summary": "[DESCRIPTION FALLBACK] n this keynote, Didier Jourdan, Head of the UNESCO Chair on Global Health and Education, explored the links between creativity, ...",
+      "link": "https://www.youtube.com/watch?v=Czng7PNYHVg",
+      "published": "2025-12-21T20:09:26Z",
+      "source_type": "youtube",
+      "channel": "Global Institute of Creative Thinking",
+      "video_id": "Czng7PNYHVg",
+      "transcript_method": "description",
+      "transcript_chars": 154,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "problem": "Insufficient critical thinking and media literacy skills among the global population",
+    "root_cause": "Lack of emphasis on critical thinking and media literacy in traditional education systems",
+    "severity": "MEDIUM",
+    "leverage_points": [
+      "Education policymakers and curriculum developers",
+      "Teachers and educators"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Integrate critical thinking and media literacy into school curricula",
+        "measurable_goal": "Increase the number of schools incorporating critical thinking and media literacy into their curricula by 20% within the next 2 years",
+        "timeframe": "medium-term"
+      }
+    ],
+    "evidence": [
+      "Some researchers suggest that the study of literacy as a concept can be divided into two periods",
+      "In a world flooded with information, learning to think critically is more important than ever"
+    ],
+    "generalization": "This problem connects to the domains of biosphere and human dignity, as a lack of critical thinking and media literacy can lead to the spread of misinformation and undermine trust in institutions",
+    "summary": "The global population lacks critical thinking and media literacy skills, which can be addressed by integrating these skills into school curricula. This problem has a medium severity level and requires attention from education policymakers and teachers.",
+    "risk_level": "MEDIUM"
+  },
+  "raw_items": [
+    {
+      "title": "Global education",
+      "summary": "Global education is a mental development program that seeks to improve global human development based on the understanding of global dynamics, through the various sectors of human development delivery. In formal education, as a mode of human development delivery, it is integrated into formal educational programs, as an advanced program where global dimensions to local problems are appreciated thro",
+      "link": "https://en.wikipedia.org/wiki/Global_education",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Global Education - Our World in Data",
+      "summary": "Hannah Ritchie, Veronika Samborska, Esteban Ortiz-Ospina, and Max Roser (2023) - “Global Education” Published online at OurWorldinData.org.",
+      "link": "https://ourworldindata.org/global-education",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Literacy",
+      "summary": "Literacy is the ability to read and write, and illiteracy is the inability to read and write. Some researchers suggest that the study of literacy as a concept can be divided into two periods: the period before 1950, when literacy was understood solely as alphabetical literacy (understanding the meanings of words without necessarily being able to use words); and the period after 1950, when literacy",
+      "link": "https://en.wikipedia.org/wiki/Literacy",
+      "source_type": "ddg"
+    },
+    {
+      "title": "LITERACY Definition & Meaning - Merriam-Webster",
+      "summary": "1 week ago - The meaning of LITERACY is the quality or state of being literate. How to use literacy in a sentence.",
+      "link": "https://www.merriam-webster.com/dictionary/literacy",
+      "source_type": "ddg"
+    },
+    {
+      "title": "[YT] Top 10 Countries with the Highest Literacy Rates in 2025",
+      "summary": "[DESCRIPTION FALLBACK] Discover the Top 10 Countries with the Highest Literacy Rates in 2025 — based on the latest UNESCO and World Bank data for ...",
+      "link": "https://www.youtube.com/watch?v=pJYV_b_QaIw",
+      "published": "2025-10-27T11:41:51Z",
+      "source_type": "youtube",
+      "channel": "Say Updates",
+      "video_id": "pJYV_b_QaIw",
+      "transcript_method": "description",
+      "transcript_chars": 149,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Global Media And Information Literacy Week",
+      "summary": "[DESCRIPTION FALLBACK] In a world flooded with information, learning to think critically is more important than ever. This Global Media & Information Literacy ...",
+      "link": "https://www.youtube.com/watch?v=97c-YZy0olk",
+      "published": "2025-10-26T05:45:00Z",
+      "source_type": "youtube",
+      "channel": "GLOBAL DAYS AWARENESS",
+      "video_id": "97c-YZy0olk",
+      "transcript_method": "description",
+      "transcript_chars": 162,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Keynote 2, Creativity, Global Citizenship, and Health for All | CES 2025, UNESCO Paris",
+      "summary": "[DESCRIPTION FALLBACK] n this keynote, Didier Jourdan, Head of the UNESCO Chair on Global Health and Education, explored the links between creativity, ...",
+      "link": "https://www.youtube.com/watch?v=Czng7PNYHVg",
+      "published": "2025-12-21T20:09:26Z",
+      "source_type": "youtube",
+      "channel": "Global Institute of Creative Thinking",
+      "video_id": "Czng7PNYHVg",
+      "transcript_method": "description",
+      "transcript_chars": 154,
+      "has_full_transcript": false
+    }
+  ]
+}

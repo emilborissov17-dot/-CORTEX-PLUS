@@ -1,0 +1,130 @@
+{
+  "axis": "PLANETARY_POTENTIAL_REVIEW",
+  "domain": "planet",
+  "timestamp": "2026-06-20T07:26:31.546267+00:00",
+  "sources_count": 7,
+  "rss_count": 4,
+  "ddg_count": 0,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] Climate Change acceleration: Do we need an emergency brake? | Dr Pete Sudbury (ex-Green Party)",
+      "summary": "[DESCRIPTION FALLBACK] Climate Change acceleration and the need for an emergency brake.” Bio : Dr. Pete Sudbury is an ex-Green Party Councillor for ...",
+      "link": "https://www.youtube.com/watch?v=37szoWu3nEA",
+      "published": "2026-06-03T23:00:06Z",
+      "source_type": "youtube",
+      "channel": "Climate Emergency Centres",
+      "video_id": "37szoWu3nEA",
+      "transcript_method": "description",
+      "transcript_chars": 151,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] A Climate Scientist Reviews: Project Hail Mary",
+      "summary": "[DESCRIPTION FALLBACK] 00:00 Intro 00:36 Book plot (spoiler alert) 01:18 The Earth's Energy Balance (simplified) 02:38 Greenhouse gases explained ...",
+      "link": "https://www.youtube.com/watch?v=GJsouT2HV9g",
+      "published": "2026-03-18T12:15:28Z",
+      "source_type": "youtube",
+      "channel": "Planetary Boundaries Science",
+      "video_id": "GJsouT2HV9g",
+      "transcript_method": "description",
+      "transcript_chars": 149,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] 10 Climate Insights You Can’t Ignore",
+      "summary": "[DESCRIPTION FALLBACK] In this episode we unpack the latest “10 New Insights in Climate Science” report and what it really means for our future.",
+      "link": "https://www.youtube.com/watch?v=0rKhgC-4s7s",
+      "published": "2026-06-14T20:15:06Z",
+      "source_type": "youtube",
+      "channel": "Climate Emergency Forum",
+      "video_id": "0rKhgC-4s7s",
+      "transcript_method": "description",
+      "transcript_chars": 144,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "problem": "Анализ на PLANETARY_POTENTIAL_REVIEW — данни получени но LLM грешка",
+    "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: Gemini rate limit",
+    "severity": "UNKNOWN",
+    "leverage_points": [],
+    "proposed_actions": [],
+    "evidence": [
+      "Major errors found in Al Gore-founded Climate TRACE database",
+      "Arizona reservoir nearly vanishes after snowpack collapse triggers massive fish kill",
+      "These bees have nowhere to hide from extreme heat"
+    ],
+    "generalization": "",
+    "summary": "- Major errors found in Al Gore-founded Climate TRACE database: A new study from Northern Arizona University is raising red flags about a widely used global emissions database from Climate TRACE, a co",
+    "risk_level": "UNKNOWN",
+    "trend": "UNKNOWN",
+    "llm_raw": ""
+  },
+  "raw_items": [
+    {
+      "title": "Major errors found in Al Gore-founded Climate TRACE database",
+      "summary": "A new study from Northern Arizona University is raising red flags about a widely used global emissions database from Climate TRACE, a consortium co-founded by Al Gore. Researchers found that the database may be dramatically undercounting carbon dioxide emissions from cars and trucks in cities—by an average of 70% across 260 U.S. cities, with some cities showing gaps of more than 90%.",
+      "link": "https://www.sciencedaily.com/releases/2026/06/260618041519.htm",
+      "published": "Thu, 18 Jun 2026 04:15:19 EDT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Arizona reservoir nearly vanishes after snowpack collapse triggers massive fish kill",
+      "summary": "A historic lack of snow in the Gila River watershed has left Arizona’s San Carlos Reservoir less than 1% full, triggering a massive fish kill and an indefinite closure. Despite the bleak conditions, heavy summer rains could help the reservoir rebound.",
+      "link": "https://www.sciencedaily.com/releases/2026/06/260618041458.htm",
+      "published": "Thu, 18 Jun 2026 09:53:38 EDT",
+      "source_type": "rss"
+    },
+    {
+      "title": "These bees have nowhere to hide from extreme heat",
+      "summary": "A major study of Australian native bees found that stem-nesting species may be the first to feel the impact of climate change. Unlike bees that nest underground, they have few ways to escape dangerous heat. Researchers also discovered that tropical bees are particularly vulnerable, even when they are already adapted to hot environments. The findings suggest bee behavior could be a key factor in determining which species survive a warming world.",
+      "link": "https://www.sciencedaily.com/releases/2026/06/260617032157.htm",
+      "published": "Thu, 18 Jun 2026 03:59:03 EDT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Scientists discover an earthquake gate as California faults reach their highest stress levels in 1,000 years",
+      "summary": "A new study suggests Southern California's major fault system is more stressed than at any point in the last 1,000 years. Researchers found that the Cajon Pass, where the San Andreas and San Jacinto faults meet, could act as an “earthquake gate” that determines whether a future rupture spreads across both faults. Current conditions resemble those that preceded some of the region’s largest historical earthquakes.",
+      "link": "https://www.sciencedaily.com/releases/2026/06/260617032155.htm",
+      "published": "Thu, 18 Jun 2026 12:19:47 EDT",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] Climate Change acceleration: Do we need an emergency brake? | Dr Pete Sudbury (ex-Green Party)",
+      "summary": "[DESCRIPTION FALLBACK] Climate Change acceleration and the need for an emergency brake.” Bio : Dr. Pete Sudbury is an ex-Green Party Councillor for ...",
+      "link": "https://www.youtube.com/watch?v=37szoWu3nEA",
+      "published": "2026-06-03T23:00:06Z",
+      "source_type": "youtube",
+      "channel": "Climate Emergency Centres",
+      "video_id": "37szoWu3nEA",
+      "transcript_method": "description",
+      "transcript_chars": 151,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] A Climate Scientist Reviews: Project Hail Mary",
+      "summary": "[DESCRIPTION FALLBACK] 00:00 Intro 00:36 Book plot (spoiler alert) 01:18 The Earth's Energy Balance (simplified) 02:38 Greenhouse gases explained ...",
+      "link": "https://www.youtube.com/watch?v=GJsouT2HV9g",
+      "published": "2026-03-18T12:15:28Z",
+      "source_type": "youtube",
+      "channel": "Planetary Boundaries Science",
+      "video_id": "GJsouT2HV9g",
+      "transcript_method": "description",
+      "transcript_chars": 149,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] 10 Climate Insights You Can’t Ignore",
+      "summary": "[DESCRIPTION FALLBACK] In this episode we unpack the latest “10 New Insights in Climate Science” report and what it really means for our future.",
+      "link": "https://www.youtube.com/watch?v=0rKhgC-4s7s",
+      "published": "2026-06-14T20:15:06Z",
+      "source_type": "youtube",
+      "channel": "Climate Emergency Forum",
+      "video_id": "0rKhgC-4s7s",
+      "transcript_method": "description",
+      "transcript_chars": 144,
+      "has_full_transcript": false
+    }
+  ]
+}

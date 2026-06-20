@@ -1,0 +1,104 @@
+{
+  "axis": "FOOD_REVIEW",
+  "fetched_at": "2026-06-19T17:51:48.963868+00:00",
+  "smart_query": "food security hunger famine",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 0,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "meyerls/FruitNeRF",
+      "snippet": "[IROS24] Offical Code for \"FruitNeRF: A Unified Neural Radiance Field based Fruit Counting Framework\" - Inegrated into Nerfstudio",
+      "stars": 328,
+      "url": "https://github.com/meyerls/FruitNeRF",
+      "updated": "2026-05-22",
+      "source": "GitHub"
+    },
+    {
+      "title": "px39n/Awesome-Precision-Agriculture",
+      "snippet": "Advancement of UAV, deep Learning and cutting edged technologies and papers in Precision Agriculture. ",
+      "stars": 139,
+      "url": "https://github.com/px39n/Awesome-Precision-Agriculture",
+      "updated": "2026-06-08",
+      "source": "GitHub"
+    },
+    {
+      "title": "nesl/agrobot",
+      "snippet": "Neural-Kalman GNSS/INS Navigation for Precision Agriculture",
+      "stars": 82,
+      "url": "https://github.com/nesl/agrobot",
+      "updated": "2026-04-25",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "How adaptation to food resources and death rates shape oscillatory dynamics in a microbial population",
+      "snippet": "Microbes constantly interact with their environment by depleting and transforming food sources. Theoretical studies have mainly focused on Lotka-Volterra models, which do not account for food source dynamics. In contrast, consumer-resource models, which consider food source dynamics, are less explor",
+      "url": "https://arxiv.org/abs/2601.22967v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "An additional food driven biological control patch model, incorporating generalized competition",
+      "snippet": "Additional food sources for an introduced predator are known to increase its efficiency on a target pest. In this context, inhibiting factors such as interference, predator competition, and the introduction of temporally dependent quantity and quality of additional food are all known to enable pest ",
+      "url": "https://arxiv.org/abs/2510.06111v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[Can computer hackers get inside your mind?] The cyber weapon that might have prevented nuclear war.The U.S. and Israel have long been in conflict with Iran over their nuclear development program. Some of that conflict has been out in the open, with bombs and blockades, but some of it has been invisible. Recently some security researchers discovered a cyberweapon likely tied to that invisible conflict. It looks like it was designed to hide o",
+  "wiki": null,
+  "youtube_items": [
+    {
+      "title": "[YT] YouTube:jZwPIMk-HoM",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=jZwPIMk-HoM",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "jZwPIMk-HoM",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] YouTube:1NPmXpahXNY",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=1NPmXpahXNY",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "1NPmXpahXNY",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] YouTube:wu7PjKawjwI",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=wu7PjKawjwI",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "wu7PjKawjwI",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    }
+  ],
+  "summary": "Анализът на храните и производството им е от ключово значение за постигане на устойчива цивилизация. Проучванията върху адаптацията на микробни популяции към хранителни ресурси и смъртните ставки показват сложна динамика. Технологиите като FruitNeRF и Precision Agriculture се разработват, за да подобрят този процес.",
+  "urgency": "MEDIUM",
+  "sentiment": "POSITIVE",
+  "key_developments": [
+    "FruitNeRF: A Unified Neural Radiance Field based Fruit",
+    "Awesome-Precision-Agriculture",
+    "Neural-Kalman GNSS/INS Navigation for Precision Agriculture"
+  ],
+  "open_source_momentum": "Проектите като meyerls/FruitNeRF, px39n/Awesome-Precision-Agriculture и nesl/agrobot показват активно развитие на отворен код в областта на храните и精изното земеделие.",
+  "scientific_frontier": "Изследванията върху адаптацията на микробни популяции и моделите за биологичен контрол, както и разработването на нови технологии като FruitNeRF, представляват научния авангард в тази област.",
+  "relevance_to_goal": "Развитието на устойчиви и ефикасни методи за производство и дистрибуция на храните е фундаментално за постигане на достоен живот за всеки и премахване на изкуствения недостиг."
+}

@@ -1,0 +1,48 @@
+{
+  "timestamp": "2026-06-20T07:26:39.279695+00:00",
+  "sources": {
+    "co2": "NOAA Mauna Loa CO2",
+    "temperature": "NASA GISTEMP",
+    "sea_level": "NOAA Satellite Altimetry",
+    "world_bank": "World Bank WDI",
+    "biodiversity": "GBIF",
+    "conflicts": "UCDP",
+    "nuclear": "SIPRI 2024"
+  },
+  "co2": {
+    "co2_ppm": 432.15,
+    "co2_ppm_1yr_ago": 429.78,
+    "co2_annual_increase": 2.37,
+    "co2_date": "2026-06-07"
+  },
+  "temperature": {
+    "temp_anomaly_c": 1.19,
+    "temp_anomaly_year": 2025,
+    "temp_anomaly_baseline": "1951-1980"
+  },
+  "sea_level": {},
+  "world_bank": {
+    "population_billions": 8.142,
+    "poverty_190_pct": 10.4,
+    "life_expectancy": 73.4804,
+    "infant_mortality_per1k": 27.7,
+    "gini_mean": 39.625,
+    "forest_area_pct": 31.143,
+    "renewable_elec_pct": 27.8357,
+    "safe_water_access_pct": 73.6686,
+    "literacy_rate_adult_pct": 87.74,
+    "threatened_mammals_no": 3434.0,
+    "co2_emissions_kt": null
+  },
+  "biodiversity": {
+    "species_observations_30d": 2656172
+  },
+  "conflicts": {},
+  "nuclear": {
+    "nuclear_warheads_total": 12121,
+    "nuclear_warheads_deployed": 3904,
+    "nuclear_warheads_on_alert": 2100,
+    "source_year": 2024,
+    "source": "SIPRI Yearbook 2024"
+  }
+}

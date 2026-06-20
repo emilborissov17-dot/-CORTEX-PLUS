@@ -1,0 +1,141 @@
+{
+  "axis": "DEEP_TIME_RISKS_REVIEW",
+  "domain": "cosmos",
+  "timestamp": "2026-06-18T18:21:32.559893+00:00",
+  "sources_count": 13,
+  "rss_count": 4,
+  "ddg_count": 6,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] Consumed by the Apocalypse",
+      "summary": "[DESCRIPTION FALLBACK] At some indeterminate point in the future, humanity must come to an end. It may take centuries. It might take eons. But extinction is ...",
+      "link": "https://www.youtube.com/watch?v=nx2-4l4s4Nw",
+      "published": "2021-01-18T19:00:11Z",
+      "source_type": "youtube",
+      "channel": "LEMMiNO",
+      "video_id": "nx2-4l4s4Nw",
+      "transcript_method": "description",
+      "transcript_chars": 160,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] ‘End Times’ explores the catastrophic events that could kill us all - Science and life",
+      "summary": "[DESCRIPTION FALLBACK] Science and life presents: 'End Times' explores the catastrophic events that could kill us all - Science and life 'End Times' ...",
+      "link": "https://www.youtube.com/watch?v=hqFPDElN8q4",
+      "published": "2019-08-25T17:46:43Z",
+      "source_type": "youtube",
+      "channel": "Science and life",
+      "video_id": "hqFPDElN8q4",
+      "transcript_method": "description",
+      "transcript_chars": 152,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] 3+ Hours of Civilization-Ending Scenarios to Fall Asleep to",
+      "summary": "[DESCRIPTION FALLBACK] Are we on the brink of civilization's collapse? This video explores the most terrifying civilization-ending scenarios that could wipe ...",
+      "link": "https://www.youtube.com/watch?v=MMyEuHE0I5A",
+      "published": "2025-01-31T11:05:16Z",
+      "source_type": "youtube",
+      "channel": "SleepEnlightened",
+      "video_id": "MMyEuHE0I5A",
+      "transcript_method": "description",
+      "transcript_chars": 160,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "problem": "Insufficient global preparedness for pandemic outbreaks and asteroid impacts",
+    "root_cause": "Lack of effective international cooperation and inadequate investment in global health infrastructure and asteroid detection systems",
+    "severity": "HIGH",
+    "leverage_points": [
+      "World Health Organization (WHO) and national governments",
+      "International cooperation and agreements, such as the WHO Pandemic Agreement"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Finalize and implement the WHO Pandemic Agreement's Pathogen Access and Benefit Sharing annex",
+        "measurable_goal": "Increase the number of countries that have implemented the agreement by 50% within the next 12 months",
+        "timeframe": "medium-term"
+      },
+      {
+        "action": "Increase funding for global health infrastructure and asteroid detection systems",
+        "measurable_goal": "Allocate an additional $1 billion to global health infrastructure and asteroid detection systems within the next 2 years",
+        "timeframe": "medium-term"
+      }
+    ],
+    "evidence": [
+      "The World Health Organization (WHO) has released comprehensive guidelines for filovirus disease, including Ebola and Marburg disease, but the Democratic Republic of the Congo is still battling an Ebola outbreak",
+      "The Africa Centres for Disease Control and Prevention (Africa CDC) and the WHO have launched a joint continental Ebola response plan, highlighting the need for improved global preparedness"
+    ],
+    "generalization": "This problem connects to the domains of Planet ( biosphere and health) and Civilization (global cooperation and governance)",
+    "summary": "The world is not adequately prepared for pandemic outbreaks and asteroid impacts, posing a high risk to human life and global sustainability. International cooperation and investment in global health infrastructure and asteroid detection systems are necessary to mitigate this risk.",
+    "risk_level": "HIGH"
+  },
+  "raw_items": [
+    {
+      "title": "WHO issues comprehensive guidelines on filovirus disease, including Ebola and Marburg disease",
+      "summary": "As the Democratic Republic of the Congo is battling an Ebola disease outbreak caused by the Bundibugyo virus, the World Health Organization (WHO) has released its first comprehensive guidelines for the clinical management of filovirus disease which include all types of Ebola and Marburg viruses. The new guidelines highlight the importance of early supportive care to improve patient survival and health outcomes, outlining 16 evidence-based recommendations.",
+      "link": "https://www.who.int/news/item/17-06-2026-who-issues-comprehensive-guidelines-on-filovirus-disease--including-ebola-and-marburg-disease",
+      "published": "Wed, 17 Jun 2026 13:30:57 Z",
+      "source_type": "rss"
+    },
+    {
+      "title": "Open letter to leaders of G7, G20, BRICS and all nations on finalizing the WHO Pandemic Agreement’s Pathogen Access and Benefit Sharing annex",
+      "summary": "<p>Dear Leaders of the G7, the G20, BRICS and of all nations,</p><p>We write to you together, from Geneva and from Bras&iacute;lia, with one shared conviction: that the world must finish what it started, and that you can help it do so.</p><p>We begin not with an institution or an annex, but with a memory the whole world shares. Not so long ago, our hospitals overflowed. Families said goodbye to the people they loved through glass, or by telephone, or not at all. Children lost grandparents. Docto",
+      "link": "https://www.who.int/news/item/15-06-2026-open-letter-to-leaders-of-g7-g20-brics-and-all-nations-on-finalizing-the-who-pandemic-agreement-s-pathogen-access-and-benefit-sharing-annex",
+      "published": "Mon, 15 Jun 2026 09:05:36 Z",
+      "source_type": "rss"
+    },
+    {
+      "title": "Safe blood supply improves as voluntary donations exceed 85%, but many people still lack access",
+      "summary": "New data from the World Health Organization (WHO) show sustained progress towards safer blood supplies globally but also highlight persistent inequalities in access to safe blood and weaknesses in governance, financing and regulation of blood systems.",
+      "link": "https://www.who.int/news/item/12-06-2026-safe-blood-supply-improves-as-voluntary-donations-exceed-85---but-many-people-still-lack-access",
+      "published": "Fri, 12 Jun 2026 12:35:26 Z",
+      "source_type": "rss"
+    },
+    {
+      "title": "Africa CDC and WHO launch joint continental Ebola response plan",
+      "summary": "<p>The Africa Centres for Disease Control and Prevention (Africa CDC) and the World Health Organization (WHO) today launched a joint <a href=\"https://www.afro.who.int/publications/bundibugyo-ebola-virus-continental-preparedness-and-response-plan-june-november-2026\">continental preparedness and response plan</a> on the ongoing Ebola outbreak caused by the Bundibugyo virus. The plan aims to raise US$&nbsp;518&nbsp;million to support African countries together with partners to prepare for, rapidly ",
+      "link": "https://www.who.int/news/item/05-06-2026-africa-cdc-and-who-launch-joint-continental-ebola-response-plan",
+      "published": "Fri, 05 Jun 2026 12:28:26 Z",
+      "source_type": "rss"
+    },
+    {
+      "title": "Asteroid impact",
+      "summary": "An impact event is a collision between astronomical objects causing measurable effects. Impact events have been found to regularly occur in planetary systems, though the most frequent involve asteroids, comets or meteoroids and have minimal effect. When large objects impact terrestrial planets such as the Earth, there can be significant physical and biospheric consequences, as the impacting body i",
+      "link": "https://en.wikipedia.org/wiki/Asteroid_impact",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Impact event - Wikipedia",
+      "summary": "An impact event is a collision between astronomical objects causing measurable effects, such as craters, extinctions or evolutionary changes. Learn about the types, causes and consequences of impact events on Earth and other planets, and how to prepare for future impacts.",
+      "link": "https://en.wikipedia.org/wiki/Impact_event",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Chicxulub crater - Wikipedia",
+      "summary": "It was formed slightly over 66 million years ago when an asteroid, about ten kilometers (six miles) in diameter, struck Earth.",
+      "link": "https://en.wikipedia.org/wiki/Chicxulub_crater",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Pandemic Response Accountability Committee",
+      "summary": "The Pandemic Response Accountability Committee (PRAC) is an independent oversight committee within the Council of the Inspectors General on Integrity and Efficiency, created by the Coronavirus Aid, Relief, and Economic Security (CARES) Act of 2020 to ensure that the $2.2 trillion of the CARES act, plus 5 other pandemic-related pieces of legislation totaling over $5 trillion in government funds, we",
+      "link": "https://en.wikipedia.org/wiki/Pandemic_Response_Accountability_Committee",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Tool for Influenza Pandemic Risk Assessment",
+      "summary": "The Tool for Influenza Pandemic Risk Assessment (TIPRA) is a standardized framework developed by the World Health Organization (WHO) to evaluate the pandemic potential of influenza A viruses, focusing on their ability to acquire sustained human-to-h…",
+      "link": "https://grokipedia.com/page/tool_for_influenza_pandemic_risk_assessment",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Could the Hantavirus Cruise Ship Outbreak Lead to a Pandemic? Experts Explain the Risk Level",
+      "summary": "“Based on scientific assessment and based on evidence, the risk (to the public) is low,” World Health Organization Director-General Dr. Tedros Adhanom Ghebreyesus told reporters on Sunday after the ship docked in Tenerife, Spain. Published May 12, 2026",
+      "link": "https://today.com/health/news/hantavirus-cruise-ship-pandemic-risk-covid-2026-rcna343854",
+      "source_type": "ddg"
+    }
+  ]
+}

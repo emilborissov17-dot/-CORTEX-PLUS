@@ -1,0 +1,148 @@
+{
+  "axis": "GOAL_PROGRESS_REVIEW",
+  "domain": "cosmos",
+  "timestamp": "2026-06-18T18:22:20.126213+00:00",
+  "sources_count": 8,
+  "rss_count": 5,
+  "ddg_count": 0,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] How We Can Make the World a Better Place by 2030 | Michael Green | TED Talks",
+      "summary": "[DESCRIPTION FALLBACK] Can we end hunger and poverty, halt climate change and achieve gender equality in the next 15 years? The governments of the ...",
+      "link": "https://www.youtube.com/watch?v=o08ykAqLOxk",
+      "published": "2015-11-03T16:33:59Z",
+      "source_type": "youtube",
+      "channel": "TED",
+      "video_id": "o08ykAqLOxk",
+      "transcript_method": "description",
+      "transcript_chars": 150,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Sustainable Development Goals (SDGs) Explained: 2026 Reality Check",
+      "summary": "[DESCRIPTION FALLBACK] With only 4 years left until the 2030 deadline, the UN Sustainable Development Goals remain the global framework for ...",
+      "link": "https://www.youtube.com/watch?v=qfOgdj4Okdw",
+      "published": "2020-11-20T16:37:01Z",
+      "source_type": "youtube",
+      "channel": "Sustainability Illustrated",
+      "video_id": "qfOgdj4Okdw",
+      "transcript_method": "description",
+      "transcript_chars": 143,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Stocktaking | What it will take to achieve the Sustainable Development Goals? | United Nations",
+      "summary": "[DESCRIPTION FALLBACK] We're at the halftime mark to achieve the Sustainable Development Goals, but we're down at halftime. The 2023 SDG Progress ...",
+      "link": "https://www.youtube.com/watch?v=enGJyhu6Xr0",
+      "published": "2023-09-17T15:00:33Z",
+      "source_type": "youtube",
+      "channel": "United Nations",
+      "video_id": "enGJyhu6Xr0",
+      "transcript_method": "description",
+      "transcript_chars": 149,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "problem": "Lack of trust in the community hinders the effective response to the Ebola outbreak in the Democratic Republic of Congo",
+    "root_cause": "Insufficient engagement and communication with local communities, leading to mistrust and misinformation",
+    "severity": "HIGH",
+    "leverage_points": [
+      "World Health Organization (WHO) and local health authorities",
+      "Community leaders and influencers"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Implement a community-based outreach and education program to build trust and provide accurate information about Ebola",
+        "measurable_goal": "Achieve a 20% increase in community-reported Ebola cases within 6 months",
+        "timeframe": "short-term"
+      },
+      {
+        "action": "Establish a regional cooperation framework to share best practices and coordinate responses to Ebola outbreaks",
+        "measurable_goal": "Conduct at least 2 regional workshops within the next 12 months, with participation from at least 5 countries",
+        "timeframe": "medium-term"
+      }
+    ],
+    "evidence": [
+      "‘Some question if Ebola is real’: how trust is central in fighting DRC outbreak",
+      "WHO commends Uganda’s Ebola response, urges vigilance and regional cooperation"
+    ],
+    "generalization": "This problem connects to the domain of 'Planet' (healthy biosphere) and 'Human' (dignity for all), as it affects the well-being and livelihoods of individuals and communities, and highlights the need for effective global health governance and cooperation",
+    "summary": "The Ebola outbreak in the DRC is hindered by a lack of trust in the community, which can be addressed through community-based outreach and education programs, as well as regional cooperation and coordination. This issue has significant implications for global health security and the achievement of the Sustainable Development Goals.",
+    "risk_level": "HIGH"
+  },
+  "raw_items": [
+    {
+      "title": "Ebola treatment capacity expands in DR Congo as WHO issues new guidelines",
+      "summary": "<p>Treatment capacity for the rare and deadly Bundibugyo species of Ebola is expanding in eastern Democratic Republic of the Congo (DRC), as the World Health Organization (WHO) warns that community mistrust remains a major challenge to ending the outbreak. Read Full Story on UN News</p>\n<p>The post <a href=\"https://news.un.org/feed/view/en/story/2026/06/1167738\">Ebola treatment capacity expands in DR Congo as WHO issues new guidelines</a> appeared first on <a href=\"https://www.un.org/sustainable",
+      "link": "https://news.un.org/feed/view/en/story/2026/06/1167738",
+      "published": "Wed, 17 Jun 2026 12:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "‘Some question if Ebola is real’: how trust is central in fighting DRC outbreak",
+      "summary": "<p>In Ebola-stricken Democratic Republic of the Congo (DRC), winning the race against the disease requires earning the community’s trust first and foremost, humanitarians said on Tuesday. Read Full Story on UN News</p>\n<p>The post <a href=\"https://news.un.org/feed/view/en/story/2026/06/1167725\">‘Some question if Ebola is real’: how trust is central in fighting DRC outbreak</a> appeared first on <a href=\"https://www.un.org/sustainabledevelopment\">United Nations Sustainable Development</a>.</p>",
+      "link": "https://news.un.org/feed/view/en/story/2026/06/1167725",
+      "published": "Tue, 16 Jun 2026 12:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "WHO and Brazil urge world leaders to finalise Pandemic Agreement to prevent future global health crises",
+      "summary": "<p>Global officials are calling on world leaders to finalise a crucial international agreement aimed at preventing future pandemics, according to a joint letter issued on Monday. Read Full Story on UN News</p>\n<p>The post <a href=\"https://news.un.org/feed/view/en/story/2026/06/1167721\">WHO and Brazil urge world leaders to finalise Pandemic Agreement to prevent future global health crises</a> appeared first on <a href=\"https://www.un.org/sustainabledevelopment\">United Nations Sustainable Developm",
+      "link": "https://news.un.org/feed/view/en/story/2026/06/1167721",
+      "published": "Mon, 15 Jun 2026 12:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "WHO commends Uganda’s Ebola response, urges vigilance and regional cooperation",
+      "summary": "<p>The head of the World Health Organization (WHO) has praised Uganda’s response to an Ebola outbreak that has spread from neighbouring Democratic Republic of the Congo (DRC), while warning that continued vigilance and cross-border cooperation will be critical to stopping transmission. Read Full Story on UN News</p>\n<p>The post <a href=\"https://news.un.org/feed/view/en/story/2026/06/1167722\">WHO commends Uganda’s Ebola response, urges vigilance and regional cooperation</a> appeared first on <a h",
+      "link": "https://news.un.org/feed/view/en/story/2026/06/1167722",
+      "published": "Mon, 15 Jun 2026 12:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Hello world!",
+      "summary": "Welcome to WordPress. This is your first post. Edit or delete it, then start writing!",
+      "link": "https://sdg.iisd.org/hello-world/",
+      "published": "Thu, 18 May 2023 15:00:19 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] How We Can Make the World a Better Place by 2030 | Michael Green | TED Talks",
+      "summary": "[DESCRIPTION FALLBACK] Can we end hunger and poverty, halt climate change and achieve gender equality in the next 15 years? The governments of the ...",
+      "link": "https://www.youtube.com/watch?v=o08ykAqLOxk",
+      "published": "2015-11-03T16:33:59Z",
+      "source_type": "youtube",
+      "channel": "TED",
+      "video_id": "o08ykAqLOxk",
+      "transcript_method": "description",
+      "transcript_chars": 150,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Sustainable Development Goals (SDGs) Explained: 2026 Reality Check",
+      "summary": "[DESCRIPTION FALLBACK] With only 4 years left until the 2030 deadline, the UN Sustainable Development Goals remain the global framework for ...",
+      "link": "https://www.youtube.com/watch?v=qfOgdj4Okdw",
+      "published": "2020-11-20T16:37:01Z",
+      "source_type": "youtube",
+      "channel": "Sustainability Illustrated",
+      "video_id": "qfOgdj4Okdw",
+      "transcript_method": "description",
+      "transcript_chars": 143,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Stocktaking | What it will take to achieve the Sustainable Development Goals? | United Nations",
+      "summary": "[DESCRIPTION FALLBACK] We're at the halftime mark to achieve the Sustainable Development Goals, but we're down at halftime. The 2023 SDG Progress ...",
+      "link": "https://www.youtube.com/watch?v=enGJyhu6Xr0",
+      "published": "2023-09-17T15:00:33Z",
+      "source_type": "youtube",
+      "channel": "United Nations",
+      "video_id": "enGJyhu6Xr0",
+      "transcript_method": "description",
+      "transcript_chars": 149,
+      "has_full_transcript": false
+    }
+  ]
+}

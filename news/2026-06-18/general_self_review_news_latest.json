@@ -1,0 +1,138 @@
+{
+  "axis": "GENERAL_SELF_REVIEW",
+  "fetched_at": "2026-06-18T20:08:17.576872+00:00",
+  "smart_query": "artificial intelligence progress",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 3,
+    "arxiv": 2,
+    "github": 3,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "GTA 6 pre-order date and cover art revealed by Rockstar",
+      "snippet": "The developer has said pre-sales of the hugely anticipated game will begin on 25 June.",
+      "url": "https://www.bbc.com/news/articles/ce8j1yj64g3o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "AI will create more jobs for humans, not replace them, Amazon founder Bezos says",
+      "snippet": "The Amazon founder, who now has robotics and space travel companies, thinks AI will create a labour shortage.",
+      "url": "https://www.bbc.com/news/articles/ceqdrw2yy3vo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "What to study in the AI age - from big tech bosses",
+      "snippet": "Sundar Pichai, Jensen Huang and Jack Clark share their advice with the BBC.",
+      "url": "https://www.bbc.com/news/videos/cewqg4qwq1wo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [
+    {
+      "title": "Geleceğin işleri belli oldu ! İşte yapay zekaya göre günde sadece  saat çalışıp servet kazandıracak 5 meslek",
+      "snippet": "Geleceğin işleri belli oldu ! İşte yapay zekaya göre günde sadece  saat çalışıp servet kazandıracak 5 meslek",
+      "url": "https://www.yeniakit.com.tr/foto-galeri/gelecegin-isleri-belli-oldu-iste-yapay-zekaya-gore-gunde-sadece-uc-saat-calisip-servet-kazandiracak-5-meslek-150970",
+      "source": "yeniakit.com.tr"
+    },
+    {
+      "title": "Yapay zeka yönetiminde uluslararası standart : TPye ISO 42001 belgesi",
+      "snippet": "Yapay zeka yönetiminde uluslararası standart : TPye ISO 42001 belgesi",
+      "url": "https://www.chip.com.tr/guncel/yapay-zeka-yonetiminde-uluslararasi-standart-tpye-iso-42001-belgesi_179533.html",
+      "source": "chip.com.tr"
+    },
+    {
+      "title": "  Yapay zekayı durdurma  çağrılarına yenileri ekleniyor",
+      "snippet": "  Yapay zekayı durdurma  çağrılarına yenileri ekleniyor",
+      "url": "https://www.aa.com.tr/tr/bilim-teknoloji/yapay-zekayi-durdurma-cagrilarina-yenileri-ekleniyor/3958899",
+      "source": "aa.com.tr"
+    }
+  ],
+  "github_repos": [
+    {
+      "title": "microsoft/autogen",
+      "snippet": "A programming framework for agentic AI",
+      "stars": 59059,
+      "url": "https://github.com/microsoft/autogen",
+      "updated": "2026-06-18",
+      "source": "GitHub"
+    },
+    {
+      "title": "2noise/ChatTTS",
+      "snippet": "A generative speech model for daily dialogue.",
+      "stars": 39474,
+      "url": "https://github.com/2noise/ChatTTS",
+      "updated": "2026-06-18",
+      "source": "GitHub"
+    },
+    {
+      "title": "agentscope-ai/agentscope",
+      "snippet": "Build and run agents you can see, understand and trust.",
+      "stars": 26988,
+      "url": "https://github.com/agentscope-ai/agentscope",
+      "updated": "2026-06-18",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "A Multi-Domain Benchmark for Detecting AI-Generated Text-Rich Images from GPT-Image-2",
+      "snippet": "Text-rich images often contain privacy-sensitive, transactional, or decision-relevant information. As recent multimodal image generation models become increasingly capable of synthesizing realistic textual content and structured visual designs, detecting AI-generated text-rich images has become an i",
+      "url": "https://arxiv.org/abs/2606.19259v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "TxBench-PP: Analyzing AI Agent Performance on Small-Molecule Preclinical Pharmacology",
+      "snippet": "Artificial intelligence (AI) agents promise to accelerate drug discovery by compressing interpretation and decision-making loops, but practical deployment requires trusted evaluation on realistic program decisions. We introduce TherapeuticsBench Preclinical Pharmacology (TxBench-PP), a verifiable be",
+      "url": "https://arxiv.org/abs/2606.19245v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[Prominent Scientists, Faith Leaders, Policymakers and Artists Call for a Prohibition on Superintelligence, as Poll Shows Americans Don’t Want It] Initial signatories include AI pioneers Yoshua Bengio and Geoffrey Hinton, leading media voices Steve Bannon and Glenn Beck, Obama's National Security Advisor Susan Rice, business trailblazers Steve Wozniak and Richard Branson, five Nobel Laureates, former Irish President Mary Robinson, actors Stephen Fry and Joseph Gordon-Levitt, and hundreds of others.",
+  "wiki": null,
+  "youtube_items": [
+    {
+      "title": "[YT] YouTube:gdlTspKdsjU",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=gdlTspKdsjU",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "gdlTspKdsjU",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] YouTube:J2V9X6yIHw4",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=J2V9X6yIHw4",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "J2V9X6yIHw4",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] YouTube:wWoSx73g1DI",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=wWoSx73g1DI",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "wWoSx73g1DI",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    }
+  ],
+  "summary": "[RSS News]\n- GTA 6 pre-order date and cover art revealed by Rockstar\n- AI will create more jobs for humans, not replace them, Amazon founder Bezos says\n\n[GDELT News]\n- Geleceğin işleri belli oldu ! İş",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": [],
+  "open_source_momentum": "",
+  "scientific_frontier": "",
+  "relevance_to_goal": ""
+}

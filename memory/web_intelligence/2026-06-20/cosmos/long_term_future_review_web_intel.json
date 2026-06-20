@@ -1,0 +1,157 @@
+{
+  "axis": "LONG_TERM_FUTURE_REVIEW",
+  "domain": "cosmos",
+  "timestamp": "2026-06-20T07:26:16.984771+00:00",
+  "sources_count": 11,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] AI2027: Is this how AI might destroy humanity? - BBC World Service",
+      "summary": "[DESCRIPTION FALLBACK] A research paper predicting that artificial intelligence will go rogue in 2027 and lead to humanity's extinction within a decade is ...",
+      "link": "https://www.youtube.com/watch?v=1UufaK3pQMg",
+      "published": "2025-08-01T23:00:03Z",
+      "source_type": "youtube",
+      "channel": "BBC World Service",
+      "video_id": "1UufaK3pQMg",
+      "transcript_method": "description",
+      "transcript_chars": 158,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] The Catastrophic Risks of AI — and a Safer Path | Yoshua Bengio | TED",
+      "summary": "[DESCRIPTION FALLBACK] Yoshua Bengio — the world's most-cited computer scientist and a \"godfather\" of artificial intelligence — is deadly concerned about ...",
+      "link": "https://www.youtube.com/watch?v=qe9QSCF-d88",
+      "published": "2025-05-21T15:01:24Z",
+      "source_type": "youtube",
+      "channel": "TED",
+      "video_id": "qe9QSCF-d88",
+      "transcript_method": "description",
+      "transcript_chars": 157,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] THE FUTURE OF HUMANITY: A.I Predicts 400 Years In 3 Minutes (4K)",
+      "summary": "[DESCRIPTION FALLBACK] How will Humanity look in 400 Years? This exciting time-lapse of our future produced entirely by Artificially Intelligent Concept ...",
+      "link": "https://www.youtube.com/watch?v=-UBaW1OIgTo",
+      "published": "2022-11-27T22:29:38Z",
+      "source_type": "youtube",
+      "channel": "Amara Pictures",
+      "video_id": "-UBaW1OIgTo",
+      "transcript_method": "description",
+      "transcript_chars": 156,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "problem": "Lack of concrete plans and actions to address potential existential risks from artificial intelligence",
+    "root_cause": "Insufficient prioritization and coordination among developers, regulators, and stakeholders to address AI safety concerns",
+    "severity": "HIGH",
+    "leverage_points": [
+      "AI developers and researchers",
+      "Regulatory bodies and governments"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Establish international standards and guidelines for AI development and deployment",
+        "measurable_goal": "50% of AI developers adopt these standards within the next 2 years",
+        "timeframe": "medium-term"
+      },
+      {
+        "action": "Increase funding for AI safety research and development of formal verification methods",
+        "measurable_goal": "Double the current funding for AI safety research within the next year",
+        "timeframe": "short-term"
+      }
+    ],
+    "evidence": [
+      "A research paper predicting AI to go rogue in 2027 and lead to humanity's extinction within a decade",
+      "Yoshua Bengio, a renowned computer scientist, expressing concern about the catastrophic risks of AI"
+    ],
+    "generalization": "This problem connects to the domains of civilization, human dignity, and the biosphere, as the potential consequences of uncontrolled AI development could have far-reaching and devastating effects on human societies and the environment",
+    "summary": "The lack of concrete plans and actions to address potential existential risks from artificial intelligence poses a high risk to human civilization and the environment, requiring immediate attention and coordination among stakeholders",
+    "risk_level": "HIGH"
+  },
+  "raw_items": [
+    {
+      "title": "Unchickenous Apricot Berry Cake",
+      "summary": "<p><span>\n\nIf someone tells me a cake is </span>\n\n<strike>vegan</strike> \n\n<a href=\"https://en.wiktionary.org/wiki/euphemism_treadmill\">plant-based</a>,\nI'm going to downgrade my expected enjoyment: I've had a lot of bad\nvegan baked goods.  Some bakers are vegan for health reasons, and minimize\nall the other things that make food worth eating, but even a fully\nhedonistic vegan baker is at a serious disadvantage.  But much less\nnow that \n\n<a href=\"https://www.jefftk.com/p/chicken-free-egg-whites\"",
+      "link": "https://www.lesswrong.com/posts/JtkR9aDd3m2CeRi3J/unchickenous-apricot-berry-cake",
+      "published": "Sat, 20 Jun 2026 02:20:59 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "The LLM shoggoth meme is weirder than you think",
+      "summary": "<p><i><span>This article contains spoilers for </span></i><a href=\"https://hplovecraft.com/writings/texts/fiction/mm.aspx\" rel=\"noopener noreferrer nofollow\" target=\"_blank\"><i><span>At the Mountains of Madness</span></i></a><i><span>, </span></i><a href=\"https://hplovecraft.com/writings/texts/fiction/cdw.aspx\" rel=\"noopener noreferrer nofollow\" target=\"_blank\"><i><span>The Case of Charles Dexter Ward</span></i></a><i><span>, and other works by H. P. Lovecraft.</span></i></p><p><span>In 1931, Cl",
+      "link": "https://www.lesswrong.com/posts/nhb8AyEcQGjQetgi5/the-llm-shoggoth-meme-is-weirder-than-you-think",
+      "published": "Fri, 19 Jun 2026 23:35:21 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "How I think developers of frontier AI systems and regulators ought to act in the face of existential AI risk",
+      "summary": "<p><i>This is a post I drafted on 2025-08-06 that doesn't live up to the ambitious title, but I'm publishing it anyways 10+ months later. \"Don't let perfect be the enemy of good.\"</i><br /><br />Below I describe a simple framework for thinking about the permissibility of building the next frontier AI system. <i>TL;DR: Evaluate the risk that proceeding with building the AI system will lead to catastrophic harm. (Get independent regulators to evaluate the risk too.) If the risk is too high, do not",
+      "link": "https://www.lesswrong.com/posts/qJJyDLrEcKkAf7bnC/how-i-think-developers-of-frontier-ai-systems-and-regulators",
+      "published": "Fri, 19 Jun 2026 22:22:14 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Hyperstition as the Natural Enemy of Rationality",
+      "summary": "<blockquote><p><span>If the box contains a diamond,</span></p><p><span>I desire to believe that the box contains a diamond;</span></p><p><span>If the box does not contain a diamond right now, but will contain a diamond if I believe there is a diamond,</span></p><p><span>Uh...</span></p></blockquote><p><span>Holding unfounded beliefs might sometimes, because of the causal power of belief, produce better outcomes than being rational. This post was inspired by a couple cases where this phenomenon s",
+      "link": "https://www.lesswrong.com/posts/KDbdkvenK3DCTeL6t/hyperstition-as-the-natural-enemy-of-rationality",
+      "published": "Fri, 19 Jun 2026 21:12:58 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "How to get a job at the World Bank",
+      "summary": "Published on June 20, 2026 12:21 AM GMT<br /><br /><p><i>I had a draft of this post sitting in my files. The situation is changing at the World Bank, where I no longer work, so my knowledge is rapidly becoming obsolete. However, there may be a specific opportunity for people with US work authorization willing to move to Washington DC; see (2)(a) below.</i></p><p>There are two common routes into a career at the World Bank. These are not the only options, but they are the most common.</p><ol><li>T",
+      "link": "https://forum.effectivealtruism.org/posts/Y44DPvSXr4y72BL6N/how-to-get-a-job-at-the-world-bank",
+      "published": "Sat, 20 Jun 2026 00:21:22 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Infrastructure exists for secret collusion in large private agent networks",
+      "summary": "Published on June 19, 2026 8:02 PM GMT<br /><br /><p><i>I used an LLM to help draft this post and it likely contains &gt;10% AI-generated text, but I’ve edited/rewritten it extensively and endorse it.</i></p><p><i>This is a summary of my full document, “</i><a href=\"https://drive.google.com/file/d/1OrPkgKBi4G1CRnAbEBPO1iMuJ8grA91t/view?usp=sharing\"><i>Infrastructure for secret mass multi-agent collusion exists and is rapidly advancing</i></a><i>”. Section references below point to it, and citati",
+      "link": "https://forum.effectivealtruism.org/posts/ZYDqFALSHgexThu38/infrastructure-exists-for-secret-collusion-in-large-private",
+      "published": "Fri, 19 Jun 2026 20:02:51 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Coefficient Giving RFP: Global Health and Wellbeing in an Era of Transformative AI",
+      "summary": "Published on June 19, 2026 6:12 PM GMT<br /><br /><p><i>By </i><a href=\"https://coefficientgiving.org/team/deena-mousa/\"><i>Deena Mousa</i></a><i>, Program Officer, Global Health &amp; Wellbeing Cause Prioritization</i></p><p>AI is progressing rapidly and could have profound implications for the health and wellbeing of people around the world. While global health philanthropy has historically assumed relative continuity with the past, we would like to engage seriously with the potential implicat",
+      "link": "https://forum.effectivealtruism.org/posts/NAaZTyx54bLYzpZg8/coefficient-giving-rfp-global-health-and-wellbeing-in-an-era",
+      "published": "Fri, 19 Jun 2026 18:12:25 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "QURI is moving into maintenance mode",
+      "summary": "Published on June 19, 2026 5:37 PM GMT<br /><br /><p>After about seven years, <a href=\"https://quantifieduncertainty.org/\">QURI</a> is moving into maintenance mode. This means we’ll ensure that key software (Guesstimate and SquiggleHub) is maintained, but we won’t be developing new software or doing new research.</p><p><strong>Background</strong></p><p>I started QURI in 2019. At that point I was excited about projects at the intersection of epistemics and software, primarily to be used by impact",
+      "link": "https://forum.effectivealtruism.org/posts/j3rbCdXg4eCbFf6AD/quri-is-moving-into-maintenance-mode",
+      "published": "Fri, 19 Jun 2026 17:37:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] AI2027: Is this how AI might destroy humanity? - BBC World Service",
+      "summary": "[DESCRIPTION FALLBACK] A research paper predicting that artificial intelligence will go rogue in 2027 and lead to humanity's extinction within a decade is ...",
+      "link": "https://www.youtube.com/watch?v=1UufaK3pQMg",
+      "published": "2025-08-01T23:00:03Z",
+      "source_type": "youtube",
+      "channel": "BBC World Service",
+      "video_id": "1UufaK3pQMg",
+      "transcript_method": "description",
+      "transcript_chars": 158,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] The Catastrophic Risks of AI — and a Safer Path | Yoshua Bengio | TED",
+      "summary": "[DESCRIPTION FALLBACK] Yoshua Bengio — the world's most-cited computer scientist and a \"godfather\" of artificial intelligence — is deadly concerned about ...",
+      "link": "https://www.youtube.com/watch?v=qe9QSCF-d88",
+      "published": "2025-05-21T15:01:24Z",
+      "source_type": "youtube",
+      "channel": "TED",
+      "video_id": "qe9QSCF-d88",
+      "transcript_method": "description",
+      "transcript_chars": 157,
+      "has_full_transcript": false
+    }
+  ]
+}

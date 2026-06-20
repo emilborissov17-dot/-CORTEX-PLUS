@@ -1,0 +1,138 @@
+{
+  "axis": "WATER_REVIEW",
+  "fetched_at": "2026-06-19T18:00:29.962433+00:00",
+  "smart_query": "water scarcity drinking water",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 3,
+    "arxiv": 2,
+    "github": 3,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "‘I had sewage in my bath’: row erupts over lock on Huddersfield narrow canal",
+      "snippet": "Boaters say low water levels cause them to run aground, while residents say the lock needs to be drained to prevent waste running into their propertiesEarlier this month, signs began appearing pinned to a lock on the Huddersfield narrow canal: “Canel [sic] And River Trust,” they read. “Please leave ",
+      "url": "https://www.theguardian.com/uk-news/2026/jun/18/sewage-bath-row-lock-huddersfield-narrow-canal",
+      "source": "RSS"
+    },
+    {
+      "title": "Rising temperatures may increase flood risk through river ‘whiplash’, study finds",
+      "snippet": "Sudden shifts from wet to dry weather, or vice versa, may foil typical drought- and flood-prevention measuresRising temperatures may trigger a dangerous increase in “hydroclimatic whiplash” in rivers that would make traditional approaches to flood and drought planning insufficient, a study has found",
+      "url": "https://www.theguardian.com/environment/2026/jun/17/rising-temperatures-may-increase-flood-risk-through-river-whiplash-study-finds",
+      "source": "RSS"
+    },
+    {
+      "title": "Half of world’s children exposed to at least three climate hazards, Unicef says",
+      "snippet": "Almost every child, including those from high-income countries, is now exposed to at least one hazardHalf of the world’s children are exposed to at least three overlapping climate hazards threatening their health, education and survival, according to a Unicef report.Globally, children face increasin",
+      "url": "https://www.theguardian.com/environment/2026/jun/16/half-of-worlds-children-exposed-to-at-least-three-climate-hazards-unicef-says",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [
+    {
+      "title": "Climate Change , Drinking Water Security , and Public Health",
+      "snippet": "Climate Change , Drinking Water Security , and Public Health",
+      "url": "https://link.springer.com/book/10.1007/978-3-032-12074-8",
+      "source": "link.springer.com"
+    },
+    {
+      "title": "Gram panchayat elections in Karnataka will be held before end of 2026 , says Minister Priyank Kharge",
+      "snippet": "Gram panchayat elections in Karnataka will be held before end of 2026 , says Minister Priyank Kharge",
+      "url": "https://www.thehindu.com/news/national/karnataka/gram-panchayat-elections-in-karnataka-will-be-held-before-end-of-2026-says-minister-priyank-kharge/article70958996.ece",
+      "source": "thehindu.com"
+    },
+    {
+      "title": "Yadgir officials told to be on high alert to any emerging water supply crisis",
+      "snippet": "Yadgir officials told to be on high alert to any emerging water supply crisis",
+      "url": "https://www.thehindu.com/news/national/karnataka/yadgir-officials-told-to-be-on-high-alert-to-any-emerging-water-supply-crisis/article70969872.ece",
+      "source": "thehindu.com"
+    }
+  ],
+  "github_repos": [
+    {
+      "title": "wilsto/pool-monitor-card",
+      "snippet": "Keep your swimming pool safe and crystal clear by monitoring up to 25 water chemistry parameters at a glance.",
+      "stars": 122,
+      "url": "https://github.com/wilsto/pool-monitor-card",
+      "updated": "2026-06-17",
+      "source": "GitHub"
+    },
+    {
+      "title": "DOI-USGS/EGRET",
+      "snippet": "An R-package for the analysis of long-term changes in water quality and streamflow, including the water-quality method Weighted Regressions on Time, Discharge, and Season (WRTDS). https://doi-usgs.git",
+      "stars": 100,
+      "url": "https://github.com/DOI-USGS/EGRET",
+      "updated": "2026-06-19",
+      "source": "GitHub"
+    },
+    {
+      "title": "KnowFlow/KnowFlow_AWM",
+      "snippet": "KnowFlow Automatic Water Monitoring device is an open sourced tool enable everyone having access to first hand water quality data with low cost.",
+      "stars": 96,
+      "url": "https://github.com/KnowFlow/KnowFlow_AWM",
+      "updated": "2026-06-15",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Water vapor buoyancy and the African easterly jet",
+      "snippet": "The African easterly jet (AEJ) is a prominent circulation feature in the tropical atmosphere. It transports mineral dust and generates easterly waves that serve as seeds for hurricanes. Conventional wisdom holds that the AEJ is in thermal wind balance with the positive meridional temperature gradien",
+      "url": "https://arxiv.org/abs/2605.21875v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Acidification of Water by CO2",
+      "snippet": "Fundamental inorganic chemistry shows that increasing concentrations of atmospheric CO2 will have no harmful effect on organisms that live in the natural waters of the Earths, and may well benefit them. Alkalinity and dissolved CO2 give high buffering capacity to most natural waters and minimize the",
+      "url": "https://arxiv.org/abs/2605.12311v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[Sunday Pick: The Data Center Next Door with Dr. Jacoby Wilson | from TED Tech] Imagine if one day, your quiet neighborhood came alive with a steady hum… and it never went away? All throughout the United States, data centers are popping up next door and in your backyards. These buildings guzzle millions of water, cause noise pollution, and are raising homeowners’ utility bills. In this first episode of a four-part miniseries, Sherrell interviews environmental health scientist",
+  "wiki": null,
+  "youtube_items": [
+    {
+      "title": "[YT] YouTube:C65iqOSCZOY",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=C65iqOSCZOY",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "C65iqOSCZOY",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] YouTube:otrpxtAmDAk",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=otrpxtAmDAk",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "otrpxtAmDAk",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] YouTube:3VyfN30XzDM",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=3VyfN30XzDM",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "3VyfN30XzDM",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    }
+  ],
+  "summary": "[RSS News]\n- ‘I had sewage in my bath’: row erupts over lock on Huddersfield narrow canal\n- Rising temperatures may increase flood risk through river ‘whiplash’, study finds\n\n[GDELT News]\n- Climate Ch",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": [],
+  "open_source_momentum": "",
+  "scientific_frontier": "",
+  "relevance_to_goal": ""
+}

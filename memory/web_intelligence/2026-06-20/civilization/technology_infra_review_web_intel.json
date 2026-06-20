@@ -1,0 +1,157 @@
+{
+  "axis": "TECHNOLOGY_INFRA_REVIEW",
+  "domain": "civilization",
+  "timestamp": "2026-06-20T05:39:40.609285+00:00",
+  "sources_count": 11,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] Closing the Digital Divide: How Upwork Supports Human-I-T’s Social Mission",
+      "summary": "[DESCRIPTION FALLBACK] Human-I-T is a nonprofit social enterprise committed to ensuring everybody in the world has access to the digital tools they need ...",
+      "link": "https://www.youtube.com/watch?v=cz-rOhiMxmo",
+      "published": "2026-02-27T19:47:23Z",
+      "source_type": "youtube",
+      "channel": "Upwork",
+      "video_id": "cz-rOhiMxmo",
+      "transcript_method": "description",
+      "transcript_chars": 156,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Bedford County closes digital divide with $25 million boost in high-speed internet",
+      "summary": "[DESCRIPTION FALLBACK] Bedford County is making big strides in closing the digital divide with a major boost in high-speed internet access. Thanks to a ...",
+      "link": "https://www.youtube.com/watch?v=3qAfCKfQIUc",
+      "published": "2026-01-07T00:08:12Z",
+      "source_type": "youtube",
+      "channel": "WSLS 10",
+      "video_id": "3qAfCKfQIUc",
+      "transcript_method": "description",
+      "transcript_chars": 155,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] IDIA Bridges the Digital Divide | Verizon",
+      "summary": "[DESCRIPTION FALLBACK] Systemic poverty deepens the digital divide, but IDIA and Verizon can move mountains. Through critical partnerships, IDIA ...",
+      "link": "https://www.youtube.com/watch?v=f0YlO17l9dg",
+      "published": "2026-02-11T15:54:33Z",
+      "source_type": "youtube",
+      "channel": "Verizon Business",
+      "video_id": "f0YlO17l9dg",
+      "transcript_method": "description",
+      "transcript_chars": 148,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "problem": "Insufficient access to digital tools and high-speed internet for all people, exacerbating the digital divide",
+    "root_cause": "Systemic poverty and lack of investment in digital infrastructure, particularly in underserved areas",
+    "severity": "MEDIUM",
+    "leverage_points": [
+      "Government agencies and policymakers",
+      "Non-profit organizations and private companies investing in digital infrastructure"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Implement programs to increase access to affordable high-speed internet and digital devices",
+        "measurable_goal": "Reduce the number of households without internet access by 20% within the next 12 months",
+        "timeframe": "medium-term"
+      },
+      {
+        "action": "Support non-profit organizations working to close the digital divide",
+        "measurable_goal": "Increase the number of people served by these organizations by 30% within the next 18 months",
+        "timeframe": "medium-term"
+      }
+    ],
+    "evidence": [
+      "Bedford County closes digital divide with $25 million boost in high-speed internet",
+      "IDIA Bridges the Digital Divide | Verizon"
+    ],
+    "generalization": "This problem connects to the domains of Civilization and Biosphere, as it affects the overall well-being and economic opportunities of individuals and communities, which in turn can impact the health of the planet",
+    "summary": "The digital divide remains a significant problem, with many people lacking access to high-speed internet and digital tools, but efforts by governments, non-profits, and private companies can help address this issue",
+    "risk_level": "MEDIUM"
+  },
+  "raw_items": [
+    {
+      "title": "How I Get Free Traffic from ChatGPT in 2025 (AIO vs SEO)",
+      "summary": "<p style=\"text-align: left;\">Three weeks ago, I tested something that completely changed how I think about organic traffic. I opened ChatGPT and asked a simple question: \"What's the best course on building SaaS with WordPress?\" The answer that appeared stopped me cold. My course showed up as the first result, recommended directly by the AI with specific reasons why it was valuable.</p><p style=\"text-align: left;\">I hadn't paid for advertising. I hadn't done any special promotion. The AI simply d",
+      "link": "https://techncruncher.blogspot.com/2025/12/how-i-get-free-traffic-from-chatgpt-in.html",
+      "published": "Thu, 04 Dec 2025 05:37:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Top 10 AI Tools That Will Transform Your Content Creation in 2025",
+      "summary": "<div style=\"text-align: left;\"><a href=\"https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEge5QgwLKWbavTUhIedQLI79z5BGD4h0ZoH4YMK6bGBL6fY4Je8R3GZurMZaJmtYirFS6pS-GgZD3xFAqfln8w8faEY2iDehndQNeez57DoiDsgYFJrIwMOLBjzcZiOJrqYDktm6pmRkwtprJChag0yQoeEZx1Pa_eKnt3kKzz69f-FSPWu_JXQxFq5Z8WZ/s1920/Blue%20Purple%20Futuristic%20Modern%203D%20Tech%20Company%20Business%20Presentation.jpg\" style=\"clear: left; margin-bottom: 1em;\"><span style=\"font-family: Coda;\"><img alt=\"Top 10 AI Tools That Will Trans",
+      "link": "https://techncruncher.blogspot.com/2025/01/top-10-ai-tools-that-will-transform.html",
+      "published": "Thu, 02 Jan 2025 09:26:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "LimeWire AI Studio Review 2023: Details, Pricing & Features",
+      "summary": "<p style=\"text-align: left;\"><span style=\"font-family: Oxygen;\">&nbsp;</span></p><p style=\"text-align: left;\"><span style=\"font-family: Oxygen;\">In the rapidly advancing landscape of AI technology and innovation, LimeWire emerges as a unique platform in the realm of generative AI tools. This platform not only stands out from the multitude of existing AI tools but also brings a fresh approach to content generation. LimeWire not only empowers users to create AI content but also provides creators w",
+      "link": "https://techncruncher.blogspot.com/2023/12/limewire-ai-studio-review-2023-details.html",
+      "published": "Tue, 12 Dec 2023 16:10:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Top 10 AI Tools in 2023 That Will Make Your Life Easier",
+      "summary": "<p><span style=\"font-family: Montserrat;\"><br /></span></p><div class=\"separator\" style=\"clear: both; text-align: center;\"><a href=\"https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiu91xnR3LQV62WoiA0scuFOTa-Xx9vIwouaceeyosFtZrJB0UivYIWtbcF3TCWEjKhRQVBiSeB00RQI0-cO_eBG6d05_6UV7zYw9qzyHMJ6u2m9_itNW2mFAS8LChEhhJQ14aJbI3GrkEsY9xCTExAT-qxUSh5asVFMAmX-ceWufpgV_DrG9tk3Y4umw/s1920/Blue%20Purple%20Futuristic%20Modern%203D%20Tech%20Company%20Business%20Presentation-min.jpg\" style=\"margin-left: 1",
+      "link": "https://techncruncher.blogspot.com/2023/01/top-10-ai-tools-in-2023-that-will-make.html",
+      "published": "Wed, 25 Jan 2023 19:52:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "The Most Promising Ebola Vaccine Has Been Sitting on the Shelf for 15 Years",
+      "summary": "Years after initial tests, researchers are now racing to see if a vaccine developed in 2011 can help fight the current Bundibugyo outbreak in Congo.",
+      "link": "https://www.wired.com/story/ebola-vaccine-sitting-on-shelf-for-15-years/",
+      "published": "Fri, 19 Jun 2026 14:23:43 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "The Best iPad to Buy (and Some to Avoid) in 2026: Compare the Air, Pro, Mini",
+      "summary": "We break down the current iPad lineup to help you figure out which of Apple’s tablets is best for you.",
+      "link": "https://www.wired.com/gallery/the-best-ipad/",
+      "published": "Fri, 19 Jun 2026 12:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Best Mesh Wi-Fi Systems (2026): Netgear, Asus, Amazon, and More",
+      "summary": "Forget about patchy internet connections and dead spots in the house. These WIRED-tested multiroom mesh systems will get you online in no time.",
+      "link": "https://www.wired.com/story/best-mesh-wifi-routers/",
+      "published": "Fri, 19 Jun 2026 11:31:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "The Best Art TVs",
+      "summary": "Even after your movies end, these art televisions look stunning on any wall.",
+      "link": "https://www.wired.com/story/best-art-tvs/",
+      "published": "Fri, 19 Jun 2026 11:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] Closing the Digital Divide: How Upwork Supports Human-I-T’s Social Mission",
+      "summary": "[DESCRIPTION FALLBACK] Human-I-T is a nonprofit social enterprise committed to ensuring everybody in the world has access to the digital tools they need ...",
+      "link": "https://www.youtube.com/watch?v=cz-rOhiMxmo",
+      "published": "2026-02-27T19:47:23Z",
+      "source_type": "youtube",
+      "channel": "Upwork",
+      "video_id": "cz-rOhiMxmo",
+      "transcript_method": "description",
+      "transcript_chars": 156,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Bedford County closes digital divide with $25 million boost in high-speed internet",
+      "summary": "[DESCRIPTION FALLBACK] Bedford County is making big strides in closing the digital divide with a major boost in high-speed internet access. Thanks to a ...",
+      "link": "https://www.youtube.com/watch?v=3qAfCKfQIUc",
+      "published": "2026-01-07T00:08:12Z",
+      "source_type": "youtube",
+      "channel": "WSLS 10",
+      "video_id": "3qAfCKfQIUc",
+      "transcript_method": "description",
+      "transcript_chars": 155,
+      "has_full_transcript": false
+    }
+  ]
+}

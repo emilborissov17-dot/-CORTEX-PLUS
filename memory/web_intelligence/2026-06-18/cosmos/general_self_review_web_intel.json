@@ -1,0 +1,157 @@
+{
+  "axis": "GENERAL_SELF_REVIEW",
+  "domain": "cosmos",
+  "timestamp": "2026-06-18T18:22:04.094491+00:00",
+  "sources_count": 11,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] Lost in the Hype: AI Will Never Become Conscious | Sir Roger Penrose (Nobel)",
+      "summary": "[DESCRIPTION FALLBACK] This video is a short clip from our full‑length interview with Sir Roger Penrose. In the full conversation on our channel, the ...",
+      "link": "https://www.youtube.com/watch?v=e9484gNpFF8",
+      "published": "2025-04-19T13:30:54Z",
+      "source_type": "youtube",
+      "channel": "This Is The World",
+      "video_id": "e9484gNpFF8",
+      "transcript_method": "description",
+      "transcript_chars": 153,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Why AI Isn’t Going to Become Conscious | Anil Seth | TED",
+      "summary": "[DESCRIPTION FALLBACK] We see consciousness in AI the same way we see faces in clouds, says neuroscientist Anil Seth. He explores the all-too-human ...",
+      "link": "https://www.youtube.com/watch?v=tJV-vdbZ388",
+      "published": "2026-05-08T15:01:48Z",
+      "source_type": "youtube",
+      "channel": "TED",
+      "video_id": "tJV-vdbZ388",
+      "transcript_method": "description",
+      "transcript_chars": 151,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] A.I. ‐ Humanity&#39;s Final Invention?",
+      "summary": "[DESCRIPTION FALLBACK] Go to https://brilliant.org/nutshell/ to dive deeper into these topics and more with a free 30-day trial + 20% off the premium ...",
+      "link": "https://www.youtube.com/watch?v=fa8k8IQ1_X0",
+      "published": "2024-08-06T14:00:09Z",
+      "source_type": "youtube",
+      "channel": "Kurzgesagt – In a Nutshell",
+      "video_id": "fa8k8IQ1_X0",
+      "transcript_method": "description",
+      "transcript_chars": 153,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "problem": "Lack of concrete progress in geoengineering and dark matter research despite increased attention",
+    "root_cause": "Insufficient investment and coordination in these fields, leading to scattered and inefficient efforts",
+    "severity": "MEDIUM",
+    "leverage_points": [
+      "Government agencies and research institutions",
+      "Private investors and tech companies"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Establish a global geoengineering research initiative with coordinated funding and goals",
+        "measurable_goal": "Reduce carbon emissions by 10% within 5 years through geoengineering methods",
+        "timeframe": "medium-term"
+      },
+      {
+        "action": "Increase investment in dark matter research by 20% annually for the next 3 years",
+        "measurable_goal": "Discover and verify the existence of dark matter particles within 5 years",
+        "timeframe": "long-term"
+      }
+    ],
+    "evidence": [
+      "Geoengineering still faces major practical challenges",
+      "The search for dark matter has been blown wide open with new research initiatives"
+    ],
+    "generalization": "This problem connects to the domains of Planet (climate change) and Civilization (sustainable energy and technology)",
+    "summary": "Despite growing attention, geoengineering and dark matter research lack concrete progress due to insufficient investment and coordination. A global initiative and increased investment could address these challenges.",
+    "risk_level": "MEDIUM"
+  },
+  "raw_items": [
+    {
+      "title": "The Download: a new hunt for dark matter and Kenya’s case for going solar",
+      "summary": "This is today&#8217;s edition of The Download, our weekday newsletter that provides a daily dose of what&#8217;s going on in the world of technology. The search for dark matter has been blown wide open For decades, physicists have hunted for weakly interacting massive particles (WIMPs), a leading candidate for dark matter. But their search has&#8230;",
+      "link": "https://www.technologyreview.com/2026/06/18/1139261/the-download-dark-matter-hunt-kenya-solar-power/",
+      "published": "Thu, 18 Jun 2026 12:10:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Geoengineering still faces major practical challenges",
+      "summary": "Solar geoengineering is often portrayed as a sort of emergency brake. Something along the lines of Pull in case of climate emergency to scatter light-reflecting particles to bounce sunlight out of the atmosphere and cool the planet. But it might be less like a simple brake and more like a complicated, entirely unsolved puzzle. Some&#8230;",
+      "link": "https://www.technologyreview.com/2026/06/18/1139227/geoengineering-engineering-challenges/",
+      "published": "Thu, 18 Jun 2026 10:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "The search for dark matter has been blown wide open",
+      "summary": "Underneath an Apennine massif, below the Jinping Mountains of Sichuan, and at the bottom of a South Dakota mine, there is a cosmic hunt afoot. Isolated deep beneath these rocky shields, massive detectors filled with liquid xenon aim to make the first direct detections of dark matter, the long-sought invisible substance whose gravity has sculpted&#8230;",
+      "link": "https://www.technologyreview.com/2026/06/18/1138755/search-for-dark-matter-blown-wide-open/",
+      "published": "Thu, 18 Jun 2026 09:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "The Download: a reality check for geoengineering and the science of interoception",
+      "summary": "This is today&#8217;s edition of The Download, our weekday newsletter that provides a daily dose of what&#8217;s going on in the world of technology. Hacking the atmosphere: geoengineering gets a reality check Solar geoengineering, the controversial idea that we could deliberately intervene in the climate system to counteract global warming, is moving beyond computer simulations&#8230;",
+      "link": "https://www.technologyreview.com/2026/06/17/1139200/the-download-solar-geoengineering-interoception/",
+      "published": "Wed, 17 Jun 2026 12:10:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Improving health intelligence in ChatGPT",
+      "summary": "Learn how GPT-5.5 Instant improves ChatGPT’s health and wellness responses with stronger reasoning, better context, clearer communication, and physician-informed evaluations.",
+      "link": "https://openai.com/index/improving-health-intelligence-in-chatgpt",
+      "published": "Thu, 18 Jun 2026 11:00:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Using AI to help physicians diagnose rare genetic diseases affecting children",
+      "summary": "Researchers used an OpenAI reasoning model to help diagnose rare diseases, identifying 18 new diagnoses in previously unsolved cases.",
+      "link": "https://openai.com/index/diagnose-rare-childhood-diseases",
+      "published": "Thu, 18 Jun 2026 08:00:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "A near-autonomous AI chemist improves a challenging reaction in medicinal chemistry",
+      "summary": "OpenAI and Molecule.one show how a near-autonomous AI chemist using GPT-5.4 improved a key drug-making reaction, advancing medicinal chemistry research.",
+      "link": "https://openai.com/index/ai-chemist-improves-reaction",
+      "published": "Wed, 17 Jun 2026 10:00:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Introducing LifeSciBench",
+      "summary": "Introducing LifeSciBench, an expert-authored, expert-reviewed benchmark for evaluating how AI systems handle real-world life science research tasks and decisions.",
+      "link": "https://openai.com/index/introducing-life-sci-bench",
+      "published": "Wed, 17 Jun 2026 00:00:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] Lost in the Hype: AI Will Never Become Conscious | Sir Roger Penrose (Nobel)",
+      "summary": "[DESCRIPTION FALLBACK] This video is a short clip from our full‑length interview with Sir Roger Penrose. In the full conversation on our channel, the ...",
+      "link": "https://www.youtube.com/watch?v=e9484gNpFF8",
+      "published": "2025-04-19T13:30:54Z",
+      "source_type": "youtube",
+      "channel": "This Is The World",
+      "video_id": "e9484gNpFF8",
+      "transcript_method": "description",
+      "transcript_chars": 153,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Why AI Isn’t Going to Become Conscious | Anil Seth | TED",
+      "summary": "[DESCRIPTION FALLBACK] We see consciousness in AI the same way we see faces in clouds, says neuroscientist Anil Seth. He explores the all-too-human ...",
+      "link": "https://www.youtube.com/watch?v=tJV-vdbZ388",
+      "published": "2026-05-08T15:01:48Z",
+      "source_type": "youtube",
+      "channel": "TED",
+      "video_id": "tJV-vdbZ388",
+      "transcript_method": "description",
+      "transcript_chars": 151,
+      "has_full_transcript": false
+    }
+  ]
+}

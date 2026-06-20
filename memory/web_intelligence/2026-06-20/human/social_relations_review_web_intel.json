@@ -1,0 +1,145 @@
+{
+  "axis": "SOCIAL_RELATIONS_REVIEW",
+  "domain": "human",
+  "timestamp": "2026-06-20T05:37:35.396592+00:00",
+  "sources_count": 10,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 2,
+  "youtube_items": [
+    {
+      "title": "[YT] Loneliness and Social Isolation: Tackling the ... - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] Apr 4, 2025 · This webinar will discuss why we should care about loneliness and social isolation, the negative health consequences of these issues, how to recognize and identify loneliness and social...",
+      "link": "https://www.youtube.com/watch?v=eXEoYLhVGd8",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "eXEoYLhVGd8",
+      "transcript_method": "description",
+      "transcript_chars": 225,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] The Loneliness Epidemic: What’s Really Going On ... - YouTubeSense of Community | The Loneliness Epidemic - Overview | PBSHow Cohousing Neighborhoods Can Combat the Rise of Loneliness ...This clip explains how loneliness is a growing public health ...Loneliness Is on the Rise. Are Closer Neighbors a Solution?Loneliness and isolation – the hidden threat to global health ...",
+      "summary": "[DESCRIPTION FALLBACK] In this episode of Perspectives, a panel of Priory experts tackle the truth about modern disconnection, isolation, and what it really means to feel alone in today’s world. One in three adults over 60 live by themselves, but loneliness is the deeper experience of craving connection. An overview of its hidden impacts on health and well-being. Jun 20, 2024 · Experts caution that this loneliness may be as harmful to health as smoking. In a new video with Retro Report, we explore one possible solutio",
+      "link": "https://www.youtube.com/watch?v=eLNoEBiM8Vc",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "eLNoEBiM8Vc",
+      "transcript_method": "description",
+      "transcript_chars": 523,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "problem": "Growing loneliness and social isolation among adults",
+    "root_cause": "Modern disconnection and isolation due to various factors such as urbanization, technological advancements, and lack of community engagement",
+    "severity": "HIGH",
+    "leverage_points": [
+      "Community leaders and local governments",
+      "Mental health professionals and social workers"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Implement community-based programs to promote social connections and a sense of belonging",
+        "measurable_goal": "Reduce loneliness rates by 20% within the next 12 months",
+        "timeframe": "medium-term"
+      },
+      {
+        "action": "Increase funding for mental health services and social isolation research",
+        "measurable_goal": "Increase funding by 30% within the next 18 months",
+        "timeframe": "medium-term"
+      }
+    ],
+    "evidence": [
+      "One in three adults over 60 live by themselves, but loneliness is the deeper experience of craving connection",
+      "Experts caution that loneliness is a growing public health concern with hidden impacts on health and well-being"
+    ],
+    "generalization": "This problem connects to the domain of human health and wellbeing, and has implications for the sustainability of civilization, as lonely and isolated individuals may be less likely to contribute to their communities and more likely to experience poor health outcomes",
+    "summary": "Loneliness and social isolation are growing concerns among adults, with significant implications for mental and physical health, and community engagement is crucial to addressing this issue.",
+    "risk_level": "HIGH"
+  },
+  "raw_items": [
+    {
+      "title": "Catholics in Latin America generally have positive views of Pope Leo",
+      "summary": "In six Latin American countries surveyed, most Catholics view Pope Leo XIV favorably, though his ratings trail those Pope Francis received early in his papacy.",
+      "link": "https://www.pewresearch.org/short-reads/2026/06/18/catholics-in-latin-america-generally-have-positive-views-of-pope-leo/",
+      "published": "Thu, 18 Jun 2026 17:41:43 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Most U.S. Catholics view Pope Leo favorably; many think Trump has been too critical of him",
+      "summary": "About eight-in-ten U.S. Catholics view Pope Leo XIV favorably, though opinions on the tension between Leo and President Trump split sharply along party lines.",
+      "link": "https://www.pewresearch.org/short-reads/2026/06/18/most-us-catholics-view-pope-leo-favorably-many-think-trump-has-been-too-critical-of-him/",
+      "published": "Thu, 18 Jun 2026 17:41:09 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Is U.S. fertility at an all-time low? It depends how you measure it",
+      "summary": "U.S. fertility rates have hit historic lows, but three common measures tell different stories about whether American families are truly shrinking.",
+      "link": "https://www.pewresearch.org/short-reads/2026/06/17/is-us-fertility-at-an-all-time-low-it-depends-how-you-measure-it/",
+      "published": "Wed, 17 Jun 2026 18:52:43 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "What the data says about abortion in the U.S.",
+      "summary": "Six-in-ten US adults say abortion should be legal in all or most cases. Here's a look at data on abortion rates, providers, demographics and more.",
+      "link": "https://www.pewresearch.org/short-reads/2026/06/17/what-the-data-says-about-abortion-in-the-us/",
+      "published": "Wed, 17 Jun 2026 16:02:33 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Israel and Hezbollah agree ceasefire, US says, as more Lebanon strikes reported",
+      "summary": "The agreement followed concerns that continued clashes would undermine the deal to end the war between the US and Iran.",
+      "link": "https://www.bbc.com/news/articles/cwyk7kkygj5o?at_medium=RSS&at_campaign=rss",
+      "published": "Fri, 19 Jun 2026 19:27:12 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Italy's Meloni says Trump 'made up' story that she 'begged' him for photo at G7",
+      "summary": "The highly public exchange is an indication that their earlier close ties have frayed  since Trump's decision to go to war with Iran.",
+      "link": "https://www.bbc.com/news/articles/c20y1ygn707o?at_medium=RSS&at_campaign=rss",
+      "published": "Fri, 19 Jun 2026 19:36:10 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "US to stop funding HIV programmes in South Africa",
+      "summary": "More than eight million South Africans are living with HIV – the highest number of any country in the world.",
+      "link": "https://www.bbc.com/news/articles/cdr457lxr71o?at_medium=RSS&at_campaign=rss",
+      "published": "Fri, 19 Jun 2026 23:35:07 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Watch: World Cup fans react to US defeating Australia to reach knockout round",
+      "summary": "US supporters were delighted after their team won 2-0 against the Socceroos while Australian fans were left disappointed but still hopeful.",
+      "link": "https://www.bbc.com/news/videos/cdxdly41p23o?at_medium=RSS&at_campaign=rss",
+      "published": "Sat, 20 Jun 2026 03:13:18 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] Loneliness and Social Isolation: Tackling the ... - YouTube",
+      "summary": "[DESCRIPTION FALLBACK] Apr 4, 2025 · This webinar will discuss why we should care about loneliness and social isolation, the negative health consequences of these issues, how to recognize and identify loneliness and social...",
+      "link": "https://www.youtube.com/watch?v=eXEoYLhVGd8",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "eXEoYLhVGd8",
+      "transcript_method": "description",
+      "transcript_chars": 225,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] The Loneliness Epidemic: What’s Really Going On ... - YouTubeSense of Community | The Loneliness Epidemic - Overview | PBSHow Cohousing Neighborhoods Can Combat the Rise of Loneliness ...This clip explains how loneliness is a growing public health ...Loneliness Is on the Rise. Are Closer Neighbors a Solution?Loneliness and isolation – the hidden threat to global health ...",
+      "summary": "[DESCRIPTION FALLBACK] In this episode of Perspectives, a panel of Priory experts tackle the truth about modern disconnection, isolation, and what it really means to feel alone in today’s world. One in three adults over 60 live by themselves, but loneliness is the deeper experience of craving connection. An overview of its hidden impacts on health and well-being. Jun 20, 2024 · Experts caution that this loneliness may be as harmful to health as smoking. In a new video with Retro Report, we explore one possible solutio",
+      "link": "https://www.youtube.com/watch?v=eLNoEBiM8Vc",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "eLNoEBiM8Vc",
+      "transcript_method": "description",
+      "transcript_chars": 523,
+      "has_full_transcript": false
+    }
+  ]
+}
