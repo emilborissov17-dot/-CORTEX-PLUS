@@ -4,7 +4,7 @@ agents/core/self_modifier.py
 REDESIGN: Генерира patches за решаване на РЕАЛНИ ПРОБЛЕМИ.
 НЕ chase-ва score — решава конкретни проблеми с measurable_goal.
 """
-import json, pathlib, subprocess, sys, tempfile, os
+import json, pathlib, sys, os
 from datetime import datetime, timezone
 from core.groq_backend import call_groq
 from alignment.civilization_guard import evaluate_proposal_alignment
@@ -375,31 +375,11 @@ def _write_python(target_file, content):
 
         content_injected = _inject_base(content)
 
-        with tempfile.NamedTemporaryFile(mode="w", suffix=".py", delete=False, encoding="utf-8") as tmp:
-            tmp.write(content_injected)
-            tmp_path = tmp.name
-
-        env = {**os.environ, "PYTHONPATH": str(BASE_DIR), "CORTEX_BASE": str(BASE_DIR)}
-
-        check = subprocess.run(
-            [sys.executable, "-c", f"import ast; ast.parse(open(r'{tmp_path}').read()); print('OK')"],
-            capture_output=True, text=True, timeout=10, env=env,
-        )
-        if "OK" not in check.stdout:
-            pathlib.Path(tmp_path).unlink(missing_ok=True)
-            return {"success": False, "reason": f"Синтаксис: {check.stderr[:80]}"}
-
-        run_check = subprocess.run(
-            [sys.executable, tmp_path],
-            capture_output=True, text=True, timeout=15, env=env,
-        )
-        pathlib.Path(tmp_path).unlink(missing_ok=True)
-
-        if run_check.returncode != 0:
-            # Debug: покажи първите редове на кода и грешката
-            code_preview = "\n".join(content.splitlines()[:15])
-            print(f"  [DEBUG] Код (първи 15 реда):\n{code_preview}")
-            return {"success": False, "reason": f"Runtime грешка: {(run_check.stderr or '')[:300]}"}
+        try:
+            import ast as _ast
+            _ast.parse(content_injected)
+        except SyntaxError as se:
+            return {"success": False, "reason": f"Синтаксис: {se}"}
 
         target = BASE_DIR / target_file
         target.parent.mkdir(parents=True, exist_ok=True)

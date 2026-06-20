@@ -217,7 +217,7 @@ class SelfAwareness:
             "resources_current": self.resources,
             "capabilities": self.capabilities,
             "goal": self.goal,
-            "performance_history": [str(p) for p in self.performance_history],
+            "performance_history": [str(p)[:200] for p in self.performance_history[:20]],
             "trends": self.trends,
             "predictions": self.predictions,
             "self_assessment": self.assess_self()
