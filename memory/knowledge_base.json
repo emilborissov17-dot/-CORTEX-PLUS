@@ -1,8 +1,7 @@
 {
   "ENERGY_REVIEW": {
-    "cycle_count": 74,
+    "cycle_count": 82,
     "key_insights": [
-      "ENERGY_REVIEW: Web risk: UNKNOWN",
       "ENERGY_REVIEW: Проблем: Недостатъчна надеждност на електрическата мрежа за да посрещне големите потребности на големите данн | Root cause: Бързият растеж на данните центровете и липсата на адекватна и",
       "ENERGY_REVIEW: Проблем: XAi увеличава флотилията си от газови турбини въпреки правните проверки, което потенциално увеличава | Root cause: XAi търси баланс между необходимостта от увеличаване на мощно",
       "ENERGY_REVIEW: Проблем: Некоректна прогнозиране и реална по-бавна построява на ядрената енергия, което води до нереалистични | Root cause: Публикациите показват, че прогнозите за ядрената енергия не о",
@@ -11,42 +10,11 @@
       "ENERGY_REVIEW: Проблем: Забавяне на преминаването към чисти източници на енергия от някои компании | Root cause: Отсъствието на задължителни регулации и недостатъчната политическа воля за забра",
       "ENERGY_REVIEW: Проблем: The energy transition is hindered by the lack of efficient energy storage solutions, which poses a c | Root cause: The current energy storage technologies are not yet cost-comp",
       "ENERGY_REVIEW: Проблем: Inconsistent energy policy and investment in renewable energy sources, hindering the transition to a | Root cause: Lack of coordinated and consistent energy policy, influenced ",
-      "ENERGY_REVIEW: Проблем: Inefficient grid modernization efforts and lack of investment in renewable energy may hinder the tra | Root cause: The root cause of this problem is the lack of coordination an"
+      "ENERGY_REVIEW: Проблем: Inefficient grid modernization efforts and lack of investment in renewable energy may hinder the tra | Root cause: The root cause of this problem is the lack of coordination an",
+      "ENERGY_REVIEW: Проблем: Анализ на ENERGY_REVIEW — данни получени но LLM грешка | Root cause: LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: None"
     ],
     "scores": [
       {
-        "date": "2026-05-16",
-        "score": 55.0
-      },
-      {
-        "date": "2026-05-16",
-        "score": 30.0
-      },
-      {
-        "date": "2026-05-16",
-        "score": 30.0
-      },
-      {
-        "date": "2026-05-17",
-        "score": 30.0
-      },
-      {
-        "date": "2026-05-17",
-        "score": 30.0
-      },
-      {
-        "date": "2026-05-18",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-11",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-11",
-        "score": 55.0
-      },
-      {
         "date": "2026-06-18",
         "score": 55.0
       },
@@ -133,13 +101,44 @@
       {
         "date": "2026-06-20",
         "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 25.0
       }
     ],
     "trend": "СТАБИЛНО (±0.0)",
     "last_updated": "2026-06-20",
-    "last_score": 55.0,
+    "last_score": 25.0,
     "insight_hashes": [
-      "677458cd",
       "c9851e22",
       "4d1de8d0",
       "d861a248",
@@ -148,11 +147,12 @@
       "4416d260",
       "7ba605d3",
       "9d3d2366",
-      "8572702d"
+      "8572702d",
+      "d5e16719"
     ]
   },
   "ECONOMY_WORK_REVIEW": {
-    "cycle_count": 99,
+    "cycle_count": 107,
     "key_insights": [
       "ECONOMY_WORK_REVIEW: Ниво: MEDIUM | Web risk: UNKNOWN",
       "ECONOMY_WORK_REVIEW: Проблем: Анализ на ECONOMY_WORK_REVIEW — данни получени но LLM грешка | Root cause: LLM parsing грешка",
@@ -167,38 +167,6 @@
     ],
     "scores": [
       {
-        "date": "2026-05-16",
-        "score": 55.0
-      },
-      {
-        "date": "2026-05-16",
-        "score": 30.0
-      },
-      {
-        "date": "2026-05-16",
-        "score": 30.0
-      },
-      {
-        "date": "2026-05-17",
-        "score": 30.0
-      },
-      {
-        "date": "2026-05-17",
-        "score": 30.0
-      },
-      {
-        "date": "2026-05-18",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-11",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-11",
-        "score": 55.0
-      },
-      {
         "date": "2026-06-18",
         "score": 55.0
       },
@@ -260,6 +228,38 @@
       },
       {
         "date": "2026-06-19",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
         "score": 55.0
       },
       {
@@ -304,9 +304,8 @@
     ]
   },
   "EDUCATION_CULTURE_REVIEW": {
-    "cycle_count": 99,
+    "cycle_count": 107,
     "key_insights": [
-      "EDUCATION_CULTURE_REVIEW: Проблем: Global math gender gap is shrinking, but quality of programs remains a concern. | Root cause: While there is increased investment in preschool programs, the quality ",
       "EDUCATION_CULTURE_REVIEW: Проблем: Намалените постижения на девојки в математика на глобално ниво | Root cause: Отсъствие на целевите мерки за решаване на проблема с ранна икономия в образован",
       "EDUCATION_CULTURE_REVIEW: Проблем: Ниските нива на грамотност и образование сред английските ученици са били влошени от пандемията. | Root cause: Пандемията е ограничила достъпа до образование и създа",
       "EDUCATION_CULTURE_REVIEW: Проблем: Недостатъчна защита на данни в образователните платформи довежда до кибератаки и уязвимост на училищ | Root cause: Училищата използват слабо защитени дигитални платф",
@@ -315,42 +314,11 @@
       "EDUCATION_CULTURE_REVIEW: Проблем: Намаляването на литературна грамотност сред учениците по време на пандемията | Root cause: Пандемията е променя начина, по който се провежда образованието, което е д",
       "EDUCATION_CULTURE_REVIEW: Проблем: Inequities in access to quality education and literacy rates persist globally, hindering human devel | Root cause: Systemic issues such as inadequate funding, lack o",
       "EDUCATION_CULTURE_REVIEW: Проблем: Insufficient critical thinking and media literacy skills among the global population | Root cause: Lack of emphasis on critical thinking and media literacy in tradit",
-      "EDUCATION_CULTURE_REVIEW: Проблем: Insufficient progress in increasing access to quality education, with persistent inequalities in edu | Root cause: Inadequate investment in education infrastructure,"
+      "EDUCATION_CULTURE_REVIEW: Проблем: Insufficient progress in increasing access to quality education, with persistent inequalities in edu | Root cause: Inadequate investment in education infrastructure,",
+      "EDUCATION_CULTURE_REVIEW: Проблем: Анализ на EDUCATION_CULTURE_REVIEW — данни получени но LLM грешка | Root cause: LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: None"
     ],
     "scores": [
       {
-        "date": "2026-05-16",
-        "score": 55.0
-      },
-      {
-        "date": "2026-05-16",
-        "score": 30.0
-      },
-      {
-        "date": "2026-05-16",
-        "score": 30.0
-      },
-      {
-        "date": "2026-05-17",
-        "score": 55.0
-      },
-      {
-        "date": "2026-05-17",
-        "score": 30.0
-      },
-      {
-        "date": "2026-05-18",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-11",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-11",
-        "score": 55.0
-      },
-      {
         "date": "2026-06-18",
         "score": 55.0
       },
@@ -412,6 +380,38 @@
       },
       {
         "date": "2026-06-19",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
         "score": 55.0
       },
       {
@@ -443,7 +443,6 @@
     "last_updated": "2026-06-20",
     "last_score": 55.0,
     "insight_hashes": [
-      "8e692a6d",
       "0c0ac6cf",
       "f8a710c2",
       "144c3067",
@@ -452,13 +451,13 @@
       "0b126a34",
       "277a5efc",
       "809b2d07",
-      "2b67c9c4"
+      "2b67c9c4",
+      "c43620ab"
     ]
   },
   "GOVERNANCE_INSTITUTIONS_REVIEW": {
-    "cycle_count": 96,
+    "cycle_count": 104,
     "key_insights": [
-      "GOVERNANCE_INSTITUTIONS_REVIEW: Ниво: LOW",
       "GOVERNANCE_INSTITUTIONS_REVIEW: Ниво: LOW | Web risk: UNKNOWN",
       "GOVERNANCE_INSTITUTIONS_REVIEW: Проблем: Анализ на GOVERNANCE_INSTITUTIONS_REVIEW — данни получени но LLM грешка | Root cause: LLM parsing грешка",
       "GOVERNANCE_INSTITUTIONS_REVIEW: Проблем: Финансовата нестабилност на Организацията на обединените нации (ОН) поради неплатени членски вноски  | Root cause: Неизпълнението на финансовите задължения от ",
@@ -467,135 +466,135 @@
       "GOVERNANCE_INSTITUTIONS_REVIEW: Проблем: Продължаващите конфликти и насилие в различни части на света, например в Газа, Мали и Сирия | Root cause: Сложните исторически, политически и социални фактори,",
       "GOVERNANCE_INSTITUTIONS_REVIEW: Проблем: Inadequate representation of women in peace negotiations and governance institutions | Root cause: Systemic gender bias and lack of inclusive decision-making p",
       "GOVERNANCE_INSTITUTIONS_REVIEW: Проблем: Lack of effective international cooperation and inconsistent adherence to human rights and internati | Root cause: Inconsistent enforcement mechanisms and vary",
-      "GOVERNANCE_INSTITUTIONS_REVIEW: Проблем: Lack of effective governance and international cooperation to address humanitarian crises, such as t | Root cause: Insufficient commitment to and enforcement o"
+      "GOVERNANCE_INSTITUTIONS_REVIEW: Проблем: Lack of effective governance and international cooperation to address humanitarian crises, such as t | Root cause: Insufficient commitment to and enforcement o",
+      "GOVERNANCE_INSTITUTIONS_REVIEW: Проблем: Анализ на GOVERNANCE_INSTITUTIONS_REVIEW — данни получени но LLM грешка | Root cause: LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: None"
     ],
     "scores": [
       {
-        "date": "2026-05-08",
+        "date": "2026-06-18",
         "score": 55.0
       },
       {
-        "date": "2026-05-09",
+        "date": "2026-06-18",
         "score": 55.0
       },
       {
-        "date": "2026-05-09",
+        "date": "2026-06-18",
         "score": 55.0
       },
       {
-        "date": "2026-05-16",
+        "date": "2026-06-18",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-18",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-18",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-18",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-18",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-18",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-18",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-18",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-18",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-19",
         "score": 30.0
       },
       {
-        "date": "2026-05-17",
+        "date": "2026-06-19",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-19",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-19",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-20",
         "score": 25.0
-      },
-      {
-        "date": "2026-05-18",
-        "score": 30.0
-      },
-      {
-        "date": "2026-06-11",
-        "score": 30.0
-      },
-      {
-        "date": "2026-06-11",
-        "score": 30.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-19",
-        "score": 30.0
-      },
-      {
-        "date": "2026-06-19",
-        "score": 30.0
-      },
-      {
-        "date": "2026-06-19",
-        "score": 30.0
-      },
-      {
-        "date": "2026-06-19",
-        "score": 30.0
-      },
-      {
-        "date": "2026-06-20",
-        "score": 30.0
-      },
-      {
-        "date": "2026-06-20",
-        "score": 30.0
-      },
-      {
-        "date": "2026-06-20",
-        "score": 30.0
-      },
-      {
-        "date": "2026-06-20",
-        "score": 30.0
-      },
-      {
-        "date": "2026-06-20",
-        "score": 30.0
-      },
-      {
-        "date": "2026-06-20",
-        "score": 30.0
       }
     ],
     "trend": "СТАБИЛНО (±0.0)",
     "last_updated": "2026-06-20",
-    "last_score": 30.0,
+    "last_score": 25.0,
     "insight_hashes": [
-      "b3619cda",
       "162d6dde",
       "fa911702",
       "4dc14c37",
@@ -604,13 +603,13 @@
       "4a96650f",
       "f963846d",
       "8bf62318",
-      "70783829"
+      "70783829",
+      "911e4359"
     ]
   },
   "INEQUALITY_POVERTY_REVIEW": {
-    "cycle_count": 99,
+    "cycle_count": 107,
     "key_insights": [
-      "INEQUALITY_POVERTY_REVIEW: Ниво: MEDIUM | Web risk: UNKNOWN",
       "INEQUALITY_POVERTY_REVIEW: Проблем: Анализ на INEQUALITY_POVERTY_REVIEW — данни получени но LLM грешка | Root cause: LLM parsing грешка",
       "INEQUALITY_POVERTY_REVIEW: Проблем: 37 милиона души в САЩ живеят в бедност според мерките на преброяването на населението | Root cause: Неравномерното разпределение на доходите и богатството в обществ",
       "INEQUALITY_POVERTY_REVIEW: Проблем: Неравенство на доходите и бедността в САЩ | Root cause: Концентриране на богатството при малка част от населението, което води до значит",
@@ -619,42 +618,11 @@
       "INEQUALITY_POVERTY_REVIEW: Проблем: Повече от 430 милиона души живеят в бедност в Субсахарска Африка, където над 40% от населението живе | Root cause: Неравенството и недостатъчното развитие на иконом",
       "INEQUALITY_POVERTY_REVIEW: Проблем: 839 million people live in poverty globally, with an increase in extreme poverty rate in Sub-Saharan | Root cause: Inequality and lack of economic growth in poor re",
       "INEQUALITY_POVERTY_REVIEW: Проблем: High poverty rates persist in Sub-Saharan Africa and Latin America, with over 25% of the population  | Root cause: Inequality and unequal distribution of wealth and",
-      "INEQUALITY_POVERTY_REVIEW: Проблем: Over 40% of people in Sub-Saharan Africa live in extreme poverty | Root cause: Lack of economic growth and unequal distribution of resources in Sub-Saharan Afr"
+      "INEQUALITY_POVERTY_REVIEW: Проблем: Over 40% of people in Sub-Saharan Africa live in extreme poverty | Root cause: Lack of economic growth and unequal distribution of resources in Sub-Saharan Afr",
+      "INEQUALITY_POVERTY_REVIEW: Проблем: Анализ на INEQUALITY_POVERTY_REVIEW — данни получени но LLM грешка | Root cause: LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: None"
     ],
     "scores": [
       {
-        "date": "2026-05-16",
-        "score": 30.0
-      },
-      {
-        "date": "2026-05-16",
-        "score": 10.0
-      },
-      {
-        "date": "2026-05-16",
-        "score": 10.0
-      },
-      {
-        "date": "2026-05-17",
-        "score": 55.0
-      },
-      {
-        "date": "2026-05-17",
-        "score": 10.0
-      },
-      {
-        "date": "2026-05-18",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-11",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-11",
-        "score": 55.0
-      },
-      {
         "date": "2026-06-18",
         "score": 30.0
       },
@@ -741,13 +709,44 @@
       {
         "date": "2026-06-20",
         "score": 10.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 10.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 10.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 10.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 10.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 10.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 10.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 10.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
       }
     ],
     "trend": "СТАБИЛНО (±0.0)",
     "last_updated": "2026-06-20",
-    "last_score": 10.0,
+    "last_score": 55.0,
     "insight_hashes": [
-      "b2b64fc9",
       "0a63d08c",
       "8bd2c5f0",
       "08729a74",
@@ -756,13 +755,13 @@
       "2d8b2692",
       "0726d936",
       "0b9cd1c9",
-      "8d64e6e7"
+      "8d64e6e7",
+      "68d5f695"
     ]
   },
   "INFRASTRUCTURE_CITIES_REVIEW": {
-    "cycle_count": 99,
+    "cycle_count": 107,
     "key_insights": [
-      "INFRASTRUCTURE_CITIES_REVIEW: Проблем: Повишено ниво на непрекъснато движение и неразрешен проблем със стари пътища, които не са поддържани | Root cause: Повече от градовете използват стари пътища, ко",
       "INFRASTRUCTURE_CITIES_REVIEW: Проблем: Недостатъчно финансиране за инфраструктурни проекти, което може да забави или спре разработката на у | Root cause: Ограничения във финансирането и липса на ефика",
       "INFRASTRUCTURE_CITIES_REVIEW: Проблем: Недостиг на водни ресурси и неадекватна водна инфраструктура в градовете | Root cause: Недостиг на финансиране и плохо планиране на водните ресурси и инфраструкт",
       "INFRASTRUCTURE_CITIES_REVIEW: Проблем: Инфраструктурата за водоподем и управление на градски води е в критично състояние в някои градове, к | Root cause: Повечето градове имат стара и неефективна инфр",
@@ -771,42 +770,11 @@
       "INFRASTRUCTURE_CITIES_REVIEW: Проблем: Недостатъчната инфраструктура в градовете, включително водоснабдителната система и жилища за бездомн | Root cause: Отсъствието на достатъчни инвестиции и планира",
       "INFRASTRUCTURE_CITIES_REVIEW: Проблем: Inefficient use of existing infrastructure and potential loss of homes and transportation hubs | Root cause: Lack of effective urban planning and insufficient in",
       "INFRASTRUCTURE_CITIES_REVIEW: Проблем: Inadequate affordable housing and potential loss of existing homes in cities | Root cause: Insufficient urban planning and lack of effective strategies to balanc",
-      "INFRASTRUCTURE_CITIES_REVIEW: Проблем: Housing segregation and potential loss of homes in urban areas | Root cause: Inadequate urban planning and housing policies, leading to segregation and unaff"
+      "INFRASTRUCTURE_CITIES_REVIEW: Проблем: Housing segregation and potential loss of homes in urban areas | Root cause: Inadequate urban planning and housing policies, leading to segregation and unaff",
+      "INFRASTRUCTURE_CITIES_REVIEW: Проблем: Анализ на INFRASTRUCTURE_CITIES_REVIEW — данни получени но LLM грешка | Root cause: LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: None"
     ],
     "scores": [
       {
-        "date": "2026-05-16",
-        "score": 55.0
-      },
-      {
-        "date": "2026-05-16",
-        "score": 10.0
-      },
-      {
-        "date": "2026-05-16",
-        "score": 10.0
-      },
-      {
-        "date": "2026-05-17",
-        "score": 55.0
-      },
-      {
-        "date": "2026-05-17",
-        "score": 10.0
-      },
-      {
-        "date": "2026-05-18",
-        "score": 30.0
-      },
-      {
-        "date": "2026-06-11",
-        "score": 30.0
-      },
-      {
-        "date": "2026-06-11",
-        "score": 30.0
-      },
-      {
         "date": "2026-06-18",
         "score": 55.0
       },
@@ -868,6 +836,38 @@
       },
       {
         "date": "2026-06-19",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
         "score": 55.0
       },
       {
@@ -899,7 +899,6 @@
     "last_updated": "2026-06-20",
     "last_score": 55.0,
     "insight_hashes": [
-      "bffe9618",
       "0f7910a7",
       "c63dcb70",
       "4fc94d14",
@@ -908,13 +907,13 @@
       "0a1c566d",
       "b9fa7a73",
       "4b67e87e",
-      "3426fc9b"
+      "3426fc9b",
+      "ad851cff"
     ]
   },
   "TECHNOLOGY_AI_REVIEW": {
-    "cycle_count": 99,
+    "cycle_count": 107,
     "key_insights": [
-      "TECHNOLOGY_AI_REVIEW: Ниво: MEDIUM | Web risk: MEDIUM",
       "TECHNOLOGY_AI_REVIEW: Проблем: Анализ на TECHNOLOGY_AI_REVIEW — данни получени но LLM грешка | Root cause: LLM parsing грешка",
       "TECHNOLOGY_AI_REVIEW: Проблем: Високата цена на инструментите за изкуствен интелект (AI) може да ограничи достъпа до тях за малки к | Root cause: Ограничената конкуренция на пазара на AI инструменти и",
       "TECHNOLOGY_AI_REVIEW: Проблем: Конкуренцията за AI-ресурси води до несправедно разпределение на технологии и услуги, което огранича | Root cause: Платформи като Claude и Goose предлагат различни модел",
@@ -923,42 +922,11 @@
       "TECHNOLOGY_AI_REVIEW: Проблем: Ниска достъпност на AI технологии за малки компании и индивиди поради високи разходи | Root cause: Доминантият модел на собственост и разработка на AI технологии от голе",
       "TECHNOLOGY_AI_REVIEW: Проблем: High cost of AI coding tools, making them inaccessible to many developers | Root cause: The high cost of developing and maintaining AI-powered coding tools, which is th",
       "TECHNOLOGY_AI_REVIEW: Проблем: The high cost of AI coding tools, such as Claude Code, which can cost up to $200 a month, making the | Root cause: The high cost of development and maintenance of AI mod",
-      "TECHNOLOGY_AI_REVIEW: Проблем: The high cost of AI coding tools, such as Claude Code, is a barrier to accessibility for many develo | Root cause: The high development and maintenance costs of AI model"
+      "TECHNOLOGY_AI_REVIEW: Проблем: The high cost of AI coding tools, such as Claude Code, is a barrier to accessibility for many develo | Root cause: The high development and maintenance costs of AI model",
+      "TECHNOLOGY_AI_REVIEW: Проблем: Анализ на TECHNOLOGY_AI_REVIEW — данни получени но LLM грешка | Root cause: LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: None"
     ],
     "scores": [
       {
-        "date": "2026-05-16",
-        "score": 55.0
-      },
-      {
-        "date": "2026-05-16",
-        "score": 30.0
-      },
-      {
-        "date": "2026-05-16",
-        "score": 30.0
-      },
-      {
-        "date": "2026-05-17",
-        "score": 55.0
-      },
-      {
-        "date": "2026-05-17",
-        "score": 30.0
-      },
-      {
-        "date": "2026-05-18",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-11",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-11",
-        "score": 55.0
-      },
-      {
         "date": "2026-06-18",
         "score": 55.0
       },
@@ -1020,6 +988,38 @@
       },
       {
         "date": "2026-06-19",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
         "score": 55.0
       },
       {
@@ -1051,7 +1051,6 @@
     "last_updated": "2026-06-20",
     "last_score": 55.0,
     "insight_hashes": [
-      "faca09d1",
       "5d4087b5",
       "fd9d844a",
       "9e18de01",
@@ -1060,13 +1059,13 @@
       "09fc2b87",
       "7c447c96",
       "bb7a07a1",
-      "c75597ab"
+      "c75597ab",
+      "648ebe7d"
     ]
   },
   "TECHNOLOGY_INFRA_REVIEW": {
-    "cycle_count": 99,
+    "cycle_count": 107,
     "key_insights": [
-      "TECHNOLOGY_INFRA_REVIEW: Ниво: MEDIUM | Web risk: MEDIUM",
       "TECHNOLOGY_INFRA_REVIEW: Проблем: Анализ на TECHNOLOGY_INFRA_REVIEW — данни получени но LLM грешка | Root cause: LLM parsing грешка",
       "TECHNOLOGY_INFRA_REVIEW: Проблем: Недостиг на достъп до информация и технологии, които да позволят ефективно решение на проблемите с и | Root cause: Отсъствие на обслужване и поддържане на техниката, ",
       "TECHNOLOGY_INFRA_REVIEW: Проблем: Потребителите срещат проблеми с връзката (Wi-Fi или интернет) на уредите си, въпреки че са физически | Root cause: Проблемът е свързан с настройки, конфликти между со",
@@ -1075,42 +1074,11 @@
       "TECHNOLOGY_INFRA_REVIEW: Проблем: Отсъствие на технологии за устойчивост в съществуващите разработки | Root cause: Фокус върху лична полза и липса на приоритет за устойчивост в разработките",
       "TECHNOLOGY_INFRA_REVIEW: Проблем: The digital divide persists in various regions, hindering access to high-speed internet and digital  | Root cause: Insufficient investment and infrastructure developm",
       "TECHNOLOGY_INFRA_REVIEW: Проблем: Digital inequality persists, with nearly half of the world still offline, and the digital divide int | Root cause: Lack of access to affordable and reliable internet ",
-      "TECHNOLOGY_INFRA_REVIEW: Проблем: Insufficient access to digital tools and high-speed internet for all people, exacerbating the digita | Root cause: Systemic poverty and lack of investment in digital "
+      "TECHNOLOGY_INFRA_REVIEW: Проблем: Insufficient access to digital tools and high-speed internet for all people, exacerbating the digita | Root cause: Systemic poverty and lack of investment in digital ",
+      "TECHNOLOGY_INFRA_REVIEW: Проблем: Анализ на TECHNOLOGY_INFRA_REVIEW — данни получени но LLM грешка | Root cause: LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: None"
     ],
     "scores": [
       {
-        "date": "2026-05-16",
-        "score": 55.0
-      },
-      {
-        "date": "2026-05-16",
-        "score": 55.0
-      },
-      {
-        "date": "2026-05-16",
-        "score": 55.0
-      },
-      {
-        "date": "2026-05-17",
-        "score": 55.0
-      },
-      {
-        "date": "2026-05-17",
-        "score": 55.0
-      },
-      {
-        "date": "2026-05-18",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-11",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-11",
-        "score": 55.0
-      },
-      {
         "date": "2026-06-18",
         "score": 55.0
       },
@@ -1173,6 +1141,38 @@
       {
         "date": "2026-06-19",
         "score": 30.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
       },
       {
         "date": "2026-06-20",
@@ -1203,7 +1203,6 @@
     "last_updated": "2026-06-20",
     "last_score": 55.0,
     "insight_hashes": [
-      "ca24d4b9",
       "94eeeef5",
       "83135d97",
       "c6003330",
@@ -1212,13 +1211,13 @@
       "11d83f56",
       "801fdbf2",
       "759b3af3",
-      "1213c162"
+      "1213c162",
+      "af5b1578"
     ]
   },
   "COSMIC_RESOURCES_REVIEW": {
-    "cycle_count": 99,
+    "cycle_count": 107,
     "key_insights": [
-      "COSMIC_RESOURCES_REVIEW: Проблем: Asteroid mining is moving from fiction to fact, but the regulatory framework is still incomplete and | Root cause: The lack of comprehensive regulatory frameworks and",
       "COSMIC_RESOURCES_REVIEW: Проблем: Анализ на COSMIC_RESOURCES_REVIEW — данни получени но LLM грешка | Root cause: LLM parsing грешка",
       "COSMIC_RESOURCES_REVIEW: Проблем: Отсутствие на ясна регулация и международно сътрудничество за експлоатация на космически ресурси | Root cause: Отсутствие на ясна правна база и международни споразуме",
       "COSMIC_RESOURCES_REVIEW: Проблем: Астероидното изкопаване е представено като технически възможно, но няма ясна политика за регулиране  | Root cause: Няма международно споразумение или закона, който да",
@@ -1227,135 +1226,135 @@
       "COSMIC_RESOURCES_REVIEW: Проблем: Отсъствието на ясна регулаторна рамка за астероидното миниране | Root cause: Отсъствието на международен консенсус и законодателна база за експлоатацията на",
       "COSMIC_RESOURCES_REVIEW: Проблем: Lack of regulatory framework for space mining and resource utilization | Root cause: Insufficient international cooperation and agreement on space resource utilizati",
       "COSMIC_RESOURCES_REVIEW: Проблем: Lack of regulatory framework for asteroid mining and space resource utilization | Root cause: Insufficient international cooperation and lack of clear laws and regula",
-      "COSMIC_RESOURCES_REVIEW: Проблем: Insufficient legal frameworks and regulations for asteroid mining, hindering its development and pot | Root cause: Lack of international agreements and national laws "
+      "COSMIC_RESOURCES_REVIEW: Проблем: Insufficient legal frameworks and regulations for asteroid mining, hindering its development and pot | Root cause: Lack of international agreements and national laws ",
+      "COSMIC_RESOURCES_REVIEW: Проблем: Анализ на COSMIC_RESOURCES_REVIEW — данни получени но LLM грешка | Root cause: LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: None"
     ],
     "scores": [
       {
-        "date": "2026-05-16",
+        "date": "2026-06-18",
         "score": 55.0
       },
       {
-        "date": "2026-05-16",
-        "score": 30.0
+        "date": "2026-06-18",
+        "score": 55.0
       },
       {
-        "date": "2026-05-16",
-        "score": 30.0
+        "date": "2026-06-18",
+        "score": 55.0
       },
       {
-        "date": "2026-05-17",
+        "date": "2026-06-18",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-18",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-18",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-18",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-18",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-18",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-18",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-18",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-18",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-19",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-19",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-19",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-19",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
         "score": 85.0
-      },
-      {
-        "date": "2026-05-17",
-        "score": 30.0
-      },
-      {
-        "date": "2026-05-18",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-11",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-11",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-19",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-19",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-19",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-19",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-20",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-20",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-20",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-20",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-20",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-20",
-        "score": 55.0
       }
     ],
     "trend": "СТАБИЛНО (±0.0)",
     "last_updated": "2026-06-20",
-    "last_score": 55.0,
+    "last_score": 85.0,
     "insight_hashes": [
-      "151c0813",
       "14c76680",
       "a42d938e",
       "9b9f0883",
@@ -1364,13 +1363,13 @@
       "75bc183d",
       "cea90326",
       "86744fc9",
-      "6676407f"
+      "6676407f",
+      "bdae0862"
     ]
   },
   "GENERAL_SELF_REVIEW": {
-    "cycle_count": 124,
+    "cycle_count": 133,
     "key_insights": [
-      "MEDIUM: Системата показва добри резултати в някои области, но има още много слабости и област за подобрение, особено в предсказанията и действието в света.",
       "GENERAL_SELF_REVIEW: Проблем: Конкуренцията за влиянието в AI-сферата води до нестабилност и потенциално рискове за развитие на AI | Root cause: Конфликти между ключови фигури като Musk и Altman, какт",
       "LOW: Системата работи, но с ограничения в обучението и обработка на сложни рискове. Необходимо е да се подобри автономната способност и точността в предсказанията.",
       "GENERAL_SELF_REVIEW: Проблем: Недостигащите здравни показатели и пропуснати цели на Световната здравна организация | Root cause: Недостатъчните инвестиции в здравеопазването и липсата на ефективни стр",
@@ -1379,46 +1378,11 @@
       "GENERAL_SELF_REVIEW: Проблем: Lack of monitoring and understanding of AI consciousness and sentience | Root cause: Insufficient research and development of methods to detect and measure AI consci",
       "MEDIUM: Системата е в процес на развитие и има потенциал за растеж, но все още има недостатъци в точността на предсказанията и обхвата на решените проблеми.",
       "GENERAL_SELF_REVIEW: Проблем: Анализ на GENERAL_SELF_REVIEW — данни получени но LLM грешка | Root cause: LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: None",
-      "GENERAL_SELF_REVIEW: Проблем: Lack of transparency in AI development and deployment, particularly in brain-computer interface tria | Root cause: Insufficient prioritization of ethics and transparency "
+      "GENERAL_SELF_REVIEW: Проблем: Lack of transparency in AI development and deployment, particularly in brain-computer interface tria | Root cause: Insufficient prioritization of ethics and transparency ",
+      "MEDIUM: Системата показва добри резултати в някои области, но има недостатъци в предсказанията и отсъствие на действия в света. Требва да се фокусира върху подобряването на тези области."
     ],
     "scores": [
       {
-        "date": "2026-05-16",
-        "score": 30.0
-      },
-      {
-        "date": "2026-05-16",
-        "score": 25.0
-      },
-      {
-        "date": "2026-05-17",
-        "score": 25.0
-      },
-      {
-        "date": "2026-05-17",
-        "score": 55.0
-      },
-      {
-        "date": "2026-05-17",
-        "score": 30.0
-      },
-      {
-        "date": "2026-05-17",
-        "score": 25.0
-      },
-      {
-        "date": "2026-05-18",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-11",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-11",
-        "score": 55.0
-      },
-      {
         "date": "2026-06-18",
         "score": 55.0
       },
@@ -1488,6 +1452,42 @@
       },
       {
         "date": "2026-06-19",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
         "score": 55.0
       },
       {
@@ -1507,7 +1507,6 @@
     "last_updated": "2026-06-20",
     "last_score": 55.0,
     "insight_hashes": [
-      "cce7f941",
       "9f1ed159",
       "d21d5186",
       "e8129242",
@@ -1516,13 +1515,13 @@
       "972c2c3f",
       "5cffb180",
       "94b90657",
-      "dbdcf87f"
+      "dbdcf87f",
+      "874c892f"
     ]
   },
   "SPACE_INFRASTRUCTURE_REVIEW": {
-    "cycle_count": 99,
+    "cycle_count": 107,
     "key_insights": [
-      "[РЕВИЗИЯ на предишен инсайт] SPACE_INFRASTRUCTURE_REVIEW: Ниво: HIGH | Web risk: LOW",
       "SPACE_INFRASTRUCTURE_REVIEW: Проблем: Анализ на SPACE_INFRASTRUCTURE_REVIEW — данни получени но LLM грешка | Root cause: LLM parsing грешка",
       "SPACE_INFRASTRUCTURE_REVIEW: Проблем: Неуспешните изстрелвания на космически мисии поради лоши метеорологични условия | Root cause: Недостатъчното планиране и подготовка за метеорологични изключвания ",
       "SPACE_INFRASTRUCTURE_REVIEW: Проблем: Закъсняване или отлагане на космически мисии поради фактори като лошо време или технически проблеми | Root cause: Недостатъчна издръжливост или резервни капацитет",
@@ -1531,135 +1530,135 @@
       "SPACE_INFRASTRUCTURE_REVIEW: Проблем: Забавяне на мисии поради лошо време, което влияе на доставката на запаси и оборудване до международн | Root cause: Ограничен контрол над атмосферните условия, кое",
       "SPACE_INFRASTRUCTURE_REVIEW: Проблем: Over-reliance on private companies like SpaceX for space infrastructure development and satellite la | Root cause: Lack of significant public investment in space ",
       "SPACE_INFRASTRUCTURE_REVIEW: Проблем: Insufficient attention to durability of satellites in Medium Earth Orbit (MEO) and low Earth orbit ( | Root cause: The push for rapid deployment and cost reductio",
-      "SPACE_INFRASTRUCTURE_REVIEW: Проблем: The rapid development and launch of various satellite constellations and space infrastructure withou | Root cause: Lack of international cooperation and regulatio"
+      "SPACE_INFRASTRUCTURE_REVIEW: Проблем: The rapid development and launch of various satellite constellations and space infrastructure withou | Root cause: Lack of international cooperation and regulatio",
+      "SPACE_INFRASTRUCTURE_REVIEW: Проблем: Анализ на SPACE_INFRASTRUCTURE_REVIEW — данни получени но LLM грешка | Root cause: LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: None"
     ],
     "scores": [
       {
-        "date": "2026-05-16",
+        "date": "2026-06-18",
         "score": 55.0
       },
       {
-        "date": "2026-05-16",
+        "date": "2026-06-18",
         "score": 55.0
       },
       {
-        "date": "2026-05-16",
+        "date": "2026-06-18",
         "score": 55.0
       },
       {
-        "date": "2026-05-17",
+        "date": "2026-06-18",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-18",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-18",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-18",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-18",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-18",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-18",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-18",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-18",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-19",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-19",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-19",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-19",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
         "score": 85.0
-      },
-      {
-        "date": "2026-05-17",
-        "score": 55.0
-      },
-      {
-        "date": "2026-05-18",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-11",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-11",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-19",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-19",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-19",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-19",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-20",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-20",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-20",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-20",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-20",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-20",
-        "score": 55.0
       }
     ],
     "trend": "СТАБИЛНО (±0.0)",
     "last_updated": "2026-06-20",
-    "last_score": 55.0,
+    "last_score": 85.0,
     "insight_hashes": [
-      "839f4b02",
       "41f7d03d",
       "8e364c5c",
       "bdf9d261",
@@ -1668,11 +1667,12 @@
       "1d880888",
       "36365a12",
       "4a09f68d",
-      "404be95b"
+      "404be95b",
+      "fb4c60a8"
     ]
   },
   "COGNITION_LEARNING_REVIEW": {
-    "cycle_count": 73,
+    "cycle_count": 81,
     "key_insights": [
       "COGNITION_LEARNING_REVIEW: Проблем: Нарастващата preocupация за употребата на технологии в обучението и потенциалното им влияние върху р | Root cause: Отсъствието на ефективен процес за оценка и одобр",
       "COGNITION_LEARNING_REVIEW: Проблем: Намаляването на уменията за грамотност при учениците в резултат на пандемията | Root cause: Пандемията е променяла начина, по който децата учат, и е довела до намал",
@@ -1687,38 +1687,6 @@
     ],
     "scores": [
       {
-        "date": "2026-05-16",
-        "score": 55.0
-      },
-      {
-        "date": "2026-05-16",
-        "score": 55.0
-      },
-      {
-        "date": "2026-05-16",
-        "score": 55.0
-      },
-      {
-        "date": "2026-05-17",
-        "score": 55.0
-      },
-      {
-        "date": "2026-05-17",
-        "score": 30.0
-      },
-      {
-        "date": "2026-05-18",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-11",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-11",
-        "score": 55.0
-      },
-      {
         "date": "2026-06-18",
         "score": 55.0
       },
@@ -1780,6 +1748,38 @@
       },
       {
         "date": "2026-06-19",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
         "score": 55.0
       },
       {
@@ -1824,7 +1824,7 @@
     ]
   },
   "CULTURE_MEDIA_REVIEW": {
-    "cycle_count": 73,
+    "cycle_count": 81,
     "key_insights": [
       "CULTURE_MEDIA_REVIEW: Проблем: Разпространението на дезинформация и фалшиви новини в социалните медии и интернет пространството | Root cause: Отсъствие на достатъчна регулираност и контрол върху социа",
       "CULTURE_MEDIA_REVIEW: Проблем: Анализ на CULTURE_MEDIA_REVIEW — данни получени но LLM грешка | Root cause: LLM parsing грешка",
@@ -1839,38 +1839,6 @@
     ],
     "scores": [
       {
-        "date": "2026-05-16",
-        "score": 55.0
-      },
-      {
-        "date": "2026-05-16",
-        "score": 30.0
-      },
-      {
-        "date": "2026-05-16",
-        "score": 30.0
-      },
-      {
-        "date": "2026-05-17",
-        "score": 55.0
-      },
-      {
-        "date": "2026-05-17",
-        "score": 30.0
-      },
-      {
-        "date": "2026-05-18",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-11",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-11",
-        "score": 55.0
-      },
-      {
         "date": "2026-06-18",
         "score": 55.0
       },
@@ -1932,6 +1900,38 @@
       },
       {
         "date": "2026-06-19",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
         "score": 55.0
       },
       {
@@ -1976,9 +1976,8 @@
     ]
   },
   "HUMAN_WELL_BEING_REVIEW": {
-    "cycle_count": 73,
+    "cycle_count": 81,
     "key_insights": [
-      "HUMAN_WELL_BEING_REVIEW: Ниво: MEDIUM | Web risk: UNKNOWN",
       "HUMAN_WELL_BEING_REVIEW: Проблем: Разпространението на хантавируса сред пътници на круизен кораб | Root cause: Отсъствие на ефективни мерки за профилактика и контрол на болестите при междунар",
       "HUMAN_WELL_BEING_REVIEW: Проблем: Анализ на HUMAN_WELL_BEING_REVIEW — данни получени но LLM грешка | Root cause: LLM parsing грешка",
       "HUMAN_WELL_BEING_REVIEW: Проблем: Недостатъчно регулиране и маркетинг на никотинови торби, насочени към младежта. | Root cause: Липсата на строги регулации и активният маркетинг на никотинови торби от",
@@ -1987,42 +1986,11 @@
       "HUMAN_WELL_BEING_REVIEW: Проблем: Анализ на HUMAN_WELL_BEING_REVIEW — данни получени но LLM грешка | Root cause: LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: Ollama: няма",
       "HUMAN_WELL_BEING_REVIEW: Проблем: Many people still lack access to safe blood and weaknesses in government blood systems persist | Root cause: Inequities in access to healthcare and weaknesses in gove",
       "HUMAN_WELL_BEING_REVIEW: Проблем: Many people still lack access to safe blood supplies globally, despite progress towards safer blood  | Root cause: Persistent inequalities in access to healthcare and",
-      "HUMAN_WELL_BEING_REVIEW: Проблем: Many people still lack access to safe blood supplies globally | Root cause: Persistent inequalities in access to healthcare and weaknesses in government pol"
+      "HUMAN_WELL_BEING_REVIEW: Проблем: Many people still lack access to safe blood supplies globally | Root cause: Persistent inequalities in access to healthcare and weaknesses in government pol",
+      "HUMAN_WELL_BEING_REVIEW: Проблем: Анализ на HUMAN_WELL_BEING_REVIEW — данни получени но LLM грешка | Root cause: LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: None"
     ],
     "scores": [
       {
-        "date": "2026-05-16",
-        "score": 55.0
-      },
-      {
-        "date": "2026-05-16",
-        "score": 30.0
-      },
-      {
-        "date": "2026-05-16",
-        "score": 30.0
-      },
-      {
-        "date": "2026-05-17",
-        "score": 30.0
-      },
-      {
-        "date": "2026-05-17",
-        "score": 30.0
-      },
-      {
-        "date": "2026-05-18",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-11",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-11",
-        "score": 55.0
-      },
-      {
         "date": "2026-06-18",
         "score": 55.0
       },
@@ -2084,6 +2052,38 @@
       },
       {
         "date": "2026-06-19",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
         "score": 55.0
       },
       {
@@ -2115,7 +2115,6 @@
     "last_updated": "2026-06-20",
     "last_score": 55.0,
     "insight_hashes": [
-      "48053676",
       "7f7e916b",
       "9520810c",
       "6169284d",
@@ -2124,13 +2123,13 @@
       "25389263",
       "e2f08217",
       "a2155014",
-      "0e62cb87"
+      "0e62cb87",
+      "d056f39b"
     ]
   },
   "SOCIAL_RELATIONS_REVIEW": {
-    "cycle_count": 99,
+    "cycle_count": 107,
     "key_insights": [
-      "SOCIAL_RELATIONS_REVIEW: Ниво: MEDIUM | Web risk: MEDIUM",
       "SOCIAL_RELATIONS_REVIEW: Проблем: Анализ на SOCIAL_RELATIONS_REVIEW — данни получени но LLM грешка | Root cause: LLM parsing грешка",
       "SOCIAL_RELATIONS_REVIEW: Проблем: Отчуждение и липса на доверие към официалните източници на здравословна информация в САЩ, водещо до  | Root cause: Отсутствие на прозрачност и доверие към официалните",
       "SOCIAL_RELATIONS_REVIEW: Проблем: Епидемията от самота и липсата на социални връзки сред хората | Root cause: Чрезмерната употреба на технологии и социалните мрежи, което води до замяната на",
@@ -2139,42 +2138,11 @@
       "SOCIAL_RELATIONS_REVIEW: Проблем: Намаляване на обществената вярност в институциите и растяща скептичност към информацията | Root cause: Растящата скептичност към информацията и неповръщането на общес",
       "SOCIAL_RELATIONS_REVIEW: Проблем: Increased social unrest and polarization due to conflicts and political tensions | Root cause: Underlying ideological and political divisions, exacerbated by social m",
       "SOCIAL_RELATIONS_REVIEW: Проблем: Loneliness epidemic despite increased technological connectivity | Root cause: Misuse of technology leading to social isolation and decreased face-to-face inte",
-      "SOCIAL_RELATIONS_REVIEW: Проблем: Growing loneliness and social isolation among adults | Root cause: Modern disconnection and isolation due to various factors such as urbanization,"
+      "SOCIAL_RELATIONS_REVIEW: Проблем: Growing loneliness and social isolation among adults | Root cause: Modern disconnection and isolation due to various factors such as urbanization,",
+      "SOCIAL_RELATIONS_REVIEW: Проблем: Анализ на SOCIAL_RELATIONS_REVIEW — данни получени но LLM грешка | Root cause: LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: None"
     ],
     "scores": [
       {
-        "date": "2026-05-16",
-        "score": 30.0
-      },
-      {
-        "date": "2026-05-16",
-        "score": 30.0
-      },
-      {
-        "date": "2026-05-16",
-        "score": 30.0
-      },
-      {
-        "date": "2026-05-17",
-        "score": 55.0
-      },
-      {
-        "date": "2026-05-17",
-        "score": 30.0
-      },
-      {
-        "date": "2026-05-18",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-11",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-11",
-        "score": 55.0
-      },
-      {
         "date": "2026-06-18",
         "score": 55.0
       },
@@ -2261,286 +2229,6 @@
       {
         "date": "2026-06-20",
         "score": 30.0
-      }
-    ],
-    "trend": "СТАБИЛНО (±0.0)",
-    "last_updated": "2026-06-20",
-    "last_score": 30.0,
-    "insight_hashes": [
-      "ac0deb61",
-      "f4b6e535",
-      "097cc6af",
-      "0b9ca44c",
-      "1035d9c2",
-      "8f9c2fb0",
-      "0272ab86",
-      "cc2b0898",
-      "d6dcc1a5",
-      "5a128f15"
-    ]
-  },
-  "CLIMATE_GLOBAL_RISK_REVIEW": {
-    "cycle_count": 73,
-    "key_insights": [
-      "[РЕВИЗИЯ на предишен инсайт] CLIMATE_GLOBAL_RISK_REVIEW: Ниво: LOW | Web risk: HIGH",
-      "CLIMATE_GLOBAL_RISK_REVIEW: Проблем: Увеличаване на засегнатите от климатични промени територии и последствията от тях | Root cause: Човешката дейност, като увеличavanе на парниковите газове и изменен",
-      "CLIMATE_GLOBAL_RISK_REVIEW: Проблем: Отслабване на финансовата подкрепа за Зелените климатични фондове от страна на високо развитите стра | Root cause: Политически решения и променливи приоритети в уп",
-      "CLIMATE_GLOBAL_RISK_REVIEW: Проблем: Увеличението на глобалните температури и честотата на екстремалните неблагоприятни явления | Root cause: Глобалното затопляне, причинено от антропогенните емисии н",
-      "CLIMATE_GLOBAL_RISK_REVIEW: Проблем: Светът е на път да постигне 3 степени повишение на глобалната температура | Root cause: Индустриализацията и човешката дейност довели до повишаване на концентрация",
-      "CLIMATE_GLOBAL_RISK_REVIEW: Проблем: Намаляване на финансирането за борба с климатичните промени в Обединеното кралство | Root cause: Оттеглянето на финансови обещания от правителството на Обединеното",
-      "CLIMATE_GLOBAL_RISK_REVIEW: Проблем: Insufficient funding for climate change mitigation and adaptation efforts, as seen in the UK's reduc | Root cause: Lack of prioritization and commitment from gover",
-      "CLIMATE_GLOBAL_RISK_REVIEW: Проблем: Increasing frequency and severity of extreme humid heat waves, making some areas unlivable | Root cause: Global warming due to climate change, primarily caused by ",
-      "CLIMATE_GLOBAL_RISK_REVIEW: Проблем: Climate talks end in gridlock, and global emissions must be reduced immediately, but tangible outcom | Root cause: Insufficient global cooperation and lack of urge",
-      "CLIMATE_GLOBAL_RISK_REVIEW: Проблем: Insufficient progress in reducing global emissions and adapting to climate change, as evident from t | Root cause: Inadequate global cooperation, lack of decisive "
-    ],
-    "scores": [
-      {
-        "date": "2026-05-16",
-        "score": 55.0
-      },
-      {
-        "date": "2026-05-16",
-        "score": 10.0
-      },
-      {
-        "date": "2026-05-16",
-        "score": 10.0
-      },
-      {
-        "date": "2026-05-17",
-        "score": 10.0
-      },
-      {
-        "date": "2026-05-17",
-        "score": 55.0
-      },
-      {
-        "date": "2026-05-18",
-        "score": 30.0
-      },
-      {
-        "date": "2026-06-11",
-        "score": 30.0
-      },
-      {
-        "date": "2026-06-11",
-        "score": 30.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 10.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 10.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 10.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 10.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 10.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 10.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 10.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 10.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 10.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 10.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 10.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 10.0
-      },
-      {
-        "date": "2026-06-19",
-        "score": 10.0
-      },
-      {
-        "date": "2026-06-19",
-        "score": 10.0
-      },
-      {
-        "date": "2026-06-19",
-        "score": 10.0
-      },
-      {
-        "date": "2026-06-19",
-        "score": 10.0
-      },
-      {
-        "date": "2026-06-20",
-        "score": 10.0
-      },
-      {
-        "date": "2026-06-20",
-        "score": 10.0
-      },
-      {
-        "date": "2026-06-20",
-        "score": 10.0
-      },
-      {
-        "date": "2026-06-20",
-        "score": 10.0
-      },
-      {
-        "date": "2026-06-20",
-        "score": 10.0
-      },
-      {
-        "date": "2026-06-20",
-        "score": 10.0
-      }
-    ],
-    "trend": "СТАБИЛНО (±0.0)",
-    "last_updated": "2026-06-20",
-    "last_score": 10.0,
-    "insight_hashes": [
-      "1d8f40ef",
-      "18d1fdc4",
-      "6fc30113",
-      "a14f9f82",
-      "92bcc007",
-      "d05110cf",
-      "5ae4c551",
-      "a6ae0a50",
-      "46e160c9",
-      "c1532982"
-    ]
-  },
-  "ECOSYSTEMS_BIODIVERSITY_REVIEW": {
-    "cycle_count": 73,
-    "key_insights": [
-      "ECOSYSTEMS_BIODIVERSITY_REVIEW: Ниво: MEDIUM | Web risk: MEDIUM",
-      "ECOSYSTEMS_BIODIVERSITY_REVIEW: Проблем: Разрушаването на горите и загубата на биоразнообразие | Root cause: Човешка дейност, като отсечене на дървета и замяна на естествени местообитания с",
-      "ECOSYSTEMS_BIODIVERSITY_REVIEW: Проблем: Разрушаването на горите и загубата на биоразнообразие | Root cause: Човешка дейност, като отсечане на дървета за земеделие, добив на ресурси и урбан",
-      "ECOSYSTEMS_BIODIVERSITY_REVIEW: Проблем: Анализ на ECOSYSTEMS_BIODIVERSITY_REVIEW — данни получени но LLM грешка | Root cause: LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: 402 C",
-      "ECOSYSTEMS_BIODIVERSITY_REVIEW: Проблем: Откриването на нови видове и откритието на скритите дълбоководни света не е достатъчно за да се гара | Root cause: Отсъствието на глобална власт за здравето на",
-      "ECOSYSTEMS_BIODIVERSITY_REVIEW: Проблем: Недостатъчна координация между научни изследвания и политически действия за защита на биоразнообрази | Root cause: Изследванията на биоразнообразието продължав",
-      "ECOSYSTEMS_BIODIVERSITY_REVIEW: Проблем: Засилването на човешките дейности, които застрашават биоразнообразието | Root cause: Растежът на човешката популация и недостатъчното внимание към екологичните",
-      "ECOSYSTEMS_BIODIVERSITY_REVIEW: Проблем: Deforestation is clearing Earth's forests on a massive scale, with the world's rainforest potentiall | Root cause: Agriculture and forestry practices, driven b",
-      "ECOSYSTEMS_BIODIVERSITY_REVIEW: Проблем: Insufficient efforts to prevent biodiversity loss, as highlighted by the critically endangered vaqui | Root cause: Human activities such as habitat destruction",
-      "ECOSYSTEMS_BIODIVERSITY_REVIEW: Проблем: Deforestation and habitat loss lead to biodiversity loss and species extinction | Root cause: Animal agriculture and grazing practices are significant drivers "
-    ],
-    "scores": [
-      {
-        "date": "2026-05-16",
-        "score": 10.0
-      },
-      {
-        "date": "2026-05-16",
-        "score": 55.0
-      },
-      {
-        "date": "2026-05-16",
-        "score": 55.0
-      },
-      {
-        "date": "2026-05-17",
-        "score": 55.0
-      },
-      {
-        "date": "2026-05-17",
-        "score": 30.0
-      },
-      {
-        "date": "2026-05-18",
-        "score": 30.0
-      },
-      {
-        "date": "2026-06-11",
-        "score": 30.0
-      },
-      {
-        "date": "2026-06-11",
-        "score": 30.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 10.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 10.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 10.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 10.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 10.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 10.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 10.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 10.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 10.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 10.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 10.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 10.0
-      },
-      {
-        "date": "2026-06-19",
-        "score": 10.0
-      },
-      {
-        "date": "2026-06-19",
-        "score": 10.0
-      },
-      {
-        "date": "2026-06-19",
-        "score": 10.0
-      },
-      {
-        "date": "2026-06-19",
-        "score": 10.0
       },
       {
         "date": "2026-06-20",
@@ -2565,306 +2253,10 @@
       {
         "date": "2026-06-20",
         "score": 30.0
-      }
-    ],
-    "trend": "СТАБИЛНО (±0.0)",
-    "last_updated": "2026-06-20",
-    "last_score": 30.0,
-    "insight_hashes": [
-      "8cb4f9d6",
-      "dd3ba90d",
-      "64b691fd",
-      "2d1c97d9",
-      "9a7740f7",
-      "a83a1fbb",
-      "a4c40e2a",
-      "deb98f50",
-      "62213721",
-      "49a2df34"
-    ]
-  },
-  "FOOD_REVIEW": {
-    "cycle_count": 73,
-    "key_insights": [
-      "FOOD_REVIEW: Ниво: MEDIUM | Web risk: UNKNOWN",
-      "FOOD_REVIEW: Проблем: Хората в някои части на света, като пустинята Сахара, изпитват глад и несигурност при храната поради | Root cause: Една от основните причини е деградацията на природната среда и ",
-      "FOOD_REVIEW: Проблем: Анализ на FOOD_REVIEW — данни получени но LLM грешка | Root cause: LLM parsing грешка",
-      "FOOD_REVIEW: Проблем: Над 85 милиона души в Африка са с висок уровень на хранителна неустойчивост | Root cause: Климатични, икономически и конфликтни фактори, довели до засуха, неурожай и разс",
-      "FOOD_REVIEW: Проблем: Продължаващите конфликти, икономически шокове, климатични крайности и принудителни изселвания продъл | Root cause: Многофакторна причина, включваща конфликти, икономически кризи,",
-      "FOOD_REVIEW: Проблем: Повече от 85 милиона души в Африка са в критично положение за хранене в 2025 г. | Root cause: Съчетание от климатични, икономически и конфликтни фактори, които усилват гладта",
-      "FOOD_REVIEW: Проблем: Анализ на FOOD_REVIEW — данни получени но LLM грешка | Root cause: LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: Ollama: няма",
-      "FOOD_REVIEW: Проблем: Conflict, economic shocks, climate extremes, and forced displacement are driving food insecurity and | Root cause: The underlying cause of this problem is the complex interplay b",
-      "FOOD_REVIEW: Проблем: Conflict, economic shocks, climate extremes, and forced displacement are driving food insecurity and | Root cause: The combination of human-induced climate change, socio-economic",
-      "FOOD_REVIEW: Проблем: 673 million people experienced hunger in 2024, and the global food supply chain is vulnerable to cli | Root cause: Conflict, economic shocks, climate extremes, and forced displac"
-    ],
-    "scores": [
-      {
-        "date": "2026-05-16",
-        "score": 55.0
-      },
-      {
-        "date": "2026-05-16",
-        "score": 30.0
-      },
-      {
-        "date": "2026-05-16",
-        "score": 30.0
-      },
-      {
-        "date": "2026-05-17",
-        "score": 30.0
-      },
-      {
-        "date": "2026-05-17",
-        "score": 10.0
-      },
-      {
-        "date": "2026-05-18",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-11",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-11",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 30.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 30.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 30.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 30.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 30.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 30.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 30.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 30.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 30.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 30.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 30.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 30.0
-      },
-      {
-        "date": "2026-06-19",
-        "score": 10.0
-      },
-      {
-        "date": "2026-06-19",
-        "score": 10.0
-      },
-      {
-        "date": "2026-06-19",
-        "score": 10.0
-      },
-      {
-        "date": "2026-06-19",
-        "score": 10.0
       },
       {
         "date": "2026-06-20",
-        "score": 10.0
-      },
-      {
-        "date": "2026-06-20",
-        "score": 10.0
-      },
-      {
-        "date": "2026-06-20",
-        "score": 10.0
-      },
-      {
-        "date": "2026-06-20",
-        "score": 10.0
-      },
-      {
-        "date": "2026-06-20",
-        "score": 10.0
-      },
-      {
-        "date": "2026-06-20",
-        "score": 10.0
-      }
-    ],
-    "trend": "СТАБИЛНО (±0.0)",
-    "last_updated": "2026-06-20",
-    "last_score": 10.0,
-    "insight_hashes": [
-      "407a477f",
-      "2b91ed14",
-      "7c3bf5bc",
-      "76711fb8",
-      "53ca9355",
-      "6f467ac1",
-      "d1f7c1cb",
-      "5de8eecb",
-      "677ea070",
-      "1ceea9b6"
-    ]
-  },
-  "MATERIALS_WASTE_REVIEW": {
-    "cycle_count": 73,
-    "key_insights": [
-      "MATERIALS_WASTE_REVIEW: Ниво: MEDIUM | Web risk: UNKNOWN",
-      "MATERIALS_WASTE_REVIEW: Проблем: Намерило се е, че 19-23 милиона тона отпадъци от пластика навлизат в акватичните екосистеми всяка го | Root cause: Отсъствието на ефективни системы за рециклиране и уп",
-      "MATERIALS_WASTE_REVIEW: Проблем: Големите количества пластмасови отходи, които завършват в океаните, депортите и дори в човешкото тял | Root cause: Неспособността да се рециклира достатъчно количество",
-      "MATERIALS_WASTE_REVIEW: Проблем: Неправилното управление на отпадъците води до загрязнение на водни ресурси и усилена урбана подтопяв | Root cause: Неправилното съхранение и разхлабената система за уп",
-      "MATERIALS_WASTE_REVIEW: Проблем: Неправилното управление на отпадъци в урбанизирани области | Root cause: Ограничените ресурси и липсата на ефективни системи за управление на отпадъци в",
-      "MATERIALS_WASTE_REVIEW: Проблем: Неправилното управление на отпадъците води до загрязнение на океаните и увреждане на биосферата. | Root cause: Ниските и средни икономики имат слаби инфраструктури за ",
-      "MATERIALS_WASTE_REVIEW: Проблем: Анализ на MATERIALS_WASTE_REVIEW — данни получени но LLM грешка | Root cause: LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: Ollama: няма",
-      "MATERIALS_WASTE_REVIEW: Проблем: Plastic waste is not being effectively recycled and is polluting the environment, harming ecosystems | Root cause: Lack of effective waste management systems and inade",
-      "MATERIALS_WASTE_REVIEW: Проблем: Inadequate waste management and plastic pollution | Root cause: Lack of coordinated approaches and insufficient infrastructure for waste managem",
-      "MATERIALS_WASTE_REVIEW: Проблем: Improper waste sorting and management of plastic waste | Root cause: Lack of technical skills for managing hazardous waste, insufficient infrastructu"
-    ],
-    "scores": [
-      {
-        "date": "2026-05-16",
-        "score": 10.0
-      },
-      {
-        "date": "2026-05-16",
-        "score": 10.0
-      },
-      {
-        "date": "2026-05-16",
-        "score": 10.0
-      },
-      {
-        "date": "2026-05-17",
-        "score": 55.0
-      },
-      {
-        "date": "2026-05-17",
-        "score": 10.0
-      },
-      {
-        "date": "2026-05-18",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-11",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-11",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-18",
         "score": 30.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 30.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 30.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 30.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 30.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 30.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 30.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 30.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 30.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 30.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 30.0
-      },
-      {
-        "date": "2026-06-18",
-        "score": 30.0
-      },
-      {
-        "date": "2026-06-19",
-        "score": 30.0
-      },
-      {
-        "date": "2026-06-19",
-        "score": 30.0
-      },
-      {
-        "date": "2026-06-19",
-        "score": 30.0
-      },
-      {
-        "date": "2026-06-19",
-        "score": 30.0
-      },
-      {
-        "date": "2026-06-20",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-20",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-20",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-20",
-        "score": 55.0
-      },
-      {
-        "date": "2026-06-20",
-        "score": 55.0
       },
       {
         "date": "2026-06-20",
@@ -2875,7 +2267,614 @@
     "last_updated": "2026-06-20",
     "last_score": 55.0,
     "insight_hashes": [
-      "f87d4fc6",
+      "f4b6e535",
+      "097cc6af",
+      "0b9ca44c",
+      "1035d9c2",
+      "8f9c2fb0",
+      "0272ab86",
+      "cc2b0898",
+      "d6dcc1a5",
+      "5a128f15",
+      "9dd0ab30"
+    ]
+  },
+  "CLIMATE_GLOBAL_RISK_REVIEW": {
+    "cycle_count": 81,
+    "key_insights": [
+      "CLIMATE_GLOBAL_RISK_REVIEW: Проблем: Увеличаване на засегнатите от климатични промени територии и последствията от тях | Root cause: Човешката дейност, като увеличavanе на парниковите газове и изменен",
+      "CLIMATE_GLOBAL_RISK_REVIEW: Проблем: Отслабване на финансовата подкрепа за Зелените климатични фондове от страна на високо развитите стра | Root cause: Политически решения и променливи приоритети в уп",
+      "CLIMATE_GLOBAL_RISK_REVIEW: Проблем: Увеличението на глобалните температури и честотата на екстремалните неблагоприятни явления | Root cause: Глобалното затопляне, причинено от антропогенните емисии н",
+      "CLIMATE_GLOBAL_RISK_REVIEW: Проблем: Светът е на път да постигне 3 степени повишение на глобалната температура | Root cause: Индустриализацията и човешката дейност довели до повишаване на концентрация",
+      "CLIMATE_GLOBAL_RISK_REVIEW: Проблем: Намаляване на финансирането за борба с климатичните промени в Обединеното кралство | Root cause: Оттеглянето на финансови обещания от правителството на Обединеното",
+      "CLIMATE_GLOBAL_RISK_REVIEW: Проблем: Insufficient funding for climate change mitigation and adaptation efforts, as seen in the UK's reduc | Root cause: Lack of prioritization and commitment from gover",
+      "CLIMATE_GLOBAL_RISK_REVIEW: Проблем: Increasing frequency and severity of extreme humid heat waves, making some areas unlivable | Root cause: Global warming due to climate change, primarily caused by ",
+      "CLIMATE_GLOBAL_RISK_REVIEW: Проблем: Climate talks end in gridlock, and global emissions must be reduced immediately, but tangible outcom | Root cause: Insufficient global cooperation and lack of urge",
+      "CLIMATE_GLOBAL_RISK_REVIEW: Проблем: Insufficient progress in reducing global emissions and adapting to climate change, as evident from t | Root cause: Inadequate global cooperation, lack of decisive ",
+      "CLIMATE_GLOBAL_RISK_REVIEW: Проблем: Анализ на CLIMATE_GLOBAL_RISK_REVIEW — данни получени но LLM грешка | Root cause: LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: Gemini rate"
+    ],
+    "scores": [
+      {
+        "date": "2026-06-18",
+        "score": 10.0
+      },
+      {
+        "date": "2026-06-18",
+        "score": 10.0
+      },
+      {
+        "date": "2026-06-18",
+        "score": 10.0
+      },
+      {
+        "date": "2026-06-18",
+        "score": 10.0
+      },
+      {
+        "date": "2026-06-18",
+        "score": 10.0
+      },
+      {
+        "date": "2026-06-18",
+        "score": 10.0
+      },
+      {
+        "date": "2026-06-18",
+        "score": 10.0
+      },
+      {
+        "date": "2026-06-18",
+        "score": 10.0
+      },
+      {
+        "date": "2026-06-18",
+        "score": 10.0
+      },
+      {
+        "date": "2026-06-18",
+        "score": 10.0
+      },
+      {
+        "date": "2026-06-18",
+        "score": 10.0
+      },
+      {
+        "date": "2026-06-18",
+        "score": 10.0
+      },
+      {
+        "date": "2026-06-19",
+        "score": 10.0
+      },
+      {
+        "date": "2026-06-19",
+        "score": 10.0
+      },
+      {
+        "date": "2026-06-19",
+        "score": 10.0
+      },
+      {
+        "date": "2026-06-19",
+        "score": 10.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 10.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 10.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 10.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 10.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 10.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 10.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 10.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 10.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 10.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 10.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 10.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 10.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 10.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 25.0
+      }
+    ],
+    "trend": "СТАБИЛНО (±0.0)",
+    "last_updated": "2026-06-20",
+    "last_score": 25.0,
+    "insight_hashes": [
+      "18d1fdc4",
+      "6fc30113",
+      "a14f9f82",
+      "92bcc007",
+      "d05110cf",
+      "5ae4c551",
+      "a6ae0a50",
+      "46e160c9",
+      "c1532982",
+      "e1e09ba2"
+    ]
+  },
+  "ECOSYSTEMS_BIODIVERSITY_REVIEW": {
+    "cycle_count": 81,
+    "key_insights": [
+      "ECOSYSTEMS_BIODIVERSITY_REVIEW: Проблем: Разрушаването на горите и загубата на биоразнообразие | Root cause: Човешка дейност, като отсечене на дървета и замяна на естествени местообитания с",
+      "ECOSYSTEMS_BIODIVERSITY_REVIEW: Проблем: Разрушаването на горите и загубата на биоразнообразие | Root cause: Човешка дейност, като отсечане на дървета за земеделие, добив на ресурси и урбан",
+      "ECOSYSTEMS_BIODIVERSITY_REVIEW: Проблем: Анализ на ECOSYSTEMS_BIODIVERSITY_REVIEW — данни получени но LLM грешка | Root cause: LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: 402 C",
+      "ECOSYSTEMS_BIODIVERSITY_REVIEW: Проблем: Откриването на нови видове и откритието на скритите дълбоководни света не е достатъчно за да се гара | Root cause: Отсъствието на глобална власт за здравето на",
+      "ECOSYSTEMS_BIODIVERSITY_REVIEW: Проблем: Недостатъчна координация между научни изследвания и политически действия за защита на биоразнообрази | Root cause: Изследванията на биоразнообразието продължав",
+      "ECOSYSTEMS_BIODIVERSITY_REVIEW: Проблем: Засилването на човешките дейности, които застрашават биоразнообразието | Root cause: Растежът на човешката популация и недостатъчното внимание към екологичните",
+      "ECOSYSTEMS_BIODIVERSITY_REVIEW: Проблем: Deforestation is clearing Earth's forests on a massive scale, with the world's rainforest potentiall | Root cause: Agriculture and forestry practices, driven b",
+      "ECOSYSTEMS_BIODIVERSITY_REVIEW: Проблем: Insufficient efforts to prevent biodiversity loss, as highlighted by the critically endangered vaqui | Root cause: Human activities such as habitat destruction",
+      "ECOSYSTEMS_BIODIVERSITY_REVIEW: Проблем: Deforestation and habitat loss lead to biodiversity loss and species extinction | Root cause: Animal agriculture and grazing practices are significant drivers ",
+      "ECOSYSTEMS_BIODIVERSITY_REVIEW: Проблем: Анализ на ECOSYSTEMS_BIODIVERSITY_REVIEW — данни получени но LLM грешка | Root cause: LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: None"
+    ],
+    "scores": [
+      {
+        "date": "2026-06-18",
+        "score": 10.0
+      },
+      {
+        "date": "2026-06-18",
+        "score": 10.0
+      },
+      {
+        "date": "2026-06-18",
+        "score": 10.0
+      },
+      {
+        "date": "2026-06-18",
+        "score": 10.0
+      },
+      {
+        "date": "2026-06-18",
+        "score": 10.0
+      },
+      {
+        "date": "2026-06-18",
+        "score": 10.0
+      },
+      {
+        "date": "2026-06-18",
+        "score": 10.0
+      },
+      {
+        "date": "2026-06-18",
+        "score": 10.0
+      },
+      {
+        "date": "2026-06-18",
+        "score": 10.0
+      },
+      {
+        "date": "2026-06-18",
+        "score": 10.0
+      },
+      {
+        "date": "2026-06-18",
+        "score": 10.0
+      },
+      {
+        "date": "2026-06-18",
+        "score": 10.0
+      },
+      {
+        "date": "2026-06-19",
+        "score": 10.0
+      },
+      {
+        "date": "2026-06-19",
+        "score": 10.0
+      },
+      {
+        "date": "2026-06-19",
+        "score": 10.0
+      },
+      {
+        "date": "2026-06-19",
+        "score": 10.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      }
+    ],
+    "trend": "СТАБИЛНО (±0.0)",
+    "last_updated": "2026-06-20",
+    "last_score": 55.0,
+    "insight_hashes": [
+      "dd3ba90d",
+      "64b691fd",
+      "2d1c97d9",
+      "9a7740f7",
+      "a83a1fbb",
+      "a4c40e2a",
+      "deb98f50",
+      "62213721",
+      "49a2df34",
+      "324f56d3"
+    ]
+  },
+  "FOOD_REVIEW": {
+    "cycle_count": 81,
+    "key_insights": [
+      "FOOD_REVIEW: Проблем: Хората в някои части на света, като пустинята Сахара, изпитват глад и несигурност при храната поради | Root cause: Една от основните причини е деградацията на природната среда и ",
+      "FOOD_REVIEW: Проблем: Анализ на FOOD_REVIEW — данни получени но LLM грешка | Root cause: LLM parsing грешка",
+      "FOOD_REVIEW: Проблем: Над 85 милиона души в Африка са с висок уровень на хранителна неустойчивост | Root cause: Климатични, икономически и конфликтни фактори, довели до засуха, неурожай и разс",
+      "FOOD_REVIEW: Проблем: Продължаващите конфликти, икономически шокове, климатични крайности и принудителни изселвания продъл | Root cause: Многофакторна причина, включваща конфликти, икономически кризи,",
+      "FOOD_REVIEW: Проблем: Повече от 85 милиона души в Африка са в критично положение за хранене в 2025 г. | Root cause: Съчетание от климатични, икономически и конфликтни фактори, които усилват гладта",
+      "FOOD_REVIEW: Проблем: Анализ на FOOD_REVIEW — данни получени но LLM грешка | Root cause: LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: Ollama: няма",
+      "FOOD_REVIEW: Проблем: Conflict, economic shocks, climate extremes, and forced displacement are driving food insecurity and | Root cause: The underlying cause of this problem is the complex interplay b",
+      "FOOD_REVIEW: Проблем: Conflict, economic shocks, climate extremes, and forced displacement are driving food insecurity and | Root cause: The combination of human-induced climate change, socio-economic",
+      "FOOD_REVIEW: Проблем: 673 million people experienced hunger in 2024, and the global food supply chain is vulnerable to cli | Root cause: Conflict, economic shocks, climate extremes, and forced displac",
+      "FOOD_REVIEW: Проблем: Анализ на FOOD_REVIEW — данни получени но LLM грешка | Root cause: LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: None"
+    ],
+    "scores": [
+      {
+        "date": "2026-06-18",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-18",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-18",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-18",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-18",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-18",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-18",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-18",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-18",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-18",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-18",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-18",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-19",
+        "score": 10.0
+      },
+      {
+        "date": "2026-06-19",
+        "score": 10.0
+      },
+      {
+        "date": "2026-06-19",
+        "score": 10.0
+      },
+      {
+        "date": "2026-06-19",
+        "score": 10.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 10.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 10.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 10.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 10.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 10.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 10.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 10.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 10.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 10.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 10.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 10.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 10.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 10.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      }
+    ],
+    "trend": "СТАБИЛНО (±0.0)",
+    "last_updated": "2026-06-20",
+    "last_score": 55.0,
+    "insight_hashes": [
+      "2b91ed14",
+      "7c3bf5bc",
+      "76711fb8",
+      "53ca9355",
+      "6f467ac1",
+      "d1f7c1cb",
+      "5de8eecb",
+      "677ea070",
+      "1ceea9b6",
+      "d1cb7ebb"
+    ]
+  },
+  "MATERIALS_WASTE_REVIEW": {
+    "cycle_count": 81,
+    "key_insights": [
+      "MATERIALS_WASTE_REVIEW: Проблем: Намерило се е, че 19-23 милиона тона отпадъци от пластика навлизат в акватичните екосистеми всяка го | Root cause: Отсъствието на ефективни системы за рециклиране и уп",
+      "MATERIALS_WASTE_REVIEW: Проблем: Големите количества пластмасови отходи, които завършват в океаните, депортите и дори в човешкото тял | Root cause: Неспособността да се рециклира достатъчно количество",
+      "MATERIALS_WASTE_REVIEW: Проблем: Неправилното управление на отпадъците води до загрязнение на водни ресурси и усилена урбана подтопяв | Root cause: Неправилното съхранение и разхлабената система за уп",
+      "MATERIALS_WASTE_REVIEW: Проблем: Неправилното управление на отпадъци в урбанизирани области | Root cause: Ограничените ресурси и липсата на ефективни системи за управление на отпадъци в",
+      "MATERIALS_WASTE_REVIEW: Проблем: Неправилното управление на отпадъците води до загрязнение на океаните и увреждане на биосферата. | Root cause: Ниските и средни икономики имат слаби инфраструктури за ",
+      "MATERIALS_WASTE_REVIEW: Проблем: Анализ на MATERIALS_WASTE_REVIEW — данни получени но LLM грешка | Root cause: LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: Ollama: няма",
+      "MATERIALS_WASTE_REVIEW: Проблем: Plastic waste is not being effectively recycled and is polluting the environment, harming ecosystems | Root cause: Lack of effective waste management systems and inade",
+      "MATERIALS_WASTE_REVIEW: Проблем: Inadequate waste management and plastic pollution | Root cause: Lack of coordinated approaches and insufficient infrastructure for waste managem",
+      "MATERIALS_WASTE_REVIEW: Проблем: Improper waste sorting and management of plastic waste | Root cause: Lack of technical skills for managing hazardous waste, insufficient infrastructu",
+      "MATERIALS_WASTE_REVIEW: Проблем: Анализ на MATERIALS_WASTE_REVIEW — данни получени но LLM грешка | Root cause: LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: None"
+    ],
+    "scores": [
+      {
+        "date": "2026-06-18",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-18",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-18",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-18",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-18",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-18",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-18",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-18",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-18",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-18",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-18",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-18",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-19",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-19",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-19",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-19",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 25.0
+      }
+    ],
+    "trend": "СТАБИЛНО (±0.0)",
+    "last_updated": "2026-06-20",
+    "last_score": 25.0,
+    "insight_hashes": [
       "2ce89093",
       "b01b38b5",
       "e958444f",
@@ -2884,13 +2883,13 @@
       "d2def936",
       "f78b1489",
       "1b82df8d",
-      "81978d56"
+      "81978d56",
+      "a959253d"
     ]
   },
   "WATER_REVIEW": {
-    "cycle_count": 73,
+    "cycle_count": 81,
     "key_insights": [
-      "WATER_REVIEW: Ниво: MEDIUM | Web risk: UNKNOWN",
       "WATER_REVIEW: Проблем: Замърсяване на реките и водните ресурси, което води до водна скъпост и криза | Root cause: Човешка дейност, включително промишлено-замърсяване, неконтролирано използване н",
       "WATER_REVIEW: Проблем: Недостиг на прясна вода и намаляване на водните ресурси в определени региони, включително в Иран, СА | Root cause: Причини като изменението на климата, несъответствието между из",
       "WATER_REVIEW: Проблем: Ниските нива на подземни води и загрязнени водни източници угрожат здравето на населението и достъпа | Root cause: Непрекъснатото изгаряне на подземните водни запаси, загрязнени",
@@ -2899,42 +2898,11 @@
       "WATER_REVIEW: Проблем: Намаление на нивото на地下 nước в Сан Луис Вали, което води до увеличение на концентрацията на тежки м | Root cause: Климатичните промени и недостигът на вода довеждат до намалява",
       "WATER_REVIEW: Проблем: Groundwater depletion due to unsustainable water use for farming in dry areas | Root cause:  Unsustainable agricultural practices and lack of effective water management pol",
       "WATER_REVIEW: Проблем: Groundwater depletion in Florida due to public use and agricultural activities | Root cause: Over-extraction of groundwater for households, municipalities, businesses, and a",
-      "WATER_REVIEW: Проблем: Groundwater depletion and decline in water levels due to drought and unsustainable use | Root cause: Over-extraction of groundwater for agricultural and human consumption purpos"
+      "WATER_REVIEW: Проблем: Groundwater depletion and decline in water levels due to drought and unsustainable use | Root cause: Over-extraction of groundwater for agricultural and human consumption purpos",
+      "WATER_REVIEW: Проблем: Анализ на WATER_REVIEW — данни получени но LLM грешка | Root cause: LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: Gemini rate"
     ],
     "scores": [
       {
-        "date": "2026-05-16",
-        "score": 30.0
-      },
-      {
-        "date": "2026-05-16",
-        "score": 10.0
-      },
-      {
-        "date": "2026-05-16",
-        "score": 10.0
-      },
-      {
-        "date": "2026-05-17",
-        "score": 30.0
-      },
-      {
-        "date": "2026-05-17",
-        "score": 55.0
-      },
-      {
-        "date": "2026-05-18",
-        "score": 30.0
-      },
-      {
-        "date": "2026-06-11",
-        "score": 30.0
-      },
-      {
-        "date": "2026-06-11",
-        "score": 30.0
-      },
-      {
         "date": "2026-06-18",
         "score": 10.0
       },
@@ -3021,13 +2989,44 @@
       {
         "date": "2026-06-20",
         "score": 30.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
       }
     ],
     "trend": "СТАБИЛНО (±0.0)",
     "last_updated": "2026-06-20",
-    "last_score": 30.0,
+    "last_score": 55.0,
     "insight_hashes": [
-      "e197c36f",
       "e1525fd1",
       "03d939e3",
       "2730f4ce",
@@ -3036,11 +3035,12 @@
       "fab5e708",
       "2720b88d",
       "1e892733",
-      "19f758c3"
+      "19f758c3",
+      "b868a9cc"
     ]
   },
   "LONG_TERM_FUTURE_REVIEW": {
-    "cycle_count": 87,
+    "cycle_count": 95,
     "key_insights": [
       "LONG_TERM_FUTURE_REVIEW: Проблем: Анализ на LONG_TERM_FUTURE_REVIEW — данни получени но LLM грешка | Root cause: LLM parsing грешка",
       "LONG_TERM_FUTURE_REVIEW: Проблем: Отсутствие на ясна връзка между развитието на изкуствения интелект и решаването на биологичните риск | Root cause: Фокусът върху техническите аспекти на изкуствения и",
@@ -3055,38 +3055,6 @@
     ],
     "scores": [
       {
-        "date": "2026-05-04",
-        "score": 55.0
-      },
-      {
-        "date": "2026-05-04",
-        "score": 55.0
-      },
-      {
-        "date": "2026-05-04",
-        "score": 55.0
-      },
-      {
-        "date": "2026-05-04",
-        "score": 55.0
-      },
-      {
-        "date": "2026-05-16",
-        "score": 55.0
-      },
-      {
-        "date": "2026-05-16",
-        "score": 30.0
-      },
-      {
-        "date": "2026-05-16",
-        "score": 30.0
-      },
-      {
-        "date": "2026-05-17",
-        "score": 30.0
-      },
-      {
         "date": "2026-05-18",
         "score": 55.0
       },
@@ -3160,6 +3128,38 @@
       },
       {
         "date": "2026-06-19",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-20",
         "score": 30.0
       },
       {
@@ -3192,9 +3192,8 @@
     "last_score": 30.0
   },
   "GOAL_PROGRESS_REVIEW": {
-    "cycle_count": 88,
+    "cycle_count": 96,
     "key_insights": [
-      "GOAL_PROGRESS_REVIEW: Проблем: Анализ на GOAL_PROGRESS_REVIEW — данни получени но LLM грешка | Root cause: LLM parsing грешка",
       "GOAL_PROGRESS_REVIEW: Проблем: Растежът на никотинова зависимост сред младите хора | Root cause: Агресивното маркетингово поведение на производителите на никотинови торбички чре",
       "GOAL_PROGRESS_REVIEW: Проблем: Нарушаване на целите на SDG и Agenda 2030 поради намаление на донорските средства за HIV-превенция и | Root cause: Намалени донорски фондове и колапс на местните здравни",
       "GOAL_PROGRESS_REVIEW: Проблем: Анализ на GOAL_PROGRESS_REVIEW — данни получени но LLM грешка | Root cause: LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: Ollama: няма",
@@ -3203,41 +3202,10 @@
       "GOAL_PROGRESS_REVIEW: Проблем: Lack of trust in the community hinders the effective response to the Ebola outbreak in the Democrati | Root cause: Insufficient engagement and communication with local c",
       "GOAL_PROGRESS_REVIEW: Проблем: Lack of trust in the community hinders the effective response to Ebola outbreaks in the Democratic R | Root cause: Insufficient communication and engagement with local c",
       "GOAL_PROGRESS_REVIEW: Проблем: Анализ на GOAL_PROGRESS_REVIEW — данни получени но LLM грешка | Root cause: LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: None",
-      "GOAL_PROGRESS_REVIEW: Проблем: Анализ на GOAL_PROGRESS_REVIEW — данни получени но LLM грешка | Root cause: LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: Gemini rate"
+      "GOAL_PROGRESS_REVIEW: Проблем: Анализ на GOAL_PROGRESS_REVIEW — данни получени но LLM грешка | Root cause: LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: Gemini rate",
+      "GOAL_PROGRESS_REVIEW: Проблем: Lack of trust in healthcare systems hindering effective disease outbreak response | Root cause: Insufficient community engagement and education leading to mistrust in he"
     ],
     "scores": [
-      {
-        "date": "2026-05-04",
-        "score": 65.0
-      },
-      {
-        "date": "2026-05-04",
-        "score": 65.0
-      },
-      {
-        "date": "2026-05-04",
-        "score": 65.0
-      },
-      {
-        "date": "2026-05-04",
-        "score": 65.0
-      },
-      {
-        "date": "2026-05-04",
-        "score": 65.0
-      },
-      {
-        "date": "2026-05-04",
-        "score": 65.0
-      },
-      {
-        "date": "2026-05-16",
-        "score": 30.0
-      },
-      {
-        "date": "2026-05-16",
-        "score": 30.0
-      },
       {
         "date": "2026-05-16",
         "score": 30.0
@@ -3325,13 +3293,44 @@
       {
         "date": "2026-06-19",
         "score": 30.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
       }
     ],
     "trend": "ПОДОБРЕНИЕ (+13.3 последните 3 цикъла)",
     "last_updated": "2026-06-20",
-    "last_score": 30.0,
+    "last_score": 55.0,
     "insight_hashes": [
-      "7494f9d4",
       "f542dff7",
       "3c38e44b",
       "9e849ed0",
@@ -3340,11 +3339,12 @@
       "79570427",
       "0372f12c",
       "92fcc880",
-      "2f209b25"
+      "2f209b25",
+      "6711d101"
     ]
   },
   "DEEP_TIME_RISKS_REVIEW": {
-    "cycle_count": 80,
+    "cycle_count": 88,
     "key_insights": [
       "DEEP_TIME_RISKS_REVIEW: Проблем: Анализ на DEEP_TIME_RISKS_REVIEW — данни получени но LLM грешка | Root cause: LLM parsing грешка",
       "DEEP_TIME_RISKS_REVIEW: Проблем: Забавянето на мерките за намаляване на риска от астероидни удари | Root cause: Ограничените ресурси и липсата на съгласувана международна политика за борба с а",
@@ -3358,38 +3358,6 @@
       "DEEP_TIME_RISKS_REVIEW: Проблем: Insufficient access to safe blood supplies globally, with many people lacking access, despite progre | Root cause: Persistent inequalities in access to healthcare and "
     ],
     "scores": [
-      {
-        "date": "2026-05-08",
-        "score": 55.0
-      },
-      {
-        "date": "2026-05-08",
-        "score": 55.0
-      },
-      {
-        "date": "2026-05-08",
-        "score": 55.0
-      },
-      {
-        "date": "2026-05-08",
-        "score": 55.0
-      },
-      {
-        "date": "2026-05-16",
-        "score": 55.0
-      },
-      {
-        "date": "2026-05-16",
-        "score": 30.0
-      },
-      {
-        "date": "2026-05-16",
-        "score": 30.0
-      },
-      {
-        "date": "2026-05-17",
-        "score": 30.0
-      },
       {
         "date": "2026-05-18",
         "score": 10.0
@@ -3477,6 +3445,38 @@
       {
         "date": "2026-06-20",
         "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
       }
     ],
     "trend": "ПОДОБРЕНИЕ (+8.3 последните 3 цикъла)",
@@ -3496,7 +3496,7 @@
     ]
   },
   "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL": {
-    "cycle_count": 80,
+    "cycle_count": 88,
     "key_insights": [
       "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL: Проблем: Нарушения на правата на човека в различни страни по света | Root cause: Отсъствие на ефективни механизми за защита на правата на човека и слаба демократ",
       "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL: Проблем: Политически престъпници и ограничения на правата на човека в различни страни, включително Китай и Ве | Root cause: Нарушаването на правата на човека от прави",
@@ -3511,34 +3511,6 @@
     ],
     "scores": [
       {
-        "date": "2026-05-04",
-        "score": 55.0
-      },
-      {
-        "date": "2026-05-07",
-        "score": 55.0
-      },
-      {
-        "date": "2026-05-07",
-        "score": 55.0
-      },
-      {
-        "date": "2026-05-07",
-        "score": 55.0
-      },
-      {
-        "date": "2026-05-07",
-        "score": 55.0
-      },
-      {
-        "date": "2026-05-07",
-        "score": 55.0
-      },
-      {
-        "date": "2026-05-08",
-        "score": 55.0
-      },
-      {
         "date": "2026-05-08",
         "score": 55.0
       },
@@ -3604,6 +3576,34 @@
       },
       {
         "date": "2026-06-19",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 30.0
+      },
+      {
+        "date": "2026-06-20",
         "score": 30.0
       },
       {
@@ -3648,9 +3648,8 @@
     ]
   },
   "PLANETARY_POTENTIAL_REVIEW": {
-    "cycle_count": 78,
+    "cycle_count": 86,
     "key_insights": [
-      "PLANETARY_POTENTIAL_REVIEW: Web risk: MEDIUM",
       "PLANETARY_POTENTIAL_REVIEW: Проблем: Анализ на PLANETARY_POTENTIAL_REVIEW — данни получени но LLM грешка | Root cause: LLM parsing грешка",
       "PLANETARY_POTENTIAL_REVIEW: Проблем: Planetary boundaries are being exceeded due to human activities, particularly in the context of clim | Root cause: Human activities are pushing the Earth's systems",
       "PLANETARY_POTENTIAL_REVIEW: Проблем: Откриване на огромно количество земетресения и магма-сурджей, които се случват без предупреждение, к | Root cause: Неадекватното разбиране на сложните геоложки про",
@@ -3659,41 +3658,10 @@
       "PLANETARY_POTENTIAL_REVIEW: Проблем: Inaccurate emissions data in the Climate TRACE database | Root cause: Methodological errors and lack of robust data validation",
       "PLANETARY_POTENTIAL_REVIEW: Проблем: Inaccurate climate data due to errors in the Climate TRACE database | Root cause: Methodological flaws and lack of transparency in the database",
       "PLANETARY_POTENTIAL_REVIEW: Проблем: Анализ на PLANETARY_POTENTIAL_REVIEW — данни получени но LLM грешка | Root cause: LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: None",
-      "PLANETARY_POTENTIAL_REVIEW: Проблем: Анализ на PLANETARY_POTENTIAL_REVIEW — данни получени но LLM грешка | Root cause: LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: Gemini rate"
+      "PLANETARY_POTENTIAL_REVIEW: Проблем: Анализ на PLANETARY_POTENTIAL_REVIEW — данни получени но LLM грешка | Root cause: LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: Gemini rate",
+      "PLANETARY_POTENTIAL_REVIEW: Проблем: Inaccurate global emissions database | Root cause: Methodological errors in data collection and analysis"
     ],
     "scores": [
-      {
-        "date": "2026-05-04",
-        "score": 55.0
-      },
-      {
-        "date": "2026-05-04",
-        "score": 55.0
-      },
-      {
-        "date": "2026-05-04",
-        "score": 55.0
-      },
-      {
-        "date": "2026-05-07",
-        "score": 55.0
-      },
-      {
-        "date": "2026-05-07",
-        "score": 55.0
-      },
-      {
-        "date": "2026-05-07",
-        "score": 55.0
-      },
-      {
-        "date": "2026-05-07",
-        "score": 55.0
-      },
-      {
-        "date": "2026-05-07",
-        "score": 55.0
-      },
       {
         "date": "2026-05-08",
         "score": 55.0
@@ -3781,12 +3749,43 @@
       {
         "date": "2026-06-19",
         "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
+      },
+      {
+        "date": "2026-06-20",
+        "score": 55.0
       }
     ],
     "trend": "СТАБИЛНО (±0.0)",
     "last_updated": "2026-06-20",
     "insight_hashes": [
-      "c2a4658d",
       "e05a7bf6",
       "5ec5f056",
       "9428a233",
@@ -3795,7 +3794,8 @@
       "1ec5882c",
       "e7194d0c",
       "046a99f6",
-      "bc4b930a"
+      "bc4b930a",
+      "e16603a3"
     ],
     "last_score": 55.0
   },

@@ -1,17 +1,36 @@
 {
   "axis": "GOVERNANCE_INSTITUTIONS_REVIEW",
-  "fetched_at": "2026-06-20T07:31:08.072503+00:00",
+  "fetched_at": "2026-06-20T12:16:49.511608+00:00",
   "smart_query": "government corruption institutions",
   "sources_count": {
     "wiki": 0,
-    "rss": 0,
+    "rss": 3,
     "gdelt": 0,
     "arxiv": 2,
     "github": 3,
     "youtube_transcripts": 3,
     "podcast": 1
   },
-  "rss": [],
+  "rss": [
+    {
+      "title": "From ‘media deserts’ to the invisibility of women, rights experts spotlight latest trends",
+      "snippet": "From the invisibility of women and girls to “media deserts” amid an artificial intelligence (AI) tsunami, dozens of UN independent experts have been shedding light on the battle for equal rights worldwide as the Geneva-based Human Rights Council continued its 62nd session on Thursday.",
+      "url": "https://news.un.org/feed/view/en/story/2026/06/1167756",
+      "source": "RSS"
+    },
+    {
+      "title": "Rights defender killings hit record high as UN pushes to shore up humanitarian action",
+      "snippet": "Attacks against human right defenders have reached record levels over the past year, according to a new report issued on Wednesday by the UN human rights office, OHCHR.",
+      "url": "https://news.un.org/feed/view/en/story/2026/06/1167746",
+      "source": "RSS"
+    },
+    {
+      "title": "Hate speech is ‘first step down the path of dehumanisation’",
+      "snippet": "As online platforms continue to fuel a surge in real-world violence against vulnerable communities, UN Secretary-General António Guterres is warning that freedom of expression must never be used to justify hate speech.&nbsp;",
+      "url": "https://news.un.org/feed/view/en/story/2026/06/1167745",
+      "source": "RSS"
+    }
+  ],
   "gdelt": [],
   "github_repos": [
     {
@@ -57,40 +76,40 @@
   "wiki": null,
   "youtube_items": [
     {
-      "title": "[YT] Global Geopolitical Outlook 2026",
-      "summary": "[DESCRIPTION FALLBACK] Emerging geopolitics expert and co-author of Danger Zone, Professor Hal Brands, takes audiences on a global tour of today's ...",
-      "link": "https://www.youtube.com/watch?v=Gkw2vbJCFkQ",
-      "source_type": "youtube",
-      "channel": "World Knowledge Forum",
-      "video_id": "Gkw2vbJCFkQ",
-      "transcript_method": "description",
-      "transcript_chars": 150,
-      "has_full_transcript": false
-    },
-    {
-      "title": "[YT] The top 10 geopolitical developments for 2026",
-      "summary": "[DESCRIPTION FALLBACK] Geopolitics #GeostrategicOutlook 2026 Geostrategic Outlook: Key Developments Shaping Global Business Welcome to our latest ...",
+      "title": "[YT] YouTube:KqZqusPFf78",
+      "summary": "Hi everybody and a really warm welcome. Today we're delighted to share the launch of our 2026 Geostrategic Outlook. Now we've been publishing these geostrategic outlooks for nearly eight years now. In each of those eight years, we've identified the top 10 issues that we believe are impacting the global business community, but also policymakers and government entities throughout the world. And so in 2026, we do the same thing. We identify our top 10 development that we think those individuals and those organizations should be focusing on. We're going to do one thing slightly differently this year, though. As well as hearing about those top 10 issues, we're going to move around the globe and hear from four of my colleagues in the Geostrategic Business Group for their take on what all of this",
       "link": "https://www.youtube.com/watch?v=KqZqusPFf78",
       "source_type": "youtube",
-      "channel": "EY Global",
+      "channel": "",
       "video_id": "KqZqusPFf78",
-      "transcript_method": "description",
-      "transcript_chars": 149,
-      "has_full_transcript": false
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1952,
+      "has_full_transcript": true
     },
     {
-      "title": "[YT] Why the world&#39;s superpowers are racing to control the Arctic - BBC World Service",
-      "summary": "[DESCRIPTION FALLBACK] Tensions are rising at the top of the world as the Arctic warms faster than anywhere else on earth. Click here to subscribe to our ...",
-      "link": "https://www.youtube.com/watch?v=TkRmrPQDPFw",
+      "title": "[YT] YouTube:VKIMeXestDE",
+      "summary": "President Trump said US oil firms will invest billions to restore Venezuela's oil infrastructure following a military operation that captured Nicholas Baduro. Now, under Trump 2.0, American firms are not only driving record domestic oil and gas output, but they are also asserting their influence globally. This is in keeping with Trump's expansive vision of US energy domination, which includes his plan for Venezuela. Preceding US air strikes and Maduro's capture, successive administrations used oil sanctions in 2019 and a partial blockade of oil vessels to put pressure on Maduro, but it was all in vain. Trude has played a central role in those moves for many years. Low oil and gasoline prices are important to the president because he wants to control inflation and address the cost of living",
+      "link": "https://www.youtube.com/watch?v=VKIMeXestDE",
       "source_type": "youtube",
-      "channel": "BBC World Service",
-      "video_id": "TkRmrPQDPFw",
-      "transcript_method": "description",
-      "transcript_chars": 157,
-      "has_full_transcript": false
+      "channel": "",
+      "video_id": "VKIMeXestDE",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1233,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] YouTube:XPUQvhRxpj4",
+      "summary": "চীন, রাশিয়া আর আমেরিকার মত পরাশক্তিগুলোকে ইশারায় নাচিয়ে বিশ্ব রাজনীতির পুরো মানচিত্রই বদলে দিয়েছেন কিম জং উন। দেড় শতাধিক পরমাণু অস্ত্র আর সাইবার বাহিনীর নিয়ন্ত্রণ নিয়ে কিম এখন বিশ্বমঞ্চের আসল জাদুকর। সব হিসাব উল্টে দিয়ে পরাশক্তিগুলো এখন তার দরবারে লাইন ধরে দাঁড়িয়েছে।",
+      "link": "https://www.youtube.com/watch?v=XPUQvhRxpj4",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "XPUQvhRxpj4",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 277,
+      "has_full_transcript": true
     }
   ],
-  "summary": "[arXiv]\n- Programmable Participatory Governance -- A Formal Framework for Transparent, Accountable, and Citizen-Responsive Democratic Systems: From Deliberative Theory to Decentralised Architecture\n- ",
+  "summary": "[RSS News]\n- From ‘media deserts’ to the invisibility of women, rights experts spotlight latest trends\n- Rights defender killings hit record high as UN pushes to shore up humanitarian action\n\n[arXiv]\n",
   "urgency": "LOW",
   "sentiment": "NEUTRAL",
   "key_developments": [],

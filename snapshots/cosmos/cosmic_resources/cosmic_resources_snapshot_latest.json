@@ -13,6 +13,6 @@
     "data_quality": "static_estimates_2025",
     "notes": "Static estimates — no public real-time API for cosmic resources."
   },
-  "snapshot_timestamp": "2026-06-20T07:36:25.191757+00:00",
+  "snapshot_timestamp": "2026-06-20T11:35:07.488739+00:00",
   "axis": "COSMIC_RESOURCES_REVIEW"
 }

@@ -1,64 +1,65 @@
 {
   "axis": "GOVERNANCE_INSTITUTIONS_REVIEW",
   "domain": "civilization",
-  "timestamp": "2026-06-20T05:39:11.701486+00:00",
-  "sources_count": 14,
+  "timestamp": "2026-06-20T12:06:01.010571+00:00",
+  "sources_count": 15,
   "rss_count": 12,
   "ddg_count": 0,
-  "youtube_count": 2,
+  "youtube_count": 3,
   "youtube_items": [
     {
-      "title": "[YT] Angela Merkel's revelation on Minsk Agreements - YouTube",
-      "summary": "[DESCRIPTION FALLBACK] About Press Copyright Contact us Creators Advertise Developers Terms Privacy Policy & Safety How YouTube works Test new features.",
-      "link": "https://www.youtube.com/watch?v=0-57KOwG9co",
-      "published": "",
+      "title": "[YT] The top 10 geopolitical developments for 2026",
+      "summary": "Hi everybody and a really warm welcome. Today we're delighted to share the launch of our 2026 Geostrategic Outlook. Now we've been publishing these geostrategic outlooks for nearly eight years now. In each of those eight years, we've identified the top 10 issues that we believe are impacting the global business community, but also policymakers and government entities throughout the world. And so in 2026, we do the same thing. We identify our top 10 development that we think those individuals and those organizations should be focusing on. We're going to do one thing slightly differently this year, though. As well as hearing about those top 10 issues, we're going to move around the globe and hear from four of my colleagues in the Geostrategic Business Group for their take on what all of this",
+      "link": "https://www.youtube.com/watch?v=KqZqusPFf78",
+      "published": "2025-12-16T13:30:16Z",
       "source_type": "youtube",
-      "channel": "",
-      "video_id": "0-57KOwG9co",
-      "transcript_method": "description",
-      "transcript_chars": 152,
-      "has_full_transcript": false
+      "channel": "EY Global",
+      "video_id": "KqZqusPFf78",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1952,
+      "has_full_transcript": true
     },
     {
-      "title": "[YT] Беларусь нападет на Украину? | Встреча Лукашенко... - YouTube",
-      "summary": "[DESCRIPTION FALLBACK] О сервисе Прессе Авторские права Связаться с нами Авторам Рекламодателям Разработчикам Условия использования Конфиденциальность Правила и безопасность Как работает YouTube Тестирование новых функций.",
-      "link": "https://www.youtube.com/watch?v=NBgcn11jRMc",
-      "published": "",
+      "title": "[YT] UN Chief on 2026 priorities | United Nations",
+      "summary": "Good afternoon. Afternoon. Yes. All right. Good uh good afternoon. Welcome&nbsp; uh to all of you. Just as a reminder,&nbsp;&nbsp; we have our wonderful interpreters here for&nbsp; French and Spanish. Um the secretary general&nbsp;&nbsp; will make some opening remarks and he may take a&nbsp; few questions from you. Dear members of the press,&nbsp;&nbsp; happy new year. This is an especially meaningful&nbsp; moment for me since it is my final opportunity&nbsp;&nbsp; for our customary exchange at the beginning&nbsp; of the year. So these are early days, but 2026&nbsp;&nbsp; is already shaping up to be a year of constant&nbsp; surprises and chaos. Before I entered public life,&nbsp;&nbsp; I trained as a physicist. And in times of profound&nbsp; flux, I returned to some of the fixed principles",
+      "link": "https://www.youtube.com/watch?v=CoY-gy90EaQ",
+      "published": "2026-01-29T18:18:14Z",
       "source_type": "youtube",
-      "channel": "",
-      "video_id": "NBgcn11jRMc",
-      "transcript_method": "description",
-      "transcript_chars": 222,
-      "has_full_transcript": false
+      "channel": "United Nations",
+      "video_id": "CoY-gy90EaQ",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 2238,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] The Biggest Global Risks for 2026 | TED Explains the World with Ian Bremmer",
+      "summary": "Helen Walters: Hello everyone. Happy 2026, wherever you are. I am Helen Walters, I'm the head of media and curation at TED. It is January 5. I am in Brooklyn, I have a cold, so apologies if my voice gives out, but luckily, most of the talking today will be done by the one and only Ian Bremmer, the president of Eurasia Group, who often comes to explain what on Earth is going on in the world to us. He's also here today to share the list of global risks that he and Eurasia just published. So, Ian, thank you so much for being here. Ian Bremmer: Helen, happy New year. How else could one possibly celebrate but to talk about the global risk environment? HW: You really are a massive downer, it turns out. But it turns out there is also a lot to talk about. And so a lot of the report, which is so me",
+      "link": "https://www.youtube.com/watch?v=dqVfnC_muaI",
+      "published": "2026-01-06T21:05:18Z",
+      "source_type": "youtube",
+      "channel": "TED",
+      "video_id": "dqVfnC_muaI",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1470,
+      "has_full_transcript": true
     }
   ],
   "analysis": {
-    "problem": "Lack of effective governance and international cooperation to address humanitarian crises, such as the situation in Gaza and war crimes in Syria",
-    "root_cause": "Insufficient commitment to and enforcement of international laws and agreements, including the United Nations Convention on the Law of the Sea and human rights treaties",
-    "severity": "HIGH",
-    "leverage_points": [
-      "The United Nations and its agencies, such as the Security Council and the Human Rights Council",
-      "National governments and their leaders, particularly those with significant global influence"
-    ],
-    "proposed_actions": [
-      {
-        "action": "Strengthening the United Nations' ability to enforce international law and hold perpetrators of humanitarian crises accountable",
-        "measurable_goal": "Increase in the number of successful prosecutions of war crimes and improvement in humanitarian access to affected areas",
-        "timeframe": "medium-term"
-      },
-      {
-        "action": "Encouraging national governments to prioritize human rights and international cooperation",
-        "measurable_goal": "Increase in the number of countries ratifying and implementing key human rights treaties and participating in international efforts to address humanitarian crises",
-        "timeframe": "long-term"
-      }
-    ],
+    "problem": "Анализ на GOVERNANCE_INSTITUTIONS_REVIEW — данни получени но LLM грешка",
+    "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: None",
+    "severity": "UNKNOWN",
+    "leverage_points": [],
+    "proposed_actions": [],
     "evidence": [
-      "The Daily Press Briefing by the Office of the Spokesperson for the Secretary-General highlighted the International Day for the Elimination of Sexual Violence in Conflict",
-      "The Security Council heard briefings on the humanitarian situation in Gaza, emphasizing the need for unhindered aid access and respect for the peace plan"
+      "Daily Press Briefing by the Office of the Spokesperson for the Secretary-General",
+      "With Fundamental Freedoms under Assault, Work of Human Rights Council ‘More Vital Than Ever’, Secretary-General Says in Anniversary Video Message",
+      "Meeting of States Parties to United Nations Convention on Law of Sea, United Nations Headquarters, 15-18 June"
     ],
-    "generalization": "This problem connects to the domains of human biosphere and cosmos, as humanitarian crises can have long-term consequences for the environment, global health, and stability, ultimately affecting the sustainability of intelligent life on Earth and beyond",
-    "summary": "The lack of effective governance and international cooperation exacerbates humanitarian crises, and strengthening the United Nations and encouraging national governments to prioritize human rights can help address these issues.",
-    "risk_level": "HIGH"
+    "generalization": "",
+    "summary": "- Daily Press Briefing by the Office of the Spokesperson for the Secretary-General: Today is the International Day for the Elimination of Sexual Violence in Conflict. Sexual violence against children ",
+    "risk_level": "UNKNOWN",
+    "trend": "UNKNOWN",
+    "llm_raw": ""
   },
   "raw_items": [
     {
@@ -118,17 +119,17 @@
       "source_type": "rss"
     },
     {
-      "title": "Israel and Hezbollah agree ceasefire, US says, as more Lebanon strikes reported",
-      "summary": "The agreement followed concerns that continued clashes would undermine the deal to end the war between the US and Iran.",
-      "link": "https://www.bbc.com/news/articles/cwyk7kkygj5o?at_medium=RSS&at_campaign=rss",
-      "published": "Fri, 19 Jun 2026 19:27:12 GMT",
+      "title": "Israel and Hezbollah continue strikes despite ceasefire agreement",
+      "summary": "Several people are reported killed in southern Lebanon, with the IDF saying it hit \"Hezbollah terrorist targets\" after the group fired over 50 projectiles at Israeli forces.",
+      "link": "https://www.bbc.com/news/articles/cx240k9l112o?at_medium=RSS&at_campaign=rss",
+      "published": "Sat, 20 Jun 2026 08:53:53 GMT",
       "source_type": "rss"
     },
     {
-      "title": "Italy's Meloni says Trump 'made up' story that she 'begged' him for photo at G7",
-      "summary": "The highly public exchange is an indication that their earlier close ties have frayed  since Trump's decision to go to war with Iran.",
-      "link": "https://www.bbc.com/news/articles/c20y1ygn707o?at_medium=RSS&at_campaign=rss",
-      "published": "Fri, 19 Jun 2026 19:36:10 GMT",
+      "title": "Zelensky stripped of highest Polish honour over WW2 name of army unit",
+      "summary": "Ukraine has denounced the move, calling it a \"strategic mistake\" and \"disrespectful\".",
+      "link": "https://www.bbc.com/news/articles/cr7xzg3dmj8o?at_medium=RSS&at_campaign=rss",
+      "published": "Fri, 19 Jun 2026 21:46:07 GMT",
       "source_type": "rss"
     }
   ]

@@ -68,5 +68,37 @@
     "top_degradations": [],
     "beneficial_actions": 10,
     "harmful_actions": 0
+  },
+  {
+    "timestamp": "2026-06-20T10:32:21.809629+00:00",
+    "avg_score": 53.96,
+    "axes_count": 8,
+    "axes_improved": 0,
+    "axes_degraded": 1,
+    "top_improvements": [],
+    "top_degradations": [
+      [
+        "BODY_SCAN",
+        -58.3
+      ]
+    ],
+    "beneficial_actions": 0,
+    "harmful_actions": 10
+  },
+  {
+    "timestamp": "2026-06-20T11:56:44.836973+00:00",
+    "avg_score": 55.95,
+    "axes_count": 8,
+    "axes_improved": 1,
+    "axes_degraded": 0,
+    "top_improvements": [
+      [
+        "BODY_SCAN",
+        15.9
+      ]
+    ],
+    "top_degradations": [],
+    "beneficial_actions": 10,
+    "harmful_actions": 0
   }
 ]

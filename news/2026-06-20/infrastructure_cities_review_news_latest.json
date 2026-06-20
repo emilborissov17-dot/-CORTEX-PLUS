@@ -1,11 +1,11 @@
 {
   "axis": "INFRASTRUCTURE_CITIES_REVIEW",
-  "fetched_at": "2026-06-20T07:34:21.621063+00:00",
+  "fetched_at": "2026-06-20T11:26:54.739574+00:00",
   "smart_query": "cities infrastructure urban development",
   "sources_count": {
     "wiki": 0,
     "rss": 3,
-    "gdelt": 3,
+    "gdelt": 0,
     "arxiv": 2,
     "github": 3,
     "youtube_transcripts": 3,
@@ -31,41 +31,22 @@
       "source": "RSS"
     }
   ],
-  "gdelt": [
-    {
-      "title": "Qazaxıstan mediasında Ümumdünya Şəhərsalma Forumunun 13 - cü sessiyasına hazırlıq geniş işıqlandırılıb",
-      "snippet": "Qazaxıstan mediasında Ümumdünya Şəhərsalma Forumunun 13 - cü sessiyasına hazırlıq geniş işıqlandırılıb",
-      "url": "https://musavat.com/news/qazaxistan-mediasinda-umumdunya-sehersalma-forumunun-13-cu-sessiyasina-hazirliq-genis-isiqlandirilib_1258604.html",
-      "source": "musavat.com"
-    },
-    {
-      "title": "Orașele și viața de noapte în economia urbană non - stop",
-      "snippet": "Orașele și viața de noapte în economia urbană non - stop",
-      "url": "https://www.kanald.ro/orasele-si-viata-de-noapte-in-economia-urbana-non-stop-20526216",
-      "source": "kanald.ro"
-    },
-    {
-      "title": "10 years of Smart Cities Mission : How technology is transforming urban India",
-      "snippet": "10 years of Smart Cities Mission : How technology is transforming urban India",
-      "url": "https://timesofindia.indiatimes.com/india/10-years-of-smart-cities-mission-how-technology-is-transforming-urban-india/articleshow/131768426.cms",
-      "source": "timesofindia.indiatimes.com"
-    }
-  ],
+  "gdelt": [],
   "github_repos": [
     {
       "title": "opendatacam/opendatacam",
       "snippet": "An open source tool to quantify the world",
-      "stars": 1717,
+      "stars": 1716,
       "url": "https://github.com/opendatacam/opendatacam",
-      "updated": "2026-06-09",
+      "updated": "2026-06-20",
       "source": "GitHub"
     },
     {
       "title": "duy-phamduc68/TrafficLab-3D",
       "snippet": "Create a digital-twin style traffic visualization using only mp4 CCTV footage and its Google Maps location.",
-      "stars": 311,
+      "stars": 312,
       "url": "https://github.com/duy-phamduc68/TrafficLab-3D",
-      "updated": "2026-06-01",
+      "updated": "2026-06-20",
       "source": "GitHub"
     },
     {
@@ -106,6 +87,17 @@
       "has_full_transcript": false
     },
     {
+      "title": "[YT] Smart City Infrastructure: The Future of Transportation and Urban Planning!",
+      "summary": "[DESCRIPTION FALLBACK] Smart City Infrastructure: The Future of Transportation and Urban Planning! CIVIL ENGINEERING EDGE Welcome to CIVIL ...",
+      "link": "https://www.youtube.com/watch?v=F-8LAPLaDUw",
+      "source_type": "youtube",
+      "channel": "CIVIL ENGINEERING EDGE",
+      "video_id": "F-8LAPLaDUw",
+      "transcript_method": "description",
+      "transcript_chars": 142,
+      "has_full_transcript": false
+    },
+    {
       "title": "[YT] Every Urban Planning Concept Explained in 9 Minutes",
       "summary": "[DESCRIPTION FALLBACK] Have you ever been stuck in traffic and wondered why your city spent millions on a highway that just made things worse? Or why ...",
       "link": "https://www.youtube.com/watch?v=Pj1vNBdQ2GA",
@@ -115,20 +107,9 @@
       "transcript_method": "description",
       "transcript_chars": 153,
       "has_full_transcript": false
-    },
-    {
-      "title": "[YT] Smart Cities - Infrastructure and Transport of the Future",
-      "summary": "[DESCRIPTION FALLBACK] Imagine a silent and emission free city. Imagine a cleaner, safer and more resource efficient world. How do we build smart cities ...",
-      "link": "https://www.youtube.com/watch?v=d1DndVz9dAs",
-      "source_type": "youtube",
-      "channel": "Volvo Group ",
-      "video_id": "d1DndVz9dAs",
-      "transcript_method": "description",
-      "transcript_chars": 156,
-      "has_full_transcript": false
     }
   ],
-  "summary": "[RSS News]\n- New video game console aims to get kids moving\n- UK's top data and AI regulator quits after 'inappropriate' humour\n\n[GDELT News]\n- Qazaxıstan mediasında Ümumdünya Şəhərsalma Forumunun 13 ",
+  "summary": "[RSS News]\n- New video game console aims to get kids moving\n- UK's top data and AI regulator quits after 'inappropriate' humour\n\n[arXiv]\n- Calibrating Urban Traffic Simulation from Sparse Road Observa",
   "urgency": "LOW",
   "sentiment": "NEUTRAL",
   "key_developments": [],

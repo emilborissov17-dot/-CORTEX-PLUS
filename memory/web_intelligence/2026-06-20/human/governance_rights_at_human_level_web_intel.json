@@ -1,53 +1,41 @@
 {
   "axis": "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL",
   "domain": "human",
-  "timestamp": "2026-06-20T05:37:56.149905+00:00",
+  "timestamp": "2026-06-20T12:04:32.430279+00:00",
   "sources_count": 9,
   "rss_count": 8,
   "ddg_count": 0,
   "youtube_count": 1,
   "youtube_items": [
     {
-      "title": "[YT] LIVE: UN Forum on Human Rights, Democracy and Rule ... - YouTubeUN Watch | Holding the United Nations AccountableMeeting Trump’s Challenge to Human Rights | Human Rights WatchWorld Report 2026: Peru | Human Rights WatchIndia Human Rights: A Comprehensive Analysis Report - Human ...Human rights and democracy in the world: Annual report 2025",
-      "summary": "[DESCRIPTION FALLBACK] It aims to provide factual, up-to-date news, analysis, and insights from India and around the world. The channel delivers a mix of content, including political news, business updates,... UN Watch is a Geneva-based NGO that monitors the UN by the yardstick of its own Charter. We expose double standards, defend human rights, and stand up for democracy inside the UN system. Feb 4, 2026 · In the 529-page World Report 2026, its 36th edition, Human Rights Watch reviews human rights practices in more t",
-      "link": "https://www.youtube.com/watch?v=WH92-ILCrrQ",
+      "title": "[YT] Human Rights in 2025: The 75th International Human Rights DayYouTubePromoting political rights and civil liberties after Human ...United States: Freedom in the World 2025 Country Report ...World Report 2025 - Human Rights WatchTop Human Rights Videos of 2025 | Human Rights WatchUSA Watchlist 2025 - Civicus Monitor",
+      "summary": "Hello, I'm Andrew Freriedman, director and senior fellow of the human rights initiative here at CSIS. And along with my colleague Anne Frederick, in honor of this International Human Rights Day, we want to talk about the important origins of this day and the state of human rights, freedom, and democracy in the world. And &gt;&gt; today on International Human Rights Day, we do not celebrate because we've succeeded in protecting all human beings and human rights worldwide. We know this isn't the case and we know this goal hasn't been achieved at any point in history even when the United Nations first established the Universal Declaration of Human Rights in 1948. International Human Rights Day is however a celebration that across the globe there's an ongoing fight to realize the goals of the ",
+      "link": "https://www.youtube.com/watch?v=gweWnhmdcbc",
       "published": "",
       "source_type": "youtube",
       "channel": "",
-      "video_id": "WH92-ILCrrQ",
-      "transcript_method": "description",
-      "transcript_chars": 523,
-      "has_full_transcript": false
+      "video_id": "gweWnhmdcbc",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1191,
+      "has_full_transcript": true
     }
   ],
   "analysis": {
-    "problem": "Lack of accountability for human rights violations and discriminatory practices against marginalized groups, including child refugees and political prisoners",
-    "root_cause": "Inadequate governance and lack of effective mechanisms for holding individuals and institutions accountable for human rights abuses",
-    "severity": "HIGH",
-    "leverage_points": [
-      "International human rights organizations and NGOs, such as Human Rights Watch and UN Watch",
-      "Government agencies and policymakers responsible for implementing and enforcing human rights laws and regulations"
-    ],
-    "proposed_actions": [
-      {
-        "action": "Establish independent investigation mechanisms to hold individuals and institutions accountable for human rights abuses",
-        "measurable_goal": "Increase in number of investigations and prosecutions of human rights abuses by 20% within the next 12 months",
-        "timeframe": "medium-term"
-      },
-      {
-        "action": "Provide training and resources to government agencies and policymakers on human rights laws and regulations",
-        "measurable_goal": "90% of government officials report feeling confident in their understanding of human rights laws and regulations within the next 6 months",
-        "timeframe": "short-term"
-      }
-    ],
+    "problem": "Анализ на GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL — данни получени но LLM грешка",
+    "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: None",
+    "severity": "UNKNOWN",
+    "leverage_points": [],
+    "proposed_actions": [],
     "evidence": [
-      "The UK's discriminatory AI experiment on child refugees",
-      "Canada's failure to hold corporations accountable for human rights abuses",
-      "The detention of activists and political prisoners in Uzbekistan and Georgia"
+      "The UK’s Discriminatory  AI Experiment on Child  Refugees",
+      "Canada Delivers a Blow to Corporate Accountability",
+      "Support Builds to Protect Children from Crimes Against Humanity"
     ],
-    "generalization": "This problem connects to other domains, including the biosphere, as human rights abuses can have devastating impacts on the environment and public health, and the cosmos, as a lack of accountability can undermine trust in institutions and hinder global cooperation",
-    "summary": "The lack of accountability for human rights violations and discriminatory practices against marginalized groups is a critical problem that requires immediate attention and action from international human rights organizations, governments, and policymakers.",
-    "risk_level": "HIGH"
+    "generalization": "",
+    "summary": "- The UK’s Discriminatory  AI Experiment on Child  Refugees: Click to expand Image\n          \n\n\n\n  \n        \n  \n\n        \n                      \n      \n        \n              Migrants walk towards a b",
+    "risk_level": "UNKNOWN",
+    "trend": "UNKNOWN",
+    "llm_raw": ""
   },
   "raw_items": [
     {
@@ -107,16 +95,16 @@
       "source_type": "rss"
     },
     {
-      "title": "[YT] LIVE: UN Forum on Human Rights, Democracy and Rule ... - YouTubeUN Watch | Holding the United Nations AccountableMeeting Trump’s Challenge to Human Rights | Human Rights WatchWorld Report 2026: Peru | Human Rights WatchIndia Human Rights: A Comprehensive Analysis Report - Human ...Human rights and democracy in the world: Annual report 2025",
-      "summary": "[DESCRIPTION FALLBACK] It aims to provide factual, up-to-date news, analysis, and insights from India and around the world. The channel delivers a mix of content, including political news, business updates,... UN Watch is a Geneva-based NGO that monitors the UN by the yardstick of its own Charter. We expose double standards, defend human rights, and stand up for democracy inside the UN system. Feb 4, 2026 · In the 529-page World Report 2026, its 36th edition, Human Rights Watch reviews human rights practices in more t",
-      "link": "https://www.youtube.com/watch?v=WH92-ILCrrQ",
+      "title": "[YT] Human Rights in 2025: The 75th International Human Rights DayYouTubePromoting political rights and civil liberties after Human ...United States: Freedom in the World 2025 Country Report ...World Report 2025 - Human Rights WatchTop Human Rights Videos of 2025 | Human Rights WatchUSA Watchlist 2025 - Civicus Monitor",
+      "summary": "Hello, I'm Andrew Freriedman, director and senior fellow of the human rights initiative here at CSIS. And along with my colleague Anne Frederick, in honor of this International Human Rights Day, we want to talk about the important origins of this day and the state of human rights, freedom, and democracy in the world. And &gt;&gt; today on International Human Rights Day, we do not celebrate because we've succeeded in protecting all human beings and human rights worldwide. We know this isn't the case and we know this goal hasn't been achieved at any point in history even when the United Nations first established the Universal Declaration of Human Rights in 1948. International Human Rights Day is however a celebration that across the globe there's an ongoing fight to realize the goals of the ",
+      "link": "https://www.youtube.com/watch?v=gweWnhmdcbc",
       "published": "",
       "source_type": "youtube",
       "channel": "",
-      "video_id": "WH92-ILCrrQ",
-      "transcript_method": "description",
-      "transcript_chars": 523,
-      "has_full_transcript": false
+      "video_id": "gweWnhmdcbc",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1191,
+      "has_full_transcript": true
     }
   ]
 }

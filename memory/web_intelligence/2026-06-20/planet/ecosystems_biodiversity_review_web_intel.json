@@ -1,64 +1,65 @@
 {
   "axis": "ECOSYSTEMS_BIODIVERSITY_REVIEW",
   "domain": "planet",
-  "timestamp": "2026-06-20T05:36:28.403975+00:00",
-  "sources_count": 10,
+  "timestamp": "2026-06-20T12:03:36.688126+00:00",
+  "sources_count": 11,
   "rss_count": 8,
   "ddg_count": 0,
-  "youtube_count": 2,
+  "youtube_count": 3,
   "youtube_items": [
     {
-      "title": "[YT] The Causes of Deforestation, Biodiversity Loss, and Species Extinction, Emphasizing the Impact of - YouTube",
-      "summary": "[DESCRIPTION FALLBACK] The Causes of Deforestation, Biodiversity Loss, and Species Extinction, Emphasizing the Impact of Animal Agriculture and Grazing Practices: With Glen Merzer,... Published June 11, 2025",
-      "link": "https://www.youtube.com/watch?v=QOKYEhkb1WQ",
-      "published": "",
+      "title": "[YT] Climate 101: Deforestation | National Geographic",
+      "summary": "borås cover about 30% of the planet and the ecosystems they create play an essential role in supporting life on Earth but deforestation is clearing Earth's forests on a massive scale and at the current rate of destruction the world's rainforests could completely disappear within a hundred years why should we care about deforestation together forestry and agriculture are responsible for 24 percent of greenhouse gas emissions making deforestation a significant contributor to climate significant contributor to climate change deforestation impacts the amount of greenhouse gases in the atmosphere in two ways first when trees are felled they release the carbon they are storing into the atmosphere second trees play a critical role in absorbing the greenhouse gases that fuel global warming fewer f",
+      "link": "https://www.youtube.com/watch?v=Ic-J6hcSKa8",
+      "published": "2017-08-21T17:00:03Z",
       "source_type": "youtube",
-      "channel": "",
-      "video_id": "QOKYEhkb1WQ",
-      "transcript_method": "description",
-      "transcript_chars": 207,
-      "has_full_transcript": false
+      "channel": "National Geographic",
+      "video_id": "Ic-J6hcSKa8",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1201,
+      "has_full_transcript": true
     },
     {
-      "title": "[YT] How Deforestation and Habitat Loss reduce Biodiversity: Edge Effects and Extinction Debts explained - YouTube",
-      "summary": "[DESCRIPTION FALLBACK] #habitatloss #conservation #extinctiondebt #learningEvery minute an area the size of a football field is clearcut in the Amazon basin. The mind-boggling amo... Published December 2, 2020",
-      "link": "https://www.youtube.com/watch?v=utUttHCCHXk",
-      "published": "",
+      "title": "[YT] Biodiversity Loss Emergency: The Silent Extinction Crisis Explained",
+      "summary": "picture yourself walking through a lush rainforest where the air is thick with humidity and the sounds of Life surround you from every direction the vibrant calls of tropical birds Echo above while below a myriad of insects buzz and rustle among the leaves brightly colored flowers and plants of every imaginable shade create a mosaic of life and Beauty this is biodiversity in action the variety of life forms that make up our planet's ecosystems biodiversity is more than just an array of different species it's the intricate Web of Life life that sustains ecosystems and by extension human life it encompasses the diversity within species between species and of ecosystems themselves healthy biodiversity ensures ecosystem productivity where each species no matter how small has an important role ",
+      "link": "https://www.youtube.com/watch?v=DjVU3kgmVBc",
+      "published": "2024-07-19T10:00:10Z",
       "source_type": "youtube",
-      "channel": "",
+      "channel": "The Knowledge Snack",
+      "video_id": "DjVU3kgmVBc",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1204,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] How Deforestation and Habitat Loss reduce Biodiversity: Edge Effects and Extinction Debts explained",
+      "summary": "every minute an area the size of a soccer or football field depending on where you watch this from is clear-cut in the Amazon basin which because of feedbacks of the forest on its own climate may be on the brink of turning into a savanna over half of the original six million square miles of rainforest that blanketed much of the tropics has been clear-cut in the United States less than 21 percent of old-growth forests still exist in the u.s. Midwest only a tiny fraction of the original tall grass prairie remains with less than 1/10 of one percent of the original tall grass prairie remaining in Iowa with the destruction of the flora that makes up an ecosystem The Associated fauna disappears as well the mind-boggling amount of habitat destruction that has happened and continues to happen is t",
+      "link": "https://www.youtube.com/watch?v=utUttHCCHXk",
+      "published": "2020-12-02T16:00:13Z",
+      "source_type": "youtube",
+      "channel": "Ecotasia",
       "video_id": "utUttHCCHXk",
-      "transcript_method": "description",
-      "transcript_chars": 209,
-      "has_full_transcript": false
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1188,
+      "has_full_transcript": true
     }
   ],
   "analysis": {
-    "problem": "Deforestation and habitat loss lead to biodiversity loss and species extinction",
-    "root_cause": "Animal agriculture and grazing practices are significant drivers of deforestation and habitat loss",
-    "severity": "HIGH",
-    "leverage_points": [
-      "Governments and policymakers have the greatest effect on the problem through legislation and regulation",
-      "Consumers and their food choices have a significant impact on demand for animal products"
-    ],
-    "proposed_actions": [
-      {
-        "action": "Implement and enforce policies to reduce deforestation and habitat loss, such as certification programs for sustainably sourced products",
-        "measurable_goal": "Reduce deforestation rate by 20% within the next 5 years",
-        "timeframe": "medium-term"
-      },
-      {
-        "action": "Launch public awareness campaigns to educate consumers about the impact of their food choices on biodiversity",
-        "measurable_goal": "Increase the proportion of consumers choosing plant-based options by 15% within the next 2 years",
-        "timeframe": "short-term"
-      }
-    ],
+    "problem": "Анализ на ECOSYSTEMS_BIODIVERSITY_REVIEW — данни получени но LLM грешка",
+    "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: None",
+    "severity": "UNKNOWN",
+    "leverage_points": [],
+    "proposed_actions": [],
     "evidence": [
-      "An area the size of a football field is clearcut in the Amazon basin every minute",
-      "Animal agriculture and grazing practices are emphasized as significant causes of deforestation, biodiversity loss, and species extinction"
+      "Global",
+      "Inside IUCN",
+      "DG Speech Node"
     ],
-    "generalization": "This problem connects to the domains of civilization and human, as the impact of human activities on the planet's ecosystems has significant implications for long-term sustainability and human well-being",
-    "summary": "Deforestation and habitat loss driven by animal agriculture and grazing practices lead to biodiversity loss and species extinction, requiring policy and consumer-based solutions. The problem has significant implications for the sustainability of human civilization and the planet's ecosystems.",
-    "risk_level": "HIGH"
+    "generalization": "",
+    "summary": "- Global: <span class=\"field field--name-title field--type-string field--label-hidden\">Global</span>\n<span class=\"field field--name-uid field--type-entity-reference field--label-hidden\"><span>integrat",
+    "risk_level": "UNKNOWN",
+    "trend": "UNKNOWN",
+    "llm_raw": ""
   },
   "raw_items": [
     {
@@ -118,28 +119,28 @@
       "source_type": "rss"
     },
     {
-      "title": "[YT] The Causes of Deforestation, Biodiversity Loss, and Species Extinction, Emphasizing the Impact of - YouTube",
-      "summary": "[DESCRIPTION FALLBACK] The Causes of Deforestation, Biodiversity Loss, and Species Extinction, Emphasizing the Impact of Animal Agriculture and Grazing Practices: With Glen Merzer,... Published June 11, 2025",
-      "link": "https://www.youtube.com/watch?v=QOKYEhkb1WQ",
-      "published": "",
+      "title": "[YT] Climate 101: Deforestation | National Geographic",
+      "summary": "borås cover about 30% of the planet and the ecosystems they create play an essential role in supporting life on Earth but deforestation is clearing Earth's forests on a massive scale and at the current rate of destruction the world's rainforests could completely disappear within a hundred years why should we care about deforestation together forestry and agriculture are responsible for 24 percent of greenhouse gas emissions making deforestation a significant contributor to climate significant contributor to climate change deforestation impacts the amount of greenhouse gases in the atmosphere in two ways first when trees are felled they release the carbon they are storing into the atmosphere second trees play a critical role in absorbing the greenhouse gases that fuel global warming fewer f",
+      "link": "https://www.youtube.com/watch?v=Ic-J6hcSKa8",
+      "published": "2017-08-21T17:00:03Z",
       "source_type": "youtube",
-      "channel": "",
-      "video_id": "QOKYEhkb1WQ",
-      "transcript_method": "description",
-      "transcript_chars": 207,
-      "has_full_transcript": false
+      "channel": "National Geographic",
+      "video_id": "Ic-J6hcSKa8",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1201,
+      "has_full_transcript": true
     },
     {
-      "title": "[YT] How Deforestation and Habitat Loss reduce Biodiversity: Edge Effects and Extinction Debts explained - YouTube",
-      "summary": "[DESCRIPTION FALLBACK] #habitatloss #conservation #extinctiondebt #learningEvery minute an area the size of a football field is clearcut in the Amazon basin. The mind-boggling amo... Published December 2, 2020",
-      "link": "https://www.youtube.com/watch?v=utUttHCCHXk",
-      "published": "",
+      "title": "[YT] Biodiversity Loss Emergency: The Silent Extinction Crisis Explained",
+      "summary": "picture yourself walking through a lush rainforest where the air is thick with humidity and the sounds of Life surround you from every direction the vibrant calls of tropical birds Echo above while below a myriad of insects buzz and rustle among the leaves brightly colored flowers and plants of every imaginable shade create a mosaic of life and Beauty this is biodiversity in action the variety of life forms that make up our planet's ecosystems biodiversity is more than just an array of different species it's the intricate Web of Life life that sustains ecosystems and by extension human life it encompasses the diversity within species between species and of ecosystems themselves healthy biodiversity ensures ecosystem productivity where each species no matter how small has an important role ",
+      "link": "https://www.youtube.com/watch?v=DjVU3kgmVBc",
+      "published": "2024-07-19T10:00:10Z",
       "source_type": "youtube",
-      "channel": "",
-      "video_id": "utUttHCCHXk",
-      "transcript_method": "description",
-      "transcript_chars": 209,
-      "has_full_transcript": false
+      "channel": "The Knowledge Snack",
+      "video_id": "DjVU3kgmVBc",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1204,
+      "has_full_transcript": true
     }
   ]
 }

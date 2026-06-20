@@ -1,6 +1,6 @@
 {
   "axis": "TECHNOLOGY_AI_REVIEW",
-  "fetched_at": "2026-06-20T07:32:54.183537+00:00",
+  "fetched_at": "2026-06-20T12:15:47.388228+00:00",
   "smart_query": "artificial intelligence AI regulation",
   "sources_count": {
     "wiki": 0,
@@ -8,7 +8,7 @@
     "gdelt": 0,
     "arxiv": 2,
     "github": 3,
-    "youtube_transcripts": 2,
+    "youtube_transcripts": 3,
     "podcast": 1
   },
   "rss": [
@@ -76,37 +76,37 @@
   "wiki": null,
   "youtube_items": [
     {
-      "title": "[YT] Roadmap to Become a Generative AI Expert for Beginners in 2025",
-      "summary": "[DESCRIPTION FALLBACK] Check out this roadmap to become an expert Data Scientist in 2025!",
-      "link": "https://www.youtube.com/watch?v=39zbC_PrNQs",
+      "title": "[YT] YouTube:pNt4p7TExmY",
+      "summary": "How close are we to AGI? You know, we we used to every time we finished a system, we would say like in what ways is this not an AGI? And it used to be like very easy. You kind of like make a little robotic hand that does a Rubik's cube or a Dota bot. And it's like, oh, it does some things, but definitely not an AGI. Um, it's obviously harder to say now. And so we we're trying to like stop talking about AGI as this general thing and we have this levels framework because the word AGI has become so overloaded. Um so like real quickly we use one for chat bots, two for reasoners, three for agents, four for innovators, and five for organizations. Like roughly I think we clearly got to level two or we believe we clearly got to level two with 01. Um and it you know can do really quite impressive c",
+      "link": "https://www.youtube.com/watch?v=pNt4p7TExmY",
       "source_type": "youtube",
-      "channel": "Analytics Vidhya",
-      "video_id": "39zbC_PrNQs",
-      "transcript_method": "description",
-      "transcript_chars": 89,
-      "has_full_transcript": false
+      "channel": "",
+      "video_id": "pNt4p7TExmY",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 839,
+      "has_full_transcript": true
     },
     {
-      "title": "[YT] OpenAI’s Sam Altman Talks ChatGPT, AI Agents and Superintelligence — Live at TED2025",
-      "summary": "[DESCRIPTION FALLBACK] The AI revolution is here to stay, says Sam Altman, the CEO of OpenAI. In a probing, live conversation with head of TED Chris ...",
-      "link": "https://www.youtube.com/watch?v=5MWT_doo68k",
+      "title": "[YT] YouTube:wWoSx73g1DI",
+      "summary": "What do you define as AGI? I think humans will never acknowledge that AGI has been built deeper than the goalpost. Yeah. So, uh I think there's already superhuman capabilities that are available uh in AI systems. I think I think what AGI is is when it's smarter than the collective intelligence of the entire human species in our Well, I think that you normally people would call that sort of ASI artificial super intelligence. Um but there are these thresholds where um you say at some point um the AI is smarter than a single human. Um and then then you got 8 billion humans and and actually each human is machine augmented by the computers. So it's it's a much higher bar to compete with 8 billion machine augmented humans. That's a whole whole bunch of orders of magnitude more. But at some point",
+      "link": "https://www.youtube.com/watch?v=wWoSx73g1DI",
       "source_type": "youtube",
-      "channel": "TED",
-      "video_id": "5MWT_doo68k",
-      "transcript_method": "description",
-      "transcript_chars": 152,
-      "has_full_transcript": false
+      "channel": "",
+      "video_id": "wWoSx73g1DI",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 856,
+      "has_full_transcript": true
     },
     {
-      "title": "[YT] The AI Safety Expert: These Are The Only 5 Jobs That Will Remain In 2030! - Dr. Roman Yampolskiy",
-      "summary": "[DESCRIPTION FALLBACK] WARNING: AI could end humanity, and we're completely unprepared. Dr. Roman Yampolskiy reveals how AI will take 99% of jobs ...",
-      "link": "https://www.youtube.com/watch?v=UclrVWafRAI",
+      "title": "[YT] YouTube:dGdSK4lD1bU",
+      "summary": "ever heard of AI and AI but confused about the difference let's break it down AI stands for artificial intelligence which is a broad term that covers any system or program that can perform tasks that normally require human intelligence such as recognizing faces playing games or writing code AI systems are usually designed to excel in specific domains such as chess image recognition or natural language processing General AI on the other hand is the ultimate goal of AI research it refers to AI systems that can understand learn and apply knowledge across various domains just like humans can AGI stands for artificial general intelligence which is another term for General ai ai is the hypothetical AI system that would have human-like or superhuman intelligence and capabilities AGI is often cons",
+      "link": "https://www.youtube.com/watch?v=dGdSK4lD1bU",
       "source_type": "youtube",
-      "channel": "The Diary Of A CEO",
-      "video_id": "UclrVWafRAI",
-      "transcript_method": "description",
-      "transcript_chars": 149,
-      "has_full_transcript": false
+      "channel": "",
+      "video_id": "dGdSK4lD1bU",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1022,
+      "has_full_transcript": true
     }
   ],
   "summary": "[RSS News]\n- New video game console aims to get kids moving\n- UK's top data and AI regulator quits after 'inappropriate' humour\n\n[arXiv]\n- A Link between Shock-wave Theory and Symmetry-reduced Stochas",

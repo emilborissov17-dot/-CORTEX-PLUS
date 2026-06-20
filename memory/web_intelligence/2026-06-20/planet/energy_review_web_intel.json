@@ -1,75 +1,81 @@
 {
   "axis": "ENERGY_REVIEW",
   "domain": "planet",
-  "timestamp": "2026-06-20T05:35:26.567279+00:00",
-  "sources_count": 13,
+  "timestamp": "2026-06-20T12:02:17.803279+00:00",
+  "sources_count": 14,
   "rss_count": 12,
   "ddg_count": 0,
-  "youtube_count": 1,
+  "youtube_count": 2,
   "youtube_items": [
     {
-      "title": "[YT] Why Norway is Becoming the World's Richest Country - YouTube",
-      "summary": "[DESCRIPTION FALLBACK] Go to https://brilliant.org/RealLifeLore/ to get a 30-day free trial + the first 200 people will get 20% off their annual subscriptionWatch more than 25 addi...",
-      "link": "https://www.youtube.com/watch?v=RO8vWJfmY88",
+      "title": "[YT] Will Renewable Energy Dominate in 2025? - YouTubeThe Future of Renewable Energy - Solar, Wind, and BeyondScience’s 2025 Breakthrough of the Year: The ... - AAASThe future of electricity is wind and solar, new report says ...The top energy stories of 2025 | World Economic ForumThe 2025 energy transition in eight charts: clean wins, dirty ...Power and renewables: predictions for 2025 | Wood Mackenzie",
+      "summary": "welcome to Renee energy.com on YouTube the hub for all things renewable energy and sustainability our channel is dedicated to bringing you the latest Innovations and insights in green energy including Cutting Edge developments like green hydrogen whether you're a sustainability veteran or just beginning your journey we have something for everyone join us on this channel to explore inspiring projects for a sustainable tomorrow we bring you the latest and renewable energy sustainability and Cutting Edge Technologies and don't forget for more in-depth information and resources visit our website and subscribe to our newsletter for the latest updates and newsletter for the latest updates and exclusive content welcome to Rene energy.com your go-to source for the latest insights in renewable ener",
+      "link": "https://www.youtube.com/watch?v=N43dSWuYF3Y",
       "published": "",
       "source_type": "youtube",
       "channel": "",
-      "video_id": "RO8vWJfmY88",
-      "transcript_method": "description",
-      "transcript_chars": 183,
-      "has_full_transcript": false
+      "video_id": "N43dSWuYF3Y",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1187,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] The Future of Renewable Energy - Solar, Wind, and BeyondScience’s 2025 Breakthrough of the Year: The ... - AAASThe future of electricity is wind and solar, new report says ...The top energy stories of 2025 | World Economic ForumThe 2025 energy transition in eight charts: clean wins, dirty ...Power and renewables: predictions for 2025 | Wood Mackenzie",
+      "summary": "[music] The future of renewable energy, solar, wind, and beyond, powering tomorrow. For centuries, [music] humanity relied on wood, coal, and oil to power civilization. These fuels built industries, [music] cities, and economies. But they also created pollution and contributed to climate change. Now the world is turning to renewable energy. Solar panels, wind turbines, and hydro power are no longer experiments. [music] They are major sources of electricity. The future will see renewable energy grow even faster, transforming how we live and [music] reshaping the global economy. The rise of solar power. [music] Solar energy has become one of the fastest growing sources of electricity. Panels are cheaper, more efficient, and easier to install than ever before. Homeowners can generate their ow",
+      "link": "https://www.youtube.com/watch?v=aFnjiOYKp_g",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "aFnjiOYKp_g",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1131,
+      "has_full_transcript": true
     }
   ],
   "analysis": {
-    "problem": "Inefficient grid modernization efforts and lack of investment in renewable energy may hinder the transition to a sustainable energy system",
-    "root_cause": "The root cause of this problem is the lack of coordination and investment in grid communication infrastructure, as well as the prioritization of fossil fuel projects over renewable energy",
-    "severity": "MEDIUM",
-    "leverage_points": [
-      "Utility companies and grid operators have the greatest effect on the problem",
-      "Government policies and regulations"
-    ],
-    "proposed_actions": [
-      {
-        "action": "Increase investment in grid communication infrastructure and renewable energy projects",
-        "measurable_goal": "Achieve a 20% increase in renewable energy capacity and a 15% reduction in grid interference within the next 2 years",
-        "timeframe": "medium-term"
-      }
-    ],
+    "problem": "Анализ на ENERGY_REVIEW — данни получени но LLM грешка",
+    "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: None",
+    "severity": "UNKNOWN",
+    "leverage_points": [],
+    "proposed_actions": [],
     "evidence": [
-      "The Utility Broadband Alliance is expanding its membership to enhance grid communication infrastructure",
-      "The Trump administration is buying back offshore wind leases and redirecting funds to fossil fuel projects"
+      "Yup, China’s EV Price War Was Brutal, But It Drove Innovation",
+      "Uruguay EV Sales Report: ICEV Sales Start Melting Down as BEVs Surpass 40% Share in May!",
+      "Energy Access In Rural North Carolina Grows Through Solar"
     ],
-    "generalization": "This problem connects to the domains of Civilization and Cosmos, as a sustainable energy system is crucial for the long-term viability of intelligent life and its environments",
-    "summary": "Inefficient grid modernization efforts and lack of investment in renewable energy may hinder the transition to a sustainable energy system, and increasing investment in grid communication infrastructure and renewable energy projects can help address this problem",
-    "risk_level": "MEDIUM"
+    "generalization": "",
+    "summary": "- Yup, China’s EV Price War Was Brutal, But It Drove Innovation: <p>It&#8217;s been a popular topic lately to write about China&#8217;s EV sales slump in 2026, growing EV exports from China, and vario",
+    "risk_level": "UNKNOWN",
+    "trend": "UNKNOWN",
+    "llm_raw": ""
   },
   "raw_items": [
+    {
+      "title": "Yup, China’s EV Price War Was Brutal, But It Drove Innovation",
+      "summary": "<p>It&#8217;s been a popular topic lately to write about China&#8217;s EV sales slump in 2026, growing EV exports from China, and various policy changes and even controversies related to that. But there&#8217;s much more going on that isn&#8217;t typically acknowledged. First of all, note that while China&#8217;s EV sales are   ... [continued]</p>\n<p>The post <a href=\"https://cleantechnica.com/2026/06/19/yup-chinas-ev-price-war-was-brutal-but-it-drove-innovation/\">Yup, China&#8217;s EV Price War",
+      "link": "https://cleantechnica.com/2026/06/19/yup-chinas-ev-price-war-was-brutal-but-it-drove-innovation/",
+      "published": "Sat, 20 Jun 2026 03:58:10 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Uruguay EV Sales Report: ICEV Sales Start Melting Down as BEVs Surpass 40% Share in May!",
+      "summary": "<p>Latin America’s small champion is breaking all expectations. Uruguay surpassed Costa Rica as the regional leader in 2025, reaching an impressive 20% BEV market share for the whole year, up from 8.5% in 2024. 2026 has seen the continuation of high growth levels in the Uruguayan market, bringing the yearly   ... [continued]</p>\n<p>The post <a href=\"https://cleantechnica.com/2026/06/19/uruguay-ev-sales-report-icev-sales-start-melting-down-as-bevs-surpass-40-share-in-may/\">Uruguay EV Sales Report",
+      "link": "https://cleantechnica.com/2026/06/19/uruguay-ev-sales-report-icev-sales-start-melting-down-as-bevs-surpass-40-share-in-may/",
+      "published": "Sat, 20 Jun 2026 03:57:29 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Energy Access In Rural North Carolina Grows Through Solar",
+      "summary": "<p>In the heart of the Emma community just outside Asheville, North Carolina, a transformation is taking place that goes far beyond hardwire and wires. While the transition to renewable energy is often seen as a luxury, a partnership between Sugar Hollow Solar, PODER Emma, and Footprint Project is providing clean energy as a   ... [continued]</p>\n<p>The post <a href=\"https://cleantechnica.com/2026/06/19/energy-access-in-rural-north-carolina-grows-through-solar/\">Energy Access In Rural North Caro",
+      "link": "https://cleantechnica.com/2026/06/19/energy-access-in-rural-north-carolina-grows-through-solar/",
+      "published": "Sat, 20 Jun 2026 03:55:06 +0000",
+      "source_type": "rss"
+    },
     {
       "title": "Rivian To Challenge Tesla FSD Later This Year, CEO Thinks",
       "summary": "<p>I&#8217;ve been writing a bit lately on why robotaxis are not going to be as disruptive as many people expect. (See here and here and here.) A big core of the critique is the expectation that personal vehicles will have self-driving tech in them, and people would still rather have   ... [continued]</p>\n<p>The post <a href=\"https://cleantechnica.com/2026/06/19/rivian-to-challenge-tesla-fsd-later-this-year-ceo-thinks/\">Rivian To Challenge Tesla FSD Later This Year, CEO Thinks</a> appeared first",
       "link": "https://cleantechnica.com/2026/06/19/rivian-to-challenge-tesla-fsd-later-this-year-ceo-thinks/",
       "published": "Sat, 20 Jun 2026 03:50:16 +0000",
-      "source_type": "rss"
-    },
-    {
-      "title": "ComEd, Metropolitan Mayors Caucus Honor 9 Communities Advancing EV Readiness Across Northern Illinois",
-      "summary": "<p>ComEd, in partnership with the Metropolitan Mayors Caucus (Caucus), recognized nine communities that graduated from the 2026 EV Readiness Program during an award ceremony this week in Northbrook, Illinois. The program supports municipalities as they prepare for the continued growth of electric vehicles (EVs) through improved local policies, permitting, and   ... [continued]</p>\n<p>The post <a href=\"https://cleantechnica.com/2026/06/19/comed-metropolitan-mayors-caucus-honor-9-communities-advan",
-      "link": "https://cleantechnica.com/2026/06/19/comed-metropolitan-mayors-caucus-honor-9-communities-advancing-ev-readiness-across-northern-illinois/",
-      "published": "Sat, 20 Jun 2026 00:45:50 +0000",
-      "source_type": "rss"
-    },
-    {
-      "title": "Despite All The Smack Talk, Tesla Copied BYD",
-      "summary": "<p>Tesla fans criticized BYD electric vehicles for years. Supposedly, they were cheap, boring, and poorly made. However, BYD has grown and grown over the past several years, now produces far more cars than Tesla, and has about the same number of R&#38;D engineers as Tesla has total employees. Now we   ... [continued]</p>\n<p>The post <a href=\"https://cleantechnica.com/2026/06/19/despite-all-the-smack-talk-tesla-copied-byd/\">Despite All The Smack Talk, Tesla Copied BYD</a> appeared first on <a hre",
-      "link": "https://cleantechnica.com/2026/06/19/despite-all-the-smack-talk-tesla-copied-byd/",
-      "published": "Sat, 20 Jun 2026 00:15:59 +0000",
-      "source_type": "rss"
-    },
-    {
-      "title": "BYD Datang Comparison Reveals Accelerating EV Progress",
-      "summary": "<p>BYD&#8217;s Datang EV launched this week. While impressive on its own, the premium SUV becomes more impressive compared to other vehicles in China. RWD Datang models start at 239,900 RMB ($35,502 USD) for 800 km up to 269,900 RMB ($39,941 USD) for Flagship trim with 950 km of class-leading range   ... [continued]</p>\n<p>The post <a href=\"https://cleantechnica.com/2026/06/19/byd-datang-comparison-reveals-accelerating-ev-progress/\">BYD Datang Comparison Reveals Accelerating EV Progress</a> appe",
-      "link": "https://cleantechnica.com/2026/06/19/byd-datang-comparison-reveals-accelerating-ev-progress/",
-      "published": "Sat, 20 Jun 2026 00:06:38 +0000",
       "source_type": "rss"
     },
     {

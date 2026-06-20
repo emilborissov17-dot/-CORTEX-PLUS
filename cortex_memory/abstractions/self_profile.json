@@ -1,6 +1,6 @@
 {
-  "total_cycles": 4,
-  "avg_goal_score": 0.7385,
+  "total_cycles": 6,
+  "avg_goal_score": 0.6723,
   "best_goal_score": 0.85,
   "sensor_reliability": {
     "NOAA": 3,
@@ -9,7 +9,7 @@
     "arXiv": 3,
     "GBIF": 3,
     "NOAA SWPC": 3,
-    "metrics": 47
+    "metrics": 141
   },
   "weak_domains": [
     "TECHNOLOGY_INFRA_REVIEW",

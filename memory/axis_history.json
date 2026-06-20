@@ -464,7 +464,7 @@
     },
     {
       "date": "2026-06-20",
-      "timestamp": "2026-06-20T07:26:50.932004+00:00",
+      "timestamp": "2026-06-20T12:09:27.028955+00:00",
       "metrics": {
         "gdp_per_capita_usd": 13631.2043097215,
         "gdp_growth_pct": 2.87194964204316,
@@ -937,7 +937,7 @@
     },
     {
       "date": "2026-06-20",
-      "timestamp": "2026-06-20T07:26:50.932004+00:00",
+      "timestamp": "2026-06-20T12:09:27.028955+00:00",
       "metrics": {
         "literacy_rate_adult_pct": 87.7399978637695,
         "primary_enrollment_pct": 89.4124,
@@ -1749,7 +1749,7 @@
     },
     {
       "date": "2026-06-20",
-      "timestamp": "2026-06-20T07:26:50.932004+00:00",
+      "timestamp": "2026-06-20T12:09:27.028955+00:00",
       "metrics": {
         "rule_of_law_weighted_mean": -0.355,
         "rule_of_law_weighted_median": -0.571,
@@ -2148,7 +2148,7 @@
     },
     {
       "date": "2026-06-20",
-      "timestamp": "2026-06-20T07:26:50.932004+00:00",
+      "timestamp": "2026-06-20T12:09:27.028955+00:00",
       "metrics": {
         "gini_index": 39.625,
         "poverty_headcount_190": 10.4,
@@ -2620,7 +2620,7 @@
     },
     {
       "date": "2026-06-20",
-      "timestamp": "2026-06-20T07:26:50.932004+00:00",
+      "timestamp": "2026-06-20T12:09:27.028955+00:00",
       "metrics": {
         "access_electricity_pct": 91.5991774421991,
         "urban_population_pct": 57.5634797111357,
@@ -3092,7 +3092,7 @@
     },
     {
       "date": "2026-06-20",
-      "timestamp": "2026-06-20T07:26:50.932004+00:00",
+      "timestamp": "2026-06-20T12:09:27.028955+00:00",
       "metrics": {
         "rd_expenditure_pct_gdp": 2.59056888571504,
         "high_tech_exports_pct": 24.758870073466,
@@ -3518,7 +3518,7 @@
     },
     {
       "date": "2026-06-20",
-      "timestamp": "2026-06-20T07:26:50.932004+00:00",
+      "timestamp": "2026-06-20T12:09:27.028955+00:00",
       "metrics": {
         "fixed_broadband_per100": 20.11,
         "mobile_subscriptions_per100": 111.5
@@ -3897,7 +3897,7 @@
     },
     {
       "date": "2026-06-20",
-      "timestamp": "2026-06-20T07:26:50.932004+00:00",
+      "timestamp": "2026-06-20T12:09:27.028955+00:00",
       "metrics": {
         "outer_space_treaty_signatories": 114.0
       },
@@ -3907,7 +3907,7 @@
   "DEEP_TIME_RISKS_REVIEW": [
     {
       "date": "2026-06-20",
-      "timestamp": "2026-06-20T07:26:50.932004+00:00",
+      "timestamp": "2026-06-20T12:09:27.028955+00:00",
       "metrics": {},
       "score": null
     }
@@ -3915,7 +3915,7 @@
   "GENERAL_SELF_REVIEW": [
     {
       "date": "2026-06-20",
-      "timestamp": "2026-06-20T07:26:50.932004+00:00",
+      "timestamp": "2026-06-20T12:09:27.028955+00:00",
       "metrics": {},
       "score": null
     }
@@ -3923,7 +3923,7 @@
   "GOAL_PROGRESS_REVIEW": [
     {
       "date": "2026-06-20",
-      "timestamp": "2026-06-20T07:26:50.932004+00:00",
+      "timestamp": "2026-06-20T12:09:27.028955+00:00",
       "metrics": {},
       "score": null
     }
@@ -3931,7 +3931,7 @@
   "LONG_TERM_FUTURE_REVIEW": [
     {
       "date": "2026-06-20",
-      "timestamp": "2026-06-20T07:26:50.932004+00:00",
+      "timestamp": "2026-06-20T12:09:27.028955+00:00",
       "metrics": {},
       "score": null
     }
@@ -4353,7 +4353,7 @@
     },
     {
       "date": "2026-06-20",
-      "timestamp": "2026-06-20T07:26:50.932004+00:00",
+      "timestamp": "2026-06-20T12:09:27.028955+00:00",
       "metrics": {
         "active_satellites_est": 9000.0,
         "annual_launches_est": 240.0
@@ -4823,7 +4823,7 @@
     },
     {
       "date": "2026-06-20",
-      "timestamp": "2026-06-20T07:26:50.932004+00:00",
+      "timestamp": "2026-06-20T12:09:27.028955+00:00",
       "metrics": {
         "literacy_rate_youth_pct": 93.1100006103516,
         "primary_completion_rate": 88.0215835571289,
@@ -5295,7 +5295,7 @@
     },
     {
       "date": "2026-06-20",
-      "timestamp": "2026-06-20T07:26:50.932004+00:00",
+      "timestamp": "2026-06-20T12:09:27.028955+00:00",
       "metrics": {
         "internet_users_pct": 73.6,
         "literacy_rate_adult_pct": 87.7399978637695,
@@ -5594,7 +5594,7 @@
     },
     {
       "date": "2026-06-20",
-      "timestamp": "2026-06-20T07:26:50.932004+00:00",
+      "timestamp": "2026-06-20T12:09:27.028955+00:00",
       "metrics": {
         "gender_inequality_index": 27.2485552269582,
         "access_justice_score": 3.03896103896104
@@ -6111,7 +6111,7 @@
     },
     {
       "date": "2026-06-20",
-      "timestamp": "2026-06-20T07:26:50.932004+00:00",
+      "timestamp": "2026-06-20T12:09:27.028955+00:00",
       "metrics": {
         "life_expectancy": 73.480380292779,
         "infant_mortality": 27.7,
@@ -6538,7 +6538,7 @@
     },
     {
       "date": "2026-06-20",
-      "timestamp": "2026-06-20T07:26:50.932004+00:00",
+      "timestamp": "2026-06-20T12:09:27.028955+00:00",
       "metrics": {
         "homicide_rate_per_100k": 5.2,
         "urbanization_pct": 57.5634797111357
@@ -7029,18 +7029,18 @@
     },
     {
       "date": "2026-06-20",
-      "timestamp": "2026-06-20T07:26:50.932004+00:00",
+      "timestamp": "2026-06-20T12:09:27.028955+00:00",
       "metrics": {
         "co2_ppm_current": 432.15,
         "co2_ppm_year_ago": 429.78,
         "co2_annual_increase": 2.37,
         "co2_annual_mean": 427.35,
         "archive_precipitation_variability": 2.1825398892247443,
-        "forecast_forecast_max_temp_7d": 30.6,
+        "forecast_forecast_max_temp_7d": 29.7,
         "forecast_forecast_heavy_rain_days_7d": 0.0,
         "wb_wb_country_code_mentions": 0.0
       },
-      "score": 41.89
+      "score": 41.78
     }
   ],
   "ECOSYSTEMS_BIODIVERSITY_REVIEW": [
@@ -7302,7 +7302,7 @@
     },
     {
       "date": "2026-06-20",
-      "timestamp": "2026-06-20T07:26:50.932004+00:00",
+      "timestamp": "2026-06-20T12:09:27.028955+00:00",
       "metrics": {
         "forest_area_pct": 31.1430410787403
       },
@@ -7700,7 +7700,7 @@
     },
     {
       "date": "2026-06-20",
-      "timestamp": "2026-06-20T07:26:50.932004+00:00",
+      "timestamp": "2026-06-20T12:09:27.028955+00:00",
       "metrics": {
         "renewable_energy_pct": 19.7355641050053,
         "co2_emissions_per_capita": 4.729,
@@ -7968,7 +7968,7 @@
     },
     {
       "date": "2026-06-20",
-      "timestamp": "2026-06-20T07:26:50.932004+00:00",
+      "timestamp": "2026-06-20T12:09:27.028955+00:00",
       "metrics": {
         "cereal_yield_kg_per_ha": 4243.53110790989
       },
@@ -8334,7 +8334,7 @@
     },
     {
       "date": "2026-06-20",
-      "timestamp": "2026-06-20T07:26:50.932004+00:00",
+      "timestamp": "2026-06-20T12:09:27.028955+00:00",
       "metrics": {
         "municipal_waste_per_capita_kg": 3.18969961013975,
         "material_consumption_per_gdp": 2.87194964204316,
@@ -8349,7 +8349,7 @@
   "PLANETARY_POTENTIAL_REVIEW": [
     {
       "date": "2026-06-20",
-      "timestamp": "2026-06-20T07:26:50.932004+00:00",
+      "timestamp": "2026-06-20T12:09:27.028955+00:00",
       "metrics": {},
       "score": null
     }
@@ -8772,7 +8772,7 @@
     },
     {
       "date": "2026-06-20",
-      "timestamp": "2026-06-20T07:26:50.932004+00:00",
+      "timestamp": "2026-06-20T12:09:27.028955+00:00",
       "metrics": {
         "access_safe_water_pct": 73.6686144265244,
         "access_sanitation_pct": 58.4951883486035,
@@ -8787,7 +8787,7 @@
   "OPENCLAW_SOLUTIONS": [
     {
       "date": "2026-06-20",
-      "timestamp": "2026-06-20T07:26:50.932004+00:00",
+      "timestamp": "2026-06-20T12:09:27.028955+00:00",
       "metrics": {},
       "score": null
     }
@@ -8795,7 +8795,7 @@
   "BODY_SCAN": [
     {
       "date": "2026-06-20",
-      "timestamp": "2026-06-20T07:26:50.932004+00:00",
+      "timestamp": "2026-06-20T12:09:27.028955+00:00",
       "metrics": {},
       "score": null
     }

@@ -1,6 +1,6 @@
 {
   "axis": "PLANETARY_POTENTIAL_REVIEW",
-  "fetched_at": "2026-06-20T07:27:56.358031+00:00",
+  "fetched_at": "2026-06-20T11:32:26.802826+00:00",
   "smart_query": "earth resources sustainability",
   "sources_count": {
     "wiki": 0,
@@ -67,14 +67,14 @@
       "has_full_transcript": false
     },
     {
-      "title": "[YT] India’s Climate Crisis 2026: Extreme Weather, Rising Temperatures, and Global Risks",
-      "summary": "[DESCRIPTION FALLBACK] The latest scientific data for 2025 and early 2026 confirms a harrowing reality: our planet is heating at an accelerating pace, and ...",
-      "link": "https://www.youtube.com/watch?v=Xu0R-xwCAYI",
+      "title": "[YT] FILE 007: Climate Engineering — Hubris or Necessity?",
+      "summary": "[DESCRIPTION FALLBACK] FILE 007: Climate Engineering — Hubris or Necessity? The planet is warming faster than we're cutting emissions. We're missing ...",
+      "link": "https://www.youtube.com/watch?v=SAqQG39RyuY",
       "source_type": "youtube",
-      "channel": "Voicesofindianews",
-      "video_id": "Xu0R-xwCAYI",
+      "channel": "Spectrum Archivist",
+      "video_id": "SAqQG39RyuY",
       "transcript_method": "description",
-      "transcript_chars": 158,
+      "transcript_chars": 152,
       "has_full_transcript": false
     },
     {

@@ -1,5 +1,5 @@
 {
-  "_updated": "2026-06-20T07:39:16.563337+00:00",
+  "_updated": "2026-06-20T11:56:46.809364+00:00",
   "CLIMATE_GLOBAL_RISK_REVIEW": {
     "sources": [],
     "last_asked_llm": "2026-06-19T18:30:07.739534+00:00"
@@ -32,5 +32,21 @@
   "LONG_TERM_FUTURE_REVIEW": {
     "sources": [],
     "last_asked_llm": "2026-06-20T07:39:14.562678+00:00"
+  },
+  "SPACE_INFRASTRUCTURE_REVIEW": {
+    "sources": [],
+    "last_asked_llm": "2026-06-20T10:32:24.106255+00:00"
+  },
+  "COGNITION_LEARNING_REVIEW": {
+    "sources": [],
+    "last_asked_llm": "2026-06-20T10:32:26.108194+00:00"
+  },
+  "CULTURE_MEDIA_REVIEW": {
+    "sources": [],
+    "last_asked_llm": "2026-06-20T11:56:46.808947+00:00"
+  },
+  "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL": {
+    "sources": [],
+    "last_asked_llm": "2026-06-20T11:56:46.809203+00:00"
   }
 }

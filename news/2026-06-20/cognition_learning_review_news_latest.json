@@ -1,6 +1,6 @@
 {
   "axis": "COGNITION_LEARNING_REVIEW",
-  "fetched_at": "2026-06-20T07:35:22.465166+00:00",
+  "fetched_at": "2026-06-20T11:15:04.566077+00:00",
   "smart_query": "education learning children schools",
   "sources_count": {
     "wiki": 0,
@@ -36,7 +36,7 @@
     {
       "title": "JuneYaooo/lineage-skill",
       "snippet": " Distill videos, PDFs, transcripts, and notes into source-backed Agent Skills.",
-      "stars": 167,
+      "stars": 180,
       "url": "https://github.com/JuneYaooo/lineage-skill",
       "updated": "2026-06-20",
       "source": "GitHub"

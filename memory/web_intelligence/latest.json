@@ -1,352 +1,14 @@
 {
-  "timestamp": "2026-06-20T07:26:31.683897+00:00",
+  "timestamp": "2026-06-20T12:09:19.429231+00:00",
   "date": "2026-06-20",
   "axes_covered": 25,
-  "total_sources": 249,
-  "youtube_videos_total": 53,
+  "total_sources": 265,
+  "youtube_videos_total": 65,
   "critical_axes": [
-    "CLIMATE_GLOBAL_RISK_REVIEW",
-    "WATER_REVIEW",
-    "FOOD_REVIEW",
-    "ECOSYSTEMS_BIODIVERSITY_REVIEW",
-    "SOCIAL_RELATIONS_REVIEW",
-    "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL",
-    "INEQUALITY_POVERTY_REVIEW",
-    "GOVERNANCE_INSTITUTIONS_REVIEW",
     "LONG_TERM_FUTURE_REVIEW"
   ],
   "deteriorating_axes": [],
   "problems_found": [
-    {
-      "axis": "CLIMATE_GLOBAL_RISK_REVIEW",
-      "problem": "Insufficient progress in reducing global emissions and adapting to climate change, as evident from the gridlock in Bonn talks and the need for a major scale-up of carbon removal",
-      "severity": "CRITICAL",
-      "actions": [
-        {
-          "action": "Implement and strengthen global climate agreements, such as the Paris Agreement",
-          "measurable_goal": "Reduce global greenhouse gas emissions by 45% by 2030 and achieve net-zero by 2050",
-          "timeframe": "medium-term"
-        },
-        {
-          "action": "Invest in climate-resilient infrastructure and climate-smart agriculture",
-          "measurable_goal": "Increase climate-resilient infrastructure investment by 20% annually and achieve 30% climate-resilient agriculture practices by 2030",
-          "timeframe": "long-term"
-        }
-      ]
-    },
-    {
-      "axis": "ENERGY_REVIEW",
-      "problem": "Inefficient grid modernization efforts and lack of investment in renewable energy may hinder the transition to a sustainable energy system",
-      "severity": "MEDIUM",
-      "actions": [
-        {
-          "action": "Increase investment in grid communication infrastructure and renewable energy projects",
-          "measurable_goal": "Achieve a 20% increase in renewable energy capacity and a 15% reduction in grid interference within the next 2 years",
-          "timeframe": "medium-term"
-        }
-      ]
-    },
-    {
-      "axis": "WATER_REVIEW",
-      "problem": "Groundwater depletion and decline in water levels due to drought and unsustainable use",
-      "severity": "HIGH",
-      "actions": [
-        {
-          "action": "Implement efficient irrigation systems and water-saving technologies in agriculture",
-          "measurable_goal": "Reduce groundwater extraction by 20% within the next 2 years",
-          "timeframe": "medium-term"
-        },
-        {
-          "action": "Develop and enforce sustainable water management policies and regulations",
-          "measurable_goal": "Increase water recycling and reuse by 30% within the next 5 years",
-          "timeframe": "long-term"
-        }
-      ]
-    },
-    {
-      "axis": "FOOD_REVIEW",
-      "problem": "673 million people experienced hunger in 2024, and the global food supply chain is vulnerable to climate change-induced disruptions",
-      "severity": "CRITICAL",
-      "actions": [
-        {
-          "action": "Implement climate-resilient agricultural practices and improve supply chain management",
-          "measurable_goal": "Reduce the number of people experiencing hunger by 20% within the next 2 years",
-          "timeframe": "medium-term"
-        },
-        {
-          "action": "Develop and implement policies to address the root causes of food insecurity, such as conflict and economic shocks",
-          "measurable_goal": "Reduce the number of people affected by food crises by 15% within the next 3 years",
-          "timeframe": "long-term"
-        }
-      ]
-    },
-    {
-      "axis": "MATERIALS_WASTE_REVIEW",
-      "problem": "Improper waste sorting and management of plastic waste",
-      "severity": "MEDIUM",
-      "actions": [
-        {
-          "action": "Implementing standardized waste sorting protocols and educating the public through awareness campaigns",
-          "measurable_goal": "Increase proper waste sorting rates by 20% within the next 12 months",
-          "timeframe": "short-term"
-        },
-        {
-          "action": "Investing in research and development of new technologies for efficient plastic waste management",
-          "measurable_goal": "Reduce plastic waste in landfills by 15% within the next 24 months",
-          "timeframe": "medium-term"
-        }
-      ]
-    },
-    {
-      "axis": "ECOSYSTEMS_BIODIVERSITY_REVIEW",
-      "problem": "Deforestation and habitat loss lead to biodiversity loss and species extinction",
-      "severity": "HIGH",
-      "actions": [
-        {
-          "action": "Implement and enforce policies to reduce deforestation and habitat loss, such as certification programs for sustainably sourced products",
-          "measurable_goal": "Reduce deforestation rate by 20% within the next 5 years",
-          "timeframe": "medium-term"
-        },
-        {
-          "action": "Launch public awareness campaigns to educate consumers about the impact of their food choices on biodiversity",
-          "measurable_goal": "Increase the proportion of consumers choosing plant-based options by 15% within the next 2 years",
-          "timeframe": "short-term"
-        }
-      ]
-    },
-    {
-      "axis": "HUMAN_WELL_BEING_REVIEW",
-      "problem": "Many people still lack access to safe blood supplies globally",
-      "severity": "MEDIUM",
-      "actions": [
-        {
-          "action": "Implementing nationwide blood donation awareness campaigns",
-          "measurable_goal": "Increase voluntary blood donations by 10% within the next 6 months",
-          "timeframe": "short-term"
-        },
-        {
-          "action": "Strengthening healthcare infrastructure in underserved areas",
-          "measurable_goal": "Reduce the gap in access to safe blood supplies by 20% within the next 2 years",
-          "timeframe": "medium-term"
-        }
-      ]
-    },
-    {
-      "axis": "CULTURE_MEDIA_REVIEW",
-      "problem": "The spread of misinformation through social media platforms, as discussed in the YouTube transcripts, has the potential to influence free speech rights and public health",
-      "severity": "MEDIUM",
-      "actions": [
-        {
-          "action": "Implementing more effective fact-checking mechanisms on social media platforms",
-          "measurable_goal": "Reducing the spread of false information by 30% in the next 6 months",
-          "timeframe": "medium-term"
-        }
-      ]
-    },
-    {
-      "axis": "COGNITION_LEARNING_REVIEW",
-      "problem": "Lack of clarity on the difference between studying and learning in educational contexts",
-      "severity": "MEDIUM",
-      "actions": [
-        {
-          "action": "Develop and implement more interactive and immersive learning experiences",
-          "measurable_goal": "Increase student engagement and retention rates by 20% within the next 2 years",
-          "timeframe": "medium-term"
-        },
-        {
-          "action": "Integrate AI-powered tools to personalize learning paths and provide real-time feedback",
-          "measurable_goal": "Improve student outcomes by 15% within the next 3 years",
-          "timeframe": "long-term"
-        }
-      ]
-    },
-    {
-      "axis": "SOCIAL_RELATIONS_REVIEW",
-      "problem": "Growing loneliness and social isolation among adults",
-      "severity": "HIGH",
-      "actions": [
-        {
-          "action": "Implement community-based programs to promote social connections and a sense of belonging",
-          "measurable_goal": "Reduce loneliness rates by 20% within the next 12 months",
-          "timeframe": "medium-term"
-        },
-        {
-          "action": "Increase funding for mental health services and social isolation research",
-          "measurable_goal": "Increase funding by 30% within the next 18 months",
-          "timeframe": "medium-term"
-        }
-      ]
-    },
-    {
-      "axis": "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL",
-      "problem": "Lack of accountability for human rights violations and discriminatory practices against marginalized groups, including child refugees and political prisoners",
-      "severity": "HIGH",
-      "actions": [
-        {
-          "action": "Establish independent investigation mechanisms to hold individuals and institutions accountable for human rights abuses",
-          "measurable_goal": "Increase in number of investigations and prosecutions of human rights abuses by 20% within the next 12 months",
-          "timeframe": "medium-term"
-        },
-        {
-          "action": "Provide training and resources to government agencies and policymakers on human rights laws and regulations",
-          "measurable_goal": "90% of government officials report feeling confident in their understanding of human rights laws and regulations within the next 6 months",
-          "timeframe": "short-term"
-        }
-      ]
-    },
-    {
-      "axis": "ECONOMY_WORK_REVIEW",
-      "problem": "Rising public borrowing and increasing interest rates on student loans may exacerbate economic inequality and limit access to education",
-      "severity": "MEDIUM",
-      "actions": [
-        {
-          "action": "Implement fiscal responsibility measures to reduce public borrowing",
-          "measurable_goal": "Achieve a 10% reduction in public borrowing within the next 12 months",
-          "timeframe": "medium-term"
-        },
-        {
-          "action": "Introduce income-based repayment plans for student loans",
-          "measurable_goal": "Increase the number of students able to repay their loans on time by 20% within the next 2 years",
-          "timeframe": "medium-term"
-        }
-      ]
-    },
-    {
-      "axis": "INEQUALITY_POVERTY_REVIEW",
-      "problem": "Over 40% of people in Sub-Saharan Africa live in extreme poverty",
-      "severity": "CRITICAL",
-      "actions": [
-        {
-          "action": "Invest in education and job training programs in Sub-Saharan Africa",
-          "measurable_goal": "Reduce poverty rate by 10% in the next 5 years",
-          "timeframe": "medium-term"
-        },
-        {
-          "action": "Implement policies to promote fair trade and equal distribution of resources in Sub-Saharan Africa",
-          "measurable_goal": "Increase the GDP per capita by 20% in the next 10 years",
-          "timeframe": "long-term"
-        }
-      ]
-    },
-    {
-      "axis": "INFRASTRUCTURE_CITIES_REVIEW",
-      "problem": "Housing segregation and potential loss of homes in urban areas",
-      "severity": "MEDIUM",
-      "actions": [
-        {
-          "action": "Implement inclusive zoning policies to promote mixed-income housing",
-          "measurable_goal": "Increase the number of affordable housing units by 20% within the next 2 years",
-          "timeframe": "medium-term"
-        },
-        {
-          "action": "Provide incentives for real estate developers to build affordable housing",
-          "measurable_goal": "Increase the number of affordable housing units by 30% within the next 5 years",
-          "timeframe": "long-term"
-        }
-      ]
-    },
-    {
-      "axis": "GOVERNANCE_INSTITUTIONS_REVIEW",
-      "problem": "Lack of effective governance and international cooperation to address humanitarian crises, such as the situation in Gaza and war crimes in Syria",
-      "severity": "HIGH",
-      "actions": [
-        {
-          "action": "Strengthening the United Nations' ability to enforce international law and hold perpetrators of humanitarian crises accountable",
-          "measurable_goal": "Increase in the number of successful prosecutions of war crimes and improvement in humanitarian access to affected areas",
-          "timeframe": "medium-term"
-        },
-        {
-          "action": "Encouraging national governments to prioritize human rights and international cooperation",
-          "measurable_goal": "Increase in the number of countries ratifying and implementing key human rights treaties and participating in international efforts to address humanitarian crises",
-          "timeframe": "long-term"
-        }
-      ]
-    },
-    {
-      "axis": "EDUCATION_CULTURE_REVIEW",
-      "problem": "Insufficient progress in increasing access to quality education, with persistent inequalities in education outcomes across the world",
-      "severity": "MEDIUM",
-      "actions": [
-        {
-          "action": "Increase funding for education programs and infrastructure development",
-          "measurable_goal": "10% increase in education budget allocation within the next 2 years",
-          "timeframe": "medium-term"
-        },
-        {
-          "action": "Implement teacher training and qualification programs",
-          "measurable_goal": "25% increase in qualified teachers in underserved areas within the next 5 years",
-          "timeframe": "long-term"
-        }
-      ]
-    },
-    {
-      "axis": "TECHNOLOGY_INFRA_REVIEW",
-      "problem": "Insufficient access to digital tools and high-speed internet for all people, exacerbating the digital divide",
-      "severity": "MEDIUM",
-      "actions": [
-        {
-          "action": "Implement programs to increase access to affordable high-speed internet and digital devices",
-          "measurable_goal": "Reduce the number of households without internet access by 20% within the next 12 months",
-          "timeframe": "medium-term"
-        },
-        {
-          "action": "Support non-profit organizations working to close the digital divide",
-          "measurable_goal": "Increase the number of people served by these organizations by 30% within the next 18 months",
-          "timeframe": "medium-term"
-        }
-      ]
-    },
-    {
-      "axis": "TECHNOLOGY_AI_REVIEW",
-      "problem": "The high cost of AI coding tools, such as Claude Code, is a barrier to accessibility for many developers",
-      "severity": "MEDIUM",
-      "actions": [
-        {
-          "action": "Develop and promote open-source or low-cost AI coding alternatives",
-          "measurable_goal": "Increase the number of developers using affordable AI coding tools by 20% within the next 6 months",
-          "timeframe": "short-term"
-        },
-        {
-          "action": "Encourage companies to offer tiered pricing models or discounts for non-profit and educational use",
-          "measurable_goal": "Achieve a 30% increase in the number of non-profit and educational organizations using AI coding tools within the next year",
-          "timeframe": "medium-term"
-        }
-      ]
-    },
-    {
-      "axis": "SPACE_INFRASTRUCTURE_REVIEW",
-      "problem": "The rapid development and launch of various satellite constellations and space infrastructure without a unified global governance framework may lead to increased risks of collisions, debris, and unsustainable space activities",
-      "severity": "MEDIUM",
-      "actions": [
-        {
-          "action": "Establish a global registry for satellite constellations and space infrastructure",
-          "measurable_goal": "Achieve 90% registration rate of all satellites and space infrastructure within the next 2 years",
-          "timeframe": "medium-term"
-        },
-        {
-          "action": "Develop and adopt international standards for sustainable space activities",
-          "measurable_goal": "Reach consensus among 80% of space-faring nations on a set of standards within the next 3 years",
-          "timeframe": "medium-term"
-        }
-      ]
-    },
-    {
-      "axis": "COSMIC_RESOURCES_REVIEW",
-      "problem": "Insufficient legal frameworks and regulations for asteroid mining, hindering its development and potential benefits",
-      "severity": "MEDIUM",
-      "actions": [
-        {
-          "action": "Develop and implement international laws and regulations for asteroid mining",
-          "measurable_goal": "Establish a clear legal framework for asteroid mining within the next 2 years",
-          "timeframe": "medium-term"
-        },
-        {
-          "action": "Increase investment in asteroid mining research and development",
-          "measurable_goal": "Allocate at least $100 million in funding for asteroid mining research and development within the next 5 years",
-          "timeframe": "long-term"
-        }
-      ]
-    },
     {
       "axis": "LONG_TERM_FUTURE_REVIEW",
       "problem": "Lack of concrete plans and actions to address potential existential risks from artificial intelligence",
@@ -389,99 +51,161 @@
       ]
     },
     {
+      "axis": "GOAL_PROGRESS_REVIEW",
+      "problem": "Lack of trust in healthcare systems hindering effective disease outbreak response",
+      "severity": "MEDIUM",
+      "actions": [
+        {
+          "action": "Implement community-based health education programs",
+          "measurable_goal": "Increase community participation in health initiatives by 30% within 6 months",
+          "timeframe": "medium-term"
+        },
+        {
+          "action": "Establish transparent communication channels between healthcare authorities and local communities",
+          "measurable_goal": "Reduce misinformation about diseases by 25% within 3 months",
+          "timeframe": "short-term"
+        }
+      ]
+    },
+    {
       "axis": "PLANETARY_POTENTIAL_REVIEW",
-      "problem": "Анализ на PLANETARY_POTENTIAL_REVIEW — данни получени но LLM грешка",
+      "problem": "Inaccurate global emissions database",
+      "severity": "MEDIUM",
+      "actions": [
+        {
+          "action": "Conduct an independent review and revision of the Climate TRACE database",
+          "measurable_goal": "Achieve a 20% reduction in data errors within the next 6 months",
+          "timeframe": "short-term"
+        },
+        {
+          "action": "Implement a robust quality control process for data collection and analysis",
+          "measurable_goal": "Reduce data errors by 50% within the next 12 months",
+          "timeframe": "medium-term"
+        }
+      ]
+    },
+    {
+      "axis": "ENERGY_REVIEW",
+      "problem": "Анализ на ENERGY_REVIEW — данни получени но LLM грешка",
       "severity": "UNKNOWN",
       "actions": []
     },
     {
-      "axis": "GOAL_PROGRESS_REVIEW",
-      "problem": "Анализ на GOAL_PROGRESS_REVIEW — данни получени но LLM грешка",
+      "axis": "CLIMATE_GLOBAL_RISK_REVIEW",
+      "problem": "Анализ на CLIMATE_GLOBAL_RISK_REVIEW — данни получени но LLM грешка",
+      "severity": "UNKNOWN",
+      "actions": []
+    },
+    {
+      "axis": "WATER_REVIEW",
+      "problem": "Анализ на WATER_REVIEW — данни получени но LLM грешка",
+      "severity": "UNKNOWN",
+      "actions": []
+    },
+    {
+      "axis": "FOOD_REVIEW",
+      "problem": "Анализ на FOOD_REVIEW — данни получени но LLM грешка",
+      "severity": "UNKNOWN",
+      "actions": []
+    },
+    {
+      "axis": "ECOSYSTEMS_BIODIVERSITY_REVIEW",
+      "problem": "Анализ на ECOSYSTEMS_BIODIVERSITY_REVIEW — данни получени но LLM грешка",
+      "severity": "UNKNOWN",
+      "actions": []
+    },
+    {
+      "axis": "MATERIALS_WASTE_REVIEW",
+      "problem": "Анализ на MATERIALS_WASTE_REVIEW — данни получени но LLM грешка",
+      "severity": "UNKNOWN",
+      "actions": []
+    },
+    {
+      "axis": "HUMAN_WELL_BEING_REVIEW",
+      "problem": "Анализ на HUMAN_WELL_BEING_REVIEW — данни получени но LLM грешка",
+      "severity": "UNKNOWN",
+      "actions": []
+    },
+    {
+      "axis": "CULTURE_MEDIA_REVIEW",
+      "problem": "Анализ на CULTURE_MEDIA_REVIEW — данни получени но LLM грешка",
+      "severity": "UNKNOWN",
+      "actions": []
+    },
+    {
+      "axis": "COGNITION_LEARNING_REVIEW",
+      "problem": "Анализ на COGNITION_LEARNING_REVIEW — данни получени но LLM грешка",
+      "severity": "UNKNOWN",
+      "actions": []
+    },
+    {
+      "axis": "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL",
+      "problem": "Анализ на GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL — данни получени но LLM грешка",
+      "severity": "UNKNOWN",
+      "actions": []
+    },
+    {
+      "axis": "ECONOMY_WORK_REVIEW",
+      "problem": "Анализ на ECONOMY_WORK_REVIEW — данни получени но LLM грешка",
+      "severity": "UNKNOWN",
+      "actions": []
+    },
+    {
+      "axis": "SOCIAL_RELATIONS_REVIEW",
+      "problem": "Анализ на SOCIAL_RELATIONS_REVIEW — данни получени но LLM грешка",
+      "severity": "UNKNOWN",
+      "actions": []
+    },
+    {
+      "axis": "INEQUALITY_POVERTY_REVIEW",
+      "problem": "Анализ на INEQUALITY_POVERTY_REVIEW — данни получени но LLM грешка",
+      "severity": "UNKNOWN",
+      "actions": []
+    },
+    {
+      "axis": "GOVERNANCE_INSTITUTIONS_REVIEW",
+      "problem": "Анализ на GOVERNANCE_INSTITUTIONS_REVIEW — данни получени но LLM грешка",
+      "severity": "UNKNOWN",
+      "actions": []
+    },
+    {
+      "axis": "INFRASTRUCTURE_CITIES_REVIEW",
+      "problem": "Анализ на INFRASTRUCTURE_CITIES_REVIEW — данни получени но LLM грешка",
+      "severity": "UNKNOWN",
+      "actions": []
+    },
+    {
+      "axis": "TECHNOLOGY_INFRA_REVIEW",
+      "problem": "Анализ на TECHNOLOGY_INFRA_REVIEW — данни получени но LLM грешка",
+      "severity": "UNKNOWN",
+      "actions": []
+    },
+    {
+      "axis": "EDUCATION_CULTURE_REVIEW",
+      "problem": "Анализ на EDUCATION_CULTURE_REVIEW — данни получени но LLM грешка",
+      "severity": "UNKNOWN",
+      "actions": []
+    },
+    {
+      "axis": "COSMIC_RESOURCES_REVIEW",
+      "problem": "Анализ на COSMIC_RESOURCES_REVIEW — данни получени но LLM грешка",
+      "severity": "UNKNOWN",
+      "actions": []
+    },
+    {
+      "axis": "SPACE_INFRASTRUCTURE_REVIEW",
+      "problem": "Анализ на SPACE_INFRASTRUCTURE_REVIEW — данни получени но LLM грешка",
+      "severity": "UNKNOWN",
+      "actions": []
+    },
+    {
+      "axis": "TECHNOLOGY_AI_REVIEW",
+      "problem": "Анализ на TECHNOLOGY_AI_REVIEW — данни получени но LLM грешка",
       "severity": "UNKNOWN",
       "actions": []
     }
   ],
   "cross_domain_insights": [
-    {
-      "from_axis": "CLIMATE_GLOBAL_RISK_REVIEW",
-      "insight": "This problem is connected to the domains of civilization (global governance and economic systems), human (health and well-being), and cosmos (long-term sustainability of the planet)"
-    },
-    {
-      "from_axis": "ENERGY_REVIEW",
-      "insight": "This problem connects to the domains of Civilization and Cosmos, as a sustainable energy system is crucial for the long-term viability of intelligent life and its environments"
-    },
-    {
-      "from_axis": "WATER_REVIEW",
-      "insight": "This problem connects to the domains of Civilization (agriculture, human consumption, and economic activities) and Planet (ecosystems, climate change, and natural resources)"
-    },
-    {
-      "from_axis": "FOOD_REVIEW",
-      "insight": "This problem connects to the domains of Civilization (economic shocks, conflict), Human (food insecurity, malnutrition), and Planet (climate extremes, environmental degradation)"
-    },
-    {
-      "from_axis": "MATERIALS_WASTE_REVIEW",
-      "insight": "This problem connects to the domains of Planet, Human, and Civilization, as it affects the health of the biosphere, human well-being, and the overall sustainability of civilization"
-    },
-    {
-      "from_axis": "ECOSYSTEMS_BIODIVERSITY_REVIEW",
-      "insight": "This problem connects to the domains of civilization and human, as the impact of human activities on the planet's ecosystems has significant implications for long-term sustainability and human well-being"
-    },
-    {
-      "from_axis": "HUMAN_WELL_BEING_REVIEW",
-      "insight": "This problem connects to the domain of Civilization, as access to safe blood supplies is a fundamental aspect of a functioning healthcare system, which is a critical component of a sustainable civilization"
-    },
-    {
-      "from_axis": "CULTURE_MEDIA_REVIEW",
-      "insight": "This problem connects to the domain of civilization, where the spread of misinformation can have significant impacts on public health, social cohesion, and democratic institutions"
-    },
-    {
-      "from_axis": "COGNITION_LEARNING_REVIEW",
-      "insight": "This problem connects to the domains of cognition, social structures, and technology, as it affects how individuals acquire knowledge and skills, and how societies approach education and personal development"
-    },
-    {
-      "from_axis": "SOCIAL_RELATIONS_REVIEW",
-      "insight": "This problem connects to the domain of human health and wellbeing, and has implications for the sustainability of civilization, as lonely and isolated individuals may be less likely to contribute to their communities and more likely to experience poor health outcomes"
-    },
-    {
-      "from_axis": "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL",
-      "insight": "This problem connects to other domains, including the biosphere, as human rights abuses can have devastating impacts on the environment and public health, and the cosmos, as a lack of accountability can undermine trust in institutions and hinder global cooperation"
-    },
-    {
-      "from_axis": "ECONOMY_WORK_REVIEW",
-      "insight": "This problem connects to the domains of PLANET (resource management) and HUMAN (education and social mobility), as economic instability and limited access to education can have far-reaching consequences for individual well-being and societal prosperity"
-    },
-    {
-      "from_axis": "INEQUALITY_POVERTY_REVIEW",
-      "insight": "This problem connects to the domains of planet, human, and cosmos, as poverty and inequality can have far-reaching consequences on the environment, human health, and the overall well-being of societies"
-    },
-    {
-      "from_axis": "INFRASTRUCTURE_CITIES_REVIEW",
-      "insight": "This problem connects to the domains of civilization, human dignity, and biosphere, as it affects the well-being and quality of life of urban residents and the sustainability of urban ecosystems"
-    },
-    {
-      "from_axis": "GOVERNANCE_INSTITUTIONS_REVIEW",
-      "insight": "This problem connects to the domains of human biosphere and cosmos, as humanitarian crises can have long-term consequences for the environment, global health, and stability, ultimately affecting the sustainability of intelligent life on Earth and beyond"
-    },
-    {
-      "from_axis": "EDUCATION_CULTURE_REVIEW",
-      "insight": "This problem connects to the domains of PLANETA (as education is linked to environmental sustainability and resource management) and CHOVEK (as education is crucial for human development and dignity)"
-    },
-    {
-      "from_axis": "TECHNOLOGY_INFRA_REVIEW",
-      "insight": "This problem connects to the domains of Civilization and Biosphere, as it affects the overall well-being and economic opportunities of individuals and communities, which in turn can impact the health of the planet"
-    },
-    {
-      "from_axis": "TECHNOLOGY_AI_REVIEW",
-      "insight": "This problem connects to the broader issue of unequal access to technology and digital resources, which can exacerbate existing social and economic inequalities, ultimately affecting the dignity and well-being of individuals and communities"
-    },
-    {
-      "from_axis": "SPACE_INFRASTRUCTURE_REVIEW",
-      "insight": "This problem connects to the domains of Planet (sustainable use of space resources) and Civilization (global governance and cooperation)"
-    },
-    {
-      "from_axis": "COSMIC_RESOURCES_REVIEW",
-      "insight": "The development of asteroid mining connects to the domain of COSMIC_RESOURCES_REVIEW, as it has the potential to provide a new source of resources for space exploration and development, but also raises concerns about environmental impact, economic inequality, and international cooperation"
-    },
     {
       "from_axis": "LONG_TERM_FUTURE_REVIEW",
       "insight": "This problem connects to the domains of civilization, human dignity, and the biosphere, as the potential consequences of uncontrolled AI development could have far-reaching and devastating effects on human societies and the environment"
@@ -493,567 +217,22 @@
     {
       "from_axis": "GENERAL_SELF_REVIEW",
       "insight": "This problem connects to the domains of human dignity and civilization, as the lack of transparency in AI development and deployment can erode trust in these technologies and undermine their potential benefits for society"
+    },
+    {
+      "from_axis": "GOAL_PROGRESS_REVIEW",
+      "insight": "This problem connects to the domain of Civilization, as it highlights the importance of social cohesion and trust in institutions for effective disease response, and to the domain of Planet, as it affects the health and well-being of communities"
+    },
+    {
+      "from_axis": "PLANETARY_POTENTIAL_REVIEW",
+      "insight": "This problem connects to the civilization domain as inaccurate data can inform flawed policy decisions, and to the planetary domain as climate change mitigation efforts rely on accurate emissions data"
     }
   ],
   "civilization_goal_alignment": {
-    "critical_count": 9,
-    "problems_with_actions": 23,
-    "status": "ALERT"
+    "critical_count": 1,
+    "problems_with_actions": 5,
+    "status": "MONITORING"
   },
   "axes": {
-    "CLIMATE_GLOBAL_RISK_REVIEW": {
-      "problem": "Insufficient progress in reducing global emissions and adapting to climate change, as evident from the gridlock in Bonn talks and the need for a major scale-up of carbon removal",
-      "root_cause": "Inadequate global cooperation, lack of decisive action, and insufficient investment in climate change mitigation and adaptation measures",
-      "severity": "CRITICAL",
-      "leverage_points": [
-        "International agreements and global climate governance",
-        "National and local governments' policies and implementation"
-      ],
-      "proposed_actions": [
-        {
-          "action": "Implement and strengthen global climate agreements, such as the Paris Agreement",
-          "measurable_goal": "Reduce global greenhouse gas emissions by 45% by 2030 and achieve net-zero by 2050",
-          "timeframe": "medium-term"
-        },
-        {
-          "action": "Invest in climate-resilient infrastructure and climate-smart agriculture",
-          "measurable_goal": "Increase climate-resilient infrastructure investment by 20% annually and achieve 30% climate-resilient agriculture practices by 2030",
-          "timeframe": "long-term"
-        }
-      ],
-      "evidence": [
-        "The Bonn climate talks ended in gridlock, with few tangible outcomes",
-        "Experts emphasize the need for a major scale-up of carbon removal to return warming to 1.5C",
-        "The Global Risks Report 2026 highlights climate hazards as a dominant concern"
-      ],
-      "generalization": "This problem is connected to the domains of civilization (global governance and economic systems), human (health and well-being), and cosmos (long-term sustainability of the planet)",
-      "summary": "The current pace of global climate action is insufficient, and decisive action is needed to reduce emissions and adapt to climate change. International cooperation, national policies, and investment in climate-resilient infrastructure are crucial leverage points.",
-      "risk_level": "CRITICAL"
-    },
-    "ENERGY_REVIEW": {
-      "problem": "Inefficient grid modernization efforts and lack of investment in renewable energy may hinder the transition to a sustainable energy system",
-      "root_cause": "The root cause of this problem is the lack of coordination and investment in grid communication infrastructure, as well as the prioritization of fossil fuel projects over renewable energy",
-      "severity": "MEDIUM",
-      "leverage_points": [
-        "Utility companies and grid operators have the greatest effect on the problem",
-        "Government policies and regulations"
-      ],
-      "proposed_actions": [
-        {
-          "action": "Increase investment in grid communication infrastructure and renewable energy projects",
-          "measurable_goal": "Achieve a 20% increase in renewable energy capacity and a 15% reduction in grid interference within the next 2 years",
-          "timeframe": "medium-term"
-        }
-      ],
-      "evidence": [
-        "The Utility Broadband Alliance is expanding its membership to enhance grid communication infrastructure",
-        "The Trump administration is buying back offshore wind leases and redirecting funds to fossil fuel projects"
-      ],
-      "generalization": "This problem connects to the domains of Civilization and Cosmos, as a sustainable energy system is crucial for the long-term viability of intelligent life and its environments",
-      "summary": "Inefficient grid modernization efforts and lack of investment in renewable energy may hinder the transition to a sustainable energy system, and increasing investment in grid communication infrastructure and renewable energy projects can help address this problem",
-      "risk_level": "MEDIUM"
-    },
-    "WATER_REVIEW": {
-      "problem": "Groundwater depletion and decline in water levels due to drought and unsustainable use",
-      "root_cause": "Over-extraction of groundwater for agricultural and human consumption purposes, exacerbated by climate change and lack of effective water management systems",
-      "severity": "HIGH",
-      "leverage_points": [
-        "Government agencies and water management authorities",
-        "Agricultural industries and practices"
-      ],
-      "proposed_actions": [
-        {
-          "action": "Implement efficient irrigation systems and water-saving technologies in agriculture",
-          "measurable_goal": "Reduce groundwater extraction by 20% within the next 2 years",
-          "timeframe": "medium-term"
-        },
-        {
-          "action": "Develop and enforce sustainable water management policies and regulations",
-          "measurable_goal": "Increase water recycling and reuse by 30% within the next 5 years",
-          "timeframe": "long-term"
-        }
-      ],
-      "evidence": [
-        "Groundwater levels have reached critical lows in Florida, impacting human populations and ecosystems",
-        "The U.S. Geological Survey reports long-term water-level declines caused by sustained groundwater pumping in many areas of the United States"
-      ],
-      "generalization": "This problem connects to the domains of Civilization (agriculture, human consumption, and economic activities) and Planet (ecosystems, climate change, and natural resources)",
-      "summary": "Groundwater depletion and decline in water levels pose a significant threat to the sustainability of human populations and ecosystems, requiring immediate attention and action from government agencies, agricultural industries, and other stakeholders",
-      "risk_level": "HIGH"
-    },
-    "FOOD_REVIEW": {
-      "problem": "673 million people experienced hunger in 2024, and the global food supply chain is vulnerable to climate change-induced disruptions",
-      "root_cause": "Conflict, economic shocks, climate extremes, and forced displacement drive food insecurity and malnutrition, while rising food prices and brittle supply chains exacerbate the issue",
-      "severity": "CRITICAL",
-      "leverage_points": [
-        "Global food governance and policy-making mechanisms",
-        "Climate-resilient agricultural practices and supply chain management"
-      ],
-      "proposed_actions": [
-        {
-          "action": "Implement climate-resilient agricultural practices and improve supply chain management",
-          "measurable_goal": "Reduce the number of people experiencing hunger by 20% within the next 2 years",
-          "timeframe": "medium-term"
-        },
-        {
-          "action": "Develop and implement policies to address the root causes of food insecurity, such as conflict and economic shocks",
-          "measurable_goal": "Reduce the number of people affected by food crises by 15% within the next 3 years",
-          "timeframe": "long-term"
-        }
-      ],
-      "evidence": [
-        "673 million people experienced hunger in 2024",
-        "The vulnerability assessment methods and adaptation measures have been employed to alleviate the impact of climate change in the food supply chain"
-      ],
-      "generalization": "This problem connects to the domains of Civilization (economic shocks, conflict), Human (food insecurity, malnutrition), and Planet (climate extremes, environmental degradation)",
-      "summary": "The global food supply chain is vulnerable to climate change-induced disruptions, and 673 million people experienced hunger in 2024, requiring immediate attention to address the root causes and implement climate-resilient agricultural practices. The problem is critical and requires a multi-faceted approach to ensure food security and sustainability.",
-      "risk_level": "CRITICAL"
-    },
-    "MATERIALS_WASTE_REVIEW": {
-      "problem": "Improper waste sorting and management of plastic waste",
-      "root_cause": "Lack of technical skills for managing hazardous waste, insufficient infrastructure, and inadequate education on proper waste sorting",
-      "severity": "MEDIUM",
-      "leverage_points": [
-        "Government and waste management organizations improving waste sorting infrastructure and education programs",
-        "Individuals and communities adopting proper waste sorting practices and promoting environmental awareness"
-      ],
-      "proposed_actions": [
-        {
-          "action": "Implementing standardized waste sorting protocols and educating the public through awareness campaigns",
-          "measurable_goal": "Increase proper waste sorting rates by 20% within the next 12 months",
-          "timeframe": "short-term"
-        },
-        {
-          "action": "Investing in research and development of new technologies for efficient plastic waste management",
-          "measurable_goal": "Reduce plastic waste in landfills by 15% within the next 24 months",
-          "timeframe": "medium-term"
-        }
-      ],
-      "evidence": [
-        "The present world is now facing the challenge of proper management and resource recovery of the enormous amount of plastic waste",
-        "Improper waste sorting harms the environment and hinders recycling"
-      ],
-      "generalization": "This problem connects to the domains of Planet, Human, and Civilization, as it affects the health of the biosphere, human well-being, and the overall sustainability of civilization",
-      "summary": "Improper waste sorting and management of plastic waste pose a significant problem, requiring immediate attention and action from individuals, communities, and organizations to mitigate its environmental impacts",
-      "risk_level": "MEDIUM"
-    },
-    "ECOSYSTEMS_BIODIVERSITY_REVIEW": {
-      "problem": "Deforestation and habitat loss lead to biodiversity loss and species extinction",
-      "root_cause": "Animal agriculture and grazing practices are significant drivers of deforestation and habitat loss",
-      "severity": "HIGH",
-      "leverage_points": [
-        "Governments and policymakers have the greatest effect on the problem through legislation and regulation",
-        "Consumers and their food choices have a significant impact on demand for animal products"
-      ],
-      "proposed_actions": [
-        {
-          "action": "Implement and enforce policies to reduce deforestation and habitat loss, such as certification programs for sustainably sourced products",
-          "measurable_goal": "Reduce deforestation rate by 20% within the next 5 years",
-          "timeframe": "medium-term"
-        },
-        {
-          "action": "Launch public awareness campaigns to educate consumers about the impact of their food choices on biodiversity",
-          "measurable_goal": "Increase the proportion of consumers choosing plant-based options by 15% within the next 2 years",
-          "timeframe": "short-term"
-        }
-      ],
-      "evidence": [
-        "An area the size of a football field is clearcut in the Amazon basin every minute",
-        "Animal agriculture and grazing practices are emphasized as significant causes of deforestation, biodiversity loss, and species extinction"
-      ],
-      "generalization": "This problem connects to the domains of civilization and human, as the impact of human activities on the planet's ecosystems has significant implications for long-term sustainability and human well-being",
-      "summary": "Deforestation and habitat loss driven by animal agriculture and grazing practices lead to biodiversity loss and species extinction, requiring policy and consumer-based solutions. The problem has significant implications for the sustainability of human civilization and the planet's ecosystems.",
-      "risk_level": "HIGH"
-    },
-    "HUMAN_WELL_BEING_REVIEW": {
-      "problem": "Many people still lack access to safe blood supplies globally",
-      "root_cause": "Persistent inequalities in access to healthcare and weaknesses in government policies",
-      "severity": "MEDIUM",
-      "leverage_points": [
-        "World Health Organization (WHO) and national healthcare systems",
-        "Government policies and regulations on blood donations"
-      ],
-      "proposed_actions": [
-        {
-          "action": "Implementing nationwide blood donation awareness campaigns",
-          "measurable_goal": "Increase voluntary blood donations by 10% within the next 6 months",
-          "timeframe": "short-term"
-        },
-        {
-          "action": "Strengthening healthcare infrastructure in underserved areas",
-          "measurable_goal": "Reduce the gap in access to safe blood supplies by 20% within the next 2 years",
-          "timeframe": "medium-term"
-        }
-      ],
-      "evidence": [
-        "New data from the World Health Organization (WHO) show sustained progress towards safer blood supplies globally but also highlight persistent inequalities in access to safe blood and weaknesses in government policies",
-        "Voluntary donations exceed 85%, but many people still lack access"
-      ],
-      "generalization": "This problem connects to the domain of Civilization, as access to safe blood supplies is a fundamental aspect of a functioning healthcare system, which is a critical component of a sustainable civilization",
-      "summary": "Many people lack access to safe blood supplies globally due to persistent inequalities and weaknesses in government policies, requiring immediate attention and action from the WHO and national healthcare systems.",
-      "risk_level": "MEDIUM"
-    },
-    "CULTURE_MEDIA_REVIEW": {
-      "problem": "The spread of misinformation through social media platforms, as discussed in the YouTube transcripts, has the potential to influence free speech rights and public health",
-      "root_cause": "The lack of effective balance between fighting misinformation and protecting speech on social media platforms, leading to the spread of false information",
-      "severity": "MEDIUM",
-      "leverage_points": [
-        "Social media companies and their algorithms",
-        "Influencers and their role in spreading misinformation"
-      ],
-      "proposed_actions": [
-        {
-          "action": "Implementing more effective fact-checking mechanisms on social media platforms",
-          "measurable_goal": "Reducing the spread of false information by 30% in the next 6 months",
-          "timeframe": "medium-term"
-        }
-      ],
-      "evidence": [
-        "The YouTube transcripts discuss the impact of online misinformation on free speech and public health",
-        "The need for a balance between fighting misinformation and protecting speech is highlighted"
-      ],
-      "generalization": "This problem connects to the domain of civilization, where the spread of misinformation can have significant impacts on public health, social cohesion, and democratic institutions",
-      "summary": "The spread of misinformation on social media poses a significant problem, requiring more effective balance between fighting misinformation and protecting speech. Implementing fact-checking mechanisms can help reduce the spread of false information.",
-      "risk_level": "MEDIUM"
-    },
-    "COGNITION_LEARNING_REVIEW": {
-      "problem": "Lack of clarity on the difference between studying and learning in educational contexts",
-      "root_cause": "Insufficient emphasis on the process of acquiring new understanding and skills in formal education",
-      "severity": "MEDIUM",
-      "leverage_points": [
-        "Educational institutions and policymakers",
-        "Technology and AI-based learning platforms"
-      ],
-      "proposed_actions": [
-        {
-          "action": "Develop and implement more interactive and immersive learning experiences",
-          "measurable_goal": "Increase student engagement and retention rates by 20% within the next 2 years",
-          "timeframe": "medium-term"
-        },
-        {
-          "action": "Integrate AI-powered tools to personalize learning paths and provide real-time feedback",
-          "measurable_goal": "Improve student outcomes by 15% within the next 3 years",
-          "timeframe": "long-term"
-        }
-      ],
-      "evidence": [
-        "The article 'Studying or Learning? Did You Know That There's a Huge...' highlights the difference between studying and learning",
-        "The YouTube transcript 'How AI is Changing Learning and Development in 2025' discusses the potential of AI in transforming education"
-      ],
-      "generalization": "This problem connects to the domains of cognition, social structures, and technology, as it affects how individuals acquire knowledge and skills, and how societies approach education and personal development",
-      "summary": "The lack of clarity between studying and learning hinders effective education, and addressing this issue can improve learning outcomes and student engagement. Implementing interactive learning experiences and AI-powered tools can help bridge this gap.",
-      "risk_level": "MEDIUM"
-    },
-    "SOCIAL_RELATIONS_REVIEW": {
-      "problem": "Growing loneliness and social isolation among adults",
-      "root_cause": "Modern disconnection and isolation due to various factors such as urbanization, technological advancements, and lack of community engagement",
-      "severity": "HIGH",
-      "leverage_points": [
-        "Community leaders and local governments",
-        "Mental health professionals and social workers"
-      ],
-      "proposed_actions": [
-        {
-          "action": "Implement community-based programs to promote social connections and a sense of belonging",
-          "measurable_goal": "Reduce loneliness rates by 20% within the next 12 months",
-          "timeframe": "medium-term"
-        },
-        {
-          "action": "Increase funding for mental health services and social isolation research",
-          "measurable_goal": "Increase funding by 30% within the next 18 months",
-          "timeframe": "medium-term"
-        }
-      ],
-      "evidence": [
-        "One in three adults over 60 live by themselves, but loneliness is the deeper experience of craving connection",
-        "Experts caution that loneliness is a growing public health concern with hidden impacts on health and well-being"
-      ],
-      "generalization": "This problem connects to the domain of human health and wellbeing, and has implications for the sustainability of civilization, as lonely and isolated individuals may be less likely to contribute to their communities and more likely to experience poor health outcomes",
-      "summary": "Loneliness and social isolation are growing concerns among adults, with significant implications for mental and physical health, and community engagement is crucial to addressing this issue.",
-      "risk_level": "HIGH"
-    },
-    "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL": {
-      "problem": "Lack of accountability for human rights violations and discriminatory practices against marginalized groups, including child refugees and political prisoners",
-      "root_cause": "Inadequate governance and lack of effective mechanisms for holding individuals and institutions accountable for human rights abuses",
-      "severity": "HIGH",
-      "leverage_points": [
-        "International human rights organizations and NGOs, such as Human Rights Watch and UN Watch",
-        "Government agencies and policymakers responsible for implementing and enforcing human rights laws and regulations"
-      ],
-      "proposed_actions": [
-        {
-          "action": "Establish independent investigation mechanisms to hold individuals and institutions accountable for human rights abuses",
-          "measurable_goal": "Increase in number of investigations and prosecutions of human rights abuses by 20% within the next 12 months",
-          "timeframe": "medium-term"
-        },
-        {
-          "action": "Provide training and resources to government agencies and policymakers on human rights laws and regulations",
-          "measurable_goal": "90% of government officials report feeling confident in their understanding of human rights laws and regulations within the next 6 months",
-          "timeframe": "short-term"
-        }
-      ],
-      "evidence": [
-        "The UK's discriminatory AI experiment on child refugees",
-        "Canada's failure to hold corporations accountable for human rights abuses",
-        "The detention of activists and political prisoners in Uzbekistan and Georgia"
-      ],
-      "generalization": "This problem connects to other domains, including the biosphere, as human rights abuses can have devastating impacts on the environment and public health, and the cosmos, as a lack of accountability can undermine trust in institutions and hinder global cooperation",
-      "summary": "The lack of accountability for human rights violations and discriminatory practices against marginalized groups is a critical problem that requires immediate attention and action from international human rights organizations, governments, and policymakers.",
-      "risk_level": "HIGH"
-    },
-    "ECONOMY_WORK_REVIEW": {
-      "problem": "Rising public borrowing and increasing interest rates on student loans may exacerbate economic inequality and limit access to education",
-      "root_cause": "Inadequate fiscal planning and management of public finances, combined with rising costs and inflation",
-      "severity": "MEDIUM",
-      "leverage_points": [
-        "Government economic policies and budget allocation",
-        "Central bank monetary policy and interest rate decisions"
-      ],
-      "proposed_actions": [
-        {
-          "action": "Implement fiscal responsibility measures to reduce public borrowing",
-          "measurable_goal": "Achieve a 10% reduction in public borrowing within the next 12 months",
-          "timeframe": "medium-term"
-        },
-        {
-          "action": "Introduce income-based repayment plans for student loans",
-          "measurable_goal": "Increase the number of students able to repay their loans on time by 20% within the next 2 years",
-          "timeframe": "medium-term"
-        }
-      ],
-      "evidence": [
-        "The UK borrowed £23.3bn in May, up almost a third on the same month last year",
-        "Rates on New Student Loans Will Rise on July 1"
-      ],
-      "generalization": "This problem connects to the domains of PLANET (resource management) and HUMAN (education and social mobility), as economic instability and limited access to education can have far-reaching consequences for individual well-being and societal prosperity",
-      "summary": "Rising public borrowing and increasing interest rates on student loans pose a medium-severity problem, requiring fiscal responsibility measures and income-based repayment plans to mitigate economic inequality and promote access to education",
-      "risk_level": "MEDIUM"
-    },
-    "INEQUALITY_POVERTY_REVIEW": {
-      "problem": "Over 40% of people in Sub-Saharan Africa live in extreme poverty",
-      "root_cause": "Lack of economic growth and unequal distribution of resources in Sub-Saharan Africa",
-      "severity": "CRITICAL",
-      "leverage_points": [
-        "International organizations and governments investing in economic development in Sub-Saharan Africa",
-        "Local governments implementing policies to reduce inequality and promote economic growth"
-      ],
-      "proposed_actions": [
-        {
-          "action": "Invest in education and job training programs in Sub-Saharan Africa",
-          "measurable_goal": "Reduce poverty rate by 10% in the next 5 years",
-          "timeframe": "medium-term"
-        },
-        {
-          "action": "Implement policies to promote fair trade and equal distribution of resources in Sub-Saharan Africa",
-          "measurable_goal": "Increase the GDP per capita by 20% in the next 10 years",
-          "timeframe": "long-term"
-        }
-      ],
-      "evidence": [
-        "More than 430 million people live in Sub-Saharan Africa, the poorest region in the world, where more than 40% of people lived in extreme poverty as of 2018",
-        "Poverty and inequality levels have worsened in Latin America and the Caribbean, and economic growth continues to fall short of its potential"
-      ],
-      "generalization": "This problem connects to the domains of planet, human, and cosmos, as poverty and inequality can have far-reaching consequences on the environment, human health, and the overall well-being of societies",
-      "summary": "Over 40% of people in Sub-Saharan Africa live in extreme poverty, and lack of economic growth and unequal distribution of resources are the root causes of this problem. Investing in education and job training programs, and implementing policies to promote fair trade and equal distribution of resources can help reduce poverty and promote economic growth in the region.",
-      "risk_level": "CRITICAL"
-    },
-    "INFRASTRUCTURE_CITIES_REVIEW": {
-      "problem": "Housing segregation and potential loss of homes in urban areas",
-      "root_cause": "Inadequate urban planning and housing policies, leading to segregation and unaffordability",
-      "severity": "MEDIUM",
-      "leverage_points": [
-        "Government policies and regulations on urban planning and housing",
-        "Real estate developers and their investment strategies"
-      ],
-      "proposed_actions": [
-        {
-          "action": "Implement inclusive zoning policies to promote mixed-income housing",
-          "measurable_goal": "Increase the number of affordable housing units by 20% within the next 2 years",
-          "timeframe": "medium-term"
-        },
-        {
-          "action": "Provide incentives for real estate developers to build affordable housing",
-          "measurable_goal": "Increase the number of affordable housing units by 30% within the next 5 years",
-          "timeframe": "long-term"
-        }
-      ],
-      "evidence": [
-        "New residential developments in the UK are often segregating people based on those who own their homes and those that live in social housing",
-        "We can’t build our way out of the housing crisis while losing homes every day"
-      ],
-      "generalization": "This problem connects to the domains of civilization, human dignity, and biosphere, as it affects the well-being and quality of life of urban residents and the sustainability of urban ecosystems",
-      "summary": "Housing segregation and potential loss of homes in urban areas is a significant problem that requires immediate attention and action from policymakers and real estate developers. Inclusive zoning policies and incentives for affordable housing can help address this issue.",
-      "risk_level": "MEDIUM"
-    },
-    "GOVERNANCE_INSTITUTIONS_REVIEW": {
-      "problem": "Lack of effective governance and international cooperation to address humanitarian crises, such as the situation in Gaza and war crimes in Syria",
-      "root_cause": "Insufficient commitment to and enforcement of international laws and agreements, including the United Nations Convention on the Law of the Sea and human rights treaties",
-      "severity": "HIGH",
-      "leverage_points": [
-        "The United Nations and its agencies, such as the Security Council and the Human Rights Council",
-        "National governments and their leaders, particularly those with significant global influence"
-      ],
-      "proposed_actions": [
-        {
-          "action": "Strengthening the United Nations' ability to enforce international law and hold perpetrators of humanitarian crises accountable",
-          "measurable_goal": "Increase in the number of successful prosecutions of war crimes and improvement in humanitarian access to affected areas",
-          "timeframe": "medium-term"
-        },
-        {
-          "action": "Encouraging national governments to prioritize human rights and international cooperation",
-          "measurable_goal": "Increase in the number of countries ratifying and implementing key human rights treaties and participating in international efforts to address humanitarian crises",
-          "timeframe": "long-term"
-        }
-      ],
-      "evidence": [
-        "The Daily Press Briefing by the Office of the Spokesperson for the Secretary-General highlighted the International Day for the Elimination of Sexual Violence in Conflict",
-        "The Security Council heard briefings on the humanitarian situation in Gaza, emphasizing the need for unhindered aid access and respect for the peace plan"
-      ],
-      "generalization": "This problem connects to the domains of human biosphere and cosmos, as humanitarian crises can have long-term consequences for the environment, global health, and stability, ultimately affecting the sustainability of intelligent life on Earth and beyond",
-      "summary": "The lack of effective governance and international cooperation exacerbates humanitarian crises, and strengthening the United Nations and encouraging national governments to prioritize human rights can help address these issues.",
-      "risk_level": "HIGH"
-    },
-    "EDUCATION_CULTURE_REVIEW": {
-      "problem": "Insufficient progress in increasing access to quality education, with persistent inequalities in education outcomes across the world",
-      "root_cause": "Inadequate investment in education infrastructure, lack of qualified teachers, and socio-economic disparities",
-      "severity": "MEDIUM",
-      "leverage_points": [
-        "Government policies and funding for education",
-        "International organizations such as UNESCO and OECD"
-      ],
-      "proposed_actions": [
-        {
-          "action": "Increase funding for education programs and infrastructure development",
-          "measurable_goal": "10% increase in education budget allocation within the next 2 years",
-          "timeframe": "medium-term"
-        },
-        {
-          "action": "Implement teacher training and qualification programs",
-          "measurable_goal": "25% increase in qualified teachers in underserved areas within the next 5 years",
-          "timeframe": "long-term"
-        }
-      ],
-      "evidence": [
-        "The world has made progress in increasing basic education, but also faces challenges in improving education quality and access",
-        "UNESCO strategy for youth and adult literacy (2020-2025) highlights the need for inclusive education and lifelong learning"
-      ],
-      "generalization": "This problem connects to the domains of PLANETA (as education is linked to environmental sustainability and resource management) and CHOVEK (as education is crucial for human development and dignity)",
-      "summary": "The world is facing challenges in improving access to quality education, with persistent inequalities in education outcomes, and requires increased investment and international cooperation to address these issues. Government policies and funding for education are key leverage points to drive progress.",
-      "risk_level": "MEDIUM"
-    },
-    "TECHNOLOGY_INFRA_REVIEW": {
-      "problem": "Insufficient access to digital tools and high-speed internet for all people, exacerbating the digital divide",
-      "root_cause": "Systemic poverty and lack of investment in digital infrastructure, particularly in underserved areas",
-      "severity": "MEDIUM",
-      "leverage_points": [
-        "Government agencies and policymakers",
-        "Non-profit organizations and private companies investing in digital infrastructure"
-      ],
-      "proposed_actions": [
-        {
-          "action": "Implement programs to increase access to affordable high-speed internet and digital devices",
-          "measurable_goal": "Reduce the number of households without internet access by 20% within the next 12 months",
-          "timeframe": "medium-term"
-        },
-        {
-          "action": "Support non-profit organizations working to close the digital divide",
-          "measurable_goal": "Increase the number of people served by these organizations by 30% within the next 18 months",
-          "timeframe": "medium-term"
-        }
-      ],
-      "evidence": [
-        "Bedford County closes digital divide with $25 million boost in high-speed internet",
-        "IDIA Bridges the Digital Divide | Verizon"
-      ],
-      "generalization": "This problem connects to the domains of Civilization and Biosphere, as it affects the overall well-being and economic opportunities of individuals and communities, which in turn can impact the health of the planet",
-      "summary": "The digital divide remains a significant problem, with many people lacking access to high-speed internet and digital tools, but efforts by governments, non-profits, and private companies can help address this issue",
-      "risk_level": "MEDIUM"
-    },
-    "TECHNOLOGY_AI_REVIEW": {
-      "problem": "The high cost of AI coding tools, such as Claude Code, is a barrier to accessibility for many developers",
-      "root_cause": "The high development and maintenance costs of AI models, combined with the desire for profit by companies like Anthropic, lead to expensive pricing models for end-users",
-      "severity": "MEDIUM",
-      "leverage_points": [
-        "Companies developing AI coding tools, such as Anthropic",
-        "Investors and funding bodies that support these companies"
-      ],
-      "proposed_actions": [
-        {
-          "action": "Develop and promote open-source or low-cost AI coding alternatives",
-          "measurable_goal": "Increase the number of developers using affordable AI coding tools by 20% within the next 6 months",
-          "timeframe": "short-term"
-        },
-        {
-          "action": "Encourage companies to offer tiered pricing models or discounts for non-profit and educational use",
-          "measurable_goal": "Achieve a 30% increase in the number of non-profit and educational organizations using AI coding tools within the next year",
-          "timeframe": "medium-term"
-        }
-      ],
-      "evidence": [
-        "Claude Code costs up to $200 a month, while Goose offers similar functionality for free",
-        "Listen Labs raised $69M to scale AI customer interviews, indicating a growing market for AI-powered tools"
-      ],
-      "generalization": "This problem connects to the broader issue of unequal access to technology and digital resources, which can exacerbate existing social and economic inequalities, ultimately affecting the dignity and well-being of individuals and communities",
-      "summary": "The high cost of AI coding tools is a barrier to accessibility, but promoting open-source alternatives and encouraging companies to offer tiered pricing models can increase accessibility and promote more equitable use of AI technology",
-      "risk_level": "MEDIUM"
-    },
-    "SPACE_INFRASTRUCTURE_REVIEW": {
-      "problem": "The rapid development and launch of various satellite constellations and space infrastructure without a unified global governance framework may lead to increased risks of collisions, debris, and unsustainable space activities",
-      "root_cause": "Lack of international cooperation and regulation in space activities, driven by the commercialization of space and the absence of a comprehensive global governance framework",
-      "severity": "MEDIUM",
-      "leverage_points": [
-        "United Nations Committee on the Peaceful Uses of Outer Space (COPUOS)",
-        "Space agencies and private space companies, such as SpaceX, Arianespace, and Northrop Grumman"
-      ],
-      "proposed_actions": [
-        {
-          "action": "Establish a global registry for satellite constellations and space infrastructure",
-          "measurable_goal": "Achieve 90% registration rate of all satellites and space infrastructure within the next 2 years",
-          "timeframe": "medium-term"
-        },
-        {
-          "action": "Develop and adopt international standards for sustainable space activities",
-          "measurable_goal": "Reach consensus among 80% of space-faring nations on a set of standards within the next 3 years",
-          "timeframe": "medium-term"
-        }
-      ],
-      "evidence": [
-        "India's Jio plans to launch a sovereign LEO constellation",
-        "SpaceX launches intelligence-gathering satellites for the National Reconnaissance Office",
-        "Arianespace launches its heaviest payload to date with Amazon Leo flight"
-      ],
-      "generalization": "This problem connects to the domains of Planet (sustainable use of space resources) and Civilization (global governance and cooperation)",
-      "summary": "The rapid development of space infrastructure poses risks to sustainable space activities, highlighting the need for international cooperation and regulation. A global governance framework is necessary to mitigate these risks and ensure the long-term viability of space exploration.",
-      "risk_level": "MEDIUM"
-    },
-    "COSMIC_RESOURCES_REVIEW": {
-      "problem": "Insufficient legal frameworks and regulations for asteroid mining, hindering its development and potential benefits",
-      "root_cause": "Lack of international agreements and national laws governing asteroid mining, leading to uncertainty and barriers to investment",
-      "severity": "MEDIUM",
-      "leverage_points": [
-        "Governments and international organizations, such as the United Nations, can establish and enforce regulations and laws for asteroid mining",
-        "Private companies and industry leaders can invest in asteroid mining and advocate for clear regulations"
-      ],
-      "proposed_actions": [
-        {
-          "action": "Develop and implement international laws and regulations for asteroid mining",
-          "measurable_goal": "Establish a clear legal framework for asteroid mining within the next 2 years",
-          "timeframe": "medium-term"
-        },
-        {
-          "action": "Increase investment in asteroid mining research and development",
-          "measurable_goal": "Allocate at least $100 million in funding for asteroid mining research and development within the next 5 years",
-          "timeframe": "long-term"
-        }
-      ],
-      "evidence": [
-        "The Space Resource Exploration and Utilization Act of 2015 (H.R. 1508) was introduced but never became law, indicating a lack of progress in establishing regulations for asteroid mining",
-        "The European Space Resources Innovation Centre (ESRIC) is a research, business, and innovation hub dedicated to space resources, but its efforts may be hindered by the lack of clear regulations"
-      ],
-      "generalization": "The development of asteroid mining connects to the domain of COSMIC_RESOURCES_REVIEW, as it has the potential to provide a new source of resources for space exploration and development, but also raises concerns about environmental impact, economic inequality, and international cooperation",
-      "summary": "The lack of regulations and laws for asteroid mining hinders its development, but establishing a clear legal framework and increasing investment in research and development can help unlock its potential benefits",
-      "risk_level": "MEDIUM"
-    },
     "LONG_TERM_FUTURE_REVIEW": {
       "problem": "Lack of concrete plans and actions to address potential existential risks from artificial intelligence",
       "root_cause": "Insufficient prioritization and coordination among developers, regulators, and stakeholders to address AI safety concerns",
@@ -1128,36 +307,398 @@
       "summary": "The lack of transparency in AI development and deployment poses a medium-level risk to the sustainability and long-term viability of intelligent life, and addressing this problem will require a focus on ethics and transparency in AI research and development",
       "risk_level": "MEDIUM"
     },
+    "GOAL_PROGRESS_REVIEW": {
+      "problem": "Lack of trust in healthcare systems hindering effective disease outbreak response",
+      "root_cause": "Insufficient community engagement and education leading to mistrust in healthcare authorities",
+      "severity": "MEDIUM",
+      "leverage_points": [
+        "World Health Organization (WHO) and local health authorities",
+        "Community leaders and influencers"
+      ],
+      "proposed_actions": [
+        {
+          "action": "Implement community-based health education programs",
+          "measurable_goal": "Increase community participation in health initiatives by 30% within 6 months",
+          "timeframe": "medium-term"
+        },
+        {
+          "action": "Establish transparent communication channels between healthcare authorities and local communities",
+          "measurable_goal": "Reduce misinformation about diseases by 25% within 3 months",
+          "timeframe": "short-term"
+        }
+      ],
+      "evidence": [
+        "Some question if Ebola is real: how trust is central in fighting DRC outbreak",
+        "Winning the race against the disease requires earning the community’s trust first and foremost"
+      ],
+      "generalization": "This problem connects to the domain of Civilization, as it highlights the importance of social cohesion and trust in institutions for effective disease response, and to the domain of Planet, as it affects the health and well-being of communities",
+      "summary": "Lack of trust in healthcare systems is hindering effective disease outbreak response, and community-based health education and transparent communication can help address this issue",
+      "risk_level": "MEDIUM"
+    },
     "PLANETARY_POTENTIAL_REVIEW": {
-      "problem": "Анализ на PLANETARY_POTENTIAL_REVIEW — данни получени но LLM грешка",
-      "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: Gemini rate limit",
+      "problem": "Inaccurate global emissions database",
+      "root_cause": "Methodological errors in data collection and analysis",
+      "severity": "MEDIUM",
+      "leverage_points": [
+        "Climate TRACE consortium",
+        "Research institutions reviewing and utilizing the database"
+      ],
+      "proposed_actions": [
+        {
+          "action": "Conduct an independent review and revision of the Climate TRACE database",
+          "measurable_goal": "Achieve a 20% reduction in data errors within the next 6 months",
+          "timeframe": "short-term"
+        },
+        {
+          "action": "Implement a robust quality control process for data collection and analysis",
+          "measurable_goal": "Reduce data errors by 50% within the next 12 months",
+          "timeframe": "medium-term"
+        }
+      ],
+      "evidence": [
+        "Major errors found in Al Gore-founded Climate TRACE database",
+        "Researchers found that the database contained significant methodological errors"
+      ],
+      "generalization": "This problem connects to the civilization domain as inaccurate data can inform flawed policy decisions, and to the planetary domain as climate change mitigation efforts rely on accurate emissions data",
+      "summary": "The Climate TRACE database contains significant errors, which can impact climate change mitigation efforts. An independent review and revision of the database are necessary to ensure data accuracy.",
+      "risk_level": "MEDIUM"
+    },
+    "ENERGY_REVIEW": {
+      "problem": "Анализ на ENERGY_REVIEW — данни получени но LLM грешка",
+      "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: None",
       "severity": "UNKNOWN",
       "leverage_points": [],
       "proposed_actions": [],
       "evidence": [
-        "Major errors found in Al Gore-founded Climate TRACE database",
-        "Arizona reservoir nearly vanishes after snowpack collapse triggers massive fish kill",
-        "These bees have nowhere to hide from extreme heat"
+        "Yup, China’s EV Price War Was Brutal, But It Drove Innovation",
+        "Uruguay EV Sales Report: ICEV Sales Start Melting Down as BEVs Surpass 40% Share in May!",
+        "Energy Access In Rural North Carolina Grows Through Solar"
       ],
       "generalization": "",
-      "summary": "- Major errors found in Al Gore-founded Climate TRACE database: A new study from Northern Arizona University is raising red flags about a widely used global emissions database from Climate TRACE, a co",
+      "summary": "- Yup, China’s EV Price War Was Brutal, But It Drove Innovation: <p>It&#8217;s been a popular topic lately to write about China&#8217;s EV sales slump in 2026, growing EV exports from China, and vario",
       "risk_level": "UNKNOWN",
       "trend": "UNKNOWN",
       "llm_raw": ""
     },
-    "GOAL_PROGRESS_REVIEW": {
-      "problem": "Анализ на GOAL_PROGRESS_REVIEW — данни получени но LLM грешка",
+    "CLIMATE_GLOBAL_RISK_REVIEW": {
+      "problem": "Анализ на CLIMATE_GLOBAL_RISK_REVIEW — данни получени но LLM грешка",
       "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: Gemini rate limit",
       "severity": "UNKNOWN",
       "leverage_points": [],
       "proposed_actions": [],
       "evidence": [
-        "Fermentation, flavour and the future of food: Making sustainability delicious",
-        "Ebola treatment capacity expands in DR Congo as WHO issues new guidelines",
-        "‘Some question if Ebola is real’: how trust is central in fighting DRC outbreak"
+        "DeBriefed 19 June 2026: Bonn talks end in ‘gridlock’ | Energy’s ‘new era’ | Oceans in climate negotiations",
+        "Bonn climate talks: Key outcomes from the June 2026 UN climate conference",
+        "Experts: Why carbon removal needs a ‘major scale up’ to return warming to 1.5C"
       ],
       "generalization": "",
-      "summary": "- Fermentation, flavour and the future of food: Making sustainability delicious: <p>Words like “sustainability” and “healthy” shouldn’t take the joy out of eating. As elite chef Jaume Biarnés has been",
+      "summary": "- DeBriefed 19 June 2026: Bonn talks end in ‘gridlock’ | Energy’s ‘new era’ | Oceans in climate negotiations: <p>Welcome to Carbon Brief’s DeBriefed.&#160;An essential guide to the week&#8217;s key de",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN",
+      "llm_raw": ""
+    },
+    "WATER_REVIEW": {
+      "problem": "Анализ на WATER_REVIEW — данни получени но LLM грешка",
+      "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: Gemini rate limit",
+      "severity": "UNKNOWN",
+      "leverage_points": [],
+      "proposed_actions": [],
+      "evidence": [
+        "Setting Fires On Purpose to Cut Risk of Catastrophic Wildfires",
+        "When Forests Burn, Lakes Suffer",
+        "Ethanol Was Marketed to Help Agriculture. But It Fouled Our Water and Injured Our Health."
+      ],
+      "generalization": "",
+      "summary": "- Setting Fires On Purpose to Cut Risk of Catastrophic Wildfires: <figure><img alt=\"Firefighters ignite a prescribed burn.\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN",
+      "llm_raw": ""
+    },
+    "FOOD_REVIEW": {
+      "problem": "Анализ на FOOD_REVIEW — данни получени но LLM грешка",
+      "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: None",
+      "severity": "UNKNOWN",
+      "leverage_points": [],
+      "proposed_actions": [],
+      "evidence": [
+        "Global Report on Food Crises (GRFC) 2025 | World Food Programme",
+        "Worsening food insecurity, waning response capacity: Options... | IFPRI",
+        "Global Food Insecurity: Trends and Policy... - The Borgen Project"
+      ],
+      "generalization": "",
+      "summary": "- Global Report on Food Crises (GRFC) 2025 | World Food Programme: 11 July 2025. Global Report on Food Crises (GRFC) 2025. Analyses assessments and case studies Food security analysis (VAM).In 2024, m",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN",
+      "llm_raw": ""
+    },
+    "ECOSYSTEMS_BIODIVERSITY_REVIEW": {
+      "problem": "Анализ на ECOSYSTEMS_BIODIVERSITY_REVIEW — данни получени но LLM грешка",
+      "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: None",
+      "severity": "UNKNOWN",
+      "leverage_points": [],
+      "proposed_actions": [],
+      "evidence": [
+        "Global",
+        "Inside IUCN",
+        "DG Speech Node"
+      ],
+      "generalization": "",
+      "summary": "- Global: <span class=\"field field--name-title field--type-string field--label-hidden\">Global</span>\n<span class=\"field field--name-uid field--type-entity-reference field--label-hidden\"><span>integrat",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN",
+      "llm_raw": ""
+    },
+    "MATERIALS_WASTE_REVIEW": {
+      "problem": "Анализ на MATERIALS_WASTE_REVIEW — данни получени но LLM грешка",
+      "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: None",
+      "severity": "UNKNOWN",
+      "leverage_points": [],
+      "proposed_actions": [],
+      "evidence": [
+        "EREF Auction Raises More Than $4 Million to Advance Waste and Recycling Research",
+        "Casella’s Roadmap for Renewable Energy and Driving a Circular Economy",
+        "June 2026 Business Report—Business Highlights from the Waste Leadership Summit"
+      ],
+      "generalization": "",
+      "summary": "- EREF Auction Raises More Than $4 Million to Advance Waste and Recycling Research: The Environmental Research &amp; Education Foundation (EREF) raised over $4 million during its 2026 Annual Charitabl",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN",
+      "llm_raw": ""
+    },
+    "HUMAN_WELL_BEING_REVIEW": {
+      "problem": "Анализ на HUMAN_WELL_BEING_REVIEW — данни получени но LLM грешка",
+      "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: None",
+      "severity": "UNKNOWN",
+      "leverage_points": [],
+      "proposed_actions": [],
+      "evidence": [
+        "WHO issues comprehensive guidelines on filovirus disease, including Ebola and Marburg disease",
+        "Open letter to leaders of G7, G20, BRICS and all nations on finalizing the WHO Pandemic Agreement’s Pathogen Access and Benefit Sharing annex",
+        "Safe blood supply improves as voluntary donations exceed 85%, but many people still lack access"
+      ],
+      "generalization": "",
+      "summary": "- WHO issues comprehensive guidelines on filovirus disease, including Ebola and Marburg disease: As the Democratic Republic of the Congo is battling an Ebola disease outbreak caused by the Bundibugyo ",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN",
+      "llm_raw": ""
+    },
+    "CULTURE_MEDIA_REVIEW": {
+      "problem": "Анализ на CULTURE_MEDIA_REVIEW — данни получени но LLM грешка",
+      "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: None",
+      "severity": "UNKNOWN",
+      "leverage_points": [],
+      "proposed_actions": [],
+      "evidence": [
+        "Joan Cusack, the Actress Behind Jessie in ‘Toy Story,’ Takes the Lead",
+        "Matt Smith Goes Dark on ‘House of the Dragon’",
+        "These Comics Can Barely Muster the Energy for a Joke. That’s Why They’re Funny."
+      ],
+      "generalization": "",
+      "summary": "- Joan Cusack, the Actress Behind Jessie in ‘Toy Story,’ Takes the Lead: After 27 years, the beloved cowgirl doll voiced by Cusack is finally in charge, but the actress played an important role in sha",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN",
+      "llm_raw": ""
+    },
+    "COGNITION_LEARNING_REVIEW": {
+      "problem": "Анализ на COGNITION_LEARNING_REVIEW — данни получени но LLM грешка",
+      "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: None",
+      "severity": "UNKNOWN",
+      "leverage_points": [],
+      "proposed_actions": [],
+      "evidence": [
+        "Lotus: A Woman’s Journey oLotus: A Woman’s Journey of Empowerment",
+        "Lotus: A Woman’s Journey of Empowerment",
+        "Fresh Wave"
+      ],
+      "generalization": "",
+      "summary": "- Lotus: A Woman’s Journey oLotus: A Woman’s Journey of Empowerment: DOCUMENTARY FILM In the documentary educational film &#8220;The Taboo of Sovereignty, Money, Love and Power,&#8221; Mr. Liberty exp",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN",
+      "llm_raw": ""
+    },
+    "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL": {
+      "problem": "Анализ на GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL — данни получени но LLM грешка",
+      "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: None",
+      "severity": "UNKNOWN",
+      "leverage_points": [],
+      "proposed_actions": [],
+      "evidence": [
+        "The UK’s Discriminatory  AI Experiment on Child  Refugees",
+        "Canada Delivers a Blow to Corporate Accountability",
+        "Support Builds to Protect Children from Crimes Against Humanity"
+      ],
+      "generalization": "",
+      "summary": "- The UK’s Discriminatory  AI Experiment on Child  Refugees: Click to expand Image\n          \n\n\n\n  \n        \n  \n\n        \n                      \n      \n        \n              Migrants walk towards a b",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN",
+      "llm_raw": ""
+    },
+    "ECONOMY_WORK_REVIEW": {
+      "problem": "Анализ на ECONOMY_WORK_REVIEW — данни получени но LLM грешка",
+      "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: None",
+      "severity": "UNKNOWN",
+      "leverage_points": [],
+      "proposed_actions": [],
+      "evidence": [
+        "Plans to end gazumping with binding agreements in house sales shake-up",
+        "O'Leary extends Ryanair contract in deal that could net him over £130m",
+        "Warning over 'fragile' public finances as borrowing rises"
+      ],
+      "generalization": "",
+      "summary": "- Plans to end gazumping with binding agreements in house sales shake-up: Sales agreements will be legally binding sooner and making sellers provide more home information up front are part of the plan",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN",
+      "llm_raw": ""
+    },
+    "SOCIAL_RELATIONS_REVIEW": {
+      "problem": "Анализ на SOCIAL_RELATIONS_REVIEW — данни получени но LLM грешка",
+      "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: None",
+      "severity": "UNKNOWN",
+      "leverage_points": [],
+      "proposed_actions": [],
+      "evidence": [
+        "Catholics in Latin America generally have positive views of Pope Leo",
+        "Most U.S. Catholics view Pope Leo favorably; many think Trump has been too critical of him",
+        "Is U.S. fertility at an all-time low? It depends how you measure it"
+      ],
+      "generalization": "",
+      "summary": "- Catholics in Latin America generally have positive views of Pope Leo: In six Latin American countries surveyed, most Catholics view Pope Leo XIV favorably, though his ratings trail those Pope Franci",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN",
+      "llm_raw": ""
+    },
+    "INEQUALITY_POVERTY_REVIEW": {
+      "problem": "Анализ на INEQUALITY_POVERTY_REVIEW — данни получени но LLM грешка",
+      "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: None",
+      "severity": "UNKNOWN",
+      "leverage_points": [],
+      "proposed_actions": [],
+      "evidence": [
+        "September 2025 global poverty update from the World Bank: New data and regional classifications",
+        "Income Inequality Trends in Sub-Saharan Africa: Divergence, Determinants and Consequences | United Nations Development Programme",
+        "Inequality and the impact of growth on poverty in sub‐Saharan Africa: A GMM estimator in a dynamic panel threshold model - ScienceDirect"
+      ],
+      "generalization": "",
+      "summary": "- September 2025 global poverty update from the World Bank: New data and regional classifications: September 29, 2025 - As of 2024, 839 million people ... New document). This upward revision stems pri",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN",
+      "llm_raw": ""
+    },
+    "GOVERNANCE_INSTITUTIONS_REVIEW": {
+      "problem": "Анализ на GOVERNANCE_INSTITUTIONS_REVIEW — данни получени но LLM грешка",
+      "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: None",
+      "severity": "UNKNOWN",
+      "leverage_points": [],
+      "proposed_actions": [],
+      "evidence": [
+        "Daily Press Briefing by the Office of the Spokesperson for the Secretary-General",
+        "With Fundamental Freedoms under Assault, Work of Human Rights Council ‘More Vital Than Ever’, Secretary-General Says in Anniversary Video Message",
+        "Meeting of States Parties to United Nations Convention on Law of Sea, United Nations Headquarters, 15-18 June"
+      ],
+      "generalization": "",
+      "summary": "- Daily Press Briefing by the Office of the Spokesperson for the Secretary-General: Today is the International Day for the Elimination of Sexual Violence in Conflict. Sexual violence against children ",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN",
+      "llm_raw": ""
+    },
+    "INFRASTRUCTURE_CITIES_REVIEW": {
+      "problem": "Анализ на INFRASTRUCTURE_CITIES_REVIEW — данни получени но LLM грешка",
+      "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: None",
+      "severity": "UNKNOWN",
+      "leverage_points": [],
+      "proposed_actions": [],
+      "evidence": [
+        "Chicago to buy, renovate Greyhound bus terminal",
+        "As a Maryland city mulls upzoning, a Realtor association study touts its benefits",
+        "Biking in US cities is getting better, 2026 report says"
+      ],
+      "generalization": "",
+      "summary": "- Chicago to buy, renovate Greyhound bus terminal: <p>The city&rsquo;s action, aimed at improving the customer experience for some 450,000 riders each year, saves the bus station from possible closure",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN",
+      "llm_raw": ""
+    },
+    "TECHNOLOGY_INFRA_REVIEW": {
+      "problem": "Анализ на TECHNOLOGY_INFRA_REVIEW — данни получени но LLM грешка",
+      "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: None",
+      "severity": "UNKNOWN",
+      "leverage_points": [],
+      "proposed_actions": [],
+      "evidence": [
+        "How I Get Free Traffic from ChatGPT in 2025 (AIO vs SEO)",
+        "Top 10 AI Tools That Will Transform Your Content Creation in 2025",
+        "LimeWire AI Studio Review 2023: Details, Pricing & Features"
+      ],
+      "generalization": "",
+      "summary": "- How I Get Free Traffic from ChatGPT in 2025 (AIO vs SEO): <p style=\"text-align: left;\">Three weeks ago, I tested something that completely changed how I think about organic traffic. I opened ChatGPT",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN",
+      "llm_raw": ""
+    },
+    "EDUCATION_CULTURE_REVIEW": {
+      "problem": "Анализ на EDUCATION_CULTURE_REVIEW — данни получени но LLM грешка",
+      "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: None",
+      "severity": "UNKNOWN",
+      "leverage_points": [],
+      "proposed_actions": [],
+      "evidence": [
+        "Global education",
+        "Global Education - Our World in Data",
+        "Literacy"
+      ],
+      "generalization": "",
+      "summary": "- Global education: Global education is a mental development program that seeks to improve global human development based on the understanding of global dynamics, through the various sectors of human ",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN",
+      "llm_raw": ""
+    },
+    "COSMIC_RESOURCES_REVIEW": {
+      "problem": "Анализ на COSMIC_RESOURCES_REVIEW — данни получени но LLM грешка",
+      "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: None",
+      "severity": "UNKNOWN",
+      "leverage_points": [],
+      "proposed_actions": [],
+      "evidence": [
+        "India’s Jio lays out sovereign LEO constellation plan ahead of IPO",
+        "MDA Space to buy Blue Canyon Technologies to gain foothold in U.S. market",
+        "ElevationSpace Secures US $40 Million in Series B Funding, Bringing Total Raised to US $63.5 Million"
+      ],
+      "generalization": "",
+      "summary": "- India’s Jio lays out sovereign LEO constellation plan ahead of IPO: <figure><img alt=\"\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"683\" src=\"https://i0.wp.com/spacen",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN",
+      "llm_raw": ""
+    },
+    "SPACE_INFRASTRUCTURE_REVIEW": {
+      "problem": "Анализ на SPACE_INFRASTRUCTURE_REVIEW — данни получени но LLM грешка",
+      "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: None",
+      "severity": "UNKNOWN",
+      "leverage_points": [],
+      "proposed_actions": [],
+      "evidence": [
+        "India’s Jio lays out sovereign LEO constellation plan ahead of IPO",
+        "MDA Space to buy Blue Canyon Technologies to gain foothold in U.S. market",
+        "ElevationSpace Secures US $40 Million in Series B Funding, Bringing Total Raised to US $63.5 Million"
+      ],
+      "generalization": "",
+      "summary": "- India’s Jio lays out sovereign LEO constellation plan ahead of IPO: <figure><img alt=\"\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"683\" src=\"https://i0.wp.com/spacen",
+      "risk_level": "UNKNOWN",
+      "trend": "UNKNOWN",
+      "llm_raw": ""
+    },
+    "TECHNOLOGY_AI_REVIEW": {
+      "problem": "Анализ на TECHNOLOGY_AI_REVIEW — данни получени но LLM грешка",
+      "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: None",
+      "severity": "UNKNOWN",
+      "leverage_points": [],
+      "proposed_actions": [],
+      "evidence": [
+        "The Download: AI bottleneck debates, and BCI trials take off",
+        "A startup claims it broke through a bottleneck that’s holding back LLMs",
+        "The inevitable weakness of metrics"
+      ],
+      "generalization": "",
+      "summary": "- The Download: AI bottleneck debates, and BCI trials take off: This is today&#8217;s edition of The Download, our weekday newsletter that provides a daily dose of what&#8217;s going on in the world o",
       "risk_level": "UNKNOWN",
       "trend": "UNKNOWN",
       "llm_raw": ""

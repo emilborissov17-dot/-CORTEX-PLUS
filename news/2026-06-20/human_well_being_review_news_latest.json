@@ -1,14 +1,14 @@
 {
   "axis": "HUMAN_WELL_BEING_REVIEW",
-  "fetched_at": "2026-06-20T07:32:12.622368+00:00",
+  "fetched_at": "2026-06-20T11:28:22.432128+00:00",
   "smart_query": "mental health wellbeing global",
   "sources_count": {
     "wiki": 0,
     "rss": 3,
-    "gdelt": 0,
+    "gdelt": 3,
     "arxiv": 2,
     "github": 3,
-    "youtube_transcripts": 1,
+    "youtube_transcripts": 0,
     "podcast": 1
   },
   "rss": [
@@ -31,7 +31,26 @@
       "source": "RSS"
     }
   ],
-  "gdelt": [],
+  "gdelt": [
+    {
+      "title": "Manulife Partners with Mind HK to Establish New Wellbeing Consultation Hub in Mong Kok",
+      "snippet": "Manulife Partners with Mind HK to Establish New Wellbeing Consultation Hub in Mong Kok",
+      "url": "https://portal.sina.com.hk/finance/finance-prnewswire/prnasia/2026/04/09/1680884/manulife-partners-with-mind-hk-to-establish-new-wellbeing-consultation-hub-in-mong-kok/",
+      "source": "portal.sina.com.hk"
+    },
+    {
+      "title": "What is mental wellbeing , really ? New study offers a clear answer",
+      "snippet": "What is mental wellbeing , really ? New study offers a clear answer",
+      "url": "https://www.thenews.com.pk/latest/1398536-is-mental-wellbeing-finally-defined-study-offers-new-answer",
+      "source": "thenews.com.pk"
+    },
+    {
+      "title": "Enlight Fellowship for Youth Mental Wellbeing Leaders",
+      "snippet": "Enlight Fellowship for Youth Mental Wellbeing Leaders",
+      "url": "https://www2.fundsforngos.org/innovation/enlight-fellowship-for-youth-mental-wellbeing-leaders/",
+      "source": "fundsforngos.org"
+    }
+  ],
   "github_repos": [
     {
       "title": "openemr/openemr",
@@ -76,40 +95,40 @@
   "wiki": null,
   "youtube_items": [
     {
-      "title": "[YT] Global Inequality in 2025: Why the Rich Keep Getting Richer",
-      "summary": "[DESCRIPTION FALLBACK] In 2025, the gap between the rich and the poor is wider than ever. While some enjoy record-breaking wealth, billions still ...",
-      "link": "https://www.youtube.com/watch?v=j7ysRCMNWlk",
-      "source_type": "youtube",
-      "channel": "Economic World Events",
-      "video_id": "j7ysRCMNWlk",
-      "transcript_method": "description",
-      "transcript_chars": 149,
-      "has_full_transcript": false
-    },
-    {
-      "title": "[YT] Global Health Inequality",
+      "title": "[YT] YouTube:VuTgVD7KM6w",
       "summary": "",
-      "link": "https://www.youtube.com/watch?v=IQNJtZy7JhU",
+      "link": "https://www.youtube.com/watch?v=VuTgVD7KM6w",
       "source_type": "youtube",
-      "channel": "Jessica Whisler",
-      "video_id": "IQNJtZy7JhU",
+      "channel": "",
+      "video_id": "VuTgVD7KM6w",
       "transcript_method": "none",
       "transcript_chars": 0,
       "has_full_transcript": false
     },
     {
-      "title": "[YT] Global Health Inequality",
+      "title": "[YT] YouTube:j7ysRCMNWlk",
       "summary": "",
-      "link": "https://www.youtube.com/watch?v=3jBwZ7vDYUM",
+      "link": "https://www.youtube.com/watch?v=j7ysRCMNWlk",
       "source_type": "youtube",
-      "channel": "Kyla Parks",
-      "video_id": "3jBwZ7vDYUM",
+      "channel": "",
+      "video_id": "j7ysRCMNWlk",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] YouTube:xhDi47HesRc",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=xhDi47HesRc",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "xhDi47HesRc",
       "transcript_method": "none",
       "transcript_chars": 0,
       "has_full_transcript": false
     }
   ],
-  "summary": "[RSS News]\n- Minimum age of 11 set for UK puberty blocker trial\n- Five tips to keep your kids cool this weekend\n\n[arXiv]\n- VLMs May Not Globally Enhance Human Alignment over LLMs During Natural Readin",
+  "summary": "[RSS News]\n- Minimum age of 11 set for UK puberty blocker trial\n- Five tips to keep your kids cool this weekend\n\n[GDELT News]\n- Manulife Partners with Mind HK to Establish New Wellbeing Consultation H",
   "urgency": "LOW",
   "sentiment": "NEUTRAL",
   "key_developments": [],

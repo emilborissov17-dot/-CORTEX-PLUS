@@ -1,13 +1,13 @@
 {
   "axis": "CULTURE_MEDIA_REVIEW",
-  "fetched_at": "2026-06-20T07:29:21.877932+00:00",
+  "fetched_at": "2026-06-20T12:10:55.249504+00:00",
   "smart_query": "media disinformation culture",
   "sources_count": {
     "wiki": 0,
     "gdelt": 3,
     "arxiv": 2,
     "github": 3,
-    "youtube_transcripts": 2,
+    "youtube_transcripts": 3,
     "podcast": 1
   },
   "rss": [],
@@ -75,37 +75,37 @@
   "wiki": null,
   "youtube_items": [
     {
-      "title": "[YT] Does Social Media Kill Democracy? | Freedom of Speech vs Censorship",
-      "summary": "[DESCRIPTION FALLBACK] Social media has become an integral part of our everyday lives. Accordingly, it also plays an important role for politics. How do ...",
-      "link": "https://www.youtube.com/watch?v=qraF9NSA3BQ",
+      "title": "[YT] YouTube:z1tJaouDwVw",
+      "summary": "today the gatekeepers of meaningful freedom of speech are the social media companies but there's just been scandal after scandal of how these companies have abused their powers to really not serve We the People but rather to serve their own corporate interests in ways that stifle our speech and really threaten democracy what's really noteworthy is that the First Amendment imposes absolutely no limit on private sector entities so Twitter and Facebook and Google and and all of the social media have complete freedom to pick and choose who gets to speak and what they can say and who does not get to speak and what may not be set they are completely unconstrained by the First Amendment and they have just unfettered censorship power there have been many complaints by members of racial minorities ",
+      "link": "https://www.youtube.com/watch?v=z1tJaouDwVw",
       "source_type": "youtube",
-      "channel": "DW Shift",
-      "video_id": "qraF9NSA3BQ",
-      "transcript_method": "description",
-      "transcript_chars": 156,
-      "has_full_transcript": false
+      "channel": "",
+      "video_id": "z1tJaouDwVw",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1210,
+      "has_full_transcript": true
     },
     {
-      "title": "[YT] How false news can spread - Noah Tavlin",
-      "summary": "[DESCRIPTION FALLBACK] Dive into the phenomenon known as circular reporting and how it contributes to the spread of false news and misinformation.",
+      "title": "[YT] YouTube:cSKGa_7XJkg",
+      "summary": "[Music] there's a quote usually attributed to the writer Mark Twain that goes a lie can travel Halfway Around the World while the truth is putting on its shoes funny thing about that there's reason to doubt that Mark Twain ever said this at all thus ironically proving the point and today the quote whoever said it is truer than ever before in previous decades most media with global reach consisted of several major newspapers and networks which had the resources to gather information directly Outlets like Reuters and the Associated Press that aggregate or re-report stories were relatively rare compared to today the speed with which information spreads now has created the ideal conditions for a phenomenon known as circular reporting this is when publication a publishes misinformation publicat",
       "link": "https://www.youtube.com/watch?v=cSKGa_7XJkg",
       "source_type": "youtube",
-      "channel": "TED-Ed",
+      "channel": "",
       "video_id": "cSKGa_7XJkg",
-      "transcript_method": "description",
-      "transcript_chars": 146,
-      "has_full_transcript": false
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1166,
+      "has_full_transcript": true
     },
     {
-      "title": "[YT] Jon explains how the right confuses the profit/hate-driven social media algorithm with &quot;free&quot; speech",
-      "summary": "",
-      "link": "https://www.youtube.com/watch?v=Z64qjMCoeS8",
+      "title": "[YT] YouTube:qKwxgOPwuFA",
+      "summary": "The one place the right will unequivocally protect free speech is the one place where the speech isn't actually free. Algorithms, it's speech incentivized for engagement and profit. It's manipulated. It just so happens that the same process that forces you to doom scroll somehow also draws you into Republican ideology. Social media is a machine designed to stimulate the reptilian parts of your brain that would otherwise beg you to go brain that would otherwise beg you to go outside. It's like being impressed that casinos give out free food. It's not free. Social media isn't the town square open forum of ideas. It's got a plan. In the summer of 2019, Facebook created a fake account for a 41-year-old mom. They called her Carol Smith. Carol started off by liking a few popular conservative Fac",
+      "link": "https://www.youtube.com/watch?v=qKwxgOPwuFA",
       "source_type": "youtube",
-      "channel": "The Daily Show",
-      "video_id": "Z64qjMCoeS8",
-      "transcript_method": "none",
-      "transcript_chars": 0,
-      "has_full_transcript": false
+      "channel": "",
+      "video_id": "qKwxgOPwuFA",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1210,
+      "has_full_transcript": true
     }
   ],
   "summary": "[GDELT News]\n- Фонд поддержки медиа будет финансировать проекты , укрепляющие устойчивость к дезинформации\n- Исследование медиаграмотности : половина жителей игнорирует дезинформацию\n\n[arXiv]\n- MIDSim",

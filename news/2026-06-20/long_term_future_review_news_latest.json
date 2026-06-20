@@ -1,6 +1,6 @@
 {
   "axis": "LONG_TERM_FUTURE_REVIEW",
-  "fetched_at": "2026-06-20T07:32:34.413102+00:00",
+  "fetched_at": "2026-06-20T11:13:36.260136+00:00",
   "smart_query": "existential risk future civilization",
   "sources_count": {
     "wiki": 0,
@@ -44,7 +44,7 @@
     {
       "title": "ifixai-ai/iFixAi",
       "snippet": "Catch your AI's mistakes and blind spots before your customers or regulators do. iFixAi runs 45 inspections, 32 graded core plus 13 extended for frontier risks like sabotage, sandbagging, and oversigh",
-      "stars": 558,
+      "stars": 559,
       "url": "https://github.com/ifixai-ai/iFixAi",
       "updated": "2026-06-20",
       "source": "GitHub"

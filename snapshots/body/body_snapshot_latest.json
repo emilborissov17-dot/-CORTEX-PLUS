@@ -1,37 +1,89 @@
 {
-  "timestamp": "2026-06-20T07:36:27.084667+00:00",
+  "timestamp": "2026-06-20T12:01:38.995170+00:00",
   "health": "HEALTHY",
-  "capacity_pct": 100,
-  "cpu": {},
-  "ram": {},
-  "disk": {},
-  "network_hw": {},
+  "capacity_pct": 61.4,
+  "cpu": {
+    "percent": 4.6,
+    "count_logical": 16,
+    "count_physical": 8,
+    "freq_mhz": 2555.0,
+    "load_avg_1m": 0.0
+  },
+  "ram": {
+    "total_gb": 14.88,
+    "available_gb": 9.13,
+    "used_gb": 5.75,
+    "percent": 38.6,
+    "swap_used_gb": 3.46,
+    "swap_percent": 7.7
+  },
+  "disk": {
+    "total_gb": 1022.87,
+    "free_gb": 638.99,
+    "percent": 37.5,
+    "read_mb": 1408050.1,
+    "write_mb": 1348082.9
+  },
+  "network_hw": {
+    "bytes_sent_mb": 2582.6,
+    "bytes_recv_mb": 13075.5,
+    "connections": 116
+  },
   "network_latency": {
-    "groq_api": 42.2,
-    "google_dns": 52.8,
-    "worldbank": 20.3,
-    "noaa": 180.5,
+    "groq_api": 33.3,
+    "google_dns": 47.7,
+    "worldbank": 60.2,
+    "noaa": 204.6,
     "reachable_count": 4,
     "connectivity": "FULL"
   },
   "temperatures": {},
-  "battery": {},
+  "battery": {
+    "present": true,
+    "percent": 100,
+    "plugged_in": true,
+    "secs_left": -2
+  },
   "time_context": {
-    "utc_hour": 7,
+    "utc_hour": 12,
     "utc_weekday": "Saturday",
-    "time_of_day": "MORNING",
+    "time_of_day": "MIDDAY",
     "season": "SUMMER",
     "iso_date": "2026-06-20"
   },
   "data_freshness": {
-    "global_indicators": 0.2,
-    "master_snapshot": 0.0,
-    "goal_score": 0.0,
-    "orchestration": 0.0,
-    "oldest_hours": 0.2,
+    "global_indicators": 0.9,
+    "master_snapshot": 0.1,
+    "goal_score": 0.1,
+    "orchestration": 0.1,
+    "oldest_hours": 0.9,
     "freshness": "FRESH"
   },
-  "processes": {},
+  "processes": {
+    "total": 203,
+    "top_cpu": [
+      {
+        "name": "System Idle Process",
+        "cpu_pct": 0.0
+      },
+      {
+        "name": "System",
+        "cpu_pct": 0.0
+      },
+      {
+        "name": "",
+        "cpu_pct": 0.0
+      },
+      {
+        "name": "Registry",
+        "cpu_pct": 0.0
+      },
+      {
+        "name": "smss.exe",
+        "cpu_pct": 0.0
+      }
+    ]
+  },
   "llm_backends": {
     "running": true,
     "backend": "groq+gemini",
@@ -45,7 +97,7 @@
   "bottleneck": "NONE",
   "adaptive_directives": {
     "max_parallel_workers": 3,
-    "llm_sleep_secs": 2,
+    "llm_sleep_secs": 10,
     "cycle_mode": "FULL",
     "reasons": []
   },

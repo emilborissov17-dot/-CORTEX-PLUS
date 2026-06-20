@@ -1,64 +1,53 @@
 {
   "axis": "COSMIC_RESOURCES_REVIEW",
   "domain": "cosmos",
-  "timestamp": "2026-06-20T05:40:29.215454+00:00",
+  "timestamp": "2026-06-20T12:07:02.471149+00:00",
   "sources_count": 11,
   "rss_count": 4,
   "ddg_count": 5,
   "youtube_count": 2,
   "youtube_items": [
     {
-      "title": "[YT] Mining Asteroids for Resources: The Future of Space Economy ...ASTEROID MINING & THE TRILLION-DOLLAR SPACE ECONOMY - YouTubePBS Space Time | How Asteroid Mining Will Save Earth | Season ...What is asteroid mining and how close are we to making it a ...How Asteroid Mining Could Change Earth Forever | Watch - MSNThe Asteroid Economy: Reshaping Global Industries and MarketsAre we on the verge of mining metals from the asteroids ... - BBC",
-      "summary": "[DESCRIPTION FALLBACK] Oct 11, 2025 · Learn how scientists and private companies plan to extract materials from asteroids to support space exploration and Earth’s growing demand. Discover the technology, challenges, and... Feb 6, 2026 · What if the key to Earth’s future resources lies not on our planet—but in space? Asteroid mining is emerging as one of the most exciting and profitable frontiers of the 21st century. Jun 27, 2018 · Money talks, and tens of billions or even trillions of dollars per asteroid speaks very ",
-      "link": "https://www.youtube.com/watch?v=Edf7XCHRHLw",
+      "title": "[YT] Asteroid mining: Is space the new gold rush for resource ...Asteroid Mining and Space Resource Utilization | STEM to ...PBS Space Time | How Asteroid Mining Will Save Earth | Season ...What is asteroid mining and how close are we to making it a ...Are we on the verge of mining metals from the asteroids ... - BBCUnlimited Resources From Space – Asteroid Mining | Video ...15-minute-discourse/asteroid-mining - GitHub",
+      "summary": "[Music] Never collapsed too far. Welcome to a small fertile planet, a generous planet which has always given us what we needed to survive and grow. Today we are nearly 8 billion humans and we dream of abundance. Our use of digital and green technologies skyrockets. It devours gigantic quantities of metals. But what if we had gone too far in exploiting the earth? At the dawn of the 21st century, scarcity is threatening. Perhaps it is time to seek our metals in Perhaps it is time to seek our metals in space. How did we get here? Let's go back to the dawn of humanity. Man was a huntergatherer then, roaming vast territories. His daily life alternated between periods of scarcity and abundance. With the seasons, he found around him what he needed to survive. His impact on the earth was insignifi",
+      "link": "https://www.youtube.com/watch?v=Uiqet8E5Htc",
       "published": "",
       "source_type": "youtube",
       "channel": "",
-      "video_id": "Edf7XCHRHLw",
-      "transcript_method": "description",
-      "transcript_chars": 523,
-      "has_full_transcript": false
+      "video_id": "Uiqet8E5Htc",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1096,
+      "has_full_transcript": true
     },
     {
-      "title": "[YT] ASTEROID MINING & THE TRILLION-DOLLAR SPACE ECONOMY - YouTubePBS Space Time | How Asteroid Mining Will Save Earth | Season ...What is asteroid mining and how close are we to making it a ...How Asteroid Mining Could Change Earth Forever | Watch - MSNThe Asteroid Economy: Reshaping Global Industries and MarketsAre we on the verge of mining metals from the asteroids ... - BBC",
-      "summary": "[DESCRIPTION FALLBACK] Feb 6, 2026 · What if the key to Earth’s future resources lies not on our planet—but in space? Asteroid mining is emerging as one of the most exciting and profitable frontiers of the 21st century. Jun 27, 2018 · Money talks, and tens of billions or even trillions of dollars per asteroid speaks very loudly. Perhaps in just a few decades we'll have mining outposts in the asteroid belt. Nov 5, 2025 · Asteroid mining is moving from fiction to fact, here’s how missions and startups are redefining res",
-      "link": "https://www.youtube.com/watch?v=R3igSQ71z-I",
+      "title": "[YT] Asteroid Mining and Space Resource Utilization | STEM to ...",
+      "summary": "Welcome STEM engineers to STEM to Stern, the podcast where curiosity meets critical thinking. Join Shantae and Jake as they discuss STEM topics that spark debate and exploration. Hello everyone. Welcome to STEM to Stern. I'm Jake. I'm Shante. Today we're talking about the intersection between STEM and the arts. And this is a conversation that we have had before, but this one I want to talk about how the arts helps with scientific innovation and creativity. Yeah. So you think about with your creativity like things that have been created, you need someone with a creative mind to start the conversation. Um because you have these black and white thinkers who are usually the scientific thinkers are pretty like these are the facts, especially mathematical thinkers. These are the facts. this is h",
+      "link": "https://www.youtube.com/watch?v=OQbnaip1nHU",
       "published": "",
       "source_type": "youtube",
       "channel": "",
-      "video_id": "R3igSQ71z-I",
-      "transcript_method": "description",
-      "transcript_chars": 523,
-      "has_full_transcript": false
+      "video_id": "OQbnaip1nHU",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1194,
+      "has_full_transcript": true
     }
   ],
   "analysis": {
-    "problem": "Insufficient legal frameworks and regulations for asteroid mining, hindering its development and potential benefits",
-    "root_cause": "Lack of international agreements and national laws governing asteroid mining, leading to uncertainty and barriers to investment",
-    "severity": "MEDIUM",
-    "leverage_points": [
-      "Governments and international organizations, such as the United Nations, can establish and enforce regulations and laws for asteroid mining",
-      "Private companies and industry leaders can invest in asteroid mining and advocate for clear regulations"
-    ],
-    "proposed_actions": [
-      {
-        "action": "Develop and implement international laws and regulations for asteroid mining",
-        "measurable_goal": "Establish a clear legal framework for asteroid mining within the next 2 years",
-        "timeframe": "medium-term"
-      },
-      {
-        "action": "Increase investment in asteroid mining research and development",
-        "measurable_goal": "Allocate at least $100 million in funding for asteroid mining research and development within the next 5 years",
-        "timeframe": "long-term"
-      }
-    ],
+    "problem": "Анализ на COSMIC_RESOURCES_REVIEW — данни получени но LLM грешка",
+    "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: None",
+    "severity": "UNKNOWN",
+    "leverage_points": [],
+    "proposed_actions": [],
     "evidence": [
-      "The Space Resource Exploration and Utilization Act of 2015 (H.R. 1508) was introduced but never became law, indicating a lack of progress in establishing regulations for asteroid mining",
-      "The European Space Resources Innovation Centre (ESRIC) is a research, business, and innovation hub dedicated to space resources, but its efforts may be hindered by the lack of clear regulations"
+      "India’s Jio lays out sovereign LEO constellation plan ahead of IPO",
+      "MDA Space to buy Blue Canyon Technologies to gain foothold in U.S. market",
+      "ElevationSpace Secures US $40 Million in Series B Funding, Bringing Total Raised to US $63.5 Million"
     ],
-    "generalization": "The development of asteroid mining connects to the domain of COSMIC_RESOURCES_REVIEW, as it has the potential to provide a new source of resources for space exploration and development, but also raises concerns about environmental impact, economic inequality, and international cooperation",
-    "summary": "The lack of regulations and laws for asteroid mining hinders its development, but establishing a clear legal framework and increasing investment in research and development can help unlock its potential benefits",
-    "risk_level": "MEDIUM"
+    "generalization": "",
+    "summary": "- India’s Jio lays out sovereign LEO constellation plan ahead of IPO: <figure><img alt=\"\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"683\" src=\"https://i0.wp.com/spacen",
+    "risk_level": "UNKNOWN",
+    "trend": "UNKNOWN",
+    "llm_raw": ""
   },
   "raw_items": [
     {
@@ -114,22 +103,22 @@
       "source_type": "ddg"
     },
     {
-      "title": "52 Space Resources ideas | space resources, space activities for...",
-      "summary": "May 25, 2020 - Explore Twinkl Scotland's board \"Space Resources\" on Pinterest. See more ideas about space resources, space activities for kids, space activities.",
-      "link": "https://www.pinterest.com/twinklscotland/space-resources/",
+      "title": "Earth & Space Resources - Layers of Learning",
+      "summary": "Below you will find web links, extra printables, and other resources to use along with the Earth & Space units in the Layers of Learning curriculum.",
+      "link": "https://layers-of-learning.com/unit-resources/science-resources/earth-space-resources-for-layers-of-learning/",
       "source_type": "ddg"
     },
     {
-      "title": "[YT] Mining Asteroids for Resources: The Future of Space Economy ...ASTEROID MINING & THE TRILLION-DOLLAR SPACE ECONOMY - YouTubePBS Space Time | How Asteroid Mining Will Save Earth | Season ...What is asteroid mining and how close are we to making it a ...How Asteroid Mining Could Change Earth Forever | Watch - MSNThe Asteroid Economy: Reshaping Global Industries and MarketsAre we on the verge of mining metals from the asteroids ... - BBC",
-      "summary": "[DESCRIPTION FALLBACK] Oct 11, 2025 · Learn how scientists and private companies plan to extract materials from asteroids to support space exploration and Earth’s growing demand. Discover the technology, challenges, and... Feb 6, 2026 · What if the key to Earth’s future resources lies not on our planet—but in space? Asteroid mining is emerging as one of the most exciting and profitable frontiers of the 21st century. Jun 27, 2018 · Money talks, and tens of billions or even trillions of dollars per asteroid speaks very ",
-      "link": "https://www.youtube.com/watch?v=Edf7XCHRHLw",
+      "title": "[YT] Asteroid mining: Is space the new gold rush for resource ...Asteroid Mining and Space Resource Utilization | STEM to ...PBS Space Time | How Asteroid Mining Will Save Earth | Season ...What is asteroid mining and how close are we to making it a ...Are we on the verge of mining metals from the asteroids ... - BBCUnlimited Resources From Space – Asteroid Mining | Video ...15-minute-discourse/asteroid-mining - GitHub",
+      "summary": "[Music] Never collapsed too far. Welcome to a small fertile planet, a generous planet which has always given us what we needed to survive and grow. Today we are nearly 8 billion humans and we dream of abundance. Our use of digital and green technologies skyrockets. It devours gigantic quantities of metals. But what if we had gone too far in exploiting the earth? At the dawn of the 21st century, scarcity is threatening. Perhaps it is time to seek our metals in Perhaps it is time to seek our metals in space. How did we get here? Let's go back to the dawn of humanity. Man was a huntergatherer then, roaming vast territories. His daily life alternated between periods of scarcity and abundance. With the seasons, he found around him what he needed to survive. His impact on the earth was insignifi",
+      "link": "https://www.youtube.com/watch?v=Uiqet8E5Htc",
       "published": "",
       "source_type": "youtube",
       "channel": "",
-      "video_id": "Edf7XCHRHLw",
-      "transcript_method": "description",
-      "transcript_chars": 523,
-      "has_full_transcript": false
+      "video_id": "Uiqet8E5Htc",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1096,
+      "has_full_transcript": true
     }
   ]
 }

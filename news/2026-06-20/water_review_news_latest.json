@@ -1,11 +1,11 @@
 {
   "axis": "WATER_REVIEW",
-  "fetched_at": "2026-06-20T07:35:03.183363+00:00",
+  "fetched_at": "2026-06-20T11:14:24.549545+00:00",
   "smart_query": "water scarcity drinking water",
   "sources_count": {
     "wiki": 0,
     "rss": 3,
-    "gdelt": 3,
+    "gdelt": 0,
     "arxiv": 2,
     "github": 3,
     "youtube_transcripts": 3,
@@ -31,26 +31,7 @@
       "source": "RSS"
     }
   ],
-  "gdelt": [
-    {
-      "title": "Climate Change , Drinking Water Security , and Public Health",
-      "snippet": "Climate Change , Drinking Water Security , and Public Health",
-      "url": "https://link.springer.com/book/10.1007/978-3-032-12074-8",
-      "source": "link.springer.com"
-    },
-    {
-      "title": "Gram panchayat elections in Karnataka will be held before end of 2026 , says Minister Priyank Kharge",
-      "snippet": "Gram panchayat elections in Karnataka will be held before end of 2026 , says Minister Priyank Kharge",
-      "url": "https://www.thehindu.com/news/national/karnataka/gram-panchayat-elections-in-karnataka-will-be-held-before-end-of-2026-says-minister-priyank-kharge/article70958996.ece",
-      "source": "thehindu.com"
-    },
-    {
-      "title": "Yadgir officials told to be on high alert to any emerging water supply crisis",
-      "snippet": "Yadgir officials told to be on high alert to any emerging water supply crisis",
-      "url": "https://www.thehindu.com/news/national/karnataka/yadgir-officials-told-to-be-on-high-alert-to-any-emerging-water-supply-crisis/article70969872.ece",
-      "source": "thehindu.com"
-    }
-  ],
+  "gdelt": [],
   "github_repos": [
     {
       "title": "wilsto/pool-monitor-card",
@@ -128,7 +109,7 @@
       "has_full_transcript": false
     }
   ],
-  "summary": "[RSS News]\n- ‘It’s Russian roulette’: alarm as Europe backs critical minerals mines in water-stressed regions\n- ‘I had sewage in my bath’: row erupts over lock on Huddersfield narrow canal\n\n[GDELT New",
+  "summary": "[RSS News]\n- ‘It’s Russian roulette’: alarm as Europe backs critical minerals mines in water-stressed regions\n- ‘I had sewage in my bath’: row erupts over lock on Huddersfield narrow canal\n\n[arXiv]\n- ",
   "urgency": "LOW",
   "sentiment": "NEUTRAL",
   "key_developments": [],

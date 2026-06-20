@@ -1,6 +1,6 @@
 {
   "error": "Всички LLM backends неуспешни. Последна грешка: None",
-  "source_type": "LLM_GENERATED",
-  "snapshot_timestamp": "2026-06-20T07:36:25.402148+00:00",
-  "axis": "LONG_TERM_FUTURE_REVIEW"
+  "snapshot_timestamp": "2026-06-20T12:09:26.820246+00:00",
+  "axis": "LONG_TERM_FUTURE_REVIEW",
+  "source_type": "LLM_FAST_CYCLE"
 }

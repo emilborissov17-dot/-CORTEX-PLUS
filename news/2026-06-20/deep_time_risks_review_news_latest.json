@@ -1,13 +1,13 @@
 {
   "axis": "DEEP_TIME_RISKS_REVIEW",
-  "fetched_at": "2026-06-20T07:33:15.775655+00:00",
+  "fetched_at": "2026-06-20T12:13:19.056229+00:00",
   "smart_query": "nuclear war pandemic existential risk",
   "sources_count": {
     "wiki": 0,
     "gdelt": 3,
     "arxiv": 2,
     "github": 3,
-    "youtube_transcripts": 3,
+    "youtube_transcripts": 2,
     "podcast": 1
   },
   "rss": [],
@@ -41,19 +41,19 @@
       "source": "GitHub"
     },
     {
-      "title": "nikthink/pauseai.ca",
-      "snippet": "https://pauseai.ca/",
-      "stars": 4,
-      "url": "https://github.com/nikthink/pauseai.ca",
-      "updated": "2026-04-14",
-      "source": "GitHub"
-    },
-    {
       "title": "holo-q/foom",
       "snippet": "WARNING: cognitive hazards ahead",
       "stars": 4,
       "url": "https://github.com/holo-q/foom",
       "updated": "2026-05-09",
+      "source": "GitHub"
+    },
+    {
+      "title": "nikthink/pauseai.ca",
+      "snippet": "https://pauseai.ca/",
+      "stars": 4,
+      "url": "https://github.com/nikthink/pauseai.ca",
+      "updated": "2026-04-14",
       "source": "GitHub"
     }
   ],
@@ -75,37 +75,37 @@
   "wiki": null,
   "youtube_items": [
     {
-      "title": "[YT] Every Possible Apocalypse We Still Face",
-      "summary": "[DESCRIPTION FALLBACK] From nuclear war and engineered pandemics to artificial intelligence risk and supervolcano eruptions, this video covers every ...",
-      "link": "https://www.youtube.com/watch?v=6DKV6GKZf1Q",
+      "title": "[YT] YouTube:K-u-b7Ttdms",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=K-u-b7Ttdms",
       "source_type": "youtube",
-      "channel": "Stratum Vids",
-      "video_id": "6DKV6GKZf1Q",
-      "transcript_method": "description",
-      "transcript_chars": 152,
+      "channel": "",
+      "video_id": "K-u-b7Ttdms",
+      "transcript_method": "none",
+      "transcript_chars": 0,
       "has_full_transcript": false
     },
     {
-      "title": "[YT] All The Ways Humanity Could End Explained In 60 Minutes ",
-      "summary": "[DESCRIPTION FALLBACK] We map the Risk Ladder: every credible cause of human extinction ranked and explained in 60 minutes. From asteroid impact ...",
-      "link": "https://www.youtube.com/watch?v=NbSZmC57DIQ",
+      "title": "[YT] YouTube:N9FFc0ddWQU",
+      "summary": "Like [music] why the hell you want to play me that way? You're bad. [music] You double faced on tandra. Life goes on and on and on [music] and on and on and on and on and on on and on and on [music] and on and on and on and on and on on and on and [music] on and on and on and on and on and on.",
+      "link": "https://www.youtube.com/watch?v=N9FFc0ddWQU",
       "source_type": "youtube",
-      "channel": "Ace View",
-      "video_id": "NbSZmC57DIQ",
-      "transcript_method": "description",
-      "transcript_chars": 148,
-      "has_full_transcript": false
+      "channel": "",
+      "video_id": "N9FFc0ddWQU",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 294,
+      "has_full_transcript": true
     },
     {
-      "title": "[YT] &quot;Every Way The World Could End&quot;",
-      "summary": "[DESCRIPTION FALLBACK] Most people think the apocalypse is just a movie concept. It isn't. Governments model it. Scientists track it. And some versions of it ...",
-      "link": "https://www.youtube.com/watch?v=-nxOplFDdj4",
+      "title": "[YT] YouTube:20eDWMnZxuA",
+      "summary": "an asteroid impact could trigger a massive Extinction event wiping out life on Earth Global nuclear war could lead to widespread destruction and a nuclear winter making Earth uninhabitable unchecked climate change can cause catastrophic environmental impacts affecting all forms of life a deadly pandemic has the potential to decimate human populations globally uncontrolled artificial intelligence could surpass human control and pose existential threats super volcano eruptions could lead to severe climate shifts and food shortages worldwide high energy gamma ray burst from space could strip away Earth's atmosphere making it uninhabitable misuse of biotechnology and genetic engineering could result in harmful organisms that threaten Humanity overc consumption of Natural Resources could lead t",
+      "link": "https://www.youtube.com/watch?v=20eDWMnZxuA",
       "source_type": "youtube",
-      "channel": " Minddecoded",
-      "video_id": "-nxOplFDdj4",
-      "transcript_method": "description",
-      "transcript_chars": 161,
-      "has_full_transcript": false
+      "channel": "",
+      "video_id": "20eDWMnZxuA",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 850,
+      "has_full_transcript": true
     }
   ],
   "summary": "[GDELT News]\n- Canadian MPs join U . K .- based campaign warning of extinction risk posed by superintelligent AI\n- Постъялтинский мир : рухнул ли порядок после Ялты ? \n\n[arXiv]\n- FlowMaps: Modeling Lo",

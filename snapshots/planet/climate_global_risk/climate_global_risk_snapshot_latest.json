@@ -1,6 +1,6 @@
 {
   "axis": "CLIMATE_GLOBAL_RISK_REVIEW",
-  "timestamp": "2026-06-20T07:35:51.338860+00:00",
+  "timestamp": "2026-06-20T11:34:40.858711+00:00",
   "level": "LOW",
   "signals": [
     "Средните температури остават относително стабилни във времето.",
@@ -36,7 +36,7 @@
     "co2_date": "2026-06-07",
     "co2_annual_mean": 427.35,
     "archive_precipitation_variability": 2.1825398892247443,
-    "forecast_forecast_max_temp_7d": 29.4,
+    "forecast_forecast_max_temp_7d": 29.7,
     "forecast_forecast_heavy_rain_days_7d": 0.0,
     "wb_wb_country_code_mentions": 0.0
   },

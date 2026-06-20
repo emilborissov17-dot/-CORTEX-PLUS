@@ -1,6 +1,6 @@
 {
   "axis": "ECOSYSTEMS_BIODIVERSITY_REVIEW",
-  "fetched_at": "2026-06-20T07:27:22.887817+00:00",
+  "fetched_at": "2026-06-20T11:11:57.266586+00:00",
   "smart_query": "biodiversity species extinction",
   "sources_count": {
     "wiki": 0,
@@ -98,14 +98,14 @@
       "has_full_transcript": false
     },
     {
-      "title": "[YT] Climate 101: Deforestation | National Geographic",
-      "summary": "[DESCRIPTION FALLBACK] Forests cover about 30% of the planet, but deforestation is clearing these essential habitats on a massive scale. What is ...",
-      "link": "https://www.youtube.com/watch?v=Ic-J6hcSKa8",
+      "title": "[YT] Endangered Species | Environment &amp; Ecology | Biology | FuseSchool",
+      "summary": "[DESCRIPTION FALLBACK] You can probably name quite a few endangered species - polar bear, blue whale and black rhino are just a few. But there are ...",
+      "link": "https://www.youtube.com/watch?v=2XdeLpm42i8",
       "source_type": "youtube",
-      "channel": "National Geographic",
-      "video_id": "Ic-J6hcSKa8",
+      "channel": "FuseSchool - Global Education",
+      "video_id": "2XdeLpm42i8",
       "transcript_method": "description",
-      "transcript_chars": 148,
+      "transcript_chars": 150,
       "has_full_transcript": false
     }
   ],

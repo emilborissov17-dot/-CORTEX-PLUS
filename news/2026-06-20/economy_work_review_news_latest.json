@@ -1,6 +1,6 @@
 {
   "axis": "ECONOMY_WORK_REVIEW",
-  "fetched_at": "2026-06-20T07:28:11.001847+00:00",
+  "fetched_at": "2026-06-20T11:16:47.393186+00:00",
   "smart_query": "economy unemployment poverty wages",
   "sources_count": {
     "wiki": 0,
@@ -87,17 +87,6 @@
       "has_full_transcript": false
     },
     {
-      "title": "[YT] 2025 now weakest job growth year since pandemic",
-      "summary": "[DESCRIPTION FALLBACK] The US economy added just 50000 jobs in December, according to the latest monthly report from the Bureau of Labor Statistics.",
-      "link": "https://www.youtube.com/watch?v=u-WIdZMgpIY",
-      "source_type": "youtube",
-      "channel": "CNN",
-      "video_id": "u-WIdZMgpIY",
-      "transcript_method": "description",
-      "transcript_chars": 148,
-      "has_full_transcript": false
-    },
-    {
       "title": "[YT] What we have right now is WORSE than inflation!! #money #finance #economy #recession #inflation",
       "summary": "",
       "link": "https://www.youtube.com/watch?v=pbAOEXACsHA",
@@ -106,6 +95,17 @@
       "video_id": "pbAOEXACsHA",
       "transcript_method": "none",
       "transcript_chars": 0,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] 2025 now weakest job growth year since pandemic",
+      "summary": "[DESCRIPTION FALLBACK] The US economy added just 50000 jobs in December, according to the latest monthly report from the Bureau of Labor Statistics.",
+      "link": "https://www.youtube.com/watch?v=u-WIdZMgpIY",
+      "source_type": "youtube",
+      "channel": "CNN",
+      "video_id": "u-WIdZMgpIY",
+      "transcript_method": "description",
+      "transcript_chars": 148,
       "has_full_transcript": false
     }
   ],
