@@ -175,6 +175,58 @@ def _request_approval(patch: pathlib.Path, reason: str) -> bool:
         return False
 
 
+def _guardian_preflight(patch: pathlib.Path, env: dict) -> tuple[bool, str]:
+    """
+    Run PatchGuardian checks BEFORE subprocess.run:
+      1. Syntax  — AST parse via PatchGuardian._check_syntax()
+      2. Backup  — PatchGuardian._make_backup() creates .bak before any execution
+      3. Compile — py_compile in subprocess catches import-level errors without executing
+
+    Returns (True, "") if all pass, (False, reason) to skip the patch.
+    If patch_guardian cannot be imported, preflight is skipped with a warning (non-blocking).
+    """
+    try:
+        from patch_guardian import PatchGuardian, PatchResult
+    except ImportError as e:
+        print(f"  [GUARDIAN] не може да се импортира: {e} — preflight пропуснат")
+        return True, ""
+
+    guardian = PatchGuardian()
+    source   = patch.read_text(encoding="utf-8", errors="ignore")
+
+    # ── 1. Syntax ─────────────────────────────────────────────────────────────
+    syntax_ok, syntax_err = guardian._check_syntax(source)
+    if not syntax_ok:
+        guardian._save_result(PatchResult(patch.name, False, "syntax", syntax_err))
+        return False, f"СИНТАКСИС ГРЕШКА: {syntax_err}"
+    print(f"  [GUARDIAN] ✔ Синтаксис OK")
+
+    # ── 2. Backup ─────────────────────────────────────────────────────────────
+    backup_path = guardian._make_backup(patch)
+    if not backup_path:
+        return False, "BACKUP НЕУСПЕШЕН — patch пропуснат за безопасност"
+    print(f"  [GUARDIAN] ✔ Backup: {backup_path.name}")
+
+    # ── 3. Compile (py_compile) — no execution, catches bad imports/names ──────
+    try:
+        cp = subprocess.run(
+            [sys.executable, "-m", "py_compile", str(patch)],
+            capture_output=True, text=True, timeout=10,
+            cwd=str(BASE), env=env,
+        )
+        if cp.returncode != 0:
+            err = (cp.stderr or cp.stdout).strip()[:200]
+            guardian._save_result(PatchResult(patch.name, False, "import", err))
+            return False, f"COMPILE ГРЕШКА: {err}"
+        print(f"  [GUARDIAN] ✔ Compile OK")
+    except subprocess.TimeoutExpired:
+        return False, "COMPILE TIMEOUT (>10s)"
+    except Exception as e:
+        return False, f"COMPILE ГРЕШКА: {e}"
+
+    return True, ""
+
+
 def run():
     patches = sorted(PATCH_DIR.glob("*_patch.py"))
     print(f"[PATCH_EXECUTOR] Намерени {len(patches)} patches")
@@ -204,6 +256,14 @@ def run():
                 continue
         else:
             print(f"  ✔  Auto-approved (не пипа чувствителни зони)")
+
+        # ── PatchGuardian preflight: syntax + backup + compile ────────────────
+        preflight_ok, preflight_reason = _guardian_preflight(patch, env)
+        if not preflight_ok:
+            print(f"  ⛔ GUARDIAN FAIL — patch пропуснат: {preflight_reason}")
+            _record(patch.name, False, "", preflight_reason,
+                    score_before, None, levels_before, {})
+            continue
 
         try:
             result = subprocess.run(
