@@ -75,8 +75,11 @@ _METRIC_MAP: list[tuple[re.Pattern, str, str, str]] = [
     (re.compile(r"ВЕИ|renewable|слънч|вятърн|чиста.енерг", re.I), "world_bank.renewable_elec_pct",         "higher", "Renewable electricity (%)"),
     (re.compile(r"горск|forest|залесяване|обезлесяване",   re.I), "world_bank.forest_area_pct",            "higher", "Forest area (%)"),
     (re.compile(r"застрашен.*вид|threatened|изчезващ",     re.I), "world_bank.threatened_mammals_no",      "lower",  "Threatened mammals"),
-    (re.compile(r"пътищ|road|инфраструктур|transport",     re.I), "economy.gdp_per_capita_ppp_usd",        "higher", "GDP/capita PPP (infrastructure proxy)"),
-    (re.compile(r"управлени|governance|демокрац|прозрачн",  re.I), "world_bank.gini_mean",                  "lower",  "Gini (governance proxy)"),
+    # Real infrastructure indicator: WDI IS.ROD.PAVE.ZS (global mean; ProACT and OCP
+    # Open Contracting have no suitable public global API without authentication)
+    (re.compile(r"пътищ|road|инфраструктур|transport",     re.I), "cities.roads_paved_pct",                "higher", "Roads, paved (% of total roads)"),
+    # Real governance indicators: WGI GE.EST Government Effectiveness (-2.5 to +2.5)
+    (re.compile(r"управлени|governance|демокрац|прозрачн",  re.I), "governance.ge_est",                    "higher", "Government Effectiveness (WGI GE.EST)"),
     (re.compile(r"продоволстви|хранителн|food.secur",       re.I), "food.food_production_index",            "higher", "Food production index"),
     (re.compile(r"\bBDP\b|GDP|икономически растеж",         re.I), "economy.gdp_growth_annual_pct",         "higher", "GDP growth (%)"),
 ]
@@ -263,6 +266,40 @@ def _measure_progress(initiative: dict, indicators: dict) -> dict:
 
     tag = f"{progress_pct}%" if progress_pct is not None else "no target %"
     print(f"  [PROGRESS] {init_id}: {label}  {baseline_value} -> {current_value}  ({tag})")
+
+    # Generate causal explanation only when: first time, or delta changed meaningfully
+    existing_explanation = initiative.get("progress_explanation")
+    existing_delta       = initiative.get("delta", 0.0)
+    delta_changed = abs((current_value - baseline_value) - existing_delta) > 1e-4
+    needs_explanation = (existing_explanation is None) or delta_changed
+
+    if needs_explanation:
+        try:
+            sys.path.insert(0, str(BASE))
+            from hypothesis_generator import generate_causal_hypothesis
+            causal = generate_causal_hypothesis(
+                metric_label=label,
+                indicator_path=dot_path,
+                baseline_value=baseline_value,
+                current_value=current_value,
+                direction=direction,
+                problem_context=initiative.get("problem", ""),
+                target_pct=target_pct,
+            )
+            if causal.get("verification_status") != "REJECTED":
+                result["progress_explanation"] = {
+                    "hypothesis":      causal.get("hypothesis_text", ""),
+                    "root_cause":      causal.get("root_cause", ""),
+                    "suggested_action": causal.get("suggested_action", ""),
+                    "expected_improvement": causal.get("expected_improvement", ""),
+                    "evidence_strength": causal.get("evidence_strength", "unknown"),
+                    "hypothesis_id":   causal.get("id", ""),
+                    "generated_at":    causal.get("created_at", ""),
+                    "verification_status": causal.get("verification_status", ""),
+                }
+        except Exception as e:
+            print(f"  [PROGRESS] causal hypothesis failed: {e}")
+
     return result
 
 
@@ -295,6 +332,8 @@ def _update_progress_for_active(indicators: dict) -> None:
             rec["current_progress"]   = prog["current_progress"]
             rec["measured_at"]        = prog["measured_at"]
             rec["updated_at"]         = prog["measured_at"]
+            if "progress_explanation" in prog:
+                rec["progress_explanation"] = prog["progress_explanation"]
         else:
             rec.setdefault("measurable",      False)
             rec.setdefault("progress_reason", prog.get("progress_reason", ""))

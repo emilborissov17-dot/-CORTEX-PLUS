@@ -23,9 +23,15 @@ if hasattr(sys.stderr, "reconfigure"):
 
 from citation_verifier import verify_hypothesis
 
-TRENDS_PATH   = os.path.join("cortex_memory", "abstractions", "trends.json")
-PENDING_PATH  = os.path.join("cortex_memory", "hypotheses", "pending.json")
-REJECTED_PATH = os.path.join("cortex_memory", "hypotheses", "rejected.json")
+try:
+    from core.groq_backend import call_groq as _call_groq_causal
+except Exception:
+    _call_groq_causal = None
+
+TRENDS_PATH        = os.path.join("cortex_memory", "abstractions", "trends.json")
+PENDING_PATH       = os.path.join("cortex_memory", "hypotheses", "pending.json")
+REJECTED_PATH      = os.path.join("cortex_memory", "hypotheses", "rejected.json")
+CAUSAL_PENDING_PATH = os.path.join("cortex_memory", "hypotheses", "causal_pending.json")
 
 AXIS_UNITS = {
     "co2_ppm": "ppm",
@@ -299,6 +305,157 @@ def generate_hypothesis(axis_name, horizon_days=30, past_offset_days=None):
 
     with open(PENDING_PATH, "w", encoding="utf-8") as f:
         json.dump(pending, f, indent=2, ensure_ascii=False)
+
+    return record
+
+
+def generate_causal_hypothesis(
+    metric_label: str,
+    indicator_path: str,
+    baseline_value: float,
+    current_value: float,
+    direction: str,
+    problem_context: str,
+    target_pct: float | None = None,
+) -> dict:
+    """
+    Generate an LLM-based causal hypothesis explaining WHY a global indicator
+    moves the way it does, and WHAT concrete action would improve it.
+
+    Unlike generate_hypothesis() (which extrapolates trends via regression),
+    this function produces cause-effect reasoning and an action recommendation.
+    The result is saved to causal_pending.json and returned.
+
+    Args:
+        metric_label:    Human-readable name, e.g. "Government Effectiveness"
+        indicator_path:  Dot-path in global_indicators, e.g. "governance.ge_est"
+        baseline_value:  Value captured when initiative was created
+        current_value:   Latest value from global_indicators
+        direction:       "higher" or "lower" (desired direction of improvement)
+        problem_context: The initiative's problem description
+        target_pct:      The % change targeted in the milestone (or None)
+    """
+    now = datetime.now(timezone.utc)
+    record_id = f"causal_{indicator_path.replace('.', '_')}_{now.strftime('%Y%m%d_%H%M%S')}"
+
+    if _call_groq_causal is None:
+        return {
+            "id":                  record_id,
+            "type":                "causal_hypothesis",
+            "metric_label":        metric_label,
+            "indicator_path":      indicator_path,
+            "baseline_value":      baseline_value,
+            "current_value":       current_value,
+            "delta":               round(current_value - baseline_value, 4),
+            "direction":           direction,
+            "hypothesis_text":     "",
+            "root_cause":          "",
+            "suggested_action":    "",
+            "expected_improvement": "",
+            "evidence_strength":   "none",
+            "created_at":          now.isoformat(),
+            "verification_status": "SKIPPED",
+            "verification_reason": "call_groq unavailable",
+        }
+
+    delta      = round(current_value - baseline_value, 4)
+    delta_desc = (
+        f"намалява с {abs(delta):.4f}" if delta < 0
+        else (f"расте с {delta:.4f}" if delta > 0 else "остава непроменен")
+    )
+    target_str = f"Целевото подобрение е {target_pct}%." if target_pct is not None else ""
+
+    prompt = (
+        "Ти си аналитик на глобални данни за AGI система с мисия да решава реални проблеми.\n\n"
+        f"ИНИЦИАТИВА (ПРОБЛЕМ): {problem_context}\n\n"
+        f"МЕТРИКА: {metric_label} (path: {indicator_path})\n"
+        f"ПОСОКА НА ПОДОБРЕНИЕ: {'по-висока' if direction == 'higher' else 'по-ниска'} стойност\n"
+        f"BASELINE (при старт): {baseline_value}\n"
+        f"ТЕКУЩА СТОЙНОСТ: {current_value}\n"
+        f"ПРОМЯНА: {delta_desc} ({delta:+.4f})\n"
+        f"{target_str}\n\n"
+        "ЗАДАЧА: Генерирай причинно-следствена хипотеза.\n"
+        "1. ЗАЩО се движи метриката по този начин? (конкретни механизми, не обща теория)\n"
+        "2. КОЯ е ROOT CAUSE?\n"
+        "3. КАКВО конкретно действие би подобрило метриката?\n"
+        "4. КАКВО подобрение очакваме ако действието се приложи?\n"
+        "5. КОЛКО е силна доказателствената база: strong / moderate / weak?\n\n"
+        "Отговори САМО с валиден JSON — без markdown:\n"
+        '{"hypothesis_text":"...","root_cause":"...","suggested_action":"...",'
+        '"expected_improvement":"...","evidence_strength":"moderate"}'
+    )
+
+    raw = ""
+    try:
+        raw = _call_groq_causal(prompt, max_tokens=500)
+        import re as _re
+        raw = _re.sub(r"<think>.*?</think>", "", raw, flags=_re.DOTALL).strip()
+        if "```" in raw:
+            for part in raw.split("```"):
+                part = part.strip()
+                if part.startswith("json"):
+                    part = part[4:].strip()
+                if part.startswith("{"):
+                    raw = part
+                    break
+        if "{" in raw:
+            raw = raw[raw.index("{"):raw.rindex("}") + 1]
+        parsed = json.loads(raw)
+    except Exception as e:
+        print(f"  [CAUSAL_HYP] parse error: {e} | raw[:100]: {raw[:100]!r}")
+        parsed = {}
+
+    hypothesis_text  = parsed.get("hypothesis_text", "")
+    root_cause       = parsed.get("root_cause", "")
+    suggested_action = parsed.get("suggested_action", "")
+    expected_improvement = parsed.get("expected_improvement", "")
+    evidence_strength    = parsed.get("evidence_strength", "unknown")
+
+    # Simple quality gate
+    if len(hypothesis_text) > 50 and len(suggested_action) > 30:
+        verification_status = "ACCEPTED"
+        verification_reason = ""
+    elif hypothesis_text or suggested_action:
+        verification_status = "FLAGGED"
+        verification_reason = "hypothesis_text or suggested_action too short"
+    else:
+        verification_status = "REJECTED"
+        verification_reason = "empty response from LLM"
+
+    record = {
+        "id":                  record_id,
+        "type":                "causal_hypothesis",
+        "metric_label":        metric_label,
+        "indicator_path":      indicator_path,
+        "baseline_value":      baseline_value,
+        "current_value":       current_value,
+        "delta":               delta,
+        "direction":           direction,
+        "hypothesis_text":     hypothesis_text,
+        "root_cause":          root_cause,
+        "suggested_action":    suggested_action,
+        "expected_improvement": expected_improvement,
+        "evidence_strength":   evidence_strength,
+        "created_at":          now.isoformat(),
+        "verification_status": verification_status,
+        "verification_reason": verification_reason,
+    }
+
+    if verification_status != "REJECTED":
+        os.makedirs(os.path.dirname(CAUSAL_PENDING_PATH), exist_ok=True)
+        existing: list = []
+        if os.path.exists(CAUSAL_PENDING_PATH):
+            try:
+                with open(CAUSAL_PENDING_PATH, "r", encoding="utf-8") as f:
+                    existing = json.load(f)
+            except Exception:
+                existing = []
+        existing.append(record)
+        with open(CAUSAL_PENDING_PATH, "w", encoding="utf-8") as f:
+            json.dump(existing, f, indent=2, ensure_ascii=False)
+        print(f"  [CAUSAL_HYP] {verification_status}: {metric_label} -> {suggested_action[:60]}")
+    else:
+        print(f"  [CAUSAL_HYP] REJECTED: {metric_label} (empty LLM response)")
 
     return record
 
