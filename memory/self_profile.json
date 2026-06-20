@@ -1,12 +1,12 @@
 {
-  "timestamp": "2026-06-20T12:26:33.966522+00:00",
+  "timestamp": "2026-06-20T16:24:35.657183+00:00",
   "identity": "CORTEX++ AGI — civilization monitor",
   "hardware": {
     "ram_total_gb": 14.9,
-    "ram_free_gb": 7.1,
-    "ram_percent": 52.0,
+    "ram_free_gb": 5.7,
+    "ram_percent": 61.5,
     "disk_total_gb": 1023.0,
-    "disk_free_gb": 639.0,
+    "disk_free_gb": 643.0,
     "cpu_cores": 8,
     "platform": "windows"
   },
