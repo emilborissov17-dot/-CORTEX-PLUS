@@ -546,6 +546,14 @@ def main():
     # ── 12. Update master след всички snapshots ──
     update_master()
 
+    # ── 12.3. System hypergraph — rebuild so openclaw/self_observer can query it ──
+    try:
+        from system_hypergraph import build_hypergraph
+        hg = build_hypergraph()
+        print(f"[FAST_CYCLE] system_hypergraph -> {hg['triples_count']} triples | {len(hg['isolated_nodes'])} isolated")
+    except Exception as e:
+        print(f"[FAST_CYCLE] system_hypergraph -> FAILED: {e}")
+
     # ── 12.5. Auto levels — СЛЕД snapshot агентите, не преди! ──
     # Тук auto_level чете реални данни от обновения master snapshot.
     # execute_patches ще вика auto_level отново за before/after measurement.

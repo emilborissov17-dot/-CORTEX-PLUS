@@ -130,6 +130,17 @@ def _safe_read(path: str) -> dict:
     return json.loads(p.read_text(encoding="utf-8"))
 
 
+def _query_hypergraph(node: str) -> dict:
+    """Wrapper — safe import so tool works even if system_hypergraph is missing."""
+    try:
+        import sys
+        sys.path.insert(0, str(BASE_DIR))
+        from system_hypergraph import query_hypergraph
+        return query_hypergraph(node)
+    except Exception as e:
+        return {"error": str(e), "node": node, "degree": 0, "downstream_agents": [], "upstream_agents": []}
+
+
 def get_tools(web_intel: dict):
     from memory.body_scan import full_scan, find_in_self
     from memory.existence_model import am_i_alive
@@ -145,6 +156,7 @@ def get_tools(web_intel: dict):
         "read_web_intel_axis":  lambda p=None: web_intel.get("axes", {}).get(p, {"error": f"Ос {p} не е намерена"}),
         "read_causal_log":      lambda p=None: _safe_read("memory/causal_log.json") if pathlib.Path(BASE_DIR / "memory/causal_log.json").exists() else [],
         "read_knowledge_base":  lambda p=None: _safe_read("memory/knowledge_base.json"),
+        "query_hypergraph":     lambda p=None: _query_hypergraph(p or "self_observer"),
     }
 
 TOOLS_DESC = {
@@ -159,6 +171,7 @@ TOOLS_DESC = {
     "read_web_intel_axis": "Чете детайлен анализ за конкретна ос. Параметър: AXIS_NAME",
     "read_causal_log":     "Чете историята на actions и техните ефекти",
     "read_knowledge_base": "Чете акумулираното знание между циклите",
+    "query_hypergraph":    "Проверява кои агенти са свързани с даден възел. Параметър: agent_name или axis_name — ИЗВИКАЙ ПРЕДИ ДА ПРЕДЛОЖИШ РЕШЕНИЕ",
 }
 
 
@@ -273,7 +286,8 @@ def run():
             "3. НЕ се фокусирай на score — фокусирай се на реални проблеми.\n"
             "4. read_problems дава реалните проблеми от света — започни с него.\n"
             "5. Отговори САМО с валиден JSON.\n"
-            f"6. Използвай DONE само след минимум 5 стъпки (сега: стъпка {step+1}).\n\n"
+            f"6. Използвай DONE само след минимум 5 стъпки (сега: стъпка {step+1}).\n"
+            "7. ЗАДЪЛЖИТЕЛНО извикай query_hypergraph(agent_name) ПРЕДИ да предложиш решение — провери кои агенти ще бъдат засегнати.\n\n"
             'Формат: {"action":"tool_name","param":null,"reason":"какъв проблем търся"}\n'
             'или: {"action":"DONE","param":null,"reason":"открити проблеми и предложени решения"}'
         )
@@ -342,6 +356,12 @@ def _build_problem_proposals(history: list, web_intel: dict) -> list:
         for h in history
     ])
 
+    # Extract any query_hypergraph results from history for context
+    hg_context = ""
+    for h in history:
+        if h["tool"] == "query_hypergraph":
+            hg_context += f"\nHYPERGRAPH({h['param']}): {h['result'][:300]}"
+
     problems_found = web_intel.get("problems_found", [])
     problems_context = "\n".join([
         f"  [{p.get('severity','?')}] {p.get('axis','?')}: {p.get('problem','')[:100]}"
@@ -352,10 +372,13 @@ def _build_problem_proposals(history: list, web_intel: dict) -> list:
         AGI_GOALS +
         f"\n\nРЕАЛНИ ПРОБЛЕМИ ОТ СВЕТА:\n{problems_context}\n\n"
         f"НАБЛЮДЕНИЯ НА СИСТЕМАТА:\n{history_str}\n\n"
+        + (f"HYPERGRAPH CONNECTIVITY (кои агенти са засегнати):\n{hg_context}\n\n" if hg_context else "") +
         "Генерирай 3 конкретни proposals за решаване на реални проблеми.\n"
+        "ВАЖНО: Полето 'component' трябва да е реален agent name от системата.\n"
         "САМО JSON масив — без markdown:\n"
         '[{'
         '"problem": "Конкретен реален проблем (не абстрактен)",'
+        '"component": "agent_name_from_system",'
         '"root_cause": "Защо съществува",'
         '"solution": "Конкретно действие което системата може да предприеме",'
         '"measurable_goal": "Как да измерим успеха",'
@@ -374,10 +397,23 @@ def _build_problem_proposals(history: list, web_intel: dict) -> list:
         if "[" in raw:
             raw = raw[raw.index("["):raw.rindex("]")+1]
         proposals = json.loads(raw)
+
+        # Enrich each proposal with downstream_impact from hypergraph
         for p in proposals:
             p["source"]   = "self_observer_problem_solution"
             p["priority"] = "HIGH"
-        print(f"  [OBSERVER] Генерирани {len(proposals)} problem→solution proposals")
+            component = p.get("component", "")
+            if component:
+                hg = _query_hypergraph(component)
+                p["downstream_impact"] = {
+                    "queried_node":      component,
+                    "degree":            hg.get("degree", 0),
+                    "upstream_agents":   hg.get("upstream_agents", []),
+                    "downstream_agents": hg.get("downstream_agents", []),
+                    "is_isolated":       hg.get("is_isolated", True),
+                }
+
+        print(f"  [OBSERVER] Генерирани {len(proposals)} problem→solution proposals (с downstream_impact)")
         return proposals
     except json.JSONDecodeError as e:
         print(f"  [OBSERVER] JSONDecodeError в proposals: {e} | raw[:200]: {raw[:200]!r}")

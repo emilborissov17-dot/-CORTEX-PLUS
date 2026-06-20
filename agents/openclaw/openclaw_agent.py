@@ -167,6 +167,28 @@ def synthesize(ctx):
         except Exception:
             pass
 
+    # Load system hypergraph summary — isolated nodes only for missing_agents_to_build
+    hg_block = ""
+    hg_path = BASE / "data" / "cortex_hypergraph.json"
+    if hg_path.exists():
+        try:
+            hg = json.loads(hg_path.read_text(encoding="utf-8"))
+            agents_in_cycle = [a["agent"] for a in hg.get("agents_order", [])]
+            isolated = hg.get("isolated_nodes", [])
+            degree = hg.get("node_degree", {})
+            seq = " → ".join(agents_in_cycle[:10]) + ("..." if len(agents_in_cycle) > 10 else "")
+            hg_block = (
+                "── SYSTEM HYPERGRAPH ──\n"
+                f"Agents in execution chain ({len(agents_in_cycle)}): {seq}\n"
+                f"Node degree (follows connections): {json.dumps(degree, ensure_ascii=False)}\n"
+                f"Isolated nodes (zero connectivity, not in chain): {isolated or ['none']}\n"
+                "RULE: Suggest missing_agents_to_build ONLY for nodes in the isolated list above.\n"
+                "Do NOT suggest building agents that already appear in the execution chain.\n"
+                "────────────────────────────────────────────"
+            )
+        except Exception:
+            pass
+
     # Load real global indicators if available this cycle
     gi_block = ""
     gi_path = BASE / "snapshots" / "master" / "global_indicators_latest.json"
@@ -206,6 +228,8 @@ You scanned the ENTIRE CORTEX++_QWEN project. Full context:
 
 {gi_block}
 
+{hg_block}
+
 ── AGENTS NOT IN fast_cycle_runner (missing integrations) ──
 {missing_str}
 
@@ -217,6 +241,11 @@ You scanned the ENTIRE CORTEX++_QWEN project. Full context:
 
 TASK: Analyze EVERYTHING. What is missing? What is broken? What must be built?
 How does this system get closer to the MISSION?
+
+CRITICAL RULE for missing_agents_to_build: ONLY suggest agents whose names appear in
+the "Isolated nodes" list from the SYSTEM HYPERGRAPH above. If isolated list is empty
+or says "none", return an empty array for missing_agents_to_build.
+Do NOT invent agents that already exist in the execution chain.
 
 Return ONLY this JSON:
 {{
