@@ -3,10 +3,10 @@
   "llm_sleep_secs": 10,
   "cycle_mode": "FULL",
   "reasons": [],
-  "health": "HEALTHY",
-  "capacity_pct": 70.3,
+  "health": "MODERATE",
+  "capacity_pct": 61.0,
   "connectivity": "FULL",
-  "cycle_timestamp": "2026-06-20T12:57:32.114415+00:00",
-  "data_freshness": "FRESH",
-  "time_of_day": "MIDDAY"
+  "cycle_timestamp": "2026-06-20T16:24:34.779126+00:00",
+  "data_freshness": "RECENT",
+  "time_of_day": "AFTERNOON"
 }

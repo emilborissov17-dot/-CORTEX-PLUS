@@ -11,8 +11,27 @@
   "action_plan": [],
   "source": "self_observer_problem_solution",
   "created_at": "2026-06-20T09:32:47.110066+00:00",
-  "updated_at": "2026-06-20T12:26:10.144753+00:00",
+  "updated_at": "2026-06-20T16:24:19.201547+00:00",
   "proposal_timestamp": "2026-05-07T10:20:08.774654+00:00",
-  "measurable": false,
-  "progress_reason": "indicator 'cities.roads_paved_pct' has no data in global_indicators"
+  "baseline_value": 50.4875,
+  "baseline_snapshot_at": "2026-06-20T16:24:19.201547+00:00",
+  "current_value": 50.4875,
+  "delta": 0.0,
+  "indicator_label": "Roads, paved (% of total roads)",
+  "indicator_path": "cities.roads_paved_pct",
+  "indicator_direction": "higher",
+  "target_pct": 25.0,
+  "target_value": 63.1094,
+  "current_progress": 0.0,
+  "measured_at": "2026-06-20T16:24:19.201547+00:00",
+  "progress_explanation": {
+    "hypothesis": "Непрекъснатото движение и липсата на поддържане на стари пътища са причинени от ограничените финансови ресурси, което не позволява ефективно поддържане и развитие на пътната инфраструктура. Този фактор води до ниската процентна стойност на асфалтираните пътища.",
+    "root_cause": "Ограничени финансови ресурси за поддържане и развитие на пътната инфраструктура",
+    "suggested_action": "Увеличение на бюджетните средства за поддържане и развитие на пътната инфраструктура чрез създаване на ефективни механизми за събиране и разпределение на фондове",
+    "expected_improvement": "25% увеличение на процентната стойност на асфалтираните пътища в рамките на 5 години",
+    "evidence_strength": "moderate",
+    "hypothesis_id": "causal_cities_roads_paved_pct_20260620_162419",
+    "generated_at": "2026-06-20T16:24:19.201583+00:00",
+    "verification_status": "ACCEPTED"
+  }
 }

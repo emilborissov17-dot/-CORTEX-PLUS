@@ -20,20 +20,24 @@ BASE = pathlib.Path(__file__).resolve().parent.parent.parent
 MODEL = "qwen3:1.7b"
 
 def _groq(prompt: str) -> dict:
-    """Groq llama-3.3-70b — бърз и мощен."""
-    import sys
+    """5-way fallback chain: Groq → Cerebras → OpenRouter → Gemini → Ollama."""
+    import sys, re as _re
     sys.path.insert(0, str(BASE))
     try:
         from core.groq_backend import call_groq
         text = call_groq(prompt, max_tokens=1500)
-        import re
         if "```json" in text:
             text = text.split("```json")[1].split("```")[0].strip()
         elif "```" in text:
             text = text.split("```")[1].split("```")[0].strip()
-        return json.loads(text)
+        try:
+            return json.loads(text)
+        except json.JSONDecodeError as je:
+            print(f"[OPENCLAW] JSON parse failed: {je}")
+            print(f"[OPENCLAW] raw LLM output (first 400 chars): {text[:400]}")
+            return None
     except Exception as e:
-        print(f"[OPENCLAW] Groq failed: {e} — falling back to Ollama")
+        print(f"[OPENCLAW] LLM chain exhausted: {e}")
         return None
 EXCLUDE_DIRS = {"venv", "__pycache__", ".git", "OLD", "LEGACY", ".npm-global"}
 
@@ -281,7 +285,7 @@ def save(result):
     result["axis"] = "OPENCLAW_SOLUTIONS"
     result["source_type"] = "OPENCLAW_FULL_SCAN"
     out_path.write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(f"[OPENCLAW] snapshot → {out_path}")
+    print(f"[OPENCLAW] snapshot -> {out_path}")
     try:
         sys.path.insert(0, str(BASE))
         from memory.semantic_memory import remember
@@ -303,6 +307,8 @@ def run():
     result = synthesize(ctx)
     if "error" in result:
         print(f"[OPENCLAW] LLM error: {result['error']}")
+        result["needs_reanalysis"] = True
+        save(result)   # записва snapshot дори при LLM failure — с флаг needs_reanalysis
         return result
     print(f"[OPENCLAW] health={result.get('system_health')} | mission={result.get('mission_alignment_pct')}% | gaps={len(result.get('critical_gaps',[]))}")
     save(result)
