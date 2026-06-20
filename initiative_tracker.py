@@ -47,6 +47,13 @@ _TIME_RULES: list[tuple[re.Pattern, object]] = [
 _DEFAULT_MONTHS = 6
 _PRIORITY_ORDER = {"HIGH": 0, "MEDIUM": 1, "LOW": 2}
 
+# Valid manual transitions (from → set of allowed to)
+_ALLOWED_TRANSITIONS: dict[str, set[str]] = {
+    "PROPOSED":    {"IN_PROGRESS", "CANCELLED"},
+    "OVERDUE":     {"IN_PROGRESS", "CANCELLED", "DONE"},
+    "IN_PROGRESS": {"DONE", "CANCELLED", "PROPOSED"},
+}
+
 
 def _is_code_action(proposal: dict) -> bool:
     """Return True if proposal generates *_patch.py code — not a civilizational initiative."""
@@ -122,6 +129,77 @@ def _generate_action_plan(problem: str, solution: str, target_date: str) -> list
     return []
 
 
+def _apply_overdue_transitions() -> int:
+    """
+    Scan all PROPOSED initiatives whose target_date has passed and mark them OVERDUE.
+    Returns the number of initiatives transitioned.
+    """
+    if not INITIATIVES_DIR.exists():
+        return 0
+    today = datetime.now(timezone.utc).date()
+    transitioned = 0
+    for f in INITIATIVES_DIR.glob("*.json"):
+        try:
+            rec = json.loads(f.read_text(encoding="utf-8"))
+        except Exception:
+            continue
+        if rec.get("status") != "PROPOSED":
+            continue
+        td = rec.get("target_date", "")
+        if not td:
+            continue
+        try:
+            if datetime.strptime(td, "%Y-%m-%d").date() < today:
+                rec["status"]       = "OVERDUE"
+                rec["overdue_since"] = today.isoformat()
+                rec["updated_at"]   = datetime.now(timezone.utc).isoformat()
+                f.write_text(json.dumps(rec, ensure_ascii=False, indent=2), encoding="utf-8")
+                transitioned += 1
+                print(f"[INITIATIVE_TRACKER] ⚠ OVERDUE: {rec['id']}  ({td})")
+        except ValueError:
+            continue
+    return transitioned
+
+
+def advance_status(init_id: str, new_status: str) -> bool:
+    """
+    Manually advance an initiative to new_status.
+    Enforces _ALLOWED_TRANSITIONS; returns True on success.
+    """
+    init_path = INITIATIVES_DIR / f"{init_id}.json"
+    if not init_path.exists():
+        print(f"[INITIATIVE_TRACKER] Не намерена инициатива: {init_id}")
+        return False
+    try:
+        rec = json.loads(init_path.read_text(encoding="utf-8"))
+    except Exception as e:
+        print(f"[INITIATIVE_TRACKER] Грешка при четене: {e}")
+        return False
+
+    current = rec.get("status", "")
+    new_status = new_status.upper()
+    allowed = _ALLOWED_TRANSITIONS.get(current, set())
+    if new_status not in allowed:
+        print(
+            f"[INITIATIVE_TRACKER] Невалиден преход: {current} → {new_status}\n"
+            f"  Позволени от {current}: {', '.join(sorted(allowed)) or 'няма'}"
+        )
+        return False
+
+    rec["status"]     = new_status
+    rec["updated_at"] = datetime.now(timezone.utc).isoformat()
+    if new_status == "IN_PROGRESS" and not rec.get("started_at"):
+        rec["started_at"] = rec["updated_at"]
+    elif new_status == "DONE":
+        rec["completed_at"] = rec["updated_at"]
+    elif new_status == "CANCELLED":
+        rec["cancelled_at"] = rec["updated_at"]
+
+    init_path.write_text(json.dumps(rec, ensure_ascii=False, indent=2), encoding="utf-8")
+    print(f"[INITIATIVE_TRACKER] ✓ {init_id}: {current} → {new_status}")
+    return True
+
+
 def run() -> list[dict]:
     """
     Process improvement_proposals.json:
@@ -130,6 +208,10 @@ def run() -> list[dict]:
     Returns the current list of PROPOSED + IN_PROGRESS initiatives.
     """
     INITIATIVES_DIR.mkdir(parents=True, exist_ok=True)
+
+    overdue_count = _apply_overdue_transitions()
+    if overdue_count:
+        print(f"[INITIATIVE_TRACKER] {overdue_count} инициатив(и) маркирани като OVERDUE")
 
     try:
         raw       = json.loads(PROPOSALS_PATH.read_text(encoding="utf-8"))
@@ -211,14 +293,14 @@ def run() -> list[dict]:
 
 
 def load_active() -> list[dict]:
-    """Return all PROPOSED and IN_PROGRESS initiatives sorted by priority then target_date."""
+    """Return PROPOSED, OVERDUE, and IN_PROGRESS initiatives sorted by priority then target_date."""
     if not INITIATIVES_DIR.exists():
         return []
     active: list[dict] = []
     for f in INITIATIVES_DIR.glob("*.json"):
         try:
             rec = json.loads(f.read_text(encoding="utf-8"))
-            if rec.get("status") in ("PROPOSED", "IN_PROGRESS"):
+            if rec.get("status") in ("PROPOSED", "IN_PROGRESS", "OVERDUE"):
                 active.append(rec)
         except Exception:
             pass
@@ -228,12 +310,74 @@ def load_active() -> list[dict]:
     )
 
 
-if __name__ == "__main__":
-    initiatives = run()
-    print(f"\nActive initiatives: {len(initiatives)}")
-    for init in initiatives:
+def load_all() -> list[dict]:
+    """Return every initiative regardless of status."""
+    if not INITIATIVES_DIR.exists():
+        return []
+    recs: list[dict] = []
+    for f in INITIATIVES_DIR.glob("*.json"):
+        try:
+            recs.append(json.loads(f.read_text(encoding="utf-8")))
+        except Exception:
+            pass
+    return sorted(recs, key=lambda r: r.get("updated_at", ""), reverse=True)
+
+
+def _print_table(initiatives: list[dict]) -> None:
+    _STATUS_COLOR = {
+        "PROPOSED":    "",
+        "IN_PROGRESS": "",
+        "OVERDUE":     "(!)",
+        "DONE":        "(✓)",
+        "CANCELLED":   "(x)",
+    }
+    for rec in initiatives:
+        status  = rec.get("status", "?")
+        marker  = _STATUS_COLOR.get(status, "")
         line = (
-            f"  [{init['status']:11s}] [{init['priority']:6s}]"
-            f"  {init['milestone'][:70]:<70}  -> {init['target_date']}"
+            f"  {marker}[{status:11s}] [{rec.get('priority','?'):6s}]"
+            f"  {rec['id']}  {rec.get('milestone','')[:60]:<60}"
+            f"  -> {rec.get('target_date','?')}"
         )
-        print(line.encode("ascii", errors="replace").decode("ascii"))
+        print(line)
+
+
+if __name__ == "__main__":
+    import argparse
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+
+    parser = argparse.ArgumentParser(
+        prog="initiative_tracker.py",
+        description="CORTEX++ Initiative Tracker",
+    )
+    sub = parser.add_subparsers(dest="cmd")
+
+    sub.add_parser("run", help="Процесирай proposals и провери OVERDUE (default)")
+    sub.add_parser("list", help="Покажи активни инициативи (PROPOSED / IN_PROGRESS / OVERDUE)")
+    sub.add_parser("list-all", help="Покажи всички инициативи включително DONE / CANCELLED")
+
+    adv = sub.add_parser("advance", help="Ръчно смени статус: advance <id> <NEW_STATUS>")
+    adv.add_argument("id",     help="Initiative ID (напр. init_bd91e92297)")
+    adv.add_argument("status", help=f"Нов статус. Позволени преходи: {_ALLOWED_TRANSITIONS}")
+
+    args = parser.parse_args()
+
+    if args.cmd == "advance":
+        INITIATIVES_DIR.mkdir(parents=True, exist_ok=True)
+        advance_status(args.id, args.status)
+
+    elif args.cmd == "list":
+        items = load_active()
+        print(f"\nАктивни инициативи ({len(items)}):")
+        _print_table(items)
+
+    elif args.cmd == "list-all":
+        items = load_all()
+        print(f"\nВсички инициативи ({len(items)}):")
+        _print_table(items)
+
+    else:
+        # default: run
+        initiatives = run()
+        print(f"\nАктивни: {len(initiatives)}")
+        _print_table(initiatives)
