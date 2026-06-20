@@ -445,12 +445,36 @@ def fetch_cities() -> dict:
         "electricity_access_pct":  _wb_world("EG.ELC.ACCS.ZS"),
         "urban_population_pct":    _wb_world("SP.URB.TOTL.IN.ZS"),
         "urban_growth_annual_pct": _wb_world("SP.URB.GROW"),
-        "roads_paved_pct":         _wb_world("IS.ROD.PAVE.ZS"),
+        # IS.ROD.PAVE.ZS has no WLD aggregate → use cross-country mean
+        "roads_paved_pct":         _wb_global_mean("IS.ROD.PAVE.ZS"),
     }
 
 
 # ---------------------------------------------------------------------------
-# 17. Technology infrastructure — World Bank WDI (no key)
+# 17. Governance — World Bank Worldwide Governance Indicators (WGI, no key)
+# ---------------------------------------------------------------------------
+
+def fetch_governance() -> dict:
+    """
+    World Bank Worldwide Governance Indicators (WGI) — global means.
+    Scale: -2.5 (worst) to +2.5 (best). Country-level estimates; WLD aggregate
+    does not exist, so we compute an unweighted mean across all reporting countries.
+
+    ProACT (World Bank Procurement Analytics) requires WBG login.
+    Open Contracting Partnership (OCDS) has no single public global API —
+    data is per-country (Prozorro, Mercado Público, etc.); no infrastructure
+    deficiency metric is available without authentication.
+    """
+    # WGI uses GOV_WGI_ prefix in the standard v2 API (source ID 3)
+    return {
+        "ge_est": _wb_global_mean("GOV_WGI_GE.EST"),   # Government Effectiveness
+        "cc_est": _wb_global_mean("GOV_WGI_CC.EST"),   # Control of Corruption
+        "rl_est": _wb_global_mean("GOV_WGI_RL.EST"),   # Rule of Law
+    }
+
+
+# ---------------------------------------------------------------------------
+# 18. Technology infrastructure — World Bank WDI (no key)
 # ---------------------------------------------------------------------------
 
 def fetch_tech_infra() -> dict:
@@ -561,6 +585,7 @@ _SECTIONS = [
     ("displaced",    fetch_unhcr,        "UNHCR Population API"),
     ("economy",      fetch_economy,      "World Bank WDI — Economy"),
     ("cities",       fetch_cities,       "World Bank WDI — Cities"),
+    ("governance",   fetch_governance,   "World Bank WGI — Governance"),
     ("tech_infra",   fetch_tech_infra,   "World Bank WDI — Tech Infra"),
     ("ai_activity",  fetch_ai_activity,  "arXiv + Hugging Face Hub"),
     ("media",        fetch_gdelt,        "GDELT DOC 2.0"),
@@ -577,7 +602,7 @@ _SECTIONS = [
 
 def fetch_all() -> dict:
     """Fetch all global indicators. Prints progress. Returns full dict."""
-    print("[GI] Fetching global indicators from 19 sources...")
+    print("[GI] Fetching global indicators from 20 sources...")
     result: dict = {
         "timestamp": datetime.now(timezone.utc).isoformat(),
         "sources":   {},
@@ -712,6 +737,17 @@ def as_prompt_block(ind: dict) -> str:
         )
     if econ.get("gdp_growth_annual_pct") is not None:
         lines.append(f"GDP growth: {econ['gdp_growth_annual_pct']:.2f}% annual")
+
+    # ── Governance (WGI) ─────────────────────────────────────────────────
+    gov = ind.get("governance", {})
+    if gov.get("ge_est") is not None:
+        cc  = f"{gov['cc_est']:+.3f}" if gov.get("cc_est") is not None else "N/A"
+        rl  = f"{gov['rl_est']:+.3f}" if gov.get("rl_est") is not None else "N/A"
+        lines.append(
+            f"Govt Effectiveness (WGI GE.EST): {gov['ge_est']:+.3f}"
+            f"  |  Corruption Control (CC.EST): {cc}"
+            f"  |  Rule of Law (RL.EST): {rl}"
+        )
 
     # ── Infrastructure & cities ───────────────────────────────────────────
     cities = ind.get("cities", {})
