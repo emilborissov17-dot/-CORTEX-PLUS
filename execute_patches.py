@@ -175,56 +175,123 @@ def _request_approval(patch: pathlib.Path, reason: str) -> bool:
         return False
 
 
-def _guardian_preflight(patch: pathlib.Path, env: dict) -> tuple[bool, str]:
+def _guardian_supervised_run(patch: pathlib.Path, env: dict) -> tuple[bool, str, str]:
     """
-    Run PatchGuardian checks BEFORE subprocess.run:
-      1. Syntax  — AST parse via PatchGuardian._check_syntax()
-      2. Backup  — PatchGuardian._make_backup() creates .bak before any execution
-      3. Compile — py_compile in subprocess catches import-level errors without executing
+    Replaces bare subprocess.run with full PatchGuardian pipeline:
 
-    Returns (True, "") if all pass, (False, reason) to skip the patch.
-    If patch_guardian cannot be imported, preflight is skipped with a warning (non-blocking).
+      1. Syntax check  — AST parse of patch script
+      2. Backup        — .bak of patch script before any execution
+      3. Compile       — py_compile (catches bad imports without executing)
+      4. subprocess.run — patch script executes (unavoidable: patches are scripts)
+      5. apply_patch   — for each root-level PATCHABLE_FILE modified by the patch:
+                           restore original → guardian.apply_patch(name, new_code)
+                           → import check + smoke test + auto-rollback on fail
+
+    Returns (success: bool, stdout: str, stderr: str).
+    If patch_guardian cannot be imported → falls back to direct subprocess.run.
     """
+    import asyncio as _asyncio
+    import shutil  as _shutil
+
     try:
-        from patch_guardian import PatchGuardian, PatchResult
+        from patch_guardian import PatchGuardian, PatchResult, PATCHABLE_FILES
     except ImportError as e:
-        print(f"  [GUARDIAN] не може да се импортира: {e} — preflight пропуснат")
-        return True, ""
+        print(f"  [GUARDIAN] import error: {e} — direct run")
+        try:
+            r = subprocess.run([sys.executable, str(patch)], cwd=str(BASE),
+                               capture_output=True, text=True, timeout=30, env=env)
+            return r.returncode == 0, r.stdout, r.stderr
+        except subprocess.TimeoutExpired:
+            return False, "", "timeout"
+        except Exception as ex:
+            return False, "", str(ex)
 
     guardian = PatchGuardian()
     source   = patch.read_text(encoding="utf-8", errors="ignore")
 
     # ── 1. Syntax ─────────────────────────────────────────────────────────────
-    syntax_ok, syntax_err = guardian._check_syntax(source)
-    if not syntax_ok:
-        guardian._save_result(PatchResult(patch.name, False, "syntax", syntax_err))
-        return False, f"СИНТАКСИС ГРЕШКА: {syntax_err}"
-    print(f"  [GUARDIAN] ✔ Синтаксис OK")
+    ok, err = guardian._check_syntax(source)
+    if not ok:
+        guardian._save_result(PatchResult(patch.name, False, "syntax", err))
+        print(f"  [GUARDIAN] ✗ Syntax: {err}")
+        return False, "", f"SYNTAX: {err}"
+    print(f"  [GUARDIAN] ✔ Syntax OK")
 
-    # ── 2. Backup ─────────────────────────────────────────────────────────────
-    backup_path = guardian._make_backup(patch)
-    if not backup_path:
-        return False, "BACKUP НЕУСПЕШЕН — patch пропуснат за безопасност"
-    print(f"  [GUARDIAN] ✔ Backup: {backup_path.name}")
+    # ── 2. Backup patch script ────────────────────────────────────────────────
+    bak = guardian._make_backup(patch)
+    if not bak:
+        return False, "", "BACKUP FAILED"
+    print(f"  [GUARDIAN] ✔ Backup → {bak.name}")
 
-    # ── 3. Compile (py_compile) — no execution, catches bad imports/names ──────
+    # ── 3. Compile ────────────────────────────────────────────────────────────
+    cp = subprocess.run(
+        [sys.executable, "-m", "py_compile", str(patch)],
+        capture_output=True, text=True, timeout=10, cwd=str(BASE), env=env,
+    )
+    if cp.returncode != 0:
+        err = (cp.stderr or cp.stdout).strip()[:200]
+        guardian._save_result(PatchResult(patch.name, False, "compile", err))
+        print(f"  [GUARDIAN] ✗ Compile: {err}")
+        return False, "", f"COMPILE: {err}"
+    print(f"  [GUARDIAN] ✔ Compile OK")
+
+    # ── 4a. Snapshot patchable targets BEFORE execution ───────────────────────
+    # guardian.apply_patch() resolves paths relative to CWD → only root-level files work
+    target_snaps: dict[str, str] = {}
+    for pf in PATCHABLE_FILES:
+        ppath = BASE / pf
+        if ppath.exists() and pf.replace(".py", "") in source:
+            try:
+                target_snaps[pf] = ppath.read_text(encoding="utf-8")
+                print(f"  [GUARDIAN] ✔ Snapshot before: {pf}")
+            except Exception:
+                pass
+
+    # ── 4b. Execute patch script ──────────────────────────────────────────────
     try:
-        cp = subprocess.run(
-            [sys.executable, "-m", "py_compile", str(patch)],
-            capture_output=True, text=True, timeout=10,
-            cwd=str(BASE), env=env,
+        run_result = subprocess.run(
+            [sys.executable, str(patch)],
+            cwd=str(BASE), capture_output=True, text=True, timeout=30, env=env,
         )
-        if cp.returncode != 0:
-            err = (cp.stderr or cp.stdout).strip()[:200]
-            guardian._save_result(PatchResult(patch.name, False, "import", err))
-            return False, f"COMPILE ГРЕШКА: {err}"
-        print(f"  [GUARDIAN] ✔ Compile OK")
     except subprocess.TimeoutExpired:
-        return False, "COMPILE TIMEOUT (>10s)"
-    except Exception as e:
-        return False, f"COMPILE ГРЕШКА: {e}"
+        return False, "", "TIMEOUT"
+    except Exception as ex:
+        return False, "", str(ex)
 
-    return True, ""
+    if run_result.returncode != 0:
+        print(f"  [GUARDIAN] ✗ Execution FAILED (rc={run_result.returncode})")
+        return False, run_result.stdout, run_result.stderr
+    print(f"  [GUARDIAN] ✔ Execution OK")
+
+    # ── 5. apply_patch(target, new_content) for modified patchable files ──────
+    _prev_cwd = os.getcwd()
+    os.chdir(str(BASE))  # guardian uses Path(filename) relative to CWD
+    try:
+        for pf, orig in target_snaps.items():
+            ppath = BASE / pf
+            try:
+                new_content = ppath.read_text(encoding="utf-8")
+            except Exception:
+                continue
+            if new_content == orig:
+                print(f"  [GUARDIAN] {pf} — unchanged (skip)")
+                continue
+            # Restore original so apply_patch gets a clean slate for its own backup
+            ppath.write_text(orig, encoding="utf-8")
+            print(f"  [GUARDIAN] apply_patch({pf}) — import + smoke + rollback gate")
+            try:
+                res = _asyncio.run(guardian.apply_patch(pf, new_content))
+            except Exception as ge:
+                res = PatchResult(pf, False, "exception", str(ge))
+            guardian._save_result(res)
+            if not res.success:
+                print(f"  [GUARDIAN] ✗ apply_patch FAIL [{res.stage}]: {res.error}")
+                return False, run_result.stdout, f"guardian({pf}):{res.stage}:{res.error}"
+            print(f"  [GUARDIAN] ✔ apply_patch OK → {pf} [stage={res.stage}]")
+    finally:
+        os.chdir(_prev_cwd)
+
+    return True, run_result.stdout, ""
 
 
 def run():
@@ -257,55 +324,33 @@ def run():
         else:
             print(f"  ✔  Auto-approved (не пипа чувствителни зони)")
 
-        # ── PatchGuardian preflight: syntax + backup + compile ────────────────
-        preflight_ok, preflight_reason = _guardian_preflight(patch, env)
-        if not preflight_ok:
-            print(f"  ⛔ GUARDIAN FAIL — patch пропуснат: {preflight_reason}")
-            _record(patch.name, False, "", preflight_reason,
-                    score_before, None, levels_before, {})
-            continue
+        # ── PatchGuardian supervised run: syntax+backup+compile+execute+apply_patch
+        ok, stdout, stderr = _guardian_supervised_run(patch, env)
 
-        try:
-            result = subprocess.run(
-                [sys.executable, str(patch)],
-                cwd=str(BASE),
-                capture_output=True,
-                text=True,
-                timeout=30,
-                env=env,
+        if ok:
+            time.sleep(1)
+            levels_after = _compute_levels()
+            score_after  = _avg_score(levels_after)
+
+            verdict, delta, changed = _record(
+                patch.name, True, stdout, "",
+                score_before, score_after, levels_before, levels_after
             )
 
-            if result.returncode == 0:
-                time.sleep(1)
-                levels_after = _compute_levels()
-                score_after  = _avg_score(levels_after)
-
-                verdict, delta, changed = _record(
-                    patch.name, True, result.stdout, "",
-                    score_before, score_after, levels_before, levels_after
-                )
-
-                if verdict == "HARMFUL":
-                    print(f"  ⚠️  HARMFUL (delta={delta}) — запазен за debugging")
-                else:
-                    patch.unlink(missing_ok=True)
-                    ds = f"{delta:+.2f}" if delta is not None else "n/a"
-                    print(f"  ✅ {verdict} | {score_before} → {score_after} (Δ{ds})")
-
-                levels_before = levels_after
-                score_before  = score_after
-
+            if verdict == "HARMFUL":
+                print(f"  ⚠️  HARMFUL (delta={delta}) — запазен за debugging")
             else:
-                print(f"  ❌ FAILED: {result.stderr[:150]}")
-                _record(patch.name, False, result.stdout, result.stderr,
-                        score_before, None, levels_before, {})
+                patch.unlink(missing_ok=True)
+                ds = f"{delta:+.2f}" if delta is not None else "n/a"
+                print(f"  ✅ {verdict} | {score_before} → {score_after} (Δ{ds})")
 
-        except subprocess.TimeoutExpired:
-            print(f"  ⏱ TIMEOUT")
-            _record(patch.name, False, "", "timeout", score_before, None, levels_before, {})
-        except Exception as e:
-            print(f"  ❌ ERROR: {e}")
-            _record(patch.name, False, "", str(e), score_before, None, levels_before, {})
+            levels_before = levels_after
+            score_before  = score_after
+
+        else:
+            print(f"  ⛔ GUARDIAN FAIL: {stderr[:200]}")
+            _record(patch.name, False, stdout, stderr,
+                    score_before, None, levels_before, {})
 
     print(f"\n[PATCH_EXECUTOR] final score = {_avg_score(levels_before)}")
     print(f"[PATCH_EXECUTOR] done at {datetime.now(timezone.utc).isoformat()}")
