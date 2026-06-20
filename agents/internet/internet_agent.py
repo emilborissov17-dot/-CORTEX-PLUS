@@ -576,6 +576,17 @@ def get_transcript(video_id: str, title: str = "", description: str = "") -> dic
         transcript = None
         method = "timeout"
 
+    # Опит 3: Playwright — youtube-transcript.ai (по-бърз от Whisper, без локален модел)
+    if not transcript:
+        try:
+            from youtube_intel import _get_transcript_playwright as _pw
+            transcript = _pw(video_id)
+            if transcript:
+                method = "playwright_web"
+                print(f"    [TRANSCRIPT] {video_id[:11]} OK ({len(transcript)} chars, playwright)")
+        except Exception as _e:
+            print(f"    [TRANSCRIPT-PW] {video_id[:11]} error: {_e}")
+
     # Whisper — извън time_limit (има собствен timeout в subprocess)
     if not transcript:
         transcript = _get_transcript_whisper(video_id)
