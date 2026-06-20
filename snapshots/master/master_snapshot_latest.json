@@ -1,6 +1,6 @@
 {
   "report_type": "MASTER_CIVILIZATION_SNAPSHOT",
-  "timestamp": "2026-06-20T07:36:26.494455+00:00",
+  "timestamp": "2026-06-20T12:09:26.954874+00:00",
   "cycle_type": "FAST_CYCLE",
   "axes_count": 27,
   "axes": [
@@ -34,39 +34,91 @@
   ],
   "snapshots": {
     "BODY_SCAN": {
-      "timestamp": "2026-06-20T07:25:57.017004+00:00",
+      "timestamp": "2026-06-20T12:01:38.995170+00:00",
       "health": "HEALTHY",
-      "capacity_pct": 100,
-      "cpu": {},
-      "ram": {},
-      "disk": {},
-      "network_hw": {},
+      "capacity_pct": 61.4,
+      "cpu": {
+        "percent": 4.6,
+        "count_logical": 16,
+        "count_physical": 8,
+        "freq_mhz": 2555.0,
+        "load_avg_1m": 0.0
+      },
+      "ram": {
+        "total_gb": 14.88,
+        "available_gb": 9.13,
+        "used_gb": 5.75,
+        "percent": 38.6,
+        "swap_used_gb": 3.46,
+        "swap_percent": 7.7
+      },
+      "disk": {
+        "total_gb": 1022.87,
+        "free_gb": 638.99,
+        "percent": 37.5,
+        "read_mb": 1408050.1,
+        "write_mb": 1348082.9
+      },
+      "network_hw": {
+        "bytes_sent_mb": 2582.6,
+        "bytes_recv_mb": 13075.5,
+        "connections": 116
+      },
       "network_latency": {
-        "groq_api": 48.4,
-        "google_dns": 34.0,
-        "worldbank": 40.5,
-        "noaa": 210.8,
+        "groq_api": 33.3,
+        "google_dns": 47.7,
+        "worldbank": 60.2,
+        "noaa": 204.6,
         "reachable_count": 4,
         "connectivity": "FULL"
       },
       "temperatures": {},
-      "battery": {},
+      "battery": {
+        "present": true,
+        "percent": 100,
+        "plugged_in": true,
+        "secs_left": -2
+      },
       "time_context": {
-        "utc_hour": 7,
+        "utc_hour": 12,
         "utc_weekday": "Saturday",
-        "time_of_day": "MORNING",
+        "time_of_day": "MIDDAY",
         "season": "SUMMER",
         "iso_date": "2026-06-20"
       },
       "data_freshness": {
-        "global_indicators": 1.7,
-        "master_snapshot": 1.7,
-        "goal_score": 13.0,
-        "orchestration": 13.0,
-        "oldest_hours": 13.0,
-        "freshness": "STALE"
+        "global_indicators": 0.9,
+        "master_snapshot": 0.1,
+        "goal_score": 0.1,
+        "orchestration": 0.1,
+        "oldest_hours": 0.9,
+        "freshness": "FRESH"
       },
-      "processes": {},
+      "processes": {
+        "total": 203,
+        "top_cpu": [
+          {
+            "name": "System Idle Process",
+            "cpu_pct": 0.0
+          },
+          {
+            "name": "System",
+            "cpu_pct": 0.0
+          },
+          {
+            "name": "",
+            "cpu_pct": 0.0
+          },
+          {
+            "name": "Registry",
+            "cpu_pct": 0.0
+          },
+          {
+            "name": "smss.exe",
+            "cpu_pct": 0.0
+          }
+        ]
+      },
       "llm_backends": {
         "running": true,
         "backend": "groq+gemini",
@@ -80,7 +132,7 @@
       "bottleneck": "NONE",
       "adaptive_directives": {
         "max_parallel_workers": 3,
-        "llm_sleep_secs": 2,
+        "llm_sleep_secs": 10,
         "cycle_mode": "FULL",
         "reasons": []
       },
@@ -119,7 +171,7 @@
         },
         "data_quality": "7/7 indicators fetched"
       },
-      "snapshot_timestamp": "2026-06-20T07:35:26.248378+00:00",
+      "snapshot_timestamp": "2026-06-20T11:34:21.160566+00:00",
       "axis": "ECONOMY_WORK_REVIEW"
     },
     "EDUCATION_CULTURE_REVIEW": {
@@ -152,7 +204,7 @@
         },
         "data_quality": "6/6 fetched"
       },
-      "snapshot_timestamp": "2026-06-20T07:35:36.803667+00:00",
+      "snapshot_timestamp": "2026-06-20T11:34:29.086106+00:00",
       "axis": "EDUCATION_CULTURE_REVIEW"
     },
     "GOVERNANCE_INSTITUTIONS_REVIEW": {
@@ -197,7 +249,7 @@
         "regulatory_quality_weighted_median": -0.096,
         "regulatory_quality_pct_pop_below_minus05": 27.2
       },
-      "snapshot_timestamp": "2026-06-20T07:35:33.411559+00:00",
+      "snapshot_timestamp": "2026-06-20T11:34:26.834118+00:00",
       "axis": "GOVERNANCE_INSTITUTIONS_REVIEW"
     },
     "INEQUALITY_POVERTY_REVIEW": {
@@ -216,7 +268,7 @@
         "income_share_top10": 30.575,
         "income_share_bottom40": 16.8
       },
-      "snapshot_timestamp": "2026-06-20T07:35:28.230589+00:00",
+      "snapshot_timestamp": "2026-06-20T11:34:23.289288+00:00",
       "axis": "INEQUALITY_POVERTY_REVIEW"
     },
     "INFRASTRUCTURE_CITIES_REVIEW": {
@@ -249,7 +301,7 @@
         },
         "data_quality": "6/6 fetched"
       },
-      "snapshot_timestamp": "2026-06-20T07:35:30.232713+00:00",
+      "snapshot_timestamp": "2026-06-20T11:34:25.513006+00:00",
       "axis": "INFRASTRUCTURE_CITIES_REVIEW"
     },
     "TECHNOLOGY_AI_REVIEW": {
@@ -282,7 +334,7 @@
         "data_quality": "5/5 indicators fetched",
         "notes": "R&D spend, high-tech exports, patents, internet security — World Bank proxies for tech/AI axis."
       },
-      "snapshot_timestamp": "2026-06-20T07:35:42.931824+00:00",
+      "snapshot_timestamp": "2026-06-20T11:34:32.868721+00:00",
       "axis": "TECHNOLOGY_AI_REVIEW"
     },
     "TECHNOLOGY_INFRA_REVIEW": {
@@ -315,12 +367,12 @@
         },
         "data_quality": "6/6 fetched"
       },
-      "snapshot_timestamp": "2026-06-20T07:35:40.988037+00:00",
+      "snapshot_timestamp": "2026-06-20T11:34:31.137299+00:00",
       "axis": "TECHNOLOGY_INFRA_REVIEW"
     },
     "CLIMATE_GLOBAL_RISK_REVIEW": {
       "axis": "CLIMATE_GLOBAL_RISK_REVIEW",
-      "timestamp": "2026-06-20T07:35:51.338860+00:00",
+      "timestamp": "2026-06-20T11:34:40.858711+00:00",
       "level": "LOW",
       "signals": [
         "Средните температури остават относително стабилни във времето.",
@@ -356,7 +408,7 @@
         "co2_date": "2026-06-07",
         "co2_annual_mean": 427.35,
         "archive_precipitation_variability": 2.1825398892247443,
-        "forecast_forecast_max_temp_7d": 29.4,
+        "forecast_forecast_max_temp_7d": 29.7,
         "forecast_forecast_heavy_rain_days_7d": 0.0,
         "wb_wb_country_code_mentions": 0.0
       },
@@ -378,32 +430,33 @@
         "data_quality": "static_estimates_2025",
         "notes": "Static estimates — no public real-time API for cosmic resources."
       },
-      "snapshot_timestamp": "2026-06-20T07:36:25.191757+00:00",
+      "snapshot_timestamp": "2026-06-20T11:35:07.488739+00:00",
       "axis": "COSMIC_RESOURCES_REVIEW"
     },
     "DEEP_TIME_RISKS_REVIEW": {
       "error": "Всички LLM backends неуспешни. Последна грешка: None",
       "source_type": "LLM_GENERATED",
-      "snapshot_timestamp": "2026-06-20T07:36:25.592976+00:00",
+      "snapshot_timestamp": "2026-06-20T11:35:07.870158+00:00",
       "axis": "DEEP_TIME_RISKS_REVIEW"
     },
     "GENERAL_SELF_REVIEW": {
       "error": "Всички LLM backends неуспешни. Последна грешка: None",
-      "source_type": "LLM_GENERATED",
-      "snapshot_timestamp": "2026-06-20T07:36:25.792168+00:00",
-      "axis": "GENERAL_SELF_REVIEW"
+      "raw": "",
+      "snapshot_timestamp": "2026-06-20T12:09:26.814302+00:00",
+      "axis": "GENERAL_SELF_REVIEW",
+      "source_type": "LLM_FAST_CYCLE"
     },
     "GOAL_PROGRESS_REVIEW": {
       "error": "Всички LLM backends неуспешни. Последна грешка: None",
-      "source_type": "LLM_GENERATED",
-      "snapshot_timestamp": "2026-06-20T07:36:25.988749+00:00",
-      "axis": "GOAL_PROGRESS_REVIEW"
+      "snapshot_timestamp": "2026-06-20T12:09:26.819520+00:00",
+      "axis": "GOAL_PROGRESS_REVIEW",
+      "source_type": "LLM_FAST_CYCLE"
     },
     "LONG_TERM_FUTURE_REVIEW": {
       "error": "Всички LLM backends неуспешни. Последна грешка: None",
-      "source_type": "LLM_GENERATED",
-      "snapshot_timestamp": "2026-06-20T07:36:25.402148+00:00",
-      "axis": "LONG_TERM_FUTURE_REVIEW"
+      "snapshot_timestamp": "2026-06-20T12:09:26.820246+00:00",
+      "axis": "LONG_TERM_FUTURE_REVIEW",
+      "source_type": "LLM_FAST_CYCLE"
     },
     "SPACE_INFRASTRUCTURE_REVIEW": {
       "source_type": "REAL_DATA",
@@ -421,7 +474,7 @@
         "data_quality": "static_estimates_2025",
         "notes": "Static estimates — real-time space data API TODO (SpaceTrack requires registration)."
       },
-      "snapshot_timestamp": "2026-06-20T07:36:25.191189+00:00",
+      "snapshot_timestamp": "2026-06-20T11:35:07.487989+00:00",
       "axis": "SPACE_INFRASTRUCTURE_REVIEW"
     },
     "COGNITION_LEARNING_REVIEW": {
@@ -439,7 +492,7 @@
         },
         "data_quality": "5/5 fetched"
       },
-      "snapshot_timestamp": "2026-06-20T07:36:18.112892+00:00",
+      "snapshot_timestamp": "2026-06-20T11:35:03.419544+00:00",
       "axis": "COGNITION_LEARNING_REVIEW"
     },
     "CULTURE_MEDIA_REVIEW": {
@@ -458,7 +511,7 @@
         },
         "data_quality": "6/6 indicators fetched"
       },
-      "snapshot_timestamp": "2026-06-20T07:36:16.411875+00:00",
+      "snapshot_timestamp": "2026-06-20T11:35:01.550474+00:00",
       "axis": "CULTURE_MEDIA_REVIEW"
     },
     "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL": {
@@ -477,7 +530,7 @@
         },
         "data_quality": "2/6 fetched"
       },
-      "snapshot_timestamp": "2026-06-20T07:36:25.105559+00:00",
+      "snapshot_timestamp": "2026-06-20T11:35:07.405627+00:00",
       "axis": "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL"
     },
     "HUMAN_WELL_BEING_REVIEW": {
@@ -497,7 +550,7 @@
         },
         "data_quality": "7/7 indicators fetched"
       },
-      "snapshot_timestamp": "2026-06-20T07:36:14.457288+00:00",
+      "snapshot_timestamp": "2026-06-20T11:34:59.366281+00:00",
       "axis": "HUMAN_WELL_BEING_REVIEW"
     },
     "SOCIAL_RELATIONS_REVIEW": {
@@ -515,7 +568,7 @@
         },
         "data_quality": "2/5 fetched"
       },
-      "snapshot_timestamp": "2026-06-20T07:36:21.131393+00:00",
+      "snapshot_timestamp": "2026-06-20T11:35:05.198692+00:00",
       "axis": "SOCIAL_RELATIONS_REVIEW"
     },
     "OPENCLAW_SOLUTIONS": {
@@ -580,7 +633,7 @@
     },
     "ECOSYSTEMS_BIODIVERSITY_REVIEW": {
       "axis": "ECOSYSTEMS_BIODIVERSITY_REVIEW",
-      "timestamp": "2026-06-20T07:36:10.048392+00:00",
+      "timestamp": "2026-06-20T11:34:55.530133+00:00",
       "level": "MEDIUM",
       "signals": [],
       "key_metrics": [],
@@ -592,14 +645,14 @@
         "marine_protected_area_pct": 17.4641679954692,
         "threatened_mammal_species": 3434.0,
         "co2_ppm_mauna_loa": 432.15,
-        "species_observations_30d_gbif": 2656172
+        "species_observations_30d_gbif": 2656431
       },
       "data_quality": "6/6 indicators fetched",
       "fetched_date": "2026-06-20"
     },
     "ENERGY_REVIEW": {
       "axis": "ENERGY_REVIEW",
-      "timestamp": "2026-06-20T07:35:54.716306+00:00",
+      "timestamp": "2026-06-20T11:34:44.088482+00:00",
       "level": "MEDIUM",
       "signals": [],
       "key_metrics": [],
@@ -618,7 +671,7 @@
     },
     "FOOD_REVIEW": {
       "axis": "FOOD_REVIEW",
-      "timestamp": "2026-06-20T07:36:02.619989+00:00",
+      "timestamp": "2026-06-20T11:34:48.404247+00:00",
       "level": "MEDIUM",
       "signals": [],
       "key_metrics": [],
@@ -637,7 +690,7 @@
     },
     "MATERIALS_WASTE_REVIEW": {
       "axis": "MATERIALS_WASTE_REVIEW",
-      "timestamp": "2026-06-20T07:36:06.267325+00:00",
+      "timestamp": "2026-06-20T11:34:51.945588+00:00",
       "level": "MEDIUM",
       "signals": [],
       "key_metrics": [],
@@ -656,7 +709,7 @@
     },
     "PLANETARY_POTENTIAL_REVIEW": {
       "axis": "PLANETARY_POTENTIAL_REVIEW",
-      "timestamp": "2026-06-20T07:36:10.049133+00:00",
+      "timestamp": "2026-06-20T11:34:55.530910+00:00",
       "level": "MEDIUM",
       "signals": [],
       "key_metrics": [],
@@ -668,7 +721,7 @@
     },
     "WATER_REVIEW": {
       "axis": "WATER_REVIEW",
-      "timestamp": "2026-06-20T07:35:58.852182+00:00",
+      "timestamp": "2026-06-20T11:34:46.271566+00:00",
       "level": "MEDIUM",
       "signals": [],
       "key_metrics": [],

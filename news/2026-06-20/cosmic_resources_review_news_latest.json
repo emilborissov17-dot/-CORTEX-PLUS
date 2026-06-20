@@ -1,6 +1,6 @@
 {
   "axis": "COSMIC_RESOURCES_REVIEW",
-  "fetched_at": "2026-06-20T07:34:42.463448+00:00",
+  "fetched_at": "2026-06-20T12:21:14.917382+00:00",
   "smart_query": "asteroid mining space resources",
   "sources_count": {
     "wiki": 0,
@@ -30,11 +30,11 @@
       "source": "GitHub"
     },
     {
-      "title": "tretoef-estrella/THE-ASTEROID-BELT-PROTOCOL",
-      "snippet": "A proposal from humanity to future ASI: expand into space, not Earth. Physics, data, and an extended hand. Part of Proyecto Estrella.",
+      "title": "JLmam5969/solaris-open",
+      "snippet": "AI that repairs itself from astroid dust. No proprietary Earth only elements. Open Source",
       "stars": 0,
-      "url": "https://github.com/tretoef-estrella/THE-ASTEROID-BELT-PROTOCOL",
-      "updated": "2026-01-27",
+      "url": "https://github.com/JLmam5969/solaris-open",
+      "updated": "2025-11-11",
       "source": "GitHub"
     }
   ],
@@ -56,37 +56,37 @@
   "wiki": null,
   "youtube_items": [
     {
-      "title": "[YT] Unlimited Resources From Space – Asteroid Mining",
-      "summary": "[DESCRIPTION FALLBACK] Get Merch designed with ❤ from https://kgs.link/shop-127 Join the Patreon Bird Army https://kgs.link/patreon ▽▽ More infos ...",
+      "title": "[YT] YouTube:y8XvQNt26KI",
+      "summary": "ah casually watching a video on YouTube on a computer more powerful than anything Humanity could build a few decades ago this progress and all the wonderful machines you take for granted are built on a few rare and precious materials with names like turum neodymium or tantalum getting these rare materials from the ground into your devices is ugly the mining industry is responsible for air and water pollution and the destruction of entire Landscapes dangerous chemicals like cyanide sulfuric acid or chlorine are used to extract the resources harming biodiversity workers and locals and rare resources are also political tools when countries restrict access to them to get their way but what if we could replace the mining industry on Earth with a clean process that can't harm anyone well we can ",
       "link": "https://www.youtube.com/watch?v=y8XvQNt26KI",
       "source_type": "youtube",
-      "channel": "Kurzgesagt – In a Nutshell",
+      "channel": "",
       "video_id": "y8XvQNt26KI",
-      "transcript_method": "description",
-      "transcript_chars": 149,
-      "has_full_transcript": false
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1172,
+      "has_full_transcript": true
     },
     {
-      "title": "[YT] Everyone is Wrong About Asteroid Mining",
-      "summary": "[DESCRIPTION FALLBACK] Sign up for the weekly Space Race newsletter here: https://www.thespacerace.news/subscribe Last Video: This Asteroid Is A ...",
-      "link": "https://www.youtube.com/watch?v=p3hlnL2JN8E",
+      "title": "[YT] YouTube:0l5Sv54pgYI",
+      "summary": "From the moon to the asteroids, [music] the race for space resources could spark the greatest economic boom in human the greatest economic boom in human history. Why mine in space? When we think about mining, our instinct is [music] to picture hard hats and tunnels. But the truth is that Earth is a planet that we've already dug deep. There's plenty more, though. Earth out masses our moon, every other moon, Mars, Mercury, and the entire asteroid belt combined. On Earth, the easy near surface veins of gold, silver, and copper were tapped centuries ago, and every year we're chasing ores that are lower in concentration, harder to reach, and more destructive to the environment to extract. Mining remains one of the most polluting and energyintensive industries [music] on the planet, and the cost",
+      "link": "https://www.youtube.com/watch?v=0l5Sv54pgYI",
       "source_type": "youtube",
-      "channel": "The Space Race",
-      "video_id": "p3hlnL2JN8E",
-      "transcript_method": "description",
-      "transcript_chars": 148,
-      "has_full_transcript": false
+      "channel": "",
+      "video_id": "0l5Sv54pgYI",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1223,
+      "has_full_transcript": true
     },
     {
-      "title": "[YT] Asteroid Mining: How Would It Actually Work? [Part 1]",
-      "summary": "[DESCRIPTION FALLBACK] Asteroid mining could unlock unimaginable riches—trillions in gold, platinum, and more—but pulling it off means overcoming ...",
-      "link": "https://www.youtube.com/watch?v=MkpAsSf2bJs",
+      "title": "[YT] YouTube:uo4uGd93lLQ",
+      "summary": "How will asteroid mining build space How will asteroid mining build space infrastructure? Imagine a future where the vastness of space is not just a destination, but a thriving hub of activity. That future is closer than you think, thanks to asteroid mining. This process involves extracting valuable resources from space rocks floating in the solar system. These resources include water, metals like iron and nickel, and rare materials such as platinum group metals. These materials are essential for building and maintaining space stations, habitats and maintaining space stations, habitats and spacecraft. One of the biggest advantages of asteroid mining is in situ resource utilization. This means using materials found in space instead of bringing everything from earth. For example, water mined",
+      "link": "https://www.youtube.com/watch?v=uo4uGd93lLQ",
       "source_type": "youtube",
-      "channel": "Celestium",
-      "video_id": "MkpAsSf2bJs",
-      "transcript_method": "description",
-      "transcript_chars": 149,
-      "has_full_transcript": false
+      "channel": "",
+      "video_id": "uo4uGd93lLQ",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1221,
+      "has_full_transcript": true
     }
   ],
   "summary": "[arXiv]\n- Shape, Orientation and Colors Combined approach for Asteroids (SOCCA)\n- Simultaneous Tricolor Video Observations of Three Tiny Near-Earth Asteroids with Sub-Minute Rotation Periods\n\n[GitHub]",

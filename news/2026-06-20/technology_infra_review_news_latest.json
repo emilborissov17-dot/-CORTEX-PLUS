@@ -1,6 +1,6 @@
 {
   "axis": "TECHNOLOGY_INFRA_REVIEW",
-  "fetched_at": "2026-06-20T07:33:38.041847+00:00",
+  "fetched_at": "2026-06-20T11:25:26.717480+00:00",
   "smart_query": "technology internet digital access",
   "sources_count": {
     "wiki": 0,
@@ -16,7 +16,7 @@
     {
       "title": "doocs/advanced-java",
       "snippet": "😮 Core Interview Questions & Answers For Experienced Java(Backend) Developers | 互联网 Java 工程师进阶知识完全扫盲：涵盖高并发、分布式、高可用、微服务、海量数据处理等领域知识",
-      "stars": 78991,
+      "stars": 78990,
       "url": "https://github.com/doocs/advanced-java",
       "updated": "2026-06-20",
       "source": "GitHub"
@@ -24,7 +24,7 @@
     {
       "title": "redis/redis",
       "snippet": "For developers, who are building real-time data-driven applications, Redis is the preferred, fastest, and most feature-rich cache, data structure server, and document and vector query engine.",
-      "stars": 74996,
+      "stars": 74997,
       "url": "https://github.com/redis/redis",
       "updated": "2026-06-20",
       "source": "GitHub"
@@ -32,7 +32,7 @@
     {
       "title": "binhnguyennus/awesome-scalability",
       "snippet": "The Patterns of Scalable, Reliable, and Performant Large-Scale Systems",
-      "stars": 71907,
+      "stars": 71914,
       "url": "https://github.com/binhnguyennus/awesome-scalability",
       "updated": "2026-06-20",
       "source": "GitHub"

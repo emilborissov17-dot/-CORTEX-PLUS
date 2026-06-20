@@ -1,65 +1,76 @@
 {
   "axis": "GOAL_PROGRESS_REVIEW",
   "domain": "cosmos",
-  "timestamp": "2026-06-20T07:26:31.681624+00:00",
+  "timestamp": "2026-06-20T09:18:52.392354+00:00",
   "sources_count": 8,
   "rss_count": 5,
   "ddg_count": 0,
   "youtube_count": 3,
   "youtube_items": [
     {
-      "title": "[YT] How We Can Make the World a Better Place by 2030 | Michael Green | TED Talks",
-      "summary": "[DESCRIPTION FALLBACK] Can we end hunger and poverty, halt climate change and achieve gender equality in the next 15 years? The governments of the ...",
-      "link": "https://www.youtube.com/watch?v=o08ykAqLOxk",
-      "published": "2015-11-03T16:33:59Z",
+      "title": "[YT] MIT Study Reveals Why Africa Is Still Poor",
+      "summary": "[DESCRIPTION FALLBACK] Africa is the poorest continent in the world. There are, as always, a lot of factors to consider as to why that is the case, but recently ...",
+      "link": "https://www.youtube.com/watch?v=1k8TXQWVsoI",
+      "published": "2024-02-27T14:02:39Z",
       "source_type": "youtube",
-      "channel": "TED",
-      "video_id": "o08ykAqLOxk",
+      "channel": "Economics Explained",
+      "video_id": "1k8TXQWVsoI",
       "transcript_method": "description",
-      "transcript_chars": 150,
+      "transcript_chars": 164,
       "has_full_transcript": false
     },
     {
-      "title": "[YT] Sustainable Development Goals (SDGs) Explained: 2026 Reality Check",
-      "summary": "[DESCRIPTION FALLBACK] With only 4 years left until the 2030 deadline, the UN Sustainable Development Goals remain the global framework for ...",
-      "link": "https://www.youtube.com/watch?v=qfOgdj4Okdw",
-      "published": "2020-11-20T16:37:01Z",
+      "title": "[YT] The Problem with Solar Energy in Africa",
+      "summary": "[DESCRIPTION FALLBACK] Be one of the first 500 people to sign up with this link and get 20% off your subscription with Brilliant.org: ...",
+      "link": "https://www.youtube.com/watch?v=7OpM_zKGE4o",
+      "published": "2021-10-23T15:00:08Z",
       "source_type": "youtube",
-      "channel": "Sustainability Illustrated",
-      "video_id": "qfOgdj4Okdw",
+      "channel": "Real Engineering",
+      "video_id": "7OpM_zKGE4o",
       "transcript_method": "description",
-      "transcript_chars": 143,
+      "transcript_chars": 137,
       "has_full_transcript": false
     },
     {
-      "title": "[YT] Stocktaking | What it will take to achieve the Sustainable Development Goals? | United Nations",
-      "summary": "[DESCRIPTION FALLBACK] We're at the halftime mark to achieve the Sustainable Development Goals, but we're down at halftime. The 2023 SDG Progress ...",
-      "link": "https://www.youtube.com/watch?v=enGJyhu6Xr0",
-      "published": "2023-09-17T15:00:33Z",
+      "title": "[YT] Why Europe Suddenly Wants a Stronger Lebanon",
+      "summary": "[DESCRIPTION FALLBACK] Why is the European Union quietly shifting its military strategy in the Middle East? This video uncovers the structural reality behind ...",
+      "link": "https://www.youtube.com/watch?v=yLHKZAA0Rrs",
+      "published": "2026-06-18T15:00:38Z",
       "source_type": "youtube",
-      "channel": "United Nations",
-      "video_id": "enGJyhu6Xr0",
+      "channel": "Europe Unpacked",
+      "video_id": "yLHKZAA0Rrs",
       "transcript_method": "description",
-      "transcript_chars": 149,
+      "transcript_chars": 161,
       "has_full_transcript": false
     }
   ],
   "analysis": {
-    "problem": "Анализ на GOAL_PROGRESS_REVIEW — данни получени но LLM грешка",
-    "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: Gemini rate limit",
-    "severity": "UNKNOWN",
-    "leverage_points": [],
-    "proposed_actions": [],
-    "evidence": [
-      "Fermentation, flavour and the future of food: Making sustainability delicious",
-      "Ebola treatment capacity expands in DR Congo as WHO issues new guidelines",
-      "‘Some question if Ebola is real’: how trust is central in fighting DRC outbreak"
+    "problem": "Lack of trust in healthcare systems hindering effective disease outbreak response",
+    "root_cause": "Insufficient community engagement and education leading to mistrust in healthcare authorities",
+    "severity": "MEDIUM",
+    "leverage_points": [
+      "World Health Organization (WHO) and local health authorities",
+      "Community leaders and influencers"
     ],
-    "generalization": "",
-    "summary": "- Fermentation, flavour and the future of food: Making sustainability delicious: <p>Words like “sustainability” and “healthy” shouldn’t take the joy out of eating. As elite chef Jaume Biarnés has been",
-    "risk_level": "UNKNOWN",
-    "trend": "UNKNOWN",
-    "llm_raw": ""
+    "proposed_actions": [
+      {
+        "action": "Implement community-based health education programs",
+        "measurable_goal": "Increase community participation in health initiatives by 30% within 6 months",
+        "timeframe": "medium-term"
+      },
+      {
+        "action": "Establish transparent communication channels between healthcare authorities and local communities",
+        "measurable_goal": "Reduce misinformation about diseases by 25% within 3 months",
+        "timeframe": "short-term"
+      }
+    ],
+    "evidence": [
+      "Some question if Ebola is real: how trust is central in fighting DRC outbreak",
+      "Winning the race against the disease requires earning the community’s trust first and foremost"
+    ],
+    "generalization": "This problem connects to the domain of Civilization, as it highlights the importance of social cohesion and trust in institutions for effective disease response, and to the domain of Planet, as it affects the health and well-being of communities",
+    "summary": "Lack of trust in healthcare systems is hindering effective disease outbreak response, and community-based health education and transparent communication can help address this issue",
+    "risk_level": "MEDIUM"
   },
   "raw_items": [
     {
@@ -98,39 +109,39 @@
       "source_type": "rss"
     },
     {
-      "title": "[YT] How We Can Make the World a Better Place by 2030 | Michael Green | TED Talks",
-      "summary": "[DESCRIPTION FALLBACK] Can we end hunger and poverty, halt climate change and achieve gender equality in the next 15 years? The governments of the ...",
-      "link": "https://www.youtube.com/watch?v=o08ykAqLOxk",
-      "published": "2015-11-03T16:33:59Z",
+      "title": "[YT] MIT Study Reveals Why Africa Is Still Poor",
+      "summary": "[DESCRIPTION FALLBACK] Africa is the poorest continent in the world. There are, as always, a lot of factors to consider as to why that is the case, but recently ...",
+      "link": "https://www.youtube.com/watch?v=1k8TXQWVsoI",
+      "published": "2024-02-27T14:02:39Z",
       "source_type": "youtube",
-      "channel": "TED",
-      "video_id": "o08ykAqLOxk",
+      "channel": "Economics Explained",
+      "video_id": "1k8TXQWVsoI",
       "transcript_method": "description",
-      "transcript_chars": 150,
+      "transcript_chars": 164,
       "has_full_transcript": false
     },
     {
-      "title": "[YT] Sustainable Development Goals (SDGs) Explained: 2026 Reality Check",
-      "summary": "[DESCRIPTION FALLBACK] With only 4 years left until the 2030 deadline, the UN Sustainable Development Goals remain the global framework for ...",
-      "link": "https://www.youtube.com/watch?v=qfOgdj4Okdw",
-      "published": "2020-11-20T16:37:01Z",
+      "title": "[YT] The Problem with Solar Energy in Africa",
+      "summary": "[DESCRIPTION FALLBACK] Be one of the first 500 people to sign up with this link and get 20% off your subscription with Brilliant.org: ...",
+      "link": "https://www.youtube.com/watch?v=7OpM_zKGE4o",
+      "published": "2021-10-23T15:00:08Z",
       "source_type": "youtube",
-      "channel": "Sustainability Illustrated",
-      "video_id": "qfOgdj4Okdw",
+      "channel": "Real Engineering",
+      "video_id": "7OpM_zKGE4o",
       "transcript_method": "description",
-      "transcript_chars": 143,
+      "transcript_chars": 137,
       "has_full_transcript": false
     },
     {
-      "title": "[YT] Stocktaking | What it will take to achieve the Sustainable Development Goals? | United Nations",
-      "summary": "[DESCRIPTION FALLBACK] We're at the halftime mark to achieve the Sustainable Development Goals, but we're down at halftime. The 2023 SDG Progress ...",
-      "link": "https://www.youtube.com/watch?v=enGJyhu6Xr0",
-      "published": "2023-09-17T15:00:33Z",
+      "title": "[YT] Why Europe Suddenly Wants a Stronger Lebanon",
+      "summary": "[DESCRIPTION FALLBACK] Why is the European Union quietly shifting its military strategy in the Middle East? This video uncovers the structural reality behind ...",
+      "link": "https://www.youtube.com/watch?v=yLHKZAA0Rrs",
+      "published": "2026-06-18T15:00:38Z",
       "source_type": "youtube",
-      "channel": "United Nations",
-      "video_id": "enGJyhu6Xr0",
+      "channel": "Europe Unpacked",
+      "video_id": "yLHKZAA0Rrs",
       "transcript_method": "description",
-      "transcript_chars": 149,
+      "transcript_chars": 161,
       "has_full_transcript": false
     }
   ]

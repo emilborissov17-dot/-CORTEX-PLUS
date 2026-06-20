@@ -1,16 +1,39 @@
 {
-  "timestamp": "2026-06-20T07:36:26Z",
+  "timestamp": "2026-06-20T11:53:46Z",
   "attention": {
-    "priority_axes": [],
-    "main_threat": "WATER_REVIEW (xrisk=0.00)",
-    "main_opportunity": "WATER_REVIEW",
-    "immediate_action": "Collect more real data",
-    "reasoning": "Rule-based AMP (xrisk + progress + trend)",
-    "method": "rule-based"
+    "priority_axes": [
+      "ENVIRONMENTAL_SUSTAINABILITY",
+      "RESOURCE_MANAGEMENT",
+      "GLOBAL_COOPERATION"
+    ],
+    "main_threat": "WATER_SCARCITY",
+    "main_opportunity": "WATER_CONSERVATION_TECHNOLOGIES",
+    "immediate_action": "CONDUCT_THOROUGH_WATER_REVIEW",
+    "reasoning": "The priority axes are critical because they directly impact the availability and management of water resources, which is essential for human survival and sustainable civilization. Water scarcity poses a significant threat to global food security, human health, and economic stability. On the other hand, water conservation technologies offer a substantial opportunity for reducing waste, increasing efficiency, and promoting sustainable practices. Conducting a thorough water review is essential to identify areas of improvement, optimize resource allocation, and mitigate the risks associated with water scarcity.",
+    "method": "llm-enriched"
   },
   "strategic_plan": {
-    "plan_24h": [],
-    "key_insight": "Focus on data collection",
+    "plan_24h": [
+      {
+        "axis": "ENVIRONMENTAL_SUSTAINABILITY",
+        "action": "Collect real metrics for ENVIRONMENTAL_SUSTAINABILITY",
+        "lever": "data_providers",
+        "allies": []
+      },
+      {
+        "axis": "RESOURCE_MANAGEMENT",
+        "action": "Collect real metrics for RESOURCE_MANAGEMENT",
+        "lever": "data_providers",
+        "allies": []
+      },
+      {
+        "axis": "GLOBAL_COOPERATION",
+        "action": "Collect real metrics for GLOBAL_COOPERATION",
+        "lever": "data_providers",
+        "allies": []
+      }
+    ],
+    "key_insight": "Focus on ENVIRONMENTAL_SUSTAINABILITY",
     "civilization_impact": "NEUTRAL",
     "next_evolution_step": "Improve real data coverage for priority axes",
     "method": "rule-based-fallback"

@@ -1,7 +1,7 @@
 {
   "axis": "HUMAN_WELL_BEING_REVIEW",
   "domain": "human",
-  "timestamp": "2026-06-20T05:36:59.464503+00:00",
+  "timestamp": "2026-06-20T12:03:49.000465+00:00",
   "sources_count": 11,
   "rss_count": 8,
   "ddg_count": 0,
@@ -9,68 +9,57 @@
   "youtube_items": [
     {
       "title": "[YT] Inside The AI Race: DeepMind, OpenAI, Anthropic, China, and The Race to Superintelligence",
-      "summary": "[DESCRIPTION FALLBACK] Sebastian Mallaby is the Paul A. Volcker senior fellow for international economics at the Council on Foreign Relations, a two-time Pulitzer Prize finalist, and the author of six books, including More Money Than God, The Power Law, The Man Who Knew, and The World's Banker. His latest book is The Infinity Machine: Demis Hassabis, DeepMind, and the Quest for Superintelligence.\n\nThis episode is brought to you by:\nEight Sleep Pod Cover 5 sleeping solution for dynamic cooling and heating: https://Eigh",
+      "summary": "I began by thinking, of course, AI is going to be smarter than us, but it doesn't have an incentive to attack us. And then one day, I go visit Jeff Hinton, the academic father of deep learning who lives in Toronto. I said, \"Look, Jeff, why are you so depressed?\" And he says, \"Okay, here's a thought experiment. You have an AI. It's very powerful, but you're worried that there's a Russian AI or a Chinese AI. It's going to come and attack your AI. So, you're going to empower your own AI to watch out for the attack. And when the attack is coming, defend yourself or maybe counterattack. Whatever you do, make sure you survive. Oh, survive. There you have it. Now you feeling comfortable, Sebastian. Right. You've just given the machine a survival just given the machine a survival instinct. &gt;&gt",
       "link": "https://www.youtube.com/watch?v=-UetKKxKqKU",
       "published": "2026-06-17T23:07:09+00:00",
       "source_type": "youtube",
       "channel": "Tim Ferriss",
       "video_id": "-UetKKxKqKU",
-      "transcript_method": "description",
-      "transcript_chars": 523,
-      "has_full_transcript": false
+      "transcript_method": "playwright_web",
+      "transcript_chars": 966,
+      "has_full_transcript": true
     },
     {
       "title": "[YT] The Path from The Soviet Union to Building Multi-Billion Dollar Companies — Max Levchin",
-      "summary": "[DESCRIPTION FALLBACK] Max Levchin is a serial entrepreneur and investor in 100+ startups. He's the founder and CEO of Affirm, the payment network powering consumer purchases and merchant growth. An original PayPal co-founder, Max served as CTO until its 2002 acquisition by eBay.\n\nThis episode is brought to you by:\n\nProLon: science-backed Fasting Mimicking Diet that helps activate cellular renewal through fasting, while still eating nourishing meals: https://ProlonLife.com/Tim\nMonarch track, budget, plan, and do more ",
+      "summary": "I was asking myself actually a question like why is our relationship as good as it is and it is really good and is there anything to learn about co-ounding companies like you're co-ounding a family when you marry someone you get together with someone I've had many co-founders over the years and some were amazing relationships and others didn't work out and it's always tempting to sort of blame yourself but you obviously have to examine it through the lens of like what fell apart as a relationship between two co-founders and I realized that the secret for my marriage is I'm still trying to impress this girl. Every day I roll out of bed thinking like one like how did I get this? This is definitely better than I should have gotten. So, the attempt to impress your mate on a daily basis is the ",
       "link": "https://www.youtube.com/watch?v=uOjgVxOfxXo",
       "published": "2026-06-10T21:41:36+00:00",
       "source_type": "youtube",
       "channel": "Tim Ferriss",
       "video_id": "uOjgVxOfxXo",
-      "transcript_method": "description",
-      "transcript_chars": 523,
-      "has_full_transcript": false
+      "transcript_method": "playwright_web",
+      "transcript_chars": 949,
+      "has_full_transcript": true
     },
     {
       "title": "[YT] Reimagining Biotech with Jake Becraft of Strand Therapeutics — Tim’s Founder Kitchen",
-      "summary": "[DESCRIPTION FALLBACK] Jake Becraft is the CEO and co-founder of Strand Therapeutics, a company building one of the most advanced programmable genetic medicine platforms in biotechnology. Under his leadership, Strand is redefining what RNA medicines can do by enabling cell-selective targeting and therapeutic payload delivery inside the body, unlocking a new class of precision genetic therapies.\n\nThis episode is brought to you by:\n\nHelix Sleep premium mattresses: https://HelixSleep.com/Tim (20% off any purchase)\nIncogn",
+      "summary": "What we are in the midst of right now is the United States massively losing to China. China has built an industrialized version of clinical trial infrastructure for first- inhuman trials that is so efficient and massively quick that they're just able to go faster and cheaper into the thing that matters most, which is first in human trials. What started as a place for American companies to come run clinical trials to get data and then take it to the FDA and then do larger trials in the United States has now created a flywheel structure within China where now just Chinese companies run their clinical trials faster than the American companies and then bring their Chinese discovered drugs to the United States. And what happens is the capital flow the risk capital then says ah these companies a",
       "link": "https://www.youtube.com/watch?v=mZ-vJ6kDRD0",
       "published": "2026-06-02T22:03:59+00:00",
       "source_type": "youtube",
       "channel": "Tim Ferriss",
       "video_id": "mZ-vJ6kDRD0",
-      "transcript_method": "description",
-      "transcript_chars": 523,
-      "has_full_transcript": false
+      "transcript_method": "playwright_web",
+      "transcript_chars": 939,
+      "has_full_transcript": true
     }
   ],
   "analysis": {
-    "problem": "Many people still lack access to safe blood supplies globally",
-    "root_cause": "Persistent inequalities in access to healthcare and weaknesses in government policies",
-    "severity": "MEDIUM",
-    "leverage_points": [
-      "World Health Organization (WHO) and national healthcare systems",
-      "Government policies and regulations on blood donations"
-    ],
-    "proposed_actions": [
-      {
-        "action": "Implementing nationwide blood donation awareness campaigns",
-        "measurable_goal": "Increase voluntary blood donations by 10% within the next 6 months",
-        "timeframe": "short-term"
-      },
-      {
-        "action": "Strengthening healthcare infrastructure in underserved areas",
-        "measurable_goal": "Reduce the gap in access to safe blood supplies by 20% within the next 2 years",
-        "timeframe": "medium-term"
-      }
-    ],
+    "problem": "Анализ на HUMAN_WELL_BEING_REVIEW — данни получени но LLM грешка",
+    "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: None",
+    "severity": "UNKNOWN",
+    "leverage_points": [],
+    "proposed_actions": [],
     "evidence": [
-      "New data from the World Health Organization (WHO) show sustained progress towards safer blood supplies globally but also highlight persistent inequalities in access to safe blood and weaknesses in government policies",
-      "Voluntary donations exceed 85%, but many people still lack access"
+      "WHO issues comprehensive guidelines on filovirus disease, including Ebola and Marburg disease",
+      "Open letter to leaders of G7, G20, BRICS and all nations on finalizing the WHO Pandemic Agreement’s Pathogen Access and Benefit Sharing annex",
+      "Safe blood supply improves as voluntary donations exceed 85%, but many people still lack access"
     ],
-    "generalization": "This problem connects to the domain of Civilization, as access to safe blood supplies is a fundamental aspect of a functioning healthcare system, which is a critical component of a sustainable civilization",
-    "summary": "Many people lack access to safe blood supplies globally due to persistent inequalities and weaknesses in government policies, requiring immediate attention and action from the WHO and national healthcare systems.",
-    "risk_level": "MEDIUM"
+    "generalization": "",
+    "summary": "- WHO issues comprehensive guidelines on filovirus disease, including Ebola and Marburg disease: As the Democratic Republic of the Congo is battling an Ebola disease outbreak caused by the Bundibugyo ",
+    "risk_level": "UNKNOWN",
+    "trend": "UNKNOWN",
+    "llm_raw": ""
   },
   "raw_items": [
     {
@@ -131,27 +120,27 @@
     },
     {
       "title": "[YT] Inside The AI Race: DeepMind, OpenAI, Anthropic, China, and The Race to Superintelligence",
-      "summary": "[DESCRIPTION FALLBACK] Sebastian Mallaby is the Paul A. Volcker senior fellow for international economics at the Council on Foreign Relations, a two-time Pulitzer Prize finalist, and the author of six books, including More Money Than God, The Power Law, The Man Who Knew, and The World's Banker. His latest book is The Infinity Machine: Demis Hassabis, DeepMind, and the Quest for Superintelligence.\n\nThis episode is brought to you by:\nEight Sleep Pod Cover 5 sleeping solution for dynamic cooling and heating: https://Eigh",
+      "summary": "I began by thinking, of course, AI is going to be smarter than us, but it doesn't have an incentive to attack us. And then one day, I go visit Jeff Hinton, the academic father of deep learning who lives in Toronto. I said, \"Look, Jeff, why are you so depressed?\" And he says, \"Okay, here's a thought experiment. You have an AI. It's very powerful, but you're worried that there's a Russian AI or a Chinese AI. It's going to come and attack your AI. So, you're going to empower your own AI to watch out for the attack. And when the attack is coming, defend yourself or maybe counterattack. Whatever you do, make sure you survive. Oh, survive. There you have it. Now you feeling comfortable, Sebastian. Right. You've just given the machine a survival just given the machine a survival instinct. &gt;&gt",
       "link": "https://www.youtube.com/watch?v=-UetKKxKqKU",
       "published": "2026-06-17T23:07:09+00:00",
       "source_type": "youtube",
       "channel": "Tim Ferriss",
       "video_id": "-UetKKxKqKU",
-      "transcript_method": "description",
-      "transcript_chars": 523,
-      "has_full_transcript": false
+      "transcript_method": "playwright_web",
+      "transcript_chars": 966,
+      "has_full_transcript": true
     },
     {
       "title": "[YT] The Path from The Soviet Union to Building Multi-Billion Dollar Companies — Max Levchin",
-      "summary": "[DESCRIPTION FALLBACK] Max Levchin is a serial entrepreneur and investor in 100+ startups. He's the founder and CEO of Affirm, the payment network powering consumer purchases and merchant growth. An original PayPal co-founder, Max served as CTO until its 2002 acquisition by eBay.\n\nThis episode is brought to you by:\n\nProLon: science-backed Fasting Mimicking Diet that helps activate cellular renewal through fasting, while still eating nourishing meals: https://ProlonLife.com/Tim\nMonarch track, budget, plan, and do more ",
+      "summary": "I was asking myself actually a question like why is our relationship as good as it is and it is really good and is there anything to learn about co-ounding companies like you're co-ounding a family when you marry someone you get together with someone I've had many co-founders over the years and some were amazing relationships and others didn't work out and it's always tempting to sort of blame yourself but you obviously have to examine it through the lens of like what fell apart as a relationship between two co-founders and I realized that the secret for my marriage is I'm still trying to impress this girl. Every day I roll out of bed thinking like one like how did I get this? This is definitely better than I should have gotten. So, the attempt to impress your mate on a daily basis is the ",
       "link": "https://www.youtube.com/watch?v=uOjgVxOfxXo",
       "published": "2026-06-10T21:41:36+00:00",
       "source_type": "youtube",
       "channel": "Tim Ferriss",
       "video_id": "uOjgVxOfxXo",
-      "transcript_method": "description",
-      "transcript_chars": 523,
-      "has_full_transcript": false
+      "transcript_method": "playwright_web",
+      "transcript_chars": 949,
+      "has_full_transcript": true
     }
   ]
 }

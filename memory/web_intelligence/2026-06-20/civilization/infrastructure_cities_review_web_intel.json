@@ -1,52 +1,53 @@
 {
   "axis": "INFRASTRUCTURE_CITIES_REVIEW",
   "domain": "civilization",
-  "timestamp": "2026-06-20T05:38:50.538812+00:00",
-  "sources_count": 10,
+  "timestamp": "2026-06-20T12:06:08.961675+00:00",
+  "sources_count": 11,
   "rss_count": 4,
   "ddg_count": 5,
-  "youtube_count": 1,
+  "youtube_count": 2,
   "youtube_items": [
     {
       "title": "[YT] How UK housing segregates residents - YouTube",
-      "summary": "[DESCRIPTION FALLBACK] New residential developments in the UK are often segregating people based on those who own their homes and those that live in social housing.Subscribe to The...",
+      "summary": "this is the latest in luxury london this is the latest in luxury london living but these developments like so many new developments in the uk have something missing from their glossy brochures it's the fact that all new uk developments must have a percentage of properties that are categorized as social housing so if you can afford to buy one of these flats outright you own it privately and this is your entrance but if your flat happens to be classified as social housing which includes shared ownership where you part own part rent then this is your entrance that's right same building different entrances this is what has been dubbed a poor door and it's how new housing developments are built all over the uk the segregation of new housing is not just limited to poor doors as we'll see there a",
       "link": "https://www.youtube.com/watch?v=oLSAm2szdjM",
       "published": "",
       "source_type": "youtube",
       "channel": "",
       "video_id": "oLSAm2szdjM",
-      "transcript_method": "description",
-      "transcript_chars": 183,
-      "has_full_transcript": false
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1146,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] How it Happened - The 2008 Financial Crisis: Crash... - YouTube",
+      "summary": "welcome to crash course economics my name is Jacob Clifford and I'm Adrien Hill and today we're going to do something a little different we're going to explore One Moment in history in depth we're going to talk about how the 2008 financial crisis happened and the government response to it in the United States so let's get [Music] started the 2008 financial crisis was a big deal Ben banki said it could have resulted in a 1930 style Global Financial and economic meltdown with catastrophic implications but what happened why did it happen and why aren't we all huddled around burning trash cans forming a raiding party to go steal gas from other tribes in the Wasteland by the way if you're actually doing that you probably didn't hear we survived the financial crisis things got better seriously p",
+      "link": "https://www.youtube.com/watch?v=GPOv72Awo68",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "GPOv72Awo68",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1158,
+      "has_full_transcript": true
     }
   ],
   "analysis": {
-    "problem": "Housing segregation and potential loss of homes in urban areas",
-    "root_cause": "Inadequate urban planning and housing policies, leading to segregation and unaffordability",
-    "severity": "MEDIUM",
-    "leverage_points": [
-      "Government policies and regulations on urban planning and housing",
-      "Real estate developers and their investment strategies"
-    ],
-    "proposed_actions": [
-      {
-        "action": "Implement inclusive zoning policies to promote mixed-income housing",
-        "measurable_goal": "Increase the number of affordable housing units by 20% within the next 2 years",
-        "timeframe": "medium-term"
-      },
-      {
-        "action": "Provide incentives for real estate developers to build affordable housing",
-        "measurable_goal": "Increase the number of affordable housing units by 30% within the next 5 years",
-        "timeframe": "long-term"
-      }
-    ],
+    "problem": "Анализ на INFRASTRUCTURE_CITIES_REVIEW — данни получени но LLM грешка",
+    "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: None",
+    "severity": "UNKNOWN",
+    "leverage_points": [],
+    "proposed_actions": [],
     "evidence": [
-      "New residential developments in the UK are often segregating people based on those who own their homes and those that live in social housing",
-      "We can’t build our way out of the housing crisis while losing homes every day"
+      "Chicago to buy, renovate Greyhound bus terminal",
+      "As a Maryland city mulls upzoning, a Realtor association study touts its benefits",
+      "Biking in US cities is getting better, 2026 report says"
     ],
-    "generalization": "This problem connects to the domains of civilization, human dignity, and biosphere, as it affects the well-being and quality of life of urban residents and the sustainability of urban ecosystems",
-    "summary": "Housing segregation and potential loss of homes in urban areas is a significant problem that requires immediate attention and action from policymakers and real estate developers. Inclusive zoning policies and incentives for affordable housing can help address this issue.",
-    "risk_level": "MEDIUM"
+    "generalization": "",
+    "summary": "- Chicago to buy, renovate Greyhound bus terminal: <p>The city&rsquo;s action, aimed at improving the customer experience for some 450,000 riders each year, saves the bus station from possible closure",
+    "risk_level": "UNKNOWN",
+    "trend": "UNKNOWN",
+    "llm_raw": ""
   },
   "raw_items": [
     {
@@ -102,22 +103,22 @@
       "source_type": "ddg"
     },
     {
-      "title": "Urban planning | Definition, History, Examples, Importance ...What is Urban Planning? – Sustainable Urban DevelopmentThe Fundamentals of Urban Planning: Key Concepts ExplainedWhat is Urban Planning? Its Meaning, Importance, and Key ...What Is Urban Planning? - ArchDailyUrban Planning - an overview | ScienceDirect Topics",
-      "summary": "urban planning, design and regulation of the uses of space that focus on the physical form, economic functions, and social impacts of the urban environment and on the location of different activities within it. Because urban planning draws upon engineering, architectural, and social and political concerns, it is variously a technical profession, an endeavour involving political will and public par",
-      "link": "https://www.britannica.com/topic/urban-planning",
+      "title": "Urban planner - Wikipedia",
+      "summary": "... scholarship to an average student who is initially interested in becoming an architect, but later decides they are more interested in urban planning.",
+      "link": "https://en.wikipedia.org/wiki/Urban_planner",
       "source_type": "ddg"
     },
     {
       "title": "[YT] How UK housing segregates residents - YouTube",
-      "summary": "[DESCRIPTION FALLBACK] New residential developments in the UK are often segregating people based on those who own their homes and those that live in social housing.Subscribe to The...",
+      "summary": "this is the latest in luxury london this is the latest in luxury london living but these developments like so many new developments in the uk have something missing from their glossy brochures it's the fact that all new uk developments must have a percentage of properties that are categorized as social housing so if you can afford to buy one of these flats outright you own it privately and this is your entrance but if your flat happens to be classified as social housing which includes shared ownership where you part own part rent then this is your entrance that's right same building different entrances this is what has been dubbed a poor door and it's how new housing developments are built all over the uk the segregation of new housing is not just limited to poor doors as we'll see there a",
       "link": "https://www.youtube.com/watch?v=oLSAm2szdjM",
       "published": "",
       "source_type": "youtube",
       "channel": "",
       "video_id": "oLSAm2szdjM",
-      "transcript_method": "description",
-      "transcript_chars": 183,
-      "has_full_transcript": false
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1146,
+      "has_full_transcript": true
     }
   ]
 }

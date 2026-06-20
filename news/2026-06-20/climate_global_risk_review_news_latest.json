@@ -1,14 +1,14 @@
 {
   "axis": "CLIMATE_GLOBAL_RISK_REVIEW",
-  "fetched_at": "2026-06-20T07:30:44.767606+00:00",
+  "fetched_at": "2026-06-20T11:29:56.392129+00:00",
   "smart_query": "climate change CO2 emissions",
   "sources_count": {
     "wiki": 0,
     "rss": 3,
-    "gdelt": 3,
+    "gdelt": 0,
     "arxiv": 2,
     "github": 3,
-    "youtube_transcripts": 3,
+    "youtube_transcripts": 0,
     "podcast": 1
   },
   "rss": [
@@ -31,26 +31,7 @@
       "source": "RSS"
     }
   ],
-  "gdelt": [
-    {
-      "title": "Plateauing CO2 emissions have slowed atmospheric growth",
-      "snippet": "Plateauing CO2 emissions have slowed atmospheric growth",
-      "url": "https://skepticalscience.com/plateauing-co2-slowed-growth.html",
-      "source": "skepticalscience.com"
-    },
-    {
-      "title": "Using a 20 - year period for comparing methane to CO2 is a terrible idea",
-      "snippet": "Using a 20 - year period for comparing methane to CO2 is a terrible idea",
-      "url": "https://skepticalscience.com/GWP-20-terrible-idea.html",
-      "source": "skepticalscience.com"
-    },
-    {
-      "title": "Carbon dioxide removal slow to take off , alarming scientists",
-      "snippet": "Carbon dioxide removal slow to take off , alarming scientists",
-      "url": "https://www.enca.com/opinion/carbon-dioxide-removal-slow-take-alarming-scientists",
-      "source": "enca.com"
-    }
-  ],
+  "gdelt": [],
   "github_repos": [
     {
       "title": "ESCOMP/CESM",
@@ -95,40 +76,40 @@
   "wiki": null,
   "youtube_items": [
     {
-      "title": "[YT] Top 5 Climate Disasters of 2025 That Shook the World | Planet Pulse | N18G",
-      "summary": "[DESCRIPTION FALLBACK] 2025 marked a turning point in the global climate crisis, with extreme weather events leaving a trail of destruction across ...",
-      "link": "https://www.youtube.com/watch?v=LX_sXGvOTg4",
+      "title": "[YT] YouTube:Vm9-huOzQN8",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=Vm9-huOzQN8",
       "source_type": "youtube",
-      "channel": "Firstpost",
-      "video_id": "LX_sXGvOTg4",
-      "transcript_method": "description",
-      "transcript_chars": 150,
+      "channel": "",
+      "video_id": "Vm9-huOzQN8",
+      "transcript_method": "none",
+      "transcript_chars": 0,
       "has_full_transcript": false
     },
     {
-      "title": "[YT] How much progress have we made on climate change?",
-      "summary": "[DESCRIPTION FALLBACK] Progress is happening all over the world. I couldn't fit the entire world into my studio though, so built a model. See how I did that ...",
-      "link": "https://www.youtube.com/watch?v=h1jOqyjcO4g",
+      "title": "[YT] YouTube:fsBmhrT8ZEk",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=fsBmhrT8ZEk",
       "source_type": "youtube",
-      "channel": "Simon Clark",
-      "video_id": "h1jOqyjcO4g",
-      "transcript_method": "description",
-      "transcript_chars": 160,
+      "channel": "",
+      "video_id": "fsBmhrT8ZEk",
+      "transcript_method": "none",
+      "transcript_chars": 0,
       "has_full_transcript": false
     },
     {
-      "title": "[YT] Inside the planet’s most urgent climate warning | Global Warning E1 | Featured Documentary",
-      "summary": "[DESCRIPTION FALLBACK] This decisive decade demands unprecedented action to address humanity's greatest challenge. With global access, this ...",
-      "link": "https://www.youtube.com/watch?v=F8vI5_gN90g",
+      "title": "[YT] YouTube:B7Q8cw5JPiU",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=B7Q8cw5JPiU",
       "source_type": "youtube",
-      "channel": "Al Jazeera English",
-      "video_id": "F8vI5_gN90g",
-      "transcript_method": "description",
-      "transcript_chars": 143,
+      "channel": "",
+      "video_id": "B7Q8cw5JPiU",
+      "transcript_method": "none",
+      "transcript_chars": 0,
       "has_full_transcript": false
     }
   ],
-  "summary": "[RSS News]\n- Simpler, older version of Stonehenge found three miles from famous site\n- What is El Niño and why could it mean record temperatures?\n\n[GDELT News]\n- Plateauing CO2 emissions have slowed a",
+  "summary": "[RSS News]\n- Simpler, older version of Stonehenge found three miles from famous site\n- What is El Niño and why could it mean record temperatures?\n\n[arXiv]\n- Optimal scenario design for climate emulati",
   "urgency": "LOW",
   "sentiment": "NEUTRAL",
   "key_developments": [],

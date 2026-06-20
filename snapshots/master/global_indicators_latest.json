@@ -1,13 +1,25 @@
 {
-  "timestamp": "2026-06-20T07:26:39.279695+00:00",
+  "timestamp": "2026-06-20T11:09:47.582008+00:00",
   "sources": {
     "co2": "NOAA Mauna Loa CO2",
     "temperature": "NASA GISTEMP",
     "sea_level": "NOAA Satellite Altimetry",
-    "world_bank": "World Bank WDI",
     "biodiversity": "GBIF",
+    "food": "World Bank WDI — Food",
+    "waste": "UN SDG + World Bank — Waste",
+    "world_bank": "World Bank WDI — Core",
+    "displaced": "UNHCR Population API",
+    "economy": "World Bank WDI — Economy",
+    "cities": "World Bank WDI — Cities",
+    "tech_infra": "World Bank WDI — Tech Infra",
+    "ai_activity": "arXiv + Hugging Face Hub",
+    "media": "GDELT DOC 2.0",
     "conflicts": "UCDP",
-    "nuclear": "SIPRI 2024"
+    "nuclear": "SIPRI 2024",
+    "energy": "EIA Open Data",
+    "exoplanets": "NASA Exoplanet Archive TAP",
+    "satellites": "CelesTrak SATCAT",
+    "neo": "NASA JPL CNEOS CAD"
   },
   "co2": {
     "co2_ppm": 432.15,
@@ -21,6 +33,22 @@
     "temp_anomaly_baseline": "1951-1980"
   },
   "sea_level": {},
+  "biodiversity": {
+    "species_observations_30d": 2656431
+  },
+  "food": {
+    "undernourishment_pct": 8.5,
+    "food_insecurity_moderate_severe_pct": null,
+    "food_production_index": 100.0,
+    "agriculture_pct_gdp": 4.0487,
+    "cereal_yield_kg_per_ha": 4243.5311
+  },
+  "waste": {
+    "resource_depletion_pct_gni": 1.5251,
+    "natural_resources_rents_pct": 3.0742,
+    "adjusted_net_savings_pct": 9.6455,
+    "fossil_fuel_consumption_pct": 74.832
+  },
   "world_bank": {
     "population_billions": 8.142,
     "poverty_190_pct": 10.4,
@@ -34,9 +62,38 @@
     "threatened_mammals_no": 3434.0,
     "co2_emissions_kt": null
   },
-  "biodiversity": {
-    "species_observations_30d": 2656172
+  "displaced": {
+    "refugees_millions": 29.429,
+    "asylum_seekers_millions": 5.442,
+    "idps_millions": 57.321,
+    "stateless_millions": 4.428,
+    "unhcr_year": 2022
   },
+  "economy": {
+    "unemployment_pct": 4.791,
+    "gdp_per_capita_ppp_usd": 21405,
+    "gdp_growth_annual_pct": 2.8719,
+    "labour_force_participation_pct": 60.9793,
+    "industry_value_added_pct_gdp": 25.6274
+  },
+  "cities": {
+    "internet_users_pct": 73.6,
+    "electricity_access_pct": 91.5992,
+    "urban_population_pct": 57.5635,
+    "urban_growth_annual_pct": 1.401,
+    "roads_paved_pct": null
+  },
+  "tech_infra": {
+    "broadband_per100": 20.11,
+    "mobile_subscriptions_per100": 111.5,
+    "secure_internet_servers_per1m": 16379.637,
+    "high_tech_exports_pct_manuf": 24.7589
+  },
+  "ai_activity": {
+    "arxiv_ai_papers_total": 185440,
+    "github_ai_repos_total": 38433
+  },
+  "media": {},
   "conflicts": {},
   "nuclear": {
     "nuclear_warheads_total": 12121,
@@ -44,5 +101,15 @@
     "nuclear_warheads_on_alert": 2100,
     "source_year": 2024,
     "source": "SIPRI Yearbook 2024"
+  },
+  "energy": {},
+  "exoplanets": {
+    "confirmed_exoplanets": 6298
+  },
+  "satellites": {},
+  "neo": {
+    "neo_close_approaches_90d": 111,
+    "neo_within_lunar_dist_90d": 1,
+    "neo_dist_threshold_au": 0.1
   }
 }

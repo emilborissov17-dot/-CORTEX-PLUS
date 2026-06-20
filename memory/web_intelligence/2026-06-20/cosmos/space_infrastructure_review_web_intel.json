@@ -1,7 +1,7 @@
 {
   "axis": "SPACE_INFRASTRUCTURE_REVIEW",
   "domain": "cosmos",
-  "timestamp": "2026-06-20T05:40:26.551360+00:00",
+  "timestamp": "2026-06-20T12:07:50.885606+00:00",
   "sources_count": 11,
   "rss_count": 8,
   "ddg_count": 0,
@@ -9,27 +9,27 @@
   "youtube_items": [
     {
       "title": "[YT] NASA's SpaceX 34th Commercial Resupply Services Undocking",
-      "summary": "[DESCRIPTION FALLBACK] Watch a SpaceX Dragon spacecraft undock and depart from the International Space Station. The spacecraft is scheduled to undock at 12:05 p.m. EDT (1705 UTC) on Tuesday, June 16, and splash down off the coast of California at 5:08 a.m. PDT (1208 UTC) on Wednesday, June 17.\n\nThis Dragon spacecraft arrived at the space station as part of our SpaceX 34th Commercial Resupply Services (CRS-34) mission, carrying science and supplies for the crew aboard the orbiting lab. It will return to Earth with carg",
+      "summary": "Heat. Heat. [music] [music] Heat. Heat. Heat. Heat. [music] [music] [music] &gt;&gt; [music] [music] &gt;&gt; Heat. Heat. &gt;&gt; [music] [music] [music] &gt;&gt; Good morning and welcome to Mission Control Houston in the International Space Station flight control room at NASA's Johnson Space Center. I'm Kennel with NASA Communications. Expected to undock here in just about 20 minutes from now at 11:05 a.m. Central, 12:05 p.m. Eastern. Dragon delivered more than three tons of crew cargo and science experiments upon its arrival to the orbiting laboratory about a month ago, making up SpaceX's 34th commercial resupply services mission to the International Space Station for NASA. And we did just hear a few moments ago that the SpaceX and NASA teams have pulled go for today's undocking. The re",
       "link": "https://www.youtube.com/watch?v=fu-t3Om6DIA",
       "published": "2026-06-16T16:54:31+00:00",
       "source_type": "youtube",
       "channel": "NASA",
       "video_id": "fu-t3Om6DIA",
-      "transcript_method": "description",
-      "transcript_chars": 523,
-      "has_full_transcript": false
+      "transcript_method": "playwright_web",
+      "transcript_chars": 871,
+      "has_full_transcript": true
     },
     {
       "title": "[YT] Artemis III Announcement Recap: Crew, Mission Details, and What’s Next",
-      "summary": "[DESCRIPTION FALLBACK] Another step toward one of the most complex spaceflight missions in history, NASA provided updates on Artemis III and announced crew members for the test flight. Planned to launch in 2027, the mission will practice docking the Orion spacecraft with two lunar landers in low Earth orbit. \n\nOn future missions, including Artemis IV in 2028, landers will bring astronauts to the lunar surface. While Artemis III will not land on the Moon, it will test the complex capabilities we need to return humanity",
+      "summary": "I am so grateful to be here with all of you as we discuss the Artemis program [music] and announce the four astronauts who will undertake this very exciting who will undertake this very exciting mission. Making his first space flight, mission specialist Andre Douglas. specialist Andre Douglas. &gt;&gt; [applause] &gt;&gt; Record setting astronaut, mission specialist Colonel Frank Rubio. specialist Colonel Frank Rubio. &gt;&gt; [applause] &gt;&gt; Now onto our pilot, ESA astronaut Luca &gt;&gt; Now onto our pilot, ESA astronaut Luca Parmitano. Now to our commander, Marine Corps Colonel, Artemis 3 commander, Randy Colonel, Artemis 3 commander, Randy Bresnik. Bresnik. &gt;&gt; [applause] &gt;&gt; [applause] [music] &gt;&gt; Artemis 3 backup crew member, Bob Hines. One more round of applause f",
       "link": "https://www.youtube.com/watch?v=G-GD8SQ0AvU",
       "published": "2026-06-10T00:08:26+00:00",
       "source_type": "youtube",
       "channel": "NASA",
       "video_id": "G-GD8SQ0AvU",
-      "transcript_method": "description",
-      "transcript_chars": 523,
-      "has_full_transcript": false
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1256,
+      "has_full_transcript": true
     },
     {
       "title": "[YT] Introducing Artemis III",
@@ -45,33 +45,21 @@
     }
   ],
   "analysis": {
-    "problem": "The rapid development and launch of various satellite constellations and space infrastructure without a unified global governance framework may lead to increased risks of collisions, debris, and unsustainable space activities",
-    "root_cause": "Lack of international cooperation and regulation in space activities, driven by the commercialization of space and the absence of a comprehensive global governance framework",
-    "severity": "MEDIUM",
-    "leverage_points": [
-      "United Nations Committee on the Peaceful Uses of Outer Space (COPUOS)",
-      "Space agencies and private space companies, such as SpaceX, Arianespace, and Northrop Grumman"
-    ],
-    "proposed_actions": [
-      {
-        "action": "Establish a global registry for satellite constellations and space infrastructure",
-        "measurable_goal": "Achieve 90% registration rate of all satellites and space infrastructure within the next 2 years",
-        "timeframe": "medium-term"
-      },
-      {
-        "action": "Develop and adopt international standards for sustainable space activities",
-        "measurable_goal": "Reach consensus among 80% of space-faring nations on a set of standards within the next 3 years",
-        "timeframe": "medium-term"
-      }
-    ],
+    "problem": "Анализ на SPACE_INFRASTRUCTURE_REVIEW — данни получени но LLM грешка",
+    "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: None",
+    "severity": "UNKNOWN",
+    "leverage_points": [],
+    "proposed_actions": [],
     "evidence": [
-      "India's Jio plans to launch a sovereign LEO constellation",
-      "SpaceX launches intelligence-gathering satellites for the National Reconnaissance Office",
-      "Arianespace launches its heaviest payload to date with Amazon Leo flight"
+      "India’s Jio lays out sovereign LEO constellation plan ahead of IPO",
+      "MDA Space to buy Blue Canyon Technologies to gain foothold in U.S. market",
+      "ElevationSpace Secures US $40 Million in Series B Funding, Bringing Total Raised to US $63.5 Million"
     ],
-    "generalization": "This problem connects to the domains of Planet (sustainable use of space resources) and Civilization (global governance and cooperation)",
-    "summary": "The rapid development of space infrastructure poses risks to sustainable space activities, highlighting the need for international cooperation and regulation. A global governance framework is necessary to mitigate these risks and ensure the long-term viability of space exploration.",
-    "risk_level": "MEDIUM"
+    "generalization": "",
+    "summary": "- India’s Jio lays out sovereign LEO constellation plan ahead of IPO: <figure><img alt=\"\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"683\" src=\"https://i0.wp.com/spacen",
+    "risk_level": "UNKNOWN",
+    "trend": "UNKNOWN",
+    "llm_raw": ""
   },
   "raw_items": [
     {
@@ -132,27 +120,27 @@
     },
     {
       "title": "[YT] NASA's SpaceX 34th Commercial Resupply Services Undocking",
-      "summary": "[DESCRIPTION FALLBACK] Watch a SpaceX Dragon spacecraft undock and depart from the International Space Station. The spacecraft is scheduled to undock at 12:05 p.m. EDT (1705 UTC) on Tuesday, June 16, and splash down off the coast of California at 5:08 a.m. PDT (1208 UTC) on Wednesday, June 17.\n\nThis Dragon spacecraft arrived at the space station as part of our SpaceX 34th Commercial Resupply Services (CRS-34) mission, carrying science and supplies for the crew aboard the orbiting lab. It will return to Earth with carg",
+      "summary": "Heat. Heat. [music] [music] Heat. Heat. Heat. Heat. [music] [music] [music] &gt;&gt; [music] [music] &gt;&gt; Heat. Heat. &gt;&gt; [music] [music] [music] &gt;&gt; Good morning and welcome to Mission Control Houston in the International Space Station flight control room at NASA's Johnson Space Center. I'm Kennel with NASA Communications. Expected to undock here in just about 20 minutes from now at 11:05 a.m. Central, 12:05 p.m. Eastern. Dragon delivered more than three tons of crew cargo and science experiments upon its arrival to the orbiting laboratory about a month ago, making up SpaceX's 34th commercial resupply services mission to the International Space Station for NASA. And we did just hear a few moments ago that the SpaceX and NASA teams have pulled go for today's undocking. The re",
       "link": "https://www.youtube.com/watch?v=fu-t3Om6DIA",
       "published": "2026-06-16T16:54:31+00:00",
       "source_type": "youtube",
       "channel": "NASA",
       "video_id": "fu-t3Om6DIA",
-      "transcript_method": "description",
-      "transcript_chars": 523,
-      "has_full_transcript": false
+      "transcript_method": "playwright_web",
+      "transcript_chars": 871,
+      "has_full_transcript": true
     },
     {
       "title": "[YT] Artemis III Announcement Recap: Crew, Mission Details, and What’s Next",
-      "summary": "[DESCRIPTION FALLBACK] Another step toward one of the most complex spaceflight missions in history, NASA provided updates on Artemis III and announced crew members for the test flight. Planned to launch in 2027, the mission will practice docking the Orion spacecraft with two lunar landers in low Earth orbit. \n\nOn future missions, including Artemis IV in 2028, landers will bring astronauts to the lunar surface. While Artemis III will not land on the Moon, it will test the complex capabilities we need to return humanity",
+      "summary": "I am so grateful to be here with all of you as we discuss the Artemis program [music] and announce the four astronauts who will undertake this very exciting who will undertake this very exciting mission. Making his first space flight, mission specialist Andre Douglas. specialist Andre Douglas. &gt;&gt; [applause] &gt;&gt; Record setting astronaut, mission specialist Colonel Frank Rubio. specialist Colonel Frank Rubio. &gt;&gt; [applause] &gt;&gt; Now onto our pilot, ESA astronaut Luca &gt;&gt; Now onto our pilot, ESA astronaut Luca Parmitano. Now to our commander, Marine Corps Colonel, Artemis 3 commander, Randy Colonel, Artemis 3 commander, Randy Bresnik. Bresnik. &gt;&gt; [applause] &gt;&gt; [applause] [music] &gt;&gt; Artemis 3 backup crew member, Bob Hines. One more round of applause f",
       "link": "https://www.youtube.com/watch?v=G-GD8SQ0AvU",
       "published": "2026-06-10T00:08:26+00:00",
       "source_type": "youtube",
       "channel": "NASA",
       "video_id": "G-GD8SQ0AvU",
-      "transcript_method": "description",
-      "transcript_chars": 523,
-      "has_full_transcript": false
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1256,
+      "has_full_transcript": true
     }
   ]
 }

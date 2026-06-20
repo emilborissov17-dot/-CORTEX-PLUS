@@ -1,5 +1,5 @@
 {
-  "composite_score": 0.5539,
+  "composite_score": 0.5395,
   "axis_scores": {
     "CLIMATE_GLOBAL_RISK_REVIEW": 0.8094,
     "ECOSYSTEMS_BIODIVERSITY_REVIEW": 0.5,
@@ -23,7 +23,7 @@
     "COSMIC_RESOURCES_REVIEW": 0.5,
     "DEEP_TIME_RISKS_REVIEW": 0.5,
     "GENERAL_SELF_REVIEW": 0.5,
-    "GOAL_PROGRESS_REVIEW": 0.85,
+    "GOAL_PROGRESS_REVIEW": 0.5402,
     "LONG_TERM_FUTURE_REVIEW": 0.5,
     "SPACE_INFRASTRUCTURE_REVIEW": 0.5
   },
@@ -160,17 +160,17 @@
     },
     "goal_score": {
       "axis": "GOAL_PROGRESS_REVIEW",
-      "current": 0.85,
+      "current": 0.5402,
       "target": 1.0,
       "unit": "composite 0-1 score",
       "direction": "higher_better",
-      "score": 0.85,
+      "score": 0.5402,
       "weight": 8.0,
-      "tti_cycles": 3.0
+      "tti_cycles": null
     }
   },
   "total_weight": 173.0,
-  "timestamp": "2026-06-20T07:36:26.546190+00:00",
+  "timestamp": "2026-06-20T11:53:14.374178+00:00",
   "axis": "GOAL_SCORE",
   "source_type": "CALCULATED"
 }

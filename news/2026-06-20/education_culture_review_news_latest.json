@@ -1,36 +1,17 @@
 {
   "axis": "EDUCATION_CULTURE_REVIEW",
-  "fetched_at": "2026-06-20T07:30:16.531194+00:00",
+  "fetched_at": "2026-06-20T11:27:38.716784+00:00",
   "smart_query": "education access schools literacy",
   "sources_count": {
     "wiki": 0,
-    "gdelt": 3,
+    "gdelt": 0,
     "arxiv": 2,
     "github": 3,
     "youtube_transcripts": 3,
     "podcast": 1
   },
   "rss": [],
-  "gdelt": [
-    {
-      "title": "Kid Spark Education and Bridgestone Americas Expand Partnership to Fund Six Cost - Free Elementary STEM Programs in Communities Across the U . S . ",
-      "snippet": "Kid Spark Education and Bridgestone Americas Expand Partnership to Fund Six Cost - Free Elementary STEM Programs in Communities Across the U . S . ",
-      "url": "https://www.prnewswire.com/news-releases/kid-spark-education-and-bridgestone-americas-expand-partnership-to-fund-six-cost-free-elementary-stem-programs-in-communities-across-the-us-302781924.html",
-      "source": "prnewswire.com"
-    },
-    {
-      "title": "Literacy initiative expands further with a donation of 2 , 010 trolley libraries , including braille books to cater for different learner abilities",
-      "snippet": "Literacy initiative expands further with a donation of 2 , 010 trolley libraries , including braille books to cater for different learner abilities",
-      "url": "https://www.enca.com/promotions/literacy-initiative-expands-further-donation-2010-trolley-libraries-including-braille",
-      "source": "enca.com"
-    },
-    {
-      "title": "Discovery Education Highlights Commitment to Financial Literacy Month With Free , Real - World Learning Resources",
-      "snippet": "Discovery Education Highlights Commitment to Financial Literacy Month With Free , Real - World Learning Resources",
-      "url": "https://www.finanznachrichten.de/nachrichten-2026-04/68221126-discovery-education-highlights-commitment-to-financial-literacy-month-with-free-real-world-learning-resources-200.htm",
-      "source": "finanznachrichten.de"
-    }
-  ],
+  "gdelt": [],
   "github_repos": [
     {
       "title": "upb-lea/reinforcement_learning_course_materials",
@@ -86,29 +67,29 @@
       "has_full_transcript": false
     },
     {
-      "title": "[YT] National Adult Literacy Agency in Ireland awarded the 2025 UNESCO Confucius Prize for Literacy",
-      "summary": "[DESCRIPTION FALLBACK] The Learn with NALA eLearning website by the National Adult Literacy Agency (NALA) is recognized for its accessible approach ...",
-      "link": "https://www.youtube.com/watch?v=-OOoFZVzNtc",
+      "title": "[YT] International Literacy Day 2020 – Teaching and learning literacy in the COVID-19 crisis and beyond",
+      "summary": "[DESCRIPTION FALLBACK] Since 1967, International Literacy Day (ILD) celebrations have taken place annually around the world to remind the public of the ...",
+      "link": "https://www.youtube.com/watch?v=LZaqM69M7RM",
       "source_type": "youtube",
       "channel": "UNESCO",
-      "video_id": "-OOoFZVzNtc",
+      "video_id": "LZaqM69M7RM",
       "transcript_method": "description",
-      "transcript_chars": 151,
+      "transcript_chars": 155,
       "has_full_transcript": false
     },
     {
-      "title": "[YT] Shidhulai Swanirvar Sangstha in Bangladesh awarded the 2025 UNESCO Confucius Prize for Literacy",
-      "summary": "[DESCRIPTION FALLBACK] The Solar-powered Floating Schools programme by the Non-Governmental Organization Shidhulai Swanirvar Sangstha is ...",
-      "link": "https://www.youtube.com/watch?v=WBMQBxfy2QA",
+      "title": "[YT] International Literacy Day 2023: Promoting literacy for a world in transition",
+      "summary": "[DESCRIPTION FALLBACK] Since 1967, International Literacy Day (ILD) celebrations have taken place annually around the world to remind the public of the ...",
+      "link": "https://www.youtube.com/watch?v=bB6ngFqh0V0",
       "source_type": "youtube",
       "channel": "UNESCO",
-      "video_id": "WBMQBxfy2QA",
+      "video_id": "bB6ngFqh0V0",
       "transcript_method": "description",
-      "transcript_chars": 140,
+      "transcript_chars": 155,
       "has_full_transcript": false
     }
   ],
-  "summary": "[GDELT News]\n- Kid Spark Education and Bridgestone Americas Expand Partnership to Fund Six Cost - Free Elementary STEM Programs in Communities Across the U . S . \n- Literacy initiative expands further",
+  "summary": "[arXiv]\n- Measuring Whether LLM Tutors Teach or Solve: A Diagnostic for Educational Impact\n- \"Stuck in a Spiral\": Shame and Guilt as Social Regulators of AI Use in Computing Education\n\n[GitHub]\n- upb-",
   "urgency": "LOW",
   "sentiment": "NEUTRAL",
   "key_developments": [],

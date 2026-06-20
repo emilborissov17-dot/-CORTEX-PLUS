@@ -1,6 +1,6 @@
 {
   "axis": "SOCIAL_RELATIONS_REVIEW",
-  "fetched_at": "2026-06-20T07:27:05.758148+00:00",
+  "fetched_at": "2026-06-20T11:24:12.121813+00:00",
   "smart_query": "social inequality conflict trust",
   "sources_count": {
     "wiki": 0,
@@ -13,21 +13,21 @@
   },
   "rss": [
     {
-      "title": "Israel and Hezbollah agree ceasefire, US says, as more Lebanon strikes reported",
-      "snippet": "The agreement followed concerns that continued clashes would undermine the deal to end the war between the US and Iran. ",
-      "url": "https://www.bbc.com/news/articles/cwyk7kkygj5o?at_medium=RSS&at_campaign=rss",
+      "title": "Several reported killed in Israeli strikes on Lebanon despite ceasefire",
+      "snippet": "The IDF said it struck \"Hezbollah terrorist targets\" after the group fired over 50 projectiles at Israeli forces in southern Lebanon.",
+      "url": "https://www.bbc.com/news/articles/cx240k9l112o?at_medium=RSS&at_campaign=rss",
       "source": "RSS"
     },
     {
-      "title": "Italy's Meloni says Trump 'made up' story that she 'begged' him for photo at G7",
-      "snippet": "The highly public exchange is an indication that their earlier close ties have frayed  since Trump's decision to go to war with Iran.",
-      "url": "https://www.bbc.com/news/articles/c20y1ygn707o?at_medium=RSS&at_campaign=rss",
+      "title": "Zelensky stripped of highest Polish honour over WW2 name of army unit",
+      "snippet": "Ukraine has denounced the move, calling it a \"strategic mistake\" and \"disrespectful\".",
+      "url": "https://www.bbc.com/news/articles/cr7xzg3dmj8o?at_medium=RSS&at_campaign=rss",
       "source": "RSS"
     },
     {
-      "title": "US to stop funding HIV programmes in South Africa",
-      "snippet": "More than eight million South Africans are living with HIV – the highest number of any country in the world.",
-      "url": "https://www.bbc.com/news/articles/cdr457lxr71o?at_medium=RSS&at_campaign=rss",
+      "title": "Tourist dies in Dominican Republic luxury resort fire",
+      "snippet": "Nearly 1,700 people were evacuated from the huge blaze at Viva Wyndham Dominicus Beach in Bayahibe, a popular resort town on the Caribbean coast.",
+      "url": "https://www.bbc.com/news/articles/c932k8010j1o?at_medium=RSS&at_campaign=rss",
       "source": "RSS"
     }
   ],
@@ -109,7 +109,7 @@
       "has_full_transcript": false
     }
   ],
-  "summary": "[RSS News]\n- Israel and Hezbollah agree ceasefire, US says, as more Lebanon strikes reported\n- Italy's Meloni says Trump 'made up' story that she 'begged' him for photo at G7\n\n[arXiv]\n- Networks of ag",
+  "summary": "[RSS News]\n- Several reported killed in Israeli strikes on Lebanon despite ceasefire\n- Zelensky stripped of highest Polish honour over WW2 name of army unit\n\n[arXiv]\n- Networks of agglomeration: how p",
   "urgency": "LOW",
   "sentiment": "NEUTRAL",
   "key_developments": [],

@@ -1,24 +1,12 @@
 {
   "axis": "PLANETARY_POTENTIAL_REVIEW",
   "domain": "planet",
-  "timestamp": "2026-06-20T07:26:31.546267+00:00",
-  "sources_count": 7,
+  "timestamp": "2026-06-20T09:18:51.890394+00:00",
+  "sources_count": 11,
   "rss_count": 4,
-  "ddg_count": 0,
+  "ddg_count": 4,
   "youtube_count": 3,
   "youtube_items": [
-    {
-      "title": "[YT] Climate Change acceleration: Do we need an emergency brake? | Dr Pete Sudbury (ex-Green Party)",
-      "summary": "[DESCRIPTION FALLBACK] Climate Change acceleration and the need for an emergency brake.” Bio : Dr. Pete Sudbury is an ex-Green Party Councillor for ...",
-      "link": "https://www.youtube.com/watch?v=37szoWu3nEA",
-      "published": "2026-06-03T23:00:06Z",
-      "source_type": "youtube",
-      "channel": "Climate Emergency Centres",
-      "video_id": "37szoWu3nEA",
-      "transcript_method": "description",
-      "transcript_chars": 151,
-      "has_full_transcript": false
-    },
     {
       "title": "[YT] A Climate Scientist Reviews: Project Hail Mary",
       "summary": "[DESCRIPTION FALLBACK] 00:00 Intro 00:36 Book plot (spoiler alert) 01:18 The Earth's Energy Balance (simplified) 02:38 Greenhouse gases explained ...",
@@ -32,34 +20,57 @@
       "has_full_transcript": false
     },
     {
-      "title": "[YT] 10 Climate Insights You Can’t Ignore",
-      "summary": "[DESCRIPTION FALLBACK] In this episode we unpack the latest “10 New Insights in Climate Science” report and what it really means for our future.",
-      "link": "https://www.youtube.com/watch?v=0rKhgC-4s7s",
-      "published": "2026-06-14T20:15:06Z",
+      "title": "[YT] Climate Change acceleration: Do we need an emergency brake? | Dr Pete Sudbury (ex-Green Party)",
+      "summary": "[DESCRIPTION FALLBACK] Climate Change acceleration and the need for an emergency brake.” Bio : Dr. Pete Sudbury is an ex-Green Party Councillor for ...",
+      "link": "https://www.youtube.com/watch?v=37szoWu3nEA",
+      "published": "2026-06-03T23:00:06Z",
       "source_type": "youtube",
-      "channel": "Climate Emergency Forum",
-      "video_id": "0rKhgC-4s7s",
+      "channel": "Climate Emergency Centres",
+      "video_id": "37szoWu3nEA",
+      "transcript_method": "description",
+      "transcript_chars": 151,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] 2/3/2026 -- Brad Marston, Brown University -- Can physics save the planet from climate change?",
+      "summary": "[DESCRIPTION FALLBACK] UMD Physics Colloquium on Feb 3, 2026. Prof. Brad Marston (Brown University, the APS president in 2026) presented his ...",
+      "link": "https://www.youtube.com/watch?v=hLVFIfizEZM",
+      "published": "2026-02-11T20:28:01Z",
+      "source_type": "youtube",
+      "channel": "UMD Physics Colloquium Series",
+      "video_id": "hLVFIfizEZM",
       "transcript_method": "description",
       "transcript_chars": 144,
       "has_full_transcript": false
     }
   ],
   "analysis": {
-    "problem": "Анализ на PLANETARY_POTENTIAL_REVIEW — данни получени но LLM грешка",
-    "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: Gemini rate limit",
-    "severity": "UNKNOWN",
-    "leverage_points": [],
-    "proposed_actions": [],
+    "problem": "Inaccurate global emissions database",
+    "root_cause": "Methodological errors in data collection and analysis",
+    "severity": "MEDIUM",
+    "leverage_points": [
+      "Climate TRACE consortium",
+      "Research institutions reviewing and utilizing the database"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Conduct an independent review and revision of the Climate TRACE database",
+        "measurable_goal": "Achieve a 20% reduction in data errors within the next 6 months",
+        "timeframe": "short-term"
+      },
+      {
+        "action": "Implement a robust quality control process for data collection and analysis",
+        "measurable_goal": "Reduce data errors by 50% within the next 12 months",
+        "timeframe": "medium-term"
+      }
+    ],
     "evidence": [
       "Major errors found in Al Gore-founded Climate TRACE database",
-      "Arizona reservoir nearly vanishes after snowpack collapse triggers massive fish kill",
-      "These bees have nowhere to hide from extreme heat"
+      "Researchers found that the database contained significant methodological errors"
     ],
-    "generalization": "",
-    "summary": "- Major errors found in Al Gore-founded Climate TRACE database: A new study from Northern Arizona University is raising red flags about a widely used global emissions database from Climate TRACE, a co",
-    "risk_level": "UNKNOWN",
-    "trend": "UNKNOWN",
-    "llm_raw": ""
+    "generalization": "This problem connects to the civilization domain as inaccurate data can inform flawed policy decisions, and to the planetary domain as climate change mitigation efforts rely on accurate emissions data",
+    "summary": "The Climate TRACE database contains significant errors, which can impact climate change mitigation efforts. An independent review and revision of the database are necessary to ensure data accuracy.",
+    "risk_level": "MEDIUM"
   },
   "raw_items": [
     {
@@ -91,16 +102,28 @@
       "source_type": "rss"
     },
     {
-      "title": "[YT] Climate Change acceleration: Do we need an emergency brake? | Dr Pete Sudbury (ex-Green Party)",
-      "summary": "[DESCRIPTION FALLBACK] Climate Change acceleration and the need for an emergency brake.” Bio : Dr. Pete Sudbury is an ex-Green Party Councillor for ...",
-      "link": "https://www.youtube.com/watch?v=37szoWu3nEA",
-      "published": "2026-06-03T23:00:06Z",
-      "source_type": "youtube",
-      "channel": "Climate Emergency Centres",
-      "video_id": "37szoWu3nEA",
-      "transcript_method": "description",
-      "transcript_chars": 151,
-      "has_full_transcript": false
+      "title": "Geoengineering",
+      "summary": "Geoengineering (also known as climate engineering or climate intervention) is the deliberate large-scale interventions in the Earth’s climate system intended to counteract human-caused climate change. The term commonly encompasses two broad categories: large-scale carbon dioxide removal (CDR) and solar radiation modification (SRM). CDR involves techniques to remove carbon dioxide from the atmosphe",
+      "link": "https://en.wikipedia.org/wiki/Geoengineering",
+      "source_type": "ddg"
+    },
+    {
+      "title": "geoengineeringwatch.org",
+      "summary": "CLICK HERE to go to GEOENGINEERING WATCH website and learn th.",
+      "link": "https://www.geoengineeringwatch.org/",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Planetary boundaries",
+      "summary": "Planetary boundaries are a framework to describe limits to the impacts of human activities on the Earth system. Beyond these limits, the environment may not be able to continue to self-regulate. This would mean the Earth system would leave the period of stability of the Holocene, in which human society developed.These nine boundaries are climate change, ocean acidification, stratospheric ozone dep",
+      "link": "https://en.wikipedia.org/wiki/Planetary_boundaries",
+      "source_type": "ddg"
+    },
+    {
+      "title": "Planetary boundaries - Stockholm Resilience Centre",
+      "summary": "April 23, 2026 - The planetary boundaries framework highlights the rising risks from human pressure on nine critical global processes that regulate the stability and resilience of the Earth",
+      "link": "https://www.stockholmresilience.org/research/planetary-boundaries.html",
+      "source_type": "ddg"
     },
     {
       "title": "[YT] A Climate Scientist Reviews: Project Hail Mary",
@@ -115,15 +138,15 @@
       "has_full_transcript": false
     },
     {
-      "title": "[YT] 10 Climate Insights You Can’t Ignore",
-      "summary": "[DESCRIPTION FALLBACK] In this episode we unpack the latest “10 New Insights in Climate Science” report and what it really means for our future.",
-      "link": "https://www.youtube.com/watch?v=0rKhgC-4s7s",
-      "published": "2026-06-14T20:15:06Z",
+      "title": "[YT] Climate Change acceleration: Do we need an emergency brake? | Dr Pete Sudbury (ex-Green Party)",
+      "summary": "[DESCRIPTION FALLBACK] Climate Change acceleration and the need for an emergency brake.” Bio : Dr. Pete Sudbury is an ex-Green Party Councillor for ...",
+      "link": "https://www.youtube.com/watch?v=37szoWu3nEA",
+      "published": "2026-06-03T23:00:06Z",
       "source_type": "youtube",
-      "channel": "Climate Emergency Forum",
-      "video_id": "0rKhgC-4s7s",
+      "channel": "Climate Emergency Centres",
+      "video_id": "37szoWu3nEA",
       "transcript_method": "description",
-      "transcript_chars": 144,
+      "transcript_chars": 151,
       "has_full_transcript": false
     }
   ]

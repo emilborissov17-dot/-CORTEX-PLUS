@@ -1,76 +1,41 @@
 {
   "axis": "TECHNOLOGY_INFRA_REVIEW",
   "domain": "civilization",
-  "timestamp": "2026-06-20T05:39:40.609285+00:00",
-  "sources_count": 11,
+  "timestamp": "2026-06-20T12:06:21.622942+00:00",
+  "sources_count": 9,
   "rss_count": 8,
   "ddg_count": 0,
-  "youtube_count": 3,
+  "youtube_count": 1,
   "youtube_items": [
     {
-      "title": "[YT] Closing the Digital Divide: How Upwork Supports Human-I-T’s Social Mission",
-      "summary": "[DESCRIPTION FALLBACK] Human-I-T is a nonprofit social enterprise committed to ensuring everybody in the world has access to the digital tools they need ...",
-      "link": "https://www.youtube.com/watch?v=cz-rOhiMxmo",
-      "published": "2026-02-27T19:47:23Z",
+      "title": "[YT] Fix windows 7 no internet access but connected ethernet - YouTube",
+      "summary": "my laptop is showing wi-fi no internet my laptop is showing wi-fi no internet access if you are in trouble like me then see how to solve the first method go to computer control panel now open the internet option then go to the advanced option and click on the reset button now check if your internet is okay if this method does not fix your computer you can follow the next computer you can follow the next procedure the second method this is the name of my laptop's wi-fi this is the name of my laptop's wi-fi driver the name of your laptop's wi-fi driver may be something else now go to the device manager of the computer my wi-fi driver is showing inside the network adapter now right click on this wi-fi driver and click on uninstall do not click on the delete option in any way here then click s",
+      "link": "https://www.youtube.com/watch?v=0_CIYgOz0jE",
+      "published": "",
       "source_type": "youtube",
-      "channel": "Upwork",
-      "video_id": "cz-rOhiMxmo",
-      "transcript_method": "description",
-      "transcript_chars": 156,
-      "has_full_transcript": false
-    },
-    {
-      "title": "[YT] Bedford County closes digital divide with $25 million boost in high-speed internet",
-      "summary": "[DESCRIPTION FALLBACK] Bedford County is making big strides in closing the digital divide with a major boost in high-speed internet access. Thanks to a ...",
-      "link": "https://www.youtube.com/watch?v=3qAfCKfQIUc",
-      "published": "2026-01-07T00:08:12Z",
-      "source_type": "youtube",
-      "channel": "WSLS 10",
-      "video_id": "3qAfCKfQIUc",
-      "transcript_method": "description",
-      "transcript_chars": 155,
-      "has_full_transcript": false
-    },
-    {
-      "title": "[YT] IDIA Bridges the Digital Divide | Verizon",
-      "summary": "[DESCRIPTION FALLBACK] Systemic poverty deepens the digital divide, but IDIA and Verizon can move mountains. Through critical partnerships, IDIA ...",
-      "link": "https://www.youtube.com/watch?v=f0YlO17l9dg",
-      "published": "2026-02-11T15:54:33Z",
-      "source_type": "youtube",
-      "channel": "Verizon Business",
-      "video_id": "f0YlO17l9dg",
-      "transcript_method": "description",
-      "transcript_chars": 148,
-      "has_full_transcript": false
+      "channel": "",
+      "video_id": "0_CIYgOz0jE",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1000,
+      "has_full_transcript": true
     }
   ],
   "analysis": {
-    "problem": "Insufficient access to digital tools and high-speed internet for all people, exacerbating the digital divide",
-    "root_cause": "Systemic poverty and lack of investment in digital infrastructure, particularly in underserved areas",
-    "severity": "MEDIUM",
-    "leverage_points": [
-      "Government agencies and policymakers",
-      "Non-profit organizations and private companies investing in digital infrastructure"
-    ],
-    "proposed_actions": [
-      {
-        "action": "Implement programs to increase access to affordable high-speed internet and digital devices",
-        "measurable_goal": "Reduce the number of households without internet access by 20% within the next 12 months",
-        "timeframe": "medium-term"
-      },
-      {
-        "action": "Support non-profit organizations working to close the digital divide",
-        "measurable_goal": "Increase the number of people served by these organizations by 30% within the next 18 months",
-        "timeframe": "medium-term"
-      }
-    ],
+    "problem": "Анализ на TECHNOLOGY_INFRA_REVIEW — данни получени но LLM грешка",
+    "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: None",
+    "severity": "UNKNOWN",
+    "leverage_points": [],
+    "proposed_actions": [],
     "evidence": [
-      "Bedford County closes digital divide with $25 million boost in high-speed internet",
-      "IDIA Bridges the Digital Divide | Verizon"
+      "How I Get Free Traffic from ChatGPT in 2025 (AIO vs SEO)",
+      "Top 10 AI Tools That Will Transform Your Content Creation in 2025",
+      "LimeWire AI Studio Review 2023: Details, Pricing & Features"
     ],
-    "generalization": "This problem connects to the domains of Civilization and Biosphere, as it affects the overall well-being and economic opportunities of individuals and communities, which in turn can impact the health of the planet",
-    "summary": "The digital divide remains a significant problem, with many people lacking access to high-speed internet and digital tools, but efforts by governments, non-profits, and private companies can help address this issue",
-    "risk_level": "MEDIUM"
+    "generalization": "",
+    "summary": "- How I Get Free Traffic from ChatGPT in 2025 (AIO vs SEO): <p style=\"text-align: left;\">Three weeks ago, I tested something that completely changed how I think about organic traffic. I opened ChatGPT",
+    "risk_level": "UNKNOWN",
+    "trend": "UNKNOWN",
+    "llm_raw": ""
   },
   "raw_items": [
     {
@@ -102,56 +67,44 @@
       "source_type": "rss"
     },
     {
-      "title": "The Most Promising Ebola Vaccine Has Been Sitting on the Shelf for 15 Years",
-      "summary": "Years after initial tests, researchers are now racing to see if a vaccine developed in 2011 can help fight the current Bundibugyo outbreak in Congo.",
-      "link": "https://www.wired.com/story/ebola-vaccine-sitting-on-shelf-for-15-years/",
-      "published": "Fri, 19 Jun 2026 14:23:43 +0000",
+      "title": "Home Batteries: How They're Installed and How Much They Cost",
+      "summary": "After adding one to my home, here's why you might want a home battery, how they work, and what to look for, plus some installation tips.",
+      "link": "https://www.wired.com/story/how-to-buy-a-home-battery/",
+      "published": "Sat, 20 Jun 2026 11:00:00 +0000",
       "source_type": "rss"
     },
     {
-      "title": "The Best iPad to Buy (and Some to Avoid) in 2026: Compare the Air, Pro, Mini",
-      "summary": "We break down the current iPad lineup to help you figure out which of Apple’s tablets is best for you.",
-      "link": "https://www.wired.com/gallery/the-best-ipad/",
-      "published": "Fri, 19 Jun 2026 12:00:00 +0000",
+      "title": "I Found 29 Early Prime Day Deals That Are Worth Shopping Now (2026)",
+      "summary": "We’ve trawled the depths of Amazon to find the best deals on gear we’ve tested.",
+      "link": "https://www.wired.com/story/early-prime-day-deals-june-2026-2/",
+      "published": "Sat, 20 Jun 2026 10:38:00 +0000",
       "source_type": "rss"
     },
     {
-      "title": "Best Mesh Wi-Fi Systems (2026): Netgear, Asus, Amazon, and More",
-      "summary": "Forget about patchy internet connections and dead spots in the house. These WIRED-tested multiroom mesh systems will get you online in no time.",
-      "link": "https://www.wired.com/story/best-mesh-wifi-routers/",
-      "published": "Fri, 19 Jun 2026 11:31:00 +0000",
+      "title": "16 Best Greens Powders (2026): Taste-Tested for Months",
+      "summary": "I did the research and taste-testing to find the best greens powders worth your money. Bloom Nutrition’s Superfood Greens Powder is my tried-and-true pick.",
+      "link": "https://www.wired.com/gallery/best-greens-powders/",
+      "published": "Sat, 20 Jun 2026 10:31:00 +0000",
       "source_type": "rss"
     },
     {
-      "title": "The Best Art TVs",
-      "summary": "Even after your movies end, these art televisions look stunning on any wall.",
-      "link": "https://www.wired.com/story/best-art-tvs/",
-      "published": "Fri, 19 Jun 2026 11:00:00 +0000",
+      "title": "Siri AI Hands On: A Smart, Helpful Assistant",
+      "summary": "The new Siri AI is conversational, omnipresent, and actually helpful.",
+      "link": "https://www.wired.com/story/siri-ai-hands-on-iphone/",
+      "published": "Sat, 20 Jun 2026 10:00:00 +0000",
       "source_type": "rss"
     },
     {
-      "title": "[YT] Closing the Digital Divide: How Upwork Supports Human-I-T’s Social Mission",
-      "summary": "[DESCRIPTION FALLBACK] Human-I-T is a nonprofit social enterprise committed to ensuring everybody in the world has access to the digital tools they need ...",
-      "link": "https://www.youtube.com/watch?v=cz-rOhiMxmo",
-      "published": "2026-02-27T19:47:23Z",
+      "title": "[YT] Fix windows 7 no internet access but connected ethernet - YouTube",
+      "summary": "my laptop is showing wi-fi no internet my laptop is showing wi-fi no internet access if you are in trouble like me then see how to solve the first method go to computer control panel now open the internet option then go to the advanced option and click on the reset button now check if your internet is okay if this method does not fix your computer you can follow the next computer you can follow the next procedure the second method this is the name of my laptop's wi-fi this is the name of my laptop's wi-fi driver the name of your laptop's wi-fi driver may be something else now go to the device manager of the computer my wi-fi driver is showing inside the network adapter now right click on this wi-fi driver and click on uninstall do not click on the delete option in any way here then click s",
+      "link": "https://www.youtube.com/watch?v=0_CIYgOz0jE",
+      "published": "",
       "source_type": "youtube",
-      "channel": "Upwork",
-      "video_id": "cz-rOhiMxmo",
-      "transcript_method": "description",
-      "transcript_chars": 156,
-      "has_full_transcript": false
-    },
-    {
-      "title": "[YT] Bedford County closes digital divide with $25 million boost in high-speed internet",
-      "summary": "[DESCRIPTION FALLBACK] Bedford County is making big strides in closing the digital divide with a major boost in high-speed internet access. Thanks to a ...",
-      "link": "https://www.youtube.com/watch?v=3qAfCKfQIUc",
-      "published": "2026-01-07T00:08:12Z",
-      "source_type": "youtube",
-      "channel": "WSLS 10",
-      "video_id": "3qAfCKfQIUc",
-      "transcript_method": "description",
-      "transcript_chars": 155,
-      "has_full_transcript": false
+      "channel": "",
+      "video_id": "0_CIYgOz0jE",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1000,
+      "has_full_transcript": true
     }
   ]
 }

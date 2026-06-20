@@ -1,37 +1,18 @@
 {
   "axis": "SPACE_INFRASTRUCTURE_REVIEW",
-  "fetched_at": "2026-06-20T07:31:33.374609+00:00",
+  "fetched_at": "2026-06-20T11:18:25.819469+00:00",
   "smart_query": "space exploration NASA SpaceX",
   "sources_count": {
     "wiki": 0,
     "rss": 0,
-    "gdelt": 3,
+    "gdelt": 0,
     "arxiv": 2,
     "github": 3,
     "youtube_transcripts": 3,
     "podcast": 1
   },
   "rss": [],
-  "gdelt": [
-    {
-      "title": "With new patch design , the Crew - 13 astronauts clearly arent superstitious",
-      "snippet": "With new patch design , the Crew - 13 astronauts clearly arent superstitious",
-      "url": "https://arstechnica.com/space/2026/04/nasas-spacex-crew-13-pays-homage-to-apollo-13-on-mission-patch/",
-      "source": "arstechnica.com"
-    },
-    {
-      "title": "NASA reveals Crew - 13 mission astronauts heading to ISS",
-      "snippet": "NASA reveals Crew - 13 mission astronauts heading to ISS",
-      "url": "https://www.wesh.com/article/nasa-spacex-crew-13-astronauts-iss-launch-florida/71122121",
-      "source": "wesh.com"
-    },
-    {
-      "title": "NASA schimbă planul pentru Artemis III . Aselenizarea este amânată pentru următoarea misiune",
-      "snippet": "NASA schimbă planul pentru Artemis III . Aselenizarea este amânată pentru următoarea misiune",
-      "url": "https://www.mediafax.ro/externe/nasa-schimba-planul-pentru-artemis-iii-aselenizarea-este-amanata-pentru-urmatoarea-misiune-23737036",
-      "source": "mediafax.ro"
-    }
-  ],
+  "gdelt": [],
   "github_repos": [
     {
       "title": "KOSASIH/stable-pi-core",
@@ -76,14 +57,14 @@
   "wiki": null,
   "youtube_items": [
     {
-      "title": "[YT] NASA vs SpaceX vs China — The Final Race for Space Supremacy (1957 – 2025)",
-      "summary": "[DESCRIPTION FALLBACK] From NASA's Cold War dominance to SpaceX's private revolution and China's rising space ambitions, the world has witnessed an ...",
-      "link": "https://www.youtube.com/watch?v=Gt24_T56km8",
+      "title": "[YT] How NASA Will Build A City On The Moon",
+      "summary": "[DESCRIPTION FALLBACK] We are going to the Moon. And we're going there to stay this time. Last Video: What Exactly Happened On SpaceX's TENTH ...",
+      "link": "https://www.youtube.com/watch?v=ATgwz_hS3Qg",
       "source_type": "youtube",
-      "channel": "Timelapse World TV",
-      "video_id": "Gt24_T56km8",
+      "channel": "The Space Race",
+      "video_id": "ATgwz_hS3Qg",
       "transcript_method": "description",
-      "transcript_chars": 151,
+      "transcript_chars": 145,
       "has_full_transcript": false
     },
     {
@@ -98,18 +79,18 @@
       "has_full_transcript": false
     },
     {
-      "title": "[YT] Why is SpaceX Building the BIGGEST ROCKET EVER?",
-      "summary": "[DESCRIPTION FALLBACK] Starship is 123 meters tall - that's about as tall as a 40 story building! The plan is to prove you can reuse Starship, reducing launch ...",
-      "link": "https://www.youtube.com/watch?v=WbyZUtj4kV4",
+      "title": "[YT] NASA vs SpaceX vs China — The Final Race for Space Supremacy (1957 – 2025)",
+      "summary": "[DESCRIPTION FALLBACK] From NASA's Cold War dominance to SpaceX's private revolution and China's rising space ambitions, the world has witnessed an ...",
+      "link": "https://www.youtube.com/watch?v=Gt24_T56km8",
       "source_type": "youtube",
-      "channel": "Cleo Abram",
-      "video_id": "WbyZUtj4kV4",
+      "channel": "Timelapse World TV",
+      "video_id": "Gt24_T56km8",
       "transcript_method": "description",
-      "transcript_chars": 162,
+      "transcript_chars": 151,
       "has_full_transcript": false
     }
   ],
-  "summary": "[GDELT News]\n- With new patch design , the Crew - 13 astronauts clearly arent superstitious\n- NASA reveals Crew - 13 mission astronauts heading to ISS\n\n[arXiv]\n- The Lazuli Space Observatory: Opportun",
+  "summary": "[arXiv]\n- The Lazuli Space Observatory: Opportunities for time-domain and multi-messenger astronomy\n- Revealing Cosmic Ecosystems with the Hubble Space Telescope in 2030s and Beyond\n\n[GitHub]\n- KOSASI",
   "urgency": "LOW",
   "sentiment": "NEUTRAL",
   "key_developments": [],

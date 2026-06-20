@@ -1,52 +1,65 @@
 {
   "axis": "EDUCATION_CULTURE_REVIEW",
   "domain": "civilization",
-  "timestamp": "2026-06-20T05:39:00.700465+00:00",
-  "sources_count": 5,
+  "timestamp": "2026-06-20T12:06:23.118512+00:00",
+  "sources_count": 7,
   "rss_count": 0,
   "ddg_count": 4,
-  "youtube_count": 1,
+  "youtube_count": 3,
   "youtube_items": [
     {
-      "title": "[YT] 2025 UNESCO Confucius Prize for Literacy highlights global ...UNESCO - YouTubeLiteracy - UNESCOUNESCO in action: Education highlights in 2025 | UNESCOGlobal trends and the future of education in 2025 ... - OECDUNESCO strategy for youth and adult literacy (2020-2025)Reflection on the UNESCO Global Conference on Literacy 2025 - UEA",
-      "summary": "[DESCRIPTION FALLBACK] The ceremony marked two decades of honoring inclusive education and lifelong learning, while also opening this year's Confucius Cultural Festival. Building on collaboration among more than 20 leading research institutions, this report compiles data from all UNESCO-designated sites to assess their contributions to climate stability, human... Explore how multilingual education has profoundly impacted the development of diverse communities, fostering greater understanding, inclusion, and peace acro",
-      "link": "https://www.youtube.com/watch?v=-SG9a5M-KCI",
-      "published": "",
+      "title": "[YT] Is inequality inevitable?",
+      "summary": "foreign [Music] South Africa one of the most unequal countries in the world the richest one-tenth of one percent owns almost 30 percent of all the country's wealth more than double what the bottom 90 percent owns income and wealth inequality are not new in fact economists and historians who've charted economic inequality throughout history haven't found a single Society without it which raises a bleak question is inequality inevitable one way to estimate inequality is with a number called the genie index which is calculated by comparing the income or wealth distribution of a perfectly equal Society to the actual income or wealth distribution the area of this shape multiplied by two is the genie index a genie of one indicates perfect inequality one person has everything and everyone else ha",
+      "link": "https://www.youtube.com/watch?v=rEnf_CFoyv0",
+      "published": "2022-10-11T15:01:01Z",
       "source_type": "youtube",
-      "channel": "",
-      "video_id": "-SG9a5M-KCI",
-      "transcript_method": "description",
-      "transcript_chars": 523,
-      "has_full_transcript": false
+      "channel": "TED-Ed",
+      "video_id": "rEnf_CFoyv0",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1126,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Why Are Schools Still So Segregated?",
+      "summary": "[Music] if you've ever taken a US history class you've most likely seen photos like these ones that might give the impression that school segregation used to be a big problem and then we took care of it and now it's a thing of the past today America's school-age population is more racially diverse than ever before and that all might lead you to assume that America's classrooms are a whole lot more mix than they used to be progress right there's been all these stories in the news that basically say that schools are actually getting more racially segregated the most recent data shows the average white student goes to a school that's more than 70% white the study ordered by Congress found the percentage of high poverty schools with mostly black or hispanic students has more than doubled since",
+      "link": "https://www.youtube.com/watch?v=v2TG9n0vc-4",
+      "published": "2018-02-07T18:02:47Z",
+      "source_type": "youtube",
+      "channel": "Above The Noise",
+      "video_id": "v2TG9n0vc-4",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1198,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Neocons Move to Merge CIA &amp; Mossad While Netanyahu Desperately Begs Trump Not to Leave His Side",
+      "summary": "Thanks for doing this. &gt;&gt; Thank you for having me. &gt;&gt; Um, is this deal real? &gt;&gt; I think so. I think this is a significant achievement, but nothing is fully real until they manage to get to the final agreement. And we already have a precedent in which we also see that when there was a final agreement, which there was in 2015 that Obama struck, it didn't mean that it necessarily would last because Trump walked out of that deal. So, if this is something we want, we have to work at it. We have to work to keep it. These things are not part of the background that you can keep without putting any effort into it. And right now we're not even halfway to the distance, but this is an important &gt;&gt; So, what are the key deal points as they're emerging to the extent we know &gt;&g",
+      "link": "https://www.youtube.com/watch?v=BeScodaLjkg",
+      "published": "2026-06-15T21:28:11Z",
+      "source_type": "youtube",
+      "channel": "Tucker Carlson",
+      "video_id": "BeScodaLjkg",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 959,
+      "has_full_transcript": true
     }
   ],
   "analysis": {
-    "problem": "Insufficient progress in increasing access to quality education, with persistent inequalities in education outcomes across the world",
-    "root_cause": "Inadequate investment in education infrastructure, lack of qualified teachers, and socio-economic disparities",
-    "severity": "MEDIUM",
-    "leverage_points": [
-      "Government policies and funding for education",
-      "International organizations such as UNESCO and OECD"
-    ],
-    "proposed_actions": [
-      {
-        "action": "Increase funding for education programs and infrastructure development",
-        "measurable_goal": "10% increase in education budget allocation within the next 2 years",
-        "timeframe": "medium-term"
-      },
-      {
-        "action": "Implement teacher training and qualification programs",
-        "measurable_goal": "25% increase in qualified teachers in underserved areas within the next 5 years",
-        "timeframe": "long-term"
-      }
-    ],
+    "problem": "Анализ на EDUCATION_CULTURE_REVIEW — данни получени но LLM грешка",
+    "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: None",
+    "severity": "UNKNOWN",
+    "leverage_points": [],
+    "proposed_actions": [],
     "evidence": [
-      "The world has made progress in increasing basic education, but also faces challenges in improving education quality and access",
-      "UNESCO strategy for youth and adult literacy (2020-2025) highlights the need for inclusive education and lifelong learning"
+      "Global education",
+      "Global Education - Our World in Data",
+      "Literacy"
     ],
-    "generalization": "This problem connects to the domains of PLANETA (as education is linked to environmental sustainability and resource management) and CHOVEK (as education is crucial for human development and dignity)",
-    "summary": "The world is facing challenges in improving access to quality education, with persistent inequalities in education outcomes, and requires increased investment and international cooperation to address these issues. Government policies and funding for education are key leverage points to drive progress.",
-    "risk_level": "MEDIUM"
+    "generalization": "",
+    "summary": "- Global education: Global education is a mental development program that seeks to improve global human development based on the understanding of global dynamics, through the various sectors of human ",
+    "risk_level": "UNKNOWN",
+    "trend": "UNKNOWN",
+    "llm_raw": ""
   },
   "raw_items": [
     {
@@ -57,7 +70,7 @@
     },
     {
       "title": "Global Education - Our World in Data",
-      "summary": "Explore data and insights on education outcomes, access, quality, and inequalities across the world. Learn how the world has made progress in increasing basic education, but also faces challenges in improving learning and reducing gaps.",
+      "summary": "Hannah Ritchie, Veronika Samborska, Esteban Ortiz-Ospina, and Max Roser (2023) - “Global Education” Published online at OurWorldinData.org.",
       "link": "https://ourworldindata.org/global-education",
       "source_type": "ddg"
     },
@@ -68,22 +81,46 @@
       "source_type": "ddg"
     },
     {
-      "title": "Reflections On Literacy. When many people hear the word | ROVER",
-      "summary": "But literacy can indeed be defined as “the ability to read and write”, so most people are not wrong to think that literacy is about reading. Literacy is definitely about reading...",
-      "link": "https://rover.whoistheo.com/reflections-on-literacy-9e12d77232c2",
+      "title": "Find and save ideas about parent literacy night activities on Pinterest.",
+      "summary": "Discover Pinterest’s best ideas and inspiration for Parent literacy night activities. Get inspired and try out new things.Family Literacy Night Activities It's A Lawn Party!",
+      "link": "https://www.pinterest.com/ideas/parent-literacy-night-activities/934162777449/",
       "source_type": "ddg"
     },
     {
-      "title": "[YT] 2025 UNESCO Confucius Prize for Literacy highlights global ...UNESCO - YouTubeLiteracy - UNESCOUNESCO in action: Education highlights in 2025 | UNESCOGlobal trends and the future of education in 2025 ... - OECDUNESCO strategy for youth and adult literacy (2020-2025)Reflection on the UNESCO Global Conference on Literacy 2025 - UEA",
-      "summary": "[DESCRIPTION FALLBACK] The ceremony marked two decades of honoring inclusive education and lifelong learning, while also opening this year's Confucius Cultural Festival. Building on collaboration among more than 20 leading research institutions, this report compiles data from all UNESCO-designated sites to assess their contributions to climate stability, human... Explore how multilingual education has profoundly impacted the development of diverse communities, fostering greater understanding, inclusion, and peace acro",
-      "link": "https://www.youtube.com/watch?v=-SG9a5M-KCI",
-      "published": "",
+      "title": "[YT] Is inequality inevitable?",
+      "summary": "foreign [Music] South Africa one of the most unequal countries in the world the richest one-tenth of one percent owns almost 30 percent of all the country's wealth more than double what the bottom 90 percent owns income and wealth inequality are not new in fact economists and historians who've charted economic inequality throughout history haven't found a single Society without it which raises a bleak question is inequality inevitable one way to estimate inequality is with a number called the genie index which is calculated by comparing the income or wealth distribution of a perfectly equal Society to the actual income or wealth distribution the area of this shape multiplied by two is the genie index a genie of one indicates perfect inequality one person has everything and everyone else ha",
+      "link": "https://www.youtube.com/watch?v=rEnf_CFoyv0",
+      "published": "2022-10-11T15:01:01Z",
       "source_type": "youtube",
-      "channel": "",
-      "video_id": "-SG9a5M-KCI",
-      "transcript_method": "description",
-      "transcript_chars": 523,
-      "has_full_transcript": false
+      "channel": "TED-Ed",
+      "video_id": "rEnf_CFoyv0",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1126,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Why Are Schools Still So Segregated?",
+      "summary": "[Music] if you've ever taken a US history class you've most likely seen photos like these ones that might give the impression that school segregation used to be a big problem and then we took care of it and now it's a thing of the past today America's school-age population is more racially diverse than ever before and that all might lead you to assume that America's classrooms are a whole lot more mix than they used to be progress right there's been all these stories in the news that basically say that schools are actually getting more racially segregated the most recent data shows the average white student goes to a school that's more than 70% white the study ordered by Congress found the percentage of high poverty schools with mostly black or hispanic students has more than doubled since",
+      "link": "https://www.youtube.com/watch?v=v2TG9n0vc-4",
+      "published": "2018-02-07T18:02:47Z",
+      "source_type": "youtube",
+      "channel": "Above The Noise",
+      "video_id": "v2TG9n0vc-4",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1198,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Neocons Move to Merge CIA &amp; Mossad While Netanyahu Desperately Begs Trump Not to Leave His Side",
+      "summary": "Thanks for doing this. &gt;&gt; Thank you for having me. &gt;&gt; Um, is this deal real? &gt;&gt; I think so. I think this is a significant achievement, but nothing is fully real until they manage to get to the final agreement. And we already have a precedent in which we also see that when there was a final agreement, which there was in 2015 that Obama struck, it didn't mean that it necessarily would last because Trump walked out of that deal. So, if this is something we want, we have to work at it. We have to work to keep it. These things are not part of the background that you can keep without putting any effort into it. And right now we're not even halfway to the distance, but this is an important &gt;&gt; So, what are the key deal points as they're emerging to the extent we know &gt;&g",
+      "link": "https://www.youtube.com/watch?v=BeScodaLjkg",
+      "published": "2026-06-15T21:28:11Z",
+      "source_type": "youtube",
+      "channel": "Tucker Carlson",
+      "video_id": "BeScodaLjkg",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 959,
+      "has_full_transcript": true
     }
   ]
 }

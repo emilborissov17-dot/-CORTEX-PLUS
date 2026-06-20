@@ -1,52 +1,41 @@
 {
   "axis": "ECONOMY_WORK_REVIEW",
   "domain": "civilization",
-  "timestamp": "2026-06-20T05:38:07.870671+00:00",
+  "timestamp": "2026-06-20T12:04:36.261940+00:00",
   "sources_count": 9,
   "rss_count": 8,
   "ddg_count": 0,
   "youtube_count": 1,
   "youtube_items": [
     {
-      "title": "[YT] The AI Safety Expert: These Are The Only 5 Jobs That Will... - YouTube",
-      "summary": "[DESCRIPTION FALLBACK] WARNING: AI could end humanity, and we’re completely unprepared. Dr. Roman Yampolskiy reveals how AI will take 99% of jobs, why Sam Altman is ignoring safety...",
-      "link": "https://www.youtube.com/watch?v=UclrVWafRAI",
+      "title": "[YT] STOP wasting your LIFE (2026) - YouTube",
+      "summary": "do you know what day of the week do you know what day of the week you are most likely to die from a heart are most likely to die from a heart attack take a guess i'll give you a second it's monday it's monday [Music] karen guess what time it is between 8 00 and 9 00 am do you know what else happens monday at do you know what else happens monday at 8 that is the same day and time people get ready to go into jobs they hate they hate coincidence i don't think so take a look at this chart take a look at this chart this is the lifespan of the average person on average we live about 80 years if we're lucky we start working at about 18 and we work work work and retire at about 67. now what does this tell you that for better or for worse the majority of your life will be spent at work do not spend",
+      "link": "https://www.youtube.com/watch?v=M2NDQOgGycg",
       "published": "",
       "source_type": "youtube",
       "channel": "",
-      "video_id": "UclrVWafRAI",
-      "transcript_method": "description",
-      "transcript_chars": 183,
-      "has_full_transcript": false
+      "video_id": "M2NDQOgGycg",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 837,
+      "has_full_transcript": true
     }
   ],
   "analysis": {
-    "problem": "Rising public borrowing and increasing interest rates on student loans may exacerbate economic inequality and limit access to education",
-    "root_cause": "Inadequate fiscal planning and management of public finances, combined with rising costs and inflation",
-    "severity": "MEDIUM",
-    "leverage_points": [
-      "Government economic policies and budget allocation",
-      "Central bank monetary policy and interest rate decisions"
-    ],
-    "proposed_actions": [
-      {
-        "action": "Implement fiscal responsibility measures to reduce public borrowing",
-        "measurable_goal": "Achieve a 10% reduction in public borrowing within the next 12 months",
-        "timeframe": "medium-term"
-      },
-      {
-        "action": "Introduce income-based repayment plans for student loans",
-        "measurable_goal": "Increase the number of students able to repay their loans on time by 20% within the next 2 years",
-        "timeframe": "medium-term"
-      }
-    ],
+    "problem": "Анализ на ECONOMY_WORK_REVIEW — данни получени но LLM грешка",
+    "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: None",
+    "severity": "UNKNOWN",
+    "leverage_points": [],
+    "proposed_actions": [],
     "evidence": [
-      "The UK borrowed £23.3bn in May, up almost a third on the same month last year",
-      "Rates on New Student Loans Will Rise on July 1"
+      "Plans to end gazumping with binding agreements in house sales shake-up",
+      "O'Leary extends Ryanair contract in deal that could net him over £130m",
+      "Warning over 'fragile' public finances as borrowing rises"
     ],
-    "generalization": "This problem connects to the domains of PLANET (resource management) and HUMAN (education and social mobility), as economic instability and limited access to education can have far-reaching consequences for individual well-being and societal prosperity",
-    "summary": "Rising public borrowing and increasing interest rates on student loans pose a medium-severity problem, requiring fiscal responsibility measures and income-based repayment plans to mitigate economic inequality and promote access to education",
-    "risk_level": "MEDIUM"
+    "generalization": "",
+    "summary": "- Plans to end gazumping with binding agreements in house sales shake-up: Sales agreements will be legally binding sooner and making sellers provide more home information up front are part of the plan",
+    "risk_level": "UNKNOWN",
+    "trend": "UNKNOWN",
+    "llm_raw": ""
   },
   "raw_items": [
     {
@@ -78,44 +67,44 @@
       "source_type": "rss"
     },
     {
-      "title": "Amazon’s Movie Arm Abandons Film About OpenAI",
-      "summary": "The company, which invested $50 billion in the artificial intelligence start-up this year, will let the team behind the film, “Artificial,” try to sell the project to another studio.",
-      "link": "https://www.nytimes.com/2026/06/19/business/media/amazon-openai-artificial-movie-sam-altman.html",
-      "published": "Sat, 20 Jun 2026 00:11:02 +0000",
+      "title": "Mines, Logistics and Deep Uncertainty Threaten a Middle East Oil Rebound",
+      "summary": "More oil is getting out of the Persian Gulf, but the region’s producers are looking for signs that it is safe as they ramp up plans for alternative routes.",
+      "link": "https://www.nytimes.com/2026/06/20/business/iran-us-persian-gulf-oil-production.html",
+      "published": "Sat, 20 Jun 2026 09:02:32 +0000",
       "source_type": "rss"
     },
     {
-      "title": "For India, the Return of Iranian Oil Cannot Come Soon Enough",
-      "summary": "After months of shortages and uncertainty, India sees an opportunity to restore a once-crucial energy relationship.",
-      "link": "https://www.nytimes.com/2026/06/19/business/india-iran-oil-imports.html",
-      "published": "Fri, 19 Jun 2026 13:17:59 +0000",
+      "title": "Egg Prices Are Way Down, but That’s Hurting Farmers",
+      "summary": "An oversupply of hens has lowered wholesale egg prices. But consumers may not reap the full benefits because of producer contracts and higher costs.",
+      "link": "https://www.nytimes.com/2026/06/20/business/egg-prices-down.html",
+      "published": "Sat, 20 Jun 2026 09:01:46 +0000",
       "source_type": "rss"
     },
     {
-      "title": "Rates on New Student Loans Will Rise on July 1",
-      "summary": "Higher interest rates take effect on July 1 for the next school year. Borrowers are already dealing with rising college costs and inflation elsewhere.",
-      "link": "https://www.nytimes.com/2026/06/19/your-money/student-loans-interest-rates-changes.html",
-      "published": "Fri, 19 Jun 2026 13:00:04 +0000",
+      "title": "The Giant Test Kitchen Where Cooks Battle A.I. Slop",
+      "summary": "People Inc., the home of Food & Wine and Southern Living, publishes more food content than anyone else. It’s pushing back against the bots with recipes from its culinary hub.",
+      "link": "https://www.nytimes.com/2026/06/20/business/media/people-inc-ai-test-kitchen.html",
+      "published": "Sat, 20 Jun 2026 09:00:43 +0000",
       "source_type": "rss"
     },
     {
-      "title": "Oil Prices Rise as U.S.-Iran Deal Faces Tests",
-      "summary": "Oil remains on track for a second straight weekly decline, but signs of cracks in the agreement to end the war have given traders pause.",
-      "link": "https://www.nytimes.com/2026/06/19/business/oil-gas-prices-iran.html",
-      "published": "Fri, 19 Jun 2026 23:51:26 +0000",
+      "title": "Cottage Cheese Shortages Are Driven by TikTok and ‘Protein-Maxxing’",
+      "summary": "TikTok and “protein-maxxing” are driving a cottage cheese squeeze that’s left some consumers desperate.",
+      "link": "https://www.nytimes.com/2026/06/20/business/cottage-cheese-shortage.html",
+      "published": "Sat, 20 Jun 2026 09:00:22 +0000",
       "source_type": "rss"
     },
     {
-      "title": "[YT] The AI Safety Expert: These Are The Only 5 Jobs That Will... - YouTube",
-      "summary": "[DESCRIPTION FALLBACK] WARNING: AI could end humanity, and we’re completely unprepared. Dr. Roman Yampolskiy reveals how AI will take 99% of jobs, why Sam Altman is ignoring safety...",
-      "link": "https://www.youtube.com/watch?v=UclrVWafRAI",
+      "title": "[YT] STOP wasting your LIFE (2026) - YouTube",
+      "summary": "do you know what day of the week do you know what day of the week you are most likely to die from a heart are most likely to die from a heart attack take a guess i'll give you a second it's monday it's monday [Music] karen guess what time it is between 8 00 and 9 00 am do you know what else happens monday at do you know what else happens monday at 8 that is the same day and time people get ready to go into jobs they hate they hate coincidence i don't think so take a look at this chart take a look at this chart this is the lifespan of the average person on average we live about 80 years if we're lucky we start working at about 18 and we work work work and retire at about 67. now what does this tell you that for better or for worse the majority of your life will be spent at work do not spend",
+      "link": "https://www.youtube.com/watch?v=M2NDQOgGycg",
       "published": "",
       "source_type": "youtube",
       "channel": "",
-      "video_id": "UclrVWafRAI",
-      "transcript_method": "description",
-      "transcript_chars": 183,
-      "has_full_transcript": false
+      "video_id": "M2NDQOgGycg",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 837,
+      "has_full_transcript": true
     }
   ]
 }

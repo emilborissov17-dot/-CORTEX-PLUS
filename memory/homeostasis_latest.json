@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-06-20T07:25:57.053553+00:00",
+  "timestamp": "2026-06-20T12:01:39.284909+00:00",
   "can_start": true,
   "abort_reason": null,
   "cycle_mode": "FULL",
@@ -7,8 +7,8 @@
   "skip_steps": [],
   "resource_needs": [],
   "self_awareness": [
-    "I am running on ?GB RAM laptop",
-    "RAM currently 0% used — 0.0GB available",
+    "I am running on 14.9GB RAM laptop",
+    "RAM currently 38% used — 9.1GB available",
     "LLM access: Groq=yes, Gemini=yes",
     "Network: connected",
     "My bottleneck: LLM rate limits",

@@ -1,52 +1,65 @@
 {
   "axis": "MATERIALS_WASTE_REVIEW",
   "domain": "planet",
-  "timestamp": "2026-06-20T05:36:05.148456+00:00",
-  "sources_count": 11,
+  "timestamp": "2026-06-20T12:03:42.035614+00:00",
+  "sources_count": 13,
   "rss_count": 4,
   "ddg_count": 6,
-  "youtube_count": 1,
+  "youtube_count": 3,
   "youtube_items": [
     {
-      "title": "[YT] What really happens to the plastic you throw away - Emma... - YouTube",
-      "summary": "[DESCRIPTION FALLBACK] About Press Copyright Contact us Creators Advertise Developers Terms Privacy Policy & Safety How YouTube works Test new features.",
-      "link": "https://www.youtube.com/watch?v=_6xlNyWPpB8",
-      "published": "",
+      "title": "[YT] Recycling Marine Plastic Waste A Circular Economy Case | Suzanna Laskaridis | TEDxAthens",
+      "summary": "In 2017, I was approached by a team of designers to help finance a project they were doing here in Greece. The aim was to reuse old fishing nets and turn them into filament for 3D and turn them into filament for 3D printers. I thought the idea of recycling marine plastic waste into something workable was absolutely fantastic. So, I started working in my mind the idea of how this could actually be idea of how this could actually be reused. We put together the best minds in the fields of marine plastic waste, new technologies, and circular economy and dove right in. We have a storage area just outside of Athens, so we started suggesting to various friends and NGOs and various other companies who had been collecting marine plastic waste up to that point that we take them back to our storage t",
+      "link": "https://www.youtube.com/watch?v=n_3vSDOY7iU",
+      "published": "2022-07-27T15:35:19Z",
       "source_type": "youtube",
-      "channel": "",
-      "video_id": "_6xlNyWPpB8",
-      "transcript_method": "description",
-      "transcript_chars": 152,
-      "has_full_transcript": false
+      "channel": "TEDx Talks",
+      "video_id": "n_3vSDOY7iU",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1113,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Circular economy for plastics",
+      "summary": "Since 1950 approximately 8.3 billion tons of plastics have been produced globally and 5-13 million tons of plastic waste seeps into our environment and oceans every year. The danish cleantech mechanical recycling company PLASTIX is specializing in converting plastic fibres primarily used fishnets, trawls and ropes that would previously have ended up in the ocean or landfill into high-quality and virgin-like Green Plastic raw materials. PLASTIX received a feasibility study grant from Nopef, a fund financed by the Nordic Council of Ministers and managed by Nefco to assess the South African market and, as a result, established a local subsidiary in 2017. Today, it obtains post-use discarded nets, trawls and other fishing gear from the South African market. PLASTIX is currently expanding its p",
+      "link": "https://www.youtube.com/watch?v=cZwRG7sXCKw",
+      "published": "2021-03-17T21:13:10Z",
+      "source_type": "youtube",
+      "channel": "Nefco - the Nordic Green Bank",
+      "video_id": "cZwRG7sXCKw",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1505,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Plastics Recycling - an important element of Circular Economy",
+      "summary": "[Music] Plastics are nowadays part of our life they are omnipresent in our homes in our toys electronic appliances and Furniture in our cars sports equipment medical equipment or simply being used for food packaging however use of plastics results in waste generation recycling is not always possible due to a number of reasons such as lack of collection schemes or low recycling rates the EU produces 24 million tons of plastic waste per year yet only a quarter of this gets recycled luckily this scenario is changing and more and more plastic is being recycled in the EU plastic recycling is a sustainable and valuable activity promoting the efficient use of activity promoting the efficient use of Natural Resources recycling is a complex process that starts at our homes not all Plastics are the ",
+      "link": "https://www.youtube.com/watch?v=UcPqKg_82Rw",
+      "published": "2016-11-02T14:58:29Z",
+      "source_type": "youtube",
+      "channel": "Plastics Recyclers Europe",
+      "video_id": "UcPqKg_82Rw",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1183,
+      "has_full_transcript": true
     }
   ],
   "analysis": {
-    "problem": "Improper waste sorting and management of plastic waste",
-    "root_cause": "Lack of technical skills for managing hazardous waste, insufficient infrastructure, and inadequate education on proper waste sorting",
-    "severity": "MEDIUM",
-    "leverage_points": [
-      "Government and waste management organizations improving waste sorting infrastructure and education programs",
-      "Individuals and communities adopting proper waste sorting practices and promoting environmental awareness"
-    ],
-    "proposed_actions": [
-      {
-        "action": "Implementing standardized waste sorting protocols and educating the public through awareness campaigns",
-        "measurable_goal": "Increase proper waste sorting rates by 20% within the next 12 months",
-        "timeframe": "short-term"
-      },
-      {
-        "action": "Investing in research and development of new technologies for efficient plastic waste management",
-        "measurable_goal": "Reduce plastic waste in landfills by 15% within the next 24 months",
-        "timeframe": "medium-term"
-      }
-    ],
+    "problem": "Анализ на MATERIALS_WASTE_REVIEW — данни получени но LLM грешка",
+    "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: None",
+    "severity": "UNKNOWN",
+    "leverage_points": [],
+    "proposed_actions": [],
     "evidence": [
-      "The present world is now facing the challenge of proper management and resource recovery of the enormous amount of plastic waste",
-      "Improper waste sorting harms the environment and hinders recycling"
+      "EREF Auction Raises More Than $4 Million to Advance Waste and Recycling Research",
+      "Casella’s Roadmap for Renewable Energy and Driving a Circular Economy",
+      "June 2026 Business Report—Business Highlights from the Waste Leadership Summit"
     ],
-    "generalization": "This problem connects to the domains of Planet, Human, and Civilization, as it affects the health of the biosphere, human well-being, and the overall sustainability of civilization",
-    "summary": "Improper waste sorting and management of plastic waste pose a significant problem, requiring immediate attention and action from individuals, communities, and organizations to mitigate its environmental impacts",
-    "risk_level": "MEDIUM"
+    "generalization": "",
+    "summary": "- EREF Auction Raises More Than $4 Million to Advance Waste and Recycling Research: The Environmental Research &amp; Education Foundation (EREF) raised over $4 million during its 2026 Annual Charitabl",
+    "risk_level": "UNKNOWN",
+    "trend": "UNKNOWN",
+    "llm_raw": ""
   },
   "raw_items": [
     {
@@ -78,39 +91,39 @@
       "source_type": "rss"
     },
     {
-      "title": "2026 Trends to Watch: From Red Tape to a Circular Plastics Renaissance",
-      "summary": "December 22, 2025 - Packaging structures that are overly ... definitive trend to watch in 2026 for plastics and recycling is a shift toward radical simplification: Mono-Material designs....",
-      "link": "https://www.scgchemicals.com/en/articles/stories/2026-trends-watch-red-tape-circular-plastics-renaissance",
+      "title": "16 Biggest Environmental Problems of 2026 | Earth.Org",
+      "summary": "From the rise of AI and plastic pollution to fast fashion, here are 16 of the biggest environmental problems of 2026.",
+      "link": "https://earth.org/the-biggest-environmental-problems-of-our-lifetime/",
       "source_type": "ddg"
     },
     {
-      "title": "How climate change is reshaping the global plastic pollution | World Economic Forum",
-      "summary": "February 11, 2026 - Viewed through this lens, plastic ... face a systems-level challenge that calls for coordinated approaches across climate action, materials design and environmental governance....",
-      "link": "https://www.weforum.org/stories/2026/02/climate-change-reshaping-global-plastic-pollution-crisis/",
+      "title": "The world’s plastic pollution crisis, explained | National Geographic",
+      "summary": "Why was plastic invented? Plastics made from fossil fuels are just over a century old. Belgian chemist Leo Baekeland created the first fully synthetic plastic in 1907.",
+      "link": "https://www.nationalgeographic.com/environment/article/plastic-pollution",
       "source_type": "ddg"
     },
     {
-      "title": "Plastic Waste: Challenges and Opportunities to Mitigate Pollution and Effective Management - PMC",
-      "summary": "The present world is now facing the challenge of proper management and resource recovery of the enormous amount of plastic waste. Lack of technical skills for managing hazardous waste, insufficient infrastructure development for recycling and ...",
-      "link": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9857911/",
+      "title": "TONTOTON at UNOC3: A Certified Local Solution to the Global...",
+      "summary": "With global plastic waste export policies tightening, the urgency for local, effective, and scalable solutions has never been greater. TONTOTON's work is driven by a deep commitment to Cambodia's environmental future and the belief that lasting change is possible through collective action.",
+      "link": "https://www.linkedin.com/pulse/tontoton-unoc3-certified-local-solution-global-plastic-waste-fqawf",
       "source_type": "ddg"
     },
     {
-      "title": "Environmental Impact of Improper Waste Sorting",
-      "summary": "Improper waste sorting harms the environment and hinders recycling.Think beyond your bin: Encourage others to sort their waste and treat public spaces as part of the shared environment, because small actions add up to a cleaner future for everyone.",
-      "link": "https://www.linkedin.com/top-content/engineering/environmental-engineering-waste-management/environmental-impact-of-improper-waste-sorting/",
+      "title": "Environmental and health implications of improper waste ...",
+      "summary": "While astounding cities promise employment and opportunities, they do not seem to be able to keep up with the magnifying concern of waste management. This research looks at the implications of poor waste management on the demography as well as on the environment’s state and public health.",
+      "link": "https://wjarr.com/sites/default/files/fulltext_pdf/WJARR-2025-0713.pdf",
       "source_type": "ddg"
     },
     {
-      "title": "Impact of Improper Waste Sorting on Environment and Health...",
-      "summary": "How waste sorting helps the environment. When we sort, we allow materials to be reused. Fewer new resources need to be extracted, there’s less pollution, and less waste ends up in landfills. It’s a simple action with a huge impact.",
-      "link": "https://mwc.lv/impact-of-improper-waste-sorting-on-environment-and-health/",
+      "title": "Environmental Consequences Of Poor Waste Disposal: A Growing ...",
+      "summary": "Oct 18, 2025 · Poor waste disposal devastates ecosystems, pollutes water, harms wildlife, and threatens human health. Learn about this growing environmental crisis.",
+      "link": "https://shunwaste.com/article/how-does-improper-waste-management-affect-the-environment",
       "source_type": "ddg"
     },
     {
-      "title": "Frontiers | The impact of improper waste disposal on human health...",
-      "summary": "Environmentalists’ concern about improper waste disposal’s impact on human health and the environment has prompted studies in the United Kingdom.",
-      "link": "https://www.frontiersin.org/journals/sustainability/articles/10.3389/frsus.2024.1386047/full",
+      "title": "Hazardous waste management and one health approach - Frontiers",
+      "summary": "Oct 7, 2025 · In the context of solid waste management, the One Health approach highlights how improper handling of municipal, industrial, agricultural, or biomedical waste can simultaneously affect ecosystems, animals, and human populations.",
+      "link": "https://www.frontiersin.org/journals/public-health/articles/10.3389/fpubh.2025.1684269/full",
       "source_type": "ddg"
     }
   ]

@@ -1,101 +1,138 @@
 {
   "axis": "FOOD_REVIEW",
   "domain": "planet",
-  "timestamp": "2026-06-20T05:35:48.779533+00:00",
-  "sources_count": 7,
+  "timestamp": "2026-06-20T12:03:05.689809+00:00",
+  "sources_count": 9,
   "rss_count": 0,
   "ddg_count": 6,
-  "youtube_count": 1,
+  "youtube_count": 3,
   "youtube_items": [
     {
-      "title": "[YT] I Didn't Eat Food for 7 days. This is what happened to my... - YouTube",
-      "summary": "[DESCRIPTION FALLBACK] Go to https://DrinkLMNT.com/WhatIveLearned to get a free sampler pack with any purchase!Learn my optimized Fasting protocol here: https://bit.ly/FastToLas...",
-      "link": "https://www.youtube.com/watch?v=KSSBiNPZs8Q",
-      "published": "",
+      "title": "[YT] A world going hungry? How conflict and climate change disrupt global food supply | Business Beyond",
+      "summary": "The world is struggling to feed itself. A planet that once looked like it was winning the&nbsp; war on starvation is now heading for disaster. “There is one person dying from hunger every&nbsp; minute across Ethiopia, Kenya and Somalia.&nbsp;&nbsp; In West Africa, the region is facing&nbsp; its worst hunger crisis in a decade But when there’s never been more food and there’s&nbsp; never been more farming, how is this possible? It's an extraordinary situation, isn't it? A world&nbsp; of great abundance. I mean, we have a massive&nbsp;&nbsp; surplus of food, twice as many calories are&nbsp; produced than humans need to support themselves,&nbsp;&nbsp; and yet we see rising hunger once again Keep watching to find out what brought&nbsp;&nbsp; us here. Was it the war in Ukraine?&nbsp; Was it env",
+      "link": "https://www.youtube.com/watch?v=5YcvKvxWaCE",
+      "published": "2022-07-05T15:15:16Z",
       "source_type": "youtube",
-      "channel": "",
-      "video_id": "KSSBiNPZs8Q",
-      "transcript_method": "description",
-      "transcript_chars": 180,
-      "has_full_transcript": false
+      "channel": "DW News",
+      "video_id": "5YcvKvxWaCE",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 2099,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] FoodSystems 2030: Transforming Food Systems for People, Planet, and Prosperity",
+      "summary": "Hunger is on the rise with over 295 million people facing severe food insecurity in 2024. Current food systems generate a third of global emissions and drive the loss of forest and biodiversity. Meeting sustainable development goals require shifting towards a more circular economy. So every part of the food system delivers better outcomes from farm to table. To achieve this, the World Bank leads Food Systems 2030, a multi-donor trust fund that is rebuilding food systems. Food systems 2030 targets every stage in the food value chain to ensure a healthier people, planet, [music] and economy. Food Systems 2030 envisions a world where by 2030 people can afford a healthy and sustainable diet and have healthier lives with less illness and disease. This means working across all aspects of food sy",
+      "link": "https://www.youtube.com/watch?v=nHSEZlJ08aM",
+      "published": "2025-11-15T15:01:39Z",
+      "source_type": "youtube",
+      "channel": "World Bank Group",
+      "video_id": "nHSEZlJ08aM",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1192,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] What Earth in 2050 could look like - Shannon Odell",
+      "summary": "While we’re already feeling the devastating effects of human-caused climate change, governments continue to fall short on making and executing emissions pledges that would help thwart further warming. So, what will our world look like in the next 30 to 80 years, if we continue on the current path? While it’s impossible to know exactly how the next decade will unfold, scientists and climate experts have made projections, factoring in the current state of affairs. This future we’re about to describe is bleak, but remember there’s still time to ensure it doesn’t become our reality. It’s 2050. We’ve blown past the 1.5 degree target that world leaders promised to stick to. The Earth has warmed 2 degrees since the 1800s, when the world first started burning fossil fuels in mass scale. Reports on",
+      "link": "https://www.youtube.com/watch?v=2njn71TqkjA",
+      "published": "2024-03-28T15:01:38Z",
+      "source_type": "youtube",
+      "channel": "TED-Ed",
+      "video_id": "2njn71TqkjA",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1669,
+      "has_full_transcript": true
     }
   ],
   "analysis": {
-    "problem": "673 million people experienced hunger in 2024, and the global food supply chain is vulnerable to climate change-induced disruptions",
-    "root_cause": "Conflict, economic shocks, climate extremes, and forced displacement drive food insecurity and malnutrition, while rising food prices and brittle supply chains exacerbate the issue",
-    "severity": "CRITICAL",
-    "leverage_points": [
-      "Global food governance and policy-making mechanisms",
-      "Climate-resilient agricultural practices and supply chain management"
-    ],
-    "proposed_actions": [
-      {
-        "action": "Implement climate-resilient agricultural practices and improve supply chain management",
-        "measurable_goal": "Reduce the number of people experiencing hunger by 20% within the next 2 years",
-        "timeframe": "medium-term"
-      },
-      {
-        "action": "Develop and implement policies to address the root causes of food insecurity, such as conflict and economic shocks",
-        "measurable_goal": "Reduce the number of people affected by food crises by 15% within the next 3 years",
-        "timeframe": "long-term"
-      }
-    ],
+    "problem": "Анализ на FOOD_REVIEW — данни получени но LLM грешка",
+    "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: None",
+    "severity": "UNKNOWN",
+    "leverage_points": [],
+    "proposed_actions": [],
     "evidence": [
-      "673 million people experienced hunger in 2024",
-      "The vulnerability assessment methods and adaptation measures have been employed to alleviate the impact of climate change in the food supply chain"
+      "Global Report on Food Crises (GRFC) 2025 | World Food Programme",
+      "Worsening food insecurity, waning response capacity: Options... | IFPRI",
+      "Global Food Insecurity: Trends and Policy... - The Borgen Project"
     ],
-    "generalization": "This problem connects to the domains of Civilization (economic shocks, conflict), Human (food insecurity, malnutrition), and Planet (climate extremes, environmental degradation)",
-    "summary": "The global food supply chain is vulnerable to climate change-induced disruptions, and 673 million people experienced hunger in 2024, requiring immediate attention to address the root causes and implement climate-resilient agricultural practices. The problem is critical and requires a multi-faceted approach to ensure food security and sustainability.",
-    "risk_level": "CRITICAL"
+    "generalization": "",
+    "summary": "- Global Report on Food Crises (GRFC) 2025 | World Food Programme: 11 July 2025. Global Report on Food Crises (GRFC) 2025. Analyses assessments and case studies Food security analysis (VAM).In 2024, m",
+    "risk_level": "UNKNOWN",
+    "trend": "UNKNOWN",
+    "llm_raw": ""
   },
   "raw_items": [
     {
-      "title": "Global Report on Food Crises (GRFC) 2025 - World Food Programme",
-      "summary": "The Global Report on Food Crises (GRFC) 2025 shows conflict, economic shocks, climate extremes and forced displacement continued to drive food insecurity and malnutrition around the world, with a catastrophic impact on many already fragile regions. In 2024, more than 295 million people across 53 countries and territories experienced acute levels of hunger - an increase of 13.7 million from ...",
+      "title": "Global Report on Food Crises (GRFC) 2025 | World Food Programme",
+      "summary": "11 July 2025. Global Report on Food Crises (GRFC) 2025. Analyses assessments and case studies Food security analysis (VAM).In 2024, more than 295 million people across 53 countries and territories experienced acute levels of hunger – an increase of 13.7 million from 2023.",
       "link": "https://www.wfp.org/publications/global-report-food-crises-grfc",
       "source_type": "ddg"
     },
     {
-      "title": "The State of Food Security and Nutrition in the World 2025",
-      "summary": "The 2025 SOFI report from FAO, IFAD, UNICEF, WFP and WHO examines how rising food prices are shaping access to healthy diets and driving food insecurity and malnutrition. Global hunger declined slightly for a second year, but the gains are modest and uneven. Africa and Western Asia continue to see hunger rise. High and persistent prices for nutritious foods are putting quality diets further ...",
-      "link": "https://data.unicef.org/resources/sofi-2025/",
+      "title": "Worsening food insecurity, waning response capacity: Options... | IFPRI",
+      "summary": "Global food crises, fragility, and prospects: Trends and drivers Presentation of the key findings of the 2025 Global Report on Food Crises. Sara McHattie, Global Coordinator, Food Security Information Network (FSIN) (Presentation).",
+      "link": "https://www.ifpri.org/event/worsening-food-insecurity-waning-response-capacity-options-for-a-better-way-forward/",
       "source_type": "ddg"
     },
     {
-      "title": "Hunger Map 2025 | FAO | Food and Agriculture Organization of the United ...",
-      "summary": "About 673 million people, experienced hunger in 2024. Explore @FAO's hunger map and navigate through regions, subregions and countries to discover the state of the prevalence of undernourishment and food insecurity.",
-      "link": "https://www.fao.org/interactive/hunger-map/en/",
+      "title": "Global Food Insecurity: Trends and Policy... - The Borgen Project",
+      "summary": "Food Insecurity: Global Trends. Global progress toward SDG 2 (Zero Hunger) remains stagnant since 2021. The broader picture reveals that hunger rates have plateaued since spiking in 2019.",
+      "link": "https://borgenproject.org/global-food-insecurity/",
       "source_type": "ddg"
     },
     {
-      "title": "The world is running out of time. Inside the 2026 food crisis. | foodfacts.org",
-      "summary": "May 11, 2026 - A study published in the journal ... escalate through brittle, just-in-time supply chains into food shortages, price spikes, public health crises, and ultimately social unrest....",
-      "link": "https://www.foodfacts.org/articles/global-food-crisis-2026",
+      "title": "Supply Chain Disruptions May Accelerate... - Responsibleus",
+      "summary": "Rising supply chain risks linked to conflict, climate change and trade disruptions could drive greater investment in regenerative agriculture and sustainable food production, according to Ecovia Intelligence. Responsible Us Bureau Jun 17, 2026 Add to Reading List.",
+      "link": "https://responsibleus.com/supply-chain-disruptions-may-accelerate-investment-in-sustainable-food-production",
       "source_type": "ddg"
     },
     {
-      "title": "Assessing the vulnerability of food supply chains to climate change-induced disruptions - PubMed",
-      "summary": "April 10, 2024 - The vulnerability assessment methods as well as the adaptation and resilience measures that have been employed to alleviate the impact of climate change in the food supply chain were discussed. The results revealed a growing number of publications providing evidence of the weakening of the food supply chain due to climate change and extreme weather events.",
-      "link": "https://pubmed.ncbi.nlm.nih.gov/38373458/",
+      "title": "How Indonesia's Food System Can Weather Supply-Chain Shocks",
+      "summary": "In that same timeframe, reported food shortages rose from 19% to 31.2%. Those trends expose how quickly healthy diets can become unaffordable when supply-chain disruptions reverberate across household incomes, schools, health services, and food supply chains.",
+      "link": "https://www.thinkglobalhealth.org/article/how-indonesias-food-system-can-weather-supply-chain-shocks",
       "source_type": "ddg"
     },
     {
-      "title": "Assessing the vulnerability of food supply chains to climate change-induced disruptions - ScienceDirect",
-      "summary": "February 17, 2024 - The vulnerability assessment methods as well as the adaptation and resilience measures that have been employed to alleviate the impact of climate change in the food supply chain were discussed. The results revealed a growing number of publications providing evidence of the weakening of the food supply chain due to climate change and extreme weather events.",
-      "link": "https://www.sciencedirect.com/science/article/pii/S0048969724011860",
+      "title": "Thanks to climate change, supply chain disruptions are... | Salon.com",
+      "summary": "Like so many other features of capitalism, the development of long supply chains seems poised to self-immolate because of climate change. Unfortunately, there is no sign that the economic titans are interested in changing the way supply chains work at this juncture.",
+      "link": "https://www.salon.com/2021/08/15/supply-chain-disruptions-covid-semiconductors-climate-change/",
       "source_type": "ddg"
     },
     {
-      "title": "[YT] I Didn't Eat Food for 7 days. This is what happened to my... - YouTube",
-      "summary": "[DESCRIPTION FALLBACK] Go to https://DrinkLMNT.com/WhatIveLearned to get a free sampler pack with any purchase!Learn my optimized Fasting protocol here: https://bit.ly/FastToLas...",
-      "link": "https://www.youtube.com/watch?v=KSSBiNPZs8Q",
-      "published": "",
+      "title": "[YT] A world going hungry? How conflict and climate change disrupt global food supply | Business Beyond",
+      "summary": "The world is struggling to feed itself. A planet that once looked like it was winning the&nbsp; war on starvation is now heading for disaster. “There is one person dying from hunger every&nbsp; minute across Ethiopia, Kenya and Somalia.&nbsp;&nbsp; In West Africa, the region is facing&nbsp; its worst hunger crisis in a decade But when there’s never been more food and there’s&nbsp; never been more farming, how is this possible? It's an extraordinary situation, isn't it? A world&nbsp; of great abundance. I mean, we have a massive&nbsp;&nbsp; surplus of food, twice as many calories are&nbsp; produced than humans need to support themselves,&nbsp;&nbsp; and yet we see rising hunger once again Keep watching to find out what brought&nbsp;&nbsp; us here. Was it the war in Ukraine?&nbsp; Was it env",
+      "link": "https://www.youtube.com/watch?v=5YcvKvxWaCE",
+      "published": "2022-07-05T15:15:16Z",
       "source_type": "youtube",
-      "channel": "",
-      "video_id": "KSSBiNPZs8Q",
-      "transcript_method": "description",
-      "transcript_chars": 180,
-      "has_full_transcript": false
+      "channel": "DW News",
+      "video_id": "5YcvKvxWaCE",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 2099,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] FoodSystems 2030: Transforming Food Systems for People, Planet, and Prosperity",
+      "summary": "Hunger is on the rise with over 295 million people facing severe food insecurity in 2024. Current food systems generate a third of global emissions and drive the loss of forest and biodiversity. Meeting sustainable development goals require shifting towards a more circular economy. So every part of the food system delivers better outcomes from farm to table. To achieve this, the World Bank leads Food Systems 2030, a multi-donor trust fund that is rebuilding food systems. Food systems 2030 targets every stage in the food value chain to ensure a healthier people, planet, [music] and economy. Food Systems 2030 envisions a world where by 2030 people can afford a healthy and sustainable diet and have healthier lives with less illness and disease. This means working across all aspects of food sy",
+      "link": "https://www.youtube.com/watch?v=nHSEZlJ08aM",
+      "published": "2025-11-15T15:01:39Z",
+      "source_type": "youtube",
+      "channel": "World Bank Group",
+      "video_id": "nHSEZlJ08aM",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1192,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] What Earth in 2050 could look like - Shannon Odell",
+      "summary": "While we’re already feeling the devastating effects of human-caused climate change, governments continue to fall short on making and executing emissions pledges that would help thwart further warming. So, what will our world look like in the next 30 to 80 years, if we continue on the current path? While it’s impossible to know exactly how the next decade will unfold, scientists and climate experts have made projections, factoring in the current state of affairs. This future we’re about to describe is bleak, but remember there’s still time to ensure it doesn’t become our reality. It’s 2050. We’ve blown past the 1.5 degree target that world leaders promised to stick to. The Earth has warmed 2 degrees since the 1800s, when the world first started burning fossil fuels in mass scale. Reports on",
+      "link": "https://www.youtube.com/watch?v=2njn71TqkjA",
+      "published": "2024-03-28T15:01:38Z",
+      "source_type": "youtube",
+      "channel": "TED-Ed",
+      "video_id": "2njn71TqkjA",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1669,
+      "has_full_transcript": true
     }
   ]
 }

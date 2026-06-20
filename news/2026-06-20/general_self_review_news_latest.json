@@ -1,6 +1,6 @@
 {
   "axis": "GENERAL_SELF_REVIEW",
-  "fetched_at": "2026-06-20T07:28:28.716716+00:00",
+  "fetched_at": "2026-06-20T11:19:17.096938+00:00",
   "smart_query": "artificial intelligence progress",
   "sources_count": {
     "wiki": 0,
@@ -36,7 +36,7 @@
     {
       "title": "microsoft/autogen",
       "snippet": "A programming framework for agentic AI",
-      "stars": 59080,
+      "stars": 59085,
       "url": "https://github.com/microsoft/autogen",
       "updated": "2026-06-20",
       "source": "GitHub"
@@ -44,15 +44,15 @@
     {
       "title": "2noise/ChatTTS",
       "snippet": "A generative speech model for daily dialogue.",
-      "stars": 39482,
+      "stars": 39483,
       "url": "https://github.com/2noise/ChatTTS",
-      "updated": "2026-06-19",
+      "updated": "2026-06-20",
       "source": "GitHub"
     },
     {
       "title": "agentscope-ai/agentscope",
       "snippet": "Build and run agents you can see, understand and trust.",
-      "stars": 27014,
+      "stars": 27017,
       "url": "https://github.com/agentscope-ai/agentscope",
       "updated": "2026-06-20",
       "source": "GitHub"

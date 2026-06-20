@@ -1,65 +1,65 @@
 {
   "axis": "CLIMATE_GLOBAL_RISK_REVIEW",
   "domain": "planet",
-  "timestamp": "2026-06-20T05:35:10.574384+00:00",
-  "sources_count": 12,
+  "timestamp": "2026-06-20T12:02:50.589289+00:00",
+  "sources_count": 13,
   "rss_count": 4,
   "ddg_count": 6,
-  "youtube_count": 2,
+  "youtube_count": 3,
   "youtube_items": [
     {
-      "title": "[YT] Extreme Weather 2025: Fires, Floods, Heatwaves & Cyclones ...EXPLAINED: How Climate Change is Fueling Extreme Weather ...Climate Extremes Documentary | Climate Science2025 Europe Climate Review: Extreme Weather Toll and Outlook ...Year in Review: The Biggest Climate Headlines of 2025Wildfires, floods and extreme heat: These are the biggest ...World slammed by extreme weather in 2025, one of the hottest ...Tackle Climate Change - Munich Re | Climate change",
-      "summary": "[DESCRIPTION FALLBACK] 🌍 Starkon International presents a detailed global climate report for 2025, covering every continent and every major climate event. Jul 21, 2025 · This video compiles shocking footage from extreme weather events around the world between 2024 and 2025 — from devastating hurricanes and deadly floods to intense droughts and wildfires. Through expert insights, the documentary highlights the interconnected nature of climate, ecosystems and agriculture, revealing how extreme weather events, soil degra",
-      "link": "https://www.youtube.com/watch?v=jrLBkuyQgKs",
+      "title": "[YT] In what ways do extreme weather events result from climate change? | DW News - YouTube",
+      "summary": "In climate news, the planet is on track to log its second hottest year on record this year. That's according to Europe's global warming monitor. New data from the Capernicus Climate Change Service shows that at 200 to 2025 is currently tied with 2023 after a historic high recorded in 2024, making them the three hottest years ever recorded. The AY's latest report shows the 3-year average is on track to exceed 1 1/2° C above pre-industrial levels for the first time. You'll you'll recall that's the threshold targeted in the 2015 Paris Climate Accord. Well, Samantha Burgess is strategic lead for climate in the Capernicus Climate Change Service which produced that report. Welcome to DW. So is global warming accelerating or or how do you interpret this new data? &gt;&gt; Yes, the trajectory of g",
+      "link": "https://www.youtube.com/watch?v=B7Q8cw5JPiU",
       "published": "",
       "source_type": "youtube",
       "channel": "",
-      "video_id": "jrLBkuyQgKs",
-      "transcript_method": "description",
-      "transcript_chars": 523,
-      "has_full_transcript": false
+      "video_id": "B7Q8cw5JPiU",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1207,
+      "has_full_transcript": true
     },
     {
-      "title": "[YT] EXPLAINED: How Climate Change is Fueling Extreme Weather ...Climate Extremes Documentary | Climate Science2025 Europe Climate Review: Extreme Weather Toll and Outlook ...Year in Review: The Biggest Climate Headlines of 2025Wildfires, floods and extreme heat: These are the biggest ...World slammed by extreme weather in 2025, one of the hottest ...",
-      "summary": "[DESCRIPTION FALLBACK] Jul 21, 2025 · This video compiles shocking footage from extreme weather events around the world between 2024 and 2025 — from devastating hurricanes and deadly floods to intense droughts and wildfires. Through expert insights, the documentary highlights the interconnected nature of climate, ecosystems and agriculture, revealing how extreme weather events, soil degradation, and resource scarcity are impacting both farmers and global supply chains. Dec 27, 2025 · An analysis of the defining climat",
-      "link": "https://www.youtube.com/watch?v=UhxhDsVzFmU",
+      "title": "[YT] What Climate Science Actually Says About Extreme Weather - YouTube",
+      "summary": "Welcome everyone. I'm David Lodge. I'm the director of the Cornell Atinson Center for Sustainability and it's my pleasure to introduce Dr. Roger Pilky Jr. to be uh the last in this year's climate speaker series. Um, Roger is a professor ameritus at the University of Colorado Boulder where he was a faculty member for 23 years. And while he was at Boulder, led the development there of the graduate program in environmental studies. And before becoming a faculty member, Roger was on the staff uh staff scientist at INCAR for a number of years. That is the National Center for Atmospheric Research. Our writer has taught and continues to write on a diverse range of policy and governance issues uh related to science, technology, environment, energy, climate, innovation, and sports. Uh since retirin",
+      "link": "https://www.youtube.com/watch?v=6bMG2Ds0sVA",
       "published": "",
       "source_type": "youtube",
       "channel": "",
-      "video_id": "UhxhDsVzFmU",
-      "transcript_method": "description",
-      "transcript_chars": 523,
-      "has_full_transcript": false
+      "video_id": "6bMG2Ds0sVA",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 952,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Watch Climate Extremes: Extreme Weather today! The full free documentary is now on YouTube! - YouTube",
+      "summary": "When you see these massive floods, we're talking of a completely new realarm. It's is a it's a new hydraological situation on planet Earth. Once you get to a warmer climate state, then the number of hot days and warmer longer periods increase and that has dramatically changed. So, what used to be basically impossible 20 years ago has become almost mainstream these days, including events that go far beyond anything we've seen in the past. with humancaused warming, this accumulation of heat trapping gases in the atmosphere. In some cases, we're unearthing some of these historical or even prehistorical extremes that modern civilization hasn't had to deal with. &gt;&gt; Heat extremes have become much much more frequent. They now occurs already five times more frequent in a 1°ree warmer world. ",
+      "link": "https://www.youtube.com/watch?v=bHkN7lC232U",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "bHkN7lC232U",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1235,
+      "has_full_transcript": true
     }
   ],
   "analysis": {
-    "problem": "Insufficient progress in reducing global emissions and adapting to climate change, as evident from the gridlock in Bonn talks and the need for a major scale-up of carbon removal",
-    "root_cause": "Inadequate global cooperation, lack of decisive action, and insufficient investment in climate change mitigation and adaptation measures",
-    "severity": "CRITICAL",
-    "leverage_points": [
-      "International agreements and global climate governance",
-      "National and local governments' policies and implementation"
-    ],
-    "proposed_actions": [
-      {
-        "action": "Implement and strengthen global climate agreements, such as the Paris Agreement",
-        "measurable_goal": "Reduce global greenhouse gas emissions by 45% by 2030 and achieve net-zero by 2050",
-        "timeframe": "medium-term"
-      },
-      {
-        "action": "Invest in climate-resilient infrastructure and climate-smart agriculture",
-        "measurable_goal": "Increase climate-resilient infrastructure investment by 20% annually and achieve 30% climate-resilient agriculture practices by 2030",
-        "timeframe": "long-term"
-      }
-    ],
+    "problem": "Анализ на CLIMATE_GLOBAL_RISK_REVIEW — данни получени но LLM грешка",
+    "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: Gemini rate limit",
+    "severity": "UNKNOWN",
+    "leverage_points": [],
+    "proposed_actions": [],
     "evidence": [
-      "The Bonn climate talks ended in gridlock, with few tangible outcomes",
-      "Experts emphasize the need for a major scale-up of carbon removal to return warming to 1.5C",
-      "The Global Risks Report 2026 highlights climate hazards as a dominant concern"
+      "DeBriefed 19 June 2026: Bonn talks end in ‘gridlock’ | Energy’s ‘new era’ | Oceans in climate negotiations",
+      "Bonn climate talks: Key outcomes from the June 2026 UN climate conference",
+      "Experts: Why carbon removal needs a ‘major scale up’ to return warming to 1.5C"
     ],
-    "generalization": "This problem is connected to the domains of civilization (global governance and economic systems), human (health and well-being), and cosmos (long-term sustainability of the planet)",
-    "summary": "The current pace of global climate action is insufficient, and decisive action is needed to reduce emissions and adapt to climate change. International cooperation, national policies, and investment in climate-resilient infrastructure are crucial leverage points.",
-    "risk_level": "CRITICAL"
+    "generalization": "",
+    "summary": "- DeBriefed 19 June 2026: Bonn talks end in ‘gridlock’ | Energy’s ‘new era’ | Oceans in climate negotiations: <p>Welcome to Carbon Brief’s DeBriefed.&#160;An essential guide to the week&#8217;s key de",
+    "risk_level": "UNKNOWN",
+    "trend": "UNKNOWN",
+    "llm_raw": ""
   },
   "raw_items": [
     {
@@ -91,21 +91,21 @@
       "source_type": "rss"
     },
     {
-      "title": "Climate Risk Index 2026 | Germanwatch e.V.",
-      "summary": "... global ambition gaps, as the CRI 2026 results illustrate: Global emissions must be reduced immediately, adaptation efforts must be accelerated, ...",
-      "link": "https://www.germanwatch.org/en/cri",
+      "title": "The Global Risks Report 2026 | World Economic Forum",
+      "summary": "The report analyses global risks through three timeframes to support decision-makers in balancing current crises and longer-term priorities. Chapter 1 presents the findings of this year’s Global Risks Perception Survey (GRPS), which captures insights from over 1,300 experts worldwide.",
+      "link": "https://www.weforum.org/publications/global-risks-report-2026/",
       "source_type": "ddg"
     },
     {
-      "title": "What the Global Risks Report 2026 really warns about climate",
-      "summary": "The Global Risks Report 2026 sets out its findings across short, medium and long time horizons, and climate hazards dominate the far end of that ...",
-      "link": "https://morningoverview.com/what-the-global-risks-report-2026-really-warns-about-climate-urgency/",
+      "title": "What the Global Risks Report 2026 Is Really Telling Cities...",
+      "summary": "I did not approach the Global Risks Report 2026 in search of new or unexpected findings.The report shows risks compounding across domains: climate change, debt, inequality, infrastructure failure, misinformation, and geopolitical tensions.",
+      "link": "https://www.linkedin.com/pulse/what-global-risks-report-2026-really-telling-cities-you-hamid-shehan-xy0kf",
       "source_type": "ddg"
     },
     {
-      "title": "Global Risks Report 2026: Economic, climate shocks are",
-      "summary": "The WEF’s Global Risks Report 2026 shows how geoeconomic conflict, climate stress, and trust deficits are reinforcing each other.",
-      "link": "https://www.policycircle.org/economy/global-risks-report-2026/",
+      "title": "What are the major global threats facing society and the economy...",
+      "summary": "According to the World Economic Forum´s Global Risk Report 2026, geoeconomic confrontation, mis- and disinformation and societal polarization make up the top three short-term risks, while environmental risks dominate in the long term.",
+      "link": "https://www.santander.com/en/press-room/insights/what-are-the-major-global-threats-facing-society-and-the-economy-going-forward",
       "source_type": "ddg"
     },
     {

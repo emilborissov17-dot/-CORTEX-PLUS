@@ -1,6 +1,6 @@
 {
   "axis": "GOAL_PROGRESS_REVIEW",
-  "fetched_at": "2026-06-20T07:33:55.124030+00:00",
+  "fetched_at": "2026-06-20T12:19:03.892390+00:00",
   "smart_query": "sustainable development goals SDG",
   "sources_count": {
     "wiki": 0,
@@ -58,36 +58,36 @@
   "youtube_items": [
     {
       "title": "[YT] How We Can Make the World a Better Place by 2030 | Michael Green | TED Talks",
-      "summary": "[DESCRIPTION FALLBACK] Can we end hunger and poverty, halt climate change and achieve gender equality in the next 15 years? The governments of the ...",
+      "summary": "do you think the world is going to be a better place next year in the next decade can we end Hunger achieve gender equality halt climate change all in the next 15 years well according to the governments of the world yes we can in the last few days the leaders of the world meeting at the UN in New York agreed a new set of global goals for the development of the world to 2030 and here they are these goals are the product of a massive consultation exercise the global goals are who we Humanity want to be now now that's the plan but can we get there can this vision for a better world really be achieved well I'm here today because we've run the numbers and the numbers and the answer shockingly is that maybe we actually can but not with business as usual now the idea that the world is going to ge",
       "link": "https://www.youtube.com/watch?v=o08ykAqLOxk",
       "source_type": "youtube",
       "channel": "TED",
       "video_id": "o08ykAqLOxk",
-      "transcript_method": "description",
-      "transcript_chars": 150,
-      "has_full_transcript": false
-    },
-    {
-      "title": "[YT] The Sustainable Development Goals – Action Towards 2030 | CAFOD and SDGs",
-      "summary": "[DESCRIPTION FALLBACK] The Sustainable Development Goals (SDGs) were adopted by the United Nations in 2015 as part of Agenda 2030 – see: ...",
-      "link": "https://www.youtube.com/watch?v=9-xdy1Jr2eg",
-      "source_type": "youtube",
-      "channel": "CAFOD",
-      "video_id": "9-xdy1Jr2eg",
-      "transcript_method": "description",
-      "transcript_chars": 140,
-      "has_full_transcript": false
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1123,
+      "has_full_transcript": true
     },
     {
       "title": "[YT] Sustainable Development Goals (SDGs) Explained: 2026 Reality Check",
-      "summary": "[DESCRIPTION FALLBACK] With only 4 years left until the 2030 deadline, the UN Sustainable Development Goals remain the global framework for ...",
+      "summary": "Hi folks, Alex here. In 2015, the United Nations set&nbsp; up 17 sustainable development goals (also known&nbsp;&nbsp; as SDGs) that were adopted by 193 countries and&nbsp; our mission is to achieve these goals by 2030.&nbsp;&nbsp; In this video we are going to talk about the SDG&nbsp; wedding cake and two other interesting ways you&nbsp;&nbsp; can use these goals to see if your country or your&nbsp; business is sustainable. Ok, let’s get drawing! On this channel, we share tools&nbsp; to help YOU change the world&nbsp;&nbsp; so subscribe if that’s of interest to you. To be totally honest, the problem&nbsp; with these 17 goals is that… well,&nbsp;&nbsp; there are 17 of them… which can make them&nbsp; look complicated and not easy to remember.&nbsp;&nbsp; But the good thing about them, is th",
       "link": "https://www.youtube.com/watch?v=qfOgdj4Okdw",
       "source_type": "youtube",
       "channel": "Sustainability Illustrated",
       "video_id": "qfOgdj4Okdw",
-      "transcript_method": "description",
-      "transcript_chars": 143,
-      "has_full_transcript": false
+      "transcript_method": "playwright_web",
+      "transcript_chars": 2297,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Sustainable Development Goals (SDGs) Explained in 10 minutes or less",
+      "summary": "hey y'all it's kaylee welcome tipping a suit where every week i talk about sustainability why you ask because i dream of a world where a global pandemic does not create 50 new billionaires today i'm going to be covering the united nations sustainable development goals or as you may know them the sdgs global goals or 2030 agenda for sustainable development i'm going to attempt to give you everything you need to know about them in just 10 minutes or less so we better get going get going [Music] the 2030 agenda for sustainable development was adopted on september development was adopted on september 25th 2015 universally universal adoption means that every single country all 193 u.n member every single country all 193 u.n member states agreed i'm sure you can imagine that getting 193 countrie",
+      "link": "https://www.youtube.com/watch?v=xubK4T9Nc8A",
+      "source_type": "youtube",
+      "channel": "Hippy In A Suit",
+      "video_id": "xubK4T9Nc8A",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1071,
+      "has_full_transcript": true
     }
   ],
   "summary": "[arXiv]\n- Evaluating the Impact of Rhode Island's Self-Sustaining Reemployment Services and Eligibility Assessment (RESEA) Program on Employment Outcomes\n- Sustainability by Design in Decentralized Au",

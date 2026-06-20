@@ -1,6 +1,6 @@
 {
   "axis": "INEQUALITY_POVERTY_REVIEW",
-  "fetched_at": "2026-06-20T07:29:01.433362+00:00",
+  "fetched_at": "2026-06-20T12:11:47.941831+00:00",
   "smart_query": "inequality poverty wealth gap",
   "sources_count": {
     "wiki": 0,
@@ -13,21 +13,21 @@
   },
   "rss": [
     {
-      "title": "Israel and Hezbollah agree ceasefire, US says, as more Lebanon strikes reported",
-      "snippet": "The agreement followed concerns that continued clashes would undermine the deal to end the war between the US and Iran. ",
-      "url": "https://www.bbc.com/news/articles/cwyk7kkygj5o?at_medium=RSS&at_campaign=rss",
+      "title": "Israel and Hezbollah continue strikes despite ceasefire agreement",
+      "snippet": "Several people are reported killed in southern Lebanon, with the IDF saying it hit \"Hezbollah terrorist targets\" after the group fired over 50 projectiles at Israeli forces.",
+      "url": "https://www.bbc.com/news/articles/cx240k9l112o?at_medium=RSS&at_campaign=rss",
       "source": "RSS"
     },
     {
-      "title": "Italy's Meloni says Trump 'made up' story that she 'begged' him for photo at G7",
-      "snippet": "The highly public exchange is an indication that their earlier close ties have frayed  since Trump's decision to go to war with Iran.",
-      "url": "https://www.bbc.com/news/articles/c20y1ygn707o?at_medium=RSS&at_campaign=rss",
+      "title": "Zelensky stripped of highest Polish honour over WW2 name of army unit",
+      "snippet": "Ukraine has denounced the move, calling it a \"strategic mistake\" and \"disrespectful\".",
+      "url": "https://www.bbc.com/news/articles/cr7xzg3dmj8o?at_medium=RSS&at_campaign=rss",
       "source": "RSS"
     },
     {
-      "title": "US to stop funding HIV programmes in South Africa",
-      "snippet": "More than eight million South Africans are living with HIV – the highest number of any country in the world.",
-      "url": "https://www.bbc.com/news/articles/cdr457lxr71o?at_medium=RSS&at_campaign=rss",
+      "title": "Tourist dies in Dominican Republic luxury resort fire",
+      "snippet": "Nearly 1,700 people were evacuated from the huge blaze at Viva Wyndham Dominicus Beach in Bayahibe, a popular resort town on the Caribbean coast.",
+      "url": "https://www.bbc.com/news/articles/c932k8010j1o?at_medium=RSS&at_campaign=rss",
       "source": "RSS"
     }
   ],
@@ -76,40 +76,40 @@
   "wiki": null,
   "youtube_items": [
     {
-      "title": "[YT] Is inequality inevitable?",
-      "summary": "[DESCRIPTION FALLBACK] Explore how economic inequality can be measured and how it is impacted by different governmental policy choices. -- Income ...",
-      "link": "https://www.youtube.com/watch?v=rEnf_CFoyv0",
+      "title": "[YT] YouTube:MTAzQtrcfiM",
+      "summary": "There are calls on the political left and the Democrats to tax billionaires, have a wealth tax. Would that stuff be productive and maybe close the wealth and income gap? &gt;&gt; Well, I think that I think I wrote something seven or eight years ago that about the fact that there was that I was doing a little hyperbole, but there was class warfare and my class was winning. You know, basically that there's no question that that that question that that that capitalism as it gets more advanced will widen the gap between the people that have market skills whatever that market demands and uh and others unless government does something in between which say the earned income tax credit or all all kinds of things and and I think that's a proper function. So I would I would I would say that if peopl",
+      "link": "https://www.youtube.com/watch?v=MTAzQtrcfiM",
       "source_type": "youtube",
-      "channel": "TED-Ed",
-      "video_id": "rEnf_CFoyv0",
-      "transcript_method": "description",
-      "transcript_chars": 149,
-      "has_full_transcript": false
+      "channel": "",
+      "video_id": "MTAzQtrcfiM",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1191,
+      "has_full_transcript": true
     },
     {
-      "title": "[YT] Wealth Inequality in America Has Never Been Worse. The Middle Class Has Disappeared",
-      "summary": "[DESCRIPTION FALLBACK] What Wealth Inequality in America looks like. Special thanks to user politzane for the inspiration - their video will be linked down ...",
-      "link": "https://www.youtube.com/watch?v=EdqxBNgnmxU",
+      "title": "[YT] YouTube:HDLfUrG1MHU",
+      "summary": "Listen, the last 70 years are not normal, Stephen. The last 70 years are not normal. The last 70 years in Europe and the US where ordinary people like my dad could work for the post office on less than average wage and buy a house and support a family. It's not normal. It's not normal in the world and it's not normal in history. Most countries in the world are not like that. Most countries have a a small super rich elite and a very large group of extremely poor people. That's most of the country and it's most of history in this country and it's most of history in the US, you know. Yeah, we talk about Charles Dickens. I read Hard Times. I read Hard Times. And this is written in the 19th century when Britain was like the industrial superpower of the whole world. And at the time, the governme",
+      "link": "https://www.youtube.com/watch?v=HDLfUrG1MHU",
       "source_type": "youtube",
-      "channel": "Humphrey Yang",
-      "video_id": "EdqxBNgnmxU",
-      "transcript_method": "description",
-      "transcript_chars": 159,
-      "has_full_transcript": false
+      "channel": "",
+      "video_id": "HDLfUrG1MHU",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1227,
+      "has_full_transcript": true
     },
     {
-      "title": "[YT] How Hong Kong became one of the world’s most unequal cities",
-      "summary": "[DESCRIPTION FALLBACK] Subscribe to our YouTube channel for free here: https://sc.mp/subscribe-youtube Read more about Hong Kong: ...",
-      "link": "https://www.youtube.com/watch?v=hR67NxGhTYs",
+      "title": "[YT] YouTube:59xH96V-g2Q",
+      "summary": "there's widespread agreement among people doing rather different theoretical approaches to economics that over recent decades in the United States the distribution of wealth and income has become much more unequal that 40 years ago the United States was not the extreme outlier when compared say to Western Europe that it is now in the in the sense to that kind of inequality",
+      "link": "https://www.youtube.com/watch?v=59xH96V-g2Q",
       "source_type": "youtube",
-      "channel": "South China Morning Post",
-      "video_id": "hR67NxGhTYs",
-      "transcript_method": "description",
-      "transcript_chars": 133,
-      "has_full_transcript": false
+      "channel": "",
+      "video_id": "59xH96V-g2Q",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 375,
+      "has_full_transcript": true
     }
   ],
-  "summary": "[RSS News]\n- Israel and Hezbollah agree ceasefire, US says, as more Lebanon strikes reported\n- Italy's Meloni says Trump 'made up' story that she 'begged' him for photo at G7\n\n[arXiv]\n- Poverty traps ",
+  "summary": "[RSS News]\n- Israel and Hezbollah continue strikes despite ceasefire agreement\n- Zelensky stripped of highest Polish honour over WW2 name of army unit\n\n[arXiv]\n- Poverty traps are rare, but trappednes",
   "urgency": "LOW",
   "sentiment": "NEUTRAL",
   "key_developments": [],

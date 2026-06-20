@@ -1,37 +1,18 @@
 {
   "axis": "MATERIALS_WASTE_REVIEW",
-  "fetched_at": "2026-06-20T07:29:42.736454+00:00",
+  "fetched_at": "2026-06-20T11:22:24.799501+00:00",
   "smart_query": "plastic waste pollution recycling",
   "sources_count": {
     "wiki": 0,
     "rss": 0,
-    "gdelt": 3,
+    "gdelt": 0,
     "arxiv": 2,
     "github": 3,
     "youtube_transcripts": 3,
     "podcast": 1
   },
   "rss": [],
-  "gdelt": [
-    {
-      "title": "Savez - vous quel pourcentage de plastique a réellement été recyclé ? ",
-      "snippet": "Savez - vous quel pourcentage de plastique a réellement été recyclé ? ",
-      "url": "https://sciencepost.fr/savez-vous-quel-pourcentage-de-plastique-a-reellement-ete-recycle-depuis-sa-creation-moins-que-ce-que-vous-pensez/",
-      "source": "sciencepost.fr"
-    },
-    {
-      "title": "Osmangazi Belediyesi 73 bin ağacın kesilmesini önledi",
-      "snippet": "Osmangazi Belediyesi 73 bin ağacın kesilmesini önledi",
-      "url": "https://www.bursadabugun.com/haber/osmangazi-belediyesi-73-bin-agacin-kesilmesini-onledi-1918950.html",
-      "source": "bursadabugun.com"
-    },
-    {
-      "title": "Trách nhiệm với môi trường của các nhà sản xuất , nhập khẩu",
-      "snippet": "Trách nhiệm với môi trường của các nhà sản xuất , nhập khẩu",
-      "url": "https://baophapluat.vn/trach-nhiem-voi-moi-truong-cua-cac-nha-san-xuat-nhap-khau.html",
-      "source": "baophapluat.vn"
-    }
-  ],
+  "gdelt": [],
   "github_repos": [
     {
       "title": "pogopaule/awesome-sustainability-jobs",
@@ -109,11 +90,15 @@
       "has_full_transcript": false
     }
   ],
-  "summary": "[GDELT News]\n- Savez - vous quel pourcentage de plastique a réellement été recyclé ? \n- Osmangazi Belediyesi 73 bin ağacın kesilmesini önledi\n\n[arXiv]\n- Circular Raman responses from angular-momentum ",
-  "urgency": "LOW",
+  "summary": "Анализът на оса MATERIALS_WASTE_REVIEW разглежда устойчивостта на цивилизацията чрез управление на материалите и минимизиране на отпадъците. Използването на кръгови модели и технологии за рециклиране е от крайна важност. Повишаването на рециклирането на изгубените риболовни уреди е един от аспектите на този анализ.",
+  "urgency": "MEDIUM",
   "sentiment": "NEUTRAL",
-  "key_developments": [],
-  "open_source_momentum": "",
-  "scientific_frontier": "",
-  "relevance_to_goal": ""
+  "key_developments": [
+    "pogopaule/awesome-sustainability-jobs",
+    "NatLabRockies/PV_ICE",
+    "We will be discussing the problem of lost fishing gear globally and in Greece, how it can be tackled by increasing recycling"
+  ],
+  "open_source_momentum": "Repository like pogopaule/awesome-sustainability-jobs with 511 stars indicates a growing interest in sustainable development jobs.",
+  "scientific_frontier": "Circular Raman responses from angular-momentum inequivalence in CoSi indicates advancements in material science.",
+  "relevance_to_goal": "Управлението на материалите и минимизиране на отпадъците е съществен аспект от постигането на устойчива цивилизация с достоен живот за всеки."
 }

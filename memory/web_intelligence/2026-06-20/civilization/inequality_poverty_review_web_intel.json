@@ -1,70 +1,71 @@
 {
   "axis": "INEQUALITY_POVERTY_REVIEW",
   "domain": "civilization",
-  "timestamp": "2026-06-20T05:38:21.389890+00:00",
-  "sources_count": 7,
+  "timestamp": "2026-06-20T12:05:15.470980+00:00",
+  "sources_count": 8,
   "rss_count": 0,
   "ddg_count": 6,
-  "youtube_count": 1,
+  "youtube_count": 2,
   "youtube_items": [
     {
       "title": "[YT] The Untold Truth About Money: How to Build Wealth From... - YouTube",
-      "summary": "[DESCRIPTION FALLBACK] There is an untold truth about money – an actual equation that allows you to build wealth from nothing.It’s an equation that is hardly taught in schools if a...",
+      "summary": "let this circle represent $1,000,000 this is what ten million dollars would look like this is what one hundred million dollars would look like and this is what 1 billion dollars would look like Jeff Bezos the founder of Amazon has a net worth of 117 times this number and then there's you you're probably working a job right now one that you got from the degree that you studied for in university you probably don't have much in savings your living expenses seem ridiculously high you feel as though you're not paid enough you have credit card debt that needs taking care of maybe your student studying for a degree that you ho can and your job that you hope can bring some good money you probably don't have any savings only a pesky student debt hanging above your head wealth getting rich that all ",
       "link": "https://www.youtube.com/watch?v=6mRbDEtDoyA",
       "published": "",
       "source_type": "youtube",
       "channel": "",
       "video_id": "6mRbDEtDoyA",
-      "transcript_method": "description",
-      "transcript_chars": 183,
-      "has_full_transcript": false
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1229,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Liberal Hypocrisy is Fueling American Inequality. - YouTube",
+      "summary": "There is a question I've had for a very long time and it has to do with this long time and it has to do with this map. This is a map of the 18 states in the US where Democrats control the legislative and executive branches or else have some veto proof majority in the legislature. Democrats in DC often blame the GOP for foiling their progressive vision. When middle class families see their taxes go up, they'll know Republicans are to blame. But if you zoom into these 18 states, there's effectively no Republicans standing in the way. So my question is, what do Democrats actually do when they have all the power? To answer this question, I teamed up with the Times editorial board writer Bea Applebomb. Okay, you got my attention. He's been thinking about and writing books about and reporting on",
+      "link": "https://www.youtube.com/watch?v=hNDgcjVGHIw",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "hNDgcjVGHIw",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1227,
+      "has_full_transcript": true
     }
   ],
   "analysis": {
-    "problem": "Over 40% of people in Sub-Saharan Africa live in extreme poverty",
-    "root_cause": "Lack of economic growth and unequal distribution of resources in Sub-Saharan Africa",
-    "severity": "CRITICAL",
-    "leverage_points": [
-      "International organizations and governments investing in economic development in Sub-Saharan Africa",
-      "Local governments implementing policies to reduce inequality and promote economic growth"
-    ],
-    "proposed_actions": [
-      {
-        "action": "Invest in education and job training programs in Sub-Saharan Africa",
-        "measurable_goal": "Reduce poverty rate by 10% in the next 5 years",
-        "timeframe": "medium-term"
-      },
-      {
-        "action": "Implement policies to promote fair trade and equal distribution of resources in Sub-Saharan Africa",
-        "measurable_goal": "Increase the GDP per capita by 20% in the next 10 years",
-        "timeframe": "long-term"
-      }
-    ],
+    "problem": "Анализ на INEQUALITY_POVERTY_REVIEW — данни получени но LLM грешка",
+    "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: None",
+    "severity": "UNKNOWN",
+    "leverage_points": [],
+    "proposed_actions": [],
     "evidence": [
-      "More than 430 million people live in Sub-Saharan Africa, the poorest region in the world, where more than 40% of people lived in extreme poverty as of 2018",
-      "Poverty and inequality levels have worsened in Latin America and the Caribbean, and economic growth continues to fall short of its potential"
+      "September 2025 global poverty update from the World Bank: New data and regional classifications",
+      "Income Inequality Trends in Sub-Saharan Africa: Divergence, Determinants and Consequences | United Nations Development Programme",
+      "Inequality and the impact of growth on poverty in sub‐Saharan Africa: A GMM estimator in a dynamic panel threshold model - ScienceDirect"
     ],
-    "generalization": "This problem connects to the domains of planet, human, and cosmos, as poverty and inequality can have far-reaching consequences on the environment, human health, and the overall well-being of societies",
-    "summary": "Over 40% of people in Sub-Saharan Africa live in extreme poverty, and lack of economic growth and unequal distribution of resources are the root causes of this problem. Investing in education and job training programs, and implementing policies to promote fair trade and equal distribution of resources can help reduce poverty and promote economic growth in the region.",
-    "risk_level": "CRITICAL"
+    "generalization": "",
+    "summary": "- September 2025 global poverty update from the World Bank: New data and regional classifications: September 29, 2025 - As of 2024, 839 million people ... New document). This upward revision stems pri",
+    "risk_level": "UNKNOWN",
+    "trend": "UNKNOWN",
+    "llm_raw": ""
   },
   "raw_items": [
     {
-      "title": "Sub-Saharan Africa - Wikipedia",
-      "summary": "Sub-Saharan Africa is a key player in the global minerals market, producing over 70% of the world's cobalt and hosting about 50% of its reserves in the Democratic Republic of the Congo (DRC). The region also harbors significant lithium deposits in Zimbabwe, DR Congo, and Mali.[100].",
-      "link": "https://en.wikipedia.org/wiki/Sub-Saharan_Africa",
+      "title": "September 2025 global poverty update from the World Bank: New data and regional classifications",
+      "summary": "September 29, 2025 - As of 2024, 839 million people ... New document). This upward revision stems primarily from an increase in the extreme poverty rate of Sub-Saharan Africa....",
+      "link": "https://blogs.worldbank.org/en/opendata/september-2025-global-poverty-update-from-the-world-bank--new-da",
       "source_type": "ddg"
     },
     {
-      "title": "The Inequality Trap: Why Sub-Saharan Africa Struggles to Escape...",
-      "summary": "Poverty; inequality; economic growth; Sub-Saharan Africa; Nigeria, South Africa; DR CongoFosu, Augustin Kwasi (2015): Growth, inequality and poverty in Sub-Saharan Africa: recent progress in a global context. Oxford Development Studies, vol. 43(1), pp. 44-59.",
-      "link": "https://mpra.ub.uni-muenchen.de/125930/",
+      "title": "Income Inequality Trends in Sub-Saharan Africa: Divergence, Determinants and Consequences | United Nations Development Programme",
+      "summary": "The 2030 Agenda for Sustainable Development and its 17 Sustainable Development Goals (SDGs) underscore the need to address broad inequalities in their quest to ‘leave no-one behind.’ Income Inequality Trends in sub-Saharan Africa: Divergence, Determinants, and Consequences is a groundbreaking United Nations Development Programme (UNDP) study that provides policy guidance to reduce income inequalit",
+      "link": "https://www.undp.org/africa/publications/income-inequality-trends-sub-saharan-africa-divergence-determinants-and-consequences",
       "source_type": "ddg"
     },
     {
-      "title": "Poverty Rate by Country 2026 | World Population Review",
-      "summary": "More than 430 million of these people live in Sub-Saharan Africa, the poorest region in the world, where more than 40% of people lived in extreme poverty as of 2018. Many countries in which poverty is rising have been plagued by political instability or conflict.",
-      "link": "https://worldpopulationreview.com/country-rankings/poverty-rate-by-country",
+      "title": "Inequality and the impact of growth on poverty in sub‐Saharan Africa: A GMM estimator in a dynamic panel threshold model - ScienceDirect",
+      "summary": "September 25, 2023 - The need for a good understanding of the relationship among poverty, inequality, and economic growth has become a significant concern in poor countries. This paper, therefore, empirically analyzes the triangular relationship among extreme poverty, income inequality, and economic growth for the 45 middle and low‐income sub‐Saharan African countries over the period 2010–2021.",
+      "link": "https://www.sciencedirect.com/science/article/pii/S1757780223007448",
       "source_type": "ddg"
     },
     {
@@ -80,22 +81,34 @@
       "source_type": "ddg"
     },
     {
-      "title": "Latin America and the Caribbean Population (2026) - Worldometer",
-      "summary": "The Population of Latin America and the Caribbean (1950 - 2026) chart plots the total population count as of July 1 of each year, from 1950 to 2026.",
-      "link": "https://www.worldometers.info/world-population/latin-america-and-the-caribbean-population/",
+      "title": "Telegram: View @GAPS2026",
+      "summary": "Creator of the GAPS concept. View in Telegram. Preview channel.",
+      "link": "https://t.me/GAPS2026",
       "source_type": "ddg"
     },
     {
       "title": "[YT] The Untold Truth About Money: How to Build Wealth From... - YouTube",
-      "summary": "[DESCRIPTION FALLBACK] There is an untold truth about money – an actual equation that allows you to build wealth from nothing.It’s an equation that is hardly taught in schools if a...",
+      "summary": "let this circle represent $1,000,000 this is what ten million dollars would look like this is what one hundred million dollars would look like and this is what 1 billion dollars would look like Jeff Bezos the founder of Amazon has a net worth of 117 times this number and then there's you you're probably working a job right now one that you got from the degree that you studied for in university you probably don't have much in savings your living expenses seem ridiculously high you feel as though you're not paid enough you have credit card debt that needs taking care of maybe your student studying for a degree that you ho can and your job that you hope can bring some good money you probably don't have any savings only a pesky student debt hanging above your head wealth getting rich that all ",
       "link": "https://www.youtube.com/watch?v=6mRbDEtDoyA",
       "published": "",
       "source_type": "youtube",
       "channel": "",
       "video_id": "6mRbDEtDoyA",
-      "transcript_method": "description",
-      "transcript_chars": 183,
-      "has_full_transcript": false
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1229,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Liberal Hypocrisy is Fueling American Inequality. - YouTube",
+      "summary": "There is a question I've had for a very long time and it has to do with this long time and it has to do with this map. This is a map of the 18 states in the US where Democrats control the legislative and executive branches or else have some veto proof majority in the legislature. Democrats in DC often blame the GOP for foiling their progressive vision. When middle class families see their taxes go up, they'll know Republicans are to blame. But if you zoom into these 18 states, there's effectively no Republicans standing in the way. So my question is, what do Democrats actually do when they have all the power? To answer this question, I teamed up with the Times editorial board writer Bea Applebomb. Okay, you got my attention. He's been thinking about and writing books about and reporting on",
+      "link": "https://www.youtube.com/watch?v=hNDgcjVGHIw",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "hNDgcjVGHIw",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1227,
+      "has_full_transcript": true
     }
   ]
 }

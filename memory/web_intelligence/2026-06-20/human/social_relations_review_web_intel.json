@@ -1,64 +1,65 @@
 {
   "axis": "SOCIAL_RELATIONS_REVIEW",
   "domain": "human",
-  "timestamp": "2026-06-20T05:37:35.396592+00:00",
-  "sources_count": 10,
+  "timestamp": "2026-06-20T12:05:02.987619+00:00",
+  "sources_count": 11,
   "rss_count": 8,
   "ddg_count": 0,
-  "youtube_count": 2,
+  "youtube_count": 3,
   "youtube_items": [
     {
-      "title": "[YT] Loneliness and Social Isolation: Tackling the ... - YouTube",
-      "summary": "[DESCRIPTION FALLBACK] Apr 4, 2025 · This webinar will discuss why we should care about loneliness and social isolation, the negative health consequences of these issues, how to recognize and identify loneliness and social...",
-      "link": "https://www.youtube.com/watch?v=eXEoYLhVGd8",
+      "title": "[YT] Promoting Social Connection During an Epidemic of Loneliness - YouTube",
+      "summary": "welcome everyone I'm Dr John White the chief medical officer at WebMD there's a lot of things that impact our health and we talk about them quite a bit at WebMD in terms of Lifestyle issues in terms of environment how diseases progress and develop but we're also starting to learn about the role of some other aspects such as loneliness disagreement with people in loneliness disagreement with people in our communities my guest today says we need to focus on how we all come together he's the CEO of Beyond Us and Them Jared side Jared thanks for joining me today it's great to be with you thanks so much for doing this I really appreciate it now some folks may not be aware of your organization so can you tell us a little bit about what you do and why you do it absolutely uh Beyond Us and Them is",
+      "link": "https://www.youtube.com/watch?v=-zJHk7TVAPM",
       "published": "",
       "source_type": "youtube",
       "channel": "",
-      "video_id": "eXEoYLhVGd8",
-      "transcript_method": "description",
-      "transcript_chars": 225,
-      "has_full_transcript": false
+      "video_id": "-zJHk7TVAPM",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1205,
+      "has_full_transcript": true
     },
     {
-      "title": "[YT] The Loneliness Epidemic: What’s Really Going On ... - YouTubeSense of Community | The Loneliness Epidemic - Overview | PBSHow Cohousing Neighborhoods Can Combat the Rise of Loneliness ...This clip explains how loneliness is a growing public health ...Loneliness Is on the Rise. Are Closer Neighbors a Solution?Loneliness and isolation – the hidden threat to global health ...",
-      "summary": "[DESCRIPTION FALLBACK] In this episode of Perspectives, a panel of Priory experts tackle the truth about modern disconnection, isolation, and what it really means to feel alone in today’s world. One in three adults over 60 live by themselves, but loneliness is the deeper experience of craving connection. An overview of its hidden impacts on health and well-being. Jun 20, 2024 · Experts caution that this loneliness may be as harmful to health as smoking. In a new video with Retro Report, we explore one possible solutio",
-      "link": "https://www.youtube.com/watch?v=eLNoEBiM8Vc",
+      "title": "[YT] The Loneliness Epidemic: The Impact of Social Connectedness on Our Health and Well-Being - YouTube",
+      "summary": "Welcome. We're so glad you're here. We're seeing folks uh greet us in the chat and we appreciate that you have joined the loneliness epidemic, the impact of social connectedness on our health and well-being with Aaron Ficker and Chris Gabrielson. This presentation was prepared for the Great Lakes PTTC under a cooperative agreement from the Substance Abuse and Mental Health Services Administration or Mental Health Services Administration or SAMA. The opinions expressed in this webinar are the views of the speakers and do not reflect the official position of the Department of Health and Human Services. The PTTC believes that words matter and uses affirming language in all our activities. I want to share a few housekeeping items with you. If you have technical issues, please individually mess",
+      "link": "https://www.youtube.com/watch?v=bKpSxziZDHk",
       "published": "",
       "source_type": "youtube",
       "channel": "",
-      "video_id": "eLNoEBiM8Vc",
-      "transcript_method": "description",
-      "transcript_chars": 523,
-      "has_full_transcript": false
+      "video_id": "bKpSxziZDHk",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 946,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] How is the loneliness epidemic affecting society? | The Stream - YouTube",
+      "summary": "hyperconnected yet disconnected it's the Paradox of our time why are we lonelier than ever in a world that's always online today we uncover the causes of the loneliness epidemic and ways to overcome it I'm anaise boures and this is the stream do you ever get lonely yeah I think everyone gets lonely uh that's almost like a daily struggle I often feel very lonely in the city what does it feel like feels like being lost like in a maze with no hand reaching out to you and you just don't really feel like climbing back out or you just can't climb back out it feels like that feeling of like you're about to cry but you just don't need to I live in a studio apartment so often times it's sort of trying to be comfortable with myself I think loneliness for me is not feeling understood and I definitely",
+      "link": "https://www.youtube.com/watch?v=lCwHWH8T2ck",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "lCwHWH8T2ck",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1158,
+      "has_full_transcript": true
     }
   ],
   "analysis": {
-    "problem": "Growing loneliness and social isolation among adults",
-    "root_cause": "Modern disconnection and isolation due to various factors such as urbanization, technological advancements, and lack of community engagement",
-    "severity": "HIGH",
-    "leverage_points": [
-      "Community leaders and local governments",
-      "Mental health professionals and social workers"
-    ],
-    "proposed_actions": [
-      {
-        "action": "Implement community-based programs to promote social connections and a sense of belonging",
-        "measurable_goal": "Reduce loneliness rates by 20% within the next 12 months",
-        "timeframe": "medium-term"
-      },
-      {
-        "action": "Increase funding for mental health services and social isolation research",
-        "measurable_goal": "Increase funding by 30% within the next 18 months",
-        "timeframe": "medium-term"
-      }
-    ],
+    "problem": "Анализ на SOCIAL_RELATIONS_REVIEW — данни получени но LLM грешка",
+    "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: None",
+    "severity": "UNKNOWN",
+    "leverage_points": [],
+    "proposed_actions": [],
     "evidence": [
-      "One in three adults over 60 live by themselves, but loneliness is the deeper experience of craving connection",
-      "Experts caution that loneliness is a growing public health concern with hidden impacts on health and well-being"
+      "Catholics in Latin America generally have positive views of Pope Leo",
+      "Most U.S. Catholics view Pope Leo favorably; many think Trump has been too critical of him",
+      "Is U.S. fertility at an all-time low? It depends how you measure it"
     ],
-    "generalization": "This problem connects to the domain of human health and wellbeing, and has implications for the sustainability of civilization, as lonely and isolated individuals may be less likely to contribute to their communities and more likely to experience poor health outcomes",
-    "summary": "Loneliness and social isolation are growing concerns among adults, with significant implications for mental and physical health, and community engagement is crucial to addressing this issue.",
-    "risk_level": "HIGH"
+    "generalization": "",
+    "summary": "- Catholics in Latin America generally have positive views of Pope Leo: In six Latin American countries surveyed, most Catholics view Pope Leo XIV favorably, though his ratings trail those Pope Franci",
+    "risk_level": "UNKNOWN",
+    "trend": "UNKNOWN",
+    "llm_raw": ""
   },
   "raw_items": [
     {
@@ -90,10 +91,24 @@
       "source_type": "rss"
     },
     {
-      "title": "Israel and Hezbollah agree ceasefire, US says, as more Lebanon strikes reported",
-      "summary": "The agreement followed concerns that continued clashes would undermine the deal to end the war between the US and Iran.",
-      "link": "https://www.bbc.com/news/articles/cwyk7kkygj5o?at_medium=RSS&at_campaign=rss",
-      "published": "Fri, 19 Jun 2026 19:27:12 GMT",
+      "title": "Israel and Hezbollah continue strikes despite ceasefire agreement",
+      "summary": "Several people are reported killed in southern Lebanon, with the IDF saying it hit \"Hezbollah terrorist targets\" after the group fired over 50 projectiles at Israeli forces.",
+      "link": "https://www.bbc.com/news/articles/cx240k9l112o?at_medium=RSS&at_campaign=rss",
+      "published": "Sat, 20 Jun 2026 08:53:53 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Zelensky stripped of highest Polish honour over WW2 name of army unit",
+      "summary": "Ukraine has denounced the move, calling it a \"strategic mistake\" and \"disrespectful\".",
+      "link": "https://www.bbc.com/news/articles/cr7xzg3dmj8o?at_medium=RSS&at_campaign=rss",
+      "published": "Fri, 19 Jun 2026 21:46:07 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Tourist dies in Dominican Republic luxury resort fire",
+      "summary": "Nearly 1,700 people were evacuated from the huge blaze at Viva Wyndham Dominicus Beach in Bayahibe, a popular resort town on the Caribbean coast.",
+      "link": "https://www.bbc.com/news/articles/c932k8010j1o?at_medium=RSS&at_campaign=rss",
+      "published": "Sat, 20 Jun 2026 07:40:20 GMT",
       "source_type": "rss"
     },
     {
@@ -104,42 +119,28 @@
       "source_type": "rss"
     },
     {
-      "title": "US to stop funding HIV programmes in South Africa",
-      "summary": "More than eight million South Africans are living with HIV – the highest number of any country in the world.",
-      "link": "https://www.bbc.com/news/articles/cdr457lxr71o?at_medium=RSS&at_campaign=rss",
-      "published": "Fri, 19 Jun 2026 23:35:07 GMT",
-      "source_type": "rss"
-    },
-    {
-      "title": "Watch: World Cup fans react to US defeating Australia to reach knockout round",
-      "summary": "US supporters were delighted after their team won 2-0 against the Socceroos while Australian fans were left disappointed but still hopeful.",
-      "link": "https://www.bbc.com/news/videos/cdxdly41p23o?at_medium=RSS&at_campaign=rss",
-      "published": "Sat, 20 Jun 2026 03:13:18 GMT",
-      "source_type": "rss"
-    },
-    {
-      "title": "[YT] Loneliness and Social Isolation: Tackling the ... - YouTube",
-      "summary": "[DESCRIPTION FALLBACK] Apr 4, 2025 · This webinar will discuss why we should care about loneliness and social isolation, the negative health consequences of these issues, how to recognize and identify loneliness and social...",
-      "link": "https://www.youtube.com/watch?v=eXEoYLhVGd8",
+      "title": "[YT] Promoting Social Connection During an Epidemic of Loneliness - YouTube",
+      "summary": "welcome everyone I'm Dr John White the chief medical officer at WebMD there's a lot of things that impact our health and we talk about them quite a bit at WebMD in terms of Lifestyle issues in terms of environment how diseases progress and develop but we're also starting to learn about the role of some other aspects such as loneliness disagreement with people in loneliness disagreement with people in our communities my guest today says we need to focus on how we all come together he's the CEO of Beyond Us and Them Jared side Jared thanks for joining me today it's great to be with you thanks so much for doing this I really appreciate it now some folks may not be aware of your organization so can you tell us a little bit about what you do and why you do it absolutely uh Beyond Us and Them is",
+      "link": "https://www.youtube.com/watch?v=-zJHk7TVAPM",
       "published": "",
       "source_type": "youtube",
       "channel": "",
-      "video_id": "eXEoYLhVGd8",
-      "transcript_method": "description",
-      "transcript_chars": 225,
-      "has_full_transcript": false
+      "video_id": "-zJHk7TVAPM",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1205,
+      "has_full_transcript": true
     },
     {
-      "title": "[YT] The Loneliness Epidemic: What’s Really Going On ... - YouTubeSense of Community | The Loneliness Epidemic - Overview | PBSHow Cohousing Neighborhoods Can Combat the Rise of Loneliness ...This clip explains how loneliness is a growing public health ...Loneliness Is on the Rise. Are Closer Neighbors a Solution?Loneliness and isolation – the hidden threat to global health ...",
-      "summary": "[DESCRIPTION FALLBACK] In this episode of Perspectives, a panel of Priory experts tackle the truth about modern disconnection, isolation, and what it really means to feel alone in today’s world. One in three adults over 60 live by themselves, but loneliness is the deeper experience of craving connection. An overview of its hidden impacts on health and well-being. Jun 20, 2024 · Experts caution that this loneliness may be as harmful to health as smoking. In a new video with Retro Report, we explore one possible solutio",
-      "link": "https://www.youtube.com/watch?v=eLNoEBiM8Vc",
+      "title": "[YT] The Loneliness Epidemic: The Impact of Social Connectedness on Our Health and Well-Being - YouTube",
+      "summary": "Welcome. We're so glad you're here. We're seeing folks uh greet us in the chat and we appreciate that you have joined the loneliness epidemic, the impact of social connectedness on our health and well-being with Aaron Ficker and Chris Gabrielson. This presentation was prepared for the Great Lakes PTTC under a cooperative agreement from the Substance Abuse and Mental Health Services Administration or Mental Health Services Administration or SAMA. The opinions expressed in this webinar are the views of the speakers and do not reflect the official position of the Department of Health and Human Services. The PTTC believes that words matter and uses affirming language in all our activities. I want to share a few housekeeping items with you. If you have technical issues, please individually mess",
+      "link": "https://www.youtube.com/watch?v=bKpSxziZDHk",
       "published": "",
       "source_type": "youtube",
       "channel": "",
-      "video_id": "eLNoEBiM8Vc",
-      "transcript_method": "description",
-      "transcript_chars": 523,
-      "has_full_transcript": false
+      "video_id": "bKpSxziZDHk",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 946,
+      "has_full_transcript": true
     }
   ]
 }
