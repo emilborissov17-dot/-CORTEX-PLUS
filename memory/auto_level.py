@@ -214,7 +214,8 @@ def run():
         if not isinstance(snap, dict):
             continue
 
-        metrics = snap.get("metrics", snap.get("raw", {}).get("metrics", {}))
+        raw = snap.get("raw")
+        metrics = snap.get("metrics") or (raw.get("metrics", {}) if isinstance(raw, dict) else {})
         if isinstance(metrics, dict) and "metrics" in metrics and len(metrics) < 8:
             inner = metrics.get("metrics", {})
             if inner and isinstance(inner, dict):
