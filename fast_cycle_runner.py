@@ -614,6 +614,14 @@ def main():
     # ── 15.7. HyperClaw plan → improvement proposals ──
     _hyperclaw_to_proposals()
 
+    # ── 15.8. GitHub publish — cycle synthesis + verified hypotheses ──
+    try:
+        from github_publisher import publish_synthesis as _gh_publish
+        _gh_publish()
+        print("[FAST_CYCLE] github_publisher -> OK")
+    except Exception as e:
+        print(f"[FAST_CYCLE] github_publisher -> FAILED: {e}")
+
     # ── 16. Action recommendations ──
     try:
         from core.cortex_reasoner import reason
@@ -739,6 +747,17 @@ def main():
         print(f"[FAST_CYCLE] MerkleMemory -> committed | signals={len(_signals)} decisions={len(_decisions)} results={len(_patch_results)} goal={composite:.4f}")
     except Exception as e:
         print(f"[FAST_CYCLE] MerkleMemory -> FAILED: {e}")
+
+    # ── 25. Training data accumulation ──
+    # Runs AFTER MerkleMemory commit (step 24) so the archive entry exists.
+    try:
+        from merkle_to_training import append_latest_cycle as _append_training
+        if _append_training():
+            print("[FAST_CYCLE] merkle_to_training -> appended latest cycle")
+        else:
+            print("[FAST_CYCLE] merkle_to_training -> already processed or no archive")
+    except Exception as e:
+        print(f"[FAST_CYCLE] merkle_to_training -> FAILED: {e}")
 
     print("=" * 50)
     print(f"[FAST_CYCLE] done at {_utc_now()}")
