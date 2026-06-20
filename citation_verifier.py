@@ -815,5 +815,83 @@ def main():
     return results
 
 
+# ── hypothesis quality gate ───────────────────────────────────────────────────
+
+_MIN_POINTS       = 3     # fewer data points → hard REJECTED
+_MIN_CONFIDENCE   = 0.05  # below → FLAGGED
+_MIN_R2           = 0.10  # below → FLAGGED
+_MAX_EXTRAP_RATIO = 10.0  # horizon_days / (n_points-1) above → FLAGGED
+
+
+@dataclass
+class HypothesisVerification:
+    status:    str   # "ACCEPTED" | "FLAGGED" | "REJECTED"
+    reasons:   list  # list[str]; empty when ACCEPTED
+    timestamp: str   # ISO-8601 UTC
+
+
+def verify_hypothesis(record: dict) -> HypothesisVerification:
+    """
+    Quality-gate for a hypothesis record from hypothesis_generator.py.
+    Called before the record is written to pending.json.
+
+    Checks (in order):
+      1. REJECTED (hard) — fewer than _MIN_POINTS data points
+      2. FLAGGED  (soft) — high extrapolation ratio
+      3. FLAGGED  (soft) — low confidence score
+      4. FLAGGED  (soft) — weak regression fit (R²)
+      5. FLAGGED  (soft) — logistic fallback model used
+      6. FLAGGED  (soft) — predicted value outside declared bounds
+
+    Returns:
+      ACCEPTED  — all checks pass; safe to write to pending.json
+      FLAGGED   — soft concerns; written to pending.json with flags attached
+      REJECTED  — hard failure; caller routes record to rejected.json
+    """
+    reasons: list[str] = []
+    now = datetime.now(timezone.utc).isoformat()
+
+    n          = record.get("n_points", 0)
+    confidence = record.get("confidence", 0.0)
+    r_squared  = record.get("r_squared", 0.0)
+    horizon    = record.get("horizon_days", 30)
+    model      = record.get("model_type", "")
+    predicted  = record.get("predicted_value")
+    bounds     = record.get("bounds")
+
+    if n < _MIN_POINTS:
+        return HypothesisVerification(
+            status="REJECTED",
+            reasons=[f"INSUFFICIENT_DATA: {n} point(s), minimum {_MIN_POINTS} required"],
+            timestamp=now,
+        )
+
+    extrap = horizon / max(1, n - 1)
+    if extrap > _MAX_EXTRAP_RATIO:
+        reasons.append(
+            f"HIGH_EXTRAPOLATION: projecting {horizon}d ahead from {n} points "
+            f"(ratio={extrap:.1f}x, threshold {_MAX_EXTRAP_RATIO}x)"
+        )
+
+    if confidence < _MIN_CONFIDENCE:
+        reasons.append(f"LOW_CONFIDENCE: {confidence:.3f} < {_MIN_CONFIDENCE}")
+
+    if r_squared < _MIN_R2:
+        reasons.append(f"WEAK_FIT: R²={r_squared:.3f} < {_MIN_R2}")
+
+    if "fallback" in model:
+        reasons.append(f"FALLBACK_MODEL: logistic fitting failed, using '{model}'")
+
+    if bounds and predicted is not None:
+        lo, hi = bounds
+        if predicted < lo or predicted > hi:
+            reasons.append(
+                f"OUT_OF_BOUNDS: predicted={predicted:.4g} outside [{lo}, {hi}]"
+            )
+
+    status = "FLAGGED" if reasons else "ACCEPTED"
+    return HypothesisVerification(status=status, reasons=reasons, timestamp=now)
+
+
 if __name__ == "__main__":
     main()
