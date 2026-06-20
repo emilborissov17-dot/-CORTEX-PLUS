@@ -4,7 +4,7 @@ execute_patches.py
 Изпълнява генерираните patches от self_modifier.
 Мери реален ефект чрез auto_level.py ПРЕДИ и СЛЕД всеки patch.
 """
-import subprocess, sys, pathlib, json, os, time
+import subprocess, sys, pathlib, json, os, time, re
 from datetime import datetime, timezone
 
 BASE = pathlib.Path(__file__).resolve().parent
@@ -116,6 +116,65 @@ def _record(name, ok, out, err, score_before, score_after, levels_before, levels
     return verdict, delta, changed
 
 
+# Patterns that require human approval before a patch is executed.
+# Checked line-by-line; comment lines are skipped.
+_APPROVAL_RULES: list[tuple[str, str]] = [
+    # Self-modification of critical orchestration files
+    (r"execute_patches",          "пипа execute_patches.py"),
+    (r"self_modifier",            "пипа self_modifier.py"),
+    # Git operations
+    (r"""["']git[\s"']""",        "git операция"),
+    (r'subprocess[^\n]*"git',     "git subprocess"),
+    # File deletion outside patches/
+    # (detected separately below to inspect path context)
+    # Network credentials being written
+    (r"(?i)(password|secret)\s*=\s*[\"'][^\"']{4,}", "записва credentials"),
+    (r"open\s*\([^)]*\.env",      "пише в .env"),
+]
+
+
+def _needs_approval(patch: pathlib.Path) -> tuple[bool, str]:
+    """Inspect patch source. Return (True, reason) if approval is required."""
+    try:
+        content = patch.read_text(encoding="utf-8", errors="ignore")
+    except Exception:
+        return True, "не може да се прочете"
+
+    for line in content.splitlines():
+        if line.strip().startswith("#"):
+            continue
+        for pattern, reason in _APPROVAL_RULES:
+            if re.search(pattern, line):
+                return True, reason
+        # File deletion: flag only when the path is not inside patches/
+        if re.search(r"(os\.remove|\.unlink\b|shutil\.rmtree|shutil\.rmdir)", line):
+            if "patch" not in line.lower():
+                return True, f"изтрива файл извън patches/: {line.strip()[:80]}"
+
+    return False, ""
+
+
+def _request_approval(patch: pathlib.Path, reason: str) -> bool:
+    """Show patch content and reason, then ask for y/N. Returns True if approved."""
+    sep = "=" * 60
+    print(f"\n{sep}")
+    print(f"  PATCH:  {patch.name}")
+    print(f"  ПРИЧИНА ЗА ПРОВЕРКА: {reason}")
+    print(sep)
+    try:
+        print(patch.read_text(encoding="utf-8", errors="ignore"))
+    except Exception as e:
+        print(f"  [ERROR] {e}")
+        return False
+    print(sep)
+    try:
+        answer = input("  Одобри? [y/N]: ").strip().lower()
+        return answer == "y"
+    except (EOFError, KeyboardInterrupt):
+        print("\n  Прекъснато — patch пропуснат.")
+        return False
+
+
 def run():
     patches = sorted(PATCH_DIR.glob("*_patch.py"))
     print(f"[PATCH_EXECUTOR] Намерени {len(patches)} patches")
@@ -133,6 +192,18 @@ def run():
 
     for patch in patches:
         print(f"\n[PATCH_EXECUTOR] → {patch.name}")
+
+        needs_ok, reason = _needs_approval(patch)
+        if needs_ok:
+            if not sys.stdin.isatty():
+                print(f"  ⛔ ПРОПУСНАТ (изисква одобрение, но няма TTY): {reason}")
+                print(f"     Пусни ръчно: python execute_patches.py")
+                continue
+            if not _request_approval(patch, reason):
+                print("  ⏭  Пропуснат от потребителя.")
+                continue
+        else:
+            print(f"  ✔  Auto-approved (не пипа чувствителни зони)")
 
         try:
             result = subprocess.run(

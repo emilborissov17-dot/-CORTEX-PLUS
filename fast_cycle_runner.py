@@ -353,10 +353,80 @@ def _load_directives() -> dict:
     return {"cycle_mode": "FULL", "max_parallel_workers": 3, "llm_sleep_secs": 2}
 
 
+def _send_windows_toast(title: str, body: str) -> None:
+    """Send a Windows balloon notification via PowerShell NotifyIcon."""
+    ps = (
+        "Add-Type -AssemblyName System.Windows.Forms; "
+        "$n = New-Object System.Windows.Forms.NotifyIcon; "
+        "$n.Icon = [System.Drawing.SystemIcons]::Warning; "
+        "$n.BalloonTipIcon = 'Warning'; "
+        "$n.BalloonTipTitle = $env:NOTIFY_TITLE; "
+        "$n.BalloonTipText  = $env:NOTIFY_BODY; "
+        "$n.Visible = $true; "
+        "$n.ShowBalloonTip(30000); "
+        "Start-Sleep -Milliseconds 500; "
+        "$n.Dispose()"
+    )
+    env = {**os.environ, "NOTIFY_TITLE": title[:63], "NOTIFY_BODY": body[:255]}
+    try:
+        subprocess.run(
+            ["powershell", "-NoProfile", "-NonInteractive", "-Command", ps],
+            capture_output=True, timeout=15, env=env,
+        )
+    except Exception as e:
+        print(f"[NOTIFY] toast failed: {e}")
+
+
+def _notify_pending_patches() -> None:
+    """Scan agents/core/*_patch.py for sensitive patches and send a Windows notification."""
+    import re as _re
+    _RULES = [
+        (_re.compile(r"execute_patches"),                              "пипа execute_patches.py"),
+        (_re.compile(r"self_modifier"),                                "пипа self_modifier.py"),
+        (_re.compile(r"""["']git[\s"']"""),                            "git операция"),
+        (_re.compile(r'subprocess[^\n]*"git'),                         "git subprocess"),
+        (_re.compile(r"(?i)(password|secret)\s*=\s*[\"'][^\"']{4,}"), "credentials"),
+        (_re.compile(r"open\s*\([^)]*\.env"),                          "пише в .env"),
+    ]
+    _DEL = _re.compile(r"(os\.remove|\.unlink\b|shutil\.rmtree|shutil\.rmdir)")
+
+    pending = []
+    for patch in sorted((BASE / "agents" / "core").glob("*_patch.py")):
+        try:
+            content = patch.read_text(encoding="utf-8", errors="ignore")
+        except Exception:
+            pending.append(patch.name)
+            continue
+        for line in content.splitlines():
+            if line.strip().startswith("#"):
+                continue
+            hit = next((msg for rx, msg in _RULES if rx.search(line)), "")
+            if not hit and _DEL.search(line) and "patch" not in line.lower():
+                hit = "изтрива файл"
+            if hit:
+                pending.append(patch.name)
+                break
+
+    if not pending:
+        print("[NOTIFY] няма patches чакащи одобрение")
+        return
+
+    title = f"CORTEX++ — {len(pending)} patch(es) чакат одобрение"
+    body  = ", ".join(pending[:6])
+    if len(pending) > 6:
+        body += f" и още {len(pending) - 6}"
+    print(f"[NOTIFY] {title}")
+    print(f"[NOTIFY] {body}")
+    _send_windows_toast(title, body)
+
+
 def main():
     print("=" * 50)
     print(f"[FAST_CYCLE] started at {_utc_now()}")
     print("=" * 50)
+
+    # ── Проверка за чакащи patches преди всичко друго ──
+    _notify_pending_patches()
 
     # ── 0. Body scan → adaptive directives (runs FIRST, before everything) ──
     print("[FAST_CYCLE] Step 0: body scan + dependency check...")
