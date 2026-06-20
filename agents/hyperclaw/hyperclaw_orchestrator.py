@@ -49,7 +49,25 @@ def _read_context() -> str:
     return "(no snapshot data available)"
 
 
-def _build_prompt(context: str, axes_spec: str, today: str) -> str:
+def _load_merkle_essence() -> str:
+    """Връща load_fast() есенция от MerkleMemory — сжат контекст от минали цикли."""
+    import sys
+    sys.path.insert(0, str(BASE))
+    try:
+        from merkle_memory import MerkleMemory
+        essence = MerkleMemory().load_fast()
+        if essence and len(essence) > 20:
+            return essence[:800]
+    except Exception as e:
+        print(f"[HYPERCLAW] MerkleMemory.load_fast() failed: {e}")
+    return ""
+
+
+def _build_prompt(context: str, axes_spec: str, today: str, merkle_essence: str = "") -> str:
+    merkle_section = (
+        f"── MERKLE MEMORY (история от минали цикли) ──\n{merkle_essence}\n\n"
+        if merkle_essence else ""
+    )
     return (
         "Ти си CORTEX++ в ролята на HYPERCLAW_ORCHESTRATOR.\n"
         "Имаш достъп до текущото състояние на системата по всички оси.\n\n"
@@ -97,7 +115,8 @@ def _build_prompt(context: str, axes_spec: str, today: str) -> str:
         "  PLANET: <индикатор>\n"
         "  CIVILIZATION: <индикатор>\n"
         "  COSMOS: <индикатор>\n\n"
-        f"── AGI AXES SPEC ──\n{axes_spec[:1000]}\n\n"
+        + merkle_section
+        + f"── AGI AXES SPEC ──\n{axes_spec[:1000]}\n\n"
         f"── ТЕКУЩО СЪСТОЯНИЕ ──\n{context}\n\n"
         f"Генерирай plan-{today}.md по горния формат. Само Markdown."
     ).replace("{today}", today)
@@ -107,9 +126,12 @@ def main() -> None:
     today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
     print(f"[HYPERCLAW] started at {_utc_now()}")
 
-    context   = _read_context()
-    axes_spec = AXES_SPEC.read_text(encoding="utf-8", errors="ignore") if AXES_SPEC.exists() else ""
-    prompt    = _build_prompt(context, axes_spec, today)
+    context        = _read_context()
+    axes_spec      = AXES_SPEC.read_text(encoding="utf-8", errors="ignore") if AXES_SPEC.exists() else ""
+    merkle_essence = _load_merkle_essence()
+    if merkle_essence:
+        print(f"[HYPERCLAW] MerkleMemory essence loaded ({len(merkle_essence)} chars)")
+    prompt         = _build_prompt(context, axes_spec, today, merkle_essence)
 
     try:
         from core.groq_backend import call_groq

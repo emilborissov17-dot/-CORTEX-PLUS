@@ -141,6 +141,20 @@ def _query_hypergraph(node: str) -> dict:
         return {"error": str(e), "node": node, "degree": 0, "downstream_agents": [], "upstream_agents": []}
 
 
+def _load_merkle_essence() -> str:
+    """Връща essence от MerkleMemory (сжат исторически контекст от минали цикли)."""
+    try:
+        import sys
+        sys.path.insert(0, str(BASE_DIR))
+        from merkle_memory import MerkleMemory
+        essence = MerkleMemory().load_fast()
+        if essence and len(essence) > 20:
+            return essence[:800]
+    except Exception as e:
+        print(f"  [MERKLE] load_fast failed: {e}")
+    return ""
+
+
 def get_tools(web_intel: dict):
     from memory.body_scan import full_scan, find_in_self
     from memory.existence_model import am_i_alive
@@ -254,6 +268,11 @@ def run():
 
     web_intel     = _load_web_intelligence()
     problems_str  = _format_problems_for_prompt(web_intel)
+    merkle_essence = _load_merkle_essence()
+    merkle_block  = (
+        "МИНАЛ ОПИТ (Merkle Memory — сжата история от минали цикли):\n"
+        + merkle_essence
+    ) if merkle_essence else ""
 
     tools          = get_tools(web_intel)
     history        = []
@@ -276,7 +295,8 @@ def run():
         prompt = (
             AGI_GOALS +
             f"\n\n{problems_str}\n\n"
-            "НАЛИЧНИ ИНСТРУМЕНТИ:\n" + available_desc +
+            + (f"{merkle_block}\n\n" if merkle_block else "")
+            + "НАЛИЧНИ ИНСТРУМЕНТИ:\n" + available_desc +
             "\n\nВЕЧЕ ИЗПОЛЗВАНИ (НЕ ги избирай): "
             + (", ".join(used_tools) if used_tools else "няма") +
             "\n\nДосегашни наблюдения:\n" + history_str +
@@ -344,13 +364,13 @@ def run():
             print(f"             ГРЕШКА: {e}")
 
     if history:
-        proposals = _build_problem_proposals(history, web_intel)
+        proposals = _build_problem_proposals(history, web_intel, merkle_essence)
         save_proposals(proposals)
 
 
 # ── PROPOSALS — problem → solution фрейм ────────────────────────────────────
 
-def _build_problem_proposals(history: list, web_intel: dict) -> list:
+def _build_problem_proposals(history: list, web_intel: dict, merkle_essence: str = "") -> list:
     history_str = "\n".join([
         f"  {h['tool']}({h['param']}) -> {h['result'][:200]}"
         for h in history
@@ -371,7 +391,8 @@ def _build_problem_proposals(history: list, web_intel: dict) -> list:
     prompt = (
         AGI_GOALS +
         f"\n\nРЕАЛНИ ПРОБЛЕМИ ОТ СВЕТА:\n{problems_context}\n\n"
-        f"НАБЛЮДЕНИЯ НА СИСТЕМАТА:\n{history_str}\n\n"
+        + (f"МИНАЛ ОПИТ (Merkle Memory):\n{merkle_essence[:600]}\n\n" if merkle_essence else "")
+        + f"НАБЛЮДЕНИЯ НА СИСТЕМАТА:\n{history_str}\n\n"
         + (f"HYPERGRAPH CONNECTIVITY (кои агенти са засегнати):\n{hg_context}\n\n" if hg_context else "") +
         "Генерирай 3 конкретни proposals за решаване на реални проблеми.\n"
         "ВАЖНО: Полето 'component' трябва да е реален agent name от системата.\n"
