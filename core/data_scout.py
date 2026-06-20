@@ -240,7 +240,7 @@ def run(max_axes: int = 4) -> dict:
         if axis not in discovered:
             discovered[axis] = {"sources": []}
         discovered[axis]["last_asked_llm"] = datetime.now(timezone.utc).isoformat()
-        time.sleep(2)   # courtesy pause between LLM calls
+        # groq_backend sleeps _SLEEP_SECS internally before each call
 
         for s in suggestions:
             url = s.get("url", "").strip()

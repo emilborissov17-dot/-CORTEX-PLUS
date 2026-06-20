@@ -350,7 +350,7 @@ def _load_directives() -> dict:
             return json.loads(p.read_text(encoding="utf-8"))
         except Exception:
             pass
-    return {"cycle_mode": "FULL", "max_parallel_workers": 3, "llm_sleep_secs": 2}
+    return {"cycle_mode": "FULL", "max_parallel_workers": 3, "llm_sleep_secs": 10}
 
 
 def _send_windows_toast(title: str, body: str) -> None:
@@ -377,8 +377,8 @@ def _send_windows_toast(title: str, body: str) -> None:
         print(f"[NOTIFY] toast failed: {e}")
 
 
-def _notify_pending_patches() -> None:
-    """Scan agents/core/*_patch.py for sensitive patches and send a Windows notification."""
+def _get_pending_patches() -> list[str]:
+    """Scan agents/core/*_patch.py for sensitive patches; return list of flagged filenames."""
     import re as _re
     _RULES = [
         (_re.compile(r"execute_patches"),                              "пипа execute_patches.py"),
@@ -406,17 +406,69 @@ def _notify_pending_patches() -> None:
             if hit:
                 pending.append(patch.name)
                 break
+    return pending
 
-    if not pending:
+
+def _notify_patches_and_initiatives() -> None:
+    """Run initiative tracker then send a single Windows notification combining
+    pending code patches and PROPOSED/IN_PROGRESS initiatives."""
+    # 1. Pending code patches
+    pending_patches = _get_pending_patches()
+    if pending_patches:
+        print(f"[NOTIFY] {len(pending_patches)} patch(es) чакат одобрение: "
+              f"{', '.join(pending_patches[:4])}" +
+              (f" +{len(pending_patches)-4}" if len(pending_patches) > 4 else ""))
+    else:
         print("[NOTIFY] няма patches чакащи одобрение")
+
+    # 2. Run initiative tracker → creates data/initiatives/*.json
+    active_initiatives: list[dict] = []
+    try:
+        from initiative_tracker import run as _it_run
+        active_initiatives = _it_run()
+    except Exception as e:
+        print(f"[NOTIFY] initiative_tracker FAILED: {e}")
+
+    if active_initiatives:
+        prop  = sum(1 for i in active_initiatives if i.get("status") == "PROPOSED")
+        prog  = sum(1 for i in active_initiatives if i.get("status") == "IN_PROGRESS")
+        print(f"[NOTIFY] initiatives — PROPOSED={prop} IN_PROGRESS={prog}")
+        for init in active_initiatives[:3]:
+            print(f"[NOTIFY]   [{init['status']:11s}] {init['milestone'][:60]}  → {init['target_date']}")
+
+    # 3. Build combined notification
+    if not pending_patches and not active_initiatives:
         return
 
-    title = f"CORTEX++ — {len(pending)} patch(es) чакат одобрение"
-    body  = ", ".join(pending[:6])
-    if len(pending) > 6:
-        body += f" и още {len(pending) - 6}"
+    body_parts: list[str] = []
+
+    if pending_patches:
+        patch_list = ", ".join(pending_patches[:5])
+        if len(pending_patches) > 5:
+            patch_list += f" +{len(pending_patches)-5}"
+        body_parts.append(f"Patches({len(pending_patches)}): {patch_list}")
+
+    if active_initiatives:
+        prop  = sum(1 for i in active_initiatives if i.get("status") == "PROPOSED")
+        prog  = sum(1 for i in active_initiatives if i.get("status") == "IN_PROGRESS")
+        counts = []
+        if prop: counts.append(f"{prop} PROPOSED")
+        if prog: counts.append(f"{prog} IN_PROGRESS")
+        # append first initiative milestone for context
+        first = active_initiatives[0]
+        body_parts.append(
+            f"Initiatives({', '.join(counts)}): {first['milestone'][:50]}"
+        )
+
+    if pending_patches and active_initiatives:
+        title = f"CORTEX++ — {len(pending_patches)} patch(es) + {len(active_initiatives)} initiatives"
+    elif pending_patches:
+        title = f"CORTEX++ — {len(pending_patches)} patch(es) чакат одобрение"
+    else:
+        title = f"CORTEX++ — {len(active_initiatives)} active initiatives"
+
+    body = " | ".join(body_parts)
     print(f"[NOTIFY] {title}")
-    print(f"[NOTIFY] {body}")
     _send_windows_toast(title, body)
 
 
@@ -425,8 +477,8 @@ def main():
     print(f"[FAST_CYCLE] started at {_utc_now()}")
     print("=" * 50)
 
-    # ── Проверка за чакащи patches преди всичко друго ──
-    _notify_pending_patches()
+    # ── Проверка за patches + initiatives преди всичко друго ──
+    _notify_patches_and_initiatives()
 
     # ── 0. Body scan → adaptive directives (runs FIRST, before everything) ──
     print("[FAST_CYCLE] Step 0: body scan + dependency check...")
@@ -455,7 +507,7 @@ def main():
         if h_mode == "MINIMAL" and cycle_mode != "MINIMAL":
             cycle_mode = "MINIMAL"
             workers    = 1
-            llm_sleep  = 4
+            llm_sleep  = 15
             print(f"[FAST_CYCLE] homeostasis overrides to MINIMAL mode")
         # Apply skip directives
         _skip_steps = set(homeo.get("skip_steps", []))

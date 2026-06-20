@@ -52,7 +52,7 @@ _cooldown_hits: dict = {}     # брои колко пъти е hit-нат вс�
 _cd_lock = threading.Lock()
 
 # Adaptive sleep — overridden by body_scanner directives at cycle start
-_SLEEP_SECS: float = 2.0
+_SLEEP_SECS: float = 10.0
 
 
 # ---------------------------------------------------------------------------
@@ -153,6 +153,7 @@ def _call_gemini(prompt: str, max_tokens: int) -> str:
         "contents": [{"parts": [{"text": prompt}]}],
         "generationConfig": {"maxOutputTokens": max_tokens},
     }
+    time.sleep(_SLEEP_SECS)
     r = requests.post(url, json=payload, timeout=60)
 
     if r.status_code == 429:
