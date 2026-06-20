@@ -21,8 +21,11 @@ if hasattr(sys.stdout, "reconfigure"):
 if hasattr(sys.stderr, "reconfigure"):
     sys.stderr.reconfigure(encoding="utf-8")
 
-TRENDS_PATH = os.path.join("cortex_memory", "abstractions", "trends.json")
-PENDING_PATH = os.path.join("cortex_memory", "hypotheses", "pending.json")
+from citation_verifier import verify_hypothesis
+
+TRENDS_PATH   = os.path.join("cortex_memory", "abstractions", "trends.json")
+PENDING_PATH  = os.path.join("cortex_memory", "hypotheses", "pending.json")
+REJECTED_PATH = os.path.join("cortex_memory", "hypotheses", "rejected.json")
 
 AXIS_UNITS = {
     "co2_ppm": "ppm",
@@ -256,6 +259,36 @@ def generate_hypothesis(axis_name, horizon_days=30, past_offset_days=None):
     }
 
     os.makedirs(os.path.dirname(PENDING_PATH), exist_ok=True)
+
+    # ── citation verification gate ────────────────────────────────────────────
+    vr = verify_hypothesis(record)
+    record["verification_status"]  = vr.status
+    record["verification_reasons"] = vr.reasons
+    record["verification_at"]      = vr.timestamp
+
+    if vr.status == "REJECTED":
+        record["status"] = "rejected"
+        rejected: list = []
+        if os.path.exists(REJECTED_PATH):
+            with open(REJECTED_PATH, "r", encoding="utf-8") as f:
+                rejected = json.load(f)
+        rejected.append(record)
+        with open(REJECTED_PATH, "w", encoding="utf-8") as f:
+            json.dump(rejected, f, indent=2, ensure_ascii=False)
+        print(
+            f"  [HYP] ⛔ REJECTED {record['id']}: {'; '.join(vr.reasons)}",
+            file=sys.stderr,
+        )
+        return record
+
+    if vr.status == "FLAGGED":
+        print(
+            f"  [HYP] ⚠️  FLAGGED  {record['id']}: {'; '.join(vr.reasons)}",
+            file=sys.stderr,
+        )
+    else:
+        print(f"  [HYP] ✅ ACCEPTED {record['id']}", file=sys.stderr)
+    # ─────────────────────────────────────────────────────────────────────────
 
     pending = []
     if os.path.exists(PENDING_PATH):
