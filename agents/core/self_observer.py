@@ -369,6 +369,17 @@ def run():
 
 # ── PROPOSALS — problem → solution фрейм ────────────────────────────────────
 
+def _load_existing_proposal_fingerprints() -> list[str]:
+    """Load first 80 chars of each existing proposal problem to avoid repetition."""
+    proposals_path = BASE_DIR / "memory" / "improvement_proposals.json"
+    try:
+        data = json.loads(proposals_path.read_text(encoding="utf-8"))
+        proposals = data.get("proposals", data) if isinstance(data, dict) else data
+        return [p["problem"][:80] for p in proposals if p.get("problem")]
+    except Exception:
+        return []
+
+
 def _build_problem_proposals(history: list, web_intel: dict, merkle_essence: str = "") -> list:
     history_str = "\n".join([
         f"  {h['tool']}({h['param']}) -> {h['result'][:200]}"
@@ -387,14 +398,27 @@ def _build_problem_proposals(history: list, web_intel: dict, merkle_essence: str
         for p in problems_found[:5]
     ]) or "Няма данни от web intelligence"
 
+    # Pass existing proposal fingerprints so LLM doesn't repeat
+    existing_fingerprints = _load_existing_proposal_fingerprints()
+    already_proposed_block = ""
+    if existing_fingerprints:
+        sample = existing_fingerprints[-15:]  # last 15 are the most recent
+        already_proposed_block = (
+            "ВЕЧЕ ПРЕДЛОЖЕНИ ПРОБЛЕМИ (НЕ повтаряй — намери нови, различни):\n"
+            + "\n".join(f"  - {fp}" for fp in sample)
+            + "\n\n"
+        )
+
     prompt = (
         AGI_GOALS +
         f"\n\nРЕАЛНИ ПРОБЛЕМИ ОТ СВЕТА:\n{problems_context}\n\n"
         + (f"МИНАЛ ОПИТ (Merkle Memory):\n{merkle_essence[:600]}\n\n" if merkle_essence else "")
+        + already_proposed_block
         + f"НАБЛЮДЕНИЯ НА СИСТЕМАТА:\n{history_str}\n\n"
         + (f"HYPERGRAPH CONNECTIVITY (кои агенти са засегнати):\n{hg_context}\n\n" if hg_context else "") +
         "Генерирай 3 конкретни proposals за решаване на реални проблеми.\n"
         "ВАЖНО: Полето 'component' трябва да е реален agent name от системата.\n"
+        "ВАЖНО: Proposals трябва да са РАЗЛИЧНИ от вече предложените по-горе.\n"
         "САМО JSON масив — без markdown:\n"
         '[{'
         '"problem": "Конкретен реален проблем (не абстрактен)",'
@@ -501,12 +525,12 @@ def save_proposals(observations: list):
     if removed_old:
         print(f"  [PROPOSALS] Изчистени {removed_old} стари (>{MAX_AGE_DAYS}д)")
 
-    # ── Fuzzy дедупликация по първите 60 символа ─────────────────────────────
-    existing_problems = {p["problem"][:60] for p in data["proposals"]}
+    # ── Fuzzy дедупликация по първите 80 символа ─────────────────────────────
+    existing_problems = {p["problem"][:80] for p in data["proposals"]}
 
     added = 0
     for obs in observations:
-        if obs["problem"][:60] in existing_problems:
+        if obs["problem"][:80] in existing_problems:
             continue
         result = evaluate_proposal_alignment(obs)
         if result["allowed"]:
@@ -515,7 +539,7 @@ def save_proposals(observations: list):
             obs["priority"]  = "HIGH"
             obs["timestamp"] = datetime.now(timezone.utc).isoformat()
             data["proposals"].append(obs)
-            existing_problems.add(obs["problem"][:60])
+            existing_problems.add(obs["problem"][:80])
             added += 1
             print(f"  [GUARD] ✅ Добавен: {obs['problem'][:60]}")
         else:
