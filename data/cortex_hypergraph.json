@@ -1,0 +1,316 @@
+{
+  "generated_at": "2026-06-20T06:40:22.043721+00:00",
+  "source_file": "fast_cycle_runner.py",
+  "agents_order": [
+    {
+      "agent": "internet_agent",
+      "line": 513
+    },
+    {
+      "agent": "civilization_snapshots_agent",
+      "line": 517
+    },
+    {
+      "agent": "planet_snapshots_agent",
+      "line": 521
+    },
+    {
+      "agent": "human_snapshots_agent",
+      "line": 525
+    },
+    {
+      "agent": "cosmos_snapshots_agent",
+      "line": 529
+    },
+    {
+      "agent": "planetary_potential_agent",
+      "line": 533
+    },
+    {
+      "agent": "energy_review_agent",
+      "line": 537
+    },
+    {
+      "agent": "self_awareness_agent",
+      "line": 544
+    },
+    {
+      "agent": "body_scanner",
+      "line": 596
+    },
+    {
+      "agent": "growth_planner",
+      "line": 600
+    },
+    {
+      "agent": "openclaw_agent",
+      "line": 604
+    },
+    {
+      "agent": "hyperclaw_orchestrator",
+      "line": 611
+    },
+    {
+      "agent": "self_observer",
+      "line": 641
+    },
+    {
+      "agent": "self_modifier",
+      "line": 645
+    },
+    {
+      "agent": "execute_patches",
+      "line": 649
+    },
+    {
+      "agent": "feedback_loop",
+      "line": 653
+    },
+    {
+      "agent": "daily_analysis",
+      "line": 665
+    }
+  ],
+  "node_degree": {
+    "internet_agent": 1,
+    "civilization_snapshots_agent": 2,
+    "planet_snapshots_agent": 2,
+    "human_snapshots_agent": 2,
+    "cosmos_snapshots_agent": 2,
+    "planetary_potential_agent": 2,
+    "energy_review_agent": 2,
+    "self_awareness_agent": 2,
+    "body_scanner": 2,
+    "growth_planner": 2,
+    "openclaw_agent": 2,
+    "hyperclaw_orchestrator": 2,
+    "self_observer": 2,
+    "self_modifier": 2,
+    "execute_patches": 2,
+    "feedback_loop": 2,
+    "daily_analysis": 1
+  },
+  "isolated_nodes": [
+    "fast_cycle_runner"
+  ],
+  "triples_count": 30,
+  "triples": [
+    {
+      "subject": "internet_agent",
+      "predicate": "follows",
+      "object": "civilization_snapshots_agent",
+      "subject_line": 513,
+      "object_line": 517
+    },
+    {
+      "subject": "civilization_snapshots_agent",
+      "predicate": "follows",
+      "object": "planet_snapshots_agent",
+      "subject_line": 517,
+      "object_line": 521
+    },
+    {
+      "subject": "planet_snapshots_agent",
+      "predicate": "follows",
+      "object": "human_snapshots_agent",
+      "subject_line": 521,
+      "object_line": 525
+    },
+    {
+      "subject": "human_snapshots_agent",
+      "predicate": "follows",
+      "object": "cosmos_snapshots_agent",
+      "subject_line": 525,
+      "object_line": 529
+    },
+    {
+      "subject": "cosmos_snapshots_agent",
+      "predicate": "follows",
+      "object": "planetary_potential_agent",
+      "subject_line": 529,
+      "object_line": 533
+    },
+    {
+      "subject": "planetary_potential_agent",
+      "predicate": "follows",
+      "object": "energy_review_agent",
+      "subject_line": 533,
+      "object_line": 537
+    },
+    {
+      "subject": "energy_review_agent",
+      "predicate": "follows",
+      "object": "self_awareness_agent",
+      "subject_line": 537,
+      "object_line": 544
+    },
+    {
+      "subject": "self_awareness_agent",
+      "predicate": "follows",
+      "object": "body_scanner",
+      "subject_line": 544,
+      "object_line": 596
+    },
+    {
+      "subject": "body_scanner",
+      "predicate": "follows",
+      "object": "growth_planner",
+      "subject_line": 596,
+      "object_line": 600
+    },
+    {
+      "subject": "growth_planner",
+      "predicate": "follows",
+      "object": "openclaw_agent",
+      "subject_line": 600,
+      "object_line": 604
+    },
+    {
+      "subject": "openclaw_agent",
+      "predicate": "follows",
+      "object": "hyperclaw_orchestrator",
+      "subject_line": 604,
+      "object_line": 611
+    },
+    {
+      "subject": "hyperclaw_orchestrator",
+      "predicate": "follows",
+      "object": "self_observer",
+      "subject_line": 611,
+      "object_line": 641
+    },
+    {
+      "subject": "self_observer",
+      "predicate": "follows",
+      "object": "self_modifier",
+      "subject_line": 641,
+      "object_line": 645
+    },
+    {
+      "subject": "self_modifier",
+      "predicate": "follows",
+      "object": "execute_patches",
+      "subject_line": 645,
+      "object_line": 649
+    },
+    {
+      "subject": "execute_patches",
+      "predicate": "follows",
+      "object": "feedback_loop",
+      "subject_line": 649,
+      "object_line": 653
+    },
+    {
+      "subject": "feedback_loop",
+      "predicate": "follows",
+      "object": "daily_analysis",
+      "subject_line": 653,
+      "object_line": 665
+    },
+    {
+      "subject": "fast_cycle_runner",
+      "predicate": "writes",
+      "object": "cortex_memory/archive/cycle_000001/decisions.json",
+      "cycle": "cycle_000001",
+      "action": "monitor"
+    },
+    {
+      "subject": "execute_patches",
+      "predicate": "writes",
+      "object": "cortex_memory/archive/cycle_000001/results.json",
+      "cycle": "cycle_000001",
+      "verdict": null,
+      "goal_score": 0.75
+    },
+    {
+      "subject": "fast_cycle_runner",
+      "predicate": "writes",
+      "object": "cortex_memory/archive/cycle_000002/decisions.json",
+      "cycle": "cycle_000002",
+      "action": "monitor"
+    },
+    {
+      "subject": "execute_patches",
+      "predicate": "writes",
+      "object": "cortex_memory/archive/cycle_000002/results.json",
+      "cycle": "cycle_000002",
+      "verdict": null,
+      "goal_score": 0.7999999999999999
+    },
+    {
+      "subject": "fast_cycle_runner",
+      "predicate": "writes",
+      "object": "cortex_memory/archive/cycle_000003/decisions.json",
+      "cycle": "cycle_000003",
+      "action": "monitor"
+    },
+    {
+      "subject": "execute_patches",
+      "predicate": "writes",
+      "object": "cortex_memory/archive/cycle_000003/results.json",
+      "cycle": "cycle_000003",
+      "verdict": null,
+      "goal_score": 0.85
+    },
+    {
+      "subject": "fast_cycle_runner",
+      "predicate": "writes",
+      "object": "cortex_memory/archive/cycle_000004/decisions.json",
+      "cycle": "cycle_000004",
+      "action": "observe_and_record"
+    },
+    {
+      "subject": "execute_patches",
+      "predicate": "writes",
+      "object": "cortex_memory/archive/cycle_000004/results.json",
+      "cycle": "cycle_000004",
+      "verdict": null,
+      "goal_score": 0.75
+    },
+    {
+      "subject": "fast_cycle_runner",
+      "predicate": "writes",
+      "object": "cortex_memory/archive/cycle_000005/decisions.json",
+      "cycle": "cycle_000005",
+      "action": "observe"
+    },
+    {
+      "subject": "execute_patches",
+      "predicate": "writes",
+      "object": "cortex_memory/archive/cycle_000005/results.json",
+      "cycle": "cycle_000005",
+      "verdict": null,
+      "goal_score": 0.75
+    },
+    {
+      "subject": "fast_cycle_runner",
+      "predicate": "writes",
+      "object": "cortex_memory/archive/cycle_000006/decisions.json",
+      "cycle": "cycle_000006",
+      "action": "observe"
+    },
+    {
+      "subject": "execute_patches",
+      "predicate": "writes",
+      "object": "cortex_memory/archive/cycle_000006/results.json",
+      "cycle": "cycle_000006",
+      "verdict": null,
+      "goal_score": 0.7999999999999999
+    },
+    {
+      "subject": "fast_cycle_runner",
+      "predicate": "writes",
+      "object": "cortex_memory/archive/cycle_000007/decisions.json",
+      "cycle": "cycle_000007",
+      "action": "observe"
+    },
+    {
+      "subject": "execute_patches",
+      "predicate": "writes",
+      "object": "cortex_memory/archive/cycle_000007/results.json",
+      "cycle": "cycle_000007",
+      "verdict": null,
+      "goal_score": 0.85
+    }
+  ]
+}
