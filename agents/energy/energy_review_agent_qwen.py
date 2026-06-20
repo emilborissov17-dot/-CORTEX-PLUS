@@ -86,7 +86,7 @@ def main() -> None:
         text_str = call_internal_llm(prompt)
     except Exception as e:
         print(f"[ENERGY_REVIEW_AGENT_QWEN][ERROR] {e}")
-        return
+        text_str = f"[LLM UNAVAILABLE — {e}]\n\nPrompt was built successfully from summaries."
 
     print("[ENERGY_REVIEW_AGENT_QWEN] saving results to out/energy_review_qwen.txt...")
     save_results(text_str)
