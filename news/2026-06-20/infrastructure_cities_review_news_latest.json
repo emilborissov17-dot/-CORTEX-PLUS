@@ -1,6 +1,6 @@
 {
   "axis": "INFRASTRUCTURE_CITIES_REVIEW",
-  "fetched_at": "2026-06-20T11:26:54.739574+00:00",
+  "fetched_at": "2026-06-20T12:34:41.338445+00:00",
   "smart_query": "cities infrastructure urban development",
   "sources_count": {
     "wiki": 0,
@@ -76,37 +76,37 @@
   "wiki": null,
   "youtube_items": [
     {
-      "title": "[YT] Smart City: How do you live in a Smart City? | Future Smart City Projects | Surveillance or Utopia?",
-      "summary": "[DESCRIPTION FALLBACK] Smart City: The idea of a smart city sounds very fascinating at first: Underground automatic gardens, remote controlled smart city ...",
-      "link": "https://www.youtube.com/watch?v=VRRPy-yEKRM",
+      "title": "[YT] YouTube:azBwqt4z0oA",
+      "summary": "Hello, my name is Sean Elliot and this research was conducted with my co-author Sigin Roy. Today I'll be presenting our study titled critical transit infrastructure in smart cities and urban air quality a multi-ity seasonal comparison of ridership in PM2.5. Urban transit systems play a central role in modern smart cities. They influence mobility, economic activity and increasingly environmental sustainability. At the same time, urban air pollution remains a major public health concern worldwide. One of the most important pollutants studied in urban environmental research is PM 2.5, which refers to particulate matter smaller than 2.5 micrometers. This study explores the relationship between public transit usage and air quality, specifically examining how transit ridership correlates with PM",
+      "link": "https://www.youtube.com/watch?v=azBwqt4z0oA",
       "source_type": "youtube",
-      "channel": "DW Shift",
-      "video_id": "VRRPy-yEKRM",
-      "transcript_method": "description",
-      "transcript_chars": 157,
-      "has_full_transcript": false
+      "channel": "",
+      "video_id": "azBwqt4z0oA",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 927,
+      "has_full_transcript": true
     },
     {
-      "title": "[YT] Smart City Infrastructure: The Future of Transportation and Urban Planning!",
-      "summary": "[DESCRIPTION FALLBACK] Smart City Infrastructure: The Future of Transportation and Urban Planning! CIVIL ENGINEERING EDGE Welcome to CIVIL ...",
-      "link": "https://www.youtube.com/watch?v=F-8LAPLaDUw",
+      "title": "[YT] YouTube:zlT5Y0hH04Y",
+      "summary": "Welcome to our journey through the top 10 most sustainable cities to live in by 10 most sustainable cities to live in by 2026. Imagine a world where innovation meets eco-friendliness, where your surroundings support a better future for you and the planet. Today, we explore cities that shine as beacons of sustainability and beacons of sustainability and creativity. Amsterdam, Netherlands. Known for its iconic canals and bike-friendly streets, Amsterdam is making significant strides in renewable energy and green architecture. With a goal to be entirely carbon neutral by 2030, it's a model for eco-conscious living. Copenhagen, Denmark. Often dubbed the green capital of Europe, Copenhagen leads with amazing bike infrastructure, strong waste management, and a commitment to carbon neutrality by ",
+      "link": "https://www.youtube.com/watch?v=zlT5Y0hH04Y",
       "source_type": "youtube",
-      "channel": "CIVIL ENGINEERING EDGE",
-      "video_id": "F-8LAPLaDUw",
-      "transcript_method": "description",
-      "transcript_chars": 142,
-      "has_full_transcript": false
+      "channel": "",
+      "video_id": "zlT5Y0hH04Y",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1119,
+      "has_full_transcript": true
     },
     {
-      "title": "[YT] Every Urban Planning Concept Explained in 9 Minutes",
-      "summary": "[DESCRIPTION FALLBACK] Have you ever been stuck in traffic and wondered why your city spent millions on a highway that just made things worse? Or why ...",
-      "link": "https://www.youtube.com/watch?v=Pj1vNBdQ2GA",
+      "title": "[YT] YouTube:C8zplcodfzo",
+      "summary": "It's fully operational. During the COVID lockdowns, Moscow used the system to catch residents violating quarantine, sending automated fines before those people even reached home. Every traffic camera, every metro gate, every public screen feeds into a single unified intelligence platform. The system can track a specific individual across the city using gait recognition, meaning it can identify you by the way you walk, even if your face is covered. Shenzhen operates over 1.9 million cameras across a city of 17 million people. That's more cameras per square kilometer than anywhere else on the planet. The system uses AI that doesn't just watch, it thinks. It predicts crowd movement, detects unusual behavior before anything happens, and identifies individuals across multiple cameras simultaneo",
+      "link": "https://www.youtube.com/watch?v=C8zplcodfzo",
       "source_type": "youtube",
-      "channel": "Urban Planner Explained",
-      "video_id": "Pj1vNBdQ2GA",
-      "transcript_method": "description",
-      "transcript_chars": 153,
-      "has_full_transcript": false
+      "channel": "",
+      "video_id": "C8zplcodfzo",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1210,
+      "has_full_transcript": true
     }
   ],
   "summary": "[RSS News]\n- New video game console aims to get kids moving\n- UK's top data and AI regulator quits after 'inappropriate' humour\n\n[arXiv]\n- Calibrating Urban Traffic Simulation from Sparse Road Observa",

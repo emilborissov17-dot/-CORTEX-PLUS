@@ -1,83 +1,59 @@
 {
   "axis": "FOOD_REVIEW",
   "domain": "planet",
-  "timestamp": "2026-06-20T12:03:05.689809+00:00",
-  "sources_count": 9,
+  "timestamp": "2026-06-20T12:25:36.177250+00:00",
+  "sources_count": 7,
   "rss_count": 0,
   "ddg_count": 6,
-  "youtube_count": 3,
+  "youtube_count": 1,
   "youtube_items": [
     {
-      "title": "[YT] A world going hungry? How conflict and climate change disrupt global food supply | Business Beyond",
-      "summary": "The world is struggling to feed itself. A planet that once looked like it was winning the&nbsp; war on starvation is now heading for disaster. “There is one person dying from hunger every&nbsp; minute across Ethiopia, Kenya and Somalia.&nbsp;&nbsp; In West Africa, the region is facing&nbsp; its worst hunger crisis in a decade But when there’s never been more food and there’s&nbsp; never been more farming, how is this possible? It's an extraordinary situation, isn't it? A world&nbsp; of great abundance. I mean, we have a massive&nbsp;&nbsp; surplus of food, twice as many calories are&nbsp; produced than humans need to support themselves,&nbsp;&nbsp; and yet we see rising hunger once again Keep watching to find out what brought&nbsp;&nbsp; us here. Was it the war in Ukraine?&nbsp; Was it env",
-      "link": "https://www.youtube.com/watch?v=5YcvKvxWaCE",
-      "published": "2022-07-05T15:15:16Z",
+      "title": "[YT] I Didn’t Eat Food For 30 Days - YouTube",
+      "summary": "I am not eating any food for the next 30 days wait won't you be hungry this is what I currently look like and I weigh 220 lb and when I say no food I really mean it this was the hardest I've ever pushed my body in my entire life seriously do not try this at home I had a whole team of doctors watching me every single day they kept track of all my vitals like these to ensure I didn't have a heart attack or worse thanks doctors and if I for any reason eat food in the next 30 days Chris you get to shave my head no there's no ways going to 30 days we're shaving his head the challenge has officially begun guess you won't need these you're right and since I'm not eating for the next 30 days I might as well get rid of all the food in my house or are you eating I'm not or are you I'm not eating and",
+      "link": "https://www.youtube.com/watch?v=vaIgyRoUkQI",
+      "published": "",
       "source_type": "youtube",
-      "channel": "DW News",
-      "video_id": "5YcvKvxWaCE",
+      "channel": "",
+      "video_id": "vaIgyRoUkQI",
       "transcript_method": "playwright_web",
-      "transcript_chars": 2099,
-      "has_full_transcript": true
-    },
-    {
-      "title": "[YT] FoodSystems 2030: Transforming Food Systems for People, Planet, and Prosperity",
-      "summary": "Hunger is on the rise with over 295 million people facing severe food insecurity in 2024. Current food systems generate a third of global emissions and drive the loss of forest and biodiversity. Meeting sustainable development goals require shifting towards a more circular economy. So every part of the food system delivers better outcomes from farm to table. To achieve this, the World Bank leads Food Systems 2030, a multi-donor trust fund that is rebuilding food systems. Food systems 2030 targets every stage in the food value chain to ensure a healthier people, planet, [music] and economy. Food Systems 2030 envisions a world where by 2030 people can afford a healthy and sustainable diet and have healthier lives with less illness and disease. This means working across all aspects of food sy",
-      "link": "https://www.youtube.com/watch?v=nHSEZlJ08aM",
-      "published": "2025-11-15T15:01:39Z",
-      "source_type": "youtube",
-      "channel": "World Bank Group",
-      "video_id": "nHSEZlJ08aM",
-      "transcript_method": "playwright_web",
-      "transcript_chars": 1192,
-      "has_full_transcript": true
-    },
-    {
-      "title": "[YT] What Earth in 2050 could look like - Shannon Odell",
-      "summary": "While we’re already feeling the devastating effects of human-caused climate change, governments continue to fall short on making and executing emissions pledges that would help thwart further warming. So, what will our world look like in the next 30 to 80 years, if we continue on the current path? While it’s impossible to know exactly how the next decade will unfold, scientists and climate experts have made projections, factoring in the current state of affairs. This future we’re about to describe is bleak, but remember there’s still time to ensure it doesn’t become our reality. It’s 2050. We’ve blown past the 1.5 degree target that world leaders promised to stick to. The Earth has warmed 2 degrees since the 1800s, when the world first started burning fossil fuels in mass scale. Reports on",
-      "link": "https://www.youtube.com/watch?v=2njn71TqkjA",
-      "published": "2024-03-28T15:01:38Z",
-      "source_type": "youtube",
-      "channel": "TED-Ed",
-      "video_id": "2njn71TqkjA",
-      "transcript_method": "playwright_web",
-      "transcript_chars": 1669,
+      "transcript_chars": 940,
       "has_full_transcript": true
     }
   ],
   "analysis": {
     "problem": "Анализ на FOOD_REVIEW — данни получени но LLM грешка",
-    "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: None",
+    "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: Gemini rate limit",
     "severity": "UNKNOWN",
     "leverage_points": [],
     "proposed_actions": [],
     "evidence": [
-      "Global Report on Food Crises (GRFC) 2025 | World Food Programme",
-      "Worsening food insecurity, waning response capacity: Options... | IFPRI",
-      "Global Food Insecurity: Trends and Policy... - The Borgen Project"
+      "Global Report on Food Crises (GRFC) 2025 - World Food Programme",
+      "The State of Food Security and Nutrition in the World 2025",
+      "Hunger Map 2025 | FAO | Food and Agriculture Organization of ..."
     ],
     "generalization": "",
-    "summary": "- Global Report on Food Crises (GRFC) 2025 | World Food Programme: 11 July 2025. Global Report on Food Crises (GRFC) 2025. Analyses assessments and case studies Food security analysis (VAM).In 2024, m",
+    "summary": "- Global Report on Food Crises (GRFC) 2025 - World Food Programme: Jul 11, 2025 · The Global Report on Food Crises (GRFC) 2025 shows conflict, economic shocks, climate extremes and forced displacement",
     "risk_level": "UNKNOWN",
     "trend": "UNKNOWN",
     "llm_raw": ""
   },
   "raw_items": [
     {
-      "title": "Global Report on Food Crises (GRFC) 2025 | World Food Programme",
-      "summary": "11 July 2025. Global Report on Food Crises (GRFC) 2025. Analyses assessments and case studies Food security analysis (VAM).In 2024, more than 295 million people across 53 countries and territories experienced acute levels of hunger – an increase of 13.7 million from 2023.",
+      "title": "Global Report on Food Crises (GRFC) 2025 - World Food Programme",
+      "summary": "Jul 11, 2025 · The Global Report on Food Crises (GRFC) 2025 shows conflict, economic shocks, climate extremes and forced displacement continued to drive food insecurity and malnutrition around the world, with a catastrophic impact on many already fragile regions.",
       "link": "https://www.wfp.org/publications/global-report-food-crises-grfc",
       "source_type": "ddg"
     },
     {
-      "title": "Worsening food insecurity, waning response capacity: Options... | IFPRI",
-      "summary": "Global food crises, fragility, and prospects: Trends and drivers Presentation of the key findings of the 2025 Global Report on Food Crises. Sara McHattie, Global Coordinator, Food Security Information Network (FSIN) (Presentation).",
-      "link": "https://www.ifpri.org/event/worsening-food-insecurity-waning-response-capacity-options-for-a-better-way-forward/",
+      "title": "The State of Food Security and Nutrition in the World 2025",
+      "summary": "Aug 8, 2025 · The 2025 SOFI report from FAO, IFAD, UNICEF, WFP and WHO examines how rising food prices are shaping access to healthy diets and driving food insecurity and malnutrition.",
+      "link": "https://data.unicef.org/resources/sofi-2025/",
       "source_type": "ddg"
     },
     {
-      "title": "Global Food Insecurity: Trends and Policy... - The Borgen Project",
-      "summary": "Food Insecurity: Global Trends. Global progress toward SDG 2 (Zero Hunger) remains stagnant since 2021. The broader picture reveals that hunger rates have plateaued since spiking in 2019.",
-      "link": "https://borgenproject.org/global-food-insecurity/",
+      "title": "Hunger Map 2025 | FAO | Food and Agriculture Organization of ...",
+      "summary": "Explore @FAO's hunger map and navigate through regions, subregions and countries to discover the state of the prevalence of undernourishment and food insecurity.",
+      "link": "https://www.fao.org/interactive/hunger-map/en/",
       "source_type": "ddg"
     },
     {
@@ -87,51 +63,27 @@
       "source_type": "ddg"
     },
     {
-      "title": "How Indonesia's Food System Can Weather Supply-Chain Shocks",
-      "summary": "In that same timeframe, reported food shortages rose from 19% to 31.2%. Those trends expose how quickly healthy diets can become unaffordable when supply-chain disruptions reverberate across household incomes, schools, health services, and food supply chains.",
-      "link": "https://www.thinkglobalhealth.org/article/how-indonesias-food-system-can-weather-supply-chain-shocks",
+      "title": "Arctic Ocean food chain is disrupted as a key tipping point has now...",
+      "summary": "How this change cascades through the food chain needs to be closely monitored as this has profound implications for us, including on commercial fishing in the North Atlantic Ocean.\" Publication details. Communications Earth & Environment (2026).",
+      "link": "https://phys.org/news/2026-05-arctic-ocean-food-chain-disrupted.html",
       "source_type": "ddg"
     },
     {
-      "title": "Thanks to climate change, supply chain disruptions are... | Salon.com",
-      "summary": "Like so many other features of capitalism, the development of long supply chains seems poised to self-immolate because of climate change. Unfortunately, there is no sign that the economic titans are interested in changing the way supply chains work at this juncture.",
-      "link": "https://www.salon.com/2021/08/15/supply-chain-disruptions-covid-semiconductors-climate-change/",
+      "title": "The Link Between Extreme Weather and Global Supply Chain...",
+      "summary": "Extreme weather events are becoming more frequent due to climate change. Rising temperatures are altering weather patterns, leading to more hurricanes, droughts, and floods.",
+      "link": "https://weather-fox.com/the-link-between-extreme-weather-and-global-supply-chain-disruptions-7-294898/",
       "source_type": "ddg"
     },
     {
-      "title": "[YT] A world going hungry? How conflict and climate change disrupt global food supply | Business Beyond",
-      "summary": "The world is struggling to feed itself. A planet that once looked like it was winning the&nbsp; war on starvation is now heading for disaster. “There is one person dying from hunger every&nbsp; minute across Ethiopia, Kenya and Somalia.&nbsp;&nbsp; In West Africa, the region is facing&nbsp; its worst hunger crisis in a decade But when there’s never been more food and there’s&nbsp; never been more farming, how is this possible? It's an extraordinary situation, isn't it? A world&nbsp; of great abundance. I mean, we have a massive&nbsp;&nbsp; surplus of food, twice as many calories are&nbsp; produced than humans need to support themselves,&nbsp;&nbsp; and yet we see rising hunger once again Keep watching to find out what brought&nbsp;&nbsp; us here. Was it the war in Ukraine?&nbsp; Was it env",
-      "link": "https://www.youtube.com/watch?v=5YcvKvxWaCE",
-      "published": "2022-07-05T15:15:16Z",
+      "title": "[YT] I Didn’t Eat Food For 30 Days - YouTube",
+      "summary": "I am not eating any food for the next 30 days wait won't you be hungry this is what I currently look like and I weigh 220 lb and when I say no food I really mean it this was the hardest I've ever pushed my body in my entire life seriously do not try this at home I had a whole team of doctors watching me every single day they kept track of all my vitals like these to ensure I didn't have a heart attack or worse thanks doctors and if I for any reason eat food in the next 30 days Chris you get to shave my head no there's no ways going to 30 days we're shaving his head the challenge has officially begun guess you won't need these you're right and since I'm not eating for the next 30 days I might as well get rid of all the food in my house or are you eating I'm not or are you I'm not eating and",
+      "link": "https://www.youtube.com/watch?v=vaIgyRoUkQI",
+      "published": "",
       "source_type": "youtube",
-      "channel": "DW News",
-      "video_id": "5YcvKvxWaCE",
+      "channel": "",
+      "video_id": "vaIgyRoUkQI",
       "transcript_method": "playwright_web",
-      "transcript_chars": 2099,
-      "has_full_transcript": true
-    },
-    {
-      "title": "[YT] FoodSystems 2030: Transforming Food Systems for People, Planet, and Prosperity",
-      "summary": "Hunger is on the rise with over 295 million people facing severe food insecurity in 2024. Current food systems generate a third of global emissions and drive the loss of forest and biodiversity. Meeting sustainable development goals require shifting towards a more circular economy. So every part of the food system delivers better outcomes from farm to table. To achieve this, the World Bank leads Food Systems 2030, a multi-donor trust fund that is rebuilding food systems. Food systems 2030 targets every stage in the food value chain to ensure a healthier people, planet, [music] and economy. Food Systems 2030 envisions a world where by 2030 people can afford a healthy and sustainable diet and have healthier lives with less illness and disease. This means working across all aspects of food sy",
-      "link": "https://www.youtube.com/watch?v=nHSEZlJ08aM",
-      "published": "2025-11-15T15:01:39Z",
-      "source_type": "youtube",
-      "channel": "World Bank Group",
-      "video_id": "nHSEZlJ08aM",
-      "transcript_method": "playwright_web",
-      "transcript_chars": 1192,
-      "has_full_transcript": true
-    },
-    {
-      "title": "[YT] What Earth in 2050 could look like - Shannon Odell",
-      "summary": "While we’re already feeling the devastating effects of human-caused climate change, governments continue to fall short on making and executing emissions pledges that would help thwart further warming. So, what will our world look like in the next 30 to 80 years, if we continue on the current path? While it’s impossible to know exactly how the next decade will unfold, scientists and climate experts have made projections, factoring in the current state of affairs. This future we’re about to describe is bleak, but remember there’s still time to ensure it doesn’t become our reality. It’s 2050. We’ve blown past the 1.5 degree target that world leaders promised to stick to. The Earth has warmed 2 degrees since the 1800s, when the world first started burning fossil fuels in mass scale. Reports on",
-      "link": "https://www.youtube.com/watch?v=2njn71TqkjA",
-      "published": "2024-03-28T15:01:38Z",
-      "source_type": "youtube",
-      "channel": "TED-Ed",
-      "video_id": "2njn71TqkjA",
-      "transcript_method": "playwright_web",
-      "transcript_chars": 1669,
+      "transcript_chars": 940,
       "has_full_transcript": true
     }
   ]

@@ -1,11 +1,11 @@
 {
   "axis": "TECHNOLOGY_INFRA_REVIEW",
-  "fetched_at": "2026-06-20T11:25:26.717480+00:00",
+  "fetched_at": "2026-06-20T12:32:57.751093+00:00",
   "smart_query": "technology internet digital access",
   "sources_count": {
     "wiki": 0,
     "gdelt": 0,
-    "arxiv": 2,
+    "arxiv": 0,
     "github": 3,
     "youtube_transcripts": 3,
     "podcast": 1
@@ -24,7 +24,7 @@
     {
       "title": "redis/redis",
       "snippet": "For developers, who are building real-time data-driven applications, Redis is the preferred, fastest, and most feature-rich cache, data structure server, and document and vector query engine.",
-      "stars": 74997,
+      "stars": 74998,
       "url": "https://github.com/redis/redis",
       "updated": "2026-06-20",
       "source": "GitHub"
@@ -32,64 +32,51 @@
     {
       "title": "binhnguyennus/awesome-scalability",
       "snippet": "The Patterns of Scalable, Reliable, and Performant Large-Scale Systems",
-      "stars": 71914,
+      "stars": 71916,
       "url": "https://github.com/binhnguyennus/awesome-scalability",
       "updated": "2026-06-20",
       "source": "GitHub"
     }
   ],
-  "arxiv_papers": [
-    {
-      "title": "UAV-CAS: A Calibrated Digital-Twin Dataset for Intrusion Detection in UAV Swarm Networks",
-      "snippet": "Intrusion detection systems (IDS) trained on wired-network benchmarks degrade sharply in real-world unmanned aerial vehicle (UAV) swarms, where mobility, fluctuating link quality, and decentralized routing reshape traffic distributions. Existing UAV-specific datasets also do not systematically vary ",
-      "url": "https://arxiv.org/abs/2606.17845v1",
-      "source": "arXiv"
-    },
-    {
-      "title": "Integration of 5G and Industrial Digital Models: A Case Study with AGVs",
-      "snippet": "5G is a fundamental technology for the digitalization of smart manufacturing. Smart manufacturing relies on the use of digital models to optimize industrial processes before implementation on the manufacturing plants. These models should account for the impact of 5G communications to adequately dime",
-      "url": "https://arxiv.org/abs/2606.17655v1",
-      "source": "arXiv"
-    }
-  ],
+  "arxiv_papers": [],
   "podcast": "[#496 – FFmpeg: The Incredible Technology Behind Video on the Internet] Jean-Baptiste Kempf is lead developer of VLC and president of VideoLAN. Kieran Kunhya is a longtime FFmpeg contributor, codec engineer, and the person behind the now-infamous FFmpeg account on X.\nThank you for listening ❤ Check out our sponsors: https://lexfridman.com/sponsors/ep496-sc\nSee below for timestamps, transcript, and to give feedback, submit questions, contact Lex, etc.\nTranscript:\nhttps",
   "wiki": null,
   "youtube_items": [
     {
-      "title": "[YT] Industry 4.0 will depend on Intelligent Infrastructure - 5G and Edge",
-      "summary": "[DESCRIPTION FALLBACK] Intelligent, autonomous, and electrified infrastructure is the equivalent of the atomic energy race of the 1940s. We need to ...",
-      "link": "https://www.youtube.com/watch?v=eKOY_tNc_K8",
+      "title": "[YT] YouTube:QloAsVyhHuY",
+      "summary": "In the vast expanse of space, humanity dared to dream beyond Earth's bounds. The Apollo program pushed the limits of exploration. Among its ambitious missions was Apollo 13, launched in April 1970, aiming for the moon's Framaro Formation. Astronauts Jim Levelvel, Jack Swigert, and Fred Hayes embarked on this journey. A testament to human ingenuity and courage. Their mission was part of the intense space race, a global competition to conquer the final frontier. But what began as a routine lunar voyage would soon transform into a desperate fight for survival miles from home. Just 2 days into their mission, a routine stir of an oxygen tank turned catastrophic. A sudden explosion rocked the spacecraft. The chilling words, \"Houston, we've had a problem.\" echoed across the vast distance, signali",
+      "link": "https://www.youtube.com/watch?v=QloAsVyhHuY",
       "source_type": "youtube",
-      "channel": "Autonomy Institute",
-      "video_id": "eKOY_tNc_K8",
-      "transcript_method": "description",
-      "transcript_chars": 151,
-      "has_full_transcript": false
+      "channel": "",
+      "video_id": "QloAsVyhHuY",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1190,
+      "has_full_transcript": true
     },
     {
-      "title": "[YT] Industry 4.0 will depend on Intelligent Infrastructure - 5G and Edge",
-      "summary": "[DESCRIPTION FALLBACK] 5G will impact dozens of industries. Intelligent, autonomous, and electrified infrastructure is the equivalent of the atomic energy ...",
-      "link": "https://www.youtube.com/watch?v=YoJUkbhkYOo",
+      "title": "[YT] YouTube:IrhuVi0Sltc",
+      "summary": "We've spent years trying to connect the world, and we've made remarkable world, and we've made remarkable progress. Today, billions of people are online. But what if access isn't the problem But what if access isn't the problem anymore? Because being connected doesn't mean being included. You can have a signal and still be left behind. The next [music] digital divide isn't about networks. It's about about networks. It's about participation. Can people afford to use digital Can people afford to use digital services? &gt;&gt; Do they trust them? Do they understand them? Can they benefit from them? Because the future belongs [music] to those who can participate, not just connect. And as AI becomes part of work, education, [music] finance and health care, a new divide is emerging between those",
+      "link": "https://www.youtube.com/watch?v=IrhuVi0Sltc",
       "source_type": "youtube",
-      "channel": "Autonomy Institute",
-      "video_id": "YoJUkbhkYOo",
-      "transcript_method": "description",
-      "transcript_chars": 158,
-      "has_full_transcript": false
+      "channel": "",
+      "video_id": "IrhuVi0Sltc",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1095,
+      "has_full_transcript": true
     },
     {
-      "title": "[YT] Accelerating 5G in the United States",
-      "summary": "[DESCRIPTION FALLBACK] 5G is the infrastructure for the next phase of digital transformation. It will shape the economic future of the United States in the ...",
-      "link": "https://www.youtube.com/watch?v=njedFXYOnHU",
+      "title": "[YT] YouTube:TaK1a-NFNhQ",
+      "summary": "why is it cut off why is this come up disconnected we have a real absolute not relative poverty issue going to come in the UK I wish they could see I'm not okay I need help please I just need a but like what you been up to hello M the internet's cut out Ms being online is the only group of likeminded people that I have anymore I'm needing some form of communication if digital Equity was a thing and reality for all of us then everyone's voices would matter",
+      "link": "https://www.youtube.com/watch?v=TaK1a-NFNhQ",
       "source_type": "youtube",
-      "channel": "Center for Strategic & International Studies",
-      "video_id": "njedFXYOnHU",
-      "transcript_method": "description",
-      "transcript_chars": 159,
-      "has_full_transcript": false
+      "channel": "",
+      "video_id": "TaK1a-NFNhQ",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 459,
+      "has_full_transcript": true
     }
   ],
-  "summary": "[arXiv]\n- UAV-CAS: A Calibrated Digital-Twin Dataset for Intrusion Detection in UAV Swarm Networks\n- Integration of 5G and Industrial Digital Models: A Case Study with AGVs\n\n[GitHub]\n- doocs/advanced-",
+  "summary": "[GitHub]\n- doocs/advanced-java star=78990: 😮 Core Interview Questions & Answers For Experienced Java(Backend) Developers | \n- redis/redis star=74998: For developers, who are building real-time data-dr",
   "urgency": "LOW",
   "sentiment": "NEUTRAL",
   "key_developments": [],

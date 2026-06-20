@@ -1,6 +1,6 @@
 {
   "axis": "SPACE_INFRASTRUCTURE_REVIEW",
-  "fetched_at": "2026-06-20T11:18:25.819469+00:00",
+  "fetched_at": "2026-06-20T12:35:47.132600+00:00",
   "smart_query": "space exploration NASA SpaceX",
   "sources_count": {
     "wiki": 0,
@@ -57,28 +57,6 @@
   "wiki": null,
   "youtube_items": [
     {
-      "title": "[YT] How NASA Will Build A City On The Moon",
-      "summary": "[DESCRIPTION FALLBACK] We are going to the Moon. And we're going there to stay this time. Last Video: What Exactly Happened On SpaceX's TENTH ...",
-      "link": "https://www.youtube.com/watch?v=ATgwz_hS3Qg",
-      "source_type": "youtube",
-      "channel": "The Space Race",
-      "video_id": "ATgwz_hS3Qg",
-      "transcript_method": "description",
-      "transcript_chars": 145,
-      "has_full_transcript": false
-    },
-    {
-      "title": "[YT] Why SpaceX and NASA Rockets Are So Different",
-      "summary": "[DESCRIPTION FALLBACK] In this video, we delve into the fascinating world of rocket design philosophy, specifically looking at the pros and cons of two ...",
-      "link": "https://www.youtube.com/watch?v=AlrowLw4dKE",
-      "source_type": "youtube",
-      "channel": "Beyond Facts",
-      "video_id": "AlrowLw4dKE",
-      "transcript_method": "description",
-      "transcript_chars": 155,
-      "has_full_transcript": false
-    },
-    {
       "title": "[YT] NASA vs SpaceX vs China — The Final Race for Space Supremacy (1957 – 2025)",
       "summary": "[DESCRIPTION FALLBACK] From NASA's Cold War dominance to SpaceX's private revolution and China's rising space ambitions, the world has witnessed an ...",
       "link": "https://www.youtube.com/watch?v=Gt24_T56km8",
@@ -88,6 +66,28 @@
       "transcript_method": "description",
       "transcript_chars": 151,
       "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Why SpaceX and NASA Rockets Are So Different",
+      "summary": "let's start by acknowledging something crucial although NASA and SpaceX are both at the Forefront of space travel their rockets look entirely different and that's mainly due to the fact that they have very different goals imagine packing for a trip to the edge of the solar system this is the kind of durability NASA is thinking about they need materials tough enough to withstand the unknown that's why NASA relies on Advanced Materials like aluminum lithium alloy known for being both lightweight and incredibly strong this allows their space launch system SLS to survive the intense forces of a rocket launch and the hostile environment of deep space meanwhile SpaceX isn't playing that same long game they're taking a completely different approach instead of one-time use Rockets like NASA's they",
+      "link": "https://www.youtube.com/watch?v=AlrowLw4dKE",
+      "source_type": "youtube",
+      "channel": "Beyond Facts",
+      "video_id": "AlrowLw4dKE",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1225,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] How NASA Will Build A City On The Moon",
+      "summary": "We are going to the moon and we are going there to stay this time. That's the plan that the American government, NASA and dozens of their international and commercial partners have made. And assuming that they can stick to that plan, what we are looking at is so much more than just landing people on the moon. Landing is not easy, but it's also not the hardest part. We have done that before. But what comes next is something entirely new. We need to build on the moon. We need to build a permanent base. Essentially, a small city on an alien world. And no one is exactly sure how that's going to go. But we do have some incredibly practical and innovative new solutions for life beyond the Earth. First, we need to talk about where this moon base is going to be located. The moon is a big place, an",
+      "link": "https://www.youtube.com/watch?v=ATgwz_hS3Qg",
+      "source_type": "youtube",
+      "channel": "The Space Race",
+      "video_id": "ATgwz_hS3Qg",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1197,
+      "has_full_transcript": true
     }
   ],
   "summary": "[arXiv]\n- The Lazuli Space Observatory: Opportunities for time-domain and multi-messenger astronomy\n- Revealing Cosmic Ecosystems with the Hubble Space Telescope in 2030s and Beyond\n\n[GitHub]\n- KOSASI",

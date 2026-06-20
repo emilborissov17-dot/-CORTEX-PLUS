@@ -1,21 +1,29 @@
 #!/usr/bin/env python3
 """
-groq_backend.py — LLM backend с 3-степенен fallback chain
+groq_backend.py — LLM backend с 5-степенен fallback chain
 ==========================================================
 Ред на опити:
-  1. Groq    (llama-3.3-70b-versatile) — бърз, безплатен
-  2. Gemini  (gemini-2.0-flash)        — 1500 req/day безплатно
-  3. Ollama  (локален)                 — без лимит, последна мрежа
+  1. Groq       (llama-3.3-70b-versatile)    — бърз, безплатен
+  2. Cerebras   (llama-3.3-70b)              — cloud.cerebras.ai
+  3. OpenRouter (deepseek/deepseek-r1:free)  — openrouter.ai
+  4. Gemini     (gemini-2.0-flash)           — 1500 req/day безплатно
+  5. Ollama     (локален)                    — без лимит, последна мрежа
 
 При rate limit → веднага следващ backend, БЕЗ дълго чакане.
 Cooldown 60s на backend при rate limit — после се опитва пак.
 
+При изчерпване на всички backends → вдига AllBackendsFailedError,
+която caller-ите могат да уловят и да маркират snapshot с
+needs_reanalysis: True за приоритетен повторен анализ.
+
 УПОТРЕБА: Drop-in replacement, API не се променя.
-  from core.groq_backend import call_groq
+  from core.groq_backend import call_groq, AllBackendsFailedError
   result = call_groq(prompt, max_tokens=800)
 
-.env (не се променя):
+.env:
   GROQ_API_KEY=gsk_...
+  CEREBRAS_API_KEY=csk_...
+  OPENROUTER_API_KEY=sk-or-...
   GEMINI_API_KEY=AIza...
 """
 
@@ -33,6 +41,12 @@ from pathlib import Path
 GROQ_API_URL    = "https://api.groq.com/openai/v1/chat/completions"
 GROQ_MODEL      = "llama-3.3-70b-versatile"
 
+CEREBRAS_API_URL = "https://api.cerebras.ai/v1/chat/completions"
+CEREBRAS_MODEL   = "gpt-oss-120b"   # reasoning model; "zai-glm-4.7" е алтернатива
+
+OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions"
+OPENROUTER_MODEL   = "nvidia/nemotron-3-super-120b-a12b:free"  # 120B, верифициран безплатен
+
 GEMINI_API_URL  = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent"
 
 OLLAMA_URL      = "http://localhost:11434/api/chat"
@@ -41,6 +55,17 @@ OLLAMA_PREFERRED = [
     "qwen3:8b", "qwen3:1.7b", "qwen2.5:7b",
     "qwen2.5:3b", "llama3:8b", "mistral:7b",
 ]
+
+# ---------------------------------------------------------------------------
+# Custom exception — raised when every backend is exhausted
+# ---------------------------------------------------------------------------
+
+class AllBackendsFailedError(RuntimeError):
+    """Raised when the full fallback chain (Groq→Cerebras→OpenRouter→Gemini→Ollama)
+    has been exhausted without a successful response.  Callers that write
+    snapshots should catch this and set needs_reanalysis=True on the output."""
+    pass
+
 
 # Cooldown при rate limit:
 # - При първи rate limit → 60s (може да е временен)
@@ -142,6 +167,75 @@ def _call_groq(prompt: str, max_tokens: int) -> str:
     return r.json()["choices"][0]["message"]["content"]
 
 
+def _call_cerebras(prompt: str, max_tokens: int) -> str:
+    key = _load_key("CEREBRAS_API_KEY")
+    if not key:
+        raise ValueError("CEREBRAS_API_KEY не е намерен")
+
+    print(f"  [LLM] Cerebras {CEREBRAS_MODEL}...")
+    headers = {
+        "Authorization": f"Bearer {key}",
+        "Content-Type": "application/json",
+    }
+    payload = {
+        "model": CEREBRAS_MODEL,
+        "messages": [
+            {"role": "system", "content": _system_msg()},
+            {"role": "user",   "content": prompt},
+        ],
+        "max_tokens": max_tokens,
+    }
+    time.sleep(_SLEEP_SECS)
+    r = requests.post(CEREBRAS_API_URL, headers=headers, json=payload, timeout=60)
+
+    if r.status_code == 429:
+        _set_cooldown("cerebras")
+        raise RuntimeError("Cerebras rate limit")
+
+    r.raise_for_status()
+    msg = r.json()["choices"][0]["message"]
+    # gpt-oss-120b / zai-glm-4.7 са reasoning модели: отговорът е в "content",
+    # "reasoning" е вътрешното мислене. При твърде нисък max_tokens "content"
+    # може да липсва — в такъв случай fallback-ваме към "reasoning".
+    content = msg.get("content") or msg.get("reasoning") or ""
+    if not content.strip():
+        raise ValueError(f"Cerebras {CEREBRAS_MODEL}: празен отговор (content и reasoning са празни)")
+    return content
+
+
+def _call_openrouter(prompt: str, max_tokens: int) -> str:
+    key = _load_key("OPENROUTER_API_KEY")
+    if not key:
+        raise ValueError("OPENROUTER_API_KEY не е намерен")
+
+    print(f"  [LLM] OpenRouter {OPENROUTER_MODEL}...")
+    headers = {
+        "Authorization": f"Bearer {key}",
+        "Content-Type": "application/json",
+        "HTTP-Referer": "https://github.com/cortex-agi",
+    }
+    payload = {
+        "model": OPENROUTER_MODEL,
+        "messages": [
+            {"role": "system", "content": _system_msg()},
+            {"role": "user",   "content": prompt},
+        ],
+        "max_tokens": max_tokens,
+    }
+    time.sleep(_SLEEP_SECS)
+    r = requests.post(OPENROUTER_API_URL, headers=headers, json=payload, timeout=90)
+
+    if r.status_code == 429:
+        _set_cooldown("openrouter")
+        raise RuntimeError("OpenRouter rate limit")
+
+    r.raise_for_status()
+    content = r.json()["choices"][0]["message"]["content"] or ""
+    # Някои OpenRouter модели могат да връщат <think>...</think> блокове
+    content = re.sub(r"<think>.*?</think>", "", content, flags=re.DOTALL).strip()
+    return content
+
+
 def _call_gemini(prompt: str, max_tokens: int) -> str:
     key = _load_key("GEMINI_API_KEY")
     if not key:
@@ -198,40 +292,49 @@ def _call_ollama(prompt: str, max_tokens: int) -> str:
 
 def call_groq(prompt: str, max_tokens: int = 1024) -> str:
     """
-    Fallback chain: Groq → Gemini
+    Fallback chain: Groq → Cerebras → OpenRouter → Gemini → Ollama
 
     При rate limit на даден backend → веднага следващ (без дълго чакане).
-    Backend с cooldown се прескача докато cooldown-ът не изтече.
-    Ollama е премахнат — изисква локален сървър, добавя 5s timeout при всяка грешка.
+    Backend с активен cooldown се прескача докато cooldown-ът не изтече.
+    При изчерпване на всички → вдига AllBackendsFailedError (subclass на
+    RuntimeError, съвместима с всички съществуващи except-клаузи).
     """
     backends = [
-        ("Groq",   _call_groq),
-        ("Gemini", _call_gemini),
+        ("Groq",       "groq",       _call_groq),
+        ("Cerebras",   "cerebras",   _call_cerebras),
+        ("OpenRouter", "openrouter", _call_openrouter),
+        ("Gemini",     "gemini",     _call_gemini),
+        ("Ollama",     "ollama",     _call_ollama),
     ]
 
     last_error = None
-    for name, fn in backends:
-        if _is_cooling(name.lower()):
-            print(f"  [LLM] {name} в cooldown — прескачам")
+    for label, key, fn in backends:
+        if _is_cooling(key):
+            print(f"  [LLM] {label} in cooldown -- skipping")
             continue
         try:
             result = fn(prompt, max_tokens)
             if result and result.strip():
-                print(f"[LLM] {name} ✅")
+                print(f"[LLM] {label} OK")
                 return result
-            raise ValueError(f"Празен отговор от {name}")
+            raise ValueError(f"Empty response from {label}")
         except Exception as e:
-            print(f"  [LLM] {name} неуспешен ({e}) — превключвам...")
+            print(f"  [LLM] {label} failed ({e}) -- next...")
             last_error = e
 
-    raise RuntimeError(f"Всички LLM backends неуспешни. Последна грешка: {last_error}")
+    raise AllBackendsFailedError(
+        f"All LLM backends failed (Groq/Cerebras/OpenRouter/Gemini/Ollama). "
+        f"Last error: {last_error}"
+    )
 
 
 def call_groq_safe(prompt: str, max_tokens: int = 1024) -> str:
     try:
         return call_groq(prompt, max_tokens)
+    except AllBackendsFailedError:
+        raise  # preserve specific type so callers can set needs_reanalysis
     except Exception as e:
-        raise RuntimeError(f"LLM call failed: {e}")
+        raise RuntimeError(f"LLM call failed: {e}") from e
 
 
 class GroqBackend:

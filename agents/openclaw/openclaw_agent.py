@@ -269,7 +269,7 @@ Be specific. Reference actual filenames. Return ONLY valid JSON."""
 
     result = _groq(prompt)
     if result and "error" not in result:
-        print("[OPENCLAW] LLM: Groq ✅")
+        print("[OPENCLAW] LLM: OK")
         return result
     return {"error": "All LLM backends failed"}
 

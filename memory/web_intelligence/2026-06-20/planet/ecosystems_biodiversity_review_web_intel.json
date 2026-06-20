@@ -1,46 +1,22 @@
 {
   "axis": "ECOSYSTEMS_BIODIVERSITY_REVIEW",
   "domain": "planet",
-  "timestamp": "2026-06-20T12:03:36.688126+00:00",
-  "sources_count": 11,
+  "timestamp": "2026-06-20T12:26:07.468962+00:00",
+  "sources_count": 9,
   "rss_count": 8,
   "ddg_count": 0,
-  "youtube_count": 3,
+  "youtube_count": 1,
   "youtube_items": [
     {
-      "title": "[YT] Climate 101: Deforestation | National Geographic",
-      "summary": "borås cover about 30% of the planet and the ecosystems they create play an essential role in supporting life on Earth but deforestation is clearing Earth's forests on a massive scale and at the current rate of destruction the world's rainforests could completely disappear within a hundred years why should we care about deforestation together forestry and agriculture are responsible for 24 percent of greenhouse gas emissions making deforestation a significant contributor to climate significant contributor to climate change deforestation impacts the amount of greenhouse gases in the atmosphere in two ways first when trees are felled they release the carbon they are storing into the atmosphere second trees play a critical role in absorbing the greenhouse gases that fuel global warming fewer f",
-      "link": "https://www.youtube.com/watch?v=Ic-J6hcSKa8",
-      "published": "2017-08-21T17:00:03Z",
+      "title": "[YT] One Year Ago I Built an Ecosystem, This Happened - YouTube",
+      "summary": "A year ago today, I built this little chunk of rainforest. This is much more than a bedside tank. It has evolved into a dense ecosystem teeming with life. It is in this video where you can see both the brutality and beauty of Mother Nature. Today, I will unveil to you the full history of the cannibal jungle in my bedroom. The tank began as a summer project. I built a custom background for the tank using some ghost wood spray foam and silicone. Nothing major. The tank wouldn't be the same without it. I built up some lava rock in the foreground. This was to create the water area. The back of the tank was then filled with some liquid and substrate. From here I planted the tank and it was complete. I didn't realize I had created the groundwork for an ecosystem. At the time, the only animals we",
+      "link": "https://www.youtube.com/watch?v=QTH9m6MDIfc",
+      "published": "",
       "source_type": "youtube",
-      "channel": "National Geographic",
-      "video_id": "Ic-J6hcSKa8",
+      "channel": "",
+      "video_id": "QTH9m6MDIfc",
       "transcript_method": "playwright_web",
-      "transcript_chars": 1201,
-      "has_full_transcript": true
-    },
-    {
-      "title": "[YT] Biodiversity Loss Emergency: The Silent Extinction Crisis Explained",
-      "summary": "picture yourself walking through a lush rainforest where the air is thick with humidity and the sounds of Life surround you from every direction the vibrant calls of tropical birds Echo above while below a myriad of insects buzz and rustle among the leaves brightly colored flowers and plants of every imaginable shade create a mosaic of life and Beauty this is biodiversity in action the variety of life forms that make up our planet's ecosystems biodiversity is more than just an array of different species it's the intricate Web of Life life that sustains ecosystems and by extension human life it encompasses the diversity within species between species and of ecosystems themselves healthy biodiversity ensures ecosystem productivity where each species no matter how small has an important role ",
-      "link": "https://www.youtube.com/watch?v=DjVU3kgmVBc",
-      "published": "2024-07-19T10:00:10Z",
-      "source_type": "youtube",
-      "channel": "The Knowledge Snack",
-      "video_id": "DjVU3kgmVBc",
-      "transcript_method": "playwright_web",
-      "transcript_chars": 1204,
-      "has_full_transcript": true
-    },
-    {
-      "title": "[YT] How Deforestation and Habitat Loss reduce Biodiversity: Edge Effects and Extinction Debts explained",
-      "summary": "every minute an area the size of a soccer or football field depending on where you watch this from is clear-cut in the Amazon basin which because of feedbacks of the forest on its own climate may be on the brink of turning into a savanna over half of the original six million square miles of rainforest that blanketed much of the tropics has been clear-cut in the United States less than 21 percent of old-growth forests still exist in the u.s. Midwest only a tiny fraction of the original tall grass prairie remains with less than 1/10 of one percent of the original tall grass prairie remaining in Iowa with the destruction of the flora that makes up an ecosystem The Associated fauna disappears as well the mind-boggling amount of habitat destruction that has happened and continues to happen is t",
-      "link": "https://www.youtube.com/watch?v=utUttHCCHXk",
-      "published": "2020-12-02T16:00:13Z",
-      "source_type": "youtube",
-      "channel": "Ecotasia",
-      "video_id": "utUttHCCHXk",
-      "transcript_method": "playwright_web",
-      "transcript_chars": 1188,
+      "transcript_chars": 1988,
       "has_full_transcript": true
     }
   ],
@@ -119,27 +95,15 @@
       "source_type": "rss"
     },
     {
-      "title": "[YT] Climate 101: Deforestation | National Geographic",
-      "summary": "borås cover about 30% of the planet and the ecosystems they create play an essential role in supporting life on Earth but deforestation is clearing Earth's forests on a massive scale and at the current rate of destruction the world's rainforests could completely disappear within a hundred years why should we care about deforestation together forestry and agriculture are responsible for 24 percent of greenhouse gas emissions making deforestation a significant contributor to climate significant contributor to climate change deforestation impacts the amount of greenhouse gases in the atmosphere in two ways first when trees are felled they release the carbon they are storing into the atmosphere second trees play a critical role in absorbing the greenhouse gases that fuel global warming fewer f",
-      "link": "https://www.youtube.com/watch?v=Ic-J6hcSKa8",
-      "published": "2017-08-21T17:00:03Z",
+      "title": "[YT] One Year Ago I Built an Ecosystem, This Happened - YouTube",
+      "summary": "A year ago today, I built this little chunk of rainforest. This is much more than a bedside tank. It has evolved into a dense ecosystem teeming with life. It is in this video where you can see both the brutality and beauty of Mother Nature. Today, I will unveil to you the full history of the cannibal jungle in my bedroom. The tank began as a summer project. I built a custom background for the tank using some ghost wood spray foam and silicone. Nothing major. The tank wouldn't be the same without it. I built up some lava rock in the foreground. This was to create the water area. The back of the tank was then filled with some liquid and substrate. From here I planted the tank and it was complete. I didn't realize I had created the groundwork for an ecosystem. At the time, the only animals we",
+      "link": "https://www.youtube.com/watch?v=QTH9m6MDIfc",
+      "published": "",
       "source_type": "youtube",
-      "channel": "National Geographic",
-      "video_id": "Ic-J6hcSKa8",
+      "channel": "",
+      "video_id": "QTH9m6MDIfc",
       "transcript_method": "playwright_web",
-      "transcript_chars": 1201,
-      "has_full_transcript": true
-    },
-    {
-      "title": "[YT] Biodiversity Loss Emergency: The Silent Extinction Crisis Explained",
-      "summary": "picture yourself walking through a lush rainforest where the air is thick with humidity and the sounds of Life surround you from every direction the vibrant calls of tropical birds Echo above while below a myriad of insects buzz and rustle among the leaves brightly colored flowers and plants of every imaginable shade create a mosaic of life and Beauty this is biodiversity in action the variety of life forms that make up our planet's ecosystems biodiversity is more than just an array of different species it's the intricate Web of Life life that sustains ecosystems and by extension human life it encompasses the diversity within species between species and of ecosystems themselves healthy biodiversity ensures ecosystem productivity where each species no matter how small has an important role ",
-      "link": "https://www.youtube.com/watch?v=DjVU3kgmVBc",
-      "published": "2024-07-19T10:00:10Z",
-      "source_type": "youtube",
-      "channel": "The Knowledge Snack",
-      "video_id": "DjVU3kgmVBc",
-      "transcript_method": "playwright_web",
-      "transcript_chars": 1204,
+      "transcript_chars": 1988,
       "has_full_transcript": true
     }
   ]

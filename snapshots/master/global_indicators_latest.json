@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-06-20T11:09:47.582008+00:00",
+  "timestamp": "2026-06-20T12:29:47.932000+00:00",
   "sources": {
     "co2": "NOAA Mauna Loa CO2",
     "temperature": "NASA GISTEMP",
@@ -11,6 +11,7 @@
     "displaced": "UNHCR Population API",
     "economy": "World Bank WDI — Economy",
     "cities": "World Bank WDI — Cities",
+    "governance": "World Bank WGI — Governance",
     "tech_infra": "World Bank WDI — Tech Infra",
     "ai_activity": "arXiv + Hugging Face Hub",
     "media": "GDELT DOC 2.0",
@@ -81,7 +82,12 @@
     "electricity_access_pct": 91.5992,
     "urban_population_pct": 57.5635,
     "urban_growth_annual_pct": 1.401,
-    "roads_paved_pct": null
+    "roads_paved_pct": 50.4875
+  },
+  "governance": {
+    "ge_est": 0.0758,
+    "cc_est": 0.0046,
+    "rl_est": -0.0075
   },
   "tech_infra": {
     "broadband_per100": 20.11,
@@ -91,9 +97,16 @@
   },
   "ai_activity": {
     "arxiv_ai_papers_total": 185440,
-    "github_ai_repos_total": 38433
+    "github_ai_repos_total": 38438
   },
-  "media": {},
+  "media": {
+    "news_tone_avg_1month": -0.783,
+    "news_tone_latest": -0.854,
+    "news_tone_min": -0.854,
+    "news_tone_max": -0.712,
+    "news_tone_datapoints": 2,
+    "news_tone_scale": "-100=very negative, 0=neutral, +100=very positive"
+  },
   "conflicts": {},
   "nuclear": {
     "nuclear_warheads_total": 12121,
@@ -108,7 +121,7 @@
   },
   "satellites": {},
   "neo": {
-    "neo_close_approaches_90d": 111,
+    "neo_close_approaches_90d": 112,
     "neo_within_lunar_dist_90d": 1,
     "neo_dist_threshold_au": 0.1
   }

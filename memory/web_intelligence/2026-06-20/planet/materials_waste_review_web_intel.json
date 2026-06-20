@@ -1,46 +1,34 @@
 {
   "axis": "MATERIALS_WASTE_REVIEW",
   "domain": "planet",
-  "timestamp": "2026-06-20T12:03:42.035614+00:00",
-  "sources_count": 13,
+  "timestamp": "2026-06-20T12:26:30.942472+00:00",
+  "sources_count": 12,
   "rss_count": 4,
   "ddg_count": 6,
-  "youtube_count": 3,
+  "youtube_count": 2,
   "youtube_items": [
     {
-      "title": "[YT] Recycling Marine Plastic Waste A Circular Economy Case | Suzanna Laskaridis | TEDxAthens",
-      "summary": "In 2017, I was approached by a team of designers to help finance a project they were doing here in Greece. The aim was to reuse old fishing nets and turn them into filament for 3D and turn them into filament for 3D printers. I thought the idea of recycling marine plastic waste into something workable was absolutely fantastic. So, I started working in my mind the idea of how this could actually be idea of how this could actually be reused. We put together the best minds in the fields of marine plastic waste, new technologies, and circular economy and dove right in. We have a storage area just outside of Athens, so we started suggesting to various friends and NGOs and various other companies who had been collecting marine plastic waste up to that point that we take them back to our storage t",
-      "link": "https://www.youtube.com/watch?v=n_3vSDOY7iU",
-      "published": "2022-07-27T15:35:19Z",
+      "title": "[YT] Pacific ocean litter project targets plastic waste in...",
+      "summary": "Regional leaders, environmental experts, and development partners have gathered in Port Moresby this week for the 2026 Melanesian Ocean Summit with the discussions focused on marine pollution, climate resilience, and sustainable ocean management across the Pacific. Speaking to PNG Haus Buai, Laurent Tuto Andrew Valentine, project manager of Pacific Ocean Litter Project, said the initiative is funded by the government of Australia and operates across 14 Pacific countries including Papua New Pacific countries including Papua New Guinea. My project, the Pacific Ocean Litter Project, is funded by the government of Project, is funded by the government of Australia. And we work in um 14 countries of the Pacific including Papua New Guinea. And what we are trying to do is um help countries reduce ",
+      "link": "https://www.youtube.com/watch?v=HL9YatMy008",
+      "published": "",
       "source_type": "youtube",
-      "channel": "TEDx Talks",
-      "video_id": "n_3vSDOY7iU",
-      "transcript_method": "playwright_web",
-      "transcript_chars": 1113,
-      "has_full_transcript": true
-    },
-    {
-      "title": "[YT] Circular economy for plastics",
-      "summary": "Since 1950 approximately 8.3 billion tons of plastics have been produced globally and 5-13 million tons of plastic waste seeps into our environment and oceans every year. The danish cleantech mechanical recycling company PLASTIX is specializing in converting plastic fibres primarily used fishnets, trawls and ropes that would previously have ended up in the ocean or landfill into high-quality and virgin-like Green Plastic raw materials. PLASTIX received a feasibility study grant from Nopef, a fund financed by the Nordic Council of Ministers and managed by Nefco to assess the South African market and, as a result, established a local subsidiary in 2017. Today, it obtains post-use discarded nets, trawls and other fishing gear from the South African market. PLASTIX is currently expanding its p",
-      "link": "https://www.youtube.com/watch?v=cZwRG7sXCKw",
-      "published": "2021-03-17T21:13:10Z",
-      "source_type": "youtube",
-      "channel": "Nefco - the Nordic Green Bank",
-      "video_id": "cZwRG7sXCKw",
-      "transcript_method": "playwright_web",
-      "transcript_chars": 1505,
-      "has_full_transcript": true
-    },
-    {
-      "title": "[YT] Plastics Recycling - an important element of Circular Economy",
-      "summary": "[Music] Plastics are nowadays part of our life they are omnipresent in our homes in our toys electronic appliances and Furniture in our cars sports equipment medical equipment or simply being used for food packaging however use of plastics results in waste generation recycling is not always possible due to a number of reasons such as lack of collection schemes or low recycling rates the EU produces 24 million tons of plastic waste per year yet only a quarter of this gets recycled luckily this scenario is changing and more and more plastic is being recycled in the EU plastic recycling is a sustainable and valuable activity promoting the efficient use of activity promoting the efficient use of Natural Resources recycling is a complex process that starts at our homes not all Plastics are the ",
-      "link": "https://www.youtube.com/watch?v=UcPqKg_82Rw",
-      "published": "2016-11-02T14:58:29Z",
-      "source_type": "youtube",
-      "channel": "Plastics Recyclers Europe",
-      "video_id": "UcPqKg_82Rw",
+      "channel": "",
+      "video_id": "HL9YatMy008",
       "transcript_method": "playwright_web",
       "transcript_chars": 1183,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] What really happens to the plastic you throw away - Emma... - YouTube",
+      "summary": "This is the story of three plastic bottles, empty and discarded. Their journeys are about to diverge with outcomes that impact nothing less than the fate of the planet. But they weren't always this way. To understand where these bottles end up, we must first explore their origins. The heroes of our story were conceived in this oil refinery. The plastic in their bodies was formed by chemically bonding oil and gas molecules together to make monomers. In turn, these monomers were bonded into long polymer chains to make plastic in the form of millions of pellets. Those were melted at manufacturing plants and reformed in molds to create the resilient material that makes up the triplets' bodies. Machines filled the bottles with sweet bubbily liquid and they were then wrapped, shipped, bought, op",
+      "link": "https://www.youtube.com/watch?v=_6xlNyWPpB8",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "_6xlNyWPpB8",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1551,
       "has_full_transcript": true
     }
   ],
@@ -91,21 +79,21 @@
       "source_type": "rss"
     },
     {
+      "title": "Global Plastic Waste: 2026 Verified Stats & Trends",
+      "summary": "28Global enzymatic recycling pilots process 100 tonnes/year, scaling challenges.30Households generate 60% of plastic waste globally, around 220 million tonnes/year. Verified.",
+      "link": "https://gitnux.org/global-plastic-waste-statistics/",
+      "source_type": "ddg"
+    },
+    {
       "title": "16 Biggest Environmental Problems of 2026 | Earth.Org",
-      "summary": "From the rise of AI and plastic pollution to fast fashion, here are 16 of the biggest environmental problems of 2026.",
+      "summary": "By 2015, this annual production swelled to 419 million tons and exacerbating plastic waste in the environment. Currently, roughly 14 million tons of plastic make their way into the oceans every year, harming wildlife habitats and the animals that live in them.",
       "link": "https://earth.org/the-biggest-environmental-problems-of-our-lifetime/",
       "source_type": "ddg"
     },
     {
-      "title": "The world’s plastic pollution crisis, explained | National Geographic",
-      "summary": "Why was plastic invented? Plastics made from fossil fuels are just over a century old. Belgian chemist Leo Baekeland created the first fully synthetic plastic in 1907.",
-      "link": "https://www.nationalgeographic.com/environment/article/plastic-pollution",
-      "source_type": "ddg"
-    },
-    {
-      "title": "TONTOTON at UNOC3: A Certified Local Solution to the Global...",
-      "summary": "With global plastic waste export policies tightening, the urgency for local, effective, and scalable solutions has never been greater. TONTOTON's work is driven by a deep commitment to Cambodia's environmental future and the belief that lasting change is possible through collective action.",
-      "link": "https://www.linkedin.com/pulse/tontoton-unoc3-certified-local-solution-global-plastic-waste-fqawf",
+      "title": "ОНЭ 2026 :: Global Management Challenge Россия",
+      "summary": "Что такое Global Management Challenge? История чемпионата.ОНЭ 2026. График. Скачать исторический отчёт.",
+      "link": "https://globalmanager.ru/open2026",
       "source_type": "ddg"
     },
     {

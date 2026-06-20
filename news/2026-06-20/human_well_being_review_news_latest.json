@@ -1,14 +1,14 @@
 {
   "axis": "HUMAN_WELL_BEING_REVIEW",
-  "fetched_at": "2026-06-20T11:28:22.432128+00:00",
+  "fetched_at": "2026-06-20T12:27:22.728903+00:00",
   "smart_query": "mental health wellbeing global",
   "sources_count": {
     "wiki": 0,
     "rss": 3,
-    "gdelt": 3,
+    "gdelt": 0,
     "arxiv": 2,
     "github": 3,
-    "youtube_transcripts": 0,
+    "youtube_transcripts": 3,
     "podcast": 1
   },
   "rss": [
@@ -31,26 +31,7 @@
       "source": "RSS"
     }
   ],
-  "gdelt": [
-    {
-      "title": "Manulife Partners with Mind HK to Establish New Wellbeing Consultation Hub in Mong Kok",
-      "snippet": "Manulife Partners with Mind HK to Establish New Wellbeing Consultation Hub in Mong Kok",
-      "url": "https://portal.sina.com.hk/finance/finance-prnewswire/prnasia/2026/04/09/1680884/manulife-partners-with-mind-hk-to-establish-new-wellbeing-consultation-hub-in-mong-kok/",
-      "source": "portal.sina.com.hk"
-    },
-    {
-      "title": "What is mental wellbeing , really ? New study offers a clear answer",
-      "snippet": "What is mental wellbeing , really ? New study offers a clear answer",
-      "url": "https://www.thenews.com.pk/latest/1398536-is-mental-wellbeing-finally-defined-study-offers-new-answer",
-      "source": "thenews.com.pk"
-    },
-    {
-      "title": "Enlight Fellowship for Youth Mental Wellbeing Leaders",
-      "snippet": "Enlight Fellowship for Youth Mental Wellbeing Leaders",
-      "url": "https://www2.fundsforngos.org/innovation/enlight-fellowship-for-youth-mental-wellbeing-leaders/",
-      "source": "fundsforngos.org"
-    }
-  ],
+  "gdelt": [],
   "github_repos": [
     {
       "title": "openemr/openemr",
@@ -96,39 +77,39 @@
   "youtube_items": [
     {
       "title": "[YT] YouTube:VuTgVD7KM6w",
-      "summary": "",
+      "summary": "2025 [music] was a year of major achievements and challenges for global health and for who. The most significant [music] achievement was the adoption of the WHO pandemic agreement. A powerful example of what multilateralism can deliver when countries choose cooperation over division. In addition, this year WHO validated [music] 13 countries for the elimination of diseases. We provided guidance [music] on innovations including Lenapavir for HIV prevention and GLP-1 [music] therapies for obesity and we responded to 48 emergencies in 79 [music] countries and territories including Gaza, Sudan and Ukraine. 2025 [music] brought other serious challenges. Aid cuts threatened to reverse [music] decades of progress with early estimates suggesting childhood mortality could rise for the first time thi",
       "link": "https://www.youtube.com/watch?v=VuTgVD7KM6w",
       "source_type": "youtube",
       "channel": "",
       "video_id": "VuTgVD7KM6w",
-      "transcript_method": "none",
-      "transcript_chars": 0,
-      "has_full_transcript": false
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1163,
+      "has_full_transcript": true
     },
     {
       "title": "[YT] YouTube:j7ysRCMNWlk",
-      "summary": "",
+      "summary": "In the year 2025, the issue of global inequality remains a daunting challenge for humanity. Today, we explore the ever widening gap between rich and poor, a divide that continues to shape our world socially, economically, and politically. Despite technological advancements and economic growth, the chasm seems wider than ever, sparking debates and concerns across various platforms. The disparity between wealth and poverty isn't just a statistic. It's a reality impacting billions of lives. While a small percentage of the global population enjoys unprecedented riches, a staggering number of people struggle to meet basic needs. In 2025, it's estimated that the top 1% of the world's richest individuals control nearly half of the global wealth, whereas billions are barely surviving on a few doll",
       "link": "https://www.youtube.com/watch?v=j7ysRCMNWlk",
       "source_type": "youtube",
       "channel": "",
       "video_id": "j7ysRCMNWlk",
-      "transcript_method": "none",
-      "transcript_chars": 0,
-      "has_full_transcript": false
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1185,
+      "has_full_transcript": true
     },
     {
-      "title": "[YT] YouTube:xhDi47HesRc",
-      "summary": "",
-      "link": "https://www.youtube.com/watch?v=xhDi47HesRc",
+      "title": "[YT] YouTube:3jBwZ7vDYUM",
+      "summary": "Hello everyone. My name is Kyla Parks and today I'll be presenting on global health inequality. This issue explores how and why health outcomes differ dramatically across countries and populations and why it matters to all of us. Global health inequality refers to unfair and avoidable differences in health status and access to healthc care resources across population populations. These gaps are shaped by income, geography, gender, and social or political systems. At its core, it's about who has the chance to live a long and healthy life and who does not. To give you a sense of scale, in highincome countries, average life expectancy is about 80 years. In some lowincome countries is closer to 60. A child born in subsaharan Africa is about 15 times more likely to die before age 5 compared to ",
+      "link": "https://www.youtube.com/watch?v=3jBwZ7vDYUM",
       "source_type": "youtube",
       "channel": "",
-      "video_id": "xhDi47HesRc",
-      "transcript_method": "none",
-      "transcript_chars": 0,
-      "has_full_transcript": false
+      "video_id": "3jBwZ7vDYUM",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1150,
+      "has_full_transcript": true
     }
   ],
-  "summary": "[RSS News]\n- Minimum age of 11 set for UK puberty blocker trial\n- Five tips to keep your kids cool this weekend\n\n[GDELT News]\n- Manulife Partners with Mind HK to Establish New Wellbeing Consultation H",
+  "summary": "[RSS News]\n- Minimum age of 11 set for UK puberty blocker trial\n- Five tips to keep your kids cool this weekend\n\n[arXiv]\n- VLMs May Not Globally Enhance Human Alignment over LLMs During Natural Readin",
   "urgency": "LOW",
   "sentiment": "NEUTRAL",
   "key_developments": [],

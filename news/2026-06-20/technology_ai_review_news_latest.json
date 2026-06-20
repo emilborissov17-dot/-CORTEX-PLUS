@@ -1,6 +1,6 @@
 {
   "axis": "TECHNOLOGY_AI_REVIEW",
-  "fetched_at": "2026-06-20T12:15:47.388228+00:00",
+  "fetched_at": "2026-06-20T12:35:18.741632+00:00",
   "smart_query": "artificial intelligence AI regulation",
   "sources_count": {
     "wiki": 0,
@@ -8,7 +8,7 @@
     "gdelt": 0,
     "arxiv": 2,
     "github": 3,
-    "youtube_transcripts": 3,
+    "youtube_transcripts": 2,
     "podcast": 1
   },
   "rss": [
@@ -88,24 +88,24 @@
     },
     {
       "title": "[YT] YouTube:wWoSx73g1DI",
-      "summary": "What do you define as AGI? I think humans will never acknowledge that AGI has been built deeper than the goalpost. Yeah. So, uh I think there's already superhuman capabilities that are available uh in AI systems. I think I think what AGI is is when it's smarter than the collective intelligence of the entire human species in our Well, I think that you normally people would call that sort of ASI artificial super intelligence. Um but there are these thresholds where um you say at some point um the AI is smarter than a single human. Um and then then you got 8 billion humans and and actually each human is machine augmented by the computers. So it's it's a much higher bar to compete with 8 billion machine augmented humans. That's a whole whole bunch of orders of magnitude more. But at some point",
+      "summary": "",
       "link": "https://www.youtube.com/watch?v=wWoSx73g1DI",
       "source_type": "youtube",
       "channel": "",
       "video_id": "wWoSx73g1DI",
-      "transcript_method": "playwright_web",
-      "transcript_chars": 856,
-      "has_full_transcript": true
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
     },
     {
-      "title": "[YT] YouTube:dGdSK4lD1bU",
-      "summary": "ever heard of AI and AI but confused about the difference let's break it down AI stands for artificial intelligence which is a broad term that covers any system or program that can perform tasks that normally require human intelligence such as recognizing faces playing games or writing code AI systems are usually designed to excel in specific domains such as chess image recognition or natural language processing General AI on the other hand is the ultimate goal of AI research it refers to AI systems that can understand learn and apply knowledge across various domains just like humans can AGI stands for artificial general intelligence which is another term for General ai ai is the hypothetical AI system that would have human-like or superhuman intelligence and capabilities AGI is often cons",
-      "link": "https://www.youtube.com/watch?v=dGdSK4lD1bU",
+      "title": "[YT] YouTube:LV-Uu7GvpUo",
+      "summary": "uhhuh I think this year probably in 2025 we at meta as well as the other companies that are basically working on this are going to have an AI that can effectively be a sort of midlevel engineer that you have at your company that can write code and once you have that then in the beginning it'll be really expensive to run and you can get it to be more efficient and then over time we'll get to the point where a lot of the code in our apps and and including the AI that we generate is actually going to be built by AI Engineers instead of people Engineers but but I don't know I I think that that'll augment the people working on it so I mean my my view on this is like the future people are just going to be so much more creative and they're going to be freed up to do kind of crazy going to be free",
+      "link": "https://www.youtube.com/watch?v=LV-Uu7GvpUo",
       "source_type": "youtube",
       "channel": "",
-      "video_id": "dGdSK4lD1bU",
+      "video_id": "LV-Uu7GvpUo",
       "transcript_method": "playwright_web",
-      "transcript_chars": 1022,
+      "transcript_chars": 831,
       "has_full_transcript": true
     }
   ],

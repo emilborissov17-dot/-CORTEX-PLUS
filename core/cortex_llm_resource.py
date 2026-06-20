@@ -6,9 +6,9 @@ from pathlib import Path
 from datetime import datetime, timezone
 
 try:
-    from .groq_backend import call_groq
+    from .groq_backend import call_groq, AllBackendsFailedError
 except ImportError:
-    from groq_backend import call_groq
+    from groq_backend import call_groq, AllBackendsFailedError
 
 ENERGY_DATA_PATH = Path("data/energy/owid-energy-data.csv")
 
@@ -59,12 +59,16 @@ def summarize_energy_indicator(rows, column: str, country: str = "World"):
 #  FALLBACK JSON КОГАТО LLM СЕ СЧУПИ
 # ======================================================================
 
-def build_dummy_json_energy(raw_context: str, error_message: str) -> dict:
+def build_dummy_json_energy(raw_context: str, error_message: str,
+                            needs_reanalysis: bool = True) -> dict:
     """
     Fallback за ENERGY: новият формат с оси + action_plan.
+    needs_reanalysis=True (default) сигнализира на следващия цикъл
+    да преанализира тази ос приоритетно.
     """
     return {
         "status": "CRITICAL",
+        "needs_reanalysis": needs_reanalysis,
         "summary_bg": (
             "ENERGY_REVIEW не успя да завърши успешно LLM анализа "
             "(липсват ключови полета в JSON изхода или парсването се провали)."
@@ -124,11 +128,15 @@ def build_dummy_json_energy(raw_context: str, error_message: str) -> dict:
     }
 
 
-def build_dummy_json_generic(domain: str, raw_context: str, error_message: str) -> dict:
+def build_dummy_json_generic(domain: str, raw_context: str, error_message: str,
+                             needs_reanalysis: bool = True) -> dict:
     """
     Старият generic fallback за не-ENERGY домейни (диагноза/рискове/действия).
+    needs_reanalysis=True (default) сигнализира на следващия цикъл
+    да преанализира тази ос приоритетно.
     """
     return {
+        "needs_reanalysis": needs_reanalysis,
         "diagnosis": {
             "status": "CRITICAL",
             "short_summary_bg": (
@@ -470,10 +478,15 @@ def main():
     try:
         data = call_ollama_json(args.domain, raw_context)
     except Exception as e:
+        # AllBackendsFailedError → всички 5 backends са изчерпани;
+        # останалите грешки са JSON parse failures след успешен LLM call.
+        all_failed = isinstance(e, AllBackendsFailedError)
         if args.domain.lower() == "energy":
-            data = build_dummy_json_energy(raw_context, str(e))
+            data = build_dummy_json_energy(raw_context, str(e),
+                                           needs_reanalysis=all_failed)
         else:
-            data = build_dummy_json_generic(args.domain, raw_context, str(e))
+            data = build_dummy_json_generic(args.domain, raw_context, str(e),
+                                            needs_reanalysis=all_failed)
 
     text = json.dumps(data, ensure_ascii=False, indent=2)
     output_path.write_text(text, encoding="utf-8")

@@ -1,14 +1,14 @@
 {
   "axis": "ECONOMY_WORK_REVIEW",
-  "fetched_at": "2026-06-20T11:16:47.393186+00:00",
+  "fetched_at": "2026-06-20T12:29:57.226555+00:00",
   "smart_query": "economy unemployment poverty wages",
   "sources_count": {
     "wiki": 0,
     "rss": 3,
     "gdelt": 0,
-    "arxiv": 2,
+    "arxiv": 0,
     "github": 3,
-    "youtube_transcripts": 2,
+    "youtube_transcripts": 3,
     "podcast": 1
   },
   "rss": [
@@ -58,58 +58,45 @@
       "source": "GitHub"
     }
   ],
-  "arxiv_papers": [
-    {
-      "title": "AI Economist Agent: An Agentic Framework for Model-Grounded Economic Analysis with RAG, Knowledge Graphs, and Large Language Models",
-      "snippet": "We propose a model-grounded RAG-based AI economist with an agentic framework for economic scenario analysis using large language models (LLMs) and knowledge graphs. While LLMs can generate fluent economic narratives, economists are often required to make economic claims grounded by economic theory a",
-      "url": "https://arxiv.org/abs/2606.20041v1",
-      "source": "arXiv"
-    },
-    {
-      "title": "An economic geography dataset of U.S. skill specialization, relatedness, and complexity",
-      "snippet": "We release a new dataset of U.S. skill specialization, relatedness, and complexity, derived from 433.6 million job postings between 2010 and 2024. The panel covers 3,194 counties across 15 years and reports 201 variables that describe the volume of job postings (e.g., labor demand), the modality and",
-      "url": "https://arxiv.org/abs/2606.09918v1",
-      "source": "arXiv"
-    }
-  ],
+  "arxiv_papers": [],
   "podcast": "[The real horror of ‘Alien’ and how it explains why we’re not paid enough] Maybe the real monster in the Alien franchise isn’t actually the killer alien. Because behind the acid blood and jump scares is an even more insidious horror: a single employer with unchecked power. That employer is named Weyland-Yutani, a mega-corporation that dominates workers across the galaxy.Weyland-Yutani is a sort of extreme example of what economists call a monopsony — when one employer do",
   "wiki": null,
   "youtube_items": [
     {
       "title": "[YT] Economy Was Already Horrible. New Global Crisis Just Made It Worse.",
-      "summary": "[DESCRIPTION FALLBACK] The US lost 1.27 million jobs in 2025. Only 181000 new jobs were created for the entire year. We haven't seen job numbers this ...",
+      "summary": "My husband and I finally made the difficult decision to leave the United States. This economy is so bad. $33 for toilet paper? We can't even afford to America has become completely unaffordable and I don't know why more people are not talking about this. I just got laid off from my job after 12 years. The way that the world is right now, how do you lay someone off? The gas was 289. Last time I got gas, after you filled it up, I said, \"Oh, gas must have went up.\" It was 315, it's 350. 92,000 jobs disappeared last month. The same month the US government started spending $891 million per day of taxpayer money to fund their conflict in Iran. You know the economy is already bad when the CEO of McDonald's is taking the world's smallest bite of a burger he's trying to promote on social media. The",
       "link": "https://www.youtube.com/watch?v=SHySrxXWkg0",
       "source_type": "youtube",
       "channel": "Vanessa Wingårdh",
       "video_id": "SHySrxXWkg0",
-      "transcript_method": "description",
-      "transcript_chars": 153,
-      "has_full_transcript": false
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1200,
+      "has_full_transcript": true
     },
     {
       "title": "[YT] What we have right now is WORSE than inflation!! #money #finance #economy #recession #inflation",
-      "summary": "",
+      "summary": "Inflation this, inflation that. Babe, you are worried about the wrong thing because this bad job market and these high costs are going to cause something even worse. Stagflation. Inflation's much meaner older brother. If you want to be prepared for a potential recession, you better understand how this works. I'm Vivian, your HBF and your favorite Wall Street girly, and I teach you all the finance and economics you probably should have learned in school. So, follow if you want to get smarter. Before we can talk about stagflation, we got to cover all the other flations. Inflation. You've heard of rising prices over a period of time, reducing the value of money. Things are cheaper to buy today than they would be in a year's time. Inflation is normal. It's healthy, and we typically try to aim ",
       "link": "https://www.youtube.com/watch?v=pbAOEXACsHA",
       "source_type": "youtube",
       "channel": "Your Rich BFF",
       "video_id": "pbAOEXACsHA",
-      "transcript_method": "none",
-      "transcript_chars": 0,
-      "has_full_transcript": false
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1211,
+      "has_full_transcript": true
     },
     {
-      "title": "[YT] 2025 now weakest job growth year since pandemic",
-      "summary": "[DESCRIPTION FALLBACK] The US economy added just 50000 jobs in December, according to the latest monthly report from the Bureau of Labor Statistics.",
-      "link": "https://www.youtube.com/watch?v=u-WIdZMgpIY",
+      "title": "[YT] What causes an economic recession? - Richard Coffin",
+      "summary": "[Music] for millennia the people of britain had been using bronze to make tools and jewelry and as a currency for trade but around and as a currency for trade but around 800 bce that began to change the value of bronze declined causing social upheaval and an economic causing social upheaval and an economic crisis what we would call a recession today what causes recessions this question has long been the subject of heated debate among economists and for good reason a recession can be a mild decline in economic activity in a single country that lasts months a long lasting downturn with global ramifications that lasts years or anything in between complicating matters further there are countless variables that contribute to an economy's health making it difficult to pinpoint specific making it",
+      "link": "https://www.youtube.com/watch?v=SwaCg7Gwtzw",
       "source_type": "youtube",
-      "channel": "CNN",
-      "video_id": "u-WIdZMgpIY",
-      "transcript_method": "description",
-      "transcript_chars": 148,
-      "has_full_transcript": false
+      "channel": "TED-Ed",
+      "video_id": "SwaCg7Gwtzw",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1076,
+      "has_full_transcript": true
     }
   ],
-  "summary": "[RSS News]\n- Plans to end gazumping with binding agreements in house sales shake-up\n- O'Leary extends Ryanair contract in deal that could net him over £130m\n\n[arXiv]\n- AI Economist Agent: An Agentic F",
+  "summary": "[RSS News]\n- Plans to end gazumping with binding agreements in house sales shake-up\n- O'Leary extends Ryanair contract in deal that could net him over £130m\n\n[GitHub]\n- AmirhosseinHonardoust/Economic-",
   "urgency": "LOW",
   "sentiment": "NEUTRAL",
   "key_developments": [],

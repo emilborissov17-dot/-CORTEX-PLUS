@@ -1,6 +1,6 @@
 {
   "axis": "PLANETARY_POTENTIAL_REVIEW",
-  "fetched_at": "2026-06-20T11:32:26.802826+00:00",
+  "fetched_at": "2026-06-20T12:22:09.829055+00:00",
   "smart_query": "earth resources sustainability",
   "sources_count": {
     "wiki": 0,
@@ -56,37 +56,37 @@
   "wiki": null,
   "youtube_items": [
     {
-      "title": "[YT] A Climate Scientist Reviews: Project Hail Mary",
-      "summary": "[DESCRIPTION FALLBACK] 00:00 Intro 00:36 Book plot (spoiler alert) 01:18 The Earth's Energy Balance (simplified) 02:38 Greenhouse gases explained ...",
-      "link": "https://www.youtube.com/watch?v=GJsouT2HV9g",
+      "title": "[YT] YouTube:dhWXmq1XQa4",
+      "summary": "So the planetary boundary science now has 50 years of scientific advancement and is based on three fundamental pieces of evidence that has been advancing over the past 30 years. And the first one is that we've entered a whole new geological epoch, the Anthropocene. Anthros, Greek for humans. We're now, as humanity, the world as we know it, the dominating force of change on planet Earth. The scale, the speed, and the connectivity has reached the point where we are starting to see the first indications of hitting the ceiling of hardwired biophysical processes that regulates the stability, the resilience, and the life support on Earth. The evidence for this comes not from models, not from theories, but from observations. It's the great acceleration curves that you see here. They're now iconic",
+      "link": "https://www.youtube.com/watch?v=dhWXmq1XQa4",
       "source_type": "youtube",
-      "channel": "Planetary Boundaries Science",
-      "video_id": "GJsouT2HV9g",
-      "transcript_method": "description",
-      "transcript_chars": 149,
-      "has_full_transcript": false
+      "channel": "",
+      "video_id": "dhWXmq1XQa4",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1197,
+      "has_full_transcript": true
     },
     {
-      "title": "[YT] FILE 007: Climate Engineering — Hubris or Necessity?",
-      "summary": "[DESCRIPTION FALLBACK] FILE 007: Climate Engineering — Hubris or Necessity? The planet is warming faster than we're cutting emissions. We're missing ...",
-      "link": "https://www.youtube.com/watch?v=SAqQG39RyuY",
+      "title": "[YT] YouTube:ndPVcg6uSZc",
+      "summary": "Welcome to the 2025 planetary health check report by the planetary boundary science lab here at the potam institute for climate impact research. The 2025 report confirms the scientific consensus that we have a deep planetary challenge. Six of the nine planetary boundaries were breached and this year we're forced to conclude that a seventh boundary also has been breached. It is ocean acidification that is now also moving into the risk zone. All of these seven boundaries are unfortunately continuing to move in the wrong direction. So we haven't yet bent the curves towards the safe landing for humanity within the safe operating space of the planetary boundaries on Earth. This is the major challenge. We're not yet in the high-risk zone of irreversible, unmanageable change of the planet, which ",
+      "link": "https://www.youtube.com/watch?v=ndPVcg6uSZc",
       "source_type": "youtube",
-      "channel": "Spectrum Archivist",
-      "video_id": "SAqQG39RyuY",
-      "transcript_method": "description",
-      "transcript_chars": 152,
-      "has_full_transcript": false
+      "channel": "",
+      "video_id": "ndPVcg6uSZc",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1204,
+      "has_full_transcript": true
     },
     {
-      "title": "[YT] Climate Change acceleration: Do we need an emergency brake? | Dr Pete Sudbury (ex-Green Party)",
-      "summary": "[DESCRIPTION FALLBACK] Climate Change acceleration and the need for an emergency brake.” Bio : Dr. Pete Sudbury is an ex-Green Party Councillor for ...",
-      "link": "https://www.youtube.com/watch?v=37szoWu3nEA",
+      "title": "[YT] YouTube:y_BaJjK2DdI",
+      "summary": "I think we'll get started. Um, welcome to the Oxford Climate Research Network annual lecture. Uh, my name is Helen Johnson and I'm and I'm the current convenor of the Oxford Climate Research Network or OCRN. Um, for those that don't know, OCRN is one of Oxford's five uh networks for the environment. Um and it's exists for uh anybody at the University of Oxford with a research interest related to climate and the goal is to help make us more than the sum of our parts to help uh help us take advantage of uh opportunities to work across disciplines and to better project what we do both within Oxford and beyond. So if you're not already on our mailing list and web page, you can um find out how to do that from the web page and encourage you to do so. Our annual lecture is uh one of our biggest e",
+      "link": "https://www.youtube.com/watch?v=y_BaJjK2DdI",
       "source_type": "youtube",
-      "channel": "Climate Emergency Centres",
-      "video_id": "37szoWu3nEA",
-      "transcript_method": "description",
-      "transcript_chars": 151,
-      "has_full_transcript": false
+      "channel": "",
+      "video_id": "y_BaJjK2DdI",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 944,
+      "has_full_transcript": true
     }
   ],
   "summary": "[arXiv]\n- Resonant lunar tides of Earth's core and basal magma ocean\n- Towards imaging Earth's large-scale structures by directional geoneutrino detection with Ocean Bottom Detector\n\n[GitHub]\n- satell",

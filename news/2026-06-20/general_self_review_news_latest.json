@@ -1,6 +1,6 @@
 {
   "axis": "GENERAL_SELF_REVIEW",
-  "fetched_at": "2026-06-20T11:19:17.096938+00:00",
+  "fetched_at": "2026-06-20T12:38:28.074569+00:00",
   "smart_query": "artificial intelligence progress",
   "sources_count": {
     "wiki": 0,
@@ -36,7 +36,7 @@
     {
       "title": "microsoft/autogen",
       "snippet": "A programming framework for agentic AI",
-      "stars": 59085,
+      "stars": 59087,
       "url": "https://github.com/microsoft/autogen",
       "updated": "2026-06-20",
       "source": "GitHub"
@@ -52,7 +52,7 @@
     {
       "title": "agentscope-ai/agentscope",
       "snippet": "Build and run agents you can see, understand and trust.",
-      "stars": 27017,
+      "stars": 27018,
       "url": "https://github.com/agentscope-ai/agentscope",
       "updated": "2026-06-20",
       "source": "GitHub"
@@ -76,37 +76,37 @@
   "wiki": null,
   "youtube_items": [
     {
-      "title": "[YT] Is AI🤖 Truly Conscious? - Elon Musk",
-      "summary": "[DESCRIPTION FALLBACK] Aa small part of the conversation between Elon Musk and Dr. Jordan B. Peterson. Full Video ...",
+      "title": "[YT] YouTube:gdlTspKdsjU",
+      "summary": "itely do you think these llms like do you think that any of the Machinery that you've interacted with is showing anything signs of anything that might be equated to Consciousness I mean the llms are remarkable right and they certainly pass the teing test as far as I'm concerned passing test so from from a testing standpoint I think we will if we're not there already we soon will be where you would not be able to tell that you're yeah interacting with a that's coming right away man yes in fact probably sort of here unless you're really sneaky and you ask like harsh questions and Corner the damn things were probably already there yeah so long as you if you know some of the tricks like how many RS are there in renderer um bizi can't figure that one out oh I didn't know that that was one of it",
       "link": "https://www.youtube.com/watch?v=gdlTspKdsjU",
       "source_type": "youtube",
-      "channel": "Get Ready to Consider",
+      "channel": "",
       "video_id": "gdlTspKdsjU",
-      "transcript_method": "description",
-      "transcript_chars": 117,
-      "has_full_transcript": false
+      "transcript_method": "playwright_web",
+      "transcript_chars": 951,
+      "has_full_transcript": true
     },
     {
-      "title": "[YT] Sam Altman on AGI: people will freak out then move on",
-      "summary": "[DESCRIPTION FALLBACK] If artificial general intelligence is achieved, it will be able to outperform humans on most intellectual tasks. The Economist asks ...",
-      "link": "https://www.youtube.com/watch?v=T2g8FF8-RLA",
+      "title": "[YT] YouTube:J2V9X6yIHw4",
+      "summary": "Putting Claude for an open playground to chat with itself led to diving into philosophical explorations of consciousness, self-awareness, and by 30 turns, it eventually started using turns, it eventually started using Sanskrit. Sanskrit. Jesus, what the dude? This is so scary. In 90 to 100% of interactions, two instances of Claude quickly dove into philosophical explorations of consciousness, self-awareness, and/or the nature of their own existence and experience. and",
+      "link": "https://www.youtube.com/watch?v=J2V9X6yIHw4",
       "source_type": "youtube",
-      "channel": "The Economist",
-      "video_id": "T2g8FF8-RLA",
-      "transcript_method": "description",
-      "transcript_chars": 158,
-      "has_full_transcript": false
+      "channel": "",
+      "video_id": "J2V9X6yIHw4",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 472,
+      "has_full_transcript": true
     },
     {
-      "title": "[YT] Lost in the Hype: AI Will Never Become Conscious | Sir Roger Penrose (Nobel)",
-      "summary": "[DESCRIPTION FALLBACK] This video is a short clip from our full‑length interview with Sir Roger Penrose. In the full conversation on our channel, the ...",
-      "link": "https://www.youtube.com/watch?v=e9484gNpFF8",
+      "title": "[YT] YouTube:f-J6XC_Bkso",
+      "summary": "you can give a theoretical argument that in principle a complex system with vast search capacity could conceivably turn into something that would start to do things that you can't predict maybe Beyond but that's even more remote than uh some distant asteroid maybe someday hitting the Earth yeah it could happen",
+      "link": "https://www.youtube.com/watch?v=f-J6XC_Bkso",
       "source_type": "youtube",
-      "channel": "This Is The World",
-      "video_id": "e9484gNpFF8",
-      "transcript_method": "description",
-      "transcript_chars": 153,
-      "has_full_transcript": false
+      "channel": "",
+      "video_id": "f-J6XC_Bkso",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 311,
+      "has_full_transcript": true
     }
   ],
   "summary": "[RSS News]\n- New video game console aims to get kids moving\n- UK's top data and AI regulator quits after 'inappropriate' humour\n\n[arXiv]\n- Efficient and Sound Probabilistic Verification for AI Agents\n",

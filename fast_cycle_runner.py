@@ -342,6 +342,40 @@ def _hyperclaw_to_proposals():
     print(f"[FAST_CYCLE] hyperclaw_to_proposals -> {len(new_proposals)} proposals injected")
 
 
+def _scan_needs_reanalysis() -> list[dict]:
+    """
+    Сканира всички snapshot JSON файлове за needs_reanalysis: true.
+    Връща списък от {"axis", "file", "error"} — за логване и приоритизиране.
+    Резултатът се записва в snapshots/master/needs_reanalysis_latest.json
+    за да може initiative_tracker / openclaw да го намерят.
+    """
+    snap_dir = BASE / "snapshots"
+    flagged = []
+    for path in snap_dir.rglob("*.json"):
+        if "master" in path.parts:
+            continue
+        try:
+            data = json.loads(path.read_text(encoding="utf-8"))
+            if isinstance(data, dict) and data.get("needs_reanalysis"):
+                axis = data.get("axis") or data.get("axis_name") or path.stem
+                flagged.append({
+                    "axis":  axis,
+                    "file":  str(path.relative_to(BASE)),
+                    "error": data.get("error", ""),
+                })
+        except Exception:
+            continue
+
+    out = BASE / "snapshots" / "master" / "needs_reanalysis_latest.json"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(
+        json.dumps({"timestamp": _utc_now(), "count": len(flagged), "axes": flagged},
+                   ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
+    return flagged
+
+
 def _load_directives() -> dict:
     """Read adaptive_directives.json written by body_scanner. Safe fallback to defaults."""
     p = BASE / "memory" / "adaptive_directives.json"
@@ -534,6 +568,17 @@ def main():
     else:
         pass  # falls through to Step 1 below
 
+    # ── 0.7. needs_reanalysis scan — find axes that failed all LLM backends ──
+    try:
+        flagged = _scan_needs_reanalysis()
+        if flagged:
+            axes_str = ", ".join(f["axis"] for f in flagged)
+            print(f"[FAST_CYCLE] needs_reanalysis: {len(flagged)} axes flagged — {axes_str}")
+        else:
+            print("[FAST_CYCLE] needs_reanalysis: no flagged axes")
+    except Exception as e:
+        print(f"[FAST_CYCLE] needs_reanalysis scan -> FAILED: {e}")
+
     # ── 1. Web Intelligence ──
     if not directives.get("skip_web_intel"):
         run_web_intelligence()
@@ -562,6 +607,13 @@ def main():
 
     # ── 3. Trend tracker ──
     run_trend_tracker()
+
+    # ── 3.5. OpenClaw — MUST run early before token budget is depleted by snapshots ──
+    # Groq free tier: 100K tokens/day. Steps 4-11 consume ~90K tokens.
+    # OpenClaw needs ~7K tokens — running it here ensures budget is available.
+    _run("openclaw_agent", lambda: __import__(
+        "agents.openclaw.openclaw_agent", fromlist=["run"]).run(), free_after=True)
+    _openclaw_to_proposals()
 
     # ── 4. Internet intelligence ──
     _run("internet_agent", lambda: __import__(
@@ -638,7 +690,8 @@ def main():
         print(f"[FAST_CYCLE] goal_score_calculator -> FAILED: {e}")
 
     # ── 12.7. Cognitive Orchestrator — Attentional Meta Protocol ──
-    # Runs BEFORE OpenClaw/HyperClaw so they can use its priority_axes assessment.
+    # Runs BEFORE HyperClaw so it can use its priority_axes assessment.
+    # (OpenClaw was moved to step 3.5 to run before token budget is depleted.)
     try:
         from core.cortex_orchestrator import run as _orchestrate
         _orchestrate()
@@ -653,13 +706,6 @@ def main():
     # ── 14. Growth planner ──
     _run("growth_planner", lambda: __import__(
         "agents.body.growth_planner", fromlist=["run"]).run())
-
-    # ── 15. OpenClaw ──
-    _run("openclaw_agent", lambda: __import__(
-        "agents.openclaw.openclaw_agent", fromlist=["run"]).run(), free_after=True)
-
-    # ── 15.5. OpenClaw actions → improvement proposals ──
-    _openclaw_to_proposals()
 
     # ── 15.6. HyperClaw — multi-axis 24-72h plan ──
     _run("hyperclaw_orchestrator", lambda: __import__(

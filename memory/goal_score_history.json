@@ -91,5 +91,18 @@
       "PLANETARY_POTENTIAL_REVIEW": 60.0,
       "WATER_REVIEW": 60.0
     }
+  },
+  {
+    "timestamp": "2026-06-20T13:00:28.887984+00:00",
+    "scores": {
+      "BODY_SCAN": 49.4,
+      "CLIMATE_GLOBAL_RISK_REVIEW": 30.0,
+      "ECOSYSTEMS_BIODIVERSITY_REVIEW": 60.0,
+      "ENERGY_REVIEW": 60.0,
+      "FOOD_REVIEW": 60.0,
+      "MATERIALS_WASTE_REVIEW": 60.0,
+      "PLANETARY_POTENTIAL_REVIEW": 60.0,
+      "WATER_REVIEW": 60.0
+    }
   }
 ]

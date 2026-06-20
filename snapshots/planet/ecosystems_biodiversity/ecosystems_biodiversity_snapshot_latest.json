@@ -1,6 +1,6 @@
 {
   "axis": "ECOSYSTEMS_BIODIVERSITY_REVIEW",
-  "timestamp": "2026-06-20T11:34:55.530133+00:00",
+  "timestamp": "2026-06-20T12:37:48.672103+00:00",
   "level": "MEDIUM",
   "signals": [],
   "key_metrics": [],
@@ -11,7 +11,7 @@
     "protected_terrestrial_area_pct": 16.511660312023,
     "marine_protected_area_pct": 17.4641679954692,
     "threatened_mammal_species": 3434.0,
-    "co2_ppm_mauna_loa": 432.15,
+    "co2_ppm_mauna_loa": 431.57,
     "species_observations_30d_gbif": 2656431
   },
   "data_quality": "6/6 indicators fetched",

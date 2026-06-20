@@ -1,6 +1,6 @@
 {
   "axis": "EDUCATION_CULTURE_REVIEW",
-  "fetched_at": "2026-06-20T11:27:38.716784+00:00",
+  "fetched_at": "2026-06-20T12:36:28.559891+00:00",
   "smart_query": "education access schools literacy",
   "sources_count": {
     "wiki": 0,
@@ -56,37 +56,37 @@
   "wiki": null,
   "youtube_items": [
     {
-      "title": "[YT] 2025 UNESCO Confucius Prize for Literacy highlights global education efforts",
-      "summary": "[DESCRIPTION FALLBACK] For more: https://www.cgtn.com/video In Qufu, the birthplace of Confucius in east China's Shandong Province, the 20th UNESCO ...",
+      "title": "[YT] YouTube:V9ESSv8_VLs",
+      "summary": "Global citizenship education helps learners of all ages develop the knowledge, skills, and values needed to build more just, peaceful, and sustainable societies. The UNESCO Prize for Global Citizenship Education [music] rewards outstanding initiatives from all around the world that contribute to transforming education. It also recognizes the powerful engagement of youth [music] in society. In 2025, two remarkable initiatives are recognized for their exceptional contributions to their local communities and beyond. Each laurate will be awarded $50,000. Boske Escuatena, a school in Ecuador's Amazon region, is reshaping learning by grounding education in active experiential learning where the forest becomes a living classroom. Children from preschool to high school age develop empathy, critica",
+      "link": "https://www.youtube.com/watch?v=V9ESSv8_VLs",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "V9ESSv8_VLs",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1143,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] YouTube:-SG9a5M-KCI",
+      "summary": "A celebration of both heritage and humanity. The 20th UNESCO Confucious Prize for Literacy ceremony took place in Chu Fu, hometown of the ancient Chinese philosopher. This year's awards recognize three projects from Bangladesh, Ireland, and Morocco for their outstanding contributions to inclusive education. &gt;&gt; Thank you. &gt;&gt; We believe that people should have the right to have their literacy needs met. Um and by having this prize it gives international recognition for that work but also will help us to fund and sustain the work in the years to come. It gives up lot of strength. Hopefully uh we will be able to scale up more communities and internationally in other communities and internationally in other countries. &gt;&gt; Founded 20 years ago. The UNESCO Confucious Prize for Li",
       "link": "https://www.youtube.com/watch?v=-SG9a5M-KCI",
       "source_type": "youtube",
-      "channel": "CGTN",
+      "channel": "",
       "video_id": "-SG9a5M-KCI",
-      "transcript_method": "description",
-      "transcript_chars": 151,
-      "has_full_transcript": false
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1181,
+      "has_full_transcript": true
     },
     {
-      "title": "[YT] International Literacy Day 2020 – Teaching and learning literacy in the COVID-19 crisis and beyond",
-      "summary": "[DESCRIPTION FALLBACK] Since 1967, International Literacy Day (ILD) celebrations have taken place annually around the world to remind the public of the ...",
-      "link": "https://www.youtube.com/watch?v=LZaqM69M7RM",
-      "source_type": "youtube",
-      "channel": "UNESCO",
-      "video_id": "LZaqM69M7RM",
-      "transcript_method": "description",
-      "transcript_chars": 155,
-      "has_full_transcript": false
-    },
-    {
-      "title": "[YT] International Literacy Day 2023: Promoting literacy for a world in transition",
-      "summary": "[DESCRIPTION FALLBACK] Since 1967, International Literacy Day (ILD) celebrations have taken place annually around the world to remind the public of the ...",
+      "title": "[YT] YouTube:bB6ngFqh0V0",
+      "summary": "[Music] imagine if you couldn't read life-saving information such as pandemic precautions if you couldn't count the change you were given in a shop imagine if you couldn't stay informed about a crisis if you couldn't spot fake news in the media or if you couldn't read about alarming issues such as climate change today at least one in seven young people and adults around the world still lack basic literacy and y skills that's 763 million adults 2/3 of whom are women they are spread unevenly across regions countries and populations equipping people with literacy numeracy and digital skills can make a big difference in their lives and societies it lays the foundation for further learning literacy is also an essential means for increasing environmental awareness embra embracing cultural differ",
       "link": "https://www.youtube.com/watch?v=bB6ngFqh0V0",
       "source_type": "youtube",
-      "channel": "UNESCO",
+      "channel": "",
       "video_id": "bB6ngFqh0V0",
-      "transcript_method": "description",
-      "transcript_chars": 155,
-      "has_full_transcript": false
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1155,
+      "has_full_transcript": true
     }
   ],
   "summary": "[arXiv]\n- Measuring Whether LLM Tutors Teach or Solve: A Diagnostic for Educational Impact\n- \"Stuck in a Spiral\": Shame and Guilt as Social Regulators of AI Use in Computing Education\n\n[GitHub]\n- upb-",

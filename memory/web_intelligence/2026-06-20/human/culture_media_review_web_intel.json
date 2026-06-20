@@ -1,25 +1,12 @@
 {
   "axis": "CULTURE_MEDIA_REVIEW",
   "domain": "human",
-  "timestamp": "2026-06-20T12:04:05.374822+00:00",
-  "sources_count": 9,
+  "timestamp": "2026-06-20T12:26:22.152402+00:00",
+  "sources_count": 8,
   "rss_count": 8,
   "ddg_count": 0,
-  "youtube_count": 1,
-  "youtube_items": [
-    {
-      "title": "[YT] Disinformation, Misinformation and the Freedom to Dissent",
-      "summary": "hello and uh welcome everyone to um this Live Free Speech Union Speakeasy um we have uh more or less a full house here in central London and hundreds of people uh joining us at home so welcome to you and welcome to all of you at home um and um today we'll be discussing uh disinformation misinformation and the freedom to dissent and we are very fortunate to have a fantastic panel uh to discuss uh This what I consider to be one of the um most pernicious threats to free speech that we're currently facing uh we have on my immediate left silky Carlo who is a director of Big Brother watch and uh the uh Big Brother recently published a fantastic report called the ministry of Truth for secretive government units spying on your speech and you can pick up a copy right there um on the trestle table i",
-      "link": "https://www.youtube.com/watch?v=I9UJrwykKSI",
-      "published": "",
-      "source_type": "youtube",
-      "channel": "",
-      "video_id": "I9UJrwykKSI",
-      "transcript_method": "playwright_web",
-      "transcript_chars": 923,
-      "has_full_transcript": true
-    }
-  ],
+  "youtube_count": 0,
+  "youtube_items": [],
   "analysis": {
     "problem": "Анализ на CULTURE_MEDIA_REVIEW — данни получени но LLM грешка",
     "root_cause": "LLM parsing грешка: Всички LLM backends неуспешни. Последна грешка: None",
@@ -93,18 +80,6 @@
       "link": "https://www.theguardian.com/stage/2026/jun/19/sinead-oconnor-ode-dance-surge-sonya-tayeh-aviva-studios",
       "published": "Fri, 19 Jun 2026 12:00:32 GMT",
       "source_type": "rss"
-    },
-    {
-      "title": "[YT] Disinformation, Misinformation and the Freedom to Dissent",
-      "summary": "hello and uh welcome everyone to um this Live Free Speech Union Speakeasy um we have uh more or less a full house here in central London and hundreds of people uh joining us at home so welcome to you and welcome to all of you at home um and um today we'll be discussing uh disinformation misinformation and the freedom to dissent and we are very fortunate to have a fantastic panel uh to discuss uh This what I consider to be one of the um most pernicious threats to free speech that we're currently facing uh we have on my immediate left silky Carlo who is a director of Big Brother watch and uh the uh Big Brother recently published a fantastic report called the ministry of Truth for secretive government units spying on your speech and you can pick up a copy right there um on the trestle table i",
-      "link": "https://www.youtube.com/watch?v=I9UJrwykKSI",
-      "published": "",
-      "source_type": "youtube",
-      "channel": "",
-      "video_id": "I9UJrwykKSI",
-      "transcript_method": "playwright_web",
-      "transcript_chars": 923,
-      "has_full_transcript": true
     }
   ]
 }

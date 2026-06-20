@@ -1,14 +1,14 @@
 {
   "axis": "ENERGY_REVIEW",
-  "fetched_at": "2026-06-20T12:18:06.491349+00:00",
+  "fetched_at": "2026-06-20T12:36:43.350671+00:00",
   "smart_query": "renewable energy solar wind",
   "sources_count": {
     "wiki": 0,
     "rss": 3,
     "gdelt": 0,
-    "arxiv": 0,
+    "arxiv": 2,
     "github": 3,
-    "youtube_transcripts": 2,
+    "youtube_transcripts": 1,
     "podcast": 1
   },
   "rss": [
@@ -58,10 +58,34 @@
       "source": "GitHub"
     }
   ],
-  "arxiv_papers": [],
+  "arxiv_papers": [
+    {
+      "title": "Nodal Frequency Stability-Constrained UC & ED for Renewable-Dominated Power Systems",
+      "snippet": "In modern power systems with high shares of renewable, inverter-based resources (IBRs), frequency stability becomes more complex due to the fast dynamics of IBRs and frequency trajectories that vary significantly from bus to bus. In this paper, we present an optimization framework for unit commitmen",
+      "url": "https://arxiv.org/abs/2606.15706v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Mitigating business risks from renewable PPA power sourcing uncertainties for European green hydrogen production: Robust system design, regulatory adjustments and offtake flexibility",
+      "snippet": "As energy prices surge for the second time in recent years driven by the ongoing crisis in the Middle East, the European Union's continuing reliance on fossil energy imports is becoming increasingly apparent. However, despite offering an intriguing prospect of improved energy resilience, the ramp-up",
+      "url": "https://arxiv.org/abs/2606.13215v1",
+      "source": "arXiv"
+    }
+  ],
   "podcast": "[Vacation and why Americans take so little] Do you work more for more money? Or work less for more time? For some, this is the ultimate economic choice. Every single worker in the European Union is guaranteed four weeks of paid vacation. No matter how long they’ve been at a company. No matter how low paying the job is. Vacation is a right. In fact, all but one of the richest countries in the world guarantees paid vacation, except: the U.S. ",
   "wiki": null,
   "youtube_items": [
+    {
+      "title": "[YT] YouTube:xBWMi5m662M",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=xBWMi5m662M",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "xBWMi5m662M",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    },
     {
       "title": "[YT] YouTube:UZAPm0zgVBM",
       "summary": "As our planet faces unprecedented climate challenges, the energy transition is more crucial than ever transition is more crucial than ever before. The World Economic Forum reports a significant rebound in energy transition momentum showing an overall increase of momentum showing an overall increase of 1.1%. Remarkably, nearly 2/3 of the 118 countries surveyed have made progress towards decarbonized energy goals despite global turmoil. However, clean energy only represents 14.8% of the global energy share, highlighting a long road ahead for net zero emissions. Diving deeper, we find that energy security remains a critical concern, lagging behind other indicators of progress in this transition. Countries like Latvia and the UAE have achieved remarkable progress driven by targeted policies an",
@@ -74,23 +98,12 @@
       "has_full_transcript": true
     },
     {
-      "title": "[YT] YouTube:uw9csY8Kusk",
-      "summary": "Rare earth elements power everything from EVs to wind turbos. But they're hard to find. Satellites and spectral data help us pinpoint where to spectral data help us pinpoint where to explore faster before we drill.",
-      "link": "https://www.youtube.com/watch?v=uw9csY8Kusk",
-      "source_type": "youtube",
-      "channel": "",
-      "video_id": "uw9csY8Kusk",
-      "transcript_method": "playwright_web",
-      "transcript_chars": 214,
-      "has_full_transcript": true
-    },
-    {
-      "title": "[YT] YouTube:8XNxnPYB9zw",
+      "title": "[YT] YouTube:-ENCA0LOtVs",
       "summary": "",
-      "link": "https://www.youtube.com/watch?v=8XNxnPYB9zw",
+      "link": "https://www.youtube.com/watch?v=-ENCA0LOtVs",
       "source_type": "youtube",
       "channel": "",
-      "video_id": "8XNxnPYB9zw",
+      "video_id": "-ENCA0LOtVs",
       "transcript_method": "none",
       "transcript_chars": 0,
       "has_full_transcript": false

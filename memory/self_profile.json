@@ -1,10 +1,10 @@
 {
-  "timestamp": "2026-06-20T12:01:39.282753+00:00",
+  "timestamp": "2026-06-20T12:26:33.966522+00:00",
   "identity": "CORTEX++ AGI — civilization monitor",
   "hardware": {
     "ram_total_gb": 14.9,
-    "ram_free_gb": 9.1,
-    "ram_percent": 38.5,
+    "ram_free_gb": 7.1,
+    "ram_percent": 52.0,
     "disk_total_gb": 1023.0,
     "disk_free_gb": 639.0,
     "cpu_cores": 8,
@@ -43,7 +43,7 @@
     "No persistent process — cycle must be triggered manually or via scheduler"
   ],
   "current_vitals": {
-    "ram_pressure": "LOW",
+    "ram_pressure": "MODERATE",
     "can_run_parallel": true,
     "can_run_chromadb": true,
     "safe_to_start": true

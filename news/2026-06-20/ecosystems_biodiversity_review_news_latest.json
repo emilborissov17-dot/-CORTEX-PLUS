@@ -1,6 +1,6 @@
 {
   "axis": "ECOSYSTEMS_BIODIVERSITY_REVIEW",
-  "fetched_at": "2026-06-20T11:11:57.266586+00:00",
+  "fetched_at": "2026-06-20T12:36:49.809694+00:00",
   "smart_query": "biodiversity species extinction",
   "sources_count": {
     "wiki": 0,
@@ -76,37 +76,37 @@
   "wiki": null,
   "youtube_items": [
     {
-      "title": "[YT] We need IMMEDIATE action to stop extinction crisis, David Attenborough - BBC",
-      "summary": "[DESCRIPTION FALLBACK] Subscribe and to the BBC https://bit.ly/BBCYouTubeSub Watch the BBC first on iPlayer https://bbc.in/iPlayer-Home With a ...",
+      "title": "[YT] YouTube:dbCR0KSU52g",
+      "summary": "over the course of my life i've over the course of my life i've encountered some of the world's most remarkable species of animals only now do i realize just how lucky i've been many of these wonders seem set to disappear forever the un panel of experts has found that million animal and plant species face million animal and plant species face extinction it is worse than expected this is it is worse than expected this is happening much faster than we've ever seen before today we are the asteroid that's causing many many species to go extinct simultaneously the evidence is that simultaneously the evidence is that unless immediate action is taken this crisis has grave impacts for us all we're not just losing nice things to look at we're losing critical parts of earth's system and it's threate",
       "link": "https://www.youtube.com/watch?v=dbCR0KSU52g",
       "source_type": "youtube",
-      "channel": "BBC",
+      "channel": "",
       "video_id": "dbCR0KSU52g",
-      "transcript_method": "description",
-      "transcript_chars": 146,
-      "has_full_transcript": false
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1080,
+      "has_full_transcript": true
     },
     {
-      "title": "[YT] Million animals, plants at risk of extinction due to human activities, U.N. report says",
-      "summary": "[DESCRIPTION FALLBACK] About one million species of animals and plants around the world are now at risk of extinction, in part due to pollution and ...",
+      "title": "[YT] YouTube:Ic-J6hcSKa8",
+      "summary": "borås cover about 30% of the planet and the ecosystems they create play an essential role in supporting life on Earth but deforestation is clearing Earth's forests on a massive scale and at the current rate of destruction the world's rainforests could completely disappear within a hundred years why should we care about deforestation together forestry and agriculture are responsible for 24 percent of greenhouse gas emissions making deforestation a significant contributor to climate significant contributor to climate change deforestation impacts the amount of greenhouse gases in the atmosphere in two ways first when trees are felled they release the carbon they are storing into the atmosphere second trees play a critical role in absorbing the greenhouse gases that fuel global warming fewer f",
+      "link": "https://www.youtube.com/watch?v=Ic-J6hcSKa8",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "Ic-J6hcSKa8",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1201,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] YouTube:5tgNtIUOL4E",
+      "summary": "as we told you yesterday about 1 million species of animals and plants around the world are now at risk of extinction in part due to pollution and overfishing a new United Nations report says nature is essential for our existence and a good quality of life but points to a start humans are transforming the planet's natural habitat at an unprecedented rate Jonathan Vigliotti is in Los Angeles eluate in Los Angeles with what the future could look like if nothing's done Jonathan good morning and good morning John scientists say the report is a landmark in the conservation battle not only was it compiled by scientists hundreds of them it was approved by diplomats as well from 132 countries including here in the US they say human survival depends on healthy animals and plants and destroying them",
       "link": "https://www.youtube.com/watch?v=5tgNtIUOL4E",
       "source_type": "youtube",
-      "channel": "CBS Mornings",
+      "channel": "",
       "video_id": "5tgNtIUOL4E",
-      "transcript_method": "description",
-      "transcript_chars": 151,
-      "has_full_transcript": false
-    },
-    {
-      "title": "[YT] Endangered Species | Environment &amp; Ecology | Biology | FuseSchool",
-      "summary": "[DESCRIPTION FALLBACK] You can probably name quite a few endangered species - polar bear, blue whale and black rhino are just a few. But there are ...",
-      "link": "https://www.youtube.com/watch?v=2XdeLpm42i8",
-      "source_type": "youtube",
-      "channel": "FuseSchool - Global Education",
-      "video_id": "2XdeLpm42i8",
-      "transcript_method": "description",
-      "transcript_chars": 150,
-      "has_full_transcript": false
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1224,
+      "has_full_transcript": true
     }
   ],
   "summary": "[RSS News]\n- A hidden pollutant is changing how the world's forests breathe\n- This newly discovered raptor may have hunted like a giant heron\n\n[arXiv]\n- An information-geometric framework for mapping ",

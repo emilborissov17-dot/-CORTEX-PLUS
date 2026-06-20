@@ -1,10 +1,80 @@
 {
-  "cycle_id": "full_test_003",
-  "count": 1,
+  "cycle_id": "2026-06-20T13:00:35.892077+00:00",
+  "count": 6,
   "decisions": [
     {
-      "action": "observe",
-      "priority": "HIGH"
+      "component": "unknown",
+      "problem": "To enable full system functionality",
+      "solution": "Update fast_cycle_runner.py to include missing agents",
+      "measurable_goal": "Update fast_cycle_runner.py to include missing agents",
+      "root_cause": "OpenClaw scan → fast_cycle_runner.py",
+      "priority": "HIGH",
+      "real_world_signal": true,
+      "generated_by": "OPENCLAW",
+      "timestamp": "2026-06-20T12:57:34.003606+00:00"
+    },
+    {
+      "component": "unknown",
+      "problem": "To enable accurate system monitoring",
+      "solution": "Populate SNAPSHOTS STATE with actual data",
+      "measurable_goal": "Populate SNAPSHOTS STATE with actual data",
+      "root_cause": "OpenClaw scan → SNAPSHOTS STATE",
+      "priority": "HIGH",
+      "real_world_signal": true,
+      "generated_by": "OPENCLAW",
+      "timestamp": "2026-06-20T12:57:34.003622+00:00"
+    },
+    {
+      "component": "unknown",
+      "problem": "Lack of integration between agents and fast_cycle_runner.py",
+      "solution": "Update fast_cycle_runner.py to include missing agents",
+      "measurable_goal": "Lack of integration between agents and fast_cycle_runner.py",
+      "root_cause": "Critical gap — OpenClaw full-scan",
+      "priority": "HIGH",
+      "real_world_signal": true,
+      "generated_by": "OPENCLAW",
+      "timestamp": "2026-06-20T12:57:34.003631+00:00"
+    },
+    {
+      "problem": "Недостатък в правителствената гъвкавост и устойчивост на държавата във възстановяването на демокрацията",
+      "root_cause": "Отсутствие на ефективни механизми за обществен контрол и участие",
+      "solution": "Разработване на платформа за гражданско участие и онлайнPETИЦИИ, интегрирана с данни от правителствени институции",
+      "measurable_goal": "10 000 потписа на петицията за увеличаване на прозрачността на правителството за 6 месеца",
+      "agi_characteristic": "REASONING",
+      "priority": "LOW",
+      "real_world_signal": true,
+      "source": "self_observer_problem_solution",
+      "approved": true,
+      "rejected": false,
+      "timestamp": "2026-05-07T10:20:08.774529+00:00",
+      "feedback_note": "Понижен — влошаване"
+    },
+    {
+      "problem": "Повишено ниво на непрекъснато движение и неразрешен проблем със стари пътища, които не са поддържани",
+      "root_cause": "Недостатъчен бюджет за инфраструктурни проекти и липса на ефективно управление",
+      "solution": "Създаване на интегрирана система за управление на инфраструктурни проекти и ресурси, базирана на данни от сензори и граждански отчети",
+      "measurable_goal": "25% намаление на броя на несъответствията на пътищата за 12 месеца",
+      "agi_characteristic": "GENERALIZATION",
+      "priority": "HIGH",
+      "real_world_signal": true,
+      "source": "self_observer_problem_solution",
+      "approved": true,
+      "rejected": false,
+      "timestamp": "2026-05-07T10:20:08.774654+00:00"
+    },
+    {
+      "problem": "Отсутствие на точни данни за неравенство и бедност",
+      "root_cause": "Недостатъчен достъп до надеждни източници на данни и методологии за оценка",
+      "solution": "Разработване на модел за прогноза на неравенство и бедност, базиран на исторически данни и социални индикатори",
+      "measurable_goal": "10% увеличение на точността на прогнозите за неравенство за 9 месеца",
+      "agi_characteristic": "AUTONOMOUS_LEARNING",
+      "priority": "LOW",
+      "real_world_signal": true,
+      "source": "self_observer_problem_solution",
+      "approved": true,
+      "rejected": false,
+      "timestamp": "2026-05-07T10:20:08.774740+00:00",
+      "feedback_note": "Понижен — влошаване"
     }
   ]
 }

@@ -1,22 +1,34 @@
 {
   "axis": "TECHNOLOGY_INFRA_REVIEW",
   "domain": "civilization",
-  "timestamp": "2026-06-20T12:06:21.622942+00:00",
-  "sources_count": 9,
+  "timestamp": "2026-06-20T12:28:20.855907+00:00",
+  "sources_count": 10,
   "rss_count": 8,
   "ddg_count": 0,
-  "youtube_count": 1,
+  "youtube_count": 2,
   "youtube_items": [
     {
-      "title": "[YT] Fix windows 7 no internet access but connected ethernet - YouTube",
-      "summary": "my laptop is showing wi-fi no internet my laptop is showing wi-fi no internet access if you are in trouble like me then see how to solve the first method go to computer control panel now open the internet option then go to the advanced option and click on the reset button now check if your internet is okay if this method does not fix your computer you can follow the next computer you can follow the next procedure the second method this is the name of my laptop's wi-fi this is the name of my laptop's wi-fi driver the name of your laptop's wi-fi driver may be something else now go to the device manager of the computer my wi-fi driver is showing inside the network adapter now right click on this wi-fi driver and click on uninstall do not click on the delete option in any way here then click s",
-      "link": "https://www.youtube.com/watch?v=0_CIYgOz0jE",
+      "title": "[YT] What the Digital Divide Means in 2026 - YouTubeNet Inclusion 2026 - Bridging the Digital Divide in ... - YouTubeConnected Nation updates the Digital Divide numbers for 2026Digital 2026: internet users pass the 6 billion markInternet use, smartphone ownership, digital divides in the US ...Arjun Linglala: The Digital Divide | TED TalkDigital 2026 Global Overview Report - DataReportal",
+      "summary": "We've spent years trying to connect the world, and we've made remarkable world, and we've made remarkable progress. Today, billions of people are online. But what if access isn't the problem But what if access isn't the problem anymore? Because being connected doesn't mean being included. You can have a signal and still be left behind. The next [music] digital divide isn't about networks. It's about about networks. It's about participation. Can people afford to use digital Can people afford to use digital services? &gt;&gt; Do they trust them? Do they understand them? Can they benefit from them? Because the future belongs [music] to those who can participate, not just connect. And as AI becomes part of work, education, [music] finance and health care, a new divide is emerging between those",
+      "link": "https://www.youtube.com/watch?v=IrhuVi0Sltc",
       "published": "",
       "source_type": "youtube",
       "channel": "",
-      "video_id": "0_CIYgOz0jE",
+      "video_id": "IrhuVi0Sltc",
       "transcript_method": "playwright_web",
-      "transcript_chars": 1000,
+      "transcript_chars": 1095,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Net Inclusion 2026 - Bridging the Digital Divide in ... - YouTubeConnected Nation updates the Digital Divide numbers for 2026Digital 2026: internet users pass the 6 billion markInternet use, smartphone ownership, digital divides in the US ...Arjun Linglala: The Digital Divide | TED TalkDigital 2026 Global Overview Report - DataReportal",
+      "summary": "Welcome. My name is Gina Denise Cooper Benjamin. I am the deputy director of NDIA and I'm so happy to be moderating this PL panel today. We're going to have a fun lively conversation. I'm going to start by letting the panelists introduce themselves and share a bright spot from their communities. Then if we have time, we're going to have time. I'm going to go through a moderated conversation. And then if we have time, we'll go through some Q&amp;A. After the Q&amp;A, we'll wrap it up. I'll tie it with a pretty little bow and then u but before we get started, I want to establish some norms for all of us. So, please try to be present. You can have your computers open. That's fine. But please try to be present. And in fact, I'm going to ask one of you to open your computer because we have coll",
+      "link": "https://www.youtube.com/watch?v=BICaOlqfvfo",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "BICaOlqfvfo",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 987,
       "has_full_transcript": true
     }
   ],
@@ -95,15 +107,27 @@
       "source_type": "rss"
     },
     {
-      "title": "[YT] Fix windows 7 no internet access but connected ethernet - YouTube",
-      "summary": "my laptop is showing wi-fi no internet my laptop is showing wi-fi no internet access if you are in trouble like me then see how to solve the first method go to computer control panel now open the internet option then go to the advanced option and click on the reset button now check if your internet is okay if this method does not fix your computer you can follow the next computer you can follow the next procedure the second method this is the name of my laptop's wi-fi this is the name of my laptop's wi-fi driver the name of your laptop's wi-fi driver may be something else now go to the device manager of the computer my wi-fi driver is showing inside the network adapter now right click on this wi-fi driver and click on uninstall do not click on the delete option in any way here then click s",
-      "link": "https://www.youtube.com/watch?v=0_CIYgOz0jE",
+      "title": "[YT] What the Digital Divide Means in 2026 - YouTubeNet Inclusion 2026 - Bridging the Digital Divide in ... - YouTubeConnected Nation updates the Digital Divide numbers for 2026Digital 2026: internet users pass the 6 billion markInternet use, smartphone ownership, digital divides in the US ...Arjun Linglala: The Digital Divide | TED TalkDigital 2026 Global Overview Report - DataReportal",
+      "summary": "We've spent years trying to connect the world, and we've made remarkable world, and we've made remarkable progress. Today, billions of people are online. But what if access isn't the problem But what if access isn't the problem anymore? Because being connected doesn't mean being included. You can have a signal and still be left behind. The next [music] digital divide isn't about networks. It's about about networks. It's about participation. Can people afford to use digital Can people afford to use digital services? &gt;&gt; Do they trust them? Do they understand them? Can they benefit from them? Because the future belongs [music] to those who can participate, not just connect. And as AI becomes part of work, education, [music] finance and health care, a new divide is emerging between those",
+      "link": "https://www.youtube.com/watch?v=IrhuVi0Sltc",
       "published": "",
       "source_type": "youtube",
       "channel": "",
-      "video_id": "0_CIYgOz0jE",
+      "video_id": "IrhuVi0Sltc",
       "transcript_method": "playwright_web",
-      "transcript_chars": 1000,
+      "transcript_chars": 1095,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Net Inclusion 2026 - Bridging the Digital Divide in ... - YouTubeConnected Nation updates the Digital Divide numbers for 2026Digital 2026: internet users pass the 6 billion markInternet use, smartphone ownership, digital divides in the US ...Arjun Linglala: The Digital Divide | TED TalkDigital 2026 Global Overview Report - DataReportal",
+      "summary": "Welcome. My name is Gina Denise Cooper Benjamin. I am the deputy director of NDIA and I'm so happy to be moderating this PL panel today. We're going to have a fun lively conversation. I'm going to start by letting the panelists introduce themselves and share a bright spot from their communities. Then if we have time, we're going to have time. I'm going to go through a moderated conversation. And then if we have time, we'll go through some Q&amp;A. After the Q&amp;A, we'll wrap it up. I'll tie it with a pretty little bow and then u but before we get started, I want to establish some norms for all of us. So, please try to be present. You can have your computers open. That's fine. But please try to be present. And in fact, I'm going to ask one of you to open your computer because we have coll",
+      "link": "https://www.youtube.com/watch?v=BICaOlqfvfo",
+      "published": "",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "BICaOlqfvfo",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 987,
       "has_full_transcript": true
     }
   ]

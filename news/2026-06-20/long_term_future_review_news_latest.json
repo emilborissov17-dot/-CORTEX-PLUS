@@ -1,11 +1,11 @@
 {
   "axis": "LONG_TERM_FUTURE_REVIEW",
-  "fetched_at": "2026-06-20T11:13:36.260136+00:00",
+  "fetched_at": "2026-06-20T12:38:39.663062+00:00",
   "smart_query": "existential risk future civilization",
   "sources_count": {
     "wiki": 0,
     "rss": 3,
-    "gdelt": 0,
+    "gdelt": 3,
     "arxiv": 2,
     "github": 3,
     "youtube_transcripts": 3,
@@ -31,7 +31,26 @@
       "source": "RSS"
     }
   ],
-  "gdelt": [],
+  "gdelt": [
+    {
+      "title": " « Lhumanité pourrait ne pas survivre au - delà des 50 prochaines années », affirme le prix Nobel de physique David Gross qui suggère que confier le c",
+      "snippet": " « Lhumanité pourrait ne pas survivre au - delà des 50 prochaines années », affirme le prix Nobel de physique David Gross qui suggère que confier le contrôle nucléaire à lIA représente un risque existentiel",
+      "url": "https://www.developpez.com/actu/382403/-L-humanite-pourrait-ne-pas-survivre-au-dela-des-50-prochaines-annees-affirme-le-prix-Nobel-de-physique-David-Gross-qui-suggere-que-confier-le-controle-nucleaire-a-l-IA-represente-un-risque-existentiel/",
+      "source": "developpez.com"
+    },
+    {
+      "title": "Peter Thiel invite - only club featured talks on sex , cult - building and World War III : report",
+      "snippet": "Peter Thiel invite - only club featured talks on sex , cult - building and World War III : report",
+      "url": "https://nypost.com/2026/06/17/business/peter-thiels-invite-only-club-featured-talks-on-sex-cult-building-and-world-war-iii-report/",
+      "source": "nypost.com"
+    },
+    {
+      "title": "LPOI Dorong Rekalibrasi Spiritual untuk Wujudkan Dunia Lebih Baik : Okezone News",
+      "snippet": "LPOI Dorong Rekalibrasi Spiritual untuk Wujudkan Dunia Lebih Baik : Okezone News",
+      "url": "https://news.okezone.com/read/2026/04/24/337/3214365/lpoi-dorong-rekalibrasi-spiritual-untuk-wujudkan-dunia-lebih-baik",
+      "source": "news.okezone.com"
+    }
+  ],
   "github_repos": [
     {
       "title": "emcie-co/parlant",
@@ -77,39 +96,39 @@
   "youtube_items": [
     {
       "title": "[YT] Is Generative AI an Existential Threat to the Human Species?",
-      "summary": "[DESCRIPTION FALLBACK] Is generative AI an existential threat to the human species? The \"Godfather of AI\" says yes. Watch more of David Westin's ...",
+      "summary": "from everything you know everything you understand is generative AI potentially an existential threat to the human species I think that's what I've been saying yes it really is an existential threat some people say this is just science fiction and until fairly recently I believed it was a long way off I always thought it would be a very long-term threat but I thought it would be 100 years before we had really smart things um 50 years maybe we had plenty of time to think about it now I think it's quite likely that sometime in the next 20 years these things will get smarter than us and we really need to worry about what happens then",
       "link": "https://www.youtube.com/watch?v=9fogzZ_6kR0",
       "source_type": "youtube",
       "channel": "Bloomberg News",
       "video_id": "9fogzZ_6kR0",
-      "transcript_method": "description",
-      "transcript_chars": 148,
-      "has_full_transcript": false
+      "transcript_method": "playwright_web",
+      "transcript_chars": 638,
+      "has_full_transcript": true
     },
     {
       "title": "[YT] AI2027: Is this how AI might destroy humanity? - BBC World Service",
-      "summary": "[DESCRIPTION FALLBACK] A research paper predicting that artificial intelligence will go rogue in 2027 and lead to humanity's extinction within a decade is ...",
+      "summary": "This is what the world will look like in about a decade from now. A tech utopia where humans barely have to work. That's according to a group of AI researchers who've written a controversial and influential paper called AI2027. But they also predict that within five years of this, humanity will be wiped out. The AI2027 paper has got the tech world talking. We've asked a prominent critic for their view on this stark scenario. But first, here's how it plays out. As an experiment, we've illustrated it using text to video AI. The scenario says that in 2027, a fictional company called OpenBrain is celebrating. They've created Agent-3, an AI with the knowledge of the entire internet. All movies, all books. It has PhD level expertise in every field, including AI. Using enormous data centres, 200,",
       "link": "https://www.youtube.com/watch?v=1UufaK3pQMg",
       "source_type": "youtube",
       "channel": "BBC World Service",
       "video_id": "1UufaK3pQMg",
-      "transcript_method": "description",
-      "transcript_chars": 158,
-      "has_full_transcript": false
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1715,
+      "has_full_transcript": true
     },
     {
       "title": "[YT] THE FUTURE OF HUMANITY: A.I Predicts 400 Years In 3 Minutes (4K)",
-      "summary": "[DESCRIPTION FALLBACK] How will Humanity look in 400 Years? This exciting time-lapse of our future produced entirely by Artificially Intelligent Concept ...",
+      "summary": "Tasked with designing 400 years into the future, 2 Arcadians set out with the mission to both warn humanity of the dangers of the current climate conditions and show our species its great potential should we&nbsp; work together, and so we begin known to the&nbsp;&nbsp; arcadians as the Reckoning in the year 2040&nbsp; where society's efforts to push initiatives&nbsp;&nbsp; and agendas of sustainability failed due to&nbsp; Humanity's obsession with over consumerism Next we have, the dystopian era, in the year 2070, where the living conditions are inconceivably depressing, unhygienic and inhumane. Also with the sheer mismanagement of waste dumping around our beloved planet in space, leading world governments to assemble the people of the nations. after much trial and tribulation we move on t",
       "link": "https://www.youtube.com/watch?v=-UBaW1OIgTo",
       "source_type": "youtube",
       "channel": "Amara Pictures",
       "video_id": "-UBaW1OIgTo",
-      "transcript_method": "description",
-      "transcript_chars": 156,
-      "has_full_transcript": false
+      "transcript_method": "playwright_web",
+      "transcript_chars": 2297,
+      "has_full_transcript": true
     }
   ],
-  "summary": "[RSS News]\n- New video game console aims to get kids moving\n- UK's top data and AI regulator quits after 'inappropriate' humour\n\n[arXiv]\n- A Virtuous AI is an Existential Risk\n- Existential Indifferen",
+  "summary": "[RSS News]\n- New video game console aims to get kids moving\n- UK's top data and AI regulator quits after 'inappropriate' humour\n\n[GDELT News]\n-  « Lhumanité pourrait ne pas survivre au - delà des 50 p",
   "urgency": "LOW",
   "sentiment": "NEUTRAL",
   "key_developments": [],

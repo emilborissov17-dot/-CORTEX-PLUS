@@ -1,6 +1,6 @@
 {
   "axis": "MATERIALS_WASTE_REVIEW",
-  "fetched_at": "2026-06-20T11:22:24.799501+00:00",
+  "fetched_at": "2026-06-20T12:33:59.747146+00:00",
   "smart_query": "plastic waste pollution recycling",
   "sources_count": {
     "wiki": 0,
@@ -57,48 +57,44 @@
   "wiki": null,
   "youtube_items": [
     {
-      "title": "[YT] Recycling Marine Plastic Waste A Circular Economy Case | Suzanna Laskaridis | TEDxAthens",
-      "summary": "[DESCRIPTION FALLBACK] We will be discussing the problem of lost fishing gear globally and in Greece, how it can be tackled by increasing recycling and ...",
+      "title": "[YT] YouTube:n_3vSDOY7iU",
+      "summary": "In 2017, I was approached by a team of designers to help finance a project they were doing here in Greece. The aim was to reuse old fishing nets and turn them into filament for 3D and turn them into filament for 3D printers. I thought the idea of recycling marine plastic waste into something workable was absolutely fantastic. So, I started working in my mind the idea of how this could actually be idea of how this could actually be reused. We put together the best minds in the fields of marine plastic waste, new technologies, and circular economy and dove right in. We have a storage area just outside of Athens, so we started suggesting to various friends and NGOs and various other companies who had been collecting marine plastic waste up to that point that we take them back to our storage t",
       "link": "https://www.youtube.com/watch?v=n_3vSDOY7iU",
       "source_type": "youtube",
-      "channel": "TEDx Talks",
+      "channel": "",
       "video_id": "n_3vSDOY7iU",
-      "transcript_method": "description",
-      "transcript_chars": 155,
-      "has_full_transcript": false
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1113,
+      "has_full_transcript": true
     },
     {
-      "title": "[YT] Can the Circular Economy Solve Our Plastics Problem?",
-      "summary": "[DESCRIPTION FALLBACK] What if we could make every plastic product reusable and get rid of plastic waste altogether? Earthrise Studio's Alice Aedy ...",
-      "link": "https://www.youtube.com/watch?v=X4EX3ISBZWo",
+      "title": "[YT] YouTube:sDKKKQ0_IxU",
+      "summary": "today we are back home with lisa she has an important meeting today but oh no just now she realizes she's out of hair shampoo no but now we already know her empty shampoo bottle will be given new life if recycled properly you remember producing a product using it for a short time and then throwing it in the trash that is not sustainable that's why we that is not sustainable that's why we recycle but with lisa made not know yet mechanical recycling has proven to be an effective and eco-efficient solution omv and borealis are a pioneer when it comes to returning plastic waste to the value chain so let's have a closer look at how this mechanical recycling works in practice for mechanical recycling to work the plastic waste must be divided this means that the plastic items are first sorted the",
+      "link": "https://www.youtube.com/watch?v=sDKKKQ0_IxU",
       "source_type": "youtube",
-      "channel": "Bloomberg Originals",
-      "video_id": "X4EX3ISBZWo",
-      "transcript_method": "description",
-      "transcript_chars": 150,
-      "has_full_transcript": false
+      "channel": "",
+      "video_id": "sDKKKQ0_IxU",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 1181,
+      "has_full_transcript": true
     },
     {
-      "title": "[YT] How can Africa Create a Circular Economy for Plastics?",
-      "summary": "[DESCRIPTION FALLBACK] IFC Managing Director Makhtar Diop speaks with Inger Andersen, Executive Director of the UN Environment Programme.",
-      "link": "https://www.youtube.com/watch?v=4e29MlwDzkk",
+      "title": "[YT] YouTube:0EfsD7xNLIo",
+      "summary": "A world choking on waste and running out of resources. Something has to change. How can we design an economy where we don't waste all these resources? all these resources? [Music] Meet the people grabbing opportunities around the world in a new way of doing business where nothing goes to waste. The circular economy will change how we use everyday products and our urban use everyday products and our urban landscape. It could bring massive environmental and financial benefits. This is just the beginning of really being able to solve a global problem. But is the world ready? But is the world ready? [Music] [Music] [Music] [Music] at one of the world's largest landfills near Jakarta. Atma is one of thousands scratching out a living. [Music] He often gets injured by broken glass and nails. And ",
+      "link": "https://www.youtube.com/watch?v=0EfsD7xNLIo",
       "source_type": "youtube",
-      "channel": "International Finance Corporation",
-      "video_id": "4e29MlwDzkk",
-      "transcript_method": "description",
-      "transcript_chars": 137,
-      "has_full_transcript": false
+      "channel": "",
+      "video_id": "0EfsD7xNLIo",
+      "transcript_method": "playwright_web",
+      "transcript_chars": 933,
+      "has_full_transcript": true
     }
   ],
-  "summary": "Анализът на оса MATERIALS_WASTE_REVIEW разглежда устойчивостта на цивилизацията чрез управление на материалите и минимизиране на отпадъците. Използването на кръгови модели и технологии за рециклиране е от крайна важност. Повишаването на рециклирането на изгубените риболовни уреди е един от аспектите на този анализ.",
-  "urgency": "MEDIUM",
+  "summary": "[arXiv]\n- Circular Raman responses from angular-momentum inequivalence in CoSi\n- Electromagnetic Characterization of Magnetic Ring: Case of Circular Cross-Section Shape\n\n[GitHub]\n- pogopaule/awesome-s",
+  "urgency": "LOW",
   "sentiment": "NEUTRAL",
-  "key_developments": [
-    "pogopaule/awesome-sustainability-jobs",
-    "NatLabRockies/PV_ICE",
-    "We will be discussing the problem of lost fishing gear globally and in Greece, how it can be tackled by increasing recycling"
-  ],
-  "open_source_momentum": "Repository like pogopaule/awesome-sustainability-jobs with 511 stars indicates a growing interest in sustainable development jobs.",
-  "scientific_frontier": "Circular Raman responses from angular-momentum inequivalence in CoSi indicates advancements in material science.",
-  "relevance_to_goal": "Управлението на материалите и минимизиране на отпадъците е съществен аспект от постигането на устойчива цивилизация с достоен живот за всеки."
+  "key_developments": [],
+  "open_source_momentum": "",
+  "scientific_frontier": "",
+  "relevance_to_goal": ""
 }

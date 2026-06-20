@@ -46,14 +46,21 @@ def _inject_memory(axis: str, prompt: str) -> str:
 def _llm_fallback(prompt, axis="CIVILIZATION"):
     prompt = _inject_memory(axis, prompt)
     try:
-        from core.groq_backend import call_groq
+        from core.groq_backend import call_groq, AllBackendsFailedError
         text = call_groq(prompt, max_tokens=1024)
         if "```json" in text: text = text.split("```json")[1].split("```")[0].strip()
         elif "```" in text:   text = text.split("```")[1].split("```")[0].strip()
         if "</think>" in text: text = text.split("</think>")[-1].strip()
         return json.loads(text)
     except Exception as e:
-        return {"error": str(e)}
+        result = {"error": str(e)}
+        try:
+            from core.groq_backend import AllBackendsFailedError
+            if isinstance(e, AllBackendsFailedError):
+                result["needs_reanalysis"] = True
+        except ImportError:
+            pass
+        return result
 
 def _write(folder, axis_name, data):
     out_dir = SNAPSHOT_DIR / folder
