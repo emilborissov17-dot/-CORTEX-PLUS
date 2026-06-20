@@ -549,6 +549,7 @@ def main():
     # ── 12.5. Auto levels — СЛЕД snapshot агентите, не преди! ──
     # Тук auto_level чете реални данни от обновения master snapshot.
     # execute_patches ще вика auto_level отново за before/after measurement.
+    levels = {}  # initialized here so MerkleMemory commit can read it at step 24
     try:
         from memory.auto_level import run as compute_levels
         levels, corrections, alerts = compute_levels()
@@ -557,6 +558,7 @@ def main():
         print(f"[FAST_CYCLE] auto_levels -> FAILED: {e}")
 
     # ── 12.6. Goal score calculator ──
+    composite = 0.0  # initialized here so MerkleMemory commit can read it at step 24
     try:
         from goal_score_calculator import compute_goal_score
         gs_result = compute_goal_score()
@@ -679,6 +681,56 @@ def main():
             print("[FAST_CYCLE] Continuous learning -> OK")
     except Exception as e:
         print(f"[FAST_CYCLE] Continuous learning грешка: {e}")
+
+    # ── 24. MerkleMemory commit ──
+    try:
+        import asyncio
+        import re as _re
+        from merkle_memory import MerkleMemory
+
+        # signals — parse from auto_levels details: "metric=value → LEVEL"
+        _signals = []
+        for _axis, _info in levels.items():
+            if not isinstance(_info, dict):
+                continue
+            for _detail in _info.get("details", []):
+                _m = _re.match(r"([\w]+)=([-\d.]+)", _detail)
+                if _m:
+                    _signals.append({
+                        "metric":   _m.group(1),
+                        "value":    float(_m.group(2)),
+                        "domain":   _axis,
+                        "source":   _info.get("source", "auto_level"),
+                        "category": "CIVILIZATION",
+                    })
+
+        # decisions — improvement_proposals.json (written by openclaw/hyperclaw, steps 15.5/15.7)
+        _decisions = []
+        try:
+            _raw = json.loads((BASE / "memory" / "improvement_proposals.json").read_text(encoding="utf-8"))
+            _decisions = (_raw.get("proposals", _raw) if isinstance(_raw, dict) else _raw)[:30]
+        except Exception:
+            pass
+
+        # results — today's patch executions from development_journal.json (written by execute_patches, step 19)
+        _patch_results = []
+        try:
+            _journal = json.loads((BASE / "memory" / "development_journal.json").read_text(encoding="utf-8"))
+            _today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+            _patch_results = _journal.get(_today, {}).get("patch_executions", [])
+        except Exception:
+            pass
+
+        asyncio.run(MerkleMemory().commit(
+            cycle_id  = _utc_now(),
+            signals   = _signals,
+            decisions = _decisions,
+            results   = _patch_results,
+            goal_score = float(composite),
+        ))
+        print(f"[FAST_CYCLE] MerkleMemory -> committed | signals={len(_signals)} decisions={len(_decisions)} results={len(_patch_results)} goal={composite:.4f}")
+    except Exception as e:
+        print(f"[FAST_CYCLE] MerkleMemory -> FAILED: {e}")
 
     print("=" * 50)
     print(f"[FAST_CYCLE] done at {_utc_now()}")
