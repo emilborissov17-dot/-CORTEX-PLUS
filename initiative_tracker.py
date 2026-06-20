@@ -20,9 +20,10 @@ try:
 except Exception:
     _call_groq = None
 
-BASE            = pathlib.Path(__file__).resolve().parent
-PROPOSALS_PATH  = BASE / "memory" / "improvement_proposals.json"
-INITIATIVES_DIR = BASE / "data" / "initiatives"
+BASE              = pathlib.Path(__file__).resolve().parent
+PROPOSALS_PATH    = BASE / "memory" / "improvement_proposals.json"
+INITIATIVES_DIR   = BASE / "data" / "initiatives"
+_INDICATORS_PATH  = BASE / "snapshots" / "master" / "global_indicators_latest.json"
 
 # Sources whose proposals are code-patch generators — skip entirely
 _CODE_GENERATOR_SOURCES = {"OPENCLAW", "HYPERCLAW"}
@@ -53,6 +54,32 @@ _ALLOWED_TRANSITIONS: dict[str, set[str]] = {
     "OVERDUE":     {"IN_PROGRESS", "CANCELLED", "DONE"},
     "IN_PROGRESS": {"DONE", "CANCELLED", "PROPOSED"},
 }
+
+# Keyword → (dot_path_in_global_indicators, direction, label)
+# direction: "lower" = we want to decrease it, "higher" = we want to increase it
+# Ordered by specificity — first match wins.
+_METRIC_MAP: list[tuple[re.Pattern, str, str, str]] = [
+    (re.compile(r"неравенство|gini|inequality",             re.I), "world_bank.gini_mean",                  "lower",  "Gini coefficient"),
+    (re.compile(r"бедност|poverty|беден",                   re.I), "world_bank.poverty_190_pct",            "lower",  "Poverty rate (%)"),
+    (re.compile(r"CO2|въглероден|парников|emission",        re.I), "co2.co2_ppm",                           "lower",  "CO2 (ppm)"),
+    (re.compile(r"температур|global.warm|климатична криза", re.I), "temperature.temp_anomaly_c",            "lower",  "Temp anomaly (°C)"),
+    (re.compile(r"биоразнообразие|biodiversity|вид(?:ов)?", re.I), "biodiversity.species_observations_30d", "higher", "Species observations (30d)"),
+    (re.compile(r"глад|undernourishment|недохранване",      re.I), "food.undernourishment_pct",             "lower",  "Undernourishment (%)"),
+    (re.compile(r"безработиц|unemployment",                 re.I), "economy.unemployment_pct",              "lower",  "Unemployment (%)"),
+    (re.compile(r"интернет|broadband|дигитал",              re.I), "cities.internet_users_pct",             "higher", "Internet users (%)"),
+    (re.compile(r"електр|electricity|\bток\b",              re.I), "cities.electricity_access_pct",         "higher", "Electricity access (%)"),
+    (re.compile(r"\bвода\b|water|водоснабд",                re.I), "world_bank.safe_water_access_pct",      "higher", "Safe water access (%)"),
+    (re.compile(r"грамотност|literacy|образован",           re.I), "world_bank.literacy_rate_adult_pct",    "higher", "Literacy rate (%)"),
+    (re.compile(r"ядрен|nuclear|warhead",                   re.I), "nuclear.nuclear_warheads_total",        "lower",  "Nuclear warheads"),
+    (re.compile(r"бежанц|refugee|разселен|displaced",       re.I), "displaced.refugees_millions",           "lower",  "Refugees (millions)"),
+    (re.compile(r"ВЕИ|renewable|слънч|вятърн|чиста.енерг", re.I), "world_bank.renewable_elec_pct",         "higher", "Renewable electricity (%)"),
+    (re.compile(r"горск|forest|залесяване|обезлесяване",   re.I), "world_bank.forest_area_pct",            "higher", "Forest area (%)"),
+    (re.compile(r"застрашен.*вид|threatened|изчезващ",     re.I), "world_bank.threatened_mammals_no",      "lower",  "Threatened mammals"),
+    (re.compile(r"пътищ|road|инфраструктур|transport",     re.I), "economy.gdp_per_capita_ppp_usd",        "higher", "GDP/capita PPP (infrastructure proxy)"),
+    (re.compile(r"управлени|governance|демокрац|прозрачн",  re.I), "world_bank.gini_mean",                  "lower",  "Gini (governance proxy)"),
+    (re.compile(r"продоволстви|хранителн|food.secur",       re.I), "food.food_production_index",            "higher", "Food production index"),
+    (re.compile(r"\bBDP\b|GDP|икономически растеж",         re.I), "economy.gdp_growth_annual_pct",         "higher", "GDP growth (%)"),
+]
 
 
 def _is_code_action(proposal: dict) -> bool:
@@ -127,6 +154,152 @@ def _generate_action_plan(problem: str, solution: str, target_date: str) -> list
             if attempt == 0:
                 time.sleep(5)
     return []
+
+
+# ── PROGRESS MEASUREMENT ──────────────────────────────────────────────────────
+
+def _get_indicator_value(dot_path: str, indicators: dict) -> float | None:
+    """Extract a nested value by dot-path, e.g. 'world_bank.gini_mean'."""
+    node: object = indicators
+    for part in dot_path.split("."):
+        if not isinstance(node, dict):
+            return None
+        node = node.get(part)
+    if node is None or not isinstance(node, (int, float)):
+        return None
+    return float(node)
+
+
+def _match_metric(text: str) -> tuple[str, str, str] | None:
+    """Return (dot_path, direction, label) for the first matching pattern, or None."""
+    for pattern, dot_path, direction, label in _METRIC_MAP:
+        if pattern.search(text):
+            return dot_path, direction, label
+    return None
+
+
+def _extract_target_pct(text: str) -> float | None:
+    """Pull the first percentage from text: '25% намаление' → 25.0."""
+    m = re.search(r"(\d+(?:[.,]\d+)?)\s*%", text)
+    return float(m.group(1).replace(",", ".")) if m else None
+
+
+def _load_indicators() -> dict:
+    try:
+        return json.loads(_INDICATORS_PATH.read_text(encoding="utf-8"))
+    except Exception as e:
+        print(f"[INITIATIVE_TRACKER] global_indicators load failed: {e}")
+        return {}
+
+
+def _measure_progress(initiative: dict, indicators: dict) -> dict:
+    """
+    Match the initiative's milestone text to a global_indicator field.
+    On first call: captures baseline_value = current reading.
+    On subsequent calls: computes progress % toward the milestone target.
+    Returns a dict with measurable/progress fields to be merged back into the record.
+    """
+    init_id = initiative.get("id", "?")
+    search_text = " ".join([
+        initiative.get("problem", ""),
+        initiative.get("solution", ""),
+        initiative.get("milestone", ""),
+    ])
+
+    match = _match_metric(search_text)
+    if not match:
+        return {"measurable": False, "progress_reason": "no matching indicator in global_indicators"}
+
+    dot_path, direction, label = match
+    current_value = _get_indicator_value(dot_path, indicators)
+    if current_value is None:
+        return {
+            "measurable":      False,
+            "progress_reason": f"indicator '{dot_path}' has no data in global_indicators",
+            "indicator_path":  dot_path,
+            "indicator_label": label,
+        }
+
+    # First measurement → snapshot baseline; subsequent → reuse saved baseline
+    saved_baseline = initiative.get("baseline_value")
+    is_first       = saved_baseline is None
+    baseline_value = current_value if is_first else float(saved_baseline)
+
+    target_pct  = _extract_target_pct(initiative.get("milestone", ""))
+    target_value: float | None = None
+    progress_pct: float | None = None
+
+    if target_pct is not None and baseline_value != 0:
+        if direction == "lower":
+            target_value = baseline_value * (1.0 - target_pct / 100.0)
+            denom        = baseline_value - target_value
+        else:
+            target_value = baseline_value * (1.0 + target_pct / 100.0)
+            denom        = target_value - baseline_value
+
+        if denom != 0:
+            if direction == "lower":
+                raw = (baseline_value - current_value) / denom * 100.0
+            else:
+                raw = (current_value - baseline_value) / denom * 100.0
+            progress_pct = round(max(0.0, min(100.0, raw)), 1)
+
+    now_iso = datetime.now(timezone.utc).isoformat()
+    result: dict = {
+        "measurable":          True,
+        "indicator_path":      dot_path,
+        "indicator_label":     label,
+        "indicator_direction": direction,
+        "baseline_value":      round(baseline_value, 4),
+        "current_value":       round(current_value, 4),
+        "delta":               round(current_value - baseline_value, 4),
+        "target_pct":          target_pct,
+        "target_value":        round(target_value, 4) if target_value is not None else None,
+        "current_progress":    progress_pct,
+        "measured_at":         now_iso,
+    }
+    if is_first:
+        result["baseline_snapshot_at"] = now_iso
+
+    tag = f"{progress_pct}%" if progress_pct is not None else "no target %"
+    print(f"  [PROGRESS] {init_id}: {label}  {baseline_value} -> {current_value}  ({tag})")
+    return result
+
+
+def _update_progress_for_active(indicators: dict) -> None:
+    """Measure and persist progress for every PROPOSED / IN_PROGRESS / OVERDUE initiative."""
+    if not indicators or not INITIATIVES_DIR.exists():
+        return
+    for f in INITIATIVES_DIR.glob("*.json"):
+        try:
+            rec = json.loads(f.read_text(encoding="utf-8"))
+        except Exception:
+            continue
+        if rec.get("status") not in ("PROPOSED", "IN_PROGRESS", "OVERDUE"):
+            continue
+
+        prog = _measure_progress(rec, indicators)
+
+        if prog.get("measurable"):
+            # Persist baseline only on first measurement
+            if rec.get("baseline_value") is None:
+                rec["baseline_value"]       = prog["baseline_value"]
+                rec["baseline_snapshot_at"] = prog.get("baseline_snapshot_at", prog["measured_at"])
+            rec["current_value"]      = prog["current_value"]
+            rec["delta"]              = prog["delta"]
+            rec["indicator_label"]    = prog["indicator_label"]
+            rec["indicator_path"]     = prog["indicator_path"]
+            rec["indicator_direction"]= prog["indicator_direction"]
+            rec["target_pct"]         = prog["target_pct"]
+            rec["target_value"]       = prog["target_value"]
+            rec["current_progress"]   = prog["current_progress"]
+            rec["measured_at"]        = prog["measured_at"]
+            rec["updated_at"]         = prog["measured_at"]
+        else:
+            rec.setdefault("measurable",      False)
+            rec.setdefault("progress_reason", prog.get("progress_reason", ""))
+
+        f.write_text(json.dumps(rec, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
 def _apply_overdue_transitions() -> int:
@@ -289,6 +462,14 @@ def run() -> list[dict]:
         init_path.write_text(json.dumps(record, ensure_ascii=False, indent=2), encoding="utf-8")
 
     print(f"[INITIATIVE_TRACKER] created={created} updated={updated} skipped_code={skipped}")
+
+    # Measure progress for all active initiatives against global_indicators
+    indicators = _load_indicators()
+    if indicators:
+        _update_progress_for_active(indicators)
+    else:
+        print("[INITIATIVE_TRACKER] global_indicators недостъпни — progress пропуснат")
+
     return load_active()
 
 
