@@ -237,7 +237,7 @@ def _get_transcript_api(video_id: str) -> Optional[str]:
             _YT_IP_BLOCKED = True
             print(f"    [TRANSCRIPT-API] ⛔ YouTube IP блок засечен — спираме transcript заявки за този цикъл")
         else:
-            print(f"    [TRANSCRIPT-API] {video_id}: {e}")
+            print(f"    [TRANSCRIPT-API] {video_id}: {str(e).splitlines()[0]}")
 
     return None
 

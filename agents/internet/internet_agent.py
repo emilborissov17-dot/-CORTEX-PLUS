@@ -455,7 +455,11 @@ def _get_transcript_api(video_id: str) -> Optional[str]:
     except ImportError:
         pass
     except Exception as e:
-        print(f"    [TRANSCRIPT-API] {video_id}: {e}")
+        err = str(e)
+        if "blocking" in err.lower() or "IP" in err or "RequestBlocked" in err or "IPBlocked" in err:
+            print(f"    [TRANSCRIPT-API] IP blocked, опитвам Playwright")
+        else:
+            print(f"    [TRANSCRIPT-API] {video_id}: {err.splitlines()[0]}")
     return None
 
 def _parse_vtt(filepath: str) -> str:
