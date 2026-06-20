@@ -303,6 +303,59 @@ def _parse_vtt(filepath: str) -> str:
         return ""
 
 
+def _get_transcript_playwright(video_id: str) -> Optional[str]:
+    """
+    Playwright headless scraper за youtube-transcript.ai.
+    Fallback когато youtube-transcript-api и yt-dlp са неуспешни.
+    Изисква: pip install playwright && playwright install chromium
+    """
+    try:
+        from playwright.sync_api import sync_playwright, TimeoutError as _PWTimeout
+    except ImportError:
+        return None
+
+    yt_url = f"https://www.youtube.com/watch?v={video_id}"
+    try:
+        with sync_playwright() as p:
+            browser = p.chromium.launch(headless=True, args=["--no-sandbox"])
+            page    = browser.new_page()
+            page.set_extra_http_headers({"Accept-Language": "en-US,en;q=0.9"})
+
+            page.goto("https://youtube-transcript.ai/", timeout=30_000, wait_until="domcontentloaded")
+            page.locator("input[type='text']").first.fill(yt_url)
+            page.locator("button:has-text('Get Transcript')").first.click()
+
+            try:
+                page.wait_for_load_state("networkidle", timeout=20_000)
+            except _PWTimeout:
+                pass
+
+            raw = page.locator("#root").inner_text()
+            browser.close()
+
+        # Изрязваме само транскрипта между известните маркери
+        start_marker = "Try another video"
+        end_marker   = "Copy original transcript"
+        s = raw.find(start_marker)
+        e = raw.find(end_marker)
+        if s == -1 or e == -1 or e <= s:
+            return None
+
+        body = raw[s + len(start_marker):e].strip()
+
+        # Премахваме timestamp редове (0:01  12:34  1:23:45)
+        clean = " ".join(
+            line.strip()
+            for line in body.splitlines()
+            if line.strip() and not re.match(r"^\d{1,2}:\d{2}(:\d{2})?$", line.strip())
+        )
+        return clean if len(clean) > 100 else None
+
+    except Exception as e:
+        print(f"    [TRANSCRIPT-PW] {video_id[:11]} error: {e}")
+        return None
+
+
 def get_transcript(video_id: str, title: str = "", description: str = "") -> dict:
     """
     Извлича транскрипция. FIX: глобален TRANSCRIPT_TIMEOUT_SEC guard.
@@ -335,7 +388,14 @@ def get_transcript(video_id: str, title: str = "", description: str = "") -> dic
         transcript = None
         method     = "timeout"
 
-    # Опит 3: Whisper
+    # Опит 3: Playwright — youtube-transcript.ai (по-бърз от Whisper, без локален модел)
+    if not transcript:
+        transcript = _get_transcript_playwright(video_id)
+        if transcript:
+            method = "playwright_web"
+            print(f"    [TRANSCRIPT] {video_id[:11]} OK ({len(transcript)} chars, playwright)")
+
+    # Опит 4: Whisper
     if not transcript:
         try:
             import tempfile, subprocess, whisper, os
