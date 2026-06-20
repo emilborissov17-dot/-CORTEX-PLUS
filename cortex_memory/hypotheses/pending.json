@@ -18,5 +18,27 @@
     "confidence": 0.4,
     "created_at": "2026-06-17T18:35:43.692011+00:00",
     "status": "pending"
+  },
+  {
+    "id": "co2_ppm_20260620_083108",
+    "axis": "co2_ppm",
+    "hypothesis_text": "Ако текущият темп продължи, co2_ppm ще остане стабилен на 432.4 ppm до 2026-07-20",
+    "predicted_value": 432.44,
+    "prediction_date": "2026-07-20",
+    "horizon_days": 30,
+    "model_type": "linear",
+    "bounds": null,
+    "linear_projection": 432.44,
+    "slope_per_cycle": 0.0,
+    "n_points": 3,
+    "r_squared": 1.0,
+    "confidence": 0.4,
+    "created_at": "2026-06-20T08:31:08.098015+00:00",
+    "status": "pending",
+    "verification_status": "FLAGGED",
+    "verification_reasons": [
+      "HIGH_EXTRAPOLATION: projecting 30d ahead from 3 points (ratio=15.0x, threshold 10.0x)"
+    ],
+    "verification_at": "2026-06-20T08:31:08.098225+00:00"
   }
 ]
