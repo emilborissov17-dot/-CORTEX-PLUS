@@ -442,14 +442,14 @@ def _get_transcript_api(video_id: str) -> Optional[str]:
         for lang in TRANSCRIPT_LANGUAGES:
             try:
                 tl = api.fetch(video_id, languages=[lang])
-                text = " ".join([t.get("text", "") for t in list(tl)])
+                text = " ".join([t.text for t in list(tl)])
                 if text.strip():
                     return text[:MAX_TRANSCRIPT_CHARS]
             except Exception:
                 continue
         # автоматични субтитри без зададен език
         tl = api.fetch(video_id)
-        text = " ".join([t.get("text", "") for t in list(tl)])
+        text = " ".join([t.text for t in list(tl)])
         if text.strip():
             return text[:MAX_TRANSCRIPT_CHARS]
     except ImportError:
