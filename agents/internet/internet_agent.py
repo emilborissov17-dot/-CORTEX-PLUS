@@ -707,6 +707,11 @@ def _generate_smart_query(axis, snapshot_data):
 
 def _parse_llm_json(raw: str) -> dict:
     """Robust JSON parsing — опитва директно, markdown и regex."""
+    # Стрипване на reasoning блокове (<think>...</think> и Cerebras "done thinking.")
+    if 'done thinking.' in raw:
+        raw = raw.split('done thinking.')[-1].strip()
+    if '</think>' in raw:
+        raw = raw.split('</think>')[-1].strip()
     # Опит 1: директен parse
     try:
         return json.loads(raw.strip())
@@ -893,6 +898,10 @@ def run(axes=None):
             'Върни САМО JSON: {"axes": {"ИМЕ_ОС": {"urgency": "...", "summary": "...", "sentiment": "POSITIVE|NEUTRAL|NEGATIVE|CRITICAL"}}}'
         )
         response = _groq(prompt, max_tokens=2000)
+        if 'done thinking.' in response:
+            response = response.split('done thinking.')[-1].strip()
+        if '</think>' in response:
+            response = response.split('</think>')[-1].strip()
         analyses = _parse_llm_json(response).get("axes", {})
         for ax, analysis in analyses.items():
             if ax in all_results:
