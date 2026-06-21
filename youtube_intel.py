@@ -395,25 +395,45 @@ def get_transcript(video_id: str, title: str = "", description: str = "") -> dic
             method = "playwright_web"
             print(f"    [TRANSCRIPT] {video_id[:11]} OK ({len(transcript)} chars, playwright)")
 
-    # Опит 4: Whisper
+    # Опит 4: Groq Whisper API (yt-dlp → audio.mp3 → Groq endpoint, без локален модел)
     if not transcript:
         try:
-            import tempfile, subprocess, whisper, os
-            url = f"https://www.youtube.com/watch?v={video_id}"
-            with tempfile.TemporaryDirectory() as tmpdir:
-                audio_path = f"{tmpdir}/audio.mp3"
-                dl = subprocess.run(["yt-dlp", "-x", "--audio-format", "mp3", "-o", audio_path, url], capture_output=True, timeout=60)
-                if dl.returncode == 0 and os.path.exists(audio_path):
-                    model = whisper.load_model("tiny")
-                    result = model.transcribe(audio_path, fp16=False)
-                    del model
-                    import gc; gc.collect()
-                    transcript = result.get("text", "").strip() if isinstance(result, dict) else getattr(result, "text", "").strip()
-                    if transcript:
-                        method = "whisper"
-                        print(f"    [TRANSCRIPT] {video_id[:11]} 2705 whisper ({len(transcript)} chars)")
+            import sys, requests as _req
+            groq_key = os.environ.get("GROQ_API_KEY", "")
+            if not groq_key:
+                _env = pathlib.Path(__file__).resolve().parent / ".env"
+                if _env.exists():
+                    for _line in _env.read_text(encoding="utf-8").splitlines():
+                        if _line.startswith("GROQ_API_KEY="):
+                            groq_key = _line.split("=", 1)[1].strip()
+                            break
+            if groq_key:
+                _yt_url = f"https://www.youtube.com/watch?v={video_id}"
+                with tempfile.TemporaryDirectory() as tmpdir:
+                    audio_path = os.path.join(tmpdir, "audio.mp3")
+                    dl = subprocess.run(
+                        [sys.executable, "-m", "yt_dlp", "-x", "--audio-format", "mp3",
+                         "-o", audio_path, "--no-playlist", "--quiet", _yt_url],
+                        capture_output=True, timeout=90,
+                    )
+                    if dl.returncode == 0 and os.path.exists(audio_path):
+                        if os.path.getsize(audio_path) <= 24 * 1024 * 1024:
+                            with open(audio_path, "rb") as f:
+                                resp = _req.post(
+                                    "https://api.groq.com/openai/v1/audio/transcriptions",
+                                    headers={"Authorization": f"Bearer {groq_key}"},
+                                    files={"file": ("audio.mp3", f, "audio/mpeg")},
+                                    data={"model": "whisper-large-v3", "response_format": "json"},
+                                    timeout=(10, 120),
+                                )
+                            resp.raise_for_status()
+                            text = resp.json().get("text", "").strip()
+                            if text:
+                                transcript = text[:MAX_TRANSCRIPT_CHARS]
+                                method = "groq_whisper"
+                                print(f"    [TRANSCRIPT] {video_id[:11]} OK groq-whisper ({len(transcript)} chars)")
         except Exception as e:
-            print(f"    [TRANSCRIPT] {video_id[:11]} 26a0Fe0f whisper failed: {e}")
+            print(f"    [TRANSCRIPT] {video_id[:11]} groq-whisper failed: {e}")
 
     # Fallback: description
     if not transcript and description:
