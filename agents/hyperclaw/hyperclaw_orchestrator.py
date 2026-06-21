@@ -133,11 +133,28 @@ def main() -> None:
         print(f"[HYPERCLAW] MerkleMemory essence loaded ({len(merkle_essence)} chars)")
     prompt         = _build_prompt(context, axes_spec, today, merkle_essence)
 
+    plan_md = None
     try:
-        from core.groq_backend import call_groq
+        from core.groq_backend import call_groq, AllBackendsFailedError
         plan_md = call_groq(prompt, max_tokens=4000)
+    except AllBackendsFailedError as e:
+        print(f"[HYPERCLAW] AllBackendsFailedError — всички backends изчерпани: {e}")
+        _snap_dir = BASE / "snapshots" / "hyperclaw"
+        _snap_dir.mkdir(parents=True, exist_ok=True)
+        (_snap_dir / "hyperclaw_snapshot_latest.json").write_text(
+            json.dumps({
+                "axis": "HYPERCLAW_PLAN",
+                "needs_reanalysis": True,
+                "error": str(e)[:200],
+                "snapshot_timestamp": _utc_now(),
+            }, ensure_ascii=False, indent=2),
+            encoding="utf-8",
+        )
     except Exception as e:
         print(f"[HYPERCLAW] LLM error: {e}")
+
+    if not plan_md:
+        print("[HYPERCLAW] пропускам запис — няма план (всички LLM backends неуспешни)")
         return
 
     out_path = PLAN_DIR / f"plan-{today}.md"
