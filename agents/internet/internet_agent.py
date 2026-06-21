@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+﻿#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # internet_agent.py -- CORTEX++_QWEN Internet Intelligence Agent
 # Събира данни от RSS, GDELT, arXiv, GitHub, Podcasts и YouTube (с Whisper).
@@ -26,6 +26,7 @@ NEWS_DIR = BASE_DIR / 'news'
 NEWS_DIR.mkdir(exist_ok=True)
 
 YOUTUBE_API_KEY      = os.environ.get("YOUTUBE_API_KEY", "")
+_YT_QUOTA_EXHAUSTED  = False   # True след първи 429 — важи за целия цикъл
 MAX_TRANSCRIPT_CHARS = 3000
 TRANSCRIPT_LANGUAGES = ["en", "bg", "de", "fr", "es"]
 TRANSCRIPT_TIMEOUT_SEC = 60
@@ -391,6 +392,49 @@ def _yt_search_html(query: str, max_results: int = 10) -> list[dict]:
     except Exception:
         return []
 
+def _yt_search_playwright(query: str, max_results: int = 5) -> list[dict]:
+    """YouTube search чрез Playwright Chromium — заобикаля IP block и API quota."""
+    import random
+    pause = random.uniform(2.0, 4.0)
+    print(f"    [YT-PW] пауза {pause:.1f}s → '{query}'")
+    time.sleep(pause)
+
+    encoded = urllib.parse.quote(query)
+    url = f"https://www.youtube.com/results?search_query={encoded}"
+
+    try:
+        from playwright.sync_api import sync_playwright, TimeoutError as _PWTimeout
+    except ImportError:
+        print("    [YT-PW] playwright не е инсталиран")
+        return []
+
+    try:
+        with sync_playwright() as p:
+            browser = p.chromium.launch(headless=True, args=["--no-sandbox"])
+            page = browser.new_page()
+            page.set_extra_http_headers({"Accept-Language": "en-US,en;q=0.9"})
+            page.goto(url, timeout=30_000, wait_until="domcontentloaded")
+            try:
+                page.wait_for_load_state("networkidle", timeout=10_000)
+            except _PWTimeout:
+                pass
+            html = page.content()
+            browser.close()
+
+        video_ids = list(dict.fromkeys(re.findall(r'"videoId":"([a-zA-Z0-9_-]{11})"', html)))
+        results = [
+            {"video_id": vid, "title": f"YouTube:{vid}",
+             "url": f"https://www.youtube.com/watch?v={vid}",
+             "description": "", "channel": "", "published": ""}
+            for vid in video_ids[:max_results]
+        ]
+        print(f"    [YT-PW] '{query}' → {len(results)} видеа")
+        return results
+    except Exception as e:
+        print(f"    [YT-PW] грешка: {e}")
+        return []
+
+
 def _yt_search_api(query: str, max_results: int = 3) -> list[dict]:
     """YouTube Data API v3 — само ако е зададен YOUTUBE_API_KEY."""
     if not YOUTUBE_API_KEY:
@@ -427,12 +471,12 @@ def _yt_search_api(query: str, max_results: int = 3) -> list[dict]:
         return []
 
 def _search_youtube(query: str, max_results: int = 5) -> list[dict]:
-    """Waterfall: YouTube API → HTML scrape."""
-    if YOUTUBE_API_KEY:
+    """Waterfall: YouTube API -> Playwright (HTML scrape e IP-blocked)."""
+    if YOUTUBE_API_KEY and not _YT_QUOTA_EXHAUSTED:
         results = _yt_search_api(query, max_results)
         if results:
             return results
-    return _yt_search_html(query, max_results)
+    return _yt_search_playwright(query, max_results)
 
 def _get_transcript_api(video_id: str) -> Optional[str]:
     """Опит 1: youtube-transcript-api (официални субтитри)."""
