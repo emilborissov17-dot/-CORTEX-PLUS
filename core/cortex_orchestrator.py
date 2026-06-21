@@ -160,6 +160,10 @@ def assess_attention(state):
     )
     try:
         response = call_groq(prompt, max_tokens=600)
+        if 'done thinking.' in response:
+            response = response.split('done thinking.')[-1].strip()
+        if '</think>' in response:
+            response = response.split('</think>')[-1].strip()
         if "```json" in response:
             response = response.split("```json")[1].split("```")[0]
         elif "```" in response:
@@ -204,6 +208,10 @@ def generate_strategic_plan(attention, state):
 """
     try:
         response = call_groq(prompt, max_tokens=1500)
+        if 'done thinking.' in response:
+            response = response.split('done thinking.')[-1].strip()
+        if '</think>' in response:
+            response = response.split('</think>')[-1].strip()
         if "```json" in response:
             response = response.split("```json")[1].split("```")[0]
         elif "```" in response:
