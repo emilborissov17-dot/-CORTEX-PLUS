@@ -285,7 +285,9 @@ def _measure_progress(initiative: dict, indicators: dict) -> dict:
         try:
             sys.path.insert(0, str(BASE))
             from hypothesis_generator import generate_causal_hypothesis
-            causal = generate_causal_hypothesis(
+            import concurrent.futures as _cf
+            _ex = _cf.ThreadPoolExecutor(max_workers=1)
+            _fut = _ex.submit(generate_causal_hypothesis,
                 metric_label=label,
                 indicator_path=dot_path,
                 baseline_value=baseline_value,
@@ -294,6 +296,8 @@ def _measure_progress(initiative: dict, indicators: dict) -> dict:
                 problem_context=initiative.get("problem", ""),
                 target_pct=target_pct,
             )
+            _ex.shutdown(wait=False)
+            causal = _fut.result(timeout=90)
             if causal.get("verification_status") != "REJECTED":
                 result["progress_explanation"] = {
                     "hypothesis":      causal.get("hypothesis_text", ""),

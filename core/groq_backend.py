@@ -157,7 +157,7 @@ def _call_groq(prompt: str, max_tokens: int) -> str:
         "max_tokens": max_tokens,
     }
     time.sleep(_SLEEP_SECS)  # adaptive: set by body_scanner directives (default 2s)
-    r = requests.post(GROQ_API_URL, headers=headers, json=payload, timeout=60)
+    r = requests.post(GROQ_API_URL, headers=headers, json=payload, timeout=(10, 60))
 
     if r.status_code == 429:
         _set_cooldown("groq")
@@ -186,7 +186,7 @@ def _call_cerebras(prompt: str, max_tokens: int) -> str:
         "max_tokens": max_tokens,
     }
     time.sleep(_SLEEP_SECS)
-    r = requests.post(CEREBRAS_API_URL, headers=headers, json=payload, timeout=60)
+    r = requests.post(CEREBRAS_API_URL, headers=headers, json=payload, timeout=(10, 60))
 
     if r.status_code == 429:
         _set_cooldown("cerebras")
@@ -223,7 +223,7 @@ def _call_openrouter(prompt: str, max_tokens: int) -> str:
         "max_tokens": max_tokens,
     }
     time.sleep(_SLEEP_SECS)
-    r = requests.post(OPENROUTER_API_URL, headers=headers, json=payload, timeout=90)
+    r = requests.post(OPENROUTER_API_URL, headers=headers, json=payload, timeout=(10, 90))
 
     if r.status_code == 429:
         _set_cooldown("openrouter")
@@ -248,7 +248,7 @@ def _call_gemini(prompt: str, max_tokens: int) -> str:
         "generationConfig": {"maxOutputTokens": max_tokens},
     }
     time.sleep(_SLEEP_SECS)
-    r = requests.post(url, json=payload, timeout=60)
+    r = requests.post(url, json=payload, timeout=(10, 60))
 
     if r.status_code == 429:
         _set_cooldown("gemini")
@@ -278,7 +278,7 @@ def _call_ollama(prompt: str, max_tokens: int) -> str:
         "options": {"num_predict": max_tokens, "num_ctx": 2048},
         "keep_alive": 0,
     }
-    r = requests.post(OLLAMA_URL, json=payload, timeout=300)
+    r = requests.post(OLLAMA_URL, json=payload, timeout=(10, 120))
     r.raise_for_status()
     content = r.json()["message"]["content"]
     # Strip <think>...</think> блок (qwen3 reasoning mode)
