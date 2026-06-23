@@ -242,7 +242,7 @@ def run():
             "computed_at": datetime.now(timezone.utc).isoformat(),
         }
 
-        icon = "🟢" if level == "HIGH" else "🟡" if level == "MEDIUM" else "🔴"
+        icon = "[OK]" if level == "HIGH" else "[~~]" if level == "MEDIUM" else "[!!]"
         fallback_tag = " [FALLBACK]" if source == "severity_fallback" else ""
         print(f"{icon} {axis}: {level}{fallback_tag}")
         for d in details:
@@ -256,13 +256,13 @@ def run():
                 "real_level": level,
                 "details": details,
             })
-            print(f"   ⚠️  КОРЕКЦИЯ: LLM казва {old_level}, данните казват {level}")
+            print(f"   [CORR] КОРЕКЦИЯ: LLM казва {old_level}, данните казват {level}")
 
         if prev_auto and prev_auto != level:
             score_map = {"LOW": 0, "MEDIUM": 1, "HIGH": 2}
             if score_map.get(level, 1) < score_map.get(prev_auto, 1):
                 alerts.append(f"{axis}: {prev_auto} → {level} ВЛОШАВАНЕ")
-                print(f"   🚨 ALERT: {prev_auto} → {level}")
+                print(f"   [ALERT] {prev_auto} -> {level}")
         print()
 
     LEVELS_PATH.write_text(

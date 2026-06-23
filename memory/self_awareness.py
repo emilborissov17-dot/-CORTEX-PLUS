@@ -106,13 +106,21 @@ class ResourceMonitor:
     @staticmethod
     def current() -> Dict:
         process = psutil.Process()
+        try:
+            open_files = len(process.open_files())
+        except (psutil.AccessDenied, OSError):
+            open_files = -1
+        try:
+            connections = len(process.net_connections())
+        except (psutil.AccessDenied, OSError):
+            connections = -1
         return {
             "cpu_percent": process.cpu_percent(interval=0.1),
             "memory_percent": process.memory_percent(),
             "memory_rss_gb": round(process.memory_info().rss / (1024**3), 3),
-            "open_files": len(process.open_files()),
+            "open_files": open_files,
             "threads": process.num_threads(),
-            "connections": len(process.net_connections())
+            "connections": connections,
         }
 
 class CapabilityAssessor:
