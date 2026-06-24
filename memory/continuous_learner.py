@@ -34,6 +34,10 @@ def before_llm_call(axis: str, question: str = "") -> str:
     """
     Инжектира акумулираното знание в LLM prompt ПРЕДИ call.
     REDESIGN: Включва проблеми, решения и резултати — не само score trends.
+    NOTE: This is retrieval-augmented memory (RAG), not machine learning.
+    Queries past insights from ChromaDB/JSON files and injects them as context
+    into the LLM prompt. Does NOT train models, update weights, or perform
+    gradient descent.
     """
     parts = []
 
@@ -205,6 +209,10 @@ def learn_from_cycle(cycle_data: dict = None) -> dict:
     Извиква се в края на fast_cycle_runner.
     REDESIGN: Акумулира проблеми и решения от web_intel.
     Score приоритет: web_intel analysis > snapshot > level_map (само за KB compat).
+    NOTE: This is retrieval-augmented memory (RAG), not machine learning.
+    Writes textual summaries to knowledge_base.json, problem_solution_db.json,
+    and ChromaDB. These are retrieved by before_llm_call() in future cycles and
+    injected into LLM prompts as context. No model weights are updated.
     """
     master_path = BASE_DIR / "snapshots" / "master" / "master_snapshot_latest.json"
     master      = _load(master_path, {})
