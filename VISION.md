@@ -1,4 +1,4 @@
-# CORTEX++ — Long-term Vision
+# CORTEX++  Long-term Vision
 
 This document describes the long-term civilizational vision behind CORTEX++. It is the project's direction, not a claim about the system's current capabilities.
 
