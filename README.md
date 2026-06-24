@@ -39,6 +39,9 @@ development. Concretely:
   actively closing paths by which the system could bypass its own guardian.
 - The effect-measurement metric for self-applied changes is being reworked to
   measure impact honestly across cycles rather than within a single cycle.
+- The system's memory is retrieval-based (RAG): it accumulates textual insights
+  from past cycles and feeds them into future LLM prompts as context. It does
+  not perform machine-learning training — no model weights are updated.
 
 We document what works and what doesn't, deliberately. Epistemic honesty —
 refusing to treat the model's own claims as evidence — is a design principle,
