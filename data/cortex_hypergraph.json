@@ -1,78 +1,79 @@
 {
-  "generated_at": "2026-06-20T12:56:57.744572+00:00",
+  "generated_at": "2026-06-21T13:50:31.419174+00:00",
   "source_file": "fast_cycle_runner.py",
   "agents_order": [
     {
+      "agent": "openclaw_agent",
+      "line": 628
+    },
+    {
       "agent": "internet_agent",
-      "line": 567
+      "line": 633
     },
     {
       "agent": "civilization_snapshots_agent",
-      "line": 571
+      "line": 637
     },
     {
       "agent": "planet_snapshots_agent",
-      "line": 575
+      "line": 641
     },
     {
       "agent": "human_snapshots_agent",
-      "line": 579
+      "line": 645
     },
     {
       "agent": "cosmos_snapshots_agent",
-      "line": 583
+      "line": 649
     },
     {
       "agent": "planetary_potential_agent",
-      "line": 587
+      "line": 653
     },
     {
       "agent": "energy_review_agent",
-      "line": 591
+      "line": 657
     },
     {
       "agent": "self_awareness_agent",
-      "line": 598
+      "line": 664
     },
     {
       "agent": "body_scanner",
-      "line": 650
+      "line": 717
     },
     {
       "agent": "growth_planner",
-      "line": 654
-    },
-    {
-      "agent": "openclaw_agent",
-      "line": 658
+      "line": 721
     },
     {
       "agent": "hyperclaw_orchestrator",
-      "line": 665
+      "line": 725
     },
     {
       "agent": "self_observer",
-      "line": 703
+      "line": 763
     },
     {
       "agent": "self_modifier",
-      "line": 707
+      "line": 767
     },
     {
       "agent": "execute_patches",
-      "line": 711
+      "line": 771
     },
     {
       "agent": "feedback_loop",
-      "line": 715
+      "line": 775
     },
     {
       "agent": "daily_analysis",
-      "line": 727
+      "line": 787
     }
   ],
   "node_degree": {
-    "internet_agent": 1,
+    "openclaw_agent": 1,
+    "internet_agent": 2,
     "civilization_snapshots_agent": 2,
     "planet_snapshots_agent": 2,
     "human_snapshots_agent": 2,
@@ -82,7 +83,6 @@
     "self_awareness_agent": 2,
     "body_scanner": 2,
     "growth_planner": 2,
-    "openclaw_agent": 2,
     "hyperclaw_orchestrator": 2,
     "self_observer": 2,
     "self_modifier": 2,
@@ -96,119 +96,119 @@
     "climate_patch.py",
     "fast_cycle_runner"
   ],
-  "triples_count": 48,
+  "triples_count": 54,
   "triples": [
+    {
+      "subject": "openclaw_agent",
+      "predicate": "follows",
+      "object": "internet_agent",
+      "subject_line": 628,
+      "object_line": 633
+    },
     {
       "subject": "internet_agent",
       "predicate": "follows",
       "object": "civilization_snapshots_agent",
-      "subject_line": 567,
-      "object_line": 571
+      "subject_line": 633,
+      "object_line": 637
     },
     {
       "subject": "civilization_snapshots_agent",
       "predicate": "follows",
       "object": "planet_snapshots_agent",
-      "subject_line": 571,
-      "object_line": 575
+      "subject_line": 637,
+      "object_line": 641
     },
     {
       "subject": "planet_snapshots_agent",
       "predicate": "follows",
       "object": "human_snapshots_agent",
-      "subject_line": 575,
-      "object_line": 579
+      "subject_line": 641,
+      "object_line": 645
     },
     {
       "subject": "human_snapshots_agent",
       "predicate": "follows",
       "object": "cosmos_snapshots_agent",
-      "subject_line": 579,
-      "object_line": 583
+      "subject_line": 645,
+      "object_line": 649
     },
     {
       "subject": "cosmos_snapshots_agent",
       "predicate": "follows",
       "object": "planetary_potential_agent",
-      "subject_line": 583,
-      "object_line": 587
+      "subject_line": 649,
+      "object_line": 653
     },
     {
       "subject": "planetary_potential_agent",
       "predicate": "follows",
       "object": "energy_review_agent",
-      "subject_line": 587,
-      "object_line": 591
+      "subject_line": 653,
+      "object_line": 657
     },
     {
       "subject": "energy_review_agent",
       "predicate": "follows",
       "object": "self_awareness_agent",
-      "subject_line": 591,
-      "object_line": 598
+      "subject_line": 657,
+      "object_line": 664
     },
     {
       "subject": "self_awareness_agent",
       "predicate": "follows",
       "object": "body_scanner",
-      "subject_line": 598,
-      "object_line": 650
+      "subject_line": 664,
+      "object_line": 717
     },
     {
       "subject": "body_scanner",
       "predicate": "follows",
       "object": "growth_planner",
-      "subject_line": 650,
-      "object_line": 654
+      "subject_line": 717,
+      "object_line": 721
     },
     {
       "subject": "growth_planner",
       "predicate": "follows",
-      "object": "openclaw_agent",
-      "subject_line": 654,
-      "object_line": 658
-    },
-    {
-      "subject": "openclaw_agent",
-      "predicate": "follows",
       "object": "hyperclaw_orchestrator",
-      "subject_line": 658,
-      "object_line": 665
+      "subject_line": 721,
+      "object_line": 725
     },
     {
       "subject": "hyperclaw_orchestrator",
       "predicate": "follows",
       "object": "self_observer",
-      "subject_line": 665,
-      "object_line": 703
+      "subject_line": 725,
+      "object_line": 763
     },
     {
       "subject": "self_observer",
       "predicate": "follows",
       "object": "self_modifier",
-      "subject_line": 703,
-      "object_line": 707
+      "subject_line": 763,
+      "object_line": 767
     },
     {
       "subject": "self_modifier",
       "predicate": "follows",
       "object": "execute_patches",
-      "subject_line": 707,
-      "object_line": 711
+      "subject_line": 767,
+      "object_line": 771
     },
     {
       "subject": "execute_patches",
       "predicate": "follows",
       "object": "feedback_loop",
-      "subject_line": 711,
-      "object_line": 715
+      "subject_line": 771,
+      "object_line": 775
     },
     {
       "subject": "feedback_loop",
       "predicate": "follows",
       "object": "daily_analysis",
-      "subject_line": 715,
-      "object_line": 727
+      "subject_line": 775,
+      "object_line": 787
     },
     {
       "subject": "fast_cycle_runner",
@@ -430,19 +430,62 @@
       "goal_score": 0.5395
     },
     {
+      "subject": "OPENCLAW",
+      "predicate": "writes",
+      "object": "cortex_memory/archive/cycle_000007/decisions.json",
+      "cycle": "cycle_000007",
+      "action": "Update fast_cycle_runner.py to include missing agents"
+    },
+    {
+      "subject": "OPENCLAW",
+      "predicate": "writes",
+      "object": "cortex_memory/archive/cycle_000007/decisions.json",
+      "cycle": "cycle_000007",
+      "action": "Populate SNAPSHOTS STATE with actual data"
+    },
+    {
+      "subject": "OPENCLAW",
+      "predicate": "writes",
+      "object": "cortex_memory/archive/cycle_000007/decisions.json",
+      "cycle": "cycle_000007",
+      "action": "Update fast_cycle_runner.py to include missing agents"
+    },
+    {
       "subject": "fast_cycle_runner",
       "predicate": "writes",
       "object": "cortex_memory/archive/cycle_000007/decisions.json",
       "cycle": "cycle_000007",
-      "action": "observe"
+      "action": "Разработване на платформа за гражданско участие и онлайнPETИЦИИ, интегрирана с данни от правителствени институции"
     },
     {
-      "subject": "execute_patches",
+      "subject": "fast_cycle_runner",
+      "predicate": "writes",
+      "object": "cortex_memory/archive/cycle_000007/decisions.json",
+      "cycle": "cycle_000007",
+      "action": "Създаване на интегрирана система за управление на инфраструктурни проекти и ресурси, базирана на данни от сензори и граждански отчети"
+    },
+    {
+      "subject": "fast_cycle_runner",
+      "predicate": "writes",
+      "object": "cortex_memory/archive/cycle_000007/decisions.json",
+      "cycle": "cycle_000007",
+      "action": "Разработване на модел за прогноза на неравенство и бедност, базиран на исторически данни и социални индикатори"
+    },
+    {
+      "subject": "climate_patch.py",
       "predicate": "writes",
       "object": "cortex_memory/archive/cycle_000007/results.json",
       "cycle": "cycle_000007",
-      "verdict": null,
-      "goal_score": 0.85
+      "verdict": "NEUTRAL",
+      "goal_score": 0.5395
+    },
+    {
+      "subject": "broken_test_patch.py",
+      "predicate": "writes",
+      "object": "cortex_memory/archive/cycle_000007/results.json",
+      "cycle": "cycle_000007",
+      "verdict": "NEUTRAL",
+      "goal_score": 0.5395
     }
   ]
 }

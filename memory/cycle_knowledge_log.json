@@ -1,35 +1,5 @@
 [
   {
-    "timestamp": "2026-05-01T09:35:06.226751+00:00",
-    "axes_updated": 21,
-    "total_axes_in_kb": 22,
-    "axes_with_trend": 21
-  },
-  {
-    "timestamp": "2026-05-01T09:35:14.162598+00:00",
-    "axes_updated": 21,
-    "total_axes_in_kb": 22,
-    "axes_with_trend": 21
-  },
-  {
-    "timestamp": "2026-05-01T09:35:21.897401+00:00",
-    "axes_updated": 21,
-    "total_axes_in_kb": 22,
-    "axes_with_trend": 21
-  },
-  {
-    "timestamp": "2026-05-01T09:35:31.178292+00:00",
-    "axes_updated": 21,
-    "total_axes_in_kb": 22,
-    "axes_with_trend": 21
-  },
-  {
-    "timestamp": "2026-05-01T09:40:06.401759+00:00",
-    "axes_updated": 19,
-    "total_axes_in_kb": 22,
-    "axes_with_trend": 21
-  },
-  {
     "timestamp": "2026-05-01T12:11:00.363712+00:00",
     "axes_updated": 25,
     "total_axes_in_kb": 25,
@@ -767,5 +737,45 @@
     "problems_tracked": 520,
     "web_intel_problems": 25,
     "source": "fast_cycle_runner"
+  },
+  {
+    "timestamp": "2026-06-21T12:58:06.769696+00:00",
+    "axes_updated": 23,
+    "total_axes_in_kb": 28,
+    "problems_tracked": 520,
+    "web_intel_problems": 23,
+    "source": "web_intelligence_agent"
+  },
+  {
+    "timestamp": "2026-06-21T13:57:03.307007+00:00",
+    "axes_updated": 23,
+    "total_axes_in_kb": 28,
+    "problems_tracked": 520,
+    "web_intel_problems": 23,
+    "source": "self_modifier"
+  },
+  {
+    "timestamp": "2026-06-21T13:57:09.738368+00:00",
+    "axes_updated": 23,
+    "total_axes_in_kb": 28,
+    "problems_tracked": 520,
+    "web_intel_problems": 23,
+    "source": "execute_patches"
+  },
+  {
+    "timestamp": "2026-06-21T13:57:38.890129+00:00",
+    "axes_updated": 23,
+    "total_axes_in_kb": 28,
+    "problems_tracked": 520,
+    "web_intel_problems": 23,
+    "source": "fast_cycle_runner"
+  },
+  {
+    "timestamp": "2026-06-21T19:51:40.636506+00:00",
+    "axes_updated": 20,
+    "total_axes_in_kb": 28,
+    "problems_tracked": 520,
+    "web_intel_problems": 18,
+    "source": "web_intelligence_agent"
   }
 ]

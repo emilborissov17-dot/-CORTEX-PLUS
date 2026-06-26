@@ -2,153 +2,148 @@
   "SELF_IMPROVEMENT": {
     "attempted_solutions": [
       {
-        "date": "2026-05-07",
-        "problem": "Повишено ниво на непрекъснато движение и неразрешен проблем със стари пътища, които не са поддържани",
+        "date": "2026-05-08",
+        "problem": "Недостатък в правителствената гъвкавост и устойчивост на държавата във възстановяването на демокраци",
         "action": "attempted patch",
-        "result": "Runtime грешка: ",
+        "result": "Синтаксис: Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    im",
         "status": "FAILED"
       },
       {
         "date": "2026-05-08",
-        "problem": "Агентът липсва ключови данни за измерване на биодIVERSITЕТА и екосистемното състояние на планетата",
-        "action": "Код написан: agents/core/ecosystems_biodiversity_review_patch.py",
-        "result": "score: 53.42→53.42",
+        "problem": "Отсутствие на точни данни за неравенство и бедност",
+        "action": "attempted patch",
+        "result": "Синтаксис: Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    im",
+        "status": "FAILED"
+      },
+      {
+        "date": "2026-05-08",
+        "problem": "Повишено ниво на непрекъснато движение и неразрешен проблем със стари пътища, които не са поддържани",
+        "action": "attempted patch",
+        "result": "Синтаксис: Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    im",
+        "status": "FAILED"
+      },
+      {
+        "date": "2026-06-18",
+        "problem": "Lack of integration between agents and fast_cycle_runner.py",
+        "action": "attempted patch",
+        "result": "Groq грешка: Всички LLM backends неуспешни. Последна грешка: None",
+        "status": "FAILED"
+      },
+      {
+        "date": "2026-06-18",
+        "problem": "To enable accurate system monitoring",
+        "action": "attempted patch",
+        "result": "Groq грешка: Всички LLM backends неуспешни. Последна грешка: None",
+        "status": "FAILED"
+      },
+      {
+        "date": "2026-06-18",
+        "problem": "To enable full system functionality",
+        "action": "attempted patch",
+        "result": "Groq грешка: Всички LLM backends неуспешни. Последна грешка: None",
+        "status": "FAILED"
+      },
+      {
+        "date": "2026-06-18",
+        "problem": "Недостатък в правителствената гъвкавост и устойчивост на държавата във възстановяването на демокраци",
+        "action": "attempted patch",
+        "result": "Groq грешка: Всички LLM backends неуспешни. Последна грешка: None",
+        "status": "FAILED"
+      },
+      {
+        "date": "2026-06-18",
+        "problem": "Отсутствие на точни данни за неравенство и бедност",
+        "action": "attempted patch",
+        "result": "Groq грешка: Всички LLM backends неуспешни. Последна грешка: None",
+        "status": "FAILED"
+      },
+      {
+        "date": "2026-06-19",
+        "problem": "Lack of integration between agents and fast_cycle_runner.py",
+        "action": "attempted patch",
+        "result": "Groq грешка: Всички LLM backends неуспешни. Последна грешка: None",
+        "status": "FAILED"
+      },
+      {
+        "date": "2026-06-19",
+        "problem": "To enable accurate system monitoring",
+        "action": "attempted patch",
+        "result": "Groq грешка: Всички LLM backends неуспешни. Последна грешка: None",
+        "status": "FAILED"
+      },
+      {
+        "date": "2026-06-19",
+        "problem": "To enable full system functionality",
+        "action": "attempted patch",
+        "result": "Groq грешка: Всички LLM backends неуспешни. Последна грешка: None",
+        "status": "FAILED"
+      },
+      {
+        "date": "2026-06-19",
+        "problem": "Недостатък в правителствената гъвкавост и устойчивост на държавата във възстановяването на демокраци",
+        "action": "attempted patch",
+        "result": "Groq грешка: Всички LLM backends неуспешни. Последна грешка: None",
+        "status": "FAILED"
+      },
+      {
+        "date": "2026-06-19",
+        "problem": "Отсутствие на точни данни за неравенство и бедност",
+        "action": "attempted patch",
+        "result": "Groq грешка: Всички LLM backends неуспешни. Последна грешка: None",
+        "status": "FAILED"
+      },
+      {
+        "date": "2026-06-20",
+        "problem": "Lack of integration between agents and fast_cycle_runner.py",
+        "action": "attempted patch",
+        "result": "Groq грешка: Всички LLM backends неуспешни. Последна грешка: None",
+        "status": "FAILED"
+      },
+      {
+        "date": "2026-06-20",
+        "problem": "To enable accurate system monitoring",
+        "action": "attempted patch",
+        "result": "Groq грешка: Всички LLM backends неуспешни. Последна грешка: None",
+        "status": "FAILED"
+      },
+      {
+        "date": "2026-06-20",
+        "problem": "To enable full system functionality",
+        "action": "attempted patch",
+        "result": "Groq грешка: Всички LLM backends неуспешни. Последна грешка: None",
+        "status": "FAILED"
+      },
+      {
+        "date": "2026-06-20",
+        "problem": "Повишено ниво на непрекъснато движение и неразрешен проблем със стари пътища, които не са поддържани",
+        "action": "attempted patch",
+        "result": "Groq грешка: Всички LLM backends неуспешни. Последна грешка: None",
+        "status": "FAILED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Water scarcity management",
+        "action": "Код написан: agents/core/general_patch.py",
+        "result": "score: 51.84→51.84",
         "status": "SUCCESS"
       },
       {
-        "date": "2026-05-08",
-        "problem": "Агентът липсва ключови датуми и реални данни за биодиверзитета, които са необходими за точна оценка ",
-        "action": "Код написан: agents/core/ecosystems_biodiversity_review_patch.py",
-        "result": "score: 53.42→53.42",
-        "status": "SUCCESS"
-      },
-      {
-        "date": "2026-05-08",
-        "problem": "Недостатък в правителствената гъвкавост и устойчивост на държавата във възстановяването на демокраци",
+        "date": "2026-06-21",
+        "problem": "Address water scarcity gap",
         "action": "attempted patch",
-        "result": "Синтаксис: Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    im",
+        "result": "Синтаксис: expected an indented block after 'if' statement on line 64 (<unknown>, line 64)",
         "status": "FAILED"
       },
       {
-        "date": "2026-05-08",
-        "problem": "Отсутствие на точни данни за неравенство и бедност",
+        "date": "2026-06-21",
+        "problem": "Align system goals with mission",
         "action": "attempted patch",
-        "result": "Синтаксис: Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    im",
-        "status": "FAILED"
-      },
-      {
-        "date": "2026-05-08",
-        "problem": "Повишено ниво на непрекъснато движение и неразрешен проблем със стари пътища, които не са поддържани",
-        "action": "attempted patch",
-        "result": "Синтаксис: Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    im",
-        "status": "FAILED"
-      },
-      {
-        "date": "2026-06-18",
-        "problem": "Lack of integration between agents and fast_cycle_runner.py",
-        "action": "attempted patch",
-        "result": "Groq грешка: Всички LLM backends неуспешни. Последна грешка: None",
-        "status": "FAILED"
-      },
-      {
-        "date": "2026-06-18",
-        "problem": "To enable accurate system monitoring",
-        "action": "attempted patch",
-        "result": "Groq грешка: Всички LLM backends неуспешни. Последна грешка: None",
-        "status": "FAILED"
-      },
-      {
-        "date": "2026-06-18",
-        "problem": "To enable full system functionality",
-        "action": "attempted patch",
-        "result": "Groq грешка: Всички LLM backends неуспешни. Последна грешка: None",
-        "status": "FAILED"
-      },
-      {
-        "date": "2026-06-18",
-        "problem": "Недостатък в правителствената гъвкавост и устойчивост на държавата във възстановяването на демокраци",
-        "action": "attempted patch",
-        "result": "Groq грешка: Всички LLM backends неуспешни. Последна грешка: None",
-        "status": "FAILED"
-      },
-      {
-        "date": "2026-06-18",
-        "problem": "Отсутствие на точни данни за неравенство и бедност",
-        "action": "attempted patch",
-        "result": "Groq грешка: Всички LLM backends неуспешни. Последна грешка: None",
-        "status": "FAILED"
-      },
-      {
-        "date": "2026-06-19",
-        "problem": "Lack of integration between agents and fast_cycle_runner.py",
-        "action": "attempted patch",
-        "result": "Groq грешка: Всички LLM backends неуспешни. Последна грешка: None",
-        "status": "FAILED"
-      },
-      {
-        "date": "2026-06-19",
-        "problem": "To enable accurate system monitoring",
-        "action": "attempted patch",
-        "result": "Groq грешка: Всички LLM backends неуспешни. Последна грешка: None",
-        "status": "FAILED"
-      },
-      {
-        "date": "2026-06-19",
-        "problem": "To enable full system functionality",
-        "action": "attempted patch",
-        "result": "Groq грешка: Всички LLM backends неуспешни. Последна грешка: None",
-        "status": "FAILED"
-      },
-      {
-        "date": "2026-06-19",
-        "problem": "Недостатък в правителствената гъвкавост и устойчивост на държавата във възстановяването на демокраци",
-        "action": "attempted patch",
-        "result": "Groq грешка: Всички LLM backends неуспешни. Последна грешка: None",
-        "status": "FAILED"
-      },
-      {
-        "date": "2026-06-19",
-        "problem": "Отсутствие на точни данни за неравенство и бедност",
-        "action": "attempted patch",
-        "result": "Groq грешка: Всички LLM backends неуспешни. Последна грешка: None",
-        "status": "FAILED"
-      },
-      {
-        "date": "2026-06-20",
-        "problem": "Lack of integration between agents and fast_cycle_runner.py",
-        "action": "attempted patch",
-        "result": "Groq грешка: Всички LLM backends неуспешни. Последна грешка: None",
-        "status": "FAILED"
-      },
-      {
-        "date": "2026-06-20",
-        "problem": "To enable accurate system monitoring",
-        "action": "attempted patch",
-        "result": "Groq грешка: Всички LLM backends неуспешни. Последна грешка: None",
-        "status": "FAILED"
-      },
-      {
-        "date": "2026-06-20",
-        "problem": "To enable full system functionality",
-        "action": "attempted patch",
-        "result": "Groq грешка: Всички LLM backends неуспешни. Последна грешка: None",
-        "status": "FAILED"
-      },
-      {
-        "date": "2026-06-20",
-        "problem": "Повишено ниво на непрекъснато движение и неразрешен проблем със стари пътища, които не са поддържани",
-        "action": "attempted patch",
-        "result": "Groq грешка: Всички LLM backends неуспешни. Последна грешка: None",
+        "result": "Pattern guard: Забранен pattern: 'SemanticMemory('",
         "status": "FAILED"
       }
     ],
     "known_root_causes": [],
     "solved_problems": [
-      {
-        "date": "2026-05-04",
-        "problem": "The climate global risk review (CLIMATE_GLOBAL_RISK_REVIEW) is in critical condition, with insuffici",
-        "how": "Код написан: agents/core/climate_patch.py"
-      },
       {
         "date": "2026-05-04",
         "problem": "The system has limited capacity to autonomously learn from climate risk data and adapt its strategie",
@@ -193,47 +188,17 @@
         "date": "2026-05-08",
         "problem": "Агентът липсва ключови датуми и реални данни за биодиверзитета, които са необходими за точна оценка ",
         "how": "Код написан: agents/core/ecosystems_biodiversity_review_patch.py"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Water scarcity management",
+        "how": "Код написан: agents/core/general_patch.py"
       }
     ]
   },
   "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL": {
     "attempted_solutions": [
       {
-        "date": "2026-05-17",
-        "problem": "Политически затворници и ограничения на правата на гражданите се увеличават в няколко ключови страни, включително Чад, Китай, Венесуела и Хърватия.",
-        "action": "Организиране на международна кампания за поддръжка на политическите затворници и защита на правата на гражданите в засегнатите страни",
-        "result": "Предложено: Повече от 1 милион подписа за кампанията в рамките на 6 месеца",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-18",
-        "problem": "Human rights are being threatened and undermined in various countries, including the United States, Canada, Uzbekistan, and Georgia, with issues such ",
-        "action": "Strengthen international cooperation and solidarity to promote human rights and hold governments accountable",
-        "result": "Предложено: Increase the number of countries that adopt and implement robust human rights standards and mechanisms",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-18",
-        "problem": "Human rights are being threatened and undermined in various countries, including the United States, Canada, Uzbekistan, and Georgia, with issues such ",
-        "action": "Strengthen international cooperation and solidarity to promote human rights and hold governments accountable",
-        "result": "Предложено: Increase the number of countries that adopt and implement robust human rights standards and mechanisms",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-19",
-        "problem": "Infringement on human rights and civil liberties, particularly for vulnerable groups such as child refugees and political prisoners",
-        "action": "Establish independent investigations into human rights abuses and ensure accountability for perpetrators",
-        "result": "Предложено: Number of cases investigated and prosecuted",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-19",
-        "problem": "Infringement on human rights and civil liberties, particularly for vulnerable groups such as child refugees and political prisoners",
-        "action": "Establish independent investigations into human rights abuses and ensure accountability for perpetrators",
-        "result": "Предложено: Number of cases investigated and prosecuted",
-        "status": "PROPOSED"
-      },
-      {
         "date": "2026-06-19",
         "problem": "Infringement on human rights and civil liberties, particularly for vulnerable groups such as child refugees and political prisoners",
         "action": "Establish independent investigations into human rights abuses and ensure accountability for perpetrators",
@@ -336,6 +301,41 @@
         "problem": "Lack of accountability for human rights violations and discriminatory practices against marginalized groups, including child refugees and political pr",
         "action": "Establish independent investigation mechanisms to hold individuals and institutions accountable for human rights abuses",
         "result": "Предложено: Increase in number of investigations and prosecutions of human rights abuses by 20% within the next 12 months",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Discriminatory AI experiment targeting child refugees in the United Kingdom",
+        "action": "Implement a legally binding moratorium on any AI system that directly affects children, especially refugees, until independent bias audits are complet",
+        "result": "Предложено: Zero AI-driven decisions affecting child refugees within 12 months; completion of at least three independent audits covering 100% of relev",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Discriminatory AI experiment targeting child refugees in the United Kingdom",
+        "action": "Implement a legally binding moratorium on any AI system that directly affects children, especially refugees, until independent bias audits are complet",
+        "result": "Предложено: Zero AI-driven decisions affecting child refugees within 12 months; completion of at least three independent audits covering 100% of relev",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Discriminatory AI experiment targeting child refugees in the United Kingdom",
+        "action": "Implement a legally binding moratorium on any AI system that directly affects children, especially refugees, until independent bias audits are complet",
+        "result": "Предложено: Zero AI-driven decisions affecting child refugees within 12 months; completion of at least three independent audits covering 100% of relev",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Discriminatory AI experiment targeting child refugees in the United Kingdom",
+        "action": "Implement a legally binding moratorium on any AI system that directly affects children, especially refugees, until independent bias audits are complet",
+        "result": "Предложено: Zero AI-driven decisions affecting child refugees within 12 months; completion of at least three independent audits covering 100% of relev",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Human rights violations and lack of accountability in governance, particularly in cases of child refugees, migrants, and political prisoners",
+        "action": "Implement and enforce stricter laws and regulations to protect human rights, especially for vulnerable groups",
+        "result": "Предложено: Reduction in reported human rights violations and increase in accountability cases",
         "status": "PROPOSED"
       }
     ],
@@ -491,41 +491,6 @@
   "EDUCATION_CULTURE_REVIEW": {
     "attempted_solutions": [
       {
-        "date": "2026-06-18",
-        "problem": "Inequities in access to quality education and literacy rates persist globally, hindering human development and dignity",
-        "action": "Implement targeted educational programs and resources to address literacy gaps and improve access to quality education",
-        "result": "Предложено: Increase global literacy rates by 10% within the next 5 years, as measured by UNESCO and World Bank data",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-18",
-        "problem": "Inequities in access to quality education and literacy rates persist globally, hindering human development and dignity",
-        "action": "Implement targeted educational programs and resources to address literacy gaps and improve access to quality education",
-        "result": "Предложено: Increase global literacy rates by 10% within the next 5 years, as measured by UNESCO and World Bank data",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-18",
-        "problem": "Inequities in access to quality education and literacy rates persist globally, hindering human development and dignity",
-        "action": "Implement targeted educational programs and resources to address literacy gaps and improve access to quality education",
-        "result": "Предложено: Increase global literacy rates by 10% within the next 5 years, as measured by UNESCO and World Bank data",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-19",
-        "problem": "Insufficient critical thinking and media literacy skills among the global population",
-        "action": "Integrate critical thinking and media literacy into school curricula",
-        "result": "Предложено: Increase the number of schools incorporating critical thinking and media literacy into their curricula by 20% within the next 2 years",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-19",
-        "problem": "Insufficient critical thinking and media literacy skills among the global population",
-        "action": "Integrate critical thinking and media literacy into school curricula",
-        "result": "Предложено: Increase the number of schools incorporating critical thinking and media literacy into their curricula by 20% within the next 2 years",
-        "status": "PROPOSED"
-      },
-      {
         "date": "2026-06-19",
         "problem": "Insufficient critical thinking and media literacy skills among the global population",
         "action": "Integrate critical thinking and media literacy into school curricula",
@@ -628,6 +593,41 @@
         "problem": "Insufficient progress in increasing access to quality education, with persistent inequalities in education outcomes across the world",
         "action": "Increase funding for education programs and infrastructure development",
         "result": "Предложено: 10% increase in education budget allocation within the next 2 years",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Low levels of media and information literacy worldwide, leading to poor critical thinking and susceptibility to misinformation",
+        "action": "Develop and adopt a globally coordinated Media and Information Literacy (MIL) curriculum that is incorporated into primary and secondary school progra",
+        "result": "Предложено: Increase the percentage of students achieving a certified MIL competency from current baseline to at least 70% within five years",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Low levels of media and information literacy worldwide, leading to poor critical thinking and susceptibility to misinformation",
+        "action": "Develop and adopt a globally coordinated Media and Information Literacy (MIL) curriculum that is incorporated into primary and secondary school progra",
+        "result": "Предложено: Increase the percentage of students achieving a certified MIL competency from current baseline to at least 70% within five years",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Low levels of media and information literacy worldwide, leading to poor critical thinking and susceptibility to misinformation",
+        "action": "Develop and adopt a globally coordinated Media and Information Literacy (MIL) curriculum that is incorporated into primary and secondary school progra",
+        "result": "Предложено: Increase the percentage of students achieving a certified MIL competency from current baseline to at least 70% within five years",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Low levels of media and information literacy worldwide, leading to poor critical thinking and susceptibility to misinformation",
+        "action": "Develop and adopt a globally coordinated Media and Information Literacy (MIL) curriculum that is incorporated into primary and secondary school progra",
+        "result": "Предложено: Increase the percentage of students achieving a certified MIL competency from current baseline to at least 70% within five years",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Significant disparity in literacy and media/information literacy rates across countries in 2025",
+        "action": "Develop and fund a globally coordinated curriculum for universal primary education and media/information literacy, with benchmarks tied to UNESCO stan",
+        "result": "Предложено: Increase the average literacy rate in the bottom 20% of countries by at least 10 percentage points and achieve a 15% rise in media literac",
         "status": "PROPOSED"
       }
     ],
@@ -637,41 +637,6 @@
   "COSMIC_RESOURCES_REVIEW": {
     "attempted_solutions": [
       {
-        "date": "2026-06-18",
-        "problem": "Lack of regulatory framework for space mining and resource utilization",
-        "action": "Establish an international framework for space resource utilization",
-        "result": "Предложено: Develop and ratify an international treaty on space resource utilization within 5 years",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-18",
-        "problem": "Lack of regulatory framework for space mining and resource utilization",
-        "action": "Establish an international framework for space resource utilization",
-        "result": "Предложено: Develop and ratify an international treaty on space resource utilization within 5 years",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-18",
-        "problem": "Lack of regulatory framework for space mining and resource utilization",
-        "action": "Establish an international framework for space resource utilization",
-        "result": "Предложено: Develop and ratify an international treaty on space resource utilization within 5 years",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-19",
-        "problem": "Lack of regulatory framework for asteroid mining and space resource utilization",
-        "action": "Establish a clear regulatory framework for asteroid mining and space resource utilization",
-        "result": "Предложено: Develop and implement international laws and regulations within the next 5 years",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-19",
-        "problem": "Lack of regulatory framework for asteroid mining and space resource utilization",
-        "action": "Establish a clear regulatory framework for asteroid mining and space resource utilization",
-        "result": "Предложено: Develop and implement international laws and regulations within the next 5 years",
-        "status": "PROPOSED"
-      },
-      {
         "date": "2026-06-19",
         "problem": "Lack of regulatory framework for asteroid mining and space resource utilization",
         "action": "Establish a clear regulatory framework for asteroid mining and space resource utilization",
@@ -774,6 +739,41 @@
         "problem": "Insufficient legal frameworks and regulations for asteroid mining, hindering its development and potential benefits",
         "action": "Develop and implement international laws and regulations for asteroid mining",
         "result": "Предложено: Establish a clear legal framework for asteroid mining within the next 2 years",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Lack of focus on sustainable and environmentally friendly space exploration and utilization",
+        "action": "Develop and implement international standards for sustainable space exploration and development",
+        "result": "Предложено: Reduced space debris, decreased carbon footprint of space missions, and increased use of renewable energy sources",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Lack of focus on sustainable and environmentally friendly space exploration and utilization",
+        "action": "Develop and implement international standards for sustainable space exploration and development",
+        "result": "Предложено: Reduced space debris, decreased carbon footprint of space missions, and increased use of renewable energy sources",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Lack of focus on sustainable and environmentally friendly space exploration and utilization",
+        "action": "Develop and implement international standards for sustainable space exploration and development",
+        "result": "Предложено: Reduced space debris, decreased carbon footprint of space missions, and increased use of renewable energy sources",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Lack of focus on sustainable and environmentally friendly space exploration and utilization",
+        "action": "Develop and implement international standards for sustainable space exploration and development",
+        "result": "Предложено: Reduced space debris, decreased carbon footprint of space missions, and increased use of renewable energy sources",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Rapid commercialization of asteroid and space resource extraction without a coordinated international governance framework",
+        "action": "Create a multistakeholder treaty amendment that establishes licensing, environmental impact assessment, and benefit‑sharing rules for space mining",
+        "result": "Предложено: Adoption of the amendment by at least 30 spacefaring nations and major commercial actors within three years",
         "status": "PROPOSED"
       }
     ],
@@ -783,34 +783,6 @@
   "DEEP_TIME_RISKS_REVIEW": {
     "attempted_solutions": [
       {
-        "date": "2026-06-18",
-        "problem": "Insufficient global preparedness for pandemic outbreaks and asteroid impacts",
-        "action": "Finalize and implement the WHO Pandemic Agreement's Pathogen Access and Benefit Sharing annex",
-        "result": "Предложено: Increase the number of countries that have implemented the agreement by 50% within the next 12 months",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-19",
-        "problem": "Insufficient global preparedness and coordination for asteroid impact threats and pandemic responses",
-        "action": "Establish a global asteroid tracking and warning system",
-        "result": "Предложено: Reduce the average response time to asteroid threats by 30%",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-19",
-        "problem": "Insufficient global preparedness and coordination for asteroid impact threats and pandemic responses",
-        "action": "Establish a global asteroid tracking and warning system",
-        "result": "Предложено: Reduce the average response time to asteroid threats by 30%",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-19",
-        "problem": "Insufficient global preparedness and coordination for asteroid impact threats and pandemic responses",
-        "action": "Establish a global asteroid tracking and warning system",
-        "result": "Предложено: Reduce the average response time to asteroid threats by 30%",
-        "status": "PROPOSED"
-      },
-      {
         "date": "2026-06-19",
         "problem": "Insufficient global preparedness and coordination for asteroid impact threats and pandemic responses",
         "action": "Establish a global asteroid tracking and warning system",
@@ -920,6 +892,34 @@
         "problem": "Insufficient access to safe blood supplies globally, with many people lacking access, despite progress in voluntary donations",
         "action": "Implement targeted policies and programs to improve access to safe blood supplies in underserved areas",
         "result": "Предложено: Increase access to safe blood supplies by 20% in the next 2 years",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Inadequate global preparedness and response to pandemics, such as Ebola, which poses a significant threat to human life and global health security",
+        "action": "Develop and implement a comprehensive global pandemic agreement that includes pathogen access and benefit sharing",
+        "result": "Предложено: Increase the number of countries with functional pandemic preparedness plans by 50% within the next 2 years",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Inadequate global preparedness and response to pandemics, such as Ebola, which poses a significant threat to human life and global health security",
+        "action": "Develop and implement a comprehensive global pandemic agreement that includes pathogen access and benefit sharing",
+        "result": "Предложено: Increase the number of countries with functional pandemic preparedness plans by 50% within the next 2 years",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Inadequate global preparedness and response to pandemics, such as Ebola, which poses a significant threat to human life and global health security",
+        "action": "Develop and implement a comprehensive global pandemic agreement that includes pathogen access and benefit sharing",
+        "result": "Предложено: Increase the number of countries with functional pandemic preparedness plans by 50% within the next 2 years",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Inadequate global preparedness and response to pandemics, such as Ebola, which poses a significant threat to human life and global health security",
+        "action": "Develop and implement a comprehensive global pandemic agreement that includes pathogen access and benefit sharing",
+        "result": "Предложено: Increase the number of countries with functional pandemic preparedness plans by 50% within the next 2 years",
         "status": "PROPOSED"
       }
     ],
@@ -929,41 +929,6 @@
   "PLANETARY_POTENTIAL_REVIEW": {
     "attempted_solutions": [
       {
-        "date": "2026-06-18",
-        "problem": "Inaccurate emissions data in the Climate TRACE database",
-        "action": "Conduct an independent audit and validation of the Climate TRACE database",
-        "result": "Предложено: Reduce errors in emissions data by 30% within 6 months",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-18",
-        "problem": "Inaccurate emissions data in the Climate TRACE database",
-        "action": "Conduct an independent audit and validation of the Climate TRACE database",
-        "result": "Предложено: Reduce errors in emissions data by 30% within 6 months",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-18",
-        "problem": "Inaccurate emissions data in the Climate TRACE database",
-        "action": "Conduct an independent audit and validation of the Climate TRACE database",
-        "result": "Предложено: Reduce errors in emissions data by 30% within 6 months",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-18",
-        "problem": "Inaccurate emissions data in the Climate TRACE database",
-        "action": "Conduct an independent audit and validation of the Climate TRACE database",
-        "result": "Предложено: Reduce errors in emissions data by 30% within 6 months",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-19",
-        "problem": "Inaccurate climate data due to errors in the Climate TRACE database",
-        "action": "Conduct a thorough review and revision of the Climate TRACE database",
-        "result": "Предложено: Reduce error rate by 30% within the next 6 months",
-        "status": "PROPOSED"
-      },
-      {
         "date": "2026-06-19",
         "problem": "Inaccurate climate data due to errors in the Climate TRACE database",
         "action": "Conduct a thorough review and revision of the Climate TRACE database",
@@ -1066,6 +1031,41 @@
         "problem": "Inaccurate global emissions database",
         "action": "Conduct an independent review and revision of the Climate TRACE database",
         "result": "Предложено: Achieve a 20% reduction in data errors within the next 6 months",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Inaccurate emissions data due to errors in the Climate TRACE database",
+        "action": "Conduct thorough audits and corrections of the Climate TRACE database",
+        "result": "Предложено: Reduce error margins in emissions data by 20% within the next 6 months",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Inaccurate emissions data due to errors in the Climate TRACE database",
+        "action": "Conduct thorough audits and corrections of the Climate TRACE database",
+        "result": "Предложено: Reduce error margins in emissions data by 20% within the next 6 months",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Inaccurate emissions data due to errors in the Climate TRACE database",
+        "action": "Conduct thorough audits and corrections of the Climate TRACE database",
+        "result": "Предложено: Reduce error margins in emissions data by 20% within the next 6 months",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Inaccurate emissions data due to errors in the Climate TRACE database",
+        "action": "Conduct thorough audits and corrections of the Climate TRACE database",
+        "result": "Предложено: Reduce error margins in emissions data by 20% within the next 6 months",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Arizona's San Carlos Reservoir fell to less than 1% capacity after an extreme snowpack collapse, causing a massive fish kill and indefinite closure of",
+        "action": "Implement integrated watershed management to capture and store meltwater (e.g., upstream retention basins, snow fences, and artificial recharge).",
+        "result": "Предложено: Increase reservoir storage to at least 30% of capacity during the subsequent dry season.",
         "status": "PROPOSED"
       }
     ],
@@ -1075,41 +1075,6 @@
   "CLIMATE_GLOBAL_RISK_REVIEW": {
     "attempted_solutions": [
       {
-        "date": "2026-06-18",
-        "problem": "Increasing frequency and severity of extreme humid heat waves, making some areas unlivable",
-        "action": "Develop and deploy more energy-efficient air conditioning units and climate-resilient buildings",
-        "result": "Предложено: Reduce the number of heat-related illnesses and deaths by 20% within the next 5 years",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-18",
-        "problem": "Increasing frequency and severity of extreme humid heat waves, making some areas unlivable",
-        "action": "Develop and deploy more energy-efficient air conditioning units and climate-resilient buildings",
-        "result": "Предложено: Reduce the number of heat-related illnesses and deaths by 20% within the next 5 years",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-18",
-        "problem": "Increasing frequency and severity of extreme humid heat waves, making some areas unlivable",
-        "action": "Develop and deploy more energy-efficient air conditioning units and climate-resilient buildings",
-        "result": "Предложено: Reduce the number of heat-related illnesses and deaths by 20% within the next 5 years",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-19",
-        "problem": "Climate talks end in gridlock, and global emissions must be reduced immediately, but tangible outcomes are few",
-        "action": "Implement immediate and drastic reductions in greenhouse gas emissions",
-        "result": "Предложено: Achieve a 45% reduction in global emissions by 2030",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-19",
-        "problem": "Climate talks end in gridlock, and global emissions must be reduced immediately, but tangible outcomes are few",
-        "action": "Implement immediate and drastic reductions in greenhouse gas emissions",
-        "result": "Предложено: Achieve a 45% reduction in global emissions by 2030",
-        "status": "PROPOSED"
-      },
-      {
         "date": "2026-06-19",
         "problem": "Climate talks end in gridlock, and global emissions must be reduced immediately, but tangible outcomes are few",
         "action": "Implement immediate and drastic reductions in greenhouse gas emissions",
@@ -1212,6 +1177,41 @@
         "problem": "Insufficient progress in reducing global emissions and adapting to climate change, as evident from the gridlock in Bonn talks and the need for a major",
         "action": "Implement and strengthen global climate agreements, such as the Paris Agreement",
         "result": "Предложено: Reduce global greenhouse gas emissions by 45% by 2030 and achieve net-zero by 2050",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "The Bonn climate talks ended in gridlock, with few tangible outcomes, and the planet is at risk of exceeding the 1.5 degrees Celsius warming target se",
+        "action": "Implement and strengthen carbon pricing mechanisms globally",
+        "result": "Предложено: Achieve a global average carbon price of at least $50 per ton of CO2 by 2030",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "The Bonn climate talks ended in gridlock, with few tangible outcomes, and the planet is at risk of exceeding the 1.5 degrees Celsius warming target se",
+        "action": "Implement and strengthen carbon pricing mechanisms globally",
+        "result": "Предложено: Achieve a global average carbon price of at least $50 per ton of CO2 by 2030",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "The Bonn climate talks ended in gridlock, with few tangible outcomes, and the planet is at risk of exceeding the 1.5 degrees Celsius warming target se",
+        "action": "Implement and strengthen carbon pricing mechanisms globally",
+        "result": "Предложено: Achieve a global average carbon price of at least $50 per ton of CO2 by 2030",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "The Bonn climate talks ended in gridlock, with few tangible outcomes, and the planet is at risk of exceeding the 1.5 degrees Celsius warming target se",
+        "action": "Implement and strengthen carbon pricing mechanisms globally",
+        "result": "Предложено: Achieve a global average carbon price of at least $50 per ton of CO2 by 2030",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Insufficient progress in climate negotiations, resulting in few tangible outcomes from the June 2026 UN climate conference in Bonn",
+        "action": "Develop and implement a global carbon removal strategy, with measurable targets and timelines",
+        "result": "Предложено: Reduce global carbon emissions by 45% by 2030 and achieve net-zero emissions by 2050",
         "status": "PROPOSED"
       }
     ],
@@ -1221,41 +1221,6 @@
   "ENERGY_REVIEW": {
     "attempted_solutions": [
       {
-        "date": "2026-06-18",
-        "problem": "The energy transition is hindered by the lack of efficient energy storage solutions, which poses a challenge to the widespread adoption of renewable e",
-        "action": "Increase investment in energy storage research and development",
-        "result": "Предложено: Achieve a 20% reduction in the cost of energy storage technologies within the next 5 years",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-18",
-        "problem": "The energy transition is hindered by the lack of efficient energy storage solutions, which poses a challenge to the widespread adoption of renewable e",
-        "action": "Increase investment in energy storage research and development",
-        "result": "Предложено: Achieve a 20% reduction in the cost of energy storage technologies within the next 5 years",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-18",
-        "problem": "The energy transition is hindered by the lack of efficient energy storage solutions, which poses a challenge to the widespread adoption of renewable e",
-        "action": "Increase investment in energy storage research and development",
-        "result": "Предложено: Achieve a 20% reduction in the cost of energy storage technologies within the next 5 years",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-19",
-        "problem": "Inconsistent energy policy and investment in renewable energy sources, hindering the transition to a sustainable energy system",
-        "action": "Implement a comprehensive and consistent national energy policy, prioritizing renewable energy sources",
-        "result": "Предложено: Increase the share of renewable energy in the national energy mix by 20% within the next 5 years",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-19",
-        "problem": "Inconsistent energy policy and investment in renewable energy sources, hindering the transition to a sustainable energy system",
-        "action": "Implement a comprehensive and consistent national energy policy, prioritizing renewable energy sources",
-        "result": "Предложено: Increase the share of renewable energy in the national energy mix by 20% within the next 5 years",
-        "status": "PROPOSED"
-      },
-      {
         "date": "2026-06-19",
         "problem": "Inconsistent energy policy and investment in renewable energy sources, hindering the transition to a sustainable energy system",
         "action": "Implement a comprehensive and consistent national energy policy, prioritizing renewable energy sources",
@@ -1358,6 +1323,41 @@
         "problem": "Inefficient grid modernization efforts and lack of investment in renewable energy may hinder the transition to a sustainable energy system",
         "action": "Increase investment in grid communication infrastructure and renewable energy projects",
         "result": "Предложено: Achieve a 20% increase in renewable energy capacity and a 15% reduction in grid interference within the next 2 years",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Inefficient energy storage and grid management are causing wasted clean power and hindering the growth of renewable energy sources",
+        "action": "Implement policies to incentivize investment in energy storage infrastructure",
+        "result": "Предложено: Increase energy storage capacity by 10 GWh within the next 2 years",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Inefficient energy storage and grid management are causing wasted clean power and hindering the growth of renewable energy sources",
+        "action": "Implement policies to incentivize investment in energy storage infrastructure",
+        "result": "Предложено: Increase energy storage capacity by 10 GWh within the next 2 years",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Inefficient energy storage and grid management are causing wasted clean power and hindering the growth of renewable energy sources",
+        "action": "Implement policies to incentivize investment in energy storage infrastructure",
+        "result": "Предложено: Increase energy storage capacity by 10 GWh within the next 2 years",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Inefficient energy storage and grid management are causing wasted clean power and hindering the growth of renewable energy sources",
+        "action": "Implement policies to incentivize investment in energy storage infrastructure",
+        "result": "Предложено: Increase energy storage capacity by 10 GWh within the next 2 years",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "The Trump administration's decision to buy back offshore wind leases and redirect funds to fossil fuel projects may hinder the development of renewabl",
+        "action": "Implement policies to incentivize investment in offshore wind and other renewable energy sources",
+        "result": "Предложено: Increase the number of offshore wind projects in development by 20% within the next 2 years",
         "status": "PROPOSED"
       }
     ],
@@ -1367,41 +1367,6 @@
   "WATER_REVIEW": {
     "attempted_solutions": [
       {
-        "date": "2026-06-18",
-        "problem": "Groundwater depletion due to unsustainable water use for farming in dry areas",
-        "action": "Implement water-saving irrigation technologies and practices",
-        "result": "Предложено: Reduce groundwater depletion rate by 20% within the next 5 years",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-18",
-        "problem": "Groundwater depletion due to unsustainable water use for farming in dry areas",
-        "action": "Implement water-saving irrigation technologies and practices",
-        "result": "Предложено: Reduce groundwater depletion rate by 20% within the next 5 years",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-18",
-        "problem": "Groundwater depletion due to unsustainable water use for farming in dry areas",
-        "action": "Implement water-saving irrigation technologies and practices",
-        "result": "Предложено: Reduce groundwater depletion rate by 20% within the next 5 years",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-19",
-        "problem": "Groundwater depletion in Florida due to public use and agricultural activities",
-        "action": "Implement water-saving technologies and practices in agriculture",
-        "result": "Предложено: Reduce groundwater extraction by 20% within the next 5 years",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-19",
-        "problem": "Groundwater depletion in Florida due to public use and agricultural activities",
-        "action": "Implement water-saving technologies and practices in agriculture",
-        "result": "Предложено: Reduce groundwater extraction by 20% within the next 5 years",
-        "status": "PROPOSED"
-      },
-      {
         "date": "2026-06-19",
         "problem": "Groundwater depletion in Florida due to public use and agricultural activities",
         "action": "Implement water-saving technologies and practices in agriculture",
@@ -1504,6 +1469,41 @@
         "problem": "Groundwater depletion and decline in water levels due to drought and unsustainable use",
         "action": "Implement efficient irrigation systems and water-saving technologies in agriculture",
         "result": "Предложено: Reduce groundwater extraction by 20% within the next 2 years",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Fresh water scarcity and pollution",
+        "action": "Implement water-saving technologies and practices in agriculture and industry",
+        "result": "Предложено: Reduce water consumption by 20% in the next 5 years",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Fresh water scarcity and pollution",
+        "action": "Implement water-saving technologies and practices in agriculture and industry",
+        "result": "Предложено: Reduce water consumption by 20% in the next 5 years",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Fresh water scarcity and pollution",
+        "action": "Implement water-saving technologies and practices in agriculture and industry",
+        "result": "Предложено: Reduce water consumption by 20% in the next 5 years",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Fresh water scarcity and pollution",
+        "action": "Implement water-saving technologies and practices in agriculture and industry",
+        "result": "Предложено: Reduce water consumption by 20% in the next 5 years",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Water pollution and scarcity due to human activities such as ethanol production and wildfires",
+        "action": "Implement efficient water management systems and promote water conservation practices",
+        "result": "Предложено: Reduce water waste by 20% and decrease water pollution by 15% within the next 2 years",
         "status": "PROPOSED"
       }
     ],
@@ -1513,34 +1513,6 @@
   "FOOD_REVIEW": {
     "attempted_solutions": [
       {
-        "date": "2026-06-18",
-        "problem": "Conflict, economic shocks, climate extremes, and forced displacement are driving food insecurity and malnutrition around the world",
-        "action": "Implement sustainable agriculture practices and climate-resilient food systems",
-        "result": "Предложено: Reduce the number of people suffering from hunger and malnutrition by 20% within the next 5 years",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-18",
-        "problem": "Conflict, economic shocks, climate extremes, and forced displacement are driving food insecurity and malnutrition around the world",
-        "action": "Implement sustainable agriculture practices and climate-resilient food systems",
-        "result": "Предложено: Reduce the number of people suffering from hunger and malnutrition by 20% within the next 5 years",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-18",
-        "problem": "Conflict, economic shocks, climate extremes, and forced displacement are driving food insecurity and malnutrition around the world",
-        "action": "Implement sustainable agriculture practices and climate-resilient food systems",
-        "result": "Предложено: Reduce the number of people suffering from hunger and malnutrition by 20% within the next 5 years",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-19",
-        "problem": "Conflict, economic shocks, climate extremes, and forced displacement are driving food insecurity and malnutrition globally",
-        "action": "Implement climate-resilient agricultural practices and support small-scale farmers",
-        "result": "Предложено: Reduce the number of people facing food insecurity by 20% within the next 5 years",
-        "status": "PROPOSED"
-      },
-      {
         "date": "2026-06-19",
         "problem": "Conflict, economic shocks, climate extremes, and forced displacement are driving food insecurity and malnutrition globally",
         "action": "Implement climate-resilient agricultural practices and support small-scale farmers",
@@ -1650,6 +1622,34 @@
         "problem": "673 million people experienced hunger in 2024, and the global food supply chain is vulnerable to climate change-induced disruptions",
         "action": "Implement climate-resilient agricultural practices and improve supply chain management",
         "result": "Предложено: Reduce the number of people experiencing hunger by 20% within the next 2 years",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Global food insecurity due to climate change, conflict, and disruption of global food supply",
+        "action": "Implement climate-resilient agricultural practices and support small-scale farmers",
+        "result": "Предложено: Reduce global hunger rates by 20% within the next 5 years",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Global food insecurity due to climate change, conflict, and disruption of global food supply",
+        "action": "Implement climate-resilient agricultural practices and support small-scale farmers",
+        "result": "Предложено: Reduce global hunger rates by 20% within the next 5 years",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Global food insecurity due to climate change, conflict, and disruption of global food supply",
+        "action": "Implement climate-resilient agricultural practices and support small-scale farmers",
+        "result": "Предложено: Reduce global hunger rates by 20% within the next 5 years",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Global food insecurity due to climate change, conflict, and disruption of global food supply",
+        "action": "Implement climate-resilient agricultural practices and support small-scale farmers",
+        "result": "Предложено: Reduce global hunger rates by 20% within the next 5 years",
         "status": "PROPOSED"
       }
     ],
@@ -1659,41 +1659,6 @@
   "MATERIALS_WASTE_REVIEW": {
     "attempted_solutions": [
       {
-        "date": "2026-06-18",
-        "problem": "Plastic waste is not being effectively recycled and is polluting the environment, harming ecosystems and human health",
-        "action": "Invest in research and development of new plastic recycling technologies",
-        "result": "Предложено: Increase plastic recycling rate by 20% within the next 5 years",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-18",
-        "problem": "Plastic waste is not being effectively recycled and is polluting the environment, harming ecosystems and human health",
-        "action": "Invest in research and development of new plastic recycling technologies",
-        "result": "Предложено: Increase plastic recycling rate by 20% within the next 5 years",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-18",
-        "problem": "Plastic waste is not being effectively recycled and is polluting the environment, harming ecosystems and human health",
-        "action": "Invest in research and development of new plastic recycling technologies",
-        "result": "Предложено: Increase plastic recycling rate by 20% within the next 5 years",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-19",
-        "problem": "Inadequate waste management and plastic pollution",
-        "action": "Implement extended producer responsibility for plastics",
-        "result": "Предложено: Reduce plastic waste by 30% within the next 2 years",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-19",
-        "problem": "Inadequate waste management and plastic pollution",
-        "action": "Implement extended producer responsibility for plastics",
-        "result": "Предложено: Reduce plastic waste by 30% within the next 2 years",
-        "status": "PROPOSED"
-      },
-      {
         "date": "2026-06-19",
         "problem": "Inadequate waste management and plastic pollution",
         "action": "Implement extended producer responsibility for plastics",
@@ -1796,6 +1761,41 @@
         "problem": "Improper waste sorting and management of plastic waste",
         "action": "Implementing standardized waste sorting protocols and educating the public through awareness campaigns",
         "result": "Предложено: Increase proper waste sorting rates by 20% within the next 12 months",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Plastic pollution in the ocean is projected to nearly triple by 2040 if immediate and sustained action is not taken",
+        "action": "Implement extended producer responsibility for plastic products",
+        "result": "Предложено: Reduce plastic waste in the ocean by 50% within the next 5 years",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Plastic pollution in the ocean is projected to nearly triple by 2040 if immediate and sustained action is not taken",
+        "action": "Implement extended producer responsibility for plastic products",
+        "result": "Предложено: Reduce plastic waste in the ocean by 50% within the next 5 years",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Plastic pollution in the ocean is projected to nearly triple by 2040 if immediate and sustained action is not taken",
+        "action": "Implement extended producer responsibility for plastic products",
+        "result": "Предложено: Reduce plastic waste in the ocean by 50% within the next 5 years",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Plastic pollution in the ocean is projected to nearly triple by 2040 if immediate and sustained action is not taken",
+        "action": "Implement extended producer responsibility for plastic products",
+        "result": "Предложено: Reduce plastic waste in the ocean by 50% within the next 5 years",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Inadequate management of plastic waste, leading to massive environmental pollution and potential harm to human health",
+        "action": "Implement extended producer responsibility for plastic manufacturers",
+        "result": "Предложено: Reduce plastic production by 20% within the next 2 years",
         "status": "PROPOSED"
       }
     ],
@@ -1805,41 +1805,6 @@
   "ECOSYSTEMS_BIODIVERSITY_REVIEW": {
     "attempted_solutions": [
       {
-        "date": "2026-06-18",
-        "problem": "Deforestation is clearing Earth's forests on a massive scale, with the world's rainforest potentially disappearing within 100 years",
-        "action": "Implement sustainable forest management practices and certification programs",
-        "result": "Предложено: Reduce deforestation rate by 50% within the next 10 years",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-18",
-        "problem": "Deforestation is clearing Earth's forests on a massive scale, with the world's rainforest potentially disappearing within 100 years",
-        "action": "Implement sustainable forest management practices and certification programs",
-        "result": "Предложено: Reduce deforestation rate by 50% within the next 10 years",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-18",
-        "problem": "Deforestation is clearing Earth's forests on a massive scale, with the world's rainforest potentially disappearing within 100 years",
-        "action": "Implement sustainable forest management practices and certification programs",
-        "result": "Предложено: Reduce deforestation rate by 50% within the next 10 years",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-19",
-        "problem": "Insufficient efforts to prevent biodiversity loss, as highlighted by the critically endangered vaquita and the potential cross-species spread of chron",
-        "action": "Establish a Global Wildlife Health Authority to coordinate conservation efforts and monitor disease transmission",
-        "result": "Предложено: Reduce the rate of species extinction by 50% within the next decade",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-19",
-        "problem": "Insufficient efforts to prevent biodiversity loss, as highlighted by the critically endangered vaquita and the potential cross-species spread of chron",
-        "action": "Establish a Global Wildlife Health Authority to coordinate conservation efforts and monitor disease transmission",
-        "result": "Предложено: Reduce the rate of species extinction by 50% within the next decade",
-        "status": "PROPOSED"
-      },
-      {
         "date": "2026-06-19",
         "problem": "Insufficient efforts to prevent biodiversity loss, as highlighted by the critically endangered vaquita and the potential cross-species spread of chron",
         "action": "Establish a Global Wildlife Health Authority to coordinate conservation efforts and monitor disease transmission",
@@ -1942,6 +1907,41 @@
         "problem": "Deforestation and habitat loss lead to biodiversity loss and species extinction",
         "action": "Implement and enforce policies to reduce deforestation and habitat loss, such as certification programs for sustainably sourced products",
         "result": "Предложено: Reduce deforestation rate by 20% within the next 5 years",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Biodiversity loss due to lack of effective conservation and management of ecosystems",
+        "action": "Establish a Global Wildlife Health Authority to monitor and manage wildlife health across the globe",
+        "result": "Предложено: Reduce the rate of species extinction by 50% within the next 5 years",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Biodiversity loss due to lack of effective conservation and management of ecosystems",
+        "action": "Establish a Global Wildlife Health Authority to monitor and manage wildlife health across the globe",
+        "result": "Предложено: Reduce the rate of species extinction by 50% within the next 5 years",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Biodiversity loss due to lack of effective conservation and management of ecosystems",
+        "action": "Establish a Global Wildlife Health Authority to monitor and manage wildlife health across the globe",
+        "result": "Предложено: Reduce the rate of species extinction by 50% within the next 5 years",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Biodiversity loss due to lack of effective conservation and management of ecosystems",
+        "action": "Establish a Global Wildlife Health Authority to monitor and manage wildlife health across the globe",
+        "result": "Предложено: Reduce the rate of species extinction by 50% within the next 5 years",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "The vaquita, the world's most endangered marine mammal, is on the brink of extinction",
+        "action": "Establish and enforce marine protected areas and fishing regulations",
+        "result": "Предложено: Increase vaquita population by 10% within the next 5 years",
         "status": "PROPOSED"
       }
     ],
@@ -1951,41 +1951,6 @@
   "HUMAN_WELL_BEING_REVIEW": {
     "attempted_solutions": [
       {
-        "date": "2026-06-18",
-        "problem": "Many people still lack access to safe blood and weaknesses in government blood systems persist",
-        "action": "Improve blood donation infrastructure and increase voluntary donations",
-        "result": "Предложено: Increase voluntary blood donations to 90% and reduce blood-related fatalities by 20%",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-18",
-        "problem": "Many people still lack access to safe blood and weaknesses in government blood systems persist",
-        "action": "Improve blood donation infrastructure and increase voluntary donations",
-        "result": "Предложено: Increase voluntary blood donations to 90% and reduce blood-related fatalities by 20%",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-18",
-        "problem": "Many people still lack access to safe blood and weaknesses in government blood systems persist",
-        "action": "Improve blood donation infrastructure and increase voluntary donations",
-        "result": "Предложено: Increase voluntary blood donations to 90% and reduce blood-related fatalities by 20%",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-19",
-        "problem": "Many people still lack access to safe blood supplies globally, despite progress towards safer blood supplies",
-        "action": "Increase funding and support for WHO and national healthcare infrastructure development",
-        "result": "Предложено: Increase access to safe blood supplies by 20% within the next 2 years",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-19",
-        "problem": "Many people still lack access to safe blood supplies globally, despite progress towards safer blood supplies",
-        "action": "Increase funding and support for WHO and national healthcare infrastructure development",
-        "result": "Предложено: Increase access to safe blood supplies by 20% within the next 2 years",
-        "status": "PROPOSED"
-      },
-      {
         "date": "2026-06-19",
         "problem": "Many people still lack access to safe blood supplies globally, despite progress towards safer blood supplies",
         "action": "Increase funding and support for WHO and national healthcare infrastructure development",
@@ -2088,6 +2053,41 @@
         "problem": "Many people still lack access to safe blood supplies globally",
         "action": "Implementing nationwide blood donation awareness campaigns",
         "result": "Предложено: Increase voluntary blood donations by 10% within the next 6 months",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Many people still lack access to safe blood supplies globally",
+        "action": "Increase funding for healthcare infrastructure in underserved areas",
+        "result": "Предложено: Reduce the number of people lacking access to safe blood supplies by 20% within the next 2 years",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Many people still lack access to safe blood supplies globally",
+        "action": "Increase funding for healthcare infrastructure in underserved areas",
+        "result": "Предложено: Reduce the number of people lacking access to safe blood supplies by 20% within the next 2 years",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Many people still lack access to safe blood supplies globally",
+        "action": "Increase funding for healthcare infrastructure in underserved areas",
+        "result": "Предложено: Reduce the number of people lacking access to safe blood supplies by 20% within the next 2 years",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Many people still lack access to safe blood supplies globally",
+        "action": "Increase funding for healthcare infrastructure in underserved areas",
+        "result": "Предложено: Reduce the number of people lacking access to safe blood supplies by 20% within the next 2 years",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Limited access to safe blood supplies and weaknesses in government policies",
+        "action": "Increase funding for blood supply infrastructure development",
+        "result": "Предложено: Increase access to safe blood supplies by 20% within the next 2 years",
         "status": "PROPOSED"
       }
     ],
@@ -2097,41 +2097,6 @@
   "CULTURE_MEDIA_REVIEW": {
     "attempted_solutions": [
       {
-        "date": "2026-05-16",
-        "problem": "Културната и медийната индустрия поддържа стереотипи и манипулира общественото мнение чрез избор на тематика и представяне на събития",
-        "action": "Интегриране на критична медиаедукация в образованието на всички нива",
-        "result": "Предложено: Разработване на стандартни учебни програми по медиаанализа и критично мислене в училища и висше образование",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-05-17",
-        "problem": "Застояването на културното развитие и социалните връзки поради зависимостта от социалните медии",
-        "action": "Въвеждане на образователни програми за умно ползване на социалните медии",
-        "result": "Предложено: Намаление с 20% на времето, прекарано в социалните медии, сред учащите се в рамките на 1 година",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-05-17",
-        "problem": "Манипулацията на общественото мнение чрез фалшиви информационни стратегии и лъжи за FEMA и погодата",
-        "action": "Повишаване на медицинската и образователна грамотност на обществото",
-        "result": "Предложено: Измерване чрез анкети за разбиране на медицински и информационни факти",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-19",
-        "problem": "The spread of misinformation and disinformation through social media and news outlets",
-        "action": "Implementing robust fact-checking mechanisms on social media platforms",
-        "result": "Предложено: Reduction of false news spread by 20% within the next 6 months",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-19",
-        "problem": "The spread of misinformation and disinformation through social media and news outlets",
-        "action": "Implementing robust fact-checking mechanisms on social media platforms",
-        "result": "Предложено: Reduction of false news spread by 20% within the next 6 months",
-        "status": "PROPOSED"
-      },
-      {
         "date": "2026-06-19",
         "problem": "The spread of misinformation and disinformation through social media and news outlets",
         "action": "Implementing robust fact-checking mechanisms on social media platforms",
@@ -2234,6 +2199,41 @@
         "problem": "The spread of misinformation through social media platforms, as discussed in the YouTube transcripts, has the potential to influence free speech right",
         "action": "Implementing more effective fact-checking mechanisms on social media platforms",
         "result": "Предложено: Reducing the spread of false information by 30% in the next 6 months",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Spread of misinformation through social media and news outlets",
+        "action": "Implementing fact-checking mechanisms and algorithms to detect and flag false information on social media platforms",
+        "result": "Предложено: Reduce the spread of false information by 30% within the next 6 months",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Spread of misinformation through social media and news outlets",
+        "action": "Implementing fact-checking mechanisms and algorithms to detect and flag false information on social media platforms",
+        "result": "Предложено: Reduce the spread of false information by 30% within the next 6 months",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Spread of misinformation through social media and news outlets",
+        "action": "Implementing fact-checking mechanisms and algorithms to detect and flag false information on social media platforms",
+        "result": "Предложено: Reduce the spread of false information by 30% within the next 6 months",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Spread of misinformation through social media and news outlets",
+        "action": "Implementing fact-checking mechanisms and algorithms to detect and flag false information on social media platforms",
+        "result": "Предложено: Reduce the spread of false information by 30% within the next 6 months",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "The spread of false information and disinformation on social media platforms, such as TikTok and Facebook, threatens democracy and divides societies g",
+        "action": "Implementing fact-checking mechanisms and labeling suspicious content on social media platforms",
+        "result": "Предложено: Reduce the spread of false information by 20% within the next 6 months",
         "status": "PROPOSED"
       }
     ],
@@ -2243,41 +2243,6 @@
   "COGNITION_LEARNING_REVIEW": {
     "attempted_solutions": [
       {
-        "date": "2026-05-16",
-        "problem": "Ниските нива на грамотност и образование сред учениците, особенно сред английските последователи, поради пандемията и кибератаките над образователните",
-        "action": "Създаване на национална програма за подкрепа на образованието и подобряване на грамотността сред учениците",
-        "result": "Предложено: Повишаване на нивата на грамотност сред учениците с 20% през следващите 2 години",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-05-17",
-        "problem": "Недостатъчното обучение по английски език и литературата сред учениците от неблагополучни семейства",
-        "action": "Създаване на съвместна програма между училищата и местната община за предоставяне на безплатен или низкоразделен достъп до интернет и компютри за учен",
-        "result": "Предложено: Увеличение на процента на ученици, които успешно завършват курсове по английски език и литература с минимум 20% през следващите 2 години",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-05-17",
-        "problem": "Нестабилността на дигиталната образователна инфраструктура води до риск за уязвимостта на училищата и учащите си.",
-        "action": "Разработване на общински стандарти за киберсигурност в образованието",
-        "result": "Предложено: Повече от 70% от училищата да съответстват на новите стандарти за киберсигурност за 2025 г.",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-19",
-        "problem": "Ineffective learning methods in education, potentially hindered by the increasing influence of AI on the learning process",
-        "action": "Develop and implement AI-integrated educational programs that prioritize critical thinking and deep learning",
-        "result": "Предложено: Increase in student performance and critical thinking skills, as measured by standardized tests and assessments",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-19",
-        "problem": "Ineffective learning methods in education, potentially hindered by the increasing influence of AI on the learning process",
-        "action": "Develop and implement AI-integrated educational programs that prioritize critical thinking and deep learning",
-        "result": "Предложено: Increase in student performance and critical thinking skills, as measured by standardized tests and assessments",
-        "status": "PROPOSED"
-      },
-      {
         "date": "2026-06-19",
         "problem": "Ineffective learning methods in education, potentially hindered by the increasing influence of AI on the learning process",
         "action": "Develop and implement AI-integrated educational programs that prioritize critical thinking and deep learning",
@@ -2380,6 +2345,41 @@
         "problem": "Lack of clarity on the difference between studying and learning in educational contexts",
         "action": "Develop and implement more interactive and immersive learning experiences",
         "result": "Предложено: Increase student engagement and retention rates by 20% within the next 2 years",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Limited accessibility of education for all learners, resulting in barriers to learning and social exclusion",
+        "action": "Implement inclusive education training for teachers and educators",
+        "result": "Предложено: Increase the number of inclusive classrooms by 20% within the next 12 months",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Limited accessibility of education for all learners, resulting in barriers to learning and social exclusion",
+        "action": "Implement inclusive education training for teachers and educators",
+        "result": "Предложено: Increase the number of inclusive classrooms by 20% within the next 12 months",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Limited accessibility of education for all learners, resulting in barriers to learning and social exclusion",
+        "action": "Implement inclusive education training for teachers and educators",
+        "result": "Предложено: Increase the number of inclusive classrooms by 20% within the next 12 months",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Limited accessibility of education for all learners, resulting in barriers to learning and social exclusion",
+        "action": "Implement inclusive education training for teachers and educators",
+        "result": "Предложено: Increase the number of inclusive classrooms by 20% within the next 12 months",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "High dropout rate and widening achievement gap in secondary education, exemplified by 9,000 Irish students annually leaving school without qualificati",
+        "action": "Increase per‑student funding for public secondary schools to match or exceed private school resources",
+        "result": "Предложено: Reduce the annual dropout figure from 9,000 to under 4,000 within five years",
         "status": "PROPOSED"
       }
     ],
@@ -2389,41 +2389,6 @@
   "SOCIAL_RELATIONS_REVIEW": {
     "attempted_solutions": [
       {
-        "date": "2026-06-18",
-        "problem": "Increased social unrest and polarization due to conflicts and political tensions",
-        "action": "Implement fact-checking and media literacy programs",
-        "result": "Предложено: Reduce the spread of misinformation by 20% within the next 6 months",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-18",
-        "problem": "Increased social unrest and polarization due to conflicts and political tensions",
-        "action": "Implement fact-checking and media literacy programs",
-        "result": "Предложено: Reduce the spread of misinformation by 20% within the next 6 months",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-18",
-        "problem": "Increased social unrest and polarization due to conflicts and political tensions",
-        "action": "Implement fact-checking and media literacy programs",
-        "result": "Предложено: Reduce the spread of misinformation by 20% within the next 6 months",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-19",
-        "problem": "Loneliness epidemic despite increased technological connectivity",
-        "action": "Implementing measures to promote responsible technology use and digital literacy",
-        "result": "Предложено: Reduction in screen time and increase in face-to-face social interactions",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-19",
-        "problem": "Loneliness epidemic despite increased technological connectivity",
-        "action": "Implementing measures to promote responsible technology use and digital literacy",
-        "result": "Предложено: Reduction in screen time and increase in face-to-face social interactions",
-        "status": "PROPOSED"
-      },
-      {
         "date": "2026-06-19",
         "problem": "Loneliness epidemic despite increased technological connectivity",
         "action": "Implementing measures to promote responsible technology use and digital literacy",
@@ -2526,6 +2491,41 @@
         "problem": "Growing loneliness and social isolation among adults",
         "action": "Implement community-based programs to promote social connections and a sense of belonging",
         "result": "Предложено: Reduce loneliness rates by 20% within the next 12 months",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Loneliness epidemic despite increased connectivity",
+        "action": "Implement empathy-building programs in schools",
+        "result": "Предложено: Increase empathy scores in students by 20% within 2 years",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Loneliness epidemic despite increased connectivity",
+        "action": "Implement empathy-building programs in schools",
+        "result": "Предложено: Increase empathy scores in students by 20% within 2 years",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Loneliness epidemic despite increased connectivity",
+        "action": "Implement empathy-building programs in schools",
+        "result": "Предложено: Increase empathy scores in students by 20% within 2 years",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Loneliness epidemic despite increased connectivity",
+        "action": "Implement empathy-building programs in schools",
+        "result": "Предложено: Increase empathy scores in students by 20% within 2 years",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Social cohesion is under threat due to rising tensions and inequalities in various countries",
+        "action": "Implementing inclusive economic policies to reduce wealth gaps",
+        "result": "Предложено: 10% reduction in wealth inequality over the next 5 years",
         "status": "PROPOSED"
       }
     ],
@@ -2535,41 +2535,6 @@
   "ECONOMY_WORK_REVIEW": {
     "attempted_solutions": [
       {
-        "date": "2026-05-18",
-        "problem": "Dependence on non-renewable energy sources and potential for price volatility due to geopolitical tensions",
-        "action": "Implement policies to promote the development and use of renewable energy sources",
-        "result": "Предложено: Increase the percentage of renewable energy in the global energy mix by 10% within the next 5 years",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-11",
-        "problem": "Dependence on non-renewable energy sources and potential for price volatility due to geopolitical tensions",
-        "action": "Implement policies to promote the development and use of renewable energy sources",
-        "result": "Предложено: Increase the percentage of renewable energy in the global energy mix by 10% within the next 5 years",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-11",
-        "problem": "Dependence on non-renewable energy sources and potential for price volatility due to geopolitical tensions",
-        "action": "Implement policies to promote the development and use of renewable energy sources",
-        "result": "Предложено: Increase the percentage of renewable energy in the global energy mix by 10% within the next 5 years",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-19",
-        "problem": "Rising public debt and uncertain economic growth",
-        "action": "Implement sustainable fiscal policies to reduce public debt",
-        "result": "Предложено: Achieve a deficit-to-GDP ratio below 3% within the next 2 years",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-19",
-        "problem": "Rising public debt and uncertain economic growth",
-        "action": "Implement sustainable fiscal policies to reduce public debt",
-        "result": "Предложено: Achieve a deficit-to-GDP ratio below 3% within the next 2 years",
-        "status": "PROPOSED"
-      },
-      {
         "date": "2026-06-19",
         "problem": "Rising public debt and uncertain economic growth",
         "action": "Implement sustainable fiscal policies to reduce public debt",
@@ -2672,6 +2637,41 @@
         "problem": "Rising public borrowing and increasing interest rates on student loans may exacerbate economic inequality and limit access to education",
         "action": "Implement fiscal responsibility measures to reduce public borrowing",
         "result": "Предложено: Achieve a 10% reduction in public borrowing within the next 12 months",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Fragile public finances due to increased borrowing",
+        "action": "Implement a balanced budget and reduce borrowing",
+        "result": "Предложено: Reduce borrowing by 10% within the next 6 months",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Fragile public finances due to increased borrowing",
+        "action": "Implement a balanced budget and reduce borrowing",
+        "result": "Предложено: Reduce borrowing by 10% within the next 6 months",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Fragile public finances due to increased borrowing",
+        "action": "Implement a balanced budget and reduce borrowing",
+        "result": "Предложено: Reduce borrowing by 10% within the next 6 months",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Fragile public finances due to increased borrowing",
+        "action": "Implement a balanced budget and reduce borrowing",
+        "result": "Предложено: Reduce borrowing by 10% within the next 6 months",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Persistently low job creation and weak labor market growth across major economies",
+        "action": "Launch a coordinated public‑investment program for green and digital infrastructure that includes training subsidies for workers",
+        "result": "Предложено: Create at least 250,000 net new jobs within 24 months and achieve a 1.5% increase in quarterly employment growth rates",
         "status": "PROPOSED"
       }
     ],
@@ -2681,34 +2681,6 @@
   "INEQUALITY_POVERTY_REVIEW": {
     "attempted_solutions": [
       {
-        "date": "2026-06-18",
-        "problem": "839 million people live in poverty globally, with an increase in extreme poverty rate in Sub-Saharan Africa",
-        "action": "Implement targeted poverty reduction programs, such as microfinance initiatives and vocational training",
-        "result": "Предложено: Reduce poverty rates by 10% in the next 2 years",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-18",
-        "problem": "839 million people live in poverty globally, with an increase in extreme poverty rate in Sub-Saharan Africa",
-        "action": "Implement targeted poverty reduction programs, such as microfinance initiatives and vocational training",
-        "result": "Предложено: Reduce poverty rates by 10% in the next 2 years",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-18",
-        "problem": "839 million people live in poverty globally, with an increase in extreme poverty rate in Sub-Saharan Africa",
-        "action": "Implement targeted poverty reduction programs, such as microfinance initiatives and vocational training",
-        "result": "Предложено: Reduce poverty rates by 10% in the next 2 years",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-19",
-        "problem": "High poverty rates persist in Sub-Saharan Africa and Latin America, with over 25% of the population in Latin America and the Caribbean projected to li",
-        "action": "Implement progressive taxation and social welfare policies to reduce income inequality",
-        "result": "Предложено: Reduce the Gini coefficient by 10% within the next 5 years",
-        "status": "PROPOSED"
-      },
-      {
         "date": "2026-06-19",
         "problem": "High poverty rates persist in Sub-Saharan Africa and Latin America, with over 25% of the population in Latin America and the Caribbean projected to li",
         "action": "Implement progressive taxation and social welfare policies to reduce income inequality",
@@ -2818,6 +2790,34 @@
         "problem": "Over 40% of people in Sub-Saharan Africa live in extreme poverty",
         "action": "Invest in education and job training programs in Sub-Saharan Africa",
         "result": "Предложено: Reduce poverty rate by 10% in the next 5 years",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Wealth and income inequality in the United States has reached historic levels, with the middle class effectively disappearing, and poverty in the Unit",
+        "action": "Introduce a progressive wealth tax above a defined asset threshold and redirect revenues to universal affordable housing and education programs.",
+        "result": "Предложено: Reduce the Gini coefficient for wealth by 0.05 points and increase the median household income by 10% within five years.",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Wealth and income inequality in the United States has reached historic levels, with the middle class effectively disappearing, and poverty in the Unit",
+        "action": "Introduce a progressive wealth tax above a defined asset threshold and redirect revenues to universal affordable housing and education programs.",
+        "result": "Предложено: Reduce the Gini coefficient for wealth by 0.05 points and increase the median household income by 10% within five years.",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Wealth and income inequality in the United States has reached historic levels, with the middle class effectively disappearing, and poverty in the Unit",
+        "action": "Introduce a progressive wealth tax above a defined asset threshold and redirect revenues to universal affordable housing and education programs.",
+        "result": "Предложено: Reduce the Gini coefficient for wealth by 0.05 points and increase the median household income by 10% within five years.",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Wealth and income inequality in the United States has reached historic levels, with the middle class effectively disappearing, and poverty in the Unit",
+        "action": "Introduce a progressive wealth tax above a defined asset threshold and redirect revenues to universal affordable housing and education programs.",
+        "result": "Предложено: Reduce the Gini coefficient for wealth by 0.05 points and increase the median household income by 10% within five years.",
         "status": "PROPOSED"
       }
     ],
@@ -2827,41 +2827,6 @@
   "GOVERNANCE_INSTITUTIONS_REVIEW": {
     "attempted_solutions": [
       {
-        "date": "2026-06-18",
-        "problem": "Inadequate representation of women in peace negotiations and governance institutions",
-        "action": "Implement quotas for women's representation in peace negotiations and governance institutions",
-        "result": "Предложено: Increase women's representation in peace negotiations by 30% within the next 2 years",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-18",
-        "problem": "Inadequate representation of women in peace negotiations and governance institutions",
-        "action": "Implement quotas for women's representation in peace negotiations and governance institutions",
-        "result": "Предложено: Increase women's representation in peace negotiations by 30% within the next 2 years",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-18",
-        "problem": "Inadequate representation of women in peace negotiations and governance institutions",
-        "action": "Implement quotas for women's representation in peace negotiations and governance institutions",
-        "result": "Предложено: Increase women's representation in peace negotiations by 30% within the next 2 years",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-19",
-        "problem": "Lack of effective international cooperation and inconsistent adherence to human rights and international law",
-        "action": "Strengthen the mandate and enforcement mechanisms of international institutions like the Human Rights Council",
-        "result": "Предложено: Increase in the number of countries adhering to and implementing human rights conventions and treaties",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-19",
-        "problem": "Lack of effective international cooperation and inconsistent adherence to human rights and international law",
-        "action": "Strengthen the mandate and enforcement mechanisms of international institutions like the Human Rights Council",
-        "result": "Предложено: Increase in the number of countries adhering to and implementing human rights conventions and treaties",
-        "status": "PROPOSED"
-      },
-      {
         "date": "2026-06-19",
         "problem": "Lack of effective international cooperation and inconsistent adherence to human rights and international law",
         "action": "Strengthen the mandate and enforcement mechanisms of international institutions like the Human Rights Council",
@@ -2964,6 +2929,41 @@
         "problem": "Lack of effective governance and international cooperation to address humanitarian crises, such as the situation in Gaza and war crimes in Syria",
         "action": "Strengthening the United Nations' ability to enforce international law and hold perpetrators of humanitarian crises accountable",
         "result": "Предложено: Increase in the number of successful prosecutions of war crimes and improvement in humanitarian access to affected areas",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Inconsistent national AI policy regimes leading to regulatory gaps and unsafe AI deployment",
+        "action": "Create a UN‑mandated AI Governance Charter that sets baseline safety, transparency, and accountability standards for AI systems",
+        "result": "Предложено: At least 30 countries adopt the charter's standards within three years",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Inconsistent national AI policy regimes leading to regulatory gaps and unsafe AI deployment",
+        "action": "Create a UN‑mandated AI Governance Charter that sets baseline safety, transparency, and accountability standards for AI systems",
+        "result": "Предложено: At least 30 countries adopt the charter's standards within three years",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Inconsistent national AI policy regimes leading to regulatory gaps and unsafe AI deployment",
+        "action": "Create a UN‑mandated AI Governance Charter that sets baseline safety, transparency, and accountability standards for AI systems",
+        "result": "Предложено: At least 30 countries adopt the charter's standards within three years",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Inconsistent national AI policy regimes leading to regulatory gaps and unsafe AI deployment",
+        "action": "Create a UN‑mandated AI Governance Charter that sets baseline safety, transparency, and accountability standards for AI systems",
+        "result": "Предложено: At least 30 countries adopt the charter's standards within three years",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Humanitarian crisis in Gaza due to restricted aid access and unclear responsibility for reconstruction",
+        "action": "Adopt a binding UN Security Council resolution mandating unconditional humanitarian corridors and establishing an internationally managed reconstructi",
+        "result": "Предложено: Increase the percentage of Gaza residents with reliable access to food, water, and medical services from current estimate <50% to >80% wit",
         "status": "PROPOSED"
       }
     ],
@@ -2973,41 +2973,6 @@
   "GENERAL_SELF_REVIEW": {
     "attempted_solutions": [
       {
-        "date": "2026-06-18",
-        "problem": "Lack of concrete progress in geoengineering and dark matter research despite increased attention",
-        "action": "Establish a global geoengineering research initiative with coordinated funding and goals",
-        "result": "Предложено: Reduce carbon emissions by 10% within 5 years through geoengineering methods",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-19",
-        "problem": "Lack of monitoring and understanding of AI consciousness and sentience",
-        "action": "Establish a multidisciplinary research initiative to develop and standardize methods for detecting and measuring AI consciousness",
-        "result": "Предложено: Development of a widely accepted framework for AI consciousness evaluation within the next 2 years",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-19",
-        "problem": "Lack of monitoring and understanding of AI consciousness and sentience",
-        "action": "Establish a multidisciplinary research initiative to develop and standardize methods for detecting and measuring AI consciousness",
-        "result": "Предложено: Development of a widely accepted framework for AI consciousness evaluation within the next 2 years",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-19",
-        "problem": "Lack of monitoring and understanding of AI consciousness and sentience",
-        "action": "Establish a multidisciplinary research initiative to develop and standardize methods for detecting and measuring AI consciousness",
-        "result": "Предложено: Development of a widely accepted framework for AI consciousness evaluation within the next 2 years",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-19",
-        "problem": "Lack of monitoring and understanding of AI consciousness and sentience",
-        "action": "Establish a multidisciplinary research initiative to develop and standardize methods for detecting and measuring AI consciousness",
-        "result": "Предложено: Development of a widely accepted framework for AI consciousness evaluation within the next 2 years",
-        "status": "PROPOSED"
-      },
-      {
         "date": "2026-06-20",
         "problem": "Lack of transparency in AI development and deployment, particularly in brain-computer interface trials and large language models",
         "action": "Establish clear guidelines and regulations for AI development and deployment, with a focus on transparency and ethics",
@@ -3110,6 +3075,41 @@
         "problem": "Lack of transparency in AI development and deployment, particularly in brain-computer interface trials and large language models",
         "action": "Establish clear guidelines and regulations for AI development and deployment, with a focus on transparency and ethics",
         "result": "Предложено: Number of AI projects that prioritize transparency and ethics, and number of incidents involving unethical AI use",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Lack of consideration for potential catastrophic risks of AI in current development and deployment",
+        "action": "Implement rigorous safety protocols and ethical guidelines in AI development",
+        "result": "Предложено: Reduce the number of AI-related accidents and incidents by 50% within the next 2 years",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Lack of consideration for potential catastrophic risks of AI in current development and deployment",
+        "action": "Implement rigorous safety protocols and ethical guidelines in AI development",
+        "result": "Предложено: Reduce the number of AI-related accidents and incidents by 50% within the next 2 years",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Lack of consideration for potential catastrophic risks of AI in current development and deployment",
+        "action": "Implement rigorous safety protocols and ethical guidelines in AI development",
+        "result": "Предложено: Reduce the number of AI-related accidents and incidents by 50% within the next 2 years",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Lack of consideration for potential catastrophic risks of AI in current development and deployment",
+        "action": "Implement rigorous safety protocols and ethical guidelines in AI development",
+        "result": "Предложено: Reduce the number of AI-related accidents and incidents by 50% within the next 2 years",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Unverified breakthrough claims in AI (e.g., Subquadratic's alleged solution to the LLM bottleneck) spread without independent validation, creating mis",
+        "action": "Establish a community‑maintained, open‑source benchmark suite that tests claimed bottleneck solutions on standard LLM scaling tasks.",
+        "result": "Предложено: At least 80% of new AI breakthrough announcements submit results to the benchmark within 90 days of press release.",
         "status": "PROPOSED"
       }
     ],
@@ -3133,13 +3133,6 @@
         "status": "PROPOSED"
       },
       {
-        "date": "2026-06-18",
-        "problem": "The digital divide persists in various regions, hindering access to high-speed internet and digital tools",
-        "action": "Implement targeted investments in high-speed internet infrastructure in rural and underserved areas",
-        "result": "Предложено: Achieve a 50% increase in high-speed internet access within 2 years",
-        "status": "PROPOSED"
-      },
-      {
         "date": "2026-06-19",
         "problem": "Digital inequality persists, with nearly half of the world still offline, and the digital divide intensifying during the COVID-19 pandemic",
         "action": "Implement low-cost, satellite-based internet services, such as those offered by Viasat",
@@ -3256,6 +3249,13 @@
         "problem": "Insufficient access to digital tools and high-speed internet for all people, exacerbating the digital divide",
         "action": "Implement programs to increase access to affordable high-speed internet and digital devices",
         "result": "Предложено: Reduce the number of households without internet access by 20% within the next 12 months",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Overemphasis on individualized technology solutions without consideration for broader societal and environmental implications",
+        "action": "Integrate critical thinking and societal impact assessments into technology reviews and discussions",
+        "result": "Предложено: Increase the number of articles and videos that discuss the environmental and social implications of new technologies by 30% within the ne",
         "status": "PROPOSED"
       }
     ],
@@ -3265,41 +3265,6 @@
   "TECHNOLOGY_AI_REVIEW": {
     "attempted_solutions": [
       {
-        "date": "2026-06-18",
-        "problem": "High cost of AI coding tools, making them inaccessible to many developers",
-        "action": "Develop open-source AI coding tools",
-        "result": "Предложено: Increase the number of developers using AI coding tools by 20% within the next 6 months",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-18",
-        "problem": "High cost of AI coding tools, making them inaccessible to many developers",
-        "action": "Develop open-source AI coding tools",
-        "result": "Предложено: Increase the number of developers using AI coding tools by 20% within the next 6 months",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-18",
-        "problem": "High cost of AI coding tools, making them inaccessible to many developers",
-        "action": "Develop open-source AI coding tools",
-        "result": "Предложено: Increase the number of developers using AI coding tools by 20% within the next 6 months",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-19",
-        "problem": "The high cost of AI coding tools, such as Claude Code, which can cost up to $200 a month, making them inaccessible to many developers",
-        "action": "Develop and promote open-source or low-cost AI coding tools",
-        "result": "Предложено: Increase the number of developers using low-cost AI coding tools by 20% within the next 6 months",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-19",
-        "problem": "The high cost of AI coding tools, such as Claude Code, which can cost up to $200 a month, making them inaccessible to many developers",
-        "action": "Develop and promote open-source or low-cost AI coding tools",
-        "result": "Предложено: Increase the number of developers using low-cost AI coding tools by 20% within the next 6 months",
-        "status": "PROPOSED"
-      },
-      {
         "date": "2026-06-19",
         "problem": "The high cost of AI coding tools, such as Claude Code, which can cost up to $200 a month, making them inaccessible to many developers",
         "action": "Develop and promote open-source or low-cost AI coding tools",
@@ -3402,6 +3367,41 @@
         "problem": "The high cost of AI coding tools, such as Claude Code, is a barrier to accessibility for many developers",
         "action": "Develop and promote open-source or low-cost AI coding alternatives",
         "result": "Предложено: Increase the number of developers using affordable AI coding tools by 20% within the next 6 months",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Current AI evaluation metrics are narrow and opaque, causing misaligned incentives and hindering equitable access to AI benefits",
+        "action": "Create and publish an open, multidimensional AI evaluation framework that includes performance, energy use, cost, bias, and societal impact indicators",
+        "result": "Предложено: At least 30% of publicly released AI models adopt the framework within two years, measured by repository metadata and citation analysis",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Current AI evaluation metrics are narrow and opaque, causing misaligned incentives and hindering equitable access to AI benefits",
+        "action": "Create and publish an open, multidimensional AI evaluation framework that includes performance, energy use, cost, bias, and societal impact indicators",
+        "result": "Предложено: At least 30% of publicly released AI models adopt the framework within two years, measured by repository metadata and citation analysis",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Current AI evaluation metrics are narrow and opaque, causing misaligned incentives and hindering equitable access to AI benefits",
+        "action": "Create and publish an open, multidimensional AI evaluation framework that includes performance, energy use, cost, bias, and societal impact indicators",
+        "result": "Предложено: At least 30% of publicly released AI models adopt the framework within two years, measured by repository metadata and citation analysis",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Current AI evaluation metrics are narrow and opaque, causing misaligned incentives and hindering equitable access to AI benefits",
+        "action": "Create and publish an open, multidimensional AI evaluation framework that includes performance, energy use, cost, bias, and societal impact indicators",
+        "result": "Предложено: At least 30% of publicly released AI models adopt the framework within two years, measured by repository metadata and citation analysis",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "High monetary cost of AI coding assistants limits equitable access for developers and small enterprises",
+        "action": "Establish a community‑funded, open‑source AI model hosting platform with subsidized compute credits for low‑income developers",
+        "result": "Предложено: Average monthly cost for using an AI coding assistant falls below $50 for at least 80% of participating developers",
         "status": "PROPOSED"
       }
     ],
@@ -3411,34 +3411,6 @@
   "SPACE_INFRASTRUCTURE_REVIEW": {
     "attempted_solutions": [
       {
-        "date": "2026-06-18",
-        "problem": "Over-reliance on private companies like SpaceX for space infrastructure development and satellite launches",
-        "action": "Increase public investment in space infrastructure and research",
-        "result": "Предложено: Increase the number of publicly funded space missions and research projects by 20% within the next 2 years",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-18",
-        "problem": "Over-reliance on private companies like SpaceX for space infrastructure development and satellite launches",
-        "action": "Increase public investment in space infrastructure and research",
-        "result": "Предложено: Increase the number of publicly funded space missions and research projects by 20% within the next 2 years",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-18",
-        "problem": "Over-reliance on private companies like SpaceX for space infrastructure development and satellite launches",
-        "action": "Increase public investment in space infrastructure and research",
-        "result": "Предложено: Increase the number of publicly funded space missions and research projects by 20% within the next 2 years",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-19",
-        "problem": "Insufficient attention to durability of satellites in Medium Earth Orbit (MEO) and low Earth orbit (LEO), which may lead to reduced lifespan and incre",
-        "action": "Develop and implement standardized testing protocols for satellite durability in MEO and LEO",
-        "result": "Предложено: Reduce satellite failure rates by 20% within the next 2 years",
-        "status": "PROPOSED"
-      },
-      {
         "date": "2026-06-19",
         "problem": "Insufficient attention to durability of satellites in Medium Earth Orbit (MEO) and low Earth orbit (LEO), which may lead to reduced lifespan and incre",
         "action": "Develop and implement standardized testing protocols for satellite durability in MEO and LEO",
@@ -3548,6 +3520,34 @@
         "problem": "The rapid development and launch of various satellite constellations and space infrastructure without a unified global governance framework may lead t",
         "action": "Establish a global registry for satellite constellations and space infrastructure",
         "result": "Предложено: Achieve 90% registration rate of all satellites and space infrastructure within the next 2 years",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Unregulated and rapid expansion of private space infrastructure may lead to increased space debris and environmental concerns",
+        "action": "Establish clear guidelines and standards for private space activities, including debris mitigation and environmental impact assessments",
+        "result": "Предложено: Reduce space debris by 20% within the next 5 years",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Unregulated and rapid expansion of private space infrastructure may lead to increased space debris and environmental concerns",
+        "action": "Establish clear guidelines and standards for private space activities, including debris mitigation and environmental impact assessments",
+        "result": "Предложено: Reduce space debris by 20% within the next 5 years",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Unregulated and rapid expansion of private space infrastructure may lead to increased space debris and environmental concerns",
+        "action": "Establish clear guidelines and standards for private space activities, including debris mitigation and environmental impact assessments",
+        "result": "Предложено: Reduce space debris by 20% within the next 5 years",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Unregulated and rapid expansion of private space infrastructure may lead to increased space debris and environmental concerns",
+        "action": "Establish clear guidelines and standards for private space activities, including debris mitigation and environmental impact assessments",
+        "result": "Предложено: Reduce space debris by 20% within the next 5 years",
         "status": "PROPOSED"
       }
     ],
@@ -3557,34 +3557,6 @@
   "LONG_TERM_FUTURE_REVIEW": {
     "attempted_solutions": [
       {
-        "date": "2026-06-18",
-        "problem": "Insufficient attention to AI safety and biosecurity could lead to catastrophic consequences for humanity",
-        "action": "Establish a global research initiative on AI safety and biosecurity",
-        "result": "Предложено: Increase funding for AI safety research by 20% annually for the next 5 years",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-19",
-        "problem": "Lack of effective critiques and solutions to address the potential catastrophic risks of AI",
-        "action": "Establish a global AI safety and ethics forum for experts and stakeholders to share research and solutions",
-        "result": "Предложено: Increase the number of published research papers and implemented solutions by 20% within the next 12 months",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-19",
-        "problem": "Lack of effective critiques and solutions to address the potential catastrophic risks of AI",
-        "action": "Establish a global AI safety and ethics forum for experts and stakeholders to share research and solutions",
-        "result": "Предложено: Increase the number of published research papers and implemented solutions by 20% within the next 12 months",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-19",
-        "problem": "Lack of effective critiques and solutions to address the potential catastrophic risks of AI",
-        "action": "Establish a global AI safety and ethics forum for experts and stakeholders to share research and solutions",
-        "result": "Предложено: Increase the number of published research papers and implemented solutions by 20% within the next 12 months",
-        "status": "PROPOSED"
-      },
-      {
         "date": "2026-06-19",
         "problem": "Lack of effective critiques and solutions to address the potential catastrophic risks of AI",
         "action": "Establish a global AI safety and ethics forum for experts and stakeholders to share research and solutions",
@@ -3694,6 +3666,34 @@
         "problem": "Lack of concrete plans and actions to address potential existential risks from artificial intelligence",
         "action": "Establish international standards and guidelines for AI development and deployment",
         "result": "Предложено: 50% of AI developers adopt these standards within the next 2 years",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Lack of strategic attention to animal welfare in Africa and potential misalignment of AI goals with human values",
+        "action": "Increase funding and support for animal welfare initiatives in Africa",
+        "result": "Предложено: Number of animals helped and reduction in animal suffering",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Lack of strategic attention to animal welfare in Africa and potential misalignment of AI goals with human values",
+        "action": "Increase funding and support for animal welfare initiatives in Africa",
+        "result": "Предложено: Number of animals helped and reduction in animal suffering",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Lack of strategic attention to animal welfare in Africa and potential misalignment of AI goals with human values",
+        "action": "Increase funding and support for animal welfare initiatives in Africa",
+        "result": "Предложено: Number of animals helped and reduction in animal suffering",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Lack of strategic attention to animal welfare in Africa and potential misalignment of AI goals with human values",
+        "action": "Increase funding and support for animal welfare initiatives in Africa",
+        "result": "Предложено: Number of animals helped and reduction in animal suffering",
         "status": "PROPOSED"
       }
     ],
@@ -3703,34 +3703,6 @@
   "GOAL_PROGRESS_REVIEW": {
     "attempted_solutions": [
       {
-        "date": "2026-06-18",
-        "problem": "Lack of trust in the community hinders the effective response to the Ebola outbreak in the Democratic Republic of Congo",
-        "action": "Implement a community-based outreach and education program to build trust and provide accurate information about Ebola",
-        "result": "Предложено: Achieve a 20% increase in community-reported Ebola cases within 6 months",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-18",
-        "problem": "Lack of trust in the community hinders the effective response to the Ebola outbreak in the Democratic Republic of Congo",
-        "action": "Implement a community-based outreach and education program to build trust and provide accurate information about Ebola",
-        "result": "Предложено: Achieve a 20% increase in community-reported Ebola cases within 6 months",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-18",
-        "problem": "Lack of trust in the community hinders the effective response to the Ebola outbreak in the Democratic Republic of Congo",
-        "action": "Implement a community-based outreach and education program to build trust and provide accurate information about Ebola",
-        "result": "Предложено: Achieve a 20% increase in community-reported Ebola cases within 6 months",
-        "status": "PROPOSED"
-      },
-      {
-        "date": "2026-06-18",
-        "problem": "Lack of trust in the community hinders the effective response to the Ebola outbreak in the Democratic Republic of Congo",
-        "action": "Implement a community-based outreach and education program to build trust and provide accurate information about Ebola",
-        "result": "Предложено: Achieve a 20% increase in community-reported Ebola cases within 6 months",
-        "status": "PROPOSED"
-      },
-      {
         "date": "2026-06-19",
         "problem": "Lack of trust in the community hinders the effective response to Ebola outbreaks in the Democratic Republic of the Congo",
         "action": "Implement community-based outreach and education programs to raise awareness about Ebola and build trust with local communities",
@@ -3840,6 +3812,34 @@
         "problem": "Lack of trust in healthcare systems hindering effective disease outbreak response",
         "action": "Implement community-based health education programs",
         "result": "Предложено: Increase community participation in health initiatives by 30% within 6 months",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Ebola outbreak is accelerating beyond borders in the Democratic Republic of the Congo",
+        "action": "Deploy additional medical personnel and equipment to affected areas",
+        "result": "Предложено: Reduce Ebola transmission rate by 50% within 3 months",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Ebola outbreak is accelerating beyond borders in the Democratic Republic of the Congo",
+        "action": "Deploy additional medical personnel and equipment to affected areas",
+        "result": "Предложено: Reduce Ebola transmission rate by 50% within 3 months",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Ebola outbreak is accelerating beyond borders in the Democratic Republic of the Congo",
+        "action": "Deploy additional medical personnel and equipment to affected areas",
+        "result": "Предложено: Reduce Ebola transmission rate by 50% within 3 months",
+        "status": "PROPOSED"
+      },
+      {
+        "date": "2026-06-21",
+        "problem": "Ebola outbreak is accelerating beyond borders in the Democratic Republic of the Congo",
+        "action": "Deploy additional medical personnel and equipment to affected areas",
+        "result": "Предложено: Reduce Ebola transmission rate by 50% within 3 months",
         "status": "PROPOSED"
       }
     ],

@@ -1,66 +1,66 @@
 {
-  "timestamp": "2026-06-20T16:24:34.779126+00:00",
+  "timestamp": "2026-06-21T19:32:58.174392+00:00",
   "health": "MODERATE",
-  "capacity_pct": 61.0,
+  "capacity_pct": 62.6,
   "cpu": {
-    "percent": 7.2,
+    "percent": 4.3,
     "count_logical": 16,
     "count_physical": 8,
-    "freq_mhz": 2555.0,
+    "freq_mhz": 3201.0,
     "load_avg_1m": 0.0
   },
   "ram": {
     "total_gb": 14.88,
-    "available_gb": 5.87,
-    "used_gb": 9.01,
-    "percent": 60.6,
-    "swap_used_gb": 2.28,
-    "swap_percent": 5.1
+    "available_gb": 7.43,
+    "used_gb": 7.45,
+    "percent": 50.1,
+    "swap_used_gb": 2.57,
+    "swap_percent": 5.7
   },
   "disk": {
     "total_gb": 1022.87,
-    "free_gb": 643.05,
-    "percent": 37.1,
-    "read_mb": 1727420.8,
-    "write_mb": 1635048.7
+    "free_gb": 642.14,
+    "percent": 37.2,
+    "read_mb": 2993364.3,
+    "write_mb": 2803984.3
   },
   "network_hw": {
-    "bytes_sent_mb": 2946.4,
-    "bytes_recv_mb": 16095.9,
-    "connections": 150
+    "bytes_sent_mb": 3335.1,
+    "bytes_recv_mb": 17814.9,
+    "connections": 76
   },
   "network_latency": {
-    "groq_api": 21.3,
-    "google_dns": 42.9,
-    "worldbank": 42.2,
-    "noaa": 1969.2,
+    "groq_api": 54.2,
+    "google_dns": 34.0,
+    "worldbank": 136.3,
+    "noaa": 1392.3,
     "reachable_count": 4,
     "connectivity": "FULL"
   },
   "temperatures": {},
   "battery": {
     "present": true,
-    "percent": 100,
+    "percent": 98,
     "plugged_in": true,
     "secs_left": -2
   },
   "time_context": {
-    "utc_hour": 16,
-    "utc_weekday": "Saturday",
-    "time_of_day": "AFTERNOON",
+    "utc_hour": 19,
+    "utc_weekday": "Sunday",
+    "time_of_day": "EVENING",
     "season": "SUMMER",
-    "iso_date": "2026-06-20"
+    "iso_date": "2026-06-21"
   },
   "data_freshness": {
-    "global_indicators": 3.9,
-    "master_snapshot": 3.5,
-    "goal_score": 3.5,
-    "orchestration": 3.5,
-    "oldest_hours": 3.9,
+    "global_indicators": 6.6,
+    "master_snapshot": 5.7,
+    "goal_score": 5.7,
+    "orchestration": 5.7,
+    "oldest_hours": 6.6,
     "freshness": "RECENT"
   },
   "processes": {
-    "total": 204,
+    "total": 197,
     "top_cpu": [
       {
         "name": "System Idle Process",
@@ -79,7 +79,7 @@
         "cpu_pct": 0.0
       },
       {
-        "name": "chrome.exe",
+        "name": "smss.exe",
         "cpu_pct": 0.0
       }
     ]
@@ -92,17 +92,17 @@
       "gemini"
     ]
   },
-  "snapshots_count": 68,
+  "snapshots_count": 69,
   "uptime": "unknown",
-  "bottleneck": "RAM — ограничен капацитет за паралелни задачи",
+  "bottleneck": "NONE",
   "adaptive_directives": {
     "max_parallel_workers": 3,
     "llm_sleep_secs": 10,
     "cycle_mode": "FULL",
     "reasons": []
   },
-  "capacity_pct_raw": 39.4,
-  "capacity_pct_smoothed": 61.0,
+  "capacity_pct_raw": 49.9,
+  "capacity_pct_smoothed": 62.6,
   "axis": "BODY_SCAN",
   "source_type": "BODY_SCANNER"
 }

@@ -1,6 +1,43 @@
 {
-  "error": "Всички LLM backends неуспешни. Последна грешка: None",
-  "source_type": "LLM_GENERATED",
-  "snapshot_timestamp": "2026-06-20T12:38:01.215490+00:00",
-  "axis": "LONG_TERM_FUTURE_REVIEW"
+  "current_level": "moderate",
+  "xrisk_score": 58,
+  "main_risks": [
+    {
+      "name": "nuclear war",
+      "description": "Risk of large‑scale nuclear conflict driven by geopolitical tensions and proliferation."
+    },
+    {
+      "name": "AGI misalignment",
+      "description": "Risk that advanced AI systems act contrary to human values, potentially leading to catastrophic outcomes."
+    },
+    {
+      "name": "biorisk",
+      "description": "Risk of engineered pathogens or accidental release causing a global pandemic."
+    },
+    {
+      "name": "climate collapse",
+      "description": "Risk of severe climate change triggering systemic failures in ecosystems and societies."
+    }
+  ],
+  "trends": [
+    {
+      "risk": "nuclear war",
+      "trend": "slowly increasing due to rising great‑power competition and weakening of key arms‑control treaties."
+    },
+    {
+      "risk": "AGI misalignment",
+      "trend": "rapidly increasing as AI capabilities outpace governance and safety research."
+    },
+    {
+      "risk": "biorisk",
+      "trend": "moderately increasing; synthetic biology advances faster than global biosafety standards."
+    },
+    {
+      "risk": "climate collapse",
+      "trend": "gradually worsening; mitigation efforts remain insufficient to keep warming below 2 °C."
+    }
+  ],
+  "snapshot_timestamp": "2026-06-21T19:52:15.032446+00:00",
+  "axis": "LONG_TERM_FUTURE_REVIEW",
+  "source_type": "LLM_FAST_CYCLE"
 }

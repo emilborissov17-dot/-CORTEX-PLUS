@@ -1,34 +1,61 @@
 {
-  "timestamp": "2026-06-20T12:57:30Z",
+  "timestamp": "2026-06-21T13:51:04Z",
   "attention": {
-    "priority_axes": [
-      "ПЛАНЕТА",
-      "ЧОВЕК"
-    ],
-    "main_threat": "Недостиг на sạchна вода",
-    "main_opportunity": "Устойчиво управление на водните ресурси",
-    "immediate_action": "Оценка на текущите водни ресурси и разработване на стратегии за консервиране и ефективно използване",
-    "reasoning": "Водата е основен елемент за оцеляването на човека и планетата. Недостигът на чиста вода може да доведе доserious последствия за здравето, икономиката и околната среда. Устойчивото управление на водните ресурси е ключова опотърност за постигане на устойчива цивилизация.",
-    "method": "llm-enriched"
+    "priority_axes": [],
+    "main_threat": "WATER_REVIEW (xrisk=0.00)",
+    "main_opportunity": "WATER_REVIEW",
+    "immediate_action": "Collect more real data",
+    "reasoning": "Rule-based AMP (xrisk + progress + trend)",
+    "method": "rule-based"
   },
   "strategic_plan": {
     "plan_24h": [
       {
-        "axis": "ПЛАНЕТА",
-        "action": "Collect real metrics for ПЛАНЕТА",
-        "lever": "data_providers",
-        "allies": []
+        "axis": "Water Resource Monitoring",
+        "action": "Идентифицирай ключови датасети за глобално и регионално водоснабдяване (стокове вода, качествен мониторинг, тенденции на използване) чрез публични APIs на UN Water, World Bank, FAO и национални водни агенции.",
+        "lever": "Отворени данни и автоматизирани ETL процеси за ежедневно извличане и синхронизация.",
+        "allies": [
+          "UN Water",
+          "World Bank Water Global Practice",
+          "FAO AQUASTAT",
+          "NASA Earthdata (GRACE, MODIS)",
+          "European Environment Agency (EEA)",
+          "Неправителствени организации: Water.org, International Water Management Institute (IWMI)"
+        ]
       },
       {
-        "axis": "ЧОВЕК",
-        "action": "Collect real metrics for ЧОВЕК",
-        "lever": "data_providers",
-        "allies": []
+        "axis": "Data Integration & Quality Assurance",
+        "action": "Настрой интеграционна платформа (например CKAN или DataHub) за агрегация и валидация на събраните данни; извърши бърз одит за пропуски и несъответствия.",
+        "lever": "Стандарти за метаданни (ISO 19115) и автоматични скриптове за откриване на аномалии.",
+        "allies": [
+          "Open Knowledge Foundation",
+          "Global Water Partnership (GWP)",
+          "Университети с експертиза в хидрологични модели – MIT, ETH Zurich"
+        ]
+      },
+      {
+        "axis": "Stakeholder Engagement & Citizen Science",
+        "action": "Лансирай 24‑часова онлайн кампания (Twitter, LinkedIn, Telegram) с призив към учени, журналисти и граждани да споделят локални данни за водни ресурси (напр. ниво на реки, качество) чрез готова форма в Google Forms.",
+        "lever": "Мобилно приложение за събиране на данни (пример: Open Water Map) и геймификация за максимизиране на участие.",
+        "allies": [
+          "Citizen Science Association",
+          "Ключови инфлуенсъри в областта на околната среда – @climateaction, @WaterWatch",
+          "Местни екологични НПО"
+        ]
+      },
+      {
+        "axis": "Risk Assessment Preparation",
+        "action": "Изготви предварителен скелет за модел на риск от водни дефицити, базиран на събраните данни, за да позволи по‑нататъшно приоритетизиране (напр. регион с най‑голямо увеличение в стреса върху водните ресурси).",
+        "lever": "Съществуващи модели (WWF Water Stress Index, UN SDG 6.4) и отворен код (Python, R) за бързо прототипиране.",
+        "allies": [
+          "World Wildlife Fund (WWF)",
+          "UN Sustainable Development Solutions Network (SDSN)",
+          "Data Science for Social Good инициативи"
+        ]
       }
     ],
-    "key_insight": "Focus on ПЛАНЕТА",
-    "civilization_impact": "NEUTRAL",
-    "next_evolution_step": "Improve real data coverage for priority axes",
-    "method": "rule-based-fallback"
+    "key_insight": "Недостатъчната и децентрализирана достъпност до актуални данни за водните ресурси е главната бариера за оперативно управление на риска — събирането и интеграцията на реални данни е спешна нужда, а съществуващите международни платформи предоставят готови API, които могат да бъдат активирани в рамките на 24 ч.",
+    "civilization_impact": "POSITIVE",
+    "next_evolution_step": "След 24‑часовата фаза, изграждане на глобален дашборд за водна сигурност, който да подкрепи стратегически решения за инвестиции в регенеративни водни системи и да служи като основа за дългосрочна политика за устойчиво управление на водните ресурси."
   }
 }

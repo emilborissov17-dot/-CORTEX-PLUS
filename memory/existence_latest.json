@@ -1,14 +1,15 @@
 {
-  "timestamp": "2026-06-05T06:09:54.470407+00:00",
+  "timestamp": "2026-06-21T13:54:28.490660+00:00",
   "pain": {
     "pain_points": [
       "7 оси без реални данни",
       "GOVERNANCE_INSTITUTIONS_REVIEW е в критично състояние",
       "CLIMATE_GLOBAL_RISK_REVIEW е в критично състояние",
       "ENERGY_REVIEW е в критично състояние",
-      "68 грешки в паметта"
+      "MATERIALS_WASTE_REVIEW е в критично състояние",
+      "77 грешки в паметта"
     ],
-    "pain_score": 91
+    "pain_score": 103
   },
   "memory": {
     "scars": [
@@ -30,341 +31,6 @@
       {
         "date": "2026-02-25",
         "wound": "OpenCLaw симулация се провали — run_sim.py грешка",
-        "type": "FAILURE"
-      },
-      {
-        "date": "2026-04-29",
-        "wound": "Предсказанието за технологиите и изкуствения интелект има грешка от 17.5, което ",
-        "type": "FAILURE"
-      },
-      {
-        "date": "2026-04-29",
-        "wound": "Прогнозната грешка за ENERGY_REVIEW е 16.3, което надхвърля средната грешка от 1",
-        "type": "FAILURE"
-      },
-      {
-        "date": "2026-04-29",
-        "wound": "Предсказанието за технологиите и изкуствения интелект има грешка от 17.5, което ",
-        "type": "FAILURE"
-      },
-      {
-        "date": "2026-04-29",
-        "wound": "Прогнозната грешка за ENERGY_REVIEW е 16.3, което надхвърля средната грешка от 1",
-        "type": "FAILURE"
-      },
-      {
-        "date": "2026-04-29",
-        "wound": "Предсказанието за технологиите и изкуствения интелект има грешка от 17.5, което ",
-        "type": "FAILURE"
-      },
-      {
-        "date": "2026-04-29",
-        "wound": "Прогнозната грешка за ENERGY_REVIEW е 16.3, което надхвърля средната грешка от 1",
-        "type": "FAILURE"
-      },
-      {
-        "date": "2026-04-29",
-        "wound": "Предсказанието за технологиите и изкуствения интелект има грешка от 17.5, което ",
-        "type": "FAILURE"
-      },
-      {
-        "date": "2026-04-29",
-        "wound": "Прогнозната грешка за ENERGY_REVIEW е 16.3, което надхвърля средната грешка от 1",
-        "type": "FAILURE"
-      },
-      {
-        "date": "2026-04-29",
-        "wound": "Код написан: agents/core/energy_review_patch.py",
-        "type": "CODE_WRITTEN"
-      },
-      {
-        "date": "2026-04-29",
-        "wound": "Предсказанието за технологиите и изкуствения интелект има грешка от 17.5, което ",
-        "type": "FAILURE"
-      },
-      {
-        "date": "2026-04-29",
-        "wound": "Код написан: agents/core/technology_ai_review_patch.py",
-        "type": "CODE_WRITTEN"
-      },
-      {
-        "date": "2026-04-29",
-        "wound": "Код написан: agents/core/energy_review_patch.py",
-        "type": "CODE_WRITTEN"
-      },
-      {
-        "date": "2026-04-29",
-        "wound": "Код написан: agents/core/technology_ai_review_patch.py",
-        "type": "CODE_WRITTEN"
-      },
-      {
-        "date": "2026-04-29",
-        "wound": "Код написан: agents/core/energy_review_patch.py",
-        "type": "CODE_WRITTEN"
-      },
-      {
-        "date": "2026-04-29",
-        "wound": "Код написан: agents/core/technology_ai_review_patch.py",
-        "type": "CODE_WRITTEN"
-      },
-      {
-        "date": "2026-04-29",
-        "wound": "Код написан: agents/core/energy_review_patch.py",
-        "type": "CODE_WRITTEN"
-      },
-      {
-        "date": "2026-04-29",
-        "wound": "Код написан: agents/core/technology_ai_review_patch.py",
-        "type": "CODE_WRITTEN"
-      },
-      {
-        "date": "2026-04-29",
-        "wound": "Код написан: agents/core/energy_review_patch.py",
-        "type": "CODE_WRITTEN"
-      },
-      {
-        "date": "2026-04-29",
-        "wound": "Код написан: agents/core/technology_ai_review_patch.py",
-        "type": "CODE_WRITTEN"
-      },
-      {
-        "date": "2026-04-29",
-        "wound": "Прогнозната грешка за ENERGY_REVIEW е 16.3, което надхвърля средната грешка от 1",
-        "type": "FAILURE"
-      },
-      {
-        "date": "2026-04-29",
-        "wound": "Код написан: agents/core/technology_ai_review_patch.py",
-        "type": "CODE_WRITTEN"
-      },
-      {
-        "date": "2026-04-29",
-        "wound": "Код написан: agents/core/energy_review_patch.py",
-        "type": "CODE_WRITTEN"
-      },
-      {
-        "date": "2026-04-29",
-        "wound": "Код написан: agents/core/technology_ai_review_patch.py",
-        "type": "CODE_WRITTEN"
-      },
-      {
-        "date": "2026-04-29",
-        "wound": "Код написан: agents/core/energy_review_patch.py",
-        "type": "CODE_WRITTEN"
-      },
-      {
-        "date": "2026-04-29",
-        "wound": "Предсказанието е значително подценено според реалните стойности, което води до г",
-        "type": "FAILURE"
-      },
-      {
-        "date": "2026-04-29",
-        "wound": "Предсказанията за глобалната климатична риска са надценени, което води до грешки",
-        "type": "FAILURE"
-      },
-      {
-        "date": "2026-04-29",
-        "wound": "Предсказанието за нивото на добрещо бъде подценено поради недостатъчна калibraci",
-        "type": "FAILURE"
-      },
-      {
-        "date": "2026-04-30",
-        "wound": "Код написан: agents/core/technology_ai_review_patch.py",
-        "type": "CODE_WRITTEN"
-      },
-      {
-        "date": "2026-04-30",
-        "wound": "Код написан: agents/core/economy_work_review_patch.py",
-        "type": "CODE_WRITTEN"
-      },
-      {
-        "date": "2026-04-30",
-        "wound": "Код написан: agents/core/human_well_being_review_patch.py",
-        "type": "CODE_WRITTEN"
-      },
-      {
-        "date": "2026-04-30",
-        "wound": "Прогнозната грешка за ENERGY_REVIEW е 16.3, което надхвърля средната грешка от 1",
-        "type": "FAILURE"
-      },
-      {
-        "date": "2026-04-30",
-        "wound": "Предсказанията за глобалната климатична риска са надценени, което води до грешки",
-        "type": "FAILURE"
-      },
-      {
-        "date": "2026-04-30",
-        "wound": "Код написан: agents/core/technology_ai_review_patch.py",
-        "type": "CODE_WRITTEN"
-      },
-      {
-        "date": "2026-04-30",
-        "wound": "Код написан: agents/core/energy_review_patch.py",
-        "type": "CODE_WRITTEN"
-      },
-      {
-        "date": "2026-04-30",
-        "wound": "Код написан: agents/core/climate_global_risk_review_patch.py",
-        "type": "CODE_WRITTEN"
-      },
-      {
-        "date": "2026-04-30",
-        "wound": "Предсказанието е значително подценено според реалните стойности, което води до г",
-        "type": "FAILURE"
-      },
-      {
-        "date": "2026-04-30",
-        "wound": "Предсказанието за нивото на добрещо бъде подценено поради недостатъчна калibraci",
-        "type": "FAILURE"
-      },
-      {
-        "date": "2026-04-30",
-        "wound": "Код написан: agents/core/technology_ai_review_patch.py",
-        "type": "CODE_WRITTEN"
-      },
-      {
-        "date": "2026-04-30",
-        "wound": "Код написан: agents/core/energy_review_patch.py",
-        "type": "CODE_WRITTEN"
-      },
-      {
-        "date": "2026-04-30",
-        "wound": "Код написан: agents/core/climate_global_risk_review_patch.py",
-        "type": "CODE_WRITTEN"
-      },
-      {
-        "date": "2026-04-30",
-        "wound": "Предсказанието е значително подценено според реалните стойности, което води до г",
-        "type": "FAILURE"
-      },
-      {
-        "date": "2026-04-30",
-        "wound": "Предсказанието за нивото на добрещо бъде подценено поради недостатъчна калibraci",
-        "type": "FAILURE"
-      },
-      {
-        "date": "2026-05-01",
-        "wound": "Код написан: agents/core/technology_ai_review_patch.py",
-        "type": "CODE_WRITTEN"
-      },
-      {
-        "date": "2026-05-01",
-        "wound": "Код написан: agents/core/economy_work_review_patch.py",
-        "type": "CODE_WRITTEN"
-      },
-      {
-        "date": "2026-05-01",
-        "wound": "Код написан: agents/core/climate_global_risk_review_patch.py",
-        "type": "CODE_WRITTEN"
-      },
-      {
-        "date": "2026-05-01",
-        "wound": "Прогнозната грешка за ENERGY_REVIEW е 16.3, което надхвърля средната грешка от 1",
-        "type": "FAILURE"
-      },
-      {
-        "date": "2026-05-01",
-        "wound": "Предсказанието за нивото на добрещо бъде подценено поради недостатъчна калibraci",
-        "type": "FAILURE"
-      },
-      {
-        "date": "2026-05-01",
-        "wound": "Код написан: agents/core/technology_ai_review_patch.py",
-        "type": "CODE_WRITTEN"
-      },
-      {
-        "date": "2026-05-01",
-        "wound": "Код написан: agents/core/energy_review_patch.py",
-        "type": "CODE_WRITTEN"
-      },
-      {
-        "date": "2026-05-01",
-        "wound": "Код написан: agents/core/climate_global_risk_review_patch.py",
-        "type": "CODE_WRITTEN"
-      },
-      {
-        "date": "2026-05-01",
-        "wound": "Предсказанието е значително подценено според реалните стойности, което води до г",
-        "type": "FAILURE"
-      },
-      {
-        "date": "2026-05-01",
-        "wound": "Предсказанието за нивото на добрещо бъде подценено поради недостатъчна калibraci",
-        "type": "FAILURE"
-      },
-      {
-        "date": "2026-05-01",
-        "wound": "Код написан: agents/core/technology_ai_review_patch.py",
-        "type": "CODE_WRITTEN"
-      },
-      {
-        "date": "2026-05-01",
-        "wound": "Код написан: agents/core/energy_review_patch.py",
-        "type": "CODE_WRITTEN"
-      },
-      {
-        "date": "2026-05-01",
-        "wound": "Код написан: agents/core/climate_global_risk_review_patch.py",
-        "type": "CODE_WRITTEN"
-      },
-      {
-        "date": "2026-05-01",
-        "wound": "Предсказанието е значително подценено според реалните стойности, което води до г",
-        "type": "FAILURE"
-      },
-      {
-        "date": "2026-05-01",
-        "wound": "Предсказанието за нивото на добрещо бъде подценено поради недостатъчна калibraci",
-        "type": "FAILURE"
-      },
-      {
-        "date": "2026-05-01",
-        "wound": "Код написан: agents/core/technology_ai_review_patch.py",
-        "type": "CODE_WRITTEN"
-      },
-      {
-        "date": "2026-05-01",
-        "wound": "Код написан: agents/core/energy_review_patch.py",
-        "type": "CODE_WRITTEN"
-      },
-      {
-        "date": "2026-05-01",
-        "wound": "Код написан: agents/core/climate_global_risk_review_patch.py",
-        "type": "CODE_WRITTEN"
-      },
-      {
-        "date": "2026-05-01",
-        "wound": "Код написан: agents/core/human_well_being_review_patch.py",
-        "type": "CODE_WRITTEN"
-      },
-      {
-        "date": "2026-05-01",
-        "wound": "Предсказанието е значително подценено според реалните стойности, което води до г",
-        "type": "FAILURE"
-      },
-      {
-        "date": "2026-05-01",
-        "wound": "Код написан: agents/core/technology_ai_review_patch.py",
-        "type": "CODE_WRITTEN"
-      },
-      {
-        "date": "2026-05-01",
-        "wound": "Код написан: agents/core/energy_review_patch.py",
-        "type": "CODE_WRITTEN"
-      },
-      {
-        "date": "2026-05-01",
-        "wound": "Код написан: agents/core/climate_global_risk_review_patch.py",
-        "type": "CODE_WRITTEN"
-      },
-      {
-        "date": "2026-05-01",
-        "wound": "Код написан: agents/core/human_well_being_review_patch.py",
-        "type": "CODE_WRITTEN"
-      },
-      {
-        "date": "2026-05-01",
-        "wound": "Предсказанието е значително подценено според реалните стойности, което води до г",
         "type": "FAILURE"
       },
       {
@@ -486,9 +152,79 @@
         "date": "2026-05-07",
         "wound": "Повишено ниво на непрекъснато движение и неразрешен проблем със стари пътища, ко",
         "type": "FAILURE"
+      },
+      {
+        "date": "2026-06-18",
+        "wound": "Lack of integration between agents and fast_cycle_runner.py",
+        "type": "FAILURE"
+      },
+      {
+        "date": "2026-06-18",
+        "wound": "To enable accurate system monitoring",
+        "type": "FAILURE"
+      },
+      {
+        "date": "2026-06-18",
+        "wound": "To enable full system functionality",
+        "type": "FAILURE"
+      },
+      {
+        "date": "2026-06-18",
+        "wound": "Недостатък в правителствената гъвкавост и устойчивост на държавата във възстанов",
+        "type": "FAILURE"
+      },
+      {
+        "date": "2026-06-18",
+        "wound": "Отсутствие на точни данни за неравенство и бедност",
+        "type": "FAILURE"
+      },
+      {
+        "date": "2026-06-19",
+        "wound": "Lack of integration between agents and fast_cycle_runner.py",
+        "type": "FAILURE"
+      },
+      {
+        "date": "2026-06-19",
+        "wound": "To enable accurate system monitoring",
+        "type": "FAILURE"
+      },
+      {
+        "date": "2026-06-19",
+        "wound": "To enable full system functionality",
+        "type": "FAILURE"
+      },
+      {
+        "date": "2026-06-19",
+        "wound": "Недостатък в правителствената гъвкавост и устойчивост на държавата във възстанов",
+        "type": "FAILURE"
+      },
+      {
+        "date": "2026-06-19",
+        "wound": "Отсутствие на точни данни за неравенство и бедност",
+        "type": "FAILURE"
+      },
+      {
+        "date": "2026-06-20",
+        "wound": "Lack of integration between agents and fast_cycle_runner.py",
+        "type": "FAILURE"
+      },
+      {
+        "date": "2026-06-20",
+        "wound": "To enable accurate system monitoring",
+        "type": "FAILURE"
+      },
+      {
+        "date": "2026-06-20",
+        "wound": "To enable full system functionality",
+        "type": "FAILURE"
+      },
+      {
+        "date": "2026-06-20",
+        "wound": "Повишено ниво на непрекъснато движение и неразрешен проблем със стари пътища, ко",
+        "type": "FAILURE"
       }
     ],
-    "total": 95
+    "total": 42
   },
   "mortality": {
     "losses": [
@@ -498,5 +234,5 @@
     ],
     "urgency_score": 6
   },
-  "vitality_score": 3
+  "vitality_score": 0
 }

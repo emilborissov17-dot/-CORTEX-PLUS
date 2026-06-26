@@ -3,7 +3,7 @@
   "raw": {
     "axis": "SOCIAL_RELATIONS_REVIEW",
     "source": "world_bank_api",
-    "fetched_date": "2026-06-20",
+    "fetched_date": "2026-06-21",
     "metrics": {
       "homicide_rate_per_100k": 5.2,
       "refugee_population": null,
@@ -13,6 +13,6 @@
     },
     "data_quality": "2/5 fetched"
   },
-  "snapshot_timestamp": "2026-06-20T12:37:58.380039+00:00",
+  "snapshot_timestamp": "2026-06-21T13:30:05.262571+00:00",
   "axis": "SOCIAL_RELATIONS_REVIEW"
 }

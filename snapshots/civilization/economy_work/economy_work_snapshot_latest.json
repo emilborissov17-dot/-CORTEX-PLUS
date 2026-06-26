@@ -3,7 +3,7 @@
   "metrics": {
     "axis": "ECONOMY_WORK_REVIEW",
     "source": "world_bank_api",
-    "fetched_date": "2026-06-20",
+    "fetched_date": "2026-06-21",
     "metrics": {
       "gdp_per_capita_usd": 13631.2043097215,
       "gdp_growth_pct": 2.87194964204316,
@@ -18,7 +18,7 @@
   "raw": {
     "axis": "ECONOMY_WORK_REVIEW",
     "source": "world_bank_api",
-    "fetched_date": "2026-06-20",
+    "fetched_date": "2026-06-21",
     "metrics": {
       "gdp_per_capita_usd": 13631.2043097215,
       "gdp_growth_pct": 2.87194964204316,
@@ -30,6 +30,6 @@
     },
     "data_quality": "7/7 indicators fetched"
   },
-  "snapshot_timestamp": "2026-06-20T12:37:13.139598+00:00",
+  "snapshot_timestamp": "2026-06-21T13:28:53.226675+00:00",
   "axis": "ECONOMY_WORK_REVIEW"
 }

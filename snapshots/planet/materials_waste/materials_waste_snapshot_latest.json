@@ -1,6 +1,6 @@
 {
   "axis": "MATERIALS_WASTE_REVIEW",
-  "timestamp": "2026-06-20T12:37:45.247434+00:00",
+  "timestamp": "2026-06-21T13:29:37.536048+00:00",
   "level": "MEDIUM",
   "signals": [],
   "key_metrics": [],
@@ -15,5 +15,5 @@
     "recycling_rate_pct": 13.5
   },
   "data_quality": "6/6 indicators fetched",
-  "fetched_date": "2026-06-20"
+  "fetched_date": "2026-06-21"
 }

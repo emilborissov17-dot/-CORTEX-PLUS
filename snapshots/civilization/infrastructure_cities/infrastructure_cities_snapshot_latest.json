@@ -3,7 +3,7 @@
   "metrics": {
     "axis": "INFRASTRUCTURE_CITIES_REVIEW",
     "source": "world_bank_api",
-    "fetched_date": "2026-06-20",
+    "fetched_date": "2026-06-21",
     "metrics": {
       "access_electricity_pct": 91.5991774421991,
       "access_clean_fuels_pct": 74.4233687014423,
@@ -17,7 +17,7 @@
   "raw": {
     "axis": "INFRASTRUCTURE_CITIES_REVIEW",
     "source": "world_bank_api",
-    "fetched_date": "2026-06-20",
+    "fetched_date": "2026-06-21",
     "metrics": {
       "access_electricity_pct": 91.5991774421991,
       "access_clean_fuels_pct": 74.4233687014423,
@@ -28,6 +28,6 @@
     },
     "data_quality": "6/6 fetched"
   },
-  "snapshot_timestamp": "2026-06-20T12:37:18.038916+00:00",
+  "snapshot_timestamp": "2026-06-21T13:28:59.353650+00:00",
   "axis": "INFRASTRUCTURE_CITIES_REVIEW"
 }

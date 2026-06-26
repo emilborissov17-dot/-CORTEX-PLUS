@@ -1,12 +1,14 @@
 {
   "EDUCATION_CULTURE_REVIEW": {
     "queries": [
-      "global education UNESCO literacy 2025",
-      "global education UNESCO literacy 2025",
       "global education literacy 2026",
       "global education Middle East alternatives",
       "global education UNESCO literacy 2025",
       "education access literacy gap policy failure",
+      "global education UNESCO literacy 2025",
+      "global education UNESCO literacy 2025",
+      "global education UNESCO literacy 2025",
+      "global education UNESCO literacy 2025",
       "global education UNESCO literacy 2025",
       "global education UNESCO literacy 2025",
       "global education UNESCO literacy 2025",
@@ -23,8 +25,6 @@
     "scores": [
       1.0,
       1.0,
-      1.0,
-      1.0,
       0.791,
       0.024,
       0.021,
@@ -38,14 +38,21 @@
       0.02,
       0.02,
       0.02,
-      0.02
+      0.02,
+      0.021,
+      0.02,
+      0.021,
+      0.0
     ],
     "failures": [
-      "ZERO_RESULTS: query 'global education UNESCO literacy 2025' върна 0 видеа",
       "NO_TRANSCRIPTS: никое видео няма транскрипция за 'education access literacy gap policy failure'",
       "LOW_CONTENT: 1 видеа с <500 chars съдържание",
       "NO_TRANSCRIPTS: никое видео няма транскрипция за 'education access literacy gap policy failure'",
       "LOW_CONTENT: 1 видеа с <500 chars съдържание",
+      "NO_TRANSCRIPTS: никое видео няма транскрипция за 'global education UNESCO literacy 2025'",
+      "LOW_CONTENT: 3 видеа с <500 chars съдържание",
+      "NO_TRANSCRIPTS: никое видео няма транскрипция за 'global education UNESCO literacy 2025'",
+      "LOW_CONTENT: 3 видеа с <500 chars съдържание",
       "NO_TRANSCRIPTS: никое видео няма транскрипция за 'global education UNESCO literacy 2025'",
       "LOW_CONTENT: 3 видеа с <500 chars съдържание"
     ],
@@ -54,7 +61,6 @@
   },
   "TECHNOLOGY_INFRA_REVIEW": {
     "queries": [
-      "digital divide 5G semiconductor tech infrastructure",
       "internet access digital divide 2026",
       "internet access digital divide 2026",
       "internet access digital divide 2026",
@@ -72,10 +78,11 @@
       "digital divide 5G semiconductor tech infrastructure",
       "digital divide 5G semiconductor tech infrastructure",
       "digital divide 5G semiconductor tech infrastructure",
-      "digital divide 5G semiconductor tech infrastructure"
+      "digital divide 5G semiconductor tech infrastructure",
+      "internet access digital divide 2026",
+      "internet access digital divide 2026"
     ],
     "scores": [
-      0.806,
       1.0,
       0.717,
       1.0,
@@ -93,7 +100,9 @@
       0.021,
       0.021,
       0.021,
-      0.021
+      0.021,
+      0.018,
+      0.0
     ],
     "failures": [
       "ZERO_RESULTS: query 'digital divide 5G semiconductor tech infrastructure' върна 0 видеа",
@@ -124,16 +133,13 @@
       "artificial intelligence AGI machine learning safety 2025",
       "artificial intelligence AGI machine learning safety 2025",
       "artificial intelligence AGI machine learning safety 2025",
-      "artificial intelligence AGI machine learning safety 2025",
-      "artificial intelligence AGI machine learning safety 2025",
-      "artificial intelligence AGI machine learning safety 2025",
       "AI safety AGI alignment algorithmic accountability",
+      "artificial intelligence AGI machine learning safety 2025",
+      "artificial intelligence Latin America root causes",
+      "artificial intelligence AGI machine learning safety 2025",
       "artificial intelligence AGI machine learning safety 2025"
     ],
     "scores": [
-      1.0,
-      1.0,
-      0.718,
       0.671,
       1.0,
       0.017,
@@ -150,15 +156,20 @@
       0.017,
       0.017,
       0.749,
-      0.721
+      0.721,
+      0.021,
+      0.017,
+      0.0
     ],
-    "failures": [],
+    "failures": [
+      "NO_TRANSCRIPTS: никое видео няма транскрипция за 'artificial intelligence AGI machine learning safety 2025'",
+      "LOW_CONTENT: 3 видеа с <500 chars съдържание"
+    ],
     "best_query": "artificial intelligence AGI machine learning safety 2025",
     "best_score": 1.0
   },
   "SPACE_INFRASTRUCTURE_REVIEW": {
     "queries": [
-      "space exploration SpaceX NASA satellite 2025",
       "space exploration SpaceX NASA satellite 2025",
       "space exploration SpaceX NASA satellite 2025",
       "space exploration SpaceX NASA satellite 2025",
@@ -176,10 +187,11 @@
       "space exploration SpaceX NASA satellite 2025",
       "space exploration SpaceX NASA satellite 2025",
       "space exploration SpaceX NASA satellite 2025",
+      "space exploration SpaceX NASA satellite 2025",
+      "space exploration SpaceX NASA satellite 2025",
       "space exploration SpaceX NASA satellite 2025"
     ],
     "scores": [
-      1.0,
       1.0,
       0.021,
       1.0,
@@ -197,7 +209,9 @@
       0.0,
       0.021,
       0.02,
-      0.02
+      0.02,
+      0.0,
+      0.0
     ],
     "failures": [
       "NO_TRANSCRIPTS: никое видео няма транскрипция за 'space exploration SpaceX NASA satellite 2025'",
@@ -225,7 +239,9 @@
       "asteroid mining space resources investigation",
       "asteroid mining space resources investigation",
       "asteroid mining space resources investigation",
-      "asteroid mining space economy resources"
+      "asteroid mining space economy resources",
+      "asteroid mining space resources investigation",
+      "asteroid mining space resources debate"
     ],
     "scores": [
       0.8,
@@ -244,21 +260,23 @@
       0.02,
       0.02,
       0.02,
-      0.761
+      0.761,
+      0.0,
+      0.02
     ],
     "failures": [
       "ZERO_RESULTS: query 'asteroid mining space economy resources' върна 0 видеа",
       "ZERO_RESULTS: query 'asteroid mining space economy resources' върна 0 видеа",
       "NO_TRANSCRIPTS: никое видео няма транскрипция за 'asteroid mining space resources investigation'",
       "LOW_CONTENT: 3 видеа с <500 chars съдържание",
-      "NO_TRANSCRIPTS: никое видео няма транскрипция за 'asteroid mining space resources off-world economy'"
+      "NO_TRANSCRIPTS: никое видео няма транскрипция за 'asteroid mining space resources off-world economy'",
+      "ZERO_RESULTS: query 'asteroid mining space resources investigation' върна 0 видеа"
     ],
     "best_query": "asteroid mining space resources investigation",
     "best_score": 1.0
   },
   "LONG_TERM_FUTURE_REVIEW": {
     "queries": [
-      "existential risk humanity future civilization",
       "existential risk civilization collapse 2026",
       "existential risk humanity future civilization",
       "latest existential risk research 2026",
@@ -274,10 +292,13 @@
       "existential risk humanity future civilization",
       "existential risk humanity future civilization",
       "existential risk humanity future civilization",
+      "existential risk humanity future civilization",
+      "existential risk humanity future civilization",
+      "existential risk humanity future civilization",
+      "existential risk humanity future civilization",
       "existential risk humanity future civilization"
     ],
     "scores": [
-      1.0,
       0.7,
       0.02,
       0.702,
@@ -293,20 +314,26 @@
       0.021,
       0.02,
       0.021,
-      0.708
+      0.708,
+      0.021,
+      0.021,
+      0.021,
+      0.021
     ],
     "failures": [
       "ZERO_RESULTS: query 'existential risk humanity future civilization' върна 0 видеа",
       "ZERO_RESULTS: query 'existential risk humanity future civilization' върна 0 видеа",
-      "ZERO_RESULTS: query 'existential risk humanity future civilization' върна 0 видеа"
+      "ZERO_RESULTS: query 'existential risk humanity future civilization' върна 0 видеа",
+      "NO_TRANSCRIPTS: никое видео няма транскрипция за 'existential risk humanity future civilization'",
+      "LOW_CONTENT: 3 видеа с <500 chars съдържание",
+      "NO_TRANSCRIPTS: никое видео няма транскрипция за 'existential risk humanity future civilization'",
+      "LOW_CONTENT: 3 видеа с <500 chars съдържание"
     ],
     "best_query": "existential risk humanity future civilization",
     "best_score": 1.0
   },
   "CLIMATE_GLOBAL_RISK_REVIEW": {
     "queries": [
-      "climate change extreme weather 2025",
-      "climate change extreme weather 2025",
       "climate change extreme weather 2025",
       "climate change extreme weather 2025",
       "climate change extreme weather 2025",
@@ -324,11 +351,11 @@
       "climate change extreme weather 2025",
       "climate change extreme weather 2025",
       "climate change extreme weather 2025",
+      "climate change extreme weather 2025",
+      "climate change extreme weather 2025",
       "climate change extreme weather 2025"
     ],
     "scores": [
-      0.961,
-      1.0,
       1.0,
       1.0,
       0.019,
@@ -346,7 +373,9 @@
       0.02,
       0.016,
       0.0,
-      0.758
+      0.758,
+      0.0,
+      0.0
     ],
     "failures": [
       "NO_TRANSCRIPTS: никое видео няма транскрипция за 'climate change extreme weather 2025'",
@@ -376,6 +405,9 @@
       "pandemic risk nuclear war asteroid impact supervolcano",
       "pandemic risk nuclear war asteroid impact supervolcano",
       "pandemic risk nuclear war asteroid impact supervolcano",
+      "pandemic risk nuclear war asteroid impact supervolcano",
+      "pandemic risk nuclear war asteroid impact supervolcano",
+      "pandemic risk nuclear war asteroid impact supervolcano",
       "pandemic risk nuclear war asteroid impact supervolcano"
     ],
     "scores": [
@@ -394,7 +426,10 @@
       0.02,
       0.02,
       0.02,
-      0.451
+      0.451,
+      0.021,
+      0.0,
+      0.0
     ],
     "failures": [
       "ZERO_RESULTS: query 'pandemic risk nuclear war asteroid impact supervolcano' върна 0 видеа",
@@ -402,6 +437,8 @@
       "NO_TRANSCRIPTS: никое видео няма транскрипция за 'pandemic risk nuclear war asteroid impact supervolcano'",
       "LOW_CONTENT: 3 видеа с <500 chars съдържание",
       "NO_TRANSCRIPTS: никое видео няма транскрипция за 'pandemic preparedness nuclear risk catastrophic threat'",
+      "LOW_CONTENT: 3 видеа с <500 chars съдържание",
+      "NO_TRANSCRIPTS: никое видео няма транскрипция за 'pandemic risk nuclear war asteroid impact supervolcano'",
       "LOW_CONTENT: 3 видеа с <500 chars съдържание"
     ],
     "best_query": "pandemic risk nuclear war asteroid impact supervolcano",
@@ -409,8 +446,6 @@
   },
   "ENERGY_REVIEW": {
     "queries": [
-      "renewable energy transition solar wind 2025",
-      "renewable energy transition solar wind 2025",
       "renewable energy transition solar wind 2025",
       "renewable energy solar power expert analysis",
       "2025 global energy crisis updates: rising energy prices and supply chain disruptions",
@@ -428,11 +463,11 @@
       "renewable energy transition solar wind 2025",
       "renewable energy transition solar wind 2025",
       "renewable energy expert analysis",
+      "renewable energy transition solar wind 2025",
+      "current state of renewable energy policy gap",
       "renewable energy transition solar wind 2025"
     ],
     "scores": [
-      0.779,
-      0.02,
       0.867,
       0.028,
       0.021,
@@ -450,10 +485,11 @@
       0.755,
       0.463,
       0.757,
-      0.254
+      0.254,
+      0.021,
+      0.0
     ],
     "failures": [
-      "NO_TRANSCRIPTS: никое видео няма транскрипция за 'renewable energy transition solar wind 2025'",
       "LOW_CONTENT: 3 видеа с <500 chars съдържание",
       "NO_TRANSCRIPTS: никое видео няма транскрипция за 'renewable energy transition solar wind 2025'",
       "LOW_CONTENT: 1 видеа с <500 chars съдържание",
@@ -461,7 +497,9 @@
       "LOW_CONTENT: 3 видеа с <500 chars съдържание",
       "NO_TRANSCRIPTS: никое видео няма транскрипция за '2025 global energy crisis updates: rising energy prices and supply chain disruptions'",
       "LOW_CONTENT: 3 видеа с <500 chars съдържание",
-      "ZERO_RESULTS: query 'renewable energy transition solar wind 2025' върна 0 видеа"
+      "ZERO_RESULTS: query 'renewable energy transition solar wind 2025' върна 0 видеа",
+      "NO_TRANSCRIPTS: никое видео няма транскрипция за 'renewable energy transition solar wind 2025'",
+      "LOW_CONTENT: 3 видеа с <500 chars съдържание"
     ],
     "best_query": "renewable energy transition solar wind 2025",
     "best_score": 1.0
@@ -484,6 +522,9 @@
       "AI consciousness AGI progress machine sentience",
       "AI consciousness AGI progress machine sentience",
       "AI consciousness AGI progress machine sentience",
+      "AI consciousness AGI progress machine sentience",
+      "AI consciousness AGI progress machine sentience",
+      "AI consciousness Latin America systemic failure",
       "AI consciousness AGI progress machine sentience"
     ],
     "scores": [
@@ -503,23 +544,24 @@
       0.019,
       0.019,
       0.019,
-      0.677
+      0.677,
+      0.0,
+      0.021,
+      0.0
     ],
     "failures": [
       "ZERO_RESULTS: query 'AI consciousness AGI progress machine sentience' върна 0 видеа",
       "NO_TRANSCRIPTS: никое видео няма транскрипция за 'AI consciousness AGI progress machine sentience'",
       "LOW_CONTENT: 3 видеа с <500 chars съдържание",
       "NO_TRANSCRIPTS: никое видео няма транскрипция за 'AI consciousness AGI progress machine sentience'",
-      "LOW_CONTENT: 3 видеа с <500 chars съдържание"
+      "LOW_CONTENT: 3 видеа с <500 chars съдържание",
+      "ZERO_RESULTS: query 'AI consciousness AGI progress machine sentience' върна 0 видеа"
     ],
     "best_query": "AI consciousness AGI progress machine sentience",
     "best_score": 1.0
   },
   "WATER_REVIEW": {
     "queries": [
-      "latest water scarcity research 2026",
-      "water crisis drought freshwater scarcity",
-      "water crisis drought freshwater scarcity",
       "water crisis drought freshwater scarcity",
       "water crisis drought freshwater scarcity",
       "water crisis drought freshwater scarcity",
@@ -536,12 +578,12 @@
       "water crisis drought freshwater scarcity",
       "water crisis drought freshwater scarcity",
       "water crisis drought freshwater scarcity",
+      "water crisis drought freshwater scarcity",
+      "water crisis drought freshwater scarcity",
+      "water scarcity freshwater documentary",
       "water crisis drought freshwater scarcity"
     ],
     "scores": [
-      1.0,
-      1.0,
-      1.0,
       0.021,
       1.0,
       0.0,
@@ -558,10 +600,12 @@
       0.02,
       0.021,
       0.02,
-      0.766
+      0.766,
+      0.0,
+      1.0,
+      0.0
     ],
     "failures": [
-      "ZERO_RESULTS: query 'water crisis drought freshwater scarcity' върна 0 видеа",
       "ZERO_RESULTS: query 'water crisis drought freshwater scarcity' върна 0 видеа",
       "NO_TRANSCRIPTS: никое видео няма транскрипция за 'water crisis drought freshwater scarcity'",
       "LOW_CONTENT: 3 видеа с <500 chars съдържание",
@@ -570,16 +614,14 @@
       "NO_TRANSCRIPTS: никое видео няма транскрипция за 'water crisis drought freshwater scarcity'",
       "LOW_CONTENT: 3 видеа с <500 chars съдържание",
       "NO_TRANSCRIPTS: никое видео няма транскрипция за 'water crisis drought freshwater scarcity'",
-      "LOW_CONTENT: 1 видеа с <500 chars съдържание"
+      "LOW_CONTENT: 1 видеа с <500 chars съдържание",
+      "ZERO_RESULTS: query 'water crisis drought freshwater scarcity' върна 0 видеа"
     ],
     "best_query": "water crisis drought freshwater scarcity",
     "best_score": 1.0
   },
   "GOAL_PROGRESS_REVIEW": {
     "queries": [
-      "sustainable development goals SDG 2026",
-      "sustainable development goals SDG 2030 UN progress",
-      "sustainable development goals SDG 2030 UN progress",
       "sustainable development goals SDG 2030 UN progress",
       "sustainable development goals explained 2026",
       "SDG failure UN accountability development gap",
@@ -596,12 +638,12 @@
       "sustainable development goals Middle East systemic failure",
       "sustainable development goals SDG 2030 UN progress",
       "sustainable development goals SDG 2030 UN progress",
-      "sustainable development goals SDG 2030 UN progress"
+      "sustainable development goals SDG 2030 UN progress",
+      "sustainable development goals SDG 2030 UN progress",
+      "sustainable development goals SDG 2030 UN progress",
+      "sustainable development goals Middle East alternatives"
     ],
     "scores": [
-      0.7,
-      0.603,
-      0.937,
       0.02,
       0.699,
       0.782,
@@ -618,7 +660,10 @@
       0.021,
       0.013,
       0.013,
-      0.8
+      0.8,
+      0.02,
+      0.0,
+      0.02
     ],
     "failures": [
       "ZERO_RESULTS: query 'sustainable development goals SDG 2030 UN progress' върна 0 видеа",
@@ -626,15 +671,16 @@
       "NO_TRANSCRIPTS: никое видео няма транскрипция за 'sustainable development goals SDG 2030 UN progress'",
       "LOW_CONTENT: 3 видеа с <500 chars съдържание",
       "NO_TRANSCRIPTS: никое видео няма транскрипция за 'sustainable development goals SDG 2030 UN progress'",
-      "LOW_CONTENT: 3 видеа с <500 chars съдържание"
+      "LOW_CONTENT: 3 видеа с <500 chars съдържание",
+      "NO_TRANSCRIPTS: никое видео няма транскрипция за 'sustainable development goals SDG 2030 UN progress'",
+      "LOW_CONTENT: 3 видеа с <500 chars съдържание",
+      "ZERO_RESULTS: query 'sustainable development goals SDG 2030 UN progress' върна 0 видеа"
     ],
     "best_query": "sustainable development goals SDG 2030 UN progress",
     "best_score": 1.0
   },
   "FOOD_REVIEW": {
     "queries": [
-      "food security global hunger agriculture 2025",
-      "food security global hunger agriculture 2025",
       "food security global hunger agriculture 2025",
       "food security global hunger agriculture 2025",
       "food security global hunger agriculture 2025",
@@ -652,11 +698,11 @@
       "food security global hunger agriculture 2025",
       "food security global hunger agriculture 2025",
       "2025 global food insecurity trends and impact on developing countries",
+      "food security global hunger agriculture 2025",
+      "food security global hunger agriculture 2025",
       "food security global hunger agriculture 2025"
     ],
     "scores": [
-      0.717,
-      1.0,
       1.0,
       1.0,
       0.977,
@@ -674,23 +720,23 @@
       0.021,
       0.021,
       0.82,
-      0.755
+      0.755,
+      0.021,
+      0.0
     ],
     "failures": [
       "ZERO_RESULTS: query 'food security global hunger agriculture 2025' върна 0 видеа",
       "NO_TRANSCRIPTS: никое видео няма транскрипция за 'food security global hunger agriculture 2025'",
       "LOW_CONTENT: 3 видеа с <500 chars съдържание",
       "NO_TRANSCRIPTS: никое видео няма транскрипция за '2025 global food insecurity trends and impact on developing countries'",
-      "LOW_CONTENT: 1 видеа с <500 chars съдържание"
+      "LOW_CONTENT: 1 видеа с <500 chars съдържание",
+      "ZERO_RESULTS: query 'food security global hunger agriculture 2025' върна 0 видеа"
     ],
     "best_query": "food security global hunger agriculture 2025",
     "best_score": 1.0
   },
   "MATERIALS_WASTE_REVIEW": {
     "queries": [
-      "plastic pollution circular economy recycling",
-      "plastic pollution circular economy recycling",
-      "2026 global plastic waste management challenges and solutions",
       "2026 global plastic waste management challenges and solutions",
       "plastic pollution circular economy recycling",
       "plastic pollution recycling investigation",
@@ -707,12 +753,12 @@
       "plastic pollution circular economy recycling",
       "plastic pollution circular economy recycling",
       "2026 global plastic waste management challenges and solutions",
+      "plastic pollution circular economy recycling",
+      "plastic pollution circular economy recycling",
+      "plastic pollution documentary",
       "plastic pollution circular economy recycling"
     ],
     "scores": [
-      0.979,
-      1.0,
-      0.787,
       0.997,
       0.949,
       0.024,
@@ -729,7 +775,10 @@
       0.02,
       0.743,
       0.782,
-      0.743
+      0.743,
+      0.0,
+      1.0,
+      0.0
     ],
     "failures": [
       "NO_TRANSCRIPTS: никое видео няма транскрипция за '2026 global plastic waste management challenges and solutions'",
@@ -737,16 +786,14 @@
       "PARTIAL_TRANSCRIPTS: 2/3 без транскрипция",
       "LOW_CONTENT: 2 видеа с <500 chars съдържание",
       "NO_TRANSCRIPTS: никое видео няма транскрипция за '2026 global plastic waste management challenges and solutions'",
-      "LOW_CONTENT: 3 видеа с <500 chars съдържание"
+      "LOW_CONTENT: 3 видеа с <500 chars съдържание",
+      "ZERO_RESULTS: query 'plastic pollution circular economy recycling' върна 0 видеа"
     ],
     "best_query": "plastic pollution circular economy recycling",
     "best_score": 1.0
   },
   "ECOSYSTEMS_BIODIVERSITY_REVIEW": {
     "queries": [
-      "biodiversity loss deforestation species extinction",
-      "biodiversity loss deforestation species extinction",
-      "biodiversity loss deforestation species extinction",
       "biodiversity loss deforestation species extinction",
       "biodiversity loss deforestation 2026",
       "biodiversity loss deforestation species extinction",
@@ -763,12 +810,12 @@
       "biodiversity loss deforestation species extinction",
       "biodiversity loss deforestation species extinction",
       "biodiversity loss deforestation species extinction",
+      "biodiversity loss deforestation species extinction",
+      "biodiversity collapse habitat destruction root causes",
+      "biodiversity loss deforestation species extinction",
       "biodiversity loss deforestation species extinction"
     ],
     "scores": [
-      1.0,
-      1.0,
-      1.0,
       0.71,
       0.991,
       0.02,
@@ -785,14 +832,19 @@
       0.02,
       0.02,
       0.02,
-      0.756
+      0.756,
+      0.021,
+      0.02,
+      0.0
     ],
     "failures": [
       "ZERO_RESULTS: query 'biodiversity loss deforestation species extinction' върна 0 видеа",
       "NO_TRANSCRIPTS: никое видео няма транскрипция за 'biodiversity loss deforestation species extinction'",
       "LOW_CONTENT: 1 видеа с <500 chars съдържание",
       "NO_TRANSCRIPTS: никое видео няма транскрипция за 'biodiversity loss deforestation species extinction'",
-      "LOW_CONTENT: 1 видеа с <500 chars съдържание"
+      "LOW_CONTENT: 1 видеа с <500 chars съдържание",
+      "NO_TRANSCRIPTS: никое видео няма транскрипция за 'biodiversity collapse habitat destruction root causes'",
+      "LOW_CONTENT: 3 видеа с <500 chars съдържание"
     ],
     "best_query": "biodiversity loss deforestation species extinction",
     "best_score": 1.0
@@ -823,7 +875,6 @@
     "scores": [
       1.0,
       1.0,
-      1.0,
       0.646,
       0.07,
       1.0,
@@ -840,7 +891,8 @@
       0.007,
       0.007,
       0.0,
-      0.727
+      0.727,
+      0.0
     ],
     "failures": [
       "NO_TRANSCRIPTS: никое видео няма транскрипция за 'global health WHO poverty inequality 2025'",
@@ -851,8 +903,6 @@
   },
   "CULTURE_MEDIA_REVIEW": {
     "queries": [
-      "media freedom misinformation 2026",
-      "media freedom misinformation social media impact",
       "culture media review 2026",
       "media freedom misinformation social media impact",
       "media manipulation misinformation freedom of press",
@@ -870,11 +920,11 @@
       "media freedom misinformation social media impact",
       "media freedom misinformation social media impact",
       "media freedom misinformation social media impact",
+      "media freedom misinformation social media impact",
+      "media freedom misinformation social media impact",
       "media freedom misinformation social media impact"
     ],
     "scores": [
-      1.0,
-      1.0,
       1.0,
       1.0,
       0.668,
@@ -892,7 +942,9 @@
       0.013,
       0.02,
       0.02,
-      0.759
+      0.759,
+      0.02,
+      0.886
     ],
     "failures": [
       "NO_TRANSCRIPTS: никое видео няма транскрипция за 'media freedom misinformation social media impact'",
@@ -916,9 +968,6 @@
       "education future AI learning skills 2025",
       "education future AI learning skills 2025",
       "education future AI learning skills 2025",
-      "education future AI learning skills 2025",
-      "education future AI learning skills 2025",
-      "education future AI learning skills 2025",
       "education inequality learning access alternatives",
       "education future AI learning skills 2025",
       "education future AI learning skills 2025",
@@ -930,12 +979,12 @@
       "education future AI learning skills 2025",
       "education future AI learning skills 2025",
       "education future AI learning skills 2025",
-      "education future AI learning skills 2025"
+      "education future AI learning skills 2025",
+      "education Sub-Saharan Africa accountability",
+      "education future AI learning skills 2025",
+      "education inequality learning access alternatives"
     ],
     "scores": [
-      1.0,
-      1.0,
-      1.0,
       1.0,
       0.011,
       1.0,
@@ -952,13 +1001,18 @@
       0.011,
       0.018,
       0.018,
-      0.76
+      0.76,
+      0.021,
+      0.018,
+      0.893
     ],
     "failures": [
       "NO_TRANSCRIPTS: никое видео няма транскрипция за 'education inequality learning access alternatives'",
       "LOW_CONTENT: 1 видеа с <500 chars съдържание",
       "NO_TRANSCRIPTS: никое видео няма транскрипция за 'education future AI learning skills 2025'",
       "LOW_CONTENT: 2 видеа с <500 chars съдържание",
+      "NO_TRANSCRIPTS: никое видео няма транскрипция за 'education future AI learning skills 2025'",
+      "LOW_CONTENT: 3 видеа с <500 chars съдържание",
       "NO_TRANSCRIPTS: никое видео няма транскрипция за 'education future AI learning skills 2025'",
       "LOW_CONTENT: 3 видеа с <500 chars съдържание"
     ],
@@ -967,7 +1021,6 @@
   },
   "SOCIAL_RELATIONS_REVIEW": {
     "queries": [
-      "social inequality loneliness epidemic community",
       "social inequality loneliness epidemic community",
       "social inequality loneliness epidemic community",
       "social inequality loneliness epidemic community",
@@ -985,10 +1038,11 @@
       "social inequality loneliness epidemic community",
       "social inequality loneliness epidemic community",
       "social cohesion loneliness epidemic community solutions",
+      "social inequality loneliness epidemic community",
+      "social inequality loneliness epidemic community",
       "social inequality loneliness epidemic community"
     ],
     "scores": [
-      0.806,
       1.0,
       1.0,
       1.0,
@@ -1006,7 +1060,9 @@
       0.016,
       0.016,
       0.768,
-      0.757
+      0.757,
+      0.0,
+      0.0
     ],
     "failures": [
       "ZERO_RESULTS: query 'social inequality loneliness epidemic community' върна 0 видеа",
@@ -1018,9 +1074,6 @@
   },
   "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL": {
     "queries": [
-      "human rights democracy civil liberties 2025",
-      "human rights democracy civil liberties 2025",
-      "human rights democracy civil liberties 2025",
       "human rights democracy civil liberties 2025",
       "human rights democracy civil liberties 2025",
       "human rights democracy civil liberties 2025",
@@ -1037,12 +1090,12 @@
       "human rights democracy civil liberties 2025",
       "human rights democracy civil liberties 2025",
       "human rights democracy civil liberties 2025",
+      "human rights democracy civil liberties 2025",
+      "human rights democracy civil liberties 2025",
+      "human rights Sub-Saharan Africa alternatives",
       "human rights democracy civil liberties 2025"
     ],
     "scores": [
-      0.943,
-      1.0,
-      0.024,
       1.0,
       0.017,
       0.0,
@@ -1059,7 +1112,10 @@
       0.02,
       0.016,
       0.756,
-      0.755
+      0.755,
+      0.0,
+      0.877,
+      0.0
     ],
     "failures": [
       "NO_TRANSCRIPTS: никое видео няма транскрипция за 'human rights democracy civil liberties 2025'",
@@ -1070,17 +1126,14 @@
       "NO_TRANSCRIPTS: никое видео няма транскрипция за 'human rights democracy civil liberties 2025'",
       "LOW_CONTENT: 3 видеа с <500 chars съдържание",
       "NO_TRANSCRIPTS: никое видео няма транскрипция за 'human rights democracy civil liberties 2025'",
-      "LOW_CONTENT: 3 видеа с <500 chars съдържание"
+      "LOW_CONTENT: 3 видеа с <500 chars съдържание",
+      "ZERO_RESULTS: query 'human rights democracy civil liberties 2025' върна 0 видеа"
     ],
     "best_query": "human rights democracy civil liberties 2025",
     "best_score": 1.0
   },
   "ECONOMY_WORK_REVIEW": {
     "queries": [
-      "2025 global economic impact of climate change on workforce productivity and labor markets",
-      "global economy recession inflation unemployment 2025",
-      "global economy recession inflation unemployment 2025",
-      "global economy GDP debate",
       "global economy recession inflation unemployment 2025",
       "latest global economy root causes",
       "global economy Sub-Saharan Africa policy gap",
@@ -1096,13 +1149,13 @@
       "global economy recession inflation unemployment 2025",
       "global economy recession inflation unemployment 2025",
       "global economy recession inflation unemployment 2025",
+      "global economy recession inflation unemployment 2025",
+      "global economy recession inflation unemployment 2025",
+      "global economy recession inflation unemployment 2025",
+      "global economy recession inflation unemployment 2025",
       "global economy recession inflation unemployment 2025"
     ],
     "scores": [
-      0.07,
-      1.0,
-      0.013,
-      0.028,
       0.028,
       0.07,
       0.07,
@@ -1118,11 +1171,13 @@
       0.013,
       0.013,
       0.712,
-      0.755
+      0.755,
+      0.02,
+      0.013,
+      1.0,
+      0.0
     ],
     "failures": [
-      "NO_TRANSCRIPTS: никое видео няма транскрипция за 'global economy recession inflation unemployment 2025'",
-      "LOW_CONTENT: 2 видеа с <500 chars съдържание",
       "NO_TRANSCRIPTS: никое видео няма транскрипция за 'global economy recession inflation unemployment 2025'",
       "LOW_CONTENT: 3 видеа с <500 chars съдържание",
       "NO_TRANSCRIPTS: никое видео няма транскрипция за 'global economy recession inflation unemployment 2025'",
@@ -1130,21 +1185,23 @@
       "NO_TRANSCRIPTS: никое видео няма транскрипция за '2025 global economic impact of climate change on workforce productivity and labor markets'",
       "LOW_CONTENT: 1 видеа с <500 chars съдържание",
       "NO_TRANSCRIPTS: никое видео няма транскрипция за 'global economy recession inflation unemployment 2025'",
-      "LOW_CONTENT: 2 видеа с <500 chars съдържание"
+      "LOW_CONTENT: 2 видеа с <500 chars съдържание",
+      "NO_TRANSCRIPTS: никое видео няма транскрипция за 'global economy recession inflation unemployment 2025'",
+      "LOW_CONTENT: 3 видеа с <500 chars съдържание"
     ],
     "best_query": "global economy recession inflation unemployment 2025",
     "best_score": 1.0
   },
   "INEQUALITY_POVERTY_REVIEW": {
     "queries": [
-      "income inequality wealth gap poverty 2025",
-      "income inequality wealth gap poverty 2025",
-      "income inequality wealth gap poverty 2025",
-      "income inequality wealth gap poverty 2025",
       "2025 global inequality and poverty trends in sub-Saharan Africa",
       "income inequality wealth gap poverty 2025",
       "income inequality wealth gap poverty 2025",
       "2025 global inequality and poverty trends in sub-Saharan Africa",
+      "income inequality wealth gap poverty 2025",
+      "income inequality wealth gap poverty 2025",
+      "income inequality wealth gap poverty 2025",
+      "income inequality wealth gap poverty 2025",
       "income inequality wealth gap poverty 2025",
       "income inequality wealth gap poverty 2025",
       "income inequality wealth gap poverty 2025",
@@ -1159,10 +1216,6 @@
       "income inequality wealth gap poverty 2025"
     ],
     "scores": [
-      0.93,
-      0.759,
-      1.0,
-      0.02,
       1.0,
       1.0,
       0.975,
@@ -1178,11 +1231,18 @@
       0.019,
       0.021,
       0.724,
-      0.732
+      0.732,
+      0.02,
+      0.0,
+      0.0,
+      0.0
     ],
     "failures": [
       "NO_TRANSCRIPTS: никое видео няма транскрипция за '2025 global inequality and poverty trends in sub-Saharan Africa'",
-      "LOW_CONTENT: 1 видеа с <500 chars съдържание"
+      "LOW_CONTENT: 1 видеа с <500 chars съдържание",
+      "NO_TRANSCRIPTS: никое видео няма транскрипция за 'income inequality wealth gap poverty 2025'",
+      "LOW_CONTENT: 3 видеа с <500 chars съдържание",
+      "ZERO_RESULTS: query 'income inequality wealth gap poverty 2025' върна 0 видеа"
     ],
     "best_query": "income inequality wealth gap poverty 2025",
     "best_score": 1.0
@@ -1201,18 +1261,16 @@
       "latest smart cities research 2026",
       "latest smart cities research 2026",
       "latest smart cities research 2026",
-      "latest smart cities research 2026",
-      "latest smart cities research 2026",
       "urban inequality housing crisis infrastructure gap",
       "latest smart cities research 2026",
       "smart cities urban planning infrastructure future",
       "smart cities urban planning infrastructure future",
       "smart cities urban planning infrastructure future",
-      "urban inequality housing crisis infrastructure gap"
+      "urban inequality housing crisis infrastructure gap",
+      "smart cities urban planning infrastructure future",
+      "latest smart cities research 2026"
     ],
     "scores": [
-      1.0,
-      1.0,
       0.021,
       1.0,
       1.0,
@@ -1230,7 +1288,9 @@
       0.021,
       0.02,
       0.02,
-      0.754
+      0.754,
+      0.02,
+      0.0
     ],
     "failures": [
       "ZERO_RESULTS: query 'smart cities urban planning infrastructure future' върна 0 видеа",
@@ -1245,9 +1305,6 @@
   },
   "GOVERNANCE_INSTITUTIONS_REVIEW": {
     "queries": [
-      "geopolitics UN 2026",
-      "geopolitics war peace UN NATO 2025",
-      "geopolitics UN 2026",
       "geopolitics UN 2026",
       "geopolitics UN 2026",
       "geopolitics Sub-Saharan Africa alternatives",
@@ -1264,12 +1321,12 @@
       "geopolitics UN 2026",
       "geopolitics UN 2026",
       "geopolitics UN 2026",
+      "geopolitics UN 2026",
+      "2025 global governance institutions crisis: how are international organizations responding to ongoing conflicts and terrorism in 2026?",
+      "geopolitics UN 2026",
       "geopolitics UN 2026"
     ],
     "scores": [
-      1.0,
-      0.02,
-      1.0,
       1.0,
       1.0,
       0.022,
@@ -1286,21 +1343,23 @@
       0.02,
       0.754,
       0.827,
-      0.794
+      0.794,
+      0.021,
+      0.02,
+      0.02
     ],
     "failures": [
       "ZERO_RESULTS: query 'geopolitics war peace UN NATO 2025' върна 0 видеа",
       "NO_TRANSCRIPTS: никое видео няма транскрипция за 'geopolitics UN 2026'",
-      "LOW_CONTENT: 1 видеа с <500 chars съдържание"
+      "LOW_CONTENT: 1 видеа с <500 chars съдържание",
+      "NO_TRANSCRIPTS: никое видео няма транскрипция за '2025 global governance institutions crisis: how are international organizations responding to ongoing conflicts and terrorism in 2026?'",
+      "LOW_CONTENT: 3 видеа с <500 chars съдържание"
     ],
     "best_query": "geopolitics UN 2026",
     "best_score": 1.0
   },
   "PLANETARY_POTENTIAL_REVIEW": {
     "queries": [
-      "geoengineering planetary boundaries 2026",
-      "planetary boundaries geoengineering tipping points",
-      "geoengineering planetary boundaries 2026",
       "geoengineering planetary boundaries 2026",
       "geoengineering planetary boundaries 2026",
       "geoengineering planetary boundaries 2026",
@@ -1317,12 +1376,12 @@
       "geoengineering planetary boundaries 2026",
       "geoengineering planetary boundaries 2026",
       "geoengineering planetary boundaries 2026",
+      "geoengineering planetary boundaries 2026",
+      "geoengineering planetary boundaries 2026",
+      "geoengineering planetary boundaries 2026",
       "geoengineering planetary boundaries 2026"
     ],
     "scores": [
-      0.7,
-      0.021,
-      0.7,
       1.0,
       1.0,
       0.7,
@@ -1339,10 +1398,15 @@
       0.02,
       0.02,
       0.02,
-      0.749
+      0.749,
+      0.02,
+      0.0,
+      0.0
     ],
     "failures": [
       "ZERO_RESULTS: query 'planetary boundaries geoengineering tipping points' върна 0 видеа",
+      "NO_TRANSCRIPTS: никое видео няма транскрипция за 'geoengineering planetary boundaries 2026'",
+      "LOW_CONTENT: 3 видеа с <500 chars съдържание",
       "NO_TRANSCRIPTS: никое видео няма транскрипция за 'geoengineering planetary boundaries 2026'",
       "LOW_CONTENT: 3 видеа с <500 chars съдържание",
       "NO_TRANSCRIPTS: никое видео няма транскрипция за 'geoengineering planetary boundaries 2026'",
