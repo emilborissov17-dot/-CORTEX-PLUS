@@ -3,7 +3,7 @@
   "raw": {
     "axis": "COGNITION_LEARNING_REVIEW",
     "source": "world_bank_api",
-    "fetched_date": "2026-06-20",
+    "fetched_date": "2026-06-21",
     "metrics": {
       "literacy_rate_youth_pct": 93.1100006103516,
       "primary_completion_rate": 88.0215835571289,
@@ -13,6 +13,6 @@
     },
     "data_quality": "5/5 fetched"
   },
-  "snapshot_timestamp": "2026-06-20T12:37:56.355258+00:00",
+  "snapshot_timestamp": "2026-06-21T13:30:01.658417+00:00",
   "axis": "COGNITION_LEARNING_REVIEW"
 }

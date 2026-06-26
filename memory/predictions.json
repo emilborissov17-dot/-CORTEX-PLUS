@@ -218,5 +218,15 @@
     "verified": false,
     "was_correct": null,
     "lesson": ""
+  },
+  {
+    "axis": "BODY_SCAN",
+    "prediction": "Очакваме продължаване (delta=17.3)",
+    "predicted_urgency": "MEDIUM",
+    "made_at": "2026-06-21T13:57:09.805268+00:00",
+    "verify_after": "2026-06-21",
+    "verified": false,
+    "was_correct": null,
+    "lesson": ""
   }
 ]

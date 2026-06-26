@@ -3,7 +3,7 @@
   "raw": {
     "axis": "SPACE_INFRASTRUCTURE_REVIEW",
     "source": "llm_estimates",
-    "fetched_date": "2026-06-20",
+    "fetched_date": "2026-06-21",
     "metrics": {
       "active_satellites_est": 9000,
       "space_agencies_count": 72,
@@ -14,6 +14,6 @@
     "data_quality": "static_estimates_2025",
     "notes": "Static estimates — real-time space data API TODO (SpaceTrack requires registration)."
   },
-  "snapshot_timestamp": "2026-06-20T12:38:00.989037+00:00",
+  "snapshot_timestamp": "2026-06-21T13:30:09.404205+00:00",
   "axis": "SPACE_INFRASTRUCTURE_REVIEW"
 }

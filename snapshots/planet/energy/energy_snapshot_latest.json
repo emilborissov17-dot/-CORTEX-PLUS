@@ -1,6 +1,6 @@
 {
   "axis": "ENERGY_REVIEW",
-  "timestamp": "2026-06-20T12:37:36.744470+00:00",
+  "timestamp": "2026-06-21T13:29:24.770351+00:00",
   "level": "MEDIUM",
   "signals": [],
   "key_metrics": [],
@@ -15,5 +15,5 @@
     "co2_emissions_per_capita": 4.729
   },
   "data_quality": "6/6 indicators fetched",
-  "fetched_date": "2026-06-20"
+  "fetched_date": "2026-06-21"
 }

@@ -1,5 +1,6 @@
 {
-  "source_type": "REAL_DATA",
+  "axis": "GOVERNANCE_INSTITUTIONS_REVIEW",
+  "source_type": "WORLD_BANK_WGI",
   "metrics": {
     "rule_of_law_weighted_mean": -0.355,
     "rule_of_law_weighted_median": -0.571,
@@ -40,6 +41,5 @@
     "regulatory_quality_weighted_median": -0.096,
     "regulatory_quality_pct_pop_below_minus05": 27.2
   },
-  "snapshot_timestamp": "2026-06-20T12:37:19.412335+00:00",
-  "axis": "GOVERNANCE_INSTITUTIONS_REVIEW"
+  "snapshot_timestamp": "2026-06-26T17:15:28.306853+00:00"
 }

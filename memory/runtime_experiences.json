@@ -1,45 +1,6 @@
 {
   "experiences": [
     {
-      "timestamp": "2026-03-25T11:51:55.119388+00:00",
-      "event_type": "SUCCESS",
-      "data": {
-        "message": "Код написан: agents/core/trend_tracker_patch.py",
-        "problem": "12 оси имат INSUFFICIENT_DATA защото нямат метрики в TRACKED"
-      },
-      "body_state": {
-        "ram_mb": 36.4,
-        "cpu_pct": 0.0,
-        "open_files": 2
-      }
-    },
-    {
-      "timestamp": "2026-03-25T11:51:58.013618+00:00",
-      "event_type": "SUCCESS",
-      "data": {
-        "message": "Код написан: agents/core/climate_global_risk_review_patch.py",
-        "problem": "Недостатъчен анализ на климатичните рискове и техните въздей"
-      },
-      "body_state": {
-        "ram_mb": 36.5,
-        "cpu_pct": 15.6,
-        "open_files": 2
-      }
-    },
-    {
-      "timestamp": "2026-03-27T08:14:53.884571+00:00",
-      "event_type": "SUCCESS",
-      "data": {
-        "message": "Код написан: agents/core/trend_tracker_patch.py",
-        "problem": "12 оси имат INSUFFICIENT_DATA защото нямат метрики в TRACKED"
-      },
-      "body_state": {
-        "ram_mb": 181.4,
-        "cpu_pct": 0.0,
-        "open_files": 6
-      }
-    },
-    {
       "timestamp": "2026-03-27T08:14:56.043009+00:00",
       "event_type": "SUCCESS",
       "data": {
@@ -2599,16 +2560,55 @@
         "cpu_pct": 0.0,
         "open_files": 9
       }
+    },
+    {
+      "timestamp": "2026-06-21T13:55:34.492177+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Синтаксис: expected an indented block after 'if' statement on line 64 (<unknown>, line 64)",
+        "problem": "Address water scarcity gap"
+      },
+      "body_state": {
+        "ram_mb": 138.5,
+        "cpu_pct": 0.0,
+        "open_files": 9
+      }
+    },
+    {
+      "timestamp": "2026-06-21T13:56:46.272557+00:00",
+      "event_type": "ERROR",
+      "data": {
+        "message": "Pattern guard: Забранен pattern: 'SemanticMemory('",
+        "problem": "Align system goals with mission"
+      },
+      "body_state": {
+        "ram_mb": 121.0,
+        "cpu_pct": 0.0,
+        "open_files": 9
+      }
+    },
+    {
+      "timestamp": "2026-06-21T13:56:57.842223+00:00",
+      "event_type": "SUCCESS",
+      "data": {
+        "message": "Код написан: agents/core/general_patch.py",
+        "problem": "Water scarcity management"
+      },
+      "body_state": {
+        "ram_mb": 121.2,
+        "cpu_pct": 0.0,
+        "open_files": 9
+      }
     }
   ],
   "summary": {
     "total_experiences": 200,
-    "success_rate_pct": 61.5,
-    "error_count": 77,
+    "success_rate_pct": 60.5,
+    "error_count": 79,
     "timeout_count": 0,
     "api_calls": 0,
-    "avg_ram_mb_last10": 199.2,
-    "last_error": "Groq грешка: Всички LLM backends неуспешни. Последна грешка: None",
-    "last_updated": "2026-06-19T18:29:53.940930+00:00"
+    "avg_ram_mb_last10": 178.8,
+    "last_error": "Pattern guard: Забранен pattern: 'SemanticMemory('",
+    "last_updated": "2026-06-21T13:56:58.010896+00:00"
   }
 }

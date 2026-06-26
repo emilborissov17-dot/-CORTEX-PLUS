@@ -3,7 +3,7 @@
   "metrics": {
     "axis": "TECHNOLOGY_INFRA_REVIEW",
     "source": "world_bank_api",
-    "fetched_date": "2026-06-20",
+    "fetched_date": "2026-06-21",
     "metrics": {
       "secure_internet_servers_per1m": 16379.6369660674,
       "fixed_broadband_per100": 20.11,
@@ -17,7 +17,7 @@
   "raw": {
     "axis": "TECHNOLOGY_INFRA_REVIEW",
     "source": "world_bank_api",
-    "fetched_date": "2026-06-20",
+    "fetched_date": "2026-06-21",
     "metrics": {
       "secure_internet_servers_per1m": 16379.6369660674,
       "fixed_broadband_per100": 20.11,
@@ -28,6 +28,6 @@
     },
     "data_quality": "6/6 fetched"
   },
-  "snapshot_timestamp": "2026-06-20T12:37:24.233533+00:00",
+  "snapshot_timestamp": "2026-06-21T13:29:11.085574+00:00",
   "axis": "TECHNOLOGY_INFRA_REVIEW"
 }

@@ -1,6 +1,32 @@
 {
-  "error": "Всички LLM backends неуспешни. Последна грешка: None",
+  "current_level": "MEDIUM",
+  "key_metrics": {
+    "asteroid_global_catastrophic_probability_per_year": 1.2e-08,
+    "supervolcano_global_catastrophic_probability_per_year": 1.8e-06,
+    "astrophysical_event_global_catastrophic_probability_per_year": 9.5e-09,
+    "data_quality_score": 0.63,
+    "last_assessment_dates": {
+      "asteroid": "2026-05-01",
+      "supervolcano": "2026-05-01",
+      "astrophysical": "2026-05-01"
+    },
+    "risk_levels": {
+      "asteroid": "HIGH",
+      "supervolcano": "MEDIUM",
+      "astrophysical": "UNKNOWN"
+    }
+  },
+  "main_risks": [
+    "Potential global catastrophic impact from a near-Earth asteroid.",
+    "Possible supervolcano eruption with worldwide climatic consequences.",
+    "Rare astrophysical events (e.g., gamma‑ray burst, solar super‑flare) that could disrupt planetary systems."
+  ],
+  "trends": {
+    "recent_trend": "Risk assessment moved from HIGH to MEDIUM, with increased uncertainty due to a parsing error on 2026‑05‑08.",
+    "confidence": "Medium",
+    "notes": "Data gaps and LLM parsing errors reduce reliability; need improved automated parsing and cross‑validation with observational datasets."
+  },
   "source_type": "LLM_GENERATED",
-  "snapshot_timestamp": "2026-06-20T12:38:01.411227+00:00",
+  "snapshot_timestamp": "2026-06-21T13:30:31.599456+00:00",
   "axis": "DEEP_TIME_RISKS_REVIEW"
 }

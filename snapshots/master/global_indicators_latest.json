@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-06-20T12:29:47.932000+00:00",
+  "timestamp": "2026-06-21T19:52:15.139231+00:00",
   "sources": {
     "co2": "NOAA Mauna Loa CO2",
     "temperature": "NASA GISTEMP",
@@ -23,10 +23,10 @@
     "neo": "NASA JPL CNEOS CAD"
   },
   "co2": {
-    "co2_ppm": 432.15,
-    "co2_ppm_1yr_ago": 429.78,
-    "co2_annual_increase": 2.37,
-    "co2_date": "2026-06-07"
+    "co2_ppm": 431.17,
+    "co2_ppm_1yr_ago": 429.43,
+    "co2_annual_increase": 1.74,
+    "co2_date": "2026-06-14"
   },
   "temperature": {
     "temp_anomaly_c": 1.19,
@@ -35,7 +35,7 @@
   },
   "sea_level": {},
   "biodiversity": {
-    "species_observations_30d": 2656431
+    "species_observations_30d": 2627112
   },
   "food": {
     "undernourishment_pct": 8.5,
@@ -97,13 +97,13 @@
   },
   "ai_activity": {
     "arxiv_ai_papers_total": 185440,
-    "github_ai_repos_total": 38438
+    "github_ai_repos_total": 38529
   },
   "media": {
-    "news_tone_avg_1month": -0.783,
-    "news_tone_latest": -0.854,
-    "news_tone_min": -0.854,
-    "news_tone_max": -0.712,
+    "news_tone_avg_1month": -1.469,
+    "news_tone_latest": -1.558,
+    "news_tone_min": -1.558,
+    "news_tone_max": -1.379,
     "news_tone_datapoints": 2,
     "news_tone_scale": "-100=very negative, 0=neutral, +100=very positive"
   },
@@ -121,7 +121,7 @@
   },
   "satellites": {},
   "neo": {
-    "neo_close_approaches_90d": 112,
+    "neo_close_approaches_90d": 114,
     "neo_within_lunar_dist_90d": 1,
     "neo_dist_threshold_au": 0.1
   }

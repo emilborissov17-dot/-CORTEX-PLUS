@@ -1,5 +1,5 @@
 {
-  "_updated": "2026-06-20T13:00:30.881556+00:00",
+  "_updated": "2026-06-21T13:57:33.949732+00:00",
   "CLIMATE_GLOBAL_RISK_REVIEW": {
     "sources": [],
     "last_asked_llm": "2026-06-19T18:30:07.739534+00:00"
@@ -56,5 +56,13 @@
   "SOCIAL_RELATIONS_REVIEW": {
     "sources": [],
     "last_asked_llm": "2026-06-20T13:00:30.881339+00:00"
+  },
+  "OPENCLAW_SOLUTIONS": {
+    "sources": [],
+    "last_asked_llm": "2026-06-21T13:57:22.903694+00:00"
+  },
+  "PLANETARY_POTENTIAL_REVIEW": {
+    "sources": [],
+    "last_asked_llm": "2026-06-21T13:57:33.949404+00:00"
   }
 }

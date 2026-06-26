@@ -387,7 +387,7 @@ def generate_causal_hypothesis(
 
     raw = ""
     try:
-        raw = _call_groq_causal(prompt, max_tokens=500)
+        raw = _call_groq_causal(prompt, max_tokens=1200)
         import re as _re
         raw = _re.sub(r"<think>.*?</think>", "", raw, flags=_re.DOTALL).strip()
         if "```" in raw:
@@ -399,10 +399,29 @@ def generate_causal_hypothesis(
                     raw = part
                     break
         if "{" in raw:
-            raw = raw[raw.index("{"):raw.rindex("}") + 1]
-        parsed = json.loads(raw)
+            start = raw.index("{")
+            end = raw.rfind("}")
+            raw = raw[start:end + 1] if end != -1 else raw[start:]
+        try:
+            parsed = json.loads(raw)
+        except json.JSONDecodeError:
+            # Truncated JSON fallback — extract fields via regex
+            def _rx(field):
+                m = _re.search(rf'"{field}"\s*:\s*"([^"]*)"', raw)
+                return m.group(1) if m else ""
+            parsed = {
+                "hypothesis_text":      _rx("hypothesis_text"),
+                "root_cause":           _rx("root_cause"),
+                "suggested_action":     _rx("suggested_action"),
+                "expected_improvement": _rx("expected_improvement"),
+                "evidence_strength":    _rx("evidence_strength") or "unknown",
+            }
+            if parsed["hypothesis_text"]:
+                print(f"  [CAUSAL_HYP] truncated JSON — regex fallback OK ({len(parsed['hypothesis_text'])} chars)")
+            else:
+                print(f"  [CAUSAL_HYP] parse error: unrecoverable | raw[:100]: {raw[:100]!r}")
     except Exception as e:
-        print(f"  [CAUSAL_HYP] parse error: {e} | raw[:100]: {raw[:100]!r}")
+        print(f"  [CAUSAL_HYP] LLM call error: {e} | raw[:100]: {raw[:100]!r}")
         parsed = {}
 
     hypothesis_text  = parsed.get("hypothesis_text", "")

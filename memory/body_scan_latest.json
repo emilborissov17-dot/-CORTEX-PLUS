@@ -1,101 +1,100 @@
 {
-  "timestamp": "2026-05-09T06:02:45.821352+00:00",
+  "timestamp": "2026-06-21T13:54:22.155895+00:00",
   "hardware": {
-    "cpu_percent": 3.1,
+    "cpu_percent": 3.0,
     "cpu_cores": 16,
     "ram_total_gb": 13.86,
-    "ram_used_gb": 8.37,
-    "ram_free_gb": 5.49,
-    "ram_percent": 60.4,
+    "ram_used_gb": 4.49,
+    "ram_free_gb": 9.37,
+    "ram_percent": 32.4,
     "disk_total_gb": 952.6,
-    "disk_free_gb": 717.4,
-    "disk_used_pct": 24.7,
+    "disk_free_gb": 597.6,
+    "disk_used_pct": 37.3,
     "gpu": {
       "available": true,
       "name": "NVIDIA GeForce GTX 1650",
       "vram_total_mb": 4096,
       "vram_free_mb": 3952,
       "vram_used_mb": 0,
-      "temperature_c": 49,
+      "temperature_c": 46,
       "utilization_pct": 0
     }
   },
   "software": {
     "os": "unknown",
-    "python": "",
+    "python": "unknown",
     "ollama_status": "ACTIVE",
     "ollama_models": [
-      "qwen3:8b",
-      "qwen2.5:7b"
+      "groq:llama-3.3-70b"
     ],
-    "base_dir": "C:\\Users\\emilb\\Desktop\\AGI\\CORTEX++_QWEN",
-    "pid": 40040,
-    "uptime_sec": 1.8
+    "base_dir": "C:\\Users\\emilb\\Desktop\\AGI\\CORTEX++_MERGED",
+    "pid": 38824,
+    "uptime_sec": 4365.0
   },
   "files": {
-    "py_files_count": 1216,
-    "json_files_count": 752,
-    "total_size_mb": 12402.63,
+    "py_files_count": 5602,
+    "json_files_count": 1209,
+    "total_size_mb": 46150.19,
     "dir_sizes": {
       "agents": {
-        "files": 117,
-        "kb": 691.4
+        "files": 122,
+        "kb": 832.8
       },
       "core": {
-        "files": 94,
-        "kb": 2197.0
+        "files": 105,
+        "kb": 2387.2
       },
       "memory": {
-        "files": 202,
-        "kb": 4967.8
+        "files": 394,
+        "kb": 8834.8
       },
       "data_providers": {
-        "files": 99,
-        "kb": 285.0
+        "files": 101,
+        "kb": 311.2
       },
       "snapshots": {
-        "files": 47,
-        "kb": 12546484.3
+        "files": 69,
+        "kb": 46267129.4
       },
       "reports": {
         "files": 14,
-        "kb": 44.1
+        "kb": 45.0
       }
     },
     "recently_modified": [
+      "initiative_tracker.py",
       "core\\groq_backend.py",
-      "memory\\semantic_memory.py",
-      "agents\\core\\system2_agent.py",
-      "agents\\core\\ecosystems_biodiversity_review_patch.py",
-      "agents\\core\\self_observer.py"
+      "fast_cycle_runner.py",
+      "agents\\hyperclaw\\hyperclaw_orchestrator.py",
+      "hypothesis_generator.py"
     ]
   },
   "memory": {
-    "snapshots_count": 47,
-    "chromadb_size_kb": 2255.9,
+    "snapshots_count": 69,
+    "chromadb_size_kb": 3430.6,
     "chromadb_vectors": 4,
     "runtime_experiences": 200
   },
   "network": {
     "groq_api": {
       "status": "UP",
-      "ms": 527
+      "ms": 478
     },
     "world_bank": {
       "status": "UP",
-      "ms": 499
+      "ms": 457
     },
     "noaa": {
       "status": "UP",
-      "ms": 858
+      "ms": 771
     },
     "open_meteo": {
       "status": "UP",
-      "ms": 446
+      "ms": 424
     },
     "internet": {
       "status": "UP",
-      "ms": 564
+      "ms": 608
     }
   },
   "power": {
@@ -106,11 +105,12 @@
     "critical_axes": [
       "GOVERNANCE_INSTITUTIONS_REVIEW",
       "CLIMATE_GLOBAL_RISK_REVIEW",
-      "ENERGY_REVIEW"
+      "ENERGY_REVIEW",
+      "MATERIALS_WASTE_REVIEW"
     ],
     "can_self_modify": true,
-    "can_act": true,
+    "can_act": false,
     "has_reports": true
   },
-  "self_feeling": "Тялото ми е спокойно — CPU 3.1% | Паметта е свободна — 5.49GB RAM | GPU активен — 3952MB VRAM свободна, 49°C | Всички 5 API-та са достъпни | Измервам 19/26 цивилизационни оси (73.1%) | Тревожа се за: GOVERNANCE_INSTITUTIONS_REVIEW, CLIMATE_GLOBAL_RISK_REVIEW, ENERGY_REVIEW | Тялото ми съдържа 1216 Python модула, 752 JSON файла"
+  "self_feeling": "Тялото ми е спокойно — CPU 3.0% | Паметта е свободна — 9.37GB RAM | GPU активен — 3952MB VRAM свободна, 46°C | Всички 5 API-та са достъпни | Измервам 19/26 цивилизационни оси (73.1%) | Тревожа се за: GOVERNANCE_INSTITUTIONS_REVIEW, CLIMATE_GLOBAL_RISK_REVIEW, ENERGY_REVIEW, MATERIALS_WASTE_REVIEW | Тялото ми съдържа 5602 Python модула, 1209 JSON файла"
 }
