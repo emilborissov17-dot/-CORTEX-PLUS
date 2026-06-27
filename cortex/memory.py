@@ -37,12 +37,17 @@ def init_memory() -> None:
 
 def _embed(text: str) -> List[float]:
     """
-    TODO: по-късно ще закачим реален embedding (напр. Qwen).
-    Засега връщаме фиктивен, но детерминиран псевдо-вектор,
-    за да има стабилно семантично сравнение в рамките на системата.
+    Real 384-dim semantic embedding via ChromaDB DefaultEmbeddingFunction
+    (all-MiniLM-L6-v2 via onnxruntime — already installed as chromadb dependency,
+    model cached locally). Compatible with the active memory/chromadb collection.
+    Falls back to deterministic pseudo-vector if chromadb is unavailable.
     """
-    base = sum(ord(c) for c in text) % 1000
-    return [float((base + i * 13) % 100) for i in range(16)]
+    try:
+        from chromadb.utils.embedding_functions import DefaultEmbeddingFunction
+        return list(DefaultEmbeddingFunction()([text])[0])
+    except Exception:
+        base = sum(ord(c) for c in text) % 1000
+        return [float((base + i * 13) % 100) for i in range(16)]
 
 
 def _trim_file(path: Path, max_chars: int) -> None:
