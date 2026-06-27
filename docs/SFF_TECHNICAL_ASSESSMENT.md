@@ -225,7 +225,7 @@ A 12-pair **inter-axis correlation matrix** is implemented (e.g., CLIMATE↔FOOD
 
 **Hypotheses (`cortex_memory/hypotheses/causal_pending.json`):**
 - Multiple Groq causal hypotheses linking metric stagnation to root causes
-- All show `baseline_value == current_value` because `trends.json` contains triplicate-identical values (`"co2_ppm": [432.44, 432.44, 432.44]`) — consecutive cycles ran without real time passing, so OLS regression detects no trend
+- All show `baseline_value == current_value` because consecutive cycles ran on the same day with the same API values. Trend storage is now date-keyed (fixed, commit `bb7da5b`); prior fake history cleared (commit `10d15c3`). Delta remains 0.0 until real time-separated data accumulates (~30 days).
 - `"ACCEPTED"` status = citation verifier found the number in a Wikipedia/WHO web response. Not independent scientific validation.
 - No hypothesis has been tested against a changed real-world outcome.
 
@@ -328,12 +328,13 @@ These build directly on what works today. No algorithmic novelty required.
 
 ---
 
-### Milestone 2 — Months 3-4: Fix Trend Detection (delta = 0.0 problem)
-**What:** Replace the flat-array trend store with a date-keyed SQLite table or dated JSON (one row per calendar day, not one row per cycle). When multiple cycles run the same day, take the most recent value. OLS regression then operates over genuine temporal change.
+### Milestone 2 — Months 3-4: Fix Trend Detection (delta = 0.0 problem) ⚙️ MECHANISM FIXED — signal pending
 
-**Why:** Every hypothesis currently shows delta = 0.0 because the trend store records the same API response multiple times in one day. The hypothesis generator and initiative tracker cannot detect real movement until this is fixed.
+**What:** Replace the flat-array trend store with date-keyed storage so same-day cycles overwrite instead of append.
 
-**Measurable outcome:** After 60 days of operation, at least 3 axes show non-zero slope in trends.json. Hypotheses generated from that point forward have a non-trivial baseline/current delta.
+**Status (2026-06-27):** Mechanism fixed in `merkle_memory._update_trends()` (commit `bb7da5b`). Prior fake history (triplicate-identical values from same-day repeated cycles) cleared (commit `10d15c3`). The fix enables real trend detection — but delta remains 0.0 until ~30 days of real daily data accumulates. The capability is in place; the signal is not yet.
+
+**Measurable outcome:** After 30+ days of operation, at least 3 axes show non-zero slope in trends.json. Hypotheses generated from that point forward have a non-trivial baseline/current delta.
 
 ---
 
@@ -378,7 +379,7 @@ These build directly on what works today. No algorithmic novelty required.
 - Honest recent record: fabricated training data deleted, incorrect WGI codes fixed, documentation updated to reflect actual capability
 
 **Honest current limitations:**
-- Self-improvement: zero measurable impact (delta = 0.0 across 8 cycles); patches write files but close no feedback loop
+- Self-improvement: zero measurable impact (delta = 0.0 across 11 cycles); patches write files but close no feedback loop. Trend storage now date-keyed (fixed), but delta remains 0.0 until real time-separated data accumulates.
 - SOCIAL_RELATIONS scorer deferred — provider returns only 2/5 usable metrics; scorer pending UNHCR+UCDP data wiring
 - Memory embeddings are ASCII pseudo-vectors, not semantic
 - Safety guard has a bypass in the self-modifier path
