@@ -1,170 +1,341 @@
 {
-  "BODY_SCAN": {
-    "score": 0.5,
-    "score_100": 50.0,
-    "level": "MEDIUM",
-    "timestamp": "2026-05-07T10:20:42.026925+00:00"
-  },
-  "ECONOMY_WORK_REVIEW": {
-    "score": 0.5,
-    "score_100": 50.0,
-    "level": "MEDIUM",
-    "timestamp": "2026-05-07T10:20:42.026947+00:00"
-  },
-  "EDUCATION_CULTURE_REVIEW": {
-    "score": 0.5,
-    "score_100": 50.0,
-    "level": "MEDIUM",
-    "timestamp": "2026-05-07T10:20:42.026954+00:00"
-  },
-  "GOVERNANCE_INSTITUTIONS_REVIEW": {
-    "score": 0.311,
-    "score_100": 31.1,
-    "level": "LOW",
-    "timestamp": "2026-05-07T10:20:42.026966+00:00"
-  },
-  "INEQUALITY_POVERTY_REVIEW": {
-    "score": 0.333,
-    "score_100": 33.3,
-    "level": "LOW",
-    "timestamp": "2026-05-07T10:20:42.026973+00:00"
-  },
-  "INFRASTRUCTURE_CITIES_REVIEW": {
-    "score": 0.5,
-    "score_100": 50.0,
-    "level": "MEDIUM",
-    "timestamp": "2026-05-07T10:20:42.026979+00:00"
-  },
-  "TECHNOLOGY_AI_REVIEW": {
-    "score": 0.5,
-    "score_100": 50.0,
-    "level": "MEDIUM",
-    "timestamp": "2026-05-07T10:20:42.026984+00:00"
-  },
-  "TECHNOLOGY_INFRA_REVIEW": {
-    "score": 0.5,
-    "score_100": 50.0,
-    "level": "MEDIUM",
-    "timestamp": "2026-05-07T10:20:42.026988+00:00"
-  },
-  "CLIMATE_GLOBAL_RISK_REVIEW": {
-    "score": 0.059,
-    "score_100": 5.9,
-    "level": "LOW",
-    "timestamp": "2026-05-07T10:20:42.026995+00:00"
-  },
-  "COSMIC_RESOURCES_REVIEW": {
-    "score": 0.5,
-    "score_100": 50.0,
-    "level": "MEDIUM",
-    "timestamp": "2026-05-07T10:20:42.026999+00:00"
-  },
-  "DEEP_TIME_RISKS_REVIEW": {
-    "score": 0.5,
-    "score_100": 50.0,
-    "level": "MEDIUM",
-    "timestamp": "2026-05-07T10:20:42.027001+00:00"
-  },
-  "GENERAL_SELF_REVIEW": {
-    "score": 0.5,
-    "score_100": 50.0,
-    "level": "MEDIUM",
-    "timestamp": "2026-05-07T10:20:42.027005+00:00"
-  },
-  "GOAL_PROGRESS_REVIEW": {
-    "score": 0.5,
-    "score_100": 50.0,
-    "level": "MEDIUM",
-    "timestamp": "2026-05-07T10:20:42.027007+00:00"
-  },
-  "LONG_TERM_FUTURE_REVIEW": {
-    "score": 0.5,
-    "score_100": 50.0,
-    "level": "MEDIUM",
-    "timestamp": "2026-05-07T10:20:42.027010+00:00"
-  },
-  "SPACE_INFRASTRUCTURE_REVIEW": {
-    "score": 0.5,
-    "score_100": 50.0,
-    "level": "MEDIUM",
-    "timestamp": "2026-05-07T10:20:42.027012+00:00"
-  },
-  "COGNITION_LEARNING_REVIEW": {
-    "score": 0.5,
-    "score_100": 50.0,
-    "level": "MEDIUM",
-    "timestamp": "2026-05-07T10:20:42.027015+00:00"
-  },
-  "CULTURE_MEDIA_REVIEW": {
-    "score": 0.5,
-    "score_100": 50.0,
-    "level": "MEDIUM",
-    "timestamp": "2026-05-07T10:20:42.027018+00:00"
-  },
-  "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL": {
-    "score": 0.5,
-    "score_100": 50.0,
-    "level": "MEDIUM",
-    "timestamp": "2026-05-07T10:20:42.027021+00:00"
-  },
-  "HUMAN_WELL_BEING_REVIEW": {
-    "score": 0.5,
-    "score_100": 50.0,
-    "level": "MEDIUM",
-    "timestamp": "2026-05-07T10:20:42.027023+00:00"
-  },
-  "SOCIAL_RELATIONS_REVIEW": {
-    "score": 0.5,
-    "score_100": 50.0,
-    "level": "MEDIUM",
-    "timestamp": "2026-05-07T10:20:42.027026+00:00"
-  },
-  "MASTER": {
-    "score": 0.5,
-    "score_100": 50.0,
-    "level": "MEDIUM",
-    "timestamp": "2026-05-07T10:20:42.027029+00:00"
-  },
-  "OPENCLAW_SOLUTIONS": {
-    "score": 0.5,
-    "score_100": 50.0,
-    "level": "MEDIUM",
-    "timestamp": "2026-05-07T10:20:42.027031+00:00"
-  },
-  "ECOSYSTEMS_BIODIVERSITY_REVIEW": {
-    "score": 0.217,
-    "score_100": 21.7,
-    "level": "LOW",
-    "timestamp": "2026-05-07T10:20:42.027037+00:00"
-  },
-  "ENERGY_REVIEW": {
-    "score": 0.477,
-    "score_100": 47.7,
-    "level": "MEDIUM",
-    "timestamp": "2026-05-07T10:20:42.027042+00:00"
-  },
-  "FOOD_REVIEW": {
-    "score": 0.309,
-    "score_100": 30.9,
-    "level": "LOW",
-    "timestamp": "2026-05-07T10:20:42.027046+00:00"
-  },
-  "MATERIALS_WASTE_REVIEW": {
-    "score": 0.134,
-    "score_100": 13.4,
-    "level": "LOW",
-    "timestamp": "2026-05-07T10:20:42.027050+00:00"
-  },
-  "PLANETARY_POTENTIAL_REVIEW": {
-    "score": 0.5,
-    "score_100": 50.0,
-    "level": "MEDIUM",
-    "timestamp": "2026-05-07T10:20:42.027054+00:00"
-  },
-  "WATER_REVIEW": {
-    "score": 0.514,
-    "score_100": 51.4,
-    "level": "MEDIUM",
-    "timestamp": "2026-05-07T10:20:42.027058+00:00"
+  "generated_at": "2026-06-27T11:27:11.868156+00:00",
+  "scorer_version": "1.1",
+  "total_axes": 27,
+  "scores": {
+    "BODY_SCAN": {
+      "score": 0.5,
+      "level": "MEDIUM",
+      "signals": [
+        "⚡ Generic scorer — няма специфични прагове за тази ос"
+      ],
+      "metrics_used": {}
+    },
+    "ECONOMY_WORK_REVIEW": {
+      "score": 0.6,
+      "level": "MEDIUM",
+      "signals": [
+        "⚡ БВП на глава: $13,631 — среден доход",
+        "✅ БВП ръст: 2.9%",
+        "✅ Безработица: 4.8%",
+        "⚡ Джини: 39.6 — умерена неравнственост",
+        "🔗 Корелация: TECHNOLOGY_AI_REVIEW (score=0.65) влияе позитивно"
+      ],
+      "metrics_used": {
+        "gdp_per_capita": 13631.2043097215,
+        "growth": 2.87194964204316,
+        "unemployment": 4.79097241077406
+      }
+    },
+    "EDUCATION_CULTURE_REVIEW": {
+      "score": 0.5,
+      "level": "MEDIUM",
+      "signals": [
+        "⚡ Липсват данни за грамотност"
+      ],
+      "metrics_used": {
+        "literacy": null,
+        "enrollment": null,
+        "edu_exp": null
+      }
+    },
+    "GOVERNANCE_INSTITUTIONS_REVIEW": {
+      "score": 0.45,
+      "level": "MEDIUM",
+      "signals": [
+        "⚡ Върховенство на закона: -0.35",
+        "⚡ Контрол на корупцията: -0.25",
+        "⚠️ Политическа стабилност: -0.65 — слабо",
+        "⚡ Ефективност на управлението: 0.18"
+      ],
+      "metrics_used": {
+        "rule_of_law": -0.355,
+        "corruption": -0.253,
+        "political_stability": -0.651
+      }
+    },
+    "INEQUALITY_POVERTY_REVIEW": {
+      "score": 0.4,
+      "level": "MEDIUM",
+      "signals": [
+        "⚡ Джини: 39.6 — умерена",
+        "⚡ Бедност: 10.4%"
+      ],
+      "metrics_used": {
+        "gini": 39.625,
+        "poverty": 10.4,
+        "bottom20": 16.8
+      }
+    },
+    "INFRASTRUCTURE_CITIES_REVIEW": {
+      "score": 0.5,
+      "level": "MEDIUM",
+      "signals": [
+        "⚡ Липсват данни за електричество"
+      ],
+      "metrics_used": {
+        "electricity": null,
+        "internet": null,
+        "logistics": null
+      }
+    },
+    "TECHNOLOGY_AI_REVIEW": {
+      "score": 0.65,
+      "level": "HIGH",
+      "signals": [
+        "⚡ Интернет покритие: 73.6%",
+        "✅ НИРД разходи: 2.6% от БВП",
+        "✅ Високотехнологичен износ: 24.8%",
+        "ℹ️ Патентни заявки: 2,385,200"
+      ],
+      "metrics_used": {
+        "internet_pct": 73.6,
+        "rd_pct": 2.59056888571504,
+        "high_tech_pct": 24.758870073466
+      }
+    },
+    "TECHNOLOGY_INFRA_REVIEW": {
+      "score": 0.6,
+      "level": "MEDIUM",
+      "signals": [
+        "⚡ Логистичен индекс (LPI): 3.00/5 — над глобалната средна (~2.8)",
+        "⚡ Сигурни интернет сървъри: 16,380/млн — горна средна",
+        "⚡ Фиксиран интернет: 20.1/100 — умерено",
+        "⚡ Мобилни абонаменти: 111.5/100"
+      ],
+      "metrics_used": {
+        "lpi": 3.0,
+        "secure_servers": 16379.6369660674,
+        "broadband_per100": 20.11,
+        "mobile_per100": 111.5
+      }
+    },
+    "CLIMATE_GLOBAL_RISK_REVIEW": {
+      "score": 0.45,
+      "level": "MEDIUM",
+      "signals": [
+        "⚠️ CO2 431.17 ppm — опасно над 420 ppm (пред-индустриален: 280 ppm)",
+        "✅ Годишен ръст на CO2: +1.74 ppm",
+        "⚡ Прогноза: висока температура 30.1°C",
+        "🔗 Корелация: ENERGY_REVIEW (score=0.05) влияе негативно"
+      ],
+      "metrics_used": {
+        "co2_ppm": 431.17,
+        "co2_increase": 1.74,
+        "max_temp_7d": 30.1
+      }
+    },
+    "COSMIC_RESOURCES_REVIEW": {
+      "score": 0.5,
+      "level": "MEDIUM",
+      "signals": [
+        "⚡ Generic scorer — няма специфични прагове за тази ос"
+      ],
+      "metrics_used": {}
+    },
+    "DEEP_TIME_RISKS_REVIEW": {
+      "score": 0.5,
+      "level": "MEDIUM",
+      "signals": [
+        "⚡ Generic scorer — няма специфични прагове за тази ос"
+      ],
+      "metrics_used": {}
+    },
+    "GENERAL_SELF_REVIEW": {
+      "score": 0.5,
+      "level": "MEDIUM",
+      "signals": [
+        "⚡ Generic scorer — няма специфични прагове за тази ос"
+      ],
+      "metrics_used": {}
+    },
+    "GOAL_PROGRESS_REVIEW": {
+      "score": 0.5,
+      "level": "MEDIUM",
+      "signals": [
+        "⚡ Generic scorer — няма специфични прагове за тази ос"
+      ],
+      "metrics_used": {}
+    },
+    "LONG_TERM_FUTURE_REVIEW": {
+      "score": 0.5,
+      "level": "MEDIUM",
+      "signals": [
+        "⚡ Generic scorer — няма специфични прагове за тази ос"
+      ],
+      "metrics_used": {}
+    },
+    "SPACE_INFRASTRUCTURE_REVIEW": {
+      "score": 0.5,
+      "level": "MEDIUM",
+      "signals": [
+        "⚡ Generic scorer — няма специфични прагове за тази ос"
+      ],
+      "metrics_used": {}
+    },
+    "COGNITION_LEARNING_REVIEW": {
+      "score": 0.45,
+      "level": "MEDIUM",
+      "signals": [
+        "⚡ Грамотност (млади): 93.1% — над глобалната средна (~91%)",
+        "⚡ Завършване на начално образование: 88.0%",
+        "⚡ Терциерно образование: 43.6%",
+        "⚠️ Разходи за образование: 3.6% — под UNESCO минимума (4%)",
+        "⚡ Ученици/учител: 24.5 — приемливо (глобална средна ~23)"
+      ],
+      "metrics_used": {
+        "literacy_youth_pct": 93.1100006103516,
+        "primary_completion": 88.0215835571289,
+        "tertiary_enrollment": 43.6151390075684,
+        "govt_exp_pct": 3.56927475138052,
+        "pupil_teacher_ratio": 24.4888
+      }
+    },
+    "CULTURE_MEDIA_REVIEW": {
+      "score": 0.49,
+      "level": "MEDIUM",
+      "signals": [
+        "ℹ️ Метриките измерват инфраструктура за достъп до информация, не медийна свобода или качество на културата",
+        "⚡ Интернет потребители: 73.6% — над глобалната средна (67%)",
+        "⚡ Грамотност (възрастни): 87.7%",
+        "⚠️ Записване в средно образование: 66.3% — под глобалната средна (77%)",
+        "⚡ Фиксиран интернет: 20.1/100 — умерено",
+        "⚡ Мобилни абонаменти: 111.5/100",
+        "⚡ Записване в начално образование: 89.4%"
+      ],
+      "metrics_used": {
+        "internet_users_pct": 73.6,
+        "adult_literacy_pct": 87.7399978637695,
+        "secondary_enr_pct": 66.27183,
+        "broadband_per100": 20.11,
+        "mobile_per100": 111.5,
+        "primary_enr_pct": 89.4124
+      }
+    },
+    "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL": {
+      "score": 0.29,
+      "level": "LOW",
+      "signals": [
+        "⚡ Върховенство на закона: -0.046",
+        "⚡ Глас и отчетност: -0.100",
+        "⚡ Политическа стабилност: -0.026",
+        "⚡ Полово неравенство (GII): 27.2 — умерено",
+        "⚠️ Достъп до правосъдие (WJP): 3.04/10 — нисък"
+      ],
+      "metrics_used": {
+        "rule_of_law": -0.046,
+        "voice": -0.1,
+        "stability": -0.026,
+        "gii": 27.2485552269582,
+        "access_justice": 3.03896103896104
+      }
+    },
+    "HUMAN_WELL_BEING_REVIEW": {
+      "score": 0.45,
+      "level": "MEDIUM",
+      "signals": [
+        "⚡ UHC индекс: 71.0 — средно покритие",
+        "✅ Самоубийства: 9.2/100k",
+        "⚡ Бедност: 10.4% — значително"
+      ],
+      "metrics_used": {
+        "uhc": 71.0,
+        "suicide_rate": 9.157418121,
+        "poverty": 10.4,
+        "life_exp": 73.480380292779
+      }
+    },
+    "SOCIAL_RELATIONS_REVIEW": {
+      "score": 0.5,
+      "level": "MEDIUM",
+      "signals": [
+        "⚡ Generic scorer — няма специфични прагове за тази ос"
+      ],
+      "metrics_used": {}
+    },
+    "OPENCLAW_SOLUTIONS": {
+      "score": 0.5,
+      "level": "MEDIUM",
+      "signals": [
+        "⚡ Generic scorer — няма специфични прагове за тази ос"
+      ],
+      "metrics_used": {}
+    },
+    "ECOSYSTEMS_BIODIVERSITY_REVIEW": {
+      "score": 0.55,
+      "level": "MEDIUM",
+      "signals": [
+        "⚡ Горска площ: 31.1%",
+        "⚡ Защитени територии: 16.5%",
+        "✅ Морски защитени зони: 17.5%"
+      ],
+      "metrics_used": {
+        "forest_pct": 31.1430410787403,
+        "protected_pct": 16.511660312023,
+        "threatened": null
+      }
+    },
+    "ENERGY_REVIEW": {
+      "score": 0.05,
+      "level": "LOW",
+      "signals": [
+        "⚠️ Възобновяеми: 19.7% — критично ниско",
+        "⚠️ Изкопаеми горива: 74.8% — висока зависимост",
+        "✅ Достъп до ел. енергия: 91.6%"
+      ],
+      "metrics_used": {
+        "renewable_pct": 19.7355641050053,
+        "fossil_pct": 74.8319994480172,
+        "access_pct": 91.5991774421991
+      }
+    },
+    "FOOD_REVIEW": {
+      "score": 0.5,
+      "level": "MEDIUM",
+      "signals": [
+        "⚡ Недохранване: 8.5% — над SDG целта",
+        "✅ Зърнен добив: 4244 kg/ha",
+        "✅ Индекс на хранително производство: 100.0"
+      ],
+      "metrics_used": {
+        "undernourishment": 8.5,
+        "cereal_yield": 4243.53110790989,
+        "food_production": 100.0
+      }
+    },
+    "MATERIALS_WASTE_REVIEW": {
+      "score": 0.25,
+      "level": "LOW",
+      "signals": [
+        "⚠️ Рециклиране: 13.5% — ниско",
+        "✅ Отпадъци: 3 kg/човек"
+      ],
+      "metrics_used": {
+        "recycling": 13.5,
+        "waste_per_capita": 3.18969961013975
+      }
+    },
+    "PLANETARY_POTENTIAL_REVIEW": {
+      "score": 0.5,
+      "level": "MEDIUM",
+      "signals": [
+        "⚡ Generic scorer — няма специфични прагове за тази ос"
+      ],
+      "metrics_used": {}
+    },
+    "WATER_REVIEW": {
+      "score": 0.5,
+      "level": "MEDIUM",
+      "signals": [
+        "⚡ Достъп до чиста вода: 73.7% — нужен напредък",
+        "⚡ Санитация: 58.5%",
+        "✅ Изтегляне на сладка вода: 9.2% — устойчиво"
+      ],
+      "metrics_used": {
+        "safe_water": 73.6686144265244,
+        "sanitation": 58.4951883486035,
+        "withdrawal": 9.2339298524297
+      }
+    }
   }
 }
