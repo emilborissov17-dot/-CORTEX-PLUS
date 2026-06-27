@@ -201,7 +201,7 @@ A 12-pair **inter-axis correlation matrix** is implemented (e.g., CLIMATE↔FOOD
 **Three layers:**
 
 **`cortex/memory.py` (STM/LTM/HIST in JSONL):**
-- The `_embed()` function uses ASCII character sums to produce 16-dimensional deterministic pseudo-vectors. Code comment explicitly says: `"TODO: later we'll attach a real embedding"`. **This is not semantic similarity.**
+- The `_embed()` function previously used ASCII character sums (16-dim pseudo-vector). **Fixed (commit `8f0e941`):** now uses ChromaDB `DefaultEmbeddingFunction` (all-MiniLM-L6-v2 via onnxruntime, 384-dim). Cosine similarity is now semantically meaningful.
 
 **`merkle_memory.py` (cycle archive):**
 - 8 cycles archived with `signals.json`, `decisions.json`, `results.json`, `hash.txt`
@@ -209,10 +209,10 @@ A 12-pair **inter-axis correlation matrix** is implemented (e.g., CLIMATE↔FOOD
 - `essence.md` (~1000 tokens) is injected into subsequent LLM prompts — this is the functional RAG layer
 
 **ChromaDB:**
-- 578 memories stored as of 2026-06-21
-- ChromaDB can provide real embedding-based similarity search, but the relationship between ChromaDB entries and the pseudo-vector `_embed()` in `cortex/memory.py` is unresolved in current code
+- 600 entries as of 2026-06-27, growing each cycle
+- **Already using real 384-dim semantic embeddings** (all-MiniLM-L6-v2, confirmed by inspecting stored vectors). The `memory/semantic_memory.py` + ChromaDB system is the active production memory — `cortex/memory.py` was a legacy parallel module, now aligned to the same embedding space.
 
-**Summary:** Memory functions as a **structured retrieval log** — previous cycle summaries are formatted and injected into LLM prompts. It does not train or fine-tune any model. Real semantic embeddings are not yet active in the main pipeline.
+**Summary:** Memory functions as a **structured retrieval log** — previous cycle summaries are formatted and injected into LLM prompts. It does not train or fine-tune any model. Real semantic embeddings are active in the production pipeline (ChromaDB `cortex_insights`, 384-dim). The legacy `cortex/memory.py` module is now also using real embeddings.
 
 ---
 
@@ -237,14 +237,14 @@ A 12-pair **inter-axis correlation matrix** is implemented (e.g., CLIMATE↔FOOD
 |---|---|
 | "17 axes with real metric-driven scores" | **True** — 17 axes have genuine threshold scorers reading live API data. Scoring engine runs at step 12.4 of each cycle; `output/cortex_scores_latest.json` is refreshed automatically. |
 | "Self-improving system" | **Simulated.** Writes LLM-generated Python files to disk. No closed loop between patch → execution → measured outcome. `delta = 0.0` across all 8 cycles. |
-| "Learning" | **RAG retrieval, not ML.** Previous cycle summaries injected into LLM prompts. Primary embedding function returns ASCII pseudo-vectors, not semantic embeddings. |
+| "Learning" | **RAG retrieval, not ML.** Previous cycle summaries injected into LLM prompts. Production memory (ChromaDB) uses real 384-dim semantic embeddings. Legacy `cortex/memory.py._embed()` pseudo-vector fixed (commit `8f0e941`). |
 | "Causal hypothesis generation" | **Working but unvalidated.** LLM narratives grounded in real metric values. Evidence strength self-labeled "moderate". No external validation. |
 | "5 axes with working providers but score_generic (fake 0.5)" | **Partially resolved.** 4 of 5 now have real scorers (CULTURE_MEDIA, COGNITION_LEARNING, GOVERNANCE_RIGHTS, TECHNOLOGY_INFRA). SOCIAL_RELATIONS remains on `score_generic` — provider has only 2 of 5 metrics; scorer deferred until UNHCR+UCDP data is piped in. |
 | "7 composite/internal axes" | **Confirmed.** LONG_TERM_FUTURE, GOAL_PROGRESS, GENERAL_SELF_REVIEW, DEEP_TIME_RISKS, SPACE_INFRASTRUCTURE, PLANETARY_POTENTIAL, BODY_SCAN — LLM or internal only. |
 | "2 qualitative axes" | **Confirmed.** COSMIC_RESOURCES (static estimates) and OPENCLAW_SOLUTIONS (text proposals). |
 | "Safety-constrained self-modification" | **Partial.** Guard exists and is fail-closed. Two confirmed limitations: (1) keyword-only detection, not semantic; (2) `self_modifier` bypasses `patch_guardian` on its own writes. |
 | "Initiative tracking tied to real indicators" | **Mechanically working.** No progress measured yet (0.0 delta) — expected for planetary indicators that change over years, not cycles. |
-| "Semantic memory (ChromaDB, 578 entries)" | **Uncertain.** ChromaDB exists with 578 entries. Whether those entries use real or pseudo-vector embeddings is unresolved in the codebase. |
+| "Semantic memory (ChromaDB, 600 entries)" | **Confirmed real.** 384-dim all-MiniLM-L6-v2 embeddings verified by direct inspection of stored vectors. `memory/semantic_memory.py` is the active production path. |
 | "Action in the world" | **Not implemented.** System observes and generates local files. No external API writes, no messages sent, no integration with any system outside this machine. |
 
 ---
@@ -339,9 +339,11 @@ These build directly on what works today. No algorithmic novelty required.
 ---
 
 ### Milestone 3 — Months 5-6: Real Semantic Embeddings
-**What:** Replace the `_embed()` ASCII pseudo-vector in `cortex/memory.py` with a lightweight real embedding model (e.g., `sentence-transformers/all-MiniLM-L6-v2`, runs locally, ~80MB). Unify with ChromaDB so the 578 existing entries and new entries all use the same embedding space. This activates genuine semantic retrieval of past cycle contexts.
+**What:** Replace the `_embed()` ASCII pseudo-vector in `cortex/memory.py` with real embeddings. Unify both memory systems.
 
-**Measurable outcome:** Retrieval similarity between a current question and a past cycle entry is semantically meaningful. Can demonstrate a concrete example: querying "governance crisis" returns governance-related past cycles, not random entries.
+**Status (2026-06-27):** Largely complete. Discovery: production memory (`memory/semantic_memory.py` + ChromaDB) **already uses real 384-dim embeddings** (all-MiniLM-L6-v2, confirmed). The 600 ChromaDB entries are semantically meaningful. Legacy `cortex/memory.py._embed()` fixed to use `chromadb.DefaultEmbeddingFunction` (commit `8f0e941`) — no new installs, model was already cached. Remaining: deprecate `cortex/memory.py` LTM entirely in favour of `memory/semantic_memory.py` (Variant B — separate refactor task).
+
+**Measurable outcome:** Querying "governance crisis" returns governance-related past cycles, not random entries. Demonstrable now with the 600-entry ChromaDB collection.
 
 ---
 
@@ -381,7 +383,7 @@ These build directly on what works today. No algorithmic novelty required.
 **Honest current limitations:**
 - Self-improvement: zero measurable impact (delta = 0.0 across 11 cycles); patches write files but close no feedback loop. Trend storage now date-keyed (fixed), but delta remains 0.0 until real time-separated data accumulates.
 - SOCIAL_RELATIONS scorer deferred — provider returns only 2/5 usable metrics; scorer pending UNHCR+UCDP data wiring
-- Memory embeddings are ASCII pseudo-vectors, not semantic
+- Memory embeddings: production (ChromaDB, 600 entries) uses real 384-dim semantic embeddings; legacy `cortex/memory.py` fixed (commit `8f0e941`). Remaining: deprecate legacy module entirely.
 - Safety guard has a bypass in the self-modifier path
 - No output has left the local machine or influenced anything external
 
