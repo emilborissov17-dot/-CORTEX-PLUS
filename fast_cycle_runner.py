@@ -674,6 +674,39 @@ def main():
     except Exception as e:
         print(f"[FAST_CYCLE] system_hypergraph -> FAILED: {e}")
 
+    # ── 12.4. Scoring engine — освежи cortex_scores_latest.json ──
+    try:
+        from cortex_scoring_engine import score_all_snapshots as _score_all, AXIS_SCORERS as _AXIS_SCORERS
+        import datetime as _dt
+        _scores = _score_all()
+        _out = BASE / "output" / "cortex_scores_latest.json"
+        _out.parent.mkdir(parents=True, exist_ok=True)
+        _out.write_text(
+            json.dumps(
+                {
+                    "generated_at": _dt.datetime.now(_dt.timezone.utc).isoformat(),
+                    "scorer_version": "1.1",
+                    "total_axes": len(_scores),
+                    "scores": {
+                        ax: {
+                            "score": r.score,
+                            "level": r.level,
+                            "signals": r.signals,
+                            "metrics_used": r.metrics_used,
+                        }
+                        for ax, r in _scores.items()
+                    },
+                },
+                ensure_ascii=False,
+                indent=2,
+            ),
+            encoding="utf-8",
+        )
+        _real = sum(1 for ax in _scores if ax in _AXIS_SCORERS)
+        print(f"[FAST_CYCLE] scoring_engine -> {len(_scores)} axes | {_real} real scorers | output/cortex_scores_latest.json")
+    except Exception as e:
+        print(f"[FAST_CYCLE] scoring_engine -> FAILED: {e}")
+
     # ── 12.5. Auto levels — СЛЕД snapshot агентите, не преди! ──
     # Тук auto_level чете реални данни от обновения master snapshot.
     # execute_patches ще вика auto_level отново за before/after measurement.

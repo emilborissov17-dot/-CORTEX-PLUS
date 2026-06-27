@@ -770,6 +770,406 @@ def score_materials_waste(metrics: Dict) -> ScoreResult:
     )
 
 
+def score_governance_rights_human(metrics: Dict) -> ScoreResult:
+    metrics = _unwrap_metrics(metrics)
+    signals = []
+
+    rule_of_law    = metrics.get("rule_of_law")
+    voice          = metrics.get("voice_accountability")
+    stability      = metrics.get("political_stability")
+    gii            = metrics.get("gender_inequality_index")
+    child_labor    = metrics.get("child_labor_pct")
+    access_justice = metrics.get("access_justice_score")
+
+    # ── WGI компонент (−2.5..+2.5 → 0..1) ───────────────────────────────────
+    wgi_scores = []
+    for val, label in [
+        (rule_of_law, "Върховенство на закона"),
+        (voice,       "Глас и отчетност"),
+        (stability,   "Политическа стабилност"),
+    ]:
+        if val is not None:
+            n = (val + 2.5) / 5.0
+            wgi_scores.append(n)
+            if n > 0.60:
+                signals.append(f"✅ {label}: {val:+.3f}")
+            elif n > 0.40:
+                signals.append(f"⚡ {label}: {val:+.3f}")
+            else:
+                signals.append(f"⚠️ {label}: {val:+.3f} — под глобалната медиана")
+
+    if wgi_scores:
+        score = sum(wgi_scores) / len(wgi_scores)
+    else:
+        score = 0.5
+        signals.append("⚡ Липсват WGI данни — използван неутрален старт")
+
+    # ── Gender Inequality Index (0=равенство, 100=най-лошо) ──────────────────
+    if gii is not None:
+        if gii < 15:
+            score += 0.05
+            signals.append(f"✅ Полово неравенство (GII): {gii:.1f} — ниско")
+        elif gii < 35:
+            score -= 0.05
+            signals.append(f"⚡ Полово неравенство (GII): {gii:.1f} — умерено")
+        elif gii < 60:
+            score -= 0.10
+            signals.append(f"⚠️ Полово неравенство (GII): {gii:.1f} — значително")
+        else:
+            score -= 0.20
+            signals.append(f"⚠️ Полово неравенство (GII): {gii:.1f} — критично")
+    else:
+        signals.append("⚡ Липсват данни за GII")
+
+    # ── Access to Justice (WJP, 0..10) ────────────────────────────────────────
+    if access_justice is not None:
+        if access_justice > 6.5:
+            score += 0.05
+            signals.append(f"✅ Достъп до правосъдие (WJP): {access_justice:.2f}/10")
+        elif access_justice > 4.5:
+            signals.append(f"⚡ Достъп до правосъдие (WJP): {access_justice:.2f}/10")
+        else:
+            score -= 0.15
+            signals.append(f"⚠️ Достъп до правосъдие (WJP): {access_justice:.2f}/10 — нисък")
+    else:
+        signals.append("⚡ Липсват данни за достъп до правосъдие")
+
+    # ── Детски труд (опционален) ──────────────────────────────────────────────
+    if child_labor is not None:
+        if child_labor > 10:
+            score -= 0.10
+            signals.append(f"⚠️ Детски труд: {child_labor:.1f}% — критично")
+        elif child_labor > 5:
+            score -= 0.05
+            signals.append(f"⚡ Детски труд: {child_labor:.1f}%")
+        else:
+            signals.append(f"✅ Детски труд: {child_labor:.1f}%")
+
+    score = max(0.0, min(1.0, score))
+    return ScoreResult(
+        axis="GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL",
+        level=_score_to_level(score),
+        score=round(score, 2),
+        signals=signals,
+        metrics_used={
+            "rule_of_law":    rule_of_law,
+            "voice":          voice,
+            "stability":      stability,
+            "gii":            gii,
+            "access_justice": access_justice,
+        },
+    )
+
+
+def score_cognition_learning(metrics: Dict) -> ScoreResult:
+    metrics = _unwrap_metrics(metrics)
+    signals = []
+
+    literacy   = metrics.get("literacy_rate_youth_pct")
+    completion = metrics.get("primary_completion_rate")
+    tertiary   = metrics.get("tertiary_enrollment_pct")
+    govt_exp   = metrics.get("govt_expenditure_education_pct")
+    ptr        = metrics.get("pupil_teacher_ratio_primary")
+
+    # ── Youth literacy — задава базовия score (4 нива) ──────────────────────
+    if literacy is not None:
+        if literacy > 97:
+            score = 0.80
+            signals.append(f"✅ Грамотност (млади): {literacy:.1f}% — близо до универсална (SDG 4.6)")
+        elif literacy > 90:
+            score = 0.55
+            signals.append(f"⚡ Грамотност (млади): {literacy:.1f}% — над глобалната средна (~91%)")
+        elif literacy > 80:
+            score = 0.35
+            signals.append(f"⚠️ Грамотност (млади): {literacy:.1f}% — под глобалната средна")
+        else:
+            score = 0.15
+            signals.append(f"⚠️ Грамотност (млади): {literacy:.1f}% — критично ниска")
+    else:
+        score = 0.5
+        signals.append("⚡ Липсват данни за грамотност")
+
+    # ── Primary completion rate (SDG 4.1) ────────────────────────────────────
+    if completion is not None:
+        if completion > 95:
+            score += 0.08
+            signals.append(f"✅ Завършване на начално образование: {completion:.1f}% — близо до SDG 4.1")
+        elif completion < 85:
+            score -= 0.12
+            signals.append(f"⚠️ Завършване на начално образование: {completion:.1f}% — под 85%")
+        else:
+            signals.append(f"⚡ Завършване на начално образование: {completion:.1f}%")
+    else:
+        signals.append("⚡ Липсват данни за завършване на начално образование")
+
+    # ── Tertiary enrollment (UNESCO benchmark: >60% = висока) ────────────────
+    if tertiary is not None:
+        if tertiary > 60:
+            score += 0.08
+            signals.append(f"✅ Терциерно образование: {tertiary:.1f}% — висока степен (ОИСР ~68%)")
+        elif tertiary < 30:
+            score -= 0.08
+            signals.append(f"⚠️ Терциерно образование: {tertiary:.1f}% — ниска степен")
+        else:
+            signals.append(f"⚡ Терциерно образование: {tertiary:.1f}%")
+    else:
+        signals.append("⚡ Липсват данни за терциерно образование")
+
+    # ── Govt expenditure on education % GDP (UNESCO Incheon 2015: мин. 4-6%) ─
+    if govt_exp is not None:
+        if govt_exp > 5:
+            score += 0.08
+            signals.append(f"✅ Разходи за образование: {govt_exp:.1f}% от БВП")
+        elif govt_exp >= 4:
+            signals.append(f"⚡ Разходи за образование: {govt_exp:.1f}% от БВП — в препоръчания диапазон")
+        elif govt_exp >= 3:
+            score -= 0.10
+            signals.append(f"⚠️ Разходи за образование: {govt_exp:.1f}% — под UNESCO минимума (4%)")
+        else:
+            score -= 0.18
+            signals.append(f"⚠️ Разходи за образование: {govt_exp:.1f}% — критично под препоръчаното")
+    else:
+        signals.append("⚡ Липсват данни за разходи за образование")
+
+    # ── Pupil-teacher ratio primary (ОИСР оптимум <20, риск >30) ─────────────
+    if ptr is not None:
+        if ptr < 20:
+            score += 0.05
+            signals.append(f"✅ Ученици/учител: {ptr:.1f} — добро (ОИСР средна ~15)")
+        elif ptr > 40:
+            score -= 0.15
+            signals.append(f"⚠️ Ученици/учител: {ptr:.1f} — критично (UNESCO таван 40:1)")
+        elif ptr > 30:
+            score -= 0.10
+            signals.append(f"⚠️ Ученици/учител: {ptr:.1f} — над препоръчаното")
+        else:
+            signals.append(f"⚡ Ученици/учител: {ptr:.1f} — приемливо (глобална средна ~23)")
+    else:
+        signals.append("⚡ Липсват данни за ученици/учител")
+
+    score = max(0.0, min(1.0, score))
+    return ScoreResult(
+        axis="COGNITION_LEARNING_REVIEW",
+        level=_score_to_level(score),
+        score=round(score, 2),
+        signals=signals,
+        metrics_used={
+            "literacy_youth_pct":    literacy,
+            "primary_completion":    completion,
+            "tertiary_enrollment":   tertiary,
+            "govt_exp_pct":          govt_exp,
+            "pupil_teacher_ratio":   ptr,
+        },
+    )
+
+
+def score_culture_media(metrics: Dict) -> ScoreResult:
+    metrics = _unwrap_metrics(metrics)
+    signals = []
+
+    # Honest caveat — always shown first
+    signals.append("ℹ️ Метриките измерват инфраструктура за достъп до информация, не медийна свобода или качество на културата")
+
+    internet   = metrics.get("internet_users_pct")
+    literacy   = metrics.get("literacy_rate_adult_pct")
+    secondary  = metrics.get("secondary_school_enrollment")
+    broadband  = metrics.get("fixed_broadband_per100")
+    mobile     = metrics.get("mobile_subscriptions_per100")
+    primary    = metrics.get("primary_school_enrollment")
+
+    # ── Internet users — primary metric (ITU 2023 global avg ~67%) ────────────
+    if internet is not None:
+        if internet > 85:
+            score = 0.75
+            signals.append(f"✅ Интернет потребители: {internet:.1f}% — ОИСР ниво")
+        elif internet > 67:
+            score = 0.55
+            signals.append(f"⚡ Интернет потребители: {internet:.1f}% — над глобалната средна (67%)")
+        elif internet > 50:
+            score = 0.35
+            signals.append(f"⚠️ Интернет потребители: {internet:.1f}% — под глобалната средна")
+        else:
+            score = 0.15
+            signals.append(f"⚠️ Интернет потребители: {internet:.1f}% — нисък достъп")
+    else:
+        score = 0.5
+        signals.append("⚡ Липсват данни за интернет потребители")
+
+    # ── Adult literacy (UNESCO SDG 4.6; global avg ~87%) ─────────────────────
+    if literacy is not None:
+        if literacy > 95:
+            score += 0.08
+            signals.append(f"✅ Грамотност (възрастни): {literacy:.1f}% — близо до универсална")
+        elif literacy < 80:
+            score -= 0.10
+            signals.append(f"⚠️ Грамотност (възрастни): {literacy:.1f}% — значителна пропаст")
+        else:
+            signals.append(f"⚡ Грамотност (възрастни): {literacy:.1f}%")
+    else:
+        signals.append("⚡ Липсват данни за грамотност")
+
+    # ── Secondary school enrollment (WB global avg ~76-78%) ──────────────────
+    if secondary is not None:
+        if secondary > 80:
+            score += 0.08
+            signals.append(f"✅ Записване в средно образование: {secondary:.1f}% — над глобалната средна (77%)")
+        elif secondary < 60:
+            score -= 0.14
+            signals.append(f"⚠️ Записване в средно образование: {secondary:.1f}% — значително под средното")
+        else:
+            score -= 0.06
+            signals.append(f"⚠️ Записване в средно образование: {secondary:.1f}% — под глобалната средна (77%)")
+    else:
+        signals.append("⚡ Липсват данни за средно образование")
+
+    # ── Fixed broadband (ITU global avg ~17/100; OECD avg ~35) ───────────────
+    if broadband is not None:
+        if broadband > 35:
+            score += 0.08
+            signals.append(f"✅ Фиксиран интернет: {broadband:.1f}/100 — ОИСР ниво")
+        elif broadband > 17:
+            signals.append(f"⚡ Фиксиран интернет: {broadband:.1f}/100 — умерено")
+        elif broadband > 5:
+            score -= 0.05
+            signals.append(f"⚠️ Фиксиран интернет: {broadband:.1f}/100 — под глобалната средна")
+        else:
+            score -= 0.12
+            signals.append(f"⚠️ Фиксиран интернет: {broadband:.1f}/100 — много слаба свързаност")
+    else:
+        signals.append("⚡ Липсват данни за фиксиран интернет")
+
+    # ── Mobile subscriptions — само penalty под 80 (>100 = насищане) ─────────
+    if mobile is not None:
+        if mobile < 60:
+            score -= 0.14
+            signals.append(f"⚠️ Мобилни абонаменти: {mobile:.1f}/100 — критично нисък достъп")
+        elif mobile < 80:
+            score -= 0.06
+            signals.append(f"⚠️ Мобилни абонаменти: {mobile:.1f}/100 — ограничен достъп")
+        else:
+            signals.append(f"⚡ Мобилни абонаменти: {mobile:.1f}/100")
+    else:
+        signals.append("⚡ Липсват данни за мобилни абонаменти")
+
+    # ── Primary enrollment — само penalty под 75% (floor indicator) ──────────
+    if primary is not None:
+        if primary < 75:
+            score -= 0.10
+            signals.append(f"⚠️ Записване в начално образование: {primary:.1f}% — фундаментален дефицит")
+        else:
+            signals.append(f"⚡ Записване в начално образование: {primary:.1f}%")
+    else:
+        signals.append("⚡ Липсват данни за начално образование")
+
+    score = max(0.0, min(1.0, score))
+    return ScoreResult(
+        axis="CULTURE_MEDIA_REVIEW",
+        level=_score_to_level(score),
+        score=round(score, 2),
+        signals=signals,
+        metrics_used={
+            "internet_users_pct":   internet,
+            "adult_literacy_pct":   literacy,
+            "secondary_enr_pct":    secondary,
+            "broadband_per100":     broadband,
+            "mobile_per100":        mobile,
+            "primary_enr_pct":      primary,
+        },
+    )
+
+
+def score_technology_infra(metrics: Dict) -> ScoreResult:
+    metrics = _unwrap_metrics(metrics)
+    signals = []
+
+    lpi      = metrics.get("logistics_performance_index")
+    servers  = metrics.get("secure_internet_servers_per1m")
+    broadband = metrics.get("fixed_broadband_per100")
+    mobile   = metrics.get("mobile_subscriptions_per100")
+    # air_transport_passengers and container_port_traffic are absolute global
+    # totals with no meaningful per-capita threshold — excluded deliberately.
+
+    # ── LPI — primary metric (WB Logistics Performance Index, 1-5) ────────────
+    if lpi is not None:
+        if lpi > 3.7:
+            score = 0.78
+            signals.append(f"✅ Логистичен индекс (LPI): {lpi:.2f}/5 — топ квартил (WB 2023)")
+        elif lpi > 2.9:
+            score = 0.55
+            signals.append(f"⚡ Логистичен индекс (LPI): {lpi:.2f}/5 — над глобалната средна (~2.8)")
+        elif lpi > 2.3:
+            score = 0.35
+            signals.append(f"⚠️ Логистичен индекс (LPI): {lpi:.2f}/5 — под глобалната средна")
+        else:
+            score = 0.15
+            signals.append(f"⚠️ Логистичен индекс (LPI): {lpi:.2f}/5 — долен квартил")
+    else:
+        score = 0.5
+        signals.append("⚡ Липсват данни за логистичен индекс")
+
+    # ── Secure internet servers per million (WB IT.NET.SECR.P6) ──────────────
+    if servers is not None:
+        if servers > 100_000:
+            score += 0.12
+            signals.append(f"✅ Сигурни интернет сървъри: {servers:,.0f}/млн — ОИСР ниво")
+        elif servers > 10_000:
+            score += 0.05
+            signals.append(f"⚡ Сигурни интернет сървъри: {servers:,.0f}/млн — горна средна")
+        elif servers > 1_000:
+            signals.append(f"⚡ Сигурни интернет сървъри: {servers:,.0f}/млн — средна цифрова инфраструктура")
+        elif servers > 100:
+            score -= 0.08
+            signals.append(f"⚠️ Сигурни интернет сървъри: {servers:,.0f}/млн — слаба")
+        else:
+            score -= 0.15
+            signals.append(f"⚠️ Сигурни интернет сървъри: {servers:,.0f}/млн — критично ниска")
+    else:
+        signals.append("⚡ Липсват данни за интернет сървъри")
+
+    # ── Fixed broadband per 100 (ITU avg ~17; OECD avg ~35) ──────────────────
+    if broadband is not None:
+        if broadband > 35:
+            score += 0.08
+            signals.append(f"✅ Фиксиран интернет: {broadband:.1f}/100 — ОИСР ниво")
+        elif broadband > 17:
+            signals.append(f"⚡ Фиксиран интернет: {broadband:.1f}/100 — умерено")
+        elif broadband > 5:
+            score -= 0.05
+            signals.append(f"⚠️ Фиксиран интернет: {broadband:.1f}/100 — под глобалната средна")
+        else:
+            score -= 0.12
+            signals.append(f"⚠️ Фиксиран интернет: {broadband:.1f}/100 — много слаба свързаност")
+    else:
+        signals.append("⚡ Липсват данни за фиксиран интернет")
+
+    # ── Mobile subscriptions — само penalty под 80 (>100 = насищане) ─────────
+    if mobile is not None:
+        if mobile < 60:
+            score -= 0.14
+            signals.append(f"⚠️ Мобилни абонаменти: {mobile:.1f}/100 — критично нисък достъп")
+        elif mobile < 80:
+            score -= 0.06
+            signals.append(f"⚠️ Мобилни абонаменти: {mobile:.1f}/100 — ограничен достъп")
+        else:
+            signals.append(f"⚡ Мобилни абонаменти: {mobile:.1f}/100")
+    else:
+        signals.append("⚡ Липсват данни за мобилни абонаменти")
+
+    score = max(0.0, min(1.0, score))
+    return ScoreResult(
+        axis="TECHNOLOGY_INFRA_REVIEW",
+        level=_score_to_level(score),
+        score=round(score, 2),
+        signals=signals,
+        metrics_used={
+            "lpi":              lpi,
+            "secure_servers":   servers,
+            "broadband_per100": broadband,
+            "mobile_per100":    mobile,
+        },
+    )
+
+
 def score_generic(axis: str, metrics: Dict, level_hint: str) -> ScoreResult:
     level_map = {"LOW": 0.2, "MEDIUM": 0.5, "HIGH": 0.8}
     score = level_map.get(level_hint, 0.5)
@@ -867,6 +1267,10 @@ AXIS_SCORERS = {
     "EDUCATION_CULTURE_REVIEW":        score_education,
     "INFRASTRUCTURE_CITIES_REVIEW":    score_infrastructure,
     "MATERIALS_WASTE_REVIEW":          score_materials_waste,
+    "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL": score_governance_rights_human,
+    "COGNITION_LEARNING_REVIEW":        score_cognition_learning,
+    "CULTURE_MEDIA_REVIEW":             score_culture_media,
+    "TECHNOLOGY_INFRA_REVIEW":          score_technology_infra,
 }
 
 
