@@ -85,7 +85,11 @@ class MerkleMemory:
             "co2_ppm": [], "kp_index": [], "earthquake_max": [],
             "refugees": [], "gbif_30d": [], "goal_score": [],
             "cycle_count": 0,
+            "_trend_dates": {},
         })
+        # Backfill _trend_dates if loading an older trends.json that lacks it
+        if "_trend_dates" not in self._trends:
+            self._trends["_trend_dates"] = {}
         self._profile: dict = self._load_json(PROFILE_FILE, default={
             "total_cycles": 0,
             "avg_goal_score": 0.0,
@@ -248,8 +252,18 @@ class MerkleMemory:
     # ── trends ────────────────────────────────────────────────────────────────
 
     def _update_trends(self, signals: list, goal_score: float):
+        from datetime import date as _date
+        today = _date.today().isoformat()
+        dates = self._trends["_trend_dates"]
+
         self._trends["cycle_count"] += 1
-        self._trends["goal_score"].append(round(goal_score, 4))
+
+        # goal_score — date-keyed: overwrite same-day, append new day
+        if dates.get("goal_score") == today and self._trends["goal_score"]:
+            self._trends["goal_score"][-1] = round(goal_score, 4)
+        else:
+            self._trends["goal_score"].append(round(goal_score, 4))
+            dates["goal_score"] = today
 
         by_metric = defaultdict(list)
         for s in signals:
@@ -258,21 +272,33 @@ class MerkleMemory:
             if isinstance(value, (int, float)):
                 by_metric[metric].append(value)
 
-        def _append(key, metric):
+        def _append_dated(key, metric):
+            """Append metric average to trend list, but overwrite if same day."""
             vals = by_metric.get(metric, [])
-            if vals:
-                self._trends[key].append(round(sum(vals) / len(vals), 4))
-                if len(self._trends[key]) > 5000:
-                    self._trends[key] = self._trends[key][-5000:]
+            if not vals:
+                return
+            new_val = round(sum(vals) / len(vals), 4)
+            if dates.get(key) == today and self._trends[key]:
+                self._trends[key][-1] = new_val
+            else:
+                self._trends[key].append(new_val)
+                dates[key] = today
+            if len(self._trends[key]) > 5000:
+                self._trends[key] = self._trends[key][-5000:]
 
-        _append("co2_ppm", "co2_ppm")
-        _append("kp_index", "kp_index")
-        _append("refugees", "total_refugees")
-        _append("gbif_30d", "species_observations_30d")
+        _append_dated("co2_ppm", "co2_ppm")
+        _append_dated("kp_index", "kp_index")
+        _append_dated("refugees", "total_refugees")
+        _append_dated("gbif_30d", "species_observations_30d")
 
         mags = by_metric.get("earthquake_magnitude", [])
         if mags:
-            self._trends["earthquake_max"].append(round(max(mags), 4))
+            new_max = round(max(mags), 4)
+            if dates.get("earthquake_max") == today and self._trends["earthquake_max"]:
+                self._trends["earthquake_max"][-1] = new_max
+            else:
+                self._trends["earthquake_max"].append(new_max)
+                dates["earthquake_max"] = today
             if len(self._trends["earthquake_max"]) > 5000:
                 self._trends["earthquake_max"] = self._trends["earthquake_max"][-5000:]
 
