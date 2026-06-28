@@ -55,8 +55,8 @@ BUNDLE_AXES = {ax for ax, *_ in BUNDLES}
 T_DEP_CRISIS     = 0.65   # deprivation above this → In Crisis regardless of rest
 T_DEP_PRECARIOUS = 0.40   # deprivation above this → Precarious
 T_STR_PRECARIOUS = 0.55   # strain above this → Precarious (even if needs covered)
-T_FLO_SECURE     = 0.35   # flourishing below this → Secure
-T_FLO_THRIVING   = 0.60   # flourishing below this → Thriving
+T_FLO_SECURE     = 0.58   # flourishing below this → Secure  [CAL: raised from 0.35 after V-Dem; empirical min for dep<=0.40 is ~0.53]
+T_FLO_THRIVING   = 0.70   # flourishing below this → Thriving [CAL: raised from 0.60; 62% Dignified Life was over-inflated]
 
 
 # ── Output type ──────────────────────────────────────────────────────────────
