@@ -65,6 +65,8 @@ _IND: dict[str, object] = {
     "GOV_WGI_CC.EST":    (-2.5,   2.5,   False),   # Control of Corruption
     "GOV_WGI_GE.EST":    (-2.5,   2.5,   False),   # Government Effectiveness
     "GOV_WGI_RL.EST":    (-2.5,   2.5,   False),   # Rule of Law
+    # WB Human Capital Index
+    "HD.HCI.LAYS":       (0.0,   12.0,   False),   # Learning-Adjusted Years of School (HCI)
 }
 
 _LABELS: dict[str, str] = {
@@ -96,6 +98,7 @@ _LABELS: dict[str, str] = {
     "GOV_WGI_CC.EST":    "Corruption Control (WGI)",
     "GOV_WGI_GE.EST":   "Govt Effectiveness (WGI)",
     "GOV_WGI_RL.EST":   "Rule of Law (WGI)",
+    "HD.HCI.LAYS":       "Learning-Adj Yrs School (HCI)",
 }
 
 _GDP_LOG_WORST = math.log(500)
@@ -111,10 +114,12 @@ _MRV_LONG_CODES = frozenset({
     "SE.ADT.LITR.ZS",   # literacy: updated every few years
     "SI.POV.GINI",      # Gini: updated every 2-4 years
     "AG.LND.FRST.ZS",   # forest area: updated every 5 years (FAO)
+    "HD.HCI.LAYS",      # Learning-Adjusted Years of School: HCI updated every ~2 years
 })
 
 # Fetched raw but NOT normalized — used only for derived computations
 _FETCH_ALSO = ["EN.ATM.CO2E.KT", "SP.POP.TOTL"]
+
 
 
 # ── Axis → indicator mapping ───────────────────────────────────────────────────
@@ -129,7 +134,7 @@ AXIS_INDICATORS: dict[str, list[str]] = {
     "INEQUALITY_POVERTY_REVIEW":        ["SI.POV.GINI", "SI.POV.DDAY"],
     "GOVERNANCE_INSTITUTIONS_REVIEW":   ["GOV_WGI_GE.EST", "GOV_WGI_RL.EST", "GOV_WGI_CC.EST"],
     "CLIMATE_GLOBAL_RISK_REVIEW":       ["EN.ATM.CO2E.PC", "EG.USE.COMM.FO.ZS", "NY.ADJ.DRES.GN.ZS", "EG.FEC.RNEW.ZS"],
-    "COGNITION_LEARNING_REVIEW":        ["SE.ADT.LITR.ZS"],
+    "COGNITION_LEARNING_REVIEW":        ["SE.ADT.LITR.ZS", "HD.HCI.LAYS"],
     "TECHNOLOGY_AI_REVIEW":             ["IT.NET.USER.ZS", "IT.NET.BBND.P2"],
     "TECHNOLOGY_INFRA_REVIEW":          ["EG.ELC.ACCS.ZS", "IT.CEL.SETS.P2"],
     "INFRASTRUCTURE_CITIES_REVIEW":     ["SP.URB.TOTL.IN.ZS", "EG.ELC.ACCS.ZS"],
@@ -342,6 +347,7 @@ def country_wellbeing(iso2: str) -> dict:
         "computed_at":        profile.computed_at,
     }
     result["data_quality"] = _data_quality(result)
+    result["flo_quality"]  = _flo_quality(result)
 
     conf = result["data_quality"]["confidence"]
     zone = profile.zone
@@ -351,6 +357,63 @@ def country_wellbeing(iso2: str) -> dict:
         f"{zone} (UNVERIFIED)"
     )
     return result
+
+
+# ── Flourishing quality marker ────────────────────────────────────────────────
+_FLO_TOTAL_WEIGHT = 5.68   # sum of all flo_weights in BUNDLES when all axes present
+
+_TECH_FLO_AXES = frozenset({"TECHNOLOGY_AI_REVIEW", "TECHNOLOGY_INFRA_REVIEW"})
+_SOFT_FLO_AXES = frozenset({"CULTURE_MEDIA_REVIEW", "COGNITION_LEARNING_REVIEW"})
+
+def _flo_quality(r: dict) -> dict:
+    """
+    Compute flourishing quality: technology dominance %, missing soft axes.
+
+    Warning is raised when culture/media or cognition are absent, leaving
+    technology as the primary measurable flourishing dimension.
+    """
+    from wellbeing_profile import BUNDLES
+
+    ax   = r["axis_scores"]
+    flo  = r["profile"].flourishing
+
+    flo_pairs = [
+        (axis, score, fw)
+        for axis, _dw, _sw, fw in BUNDLES
+        if fw > 0 and (score := ax.get(axis)) is not None
+    ]
+
+    if not flo_pairs or flo <= 0:
+        return {"warning": None, "tech_share_pct": None,
+                "missing_soft_axes": [], "active_weight_pct": None}
+
+    active_w = sum(fw for _, _, fw in flo_pairs)
+    tech_contrib = sum(score * fw for axis, score, fw in flo_pairs
+                       if axis in _TECH_FLO_AXES)
+    tech_share = round(100 * tech_contrib / (active_w * flo), 1) if active_w * flo > 0 else 0.0
+
+    # Soft axes that are absent (null or structurally missing)
+    missing_soft = []
+    for axis in _SOFT_FLO_AXES:
+        if ax.get(axis) is None or axis in r.get("structural_missing", []):
+            missing_soft.append(axis)
+
+    if missing_soft:
+        labels = {
+            "CULTURE_MEDIA_REVIEW":      "culture/media",
+            "COGNITION_LEARNING_REVIEW": "cognition",
+        }
+        missing_str = " & ".join(labels[a] for a in sorted(missing_soft))
+        warning = f"tech-weighted — {missing_str} not measured per-country"
+    else:
+        warning = None
+
+    return {
+        "warning":           warning,
+        "tech_share_pct":    tech_share,
+        "missing_soft_axes": missing_soft,
+        "active_weight_pct": round(100 * active_w / _FLO_TOTAL_WEIGHT, 1),
+    }
 
 
 # ── Data quality assessment ───────────────────────────────────────────────────
@@ -485,7 +548,12 @@ def _print_result(r: dict) -> None:
     print(f"\n── Profile dimensions {'─'*48}")
     print(f"  deprivation   {p.deprivation:>6.3f}   (0 = no deprivation,  1 = severe)")
     print(f"  strain        {p.strain:>6.3f}   (0 = stable,          1 = high pressure)")
-    print(f"  flourishing   {p.flourishing:>6.3f}   (0 = no room,         1 = full)")
+    fq = r.get("flo_quality", {})
+    flo_warn = f"  ⚠ {fq['warning']}" if fq.get("warning") else ""
+    print(f"  flourishing   {p.flourishing:>6.3f}   (0 = no room,         1 = full){flo_warn}")
+    if fq.get("warning"):
+        print(f"                        tech share: {fq.get('tech_share_pct','?')}%"
+              f"  |  active flo weight: {fq.get('active_weight_pct','?')}% of potential")
     print(f"\n  ZONE : {r['zone_label']}")
     print(f"\n  Coverage: {active_count} of 15 mapped axes active")
     print(f"            15 of 17 total BUNDLE axes (2 structural gaps above)")
