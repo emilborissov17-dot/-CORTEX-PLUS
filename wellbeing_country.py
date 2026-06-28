@@ -145,6 +145,22 @@ STRUCTURAL_MISSING: list[str] = [
     "CULTURE_MEDIA_REVIEW",     # no WB country indicator
 ]
 
+# ── Data quality constants ────────────────────────────────────────────────────
+# Key deprivation axes — null here collapses confidence to LOW immediately
+_KEY_DEP_AXES: frozenset[str] = frozenset({
+    "FOOD_REVIEW",
+    "WATER_REVIEW",
+    "HUMAN_WELL_BEING_REVIEW",
+    "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL",
+})
+
+# Axis-specific critical indicators: if ALL listed codes are absent the axis
+# score is driven by weaker proxies and is likely inflated.
+_CRITICAL_MISSING: dict[str, frozenset[str]] = {
+    "CLIMATE_GLOBAL_RISK_REVIEW": frozenset({"EN.ATM.CO2E.PC", "EG.USE.COMM.FO.ZS"}),
+    "ENERGY_REVIEW":              frozenset({"EG.ELC.RNEW.ZS"}),
+}
+
 # Dimension tags for display
 _AXIS_DIM: dict[str, str] = {
     "FOOD_REVIEW":                      "dep",
@@ -315,7 +331,7 @@ def country_wellbeing(iso2: str) -> dict:
 
     data_missing = [a for a, s in axis_scores.items() if s is None]
 
-    return {
+    result = {
         "iso2":               iso2.upper(),
         "raw_values":         raw,
         "normalized":         norm,
@@ -324,6 +340,77 @@ def country_wellbeing(iso2: str) -> dict:
         "structural_missing": STRUCTURAL_MISSING,
         "data_missing":       data_missing,
         "computed_at":        profile.computed_at,
+    }
+    result["data_quality"] = _data_quality(result)
+    return result
+
+
+# ── Data quality assessment ───────────────────────────────────────────────────
+def _data_quality(r: dict) -> dict:
+    """
+    Classify each mapped axis as real / null / suspect and derive a
+    confidence level for the zone label.
+
+    Suspect rules (applied in order, first match wins):
+      1. Axis-specific critical codes all absent → score is proxy-only, likely inflated.
+         (e.g. CLIMATE without CO2 or fossil-fuel data; ENERGY without renewables %)
+      2. Axis has ≥3 indicators and fill rate < 0.5 → thin coverage.
+
+    Confidence:
+      LOW    — any key deprivation axis null, OR ≥2 null, OR ≥2 suspect
+      MEDIUM — 1 null, OR 1 suspect, OR key dep axis suspect
+      HIGH   — all axes real, no suspect flags
+    """
+    norm = r["normalized"]
+    ax   = r["axis_scores"]
+
+    real_axes:    list[str]        = []
+    null_axes:    list[str]        = []
+    suspect_axes: list[tuple[str, str]] = []   # (axis, reason)
+
+    for axis, score in ax.items():
+        inds        = AXIS_INDICATORS[axis]
+        total_n     = len(inds)
+        available_n = sum(1 for c in inds if c in norm)
+        fill        = available_n / total_n if total_n else 0.0
+
+        if score is None:
+            null_axes.append(axis)
+            continue
+
+        critical = _CRITICAL_MISSING.get(axis, frozenset())
+        if critical and critical.issubset(set(inds) - set(norm)):
+            # all critical indicators for this axis are missing
+            suspect_axes.append((axis, f"critical absent: {', '.join(sorted(critical))}"))
+        elif total_n >= 3 and fill < 0.5:
+            suspect_axes.append((axis, f"{available_n}/{total_n} indicators — thin"))
+        else:
+            real_axes.append(axis)
+
+    n_null    = len(null_axes)
+    n_suspect = len(suspect_axes)
+    n_real    = len(real_axes)
+    total     = len(ax)
+
+    key_dep_null    = any(a in _KEY_DEP_AXES for a in null_axes)
+    key_dep_suspect = any(a in _KEY_DEP_AXES for a, _ in suspect_axes)
+
+    if key_dep_null or n_null >= 2 or n_suspect >= 2:
+        confidence = "LOW"
+    elif n_null >= 1 or n_suspect >= 1 or key_dep_suspect:
+        confidence = "MEDIUM"
+    else:
+        confidence = "HIGH"
+
+    return {
+        "real":         n_real,
+        "null":         n_null,
+        "suspect":      n_suspect,
+        "total":        total,
+        "confidence":   confidence,
+        "null_axes":    null_axes,
+        "suspect_axes": suspect_axes,
+        "summary":      f"{n_real}/{total} real, {n_null} null, {n_suspect} suspect",
     }
 
 
@@ -339,6 +426,16 @@ def _print_result(r: dict) -> None:
     print(f"\n[!] CAVEAT: official WB quantitative data only.")
     print(f"    WGI governance included (CC, GE, RL) — lived experience, quality, materials still absent.")
     print(f"    Zone label may be INFLATED vs. lived reality.")
+
+    # ── Data quality banner ──
+    dq   = r.get("data_quality", {})
+    conf = dq.get("confidence", "?")
+    icon = {"HIGH": "✅", "MEDIUM": "⚡", "LOW": "⚠️ "}.get(conf, "?")
+    print(f"\n{icon} Data completeness: {dq.get('summary', '?')}  [{conf} CONFIDENCE]")
+    if conf == "LOW":
+        print(f"    *** LOW CONFIDENCE — zone label unreliable ***")
+    for axis, reason in dq.get("suspect_axes", []):
+        print(f"    [suspect] {axis}: {reason}")
 
     # ── Raw → Normalized ──
     raw  = r["raw_values"]
@@ -384,7 +481,10 @@ def _print_result(r: dict) -> None:
     print(f"\n  ZONE : {p.zone}")
     print(f"\n  Coverage: {active_count} of 15 mapped axes active")
     print(f"            15 of 17 total BUNDLE axes (2 structural gaps above)")
-    if p.zone in ("Thriving", "Dignified Life"):
+    conf = r.get("data_quality", {}).get("confidence", "?")
+    if conf == "LOW":
+        print(f"\n  *** LOW CONFIDENCE — zone label unreliable; see data quality above ***")
+    elif p.zone in ("Thriving", "Dignified Life"):
         print(f"\n  [!] Zone may be INFLATED — lived experience and quality dimensions not measured by WB")
     print(f"{'='*W}\n")
 
