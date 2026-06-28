@@ -2,17 +2,17 @@
   "source_type": "REAL_DATA",
   "raw": {
     "axis": "SOCIAL_RELATIONS_REVIEW",
-    "source": "world_bank_api",
-    "fetched_date": "2026-06-21",
+    "source": "unhcr_api+ucdp_api+world_bank",
+    "fetched_date": "2026-06-28",
     "metrics": {
       "homicide_rate_per_100k": 5.2,
-      "refugee_population": null,
-      "internally_displaced": null,
-      "conflict_deaths_per_100k": null,
-      "urbanization_pct": 57.5634797111357
+      "refugees_millions": 29.429,
+      "asylum_seekers_millions": 5.442,
+      "idps_millions": 57.321,
+      "active_armed_conflicts": null
     },
-    "data_quality": "2/5 fetched"
+    "data_quality": "4/5 fetched"
   },
-  "snapshot_timestamp": "2026-06-21T13:30:05.262571+00:00",
+  "snapshot_timestamp": "2026-06-28T09:49:18.859485+00:00",
   "axis": "SOCIAL_RELATIONS_REVIEW"
 }

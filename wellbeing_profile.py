@@ -46,7 +46,7 @@ BUNDLES: list[tuple[str, float, float, float]] = [
     ("EDUCATION_CULTURE_REVIEW",         0.5,  0.0,  0.5),  # [CAL] dep/flourishing
     ("ECONOMY_WORK_REVIEW",              0.33, 0.33, 0.34), # [CAL] all three
     ("ECOSYSTEMS_BIODIVERSITY_REVIEW",   0.33, 0.33, 0.34), # [CAL] all three
-    # SOCIAL_RELATIONS_REVIEW: excluded — generic 0.5 placeholder, no real scorer yet
+    ("SOCIAL_RELATIONS_REVIEW",          0.0,  1.0,  0.0),  # strain: forced displacement + conflicts
 ]
 
 BUNDLE_AXES = {ax for ax, *_ in BUNDLES}

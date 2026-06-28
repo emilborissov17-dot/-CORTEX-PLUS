@@ -18,11 +18,17 @@ OECD_RECYCLING_URL = (
 )
 RECYCLING_STATIC_FALLBACK = 13.5  # WB What-a-Waste 2.0 global estimate
 
+# WB WDI has no material footprint or waste generation indicators at global scale.
+# Best available proxies:
+#   NY.ADJ.DRES.GN.ZS — resource depletion (% GNI): how fast natural capital is drawn down
+#   NY.GDP.TOTL.RT.ZS — natural resource rents (% GDP): extraction dependency
+#   AG.LND.FRST.ZS    — forest area: land-use proxy for linear economy pressure
+#   ER.LND.PTLD.ZS    — protected terrestrial areas: conservation signal
 WB_INDICATORS = {
-    "municipal_waste_per_capita_kg": "EN.POP.EL5M.UR.ZS",
-    "material_consumption_per_gdp":  "NY.GDP.MKTP.KD.ZG",
-    "forest_area_pct":               "AG.LND.FRST.ZS",
-    "protected_areas_pct":           "ER.LND.PTLD.ZS",
+    "resource_depletion_pct_gni":     "NY.ADJ.DRES.GN.ZS",
+    "natural_resource_rents_pct_gdp": "NY.GDP.TOTL.RT.ZS",
+    "forest_area_pct":                "AG.LND.FRST.ZS",
+    "protected_areas_pct":            "ER.LND.PTLD.ZS",
 }
 
 

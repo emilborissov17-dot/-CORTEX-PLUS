@@ -719,46 +719,62 @@ def score_infrastructure(metrics: Dict) -> ScoreResult:
 def score_materials_waste(metrics: Dict) -> ScoreResult:
     metrics = _unwrap_metrics(metrics)
     signals = []
-    score = 0.5
 
-    recycling = metrics.get("recycling_rate_pct")
-    waste_per_capita = metrics.get("municipal_waste_per_capita_kg")
-    material_footprint = metrics.get("material_footprint_per_capita")
-    plastic_waste = metrics.get("plastic_waste_mismanaged_pct")
+    # WB WDI structural gap: no material footprint or waste generation data at global scale.
+    # Using resource-pressure proxies: depletion, rents, forest cover, recycling (OECD/static).
+    signals.append("ℹ️ WB WDI: липсват материален отпечатък и генерирани отпадъци — прокси: ресурсно изчерпване + рециклиране (ОИСР оценка)")
 
+    recycling           = metrics.get("recycling_rate_pct")
+    resource_depletion  = metrics.get("resource_depletion_pct_gni")
+    resource_rents      = metrics.get("natural_resource_rents_pct_gdp")
+    forest_area         = metrics.get("forest_area_pct")
+
+    components = []
+
+    # Recycling rate: OECD avg ~34%; global static estimate 13.5% (WB What-a-Waste 2.0)
     if recycling is not None:
-        if recycling > 50:
-            score = 0.75
-            signals.append(f"✅ Рециклиране: {recycling:.1f}%")
+        if recycling > 40:
+            norm = 0.85
+            signals.append(f"✅ Рециклиране: {recycling:.1f}% — над ОИСР средна (~34%)")
         elif recycling > 25:
-            score = 0.5
-            signals.append(f"⚡ Рециклиране: {recycling:.1f}%")
+            norm = 0.60
+            signals.append(f"⚡ Рециклиране: {recycling:.1f}% — умерено")
+        elif recycling == 13.5:
+            norm = 0.30
+            signals.append(f"⚠️ Рециклиране: ~13.5% (глобална статична оценка; без измерени данни)")
         else:
-            score = 0.25
+            norm = 0.20
             signals.append(f"⚠️ Рециклиране: {recycling:.1f}% — ниско")
+        components.append(norm)
     else:
         signals.append("⚡ Липсват данни за рециклиране")
 
-    if waste_per_capita is not None:
-        if waste_per_capita > 500:
-            score -= 0.1
-            signals.append(f"⚠️ Отпадъци: {waste_per_capita:.0f} kg/човек — високо потребление")
-        else:
-            signals.append(f"✅ Отпадъци: {waste_per_capita:.0f} kg/човек")
+    # Resource depletion % GNI: worst=20%, best=0% (linear)
+    if resource_depletion is not None:
+        norm = 1.0 - min(1.0, resource_depletion / 20.0)
+        level = "✅" if resource_depletion < 2 else "⚠️" if resource_depletion > 8 else "⚡"
+        signals.append(f"{level} Ресурсно изчерпване: {resource_depletion:.1f}% от БНД")
+        components.append(norm)
 
-    if plastic_waste is not None and plastic_waste > 20:
-        score -= 0.15
-        signals.append(f"⚠️ Неуправляван пластмасов отпадък: {plastic_waste:.1f}%")
+    # Natural resource rents % GDP: worst=30%, best=0% (resource curse threshold ~10%)
+    if resource_rents is not None:
+        norm = 1.0 - min(1.0, resource_rents / 30.0)
+        level = "✅" if resource_rents < 3 else "⚠️" if resource_rents > 10 else "⚡"
+        signals.append(f"{level} Ресурсна рента: {resource_rents:.1f}% от БВП")
+        components.append(norm)
 
-    if material_footprint is not None:
-        if material_footprint > 20:
-            score -= 0.1
-            signals.append(f"⚠️ Материален отпечатък: {material_footprint:.1f} тона/човек — висок")
-        else:
-            signals.append(f"⚡ Материален отпечатък: {material_footprint:.1f} тона/човек")
+    # Forest area: worst=0%, best=75% (global avg ~31%)
+    if forest_area is not None:
+        norm = min(1.0, forest_area / 75.0)
+        level = "✅" if forest_area > 40 else "⚡" if forest_area > 20 else "⚠️"
+        signals.append(f"{level} Горски площи: {forest_area:.1f}%")
+        components.append(norm)
 
-    if not signals:
-        signals.append("⚡ Липсват данни за отпадъци и материали")
+    if components:
+        score = sum(components) / len(components)
+    else:
+        score = 0.5
+        signals.append("⚠️ Структурна липса — няма реални данни")
 
     score = max(0.0, min(1.0, score))
     return ScoreResult(
@@ -766,7 +782,12 @@ def score_materials_waste(metrics: Dict) -> ScoreResult:
         level=_score_to_level(score),
         score=round(score, 2),
         signals=signals,
-        metrics_used={"recycling": recycling, "waste_per_capita": waste_per_capita}
+        metrics_used={
+            "recycling_pct": recycling,
+            "resource_depletion_pct_gni": resource_depletion,
+            "resource_rents_pct_gdp": resource_rents,
+            "forest_area_pct": forest_area,
+        }
     )
 
 
@@ -1061,6 +1082,24 @@ def score_culture_media(metrics: Dict) -> ScoreResult:
     else:
         signals.append("⚡ Липсват данни за начално образование")
 
+    # ── Education spending — proxy за инвестиция в културен капацитет ─────────
+    # UNESCO препоръка: минимум 4% от БВП; глобална средна ~4.3%
+    edu_spend = metrics.get("education_spend_pct_gdp")
+    if edu_spend is not None:
+        if edu_spend >= 5.0:
+            score += 0.05
+            signals.append(f"✅ Разходи за образование: {edu_spend:.1f}% от БВП — над UNESCO минимума")
+        elif edu_spend >= 4.0:
+            signals.append(f"⚡ Разходи за образование: {edu_spend:.1f}% от БВП — близо до UNESCO минимума (4%)")
+        else:
+            score -= 0.05
+            signals.append(f"⚠️ Разходи за образование: {edu_spend:.1f}% от БВП — под UNESCO минимума (4%)")
+    else:
+        signals.append("⚡ Липсват данни за разходи за образование")
+
+    # ── Structural gap — press/media freedom NOT in WB WDI ────────────────────
+    signals.append("⚠️ Структурна липса: медийна свобода (RSF, Freedom House) не е налична в WB API — не е измерена")
+
     score = max(0.0, min(1.0, score))
     return ScoreResult(
         axis="CULTURE_MEDIA_REVIEW",
@@ -1068,12 +1107,13 @@ def score_culture_media(metrics: Dict) -> ScoreResult:
         score=round(score, 2),
         signals=signals,
         metrics_used={
-            "internet_users_pct":   internet,
-            "adult_literacy_pct":   literacy,
-            "secondary_enr_pct":    secondary,
-            "broadband_per100":     broadband,
-            "mobile_per100":        mobile,
-            "primary_enr_pct":      primary,
+            "internet_users_pct":       internet,
+            "adult_literacy_pct":       literacy,
+            "secondary_enr_pct":        secondary,
+            "broadband_per100":         broadband,
+            "mobile_per100":            mobile,
+            "primary_enr_pct":          primary,
+            "education_spend_pct_gdp":  edu_spend,
         },
     )
 
@@ -1249,6 +1289,66 @@ def _load_snapshot(path: pathlib.Path) -> Optional[Dict]:
         return None
 
 
+def score_social_relations(metrics: Dict) -> ScoreResult:
+    metrics = _unwrap_metrics(metrics)
+    signals = []
+
+    refugees_m    = metrics.get("refugees_millions")
+    idps_m        = metrics.get("idps_millions")
+    conflicts     = metrics.get("active_armed_conflicts")
+    homicide_rate = metrics.get("homicide_rate_per_100k")
+
+    components: list[float] = []
+
+    # UNHCR refugees: 5M→score=1.0, 80M→score=0.0 (2024 actual: ~43M)
+    if refugees_m is not None:
+        norm = 1.0 - min(1.0, max(0.0, (refugees_m - 5.0) / 75.0))
+        components.append(norm)
+        level = "✅" if refugees_m < 15 else "⚠️" if refugees_m > 35 else "⚡"
+        signals.append(f"{level} Бежанци: {refugees_m:.1f}M (UNHCR)")
+
+    # UNHCR IDPs: 5M→1.0, 80M→0.0 (2024 actual: ~68M)
+    if idps_m is not None:
+        norm = 1.0 - min(1.0, max(0.0, (idps_m - 5.0) / 75.0))
+        components.append(norm)
+        level = "✅" if idps_m < 15 else "⚠️" if idps_m > 35 else "⚡"
+        signals.append(f"{level} Вътрешно разселени (IDPs): {idps_m:.1f}M (UNHCR)")
+
+    # UCDP active armed conflicts: 5→1.0, 80→0.0 (2024 actual: ~55)
+    if conflicts is not None:
+        norm = 1.0 - min(1.0, max(0.0, (conflicts - 5) / 75.0))
+        components.append(norm)
+        level = "✅" if conflicts < 15 else "⚠️" if conflicts > 35 else "⚡"
+        signals.append(f"{level} Активни въоръжени конфликти: {conflicts} (UCDP)")
+
+    # WB homicide rate: 1/100k→1.0, 20/100k→0.0 (global avg ~5-6)
+    if homicide_rate is not None:
+        norm = 1.0 - min(1.0, max(0.0, (homicide_rate - 1.0) / 19.0))
+        components.append(norm)
+        level = "✅" if homicide_rate < 3 else "⚠️" if homicide_rate > 10 else "⚡"
+        signals.append(f"{level} Убийства: {homicide_rate:.1f}/100k (WB)")
+
+    if components:
+        score = sum(components) / len(components)
+    else:
+        score = 0.5
+        signals.append("⚠️ Няма данни от UNHCR/UCDP/WB — generic fallback")
+
+    score = max(0.0, min(1.0, score))
+    return ScoreResult(
+        axis="SOCIAL_RELATIONS_REVIEW",
+        level=_score_to_level(score),
+        score=round(score, 2),
+        signals=signals,
+        metrics_used={
+            "refugees_millions": refugees_m,
+            "idps_millions":     idps_m,
+            "active_conflicts":  conflicts,
+            "homicide_rate":     homicide_rate,
+        },
+    )
+
+
 # ─────────────────────────────────────────────
 # AXIS SCORERS REGISTRY
 # ─────────────────────────────────────────────
@@ -1271,6 +1371,7 @@ AXIS_SCORERS = {
     "COGNITION_LEARNING_REVIEW":        score_cognition_learning,
     "CULTURE_MEDIA_REVIEW":             score_culture_media,
     "TECHNOLOGY_INFRA_REVIEW":          score_technology_infra,
+    "SOCIAL_RELATIONS_REVIEW":          score_social_relations,
 }
 
 
