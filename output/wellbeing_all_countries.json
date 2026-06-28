@@ -1,5 +1,5 @@
 {
-  "computed_at": "2026-06-28T13:15:39.042294+00:00",
+  "computed_at": "2026-06-28T18:03:16.499997+00:00",
   "total": 217,
   "countries": [
     {
@@ -13,17 +13,18 @@
       "strain": 0.428,
       "flourishing": 0.878,
       "confidence": "LOW",
-      "completeness": "10/15 real, 3 null, 2 suspect",
+      "completeness": "10/16 real, 4 null, 2 suspect",
       "null_axes": [
         "FOOD_REVIEW",
         "INEQUALITY_POVERTY_REVIEW",
-        "COGNITION_LEARNING_REVIEW"
+        "COGNITION_LEARNING_REVIEW",
+        "CULTURE_MEDIA_REVIEW"
       ],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW",
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:33.694053+00:00",
+      "computed_at": "2026-06-28T18:02:27.647822+00:00",
       "status": "ok"
     },
     {
@@ -35,14 +36,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.166,
       "strain": 0.33,
-      "flourishing": 0.903,
+      "flourishing": 0.755,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:37.348869+00:00",
+      "computed_at": "2026-06-28T18:02:27.451152+00:00",
       "status": "ok"
     },
     {
@@ -54,16 +55,16 @@
       "zone_label": "Precarious (partial data)",
       "deprivation": 0.542,
       "strain": 0.527,
-      "flourishing": 0.43,
+      "flourishing": 0.358,
       "confidence": "MEDIUM",
-      "completeness": "13/15 real, 1 null, 1 suspect",
+      "completeness": "14/16 real, 1 null, 1 suspect",
       "null_axes": [
         "INEQUALITY_POVERTY_REVIEW"
       ],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:37.351867+00:00",
+      "computed_at": "2026-06-28T18:02:27.764471+00:00",
       "status": "ok"
     },
     {
@@ -77,16 +78,17 @@
       "strain": 0.63,
       "flourishing": 0.733,
       "confidence": "LOW",
-      "completeness": "11/15 real, 2 null, 2 suspect",
+      "completeness": "11/16 real, 3 null, 2 suspect",
       "null_axes": [
         "WATER_REVIEW",
-        "INEQUALITY_POVERTY_REVIEW"
+        "INEQUALITY_POVERTY_REVIEW",
+        "CULTURE_MEDIA_REVIEW"
       ],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW",
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:39.729322+00:00",
+      "computed_at": "2026-06-28T18:02:29.236006+00:00",
       "status": "ok"
     },
     {
@@ -98,14 +100,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.274,
       "strain": 0.276,
-      "flourishing": 0.768,
+      "flourishing": 0.751,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:37.298619+00:00",
+      "computed_at": "2026-06-28T18:02:27.601534+00:00",
       "status": "ok"
     },
     {
@@ -117,14 +119,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.298,
       "strain": 0.373,
-      "flourishing": 0.769,
+      "flourishing": 0.763,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:37.387877+00:00",
+      "computed_at": "2026-06-28T18:02:27.708024+00:00",
       "status": "ok"
     },
     {
@@ -136,16 +138,16 @@
       "zone_label": "Precarious (UNVERIFIED)",
       "deprivation": 0.46,
       "strain": 0.545,
-      "flourishing": 0.474,
+      "flourishing": 0.478,
       "confidence": "LOW",
-      "completeness": "13/15 real, 1 null, 1 suspect",
+      "completeness": "14/16 real, 1 null, 1 suspect",
       "null_axes": [
         "WATER_REVIEW"
       ],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:37.366178+00:00",
+      "computed_at": "2026-06-28T18:02:27.483950+00:00",
       "status": "ok"
     },
     {
@@ -157,16 +159,16 @@
       "zone_label": "Dignified Life (UNVERIFIED)",
       "deprivation": 0.296,
       "strain": 0.405,
-      "flourishing": 0.812,
+      "flourishing": 0.799,
       "confidence": "LOW",
-      "completeness": "13/15 real, 1 null, 1 suspect",
+      "completeness": "14/16 real, 1 null, 1 suspect",
       "null_axes": [
         "WATER_REVIEW"
       ],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:38.031305+00:00",
+      "computed_at": "2026-06-28T18:02:27.452081+00:00",
       "status": "ok"
     },
     {
@@ -180,10 +182,11 @@
       "strain": 0.616,
       "flourishing": 0.505,
       "confidence": "LOW",
-      "completeness": "9/15 real, 2 null, 4 suspect",
+      "completeness": "9/16 real, 3 null, 4 suspect",
       "null_axes": [
         "FOOD_REVIEW",
-        "INEQUALITY_POVERTY_REVIEW"
+        "INEQUALITY_POVERTY_REVIEW",
+        "CULTURE_MEDIA_REVIEW"
       ],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW",
@@ -191,7 +194,7 @@
         "ECONOMY_WORK_REVIEW",
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:37.637479+00:00",
+      "computed_at": "2026-06-28T18:02:29.251589+00:00",
       "status": "ok"
     },
     {
@@ -203,14 +206,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.148,
       "strain": 0.207,
-      "flourishing": 0.834,
+      "flourishing": 0.848,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:39.786374+00:00",
+      "computed_at": "2026-06-28T18:02:29.413200+00:00",
       "status": "ok"
     },
     {
@@ -222,16 +225,16 @@
       "zone_label": "Dignified Life (UNVERIFIED)",
       "deprivation": 0.211,
       "strain": 0.301,
-      "flourishing": 0.849,
+      "flourishing": 0.861,
       "confidence": "LOW",
-      "completeness": "13/15 real, 1 null, 1 suspect",
+      "completeness": "14/16 real, 1 null, 1 suspect",
       "null_axes": [
         "WATER_REVIEW"
       ],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:39.622910+00:00",
+      "computed_at": "2026-06-28T18:02:29.236403+00:00",
       "status": "ok"
     },
     {
@@ -245,16 +248,17 @@
       "strain": 0.377,
       "flourishing": 0.815,
       "confidence": "LOW",
-      "completeness": "11/15 real, 3 null, 1 suspect",
+      "completeness": "11/16 real, 4 null, 1 suspect",
       "null_axes": [
         "FOOD_REVIEW",
         "WATER_REVIEW",
-        "INEQUALITY_POVERTY_REVIEW"
+        "INEQUALITY_POVERTY_REVIEW",
+        "CULTURE_MEDIA_REVIEW"
       ],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:37.387084+00:00",
+      "computed_at": "2026-06-28T18:02:27.451495+00:00",
       "status": "ok"
     },
     {
@@ -266,14 +270,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.361,
       "strain": 0.459,
-      "flourishing": 0.765,
+      "flourishing": 0.646,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:39.965404+00:00",
+      "computed_at": "2026-06-28T18:02:29.392435+00:00",
       "status": "ok"
     },
     {
@@ -285,14 +289,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.268,
       "strain": 0.327,
-      "flourishing": 0.788,
+      "flourishing": 0.764,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:42.455610+00:00",
+      "computed_at": "2026-06-28T18:02:31.290108+00:00",
       "status": "ok"
     },
     {
@@ -304,16 +308,16 @@
       "zone_label": "Dignified Life (UNVERIFIED)",
       "deprivation": 0.298,
       "strain": 0.345,
-      "flourishing": 0.809,
+      "flourishing": 0.827,
       "confidence": "LOW",
-      "completeness": "13/15 real, 1 null, 1 suspect",
+      "completeness": "14/16 real, 1 null, 1 suspect",
       "null_axes": [
         "WATER_REVIEW"
       ],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:44.849478+00:00",
+      "computed_at": "2026-06-28T18:02:33.835141+00:00",
       "status": "ok"
     },
     {
@@ -325,14 +329,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.387,
       "strain": 0.396,
-      "flourishing": 0.643,
+      "flourishing": 0.623,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:42.126330+00:00",
+      "computed_at": "2026-06-28T18:02:31.201407+00:00",
       "status": "ok"
     },
     {
@@ -344,14 +348,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.161,
       "strain": 0.273,
-      "flourishing": 0.867,
+      "flourishing": 0.885,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:39.782004+00:00",
+      "computed_at": "2026-06-28T18:02:29.682208+00:00",
       "status": "ok"
     },
     {
@@ -363,16 +367,16 @@
       "zone_label": "Precarious (UNVERIFIED)",
       "deprivation": 0.559,
       "strain": 0.504,
-      "flourishing": 0.372,
+      "flourishing": 0.352,
       "confidence": "LOW",
-      "completeness": "13/15 real, 1 null, 1 suspect",
+      "completeness": "14/16 real, 1 null, 1 suspect",
       "null_axes": [
         "WATER_REVIEW"
       ],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:40.603370+00:00",
+      "computed_at": "2026-06-28T18:02:31.450629+00:00",
       "status": "ok"
     },
     {
@@ -384,14 +388,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.25,
       "strain": 0.36,
-      "flourishing": 0.821,
+      "flourishing": 0.809,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:41.969910+00:00",
+      "computed_at": "2026-06-28T18:02:31.445194+00:00",
       "status": "ok"
     },
     {
@@ -403,9 +407,9 @@
       "zone_label": "Dignified Life (UNVERIFIED)",
       "deprivation": 0.241,
       "strain": 0.512,
-      "flourishing": 0.824,
+      "flourishing": 0.709,
       "confidence": "LOW",
-      "completeness": "12/15 real, 1 null, 2 suspect",
+      "completeness": "13/16 real, 1 null, 2 suspect",
       "null_axes": [
         "INEQUALITY_POVERTY_REVIEW"
       ],
@@ -413,7 +417,7 @@
         "FOOD_REVIEW",
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:42.146905+00:00",
+      "computed_at": "2026-06-28T18:02:31.359844+00:00",
       "status": "ok"
     },
     {
@@ -425,16 +429,16 @@
       "zone_label": "Precarious (UNVERIFIED)",
       "deprivation": 0.587,
       "strain": 0.563,
-      "flourishing": 0.351,
+      "flourishing": 0.318,
       "confidence": "LOW",
-      "completeness": "13/15 real, 1 null, 1 suspect",
+      "completeness": "14/16 real, 1 null, 1 suspect",
       "null_axes": [
         "WATER_REVIEW"
       ],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:39.673361+00:00",
+      "computed_at": "2026-06-28T18:02:29.562067+00:00",
       "status": "ok"
     },
     {
@@ -446,14 +450,14 @@
       "zone_label": "Precarious (partial data)",
       "deprivation": 0.533,
       "strain": 0.395,
-      "flourishing": 0.508,
+      "flourishing": 0.538,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:39.863893+00:00",
+      "computed_at": "2026-06-28T18:02:29.513561+00:00",
       "status": "ok"
     },
     {
@@ -467,19 +471,20 @@
       "strain": 0.494,
       "flourishing": 0.834,
       "confidence": "LOW",
-      "completeness": "8/15 real, 4 null, 3 suspect",
+      "completeness": "8/16 real, 5 null, 3 suspect",
       "null_axes": [
         "FOOD_REVIEW",
         "WATER_REVIEW",
         "INEQUALITY_POVERTY_REVIEW",
-        "COGNITION_LEARNING_REVIEW"
+        "COGNITION_LEARNING_REVIEW",
+        "CULTURE_MEDIA_REVIEW"
       ],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW",
         "ENERGY_REVIEW",
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:42.667896+00:00",
+      "computed_at": "2026-06-28T18:02:33.406343+00:00",
       "status": "ok"
     },
     {
@@ -493,15 +498,16 @@
       "strain": 0.474,
       "flourishing": 0.809,
       "confidence": "LOW",
-      "completeness": "12/15 real, 2 null, 1 suspect",
+      "completeness": "12/16 real, 3 null, 1 suspect",
       "null_axes": [
         "WATER_REVIEW",
-        "INEQUALITY_POVERTY_REVIEW"
+        "INEQUALITY_POVERTY_REVIEW",
+        "CULTURE_MEDIA_REVIEW"
       ],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:45.250817+00:00",
+      "computed_at": "2026-06-28T18:02:33.395167+00:00",
       "status": "ok"
     },
     {
@@ -513,16 +519,16 @@
       "zone_label": "Dignified Life (UNVERIFIED)",
       "deprivation": 0.395,
       "strain": 0.45,
-      "flourishing": 0.758,
+      "flourishing": 0.744,
       "confidence": "LOW",
-      "completeness": "13/15 real, 1 null, 1 suspect",
+      "completeness": "14/16 real, 1 null, 1 suspect",
       "null_axes": [
         "WATER_REVIEW"
       ],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:44.197705+00:00",
+      "computed_at": "2026-06-28T18:02:33.072102+00:00",
       "status": "ok"
     },
     {
@@ -534,14 +540,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.247,
       "strain": 0.355,
-      "flourishing": 0.78,
+      "flourishing": 0.803,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:44.177106+00:00",
+      "computed_at": "2026-06-28T18:02:33.209914+00:00",
       "status": "ok"
     },
     {
@@ -555,16 +561,17 @@
       "strain": 0.405,
       "flourishing": 0.778,
       "confidence": "LOW",
-      "completeness": "11/15 real, 3 null, 1 suspect",
+      "completeness": "11/16 real, 4 null, 1 suspect",
       "null_axes": [
         "WATER_REVIEW",
         "INEQUALITY_POVERTY_REVIEW",
-        "COGNITION_LEARNING_REVIEW"
+        "COGNITION_LEARNING_REVIEW",
+        "CULTURE_MEDIA_REVIEW"
       ],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:42.375043+00:00",
+      "computed_at": "2026-06-28T18:02:31.173417+00:00",
       "status": "ok"
     },
     {
@@ -576,14 +583,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.314,
       "strain": 0.162,
-      "flourishing": 0.665,
+      "flourishing": 0.668,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:44.783205+00:00",
+      "computed_at": "2026-06-28T18:02:33.438677+00:00",
       "status": "ok"
     },
     {
@@ -595,14 +602,14 @@
       "zone_label": "Precarious (partial data)",
       "deprivation": 0.413,
       "strain": 0.451,
-      "flourishing": 0.627,
+      "flourishing": 0.657,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:44.749285+00:00",
+      "computed_at": "2026-06-28T18:02:33.401912+00:00",
       "status": "ok"
     },
     {
@@ -614,14 +621,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.29,
       "strain": 0.382,
-      "flourishing": 0.867,
+      "flourishing": 0.719,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:42.484427+00:00",
+      "computed_at": "2026-06-28T18:02:31.774905+00:00",
       "status": "ok"
     },
     {
@@ -635,14 +642,15 @@
       "strain": 0.316,
       "flourishing": 0.712,
       "confidence": "LOW",
-      "completeness": "13/15 real, 1 null, 1 suspect",
+      "completeness": "13/16 real, 2 null, 1 suspect",
       "null_axes": [
-        "WATER_REVIEW"
+        "WATER_REVIEW",
+        "CULTURE_MEDIA_REVIEW"
       ],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:42.288841+00:00",
+      "computed_at": "2026-06-28T18:02:31.555037+00:00",
       "status": "ok"
     },
     {
@@ -654,14 +662,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.168,
       "strain": 0.237,
-      "flourishing": 0.859,
+      "flourishing": 0.872,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:45.101121+00:00",
+      "computed_at": "2026-06-28T18:02:34.839615+00:00",
       "status": "ok"
     },
     {
@@ -673,14 +681,14 @@
       "zone_label": "Precarious (partial data)",
       "deprivation": 0.627,
       "strain": 0.633,
-      "flourishing": 0.382,
+      "flourishing": 0.42,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:47.195330+00:00",
+      "computed_at": "2026-06-28T18:02:35.628335+00:00",
       "status": "ok"
     },
     {
@@ -692,14 +700,14 @@
       "zone_label": "Precarious (partial data)",
       "deprivation": 0.628,
       "strain": 0.477,
-      "flourishing": 0.313,
+      "flourishing": 0.366,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:44.990853+00:00",
+      "computed_at": "2026-06-28T18:02:33.589260+00:00",
       "status": "ok"
     },
     {
@@ -711,14 +719,14 @@
       "zone_label": "Precarious (partial data)",
       "deprivation": 0.53,
       "strain": 0.601,
-      "flourishing": 0.494,
+      "flourishing": 0.473,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:47.659279+00:00",
+      "computed_at": "2026-06-28T18:02:36.665747+00:00",
       "status": "ok"
     },
     {
@@ -730,14 +738,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.138,
       "strain": 0.21,
-      "flourishing": 0.889,
+      "flourishing": 0.903,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:46.666739+00:00",
+      "computed_at": "2026-06-28T18:02:35.211939+00:00",
       "status": "ok"
     },
     {
@@ -749,14 +757,14 @@
       "zone_label": "Precarious (partial data)",
       "deprivation": 0.48,
       "strain": 0.379,
-      "flourishing": 0.559,
+      "flourishing": 0.581,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:46.993818+00:00",
+      "computed_at": "2026-06-28T18:02:35.126677+00:00",
       "status": "ok"
     },
     {
@@ -768,14 +776,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.193,
       "strain": 0.356,
-      "flourishing": 0.809,
+      "flourishing": 0.829,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:47.347514+00:00",
+      "computed_at": "2026-06-28T18:02:35.410916+00:00",
       "status": "ok"
     },
     {
@@ -787,16 +795,16 @@
       "zone_label": "Precarious (UNVERIFIED)",
       "deprivation": 0.448,
       "strain": 0.405,
-      "flourishing": 0.563,
+      "flourishing": 0.558,
       "confidence": "LOW",
-      "completeness": "13/15 real, 1 null, 1 suspect",
+      "completeness": "14/16 real, 1 null, 1 suspect",
       "null_axes": [
         "WATER_REVIEW"
       ],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:47.085459+00:00",
+      "computed_at": "2026-06-28T18:02:35.426969+00:00",
       "status": "ok"
     },
     {
@@ -808,16 +816,16 @@
       "zone_label": "Dignified Life (UNVERIFIED)",
       "deprivation": 0.28,
       "strain": 0.346,
-      "flourishing": 0.859,
+      "flourishing": 0.716,
       "confidence": "LOW",
-      "completeness": "13/15 real, 1 null, 1 suspect",
+      "completeness": "14/16 real, 1 null, 1 suspect",
       "null_axes": [
         "WATER_REVIEW"
       ],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:47.217058+00:00",
+      "computed_at": "2026-06-28T18:02:35.428070+00:00",
       "status": "ok"
     },
     {
@@ -829,14 +837,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.281,
       "strain": 0.401,
-      "flourishing": 0.793,
+      "flourishing": 0.796,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:48.787864+00:00",
+      "computed_at": "2026-06-28T18:02:36.868096+00:00",
       "status": "ok"
     },
     {
@@ -848,14 +856,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.21,
       "strain": 0.272,
-      "flourishing": 0.82,
+      "flourishing": 0.837,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:49.799083+00:00",
+      "computed_at": "2026-06-28T18:02:37.175775+00:00",
       "status": "ok"
     },
     {
@@ -867,9 +875,9 @@
       "zone_label": "Dignified Life (UNVERIFIED)",
       "deprivation": 0.339,
       "strain": 0.451,
-      "flourishing": 0.735,
+      "flourishing": 0.619,
       "confidence": "LOW",
-      "completeness": "12/15 real, 2 null, 1 suspect",
+      "completeness": "13/16 real, 2 null, 1 suspect",
       "null_axes": [
         "WATER_REVIEW",
         "INEQUALITY_POVERTY_REVIEW"
@@ -877,7 +885,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:49.733925+00:00",
+      "computed_at": "2026-06-28T18:02:37.395440+00:00",
       "status": "ok"
     },
     {
@@ -889,16 +897,16 @@
       "zone_label": "Dignified Life (UNVERIFIED)",
       "deprivation": 0.325,
       "strain": 0.365,
-      "flourishing": 0.743,
+      "flourishing": 0.763,
       "confidence": "LOW",
-      "completeness": "13/15 real, 1 null, 1 suspect",
+      "completeness": "14/16 real, 1 null, 1 suspect",
       "null_axes": [
         "WATER_REVIEW"
       ],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:49.284757+00:00",
+      "computed_at": "2026-06-28T18:02:37.240277+00:00",
       "status": "ok"
     },
     {
@@ -912,20 +920,21 @@
       "strain": 0.732,
       "flourishing": 0.687,
       "confidence": "LOW",
-      "completeness": "7/15 real, 6 null, 2 suspect",
+      "completeness": "7/16 real, 7 null, 2 suspect",
       "null_axes": [
         "FOOD_REVIEW",
         "WATER_REVIEW",
         "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL",
         "INEQUALITY_POVERTY_REVIEW",
         "GOVERNANCE_INSTITUTIONS_REVIEW",
-        "COGNITION_LEARNING_REVIEW"
+        "COGNITION_LEARNING_REVIEW",
+        "CULTURE_MEDIA_REVIEW"
       ],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW",
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:49.454391+00:00",
+      "computed_at": "2026-06-28T18:02:37.675043+00:00",
       "status": "ok"
     },
     {
@@ -937,14 +946,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.231,
       "strain": 0.316,
-      "flourishing": 0.864,
+      "flourishing": 0.855,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:49.703620+00:00",
+      "computed_at": "2026-06-28T18:02:38.595478+00:00",
       "status": "ok"
     },
     {
@@ -956,14 +965,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.197,
       "strain": 0.276,
-      "flourishing": 0.853,
+      "flourishing": 0.869,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:51.242514+00:00",
+      "computed_at": "2026-06-28T18:02:38.550069+00:00",
       "status": "ok"
     },
     {
@@ -975,14 +984,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.156,
       "strain": 0.254,
-      "flourishing": 0.879,
+      "flourishing": 0.885,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:51.207668+00:00",
+      "computed_at": "2026-06-28T18:02:39.000120+00:00",
       "status": "ok"
     },
     {
@@ -994,9 +1003,9 @@
       "zone_label": "Precarious (UNVERIFIED)",
       "deprivation": 0.489,
       "strain": 0.468,
-      "flourishing": 0.468,
+      "flourishing": 0.436,
       "confidence": "LOW",
-      "completeness": "11/15 real, 3 null, 1 suspect",
+      "completeness": "12/16 real, 3 null, 1 suspect",
       "null_axes": [
         "WATER_REVIEW",
         "COGNITION_LEARNING_REVIEW",
@@ -1005,7 +1014,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:51.566519+00:00",
+      "computed_at": "2026-06-28T18:02:39.122104+00:00",
       "status": "ok"
     },
     {
@@ -1017,14 +1026,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.119,
       "strain": 0.173,
-      "flourishing": 0.886,
+      "flourishing": 0.902,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:51.558831+00:00",
+      "computed_at": "2026-06-28T18:02:39.127769+00:00",
       "status": "ok"
     },
     {
@@ -1038,15 +1047,16 @@
       "strain": 0.396,
       "flourishing": 0.732,
       "confidence": "LOW",
-      "completeness": "12/15 real, 2 null, 1 suspect",
+      "completeness": "12/16 real, 3 null, 1 suspect",
       "null_axes": [
         "WATER_REVIEW",
-        "INEQUALITY_POVERTY_REVIEW"
+        "INEQUALITY_POVERTY_REVIEW",
+        "CULTURE_MEDIA_REVIEW"
       ],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:51.647733+00:00",
+      "computed_at": "2026-06-28T18:02:39.067625+00:00",
       "status": "ok"
     },
     {
@@ -1058,14 +1068,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.349,
       "strain": 0.369,
-      "flourishing": 0.742,
+      "flourishing": 0.77,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:51.725126+00:00",
+      "computed_at": "2026-06-28T18:02:39.192560+00:00",
       "status": "ok"
     },
     {
@@ -1077,14 +1087,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.368,
       "strain": 0.465,
-      "flourishing": 0.69,
+      "flourishing": 0.633,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:51.994635+00:00",
+      "computed_at": "2026-06-28T18:02:39.512568+00:00",
       "status": "ok"
     },
     {
@@ -1096,14 +1106,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.326,
       "strain": 0.409,
-      "flourishing": 0.736,
+      "flourishing": 0.731,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:51.822705+00:00",
+      "computed_at": "2026-06-28T18:02:40.670222+00:00",
       "status": "ok"
     },
     {
@@ -1115,14 +1125,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.18,
       "strain": 0.231,
-      "flourishing": 0.876,
+      "flourishing": 0.892,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:53.906588+00:00",
+      "computed_at": "2026-06-28T18:02:41.069878+00:00",
       "status": "ok"
     },
     {
@@ -1130,18 +1140,18 @@
       "name": "Egypt, Arab Rep.",
       "region": "MEA",
       "income": "LMC",
-      "zone": "Dignified Life",
-      "zone_label": "Dignified Life (partial data)",
+      "zone": "Thriving",
+      "zone_label": "Thriving (partial data)",
       "deprivation": 0.352,
       "strain": 0.417,
-      "flourishing": 0.686,
+      "flourishing": 0.574,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:53.750483+00:00",
+      "computed_at": "2026-06-28T18:02:41.325708+00:00",
       "status": "ok"
     },
     {
@@ -1153,9 +1163,9 @@
       "zone_label": "Precarious (UNVERIFIED)",
       "deprivation": 0.566,
       "strain": 0.587,
-      "flourishing": 0.459,
+      "flourishing": 0.382,
       "confidence": "LOW",
-      "completeness": "12/15 real, 2 null, 1 suspect",
+      "completeness": "13/16 real, 2 null, 1 suspect",
       "null_axes": [
         "WATER_REVIEW",
         "INEQUALITY_POVERTY_REVIEW"
@@ -1163,7 +1173,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:53.351227+00:00",
+      "computed_at": "2026-06-28T18:02:41.221608+00:00",
       "status": "ok"
     },
     {
@@ -1175,14 +1185,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.192,
       "strain": 0.285,
-      "flourishing": 0.868,
+      "flourishing": 0.864,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:53.631734+00:00",
+      "computed_at": "2026-06-28T18:02:41.078107+00:00",
       "status": "ok"
     },
     {
@@ -1194,14 +1204,14 @@
       "zone_label": "Precarious (partial data)",
       "deprivation": 0.52,
       "strain": 0.356,
-      "flourishing": 0.431,
+      "flourishing": 0.405,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:54.400170+00:00",
+      "computed_at": "2026-06-28T18:02:41.006422+00:00",
       "status": "ok"
     },
     {
@@ -1213,14 +1223,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.149,
       "strain": 0.167,
-      "flourishing": 0.87,
+      "flourishing": 0.884,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:54.059333+00:00",
+      "computed_at": "2026-06-28T18:02:41.010292+00:00",
       "status": "ok"
     },
     {
@@ -1232,14 +1242,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.333,
       "strain": 0.292,
-      "flourishing": 0.715,
+      "flourishing": 0.717,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:54.628569+00:00",
+      "computed_at": "2026-06-28T18:02:41.467585+00:00",
       "status": "ok"
     },
     {
@@ -1253,14 +1263,15 @@
       "strain": 0.406,
       "flourishing": 0.536,
       "confidence": "LOW",
-      "completeness": "13/15 real, 1 null, 1 suspect",
+      "completeness": "13/16 real, 2 null, 1 suspect",
       "null_axes": [
-        "WATER_REVIEW"
+        "WATER_REVIEW",
+        "CULTURE_MEDIA_REVIEW"
       ],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:55.795647+00:00",
+      "computed_at": "2026-06-28T18:02:42.890064+00:00",
       "status": "ok"
     },
     {
@@ -1274,21 +1285,22 @@
       "strain": 0.687,
       "flourishing": 0.691,
       "confidence": "LOW",
-      "completeness": "6/15 real, 6 null, 3 suspect",
+      "completeness": "6/16 real, 7 null, 3 suspect",
       "null_axes": [
         "WATER_REVIEW",
         "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL",
         "INEQUALITY_POVERTY_REVIEW",
         "GOVERNANCE_INSTITUTIONS_REVIEW",
         "COGNITION_LEARNING_REVIEW",
-        "EDUCATION_CULTURE_REVIEW"
+        "EDUCATION_CULTURE_REVIEW",
+        "CULTURE_MEDIA_REVIEW"
       ],
       "suspect_axes": [
         "FOOD_REVIEW",
         "CLIMATE_GLOBAL_RISK_REVIEW",
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:55.306501+00:00",
+      "computed_at": "2026-06-28T18:02:42.797479+00:00",
       "status": "ok"
     },
     {
@@ -1300,14 +1312,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.185,
       "strain": 0.289,
-      "flourishing": 0.873,
+      "flourishing": 0.888,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:54.119265+00:00",
+      "computed_at": "2026-06-28T18:02:42.288552+00:00",
       "status": "ok"
     },
     {
@@ -1319,16 +1331,16 @@
       "zone_label": "Precarious (UNVERIFIED)",
       "deprivation": 0.407,
       "strain": 0.379,
-      "flourishing": 0.695,
+      "flourishing": 0.704,
       "confidence": "LOW",
-      "completeness": "13/15 real, 1 null, 1 suspect",
+      "completeness": "14/16 real, 1 null, 1 suspect",
       "null_axes": [
         "WATER_REVIEW"
       ],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:55.965434+00:00",
+      "computed_at": "2026-06-28T18:02:42.993783+00:00",
       "status": "ok"
     },
     {
@@ -1340,14 +1352,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.168,
       "strain": 0.284,
-      "flourishing": 0.87,
+      "flourishing": 0.864,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:55.992592+00:00",
+      "computed_at": "2026-06-28T18:02:42.891472+00:00",
       "status": "ok"
     },
     {
@@ -1361,13 +1373,15 @@
       "strain": 0.5,
       "flourishing": 0.733,
       "confidence": "LOW",
-      "completeness": "13/15 real, 0 null, 2 suspect",
-      "null_axes": [],
+      "completeness": "13/16 real, 1 null, 2 suspect",
+      "null_axes": [
+        "CULTURE_MEDIA_REVIEW"
+      ],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW",
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:59.023499+00:00",
+      "computed_at": "2026-06-28T18:02:44.822169+00:00",
       "status": "ok"
     },
     {
@@ -1379,14 +1393,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.273,
       "strain": 0.297,
-      "flourishing": 0.82,
+      "flourishing": 0.797,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:56.462423+00:00",
+      "computed_at": "2026-06-28T18:02:43.057637+00:00",
       "status": "ok"
     },
     {
@@ -1398,14 +1412,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.399,
       "strain": 0.451,
-      "flourishing": 0.633,
+      "flourishing": 0.679,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:56.200913+00:00",
+      "computed_at": "2026-06-28T18:02:43.269360+00:00",
       "status": "ok"
     },
     {
@@ -1419,20 +1433,21 @@
       "strain": 0.863,
       "flourishing": 0.813,
       "confidence": "LOW",
-      "completeness": "7/15 real, 6 null, 2 suspect",
+      "completeness": "7/16 real, 7 null, 2 suspect",
       "null_axes": [
         "FOOD_REVIEW",
         "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL",
         "INEQUALITY_POVERTY_REVIEW",
         "GOVERNANCE_INSTITUTIONS_REVIEW",
         "COGNITION_LEARNING_REVIEW",
-        "ECONOMY_WORK_REVIEW"
+        "ECONOMY_WORK_REVIEW",
+        "CULTURE_MEDIA_REVIEW"
       ],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW",
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:56.880452+00:00",
+      "computed_at": "2026-06-28T18:02:43.198414+00:00",
       "status": "ok"
     },
     {
@@ -1446,19 +1461,20 @@
       "strain": 0.492,
       "flourishing": 0.689,
       "confidence": "LOW",
-      "completeness": "8/15 real, 5 null, 2 suspect",
+      "completeness": "8/16 real, 6 null, 2 suspect",
       "null_axes": [
         "FOOD_REVIEW",
         "WATER_REVIEW",
         "INEQUALITY_POVERTY_REVIEW",
         "COGNITION_LEARNING_REVIEW",
-        "EDUCATION_CULTURE_REVIEW"
+        "EDUCATION_CULTURE_REVIEW",
+        "CULTURE_MEDIA_REVIEW"
       ],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW",
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:58.963705+00:00",
+      "computed_at": "2026-06-28T18:02:44.924424+00:00",
       "status": "ok"
     },
     {
@@ -1470,14 +1486,14 @@
       "zone_label": "Precarious (partial data)",
       "deprivation": 0.482,
       "strain": 0.426,
-      "flourishing": 0.538,
+      "flourishing": 0.587,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:57.696589+00:00",
+      "computed_at": "2026-06-28T18:02:44.987827+00:00",
       "status": "ok"
     },
     {
@@ -1489,16 +1505,16 @@
       "zone_label": "Precarious (UNVERIFIED)",
       "deprivation": 0.503,
       "strain": 0.377,
-      "flourishing": 0.428,
+      "flourishing": 0.451,
       "confidence": "LOW",
-      "completeness": "13/15 real, 1 null, 1 suspect",
+      "completeness": "14/16 real, 1 null, 1 suspect",
       "null_axes": [
         "WATER_REVIEW"
       ],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:57.107541+00:00",
+      "computed_at": "2026-06-28T18:02:43.960136+00:00",
       "status": "ok"
     },
     {
@@ -1510,9 +1526,9 @@
       "zone_label": "Precarious (UNVERIFIED)",
       "deprivation": 0.523,
       "strain": 0.576,
-      "flourishing": 0.593,
+      "flourishing": 0.508,
       "confidence": "LOW",
-      "completeness": "12/15 real, 1 null, 2 suspect",
+      "completeness": "13/16 real, 1 null, 2 suspect",
       "null_axes": [
         "WATER_REVIEW"
       ],
@@ -1520,7 +1536,7 @@
         "FOOD_REVIEW",
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:58.478867+00:00",
+      "computed_at": "2026-06-28T18:02:44.733529+00:00",
       "status": "ok"
     },
     {
@@ -1532,14 +1548,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.225,
       "strain": 0.325,
-      "flourishing": 0.839,
+      "flourishing": 0.834,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:57.965019+00:00",
+      "computed_at": "2026-06-28T18:02:44.823200+00:00",
       "status": "ok"
     },
     {
@@ -1551,14 +1567,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.39,
       "strain": 0.359,
-      "flourishing": 0.667,
+      "flourishing": 0.697,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:00.406050+00:00",
+      "computed_at": "2026-06-28T18:02:45.753750+00:00",
       "status": "ok"
     },
     {
@@ -1572,16 +1588,17 @@
       "strain": 0.521,
       "flourishing": 0.739,
       "confidence": "LOW",
-      "completeness": "11/15 real, 2 null, 2 suspect",
+      "completeness": "11/16 real, 3 null, 2 suspect",
       "null_axes": [
         "FOOD_REVIEW",
-        "INEQUALITY_POVERTY_REVIEW"
+        "INEQUALITY_POVERTY_REVIEW",
+        "CULTURE_MEDIA_REVIEW"
       ],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW",
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:00.263354+00:00",
+      "computed_at": "2026-06-28T18:02:45.844154+00:00",
       "status": "ok"
     },
     {
@@ -1593,14 +1610,14 @@
       "zone_label": "Precarious (partial data)",
       "deprivation": 0.569,
       "strain": 0.476,
-      "flourishing": 0.515,
+      "flourishing": 0.522,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:57.937004+00:00",
+      "computed_at": "2026-06-28T18:02:45.158181+00:00",
       "status": "ok"
     },
     {
@@ -1612,14 +1629,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.356,
       "strain": 0.542,
-      "flourishing": 0.695,
+      "flourishing": 0.708,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:00.540221+00:00",
+      "computed_at": "2026-06-28T18:02:46.487575+00:00",
       "status": "ok"
     },
     {
@@ -1631,9 +1648,9 @@
       "zone_label": "Dignified Life (UNVERIFIED)",
       "deprivation": 0.155,
       "strain": 0.322,
-      "flourishing": 0.962,
+      "flourishing": 0.833,
       "confidence": "LOW",
-      "completeness": "12/15 real, 1 null, 2 suspect",
+      "completeness": "13/16 real, 1 null, 2 suspect",
       "null_axes": [
         "INEQUALITY_POVERTY_REVIEW"
       ],
@@ -1641,7 +1658,7 @@
         "CLIMATE_GLOBAL_RISK_REVIEW",
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:00.532917+00:00",
+      "computed_at": "2026-06-28T18:02:46.811989+00:00",
       "status": "ok"
     },
     {
@@ -1653,14 +1670,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.373,
       "strain": 0.385,
-      "flourishing": 0.638,
+      "flourishing": 0.677,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:00.452274+00:00",
+      "computed_at": "2026-06-28T18:02:46.569411+00:00",
       "status": "ok"
     },
     {
@@ -1672,14 +1689,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.232,
       "strain": 0.267,
-      "flourishing": 0.817,
+      "flourishing": 0.804,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:00.646001+00:00",
+      "computed_at": "2026-06-28T18:02:47.149554+00:00",
       "status": "ok"
     },
     {
@@ -1691,16 +1708,16 @@
       "zone_label": "Precarious (UNVERIFIED)",
       "deprivation": 0.59,
       "strain": 0.496,
-      "flourishing": 0.484,
+      "flourishing": 0.54,
       "confidence": "LOW",
-      "completeness": "13/15 real, 1 null, 1 suspect",
+      "completeness": "14/16 real, 1 null, 1 suspect",
       "null_axes": [
         "WATER_REVIEW"
       ],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:01.045292+00:00",
+      "computed_at": "2026-06-28T18:02:47.028355+00:00",
       "status": "ok"
     },
     {
@@ -1712,14 +1729,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.244,
       "strain": 0.336,
-      "flourishing": 0.837,
+      "flourishing": 0.776,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:01.100509+00:00",
+      "computed_at": "2026-06-28T18:02:46.934178+00:00",
       "status": "ok"
     },
     {
@@ -1731,14 +1748,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.384,
       "strain": 0.373,
-      "flourishing": 0.726,
+      "flourishing": 0.719,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:02.531270+00:00",
+      "computed_at": "2026-06-28T18:02:47.471818+00:00",
       "status": "ok"
     },
     {
@@ -1750,14 +1767,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.161,
       "strain": 0.251,
-      "flourishing": 0.842,
+      "flourishing": 0.865,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:02.874559+00:00",
+      "computed_at": "2026-06-28T18:02:48.406429+00:00",
       "status": "ok"
     },
     {
@@ -1769,14 +1786,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.217,
       "strain": 0.341,
-      "flourishing": 0.854,
+      "flourishing": 0.849,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:03.372089+00:00",
+      "computed_at": "2026-06-28T18:02:49.133884+00:00",
       "status": "ok"
     },
     {
@@ -1790,7 +1807,7 @@
       "strain": 0.702,
       "flourishing": 0.686,
       "confidence": "LOW",
-      "completeness": "4/15 real, 7 null, 4 suspect",
+      "completeness": "4/16 real, 8 null, 4 suspect",
       "null_axes": [
         "FOOD_REVIEW",
         "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL",
@@ -1798,7 +1815,8 @@
         "GOVERNANCE_INSTITUTIONS_REVIEW",
         "COGNITION_LEARNING_REVIEW",
         "TECHNOLOGY_AI_REVIEW",
-        "EDUCATION_CULTURE_REVIEW"
+        "EDUCATION_CULTURE_REVIEW",
+        "CULTURE_MEDIA_REVIEW"
       ],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW",
@@ -1806,7 +1824,7 @@
         "ECONOMY_WORK_REVIEW",
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:02.591483+00:00",
+      "computed_at": "2026-06-28T18:02:47.639333+00:00",
       "status": "ok"
     },
     {
@@ -1818,14 +1836,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.337,
       "strain": 0.321,
-      "flourishing": 0.644,
+      "flourishing": 0.611,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:02.730481+00:00",
+      "computed_at": "2026-06-28T18:02:48.474373+00:00",
       "status": "ok"
     },
     {
@@ -1837,14 +1855,14 @@
       "zone_label": "Precarious (partial data)",
       "deprivation": 0.424,
       "strain": 0.509,
-      "flourishing": 0.668,
+      "flourishing": 0.651,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:03.044872+00:00",
+      "computed_at": "2026-06-28T18:02:49.410797+00:00",
       "status": "ok"
     },
     {
@@ -1856,14 +1874,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.331,
       "strain": 0.478,
-      "flourishing": 0.789,
+      "flourishing": 0.661,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:02.849837+00:00",
+      "computed_at": "2026-06-28T18:02:48.899674+00:00",
       "status": "ok"
     },
     {
@@ -1875,14 +1893,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.149,
       "strain": 0.132,
-      "flourishing": 0.85,
+      "flourishing": 0.849,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:03.465591+00:00",
+      "computed_at": "2026-06-28T18:02:49.163763+00:00",
       "status": "ok"
     },
     {
@@ -1894,14 +1912,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.206,
       "strain": 0.307,
-      "flourishing": 0.838,
+      "flourishing": 0.824,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:04.937088+00:00",
+      "computed_at": "2026-06-28T18:02:49.244371+00:00",
       "status": "ok"
     },
     {
@@ -1915,7 +1933,7 @@
       "strain": 0.332,
       "flourishing": 0.737,
       "confidence": "LOW",
-      "completeness": "4/15 real, 9 null, 2 suspect",
+      "completeness": "4/16 real, 10 null, 2 suspect",
       "null_axes": [
         "FOOD_REVIEW",
         "WATER_REVIEW",
@@ -1925,13 +1943,14 @@
         "CLIMATE_GLOBAL_RISK_REVIEW",
         "COGNITION_LEARNING_REVIEW",
         "TECHNOLOGY_AI_REVIEW",
-        "EDUCATION_CULTURE_REVIEW"
+        "EDUCATION_CULTURE_REVIEW",
+        "CULTURE_MEDIA_REVIEW"
       ],
       "suspect_axes": [
         "ENERGY_REVIEW",
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:46.208892+00:00",
+      "computed_at": "2026-06-28T18:02:35.300194+00:00",
       "status": "ok"
     },
     {
@@ -1943,16 +1962,16 @@
       "zone_label": "Dignified Life (UNVERIFIED)",
       "deprivation": 0.351,
       "strain": 0.372,
-      "flourishing": 0.732,
+      "flourishing": 0.765,
       "confidence": "LOW",
-      "completeness": "13/15 real, 1 null, 1 suspect",
+      "completeness": "14/16 real, 1 null, 1 suspect",
       "null_axes": [
         "WATER_REVIEW"
       ],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:04.906943+00:00",
+      "computed_at": "2026-06-28T18:02:49.364094+00:00",
       "status": "ok"
     },
     {
@@ -1964,14 +1983,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.287,
       "strain": 0.367,
-      "flourishing": 0.715,
+      "flourishing": 0.687,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:04.796559+00:00",
+      "computed_at": "2026-06-28T18:02:50.066434+00:00",
       "status": "ok"
     },
     {
@@ -1983,14 +2002,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.19,
       "strain": 0.267,
-      "flourishing": 0.905,
+      "flourishing": 0.895,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:05.825364+00:00",
+      "computed_at": "2026-06-28T18:02:50.186906+00:00",
       "status": "ok"
     },
     {
@@ -2002,16 +2021,16 @@
       "zone_label": "Precarious (UNVERIFIED)",
       "deprivation": 0.452,
       "strain": 0.383,
-      "flourishing": 0.597,
+      "flourishing": 0.651,
       "confidence": "LOW",
-      "completeness": "13/15 real, 1 null, 1 suspect",
+      "completeness": "14/16 real, 1 null, 1 suspect",
       "null_axes": [
         "WATER_REVIEW"
       ],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:05.040723+00:00",
+      "computed_at": "2026-06-28T18:02:50.857747+00:00",
       "status": "ok"
     },
     {
@@ -2023,14 +2042,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.341,
       "strain": 0.385,
-      "flourishing": 0.725,
+      "flourishing": 0.68,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:06.009184+00:00",
+      "computed_at": "2026-06-28T18:02:50.956235+00:00",
       "status": "ok"
     },
     {
@@ -2042,16 +2061,16 @@
       "zone_label": "Precarious (partial data)",
       "deprivation": 0.421,
       "strain": 0.381,
-      "flourishing": 0.654,
+      "flourishing": 0.566,
       "confidence": "MEDIUM",
-      "completeness": "13/15 real, 1 null, 1 suspect",
+      "completeness": "14/16 real, 1 null, 1 suspect",
       "null_axes": [
         "INEQUALITY_POVERTY_REVIEW"
       ],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:06.098804+00:00",
+      "computed_at": "2026-06-28T18:02:51.026956+00:00",
       "status": "ok"
     },
     {
@@ -2065,12 +2084,14 @@
       "strain": 0.317,
       "flourishing": 0.663,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
-      "null_axes": [],
+      "completeness": "14/16 real, 1 null, 1 suspect",
+      "null_axes": [
+        "CULTURE_MEDIA_REVIEW"
+      ],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:06.781612+00:00",
+      "computed_at": "2026-06-28T18:02:51.431727+00:00",
       "status": "ok"
     },
     {
@@ -2082,16 +2103,16 @@
       "zone_label": "Precarious (UNVERIFIED)",
       "deprivation": 0.472,
       "strain": 0.416,
-      "flourishing": 0.561,
+      "flourishing": 0.55,
       "confidence": "LOW",
-      "completeness": "13/15 real, 1 null, 1 suspect",
+      "completeness": "14/16 real, 1 null, 1 suspect",
       "null_axes": [
         "WATER_REVIEW"
       ],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:49.133280+00:00",
+      "computed_at": "2026-06-28T18:02:37.065363+00:00",
       "status": "ok"
     },
     {
@@ -2105,17 +2126,18 @@
       "strain": 0.604,
       "flourishing": 0.759,
       "confidence": "LOW",
-      "completeness": "10/15 real, 2 null, 3 suspect",
+      "completeness": "10/16 real, 3 null, 3 suspect",
       "null_axes": [
         "WATER_REVIEW",
-        "INEQUALITY_POVERTY_REVIEW"
+        "INEQUALITY_POVERTY_REVIEW",
+        "CULTURE_MEDIA_REVIEW"
       ],
       "suspect_axes": [
         "FOOD_REVIEW",
         "CLIMATE_GLOBAL_RISK_REVIEW",
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:07.149951+00:00",
+      "computed_at": "2026-06-28T18:02:51.070025+00:00",
       "status": "ok"
     },
     {
@@ -2127,9 +2149,9 @@
       "zone_label": "Precarious (UNVERIFIED)",
       "deprivation": 0.427,
       "strain": 0.638,
-      "flourishing": 0.562,
+      "flourishing": 0.465,
       "confidence": "LOW",
-      "completeness": "11/15 real, 1 null, 3 suspect",
+      "completeness": "12/16 real, 1 null, 3 suspect",
       "null_axes": [
         "INEQUALITY_POVERTY_REVIEW"
       ],
@@ -2138,7 +2160,7 @@
         "ECONOMY_WORK_REVIEW",
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:21.944785+00:00",
+      "computed_at": "2026-06-28T18:03:04.086945+00:00",
       "status": "ok"
     },
     {
@@ -2152,12 +2174,12 @@
       "strain": 0.298,
       "flourishing": 0.934,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:06.976195+00:00",
+      "computed_at": "2026-06-28T18:02:52.239817+00:00",
       "status": "ok"
     },
     {
@@ -2169,16 +2191,16 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.194,
       "strain": 0.509,
-      "flourishing": 0.763,
+      "flourishing": 0.723,
       "confidence": "MEDIUM",
-      "completeness": "13/15 real, 1 null, 1 suspect",
+      "completeness": "14/16 real, 1 null, 1 suspect",
       "null_axes": [
         "INEQUALITY_POVERTY_REVIEW"
       ],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:07.018938+00:00",
+      "computed_at": "2026-06-28T18:02:51.816068+00:00",
       "status": "ok"
     },
     {
@@ -2192,17 +2214,18 @@
       "strain": 0.554,
       "flourishing": 0.902,
       "confidence": "LOW",
-      "completeness": "10/15 real, 3 null, 2 suspect",
+      "completeness": "10/16 real, 4 null, 2 suspect",
       "null_axes": [
         "FOOD_REVIEW",
         "WATER_REVIEW",
-        "INEQUALITY_POVERTY_REVIEW"
+        "INEQUALITY_POVERTY_REVIEW",
+        "CULTURE_MEDIA_REVIEW"
       ],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW",
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:14:49.528442+00:00",
+      "computed_at": "2026-06-28T18:02:37.400153+00:00",
       "status": "ok"
     },
     {
@@ -2214,14 +2237,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.297,
       "strain": 0.447,
-      "flourishing": 0.769,
+      "flourishing": 0.692,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:04.956688+00:00",
+      "computed_at": "2026-06-28T18:02:50.499318+00:00",
       "status": "ok"
     },
     {
@@ -2233,14 +2256,14 @@
       "zone_label": "Precarious (partial data)",
       "deprivation": 0.445,
       "strain": 0.346,
-      "flourishing": 0.64,
+      "flourishing": 0.513,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:07.354316+00:00",
+      "computed_at": "2026-06-28T18:02:52.726022+00:00",
       "status": "ok"
     },
     {
@@ -2252,14 +2275,14 @@
       "zone_label": "Precarious (partial data)",
       "deprivation": 0.417,
       "strain": 0.47,
-      "flourishing": 0.67,
+      "flourishing": 0.683,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:07.867267+00:00",
+      "computed_at": "2026-06-28T18:02:52.516179+00:00",
       "status": "ok"
     },
     {
@@ -2273,14 +2296,15 @@
       "strain": 0.371,
       "flourishing": 0.686,
       "confidence": "LOW",
-      "completeness": "13/15 real, 1 null, 1 suspect",
+      "completeness": "13/16 real, 2 null, 1 suspect",
       "null_axes": [
-        "WATER_REVIEW"
+        "WATER_REVIEW",
+        "CULTURE_MEDIA_REVIEW"
       ],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:08.708960+00:00",
+      "computed_at": "2026-06-28T18:02:53.095565+00:00",
       "status": "ok"
     },
     {
@@ -2294,11 +2318,12 @@
       "strain": 0.302,
       "flourishing": 0.785,
       "confidence": "LOW",
-      "completeness": "8/15 real, 3 null, 4 suspect",
+      "completeness": "8/16 real, 4 null, 4 suspect",
       "null_axes": [
         "FOOD_REVIEW",
         "INEQUALITY_POVERTY_REVIEW",
-        "COGNITION_LEARNING_REVIEW"
+        "COGNITION_LEARNING_REVIEW",
+        "CULTURE_MEDIA_REVIEW"
       ],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW",
@@ -2306,7 +2331,7 @@
         "ECONOMY_WORK_REVIEW",
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:09.930898+00:00",
+      "computed_at": "2026-06-28T18:02:53.123361+00:00",
       "status": "ok"
     },
     {
@@ -2318,14 +2343,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.358,
       "strain": 0.313,
-      "flourishing": 0.698,
+      "flourishing": 0.728,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:09.500420+00:00",
+      "computed_at": "2026-06-28T18:02:53.409782+00:00",
       "status": "ok"
     },
     {
@@ -2337,16 +2362,16 @@
       "zone_label": "Precarious (UNVERIFIED)",
       "deprivation": 0.567,
       "strain": 0.481,
-      "flourishing": 0.369,
+      "flourishing": 0.451,
       "confidence": "LOW",
-      "completeness": "13/15 real, 1 null, 1 suspect",
+      "completeness": "14/16 real, 1 null, 1 suspect",
       "null_axes": [
         "WATER_REVIEW"
       ],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:08.373483+00:00",
+      "computed_at": "2026-06-28T18:02:52.841816+00:00",
       "status": "ok"
     },
     {
@@ -2358,14 +2383,14 @@
       "zone_label": "Precarious (partial data)",
       "deprivation": 0.546,
       "strain": 0.458,
-      "flourishing": 0.522,
+      "flourishing": 0.559,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:09.432850+00:00",
+      "computed_at": "2026-06-28T18:02:53.893937+00:00",
       "status": "ok"
     },
     {
@@ -2377,14 +2402,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.19,
       "strain": 0.247,
-      "flourishing": 0.842,
+      "flourishing": 0.855,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:09.440318+00:00",
+      "computed_at": "2026-06-28T18:02:54.664164+00:00",
       "status": "ok"
     },
     {
@@ -2396,14 +2421,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.117,
       "strain": 0.202,
-      "flourishing": 0.869,
+      "flourishing": 0.884,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:10.126384+00:00",
+      "computed_at": "2026-06-28T18:02:54.696913+00:00",
       "status": "ok"
     },
     {
@@ -2415,14 +2440,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.203,
       "strain": 0.247,
-      "flourishing": 0.828,
+      "flourishing": 0.846,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:10.671199+00:00",
+      "computed_at": "2026-06-28T18:02:54.597976+00:00",
       "status": "ok"
     },
     {
@@ -2434,9 +2459,9 @@
       "zone_label": "Precarious (UNVERIFIED)",
       "deprivation": 0.49,
       "strain": 0.71,
-      "flourishing": 0.634,
+      "flourishing": 0.617,
       "confidence": "LOW",
-      "completeness": "12/15 real, 2 null, 1 suspect",
+      "completeness": "13/16 real, 2 null, 1 suspect",
       "null_axes": [
         "WATER_REVIEW",
         "INEQUALITY_POVERTY_REVIEW"
@@ -2444,7 +2469,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:08.264526+00:00",
+      "computed_at": "2026-06-28T18:02:53.395760+00:00",
       "status": "ok"
     },
     {
@@ -2456,14 +2481,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.34,
       "strain": 0.395,
-      "flourishing": 0.695,
+      "flourishing": 0.675,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:11.584223+00:00",
+      "computed_at": "2026-06-28T18:02:55.060982+00:00",
       "status": "ok"
     },
     {
@@ -2477,19 +2502,20 @@
       "strain": 0.245,
       "flourishing": 0.837,
       "confidence": "LOW",
-      "completeness": "8/15 real, 4 null, 3 suspect",
+      "completeness": "8/16 real, 5 null, 3 suspect",
       "null_axes": [
         "FOOD_REVIEW",
         "INEQUALITY_POVERTY_REVIEW",
         "CLIMATE_GLOBAL_RISK_REVIEW",
-        "COGNITION_LEARNING_REVIEW"
+        "COGNITION_LEARNING_REVIEW",
+        "CULTURE_MEDIA_REVIEW"
       ],
       "suspect_axes": [
         "ENERGY_REVIEW",
         "ECONOMY_WORK_REVIEW",
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:11.557843+00:00",
+      "computed_at": "2026-06-28T18:02:55.599101+00:00",
       "status": "ok"
     },
     {
@@ -2501,14 +2527,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.34,
       "strain": 0.348,
-      "flourishing": 0.771,
+      "flourishing": 0.75,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:11.557435+00:00",
+      "computed_at": "2026-06-28T18:02:55.559690+00:00",
       "status": "ok"
     },
     {
@@ -2520,14 +2546,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.246,
       "strain": 0.284,
-      "flourishing": 0.866,
+      "flourishing": 0.864,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:14.158371+00:00",
+      "computed_at": "2026-06-28T18:02:58.437173+00:00",
       "status": "ok"
     },
     {
@@ -2541,7 +2567,7 @@
       "strain": 0.497,
       "flourishing": 0.845,
       "confidence": "LOW",
-      "completeness": "5/15 real, 8 null, 2 suspect",
+      "completeness": "5/16 real, 9 null, 2 suspect",
       "null_axes": [
         "FOOD_REVIEW",
         "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL",
@@ -2550,13 +2576,14 @@
         "CLIMATE_GLOBAL_RISK_REVIEW",
         "COGNITION_LEARNING_REVIEW",
         "TECHNOLOGY_AI_REVIEW",
-        "EDUCATION_CULTURE_REVIEW"
+        "EDUCATION_CULTURE_REVIEW",
+        "CULTURE_MEDIA_REVIEW"
       ],
       "suspect_axes": [
         "ECONOMY_WORK_REVIEW",
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:11.034094+00:00",
+      "computed_at": "2026-06-28T18:02:55.285173+00:00",
       "status": "ok"
     },
     {
@@ -2568,14 +2595,14 @@
       "zone_label": "Precarious (partial data)",
       "deprivation": 0.579,
       "strain": 0.486,
-      "flourishing": 0.435,
+      "flourishing": 0.47,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:11.917093+00:00",
+      "computed_at": "2026-06-28T18:02:56.566172+00:00",
       "status": "ok"
     },
     {
@@ -2589,16 +2616,17 @@
       "strain": 0.484,
       "flourishing": 0.637,
       "confidence": "LOW",
-      "completeness": "11/15 real, 1 null, 3 suspect",
+      "completeness": "11/16 real, 2 null, 3 suspect",
       "null_axes": [
-        "WATER_REVIEW"
+        "WATER_REVIEW",
+        "CULTURE_MEDIA_REVIEW"
       ],
       "suspect_axes": [
         "FOOD_REVIEW",
         "CLIMATE_GLOBAL_RISK_REVIEW",
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:12.913069+00:00",
+      "computed_at": "2026-06-28T18:02:57.344410+00:00",
       "status": "ok"
     },
     {
@@ -2610,14 +2638,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.29,
       "strain": 0.354,
-      "flourishing": 0.823,
+      "flourishing": 0.764,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:13.816311+00:00",
+      "computed_at": "2026-06-28T18:02:57.625210+00:00",
       "status": "ok"
     },
     {
@@ -2629,16 +2657,16 @@
       "zone_label": "Precarious (UNVERIFIED)",
       "deprivation": 0.524,
       "strain": 0.482,
-      "flourishing": 0.398,
+      "flourishing": 0.414,
       "confidence": "LOW",
-      "completeness": "13/15 real, 1 null, 1 suspect",
+      "completeness": "14/16 real, 1 null, 1 suspect",
       "null_axes": [
         "WATER_REVIEW"
       ],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:14.283181+00:00",
+      "computed_at": "2026-06-28T18:02:57.114381+00:00",
       "status": "ok"
     },
     {
@@ -2650,14 +2678,14 @@
       "zone_label": "Precarious (partial data)",
       "deprivation": 0.442,
       "strain": 0.4,
-      "flourishing": 0.611,
+      "flourishing": 0.508,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:13.849106+00:00",
+      "computed_at": "2026-06-28T18:02:57.363572+00:00",
       "status": "ok"
     },
     {
@@ -2669,14 +2697,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.377,
       "strain": 0.466,
-      "flourishing": 0.765,
+      "flourishing": 0.766,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:14.372836+00:00",
+      "computed_at": "2026-06-28T18:02:58.639449+00:00",
       "status": "ok"
     },
     {
@@ -2690,16 +2718,17 @@
       "strain": 0.436,
       "flourishing": 0.923,
       "confidence": "LOW",
-      "completeness": "11/15 real, 2 null, 2 suspect",
+      "completeness": "11/16 real, 3 null, 2 suspect",
       "null_axes": [
         "INEQUALITY_POVERTY_REVIEW",
-        "ECOSYSTEMS_BIODIVERSITY_REVIEW"
+        "ECOSYSTEMS_BIODIVERSITY_REVIEW",
+        "CULTURE_MEDIA_REVIEW"
       ],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW",
         "ENERGY_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:10.629054+00:00",
+      "computed_at": "2026-06-28T18:02:55.034367+00:00",
       "status": "ok"
     },
     {
@@ -2713,14 +2742,15 @@
       "strain": 0.528,
       "flourishing": 0.5,
       "confidence": "LOW",
-      "completeness": "5/15 real, 6 null, 4 suspect",
+      "completeness": "5/16 real, 7 null, 4 suspect",
       "null_axes": [
         "FOOD_REVIEW",
         "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL",
         "INEQUALITY_POVERTY_REVIEW",
         "GOVERNANCE_INSTITUTIONS_REVIEW",
         "COGNITION_LEARNING_REVIEW",
-        "EDUCATION_CULTURE_REVIEW"
+        "EDUCATION_CULTURE_REVIEW",
+        "CULTURE_MEDIA_REVIEW"
       ],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW",
@@ -2728,7 +2758,7 @@
         "ECONOMY_WORK_REVIEW",
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:14.855973+00:00",
+      "computed_at": "2026-06-28T18:02:58.469741+00:00",
       "status": "ok"
     },
     {
@@ -2740,16 +2770,16 @@
       "zone_label": "Precarious (UNVERIFIED)",
       "deprivation": 0.467,
       "strain": 0.471,
-      "flourishing": 0.486,
+      "flourishing": 0.511,
       "confidence": "LOW",
-      "completeness": "13/15 real, 1 null, 1 suspect",
+      "completeness": "14/16 real, 1 null, 1 suspect",
       "null_axes": [
         "WATER_REVIEW"
       ],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:16.246298+00:00",
+      "computed_at": "2026-06-28T18:02:59.022182+00:00",
       "status": "ok"
     },
     {
@@ -2761,15 +2791,15 @@
       "zone_label": "Dignified Life (UNVERIFIED)",
       "deprivation": 0.244,
       "strain": 0.48,
-      "flourishing": 0.843,
+      "flourishing": 0.841,
       "confidence": "LOW",
-      "completeness": "13/15 real, 0 null, 2 suspect",
+      "completeness": "14/16 real, 0 null, 2 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW",
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:13.699979+00:00",
+      "computed_at": "2026-06-28T18:02:57.275384+00:00",
       "status": "ok"
     },
     {
@@ -2781,16 +2811,16 @@
       "zone_label": "Dignified Life (UNVERIFIED)",
       "deprivation": 0.28,
       "strain": 0.341,
-      "flourishing": 0.796,
+      "flourishing": 0.812,
       "confidence": "LOW",
-      "completeness": "13/15 real, 1 null, 1 suspect",
+      "completeness": "14/16 real, 1 null, 1 suspect",
       "null_axes": [
         "WATER_REVIEW"
       ],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:16.377095+00:00",
+      "computed_at": "2026-06-28T18:02:59.101567+00:00",
       "status": "ok"
     },
     {
@@ -2802,16 +2832,16 @@
       "zone_label": "Dignified Life (UNVERIFIED)",
       "deprivation": 0.372,
       "strain": 0.375,
-      "flourishing": 0.809,
+      "flourishing": 0.789,
       "confidence": "LOW",
-      "completeness": "13/15 real, 1 null, 1 suspect",
+      "completeness": "14/16 real, 1 null, 1 suspect",
       "null_axes": [
         "WATER_REVIEW"
       ],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:12.151040+00:00",
+      "computed_at": "2026-06-28T18:02:56.680652+00:00",
       "status": "ok"
     },
     {
@@ -2823,14 +2853,14 @@
       "zone_label": "Precarious (partial data)",
       "deprivation": 0.538,
       "strain": 0.484,
-      "flourishing": 0.386,
+      "flourishing": 0.451,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:15.944086+00:00",
+      "computed_at": "2026-06-28T18:02:59.062185+00:00",
       "status": "ok"
     },
     {
@@ -2842,14 +2872,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.373,
       "strain": 0.428,
-      "flourishing": 0.782,
+      "flourishing": 0.753,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:13.203398+00:00",
+      "computed_at": "2026-06-28T18:02:56.655885+00:00",
       "status": "ok"
     },
     {
@@ -2861,14 +2891,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.245,
       "strain": 0.37,
-      "flourishing": 0.796,
+      "flourishing": 0.759,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:16.585072+00:00",
+      "computed_at": "2026-06-28T18:02:59.653800+00:00",
       "status": "ok"
     },
     {
@@ -2880,14 +2910,14 @@
       "zone_label": "Precarious (partial data)",
       "deprivation": 0.533,
       "strain": 0.494,
-      "flourishing": 0.4,
+      "flourishing": 0.421,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:15.436634+00:00",
+      "computed_at": "2026-06-28T18:02:58.854825+00:00",
       "status": "ok"
     },
     {
@@ -2899,16 +2929,16 @@
       "zone_label": "Precarious (UNVERIFIED)",
       "deprivation": 0.413,
       "strain": 0.438,
-      "flourishing": 0.562,
+      "flourishing": 0.614,
       "confidence": "LOW",
-      "completeness": "13/15 real, 1 null, 1 suspect",
+      "completeness": "14/16 real, 1 null, 1 suspect",
       "null_axes": [
         "WATER_REVIEW"
       ],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:16.938276+00:00",
+      "computed_at": "2026-06-28T18:03:00.080772+00:00",
       "status": "ok"
     },
     {
@@ -2917,19 +2947,20 @@
       "region": "EAS",
       "income": "HIC",
       "zone": "Dignified Life",
-      "zone_label": "Dignified Life (partial data)",
+      "zone_label": "Dignified Life (UNVERIFIED)",
       "deprivation": 0.239,
       "strain": 0.478,
       "flourishing": 0.754,
-      "confidence": "MEDIUM",
-      "completeness": "13/15 real, 1 null, 1 suspect",
+      "confidence": "LOW",
+      "completeness": "13/16 real, 2 null, 1 suspect",
       "null_axes": [
-        "INEQUALITY_POVERTY_REVIEW"
+        "INEQUALITY_POVERTY_REVIEW",
+        "CULTURE_MEDIA_REVIEW"
       ],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:16.638224+00:00",
+      "computed_at": "2026-06-28T18:03:00.144414+00:00",
       "status": "ok"
     },
     {
@@ -2941,16 +2972,16 @@
       "zone_label": "Precarious (UNVERIFIED)",
       "deprivation": 0.592,
       "strain": 0.459,
-      "flourishing": 0.296,
+      "flourishing": 0.377,
       "confidence": "LOW",
-      "completeness": "13/15 real, 1 null, 1 suspect",
+      "completeness": "14/16 real, 1 null, 1 suspect",
       "null_axes": [
         "WATER_REVIEW"
       ],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:16.904335+00:00",
+      "computed_at": "2026-06-28T18:03:00.363132+00:00",
       "status": "ok"
     },
     {
@@ -2962,14 +2993,14 @@
       "zone_label": "Precarious (partial data)",
       "deprivation": 0.553,
       "strain": 0.416,
-      "flourishing": 0.517,
+      "flourishing": 0.575,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:17.397182+00:00",
+      "computed_at": "2026-06-28T18:03:00.738643+00:00",
       "status": "ok"
     },
     {
@@ -2977,20 +3008,20 @@
       "name": "Nicaragua",
       "region": "LCN",
       "income": "LMC",
-      "zone": "Dignified Life",
-      "zone_label": "Dignified Life (UNVERIFIED)",
+      "zone": "Thriving",
+      "zone_label": "Thriving (UNVERIFIED)",
       "deprivation": 0.379,
       "strain": 0.407,
-      "flourishing": 0.655,
+      "flourishing": 0.543,
       "confidence": "LOW",
-      "completeness": "13/15 real, 1 null, 1 suspect",
+      "completeness": "14/16 real, 1 null, 1 suspect",
       "null_axes": [
         "WATER_REVIEW"
       ],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:18.361983+00:00",
+      "computed_at": "2026-06-28T18:03:00.700095+00:00",
       "status": "ok"
     },
     {
@@ -3002,14 +3033,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.147,
       "strain": 0.242,
-      "flourishing": 0.89,
+      "flourishing": 0.894,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:18.727164+00:00",
+      "computed_at": "2026-06-28T18:03:00.786291+00:00",
       "status": "ok"
     },
     {
@@ -3021,14 +3052,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.13,
       "strain": 0.166,
-      "flourishing": 0.875,
+      "flourishing": 0.889,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:18.899734+00:00",
+      "computed_at": "2026-06-28T18:03:01.338956+00:00",
       "status": "ok"
     },
     {
@@ -3040,14 +3071,14 @@
       "zone_label": "Precarious (partial data)",
       "deprivation": 0.413,
       "strain": 0.274,
-      "flourishing": 0.636,
+      "flourishing": 0.668,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:18.723230+00:00",
+      "computed_at": "2026-06-28T18:03:01.410185+00:00",
       "status": "ok"
     },
     {
@@ -3061,14 +3092,16 @@
       "strain": 0.552,
       "flourishing": 0.677,
       "confidence": "LOW",
-      "completeness": "12/15 real, 0 null, 3 suspect",
-      "null_axes": [],
+      "completeness": "12/16 real, 1 null, 3 suspect",
+      "null_axes": [
+        "CULTURE_MEDIA_REVIEW"
+      ],
       "suspect_axes": [
         "FOOD_REVIEW",
         "CLIMATE_GLOBAL_RISK_REVIEW",
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:19.040752+00:00",
+      "computed_at": "2026-06-28T18:03:01.817814+00:00",
       "status": "ok"
     },
     {
@@ -3080,16 +3113,16 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.124,
       "strain": 0.231,
-      "flourishing": 0.866,
+      "flourishing": 0.877,
       "confidence": "MEDIUM",
-      "completeness": "13/15 real, 1 null, 1 suspect",
+      "completeness": "14/16 real, 1 null, 1 suspect",
       "null_axes": [
         "INEQUALITY_POVERTY_REVIEW"
       ],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:18.987498+00:00",
+      "computed_at": "2026-06-28T18:03:02.236996+00:00",
       "status": "ok"
     },
     {
@@ -3101,16 +3134,16 @@
       "zone_label": "Precarious (partial data)",
       "deprivation": 0.214,
       "strain": 0.597,
-      "flourishing": 0.745,
+      "flourishing": 0.64,
       "confidence": "MEDIUM",
-      "completeness": "13/15 real, 1 null, 1 suspect",
+      "completeness": "14/16 real, 1 null, 1 suspect",
       "null_axes": [
         "INEQUALITY_POVERTY_REVIEW"
       ],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:18.957189+00:00",
+      "computed_at": "2026-06-28T18:03:02.091530+00:00",
       "status": "ok"
     },
     {
@@ -3122,16 +3155,16 @@
       "zone_label": "Dignified Life (UNVERIFIED)",
       "deprivation": 0.278,
       "strain": 0.35,
-      "flourishing": 0.764,
+      "flourishing": 0.772,
       "confidence": "LOW",
-      "completeness": "13/15 real, 1 null, 1 suspect",
+      "completeness": "14/16 real, 1 null, 1 suspect",
       "null_axes": [
         "WATER_REVIEW"
       ],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:20.462606+00:00",
+      "computed_at": "2026-06-28T18:03:02.475312+00:00",
       "status": "ok"
     },
     {
@@ -3143,14 +3176,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.325,
       "strain": 0.388,
-      "flourishing": 0.758,
+      "flourishing": 0.759,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:21.282187+00:00",
+      "computed_at": "2026-06-28T18:03:02.764393+00:00",
       "status": "ok"
     },
     {
@@ -3164,15 +3197,16 @@
       "strain": 0.407,
       "flourishing": 0.782,
       "confidence": "LOW",
-      "completeness": "12/15 real, 2 null, 1 suspect",
+      "completeness": "12/16 real, 3 null, 1 suspect",
       "null_axes": [
         "INEQUALITY_POVERTY_REVIEW",
-        "COGNITION_LEARNING_REVIEW"
+        "COGNITION_LEARNING_REVIEW",
+        "CULTURE_MEDIA_REVIEW"
       ],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:23.134599+00:00",
+      "computed_at": "2026-06-28T18:03:05.452181+00:00",
       "status": "ok"
     },
     {
@@ -3184,16 +3218,16 @@
       "zone_label": "Precarious (UNVERIFIED)",
       "deprivation": 0.501,
       "strain": 0.559,
-      "flourishing": 0.417,
+      "flourishing": 0.491,
       "confidence": "LOW",
-      "completeness": "13/15 real, 1 null, 1 suspect",
+      "completeness": "14/16 real, 1 null, 1 suspect",
       "null_axes": [
         "WATER_REVIEW"
       ],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:21.041656+00:00",
+      "computed_at": "2026-06-28T18:03:03.635084+00:00",
       "status": "ok"
     },
     {
@@ -3205,14 +3239,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.385,
       "strain": 0.379,
-      "flourishing": 0.709,
+      "flourishing": 0.703,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:20.777463+00:00",
+      "computed_at": "2026-06-28T18:03:03.003488+00:00",
       "status": "ok"
     },
     {
@@ -3224,14 +3258,14 @@
       "zone_label": "Precarious (partial data)",
       "deprivation": 0.471,
       "strain": 0.411,
-      "flourishing": 0.548,
+      "flourishing": 0.55,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:19.974968+00:00",
+      "computed_at": "2026-06-28T18:03:02.623414+00:00",
       "status": "ok"
     },
     {
@@ -3243,14 +3277,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.233,
       "strain": 0.303,
-      "flourishing": 0.833,
+      "flourishing": 0.848,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:21.334236+00:00",
+      "computed_at": "2026-06-28T18:03:03.746222+00:00",
       "status": "ok"
     },
     {
@@ -3264,15 +3298,16 @@
       "strain": 0.591,
       "flourishing": 0.826,
       "confidence": "LOW",
-      "completeness": "12/15 real, 1 null, 2 suspect",
+      "completeness": "12/16 real, 2 null, 2 suspect",
       "null_axes": [
-        "INEQUALITY_POVERTY_REVIEW"
+        "INEQUALITY_POVERTY_REVIEW",
+        "CULTURE_MEDIA_REVIEW"
       ],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW",
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:21.114749+00:00",
+      "computed_at": "2026-06-28T18:03:03.907367+00:00",
       "status": "ok"
     },
     {
@@ -3284,15 +3319,15 @@
       "zone_label": "Precarious (UNVERIFIED)",
       "deprivation": 0.422,
       "strain": 0.592,
-      "flourishing": 0.654,
+      "flourishing": 0.601,
       "confidence": "LOW",
-      "completeness": "13/15 real, 0 null, 2 suspect",
+      "completeness": "14/16 real, 0 null, 2 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW",
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:23.538413+00:00",
+      "computed_at": "2026-06-28T18:03:04.600699+00:00",
       "status": "ok"
     },
     {
@@ -3304,14 +3339,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.19,
       "strain": 0.26,
-      "flourishing": 0.857,
+      "flourishing": 0.864,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:22.424695+00:00",
+      "computed_at": "2026-06-28T18:03:04.191490+00:00",
       "status": "ok"
     },
     {
@@ -3325,16 +3360,17 @@
       "strain": 0.553,
       "flourishing": 0.787,
       "confidence": "LOW",
-      "completeness": "11/15 real, 2 null, 2 suspect",
+      "completeness": "11/16 real, 3 null, 2 suspect",
       "null_axes": [
         "FOOD_REVIEW",
-        "INEQUALITY_POVERTY_REVIEW"
+        "INEQUALITY_POVERTY_REVIEW",
+        "CULTURE_MEDIA_REVIEW"
       ],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW",
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:21.249781+00:00",
+      "computed_at": "2026-06-28T18:03:03.427197+00:00",
       "status": "ok"
     },
     {
@@ -3346,14 +3382,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.319,
       "strain": 0.311,
-      "flourishing": 0.746,
+      "flourishing": 0.747,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:23.073298+00:00",
+      "computed_at": "2026-06-28T18:03:04.326539+00:00",
       "status": "ok"
     },
     {
@@ -3365,14 +3401,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.177,
       "strain": 0.382,
-      "flourishing": 0.812,
+      "flourishing": 0.679,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:23.923906+00:00",
+      "computed_at": "2026-06-28T18:03:05.348282+00:00",
       "status": "ok"
     },
     {
@@ -3384,14 +3420,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.281,
       "strain": 0.31,
-      "flourishing": 0.802,
+      "flourishing": 0.798,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:23.333654+00:00",
+      "computed_at": "2026-06-28T18:03:05.370084+00:00",
       "status": "ok"
     },
     {
@@ -3403,14 +3439,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.291,
       "strain": 0.341,
-      "flourishing": 0.822,
+      "flourishing": 0.752,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:27.658598+00:00",
+      "computed_at": "2026-06-28T18:03:07.746094+00:00",
       "status": "ok"
     },
     {
@@ -3422,14 +3458,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.316,
       "strain": 0.437,
-      "flourishing": 0.872,
+      "flourishing": 0.732,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:23.511791+00:00",
+      "computed_at": "2026-06-28T18:03:05.739370+00:00",
       "status": "ok"
     },
     {
@@ -3441,16 +3477,16 @@
       "zone_label": "Precarious (UNVERIFIED)",
       "deprivation": 0.412,
       "strain": 0.354,
-      "flourishing": 0.499,
+      "flourishing": 0.441,
       "confidence": "LOW",
-      "completeness": "13/15 real, 1 null, 1 suspect",
+      "completeness": "14/16 real, 1 null, 1 suspect",
       "null_axes": [
         "WATER_REVIEW"
       ],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:25.349644+00:00",
+      "computed_at": "2026-06-28T18:03:05.922566+00:00",
       "status": "ok"
     },
     {
@@ -3462,9 +3498,9 @@
       "zone_label": "Dignified Life (UNVERIFIED)",
       "deprivation": 0.244,
       "strain": 0.457,
-      "flourishing": 0.867,
+      "flourishing": 0.731,
       "confidence": "LOW",
-      "completeness": "12/15 real, 2 null, 1 suspect",
+      "completeness": "13/16 real, 2 null, 1 suspect",
       "null_axes": [
         "WATER_REVIEW",
         "INEQUALITY_POVERTY_REVIEW"
@@ -3472,7 +3508,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:24.441612+00:00",
+      "computed_at": "2026-06-28T18:03:05.823200+00:00",
       "status": "ok"
     },
     {
@@ -3484,16 +3520,16 @@
       "zone_label": "Precarious (UNVERIFIED)",
       "deprivation": 0.405,
       "strain": 0.394,
-      "flourishing": 0.528,
+      "flourishing": 0.583,
       "confidence": "LOW",
-      "completeness": "13/15 real, 1 null, 1 suspect",
+      "completeness": "14/16 real, 1 null, 1 suspect",
       "null_axes": [
         "WATER_REVIEW"
       ],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:25.742040+00:00",
+      "computed_at": "2026-06-28T18:03:06.971173+00:00",
       "status": "ok"
     },
     {
@@ -3505,14 +3541,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.245,
       "strain": 0.317,
-      "flourishing": 0.816,
+      "flourishing": 0.826,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:29.968463+00:00",
+      "computed_at": "2026-06-28T18:03:09.462408+00:00",
       "status": "ok"
     },
     {
@@ -3524,16 +3560,16 @@
       "zone_label": "Precarious (UNVERIFIED)",
       "deprivation": 0.543,
       "strain": 0.463,
-      "flourishing": 0.399,
+      "flourishing": 0.379,
       "confidence": "LOW",
-      "completeness": "13/15 real, 1 null, 1 suspect",
+      "completeness": "14/16 real, 1 null, 1 suspect",
       "null_axes": [
         "WATER_REVIEW"
       ],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:25.206673+00:00",
+      "computed_at": "2026-06-28T18:03:05.918879+00:00",
       "status": "ok"
     },
     {
@@ -3545,14 +3581,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.133,
       "strain": 0.163,
-      "flourishing": 0.899,
+      "flourishing": 0.907,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:28.716232+00:00",
+      "computed_at": "2026-06-28T18:03:09.062867+00:00",
       "status": "ok"
     },
     {
@@ -3564,9 +3600,9 @@
       "zone_label": "Dignified Life (UNVERIFIED)",
       "deprivation": 0.161,
       "strain": 0.313,
-      "flourishing": 0.898,
+      "flourishing": 0.81,
       "confidence": "LOW",
-      "completeness": "12/15 real, 1 null, 2 suspect",
+      "completeness": "13/16 real, 1 null, 2 suspect",
       "null_axes": [
         "INEQUALITY_POVERTY_REVIEW"
       ],
@@ -3574,7 +3610,7 @@
         "FOOD_REVIEW",
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:25.448883+00:00",
+      "computed_at": "2026-06-28T18:03:07.093983+00:00",
       "status": "ok"
     },
     {
@@ -3586,14 +3622,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.19,
       "strain": 0.254,
-      "flourishing": 0.856,
+      "flourishing": 0.827,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:28.131266+00:00",
+      "computed_at": "2026-06-28T18:03:08.980008+00:00",
       "status": "ok"
     },
     {
@@ -3605,14 +3641,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.236,
       "strain": 0.299,
-      "flourishing": 0.815,
+      "flourishing": 0.806,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:28.249111+00:00",
+      "computed_at": "2026-06-28T18:03:08.999518+00:00",
       "status": "ok"
     },
     {
@@ -3624,14 +3660,14 @@
       "zone_label": "Precarious (partial data)",
       "deprivation": 0.585,
       "strain": 0.442,
-      "flourishing": 0.413,
+      "flourishing": 0.485,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:25.884747+00:00",
+      "computed_at": "2026-06-28T18:03:07.313402+00:00",
       "status": "ok"
     },
     {
@@ -3645,17 +3681,18 @@
       "strain": 0.296,
       "flourishing": 0.841,
       "confidence": "LOW",
-      "completeness": "10/15 real, 3 null, 2 suspect",
+      "completeness": "10/16 real, 4 null, 2 suspect",
       "null_axes": [
         "FOOD_REVIEW",
         "INEQUALITY_POVERTY_REVIEW",
-        "CLIMATE_GLOBAL_RISK_REVIEW"
+        "CLIMATE_GLOBAL_RISK_REVIEW",
+        "CULTURE_MEDIA_REVIEW"
       ],
       "suspect_axes": [
         "ENERGY_REVIEW",
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:26.434370+00:00",
+      "computed_at": "2026-06-28T18:03:07.465692+00:00",
       "status": "ok"
     },
     {
@@ -3667,14 +3704,14 @@
       "zone_label": "Precarious (partial data)",
       "deprivation": 0.437,
       "strain": 0.382,
-      "flourishing": 0.558,
+      "flourishing": 0.604,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:25.524196+00:00",
+      "computed_at": "2026-06-28T18:03:06.233397+00:00",
       "status": "ok"
     },
     {
@@ -3686,9 +3723,9 @@
       "zone_label": "In Crisis (UNVERIFIED)",
       "deprivation": 0.694,
       "strain": 0.583,
-      "flourishing": 0.384,
+      "flourishing": 0.426,
       "confidence": "LOW",
-      "completeness": "12/15 real, 2 null, 1 suspect",
+      "completeness": "13/16 real, 2 null, 1 suspect",
       "null_axes": [
         "WATER_REVIEW",
         "INEQUALITY_POVERTY_REVIEW"
@@ -3696,7 +3733,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:27.295094+00:00",
+      "computed_at": "2026-06-28T18:03:07.532130+00:00",
       "status": "ok"
     },
     {
@@ -3708,14 +3745,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.343,
       "strain": 0.4,
-      "flourishing": 0.811,
+      "flourishing": 0.825,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:28.177632+00:00",
+      "computed_at": "2026-06-28T18:03:09.083055+00:00",
       "status": "ok"
     },
     {
@@ -3727,16 +3764,16 @@
       "zone_label": "In Crisis (UNVERIFIED)",
       "deprivation": 0.708,
       "strain": 0.714,
-      "flourishing": 0.219,
+      "flourishing": 0.208,
       "confidence": "LOW",
-      "completeness": "13/15 real, 1 null, 1 suspect",
+      "completeness": "14/16 real, 1 null, 1 suspect",
       "null_axes": [
         "WATER_REVIEW"
       ],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:27.066694+00:00",
+      "computed_at": "2026-06-28T18:03:07.816365+00:00",
       "status": "ok"
     },
     {
@@ -3748,14 +3785,14 @@
       "zone_label": "Precarious (partial data)",
       "deprivation": 0.418,
       "strain": 0.398,
-      "flourishing": 0.654,
+      "flourishing": 0.678,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:27.650179+00:00",
+      "computed_at": "2026-06-28T18:03:08.576481+00:00",
       "status": "ok"
     },
     {
@@ -3767,16 +3804,16 @@
       "zone_label": "Dignified Life (UNVERIFIED)",
       "deprivation": 0.319,
       "strain": 0.351,
-      "flourishing": 0.745,
+      "flourishing": 0.677,
       "confidence": "LOW",
-      "completeness": "13/15 real, 1 null, 1 suspect",
+      "completeness": "14/16 real, 1 null, 1 suspect",
       "null_axes": [
         "WATER_REVIEW"
       ],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:26.190129+00:00",
+      "computed_at": "2026-06-28T18:03:07.348499+00:00",
       "status": "ok"
     },
     {
@@ -3790,7 +3827,7 @@
       "strain": 0.749,
       "flourishing": 0.859,
       "confidence": "LOW",
-      "completeness": "6/15 real, 7 null, 2 suspect",
+      "completeness": "6/16 real, 8 null, 2 suspect",
       "null_axes": [
         "FOOD_REVIEW",
         "WATER_REVIEW",
@@ -3798,13 +3835,14 @@
         "INEQUALITY_POVERTY_REVIEW",
         "GOVERNANCE_INSTITUTIONS_REVIEW",
         "COGNITION_LEARNING_REVIEW",
-        "TECHNOLOGY_AI_REVIEW"
+        "TECHNOLOGY_AI_REVIEW",
+        "CULTURE_MEDIA_REVIEW"
       ],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW",
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:29.548196+00:00",
+      "computed_at": "2026-06-28T18:03:09.333469+00:00",
       "status": "ok"
     },
     {
@@ -3816,16 +3854,16 @@
       "zone_label": "Precarious (UNVERIFIED)",
       "deprivation": 0.49,
       "strain": 0.507,
-      "flourishing": 0.64,
+      "flourishing": 0.591,
       "confidence": "LOW",
-      "completeness": "13/15 real, 1 null, 1 suspect",
+      "completeness": "14/16 real, 1 null, 1 suspect",
       "null_axes": [
         "WATER_REVIEW"
       ],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:30.068637+00:00",
+      "computed_at": "2026-06-28T18:03:10.143982+00:00",
       "status": "ok"
     },
     {
@@ -3837,14 +3875,14 @@
       "zone_label": "Precarious (partial data)",
       "deprivation": 0.474,
       "strain": 0.452,
-      "flourishing": 0.61,
+      "flourishing": 0.522,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:29.085927+00:00",
+      "computed_at": "2026-06-28T18:03:09.130380+00:00",
       "status": "ok"
     },
     {
@@ -3858,18 +3896,19 @@
       "strain": 0.441,
       "flourishing": 0.604,
       "confidence": "LOW",
-      "completeness": "9/15 real, 5 null, 1 suspect",
+      "completeness": "9/16 real, 6 null, 1 suspect",
       "null_axes": [
         "FOOD_REVIEW",
         "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL",
         "INEQUALITY_POVERTY_REVIEW",
         "GOVERNANCE_INSTITUTIONS_REVIEW",
-        "COGNITION_LEARNING_REVIEW"
+        "COGNITION_LEARNING_REVIEW",
+        "CULTURE_MEDIA_REVIEW"
       ],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:30.698260+00:00",
+      "computed_at": "2026-06-28T18:03:10.626012+00:00",
       "status": "ok"
     },
     {
@@ -3881,14 +3920,14 @@
       "zone_label": "In Crisis (partial data)",
       "deprivation": 0.703,
       "strain": 0.56,
-      "flourishing": 0.276,
+      "flourishing": 0.303,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:30.220768+00:00",
+      "computed_at": "2026-06-28T18:03:11.113710+00:00",
       "status": "ok"
     },
     {
@@ -3900,14 +3939,14 @@
       "zone_label": "Precarious (partial data)",
       "deprivation": 0.513,
       "strain": 0.428,
-      "flourishing": 0.52,
+      "flourishing": 0.53,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:30.954193+00:00",
+      "computed_at": "2026-06-28T18:03:10.771221+00:00",
       "status": "ok"
     },
     {
@@ -3919,16 +3958,16 @@
       "zone_label": "Dignified Life (UNVERIFIED)",
       "deprivation": 0.324,
       "strain": 0.356,
-      "flourishing": 0.788,
+      "flourishing": 0.752,
       "confidence": "LOW",
-      "completeness": "13/15 real, 1 null, 1 suspect",
+      "completeness": "14/16 real, 1 null, 1 suspect",
       "null_axes": [
         "WATER_REVIEW"
       ],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:31.083468+00:00",
+      "computed_at": "2026-06-28T18:03:11.009130+00:00",
       "status": "ok"
     },
     {
@@ -3936,18 +3975,18 @@
       "name": "Tajikistan",
       "region": "ECS",
       "income": "LMC",
-      "zone": "Dignified Life",
-      "zone_label": "Dignified Life (partial data)",
+      "zone": "Thriving",
+      "zone_label": "Thriving (partial data)",
       "deprivation": 0.351,
       "strain": 0.379,
-      "flourishing": 0.636,
+      "flourishing": 0.532,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:31.070071+00:00",
+      "computed_at": "2026-06-28T18:03:10.993854+00:00",
       "status": "ok"
     },
     {
@@ -3959,16 +3998,16 @@
       "zone_label": "Precarious (UNVERIFIED)",
       "deprivation": 0.475,
       "strain": 0.62,
-      "flourishing": 0.545,
+      "flourishing": 0.596,
       "confidence": "LOW",
-      "completeness": "13/15 real, 1 null, 1 suspect",
+      "completeness": "14/16 real, 1 null, 1 suspect",
       "null_axes": [
         "WATER_REVIEW"
       ],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:31.871058+00:00",
+      "computed_at": "2026-06-28T18:03:11.056464+00:00",
       "status": "ok"
     },
     {
@@ -3976,18 +4015,18 @@
       "name": "Turkmenistan",
       "region": "ECS",
       "income": "UMC",
-      "zone": "Dignified Life",
-      "zone_label": "Dignified Life (partial data)",
+      "zone": "Thriving",
+      "zone_label": "Thriving (partial data)",
       "deprivation": 0.363,
       "strain": 0.541,
-      "flourishing": 0.671,
+      "flourishing": 0.56,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:32.106886+00:00",
+      "computed_at": "2026-06-28T18:03:11.160686+00:00",
       "status": "ok"
     },
     {
@@ -3999,14 +4038,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.353,
       "strain": 0.411,
-      "flourishing": 0.701,
+      "flourishing": 0.699,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:32.646734+00:00",
+      "computed_at": "2026-06-28T18:03:12.587090+00:00",
       "status": "ok"
     },
     {
@@ -4020,13 +4059,15 @@
       "strain": 0.364,
       "flourishing": 0.657,
       "confidence": "LOW",
-      "completeness": "13/15 real, 0 null, 2 suspect",
-      "null_axes": [],
+      "completeness": "13/16 real, 1 null, 2 suspect",
+      "null_axes": [
+        "CULTURE_MEDIA_REVIEW"
+      ],
       "suspect_axes": [
         "FOOD_REVIEW",
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:32.096134+00:00",
+      "computed_at": "2026-06-28T18:03:12.152779+00:00",
       "status": "ok"
     },
     {
@@ -4038,16 +4079,16 @@
       "zone_label": "Dignified Life (UNVERIFIED)",
       "deprivation": 0.298,
       "strain": 0.393,
-      "flourishing": 0.805,
+      "flourishing": 0.695,
       "confidence": "LOW",
-      "completeness": "13/15 real, 1 null, 1 suspect",
+      "completeness": "14/16 real, 1 null, 1 suspect",
       "null_axes": [
         "WATER_REVIEW"
       ],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:33.205565+00:00",
+      "computed_at": "2026-06-28T18:03:12.616122+00:00",
       "status": "ok"
     },
     {
@@ -4059,14 +4100,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.36,
       "strain": 0.434,
-      "flourishing": 0.787,
+      "flourishing": 0.805,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:32.401138+00:00",
+      "computed_at": "2026-06-28T18:03:12.244023+00:00",
       "status": "ok"
     },
     {
@@ -4080,14 +4121,16 @@
       "strain": 0.523,
       "flourishing": 0.629,
       "confidence": "LOW",
-      "completeness": "12/15 real, 0 null, 3 suspect",
-      "null_axes": [],
+      "completeness": "12/16 real, 1 null, 3 suspect",
+      "null_axes": [
+        "CULTURE_MEDIA_REVIEW"
+      ],
       "suspect_axes": [
         "FOOD_REVIEW",
         "CLIMATE_GLOBAL_RISK_REVIEW",
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:33.341361+00:00",
+      "computed_at": "2026-06-28T18:03:12.838362+00:00",
       "status": "ok"
     },
     {
@@ -4099,14 +4142,14 @@
       "zone_label": "Precarious (partial data)",
       "deprivation": 0.486,
       "strain": 0.407,
-      "flourishing": 0.517,
+      "flourishing": 0.523,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:33.594525+00:00",
+      "computed_at": "2026-06-28T18:03:12.854012+00:00",
       "status": "ok"
     },
     {
@@ -4118,14 +4161,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.315,
       "strain": 0.401,
-      "flourishing": 0.786,
+      "flourishing": 0.721,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:34.325425+00:00",
+      "computed_at": "2026-06-28T18:03:12.726515+00:00",
       "status": "ok"
     },
     {
@@ -4137,14 +4180,14 @@
       "zone_label": "Precarious (partial data)",
       "deprivation": 0.514,
       "strain": 0.442,
-      "flourishing": 0.448,
+      "flourishing": 0.445,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:34.342391+00:00",
+      "computed_at": "2026-06-28T18:03:13.061524+00:00",
       "status": "ok"
     },
     {
@@ -4156,14 +4199,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.188,
       "strain": 0.321,
-      "flourishing": 0.845,
+      "flourishing": 0.824,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:34.406118+00:00",
+      "computed_at": "2026-06-28T18:03:14.258521+00:00",
       "status": "ok"
     },
     {
@@ -4175,16 +4218,16 @@
       "zone_label": "Dignified Life (UNVERIFIED)",
       "deprivation": 0.198,
       "strain": 0.229,
-      "flourishing": 0.844,
+      "flourishing": 0.859,
       "confidence": "LOW",
-      "completeness": "13/15 real, 1 null, 1 suspect",
+      "completeness": "14/16 real, 1 null, 1 suspect",
       "null_axes": [
         "WATER_REVIEW"
       ],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:34.737201+00:00",
+      "computed_at": "2026-06-28T18:03:13.838822+00:00",
       "status": "ok"
     },
     {
@@ -4196,14 +4239,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.328,
       "strain": 0.477,
-      "flourishing": 0.793,
+      "flourishing": 0.695,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:34.615798+00:00",
+      "computed_at": "2026-06-28T18:03:14.324592+00:00",
       "status": "ok"
     },
     {
@@ -4217,15 +4260,16 @@
       "strain": 0.394,
       "flourishing": 0.773,
       "confidence": "LOW",
-      "completeness": "12/15 real, 2 null, 1 suspect",
+      "completeness": "12/16 real, 3 null, 1 suspect",
       "null_axes": [
         "WATER_REVIEW",
-        "INEQUALITY_POVERTY_REVIEW"
+        "INEQUALITY_POVERTY_REVIEW",
+        "CULTURE_MEDIA_REVIEW"
       ],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:35.233728+00:00",
+      "computed_at": "2026-06-28T18:03:14.252162+00:00",
       "status": "ok"
     },
     {
@@ -4237,16 +4281,16 @@
       "zone_label": "Dignified Life (UNVERIFIED)",
       "deprivation": 0.347,
       "strain": 0.404,
-      "flourishing": 0.784,
+      "flourishing": 0.672,
       "confidence": "LOW",
-      "completeness": "13/15 real, 1 null, 1 suspect",
+      "completeness": "14/16 real, 1 null, 1 suspect",
       "null_axes": [
         "WATER_REVIEW"
       ],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:35.515786+00:00",
+      "computed_at": "2026-06-28T18:03:14.684615+00:00",
       "status": "ok"
     },
     {
@@ -4260,7 +4304,7 @@
       "strain": 0.807,
       "flourishing": 0.661,
       "confidence": "LOW",
-      "completeness": "6/15 real, 7 null, 2 suspect",
+      "completeness": "6/16 real, 8 null, 2 suspect",
       "null_axes": [
         "FOOD_REVIEW",
         "WATER_REVIEW",
@@ -4268,13 +4312,14 @@
         "INEQUALITY_POVERTY_REVIEW",
         "GOVERNANCE_INSTITUTIONS_REVIEW",
         "COGNITION_LEARNING_REVIEW",
-        "ECONOMY_WORK_REVIEW"
+        "ECONOMY_WORK_REVIEW",
+        "CULTURE_MEDIA_REVIEW"
       ],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW",
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:35.865020+00:00",
+      "computed_at": "2026-06-28T18:03:14.451950+00:00",
       "status": "ok"
     },
     {
@@ -4288,17 +4333,18 @@
       "strain": 0.588,
       "flourishing": 0.701,
       "confidence": "LOW",
-      "completeness": "10/15 real, 3 null, 2 suspect",
+      "completeness": "10/16 real, 4 null, 2 suspect",
       "null_axes": [
         "FOOD_REVIEW",
         "INEQUALITY_POVERTY_REVIEW",
-        "COGNITION_LEARNING_REVIEW"
+        "COGNITION_LEARNING_REVIEW",
+        "CULTURE_MEDIA_REVIEW"
       ],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW",
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:36.537501+00:00",
+      "computed_at": "2026-06-28T18:03:14.496013+00:00",
       "status": "ok"
     },
     {
@@ -4310,14 +4356,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.318,
       "strain": 0.335,
-      "flourishing": 0.804,
+      "flourishing": 0.68,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:37.414111+00:00",
+      "computed_at": "2026-06-28T18:03:14.787310+00:00",
       "status": "ok"
     },
     {
@@ -4329,14 +4375,14 @@
       "zone_label": "Precarious (partial data)",
       "deprivation": 0.47,
       "strain": 0.394,
-      "flourishing": 0.528,
+      "flourishing": 0.584,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:36.555990+00:00",
+      "computed_at": "2026-06-28T18:03:15.648518+00:00",
       "status": "ok"
     },
     {
@@ -4350,12 +4396,14 @@
       "strain": 0.282,
       "flourishing": 0.612,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
-      "null_axes": [],
+      "completeness": "14/16 real, 1 null, 1 suspect",
+      "null_axes": [
+        "CULTURE_MEDIA_REVIEW"
+      ],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:37.734037+00:00",
+      "computed_at": "2026-06-28T18:03:16.100683+00:00",
       "status": "ok"
     },
     {
@@ -4367,9 +4415,9 @@
       "zone_label": "Dignified Life (UNVERIFIED)",
       "deprivation": 0.345,
       "strain": 0.526,
-      "flourishing": 0.715,
+      "flourishing": 0.725,
       "confidence": "LOW",
-      "completeness": "10/15 real, 4 null, 1 suspect",
+      "completeness": "11/16 real, 4 null, 1 suspect",
       "null_axes": [
         "FOOD_REVIEW",
         "WATER_REVIEW",
@@ -4379,7 +4427,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:36.788308+00:00",
+      "computed_at": "2026-06-28T18:03:15.904621+00:00",
       "status": "ok"
     },
     {
@@ -4391,16 +4439,16 @@
       "zone_label": "Precarious (UNVERIFIED)",
       "deprivation": 0.563,
       "strain": 0.551,
-      "flourishing": 0.413,
+      "flourishing": 0.379,
       "confidence": "LOW",
-      "completeness": "13/15 real, 1 null, 1 suspect",
+      "completeness": "14/16 real, 1 null, 1 suspect",
       "null_axes": [
         "WATER_REVIEW"
       ],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:37.436355+00:00",
+      "computed_at": "2026-06-28T18:03:16.097806+00:00",
       "status": "ok"
     },
     {
@@ -4412,14 +4460,14 @@
       "zone_label": "Dignified Life (partial data)",
       "deprivation": 0.383,
       "strain": 0.51,
-      "flourishing": 0.678,
+      "flourishing": 0.706,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:37.538120+00:00",
+      "computed_at": "2026-06-28T18:03:16.078886+00:00",
       "status": "ok"
     },
     {
@@ -4431,16 +4479,16 @@
       "zone_label": "Precarious (UNVERIFIED)",
       "deprivation": 0.451,
       "strain": 0.518,
-      "flourishing": 0.484,
+      "flourishing": 0.536,
       "confidence": "LOW",
-      "completeness": "13/15 real, 1 null, 1 suspect",
+      "completeness": "14/16 real, 1 null, 1 suspect",
       "null_axes": [
         "WATER_REVIEW"
       ],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:37.863265+00:00",
+      "computed_at": "2026-06-28T18:03:16.168263+00:00",
       "status": "ok"
     },
     {
@@ -4452,14 +4500,14 @@
       "zone_label": "Precarious (partial data)",
       "deprivation": 0.528,
       "strain": 0.449,
-      "flourishing": 0.566,
+      "flourishing": 0.539,
       "confidence": "MEDIUM",
-      "completeness": "14/15 real, 0 null, 1 suspect",
+      "completeness": "15/16 real, 0 null, 1 suspect",
       "null_axes": [],
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T13:15:39.041402+00:00",
+      "computed_at": "2026-06-28T18:03:16.499139+00:00",
       "status": "ok"
     }
   ]

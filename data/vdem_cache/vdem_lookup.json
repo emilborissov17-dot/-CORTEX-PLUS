@@ -1,0 +1,539 @@
+{
+  "MEX": {
+    "v2x_freexp_altinf": 0.619
+  },
+  "SUR": {
+    "v2x_freexp_altinf": 0.891
+  },
+  "SWE": {
+    "v2x_freexp_altinf": 0.946
+  },
+  "CHE": {
+    "v2x_freexp_altinf": 0.967
+  },
+  "GHA": {
+    "v2x_freexp_altinf": 0.896
+  },
+  "ZAF": {
+    "v2x_freexp_altinf": 0.837
+  },
+  "JPN": {
+    "v2x_freexp_altinf": 0.847
+  },
+  "MMR": {
+    "v2x_freexp_altinf": 0.026
+  },
+  "RUS": {
+    "v2x_freexp_altinf": 0.08
+  },
+  "ALB": {
+    "v2x_freexp_altinf": 0.673
+  },
+  "EGY": {
+    "v2x_freexp_altinf": 0.179
+  },
+  "YEM": {
+    "v2x_freexp_altinf": 0.219
+  },
+  "COL": {
+    "v2x_freexp_altinf": 0.81
+  },
+  "POL": {
+    "v2x_freexp_altinf": 0.917
+  },
+  "BRA": {
+    "v2x_freexp_altinf": 0.91
+  },
+  "USA": {
+    "v2x_freexp_altinf": 0.729
+  },
+  "PRT": {
+    "v2x_freexp_altinf": 0.899
+  },
+  "SLV": {
+    "v2x_freexp_altinf": 0.356
+  },
+  "BGD": {
+    "v2x_freexp_altinf": 0.527
+  },
+  "BOL": {
+    "v2x_freexp_altinf": 0.68
+  },
+  "HTI": {
+    "v2x_freexp_altinf": 0.799
+  },
+  "HND": {
+    "v2x_freexp_altinf": 0.861
+  },
+  "MLI": {
+    "v2x_freexp_altinf": 0.49
+  },
+  "PAK": {
+    "v2x_freexp_altinf": 0.559
+  },
+  "PER": {
+    "v2x_freexp_altinf": 0.763
+  },
+  "SEN": {
+    "v2x_freexp_altinf": 0.82
+  },
+  "SSD": {
+    "v2x_freexp_altinf": 0.155
+  },
+  "SDN": {
+    "v2x_freexp_altinf": 0.289
+  },
+  "VNM": {
+    "v2x_freexp_altinf": 0.102
+  },
+  "AFG": {
+    "v2x_freexp_altinf": 0.022
+  },
+  "ARG": {
+    "v2x_freexp_altinf": 0.736
+  },
+  "ETH": {
+    "v2x_freexp_altinf": 0.285
+  },
+  "IND": {
+    "v2x_freexp_altinf": 0.458
+  },
+  "KEN": {
+    "v2x_freexp_altinf": 0.9
+  },
+  "PRK": {
+    "v2x_freexp_altinf": 0.013
+  },
+  "KOR": {
+    "v2x_freexp_altinf": 0.933
+  },
+  "XKX": {
+    "v2x_freexp_altinf": 0.766
+  },
+  "LBN": {
+    "v2x_freexp_altinf": 0.744
+  },
+  "NGA": {
+    "v2x_freexp_altinf": 0.849
+  },
+  "PHL": {
+    "v2x_freexp_altinf": 0.676
+  },
+  "TZA": {
+    "v2x_freexp_altinf": 0.552
+  },
+  "TWN": {
+    "v2x_freexp_altinf": 0.838
+  },
+  "THA": {
+    "v2x_freexp_altinf": 0.587
+  },
+  "UGA": {
+    "v2x_freexp_altinf": 0.432
+  },
+  "VEN": {
+    "v2x_freexp_altinf": 0.148
+  },
+  "BEN": {
+    "v2x_freexp_altinf": 0.676
+  },
+  "BTN": {
+    "v2x_freexp_altinf": 0.682
+  },
+  "BFA": {
+    "v2x_freexp_altinf": 0.261
+  },
+  "KHM": {
+    "v2x_freexp_altinf": 0.153
+  },
+  "IDN": {
+    "v2x_freexp_altinf": 0.688
+  },
+  "MOZ": {
+    "v2x_freexp_altinf": 0.518
+  },
+  "NPL": {
+    "v2x_freexp_altinf": 0.813
+  },
+  "NIC": {
+    "v2x_freexp_altinf": 0.018
+  },
+  "NER": {
+    "v2x_freexp_altinf": 0.756
+  },
+  "ZMB": {
+    "v2x_freexp_altinf": 0.778
+  },
+  "ZWE": {
+    "v2x_freexp_altinf": 0.414
+  },
+  "GIN": {
+    "v2x_freexp_altinf": 0.56
+  },
+  "CIV": {
+    "v2x_freexp_altinf": 0.681
+  },
+  "MRT": {
+    "v2x_freexp_altinf": 0.628
+  },
+  "CAN": {
+    "v2x_freexp_altinf": 0.933
+  },
+  "AUS": {
+    "v2x_freexp_altinf": 0.915
+  },
+  "BWA": {
+    "v2x_freexp_altinf": 0.798
+  },
+  "BDI": {
+    "v2x_freexp_altinf": 0.164
+  },
+  "CPV": {
+    "v2x_freexp_altinf": 0.857
+  },
+  "CAF": {
+    "v2x_freexp_altinf": 0.613
+  },
+  "CHL": {
+    "v2x_freexp_altinf": 0.926
+  },
+  "CRI": {
+    "v2x_freexp_altinf": 0.915
+  },
+  "TLS": {
+    "v2x_freexp_altinf": 0.838
+  },
+  "ECU": {
+    "v2x_freexp_altinf": 0.706
+  },
+  "FRA": {
+    "v2x_freexp_altinf": 0.959
+  },
+  "DEU": {
+    "v2x_freexp_altinf": 0.914
+  },
+  "GTM": {
+    "v2x_freexp_altinf": 0.839
+  },
+  "IRN": {
+    "v2x_freexp_altinf": 0.166
+  },
+  "IRQ": {
+    "v2x_freexp_altinf": 0.571
+  },
+  "IRL": {
+    "v2x_freexp_altinf": 0.97
+  },
+  "ITA": {
+    "v2x_freexp_altinf": 0.756
+  },
+  "JOR": {
+    "v2x_freexp_altinf": 0.556
+  },
+  "LVA": {
+    "v2x_freexp_altinf": 0.932
+  },
+  "LSO": {
+    "v2x_freexp_altinf": 0.728
+  },
+  "LBR": {
+    "v2x_freexp_altinf": 0.836
+  },
+  "MWI": {
+    "v2x_freexp_altinf": 0.754
+  },
+  "MDV": {
+    "v2x_freexp_altinf": 0.695
+  },
+  "MNG": {
+    "v2x_freexp_altinf": 0.771
+  },
+  "MAR": {
+    "v2x_freexp_altinf": 0.579
+  },
+  "NLD": {
+    "v2x_freexp_altinf": 0.91
+  },
+  "PAN": {
+    "v2x_freexp_altinf": 0.812
+  },
+  "PNG": {
+    "v2x_freexp_altinf": 0.839
+  },
+  "QAT": {
+    "v2x_freexp_altinf": 0.055
+  },
+  "SLE": {
+    "v2x_freexp_altinf": 0.823
+  },
+  "ESP": {
+    "v2x_freexp_altinf": 0.843
+  },
+  "SYR": {
+    "v2x_freexp_altinf": 0.358
+  },
+  "TUN": {
+    "v2x_freexp_altinf": 0.687
+  },
+  "TUR": {
+    "v2x_freexp_altinf": 0.179
+  },
+  "UKR": {
+    "v2x_freexp_altinf": 0.418
+  },
+  "GBR": {
+    "v2x_freexp_altinf": 0.833
+  },
+  "URY": {
+    "v2x_freexp_altinf": 0.931
+  },
+  "DZA": {
+    "v2x_freexp_altinf": 0.367
+  },
+  "AGO": {
+    "v2x_freexp_altinf": 0.497
+  },
+  "ARM": {
+    "v2x_freexp_altinf": 0.732
+  },
+  "AZE": {
+    "v2x_freexp_altinf": 0.092
+  },
+  "BLR": {
+    "v2x_freexp_altinf": 0.025
+  },
+  "CMR": {
+    "v2x_freexp_altinf": 0.532
+  },
+  "TCD": {
+    "v2x_freexp_altinf": 0.427
+  },
+  "CHN": {
+    "v2x_freexp_altinf": 0.045
+  },
+  "COD": {
+    "v2x_freexp_altinf": 0.599
+  },
+  "COG": {
+    "v2x_freexp_altinf": 0.373
+  },
+  "DJI": {
+    "v2x_freexp_altinf": 0.336
+  },
+  "DOM": {
+    "v2x_freexp_altinf": 0.901
+  },
+  "ERI": {
+    "v2x_freexp_altinf": 0.024
+  },
+  "GAB": {
+    "v2x_freexp_altinf": 0.748
+  },
+  "GMB": {
+    "v2x_freexp_altinf": 0.814
+  },
+  "GEO": {
+    "v2x_freexp_altinf": 0.687
+  },
+  "GNB": {
+    "v2x_freexp_altinf": 0.552
+  },
+  "JAM": {
+    "v2x_freexp_altinf": 0.919
+  },
+  "KAZ": {
+    "v2x_freexp_altinf": 0.329
+  },
+  "KGZ": {
+    "v2x_freexp_altinf": 0.469
+  },
+  "LAO": {
+    "v2x_freexp_altinf": 0.032
+  },
+  "LBY": {
+    "v2x_freexp_altinf": 0.536
+  },
+  "MDG": {
+    "v2x_freexp_altinf": 0.635
+  },
+  "MDA": {
+    "v2x_freexp_altinf": 0.652
+  },
+  "NAM": {
+    "v2x_freexp_altinf": 0.859
+  },
+  "PSE": {
+    "v2x_freexp_altinf": 0.353
+  },
+  "RWA": {
+    "v2x_freexp_altinf": 0.17
+  },
+  "SOM": {
+    "v2x_freexp_altinf": 0.619
+  },
+  "LKA": {
+    "v2x_freexp_altinf": 0.871
+  },
+  "SWZ": {
+    "v2x_freexp_altinf": 0.113
+  },
+  "TJK": {
+    "v2x_freexp_altinf": 0.043
+  },
+  "TGO": {
+    "v2x_freexp_altinf": 0.579
+  },
+  "TTO": {
+    "v2x_freexp_altinf": 0.888
+  },
+  "TKM": {
+    "v2x_freexp_altinf": 0.038
+  },
+  "PSG": {
+    "v2x_freexp_altinf": 0.234
+  },
+  "SML": {
+    "v2x_freexp_altinf": 0.653
+  },
+  "UZB": {
+    "v2x_freexp_altinf": 0.234
+  },
+  "AUT": {
+    "v2x_freexp_altinf": 0.918
+  },
+  "BHR": {
+    "v2x_freexp_altinf": 0.172
+  },
+  "BRB": {
+    "v2x_freexp_altinf": 0.911
+  },
+  "BEL": {
+    "v2x_freexp_altinf": 0.969
+  },
+  "BIH": {
+    "v2x_freexp_altinf": 0.653
+  },
+  "BGR": {
+    "v2x_freexp_altinf": 0.754
+  },
+  "COM": {
+    "v2x_freexp_altinf": 0.498
+  },
+  "HRV": {
+    "v2x_freexp_altinf": 0.743
+  },
+  "CUB": {
+    "v2x_freexp_altinf": 0.074
+  },
+  "CYP": {
+    "v2x_freexp_altinf": 0.812
+  },
+  "CZE": {
+    "v2x_freexp_altinf": 0.947
+  },
+  "DNK": {
+    "v2x_freexp_altinf": 0.98
+  },
+  "GNQ": {
+    "v2x_freexp_altinf": 0.112
+  },
+  "EST": {
+    "v2x_freexp_altinf": 0.969
+  },
+  "FJI": {
+    "v2x_freexp_altinf": 0.724
+  },
+  "FIN": {
+    "v2x_freexp_altinf": 0.946
+  },
+  "GRC": {
+    "v2x_freexp_altinf": 0.81
+  },
+  "GUY": {
+    "v2x_freexp_altinf": 0.771
+  },
+  "HKG": {
+    "v2x_freexp_altinf": 0.227
+  },
+  "ISL": {
+    "v2x_freexp_altinf": 0.846
+  },
+  "ISR": {
+    "v2x_freexp_altinf": 0.822
+  },
+  "KWT": {
+    "v2x_freexp_altinf": 0.532
+  },
+  "LTU": {
+    "v2x_freexp_altinf": 0.917
+  },
+  "LUX": {
+    "v2x_freexp_altinf": 0.957
+  },
+  "MKD": {
+    "v2x_freexp_altinf": 0.664
+  },
+  "MYS": {
+    "v2x_freexp_altinf": 0.586
+  },
+  "MLT": {
+    "v2x_freexp_altinf": 0.829
+  },
+  "MUS": {
+    "v2x_freexp_altinf": 0.887
+  },
+  "MNE": {
+    "v2x_freexp_altinf": 0.853
+  },
+  "NZL": {
+    "v2x_freexp_altinf": 0.927
+  },
+  "NOR": {
+    "v2x_freexp_altinf": 0.953
+  },
+  "OMN": {
+    "v2x_freexp_altinf": 0.151
+  },
+  "PRY": {
+    "v2x_freexp_altinf": 0.751
+  },
+  "ROU": {
+    "v2x_freexp_altinf": 0.777
+  },
+  "STP": {
+    "v2x_freexp_altinf": 0.793
+  },
+  "SAU": {
+    "v2x_freexp_altinf": 0.092
+  },
+  "SRB": {
+    "v2x_freexp_altinf": 0.424
+  },
+  "SYC": {
+    "v2x_freexp_altinf": 0.874
+  },
+  "SGP": {
+    "v2x_freexp_altinf": 0.4
+  },
+  "SVK": {
+    "v2x_freexp_altinf": 0.765
+  },
+  "SVN": {
+    "v2x_freexp_altinf": 0.691
+  },
+  "SLB": {
+    "v2x_freexp_altinf": 0.84
+  },
+  "VUT": {
+    "v2x_freexp_altinf": 0.848
+  },
+  "ARE": {
+    "v2x_freexp_altinf": 0.063
+  },
+  "HUN": {
+    "v2x_freexp_altinf": 0.493
+  },
+  "ZZB": {
+    "v2x_freexp_altinf": 0.54
+  }
+}
