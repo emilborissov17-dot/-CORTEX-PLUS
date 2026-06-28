@@ -12,6 +12,7 @@ LIMITATION (see docs/WELLBEING_PROFILE_DESIGN.md § Критично огран�
 
 from __future__ import annotations
 
+import csv
 import json
 import math
 from datetime import datetime, timezone
@@ -23,8 +24,12 @@ import requests
 from wellbeing_profile import WellbeingProfile, compute_wellbeing_profile
 
 # ── Paths ──────────────────────────────────────────────────────────────────────
-CACHE_DIR = Path(__file__).parent / "output" / "wb_cache"
+CACHE_DIR      = Path(__file__).parent / "output" / "wb_cache"
 CACHE_TTL_SECONDS = 86_400   # 24h
+
+VDEM_CSV       = Path(__file__).parent / "data" / "V-Dem-CY-Core-v16.csv"
+VDEM_CACHE_DIR = Path(__file__).parent / "data" / "vdem_cache"
+VDEM_LOOKUP    = VDEM_CACHE_DIR / "vdem_lookup.json"
 
 WB_BASE = "https://api.worldbank.org/v2"
 
@@ -67,6 +72,8 @@ _IND: dict[str, object] = {
     "GOV_WGI_RL.EST":    (-2.5,   2.5,   False),   # Rule of Law
     # WB Human Capital Index
     "HD.HCI.LAYS":       (0.0,   12.0,   False),   # Learning-Adjusted Years of School (HCI)
+    # V-Dem observational indicators (already 0-1; injected from local CSV, not WB API)
+    "VDEM_FREEXP":       (0.0,    1.0,   False),   # Media freedom / freedom of expression (V-Dem v16)
 }
 
 _LABELS: dict[str, str] = {
@@ -99,6 +106,7 @@ _LABELS: dict[str, str] = {
     "GOV_WGI_GE.EST":   "Govt Effectiveness (WGI)",
     "GOV_WGI_RL.EST":   "Rule of Law (WGI)",
     "HD.HCI.LAYS":       "Learning-Adj Yrs School (HCI)",
+    "VDEM_FREEXP":       "Media Freedom (V-Dem v16)",
 }
 
 _GDP_LOG_WORST = math.log(500)
@@ -142,12 +150,13 @@ AXIS_INDICATORS: dict[str, list[str]] = {
     "EDUCATION_CULTURE_REVIEW":         ["SE.ADT.LITR.ZS", "SE.PRM.ENRR"],
     "ECONOMY_WORK_REVIEW":              ["NY.GDP.PCAP.PP.KD", "SL.UEM.TOTL.ZS", "NY.GDP.MKTP.KD.ZG"],
     "ECOSYSTEMS_BIODIVERSITY_REVIEW":   ["AG.LND.FRST.ZS", "NY.ADJ.SVNG.GN.ZS", "NY.ADJ.DRES.GN.ZS"],
+    "CULTURE_MEDIA_REVIEW":             ["VDEM_FREEXP"],
 }
 
-# Axes in BUNDLES with no adequate WB per-country indicator (structural absence)
+# Axes in BUNDLES with no adequate per-country indicator (structural absence)
 STRUCTURAL_MISSING: list[str] = [
     "MATERIALS_WASTE_REVIEW",   # no WB country indicator
-    "CULTURE_MEDIA_REVIEW",     # no WB country indicator
+    # CULTURE_MEDIA_REVIEW covered by V-Dem VDEM_FREEXP
 ]
 
 # ── Data quality constants ────────────────────────────────────────────────────
@@ -184,6 +193,117 @@ _AXIS_DIM: dict[str, str] = {
     "ECONOMY_WORK_REVIEW":              "dep+strain+flo",
     "ECOSYSTEMS_BIODIVERSITY_REVIEW":   "dep+strain+flo",
 }
+
+
+# ── V-Dem data (observational, local CSV) ────────────────────────────────────
+
+# ISO 3166-1 alpha-2 → alpha-3 mapping for all WB-listed countries
+_ISO2_TO_ISO3: dict[str, str] = {
+    "AF": "AFG", "AL": "ALB", "DZ": "DZA", "AD": "AND", "AO": "AGO",
+    "AG": "ATG", "AR": "ARG", "AM": "ARM", "AU": "AUS", "AT": "AUT",
+    "AZ": "AZE", "BS": "BHS", "BH": "BHR", "BD": "BGD", "BB": "BRB",
+    "BY": "BLR", "BE": "BEL", "BZ": "BLZ", "BJ": "BEN", "BT": "BTN",
+    "BO": "BOL", "BA": "BIH", "BW": "BWA", "BR": "BRA", "BN": "BRN",
+    "BG": "BGR", "BF": "BFA", "BI": "BDI", "CV": "CPV", "KH": "KHM",
+    "CM": "CMR", "CA": "CAN", "CF": "CAF", "TD": "TCD", "CL": "CHL",
+    "CN": "CHN", "CO": "COL", "KM": "COM", "CG": "COG", "CD": "COD",
+    "CR": "CRI", "CI": "CIV", "HR": "HRV", "CU": "CUB", "CY": "CYP",
+    "CZ": "CZE", "DK": "DNK", "DJ": "DJI", "DM": "DMA", "DO": "DOM",
+    "EC": "ECU", "EG": "EGY", "SV": "SLV", "GQ": "GNQ", "ER": "ERI",
+    "EE": "EST", "SZ": "SWZ", "ET": "ETH", "FJ": "FJI", "FI": "FIN",
+    "FR": "FRA", "GA": "GAB", "GM": "GMB", "GE": "GEO", "DE": "DEU",
+    "GH": "GHA", "GR": "GRC", "GD": "GRD", "GT": "GTM", "GN": "GIN",
+    "GW": "GNB", "GY": "GUY", "HT": "HTI", "HN": "HND", "HU": "HUN",
+    "IS": "ISL", "IN": "IND", "ID": "IDN", "IR": "IRN", "IQ": "IRQ",
+    "IE": "IRL", "IL": "ISR", "IT": "ITA", "JM": "JAM", "JP": "JPN",
+    "JO": "JOR", "KZ": "KAZ", "KE": "KEN", "KI": "KIR", "KP": "PRK",
+    "KR": "KOR", "KW": "KWT", "KG": "KGZ", "LA": "LAO", "LV": "LVA",
+    "LB": "LBN", "LS": "LSO", "LR": "LBR", "LY": "LBY", "LI": "LIE",
+    "LT": "LTU", "LU": "LUX", "MG": "MDG", "MW": "MWI", "MY": "MYS",
+    "MV": "MDV", "ML": "MLI", "MT": "MLT", "MH": "MHL", "MR": "MRT",
+    "MU": "MUS", "MX": "MEX", "FM": "FSM", "MD": "MDA", "MC": "MCO",
+    "MN": "MNG", "ME": "MNE", "MA": "MAR", "MZ": "MOZ", "MM": "MMR",
+    "NA": "NAM", "NR": "NRU", "NP": "NPL", "NL": "NLD", "NZ": "NZL",
+    "NI": "NIC", "NE": "NER", "NG": "NGA", "MK": "MKD", "NO": "NOR",
+    "OM": "OMN", "PK": "PAK", "PW": "PLW", "PA": "PAN", "PG": "PNG",
+    "PY": "PRY", "PE": "PER", "PH": "PHL", "PL": "POL", "PT": "PRT",
+    "QA": "QAT", "RO": "ROU", "RU": "RUS", "RW": "RWA", "KN": "KNA",
+    "LC": "LCA", "VC": "VCT", "WS": "WSM", "SM": "SMR", "ST": "STP",
+    "SA": "SAU", "SN": "SEN", "RS": "SRB", "SC": "SYC", "SL": "SLE",
+    "SG": "SGP", "SK": "SVK", "SI": "SVN", "SB": "SLB", "SO": "SOM",
+    "ZA": "ZAF", "SS": "SSD", "ES": "ESP", "LK": "LKA", "SD": "SDN",
+    "SR": "SUR", "SE": "SWE", "CH": "CHE", "SY": "SYR",
+    "TJ": "TJK", "TZ": "TZA", "TH": "THA", "TL": "TLS", "TG": "TGO",
+    "TO": "TON", "TT": "TTO", "TN": "TUN", "TR": "TUR", "TM": "TKM",
+    "TV": "TUV", "UG": "UGA", "UA": "UKR", "AE": "ARE", "GB": "GBR",
+    "US": "USA", "UY": "URY", "UZ": "UZB", "VU": "VUT", "VE": "VEN",
+    "VN": "VNM", "YE": "YEM", "ZM": "ZMB", "ZW": "ZWE",
+    # Non-sovereign WB territories
+    "HK": "HKG", "MO": "MAC", "PS": "PSE", "XK": "XKX",
+    "KY": "CYM", "VI": "VIR", "PR": "PRI", "GU": "GUM",
+    "AS": "ASM", "MP": "MNP", "AW": "ABW", "CW": "CUW",
+    "SX": "SXM", "GL": "GRL", "FO": "FRO",
+}
+
+
+def _iso2_to_iso3(iso2: str) -> Optional[str]:
+    return _ISO2_TO_ISO3.get(iso2.upper())
+
+
+def _build_vdem_lookup() -> dict:
+    """Read V-Dem Core CSV; return {iso3: {v2x_freexp_altinf: float}} using MRV ≥ 2018."""
+    best: dict[str, dict] = {}
+    with open(VDEM_CSV, encoding="utf-8", newline="") as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            iso3 = row.get("country_text_id", "").strip()
+            yr_s = row.get("year", "")
+            val_s = row.get("v2x_freexp_altinf", "")
+            if not iso3 or not yr_s or not val_s:
+                continue
+            try:
+                yr  = int(yr_s)
+                val = float(val_s)
+            except ValueError:
+                continue
+            if yr < 2018:
+                continue
+            if iso3 not in best or yr > best[iso3]["_year"]:
+                best[iso3] = {"_year": yr, "v2x_freexp_altinf": round(val, 4)}
+    return {iso3: {"v2x_freexp_altinf": d["v2x_freexp_altinf"]} for iso3, d in best.items()}
+
+
+_vdem_lookup_cache: Optional[dict] = None
+
+def _load_vdem() -> dict:
+    """Return V-Dem lookup, building from CSV and caching to disk on first use."""
+    global _vdem_lookup_cache
+    if _vdem_lookup_cache is not None:
+        return _vdem_lookup_cache
+    if VDEM_LOOKUP.exists():
+        _vdem_lookup_cache = json.loads(VDEM_LOOKUP.read_text(encoding="utf-8"))
+        return _vdem_lookup_cache
+    if not VDEM_CSV.exists():
+        print("  [V-Dem] CSV not found — CULTURE_MEDIA will be null")
+        _vdem_lookup_cache = {}
+        return _vdem_lookup_cache
+    print("  [V-Dem] building lookup from CSV (one-time)...")
+    lookup = _build_vdem_lookup()
+    VDEM_CACHE_DIR.mkdir(parents=True, exist_ok=True)
+    VDEM_LOOKUP.write_text(json.dumps(lookup, indent=2, ensure_ascii=False), encoding="utf-8")
+    print(f"  [V-Dem] lookup saved — {len(lookup)} countries")
+    _vdem_lookup_cache = lookup
+    return lookup
+
+
+def _inject_vdem(iso2: str, raw: dict) -> None:
+    """Add VDEM_FREEXP to raw dict in-place from local V-Dem lookup."""
+    lookup = _load_vdem()
+    iso3   = _iso2_to_iso3(iso2)
+    if iso3 and iso3 in lookup:
+        raw["VDEM_FREEXP"] = lookup[iso3].get("v2x_freexp_altinf")
+    else:
+        raw["VDEM_FREEXP"] = None
 
 
 # ── Normalization ─────────────────────────────────────────────────────────────
@@ -280,10 +400,11 @@ def fetch_country_raw(iso2: str) -> dict[str, Optional[float]]:
         return cached
 
     all_codes = list(_IND) + _FETCH_ALSO
-    print(f"  [WB] fetching {len(all_codes)} indicators for {iso2} ...")
+    wb_codes  = [c for c in all_codes if not c.startswith("VDEM_")]
+    print(f"  [WB] fetching {len(wb_codes)} indicators for {iso2} ...")
     raw: dict[str, Optional[float]] = {}
     with requests.Session() as sess:
-        for code in all_codes:
+        for code in wb_codes:
             mrv = 10 if code in _MRV_LONG_CODES else 5
             raw[code] = _fetch_one(iso2, code, sess, mrv=mrv)
 
@@ -301,6 +422,9 @@ def fetch_country_raw(iso2: str) -> dict[str, Optional[float]]:
             co2_pc = (kt * 1_000) / pop   # KT × 1000 → metric tons total, ÷ population
             raw["EN.ATM.CO2E.PC"] = round(co2_pc, 3)
             print(f"  [fix] EN.ATM.CO2E.PC derived: {kt:.0f} kt / {pop:.0f} pop = {co2_pc:.2f} t/person")
+
+    # Inject V-Dem observational indicators (local CSV, not WB API)
+    _inject_vdem(iso2, raw)
 
     _save_cache(iso2, raw)
     return raw
@@ -525,7 +649,9 @@ def _print_result(r: dict) -> None:
 
     # ── Axis scores ──
     ax = r["axis_scores"]
-    print(f"\n── Axis scores  (15 mapped  |  2 structural missing) {'─'*17}")
+    n_mapped     = len(AXIS_INDICATORS)
+    n_structural = len(STRUCTURAL_MISSING)
+    print(f"\n── Axis scores  ({n_mapped} mapped  |  {n_structural} structural missing) {'─'*17}")
     print(f"  {'Axis':<42} {'Score':>5}  Contributes to")
     print(f"  {'─'*42} {'─'*5}  {'─'*16}")
     for axis in AXIS_INDICATORS:
@@ -555,8 +681,8 @@ def _print_result(r: dict) -> None:
         print(f"                        tech share: {fq.get('tech_share_pct','?')}%"
               f"  |  active flo weight: {fq.get('active_weight_pct','?')}% of potential")
     print(f"\n  ZONE : {r['zone_label']}")
-    print(f"\n  Coverage: {active_count} of 15 mapped axes active")
-    print(f"            15 of 17 total BUNDLE axes (2 structural gaps above)")
+    print(f"\n  Coverage: {active_count} of {n_mapped} mapped axes active")
+    print(f"            {n_mapped} of 18 total BUNDLE axes ({n_structural} structural gap + SOCIAL_RELATIONS unmapped)")
     conf = r.get("data_quality", {}).get("confidence", "?")
     if conf == "LOW":
         print(f"\n  [!] Zone may be INFLATED — official data only, key gaps present")
