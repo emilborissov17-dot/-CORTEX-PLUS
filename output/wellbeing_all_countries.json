@@ -1,5 +1,5 @@
 {
-  "computed_at": "2026-06-28T18:03:16.499997+00:00",
+  "computed_at": "2026-06-28T18:11:59.884570+00:00",
   "total": 217,
   "countries": [
     {
@@ -24,7 +24,7 @@
         "CLIMATE_GLOBAL_RISK_REVIEW",
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:27.647822+00:00",
+      "computed_at": "2026-06-28T18:11:59.816838+00:00",
       "status": "ok"
     },
     {
@@ -43,7 +43,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:27.451152+00:00",
+      "computed_at": "2026-06-28T18:11:59.818953+00:00",
       "status": "ok"
     },
     {
@@ -64,7 +64,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:27.764471+00:00",
+      "computed_at": "2026-06-28T18:11:59.817126+00:00",
       "status": "ok"
     },
     {
@@ -88,7 +88,7 @@
         "CLIMATE_GLOBAL_RISK_REVIEW",
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:29.236006+00:00",
+      "computed_at": "2026-06-28T18:11:59.818590+00:00",
       "status": "ok"
     },
     {
@@ -107,7 +107,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:27.601534+00:00",
+      "computed_at": "2026-06-28T18:11:59.817831+00:00",
       "status": "ok"
     },
     {
@@ -126,7 +126,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:27.708024+00:00",
+      "computed_at": "2026-06-28T18:11:59.816633+00:00",
       "status": "ok"
     },
     {
@@ -147,7 +147,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:27.483950+00:00",
+      "computed_at": "2026-06-28T18:11:59.815924+00:00",
       "status": "ok"
     },
     {
@@ -168,7 +168,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:27.452081+00:00",
+      "computed_at": "2026-06-28T18:11:59.816446+00:00",
       "status": "ok"
     },
     {
@@ -194,7 +194,7 @@
         "ECONOMY_WORK_REVIEW",
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:29.251589+00:00",
+      "computed_at": "2026-06-28T18:11:59.817457+00:00",
       "status": "ok"
     },
     {
@@ -213,7 +213,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:29.413200+00:00",
+      "computed_at": "2026-06-28T18:11:59.819405+00:00",
       "status": "ok"
     },
     {
@@ -234,7 +234,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:29.236403+00:00",
+      "computed_at": "2026-06-28T18:11:59.818076+00:00",
       "status": "ok"
     },
     {
@@ -258,7 +258,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:27.451495+00:00",
+      "computed_at": "2026-06-28T18:11:59.815295+00:00",
       "status": "ok"
     },
     {
@@ -266,8 +266,8 @@
       "name": "Azerbaijan",
       "region": "ECS",
       "income": "UMC",
-      "zone": "Dignified Life",
-      "zone_label": "Dignified Life (partial data)",
+      "zone": "Thriving",
+      "zone_label": "Thriving (partial data)",
       "deprivation": 0.361,
       "strain": 0.459,
       "flourishing": 0.646,
@@ -277,7 +277,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:29.392435+00:00",
+      "computed_at": "2026-06-28T18:11:59.818786+00:00",
       "status": "ok"
     },
     {
@@ -296,7 +296,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:31.290108+00:00",
+      "computed_at": "2026-06-28T18:11:59.821360+00:00",
       "status": "ok"
     },
     {
@@ -317,7 +317,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:33.835141+00:00",
+      "computed_at": "2026-06-28T18:11:59.823369+00:00",
       "status": "ok"
     },
     {
@@ -325,8 +325,8 @@
       "name": "Bangladesh",
       "region": "SAS",
       "income": "LMC",
-      "zone": "Dignified Life",
-      "zone_label": "Dignified Life (partial data)",
+      "zone": "Thriving",
+      "zone_label": "Thriving (partial data)",
       "deprivation": 0.387,
       "strain": 0.396,
       "flourishing": 0.623,
@@ -336,7 +336,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:31.201407+00:00",
+      "computed_at": "2026-06-28T18:11:59.820182+00:00",
       "status": "ok"
     },
     {
@@ -355,7 +355,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:29.682208+00:00",
+      "computed_at": "2026-06-28T18:11:59.819725+00:00",
       "status": "ok"
     },
     {
@@ -376,7 +376,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:31.450629+00:00",
+      "computed_at": "2026-06-28T18:11:59.819900+00:00",
       "status": "ok"
     },
     {
@@ -395,7 +395,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:31.445194+00:00",
+      "computed_at": "2026-06-28T18:11:59.820521+00:00",
       "status": "ok"
     },
     {
@@ -417,7 +417,7 @@
         "FOOD_REVIEW",
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:31.359844+00:00",
+      "computed_at": "2026-06-28T18:11:59.821095+00:00",
       "status": "ok"
     },
     {
@@ -438,7 +438,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:29.562067+00:00",
+      "computed_at": "2026-06-28T18:11:59.818316+00:00",
       "status": "ok"
     },
     {
@@ -457,7 +457,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:29.513561+00:00",
+      "computed_at": "2026-06-28T18:11:59.820920+00:00",
       "status": "ok"
     },
     {
@@ -484,7 +484,7 @@
         "ENERGY_REVIEW",
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:33.406343+00:00",
+      "computed_at": "2026-06-28T18:11:59.821538+00:00",
       "status": "ok"
     },
     {
@@ -507,7 +507,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:33.395167+00:00",
+      "computed_at": "2026-06-28T18:11:59.822676+00:00",
       "status": "ok"
     },
     {
@@ -528,7 +528,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:33.072102+00:00",
+      "computed_at": "2026-06-28T18:11:59.822500+00:00",
       "status": "ok"
     },
     {
@@ -547,7 +547,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:33.209914+00:00",
+      "computed_at": "2026-06-28T18:11:59.822984+00:00",
       "status": "ok"
     },
     {
@@ -571,7 +571,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:31.173417+00:00",
+      "computed_at": "2026-06-28T18:11:59.820365+00:00",
       "status": "ok"
     },
     {
@@ -579,8 +579,8 @@
       "name": "Bhutan",
       "region": "SAS",
       "income": "LMC",
-      "zone": "Dignified Life",
-      "zone_label": "Dignified Life (partial data)",
+      "zone": "Thriving",
+      "zone_label": "Thriving (partial data)",
       "deprivation": 0.314,
       "strain": 0.162,
       "flourishing": 0.668,
@@ -590,7 +590,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:33.438677+00:00",
+      "computed_at": "2026-06-28T18:11:59.823180+00:00",
       "status": "ok"
     },
     {
@@ -609,7 +609,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:33.401912+00:00",
+      "computed_at": "2026-06-28T18:11:59.824469+00:00",
       "status": "ok"
     },
     {
@@ -628,7 +628,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:31.774905+00:00",
+      "computed_at": "2026-06-28T18:11:59.822327+00:00",
       "status": "ok"
     },
     {
@@ -650,7 +650,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:31.555037+00:00",
+      "computed_at": "2026-06-28T18:11:59.821925+00:00",
       "status": "ok"
     },
     {
@@ -669,7 +669,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:34.839615+00:00",
+      "computed_at": "2026-06-28T18:11:59.825257+00:00",
       "status": "ok"
     },
     {
@@ -688,7 +688,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:35.628335+00:00",
+      "computed_at": "2026-06-28T18:11:59.825043+00:00",
       "status": "ok"
     },
     {
@@ -707,7 +707,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:33.589260+00:00",
+      "computed_at": "2026-06-28T18:11:59.823695+00:00",
       "status": "ok"
     },
     {
@@ -726,7 +726,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:36.665747+00:00",
+      "computed_at": "2026-06-28T18:11:59.826848+00:00",
       "status": "ok"
     },
     {
@@ -745,7 +745,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:35.211939+00:00",
+      "computed_at": "2026-06-28T18:11:59.824170+00:00",
       "status": "ok"
     },
     {
@@ -764,7 +764,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:35.126677+00:00",
+      "computed_at": "2026-06-28T18:11:59.826168+00:00",
       "status": "ok"
     },
     {
@@ -783,7 +783,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:35.410916+00:00",
+      "computed_at": "2026-06-28T18:11:59.826506+00:00",
       "status": "ok"
     },
     {
@@ -804,7 +804,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:35.426969+00:00",
+      "computed_at": "2026-06-28T18:11:59.825550+00:00",
       "status": "ok"
     },
     {
@@ -825,7 +825,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:35.428070+00:00",
+      "computed_at": "2026-06-28T18:11:59.825912+00:00",
       "status": "ok"
     },
     {
@@ -844,7 +844,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:36.868096+00:00",
+      "computed_at": "2026-06-28T18:11:59.827073+00:00",
       "status": "ok"
     },
     {
@@ -863,7 +863,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:37.175775+00:00",
+      "computed_at": "2026-06-28T18:11:59.827309+00:00",
       "status": "ok"
     },
     {
@@ -871,8 +871,8 @@
       "name": "Cuba",
       "region": "LCN",
       "income": "UMC",
-      "zone": "Dignified Life",
-      "zone_label": "Dignified Life (UNVERIFIED)",
+      "zone": "Thriving",
+      "zone_label": "Thriving (UNVERIFIED)",
       "deprivation": 0.339,
       "strain": 0.451,
       "flourishing": 0.619,
@@ -885,7 +885,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:37.395440+00:00",
+      "computed_at": "2026-06-28T18:11:59.828880+00:00",
       "status": "ok"
     },
     {
@@ -906,7 +906,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:37.240277+00:00",
+      "computed_at": "2026-06-28T18:11:59.827592+00:00",
       "status": "ok"
     },
     {
@@ -934,7 +934,7 @@
         "CLIMATE_GLOBAL_RISK_REVIEW",
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:37.675043+00:00",
+      "computed_at": "2026-06-28T18:11:59.829067+00:00",
       "status": "ok"
     },
     {
@@ -953,7 +953,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:38.595478+00:00",
+      "computed_at": "2026-06-28T18:11:59.829676+00:00",
       "status": "ok"
     },
     {
@@ -972,7 +972,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:38.550069+00:00",
+      "computed_at": "2026-06-28T18:11:59.829312+00:00",
       "status": "ok"
     },
     {
@@ -991,7 +991,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:39.000120+00:00",
+      "computed_at": "2026-06-28T18:11:59.828535+00:00",
       "status": "ok"
     },
     {
@@ -1014,7 +1014,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:39.122104+00:00",
+      "computed_at": "2026-06-28T18:11:59.828325+00:00",
       "status": "ok"
     },
     {
@@ -1033,7 +1033,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:39.127769+00:00",
+      "computed_at": "2026-06-28T18:11:59.832293+00:00",
       "status": "ok"
     },
     {
@@ -1056,7 +1056,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:39.067625+00:00",
+      "computed_at": "2026-06-28T18:11:59.831646+00:00",
       "status": "ok"
     },
     {
@@ -1075,7 +1075,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:39.192560+00:00",
+      "computed_at": "2026-06-28T18:11:59.830325+00:00",
       "status": "ok"
     },
     {
@@ -1083,8 +1083,8 @@
       "name": "Algeria",
       "region": "MEA",
       "income": "UMC",
-      "zone": "Dignified Life",
-      "zone_label": "Dignified Life (partial data)",
+      "zone": "Thriving",
+      "zone_label": "Thriving (partial data)",
       "deprivation": 0.368,
       "strain": 0.465,
       "flourishing": 0.633,
@@ -1094,7 +1094,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:39.512568+00:00",
+      "computed_at": "2026-06-28T18:11:59.830738+00:00",
       "status": "ok"
     },
     {
@@ -1113,7 +1113,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:40.670222+00:00",
+      "computed_at": "2026-06-28T18:11:59.830536+00:00",
       "status": "ok"
     },
     {
@@ -1132,7 +1132,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:41.069878+00:00",
+      "computed_at": "2026-06-28T18:11:59.833585+00:00",
       "status": "ok"
     },
     {
@@ -1140,8 +1140,8 @@
       "name": "Egypt, Arab Rep.",
       "region": "MEA",
       "income": "LMC",
-      "zone": "Thriving",
-      "zone_label": "Thriving (partial data)",
+      "zone": "Secure",
+      "zone_label": "Secure (partial data)",
       "deprivation": 0.352,
       "strain": 0.417,
       "flourishing": 0.574,
@@ -1151,7 +1151,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:41.325708+00:00",
+      "computed_at": "2026-06-28T18:11:59.831500+00:00",
       "status": "ok"
     },
     {
@@ -1173,7 +1173,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:41.221608+00:00",
+      "computed_at": "2026-06-28T18:11:59.831839+00:00",
       "status": "ok"
     },
     {
@@ -1192,7 +1192,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:41.078107+00:00",
+      "computed_at": "2026-06-28T18:11:59.832771+00:00",
       "status": "ok"
     },
     {
@@ -1211,7 +1211,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:41.006422+00:00",
+      "computed_at": "2026-06-28T18:11:59.832598+00:00",
       "status": "ok"
     },
     {
@@ -1230,7 +1230,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:41.010292+00:00",
+      "computed_at": "2026-06-28T18:11:59.832008+00:00",
       "status": "ok"
     },
     {
@@ -1249,7 +1249,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:41.467585+00:00",
+      "computed_at": "2026-06-28T18:11:59.832962+00:00",
       "status": "ok"
     },
     {
@@ -1271,7 +1271,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:42.890064+00:00",
+      "computed_at": "2026-06-28T18:11:59.834959+00:00",
       "status": "ok"
     },
     {
@@ -1300,7 +1300,7 @@
         "CLIMATE_GLOBAL_RISK_REVIEW",
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:42.797479+00:00",
+      "computed_at": "2026-06-28T18:11:59.835433+00:00",
       "status": "ok"
     },
     {
@@ -1319,7 +1319,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:42.288552+00:00",
+      "computed_at": "2026-06-28T18:11:59.833195+00:00",
       "status": "ok"
     },
     {
@@ -1340,7 +1340,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:42.993783+00:00",
+      "computed_at": "2026-06-28T18:11:59.833967+00:00",
       "status": "ok"
     },
     {
@@ -1359,7 +1359,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:42.891472+00:00",
+      "computed_at": "2026-06-28T18:11:59.834370+00:00",
       "status": "ok"
     },
     {
@@ -1381,7 +1381,7 @@
         "CLIMATE_GLOBAL_RISK_REVIEW",
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:44.822169+00:00",
+      "computed_at": "2026-06-28T18:11:59.837311+00:00",
       "status": "ok"
     },
     {
@@ -1400,7 +1400,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:43.057637+00:00",
+      "computed_at": "2026-06-28T18:11:59.834603+00:00",
       "status": "ok"
     },
     {
@@ -1408,8 +1408,8 @@
       "name": "Ghana",
       "region": "SSF",
       "income": "LMC",
-      "zone": "Dignified Life",
-      "zone_label": "Dignified Life (partial data)",
+      "zone": "Thriving",
+      "zone_label": "Thriving (partial data)",
       "deprivation": 0.399,
       "strain": 0.451,
       "flourishing": 0.679,
@@ -1419,7 +1419,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:43.269360+00:00",
+      "computed_at": "2026-06-28T18:11:59.834777+00:00",
       "status": "ok"
     },
     {
@@ -1447,7 +1447,7 @@
         "CLIMATE_GLOBAL_RISK_REVIEW",
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:43.198414+00:00",
+      "computed_at": "2026-06-28T18:11:59.835113+00:00",
       "status": "ok"
     },
     {
@@ -1455,8 +1455,8 @@
       "name": "Greenland",
       "region": "ECS",
       "income": "HIC",
-      "zone": "Dignified Life",
-      "zone_label": "Dignified Life (UNVERIFIED)",
+      "zone": "Thriving",
+      "zone_label": "Thriving (UNVERIFIED)",
       "deprivation": 0.278,
       "strain": 0.492,
       "flourishing": 0.689,
@@ -1474,7 +1474,7 @@
         "CLIMATE_GLOBAL_RISK_REVIEW",
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:44.924424+00:00",
+      "computed_at": "2026-06-28T18:11:59.836970+00:00",
       "status": "ok"
     },
     {
@@ -1493,7 +1493,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:44.987827+00:00",
+      "computed_at": "2026-06-28T18:11:59.838163+00:00",
       "status": "ok"
     },
     {
@@ -1514,7 +1514,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:43.960136+00:00",
+      "computed_at": "2026-06-28T18:11:59.835961+00:00",
       "status": "ok"
     },
     {
@@ -1536,7 +1536,7 @@
         "FOOD_REVIEW",
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:44.733529+00:00",
+      "computed_at": "2026-06-28T18:11:59.836279+00:00",
       "status": "ok"
     },
     {
@@ -1555,7 +1555,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:44.823200+00:00",
+      "computed_at": "2026-06-28T18:11:59.837144+00:00",
       "status": "ok"
     },
     {
@@ -1563,8 +1563,8 @@
       "name": "Guatemala",
       "region": "LCN",
       "income": "UMC",
-      "zone": "Dignified Life",
-      "zone_label": "Dignified Life (partial data)",
+      "zone": "Thriving",
+      "zone_label": "Thriving (partial data)",
       "deprivation": 0.39,
       "strain": 0.359,
       "flourishing": 0.697,
@@ -1574,7 +1574,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:45.753750+00:00",
+      "computed_at": "2026-06-28T18:11:59.836828+00:00",
       "status": "ok"
     },
     {
@@ -1598,7 +1598,7 @@
         "CLIMATE_GLOBAL_RISK_REVIEW",
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:45.844154+00:00",
+      "computed_at": "2026-06-28T18:11:59.838365+00:00",
       "status": "ok"
     },
     {
@@ -1617,7 +1617,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:45.158181+00:00",
+      "computed_at": "2026-06-28T18:11:59.837547+00:00",
       "status": "ok"
     },
     {
@@ -1636,7 +1636,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:46.487575+00:00",
+      "computed_at": "2026-06-28T18:11:59.839871+00:00",
       "status": "ok"
     },
     {
@@ -1658,7 +1658,7 @@
         "CLIMATE_GLOBAL_RISK_REVIEW",
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:46.811989+00:00",
+      "computed_at": "2026-06-28T18:11:59.839018+00:00",
       "status": "ok"
     },
     {
@@ -1666,8 +1666,8 @@
       "name": "Honduras",
       "region": "LCN",
       "income": "LMC",
-      "zone": "Dignified Life",
-      "zone_label": "Dignified Life (partial data)",
+      "zone": "Thriving",
+      "zone_label": "Thriving (partial data)",
       "deprivation": 0.373,
       "strain": 0.385,
       "flourishing": 0.677,
@@ -1677,7 +1677,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:46.569411+00:00",
+      "computed_at": "2026-06-28T18:11:59.840028+00:00",
       "status": "ok"
     },
     {
@@ -1696,7 +1696,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:47.149554+00:00",
+      "computed_at": "2026-06-28T18:11:59.839252+00:00",
       "status": "ok"
     },
     {
@@ -1717,7 +1717,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:47.028355+00:00",
+      "computed_at": "2026-06-28T18:11:59.838775+00:00",
       "status": "ok"
     },
     {
@@ -1736,7 +1736,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:46.934178+00:00",
+      "computed_at": "2026-06-28T18:11:59.839672+00:00",
       "status": "ok"
     },
     {
@@ -1755,7 +1755,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:47.471818+00:00",
+      "computed_at": "2026-06-28T18:11:59.839467+00:00",
       "status": "ok"
     },
     {
@@ -1774,7 +1774,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:48.406429+00:00",
+      "computed_at": "2026-06-28T18:11:59.843014+00:00",
       "status": "ok"
     },
     {
@@ -1793,7 +1793,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:49.133884+00:00",
+      "computed_at": "2026-06-28T18:11:59.842380+00:00",
       "status": "ok"
     },
     {
@@ -1824,7 +1824,7 @@
         "ECONOMY_WORK_REVIEW",
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:47.639333+00:00",
+      "computed_at": "2026-06-28T18:11:59.840471+00:00",
       "status": "ok"
     },
     {
@@ -1832,8 +1832,8 @@
       "name": "India",
       "region": "SAS",
       "income": "LMC",
-      "zone": "Dignified Life",
-      "zone_label": "Dignified Life (partial data)",
+      "zone": "Thriving",
+      "zone_label": "Thriving (partial data)",
       "deprivation": 0.337,
       "strain": 0.321,
       "flourishing": 0.611,
@@ -1843,7 +1843,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:48.474373+00:00",
+      "computed_at": "2026-06-28T18:11:59.841030+00:00",
       "status": "ok"
     },
     {
@@ -1862,7 +1862,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:49.410797+00:00",
+      "computed_at": "2026-06-28T18:11:59.841197+00:00",
       "status": "ok"
     },
     {
@@ -1870,8 +1870,8 @@
       "name": "Iran, Islamic Rep.",
       "region": "MEA",
       "income": "UMC",
-      "zone": "Dignified Life",
-      "zone_label": "Dignified Life (partial data)",
+      "zone": "Thriving",
+      "zone_label": "Thriving (partial data)",
       "deprivation": 0.331,
       "strain": 0.478,
       "flourishing": 0.661,
@@ -1881,7 +1881,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:48.899674+00:00",
+      "computed_at": "2026-06-28T18:11:59.841777+00:00",
       "status": "ok"
     },
     {
@@ -1900,7 +1900,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:49.163763+00:00",
+      "computed_at": "2026-06-28T18:11:59.841411+00:00",
       "status": "ok"
     },
     {
@@ -1919,7 +1919,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:49.244371+00:00",
+      "computed_at": "2026-06-28T18:11:59.840681+00:00",
       "status": "ok"
     },
     {
@@ -1950,7 +1950,7 @@
         "ENERGY_REVIEW",
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:35.300194+00:00",
+      "computed_at": "2026-06-28T18:11:59.824665+00:00",
       "status": "ok"
     },
     {
@@ -1971,7 +1971,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:49.364094+00:00",
+      "computed_at": "2026-06-28T18:11:59.842812+00:00",
       "status": "ok"
     },
     {
@@ -1979,8 +1979,8 @@
       "name": "Jordan",
       "region": "MEA",
       "income": "LMC",
-      "zone": "Dignified Life",
-      "zone_label": "Dignified Life (partial data)",
+      "zone": "Thriving",
+      "zone_label": "Thriving (partial data)",
       "deprivation": 0.287,
       "strain": 0.367,
       "flourishing": 0.687,
@@ -1990,7 +1990,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:50.066434+00:00",
+      "computed_at": "2026-06-28T18:11:59.842612+00:00",
       "status": "ok"
     },
     {
@@ -2009,7 +2009,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:50.186906+00:00",
+      "computed_at": "2026-06-28T18:11:59.843255+00:00",
       "status": "ok"
     },
     {
@@ -2030,7 +2030,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:50.857747+00:00",
+      "computed_at": "2026-06-28T18:11:59.844341+00:00",
       "status": "ok"
     },
     {
@@ -2038,8 +2038,8 @@
       "name": "Kyrgyz Republic",
       "region": "ECS",
       "income": "LMC",
-      "zone": "Dignified Life",
-      "zone_label": "Dignified Life (partial data)",
+      "zone": "Thriving",
+      "zone_label": "Thriving (partial data)",
       "deprivation": 0.341,
       "strain": 0.385,
       "flourishing": 0.68,
@@ -2049,7 +2049,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:50.956235+00:00",
+      "computed_at": "2026-06-28T18:11:59.844117+00:00",
       "status": "ok"
     },
     {
@@ -2070,7 +2070,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:51.026956+00:00",
+      "computed_at": "2026-06-28T18:11:59.845455+00:00",
       "status": "ok"
     },
     {
@@ -2091,7 +2091,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:51.431727+00:00",
+      "computed_at": "2026-06-28T18:11:59.843663+00:00",
       "status": "ok"
     },
     {
@@ -2112,7 +2112,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:37.065363+00:00",
+      "computed_at": "2026-06-28T18:11:59.828717+00:00",
       "status": "ok"
     },
     {
@@ -2137,7 +2137,7 @@
         "CLIMATE_GLOBAL_RISK_REVIEW",
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:51.070025+00:00",
+      "computed_at": "2026-06-28T18:11:59.845635+00:00",
       "status": "ok"
     },
     {
@@ -2160,7 +2160,7 @@
         "ECONOMY_WORK_REVIEW",
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:04.086945+00:00",
+      "computed_at": "2026-06-28T18:11:59.862870+00:00",
       "status": "ok"
     },
     {
@@ -2179,7 +2179,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:52.239817+00:00",
+      "computed_at": "2026-06-28T18:11:59.844757+00:00",
       "status": "ok"
     },
     {
@@ -2200,7 +2200,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:51.816068+00:00",
+      "computed_at": "2026-06-28T18:11:59.845860+00:00",
       "status": "ok"
     },
     {
@@ -2225,7 +2225,7 @@
         "CLIMATE_GLOBAL_RISK_REVIEW",
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:37.400153+00:00",
+      "computed_at": "2026-06-28T18:11:59.829849+00:00",
       "status": "ok"
     },
     {
@@ -2233,8 +2233,8 @@
       "name": "Kazakhstan",
       "region": "ECS",
       "income": "UMC",
-      "zone": "Dignified Life",
-      "zone_label": "Dignified Life (partial data)",
+      "zone": "Thriving",
+      "zone_label": "Thriving (partial data)",
       "deprivation": 0.297,
       "strain": 0.447,
       "flourishing": 0.692,
@@ -2244,7 +2244,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:50.499318+00:00",
+      "computed_at": "2026-06-28T18:11:59.843864+00:00",
       "status": "ok"
     },
     {
@@ -2263,7 +2263,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:52.726022+00:00",
+      "computed_at": "2026-06-28T18:11:59.846260+00:00",
       "status": "ok"
     },
     {
@@ -2282,7 +2282,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:52.516179+00:00",
+      "computed_at": "2026-06-28T18:11:59.846479+00:00",
       "status": "ok"
     },
     {
@@ -2290,8 +2290,8 @@
       "name": "St. Lucia",
       "region": "LCN",
       "income": "UMC",
-      "zone": "Dignified Life",
-      "zone_label": "Dignified Life (UNVERIFIED)",
+      "zone": "Thriving",
+      "zone_label": "Thriving (UNVERIFIED)",
       "deprivation": 0.4,
       "strain": 0.371,
       "flourishing": 0.686,
@@ -2304,7 +2304,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:53.095565+00:00",
+      "computed_at": "2026-06-28T18:11:59.849170+00:00",
       "status": "ok"
     },
     {
@@ -2331,7 +2331,7 @@
         "ECONOMY_WORK_REVIEW",
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:53.123361+00:00",
+      "computed_at": "2026-06-28T18:11:59.847783+00:00",
       "status": "ok"
     },
     {
@@ -2350,7 +2350,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:53.409782+00:00",
+      "computed_at": "2026-06-28T18:11:59.847431+00:00",
       "status": "ok"
     },
     {
@@ -2371,7 +2371,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:52.841816+00:00",
+      "computed_at": "2026-06-28T18:11:59.846920+00:00",
       "status": "ok"
     },
     {
@@ -2390,7 +2390,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:53.893937+00:00",
+      "computed_at": "2026-06-28T18:11:59.847635+00:00",
       "status": "ok"
     },
     {
@@ -2409,7 +2409,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:54.664164+00:00",
+      "computed_at": "2026-06-28T18:11:59.848615+00:00",
       "status": "ok"
     },
     {
@@ -2428,7 +2428,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:54.696913+00:00",
+      "computed_at": "2026-06-28T18:11:59.848981+00:00",
       "status": "ok"
     },
     {
@@ -2447,7 +2447,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:54.597976+00:00",
+      "computed_at": "2026-06-28T18:11:59.847947+00:00",
       "status": "ok"
     },
     {
@@ -2469,7 +2469,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:53.395760+00:00",
+      "computed_at": "2026-06-28T18:11:59.846102+00:00",
       "status": "ok"
     },
     {
@@ -2477,8 +2477,8 @@
       "name": "Morocco",
       "region": "MEA",
       "income": "LMC",
-      "zone": "Dignified Life",
-      "zone_label": "Dignified Life (partial data)",
+      "zone": "Thriving",
+      "zone_label": "Thriving (partial data)",
       "deprivation": 0.34,
       "strain": 0.395,
       "flourishing": 0.675,
@@ -2488,7 +2488,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:55.060982+00:00",
+      "computed_at": "2026-06-28T18:11:59.850666+00:00",
       "status": "ok"
     },
     {
@@ -2515,7 +2515,7 @@
         "ECONOMY_WORK_REVIEW",
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:55.599101+00:00",
+      "computed_at": "2026-06-28T18:11:59.849908+00:00",
       "status": "ok"
     },
     {
@@ -2534,7 +2534,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:55.559690+00:00",
+      "computed_at": "2026-06-28T18:11:59.850503+00:00",
       "status": "ok"
     },
     {
@@ -2553,7 +2553,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:58.437173+00:00",
+      "computed_at": "2026-06-28T18:11:59.853348+00:00",
       "status": "ok"
     },
     {
@@ -2583,7 +2583,7 @@
         "ECONOMY_WORK_REVIEW",
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:55.285173+00:00",
+      "computed_at": "2026-06-28T18:11:59.850877+00:00",
       "status": "ok"
     },
     {
@@ -2602,7 +2602,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:56.566172+00:00",
+      "computed_at": "2026-06-28T18:11:59.851124+00:00",
       "status": "ok"
     },
     {
@@ -2610,8 +2610,8 @@
       "name": "Marshall Islands",
       "region": "EAS",
       "income": "UMC",
-      "zone": "Dignified Life",
-      "zone_label": "Dignified Life (UNVERIFIED)",
+      "zone": "Thriving",
+      "zone_label": "Thriving (UNVERIFIED)",
       "deprivation": 0.377,
       "strain": 0.484,
       "flourishing": 0.637,
@@ -2626,7 +2626,7 @@
         "CLIMATE_GLOBAL_RISK_REVIEW",
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:57.344410+00:00",
+      "computed_at": "2026-06-28T18:11:59.850126+00:00",
       "status": "ok"
     },
     {
@@ -2645,7 +2645,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:57.625210+00:00",
+      "computed_at": "2026-06-28T18:11:59.852740+00:00",
       "status": "ok"
     },
     {
@@ -2666,7 +2666,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:57.114381+00:00",
+      "computed_at": "2026-06-28T18:11:59.853801+00:00",
       "status": "ok"
     },
     {
@@ -2685,7 +2685,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:57.363572+00:00",
+      "computed_at": "2026-06-28T18:11:59.852927+00:00",
       "status": "ok"
     },
     {
@@ -2704,7 +2704,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:58.639449+00:00",
+      "computed_at": "2026-06-28T18:11:59.854817+00:00",
       "status": "ok"
     },
     {
@@ -2728,7 +2728,7 @@
         "CLIMATE_GLOBAL_RISK_REVIEW",
         "ENERGY_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:55.034367+00:00",
+      "computed_at": "2026-06-28T18:11:59.848828+00:00",
       "status": "ok"
     },
     {
@@ -2736,8 +2736,8 @@
       "name": "Northern Mariana Islands",
       "region": "EAS",
       "income": "HIC",
-      "zone": "Thriving",
-      "zone_label": "Thriving (UNVERIFIED)",
+      "zone": "Secure",
+      "zone_label": "Secure (UNVERIFIED)",
       "deprivation": 0.133,
       "strain": 0.528,
       "flourishing": 0.5,
@@ -2758,7 +2758,7 @@
         "ECONOMY_WORK_REVIEW",
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:58.469741+00:00",
+      "computed_at": "2026-06-28T18:11:59.853633+00:00",
       "status": "ok"
     },
     {
@@ -2779,7 +2779,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:59.022182+00:00",
+      "computed_at": "2026-06-28T18:11:59.855421+00:00",
       "status": "ok"
     },
     {
@@ -2799,7 +2799,7 @@
         "CLIMATE_GLOBAL_RISK_REVIEW",
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:57.275384+00:00",
+      "computed_at": "2026-06-28T18:11:59.852332+00:00",
       "status": "ok"
     },
     {
@@ -2820,7 +2820,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:59.101567+00:00",
+      "computed_at": "2026-06-28T18:11:59.855906+00:00",
       "status": "ok"
     },
     {
@@ -2841,7 +2841,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:56.680652+00:00",
+      "computed_at": "2026-06-28T18:11:59.851942+00:00",
       "status": "ok"
     },
     {
@@ -2860,7 +2860,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:59.062185+00:00",
+      "computed_at": "2026-06-28T18:11:59.854226+00:00",
       "status": "ok"
     },
     {
@@ -2879,7 +2879,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:56.655885+00:00",
+      "computed_at": "2026-06-28T18:11:59.851284+00:00",
       "status": "ok"
     },
     {
@@ -2898,7 +2898,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:59.653800+00:00",
+      "computed_at": "2026-06-28T18:11:59.855620+00:00",
       "status": "ok"
     },
     {
@@ -2917,7 +2917,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:02:58.854825+00:00",
+      "computed_at": "2026-06-28T18:11:59.853170+00:00",
       "status": "ok"
     },
     {
@@ -2938,7 +2938,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:00.080772+00:00",
+      "computed_at": "2026-06-28T18:11:59.855018+00:00",
       "status": "ok"
     },
     {
@@ -2960,7 +2960,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:00.144414+00:00",
+      "computed_at": "2026-06-28T18:11:59.856102+00:00",
       "status": "ok"
     },
     {
@@ -2981,7 +2981,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:00.363132+00:00",
+      "computed_at": "2026-06-28T18:11:59.856326+00:00",
       "status": "ok"
     },
     {
@@ -3000,7 +3000,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:00.738643+00:00",
+      "computed_at": "2026-06-28T18:11:59.856689+00:00",
       "status": "ok"
     },
     {
@@ -3008,8 +3008,8 @@
       "name": "Nicaragua",
       "region": "LCN",
       "income": "LMC",
-      "zone": "Thriving",
-      "zone_label": "Thriving (UNVERIFIED)",
+      "zone": "Secure",
+      "zone_label": "Secure (UNVERIFIED)",
       "deprivation": 0.379,
       "strain": 0.407,
       "flourishing": 0.543,
@@ -3021,7 +3021,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:00.700095+00:00",
+      "computed_at": "2026-06-28T18:11:59.856912+00:00",
       "status": "ok"
     },
     {
@@ -3040,7 +3040,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:00.786291+00:00",
+      "computed_at": "2026-06-28T18:11:59.857585+00:00",
       "status": "ok"
     },
     {
@@ -3059,7 +3059,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:01.338956+00:00",
+      "computed_at": "2026-06-28T18:11:59.859156+00:00",
       "status": "ok"
     },
     {
@@ -3078,7 +3078,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:01.410185+00:00",
+      "computed_at": "2026-06-28T18:11:59.858758+00:00",
       "status": "ok"
     },
     {
@@ -3101,7 +3101,7 @@
         "CLIMATE_GLOBAL_RISK_REVIEW",
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:01.817814+00:00",
+      "computed_at": "2026-06-28T18:11:59.858071+00:00",
       "status": "ok"
     },
     {
@@ -3122,7 +3122,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:02.236996+00:00",
+      "computed_at": "2026-06-28T18:11:59.857807+00:00",
       "status": "ok"
     },
     {
@@ -3143,7 +3143,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:02.091530+00:00",
+      "computed_at": "2026-06-28T18:11:59.858504+00:00",
       "status": "ok"
     },
     {
@@ -3164,7 +3164,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:02.475312+00:00",
+      "computed_at": "2026-06-28T18:11:59.861235+00:00",
       "status": "ok"
     },
     {
@@ -3183,7 +3183,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:02.764393+00:00",
+      "computed_at": "2026-06-28T18:11:59.860609+00:00",
       "status": "ok"
     },
     {
@@ -3206,7 +3206,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:05.452181+00:00",
+      "computed_at": "2026-06-28T18:11:59.864336+00:00",
       "status": "ok"
     },
     {
@@ -3227,7 +3227,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:03.635084+00:00",
+      "computed_at": "2026-06-28T18:11:59.861039+00:00",
       "status": "ok"
     },
     {
@@ -3246,7 +3246,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:03.003488+00:00",
+      "computed_at": "2026-06-28T18:11:59.860868+00:00",
       "status": "ok"
     },
     {
@@ -3265,7 +3265,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:02.623414+00:00",
+      "computed_at": "2026-06-28T18:11:59.860440+00:00",
       "status": "ok"
     },
     {
@@ -3284,7 +3284,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:03.746222+00:00",
+      "computed_at": "2026-06-28T18:11:59.861455+00:00",
       "status": "ok"
     },
     {
@@ -3307,7 +3307,7 @@
         "CLIMATE_GLOBAL_RISK_REVIEW",
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:03.907367+00:00",
+      "computed_at": "2026-06-28T18:11:59.861707+00:00",
       "status": "ok"
     },
     {
@@ -3327,7 +3327,7 @@
         "CLIMATE_GLOBAL_RISK_REVIEW",
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:04.600699+00:00",
+      "computed_at": "2026-06-28T18:11:59.863577+00:00",
       "status": "ok"
     },
     {
@@ -3346,7 +3346,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:04.191490+00:00",
+      "computed_at": "2026-06-28T18:11:59.862188+00:00",
       "status": "ok"
     },
     {
@@ -3370,7 +3370,7 @@
         "CLIMATE_GLOBAL_RISK_REVIEW",
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:03.427197+00:00",
+      "computed_at": "2026-06-28T18:11:59.860285+00:00",
       "status": "ok"
     },
     {
@@ -3389,7 +3389,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:04.326539+00:00",
+      "computed_at": "2026-06-28T18:11:59.862383+00:00",
       "status": "ok"
     },
     {
@@ -3397,8 +3397,8 @@
       "name": "Qatar",
       "region": "MEA",
       "income": "HIC",
-      "zone": "Dignified Life",
-      "zone_label": "Dignified Life (partial data)",
+      "zone": "Thriving",
+      "zone_label": "Thriving (partial data)",
       "deprivation": 0.177,
       "strain": 0.382,
       "flourishing": 0.679,
@@ -3408,7 +3408,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:05.348282+00:00",
+      "computed_at": "2026-06-28T18:11:59.863342+00:00",
       "status": "ok"
     },
     {
@@ -3427,7 +3427,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:05.370084+00:00",
+      "computed_at": "2026-06-28T18:11:59.863167+00:00",
       "status": "ok"
     },
     {
@@ -3446,7 +3446,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:07.746094+00:00",
+      "computed_at": "2026-06-28T18:11:59.868242+00:00",
       "status": "ok"
     },
     {
@@ -3465,7 +3465,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:05.739370+00:00",
+      "computed_at": "2026-06-28T18:11:59.865210+00:00",
       "status": "ok"
     },
     {
@@ -3486,7 +3486,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:05.922566+00:00",
+      "computed_at": "2026-06-28T18:11:59.864542+00:00",
       "status": "ok"
     },
     {
@@ -3508,7 +3508,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:05.823200+00:00",
+      "computed_at": "2026-06-28T18:11:59.865037+00:00",
       "status": "ok"
     },
     {
@@ -3529,7 +3529,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:06.971173+00:00",
+      "computed_at": "2026-06-28T18:11:59.865393+00:00",
       "status": "ok"
     },
     {
@@ -3548,7 +3548,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:09.462408+00:00",
+      "computed_at": "2026-06-28T18:11:59.871024+00:00",
       "status": "ok"
     },
     {
@@ -3569,7 +3569,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:05.918879+00:00",
+      "computed_at": "2026-06-28T18:11:59.866449+00:00",
       "status": "ok"
     },
     {
@@ -3588,7 +3588,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:09.062867+00:00",
+      "computed_at": "2026-06-28T18:11:59.869782+00:00",
       "status": "ok"
     },
     {
@@ -3610,7 +3610,7 @@
         "FOOD_REVIEW",
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:07.093983+00:00",
+      "computed_at": "2026-06-28T18:11:59.866228+00:00",
       "status": "ok"
     },
     {
@@ -3629,7 +3629,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:08.980008+00:00",
+      "computed_at": "2026-06-28T18:11:59.870014+00:00",
       "status": "ok"
     },
     {
@@ -3648,7 +3648,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:08.999518+00:00",
+      "computed_at": "2026-06-28T18:11:59.868932+00:00",
       "status": "ok"
     },
     {
@@ -3667,7 +3667,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:07.313402+00:00",
+      "computed_at": "2026-06-28T18:11:59.866612+00:00",
       "status": "ok"
     },
     {
@@ -3692,7 +3692,7 @@
         "ENERGY_REVIEW",
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:07.465692+00:00",
+      "computed_at": "2026-06-28T18:11:59.867821+00:00",
       "status": "ok"
     },
     {
@@ -3711,7 +3711,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:06.233397+00:00",
+      "computed_at": "2026-06-28T18:11:59.865848+00:00",
       "status": "ok"
     },
     {
@@ -3733,7 +3733,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:07.532130+00:00",
+      "computed_at": "2026-06-28T18:11:59.867624+00:00",
       "status": "ok"
     },
     {
@@ -3752,7 +3752,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:09.083055+00:00",
+      "computed_at": "2026-06-28T18:11:59.868450+00:00",
       "status": "ok"
     },
     {
@@ -3773,7 +3773,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:07.816365+00:00",
+      "computed_at": "2026-06-28T18:11:59.869297+00:00",
       "status": "ok"
     },
     {
@@ -3792,7 +3792,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:08.576481+00:00",
+      "computed_at": "2026-06-28T18:11:59.868687+00:00",
       "status": "ok"
     },
     {
@@ -3800,8 +3800,8 @@
       "name": "El Salvador",
       "region": "LCN",
       "income": "UMC",
-      "zone": "Dignified Life",
-      "zone_label": "Dignified Life (UNVERIFIED)",
+      "zone": "Thriving",
+      "zone_label": "Thriving (UNVERIFIED)",
       "deprivation": 0.319,
       "strain": 0.351,
       "flourishing": 0.677,
@@ -3813,7 +3813,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:07.348499+00:00",
+      "computed_at": "2026-06-28T18:11:59.867445+00:00",
       "status": "ok"
     },
     {
@@ -3842,7 +3842,7 @@
         "CLIMATE_GLOBAL_RISK_REVIEW",
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:09.333469+00:00",
+      "computed_at": "2026-06-28T18:11:59.870203+00:00",
       "status": "ok"
     },
     {
@@ -3863,7 +3863,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:10.143982+00:00",
+      "computed_at": "2026-06-28T18:11:59.871217+00:00",
       "status": "ok"
     },
     {
@@ -3882,7 +3882,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:09.130380+00:00",
+      "computed_at": "2026-06-28T18:11:59.869128+00:00",
       "status": "ok"
     },
     {
@@ -3890,8 +3890,8 @@
       "name": "Turks and Caicos Islands",
       "region": "LCN",
       "income": "HIC",
-      "zone": "Dignified Life",
-      "zone_label": "Dignified Life (UNVERIFIED)",
+      "zone": "Thriving",
+      "zone_label": "Thriving (UNVERIFIED)",
       "deprivation": 0.26,
       "strain": 0.441,
       "flourishing": 0.604,
@@ -3908,7 +3908,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:10.626012+00:00",
+      "computed_at": "2026-06-28T18:11:59.870692+00:00",
       "status": "ok"
     },
     {
@@ -3927,7 +3927,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:11.113710+00:00",
+      "computed_at": "2026-06-28T18:11:59.871461+00:00",
       "status": "ok"
     },
     {
@@ -3946,7 +3946,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:10.771221+00:00",
+      "computed_at": "2026-06-28T18:11:59.870513+00:00",
       "status": "ok"
     },
     {
@@ -3967,7 +3967,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:11.009130+00:00",
+      "computed_at": "2026-06-28T18:11:59.872631+00:00",
       "status": "ok"
     },
     {
@@ -3975,8 +3975,8 @@
       "name": "Tajikistan",
       "region": "ECS",
       "income": "LMC",
-      "zone": "Thriving",
-      "zone_label": "Thriving (partial data)",
+      "zone": "Secure",
+      "zone_label": "Secure (partial data)",
       "deprivation": 0.351,
       "strain": 0.379,
       "flourishing": 0.532,
@@ -3986,7 +3986,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:10.993854+00:00",
+      "computed_at": "2026-06-28T18:11:59.872413+00:00",
       "status": "ok"
     },
     {
@@ -4007,7 +4007,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:11.056464+00:00",
+      "computed_at": "2026-06-28T18:11:59.875955+00:00",
       "status": "ok"
     },
     {
@@ -4015,8 +4015,8 @@
       "name": "Turkmenistan",
       "region": "ECS",
       "income": "UMC",
-      "zone": "Thriving",
-      "zone_label": "Thriving (partial data)",
+      "zone": "Secure",
+      "zone_label": "Secure (partial data)",
       "deprivation": 0.363,
       "strain": 0.541,
       "flourishing": 0.56,
@@ -4026,7 +4026,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:11.160686+00:00",
+      "computed_at": "2026-06-28T18:11:59.873293+00:00",
       "status": "ok"
     },
     {
@@ -4034,8 +4034,8 @@
       "name": "Tunisia",
       "region": "MEA",
       "income": "LMC",
-      "zone": "Dignified Life",
-      "zone_label": "Dignified Life (partial data)",
+      "zone": "Thriving",
+      "zone_label": "Thriving (partial data)",
       "deprivation": 0.353,
       "strain": 0.411,
       "flourishing": 0.699,
@@ -4045,7 +4045,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:12.587090+00:00",
+      "computed_at": "2026-06-28T18:11:59.874826+00:00",
       "status": "ok"
     },
     {
@@ -4067,7 +4067,7 @@
         "FOOD_REVIEW",
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:12.152779+00:00",
+      "computed_at": "2026-06-28T18:11:59.874592+00:00",
       "status": "ok"
     },
     {
@@ -4075,8 +4075,8 @@
       "name": "Turkiye",
       "region": "ECS",
       "income": "UMC",
-      "zone": "Dignified Life",
-      "zone_label": "Dignified Life (UNVERIFIED)",
+      "zone": "Thriving",
+      "zone_label": "Thriving (UNVERIFIED)",
       "deprivation": 0.298,
       "strain": 0.393,
       "flourishing": 0.695,
@@ -4088,7 +4088,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:12.616122+00:00",
+      "computed_at": "2026-06-28T18:11:59.874152+00:00",
       "status": "ok"
     },
     {
@@ -4107,7 +4107,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:12.244023+00:00",
+      "computed_at": "2026-06-28T18:11:59.872920+00:00",
       "status": "ok"
     },
     {
@@ -4130,7 +4130,7 @@
         "CLIMATE_GLOBAL_RISK_REVIEW",
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:12.838362+00:00",
+      "computed_at": "2026-06-28T18:11:59.875734+00:00",
       "status": "ok"
     },
     {
@@ -4149,7 +4149,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:12.854012+00:00",
+      "computed_at": "2026-06-28T18:11:59.873731+00:00",
       "status": "ok"
     },
     {
@@ -4168,7 +4168,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:12.726515+00:00",
+      "computed_at": "2026-06-28T18:11:59.877101+00:00",
       "status": "ok"
     },
     {
@@ -4187,7 +4187,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:13.061524+00:00",
+      "computed_at": "2026-06-28T18:11:59.873930+00:00",
       "status": "ok"
     },
     {
@@ -4206,7 +4206,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:14.258521+00:00",
+      "computed_at": "2026-06-28T18:11:59.876737+00:00",
       "status": "ok"
     },
     {
@@ -4227,7 +4227,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:13.838822+00:00",
+      "computed_at": "2026-06-28T18:11:59.876567+00:00",
       "status": "ok"
     },
     {
@@ -4235,8 +4235,8 @@
       "name": "Uzbekistan",
       "region": "ECS",
       "income": "LMC",
-      "zone": "Dignified Life",
-      "zone_label": "Dignified Life (partial data)",
+      "zone": "Thriving",
+      "zone_label": "Thriving (partial data)",
       "deprivation": 0.328,
       "strain": 0.477,
       "flourishing": 0.695,
@@ -4246,7 +4246,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:14.324592+00:00",
+      "computed_at": "2026-06-28T18:11:59.878696+00:00",
       "status": "ok"
     },
     {
@@ -4269,7 +4269,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:14.252162+00:00",
+      "computed_at": "2026-06-28T18:11:59.877495+00:00",
       "status": "ok"
     },
     {
@@ -4277,8 +4277,8 @@
       "name": "Venezuela, RB",
       "region": "LCN",
       "income": "INX",
-      "zone": "Dignified Life",
-      "zone_label": "Dignified Life (UNVERIFIED)",
+      "zone": "Thriving",
+      "zone_label": "Thriving (UNVERIFIED)",
       "deprivation": 0.347,
       "strain": 0.404,
       "flourishing": 0.672,
@@ -4290,7 +4290,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:14.684615+00:00",
+      "computed_at": "2026-06-28T18:11:59.877746+00:00",
       "status": "ok"
     },
     {
@@ -4319,7 +4319,7 @@
         "CLIMATE_GLOBAL_RISK_REVIEW",
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:14.451950+00:00",
+      "computed_at": "2026-06-28T18:11:59.876926+00:00",
       "status": "ok"
     },
     {
@@ -4344,7 +4344,7 @@
         "CLIMATE_GLOBAL_RISK_REVIEW",
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:14.496013+00:00",
+      "computed_at": "2026-06-28T18:11:59.878893+00:00",
       "status": "ok"
     },
     {
@@ -4352,8 +4352,8 @@
       "name": "Viet Nam",
       "region": "EAS",
       "income": "LMC",
-      "zone": "Dignified Life",
-      "zone_label": "Dignified Life (partial data)",
+      "zone": "Thriving",
+      "zone_label": "Thriving (partial data)",
       "deprivation": 0.318,
       "strain": 0.335,
       "flourishing": 0.68,
@@ -4363,7 +4363,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:14.787310+00:00",
+      "computed_at": "2026-06-28T18:11:59.880618+00:00",
       "status": "ok"
     },
     {
@@ -4382,7 +4382,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:15.648518+00:00",
+      "computed_at": "2026-06-28T18:11:59.879427+00:00",
       "status": "ok"
     },
     {
@@ -4390,8 +4390,8 @@
       "name": "Samoa",
       "region": "EAS",
       "income": "UMC",
-      "zone": "Dignified Life",
-      "zone_label": "Dignified Life (partial data)",
+      "zone": "Thriving",
+      "zone_label": "Thriving (partial data)",
       "deprivation": 0.287,
       "strain": 0.282,
       "flourishing": 0.612,
@@ -4403,7 +4403,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:16.100683+00:00",
+      "computed_at": "2026-06-28T18:11:59.879593+00:00",
       "status": "ok"
     },
     {
@@ -4427,7 +4427,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:15.904621+00:00",
+      "computed_at": "2026-06-28T18:11:59.880736+00:00",
       "status": "ok"
     },
     {
@@ -4448,7 +4448,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:16.097806+00:00",
+      "computed_at": "2026-06-28T18:11:59.880463+00:00",
       "status": "ok"
     },
     {
@@ -4467,7 +4467,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:16.078886+00:00",
+      "computed_at": "2026-06-28T18:11:59.880124+00:00",
       "status": "ok"
     },
     {
@@ -4488,7 +4488,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:16.168263+00:00",
+      "computed_at": "2026-06-28T18:11:59.880296+00:00",
       "status": "ok"
     },
     {
@@ -4507,7 +4507,7 @@
       "suspect_axes": [
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
-      "computed_at": "2026-06-28T18:03:16.499139+00:00",
+      "computed_at": "2026-06-28T18:11:59.880882+00:00",
       "status": "ok"
     }
   ]
