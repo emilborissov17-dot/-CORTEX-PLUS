@@ -61,20 +61,21 @@ def _run_one(c: dict) -> dict:
         p  = result["profile"]
         dq = result["data_quality"]
         return {
-            "iso2":       iso2,
-            "name":       c["name"],
-            "region":     c["region"],
-            "income":     c["income"],
-            "zone":       p.zone,
-            "deprivation":  round(p.deprivation,  3),
-            "strain":       round(p.strain,       3),
-            "flourishing":  round(p.flourishing,  3),
-            "confidence":   dq["confidence"],
-            "completeness": dq["summary"],
-            "null_axes":    dq["null_axes"],
-            "suspect_axes": [ax for ax, _ in dq["suspect_axes"]],
-            "computed_at":  result["computed_at"],
-            "status":       "ok",
+            "iso2":        iso2,
+            "name":        c["name"],
+            "region":      c["region"],
+            "income":      c["income"],
+            "zone":        p.zone,
+            "zone_label":  result["zone_label"],
+            "deprivation": round(p.deprivation,  3),
+            "strain":      round(p.strain,       3),
+            "flourishing": round(p.flourishing,  3),
+            "confidence":  dq["confidence"],
+            "completeness":dq["summary"],
+            "null_axes":   dq["null_axes"],
+            "suspect_axes":[ax for ax, _ in dq["suspect_axes"]],
+            "computed_at": result["computed_at"],
+            "status":      "ok",
         }
     except Exception as e:
         return {
@@ -92,11 +93,21 @@ def _run_one(c: dict) -> dict:
 
 def run_batch(countries: list[dict], resume: bool = False) -> list[dict]:
     """Run all countries with ThreadPoolExecutor; print live progress."""
-    # Resume: skip already-computed
+    def _make_zone_label(r: dict) -> str:
+        zone, conf = r.get("zone", "UNKNOWN"), r.get("confidence", "?")
+        if conf == "HIGH":   return zone
+        if conf == "MEDIUM": return f"{zone} (partial data)"
+        return f"{zone} (UNVERIFIED)"
+
+    # Resume: skip already-computed; backfill zone_label for older records
     done: dict[str, dict] = {}
     if resume and OUTPUT_FILE.exists():
         prev = json.loads(OUTPUT_FILE.read_text(encoding="utf-8"))
-        done = {r["iso2"]: r for r in prev.get("countries", []) if r.get("status") == "ok"}
+        for r in prev.get("countries", []):
+            if r.get("status") == "ok":
+                if "zone_label" not in r:
+                    r["zone_label"] = _make_zone_label(r)
+                done[r["iso2"]] = r
         print(f"[resume] {len(done)} countries already computed — skipping")
 
     todo = [c for c in countries if c["iso2"] not in done]
@@ -165,13 +176,22 @@ def print_summary(results: list[dict]) -> None:
     print(f"  OK         : {len(ok)}")
     print(f"  Errors     : {len(results) - len(ok)}")
 
-    print("\n── Zone distribution ──")
-    for z in ZONE_ORDER:
-        n = zones.get(z, 0)
+    # Zone distribution — by zone_label (confidence embedded)
+    label_counts = Counter(r.get("zone_label", r["zone"]) for r in ok)
+    LABEL_ORDER = [
+        "In Crisis (UNVERIFIED)", "In Crisis (partial data)", "In Crisis",
+        "Precarious (UNVERIFIED)", "Precarious (partial data)", "Precarious",
+        "Secure (UNVERIFIED)", "Secure (partial data)", "Secure",
+        "Thriving (UNVERIFIED)", "Thriving (partial data)", "Thriving",
+        "Dignified Life (UNVERIFIED)", "Dignified Life (partial data)", "Dignified Life",
+        "UNKNOWN", "ERROR",
+    ]
+    print("\n── Zone distribution (confidence embedded) ──")
+    for lbl in LABEL_ORDER:
+        n = label_counts.get(lbl, 0)
         if n:
-            bar = "█" * n
             pct = 100 * n / max(len(ok), 1)
-            print(f"  {z:<20}  {n:>3}  ({pct:4.1f}%)  {bar}")
+            print(f"  {lbl:<40}  {n:>3}  ({pct:4.1f}%)")
 
     print("\n── Confidence distribution ──")
     for lvl in ["HIGH", "MEDIUM", "LOW", "FAILED"]:
@@ -186,16 +206,6 @@ def print_summary(results: list[dict]) -> None:
     print(f"\n  Reliable (HIGH+MEDIUM) : {reliable}  ({100*reliable/max(len(ok),1):.1f}%)")
     print(f"  LOW CONFIDENCE         : {low_conf}  ({100*low_conf/max(len(ok),1):.1f}%)")
     print(f"  → Zone labels unreliable for {low_conf} countries")
-
-    print("\n── Zones by confidence level ──")
-    for conf in ["HIGH", "MEDIUM", "LOW"]:
-        subset = [r for r in ok if r["confidence"] == conf]
-        if not subset:
-            continue
-        z_sub = Counter(r["zone"] for r in subset)
-        parts = ", ".join(f"{z}: {n}" for z, n in sorted(z_sub.items(),
-                          key=lambda x: ZONE_ORDER.index(x[0]) if x[0] in ZONE_ORDER else 99))
-        print(f"  {conf:<8}: {parts}")
 
     print("\n── Suspect axes (most common) ──")
     from collections import Counter as C2

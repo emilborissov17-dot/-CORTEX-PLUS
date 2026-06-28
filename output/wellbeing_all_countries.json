@@ -1,5 +1,5 @@
 {
-  "computed_at": "2026-06-28T12:19:07.699731+00:00",
+  "computed_at": "2026-06-28T12:34:03.518043+00:00",
   "total": 217,
   "countries": [
     {
@@ -23,7 +23,8 @@
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
       "computed_at": "2026-06-28T12:09:57.219268+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (UNVERIFIED)"
     },
     {
       "iso2": "AE",
@@ -41,7 +42,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:09:58.130567+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "AF",
@@ -61,7 +63,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:09:56.147022+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (partial data)"
     },
     {
       "iso2": "AG",
@@ -83,7 +86,8 @@
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
       "computed_at": "2026-06-28T12:10:10.796793+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (UNVERIFIED)"
     },
     {
       "iso2": "AL",
@@ -101,7 +105,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:09:57.141034+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "AM",
@@ -119,7 +124,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:09:57.164067+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "AO",
@@ -139,7 +145,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:09:57.043667+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (UNVERIFIED)"
     },
     {
       "iso2": "AR",
@@ -159,7 +166,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:09:56.855628+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (UNVERIFIED)"
     },
     {
       "iso2": "AS",
@@ -183,7 +191,8 @@
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
       "computed_at": "2026-06-28T12:10:08.985878+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (UNVERIFIED)"
     },
     {
       "iso2": "AT",
@@ -203,7 +212,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:10:10.638033+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "AU",
@@ -224,7 +234,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:10:11.909666+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (UNVERIFIED)"
     },
     {
       "iso2": "AW",
@@ -246,7 +257,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:09:56.647441+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (UNVERIFIED)"
     },
     {
       "iso2": "AZ",
@@ -264,7 +276,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:10:10.149699+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "BA",
@@ -282,7 +295,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:10:23.915628+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "BB",
@@ -302,7 +316,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:10:38.135315+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (UNVERIFIED)"
     },
     {
       "iso2": "BD",
@@ -320,7 +335,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:10:24.005475+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "BE",
@@ -340,7 +356,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:10:10.489565+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "BF",
@@ -360,7 +377,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:10:22.822765+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (UNVERIFIED)"
     },
     {
       "iso2": "BG",
@@ -378,7 +396,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:10:10.490104+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "BH",
@@ -399,7 +418,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:10:24.921336+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (UNVERIFIED)"
     },
     {
       "iso2": "BI",
@@ -419,7 +439,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:10:11.645667+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (UNVERIFIED)"
     },
     {
       "iso2": "BJ",
@@ -437,7 +458,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:10:11.727732+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (partial data)"
     },
     {
       "iso2": "BM",
@@ -462,7 +484,8 @@
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
       "computed_at": "2026-06-28T12:10:25.781820+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (UNVERIFIED)"
     },
     {
       "iso2": "BN",
@@ -483,7 +506,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:10:37.905849+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (UNVERIFIED)"
     },
     {
       "iso2": "BO",
@@ -503,7 +527,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:10:35.775089+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (UNVERIFIED)"
     },
     {
       "iso2": "BR",
@@ -521,7 +546,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:10:36.038944+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "BS",
@@ -543,7 +569,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:10:23.775272+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (UNVERIFIED)"
     },
     {
       "iso2": "BT",
@@ -561,7 +588,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:10:38.431291+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "BW",
@@ -579,7 +607,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:10:39.598932+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (partial data)"
     },
     {
       "iso2": "BY",
@@ -597,7 +626,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:10:24.536301+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "BZ",
@@ -617,7 +647,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:10:25.268621+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (UNVERIFIED)"
     },
     {
       "iso2": "CA",
@@ -637,7 +668,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:10:40.767974+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "CD",
@@ -655,7 +687,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:10:53.712654+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (partial data)"
     },
     {
       "iso2": "CF",
@@ -673,7 +706,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:10:39.740228+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (partial data)"
     },
     {
       "iso2": "CG",
@@ -691,7 +725,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:10:54.562220+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (partial data)"
     },
     {
       "iso2": "CH",
@@ -711,7 +746,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:10:49.246166+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "CI",
@@ -729,7 +765,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:10:52.897538+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (partial data)"
     },
     {
       "iso2": "CL",
@@ -747,7 +784,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:10:52.061719+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "CM",
@@ -767,7 +805,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:10:54.396618+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (UNVERIFIED)"
     },
     {
       "iso2": "CN",
@@ -787,7 +826,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:10:51.142003+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (UNVERIFIED)"
     },
     {
       "iso2": "CO",
@@ -805,7 +845,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:11:04.432809+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "CR",
@@ -823,7 +864,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:11:05.822047+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "CU",
@@ -844,7 +886,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:11:06.680749+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (UNVERIFIED)"
     },
     {
       "iso2": "CV",
@@ -864,7 +907,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:11:06.037327+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (UNVERIFIED)"
     },
     {
       "iso2": "CW",
@@ -890,7 +934,8 @@
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
       "computed_at": "2026-06-28T12:11:07.682961+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (UNVERIFIED)"
     },
     {
       "iso2": "CY",
@@ -908,7 +953,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:11:07.838367+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "CZ",
@@ -928,7 +974,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:11:17.937326+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "DE",
@@ -948,7 +995,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:11:05.822473+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "DJ",
@@ -970,7 +1018,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:11:19.124412+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (UNVERIFIED)"
     },
     {
       "iso2": "DK",
@@ -990,7 +1039,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:11:19.510711+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "DM",
@@ -1012,7 +1062,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:11:19.742651+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (UNVERIFIED)"
     },
     {
       "iso2": "DO",
@@ -1030,7 +1081,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:11:19.601552+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "DZ",
@@ -1048,7 +1100,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:11:21.898640+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "EC",
@@ -1066,7 +1119,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:11:20.862210+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "EE",
@@ -1084,7 +1138,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:11:32.337843+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "EG",
@@ -1102,7 +1157,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:11:20.704050+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "ER",
@@ -1123,7 +1179,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:11:31.170579+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (UNVERIFIED)"
     },
     {
       "iso2": "ES",
@@ -1141,7 +1198,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:11:32.938974+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "ET",
@@ -1159,7 +1217,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:11:32.356339+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (partial data)"
     },
     {
       "iso2": "FI",
@@ -1179,7 +1238,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:11:32.861609+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "FJ",
@@ -1199,7 +1259,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:11:33.449294+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "FM",
@@ -1220,7 +1281,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:11:45.650750+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (UNVERIFIED)"
     },
     {
       "iso2": "FO",
@@ -1247,7 +1309,8 @@
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
       "computed_at": "2026-06-28T12:11:35.711579+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (UNVERIFIED)"
     },
     {
       "iso2": "FR",
@@ -1267,7 +1330,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:11:34.147670+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "GA",
@@ -1287,7 +1351,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:11:46.937617+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (UNVERIFIED)"
     },
     {
       "iso2": "GB",
@@ -1307,7 +1372,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:11:45.411486+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "GD",
@@ -1326,7 +1392,8 @@
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
       "computed_at": "2026-06-28T12:12:03.211575+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (UNVERIFIED)"
     },
     {
       "iso2": "GE",
@@ -1344,7 +1411,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:11:48.037189+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "GH",
@@ -1362,7 +1430,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:11:46.948419+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "GI",
@@ -1388,7 +1457,8 @@
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
       "computed_at": "2026-06-28T12:11:48.493299+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (UNVERIFIED)"
     },
     {
       "iso2": "GL",
@@ -1413,7 +1483,8 @@
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
       "computed_at": "2026-06-28T12:12:04.652496+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (UNVERIFIED)"
     },
     {
       "iso2": "GM",
@@ -1431,7 +1502,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:11:50.930631+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (partial data)"
     },
     {
       "iso2": "GN",
@@ -1451,7 +1523,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:11:48.832270+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (UNVERIFIED)"
     },
     {
       "iso2": "GQ",
@@ -1472,7 +1545,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:12:01.334495+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (UNVERIFIED)"
     },
     {
       "iso2": "GR",
@@ -1490,7 +1564,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:12:01.860198+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "GT",
@@ -1509,7 +1584,8 @@
         "ENERGY_REVIEW"
       ],
       "computed_at": "2026-06-28T12:12:04.965524+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (UNVERIFIED)"
     },
     {
       "iso2": "GU",
@@ -1531,7 +1607,8 @@
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
       "computed_at": "2026-06-28T12:12:05.098106+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (UNVERIFIED)"
     },
     {
       "iso2": "GW",
@@ -1549,7 +1626,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:12:02.073468+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (partial data)"
     },
     {
       "iso2": "GY",
@@ -1567,7 +1645,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:12:06.377393+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "HK",
@@ -1589,7 +1668,8 @@
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
       "computed_at": "2026-06-28T12:12:20.188912+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (UNVERIFIED)"
     },
     {
       "iso2": "HN",
@@ -1607,7 +1687,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:12:20.580378+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "HR",
@@ -1625,7 +1706,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:12:20.509712+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "HT",
@@ -1645,7 +1727,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:12:22.263401+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (UNVERIFIED)"
     },
     {
       "iso2": "HU",
@@ -1663,7 +1746,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:12:25.692071+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "ID",
@@ -1681,7 +1765,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:12:23.993567+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "IE",
@@ -1701,7 +1786,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:12:24.602398+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "IL",
@@ -1719,7 +1805,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:12:42.941733+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "IM",
@@ -1748,7 +1835,8 @@
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
       "computed_at": "2026-06-28T12:12:25.022626+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (UNVERIFIED)"
     },
     {
       "iso2": "IN",
@@ -1768,7 +1856,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:12:06.377963+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (UNVERIFIED)"
     },
     {
       "iso2": "IQ",
@@ -1786,7 +1875,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:12:39.836152+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (partial data)"
     },
     {
       "iso2": "IR",
@@ -1804,7 +1894,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:12:39.073744+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "IS",
@@ -1824,7 +1915,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:12:37.839681+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "IT",
@@ -1842,7 +1934,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:12:42.497216+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "JG",
@@ -1871,7 +1964,8 @@
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
       "computed_at": "2026-06-28T12:10:51.188639+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (UNVERIFIED)"
     },
     {
       "iso2": "JM",
@@ -1891,7 +1985,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:12:43.456828+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (UNVERIFIED)"
     },
     {
       "iso2": "JO",
@@ -1909,7 +2004,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:12:45.287428+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "JP",
@@ -1929,7 +2025,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:12:25.692714+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "KE",
@@ -1949,7 +2046,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:12:58.118584+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (UNVERIFIED)"
     },
     {
       "iso2": "KG",
@@ -1967,7 +2065,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:12:57.856437+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "KH",
@@ -1987,7 +2086,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:12:58.359040+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (partial data)"
     },
     {
       "iso2": "KI",
@@ -2005,7 +2105,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:13:02.971538+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (partial data)"
     },
     {
       "iso2": "KM",
@@ -2025,7 +2126,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:11:06.196078+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (UNVERIFIED)"
     },
     {
       "iso2": "KN",
@@ -2049,7 +2151,8 @@
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
       "computed_at": "2026-06-28T12:13:04.417786+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (UNVERIFIED)"
     },
     {
       "iso2": "KP",
@@ -2071,7 +2174,8 @@
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
       "computed_at": "2026-06-28T12:15:29.021690+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (UNVERIFIED)"
     },
     {
       "iso2": "KR",
@@ -2089,7 +2193,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:13:04.242020+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "KW",
@@ -2109,7 +2214,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:13:05.766653+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "KY",
@@ -2132,7 +2238,8 @@
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
       "computed_at": "2026-06-28T12:11:07.824018+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (UNVERIFIED)"
     },
     {
       "iso2": "KZ",
@@ -2150,7 +2257,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:12:45.009597+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "LA",
@@ -2168,7 +2276,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:13:03.362599+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (partial data)"
     },
     {
       "iso2": "LB",
@@ -2186,7 +2295,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:13:17.361153+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (partial data)"
     },
     {
       "iso2": "LC",
@@ -2207,7 +2317,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:13:22.725277+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (UNVERIFIED)"
     },
     {
       "iso2": "LI",
@@ -2232,7 +2343,8 @@
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
       "computed_at": "2026-06-28T12:13:22.252867+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (UNVERIFIED)"
     },
     {
       "iso2": "LK",
@@ -2250,7 +2362,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:13:24.691879+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "LR",
@@ -2270,7 +2383,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:13:17.851311+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (UNVERIFIED)"
     },
     {
       "iso2": "LS",
@@ -2288,7 +2402,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:13:25.417672+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (partial data)"
     },
     {
       "iso2": "LT",
@@ -2306,7 +2421,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:13:25.169460+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "LU",
@@ -2326,7 +2442,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:13:35.808541+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "LV",
@@ -2344,7 +2461,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:13:36.765430+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "LY",
@@ -2365,7 +2483,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:13:17.573265+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (UNVERIFIED)"
     },
     {
       "iso2": "MA",
@@ -2383,7 +2502,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:13:42.027740+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "MC",
@@ -2408,7 +2528,8 @@
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
       "computed_at": "2026-06-28T12:13:42.985036+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (UNVERIFIED)"
     },
     {
       "iso2": "MD",
@@ -2426,7 +2547,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:13:44.013662+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "ME",
@@ -2444,7 +2566,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:14:01.691804+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "MF",
@@ -2472,7 +2595,8 @@
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
       "computed_at": "2026-06-28T12:13:41.811852+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (UNVERIFIED)"
     },
     {
       "iso2": "MG",
@@ -2490,7 +2614,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:13:43.452425+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (partial data)"
     },
     {
       "iso2": "MH",
@@ -2512,7 +2637,8 @@
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
       "computed_at": "2026-06-28T12:13:56.412757+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (UNVERIFIED)"
     },
     {
       "iso2": "MK",
@@ -2530,7 +2656,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:13:59.652837+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "ML",
@@ -2550,7 +2677,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:14:00.344414+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (UNVERIFIED)"
     },
     {
       "iso2": "MM",
@@ -2568,7 +2696,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:14:02.447167+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (partial data)"
     },
     {
       "iso2": "MN",
@@ -2586,7 +2715,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:14:12.504644+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "MO",
@@ -2608,7 +2738,8 @@
         "ENERGY_REVIEW"
       ],
       "computed_at": "2026-06-28T12:13:37.493246+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (UNVERIFIED)"
     },
     {
       "iso2": "MP",
@@ -2636,7 +2767,8 @@
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
       "computed_at": "2026-06-28T12:14:14.811200+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Thriving (UNVERIFIED)"
     },
     {
       "iso2": "MR",
@@ -2656,7 +2788,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:14:18.866832+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (UNVERIFIED)"
     },
     {
       "iso2": "MT",
@@ -2675,7 +2808,8 @@
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
       "computed_at": "2026-06-28T12:14:01.113219+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (UNVERIFIED)"
     },
     {
       "iso2": "MU",
@@ -2695,7 +2829,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:14:20.387643+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (UNVERIFIED)"
     },
     {
       "iso2": "MV",
@@ -2715,7 +2850,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:13:55.899805+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (UNVERIFIED)"
     },
     {
       "iso2": "MW",
@@ -2733,7 +2869,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:14:19.934145+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (partial data)"
     },
     {
       "iso2": "MX",
@@ -2752,7 +2889,8 @@
         "ENERGY_REVIEW"
       ],
       "computed_at": "2026-06-28T12:13:56.285956+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (UNVERIFIED)"
     },
     {
       "iso2": "MY",
@@ -2770,7 +2908,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:14:20.195337+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "MZ",
@@ -2788,7 +2927,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:14:15.739957+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (partial data)"
     },
     {
       "iso2": "NA",
@@ -2808,7 +2948,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:14:21.676622+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (UNVERIFIED)"
     },
     {
       "iso2": "NC",
@@ -2828,7 +2969,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:14:30.990424+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "NE",
@@ -2848,7 +2990,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:14:32.865115+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (UNVERIFIED)"
     },
     {
       "iso2": "NG",
@@ -2869,7 +3012,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:14:15.740441+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (UNVERIFIED)"
     },
     {
       "iso2": "NI",
@@ -2889,7 +3033,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:14:33.453365+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (UNVERIFIED)"
     },
     {
       "iso2": "NL",
@@ -2909,7 +3054,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:14:36.701234+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "NO",
@@ -2929,7 +3075,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:14:39.809697+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "NP",
@@ -2947,7 +3094,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:14:41.046238+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (partial data)"
     },
     {
       "iso2": "NR",
@@ -2967,7 +3115,8 @@
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
       "computed_at": "2026-06-28T12:14:39.791881+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (UNVERIFIED)"
     },
     {
       "iso2": "NZ",
@@ -2988,7 +3137,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:14:40.682889+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (UNVERIFIED)"
     },
     {
       "iso2": "OM",
@@ -3008,7 +3158,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:15:03.469329+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (partial data)"
     },
     {
       "iso2": "PA",
@@ -3028,7 +3179,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:15:06.749549+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (UNVERIFIED)"
     },
     {
       "iso2": "PE",
@@ -3046,7 +3198,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:15:10.412876+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "PF",
@@ -3067,7 +3220,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:15:35.590995+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (UNVERIFIED)"
     },
     {
       "iso2": "PG",
@@ -3087,7 +3241,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:15:16.179776+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (UNVERIFIED)"
     },
     {
       "iso2": "PH",
@@ -3105,7 +3260,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:15:11.479420+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "PK",
@@ -3123,7 +3279,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:15:06.112863+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (partial data)"
     },
     {
       "iso2": "PL",
@@ -3141,7 +3298,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:15:14.249300+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "PR",
@@ -3162,7 +3320,8 @@
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
       "computed_at": "2026-06-28T12:15:25.041640+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (UNVERIFIED)"
     },
     {
       "iso2": "PS",
@@ -3181,7 +3340,8 @@
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
       "computed_at": "2026-06-28T12:15:35.225104+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (UNVERIFIED)"
     },
     {
       "iso2": "PT",
@@ -3199,7 +3359,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:15:27.861184+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "PW",
@@ -3221,7 +3382,8 @@
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
       "computed_at": "2026-06-28T12:15:13.221449+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (UNVERIFIED)"
     },
     {
       "iso2": "PY",
@@ -3239,7 +3401,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:15:33.351349+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "QA",
@@ -3257,7 +3420,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:15:37.060741+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "RO",
@@ -3275,7 +3439,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:15:37.788355+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "RS",
@@ -3293,7 +3458,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:16:22.402095+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "RU",
@@ -3311,7 +3477,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:15:48.073360+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "RW",
@@ -3331,7 +3498,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:15:52.495002+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (UNVERIFIED)"
     },
     {
       "iso2": "SA",
@@ -3352,7 +3520,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:15:55.321077+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (UNVERIFIED)"
     },
     {
       "iso2": "SB",
@@ -3372,7 +3541,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:16:03.353835+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (UNVERIFIED)"
     },
     {
       "iso2": "SC",
@@ -3390,7 +3560,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:16:55.734975+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "SD",
@@ -3410,7 +3581,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:15:58.469754+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (UNVERIFIED)"
     },
     {
       "iso2": "SE",
@@ -3430,7 +3602,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:16:44.764228+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "SG",
@@ -3451,7 +3624,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:16:03.073079+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (UNVERIFIED)"
     },
     {
       "iso2": "SI",
@@ -3469,7 +3643,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:16:36.711875+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "SK",
@@ -3489,7 +3664,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:16:27.293623+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "SL",
@@ -3507,7 +3683,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:16:03.879541+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (partial data)"
     },
     {
       "iso2": "SM",
@@ -3530,7 +3707,8 @@
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
       "computed_at": "2026-06-28T12:16:18.896446+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (UNVERIFIED)"
     },
     {
       "iso2": "SN",
@@ -3548,7 +3726,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:16:01.874592+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (partial data)"
     },
     {
       "iso2": "SO",
@@ -3569,7 +3748,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:16:18.545555+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "In Crisis (UNVERIFIED)"
     },
     {
       "iso2": "SR",
@@ -3587,7 +3767,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:16:24.935103+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "SS",
@@ -3607,7 +3788,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:16:23.186620+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "In Crisis (UNVERIFIED)"
     },
     {
       "iso2": "ST",
@@ -3625,7 +3807,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:16:28.222658+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (partial data)"
     },
     {
       "iso2": "SV",
@@ -3645,7 +3828,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:16:13.081044+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (UNVERIFIED)"
     },
     {
       "iso2": "SX",
@@ -3672,7 +3856,8 @@
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
       "computed_at": "2026-06-28T12:16:54.429619+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (UNVERIFIED)"
     },
     {
       "iso2": "SY",
@@ -3692,7 +3877,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:16:55.370373+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (UNVERIFIED)"
     },
     {
       "iso2": "SZ",
@@ -3710,7 +3896,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:16:50.269478+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (partial data)"
     },
     {
       "iso2": "TC",
@@ -3734,7 +3921,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:16:59.434168+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (UNVERIFIED)"
     },
     {
       "iso2": "TD",
@@ -3752,7 +3940,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:17:00.801070+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "In Crisis (partial data)"
     },
     {
       "iso2": "TG",
@@ -3770,7 +3959,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:17:07.799654+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (partial data)"
     },
     {
       "iso2": "TH",
@@ -3790,7 +3980,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:17:17.595211+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (UNVERIFIED)"
     },
     {
       "iso2": "TJ",
@@ -3808,7 +3999,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:17:24.068894+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "TL",
@@ -3828,7 +4020,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:17:27.823706+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (UNVERIFIED)"
     },
     {
       "iso2": "TM",
@@ -3846,7 +4039,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:17:27.477209+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "TN",
@@ -3864,7 +4058,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:17:34.343191+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "TO",
@@ -3883,7 +4078,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:17:27.850527+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (UNVERIFIED)"
     },
     {
       "iso2": "TR",
@@ -3903,7 +4099,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:17:41.841101+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (UNVERIFIED)"
     },
     {
       "iso2": "TT",
@@ -3921,7 +4118,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:17:34.509304+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "TV",
@@ -3941,7 +4139,8 @@
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
       "computed_at": "2026-06-28T12:17:55.754020+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (UNVERIFIED)"
     },
     {
       "iso2": "TZ",
@@ -3959,7 +4158,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:18:00.706530+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (partial data)"
     },
     {
       "iso2": "UA",
@@ -3977,7 +4177,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:18:05.336345+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "UG",
@@ -3995,7 +4196,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:18:08.047965+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (partial data)"
     },
     {
       "iso2": "US",
@@ -4016,7 +4218,8 @@
         "ENERGY_REVIEW"
       ],
       "computed_at": "2026-06-28T12:17:34.343752+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (UNVERIFIED)"
     },
     {
       "iso2": "UY",
@@ -4036,7 +4239,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:18:06.552815+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (UNVERIFIED)"
     },
     {
       "iso2": "UZ",
@@ -4054,7 +4258,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:18:08.432344+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "VC",
@@ -4075,7 +4280,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:18:12.356208+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (UNVERIFIED)"
     },
     {
       "iso2": "VE",
@@ -4095,7 +4301,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:18:17.196470+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (UNVERIFIED)"
     },
     {
       "iso2": "VG",
@@ -4122,7 +4329,8 @@
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
       "computed_at": "2026-06-28T12:18:33.534625+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (UNVERIFIED)"
     },
     {
       "iso2": "VI",
@@ -4145,7 +4353,8 @@
         "ECOSYSTEMS_BIODIVERSITY_REVIEW"
       ],
       "computed_at": "2026-06-28T12:18:36.111971+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (UNVERIFIED)"
     },
     {
       "iso2": "VN",
@@ -4163,7 +4372,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:18:41.023987+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "VU",
@@ -4181,7 +4391,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:18:43.948348+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (partial data)"
     },
     {
       "iso2": "WS",
@@ -4200,7 +4411,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:18:45.284059+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (UNVERIFIED)"
     },
     {
       "iso2": "XK",
@@ -4224,7 +4436,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:18:47.269332+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (UNVERIFIED)"
     },
     {
       "iso2": "YE",
@@ -4244,7 +4457,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:18:47.891302+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (UNVERIFIED)"
     },
     {
       "iso2": "ZA",
@@ -4262,7 +4476,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:18:54.597272+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Dignified Life (partial data)"
     },
     {
       "iso2": "ZM",
@@ -4282,7 +4497,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:19:06.526581+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (UNVERIFIED)"
     },
     {
       "iso2": "ZW",
@@ -4300,7 +4516,8 @@
         "CLIMATE_GLOBAL_RISK_REVIEW"
       ],
       "computed_at": "2026-06-28T12:19:07.698672+00:00",
-      "status": "ok"
+      "status": "ok",
+      "zone_label": "Precarious (partial data)"
     }
   ]
 }
