@@ -342,6 +342,14 @@ def country_wellbeing(iso2: str) -> dict:
         "computed_at":        profile.computed_at,
     }
     result["data_quality"] = _data_quality(result)
+
+    conf = result["data_quality"]["confidence"]
+    zone = profile.zone
+    result["zone_label"] = (
+        zone                       if conf == "HIGH"   else
+        f"{zone} (partial data)"   if conf == "MEDIUM" else
+        f"{zone} (UNVERIFIED)"
+    )
     return result
 
 
@@ -478,14 +486,12 @@ def _print_result(r: dict) -> None:
     print(f"  deprivation   {p.deprivation:>6.3f}   (0 = no deprivation,  1 = severe)")
     print(f"  strain        {p.strain:>6.3f}   (0 = stable,          1 = high pressure)")
     print(f"  flourishing   {p.flourishing:>6.3f}   (0 = no room,         1 = full)")
-    print(f"\n  ZONE : {p.zone}")
+    print(f"\n  ZONE : {r['zone_label']}")
     print(f"\n  Coverage: {active_count} of 15 mapped axes active")
     print(f"            15 of 17 total BUNDLE axes (2 structural gaps above)")
     conf = r.get("data_quality", {}).get("confidence", "?")
     if conf == "LOW":
-        print(f"\n  *** LOW CONFIDENCE — zone label unreliable; see data quality above ***")
-    elif p.zone in ("Thriving", "Dignified Life"):
-        print(f"\n  [!] Zone may be INFLATED — lived experience and quality dimensions not measured by WB")
+        print(f"\n  [!] Zone may be INFLATED — official data only, key gaps present")
     print(f"{'='*W}\n")
 
 
