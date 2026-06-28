@@ -3,17 +3,18 @@
   "raw": {
     "axis": "CULTURE_MEDIA_REVIEW",
     "source": "world_bank_api",
-    "fetched_date": "2026-06-21",
+    "fetched_date": "2026-06-28",
     "metrics": {
       "internet_users_pct": 73.6,
       "mobile_subscriptions_per100": 111.5,
       "literacy_rate_adult_pct": 87.7399978637695,
       "primary_school_enrollment": 89.4124,
       "secondary_school_enrollment": 66.27183,
-      "fixed_broadband_per100": 20.11
+      "fixed_broadband_per100": 20.11,
+      "education_spend_pct_gdp": 3.56927475138052
     },
-    "data_quality": "6/6 indicators fetched"
+    "data_quality": "7/7 indicators fetched"
   },
-  "snapshot_timestamp": "2026-06-21T13:29:58.443174+00:00",
+  "snapshot_timestamp": "2026-06-28T09:49:43.288790+00:00",
   "axis": "CULTURE_MEDIA_REVIEW"
 }

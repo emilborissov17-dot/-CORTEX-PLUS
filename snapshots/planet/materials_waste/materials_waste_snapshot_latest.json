@@ -1,19 +1,19 @@
 {
   "axis": "MATERIALS_WASTE_REVIEW",
-  "timestamp": "2026-06-21T13:29:37.536048+00:00",
+  "timestamp": "2026-06-28T09:49:38.462086+00:00",
   "level": "MEDIUM",
   "signals": [],
   "key_metrics": [],
-  "model": "WORLD_BANK_API",
+  "model": "WORLD_BANK_API+OWID+OECD",
   "source_type": "REAL_DATA",
   "metrics": {
-    "municipal_waste_per_capita_kg": 3.18969961013975,
-    "material_consumption_per_gdp": 2.87194964204316,
+    "resource_depletion_pct_gni": null,
+    "natural_resource_rents_pct_gdp": 3.07420969679454,
     "forest_area_pct": 31.1430410787403,
     "protected_areas_pct": 16.511660312023,
     "co2_emissions_total_kt": 38598578.0,
     "recycling_rate_pct": 13.5
   },
-  "data_quality": "6/6 indicators fetched",
-  "fetched_date": "2026-06-21"
+  "data_quality": "5/6 indicators fetched",
+  "fetched_date": "2026-06-28"
 }

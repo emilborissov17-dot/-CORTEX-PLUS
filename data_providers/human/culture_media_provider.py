@@ -15,6 +15,8 @@ INDICATORS = {
     "primary_school_enrollment":   "SE.PRM.NENR",
     "secondary_school_enrollment": "SE.SEC.NENR",
     "fixed_broadband_per100":      "IT.NET.BBND.P2",
+    # Proxy for cultural investment capacity (UNESCO minimum: 4% GDP)
+    "education_spend_pct_gdp":     "SE.XPD.TOTL.GD.ZS",
 }
 
 def _wb_latest(indicator: str) -> Optional[float]:
