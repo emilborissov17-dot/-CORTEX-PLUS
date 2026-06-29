@@ -9,7 +9,7 @@
 
 ## 1. Контекст и цел
 
-CORTEX++ в момента работи с вътрешен `openclaw_agent.py` — Python скрипт, напълно независим от
+CORTEX++ в момента работи с вътрешен `cortex_strategist_agent.py` — Python скрипт, напълно независим от
 zewnętrzния OpenClaw (CLI инструмент, `~/.openclaw/`). Интеграцията цели да даде на CORTEX++
 достъп до реалните способности на external OpenClaw: мултимодален web search, транскрипция,
 автономно събиране на информация — с **твърди граници** кои действия изискват одобрение и кои не.
@@ -251,7 +251,7 @@ GET http://localhost:18789/tasks/{task_id}
 | Gateway не отговаря | Log + retry 3 пъти (backoff), после mark task като failed |
 | Task timeout (>10 мин) | Cancel + log + notify в audit |
 | Невалиден action_type | Reject преди submit (policy check) |
-| Gateway върна грешка | Log + needs_reanalysis flag (по модела на openclaw_agent.py) |
+| Gateway върна грешка | Log + needs_reanalysis flag (по модела на cortex_strategist_agent.py) |
 
 ---
 
@@ -356,7 +356,7 @@ agents/
   human/      ← human_snapshots_agent
   civilization/ ← civilization_snapshots_agent
   cosmos/     ← cosmos_snapshots_agent
-  openclaw/   ← openclaw_agent.py (вътрешен, независим от external)
+  cortex_strategist/   ← cortex_strategist_agent.py (вътрешен, независим от external)
 ```
 
 4 domain агента + отделни специализирани. Не 25 per-axis агента.
@@ -376,7 +376,7 @@ cosmos_agent    ──┘    (policy engine
                         approval flow)
 ```
 
-**Един** нов компонент `agents/openclaw/openclaw_bridge.py` поема **цялата** комуникация с
+**Един** нов компонент `agents/openclaw_bridge.py` поема **цялата** комуникация с
 external OpenClaw. Domain агентите генерират task specs (JSON), предават ги на Bridge-а.
 Bridge-ът прави policy check, изпълнява или изпраща за одобрение, пише audit.
 
@@ -450,7 +450,7 @@ ENERGY_agent   ──► openclaw (energy-agent)
 
 ```
 config/openclaw_action_policy.json     ← allowlist ruleset (Раздел 3)
-agents/openclaw/openclaw_bridge.py     ← single bridge компонент (Раздел 4, 7)
+agents/openclaw_bridge.py              ← single bridge компонент (Раздел 4, 7)
 memory/openclaw_pending_l3.json        ← L3 задачи чакащи одобрение (Раздел 5)
 memory/openclaw_audit_log.json         ← rolling audit (backup в Merkle)
 ```
