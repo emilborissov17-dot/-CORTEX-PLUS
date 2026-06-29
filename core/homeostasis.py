@@ -31,7 +31,7 @@ DIRECTIVES_PATH    = BASE / "memory" / "adaptive_directives.json"
 def build_self_profile() -> dict:
     """
     Изгражда пълен профил на системата — хардуер, APIs, възможности, лимити.
-    Записва се при всеки цикъл. Чете се от orchestrator и OpenClaw.
+    Записва се при всеки цикъл. Чете се от orchestrator и CortexStrategist.
     """
     profile: dict = {
         "timestamp":    datetime.now(timezone.utc).isoformat(),
@@ -227,7 +227,7 @@ def assess(verbose: bool = True) -> dict:
 def as_prompt_block(assessment: dict | None = None) -> str:
     """
     Форматира самопознанието като текст за инжектиране в LLM промпт.
-    OpenClaw, HyperClaw, orchestrator — всички го виждат.
+    CortexStrategist, HyperClaw, orchestrator — всички го виждат.
     """
     if assessment is None:
         try:

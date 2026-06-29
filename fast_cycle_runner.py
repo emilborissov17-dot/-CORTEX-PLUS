@@ -228,11 +228,11 @@ def _check_dependencies() -> bool:
     return critical_ok
 
 
-def _openclaw_to_proposals():
-    snap_path     = BASE / "snapshots" / "openclaw" / "openclaw_snapshot_latest.json"
+def _strategist_to_proposals():
+    snap_path     = BASE / "snapshots" / "cortex_strategist" / "cortex_strategist_snapshot_latest.json"
     proposals_path = BASE / "memory" / "improvement_proposals.json"
     if not snap_path.exists():
-        print("[FAST_CYCLE] openclaw_to_proposals -> no snapshot yet")
+        print("[FAST_CYCLE] strategist_to_proposals -> no snapshot yet")
         return
     try:
         data = json.loads(snap_path.read_text(encoding="utf-8"))
@@ -240,13 +240,13 @@ def _openclaw_to_proposals():
         for act in data.get("immediate_actions", []):
             new_proposals.append({
                 "component":       "unknown",
-                "problem":         act.get("why", "OpenClaw action"),
+                "problem":         act.get("why", "CortexStrategist action"),
                 "solution":        act.get("action", ""),
                 "measurable_goal": act.get("action", "")[:80],
-                "root_cause":      f"OpenClaw scan → {act.get('file', 'unknown')}",
+                "root_cause":      f"CortexStrategist scan -> {act.get('file', 'unknown')}",
                 "priority":        "HIGH",
                 "real_world_signal": True,
-                "generated_by":    "OPENCLAW",
+                "generated_by":    "CORTEX_STRATEGIST",
                 "timestamp":       _utc_now(),
             })
         for gap in data.get("critical_gaps", []):
@@ -256,28 +256,28 @@ def _openclaw_to_proposals():
                     "problem":         gap.get("gap", ""),
                     "solution":        gap.get("fix", ""),
                     "measurable_goal": gap.get("gap", "")[:80],
-                    "root_cause":      "Critical gap — OpenClaw full-scan",
+                    "root_cause":      "Critical gap -- CortexStrategist full-scan",
                     "priority":        "HIGH",
                     "real_world_signal": True,
-                    "generated_by":    "OPENCLAW",
+                    "generated_by":    "CORTEX_STRATEGIST",
                     "timestamp":       _utc_now(),
                 })
         if not new_proposals:
-            print("[FAST_CYCLE] openclaw_to_proposals -> 0 HIGH proposals")
+            print("[FAST_CYCLE] strategist_to_proposals -> 0 HIGH proposals")
             return
         try:
             existing = json.loads(proposals_path.read_text(encoding="utf-8"))
             existing_list = existing.get("proposals", existing) if isinstance(existing, dict) else existing
         except Exception:
             existing_list = []
-        merged = new_proposals + [p for p in existing_list if p.get("generated_by") != "OPENCLAW"]
+        merged = new_proposals + [p for p in existing_list if p.get("generated_by") != "CORTEX_STRATEGIST"]
         proposals_path.write_text(
             json.dumps({"proposals": merged}, ensure_ascii=False, indent=2),
             encoding="utf-8",
         )
-        print(f"[FAST_CYCLE] openclaw_to_proposals -> {len(new_proposals)} proposals injected")
+        print(f"[FAST_CYCLE] strategist_to_proposals -> {len(new_proposals)} proposals injected")
     except Exception as e:
-        print(f"[FAST_CYCLE] openclaw_to_proposals -> FAILED: {e}")
+        print(f"[FAST_CYCLE] strategist_to_proposals -> FAILED: {e}")
 
 
 def _hyperclaw_to_proposals():
@@ -361,7 +361,7 @@ def _scan_needs_reanalysis() -> list[dict]:
     Сканира всички snapshot JSON файлове за needs_reanalysis: true.
     Връща списък от {"axis", "file", "error"} — за логване и приоритизиране.
     Резултатът се записва в snapshots/master/needs_reanalysis_latest.json
-    за да може initiative_tracker / openclaw да го намерят.
+    за да може initiative_tracker / cortex_strategist да го намерят.
     """
     snap_dir = BASE / "snapshots"
     flagged = []
@@ -622,12 +622,12 @@ def main():
     # ── 3. Trend tracker ──
     run_trend_tracker()
 
-    # ── 3.5. OpenClaw — MUST run early before token budget is depleted by snapshots ──
+    # ── 3.5. CortexStrategist — MUST run early before token budget is depleted by snapshots ──
     # Groq free tier: 100K tokens/day. Steps 4-11 consume ~90K tokens.
-    # OpenClaw needs ~7K tokens — running it here ensures budget is available.
-    _run("openclaw_agent", lambda: __import__(
-        "agents.openclaw.openclaw_agent", fromlist=["run"]).run(), free_after=True)
-    _openclaw_to_proposals()
+    # CortexStrategist needs ~7K tokens — running it here ensures budget is available.
+    _run("cortex_strategist_agent", lambda: __import__(
+        "agents.cortex_strategist.cortex_strategist_agent", fromlist=["run"]).run(), free_after=True)
+    _strategist_to_proposals()
 
     # ── 4. Internet intelligence ──
     _run("internet_agent", lambda: __import__(
@@ -666,7 +666,7 @@ def main():
     # ── 12. Update master след всички snapshots ──
     update_master()
 
-    # ── 12.3. System hypergraph — rebuild so openclaw/self_observer can query it ──
+    # ── 12.3. System hypergraph — rebuild so cortex_strategist/self_observer can query it ──
     try:
         from system_hypergraph import build_hypergraph
         hg = build_hypergraph()
@@ -738,7 +738,7 @@ def main():
 
     # ── 12.7. Cognitive Orchestrator — Attentional Meta Protocol ──
     # Runs BEFORE HyperClaw so it can use its priority_axes assessment.
-    # (OpenClaw was moved to step 3.5 to run before token budget is depleted.)
+    # (CortexStrategist was moved to step 3.5 to run before token budget is depleted.)
     try:
         from core.cortex_orchestrator import run as _orchestrate
         _orchestrate()
@@ -867,7 +867,7 @@ def main():
                         "category": "CIVILIZATION",
                     })
 
-        # decisions — improvement_proposals.json (written by openclaw/hyperclaw, steps 15.5/15.7)
+        # decisions — improvement_proposals.json (written by cortex_strategist/hyperclaw, steps 15.5/15.7)
         _decisions = []
         try:
             _raw = json.loads((BASE / "memory" / "improvement_proposals.json").read_text(encoding="utf-8"))

@@ -62,7 +62,7 @@ def _writes_triples(last_n: int = 10) -> list[dict]:
                 decisions = data.get("decisions", [])
                 if decisions:
                     for dec in decisions:
-                        # prefer generated_by (set by openclaw/hyperclaw proposals)
+                        # prefer generated_by (set by cortex_strategist/hyperclaw proposals)
                         agent = dec.get("generated_by") or dec.get("component") or "fast_cycle_runner"
                         triples.append({
                             "subject":   agent,

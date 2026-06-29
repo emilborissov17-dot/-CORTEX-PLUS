@@ -40,7 +40,7 @@ EXTERNAL_CAPACITIES = {
         "cost": "безплатен tier: 14,400 req/ден",
         "risk": "LOW — само допълва, не замества",
         "install": "pip install groq && export GROQ_API_KEY=...",
-        "use_case": "тежки анализи, orchestrator, openclaw синтез",
+        "use_case": "тежки анализи, orchestrator, cortex_strategist синтез",
     },
     "openai_api": {
         "name": "OpenAI GPT-4o",

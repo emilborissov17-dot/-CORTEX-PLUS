@@ -26,7 +26,7 @@ INITIATIVES_DIR   = BASE / "data" / "initiatives"
 _INDICATORS_PATH  = BASE / "snapshots" / "master" / "global_indicators_latest.json"
 
 # Sources whose proposals are code-patch generators — skip entirely
-_CODE_GENERATOR_SOURCES = {"OPENCLAW", "HYPERCLAW"}
+_CODE_GENERATOR_SOURCES = {"CORTEX_STRATEGIST", "HYPERCLAW"}
 
 # Text patterns that mark a proposal as a code action (generates *_patch.py)
 _CODE_TEXT_PATTERN = re.compile(

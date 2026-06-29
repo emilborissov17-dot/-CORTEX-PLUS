@@ -136,12 +136,12 @@ def scan():
             state["system"]["gpu_vram_free"] = gpu.get("vram_free_mb")
         except: pass
 
-    # OpenClaw
-    openclaw_file = BASE / "snapshots" / "openclaw" / "openclaw_snapshot_latest.json"
-    if openclaw_file.exists():
+    # CortexStrategist
+    cortex_strategist_file = BASE / "snapshots" / "cortex_strategist" / "cortex_strategist_snapshot_latest.json"
+    if cortex_strategist_file.exists():
         try:
-            o = json.loads(openclaw_file.read_text(encoding="utf-8"))
-            state["agents"]["openclaw"] = {
+            o = json.loads(cortex_strategist_file.read_text(encoding="utf-8"))
+            state["agents"]["cortex_strategist"] = {
                 "health": o.get("health"),
                 "mission_pct": o.get("mission_alignment_pct"),
             }

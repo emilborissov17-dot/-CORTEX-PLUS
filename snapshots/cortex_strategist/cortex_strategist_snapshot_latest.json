@@ -1,0 +1,54 @@
+{
+  "system_health": "FAIR",
+  "mission_alignment_pct": 54,
+  "critical_gaps": [
+    {
+      "gap": "Недостатъчната достъпност до актуални данни за водните ресурси",
+      "impact": "HIGH",
+      "fix": "Разработване на агент за събиране и интеграция на реални данни за водните ресурси"
+    },
+    {
+      "gap": "Отсутствия на международни платформи за достъп до данни",
+      "impact": "MEDIUM",
+      "fix": "Интегриране на съществуващи международни платформи за данни"
+    },
+    {
+      "gap": "Недостатъчно развитие на агентите в isolate list",
+      "impact": "MEDIUM",
+      "fix": "Разработване на агентите в isolate list"
+    }
+  ],
+  "immediate_actions": [
+    {
+      "action": "Разработване на агент за събиране и интеграция на реални данни за водните ресурси",
+      "file": "agents/planet/planet_snapshots_agent_qwen.py",
+      "why": "За да се подобри достъпността до актуални данни"
+    },
+    {
+      "action": "Интегриране на съществуващи международни платформи за данни",
+      "file": "agents/internet/internet_agent.py",
+      "why": "За да се подобри достъпността до данни"
+    }
+  ],
+  "missing_agents_to_build": [
+    {
+      "name": "climate_patch",
+      "role": "Климатичен агент",
+      "priority": "HIGH"
+    },
+    {
+      "name": "broken_test_patch",
+      "role": "Тествен агент",
+      "priority": "MEDIUM"
+    }
+  ],
+  "fast_cycle_improvements": [
+    "Оптимизация на кода за бързо изпълнение",
+    "Добавяне на нови функции за анализ на данни"
+  ],
+  "next_milestone": "Разработване на агент за събиране и интеграция на реални данни за водните ресурси",
+  "strategist_self_assessment": "Трябва да разработим агентите в isolate list и да подобрим достъпността до актуални данни",
+  "snapshot_timestamp": "2026-06-29T21:16:15.177549+00:00",
+  "axis": "STRATEGIST_SOLUTIONS",
+  "source_type": "STRATEGIST_FULL_SCAN"
+}

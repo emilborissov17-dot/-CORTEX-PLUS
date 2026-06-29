@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-agents/openclaw/openclaw_agent.py
+agents/cortex_strategist/cortex_strategist_agent.py
 
-OpenClaw — Сканира ЦЕЛИЯ проект CORTEX++_QWEN:
-  - всички Python файлове (агенти, памет, core)
-  - всички snapshots
+CortexStrategist -- Scans the ENTIRE CORTEX++ project:
+  - all Python files (agents, memory, core)
+  - all snapshots
   - goals.py / semantic_memory / predictions / patches
 
-След сканирането: LLM синтезира конкретни решения
-за постигане на целта — устойчива общочовешка цивилизация.
+After scanning: LLM synthesizes concrete solutions
+for achieving the goal -- sustainable human civilization.
 """
 
 from __future__ import annotations
@@ -20,7 +20,7 @@ BASE = pathlib.Path(__file__).resolve().parent.parent.parent
 MODEL = "qwen3:1.7b"
 
 def _groq(prompt: str) -> dict:
-    """5-way fallback chain: Groq → Cerebras → OpenRouter → Gemini → Ollama."""
+    """5-way fallback chain: Groq -> Cerebras -> OpenRouter -> Gemini -> Ollama."""
     import sys, re as _re
     sys.path.insert(0, str(BASE))
     try:
@@ -33,11 +33,11 @@ def _groq(prompt: str) -> dict:
         try:
             return json.loads(text)
         except json.JSONDecodeError as je:
-            print(f"[OPENCLAW] JSON parse failed: {je}")
-            print(f"[OPENCLAW] raw LLM output (first 400 chars): {text[:400]}")
+            print(f"[STRATEGIST] JSON parse failed: {je}")
+            print(f"[STRATEGIST] raw LLM output (first 400 chars): {text[:400]}")
             return None
     except Exception as e:
-        print(f"[OPENCLAW] LLM chain exhausted: {e}")
+        print(f"[STRATEGIST] LLM chain exhausted: {e}")
         return None
 EXCLUDE_DIRS = {"venv", "__pycache__", ".git", "OLD", "LEGACY", ".npm-global"}
 
@@ -160,18 +160,18 @@ def synthesize(ctx):
             att = orch.get("attention", {})
             plan = orch.get("strategic_plan", {})
             attention_block = (
-                "── ATTENTIONAL META PROTOCOL (this cycle) ──\n"
+                "-- ATTENTIONAL META PROTOCOL (this cycle) --\n"
                 f"Priority axes: {att.get('priority_axes', [])}\n"
                 f"Main threat:   {att.get('main_threat', '?')}\n"
                 f"Opportunity:   {att.get('main_opportunity', '?')}\n"
                 f"Action now:    {att.get('immediate_action', '?')}\n"
                 f"Key insight:   {plan.get('key_insight', '?')}\n"
-                "────────────────────────────────────────────"
+                "---------------------------------------------"
             )
         except Exception:
             pass
 
-    # Load system hypergraph summary — isolated nodes only for missing_agents_to_build
+    # Load system hypergraph summary -- isolated nodes only for missing_agents_to_build
     hg_block = ""
     hg_path = BASE / "data" / "cortex_hypergraph.json"
     if hg_path.exists():
@@ -180,15 +180,15 @@ def synthesize(ctx):
             agents_in_cycle = [a["agent"] for a in hg.get("agents_order", [])]
             isolated = hg.get("isolated_nodes", [])
             degree = hg.get("node_degree", {})
-            seq = " → ".join(agents_in_cycle[:10]) + ("..." if len(agents_in_cycle) > 10 else "")
+            seq = " -> ".join(agents_in_cycle[:10]) + ("..." if len(agents_in_cycle) > 10 else "")
             hg_block = (
-                "── SYSTEM HYPERGRAPH ──\n"
+                "-- SYSTEM HYPERGRAPH --\n"
                 f"Agents in execution chain ({len(agents_in_cycle)}): {seq}\n"
                 f"Node degree (follows connections): {json.dumps(degree, ensure_ascii=False)}\n"
                 f"Isolated nodes (zero connectivity, not in chain): {isolated or ['none']}\n"
                 "RULE: Suggest missing_agents_to_build ONLY for nodes in the isolated list above.\n"
                 "Do NOT suggest building agents that already appear in the execution chain.\n"
-                "────────────────────────────────────────────"
+                "---------------------------------------------"
             )
         except Exception:
             pass
@@ -204,26 +204,26 @@ def synthesize(ctx):
         except Exception:
             gi_block = "(global indicators file exists but could not be loaded)"
 
-    prompt = f"""You are OpenClaw — strategic intelligence of CORTEX++ AGI.
+    prompt = f"""You are CortexStrategist -- strategic intelligence of CORTEX++ AGI.
 
 MISSION:
 {vision_text}
 
-You scanned the ENTIRE CORTEX++_QWEN project. Full context:
+You scanned the ENTIRE CORTEX++ project. Full context:
 
-── GOALS ──
+-- GOALS --
 {ctx['goals'][:800]}
 
-── PROJECT FILES ({len(ctx['agents'])} files) ──
+-- PROJECT FILES ({len(ctx['agents'])} files) --
 {agents_list}
 
-── MEMORY MODULES ──
+-- MEMORY MODULES --
 {', '.join(ctx['memory_modules'])}
 
-── SNAPSHOTS STATE ──
+-- SNAPSHOTS STATE --
 {snap_str}
 
-── GOAL SCORE (composite from real data) ──
+-- GOAL SCORE (composite from real data) --
 {goal_score_str}
 
 {homeo_block}
@@ -234,13 +234,13 @@ You scanned the ENTIRE CORTEX++_QWEN project. Full context:
 
 {hg_block}
 
-── AGENTS NOT IN fast_cycle_runner (missing integrations) ──
+-- AGENTS NOT IN fast_cycle_runner (missing integrations) --
 {missing_str}
 
-── CYCLE STRUCTURE ──
+-- CYCLE STRUCTURE --
 {ctx['cycle_structure'][:800]}
 
-── PATCHES ──
+-- PATCHES --
 {', '.join(ctx['self_modifier_patches']) or '(none)'}
 
 TASK: Analyze EVERYTHING. What is missing? What is broken? What must be built?
@@ -266,56 +266,56 @@ Return ONLY this JSON:
   ],
   "fast_cycle_improvements": ["<improvement>"],
   "next_milestone": "<what brings system to next level>",
-  "openclaw_self_assessment": "<what OpenClaw should do next>"
+  "strategist_self_assessment": "<what CortexStrategist should do next>"
 }}
 
 Be specific. Reference actual filenames. Return ONLY valid JSON."""
 
     result = _groq(prompt)
     if result and "error" not in result:
-        print("[OPENCLAW] LLM: OK")
+        print("[STRATEGIST] LLM: OK")
         return result
     return {"error": "All LLM backends failed"}
 
 def save(result):
-    out_dir = BASE / "snapshots" / "openclaw"
+    out_dir = BASE / "snapshots" / "cortex_strategist"
     out_dir.mkdir(parents=True, exist_ok=True)
-    out_path = out_dir / "openclaw_snapshot_latest.json"
+    out_path = out_dir / "cortex_strategist_snapshot_latest.json"
     result["snapshot_timestamp"] = _utc_now()
-    result["axis"] = "OPENCLAW_SOLUTIONS"
-    result["source_type"] = "OPENCLAW_FULL_SCAN"
+    result["axis"] = "STRATEGIST_SOLUTIONS"
+    result["source_type"] = "STRATEGIST_FULL_SCAN"
     out_path.write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(f"[OPENCLAW] snapshot -> {out_path}")
+    print(f"[STRATEGIST] snapshot -> {out_path}")
     try:
         sys.path.insert(0, str(BASE))
         from memory.semantic_memory import remember
-        summary = (f"OpenClaw FullScan [{_utc_now()}]: "
+        summary = (f"CortexStrategist FullScan [{_utc_now()}]: "
                    f"Health={result.get('system_health','?')} | "
                    f"Mission={result.get('mission_alignment_pct','?')}% | "
                    f"Gaps={len(result.get('critical_gaps',[]))} | "
                    f"Next: {result.get('next_milestone','?')}")
-        remember(summary[:600], axis="OPENCLAW_FULL_SCAN", source="openclaw_agent")
-        print("[OPENCLAW] memory saved.")
+        remember(summary[:600], axis="STRATEGIST_FULL_SCAN", source="cortex_strategist_agent")
+        print("[STRATEGIST] memory saved.")
     except Exception as e:
-        print(f"[OPENCLAW] memory save failed: {e}")
+        print(f"[STRATEGIST] memory save failed: {e}")
 
 def run():
-    print(f"[OPENCLAW] FullScan started at {_utc_now()}")
+    print(f"[STRATEGIST] FullScan started at {_utc_now()}")
     ctx = scan_project()
-    print(f"[OPENCLAW] {len(ctx['agents'])} files | {len(ctx['snapshots_summary'])} snapshots | {len(ctx['missing_integrations'])} missing integrations")
-    print("[OPENCLAW] synthesizing strategic plan...")
+    print(f"[STRATEGIST] {len(ctx['agents'])} files | {len(ctx['snapshots_summary'])} snapshots | {len(ctx['missing_integrations'])} missing integrations")
+    print("[STRATEGIST] synthesizing strategic plan...")
     result = synthesize(ctx)
     if "error" in result:
-        print(f"[OPENCLAW] LLM error: {result['error']}")
+        print(f"[STRATEGIST] LLM error: {result['error']}")
         result["needs_reanalysis"] = True
-        save(result)   # записва snapshot дори при LLM failure — с флаг needs_reanalysis
+        save(result)
         return result
-    print(f"[OPENCLAW] health={result.get('system_health')} | mission={result.get('mission_alignment_pct')}% | gaps={len(result.get('critical_gaps',[]))}")
+    print(f"[STRATEGIST] health={result.get('system_health')} | mission={result.get('mission_alignment_pct')}% | gaps={len(result.get('critical_gaps',[]))}")
     save(result)
-    print(f"[OPENCLAW] done at {_utc_now()}")
+    print(f"[STRATEGIST] done at {_utc_now()}")
     return result
 
 if __name__ == "__main__":
     result = run()
-    print("\n══ OPENCLAW STRATEGIC PLAN ══")
+    print("\n== CORTEX STRATEGIST PLAN ==")
     print(json.dumps(result, ensure_ascii=False, indent=2))
