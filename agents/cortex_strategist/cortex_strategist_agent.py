@@ -284,6 +284,11 @@ def save(result):
     result["snapshot_timestamp"] = _utc_now()
     result["axis"] = "STRATEGIST_SOLUTIONS"
     result["source_type"] = "STRATEGIST_FULL_SCAN"
+    result["metrics"] = {
+        "mission_alignment_pct": result.get("mission_alignment_pct"),
+        "system_health": result.get("system_health"),
+        "critical_gaps_count": len(result.get("critical_gaps", [])),
+    }
     out_path.write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"[STRATEGIST] snapshot -> {out_path}")
     try:

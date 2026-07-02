@@ -1349,6 +1349,48 @@ def score_social_relations(metrics: Dict) -> ScoreResult:
     )
 
 
+def score_strategist_solutions(metrics: Dict) -> ScoreResult:
+    metrics = _unwrap_metrics(metrics)
+    signals = []
+
+    pct    = metrics.get("mission_alignment_pct")
+    health = metrics.get("system_health")
+    gaps   = metrics.get("critical_gaps_count")
+
+    health_map = {"POOR": 0.15, "FAIR": 0.45, "GOOD": 0.7, "EXCELLENT": 0.9}
+
+    components: list[tuple[float, float]] = []  # (value, weight)
+    if pct is not None:
+        norm = max(0.0, min(1.0, pct / 100.0))
+        components.append((norm, 0.6))
+        signals.append(f"⚡ CortexStrategist mission_alignment: {pct}%")
+    if health in health_map:
+        components.append((health_map[health], 0.4))
+        signals.append(f"⚡ CortexStrategist system_health: {health}")
+
+    if components:
+        total_w = sum(w for _, w in components)
+        score = sum(v * w for v, w in components) / total_w
+        if gaps is not None:
+            signals.append(f"ℹ️ {gaps} critical gaps identified this scan")
+    else:
+        score = 0.5
+        signals.append("⚠️ No CortexStrategist metrics available — generic fallback")
+
+    score = max(0.0, min(1.0, score))
+    return ScoreResult(
+        axis="STRATEGIST_SOLUTIONS",
+        level=_score_to_level(score),
+        score=round(score, 2),
+        signals=signals,
+        metrics_used={
+            "mission_alignment_pct": pct,
+            "system_health":         health,
+            "critical_gaps_count":   gaps,
+        },
+    )
+
+
 # ─────────────────────────────────────────────
 # AXIS SCORERS REGISTRY
 # ─────────────────────────────────────────────
@@ -1372,6 +1414,7 @@ AXIS_SCORERS = {
     "CULTURE_MEDIA_REVIEW":             score_culture_media,
     "TECHNOLOGY_INFRA_REVIEW":          score_technology_infra,
     "SOCIAL_RELATIONS_REVIEW":          score_social_relations,
+    "STRATEGIST_SOLUTIONS":              score_strategist_solutions,
 }
 
 

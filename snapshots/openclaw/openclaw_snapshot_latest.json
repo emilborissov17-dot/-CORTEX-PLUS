@@ -1,7 +1,0 @@
-{
-  "error": "All LLM backends failed",
-  "needs_reanalysis": true,
-  "snapshot_timestamp": "2026-06-21T19:53:02.591958+00:00",
-  "axis": "OPENCLAW_SOLUTIONS",
-  "source_type": "OPENCLAW_FULL_SCAN"
-}

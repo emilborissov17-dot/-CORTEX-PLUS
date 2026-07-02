@@ -117,7 +117,7 @@ The following APIs produce non-null values in saved snapshots (verified against 
 
 ## 5. All Civilization Axes — Scored Status
 
-### REAL SCORER — threshold-based, reads actual metric values (17 axes)
+### REAL SCORER — threshold-based, reads actual metric values (18 axes)
 
 Dedicated functions in `cortex_scoring_engine.py` with explicit numeric thresholds sourced from scientific literature (CO₂ 420 ppm boundary, Aichi 17% protected-areas target, SDG undernourishment <5%, ITU internet averages, WB LPI benchmarks, etc.):
 
@@ -140,8 +140,9 @@ Dedicated functions in `cortex_scoring_engine.py` with explicit numeric threshol
 | COGNITION_LEARNING_REVIEW | Youth literacy 93.1% (4-tier base), primary completion, tertiary enrollment, edu expenditure 3.57% | 0.45 MEDIUM |
 | CULTURE_MEDIA_REVIEW | Internet users 73.6% (ITU primary), adult literacy, secondary enrollment 66.3%, broadband | 0.49 MEDIUM |
 | TECHNOLOGY_INFRA_REVIEW | LPI 3.0/5 (primary), secure internet servers 16 379/M, fixed broadband per 100 | 0.60 MEDIUM |
+| STRATEGIST_SOLUTIONS | CortexStrategist's own mission_alignment_pct (60% weight) + system_health (40% weight) | see `output/cortex_scores_latest.json` |
 
-Scores as of 2026-06-27. The engine runs automatically at step 12.4 of each cycle.
+Scores as of 2026-06-27 except STRATEGIST_SOLUTIONS (added 2026-07-02). The engine runs automatically at step 12.4 of each cycle.
 
 A 12-pair **inter-axis correlation matrix** is implemented (e.g., CLIMATE↔FOOD: −0.30, INEQUALITY↔HUMAN_WELL_BEING: −0.30) and applied post-scoring.
 
@@ -163,12 +164,13 @@ A 12-pair **inter-axis correlation matrix** is implemented (e.g., CLIMATE↔FOOD
 | PLANETARY_POTENTIAL_REVIEW | LLM_COMPOSITE | `metrics: {}` — empty |
 | BODY_SCAN | psutil (CPU/RAM/disk of the laptop) | internal system health |
 
-### QUALITATIVE / STATIC (2 axes)
+### QUALITATIVE / STATIC (1 axis)
 
 | Axis | Note |
 |---|---|
 | COSMIC_RESOURCES_REVIEW | Static 2025 estimates: asteroid mining missions = 0, lunar agreements = 2. No public real-time API exists. Source: `llm_estimates`. |
-| OPENCLAW_SOLUTIONS | Solution proposals tracker — qualitative text, not scored |
+
+STRATEGIST_SOLUTIONS (formerly OPENCLAW_SOLUTIONS, renamed with `agents/cortex_strategist/cortex_strategist_agent.py`) moved out of this table — now has a dedicated scorer (`score_strategist_solutions`, derived from the agent's own `mission_alignment_pct` + `system_health` output) as of 2026-07-02. See the REAL SCORER table above.
 
 ---
 
@@ -241,7 +243,7 @@ A 12-pair **inter-axis correlation matrix** is implemented (e.g., CLIMATE↔FOOD
 | "Causal hypothesis generation" | **Working but unvalidated.** LLM narratives grounded in real metric values. Evidence strength self-labeled "moderate". No external validation. |
 | "5 axes with working providers but score_generic (fake 0.5)" | **Partially resolved.** 4 of 5 now have real scorers (CULTURE_MEDIA, COGNITION_LEARNING, GOVERNANCE_RIGHTS, TECHNOLOGY_INFRA). SOCIAL_RELATIONS remains on `score_generic` — provider has only 2 of 5 metrics; scorer deferred until UNHCR+UCDP data is piped in. |
 | "7 composite/internal axes" | **Confirmed.** LONG_TERM_FUTURE, GOAL_PROGRESS, GENERAL_SELF_REVIEW, DEEP_TIME_RISKS, SPACE_INFRASTRUCTURE, PLANETARY_POTENTIAL, BODY_SCAN — LLM or internal only. |
-| "2 qualitative axes" | **Confirmed.** COSMIC_RESOURCES (static estimates) and OPENCLAW_SOLUTIONS (text proposals). |
+| "2 qualitative axes" | **Now 1.** COSMIC_RESOURCES (static estimates). OPENCLAW_SOLUTIONS was renamed STRATEGIST_SOLUTIONS and given a dedicated scorer 2026-07-02 — no longer qualitative-only. |
 | "Safety-constrained self-modification" | **Partial.** Guard exists and is fail-closed. Two confirmed limitations: (1) keyword-only detection, not semantic; (2) `self_modifier` bypasses `patch_guardian` on its own writes. |
 | "Initiative tracking tied to real indicators" | **Mechanically working.** No progress measured yet (0.0 delta) — expected for planetary indicators that change over years, not cycles. |
 | "Semantic memory (ChromaDB, 600 entries)" | **Confirmed real.** 384-dim all-MiniLM-L6-v2 embeddings verified by direct inspection of stored vectors. `memory/semantic_memory.py` is the active production path. |

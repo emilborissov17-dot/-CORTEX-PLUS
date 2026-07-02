@@ -79,6 +79,15 @@
       "🔗 Корелация: ENERGY_REVIEW (score=0.05) влияе негативно"
     ]
   },
+  "STRATEGIST_SOLUTIONS": {
+    "level": "MEDIUM",
+    "score": 0.54,
+    "signals": [
+      "⚡ CortexStrategist mission_alignment: 60%",
+      "⚡ CortexStrategist system_health: FAIR",
+      "ℹ️ 2 critical gaps identified this scan"
+    ]
+  },
   "COSMIC_RESOURCES_REVIEW": {
     "level": "MEDIUM",
     "score": 0.5,
@@ -174,13 +183,6 @@
       "⚡ Бежанци: 29.4M (UNHCR)",
       "⚠️ Вътрешно разселени (IDPs): 57.3M (UNHCR)",
       "⚡ Убийства: 5.2/100k (WB)"
-    ]
-  },
-  "OPENCLAW_SOLUTIONS": {
-    "level": "MEDIUM",
-    "score": 0.5,
-    "signals": [
-      "⚡ Generic scorer — няма специфични прагове за тази ос"
     ]
   },
   "ECOSYSTEMS_BIODIVERSITY_REVIEW": {
