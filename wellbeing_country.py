@@ -6,7 +6,8 @@ computes axis scores, and returns a WellbeingProfile with full decomposition.
 
 LIMITATION (see docs/WELLBEING_PROFILE_DESIGN.md § Критично ограничение):
   WGI governance included (CC.EST, GE.EST, RL.EST via GOV_WGI_ prefix).
-  Lived experience, quality of services, materials/waste, social relations still absent.
+  Social relations covered narrowly (homicide rate only — see _AXIS_CAVEATS).
+  Lived experience, quality of services, materials/waste still absent.
   Zone label may be INFLATED vs. lived reality — read with this explicitly in mind.
 """
 
@@ -20,6 +21,8 @@ from pathlib import Path
 from typing import Dict, List, Optional
 
 import requests
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
 
 from wellbeing_profile import WellbeingProfile, compute_wellbeing_profile
 
@@ -74,6 +77,8 @@ _IND: dict[str, object] = {
     "HD.HCI.LAYS":       (0.0,   12.0,   False),   # Learning-Adjusted Years of School (HCI)
     # V-Dem observational indicators (already 0-1; injected from local CSV, not WB API)
     "VDEM_FREEXP":       (0.0,    1.0,   False),   # Media freedom / freedom of expression (V-Dem v16)
+    # Social relations proxy (violence only — see _AXIS_CAVEATS)
+    "VC.IHR.PSRC.P5":    (50.0,   0.5,   True),   # Intentional homicides /100k pop
 }
 
 _LABELS: dict[str, str] = {
@@ -107,6 +112,7 @@ _LABELS: dict[str, str] = {
     "GOV_WGI_RL.EST":   "Rule of Law (WGI)",
     "HD.HCI.LAYS":       "Learning-Adj Yrs School (HCI)",
     "VDEM_FREEXP":       "Media Freedom (V-Dem v16)",
+    "VC.IHR.PSRC.P5":    "Homicide rate /100k",
 }
 
 _GDP_LOG_WORST = math.log(500)
@@ -123,6 +129,7 @@ _MRV_LONG_CODES = frozenset({
     "SI.POV.GINI",      # Gini: updated every 2-4 years
     "AG.LND.FRST.ZS",   # forest area: updated every 5 years (FAO)
     "HD.HCI.LAYS",      # Learning-Adjusted Years of School: HCI updated every ~2 years
+    "VC.IHR.PSRC.P5",   # Homicide rate: reporting gaps >5yr for some countries (e.g. ZA)
 })
 
 # Fetched raw but NOT normalized — used only for derived computations
@@ -151,13 +158,21 @@ AXIS_INDICATORS: dict[str, list[str]] = {
     "ECONOMY_WORK_REVIEW":              ["NY.GDP.PCAP.PP.KD", "SL.UEM.TOTL.ZS", "NY.GDP.MKTP.KD.ZG"],
     "ECOSYSTEMS_BIODIVERSITY_REVIEW":   ["AG.LND.FRST.ZS", "NY.ADJ.SVNG.GN.ZS", "NY.ADJ.DRES.GN.ZS"],
     "CULTURE_MEDIA_REVIEW":             ["VDEM_FREEXP"],
+    "SOCIAL_RELATIONS_REVIEW":          ["VC.IHR.PSRC.P5"],
 }
 
 # Axes in BUNDLES with no adequate per-country indicator (structural absence)
 STRUCTURAL_MISSING: list[str] = [
     "MATERIALS_WASTE_REVIEW",   # no WB country indicator
     # CULTURE_MEDIA_REVIEW covered by V-Dem VDEM_FREEXP
+    # SOCIAL_RELATIONS_REVIEW covered (narrowly) by VC.IHR.PSRC.P5 — see _AXIS_CAVEATS
 ]
+
+# Axes whose per-country indicator is a narrow proxy, not full construct coverage.
+# Surfaced in CLI output and in the result dict so the gap stays visible, not implied complete.
+_AXIS_CAVEATS: dict[str, str] = {
+    "SOCIAL_RELATIONS_REVIEW": "homicide proxy only — captures violence, NOT displacement/refugees/trust/cohesion",
+}
 
 # ── Data quality constants ────────────────────────────────────────────────────
 # Key deprivation axes — null here collapses confidence to LOW immediately
@@ -192,6 +207,7 @@ _AXIS_DIM: dict[str, str] = {
     "EDUCATION_CULTURE_REVIEW":         "dep+flo",
     "ECONOMY_WORK_REVIEW":              "dep+strain+flo",
     "ECOSYSTEMS_BIODIVERSITY_REVIEW":   "dep+strain+flo",
+    "SOCIAL_RELATIONS_REVIEW":          "strain",
 }
 
 
@@ -363,6 +379,21 @@ def _save_cache(iso2: str, raw: dict) -> None:
     )
 
 
+def _wb_session() -> requests.Session:
+    """Session with retry/backoff for transient WB API errors (429/5xx/read-timeout)."""
+    sess = requests.Session()
+    retry = Retry(
+        total=3, connect=3, read=3,
+        backoff_factor=0.7,
+        status_forcelist=[429, 500, 502, 503, 504],
+        allowed_methods=frozenset({"GET"}),
+    )
+    adapter = HTTPAdapter(max_retries=retry)
+    sess.mount("https://", adapter)
+    sess.mount("http://", adapter)
+    return sess
+
+
 # ── Fetch ──────────────────────────────────────────────────────────────────────
 def _fetch_one(iso2: str, code: str, sess: requests.Session, mrv: int = 5) -> Optional[float]:
     """Fetch most recent non-null value for one indicator."""
@@ -370,7 +401,7 @@ def _fetch_one(iso2: str, code: str, sess: requests.Session, mrv: int = 5) -> Op
         r = sess.get(
             f"{WB_BASE}/country/{iso2}/indicator/{code}",
             params={"format": "json", "mrv": mrv},
-            timeout=15,
+            timeout=25,
         )
         r.raise_for_status()
         payload = r.json()
@@ -403,7 +434,7 @@ def fetch_country_raw(iso2: str) -> dict[str, Optional[float]]:
     wb_codes  = [c for c in all_codes if not c.startswith("VDEM_")]
     print(f"  [WB] fetching {len(wb_codes)} indicators for {iso2} ...")
     raw: dict[str, Optional[float]] = {}
-    with requests.Session() as sess:
+    with _wb_session() as sess:
         for code in wb_codes:
             mrv = 10 if code in _MRV_LONG_CODES else 5
             raw[code] = _fetch_one(iso2, code, sess, mrv=mrv)
@@ -468,6 +499,7 @@ def country_wellbeing(iso2: str) -> dict:
         "profile":            profile,
         "structural_missing": STRUCTURAL_MISSING,
         "data_missing":       data_missing,
+        "axis_caveats":       {a: c for a, c in _AXIS_CAVEATS.items() if axis_scores.get(a) is not None},
         "computed_at":        profile.computed_at,
     }
     result["data_quality"] = _data_quality(result)
@@ -658,7 +690,8 @@ def _print_result(r: dict) -> None:
         score  = ax[axis]
         score_s = f"{score:.3f}" if score is not None else " NULL"
         dim    = _AXIS_DIM.get(axis, "")
-        print(f"  {axis:<42} {score_s:>5}  {dim}")
+        caveat = "  ⚠ " + r["axis_caveats"][axis] if axis in r.get("axis_caveats", {}) else ""
+        print(f"  {axis:<42} {score_s:>5}  {dim}{caveat}")
 
     print(f"\n  ⚠  Structural missing (no adequate WB country indicator):")
     for m in r["structural_missing"]:
@@ -682,7 +715,7 @@ def _print_result(r: dict) -> None:
               f"  |  active flo weight: {fq.get('active_weight_pct','?')}% of potential")
     print(f"\n  ZONE : {r['zone_label']}")
     print(f"\n  Coverage: {active_count} of {n_mapped} mapped axes active")
-    print(f"            {n_mapped} of 18 total BUNDLE axes ({n_structural} structural gap + SOCIAL_RELATIONS unmapped)")
+    print(f"            {n_mapped} of 18 total BUNDLE axes ({n_structural} structural gap)")
     conf = r.get("data_quality", {}).get("confidence", "?")
     if conf == "LOW":
         print(f"\n  [!] Zone may be INFLATED — official data only, key gaps present")

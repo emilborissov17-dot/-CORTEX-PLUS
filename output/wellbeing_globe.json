@@ -1,0 +1,39 @@
+{
+  "globe_hash": "ceb15c573f442d769666598e7c4a62bc271f148788a1a90ceb5625e46c8747f1",
+  "computed_at": "2026-07-02T07:19:06.804616+00:00",
+  "country_count": 217,
+  "pop_total": 8139737968,
+  "dep": 0.33168,
+  "str": 0.312849,
+  "flo": 0.675248,
+  "modal_zone": "Dignified Life",
+  "zone_distribution": {
+    "Dignified Life": 109,
+    "Precarious": 74,
+    "Thriving": 26,
+    "Secure": 5,
+    "In Crisis": 3
+  },
+  "confidence_distribution": {
+    "LOW": 108,
+    "MEDIUM": 109
+  },
+  "region_hashes": [
+    "06034c8c71f7ed4169999a13c17009c02a41b76ced327a34c44b7cd0570c624f",
+    "0c252d1b63d546e6f374a31db883ba601e608faf19aed2b9aee9d4297a76a759",
+    "25fa75cf04623b4c411fddb63960b19f1b7c162be0d5470fff61af0bf47a6a82",
+    "2cd69c780516d66bdca1ca2841b63728a908e0c33656d1aa6f9108f07e341ce8",
+    "64d4e7d3537a4c429b09c2e7e088831ee5234964a30e6ffa993ff475a3688a99",
+    "8b95c8f9ad9efba1d4adafedea5018f1bc10adca0891e41cebac8d9ee7e723c4",
+    "c1dd33b92b6765f52f7b787b6b0409fef0450b79b24839f7fbe2130112cc6f6a"
+  ],
+  "regions": {
+    "EAS": "2cd69c780516d66bdca1ca2841b63728a908e0c33656d1aa6f9108f07e341ce8",
+    "ECS": "06034c8c71f7ed4169999a13c17009c02a41b76ced327a34c44b7cd0570c624f",
+    "LCN": "64d4e7d3537a4c429b09c2e7e088831ee5234964a30e6ffa993ff475a3688a99",
+    "MEA": "8b95c8f9ad9efba1d4adafedea5018f1bc10adca0891e41cebac8d9ee7e723c4",
+    "NAC": "c1dd33b92b6765f52f7b787b6b0409fef0450b79b24839f7fbe2130112cc6f6a",
+    "SAS": "0c252d1b63d546e6f374a31db883ba601e608faf19aed2b9aee9d4297a76a759",
+    "SSF": "25fa75cf04623b4c411fddb63960b19f1b7c162be0d5470fff61af0bf47a6a82"
+  }
+}
