@@ -1,0 +1,1614 @@
+{
+  "generated_by": "_divergence_pilot.py (full-universe run, re-executed for report grounding)",
+  "method": "divergence = quantitative_percentile(WB: 1-deprivation,1-strain,flourishing) - qualitative_percentile(V-Dem: freexp_altinf, 1-corr, rule)",
+  "facade_threshold": 0.2,
+  "total_wb_countries": 217,
+  "universe_size": 175,
+  "no_vdem_data_excluded": 42,
+  "facade_count": 33,
+  "facade_pct_of_universe": 18.9,
+  "facade_list": [
+    {
+      "iso2": "CN",
+      "name": "China",
+      "quant_pct": 0.782,
+      "qual_pct": 0.247,
+      "divergence": 0.534
+    },
+    {
+      "iso2": "RS",
+      "name": "Serbia",
+      "quant_pct": 0.678,
+      "qual_pct": 0.266,
+      "divergence": 0.412
+    },
+    {
+      "iso2": "RU",
+      "name": "Russian Federation",
+      "quant_pct": 0.534,
+      "qual_pct": 0.138,
+      "divergence": 0.397
+    },
+    {
+      "iso2": "TR",
+      "name": "Turkiye",
+      "quant_pct": 0.546,
+      "qual_pct": 0.163,
+      "divergence": 0.383
+    },
+    {
+      "iso2": "BA",
+      "name": "Bosnia and Herzegovina",
+      "quant_pct": 0.759,
+      "qual_pct": 0.387,
+      "divergence": 0.372
+    },
+    {
+      "iso2": "VE",
+      "name": "Venezuela, RB",
+      "quant_pct": 0.397,
+      "qual_pct": 0.038,
+      "divergence": 0.358
+    },
+    {
+      "iso2": "BY",
+      "name": "Belarus",
+      "quant_pct": 0.592,
+      "qual_pct": 0.239,
+      "divergence": 0.352
+    },
+    {
+      "iso2": "SV",
+      "name": "El Salvador",
+      "quant_pct": 0.557,
+      "qual_pct": 0.211,
+      "divergence": 0.347
+    },
+    {
+      "iso2": "TJ",
+      "name": "Tajikistan",
+      "quant_pct": 0.385,
+      "qual_pct": 0.038,
+      "divergence": 0.347
+    },
+    {
+      "iso2": "AZ",
+      "name": "Azerbaijan",
+      "quant_pct": 0.391,
+      "qual_pct": 0.057,
+      "divergence": 0.333
+    },
+    {
+      "iso2": "MK",
+      "name": "North Macedonia",
+      "quant_pct": 0.684,
+      "qual_pct": 0.351,
+      "divergence": 0.333
+    },
+    {
+      "iso2": "UZ",
+      "name": "Uzbekistan",
+      "quant_pct": 0.477,
+      "qual_pct": 0.159,
+      "divergence": 0.318
+    },
+    {
+      "iso2": "AE",
+      "name": "United Arab Emirates",
+      "quant_pct": 0.793,
+      "qual_pct": 0.483,
+      "divergence": 0.31
+    },
+    {
+      "iso2": "HK",
+      "name": "Hong Kong SAR, China",
+      "quant_pct": 0.874,
+      "qual_pct": 0.565,
+      "divergence": 0.308
+    },
+    {
+      "iso2": "TM",
+      "name": "Turkmenistan",
+      "quant_pct": 0.339,
+      "qual_pct": 0.038,
+      "divergence": 0.301
+    },
+    {
+      "iso2": "HU",
+      "name": "Hungary",
+      "quant_pct": 0.747,
+      "qual_pct": 0.448,
+      "divergence": 0.299
+    },
+    {
+      "iso2": "NI",
+      "name": "Nicaragua",
+      "quant_pct": 0.305,
+      "qual_pct": 0.006,
+      "divergence": 0.299
+    },
+    {
+      "iso2": "QA",
+      "name": "Qatar",
+      "quant_pct": 0.701,
+      "qual_pct": 0.402,
+      "divergence": 0.299
+    },
+    {
+      "iso2": "BG",
+      "name": "Bulgaria",
+      "quant_pct": 0.77,
+      "qual_pct": 0.475,
+      "divergence": 0.295
+    },
+    {
+      "iso2": "KZ",
+      "name": "Kazakhstan",
+      "quant_pct": 0.529,
+      "qual_pct": 0.236,
+      "divergence": 0.293
+    },
+    {
+      "iso2": "PY",
+      "name": "Paraguay",
+      "quant_pct": 0.661,
+      "qual_pct": 0.377,
+      "divergence": 0.284
+    },
+    {
+      "iso2": "AL",
+      "name": "Albania",
+      "quant_pct": 0.741,
+      "qual_pct": 0.46,
+      "divergence": 0.282
+    },
+    {
+      "iso2": "KH",
+      "name": "Cambodia",
+      "quant_pct": 0.345,
+      "qual_pct": 0.069,
+      "divergence": 0.276
+    },
+    {
+      "iso2": "VN",
+      "name": "Viet Nam",
+      "quant_pct": 0.575,
+      "qual_pct": 0.31,
+      "divergence": 0.264
+    },
+    {
+      "iso2": "CU",
+      "name": "Cuba",
+      "quant_pct": 0.454,
+      "qual_pct": 0.192,
+      "divergence": 0.262
+    },
+    {
+      "iso2": "BH",
+      "name": "Bahrain",
+      "quant_pct": 0.563,
+      "qual_pct": 0.303,
+      "divergence": 0.261
+    },
+    {
+      "iso2": "SA",
+      "name": "Saudi Arabia",
+      "quant_pct": 0.638,
+      "qual_pct": 0.377,
+      "divergence": 0.261
+    },
+    {
+      "iso2": "KG",
+      "name": "Kyrgyz Republic",
+      "quant_pct": 0.517,
+      "qual_pct": 0.27,
+      "divergence": 0.247
+    },
+    {
+      "iso2": "TH",
+      "name": "Thailand",
+      "quant_pct": 0.644,
+      "qual_pct": 0.398,
+      "divergence": 0.245
+    },
+    {
+      "iso2": "UA",
+      "name": "Ukraine",
+      "quant_pct": 0.58,
+      "qual_pct": 0.337,
+      "divergence": 0.243
+    },
+    {
+      "iso2": "IR",
+      "name": "Iran, Islamic Rep.",
+      "quant_pct": 0.414,
+      "qual_pct": 0.197,
+      "divergence": 0.216
+    },
+    {
+      "iso2": "ID",
+      "name": "Indonesia",
+      "quant_pct": 0.54,
+      "qual_pct": 0.333,
+      "divergence": 0.207
+    },
+    {
+      "iso2": "MM",
+      "name": "Myanmar",
+      "quant_pct": 0.259,
+      "qual_pct": 0.056,
+      "divergence": 0.203
+    }
+  ],
+  "top10_largest_divergence": [
+    {
+      "iso2": "CN",
+      "name": "China",
+      "quant_pct": 0.782,
+      "qual_pct": 0.247,
+      "divergence": 0.534
+    },
+    {
+      "iso2": "RS",
+      "name": "Serbia",
+      "quant_pct": 0.678,
+      "qual_pct": 0.266,
+      "divergence": 0.412
+    },
+    {
+      "iso2": "RU",
+      "name": "Russian Federation",
+      "quant_pct": 0.534,
+      "qual_pct": 0.138,
+      "divergence": 0.397
+    },
+    {
+      "iso2": "TR",
+      "name": "Turkiye",
+      "quant_pct": 0.546,
+      "qual_pct": 0.163,
+      "divergence": 0.383
+    },
+    {
+      "iso2": "BA",
+      "name": "Bosnia and Herzegovina",
+      "quant_pct": 0.759,
+      "qual_pct": 0.387,
+      "divergence": 0.372
+    },
+    {
+      "iso2": "VE",
+      "name": "Venezuela, RB",
+      "quant_pct": 0.397,
+      "qual_pct": 0.038,
+      "divergence": 0.358
+    },
+    {
+      "iso2": "BY",
+      "name": "Belarus",
+      "quant_pct": 0.592,
+      "qual_pct": 0.239,
+      "divergence": 0.352
+    },
+    {
+      "iso2": "SV",
+      "name": "El Salvador",
+      "quant_pct": 0.557,
+      "qual_pct": 0.211,
+      "divergence": 0.347
+    },
+    {
+      "iso2": "TJ",
+      "name": "Tajikistan",
+      "quant_pct": 0.385,
+      "qual_pct": 0.038,
+      "divergence": 0.347
+    },
+    {
+      "iso2": "AZ",
+      "name": "Azerbaijan",
+      "quant_pct": 0.391,
+      "qual_pct": 0.057,
+      "divergence": 0.333
+    }
+  ],
+  "top10_smallest_divergence": [
+    {
+      "iso2": "GM",
+      "name": "Gambia, The",
+      "quant_pct": 0.224,
+      "qual_pct": 0.703,
+      "divergence": -0.479
+    },
+    {
+      "iso2": "VU",
+      "name": "Vanuatu",
+      "quant_pct": 0.241,
+      "qual_pct": 0.716,
+      "divergence": -0.475
+    },
+    {
+      "iso2": "NE",
+      "name": "Niger",
+      "quant_pct": 0.046,
+      "qual_pct": 0.515,
+      "divergence": -0.469
+    },
+    {
+      "iso2": "TL",
+      "name": "Timor-Leste",
+      "quant_pct": 0.236,
+      "qual_pct": 0.701,
+      "divergence": -0.466
+    },
+    {
+      "iso2": "BJ",
+      "name": "Benin",
+      "quant_pct": 0.178,
+      "qual_pct": 0.634,
+      "divergence": -0.456
+    },
+    {
+      "iso2": "NA",
+      "name": "Namibia",
+      "quant_pct": 0.316,
+      "qual_pct": 0.747,
+      "divergence": -0.431
+    },
+    {
+      "iso2": "ZM",
+      "name": "Zambia",
+      "quant_pct": 0.161,
+      "qual_pct": 0.582,
+      "divergence": -0.421
+    },
+    {
+      "iso2": "LS",
+      "name": "Lesotho",
+      "quant_pct": 0.144,
+      "qual_pct": 0.563,
+      "divergence": -0.42
+    },
+    {
+      "iso2": "SL",
+      "name": "Sierra Leone",
+      "quant_pct": 0.138,
+      "qual_pct": 0.542,
+      "divergence": -0.404
+    },
+    {
+      "iso2": "TT",
+      "name": "Trinidad and Tobago",
+      "quant_pct": 0.425,
+      "qual_pct": 0.818,
+      "divergence": -0.393
+    }
+  ],
+  "all_results": [
+    {
+      "iso2": "CN",
+      "name": "China",
+      "quant_pct": 0.782,
+      "qual_pct": 0.247,
+      "divergence": 0.534
+    },
+    {
+      "iso2": "RS",
+      "name": "Serbia",
+      "quant_pct": 0.678,
+      "qual_pct": 0.266,
+      "divergence": 0.412
+    },
+    {
+      "iso2": "RU",
+      "name": "Russian Federation",
+      "quant_pct": 0.534,
+      "qual_pct": 0.138,
+      "divergence": 0.397
+    },
+    {
+      "iso2": "TR",
+      "name": "Turkiye",
+      "quant_pct": 0.546,
+      "qual_pct": 0.163,
+      "divergence": 0.383
+    },
+    {
+      "iso2": "BA",
+      "name": "Bosnia and Herzegovina",
+      "quant_pct": 0.759,
+      "qual_pct": 0.387,
+      "divergence": 0.372
+    },
+    {
+      "iso2": "VE",
+      "name": "Venezuela, RB",
+      "quant_pct": 0.397,
+      "qual_pct": 0.038,
+      "divergence": 0.358
+    },
+    {
+      "iso2": "BY",
+      "name": "Belarus",
+      "quant_pct": 0.592,
+      "qual_pct": 0.239,
+      "divergence": 0.352
+    },
+    {
+      "iso2": "SV",
+      "name": "El Salvador",
+      "quant_pct": 0.557,
+      "qual_pct": 0.211,
+      "divergence": 0.347
+    },
+    {
+      "iso2": "TJ",
+      "name": "Tajikistan",
+      "quant_pct": 0.385,
+      "qual_pct": 0.038,
+      "divergence": 0.347
+    },
+    {
+      "iso2": "AZ",
+      "name": "Azerbaijan",
+      "quant_pct": 0.391,
+      "qual_pct": 0.057,
+      "divergence": 0.333
+    },
+    {
+      "iso2": "MK",
+      "name": "North Macedonia",
+      "quant_pct": 0.684,
+      "qual_pct": 0.351,
+      "divergence": 0.333
+    },
+    {
+      "iso2": "UZ",
+      "name": "Uzbekistan",
+      "quant_pct": 0.477,
+      "qual_pct": 0.159,
+      "divergence": 0.318
+    },
+    {
+      "iso2": "AE",
+      "name": "United Arab Emirates",
+      "quant_pct": 0.793,
+      "qual_pct": 0.483,
+      "divergence": 0.31
+    },
+    {
+      "iso2": "HK",
+      "name": "Hong Kong SAR, China",
+      "quant_pct": 0.874,
+      "qual_pct": 0.565,
+      "divergence": 0.308
+    },
+    {
+      "iso2": "TM",
+      "name": "Turkmenistan",
+      "quant_pct": 0.339,
+      "qual_pct": 0.038,
+      "divergence": 0.301
+    },
+    {
+      "iso2": "HU",
+      "name": "Hungary",
+      "quant_pct": 0.747,
+      "qual_pct": 0.448,
+      "divergence": 0.299
+    },
+    {
+      "iso2": "NI",
+      "name": "Nicaragua",
+      "quant_pct": 0.305,
+      "qual_pct": 0.006,
+      "divergence": 0.299
+    },
+    {
+      "iso2": "QA",
+      "name": "Qatar",
+      "quant_pct": 0.701,
+      "qual_pct": 0.402,
+      "divergence": 0.299
+    },
+    {
+      "iso2": "BG",
+      "name": "Bulgaria",
+      "quant_pct": 0.77,
+      "qual_pct": 0.475,
+      "divergence": 0.295
+    },
+    {
+      "iso2": "KZ",
+      "name": "Kazakhstan",
+      "quant_pct": 0.529,
+      "qual_pct": 0.236,
+      "divergence": 0.293
+    },
+    {
+      "iso2": "PY",
+      "name": "Paraguay",
+      "quant_pct": 0.661,
+      "qual_pct": 0.377,
+      "divergence": 0.284
+    },
+    {
+      "iso2": "AL",
+      "name": "Albania",
+      "quant_pct": 0.741,
+      "qual_pct": 0.46,
+      "divergence": 0.282
+    },
+    {
+      "iso2": "KH",
+      "name": "Cambodia",
+      "quant_pct": 0.345,
+      "qual_pct": 0.069,
+      "divergence": 0.276
+    },
+    {
+      "iso2": "VN",
+      "name": "Viet Nam",
+      "quant_pct": 0.575,
+      "qual_pct": 0.31,
+      "divergence": 0.264
+    },
+    {
+      "iso2": "CU",
+      "name": "Cuba",
+      "quant_pct": 0.454,
+      "qual_pct": 0.192,
+      "divergence": 0.262
+    },
+    {
+      "iso2": "BH",
+      "name": "Bahrain",
+      "quant_pct": 0.563,
+      "qual_pct": 0.303,
+      "divergence": 0.261
+    },
+    {
+      "iso2": "SA",
+      "name": "Saudi Arabia",
+      "quant_pct": 0.638,
+      "qual_pct": 0.377,
+      "divergence": 0.261
+    },
+    {
+      "iso2": "KG",
+      "name": "Kyrgyz Republic",
+      "quant_pct": 0.517,
+      "qual_pct": 0.27,
+      "divergence": 0.247
+    },
+    {
+      "iso2": "TH",
+      "name": "Thailand",
+      "quant_pct": 0.644,
+      "qual_pct": 0.398,
+      "divergence": 0.245
+    },
+    {
+      "iso2": "UA",
+      "name": "Ukraine",
+      "quant_pct": 0.58,
+      "qual_pct": 0.337,
+      "divergence": 0.243
+    },
+    {
+      "iso2": "IR",
+      "name": "Iran, Islamic Rep.",
+      "quant_pct": 0.414,
+      "qual_pct": 0.197,
+      "divergence": 0.216
+    },
+    {
+      "iso2": "ID",
+      "name": "Indonesia",
+      "quant_pct": 0.54,
+      "qual_pct": 0.333,
+      "divergence": 0.207
+    },
+    {
+      "iso2": "MM",
+      "name": "Myanmar",
+      "quant_pct": 0.259,
+      "qual_pct": 0.056,
+      "divergence": 0.203
+    },
+    {
+      "iso2": "GE",
+      "name": "Georgia",
+      "quant_pct": 0.736,
+      "qual_pct": 0.55,
+      "divergence": 0.186
+    },
+    {
+      "iso2": "PH",
+      "name": "Philippines",
+      "quant_pct": 0.494,
+      "qual_pct": 0.32,
+      "divergence": 0.174
+    },
+    {
+      "iso2": "ME",
+      "name": "Montenegro",
+      "quant_pct": 0.833,
+      "qual_pct": 0.665,
+      "divergence": 0.169
+    },
+    {
+      "iso2": "RO",
+      "name": "Romania",
+      "quant_pct": 0.764,
+      "qual_pct": 0.6,
+      "divergence": 0.165
+    },
+    {
+      "iso2": "AM",
+      "name": "Armenia",
+      "quant_pct": 0.655,
+      "qual_pct": 0.496,
+      "divergence": 0.159
+    },
+    {
+      "iso2": "BO",
+      "name": "Bolivia",
+      "quant_pct": 0.483,
+      "qual_pct": 0.324,
+      "divergence": 0.159
+    },
+    {
+      "iso2": "IN",
+      "name": "India",
+      "quant_pct": 0.489,
+      "qual_pct": 0.335,
+      "divergence": 0.153
+    },
+    {
+      "iso2": "HR",
+      "name": "Croatia",
+      "quant_pct": 0.81,
+      "qual_pct": 0.665,
+      "divergence": 0.146
+    },
+    {
+      "iso2": "SI",
+      "name": "Slovenia",
+      "quant_pct": 0.862,
+      "qual_pct": 0.726,
+      "divergence": 0.136
+    },
+    {
+      "iso2": "KW",
+      "name": "Kuwait",
+      "quant_pct": 0.649,
+      "qual_pct": 0.515,
+      "divergence": 0.134
+    },
+    {
+      "iso2": "SG",
+      "name": "Singapore",
+      "quant_pct": 0.851,
+      "qual_pct": 0.716,
+      "divergence": 0.134
+    },
+    {
+      "iso2": "MY",
+      "name": "Malaysia",
+      "quant_pct": 0.69,
+      "qual_pct": 0.557,
+      "divergence": 0.132
+    },
+    {
+      "iso2": "AR",
+      "name": "Argentina",
+      "quant_pct": 0.672,
+      "qual_pct": 0.546,
+      "divergence": 0.126
+    },
+    {
+      "iso2": "BD",
+      "name": "Bangladesh",
+      "quant_pct": 0.402,
+      "qual_pct": 0.276,
+      "divergence": 0.126
+    },
+    {
+      "iso2": "EG",
+      "name": "Egypt, Arab Rep.",
+      "quant_pct": 0.374,
+      "qual_pct": 0.249,
+      "divergence": 0.125
+    },
+    {
+      "iso2": "GR",
+      "name": "Greece",
+      "quant_pct": 0.805,
+      "qual_pct": 0.699,
+      "divergence": 0.105
+    },
+    {
+      "iso2": "CM",
+      "name": "Cameroon",
+      "quant_pct": 0.247,
+      "qual_pct": 0.144,
+      "divergence": 0.103
+    },
+    {
+      "iso2": "MA",
+      "name": "Morocco",
+      "quant_pct": 0.5,
+      "qual_pct": 0.397,
+      "divergence": 0.103
+    },
+    {
+      "iso2": "IT",
+      "name": "Italy",
+      "quant_pct": 0.822,
+      "qual_pct": 0.72,
+      "divergence": 0.102
+    },
+    {
+      "iso2": "GA",
+      "name": "Gabon",
+      "quant_pct": 0.511,
+      "qual_pct": 0.421,
+      "divergence": 0.09
+    },
+    {
+      "iso2": "AT",
+      "name": "Austria",
+      "quant_pct": 0.948,
+      "qual_pct": 0.862,
+      "divergence": 0.086
+    },
+    {
+      "iso2": "IQ",
+      "name": "Iraq",
+      "quant_pct": 0.293,
+      "qual_pct": 0.207,
+      "divergence": 0.086
+    },
+    {
+      "iso2": "IS",
+      "name": "Iceland",
+      "quant_pct": 0.977,
+      "qual_pct": 0.891,
+      "divergence": 0.086
+    },
+    {
+      "iso2": "CY",
+      "name": "Cyprus",
+      "quant_pct": 0.828,
+      "qual_pct": 0.747,
+      "divergence": 0.08
+    },
+    {
+      "iso2": "DZ",
+      "name": "Algeria",
+      "quant_pct": 0.356,
+      "qual_pct": 0.278,
+      "divergence": 0.079
+    },
+    {
+      "iso2": "KR",
+      "name": "Korea, Rep.",
+      "quant_pct": 0.931,
+      "qual_pct": 0.856,
+      "divergence": 0.075
+    },
+    {
+      "iso2": "PA",
+      "name": "Panama",
+      "quant_pct": 0.667,
+      "qual_pct": 0.594,
+      "divergence": 0.073
+    },
+    {
+      "iso2": "GB",
+      "name": "United Kingdom",
+      "quant_pct": 0.902,
+      "qual_pct": 0.833,
+      "divergence": 0.069
+    },
+    {
+      "iso2": "JP",
+      "name": "Japan",
+      "quant_pct": 0.914,
+      "qual_pct": 0.851,
+      "divergence": 0.063
+    },
+    {
+      "iso2": "PE",
+      "name": "Peru",
+      "quant_pct": 0.569,
+      "qual_pct": 0.506,
+      "divergence": 0.063
+    },
+    {
+      "iso2": "JO",
+      "name": "Jordan",
+      "quant_pct": 0.598,
+      "qual_pct": 0.536,
+      "divergence": 0.061
+    },
+    {
+      "iso2": "LT",
+      "name": "Lithuania",
+      "quant_pct": 0.897,
+      "qual_pct": 0.837,
+      "divergence": 0.059
+    },
+    {
+      "iso2": "PT",
+      "name": "Portugal",
+      "quant_pct": 0.868,
+      "qual_pct": 0.81,
+      "divergence": 0.057
+    },
+    {
+      "iso2": "LA",
+      "name": "Lao PDR",
+      "quant_pct": 0.253,
+      "qual_pct": 0.199,
+      "divergence": 0.054
+    },
+    {
+      "iso2": "NL",
+      "name": "Netherlands",
+      "quant_pct": 0.954,
+      "qual_pct": 0.902,
+      "divergence": 0.052
+    },
+    {
+      "iso2": "US",
+      "name": "United States",
+      "quant_pct": 0.799,
+      "qual_pct": 0.749,
+      "divergence": 0.05
+    },
+    {
+      "iso2": "MX",
+      "name": "Mexico",
+      "quant_pct": 0.443,
+      "qual_pct": 0.397,
+      "divergence": 0.046
+    },
+    {
+      "iso2": "MN",
+      "name": "Mongolia",
+      "quant_pct": 0.506,
+      "qual_pct": 0.462,
+      "divergence": 0.044
+    },
+    {
+      "iso2": "LB",
+      "name": "Lebanon",
+      "quant_pct": 0.362,
+      "qual_pct": 0.32,
+      "divergence": 0.042
+    },
+    {
+      "iso2": "IL",
+      "name": "Israel",
+      "quant_pct": 0.816,
+      "qual_pct": 0.776,
+      "divergence": 0.04
+    },
+    {
+      "iso2": "LU",
+      "name": "Luxembourg",
+      "quant_pct": 0.983,
+      "qual_pct": 0.952,
+      "divergence": 0.031
+    },
+    {
+      "iso2": "FI",
+      "name": "Finland",
+      "quant_pct": 0.971,
+      "qual_pct": 0.943,
+      "divergence": 0.029
+    },
+    {
+      "iso2": "CZ",
+      "name": "Czechia",
+      "quant_pct": 0.891,
+      "qual_pct": 0.864,
+      "divergence": 0.027
+    },
+    {
+      "iso2": "ES",
+      "name": "Spain",
+      "quant_pct": 0.839,
+      "qual_pct": 0.812,
+      "divergence": 0.027
+    },
+    {
+      "iso2": "SE",
+      "name": "Sweden",
+      "quant_pct": 1.0,
+      "qual_pct": 0.973,
+      "divergence": 0.027
+    },
+    {
+      "iso2": "BT",
+      "name": "Bhutan",
+      "quant_pct": 0.713,
+      "qual_pct": 0.692,
+      "divergence": 0.021
+    },
+    {
+      "iso2": "MD",
+      "name": "Moldova",
+      "quant_pct": 0.615,
+      "qual_pct": 0.596,
+      "divergence": 0.019
+    },
+    {
+      "iso2": "ZW",
+      "name": "Zimbabwe",
+      "quant_pct": 0.201,
+      "qual_pct": 0.182,
+      "divergence": 0.019
+    },
+    {
+      "iso2": "NO",
+      "name": "Norway",
+      "quant_pct": 0.989,
+      "qual_pct": 0.971,
+      "divergence": 0.017
+    },
+    {
+      "iso2": "MU",
+      "name": "Mauritius",
+      "quant_pct": 0.724,
+      "qual_pct": 0.711,
+      "divergence": 0.013
+    },
+    {
+      "iso2": "FJ",
+      "name": "Fiji",
+      "quant_pct": 0.626,
+      "qual_pct": 0.621,
+      "divergence": 0.006
+    },
+    {
+      "iso2": "NZ",
+      "name": "New Zealand",
+      "quant_pct": 0.96,
+      "qual_pct": 0.954,
+      "divergence": 0.006
+    },
+    {
+      "iso2": "BE",
+      "name": "Belgium",
+      "quant_pct": 0.937,
+      "qual_pct": 0.935,
+      "divergence": 0.002
+    },
+    {
+      "iso2": "CA",
+      "name": "Canada",
+      "quant_pct": 0.925,
+      "qual_pct": 0.923,
+      "divergence": 0.002
+    },
+    {
+      "iso2": "PK",
+      "name": "Pakistan",
+      "quant_pct": 0.264,
+      "qual_pct": 0.262,
+      "divergence": 0.002
+    },
+    {
+      "iso2": "DK",
+      "name": "Denmark",
+      "quant_pct": 0.994,
+      "qual_pct": 1.0,
+      "divergence": -0.006
+    },
+    {
+      "iso2": "OM",
+      "name": "Oman",
+      "quant_pct": 0.46,
+      "qual_pct": 0.466,
+      "divergence": -0.006
+    },
+    {
+      "iso2": "IE",
+      "name": "Ireland",
+      "quant_pct": 0.943,
+      "qual_pct": 0.95,
+      "divergence": -0.008
+    },
+    {
+      "iso2": "SK",
+      "name": "Slovak Republic",
+      "quant_pct": 0.632,
+      "qual_pct": 0.64,
+      "divergence": -0.008
+    },
+    {
+      "iso2": "UY",
+      "name": "Uruguay",
+      "quant_pct": 0.885,
+      "qual_pct": 0.893,
+      "divergence": -0.008
+    },
+    {
+      "iso2": "MV",
+      "name": "Maldives",
+      "quant_pct": 0.609,
+      "qual_pct": 0.619,
+      "divergence": -0.01
+    },
+    {
+      "iso2": "SY",
+      "name": "Syrian Arab Republic",
+      "quant_pct": 0.287,
+      "qual_pct": 0.299,
+      "divergence": -0.011
+    },
+    {
+      "iso2": "CH",
+      "name": "Switzerland",
+      "quant_pct": 0.966,
+      "qual_pct": 0.979,
+      "divergence": -0.013
+    },
+    {
+      "iso2": "FR",
+      "name": "France",
+      "quant_pct": 0.908,
+      "qual_pct": 0.921,
+      "divergence": -0.013
+    },
+    {
+      "iso2": "GN",
+      "name": "Guinea",
+      "quant_pct": 0.195,
+      "qual_pct": 0.209,
+      "divergence": -0.013
+    },
+    {
+      "iso2": "MR",
+      "name": "Mauritania",
+      "quant_pct": 0.213,
+      "qual_pct": 0.228,
+      "divergence": -0.015
+    },
+    {
+      "iso2": "GQ",
+      "name": "Equatorial Guinea",
+      "quant_pct": 0.057,
+      "qual_pct": 0.075,
+      "divergence": -0.017
+    },
+    {
+      "iso2": "KM",
+      "name": "Comoros",
+      "quant_pct": 0.218,
+      "qual_pct": 0.238,
+      "divergence": -0.019
+    },
+    {
+      "iso2": "AF",
+      "name": "Afghanistan",
+      "quant_pct": 0.08,
+      "qual_pct": 0.109,
+      "divergence": -0.029
+    },
+    {
+      "iso2": "BR",
+      "name": "Brazil",
+      "quant_pct": 0.695,
+      "qual_pct": 0.728,
+      "divergence": -0.033
+    },
+    {
+      "iso2": "MT",
+      "name": "Malta",
+      "quant_pct": 0.707,
+      "qual_pct": 0.743,
+      "divergence": -0.036
+    },
+    {
+      "iso2": "DO",
+      "name": "Dominican Republic",
+      "quant_pct": 0.552,
+      "qual_pct": 0.594,
+      "divergence": -0.042
+    },
+    {
+      "iso2": "EE",
+      "name": "Estonia",
+      "quant_pct": 0.92,
+      "qual_pct": 0.964,
+      "divergence": -0.044
+    },
+    {
+      "iso2": "SZ",
+      "name": "Eswatini",
+      "quant_pct": 0.23,
+      "qual_pct": 0.274,
+      "divergence": -0.044
+    },
+    {
+      "iso2": "YE",
+      "name": "Yemen, Rep.",
+      "quant_pct": 0.04,
+      "qual_pct": 0.084,
+      "divergence": -0.044
+    },
+    {
+      "iso2": "KP",
+      "name": "Korea, Dem. People's Rep.",
+      "quant_pct": 0.075,
+      "qual_pct": 0.123,
+      "divergence": -0.048
+    },
+    {
+      "iso2": "AU",
+      "name": "Australia",
+      "quant_pct": 0.879,
+      "qual_pct": 0.929,
+      "divergence": -0.05
+    },
+    {
+      "iso2": "GW",
+      "name": "Guinea-Bissau",
+      "quant_pct": 0.167,
+      "qual_pct": 0.216,
+      "divergence": -0.05
+    },
+    {
+      "iso2": "NP",
+      "name": "Nepal",
+      "quant_pct": 0.523,
+      "qual_pct": 0.573,
+      "divergence": -0.05
+    },
+    {
+      "iso2": "CO",
+      "name": "Colombia",
+      "quant_pct": 0.586,
+      "qual_pct": 0.638,
+      "divergence": -0.052
+    },
+    {
+      "iso2": "UG",
+      "name": "Uganda",
+      "quant_pct": 0.132,
+      "qual_pct": 0.186,
+      "divergence": -0.054
+    },
+    {
+      "iso2": "LV",
+      "name": "Latvia",
+      "quant_pct": 0.845,
+      "qual_pct": 0.906,
+      "divergence": -0.061
+    },
+    {
+      "iso2": "CR",
+      "name": "Costa Rica",
+      "quant_pct": 0.753,
+      "qual_pct": 0.828,
+      "divergence": -0.075
+    },
+    {
+      "iso2": "SS",
+      "name": "South Sudan",
+      "quant_pct": 0.0,
+      "qual_pct": 0.079,
+      "divergence": -0.079
+    },
+    {
+      "iso2": "DE",
+      "name": "Germany",
+      "quant_pct": 0.856,
+      "qual_pct": 0.939,
+      "divergence": -0.082
+    },
+    {
+      "iso2": "CG",
+      "name": "Congo, Rep.",
+      "quant_pct": 0.098,
+      "qual_pct": 0.184,
+      "divergence": -0.086
+    },
+    {
+      "iso2": "ER",
+      "name": "Eritrea",
+      "quant_pct": 0.023,
+      "qual_pct": 0.111,
+      "divergence": -0.088
+    },
+    {
+      "iso2": "TD",
+      "name": "Chad",
+      "quant_pct": 0.006,
+      "qual_pct": 0.094,
+      "divergence": -0.088
+    },
+    {
+      "iso2": "RW",
+      "name": "Rwanda",
+      "quant_pct": 0.27,
+      "qual_pct": 0.36,
+      "divergence": -0.09
+    },
+    {
+      "iso2": "SC",
+      "name": "Seychelles",
+      "quant_pct": 0.787,
+      "qual_pct": 0.877,
+      "divergence": -0.09
+    },
+    {
+      "iso2": "BI",
+      "name": "Burundi",
+      "quant_pct": 0.017,
+      "qual_pct": 0.109,
+      "divergence": -0.092
+    },
+    {
+      "iso2": "TN",
+      "name": "Tunisia",
+      "quant_pct": 0.448,
+      "qual_pct": 0.54,
+      "divergence": -0.092
+    },
+    {
+      "iso2": "TG",
+      "name": "Togo",
+      "quant_pct": 0.184,
+      "qual_pct": 0.28,
+      "divergence": -0.096
+    },
+    {
+      "iso2": "EC",
+      "name": "Ecuador",
+      "quant_pct": 0.31,
+      "qual_pct": 0.41,
+      "divergence": -0.1
+    },
+    {
+      "iso2": "CL",
+      "name": "Chile",
+      "quant_pct": 0.776,
+      "qual_pct": 0.883,
+      "divergence": -0.107
+    },
+    {
+      "iso2": "LY",
+      "name": "Libya",
+      "quant_pct": 0.103,
+      "qual_pct": 0.211,
+      "divergence": -0.107
+    },
+    {
+      "iso2": "PS",
+      "name": "West Bank and Gaza",
+      "quant_pct": 0.276,
+      "qual_pct": 0.387,
+      "divergence": -0.111
+    },
+    {
+      "iso2": "SD",
+      "name": "Sudan",
+      "quant_pct": 0.115,
+      "qual_pct": 0.226,
+      "divergence": -0.111
+    },
+    {
+      "iso2": "PL",
+      "name": "Poland",
+      "quant_pct": 0.73,
+      "qual_pct": 0.845,
+      "divergence": -0.115
+    },
+    {
+      "iso2": "CV",
+      "name": "Cabo Verde",
+      "quant_pct": 0.603,
+      "qual_pct": 0.732,
+      "divergence": -0.128
+    },
+    {
+      "iso2": "MG",
+      "name": "Madagascar",
+      "quant_pct": 0.086,
+      "qual_pct": 0.216,
+      "divergence": -0.13
+    },
+    {
+      "iso2": "CI",
+      "name": "Cote d'Ivoire",
+      "quant_pct": 0.299,
+      "qual_pct": 0.431,
+      "divergence": -0.132
+    },
+    {
+      "iso2": "LK",
+      "name": "Sri Lanka",
+      "quant_pct": 0.621,
+      "qual_pct": 0.753,
+      "divergence": -0.132
+    },
+    {
+      "iso2": "XK",
+      "name": "Kosovo",
+      "quant_pct": 0.466,
+      "qual_pct": 0.602,
+      "divergence": -0.136
+    },
+    {
+      "iso2": "BB",
+      "name": "Barbados",
+      "quant_pct": 0.718,
+      "qual_pct": 0.858,
+      "divergence": -0.14
+    },
+    {
+      "iso2": "GT",
+      "name": "Guatemala",
+      "quant_pct": 0.437,
+      "qual_pct": 0.588,
+      "divergence": -0.151
+    },
+    {
+      "iso2": "ET",
+      "name": "Ethiopia",
+      "quant_pct": 0.172,
+      "qual_pct": 0.328,
+      "divergence": -0.155
+    },
+    {
+      "iso2": "CD",
+      "name": "Congo, Dem. Rep.",
+      "quant_pct": 0.029,
+      "qual_pct": 0.19,
+      "divergence": -0.161
+    },
+    {
+      "iso2": "CF",
+      "name": "Central African Republic",
+      "quant_pct": 0.034,
+      "qual_pct": 0.209,
+      "divergence": -0.174
+    },
+    {
+      "iso2": "GH",
+      "name": "Ghana",
+      "quant_pct": 0.408,
+      "qual_pct": 0.584,
+      "divergence": -0.176
+    },
+    {
+      "iso2": "NG",
+      "name": "Nigeria",
+      "quant_pct": 0.207,
+      "qual_pct": 0.393,
+      "divergence": -0.186
+    },
+    {
+      "iso2": "HN",
+      "name": "Honduras",
+      "quant_pct": 0.322,
+      "qual_pct": 0.51,
+      "divergence": -0.188
+    },
+    {
+      "iso2": "MZ",
+      "name": "Mozambique",
+      "quant_pct": 0.109,
+      "qual_pct": 0.303,
+      "divergence": -0.193
+    },
+    {
+      "iso2": "GY",
+      "name": "Guyana",
+      "quant_pct": 0.328,
+      "qual_pct": 0.523,
+      "divergence": -0.195
+    },
+    {
+      "iso2": "DJ",
+      "name": "Djibouti",
+      "quant_pct": 0.063,
+      "qual_pct": 0.268,
+      "divergence": -0.205
+    },
+    {
+      "iso2": "SO",
+      "name": "Somalia, Fed. Rep.",
+      "quant_pct": 0.011,
+      "qual_pct": 0.22,
+      "divergence": -0.209
+    },
+    {
+      "iso2": "AO",
+      "name": "Angola",
+      "quant_pct": 0.155,
+      "qual_pct": 0.375,
+      "divergence": -0.22
+    },
+    {
+      "iso2": "ST",
+      "name": "Sao Tome and Principe",
+      "quant_pct": 0.431,
+      "qual_pct": 0.659,
+      "divergence": -0.228
+    },
+    {
+      "iso2": "SB",
+      "name": "Solomon Islands",
+      "quant_pct": 0.351,
+      "qual_pct": 0.584,
+      "divergence": -0.234
+    },
+    {
+      "iso2": "KE",
+      "name": "Kenya",
+      "quant_pct": 0.379,
+      "qual_pct": 0.623,
+      "divergence": -0.243
+    },
+    {
+      "iso2": "ML",
+      "name": "Mali",
+      "quant_pct": 0.092,
+      "qual_pct": 0.337,
+      "divergence": -0.245
+    },
+    {
+      "iso2": "LR",
+      "name": "Liberia",
+      "quant_pct": 0.121,
+      "qual_pct": 0.377,
+      "divergence": -0.257
+    },
+    {
+      "iso2": "SN",
+      "name": "Senegal",
+      "quant_pct": 0.368,
+      "qual_pct": 0.626,
+      "divergence": -0.259
+    },
+    {
+      "iso2": "HT",
+      "name": "Haiti",
+      "quant_pct": 0.069,
+      "qual_pct": 0.341,
+      "divergence": -0.272
+    },
+    {
+      "iso2": "SR",
+      "name": "Suriname",
+      "quant_pct": 0.471,
+      "qual_pct": 0.774,
+      "divergence": -0.303
+    },
+    {
+      "iso2": "ZA",
+      "name": "South Africa",
+      "quant_pct": 0.282,
+      "qual_pct": 0.607,
+      "divergence": -0.326
+    },
+    {
+      "iso2": "MW",
+      "name": "Malawi",
+      "quant_pct": 0.149,
+      "qual_pct": 0.49,
+      "divergence": -0.341
+    },
+    {
+      "iso2": "TZ",
+      "name": "Tanzania",
+      "quant_pct": 0.19,
+      "qual_pct": 0.54,
+      "divergence": -0.351
+    },
+    {
+      "iso2": "BF",
+      "name": "Burkina Faso",
+      "quant_pct": 0.052,
+      "qual_pct": 0.412,
+      "divergence": -0.36
+    },
+    {
+      "iso2": "BW",
+      "name": "Botswana",
+      "quant_pct": 0.333,
+      "qual_pct": 0.713,
+      "divergence": -0.379
+    },
+    {
+      "iso2": "PG",
+      "name": "Papua New Guinea",
+      "quant_pct": 0.126,
+      "qual_pct": 0.508,
+      "divergence": -0.381
+    },
+    {
+      "iso2": "JM",
+      "name": "Jamaica",
+      "quant_pct": 0.42,
+      "qual_pct": 0.805,
+      "divergence": -0.385
+    },
+    {
+      "iso2": "TT",
+      "name": "Trinidad and Tobago",
+      "quant_pct": 0.425,
+      "qual_pct": 0.818,
+      "divergence": -0.393
+    },
+    {
+      "iso2": "SL",
+      "name": "Sierra Leone",
+      "quant_pct": 0.138,
+      "qual_pct": 0.542,
+      "divergence": -0.404
+    },
+    {
+      "iso2": "LS",
+      "name": "Lesotho",
+      "quant_pct": 0.144,
+      "qual_pct": 0.563,
+      "divergence": -0.42
+    },
+    {
+      "iso2": "ZM",
+      "name": "Zambia",
+      "quant_pct": 0.161,
+      "qual_pct": 0.582,
+      "divergence": -0.421
+    },
+    {
+      "iso2": "NA",
+      "name": "Namibia",
+      "quant_pct": 0.316,
+      "qual_pct": 0.747,
+      "divergence": -0.431
+    },
+    {
+      "iso2": "BJ",
+      "name": "Benin",
+      "quant_pct": 0.178,
+      "qual_pct": 0.634,
+      "divergence": -0.456
+    },
+    {
+      "iso2": "TL",
+      "name": "Timor-Leste",
+      "quant_pct": 0.236,
+      "qual_pct": 0.701,
+      "divergence": -0.466
+    },
+    {
+      "iso2": "NE",
+      "name": "Niger",
+      "quant_pct": 0.046,
+      "qual_pct": 0.515,
+      "divergence": -0.469
+    },
+    {
+      "iso2": "VU",
+      "name": "Vanuatu",
+      "quant_pct": 0.241,
+      "qual_pct": 0.716,
+      "divergence": -0.475
+    },
+    {
+      "iso2": "GM",
+      "name": "Gambia, The",
+      "quant_pct": 0.224,
+      "qual_pct": 0.703,
+      "divergence": -0.479
+    }
+  ]
+}
