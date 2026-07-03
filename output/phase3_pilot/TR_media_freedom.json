@@ -1,0 +1,217 @@
+{
+  "iso2": "TR",
+  "name": "Turkiye",
+  "construct": "media_freedom",
+  "official": {
+    "vdem_freexp_pct": 0.15730337078651685
+  },
+  "n_total_sources": 20,
+  "n_informative_sources": 12,
+  "computed_at": "2026-07-02T16:12:30.642555+00:00",
+  "sources": [
+    {
+      "url": "https://www.worldeconomics.com/ESG/Governance/Press-Freedom/Turkiye.aspx",
+      "title": "Turkiye's Governance Rating: 2024 | World Economics",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "CONFIRMS",
+      "rationale": "Low Press Freedom Index supports rating",
+      "query": "press freedom Turkiye report"
+    },
+    {
+      "url": "https://www.linkedin.com/posts/international-press-institute-ipi-_pressfreedom-türkiye-activity-7399386625924915200-RvuP",
+      "title": "#pressfreedom #türkiye | International Press Institute (IPI)",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "CONFIRMS",
+      "rationale": "Decline in press freedom",
+      "query": "press freedom Turkiye report"
+    },
+    {
+      "url": "https://yetkinreport.com/en/2026/02/19/terror-free-turkiye-report-voted-on-amid-objections-time-to-act/",
+      "title": "“Terror-Free Türkiye” Report Voted On... - Yetkin Report - Murat Yetkin",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "CONFIRMS",
+      "rationale": "Restrictive report title implies limited freedom",
+      "query": "press freedom Turkiye report"
+    },
+    {
+      "url": "https://worldpopulationreview.com/country-rankings/freedom-index-by-country",
+      "title": "Freedom Index by Country 2026 | World Population Review",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "NEUTRAL",
+      "rationale": "No mention of Turkiye",
+      "query": "press freedom Turkiye report"
+    },
+    {
+      "url": "https://www.aljazeera.com/opinions/2025/10/24/terror-free-turkiye-a-homegrown-peace-reshaping-the-region",
+      "title": "Terror-free Turkiye: A homegrown peace reshaping the... | Al Jazeera",
+      "outlet_country": "QA",
+      "outlet_resolution": "known_outlet",
+      "weight": 0.055,
+      "direction": "NEUTRAL",
+      "rationale": "No mention of media freedom",
+      "query": "press freedom Turkiye report"
+    },
+    {
+      "url": "https://www.article19.org/resources/turkiye-independent-media-must-be-allowed-accreditation-to-attend-nato-summit/",
+      "title": "Türkiye: Independent media must be allowed... - ARTICLE 19",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "CONFIRMS",
+      "rationale": "pressure on journalists aligns",
+      "query": "media independence Turkiye"
+    },
+    {
+      "url": "https://www.freepik.com/photos/turkiyes-independence",
+      "title": "Turkiyes Independence Pictures | Freepik",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "NEUTRAL",
+      "rationale": "Image search result",
+      "query": "media independence Turkiye"
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=rWyh_uwcGmY",
+      "title": "Turkiye Independence",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "NEUTRAL",
+      "rationale": "No info on media freedom",
+      "query": "media independence Turkiye"
+    },
+    {
+      "url": "https://turkiye.independent.tr/",
+      "title": "Türkiye Haberleri | Independent Türkiye",
+      "outlet_country": "TR",
+      "outlet_resolution": "tld",
+      "weight": 0.179,
+      "direction": "CONTRADICTS",
+      "rationale": "Claims independence",
+      "query": "media independence Turkiye"
+    },
+    {
+      "url": "https://www.iletisim.gov.tr/english/haberler/detay/director-of-communications-altun-our-president-has-defeated-all-forces-opposed-to-an-independent-turkiye",
+      "title": "The Republic of Türkiye Directorate of Communications",
+      "outlet_country": "TR",
+      "outlet_resolution": "tld",
+      "weight": 0.179,
+      "direction": "NEUTRAL",
+      "rationale": "Lack of info on media freedom",
+      "query": "media independence Turkiye"
+    },
+    {
+      "url": "https://boldmedya.com/2025/11/29/basin-ve-ifade-ozgurlugu-raporu-turkiyede-tutuklamalar-son-bir-yilda-yuzde-560-artti/",
+      "title": "Basın ve ifade özgürlüğü raporu: Türkiye'de",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "CONFIRMS",
+      "rationale": "Increased arrests",
+      "query": " Türkiye basın özgürlüğü raporu"
+    },
+    {
+      "url": "https://www.womeninjournalism.org/threats-all/turkey-cfwij-condemns-deliberate-police-brutality-against-women-journalists-tr",
+      "title": "Türkiye: CFWIJ Gazetecilere Yönelik Korkunç Polis",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "CONFIRMS",
+      "rationale": "Police violence against journalists",
+      "query": " Türkiye basın özgürlüğü raporu"
+    },
+    {
+      "url": "https://boldmedya.com/tag/turkey/",
+      "title": "Turkey arşivleri - BoldMedya",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "CONFIRMS",
+      "rationale": "increased arrests",
+      "query": " Türkiye basın özgürlüğü raporu"
+    },
+    {
+      "url": "https://boldmedya.com/category/medya/",
+      "title": "Medya arşivleri - BoldMedya",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "CONFIRMS",
+      "rationale": "Tutuklamalar arttı",
+      "query": " Türkiye basın özgürlüğü raporu"
+    },
+    {
+      "url": "https://www.mfrr.eu/tag/turkey/",
+      "title": "Turkey Archives - Media Freedom Rapid Response",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "CONFIRMS",
+      "rationale": "Media freedom concern",
+      "query": " Türkiye basın özgürlüğü raporu"
+    },
+    {
+      "url": "https://www.researchgate.net/publication/373603263_Fitness_Isletmelerinde_Sosyal_Medya_Kullaniminin_Bireysel_Performansa_Etkisi",
+      "title": "(PDF) Fitness İşletmelerinde Sosyal Medya Kullanımının",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "NEUTRAL",
+      "rationale": "Off-topic, no relevance to media freedom",
+      "query": "Türkiye medya bağımsızlığı"
+    },
+    {
+      "url": "https://erkansaka.net/2012/08/06/sosyal-medya-haber-siteleri-2-sosyalmedya-co-sosyalmedyaco/",
+      "title": "Sosyal Medya Haber Siteleri (2): sosyalmedya.co",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "CONTRADICTS",
+      "rationale": "Mentions independent site",
+      "query": "Türkiye medya bağımsızlığı"
+    },
+    {
+      "url": "https://sinemakafasi.com/2014/06/27/network-1976-kitle-kontrol-silahi-olarak-medya/",
+      "title": "Network (1976): Kitle Kontrol Silahı Olarak Medya | SİNEMA",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "NEUTRAL",
+      "rationale": "Off-topic, discussing film and cinema.",
+      "query": "Türkiye medya bağımsızlığı"
+    },
+    {
+      "url": "https://www.womeninjournalism.org/threats-all/turkey-journalist-buse-sogutlu-stands-before-trial-for-her-tweet-about-the-notorious-judge",
+      "title": "Turkey: Journalist Buse Söğütlü Stands Before Trial For Her",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "CONFIRMS",
+      "rationale": "Journalist on trial",
+      "query": "Türkiye medya bağımsızlığı"
+    },
+    {
+      "url": "https://erkansaka.net/tag/yurttas-gazeteciligi/",
+      "title": "yurttaş gazeteciliği Archives - Erkan's Field Diary",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "NEUTRAL",
+      "rationale": "Insufficient information",
+      "query": "Türkiye medya bağımsızlığı"
+    }
+  ],
+  "status": "OK",
+  "weighted_confirm": 0.88,
+  "agrees_with_vdem": true,
+  "confidence": "MEDIUM"
+}

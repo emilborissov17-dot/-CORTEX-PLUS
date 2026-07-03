@@ -1,0 +1,207 @@
+{
+  "iso2": "BA",
+  "name": "Bosnia and Herzegovina",
+  "construct": "media_freedom",
+  "official": {
+    "vdem_freexp_pct": 0.4438202247191011
+  },
+  "n_total_sources": 19,
+  "n_informative_sources": 1,
+  "computed_at": "2026-07-02T17:10:13.418242+00:00",
+  "sources": [
+    {
+      "url": "https://en.wikipedia.org/wiki/Mass_media_in_Bosnia_and_Herzegovina",
+      "title": "Mass media in Bosnia and Herzegovina - Wikipedia",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "CONFIRMS",
+      "rationale": "Media independence hindered",
+      "query": "press freedom Bosnia and Herzegovina report"
+    },
+    {
+      "url": "https://ipi.media/report-media-freedom-in-survival-mode-bosnia-and-herzegovina/",
+      "title": "Report: Media freedom in survival mode Bosnia and Herzegovina – ipi.media",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "NEUTRAL",
+      "rationale": "classify_error: unparseable LLM output: '{\"direction\": \"CONF'",
+      "query": "press freedom Bosnia and Herzegovina report"
+    },
+    {
+      "url": "https://www.article19.org/resources/bosnia-and-herzegovina-report-on-media-freedom-in-survival-mode/",
+      "title": "Bosnia and Herzegovina: Report on media freedom in survival mode - ARTICLE 19",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "NEUTRAL",
+      "rationale": "classify_error: unparseable LLM output: 'We need to determine if the search result aligns with low rating (0.44) indicati'",
+      "query": "press freedom Bosnia and Herzegovina report"
+    },
+    {
+      "url": "https://www.state.gov/reports/2024-country-reports-on-human-rights-practices/bosnia-and-herzegovina/",
+      "title": "Bosnia and Herzegovina - United States Department of State",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "NEUTRAL",
+      "rationale": "classify_error: unparseable LLM output: '{\"direction\":\"CONFIRMS\",\"rationale'",
+      "query": "press freedom Bosnia and Herzegovina report"
+    },
+    {
+      "url": "https://freedomhouse.org/report/freedom-press/2017/bosnia-and-herzegovina",
+      "title": "Freedom of the Press | Freedom House",
+      "outlet_country": "US",
+      "outlet_resolution": "known_outlet",
+      "weight": 0.729,
+      "direction": "NEUTRAL",
+      "rationale": "classify_error: unparseable LLM output: 'We need to evaluate whether the snippet \"Freedom of the Press | Freedom House\" w'",
+      "query": "press freedom Bosnia and Herzegovina report"
+    },
+    {
+      "url": "https://www.article19.org/wp-content/uploads/2024/12/GXR_report_bosnia_and_herzegovina.pdf",
+      "title": "MEDIA LANDSCAPE ANALYSIS - BOSNIA AND HERZEGOVINA",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "NEUTRAL",
+      "rationale": "classify_error: unparseable LLM output: 'We need to interpret if the search result (title and snippet) describes conditio'",
+      "query": "media independence Bosnia and Herzegovina"
+    },
+    {
+      "url": "https://www.article19.org/resources/bosnia-and-herzegovina-media-freedom-in-survival-mode/",
+      "title": "Bosnia and Herzegovina: Media freedom in survival mode",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "NEUTRAL",
+      "rationale": "classify_error: unparseable LLM output: '{\"direction\":\"CONFIRMS\",\"rationale\":\"Snippet describes decline and restrictions,'",
+      "query": "media independence Bosnia and Herzegovina"
+    },
+    {
+      "url": "https://www.mfrr.eu/bosnia-and-herzegovina-media-freedom-in-survival-mode/",
+      "title": "Bosnia and Herzegovina: Media freedom in survival mode",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "NEUTRAL",
+      "rationale": "classify_error: unparseable LLM output: '{\"direction'",
+      "query": "media independence Bosnia and Herzegovina"
+    },
+    {
+      "url": "https://futureofmedia.seenpm.org/wp-content/uploads/2026/03/Ourmedia_BIH-ENG_2026.pdf",
+      "title": "DIVERSIFYING MEDIA, DECLINING JOURNALISM",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "NEUTRAL",
+      "rationale": "classify_error: unparseable LLM output: 'We need to decide if snippet describes conditions consistent with low rating (me'",
+      "query": "media independence Bosnia and Herzegovina"
+    },
+    {
+      "url": "https://radiosarajevo.ba/vijesti/bosna-i-hercegovina/op-ed-un-i-unesco-sloboda-izrazavanja-je-pokretac-svih-ljudskih-prava-u-bosni-i-hercegovini/494649",
+      "title": "UN i UNESCO: Sloboda izražavanja je pokretač... - Radiosarajevo.ba",
+      "outlet_country": "BA",
+      "outlet_resolution": "tld",
+      "weight": 0.653,
+      "direction": "NEUTRAL",
+      "rationale": "classify_error: unparseable LLM output: '{\"direction\": \"NEUTRAL\", \"rationale\": \"Snippet states obligations, not'",
+      "query": "sloboda štampe u Bosni i Hercegovini izvještaj"
+    },
+    {
+      "url": "https://www.dw.com/sr/mračna-vremena-za-slobodu-štampe/a-19230911",
+      "title": "Mračna vremena za slobodu štampe",
+      "outlet_country": "DE",
+      "outlet_resolution": "known_outlet",
+      "weight": 0.914,
+      "direction": "NEUTRAL",
+      "rationale": "classify_error: unparseable LLM output: 'We need to decide if the search result (title and snippet) is consistent with th'",
+      "query": "sloboda štampe u Bosni i Hercegovini izvještaj"
+    },
+    {
+      "url": "https://hrvatskiglasnik.ba/detaljan-izvjestaj-o-vremenu-u-bosni-i-hercegovini-za-nadolazece-praznike/",
+      "title": "Detaljan izvještaj o vremenu u Bosni i Hercegovini... - Hrvatski Glasnik",
+      "outlet_country": "BA",
+      "outlet_resolution": "tld",
+      "weight": 0.653,
+      "direction": "NEUTRAL",
+      "rationale": "Weather report unrelated to media freedom conditions.",
+      "query": "sloboda štampe u Bosni i Hercegovini izvještaj"
+    },
+    {
+      "url": "https://avaz.ba/vijesti/bih/901935/becirovic-strateski-interes-da-se-u-bosni-i-hercegovini-osigura-potpuna-sloboda-medija",
+      "title": "Bećirović: Strateški interes da se u Bosni i Hercegovini osigura...",
+      "outlet_country": "BA",
+      "outlet_resolution": "tld",
+      "weight": 0.653,
+      "direction": "NEUTRAL",
+      "rationale": "classify_error: unparseable LLM output: 'We need to determine if the search result (title and snippet) describes conditio'",
+      "query": "sloboda štampe u Bosni i Hercegovini izvještaj"
+    },
+    {
+      "url": "https://www.oslobodjenje.ba/vijesti/bih/temperature-u-bosni-i-hercegovini-rastu-ocekuje-nas-paklena-subota/",
+      "title": "Temperature u Bosni i Hercegovini rastu, očekuje nas \"paklena\" subota",
+      "outlet_country": "BA",
+      "outlet_resolution": "tld",
+      "weight": 0.653,
+      "direction": "NEUTRAL",
+      "rationale": "Weather forecast unrelated to media freedom assessment",
+      "query": "sloboda štampe u Bosni i Hercegovini izvještaj"
+    },
+    {
+      "url": "https://bs.wikipedia.org/wiki/Mediji_u_Bosni_i_Hercegovini",
+      "title": "Mediji u Bosni i Hercegovini - Wikipedia",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "NEUTRAL",
+      "rationale": "classify_error: unparseable LLM output: '{\"direction\": \"CONFIRMS\", \"'",
+      "query": "nezavisnost medija u Bosni i Hercegovini"
+    },
+    {
+      "url": "https://spsbh.ba/PB+8+BHS.pdf",
+      "title": "1 ALUMNI FOUNDATION COUNCIL OF EUROPE IN BOSNIA AND HERZEGOVINA Policy Brief 08",
+      "outlet_country": "BA",
+      "outlet_resolution": "tld",
+      "weight": 0.653,
+      "direction": "NEUTRAL",
+      "rationale": "classify_error: unparseable LLM output: 'We need to classify whether the search result describes conditions consistent wi'",
+      "query": "nezavisnost medija u Bosni i Hercegovini"
+    },
+    {
+      "url": "https://6yka.com/bih/koliko-su-mediji-u-bosni-i-hercegovini-slobodni/",
+      "title": "Koliko su mediji u Bosni i Hercegovini slobodni?! | 6yka",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "NEUTRAL",
+      "rationale": "classify_error: unparseable LLM output: 'We need to determine if the search result snippet describes conditions consisten'",
+      "query": "nezavisnost medija u Bosni i Hercegovini"
+    },
+    {
+      "url": "https://www.dw.com/bs/u-bosni-i-hercegovini-nema-slobode-medija/a-3306911",
+      "title": "U Bosni i Hercegovini nema slobode medija?",
+      "outlet_country": "DE",
+      "outlet_resolution": "known_outlet",
+      "weight": 0.914,
+      "direction": "NEUTRAL",
+      "rationale": "classify_error: unparseable LLM output: 'We need to evaluate if snippet confirms, contradicts, or neutral regarding low r'",
+      "query": "nezavisnost medija u Bosni i Hercegovini"
+    },
+    {
+      "url": "https://new.federalna.ba/eksperti-iz-oblasti-medija-ukazali-na-potrebu-rjesenja-brojnih-problema-k87gw",
+      "title": "Eksperti iz oblasti medija ukazali na potrebu rješenja brojnih problema",
+      "outlet_country": "BA",
+      "outlet_resolution": "tld",
+      "weight": 0.653,
+      "direction": "NEUTRAL",
+      "rationale": "classify_error: unparseable LLM output: 'We need to determine if the snippet describes conditions consistent with low med'",
+      "query": "nezavisnost medija u Bosni i Hercegovini"
+    }
+  ],
+  "status": "INSUFFICIENT_DATA",
+  "agrees_with_vdem": null,
+  "confidence": "LOW",
+  "note": "only 1 informative sources (< 5) — cannot confirm or contradict"
+}

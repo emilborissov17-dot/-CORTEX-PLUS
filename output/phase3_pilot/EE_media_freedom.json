@@ -1,0 +1,217 @@
+{
+  "iso2": "EE",
+  "name": "Estonia",
+  "construct": "media_freedom",
+  "official": {
+    "vdem_freexp_pct": 0.9887640449438202
+  },
+  "n_total_sources": 20,
+  "n_informative_sources": 0,
+  "computed_at": "2026-07-02T17:16:18.860290+00:00",
+  "sources": [
+    {
+      "url": "https://en.wikipedia.org/wiki/Human_rights_in_Estonia",
+      "title": "Human rights in Estonia - Wikipedia",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "NEUTRAL",
+      "rationale": "classify_error: unparseable LLM output: 'We need to output JSON with direction and rationale. The V-Dem rating is high (0'",
+      "query": "press freedom Estonia report"
+    },
+    {
+      "url": "https://freedomhouse.org/country/estonia/freedom-net/2023",
+      "title": "Estonia: Freedom on the Net 2023 Country Report | Freedom House",
+      "outlet_country": "US",
+      "outlet_resolution": "known_outlet",
+      "weight": 0.729,
+      "direction": "NEUTRAL",
+      "rationale": "classify_error: unparseable LLM output: 'The user asks: \"V-Dem experts rate Estonia\\'s media freedom / freedom of expressi'",
+      "query": "press freedom Estonia report"
+    },
+    {
+      "url": "https://estonianworld.com/life/estonia-ranks-third-in-2026-world-press-freedom-index/",
+      "title": "Estonia ranks third in 2026 World Press Freedom Index",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "NEUTRAL",
+      "rationale": "classify_error: unparseable LLM output: 'We need to evaluate whether the snippet describes conditions consistent with V-D'",
+      "query": "press freedom Estonia report"
+    },
+    {
+      "url": "https://www.worldeconomics.com/ESG/Governance/Press-Freedom/Estonia.aspx",
+      "title": "Estonia's Governance Rating: 2024 | World Economics",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "NEUTRAL",
+      "rationale": "classify_error: unparseable LLM output: '{\"direction\":\"CONFIRMS\",\"rationale'",
+      "query": "press freedom Estonia report"
+    },
+    {
+      "url": "https://247wallst.com/special-report/2023/06/30/the-best-countries-for-press-freedom-according-to-reporters-without-borders/",
+      "title": "25 Countries With the Most Free Press - 24/7 Wall St.",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "NEUTRAL",
+      "rationale": "classify_error: unparseable LLM output: \"The user asks: V-Dem experts rate Estonia's media freedom at percentile 0.99 (so\"",
+      "query": "press freedom Estonia report"
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/Mass_media_in_Estonia",
+      "title": "Mass media in Estonia - Wikipedia",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "NEUTRAL",
+      "rationale": "classify_error: unparseable LLM output: 'We need to decide if snippet indicates conditions consistent with low rating (i.'",
+      "query": "media independence Estonia"
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/Estonia",
+      "title": "Estonia - Wikipedia",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "NEUTRAL",
+      "rationale": "classify_error: unparseable LLM output: 'We need to evaluate: The V-Dem rating is high: percentile 0.99 out of 1.0 (low ='",
+      "query": "media independence Estonia"
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/Estonian_Soviet_Socialist_Republic",
+      "title": "Estonian Soviet Socialist Republic - Wikipedia",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "NEUTRAL",
+      "rationale": "classify_error: unparseable LLM output: 'We need to decide if snippet describes conditions consistent with that rating. V'",
+      "query": "media independence Estonia"
+    },
+    {
+      "url": "https://cmpf.eui.eu/country/estonia/",
+      "title": "Estonia - Centre for Media Pluralism and Media Freedom",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "NEUTRAL",
+      "rationale": "classify_error: unparseable LLM output: 'We need to decide: V-Dem rating percentile 0.99 means very high freedom (since l'",
+      "query": "media independence Estonia"
+    },
+    {
+      "url": "https://bti-project.org/en/reports/country-report/EST",
+      "title": "BTI 2026 Estonia Country Report: BTI 2026",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "NEUTRAL",
+      "rationale": "classify_error: unparseable LLM output: 'We need to output JSON only. The V-Dem rating: percentile 0.99 out of 1.0 indica'",
+      "query": "media independence Estonia"
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/Freedom_of_the_press",
+      "title": "Freedom of the press - Wikipedia",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "NEUTRAL",
+      "rationale": "classify_error: unparseable LLM output: '{\"direction\": \"NEUTRAL\", \"ration'",
+      "query": "press freedom Eesti report"
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/World_Press_Freedom_Index",
+      "title": "World Press Freedom Index - Wikipedia",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "NEUTRAL",
+      "rationale": "classify_error: unparseable LLM output: 'We need to determine if snippet is consistent with low rating (i.e., indicates w'",
+      "query": "press freedom Eesti report"
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/Freedom_House",
+      "title": "Freedom House - Wikipedia",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "NEUTRAL",
+      "rationale": "classify_error: unparseable LLM output: '{\"direction\": \"NEUTRAL\", \"rationale\": \"Snippet lacks Estonia‑specific'",
+      "query": "press freedom Eesti report"
+    },
+    {
+      "url": "https://simple.wikipedia.org/wiki/Freedom_of_the_press",
+      "title": "Freedom of the press - Simple English Wikipedia, the free",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "NEUTRAL",
+      "rationale": "classify_error: unparseable LLM output: '{\"direction'",
+      "query": "press freedom Eesti report"
+    },
+    {
+      "url": "https://humanrightsconnected.org/tag/press-freedom/",
+      "title": "Press Freedom Archives | Human Rights Connected",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "NEUTRAL",
+      "rationale": "classify_error: unparseable LLM output: 'We need to decide if the snippet describes conditions consistent with low rating'",
+      "query": "press freedom Eesti report"
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/History_of_Estonia",
+      "title": "History of Estonia - Wikipedia",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "NEUTRAL",
+      "rationale": "classify_error: unparseable LLM output: 'We need to output JSON with direction and rationale (<15 words). The V-Dem ratin'",
+      "query": "media independence Eesti"
+    },
+    {
+      "url": "https://grokipedia.com/page/eesti_aeg",
+      "title": "Eesti Aeg — Grokipedia",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "NEUTRAL",
+      "rationale": "classify_error: unparseable LLM output: 'We need to decide: V-Dem rating is near 1 (high media freedom). Low rating would'",
+      "query": "media independence Eesti"
+    },
+    {
+      "url": "https://eteenus.gaas.ee/eservice/auth?1",
+      "title": "Eesti Gaas",
+      "outlet_country": "EE",
+      "outlet_resolution": "tld",
+      "weight": 0.969,
+      "direction": "NEUTRAL",
+      "rationale": "classify_error: All LLM backends failed (Groq/Cerebras/OpenRouter/Gemini/Ollama). Last error: Ollama: няма налични модели",
+      "query": "media independence Eesti"
+    },
+    {
+      "url": "https://kyivindependent.com/",
+      "title": "The Kyiv Independent — News from Ukraine, Eastern Europe",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "NEUTRAL",
+      "rationale": "classify_error: All LLM backends failed (Groq/Cerebras/OpenRouter/Gemini/Ollama). Last error: Ollama: няма налични модели",
+      "query": "media independence Eesti"
+    },
+    {
+      "url": "https://app.joinhandshake.com/",
+      "title": "app.joinhandshake.com",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "NEUTRAL",
+      "rationale": "classify_error: unparseable LLM output: 'We need to decide if the search result describes conditions consistent with low '",
+      "query": "media independence Eesti"
+    }
+  ],
+  "status": "INSUFFICIENT_DATA",
+  "agrees_with_vdem": null,
+  "confidence": "LOW",
+  "note": "only 0 informative sources (< 5) — cannot confirm or contradict"
+}

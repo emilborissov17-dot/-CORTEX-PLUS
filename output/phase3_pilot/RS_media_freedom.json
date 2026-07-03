@@ -1,0 +1,217 @@
+{
+  "iso2": "RS",
+  "name": "Serbia",
+  "construct": "media_freedom",
+  "official": {
+    "vdem_freexp_pct": 0.25842696629213485
+  },
+  "n_total_sources": 20,
+  "n_informative_sources": 20,
+  "computed_at": "2026-07-02T15:53:16.857806+00:00",
+  "sources": [
+    {
+      "url": "https://en.wikipedia.org/wiki/Media_freedom_in_Serbia",
+      "title": "Media freedom in Serbia - Wikipedia",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "CONFIRMS",
+      "rationale": "Censorship reported",
+      "query": "press freedom Serbia report"
+    },
+    {
+      "url": "https://balkaninsight.com/2026/04/30/media-freedom-sliding-in-serbia-and-turkey-report-warns/bi/",
+      "title": "Media Freedom Sliding in Serbia and Turkey, Report Warns | Balkan Insight",
+      "outlet_country": "RS",
+      "outlet_resolution": "known_outlet",
+      "weight": 0.424,
+      "direction": "CONFIRMS",
+      "rationale": "Media freedom sliding",
+      "query": "press freedom Serbia report"
+    },
+    {
+      "url": "https://balkaninsight.com/2026/03/03/report-highlights-press-freedoms-plight-in-turkey-serbia-and-bulgaria/",
+      "title": "Report Highlights Press Freedom’s Plight in Turkey, Serbia and Bulgaria | Balkan Insight",
+      "outlet_country": "RS",
+      "outlet_resolution": "known_outlet",
+      "weight": 0.424,
+      "direction": "CONFIRMS",
+      "rationale": "Physical attacks on journalists",
+      "query": "press freedom Serbia report"
+    },
+    {
+      "url": "https://www.statista.com/statistics/1026485/serbia-press-freedom-index/",
+      "title": "Serbia: press freedom index 2024 | Statista",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "CONFIRMS",
+      "rationale": "Deterioration matches low freedom rating",
+      "query": "press freedom Serbia report"
+    },
+    {
+      "url": "https://www.jurist.org/news/2025/07/reports-without-borders-warns-eu-over-rapid-decline-of-press-freedom-in-serbia/",
+      "title": "Reporters without Borders warns EU over rapid decline of press freedom in Serbia - JURIST - News",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "CONFIRMS",
+      "rationale": "Censorship and persecution match low rating",
+      "query": "press freedom Serbia report"
+    },
+    {
+      "url": "https://www.mfrr.eu/serbia-media-independence-is-an-exception-rather-than-the-rule/",
+      "title": "Serbia: Media independence is an exception rather than the rule",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "CONFIRMS",
+      "rationale": "Media independence is an exception",
+      "query": "media independence Serbia"
+    },
+    {
+      "url": "https://www.mfrr.eu/serbia-independent-journalism-faces-biggest-crisis-in-years/",
+      "title": "Serbia: Independent journalism faces biggest crisis in years -",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "CONFIRMS",
+      "rationale": "Violations documented",
+      "query": "media independence Serbia"
+    },
+    {
+      "url": "https://www.balcanicaucaso.org/en/cp_article/serbia-media-independence-is-an-exception-rather-than-the-rule/",
+      "title": "Serbia: media independence is an exception rather than the rule",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "CONFIRMS",
+      "rationale": "Editorial independence rare",
+      "query": "media independence Serbia"
+    },
+    {
+      "url": "https://www.balcanicaucaso.org/eng/Areas/Serbia/Serbia-media-pillory-for-independent-journalists-229538",
+      "title": "Serbia: media pillory for independent journalists / Serbia /",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "CONFIRMS",
+      "rationale": "Media pillory for independent journalists",
+      "query": "media independence Serbia"
+    },
+    {
+      "url": "https://weeklyblitz.net/2025/08/28/power-profits-and-media-freedom-serbias-last-independent-broadcaster-under-threat/",
+      "title": "Power, profits, and media freedom: Serbia’s last independent",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "CONFIRMS",
+      "rationale": "Highlights government intent to dismantle independent media",
+      "query": "media independence Serbia"
+    },
+    {
+      "url": "https://sr.wikipedia.org/sr-el/Sloboda_štampe",
+      "title": "Sloboda štampe — Википедија",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "CONTRADICTS",
+      "rationale": "Describes ideal freedom of press",
+      "query": "sloboda štampe Srbija izveštaj"
+    },
+    {
+      "url": "https://nova.rs/vesti/drustvo/indeks-rsf-a-za-2026-sloboda-stampe-na-najnizem-nivou-u-poslednjih-25-godina-srbija-najgora-u-regionu/",
+      "title": "Indeks RSF-a za 2026: Sloboda štampe na najnižem nivou... - nova.rs",
+      "outlet_country": "RS",
+      "outlet_resolution": "tld",
+      "weight": 0.424,
+      "direction": "CONFIRMS",
+      "rationale": "Low media freedom rating",
+      "query": "sloboda štampe Srbija izveštaj"
+    },
+    {
+      "url": "https://pescanik.net/o-slobodi-stampe-u-srbiji/",
+      "title": "O slobodi štampe u Srbiji - Miloš Vasić - Peščanik",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "CONFIRMS",
+      "rationale": "Reports media freedom is threatened",
+      "query": "sloboda štampe Srbija izveštaj"
+    },
+    {
+      "url": "https://javniservis.net/sekcije/drustvo/rsf-svetski-indeks-slobode-stampe-2025-ekonomska-krhkost-vodeca-pretnja-slobodi-stampe/",
+      "title": "RSF Svetski indeks slobode štampe 2025: Ekonomska... - Javni servis",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "CONFIRMS",
+      "rationale": "Economic indicator at critical minimum",
+      "query": "sloboda štampe Srbija izveštaj"
+    },
+    {
+      "url": "https://www.cenzolovka.rs/pritisci-i-napadi/niko-nije-slep-zasto-je-sloboda-medija-u-srbiji-u-nikad-goroj-situaciji/",
+      "title": "„Niko nije slep“: Zašto je sloboda medija u Srbiji u nikad goroj situaciji?",
+      "outlet_country": "RS",
+      "outlet_resolution": "tld",
+      "weight": 0.424,
+      "direction": "CONFIRMS",
+      "rationale": "Lažne vesti i propaganda",
+      "query": "sloboda štampe Srbija izveštaj"
+    },
+    {
+      "url": "https://naslovi.net/2026-07-02/cenzolovka/mpm-2026-srbija-u-zoni-visokog-rizika-za-medijski-pluralizam-politicka-nezavisnost-medija-najugrozenija/42033855",
+      "title": "MPM 2026: Srbija u zoni visokog rizika za medijski pluralizam ...",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "CONFIRMS",
+      "rationale": "Reports high risk for media freedom",
+      "query": "nezavisnost medija Srbija"
+    },
+    {
+      "url": "https://nuns.rs/obct-u-srbiji-je-nezavisnost-medija-je-pre-izuzetak-nego-pravilo/",
+      "title": "U Srbiji je nezavisnost medija pre izuzetak nego pravilo",
+      "outlet_country": "RS",
+      "outlet_resolution": "tld",
+      "weight": 0.424,
+      "direction": "CONFIRMS",
+      "rationale": "Medija under political and financial pressure",
+      "query": "nezavisnost medija Srbija"
+    },
+    {
+      "url": "https://radiosloboda.rs/srbija-u-zoni-visokog-rizika-za-medijski-pluralizam-politicka-nezavisnost-medija-najugrozenija/",
+      "title": "Srbija u zoni visokog rizika za medijski pluralizam ...",
+      "outlet_country": "RS",
+      "outlet_resolution": "tld",
+      "weight": 0.424,
+      "direction": "CONFIRMS",
+      "rationale": "Politički pritisci urušavaju nezavisnost medija",
+      "query": "nezavisnost medija Srbija"
+    },
+    {
+      "url": "https://www.balcanicaucaso.org/bchs/cp_article/nezavisnost-medija-u-srbiji-pre-izuzetak-nego-pravilo/",
+      "title": "Nezavisnost medija u Srbiji: pre izuzetak nego pravilo - OBCT",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "CONFIRMS",
+      "rationale": "Media freedom described as exception",
+      "query": "nezavisnost medija Srbija"
+    },
+    {
+      "url": "https://nasportal.info/drustvo/izvestaj-srbija-u-zoni-visokog-rizika-po-medijski-pluralizam-sa-ukupnom-ocenom-od-74-odsto/",
+      "title": "Izveštaj: Srbija u zoni visokog rizika po medijski pluralizam ...",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "CONFIRMS",
+      "rationale": "High risk to media pluralism",
+      "query": "nezavisnost medija Srbija"
+    }
+  ],
+  "status": "OK",
+  "weighted_confirm": 0.948,
+  "agrees_with_vdem": true,
+  "confidence": "HIGH"
+}

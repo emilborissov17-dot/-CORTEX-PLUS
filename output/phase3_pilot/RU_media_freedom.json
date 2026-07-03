@@ -1,0 +1,207 @@
+{
+  "iso2": "RU",
+  "name": "Russia",
+  "construct": "media_freedom",
+  "official": {
+    "vdem_freexp_pct": 0.07303370786516854
+  },
+  "n_total_sources": 19,
+  "n_informative_sources": 18,
+  "computed_at": "2026-07-02T16:08:33.210280+00:00",
+  "sources": [
+    {
+      "url": "https://en.wikipedia.org/wiki/Media_freedom_in_Russia",
+      "title": "Media freedom in Russia - Wikipedia",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "CONFIRMS",
+      "rationale": "Media restrictions and harassment",
+      "query": "press freedom Russia report"
+    },
+    {
+      "url": "https://www.pbs.org/wgbh/frontline/article/russia-putin-press-freedom-independent-news/",
+      "title": "How Russia’s Press Freedom has Deteriorated Over the Decades Since Putin Came to Power | FRONTLINE | PBS | Official Site | Documentary Series",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "CONFIRMS",
+      "rationale": "Journalists killed in retaliation",
+      "query": "press freedom Russia report"
+    },
+    {
+      "url": "https://www.statista.com/statistics/1114255/russia-press-freedom-index/",
+      "title": "Russia press freedom index 2024 | Statista",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "CONFIRMS",
+      "rationale": "Deterioration of media freedom",
+      "query": "press freedom Russia report"
+    },
+    {
+      "url": "https://www.themoscowtimes.com/2025/05/13/press-freedom-in-russia-is-at-an-all-time-low-so-is-its-journalism-education-a89069",
+      "title": "Press Freedom in Russia Is at an All-Time Low. So Is Its Journalism Education. - The Moscow Times",
+      "outlet_country": "NL",
+      "outlet_resolution": "known_outlet",
+      "weight": 0.91,
+      "direction": "CONFIRMS",
+      "rationale": "Reports decline in press freedom",
+      "query": "press freedom Russia report"
+    },
+    {
+      "url": "https://theins.ru/en/news/281039",
+      "title": "Russia drops to a record-low position in RSF's World Press Freedom Index, ranking 171st out of 180 countries — The Insider",
+      "outlet_country": "RU",
+      "outlet_resolution": "tld",
+      "weight": 0.08,
+      "direction": "CONFIRMS",
+      "rationale": "Ranking 171st out of 180",
+      "query": "press freedom Russia report"
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/Mass_media_in_Russia",
+      "title": "Mass media in Russia - Wikipedia",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "CONTRADICTS",
+      "rationale": "High number of outlets contradicts low freedom rating",
+      "query": "media independence Russia"
+    },
+    {
+      "url": "https://freepressalliance.com/silencing-the-truth-russias-systematic-erosion-of-press-freedom/",
+      "title": "Silencing the truth: Russia’s systematic erosion of press ...",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "CONFIRMS",
+      "rationale": "Describes erosion of press freedom",
+      "query": "media independence Russia"
+    },
+    {
+      "url": "https://thinktank.4freerussia.org/civil-society/independent-media-is-key-to-democracy-in-russia-and-lasting-peace-in-europe/",
+      "title": "Independent Media Is Key to Democracy in Russia and Lasting ...",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "CONFIRMS",
+      "rationale": "Media control and marginalization",
+      "query": "media independence Russia"
+    },
+    {
+      "url": "https://jx-fund.org/newsroom/research/sustaining-independence-the-current-state-of-exiled-media-from-russia/",
+      "title": "Sustaining independence: Current state of Russian media in ...",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "CONTRADICTS",
+      "rationale": "Independent media survives",
+      "query": "media independence Russia"
+    },
+    {
+      "url": "https://ru.wikipedia.org/wiki/Свобода_слова_в_России",
+      "title": "Свобода слова в России — Википедия",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "CONFIRMS",
+      "rationale": "Constitutional rights limited in practice",
+      "query": "Свобода прессы Россия отчет"
+    },
+    {
+      "url": "https://www.bbc.com/russian/news-65469069",
+      "title": "Опубликован новый рейтинг свободы прессы в мире. Россия - на...",
+      "outlet_country": "GB",
+      "outlet_resolution": "known_outlet",
+      "weight": 0.833,
+      "direction": "CONFIRMS",
+      "rationale": "Reports worsening press freedom",
+      "query": "Свобода прессы Россия отчет"
+    },
+    {
+      "url": "https://www.svoboda.org/",
+      "title": "Радио Свобода",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "CONTRADICTS",
+      "rationale": "Radio Freedom reports freely",
+      "query": "Свобода прессы Россия отчет"
+    },
+    {
+      "url": "https://new.ras.ru/upload/iblock/6df/6innaqfkdsot7rjqpp1jvgf1akrskb1o.pdf",
+      "title": "Российский путь к свободе прессы",
+      "outlet_country": "RU",
+      "outlet_resolution": "tld",
+      "weight": 0.08,
+      "direction": "CONTRADICTS",
+      "rationale": "Mentions freedom of press initiative",
+      "query": "Свобода прессы Россия отчет"
+    },
+    {
+      "url": "https://www.unian.net/world/1331514-uroven-svobodyi-smi-v-mire-rekordno-upal-rossiya-stala-novatorom-gospropagandyi-freedom-house.html",
+      "title": "Уровень свободы СМИ в мире рекордно упал, Россия стала...",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "CONFIRMS",
+      "rationale": " Russia leads in modern state propaganda",
+      "query": "Свобода прессы Россия отчет"
+    },
+    {
+      "url": "https://ru.wikipedia.org/wiki/Независимость_СМИ",
+      "title": "Независимость СМИ — Википедия",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "NEUTRAL",
+      "rationale": "Defines media independence concept",
+      "query": "Независимость СМИ Россия"
+    },
+    {
+      "url": "https://www.yaklass.ru/p/obshchestvoznanie-611-klassy/11-klass/politika-7263810/politicheskii-protcess-7279297/re-4cf6415e-9487-44cc-92dd-fd7a3ee654f0",
+      "title": "Место и роль СМИ в политическом процессе — урок.",
+      "outlet_country": "RU",
+      "outlet_resolution": "tld",
+      "weight": 0.08,
+      "direction": "CONTRADICTS",
+      "rationale": "Claims media independence",
+      "query": "Независимость СМИ Россия"
+    },
+    {
+      "url": "https://legaltop.ru/forum/forum45/1613-nezavisimost-smi-v-rossii.",
+      "title": "Независимость СМИ в России. | Форум Ассоциации юристов по...",
+      "outlet_country": "RU",
+      "outlet_resolution": "tld",
+      "weight": 0.08,
+      "direction": "CONFIRMS",
+      "rationale": "СМИ в России описани като зависими от държавата",
+      "query": "Независимость СМИ Россия"
+    },
+    {
+      "url": "https://dailymoscow.ru/urbanrooms/6303-putin-zayavil-o-nezavisimosti-smi-rossii-ot-vlasti",
+      "title": "Путин заявил о независимости СМИ России от власти",
+      "outlet_country": "RU",
+      "outlet_resolution": "tld",
+      "weight": 0.08,
+      "direction": "CONTRADICTS",
+      "rationale": "Claims media independence",
+      "query": "Независимость СМИ Россия"
+    },
+    {
+      "url": "https://www.kommersant.ru/doc/2149901",
+      "title": "\"Экономическая независимость СМИ сегодня эфемерна...\"",
+      "outlet_country": "RU",
+      "outlet_resolution": "tld",
+      "weight": 0.08,
+      "direction": "CONFIRMS",
+      "rationale": "Limiting free speech",
+      "query": "Независимость СМИ Россия"
+    }
+  ],
+  "status": "OK",
+  "weighted_confirm": 0.759,
+  "agrees_with_vdem": true,
+  "confidence": "HIGH"
+}

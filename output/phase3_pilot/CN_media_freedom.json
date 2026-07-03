@@ -1,0 +1,217 @@
+{
+  "iso2": "CN",
+  "name": "China",
+  "construct": "media_freedom",
+  "official": {
+    "vdem_freexp_pct": 0.05056179775280899
+  },
+  "n_total_sources": 20,
+  "n_informative_sources": 17,
+  "computed_at": "2026-07-02T15:49:15.735546+00:00",
+  "sources": [
+    {
+      "url": "https://en.wikipedia.org/wiki/Freedom_of_the_press_in_China",
+      "title": "Freedom of the press in China - Wikipedia",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "CONFIRMS",
+      "rationale": "Routinely violates freedom",
+      "query": "press freedom China report"
+    },
+    {
+      "url": "https://rsf.org/en/country/china",
+      "title": "China | RSF",
+      "outlet_country": "FR",
+      "outlet_resolution": "known_outlet",
+      "weight": 0.959,
+      "direction": "CONFIRMS",
+      "rationale": "Journalists harassed, detained, surveilled",
+      "query": "press freedom China report"
+    },
+    {
+      "url": "https://www.statista.com/statistics/1117177/china-press-freedom-index/",
+      "title": "China: press freedom index 2025| Statista",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "CONFIRMS",
+      "rationale": "Low press freedom index",
+      "query": "press freedom China report"
+    },
+    {
+      "url": "https://www.nytimes.com/2026/05/29/us/politics/china-expels-times-reporter.html",
+      "title": "After China Orders a Times Reporter to Leave the Country, the U.S. Reciprocates - The New York Times",
+      "outlet_country": "US",
+      "outlet_resolution": "known_outlet",
+      "weight": 0.729,
+      "direction": "CONFIRMS",
+      "rationale": "Journalist expulsion over sensitive coverage",
+      "query": "press freedom China report"
+    },
+    {
+      "url": "https://freedomhouse.org/country/china",
+      "title": "China: Country Profile | Freedom House",
+      "outlet_country": "US",
+      "outlet_resolution": "known_outlet",
+      "weight": 0.729,
+      "direction": "CONFIRMS",
+      "rationale": "Mentions Freedom House, known for tracking censorship",
+      "query": "press freedom China report"
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/China_Media_Group",
+      "title": "China Media Group - Wikipedia",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "CONFIRMS",
+      "rationale": "State media predominance",
+      "query": "media independence China"
+    },
+    {
+      "url": "https://chinamediaproject.org/2021/02/12/all-this-talk-of-independence/",
+      "title": "All This Talk of Independence - China Media Project",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "CONTRADICTS",
+      "rationale": "Claims objectivity, contradicting low freedom rating",
+      "query": "media independence China"
+    },
+    {
+      "url": "https://statemediamonitor.com/2024/09/china-media-group/",
+      "title": "China Media Group",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "CONFIRMS",
+      "rationale": "State control indicates censorship",
+      "query": "media independence China"
+    },
+    {
+      "url": "https://booksandideas.net/Investigating-China",
+      "title": "Investigating China - Books & ideas",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "CONTRADICTS",
+      "rationale": "Mentions media independence",
+      "query": "media independence China"
+    },
+    {
+      "url": "https://grokipedia.com/page/China_Media_Group",
+      "title": "China Media Group — Grokipedia",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "CONFIRMS",
+      "rationale": "State-controlled media",
+      "query": "media independence China"
+    },
+    {
+      "url": "https://www.renminbao.com/rmb/articles/2026/5/2/95076p.html",
+      "title": "2026年新闻自由指数显示 中国是全世界最大的记者监狱",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "CONFIRMS",
+      "rationale": "China ranked low in press freedom index",
+      "query": "中国新闻自由报告"
+    },
+    {
+      "url": "https://www.voachinese.com/a/rsf-world-press-freedom-index-20260501/8145470.html",
+      "title": "2026年世界新闻自由指数显示，中国是全世界最大的记者监狱",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "CONFIRMS",
+      "rationale": "China ranked low in press freedom index",
+      "query": "中国新闻自由报告"
+    },
+    {
+      "url": "https://www.dw.com/zh/rsf全球新闻自由度25年新低-中国依旧倒数/a-76990052",
+      "title": "RSF：全球新闻自由度25年新低 中国依旧倒数 - dw.com",
+      "outlet_country": "DE",
+      "outlet_resolution": "known_outlet",
+      "weight": 0.914,
+      "direction": "CONFIRMS",
+      "rationale": "China ranked low in press freedom index",
+      "query": "中国新闻自由报告"
+    },
+    {
+      "url": "https://ichina.news/国内/无国界记者2025报告：中国仍是世界最大记者监狱-5699",
+      "title": "无国界记者2025报告：中国仍是世界最大记者监狱",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "CONFIRMS",
+      "rationale": "Reports China as world's largest journalist jail",
+      "query": "中国新闻自由报告"
+    },
+    {
+      "url": "https://chinadigitaltimes.net/chinese/707496.html",
+      "title": "【CDT报告汇】中国新闻自由全球倒数第八，关押记者世界第一（外三篇）",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "CONFIRMS",
+      "rationale": "Reports censorship and jailed journalists",
+      "query": "中国新闻自由报告"
+    },
+    {
+      "url": "https://zh.wikipedia.org/zh-cn/Category:獨立媒體",
+      "title": "分类:独立媒体 - 维基百科，自由的百科全书",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "NEUTRAL",
+      "rationale": "No clear info on media freedom",
+      "query": "中国媒体独立"
+    },
+    {
+      "url": "http://theory.people.com.cn/n1/2016/0407/c40531-28255521.html",
+      "title": "认清西方“媒体独立”的实质--理论-中国共产党新闻网",
+      "outlet_country": "CN",
+      "outlet_resolution": "tld",
+      "weight": 0.045,
+      "direction": "CONFIRMS",
+      "rationale": "Censorial tone",
+      "query": "中国媒体独立"
+    },
+    {
+      "url": "https://www.bbc.com/zhongwen/simp/china/2015/10/151022_human_rights_what_china_is_accused_of",
+      "title": "中国有哪些遭到指责的人权问题 - BBC News 中文",
+      "outlet_country": "GB",
+      "outlet_resolution": "known_outlet",
+      "weight": 0.833,
+      "direction": "CONFIRMS",
+      "rationale": "Media strictly controlled",
+      "query": "中国媒体独立"
+    },
+    {
+      "url": "https://tech.sina.com.cn/i/csj/2013-01-18/07477990386.shtml",
+      "title": "独立科技媒体：成熟尚远，路在何方？_ 互联网_科技时代_新浪网",
+      "outlet_country": "CN",
+      "outlet_resolution": "tld",
+      "weight": 0.045,
+      "direction": "NEUTRAL",
+      "rationale": "no clear signal on media freedom",
+      "query": "中国媒体独立"
+    },
+    {
+      "url": "https://www.zaobao.com.sg/news/china?_wrapper_format=html&page=0",
+      "title": "中国新闻 | 联合早报 - 享誉新加坡与国际的新闻媒体",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "NEUTRAL",
+      "rationale": "No info on China media freedom",
+      "query": "中国媒体独立"
+    }
+  ],
+  "status": "OK",
+  "weighted_confirm": 0.897,
+  "agrees_with_vdem": true,
+  "confidence": "HIGH"
+}
