@@ -281,7 +281,12 @@ def _measure_progress(initiative: dict, indicators: dict) -> dict:
         except Exception:
             pass
 
-    if needs_explanation:
+    if False and needs_explanation:  # TODO: causal-hypothesis gate is string-length-only
+                                      # (len(text)>50 and len(action)>30 -> ACCEPTED), not
+                                      # citation_verifier.verify_hypothesis() — produced 24
+                                      # near-duplicate ACCEPTED records for 3 static metrics
+                                      # (baseline==current every time). Disabled pending a
+                                      # real per-causal-hypothesis quality gate. See memory.
         try:
             sys.path.insert(0, str(BASE))
             from hypothesis_generator import generate_causal_hypothesis
