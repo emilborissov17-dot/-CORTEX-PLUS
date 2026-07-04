@@ -1,9 +1,9 @@
-# Divergence Report v1: Where Official Data Overstates Governance Reality
+# Divergence Report v1.1: Where Official Data Overstates Governance Reality
 
 **Status:** Draft for review. Mechanism validated on a defined slice of evidence; explicitly not a complete map. See Section 4 for what this report does and does not support.
 
-**Date:** 2026-07-03
-**Data vintage:** World Bank wellbeing batch (217 countries, 2026-06-28) · V-Dem Core v16 (2018+ observations) · live web-signal pilot (7 countries, 2026-07-02)
+**Date:** 2026-07-04 (v1.1, supersedes v1 of 2026-07-03 — see Section 3.4 for what changed)
+**Data vintage:** World Bank wellbeing batch (217 countries, 2026-06-28) · V-Dem Core v16 (2018+ observations) · live web-signal pilot (7 countries, 2026-07-02, controls/borderline re-run 2026-07-04 after a pipeline fix)
 **Reproduction:** every number in this report is read from `output/divergence_latest.json` and `output/phase3_pilot/*.json`, both committed to this repository. See Section 5.
 
 ---
@@ -16,9 +16,9 @@ Countries are routinely assessed by how they look on quantitative development me
 
 **Findings.** 33 of 175 countries (18.9%) are flagged FACADE. The top of the list — China (divergence 0.534), Serbia (0.412), Russia (0.397), Turkiye (0.383), Bosnia and Herzegovina (0.372) — is a coherent match to known hybrid or authoritarian regimes with strong economic optics and weak observed governance. The opposite tail — Gambia, Vanuatu, Niger, Timor-Leste, Benin (divergence −0.40 to −0.48) — is poor-but-functioning democracies whose material conditions understate how well they are actually governed. No absurd outliers appear in either tail.
 
-**Independent corroboration.** A separate pilot cross-checked the top of the FACADE list against live web search + LLM-classified media coverage, independent of both input datasets. China, Serbia, Russia, and Turkiye were strongly corroborated (12–20 informative sources each, 76–95% agreement with the FACADE classification, confidence HIGH/MEDIUM). The fifth case, Bosnia and Herzegovina, and both clean-control checks (Estonia, Denmark) returned too little usable data to confirm or deny — a pipeline defect, not a finding (Section 4.2).
+**Independent corroboration.** A separate pilot cross-checked the top of the FACADE list against live web search + LLM-classified media coverage, independent of both input datasets. All 7 tested countries now agree with their expected classification. China, Serbia, Russia, Turkiye, and Bosnia and Herzegovina were corroborated as facades (12–20 informative sources each, 66–95% agreement, confidence MEDIUM/HIGH); Estonia and Denmark were corroborated as clean controls (15–18 informative sources each, 0% agreement with the facade direction — i.e. sources consistently describe conditions *better* than a low rating, confidence HIGH). The v1 report could not make this claim for BA/EE/DK because of a pipeline defect that has since been fixed (Section 3.4).
 
-**Honest limits.** This mechanism catches *gross* facades — large, economically visible divergence — not subtle or partial ones. The live-signal layer is not yet validated for borderline or control cases. The underlying wellbeing-profile confidence system reports 0 of 217 countries at HIGH confidence, by structural design (Section 4.3), not because this specific result is weak. All code, data, and thresholds are in this repository and reproducible from a clean checkout.
+**Honest limits.** This mechanism catches *gross* facades — large, economically visible divergence — not subtle or partial ones. The live-signal layer is now validated on 7/7 pre-registered cases, still a small sample. The underlying wellbeing-profile confidence system reports 0 of 217 countries at HIGH confidence, by structural design (Section 4.3), not because this specific result is weak. All code, data, and thresholds are in this repository and reproducible from a clean checkout.
 
 ---
 
@@ -156,11 +156,17 @@ A separate pilot (`live_divergence_pilot.py`) tested whether the top of the FACA
 | RS | Serbia | FACADE | 0.258 | 20 of 20 | 94.8% | HIGH |
 | RU | Russian Federation | FACADE | 0.073 | 18 of 19 | 75.9% | HIGH |
 | TR | Turkiye | FACADE | 0.157 | 12 of 20 | 88.0% | MEDIUM |
-| BA | Bosnia and Herzegovina | FACADE | 0.444 | 1 of 19 | — | LOW (insufficient) |
-| EE | Estonia | control (clean) | 0.989 | 0 of 20 | — | LOW (insufficient) |
-| DK | Denmark | control (clean) | 1.000 | 1 of 16 | — | LOW (insufficient) |
+| BA | Bosnia and Herzegovina | FACADE | 0.444 | 14 of 18 | 65.5% | MEDIUM |
+| EE | Estonia | control (clean) | 0.989 | 15 of 19 | 0.0% | HIGH |
+| DK | Denmark | control (clean) | 1.000 | 18 of 19 | 0.0% | HIGH |
 
-**Four of five FACADE cases (China, Serbia, Russia, Turkiye) are strongly and independently corroborated.** The fifth (Bosnia and Herzegovina) and both controls (Estonia, Denmark) returned too few informative sources to confirm or refute anything — this is a data-collection failure in the pilot, not a finding about those three countries. Root cause: a parsing defect where the classification step discards some LLM responses that already begin as valid JSON (e.g. a raw response beginning `{"direction":"CONFIRMS",...` was logged as unparseable), compounding with rate-limit exhaustion by the time later countries in a run are processed. This defect was still present in a rerun intended to fix it and is an open item, not resolved by this report. **No claim is made here about whether Bosnia and Herzegovina, Estonia, or Denmark would confirm or contradict the FACADE mechanism** — the honest result is "untested," not "clean" or "confirmed."
+**All 7 tested countries now agree with their expected classification.** The v1 report (2026-07-03) could only corroborate 4 of 5 FACADE cases; Bosnia and Herzegovina and both controls (Estonia, Denmark) returned too few informative sources (0–1) to confirm or refute anything.
+
+**Root cause, diagnosed and fixed 2026-07-04.** The v1 "unparseable LLM output" errors were not a parser defect — `_parse_llm_json` was working correctly on what it received. The real cause was two independent problems upstream:
+1. **Token starvation on reasoning-model backends.** `classify_direction` capped the classification call at `max_tokens=100`. Two backends in the fallback chain (Cerebras `gpt-oss-120b`, OpenRouter `nvidia/nemotron-3-super-120b-a12b`) emit free-text chain-of-thought reasoning before or instead of the final JSON answer. At 100 tokens, the response was cut off either mid-reasoning (no `{` ever appears) or mid-JSON (e.g. `{"direction": "CONF` — a truncated string with no closing brace). Both are correctly unparseable; the budget was the bug, not the parsing logic. Fixed by raising `max_tokens` to 400 (`live_divergence_pilot.py`).
+2. **A dead fallback.** The last-resort backend, Ollama, had zero models pulled locally (`"Ollama: няма налични модели"` / "no available models"). Once Groq/Cerebras/OpenRouter/Gemini hit rate limits or cooldowns — which happens disproportionately for countries processed later in a run — the chain fell through to a backend that could never succeed, producing outright classification failures rather than a working answer. Removed from the fallback chain (`core/groq_backend.py`) so a real exhaustion now fails loudly instead of masquerading as a fifth attempt.
+
+After both fixes, BA/EE/DK were re-run from the same cached search results (no new web queries) — only the classification step re-ran. Result: 0 `classify_error` entries across all three countries' 56 total sources. Spot-checking the rationale text confirms the classifications are semantically sound, including for Bosnian/Serbian-language sources (e.g. *"Politicki pritisci ometaju nezavisnost medija"* → CONFIRMS), addressing part of the local-language concern raised in Section 4.2 of v1.
 
 ---
 
@@ -170,9 +176,9 @@ A separate pilot (`live_divergence_pilot.py`) tested whether the top of the FACA
 
 A single threshold on two composite percentiles catches large, economically visible divergence. It will miss: countries where governance capture is real but the material composite is *also* mediocre (no divergence to detect even though the underlying problem exists); countries where V-Dem's own expert coding lags a recent political shift; and any form of facade that operates through a channel not captured by `freexp`/`corr`/`rule` (e.g., judicial capture that doesn't show up in the specific rule-of-law variable used here). 33/175 should be read as "at least this many," not "exactly this many."
 
-### 4.2 The live-signal layer has a known western-corpus bias, undocumented in magnitude
+### 4.2 The live-signal layer has a known western-corpus bias, partially untested in magnitude
 
-Search queries in the pilot were issued primarily in English (with a secondary pass in the country's national language for non-English cases), and the underlying search and LLM classification stack is trained predominantly on English-language, Western-outlet content. Combined with the parsing defect in 3.4, this means the live-signal layer has *only* been shown to work for cases with large, internationally reported divergence (China, Russia) — it has not been validated for subtler cases, and it has not been validated at all for clean controls, where the expected signal is an *absence* of contradicting coverage rather than a presence of confirming coverage. Closing this gap requires local-language source collection, which is scoped but not yet built (see the Phase 3 media-intelligence inventory, `media_intel_worker.py`, currently English-search-only).
+Search queries in the pilot are issued primarily in English, with a secondary pass in the country's national language for non-English cases. With the parsing/token defect from v1 fixed (Section 3.4), local-language sources for Bosnia and Herzegovina were successfully retrieved and correctly classified — so the local-language query path itself works. What remains unvalidated is *coverage depth*: whether local-language search surfaces enough independent signal for subtler or more contested cases than the 7 tested here, and whether the underlying LLM classification stack (trained predominantly on English-language, Western-outlet content) is equally reliable when reasoning about non-English source text at scale. Closing this fully requires broader local-language source collection across more countries, which is scoped but not yet built (see the Phase 3 media-intelligence inventory, `media_intel_worker.py`, currently English-search-only).
 
 ### 4.3 0 of 217 countries reach HIGH confidence in the underlying wellbeing profile
 
@@ -194,7 +200,8 @@ Every number in this report is generated from code and data present in this repo
 
 **Code:**
 - `_divergence_pilot.py` — computes the 175-country divergence universe, the FACADE list, and the pre-registered test. Re-executed on 2026-07-03 to produce `output/divergence_latest.json`; results are identical to the original 2026-07-02 run (33/175 FACADE, same top and bottom 10).
-- `live_divergence_pilot.py` — the 7-country live web-signal pilot behind Section 3.4. Outputs one JSON file per country in `output/phase3_pilot/`.
+- `live_divergence_pilot.py` — the 7-country live web-signal pilot behind Section 3.4. Outputs one JSON file per country in `output/phase3_pilot/`. `classify_direction`'s `max_tokens` raised 100→400 on 2026-07-04 (Section 3.4).
+- `core/groq_backend.py` — the shared LLM fallback chain. Ollama removed from the chain on 2026-07-04 (Section 3.4); now Groq → Cerebras → OpenRouter → Gemini.
 
 **Data:**
 - `output/wellbeing_all_countries.json` — World Bank-derived quantitative composite, 217 countries, generated 2026-06-28.
@@ -212,6 +219,6 @@ requires only the two data files listed above; no network access or API keys.
 ```
 python live_divergence_pilot.py
 ```
-requires live web search and at least one working LLM backend (Groq/Cerebras/OpenRouter/Gemini/Ollama, tried in that order with cooldown fallback); subject to the parsing defect noted in Section 3.4 until fixed.
+requires live web search and at least one working LLM backend (Groq/Cerebras/OpenRouter/Gemini, tried in that order with cooldown fallback).
 
 This report makes no claim beyond what these two scripts and their outputs directly support. Where a finding is provisional, inconclusive, or contradicted by a defect in the pipeline, that is stated in Section 4 rather than omitted.

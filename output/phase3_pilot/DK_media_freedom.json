@@ -5,9 +5,9 @@
   "official": {
     "vdem_freexp_pct": 1.0
   },
-  "n_total_sources": 16,
-  "n_informative_sources": 1,
-  "computed_at": "2026-07-02T17:18:47.735429+00:00",
+  "n_total_sources": 19,
+  "n_informative_sources": 18,
+  "computed_at": "2026-07-04T06:49:18.251024+00:00",
   "sources": [
     {
       "url": "https://rsf.org/en/press-freedom-under-chinese-scrutiny-denmark",
@@ -15,8 +15,8 @@
       "outlet_country": "FR",
       "outlet_resolution": "known_outlet",
       "weight": 0.959,
-      "direction": "NEUTRAL",
-      "rationale": "classify_error: unparseable LLM output: 'We need to decide: V-Dem rating: percentile 1.00 out of 1.0 meaning highest? Wai'",
+      "direction": "CONTRADICTS",
+      "rationale": "Report suggests Denmark's media is free to criticize",
       "query": "press freedom Denmark report"
     },
     {
@@ -25,8 +25,8 @@
       "outlet_country": "unknown",
       "outlet_resolution": "unresolved",
       "weight": 0.5,
-      "direction": "NEUTRAL",
-      "rationale": "classify_error: unparseable LLM output: 'We need to decide whether the snippet suggests conditions consistent with low me'",
+      "direction": "CONTRADICTS",
+      "rationale": "Proposed protections imply stronger freedom",
       "query": "press freedom Denmark report"
     },
     {
@@ -35,8 +35,8 @@
       "outlet_country": "GB",
       "outlet_resolution": "tld",
       "weight": 0.833,
-      "direction": "NEUTRAL",
-      "rationale": "classify_error: All LLM backends failed (Groq/Cerebras/OpenRouter/Gemini/Ollama). Last error: Ollama: няма налични модели",
+      "direction": "CONTRADICTS",
+      "rationale": "Describes erosion, but starts with 'best place'",
       "query": "press freedom Denmark report"
     },
     {
@@ -45,8 +45,8 @@
       "outlet_country": "unknown",
       "outlet_resolution": "unresolved",
       "weight": 0.5,
-      "direction": "NEUTRAL",
-      "rationale": "classify_error: All LLM backends failed (Groq/Cerebras/OpenRouter/Gemini/Ollama). Last error: Ollama: няма налични модели",
+      "direction": "CONTRADICTS",
+      "rationale": "Strong media pluralism framework",
       "query": "press freedom Denmark report"
     },
     {
@@ -55,8 +55,8 @@
       "outlet_country": "unknown",
       "outlet_resolution": "unresolved",
       "weight": 0.5,
-      "direction": "NEUTRAL",
-      "rationale": "classify_error: All LLM backends failed (Groq/Cerebras/OpenRouter/Gemini/Ollama). Last error: Ollama: няма налични модели",
+      "direction": "CONTRADICTS",
+      "rationale": "High democracy rating",
       "query": "press freedom Denmark report"
     },
     {
@@ -65,8 +65,8 @@
       "outlet_country": "unknown",
       "outlet_resolution": "unresolved",
       "weight": 0.5,
-      "direction": "NEUTRAL",
-      "rationale": "classify_error: All LLM backends failed (Groq/Cerebras/OpenRouter/Gemini/Ollama). Last error: Ollama: няма налични модели",
+      "direction": "CONTRADICTS",
+      "rationale": "Rankings suggest better freedom",
       "query": "media independence Denmark"
     },
     {
@@ -76,7 +76,7 @@
       "outlet_resolution": "known_outlet",
       "weight": 0.959,
       "direction": "CONTRADICTS",
-      "rationale": "Subsidy system supports independent media",
+      "rationale": "Describes independent funding",
       "query": "media independence Denmark"
     },
     {
@@ -85,8 +85,8 @@
       "outlet_country": "unknown",
       "outlet_resolution": "unresolved",
       "weight": 0.5,
-      "direction": "NEUTRAL",
-      "rationale": "classify_error: All LLM backends failed (Groq/Cerebras/OpenRouter/Gemini/Ollama). Last error: Ollama: няма налични модели",
+      "direction": "CONTRADICTS",
+      "rationale": "Mentions pluralistic and independent media",
       "query": "media independence Denmark"
     },
     {
@@ -95,83 +95,113 @@
       "outlet_country": "unknown",
       "outlet_resolution": "unresolved",
       "weight": 0.5,
-      "direction": "NEUTRAL",
-      "rationale": "classify_error: All LLM backends failed (Groq/Cerebras/OpenRouter/Gemini/Ollama). Last error: Ollama: няма налични модели",
+      "direction": "CONTRADICTS",
+      "rationale": "High media independence",
       "query": "media independence Denmark"
     },
     {
-      "url": "https://cmpf.eui.eu/country/denmark-2026/",
-      "title": "Denmark 2026 - Centre for Media Pluralism and Media Freedom",
+      "url": "https://faktalink.dk/emner/pressefrihed",
+      "title": "Pressefrihed | Emner | Faktalink",
+      "outlet_country": "DK",
+      "outlet_resolution": "tld",
+      "weight": 0.98,
+      "direction": "CONTRADICTS",
+      "rationale": "Mentions legal protection of press freedom",
+      "query": "pressefrihed i Danmark rapport"
+    },
+    {
+      "url": "https://globalis.dk/Statistikk/pressefrihet",
+      "title": "Pressefrihed",
+      "outlet_country": "DK",
+      "outlet_resolution": "tld",
+      "weight": 0.98,
+      "direction": "CONTRADICTS",
+      "rationale": "Describes high media freedom ranking",
+      "query": "pressefrihed i Danmark rapport"
+    },
+    {
+      "url": "https://www.berlingske.dk/internationalt/rapport-peger-paa-laveste-pressefrihed-globalt-i-mindst-25-aar",
+      "title": "Rapport peger på laveste pressefrihed globalt i mindst 25... | Berlingske",
+      "outlet_country": "DK",
+      "outlet_resolution": "tld",
+      "weight": 0.98,
+      "direction": "CONTRADICTS",
+      "rationale": "Danmark rises to 4th place",
+      "query": "pressefrihed i Danmark rapport"
+    },
+    {
+      "url": "https://dk.mediasupport.org/hvad-vi-gor/pressefrihed/",
+      "title": "Pressefrihed : IMS",
       "outlet_country": "unknown",
       "outlet_resolution": "unresolved",
       "weight": 0.5,
-      "direction": "NEUTRAL",
-      "rationale": "classify_error: All LLM backends failed (Groq/Cerebras/OpenRouter/Gemini/Ollama). Last error: Ollama: няма налични модели",
-      "query": "press freedom Danmark report"
+      "direction": "CONTRADICTS",
+      "rationale": "Describes support for press freedom",
+      "query": "pressefrihed i Danmark rapport"
     },
     {
-      "url": "https://www.dr.dk/nyheder/seneste/kun-et-land-overgaar-danmark-i-pressefrihed-viser-indeks",
-      "title": "Kun ét land overgår Danmark i pressefrihed, viser indeks",
+      "url": "https://jyllands-posten.dk/international/ECE9535700/nedslaaende-rapport-om-pressefrihed/",
+      "title": "jyllands-posten.dk/international/ECE9535700/nedslaaende-rapport-om...",
+      "outlet_country": "DK",
+      "outlet_resolution": "tld",
+      "weight": 0.98,
+      "direction": "CONTRADICTS",
+      "rationale": "Report about press freedom suggests concern, not restriction",
+      "query": "pressefrihed i Danmark rapport"
+    },
+    {
+      "url": "https://zenodo.org/records/18384917/files/Medieejerskab+i+Danmark+-+2025+-+ONLINE.pdf",
+      "title": "Medieejerskab i Danmark - 2025 - ONLINE - Zenodo",
+      "outlet_country": "unknown",
+      "outlet_resolution": "unresolved",
+      "weight": 0.5,
+      "direction": "CONTRADICTS",
+      "rationale": "Moderate threat, not extremely low",
+      "query": "medie-uafhængighed i Danmark"
+    },
+    {
+      "url": "https://ippf.dk/danske-medier/",
+      "title": "Danske Medier: En omfattende guide til danske medier, deres ...",
+      "outlet_country": "DK",
+      "outlet_resolution": "tld",
+      "weight": 0.98,
+      "direction": "CONTRADICTS",
+      "rationale": "Describes diverse media landscape",
+      "query": "medie-uafhængighed i Danmark"
+    },
+    {
+      "url": "https://www.dr.dk/static/documents/2025/01/24/dr_medieudvikling_2024_ce3243e9.pdf",
+      "title": "Medieudviklingen 2024",
       "outlet_country": "DK",
       "outlet_resolution": "tld",
       "weight": 0.98,
       "direction": "NEUTRAL",
-      "rationale": "classify_error: All LLM backends failed (Groq/Cerebras/OpenRouter/Gemini/Ollama). Last error: Ollama: няма налични модели",
-      "query": "press freedom Danmark report"
+      "rationale": "No info on media freedom",
+      "query": "medie-uafhængighed i Danmark"
     },
     {
-      "url": "https://www.reprtoir.com/integrations/danmark",
-      "title": "Danmark + Reprtoir",
+      "url": "https://asset.dr.dk/drdk/umbraco-files/n0hfflfa/2025-dr-medieudvikling.pdf",
+      "title": "Medieudviklingen 2025 - asset.dr.dk",
+      "outlet_country": "DK",
+      "outlet_resolution": "tld",
+      "weight": 0.98,
+      "direction": "CONTRADICTS",
+      "rationale": "Describes a thriving media market",
+      "query": "medie-uafhængighed i Danmark"
+    },
+    {
+      "url": "https://commission.europa.eu/strategy-and-policy/priorities-2019-2024/new-push-european-democracy/protecting-democracy/european-media-freedom-act_da",
+      "title": "Den europæiske forordning om mediefrihed - Europa-Kommissionen",
       "outlet_country": "unknown",
       "outlet_resolution": "unresolved",
       "weight": 0.5,
-      "direction": "NEUTRAL",
-      "rationale": "classify_error: All LLM backends failed (Groq/Cerebras/OpenRouter/Gemini/Ollama). Last error: Ollama: няма налични модели",
-      "query": "media independence Danmark"
-    },
-    {
-      "url": "https://tmbroadcast.com/index.php/tag/tv-2-danmark-tv-2/",
-      "title": "TV 2 DANMARK (TV 2) Archives - TM Broadcast International",
-      "outlet_country": "unknown",
-      "outlet_resolution": "unresolved",
-      "weight": 0.5,
-      "direction": "NEUTRAL",
-      "rationale": "classify_error: All LLM backends failed (Groq/Cerebras/OpenRouter/Gemini/Ollama). Last error: Ollama: няма налични модели",
-      "query": "media independence Danmark"
-    },
-    {
-      "url": "https://danmarksfrihedsraad.com/tag/2083-a-european-declaration-of-independence/",
-      "title": "2083 – A European Declaration of Independence –",
-      "outlet_country": "unknown",
-      "outlet_resolution": "unresolved",
-      "weight": 0.5,
-      "direction": "NEUTRAL",
-      "rationale": "classify_error: All LLM backends failed (Groq/Cerebras/OpenRouter/Gemini/Ollama). Last error: Ollama: няма налични модели",
-      "query": "media independence Danmark"
-    },
-    {
-      "url": "https://danmarksfrihedsraad.com/tag/2083-a-european-declaration-of-independence-eng/",
-      "title": "2083 – A European Declaration of Independence (ENG)",
-      "outlet_country": "unknown",
-      "outlet_resolution": "unresolved",
-      "weight": 0.5,
-      "direction": "NEUTRAL",
-      "rationale": "classify_error: All LLM backends failed (Groq/Cerebras/OpenRouter/Gemini/Ollama). Last error: Ollama: няма налични модели",
-      "query": "media independence Danmark"
-    },
-    {
-      "url": "https://www.ravenseyemedia.com/",
-      "title": "Raven's Eye Media",
-      "outlet_country": "unknown",
-      "outlet_resolution": "unresolved",
-      "weight": 0.5,
-      "direction": "NEUTRAL",
-      "rationale": "classify_error: All LLM backends failed (Groq/Cerebras/OpenRouter/Gemini/Ollama). Last error: Ollama: няма налични модели",
-      "query": "media independence Danmark"
+      "direction": "CONTRADICTS",
+      "rationale": "Mentions protection of media pluralism",
+      "query": "medie-uafhængighed i Danmark"
     }
   ],
-  "status": "INSUFFICIENT_DATA",
-  "agrees_with_vdem": null,
-  "confidence": "LOW",
-  "note": "only 1 informative sources (< 5) — cannot confirm or contradict"
+  "status": "OK",
+  "weighted_confirm": 0.0,
+  "agrees_with_vdem": false,
+  "confidence": "HIGH"
 }

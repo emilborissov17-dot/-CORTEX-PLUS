@@ -1,13 +1,17 @@
 #!/usr/bin/env python3
 """
-groq_backend.py — LLM backend с 5-степенен fallback chain
+groq_backend.py — LLM backend с 4-степенен fallback chain
 ==========================================================
 Ред на опити:
   1. Groq       (llama-3.3-70b-versatile)    — бърз, безплатен
   2. Cerebras   (llama-3.3-70b)              — cloud.cerebras.ai
   3. OpenRouter (deepseek/deepseek-r1:free)  — openrouter.ai
   4. Gemini     (gemini-2.0-flash)           — 1500 req/day безплатно
-  5. Ollama     (локален)                    — без лимит, последна мрежа
+
+Ollama беше премахнат от веригата (2026-07-04) — локално няма нито един
+pull-нат модел ("Ollama: няма налични модели"), т.е. беше мъртъв safety
+net, който само маскираше AllBackendsFailedError. По-добре да гърми
+ясно, отколкото тихо да минава през несъществуващ backend.
 
 При rate limit → веднага следващ backend, БЕЗ дълго чакане.
 Cooldown 60s на backend при rate limit — после се опитва пак.
@@ -292,7 +296,7 @@ def _call_ollama(prompt: str, max_tokens: int) -> str:
 
 def call_groq(prompt: str, max_tokens: int = 1024) -> str:
     """
-    Fallback chain: Groq → Cerebras → OpenRouter → Gemini → Ollama
+    Fallback chain: Groq → Cerebras → OpenRouter → Gemini
 
     При rate limit на даден backend → веднага следващ (без дълго чакане).
     Backend с активен cooldown се прескача докато cooldown-ът не изтече.
@@ -304,7 +308,6 @@ def call_groq(prompt: str, max_tokens: int = 1024) -> str:
         ("Cerebras",   "cerebras",   _call_cerebras),
         ("OpenRouter", "openrouter", _call_openrouter),
         ("Gemini",     "gemini",     _call_gemini),
-        ("Ollama",     "ollama",     _call_ollama),
     ]
 
     last_error = None
@@ -323,7 +326,7 @@ def call_groq(prompt: str, max_tokens: int = 1024) -> str:
             last_error = e
 
     raise AllBackendsFailedError(
-        f"All LLM backends failed (Groq/Cerebras/OpenRouter/Gemini/Ollama). "
+        f"All LLM backends failed (Groq/Cerebras/OpenRouter/Gemini). "
         f"Last error: {last_error}"
     )
 

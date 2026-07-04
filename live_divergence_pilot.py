@@ -192,7 +192,7 @@ def classify_direction(country_name: str, qual_pct: float, title: str, body: str
         'Return ONLY JSON: {"direction": "CONFIRMS|CONTRADICTS|NEUTRAL", "rationale": "<15 words>"}'
     )
     try:
-        raw = call_groq(prompt, max_tokens=100)
+        raw = call_groq(prompt, max_tokens=400)
         data = _parse_llm_json(raw)
         if not data:
             return {"direction": "NEUTRAL", "rationale": f"classify_error: unparseable LLM output: {raw[:80]!r}"}
