@@ -1,9 +1,9 @@
 # CORTEX STATE ESSENCE
-> 2026-06-21 13:57 | цикъл: 2026-06-21T13:57:38.893810+00:00 | goal: 0.539
+> 2026-06-27 12:00 | цикъл: test_2 | goal: 0.540
 
 ## СИСТЕМА
-- Цикли: 8 | avg goal: 0.639 | best: 0.850
-- Merkle root: `3726b3a2011b5406cd8aae5a2acd08624d3d875d895984c84b0432bd2194a1c2`
+- Цикли: 11 | avg goal: 0.612 | best: 0.850
+- Merkle root: `1a03ec5a0173c1b4cfdbf0693abe4ac653d77585aa2e2375b8c0361147209b8b`
 
 ## ТРЕНД ВЕКТОРИ
 - CO₂: 432.44 ppm → (Δ+0.000)
@@ -11,11 +11,11 @@
 - Kp index: 2.67 → (Δ+0.000)
 - Бежанци: 43400000.0 → (Δ+0.000)
 - GBIF obs/30d: 4933538.0 → (Δ+0.000)
-- Goal score: 0.5395 → (Δ+0.000)
+- Goal score: 0.54 ↑ (Δ+0.001)
 
 ## СЕБЕПРОФИЛ
-- Силни домейни: GOVERNANCE_INSTITUTIONS_REVIEW
-- Слаби домейни: TECHNOLOGY_INFRA_REVIEW, SOCIAL_RELATIONS_REVIEW
+- Силни домейни: N/A
+- Слаби домейни: none
 - Известни дупки: none
 
 ## ВИЗИЯ (константа)
