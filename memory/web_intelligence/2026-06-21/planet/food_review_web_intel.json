@@ -1,0 +1,23 @@
+{
+  "axis": "FOOD_REVIEW",
+  "domain": "planet",
+  "timestamp": "2026-06-21T19:44:31.358166+00:00",
+  "sources_count": 0,
+  "rss_count": 0,
+  "ddg_count": 0,
+  "youtube_count": 0,
+  "youtube_items": [],
+  "analysis": {
+    "problem": "Няма достатъчно данни за анализ",
+    "root_cause": "Липсващи или недостъпни sources",
+    "severity": "UNKNOWN",
+    "leverage_points": [],
+    "proposed_actions": [],
+    "evidence": [],
+    "generalization": "",
+    "risk_level": "UNKNOWN",
+    "trend": "UNKNOWN",
+    "summary": "Няма данни"
+  },
+  "raw_items": []
+}

@@ -1,0 +1,336 @@
+{
+  "cycle_id": "2026-06-21T13:57:38.893810+00:00",
+  "timestamp": "2026-06-21T13:57:38.896314+00:00",
+  "count": 47,
+  "signals": [
+    {
+      "metric": "gdp_per_capita_usd",
+      "value": 13631.2,
+      "domain": "ECONOMY_WORK_REVIEW",
+      "source": "metrics",
+      "category": "CIVILIZATION"
+    },
+    {
+      "metric": "gdp_growth_pct",
+      "value": 2.9,
+      "domain": "ECONOMY_WORK_REVIEW",
+      "source": "metrics",
+      "category": "CIVILIZATION"
+    },
+    {
+      "metric": "unemployment_pct",
+      "value": 4.8,
+      "domain": "ECONOMY_WORK_REVIEW",
+      "source": "metrics",
+      "category": "CIVILIZATION"
+    },
+    {
+      "metric": "literacy_rate_adult_pct",
+      "value": 87.7,
+      "domain": "EDUCATION_CULTURE_REVIEW",
+      "source": "metrics",
+      "category": "CIVILIZATION"
+    },
+    {
+      "metric": "primary_enrollment_pct",
+      "value": 89.4,
+      "domain": "EDUCATION_CULTURE_REVIEW",
+      "source": "metrics",
+      "category": "CIVILIZATION"
+    },
+    {
+      "metric": "secondary_enrollment_pct",
+      "value": 66.3,
+      "domain": "EDUCATION_CULTURE_REVIEW",
+      "source": "metrics",
+      "category": "CIVILIZATION"
+    },
+    {
+      "metric": "rule_of_law_weighted_mean",
+      "value": -0.4,
+      "domain": "GOVERNANCE_INSTITUTIONS_REVIEW",
+      "source": "metrics",
+      "category": "CIVILIZATION"
+    },
+    {
+      "metric": "control_of_corruption_weighted_mean",
+      "value": -0.3,
+      "domain": "GOVERNANCE_INSTITUTIONS_REVIEW",
+      "source": "metrics",
+      "category": "CIVILIZATION"
+    },
+    {
+      "metric": "political_stability_weighted_mean",
+      "value": -0.7,
+      "domain": "GOVERNANCE_INSTITUTIONS_REVIEW",
+      "source": "metrics",
+      "category": "CIVILIZATION"
+    },
+    {
+      "metric": "voice_accountability_weighted_mean",
+      "value": -0.6,
+      "domain": "GOVERNANCE_INSTITUTIONS_REVIEW",
+      "source": "metrics",
+      "category": "CIVILIZATION"
+    },
+    {
+      "metric": "political_stability_pct_pop_below_minus05",
+      "value": 57.3,
+      "domain": "GOVERNANCE_INSTITUTIONS_REVIEW",
+      "source": "metrics",
+      "category": "CIVILIZATION"
+    },
+    {
+      "metric": "voice_accountability_pct_pop_below_minus05",
+      "value": 50.7,
+      "domain": "GOVERNANCE_INSTITUTIONS_REVIEW",
+      "source": "metrics",
+      "category": "CIVILIZATION"
+    },
+    {
+      "metric": "poverty_headcount_190",
+      "value": 10.4,
+      "domain": "INEQUALITY_POVERTY_REVIEW",
+      "source": "metrics",
+      "category": "CIVILIZATION"
+    },
+    {
+      "metric": "gini_index",
+      "value": 39.6,
+      "domain": "INEQUALITY_POVERTY_REVIEW",
+      "source": "metrics",
+      "category": "CIVILIZATION"
+    },
+    {
+      "metric": "income_share_bottom40",
+      "value": 16.8,
+      "domain": "INEQUALITY_POVERTY_REVIEW",
+      "source": "metrics",
+      "category": "CIVILIZATION"
+    },
+    {
+      "metric": "access_electricity_pct",
+      "value": 91.6,
+      "domain": "INFRASTRUCTURE_CITIES_REVIEW",
+      "source": "metrics",
+      "category": "CIVILIZATION"
+    },
+    {
+      "metric": "access_clean_fuels_pct",
+      "value": 74.4,
+      "domain": "INFRASTRUCTURE_CITIES_REVIEW",
+      "source": "metrics",
+      "category": "CIVILIZATION"
+    },
+    {
+      "metric": "rd_expenditure_pct_gdp",
+      "value": 2.6,
+      "domain": "TECHNOLOGY_AI_REVIEW",
+      "source": "metrics",
+      "category": "CIVILIZATION"
+    },
+    {
+      "metric": "high_tech_exports_pct",
+      "value": 24.8,
+      "domain": "TECHNOLOGY_AI_REVIEW",
+      "source": "metrics",
+      "category": "CIVILIZATION"
+    },
+    {
+      "metric": "fixed_broadband_per100",
+      "value": 20.1,
+      "domain": "TECHNOLOGY_INFRA_REVIEW",
+      "source": "metrics",
+      "category": "CIVILIZATION"
+    },
+    {
+      "metric": "co2_ppm_current",
+      "value": 431.2,
+      "domain": "CLIMATE_GLOBAL_RISK_REVIEW",
+      "source": "metrics",
+      "category": "CIVILIZATION"
+    },
+    {
+      "metric": "co2_annual_increase",
+      "value": 1.7,
+      "domain": "CLIMATE_GLOBAL_RISK_REVIEW",
+      "source": "metrics",
+      "category": "CIVILIZATION"
+    },
+    {
+      "metric": "outer_space_treaty_signatories",
+      "value": 114.0,
+      "domain": "COSMIC_RESOURCES_REVIEW",
+      "source": "metrics",
+      "category": "CIVILIZATION"
+    },
+    {
+      "metric": "asteroid_mining_missions_active",
+      "value": 0.0,
+      "domain": "COSMIC_RESOURCES_REVIEW",
+      "source": "metrics",
+      "category": "CIVILIZATION"
+    },
+    {
+      "metric": "active_satellites_est",
+      "value": 9000.0,
+      "domain": "SPACE_INFRASTRUCTURE_REVIEW",
+      "source": "metrics",
+      "category": "CIVILIZATION"
+    },
+    {
+      "metric": "annual_launches_est",
+      "value": 240.0,
+      "domain": "SPACE_INFRASTRUCTURE_REVIEW",
+      "source": "metrics",
+      "category": "CIVILIZATION"
+    },
+    {
+      "metric": "literacy_rate_youth_pct",
+      "value": 93.1,
+      "domain": "COGNITION_LEARNING_REVIEW",
+      "source": "metrics",
+      "category": "CIVILIZATION"
+    },
+    {
+      "metric": "primary_completion_rate",
+      "value": 88.0,
+      "domain": "COGNITION_LEARNING_REVIEW",
+      "source": "metrics",
+      "category": "CIVILIZATION"
+    },
+    {
+      "metric": "tertiary_enrollment_pct",
+      "value": 43.6,
+      "domain": "COGNITION_LEARNING_REVIEW",
+      "source": "metrics",
+      "category": "CIVILIZATION"
+    },
+    {
+      "metric": "internet_users_pct",
+      "value": 73.6,
+      "domain": "CULTURE_MEDIA_REVIEW",
+      "source": "metrics",
+      "category": "CIVILIZATION"
+    },
+    {
+      "metric": "mobile_subscriptions_per100",
+      "value": 111.5,
+      "domain": "CULTURE_MEDIA_REVIEW",
+      "source": "metrics",
+      "category": "CIVILIZATION"
+    },
+    {
+      "metric": "literacy_rate_adult_pct",
+      "value": 87.7,
+      "domain": "CULTURE_MEDIA_REVIEW",
+      "source": "metrics",
+      "category": "CIVILIZATION"
+    },
+    {
+      "metric": "life_expectancy",
+      "value": 73.5,
+      "domain": "HUMAN_WELL_BEING_REVIEW",
+      "source": "metrics",
+      "category": "CIVILIZATION"
+    },
+    {
+      "metric": "infant_mortality",
+      "value": 27.7,
+      "domain": "HUMAN_WELL_BEING_REVIEW",
+      "source": "metrics",
+      "category": "CIVILIZATION"
+    },
+    {
+      "metric": "health_expenditure_pct",
+      "value": 10.0,
+      "domain": "HUMAN_WELL_BEING_REVIEW",
+      "source": "metrics",
+      "category": "CIVILIZATION"
+    },
+    {
+      "metric": "homicide_rate_per_100k",
+      "value": 5.2,
+      "domain": "SOCIAL_RELATIONS_REVIEW",
+      "source": "metrics",
+      "category": "CIVILIZATION"
+    },
+    {
+      "metric": "forest_area_pct",
+      "value": 31.1,
+      "domain": "ECOSYSTEMS_BIODIVERSITY_REVIEW",
+      "source": "metrics",
+      "category": "CIVILIZATION"
+    },
+    {
+      "metric": "protected_terrestrial_area_pct",
+      "value": 16.5,
+      "domain": "ECOSYSTEMS_BIODIVERSITY_REVIEW",
+      "source": "metrics",
+      "category": "CIVILIZATION"
+    },
+    {
+      "metric": "renewable_energy_pct",
+      "value": 19.7,
+      "domain": "ENERGY_REVIEW",
+      "source": "metrics",
+      "category": "CIVILIZATION"
+    },
+    {
+      "metric": "fossil_fuel_consumption_pct",
+      "value": 74.8,
+      "domain": "ENERGY_REVIEW",
+      "source": "metrics",
+      "category": "CIVILIZATION"
+    },
+    {
+      "metric": "prevalence_undernourishment_pct",
+      "value": 8.5,
+      "domain": "FOOD_REVIEW",
+      "source": "metrics",
+      "category": "CIVILIZATION"
+    },
+    {
+      "metric": "food_production_index",
+      "value": 100.0,
+      "domain": "FOOD_REVIEW",
+      "source": "metrics",
+      "category": "CIVILIZATION"
+    },
+    {
+      "metric": "municipal_waste_per_capita_kg",
+      "value": 3.2,
+      "domain": "MATERIALS_WASTE_REVIEW",
+      "source": "metrics",
+      "category": "CIVILIZATION"
+    },
+    {
+      "metric": "recycling_rate_pct",
+      "value": 13.5,
+      "domain": "MATERIALS_WASTE_REVIEW",
+      "source": "metrics",
+      "category": "CIVILIZATION"
+    },
+    {
+      "metric": "material_consumption_per_gdp",
+      "value": 2.9,
+      "domain": "MATERIALS_WASTE_REVIEW",
+      "source": "metrics",
+      "category": "CIVILIZATION"
+    },
+    {
+      "metric": "access_safe_water_pct",
+      "value": 73.7,
+      "domain": "WATER_REVIEW",
+      "source": "metrics",
+      "category": "CIVILIZATION"
+    },
+    {
+      "metric": "access_sanitation_pct",
+      "value": 58.5,
+      "domain": "WATER_REVIEW",
+      "source": "metrics",
+      "category": "CIVILIZATION"
+    }
+  ]
+}

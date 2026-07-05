@@ -1,0 +1,182 @@
+{
+  "cycle_id": "2026-06-21T13:57:38.893810+00:00",
+  "count": 16,
+  "decisions": [
+    {
+      "component": "HUMAN",
+      "problem": "HUMAN axis needs progress",
+      "solution": "** Повишаване на доверие към здравните системи и засилване на общностната съпротива в борбата срещу ебола, като се гарантира безопасни социални взаимодействия в следващите 24‑72 часа.",
+      "measurable_goal": "** Повишаване на доверие към здравните системи и засилване на общностната съпрот",
+      "root_cause": "HyperClaw plan — plan-2026-06-21.md",
+      "priority": "MEDIUM",
+      "real_world_signal": true,
+      "generated_by": "HYPERCLAW",
+      "timestamp": "2026-06-21T13:51:30.927492+00:00"
+    },
+    {
+      "component": "HUMAN",
+      "problem": "Action required for HUMAN",
+      "solution": "Локализирано онлайн‑семинарно вълна – създаване и разпространение на три 1‑часови уебинара (на 10 00, 14 00 и 18 00 GMT) за 100 000+ общностни лидери в ДРК, с теми: “Как да разпознаваме симптоми”, “Как да комуникираме без паника”, “Как да подкрепим локалните здравни центрове”.",
+      "measurable_goal": "Локализирано онлайн‑семинарно вълна – създаване и разпространение на три 1‑часов",
+      "root_cause": "HyperClaw step — plan-2026-06-21.md",
+      "priority": "MEDIUM",
+      "real_world_signal": true,
+      "generated_by": "HYPERCLAW",
+      "timestamp": "2026-06-21T13:51:30.927522+00:00"
+    },
+    {
+      "component": "HUMAN",
+      "problem": "Action required for HUMAN",
+      "solution": "Срочно доставяне на комплект за защита – изпращане на 2 000 комплектa с лични защитни средства (маски, ръкавици, термометри) към по‑уязвимите области (Киву, Ита) чрез дронове, доставени от международна хуманитарна мисия.",
+      "measurable_goal": "Срочно доставяне на комплект за защита – изпращане на 2 000 комплектa с лични за",
+      "root_cause": "HyperClaw step — plan-2026-06-21.md",
+      "priority": "MEDIUM",
+      "real_world_signal": true,
+      "generated_by": "HYPERCLAW",
+      "timestamp": "2026-06-21T13:51:30.927535+00:00"
+    },
+    {
+      "component": "HUMAN",
+      "problem": "Action required for HUMAN",
+      "solution": "Двупосочна комуникационна линия – откриване на WhatsApp‑бот, интегриран със системата CORTEX++, който автоматично събира доклади за нови случаи и изпраща персонализирани съвети на гражданите.",
+      "measurable_goal": "Двупосочна комуникационна линия – откриване на WhatsApp‑бот, интегриран със сист",
+      "root_cause": "HyperClaw step — plan-2026-06-21.md",
+      "priority": "MEDIUM",
+      "real_world_signal": true,
+      "generated_by": "HYPERCLAW",
+      "timestamp": "2026-06-21T13:51:30.927545+00:00"
+    },
+    {
+      "component": "PLANET",
+      "problem": "PLANET axis needs progress",
+      "solution": "** Намаляване на емисиите от ключови индустрии в рамките на 48 ч и подобряване на наблюдението на климатични индикатори чрез мобилна инфраструктура.",
+      "measurable_goal": "** Намаляване на емисиите от ключови индустрии в рамките на 48 ч и подобряване н",
+      "root_cause": "HyperClaw plan — plan-2026-06-21.md",
+      "priority": "MEDIUM",
+      "real_world_signal": true,
+      "generated_by": "HYPERCLAW",
+      "timestamp": "2026-06-21T13:51:30.927574+00:00"
+    },
+    {
+      "component": "PLANET",
+      "problem": "Action required for PLANET",
+      "solution": "Екстрено препоръчително писмо до най‑големите пет емитиращи компании – изискване на 15 % незабавно намаляване на въглеродните емисии чрез спиране на по‑енергийно‑интензивни операции за следващите 24 ч. Писмото се подпомага от юридически екип на ООН за климатични промени.",
+      "measurable_goal": "Екстрено препоръчително писмо до най‑големите пет емитиращи компании – изискване",
+      "root_cause": "HyperClaw step — plan-2026-06-21.md",
+      "priority": "MEDIUM",
+      "real_world_signal": true,
+      "generated_by": "HYPERCLAW",
+      "timestamp": "2026-06-21T13:51:30.927586+00:00"
+    },
+    {
+      "component": "PLANET",
+      "problem": "Action required for PLANET",
+      "solution": "Инсталация на мобилни климатични станции – разполагане на 50 преносими сензори (NO₂, PM2.5, температура) в мегаполисите на Индия, Китай и Бразилия за осигуряване на данни в реално време към глобалната платформа ClimateWatch.",
+      "measurable_goal": "Инсталация на мобилни климатични станции – разполагане на 50 преносими сензори (",
+      "root_cause": "HyperClaw step — plan-2026-06-21.md",
+      "priority": "MEDIUM",
+      "real_world_signal": true,
+      "generated_by": "HYPERCLAW",
+      "timestamp": "2026-06-21T13:51:30.927595+00:00"
+    },
+    {
+      "component": "CIVILIZATION",
+      "problem": "CIVILIZATION axis needs progress",
+      "solution": "** Подобряване на прозрачността и отговорността в управлението и намаляване на неравенството чрез бързи политически действия.",
+      "measurable_goal": "** Подобряване на прозрачността и отговорността в управлението и намаляване на н",
+      "root_cause": "HyperClaw plan — plan-2026-06-21.md",
+      "priority": "MEDIUM",
+      "real_world_signal": true,
+      "generated_by": "HYPERCLAW",
+      "timestamp": "2026-06-21T13:51:30.927618+00:00"
+    },
+    {
+      "component": "CIVILIZATION",
+      "problem": "Action required for CIVILIZATION",
+      "solution": "Отваряне на публична платформа за следене на бюджетни разходи – внедряване на “OpenBudget‑2026” в рамките на 12 ч, което позволява на гражданите да проследяват разходите за здравеопазване, енергетика и образование.",
+      "measurable_goal": "Отваряне на публична платформа за следене на бюджетни разходи – внедряване на “O",
+      "root_cause": "HyperClaw step — plan-2026-06-21.md",
+      "priority": "MEDIUM",
+      "real_world_signal": true,
+      "generated_by": "HYPERCLAW",
+      "timestamp": "2026-06-21T13:51:30.927628+00:00"
+    },
+    {
+      "component": "CIVILIZATION",
+      "problem": "Action required for CIVILIZATION",
+      "solution": "Скалиране на микрофинансови грантове – отпускане на 1 млн USD чрез партньорска програма с международни банки за подкрепа на 5 000 малки фермерски предприятия в региони с висока бедност (Субсахарска Африка, Южна Азия).",
+      "measurable_goal": "Скалиране на микрофинансови грантове – отпускане на 1 млн USD чрез партньорска п",
+      "root_cause": "HyperClaw step — plan-2026-06-21.md",
+      "priority": "MEDIUM",
+      "real_world_signal": true,
+      "generated_by": "HYPERCLAW",
+      "timestamp": "2026-06-21T13:51:30.927637+00:00"
+    },
+    {
+      "component": "COSMOS",
+      "problem": "COSMOS axis needs progress",
+      "solution": "** Намаляване на екзистенциалния риск от астероиден удар и подготовка за дългосрочна космическа устойчивост.",
+      "measurable_goal": "** Намаляване на екзистенциалния риск от астероиден удар и подготовка за дългоср",
+      "root_cause": "HyperClaw plan — plan-2026-06-21.md",
+      "priority": "MEDIUM",
+      "real_world_signal": true,
+      "generated_by": "HYPERCLAW",
+      "timestamp": "2026-06-21T13:51:30.927657+00:00"
+    },
+    {
+      "component": "COSMOS",
+      "problem": "Action required for COSMOS",
+      "solution": "Организиране на видеоконферентна сесия с експерти от NASA, ESA и JAXA – 2‑часово обсъждане в 16:00 GMT за актуален статус на дефлекционните мисии и определяне на следващи стъпки за 48‑часовото прототипиране на лазерна отмяна.",
+      "measurable_goal": "Организиране на видеоконферентна сесия с експерти от NASA, ESA и JAXA – 2‑часово",
+      "root_cause": "HyperClaw step — plan-2026-06-21.md",
+      "priority": "MEDIUM",
+      "real_world_signal": true,
+      "generated_by": "HYPERCLAW",
+      "timestamp": "2026-06-21T13:51:30.927667+00:00"
+    },
+    {
+      "component": "COSMOS",
+      "problem": "Action required for COSMOS",
+      "solution": "Актуализиране на „Cosmic Risk Dashboard“ – вмъкване на последните данни от телескопите LSST и NEOWISE, като се зададе нов праг за автоматично сигнализиране при обекти > 140 м над 0,05 AU.",
+      "measurable_goal": "Актуализиране на „Cosmic Risk Dashboard“ – вмъкване на последните данни от телес",
+      "root_cause": "HyperClaw step — plan-2026-06-21.md",
+      "priority": "MEDIUM",
+      "real_world_signal": true,
+      "generated_by": "HYPERCLAW",
+      "timestamp": "2026-06-21T13:51:30.927675+00:00"
+    },
+    {
+      "component": "unknown",
+      "problem": "Align system goals with mission",
+      "solution": "Review and update civilization_goal.txt",
+      "measurable_goal": "Review and update civilization_goal.txt",
+      "root_cause": "OpenClaw scan → civilization_goal.txt",
+      "priority": "HIGH",
+      "real_world_signal": true,
+      "generated_by": "OPENCLAW",
+      "timestamp": "2026-06-21T12:59:43.091574+00:00"
+    },
+    {
+      "component": "unknown",
+      "problem": "Address water scarcity gap",
+      "solution": "Implement water conservation strategies",
+      "measurable_goal": "Implement water conservation strategies",
+      "root_cause": "OpenClaw scan → agents/planet/planetary_potential_review_agent_qwen.py",
+      "priority": "HIGH",
+      "real_world_signal": true,
+      "generated_by": "OPENCLAW",
+      "timestamp": "2026-06-21T12:59:43.091589+00:00"
+    },
+    {
+      "component": "unknown",
+      "problem": "Water scarcity management",
+      "solution": "Develop and integrate agents for sustainable water resource management",
+      "measurable_goal": "Water scarcity management",
+      "root_cause": "Critical gap — OpenClaw full-scan",
+      "priority": "HIGH",
+      "real_world_signal": true,
+      "generated_by": "OPENCLAW",
+      "timestamp": "2026-06-21T12:59:43.091595+00:00"
+    }
+  ]
+}

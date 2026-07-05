@@ -1,0 +1,157 @@
+{
+  "axis": "ECONOMY_WORK_REVIEW",
+  "domain": "civilization",
+  "timestamp": "2026-06-21T19:45:34.432301+00:00",
+  "sources_count": 11,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] 2025 now weakest job growth year since pandemic",
+      "summary": "All right, breaking just a few minutes ago, brand \nnew data on jobs. The economy added just 50,000   jobs in December. You can see that right there. \nAnd jobs growth was revised lower in both October   and November. You can see what a bad month October \nwas right there. 2025 now the weakest year of jobs   growth since the pandemic. Now, on the other \nhand, the unemployment rate dipped to 4.4%.   4% in December. A lot more on this coming up. \nThese jobs numbers painting an interesting   picture of the economy. People digging into it \nright now. The final jobs report for 2025 shows   the economy added just 50,000 jobs in December. \nCNN senior reporter Matt Egan joining us now.   Is this what folks were expecting here? Because \nthis is a lot lower than what we have been seeing   uh I think ev",
+      "link": "https://www.youtube.com/watch?v=u-WIdZMgpIY",
+      "published": "2026-01-09T16:35:55Z",
+      "source_type": "youtube",
+      "channel": "CNN",
+      "video_id": "u-WIdZMgpIY",
+      "transcript_method": "youtube_transcript_api",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Goldman&#39;s Hatzius and Snider on the Outlook for 2026 | Odd Lots",
+      "summary": "One consistent pattern at the top\nof almost every equity bull market in the past has been tightening\nfed policy instead of easing policy that we have today. And then, of course, this is a very small\nand maybe silly example. But a couple of years ago, I remember when\nthe GLP one drugs were being rolled out, there was a very brief window\nwhere investors were talking about buying the airline stocks on the basis\nthat fuel costs would be lower. Right. Yeah. When this narrative, this type of narrative starts\nto emerge in my conversations, that's the kind of time\nwhere I think you will be seeing prices run ahead of earnings, which, as I\nmentioned, is really not been the case. I'll be a lot more nervous\nthat that's interesting. So when you just start to see investors start to justify things on var",
+      "link": "https://www.youtube.com/watch?v=7WrpqjcMCWI",
+      "published": "2025-12-29T09:00:18Z",
+      "source_type": "youtube",
+      "channel": "Bloomberg Podcasts",
+      "video_id": "7WrpqjcMCWI",
+      "transcript_method": "youtube_transcript_api",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Stagflation",
+      "summary": "Stagflation is a word that, for one reason or another, is going to get thrown around a lot more over the coming months. But, all it means is simply increasing unemployment and slow economic growth at the same time as there is persistently high inflation. None of these outcomes are ideal, even individually, but when they all happen together, they become one of the worst economic scenarios imaginable. Something that can, and has in the past, genuinely lead to years of economic struggle or even the outright collapse of entire economic systems. The heart of what makes this so bad is that the treatment of these problems only makes the others worse, in theory anyway. Low interest rates and lots of money printing can pump up market activity and, at least on paper, make growth look good for a litt",
+      "link": "https://www.youtube.com/watch?v=x-Q47erm5MI",
+      "published": "2025-09-28T15:01:38Z",
+      "source_type": "youtube",
+      "channel": "Economics Explained",
+      "video_id": "x-Q47erm5MI",
+      "transcript_method": "youtube_transcript_api",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "Persistently low job creation and weak labor market growth across major economies",
+    "root_cause": "Constrained macroeconomic environment caused by tightening monetary policy, high inflation, and fiscal strain that limits investment and hiring incentives",
+    "severity": "HIGH",
+    "leverage_points": [
+      "Government fiscal policy (public investment, borrowing capacity)",
+      "Central bank monetary policy (interest rates, credit availability)"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Launch a coordinated public‑investment program for green and digital infrastructure that includes training subsidies for workers",
+        "measurable_goal": "Create at least 250,000 net new jobs within 24 months and achieve a 1.5% increase in quarterly employment growth rates",
+        "timeframe": "medium-term"
+      },
+      {
+        "action": "Adjust monetary policy to temporarily lower policy rates and provide targeted credit facilities for small‑and‑medium enterprises",
+        "measurable_goal": "Reduce the monthly unemployment rate by 0.3 percentage points within 12 months and increase private sector hiring by 100,000 positions",
+        "timeframe": "short-term"
+      }
+    ],
+    "evidence": [
+      "Economy added just 50,000 jobs in December 2025, the weakest year of job growth since the pandemic (YouTube transcript)",
+      "UK borrowed £23.3 bn in May, up almost a third on the same month last year, indicating fragile public finances (RSS/WEB)"
+    ],
+    "generalization": "Weak labor market growth reduces household incomes, hampers consumer demand, and limits funding for sustainable projects, thereby affecting planetary resource use, social equity, and long‑term civilizational resilience",
+    "summary": "Low job creation driven by tight monetary and fiscal conditions threatens economic stability and undermines sustainability goals.",
+    "risk_level": "HIGH"
+  },
+  "raw_items": [
+    {
+      "title": "Plans to end gazumping with binding agreements in house sales shake-up",
+      "summary": "Sales agreements will be legally binding sooner and making sellers provide more home information up front are part of the planned changes.",
+      "link": "https://www.bbc.com/news/articles/c6216g52p8wo?at_medium=RSS&at_campaign=rss",
+      "published": "Fri, 19 Jun 2026 11:41:14 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "O'Leary extends Ryanair contract in deal that could net him over £130m",
+      "summary": "The Ryanair boss extends his contract to 2032, in a deal featuring a bonus scheme that could earn him more than €150m (£130m).",
+      "link": "https://www.bbc.com/news/articles/c4gyejpy221o?at_medium=RSS&at_campaign=rss",
+      "published": "Fri, 19 Jun 2026 15:27:27 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Warning over 'fragile' public finances as borrowing rises",
+      "summary": "The UK borrowed £23.3bn in May, according to official figures, up almost a third on the same month last year.",
+      "link": "https://www.bbc.com/news/articles/cqx1e8nrwgvo?at_medium=RSS&at_campaign=rss",
+      "published": "Fri, 19 Jun 2026 08:37:31 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "'I'd be put off if he asked to split it': Who should pay on a first date?",
+      "summary": "Some insist on splitting the bill, others say the asker should pay, while many still see a man paying as romantic.",
+      "link": "https://www.bbc.com/news/articles/c74yl4gknzno?at_medium=RSS&at_campaign=rss",
+      "published": "Fri, 19 Jun 2026 06:52:40 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "‘Toy Story 5’ Fuels Hollywood’s Hottest Summer Since 2019",
+      "summary": "The Disney-Pixar sequel was expected to make $160 million in North America over the weekend, lifting the summer box office to $1.85 billion to date.",
+      "link": "https://www.nytimes.com/2026/06/21/business/media/toy-story-5-box-office-hollywood-summer.html",
+      "published": "Sun, 21 Jun 2026 17:17:10 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "While the World Scrambles for Oil, China Sits on Full Tanks",
+      "summary": "The possible reopening of the Strait of Hormuz may not prompt China to return quickly to prewar levels of oil purchases from the Persian Gulf.",
+      "link": "https://www.nytimes.com/2026/06/21/business/china-oil-iran.html",
+      "published": "Sun, 21 Jun 2026 09:01:52 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "When a Job Goes From Dreamy to Dreary",
+      "summary": "Plus, should I follow through on complaints about one workplace after I’ve moved on to another?",
+      "link": "https://www.nytimes.com/2026/06/21/business/when-a-job-goes-from-dreamy-to-dreary.html",
+      "published": "Sun, 21 Jun 2026 09:01:44 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Is Your Vibe ‘High-Signal’ or ‘Anti-Signal’?",
+      "summary": "Subtle cues are shaping notions of what’s hot and what’s not in the tech world.",
+      "link": "https://www.nytimes.com/2026/06/21/business/signal-tech-silicon-valley.html",
+      "published": "Sun, 21 Jun 2026 11:00:22 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] 2025 now weakest job growth year since pandemic",
+      "summary": "All right, breaking just a few minutes ago, brand \nnew data on jobs. The economy added just 50,000   jobs in December. You can see that right there. \nAnd jobs growth was revised lower in both October   and November. You can see what a bad month October \nwas right there. 2025 now the weakest year of jobs   growth since the pandemic. Now, on the other \nhand, the unemployment rate dipped to 4.4%.   4% in December. A lot more on this coming up. \nThese jobs numbers painting an interesting   picture of the economy. People digging into it \nright now. The final jobs report for 2025 shows   the economy added just 50,000 jobs in December. \nCNN senior reporter Matt Egan joining us now.   Is this what folks were expecting here? Because \nthis is a lot lower than what we have been seeing   uh I think ev",
+      "link": "https://www.youtube.com/watch?v=u-WIdZMgpIY",
+      "published": "2026-01-09T16:35:55Z",
+      "source_type": "youtube",
+      "channel": "CNN",
+      "video_id": "u-WIdZMgpIY",
+      "transcript_method": "youtube_transcript_api",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Goldman&#39;s Hatzius and Snider on the Outlook for 2026 | Odd Lots",
+      "summary": "One consistent pattern at the top\nof almost every equity bull market in the past has been tightening\nfed policy instead of easing policy that we have today. And then, of course, this is a very small\nand maybe silly example. But a couple of years ago, I remember when\nthe GLP one drugs were being rolled out, there was a very brief window\nwhere investors were talking about buying the airline stocks on the basis\nthat fuel costs would be lower. Right. Yeah. When this narrative, this type of narrative starts\nto emerge in my conversations, that's the kind of time\nwhere I think you will be seeing prices run ahead of earnings, which, as I\nmentioned, is really not been the case. I'll be a lot more nervous\nthat that's interesting. So when you just start to see investors start to justify things on var",
+      "link": "https://www.youtube.com/watch?v=7WrpqjcMCWI",
+      "published": "2025-12-29T09:00:18Z",
+      "source_type": "youtube",
+      "channel": "Bloomberg Podcasts",
+      "video_id": "7WrpqjcMCWI",
+      "transcript_method": "youtube_transcript_api",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ]
+}

@@ -1,0 +1,142 @@
+{
+  "axis": "ENERGY_REVIEW",
+  "domain": "planet",
+  "timestamp": "2026-06-21T19:44:33.649854+00:00",
+  "sources_count": 15,
+  "rss_count": 12,
+  "ddg_count": 0,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] How a Solar Farm is Constructed From Beginning to End",
+      "summary": "In this video, we're going to \nshow you how a solar farm is \nconstructed from beginning to \nend. We've been invited to the \nElmbrook solar farm site in \nSchodack, NY by Eden Renewables. This 36 acre site will produce \nabout 11,000 megawatt hours per \nyear of electricity enough to power about 1,200 \naverage homes. That's a lot of clean energy \nfrom a small pice of land! Here, we are at phase one of the\nconstruction process. It begins with trucks making \nroads and pathways to have \naccess and for developing the land into\na solar farm. You've got all this earth moving\nequipment that's moving soil \naround and as soon as soil is disturbed, it\nbecomes sensitive to erosion, so\nto try to mitigate that, the first step is to put erosion\nand sediment control measures \nin, so at your construction entr",
+      "link": "https://www.youtube.com/watch?v=sM7ge9ahsGY",
+      "published": "2023-04-02T20:59:50Z",
+      "source_type": "youtube",
+      "channel": "EltonDP",
+      "video_id": "sM7ge9ahsGY",
+      "transcript_method": "youtube_transcript_api",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] How do solar plants work? | solar plant explained | on grid solar power system",
+      "summary": "  I don't know whether you believe it or not but the world's largest solar Park is this image shows the area before the solar Park and this one shows it after the solar park installation just imagine this small area covers nearly 14,000 acres  and can generate over 2.2 gaw of solar power the fact that this capacity could potentially fulfill the energy   requirements of a major city like Mumbai friends hope you are very excited I also excited  in this video, we will try to understand what a solar Park is exactly and how it generates power  in simple terms, a solar Park is an area \nof land where many solar panels are installed   a single solar panel can produce a small amount of electricity but when solar panels are connected in series  they form what is called a solar array and it produces ",
+      "link": "https://www.youtube.com/watch?v=FQXkMt0Zm1A",
+      "published": "2024-04-14T08:15:12Z",
+      "source_type": "youtube",
+      "channel": "Let's Grow Up",
+      "video_id": "FQXkMt0Zm1A",
+      "transcript_method": "youtube_transcript_api",
+      "transcript_chars": 2952,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] How do solar panels work? - Richard Komp",
+      "summary": "The Earth intercepts a lot of solar power: 173 thousand terawatts. That's ten thousand times more power\nthan the planet's population uses. So is it possible that one day the world could be completely \nreliant on solar energy? To answer that question, we first need to examine how solar panels\nconvert solar energy to electrical energy. Solar panels are made up of smaller units\ncalled solar cells. The most common solar cells\nare made from silicon, a semiconductor that is the second\nmost abundant element on Earth. In a solar cell, crystalline silicon is sandwiched\nbetween conductive layers. Each silicon atom is connected\nto its neighbors by four strong bonds, which keep the electrons in place\nso no current can flow. Here's the key: a silicon solar cell uses\ntwo different layers of silicon. An ",
+      "link": "https://www.youtube.com/watch?v=xKxrkht7CpY",
+      "published": "2016-01-05T16:35:38Z",
+      "source_type": "youtube",
+      "channel": "TED-Ed",
+      "video_id": "xKxrkht7CpY",
+      "transcript_method": "youtube_transcript_api",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "The Trump administration's decision to buy back offshore wind leases and redirect funds to fossil fuel projects may hinder the development of renewable energy sources",
+    "root_cause": "Short-sighted energy policy prioritizing fossil fuels over renewable energy sources",
+    "severity": "MEDIUM",
+    "leverage_points": [
+      "US Government energy policy decision-makers",
+      "Investors in renewable energy projects"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Implement policies to incentivize investment in offshore wind and other renewable energy sources",
+        "measurable_goal": "Increase the number of offshore wind projects in development by 20% within the next 2 years",
+        "timeframe": "medium-term"
+      }
+    ],
+    "evidence": [
+      "The Trump administration is buying back Invenergy's four offshore wind leases for $765 million, redirecting funds to fossil fuel projects",
+      "The world's largest solar park can generate over 2.2 GW of solar power, enough to fulfill the energy requirements of a major city like Mumbai"
+    ],
+    "generalization": "This problem connects to the Civilization domain, as the development of renewable energy sources is crucial for reducing greenhouse gas emissions and mitigating climate change, which in turn affects human health, economic stability, and social equality",
+    "summary": "The Trump administration's decision to redirect funds from offshore wind leases to fossil fuel projects may hinder the development of renewable energy sources, and policies should be implemented to incentivize investment in these projects. This problem has implications for the Civilization domain, as renewable energy is crucial for mitigating climate change and ensuring sustainable development",
+    "risk_level": "MEDIUM"
+  },
+  "raw_items": [
+    {
+      "title": "European Union Going To Put Tariffs On Plugin Hybrids From China Now?",
+      "summary": "<p>China has rapidly electrified its auto market, which is by far the largest auto market in the world. The country accounts for about half of the world&#8217;s electric vehicle sales, and 63% of the country&#8217;s auto sales were plugin vehicles last month. As the market has ramped up and gotten   ... [continued]</p>\n<p>The post <a href=\"https://cleantechnica.com/2026/06/21/european-union-going-to-put-tariffs-on-plugin-hybrids-from-china-now/\">European Union Going To Put Tariffs On Plugin Hybr",
+      "link": "https://cleantechnica.com/2026/06/21/european-union-going-to-put-tariffs-on-plugin-hybrids-from-china-now/",
+      "published": "Sun, 21 Jun 2026 18:07:49 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Termination Shock — The Existential Danger Of Geoengineering",
+      "summary": "<p>Four leading climate scientists are warning that geoengineering is a fool's game with potentially catastrophic consequences. </p>\n<p>The post <a href=\"https://cleantechnica.com/2026/06/21/termination-shock-the-existential-danger-of-geoengineering/\">Termination Shock &#8212; The Existential Danger Of Geoengineering</a> appeared first on <a href=\"https://cleantechnica.com\">CleanTechnica</a>.</p>",
+      "link": "https://cleantechnica.com/2026/06/21/termination-shock-the-existential-danger-of-geoengineering/",
+      "published": "Sun, 21 Jun 2026 16:01:40 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "US President Donald Trump Makes Surprise Move Into Algae Biofuel",
+      "summary": "<p>The Reflecting Pool in Washington, DC has emerged as a high profile showcase for the US algae biofuel industry, demonstrating the rapid growth cycle of a sustainable, oil-rich domestic energy resource.</p>\n<p>The post <a href=\"https://cleantechnica.com/2026/06/21/algae-biofuel-reflecting-pool-trump-showcase-experiment/\">US President Donald Trump Makes Surprise Move Into Algae Biofuel</a> appeared first on <a href=\"https://cleantechnica.com\">CleanTechnica</a>.</p>",
+      "link": "https://cleantechnica.com/2026/06/21/algae-biofuel-reflecting-pool-trump-showcase-experiment/",
+      "published": "Sun, 21 Jun 2026 12:43:15 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "BYD Battery Production Ramps Up In Brazil",
+      "summary": "<p>As we&#8217;ve been writing, BYD is focusing more and more on sales outside of China for its core EV business and a hopeful return to EV sales growth. The company&#8217;s vehicle exports have grown 65% this year so far, for example, and grew by 80% in May. BYD also now   ... [continued]</p>\n<p>The post <a href=\"https://cleantechnica.com/2026/06/20/byd-battery-production-ramps-up-in-brazil/\">BYD Battery Production Ramps Up In Brazil</a> appeared first on <a href=\"https://cleantechnica.com\">Cle",
+      "link": "https://cleantechnica.com/2026/06/20/byd-battery-production-ramps-up-in-brazil/",
+      "published": "Sun, 21 Jun 2026 03:57:47 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "New UBBA members showcase why communication networks are foundational to grid modernization efforts",
+      "summary": "The Utility Broadband Alliance expanded its membership with organizations like Eversource Energy and Hawaiian Electric to enhance grid communication infrastructure.",
+      "link": "https://www.renewableenergyworld.com/power-grid/grid-modernization/new-ubba-members-communication-networks-grid-modernization-efforts/",
+      "published": "Fri, 19 Jun 2026 14:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "What does global energy trade look like after US-Iran deal? – This Week in Cleantech",
+      "summary": "On this episode of the This Week in Cleantech podcast, Tim McDonnell from Semafor discusses the potential future of the Strait of Hormuz and energy markets if the US-Iran de-escalation deal holds.",
+      "link": "https://www.renewableenergyworld.com/energy-business/policy-and-regulation/what-does-global-energy-trade-look-like-after-us-iran-deal-this-week-in-cleantech/",
+      "published": "Fri, 19 Jun 2026 10:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Trump administration to buy back another energy company’s offshore wind leases for 4 more projects",
+      "summary": "The Trump administration is buying back Invenergy's four offshore wind leases for $765 million, redirecting funds to fossil fuel projects.",
+      "link": "https://www.renewableenergyworld.com/wind-power/offshore/trump-administration-to-buy-back-another-energy-companys-offshore-wind-leases-for-4-more-projects/",
+      "published": "Thu, 18 Jun 2026 19:10:40 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "FERC takes historic action, orders US grid operators to ‘defend or revise’ large load interconnection tariffs",
+      "summary": "FERC has issued tailored show-cause orders under section 206 of the Federal Power Act to each of the six regional grid operators within its jurisdiction, directing them to either justify or reform the rules governing how large energy users like data centers connect to the electric grid.",
+      "link": "https://www.renewableenergyworld.com/energy-business/policy-and-regulation/ferc-takes-historic-action-orders-us-grid-operators-to-defend-or-revise-large-load-interconnection-tariffs/",
+      "published": "Thu, 18 Jun 2026 17:46:28 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Whatever Happened to the Small Modular Reactor Revolution?",
+      "summary": "In the early 2020s, there was great enthusiasm around the development of the small modular reactor (SMR), which was expected to support a nuclear renaissance. However, after supply chain disruptions, technical difficulties, and other challenges, it is unclear whether SMR development is progressing as expected. Nevertheless, some companies continue to invest heavily in the technology, hoping it will help drive innovation and expansion in the nuclear power sector. SMRs are advanced nuclear reactor",
+      "link": "https://oilprice.com/Alternative-Energy/Nuclear-Power/Whatever-Happened-to-the-Small-Modular-Reactor-Revolution.html",
+      "published": "Sun, 21 Jun 2026 14:00:00 -0500",
+      "source_type": "rss"
+    },
+    {
+      "title": "Equinor Expands Giant Troll Field as Europe Hunts for More Gas",
+      "summary": "Equinor and its partners are investing more than NOK 4 billion ($390 million) to expand the Troll field, a giant North Sea asset that supplies around 10% of Europe's natural gas and contains 40% of Norway's remaining gas reserves. The project is expected to unlock around 11 billion cubic meters of natural gas, equivalent to roughly 69 million barrels of oil equivalent (boe), further strengthening one of Europe's most important sources of energy. Known as TWIN (Troll West Increased Gas Recovery N",
+      "link": "https://oilprice.com/Energy/Crude-Oil/Equinor-Expands-Giant-Troll-Field-as-Europe-Hunts-for-More-Gas.html",
+      "published": "Sun, 21 Jun 2026 12:00:00 -0500",
+      "source_type": "rss"
+    }
+  ]
+}

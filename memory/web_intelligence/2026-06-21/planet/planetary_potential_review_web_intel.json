@@ -1,0 +1,73 @@
+{
+  "axis": "PLANETARY_POTENTIAL_REVIEW",
+  "domain": "planet",
+  "timestamp": "2026-06-21T19:51:12.601597+00:00",
+  "sources_count": 4,
+  "rss_count": 4,
+  "ddg_count": 0,
+  "youtube_count": 0,
+  "youtube_items": [],
+  "analysis": {
+    "problem": "Arizona's San Carlos Reservoir fell to less than 1% capacity after an extreme snowpack collapse, causing a massive fish kill and indefinite closure of the reservoir.",
+    "root_cause": "Severe reduction in winter snowpack caused by regional climate warming, leading to insufficient runoff to refill the reservoir and a cascade of ecological stressors.",
+    "severity": "HIGH",
+    "leverage_points": [
+      "Regional water management agencies that control reservoir releases and allocation",
+      "Climate mitigation policies that address temperature and precipitation trends"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Implement integrated watershed management to capture and store meltwater (e.g., upstream retention basins, snow fences, and artificial recharge).",
+        "measurable_goal": "Increase reservoir storage to at least 30% of capacity during the subsequent dry season.",
+        "timeframe": "medium-term"
+      },
+      {
+        "action": "Adopt adaptive water allocation policies that prioritize ecological flows for fish survival during low‑water years.",
+        "measurable_goal": "Maintain minimum downstream ecological flow of 10 cubic meters per second throughout the next two years.",
+        "timeframe": "short-term"
+      },
+      {
+        "action": "Accelerate regional greenhouse‑gas reduction projects to curb temperature rise and preserve future snowpack levels.",
+        "measurable_goal": "Achieve a 15% reduction in projected regional temperature increase by 2030 relative to the baseline scenario.",
+        "timeframe": "long-term"
+      }
+    ],
+    "evidence": [
+      "Arizona reservoir nearly vanishes after snowpack collapse triggers massive fish kill: reservoir less than 1% full.",
+      "Research shows lakes across North America and Europe turning brown, indicating broader water‑quality stress linked to climate impacts."
+    ],
+    "generalization": "Water scarcity and ecosystem degradation in one basin reflect systemic planetary risks: reduced freshwater availability for humans, loss of biodiversity, and amplified climate vulnerability across the Planet and Civilization domains.",
+    "summary": "A near‑dry reservoir in Arizona, driven by collapsing snowpack, illustrates acute water‑resource failure and ecosystem collapse, demanding immediate watershed and climate actions.",
+    "risk_level": "HIGH"
+  },
+  "raw_items": [
+    {
+      "title": "As lakes turn brown, trout and bass decline while pike and walleye thrive",
+      "summary": "Freshwater lakes across North America and Europe are becoming noticeably browner, reducing underwater visibility and reshaping fish populations. Research found that several popular sport fish, including trout, bass, perch, and whitefish, tend to decline in darker waters. Meanwhile, walleye and northern pike often become more abundant because they are better adapted to low-visibility conditions. The shift could change both lake ecosystems and the fishing experience for millions of anglers.",
+      "link": "https://www.sciencedaily.com/releases/2026/06/260621060322.htm",
+      "published": "Sun, 21 Jun 2026 09:40:21 EDT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Hidden geological process offsets carbon emissions from thawing permafrost",
+      "summary": "Scientists found that thawing permafrost can trigger increased rock weathering, a natural process that absorbs CO2 from the atmosphere. In some regions, this carbon uptake was strong enough to fully offset — or even surpass — river greenhouse gas emissions.",
+      "link": "https://www.sciencedaily.com/releases/2026/06/260619101343.htm",
+      "published": "Sat, 20 Jun 2026 05:07:09 EDT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Major errors found in Al Gore-founded Climate TRACE database",
+      "summary": "A new study from Northern Arizona University is raising red flags about a widely used global emissions database from Climate TRACE, a consortium co-founded by Al Gore. Researchers found that the database may be dramatically undercounting carbon dioxide emissions from cars and trucks in cities—by an average of 70% across 260 U.S. cities, with some cities showing gaps of more than 90%.",
+      "link": "https://www.sciencedaily.com/releases/2026/06/260618041519.htm",
+      "published": "Thu, 18 Jun 2026 04:15:19 EDT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Arizona reservoir nearly vanishes after snowpack collapse triggers massive fish kill",
+      "summary": "A historic lack of snow in the Gila River watershed has left Arizona’s San Carlos Reservoir less than 1% full, triggering a massive fish kill and an indefinite closure. Despite the bleak conditions, heavy summer rains could help the reservoir rebound.",
+      "link": "https://www.sciencedaily.com/releases/2026/06/260618041458.htm",
+      "published": "Thu, 18 Jun 2026 09:53:38 EDT",
+      "source_type": "rss"
+    }
+  ]
+}

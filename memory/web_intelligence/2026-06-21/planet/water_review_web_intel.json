@@ -1,0 +1,137 @@
+{
+  "axis": "WATER_REVIEW",
+  "domain": "planet",
+  "timestamp": "2026-06-21T19:44:35.564096+00:00",
+  "sources_count": 7,
+  "rss_count": 4,
+  "ddg_count": 0,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] Our Planet | Fresh Water | FULL EPISODE | Netflix",
+      "summary": "EINE NETFLIX ORIGINAL DOKUREIHE Vor erst 50 Jahren brachen wir endlich zum Mond auf. Zum ersten Mal blickten wir auf unseren eigenen Planeten. Seitdem hat sich\ndie Bevölkerungszahl mehr als verdoppelt. Diese Reihe feiert die Naturwunder,\ndie verblieben sind, und zeigt, was wir bewahren müssen, um das Gedeihen\nvon Mensch und Natur zu gewährleisten. Süßwasser. Jedes Lebewesen an Land,\nob Tier oder Pflanze, ist darauf angewiesen. Doch nur ein Prozent davon ist zugänglich. SÜSSWASSER Die Wüste Zentralaustraliens. Einer der heißesten,\ntrockensten Orte der Erde. Praktisch nichts\nkann hier länger überleben. Doch einmal alle zehn Jahre\nverwandelt sich die riesige, leere Wüste. Damit das geschieht,\nmuss eine Kettenreaktion ausgelöst werden, und zwar 2000 Kilometer weiter nördlich. Dort bauen sich l",
+      "link": "https://www.youtube.com/watch?v=R2DU85qLfJQ",
+      "published": "2020-04-17T13:00:00Z",
+      "source_type": "youtube",
+      "channel": "Netflix",
+      "video_id": "R2DU85qLfJQ",
+      "transcript_method": "youtube_transcript_api",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Explained | World&#39;s Water Crisis | FULL EPISODE | Netflix",
+      "summary": "Dreht man einen Wasserhahn auf, läuft zu jeder Zeit unbegrenzt\nsauberes Wasser heraus. Man vergisst leicht, dass das Streben danach eine\nder prägenden Mühen der Geschichte war. Zivilisationen, die Wasser\nnutzbar machten, gediehen. Die, die scheiterten... gingen unter. Heute können sich sieben von zehn Menschen\nzu Hause auf fließend Wasser verlassen. Das Wasser fließt von Steigleitungen zu Serviceanschlüssen\nund erreicht alle Gebäude in der Straße. Zumindest denkt man das. Kapstadt könnte die erste Großstadt\nweltweit sein, der das Wasser ausgeht. Kapstadt, Südafrika,\nbewegt sich auf Tag Null zu. In nur 92 Tagen\nmüssen sie aufgrund der Dürre die meisten Leitungen abdrehen. Kapstadt ist die erste Großstadt\nder Welt, die plant, die Wasserversorgung\nauf unbestimmte Zeit abzudrehen. Vier Million",
+      "link": "https://www.youtube.com/watch?v=C65iqOSCZOY",
+      "published": "2020-04-17T13:00:00Z",
+      "source_type": "youtube",
+      "channel": "Netflix",
+      "video_id": "C65iqOSCZOY",
+      "transcript_method": "youtube_transcript_api",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Water scarcity - Innovation to combat drought | DW Documentary",
+      "summary": "Climate change is making\nit clear what a precious treasure we have – in water. We simply want to use the\ngroundwater we have — good, safe water — as efficiently as we can, Yet too much water\ncan become a threat, too. We face a great two-part challenge:\nmanaging weather extremes while protecting our\nplanet’s vital water resources. Construction on Hamburg's sewer\nsystem began over 180 years ago. The old masonry\nis still in place. Public works supervisor Dirk\nGrünert inspects it regularly. Here, look — that's pretty deep… three centimeters. Pretty significant. These walls are easily repaired. What's of greater concern for the\nman responsible for their maintenance — increasingly extreme weather. No sewer system was designed\nfor that — not even newly built ones. During a downpour, we\nwouldn't b",
+      "link": "https://www.youtube.com/watch?v=5zyxsOMw634",
+      "published": "2025-11-16T17:00:18Z",
+      "source_type": "youtube",
+      "channel": "DW Documentary",
+      "video_id": "5zyxsOMw634",
+      "transcript_method": "youtube_transcript_api",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "Water pollution and scarcity due to human activities such as ethanol production and wildfires",
+    "root_cause": "Human activities and climate change leading to inefficient water management and pollution",
+    "severity": "MEDIUM",
+    "leverage_points": [
+      "Government policies and regulations on water usage and pollution",
+      "Individual and community actions to reduce water waste and conserve water"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Implement efficient water management systems and promote water conservation practices",
+        "measurable_goal": "Reduce water waste by 20% and decrease water pollution by 15% within the next 2 years",
+        "timeframe": "medium-term"
+      }
+    ],
+    "evidence": [
+      "U.S. Homes Show Three-Decade Decline in Indoor Water Use",
+      "When Forests Burn, Lakes Suffer",
+      "Ethanol Was Marketed to Help Agriculture. But It Fouled Our Water and Injured Our Health."
+    ],
+    "generalization": "This problem connects to the domains of Planet, Human, and Civilization, as it affects not only the environment but also human health and the economy",
+    "summary": "Water pollution and scarcity are significant problems caused by human activities, and addressing them requires efficient water management and conservation practices. Implementing government policies and individual actions can help reduce water waste and pollution.",
+    "risk_level": "MEDIUM"
+  },
+  "raw_items": [
+    {
+      "title": "U.S. Homes Show Three-Decade Decline in Indoor Water Use",
+      "summary": "<figure><img alt=\"\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"683\" src=\"https://i0.wp.com/www.circleofblue.org/wp-content/uploads/2016/04/2016-04-Michigan-Infrastructure-TVC-JCGanter_5249-2500.jpg?fit=1024%2C683&amp;ssl=1\" width=\"1024\" /></figure>\n<p>Decades ago, before it was much of a concern, water moved through the average U.S. home in enormous quantities. Toilets pulled 3.5 gallons per flush or more. Washing machines filled like tiny swimming pools. Water f",
+      "link": "https://www.circleofblue.org/2026/supply/u-s-homes-show-three-decade-decline-in-indoor-water-use/",
+      "published": "Sun, 21 Jun 2026 12:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Setting Fires On Purpose to Cut Risk of Catastrophic Wildfires",
+      "summary": "<figure><img alt=\"Firefighters ignite a prescribed burn.\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"681\" src=\"https://i0.wp.com/www.circleofblue.org/wp-content/uploads/2026/06/PRESCRIBED-BURN-scaled.jpg?fit=1024%2C681&amp;ssl=1\" width=\"1024\" /></figure>\n<p>Wildfire risk is predicted to stay elevated through June in the Upper Midwest from drought and high winds. That’s risky for the region’s pristine inland lakes, but land managers are working to reduce wildfire ",
+      "link": "https://www.circleofblue.org/2026/great-lakes/setting-fires-on-purpose-to-cut-risk-of-catastrophic-wildfires/",
+      "published": "Thu, 18 Jun 2026 10:02:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "When Forests Burn, Lakes Suffer",
+      "summary": "<figure><img alt=\"A Smokey Bear sign with &quot;fire danger high&quot; in front of a landscape on fire. A firefighter walks in the background.\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"768\" src=\"https://i0.wp.com/www.circleofblue.org/wp-content/uploads/2026/06/SMOKEYBEAR-scaled.jpg?fit=1024%2C768&amp;ssl=1\" width=\"1024\" /></figure>\n<p>Wildfire risk is high in the upper Great Lakes, and research shows that large, scorching wildfires spell trouble for lakes in th",
+      "link": "https://www.circleofblue.org/2026/great-lakes/when-forests-burn-lakes-suffer/",
+      "published": "Wed, 17 Jun 2026 10:04:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Ethanol Was Marketed to Help Agriculture. But It Fouled Our Water and Injured Our Health.",
+      "summary": "<figure><img alt=\"\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"667\" src=\"https://i0.wp.com/www.circleofblue.org/wp-content/uploads/2014/06/20131104_AERIAL_CORN_HARVEST_0153.jpg?fit=1000%2C667&amp;ssl=1\" width=\"1000\" /></figure>\n<p>Just like his presidential predecessors – George Bush, Barack Obama, and Joe Biden – Donald Trump has a thing for ethanol. But why? Inordinately expensive to taxpayers, monstrously polluting, and now linked to mounting cancer incidence ",
+      "link": "https://www.circleofblue.org/2026/opinion/ethanol-was-marketed-to-help-agriculture-but-it-fouled-our-water-and-injured-our-health/",
+      "published": "Tue, 16 Jun 2026 10:30:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] Our Planet | Fresh Water | FULL EPISODE | Netflix",
+      "summary": "EINE NETFLIX ORIGINAL DOKUREIHE Vor erst 50 Jahren brachen wir endlich zum Mond auf. Zum ersten Mal blickten wir auf unseren eigenen Planeten. Seitdem hat sich\ndie Bevölkerungszahl mehr als verdoppelt. Diese Reihe feiert die Naturwunder,\ndie verblieben sind, und zeigt, was wir bewahren müssen, um das Gedeihen\nvon Mensch und Natur zu gewährleisten. Süßwasser. Jedes Lebewesen an Land,\nob Tier oder Pflanze, ist darauf angewiesen. Doch nur ein Prozent davon ist zugänglich. SÜSSWASSER Die Wüste Zentralaustraliens. Einer der heißesten,\ntrockensten Orte der Erde. Praktisch nichts\nkann hier länger überleben. Doch einmal alle zehn Jahre\nverwandelt sich die riesige, leere Wüste. Damit das geschieht,\nmuss eine Kettenreaktion ausgelöst werden, und zwar 2000 Kilometer weiter nördlich. Dort bauen sich l",
+      "link": "https://www.youtube.com/watch?v=R2DU85qLfJQ",
+      "published": "2020-04-17T13:00:00Z",
+      "source_type": "youtube",
+      "channel": "Netflix",
+      "video_id": "R2DU85qLfJQ",
+      "transcript_method": "youtube_transcript_api",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Explained | World&#39;s Water Crisis | FULL EPISODE | Netflix",
+      "summary": "Dreht man einen Wasserhahn auf, läuft zu jeder Zeit unbegrenzt\nsauberes Wasser heraus. Man vergisst leicht, dass das Streben danach eine\nder prägenden Mühen der Geschichte war. Zivilisationen, die Wasser\nnutzbar machten, gediehen. Die, die scheiterten... gingen unter. Heute können sich sieben von zehn Menschen\nzu Hause auf fließend Wasser verlassen. Das Wasser fließt von Steigleitungen zu Serviceanschlüssen\nund erreicht alle Gebäude in der Straße. Zumindest denkt man das. Kapstadt könnte die erste Großstadt\nweltweit sein, der das Wasser ausgeht. Kapstadt, Südafrika,\nbewegt sich auf Tag Null zu. In nur 92 Tagen\nmüssen sie aufgrund der Dürre die meisten Leitungen abdrehen. Kapstadt ist die erste Großstadt\nder Welt, die plant, die Wasserversorgung\nauf unbestimmte Zeit abzudrehen. Vier Million",
+      "link": "https://www.youtube.com/watch?v=C65iqOSCZOY",
+      "published": "2020-04-17T13:00:00Z",
+      "source_type": "youtube",
+      "channel": "Netflix",
+      "video_id": "C65iqOSCZOY",
+      "transcript_method": "youtube_transcript_api",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Water scarcity - Innovation to combat drought | DW Documentary",
+      "summary": "Climate change is making\nit clear what a precious treasure we have – in water. We simply want to use the\ngroundwater we have — good, safe water — as efficiently as we can, Yet too much water\ncan become a threat, too. We face a great two-part challenge:\nmanaging weather extremes while protecting our\nplanet’s vital water resources. Construction on Hamburg's sewer\nsystem began over 180 years ago. The old masonry\nis still in place. Public works supervisor Dirk\nGrünert inspects it regularly. Here, look — that's pretty deep… three centimeters. Pretty significant. These walls are easily repaired. What's of greater concern for the\nman responsible for their maintenance — increasingly extreme weather. No sewer system was designed\nfor that — not even newly built ones. During a downpour, we\nwouldn't b",
+      "link": "https://www.youtube.com/watch?v=5zyxsOMw634",
+      "published": "2025-11-16T17:00:18Z",
+      "source_type": "youtube",
+      "channel": "DW Documentary",
+      "video_id": "5zyxsOMw634",
+      "transcript_method": "youtube_transcript_api",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ]
+}

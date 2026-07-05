@@ -1,0 +1,119 @@
+{
+  "axis": "WATER_REVIEW",
+  "fetched_at": "2026-06-21T19:59:15.434721+00:00",
+  "smart_query": "water scarcity drinking water",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "‘It’s Russian roulette’: alarm as Europe backs critical minerals mines in water-stressed regions",
+      "snippet": "Exclusive: European Commission planning to rewrite key law to allow water-intensive mines in regions suffering from droughtThe European Commission plans to rewrite the EU’s flagship water protection law to speed up the development of critical minerals mines, despite many being located in drying and ",
+      "url": "https://www.theguardian.com/environment/2026/jun/20/europe-backs-critical-minerals-mines-water-stressed-regions",
+      "source": "RSS"
+    },
+    {
+      "title": "‘I had sewage in my bath’: row erupts over lock on Huddersfield narrow canal",
+      "snippet": "Boaters say low water levels cause them to run aground, while residents say the lock needs to be drained to prevent waste running into their propertiesEarlier this month, signs began appearing pinned to a lock on the Huddersfield narrow canal: “Canel [sic] And River Trust,” they read. “Please leave ",
+      "url": "https://www.theguardian.com/uk-news/2026/jun/18/sewage-bath-row-lock-huddersfield-narrow-canal",
+      "source": "RSS"
+    },
+    {
+      "title": "Rising temperatures may increase flood risk through river ‘whiplash’, study finds",
+      "snippet": "Sudden shifts from wet to dry weather, or vice versa, may foil typical drought- and flood-prevention measuresRising temperatures may trigger a dangerous increase in “hydroclimatic whiplash” in rivers that would make traditional approaches to flood and drought planning insufficient, a study has found",
+      "url": "https://www.theguardian.com/environment/2026/jun/17/rising-temperatures-may-increase-flood-risk-through-river-whiplash-study-finds",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "wilsto/pool-monitor-card",
+      "snippet": "Keep your swimming pool safe and crystal clear by monitoring up to 25 water chemistry parameters at a glance.",
+      "stars": 122,
+      "url": "https://github.com/wilsto/pool-monitor-card",
+      "updated": "2026-06-17",
+      "source": "GitHub"
+    },
+    {
+      "title": "DOI-USGS/EGRET",
+      "snippet": "An R-package for the analysis of long-term changes in water quality and streamflow, including the water-quality method Weighted Regressions on Time, Discharge, and Season (WRTDS). https://doi-usgs.git",
+      "stars": 100,
+      "url": "https://github.com/DOI-USGS/EGRET",
+      "updated": "2026-06-19",
+      "source": "GitHub"
+    },
+    {
+      "title": "KnowFlow/KnowFlow_AWM",
+      "snippet": "KnowFlow Automatic Water Monitoring device is an open sourced tool enable everyone having access to first hand water quality data with low cost.",
+      "stars": 96,
+      "url": "https://github.com/KnowFlow/KnowFlow_AWM",
+      "updated": "2026-06-15",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Water vapor buoyancy and the African easterly jet",
+      "snippet": "The African easterly jet (AEJ) is a prominent circulation feature in the tropical atmosphere. It transports mineral dust and generates easterly waves that serve as seeds for hurricanes. Conventional wisdom holds that the AEJ is in thermal wind balance with the positive meridional temperature gradien",
+      "url": "https://arxiv.org/abs/2605.21875v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Acidification of Water by CO2",
+      "snippet": "Fundamental inorganic chemistry shows that increasing concentrations of atmospheric CO2 will have no harmful effect on organisms that live in the natural waters of the Earths, and may well benefit them. Alkalinity and dissolved CO2 give high buffering capacity to most natural waters and minimize the",
+      "url": "https://arxiv.org/abs/2605.12311v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[Sunday Pick: The Data Center Next Door with Dr. Jacoby Wilson | from TED Tech] Imagine if one day, your quiet neighborhood came alive with a steady hum… and it never went away? All throughout the United States, data centers are popping up next door and in your backyards. These buildings guzzle millions of water, cause noise pollution, and are raising homeowners’ utility bills. In this first episode of a four-part miniseries, Sherrell interviews environmental health scientist",
+  "wiki": null,
+  "youtube_items": [
+    {
+      "title": "[YT] YouTube:ndjOWflLbVo",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=ndjOWflLbVo",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "ndjOWflLbVo",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] YouTube:pL8UleY5gdw",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=pL8UleY5gdw",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "pL8UleY5gdw",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] YouTube:hvmCq4x6Nrs",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=hvmCq4x6Nrs",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "hvmCq4x6Nrs",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    }
+  ],
+  "summary": "[RSS News]\n- ‘It’s Russian roulette’: alarm as Europe backs critical minerals mines in water-stressed regions\n- ‘I had sewage in my bath’: row erupts over lock on Huddersfield narrow canal\n\n[arXiv]\n- ",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": [],
+  "open_source_momentum": "",
+  "scientific_frontier": "",
+  "relevance_to_goal": ""
+}

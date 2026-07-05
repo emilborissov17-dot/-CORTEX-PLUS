@@ -1,0 +1,14 @@
+{
+  "cycle_id": "test_0",
+  "timestamp": "2026-06-27T12:00:05.303028+00:00",
+  "count": 1,
+  "signals": [
+    {
+      "metric": "co2_ppm",
+      "value": 432.44,
+      "domain": "CLIMATE",
+      "source": "test",
+      "category": "test"
+    }
+  ]
+}

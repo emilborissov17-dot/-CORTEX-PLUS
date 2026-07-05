@@ -1,0 +1,152 @@
+{
+  "axis": "TECHNOLOGY_INFRA_REVIEW",
+  "domain": "civilization",
+  "timestamp": "2026-06-21T19:46:57.601600+00:00",
+  "sources_count": 11,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] Neocons Move to Merge CIA &amp; Mossad While Netanyahu Desperately Begs Trump Not to Leave His Side",
+      "summary": "[DESCRIPTION FALLBACK] Trita Parsi has a rational, pro-American view of the Iran war, so naturally Bari Weiss tried to get him deported. Trita Parsi is an ...",
+      "link": "https://www.youtube.com/watch?v=BeScodaLjkg",
+      "published": "2026-06-15T21:28:11Z",
+      "source_type": "youtube",
+      "channel": "Tucker Carlson",
+      "video_id": "BeScodaLjkg",
+      "transcript_method": "description",
+      "transcript_chars": 158,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] U.S. on alert for potential cyberattack from Russia over Ukraine",
+      "summary": "[DESCRIPTION FALLBACK] Russia's growing threats stretch from Eastern Europe to power grids in the U.S. The Department of Homeland Security issued a ...",
+      "link": "https://www.youtube.com/watch?v=7nvGlBJzcQ4",
+      "published": "2022-01-28T16:21:14Z",
+      "source_type": "youtube",
+      "channel": "CBS News",
+      "video_id": "7nvGlBJzcQ4",
+      "transcript_method": "description",
+      "transcript_chars": 151,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] The Truth About Hybrid Cars : It’s Worse Than You Think!",
+      "summary": "[DESCRIPTION FALLBACK] Hybrid cars have long been marketed as the sensible halfway house between petrol vehicles and fully electric cars. But does the ...",
+      "link": "https://www.youtube.com/watch?v=NvWgiCCcIig",
+      "published": "2026-06-21T17:00:02Z",
+      "source_type": "youtube",
+      "channel": "Just Have a Think",
+      "video_id": "NvWgiCCcIig",
+      "transcript_method": "description",
+      "transcript_chars": 154,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "problem": "Overemphasis on individualized technology solutions without consideration for broader societal and environmental implications",
+    "root_cause": "Lack of comprehensive and nuanced discussion around the role of technology in sustainable civilization development",
+    "severity": "MEDIUM",
+    "leverage_points": [
+      "Media outlets and content creators",
+      "Technology developers and industry leaders"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Integrate critical thinking and societal impact assessments into technology reviews and discussions",
+        "measurable_goal": "Increase the number of articles and videos that discuss the environmental and social implications of new technologies by 30% within the next 6 months",
+        "timeframe": "medium-term"
+      }
+    ],
+    "evidence": [
+      "The majority of the provided articles and videos focus on individualized benefits and marketing of new technologies without discussing broader societal and environmental implications",
+      "The lack of discussion around the environmental impact of technologies, such as hybrid cars, is evident in the provided data"
+    ],
+    "generalization": "This problem connects to the domains of Civilization, Planet, and Human, as the development and adoption of technologies have far-reaching consequences for the environment, human well-being, and societal structures",
+    "summary": "The data reveals an overemphasis on individualized technology solutions without consideration for broader societal and environmental implications, highlighting the need for more comprehensive and nuanced discussions around technology development and adoption",
+    "risk_level": "MEDIUM"
+  },
+  "raw_items": [
+    {
+      "title": "How I Get Free Traffic from ChatGPT in 2025 (AIO vs SEO)",
+      "summary": "<p style=\"text-align: left;\">Three weeks ago, I tested something that completely changed how I think about organic traffic. I opened ChatGPT and asked a simple question: \"What's the best course on building SaaS with WordPress?\" The answer that appeared stopped me cold. My course showed up as the first result, recommended directly by the AI with specific reasons why it was valuable.</p><p style=\"text-align: left;\">I hadn't paid for advertising. I hadn't done any special promotion. The AI simply d",
+      "link": "https://techncruncher.blogspot.com/2025/12/how-i-get-free-traffic-from-chatgpt-in.html",
+      "published": "Thu, 04 Dec 2025 05:37:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Top 10 AI Tools That Will Transform Your Content Creation in 2025",
+      "summary": "<div style=\"text-align: left;\"><a href=\"https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEge5QgwLKWbavTUhIedQLI79z5BGD4h0ZoH4YMK6bGBL6fY4Je8R3GZurMZaJmtYirFS6pS-GgZD3xFAqfln8w8faEY2iDehndQNeez57DoiDsgYFJrIwMOLBjzcZiOJrqYDktm6pmRkwtprJChag0yQoeEZx1Pa_eKnt3kKzz69f-FSPWu_JXQxFq5Z8WZ/s1920/Blue%20Purple%20Futuristic%20Modern%203D%20Tech%20Company%20Business%20Presentation.jpg\" style=\"clear: left; margin-bottom: 1em;\"><span style=\"font-family: Coda;\"><img alt=\"Top 10 AI Tools That Will Trans",
+      "link": "https://techncruncher.blogspot.com/2025/01/top-10-ai-tools-that-will-transform.html",
+      "published": "Thu, 02 Jan 2025 09:26:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "LimeWire AI Studio Review 2023: Details, Pricing & Features",
+      "summary": "<p style=\"text-align: left;\"><span style=\"font-family: Oxygen;\">&nbsp;</span></p><p style=\"text-align: left;\"><span style=\"font-family: Oxygen;\">In the rapidly advancing landscape of AI technology and innovation, LimeWire emerges as a unique platform in the realm of generative AI tools. This platform not only stands out from the multitude of existing AI tools but also brings a fresh approach to content generation. LimeWire not only empowers users to create AI content but also provides creators w",
+      "link": "https://techncruncher.blogspot.com/2023/12/limewire-ai-studio-review-2023-details.html",
+      "published": "Tue, 12 Dec 2023 16:10:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Top 10 AI Tools in 2023 That Will Make Your Life Easier",
+      "summary": "<p><span style=\"font-family: Montserrat;\"><br /></span></p><div class=\"separator\" style=\"clear: both; text-align: center;\"><a href=\"https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiu91xnR3LQV62WoiA0scuFOTa-Xx9vIwouaceeyosFtZrJB0UivYIWtbcF3TCWEjKhRQVBiSeB00RQI0-cO_eBG6d05_6UV7zYw9qzyHMJ6u2m9_itNW2mFAS8LChEhhJQ14aJbI3GrkEsY9xCTExAT-qxUSh5asVFMAmX-ceWufpgV_DrG9tk3Y4umw/s1920/Blue%20Purple%20Futuristic%20Modern%203D%20Tech%20Company%20Business%20Presentation-min.jpg\" style=\"margin-left: 1",
+      "link": "https://techncruncher.blogspot.com/2023/01/top-10-ai-tools-in-2023-that-will-make.html",
+      "published": "Wed, 25 Jan 2023 19:52:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Wooting 60HE v2: Peak Keyboard Perfection",
+      "summary": "Wooting’s 60HE v2 isn’t just a terrific Hall Effect keyboard. It’s a fantastic keyboard period.",
+      "link": "https://www.wired.com/review/review-wooting-60he-v2/",
+      "published": "Sun, 21 Jun 2026 11:01:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "The Best NAS Devices for Your Home After Months of Testing",
+      "summary": "Network-attached storage (NAS) provides accessible shared space on your home network. After testing, these are my favorite NAS devices.",
+      "link": "https://www.wired.com/story/best-nas-devices/",
+      "published": "Sun, 21 Jun 2026 10:30:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "28 Tips to Take Your ChatGPT Prompts to the Next Level",
+      "summary": "Sure, anyone can use OpenAI’s chatbot. But with smart engineering, you can get way more interesting results.",
+      "link": "https://www.wired.com/story/28-tips-to-take-your-chatgpt-prompts-to-the-next-level/",
+      "published": "Sun, 21 Jun 2026 10:30:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "If You’re Searching for a New Skillet, Consider Stainless Steel",
+      "summary": "Stainless-steel pans may lack nonstick coatings, but they’re unfussy, they sear well, and they’re built for a lifetime of hard work.",
+      "link": "https://www.wired.com/story/stainless-steel-skillets-are-great/",
+      "published": "Sun, 21 Jun 2026 10:30:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] Neocons Move to Merge CIA &amp; Mossad While Netanyahu Desperately Begs Trump Not to Leave His Side",
+      "summary": "[DESCRIPTION FALLBACK] Trita Parsi has a rational, pro-American view of the Iran war, so naturally Bari Weiss tried to get him deported. Trita Parsi is an ...",
+      "link": "https://www.youtube.com/watch?v=BeScodaLjkg",
+      "published": "2026-06-15T21:28:11Z",
+      "source_type": "youtube",
+      "channel": "Tucker Carlson",
+      "video_id": "BeScodaLjkg",
+      "transcript_method": "description",
+      "transcript_chars": 158,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] U.S. on alert for potential cyberattack from Russia over Ukraine",
+      "summary": "[DESCRIPTION FALLBACK] Russia's growing threats stretch from Eastern Europe to power grids in the U.S. The Department of Homeland Security issued a ...",
+      "link": "https://www.youtube.com/watch?v=7nvGlBJzcQ4",
+      "published": "2022-01-28T16:21:14Z",
+      "source_type": "youtube",
+      "channel": "CBS News",
+      "video_id": "7nvGlBJzcQ4",
+      "transcript_method": "description",
+      "transcript_chars": 151,
+      "has_full_transcript": false
+    }
+  ]
+}

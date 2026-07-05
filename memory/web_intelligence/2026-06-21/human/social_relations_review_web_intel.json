@@ -1,0 +1,157 @@
+{
+  "axis": "SOCIAL_RELATIONS_REVIEW",
+  "domain": "human",
+  "timestamp": "2026-06-21T19:45:15.919977+00:00",
+  "sources_count": 11,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] Australia’s Breaking Point: The Real Threat to Social Cohesion",
+      "summary": "In Australia—and indeed other parts of the \nWestern world—so-called ‘social cohesion’   is on a knife’s edge. You can feel \na sense of unease gripping society. The ABC reported in August: “How extremism \nand foreign interference threaten Australian   social cohesion.” In September, The Age \nran the headline: “Australia’s cohesion   is fraying. If we’re not careful, it may \nshatter.” While just this week, SBS noted:   “Royal Commission into the Bondi terror attack \nto focus on antisemitism and social cohesion.” So clearly, social cohesion is not only \nhanging by a thread; if we’re not careful,   we’ll quickly go from social cohesion to \ntotal tribalism and societal dysfunction. But what is the biggest threat to social cohesion?   What is causing this social \ndiscord and polarisation? Many o",
+      "link": "https://www.youtube.com/watch?v=7t5kgdZrJK4",
+      "published": "2026-01-16T02:46:55Z",
+      "source_type": "youtube",
+      "channel": "Daily Insight",
+      "video_id": "7t5kgdZrJK4",
+      "transcript_method": "youtube_transcript_api",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Is inequality inevitable?",
+      "summary": "In South Africa, one of the most\nunequal countries in the world, the richest one-tenth of 1%, owns \nalmost 30% of all the country’s wealth, more than double what the bottom 90% owns. Income and wealth inequality are not new. In fact, economists and historians \nwho’ve charted economic inequality throughout history haven’t found \na single society without it. Which raises a bleak question: is inequality inevitable? One way to estimate inequality is \nwith a number called the Gini index, which is calculated by comparing \nthe income or wealth distribution of a perfectly equal society to the \nactual income or wealth distribution. The area of this shape multiplied\nby 2 is the Gini index. A Gini of 1 indicates\nperfect inequality— one person has everything \nand everyone else has nothing. You’d never",
+      "link": "https://www.youtube.com/watch?v=rEnf_CFoyv0",
+      "published": "2022-10-11T15:01:01Z",
+      "source_type": "youtube",
+      "channel": "TED-Ed",
+      "video_id": "rEnf_CFoyv0",
+      "transcript_method": "youtube_transcript_api",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] If This Doesn’t Prove Russia Is DOOMED… Nothing Will",
+      "summary": "Russia built its empire on hard power, tanks, \npropaganda, fear. But now it's collapsing under   something it never saw coming. Women. In cities \nfrom Moscow to Novosk, you don't hear the chance   of protesters. You hear the clanging of empty \npots. You don't see foreign saboturs. You see   grieving mothers, school teachers, teenage girls. \nAnd behind every widow's cry is the truth. This   isn't Russia's war anymore. It's Putin's. The \nsoldiers are dead. The men have vanished. And   now the women are rising, not with guns, but \nwith grief. And in a regime built on control and   silence, their defiance is louder than any missile \nstrike. Putin can crush opposition parties. He   can jail artists than censor the web. But he can't \njail every mother. He can't silence every kitchen.   And that'",
+      "link": "https://www.youtube.com/watch?v=NxTuNxJY2_s",
+      "published": "2026-06-20T17:00:08Z",
+      "source_type": "youtube",
+      "channel": "Fall of Nations",
+      "video_id": "NxTuNxJY2_s",
+      "transcript_method": "youtube_transcript_api",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "Social cohesion is under threat due to rising tensions and inequalities in various countries",
+    "root_cause": "Underlying social and economic inequalities, exacerbated by factors like foreign interference and extremism",
+    "severity": "MEDIUM",
+    "leverage_points": [
+      "Government policies and initiatives to address social and economic disparities",
+      "International cooperation to mitigate the effects of foreign interference"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Implementing inclusive economic policies to reduce wealth gaps",
+        "measurable_goal": "10% reduction in wealth inequality over the next 5 years",
+        "timeframe": "medium-term"
+      },
+      {
+        "action": "Establishing community programs to promote social cohesion",
+        "measurable_goal": "25% increase in community engagement and participation over the next 2 years",
+        "timeframe": "short-term"
+      }
+    ],
+    "evidence": [
+      "In Australia, social cohesion is on a knife’s edge due to rising extremism and foreign interference",
+      "In South Africa, the richest one-tenth of 1% owns almost 30% of all the country’s wealth, more than double what the bottom 90% owns"
+    ],
+    "generalization": "This problem connects to the domains of human (social relations), civilization (economic inequality), and planet (resource distribution)",
+    "summary": "Social cohesion is under threat due to rising tensions and inequalities, requiring government and international initiatives to address these issues. Implementing inclusive economic policies and community programs can help mitigate these effects.",
+    "risk_level": "MEDIUM"
+  },
+  "raw_items": [
+    {
+      "title": "Catholics in Latin America generally have positive views of Pope Leo",
+      "summary": "In six Latin American countries surveyed, most Catholics view Pope Leo XIV favorably, though his ratings trail those Pope Francis received early in his papacy.",
+      "link": "https://www.pewresearch.org/short-reads/2026/06/18/catholics-in-latin-america-generally-have-positive-views-of-pope-leo/",
+      "published": "Thu, 18 Jun 2026 17:41:43 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Most U.S. Catholics view Pope Leo favorably; many think Trump has been too critical of him",
+      "summary": "About eight-in-ten U.S. Catholics view Pope Leo XIV favorably, though opinions on the tension between Leo and President Trump split sharply along party lines.",
+      "link": "https://www.pewresearch.org/short-reads/2026/06/18/most-us-catholics-view-pope-leo-favorably-many-think-trump-has-been-too-critical-of-him/",
+      "published": "Thu, 18 Jun 2026 17:41:09 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Is U.S. fertility at an all-time low? It depends how you measure it",
+      "summary": "U.S. fertility rates have hit historic lows, but three common measures tell different stories about whether American families are truly shrinking.",
+      "link": "https://www.pewresearch.org/short-reads/2026/06/17/is-us-fertility-at-an-all-time-low-it-depends-how-you-measure-it/",
+      "published": "Wed, 17 Jun 2026 18:52:43 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "What the data says about abortion in the U.S.",
+      "summary": "Six-in-ten US adults say abortion should be legal in all or most cases. Here's a look at data on abortion rates, providers, demographics and more.",
+      "link": "https://www.pewresearch.org/short-reads/2026/06/17/what-the-data-says-about-abortion-in-the-us/",
+      "published": "Wed, 17 Jun 2026 16:02:33 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Trump and Iran's negotiator trade warnings as talks held in Switzerland",
+      "summary": "The US president, who is not at the talks, threatens to attack Iran if it does not restrain Hezbollah in Lebanon.",
+      "link": "https://www.bbc.com/news/articles/cwy0q41v1lzo?at_medium=RSS&at_campaign=rss",
+      "published": "Sun, 21 Jun 2026 19:33:09 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Fuel sales halted in occupied Crimea as Ukraine targets oil facilities",
+      "summary": "Fuel had already been rationed due to shortages caused by Kyiv's attacks against supply routes in Russian-occupied territories.",
+      "link": "https://www.bbc.com/news/articles/clyx2lk9d15o?at_medium=RSS&at_campaign=rss",
+      "published": "Sun, 21 Jun 2026 10:55:05 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Ethiopia PM's party wins landslide as fears grow of new conflict",
+      "summary": "Abiy Ahmed's party retains its huge majority despite unrest in several parts of Ethiopia and tensions with its neighbours.",
+      "link": "https://www.bbc.com/news/articles/cz750q5e3w3o?at_medium=RSS&at_campaign=rss",
+      "published": "Sun, 21 Jun 2026 15:01:28 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Half of France under red heat alert as alcohol banned at street music festival",
+      "summary": "Temperatures are forecast to peak on Monday, and authorities warn they could match historic highs.",
+      "link": "https://www.bbc.com/news/articles/cgmdw4vn7y2o?at_medium=RSS&at_campaign=rss",
+      "published": "Sun, 21 Jun 2026 15:22:14 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] Australia’s Breaking Point: The Real Threat to Social Cohesion",
+      "summary": "In Australia—and indeed other parts of the \nWestern world—so-called ‘social cohesion’   is on a knife’s edge. You can feel \na sense of unease gripping society. The ABC reported in August: “How extremism \nand foreign interference threaten Australian   social cohesion.” In September, The Age \nran the headline: “Australia’s cohesion   is fraying. If we’re not careful, it may \nshatter.” While just this week, SBS noted:   “Royal Commission into the Bondi terror attack \nto focus on antisemitism and social cohesion.” So clearly, social cohesion is not only \nhanging by a thread; if we’re not careful,   we’ll quickly go from social cohesion to \ntotal tribalism and societal dysfunction. But what is the biggest threat to social cohesion?   What is causing this social \ndiscord and polarisation? Many o",
+      "link": "https://www.youtube.com/watch?v=7t5kgdZrJK4",
+      "published": "2026-01-16T02:46:55Z",
+      "source_type": "youtube",
+      "channel": "Daily Insight",
+      "video_id": "7t5kgdZrJK4",
+      "transcript_method": "youtube_transcript_api",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Is inequality inevitable?",
+      "summary": "In South Africa, one of the most\nunequal countries in the world, the richest one-tenth of 1%, owns \nalmost 30% of all the country’s wealth, more than double what the bottom 90% owns. Income and wealth inequality are not new. In fact, economists and historians \nwho’ve charted economic inequality throughout history haven’t found \na single society without it. Which raises a bleak question: is inequality inevitable? One way to estimate inequality is \nwith a number called the Gini index, which is calculated by comparing \nthe income or wealth distribution of a perfectly equal society to the \nactual income or wealth distribution. The area of this shape multiplied\nby 2 is the Gini index. A Gini of 1 indicates\nperfect inequality— one person has everything \nand everyone else has nothing. You’d never",
+      "link": "https://www.youtube.com/watch?v=rEnf_CFoyv0",
+      "published": "2022-10-11T15:01:01Z",
+      "source_type": "youtube",
+      "channel": "TED-Ed",
+      "video_id": "rEnf_CFoyv0",
+      "transcript_method": "youtube_transcript_api",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ]
+}

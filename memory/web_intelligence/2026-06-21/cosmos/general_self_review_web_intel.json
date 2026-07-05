@@ -1,0 +1,157 @@
+{
+  "axis": "GENERAL_SELF_REVIEW",
+  "domain": "cosmos",
+  "timestamp": "2026-06-21T19:50:59.493949+00:00",
+  "sources_count": 11,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] AI Is Dangerous, but Not for the Reasons You Think | Sasha Luccioni | TED",
+      "summary": "[DESCRIPTION FALLBACK] AI won't kill us all — but that doesn't make it trustworthy. Instead of getting distracted by future existential risks, AI ethics researcher ...",
+      "link": "https://www.youtube.com/watch?v=eXdVDhOGqoE",
+      "published": "2023-11-06T12:00:37Z",
+      "source_type": "youtube",
+      "channel": "TED",
+      "video_id": "eXdVDhOGqoE",
+      "transcript_method": "description",
+      "transcript_chars": 167,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] If This Doesn’t Prove Russia Is DOOMED… Nothing Will",
+      "summary": "[DESCRIPTION FALLBACK] 00:00:00 - Russian GIRLS Just Did Something BRUTAL — Now Russia Is COLLAPSING 00:25:04 - Putin's War Is Killing Russia, ...",
+      "link": "https://www.youtube.com/watch?v=NxTuNxJY2_s",
+      "published": "2026-06-20T17:00:08Z",
+      "source_type": "youtube",
+      "channel": "Fall of Nations",
+      "video_id": "NxTuNxJY2_s",
+      "transcript_method": "description",
+      "transcript_chars": 146,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] &quot;Socialism Always Fails&quot;: A Dishonest Claim (3 Times It Worked)",
+      "summary": "[DESCRIPTION FALLBACK] \"Socialism Always Fails\" is a claim I hear frequently. More often than not, when someone deploys this quip, it's meant to end any ...",
+      "link": "https://www.youtube.com/watch?v=DIV3HH878Lc",
+      "published": "2024-09-04T23:30:05Z",
+      "source_type": "youtube",
+      "channel": "overzealots",
+      "video_id": "DIV3HH878Lc",
+      "transcript_method": "description",
+      "transcript_chars": 156,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "problem": "Unverified breakthrough claims in AI (e.g., Subquadratic's alleged solution to the LLM bottleneck) spread without independent validation, creating misinformation and misallocation of research resources.",
+    "root_cause": "Startup incentive structures prioritize hype and rapid publicity over rigorous peer review; the current ecosystem lacks standardised, publicly accessible benchmarks for verifying such claims.",
+    "severity": "HIGH",
+    "leverage_points": [
+      "Independent validation platforms and open benchmark datasets for LLM performance scaling",
+      "Funding agencies and corporate investors requiring transparent, reproducible evidence before allocating resources"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Establish a community‑maintained, open‑source benchmark suite that tests claimed bottleneck solutions on standard LLM scaling tasks.",
+        "measurable_goal": "At least 80% of new AI breakthrough announcements submit results to the benchmark within 90 days of press release.",
+        "timeframe": "short-term"
+      },
+      {
+        "action": "Tie venture capital and grant funding to compliance with open‑validation standards, with periodic audits.",
+        "measurable_goal": "90% of AI‑focused funding rounds include a clause mandating benchmark submission and third‑party audit.",
+        "timeframe": "medium-term"
+      }
+    ],
+    "evidence": [
+      "Subquadratic claims to have solved a mathematical bottleneck that had been holding back large language models (RSS entry).",
+      "The article \"The inevitable weakness of metrics\" discusses how metrics can obscure real performance, highlighting the risk of misleading indicators."
+    ],
+    "generalization": "The same lack of transparent validation that hampers AI research also appears in health AI (e.g., metrics for ChatGPT health responses) and BCI trials, where insufficient scrutiny can lead to unsafe or ineffective applications across the Planet, Person, Civilization, and Cosmos domains.",
+    "summary": "Unverified AI breakthrough claims undermine trust and waste resources; introducing open benchmarks and funding conditions can restore rigor.",
+    "risk_level": "HIGH"
+  },
+  "raw_items": [
+    {
+      "title": "The Download: AI bottleneck debates, and BCI trials take off",
+      "summary": "This is today&#8217;s edition of The Download, our weekday newsletter that provides a daily dose of what&#8217;s going on in the world of technology. A startup claims it broke through a bottleneck that’s holding back LLMs AI startup Subquadratic came out of stealth last month with a huge claim: it had solved a mathematical bottleneck&#8230;",
+      "link": "https://www.technologyreview.com/2026/06/19/1139327/the-download-llms-bottleneck-breakthrough-bci-trials-take-off/",
+      "published": "Fri, 19 Jun 2026 12:10:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "A startup claims it broke through a bottleneck that’s holding back LLMs",
+      "summary": "Miami-based AI startup Subquadratic came out of stealth mode last month with a huge claim. It announced that it had solved a mathematical bottleneck that had been holding back large language models for almost a decade. The details were thin, and many people were unconvinced. But Subquadratic has started to bring the receipts, sharing the&#8230;",
+      "link": "https://www.technologyreview.com/2026/06/19/1139313/a-startup-claims-it-broke-through-a-bottleneck-thats-holding-back-llms/",
+      "published": "Fri, 19 Jun 2026 10:40:24 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "The inevitable weakness of metrics",
+      "summary": "There are plenty of useful things a metric can reveal. There are even more it can obscure or corrupt. It took me well over a decade of tracking my own life in ever greater detail to fully appreciate this duality, which probably reveals something about both me and the nature of measurement. Like a lot&#8230;",
+      "link": "https://www.technologyreview.com/2026/06/19/1138778/inevitable-weakness-metrics-quantified-life-book-review/",
+      "published": "Fri, 19 Jun 2026 09:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Brain-computer interface trials are taking off",
+      "summary": "This week, I covered the story of Casey Harrell—a man with ALS who is “the first power user” of a brain implant, according to the researchers who worked with him. Harrell is paralyzed and unable to speak coherently without the device. He has now spent almost three years using a brain-computer interface (BCI) that enables&#8230;",
+      "link": "https://www.technologyreview.com/2026/06/19/1139270/brain-computer-interface-trials-are-taking-off/",
+      "published": "Fri, 19 Jun 2026 09:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "New usage analytics and updated spend controls for enterprises",
+      "summary": "OpenAI introduces new spend controls and usage analytics for ChatGPT Enterprise, helping organizations manage costs and scale AI with confidence.",
+      "link": "https://openai.com/index/chatgpt-enterprise-spend-controls",
+      "published": "Thu, 18 Jun 2026 17:00:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Improving health intelligence in ChatGPT",
+      "summary": "Learn how GPT-5.5 Instant improves ChatGPT’s health and wellness responses with stronger reasoning, better context, clearer communication, and physician-informed evaluations.",
+      "link": "https://openai.com/index/improving-health-intelligence-in-chatgpt",
+      "published": "Thu, 18 Jun 2026 11:00:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Using AI to help physicians diagnose rare genetic diseases affecting children",
+      "summary": "Researchers used an OpenAI reasoning model to help diagnose rare diseases, identifying 18 new diagnoses in previously unsolved cases.",
+      "link": "https://openai.com/index/diagnose-rare-childhood-diseases",
+      "published": "Thu, 18 Jun 2026 08:00:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "A near-autonomous AI chemist improves a challenging reaction in medicinal chemistry",
+      "summary": "OpenAI and Molecule.one show how a near-autonomous AI chemist using GPT-5.4 improved a key drug-making reaction, advancing medicinal chemistry research.",
+      "link": "https://openai.com/index/ai-chemist-improves-reaction",
+      "published": "Wed, 17 Jun 2026 10:00:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] AI Is Dangerous, but Not for the Reasons You Think | Sasha Luccioni | TED",
+      "summary": "[DESCRIPTION FALLBACK] AI won't kill us all — but that doesn't make it trustworthy. Instead of getting distracted by future existential risks, AI ethics researcher ...",
+      "link": "https://www.youtube.com/watch?v=eXdVDhOGqoE",
+      "published": "2023-11-06T12:00:37Z",
+      "source_type": "youtube",
+      "channel": "TED",
+      "video_id": "eXdVDhOGqoE",
+      "transcript_method": "description",
+      "transcript_chars": 167,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] If This Doesn’t Prove Russia Is DOOMED… Nothing Will",
+      "summary": "[DESCRIPTION FALLBACK] 00:00:00 - Russian GIRLS Just Did Something BRUTAL — Now Russia Is COLLAPSING 00:25:04 - Putin's War Is Killing Russia, ...",
+      "link": "https://www.youtube.com/watch?v=NxTuNxJY2_s",
+      "published": "2026-06-20T17:00:08Z",
+      "source_type": "youtube",
+      "channel": "Fall of Nations",
+      "video_id": "NxTuNxJY2_s",
+      "transcript_method": "description",
+      "transcript_chars": 146,
+      "has_full_transcript": false
+    }
+  ]
+}

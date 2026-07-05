@@ -1,0 +1,113 @@
+{
+  "axis": "EDUCATION_CULTURE_REVIEW",
+  "domain": "civilization",
+  "timestamp": "2026-06-21T19:47:14.548076+00:00",
+  "sources_count": 3,
+  "rss_count": 0,
+  "ddg_count": 0,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] Top 10 Countries with the Highest Literacy Rates in 2025",
+      "summary": "[DESCRIPTION FALLBACK] Discover the Top 10 Countries with the Highest Literacy Rates in 2025 — based on the latest UNESCO and World Bank data for ...",
+      "link": "https://www.youtube.com/watch?v=pJYV_b_QaIw",
+      "published": "2025-10-27T11:41:51Z",
+      "source_type": "youtube",
+      "channel": "Say Updates",
+      "video_id": "pJYV_b_QaIw",
+      "transcript_method": "description",
+      "transcript_chars": 149,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Global Media And Information Literacy Week",
+      "summary": "[DESCRIPTION FALLBACK] In a world flooded with information, learning to think critically is more important than ever. This Global Media & Information Literacy ...",
+      "link": "https://www.youtube.com/watch?v=97c-YZy0olk",
+      "published": "2025-10-26T05:45:00Z",
+      "source_type": "youtube",
+      "channel": "GLOBAL DAYS AWARENESS",
+      "video_id": "97c-YZy0olk",
+      "transcript_method": "description",
+      "transcript_chars": 162,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Keynote 2, Creativity, Global Citizenship, and Health for All | CES 2025, UNESCO Paris",
+      "summary": "[DESCRIPTION FALLBACK] n this keynote, Didier Jourdan, Head of the UNESCO Chair on Global Health and Education, explored the links between creativity, ...",
+      "link": "https://www.youtube.com/watch?v=Czng7PNYHVg",
+      "published": "2025-12-21T20:09:26Z",
+      "source_type": "youtube",
+      "channel": "Global Institute of Creative Thinking",
+      "video_id": "Czng7PNYHVg",
+      "transcript_method": "description",
+      "transcript_chars": 154,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "problem": "Significant disparity in literacy and media/information literacy rates across countries in 2025",
+    "root_cause": "Uneven investment in education infrastructure, socioeconomic inequality, and lack of coordinated curricula for critical media skills",
+    "severity": "HIGH",
+    "leverage_points": [
+      "UNESCO and World Bank policy frameworks",
+      "National education ministries"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Develop and fund a globally coordinated curriculum for universal primary education and media/information literacy, with benchmarks tied to UNESCO standards",
+        "measurable_goal": "Increase the average literacy rate in the bottom 20% of countries by at least 10 percentage points and achieve a 15% rise in media literacy assessment scores within five years",
+        "timeframe": "medium-term"
+      },
+      {
+        "action": "Establish a monitoring and reporting platform that publishes annual literacy and media literacy indicators for all nations",
+        "measurable_goal": "Release publicly accessible reports for 100% of UN member states each year, with data verification audits completed by accredited agencies",
+        "timeframe": "short-term"
+      }
+    ],
+    "evidence": [
+      "The video titled \"Top 10 Countries with the Highest Literacy Rates in 2025\" implies a ranking that highlights global disparities",
+      "The existence of a \"Global Media And Information Literacy Week\" suggests an acknowledged need to improve critical information skills worldwide"
+    ],
+    "generalization": "Education gaps fuel economic inequality (civilization domain), reduce capacity for sustainable health and climate actions (planet domain), and limit the development of informed global citizenship needed for peaceful cooperation (civilization and cosmos domains)",
+    "summary": "Literacy and media literacy gaps remain pronounced in 2025, driven by unequal education funding and curricula, threatening sustainable development and informed participation.",
+    "risk_level": "MEDIUM"
+  },
+  "raw_items": [
+    {
+      "title": "[YT] Top 10 Countries with the Highest Literacy Rates in 2025",
+      "summary": "[DESCRIPTION FALLBACK] Discover the Top 10 Countries with the Highest Literacy Rates in 2025 — based on the latest UNESCO and World Bank data for ...",
+      "link": "https://www.youtube.com/watch?v=pJYV_b_QaIw",
+      "published": "2025-10-27T11:41:51Z",
+      "source_type": "youtube",
+      "channel": "Say Updates",
+      "video_id": "pJYV_b_QaIw",
+      "transcript_method": "description",
+      "transcript_chars": 149,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Global Media And Information Literacy Week",
+      "summary": "[DESCRIPTION FALLBACK] In a world flooded with information, learning to think critically is more important than ever. This Global Media & Information Literacy ...",
+      "link": "https://www.youtube.com/watch?v=97c-YZy0olk",
+      "published": "2025-10-26T05:45:00Z",
+      "source_type": "youtube",
+      "channel": "GLOBAL DAYS AWARENESS",
+      "video_id": "97c-YZy0olk",
+      "transcript_method": "description",
+      "transcript_chars": 162,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Keynote 2, Creativity, Global Citizenship, and Health for All | CES 2025, UNESCO Paris",
+      "summary": "[DESCRIPTION FALLBACK] n this keynote, Didier Jourdan, Head of the UNESCO Chair on Global Health and Education, explored the links between creativity, ...",
+      "link": "https://www.youtube.com/watch?v=Czng7PNYHVg",
+      "published": "2025-12-21T20:09:26Z",
+      "source_type": "youtube",
+      "channel": "Global Institute of Creative Thinking",
+      "video_id": "Czng7PNYHVg",
+      "transcript_method": "description",
+      "transcript_chars": 154,
+      "has_full_transcript": false
+    }
+  ]
+}

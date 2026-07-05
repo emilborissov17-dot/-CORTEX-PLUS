@@ -1,0 +1,141 @@
+{
+  "axis": "MATERIALS_WASTE_REVIEW",
+  "domain": "planet",
+  "timestamp": "2026-06-21T19:44:55.624227+00:00",
+  "sources_count": 7,
+  "rss_count": 4,
+  "ddg_count": 0,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] Plastic Wars (full documentary) | FRONTLINE",
+      "summary": ">> The world is flooded with plastic garbage. >> In this state, none of this is recyclable. >> NARRATOR: Have efforts to solve the plastics problem made it worse? >> Do you think the industry used recycling to sell more plastic? >> Absolutely. >> NARRATOR: FRONTLINE and NPR investigate the battle over plastics. >> We have to manage the waste right. We have to fix this. >> NARRATOR: And what's at stake. >> For the oil and gas industry plastic is their lifeline. This is the big war. >> NARRATOR: Now, “Plastic Wars”. (water burbling) >> LAURA SULLIVAN: In 2015, a marine biologist came across a sea turtle in distress. >> Oh. >> I don't want to pull it too hard. >> Yeah, I mean, it's bleeding already. Oh, poor baby. I'm sorry. (bleep) (bleep) Christ. That is plastico. Oh, man. >> That's plastic",
+      "link": "https://www.youtube.com/watch?v=-dk3NOEgX7o",
+      "published": "2020-04-01T02:00:10Z",
+      "source_type": "youtube",
+      "channel": "FRONTLINE PBS | Official",
+      "video_id": "-dk3NOEgX7o",
+      "transcript_method": "youtube_transcript_api",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Why The Microplastics Crisis Will Only Get Worse",
+      "summary": "Nearly everything we eat and drink \nis wrapped in plastic. In fact, global plastic production \nmore than doubled between 2000 and 2022. And now we're realizing it's \nshowing up in our bodies, too. One recent study showed the \nlevel of microplastics in the frontal cortex of our brains \nincreased by about 50% between 2016 and 2024. You cannot take the current \nexposure levels to plastic and say, let's double them in the human race \nand just see what happens. I mean, that's just idiotic. The problem is that plastic never \nfully decomposes. It just breaks down into smaller \nand smaller pieces. When it becomes smaller than five \nmillimeters. That's about the width of a pencil \neraser. It's called a microplastic. But then a subset called nano \nplastics can get much, much smaller, so small that t",
+      "link": "https://www.youtube.com/watch?v=_6EHNWJGY6M",
+      "published": "2025-08-14T16:01:03Z",
+      "source_type": "youtube",
+      "channel": "CNBC",
+      "video_id": "_6EHNWJGY6M",
+      "transcript_method": "youtube_transcript_api",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Plastic Ocean",
+      "summary": "[Music] PLASTIC OCEAN Plastic is wonderful because it's durable and plastic is terrible because it is durable. Almost every piece of plastic ever made is still on the planet in some form or another. Plastic production globally this year is expected to be more than 300 million tons. Half of which we'll use just once and then throw away. By 2050, when the population explodes to almost 10 billion people, it's expected that plastic production will triple. The problem with that is is that today only a fraction of the plastic that we produce is recycled. The rest ends up in our environment and it's coating our lands and our oceans like a disease. [Music] Garbage thrown away in the United States can make its way to Antarctica. Plastic in our coastal waters is pulled into the center of massive win",
+      "link": "https://www.youtube.com/watch?v=ju_2NuK5O-E",
+      "published": "2017-05-24T17:14:55Z",
+      "source_type": "youtube",
+      "channel": "United Nations",
+      "video_id": "ju_2NuK5O-E",
+      "transcript_method": "youtube_transcript_api",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "Inadequate management of plastic waste, leading to massive environmental pollution and potential harm to human health",
+    "root_cause": "Lack of effective recycling systems and excessive production of single-use plastics, driven by industry interests and consumer behavior",
+    "severity": "CRITICAL",
+    "leverage_points": [
+      "Government regulations and policies on plastic production and waste management",
+      "Consumer awareness and behavior change towards reducing plastic use"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Implement extended producer responsibility for plastic manufacturers",
+        "measurable_goal": "Reduce plastic production by 20% within the next 2 years",
+        "timeframe": "medium-term"
+      },
+      {
+        "action": "Launch public education campaigns on plastic waste reduction and proper recycling practices",
+        "measurable_goal": "Increase recycling rates by 30% within the next year",
+        "timeframe": "short-term"
+      }
+    ],
+    "evidence": [
+      "Global plastic production has more than doubled between 2000 and 2022, with nearly half of it being used once and then thrown away",
+      "Microplastics have been found in human brains, with a 50% increase in levels between 2016 and 2024"
+    ],
+    "generalization": "This problem connects to the domains of human health, civilization, and the cosmos, as poor waste management can have far-reaching consequences for the environment, human well-being, and the long-term sustainability of intelligent life",
+    "summary": "Inadequate plastic waste management poses a critical threat to the environment and human health, requiring immediate attention and action from governments, industries, and consumers",
+    "risk_level": "CRITICAL"
+  },
+  "raw_items": [
+    {
+      "title": "EREF Auction Raises More Than $4 Million to Advance Waste and Recycling Research",
+      "summary": "The Environmental Research &amp; Education Foundation (EREF) raised over $4 million during its 2026 Annual Charitable Auction, held during the inaugural Waste Leadership Summit in Washington, D.C.",
+      "link": "https://www.waste360.com/industry-insights/eref-auction-raises-more-than-4-million-to-advance-waste-and-recycling-research",
+      "published": "Thu, 18 Jun 2026 12:32:49 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Casella’s Roadmap for Renewable Energy and Driving a Circular Economy",
+      "summary": "In this Waste360 Q&amp;A, Casella CEO Ned Coletta catches us up to speed on facility projects and shares what his team learned from testing electric trucks in the real world. He takes us behind the scenes of some exciting partnerships, including work with the University of Vermont to advance a circular economy.",
+      "link": "https://www.waste360.com/industry-insights/casella-s-roadmap-for-renewable-energy-and-driving-a-circular-economy",
+      "published": "Thu, 18 Jun 2026 12:00:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "June 2026 Business Report—Business Highlights from the Waste Leadership Summit",
+      "summary": "In this edition of the Business Report, we recap the highlights of the Investor Summit, as well as several of the education sessions from the Waste Leadership Summit.",
+      "link": "https://www.waste360.com/industry-insights/june-2026-business-report-business-highlights-from-the-waste-leadership-summit",
+      "published": "Thu, 18 Jun 2026 11:30:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Meet the 2026 Waste360 Women Who Inspire",
+      "summary": "Waste360 is proud to announce its fourth annual Women Who Inspire award winners. Our program, sponsored by Wastequip, recognizes incredible women who are making a difference across waste, recycling, and sustainability.",
+      "link": "https://www.waste360.com/industry-insights/meet-the-2026-waste360-women-who-inspire",
+      "published": "Wed, 17 Jun 2026 12:00:00 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] Plastic Wars (full documentary) | FRONTLINE",
+      "summary": ">> The world is flooded with plastic garbage. >> In this state, none of this is recyclable. >> NARRATOR: Have efforts to solve the plastics problem made it worse? >> Do you think the industry used recycling to sell more plastic? >> Absolutely. >> NARRATOR: FRONTLINE and NPR investigate the battle over plastics. >> We have to manage the waste right. We have to fix this. >> NARRATOR: And what's at stake. >> For the oil and gas industry plastic is their lifeline. This is the big war. >> NARRATOR: Now, “Plastic Wars”. (water burbling) >> LAURA SULLIVAN: In 2015, a marine biologist came across a sea turtle in distress. >> Oh. >> I don't want to pull it too hard. >> Yeah, I mean, it's bleeding already. Oh, poor baby. I'm sorry. (bleep) (bleep) Christ. That is plastico. Oh, man. >> That's plastic",
+      "link": "https://www.youtube.com/watch?v=-dk3NOEgX7o",
+      "published": "2020-04-01T02:00:10Z",
+      "source_type": "youtube",
+      "channel": "FRONTLINE PBS | Official",
+      "video_id": "-dk3NOEgX7o",
+      "transcript_method": "youtube_transcript_api",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Why The Microplastics Crisis Will Only Get Worse",
+      "summary": "Nearly everything we eat and drink \nis wrapped in plastic. In fact, global plastic production \nmore than doubled between 2000 and 2022. And now we're realizing it's \nshowing up in our bodies, too. One recent study showed the \nlevel of microplastics in the frontal cortex of our brains \nincreased by about 50% between 2016 and 2024. You cannot take the current \nexposure levels to plastic and say, let's double them in the human race \nand just see what happens. I mean, that's just idiotic. The problem is that plastic never \nfully decomposes. It just breaks down into smaller \nand smaller pieces. When it becomes smaller than five \nmillimeters. That's about the width of a pencil \neraser. It's called a microplastic. But then a subset called nano \nplastics can get much, much smaller, so small that t",
+      "link": "https://www.youtube.com/watch?v=_6EHNWJGY6M",
+      "published": "2025-08-14T16:01:03Z",
+      "source_type": "youtube",
+      "channel": "CNBC",
+      "video_id": "_6EHNWJGY6M",
+      "transcript_method": "youtube_transcript_api",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Plastic Ocean",
+      "summary": "[Music] PLASTIC OCEAN Plastic is wonderful because it's durable and plastic is terrible because it is durable. Almost every piece of plastic ever made is still on the planet in some form or another. Plastic production globally this year is expected to be more than 300 million tons. Half of which we'll use just once and then throw away. By 2050, when the population explodes to almost 10 billion people, it's expected that plastic production will triple. The problem with that is is that today only a fraction of the plastic that we produce is recycled. The rest ends up in our environment and it's coating our lands and our oceans like a disease. [Music] Garbage thrown away in the United States can make its way to Antarctica. Plastic in our coastal waters is pulled into the center of massive win",
+      "link": "https://www.youtube.com/watch?v=ju_2NuK5O-E",
+      "published": "2017-05-24T17:14:55Z",
+      "source_type": "youtube",
+      "channel": "United Nations",
+      "video_id": "ju_2NuK5O-E",
+      "transcript_method": "youtube_transcript_api",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ]
+}

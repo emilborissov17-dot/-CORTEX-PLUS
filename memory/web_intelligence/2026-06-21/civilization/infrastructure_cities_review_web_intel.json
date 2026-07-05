@@ -1,0 +1,46 @@
+{
+  "axis": "INFRASTRUCTURE_CITIES_REVIEW",
+  "domain": "civilization",
+  "timestamp": "2026-06-21T19:45:41.920862+00:00",
+  "sources_count": 4,
+  "rss_count": 4,
+  "ddg_count": 0,
+  "youtube_count": 0,
+  "youtube_items": [],
+  "analysis": {
+    "action": "Adopt mandatory inclusionary zoning that requires at least 20 % of new units to be affordable for low‑ and moderate‑income households, combined with a city‑wide housing trust to acquire and preserve existing affordable stock",
+    "measurable_goal": "Number of affordable units created or preserved per year (target: 5,000 units within three years) and reduction in annual displacement rate by 15 % within five years",
+    "timeframe": "short-term",
+    "severity": "UNKNOWN"
+  },
+  "raw_items": [
+    {
+      "title": "Chicago to buy, renovate Greyhound bus terminal",
+      "summary": "<p>The city&rsquo;s action, aimed at improving the customer experience for some 450,000 riders each year, saves the bus station from possible closure or demolition.</p>",
+      "link": "https://www.smartcitiesdive.com/news/chicago-buy-renovate-greyhound-bus-terminal/823261/",
+      "published": "Thu, 18 Jun 2026 11:47:00 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "As a Maryland city mulls upzoning, a Realtor association study touts its benefits",
+      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.com/SdilQhaMkIMWS6urkZkKCWVYtRU0lUedMMnFqGG8Hfc/g:ce/rs:fill:1600:900:1/Z3M6Ly9kaXZlc2l0ZS1zdG9yYWdlL2RpdmVpbWFnZS9HZXR0eUltYWdlcy02MjQyODkzMzIuanBn.webp\" /></div></figure><p>A &ldquo;missing middle&rdquo; housing proposal in Rockville, Maryland, would boost the city&rsquo;s housing stock 4.5%, the local Realtor association said.</p>",
+      "link": "https://www.smartcitiesdive.com/news/rockville-maryland-missing-middle-zoning-realtor-study-gcaar/823161/",
+      "published": "Wed, 17 Jun 2026 11:49:15 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "Biking in US cities is getting better, 2026 report says",
+      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.com/ZRJiSJzN_EbsN-H_CtQ5m5FXTaZ9ENhL4esB-qCaZ5k/g:ce/rs:fill:1600:900:1/Z3M6Ly9kaXZlc2l0ZS1zdG9yYWdlL2RpdmVpbWFnZS9HZXR0eUltYWdlcy0yMjcxMzY3MjY1LmpwZw==.webp\" /></div></figure><p>In PeopleForBikes&rsquo; annual rating, the number of cities with bike infrastructure that scored 50 or higher on a 100-point scale more than doubled this year.</p>",
+      "link": "https://www.smartcitiesdive.com/news/peopleforbikes-us-cities-biking-2026-rankings/823116/",
+      "published": "Wed, 17 Jun 2026 11:28:00 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "We can’t build our way out of the housing crisis while losing homes every day",
+      "summary": "<figure><div><img src=\"https://imgproxy.divecdn.com/oU-feK5uw7bMxIiHc3_pfsTC-3owwTwqoMF5IarfBus/g:ce/rs:fill:1600:900:1/Z3M6Ly9kaXZlc2l0ZS1zdG9yYWdlL2RpdmVpbWFnZS9HZXR0eUltYWdlcy05NTMwOTA5NTIuanBn.webp\" /></div></figure><p>The path forward is not just about adding supply. It is also about protecting it.</p>",
+      "link": "https://www.smartcitiesdive.com/news/cant-build-way-out-housing-crisis-while-losing-homes/823117/",
+      "published": "Wed, 17 Jun 2026 08:16:21 -0400",
+      "source_type": "rss"
+    }
+  ]
+}

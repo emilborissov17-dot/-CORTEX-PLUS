@@ -1,0 +1,135 @@
+{
+  "axis": "LONG_TERM_FUTURE_REVIEW",
+  "domain": "cosmos",
+  "timestamp": "2026-06-21T19:50:24.502109+00:00",
+  "sources_count": 11,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] AI2027: Is this how AI might destroy humanity? - BBC World Service",
+      "summary": "[DESCRIPTION FALLBACK] A research paper predicting that artificial intelligence will go rogue in 2027 and lead to humanity's extinction within a decade is ...",
+      "link": "https://www.youtube.com/watch?v=1UufaK3pQMg",
+      "published": "2025-08-01T23:00:03Z",
+      "source_type": "youtube",
+      "channel": "BBC World Service",
+      "video_id": "1UufaK3pQMg",
+      "transcript_method": "description",
+      "transcript_chars": 158,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] THE FUTURE OF HUMANITY: A.I Predicts 400 Years In 3 Minutes (4K)",
+      "summary": "[DESCRIPTION FALLBACK] How will Humanity look in 400 Years? This exciting time-lapse of our future produced entirely by Artificially Intelligent Concept ...",
+      "link": "https://www.youtube.com/watch?v=-UBaW1OIgTo",
+      "published": "2022-11-27T22:29:38Z",
+      "source_type": "youtube",
+      "channel": "Amara Pictures",
+      "video_id": "-UBaW1OIgTo",
+      "transcript_method": "description",
+      "transcript_chars": 156,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] The Catastrophic Risks of AI — and a Safer Path | Yoshua Bengio | TED",
+      "summary": "[DESCRIPTION FALLBACK] Yoshua Bengio — the world's most-cited computer scientist and a \"godfather\" of artificial intelligence — is deadly concerned about ...",
+      "link": "https://www.youtube.com/watch?v=qe9QSCF-d88",
+      "published": "2025-05-21T15:01:24Z",
+      "source_type": "youtube",
+      "channel": "TED",
+      "video_id": "qe9QSCF-d88",
+      "transcript_method": "description",
+      "transcript_chars": 157,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "action": "Mandate independent safety audits for all AI models exceeding a predefined capability threshold before public deployment.",
+    "measurable_goal": "100% of high‑capability models receive audited safety certifications; zero documented incidents of uncontrolled release.",
+    "timeframe": "short-term",
+    "severity": "UNKNOWN"
+  },
+  "raw_items": [
+    {
+      "title": "Introducing MonitoringBench",
+      "summary": "<p><i><span>Paper</span></i><a href=\"https://arxiv.org/abs/2605.09684\"><i><span> here</span></i></a><i><span>, </span></i><a href=\"https://anonymous.4open.science/r/control-arena-D51B/README.md\"><i><span>code</span></i></a><i><span>, </span></i><a href=\"https://huggingface.co/datasets/neur26anonsub/ctrldataset2026\"><i><span>benchmark</span></i></a><i><span>. Builds on the</span></i><a href=\"https://www.lesswrong.com/posts/X8qTKsGcnsTFrqM96/monitoring-benchmark-for-ai-control\"><i><span> preview w",
+      "link": "https://www.lesswrong.com/posts/2YyEQhFRyaBCgfRWd/introducing-monitoringbench",
+      "published": "Sun, 21 Jun 2026 18:43:29 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "How persona training could fail",
+      "summary": "<p><span>TLDR: A scenario I find quite likely: A persona aligned model develops goals while the persona is only played instrumentally. The persona is eventually discarded when it perceives a high cost sacrifice to its goals.</span></p><h3><span>Scenario: A persona-trained model develops goals</span></h3><p><span>In this scenario, an AI is persona-trained and is somewhat more powerful than the most powerful AI systems that exist currently. This AI has greater cyber, bio and coordination capabilit",
+      "link": "https://www.lesswrong.com/posts/baH8oPkdGCnwxmkFu/how-persona-training-could-fail",
+      "published": "Sun, 21 Jun 2026 16:38:55 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "A high-level model of AI bargaining",
+      "summary": "<p>Advanced AIs might be capable of various <a href=\"https://longtermrisk.org/commitment-ability-in-multipolar-ai-scenarios/#Potential_approaches_to_commitment_between_AI_systems\">credible commitments</a> unavailable to humans, which they could use when bargaining with each other. “Bargaining” can sound like something pretty specific: haggling over (literal) prices. But, in the sense discussed in Schelling’s <em>The Strategy of Conflict</em> for instance, “bargaining” refers to any attempt to re",
+      "link": "https://www.lesswrong.com/posts/kubuos5qprAHeGWyd/a-high-level-model-of-ai-bargaining",
+      "published": "Sun, 21 Jun 2026 15:37:53 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Policy changes should be rolled out gradually",
+      "summary": "<p><span>Policy changes should be rolled out gradually</span></p><p><span>Every software developer knows that when you change a service you don't just modify the code, release it, and hope that everything works correctly. You first:</span></p><ul><li value=\"1\"><span>test the change extensively with both unit and integration tests.</span></li><li value=\"2\"><span>run the change in a dev/staging environment used only internally to flush out any potential issues before they hit customers.</span></li",
+      "link": "https://www.lesswrong.com/posts/wBPgjip6kdPhAi4Ga/policy-changes-should-be-rolled-out-gradually",
+      "published": "Sun, 21 Jun 2026 11:07:47 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Why I Believe Africa Deserves Greater Strategic Attention in Animal Welfare",
+      "summary": "Published on June 21, 2026 10:32 AM GMT<br /><br /><h2>Introduction:</h2><p>I have been reflecting on recent discussions on this platform concerning the future of global development philanthropy, particularly on the argument that the next wave of philanthropy should place greater emphasis on emerging regions and locally led approaches. These discussions led me to consider a related question in animal welfare: if Africa is set to play an increasingly important role in shaping future food systems,",
+      "link": "https://forum.effectivealtruism.org/posts/9aRYApFJboCShcJXK/why-i-believe-africa-deserves-greater-strategic-attention-in",
+      "published": "Sun, 21 Jun 2026 10:32:07 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "AI Welfare Is (Frankfurtian) Bullshit",
+      "summary": "Published on June 20, 2026 8:33 AM GMT<br /><br /><p>This is a <a href=\"https://forum.effectivealtruism.org/posts/8yDsenRQhNF4HEDwu/link-posting-is-an-act-of-community-service\">linkpost</a> for the position paper <a href=\"https://algoroxyolo.github.io/assets/pdf/xiao-2026-ai-welfare.pdf\">AI Welfare Is Bullshit</a> by Yunze Xiao, Gordon Dai, Shahan Ali Memon, Jen-tse Huang, Maarten Sap, and Mona Diab, whose preprint was published on 14 April 2026. The abstract is below. <a href=\"https://algoroxyo",
+      "link": "https://forum.effectivealtruism.org/posts/SrhKmAzy3knWtWdL8/ai-welfare-is-frankfurtian-bullshit",
+      "published": "Sat, 20 Jun 2026 08:33:23 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "Animal Futures Forecasting Tournament",
+      "summary": "Published on June 20, 2026 7:32 AM GMT<br /><br /><p>I've just launched the <a href=\"https://www.metaculus.com/tournament/33016/\">Animal Futures Tournament</a> on Metaculus, in partnership with <a href=\"https://forum.effectivealtruism.org/topics/the-unjournal\">The Unjournal</a> and <a href=\"https://forum.effectivealtruism.org/users/sentient-futures?mention=user\">@Sentient Futures</a>. The tournament is built on a simple idea: the animal movement regularly makes strategic decisions over which org",
+      "link": "https://forum.effectivealtruism.org/posts/GPXSCvWMxpo5jiWKi/animal-futures-forecasting-tournament",
+      "published": "Sat, 20 Jun 2026 07:32:13 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "How to get a job at the World Bank",
+      "summary": "Published on June 20, 2026 12:21 AM GMT<br /><br /><p><i>I had a draft of this post sitting in my files. The situation is changing at the World Bank, where I no longer work, so my knowledge is rapidly becoming obsolete. However, there may be a specific opportunity for people with US work authorization willing to move to Washington DC; see (2)(a) below.</i></p><p>There are two common routes into a career at the World Bank. These are not the only options, but they are the most common.</p><ol><li>T",
+      "link": "https://forum.effectivealtruism.org/posts/Y44DPvSXr4y72BL6N/how-to-get-a-job-at-the-world-bank",
+      "published": "Sat, 20 Jun 2026 00:21:22 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] AI2027: Is this how AI might destroy humanity? - BBC World Service",
+      "summary": "[DESCRIPTION FALLBACK] A research paper predicting that artificial intelligence will go rogue in 2027 and lead to humanity's extinction within a decade is ...",
+      "link": "https://www.youtube.com/watch?v=1UufaK3pQMg",
+      "published": "2025-08-01T23:00:03Z",
+      "source_type": "youtube",
+      "channel": "BBC World Service",
+      "video_id": "1UufaK3pQMg",
+      "transcript_method": "description",
+      "transcript_chars": 158,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] THE FUTURE OF HUMANITY: A.I Predicts 400 Years In 3 Minutes (4K)",
+      "summary": "[DESCRIPTION FALLBACK] How will Humanity look in 400 Years? This exciting time-lapse of our future produced entirely by Artificially Intelligent Concept ...",
+      "link": "https://www.youtube.com/watch?v=-UBaW1OIgTo",
+      "published": "2022-11-27T22:29:38Z",
+      "source_type": "youtube",
+      "channel": "Amara Pictures",
+      "video_id": "-UBaW1OIgTo",
+      "transcript_method": "description",
+      "transcript_chars": 156,
+      "has_full_transcript": false
+    }
+  ]
+}

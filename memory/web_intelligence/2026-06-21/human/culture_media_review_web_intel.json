@@ -1,0 +1,157 @@
+{
+  "axis": "CULTURE_MEDIA_REVIEW",
+  "domain": "human",
+  "timestamp": "2026-06-21T19:45:07.551186+00:00",
+  "sources_count": 11,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] How false news can spread - Noah Tavlin",
+      "summary": "There's a quote usually attributed\nto the writer Mark Twain that goes, \"A lie can travel \nhalfway around the world while the truth is putting on its shoes.\" Funny thing about that. There's reason to doubt\nthat Mark Twain ever said this at all, thus, ironically, proving the point. And today, the quote, whoever said it,\nis truer than ever before. In previous decades, \nmost media with global reach consisted of several \nmajor newspapers and networks which had the resources\nto gather information directly. Outlets like Reuters\nand the Associated Press that aggregate or rereport stories\nwere relatively rare compared to today. The speed with which \ninformation spreads now has created the ideal conditions for\na phenomenon known as circular reporting. This is when publication A\npublishes misinformat",
+      "link": "https://www.youtube.com/watch?v=cSKGa_7XJkg",
+      "published": "2015-08-27T15:12:55Z",
+      "source_type": "youtube",
+      "channel": "TED-Ed",
+      "video_id": "cSKGa_7XJkg",
+      "transcript_method": "youtube_transcript_api",
+      "transcript_chars": 2826,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] How dangerous are TikTok &amp; Co. for democracy?",
+      "summary": "Is social media a\nthreat to democracy? Online radicalization is\ndividing societies globally. Many people blame social media:\nwe interact in echo chambers and algorithms make sure we see\nopinions similar to our own. What's behind this? Let's take a closer look- on SHIFT. Messaging friends, checking out new\ndances, and sneaking a peek at your crush's posts...all while\ncatching up on the latest news. That’s how a lot people use\nTikTok, Instagram, or Facebook. But that’s just one side of\nsocial media, says Indian software developer Sairaj Balaji. People need to understand that social\nmedia now is not the same as it was ten years ago. It is now a word minefield, a\nbattlefield for information warfare. Information warfare using\nAI, but we'll get to that later. Everyone is fighting for your\nattent",
+      "link": "https://www.youtube.com/watch?v=FczicUSRGwU",
+      "published": "2025-11-15T16:00:32Z",
+      "source_type": "youtube",
+      "channel": "DW Shift",
+      "video_id": "FczicUSRGwU",
+      "transcript_method": "youtube_transcript_api",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Maria Ressa - Disinformation on Social Media Is Threat to Democracy",
+      "summary": "American biologist, E.O.\nWilson said it best. We're facing paleolithic\nemotions, medieval institutions, and God-like technology. Social media has become a\nbehavior modification system and we are Pavlov's dogs, experimented on in real time\nwith disastrous consequences. Facebook is the world's\nlargest distributor of news and yet studies have shown that lies laced with anger and hate spread faster and further\nthan really boring facts. The very platforms and social media that deliver the facts to\nyou are biased against facts. They're biased against journalists. They are by design dividing\nus and radicalizing us.",
+      "link": "https://www.youtube.com/watch?v=JLWBV_QUG10",
+      "published": "2021-04-15T17:34:18Z",
+      "source_type": "youtube",
+      "channel": "Skoll.org",
+      "video_id": "JLWBV_QUG10",
+      "transcript_method": "youtube_transcript_api",
+      "transcript_chars": 615,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "The spread of false information and disinformation on social media platforms, such as TikTok and Facebook, threatens democracy and divides societies globally",
+    "root_cause": "The combination of paleolithic emotions, medieval institutions, and God-like technology, as well as the use of algorithms that prioritize sensational and provocative content, creates an environment where lies and misinformation can spread quickly",
+    "severity": "HIGH",
+    "leverage_points": [
+      "Social media companies and their algorithms",
+      "Government regulations and fact-checking initiatives"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Implementing fact-checking mechanisms and labeling suspicious content on social media platforms",
+        "measurable_goal": "Reduce the spread of false information by 20% within the next 6 months",
+        "timeframe": "short-term"
+      },
+      {
+        "action": "Developing and implementing media literacy programs in schools and communities",
+        "measurable_goal": "Increase the number of people who can critically evaluate online information by 30% within the next year",
+        "timeframe": "medium-term"
+      }
+    ],
+    "evidence": [
+      "A lie can travel halfway around the world while the truth is putting on its shoes, as quoted by Mark Twain",
+      "Studies have shown that lies laced with anger and hate spread faster on social media platforms, as mentioned by Maria Ressa"
+    ],
+    "generalization": "This problem connects to the domains of human (culture and social media), civilization (democracy and institutions), and planet (global interconnectedness and technology)",
+    "summary": "The spread of false information on social media threatens democracy and requires immediate attention and action from social media companies, governments, and individuals",
+    "risk_level": "HIGH"
+  },
+  "raw_items": [
+    {
+      "title": "The Dad Movie Canon: Films That Define Dad Cinema",
+      "summary": "What is it about a certain kind of film that appeals to fathers? Our writer took a stab at defining Dad Cinema and rounding up its greatest hits.",
+      "link": "https://www.nytimes.com/2026/06/21/movies/dad-movies.html",
+      "published": "Sun, 21 Jun 2026 04:01:07 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "With ‘Girls Like Girls,’ Hayley Kiyoko Turns Her Teenage Pain Into Art",
+      "summary": "The once-closeted star has reinvented her song “Girls Like Girls” as a best-selling Y.A. novel and a new theatrical film. It wasn’t easy.",
+      "link": "https://www.nytimes.com/2026/06/21/movies/hayley-kiyoko-interview-girls-like-girls.html",
+      "published": "Sun, 21 Jun 2026 09:01:52 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "For Heirs of Custer and Sitting Bull, a 150-Year-Old Battle Is Personal",
+      "summary": "As the anniversary of the Battle of the Little Bighorn approaches, relatives of the two men still grapple with the legacy of a contentious moment in U.S. history.",
+      "link": "https://www.nytimes.com/2026/06/21/arts/for-heirs-of-custer-and-sitting-bull-a-150-year-old-battle-is-personal.html",
+      "published": "Sun, 21 Jun 2026 15:29:23 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "San Antonio Mayor Says Kanye West’s July 4 Concert There Should Be Canceled",
+      "summary": "The mayor’s appeal comes after several of the rapper’s shows were canceled in Europe. A planned concert in Tampa, Fla., has also raised concern.",
+      "link": "https://www.nytimes.com/2026/06/21/arts/music/kanye-west-ye-san-antonio-concert-antisemitism.html",
+      "published": "Sun, 21 Jun 2026 17:24:08 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "One Van Gogh is never enough! So how many Sunflowers did he paint? Find out in our great British museum quiz",
+      "summary": "<p>What’s Britain’s best museum? We asked the five shortlisted for the Art Fund’s £120,000 prize to pose questions about their collections. Here, National Gallery curators get the ball rolling … so do you know the story of their cut-up Manet? </p><p></p><p></p> <a href=\"https://www.theguardian.com/artanddesign/2026/jun/21/van-gogh-sunflowers-national-gallery-art-fund\">Continue reading...</a>",
+      "link": "https://www.theguardian.com/artanddesign/2026/jun/21/van-gogh-sunflowers-national-gallery-art-fund",
+      "published": "Sun, 21 Jun 2026 06:00:23 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "‘My mum says I’m not working class any more!’: Olivia Cooke on power, privilege, and dividing audiences in House of Dragon",
+      "summary": "<p>The actor has a knack for playing characters that test viewers’ loyalties. As the Game of Thrones prequel returns, she talks problem fans, ‘boy mums’ and why the arts should be for everyone</p><p>House of the Dragon is a massive television series. Over two seasons, the prequel to Game of Thrones has seduced viewers with its plotting, backstabbing, candlelit meetings about war, and massive sheep-munching dragons. Olivia Cooke’s dad, however, did not get the memo.</p><p>We’re in London, on a st",
+      "link": "https://www.theguardian.com/tv-and-radio/2026/jun/21/olivia-cooke-interview-house-dragon-game-thrones-girlfriend",
+      "published": "Sun, 21 Jun 2026 09:00:27 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "A to B review – relentless mishaps as nothing goes to plan on blind date",
+      "summary": "<p><strong>Soho theatre, London</strong><br />Told through two overlapping monologues, Brianna and Armani prepare for a night that could change the course of their lives</p><p>All the nerves, hope and anticipation of getting ready for a date melt together in Tia-Renee Mullings’s coming-of-age play. Told through two separate, overlapping monologues, Brianna (Zakiyyah Dean) and Armani (Sheyi Cole) prepare for a night that could change the course of their lives for the better. Or it could go horrib",
+      "link": "https://www.theguardian.com/stage/2026/jun/21/a-to-b-review-blind-date-soho-theatre-london",
+      "published": "Sun, 21 Jun 2026 13:07:31 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "‘How do I deal with my rage? I put it in everything I do’: Killing Eve’s Sandra Oh on fury, friendship and hitting her prime in midlife",
+      "summary": "<p>It took a long time for the actor to find her groove – then the smash TV spy thriller changed everything. She talks about getting advice from A-listers, speaking her mind, and why she’s switching to theatre</p><p>Sandra Oh bursts into a back room at the National Theatre in London with wayward post-rehearsal energy. The 54-year-old, long one of the most stylish actors in Hollywood, is in brown linen, a herringbone jacket and hat and sunglasses, which she removes before collapsing into a chair ",
+      "link": "https://www.theguardian.com/tv-and-radio/2026/jun/20/sandra-oh-interview-killing-eve-theatre",
+      "published": "Sat, 20 Jun 2026 11:00:05 GMT",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] How false news can spread - Noah Tavlin",
+      "summary": "There's a quote usually attributed\nto the writer Mark Twain that goes, \"A lie can travel \nhalfway around the world while the truth is putting on its shoes.\" Funny thing about that. There's reason to doubt\nthat Mark Twain ever said this at all, thus, ironically, proving the point. And today, the quote, whoever said it,\nis truer than ever before. In previous decades, \nmost media with global reach consisted of several \nmajor newspapers and networks which had the resources\nto gather information directly. Outlets like Reuters\nand the Associated Press that aggregate or rereport stories\nwere relatively rare compared to today. The speed with which \ninformation spreads now has created the ideal conditions for\na phenomenon known as circular reporting. This is when publication A\npublishes misinformat",
+      "link": "https://www.youtube.com/watch?v=cSKGa_7XJkg",
+      "published": "2015-08-27T15:12:55Z",
+      "source_type": "youtube",
+      "channel": "TED-Ed",
+      "video_id": "cSKGa_7XJkg",
+      "transcript_method": "youtube_transcript_api",
+      "transcript_chars": 2826,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] How dangerous are TikTok &amp; Co. for democracy?",
+      "summary": "Is social media a\nthreat to democracy? Online radicalization is\ndividing societies globally. Many people blame social media:\nwe interact in echo chambers and algorithms make sure we see\nopinions similar to our own. What's behind this? Let's take a closer look- on SHIFT. Messaging friends, checking out new\ndances, and sneaking a peek at your crush's posts...all while\ncatching up on the latest news. That’s how a lot people use\nTikTok, Instagram, or Facebook. But that’s just one side of\nsocial media, says Indian software developer Sairaj Balaji. People need to understand that social\nmedia now is not the same as it was ten years ago. It is now a word minefield, a\nbattlefield for information warfare. Information warfare using\nAI, but we'll get to that later. Everyone is fighting for your\nattent",
+      "link": "https://www.youtube.com/watch?v=FczicUSRGwU",
+      "published": "2025-11-15T16:00:32Z",
+      "source_type": "youtube",
+      "channel": "DW Shift",
+      "video_id": "FczicUSRGwU",
+      "transcript_method": "youtube_transcript_api",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ]
+}

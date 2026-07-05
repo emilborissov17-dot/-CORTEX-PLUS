@@ -1,0 +1,139 @@
+{
+  "axis": "COGNITION_LEARNING_REVIEW",
+  "domain": "human",
+  "timestamp": "2026-06-21T19:45:28.740686+00:00",
+  "sources_count": 6,
+  "rss_count": 3,
+  "ddg_count": 0,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] Inequality in Irish education | The Classroom Divide | RTÉ One",
+      "summary": "nine thousand kids a year don't complete second-level education so that's nine thousand lives are being devastated every year because of the failures of the education system and nobody's paying attention there's a tendency to look at the schools that I was in that my wife was in to say oh they're not the schools that they were and what they mean is that a lot private schools it's not an accident that our prison population have such high levels of illiteracy it's not an accident that the family is more likely to fall into homelessness are those who come from a particular educational background",
+      "link": "https://www.youtube.com/watch?v=wtfjTyt392E",
+      "published": "2017-09-18T11:03:40Z",
+      "source_type": "youtube",
+      "channel": "RTÉ - IRELAND’S NATIONAL PUBLIC SERVICE MEDIA",
+      "video_id": "wtfjTyt392E",
+      "transcript_method": "youtube_transcript_api",
+      "transcript_chars": 599,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] What Google Search Data Tells Us About Inequality in Online Learning During the Pandemic",
+      "summary": "Let's, um, let's go ahead and get started.\nUm, hello everyone. My name is Marcus Winters. I'm an\nassociate press- uh, professor here at the BU Wheelock\nCollege of Education and, uh, um, and Human Development. Um, I'm really excited to- to be here today to moderate this panel.\nUm, this is the Social Justice and Equity Seminar\nseries, um, that we host within the college, um,\nevery Thursday at this time. Um, so please, uh, if you're if you're new\nto the series, uh, please keep an eye out for- for our future events.\nUm, I want to let everyone know at the beginning here that we will be recording\nthis session, um, the- the session will be made publicly\navailable for your ability to review and also for, for\nsharing as well. Um, another, uh, just a house-cleaning note,\num, during the session the- ",
+      "link": "https://www.youtube.com/watch?v=kkrIQ2hJgxE",
+      "published": "2020-09-17T23:37:18Z",
+      "source_type": "youtube",
+      "channel": "Wheelock College of Education & Human Development",
+      "video_id": "kkrIQ2hJgxE",
+      "transcript_method": "youtube_transcript_api",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Do Learning Pods Widen the Education Gap?",
+      "summary": "Now joining us is NYU professor Dr. L'Heureux Lewis-McCoy He's the author of the book, \"Inequality in the Promised Land: Race, Resources, and Suburban Schooling\". He feels that pods might actually cause more problems than they actually solve. Dr. Lewis-McCoy, thanks for joining me. My pleasure, thank you for having me on. So you feel as though parents are forming these pods, with their family's best interest in mind but this could actually be widening the education gap. How so? Well, parents are responding to a very uncertain moment. Whether schools will be open, whether there'll be hybrid whether there'll be online and safe. And so parents are choosing sometimes safety for their own children. But this is a prime example of what I call opportunity hoarding. When people create these pods, w",
+      "link": "https://www.youtube.com/watch?v=rme_vbn5W-U",
+      "published": "2020-10-06T10:05:55Z",
+      "source_type": "youtube",
+      "channel": "The Doctors",
+      "video_id": "rme_vbn5W-U",
+      "transcript_method": "youtube_transcript_api",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "High dropout rate and widening achievement gap in secondary education, exemplified by 9,000 Irish students annually leaving school without qualification",
+    "root_cause": "Structural inequality in education funding and resources, amplified by privatization, unequal digital access during the pandemic, and the emergence of private learning pods that concentrate advantages among already privileged families",
+    "severity": "HIGH",
+    "leverage_points": [
+      "National education ministries and policy makers who allocate funding and set curriculum standards",
+      "Public school infrastructure and digital connectivity providers"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Increase per‑student funding for public secondary schools to match or exceed private school resources",
+        "measurable_goal": "Reduce the annual dropout figure from 9,000 to under 4,000 within five years",
+        "timeframe": "medium-term"
+      },
+      {
+        "action": "Implement a universal broadband and device program for all secondary students, ensuring equitable online learning access",
+        "measurable_goal": "100% of students have reliable internet and a device by the start of the next academic year",
+        "timeframe": "short-term"
+      },
+      {
+        "action": "Regulate and integrate learning pods into the public school system, providing state‑funded support and oversight",
+        "measurable_goal": "No increase in achievement disparity between pod participants and non‑participants after three years",
+        "timeframe": "long-term"
+      }
+    ],
+    "evidence": [
+      "\"nine thousand kids a year don't complete second-level education\" (Irish education transcript)",
+      "\"learning pods might actually cause more problems than they actually solve\" (NYU professor statement)"
+    ],
+    "generalization": "Educational inequality undermines human development (Human domain) and fuels broader socioeconomic disparities (Civilization domain), which in turn affect planetary sustainability by limiting equitable participation in climate and resource stewardship",
+    "summary": "Systemic resource gaps and unregulated private learning options are driving a severe secondary‑education dropout crisis, threatening human dignity and long‑term societal resilience.",
+    "risk_level": "HIGH"
+  },
+  "raw_items": [
+    {
+      "title": "Lotus: A Woman’s Journey oLotus: A Woman’s Journey of Empowerment",
+      "summary": "DOCUMENTARY FILM In the documentary educational film &#8220;The Taboo of Sovereignty, Money, Love and Power,&#8221; Mr. Liberty explores the taboos seldom discussed in polite conversation. He reveals the nature of global power structures, money as a control system and the futility of elections. He is empowering people with popular sovereignty as a key to unlocking [&#8230;]",
+      "link": "https://mindshiftentertainment.wordpress.com/2005/04/01/hello-world/",
+      "published": "Fri, 01 Apr 2005 21:27:39 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Lotus: A Woman’s Journey of Empowerment",
+      "summary": "CLAIRE GAILLARD &#8211; DANCE IS LIFE! &#8220;From the revelation that disconnectedness between people and their passion, between individuals and their communities, reflect agonized personal wounds in each of us, her Empower Moves was birthed. It builds community and honors the People with Transcendance through story telling and interpretive forms of dance, allowing ecstatic communion, reconnection [&#8230;]",
+      "link": "https://mindshiftentertainment.wordpress.com/2003/03/23/lotus-a-womans-journey-of-empowerment/",
+      "published": "Sun, 23 Mar 2003 23:15:05 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Fresh Wave",
+      "summary": "JOHNNY LIGHT For over three decades, Johnny Light has been guided by a vision of a new world coming, the “fresh wave” is coming. These twelve songs are professionally produced and arranged, an album of his finest original compositions recorded with Michael Cooper at Rising Star Studios in Eugene, Oregon. Songs like Yes, Nobody’s Gonna [&#8230;]",
+      "link": "https://mindshiftentertainment.wordpress.com/1988/09/09/fresh-wave/",
+      "published": "Fri, 09 Sep 1988 23:17:22 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] Inequality in Irish education | The Classroom Divide | RTÉ One",
+      "summary": "nine thousand kids a year don't complete second-level education so that's nine thousand lives are being devastated every year because of the failures of the education system and nobody's paying attention there's a tendency to look at the schools that I was in that my wife was in to say oh they're not the schools that they were and what they mean is that a lot private schools it's not an accident that our prison population have such high levels of illiteracy it's not an accident that the family is more likely to fall into homelessness are those who come from a particular educational background",
+      "link": "https://www.youtube.com/watch?v=wtfjTyt392E",
+      "published": "2017-09-18T11:03:40Z",
+      "source_type": "youtube",
+      "channel": "RTÉ - IRELAND’S NATIONAL PUBLIC SERVICE MEDIA",
+      "video_id": "wtfjTyt392E",
+      "transcript_method": "youtube_transcript_api",
+      "transcript_chars": 599,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] What Google Search Data Tells Us About Inequality in Online Learning During the Pandemic",
+      "summary": "Let's, um, let's go ahead and get started.\nUm, hello everyone. My name is Marcus Winters. I'm an\nassociate press- uh, professor here at the BU Wheelock\nCollege of Education and, uh, um, and Human Development. Um, I'm really excited to- to be here today to moderate this panel.\nUm, this is the Social Justice and Equity Seminar\nseries, um, that we host within the college, um,\nevery Thursday at this time. Um, so please, uh, if you're if you're new\nto the series, uh, please keep an eye out for- for our future events.\nUm, I want to let everyone know at the beginning here that we will be recording\nthis session, um, the- the session will be made publicly\navailable for your ability to review and also for, for\nsharing as well. Um, another, uh, just a house-cleaning note,\num, during the session the- ",
+      "link": "https://www.youtube.com/watch?v=kkrIQ2hJgxE",
+      "published": "2020-09-17T23:37:18Z",
+      "source_type": "youtube",
+      "channel": "Wheelock College of Education & Human Development",
+      "video_id": "kkrIQ2hJgxE",
+      "transcript_method": "youtube_transcript_api",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Do Learning Pods Widen the Education Gap?",
+      "summary": "Now joining us is NYU professor Dr. L'Heureux Lewis-McCoy He's the author of the book, \"Inequality in the Promised Land: Race, Resources, and Suburban Schooling\". He feels that pods might actually cause more problems than they actually solve. Dr. Lewis-McCoy, thanks for joining me. My pleasure, thank you for having me on. So you feel as though parents are forming these pods, with their family's best interest in mind but this could actually be widening the education gap. How so? Well, parents are responding to a very uncertain moment. Whether schools will be open, whether there'll be hybrid whether there'll be online and safe. And so parents are choosing sometimes safety for their own children. But this is a prime example of what I call opportunity hoarding. When people create these pods, w",
+      "link": "https://www.youtube.com/watch?v=rme_vbn5W-U",
+      "published": "2020-10-06T10:05:55Z",
+      "source_type": "youtube",
+      "channel": "The Doctors",
+      "video_id": "rme_vbn5W-U",
+      "transcript_method": "youtube_transcript_api",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ]
+}

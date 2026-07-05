@@ -1,0 +1,158 @@
+{
+  "axis": "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL",
+  "domain": "human",
+  "timestamp": "2026-06-21T19:45:27.613420+00:00",
+  "sources_count": 11,
+  "rss_count": 8,
+  "ddg_count": 0,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] How Did Ancient Humans Know Which Plants Would Kill Them?",
+      "summary": "You are hungry. Three days with almost nothing to eat. You are walking through a forest and you see a red fruit hanging from a branch directly in front of you. It looks ripe. It smells faintly sweet. You have never seen this fruit before in your life. You have no phone to search. No book to check. No one nearby who knows what it is. Do you eat it or walk away. That is not a hypothetical question. That was a real decision ancient humans made thousands of times across thousands of generations. And the wrong answer did not mean an upset stomach. The wrong answer meant dying alone in the dark before morning came. Before we go further, type EAT in the comments if you would take the risk. Type PASS if you would walk away hungry. I want to see your answer before this video ends. Now here is what ",
+      "link": "https://www.youtube.com/watch?v=Dl1GmfpX6wo",
+      "published": "2026-06-21T16:32:41Z",
+      "source_type": "youtube",
+      "channel": "Early Us",
+      "video_id": "Dl1GmfpX6wo",
+      "transcript_method": "youtube_transcript_api",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Can Finance Activism End Factory Farming? AI, Divestment, and Animal Advocacy with Richie Richardson",
+      "summary": "There is a way to use AI that makes you stupider. And there's a way to use AI that makes you smarter. >> [music] >> Welcome to the Our Hen House interview. I'm Jasmine Singer. >> I'm Mary [music] Ann Sullivan. >> This is Murray and Shirley. We are going to welcome our guest today, Thomas Menander Richardson, also known as Richie. And I'm so excited to chat with Richie. Richie is the AI impact director at Vegan Hacktivists. And there he builds AI automations and provides AI education and consulting for organizations to help them have more impact for animals. And previously, he was the director of research at Bryant Research. Uh where he conducted research primarily on the economics and finance of factory farming, as well as food security and alternative proteins. Welcome to Our Hen House, R",
+      "link": "https://www.youtube.com/watch?v=CKFZo7sDSCM",
+      "published": "2026-06-19T09:00:36Z",
+      "source_type": "youtube",
+      "channel": "Our Hen House",
+      "video_id": "CKFZo7sDSCM",
+      "transcript_method": "youtube_transcript_api",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Voices For Humanity - Scientology Documentary Series",
+      "summary": "We must continue to bring this message... It's now time for a peace movement What we're trying to do is actually\nchange that culture and change that environment Voices for Humanity. Exclusively on\nScientology Network DIRECTV channel 320.",
+      "link": "https://www.youtube.com/watch?v=feYDc1T0GqM",
+      "published": "2018-03-29T02:23:13Z",
+      "source_type": "youtube",
+      "channel": "Scientology",
+      "video_id": "feYDc1T0GqM",
+      "transcript_method": "youtube_transcript_api",
+      "transcript_chars": 237,
+      "has_full_transcript": true
+    }
+  ],
+  "analysis": {
+    "problem": "Human rights violations and lack of accountability in governance, particularly in cases of child refugees, migrants, and political prisoners",
+    "root_cause": "Inadequate laws, corrupt institutions, and lack of transparency and accountability in governments and corporations",
+    "severity": "HIGH",
+    "leverage_points": [
+      "International human rights organizations and advocacy groups",
+      "National governments and their policy-making institutions"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Implement and enforce stricter laws and regulations to protect human rights, especially for vulnerable groups",
+        "measurable_goal": "Reduction in reported human rights violations and increase in accountability cases",
+        "timeframe": "medium-term"
+      },
+      {
+        "action": "Increase transparency and public awareness about human rights issues and governance accountability",
+        "measurable_goal": "Increase in public engagement and media coverage on human rights issues",
+        "timeframe": "short-term"
+      }
+    ],
+    "evidence": [
+      "The UK's discriminatory AI experiment on child refugees",
+      "Canada's blow to corporate accountability",
+      "Support builds to protect children from crimes against humanity"
+    ],
+    "generalization": "This problem connects to other domains such as biosphere (impact of human activities on the environment) and cosmos (long-term sustainability of human civilization)",
+    "summary": "Human rights violations and lack of accountability in governance pose a significant problem, requiring immediate attention and action from international organizations, governments, and advocacy groups. Proposed actions include implementing stricter laws and increasing transparency and public awareness.",
+    "risk_level": "HIGH"
+  },
+  "raw_items": [
+    {
+      "title": "The UK’s Discriminatory  AI Experiment on Child  Refugees",
+      "summary": "Click to expand Image\n          \n\n\n\n  \n        \n  \n\n        \n                      \n      \n        \n              Migrants walk towards a bus to be taken for processing after disembarking from a Royal National Lifeboat Institution (RNLI) lifeboat on a beach after crossing the English Channel, in Dungeness, England, on June 15, 2022.\n                    © 2022 Ben Stansall/AFP via Getty Images\n          \n    \n\n\n  \n<p>The UK Home Office&nbsp;is pushing ahead with&nbsp;plans to use AI technology to",
+      "link": "https://www.hrw.org/news/2026/06/19/the-uks-discriminatory-ai-experiment-on-child-refugees",
+      "published": "Fri, 19 Jun 2026 10:15:00 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "Canada Delivers a Blow to Corporate Accountability",
+      "summary": "Click to expand Image\n          \n\n\n\n  \n        \n  \n\n        \n                      \n      \n        \n              In this file image from undated video footage run by China's CCTV via AP Video, Muslim trainees work in a garment factory at the Hotan Vocational Education and Training Center in Hotan, Xinjiang, northwest China.\n                    © CCTV via AP Video, File\n          \n    \n\n\n  \n<p>The Canadian government’s&nbsp;elimination of the&nbsp;Canadian Ombudsperson for Responsible Enterprise",
+      "link": "https://www.hrw.org/news/2026/06/18/canada-delivers-a-blow-to-corporate-accountability",
+      "published": "Thu, 18 Jun 2026 16:03:50 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "Support Builds to Protect Children from Crimes Against Humanity",
+      "summary": "Click to expand Image\n          \n\n\n\n  \n        \n  \n\n        \n                      \n      \n        \n              Children wait near the site of Okhmatdyt children’s hospital hit by Russian missiles, in Kyiv, Ukraine, Monday, July 8, 2024.\n                    © 2024 Evgeniy Maloletka/AP Photo\n          \n    \n\n\n  \n<p>In the process leading toward a new international treaty to prevent and punish crimes against humanity, there is already growing, cross-regional support to ensure the final effort in",
+      "link": "https://www.hrw.org/news/2026/06/18/support-builds-to-protect-children-from-crimes-against-humanity",
+      "published": "Thu, 18 Jun 2026 14:50:47 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "Uzbekistan: Activist Held in Trumped-Up Case",
+      "summary": "Click to expand Image\n          \n\n\n\n  \n        \n  \n\n        \n                      \n      \n        \n              Javokhir Muminov (left) and Djura Akbarov (right) at the Kashkadarya Regional Prosecutor's Office, Uzbekistan.&nbsp;\n                    © 2025 Elena Urlaeva\n          \n    \n\n\n  \n<p>(Berlin, June 18, 2026) – Uzbek authorities should release a local human rights activist accused of extortion and investigate his allegations of abuse in police custody, Human Rights Watch said today. Jav",
+      "link": "https://www.hrw.org/news/2026/06/18/uzbekistan-activist-held-in-trumped-up-case",
+      "published": "Thu, 18 Jun 2026 03:19:51 -0400",
+      "source_type": "rss"
+    },
+    {
+      "title": "No Reset Without Releases: Georgia’s Political Prisoners and the Price of Better Relations with Washington",
+      "summary": "<span class=\"field field--name-title field--type-string field--label-hidden\">No Reset Without Releases: Georgia’s Political Prisoners and the Price of Better Relations with Washington</span>\n<span class=\"field field--name-uid field--type-entity-reference field--label-hidden\"><span lang=\"lang\">zevans@freedom…</span></span>\n<span class=\"field field--name-created field--type-created field--label-hidden\"><time class=\"datetime\" datetime=\"2026-06-10T01:00:39-04:00\" title=\"Wednesday, June 10, 2026 - 01",
+      "link": "https://freedomhouse.org/article/no-reset-without-releases-georgias-political-prisoners-and-price-better-relations",
+      "published": "Wed, 10 Jun 2026 05:00:39 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "The 2026 Mark Palmer Prize: Honoring H.E. Salome Zourabichvili",
+      "summary": "<div class=\"node node--type-event node--view-mode-rss ds-1col clearfix hero-no-header share-buttons-on\">\n\n\n        \n\n\n\n  <div class=\"no-header-wrapper\">\n    <span class=\"hr\"></span>\n    <div class=\"grid header\">\n      <div class=\"text-wrapper\">\n\n        \n        \n        <h1 class=\"basic-h1 dark-text\"><span class=\"field field--name-title field--type-string field--label-hidden\">The 2026 Mark Palmer Prize: Honoring H.E. Salome Zourabichvili</span>\n</h1>\n\n                </div>\n    </div>\n  </div>\n",
+      "link": "https://freedomhouse.org/event/2026-mark-palmer-prize-honoring-he-salome-zourabichvili",
+      "published": "Tue, 09 Jun 2026 15:07:39 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Freedom House Welcomes New Board Members Margaret Hoover, David Pressman",
+      "summary": "<span class=\"field field--name-title field--type-string field--label-hidden\">Freedom House Welcomes New Board Members Margaret Hoover, David Pressman </span>\n<span class=\"field field--name-uid field--type-entity-reference field--label-hidden\"><span lang=\"lang\">zevans@freedom…</span></span>\n<span class=\"field field--name-created field--type-created field--label-hidden\"><time class=\"datetime\" datetime=\"2026-06-04T00:01:01-04:00\" title=\"Thursday, June 4, 2026 - 00:01\">Thu, 06/04/2026 - 00:01</time>",
+      "link": "https://freedomhouse.org/article/freedom-house-welcomes-new-board-members-margaret-hoover-david-pressman",
+      "published": "Thu, 04 Jun 2026 04:01:01 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "David Pressman",
+      "summary": "<span class=\"field field--name-title field--type-string field--label-hidden\">David Pressman</span>\n<span class=\"field field--name-uid field--type-entity-reference field--label-hidden\"><span lang=\"lang\">zevans@freedom…</span></span>\n<span class=\"field field--name-created field--type-created field--label-hidden\"><time class=\"datetime\" datetime=\"2026-05-29T14:56:26-04:00\" title=\"Friday, May 29, 2026 - 14:56\">Fri, 05/29/2026 - 14:56</time>\n</span>\n\n  <div class=\"field field--name-field-person-type f",
+      "link": "https://freedomhouse.org/expert/david-pressman",
+      "published": "Fri, 29 May 2026 18:56:26 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] How Did Ancient Humans Know Which Plants Would Kill Them?",
+      "summary": "You are hungry. Three days with almost nothing to eat. You are walking through a forest and you see a red fruit hanging from a branch directly in front of you. It looks ripe. It smells faintly sweet. You have never seen this fruit before in your life. You have no phone to search. No book to check. No one nearby who knows what it is. Do you eat it or walk away. That is not a hypothetical question. That was a real decision ancient humans made thousands of times across thousands of generations. And the wrong answer did not mean an upset stomach. The wrong answer meant dying alone in the dark before morning came. Before we go further, type EAT in the comments if you would take the risk. Type PASS if you would walk away hungry. I want to see your answer before this video ends. Now here is what ",
+      "link": "https://www.youtube.com/watch?v=Dl1GmfpX6wo",
+      "published": "2026-06-21T16:32:41Z",
+      "source_type": "youtube",
+      "channel": "Early Us",
+      "video_id": "Dl1GmfpX6wo",
+      "transcript_method": "youtube_transcript_api",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    },
+    {
+      "title": "[YT] Can Finance Activism End Factory Farming? AI, Divestment, and Animal Advocacy with Richie Richardson",
+      "summary": "There is a way to use AI that makes you stupider. And there's a way to use AI that makes you smarter. >> [music] >> Welcome to the Our Hen House interview. I'm Jasmine Singer. >> I'm Mary [music] Ann Sullivan. >> This is Murray and Shirley. We are going to welcome our guest today, Thomas Menander Richardson, also known as Richie. And I'm so excited to chat with Richie. Richie is the AI impact director at Vegan Hacktivists. And there he builds AI automations and provides AI education and consulting for organizations to help them have more impact for animals. And previously, he was the director of research at Bryant Research. Uh where he conducted research primarily on the economics and finance of factory farming, as well as food security and alternative proteins. Welcome to Our Hen House, R",
+      "link": "https://www.youtube.com/watch?v=CKFZo7sDSCM",
+      "published": "2026-06-19T09:00:36Z",
+      "source_type": "youtube",
+      "channel": "Our Hen House",
+      "video_id": "CKFZo7sDSCM",
+      "transcript_method": "youtube_transcript_api",
+      "transcript_chars": 3000,
+      "has_full_transcript": true
+    }
+  ]
+}

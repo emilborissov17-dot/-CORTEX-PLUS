@@ -1,0 +1,68 @@
+{
+  "axis": "CLIMATE_GLOBAL_RISK_REVIEW",
+  "domain": "planet",
+  "timestamp": "2026-06-21T19:44:28.285368+00:00",
+  "sources_count": 4,
+  "rss_count": 4,
+  "ddg_count": 0,
+  "youtube_count": 0,
+  "youtube_items": [],
+  "analysis": {
+    "problem": "Insufficient progress in climate negotiations, resulting in few tangible outcomes from the June 2026 UN climate conference in Bonn",
+    "root_cause": "Lack of consensus and cooperation among nations, combined with inadequate scaling up of carbon removal efforts",
+    "severity": "HIGH",
+    "leverage_points": [
+      "International agreements and policy frameworks, such as the UN climate conference",
+      "National and regional governments' implementation of climate and energy plans, such as China's provincial five-year plans"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Develop and implement a global carbon removal strategy, with measurable targets and timelines",
+        "measurable_goal": "Reduce global carbon emissions by 45% by 2030 and achieve net-zero emissions by 2050",
+        "timeframe": "medium-term"
+      },
+      {
+        "action": "Enhance international cooperation and diplomacy to facilitate agreement on climate policies and actions",
+        "measurable_goal": "Achieve a 20% increase in bilateral and multilateral climate agreements within the next 12 months",
+        "timeframe": "short-term"
+      }
+    ],
+    "evidence": [
+      "The Bonn climate talks ended in 'gridlock', with few tangible outcomes",
+      "Experts emphasize the need for a 'major scale up' of carbon removal efforts to return warming to 1.5C"
+    ],
+    "generalization": "This problem connects to the domains of civilization, human dignity, and the cosmos, as climate change has far-reaching implications for global food systems, human health, economic stability, and the long-term viability of intelligent life on Earth",
+    "summary": "The lack of progress in climate negotiations poses a high risk to global sustainability, and requires immediate attention and action from international leaders and governments. A global carbon removal strategy and enhanced international cooperation are crucial to addressing this problem.",
+    "risk_level": "HIGH"
+  },
+  "raw_items": [
+    {
+      "title": "DeBriefed 19 June 2026: Bonn talks end in ‘gridlock’ | Energy’s ‘new era’ | Oceans in climate negotiations",
+      "summary": "<p>Welcome to Carbon Brief’s DeBriefed.&#160;An essential guide to the week&#8217;s key developments relating to climate...</p>\n<p>The post <a href=\"https://www.carbonbrief.org/debriefed-19-june-2026-bonn-talks-end-in-gridlock-energys-new-era-oceans-in-climate-negotiations/\">DeBriefed 19 June 2026: Bonn talks end in ‘gridlock’ | Energy’s ‘new era’ | Oceans in climate negotiations</a> appeared first on <a href=\"https://www.carbonbrief.org\">Carbon Brief</a>.</p>",
+      "link": "https://www.carbonbrief.org/debriefed-19-june-2026-bonn-talks-end-in-gridlock-energys-new-era-oceans-in-climate-negotiations/",
+      "published": "Fri, 19 Jun 2026 15:39:05 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Bonn climate talks: Key outcomes from the June 2026 UN climate conference",
+      "summary": "<p>Two weeks of tense UN climate talks in Bonn, Germany, have produced few tangible outcomes...</p>\n<p>The post <a href=\"https://www.carbonbrief.org/bonn-climate-talks-key-outcomes-from-the-june-2026-un-climate-conference/\">Bonn climate talks: Key outcomes from the June 2026 UN climate conference</a> appeared first on <a href=\"https://www.carbonbrief.org\">Carbon Brief</a>.</p>",
+      "link": "https://www.carbonbrief.org/bonn-climate-talks-key-outcomes-from-the-june-2026-un-climate-conference/",
+      "published": "Fri, 19 Jun 2026 15:16:42 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Experts: Why carbon removal needs a ‘major scale up’ to return warming to 1.5C",
+      "summary": "<p>Last week, more than 260 researchers convened in Milan to discuss the opportunities, challenges and...</p>\n<p>The post <a href=\"https://www.carbonbrief.org/experts-why-carbon-removal-needs-a-major-scale-up-to-return-warming-to-1-5c/\">Experts: Why carbon removal needs a ‘major scale up’ to return warming to 1.5C</a> appeared first on <a href=\"https://www.carbonbrief.org\">Carbon Brief</a>.</p>",
+      "link": "https://www.carbonbrief.org/experts-why-carbon-removal-needs-a-major-scale-up-to-return-warming-to-1-5c/",
+      "published": "Fri, 19 Jun 2026 10:02:15 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Q&A: What do China’s provincial five-year plans say about climate and energy?",
+      "summary": "<p>China’s provincial-level governments have now all published their 15th five-year plans – economic and social...</p>\n<p>The post <a href=\"https://www.carbonbrief.org/qa-what-do-chinas-provincial-five-year-plans-say-about-climate-and-energy/\">Q&amp;A: What do China’s provincial five-year plans say about climate and energy?</a> appeared first on <a href=\"https://www.carbonbrief.org\">Carbon Brief</a>.</p>",
+      "link": "https://www.carbonbrief.org/qa-what-do-chinas-provincial-five-year-plans-say-about-climate-and-energy/",
+      "published": "Thu, 18 Jun 2026 10:00:27 +0000",
+      "source_type": "rss"
+    }
+  ]
+}

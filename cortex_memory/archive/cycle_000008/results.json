@@ -1,0 +1,19 @@
+{
+  "cycle_id": "2026-06-21T13:57:38.893810+00:00",
+  "goal_score": 0.5395,
+  "count": 1,
+  "results": [
+    {
+      "timestamp": "2026-06-21T13:57:04.650378+00:00",
+      "patch": "general_patch.py",
+      "success": true,
+      "stdout": "",
+      "stderr": "",
+      "score_before": 50.26,
+      "score_after": 50.26,
+      "delta": 0.0,
+      "verdict": "NEUTRAL",
+      "changed_axes": []
+    }
+  ]
+}

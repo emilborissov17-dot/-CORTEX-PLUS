@@ -1,0 +1,138 @@
+{
+  "axis": "GENERAL_SELF_REVIEW",
+  "fetched_at": "2026-06-21T19:53:52.218891+00:00",
+  "smart_query": "artificial intelligence progress",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 3,
+    "arxiv": 2,
+    "github": 3,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "Why an AI company cleaned my New York City apartment for free",
+      "snippet": "An AI company is sending free cleaners door-to-door in a bid to train the robots it hopes one day will replace them. ",
+      "url": "https://www.bbc.com/news/articles/cpwerjy20kyo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "How the social media ban could reshape how all of us use the internet",
+      "snippet": "Why some argue the social media ban could have a profound affect on how young people gain new knowledge and the rest of us move around online",
+      "url": "https://www.bbc.com/news/articles/c1jy512r19ro?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "New video game console aims to get kids moving",
+      "snippet": "The Nex Playground will cost £269 (€319) when it is released on 22 June in the UK and Ireland.",
+      "url": "https://www.bbc.com/news/articles/czx50rrz7zro?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [
+    {
+      "title": "Geleceğin işleri belli oldu ! İşte yapay zekaya göre günde sadece  saat çalışıp servet kazandıracak 5 meslek",
+      "snippet": "Geleceğin işleri belli oldu ! İşte yapay zekaya göre günde sadece  saat çalışıp servet kazandıracak 5 meslek",
+      "url": "https://www.yeniakit.com.tr/foto-galeri/gelecegin-isleri-belli-oldu-iste-yapay-zekaya-gore-gunde-sadece-uc-saat-calisip-servet-kazandiracak-5-meslek-150970",
+      "source": "yeniakit.com.tr"
+    },
+    {
+      "title": "Yapay zeka yönetiminde uluslararası standart : TPye ISO 42001 belgesi",
+      "snippet": "Yapay zeka yönetiminde uluslararası standart : TPye ISO 42001 belgesi",
+      "url": "https://www.chip.com.tr/guncel/yapay-zeka-yonetiminde-uluslararasi-standart-tpye-iso-42001-belgesi_179533.html",
+      "source": "chip.com.tr"
+    },
+    {
+      "title": "  Yapay zekayı durdurma  çağrılarına yenileri ekleniyor",
+      "snippet": "  Yapay zekayı durdurma  çağrılarına yenileri ekleniyor",
+      "url": "https://www.aa.com.tr/tr/bilim-teknoloji/yapay-zekayi-durdurma-cagrilarina-yenileri-ekleniyor/3958899",
+      "source": "aa.com.tr"
+    }
+  ],
+  "github_repos": [
+    {
+      "title": "microsoft/autogen",
+      "snippet": "A programming framework for agentic AI",
+      "stars": 59111,
+      "url": "https://github.com/microsoft/autogen",
+      "updated": "2026-06-21",
+      "source": "GitHub"
+    },
+    {
+      "title": "2noise/ChatTTS",
+      "snippet": "A generative speech model for daily dialogue.",
+      "stars": 39488,
+      "url": "https://github.com/2noise/ChatTTS",
+      "updated": "2026-06-21",
+      "source": "GitHub"
+    },
+    {
+      "title": "agentscope-ai/agentscope",
+      "snippet": "Build and run agents you can see, understand and trust.",
+      "stars": 27045,
+      "url": "https://github.com/agentscope-ai/agentscope",
+      "updated": "2026-06-21",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Efficient and Sound Probabilistic Verification for AI Agents",
+      "snippet": "Securing AI agents that operate in complex digital environments has become a critical need, and runtime monitoring approaches that formulate and enforce policies expressed in a formal language like Datalog offer a promising solution. However, existing approaches are restricted to deterministic polic",
+      "url": "https://arxiv.org/abs/2606.20510v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Analyzing Defensive Misdirection Against Model-Guided Automated Attacks on Agentic AI Systems",
+      "snippet": "Agentic AI systems increasingly rely on language-model components to interpret instructions, process external data, invoke tools, and coordinate with other agents. These capabilities make prompt-injection and jailbreak attacks more consequential, especially as attackers adopt model-guided automation",
+      "url": "https://arxiv.org/abs/2606.20470v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[Prominent Scientists, Faith Leaders, Policymakers and Artists Call for a Prohibition on Superintelligence, as Poll Shows Americans Don’t Want It] Initial signatories include AI pioneers Yoshua Bengio and Geoffrey Hinton, leading media voices Steve Bannon and Glenn Beck, Obama's National Security Advisor Susan Rice, business trailblazers Steve Wozniak and Richard Branson, five Nobel Laureates, former Irish President Mary Robinson, actors Stephen Fry and Joseph Gordon-Levitt, and hundreds of others.",
+  "wiki": null,
+  "youtube_items": [
+    {
+      "title": "[YT] YouTube:gdlTspKdsjU",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=gdlTspKdsjU",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "gdlTspKdsjU",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] YouTube:J2V9X6yIHw4",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=J2V9X6yIHw4",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "J2V9X6yIHw4",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] YouTube:f-J6XC_Bkso",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=f-J6XC_Bkso",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "f-J6XC_Bkso",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    }
+  ],
+  "summary": "[RSS News]\n- Why an AI company cleaned my New York City apartment for free\n- How the social media ban could reshape how all of us use the internet\n\n[GDELT News]\n- Geleceğin işleri belli oldu ! İşte ya",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": [],
+  "open_source_momentum": "",
+  "scientific_frontier": "",
+  "relevance_to_goal": ""
+}

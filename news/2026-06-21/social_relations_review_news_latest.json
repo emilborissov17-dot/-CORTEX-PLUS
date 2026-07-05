@@ -1,0 +1,119 @@
+{
+  "axis": "SOCIAL_RELATIONS_REVIEW",
+  "fetched_at": "2026-06-21T20:00:56.625045+00:00",
+  "smart_query": "social inequality conflict trust",
+  "sources_count": {
+    "wiki": 0,
+    "rss": 3,
+    "gdelt": 0,
+    "arxiv": 2,
+    "github": 3,
+    "youtube_transcripts": 0,
+    "podcast": 1
+  },
+  "rss": [
+    {
+      "title": "Trump and Iran's negotiator trade warnings as talks held in Switzerland",
+      "snippet": "The US president, who is not at the talks, threatens to attack Iran if it does not restrain Hezbollah in Lebanon.",
+      "url": "https://www.bbc.com/news/articles/cwy0q41v1lzo?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Fuel sales halted in occupied Crimea as Ukraine targets oil facilities",
+      "snippet": "Fuel had already been rationed due to shortages caused by Kyiv's attacks against supply routes in Russian-occupied territories.",
+      "url": "https://www.bbc.com/news/articles/clyx2lk9d15o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    },
+    {
+      "title": "Ethiopia PM's party wins landslide as fears grow of new conflict",
+      "snippet": "Abiy Ahmed's party retains its huge majority despite unrest in several parts of Ethiopia and tensions with its neighbours.",
+      "url": "https://www.bbc.com/news/articles/cz750q5e3w3o?at_medium=RSS&at_campaign=rss",
+      "source": "RSS"
+    }
+  ],
+  "gdelt": [],
+  "github_repos": [
+    {
+      "title": "briatte/awesome-network-analysis",
+      "snippet": "A curated list of awesome network analysis resources.",
+      "stars": 4066,
+      "url": "https://github.com/briatte/awesome-network-analysis",
+      "updated": "2026-06-21",
+      "source": "GitHub"
+    },
+    {
+      "title": "obsei/obsei",
+      "snippet": "Obsei is a low code AI powered automation tool. It can be used in various business flows like social listening, AI based alerting, brand image analysis, comparative study and more .",
+      "stars": 1411,
+      "url": "https://github.com/obsei/obsei",
+      "updated": "2026-06-16",
+      "source": "GitHub"
+    },
+    {
+      "title": "shaypal5/awesome-twitter-data",
+      "snippet": "A list of Twitter datasets and related resources.",
+      "stars": 1120,
+      "url": "https://github.com/shaypal5/awesome-twitter-data",
+      "updated": "2026-06-19",
+      "source": "GitHub"
+    }
+  ],
+  "arxiv_papers": [
+    {
+      "title": "Networks of agglomeration: how population density rewires social networks and reshapes contagion dynamics",
+      "snippet": "From ancient Mesopotamia to modern cities, dense human settlements coincide with bursts of economic productivity, cultural innovation, and social change. But how does packing people more tightly together alter social organization in ways that reshape collective outcomes? Here, I use a minimal agent-",
+      "url": "https://arxiv.org/abs/2606.19488v1",
+      "source": "arXiv"
+    },
+    {
+      "title": "Opinion Polarization in LLM-Based Social Networks: Manipulation and Mitigation",
+      "snippet": "How vulnerable are online social networks to adversaries who seek to amplify opinion polarization by manipulating opinions, and how difficult is it to mitigate such manipulation? Existing studies have examined this question using mathematical models of opinion dynamics. While these models offer valu",
+      "url": "https://arxiv.org/abs/2606.18795v1",
+      "source": "arXiv"
+    }
+  ],
+  "podcast": "[The real horror of ‘Alien’ and how it explains why we’re not paid enough] Maybe the real monster in the Alien franchise isn’t actually the killer alien. Because behind the acid blood and jump scares is an even more insidious horror: a single employer with unchecked power. That employer is named Weyland-Yutani, a mega-corporation that dominates workers across the galaxy.Weyland-Yutani is a sort of extreme example of what economists call a monopsony — when one employer do",
+  "wiki": null,
+  "youtube_items": [
+    {
+      "title": "[YT] YouTube:lCwHWH8T2ck",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=lCwHWH8T2ck",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "lCwHWH8T2ck",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] YouTube:XSwCHgcAY3w",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=XSwCHgcAY3w",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "XSwCHgcAY3w",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] YouTube:h5s4VYCWY6Y",
+      "summary": "",
+      "link": "https://www.youtube.com/watch?v=h5s4VYCWY6Y",
+      "source_type": "youtube",
+      "channel": "",
+      "video_id": "h5s4VYCWY6Y",
+      "transcript_method": "none",
+      "transcript_chars": 0,
+      "has_full_transcript": false
+    }
+  ],
+  "summary": "[RSS News]\n- Trump and Iran's negotiator trade warnings as talks held in Switzerland\n- Fuel sales halted in occupied Crimea as Ukraine targets oil facilities\n\n[arXiv]\n- Networks of agglomeration: how ",
+  "urgency": "LOW",
+  "sentiment": "NEUTRAL",
+  "key_developments": [],
+  "open_source_momentum": "",
+  "scientific_frontier": "",
+  "relevance_to_goal": ""
+}

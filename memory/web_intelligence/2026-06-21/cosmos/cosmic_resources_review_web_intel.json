@@ -1,0 +1,143 @@
+{
+  "axis": "COSMIC_RESOURCES_REVIEW",
+  "domain": "cosmos",
+  "timestamp": "2026-06-21T19:48:10.126884+00:00",
+  "sources_count": 7,
+  "rss_count": 4,
+  "ddg_count": 0,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] Unlimited Resources From Space – Asteroid Mining",
+      "summary": "[DESCRIPTION FALLBACK] Get Merch designed with ❤ from https://kgs.link/shop-127 Join the Patreon Bird Army https://kgs.link/patreon ▽▽ More infos ...",
+      "link": "https://www.youtube.com/watch?v=y8XvQNt26KI",
+      "published": "2020-08-16T12:29:23Z",
+      "source_type": "youtube",
+      "channel": "Kurzgesagt – In a Nutshell",
+      "video_id": "y8XvQNt26KI",
+      "transcript_method": "description",
+      "transcript_chars": 149,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Digging in: Should we mine in space?",
+      "summary": "[DESCRIPTION FALLBACK] The business of space is booming: Humans are leaving Earth's atmosphere to mine for precious minerals that could bring trillions ...",
+      "link": "https://www.youtube.com/watch?v=aXAPt9PuKhM",
+      "published": "2024-04-02T16:00:07Z",
+      "source_type": "youtube",
+      "channel": "Doha Debates",
+      "video_id": "aXAPt9PuKhM",
+      "transcript_method": "description",
+      "transcript_chars": 155,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Space mining: David Gump at TEDxCibeles",
+      "summary": "[DESCRIPTION FALLBACK] In the spirit of ideas worth spreading, TEDx is a program of local, self-organized events that bring people together to share a ...",
+      "link": "https://www.youtube.com/watch?v=OoNjSADM9H4",
+      "published": "2014-03-28T16:35:49Z",
+      "source_type": "youtube",
+      "channel": "TEDx Talks",
+      "video_id": "OoNjSADM9H4",
+      "transcript_method": "description",
+      "transcript_chars": 154,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "problem": "Rapid commercialization of asteroid and space resource extraction without a coordinated international governance framework",
+    "root_cause": "Profit‑driven companies are scaling up mining activities (e.g., Astrobotic sale to Voyager, MDA acquisition of Blue Canyon, ElevationSpace $40 M funding) while existing space law (Outer Space Treaty) lacks enforceable environmental and equity provisions",
+    "severity": "HIGH",
+    "leverage_points": [
+      "International policy bodies (UN Office for Outer Space Affairs) to draft and adopt binding regulations",
+      "Major private sector players (Astrobotic, MDA, ElevationSpace) to adopt voluntary sustainability standards"
+    ],
+    "proposed_actions": [
+      {
+        "action": "Create a multistakeholder treaty amendment that establishes licensing, environmental impact assessment, and benefit‑sharing rules for space mining",
+        "measurable_goal": "Adoption of the amendment by at least 30 spacefaring nations and major commercial actors within three years",
+        "timeframe": "medium-term"
+      },
+      {
+        "action": "Launch a transparent registry for all space‑resource contracts and funding rounds, updated quarterly",
+        "measurable_goal": "Publicly accessible database with 100 % of announced deals (e.g., Astrobotic‑Voyager sale, ElevationSpace Series B) listed within six months",
+        "timeframe": "short-term"
+      }
+    ],
+    "evidence": [
+      "Astrobotic sale to Voyager will allow it to scale up (RSS entry)",
+      "MDA Space to buy Blue Canyon Technologies to gain foothold in U.S. market (RSS entry)",
+      "ElevationSpace secured US $40 Million in Series B funding, total US $63.5 Million (RSS entry)",
+      "YouTube video titles promoting asteroid mining as a source of unlimited resources"
+    ],
+    "generalization": "The unchecked rush toward space mining mirrors the historic exploitation of terrestrial resources, linking the COSMIC domain to the CIVILIZATION domain (economics, inequality) and the PLANET domain (potential contamination of space environments and downstream impacts on Earth’s resource markets)",
+    "summary": "Commercial space mining is accelerating without adequate governance, risking unsustainable exploitation and inequitable benefit distribution; coordinated policy and transparency are urgently needed.",
+    "risk_level": "HIGH"
+  },
+  "raw_items": [
+    {
+      "title": "Astrobotic says sale to Voyager will allow it to scale up",
+      "summary": "<figure><img alt=\"John Thornton\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"684\" src=\"https://i0.wp.com/spacenews.com/wp-content/uploads/2026/06/John-Thornton-Astrobotic-scaled.jpg?fit=1024%2C684&amp;ssl=1\" width=\"1024\" /></figure>\n<p>Lunar lander developer Astrobotic decided to sell to Voyager Technologies so it could quickly scale up to meet the projected demands of NASA’s lunar base initiative.</p>\n<p>The post <a href=\"https://spacenews.com/astrobotic-says-sal",
+      "link": "https://spacenews.com/astrobotic-says-sale-to-voyager-will-allow-it-to-scale-up/",
+      "published": "Sat, 20 Jun 2026 19:51:45 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "India’s Jio lays out sovereign LEO constellation plan ahead of IPO",
+      "summary": "<figure><img alt=\"\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"683\" src=\"https://i0.wp.com/spacenews.com/wp-content/uploads/2025/05/India-scaled.jpeg?fit=1024%2C683&amp;ssl=1\" width=\"1024\" /></figure>\n<p>Jio Platforms, which owns India’s largest telco, is looking to lease broadband capacity from satellite constellations to jumpstart its own sovereign LEO network in the country.</p>\n<p>The post <a href=\"https://spacenews.com/indias-jio-lays-out-sovereign-leo-const",
+      "link": "https://spacenews.com/indias-jio-lays-out-sovereign-leo-constellation-plan-ahead-of-ipo/",
+      "published": "Fri, 19 Jun 2026 19:27:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "MDA Space to buy Blue Canyon Technologies to gain foothold in U.S. market",
+      "summary": "<figure><img alt=\"Blue Canyon Technologies is using the 150-kilogram X-SAT bus for DARPA&#039;s Blackjack program.\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"601\" src=\"https://i0.wp.com/spacenews.com/wp-content/uploads/2020/07/Blackjack_Space_Image-copy.png?fit=1024%2C601&amp;ssl=1\" width=\"1024\" /></figure>\n<p>MDA Space is buying smallsat manufacturer Blue Canyon Technologies (BCT) for $620 million, giving the Canadian company greater access to the lucrative U.S",
+      "link": "https://spacenews.com/mda-space-to-buy-blue-canyon-technologies-to-gain-foothold-in-u-s-market/",
+      "published": "Fri, 19 Jun 2026 16:03:50 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "ElevationSpace Secures US $40 Million in Series B Funding, Bringing Total Raised to US $63.5 Million",
+      "summary": "<figure><img alt=\"elevationspace logo\" class=\"attachment-rss-image-size size-rss-image-size wp-post-image\" height=\"1024\" src=\"https://i0.wp.com/spacenews.com/wp-content/uploads/2026/06/ELS_01_logo_white.png?fit=1024%2C1024&amp;ssl=1\" width=\"1024\" /></figure>\n<p>ElevationSpace Inc. (CEO: Ryohei Kobayashi), a company developing Space-to-Earth transportation as well as a Space Environment Utilization and Recovery Platform, has raised a total of US $40 million in its [&#8230;]</p>\n<p>The post <a hre",
+      "link": "https://spacenews.com/elevationspace-secures-us-40-million-in-series-b-funding-bringing-total-raised-to-us-63-5-million/",
+      "published": "Fri, 19 Jun 2026 14:52:11 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] Unlimited Resources From Space – Asteroid Mining",
+      "summary": "[DESCRIPTION FALLBACK] Get Merch designed with ❤ from https://kgs.link/shop-127 Join the Patreon Bird Army https://kgs.link/patreon ▽▽ More infos ...",
+      "link": "https://www.youtube.com/watch?v=y8XvQNt26KI",
+      "published": "2020-08-16T12:29:23Z",
+      "source_type": "youtube",
+      "channel": "Kurzgesagt – In a Nutshell",
+      "video_id": "y8XvQNt26KI",
+      "transcript_method": "description",
+      "transcript_chars": 149,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Digging in: Should we mine in space?",
+      "summary": "[DESCRIPTION FALLBACK] The business of space is booming: Humans are leaving Earth's atmosphere to mine for precious minerals that could bring trillions ...",
+      "link": "https://www.youtube.com/watch?v=aXAPt9PuKhM",
+      "published": "2024-04-02T16:00:07Z",
+      "source_type": "youtube",
+      "channel": "Doha Debates",
+      "video_id": "aXAPt9PuKhM",
+      "transcript_method": "description",
+      "transcript_chars": 155,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Space mining: David Gump at TEDxCibeles",
+      "summary": "[DESCRIPTION FALLBACK] In the spirit of ideas worth spreading, TEDx is a program of local, self-organized events that bring people together to share a ...",
+      "link": "https://www.youtube.com/watch?v=OoNjSADM9H4",
+      "published": "2014-03-28T16:35:49Z",
+      "source_type": "youtube",
+      "channel": "TEDx Talks",
+      "video_id": "OoNjSADM9H4",
+      "transcript_method": "description",
+      "transcript_chars": 154,
+      "has_full_transcript": false
+    }
+  ]
+}

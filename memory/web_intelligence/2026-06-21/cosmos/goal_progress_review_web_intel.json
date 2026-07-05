@@ -1,0 +1,126 @@
+{
+  "axis": "GOAL_PROGRESS_REVIEW",
+  "domain": "cosmos",
+  "timestamp": "2026-06-21T19:51:32.725278+00:00",
+  "sources_count": 8,
+  "rss_count": 5,
+  "ddg_count": 0,
+  "youtube_count": 3,
+  "youtube_items": [
+    {
+      "title": "[YT] Elizabeth Cousens: The Path Forward for the SDGs | #WTFuture",
+      "summary": "[DESCRIPTION FALLBACK] Before joining the UN Foundation, Elizabeth Cousens served as U.S. Ambassador to the UN Economic and Social Council and ...",
+      "link": "https://www.youtube.com/watch?v=1zo0-7UV_H4",
+      "published": "2019-10-21T18:42:44Z",
+      "source_type": "youtube",
+      "channel": "Skoll.org",
+      "video_id": "1zo0-7UV_H4",
+      "transcript_method": "description",
+      "transcript_chars": 146,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Integrating blue foods into national climate strategies: Africa &amp; the Middle East | Webinar",
+      "summary": "[DESCRIPTION FALLBACK] Blue or aquatic foods – foods that are wild-caught or farmed from oceans, rivers, and lakes – are increasingly recognized as a ...",
+      "link": "https://www.youtube.com/watch?v=EmL1Ygr2iiw",
+      "published": "2024-11-04T15:21:59Z",
+      "source_type": "youtube",
+      "channel": "Stanford Woods Institute for the Environment",
+      "video_id": "EmL1Ygr2iiw",
+      "transcript_method": "description",
+      "transcript_chars": 153,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Global renewables: Pioneering the energy transition | DW Documentary",
+      "summary": "[DESCRIPTION FALLBACK] We are facing the greatest upheaval since industrialization. To stop climate change, the energy system must be transformed ...",
+      "link": "https://www.youtube.com/watch?v=UVf2Yw7uFoE",
+      "published": "2023-12-01T17:30:06Z",
+      "source_type": "youtube",
+      "channel": "DW Documentary",
+      "video_id": "UVf2Yw7uFoE",
+      "transcript_method": "description",
+      "transcript_chars": 149,
+      "has_full_transcript": false
+    }
+  ],
+  "analysis": {
+    "action": "Establish protected humanitarian corridors through coordination with local armed groups and peacekeeping forces.",
+    "measurable_goal": "Secure safe passage for 100% of health‑care staff and supplies by the end of the first month.",
+    "timeframe": "short-term",
+    "severity": "UNKNOWN"
+  },
+  "raw_items": [
+    {
+      "title": "Ebola in DR Congo: One month on, scaled up response remains insufficient",
+      "summary": "<p>One month after the Bundibugyo Ebola outbreak was declared in the Democratic Republic of the Congo (DRC) and Uganda, case numbers continue to rise.  Read Full Story on UN News</p>\n<p>The post <a href=\"https://news.un.org/feed/view/en/story/2026/06/1167763\">Ebola in DR Congo: One month on, scaled up response remains insufficient</a> appeared first on <a href=\"https://www.un.org/sustainabledevelopment\">United Nations Sustainable Development</a>.</p>",
+      "link": "https://news.un.org/feed/view/en/story/2026/06/1167763",
+      "published": "Sat, 20 Jun 2026 12:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "DR Congo: Efforts ramp up as Ebola outbreak accelerates beyond borders",
+      "summary": "<p>The spread of Ebola is accelerating in the eastern Democratic Republic of the Congo (DRC) amid continued armed violence, posing a grave and growing risk to the region, UN agencies warned on Friday. Read Full Story on UN News</p>\n<p>The post <a href=\"https://news.un.org/feed/view/en/story/2026/06/1167765\">DR Congo: Efforts ramp up as Ebola outbreak accelerates beyond borders</a> appeared first on <a href=\"https://www.un.org/sustainabledevelopment\">United Nations Sustainable Development</a>.</p",
+      "link": "https://news.un.org/feed/view/en/story/2026/06/1167765",
+      "published": "Fri, 19 Jun 2026 12:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Climate shocks accelerating as El Niño threat looms over already vulnerable regions",
+      "summary": "<p>Millions of people already facing hunger, displacement and economic hardship could soon face another major climate shock, as UN agencies warned on Thursday that extreme weather risks are intensifying across some of the world’s most vulnerable regions. Read Full Story on UN News</p>\n<p>The post <a href=\"https://news.un.org/feed/view/en/story/2026/06/1167753\">Climate shocks accelerating as El Niño threat looms over already vulnerable regions</a> appeared first on <a href=\"https://www.un.org/sus",
+      "link": "https://news.un.org/feed/view/en/story/2026/06/1167753",
+      "published": "Thu, 18 Jun 2026 12:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Fermentation, flavour and the future of food: Making sustainability delicious",
+      "summary": "<p>Words like “sustainability” and “healthy” shouldn’t take the joy out of eating. As elite chef Jaume Biarnés has been explaining to UN News, sustainable gastronomy can be delicious, exciting and fun. Read Full Story on UN News</p>\n<p>The post <a href=\"https://news.un.org/feed/view/en/story/2026/06/1167755\">Fermentation, flavour and the future of food: Making sustainability delicious</a> appeared first on <a href=\"https://www.un.org/sustainabledevelopment\">United Nations Sustainable Development",
+      "link": "https://news.un.org/feed/view/en/story/2026/06/1167755",
+      "published": "Thu, 18 Jun 2026 12:00:00 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "Hello world!",
+      "summary": "Welcome to WordPress. This is your first post. Edit or delete it, then start writing!",
+      "link": "https://sdg.iisd.org/hello-world/",
+      "published": "Thu, 18 May 2023 15:00:19 +0000",
+      "source_type": "rss"
+    },
+    {
+      "title": "[YT] Elizabeth Cousens: The Path Forward for the SDGs | #WTFuture",
+      "summary": "[DESCRIPTION FALLBACK] Before joining the UN Foundation, Elizabeth Cousens served as U.S. Ambassador to the UN Economic and Social Council and ...",
+      "link": "https://www.youtube.com/watch?v=1zo0-7UV_H4",
+      "published": "2019-10-21T18:42:44Z",
+      "source_type": "youtube",
+      "channel": "Skoll.org",
+      "video_id": "1zo0-7UV_H4",
+      "transcript_method": "description",
+      "transcript_chars": 146,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Integrating blue foods into national climate strategies: Africa &amp; the Middle East | Webinar",
+      "summary": "[DESCRIPTION FALLBACK] Blue or aquatic foods – foods that are wild-caught or farmed from oceans, rivers, and lakes – are increasingly recognized as a ...",
+      "link": "https://www.youtube.com/watch?v=EmL1Ygr2iiw",
+      "published": "2024-11-04T15:21:59Z",
+      "source_type": "youtube",
+      "channel": "Stanford Woods Institute for the Environment",
+      "video_id": "EmL1Ygr2iiw",
+      "transcript_method": "description",
+      "transcript_chars": 153,
+      "has_full_transcript": false
+    },
+    {
+      "title": "[YT] Global renewables: Pioneering the energy transition | DW Documentary",
+      "summary": "[DESCRIPTION FALLBACK] We are facing the greatest upheaval since industrialization. To stop climate change, the energy system must be transformed ...",
+      "link": "https://www.youtube.com/watch?v=UVf2Yw7uFoE",
+      "published": "2023-12-01T17:30:06Z",
+      "source_type": "youtube",
+      "channel": "DW Documentary",
+      "video_id": "UVf2Yw7uFoE",
+      "transcript_method": "description",
+      "transcript_chars": 149,
+      "has_full_transcript": false
+    }
+  ]
+}
