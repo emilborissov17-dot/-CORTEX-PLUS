@@ -13,3 +13,14 @@ chromadb/
 logs/
 snapshots/self/
 
+*.mp4
+_cycle_*.txt
+_monitor_*.txt
+_check_*.py
+cycle_output.txt
+cycle_run_log*.txt
+live_pilot*.txt
+_test_zone_logic.py
+_check_proposals.py
+output/phase3_pilot/_search_cache/
+
