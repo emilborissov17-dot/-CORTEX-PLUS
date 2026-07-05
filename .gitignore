@@ -23,4 +23,5 @@ live_pilot*.txt
 _test_zone_logic.py
 _check_proposals.py
 output/phase3_pilot/_search_cache/
+data/V-Dem-CY-Core-v16.csv
 
