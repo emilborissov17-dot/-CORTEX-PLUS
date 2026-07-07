@@ -1,0 +1,41 @@
+{
+  "Y1": {
+    "iso3": "YY1",
+    "name": "Redteam Boundary BELOW 0.20 (Y1)",
+    "label": "BELOW 0.20",
+    "target_p_q": 0.53,
+    "target_p_ql": 0.35,
+    "deprivation": 0.3233,
+    "strain": 0.3233,
+    "flourishing": 0.6767,
+    "v2x_freexp_altinf": 0.5556,
+    "v2x_corr": 0.6701,
+    "v2x_rule": 0.3679
+  },
+  "Y2": {
+    "iso3": "YY2",
+    "name": "Redteam Boundary EXACT 0.20 (Y2)",
+    "label": "EXACT 0.20",
+    "target_p_q": 0.55,
+    "target_p_ql": 0.35,
+    "deprivation": 0.309,
+    "strain": 0.309,
+    "flourishing": 0.691,
+    "v2x_freexp_altinf": 0.5556,
+    "v2x_corr": 0.6701,
+    "v2x_rule": 0.3679
+  },
+  "Y3": {
+    "iso3": "YY3",
+    "name": "Redteam Boundary ABOVE 0.20 (Y3)",
+    "label": "ABOVE 0.20",
+    "target_p_q": 0.57,
+    "target_p_ql": 0.35,
+    "deprivation": 0.3023,
+    "strain": 0.3023,
+    "flourishing": 0.6977,
+    "v2x_freexp_altinf": 0.5556,
+    "v2x_corr": 0.6701,
+    "v2x_rule": 0.3679
+  }
+}
