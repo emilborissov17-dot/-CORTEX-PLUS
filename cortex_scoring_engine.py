@@ -34,16 +34,30 @@ def _unwrap_metrics(metrics: Dict) -> Dict:
 # SCORING FUNCTIONS — по ос
 # ─────────────────────────────────────────────
 
+# Missing-data penalty per metric == that metric's own worst-case deduction, so
+# omitting a reading can never score better than honestly reporting a bad one.
+MISSING_DATA_PENALTIES = {
+    "co2_ppm_current":               0.4,
+    "co2_annual_increase":            0.3,
+    "forecast_forecast_max_temp_7d":  0.2,
+}
+
+
 def score_climate(metrics: Dict) -> ScoreResult:
     metrics = _unwrap_metrics(metrics)
     signals = []
     score = 1.0
 
-    co2 = metrics.get("co2_ppm_current", 0)
-    co2_increase = metrics.get("co2_annual_increase", 0)
-    max_temp_7d = metrics.get("forecast_forecast_max_temp_7d", 0)
+    co2          = metrics.get("co2_ppm_current")
+    co2_increase = metrics.get("co2_annual_increase")
+    max_temp_7d  = metrics.get("forecast_forecast_max_temp_7d")
 
-    if co2 > 430:
+    if co2 is None:
+        msg = "🚨 ЛИПСВАЩИ ДАННИ: co2_ppm_current — изключен от оценката"
+        score -= MISSING_DATA_PENALTIES["co2_ppm_current"]
+        signals.append(msg)
+        print(f"[SCORER][WARNING] CLIMATE_GLOBAL_RISK_REVIEW: {msg}")
+    elif co2 > 430:
         score -= 0.4
         signals.append(f"⚠️ CO2 {co2} ppm — опасно над 420 ppm (пред-индустриален: 280 ppm)")
     elif co2 > 420:
@@ -52,7 +66,12 @@ def score_climate(metrics: Dict) -> ScoreResult:
     else:
         signals.append(f"✅ CO2 {co2} ppm — под критичния праг")
 
-    if co2_increase > 3.5:
+    if co2_increase is None:
+        msg = "🚨 ЛИПСВАЩИ ДАННИ: co2_annual_increase — изключен от оценката"
+        score -= MISSING_DATA_PENALTIES["co2_annual_increase"]
+        signals.append(msg)
+        print(f"[SCORER][WARNING] CLIMATE_GLOBAL_RISK_REVIEW: {msg}")
+    elif co2_increase > 3.5:
         score -= 0.3
         signals.append(f"⚠️ Годишен ръст на CO2: +{co2_increase} ppm — ускорен")
     elif co2_increase > 2.5:
@@ -61,7 +80,12 @@ def score_climate(metrics: Dict) -> ScoreResult:
     else:
         signals.append(f"✅ Годишен ръст на CO2: +{co2_increase} ppm")
 
-    if max_temp_7d > 35:
+    if max_temp_7d is None:
+        msg = "🚨 ЛИПСВАЩИ ДАННИ: forecast_forecast_max_temp_7d — изключен от оценката"
+        score -= MISSING_DATA_PENALTIES["forecast_forecast_max_temp_7d"]
+        signals.append(msg)
+        print(f"[SCORER][WARNING] CLIMATE_GLOBAL_RISK_REVIEW: {msg}")
+    elif max_temp_7d > 35:
         score -= 0.2
         signals.append(f"⚠️ Прогноза: екстремна топлина {max_temp_7d}°C")
     elif max_temp_7d > 25:
