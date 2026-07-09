@@ -721,7 +721,8 @@ def main():
 
     # ── 12.6. Goal score calculator ──
     composite = 0.0  # initialized here so MerkleMemory commit can read it at step 24
-    try:
+    def _goal_score_calculator():
+        nonlocal composite
         from goal_score_calculator import compute_goal_score
         gs_result = compute_goal_score()
         composite  = gs_result["composite_score"]
@@ -734,18 +735,15 @@ def main():
                        ensure_ascii=False, indent=2),
             encoding="utf-8",
         )
-    except Exception as e:
-        print(f"[FAST_CYCLE] goal_score_calculator -> FAILED: {e}")
+    _run("goal_score_calculator", _goal_score_calculator)
 
     # ── 12.7. Cognitive Orchestrator — Attentional Meta Protocol ──
     # Runs BEFORE HyperClaw so it can use its priority_axes assessment.
     # (CortexStrategist was moved to step 3.5 to run before token budget is depleted.)
-    try:
+    def _cortex_orchestrator():
         from core.cortex_orchestrator import run as _orchestrate
         _orchestrate()
-        print("[FAST_CYCLE] cortex_orchestrator -> OK")
-    except Exception as e:
-        print(f"[FAST_CYCLE] cortex_orchestrator -> FAILED: {e}")
+    _run("cortex_orchestrator", _cortex_orchestrator)
 
     # ── 13. Body scan ──
     _run("body_scanner", lambda: __import__(
@@ -763,15 +761,13 @@ def main():
     _hyperclaw_to_proposals()
 
     # ── 15.8. GitHub publish — cycle synthesis + verified hypotheses ──
-    try:
+    def _github_publisher():
         from github_publisher import publish_synthesis as _gh_publish
         _gh_publish()
-        print("[FAST_CYCLE] github_publisher -> OK")
-    except Exception as e:
-        print(f"[FAST_CYCLE] github_publisher -> FAILED: {e}")
+    _run("github_publisher", _github_publisher)
 
     # ── 16. Action recommendations ──
-    try:
+    def _cortex_reasoner():
         from core.cortex_reasoner import reason
         from memory.semantic_memory import remember
         rec = reason(
@@ -790,8 +786,7 @@ def main():
             )
         except Exception as e:
             print(f"[FAST_CYCLE] record_causal грешка: {e}")
-    except Exception as e:
-        print(f"[FAST_CYCLE] Препоръка грешка: {e}")
+    _run("cortex_reasoner", _cortex_reasoner)
 
     # ── 17. Self observer ──
     _run("self_observer", lambda: __import__(
@@ -810,12 +805,10 @@ def main():
         "agents.core.feedback_loop", fromlist=["run"]).run())
 
     # ── 21. Session update ──
-    try:
+    def _session_updater():
         from core.session_updater import update as _update
         _update()
-        print("[FAST_CYCLE] session_updater -> OK")
-    except Exception as e:
-        print(f"[SESSION] Грешка: {e}")
+    _run("session_updater", _session_updater)
 
     # ── 22. Daily analysis ──
     _run("daily_analysis", lambda: __import__(
@@ -824,7 +817,7 @@ def main():
     # ── 22.5. Data Scout — автономно търсене на нови реални данни ──
     # Пуска се ПОСЛЕДНО — не се бие с основния цикъл за LLM rate limit.
     # Кешира предложенията; пита LLM само когато ги няма или са >7 дни.
-    try:
+    def _data_scout():
         from core.data_scout import run as _scout_run
         scout_summary = _scout_run(max_axes=2)
         print(
@@ -832,8 +825,7 @@ def main():
             f"scanned={scout_summary.get('scanned',0)} | "
             f"validated={scout_summary.get('validated',0)} new sources"
         )
-    except Exception as e:
-        print(f"[FAST_CYCLE] data_scout -> FAILED: {e}")
+    _run("data_scout", _data_scout)
 
     # ── 23. Continuous learning ──
     try:
