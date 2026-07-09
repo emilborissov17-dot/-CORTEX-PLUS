@@ -8,6 +8,7 @@ from __future__ import annotations
 import json
 import pathlib
 from dataclasses import dataclass
+from datetime import datetime
 from typing import Any, Dict, List, Optional
 
 BASE_DIR = pathlib.Path(__file__).resolve().parent
@@ -1313,6 +1314,18 @@ def _load_snapshot(path: pathlib.Path) -> Optional[Dict]:
         return None
 
 
+def _snapshot_timestamp(snap: Dict, path: pathlib.Path) -> float:
+    """Best-effort epoch timestamp for a snapshot, for duplicate-axis resolution."""
+    for key in ("timestamp", "snapshot_timestamp", "last_updated", "fetched_date"):
+        val = snap.get(key)
+        if val:
+            try:
+                return datetime.fromisoformat(str(val).replace("Z", "+00:00")).timestamp()
+            except Exception:
+                continue
+    return path.stat().st_mtime
+
+
 def score_social_relations(metrics: Dict) -> ScoreResult:
     metrics = _unwrap_metrics(metrics)
     signals = []
@@ -1444,6 +1457,7 @@ AXIS_SCORERS = {
 
 def score_all_snapshots() -> Dict[str, ScoreResult]:
     scores: Dict[str, ScoreResult] = {}
+    axis_source: Dict[str, tuple] = {}  # axis -> (path, timestamp), for duplicate detection
 
     for json_file in sorted(SNAPSHOTS_DIR.rglob("*_snapshot_latest.json")):
         snap = _load_snapshot(json_file)
@@ -1453,6 +1467,18 @@ def score_all_snapshots() -> Dict[str, ScoreResult]:
         axis = snap.get("axis", "")
         if not axis:
             continue  # FIX: пропускай snapshots без axis
+
+        ts = _snapshot_timestamp(snap, json_file)
+
+        if axis in axis_source:
+            prev_path, prev_ts = axis_source[axis]
+            if ts <= prev_ts:
+                print(f"[SCORER][WARNING] Duplicate axis '{axis}': keeping {prev_path} (newer), ignoring {json_file} (older)")
+                continue
+            else:
+                print(f"[SCORER][WARNING] Duplicate axis '{axis}': keeping {json_file} (newer), ignoring {prev_path} (older)")
+
+        axis_source[axis] = (json_file, ts)
 
         raw = snap.get("raw")
         raw = raw if isinstance(raw, dict) else {}
