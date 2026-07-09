@@ -14,25 +14,15 @@ BASE_DIR     = pathlib.Path(__file__).resolve().parents[2]
 MASTER_PATH  = BASE_DIR / "snapshots" / "master" / "master_snapshot_latest.json"
 NOTES_DIR    = BASE_DIR / "notes"
 DAILY_DIR    = BASE_DIR / "daily"
-MODEL        = "qwen3:8b"
 sys.path.insert(0, str(BASE_DIR))
+
+from core.groq_backend import call_groq, AllBackendsFailedError
 
 def _utc_now():
     return datetime.now(timezone.utc).isoformat()
 
 def _llm(prompt: str) -> str:
-    try:
-        r = subprocess.run(
-            ["ollama", "run", MODEL],
-            input=prompt.encode("utf-8"),
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            timeout=120,
-            check=False,
-        )
-        return r.stdout.decode("utf-8", errors="ignore").strip()
-    except Exception as e:
-        return f"[LLM ERROR: {e}]"
+    return call_groq(prompt)
 
 def _clean_llm(text: str) -> str:
     """Премахва Thinking блокове и markdown fences."""
@@ -64,7 +54,12 @@ Analyze this axis snapshot and return ONLY a JSON object with:
 
 Return ONLY valid JSON, no explanation."""
 
-    text = _llm(prompt)
+    try:
+        text = _llm(prompt)
+    except AllBackendsFailedError as e:
+        print(f"[DAILY_ANALYSIS] LLM FAILED for axis {axis_name}: {e}", file=sys.stderr)
+        return {"current_level": "LLM_FAILED", "error": str(e)}
+
     try:
         text = _clean_llm(text)
         return json.loads(text)
@@ -91,7 +86,11 @@ Write a concise overall assessment in Bulgarian (5-7 sentences):
 
 Be concrete and actionable."""
 
-    return _llm(prompt)
+    try:
+        return _llm(prompt)
+    except AllBackendsFailedError as e:
+        print(f"[DAILY_ANALYSIS] LLM FAILED for overall assessment: {e}", file=sys.stderr)
+        return f"[ASSESSMENT UNAVAILABLE: all LLM backends failed — {e}]"
 
 def _send_windows_toast(title: str, body: str) -> None:
     """Send a Windows balloon notification via PowerShell NotifyIcon."""
