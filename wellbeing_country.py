@@ -77,6 +77,8 @@ _IND: dict[str, object] = {
     "HD.HCI.LAYS":       (0.0,   12.0,   False),   # Learning-Adjusted Years of School (HCI)
     # V-Dem observational indicators (already 0-1; injected from local CSV, not WB API)
     "VDEM_FREEXP":       (0.0,    1.0,   False),   # Media freedom / freedom of expression (V-Dem v16)
+    "VDEM_CORR":         (0.0,    1.0,   False),   # Corruption control, inverted from V-Dem v2x_corr (V-Dem v16)
+    "VDEM_RULE":         (0.0,    1.0,   False),   # Rule of law (V-Dem v16)
     # Social relations proxy (violence only — see _AXIS_CAVEATS)
     "VC.IHR.PSRC.P5":    (50.0,   0.5,   True),   # Intentional homicides /100k pop
 }
@@ -112,6 +114,8 @@ _LABELS: dict[str, str] = {
     "GOV_WGI_RL.EST":   "Rule of Law (WGI)",
     "HD.HCI.LAYS":       "Learning-Adj Yrs School (HCI)",
     "VDEM_FREEXP":       "Media Freedom (V-Dem v16)",
+    "VDEM_CORR":         "Corruption Control (V-Dem v16)",
+    "VDEM_RULE":         "Rule of Law (V-Dem v16)",
     "VC.IHR.PSRC.P5":    "Homicide rate /100k",
 }
 
@@ -145,9 +149,9 @@ AXIS_INDICATORS: dict[str, list[str]] = {
     "FOOD_REVIEW":                      ["SN.ITK.DEFC.ZS", "AG.PRD.FOOD.XD", "AG.YLD.CREL.KG"],
     "WATER_REVIEW":                     ["SH.H2O.SMDW.ZS"],
     "HUMAN_WELL_BEING_REVIEW":          ["SP.DYN.LE00.IN", "SP.DYN.IMRT.IN"],
-    "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL": ["GOV_WGI_CC.EST", "GOV_WGI_RL.EST"],
+    "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL": ["GOV_WGI_CC.EST", "GOV_WGI_RL.EST", "VDEM_CORR", "VDEM_RULE"],
     "INEQUALITY_POVERTY_REVIEW":        ["SI.POV.GINI", "SI.POV.DDAY"],
-    "GOVERNANCE_INSTITUTIONS_REVIEW":   ["GOV_WGI_GE.EST", "GOV_WGI_RL.EST", "GOV_WGI_CC.EST"],
+    "GOVERNANCE_INSTITUTIONS_REVIEW":   ["GOV_WGI_GE.EST", "GOV_WGI_RL.EST", "GOV_WGI_CC.EST", "VDEM_CORR", "VDEM_RULE"],
     "CLIMATE_GLOBAL_RISK_REVIEW":       ["EN.ATM.CO2E.PC", "EG.USE.COMM.FO.ZS", "NY.ADJ.DRES.GN.ZS", "EG.FEC.RNEW.ZS"],
     "COGNITION_LEARNING_REVIEW":        ["SE.ADT.LITR.ZS", "HD.HCI.LAYS"],
     "TECHNOLOGY_AI_REVIEW":             ["IT.NET.USER.ZS", "IT.NET.BBND.P2"],
@@ -267,7 +271,11 @@ def _iso2_to_iso3(iso2: str) -> Optional[str]:
 
 
 def _build_vdem_lookup() -> dict:
-    """Read V-Dem Core CSV; return {iso3: {v2x_freexp_altinf: float}} using MRV ≥ 2018."""
+    """Read V-Dem Core CSV; return {iso3: {v2x_freexp_altinf, v2x_corr_inv, v2x_rule}} using MRV ≥ 2018.
+
+    v2x_corr_inv is stored pre-inverted (1 - v2x_corr) so higher = better,
+    consistent with v2x_freexp_altinf and v2x_rule.
+    """
     best: dict[str, dict] = {}
     with open(VDEM_CSV, encoding="utf-8", newline="") as f:
         reader = csv.DictReader(f)
@@ -275,6 +283,8 @@ def _build_vdem_lookup() -> dict:
             iso3 = row.get("country_text_id", "").strip()
             yr_s = row.get("year", "")
             val_s = row.get("v2x_freexp_altinf", "")
+            corr_s = row.get("v2x_corr", "")
+            rule_s = row.get("v2x_rule", "")
             if not iso3 or not yr_s or not val_s:
                 continue
             try:
@@ -285,8 +295,24 @@ def _build_vdem_lookup() -> dict:
             if yr < 2018:
                 continue
             if iso3 not in best or yr > best[iso3]["_year"]:
-                best[iso3] = {"_year": yr, "v2x_freexp_altinf": round(val, 4)}
-    return {iso3: {"v2x_freexp_altinf": d["v2x_freexp_altinf"]} for iso3, d in best.items()}
+                entry = {"_year": yr, "v2x_freexp_altinf": round(val, 4)}
+                try:
+                    entry["v2x_corr_inv"] = round(1.0 - float(corr_s), 4) if corr_s else None
+                except ValueError:
+                    entry["v2x_corr_inv"] = None
+                try:
+                    entry["v2x_rule"] = round(float(rule_s), 4) if rule_s else None
+                except ValueError:
+                    entry["v2x_rule"] = None
+                best[iso3] = entry
+    return {
+        iso3: {
+            "v2x_freexp_altinf": d["v2x_freexp_altinf"],
+            "v2x_corr_inv": d["v2x_corr_inv"],
+            "v2x_rule": d["v2x_rule"],
+        }
+        for iso3, d in best.items()
+    }
 
 
 _vdem_lookup_cache: Optional[dict] = None
@@ -313,13 +339,17 @@ def _load_vdem() -> dict:
 
 
 def _inject_vdem(iso2: str, raw: dict) -> None:
-    """Add VDEM_FREEXP to raw dict in-place from local V-Dem lookup."""
+    """Add VDEM_FREEXP, VDEM_CORR, VDEM_RULE to raw dict in-place from local V-Dem lookup."""
     lookup = _load_vdem()
     iso3   = _iso2_to_iso3(iso2)
     if iso3 and iso3 in lookup:
         raw["VDEM_FREEXP"] = lookup[iso3].get("v2x_freexp_altinf")
+        raw["VDEM_CORR"]   = lookup[iso3].get("v2x_corr_inv")
+        raw["VDEM_RULE"]   = lookup[iso3].get("v2x_rule")
     else:
         raw["VDEM_FREEXP"] = None
+        raw["VDEM_CORR"]   = None
+        raw["VDEM_RULE"]   = None
 
 
 # ── Normalization ─────────────────────────────────────────────────────────────
