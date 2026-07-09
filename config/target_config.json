@@ -89,12 +89,12 @@
       "rationale": "No single numeric threshold; LLM-assessed cultural health"
     },
     "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL": {
-      "primary_metric": null,
-      "target_value": null,
+      "primary_metric": "governance_rights_score_global",
+      "target_value": 1.0,
       "direction": "higher_better",
       "weight": 7,
-      "unit": "qualitative score",
-      "rationale": "Human rights protection; composite of democracy and rights indices"
+      "unit": "0-1 pop-weighted score (WGI+V-Dem)",
+      "rationale": "Population-weighted global mean of WGI (CC/RL) + V-Dem (corr/rule) via wellbeing_country.py; see output/wellbeing_globe.json"
     },
     "HUMAN_WELL_BEING_REVIEW": {
       "primary_metric": "child_mortality_per_1000",
@@ -134,12 +134,12 @@
       "rationale": "Universal primary education completion (SDG4)"
     },
     "GOVERNANCE_INSTITUTIONS_REVIEW": {
-      "primary_metric": null,
-      "target_value": null,
+      "primary_metric": "governance_institutions_score_global",
+      "target_value": 1.0,
       "direction": "higher_better",
       "weight": 7,
-      "unit": "qualitative score",
-      "rationale": "Institutional transparency and rule of law — no single global metric"
+      "unit": "0-1 pop-weighted score (WGI+V-Dem)",
+      "rationale": "Population-weighted global mean of WGI (GE/RL/CC) + V-Dem (corr/rule) via wellbeing_country.py; see output/wellbeing_globe.json"
     },
     "INEQUALITY_POVERTY_REVIEW": {
       "primary_metric": "extreme_poverty_rate_pct",

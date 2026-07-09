@@ -22,18 +22,24 @@ Time-to-threshold (TTI): linear extrapolation over last N trend points.
 from __future__ import annotations
 
 import json
+import sys
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
 # ── paths ─────────────────────────────────────────────────────────────────────
-BASE            = Path(__file__).resolve().parent
-TRENDS_FILE     = BASE / "cortex_memory" / "abstractions" / "trends.json"
-LAST_OBS_FILE   = BASE / "data" / "last_observations.json"
-TARGET_CFG_FILE = BASE / "config" / "target_config.json"
+BASE                = Path(__file__).resolve().parent
+TRENDS_FILE         = BASE / "cortex_memory" / "abstractions" / "trends.json"
+LAST_OBS_FILE       = BASE / "data" / "last_observations.json"
+TARGET_CFG_FILE     = BASE / "config" / "target_config.json"
+WELLBEING_GLOBE_FILE = BASE / "output" / "wellbeing_globe.json"
 
 # How many trend points to use for linear extrapolation
 TTI_WINDOW = 10
+
+# Governance globals (from wellbeing_globe.py --governance-only) older than this
+# are treated as unavailable rather than silently consumed as a frozen "real" score.
+GOVERNANCE_FRESHNESS_DAYS = 90
 
 
 # ── loaders ───────────────────────────────────────────────────────────────────
@@ -55,6 +61,51 @@ def load_last_obs() -> dict:
 
 def load_targets() -> dict:
     return _load(TARGET_CFG_FILE, {})
+
+
+def load_governance_globals() -> dict:
+    """
+    Load the two governance axis globals from output/wellbeing_globe.json,
+    gated by a freshness check on governance_computed_at.
+
+    Returns {} (axes fall back to qualitative 0.5) if the file is missing,
+    has no timestamp, or the timestamp is older than GOVERNANCE_FRESHNESS_DAYS —
+    always with a loud stderr warning, never a silent stale "real" score.
+    """
+    data = _load(WELLBEING_GLOBE_FILE, {})
+    ts_str = data.get("governance_computed_at")
+    if not ts_str:
+        print(
+            "[goal_score] WARNING: output/wellbeing_globe.json has no governance_computed_at "
+            "— GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL / GOVERNANCE_INSTITUTIONS_REVIEW falling back to 0.5. "
+            "Run: python wellbeing_globe.py --governance-only",
+            file=sys.stderr,
+        )
+        return {}
+    try:
+        ts = datetime.fromisoformat(ts_str)
+    except ValueError:
+        print(
+            f"[goal_score] WARNING: unparsable governance_computed_at={ts_str!r} "
+            "— governance axes falling back to 0.5.",
+            file=sys.stderr,
+        )
+        return {}
+
+    age_days = (datetime.now(timezone.utc) - ts).total_seconds() / 86400
+    if age_days > GOVERNANCE_FRESHNESS_DAYS:
+        print(
+            f"[goal_score] WARNING: governance globals are {age_days:.0f} days old "
+            f"(> {GOVERNANCE_FRESHNESS_DAYS}d freshness threshold) — falling back to 0.5. "
+            f"Run: python wellbeing_globe.py --governance-only",
+            file=sys.stderr,
+        )
+        return {}
+
+    return {
+        "governance_rights_score_global":       data.get("governance_rights_score"),
+        "governance_institutions_score_global": data.get("governance_institutions_score"),
+    }
 
 
 # ── metric resolution ─────────────────────────────────────────────────────────
@@ -208,7 +259,7 @@ def compute_goal_score(
     if trends is None:
         trends = load_trends()
     if last_obs is None:
-        last_obs = load_last_obs()
+        last_obs = {**load_last_obs(), **load_governance_globals()}
     if targets is None:
         targets = load_targets()
 
