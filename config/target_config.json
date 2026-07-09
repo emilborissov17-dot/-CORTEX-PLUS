@@ -88,7 +88,7 @@
       "unit": "qualitative score",
       "rationale": "No single numeric threshold; LLM-assessed cultural health"
     },
-    "GOVERNANCE_RIGHTS_HUMAN_REVIEW": {
+    "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL": {
       "primary_metric": null,
       "target_value": null,
       "direction": "higher_better",

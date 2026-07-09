@@ -115,7 +115,7 @@
       "verification_status": "NO_NUMERIC_CLAIM",
       "verification_date": "2026-06-17"
     },
-    "GOVERNANCE_RIGHTS_HUMAN_REVIEW": {
+    "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL": {
       "primary_metric": null,
       "target_value": null,
       "direction": "higher_better",
