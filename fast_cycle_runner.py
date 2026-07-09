@@ -693,6 +693,7 @@ def main():
                             "level": r.level,
                             "signals": r.signals,
                             "metrics_used": r.metrics_used,
+                            "verification": r.verification,
                         }
                         for ax, r in _scores.items()
                     },

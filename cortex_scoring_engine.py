@@ -22,6 +22,7 @@ class ScoreResult:
     score: float        # 0.0 - 1.0 (1.0 = най-добро)
     signals: List[str]  # обяснения
     metrics_used: Dict[str, Any]
+    verification: str = "VERIFIED"  # VERIFIED (real scorer) or SELF_REPORTED (score_generic)
 
 
 def _unwrap_metrics(metrics: Dict) -> Dict:
@@ -1243,7 +1244,8 @@ def score_generic(axis: str, metrics: Dict, level_hint: str) -> ScoreResult:
         level=level_hint,
         score=score,
         signals=["⚡ Generic scorer — няма специфични прагове за тази ос"],
-        metrics_used={}
+        metrics_used={},
+        verification="SELF_REPORTED",
     )
 
 
@@ -1556,6 +1558,7 @@ def save_scores(scores: Dict[str, ScoreResult]) -> None:
             "level": r.level,
             "score": r.score,
             "signals": r.signals,
+            "verification": r.verification,
         }
         for axis, r in scores.items()
     }
