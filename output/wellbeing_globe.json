@@ -35,5 +35,52 @@
     "NAC": "c1dd33b92b6765f52f7b787b6b0409fef0450b79b24839f7fbe2130112cc6f6a",
     "SAS": "0c252d1b63d546e6f374a31db883ba601e608faf19aed2b9aee9d4297a76a759",
     "SSF": "25fa75cf04623b4c411fddb63960b19f1b7c162be0d5470fff61af0bf47a6a82"
-  }
+  },
+  "governance_rights_score": 0.432078,
+  "governance_institutions_score": 0.443037,
+  "governance_source": "WGI+VDEM via wb_cache",
+  "governance_country_count": 207,
+  "governance_computed_at": "2026-07-09T07:22:47.273835+00:00",
+  "governance_skipped_countries": [
+    {
+      "iso2": "CW",
+      "reason": "no governance indicators (WGI+V-Dem both null)"
+    },
+    {
+      "iso2": "FO",
+      "reason": "no governance indicators (WGI+V-Dem both null)"
+    },
+    {
+      "iso2": "GI",
+      "reason": "no governance indicators (WGI+V-Dem both null)"
+    },
+    {
+      "iso2": "IM",
+      "reason": "no governance indicators (WGI+V-Dem both null)"
+    },
+    {
+      "iso2": "JG",
+      "reason": "no governance indicators (WGI+V-Dem both null)"
+    },
+    {
+      "iso2": "MF",
+      "reason": "no governance indicators (WGI+V-Dem both null)"
+    },
+    {
+      "iso2": "MP",
+      "reason": "no governance indicators (WGI+V-Dem both null)"
+    },
+    {
+      "iso2": "SX",
+      "reason": "no governance indicators (WGI+V-Dem both null)"
+    },
+    {
+      "iso2": "TC",
+      "reason": "no governance indicators (WGI+V-Dem both null)"
+    },
+    {
+      "iso2": "VG",
+      "reason": "no governance indicators (WGI+V-Dem both null)"
+    }
+  ]
 }

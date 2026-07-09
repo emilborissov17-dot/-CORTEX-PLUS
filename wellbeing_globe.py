@@ -251,6 +251,100 @@ def build_tree(countries: list[dict]) -> tuple[dict, dict]:
     return continent_data, globe_data
 
 
+# ── Governance globals (from wb_cache, no network) ──────────────────────────────
+# Population-weighted global scores for the two governance axes, computed directly
+# from cached WB indicator data + local V-Dem lookup. No live WB fetch — WGI/V-Dem
+# indicators update yearly, so cache staleness here is not a correctness issue
+# (unlike dep/str/flo, which need current WB data and go through wellbeing_batch.py).
+GOVERNANCE_AXES = ["GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL", "GOVERNANCE_INSTITUTIONS_REVIEW"]
+GOVERNANCE_SOURCE_LABEL = "WGI+VDEM via wb_cache"
+
+
+def compute_governance_globals() -> dict:
+    """
+    Returns:
+      {
+        "globals": {axis: pw_mean_score or None},
+        "per_country": {iso2: {axis: score}},
+        "country_count": int,
+        "skipped": [{"iso2": str, "reason": str}],
+      }
+    """
+    from wellbeing_country import _inject_vdem, _normalize, _axis_score, _IND
+
+    per_country: dict[str, dict[str, float]] = {}
+    pops: dict[str, float] = {}
+    skipped: list[dict[str, str]] = []
+
+    for f in sorted(WB_CACHE_DIR.glob("*.json")):
+        iso2 = f.stem
+        try:
+            data = json.loads(f.read_text(encoding="utf-8"))
+        except Exception as e:
+            skipped.append({"iso2": iso2, "reason": f"unreadable cache: {e}"})
+            continue
+        raw = data.get("raw", {})
+        if not raw:
+            skipped.append({"iso2": iso2, "reason": "empty cache"})
+            continue
+
+        _inject_vdem(iso2, raw)  # disk-only backfill of VDEM_FREEXP/VDEM_CORR/VDEM_RULE
+
+        norm = {
+            code: _normalize(code, v)
+            for code, v in raw.items()
+            if v is not None and code in _IND and _IND[code] is not None
+        }
+
+        scores = {}
+        for axis in GOVERNANCE_AXES:
+            s = _axis_score(axis, norm)
+            if s is not None:
+                scores[axis] = s
+
+        if scores:
+            per_country[iso2] = scores
+            pop = raw.get("SP.POP.TOTL")
+            pops[iso2] = float(pop) if pop and pop > 0 else 1.0
+        else:
+            skipped.append({"iso2": iso2, "reason": "no governance indicators (WGI+V-Dem both null)"})
+
+    globals_out: dict[str, float | None] = {}
+    for axis in GOVERNANCE_AXES:
+        vals = [scores[axis] for scores in per_country.values() if axis in scores]
+        wts  = [pops[iso2] for iso2, scores in per_country.items() if axis in scores]
+        globals_out[axis] = _pw_mean(vals, wts) if vals else None
+
+    return {
+        "globals": globals_out,
+        "per_country": per_country,
+        "country_count": len(per_country),
+        "skipped": skipped,
+    }
+
+
+def update_governance_output(result: dict) -> dict:
+    """Merge governance globals + provenance into output/wellbeing_globe.json, save, return merged dict."""
+    globe_data: dict = {}
+    if OUT_GLOBE.exists():
+        try:
+            globe_data = json.loads(OUT_GLOBE.read_text(encoding="utf-8"))
+        except Exception:
+            globe_data = {}
+
+    now = datetime.now(timezone.utc).isoformat()
+    globe_data["governance_rights_score"]        = result["globals"].get("GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL")
+    globe_data["governance_institutions_score"]   = result["globals"].get("GOVERNANCE_INSTITUTIONS_REVIEW")
+    globe_data["governance_source"]               = GOVERNANCE_SOURCE_LABEL
+    globe_data["governance_country_count"]        = result["country_count"]
+    globe_data["governance_skipped_countries"]    = result["skipped"]
+    globe_data["governance_computed_at"]          = now
+
+    OUT_GLOBE.parent.mkdir(parents=True, exist_ok=True)
+    OUT_GLOBE.write_text(json.dumps(globe_data, ensure_ascii=False, indent=2), encoding="utf-8")
+    return globe_data
+
+
 # ── Verification ───────────────────────────────────────────────────────────────
 
 def verify(countries: list[dict]) -> bool:
@@ -292,10 +386,39 @@ def _update_abs_hashes(globe_hash: str):
 
 # ── Main ───────────────────────────────────────────────────────────────────────
 
+def _run_governance_only():
+    """Compute governance globals from wb_cache and merge into output/wellbeing_globe.json. No network."""
+    result = compute_governance_globals()
+    print(f"[governance] {result['country_count']} countries scored (from {WB_CACHE_DIR})")
+    print()
+    for axis, score in result["globals"].items():
+        print(f"  GLOBAL {axis:<38} = {score}")
+    print()
+    print("  Sanity check — per-country scores:")
+    for iso2 in ("DE", "BG", "RU"):
+        scores = result["per_country"].get(iso2, {})
+        print(f"    {iso2}: {scores}")
+
+    if result["skipped"]:
+        print(f"\n  Skipped {len(result['skipped'])} countries (no usable governance data):")
+        for s in result["skipped"]:
+            print(f"    {s['iso2']}: {s['reason']}")
+
+    merged = update_governance_output(result)
+    print(f"\nSaved governance fields to {OUT_GLOBE}")
+    print(f"  governance_computed_at: {merged['governance_computed_at']}")
+
+
 def main():
     parser = argparse.ArgumentParser(description="Build Merkle continent/globe tree")
     parser.add_argument("--verify", action="store_true", help="verify saved hashes match recomputed")
+    parser.add_argument("--governance-only", action="store_true",
+                         help="compute governance axis globals from wb_cache only (no network, no dep/str/flo rebuild)")
     args = parser.parse_args()
+
+    if args.governance_only:
+        _run_governance_only()
+        return
 
     if not ALL_CTRY.exists():
         print(f"ERROR: {ALL_CTRY} not found — run wellbeing_batch.py first")
