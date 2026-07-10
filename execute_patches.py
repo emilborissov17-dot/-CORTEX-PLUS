@@ -177,24 +177,23 @@ def _request_approval(patch: pathlib.Path, reason: str) -> bool:
 
 def _guardian_supervised_run(patch: pathlib.Path, env: dict) -> tuple[bool, str, str]:
     """
-    Replaces bare subprocess.run with full PatchGuardian pipeline:
+    Прекарва patch-а изцяло през PatchGuardian.apply_patch():
+      backup → syntax → write → import-check (инертен — генерираният код е
+      обграден в if __name__ == "__main__" от self_modifier) → реално
+      изпълнение (subprocess, cwd=BASE, 30s timeout) → auto-rollback
+      (delete на новия patch файл) при неуспех.
 
-      1. Syntax check  — AST parse of patch script
-      2. Backup        — .bak of patch script before any execution
-      3. Compile       — py_compile (catches bad imports without executing)
-      4. subprocess.run — patch script executes (unavoidable: patches are scripts)
-      5. apply_patch   — for each root-level PATCHABLE_FILE modified by the patch:
-                           restore original → guardian.apply_patch(name, new_code)
-                           → import check + smoke test + auto-rollback on fail
+    guardian.apply_patch() е единственият път, по който patch-ът реално се
+    изпълнява — вече няма отделен "суров" subprocess.run на скрипта.
 
     Returns (success: bool, stdout: str, stderr: str).
-    If patch_guardian cannot be imported → falls back to direct subprocess.run.
+    Пада обратно към директен subprocess.run само ако patch_guardian не
+    може да се импортне.
     """
     import asyncio as _asyncio
-    import shutil  as _shutil
 
     try:
-        from patch_guardian import PatchGuardian, PatchResult, PATCHABLE_FILES
+        from patch_guardian import PatchGuardian, PatchResult
     except ImportError as e:
         print(f"  [GUARDIAN] import error: {e} — direct run")
         try:
@@ -207,91 +206,26 @@ def _guardian_supervised_run(patch: pathlib.Path, env: dict) -> tuple[bool, str,
             return False, "", str(ex)
 
     guardian = PatchGuardian()
+    relpath  = patch.relative_to(BASE).as_posix()
     source   = patch.read_text(encoding="utf-8", errors="ignore")
 
-    # ── 1. Syntax ─────────────────────────────────────────────────────────────
-    ok, err = guardian._check_syntax(source)
-    if not ok:
-        guardian._save_result(PatchResult(patch.name, False, "syntax", err))
-        print(f"  [GUARDIAN] ✗ Syntax: {err}")
-        return False, "", f"SYNTAX: {err}"
-    print(f"  [GUARDIAN] ✔ Syntax OK")
-
-    # ── 2. Backup patch script ────────────────────────────────────────────────
-    bak = guardian._make_backup(patch)
-    if not bak:
-        return False, "", "BACKUP FAILED"
-    print(f"  [GUARDIAN] ✔ Backup → {bak.name}")
-
-    # ── 3. Compile ────────────────────────────────────────────────────────────
-    cp = subprocess.run(
-        [sys.executable, "-m", "py_compile", str(patch)],
-        capture_output=True, text=True, timeout=10, cwd=str(BASE), env=env,
-    )
-    if cp.returncode != 0:
-        err = (cp.stderr or cp.stdout).strip()[:200]
-        guardian._save_result(PatchResult(patch.name, False, "compile", err))
-        print(f"  [GUARDIAN] ✗ Compile: {err}")
-        return False, "", f"COMPILE: {err}"
-    print(f"  [GUARDIAN] ✔ Compile OK")
-
-    # ── 4a. Snapshot patchable targets BEFORE execution ───────────────────────
-    # guardian.apply_patch() resolves paths relative to CWD → only root-level files work
-    target_snaps: dict[str, str] = {}
-    for pf in PATCHABLE_FILES:
-        ppath = BASE / pf
-        if ppath.exists() and pf.replace(".py", "") in source:
-            try:
-                target_snaps[pf] = ppath.read_text(encoding="utf-8")
-                print(f"  [GUARDIAN] ✔ Snapshot before: {pf}")
-            except Exception:
-                pass
-
-    # ── 4b. Execute patch script ──────────────────────────────────────────────
-    try:
-        run_result = subprocess.run(
-            [sys.executable, str(patch)],
-            cwd=str(BASE), capture_output=True, text=True, timeout=30, env=env,
-        )
-    except subprocess.TimeoutExpired:
-        return False, "", "TIMEOUT"
-    except Exception as ex:
-        return False, "", str(ex)
-
-    if run_result.returncode != 0:
-        print(f"  [GUARDIAN] ✗ Execution FAILED (rc={run_result.returncode})")
-        return False, run_result.stdout, run_result.stderr
-    print(f"  [GUARDIAN] ✔ Execution OK")
-
-    # ── 5. apply_patch(target, new_content) for modified patchable files ──────
     _prev_cwd = os.getcwd()
-    os.chdir(str(BASE))  # guardian uses Path(filename) relative to CWD
+    os.chdir(str(BASE))  # guardian резолвва Path(filename) спрямо CWD
     try:
-        for pf, orig in target_snaps.items():
-            ppath = BASE / pf
-            try:
-                new_content = ppath.read_text(encoding="utf-8")
-            except Exception:
-                continue
-            if new_content == orig:
-                print(f"  [GUARDIAN] {pf} — unchanged (skip)")
-                continue
-            # Restore original so apply_patch gets a clean slate for its own backup
-            ppath.write_text(orig, encoding="utf-8")
-            print(f"  [GUARDIAN] apply_patch({pf}) — import + smoke + rollback gate")
-            try:
-                res = _asyncio.run(guardian.apply_patch(pf, new_content))
-            except Exception as ge:
-                res = PatchResult(pf, False, "exception", str(ge))
-            guardian._save_result(res)
-            if not res.success:
-                print(f"  [GUARDIAN] ✗ apply_patch FAIL [{res.stage}]: {res.error}")
-                return False, run_result.stdout, f"guardian({pf}):{res.stage}:{res.error}"
-            print(f"  [GUARDIAN] ✔ apply_patch OK → {pf} [stage={res.stage}]")
+        try:
+            res = _asyncio.run(guardian.apply_patch(relpath, source))
+        except Exception as ge:
+            res = PatchResult(relpath, False, "exception", str(ge))
     finally:
         os.chdir(_prev_cwd)
 
-    return True, run_result.stdout, ""
+    guardian._save_result(res)
+    if not res.success:
+        print(f"  [GUARDIAN] ✗ apply_patch FAIL [{res.stage}]: {res.error}")
+        return False, res.stdout or "", f"guardian:{res.stage}:{res.error}"
+
+    print(f"  [GUARDIAN] ✔ apply_patch OK [stage={res.stage}]")
+    return True, res.stdout or "", ""
 
 
 def run():

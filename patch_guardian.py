@@ -2,17 +2,21 @@
 patch_guardian.py — тест + rollback система за CORTEX++
 =========================================================
 Преди да приложи patch:
-  1. Прави backup на файла
-  2. Прилага patch-а
-  3. Тества синтаксис + import
-  4. Пуска smoke test (1 цикъл наблюдение)
-  5. Ако нещо се счупи → автоматичен rollback
-  6. Записва резултата в data/patch_guardian/
+  1. Прави backup на файла (ако вече съществува)
+  2. Проверява синтаксис
+  3. Пише новия код
+  4. Import-check в изолиран subprocess
+  5. Реално изпълнение (динамични self-modifier patches) или smoke test
+     (фиксираните core файлове)
+  6. Ако нещо се счупи → автоматичен rollback (restore backup или delete
+     за нов файл)
+  7. Записва резултата в data/patch_guardian/
 
 Използване:
   from patch_guardian import PatchGuardian
   guardian = PatchGuardian()
-  result = await guardian.apply_patch("self_observer.py", new_code)
+  result = await guardian.apply_patch("agents/core/self_observer.py", new_code)
+  result = await guardian.apply_patch("agents/core/climate_patch.py", new_code)
 """
 
 import ast
@@ -20,6 +24,7 @@ import asyncio
 import importlib.util
 import json
 import logging
+import os
 import shutil
 import subprocess
 import sys
@@ -48,13 +53,40 @@ PATCHABLE_FILES = {
 }
 
 
+def _is_dynamic_patch(filename: str) -> bool:
+    """True за self-modifier-генерирани patches: agents/core/*_patch.py.
+
+    Тези файлове не са известни предварително (името зависи от компонента,
+    избран по време на изпълнение) — затова се разпознават по pattern, не
+    по членство в PATCHABLE_FILES.
+    """
+    norm = filename.replace("\\", "/")
+    return norm.startswith("agents/core/") and norm.endswith("_patch.py")
+
+
+def _is_patchable(filename: str) -> bool:
+    return filename in PATCHABLE_FILES or _is_dynamic_patch(filename)
+
+
+def _subprocess_env() -> dict:
+    """PYTHONPATH/CORTEX_BASE за subprocess-и, извикани от guardian-а.
+
+    По конвенция guardian-ът очаква CWD == BASE_DIR при извикване (execute_patches.py
+    прави os.chdir(BASE) преди apply_patch()) — Path.cwd() тук затова сочи вярно.
+    """
+    base = str(Path.cwd())
+    return {**os.environ, "PYTHONPATH": base, "CORTEX_BASE": os.environ.get("CORTEX_BASE", base)}
+
+
 class PatchResult:
-    def __init__(self, file: str, success: bool, stage: str, error: str = None, backup_path: str = None):
+    def __init__(self, file: str, success: bool, stage: str, error: str = None,
+                 backup_path: str = None, stdout: str = None):
         self.file = file
         self.success = success
-        self.stage = stage  # backup | syntax | import | smoke | applied | rolled_back
+        self.stage = stage  # backup | syntax | import | smoke | execute | applied | rolled_back
         self.error = error
         self.backup_path = backup_path
+        self.stdout = stdout
         self.timestamp = datetime.utcnow().isoformat()
 
     def to_dict(self) -> dict:
@@ -64,6 +96,7 @@ class PatchResult:
             "stage": self.stage,
             "error": self.error,
             "backup_path": self.backup_path,
+            "stdout": self.stdout,
             "timestamp": self.timestamp,
         }
 
@@ -74,8 +107,8 @@ class PatchGuardian:
     Backup → Test → Apply → Verify → (Rollback ако е нужно)
     """
 
-    def __init__(self):
-        pass
+    def __init__(self, patch_exec_timeout: int = 30):
+        self.patch_exec_timeout = patch_exec_timeout
 
     # ─────────────────────────────────────────────────────────────
     # ГЛАВЕН МЕТОД
@@ -85,55 +118,94 @@ class PatchGuardian:
         """
         Прилага patch безопасно.
         Връща PatchResult с детайли за успех/неуспех.
+
+        Два режима, по filename:
+          - Фиксираните 7 core файла (PATCHABLE_FILES): трябва вече да
+            съществуват; rollback при неуспех = restore на backup-а.
+          - Динамични self-modifier patches (agents/core/*_patch.py): може
+            да не съществуват предварително (нов файл); rollback при
+            неуспех = изтриване (няма смислен "предишен" backup).
         """
-        if filename not in PATCHABLE_FILES:
+        if not _is_patchable(filename):
             return PatchResult(filename, False, "rejected",
                                f"Файлът '{filename}' не е в списъка с patchable файлове.")
 
         file_path = Path(filename)
-        if not file_path.exists():
+        dynamic = _is_dynamic_patch(filename)
+        existed = file_path.exists()
+
+        if not existed and not dynamic:
             return PatchResult(filename, False, "rejected", f"Файлът не съществува: {filename}")
 
         log.info(f"[PatchGuardian] Започвам patch на {filename}")
 
-        # ── 1. BACKUP ──────────────────────────────────────────
-        backup_path = self._make_backup(file_path)
-        if not backup_path:
-            return PatchResult(filename, False, "backup", "Backup неуспешен — patch отказан.")
-        log.info(f"[PatchGuardian] Backup: {backup_path}")
+        # ── 1. BACKUP (само ако вече има какво да пазим) ────────
+        backup_path = None
+        if existed:
+            backup_path = self._make_backup(file_path)
+            if not backup_path:
+                return PatchResult(filename, False, "backup", "Backup неуспешен — patch отказан.")
+            log.info(f"[PatchGuardian] Backup: {backup_path}")
+        else:
+            file_path.parent.mkdir(parents=True, exist_ok=True)
 
         # ── 2. СИНТАКСИС ───────────────────────────────────────
         syntax_ok, syntax_error = self._check_syntax(new_code)
         if not syntax_ok:
-            return PatchResult(filename, False, "syntax", syntax_error, str(backup_path))
+            return PatchResult(filename, False, "syntax", syntax_error,
+                                str(backup_path) if backup_path else None)
 
         log.info(f"[PatchGuardian] Синтаксис OK")
 
         # ── 3. ПИШИ НОВИЯ КОД ──────────────────────────────────
-        original_code = file_path.read_text(encoding="utf-8")
         file_path.write_text(new_code, encoding="utf-8")
 
+        def _fail(stage: str, error: str) -> PatchResult:
+            if dynamic:
+                try:
+                    file_path.unlink(missing_ok=True)
+                except Exception:
+                    pass
+            else:
+                self._rollback(file_path, backup_path)
+            result = PatchResult(filename, False, stage, error,
+                                  str(backup_path) if backup_path else None)
+            result.stage = "rolled_back"
+            self._save_result(result)
+            return result
+
         # ── 4. IMPORT TEST ─────────────────────────────────────
+        # За динамични patches това е инертно: self_modifier обгражда целия
+        # генериран код в `if __name__ == "__main__":`, така че самият import
+        # не изпълнява логиката на патча (само проверява че модулът се зарежда).
         import_ok, import_error = self._check_import(filename)
         if not import_ok:
             log.warning(f"[PatchGuardian] Import FAIL: {import_error} → rollback")
-            self._rollback(file_path, backup_path)
-            result = PatchResult(filename, False, "import", import_error, str(backup_path))
-            result.stage = "rolled_back"
-            self._save_result(result)
-            return result
+            return _fail("import", import_error)
 
         log.info(f"[PatchGuardian] Import OK")
 
-        # ── 5. SMOKE TEST ──────────────────────────────────────
+        # ── 5. РЕАЛНО ИЗПЪЛНЕНИЕ / SMOKE TEST ──────────────────
+        if dynamic:
+            exec_ok, exec_error, exec_stdout = await self._execute_dynamic_patch(filename)
+            if not exec_ok:
+                log.warning(f"[PatchGuardian] Execution FAIL: {exec_error} → rollback")
+                return _fail("execute", exec_error)
+            log.info(f"[PatchGuardian] Execution OK")
+
+            result = PatchResult(filename, True, "applied",
+                                  backup_path=str(backup_path) if backup_path else None,
+                                  stdout=exec_stdout)
+            self._save_result(result)
+            if backup_path:
+                self._cleanup_old_backups(filename)
+            log.info(f"[PatchGuardian] ✅ Patch приложен успешно: {filename}")
+            return result
+
         smoke_ok, smoke_error = await self._smoke_test(filename)
         if not smoke_ok:
             log.warning(f"[PatchGuardian] Smoke test FAIL: {smoke_error} → rollback")
-            self._rollback(file_path, backup_path)
-            result = PatchResult(filename, False, "smoke", smoke_error, str(backup_path))
-            result.stage = "rolled_back"
-            self._save_result(result)
-            return result
+            return _fail("smoke", smoke_error)
 
         log.info(f"[PatchGuardian] Smoke test OK")
 
@@ -200,11 +272,13 @@ class PatchGuardian:
 
     def _check_import(self, filename: str) -> tuple[bool, str | None]:
         """Опитва да import-не модула в изолиран subprocess."""
-        module_name = filename.replace(".py", "")
+        module_name = str(Path(filename).with_suffix("")).replace(os.sep, ".").replace("/", ".")
+        env = _subprocess_env()
         try:
             result = subprocess.run(
                 [sys.executable, "-c", f"import {module_name}"],
-                capture_output=True, text=True, timeout=10
+                capture_output=True, text=True, timeout=10,
+                cwd=str(Path.cwd()), env=env,
             )
             if result.returncode == 0:
                 return True, None
@@ -213,6 +287,37 @@ class PatchGuardian:
             return False, "Import timeout (>10s)"
         except Exception as e:
             return False, str(e)
+
+    async def _execute_dynamic_patch(self, filename: str) -> tuple[bool, str | None, str | None]:
+        """
+        Реално изпълнява self-modifier-генериран patch (agents/core/*_patch.py).
+
+        Кодът е обграден в `if __name__ == "__main__":` (виж self_modifier
+        _ensure_main_guard) — import-check-ът по-горе е инертен, затова ТУК е
+        единствената реална екзекуция на patch-а. Същите семантики като
+        предишния директен subprocess.run в execute_patches.py: cwd=BASE,
+        30s timeout.
+        """
+        file_path = Path(filename)
+        env = _subprocess_env()
+        try:
+            proc = await asyncio.create_subprocess_exec(
+                sys.executable, str(file_path),
+                cwd=str(Path.cwd()), env=env,
+                stdout=asyncio.subprocess.PIPE,
+                stderr=asyncio.subprocess.PIPE,
+            )
+            stdout, stderr = await asyncio.wait_for(
+                proc.communicate(), timeout=self.patch_exec_timeout
+            )
+            out = stdout.decode(errors="replace").strip()
+            if proc.returncode == 0:
+                return True, None, out[:2000]
+            return False, stderr.decode(errors="replace").strip()[:300], out[:500]
+        except asyncio.TimeoutError:
+            return False, f"Patch execution timeout (>{self.patch_exec_timeout}s)", None
+        except Exception as e:
+            return False, str(e), None
 
     async def _smoke_test(self, filename: str) -> tuple[bool, str | None]:
         """

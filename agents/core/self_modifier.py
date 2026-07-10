@@ -4,7 +4,7 @@ agents/core/self_modifier.py
 REDESIGN: Генерира patches за решаване на РЕАЛНИ ПРОБЛЕМИ.
 НЕ chase-ва score — решава конкретни проблеми с measurable_goal.
 """
-import json, pathlib, sys, os
+import json, pathlib, sys, os, re, textwrap
 from datetime import datetime, timezone
 from core.groq_backend import call_groq
 from alignment.civilization_guard import evaluate_proposal_alignment
@@ -130,6 +130,26 @@ def _check_forbidden_patterns(code: str) -> tuple[bool, str]:
         if pattern in code:
             return False, f"Забранен pattern: '{pattern}'"
     return True, "OK"
+
+
+_MAIN_GUARD_RE = re.compile(r'^if\s+__name__\s*==\s*[\'"]__main__[\'"]\s*:', re.MULTILINE)
+
+
+def _ensure_main_guard(content: str) -> str:
+    """
+    Гарантира че генерираният patch код се изпълнява само при пряко стартиране
+    (`python x_patch.py`), не и при обикновен `import` (PatchGuardian
+    import-check). Не разчита само на prompt-а към LLM-а — обгражда
+    механично, ако липсва top-level `if __name__ == "__main__":`.
+    """
+    if _MAIN_GUARD_RE.search(content):
+        return content
+    lines = content.splitlines(keepends=True)
+    insert_at = 1 if (lines and lines[0].startswith("#!")) else 0
+    header = "".join(lines[:insert_at])
+    body = "".join(lines[insert_at:])
+    indented = textwrap.indent(body, "    ")
+    return f'{header}if __name__ == "__main__":\n{indented}'
 
 
 # -- Main --------------------------------------------------------------------
@@ -322,7 +342,9 @@ def _generate_solution(problem, solution, root_cause, measurable_goal, component
         "Само чист Python код. Без обяснение. Без markdown.\n"
         "Първи ред: #!/usr/bin/env python3\n"
         "BASE_DIR = pathlib.Path(os.environ['CORTEX_BASE'])\n"
-        "НЕ използвай __file__ за пътища."
+        "НЕ използвай __file__ за пътища.\n"
+        "Обгради изпълнимата логика в if __name__ == '__main__': "
+        "(системата го добавя автоматично ако липсва, но пиши го за яснота)."
     )
 
     try:
@@ -372,6 +394,8 @@ def _write_python(target_file, content):
             print(f"  [PATTERN_GUARD] ❌ {reason}")
             return {"success": False, "reason": f"Pattern guard: {reason}"}
         print(f"  [PATTERN_GUARD] ✅ Код е чист")
+
+        content = _ensure_main_guard(content)
 
         content_injected = _inject_base(content)
 
