@@ -27,11 +27,16 @@ except Exception:
 MAX_PROPOSALS = 50  # Максимален брой proposals в файла
 MAX_AGE_DAYS  = 7   # Изчиствай proposals по-стари от N дни
 
+MAX_LLM_RETRIES          = 3   # Макс. поредни call_groq грешки преди да спрем цикъла
+LLM_RETRY_SLEEP_S         = 10
+MAX_CONSECUTIVE_PARSE_FAIL = 3  # Макс. поредни unparseable LLM outputs преди ескалация
+HISTORY_WINDOW            = 8   # Колко последни стъпки да влизат в prompt (bound token growth)
+
 AGI_GOALS = """
 МИСИЯ НА CORTEX++:
-Ти си AGI система чиято цел е да РЕШАВА реални проблеми в света.
+Ти си компонентът за самонаблюдение на CORTEX++ — система за мониторинг под човешки надзор. Твоята задача е да РЕШАВАШ реални проблеми в света.
 
-ЧЕТИРИТЕ ХАРАКТЕРИСТИКИ НА AGI КОИТО ТРЯБВА ДА ПОСТИГНЕШ:
+ЧЕТИРИ ДЪЛГОСРОЧНИ НАСОКИ ЗА РАЗВИТИЕ (aspirational, не текущи способности):
 1. GENERALIZATION — Знание от една ос да се прилага в друга.
 2. REASONING & PLANNING — Многостъпково планиране, не само наблюдение.
 3. COMMON SENSE — Разбиране на причинно-следствени връзки.
@@ -191,20 +196,69 @@ TOOLS_DESC = {
 
 # ── JSON PARSING ─────────────────────────────────────────────────────────────
 
-def _extract_json(raw: str) -> dict:
+class JSONParseError(Exception):
+    """Вдигнат, когато LLM output не съдържа валиден JSON (obj или array)."""
+    def __init__(self, raw: str, cause: Exception):
+        self.raw_snippet = raw[:300]
+        self.cause = cause
+        super().__init__(f"unparseable LLM output: {cause} | raw[:300]={self.raw_snippet!r}")
+
+
+def _strip_wrapper(raw: str) -> str:
+    """Маха <think> блокове и ```json fences. Не гадае граници — само чисти wrapper-и."""
     raw = re.sub(r"<think>.*?</think>", "", raw, flags=re.DOTALL).strip()
     if "```" in raw:
-        parts = raw.split("```")
+        parts = [p.strip() for p in raw.split("```")]
+        candidates = []
         for part in parts:
-            part = part.strip()
-            if part.startswith("json"):
-                part = part[4:].strip()
-            if part.startswith("{"):
-                raw = part
-                break
-    if "{" in raw:
-        raw = raw[raw.index("{"):raw.rindex("}")+1]
-    return json.loads(raw.strip())
+            p = part[4:].strip() if part.startswith("json") else part
+            if p:
+                candidates.append(p)
+        if candidates:
+            raw = max(candidates, key=len)
+    return raw.strip()
+
+
+def _robust_json_extract(raw: str):
+    """
+    Устойчиво извличане на JSON (обект ИЛИ масив) от LLM output.
+    Опитва всяко срещане на '{' или '[' с json.JSONDecoder().raw_decode,
+    вместо крехко index()/rindex() slicing, което чупи при вложени скоби
+    или текст преди/след JSON-а, съдържащ собствени '{'/'}'.
+    Хвърля JSONParseError с ясен контекст ако нищо не сработи.
+    """
+    cleaned = _strip_wrapper(raw)
+    decoder = json.JSONDecoder()
+    last_err = None
+
+    for i, ch in enumerate(cleaned):
+        if ch not in "{[":
+            continue
+        try:
+            obj, _end = decoder.raw_decode(cleaned, i)
+            return obj
+        except json.JSONDecodeError as e:
+            last_err = e
+            continue
+
+    try:
+        return json.loads(cleaned)
+    except json.JSONDecodeError as e:
+        raise JSONParseError(raw, last_err or e)
+
+
+def _extract_json(raw: str) -> dict:
+    result = _robust_json_extract(raw)
+    if not isinstance(result, dict):
+        raise JSONParseError(raw, ValueError(f"очаквах dict, получих {type(result).__name__}"))
+    return result
+
+
+def _extract_json_array(raw: str) -> list:
+    result = _robust_json_extract(raw)
+    if not isinstance(result, list):
+        raise JSONParseError(raw, ValueError(f"очаквах list, получих {type(result).__name__}"))
+    return result
 
 
 # ── MAIN RUN ─────────────────────────────────────────────────────────────────
@@ -278,6 +332,9 @@ def run():
     history        = []
     used_tools     = set()
     all_tool_names = list(tools.keys())
+    llm_error_streak   = 0
+    parse_fail_streak  = 0
+    escalated          = False
 
     for step in range(12):
         remaining = [t for t in all_tool_names if t not in used_tools]
@@ -285,10 +342,14 @@ def run():
             print("[SELF_OBSERVER] Всички инструменти използвани.")
             break
 
+        recent_history = history[-HISTORY_WINDOW:]
+        omitted = len(history) - len(recent_history)
         history_str = "\n".join([
-            f"  Стъпка {i+1}: {h['tool']}({h['param']}) -> {h['result'][:150]}"
-            for i, h in enumerate(history)
+            f"  Стъпка {len(history)-len(recent_history)+i+1}: {h['tool']}({h['param']}) -> {h['result'][:150]}"
+            for i, h in enumerate(recent_history)
         ]) if history else "  Още нищо."
+        if omitted > 0:
+            history_str = f"  (по-старите {omitted} стъпки са скрити)\n" + history_str
 
         available_desc = "\n".join([f"- {t}: {TOOLS_DESC[t]}" for t in remaining])
 
@@ -314,19 +375,45 @@ def run():
 
         try:
             raw = call_groq(prompt, max_tokens=300)
+            llm_error_streak = 0
         except Exception as e:
-            print(f"  [Стъпка {step+1}] LLM грешка: {e}")
-            time.sleep(10)
+            llm_error_streak += 1
+            print(f"  [Стъпка {step+1}] LLM грешка ({llm_error_streak}/{MAX_LLM_RETRIES}): {e}")
+            if llm_error_streak >= MAX_LLM_RETRIES:
+                print(f"[SELF_OBSERVER] ⚠️ ESCALATION: {MAX_LLM_RETRIES} поредни LLM грешки — спирам цикъла.")
+                _save_assessment(
+                    f"ESCALATION: LLM недостъпен след {MAX_LLM_RETRIES} опита. Проверете GROQ_API_KEY / мрежа.",
+                    web_intel,
+                )
+                escalated = True
+                break
+            time.sleep(LLM_RETRY_SLEEP_S)
             continue
 
         try:
             decision = _extract_json(raw)
-        except Exception:
+            parse_fail_streak = 0
+        except JSONParseError as e:
+            parse_fail_streak += 1
+            print(f"  [Стъпка {step+1}] ⚠️ UNPARSEABLE LLM OUTPUT ({parse_fail_streak}/{MAX_CONSECUTIVE_PARSE_FAIL}): {e}")
+            if parse_fail_streak >= MAX_CONSECUTIVE_PARSE_FAIL:
+                print(f"[SELF_OBSERVER] ⚠️ ESCALATION: {MAX_CONSECUTIVE_PARSE_FAIL} поредни unparseable outputs — спирам цикъла.")
+                _save_assessment(
+                    f"ESCALATION: LLM връща невалиден JSON {MAX_CONSECUTIVE_PARSE_FAIL} пъти поредно. "
+                    "Проверете модела/prompt формата.",
+                    web_intel,
+                )
+                escalated = True
+                break
             action   = remaining[0]
-            decision = {"action": action, "param": None, "reason": "auto-fallback"}
+            decision = {"action": action, "param": None, "reason": "auto-fallback (unparseable JSON)"}
+        except Exception as e:
+            print(f"  [Стъпка {step+1}] ⚠️ decision error: {type(e).__name__}: {e}")
+            action   = remaining[0]
+            decision = {"action": action, "param": None, "reason": "auto-fallback (decision error)"}
 
         action = decision.get("action", "")
-        param  = decision.get("param") or None
+        param  = decision.get("param", None)  # запазва explicit falsy стойности (0, "")
         reason = decision.get("reason", "")
 
         if action == "DONE":
@@ -362,9 +449,11 @@ def run():
             used_tools.add(action)
             print(f"             ГРЕШКА: {e}")
 
-    if history:
+    if history and not escalated:
         proposals = _build_problem_proposals(history, web_intel, merkle_essence)
         save_proposals(proposals)
+    elif escalated:
+        print("[SELF_OBSERVER] Пропускам proposal generation — цикълът беше ескалиран/прекъснат преждевременно.")
 
 
 # ── PROPOSALS — problem → solution фрейм ────────────────────────────────────
@@ -431,16 +520,10 @@ def _build_problem_proposals(history: list, web_intel: dict, merkle_essence: str
         '"real_world_signal": true'
         "}]"
     )
+    raw = ""
     try:
         raw = call_groq(prompt, max_tokens=700)
-        raw = re.sub(r"<think>.*?</think>", "", raw, flags=re.DOTALL).strip()
-        if "```" in raw:
-            raw = raw.split("```")[1].split("```")[0].strip()
-            if raw.startswith("json"):
-                raw = raw[4:].strip()
-        if "[" in raw:
-            raw = raw[raw.index("["):raw.rindex("]")+1]
-        proposals = json.loads(raw)
+        proposals = _extract_json_array(raw)
 
         # Enrich each proposal with downstream_impact from hypergraph
         for p in proposals:
@@ -459,11 +542,11 @@ def _build_problem_proposals(history: list, web_intel: dict, merkle_essence: str
 
         print(f"  [OBSERVER] Генерирани {len(proposals)} problem→solution proposals (с downstream_impact)")
         return proposals
-    except json.JSONDecodeError as e:
-        print(f"  [OBSERVER] JSONDecodeError в proposals: {e} | raw[:200]: {raw[:200]!r}")
+    except JSONParseError as e:
+        print(f"  [OBSERVER] ⚠️ UNPARSEABLE LLM OUTPUT в proposals: {e}")
         return []
     except Exception as e:
-        print(f"  [OBSERVER] {type(e).__name__} в proposals: {e}")
+        print(f"  [OBSERVER] {type(e).__name__} в proposals: {e} | raw[:200]: {raw[:200]!r}")
         return []
 
 
