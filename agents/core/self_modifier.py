@@ -8,6 +8,8 @@ import json, pathlib, sys, os, re, textwrap
 from datetime import datetime, timezone
 from core.groq_backend import call_groq
 from alignment.civilization_guard import evaluate_proposal_alignment
+from safety.ast_gate import check_code
+from safety.quarantine import quarantine
 
 try:
     from memory.runtime_telemetry import record_experience as _rec
@@ -219,10 +221,10 @@ def run():
         if ready_code and len(ready_code) > 50:
             target = f"agents/core/{component.lower()}_patch.py"
             print(f"  Използвам python_code от proposal -> {target}")
-            result = _write_python(target, ready_code)
+            result = _write_python(target, ready_code, proposal)
         else:
             context = _build_context(sa, levels, component, problem)
-            result  = _generate_solution(problem, solution, root_cause, measurable, component, context)
+            result  = _generate_solution(problem, solution, root_cause, measurable, component, context, proposal)
 
         score_after = _read_avg_score()
 
@@ -301,7 +303,7 @@ def _build_context(sa, levels, component, problem):
     )
 
 
-def _generate_solution(problem, solution, root_cause, measurable_goal, component, context):
+def _generate_solution(problem, solution, root_cause, measurable_goal, component, context, proposal=None):
     memory_block = ""
     try:
         from memory.continuous_learner import before_llm_call
@@ -371,7 +373,7 @@ def _generate_solution(problem, solution, root_cause, measurable_goal, component
 
         target = f"agents/core/{component.lower()}_patch.py"
         print(f"  Groq: WRITE_PYTHON -> {target}")
-        return _write_python(target, raw)
+        return _write_python(target, raw, proposal)
 
     except Exception as e:
         return {"success": False, "reason": f"Groq грешка: {str(e)[:120]}"}
@@ -383,7 +385,7 @@ def _inject_base(content: str) -> str:
     return "".join(lines[:insert_at]) + _BASE_INJECT + "".join(lines[insert_at:])
 
 
-def _write_python(target_file, content):
+def _write_python(target_file, content, proposal=None):
     try:
         allowed = ["memory/", "agents/core/", "data_providers/", "alignment/", "core/"]
         if not any(target_file.startswith(a) for a in allowed):
@@ -404,6 +406,21 @@ def _write_python(target_file, content):
             _ast.parse(content_injected)
         except SyntaxError as se:
             return {"success": False, "reason": f"Синтаксис: {se}"}
+
+        # ── AST capability gate — втори слой след FORBIDDEN_PATTERNS ────────
+        gate_allowed, gate_reason = check_code(content)
+        if not gate_allowed:
+            print(f"  [AST_GATE] ❌ {gate_reason}")
+            quarantine(
+                base_dir=BASE_DIR,
+                filename=target_file,
+                reason=gate_reason,
+                verdict={"gate": "ast_gate", "stage": "pre_write", "reason": gate_reason},
+                content=content,
+                source_proposal=proposal,
+            )
+            return {"success": False, "reason": f"AST gate: {gate_reason}"}
+        print(f"  [AST_GATE] ✅ Код разрешен")
 
         target = BASE_DIR / target_file
         target.parent.mkdir(parents=True, exist_ok=True)

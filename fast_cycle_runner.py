@@ -868,12 +868,16 @@ def main():
         except Exception:
             pass
 
-        # results — today's patch executions from development_journal.json (written by execute_patches, step 19)
+        # results — today's patch executions + quarantine events from development_journal.json
+        # (patch_executions written by execute_patches, step 19; quarantine_events written by
+        # safety/quarantine.py whenever the AST gate or PatchGuardian rolls back a dynamic patch)
         _patch_results = []
+        _quarantine_events = []
         try:
             _journal = json.loads((BASE / "memory" / "development_journal.json").read_text(encoding="utf-8"))
             _today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
             _patch_results = _journal.get(_today, {}).get("patch_executions", [])
+            _quarantine_events = _journal.get(_today, {}).get("quarantine_events", [])
         except Exception:
             pass
 
@@ -881,10 +885,11 @@ def main():
             cycle_id  = _utc_now(),
             signals   = _signals,
             decisions = _decisions,
-            results   = _patch_results,
+            results   = _patch_results + _quarantine_events,
             goal_score = float(composite),
         ))
-        print(f"[FAST_CYCLE] MerkleMemory -> committed | signals={len(_signals)} decisions={len(_decisions)} results={len(_patch_results)} goal={composite:.4f}")
+        print(f"[FAST_CYCLE] MerkleMemory -> committed | signals={len(_signals)} decisions={len(_decisions)} "
+              f"results={len(_patch_results)} quarantined={len(_quarantine_events)} goal={composite:.4f}")
     except Exception as e:
         print(f"[FAST_CYCLE] MerkleMemory -> FAILED: {e}")
 

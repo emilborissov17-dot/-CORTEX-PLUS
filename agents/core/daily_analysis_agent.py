@@ -176,6 +176,33 @@ def _pending_patches() -> list[dict]:
     return result
 
 
+def _quarantine_summary() -> str:
+    """
+    Едноредово резюме на quarantine-натите patches (AST gate deny +
+    guardian rollback) — за да не бъдат заровени в логове. Пълен списък:
+    python scripts/review_quarantine.py
+    """
+    qdir = BASE_DIR / "patches" / "quarantine"
+    if not qdir.exists():
+        return "Quarantine е празна."
+    entries = list(qdir.glob("*.json"))
+    if not entries:
+        return "Quarantine е празна."
+    entries.sort(key=lambda p: p.stat().st_mtime, reverse=True)
+    reasons = []
+    for p in entries[:3]:
+        try:
+            meta = json.loads(p.read_text(encoding="utf-8"))
+            r = (meta.get("deny_reason") or "").strip()
+            if r:
+                reasons.append(r[:40])
+        except Exception:
+            pass
+    sample = "; ".join(reasons)
+    line = f"{len(entries)} patch(es) в quarantine (виж: python scripts/review_quarantine.py)"
+    return f"{line} — напр.: {sample}" if sample else line
+
+
 def main():
     print("[DAILY_ANALYSIS] starting daily analysis...")
 
@@ -208,6 +235,9 @@ def main():
     else:
         print("[DAILY_ANALYSIS] няма patches чакащи одобрение")
 
+    quarantine_summary = _quarantine_summary()
+    print(f"[DAILY_ANALYSIS] {quarantine_summary}")
+
     # Build daily report
     today = date.today().isoformat()
     report = {
@@ -217,6 +247,7 @@ def main():
         "analyses": analyses,
         "overall_assessment": overall,
         "pending_patches": pending,
+        "quarantine_summary": quarantine_summary,
     }
 
     # Save daily report
@@ -228,6 +259,7 @@ def main():
     # Update next_actions.txt
     NOTES_DIR.mkdir(exist_ok=True)
     next_actions_lines = [f"DAILY ANALYSIS — {today}\n", "=" * 50 + "\n\n"]
+    next_actions_lines.append(f"QUARANTINE: {quarantine_summary}\n\n")
     next_actions_lines.append("OVERALL ASSESSMENT:\n")
     next_actions_lines.append(overall + "\n\n")
     next_actions_lines.append("RECOMMENDED ACTIONS BY AXIS:\n")

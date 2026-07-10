@@ -8,8 +8,9 @@ patch_guardian.py — тест + rollback система за CORTEX++
   4. Import-check в изолиран subprocess
   5. Реално изпълнение (динамични self-modifier patches) или smoke test
      (фиксираните core файлове)
-  6. Ако нещо се счупи → автоматичен rollback (restore backup или delete
-     за нов файл)
+  6. Ако нещо се счупи → автоматичен rollback (restore backup за фиксираните
+     core файлове; quarantine — НЕ delete — за нов динамичен patch файл,
+     виж safety/quarantine.py и scripts/review_quarantine.py)
   7. Записва резултата в data/patch_guardian/
 
 Използване:
@@ -31,6 +32,8 @@ import sys
 import time
 from datetime import datetime
 from pathlib import Path
+
+from safety.quarantine import quarantine
 
 log = logging.getLogger("PatchGuardian")
 
@@ -124,7 +127,9 @@ class PatchGuardian:
             съществуват; rollback при неуспех = restore на backup-а.
           - Динамични self-modifier patches (agents/core/*_patch.py): може
             да не съществуват предварително (нов файл); rollback при
-            неуспех = изтриване (няма смислен "предишен" backup).
+            неуспех = quarantine (patches/quarantine/), НЕ изтриване —
+            системата никога не трие patch код, само човек го изчиства
+            (виж scripts/review_quarantine.py).
         """
         if not _is_patchable(filename):
             return PatchResult(filename, False, "rejected",
@@ -161,16 +166,21 @@ class PatchGuardian:
         file_path.write_text(new_code, encoding="utf-8")
 
         def _fail(stage: str, error: str) -> PatchResult:
-            if dynamic:
-                try:
-                    file_path.unlink(missing_ok=True)
-                except Exception:
-                    pass
-            else:
-                self._rollback(file_path, backup_path)
             result = PatchResult(filename, False, stage, error,
                                   str(backup_path) if backup_path else None)
             result.stage = "rolled_back"
+            if dynamic:
+                # Никога не трие — quarantine за човешки преглед
+                # (виж scripts/review_quarantine.py).
+                quarantine(
+                    base_dir=Path.cwd(),
+                    filename=filename,
+                    reason=error,
+                    verdict=result.to_dict(),
+                    source_path=file_path,
+                )
+            else:
+                self._rollback(file_path, backup_path)
             self._save_result(result)
             return result
 
@@ -279,6 +289,7 @@ class PatchGuardian:
                 [sys.executable, "-c", f"import {module_name}"],
                 capture_output=True, text=True, timeout=10,
                 cwd=str(Path.cwd()), env=env,
+                encoding="utf-8", errors="replace",
             )
             if result.returncode == 0:
                 return True, None

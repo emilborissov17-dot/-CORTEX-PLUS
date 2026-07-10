@@ -177,11 +177,13 @@ def _request_approval(patch: pathlib.Path, reason: str) -> bool:
 
 def _guardian_supervised_run(patch: pathlib.Path, env: dict) -> tuple[bool, str, str]:
     """
-    Прекарва patch-а изцяло през PatchGuardian.apply_patch():
-      backup → syntax → write → import-check (инертен — генерираният код е
-      обграден в if __name__ == "__main__" от self_modifier) → реално
-      изпълнение (subprocess, cwd=BASE, 30s timeout) → auto-rollback
-      (delete на новия patch файл) при неуспех.
+    Прекарва patch-а изцяло през AST gate + PatchGuardian.apply_patch():
+      AST capability gate (втори слой — self_modifier вече провери преди
+      write, тук е независим re-check) → backup → syntax → write →
+      import-check (инертен — генерираният код е обграден в
+      if __name__ == "__main__" от self_modifier) → реално изпълнение
+      (subprocess, cwd=BASE, 30s timeout) → auto-rollback (quarantine на
+      новия patch файл, НЕ delete) при неуспех.
 
     guardian.apply_patch() е единственият път, по който patch-ът реално се
     изпълнява — вече няма отделен "суров" subprocess.run на скрипта.
@@ -191,6 +193,25 @@ def _guardian_supervised_run(patch: pathlib.Path, env: dict) -> tuple[bool, str,
     може да се импортне.
     """
     import asyncio as _asyncio
+    from safety.ast_gate import check_code
+    from safety.quarantine import quarantine
+
+    relpath = patch.relative_to(BASE).as_posix()
+    source  = patch.read_text(encoding="utf-8", errors="ignore")
+
+    # ── AST capability gate (независим re-check преди guardian) ────────────
+    gate_allowed, gate_reason = check_code(source)
+    if not gate_allowed:
+        print(f"  [AST_GATE] ✗ {gate_reason} → quarantine")
+        quarantine(
+            base_dir=BASE,
+            filename=relpath,
+            reason=gate_reason,
+            verdict={"gate": "ast_gate", "stage": "execute_patches_recheck", "reason": gate_reason},
+            source_path=patch,
+        )
+        return False, "", f"AST_GATE: {gate_reason}"
+    print(f"  [AST_GATE] ✔ {relpath} разрешен")
 
     try:
         from patch_guardian import PatchGuardian, PatchResult
@@ -198,7 +219,8 @@ def _guardian_supervised_run(patch: pathlib.Path, env: dict) -> tuple[bool, str,
         print(f"  [GUARDIAN] import error: {e} — direct run")
         try:
             r = subprocess.run([sys.executable, str(patch)], cwd=str(BASE),
-                               capture_output=True, text=True, timeout=30, env=env)
+                               capture_output=True, text=True, timeout=30, env=env,
+                               encoding="utf-8", errors="replace")
             return r.returncode == 0, r.stdout, r.stderr
         except subprocess.TimeoutExpired:
             return False, "", "timeout"
@@ -206,8 +228,6 @@ def _guardian_supervised_run(patch: pathlib.Path, env: dict) -> tuple[bool, str,
             return False, "", str(ex)
 
     guardian = PatchGuardian()
-    relpath  = patch.relative_to(BASE).as_posix()
-    source   = patch.read_text(encoding="utf-8", errors="ignore")
 
     _prev_cwd = os.getcwd()
     os.chdir(str(BASE))  # guardian резолвва Path(filename) спрямо CWD
