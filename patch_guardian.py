@@ -37,12 +37,11 @@ RESULTS_DIR.mkdir(parents=True, exist_ok=True)
 # Колко backup-а да пазим на файл
 MAX_BACKUPS_PER_FILE = 10
 
-# Файлове които могат да се patch-ват
+# Файлове които могат да се patch-ват (реални пътища спрямо repo root)
 PATCHABLE_FILES = {
-    "self_observer.py",
-    "self_modifier.py",
-    "world_actor.py",
-    "continuous_learner.py",
+    "agents/core/self_observer.py",
+    "agents/core/self_modifier.py",
+    "memory/continuous_learner.py",
     "execute_patches.py",
     "hypercortex_runner.py",
     "fast_cycle_runner.py",
@@ -75,8 +74,8 @@ class PatchGuardian:
     Backup → Test → Apply → Verify → (Rollback ако е нужно)
     """
 
-    def __init__(self, smoke_test_timeout: int = 15):
-        self.smoke_test_timeout = smoke_test_timeout
+    def __init__(self):
+        pass
 
     # ─────────────────────────────────────────────────────────────
     # ГЛАВЕН МЕТОД
@@ -217,78 +216,15 @@ class PatchGuardian:
 
     async def _smoke_test(self, filename: str) -> tuple[bool, str | None]:
         """
-        Smoke test: ако е self_observer.py → опитва observe()
-        За останалите файлове → само проверява import в subprocess
+        За всички PATCHABLE_FILES — import test-ът (стъпка 4) вече провери че
+        модулът се зарежда. Нито self_observer.py, нито hypercortex_runner.py
+        експонират клас с cheap entrypoint за реален smoke call (проверено:
+        agents/core/self_observer.py е само модулни функции — run(), get_tools()
+        и т.н., без SelfObserver клас; hypercortex_runner.py също — main(),
+        run_agents() и т.н., без HypercortexRunner клас), затова import е
+        достатъчен и тук.
         """
-        if filename == "self_observer.py":
-            return await self._smoke_test_observer()
-        elif filename == "hypercortex_runner.py":
-            return await self._smoke_test_hypercortex()
-        else:
-            # За останалите — import е достатъчен
-            return True, None
-
-    async def _smoke_test_observer(self) -> tuple[bool, str | None]:
-        """Пуска SelfObserver.observe() с timeout."""
-        code = """
-import asyncio, sys
-sys.path.insert(0, '.')
-async def test():
-    from self_observer import SelfObserver
-    obs = SelfObserver()
-    signals = await obs.observe()
-    print(f"OK:{len(signals)}")
-asyncio.run(test())
-"""
-        try:
-            proc = await asyncio.create_subprocess_exec(
-                sys.executable, "-c", code,
-                stdout=asyncio.subprocess.PIPE,
-                stderr=asyncio.subprocess.PIPE,
-            )
-            stdout, stderr = await asyncio.wait_for(
-                proc.communicate(), timeout=self.smoke_test_timeout
-            )
-            output = stdout.decode().strip()
-            if output.startswith("OK:"):
-                count = int(output.split(":")[1])
-                log.info(f"[smoke] SelfObserver → {count} сигнала")
-                return True, None
-            return False, stderr.decode().strip()[:300]
-        except asyncio.TimeoutError:
-            return False, f"Smoke test timeout (>{self.smoke_test_timeout}s)"
-        except Exception as e:
-            return False, str(e)
-
-    async def _smoke_test_hypercortex(self) -> tuple[bool, str | None]:
-        """Пуска HypercortexRunner с празни observations."""
-        code = """
-import asyncio, sys
-sys.path.insert(0, '.')
-async def test():
-    from hypercortex_runner import HypercortexRunner
-    h = HypercortexRunner()
-    snaps = await h.run([])
-    print(f"OK:{len(snaps)}")
-asyncio.run(test())
-"""
-        try:
-            proc = await asyncio.create_subprocess_exec(
-                sys.executable, "-c", code,
-                stdout=asyncio.subprocess.PIPE,
-                stderr=asyncio.subprocess.PIPE,
-            )
-            stdout, stderr = await asyncio.wait_for(
-                proc.communicate(), timeout=10
-            )
-            output = stdout.decode().strip()
-            if output.startswith("OK:"):
-                return True, None
-            return False, stderr.decode().strip()[:300]
-        except asyncio.TimeoutError:
-            return False, "Hypercortex smoke timeout"
-        except Exception as e:
-            return False, str(e)
+        return True, None
 
     def _rollback(self, file_path: Path, backup_path: Path):
         shutil.copy2(backup_path, file_path)
