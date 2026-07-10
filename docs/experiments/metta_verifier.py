@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """
-agents/core/metta_verifier.py
+docs/experiments/metta_verifier.py
+NOT WIRED INTO LIVE CYCLE — design exploration only.
+
 MeTTa верификатор — проверява дали предложено действие
 е в съответствие с визията на CORTEX++.
 """
