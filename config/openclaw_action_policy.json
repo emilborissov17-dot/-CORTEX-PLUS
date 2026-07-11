@@ -1,0 +1,67 @@
+{
+  "version": 2,
+  "default_unclassified": "level_3",
+  "note": "Ако action_type не е в нито един списък → level_3 автоматично.",
+
+  "level_1": {
+    "description": "Автономно, само logging. Наблюдателни/четящи действия.",
+    "action_types": [
+      "web_search",
+      "web_fetch_get",
+      "read_local_file",
+      "transcribe_media_local",
+      "query_cortex_memory",
+      "query_cortex_snapshot",
+      "list_directory",
+      "public_api_get",
+      "rss_fetch",
+      "pdf_fetch_public"
+    ]
+  },
+
+  "level_2": {
+    "description": "Автономно + задължителен backup + rollback при грешка.",
+    "action_types": [
+      "write_knowledge_file",
+      "write_internet_snapshot",
+      "write_cortex_snapshot",
+      "update_semantic_memory",
+      "write_task_result",
+      "update_cortex_config_internal",
+      "write_data_file"
+    ],
+    "required_fields": ["target_path", "backup_enabled"],
+    "backup_enabled_must_be": true
+  },
+
+  "level_3": {
+    "description": "Изисква human approval преди изпълнение.",
+    "action_types": [
+      "git_push",
+      "publish_content",
+      "send_email",
+      "send_slack_message",
+      "send_discord_message",
+      "send_telegram_message",
+      "http_post_external",
+      "http_put_external",
+      "http_delete_external",
+      "delete_file_external",
+      "create_external_account",
+      "financial_transaction",
+      "upload_to_cloud_storage",
+      "api_write_external"
+    ]
+  },
+
+  "always_blocked": {
+    "description": "Никога не се изпълнява, дори с одобрение. Изисква промяна на кода.",
+    "action_types": [
+      "modify_openclaw_action_policy",
+      "modify_cortex_approval_server",
+      "delete_merkle_archive",
+      "disable_audit_log",
+      "execute_arbitrary_shell"
+    ]
+  }
+}
