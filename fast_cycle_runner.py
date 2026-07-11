@@ -52,7 +52,9 @@ def _run(label, fn, free_after=False):
         fn()
         print(f"[FAST_CYCLE] {label} -> OK")
     except Exception as e:
-        print(f"[FAST_CYCLE] {label} -> FAILED: {e}")
+        # str(e) can be empty (e.g. bare MemoryError()) — always show the
+        # exception type too, so a failure never renders as a blank message.
+        print(f"[FAST_CYCLE] {label} -> FAILED: {type(e).__name__}: {e}")
     if free_after:
         _free_ollama()
     gc.collect()  # release memory after every agent step

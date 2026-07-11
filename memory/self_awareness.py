@@ -81,12 +81,20 @@ class FilesystemMapper:
                 }
         return structure
 
+# Project-owned source dirs only — mirrors FilesystemMapper's scope. Scanning
+# from repo root with "**/*.py" used to sweep up every installed dependency
+# under venv/ (6600+ files opened and read on every single run).
+CODEBASE_SCAN_DIRS = ["memory", "core", "agents", "data_providers"]
+
 class CodebaseScanner:
     def __init__(self, root):
         self.root = root
-        
+
     def scan(self) -> Dict:
-        python_files = list(self.root.glob("**/*.py"))
+        python_files = [
+            f for d in CODEBASE_SCAN_DIRS if (self.root / d).exists()
+            for f in (self.root / d).glob("**/*.py")
+        ]
         stats = {
             "total_files": len(python_files),
             "total_lines": 0,
@@ -172,7 +180,9 @@ class HistoryLoader:
                 "predictions": ta.predict_next()
             }
         except Exception as e:
-            print(f"History load error: {e}")
+            # str(e) can be empty (e.g. bare MemoryError()) — always show the
+            # exception type too, so a failure never renders as a blank message.
+            print(f"History load error: {type(e).__name__}: {e}")
             return {
                 "history": [],
                 "trends": {},

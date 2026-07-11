@@ -13,6 +13,7 @@ __pycache__/
 chromadb/
 logs/
 snapshots/self/
+snapshots/self_archive/
 
 *.mp4
 OLD/

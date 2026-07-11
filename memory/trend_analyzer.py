@@ -12,10 +12,12 @@ import json
 from datetime import datetime
 from typing import List, Dict
 
+MAX_SNAPSHOT_BYTES = 5 * 1024 * 1024  # a properly-truncated self-snapshot is a few KB; anything past 5MB is a bug
+
 class TrendAnalyzer:
     def __init__(self):
         self.snapshots_dir = Path(__file__).parent.parent / "snapshots" / "self"
-        
+
     def load_snapshots(self) -> List[Dict]:
         if not self.snapshots_dir.exists():
             return []
@@ -23,10 +25,15 @@ class TrendAnalyzer:
         data = []
         for s in snapshots[-5:]:
             try:
+                size = s.stat().st_size
+                if size > MAX_SNAPSHOT_BYTES:
+                    print(f"[TREND_ANALYZER] skipping {s.name}: {size/1024/1024:.1f}MB "
+                          f"exceeds {MAX_SNAPSHOT_BYTES/1024/1024:.0f}MB sanity cap — not loading")
+                    continue
                 with open(s) as f:
                     data.append(json.load(f))
-            except:
-                pass
+            except Exception as e:
+                print(f"[TREND_ANALYZER] failed to load {s.name}: {type(e).__name__}: {e}")
         return data
     
     def analyze_memory_trend(self) -> Dict:
