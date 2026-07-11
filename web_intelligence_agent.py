@@ -25,9 +25,8 @@ import sys
 import time
 import hashlib
 import shutil
-import signal
-from concurrent.futures import ThreadPoolExecutor, as_completed
-from contextlib import contextmanager
+import requests
+from concurrent.futures import ThreadPoolExecutor, TimeoutError as FutureTimeoutError
 from datetime import datetime, timezone, timedelta
 from typing import Optional
 
@@ -94,7 +93,6 @@ except ImportError:
 def _warmup_ollama():
     """Загрява Ollama модела при старт — преди паралелните оси."""
     try:
-        import requests
         r = requests.get("http://localhost:11434/api/tags", timeout=5)
         models = [m["name"] for m in r.json().get("models", [])]
         if not models:
@@ -325,30 +323,16 @@ AXES = {
     },
 }
 
-# -- Timeout ------------------------------------------------------------------
-
-@contextmanager
-def _time_limit(seconds: int):
-    if not hasattr(signal, "SIGALRM"):
-        yield
-        return
-
-    def _handler(signum, frame):
-        raise TimeoutError(f"Axis timeout {seconds}s")
-
-    old = signal.signal(signal.SIGALRM, _handler)
-    signal.alarm(seconds)
-    try:
-        yield
-    finally:
-        signal.alarm(0)
-        signal.signal(signal.SIGALRM, old)
-
 # -- Helpers ------------------------------------------------------------------
 
 def _fetch_rss(url: str, max_items: int = 5) -> list:
+    """Fetches one RSS feed with a bounded network timeout. A dead/slow feed
+    must never block the axis it belongs to — any failure (network timeout,
+    HTTP error, malformed feed) is logged and skipped, never raised."""
     try:
-        feed = feedparser.parse(url)
+        response = requests.get(url, timeout=20)
+        response.raise_for_status()
+        feed = feedparser.parse(response.content)
         items = []
         for entry in feed.entries[:max_items]:
             items.append({
@@ -359,7 +343,8 @@ def _fetch_rss(url: str, max_items: int = 5) -> list:
                 "source_type": "rss",
             })
         return items
-    except Exception:
+    except Exception as e:
+        print(f"[WEB_INTEL] RSS fetch failed, skipping feed {url[:60]}...: {e}")
         return []
 
 
@@ -541,7 +526,7 @@ def _checkpoint_load() -> dict:
         print(f"[WEB_INTEL] Checkpoint четене грешка: {e}")
     return {}
 
-def _checkpoint_save(completed: list, done: bool = False):
+def _checkpoint_save(completed: list, done: bool = False, failed: Optional[list] = None):
     """Записва прогреса след всяка успешна ос."""
     try:
         CHECKPOINT_FILE.parent.mkdir(parents=True, exist_ok=True)
@@ -551,6 +536,8 @@ def _checkpoint_save(completed: list, done: bool = False):
             "completed": completed,
             "done":      done,
         }
+        if failed:
+            cp["failed"] = failed
         CHECKPOINT_FILE.write_text(json.dumps(cp, ensure_ascii=False, indent=2), encoding="utf-8")
     except Exception as e:
         print(f"[WEB_INTEL] Checkpoint запис грешка: {e}")
@@ -569,42 +556,44 @@ def run_axis(axis: str, config: dict, force: bool = False) -> dict:
     print(f"  [FETCH] {axis}...")
     all_items = []
 
-    try:
-        with _time_limit(AXIS_TIMEOUT_SEC):
-            for url in config.get("rss", []):
-                items = _fetch_rss(url, max_items=4)
-                all_items.extend(items)
-                if items:
-                    print(f"    RSS {url[:50]}... → {len(items)} items")
-                time.sleep(0.3)
+    # NOTE: no in-process wall-clock guard here anymore — SIGALRM-based
+    # timeouts don't exist on Windows and aren't safe to raise from a
+    # ThreadPoolExecutor worker thread on any platform (signal.alarm only
+    # works in the process's main thread). The AXIS_TIMEOUT_SEC ceiling is
+    # instead enforced by the caller via future.result(timeout=...) in
+    # run() — a hung axis is abandoned by the orchestrator and marked
+    # failed in the checkpoint, not stopped from within.
+    for url in config.get("rss", []):
+        items = _fetch_rss(url, max_items=4)
+        all_items.extend(items)
+        if items:
+            print(f"    RSS {url[:50]}... → {len(items)} items")
+        time.sleep(0.3)
 
-            claude_queries = CLAUDE_QUERY_PROPOSALS.get(axis, [])
+    claude_queries = CLAUDE_QUERY_PROPOSALS.get(axis, [])
+    if claude_queries:
+        print(f"    [CLAUDE→] Умни queries за {axis}: {claude_queries[:2]}")
+
+    if len(all_items) < 5 and HAS_DDG:
+        search_queries = claude_queries[:2] if claude_queries else config.get("keywords", [])[:2]
+        for kw in search_queries:
+            ddg = _ddg_search(kw, max_results=3)
+            all_items.extend(ddg)
+            time.sleep(0.5)
+
+    if HAS_YOUTUBE:
+        try:
             if claude_queries:
-                print(f"    [CLAUDE→] Умни queries за {axis}: {claude_queries[:2]}")
-
-            if len(all_items) < 5 and HAS_DDG:
-                search_queries = claude_queries[:2] if claude_queries else config.get("keywords", [])[:2]
-                for kw in search_queries:
-                    ddg = _ddg_search(kw, max_results=3)
-                    all_items.extend(ddg)
-                    time.sleep(0.5)
-
-            if HAS_YOUTUBE:
-                try:
-                    if claude_queries:
-                        config_with_proposals = dict(config)
-                        config_with_proposals["claude_queries"] = claude_queries
-                        yt_items = fetch_youtube_for_axis(axis, config_with_proposals, max_videos=3)
-                    else:
-                        yt_items = fetch_youtube_for_axis(axis, config, max_videos=3)
-                    all_items.extend(yt_items)
-                    yt_with_tr = sum(1 for i in yt_items if i.get("has_full_transcript"))
-                    print(f"    YouTube: {len(yt_items)} видеа, {yt_with_tr} с транскрипция")
-                except Exception as e:
-                    print(f"    [YT] грешка: {e}")
-
-    except TimeoutError:
-        print(f"  [TIMEOUT] {axis} — изтекло {AXIS_TIMEOUT_SEC}s, продължаваме с {len(all_items)} items")
+                config_with_proposals = dict(config)
+                config_with_proposals["claude_queries"] = claude_queries
+                yt_items = fetch_youtube_for_axis(axis, config_with_proposals, max_videos=3)
+            else:
+                yt_items = fetch_youtube_for_axis(axis, config, max_videos=3)
+            all_items.extend(yt_items)
+            yt_with_tr = sum(1 for i in yt_items if i.get("has_full_transcript"))
+            print(f"    YouTube: {len(yt_items)} видеа, {yt_with_tr} с транскрипция")
+        except Exception as e:
+            print(f"    [YT] грешка: {e}")
 
     # Дедупликация
     seen = set()
@@ -766,31 +755,53 @@ def run(axes_filter: Optional[list] = None, force: bool = False, resume: bool = 
             pass
 
     # Паралелна обработка на останалите
+    failed_axes = []
     if to_fetch:
         print(f"\n[WEB_INTEL] Паралелна обработка на {len(to_fetch)} оси (workers={MAX_WORKERS})...")
         # Checkpoint при старт на нов цикъл
         _checkpoint_save(completed_axes, done=False)
-        with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
+
+        # No `with` block here on purpose: ThreadPoolExecutor.__exit__ calls
+        # shutdown(wait=True), which would re-introduce an indefinite hang if
+        # any axis below is abandoned after timing out — its worker thread
+        # keeps running in the background (Python threads can't be force-
+        # killed), but we must not block run() waiting for it to finish.
+        executor = ThreadPoolExecutor(max_workers=MAX_WORKERS)
+        try:
             futures = {
                 executor.submit(run_axis, axis, AXES[axis], force): axis
                 for axis in to_fetch
             }
-            for future in as_completed(futures):
-                axis = futures[future]
+            # Windows has no SIGALRM, so the per-axis ceiling is enforced
+            # here instead of inside run_axis(): future.result(timeout=...)
+            # stops WAITING on a hung axis after AXIS_TIMEOUT_SEC without
+            # blocking on the others, which keep resolving independently.
+            for future, axis in futures.items():
                 try:
-                    result = future.result()
+                    result = future.result(timeout=AXIS_TIMEOUT_SEC)
                     results.append(result)
                     # Запиши checkpoint след всяка успешна ос
                     completed_axes.append(axis)
-                    _checkpoint_save(completed_axes, done=False)
+                    _checkpoint_save(completed_axes, done=False, failed=failed_axes)
                     print(f"  [CHECKPOINT] {axis} ✓ ({len(completed_axes)}/{len(target_axes)})")
+                except FutureTimeoutError:
+                    print(f"  [TIMEOUT] {axis} exceeded {AXIS_TIMEOUT_SEC}s axis ceiling "
+                          f"— marking failed, cycle continues")
+                    failed_axes.append(axis)
+                    _checkpoint_save(completed_axes, done=False, failed=failed_axes)
                 except Exception as e:
                     print(f"  [ERROR] {axis}: {e}")
+                    failed_axes.append(axis)
+                    _checkpoint_save(completed_axes, done=False, failed=failed_axes)
+        finally:
+            executor.shutdown(wait=False, cancel_futures=True)
 
     master_path = generate_master_report(results)
     # Маркирай цикъла като завършен
-    _checkpoint_save(completed_axes, done=True)
-    print("[WEB_INTEL] Checkpoint: цикълът завършен ✓")
+    _checkpoint_save(completed_axes, done=True, failed=failed_axes)
+    print("[WEB_INTEL] Checkpoint: цикълът завършен ✓" + (
+        f" ({len(failed_axes)} ос(и) timeout/failed: {', '.join(failed_axes)})" if failed_axes else ""
+    ))
 
     try:
         from memory.continuous_learner import learn_from_cycle
