@@ -4,6 +4,7 @@ __pycache__/
 *.pyc
 *.pyo
 *.pyd
+.pytest_cache/
 *.bak
 *.bak_*
 *.backup*
@@ -14,6 +15,10 @@ logs/
 snapshots/self/
 
 *.mp4
+OLD/
+LEGACY/
+PROGRESS/
+cycle_log.txt
 _cycle_*.txt
 _monitor_*.txt
 _check_*.py
