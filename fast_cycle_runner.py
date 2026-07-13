@@ -17,6 +17,15 @@ BASE = pathlib.Path(__file__).resolve().parent
 import os
 os.environ["CORTEX_BASE"] = str(BASE)
 
+# Proof of life for the supervisor's watchdog. beat() is called at EVERY step
+# boundary below — not just inside _run() — because ~a dozen steps use inline
+# try/except and bypass _run entirely. If those steps did not beat, the cycle
+# would look frozen during exactly the slowest legitimate work (global_indicators
+# hits 20 live APIs; web_intelligence can run the better part of an hour) and the
+# watchdog would kill healthy cycles. test/test_heartbeat_coverage.py enforces
+# that every step boundary is instrumented, so this cannot silently rot.
+from memory.heartbeat import beat, clear as _clear_heartbeat
+
 def _utc_now():
     return datetime.now(timezone.utc).isoformat()
 
@@ -531,6 +540,7 @@ def main():
     _notify_patches_and_initiatives()
 
     # ── 0. Body scan → adaptive directives (runs FIRST, before everything) ──
+    beat("body_scan", "0")
     print("[FAST_CYCLE] Step 0: body scan + dependency check...")
     try:
         from agents.body.body_scanner import run as _body_run
@@ -573,6 +583,7 @@ def main():
         pass
 
     # ── 0.5. Dependency check ──
+    beat("dependency_check", "0.5")
     if not _check_dependencies():
         print("\n[FAST_CYCLE] СПРЯН — dependency check failed.")
         print("[FAST_CYCLE] Отчет: snapshots/master/dependency_check_latest.json")
@@ -585,6 +596,7 @@ def main():
         pass  # falls through to Step 1 below
 
     # ── 0.7. needs_reanalysis scan — find axes that failed all LLM backends ──
+    beat("needs_reanalysis_scan", "0.7")
     try:
         flagged = _scan_needs_reanalysis()
         if flagged:
@@ -596,16 +608,19 @@ def main():
         print(f"[FAST_CYCLE] needs_reanalysis scan -> FAILED: {e}")
 
     # ── 1. Web Intelligence ──
+    beat("web_intelligence", "1")
     if not directives.get("skip_web_intel"):
         run_web_intelligence()
     else:
         print("[FAST_CYCLE] Step 1: web_intelligence SKIPPED (offline)")
 
     # ── 2. LLM self-review оси ──
+    beat("llm_self_review_axes", "2")
     refresh_llm_axes()
     update_master()
 
     # ── 2.5. Global indicators — реални данни от 7 источника ──
+    beat("global_indicators", "2.5")
     try:
         from core.global_indicators import fetch_all as _gi_fetch
         gi_data = _gi_fetch()
@@ -622,9 +637,11 @@ def main():
         _tb.print_exc()
 
     # ── 3. Trend tracker ──
+    beat("trend_tracker", "3")
     run_trend_tracker()
 
     # ── 3.5. CortexStrategist — MUST run early before token budget is depleted by snapshots ──
+    beat("cortexstrategist", "3.5")
     # Groq free tier: 100K tokens/day. Steps 4-11 consume ~90K tokens.
     # CortexStrategist needs ~7K tokens — running it here ensures budget is available.
     _run("cortex_strategist_agent", lambda: __import__(
@@ -632,43 +649,53 @@ def main():
     _strategist_to_proposals()
 
     # ── 4. Internet intelligence ──
+    beat("internet_intelligence", "4")
     _run("internet_agent", lambda: __import__(
         "agents.internet.internet_agent", fromlist=["run"]).run(), free_after=True)
 
     # ── 5. Civilization snapshots ──
+    beat("civilization_snapshots", "5")
     _run("civilization_snapshots_agent", lambda: __import__(
         "agents.civilization.civilization_snapshots_agent_qwen", fromlist=["main"]).main(), free_after=True)
 
     # ── 6. Planet snapshots ──
+    beat("planet_snapshots", "6")
     _run("planet_snapshots_agent", lambda: __import__(
         "agents.planet.planet_snapshots_agent_qwen", fromlist=["main"]).main(), free_after=True)
 
     # ── 7. Human snapshots ──
+    beat("human_snapshots", "7")
     _run("human_snapshots_agent", lambda: __import__(
         "agents.human.human_snapshots_agent_qwen", fromlist=["main"]).main(), free_after=True)
 
     # ── 8. Cosmos snapshots ──
+    beat("cosmos_snapshots", "8")
     _run("cosmos_snapshots_agent", lambda: __import__(
         "agents.cosmos.cosmos_snapshots_agent_qwen", fromlist=["main"]).main(), free_after=True)
 
     # ── 9. Planetary potential ──
+    beat("planetary_potential", "9")
     _run("planetary_potential_agent", lambda: __import__(
         "agents.planet.planetary_potential_review_agent_qwen", fromlist=["main"]).main(), free_after=True)
 
     # ── 10. Energy review ──
+    beat("energy_review", "10")
     _run("energy_review_agent", lambda: __import__(
         "agents.energy.energy_review_agent_qwen", fromlist=["main"]).main(), free_after=True)
 
     # ── 11. Self awareness ──
+    beat("self_awareness", "11")
     def _self_awareness():
         from agents.self.self_awareness_agent import SelfAwarenessAgent
         SelfAwarenessAgent().run()
     _run("self_awareness_agent", _self_awareness, free_after=True)
 
     # ── 12. Update master след всички snapshots ──
+    beat("update_master", "12")
     update_master()
 
     # ── 12.3. System hypergraph — rebuild so cortex_strategist/self_observer can query it ──
+    beat("system_hypergraph", "12.3")
     try:
         from system_hypergraph import build_hypergraph
         hg = build_hypergraph()
@@ -677,6 +704,7 @@ def main():
         print(f"[FAST_CYCLE] system_hypergraph -> FAILED: {e}")
 
     # ── 12.4. Scoring engine — освежи cortex_scores_latest.json ──
+    beat("scoring_engine", "12.4")
     try:
         from cortex_scoring_engine import score_all_snapshots as _score_all, AXIS_SCORERS as _AXIS_SCORERS
         import datetime as _dt
@@ -711,6 +739,7 @@ def main():
         print(f"[FAST_CYCLE] scoring_engine -> FAILED: {e}")
 
     # ── 12.5. Auto levels — СЛЕД snapshot агентите, не преди! ──
+    beat("auto_levels", "12.5")
     # Тук auto_level чете реални данни от обновения master snapshot.
     # execute_patches ще вика auto_level отново за before/after measurement.
     levels = {}  # initialized here so MerkleMemory commit can read it at step 24
@@ -722,6 +751,7 @@ def main():
         print(f"[FAST_CYCLE] auto_levels -> FAILED: {e}")
 
     # ── 12.6. Goal score calculator ──
+    beat("goal_score_calculator", "12.6")
     composite = 0.0  # initialized here so MerkleMemory commit can read it at step 24
     def _goal_score_calculator():
         nonlocal composite
@@ -740,6 +770,7 @@ def main():
     _run("goal_score_calculator", _goal_score_calculator)
 
     # ── 12.7. Cognitive Orchestrator — Attentional Meta Protocol ──
+    beat("cognitive_orchestrator", "12.7")
     # Runs BEFORE HyperClaw so it can use its priority_axes assessment.
     # (CortexStrategist was moved to step 3.5 to run before token budget is depleted.)
     def _cortex_orchestrator():
@@ -748,27 +779,33 @@ def main():
     _run("cortex_orchestrator", _cortex_orchestrator)
 
     # ── 13. Body scan ──
+    beat("body_scan", "13")
     _run("body_scanner", lambda: __import__(
         "agents.body.body_scanner", fromlist=["run"]).run())
 
     # ── 14. Growth planner ──
+    beat("growth_planner", "14")
     _run("growth_planner", lambda: __import__(
         "agents.body.growth_planner", fromlist=["run"]).run())
 
     # ── 15.6. HyperClaw — multi-axis 24-72h plan ──
+    beat("hyperclaw", "15.6")
     _run("hyperclaw_orchestrator", lambda: __import__(
         "agents.hyperclaw.hyperclaw_orchestrator", fromlist=["main"]).main(), free_after=True)
 
     # ── 15.7. HyperClaw plan → improvement proposals ──
+    beat("hyperclaw_plan", "15.7")
     _hyperclaw_to_proposals()
 
     # ── 15.8. GitHub publish — cycle synthesis + verified hypotheses ──
+    beat("github_publish", "15.8")
     def _github_publisher():
         from github_publisher import publish_synthesis as _gh_publish
         _gh_publish()
     _run("github_publisher", _github_publisher)
 
     # ── 16. Action recommendations ──
+    beat("action_recommendations", "16")
     def _cortex_reasoner():
         from core.cortex_reasoner import reason
         from memory.semantic_memory import remember
@@ -791,32 +828,39 @@ def main():
     _run("cortex_reasoner", _cortex_reasoner)
 
     # ── 17. Self observer ──
+    beat("self_observer", "17")
     _run("self_observer", lambda: __import__(
         "agents.core.self_observer", fromlist=["run"]).run(), free_after=True)
 
     # ── 18. Self modifier ──
+    beat("self_modifier", "18")
     _run("self_modifier", lambda: __import__(
         "agents.core.self_modifier", fromlist=["run"]).run(), free_after=True)
 
     # ── 19. Execute patches — вика auto_level вътрешно за реален before/after ──
+    beat("execute_patches", "19")
     _run("execute_patches", lambda: __import__(
         "execute_patches", fromlist=["run"]).run())
 
     # ── 20. Feedback loop ──
+    beat("feedback_loop", "20")
     _run("feedback_loop", lambda: __import__(
         "agents.core.feedback_loop", fromlist=["run"]).run())
 
     # ── 21. Session update ──
+    beat("session_update", "21")
     def _session_updater():
         from core.session_updater import update as _update
         _update()
     _run("session_updater", _session_updater)
 
     # ── 22. Daily analysis ──
+    beat("daily_analysis", "22")
     _run("daily_analysis", lambda: __import__(
         "agents.core.daily_analysis_agent", fromlist=["main"]).main())
 
     # ── 22.5. Data Scout — автономно търсене на нови реални данни ──
+    beat("data_scout", "22.5")
     # Пуска се ПОСЛЕДНО — не се бие с основния цикъл за LLM rate limit.
     # Кешира предложенията; пита LLM само когато ги няма или са >7 дни.
     def _data_scout():
@@ -830,6 +874,7 @@ def main():
     _run("data_scout", _data_scout)
 
     # ── 23. Continuous learning ──
+    beat("continuous_learning", "23")
     try:
         from memory.continuous_learner import learn_from_cycle
         result = learn_from_cycle({"source": "fast_cycle_runner", "timestamp": _utc_now()})
@@ -841,6 +886,7 @@ def main():
         print(f"[FAST_CYCLE] Continuous learning грешка: {e}")
 
     # ── 24. MerkleMemory commit ──
+    beat("merklememory_commit", "24")
     try:
         import asyncio
         import re as _re
@@ -896,6 +942,7 @@ def main():
         print(f"[FAST_CYCLE] MerkleMemory -> FAILED: {e}")
 
     # ── 25. Training data accumulation ──
+    beat("training_data_accumulation", "25")
     # Runs AFTER MerkleMemory commit (step 24) so the archive entry exists.
     try:
         from merkle_to_training import append_latest_cycle as _append_training
@@ -905,6 +952,10 @@ def main():
             print("[FAST_CYCLE] merkle_to_training -> already processed or no archive")
     except Exception as e:
         print(f"[FAST_CYCLE] merkle_to_training -> FAILED: {e}")
+
+    # Cycle finished cleanly → drop the heartbeat, so a COMPLETED cycle can never
+    # be read as a hung one by the next supervisor tick.
+    _clear_heartbeat()
 
     print("=" * 50)
     print(f"[FAST_CYCLE] done at {_utc_now()}")
