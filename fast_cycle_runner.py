@@ -929,15 +929,50 @@ def main():
         except Exception:
             pass
 
+        # ── Existence ledger anchoring ──────────────────────────────────────
+        # The supervisor's scheduler events (starts, kills, restarts, missed runs)
+        # live in their own hash-chained ledger. They are NOT committed as cycles —
+        # doing that would inflate total_cycles and push goal_score=0.0 into the
+        # trend vectors, poisoning the self-model with the system's own supervision.
+        #
+        # Instead we anchor: the ledger's HEAD HASH rides into results[], which is
+        # already a list of arbitrary event dicts. It therefore lands inside
+        # archive/cycle_NNNNNN/ and is sealed into the Merkle root — so any later
+        # edit to the ledger's history breaks its chain against a hash already in
+        # the tree.
+        #
+        # Events from a KILLED cycle are anchored by the NEXT successful cycle:
+        # the dead cannot seal their own record. That is exactly why the ledger is
+        # independently hash-chained as well.
+        _existence_anchor = []
+        try:
+            from memory.existence_ledger import verify as _el_verify, summary as _el_summary
+            _v = _el_verify()
+            _existence_anchor = [{
+                "type":              "existence_ledger_anchor",
+                "ledger_head_hash":  _v.get("head_hash"),
+                "ledger_events":     _v.get("events", 0),
+                "ledger_chain_valid": _v.get("valid"),
+                "existence":         _el_summary(),
+            }]
+            if not _v.get("valid"):
+                print(f"[FAST_CYCLE] ⚠️  EXISTENCE LEDGER CHAIN BROKEN at seq={_v.get('broken_at')} "
+                      f"— the system's own history has been edited")
+        except Exception as e:
+            print(f"[FAST_CYCLE] existence_ledger anchor -> FAILED: {type(e).__name__}: {e}")
+
         asyncio.run(MerkleMemory().commit(
             cycle_id  = _utc_now(),
             signals   = _signals,
             decisions = _decisions,
-            results   = _patch_results + _quarantine_events,
+            results   = _patch_results + _quarantine_events + _existence_anchor,
             goal_score = float(composite),
         ))
         print(f"[FAST_CYCLE] MerkleMemory -> committed | signals={len(_signals)} decisions={len(_decisions)} "
               f"results={len(_patch_results)} quarantined={len(_quarantine_events)} goal={composite:.4f}")
+        if _existence_anchor:
+            print(f"[FAST_CYCLE] existence anchored | head={_existence_anchor[0]['ledger_head_hash'][:12]}... "
+                  f"| events={_existence_anchor[0]['ledger_events']}")
     except Exception as e:
         print(f"[FAST_CYCLE] MerkleMemory -> FAILED: {e}")
 
