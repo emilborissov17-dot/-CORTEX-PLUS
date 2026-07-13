@@ -12,9 +12,19 @@ from __future__ import annotations
 import sys, io, json, pathlib, datetime
 from typing import Any, Dict, List, Optional
 
-# ── Fix: UTF-8 stdout за Windows (решава UnicodeEncodeError с емоджи) ──
-if hasattr(sys.stdout, "buffer"):
-    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
+def _force_utf8_stdout() -> None:
+    """UTF-8 stdout за Windows (решава UnicodeEncodeError с емоджи).
+
+    Вика се САМО от __main__, не при import. Преди това се изпълняваше на
+    module level и подменяше sys.stdout на всеки, който импортне модула —
+    включително pytest, чийто capture се чупеше с
+    "ValueError: I/O operation on closed file".
+    Библиотечен модул не бива да пипа глобалния stdout при import.
+    """
+    if getattr(sys.stdout, "encoding", "").lower().startswith("utf"):
+        return  # вече е UTF-8, няма какво да поправяме
+    if hasattr(sys.stdout, "buffer"):
+        sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
 
 BASE_DIR     = pathlib.Path(__file__).resolve().parents[1]
 MEMORY_DIR   = BASE_DIR / "memory"
@@ -137,17 +147,82 @@ def _compute_trend(history: List[Dict]) -> str:
         return "DETERIORATING"
     return "STABLE"
 
-def _compute_axis_score(metrics: Dict[str, float], axis: str) -> Optional[float]:
+# World Bank WGI indicators (rule_of_law, voice_accountability, ...) are
+# z-scores on a -2.5..+2.5 scale where the world average is ~0 — NOT percentages.
+WGI_METRICS = {
+    "rule_of_law", "voice_accountability", "political_stability",
+    "control_of_corruption", "government_effectiveness", "regulatory_quality",
+}
+WGI_MIN, WGI_MAX = -2.5, 2.5
+
+SCORES_PATH = BASE_DIR / "output" / "cortex_scores_latest.json"
+
+
+def _load_engine_scores() -> Dict[str, float]:
+    """The authoritative per-axis scores from cortex_scoring_engine (0-1 scale).
+
+    This is the number the rest of the system means by "axis score": it comes
+    from per-axis scorers with real thresholds. Returned on the 0-100 scale
+    used by axis_history.json.
+    """
+    if not SCORES_PATH.exists():
+        return {}
+    try:
+        data = json.loads(SCORES_PATH.read_text(encoding="utf-8"))
+    except Exception as e:
+        print(f"[TREND_TRACKER] cortex_scores_latest.json unreadable "
+              f"({type(e).__name__}: {e}) — falling back to metric mean")
+        return {}
+
+    out: Dict[str, float] = {}
+    for axis, entry in (data.get("scores") or {}).items():
+        score = entry.get("score")
+        if isinstance(score, (int, float)):
+            out[axis] = round(float(score) * 100, 2)   # 0-1 -> 0-100
+    return out
+
+
+def _fallback_metric_mean(metrics: Dict[str, float]) -> Optional[float]:
+    """Last-resort score when the scoring engine has no entry for an axis.
+
+    This is a CRUDE approximation and is labelled as such in the output. It
+    assumes metrics are 0-100 percentages, which is false for plenty of them
+    (satellite counts, patent counts, WGI z-scores). WGI is special-cased here
+    because it was the loudest failure: the old code did max(0, min(100, val))
+    on a -2.5..+2.5 z-score, so every negative value — i.e. every below-average
+    governance indicator on Earth — collapsed to exactly 0.0.
+    """
     if not metrics:
         return None
     scores = []
     for key, val in metrics.items():
-        if key in INVERTED_METRICS:
-            score = max(0, min(100, 100 - val))
+        if key in WGI_METRICS:
+            # -2.5..+2.5 -> 0..100
+            pct = (val - WGI_MIN) / (WGI_MAX - WGI_MIN) * 100
+            scores.append(max(0.0, min(100.0, pct)))
+        elif key in INVERTED_METRICS:
+            scores.append(max(0.0, min(100.0, 100 - val)))
         else:
-            score = max(0, min(100, val))
-        scores.append(score)
+            scores.append(max(0.0, min(100.0, val)))
     return round(sum(scores) / len(scores), 2) if scores else None
+
+
+def _compute_axis_score(metrics: Dict[str, float], axis: str,
+                        engine_scores: Optional[Dict[str, float]] = None) -> tuple:
+    """Return (score, source) for an axis, on a 0-100 scale.
+
+    Prefers the authoritative cortex_scoring_engine score. The old behaviour —
+    averaging raw metric values clamped to 0..100 — was silently wrong for any
+    axis whose metrics are not percentages, which is most of them. It reported
+    GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL as 0.0 while the real scorer said 0.44.
+    """
+    if engine_scores is None:
+        engine_scores = _load_engine_scores()
+
+    if axis in engine_scores:
+        return engine_scores[axis], "cortex_scoring_engine"
+
+    return _fallback_metric_mean(metrics), "fallback_metric_mean"
 
 def run() -> Dict:
     print("[TREND_TRACKER] loading master snapshot...")
@@ -165,11 +240,22 @@ def run() -> Dict:
     for axis in list(history.keys()):
         history[axis] = [e for e in history[axis] if e.get("metrics")]
 
+    engine_scores = _load_engine_scores()
+    if engine_scores:
+        print(f"[TREND_TRACKER] using cortex_scoring_engine scores for "
+              f"{len(engine_scores)} axes")
+    else:
+        print("[TREND_TRACKER] WARNING: no cortex_scores_latest.json — "
+              "all scores fall back to the crude metric mean")
+
     trends = {}
+    fallback_axes = []
 
     for axis, snapshot in snapshots.items():
         metrics = _extract_metrics(snapshot, axis)
-        score = _compute_axis_score(metrics, axis)
+        score, score_source = _compute_axis_score(metrics, axis, engine_scores)
+        if score_source == "fallback_metric_mean" and score is not None:
+            fallback_axes.append(axis)
 
         if axis not in history:
             history[axis] = []
@@ -179,6 +265,7 @@ def run() -> Dict:
             "timestamp": timestamp,
             "metrics": metrics,
             "score": score,
+            "score_source": score_source,
         }
 
         if not history[axis] or history[axis][-1]["date"] != today:
@@ -191,6 +278,8 @@ def run() -> Dict:
             "trend": trend,
             "score_today": score,
             "score_prev": history[axis][-2]["score"] if len(history[axis]) >= 2 else None,
+            "score_source": score_source,
+            "score_scale": "0-100",
             "metrics_count": len(metrics),
             "history_days": len(history[axis]),
         }
@@ -204,6 +293,10 @@ def run() -> Dict:
         "date": today,
         "timestamp": timestamp,
         "axes_tracked": len(trends),
+        "score_scale": "0-100",
+        # Axes whose score is the crude metric mean, not a real scorer output.
+        # Never let a fallback number pass as authoritative.
+        "axes_on_fallback_score": sorted(fallback_axes),
         "improving": [a for a, t in trends.items() if t["trend"] == "IMPROVING"],
         "deteriorating": [a for a, t in trends.items() if t["trend"] == "DETERIORATING"],
         "stable": [a for a, t in trends.items() if t["trend"] == "STABLE"],
@@ -217,10 +310,15 @@ def run() -> Dict:
     print(f"  STABLE:             {len(trends_report['stable'])}")
     print(f"  DETERIORATING:      {len(trends_report['deteriorating'])}")
     print(f"  INSUFFICIENT_DATA:  {len(trends_report['insufficient_data'])}")
+    if fallback_axes:
+        print(f"  ⚠️  FALLBACK SCORE:  {len(fallback_axes)} axes have no scoring-engine "
+              f"entry (crude metric mean): {', '.join(sorted(fallback_axes)[:5])}"
+              + (" ..." if len(fallback_axes) > 5 else ""))
     print(f"\n[TREND_TRACKER] history -> {HISTORY_FILE}")
     print(f"[TREND_TRACKER] trends  -> {TRENDS_FILE}")
 
     return trends_report
 
 if __name__ == "__main__":
+    _force_utf8_stdout()
     run()
