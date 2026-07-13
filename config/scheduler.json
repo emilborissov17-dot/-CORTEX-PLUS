@@ -1,0 +1,41 @@
+{
+  "_README": [
+    "Configuration for supervisor.py. This file is in the protected-path denylist:",
+    "no self-generated patch may edit it. Ceilings and budgets are HUMAN-tunable only —",
+    "a system that can widen its own restart budget has no restart budget.",
+    "",
+    "daily_hour            local hour (0-23) at which the daily cycle should run",
+    "catchup_grace_hours   if the machine was off at daily_hour, still run a catch-up",
+    "                      within this many hours of it; past that, skip to tomorrow",
+    "                      (starting a multi-hour cycle at 23:55 collides with tomorrow)",
+    "max_restarts_per_day  after this many watchdog restarts, STOP and fail loudly",
+    "step_ceilings_sec     per-step heartbeat staleness ceiling. A single global",
+    "                      ceiling would kill healthy cycles: global_indicators hits",
+    "                      20 live HTTP APIs and web_intelligence can run for the",
+    "                      better part of an hour. _default applies to unnamed steps."
+  ],
+
+  "daily_hour": 3,
+  "catchup_grace_hours": 20,
+  "max_restarts_per_day": 2,
+
+  "step_ceilings_sec": {
+    "_default": 900,
+
+    "web_intelligence": 3600,
+    "internet_intelligence": 2700,
+    "global_indicators": 1200,
+    "energy_review": 1800,
+    "planetary_potential": 1800,
+    "civilization_snapshots": 1800,
+    "planet_snapshots": 1800,
+    "human_snapshots": 1800,
+    "cosmos_snapshots": 1800,
+    "llm_self_review_axes": 1800,
+    "cortexstrategist": 1200,
+    "hyperclaw": 1200,
+    "data_scout": 1200,
+    "self_observer": 1200,
+    "continuous_learning": 1200
+  }
+}
