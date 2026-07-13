@@ -531,6 +531,51 @@ def cmd_status() -> None:
     print("=" * 62)
 
 
+def cmd_mark_ran_today() -> None:
+    """Mark today as already-run, so the next tick does NOT fire a catch-up.
+
+    Why this exists: if you install the scheduled task at 12:00 with no last_run
+    on record, the very first tick correctly concludes that today's 03:00 run was
+    missed and starts a catch-up cycle immediately. That is right by default — but
+    sometimes you just want the thing installed and quiet until tomorrow morning.
+
+    This does not fake a cycle. It writes no CYCLE_STARTED and no CYCLE_FINISHED;
+    it records CATCHUP_SUPPRESSED_BY_HUMAN, so the existence history says plainly
+    that this day had no cycle AND that a person decided that — never leaving a
+    future agent to read a human's choice as its own.
+    """
+    now = datetime.now().astimezone()
+    today = now.date().isoformat()
+
+    st = load_state()
+    if st.get("last_run_date") == today:
+        log(f"today ({today}) is already marked as run — nothing to do")
+        return
+
+    if read_lock() and pid_is_our_cycle((read_lock() or {}).get("pid")):
+        log("a cycle is RUNNING right now — refusing to mark today as run "
+            "(that would let a second cycle start once this one finishes)")
+        sys.exit(1)
+
+    st["last_run_date"] = today
+    st["last_run_utc"] = None          # honest: no cycle actually ran
+    save_state(st)
+
+    ledger.append(
+        ledger.CATCHUP_SUPPRESSED,
+        date=today,
+        scheduled_for=now.replace(hour=int(load_config().get("daily_hour", 3)),
+                                  minute=0, second=0, microsecond=0).isoformat(),
+        detail="human marked today as already-run; no cycle was executed",
+    )
+
+    hour = int(load_config().get("daily_hour", 3))
+    log(f"today ({today}) marked as run — no catch-up will fire. "
+        f"Next cycle: tomorrow at {hour:02d}:00.")
+    log("NOTE: no cycle actually ran today; the ledger records this as "
+        "CATCHUP_SUPPRESSED_BY_HUMAN, not as a completed cycle.")
+
+
 def cmd_install() -> None:
     """Print the schtasks command. Deliberately does NOT run it: registering a
     scheduled task is the moment the system starts running on its own, and that
@@ -545,6 +590,17 @@ def cmd_install() -> None:
     print("A machine that was off or logged out at the scheduled hour is covered by")
     print("the catch-up path, which runs the missed cycle on the next tick.")
 
+    hour = int(load_config().get("daily_hour", 3))
+    now = datetime.now().astimezone()
+    st = load_state()
+    if st.get("last_run_date") != now.date().isoformat() and now.hour >= hour:
+        print()
+        print(f"HEADS UP: it is past {hour:02d}:00 and no cycle has run today, so the FIRST")
+        print("tick after you install will immediately start a catch-up cycle.")
+        print("If you would rather it stay quiet until tomorrow morning, run this first:")
+        print()
+        print("  venv\\Scripts\\python.exe supervisor.py --mark-ran-today")
+
 
 def main() -> None:
     ap = argparse.ArgumentParser(description="CORTEX++ supervisor")
@@ -554,9 +610,13 @@ def main() -> None:
     ap.add_argument("--status", action="store_true", help="human-readable existence report")
     ap.add_argument("--verify-ledger", action="store_true", help="verify the existence hash chain")
     ap.add_argument("--install", action="store_true", help="print the schtasks registration command")
+    ap.add_argument("--mark-ran-today", action="store_true",
+                    help="treat today as already-run so no catch-up fires (no cycle is executed)")
     args = ap.parse_args()
 
-    if args.status:
+    if args.mark_ran_today:
+        cmd_mark_ran_today()
+    elif args.status:
         cmd_status()
     elif args.verify_ledger:
         print(json.dumps(ledger.verify(), indent=2))

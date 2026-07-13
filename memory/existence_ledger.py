@@ -71,6 +71,13 @@ CYCLE_KILLED     = "CYCLE_KILLED"
 CYCLE_RESTARTED  = "CYCLE_RESTARTED"
 MISSED_CATCHUP   = "MISSED_RUN_CATCHUP"
 MISSED_SKIPPED   = "MISSED_RUN_SKIPPED"
+# A human told the supervisor to treat today as already-run, suppressing the
+# catch-up. Distinct from MISSED_RUN_SKIPPED (which the supervisor decides on its
+# own, past the grace window): this one has a person behind it. A day with no
+# cycle is a fact about the system's existence either way — but WHO decided it is
+# part of the record, and a future agent reading its history must not mistake a
+# human's choice for its own.
+CATCHUP_SUPPRESSED = "CATCHUP_SUPPRESSED_BY_HUMAN"
 BUDGET_EXHAUSTED = "CYCLE_FAILED_BUDGET_EXHAUSTED"
 LOCK_STALE       = "LOCK_STALE_CLEARED"
 SUPERVISOR_BOOT  = "SUPERVISOR_STARTED_AFTER_REBOOT"

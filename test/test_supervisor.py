@@ -270,6 +270,108 @@ def test_real_config_file_parses_and_covers_the_slow_steps():
 
 
 # ---------------------------------------------------------------------------
+# --mark-ran-today
+# ---------------------------------------------------------------------------
+
+@pytest.fixture
+def sandboxed_supervisor(tmp_path, monkeypatch):
+    """Point supervisor + ledger state at a throwaway dir."""
+    from memory import existence_ledger as el
+
+    monkeypatch.setattr(sup, "STATE_PATH", tmp_path / "scheduler_state.json")
+    monkeypatch.setattr(sup, "LOCK_PATH", tmp_path / "cycle.lock")
+    monkeypatch.setattr(sup, "LOG_PATH", tmp_path / "supervisor.log")
+    monkeypatch.setattr(el, "LEDGER_PATH", tmp_path / "existence_ledger.jsonl")
+    return tmp_path
+
+
+def test_mark_ran_today_suppresses_the_catchup(sandboxed_supervisor):
+    """The reason it exists: installing at midday must not immediately fire a
+    catch-up cycle if the human does not want one."""
+    from memory import existence_ledger as el
+
+    # Before: a catch-up would fire.
+    now = at(12)
+    assert sup.decide(now, sup.load_state(), None, None, CFG).kind == sup.CATCHUP
+
+    sup.cmd_mark_ran_today()
+
+    # After: quiet until tomorrow.
+    today = datetime.now().astimezone().date().isoformat()
+    st = sup.load_state()
+    assert st["last_run_date"] == today
+
+    a = sup.decide(datetime.now().astimezone(), st, None, None, CFG)
+    assert a.kind == sup.NOTHING
+
+
+def test_mark_ran_today_does_not_fabricate_a_completed_cycle(sandboxed_supervisor):
+    """THE property. It must not write CYCLE_STARTED/CYCLE_FINISHED — that would
+    be the system inventing a cycle it never ran, which is exactly the kind of
+    lie the existence ledger exists to make impossible."""
+    from memory import existence_ledger as el
+
+    sup.cmd_mark_ran_today()
+
+    events = el.read_all()
+    kinds = [e["event"] for e in events]
+
+    assert kinds == [el.CATCHUP_SUPPRESSED]
+    assert el.CYCLE_STARTED not in kinds
+    assert el.CYCLE_FINISHED not in kinds
+
+    s = el.summary()
+    assert s["total_cycles_started"] == 0, "no cycle ran; none may be claimed"
+    assert s["total_cycles_finished"] == 0
+
+
+def test_mark_ran_today_records_that_a_human_decided(sandboxed_supervisor):
+    """A future agent must not read a human's choice as its own decision."""
+    from memory import existence_ledger as el
+
+    sup.cmd_mark_ran_today()
+
+    ev = el.head()
+    assert ev["event"] == el.CATCHUP_SUPPRESSED
+    assert "human" in ev["detail"].lower()
+    assert ev["date"]
+
+
+def test_mark_ran_today_leaves_last_run_utc_honest(sandboxed_supervisor):
+    """last_run_date is set (that is its job), but last_run_utc must stay None:
+    no cycle actually ran at any time."""
+    sup.cmd_mark_ran_today()
+    assert sup.load_state()["last_run_utc"] is None
+
+
+def test_mark_ran_today_is_idempotent(sandboxed_supervisor):
+    from memory import existence_ledger as el
+
+    sup.cmd_mark_ran_today()
+    sup.cmd_mark_ran_today()
+
+    assert len(el.read_all()) == 1, "a second call must not append another event"
+
+
+def test_mark_ran_today_refuses_while_a_cycle_is_running(sandboxed_supervisor, monkeypatch):
+    """Marking today as run mid-cycle would let a SECOND cycle start as soon as
+    this one released its lock."""
+    sup.write_lock(pid=1234, cycle_id="c1")
+    monkeypatch.setattr(sup, "pid_is_our_cycle", lambda pid: True)
+
+    with pytest.raises(SystemExit):
+        sup.cmd_mark_ran_today()
+
+    assert sup.load_state().get("last_run_date") is None
+
+
+def test_mark_ran_today_keeps_the_ledger_chain_valid(sandboxed_supervisor):
+    from memory import existence_ledger as el
+    sup.cmd_mark_ran_today()
+    assert el.verify()["valid"] is True
+
+
+# ---------------------------------------------------------------------------
 # The autonomy boundary (req 6)
 # ---------------------------------------------------------------------------
 
