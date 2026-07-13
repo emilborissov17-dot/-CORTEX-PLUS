@@ -90,24 +90,19 @@ except ImportError:
     def call_groq(prompt: str, max_tokens: int = 500) -> str:
         return "[LLM недостъпен]"
 
-def _warmup_ollama():
-    """Загрява Ollama модела при старт — преди паралелните оси."""
-    try:
-        r = requests.get("http://localhost:11434/api/tags", timeout=5)
-        models = [m["name"] for m in r.json().get("models", [])]
-        if not models:
-            return
-        preferred = next((m for m in ["qwen3:8b","qwen2.5:7b","qwen2.5:3b"] if m in models), models[0])
-        print(f"[WEB_INTEL] Ollama warmup: зареждам {preferred}...")
-        requests.post("http://localhost:11434/api/chat", json={
-            "model": preferred,
-            "messages": [{"role": "user", "content": "hi"}],
-            "stream": False,
-            "options": {"num_predict": 1},
-        }, timeout=60)
-        print(f"[WEB_INTEL] Ollama {preferred} готов ✓")
-    except Exception as e:
-        print(f"[WEB_INTEL] Ollama warmup пропуснат: {e}")
+# _warmup_ollama() е премахнат (2026-07-13).
+#
+# Ollama беше извадена от LLM веригата на 2026-07-04 (виж core/groq_backend.py):
+# локално няма нито един pull-нат модел, така че беше мъртъв safety net. Warmup-ът
+# обаче остана и удряше http://localhost:11434/api/tags при СТАРТА на всеки цикъл.
+# Нищо не слушаше на този порт → connection refused → цикълът винаги започваше с
+# "[WEB_INTEL] Ollama warmup пропуснат: ..." — шум, който маскираше истински грешки
+# при старта.
+#
+# По конвенция (CLAUDE.md): всяко останало subprocess/HTTP извикване към Ollama в
+# живия цикъл е бъг. Това беше единственото. (body_scanner._ollama_status() носи
+# подвеждащо име, но НЕ вика Ollama — чете API ключове; core/cortex_llm.py говори с
+# Ollama, но се импортва само от LEGACY/ и OLD/, не от живия път.)
 
 # -- Civilization goal --------------------------------------------------------
 
@@ -711,7 +706,6 @@ def run(axes_filter: Optional[list] = None, force: bool = False, resume: bool = 
     print(f"[WEB_INTEL] Оси: {len(AXES)} | DDG: {'✓' if HAS_DDG else '✗'} | YouTube: {'✓' if HAS_YOUTUBE else '✗'}")
     print(f"[WEB_INTEL] Timeout за ос: {AXIS_TIMEOUT_SEC}s | Паралелни: {MAX_WORKERS}")
     print("=" * 60)
-    _warmup_ollama()
 
     target_axes = axes_filter or list(AXES.keys())
 

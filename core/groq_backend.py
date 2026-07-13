@@ -12,6 +12,9 @@ Ollama беше премахнат от веригата (2026-07-04) — лок
 pull-нат модел ("Ollama: няма налични модели"), т.е. беше мъртъв safety
 net, който само маскираше AllBackendsFailedError. По-добре да гърми
 ясно, отколкото тихо да минава през несъществуващ backend.
+Останалият мъртъв Ollama код (_call_ollama, _get_ollama_model, URL-ите)
+е изтрит на 2026-07-13; test/test_no_ollama_in_live_path.py пази да не се
+върне.
 
 При rate limit → веднага следващ backend, БЕЗ дълго чакане.
 Cooldown 60s на backend при rate limit — после се опитва пак.
@@ -53,12 +56,10 @@ OPENROUTER_MODEL   = "nvidia/nemotron-3-super-120b-a12b:free"  # 120B, вери�
 
 GEMINI_API_URL  = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent"
 
-OLLAMA_URL      = "http://localhost:11434/api/chat"
-OLLAMA_LIST_URL = "http://localhost:11434/api/tags"
-OLLAMA_PREFERRED = [
-    "qwen3:8b", "qwen3:1.7b", "qwen2.5:7b",
-    "qwen2.5:3b", "llama3:8b", "mistral:7b",
-]
+# Ollama константите и _call_ollama/_get_ollama_model са премахнати (2026-07-13).
+# Ollama излезе от веригата на 2026-07-04 (виж docstring-а горе) — оттогава кодът
+# беше мъртъв: нищо не го викаше, но URL-ите стояха и подвеждаха, че локален
+# backend още е опция. По конвенция (CLAUDE.md) Ollama няма място в живия цикъл.
 
 # ---------------------------------------------------------------------------
 # Custom exception — raised when every backend is exhausted
@@ -123,19 +124,6 @@ def _set_cooldown(name: str) -> None:
         secs = _COOLDOWN_SECS_REPEAT if hits > 1 else _COOLDOWN_SECS_FIRST
         _cooldowns[name] = time.time() + secs
     print(f"  [LLM] {name} cooldown {secs}s (hit #{hits})")
-
-
-def _get_ollama_model():
-    try:
-        r = requests.get(OLLAMA_LIST_URL, timeout=5)
-        r.raise_for_status()
-        available = {m["name"] for m in r.json().get("models", [])}
-        for preferred in OLLAMA_PREFERRED:
-            if preferred in available:
-                return preferred
-        return next(iter(available)) if available else None
-    except Exception:
-        return None
 
 
 # ---------------------------------------------------------------------------
@@ -286,33 +274,6 @@ def _call_gemini(prompt: str, max_tokens: int):
     raw_reason = (cand.get("finishReason") or "").upper()
     finish_reason = "length" if raw_reason == "MAX_TOKENS" else raw_reason.lower() or None
     return cand["content"]["parts"][0]["text"], {"finish_reason": finish_reason}
-
-
-def _call_ollama(prompt: str, max_tokens: int):
-    model = _get_ollama_model()
-    if not model:
-        raise RuntimeError("Ollama: няма налични модели")
-
-    print(f"  [LLM] Ollama {model}...")
-    payload = {
-        "model": model,
-        "messages": [
-            {"role": "system", "content": _system_msg()},
-            {"role": "user",   "content": prompt},
-        ],
-        "stream": False,
-        "think": False,
-        "options": {"num_predict": max_tokens, "num_ctx": 2048},
-        "keep_alive": 0,
-    }
-    r = requests.post(OLLAMA_URL, json=payload, timeout=(10, 120))
-    r.raise_for_status()
-    body = r.json()
-    content = body["message"]["content"]
-    # Strip <think>...</think> блок (qwen3 reasoning mode)
-    content = re.sub(r"<think>.*?</think>", "", content, flags=re.DOTALL).strip()
-    # Ollama: done_reason == "length" при изчерпан num_predict.
-    return content, {"finish_reason": body.get("done_reason")}
 
 
 # ---------------------------------------------------------------------------
