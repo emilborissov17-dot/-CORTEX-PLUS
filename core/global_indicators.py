@@ -20,13 +20,17 @@ Sources:
 """
 from __future__ import annotations
 
+import csv
 import json
 import os
 import xml.etree.ElementTree as ET
 from datetime import datetime, date, timedelta, timezone
+from pathlib import Path
 from typing import Any, Optional
 
 import requests
+
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 try:
     from .source_status import credential_for, is_skipped
@@ -218,29 +222,111 @@ UCDP_SOURCE_KEY = "ucdp_api"
 UCDP_VERSIONS = ("26.1", "25.1")
 UCDP_RESOURCE = "ucdpprioconflict"
 
+# Interim path while the API token is pending (maintainer away until Aug 2026).
+# The full datasets are freely downloadable without a key from
+# https://ucdp.uu.se/downloads/ — and UCDP/PRIO ACD is a YEARLY release, so a
+# one-time local snapshot is not a staleness risk: there is simply nothing newer
+# to fetch until next year's release. The CSV is gitignored (see .gitignore),
+# same convention as the V-Dem bulk data.
+UCDP_LOCAL_CSV = BASE_DIR / "data" / "ucdp" / "ucdpprioconflict_26_1.csv"
+
+# The UCDP/PRIO Armed Conflict Dataset is a CONFLICT-YEAR panel: one row per
+# (conflict, year) pair, and a row exists only if that conflict was active that
+# year. So "conflicts active in the latest year" = unique conflict_id among rows
+# whose year == max(year). No 'active' flag to filter on — presence IS activity.
+_UCDP_ID_COLS   = ("conflict_id", "conflictid", "id")
+_UCDP_YEAR_COLS = ("year",)
+
+
+def _fetch_ucdp_local_csv() -> dict:
+    """Count active conflicts from a locally downloaded UCDP/PRIO ACD CSV."""
+    if not UCDP_LOCAL_CSV.exists():
+        return {}
+
+    try:
+        with UCDP_LOCAL_CSV.open("r", encoding="utf-8-sig", newline="") as fh:
+            reader = csv.DictReader(fh)
+            if not reader.fieldnames:
+                print(f"  [GI] UCDP local CSV has no header: {UCDP_LOCAL_CSV.name}")
+                return {}
+
+            lower = {f.strip().lower(): f for f in reader.fieldnames}
+            id_col   = next((lower[c] for c in _UCDP_ID_COLS   if c in lower), None)
+            year_col = next((lower[c] for c in _UCDP_YEAR_COLS if c in lower), None)
+
+            if not id_col or not year_col:
+                print(f"  [GI] UCDP local CSV missing expected columns "
+                      f"(need a conflict id + year; got {reader.fieldnames[:8]})")
+                return {}
+
+            by_year: dict[int, set] = {}
+            for row in reader:
+                try:
+                    year = int(str(row[year_col]).strip())
+                except (ValueError, TypeError, KeyError):
+                    continue
+                cid = str(row.get(id_col, "")).strip()
+                if cid:
+                    by_year.setdefault(year, set()).add(cid)
+
+        if not by_year:
+            print(f"  [GI] UCDP local CSV parsed but yielded no conflict-years")
+            return {}
+
+        latest = max(by_year)
+        count = len(by_year[latest])
+        print(f"  [GI] UCDP: {count} active conflicts in {latest} "
+              f"(local CSV — no token yet)")
+        return {
+            "active_armed_conflicts": count,
+            "ucdp_version": "26.1",
+            "ucdp_year": latest,
+            "source": "local_csv_26.1",
+        }
+    except Exception as e:
+        print(f"  [GI] UCDP local CSV unreadable: {type(e).__name__}: {e}")
+        return {}
+
 
 def fetch_ucdp() -> dict:
     """Number of active armed conflicts from Uppsala Conflict Data Program.
 
-    Returns {} (quietly) when no UCDP token is configured — not an error.
+    Three paths, in order of preference:
+      1. token present  → the live API (authoritative, current)
+      2. no token, but data/ucdp/*.csv present → the local yearly snapshot
+      3. neither        → {} quietly (NEEDS_AUTH, not an error)
+
+    The local-CSV check runs BEFORE the is_skipped() guard: the registry entry
+    stays NEEDS_AUTH (the API genuinely is gated), but a source we can serve from
+    disk must not be skipped just because its API is unreachable. The registry
+    describes the API's status, not the axis's.
     """
+    token = credential_for(UCDP_SOURCE_KEY)
+
+    if token:
+        headers = {"x-ucdp-access-token": token}
+        for version in UCDP_VERSIONS:
+            data = _get(
+                f"https://ucdpapi.pcr.uu.se/api/{UCDP_RESOURCE}/{version}?pagesize=1&page=1",
+                timeout=30,
+                headers=headers,
+            )
+            if data and isinstance(data, dict) and "TotalCount" in data:
+                return {
+                    "active_armed_conflicts": data["TotalCount"],
+                    "ucdp_version": version,
+                    "source": "api",
+                }
+        print("  [GI] UCDP: token is set but the API returned nothing — "
+              "falling back to the local CSV if present")
+
+    local = _fetch_ucdp_local_csv()
+    if local:
+        return local
+
+    # No token, no local snapshot → quiet skip (announced once).
     if is_skipped(UCDP_SOURCE_KEY):
         return {}
-
-    token = credential_for(UCDP_SOURCE_KEY)
-    headers = {"x-ucdp-access-token": token} if token else None
-
-    for version in UCDP_VERSIONS:
-        data = _get(
-            f"https://ucdpapi.pcr.uu.se/api/{UCDP_RESOURCE}/{version}?pagesize=1&page=1",
-            timeout=30,
-            headers=headers,
-        )
-        if data and isinstance(data, dict) and "TotalCount" in data:
-            return {
-                "active_armed_conflicts": data["TotalCount"],
-                "ucdp_version": version,
-            }
     return {}
 
 

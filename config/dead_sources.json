@@ -20,6 +20,15 @@
     "how_to_reenable": "Request a token from the UCDP API maintainer (see https://ucdp.uu.se/apidocs/), then put UCDP_ACCESS_TOKEN=<token> in .env",
     "docs": "https://ucdp.uu.se/apidocs/",
     "verified_by": "curl probe 2026-07-13: /api/ucdpprioconflict/26.1 -> 401 'API token required'",
-    "recheck_after": "2027-01-01"
+    "recheck_after": "2027-01-01",
+
+    "interim_local_fallback": {
+      "status": "ACTIVE since 2026-07-13 — the axis is LIT, not dark",
+      "why": "The token request is pending (maintainer away until Aug 2026), but the full datasets are freely downloadable without a key from https://ucdp.uu.se/downloads/. UCDP/PRIO ACD is a YEARLY release, so a one-time local snapshot is not a staleness risk: there is nothing newer to fetch until the next annual release.",
+      "file": "data/ucdp/ucdpprioconflict_26_1.csv (gitignored — download manually, see data/ucdp/README.md)",
+      "reported_as": "source=local_csv_26.1",
+      "precedence": "If UCDP_ACCESS_TOKEN appears, the live API wins automatically and the CSV is ignored. No code change needed.",
+      "note": "This entry stays NEEDS_AUTH because the API genuinely is gated. The registry describes the API's status, not the axis's."
+    }
   }
 }

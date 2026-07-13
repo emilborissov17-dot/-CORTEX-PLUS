@@ -178,6 +178,150 @@ def test_fetch_ucdp_returns_empty_when_api_gives_nothing(monkeypatch):
 
 
 # ---------------------------------------------------------------------------
+# UCDP interim local-CSV fallback (token pending until Aug 2026)
+# ---------------------------------------------------------------------------
+
+# The real dataset is a CONFLICT-YEAR panel: one row per (conflict, year), and a
+# row exists only if that conflict was active that year. Presence IS activity —
+# there is no 'active' flag to filter on.
+UCDP_CSV = """conflict_id,location,side_a,side_b,intensity_level,type_of_conflict,year
+333,Afghanistan,Government of Afghanistan,Taleban,2,4,2024
+333,Afghanistan,Government of Afghanistan,Taleban,2,4,2025
+418,Myanmar,Government of Myanmar,KIO,1,3,2025
+259,Ukraine,Government of Ukraine,Russia,2,2,2025
+259,Ukraine,Government of Ukraine,Russia,2,2,2024
+777,Old War,A,B,1,3,2019
+"""
+
+
+def _write_ucdp_csv(tmp_path, monkeypatch, text=UCDP_CSV):
+    p = tmp_path / "ucdpprioconflict_26_1.csv"
+    p.write_text(text, encoding="utf-8")
+    monkeypatch.setattr(gi, "UCDP_LOCAL_CSV", p)
+    return p
+
+
+def test_ucdp_local_csv_counts_conflicts_active_in_the_latest_year(tmp_path, monkeypatch):
+    _write_ucdp_csv(tmp_path, monkeypatch)
+    monkeypatch.setattr(gi, "credential_for", lambda key: None)   # no token
+
+    got = gi.fetch_ucdp()
+
+    # Latest year is 2025: conflicts 333, 418, 259 -> 3. The 2024 rows and the
+    # 2019 conflict must NOT be counted.
+    assert got["active_armed_conflicts"] == 3
+    assert got["ucdp_year"] == 2025
+    assert got["source"] == "local_csv_26.1"
+    assert got["ucdp_version"] == "26.1"
+
+
+def test_ucdp_local_csv_deduplicates_a_conflict_appearing_twice_in_a_year(tmp_path, monkeypatch):
+    """A conflict with multiple rows in the same year is ONE active conflict."""
+    csv_text = (
+        "conflict_id,year\n"
+        "333,2025\n"
+        "333,2025\n"
+        "418,2025\n"
+    )
+    _write_ucdp_csv(tmp_path, monkeypatch, csv_text)
+    monkeypatch.setattr(gi, "credential_for", lambda key: None)
+
+    assert gi.fetch_ucdp()["active_armed_conflicts"] == 2
+
+
+def test_ucdp_local_csv_makes_no_http_call(tmp_path, monkeypatch):
+    """The whole point: the axis lights up with NO network and NO token."""
+    _write_ucdp_csv(tmp_path, monkeypatch)
+    monkeypatch.setattr(gi, "credential_for", lambda key: None)
+
+    called = []
+    monkeypatch.setattr(gi, "_get", lambda *a, **kw: called.append(a) or None)
+
+    got = gi.fetch_ucdp()
+
+    assert got["active_armed_conflicts"] == 3
+    assert called == [], "the local-CSV path must not touch the network"
+
+
+def test_ucdp_token_takes_precedence_over_the_local_csv(tmp_path, monkeypatch):
+    """When the token finally arrives, the live API wins automatically — no code
+    change, no config change, and the stale CSV is ignored."""
+    _write_ucdp_csv(tmp_path, monkeypatch)
+    monkeypatch.setattr(gi, "credential_for", lambda key: "tok")
+    monkeypatch.setattr(gi, "_get", lambda *a, **kw: {"TotalCount": 55})
+
+    got = gi.fetch_ucdp()
+
+    assert got["active_armed_conflicts"] == 55
+    assert got["source"] == "api", "the live API must win over the local snapshot"
+
+
+def test_ucdp_falls_back_to_csv_if_the_api_returns_nothing(tmp_path, monkeypatch):
+    """A token that is set but broken must not black out an axis we can serve
+    from disk."""
+    _write_ucdp_csv(tmp_path, monkeypatch)
+    monkeypatch.setattr(gi, "credential_for", lambda key: "tok")
+    monkeypatch.setattr(gi, "_get", lambda *a, **kw: None)
+
+    got = gi.fetch_ucdp()
+
+    assert got["source"] == "local_csv_26.1"
+
+
+def test_ucdp_returns_empty_when_no_token_and_no_csv(tmp_path, monkeypatch):
+    monkeypatch.setattr(gi, "UCDP_LOCAL_CSV", tmp_path / "absent.csv")
+    monkeypatch.setattr(gi, "credential_for", lambda key: None)
+    assert gi.fetch_ucdp() == {}
+
+
+def test_ucdp_local_csv_survives_a_wrong_schema(tmp_path, monkeypatch):
+    """A CSV with unexpected columns must degrade to {} with a clear message,
+    not crash the cycle or invent a number."""
+    _write_ucdp_csv(tmp_path, monkeypatch, "foo,bar\n1,2\n")
+    monkeypatch.setattr(gi, "credential_for", lambda key: None)
+    assert gi.fetch_ucdp() == {}
+
+
+def test_ucdp_local_csv_ignores_unparseable_year_rows(tmp_path, monkeypatch):
+    csv_text = (
+        "conflict_id,year\n"
+        "333,2025\n"
+        "999,not-a-year\n"
+        "418,\n"
+    )
+    _write_ucdp_csv(tmp_path, monkeypatch, csv_text)
+    monkeypatch.setattr(gi, "credential_for", lambda key: None)
+
+    assert gi.fetch_ucdp()["active_armed_conflicts"] == 1
+
+
+def test_ucdp_local_csv_handles_bom_and_case(tmp_path, monkeypatch):
+    """Excel/UCDP exports routinely carry a BOM and capitalised headers."""
+    p = tmp_path / "ucdpprioconflict_26_1.csv"
+    p.write_text("﻿Conflict_ID,Year\n333,2025\n418,2025\n", encoding="utf-8")
+    monkeypatch.setattr(gi, "UCDP_LOCAL_CSV", p)
+    monkeypatch.setattr(gi, "credential_for", lambda key: None)
+
+    assert gi.fetch_ucdp()["active_armed_conflicts"] == 2
+
+
+def test_ucdp_registry_entry_stays_needs_auth():
+    """The registry describes the API's status, not the axis's. The API IS still
+    gated — the CSV is a workaround, not a fix."""
+    entry = ss.get_status("ucdp_api")
+    assert entry["status"] == "NEEDS_AUTH"
+    assert "interim_local_fallback" in entry
+
+
+def test_ucdp_csv_directory_is_gitignored():
+    """Bulk third-party data must never be committed (licence) — but the README
+    explaining how to download it must survive."""
+    ignore = (ss.BASE / ".gitignore").read_text(encoding="utf-8")
+    assert "data/ucdp/*" in ignore
+    assert "!data/ucdp/README.md" in ignore
+
+
+# ---------------------------------------------------------------------------
 # fetch_sea_level — the dated-URL 404
 # ---------------------------------------------------------------------------
 

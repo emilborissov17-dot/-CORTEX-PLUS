@@ -16,6 +16,12 @@ snapshots/self/
 snapshots/self_archive/
 memory/transcript_cache/
 
+# Bulk third-party datasets — downloaded manually, never committed (licence).
+# Same convention as the V-Dem CSV. The README explaining HOW to download it
+# must survive, or the instructions vanish with the data.
+data/ucdp/*
+!data/ucdp/README.md
+
 *.mp4
 OLD/
 LEGACY/
