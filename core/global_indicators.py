@@ -23,6 +23,7 @@ from __future__ import annotations
 import csv
 import json
 import os
+import re
 import xml.etree.ElementTree as ET
 from datetime import datetime, date, timedelta, timezone
 from pathlib import Path
@@ -228,7 +229,41 @@ UCDP_RESOURCE = "ucdpprioconflict"
 # one-time local snapshot is not a staleness risk: there is simply nothing newer
 # to fetch until next year's release. The CSV is gitignored (see .gitignore),
 # same convention as the V-Dem bulk data.
-UCDP_LOCAL_CSV = BASE_DIR / "data" / "ucdp" / "ucdpprioconflict_26_1.csv"
+#
+# NAMING: do NOT hardcode one filename. UCDP's own zip ships the file as
+# "UcdpPrioConflict_v26_1.csv" (CamelCase, "v" prefix), and the next annual
+# release will be "..._v27_1.csv". A single expected filename would force a
+# manual rename on every release — and silently blank the axis when someone
+# forgot. So we glob the directory case-insensitively and take the highest
+# version present.
+UCDP_LOCAL_DIR = BASE_DIR / "data" / "ucdp"
+UCDP_CSV_PREFIX = "ucdpprioconflict"
+
+# Explicit override, honoured first if it exists (also what the tests patch).
+UCDP_LOCAL_CSV = UCDP_LOCAL_DIR / "ucdpprioconflict_26_1.csv"
+
+
+def _resolve_ucdp_csv() -> Optional[Path]:
+    """The local UCDP CSV, whatever UCDP decided to call it this year.
+
+    Prefers the explicit UCDP_LOCAL_CSV path; otherwise globs UCDP_LOCAL_DIR for
+    any *.csv whose name starts with 'ucdpprioconflict' (case-insensitively) and
+    returns the highest-sorting one — so v26_1 beats v25_1, and next year's
+    v27_1 will beat both with no code change.
+    """
+    if UCDP_LOCAL_CSV.exists():
+        return UCDP_LOCAL_CSV
+
+    if not UCDP_LOCAL_DIR.is_dir():
+        return None
+
+    matches = [
+        p for p in UCDP_LOCAL_DIR.glob("*.csv")
+        if p.name.lower().startswith(UCDP_CSV_PREFIX)
+    ]
+    if not matches:
+        return None
+    return sorted(matches, key=lambda p: p.name.lower())[-1]
 
 # The UCDP/PRIO Armed Conflict Dataset is a CONFLICT-YEAR panel: one row per
 # (conflict, year) pair, and a row exists only if that conflict was active that
@@ -240,14 +275,15 @@ _UCDP_YEAR_COLS = ("year",)
 
 def _fetch_ucdp_local_csv() -> dict:
     """Count active conflicts from a locally downloaded UCDP/PRIO ACD CSV."""
-    if not UCDP_LOCAL_CSV.exists():
+    path = _resolve_ucdp_csv()
+    if path is None:
         return {}
 
     try:
-        with UCDP_LOCAL_CSV.open("r", encoding="utf-8-sig", newline="") as fh:
+        with path.open("r", encoding="utf-8-sig", newline="") as fh:
             reader = csv.DictReader(fh)
             if not reader.fieldnames:
-                print(f"  [GI] UCDP local CSV has no header: {UCDP_LOCAL_CSV.name}")
+                print(f"  [GI] UCDP local CSV has no header: {path.name}")
                 return {}
 
             lower = {f.strip().lower(): f for f in reader.fieldnames}
@@ -259,7 +295,10 @@ def _fetch_ucdp_local_csv() -> dict:
                       f"(need a conflict id + year; got {reader.fieldnames[:8]})")
                 return {}
 
+            ver_col = lower.get("version")
+
             by_year: dict[int, set] = {}
+            version = None
             for row in reader:
                 try:
                     year = int(str(row[year_col]).strip())
@@ -268,20 +307,31 @@ def _fetch_ucdp_local_csv() -> dict:
                 cid = str(row.get(id_col, "")).strip()
                 if cid:
                     by_year.setdefault(year, set()).add(cid)
+                if version is None and ver_col:
+                    v = str(row.get(ver_col, "")).strip()
+                    if v:
+                        version = v
 
         if not by_year:
             print(f"  [GI] UCDP local CSV parsed but yielded no conflict-years")
             return {}
 
+        # Version comes from the data itself (the CSV carries a 'version' column),
+        # falling back to the filename. Hardcoding "26.1" would quietly mislabel
+        # next year's release.
+        if not version:
+            m = re.search(r"v?(\d+)[._](\d+)", path.stem)
+            version = f"{m.group(1)}.{m.group(2)}" if m else "unknown"
+
         latest = max(by_year)
         count = len(by_year[latest])
         print(f"  [GI] UCDP: {count} active conflicts in {latest} "
-              f"(local CSV — no token yet)")
+              f"(local CSV {path.name}, v{version} — no token yet)")
         return {
             "active_armed_conflicts": count,
-            "ucdp_version": "26.1",
+            "ucdp_version": version,
             "ucdp_year": latest,
-            "source": "local_csv_26.1",
+            "source": f"local_csv_{version}",
         }
     except Exception as e:
         print(f"  [GI] UCDP local CSV unreadable: {type(e).__name__}: {e}")

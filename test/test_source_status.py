@@ -138,10 +138,16 @@ def test_ucdp_is_registered_in_the_real_config():
 # ---------------------------------------------------------------------------
 
 
-def test_fetch_ucdp_makes_no_http_call_without_a_token(monkeypatch):
-    """THE regression: it used to fire 4 doomed requests per cycle."""
+def test_fetch_ucdp_makes_no_http_call_without_a_token(tmp_path, monkeypatch):
+    """THE regression: it used to fire 4 doomed requests per cycle.
+
+    Isolates the CSV dir too — with no token AND no local snapshot, the source
+    must be a silent no-op.
+    """
+    _isolate_ucdp_dir(tmp_path, monkeypatch)
     called = []
     monkeypatch.setattr(gi, "_get", lambda *a, **kw: called.append(a) or None)
+    monkeypatch.setattr(gi, "credential_for", lambda key: None)
     monkeypatch.setattr(gi, "is_skipped", lambda key: True)
 
     assert gi.fetch_ucdp() == {}
@@ -170,7 +176,9 @@ def test_fetch_ucdp_uses_correct_resource_and_version_with_a_token(monkeypatch):
     assert seen["headers"] == {"x-ucdp-access-token": "tok"}
 
 
-def test_fetch_ucdp_returns_empty_when_api_gives_nothing(monkeypatch):
+def test_fetch_ucdp_returns_empty_when_api_gives_nothing_and_no_csv(tmp_path, monkeypatch):
+    """A broken token with no local snapshot to fall back on -> {}."""
+    _isolate_ucdp_dir(tmp_path, monkeypatch)
     monkeypatch.setattr(gi, "_get", lambda *a, **kw: None)
     monkeypatch.setattr(gi, "is_skipped", lambda key: False)
     monkeypatch.setattr(gi, "credential_for", lambda key: "tok")
@@ -194,10 +202,21 @@ UCDP_CSV = """conflict_id,location,side_a,side_b,intensity_level,type_of_conflic
 """
 
 
+def _isolate_ucdp_dir(tmp_path, monkeypatch):
+    """Point BOTH the explicit path and the glob dir at tmp_path.
+
+    Patching only UCDP_LOCAL_CSV is not enough: the resolver falls through to a
+    glob of UCDP_LOCAL_DIR, which would find the REAL downloaded CSV and make
+    "no CSV present" tests silently pass against live data.
+    """
+    monkeypatch.setattr(gi, "UCDP_LOCAL_DIR", tmp_path)
+    monkeypatch.setattr(gi, "UCDP_LOCAL_CSV", tmp_path / "ucdpprioconflict_26_1.csv")
+
+
 def _write_ucdp_csv(tmp_path, monkeypatch, text=UCDP_CSV):
+    _isolate_ucdp_dir(tmp_path, monkeypatch)
     p = tmp_path / "ucdpprioconflict_26_1.csv"
     p.write_text(text, encoding="utf-8")
-    monkeypatch.setattr(gi, "UCDP_LOCAL_CSV", p)
     return p
 
 
@@ -269,7 +288,7 @@ def test_ucdp_falls_back_to_csv_if_the_api_returns_nothing(tmp_path, monkeypatch
 
 
 def test_ucdp_returns_empty_when_no_token_and_no_csv(tmp_path, monkeypatch):
-    monkeypatch.setattr(gi, "UCDP_LOCAL_CSV", tmp_path / "absent.csv")
+    _isolate_ucdp_dir(tmp_path, monkeypatch)     # empty dir — no CSV at all
     monkeypatch.setattr(gi, "credential_for", lambda key: None)
     assert gi.fetch_ucdp() == {}
 
@@ -297,12 +316,82 @@ def test_ucdp_local_csv_ignores_unparseable_year_rows(tmp_path, monkeypatch):
 
 def test_ucdp_local_csv_handles_bom_and_case(tmp_path, monkeypatch):
     """Excel/UCDP exports routinely carry a BOM and capitalised headers."""
-    p = tmp_path / "ucdpprioconflict_26_1.csv"
-    p.write_text("﻿Conflict_ID,Year\n333,2025\n418,2025\n", encoding="utf-8")
-    monkeypatch.setattr(gi, "UCDP_LOCAL_CSV", p)
+    _write_ucdp_csv(tmp_path, monkeypatch, "﻿Conflict_ID,Year\n333,2025\n418,2025\n")
     monkeypatch.setattr(gi, "credential_for", lambda key: None)
 
     assert gi.fetch_ucdp()["active_armed_conflicts"] == 2
+
+
+def test_ucdp_finds_the_csv_under_ucdps_own_camelcase_name(tmp_path, monkeypatch):
+    """UCDP's zip ships 'UcdpPrioConflict_v26_1.csv', not a lowercase name. A
+    hardcoded filename would have silently blanked the axis — and would break
+    again on every annual release."""
+    (tmp_path / "UcdpPrioConflict_v26_1.csv").write_text(
+        "conflict_id,year,version\n333,2025,26.1\n418,2025,26.1\n", encoding="utf-8")
+
+    monkeypatch.setattr(gi, "UCDP_LOCAL_DIR", tmp_path)
+    monkeypatch.setattr(gi, "UCDP_LOCAL_CSV", tmp_path / "does_not_exist.csv")
+    monkeypatch.setattr(gi, "credential_for", lambda key: None)
+
+    got = gi.fetch_ucdp()
+
+    assert got["active_armed_conflicts"] == 2
+    assert got["ucdp_version"] == "26.1"
+    assert got["source"] == "local_csv_26.1"
+
+
+def test_ucdp_glob_prefers_the_newest_release(tmp_path, monkeypatch):
+    """Next year's v27_1 must win over this year's v26_1 with no code change."""
+    (tmp_path / "UcdpPrioConflict_v26_1.csv").write_text(
+        "conflict_id,year,version\n1,2025,26.1\n", encoding="utf-8")
+    (tmp_path / "UcdpPrioConflict_v27_1.csv").write_text(
+        "conflict_id,year,version\n1,2026,27.1\n2,2026,27.1\n", encoding="utf-8")
+
+    monkeypatch.setattr(gi, "UCDP_LOCAL_DIR", tmp_path)
+    monkeypatch.setattr(gi, "UCDP_LOCAL_CSV", tmp_path / "does_not_exist.csv")
+    monkeypatch.setattr(gi, "credential_for", lambda key: None)
+
+    got = gi.fetch_ucdp()
+
+    assert got["ucdp_version"] == "27.1"
+    assert got["ucdp_year"] == 2026
+
+
+def test_ucdp_version_is_read_from_the_data_not_hardcoded(tmp_path, monkeypatch):
+    """Hardcoding '26.1' would quietly mislabel next year's release."""
+    (tmp_path / "ucdpprioconflict_v99_2.csv").write_text(
+        "conflict_id,year,version\n1,2030,99.2\n", encoding="utf-8")
+
+    monkeypatch.setattr(gi, "UCDP_LOCAL_DIR", tmp_path)
+    monkeypatch.setattr(gi, "UCDP_LOCAL_CSV", tmp_path / "does_not_exist.csv")
+    monkeypatch.setattr(gi, "credential_for", lambda key: None)
+
+    assert gi.fetch_ucdp()["ucdp_version"] == "99.2"
+
+
+def test_ucdp_glob_ignores_unrelated_csvs(tmp_path, monkeypatch):
+    (tmp_path / "something_else.csv").write_text("a,b\n1,2\n", encoding="utf-8")
+
+    monkeypatch.setattr(gi, "UCDP_LOCAL_DIR", tmp_path)
+    monkeypatch.setattr(gi, "UCDP_LOCAL_CSV", tmp_path / "does_not_exist.csv")
+    monkeypatch.setattr(gi, "credential_for", lambda key: None)
+
+    assert gi._resolve_ucdp_csv() is None
+    assert gi.fetch_ucdp() == {}
+
+
+def test_ucdp_real_csv_if_present_lands_in_the_sanity_band():
+    """Guards the ACTUAL checkout, not a fixture. Measured band from v26.1 is
+    52-65 across 2018-2025; anything outside ~40-80 means the column mapping
+    broke and the axis is reporting a fabricated number."""
+    if gi._resolve_ucdp_csv() is None:
+        pytest.skip("no local UCDP CSV in this checkout")
+
+    got = gi.fetch_ucdp()
+    n = got.get("active_armed_conflicts")
+
+    assert n is not None, "a present CSV must yield a count"
+    assert 40 <= n <= 80, f"UCDP count {n} is outside the sane band — mapping broke?"
 
 
 def test_ucdp_registry_entry_stays_needs_auth():

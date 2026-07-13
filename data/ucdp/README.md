@@ -12,26 +12,38 @@ release.
 
 1. Go to <https://ucdp.uu.se/downloads/>
 2. Take the **UCDP/PRIO Armed Conflict Dataset**, version **26.1**, in **CSV**
-3. Save it here as:
+3. Drop it in `data/ucdp/` — **under whatever name UCDP's zip gives it**
 
-```
-data/ucdp/ucdpprioconflict_26_1.csv
-```
-
-That exact filename — it is what `core/global_indicators.UCDP_LOCAL_CSV` looks for.
+No rename needed. The loader globs `data/ucdp/` for any `*.csv` whose name starts
+with `ucdpprioconflict` (case-insensitively) and takes the highest-sorting one, so
+UCDP's own `UcdpPrioConflict_v26_1.csv` works as-is — and next year's
+`UcdpPrioConflict_v27_1.csv` will be picked up with no code change.
 
 ## What happens then
 
 `fetch_ucdp()` counts **unique `conflict_id` in the latest `year`** and reports it
-as `active_armed_conflicts` with `source: "local_csv_26.1"`.
+as `active_armed_conflicts`, with the version read from the CSV's own `version`
+column (e.g. `source: "local_csv_26.1"`).
 
 The dataset is a *conflict-year panel*: one row per (conflict, year), and a row
 exists only if that conflict was active that year. There is no `active` flag to
-filter on — **presence is activity**.
+filter on — **presence is activity**. (Verified on v26.1: zero duplicate
+`(conflict_id, year)` pairs, so the unique count equals the row count.)
 
-Sanity: the count should land somewhere around 50–60 for recent years. If it
-comes back as 0, or in the hundreds, the column mapping is wrong — check the log
-line, which prints the year and the count.
+## Sanity range
+
+Measured from v26.1, active state-based conflicts per year:
+
+| 2018 | 2019 | 2020 | 2021 | 2022 | 2023 | 2024 | **2025** |
+|------|------|------|------|------|------|------|----------|
+| 52   | 57   | 57   | 54   | 56   | 59   | 59   | **65**   |
+
+So **~50–65** is the healthy band, and it has been trending *up*. v26.1 currently
+reports **65 for 2025** — the highest in the series, not a bug.
+
+If the count comes back as **0**, or in the **hundreds**, the column mapping is
+wrong. Check the log line, which prints the file, the version, the year and the
+count.
 
 ## When the token arrives
 
