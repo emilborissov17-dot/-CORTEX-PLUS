@@ -259,6 +259,43 @@ def main():
     # Update next_actions.txt
     NOTES_DIR.mkdir(exist_ok=True)
     next_actions_lines = [f"DAILY ANALYSIS — {today}\n", "=" * 50 + "\n\n"]
+
+    # ── Supervisor failure — FIRST, above everything ────────────────────────
+    # If the watchdog exhausted its restart budget, the system is NOT running and
+    # a human has to intervene. That must be the first thing in the report, not
+    # buried under axis recommendations. The system must never be quietly dead.
+    try:
+        from memory.existence_ledger import summary as _existence_summary
+        _sched_state = {}
+        _sp = BASE_DIR / "memory" / "scheduler_state.json"
+        if _sp.exists():
+            _sched_state = json.loads(_sp.read_text(encoding="utf-8"))
+
+        _failure = _sched_state.get("failure")
+        if _failure and _failure.get("date") == today:
+            next_actions_lines.append("!" * 50 + "\n")
+            next_actions_lines.append("!!! SYSTEM NOT RUNNING — RESTART BUDGET EXHAUSTED\n")
+            next_actions_lines.append(f"!!! wedged step : {_failure.get('wedged_step')}\n")
+            next_actions_lines.append(f"!!! restarts    : {_failure.get('restarts_used')}\n")
+            next_actions_lines.append(f"!!! reason      : {_failure.get('reason')}\n")
+            next_actions_lines.append("!!! Human intervention required.\n")
+            next_actions_lines.append("!" * 50 + "\n\n")
+
+        _ex = _existence_summary()
+        if _ex.get("exists"):
+            next_actions_lines.append(
+                f"EXISTENCE: {_ex['total_cycles_finished']}/{_ex['total_cycles_started']} cycles completed"
+                f" | kills={_ex['total_kills']} | missed={_ex['total_missed_skipped']}"
+                f" | chain_valid={_ex['chain_valid']}\n"
+            )
+            if _ex.get("kills_by_step"):
+                next_actions_lines.append(f"  most-killed step: {list(_ex['kills_by_step'])[0]}\n")
+            if not _ex.get("chain_valid"):
+                next_actions_lines.append("  !!! EXISTENCE LEDGER CHAIN BROKEN — history was edited\n")
+            next_actions_lines.append("\n")
+    except Exception as e:
+        next_actions_lines.append(f"EXISTENCE: unavailable ({type(e).__name__}: {e})\n\n")
+
     next_actions_lines.append(f"QUARANTINE: {quarantine_summary}\n\n")
     next_actions_lines.append("OVERALL ASSESSMENT:\n")
     next_actions_lines.append(overall + "\n\n")

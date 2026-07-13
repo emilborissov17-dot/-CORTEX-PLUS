@@ -34,7 +34,10 @@ STATE_FILE    = BASE / "cortex_memory" / "media_scheduler_state.json"
 LOG_FILE      = BASE / "cortex_memory" / "media_scheduler.log"
 TARGET_CONFIG = BASE / "config" / "target_config.json"
 
-SCHEDULE_HOUR    = 2      # 02:00 local time
+SCHEDULE_HOUR    = 5      # 05:00 local time — moved off 02:00 (2026-07-13).
+                          # The main cycle now runs at 03:00 (config/scheduler.json)
+                          # and can run for hours; at 02:00 this scheduler contended
+                          # with it for CPU, RAM and the shared LLM rate limits.
 MAX_AXES_PER_RUN = 5      # axes per daily run (YouTube quota management)
 INTER_AXIS_SLEEP = 30     # seconds between axes (rate limiting)
 MAX_LOCK_AGE_SEC = 6 * 3600  # stale lock threshold: 6 hours

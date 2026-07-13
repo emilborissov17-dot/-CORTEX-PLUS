@@ -132,6 +132,23 @@ why the failure rendered as an **empty error string**.
 > manually after a few healthy cycles confirm the ballooning bug is gone. Quarantine
 > principle applies to data too — keep one small sample regardless.
 
+### Scheduler + Watchdog — the first autonomy rung
+**Commits:** `a642dae` (denylist) · `012b7a9` (heartbeat) · `edf42e7` (ledger) · `a18b694` (supervisor)
+**Design:** [SCHEDULER_DESIGN.md](SCHEDULER_DESIGN.md) · **Tests:** 116 across 4 suites
+
+Windows Task Scheduler as a dumb trigger + a **stateless 5-min `supervisor.py --tick`**
+(not a resident daemon — that would be the single point of failure with no supervisor).
+`decide()` is a pure function, so the whole policy is testable offline.
+
+**⚠️ NOT YET LIVE.** The scheduled task is not registered. Run `supervisor.py --install`
+and execute the printed `schtasks` command. That is deliberately a human action.
+
+Two live holes closed by the denylist along the way:
+- `execute_patches.py` was in `PATCHABLE_FILES` — **the gate could rewrite the gate.**
+- `ALLOWED_DIR_PREFIXES` permits `memory/`, where the heartbeat, lock and ledger live —
+  generated code could have **forged its own existence history** or faked a heartbeat to
+  defeat the watchdog.
+
 ---
 
 ## Noted — not urgent
