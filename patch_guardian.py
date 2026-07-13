@@ -34,6 +34,7 @@ from datetime import datetime
 from pathlib import Path
 
 from safety.quarantine import quarantine
+from safety.protected_paths import is_protected, normalise, protection_reason
 
 log = logging.getLogger("PatchGuardian")
 
@@ -46,11 +47,15 @@ RESULTS_DIR.mkdir(parents=True, exist_ok=True)
 MAX_BACKUPS_PER_FILE = 10
 
 # Файлове които могат да се patch-ват (реални пътища спрямо repo root)
+#
+# execute_patches.py БЕШЕ в този списък и е премахнат (2026-07-13): това означаваше,
+# че patch executor-ът може да пренапише сам себе си — т.е. gate-ът може да пренапише
+# gate-а. Сега е и в PROTECTED_FILES (safety/protected_paths.py), така че дори да се
+# върне тук по невнимание, denylist-ът го спира.
 PATCHABLE_FILES = {
     "agents/core/self_observer.py",
     "agents/core/self_modifier.py",
     "memory/continuous_learner.py",
-    "execute_patches.py",
     "hypercortex_runner.py",
     "fast_cycle_runner.py",
 }
@@ -62,12 +67,22 @@ def _is_dynamic_patch(filename: str) -> bool:
     Тези файлове не са известни предварително (името зависи от компонента,
     избран по време на изпълнение) — затова се разпознават по pattern, не
     по членство в PATCHABLE_FILES.
+
+    Path traversal: "agents/core/../../evil_patch.py" минаваше startswith+endswith
+    проверката и се броеше за динамичен patch. Затова нормализираме първо и
+    отхвърляме всичко, което излиза извън repo-то.
     """
-    norm = filename.replace("\\", "/")
+    norm = normalise(filename)
+    if norm is None:                      # абсолютен път или '..' извън repo-то
+        return False
     return norm.startswith("agents/core/") and norm.endswith("_patch.py")
 
 
 def _is_patchable(filename: str) -> bool:
+    # Denylist ПЪРВИ и с предимство: protected файл не е patchable, независимо
+    # дали иначе е в PATCHABLE_FILES или изглежда като динамичен patch.
+    if is_protected(filename):
+        return False
     return filename in PATCHABLE_FILES or _is_dynamic_patch(filename)
 
 
@@ -131,6 +146,22 @@ class PatchGuardian:
             системата никога не трие patch код, само човек го изчиства
             (виж scripts/review_quarantine.py).
         """
+        # ── 0. PROTECTED PATH (слой 2 от defence in depth) ──────────────────
+        # Слой 1 е safety/ast_gate (проверява write-target в генерирания КОД).
+        # Този слой проверява САМИЯ TARGET ФАЙЛ на patch-а. Двата са независими:
+        # bypass на единия не бива да е bypass на системата. Проверява се ПЪРВО —
+        # преди backup, преди всичко — и се логва изрично като PROTECTED_PATH,
+        # а не се смесва с обикновеното "не е patchable".
+        protection = protection_reason(filename)
+        if protection is not None:
+            log.error(f"[PatchGuardian] PROTECTED PATH ОТКАЗАН: {protection}")
+            try:
+                quarantine(filename, new_code, f"PROTECTED_PATH: {protection}")
+            except Exception as e:
+                log.error(f"[PatchGuardian] quarantine на protected patch се провали: {e}")
+            return PatchResult(filename, False, "rejected_protected_path",
+                               f"PROTECTED_PATH: {protection}")
+
         if not _is_patchable(filename):
             return PatchResult(filename, False, "rejected",
                                f"Файлът '{filename}' не е в списъка с patchable файлове.")

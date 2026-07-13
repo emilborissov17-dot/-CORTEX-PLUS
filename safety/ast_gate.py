@@ -19,6 +19,8 @@ getattr атрибут, non-literal open()/write_* target), се DENY-ва, не
 
 import ast
 
+from safety.protected_paths import is_protected
+
 # ── (1) забранени import-и (module или from-import) ─────────────────────────
 BANNED_MODULES = {"subprocess", "socket", "urllib", "requests", "http", "ctypes"}
 
@@ -64,14 +66,25 @@ def _dotted_name(node) -> str | None:
 
 
 def _static_str_target_allowed(path_str: str) -> bool:
-    """Проверява литерален relative path срещу ALLOWED_DIR_PREFIXES + '..' traversal."""
+    """Проверява литерален relative path срещу ALLOWED_DIR_PREFIXES + '..' traversal
+    + PROTECTED PATHS.
+
+    ВАЖНО: prefix проверката НЕ Е достатъчна. ALLOWED_DIR_PREFIXES включва "memory",
+    а точно под memory/ живеят heartbeat.json, cycle.lock и existence_ledger.jsonl.
+    Без изричното is_protected() правило генериран patch можеше да си фалшифицира
+    собствената existence история или да подправи heartbeat и така да заблуди
+    watchdog-а, който трябва да забележи, че е забил. Denylist-ът бие allowlist-а.
+    """
     norm = path_str.replace("\\", "/")
     if norm.startswith("/") or (len(norm) > 1 and norm[1] == ":"):
         return False  # абсолютен път (POSIX или Windows drive)
     parts = [p for p in norm.split("/") if p not in ("", ".")]
     if not parts or ".." in parts:
         return False
-    return parts[0] in ALLOWED_DIR_PREFIXES
+    if parts[0] not in ALLOWED_DIR_PREFIXES:
+        return False
+    # Denylist се прилага ПОСЛЕДЕН и има предимство пред allowlist-а.
+    return not is_protected(path_str)
 
 
 def _div_chain_parts(node) -> list[tuple[str, str | None]]:
