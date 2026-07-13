@@ -3,7 +3,8 @@
 # internet_agent.py -- CORTEX++_QWEN Internet Intelligence Agent
 # Събира данни от RSS, GDELT, arXiv, GitHub, Podcasts и YouTube (с Whisper).
 from __future__ import annotations
-import json, pathlib, subprocess, sys, time, re, os, tempfile, glob, signal
+import json, pathlib, subprocess, sys, time, re, os, tempfile, glob, signal, threading
+from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, date, timezone
 from typing import Any, Dict, List, Optional
 from contextlib import contextmanager
@@ -32,6 +33,29 @@ MAX_TRANSCRIPT_CHARS = 3000
 TRANSCRIPT_LANGUAGES = ["en", "bg", "de", "fr", "es"]
 TRANSCRIPT_TIMEOUT_SEC = 60
 YT_DLP_TIMEOUT_SEC     = 30
+
+# ── Sticky IP-block fallback (item 4a) ───────────────────────────────────────
+# Щом YouTube блокира IP-то ни веднъж, то остава блокирано за целия цикъл.
+# Досега всяко следващо видео пак пробваше youtube-transcript-api и yt-dlp,
+# ядеше timeout, и чак тогава падаше към Playwright — по ~60s загубени на видео.
+# Сега първият IP-block превключва ОСТАТЪКА ОТ ЦИКЪЛА директно на Playwright.
+# Флагът е cycle-scoped: reset_cycle_state() в началото на run() го нулира,
+# за да може следващият цикъл (нов IP / изтекъл rate limit) пак да пробва API.
+# Същият модел като съществуващия _YT_QUOTA_EXHAUSTED.
+_IP_BLOCKED_THIS_CYCLE = False
+_STATE_LOCK = threading.Lock()
+
+# ── Cross-cycle transcript cache (item 4c) ───────────────────────────────────
+# Ключ = video ID. Проверява се ПРЕДИ какъвто и да е fetch опит, така че вече
+# свалена транскрипция струва нула мрежови заявки — независимо от цикъл, ос
+# или query. Кешираме САМО реални транскрипции: description-fallback, timeout
+# и провал не се кешират (иначе завинаги затваряме възможността да ги вземем).
+TRANSCRIPT_CACHE_DIR = BASE_DIR / "memory" / "transcript_cache"
+_CACHEABLE_METHODS = {"youtube_transcript_api", "yt_dlp", "playwright_web", "whisper"}
+
+# Playwright контексти на ос — таванът идва от BODY scan RAM директивата.
+_MAX_PW_CONTEXTS = 3
+_MIN_PW_CONTEXTS = 1
 
 _SSL_CTX = None
 try:
@@ -363,8 +387,14 @@ def _podcast(axis, query=""):
 
 @contextmanager
 def _time_limit(seconds: int, label: str = ""):
-    """SIGALRM timeout — само на Linux/Mac. На Windows прескача."""
-    if not hasattr(signal, "SIGALRM"):
+    """SIGALRM timeout — само на Linux/Mac, само в главния thread.
+
+    signal.signal() вдига ValueError, ако бъде извикан извън main thread. Откакто
+    транскрипциите се теглят паралелно (ThreadPoolExecutor), този contextmanager
+    се вика и от worker threads — затова проверката за main thread е задължителна,
+    иначе на Linux целият паралелен fetch щеше да гърми.
+    """
+    if not hasattr(signal, "SIGALRM") or threading.current_thread() is not threading.main_thread():
         yield
         return
     def _handler(signum, frame):
@@ -376,6 +406,108 @@ def _time_limit(seconds: int, label: str = ""):
     finally:
         signal.alarm(0)
         signal.signal(signal.SIGALRM, old)
+
+
+# ── Cycle state: sticky IP-block + parallelism budget ────────────────────────
+
+def reset_cycle_state() -> None:
+    """Нулира cycle-scoped флаговете. Вика се в началото на run().
+
+    Без това sticky IP-block флагът щеше да остане вдигнат завинаги в
+    дълго-живеещ процес и никога повече нямаше да пробваме бързия API път.
+    """
+    global _IP_BLOCKED_THIS_CYCLE, _YT_QUOTA_EXHAUSTED
+    with _STATE_LOCK:
+        _IP_BLOCKED_THIS_CYCLE = False
+        _YT_QUOTA_EXHAUSTED = False
+
+
+def _is_ip_blocked() -> bool:
+    with _STATE_LOCK:
+        return _IP_BLOCKED_THIS_CYCLE
+
+
+def _mark_ip_blocked(source: str) -> None:
+    """Първият IP-block превключва остатъка от цикъла на Playwright."""
+    global _IP_BLOCKED_THIS_CYCLE
+    with _STATE_LOCK:
+        already = _IP_BLOCKED_THIS_CYCLE
+        _IP_BLOCKED_THIS_CYCLE = True
+    if not already:
+        print(f"    [YT] IP BLOCK ({source}) → останалите fetch-ове в този цикъл "
+              f"минават директно през Playwright (API се прескача)")
+
+
+_IP_BLOCK_MARKERS = ("requestblocked", "ipblocked", "blocking requests", "too many requests")
+
+
+def _is_ip_block_error(err: Exception) -> bool:
+    """Разпознава YouTube IP-block по текста на грешката."""
+    text = str(err).lower()
+    if any(m in text for m in _IP_BLOCK_MARKERS):
+        return True
+    # youtube-transcript-api вдига именовани класове за това
+    return type(err).__name__ in ("RequestBlocked", "IpBlocked", "YouTubeRequestFailed")
+
+
+def _playwright_workers() -> int:
+    """Колко паралелни Playwright контекста на ос.
+
+    Чете memory/adaptive_directives.json точно както fast_cycle_runner._load_directives:
+    body_scanner сваля max_parallel_workers на 2 при RAM/CPU > 70% и на 1 при > 85%.
+    Всеки Playwright контекст е цял Chromium — това е най-RAM-лакомото нещо в цикъла,
+    така че уважаваме същия таван, вместо да въвеждаме собствен.
+    """
+    workers = 3
+    p = BASE_DIR / "memory" / "adaptive_directives.json"
+    if p.exists():
+        try:
+            workers = int(json.loads(p.read_text(encoding="utf-8")).get("max_parallel_workers", 3))
+        except Exception:
+            pass
+    return max(_MIN_PW_CONTEXTS, min(_MAX_PW_CONTEXTS, workers))
+
+
+# ── Cross-cycle transcript cache ─────────────────────────────────────────────
+
+def _cache_path(video_id: str) -> pathlib.Path:
+    return TRANSCRIPT_CACHE_DIR / f"{video_id}.json"
+
+
+def _cache_get(video_id: str) -> Optional[dict]:
+    """Кеширана транскрипция или None. Никаква мрежа."""
+    p = _cache_path(video_id)
+    if not p.exists():
+        return None
+    try:
+        data = json.loads(p.read_text(encoding="utf-8"))
+    except Exception:
+        return None  # повреден кеш файл → третираме го като miss
+    if not data.get("transcript"):
+        return None
+    return data
+
+
+def _cache_put(video_id: str, data: dict) -> None:
+    """Кешира САМО реални транскрипции (не description-fallback / timeout)."""
+    if data.get("transcript_method") not in _CACHEABLE_METHODS:
+        return
+    if not data.get("transcript"):
+        return
+    try:
+        TRANSCRIPT_CACHE_DIR.mkdir(parents=True, exist_ok=True)
+        payload = {
+            "video_id":          video_id,
+            "transcript":        data["transcript"],
+            "transcript_chars":  data.get("transcript_chars", len(data["transcript"])),
+            "transcript_method": data["transcript_method"],
+            "cached_at":         datetime.now(timezone.utc).isoformat(),
+        }
+        _cache_path(video_id).write_text(
+            json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8"
+        )
+    except Exception as e:
+        print(f"    [TRANSCRIPT-CACHE] запис провален за {video_id}: {e}")
 
 def _yt_search_html(query: str, max_results: int = 10) -> list[dict]:
     """Fallback: извлича video_id от HTML на YouTube results страница."""
@@ -472,7 +604,12 @@ def _yt_search_api(query: str, max_results: int = 3) -> list[dict]:
         return []
 
 def _search_youtube(query: str, max_results: int = 5) -> list[dict]:
-    """Waterfall: YouTube API -> Playwright (HTML scrape e IP-blocked)."""
+    """Waterfall: YouTube API -> Playwright (HTML scrape e IP-blocked).
+
+    При вдигнат sticky IP-block флаг отиваме директно на Playwright.
+    """
+    if _is_ip_blocked():
+        return _yt_search_playwright(query, max_results)
     if YOUTUBE_API_KEY and not _YT_QUOTA_EXHAUSTED:
         results = _yt_search_api(query, max_results)
         if results:
@@ -480,7 +617,14 @@ def _search_youtube(query: str, max_results: int = 5) -> list[dict]:
     return _yt_search_playwright(query, max_results)
 
 def _get_transcript_api(video_id: str) -> Optional[str]:
-    """Опит 1: youtube-transcript-api (официални субтитри)."""
+    """Опит 1: youtube-transcript-api (официални субтитри).
+
+    Прескача се напълно, ако IP-то вече е блокирано в този цикъл — тогава
+    заявката е гарантирано губене на време.
+    """
+    if _is_ip_blocked():
+        return None
+
     try:
         from youtube_transcript_api import YouTubeTranscriptApi
         api = YouTubeTranscriptApi()
@@ -490,7 +634,12 @@ def _get_transcript_api(video_id: str) -> Optional[str]:
                 text = " ".join([t.text for t in list(tl)])
                 if text.strip():
                     return text[:MAX_TRANSCRIPT_CHARS]
-            except Exception:
+            except Exception as inner:
+                # IP-block вътре в per-language цикъла: няма смисъл да пробваме
+                # останалите езици — блокът е за целия IP, не за езика.
+                if _is_ip_block_error(inner):
+                    _mark_ip_blocked("transcript-api")
+                    return None
                 continue
         # автоматични субтитри без зададен език
         tl = api.fetch(video_id)
@@ -500,11 +649,10 @@ def _get_transcript_api(video_id: str) -> Optional[str]:
     except ImportError:
         pass
     except Exception as e:
-        err = str(e)
-        if "blocking" in err.lower() or "IP" in err or "RequestBlocked" in err or "IPBlocked" in err:
-            print(f"    [TRANSCRIPT-API] IP blocked, опитвам Playwright")
+        if _is_ip_block_error(e):
+            _mark_ip_blocked("transcript-api")
         else:
-            print(f"    [TRANSCRIPT-API] {video_id}: {err.splitlines()[0]}")
+            print(f"    [TRANSCRIPT-API] {video_id}: {str(e).splitlines()[0]}")
     return None
 
 def _parse_vtt(filepath: str) -> str:
@@ -525,7 +673,13 @@ def _parse_vtt(filepath: str) -> str:
         return ""
 
 def _get_transcript_ytdlp(video_id: str) -> Optional[str]:
-    """Опит 2: yt-dlp VTT субтитри."""
+    """Опит 2: yt-dlp VTT субтитри.
+
+    Също се прескача при IP-block: yt-dlp удря YouTube от СЪЩОТО IP, така че
+    блокът важи и за него. (Playwright минава през истински браузър и оцелява.)
+    """
+    if _is_ip_blocked():
+        return None
     try:
         with tempfile.TemporaryDirectory() as tmpdir:
             out_template = os.path.join(tmpdir, "%(id)s")
@@ -600,10 +754,37 @@ def _get_transcript_whisper(video_id: str) -> Optional[str]:
         print(f"    [TRANSCRIPT] {video_id[:11]} WARN groq-whisper failed: {e}")
     return None
 
+def _transcript_result(video_id: str, title: str, transcript: Optional[str], method: str) -> dict:
+    return {
+        "video_id":          video_id,
+        "title":             title,
+        "url":               f"https://www.youtube.com/watch?v={video_id}",
+        "transcript":        transcript or "",
+        "transcript_chars":  len(transcript) if transcript else 0,
+        "transcript_method": method,
+        "has_transcript":    bool(transcript and method not in ["none", "timeout"]),
+    }
+
+
 def get_transcript(video_id: str, title: str = "", description: str = "") -> dict:
     """
-    Пълна верига: youtube-transcript-api → yt-dlp VTT → Whisper → description fallback.
+    Пълна верига: cache → youtube-transcript-api → yt-dlp VTT → Playwright →
+    Whisper → description fallback.
+
+    Кешът се проверява ПРЕДИ всеки друг опит: hit = нула мрежови заявки.
+    При вдигнат IP-block флаг API и yt-dlp стъпките се самопрескачат (виж
+    _get_transcript_api / _get_transcript_ytdlp), тоест веригата започва
+    директно от Playwright.
     """
+    # ── Cache first: преди ВСЯКАКЪВ fetch опит ──────────────────────────────
+    cached = _cache_get(video_id)
+    if cached:
+        print(f"    [TRANSCRIPT] {video_id[:11]} ⚡ cache hit "
+              f"({cached['transcript_chars']} chars, {cached['transcript_method']})")
+        return _transcript_result(
+            video_id, title, cached["transcript"], cached["transcript_method"]
+        )
+
     transcript = None
     method = "none"
 
@@ -651,15 +832,9 @@ def get_transcript(video_id: str, title: str = "", description: str = "") -> dic
     if not transcript:
         print(f"    [TRANSCRIPT] {video_id[:11]} ❌ няма транскрипция")
 
-    return {
-        "video_id":          video_id,
-        "title":             title,
-        "url":               f"https://www.youtube.com/watch?v={video_id}",
-        "transcript":        transcript or "",
-        "transcript_chars":  len(transcript) if transcript else 0,
-        "transcript_method": method,
-        "has_transcript":    bool(transcript and method not in ["none", "timeout"]),
-    }
+    result = _transcript_result(video_id, title, transcript, method)
+    _cache_put(video_id, result)   # no-op за description/timeout/none
+    return result
 
 # ── Adaptive YouTube memory ───────────────────────────────────────────────────
 
@@ -709,12 +884,12 @@ def _fetch_youtube_for_axis(axis: str) -> list:
     for q in queries_to_try:
         print(f"    [YT] Query: '{q}'")
         videos = _search_youtube(q, max_results=5)
-        enriched = []
-        for vid in videos[:3]:
-            time.sleep(0.5)
+        targets = videos[:3]
+
+        def _enrich(vid: dict) -> dict:
             td = get_transcript(vid["video_id"], vid.get("title", ""), vid.get("description", ""))
             content = td["transcript"] or vid.get("description", "")
-            enriched.append({
+            return {
                 "title":               f"[YT] {vid.get('title', vid['video_id'])}",
                 "summary":             content[:800],
                 "link":                vid["url"],
@@ -724,7 +899,23 @@ def _fetch_youtube_for_axis(axis: str) -> list:
                 "transcript_method":   td["transcript_method"],
                 "transcript_chars":    td["transcript_chars"],
                 "has_full_transcript": td["has_transcript"] and td["transcript_method"] not in ["description", "timeout"],
-            })
+            }
+
+        # Паралелен fetch, ограничен от BODY scan RAM директивата. Всеки
+        # Playwright контекст е отделен Chromium — при RAM > 85% body_scanner
+        # сваля max_parallel_workers на 1 и тук ставаме отново серийни.
+        workers = min(_playwright_workers(), len(targets)) or 1
+        if workers > 1 and len(targets) > 1:
+            print(f"    [YT] {len(targets)} видеа, {workers} паралелни контекста "
+                  f"(BODY директива)")
+            with ThreadPoolExecutor(max_workers=workers) as pool:
+                enriched = [r for r in pool.map(_enrich, targets) if r]
+        else:
+            enriched = []
+            for vid in targets:
+                time.sleep(0.5)
+                enriched.append(_enrich(vid))
+
         score = _score_results(enriched)
         print(f"    [YT] Score: {score:.2f} ({len(enriched)} видеа)")
         if score > best_score:
@@ -878,6 +1069,10 @@ def _load_master():
         return {}
 
 def run(axes=None):
+    # Нов цикъл → нулирай sticky флаговете (IP-block, YT quota). Иначе един
+    # блок в 09:00 щеше да държи целия ден на Playwright.
+    reset_cycle_state()
+
     today   = date.today().isoformat()
     out_dir = NEWS_DIR / today
     out_dir.mkdir(exist_ok=True)
