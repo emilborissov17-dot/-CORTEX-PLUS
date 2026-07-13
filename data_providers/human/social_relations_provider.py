@@ -7,7 +7,6 @@ from data_providers.human.base_provider import HumanDataProvider
 
 WB_API        = "https://api.worldbank.org/v2/country/WLD/indicator"
 UNHCR_URL     = "https://api.unhcr.org/population/v1/population/"
-UCDP_VERSIONS = ["25.1", "24.1", "23.1", "22.1"]
 
 
 def _wb(ind: str) -> Optional[float]:
@@ -49,20 +48,21 @@ def _unhcr() -> Dict[str, Optional[float]]:
 
 
 def _ucdp() -> Optional[int]:
-    """Fetch count of active armed conflicts from UCDP API (tries multiple versions)."""
-    for ver in UCDP_VERSIONS:
-        try:
-            r = requests.get(
-                f"https://ucdpapi.pcr.uu.se/api/conflict/{ver}?pagesize=1&page=1",
-                timeout=30,
-            )
-            if r.status_code == 200:
-                total = r.json().get("TotalCount")
-                if total is not None:
-                    return int(total)
-        except Exception:
-            continue
-    return None
+    """Count of active armed conflicts from UCDP.
+
+    Delegates to core.global_indicators.fetch_ucdp rather than keeping a second
+    copy of the URL logic. The duplicate here had the same two bugs (wrong
+    resource name "conflict", stale versions) and had to be fixed twice; now
+    there is one implementation, and it also honours the NEEDS_AUTH registry
+    so a missing UCDP token is a quiet skip instead of four 404s per cycle.
+    """
+    try:
+        from core.global_indicators import fetch_ucdp
+    except ImportError:
+        return None
+    data = fetch_ucdp()
+    total = data.get("active_armed_conflicts")
+    return int(total) if total is not None else None
 
 
 class SocialRelationsProvider(HumanDataProvider):

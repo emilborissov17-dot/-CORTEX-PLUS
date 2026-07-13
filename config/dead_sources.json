@@ -1,0 +1,25 @@
+{
+  "_README": [
+    "Registry of data sources that are gone, moved, or newly gated.",
+    "A source listed here is SKIPPED cleanly instead of failing every cycle.",
+    "",
+    "status:",
+    "  DEAD       — the source no longer exists. Do not call it.",
+    "  NEEDS_AUTH — the source still exists but now requires a credential.",
+    "               If env_key is set in the environment, the source is used",
+    "               normally; if not, it is skipped quietly (not an error).",
+    "",
+    "Remove an entry (or flip its status) once the source is restored/keyed.",
+    "recheck_after is a hint for a human, nothing reads it automatically."
+  ],
+  "ucdp_api": {
+    "status": "NEEDS_AUTH",
+    "since": "2026-07-13",
+    "env_key": "UCDP_ACCESS_TOKEN",
+    "reason": "UCDP introduced token authentication. Every endpoint now returns 401 with body 'API token required. Add header: x-ucdp-access-token: <your-token>'. The old code additionally used a wrong resource name ('conflict' -> now 'ucdpprioconflict') and stale versions (25.1/24.1/23.1/22.1 -> now 26.1), so it was 404-ing on top of being unauthenticated. Both are fixed; only the token is missing.",
+    "how_to_reenable": "Request a token from the UCDP API maintainer (see https://ucdp.uu.se/apidocs/), then put UCDP_ACCESS_TOKEN=<token> in .env",
+    "docs": "https://ucdp.uu.se/apidocs/",
+    "verified_by": "curl probe 2026-07-13: /api/ucdpprioconflict/26.1 -> 401 'API token required'",
+    "recheck_after": "2027-01-01"
+  }
+}

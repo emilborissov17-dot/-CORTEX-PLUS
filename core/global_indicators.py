@@ -28,14 +28,20 @@ from typing import Any, Optional
 
 import requests
 
+try:
+    from .source_status import credential_for, is_skipped
+except ImportError:
+    from source_status import credential_for, is_skipped
+
 
 # ---------------------------------------------------------------------------
 # HTTP helper
 # ---------------------------------------------------------------------------
 
-def _get(url: str, timeout: int = 20, params: dict | None = None) -> Any:
+def _get(url: str, timeout: int = 20, params: dict | None = None,
+         headers: dict | None = None) -> Any:
     try:
-        r = requests.get(url, params=params, timeout=timeout)
+        r = requests.get(url, params=params, timeout=timeout, headers=headers)
         r.raise_for_status()
         ct = r.headers.get("content-type", "")
         return r.json() if "json" in ct else r.text
@@ -102,13 +108,21 @@ def fetch_gistemp() -> dict:
 # 3. Global mean sea level — NOAA satellite altimetry
 # ---------------------------------------------------------------------------
 
+# CU Boulder moved its data files. The old /sites/default/files/<YYYY-MM>/ paths
+# were tied to a Drupal upload month and 404 since the 2026 release; the files now
+# live under /files/<release>/ with the release baked into the filename.
+# Verified 2026-07-13: the 2026_rel1 URL returns 200 and the same two-column
+# "<year_fraction> <mm>" format the parser below already expects.
+# Newest release first — older ones are kept as fallbacks, not as the primary.
+_SEA_LEVEL_URLS = (
+    "https://sealevel.colorado.edu/files/2026_rel1/gmsl_2026rel1_seasons_rmvd.txt",
+    "https://sealevel.colorado.edu/files/2025_rel1/gmsl_2025rel1_seasons_rmvd.txt",
+)
+
+
 def fetch_sea_level() -> dict:
     """Global mean sea level rise (mm) vs 1993 baseline — CU Boulder."""
-    # CU Sea Level Research Group annual data
-    for url in (
-        "https://sealevel.colorado.edu/sites/default/files/2024-06/sl_ns_global.txt",
-        "https://sealevel.colorado.edu/sites/default/files/2023-06/sl_ns_global.txt",
-    ):
+    for url in _SEA_LEVEL_URLS:
         text = _get(url, timeout=30)
         if not text:
             continue
@@ -193,12 +207,34 @@ def fetch_gbif() -> dict:
 # 6. Armed conflicts — UCDP
 # ---------------------------------------------------------------------------
 
+# The old code called /api/conflict/<ver> for versions 25.1..22.1 and 404'd on
+# every one, every cycle. Two separate faults:
+#   1. the resource is called "ucdpprioconflict", not "conflict"
+#   2. the current version is 26.1; 25.1 and older are not served
+# And even with both fixed, UCDP now requires a token (401), so the source is
+# registered NEEDS_AUTH in config/dead_sources.json and skipped cleanly until
+# UCDP_ACCESS_TOKEN is set. See core/source_status.py.
+UCDP_SOURCE_KEY = "ucdp_api"
+UCDP_VERSIONS = ("26.1", "25.1")
+UCDP_RESOURCE = "ucdpprioconflict"
+
+
 def fetch_ucdp() -> dict:
-    """Number of active armed conflicts from Uppsala Conflict Data Program."""
-    for version in ("25.1", "24.1", "23.1", "22.1"):
+    """Number of active armed conflicts from Uppsala Conflict Data Program.
+
+    Returns {} (quietly) when no UCDP token is configured — not an error.
+    """
+    if is_skipped(UCDP_SOURCE_KEY):
+        return {}
+
+    token = credential_for(UCDP_SOURCE_KEY)
+    headers = {"x-ucdp-access-token": token} if token else None
+
+    for version in UCDP_VERSIONS:
         data = _get(
-            f"https://ucdpapi.pcr.uu.se/api/conflict/{version}?pagesize=1&page=1",
+            f"https://ucdpapi.pcr.uu.se/api/{UCDP_RESOURCE}/{version}?pagesize=1&page=1",
             timeout=30,
+            headers=headers,
         )
         if data and isinstance(data, dict) and "TotalCount" in data:
             return {
