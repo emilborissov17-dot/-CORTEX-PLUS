@@ -52,7 +52,8 @@ cannot go through a paid API. It has to be local, small, and free.
 | RAM | **13.9 GB total, ~6.6 GB free** (≈56% used at idle) |
 | **GPU** | **NVIDIA GTX 1650 — 4 GB VRAM, 3,952 MiB free** ✅ |
 | Disk | 547 GB free |
-| Ollama | **not installed** |
+| Ollama | **installed, but not on PATH; server must be started by hand** |
+| Models present | `qwen2.5:7b` (4.68 GB), `qwen3:8b` (5.23 GB) — **both exceed VRAM** |
 
 **There is a usable GPU.** The brief assumed none. `nvidia-smi` works, the driver is
 live, and ~3.9 GB of VRAM is free.
@@ -78,18 +79,80 @@ weights cost the system ~300 MB of RAM instead of ~2 GB.
 Expected latency for a 3B on a GTX 1650, ~220 output tokens: **roughly 3–8 s** — well
 inside the 30 s criterion. If it is not, that is a finding, and it goes in the results.
 
-### To unblock Part 2 (nothing has been installed)
+---
+
+## ⚠ PART 2 REQUIRES THE OLLAMA SERVER RUNNING
+
+Ollama **is installed** on this machine, but:
+
+- `ollama.exe` is **not on PATH** — it lives at
+  `%LOCALAPPDATA%\Programs\Ollama\ollama.exe`
+- the server **must be started by hand**
+
+```powershell
+# Start the server (PowerShell)
+Start-Process "$env:LOCALAPPDATA\Programs\Ollama\ollama.exe" -ArgumentList "serve"
+```
+
+`self_sense.py` talks to the server over **HTTP on `localhost:11434`** and never
+shells out to the CLI — so **PATH is irrelevant to it**. If we invoked `ollama`, the
+script would die with "command not found" while a perfectly healthy server was
+answering on the port.
+
+**If the server goes down mid-loop, `self_sense` logs one line and waits.** It does not
+crash, and it does not spam: one line on the way down, one on the way back up. The
+sensory stream keeps running regardless — Part 1 never needed a model.
+
+### Measured on this machine (2026-07-13)
+
+| | `qwen2.5:7b` (default) | `qwen3:8b` |
+|---|---|---|
+| Size | 4.68 GB | 5.23 GB |
+| Cold load | ~9.5–11.8 s | — |
+| **Warm latency** | **2.8–3.3 s** ✅ | slower (reasoning model) |
+| VRAM / RAM split | 3.44 GB VRAM (64%) / **1.93 GB system RAM** | worse |
+| **System RAM cost** | **+3.86 GB (45.6% → 71.5%)** | worse |
+
+**`qwen3:8b` is a reasoning model** — it emits `<think>…</think>` before answering,
+costing tokens and latency on *every* tick. It is available via `--model` and its
+reasoning blocks are stripped, but a self-sensing loop wants a **fast reflex, not a
+deliberation**. `qwen2.5:7b` is the default.
+
+### 🔴 C4 FAILS with the installed models — measured, not predicted
+
+| | |
+|---|---|
+| RAM, model unloaded | **45.6%** |
+| RAM, `qwen2.5:7b` loaded | **71.5%** |
+| Cost | **+3.86 GB / +25.9 pp** |
+| BODY caution threshold | **70% — BREACHED** |
+
+Neither installed model fits the GTX 1650's 4 GB of VRAM, so weights spill into system
+RAM, and the runtime + KV cache take the rest. **Above 70%, BODY cuts the live cycle's
+workers from 3 to 2** — meaning this experiment would be *degrading the live system*,
+which is precisely what its isolation rules exist to forbid.
+
+**This is a real finding, not a nuisance.** C2 passes comfortably; C4 does not.
+
+**The fix — one pull:**
+```
+ollama pull qwen2.5:3b     # ~1.9 GB — fits entirely in VRAM; ~1-2 s per tick
+```
+`self_sense.py` will then select it automatically (it is ranked ahead of the 7b in
+`PREFERRED_MODELS` once present). System RAM cost drops to a few hundred MB.
+
+**Or** run the loop only while no cycle is running (the daily cycle is 03:00) — but that
+means **C4 is not met as declared**, and the 24 h run cannot claim it.
+
+### Readiness check
 
 ```
-# 1. Install Ollama for Windows (~700 MB; background service on :11434)
-#    https://ollama.com/download/windows
-
-# 2. Pull ONE model
-ollama pull qwen2.5:3b
-
-# 3. Confirm
 venv\Scripts\python.exe experiments\pulse\self_sense.py --check
 ```
+Verifies: server reachable → model present → **one real test generation with latency** →
+VRAM/RAM split → C2 and C4 verdicts. A check that only pings `/api/tags` proves the
+server is up, not that it can *think*: a model that is present but cannot load would
+pass that and then fail on every tick of the real loop.
 
 ---
 
@@ -155,9 +218,11 @@ venv\Scripts\python.exe experiments\pulse\pulse_daemon.py
 # one sample, printed, exit
 venv\Scripts\python.exe experiments\pulse\pulse_daemon.py --once
 
-# Part 2 — the local brain (needs Ollama)
+# Part 2 — the local brain (REQUIRES the ollama server running; see above)
+Start-Process "$env:LOCALAPPDATA\Programs\Ollama\ollama.exe" -ArgumentList "serve"
 venv\Scripts\python.exe experiments\pulse\self_sense.py --check
 venv\Scripts\python.exe experiments\pulse\self_sense.py
+venv\Scripts\python.exe experiments\pulse\self_sense.py --model qwen3:8b   # reasoning model
 
 # Part 3 — the verdict (works on any stream, any time)
 venv\Scripts\python.exe experiments\pulse\analyze.py
