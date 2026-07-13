@@ -146,18 +146,19 @@ def _suggest_sources(axis: str, already_known: list[str]) -> list[dict]:
     )
 
     try:
-        from core.groq_backend import call_groq
-        raw = call_groq(prompt, max_tokens=600)
-        # Strip markdown fences
-        if "```json" in raw:
-            raw = raw.split("```json")[1].split("```")[0]
-        elif "```" in raw:
-            raw = raw.split("```")[1].split("```")[0]
-        if "</think>" in raw:
-            raw = raw.split("</think>")[-1]
-        return json.loads(raw.strip()).get("sources", [])
+        from core.llm_json import call_llm_json
+        # call_llm_json прави самото извикване + parse, и при отрязан отговор
+        # ретрайва веднъж с двоен token budget (600 е тесен за 3 URL-а).
+        data = call_llm_json(
+            prompt,
+            max_tokens=600,
+            expect=dict,
+            label=f"SCOUT/{axis}",
+        )
+        return data.get("sources", [])
     except Exception as e:
-        print(f"  [SCOUT] LLM suggestion failed for {axis}: {e}")
+        # Грешката вече носи backend + truncated флаг, не е гола.
+        print(f"  [SCOUT] LLM suggestion failed for {axis}: {type(e).__name__}: {e}")
         return []
 
 

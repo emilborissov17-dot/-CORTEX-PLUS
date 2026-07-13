@@ -195,70 +195,24 @@ TOOLS_DESC = {
 
 
 # ── JSON PARSING ─────────────────────────────────────────────────────────────
+# Логиката живее в core/llm_json.py (споделена с cortex_llm_resource,
+# internet_agent и data_scout). Тук пазим само тънки обвивки + името
+# JSONParseError, което съществуващите except-клаузи вече ловят.
 
-class JSONParseError(Exception):
-    """Вдигнат, когато LLM output не съдържа валиден JSON (obj или array)."""
-    def __init__(self, raw: str, cause: Exception):
-        self.raw_snippet = raw[:300]
-        self.cause = cause
-        super().__init__(f"unparseable LLM output: {cause} | raw[:300]={self.raw_snippet!r}")
+from core.llm_json import LLMJSONError, extract_json as _shared_extract_json
 
-
-def _strip_wrapper(raw: str) -> str:
-    """Маха <think> блокове и ```json fences. Не гадае граници — само чисти wrapper-и."""
-    raw = re.sub(r"<think>.*?</think>", "", raw, flags=re.DOTALL).strip()
-    if "```" in raw:
-        parts = [p.strip() for p in raw.split("```")]
-        candidates = []
-        for part in parts:
-            p = part[4:].strip() if part.startswith("json") else part
-            if p:
-                candidates.append(p)
-        if candidates:
-            raw = max(candidates, key=len)
-    return raw.strip()
-
-
-def _robust_json_extract(raw: str):
-    """
-    Устойчиво извличане на JSON (обект ИЛИ масив) от LLM output.
-    Опитва всяко срещане на '{' или '[' с json.JSONDecoder().raw_decode,
-    вместо крехко index()/rindex() slicing, което чупи при вложени скоби
-    или текст преди/след JSON-а, съдържащ собствени '{'/'}'.
-    Хвърля JSONParseError с ясен контекст ако нищо не сработи.
-    """
-    cleaned = _strip_wrapper(raw)
-    decoder = json.JSONDecoder()
-    last_err = None
-
-    for i, ch in enumerate(cleaned):
-        if ch not in "{[":
-            continue
-        try:
-            obj, _end = decoder.raw_decode(cleaned, i)
-            return obj
-        except json.JSONDecodeError as e:
-            last_err = e
-            continue
-
-    try:
-        return json.loads(cleaned)
-    except json.JSONDecodeError as e:
-        raise JSONParseError(raw, last_err or e)
+# Обратна съвместимост: JSONParseError беше локален клас. Сега е псевдоним на
+# споделената грешка, така че `except JSONParseError` продължава да работи —
+# и вече носи backend + truncated флаг.
+JSONParseError = LLMJSONError
 
 
 def _extract_json(raw: str) -> dict:
-    result = _robust_json_extract(raw)
-    if not isinstance(result, dict):
-        raise JSONParseError(raw, ValueError(f"очаквах dict, получих {type(result).__name__}"))
-    return result
+    return _shared_extract_json(raw, expect=dict, backend="self_observer")
 
 
 def _extract_json_array(raw: str) -> list:
-    result = _robust_json_extract(raw)
-    if not isinstance(result, list):
-        raise JSONParseError(raw, ValueError(f"очаквах list, получих {type(result).__name__}"))
-    return result
+    return _shared_extract_json(raw, expect=list, backend="self_observer")
 
 
 # ── MAIN RUN ─────────────────────────────────────────────────────────────────

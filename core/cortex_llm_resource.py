@@ -7,8 +7,10 @@ from datetime import datetime, timezone
 
 try:
     from .groq_backend import call_groq, AllBackendsFailedError
+    from .llm_json import extract_json
 except ImportError:
     from groq_backend import call_groq, AllBackendsFailedError
+    from llm_json import extract_json
 
 ENERGY_DATA_PATH = Path("data/energy/owid-energy-data.csv")
 
@@ -171,30 +173,20 @@ def _llm_run(prompt: str) -> str:
     return call_groq(prompt, max_tokens=2048)
 
 
-def _extract_json_object(text: str) -> str:
+def _extract_json_object(text: str) -> dict:
     """
-    Вади първия балансиран JSON обект `{ ... }` от text (може да има мисли преди/след него).
+    Вади JSON обекта от LLM output (може да има reasoning преди/след него).
+
+    Делегира на core/llm_json.extract_json. Старата ръчна balance-броячка
+    се чупеше на две неща: (1) скоби ВЪТРЕ в JSON string-ове (`{"x": "}"}`),
+    защото броеше символи без да знае за string-ове, и (2) decoy скоби в
+    reasoning-а преди JSON-а — заключваше се за първата '{' в изречение и
+    после гърмеше.
+
+    ПРОМЯНА В ТИПА: връща вече парснат dict, не str. Caller-ите не правят
+    json.loads след него.
     """
-    start = text.find("{")
-    if start == -1:
-        raise ValueError("No '{' found in text")
-
-    balance = 0
-    end = -1
-    for i in range(start, len(text)):
-        ch = text[i]
-        if ch == "{":
-            balance += 1
-        elif ch == "}":
-            balance -= 1
-            if balance == 0:
-                end = i
-                break
-
-    if end == -1 or balance != 0:
-        raise ValueError("Could not find balanced JSON object in text")
-
-    return text[start: end + 1]
+    return extract_json(text, expect=dict, backend="cortex_llm_resource")
 
 
 # ======================================================================
@@ -362,10 +354,7 @@ def call_ollama_json(domain: str, raw_context: str) -> dict:
         pass
 
     try:
-        json_str_1 = _extract_json_object(content)
-        data = json.loads(json_str_1)
-        if not isinstance(data, dict):
-            raise RuntimeError("Top-level JSON is not an object (v1)")
+        data = _extract_json_object(content)
     except Exception as e_first:
         # --- Втори опит: JSON repair agent ---
         repair_system = (
@@ -394,10 +383,7 @@ def call_ollama_json(domain: str, raw_context: str) -> dict:
             pass
 
         try:
-            json_str_2 = _extract_json_object(content_repaired)
-            data = json.loads(json_str_2)
-            if not isinstance(data, dict):
-                raise RuntimeError("Repaired JSON top-level is not an object (v2)")
+            data = _extract_json_object(content_repaired)
         except Exception as e_second:
             raise RuntimeError(
                 f"JSON parsing failed (v1: {e_first}; v2(repair): {e_second})"

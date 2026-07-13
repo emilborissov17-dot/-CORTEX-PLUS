@@ -142,7 +142,7 @@ def _get_ollama_model():
 # Backend извиквания
 # ---------------------------------------------------------------------------
 
-def _call_groq(prompt: str, max_tokens: int) -> str:
+def _call_groq(prompt: str, max_tokens: int):
     key = _load_key("GROQ_API_KEY")
     if not key:
         raise ValueError("GROQ_API_KEY не е намерен")
@@ -168,10 +168,11 @@ def _call_groq(prompt: str, max_tokens: int) -> str:
         raise RuntimeError("Groq rate limit")
 
     r.raise_for_status()
-    return r.json()["choices"][0]["message"]["content"]
+    choice = r.json()["choices"][0]
+    return choice["message"]["content"], {"finish_reason": choice.get("finish_reason")}
 
 
-def _call_cerebras(prompt: str, max_tokens: int) -> str:
+def _call_cerebras(prompt: str, max_tokens: int):
     key = _load_key("CEREBRAS_API_KEY")
     if not key:
         raise ValueError("CEREBRAS_API_KEY не е намерен")
@@ -197,17 +198,31 @@ def _call_cerebras(prompt: str, max_tokens: int) -> str:
         raise RuntimeError("Cerebras rate limit")
 
     r.raise_for_status()
-    msg = r.json()["choices"][0]["message"]
+    choice = r.json()["choices"][0]
+    msg = choice["message"]
     # gpt-oss-120b / zai-glm-4.7 са reasoning модели: отговорът е в "content",
     # "reasoning" е вътрешното мислене. При твърде нисък max_tokens "content"
     # може да липсва — в такъв случай fallback-ваме към "reasoning".
-    content = msg.get("content") or msg.get("reasoning") or ""
+    #
+    # ВАЖНО: точно този fallback е причината parser-ите да получават суров
+    # reasoning текст ("The user asks: ...", "done thinking."). Не го махаме
+    # (по-добре нещо, отколкото нищо), но го МАРКИРАМЕ в meta, за да може
+    # core/llm_json.py да разпознае случая и да го третира като TRUNCATED,
+    # вместо да го бърка с "моделът върна боклук".
+    content = msg.get("content") or ""
+    used_reasoning_fallback = False
+    if not content.strip():
+        content = msg.get("reasoning") or ""
+        used_reasoning_fallback = bool(content.strip())
     if not content.strip():
         raise ValueError(f"Cerebras {CEREBRAS_MODEL}: празен отговор (content и reasoning са празни)")
-    return content
+    return content, {
+        "finish_reason": choice.get("finish_reason"),
+        "used_reasoning_fallback": used_reasoning_fallback,
+    }
 
 
-def _call_openrouter(prompt: str, max_tokens: int) -> str:
+def _call_openrouter(prompt: str, max_tokens: int):
     key = _load_key("OPENROUTER_API_KEY")
     if not key:
         raise ValueError("OPENROUTER_API_KEY не е намерен")
@@ -234,13 +249,16 @@ def _call_openrouter(prompt: str, max_tokens: int) -> str:
         raise RuntimeError("OpenRouter rate limit")
 
     r.raise_for_status()
-    content = r.json()["choices"][0]["message"]["content"] or ""
-    # Някои OpenRouter модели могат да връщат <think>...</think> блокове
+    choice = r.json()["choices"][0]
+    content = choice["message"]["content"] or ""
+    # Някои OpenRouter модели могат да връщат <think>...</think> блокове.
+    # (core/llm_json.strip_reasoning прави същото и покрива още варианти —
+    # тук го оставяме за callers, които не минават през llm_json.)
     content = re.sub(r"<think>.*?</think>", "", content, flags=re.DOTALL).strip()
-    return content
+    return content, {"finish_reason": choice.get("finish_reason")}
 
 
-def _call_gemini(prompt: str, max_tokens: int) -> str:
+def _call_gemini(prompt: str, max_tokens: int):
     key = _load_key("GEMINI_API_KEY")
     if not key:
         raise ValueError("GEMINI_API_KEY не е намерен")
@@ -262,10 +280,15 @@ def _call_gemini(prompt: str, max_tokens: int) -> str:
     candidates = r.json().get("candidates", [])
     if not candidates:
         raise ValueError("Gemini: празен отговор")
-    return candidates[0]["content"]["parts"][0]["text"]
+    cand = candidates[0]
+    # Gemini казва "MAX_TOKENS" там, където OpenAI-съвместимите казват "length".
+    # Нормализираме към "length", за да има llm_json един-единствен признак.
+    raw_reason = (cand.get("finishReason") or "").upper()
+    finish_reason = "length" if raw_reason == "MAX_TOKENS" else raw_reason.lower() or None
+    return cand["content"]["parts"][0]["text"], {"finish_reason": finish_reason}
 
 
-def _call_ollama(prompt: str, max_tokens: int) -> str:
+def _call_ollama(prompt: str, max_tokens: int):
     model = _get_ollama_model()
     if not model:
         raise RuntimeError("Ollama: няма налични модели")
@@ -284,19 +307,31 @@ def _call_ollama(prompt: str, max_tokens: int) -> str:
     }
     r = requests.post(OLLAMA_URL, json=payload, timeout=(10, 120))
     r.raise_for_status()
-    content = r.json()["message"]["content"]
+    body = r.json()
+    content = body["message"]["content"]
     # Strip <think>...</think> блок (qwen3 reasoning mode)
     content = re.sub(r"<think>.*?</think>", "", content, flags=re.DOTALL).strip()
-    return content
+    # Ollama: done_reason == "length" при изчерпан num_predict.
+    return content, {"finish_reason": body.get("done_reason")}
 
 
 # ---------------------------------------------------------------------------
 # Публичен интерфейс — API не се променя
 # ---------------------------------------------------------------------------
 
-def call_groq(prompt: str, max_tokens: int = 1024) -> str:
+def call_groq_meta(prompt: str, max_tokens: int = 1024) -> tuple:
     """
     Fallback chain: Groq → Cerebras → OpenRouter → Gemini
+
+    Връща (content, meta), където meta съдържа:
+      backend                 — кой backend отговори ("Groq", "Cerebras", ...)
+      finish_reason           — "length" ако отговорът е отрязан (нормализирано
+                                през всички providers), иначе "stop"/None
+      used_reasoning_fallback — True само за Cerebras, когато "content" е бил
+                                празен и сме взели суровия "reasoning" текст
+
+    core/llm_json.py ползва точно тези две полета, за да различи "отрязан
+    отговор" (→ retry) от "моделът върна боклук" (→ грешка).
 
     При rate limit на даден backend → веднага следващ (без дълго чакане).
     Backend с активен cooldown се прескача докато cooldown-ът не изтече.
@@ -316,10 +351,17 @@ def call_groq(prompt: str, max_tokens: int = 1024) -> str:
             print(f"  [LLM] {label} in cooldown -- skipping")
             continue
         try:
-            result = fn(prompt, max_tokens)
+            result, meta = fn(prompt, max_tokens)
             if result and result.strip():
-                print(f"[LLM] {label} OK")
-                return result
+                meta = dict(meta or {})
+                meta["backend"] = label
+                if meta.get("finish_reason") == "length":
+                    print(f"[LLM] {label} OK (finish_reason=length — ОТРЯЗАН отговор)")
+                elif meta.get("used_reasoning_fallback"):
+                    print(f"[LLM] {label} OK (внимание: празен content, ползван е reasoning)")
+                else:
+                    print(f"[LLM] {label} OK")
+                return result, meta
             raise ValueError(f"Empty response from {label}")
         except Exception as e:
             print(f"  [LLM] {label} failed ({e}) -- next...")
@@ -329,6 +371,17 @@ def call_groq(prompt: str, max_tokens: int = 1024) -> str:
         f"All LLM backends failed (Groq/Cerebras/OpenRouter/Gemini). "
         f"Last error: {last_error}"
     )
+
+
+def call_groq(prompt: str, max_tokens: int = 1024) -> str:
+    """Обратно-съвместим wrapper: връща само текста (без meta).
+
+    Съществуващите caller-и не се променят. Caller-ите, които парсват JSON,
+    трябва да минават през core.llm_json (което ползва call_groq_meta и вижда
+    finish_reason).
+    """
+    content, _meta = call_groq_meta(prompt, max_tokens)
+    return content
 
 
 def call_groq_safe(prompt: str, max_tokens: int = 1024) -> str:

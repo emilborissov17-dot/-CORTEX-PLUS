@@ -20,6 +20,7 @@ import xml.etree.ElementTree as ET
 import sys as _sys
 _sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[2]))
 from core.groq_backend import call_groq as _groq
+from core.llm_json import extract_json as _shared_extract_json
 
 BASE_DIR = pathlib.Path(__file__).resolve().parents[2]
 NEWS_DIR = BASE_DIR / 'news'
@@ -750,36 +751,14 @@ def _generate_smart_query(axis, snapshot_data):
     return GDELT_QUERIES.get(axis, axis.replace("_", " ").lower())
 
 def _parse_llm_json(raw: str) -> dict:
-    """Robust JSON parsing — опитва директно, markdown и regex."""
-    # Стрипване на reasoning блокове (<think>...</think> и Cerebras "done thinking.")
-    if 'done thinking.' in raw:
-        raw = raw.split('done thinking.')[-1].strip()
-    if '</think>' in raw:
-        raw = raw.split('</think>')[-1].strip()
-    # Опит 1: директен parse
-    try:
-        return json.loads(raw.strip())
-    except Exception:
-        pass
-    # Опит 2: markdown ```json или ```
-    if "```" in raw:
-        parts = raw.split("```")
-        for part in parts:
-            part = part.strip()
-            if part.startswith("json"):
-                part = part[4:].strip()
-            try:
-                return json.loads(part)
-            except Exception:
-                continue
-    # Опит 3: намери { ... } в текста
-    match = re.search(r'\{.*\}', raw, re.DOTALL)
-    if match:
-        try:
-            return json.loads(match.group())
-        except Exception:
-            pass
-    raise ValueError(f"LLM parsing грешка: {raw[:200]}")
+    """Robust JSON parsing — делегира на споделения core/llm_json.
+
+    Старият вариант правеше re.search(r'\\{.*\\}', DOTALL), което е лакомо:
+    хваща от първата '{' до ПОСЛЕДНАТА '}' в целия текст, включително
+    trailing проза. Освен това не хващаше отрязани отговори — те просто
+    гърмяха като "LLM parsing грешка" и никой не ретрайваше.
+    """
+    return _shared_extract_json(raw, expect=dict, backend="internet_agent")
 
 def _llm_synthesize(axis, sources):
     ctx = ''
