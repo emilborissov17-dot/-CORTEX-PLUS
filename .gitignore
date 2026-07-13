@@ -22,6 +22,11 @@ memory/transcript_cache/
 data/ucdp/*
 !data/ucdp/README.md
 
+# experiments/pulse — the CODE is committed, the DATA it generates is not.
+# Same convention as memory/: runtime output does not belong in git.
+experiments/pulse/stream/
+experiments/pulse/self_state.jsonl
+
 *.mp4
 OLD/
 LEGACY/
