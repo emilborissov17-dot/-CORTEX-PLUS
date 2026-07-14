@@ -79,6 +79,14 @@ LOG_PATH    = BASE / "logs" / "supervisor.log"
 RUNNER      = BASE / "fast_cycle_runner.py"
 PYTHON      = BASE / "venv" / "Scripts" / "python.exe"
 
+# The cycle's own stdout/stderr. Until 2026-07-14 these went to DEVNULL, so the
+# only record of a 70-minute run was whatever it happened to write to disk: no
+# traceback if it crashed, no LLM backend lines, no finish_reason=length warnings.
+# A prediction about tomorrow's cycle was literally unfalsifiable — the evidence
+# was being discarded at the moment it was produced.
+CYCLE_LOG_DIR   = BASE / "memory" / "cycle_logs"
+CYCLE_LOG_KEEP  = 14      # ~two weeks; a cycle log is a few hundred KB
+
 
 # ---------------------------------------------------------------------------
 # Actions — the complete vocabulary of what a tick may do
@@ -254,9 +262,18 @@ def decide(now: datetime, state: dict, heartbeat: Optional[dict],
     # ── A cycle is (or claims to be) running ────────────────────────────────
     if lock is not None:
         if not lock_pid_alive:
+            # NEUTRAL WORDING, deliberately. This used to read "machine likely lost
+            # power mid-cycle" — a diagnosis the supervisor is in no position to
+            # make. From out here, a dead pid holding a lock is consistent with
+            # power loss, a crash, a kill, OR (until 2026-07-14) a perfectly clean
+            # finish, because the runner never released its own lock. That guess
+            # was wrong far more often than it was right, and it was wrong in the
+            # direction that makes a healthy system look broken. Now that the
+            # runner clears its own lock on a clean exit, a stale lock really does
+            # mean something ended badly — but the supervisor still cannot say
+            # WHICH bad thing, so it no longer pretends to.
             return Action(CLEAR_STALE_LOCK,
-                          reason=f"lock held by pid={lock.get('pid')} which is not alive "
-                                 f"(or is not our cycle) — machine likely lost power mid-cycle",
+                          reason=f"stale lock cleared (pid={lock.get('pid')} is gone)",
                           pid=lock.get("pid"), cycle_id=lock.get("cycle_id"))
 
         # It is alive. Is it making progress?
@@ -368,21 +385,77 @@ def _age(now: datetime, ts: Optional[str]) -> Optional[float]:
 # The effectful shell
 # ---------------------------------------------------------------------------
 
+def cycle_log_path(now: Optional[datetime] = None) -> Path:
+    now = now or datetime.now().astimezone()
+    return CYCLE_LOG_DIR / f"cycle_{now:%Y-%m-%d_%H%M%S}.log"
+
+
+def prune_cycle_logs(keep: int = CYCLE_LOG_KEEP) -> int:
+    """Keep the newest `keep` cycle logs. Returns how many were deleted.
+
+    Unbounded logs are how an observability fix turns into a disk-full outage at
+    03:00, which is precisely the hour nobody is watching.
+    """
+    try:
+        logs = sorted(CYCLE_LOG_DIR.glob("cycle_*.log"))
+    except Exception:
+        return 0
+    doomed = logs[:-keep] if keep > 0 else logs
+    n = 0
+    for p in doomed:
+        try:
+            p.unlink()
+            n += 1
+        except OSError:
+            pass
+    return n
+
+
 def spawn_cycle(cycle_id: str) -> Optional[int]:
-    """Start fast_cycle_runner detached. Returns its PID."""
+    """Start fast_cycle_runner detached, with its output captured. Returns its PID.
+
+    The handle is deliberately NOT closed here and the process is NOT waited on:
+    the supervisor is a short-lived tick that exits in milliseconds while the
+    cycle runs for an hour. The OS keeps the file open for the child and flushes
+    it as the child writes; when this tick's process exits, its own copy of the
+    descriptor is closed by the OS, and the child keeps writing to its own.
+    """
     python = str(PYTHON) if PYTHON.exists() else sys.executable
     env = {**os.environ, "PYTHONIOENCODING": "utf-8", "CORTEX_BASE": str(BASE)}
+
+    try:
+        CYCLE_LOG_DIR.mkdir(parents=True, exist_ok=True)
+        prune_cycle_logs()
+        log_file = cycle_log_path()
+        fh = log_file.open("w", encoding="utf-8", errors="replace")
+    except Exception as e:
+        # Losing the log must not cost us the cycle. Fall back to the old
+        # behaviour and say so, loudly, rather than refusing to run.
+        log(f"could not open cycle log ({type(e).__name__}: {e}) — running with output discarded")
+        fh = subprocess.DEVNULL
+        log_file = None
+
     try:
         proc = subprocess.Popen(
             [python, str(RUNNER)],
             cwd=str(BASE), env=env,
-            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+            stdout=fh, stderr=subprocess.STDOUT,
             creationflags=getattr(subprocess, "CREATE_NEW_PROCESS_GROUP", 0),
         )
-        return proc.pid
     except Exception as e:
         log(f"failed to spawn cycle: {type(e).__name__}: {e}")
         return None
+
+    # Nothing below this line may raise: the cycle is ALREADY RUNNING. Returning
+    # None now would tell the supervisor the spawn failed while a live cycle held
+    # no lock — and the next tick would start a second one. Cosmetics must never
+    # cost us the pid.
+    try:
+        if log_file:
+            log(f"cycle output -> {log_file}")
+    except Exception:
+        pass
+    return proc.pid
 
 
 def tick(now: Optional[datetime] = None, dry_run: bool = False) -> Action:

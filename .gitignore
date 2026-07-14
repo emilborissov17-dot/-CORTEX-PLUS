@@ -12,6 +12,8 @@ __pycache__/
 *.prof
 chromadb/
 logs/
+# The cycle's own stdout/stderr — runtime output, pruned to the last 14 runs.
+memory/cycle_logs/
 snapshots/self/
 snapshots/self_archive/
 memory/transcript_cache/
