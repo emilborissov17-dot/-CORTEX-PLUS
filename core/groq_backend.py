@@ -51,6 +51,17 @@ GROQ_MODEL      = "llama-3.3-70b-versatile"
 CEREBRAS_API_URL = "https://api.cerebras.ai/v1/chat/completions"
 CEREBRAS_MODEL   = "gpt-oss-120b"   # reasoning model; "zai-glm-4.7" е алтернатива
 
+# Cerebras budget transform — виж _effective_budget() по-долу.
+# gpt-oss-120b е reasoning модел: reasoning токените се броят В max_completion_tokens
+# (Cerebras docs: "including reasoning tokens"), т.е. мисленето изяжда бюджета
+# ПРЕДИ payload-а. Call site-овете тук са оразмерени за llama-3.3-70b (80..4096),
+# затова при Cerebras ги мащабираме и — по-важното — слагаме ПОД.
+CEREBRAS_BUDGET_MULT  = float(os.environ.get("CEREBRAS_BUDGET_MULT",  "3"))
+CEREBRAS_BUDGET_FLOOR = int(os.environ.get("CEREBRAS_BUDGET_FLOOR", "1500"))
+CEREBRAS_BUDGET_CAP   = int(os.environ.get("CEREBRAS_BUDGET_CAP",   "8192"))
+# low | medium | high (Cerebras default за gpt-oss-120b е "medium")
+CEREBRAS_REASONING_EFFORT = os.environ.get("CEREBRAS_REASONING_EFFORT", "low")
+
 OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions"
 OPENROUTER_MODEL   = "nvidia/nemotron-3-super-120b-a12b:free"  # 120B, верифициран безплатен
 
@@ -160,12 +171,30 @@ def _call_groq(prompt: str, max_tokens: int):
     return choice["message"]["content"], {"finish_reason": choice.get("finish_reason")}
 
 
+def _effective_budget(max_tokens: int) -> int:
+    """Бюджетът, който реално пращаме на Cerebras.
+
+    ПОДЪТ е същината, не множителят: 3 x 80 = 240 пак не стига дори за
+    мисленето. Подът гарантира, че reasoning-ът има място да СВЪРШИ, преди
+    payload-ът изобщо да започне — независимо колко малко е поискал call
+    site-ът. Капът ни държи далеч под 32k тавана на free tier-а.
+    """
+    scaled = int(max_tokens * CEREBRAS_BUDGET_MULT)
+    return min(CEREBRAS_BUDGET_CAP, max(CEREBRAS_BUDGET_FLOOR, scaled))
+
+
 def _call_cerebras(prompt: str, max_tokens: int):
     key = _load_key("CEREBRAS_API_KEY")
     if not key:
         raise ValueError("CEREBRAS_API_KEY не е намерен")
 
     print(f"  [LLM] Cerebras {CEREBRAS_MODEL}...")
+
+    budget = _effective_budget(max_tokens)
+    if budget >= 2 * max_tokens:
+        reason = "floor" if budget == CEREBRAS_BUDGET_FLOOR else f"x{CEREBRAS_BUDGET_MULT:g}"
+        print(f"  [CEREBRAS] budget {max_tokens}->{budget} ({reason})")
+
     headers = {
         "Authorization": f"Bearer {key}",
         "Content-Type": "application/json",
@@ -176,7 +205,10 @@ def _call_cerebras(prompt: str, max_tokens: int):
             {"role": "system", "content": _system_msg()},
             {"role": "user",   "content": prompt},
         ],
-        "max_tokens": max_tokens,
+        # Документираното име при Cerebras (max_tokens се приема само като
+        # legacy alias). Броят се И reasoning токените — оттам транформът горе.
+        "max_completion_tokens": budget,
+        "reasoning_effort": CEREBRAS_REASONING_EFFORT,
     }
     time.sleep(_SLEEP_SECS)
     r = requests.post(CEREBRAS_API_URL, headers=headers, json=payload, timeout=(10, 60))
