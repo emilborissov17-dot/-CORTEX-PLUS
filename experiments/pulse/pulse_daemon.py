@@ -78,6 +78,9 @@ SAMPLE_INTERVAL_SEC = 10
 PING_HOST = ("1.1.1.1", 53)     # Cloudflare DNS: TCP connect, no ICMP privileges needed
 PING_TIMEOUT_SEC = 2.0
 
+# A heartbeat older than this is not proof of life — see _sense_cycle().
+STALE_HEARTBEAT_SEC = 30 * 60
+
 
 def _utc_now() -> str:
     return datetime.now(timezone.utc).isoformat()
@@ -200,6 +203,23 @@ def _sense_cycle() -> dict:
 
     Reads memory/heartbeat.json as a plain file. A missing or torn heartbeat means
     "no cycle" — the same reading the supervisor takes, arrived at independently.
+
+    A STALE heartbeat also means "no cycle". This is the fix for a false POSITIVE
+    the 2026-07-14 review found: running was True whenever the FILE EXISTED. The
+    age was computed and then never looked at. A cycle killed hard leaves its
+    heartbeat behind (TerminateProcess runs no handler, so _clear_heartbeat never
+    runs), and the pulse would have gone on reporting a live cycle, in the same
+    step, forever — the sensor asserting life over a corpse.
+
+    That is precisely the anomaly a proprioceptive stream exists to notice, so
+    reporting it as health is the worst possible failure for this instrument. It
+    stayed invisible because every cycle we have observed so far exited cleanly.
+
+    The threshold is deliberately loose. The supervisor's own step ceilings run to
+    1200s (web_intelligence legitimately takes the better part of an hour), and it
+    owns the kill decision — this daemon only senses, so a false "stale" here would
+    be a lie in the other direction. 30 minutes is comfortably past any real step
+    and comfortably short of "this has obviously been dead for hours".
     """
     if not HEARTBEAT_FILE.exists():
         return {"running": False}
@@ -217,13 +237,19 @@ def _sense_cycle() -> dict:
     except Exception:
         pass
 
-    return {
-        "running": True,
+    out = {
         "step": hb.get("step"),
         "step_index": hb.get("step_index"),
         "heartbeat_age_sec": age,
         "pid": hb.get("pid"),
     }
+
+    # An unreadable/absent timestamp is not proof of life either: we cannot date
+    # the beat, so we cannot claim it is recent.
+    if age is None or age > STALE_HEARTBEAT_SEC:
+        return {**out, "running": False, "stale_heartbeat": True}
+
+    return {**out, "running": True}
 
 
 def _sense_ledger() -> dict:
@@ -361,7 +387,14 @@ def run(interval: int = SAMPLE_INTERVAL_SEC, max_samples: Optional[int] = None) 
                 n += 1
 
                 cyc = s["cycle"]
-                where = f"cycle:{cyc['step']}" if cyc.get("running") else "idle"
+                if cyc.get("running"):
+                    where = f"cycle:{cyc['step']}"
+                elif cyc.get("stale_heartbeat"):
+                    # Not idle. Something died holding the heartbeat, and saying
+                    # "idle" here would hide exactly the event worth seeing.
+                    where = f"STALE-HB {cyc.get('step')} ({cyc.get('heartbeat_age_sec')}s)"
+                else:
+                    where = "idle"
                 print(f"[PULSE] {n:5}  cpu={s['cpu_pct']:5.1f}%  ram={s['ram_pct']:5.1f}%  "
                       f"net={'up' if s['net']['reachable'] else 'DOWN'}  "
                       f"churn={s['memory_files_changed']:3}  "
