@@ -143,9 +143,22 @@ def head_hash() -> str:
 def append(event_type: str, **fields: Any) -> dict:
     """Append one event, chained to the current head. Returns the written event.
 
-    Append-only: this module never rewrites or deletes a line. The supervisor is
-    the only writer, and memory/existence_ledger.jsonl is in the protected-path
-    denylist, so no self-generated patch can forge or edit it.
+    Append-only: this module never rewrites or deletes a line.
+
+    There are exactly TWO writers, and the split is deliberate:
+      * supervisor.py       — everything it can observe from OUTSIDE a cycle:
+                              starts, kills, restarts, missed runs, stale locks.
+      * fast_cycle_runner.py — CYCLE_FINISHED, and only that. A clean exit is the
+                              one fact no outside observer can establish: from the
+                              supervisor's vantage, "finished" and "died quietly"
+                              look identical. The cycle is the sole witness to its
+                              own completion, so it must be the one to say so.
+                              (Before 2026-07-14 nobody said so, and every
+                              successful cycle was recorded as a probable crash.)
+
+    memory/existence_ledger.jsonl is in the protected-path denylist, so no
+    self-generated patch can forge or edit it — the runner may APPEND its own
+    completion through this module, but it cannot rewrite the history.
     """
     prev = head_hash()
     seq = (head() or {}).get("seq", 0) + 1

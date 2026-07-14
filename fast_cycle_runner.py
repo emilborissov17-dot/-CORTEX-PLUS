@@ -26,8 +26,83 @@ os.environ["CORTEX_BASE"] = str(BASE)
 # that every step boundary is instrumented, so this cannot silently rot.
 from memory.heartbeat import beat, clear as _clear_heartbeat
 
+LOCK_PATH = BASE / "memory" / "cycle.lock"
+
 def _utc_now():
     return datetime.now(timezone.utc).isoformat()
+
+
+def _seal_cycle_record() -> None:
+    """A cycle that finished cleanly says so, and lets go of its own lock.
+
+    THE BUG THIS FIXES (2026-07-14)
+    -------------------------------
+    Nothing ever wrote CYCLE_FINISHED. The constant existed in
+    memory/existence_ledger.py and summary() counted it — but no producer did, so
+    total_cycles_finished was permanently 0. And because the runner never cleared
+    its own lock, every CLEAN finish left a lock held by a now-dead pid, which the
+    next supervisor tick dutifully cleared as stale and logged as "machine likely
+    lost power mid-cycle". A successful cycle was therefore indistinguishable, in
+    the system's own records, from a crashed one. The 2026-07-14 catch-up ran all
+    25 steps, committed its Merkle root, and its permanent record says it never
+    finished and probably lost power.
+
+    A cycle is the only witness to its own completion: the supervisor watches from
+    outside and cannot tell "exited cleanly" from "died quietly". So the witness
+    must speak.
+
+    Never raises. Sealing the record must not fail a cycle that has already done
+    all of its work — the worst case of a failed seal is the old behaviour.
+    """
+    pid = os.getpid()
+    lock = None
+    cycle_id = None
+    started = None
+
+    try:
+        if LOCK_PATH.exists():
+            lock = json.loads(LOCK_PATH.read_text(encoding="utf-8"))
+            cycle_id = lock.get("cycle_id")
+            started = lock.get("started_utc")
+    except Exception:
+        lock = None
+
+    if not cycle_id:
+        # Run by hand, with no supervisor and no lock: still a cycle, still finished.
+        try:
+            from memory.heartbeat import read as _hb_read
+            cycle_id = (_hb_read() or {}).get("cycle_id")
+        except Exception:
+            pass
+
+    duration = None
+    try:
+        if started:
+            t0 = datetime.fromisoformat(started)
+            if t0.tzinfo is None:
+                t0 = t0.replace(tzinfo=timezone.utc)
+            duration = round((datetime.now(timezone.utc) - t0).total_seconds(), 1)
+    except Exception:
+        pass
+
+    try:
+        from memory.existence_ledger import append as _el_append, CYCLE_FINISHED
+        _el_append(CYCLE_FINISHED, cycle_id=cycle_id or "unknown", pid=pid,
+                   duration_sec=duration)
+        print(f"[FAST_CYCLE] existence: CYCLE_FINISHED sealed (cycle_id={cycle_id}, "
+              f"duration={duration}s)")
+    except Exception as e:
+        print(f"[FAST_CYCLE] existence: CYCLE_FINISHED -> FAILED: {type(e).__name__}: {e}")
+
+    # Release OUR lock — and only ours. If the supervisor decided we were hung,
+    # killed us, and started a replacement, the lock on disk belongs to the new
+    # cycle. Deleting it would leave the live cycle unlocked and invite a second.
+    try:
+        if lock is not None and lock.get("pid") == pid:
+            LOCK_PATH.unlink(missing_ok=True)
+            print("[FAST_CYCLE] lock released")
+    except Exception as e:
+        print(f"[FAST_CYCLE] lock release -> FAILED: {type(e).__name__}: {e}")
 
 def _free_ollama():
     gc.collect()
@@ -988,8 +1063,10 @@ def main():
     except Exception as e:
         print(f"[FAST_CYCLE] merkle_to_training -> FAILED: {e}")
 
-    # Cycle finished cleanly → drop the heartbeat, so a COMPLETED cycle can never
-    # be read as a hung one by the next supervisor tick.
+    # Cycle finished cleanly → seal the record, release the lock, drop the
+    # heartbeat. Order matters: _seal_cycle_record() reads the heartbeat for the
+    # cycle_id, so it must run BEFORE the heartbeat is cleared.
+    _seal_cycle_record()
     _clear_heartbeat()
 
     print("=" * 50)
