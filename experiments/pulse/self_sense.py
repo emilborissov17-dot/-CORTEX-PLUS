@@ -66,24 +66,48 @@ SELF_STATE_FILE = HERE / "self_state.jsonl"
 # interface; the CLI is just another client of it. So PATH is irrelevant to us.
 OLLAMA_URL = "http://localhost:11434"
 
-# Ranked by fit for THIS machine. See README for the hardware assessment.
+# Ranked by FIT IN VRAM, not by capability. See README for the hardware assessment.
 #
-# NOTE ON SIZE: both installed models EXCEED the GTX 1650's ~3.9 GB of free VRAM
-# (qwen2.5:7b = 4.68 GB, qwen3:8b = 5.23 GB), so Ollama will split them between
-# GPU and CPU. That is a real cost against criterion C4, and it is measured — not
-# assumed — by `--check`, which reports latency and the VRAM/RAM split.
+# THE RANKING BUG (fixed 2026-07-14)
+# ----------------------------------
+# This list used to be ordered by capability — qwen2.5:7b first — with 3b and
+# 1.7b annotated "not installed". qwen2.5:3b was then pulled, and the list was
+# never revisited. pick_model() walks this list in order and returns the first
+# INSTALLED match, so it kept selecting the 7b: --check listed all three models,
+# selected the 7b, correctly failed its own C4 (system RAM 92.3%), and advised
+# "pull qwen2.5:3b" — a model already sitting on disk. The check was right about
+# everything except the one thing it controlled.
 #
-# qwen2.5:7b is the DEFAULT: it is a plain instruct model, so a tick is one
-# straight answer. qwen3:8b is a REASONING model — it emits <think>...</think>
-# before answering, which costs tokens and latency on every tick and must be
-# stripped (see _extract_json). Available via --model, but not the default: a
-# self-sensing loop wants a fast reflex, not a deliberation.
+# The lesson is in the ordering, not the code. On a GTX 1650 with ~3.9 GB of free
+# VRAM, the binding constraint is FIT, not intelligence:
+#
+#   * a model that fits entirely in VRAM costs ~0 system RAM
+#   * a model that does not spills its remainder into system RAM — and system RAM
+#     is exactly what BODY's 70% caution threshold protects. Above it, BODY cuts
+#     the live cycle's workers from 3 to 2, so the experiment would be DEGRADING
+#     the live system: precisely what its isolation rules forbid.
+#
+# So a smaller model that fits BEATS a bigger one that spills, every time. The
+# 7b is not a better choice here that we settle for; it is a worse one that we
+# fall back to only if nothing that fits is installed.
+#
+# Within "fits", plain instruct beats reasoning: qwen3 models emit <think>...
+# </think> before answering, costing tokens and latency on every tick (stripped in
+# _extract_json). A self-sensing loop wants a fast reflex, not a deliberation.
+#
+# --model overrides all of this, deliberately: measuring the 7b's cost is a
+# legitimate thing to want to do. It is just not the default.
 PREFERRED_MODELS = [
-    "qwen2.5:7b",     # 4.68 GB — DEFAULT. Non-reasoning, direct answers.
-    "qwen3:8b",       # 5.23 GB — reasoning model; slower per tick, needs <think> stripping
-    "qwen2.5:3b",     # ~1.9 GB — would fit VRAM entirely; not installed
-    "qwen3:1.7b",     # ~1.4 GB — smallest viable; not installed
+    "qwen2.5:3b",     # ~1.9 GB — FITS VRAM entirely. Non-reasoning. The default.
+    "qwen3:1.7b",     # ~1.4 GB — fits, but reasoning: <think> costs latency per tick
+    "qwen2.5:7b",     # 4.68 GB — SPILLS ~1.9 GB into system RAM. Fallback only.
+    "qwen3:8b",       # 5.23 GB — spills more, and reasoning on top. Last resort.
 ]
+
+# Models known to exceed this machine's free VRAM. Used only to WARN when one is
+# selected (nothing that fits was installed) or forced via --model — never to
+# refuse: measuring the cost of a spilling model is a legitimate experiment.
+SPILLS_INTO_RAM = ("qwen2.5:7b", "qwen3:8b")
 
 TICK_SEC = 60
 STREAM_LINES = 12          # ~2 minutes of sensation at a 10s cadence
@@ -257,9 +281,13 @@ def check(verbose: bool = True) -> Optional[str]:
         listed = ", ".join(f"{m['name']} ({m['size_gb']} GB)" for m in models)
         print(f"Ollama     : server UP — {len(models)} model(s): {listed}")
         print(f"Selected   : {model}")
+        if model and model.startswith(SPILLS_INTO_RAM):
+            print("             ⚠ does NOT fit this GPU's ~3.9 GB free VRAM — it will spill")
+            print("               into system RAM. Selected only because nothing smaller is")
+            print("               installed (or --model forced it). Expect C4 to breach.")
         if model and model.startswith("qwen3"):
             print("             ⚠ reasoning model — emits <think> blocks; stripped, but")
-            print("               it costs latency on every tick. qwen2.5:7b is faster.")
+            print("               it costs latency on every tick.")
 
     latency = test_generation(model, verbose=verbose)
     if latency is None:
@@ -288,14 +316,35 @@ def check(verbose: bool = True) -> Optional[str]:
         if ram > RAM_CAUTION_PCT:
             print(f"C4  ✗ BREACHED — system RAM is {ram:.1f}%, above BODY's "
                   f"{RAM_CAUTION_PCT:.0f}% caution threshold.")
-            print(f"       {model} does not fit entirely in the GPU's 4 GB of VRAM, so it")
-            print(f"       spills into system RAM. At >70% BODY cuts the live cycle's")
-            print(f"       workers from 3 to 2 — this experiment would be DEGRADING the")
-            print(f"       live system, which is exactly what its isolation rules forbid.")
+            print(f"       At >70% BODY cuts the live cycle's workers from 3 to 2 — this")
+            print(f"       experiment would be DEGRADING the live system, which is exactly")
+            print(f"       what its isolation rules forbid.")
             print()
-            print(f"       FIX — pull a model that fits entirely in VRAM:")
-            print(f"           ollama pull qwen2.5:3b     # ~1.9 GB, fits; ~1-2s per tick")
-            print(f"       Then self_sense will select it automatically.")
+
+            # Say what is ACTUALLY wrong. The old text advised "pull qwen2.5:3b"
+            # unconditionally — and on 2026-07-14 it said that while qwen2.5:3b
+            # was installed and it had just declined to select it. Advice that
+            # ignores the machine's real state is worse than no advice: it sends
+            # you to fix a problem you do not have.
+            fitting = [m["name"] for m in models
+                       if not m["name"].startswith(SPILLS_INTO_RAM)]
+            if model and model.startswith(SPILLS_INTO_RAM):
+                if fitting:
+                    print(f"       {model} spills into system RAM, and a model that FITS is")
+                    print(f"       already installed: {', '.join(fitting)}.")
+                    print(f"       That is a selection bug — report it. Meanwhile:")
+                    print(f"           self_sense.py --check --model {fitting[0]}")
+                else:
+                    print(f"       {model} does not fit the GPU's ~3.9 GB free VRAM, and no")
+                    print(f"       smaller model is installed.")
+                    print(f"       FIX — pull one that fits entirely in VRAM:")
+                    print(f"           ollama pull qwen2.5:3b   # ~1.9 GB; ~1-2s per tick")
+                    print(f"       self_sense will then select it automatically.")
+            else:
+                # The model fits, and RAM is STILL high — so this is not our doing.
+                print(f"       {model} fits in VRAM, so this is NOT the model spilling.")
+                print(f"       Something else is using the RAM (a live cycle?). Re-check when")
+                print(f"       the machine is quiet before blaming the experiment.")
             print()
             print(f"       Or run the loop only while NO cycle is running (the daily cycle")
             print(f"       is at 03:00), accepting that C4 is not met as declared.")
