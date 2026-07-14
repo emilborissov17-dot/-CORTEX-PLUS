@@ -21,10 +21,25 @@ This experiment is OUTSIDE the live cycle path, and must stay that way:
     existence_ledger.jsonl) as plain JSON — deliberately NOT via
     `from memory.heartbeat import read`. An import would couple the experiment to
     live code and let a change here break the cycle. A file read cannot.
-  * It has no scheduler integration. Start it by hand:
-        venv/Scripts/python.exe experiments/pulse/pulse_daemon.py
+  * It runs as its OWN scheduled task (CORTEX_Pulse), registered by hand from
+    `--install`. It is NOT wired into supervisor.py: the supervisor is
+    constitutional machinery on the protected denylist, and day-0 experimental
+    code does not get to touch it. A separate task can fail, be killed, or be
+    deleted without the live system noticing — which is exactly the isolation
+    this experiment is supposed to have.
   * If it earns promotion, it goes through the normal path — gates, guardian,
     review. Not by quietly growing into the cycle.
+
+SINGLE INSTANCE
+---------------
+Two daemons appending to one stream produce interleaved samples from two pids,
+which analyze.py can detect but cannot repair — and a stream you cannot trust is
+not evidence. A scheduled task plus a forgotten manual run is the obvious way to
+get there, so the daemon holds a PID lock (experiments/pulse/pulse.lock) and a
+second instance refuses to start.
+
+Stop with Ctrl+C. It flushes, releases the lock, and exits cleanly. A `taskkill
+/F` leaves the lock behind; the next start sees the pid is gone and reclaims it.
 
 The one thing it takes from the live system is a LESSON, not a dependency: the
 torn-line tolerance and fsync-on-append come from memory/existence_ledger.py,
@@ -57,6 +72,8 @@ HEARTBEAT_FILE = REPO / "memory" / "heartbeat.json"
 LEDGER_FILE    = REPO / "memory" / "existence_ledger.jsonl"
 MEMORY_DIR     = REPO / "memory"
 
+LOCK_FILE = HERE / "pulse.lock"
+
 SAMPLE_INTERVAL_SEC = 10
 PING_HOST = ("1.1.1.1", 53)     # Cloudflare DNS: TCP connect, no ICMP privileges needed
 PING_TIMEOUT_SEC = 2.0
@@ -64,6 +81,87 @@ PING_TIMEOUT_SEC = 2.0
 
 def _utc_now() -> str:
     return datetime.now(timezone.utc).isoformat()
+
+
+# ---------------------------------------------------------------------------
+# Single-instance lock
+# ---------------------------------------------------------------------------
+#
+# Same shape as the supervisor's cycle lock (a JSON file holding pid +
+# started_utc, with a liveness probe), arrived at independently — this file
+# imports nothing from supervisor.py, and writes only under experiments/pulse/.
+#
+# The one deliberate difference: the supervisor uses its liveness probe to decide
+# whether to KILL a pid; we use ours only to decide whether to REFUSE TO START.
+# That makes the PID-recycling ambiguity harmless here. If the OS has recycled a
+# dead daemon's pid onto some unrelated python process, we wrongly conclude a
+# daemon is alive and decline to run. Annoying, and the failure is loud and
+# recoverable (delete pulse.lock). The opposite default — start anyway — would
+# silently double-write the stream, which is the one outcome that destroys the
+# evidence rather than merely withholding it.
+
+def _pid_alive(pid: Optional[int]) -> bool:
+    """True if `pid` is alive AND is a python process.
+
+    The python check is what makes a recycled pid mostly harmless: an unrelated
+    notepad.exe inheriting a dead daemon's pid will not block the next start.
+    """
+    if not pid:
+        return False
+    try:
+        proc = psutil.Process(int(pid))
+        return "python" in proc.name().lower()
+    except (psutil.NoSuchProcess, psutil.AccessDenied, ValueError):
+        return False
+
+
+def read_lock() -> Optional[dict]:
+    if not LOCK_FILE.exists():
+        return None
+    try:
+        return json.loads(LOCK_FILE.read_text(encoding="utf-8"))
+    except Exception:
+        # A torn lock is a lock we cannot trust — treat it as stale, not as a
+        # reason to crash. Same instinct as the torn-line tolerance downstream.
+        return {"pid": None, "corrupt": True}
+
+
+def acquire_lock() -> bool:
+    """Take the lock, or report that a live daemon already holds it.
+
+    Returns True if we now hold it. Never kills anything.
+    """
+    existing = read_lock()
+    if existing is not None:
+        holder = existing.get("pid")
+        if _pid_alive(holder):
+            print(f"[PULSE] a pulse daemon is already running (pid={holder}, "
+                  f"since {existing.get('started_utc')}) — refusing to start a second one.")
+            print(f"[PULSE] two daemons would interleave samples into one stream. "
+                  f"Stop that one first, or delete {LOCK_FILE.name} if you know it is dead.")
+            return False
+        why = "corrupt" if existing.get("corrupt") else f"pid={holder} is gone"
+        print(f"[PULSE] clearing stale lock ({why}) — a previous daemon was killed, not stopped.")
+
+    LOCK_FILE.write_text(json.dumps({
+        "pid": os.getpid(),
+        "started_utc": _utc_now(),
+    }), encoding="utf-8")
+    return True
+
+
+def release_lock() -> None:
+    """Release only OUR lock.
+
+    The pid check matters: if we were killed and a new daemon took over, our
+    dying breath must not delete the live daemon's lock.
+    """
+    lock = read_lock()
+    if lock and lock.get("pid") == os.getpid():
+        try:
+            LOCK_FILE.unlink(missing_ok=True)
+        except OSError:
+            pass
 
 
 # ---------------------------------------------------------------------------
@@ -240,7 +338,10 @@ def append(s: dict) -> None:
 
 
 def run(interval: int = SAMPLE_INTERVAL_SEC, max_samples: Optional[int] = None) -> int:
-    print(f"[PULSE] sensory stream starting — every {interval}s")
+    if not acquire_lock():
+        sys.exit(1)
+
+    print(f"[PULSE] sensory stream starting — every {interval}s  (pid={os.getpid()})")
     print(f"[PULSE] writing to {STREAM_DIR}{os.sep}<date>.jsonl")
     print("[PULSE] Ctrl+C to stop\n")
 
@@ -276,8 +377,48 @@ def run(interval: int = SAMPLE_INTERVAL_SEC, max_samples: Optional[int] = None) 
             time.sleep(max(0.0, interval - (time.time() - t0)))
     except KeyboardInterrupt:
         print(f"\n[PULSE] stopped after {n} samples -> {stream_path()}")
+    finally:
+        # Only reached on a clean exit or Ctrl+C. A taskkill /F reaches nothing —
+        # TerminateProcess runs no handler — so the lock survives us. That is
+        # fine and intended: the NEXT start sees the pid is gone and reclaims it.
+        release_lock()
 
     return n
+
+
+def cmd_install() -> None:
+    """Print the schtasks command. Deliberately does NOT run it — registering a
+    scheduled task is the moment a thing starts running on its own, and that is a
+    human's decision to make, explicitly. (Same convention as supervisor --install.)"""
+    python = REPO / "venv" / "Scripts" / "python.exe"
+    python_str = str(python) if python.exists() else sys.executable
+    script = HERE / "pulse_daemon.py"
+
+    onlogon = (f'schtasks /Create /TN "CORTEX_Pulse" /SC ONLOGON /F '
+               f'/TR "\\"{python_str}\\" \\"{script}\\""')
+
+    print("Run this to give the pulse a life independent of your terminal "
+          "(no admin required):\n")
+    print("  " + onlogon + "\n")
+    print("To stop it:\n\n  schtasks /Delete /TN \"CORTEX_Pulse\" /F\n")
+    print("ONLOGON fires when you log in and the daemon then runs resident, for as")
+    print("long as the session lasts. It does NOT survive a logout, and nothing")
+    print("restarts it if it dies mid-run.")
+    print()
+    print("If you want it to heal itself, register it as a 5-minute tick instead:")
+    print()
+    print(f'  schtasks /Create /TN "CORTEX_Pulse" /SC MINUTE /MO 5 /F '
+          f'/TR "\\"{python_str}\\" \\"{script}\\""')
+    print()
+    print("That is safe precisely because of the single-instance lock: while the")
+    print("daemon is alive each new invocation sees the lock, refuses, and exits in")
+    print("milliseconds; if it died, the next tick finds a stale lock and takes over.")
+    print("Same durability argument as the supervisor — the OS guarantees")
+    print("re-invocation, so no resident process is a single point of failure.")
+    print()
+    print("ONSTART (survives logout, runs before login) needs an elevated shell and")
+    print("/RU SYSTEM. The pulse only observes files it can already read, so the")
+    print("user session is enough — do not grant it SYSTEM for no reason.")
 
 
 def main() -> None:
@@ -285,9 +426,17 @@ def main() -> None:
     ap.add_argument("--interval", type=int, default=SAMPLE_INTERVAL_SEC)
     ap.add_argument("--samples", type=int, default=None, help="stop after N samples (default: forever)")
     ap.add_argument("--once", action="store_true", help="take one sample, print it, exit")
+    ap.add_argument("--install", action="store_true",
+                    help="print the schtasks registration command (does not run it)")
     args = ap.parse_args()
 
+    if args.install:
+        cmd_install()
+        return
+
     if args.once:
+        # --once takes no lock: it is a one-shot read, it appends nothing, and it
+        # must stay usable for a quick look while the real daemon is running.
         psutil.cpu_percent(interval=None)
         time.sleep(0.2)
         s, _, _ = sample(None, {})

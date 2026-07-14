@@ -26,6 +26,7 @@ data/ucdp/*
 # Same convention as memory/: runtime output does not belong in git.
 experiments/pulse/stream/
 experiments/pulse/self_state.jsonl
+experiments/pulse/pulse.lock
 
 *.mp4
 OLD/
