@@ -419,9 +419,20 @@ def spawn_cycle(cycle_id: str) -> Optional[int]:
     cycle runs for an hour. The OS keeps the file open for the child and flushes
     it as the child writes; when this tick's process exits, its own copy of the
     descriptor is closed by the OS, and the child keeps writing to its own.
+
+    PYTHONUNBUFFERED=1 is essential, not cosmetic. Redirected to a file (not a
+    tty), the child's stdout is BLOCK-buffered: output sits in an in-process buffer
+    and only reaches disk every few KB. When the cycle is killed abruptly — OOM
+    under memory pressure, a hard power loss — that buffer dies with it and the log
+    is 0 bytes for the one run it most needed to explain (observed 2026-07-15: a
+    cycle ran ~20 min, died at 99% RAM, and left an empty log — the [FAST_CYCLE]
+    and [CEREBRAS] lines it printed never reached disk). Unbuffered, output lands
+    line by line, so a death cannot erase what came before it.
     """
     python = str(PYTHON) if PYTHON.exists() else sys.executable
-    env = {**os.environ, "PYTHONIOENCODING": "utf-8", "CORTEX_BASE": str(BASE)}
+    # PYTHONUNBUFFERED — the cycle log must survive the abrupt kill it exists to record.
+    env = {**os.environ, "PYTHONIOENCODING": "utf-8", "PYTHONUNBUFFERED": "1",
+           "CORTEX_BASE": str(BASE)}
 
     try:
         CYCLE_LOG_DIR.mkdir(parents=True, exist_ok=True)
