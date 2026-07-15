@@ -157,6 +157,74 @@ def test_kills_by_step_is_groupable():
 
 
 # ---------------------------------------------------------------------------
+# Deaths — witnessed after the fact, distinct from deliberate kills
+# ---------------------------------------------------------------------------
+
+def test_record_death_stores_the_last_step():
+    ev = el.record_death(cycle_id="c1", pid=4321, last_step="web_intelligence",
+                         detail="stale lock, no CYCLE_FINISHED")
+    assert ev["event"] == el.CYCLE_DIED
+    assert ev["cycle_id"] == "c1"
+    assert ev["last_step"] == "web_intelligence"
+    assert ev["detail"] == "stale lock, no CYCLE_FINISHED"
+
+
+def test_record_death_falls_back_to_unknown_when_no_step_survived():
+    """A cycle that died before its first beat has no last step; the death is still
+    recorded, as 'unknown', rather than refused."""
+    ev = el.record_death(cycle_id="c1", pid=4321, last_step=None)
+    assert ev["last_step"] == "unknown"
+
+
+def test_a_death_is_not_a_kill():
+    """CYCLE_DIED and CYCLE_KILLED are different events and must not be conflated:
+    one was deliberate and measured, the other discovered after the fact."""
+    el.record_death(cycle_id="c1", pid=1, last_step="x")
+    s = el.summary()
+    assert s["total_deaths"] == 1
+    assert s["total_kills"] == 0, "a death must never be counted as a kill"
+
+
+def test_deaths_are_groupable_by_step():
+    """'Which step do I die in?' — the same GROUP-BY question as kills."""
+    for _ in range(2):
+        el.record_death(cycle_id="c", pid=1, last_step="web_intelligence")
+    el.record_death(cycle_id="c", pid=1, last_step="scoring_engine")
+
+    s = el.summary()
+    assert s["deaths_by_step"] == {"web_intelligence": 2, "scoring_engine": 1}
+    assert list(s["deaths_by_step"])[0] == "web_intelligence", "most frequent first"
+
+
+def test_record_death_keeps_the_chain_valid():
+    el.append(el.CYCLE_STARTED, cycle_id="c1")
+    el.record_death(cycle_id="c1", pid=1, last_step="x")
+    assert el.verify()["valid"] is True
+
+
+# ---------------------------------------------------------------------------
+# has_finished — telling a died cycle from a cleanly-finished one
+# ---------------------------------------------------------------------------
+
+def test_has_finished_true_only_for_a_sealed_cycle():
+    el.append(el.CYCLE_STARTED, cycle_id="c1")
+    el.append(el.CYCLE_FINISHED, cycle_id="c1")
+    el.append(el.CYCLE_STARTED, cycle_id="c2")     # started, not finished
+
+    assert el.has_finished("c1") is True
+    assert el.has_finished("c2") is False, "a started-but-not-finished cycle did not finish"
+    assert el.has_finished("never-seen") is False
+
+
+def test_has_finished_is_false_without_a_cycle_id():
+    """A corrupt lock gives no cycle_id to match: we cannot prove it finished, so
+    we must not claim it did."""
+    el.append(el.CYCLE_FINISHED, cycle_id="c1")
+    assert el.has_finished(None) is False
+    assert el.has_finished("") is False
+
+
+# ---------------------------------------------------------------------------
 # Summary — "what is my life like?"
 # ---------------------------------------------------------------------------
 

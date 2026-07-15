@@ -229,25 +229,73 @@ def test_live_lock_prevents_a_second_cycle():
     assert a.kind == sup.NOTHING, "started a second cycle on top of a running one"
 
 
-def test_dead_pid_lock_is_cleared_not_obeyed():
-    """After a power loss the lock file survives but the process does not. An
-    mtime-only lock would block all runs for hours; a PID-checked one recovers."""
-    a = sup.decide(at(9), state(), None, lock(pid=4321), CFG, lock_pid_alive=False)
+def test_dead_lock_from_a_cleanly_finished_cycle_is_just_cleared():
+    """The benign race: the runner sealed CYCLE_FINISHED and then died before it
+    could unlink its own lock. Its work is done — clear the orphan, do NOT retry."""
+    a = sup.decide(at(9), state(last_run_date="2026-07-13"), None, lock(pid=4321),
+                   CFG, lock_pid_alive=False, lock_cycle_finished=True)
     assert a.kind == sup.CLEAR_STALE_LOCK
 
 
-def test_stale_lock_is_never_killed_only_cleared():
-    """The PID may have been RECYCLED onto an unrelated process. Clearing the
-    lock is safe; killing whatever holds that PID would be a serious bug."""
-    a = sup.decide(at(9), state(), None, lock(pid=4321), CFG, lock_pid_alive=False)
-    assert a.kind == sup.CLEAR_STALE_LOCK
+def test_dead_lock_from_a_died_cycle_is_recorded_and_retried():
+    """No CYCLE_FINISHED on record: the cycle DIED mid-run (OOM, power loss). It
+    must not be counted as today's run — it is recorded and retried within budget.
+
+    This is the 2026-07-15 bug: a died cycle used to satisfy the daily gate, so
+    nothing retried and no death was ever recorded."""
+    a = sup.decide(at(9), state(last_run_date="2026-07-13"), None, lock(pid=4321),
+                   CFG, lock_pid_alive=False, lock_cycle_finished=False)
+    assert a.kind == sup.DEAD_LOCK_RETRY
+    assert "DIED" in a.reason
+
+
+def test_a_died_cycle_records_its_last_step_from_the_heartbeat():
+    """A death should still answer 'which step killed me?' — from the last beat."""
+    now = at(9)
+    hb = beat("web_intelligence", now - timedelta(minutes=5))  # its own heartbeat
+    a = sup.decide(now, state(last_run_date="2026-07-13"), hb, lock(pid=4321),
+                   CFG, lock_pid_alive=False, lock_cycle_finished=False)
+    assert a.kind == sup.DEAD_LOCK_RETRY
+    assert a.wedged_step == "web_intelligence"
+
+
+def test_a_stale_heartbeat_from_another_cycle_is_not_attributed_to_the_death():
+    """A heartbeat left by an EARLIER cycle must not be recorded as this death's
+    last step — better 'unknown' than a plausible-sounding wrong answer."""
+    now = at(9)
+    hb = beat("trend_tracker", now, cycle_id="an-older-cycle")
+    a = sup.decide(now, state(last_run_date="2026-07-13"), hb,
+                   lock(pid=4321, cycle_id="the-dead-cycle"),
+                   CFG, lock_pid_alive=False, lock_cycle_finished=False)
+    assert a.wedged_step == "unknown"
+
+
+def test_a_died_cycle_is_never_killed_only_recorded_and_retried():
+    """The PID may have been RECYCLED onto an unrelated process. The dead-lock path
+    must never issue a taskkill — clearing and retrying is safe; killing whatever
+    holds a recycled PID would be a serious bug."""
+    a = sup.decide(at(9), state(), None, lock(pid=4321), CFG,
+                   lock_pid_alive=False, lock_cycle_finished=False)
     assert a.kind not in (sup.KILL_RESTART, sup.KILL_BUDGET_DONE)
 
 
-def test_corrupt_lock_is_treated_as_stale():
+def test_a_died_cycle_stops_retrying_once_the_budget_is_spent():
+    """A cycle that dies on every attempt must become a visible failure, not an
+    invisible restart loop. Same budget as kill-restarts, same reason."""
+    a = sup.decide(at(9), state(last_run_date="2026-07-13", restarts={"2026-07-13": 2}),
+                   None, lock(pid=4321), CFG,
+                   lock_pid_alive=False, lock_cycle_finished=False)
+    assert a.kind == sup.DEAD_LOCK_BUDGET_DONE
+    assert "budget" in a.reason.lower()
+
+
+def test_corrupt_lock_is_retried_since_it_cannot_be_proven_finished():
+    """A lock we could not even parse has no CYCLE_FINISHED we can match, so we
+    cannot claim it finished. Conservatively: record a death and retry within
+    budget, rather than silently counting the day as done."""
     a = sup.decide(at(9), state(), None, {"pid": None, "corrupt": True}, CFG,
-                   lock_pid_alive=False)
-    assert a.kind == sup.CLEAR_STALE_LOCK
+                   lock_pid_alive=False, lock_cycle_finished=False)
+    assert a.kind == sup.DEAD_LOCK_RETRY
 
 
 # ---------------------------------------------------------------------------
@@ -407,3 +455,148 @@ def test_supervisor_never_writes_outside_its_permitted_surface():
 
     allowed = {"LOCK_PATH", "STATE_PATH", "LOG_PATH", "CONFIG_PATH"}
     assert written <= allowed, f"supervisor writes to unexpected targets: {written - allowed}"
+
+
+# ---------------------------------------------------------------------------
+# Fix 2 — a cycle that DIED must be recorded and retried, end to end
+# ---------------------------------------------------------------------------
+
+@pytest.fixture
+def tick_sandbox(tmp_path, monkeypatch):
+    """Point every surface tick() touches at a throwaway dir: state, lock, log,
+    cycle logs, the existence ledger, and the heartbeat. The real ones are
+    protected constitutional state — a test must never write to them."""
+    from memory import existence_ledger as el
+    from memory import heartbeat as hb
+
+    monkeypatch.setattr(sup, "STATE_PATH", tmp_path / "scheduler_state.json")
+    monkeypatch.setattr(sup, "LOCK_PATH", tmp_path / "cycle.lock")
+    monkeypatch.setattr(sup, "LOG_PATH", tmp_path / "supervisor.log")
+    monkeypatch.setattr(sup, "CYCLE_LOG_DIR", tmp_path / "cycle_logs")
+    monkeypatch.setattr(el, "LEDGER_PATH", tmp_path / "existence_ledger.jsonl")
+    monkeypatch.setattr(hb, "HEARTBEAT_PATH", tmp_path / "heartbeat.json")
+    return tmp_path
+
+
+def _today():
+    return datetime.now().astimezone().date().isoformat()
+
+
+def test_tick_records_a_death_and_retries_the_day(tick_sandbox, monkeypatch):
+    """THE 2026-07-15 bug, end to end. A cycle started today, wrote a heartbeat,
+    then died (OOM at 99% RAM): a stale lock with no CYCLE_FINISHED. It used to
+    still satisfy the daily gate — no death recorded, no retry. Now:
+      * CYCLE_DIED lands in the ledger, naming the step it died in, and
+      * the day is un-satisfied so the ordinary daily logic retries within budget.
+    """
+    from memory import existence_ledger as el
+    from memory import heartbeat as hb
+
+    today = _today()
+    el.append(el.CYCLE_STARTED, cycle_id="dead-1", pid=4321, trigger="CATCHUP")
+    hb.beat("web_intelligence", 12, cycle_id="dead-1")
+    sup.write_lock(pid=4321, cycle_id="dead-1")
+    st = sup.load_state(); st["last_run_date"] = today; sup.save_state(st)
+
+    monkeypatch.setattr(sup, "pid_is_our_cycle", lambda pid: False)
+
+    action = sup.tick()
+    assert action.kind == sup.DEAD_LOCK_RETRY
+
+    events = el.read_all()
+    died = [e for e in events if e["event"] == el.CYCLE_DIED]
+    assert len(died) == 1, "the death was not recorded"
+    assert died[0]["cycle_id"] == "dead-1"
+    assert died[0]["last_step"] == "web_intelligence"
+
+    st = sup.load_state()
+    assert st["last_run_date"] is None, "a death must not count as today's run"
+    assert st["restarts"][today] == 1, "the retry must spend one unit of budget"
+
+    # The lock and heartbeat are gone, the chain is intact...
+    assert not sup.LOCK_PATH.exists()
+    assert hb.read() is None
+    assert el.verify()["valid"] is True
+
+    # ...and the very next decision, given the un-satisfied day, retries.
+    retry = sup.decide(at(9), sup.load_state(), None, None, CFG)
+    assert retry.kind in (sup.START, sup.CATCHUP)
+
+
+def test_tick_does_not_retry_a_cleanly_finished_cycle(tick_sandbox, monkeypatch):
+    """The benign race: a cycle sealed CYCLE_FINISHED and then died before it could
+    unlink its lock. Its work is DONE. No CYCLE_DIED, no retry — the day stays
+    satisfied. A clean finish must stay exactly as it was."""
+    from memory import existence_ledger as el
+
+    today = _today()
+    el.append(el.CYCLE_STARTED, cycle_id="clean-1", pid=4321, trigger="CATCHUP")
+    el.append(el.CYCLE_FINISHED, cycle_id="clean-1", pid=4321, duration_sec=1234.0)
+    sup.write_lock(pid=4321, cycle_id="clean-1")
+    st = sup.load_state(); st["last_run_date"] = today; sup.save_state(st)
+
+    monkeypatch.setattr(sup, "pid_is_our_cycle", lambda pid: False)
+
+    action = sup.tick()
+    assert action.kind == sup.CLEAR_STALE_LOCK
+
+    kinds = [e["event"] for e in el.read_all()]
+    assert el.CYCLE_DIED not in kinds, "a cleanly-finished cycle was recorded as a death"
+
+    st = sup.load_state()
+    assert st["last_run_date"] == today, "a finished cycle's day must stay satisfied"
+    assert st.get("restarts", {}).get(today, 0) == 0, "a finished cycle must not be retried"
+    assert not sup.LOCK_PATH.exists()
+    assert el.verify()["valid"] is True
+
+
+def test_tick_stops_after_repeated_deaths_exhaust_the_budget(tick_sandbox, monkeypatch):
+    """A cycle that dies on every attempt must become a VISIBLE failure, not an
+    invisible restart loop. Once the budget is spent the death is still recorded,
+    but the system stays down and waits for a human."""
+    from memory import existence_ledger as el
+    from memory import heartbeat as hb
+
+    today = _today()
+    el.append(el.CYCLE_STARTED, cycle_id="dead-3", pid=4321)
+    hb.beat("scoring_engine", 15, cycle_id="dead-3")
+    sup.write_lock(pid=4321, cycle_id="dead-3")
+    st = sup.load_state()
+    st["last_run_date"] = today
+    st["restarts"] = {today: 2}            # budget already spent
+    sup.save_state(st)
+
+    monkeypatch.setattr(sup, "pid_is_our_cycle", lambda pid: False)
+
+    action = sup.tick()
+    assert action.kind == sup.DEAD_LOCK_BUDGET_DONE
+
+    kinds = [e["event"] for e in el.read_all()]
+    assert el.CYCLE_DIED in kinds, "the death must be recorded even when the budget is spent"
+    assert el.BUDGET_EXHAUSTED in kinds
+
+    st = sup.load_state()
+    assert st["failure"]["date"] == today
+
+    # The daily logic now holds and waits for a human, on the SAME day.
+    now9 = datetime.now().astimezone().replace(hour=9, minute=0, second=0, microsecond=0)
+    hold = sup.decide(now9, st, None, None, CFG)
+    assert hold.kind == sup.NOTHING
+    assert "human" in hold.reason.lower()
+
+
+def test_death_and_retry_keeps_the_ledger_chain_valid(tick_sandbox, monkeypatch):
+    """The death record is hash-chained like every other event: recording it must
+    not break the very tamper-evidence that makes it worth trusting."""
+    from memory import existence_ledger as el
+    from memory import heartbeat as hb
+
+    el.append(el.CYCLE_STARTED, cycle_id="dead-x", pid=4321)
+    hb.beat("global_indicators", 7, cycle_id="dead-x")
+    sup.write_lock(pid=4321, cycle_id="dead-x")
+    st = sup.load_state(); st["last_run_date"] = _today(); sup.save_state(st)
+
+    monkeypatch.setattr(sup, "pid_is_our_cycle", lambda pid: False)
+
+    sup.tick()
+    assert el.verify()["valid"] is True

@@ -99,6 +99,14 @@ SKIP_MISSED      = "SKIP_MISSED"
 KILL_RESTART     = "KILL_RESTART"
 KILL_BUDGET_DONE = "KILL_BUDGET_EXHAUSTED"
 CLEAR_STALE_LOCK = "CLEAR_STALE_LOCK"
+# A stale lock left by a cycle that DIED without finishing (no CYCLE_FINISHED on
+# record). Distinct from CLEAR_STALE_LOCK, which is reserved for the benign race
+# where a cycle finished cleanly but died before unlinking its lock. A death is
+# not today's completed run: it is recorded (CYCLE_DIED) and retried, bounded by
+# the SAME restart budget that bounds kill-restarts — or, once that budget is
+# spent, it fails loudly like any exhausted budget.
+DEAD_LOCK_RETRY       = "DEAD_LOCK_CLEARED_RETRY"
+DEAD_LOCK_BUDGET_DONE = "DEAD_LOCK_BUDGET_EXHAUSTED"
 
 
 @dataclass
@@ -251,30 +259,37 @@ def kill_tree(pid: int) -> bool:
 # ---------------------------------------------------------------------------
 
 def decide(now: datetime, state: dict, heartbeat: Optional[dict],
-           lock: Optional[dict], cfg: dict, lock_pid_alive: bool = False) -> Action:
+           lock: Optional[dict], cfg: dict, lock_pid_alive: bool = False,
+           lock_cycle_finished: bool = False) -> Action:
     """What should this tick do? Exactly one thing.
 
-    `lock_pid_alive` is passed in rather than probed, so the whole policy stays
-    pure and testable.
+    `lock_pid_alive` and `lock_cycle_finished` are passed in rather than probed
+    (from the OS and from the existence ledger respectively), so the whole policy
+    stays pure and testable — the same discipline that lets us assert a healthy
+    40-minute web_intelligence step is never killed.
     """
     today = now.date().isoformat()
 
     # ── A cycle is (or claims to be) running ────────────────────────────────
     if lock is not None:
         if not lock_pid_alive:
-            # NEUTRAL WORDING, deliberately. This used to read "machine likely lost
-            # power mid-cycle" — a diagnosis the supervisor is in no position to
-            # make. From out here, a dead pid holding a lock is consistent with
-            # power loss, a crash, a kill, OR (until 2026-07-14) a perfectly clean
-            # finish, because the runner never released its own lock. That guess
-            # was wrong far more often than it was right, and it was wrong in the
-            # direction that makes a healthy system look broken. Now that the
-            # runner clears its own lock on a clean exit, a stale lock really does
-            # mean something ended badly — but the supervisor still cannot say
-            # WHICH bad thing, so it no longer pretends to.
-            return Action(CLEAR_STALE_LOCK,
-                          reason=f"stale lock cleared (pid={lock.get('pid')} is gone)",
-                          pid=lock.get("pid"), cycle_id=lock.get("cycle_id"))
+            # A dead pid holding a lock. Now that the runner clears its own lock on
+            # a clean exit, a surviving lock means the cycle ended badly — but there
+            # are still TWO ways to end badly, and the ledger tells them apart.
+            if lock_cycle_finished:
+                # The BENIGN race: the runner sealed CYCLE_FINISHED and then died
+                # before it could unlink the lock (the seal and the unlink are two
+                # steps; a kill can land between them). Its work is DONE. Just clear
+                # the orphaned lock — do NOT retry; today's cycle really did run.
+                return Action(CLEAR_STALE_LOCK,
+                              reason=f"stale lock from a cleanly-finished cycle "
+                                     f"(pid={lock.get('pid')} is gone; CYCLE_FINISHED "
+                                     f"is on record) — clearing, not retrying",
+                              pid=lock.get("pid"), cycle_id=lock.get("cycle_id"))
+            # No CYCLE_FINISHED on record: the cycle DIED mid-run — OOM, power loss,
+            # an uncaught crash. A death is not a completed run, so it must not
+            # satisfy the day. Record it and retry, within the restart budget.
+            return _dead_cycle_action(now, state, today, cfg, lock, heartbeat)
 
         # It is alive. Is it making progress?
         if heartbeat is None:
@@ -366,6 +381,44 @@ def _kill_or_fail(state, today, cfg, reason, step, step_index, age, ceil, pid, c
 
     return Action(kind, reason=reason, wedged_step=step, wedged_step_index=step_index,
                   heartbeat_age_sec=age, ceiling_sec=ceil, pid=pid, cycle_id=cycle_id,
+                  details={"restarts_used": used, "restart_budget": budget})
+
+
+def _last_step_of(lock: Optional[dict], heartbeat: Optional[dict]) -> str:
+    """The step the dead cycle was last seen in, from its heartbeat — but only if
+    the heartbeat is actually ITS heartbeat. A heartbeat left over from an earlier
+    cycle must not be attributed to this death, so if the cycle_ids disagree we
+    admit we do not know rather than record a plausible-sounding wrong step."""
+    if not heartbeat:
+        return "unknown"
+    hb_cid = heartbeat.get("cycle_id")
+    lock_cid = (lock or {}).get("cycle_id")
+    if hb_cid and lock_cid and hb_cid != lock_cid:
+        return "unknown"
+    return heartbeat.get("step") or "unknown"
+
+
+def _dead_cycle_action(now, state, today, cfg, lock, heartbeat) -> Action:
+    """A stale lock with no CYCLE_FINISHED behind it: the cycle died mid-run and
+    the supervisor found the body. Record the death and retry — bounded by the
+    same restart budget that bounds kill-restarts, for the same reason: a cycle
+    that dies on every attempt must eventually stop and become a visible failure,
+    not an invisible restart loop."""
+    last_step = _last_step_of(lock, heartbeat)
+    used = restarts_today(state, today)
+    budget = int(cfg.get("max_restarts_per_day", 2))
+    kind = DEAD_LOCK_RETRY if used < budget else DEAD_LOCK_BUDGET_DONE
+
+    reason = (f"stale lock from a cycle that DIED without finishing "
+              f"(pid={lock.get('pid')} is gone; no CYCLE_FINISHED on record; "
+              f"last step '{last_step}')")
+    if kind == DEAD_LOCK_BUDGET_DONE:
+        reason += (f" — and today's restart budget is exhausted ({used}/{budget}); "
+                   f"NOT retrying, failing loudly")
+
+    return Action(kind, reason=reason, wedged_step=last_step,
+                  wedged_step_index=(heartbeat or {}).get("step_index"),
+                  pid=lock.get("pid"), cycle_id=lock.get("cycle_id"),
                   details={"restarts_used": used, "restart_budget": budget})
 
 
@@ -477,7 +530,12 @@ def tick(now: Optional[datetime] = None, dry_run: bool = False) -> Action:
     beat = hb.read()
 
     alive = pid_is_our_cycle(lock.get("pid")) if lock else False
-    action = decide(now, state, beat, lock, cfg, lock_pid_alive=alive)
+    # Only ask the ledger the question that matters: a dead-pid lock either came
+    # from a cycle that finished cleanly (CYCLE_FINISHED sealed) or one that died
+    # mid-run (no seal). A live cycle needs no such lookup.
+    finished = ledger.has_finished(lock.get("cycle_id")) if (lock and not alive) else False
+    action = decide(now, state, beat, lock, cfg, lock_pid_alive=alive,
+                    lock_cycle_finished=finished)
 
     if dry_run:
         log(f"[dry-run] {action.kind}: {action.reason}")
@@ -495,6 +553,49 @@ def tick(now: Optional[datetime] = None, dry_run: bool = False) -> Action:
         hb.clear()
         ledger.append(ledger.LOCK_STALE, pid=action.pid, cycle_id=action.cycle_id,
                       detail=action.reason)
+        return action
+
+    if action.kind in (DEAD_LOCK_RETRY, DEAD_LOCK_BUDGET_DONE):
+        # Record the death FIRST, off the still-present heartbeat, then clear both.
+        # A cycle killed by the supervisor gets CYCLE_KILLED from the kill path; a
+        # cycle that died on its own is witnessed here and only here.
+        ledger.record_death(cycle_id=action.cycle_id or "unknown",
+                            pid=action.pid or -1, last_step=action.wedged_step,
+                            detail=action.reason)
+        clear_lock()
+        hb.clear()
+
+        used = restarts_today(state, today)
+
+        if action.kind == DEAD_LOCK_RETRY:
+            state.setdefault("restarts", {})[today] = used + 1
+            # THE fix: a death is not today's completed run. Un-satisfy the day so
+            # the ordinary daily logic starts a replacement on the next tick —
+            # within the budget just incremented, so a cycle that dies every time
+            # cannot loop forever.
+            state["last_run_date"] = None
+            state["last_run_utc"] = None
+            state["failure"] = None
+            save_state(state)
+            # No CYCLE_RESTARTED here on purpose: nothing has restarted yet. The
+            # replacement is a real spawn on the NEXT tick's daily logic, and it
+            # writes its own CYCLE_STARTED then. Claiming a restart now would be an
+            # event with no cycle behind it — exactly what the ledger forbids.
+            return action
+
+        # Budget spent — stay down and visible, do not silently limp on.
+        state["failure"] = {
+            "date": today,
+            "reason": action.reason,
+            "wedged_step": action.wedged_step,
+            "restarts_used": used,
+        }
+        save_state(state)
+        ledger.append(ledger.BUDGET_EXHAUSTED, cycle_id=action.cycle_id,
+                      wedged_step=action.wedged_step, restarts_used=used,
+                      detail=action.reason)
+        log("!!! RESTART BUDGET EXHAUSTED after a cycle death — the system is NOT "
+            "running. Human intervention required. This will appear in the daily report.")
         return action
 
     if action.kind in (START, CATCHUP):

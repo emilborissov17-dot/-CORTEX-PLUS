@@ -167,16 +167,21 @@ def test_cycle_still_spawns_if_the_log_cannot_be_opened(log_dir, monkeypatch, tm
 
 def test_stale_lock_reason_is_neutral():
     """It used to say "machine likely lost power mid-cycle" — a diagnosis the
-    supervisor cannot make. Before today's fix, the most common cause of a stale
-    lock was a cycle finishing PERFECTLY, and the message called that power loss.
+    supervisor cannot make. Before that fix, the most common cause of a stale lock
+    was a cycle finishing PERFECTLY, and the message called that power loss.
+
+    A stale lock with no CYCLE_FINISHED now reads as a DEATH (the honest fact: the
+    cycle did not finish) and is retried — but the wording still refuses to guess
+    the CAUSE. It names the dead pid; it never claims power loss over a crash.
     """
     now = datetime.now().astimezone()
     lock = {"pid": 3688, "cycle_id": "c1", "started_utc": now.isoformat()}
     cfg = {"daily_hour": 3, "grace_hours": 20, "max_restarts_per_day": 2}
 
-    action = sup.decide(now, {"last_run_date": None}, None, lock, cfg, lock_pid_alive=False)
+    action = sup.decide(now, {"last_run_date": None}, None, lock, cfg,
+                        lock_pid_alive=False, lock_cycle_finished=False)
 
-    assert action.kind == sup.CLEAR_STALE_LOCK
+    assert action.kind == sup.DEAD_LOCK_RETRY
     assert "lost power" not in action.reason
-    assert "stale lock cleared" in action.reason
+    assert "DIED without finishing" in action.reason
     assert "3688" in action.reason

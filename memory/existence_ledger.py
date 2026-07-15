@@ -68,6 +68,18 @@ GENESIS_HASH = "0" * 64
 CYCLE_STARTED    = "CYCLE_STARTED"
 CYCLE_FINISHED   = "CYCLE_FINISHED"
 CYCLE_KILLED     = "CYCLE_KILLED"
+# CYCLE_KILLED and CYCLE_DIED are NOT the same event, and conflating them would
+# lose the distinction that matters most in a post-mortem. CYCLE_KILLED is a
+# DELIBERATE act: the supervisor watched a still-alive cycle go stale past its
+# ceiling and terminated it on purpose, and it records WHY (which step wedged,
+# how stale, against what ceiling). CYCLE_DIED is a DISCOVERY: the cycle vanished
+# on its own — OOM under memory pressure, a hard power loss, an uncaught crash —
+# and the supervisor only learned of it after the fact, finding a stale lock with
+# no CYCLE_FINISHED behind it. It cannot say how or exactly when; it can only
+# record the death and the last step the heartbeat named. Before 2026-07-15 such
+# a death left NO event at all: the dead cycle still satisfied the daily gate, so
+# nothing retried and total_kills stayed 0 while a cycle had actually died.
+CYCLE_DIED       = "CYCLE_DIED"
 CYCLE_RESTARTED  = "CYCLE_RESTARTED"
 MISSED_CATCHUP   = "MISSED_RUN_CATCHUP"
 MISSED_SKIPPED   = "MISSED_RUN_SKIPPED"
@@ -210,6 +222,47 @@ def record_kill(cycle_id: str, pid: int, step: Optional[str],
     )
 
 
+def record_death(cycle_id: str, pid: int, last_step: Optional[str],
+                 detail: Optional[str] = None) -> dict:
+    """A cycle that DIED — witnessed after the fact, not deliberately killed.
+
+    Unlike record_kill(), there is no heartbeat-age or ceiling to record: the
+    supervisor never measured this cycle going stale, it simply found the body (a
+    stale lock with no CYCLE_FINISHED). What it CAN preserve is the last step the
+    heartbeat named before the cycle vanished — which is what makes 'which step
+    kills me?' answerable for deaths, not only for kills. `last_step` falls back
+    to "unknown" when no heartbeat survived the death.
+    """
+    return append(
+        CYCLE_DIED,
+        cycle_id=cycle_id,
+        pid=pid,
+        last_step=last_step or "unknown",
+        detail=detail,
+    )
+
+
+def has_finished(cycle_id: Optional[str]) -> bool:
+    """True iff the ledger already holds a CYCLE_FINISHED for this cycle.
+
+    This is how the supervisor, on finding a stale lock, tells the two unclean
+    endings apart. A cycle that DIED mid-run has no CYCLE_FINISHED, so it must be
+    retried. A cycle that finished cleanly and then died before it could unlink
+    its own lock DOES have one — its work is done, and it must NOT be retried.
+    (The runner writes CYCLE_FINISHED before it releases the lock, so this race is
+    real: the seal can land while the unlink does not.)
+
+    With no cycle_id there is nothing to match on, and the honest answer is False:
+    we cannot prove a nameless cycle finished, so we do not claim it did.
+    """
+    if not cycle_id:
+        return False
+    for e in read_all():
+        if e.get("event") == CYCLE_FINISHED and e.get("cycle_id") == cycle_id:
+            return True
+    return False
+
+
 # ---------------------------------------------------------------------------
 # Verification
 # ---------------------------------------------------------------------------
@@ -255,6 +308,7 @@ def summary() -> dict:
     starts   = [e for e in events if e["event"] == CYCLE_STARTED]
     finishes = [e for e in events if e["event"] == CYCLE_FINISHED]
     kills    = [e for e in events if e["event"] == CYCLE_KILLED]
+    deaths   = [e for e in events if e["event"] == CYCLE_DIED]
     skipped  = [e for e in events if e["event"] == MISSED_SKIPPED]
     catchups = [e for e in events if e["event"] == MISSED_CATCHUP]
 
@@ -262,6 +316,14 @@ def summary() -> dict:
     for k in kills:
         step = (k.get("reason") or {}).get("wedged_step") or "unknown"
         kills_by_step[step] = kills_by_step.get(step, 0) + 1
+
+    # Deaths carry their last known step directly (no reason block — nobody
+    # measured them). Kept separate from kills_by_step: a step the supervisor
+    # kills for going stale is a different fact from a step the machine died in.
+    deaths_by_step: dict[str, int] = {}
+    for d in deaths:
+        step = d.get("last_step") or "unknown"
+        deaths_by_step[step] = deaths_by_step.get(step, 0) + 1
 
     first_ts = events[0]["ts"]
     try:
@@ -277,11 +339,15 @@ def summary() -> dict:
         "total_cycles_started": len(starts),
         "total_cycles_finished": len(finishes),
         "total_kills":          len(kills),
+        "total_deaths":         len(deaths),
         "total_missed_skipped": len(skipped),
         "total_catchups":       len(catchups),
         # Which step kills me? — answerable by GROUP BY because record_kill()
         # stores the reason, not just the fact.
         "kills_by_step":        dict(sorted(kills_by_step.items(),
+                                            key=lambda kv: -kv[1])),
+        # Which step do I die in? — the same question for abrupt deaths.
+        "deaths_by_step":       dict(sorted(deaths_by_step.items(),
                                             key=lambda kv: -kv[1])),
         "chain_valid":          verify()["valid"],
         "head_hash":            head_hash(),
