@@ -117,6 +117,10 @@ def fake(tmp_path):
         encoding="utf-8")
     (mem / "cycle_logs").mkdir()
 
+    (tmp_path / "VISION.md").write_text(
+        "# Vision\nEvery person a dignified life, free to develop their potential.\n",
+        encoding="utf-8")
+
     return md.Sources(
         news_latest=tmp_path / "news" / "news_latest.json",
         snapshots_dir=snaps,
@@ -126,6 +130,7 @@ def fake(tmp_path):
         transcript_cache=tc,
         countries_file=out / "wellbeing_all_countries.json",
         wb_cache_dir=out / "wb_cache",
+        vision_file=tmp_path / "VISION.md",
         notebook_dir=tmp_path / "meadow_out" / "notebook",
         committed_dir=tmp_path / "meadow_out" / "committed",
     )
@@ -374,3 +379,98 @@ def test_imports_no_live_pipeline_module():
         if top in repo_pkgs:
             assert mod == "core.groq_backend", \
                 f"meadow imports a live-path module it must not: {mod}"
+
+
+# ---------------------------------------------------------------------------
+# The gauntlet — each challenge produces a headed section; blindtest logs swaps
+# ---------------------------------------------------------------------------
+
+def _mark_llm(mark="CHALLENGE-OUTPUT-MARK"):
+    """A fake brain that returns a recognisable string for any prompt, and 'NONE' for
+    the COMMIT call so the base run doesn't also write a hypothesis."""
+    def _llm(prompt, max_tokens=1024):
+        return "NONE" if "YOUR NOTEBOOK ENTRY" in prompt else mark
+    return _llm
+
+
+def _seed_base_page(fake):
+    """Give today's notebook a base page, as mirror and synthesis require."""
+    md.run(DAY, dry_run=False, src=fake, llm=fake_llm(diverge_text="base page thought"))
+
+
+@pytest.mark.parametrize("name", ["mirror", "advocate", "child", "synthesis"])
+def test_each_challenge_writes_a_headed_section(fake, name):
+    if name in ("mirror", "synthesis"):
+        _seed_base_page(fake)
+    rc = md.run_challenge(name, DAY, dry_run=False, src=fake, llm=_mark_llm())
+    assert rc == 0
+    page = (fake.notebook_dir / f"{DAY}.md").read_text(encoding="utf-8")
+    assert f"## challenge: {name} — written" in page, f"{name} wrote no headed section"
+    assert "CHALLENGE-OUTPUT-MARK" in page, f"{name} did not store the model's words"
+
+
+def test_mirror_requires_a_base_page_first(fake):
+    rc = md.run_challenge("mirror", DAY, dry_run=False, src=fake, llm=_mark_llm())
+    assert rc == 1, "mirror must refuse when there is no base page to reflect on"
+    assert not (fake.notebook_dir / f"{DAY}.md").exists()
+
+
+def test_advocate_feeds_the_vision_text(fake, monkeypatch):
+    seen = {}
+    def _spy(prompt, max_tokens=1024):
+        seen["prompt"] = prompt
+        return "attack on the vision"
+    md.run_challenge("advocate", DAY, dry_run=False, src=fake, llm=_spy)
+    assert "dignified life" in seen["prompt"], "advocate did not feed VISION.md into the prompt"
+    assert "RAW SLICE OF THE WORLD" in seen["prompt"], "advocate did not feed the bundle"
+
+
+def test_blindtest_writes_two_sections_and_logs_the_swap_table(fake):
+    rc = md.run_challenge("blindtest", DAY, dry_run=False, src=fake, llm=_mark_llm())
+    assert rc == 0
+    page = (fake.notebook_dir / f"{DAY}.md").read_text(encoding="utf-8")
+    assert "## challenge: blindtest — run A (real bundle)" in page
+    assert "## challenge: blindtest — run B (swapped bundle)" in page
+    # The swap table must be recorded, both machine-readable and human-readable.
+    assert "<!-- blindtest swaps" in page, "the swap table machine header is missing"
+    assert "values swapped before run B:" in page, "the human swap note is missing"
+    # The fake repo's energy snapshot has renewable_energy_pct=29.5 — it must be swapped.
+    assert '"label": "renewable_energy_pct"' in page, "a known salient value was not swapped"
+
+
+def test_blindtest_run_b_actually_differs_from_run_a(fake):
+    """The whole experiment: run B's bundle must carry swapped numbers run A's did not.
+    A fake LLM that echoes a hash of its prompt proves the two inputs differ."""
+    def _echo_len(prompt, max_tokens=1024):
+        return f"input_len={len(prompt)} has_swap={'access_to_electricity_pct=90.1' not in prompt}"
+    # Real bundle contains 90.1; swapped bundle should not (it becomes 41).
+    md.run_challenge("blindtest", DAY, dry_run=False, src=fake, llm=_echo_len)
+    page = (fake.notebook_dir / f"{DAY}.md").read_text(encoding="utf-8")
+    assert "has_swap=False" in page and "has_swap=True" in page, \
+        "run A and run B received the same bundle — the swap did not take"
+
+
+def test_apply_swaps_is_deterministic_and_nonempty(fake):
+    bundle, _ = md.assemble_bundle(fake, DAY)
+    a, sa = md.apply_swaps(bundle)
+    b, sb = md.apply_swaps(bundle)
+    assert sa == sb, "swaps must be deterministic (same day, same fakes)"
+    assert len(sa) >= 1, "no salient value was swappable in the bundle"
+    for s in sa:
+        assert s["old"] != s["new"]
+
+
+def test_challenge_dry_run_writes_nothing(fake):
+    md.run_challenge("child", DAY, dry_run=True, src=fake, llm=_mark_llm())
+    md.run_challenge("blindtest", DAY, dry_run=True, src=fake, llm=_mark_llm())
+    assert not fake.notebook_dir.exists() or not any(fake.notebook_dir.iterdir())
+
+
+def test_challenge_sections_are_append_only_with_the_base_page(fake):
+    """A gauntlet appends to the SAME day file; earlier pages must survive."""
+    _seed_base_page(fake)
+    for name in ("mirror", "child"):
+        md.run_challenge(name, DAY, dry_run=False, src=fake, llm=_mark_llm())
+    page = (fake.notebook_dir / f"{DAY}.md").read_text(encoding="utf-8")
+    assert "base page thought" in page
+    assert page.count("## challenge:") == 2

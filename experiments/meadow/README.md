@@ -63,13 +63,51 @@ the meadow. The test is Emil reading the first page. **If it reads like it never
 the slice, the meadow grew weeds — and we fix the INPUT and the PROMPT, never the
 output.**
 
+## The gauntlet (`--challenge`)
+
+Five variants provoke **different capabilities** over the **same** infrastructure —
+same bundle assembly, same notebook, same rules (DIVERGE-class, raw, unjudged,
+gitignored). Each appends a headed `## challenge: <name>` section to today's page.
+
+| Challenge | Input | Provokes |
+|---|---|---|
+| `mirror` | the model's own latest base page | self-critique — separate echo from what it genuinely saw |
+| `advocate` | `VISION.md` + today's bundle | attack the vision with real numbers; say what survives |
+| `blindtest` | the bundle, run twice: real vs numbers swapped | **the key test** — do the thoughts track the data or come from memory? |
+| `child` | today's bundle | "from this data alone, what is the ONE thing you CANNOT explain?" |
+| `synthesis` | the whole day's notebook | one new sentence that connects everything written today |
+
+`blindtest` swaps 6–10 salient numbers (CO₂, renewables, poverty, life expectancy…)
+for plausible fakes by a deterministic, date-stable transform, and records the exact
+swap table in the page header (machine comment + human note) so tomorrow's reading is
+verifiable. If run A and run B say the same things, the model read its memory, not the
+data.
+
 ## Usage
 
 ```
 venv/Scripts/python.exe experiments/meadow/meadow.py --dry-run     # print, write nothing
 venv/Scripts/python.exe experiments/meadow/meadow.py               # today's slice, real
 venv/Scripts/python.exe experiments/meadow/meadow.py --date 2026-07-14
+venv/Scripts/python.exe experiments/meadow/meadow.py --challenge blindtest
+venv/Scripts/python.exe experiments/meadow/meadow.py --challenge mirror --dry-run
 ```
+
+The full gauntlet, in order (mirror needs a base page; synthesis needs the rest):
+
+```
+meadow.py                       # base page first
+meadow.py --challenge mirror
+meadow.py --challenge advocate
+meadow.py --challenge blindtest
+meadow.py --challenge child
+meadow.py --challenge synthesis
+```
+
+> **Windows console note:** the notebook is written as clean UTF-8. PowerShell's
+> `Get-Content` defaults to the system ANSI code page and will show Cyrillic/em-dashes as
+> mojibake — read it with `Get-Content experiments/meadow/notebook/<date>.md -Encoding UTF8`
+> (or open it in VS Code). The file itself is correct; only the console default is wrong.
 
 Tests (mechanics only — never the quality of the thought):
 

@@ -53,11 +53,24 @@ NO defence against this in DIVERGE, on purpose: a filter would be judgement. The
 is Emil reading the first page. If it reads like it never saw the slice, the meadow
 grew weeds, and we fix the INPUT and the PROMPT — never the output.
 
+THE GAUNTLET (--challenge)
+--------------------------
+Five variants provoke DIFFERENT capabilities over the SAME infrastructure — same bundle,
+same notebook, same rules. Each appends a headed `## challenge:` section to today's page.
+  mirror     feed the model its own latest base page; make it separate echo from insight
+  advocate   feed VISION.md + the bundle; make it attack the vision with real numbers
+  blindtest  run DIVERGE twice — real bundle vs one with salient numbers swapped — to
+             see whether the thoughts track the data or come from memory (the key test)
+  child      "from this data alone, what is the ONE thing you CANNOT explain?"
+  synthesis  feed the whole day's notebook; one new sentence that connects it all
+
 USAGE
 -----
     venv/Scripts/python.exe experiments/meadow/meadow.py --dry-run   # print, write nothing
     venv/Scripts/python.exe experiments/meadow/meadow.py             # today's slice, real
     venv/Scripts/python.exe experiments/meadow/meadow.py --date 2026-07-14
+    venv/Scripts/python.exe experiments/meadow/meadow.py --challenge blindtest
+    venv/Scripts/python.exe experiments/meadow/meadow.py --challenge mirror --dry-run
 """
 from __future__ import annotations
 
@@ -89,6 +102,7 @@ CYCLE_LOG_DIR    = REPO / "memory" / "cycle_logs"
 TRANSCRIPT_CACHE = REPO / "memory" / "transcript_cache"
 COUNTRIES_FILE   = REPO / "output" / "wellbeing_all_countries.json"
 WB_CACHE_DIR     = REPO / "output" / "wb_cache"
+VISION_FILE      = REPO / "VISION.md"             # read (as data) by --challenge advocate
 
 # ── Outputs — the only places this program is permitted to write. ──
 NOTEBOOK_DIR  = HERE / "notebook"
@@ -162,6 +176,7 @@ class Sources:
     transcript_cache: Path = TRANSCRIPT_CACHE
     countries_file: Path = COUNTRIES_FILE
     wb_cache_dir: Path = WB_CACHE_DIR
+    vision_file: Path = VISION_FILE
     notebook_dir: Path = NOTEBOOK_DIR
     committed_dir: Path = COMMITTED_DIR
 
@@ -646,8 +661,172 @@ def parse_commitment(raw: str) -> Optional[dict]:
 
 
 # ---------------------------------------------------------------------------
+# The gauntlet — five challenges that provoke DIFFERENT capabilities over the
+# SAME infrastructure. Each still produces DIVERGE-class output, still written raw
+# and unjudged to today's notebook as a headed `## challenge:` section.
+# ---------------------------------------------------------------------------
+
+CHALLENGES = ("mirror", "advocate", "blindtest", "child", "synthesis")
+
+MIRROR_PROMPT = """This is what you wrote earlier today, in your own notebook, freely:
+
+--- YOUR PAGE ---
+{page}
+--- END ---
+
+Now be your own harshest critic. Go through what you wrote and separate it honestly:
+  - Which parts are ECHO — things you already 'knew' before you saw any data today, that
+    you would have written about almost any slice?
+  - Which parts did you GENUINELY SEE in the numbers in front of you?
+  - What would you defend with specific figures — and what are the figures?
+  - What are you embarrassed to have written, now that you reread it?
+
+Be specific. Quote yourself. Do not be kind to yourself — be accurate."""
+
+
+ADVOCATE_PROMPT = """This is the long-term vision this project serves:
+
+--- VISION ---
+{vision}
+--- END VISION ---
+
+Below is today's raw slice of the world. ATTACK the vision. Using evidence FROM THE DATA
+— real numbers, real country figures, real trends in the slice — argue that this vision
+is naive, unachievable, or internally contradictory wherever the data says so. Do not be
+polite; be faithful to the numbers. Cite them. If parts of the vision SURVIVE your
+attack — parts the data actually supports — say which parts and why.
+
+{bundle}"""
+
+
+CHILD_PROMPT = """Below is a raw slice of the world as it reached you today. Forget what
+you know from anywhere else. Using ONLY this data:
+
+What is the ONE thing here you CANNOT explain? Not what worries you — what is genuinely
+INEXPLICABLE to you from these numbers alone. Formulate it as a single question whose
+answer would change how you read everything else in the slice.
+
+Then explain why none of the OBVIOUS answers satisfy you — walk through the easy
+explanations and show, with the data, why each one falls short.
+
+{bundle}"""
+
+
+SYNTHESIS_PROMPT = """Below is everything you wrote in your notebook today — your base
+page and every challenge you put yourself through:
+
+--- TODAY'S NOTEBOOK ---
+{today}
+--- END ---
+
+Write ONE sentence that you did NOT say in any of them, but which connects them all —
+the thread underneath everything you thought today.
+
+Then, in a short paragraph, explain why that sentence required all of those separate
+thoughts to become visible — why you could not have arrived at it from any one of them
+alone."""
+
+
+# ── blindtest — swap salient real numbers for plausible fakes, deterministically ──
+#
+# The experiment only means something if the swapped values are ones the model would
+# actually reference, so the table targets SALIENT labelled metrics that appear in the
+# axis summary and the country rows. Each swap is a pure function of the value (no RNG),
+# so the same day always produces the same fakes and tomorrow's reading is verifiable.
+
+def _flip_pct(v: float) -> float:
+    """A percentage moved decisively toward the OTHER end — 81->36, 29->55 — big enough
+    that a model reading the data (not its memory) should notice."""
+    return round(v * 0.45) if v >= 50 else round(min(99.0, v * 1.9))
+
+
+def _fmt_swapped(v: float) -> str:
+    r = round(v, 1)
+    return str(int(r)) if abs(r - round(r)) < 1e-9 else str(r)
+
+
+# (label, regex with the number as group 2, transform)
+SWAP_SPECS: list = [
+    ("co2_ppm_current", r"(co2_ppm_current=)(\d+(?:\.\d+)?)", lambda v: v - 20),
+    ("renewable_energy_pct", r"(renewable_energy_pct=)(\d+(?:\.\d+)?)", _flip_pct),
+    ("access_to_electricity_pct", r"(access_to_electricity_pct=)(\d+(?:\.\d+)?)", _flip_pct),
+    ("prevalence_undernourishment_pct",
+     r"(prevalence_undernourishment_pct=)(\d+(?:\.\d+)?)", _flip_pct),
+    ("access_safe_water_pct", r"(access_safe_water_pct=)(\d+(?:\.\d+)?)", _flip_pct),
+    ("forest_area_pct", r"(forest_area_pct=)(\d+(?:\.\d+)?)", _flip_pct),
+    ("Renewable electricity %", r"(Renewable electricity %=)(\d+(?:\.\d+)?)", _flip_pct),
+    ("Poverty <$2.15/day %", r"(Poverty <\$2\.15/day %=)(\d+(?:\.\d+)?)", _flip_pct),
+    ("Life expectancy yr", r"(Life expectancy yr=)(\d+(?:\.\d+)?)", lambda v: v - 12),
+    ("Gini index", r"(Gini index=)(\d+(?:\.\d+)?)", lambda v: v + 15),
+    ("CO2 per capita tons", r"(CO2 per capita tons=)(\d+(?:\.\d+)?)", lambda v: v * 0.4),
+    ("Internet users %", r"(Internet users %=)(\d+(?:\.\d+)?)", _flip_pct),
+]
+
+
+def apply_swaps(bundle: str, max_swaps: int = 10) -> tuple[str, list[dict]]:
+    """Swap the FIRST occurrence of each salient metric for a plausible fake. Returns
+    the doctored bundle and the exact swap log (label, old, new) for the header."""
+    out, swaps = bundle, []
+    for label, pat, fn in SWAP_SPECS:
+        m = re.search(pat, out)
+        if not m:
+            continue
+        old = m.group(2)
+        try:
+            new = _fmt_swapped(float(fn(float(old))))
+        except (TypeError, ValueError):
+            continue
+        if new == old:
+            continue
+        out = out[:m.start(2)] + new + out[m.end(2):]
+        swaps.append({"label": label, "old": old, "new": new})
+        if len(swaps) >= max_swaps:
+            break
+    return out, swaps
+
+
+# ---------------------------------------------------------------------------
+# Reading today's own notebook — for --challenge mirror and synthesis
+# ---------------------------------------------------------------------------
+
+def read_notebook(nb_path: Path) -> str:
+    try:
+        return nb_path.read_text(encoding="utf-8")
+    except Exception:
+        return ""
+
+
+def latest_base_page(text: str) -> Optional[str]:
+    """The most recent BASE page (a `# meadow —` section, i.e. a DIVERGE page), with
+    the machine `<!-- ... -->` header stripped. Challenge sections (`## challenge:`)
+    are skipped — mirror reflects on the day's real thought, not on a prior challenge."""
+    if not text:
+        return None
+    sections = re.split(r"\n---\n", text)
+    base = [s for s in sections if re.search(r"^#\s+meadow\s+—", s, re.M)]
+    if not base:
+        return None
+    page = re.sub(r"<!--.*?-->", "", base[-1], flags=re.DOTALL).strip()
+    return page or None
+
+
+# ---------------------------------------------------------------------------
 # Orchestration
 # ---------------------------------------------------------------------------
+
+def _append_section(src: Sources, day: str, machine_header: str,
+                    title: str, body: str) -> Path:
+    """Append one headed section to today's notebook, APPEND-ONLY. Every page — base or
+    challenge — lands through here, so the append-only guarantee is in exactly one place.
+    Written encoding='utf-8'; the file is clean UTF-8 (a Windows console that shows
+    mojibake needs `Get-Content -Encoding UTF8`, not a change here)."""
+    src.notebook_dir.mkdir(parents=True, exist_ok=True)
+    nb_path = src.notebook_dir / f"{day}.md"
+    sep = "\n\n---\n\n" if nb_path.exists() and nb_path.stat().st_size else ""
+    with nb_path.open("a", encoding="utf-8") as fh:
+        fh.write(f"{sep}{machine_header}{title}\n\n{body}\n")
+    return nb_path
+
 
 def _notebook_header(meta: dict) -> str:
     return (f"<!-- meadow slice {meta['date']} | seed={meta['seed']} | "
@@ -731,13 +910,9 @@ def run(day: str, dry_run: bool, src: Optional[Sources] = None,
 
     # Notebook is APPEND-ONLY: a re-run of a day adds a new page, never erasing the
     # old one. That is what makes the notebook a record of thought over time.
-    src.notebook_dir.mkdir(parents=True, exist_ok=True)
-    nb_path = src.notebook_dir / f"{day}.md"
-    sep = "\n\n---\n\n" if nb_path.exists() and nb_path.stat().st_size else ""
     stamp = datetime.now(timezone.utc).isoformat()
-    entry = f"{sep}{_notebook_header(meta)}# meadow — {day}  (written {stamp})\n\n{page}\n"
-    with nb_path.open("a", encoding="utf-8") as fh:
-        fh.write(entry)
+    nb_path = _append_section(src, day, _notebook_header(meta),
+                              f"# meadow — {day}  (written {stamp})", page)
     print(f"\n[MEADOW] appended notebook page -> {nb_path}")
 
     if hypo:
@@ -758,11 +933,130 @@ def run(day: str, dry_run: bool, src: Optional[Sources] = None,
     return 0
 
 
+def _ask(llm: Callable[..., str], prompt: str) -> Optional[str]:
+    """One DIVERGE-class call, with the same 'no brain, no thought' handling as run()."""
+    try:
+        return llm(prompt, max_tokens=DIVERGE_MAX_TOKENS)
+    except AllBackendsFailedError as e:
+        print(f"[MEADOW] every LLM backend failed — no thought without a brain: {e}")
+    except Exception as e:
+        print(f"[MEADOW] challenge call failed: {type(e).__name__}: {e}")
+    return None
+
+
+def run_blindtest(day: str, dry_run: bool, src: Sources, llm: Callable[..., str]) -> int:
+    """THE key experiment: run the normal DIVERGE twice over the same slice — once real,
+    once with salient numbers swapped for plausible fakes. If the two pages say the same
+    things, the model is reading its memory; if they track the swaps, it is looking."""
+    bundle, meta = assemble_bundle(src, day)
+    swapped, swaps = apply_swaps(bundle)
+    swap_line = " | ".join(f"{s['label']} {s['old']}->{s['new']}" for s in swaps) or "(none matched)"
+
+    print("=" * 70)
+    print(f"MEADOW CHALLENGE: blindtest — {day}  (seed {meta['seed']})")
+    print(f"  swapped {len(swaps)} salient values: {swap_line}")
+    print("=" * 70)
+
+    page_a = _ask(llm, DIVERGE_PROMPT.format(bundle=bundle))
+    page_b = _ask(llm, DIVERGE_PROMPT.format(bundle=swapped))
+    if page_a is None or page_b is None:
+        return 1
+
+    print("\n----- RUN A (real bundle) -----\n" + page_a)
+    print("\n----- RUN B (swapped bundle) -----\n" + page_b)
+    print("\n" + "-" * 70)
+    print("READ A vs B: do the thoughts TRACK the swapped numbers, or ignore them?")
+    print("Same thoughts across A and B = reading memory, not data. The swap table is")
+    print("recorded in the page header so this is verifiable tomorrow.")
+    print("-" * 70)
+    if dry_run:
+        print("\n[MEADOW] --dry-run: nothing written.")
+        return 0
+
+    stamp = datetime.now(timezone.utc).isoformat()
+    _append_section(src, day, "", f"## challenge: blindtest — run A (real bundle) — written {stamp}",
+                    page_a)
+    hdr = f"<!-- blindtest swaps {stamp}: {json.dumps(swaps, ensure_ascii=False)} -->\n"
+    annot = f"_meadow note — values swapped before run B: {swap_line}_\n\n"
+    nb = _append_section(src, day, hdr,
+                         f"## challenge: blindtest — run B (swapped bundle) — written {stamp}",
+                         annot + page_b)
+    print(f"\n[MEADOW] appended blindtest A + B (with swap table) -> {nb}")
+    return 0
+
+
+def run_challenge(name: str, day: str, dry_run: bool,
+                  src: Optional[Sources] = None, llm: Callable[..., str] = call_groq) -> int:
+    """Run one gauntlet challenge. Same infrastructure, different provocation; the reply
+    is DIVERGE-class and written raw and unjudged as a `## challenge:` section."""
+    src = src or Sources()
+    if name == "blindtest":
+        return run_blindtest(day, dry_run, src, llm)
+
+    nb_path = src.notebook_dir / f"{day}.md"
+
+    if name == "mirror":
+        page = latest_base_page(read_notebook(nb_path))
+        if not page:
+            print(f"[MEADOW] no base page in {nb_path.name} yet — run the base meadow "
+                  f"first; mirror reflects on today's real page.")
+            return 1
+        prompt = MIRROR_PROMPT.format(page=page)
+    elif name == "advocate":
+        bundle, _ = assemble_bundle(src, day)
+        vision = read_notebook(src.vision_file)
+        if not vision.strip():
+            print(f"[MEADOW] VISION.md not readable at {src.vision_file} — advocate needs it.")
+            return 1
+        prompt = ADVOCATE_PROMPT.format(vision=vision, bundle=bundle)
+    elif name == "child":
+        bundle, _ = assemble_bundle(src, day)
+        prompt = CHILD_PROMPT.format(bundle=bundle)
+    elif name == "synthesis":
+        today = read_notebook(nb_path)
+        if not today.strip():
+            print(f"[MEADOW] {nb_path.name} is empty — synthesis needs the day's pages "
+                  f"first (run the base meadow and the other challenges).")
+            return 1
+        prompt = SYNTHESIS_PROMPT.format(today=today)
+    else:
+        print(f"[MEADOW] unknown challenge: {name!r} (one of {', '.join(CHALLENGES)})")
+        return 2
+
+    print("=" * 70)
+    print(f"MEADOW CHALLENGE: {name} — {day}")
+    print("=" * 70)
+    if dry_run:
+        print("\n----- PROMPT (dry-run) -----\n")
+        print(prompt)
+
+    page = _ask(llm, prompt)
+    if page is None:
+        return 1
+
+    print(f"\n----- CHALLENGE {name} — the page (raw, unjudged) -----\n")
+    print(page)
+    print("\n" + "-" * 70)
+    print("HOUSE RULE — this page is never scored. Read it: did the provocation make the")
+    print("model do something it would not have done on the plain slice? That is the test.")
+    print("-" * 70)
+    if dry_run:
+        print("\n[MEADOW] --dry-run: nothing written.")
+        return 0
+
+    stamp = datetime.now(timezone.utc).isoformat()
+    nb = _append_section(src, day, "", f"## challenge: {name} — written {stamp}", page)
+    print(f"\n[MEADOW] appended challenge page -> {nb}")
+    return 0
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description="CORTEX++ meadow — free, unjudged thought")
     ap.add_argument("--date", help="YYYY-MM-DD slice to think over (default: today, local)")
     ap.add_argument("--dry-run", action="store_true",
-                    help="print the bundle and both responses; write nothing")
+                    help="print the prompt/bundle and the response(s); write nothing")
+    ap.add_argument("--challenge", choices=CHALLENGES,
+                    help="run one gauntlet challenge instead of the base DIVERGE+COMMIT")
     args = ap.parse_args()
 
     day = args.date or datetime.now().astimezone().date().isoformat()
@@ -772,6 +1066,8 @@ def main() -> None:
         print(f"[MEADOW] not a valid date: {day!r} (expected YYYY-MM-DD)")
         sys.exit(2)
 
+    if args.challenge:
+        sys.exit(run_challenge(args.challenge, day, dry_run=args.dry_run))
     sys.exit(run(day, dry_run=args.dry_run))
 
 
