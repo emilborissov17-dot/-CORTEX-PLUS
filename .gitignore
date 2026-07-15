@@ -30,6 +30,12 @@ experiments/pulse/stream/
 experiments/pulse/self_state.jsonl
 experiments/pulse/pulse.lock
 
+# experiments/meadow (KPI #6) — the CODE is committed, the THOUGHT is not.
+# The notebook (free, unjudged pages) and committed hypotheses are the system's
+# private thought. Only Emil and the model itself read them; git does not.
+experiments/meadow/notebook/
+experiments/meadow/committed/
+
 *.mp4
 OLD/
 LEGACY/
