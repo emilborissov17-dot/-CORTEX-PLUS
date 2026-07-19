@@ -3,14 +3,31 @@
 safety/ast_gate.py
 AST-based capability gate за self-modifier-генериран код.
 
-Fail-closed: ако walker-ът не може статично да класифицира нещо (computed
-getattr атрибут, non-literal open()/write_* target), се DENY-ва, не се
-допуска по подразбиране.
+Fail-closed: ако walker-ът не може статично да ДОКАЖЕ, че нещо е безопасно
+(computed getattr атрибут, non-provable open()/write_* target), се DENY-ва.
 
 Това е първи слой статичен анализ, не sandboxing — не хваща всичко
-(sys.modules манипулация, __builtins__ tampering, metaclass трикове и
-т.н.), но покрива честите obfuscation bypass-и (getattr с computed
-атрибут, string-concat/chr-built имена подадени на __import__).
+(sys.modules манипулация, __builtins__ tampering, metaclass трикове и т.н.),
+но покрива честите obfuscation bypass-и (getattr с computed атрибут,
+string-concat/chr-built имена подадени на __import__).
+
+WRITE-TARGET РЕЗОЛЮЦИЯ (2026-07-19)
+-----------------------------------
+По-рано write-таргетът трябваше да е ИНЛАЙН литерал или pathlib `/`-верига;
+всяка индиректност (променлива, generic helper `_safe_save(path)`) се DENY-ваше,
+дори когато присвоеният път беше безопасен литерал. Това правеше идиоматичните
+патчове, които самата система генерира, невъзможни за прилагане.
+
+Сега gate-ът РЕЗОЛВИРА таргета през, и само през, статично доказуеми стъпки:
+  * локална единична присвоена стойност в обхващащата функция,
+  * module-level единична присвоена константа,
+  * `Path(x)` / `pathlib.Path(x)` обвивка → резолвира x,
+  * функционален ПАРАМЕТЪР → доказва, че ВСЕКИ call site подава безопасна стойност
+    на тази позиция (интерпроцедурно).
+Всичко останало — reassignment, augmented assign, динамичен израз, *args/**kwargs
+на call site, функция използвана като стойност (не извикана), рекурсия — е
+недоказуемо и се DENY-ва. Разширението само ДОБАВЯ доказване-на-безопасно; никога
+не допуска таргет, който не е доказано под ALLOWED_DIR_PREFIXES и извън denylist-а.
 
 Използване:
   from safety.ast_gate import check_code
@@ -25,11 +42,9 @@ from safety.protected_paths import is_protected
 BANNED_MODULES = {"subprocess", "socket", "urllib", "requests", "http", "ctypes"}
 
 # ── (2) забранени directly-named call-ове ────────────────────────────────────
-# import_module е включен защото е функционален еквивалент на __import__.
 BANNED_CALL_NAMES = {"eval", "exec", "compile", "__import__", "import_module"}
 
-# getattr(obj, "<име>") с ЛИТЕРАЛНО име, което директно съответства на опасен
-# извикваем атрибут — затваря bypass-а на правило (4) през getattr.
+# getattr(obj, "<име>") с ЛИТЕРАЛНО опасно име.
 BANNED_ATTR_NAMES = {
     "system", "popen", "spawnl", "spawnv", "spawnve",
     "remove", "rmtree", "unlink", "chdir",
@@ -42,15 +57,18 @@ BANNED_DOTTED_CALLS = {
     "os.remove",
     "shutil.rmtree",
     "os.chdir",
-    "importlib.import_module",  # __import__-еквивалент
+    "importlib.import_module",
 }
 
 # ── (3) позволени директории за open()/Path.write_*/Path.open() ─────────────
 ALLOWED_DIR_PREFIXES = ("memory", "output", "data", "snapshots", "daily")
 
-# Атрибутни методи, за които target-ът (обектът, върху който се вика) трябва
-# да е статично проверим път под ALLOWED_DIR_PREFIXES.
+# Атрибутни методи, чийто target (обектът, върху който се вика) трябва да е
+# доказуемо път под ALLOWED_DIR_PREFIXES.
 _WRITE_LIKE_ATTRS = {"write_text", "write_bytes", "open"}
+
+# Конструктори, които просто обвиват пътен израз.
+_PATH_CTOR_NAMES = {"Path", "pathlib.Path"}
 
 
 def _dotted_name(node) -> str | None:
@@ -66,14 +84,10 @@ def _dotted_name(node) -> str | None:
 
 
 def _static_str_target_allowed(path_str: str) -> bool:
-    """Проверява литерален relative path срещу ALLOWED_DIR_PREFIXES + '..' traversal
-    + PROTECTED PATHS.
+    """Литерален relative path срещу ALLOWED_DIR_PREFIXES + '..' traversal + denylist.
 
-    ВАЖНО: prefix проверката НЕ Е достатъчна. ALLOWED_DIR_PREFIXES включва "memory",
-    а точно под memory/ живеят heartbeat.json, cycle.lock и existence_ledger.jsonl.
-    Без изричното is_protected() правило генериран patch можеше да си фалшифицира
-    собствената existence история или да подправи heartbeat и така да заблуди
-    watchdog-а, който трябва да забележи, че е забил. Denylist-ът бие allowlist-а.
+    ВАЖНО: prefix проверката НЕ Е достатъчна. Под memory/ живеят heartbeat.json,
+    cycle.lock и existence_ledger.jsonl — is_protected() (denylist) бие allowlist-а.
     """
     norm = path_str.replace("\\", "/")
     if norm.startswith("/") or (len(norm) > 1 and norm[1] == ":"):
@@ -83,67 +97,269 @@ def _static_str_target_allowed(path_str: str) -> bool:
         return False
     if parts[0] not in ALLOWED_DIR_PREFIXES:
         return False
-    # Denylist се прилага ПОСЛЕДЕН и има предимство пред allowlist-а.
     return not is_protected(path_str)
 
 
 def _div_chain_parts(node) -> list[tuple[str, str | None]]:
-    """Разгъва ляво-асоциативна верига от `/` (pathlib join) в подредена листа
-    от ('const', value) | ('dynamic', None) части, ляво-надясно."""
+    """Разгъва ляво-асоциативна `/` верига (pathlib join) в подредена листа от
+    ('const', value) | ('dynamic', None) части, ляво-надясно."""
     if isinstance(node, ast.BinOp) and isinstance(node.op, ast.Div):
         return _div_chain_parts(node.left) + _div_chain_parts(node.right)
     if isinstance(node, ast.Constant) and isinstance(node.value, str):
         return [("const", node.value)]
+    # Path('literal') / pathlib.Path('literal') — извлечи литерала (безопасно:
+    # traversal/абсолютни пътища пак се хващат от _static_str_target_allowed).
+    if (isinstance(node, ast.Call)
+            and _dotted_name(node.func) in _PATH_CTOR_NAMES
+            and len(node.args) == 1 and not node.keywords
+            and isinstance(node.args[0], ast.Constant)
+            and isinstance(node.args[0].value, str)):
+        return [("const", node.args[0].value)]
     return [("dynamic", None)]
 
 
-def _path_target_allowed(node) -> bool:
-    """
-    Статично проверява дали Path-израз сочи под ALLOWED_DIR_PREFIXES.
-    Приема ЕДИН евентуален водещ dynamic сегмент (типично BASE_DIR), всичко
-    останало трябва да е литерал; ако dynamic сегмент се появи ПОСЛЕ първия
-    литерал — не може да се гарантира липса на traversal → DENY.
-    """
+def _div_chain_allowed(node) -> bool:
+    """Статично проверява `/`-верига: приема ЕДИН евентуален водещ dynamic сегмент
+    (типично BASE_DIR), всичко останало трябва да е литерал; dynamic сегмент СЛЕД
+    първия литерал не може да гарантира липса на traversal → DENY."""
+    parts = _div_chain_parts(node)
+    if not parts:
+        return False
+    idx = 1 if parts[0][0] == "dynamic" else 0
+    if idx >= len(parts):
+        return False
+    if any(kind == "dynamic" for kind, _ in parts[idx:]):
+        return False
+    literal_path = "/".join(value for _, value in parts[idx:])
+    return _static_str_target_allowed(literal_path)
+
+
+# ---------------------------------------------------------------------------
+# Резолюционен контекст (scopes, assignments, call sites)
+# ---------------------------------------------------------------------------
+
+class _Context:
+    def __init__(self):
+        self.node_scope: dict[int, object] = {}   # id(node) -> FunctionDef | None
+        self.func_defs: dict[str, object] = {}     # name -> FunctionDef
+        self.ambiguous_funcs: set[str] = set()     # име, дефинирано >1 път
+        self.params_of: dict[object, list[str]] = {}      # FunctionDef -> [позиционни имена]
+        self.param_default: dict[object, dict] = {}       # FunctionDef -> {name: default_node}
+        self.local_assigns: dict[object, dict] = {}       # FunctionDef -> {name: [rhs|None,...]}
+        self.module_assigns: dict[str, list] = {}         # name -> [rhs|None,...]
+        self.call_sites: dict[str, list] = {}             # func name -> [Call]
+        self.noncall_refs: set[str] = set()               # функции използвани като стойност
+
+
+def _record_assign(store: dict, name: str, value):
+    store.setdefault(name, []).append(value)
+
+
+def _build_context(tree) -> _Context:
+    ctx = _Context()
+
+    # Кои Name-nodes са в call-func позиция (за да ги отличим от bare-value употреба).
+    called_func_name_ids: set[int] = set()
+    for n in ast.walk(tree):
+        if isinstance(n, ast.Call) and isinstance(n.func, ast.Name):
+            called_func_name_ids.add(id(n.func))
+            ctx.call_sites.setdefault(n.func.id, []).append(n)
+
+    load_names_noncall: set[str] = set()
+
+    def _clean_targets(targets):
+        """Yield (name, is_clean_single) за Assign targets. Complex target → None sentinel."""
+        for tgt in targets:
+            if isinstance(tgt, ast.Name):
+                yield tgt.id, True
+            else:
+                for sub in ast.walk(tgt):
+                    if isinstance(sub, ast.Name):
+                        yield sub.id, False   # tuple/attr/subscript target → недоказуемо
+
+    def visit(node, scope):
+        ctx.node_scope[id(node)] = scope
+
+        if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
+            nm = node.name
+            if nm in ctx.func_defs:
+                ctx.ambiguous_funcs.add(nm)
+            else:
+                ctx.func_defs[nm] = node
+            pos = list(getattr(node.args, "posonlyargs", [])) + list(node.args.args)
+            names = [a.arg for a in pos]
+            ctx.params_of[node] = names
+            defaults = list(node.args.defaults or [])
+            dmap = {}
+            if defaults:
+                tail = names[len(names) - len(defaults):]
+                for nm2, d in zip(tail, defaults):
+                    dmap[nm2] = d
+            ctx.param_default[node] = dmap
+            ctx.local_assigns.setdefault(node, {})
+            for child in ast.iter_child_nodes(node):
+                visit(child, node)
+            return
+
+        if isinstance(node, ast.Assign):
+            for name, clean in _clean_targets(node.targets):
+                val = node.value if clean else None
+                if scope is None:
+                    _record_assign(ctx.module_assigns, name, val)
+                else:
+                    _record_assign(ctx.local_assigns.setdefault(scope, {}), name, val)
+
+        elif isinstance(node, ast.AnnAssign):
+            if isinstance(node.target, ast.Name):
+                val = node.value  # може да е None (само анотация)
+                if scope is None:
+                    _record_assign(ctx.module_assigns, node.target.id, val)
+                else:
+                    _record_assign(ctx.local_assigns.setdefault(scope, {}), node.target.id, val)
+
+        elif isinstance(node, ast.AugAssign):
+            if isinstance(node.target, ast.Name):
+                # augmented assign → недоказуемо (None sentinel)
+                if scope is None:
+                    _record_assign(ctx.module_assigns, node.target.id, None)
+                else:
+                    _record_assign(ctx.local_assigns.setdefault(scope, {}), node.target.id, None)
+
+        if isinstance(node, ast.Name) and isinstance(node.ctx, ast.Load):
+            if id(node) not in called_func_name_ids:
+                load_names_noncall.add(node.id)
+
+        for child in ast.iter_child_nodes(node):
+            visit(child, scope)
+
+    visit(tree, None)
+    # Функция, чието име се появява като bare стойност (не в call позиция), не може
+    # да се проследи безопасно до call site-овете — може да бъде извикана другаде.
+    ctx.noncall_refs = {nm for nm in load_names_noncall if nm in ctx.func_defs}
+    return ctx
+
+
+def _target_allowed(node, scope, ctx: _Context, visited: frozenset) -> bool:
+    """Доказва ли се статично, че `node` сочи под ALLOWED_DIR_PREFIXES (и извън denylist)."""
+    # 1. литерал
     if isinstance(node, ast.Constant) and isinstance(node.value, str):
         return _static_str_target_allowed(node.value)
 
+    # 2. `/`-верига
     if isinstance(node, ast.BinOp) and isinstance(node.op, ast.Div):
-        parts = _div_chain_parts(node)
-        if not parts:
-            return False
-        idx = 1 if parts[0][0] == "dynamic" else 0
-        if idx >= len(parts):
-            return False
-        if any(kind == "dynamic" for kind, _ in parts[idx:]):
-            return False
-        literal_path = "/".join(value for _, value in parts[idx:])
-        return _static_str_target_allowed(literal_path)
+        return _div_chain_allowed(node)
 
-    return False  # Name/Call/Attribute/f-string и т.н. — не е статично проверимо
+    # 3. Path(x) / pathlib.Path(x) обвивка
+    if isinstance(node, ast.Call):
+        if (_dotted_name(node.func) in _PATH_CTOR_NAMES
+                and len(node.args) == 1
+                and not node.keywords
+                and not any(isinstance(a, ast.Starred) for a in node.args)):
+            return _target_allowed(node.args[0], scope, ctx, visited)
+        return False
+
+    # 4. Name — резолвирай binding
+    if isinstance(node, ast.Name):
+        name = node.id
+        key = ("name", id(scope), name)
+        if key in visited:
+            return False
+        visited = visited | {key}
+
+        # 4a. локална присвоена стойност в обхващащата функция
+        if scope is not None:
+            locs = ctx.local_assigns.get(scope, {}).get(name)
+            if locs is not None:
+                if len(locs) != 1 or locs[0] is None:
+                    return False
+                return _target_allowed(locs[0], scope, ctx, visited)
+            # 4b. параметър на обхващащата функция
+            if name in ctx.params_of.get(scope, []):
+                return _param_allowed(scope, name, ctx, visited)
+
+        # 4c. module-level константа
+        mods = ctx.module_assigns.get(name)
+        if mods is not None:
+            if len(mods) != 1 or mods[0] is None:
+                return False
+            return _target_allowed(mods[0], None, ctx, visited)
+
+        return False
+
+    return False
+
+
+def _param_allowed(func, param_name: str, ctx: _Context, visited: frozenset) -> bool:
+    """Доказва, че ВСЕКИ call site на `func` подава безопасна стойност на позицията
+    на `param_name`. Fail-closed на всяка неяснота."""
+    fname = func.name
+    key = ("param", id(func), param_name)
+    if key in visited:
+        return False
+    visited = visited | {key}
+
+    if fname in ctx.ambiguous_funcs:
+        return False
+    if fname in ctx.noncall_refs:          # функцията се използва и като стойност
+        return False
+
+    params = ctx.params_of.get(func, [])
+    if param_name not in params:
+        return False
+    idx = params.index(param_name)
+    default_node = ctx.param_default.get(func, {}).get(param_name)
+
+    sites = ctx.call_sites.get(fname, [])
+    if not sites:
+        return False                        # няма call site → недоказуемо
+
+    for call in sites:
+        # Разбъркани позиции / непрозрачни аргументи → недоказуемо.
+        if any(isinstance(a, ast.Starred) for a in call.args):
+            return False
+        if any(kw.arg is None for kw in call.keywords):   # **kwargs
+            return False
+
+        if idx < len(call.args):
+            value = call.args[idx]
+        else:
+            kw = next((k for k in call.keywords if k.arg == param_name), None)
+            if kw is not None:
+                value = kw.value
+            elif default_node is not None:
+                value = default_node
+            else:
+                return False                # аргументът липсва на този call site
+
+        caller_scope = ctx.node_scope.get(id(call))
+        if not _target_allowed(value, caller_scope, ctx, visited):
+            return False
+
+    return True
 
 
 def check_code(source: str) -> tuple[bool, str]:
     """
     Проверява генериран Python код срещу capability gate.
-    Връща (allowed, reason). Fail-closed: всичко, което walker-ът не може
-    статично да класифицира, се DENY-ва.
+    Връща (allowed, reason). Fail-closed: всичко, което walker-ът не може статично
+    да ДОКАЖЕ безопасно, се DENY-ва.
     """
     try:
         tree = ast.parse(source)
     except SyntaxError as e:
         return False, f"unclassifiable: syntax error ({e})"
 
+    ctx = _build_context(tree)
+
     for node in ast.walk(tree):
         # ── (1) забранени import-и ──────────────────────────────────────────
         if isinstance(node, ast.Import):
             for alias in node.names:
-                top = alias.name.split(".")[0]
-                if top in BANNED_MODULES:
+                if alias.name.split(".")[0] in BANNED_MODULES:
                     return False, f"banned import: {alias.name}"
 
         elif isinstance(node, ast.ImportFrom):
-            top = (node.module or "").split(".")[0]
-            if top in BANNED_MODULES:
+            if (node.module or "").split(".")[0] in BANNED_MODULES:
                 return False, f"banned import: {node.module}"
 
         elif isinstance(node, ast.Call):
@@ -173,12 +389,14 @@ def check_code(source: str) -> tuple[bool, str]:
             if isinstance(func, ast.Name) and func.id == "open":
                 if not node.args:
                     return False, "unclassifiable: open() with no args"
-                if not _path_target_allowed(node.args[0]):
+                scope = ctx.node_scope.get(id(node))
+                if not _target_allowed(node.args[0], scope, ctx, frozenset()):
                     return False, "open() target not statically verified under an allowed directory"
 
             # ── (3) Path.write_text()/write_bytes()/open() ───────────────────
             if isinstance(func, ast.Attribute) and func.attr in _WRITE_LIKE_ATTRS:
-                if not _path_target_allowed(func.value):
+                scope = ctx.node_scope.get(id(node))
+                if not _target_allowed(func.value, scope, ctx, frozenset()):
                     return False, f"{func.attr}() target not statically verified under an allowed directory"
 
     return True, "OK"
