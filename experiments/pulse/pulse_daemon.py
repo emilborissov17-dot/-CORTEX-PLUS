@@ -313,6 +313,68 @@ _PROC = psutil.Process()
 _CPU_COUNT = psutil.cpu_count() or 1
 
 
+# ---------------------------------------------------------------------------
+# Added afferent nerves (2026-07-19): interoceptive valence + exteroception.
+# Until now the pulse sensed only the machine substrate (cpu/ram/disk/net/cycle).
+# The felt-state gauge (pain/vitality) was computed and reported but sensed by
+# NOTHING — a dashboard, not a drive. And the world the system exists to watch was
+# not in the pulse at all. These two nerves wire both into the afferent stream the
+# local brain reads. NOTE: this is SENSING, not acting — the brain now perceives
+# its own pain and the world's state; making that perception close a loop into
+# behaviour (the efferent/motor side) is a later, harder step. Read as plain files
+# (no live-path import), never raise: a dead nerve must not kill the sense.
+EXISTENCE_FILE = REPO / "memory" / "existence_latest.json"
+WORLD_FILE     = REPO / "snapshots" / "master" / "global_indicators_latest.json"
+
+
+def _load_json_safe(path: Path) -> dict:
+    try:
+        d = json.loads(path.read_text(encoding="utf-8"))
+        return d if isinstance(d, dict) else {}
+    except Exception:
+        return {}
+
+
+def _sense_valence() -> dict:
+    """Interoceptive valence: how the system is doing relative to its own viability
+    (pain/vitality). The first wire of the drive loop — the brain now perceives it."""
+    d = _load_json_safe(EXISTENCE_FILE)
+    if not d:
+        return {"available": False}
+    pain = d.get("pain") if isinstance(d.get("pain"), dict) else {}
+    mort = d.get("mortality") if isinstance(d.get("mortality"), dict) else {}
+    return {
+        "available": True,
+        "pain_score": pain.get("pain_score"),
+        "vitality": d.get("vitality_score"),
+        "pain_points": len(pain.get("pain_points") or []),
+        "mortality_urgency": mort.get("urgency_score"),
+    }
+
+
+def _sense_world() -> dict:
+    """Exteroception: the state of the world the system exists to watch. Until now
+    the pulse was pure interoception (the machine); this adds the outside."""
+    d = _load_json_safe(WORLD_FILE)
+    if not d:
+        return {"available": False}
+
+    def _num(section: str, key: str):
+        v = d.get(section)
+        return v.get(key) if isinstance(v, dict) else None
+
+    world_sections = ("co2", "temperature", "sea_level", "biodiversity", "food",
+                      "waste", "world_bank", "displaced", "economy", "cities",
+                      "governance", "tech_infra", "ai_activity")
+    return {
+        "available": True,
+        "co2_ppm": _num("co2", "co2_ppm"),
+        "temp_anomaly_c": _num("temperature", "temp_anomaly_c"),
+        "sea_level_rise_mm": _num("sea_level", "sea_level_rise_mm"),
+        "sections_present": sum(1 for k in world_sections if d.get(k)),
+    }
+
+
 def sample(prev_net: Optional[dict], prev_mtimes: dict) -> tuple[dict, dict, dict]:
     vm = psutil.virtual_memory()
     disk = psutil.disk_usage(str(REPO.anchor or "C:\\"))
@@ -336,6 +398,8 @@ def sample(prev_net: Optional[dict], prev_mtimes: dict) -> tuple[dict, dict, dic
         "cycle": _sense_cycle(),
         "ledger": _sense_ledger(),
         "memory_files_changed": churn,
+        "valence": _sense_valence(),   # interoception — the felt state (pain/vitality)
+        "world": _sense_world(),       # exteroception — the world it monitors
         # ── the daemon's own cost (criterion C4) ──
         "daemon_cpu_pct": daemon_cpu,
         "daemon_rss_mb": daemon_rss,
