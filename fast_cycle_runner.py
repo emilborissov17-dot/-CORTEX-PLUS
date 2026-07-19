@@ -611,7 +611,19 @@ def main():
     print(f"[FAST_CYCLE] started at {_utc_now()}")
     print("=" * 50)
 
+    # Proof of life BEFORE the first real step. _notify_patches_and_initiatives()
+    # below runs initiative_tracker + a PowerShell toast and can take minutes; a
+    # death there left NO heartbeat at all, so the supervisor recorded
+    # last_step="unknown". We stamp the heartbeat with the SUPERVISOR's cycle_id
+    # (passed in via the CORTEX_CYCLE_ID env it sets at spawn) so that
+    # supervisor._last_step_of() attributes the death to THIS cycle instead of
+    # discarding the step on a cycle_id mismatch. Every later beat() preserves this
+    # cycle_id, so attribution now works for deaths at any step, not only early ones.
+    _cycle_id = os.environ.get("CORTEX_CYCLE_ID")
+    beat("boot", "-1", cycle_id=_cycle_id)
+
     # ── Проверка за patches + initiatives преди всичко друго ──
+    beat("notify_patches_and_initiatives", "-0.5")
     _notify_patches_and_initiatives()
 
     # ── 0. Body scan → adaptive directives (runs FIRST, before everything) ──

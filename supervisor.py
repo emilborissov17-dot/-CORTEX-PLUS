@@ -485,7 +485,12 @@ def spawn_cycle(cycle_id: str) -> Optional[int]:
     python = str(PYTHON) if PYTHON.exists() else sys.executable
     # PYTHONUNBUFFERED — the cycle log must survive the abrupt kill it exists to record.
     env = {**os.environ, "PYTHONIOENCODING": "utf-8", "PYTHONUNBUFFERED": "1",
-           "CORTEX_BASE": str(BASE)}
+           "CORTEX_BASE": str(BASE),
+           # The runner stamps its heartbeat with THIS cycle_id, so that on a death
+           # _last_step_of() attributes the last step to this cycle instead of
+           # discarding it on a cycle_id mismatch (which recorded last_step=
+           # "unknown" for every death before 2026-07-19).
+           "CORTEX_CYCLE_ID": cycle_id}
 
     try:
         CYCLE_LOG_DIR.mkdir(parents=True, exist_ok=True)
