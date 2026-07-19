@@ -129,10 +129,13 @@ def render() -> str:
     L.append("")
     L.append(_c(BOLD + ";" + BLUE, "  СВЯТ") + _c(DIM, "  (екстероцепция)"))
     if wld.get("available"):
-        L.append(f"    CO₂ {_c(BOLD, _fmt(wld.get('co2_ppm'),' ppm'))}   "
-                 f"temp +{_fmt(wld.get('temp_anomaly_c'),'°C')}   "
-                 f"sea +{_fmt(wld.get('sea_level_rise_mm'),'mm')}   "
-                 + _c(DIM, f"data {wld.get('sections_present','—')} sections"))
+        L.append(f"    разселени {_c(BOLD, _fmt(wld.get('displaced_millions'),'M',1))}   "
+                 f"недохранени {_fmt(wld.get('undernourished_pct'),'%')}   "
+                 f"живот {_fmt(wld.get('life_expectancy'),' г',1)}")
+        L.append(f"    неравенство(gini) {_fmt(wld.get('inequality_gini'),'',1)}   "
+                 f"върховенство на закона {_fmt(wld.get('rule_of_law'),'',2)}   "
+                 f"AI статии {_c(BOLD, _fmt(wld.get('ai_papers'),'',0))}"
+                 + _c(DIM, f"   {wld.get('sections_present','—')} sections"))
     else:
         L.append(_c(DIM, "    (world файл още не е генериран — global_indicators_latest.json)"))
 

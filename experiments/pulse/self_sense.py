@@ -416,8 +416,10 @@ def _condense(samples: list[dict]) -> str:
         ctx.append(f"FELT STATE: pain={val.get('pain_score')} vitality={val.get('vitality')} "
                    f"pain_points={val.get('pain_points')} mortality_urgency={val.get('mortality_urgency')}")
     if wld.get("available"):
-        ctx.append(f"WORLD: CO2={wld.get('co2_ppm')}ppm temp_anomaly=+{wld.get('temp_anomaly_c')}C "
-                   f"sea_level=+{wld.get('sea_level_rise_mm')}mm data_sections={wld.get('sections_present')}")
+        ctx.append(f"WORLD: displaced={wld.get('displaced_millions')}M "
+                   f"undernourished={wld.get('undernourished_pct')}% life_exp={wld.get('life_expectancy')}y "
+                   f"inequality_gini={wld.get('inequality_gini')} rule_of_law={wld.get('rule_of_law')} "
+                   f"ai_papers={wld.get('ai_papers')} data_sections={wld.get('sections_present')}")
     header = ("\n".join(ctx) + "\n\n") if ctx else ""
     return header + "\n".join(rows)
 

@@ -353,8 +353,10 @@ def _sense_valence() -> dict:
 
 
 def _sense_world() -> dict:
-    """Exteroception: the state of the world the system exists to watch. Until now
-    the pulse was pure interoception (the machine); this adds the outside."""
+    """Exteroception: the state of the world the system exists to watch. Broad by
+    design — the project spans 25 axes across 4 domains, so the world sense pulls
+    VARIED human/civilization signals (displacement, hunger, longevity, inequality,
+    rule of law, the AI frontier), NOT a single climate number."""
     d = _load_json_safe(WORLD_FILE)
     if not d:
         return {"available": False}
@@ -363,14 +365,22 @@ def _sense_world() -> dict:
         v = d.get(section)
         return v.get(key) if isinstance(v, dict) else None
 
-    world_sections = ("co2", "temperature", "sea_level", "biodiversity", "food",
-                      "waste", "world_bank", "displaced", "economy", "cities",
-                      "governance", "tech_infra", "ai_activity")
+    dis = d.get("displaced") if isinstance(d.get("displaced"), dict) else {}
+    parts = [dis.get(k) for k in ("refugees_millions", "asylum_seekers_millions",
+                                  "idps_millions", "stateless_millions")]
+    displaced_total = (round(sum(p for p in parts if isinstance(p, (int, float))), 1)
+                       if any(isinstance(p, (int, float)) for p in parts) else None)
+
+    world_sections = ("world_bank", "displaced", "food", "waste", "economy", "cities",
+                      "governance", "tech_infra", "ai_activity", "biodiversity")
     return {
         "available": True,
-        "co2_ppm": _num("co2", "co2_ppm"),
-        "temp_anomaly_c": _num("temperature", "temp_anomaly_c"),
-        "sea_level_rise_mm": _num("sea_level", "sea_level_rise_mm"),
+        "displaced_millions": displaced_total,                # human cost of conflict
+        "undernourished_pct": _num("food", "undernourishment_pct"),
+        "life_expectancy": _num("world_bank", "life_expectancy"),
+        "inequality_gini": _num("world_bank", "gini_mean"),
+        "rule_of_law": _num("governance", "rl_est"),
+        "ai_papers": _num("ai_activity", "arxiv_ai_papers_total"),
         "sections_present": sum(1 for k in world_sections if d.get(k)),
     }
 
