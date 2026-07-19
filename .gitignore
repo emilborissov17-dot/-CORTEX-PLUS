@@ -36,6 +36,11 @@ experiments/pulse/pulse.lock
 experiments/meadow/notebook/
 experiments/meadow/committed/
 
+# experiments/prophecy (K1a) — the CODE is committed, the sealed predictions are not.
+# The hash-chained prediction ledger is runtime data (like the existence ledger).
+experiments/prophecy/prophecy_ledger.jsonl
+experiments/prophecy/*.jsonl
+
 *.mp4
 OLD/
 LEGACY/
