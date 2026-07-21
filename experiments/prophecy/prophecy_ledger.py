@@ -161,6 +161,14 @@ def score_prediction(ref_hash: str, actual: Any, **extra: Any) -> dict:
     )
 
 
+def is_sealed(record: dict) -> bool:
+    """A record is sealed iff it is a link in the tamper-evident chain — it
+    carries a non-empty hash AND prev_hash. A bare dict (e.g. a legacy
+    predictions.json entry) is NOT sealed and must never pass as K1 evidence.
+    """
+    return bool(record.get("hash")) and bool(record.get("prev_hash"))
+
+
 def verify() -> dict:
     """Re-derive the whole chain. {'valid': bool, 'broken_at': seq|None, 'head_hash': ...}."""
     events = read_all()
