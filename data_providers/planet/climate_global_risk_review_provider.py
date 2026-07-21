@@ -271,11 +271,13 @@ class ClimateGlobalRiskReviewProvider(PlanetDataProvider):
         tmax: List[float] = daily.get("temperature_2m_max", []) or []
         precs: List[float] = daily.get("precipitation_sum", []) or []
 
+        # NOTE: return BARE keys — fetch() applies the "forecast_" prefix uniformly.
+        # Self-prefixing here caused the "forecast_forecast_max_temp_7d" double bug.
         metrics: Dict[str, Any] = {}
         if tmax:
-            metrics["forecast_max_temp_7d"] = float(max(tmax))
+            metrics["max_temp_7d"] = float(max(tmax))
         if precs:
-            metrics["forecast_heavy_rain_days_7d"] = float(sum(1 for p in precs if p >= 20.0))
+            metrics["heavy_rain_days_7d"] = float(sum(1 for p in precs if p >= 20.0))
 
         return metrics
 
@@ -341,12 +343,14 @@ class ClimateGlobalRiskReviewProvider(PlanetDataProvider):
         except Exception:
             wb_data = {}
 
+        # NOTE: return BARE key — fetch() applies the "wb_" prefix uniformly.
+        # Self-prefixing here caused the "wb_wb_country_code_mentions" double bug.
         metrics: Dict[str, Any] = {}
         try:
             text = json.dumps(wb_data, ensure_ascii=False)
             cc = self.config.country_code.upper()
             count = text.upper().count(f"\"{cc}\"")
-            metrics["wb_country_code_mentions"] = float(count)
+            metrics["country_code_mentions"] = float(count)
         except Exception:
             pass
 

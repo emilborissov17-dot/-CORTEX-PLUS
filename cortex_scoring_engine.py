@@ -41,7 +41,7 @@ def _unwrap_metrics(metrics: Dict) -> Dict:
 MISSING_DATA_PENALTIES = {
     "co2_ppm_current":               0.4,
     "co2_annual_increase":            0.3,
-    "forecast_forecast_max_temp_7d":  0.2,
+    "forecast_max_temp_7d":  0.2,
 }
 
 
@@ -52,7 +52,7 @@ def score_climate(metrics: Dict) -> ScoreResult:
 
     co2          = metrics.get("co2_ppm_current")
     co2_increase = metrics.get("co2_annual_increase")
-    max_temp_7d  = metrics.get("forecast_forecast_max_temp_7d")
+    max_temp_7d  = metrics.get("forecast_max_temp_7d")
 
     if co2 is None:
         msg = "🚨 ЛИПСВАЩИ ДАННИ: co2_ppm_current — изключен от оценката"
@@ -83,8 +83,8 @@ def score_climate(metrics: Dict) -> ScoreResult:
         signals.append(f"✅ Годишен ръст на CO2: +{co2_increase} ppm")
 
     if max_temp_7d is None:
-        msg = "🚨 ЛИПСВАЩИ ДАННИ: forecast_forecast_max_temp_7d — изключен от оценката"
-        score -= MISSING_DATA_PENALTIES["forecast_forecast_max_temp_7d"]
+        msg = "🚨 ЛИПСВАЩИ ДАННИ: forecast_max_temp_7d — изключен от оценката"
+        score -= MISSING_DATA_PENALTIES["forecast_max_temp_7d"]
         signals.append(msg)
         print(f"[SCORER][WARNING] CLIMATE_GLOBAL_RISK_REVIEW: {msg}")
     elif max_temp_7d > 35:

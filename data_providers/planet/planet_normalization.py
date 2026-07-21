@@ -15,7 +15,7 @@ data_providers/planet/planet_normalization.py
 
 from __future__ import annotations
 
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 
 
 def _safe_get(d: Dict[str, Any], key: str, default: Any = None) -> Any:
@@ -26,86 +26,156 @@ def _safe_get(d: Dict[str, Any], key: str, default: Any = None) -> Any:
 # ---------- CLIMATE ----------
 
 
+def _num(metrics: Dict[str, Any], key: str) -> Optional[float]:
+    """Return metrics[key] only if it is a real number, else None.
+
+    Missing/non-numeric MUST map to None (unknown), never to 0.0 — a silent 0.0
+    default is exactly the bug that let this axis publish LOW risk over CO₂ 428.
+    """
+    v = metrics.get(key)
+    return float(v) if isinstance(v, (int, float)) and not isinstance(v, bool) else None
+
+
 def normalize_climate(raw: Dict[str, Any]) -> Dict[str, Any]:
     """
     Нормализира сурови климатични данни към snapshot payload:
 
     {
-      "level": "LOW|MEDIUM|HIGH",
+      "level": "LOW|MEDIUM|HIGH|UNKNOWN",   # RISK level (HIGH = high climate risk)
+      "risk_score": float,
       "signals": [ ... ],
       "key_metrics": [ { "name": ..., "description": ... }, ... ]
     }
+
+    Rebuilt 2026-07-21: the previous version scored risk from three keys the
+    provider never emits (`temperature_trend`, `extreme_days_share`,
+    `precipitation_change`), so risk_score was always 0.0 → always LOW, while the
+    real, alarming CO₂ readings rode along unused. This version scores from the
+    keys the provider actually emits (see climate_global_risk_review_provider.py),
+    led by the CO₂ concentration, which is the globally-valid signal.
     """
 
     metrics = _safe_get(raw, "metrics", {})
-    temp_trend = _safe_get(metrics, "temperature_trend", 0.0)
-    extreme_days_share = _safe_get(metrics, "extreme_days_share", 0.0)
-    precip_change = _safe_get(metrics, "precipitation_change", 0.0)
 
-    # Много опростена логика за MVP
+    # Keys the provider ACTUALLY emits (verified against fetch()):
+    #   co2_ppm_current / co2_annual_increase / co2_annual_mean  — NOAA Mauna Loa (global)
+    #   forecast_max_temp_7d                                     — Open-Meteo 7-day (LOCAL)
+    #   archive_precipitation_variability                        — Open-Meteo reanalysis (LOCAL)
+    #   temperature_trend / extreme_days_share                   — Open-Meteo climate (optional, LOCAL)
+    co2        = _num(metrics, "co2_ppm_current")
+    if co2 is None:
+        co2 = _num(metrics, "co2_annual_mean")
+    co2_incr   = _num(metrics, "co2_annual_increase")
+    max_temp   = _num(metrics, "forecast_max_temp_7d")
+    precip_var = _num(metrics, "archive_precipitation_variability")
+    temp_trend = _num(metrics, "temperature_trend")
+    extreme    = _num(metrics, "extreme_days_share")
+
     risk_score = 0.0
-    risk_score += abs(temp_trend)
-    risk_score += extreme_days_share * 2.0
-    risk_score += abs(precip_change) * 0.5
-
-    if risk_score < 0.5:
-        level = "LOW"
-    elif risk_score < 1.5:
-        level = "MEDIUM"
-    else:
-        level = "HIGH"
-
+    have_real = False
     signals: List[str] = []
 
-    if abs(temp_trend) > 0.05:
+    # --- CO₂ concentration: dominant, globally-valid risk signal ---------------
+    # Reference thresholds: pre-industrial ≈ 280 ppm; planetary boundary 350 ppm
+    # (Rockström 2009 / Hansen 2008); 400 ppm crossed in 2015; ~450 ppm ≈ the
+    # +2 °C commitment level. With +1.19 °C already on record, >425 ppm rising is
+    # NOT a low-risk state.
+    if co2 is not None:
+        have_real = True
+        if co2 >= 450:
+            risk_score += 3.0
+            signals.append(f"CO₂ {co2:.1f} ppm — при/над прага за +2 °C (~450 ppm). Критичен риск.")
+        elif co2 >= 425:
+            risk_score += 2.0
+            signals.append(f"CO₂ {co2:.1f} ppm — далеч над безопасната граница (350 ppm) и над 400 ppm.")
+        elif co2 >= 400:
+            risk_score += 1.5
+            signals.append(f"CO₂ {co2:.1f} ppm — над 400 ppm и над планетарната граница от 350 ppm.")
+        elif co2 >= 350:
+            risk_score += 1.0
+            signals.append(f"CO₂ {co2:.1f} ppm — над безопасната граница от 350 ppm.")
+        else:
+            signals.append(f"CO₂ {co2:.1f} ppm — под планетарната граница от 350 ppm.")
+    else:
+        signals.append("CO₂ данни липсват — климатичният риск НЕ се приема за нисък (неопределен).")
+
+    # --- Is CO₂ still rising? direction matters --------------------------------
+    if co2_incr is not None:
+        have_real = True
+        if co2_incr >= 2.0:
+            risk_score += 1.0
+            signals.append(f"CO₂ нараства бързо: +{co2_incr:.2f} ppm спрямо преди година.")
+        elif co2_incr > 0:
+            risk_score += 0.5
+            signals.append(f"CO₂ продължава да нараства: +{co2_incr:.2f} ppm спрямо преди година.")
+        else:
+            signals.append(f"CO₂ не нараства спрямо предходната година ({co2_incr:+.2f} ppm).")
+
+    # --- Short-term forecast heat (LOCAL — secondary) --------------------------
+    if max_temp is not None:
+        have_real = True
+        if max_temp >= 40:
+            risk_score += 1.0
+            signals.append(f"7-дневна прогноза: екстремна горещина до {max_temp:.1f} °C.")
+        elif max_temp >= 35:
+            risk_score += 0.5
+            signals.append(f"7-дневна прогноза: висока горещина до {max_temp:.1f} °C.")
+
+    # --- Precipitation variability (instability) -------------------------------
+    if precip_var is not None:
+        have_real = True
+        if precip_var >= 2.0:
+            risk_score += 0.5
+            signals.append(f"Висока изменчивост на валежите (σ/μ = {precip_var:.2f}).")
+        elif precip_var >= 1.0:
+            risk_score += 0.25
+
+    # --- Optional long-term local warming trend --------------------------------
+    if temp_trend is not None and abs(temp_trend) > 0.05:
+        have_real = True
         if temp_trend > 0:
-            signals.append("Средните температури показват стабилен възходящ тренд.")
-        else:
-            signals.append("Средните температури показват лек низходящ тренд.")
-    else:
-        signals.append("Средните температури остават относително стабилни във времето.")
+            risk_score += 0.5
+            signals.append("Дългосрочните средни температури показват възходящ тренд.")
+    if extreme is not None and extreme > 0.05:
+        have_real = True
+        risk_score += 0.5
+        signals.append("Делът на дните с екстремни температури нараства.")
 
-    if extreme_days_share > 0.05:
-        signals.append("Делът на дните с екстремни температури се увеличава.")
+    # --- Level from risk_score (RISK polarity: HIGH = high risk) ---------------
+    if not have_real:
+        level = "UNKNOWN"
+    elif risk_score >= 2.5:
+        level = "HIGH"
+    elif risk_score >= 1.0:
+        level = "MEDIUM"
     else:
-        signals.append("Делът на дните с екстремни температури остава нисък.")
-
-    if abs(precip_change) > 0.05:
-        if precip_change > 0:
-            signals.append("Наблюдава се тенденция към по-високи валежи.")
-        else:
-            signals.append("Наблюдава се тенденция към по-ниски валежи.")
-    else:
-        signals.append("Валежите остават без ясно изразен тренд.")
+        level = "LOW"
 
     key_metrics: List[Dict[str, str]] = [
-        {
-            "name": "temperature_trend",
-            "description": "Дългосрочен тренд на средните температури според климатичните модели.",
-        },
-        {
-            "name": "extreme_temperature_days_share",
-            "description": "Относителен дял на дните с екстремни температурни стойности.",
-        },
-        {
-            "name": "precipitation_change",
-            "description": "Промяна във валежите спрямо дългосрочната база.",
-        },
-        {
-            "name": "climate_risk_score",
-            "description": "Обобщен индикатор за климатичен риск, комбиниращ няколко климатични фактори.",
-        },
+        {"name": "co2_ppm_current",
+         "description": "Текуща концентрация на CO₂ (NOAA Mauna Loa), ppm — водещ глобален сигнал."},
+        {"name": "co2_annual_increase",
+         "description": "Годишен ръст на CO₂ спрямо преди година, ppm."},
+        {"name": "forecast_max_temp_7d",
+         "description": "Максимална прогнозна температура за 7 дни (локален сигнал), °C."},
+        {"name": "archive_precipitation_variability",
+         "description": "Изменчивост на валежите (σ/μ) от реанализ (локален сигнал)."},
+        {"name": "climate_risk_score",
+         "description": "Обобщен индикатор за климатичен риск, комбиниращ горните фактори (по-високо = по-голям риск)."},
     ]
 
-    # Прехвърли всички реални метрики от raw["metrics"]
-    raw_metrics = _safe_get(raw, "metrics", {})
+    # Pass real metrics through, and PERSIST the computed score so it is no longer
+    # an empty placeholder that only ever existed as a description.
+    out_metrics = dict(_safe_get(raw, "metrics", {}))
+    out_metrics["climate_risk_score"] = round(risk_score, 2)
 
     return {
         "level": level,
+        "risk_score": round(risk_score, 2),
         "signals": signals,
         "key_metrics": key_metrics,
-        "metrics": raw_metrics,
-        "source_type": "REAL_DATA",
+        "metrics": out_metrics,
+        "source_type": "REAL_DATA" if have_real else "NO_REAL_DATA",
         "data_quality": _safe_get(raw, "data_mode", "REAL_FROM_APPROVED_SOURCE"),
         "fetched_date": _safe_get(raw, "fetched_at", ""),
     }
