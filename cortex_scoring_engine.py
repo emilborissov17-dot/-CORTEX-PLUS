@@ -615,12 +615,22 @@ def score_education(metrics: Dict) -> ScoreResult:
     signals = []
     score = 0.5
 
-    literacy = (metrics.get("adult_literacy_rate") or
+    # Read the keys the provider (education_culture_provider.py, World Bank
+    # SE.* / IT.* indicators) ACTUALLY emits FIRST; keep the older names as
+    # fallbacks. The scorer previously read only the old names, none of which
+    # the provider emits, so every reading defaulted to None -> constant 0.5.
+    literacy = (metrics.get("literacy_rate_adult_pct") or
+                metrics.get("adult_literacy_rate") or
                 metrics.get("literacy_rate_adult_total"))
-    enrollment = (metrics.get("school_enrollment_secondary") or
+    enrollment = (metrics.get("secondary_enrollment_pct") or
+                  metrics.get("tertiary_enrollment_pct") or
+                  metrics.get("primary_enrollment_pct") or
+                  metrics.get("school_enrollment_secondary") or
                   metrics.get("school_enrollment_tertiary"))
-    edu_exp = (metrics.get("education_expenditure_pct_gdp") or
+    edu_exp = (metrics.get("govt_education_spend_pct_gdp") or
+               metrics.get("education_expenditure_pct_gdp") or
                metrics.get("govt_expenditure_education_pct"))
+    internet = metrics.get("internet_users_pct")
     pisa = metrics.get("pisa_score_average")
 
     if literacy is not None:
@@ -634,7 +644,7 @@ def score_education(metrics: Dict) -> ScoreResult:
             score = 0.3
             signals.append(f"⚠️ Грамотност: {literacy:.1f}% — ниска")
     else:
-        signals.append("⚡ Липсват данни за грамотност")
+        signals.append("🚨 ЛИПСВАЩИ ДАННИ: грамотност — не влиза в оценката")
 
     if enrollment is not None:
         if enrollment > 80:
@@ -656,6 +666,16 @@ def score_education(metrics: Dict) -> ScoreResult:
         else:
             signals.append(f"⚡ Разходи за образование: {edu_exp:.1f}% от БВП")
 
+    if internet is not None:
+        if internet > 80:
+            score += 0.05
+            signals.append(f"✅ Достъп до интернет: {internet:.1f}%")
+        elif internet < 40:
+            score -= 0.05
+            signals.append(f"⚠️ Достъп до интернет: {internet:.1f}% — ограничен")
+        else:
+            signals.append(f"⚡ Достъп до интернет: {internet:.1f}%")
+
     if pisa is not None:
         if pisa > 500:
             score += 0.05
@@ -664,8 +684,12 @@ def score_education(metrics: Dict) -> ScoreResult:
             score -= 0.1
             signals.append(f"⚠️ PISA резултат: {pisa:.0f} — нисък")
 
-    if not signals:
-        signals.append("⚡ Липсват данни за образование")
+    # No real reading survived -> say so loudly instead of publishing 0.5 as if
+    # it were measured (the facade this fix removes).
+    real_inputs = [v for v in (literacy, enrollment, edu_exp, internet) if v is not None]
+    verification = "VERIFIED" if real_inputs else "SELF_REPORTED"
+    if not real_inputs:
+        signals.append("🚨 ЛИПСВАЩИ ДАННИ: няма реални образователни метрики")
 
     score = max(0.0, min(1.0, score))
     return ScoreResult(
@@ -673,7 +697,9 @@ def score_education(metrics: Dict) -> ScoreResult:
         level=_score_to_level(score),
         score=round(score, 2),
         signals=signals,
-        metrics_used={"literacy": literacy, "enrollment": enrollment, "edu_exp": edu_exp}
+        metrics_used={"literacy": literacy, "enrollment": enrollment,
+                      "edu_exp": edu_exp, "internet": internet},
+        verification=verification,
     )
 
 
