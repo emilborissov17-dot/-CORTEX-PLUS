@@ -1104,4 +1104,17 @@ if __name__ == "__main__":
             print("\nStopping pulse monitor...")
             _pstop()
     else:
-        main()
+        # Keep the machine awake for the full cycle. Diagnosis (21 Jul 2026):
+        # the cycle died mid-run ~4 of 7 mornings with no traceback -- the laptop
+        # slept before the ~60-min cycle finished. The request is bound to THIS
+        # process; Windows clears it on exit/death. FAIL-OPEN: if the keepalive
+        # module is missing or errors, the cycle runs exactly as before.
+        try:
+            from experiments.keepalive.keep_awake import keep_awake as _keep_awake
+        except Exception:
+            from contextlib import contextmanager as _cm
+            @_cm
+            def _keep_awake(*a, **k):
+                yield False
+        with _keep_awake():
+            main()
