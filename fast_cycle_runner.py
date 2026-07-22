@@ -825,6 +825,28 @@ def main():
     except Exception as e:
         print(f"[FAST_CYCLE] scoring_engine -> FAILED: {e}")
 
+    # ── 12.45. Facade self-check — did each real scorer consume real data, or
+    #           default to a constant? Fails LOUD instead of silent. FAIL-OPEN. ──
+    beat("facade_self_check", "12.45")
+    try:
+        from core.scorer_self_check import run_from_snapshots as _facade_check, format_report as _facade_fmt
+        import datetime as _dt2
+        _report = _facade_check()
+        _freport = BASE / "output" / "facade_audit_latest.json"
+        _freport.parent.mkdir(parents=True, exist_ok=True)
+        _report_out = dict(_report)
+        _report_out["generated_at"] = _dt2.datetime.now(_dt2.timezone.utc).isoformat()
+        _freport.write_text(json.dumps(_report_out, ensure_ascii=False, indent=2), encoding="utf-8")
+        for _line in _facade_fmt(_report):
+            print(f"[FACADE] {_line}")
+        if _report["dead"]:
+            print(f"[FAST_CYCLE] facade_self_check -> {len(_report['dead'])} DEAD scorer(s): "
+                  f"{', '.join(_report['dead'])} — see output/facade_audit_latest.json")
+        else:
+            print("[FAST_CYCLE] facade_self_check -> OK (no dead scorers)")
+    except Exception as e:
+        print(f"[FAST_CYCLE] facade_self_check -> FAILED: {e}")
+
     # ── 12.5. Auto levels — СЛЕД snapshot агентите, не преди! ──
     beat("auto_levels", "12.5")
     # Тук auto_level чете реални данни от обновения master snapshot.
