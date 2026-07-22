@@ -292,17 +292,22 @@ def run():
         print(f"    Съюзници: {item.get('allies',[])}")
     
     # 4. Запис
-    # Предсказания директно тук
+    # Sealed, authoritative axis self-predictions (K1a, target_kind 'axis_next').
+    # RETIRED (F1, 2026-07-21): the legacy block here graded an LLM-urgency
+    # prediction against the SAME LLM-urgency signal that produced it — a
+    # self-confirming loop (memory/prediction_tracker.verify_and_learn, now
+    # quarantined non-authoritative). It is replaced by the sealed prophecy
+    # path, which scores matured predictions against the REAL next observed
+    # axis score (memory/axis_history.json) and seals fresh ones under the
+    # tamper-evident ledger. The legacy grader is NO LONGER invoked in a cycle.
+    # FAIL-OPEN: any error here must never break the cycle.
     try:
-        from memory.prediction_tracker import make_prediction, verify_and_learn
-        axes_data = state.get("internet", {}).get("results", {})
-        verify_and_learn(axes_data)
-        for ax in attention.get("priority_axes", [])[:3]:
-            if ax in axes_data:
-                make_prediction(ax, "ситуацията ще продължи", axes_data[ax].get("urgency","LOW"))
-        print(f"[FEEDBACK] Предсказания записани")
+        from experiments.prophecy import prophecy as _prophecy
+        _prophecy.cmd_score_axes()     # verify matured predictions vs real outcome
+        _prophecy.cmd_predict_axes()   # seal next-cycle predictions (LIVE axes only)
+        print("[FEEDBACK] axis_next: matured predictions scored + next-cycle sealed (authoritative)")
     except Exception as e:
-        print(f"[FEEDBACK] Error: {e}")
+        print(f"[FEEDBACK] axis_next prophecy skipped (fail-open): {e}")
     result = save_orchestration_result(attention, plan, state)
     print("\n✅ Оркестрацията записана!")
     

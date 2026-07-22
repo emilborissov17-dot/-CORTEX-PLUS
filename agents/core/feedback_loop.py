@@ -133,15 +133,11 @@ def save_score_snapshot(current):
     _save_json(SCORES_FILE, history[-500:])
 
 def make_predictions(current, delta):
-    try:
-        from memory.prediction_tracker import make_prediction
-        for axis, d in delta.items():
-            if d > 2.0:
-                score = current.get(axis, 50)
-                urgency = "LOW" if score > 70 else "MEDIUM" if score > 40 else "HIGH"
-                make_prediction(axis, f"Очакваме продължаване (delta={d})", urgency)
-    except Exception as e:
-        print(f"[FEEDBACK] Предсказания грешка: {e}")
+    # RETIRED (F1, 2026-07-21): legacy unsealed self-graded predictor removed.
+    # Authoritative axis self-prediction runs via the sealed prophecy 'axis_next'
+    # path from the orchestrator. No-op: writes nothing, grades nothing.
+    print("[FEEDBACK] legacy predictor retired — sealed axis_next path is authoritative")
+    return None
 
 def run():
     print("[FEEDBACK_LOOP] ══════════════════════════════")
