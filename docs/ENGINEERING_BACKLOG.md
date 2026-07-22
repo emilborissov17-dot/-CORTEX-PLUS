@@ -171,6 +171,30 @@ Two live holes closed by the denylist along the way:
 
 ---
 
+## Known-failing tests — baseline (2026-07-22)
+
+These 4 reds pre-date the branch merges and are **outside the merged file set**.
+Recorded as the accepted baseline during the master merge of the reviewed
+branches (self-check #4 / K1a #5 / F1, climate, education-culture, keep-awake).
+Suite is otherwise green (445 passed). **Do not treat these as merge-induced.**
+
+- **UCDP sanity-band guard — REAL data/mapping bug.**
+  `test/test_source_status.py::test_ucdp_real_csv_if_present_lands_in_the_sanity_band`
+  fails: the actual local UCDP CSV yields `active_armed_conflicts = 2816`, far
+  outside the measured 40–80 band (v26.1, 2018–2025). The guard is doing its job
+  — it means the column mapping against the present CSV is wrong and the axis
+  would report a fabricated conflict count. Fix: reconcile `gi.fetch_ucdp()`
+  column mapping with the CSV actually on disk. Not fixed now.
+
+- **`dreams` test-signature bug — 3 collection errors.**
+  `experiments/dreams/test_dream.py::{test_facts,test_check_discriminates,test_write_and_sidecar}`
+  error at setup: each is declared `def test_x(src: dream.Sources)`, so pytest
+  tries to resolve `src` as a fixture and can't (`fixture 'src' not found`).
+  Not assertion failures — the tests never run. Fix: build `src` inside each
+  test (or add a `src` fixture) instead of taking it as a parameter. Not fixed now.
+
+---
+
 ## Conventions worth remembering
 
 - **Python:** never call bare `python` — use `PYTHONIOENCODING=utf-8 venv/Scripts/python.exe`.
