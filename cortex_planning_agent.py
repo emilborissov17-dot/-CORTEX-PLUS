@@ -73,7 +73,7 @@ def score_climate(metrics: Dict) -> ScoreResult:
 
     co2 = metrics.get("co2_ppm_current", 0)
     co2_increase = metrics.get("co2_annual_increase", 0)
-    max_temp_7d = metrics.get("forecast_forecast_max_temp_7d", 0)
+    max_temp_7d = metrics.get("forecast_max_temp_7d", 0)
 
     if co2 > 430:
         score -= 0.4

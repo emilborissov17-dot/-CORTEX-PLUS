@@ -6,7 +6,43 @@ Working list of engineering fixes, with status and commit SHAs.
 was lost when the session ended — the next session had no idea what items 5–7
 were. It lives on disk now. Keep it updated as items land.
 
-Last updated: **2026-07-13**
+Last updated: **2026-07-21**
+
+---
+
+## Operational blockers (host machine — no code, highest leverage)
+
+### The machine sleeps mid-cycle — 12 of 13 catchup runs died 16–21 Jul
+
+**Symptom.** Over 16–21 Jul the ledger recorded 15 starts / 1 finish / 12 deaths.
+Every death log ends abruptly mid-line — **no traceback, no `MemoryError`, no
+shutdown message** — with the body reporting HEALTHY (RAM 44–48%, CPU 3–5%) right
+up to the cut. The deaths span every lifecycle point (some at 329 bytes before the
+body scan, one 100 KB deep in Cerebras synthesis), so they are not one wedged step;
+they are the **process being killed from outside** while it runs.
+
+**Root cause (environmental, not code).** The daily cycle is scheduled for 03:00,
+but the machine is asleep at 03:00 every night (all 16 catchups fired 5–7 h late,
+~08:00–09:30, as `MISSED_RUN_CATCHUP`). It wakes only when Emil opens the laptop in
+the morning; the catchup fires into the brief wake window and the machine re-sleeps
+(lid/idle) before the ~60-min cycle finishes → the cycle is SIGKILLed mid-run. The
+one clean finish (07-19, 3709 s) is the one morning the machine stayed awake.
+**Autonomy is fake until the host stays awake for the cycle it wakes to run.**
+
+**Required host settings (Emil, set once — Windows 11).** On AC power:
+- **Never sleep on AC.** Settings → System → Power → Screen and sleep → *When
+  plugged in, put my device to sleep after* → **Never**. (Or `powercfg /change
+  standby-timeout-ac 0`.)
+- **Do not sleep on lid close (AC).** Control Panel → Power Options → *Choose what
+  closing the lid does* → *When plugged in* → **Do nothing**.
+- **Wake timer for 03:00.** Either keep the machine awake overnight (above), or add a
+  Task Scheduler wake timer: the supervisor's scheduled task → *Conditions* → **Wake
+  the computer to run this task** = on, and Power Options → Sleep → *Allow wake
+  timers* = **Enabled**. This lets the 03:00 run fire on schedule instead of as a
+  5–7 h-late morning catchup.
+
+Until this is set, no software fix changes the outcome — the supervisor's restart
+budget (2/day) is exhausted every morning by cycles that are killed, not crashed.
 
 ---
 
