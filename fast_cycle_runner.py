@@ -878,6 +878,14 @@ def main():
         )
     _run("goal_score_calculator", _goal_score_calculator)
 
+    # ── 12.65. Self-reflective tick — the organism reflects on itself, toward the goal ──
+    beat("goal_prophecy_self", "12.65")
+    def _goal_prophecy_self():
+        import subprocess, sys as _s
+        subprocess.run([_s.executable, str(BASE / "experiments" / "prophecy" / "goal_prophecy.py"), "--self"],
+                       timeout=180, cwd=str(BASE))
+    _run("goal_prophecy_self", _goal_prophecy_self)
+
     # ── 12.7. Cognitive Orchestrator — Attentional Meta Protocol ──
     beat("cognitive_orchestrator", "12.7")
     # Runs BEFORE HyperClaw so it can use its priority_axes assessment.
