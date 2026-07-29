@@ -1138,5 +1138,19 @@ if __name__ == "__main__":
             @_cm
             def _keep_awake(*a, **k):
                 yield False
+        # keep_awake blocks *idle* sleep but not a lid-close power action; on this
+        # laptop "Lid close action" is Sleep, which kills the cycle when the lid
+        # shuts mid-run. lidaction_guard sets it to "Do nothing" for the life of
+        # the cycle and restores the original on exit/death (finally + atexit +
+        # sidecar breadcrumb). Same FAIL-OPEN contract: missing/erroring module
+        # or an unreadable setting -> the cycle runs exactly as before.
+        try:
+            from experiments.keepalive.lidaction_guard import lidaction_guard as _lidaction_guard
+        except Exception:
+            from contextlib import contextmanager as _cm
+            @_cm
+            def _lidaction_guard(*a, **k):
+                yield False
         with _keep_awake():
-            main()
+            with _lidaction_guard():
+                main()
