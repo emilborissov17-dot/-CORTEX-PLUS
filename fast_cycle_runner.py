@@ -622,6 +622,19 @@ def main():
     _cycle_id = os.environ.get("CORTEX_CYCLE_ID")
     beat("boot", "-1", cycle_id=_cycle_id)
 
+    # ── Telegram approvals: apply any "OK <id>" replies BEFORE the cycle runs, so
+    #    a source you approved is live for this cycle's scoring. Sensing-source
+    #    promotions + accepted goals only — never a world-action, and only from the
+    #    configured chat_id. FAIL-OPEN: a failure here never blocks the cycle.
+    beat("telegram_approvals", "-0.7")
+    try:
+        from experiments.needs.approve_reader import run as _approve_run
+        _n_appr = _approve_run()
+        if _n_appr:
+            print(f"[FAST_CYCLE] telegram approvals -> applied {_n_appr}")
+    except Exception as e:
+        print(f"[FAST_CYCLE] telegram approvals -> FAILED: {type(e).__name__}: {e}")
+
     # ── Проверка за patches + initiatives преди всичко друго ──
     beat("notify_patches_and_initiatives", "-0.5")
     _notify_patches_and_initiatives()
@@ -668,6 +681,20 @@ def main():
         _gb._SLEEP_SECS = llm_sleep
     except Exception:
         pass
+
+    # ── 0.3. Canon — the ALWAYS-LOADED conceptual center (core/canon.py). Homeostasis
+    #    above is the PHYSICAL self; the canon is the CONCEPTUAL self. FAIL-OPEN.
+    beat("canon_load", "0.3")
+    try:
+        from core.canon import as_frame as _canon_frame, load_canon as _load_canon
+        _cf = _canon_frame()
+        _cc = _load_canon()
+        (BASE / "memory").mkdir(parents=True, exist_ok=True)
+        (BASE / "memory" / "active_canon_frame.txt").write_text(_cf, encoding="utf-8")
+        print(f"[FAST_CYCLE] canon loaded -> {len(_cc.get('invariants', []))} invariant(s), "
+              f"{len(_cc.get('dimensions', []))} goal-dimensions; center stamped for this cycle")
+    except Exception as e:
+        print(f"[FAST_CYCLE] canon load -> FAILED (fallback center in effect): {type(e).__name__}: {e}")
 
     # ── 0.5. Dependency check ──
     beat("dependency_check", "0.5")
@@ -723,18 +750,75 @@ def main():
         print(f"[FAST_CYCLE] global_indicators -> FAILED: {e}")
         _tb.print_exc()
 
-    # ── 2.6. Axis composers — stitch anchor + daily tentacles per axis ──
-    beat("axis_composers", "2.6")
-    def _axis_composers():
-        import subprocess, sys as _s, json as _j
-        spec_path = BASE / "config" / "composer_specs.json"
-        axes = [k for k in _j.loads(spec_path.read_text(encoding="utf-8")) if not k.startswith("_")]
-        for ax in axes:
-            subprocess.run([_s.executable,
-                            str(BASE / "experiments" / "composers" / "composer.py"),
-                            "--run", ax], timeout=120, cwd=str(BASE))
-        print(f"[FAST_CYCLE] axis_composers -> {len(axes)} axes composed (see memory/composer_needs.json)")
-    _run("axis_composers", _axis_composers)
+    # ── 2.54. Sensorium ingest — the LIGHT half of the sensing/thinking split. The
+    #    independent per-axis collectors (browser agents) deposit verified, Merkle-committed
+    #    drops out-of-band; here the cycle only routes the newest ready drop per axis to the
+    #    composer (numeric) / brain inbox (semantic). No browser, no search, no heavy model.
+    #    FAIL-OPEN. (claude/SENSORY_COLLECTORS_ARCHITECTURE_30JUL.md)
+    beat("sensorium_ingest", "2.54")
+    try:
+        from experiments.sensorium.sensorium import ingest as _sens_ingest, verify as _sens_verify
+        _si = _sens_ingest()
+        _sv = _sens_verify()
+        print(f"[FAST_CYCLE] sensorium -> ingested {_si.get('ingested', 0)} drop(s); "
+              f"merkle intact={_sv.get('ok')} ({_sv.get('n')} leaves)")
+        if not _sv.get("ok"):
+            print(f"[FAST_CYCLE] sensorium -> TAMPER/GAP: {_sv.get('mismatches')}")
+    except Exception as e:
+        print(f"[FAST_CYCLE] sensorium ingest -> FAILED: {type(e).__name__}: {e}")
+
+    # ── 2.55. Browser-scout — autonomously turn HTML pages into neutral JSON for the
+    #    DYNAMIC axes (deterministic extraction, traceable to page text). Writes
+    #    memory/browse_sources/<key>.json, which the composer reads via its "file" kind.
+    #    Runs BEFORE composers so the fresh value is available this cycle. FAIL-OPEN.
+    beat("browser_scout", "2.55")
+    try:
+        from experiments.browser_scout.scout import run_all as _scout_all
+        _scout_all()
+    except Exception as e:
+        print(f"[FAST_CYCLE] browser_scout -> FAILED: {type(e).__name__}: {e}")
+
+    # ── 2.6. Composers — daily multi-source portfolio per axis = the MOVING signal.
+    #    Fetches each spec'd axis's live sources, composes the indicator, appends the
+    #    value to memory/composer_state/<AXIS>.json (last 30, timestamped) and refreshes
+    #    composer_needs.json. THIS is the daily signal E1 (learner) / E8 (reward arena)
+    #    / K1b learn from — without it those verdicts stay "insufficient data".
+    #    FAIL-OPEN: a source/network failure lowers confidence and emits a NEED, it
+    #    never breaks the cycle. (Task #3 — the keystone.)
+    beat("composers", "2.6")
+    try:
+        from experiments.composers.composer import (
+            compose as _compose, _load as _cload, SPEC_FILE as _CSPEC)
+        _specs = _cload(_CSPEC, {})
+        _c_axes = [a for a in _specs if a != "_meta"]
+        _c_ok = 0
+        for _ax in _c_axes:
+            try:
+                _r = _compose(_ax)
+                if isinstance(_r, dict) and "error" in _r:
+                    print(f"[FAST_CYCLE] composer {_ax} -> {_r['error']}")
+                    continue
+                _cmp = (_r or {}).get("composed", {})
+                _c_ok += 1
+                print(f"[FAST_CYCLE] composer {_ax} -> anchor={_cmp.get('anchor')} "
+                      f"daily={_cmp.get('daily')} divergence={_cmp.get('divergence')} "
+                      f"confidence={_r.get('confidence')} needs={len(_r.get('needs', []))}")
+            except Exception as _ce:
+                print(f"[FAST_CYCLE] composer {_ax} -> FAILED: {type(_ce).__name__}: {_ce}")
+        print(f"[FAST_CYCLE] composers -> {_c_ok}/{len(_c_axes)} composed (moving signal recorded)")
+    except Exception as e:
+        print(f"[FAST_CYCLE] composers -> FAILED: {type(e).__name__}: {e}")
+
+    # ── 2.7. Grounding ledger (E2) — record per-axis anchor-vs-daily divergence and
+    #    proxy agreement, tamper-evidently. Reads composed_indicators, appends to its
+    #    own ledger — NEVER touches scoring. Inert (no alerts) until daily sources are
+    #    live, then it surfaces contradictions the human can act on. FAIL-OPEN.
+    beat("grounding_ledger", "2.7")
+    try:
+        from experiments.grounding.divergence_ledger import record as _ground_record
+        _ground_record()
+    except Exception as e:
+        print(f"[FAST_CYCLE] grounding_ledger -> FAILED: {type(e).__name__}: {e}")
 
     # ── 3. Trend tracker ──
     beat("trend_tracker", "3")
@@ -890,14 +974,6 @@ def main():
             encoding="utf-8",
         )
     _run("goal_score_calculator", _goal_score_calculator)
-
-    # ── 12.65. Self-reflective tick — the organism reflects on itself, toward the goal ──
-    beat("goal_prophecy_self", "12.65")
-    def _goal_prophecy_self():
-        import subprocess, sys as _s
-        subprocess.run([_s.executable, str(BASE / "experiments" / "prophecy" / "goal_prophecy.py"), "--self"],
-                       timeout=180, cwd=str(BASE))
-    _run("goal_prophecy_self", _goal_prophecy_self)
 
     # ── 12.7. Cognitive Orchestrator — Attentional Meta Protocol ──
     beat("cognitive_orchestrator", "12.7")
@@ -1123,6 +1199,32 @@ def main():
     # cycle_id, so it must run BEFORE the heartbeat is cleared.
     _seal_cycle_record()
     _clear_heartbeat()
+
+    # Cycle finished → the organism speaks its needs in one voice: for each hunger
+    # a proposal, and any candidate it found itself, written to memory/needs_brief.md
+    # for the human. Runs LAST, after every memory file this cycle wrote (homeostasis,
+    # composer_needs, self_directed_priority). Advisory only — nothing here acts.
+    # FAIL-OPEN: a failure here never breaks a completed cycle.
+    try:
+        from experiments.needs.needs_report import (
+            build as _needs_build, _brief as _needs_brief, _notify as _needs_notify,
+        )
+        _rep = _needs_build()
+        _needs_notify(_needs_brief(_rep))
+        _s = _rep["summary"]
+        print(f"[FAST_CYCLE] needs -> {_s['total']} needs ({_s['high']} high) "
+              f"-> memory/needs_brief.md")
+        # Optional phone push: fires only if memory/notify_channel.json exists
+        # (gitignored, holds the channel + secret). No config -> silent no-op.
+        try:
+            from experiments.needs.needs_report import push as _needs_push
+            _pushed = _needs_push(_rep)
+            if _pushed:
+                print(f"[FAST_CYCLE] needs -> pushed via {_pushed}")
+        except Exception as _pe:
+            print(f"[FAST_CYCLE] needs push -> FAILED: {type(_pe).__name__}: {_pe}")
+    except Exception as e:
+        print(f"[FAST_CYCLE] needs -> FAILED: {type(e).__name__}: {e}")
 
     print("=" * 50)
     print(f"[FAST_CYCLE] done at {_utc_now()}")
