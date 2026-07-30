@@ -113,10 +113,13 @@ def _find_gaps(max_gaps: int = 4) -> list[dict]:
 # LLM-driven source suggestion
 # ---------------------------------------------------------------------------
 
-def _suggest_sources(axis: str, already_known: list[str]) -> list[dict]:
+def _suggest_sources(axis: str, already_known: list[str],
+                     slot_requirement: str = "") -> list[dict]:
     """
     Ask the LLM to suggest 3 free, auth-free URLs for this axis.
     Returns list of {url, description, format, why}.
+    slot_requirement: extra constraint when searching for a specific composer
+    slot class (e.g. "must update at least daily").
     """
     spec_excerpt = ""
     if AXES_SPEC.exists():
@@ -126,11 +129,13 @@ def _suggest_sources(axis: str, already_known: list[str]) -> list[dict]:
             spec_excerpt = text[idx: idx + 600]
 
     known_str = "\n".join(f"  - {u}" for u in already_known) or "  (none yet)"
+    req_line = f"SPECIFIC REQUIREMENT: {slot_requirement}\n\n" if slot_requirement else ""
 
     prompt = (
         f"You are a data scientist helping the CORTEX++ civilization-monitoring AI.\n\n"
         f"AXIS: {axis}\n"
         f"AXIS DESCRIPTION:\n{spec_excerpt}\n\n"
+        f"{req_line}"
         f"ALREADY KNOWN SOURCES (do NOT repeat these):\n{known_str}\n\n"
         "Suggest exactly 3 FREE, publicly accessible data endpoints that:\n"
         "  - require NO API key or registration\n"
@@ -155,11 +160,48 @@ def _suggest_sources(axis: str, already_known: list[str]) -> list[dict]:
             expect=dict,
             label=f"SCOUT/{axis}",
         )
-        return data.get("sources", [])
+        srcs = data.get("sources", [])
+        if srcs:
+            return srcs
+        raise RuntimeError("cloud LLM returned no sources")
     except Exception as e:
-        # Грешката вече носи backend + truncated флаг, не е гола.
-        print(f"  [SCOUT] LLM suggestion failed for {axis}: {type(e).__name__}: {e}")
+        # Cloud backends busy/rate-limited (снощи: всички 4 -> 0 нови източника).
+        # SOVEREIGN FALLBACK: питаме локалния мозък (Ollama qwen), за да НЕ спира
+        # набавянето на данни само защото наетите модели са заети.
+        print(f"  [SCOUT] cloud LLM failed for {axis} ({type(e).__name__}) -> local brain")
+        try:
+            local = _suggest_via_local_brain(prompt)
+            if local:
+                print(f"  [SCOUT] local brain suggested {len(local)} source(s) for {axis}")
+                return local
+        except Exception as le:
+            print(f"  [SCOUT] local brain also failed for {axis}: {type(le).__name__}")
         return []
+
+
+# Sovereign source-suggestion — the organism's OWN local brain, zero external API.
+_OLLAMA_URL  = "http://localhost:11434"
+_LOCAL_MODEL = "qwen2.5:3b"
+
+
+def _suggest_via_local_brain(prompt: str, timeout: int = 45) -> list[dict]:
+    """Ask the LOCAL model (same channel as PULSE/goal_prophecy) for data sources.
+    Sovereign — never touches a paid/cloud API. Lenient JSON extraction."""
+    import urllib.request
+    body = json.dumps({
+        "model": _LOCAL_MODEL, "stream": False,
+        "messages": [{"role": "user", "content": prompt}],
+        "options": {"temperature": 0.3, "num_predict": 400},
+    }).encode("utf-8")
+    req = urllib.request.Request(_OLLAMA_URL + "/api/chat", data=body,
+                                 headers={"Content-Type": "application/json"})
+    with urllib.request.urlopen(req, timeout=timeout) as r:
+        raw = ((json.loads(r.read().decode("utf-8")).get("message") or {}).get("content") or "")
+    i, j = raw.find("{"), raw.rfind("}")
+    if i < 0 or j <= i:
+        return []
+    data = json.loads(raw[i:j + 1])
+    return data.get("sources", []) if isinstance(data, dict) else []
 
 
 # ---------------------------------------------------------------------------
@@ -211,6 +253,39 @@ def _validate(url: str, fmt: str) -> tuple[bool, str]:
 # Main
 # ---------------------------------------------------------------------------
 
+# ---------------------------------------------------------------------------
+# Composer NEEDs -> targeted discovery (the system searches for what IT declared missing)
+# ---------------------------------------------------------------------------
+
+COMPOSER_NEEDS = BASE / "memory" / "composer_needs.json"
+_NEED_ASK_TTL_DAYS = 2   # a hungry slot is re-searched every 2 days, not every cycle
+
+_SLOT_CLASS_DESC = {
+    "anchor_annual":     "an authoritative OFFICIAL statistic for this axis (annual/quarterly cadence acceptable)",
+    "measurement_daily": "a DIRECT measurement of the axis quantity that UPDATES AT LEAST DAILY or weekly",
+    "event_daily":       "a DAILY-updating event/news-derived numeric signal (counts, tone, index) for this axis",
+    "indirect_proxy":    "a related quantity that constrains or confirms the axis (any cadence)",
+}
+
+
+def _composer_gaps(max_gaps: int = 3) -> list[dict]:
+    """Slots the composers declared unfilled or dead (memory/composer_needs.json)
+    — the system's OWN declared hunger, turned into search targets."""
+    try:
+        needs = json.loads(COMPOSER_NEEDS.read_text(encoding="utf-8"))
+    except Exception:
+        return []
+    out = []
+    for axis, entry in (needs or {}).items():
+        for item in (entry or {}).get("items", []):
+            if item.get("kind") in ("slot_unfilled", "source_dead"):
+                slot = item.get("slot", "?")
+                out.append({"axis": axis, "slot": slot,
+                            "requirement": _SLOT_CLASS_DESC.get(slot, "a relevant numeric data source"),
+                            "detail": item.get("detail", "")[:100]})
+    return out[:max_gaps]
+
+
 def run(max_axes: int = 4) -> dict:
     """
     Full discovery cycle.
@@ -221,8 +296,51 @@ def run(max_axes: int = 4) -> dict:
     gaps       = _find_gaps(max_gaps=max_axes)
     summary    = {"scanned": 0, "suggested": 0, "validated": 0, "axes": {}}
 
+    # composer hunger first — these are DECLARED needs, not inferred gaps
+    composer_gaps = _composer_gaps()
+    if composer_gaps:
+        print(f"[SCOUT] {len(composer_gaps)} composer NEED(s): "
+              f"{[(g['axis'][:20], g['slot']) for g in composer_gaps]}")
+        for g in composer_gaps:
+            axis, slot = g["axis"], g["slot"]
+            entry = discovered.setdefault(axis, {"sources": []})
+            asks = entry.setdefault("slot_asks", {})
+            last = asks.get(slot)
+            if last:
+                try:
+                    age = datetime.now(timezone.utc) - datetime.fromisoformat(last)
+                    if age.days < _NEED_ASK_TTL_DAYS:
+                        continue  # asked recently — don't burn LLM budget every cycle
+                except Exception:
+                    pass
+            asks[slot] = datetime.now(timezone.utc).isoformat()
+            existing = [s["url"] for s in entry.get("sources", [])]
+            suggestions = _suggest_sources(axis, existing, slot_requirement=g["requirement"])
+            summary["suggested"] += len(suggestions)
+            for s in suggestions:
+                url = s.get("url", "").strip()
+                fmt = s.get("format", "json").lower()
+                if not url.startswith("http"):
+                    continue
+                print(f"  [SCOUT/NEED] Testing {axis}/{slot}: {url[:65]}")
+                ok, reason = _validate(url, fmt)
+                if ok:
+                    print(f"  [SCOUT/NEED] VALID {url[:65]} — candidate for slot '{slot}'")
+                    summary["validated"] += 1
+                    if url not in {x["url"] for x in entry["sources"]}:
+                        entry["sources"].append({
+                            "url": url, "format": fmt,
+                            "metric": s.get("metric", ""), "org": s.get("org", ""),
+                            "slot_hint": slot,   # composer surfaces it as a promotion candidate
+                            "discovered_at": datetime.now(timezone.utc).isoformat(),
+                            "status": "active",
+                        })
+                else:
+                    print(f"  [SCOUT/NEED] INVALID {url[:65]} — {reason}")
+
     if not gaps:
         print("[SCOUT] No data gaps found — all axes have real data.")
+        _save_discovered(discovered)
         return summary
 
     print(f"[SCOUT] {len(gaps)} axes need real data: {[g['axis'] for g in gaps]}")
