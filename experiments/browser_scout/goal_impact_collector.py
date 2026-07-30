@@ -113,6 +113,21 @@ def collect(axis: str, need: str, urls=None, votes: int = 2, collector: str = "g
     return trail
 
 
+COMPOSER_NEEDS = REPO / "memory" / "composer_needs.json"
+
+
+def need_from_composer():
+    """The SYSTEM's own declared hunger, not a human-written sentence. Mirrors
+    autonomous_scout --from-needs: first axis carrying a slot_unfilled item wins, and the
+    need is that item's OWN detail text. Returns (axis, need, item) or (None, None, None)."""
+    needs = json.loads(COMPOSER_NEEDS.read_text(encoding="utf-8"))
+    for axis, entry in (needs or {}).items():
+        for it in (entry or {}).get("items", []):
+            if it.get("kind") == "slot_unfilled":
+                return axis, it.get("detail", "a live numeric indicator"), it
+    return None, None, None
+
+
 if __name__ == "__main__":
     a = {"votes": 2}
     urls = []
@@ -121,8 +136,20 @@ if __name__ == "__main__":
         if tok == "--need":  a["need"] = sys.argv[i + 1]
         if tok == "--votes": a["votes"] = int(sys.argv[i + 1])
         if tok == "--urls":  urls = [u for u in sys.argv[i + 1:] if not u.startswith("--")]
+    chosen = None
+    if "--from-needs" in sys.argv:
+        _ax, _nd, chosen = need_from_composer()
+        if not _ax:
+            print(json.dumps({"error": "no slot_unfilled need declared in composer_needs.json"},
+                             ensure_ascii=False, indent=2))
+            sys.exit(0)
+        a["axis"], a["need"] = _ax, _nd     # the system chose both — nothing hardcoded
     a.setdefault("axis", "SOCIAL_RELATIONS_REVIEW")
     a.setdefault("need", "a current signal of social cohesion / unrest and its direction vs the goal")
     dry = "--dry" in sys.argv
     trail = collect(a["axis"], a["need"], urls=urls or None, votes=a["votes"], drop=not dry)
+    if chosen:
+        trail["need_source"] = {"from": "memory/composer_needs.json",
+                                "axis": a["axis"], "slot": chosen.get("slot"),
+                                "kind": chosen.get("kind"), "detail": chosen.get("detail")}
     print(json.dumps(trail, ensure_ascii=False, indent=2))
