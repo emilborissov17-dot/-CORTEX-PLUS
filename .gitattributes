@@ -1,0 +1,13 @@
+# Normalize line endings. Repo stores text as LF; checkout adapts per-file below.
+* text=auto
+
+# Code and data: LF everywhere (portable; stops the LF->CRLF staging warning on Windows).
+*.py   text eol=lf
+*.json text eol=lf
+*.md   text eol=lf
+*.txt  text eol=lf
+
+# Windows scripts MUST stay CRLF or they can break.
+*.cmd  text eol=crlf
+*.bat  text eol=crlf
+*.vbs  text eol=crlf
