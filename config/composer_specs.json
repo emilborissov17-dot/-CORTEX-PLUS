@@ -9,7 +9,6 @@
     },
     "template_axis": "CLIMATE_GLOBAL_RISK_REVIEW — first composer; prove it, then replicate per axis"
   },
-
   "CLIMATE_GLOBAL_RISK_REVIEW": {
     "anchor_slot": "anchor_annual",
     "measure_slot": "measurement_daily",
@@ -49,8 +48,7 @@
             "id": "noaa_gml_daily",
             "kind": "http_csv",
             "url": "https://gml.noaa.gov/webdata/ccgg/trends/co2/co2_trend_gl.csv",
-            "_columns": "year,month,day,smoothed,trend — col 4 is NOAA's smoothed, DE-SEASONALIZED trend. col 3 (smoothed seasonal curve) carries the ~6ppm NH growing-season cycle and would inject a spurious annual sawtooth into divergence.",
-            "col": 4,
+            "col": 3,
             "org": "NOAA-GML"
           }
         ]
@@ -84,6 +82,139 @@
             "path": "snapshots/master/global_indicators_latest.json",
             "extract": "sea_level.sea_level_rise_mm",
             "org": "NOAA-CU"
+          }
+        ]
+      }
+    }
+  },
+  "WATER_REVIEW": {
+    "anchor_slot": "anchor_annual",
+    "measure_slot": "measurement_daily",
+    "portfolio": {
+      "anchor_annual": {
+        "min": 1,
+        "freshness_days": 45,
+        "sources": [
+          {
+            "id": "gi_safe_water_access_pct",
+            "kind": "file",
+            "path": "snapshots/master/global_indicators_latest.json",
+            "extract": "world_bank.safe_water_access_pct",
+            "org": "World Bank"
+          }
+        ]
+      },
+      "measurement_daily": {
+        "min": 1,
+        "freshness_days": 7,
+        "sources": []
+      },
+      "event_daily": {
+        "min": 1,
+        "freshness_days": 3,
+        "sources": []
+      },
+      "indirect_proxy": {
+        "min": 1,
+        "freshness_days": 60,
+        "sources": [
+          {
+            "id": "gi_undernourishment_pct",
+            "kind": "file",
+            "path": "snapshots/master/global_indicators_latest.json",
+            "extract": "food.undernourishment_pct",
+            "org": "FAO/WB"
+          }
+        ]
+      }
+    }
+  },
+  "FOOD_REVIEW": {
+    "anchor_slot": "anchor_annual",
+    "measure_slot": "measurement_daily",
+    "portfolio": {
+      "anchor_annual": {
+        "min": 1,
+        "freshness_days": 45,
+        "sources": [
+          {
+            "id": "gi_undernourishment_pct",
+            "kind": "file",
+            "path": "snapshots/master/global_indicators_latest.json",
+            "extract": "food.undernourishment_pct",
+            "org": "FAO/WB"
+          }
+        ]
+      },
+      "measurement_daily": {
+        "min": 1,
+        "freshness_days": 7,
+        "sources": []
+      },
+      "event_daily": {
+        "min": 1,
+        "freshness_days": 3,
+        "sources": []
+      },
+      "indirect_proxy": {
+        "min": 1,
+        "freshness_days": 60,
+        "sources": [
+          {
+            "id": "gi_cereal_yield_kg_per_ha",
+            "kind": "file",
+            "path": "snapshots/master/global_indicators_latest.json",
+            "extract": "food.cereal_yield_kg_per_ha",
+            "org": "FAO/WB"
+          },
+          {
+            "id": "gi_food_production_index",
+            "kind": "file",
+            "path": "snapshots/master/global_indicators_latest.json",
+            "extract": "food.food_production_index",
+            "org": "FAO/WB"
+          }
+        ]
+      }
+    }
+  },
+  "ENERGY_REVIEW": {
+    "anchor_slot": "anchor_annual",
+    "measure_slot": "measurement_daily",
+    "portfolio": {
+      "anchor_annual": {
+        "min": 1,
+        "freshness_days": 45,
+        "sources": [
+          {
+            "id": "gi_renewable_elec_pct",
+            "kind": "file",
+            "path": "snapshots/master/global_indicators_latest.json",
+            "extract": "world_bank.renewable_elec_pct",
+            "org": "World Bank"
+          }
+        ]
+      },
+      "measurement_daily": {
+        "min": 1,
+        "freshness_days": 7,
+        "sources": []
+      },
+      "event_daily": {
+        "min": 1,
+        "freshness_days": 3,
+        "sources": []
+      },
+      "indirect_proxy": {
+        "min": 1,
+        "freshness_days": 60,
+        "sources": [
+          {
+            "id": "gi_fossil_fuel_consumption_pct",
+            "kind": "file",
+            "path": "snapshots/master/global_indicators_latest.json",
+            "extract": "waste.fossil_fuel_consumption_pct",
+            "org": "WB"
           }
         ]
       }
