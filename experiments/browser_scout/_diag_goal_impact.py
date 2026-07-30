@@ -10,6 +10,7 @@ guard rejected the read (or that the model itself declined). No writes, no drops
       https://en.wikipedia.org/wiki/List_of_ongoing_armed_conflicts
 """
 import sys
+import time
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -65,3 +66,40 @@ try:
           f"counterview len: {len(str(got.get('counterview','')))}")
 except Exception as e:
     print(f"(inspection read failed: {type(e).__name__}: {e})")
+
+# ---------------------------------------------------------------------------
+# FORCED GUARD 3 — DIAGNOSTIC ONLY. Nothing here touches the pipeline; the
+# shipped guards are unchanged and still reject these pages upstream.
+# GUARD 1 keeps firing on Wikipedia citation-bracket noise ('[3]' vs '[ 3 ]')
+# BEFORE decomposition can run, so GUARD 3 has never executed on real data and
+# the raised budgets (_decompose_claims 1200 / _refute_claim 400) are unproven.
+# Feed structural_faithful an evidence span sliced VERBATIM from this very page
+# so grounding cannot fail for formatting reasons, then watch the real path:
+# decompose -> per-claim grounding -> adversarial entailment.
+print("\n" + "=" * 70)
+print(">>> FORCED GUARD 3 (bypasses GUARD 1 — diagnostic only, pipeline untouched)")
+
+_i = txt.find("254,000")
+span = txt[_i:_i + 60].strip() if _i >= 0 else txt[2000:2060].strip()
+print(f"verbatim span: {span!r}")
+print(f"span verbatim in page? {gi._norm(span)[:40] in gi._norm(txt)}")
+
+# One faithful case and one fabricated control, so a 'passed' result is only
+# meaningful if the fabricated twin is actually rejected on the same real page.
+for label, observation in [
+        ("FAITHFUL   ", "Cumulative fatalities are reported as 254,000 to 263,000+."),
+        ("FABRICATED ", "Cumulative fatalities are reported as 999,000.")]:
+    print(f"\n--- {label} obs: {observation}")
+    _t0 = time.time()
+    try:
+        passed, survivors, broken = gi.structural_faithful(observation, span, txt)
+    except Exception as e:
+        print(f"   structural_faithful raised: {type(e).__name__}: {e}")
+        continue
+    print(f"   passed={passed}  survivors={len(survivors)}  broken={len(broken)}  "
+          f"({time.time() - _t0:.0f}s)")
+    for s_ in survivors:
+        print(f"   SURVIVOR: {str(s_.get('text'))!r}")
+        print(f"             span={str(s_.get('evidence_span'))[:70]!r}")
+    for b in broken:
+        print(f"   BROKEN[{b.get('stage')}]: {b.get('why')} — claim: {str(b.get('claim'))!r}")
