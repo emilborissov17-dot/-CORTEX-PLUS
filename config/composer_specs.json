@@ -1,0 +1,92 @@
+{
+  "_meta": {
+    "what": "Per-axis composer portfolio specs. Each axis declares SLOTS by source class, not a source list — diversification is the rule, filling is autonomous (data_scout candidates + human promotion via composer.py --promote, which edits this file as a reviewable git diff).",
+    "classes": {
+      "anchor_annual": "slow official anchor (the scientific ground truth)",
+      "measurement_daily": "daily-moving direct measurement of the same quantity",
+      "event_daily": "daily event/news signal (indirect, weak, fast)",
+      "indirect_proxy": "related quantity that constrains/confirms the anchor"
+    },
+    "template_axis": "CLIMATE_GLOBAL_RISK_REVIEW — first composer; prove it, then replicate per axis"
+  },
+
+  "CLIMATE_GLOBAL_RISK_REVIEW": {
+    "anchor_slot": "anchor_annual",
+    "measure_slot": "measurement_daily",
+    "anchor_change": {
+      "kind": "file",
+      "path": "snapshots/master/global_indicators_latest.json",
+      "extract": "co2.co2_annual_increase"
+    },
+    "portfolio": {
+      "anchor_annual": {
+        "min": 1,
+        "freshness_days": 45,
+        "sources": [
+          {
+            "id": "gi_noaa_co2",
+            "kind": "file",
+            "path": "snapshots/master/global_indicators_latest.json",
+            "extract": "co2.co2_ppm",
+            "org": "NOAA"
+          },
+          {
+            "id": "local_co2_backup",
+            "kind": "file",
+            "path": "local_co2_data.json",
+            "extract": "co2_ppm_current",
+            "data_date_extract": "co2_measurement_date",
+            "data_max_age_days": 400,
+            "org": "NOAA-local-cache"
+          }
+        ]
+      },
+      "measurement_daily": {
+        "min": 1,
+        "freshness_days": 7,
+        "sources": [
+          {
+            "id": "noaa_gml_daily",
+            "kind": "http_csv",
+            "url": "https://gml.noaa.gov/webdata/ccgg/trends/co2/co2_trend_gl.csv",
+            "_columns": "year,month,day,smoothed,trend — col 4 is NOAA's smoothed, DE-SEASONALIZED trend. col 3 (smoothed seasonal curve) carries the ~6ppm NH growing-season cycle and would inject a spurious annual sawtooth into divergence.",
+            "col": 4,
+            "org": "NOAA-GML"
+          }
+        ]
+      },
+      "event_daily": {
+        "min": 1,
+        "freshness_days": 3,
+        "sources": [
+          {
+            "id": "gdelt_climate_tone",
+            "kind": "http_gdelt_tone",
+            "url": "https://api.gdeltproject.org/api/v2/doc/doc?query=%22climate%20change%22&mode=timelinetone&timespan=7d&format=json",
+            "org": "GDELT"
+          }
+        ]
+      },
+      "indirect_proxy": {
+        "min": 1,
+        "freshness_days": 60,
+        "sources": [
+          {
+            "id": "gi_temp_anomaly",
+            "kind": "file",
+            "path": "snapshots/master/global_indicators_latest.json",
+            "extract": "temperature.temp_anomaly_c",
+            "org": "NASA"
+          },
+          {
+            "id": "gi_sea_level",
+            "kind": "file",
+            "path": "snapshots/master/global_indicators_latest.json",
+            "extract": "sea_level.sea_level_rise_mm",
+            "org": "NOAA-CU"
+          }
+        ]
+      }
+    }
+  }
+}
