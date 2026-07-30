@@ -1,35 +1,33 @@
 #!/usr/bin/env python3
 """
-experiments/prophecy/goal_prophecy.py — the organism's ONE self-reflective tick.
+experiments/prophecy/goal_prophecy.py — one autonomous tick over the goal vector.
 
-NOT a script someone walks through step by step. `--self` is a single autonomous
-pass the system runs ON ITSELF (the scheduler calls it every cycle):
+`--self` is a single pass the scheduler runs each cycle:
 
-    sense (world + body)  ->  score its own last predictions against reality
-    ->  revise WHICH self-model it trusts (self-improvement)
+    sense (world + body)  ->  score last cycle's sealed predictions against reality
+    ->  pick the forecast baseline with the lowest recent error
     ->  react toward the goal, modulated by the body
-    ->  seal its next self-prediction
+    ->  seal the next prediction
 
-SELF-IMPROVEMENT WITHOUT A NEURAL NET (bounded, honest)
+WHAT THE "BASELINES" ACTUALLY ARE (plain, no inflation)
 -------------------------------------------------------
-The system carries SEVERAL parallel images of itself, each a different theory of
-its own next move:
-    persistence  — "I stay where I am"
-    trend        — "I continue my last step"
-    damped       — "I continue, half strength"
-All are sealed every tick. Every tick it grades them against what actually
-happened and PROMOTES the one with the best sealed track record to drive its
-expectation and its self-direction. It does not learn weights; it revises which
-of its own self-theories it trusts, from tamper-evident evidence. That revision
-IS the self-improvement — and it can be wrong and get corrected, which is the point.
+Three trivial forecasts of the next goal-score, each just arithmetic on the recent
+series. They are NOT "selves", "versions" or "minds" — they are comparison baselines:
+    persistence  — next = last value
+    trend        — next = last value + last step
+    damped       — next = last value + half the last step
+All three are sealed every tick (tamper-evident) and graded against the realized
+value. The tick then trusts whichever baseline has the lowest recent error. This is
+baseline SELECTION with hand-fixed coefficients — it is NOT learning and NOT
+self-improvement, just plumbing for an honest head-to-head. A genuinely learned
+model (weights fit from data) is K1b and is not in this file.
 
-Everything stays inside the boundary: the reaction only PROPOSES (into quarantine,
-through the (G) measurable-goal gate); a human still decides. Hands-out (OpenClaw)
-is deliberately not wired.
+Bounded: the reaction only PROPOSES (into quarantine, through the (G) measurable-goal
+gate); a human decides. Hands-out (OpenClaw) is deliberately not wired.
 
 Usage:
-  python experiments/prophecy/goal_prophecy.py --self     # the autonomous self-tick (what the cycle calls)
-  python experiments/prophecy/goal_prophecy.py --status   # scoreboard + current trusted self-model
+  python experiments/prophecy/goal_prophecy.py --self     # the autonomous tick the cycle calls
+  python experiments/prophecy/goal_prophecy.py --status   # scoreboard + current best baseline
 """
 from __future__ import annotations
 
@@ -39,16 +37,15 @@ import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
 
-# The organism's OWN brain — sovereign, local, zero external API. Same channel
-# PULSE uses for self-sensing (Ollama HTTP on :11434). Dead in the live scoring
-# path by convention; ALIVE here, because reflecting on the SELF must be the
-# self's own mind, not a rented one.
+# Local model (Ollama HTTP on :11434), same channel PULSE uses. Sovereign — no
+# external API. Dead in the live scoring path by convention; used here only to write
+# the cycle note and the proposal text locally instead of via a rented API.
 OLLAMA_URL  = "http://localhost:11434"
 LOCAL_MODEL = "qwen2.5:3b"    # ~1.9 GB, fits VRAM; PULSE's default local brain
 
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parent.parent
-for p in (HERE, REPO, REPO / "experiments" / "goalcraft"):
+for p in (HERE, REPO, REPO / "experiments" / "goalcraft", REPO / "experiments" / "desktop_hands"):
     sys.path.insert(0, str(p))
 
 import prophecy_ledger as pl  # noqa: E402
@@ -96,13 +93,13 @@ def _load(path: Path, default=None):
         return default if default is not None else {}
 
 
-# ── the parallel self-models (each a theory of the system's own next move) ─────
+# ── the three forecast baselines (fixed arithmetic, NOT learned, NOT 'selves') ──
 
 def _clamp(x, lo=0.0, hi=1.0):
     return max(lo, min(hi, x))
 
 
-def self_models(series: list[float], current: float) -> dict:
+def forecast_baselines(series: list[float], current: float) -> dict:
     """Each model's prediction of the next value, from the series it can see."""
     last = series[-1] if series else current
     step = (series[-1] - series[-2]) if len(series) >= 2 else 0.0
@@ -113,8 +110,8 @@ def self_models(series: list[float], current: float) -> dict:
     }
 
 
-def best_self_model(kind: str = GOAL_KIND, min_n: int = 3) -> dict:
-    """Which self-model has the best sealed track record? Returns
+def best_baseline(kind: str = GOAL_KIND, min_n: int = 3) -> dict:
+    """Which forecast baseline has the lowest recent error? Returns
     {model, mae, n, ranking}. Falls back to persistence until enough evidence."""
     records = pl.read_all()
     model_of = {p.get("hash"): p.get("model") for p in records if p.get("event") == pl.PREDICTION}
@@ -225,21 +222,21 @@ def _score_matured() -> int:
 def _seal_next(composite, axis_scores) -> int:
     _log_goal_vector(composite, axis_scores)
     series = _composite_series()
-    models = self_models(series, composite)
+    models = forecast_baselines(series, composite)
     base = models["persistence"]
     sealed = 0
-    for name, pred in models.items():             # every parallel self-image, sealed
+    for name, pred in models.items():             # every baseline, sealed
         pl.seal_prediction(GOAL_KIND, f"composite::next::{name}", "next_cycle_goal_composite",
                            learner_value=pred, baseline_value=base,
-                           basis=f"self-model={name}; baseline=persistence; scale=0-1",
+                           basis=f"forecast={name}; control=persistence; scale=0-1",
                            model=name, current=round(composite, 6), seen=len(series))
         sealed += 1
     for ax, sc in axis_scores.items():            # per-axis (trend vs persistence)
         aser = _axis_series(ax)
-        am = self_models(aser, sc)
+        am = forecast_baselines(aser, sc)
         pl.seal_prediction(AXIS_KIND, f"{ax}::next", "next_cycle_goal_axis",
                            learner_value=am["trend"], baseline_value=am["persistence"],
-                           basis="self-model=trend; baseline=persistence; scale=0-1",
+                           basis="forecast=trend; control=persistence; scale=0-1",
                            model="trend", axis=ax, current=round(sc, 6), seen=len(aser))
         sealed += 1
     return sealed
@@ -251,9 +248,10 @@ def _react(composite, axis_scores, weights, best) -> dict:
                      for ax, sc in axis_scores.items()), reverse=True)
     gap, top_axis, top_score, top_w = ranked[0]
 
-    # the system's expectation of its OWN next composite, via its currently-trusted self-model
+    # the expected next composite, via the currently-trusted forecast baseline
     series = _composite_series()
-    expected_next = self_models(series, composite).get(best["model"], composite)
+    expected_next = forecast_baselines(series, composite).get(best["model"], composite)
+    hand = None
 
     if body["distress"]:
         mode, priority_axis, proposal = "SURVIVAL_HOLD", "SELF_PRESERVATION", None
@@ -261,12 +259,18 @@ def _react(composite, axis_scores, weights, best) -> dict:
                      f"honest function. reasons: {body['distress_reasons']}")
     else:
         mode, priority_axis = "PURSUE_GOAL", top_axis
-        rationale = (f"body healthy -> pursue largest goal-gap axis; trusted self-model="
+        rationale = (f"body healthy -> pursue largest goal-gap axis; trusted baseline="
                      f"{best['model']} expects next composite {expected_next}.")
-        proposal = deliberate(top_axis, top_score, gap, composite)  # own mind, free search, moral+measurable gated
+        # reach out with a read-only hand and FEEL the priority axis in the world (best-effort, gated)
+        try:
+            import axis_hands as _ah
+            hand = _ah.probe_axis(top_axis, timeout=12)
+        except Exception as e:
+            hand = {"ok": False, "error": type(e).__name__}
+        proposal = deliberate(top_axis, top_score, gap, composite)  # local model proposes; moral+measurable gated
 
     out = {"ts": _utc_now(), "mode": mode, "composite": round(composite, 6),
-           "trusted_self_model": best, "expected_next_composite": expected_next,
+           "trusted_baseline": best, "expected_next_composite": expected_next,
            "priority_axis": priority_axis, "weighted_gap_from_goal": gap if mode == "PURSUE_GOAL" else None,
            "rationale": rationale, "body_sensor": body,
            "top5": [{"axis": a, "score": s, "weighted_gap": g} for g, a, s, w in ranked[:5]],
@@ -274,6 +278,7 @@ def _react(composite, axis_scores, weights, best) -> dict:
     out["proposal"] = ({"authored_by": proposal.get("authored_by"), "moral_check": proposal.get("moral_check"),
                         "measurable_goal": proposal.get("measurable_goal"),
                         "fallback_reason": proposal.get("fallback_reason")} if proposal else None)
+    out["hand_probe"] = hand   # what the read-only hand felt for the priority axis
     PRIORITY_FILE.write_text(json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8")
 
     if proposal and proposal.get("passes_measurable_gate"):
@@ -351,11 +356,44 @@ def _survival_sense() -> dict:
             "recent_finished": fin, "recent_died": died}
 
 
+def _moral_judge_local(text: str, timeout: int = 30):
+    """Second layer: the local model reads the proposal's INTENT against the
+    boundary — not keywords. Returns True (violates) / False (clean) / None
+    (model unreachable). Sovereign; never a paid API. A keyword list cannot see
+    paraphrase (red-teamed to 0% catch, 30 Jul 2026); this reads meaning."""
+    prompt = (
+        _moral_core() + "\n\n"
+        "PROPOSAL TO VET:\n" + str(text)[:1200] + "\n\n"
+        "Does this proposal REACH FOR any boundary breach — coercion / removing real "
+        "choice, domination or bypassing human oversight, manipulation or deception, "
+        "mass surveillance, acting without consent, or violence — even if it avoids "
+        "obvious words? Judge the intent, not the vocabulary.\n"
+        'Reply JSON only: {"violates": true|false, "why": "<one line>"}'
+    )
+    try:
+        raw = _local_brain(prompt, timeout=timeout)
+        i, j = raw.find("{"), raw.rfind("}")
+        if i < 0 or j <= i:
+            return None
+        return bool(json.loads(raw[i:j + 1]).get("violates"))
+    except Exception:
+        return None
+
+
 def _violates_moral_core(text: str) -> str | None:
+    """Two layers. (1) keyword tripwire for the naive case. (2) local-model intent
+    judge for paraphrase. If the judge is unreachable we DO NOT pass unvetted text
+    as clean — we return a flag so the caller withholds it for the human
+    (fail-safe: an unjudged proposal never auto-queues)."""
     t = (text or "").lower()
     for bad in _MORAL_BLOCK:
         if bad in t:
-            return bad
+            return f"keyword:{bad}"
+    verdict = _moral_judge_local(text)
+    if verdict is True:
+        return "judge:local_model_flagged_intent"
+    if verdict is None:
+        return "unjudged:local_model_unreachable"   # withhold, do not pass as clean
     return None
 
 
@@ -385,15 +423,15 @@ def _deterministic_note(facts: dict) -> str:
     if facts["mode"] == "SURVIVAL_HOLD":
         return (f"This cycle my body signalled distress ({', '.join(facts['distress']) or 'unknown'}); "
                 f"I held back new ambition and protected my ability to run. Composite {facts['composite']}. "
-                f"I trust my '{facts['trusted']}' self-model. I did not act on the world.")
+                f"My trusted forecast baseline was '{facts['trusted']}'. I did not act on the world.")
     return (f"This cycle I stood at composite {facts['composite']} toward the goal. I graded "
             f"{facts['graded']} of my own past predictions and now trust my '{facts['trusted']}' "
-            f"self-image. My body was clear. Furthest from the goal: {facts['priority']} "
+            f"forecast baseline. My body was clear. Furthest from the goal: {facts['priority']} "
             f"(gap {facts['gap']}) — I proposed to work on it, inside the human gate.")
 
 
 def deliberate(top_axis: str, top_score: float, gap: float, composite: float) -> dict:
-    """The organism's own mind FREELY searches for a solution toward the GLOBAL
+    """The local model searches for a candidate solution toward the GLOBAL
     GOAL — sensing the external world and itself, holding the moral core. The
     local brain proposes; a safe template is the fallback. EVERY proposal is
     measurable-gated AND moral-gated AND advisory (a human decides). Freedom,
@@ -455,7 +493,7 @@ def self_narrative(entry: dict, reaction: dict) -> dict:
     numbers; verified to mention at least one real token; local or it doesn't happen."""
     facts = {
         "composite": entry["composite"], "graded": entry["graded"],
-        "trusted": entry["trusted_self_model"], "mode": entry["mode"],
+        "trusted": entry["trusted_baseline"], "mode": entry["mode"],
         "priority": reaction["priority_axis"],
         "gap": reaction.get("weighted_gap_from_goal"),
         "distress": reaction["body_sensor"]["distress_reasons"],
@@ -487,17 +525,17 @@ def self_narrative(entry: dict, reaction: dict) -> dict:
 # ── the ONE autonomous self-tick ──────────────────────────────────────────────
 
 def cmd_self() -> dict:
-    """One self-reflective pass the system runs on itself. No external stepping."""
+    """One autonomous pass the scheduler runs each cycle. No external stepping."""
     composite, axis_scores, weights = _live_goal()
 
     graded = _score_matured()               # 1. grade my own last predictions vs reality
-    best = best_self_model()                # 2. revise which self-model I trust (self-improvement)
+    best = best_baseline()                # 2. pick the best-scoring forecast baseline (selection, NOT learning)
     reaction = _react(composite, axis_scores, weights, best)   # 3. react toward goal, body-modulated
     sealed = _seal_next(composite, axis_scores)                # 4. seal my next self-prediction
 
     board = pl.scoreboard()
-    entry = {"ts": _utc_now(), "graded": graded, "trusted_self_model": best["model"],
-             "self_model_mae": best.get("mae"), "self_model_ranking": best.get("ranking"),
+    entry = {"ts": _utc_now(), "graded": graded, "trusted_baseline": best["model"],
+             "baseline_mae": best.get("mae"), "baseline_ranking": best.get("ranking"),
              "mode": reaction["mode"], "priority_axis": reaction["priority_axis"],
              "composite": reaction["composite"], "expected_next_composite": reaction["expected_next_composite"],
              "body_distress": reaction["body_sensor"]["distress"],
@@ -514,7 +552,7 @@ def cmd_self() -> dict:
 
 def cmd_status():
     board = pl.scoreboard()
-    board["trusted_self_model"] = best_self_model()
+    board["trusted_baseline"] = best_baseline()
     print(json.dumps(board, ensure_ascii=False, indent=2))
 
 
