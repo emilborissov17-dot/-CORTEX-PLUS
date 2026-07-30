@@ -723,6 +723,19 @@ def main():
         print(f"[FAST_CYCLE] global_indicators -> FAILED: {e}")
         _tb.print_exc()
 
+    # ── 2.6. Axis composers — stitch anchor + daily tentacles per axis ──
+    beat("axis_composers", "2.6")
+    def _axis_composers():
+        import subprocess, sys as _s, json as _j
+        spec_path = BASE / "config" / "composer_specs.json"
+        axes = [k for k in _j.loads(spec_path.read_text(encoding="utf-8")) if not k.startswith("_")]
+        for ax in axes:
+            subprocess.run([_s.executable,
+                            str(BASE / "experiments" / "composers" / "composer.py"),
+                            "--run", ax], timeout=120, cwd=str(BASE))
+        print(f"[FAST_CYCLE] axis_composers -> {len(axes)} axes composed (see memory/composer_needs.json)")
+    _run("axis_composers", _axis_composers)
+
     # ── 3. Trend tracker ──
     beat("trend_tracker", "3")
     run_trend_tracker()
