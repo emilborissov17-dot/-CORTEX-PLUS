@@ -1,0 +1,12 @@
+{
+  "_note": "HUMAN-owned cross-dimension weights for the goal-impact vector. The model assigns impact WITHIN a dimension; these relative weights (is a peace loss worse than a dignity loss?) are Emil's value-choice, not the model's. Edit freely; versioned in git. Default 1.0 = equal.",
+  "peace": 1.0,
+  "dignity": 1.0,
+  "sustainability": 1.0,
+  "freedom": 1.0,
+  "health": 1.0,
+  "truth": 1.0,
+  "prosperity": 1.0,
+  "knowledge": 1.0,
+  "resilience": 1.0
+}
