@@ -83,5 +83,14 @@ p, sv, br = gi.structural_faithful("the situation is catastrophic", "", PAGE)
 check("NON-numeric fabrication rejected (entailment) — the key gap",
       not p and br and br[0]["stage"] == "entailment")
 
+# 6) TRANSPORT FAILURE — a dead server / timeout is INFRASTRUCTURE, not a verdict. It must
+# never masquerade as "[none] no atomic claim survived", which reads like a real rejection.
+def fake_raises(prompt, num_predict=300, **kw):
+    raise ConnectionError("dead server")
+gi._local = fake_raises
+p, sv, br = gi.structural_faithful("armed conflicts rose to 56", "", PAGE)
+check("transport failure surfaces as [transport], never a verdict",
+      not p and br and br[0]["stage"] == "transport")
+
 print("\n" + ("ALL PASS" if not FAILS else f"{len(FAILS)} FAILED: {FAILS}"))
 sys.exit(1 if FAILS else 0)
