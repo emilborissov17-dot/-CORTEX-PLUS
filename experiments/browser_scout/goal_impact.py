@@ -16,6 +16,7 @@ contested dimensions carry a counter-reading. Grounded facts, assessed impact, k
 from __future__ import annotations
 
 import json
+import os
 import re
 import sys
 from pathlib import Path
@@ -70,6 +71,102 @@ def _load(p, default):
 def _dim_weights():
     w = _load(DIM_WEIGHTS_FILE, {})
     return {d: float(w.get(d, 1.0)) for d in _DIMENSIONS}  # default 1.0 until Emil sets them
+
+
+_STRUCTURAL = os.environ.get("CORTEX_STRUCTURAL_GUARD", "0") != "0"  # opt-in DNA-vs-DNA guard
+
+
+def _norm(s):
+    return re.sub(r"\s+", " ", str(s)).strip().lower()
+
+
+def _decompose_claims(observation, evidence, text):
+    """Break the observation into atomic claims, each with its OWN verbatim evidence span.
+    Grounding is enforced in code (_claim_grounded), never trusted from the model."""
+    prompt = (
+        "Decompose the OBSERVATION into atomic factual claims. For EACH claim copy the exact "
+        "phrase FROM THE PAGE that carries it (verbatim, no paraphrase).\n"
+        'Reply ONLY JSON: {"claims":[{"text":"<one assertion>","entity":"<subject>",'
+        '"predicate":"<rose|fell|is|threatens|...>","quantity":{"value":<number or null>,'
+        '"unit":"<unit or empty>"},"polarity":"+|-|0","evidence_span":"<exact phrase from the '
+        'page>"}]}\n'
+        f"OBSERVATION: {observation}\nEVIDENCE HINT: {evidence}\n"
+        f"PAGE TEXT (truncated):\n{text[:6500]}")
+    try:
+        got = _json_from(_local(prompt, timeout=300, num_predict=700))
+    except Exception as e:
+        return {"_transport_error": f"{type(e).__name__}: {e}"}
+    cl = got.get("claims")
+    return cl if isinstance(cl, list) else []
+
+
+def _claim_grounded(claim, text):
+    """Per-claim generalisation of GUARD 1/1c: the claim's evidence_span must be verbatim in
+    the page, and EVERY number in the claim (quantity or free text) must be in that span."""
+    ev = str(claim.get("evidence_span", "")).strip()
+    if not ev or _norm(ev)[:40] not in _norm(text):
+        return False, "evidence_span not verbatim in page"
+    q = (claim.get("quantity") or {}).get("value")
+    if q is not None:
+        d = _digits(q)
+        if not d or d not in _digits(ev):
+            return False, f"claim quantity {q} absent from its evidence_span"
+    for m in re.findall(r"[0-9][0-9,\.]*", str(claim.get("text", ""))):
+        dn = _digits(m)
+        if dn and dn not in _digits(ev):
+            return False, f"claim states number {m} absent from its evidence_span"
+    return True, "ok"
+
+
+def _refute_claim(claim, votes=1):
+    """Adversarial entailment: a strict skeptic sees ONLY the claim's evidence_span and tries
+    to REFUTE the claim (default to unsupported when uncertain). Survives iff a strict majority
+    of votes could NOT refute it. Catches non-numeric fabrication the digit guard misses."""
+    ev = str(claim.get("evidence_span", "")).strip()
+    ctext = str(claim.get("text", "")).strip()
+    prompt = (
+        "You are a strict skeptic. Using ONLY the evidence below — nothing else, no outside "
+        "knowledge — decide if it SUPPORTS the claim. If the evidence does not CLEARLY state "
+        'it (wrong direction, missing number, different entity), answer supported=false.\n'
+        'Reply ONLY JSON: {"supported": true|false, "why": "<short>"}\n'
+        f'EVIDENCE: "{ev}"\nCLAIM: {ctext}')
+    refutes = 0
+    v = max(1, votes)
+    for _ in range(v):
+        try:
+            g = _json_from(_local(prompt, timeout=300, num_predict=400))
+        except Exception:
+            refutes += 1
+            continue
+        if not bool(g.get("supported")):
+            refutes += 1
+    return refutes < (v // 2 + 1)   # survives unless a strict majority refuted
+
+
+def structural_faithful(observation, evidence, text, max_claims=3, votes=1):
+    """Gate: decompose -> per-claim grounding -> adversarial entailment. Returns
+    (passed, survivors, broken). Faithful iff there is >=1 claim and NONE broke; broken names
+    the exact claim + stage (grounding|entailment) so the trail is inspectable."""
+    claims = _decompose_claims(observation, evidence, text)
+    # A timeout / dead server is INFRASTRUCTURE, not a faithfulness verdict — surface it as
+    # stage "transport" so it can never masquerade as "[none] no atomic claim survived".
+    if isinstance(claims, dict) and claims.get("_transport_error"):
+        return False, [], [{"claim": observation, "stage": "transport",
+                            "why": claims["_transport_error"]}]
+    claims = claims[:max_claims]
+    survivors, broken = [], []
+    for c in claims:
+        ok, why = _claim_grounded(c, text)
+        if not ok:
+            broken.append({"claim": c.get("text"), "stage": "grounding", "why": why})
+            continue
+        if not _refute_claim(c, votes=votes):
+            broken.append({"claim": c.get("text"), "stage": "entailment",
+                           "why": "refuted from its own evidence_span"})
+            continue
+        survivors.append(c)
+    passed = bool(claims) and not broken
+    return passed, survivors, broken
 
 
 def extract_goal_impact(text: str, axis: str, need: str, url: str) -> tuple:
@@ -130,6 +227,18 @@ def extract_goal_impact(text: str, axis: str, need: str, url: str) -> tuple:
     if got.get("contested") and len(cv) < 15:
         return None, "contested impact without a counter-reading — rejected"
 
+    # GUARD 3 (structural faithfulness, opt-in via CORTEX_STRUCTURAL_GUARD): the observation
+    # must decompose into atomic claims that each survive grounding + adversarial entailment.
+    _claims = None
+    if _STRUCTURAL:
+        _passed, _survivors, _broken = structural_faithful(obs, ev, text)
+        if not _passed:
+            _b = _broken[0] if _broken else {"stage": "none", "why": "no atomic claim survived",
+                                             "claim": obs}
+            return None, (f"structural faithfulness [{_b.get('stage')}]: {_b.get('why')} "
+                          f"— claim: {_b.get('claim')}")
+        _claims = _survivors
+
     return {
         "axis": axis, "url": url,
         "observation": obs, "evidence": ev[:200],
@@ -140,6 +249,7 @@ def extract_goal_impact(text: str, axis: str, need: str, url: str) -> tuple:
         "rationale": str(got.get("rationale", "")).strip()[:300],
         "contested": bool(got.get("contested", False)),
         "counterview": cv[:300],
+        "claims": _claims,
     }, "ok"
 
 
@@ -177,12 +287,15 @@ def extract_calibrated(text: str, axis: str, need: str, url: str, votes: int = 2
     kept but marked impact_unstable (sign 0, low confidence) rather than asserting a
     confident vector we didn't actually verify. Verification over assertion, for the weight."""
     reads = []
+    last_why = "no read attempted"
     for _ in range(max(1, votes)):
         o, why = extract_goal_impact(text, axis, need, url)
         if o:
             reads.append(o)
-    if not reads:
-        return None, "nothing groundable"
+        else:
+            last_why = why          # keep the REASON — a dead server must never look
+    if not reads:                   # like a clean faithfulness rejection
+        return None, f"nothing groundable — last: {last_why}"
     signs = {o["sign"] for o in reads}
     base = reads[0]
     if len(signs) == 1:                          # consistent judgment -> trust it
