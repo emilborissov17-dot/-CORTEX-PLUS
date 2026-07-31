@@ -169,6 +169,58 @@ def structural_faithful(observation, evidence, text, max_claims=3, votes=1):
     return passed, survivors, broken
 
 
+_SIGN_GUARD = os.environ.get("CORTEX_SIGN_GUARD", "1") != "0"   # canon-anchored sign skeptic
+
+
+def _looks_like_scale(ev: str, val) -> bool:
+    """#40 'measurement, not furniture': True when the claimed value sits inside a monotonic
+    run of >=5 numbers in the evidence span — the signature of axis/legend tick labels
+    ('-14 -10 -6 -3 -1 -0.5 0 0.5 1 3 6 10 14'), not of a stated measurement. Deterministic.
+    Live failure this catches: climatecentral legend read as 'today's anomaly -0.5'."""
+    if val is None:
+        return False
+    try:
+        nums = [float(m.group()) for m in re.finditer(r"-?\d+(?:\.\d+)?", ev.replace(",", ""))]
+        v = float(str(val).replace(",", ""))
+    except Exception:
+        return False
+    if len(nums) < 5:
+        return False
+    for i in range(len(nums)):
+        run = [nums[i]]
+        for j in range(i + 1, len(nums)):
+            if nums[j] >= run[-1]:
+                run.append(nums[j])
+            else:
+                break
+        if len(run) >= 5 and any(abs(x - v) < 1e-9 for x in run):
+            return True
+    return False
+
+
+def _sign_refuted(obs_text: str, ev: str, sign: str, dimension) -> tuple:
+    """#39 canon-anchored sign skeptic: sees the CANON and tries to refute the PROPOSED SIGN
+    (never the fact). Catches stably-wrong signs that vote-consistency cannot ('+1.0 for
+    more warming', '+1.0 resilience for 254k deaths' — both live). FAIL-CLOSED for the
+    assertion, open for the fact: any failure -> the sign is simply not asserted."""
+    d = dimension or "the goal"
+    prompt = (
+        f"{_frame()}\n\n"
+        f"An observation and its evidence:\nOBSERVATION: {obs_text}\nEVIDENCE: \"{ev}\"\n"
+        f"A reader claims its impact on '{d}' relative to the GOAL above is "
+        f"'{'POSITIVE (toward the goal)' if sign == '+' else 'NEGATIVE (away from the goal)'}'.\n"
+        f"You are a strict skeptic: try to REFUTE that direction. If the direction is wrong "
+        f"or not clearly justified by the observation, answer holds=false.\n"
+        f'Reply ONLY JSON: {{"holds": true|false, "why": "<short>"}}')
+    try:
+        g = _json_from(_local(prompt, timeout=300, num_predict=200))
+    except Exception as e:
+        return True, f"sign check unavailable ({type(e).__name__}) — sign not asserted"
+    if bool(g.get("holds")):
+        return False, ""
+    return True, str(g.get("why", "sign refuted against the goal frame"))[:200]
+
+
 def extract_goal_impact(text: str, axis: str, need: str, url: str) -> tuple:
     """Read page text -> one goal-impact observation. Returns (obs, why). obs is None when
     nothing groundable is found (never fabricated)."""
@@ -217,6 +269,10 @@ def extract_goal_impact(text: str, axis: str, need: str, url: str) -> tuple:
         _dn = _digits(_m)
         if _dn and _dn not in _digits(ev):
             return None, f"observation states a number ({_m}) not present in the evidence — rejected"
+    # GUARD 1d (#40, deterministic): a value that sits inside a numeric scale run is chart
+    # furniture (axis/legend ticks), not a measurement.
+    if _looks_like_scale(ev, val):
+        return None, "value appears to be an axis/legend scale tick, not a measurement — rejected"
     # GUARD 2 (assessment hygiene): a contested reading MUST carry a counter-view.
     sign = got.get("sign") if got.get("sign") in ("+", "-", "0") else "0"
     try:
@@ -226,6 +282,16 @@ def extract_goal_impact(text: str, axis: str, need: str, url: str) -> tuple:
     cv = str(got.get("counterview", "")).strip()
     if got.get("contested") and len(cv) < 15:
         return None, "contested impact without a counter-reading — rejected"
+
+    # GUARD 4 (#39, canon-anchored): the value-judgment (sign) must survive a skeptic who
+    # reads it against the goal frame. Refuted or uncheckable -> the FACT is kept but the
+    # sign is NOT asserted (sign 0), with the reason named. Runs before the (expensive)
+    # structural guard so a bad sign fails fast.
+    _sg_note = ""
+    if _SIGN_GUARD and sign in ("+", "-"):
+        _ref, _sg_note = _sign_refuted(obs, ev, sign, got.get("dimension"))
+        if _ref:
+            sign = "0"
 
     # GUARD 3 (structural faithfulness, opt-in via CORTEX_STRUCTURAL_GUARD): the observation
     # must decompose into atomic claims that each survive grounding + adversarial entailment.
@@ -249,6 +315,7 @@ def extract_goal_impact(text: str, axis: str, need: str, url: str) -> tuple:
         "rationale": str(got.get("rationale", "")).strip()[:300],
         "contested": bool(got.get("contested", False)),
         "counterview": cv[:300],
+        "sign_guard": _sg_note,
         "claims": _claims,
     }, "ok"
 

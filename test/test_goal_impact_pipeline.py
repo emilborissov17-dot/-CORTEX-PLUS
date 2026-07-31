@@ -57,6 +57,8 @@ GOOD = json.dumps({
     "contested": False, "counterview": ""})
 
 def fake_good(prompt, num_predict=350, **kw):
+    if '"holds"' in prompt:
+        return json.dumps({"holds": True, "why": ""})
     return GOOD
 def fake_ungrounded(prompt, num_predict=350, **kw):
     return json.dumps({"observation": "peace improved", "evidence": "peace improved dramatically worldwide",
