@@ -90,3 +90,5 @@ memory/semantic_inbox/
 memory/pulse_runs.log
 memory/pulse_stream.jsonl
 memory/idea_stream.jsonl
+memory/pulse_cycle_requests.json
+memory/extraordinary_request.json

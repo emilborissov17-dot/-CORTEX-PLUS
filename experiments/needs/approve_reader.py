@@ -136,6 +136,40 @@ def _mark_candidate(axis, url, why):
         return False
 
 
+EXTRAORDINARY = REPO / "memory" / "extraordinary_request.json"
+CYCLE_PROPOSALS = REPO / "memory" / "pulse_cycle_requests.json"
+
+
+def _apply_cycle_request(spec: dict, chat_id):
+    """Emil's OK is what turns a pulse PROPOSAL into a request the supervisor will honour.
+
+    This function is the only authorised writer of extraordinary_request.json — the
+    supervisor refuses any file not authored here and not carrying a human approver. The
+    pulse can notice and propose; the alarm clock stays in human hands. Even after this,
+    the supervisor still applies the lock, the restart budget and a 4h rate limit."""
+    reason = str(spec.get("reason") or "").strip()
+    if not reason:
+        return {"ok": False, "error": "cycle request has no named reason — not written"}
+    EXTRAORDINARY.parent.mkdir(parents=True, exist_ok=True)
+    EXTRAORDINARY.write_text(json.dumps({
+        "ts": _now(),
+        "authored_by": "approve_reader",
+        "approved_by": str(chat_id),
+        "proposed_at": spec.get("proposed_at"),
+        "keys": spec.get("keys", []),
+        "reason": reason,
+    }, ensure_ascii=False, indent=2), encoding="utf-8")
+    try:                       # the proposal is spent; it must not re-surface
+        doc = _load(CYCLE_PROPOSALS, {})
+        doc.pop("pending", None)
+        CYCLE_PROPOSALS.write_text(json.dumps(doc, ensure_ascii=False, indent=2),
+                                   encoding="utf-8")
+    except Exception:
+        pass
+    return {"ok": True, "note": "supervisor will pick it up within a minute (subject to "
+                                "lock, restart budget and the 4h rate limit)"}
+
+
 def _apply_goal(spec: dict, chat_id):
     """Accept a goal-proposal: append it to improvement_proposals.json, the file
     the cycle already consumes. Human-accepted, timestamped, auditable."""
@@ -223,6 +257,12 @@ def run():
                         if ok else f"⚠️ promote failed for {label}: {res.get('error')}"
                                    + (" — marked rejected, it won't be offered again."
                                       if res.get("marked_rejected") else "")))
+            elif spec["type"] == "request_cycle":
+                res = _apply_cycle_request(spec, chat_id)
+                ok = res.get("ok")
+                _reply(token, chat_id,
+                       (f"✅ extraordinary cycle requested. {res.get('note')}" if ok
+                        else f"⚠️ cycle request not written: {res.get('error')}"))
             elif spec["type"] == "accept_goal":
                 res = _apply_goal(spec, chat_id)
                 _reply(token, chat_id,

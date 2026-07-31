@@ -25,7 +25,7 @@ from __future__ import annotations
 import hashlib
 import json
 import sys
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -209,6 +209,82 @@ def _mind_items():
                                  "correct refusal (not served as fresh); no action unless it's the only source",
                                  "none"))
     out.extend(_penumbra_items())
+    out.extend(_cycle_request_items())
+    return out
+
+
+CYCLE_PROPOSALS = REPO / "memory" / "pulse_cycle_requests.json"
+PULSE_STREAM    = REPO / "memory" / "pulse_stream.jsonl"
+CYCLE_PROPOSAL_MAX_AGE_MIN = 30
+AUTO_STIM_PER_WEEK = 3
+
+
+def _attach_cycle(item, req):
+    """Make a pulse cycle-proposal approvable. THE ALARM CLOCK IS HUMAN-OWNED: this is
+    the only path from 'the pulse thinks a cycle is warranted' to a cycle actually being
+    requested, and it runs through Emil's thumb."""
+    item["approve_id"] = _approve_id("cycle", str(req.get("reason", ""))[:120])
+    item["approve"] = {"type": "request_cycle", "reason": req.get("reason"),
+                       "keys": req.get("keys", []), "proposed_at": req.get("ts"),
+                       "label": "extraordinary cycle"}
+
+
+def _requests_last_week() -> int:
+    """How often has this been asked lately? The failure mode has a name —
+    auto-stimulation — and it is only visible as a RATE."""
+    cutoff = datetime.now(timezone.utc) - timedelta(days=7)
+    n = 0
+    for h in (_load(CYCLE_PROPOSALS, {}).get("history") or []):
+        try:
+            if datetime.fromisoformat(h["ts"]) >= cutoff:
+                n += 1
+        except Exception:
+            pass
+    return n
+
+
+def _cycle_request_items():
+    doc = _load(CYCLE_PROPOSALS, {})
+    out = []
+    req = doc.get("pending")
+    if req:
+        try:
+            age_min = (datetime.now(timezone.utc)
+                       - datetime.fromisoformat(req["ts"])).total_seconds() / 60
+        except Exception:
+            age_min = 1e9
+        if age_min <= CYCLE_PROPOSAL_MAX_AGE_MIN:
+            item = _item(
+                "MIND", "medium",
+                f"PULSE requests extraordinary cycle — reason: {req.get('reason')}",
+                "the pulse judged a full cycle warranted; it CANNOT start one — the alarm "
+                "clock is yours. Your OK is what writes the supervisor's request, which is "
+                "then still subject to the lock, the restart budget and a 4h rate limit",
+                "APPROVE to let the supervisor start an off-schedule cycle, or ignore",
+                "human")
+            _attach_cycle(item, req)
+            out.append(item)
+
+    n = _requests_last_week()
+    if n > AUTO_STIM_PER_WEEK:
+        origins = {}
+        for line in (PULSE_STREAM.read_text(encoding="utf-8").splitlines()[-200:]
+                     if PULSE_STREAM.exists() else []):
+            try:
+                o = (json.loads(line).get("mind") or {}).get("penumbra_anomaly_origins") or {}
+                for k, v in o.items():
+                    origins[k] = max(origins.get(k, 0), v)
+            except Exception:
+                pass
+        out.append(_item(
+            "MIND", "high",
+            f"possible auto-stimulation: {n} extraordinary-cycle requests in 7 days",
+            f"a system that keeps asking to be woken may be reacting to its own output "
+            f"rather than to the world. Anomaly origins seen recently: {origins or 'none'}",
+            "REVIEW the triggering reasons before approving more; if the anomalies are "
+            "self-originated, the loop is closed and the thresholds (config/pulse.json) "
+            "or the ideation guards need tightening — not more cycles",
+            "human"))
     return out
 
 

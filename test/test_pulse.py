@@ -82,12 +82,20 @@ check("dead ollama fires (+2)", n["score"] == 2 and "ollama_dead" in keys_of(n))
 n = P.necessity(ctx(approvals=2), C)
 check("pending approvals fire (+1)", n["score"] == 1)
 
-n = P.necessity(ctx(penumbra={"n_active": 1, "by_reason": {"model_anomaly": 1}}), C)
-check("a NEW model_anomaly fires (+3)", n["score"] == 3
+EXT_ANOM = {"n_active": 1, "by_reason": {"model_anomaly": 1},
+            "anomalies_by_origin": {"goal_impact_collector": 1}}
+n = P.necessity(ctx(penumbra=EXT_ANOM), C)
+check("a NEW externally-sourced model_anomaly fires (+3)", n["score"] == 3
       and "penumbra_model_anomaly_new" in keys_of(n))
-prev_a = [{"mind": {"needs_total": 10, "penumbra_anomalies": 1}, "spirit": {"composite": 0.5}}]
-n = P.necessity(ctx(prev=prev_a, penumbra={"n_active": 1, "by_reason": {"model_anomaly": 1}}), C)
+prev_a = [{"mind": {"needs_total": 10, "penumbra_anomalies_external": 1},
+           "spirit": {"composite": 0.5}}]
+n = P.necessity(ctx(prev=prev_a, penumbra=EXT_ANOM), C)
 check("the SAME anomaly does not re-fire every tick", n["score"] == 0)
+n = P.necessity(ctx(penumbra={"n_active": 1, "by_reason": {"model_anomaly": 1},
+                              "anomalies_by_origin": {"pulse_ideation": 1}}), C)
+check("an anomaly the system IDEATED never fires", n["score"] == 0)
+n = P.necessity(ctx(penumbra={"n_active": 1, "by_reason": {"model_anomaly": 1}}), C)
+check("an anomaly with UNKNOWN provenance never fires (fail-closed)", n["score"] == 0)
 
 n = P.necessity(ctx(new_drops=1, stalled=["A"]), C)
 check("contributions add up and each is named separately",
@@ -109,12 +117,20 @@ check("over threshold WAKES sensorium ingest", called["ingest"] == 1 and "ingest
 acted = P.wake({"reasons": [{"key": "unconsumed_drops"}]}, ctx(), dry=True)
 check("dry run takes no real action", called["ingest"] == 1 and acted == ["dry:unconsumed_drops"])
 
-# the spec's supervisor flag-file intake does not exist; the pulse must SAY so, not fake it
-check("extraordinary-cycle request reports the gap instead of faking a trigger",
-      P.request_extraordinary_cycle() == "unavailable:no_supervisor_intake")
-acted = P.wake({"reasons": [{"key": "composite_moved"}]}, ctx(), dry=False)
-check("...and that status reaches the actions list",
-      any("unavailable:no_supervisor_intake" in a for a in acted))
+# the pulse may ASK for a cycle, never start one — and only for cycle-worthy reasons.
+# (Freshness, consumption and the 4h rate limit are the supervisor's side and live in
+# test_extraordinary_cycle.py.)
+P.CYCLE_PROPOSALS = TMP / "proposals.json"
+check("routine reasons never propose a cycle",
+      P.propose_extraordinary_cycle([{"key": "unconsumed_drops", "why": "w"}])
+      .startswith("not_proposed"))
+acted = P.wake({"reasons": [{"key": "composite_moved", "why": "0.5 -> 0.6"}]},
+               ctx(), dry=False)
+check("a cycle-worthy reason PROPOSES (it cannot start one)",
+      any(a.startswith("cycle_proposal=proposed:composite_moved") for a in acted))
+check("...writing only a proposal for the human to approve",
+      P.CYCLE_PROPOSALS.exists())
+P.CYCLE_PROPOSALS.unlink(missing_ok=True)
 
 # ---------- degraded core ----------
 import builtins

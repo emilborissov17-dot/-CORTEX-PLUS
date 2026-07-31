@@ -162,8 +162,11 @@ def drop(axis: str, kind: str, payload: dict, collector: str = "collector",
     path = base / axis / f"{stem}.json"
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(canon, encoding="utf-8")   # store the EXACT canonical bytes we hashed
+    # collector is carried on the LEAF ENTRY (not just inside the hashed record) so
+    # provenance is readable without opening every drop file. It is not part of the
+    # leaf hash, so this changes no existing commitment.
     entry = {"id": drop_id, "leaf": leaf, "path": str(path.relative_to(REPO)),
-             "axis": axis, "kind": kind, "ts": ts}
+             "axis": axis, "kind": kind, "ts": ts, "collector": collector}
     if q:
         entry["quarantine"] = q
         PENUMBRA_DIR.mkdir(parents=True, exist_ok=True)
@@ -239,7 +242,16 @@ def penumbra_report() -> dict:
         by_axis[lf["axis"]] = by_axis.get(lf["axis"], 0) + 1
     growth = sorted(({"axis": a, "n_active": n} for a, n in by_axis.items()),
                     key=lambda x: -x["n_active"])
-    return {"n_active": len(active), "by_reason": by_reason, "growth": growth}
+    # WHERE an anomaly came from decides what it is allowed to cause. An anomaly the
+    # system generated from its own ideas is a thought about itself; one that came from
+    # a collector reading the world is evidence. Only the second may ever move anything.
+    origins = {}
+    for lf in active:
+        if (lf.get("quarantine") or {}).get("reason") == "model_anomaly":
+            o = lf.get("collector") or "unknown"
+            origins[o] = origins.get(o, 0) + 1
+    return {"n_active": len(active), "by_reason": by_reason, "growth": growth,
+            "anomalies_by_origin": origins}
 
 
 def promote(drop_id: str, by: str = "emil") -> str:

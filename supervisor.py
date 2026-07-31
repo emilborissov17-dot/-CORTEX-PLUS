@@ -73,6 +73,20 @@ from memory import existence_ledger as ledger  # noqa: E402
 from memory import heartbeat as hb             # noqa: E402
 
 CONFIG_PATH = BASE / "config" / "scheduler.json"
+# THE ALARM CLOCK IS HUMAN-OWNED.
+#
+# This file may be written by ONE author: approve_reader, and only after Emil has replied
+# "OK <id>" in Telegram. The pulse can notice that a cycle looks warranted and it can ASK
+# — it cannot write this file. An endogenous trigger that is auto-honoured is not a
+# horizontal capability, it is vertical creep wearing a horizontal costume: the system
+# would be setting its own alarm clock and then answering it.
+#
+# Read and CONSUMED on the very next tick — a request that could survive its own reading
+# would fire again forever.
+EXTRAORDINARY_PATH   = BASE / "memory" / "extraordinary_request.json"
+EXTRAORDINARY_MAX_AGE_MIN = 10    # older than this is not a request, it is litter
+EXTRAORDINARY_MIN_GAP_H   = 4     # a daily cycle must not become an hourly one
+EXTRAORDINARY_AUTHOR = "approve_reader"   # the ONLY accepted author
 STATE_PATH  = BASE / "memory" / "scheduler_state.json"
 LOCK_PATH   = BASE / "memory" / "cycle.lock"
 LOG_PATH    = BASE / "logs" / "supervisor.log"
@@ -197,6 +211,48 @@ def read_lock() -> Optional[dict]:
         return {"pid": None, "corrupt": True}
 
 
+def read_extraordinary(now: Optional[datetime] = None) -> Optional[dict]:
+    """The pulse's request, if there is a VALID one. A request must be fresh and must
+    NAME a reason: an unnamed or stale request is litter, and litter must never start a
+    multi-hour cycle. Returns None for anything malformed — the file is consumed either
+    way by consume_extraordinary()."""
+    if not EXTRAORDINARY_PATH.exists():
+        return None
+    try:
+        req = json.loads(EXTRAORDINARY_PATH.read_text(encoding="utf-8"))
+    except Exception:
+        return None
+    if not isinstance(req, dict) or not str(req.get("reason", "")).strip():
+        return None
+    # AUTHORSHIP IS THE WHOLE POINT. Only approve_reader may author this, and only with a
+    # human approver recorded on it. A request the system wrote for itself is refused
+    # here no matter how fresh or well-reasoned it is.
+    if req.get("authored_by") != EXTRAORDINARY_AUTHOR or not str(req.get("approved_by", "")).strip():
+        return None
+    now = now or datetime.now().astimezone()
+    age_s = _age(now, req.get("ts"))
+    if age_s is None or age_s > EXTRAORDINARY_MAX_AGE_MIN * 60 or age_s < -60:
+        return None          # stale, undated, or dated in the future
+    return req
+
+
+def consume_extraordinary() -> bool:
+    """Delete the request file. Called whether the request STARTED a cycle or was
+    refused, and whether it was valid or litter — a request that survives its own
+    reading fires again on the next tick, forever."""
+    try:
+        existed = EXTRAORDINARY_PATH.exists()
+        EXTRAORDINARY_PATH.unlink(missing_ok=True)
+        return existed
+    except Exception:
+        return False
+
+
+def _age_hours(now: datetime, ts: Optional[str]) -> Optional[float]:
+    s = _age(now, ts)
+    return None if s is None else s / 3600.0
+
+
 def write_lock(pid: int, cycle_id: str) -> None:
     LOCK_PATH.parent.mkdir(parents=True, exist_ok=True)
     LOCK_PATH.write_text(json.dumps({
@@ -260,13 +316,15 @@ def kill_tree(pid: int) -> bool:
 
 def decide(now: datetime, state: dict, heartbeat: Optional[dict],
            lock: Optional[dict], cfg: dict, lock_pid_alive: bool = False,
-           lock_cycle_finished: bool = False) -> Action:
+           lock_cycle_finished: bool = False,
+           extraordinary: Optional[dict] = None) -> Action:
     """What should this tick do? Exactly one thing.
 
-    `lock_pid_alive` and `lock_cycle_finished` are passed in rather than probed
-    (from the OS and from the existence ledger respectively), so the whole policy
-    stays pure and testable — the same discipline that lets us assert a healthy
-    40-minute web_intelligence step is never killed.
+    `lock_pid_alive`, `lock_cycle_finished` and `extraordinary` are passed in rather
+    than probed (from the OS, the existence ledger, and the request file respectively),
+    so the whole policy stays pure and testable — the same discipline that lets us
+    assert a healthy 40-minute web_intelligence step is never killed. Consuming the
+    request file is tick()'s job, not this function's.
     """
     today = now.date().isoformat()
 
@@ -328,6 +386,26 @@ def decide(now: datetime, state: dict, heartbeat: Optional[dict],
         return Action(NOTHING,
                       reason="restart budget exhausted today — waiting for human "
                              "intervention (see daily report)")
+
+    # ── An EXTRAORDINARY request (from the pulse) ───────────────────────────
+    # Deliberately placed AFTER the lock and restart-budget checks and BEFORE the
+    # "already ran today" check: a running cycle, a wedged cycle or a spent budget all
+    # still veto it, but the whole point of an extraordinary run is that something
+    # happened AFTER today's scheduled cycle. Rate-limited hard, because a pulse that
+    # can request a cycle whenever its necessity spikes would quietly convert a daily
+    # cycle into an hourly one — the budget is what keeps the request a request.
+    if extraordinary:
+        gap_h = float(cfg.get("extraordinary_min_gap_hours", EXTRAORDINARY_MIN_GAP_H))
+        last = _age_hours(now, state.get("last_extraordinary_utc"))
+        if last is not None and last < gap_h:
+            return Action(NOTHING,
+                          reason=f"extraordinary request REFUSED (rate limit): last one was "
+                                 f"{last:.1f}h ago, minimum gap is {gap_h:.0f}h "
+                                 f"— reason was: {extraordinary.get('reason')}")
+        return Action(START, reason="extraordinary: " + str(extraordinary.get("reason")),
+                      scheduled_for=now.isoformat(),
+                      details={"extraordinary": True,
+                               "requested_at": extraordinary.get("ts")})
 
     if state.get("last_run_date") == today:
         return Action(NOTHING, reason="today's cycle has already run")
@@ -539,12 +617,19 @@ def tick(now: Optional[datetime] = None, dry_run: bool = False) -> Action:
     # from a cycle that finished cleanly (CYCLE_FINISHED sealed) or one that died
     # mid-run (no seal). A live cycle needs no such lookup.
     finished = ledger.has_finished(lock.get("cycle_id")) if (lock and not alive) else False
+    extra = read_extraordinary(now)
     action = decide(now, state, beat, lock, cfg, lock_pid_alive=alive,
-                    lock_cycle_finished=finished)
+                    lock_cycle_finished=finished, extraordinary=extra)
 
     if dry_run:
         log(f"[dry-run] {action.kind}: {action.reason}")
         return action
+
+    # CONSUME unconditionally: started, refused by the rate limit, vetoed by a running
+    # cycle, or plain litter — the file goes. Doing this before acting means even a
+    # crash inside spawn_cycle cannot leave a request that fires again next minute.
+    if consume_extraordinary():
+        log(f"extraordinary request consumed (valid={extra is not None})")
 
     today = now.date().isoformat()
 
@@ -613,6 +698,10 @@ def tick(now: Optional[datetime] = None, dry_run: bool = False) -> Action:
         state["last_run_date"] = today
         state["last_run_utc"] = datetime.now(timezone.utc).isoformat()
         state["failure"] = None
+        if (action.details or {}).get("extraordinary"):
+            # stamp the rate limit from the moment it actually STARTED, not from when
+            # it was requested — otherwise a burst of requests could each look "old"
+            state["last_extraordinary_utc"] = datetime.now(timezone.utc).isoformat()
         save_state(state)
 
         if action.kind == CATCHUP:

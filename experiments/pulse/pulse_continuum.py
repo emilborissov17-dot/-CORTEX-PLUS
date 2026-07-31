@@ -205,10 +205,13 @@ def necessity(ctx: dict, c: dict) -> dict:
         add("ollama_dead", "ollama port 11434 not answering")
     if ctx["approvals"]:
         add("approvals_pending", f"{ctx['approvals']} approval(s) awaiting a human")
-    prev_anom = ((prev.get("mind") or {}).get("penumbra_anomalies"))
-    anom = (ctx["penumbra"].get("by_reason") or {}).get("model_anomaly", 0)
+    # ORIGIN-RESTRICTED: only anomalies from OUTSIDE the system's own ideation count.
+    # An idea the system had about itself must never raise its own necessity.
+    prev_anom = ((prev.get("mind") or {}).get("penumbra_anomalies_external"))
+    anom = external_anomalies(ctx["penumbra"])
     if anom and (not isinstance(prev_anom, int) or anom > prev_anom):
-        add("penumbra_model_anomaly_new", f"{anom} model_anomaly item(s) — model may be broken")
+        add("penumbra_model_anomaly_new",
+            f"{anom} externally-sourced model_anomaly item(s) — model may be broken")
     return {"score": score, "reasons": reasons}
 
 
@@ -225,6 +228,11 @@ def state_line(ctx: dict, nec: dict, degraded: bool) -> dict:
                  "penumbra_active": ctx["penumbra"].get("n_active", 0),
                  "penumbra_anomalies": (ctx["penumbra"].get("by_reason") or {}).get(
                      "model_anomaly", 0),
+                 # split out on purpose: the inflation monitor needs to see whether
+                 # anomalies are coming from the world or from the system's own head
+                 "penumbra_anomalies_external": external_anomalies(ctx["penumbra"]),
+                 "penumbra_anomaly_origins": (ctx["penumbra"].get(
+                     "anomalies_by_origin") or {}),
                  "series_stalled_axes": ctx["stalled"]},
         "spirit": {"composite": ctx["composite"], "worst_gap_axis": ctx["worst_gap_axis"],
                    "ideas_pending": ctx["ideas_pending"]},
@@ -234,12 +242,54 @@ def state_line(ctx: dict, nec: dict, degraded: bool) -> dict:
 
 # ── 5. WAKING ACTIONS (may wake; never writes scoring or specs) ──────────────
 
-def request_extraordinary_cycle() -> str:
-    """SPEC GAP, flagged not improvised: supervisor.py has no flag-file intake. decide()
-    is a pure function of (now, state, heartbeat, lock, cfg) and its only START paths are
-    daily_hour and catch-up. Writing a request file nothing reads would be a silent no-op
-    dressed as a trigger, so the pulse reports the gap instead of faking the capability."""
-    return "unavailable:no_supervisor_intake"
+CYCLE_PROPOSALS = REPO / "memory" / "pulse_cycle_requests.json"
+
+# ONLY these warrant waking the whole daily cycle. Routine housekeeping — unconsumed
+# drops, a needs bump, pending approvals — is handled by the waking actions themselves
+# and must never escalate to a full cycle, or the pulse becomes a scheduler.
+_CYCLE_WORTHY = ("composite_moved", "penumbra_model_anomaly_new")
+
+# ORIGIN RESTRICTION. An anomaly born from the system's OWN ideation is a thought about
+# itself; an anomaly born from a collector reading the world is evidence. Only evidence
+# may ever move anything. Without this the loop closes on itself: ideate -> anomaly ->
+# necessity spike -> request a cycle -> more ideation. Auto-stimulation, dressed as need.
+# "unknown" is counted as self-originated ON PURPOSE: an anomaly whose provenance we
+# cannot establish must not be allowed to raise the system's own necessity. Fail-closed
+# against auto-stimulation, at the cost of ignoring pre-existing leaves that predate the
+# collector field.
+_SELF_ORIGINS = ("pulse_ideation", "unknown")
+
+
+def external_anomalies(pen: dict) -> int:
+    """model_anomaly items that came from OUTSIDE the system's own thinking."""
+    origins = (pen or {}).get("anomalies_by_origin") or {}
+    return sum(n for o, n in origins.items() if o not in _SELF_ORIGINS)
+
+
+def propose_extraordinary_cycle(reasons) -> str:
+    """PROPOSE a cycle — the system does not set its own alarm clock.
+
+    The pulse may notice that a full cycle looks warranted and register it as an approval
+    item; Emil's "OK <id>" is what makes approve_reader write the supervisor's request
+    file. System proposes, human disposes. This function therefore writes a PROPOSAL that
+    only the needs report reads — never anything the supervisor honours."""
+    worthy = [r for r in reasons if r.get("key") in _CYCLE_WORTHY]
+    if not worthy:
+        return "not_proposed:no_cycle_worthy_reason"
+    try:
+        reason = "; ".join(f"{r['key']}: {r['why']}" for r in worthy)
+        CYCLE_PROPOSALS.parent.mkdir(parents=True, exist_ok=True)
+        doc = _load(CYCLE_PROPOSALS, {})
+        doc["pending"] = {"ts": _now(), "proposed_by": "pulse_continuum",
+                          "reason": reason,
+                          "keys": [r["key"] for r in worthy]}
+        doc["history"] = ([h for h in (doc.get("history") or [])][-50:]
+                          + [{"ts": _now(), "keys": [r["key"] for r in worthy]}])
+        CYCLE_PROPOSALS.write_text(json.dumps(doc, ensure_ascii=False, indent=2),
+                                   encoding="utf-8")
+        return "proposed:" + ",".join(r["key"] for r in worthy)
+    except Exception as e:
+        return f"propose_failed:{type(e).__name__}"
 
 
 def wake(nec: dict, ctx: dict, dry: bool) -> list:
@@ -271,8 +321,8 @@ def wake(nec: dict, ctx: dict, dry: bool) -> list:
                 acted.append("ollama=binary_missing")
         except Exception as e:
             acted.append(f"ollama FAILED {type(e).__name__}")
-    if keys & {"composite_moved", "series_stalled"}:
-        acted.append(f"cycle_request={request_extraordinary_cycle()}")
+    if keys & set(_CYCLE_WORTHY):
+        acted.append(f"cycle_proposal={propose_extraordinary_cycle(nec['reasons'])}")
     return acted
 
 
