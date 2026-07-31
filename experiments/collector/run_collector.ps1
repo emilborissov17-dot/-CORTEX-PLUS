@@ -71,14 +71,22 @@ if (Test-Ollama) {
 }
 
 # ---- 2. Guards + headless, then run ----------------------------------------
-# HEADFUL KNOB. Set to '0' per the #44 brief (unattended, no window). MEASURED
-# 2026-07-31, same query back to back: headful 3 pages, headless 0 -- DuckDuckGo and
-# Google time out on the results selector and Bing returns no links, and the usual
-# --disable-blink-features=AutomationControlled / navigator.webdriver hiding does not
-# help. So while this is '0' the collector reliably reads NOTHING and every scheduled
-# run logs browse_failed. Flip to '1' to actually sense, at the cost of a browser
-# window appearing every 4 hours.
-$HeadfulMode = '0'
+# HEADFUL KNOB -- currently '1' as a STOPGAP, and it should go back to '0'.
+#
+# Headless search is blocked: measured 2026-07-31, same query back to back, headful 3
+# pages vs headless 0 (DuckDuckGo and Google time out on the results selector, Bing
+# returns no links; AutomationControlled/webdriver hiding does not help). Only the
+# TYPING-INTO-AN-ENGINE half is blocked, so human_browse_read now discovers URLs through
+# the Brave Search API when headless and still reads each page in the browser.
+#
+# That path needs BRAVE_API_KEY in .env, which is NOT set on this box (checked
+# 2026-07-31: 9 other keys present, no Brave). Free tier is 2000 req/month at
+# brave.com/search/api -- at 4-hourly runs that is ~180/month, well inside it.
+#
+# Until the key exists this must be '1' or the scheduled eye is blind: a visible browser
+# window 4x/day, which is the only way it senses anything at all. Set it back to '0' the
+# moment BRAVE_API_KEY is configured.
+$HeadfulMode = '1'
 
 $env:PYTHONIOENCODING        = 'utf-8'
 $env:CORTEX_BROWSER_HEADFUL  = $HeadfulMode

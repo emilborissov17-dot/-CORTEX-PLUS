@@ -303,12 +303,37 @@ def human_browse_read(query: str, n_open: int = 4):
     """Human end-to-end in ONE visible window (Emil: 'type real words, click a page, read it'):
     open the engine homepage, type the query (UNQUOTED) with real keystrokes, press Enter,
     then OPEN each of the top results in turn and READ the page in the browser. Returns
-    [(url, page_text)]. Reading in-browser also dodges the 403s raw requests hit (e.g. reddit)."""
+    [(url, page_text)]. Reading in-browser also dodges the 403s raw requests hit (e.g. reddit).
+
+    SCHEDULED (headless) MODE SPLITS THE TWO HALVES. Measured 2026-07-31, same query back to
+    back: headful 3 pages, headless 0 — DuckDuckGo and Google time out on the results
+    selector and Bing returns no links, and --disable-blink-features=AutomationControlled
+    plus navigator.webdriver hiding does not help. It is the TYPING-INTO-AN-ENGINE half that
+    is blocked, not the reading half. So when headless we discover URLs through the Brave
+    API (a contract, not anti-bot roulette) and still open and READ each page in the browser.
+    The system keeps choosing its own query either way — this is free search, not fixed URLs.
+
+    Headful is untouched: the full human flow, because that is the one Emil watches."""
     from playwright.sync_api import sync_playwright
     headful = os.environ.get("CORTEX_BROWSER_HEADFUL", "1") != "0"
     slowmo = int(os.environ.get("CORTEX_BROWSER_SLOWMO", "600" if headful else "0"))
     typed = _loosen(query)
     out = []
+
+    api_urls = []
+    if not headful:
+        try:
+            api_urls = [u for u, _t in (search_brave(typed, n=n_open) or []) if u][:n_open]
+            print(f"[scout] headless: Brave returned {len(api_urls)} url(s)", file=sys.stderr)
+        except Exception as e:
+            print(f"[scout] headless: Brave search failed ({type(e).__name__}: {e}) — "
+                  f"falling back to the engine flow, which is blocked headless",
+                  file=sys.stderr)
+            api_urls = []
+        if not api_urls:
+            print("[scout] headless: no API results (BRAVE_API_KEY missing?) — the engine "
+                  "flow will almost certainly return 0 pages in headless mode",
+                  file=sys.stderr)
     with sync_playwright() as pw:
         browser = pw.chromium.launch(headless=not headful, slow_mo=slowmo)
         try:
@@ -317,8 +342,8 @@ def human_browse_read(query: str, n_open: int = 4):
             ctx.add_init_script(
                 "Object.defineProperty(navigator,'webdriver',{get:()=>undefined})")
             page = ctx.new_page()
-            urls = []
-            for name, home, inp, sel, host in _ENGINES:
+            urls = list(api_urls)          # headless: already discovered via the API
+            for name, home, inp, sel, host in ([] if urls else _ENGINES):
                 try:
                     page.goto(home, wait_until="domcontentloaded", timeout=30000)
                     _dismiss_consent(page)
