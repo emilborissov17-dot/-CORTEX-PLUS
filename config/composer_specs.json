@@ -27,7 +27,8 @@
             "kind": "file",
             "path": "snapshots/master/global_indicators_latest.json",
             "extract": "co2.co2_ppm",
-            "org": "NOAA"
+            "org": "NOAA",
+            "unit": "ppm_co2"
           },
           {
             "id": "local_co2_backup",
@@ -36,7 +37,8 @@
             "extract": "co2_ppm_current",
             "data_date_extract": "co2_measurement_date",
             "data_max_age_days": 400,
-            "org": "NOAA-local-cache"
+            "org": "NOAA-local-cache",
+            "unit": "ppm_co2"
           }
         ]
       },
@@ -49,7 +51,8 @@
             "kind": "http_csv",
             "url": "https://gml.noaa.gov/webdata/ccgg/trends/co2/co2_trend_gl.csv",
             "col": 3,
-            "org": "NOAA-GML"
+            "org": "NOAA-GML",
+            "unit": "ppm_co2"
           }
         ]
       },
@@ -62,6 +65,14 @@
             "kind": "http_gdelt_tone",
             "url": "https://api.gdeltproject.org/api/v2/doc/doc?query=%22climate%20change%22&mode=timelinetone&timespan=7d&format=json",
             "org": "GDELT"
+          },
+          {
+            "id": "promoted_54947",
+            "kind": "http_json_count",
+            "url": "https://eonet.gsfc.nasa.gov/api/v3/events?status=all&days=7&category=wildfires",
+            "org": "NASA-EONET",
+            "extract": "events",
+            "provenance": "NASA EONET v3 wildfire event count, 7d window. Event COUNT, not burned area; EONET coverage is uneven by region. Honest proxy for climate-driven hazard activity."
           }
         ]
       },
@@ -100,19 +111,41 @@
             "kind": "file",
             "path": "snapshots/master/global_indicators_latest.json",
             "extract": "world_bank.safe_water_access_pct",
-            "org": "World Bank"
+            "org": "World Bank",
+            "unit": "pct_population"
           }
         ]
       },
       "measurement_daily": {
         "min": 1,
         "freshness_days": 7,
-        "sources": []
+        "sources": [
+          {
+            "id": "promoted_11883",
+            "kind": "http_csv",
+            "url": "https://waterservices.usgs.gov/nwis/dv/?format=rdb&sites=01646500&parameterCd=00060&period=P10D",
+            "org": "USGS",
+            "col": 3,
+            "data_date_col": 2,
+            "data_max_age_days": 7,
+            "provenance": "USGS NWIS gauge 01646500, real instrument observation. SINGLE US river — a local measurement standing in for a global water slot. Directionally honest, geographically narrow.",
+            "unit": "cubic_feet_per_second"
+          }
+        ]
       },
       "event_daily": {
         "min": 1,
         "freshness_days": 3,
-        "sources": []
+        "sources": [
+          {
+            "id": "promoted_60365",
+            "kind": "http_json_count",
+            "url": "https://eonet.gsfc.nasa.gov/api/v3/events?status=all&days=30&category=floods",
+            "org": "NASA-EONET",
+            "extract": "events",
+            "provenance": "NASA EONET v3 flood event count, 30d window (status=all — the open-only filter returns 0). Event COUNT, not severity or people affected."
+          }
+        ]
       },
       "indirect_proxy": {
         "min": 1,
@@ -142,19 +175,41 @@
             "kind": "file",
             "path": "snapshots/master/global_indicators_latest.json",
             "extract": "food.undernourishment_pct",
-            "org": "FAO/WB"
+            "org": "FAO/WB",
+            "unit": "pct_population"
           }
         ]
       },
       "measurement_daily": {
         "min": 1,
         "freshness_days": 7,
-        "sources": []
+        "sources": [
+          {
+            "id": "promoted_35258",
+            "kind": "http_json_series",
+            "url": "https://api.open-meteo.com/v1/forecast?latitude=41.9&longitude=-93.6&daily=et0_fao_evapotranspiration&past_days=7&forecast_days=1&timezone=UTC",
+            "org": "Open-Meteo",
+            "extract": "daily.et0_fao_evapotranspiration",
+            "data_date_extract": "daily.time",
+            "data_max_age_days": 3,
+            "provenance": "Open-Meteo (ECMWF-derived) reference evapotranspiration at 41.9N/-93.6W. A crop WATER-DEMAND proxy over one growing region — not a food-supply measurement, not global. Weakest link in the FOOD portfolio.",
+            "unit": "mm_per_day_et0"
+          }
+        ]
       },
       "event_daily": {
         "min": 1,
         "freshness_days": 3,
-        "sources": []
+        "sources": [
+          {
+            "id": "promoted_40653",
+            "kind": "http_json_count",
+            "url": "https://eonet.gsfc.nasa.gov/api/v3/events?status=all&days=7&category=severeStorms",
+            "org": "NASA-EONET",
+            "extract": "events",
+            "provenance": "NASA EONET v3 severe-storm count. NOT food-specific: EONET's drought category is permanently empty, so this stands in as a crop-disruption proxy shared with ENERGY. Replace when a real food-event feed is found."
+          }
+        ]
       },
       "indirect_proxy": {
         "min": 1,
@@ -191,7 +246,73 @@
             "kind": "file",
             "path": "snapshots/master/global_indicators_latest.json",
             "extract": "world_bank.renewable_elec_pct",
-            "org": "World Bank"
+            "org": "World Bank",
+            "unit": "pct_electricity"
+          }
+        ]
+      },
+      "measurement_daily": {
+        "min": 1,
+        "freshness_days": 7,
+        "sources": [
+          {
+            "id": "promoted_34826",
+            "kind": "http_json_series",
+            "url": "https://api.open-meteo.com/v1/forecast?latitude=51.2&longitude=10.4&daily=shortwave_radiation_sum&past_days=7&forecast_days=1&timezone=UTC",
+            "org": "Open-Meteo",
+            "extract": "daily.shortwave_radiation_sum",
+            "data_date_extract": "daily.time",
+            "data_max_age_days": 3,
+            "provenance": "Open-Meteo solar resource at 51.2N/10.4E. The DRIVER of solar generation, not generation itself, and one country only. Stand-in until a keyless generation feed is found (ENTSO-E and EIA both require API keys).",
+            "unit": "mj_per_m2_day"
+          }
+        ]
+      },
+      "event_daily": {
+        "min": 1,
+        "freshness_days": 3,
+        "sources": [
+          {
+            "id": "promoted_69607",
+            "kind": "http_json_count",
+            "url": "https://eonet.gsfc.nasa.gov/api/v3/events?status=all&days=7&category=severeStorms",
+            "org": "NASA-EONET",
+            "extract": "events",
+            "provenance": "NASA EONET v3 severe-storm count as a grid-disruption proxy. NOT energy-specific — EONET has no energy category. Shared with FOOD; replace when a real outage/generation feed is found."
+          }
+        ]
+      },
+      "indirect_proxy": {
+        "min": 1,
+        "freshness_days": 60,
+        "sources": [
+          {
+            "id": "gi_fossil_fuel_consumption_pct",
+            "kind": "file",
+            "path": "snapshots/master/global_indicators_latest.json",
+            "extract": "waste.fossil_fuel_consumption_pct",
+            "org": "WB"
+          }
+        ]
+      }
+    }
+  },
+  "SOCIAL_RELATIONS_REVIEW": {
+    "anchor_slot": "anchor_annual",
+    "measure_slot": "measurement_daily",
+    "portfolio": {
+      "anchor_annual": {
+        "min": 1,
+        "freshness_days": 45,
+        "sources": [
+          {
+            "id": "gi_refugees_millions",
+            "kind": "file",
+            "path": "snapshots/master/global_indicators_latest.json",
+            "extract": "displaced.refugees_millions",
+            "org": "UNHCR",
+            "unit": "millions_persons",
+            "provenance": "UNHCR refugee stock. NOTE: target_config states the metric in PERSONS, this is MILLIONS — a scale difference the scorer must reconcile, not the composer."
           }
         ]
       },
@@ -210,13 +331,885 @@
         "freshness_days": 60,
         "sources": [
           {
-            "id": "gi_fossil_fuel_consumption_pct",
+            "id": "gi_idps_millions",
             "kind": "file",
             "path": "snapshots/master/global_indicators_latest.json",
-            "extract": "waste.fossil_fuel_consumption_pct",
-            "org": "WB"
+            "extract": "displaced.idps_millions",
+            "org": "UNHCR",
+            "unit": "millions_persons"
+          },
+          {
+            "id": "gi_asylum_millions",
+            "kind": "file",
+            "path": "snapshots/master/global_indicators_latest.json",
+            "extract": "displaced.asylum_seekers_millions",
+            "org": "UNHCR",
+            "unit": "millions_persons"
           }
         ]
+      }
+    }
+  },
+  "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL": {
+    "anchor_slot": "anchor_annual",
+    "measure_slot": "measurement_daily",
+    "portfolio": {
+      "anchor_annual": {
+        "min": 1,
+        "freshness_days": 45,
+        "sources": [
+          {
+            "id": "wbg_rights_score",
+            "kind": "file",
+            "path": "output/wellbeing_globe.json",
+            "extract": "governance_rights_score",
+            "org": "CORTEX/WGI+V-Dem",
+            "unit": "score_0_1",
+            "data_date_extract": "computed_at",
+            "data_max_age_days": 90,
+            "provenance": "Population-weighted WGI+V-Dem composite, the axis's declared primary_metric."
+          }
+        ]
+      },
+      "measurement_daily": {
+        "min": 1,
+        "freshness_days": 7,
+        "sources": []
+      },
+      "event_daily": {
+        "min": 1,
+        "freshness_days": 3,
+        "sources": []
+      },
+      "indirect_proxy": {
+        "min": 1,
+        "freshness_days": 60,
+        "sources": []
+      }
+    }
+  },
+  "GOVERNANCE_INSTITUTIONS_REVIEW": {
+    "anchor_slot": "anchor_annual",
+    "measure_slot": "measurement_daily",
+    "portfolio": {
+      "anchor_annual": {
+        "min": 1,
+        "freshness_days": 45,
+        "sources": [
+          {
+            "id": "wbg_institutions_score",
+            "kind": "file",
+            "path": "output/wellbeing_globe.json",
+            "extract": "governance_institutions_score",
+            "org": "CORTEX/WGI+V-Dem",
+            "unit": "score_0_1",
+            "data_date_extract": "computed_at",
+            "data_max_age_days": 90,
+            "provenance": "Population-weighted WGI+V-Dem composite, the declared primary_metric."
+          }
+        ]
+      },
+      "measurement_daily": {
+        "min": 1,
+        "freshness_days": 7,
+        "sources": []
+      },
+      "event_daily": {
+        "min": 1,
+        "freshness_days": 3,
+        "sources": []
+      },
+      "indirect_proxy": {
+        "min": 1,
+        "freshness_days": 60,
+        "sources": [
+          {
+            "id": "gi_gov_effectiveness",
+            "kind": "file",
+            "path": "snapshots/master/global_indicators_latest.json",
+            "extract": "governance.ge_est",
+            "org": "World Bank WGI",
+            "unit": "wgi_estimate"
+          },
+          {
+            "id": "gi_rule_of_law",
+            "kind": "file",
+            "path": "snapshots/master/global_indicators_latest.json",
+            "extract": "governance.rl_est",
+            "org": "World Bank WGI",
+            "unit": "wgi_estimate"
+          },
+          {
+            "id": "gi_control_corruption",
+            "kind": "file",
+            "path": "snapshots/master/global_indicators_latest.json",
+            "extract": "governance.cc_est",
+            "org": "World Bank WGI",
+            "unit": "wgi_estimate"
+          }
+        ]
+      }
+    }
+  },
+  "ECONOMY_WORK_REVIEW": {
+    "anchor_slot": "anchor_annual",
+    "measure_slot": "measurement_daily",
+    "portfolio": {
+      "anchor_annual": {
+        "min": 1,
+        "freshness_days": 45,
+        "sources": [
+          {
+            "id": "gi_gdp_growth",
+            "kind": "file",
+            "path": "snapshots/master/global_indicators_latest.json",
+            "extract": "economy.gdp_growth_annual_pct",
+            "org": "World Bank",
+            "unit": "pct_gdp_growth"
+          }
+        ]
+      },
+      "measurement_daily": {
+        "min": 1,
+        "freshness_days": 7,
+        "sources": [
+          {
+            "id": "fred_dgs10",
+            "kind": "http_csv",
+            "org": "FRED/St.Louis Fed",
+            "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DGS10",
+            "col": 1,
+            "data_date_col": 0,
+            "data_max_age_days": 7,
+            "unit": "pct_bond_yield",
+            "provenance": "US 10-year Treasury constant-maturity yield, daily, no API key. A FINANCIAL-CONDITIONS proxy for one country — not global economic activity. Directionally informative, narrow."
+          },
+          {
+            "id": "ecb_eurusd",
+            "kind": "http_csv",
+            "org": "ECB",
+            "url": "https://data-api.ecb.europa.eu/service/data/EXR/D.USD.EUR.SP00.A?lastNObservations=5&format=csvdata",
+            "col": 7,
+            "data_date_col": 6,
+            "data_max_age_days": 7,
+            "unit": "usd_per_eur",
+            "provenance": "ECB daily USD/EUR reference rate. Reserve source for the slot; an FX rate is a weak economic proxy, kept for org diversity and liveness."
+          }
+        ]
+      },
+      "event_daily": {
+        "min": 1,
+        "freshness_days": 3,
+        "sources": []
+      },
+      "indirect_proxy": {
+        "min": 1,
+        "freshness_days": 60,
+        "sources": [
+          {
+            "id": "gi_unemployment",
+            "kind": "file",
+            "path": "snapshots/master/global_indicators_latest.json",
+            "extract": "economy.unemployment_pct",
+            "org": "World Bank",
+            "unit": "pct_unemployed"
+          },
+          {
+            "id": "gi_gdp_per_capita",
+            "kind": "file",
+            "path": "snapshots/master/global_indicators_latest.json",
+            "extract": "economy.gdp_per_capita_ppp_usd",
+            "org": "World Bank",
+            "unit": "usd_ppp"
+          }
+        ]
+      }
+    }
+  },
+  "HUMAN_WELL_BEING_REVIEW": {
+    "anchor_slot": "anchor_annual",
+    "measure_slot": "measurement_daily",
+    "portfolio": {
+      "anchor_annual": {
+        "min": 1,
+        "freshness_days": 45,
+        "sources": [
+          {
+            "id": "gi_infant_mortality",
+            "kind": "file",
+            "path": "snapshots/master/global_indicators_latest.json",
+            "extract": "world_bank.infant_mortality_per1k",
+            "org": "World Bank",
+            "unit": "deaths_per_1000_infant",
+            "provenance": "INFANT mortality. The axis's primary_metric is UNDER-5 (child) mortality — related but not identical; the real under-5 series is still missing."
+          }
+        ]
+      },
+      "measurement_daily": {
+        "min": 1,
+        "freshness_days": 7,
+        "sources": []
+      },
+      "event_daily": {
+        "min": 1,
+        "freshness_days": 3,
+        "sources": []
+      },
+      "indirect_proxy": {
+        "min": 1,
+        "freshness_days": 60,
+        "sources": [
+          {
+            "id": "gi_life_expectancy",
+            "kind": "file",
+            "path": "snapshots/master/global_indicators_latest.json",
+            "extract": "world_bank.life_expectancy",
+            "org": "World Bank",
+            "unit": "years"
+          }
+        ]
+      }
+    }
+  },
+  "TECHNOLOGY_AI_REVIEW": {
+    "anchor_slot": "anchor_annual",
+    "measure_slot": "measurement_daily",
+    "portfolio": {
+      "anchor_annual": {
+        "min": 1,
+        "freshness_days": 45,
+        "sources": [
+          {
+            "id": "gi_arxiv_ai_papers",
+            "kind": "file",
+            "path": "snapshots/master/global_indicators_latest.json",
+            "extract": "ai_activity.arxiv_ai_papers_total",
+            "org": "arXiv",
+            "unit": "papers_total"
+          }
+        ]
+      },
+      "measurement_daily": {
+        "min": 1,
+        "freshness_days": 7,
+        "sources": []
+      },
+      "event_daily": {
+        "min": 1,
+        "freshness_days": 3,
+        "sources": []
+      },
+      "indirect_proxy": {
+        "min": 1,
+        "freshness_days": 60,
+        "sources": [
+          {
+            "id": "gi_github_ai_repos",
+            "kind": "file",
+            "path": "snapshots/master/global_indicators_latest.json",
+            "extract": "ai_activity.github_ai_repos_total",
+            "org": "GitHub",
+            "unit": "repos_total"
+          }
+        ]
+      }
+    }
+  },
+  "TECHNOLOGY_INFRA_REVIEW": {
+    "anchor_slot": "anchor_annual",
+    "measure_slot": "measurement_daily",
+    "portfolio": {
+      "anchor_annual": {
+        "min": 1,
+        "freshness_days": 45,
+        "sources": [
+          {
+            "id": "gi_broadband",
+            "kind": "file",
+            "path": "snapshots/master/global_indicators_latest.json",
+            "extract": "tech_infra.broadband_per100",
+            "org": "ITU/World Bank",
+            "unit": "per_100_people"
+          }
+        ]
+      },
+      "measurement_daily": {
+        "min": 1,
+        "freshness_days": 7,
+        "sources": []
+      },
+      "event_daily": {
+        "min": 1,
+        "freshness_days": 3,
+        "sources": []
+      },
+      "indirect_proxy": {
+        "min": 1,
+        "freshness_days": 60,
+        "sources": [
+          {
+            "id": "gi_mobile_subs",
+            "kind": "file",
+            "path": "snapshots/master/global_indicators_latest.json",
+            "extract": "tech_infra.mobile_subscriptions_per100",
+            "org": "ITU/WB",
+            "unit": "per_100_people"
+          },
+          {
+            "id": "gi_secure_servers",
+            "kind": "file",
+            "path": "snapshots/master/global_indicators_latest.json",
+            "extract": "tech_infra.secure_internet_servers_per1m",
+            "org": "World Bank",
+            "unit": "per_1m_people"
+          }
+        ]
+      }
+    }
+  },
+  "INEQUALITY_POVERTY_REVIEW": {
+    "anchor_slot": "anchor_annual",
+    "measure_slot": "measurement_daily",
+    "portfolio": {
+      "anchor_annual": {
+        "min": 1,
+        "freshness_days": 45,
+        "sources": [
+          {
+            "id": "gi_poverty_190",
+            "kind": "file",
+            "path": "snapshots/master/global_indicators_latest.json",
+            "extract": "world_bank.poverty_190_pct",
+            "org": "World Bank",
+            "unit": "pct_below_190",
+            "provenance": "Poverty headcount at the $1.90/day line. target_config specifies the $2.15 line — same concept, different threshold; not interchangeable without restating."
+          }
+        ]
+      },
+      "measurement_daily": {
+        "min": 1,
+        "freshness_days": 7,
+        "sources": []
+      },
+      "event_daily": {
+        "min": 1,
+        "freshness_days": 3,
+        "sources": []
+      },
+      "indirect_proxy": {
+        "min": 1,
+        "freshness_days": 60,
+        "sources": [
+          {
+            "id": "gi_gini",
+            "kind": "file",
+            "path": "snapshots/master/global_indicators_latest.json",
+            "extract": "world_bank.gini_mean",
+            "org": "World Bank",
+            "unit": "gini_index"
+          }
+        ]
+      }
+    }
+  },
+  "INFRASTRUCTURE_CITIES_REVIEW": {
+    "anchor_slot": "anchor_annual",
+    "measure_slot": "measurement_daily",
+    "portfolio": {
+      "anchor_annual": {
+        "min": 1,
+        "freshness_days": 45,
+        "sources": [
+          {
+            "id": "gi_urban_pct",
+            "kind": "file",
+            "path": "snapshots/master/global_indicators_latest.json",
+            "extract": "cities.urban_population_pct",
+            "org": "World Bank",
+            "unit": "pct_urban"
+          }
+        ]
+      },
+      "measurement_daily": {
+        "min": 1,
+        "freshness_days": 7,
+        "sources": []
+      },
+      "event_daily": {
+        "min": 1,
+        "freshness_days": 3,
+        "sources": []
+      },
+      "indirect_proxy": {
+        "min": 1,
+        "freshness_days": 60,
+        "sources": [
+          {
+            "id": "gi_electricity_access",
+            "kind": "file",
+            "path": "snapshots/master/global_indicators_latest.json",
+            "extract": "cities.electricity_access_pct",
+            "org": "World Bank",
+            "unit": "pct_access"
+          },
+          {
+            "id": "gi_internet_users",
+            "kind": "file",
+            "path": "snapshots/master/global_indicators_latest.json",
+            "extract": "cities.internet_users_pct",
+            "org": "ITU/World Bank",
+            "unit": "pct_users"
+          }
+        ]
+      }
+    }
+  },
+  "COGNITION_LEARNING_REVIEW": {
+    "anchor_slot": "anchor_annual",
+    "measure_slot": "measurement_daily",
+    "portfolio": {
+      "anchor_annual": {
+        "min": 1,
+        "freshness_days": 45,
+        "sources": [
+          {
+            "id": "gi_literacy_adult",
+            "kind": "file",
+            "path": "snapshots/master/global_indicators_latest.json",
+            "extract": "world_bank.literacy_rate_adult_pct",
+            "org": "World Bank",
+            "unit": "pct_literate",
+            "provenance": "ADULT literacy. The axis's primary_metric is YOUTH literacy — the youth series is not in the snapshot, so this stands in and the gap stays named."
+          }
+        ]
+      },
+      "measurement_daily": {
+        "min": 1,
+        "freshness_days": 7,
+        "sources": []
+      },
+      "event_daily": {
+        "min": 1,
+        "freshness_days": 3,
+        "sources": []
+      },
+      "indirect_proxy": {
+        "min": 1,
+        "freshness_days": 60,
+        "sources": []
+      }
+    }
+  },
+  "EDUCATION_CULTURE_REVIEW": {
+    "anchor_slot": "anchor_annual",
+    "measure_slot": "measurement_daily",
+    "portfolio": {
+      "anchor_annual": {
+        "min": 1,
+        "freshness_days": 45,
+        "sources": []
+      },
+      "measurement_daily": {
+        "min": 1,
+        "freshness_days": 7,
+        "sources": []
+      },
+      "event_daily": {
+        "min": 1,
+        "freshness_days": 3,
+        "sources": []
+      },
+      "indirect_proxy": {
+        "min": 1,
+        "freshness_days": 60,
+        "sources": [
+          {
+            "id": "gi_literacy_adult_edu",
+            "kind": "file",
+            "path": "snapshots/master/global_indicators_latest.json",
+            "extract": "world_bank.literacy_rate_adult_pct",
+            "org": "World Bank",
+            "unit": "pct_literate"
+          }
+        ]
+      }
+    }
+  },
+  "CULTURE_MEDIA_REVIEW": {
+    "anchor_slot": "anchor_annual",
+    "measure_slot": "measurement_daily",
+    "portfolio": {
+      "anchor_annual": {
+        "min": 1,
+        "freshness_days": 45,
+        "sources": []
+      },
+      "measurement_daily": {
+        "min": 1,
+        "freshness_days": 7,
+        "sources": []
+      },
+      "event_daily": {
+        "min": 1,
+        "freshness_days": 3,
+        "sources": []
+      },
+      "indirect_proxy": {
+        "min": 1,
+        "freshness_days": 60,
+        "sources": []
+      }
+    }
+  },
+  "ECOSYSTEMS_BIODIVERSITY_REVIEW": {
+    "anchor_slot": "anchor_annual",
+    "measure_slot": "measurement_daily",
+    "portfolio": {
+      "anchor_annual": {
+        "min": 1,
+        "freshness_days": 45,
+        "sources": [
+          {
+            "id": "gi_forest_area",
+            "kind": "file",
+            "path": "snapshots/master/global_indicators_latest.json",
+            "extract": "world_bank.forest_area_pct",
+            "org": "World Bank",
+            "unit": "pct_land_area"
+          }
+        ]
+      },
+      "measurement_daily": {
+        "min": 1,
+        "freshness_days": 7,
+        "sources": []
+      },
+      "event_daily": {
+        "min": 1,
+        "freshness_days": 3,
+        "sources": [
+          {
+            "id": "eonet_sealakeice",
+            "kind": "http_json_count",
+            "org": "NASA-EONET",
+            "url": "https://eonet.gsfc.nasa.gov/api/v3/events?status=all&days=30&category=seaLakeIce",
+            "extract": "events",
+            "unit": "event_count",
+            "provenance": "NASA EONET sea/lake-ice event count, 30d. Cryosphere habitat change; an event COUNT, not extent or severity."
+          }
+        ]
+      },
+      "indirect_proxy": {
+        "min": 1,
+        "freshness_days": 60,
+        "sources": [
+          {
+            "id": "gi_threatened_mammals",
+            "kind": "file",
+            "path": "snapshots/master/global_indicators_latest.json",
+            "extract": "world_bank.threatened_mammals_no",
+            "org": "IUCN/World Bank",
+            "unit": "species_count"
+          },
+          {
+            "id": "gi_species_observations",
+            "kind": "file",
+            "path": "snapshots/master/global_indicators_latest.json",
+            "extract": "biodiversity.species_observations_30d",
+            "org": "GBIF",
+            "unit": "observations_30d"
+          }
+        ]
+      }
+    }
+  },
+  "MATERIALS_WASTE_REVIEW": {
+    "anchor_slot": "anchor_annual",
+    "measure_slot": "measurement_daily",
+    "portfolio": {
+      "anchor_annual": {
+        "min": 1,
+        "freshness_days": 45,
+        "sources": [
+          {
+            "id": "gi_co2_materials",
+            "kind": "file",
+            "path": "snapshots/master/global_indicators_latest.json",
+            "extract": "co2.co2_ppm",
+            "org": "NOAA",
+            "unit": "ppm_co2",
+            "provenance": "CO2 as the axis's declared proxy for material throughput (target_config sets primary_metric=co2_ppm_mauna_loa for this axis)."
+          }
+        ]
+      },
+      "measurement_daily": {
+        "min": 1,
+        "freshness_days": 7,
+        "sources": [
+          {
+            "id": "noaa_gml_daily_materials",
+            "kind": "http_csv",
+            "org": "NOAA-GML",
+            "url": "https://gml.noaa.gov/webdata/ccgg/trends/co2/co2_trend_gl.csv",
+            "col": 3,
+            "unit": "ppm_co2",
+            "provenance": "NOAA GML global daily CO2 trend, column 3 (smoothed) to MATCH the column CLIMATE already reads — two axes declaring the same primary metric must not report different numbers. NOTE: col 4 is the de-seasonalised trend; which column belongs in a daily slot is an open question for review, not settled here."
+          }
+        ]
+      },
+      "event_daily": {
+        "min": 1,
+        "freshness_days": 3,
+        "sources": []
+      },
+      "indirect_proxy": {
+        "min": 1,
+        "freshness_days": 60,
+        "sources": [
+          {
+            "id": "gi_resource_depletion",
+            "kind": "file",
+            "path": "snapshots/master/global_indicators_latest.json",
+            "extract": "waste.resource_depletion_pct_gni",
+            "org": "World Bank",
+            "unit": "pct_gni"
+          },
+          {
+            "id": "gi_adjusted_net_savings",
+            "kind": "file",
+            "path": "snapshots/master/global_indicators_latest.json",
+            "extract": "waste.adjusted_net_savings_pct",
+            "org": "World Bank",
+            "unit": "pct_gni"
+          }
+        ]
+      }
+    }
+  },
+  "PLANETARY_POTENTIAL_REVIEW": {
+    "anchor_slot": "anchor_annual",
+    "measure_slot": "measurement_daily",
+    "portfolio": {
+      "anchor_annual": {
+        "min": 1,
+        "freshness_days": 45,
+        "sources": []
+      },
+      "measurement_daily": {
+        "min": 1,
+        "freshness_days": 7,
+        "sources": []
+      },
+      "event_daily": {
+        "min": 1,
+        "freshness_days": 3,
+        "sources": []
+      },
+      "indirect_proxy": {
+        "min": 1,
+        "freshness_days": 60,
+        "sources": [
+          {
+            "id": "gi_forest_area_potential",
+            "kind": "file",
+            "path": "snapshots/master/global_indicators_latest.json",
+            "extract": "world_bank.forest_area_pct",
+            "org": "World Bank",
+            "unit": "pct_land_area"
+          }
+        ]
+      }
+    }
+  },
+  "DEEP_TIME_RISKS_REVIEW": {
+    "anchor_slot": "anchor_annual",
+    "measure_slot": "measurement_daily",
+    "portfolio": {
+      "anchor_annual": {
+        "min": 1,
+        "freshness_days": 45,
+        "sources": [
+          {
+            "id": "gi_neo_close_approaches",
+            "kind": "file",
+            "path": "snapshots/master/global_indicators_latest.json",
+            "extract": "neo.neo_close_approaches_90d",
+            "org": "NASA JPL CNEOS",
+            "unit": "approaches_90d"
+          }
+        ]
+      },
+      "measurement_daily": {
+        "min": 1,
+        "freshness_days": 7,
+        "sources": [
+          {
+            "id": "usgs_quakes_daily",
+            "kind": "http_json_path",
+            "org": "USGS",
+            "url": "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson",
+            "extract": "metadata.count",
+            "unit": "quake_count_24h",
+            "provenance": "USGS global earthquake count, rolling 24h, no key. Geophysical hazard activity — a COUNT at all magnitudes, so it moves with detection coverage as well as with real seismicity."
+          }
+        ]
+      },
+      "event_daily": {
+        "min": 1,
+        "freshness_days": 3,
+        "sources": []
+      },
+      "indirect_proxy": {
+        "min": 1,
+        "freshness_days": 60,
+        "sources": [
+          {
+            "id": "gi_neo_lunar_dist",
+            "kind": "file",
+            "path": "snapshots/master/global_indicators_latest.json",
+            "extract": "neo.neo_within_lunar_dist_90d",
+            "org": "NASA JPL CNEOS",
+            "unit": "approaches_90d"
+          }
+        ]
+      }
+    }
+  },
+  "LONG_TERM_FUTURE_REVIEW": {
+    "anchor_slot": "anchor_annual",
+    "measure_slot": "measurement_daily",
+    "portfolio": {
+      "anchor_annual": {
+        "min": 1,
+        "freshness_days": 45,
+        "sources": [
+          {
+            "id": "gi_nuclear_total",
+            "kind": "file",
+            "path": "snapshots/master/global_indicators_latest.json",
+            "extract": "nuclear.nuclear_warheads_total",
+            "org": "SIPRI/FAS",
+            "unit": "warheads"
+          }
+        ]
+      },
+      "measurement_daily": {
+        "min": 1,
+        "freshness_days": 7,
+        "sources": []
+      },
+      "event_daily": {
+        "min": 1,
+        "freshness_days": 3,
+        "sources": []
+      },
+      "indirect_proxy": {
+        "min": 1,
+        "freshness_days": 60,
+        "sources": [
+          {
+            "id": "gi_nuclear_deployed",
+            "kind": "file",
+            "path": "snapshots/master/global_indicators_latest.json",
+            "extract": "nuclear.nuclear_warheads_deployed",
+            "org": "SIPRI/FAS",
+            "unit": "warheads"
+          },
+          {
+            "id": "gi_nuclear_on_alert",
+            "kind": "file",
+            "path": "snapshots/master/global_indicators_latest.json",
+            "extract": "nuclear.nuclear_warheads_on_alert",
+            "org": "SIPRI/FAS",
+            "unit": "warheads"
+          }
+        ]
+      }
+    }
+  },
+  "COSMIC_RESOURCES_REVIEW": {
+    "anchor_slot": "anchor_annual",
+    "measure_slot": "measurement_daily",
+    "portfolio": {
+      "anchor_annual": {
+        "min": 1,
+        "freshness_days": 45,
+        "sources": []
+      },
+      "indirect_proxy": {
+        "min": 1,
+        "freshness_days": 60,
+        "sources": [
+          {
+            "id": "gi_confirmed_exoplanets",
+            "kind": "file",
+            "path": "snapshots/master/global_indicators_latest.json",
+            "extract": "exoplanets.confirmed_exoplanets",
+            "org": "NASA Exoplanet Archive",
+            "unit": "planets_confirmed",
+            "provenance": "Known-worlds count as the crudest possible frontier indicator. Not a resource measure; placeholder until a real one is found."
+          }
+        ]
+      }
+    }
+  },
+  "SPACE_INFRASTRUCTURE_REVIEW": {
+    "anchor_slot": "anchor_annual",
+    "measure_slot": "measurement_daily",
+    "portfolio": {
+      "anchor_annual": {
+        "min": 1,
+        "freshness_days": 45,
+        "sources": []
+      },
+      "indirect_proxy": {
+        "min": 1,
+        "freshness_days": 60,
+        "sources": []
+      }
+    }
+  },
+  "GOAL_PROGRESS_REVIEW": {
+    "anchor_slot": "anchor_annual",
+    "measure_slot": "measurement_daily",
+    "portfolio": {
+      "anchor_annual": {
+        "min": 1,
+        "freshness_days": 45,
+        "sources": [
+          {
+            "id": "goal_score_self",
+            "kind": "file",
+            "path": "memory/goal_score_history.json",
+            "extract": "-1.scores.GOAL_PROGRESS_REVIEW",
+            "org": "CORTEX (self)",
+            "unit": "score_0_100",
+            "data_date_extract": "-1.timestamp",
+            "data_max_age_days": 7,
+            "provenance": "SELF-REFERENTIAL: the system's own scorer output, not an independent measurement. Wired so this meta-axis does not emit a permanently unsatisfiable need; it must never be read as external corroboration."
+          }
+        ]
+      },
+      "indirect_proxy": {
+        "min": 1,
+        "freshness_days": 60,
+        "sources": []
+      }
+    }
+  },
+  "GENERAL_SELF_REVIEW": {
+    "anchor_slot": "anchor_annual",
+    "measure_slot": "measurement_daily",
+    "portfolio": {
+      "anchor_annual": {
+        "min": 1,
+        "freshness_days": 45,
+        "sources": []
+      },
+      "indirect_proxy": {
+        "min": 1,
+        "freshness_days": 60,
+        "sources": []
       }
     }
   }
