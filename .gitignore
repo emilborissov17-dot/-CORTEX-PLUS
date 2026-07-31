@@ -1,5 +1,6 @@
 .env
 venv/
+venv312_metta/
 __pycache__/
 *.pyc
 *.pyo
@@ -60,3 +61,21 @@ data/vdem_cache/
 test/redteam/*.csv
 test/redteam/wellbeing_*.json
 
+
+# CORTEX needs/approve loop — secret + runtime state (never commit)
+memory/notify_channel.json
+memory/needs_push_state.json
+memory/pending_approvals.json
+memory/telegram_offset.json
+memory/approvals_ledger.jsonl
+memory/needs_brief.md
+
+# grounding + E8 runtime state (never commit)
+memory/grounding_ledger.jsonl
+memory/e8_elite.json
+memory/composed_indicators.json
+memory/composer_state/
+memory/browse_sources/
+memory/semantic_trajectory.jsonl
+memory/sensorium/
+memory/semantic_inbox/
