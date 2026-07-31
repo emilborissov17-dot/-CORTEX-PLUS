@@ -280,7 +280,7 @@ def compose(axis: str, force: bool = False) -> dict:
                 age_d = (_age_h(st["last_ok_ts"]) or 0.0) / 24.0
                 if age_d <= fresh_days:
                     live.append({"id": sid, "org": src.get("org", "?"),
-                                 "value": st.get("last_value"),
+                                 "value": st.get("last_value"), "unit": src.get("unit"),
                                  "age_days": round(age_d, 3), "cached": not attempted})
                 else:
                     needs.append({"slot": slot_name, "kind": "stale_value",
@@ -311,9 +311,20 @@ def compose(axis: str, force: bool = False) -> dict:
 
     anchor = _slot_primary(spec.get("anchor_slot", "anchor_annual"))
     daily = _slot_primary(spec.get("measure_slot", "measurement_daily"))
-    divergence = (round(daily["value"] - anchor["value"], 4)
-                  if anchor and daily and isinstance(anchor.get("value"), (int, float))
-                  and isinstance(daily.get("value"), (int, float)) else None)
+    # divergence is anchor-vs-daily on the SAME quantity. Subtracting a river's discharge
+    # from a percentage, or a bond yield from GDP growth, produces a number that means
+    # nothing and then flows into the hash-chained grounding ledger as if it did. So the
+    # two sources must declare the same `unit` tag; anything else yields None plus a named
+    # reason. FAIL-CLOSED: an undeclared unit is treated as not comparable, never assumed.
+    divergence, divergence_note = None, None
+    if anchor and daily and isinstance(anchor.get("value"), (int, float)) \
+            and isinstance(daily.get("value"), (int, float)):
+        au, du = anchor.get("unit"), daily.get("unit")
+        if au and du and au == du:
+            divergence = round(daily["value"] - anchor["value"], 4)
+        else:
+            divergence_note = (f"not comparable: anchor unit {au or 'undeclared'} vs daily unit "
+                               f"{du or 'undeclared'} — subtraction would be a category error")
 
     # ── agreement: does each proxy's short-term direction match the anchor's? ──
     anchor_dir = None
@@ -351,7 +362,8 @@ def compose(axis: str, force: bool = False) -> dict:
 
     report = {
         "ts": _iso(), "axis": axis,
-        "composed": {"anchor": anchor, "daily": daily, "divergence": divergence},
+        "composed": {"anchor": anchor, "daily": daily, "divergence": divergence,
+                     "divergence_note": divergence_note},
         "slots": slots_report, "agreement": agreement,
         "confidence": confidence,
         "confidence_parts": {"coverage": round(coverage, 3), "diversity": round(diversity, 3),

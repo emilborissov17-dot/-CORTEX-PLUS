@@ -106,7 +106,7 @@ def _parse_candidate(detail: str, axis: str, disc: dict):
     parts = [p.strip() for p in (detail or "").split("|")]
     org = parts[0].replace("self-discovered:", "").strip() if parts else None
     metric = parts[1].strip() if len(parts) >= 2 else None
-    url = slot = kind = None
+    url = slot = kind = status = None
     parse = {}
     if "--url" in (detail or ""):
         after = detail.split("--url", 1)[1].strip()
@@ -121,6 +121,7 @@ def _parse_candidate(detail: str, axis: str, disc: dict):
             # an explicit kind on the record wins; 'format' is the legacy fallback
             kind = s.get("kind") or _FMT2KIND.get((s.get("format") or "").lower())
             parse = _parse_rule(s)
+            status = s.get("status")
             break
     cmd = None
     if "--promote" in (detail or ""):
@@ -128,7 +129,7 @@ def _parse_candidate(detail: str, axis: str, disc: dict):
         if url and "--url" in cmd:  # rebuild with the full URL, drop the trailing "..."
             cmd = cmd.split("--url", 1)[0].strip() + f" --url {url}"
     return {"org": org, "metric": metric, "url": url, "cmd": cmd, "slot": slot,
-            "kind": kind, "parse": parse}
+            "kind": kind, "parse": parse, "status": status}
 
 
 def _mind_items():
@@ -152,6 +153,11 @@ def _mind_items():
         for it in items:
             if it.get("kind") == "candidate_awaiting_promotion":
                 c = _parse_candidate(it.get("detail", ""), axis, disc)
+                # a candidate the promote path already REFUSED must not be re-offered.
+                # composer_needs.json is only rewritten by the next compose(), so this
+                # reads the live store rather than waiting a cycle for the need to clear.
+                if c.get("status") and c["status"] != "active":
+                    continue
                 url = c.get("url")
                 if url:
                     seen_cand.add(url)

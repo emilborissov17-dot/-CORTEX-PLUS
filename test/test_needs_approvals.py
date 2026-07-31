@@ -69,6 +69,56 @@ A._apply_goal({**SPEC, "proposal": {**SPEC["proposal"],
                                     "measurable_goal": "a genuinely different goal"}}, "123")
 check("a different goal on the same axis still appends", _n() == 3)
 
+# ---------- refused candidate is marked rejected and stops being offered ----------
+disc_file = Path(tempfile.mkdtemp()) / "discovered.json"
+BROKEN_URL = "https://api.worldbank.org/v2/country/all/indicator/ER.H2O.INTR.ZS?format=json"
+disc_file.write_text(json.dumps({"WATER_REVIEW": {"sources": [
+    {"url": BROKEN_URL, "org": "World Bank", "metric": "Renewable internal freshwater",
+     "slot_hint": "event_daily", "format": "json", "status": "active"},
+    {"url": "https://example.org/good", "org": "USGS", "metric": "river discharge",
+     "slot_hint": "measurement_daily", "format": "csv", "col": 3, "status": "active"},
+]}}), encoding="utf-8")
+A.DISCOVERED = disc_file
+
+REFUSED = {"type": "promote_source", "axis": "WATER_REVIEW", "url": BROKEN_URL,
+           "slot": "event_daily", "kind": "http_json_path", "org": "World Bank", "parse": {}}
+res = A._apply_promote(REFUSED)
+check("extract-less candidate is still refused", res.get("ok") is False)
+
+marked = A._mark_candidate(REFUSED["axis"], REFUSED["url"], res.get("error"))
+_d = json.loads(disc_file.read_text(encoding="utf-8"))["WATER_REVIEW"]["sources"]
+_broken = [s for s in _d if s["url"] == BROKEN_URL][0]
+_other = [s for s in _d if s["url"] != BROKEN_URL][0]
+check("refused candidate marked rejected, with the reason and a timestamp",
+      marked and _broken["status"] == "rejected"
+      and "parsing rule" in _broken.get("rejected_why", "")
+      and _broken.get("rejected_at"))
+check("the OTHER candidate is untouched", _other["status"] == "active")
+
+check("marking an unknown url is a no-op, not a crash",
+      A._mark_candidate("WATER_REVIEW", "https://nope.example/x", "why") is False)
+
+# needs_report must stop offering it immediately — not a cycle later
+_disc = json.loads(disc_file.read_text(encoding="utf-8"))
+_detail = ("self-discovered: World Bank | Renewable internal freshwater | "
+           f"promote with --promote WATER_REVIEW --url {BROKEN_URL}")
+check("_parse_candidate surfaces the rejected status",
+      N._parse_candidate(_detail, "WATER_REVIEW", _disc).get("status") == "rejected")
+
+N.COMPOSER_NEEDS = Path(tempfile.mkdtemp()) / "needs.json"
+N.COMPOSER_NEEDS.write_text(json.dumps({"WATER_REVIEW": {"items": [
+    {"kind": "candidate_awaiting_promotion", "slot": "?", "detail": _detail}]}}),
+    encoding="utf-8")
+N.DISCOVERED = disc_file
+_ids = [i.get("approve_id") for i in N._mind_items() if i.get("approve_id")]
+check("a rejected candidate is no longer offered for approval", _ids == [])
+
+# and an ACTIVE one still is
+_broken["status"] = "active"
+disc_file.write_text(json.dumps({"WATER_REVIEW": {"sources": _d}}), encoding="utf-8")
+check("flipping it back to active offers it again (the skip is status-driven)",
+      len([i for i in N._mind_items() if i.get("approve_id")]) == 1)
+
 # ---------- one-tap extras ----------
 sent = []
 class _FakeRequests:

@@ -41,6 +41,7 @@ PENDING    = REPO / "memory" / "pending_approvals.json"
 OFFSET     = REPO / "memory" / "telegram_offset.json"
 LEDGER     = REPO / "memory" / "approvals_ledger.jsonl"
 PROPOSALS  = REPO / "memory" / "improvement_proposals.json"
+DISCOVERED = REPO / "memory" / "discovered_data_sources.json"
 
 # "OK d8df", "ok  d8df", "approve d8df", "OK: d8df" -> the id
 _OK_RE = re.compile(r"^\s*(?:ok|approve|yes|да)\b[:\s]+([0-9a-fA-F]{3,8})\s*$", re.IGNORECASE)
@@ -105,6 +106,28 @@ def _apply_promote(spec: dict):
     res = composer.promote(axis, url, slot, spec.get("kind") or "http_json_path",
                            spec.get("org") or "?", **(spec.get("parse") or {}))
     return {"ok": "error" not in res, **res}
+
+
+def _mark_candidate(axis, url, why):
+    """A REFUSED candidate must stop coming back. The promote guard is deterministic —
+    a record with no parsing rule fails identically every time — so without this the same
+    broken candidate is re-offered in every brief, and now in a one-tap message too.
+    FAIL-OPEN: bookkeeping must never break the approval loop."""
+    try:
+        doc = _load(DISCOVERED, {})
+        hit = False
+        for s in ((doc.get(axis) or {}).get("sources") or []):
+            if s.get("url") == url:
+                s["status"] = "rejected"
+                s["rejected_why"] = str(why)[:200]
+                s["rejected_at"] = _now()
+                hit = True
+        if hit:
+            DISCOVERED.write_text(json.dumps(doc, ensure_ascii=False, indent=2),
+                                  encoding="utf-8")
+        return hit
+    except Exception:
+        return False
 
 
 def _apply_goal(spec: dict, chat_id):
@@ -186,9 +209,14 @@ def run():
                 res = _apply_promote(spec)
                 label = spec.get("label", spec["axis"])
                 ok = res.get("ok")
+                if not ok:
+                    res["marked_rejected"] = _mark_candidate(spec["axis"], spec["url"],
+                                                             res.get("error"))
                 _reply(token, chat_id,
                        (f"✅ promoted {label} ({spec['slot']}). {res.get('note','spec edited — review git diff')}"
-                        if ok else f"⚠️ promote failed for {label}: {res.get('error')}"))
+                        if ok else f"⚠️ promote failed for {label}: {res.get('error')}"
+                                   + (" — marked rejected, it won't be offered again."
+                                      if res.get("marked_rejected") else "")))
             elif spec["type"] == "accept_goal":
                 res = _apply_goal(spec, chat_id)
                 _reply(token, chat_id,
