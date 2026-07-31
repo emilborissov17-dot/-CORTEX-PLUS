@@ -31,6 +31,13 @@ import approve_reader as A
 import needs_report as N
 
 _REAL_REQUESTS = sys.modules.get("requests")
+
+# Isolate the runtime files _mind_items() also reads, or a real pending cycle proposal on
+# disk leaks in as an extra approval item and this suite fails for reasons that have
+# nothing to do with what it tests.
+N.CYCLE_PROPOSALS = Path(tempfile.mkdtemp()) / "proposals.json"
+N.PULSE_STREAM = N.CYCLE_PROPOSALS.parent / "stream.jsonl"
+N.RATE_BASELINE = N.CYCLE_PROPOSALS.parent / "baseline.json"
 FAILS = []
 def check(name, cond):
     print(("PASS " if cond else "FAIL ") + name)

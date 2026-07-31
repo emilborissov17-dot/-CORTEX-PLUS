@@ -386,6 +386,55 @@ def compose(axis: str, force: bool = False) -> dict:
 PROMOTE_FIELDS = ("extract", "col", "data_date_col", "data_date_extract",
                   "data_max_age_days", "provenance", "path", "unit")
 
+# WHERE EACH KIND ACTUALLY READS FROM.
+#
+# This distinction caused a false alarm on 2026-07-31 and is worth stating once, plainly:
+# a "file" source is loaded from `path` (see fetch(), kind == "file"), NEVER from `url`.
+# A file entry may still carry `url`, and that is not a bug — it is the identity key the
+# approval path uses for the stable approve-id, for double-promote dedupe, and for
+# matching a promoted source back to its candidate record. On a file entry `url` is a
+# REFERENCE, not a location; reading it as a fetch source is the mistake, not its presence.
+KIND_LOCATION = {
+    "file":              "path",
+    "http_json_path":    "url",
+    "http_csv":          "url",
+    "http_json_count":   "url",
+    "http_json_series":  "url",
+    "http_gdelt_tone":   "url",
+}
+
+
+class PromotionRejected(ValueError):
+    """A promotion refused BEFORE config/composer_specs.json was touched."""
+
+
+def validate_entry(entry: dict) -> bool:
+    """Schema wall: does this entry declare the location its own kind reads from?
+
+    A source promoted without it is a ghost — it enters the portfolio, raises on every
+    fetch, and dies against DEATH_AT three cycles later while the slot has looked filled
+    the whole time."""
+    kind = entry.get("kind")
+    loc = KIND_LOCATION.get(kind)
+    if loc is None:
+        raise PromotionRejected(f"unknown kind {kind!r} — promotion rejected")
+    if not str(entry.get(loc) or "").strip():
+        raise PromotionRejected(f"kind={kind} requires {loc!r} — promotion rejected")
+    return True
+
+
+def smoke_fetch(entry: dict):
+    """Fetch this ONE entry with the SAME loader the composer uses, before the spec is
+    written. 'Does it actually fetch?' stops being a question anyone has to ask later.
+
+    Note 0.0 is a VALID reading (an event count of zero is a measurement); only a
+    non-numeric result counts as empty."""
+    v, dd = fetch(entry)
+    if isinstance(v, bool) or not isinstance(v, (int, float)) or v != v:  # v!=v -> NaN
+        raise PromotionRejected(f"smoke fetch returned no usable value ({v!r}) — "
+                                f"promotion rejected")
+    return v, dd
+
 
 def promote(axis, url, slot, kind, org, extract=None, col=None, **fields):
     """Human-gated: a candidate becomes a spec source. The PARSING RULE travels with it —
@@ -405,9 +454,27 @@ def promote(axis, url, slot, kind, org, extract=None, col=None, **fields):
         if fields.get(k) is not None:
             entry[k] = fields[k]
     entry.setdefault("provenance", "self-discovered, human-promoted")
+
+    # TWO WALLS, both BEFORE the spec is touched. A rejected promotion must leave no
+    # trace: no half-written entry, no source that only fails later.
+    try:
+        validate_entry(entry)                       # 1. does it declare its location?
+        smoke_value, smoke_date = smoke_fetch(entry)  # 2. does it actually fetch, once?
+    except PromotionRejected as e:
+        return {"error": str(e), "rejected": True, "id": sid,
+                "exception": f"{type(e).__name__}: {e}"}
+    except Exception as e:
+        # the RAW exception is surfaced: "it didn't work" is not a diagnosis
+        return {"error": f"smoke fetch failed — promotion rejected ({type(e).__name__}: "
+                         f"{str(e)[:200]})",
+                "rejected": True, "id": sid,
+                "exception": f"{type(e).__name__}: {e}"}
+
     spec["portfolio"][slot]["sources"].append(entry)
     _save(SPEC_FILE, specs)
-    return {"promoted": sid, "into_slot": slot, "note": "spec edited — review the git diff"}
+    return {"promoted": sid, "into_slot": slot, "smoke_value": smoke_value,
+            "smoke_data_date": smoke_date,
+            "note": "spec edited — review the git diff"}
 
 
 def revive(axis: str) -> dict:
@@ -438,7 +505,22 @@ if __name__ == "__main__":
     ap.add_argument("--url"); ap.add_argument("--slot"); ap.add_argument("--kind")
     ap.add_argument("--org", default="?"); ap.add_argument("--extract")
     ap.add_argument("--col", type=int)
+    ap.add_argument("--path", help="repo-relative file for --kind file (its READ location)")
     a = ap.parse_args()
+
+    # Caught at the parser, before promote() runs: --kind file reads from --path, and a
+    # --url handed in its place is the mistake this gate exists to make impossible.
+    if a.promote and a.kind == "file":
+        # --url first: someone typing it HAS made the specific mistake this gate exists
+        # for, and deserves to be told what the right field is rather than merely that
+        # something is missing.
+        if a.url:
+            ap.error("--kind file reads from --path, not --url; pass --path "
+                     "(on a file entry 'url' is an identity reference, set by the "
+                     "approval path, never a fetch location)")
+        if not a.path:
+            ap.error("--kind file requires --path (the file it is read from)")
+
     if a.run:
         print(json.dumps(compose(a.run, force=a.force), ensure_ascii=False, indent=2))
     elif a.needs:
@@ -446,7 +528,7 @@ if __name__ == "__main__":
     elif a.revive:
         print(json.dumps(revive(a.revive), ensure_ascii=False, indent=2))
     elif a.promote:
-        print(json.dumps(promote(a.promote, a.url, a.slot, a.kind, a.org, a.extract, a.col),
-                         ensure_ascii=False, indent=2))
+        print(json.dumps(promote(a.promote, a.url, a.slot, a.kind, a.org, a.extract, a.col,
+                                 path=a.path), ensure_ascii=False, indent=2))
     else:
         ap.print_help()
