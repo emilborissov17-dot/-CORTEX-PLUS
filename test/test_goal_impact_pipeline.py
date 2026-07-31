@@ -57,6 +57,8 @@ GOOD = json.dumps({
     "contested": False, "counterview": ""})
 
 def fake_good(prompt, num_predict=350, **kw):
+    if '"relevant"' in prompt:
+        return json.dumps({"relevant": True, "why": ""})
     if '"holds"' in prompt:
         return json.dumps({"holds": True, "why": ""})
     return GOOD

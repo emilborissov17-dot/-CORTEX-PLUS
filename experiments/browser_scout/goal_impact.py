@@ -221,6 +221,50 @@ def _sign_refuted(obs_text: str, ev: str, sign: str, dimension) -> tuple:
     return True, str(g.get("why", "sign refuted against the goal frame"))[:200]
 
 
+_RELEVANCE_GATE = os.environ.get("CORTEX_RELEVANCE_GATE", "1") != "0"  # is it even ABOUT the axis
+
+# Unambiguous site-chrome phrases. Two or more must co-occur, so an article that merely
+# mentions advertising or privacy is not caught — only the furniture itself.
+_BOILERPLATE = (
+    "cookie", "consent", "privacy policy", "terms of use", "terms of service",
+    "newsletter", "subscribe", "sign up", "log in", "enable javascript",
+    "targeted advertising", "personalization", "site functionality", "all rights reserved",
+    "skip to main content", "accept all", "manage preferences", "your browser",
+)
+
+
+def _is_boilerplate(obs: str, ev: str) -> bool:
+    """Deterministic 'this is the page, not the world': >=2 site-chrome phrases co-occurring.
+    Live failure this catches: the first real drop's only surviving component was a cookie
+    banner — verbatim, number-free, uncontested, so every anti-fabrication guard passed it."""
+    blob = _norm(str(obs) + " " + str(ev))
+    return sum(1 for k in _BOILERPLATE if k in blob) >= 2
+
+
+def _relevance_refuted(obs_text: str, ev: str, axis: str, need: str) -> tuple:
+    """Axis-anchored relevance skeptic: is the observation ABOUT what we set out to measure?
+    Every other guard is anti-FABRICATION — they ask whether a claim is grounded, never
+    whether it bears on the axis. FAIL-CLOSED for the whole observation (unlike the sign
+    guard, which keeps the fact): an unverifiable relevance claim is precisely the
+    zero-information commit this gate exists to prevent. The reason is always named."""
+    prompt = (
+        f"An observation was extracted from a web page while trying to measure:\n"
+        f"AXIS: {axis}\nNEED: {need}\n\n"
+        f"OBSERVATION: {obs_text}\nEVIDENCE: \"{ev}\"\n\n"
+        f"Is this observation actually ABOUT that axis/need — a substantive fact or figure "
+        f"bearing on it? Answer relevant=false if it is site furniture (cookie or consent "
+        f"notices, navigation, subscription prompts, legal boilerplate), or if its subject "
+        f"is simply something else.\n"
+        f'Reply ONLY JSON: {{"relevant": true|false, "why": "<short>"}}')
+    try:
+        g = _json_from(_local(prompt, timeout=300, num_predict=200))
+    except Exception as e:
+        return True, f"relevance check unavailable ({type(e).__name__})"
+    if bool(g.get("relevant")):
+        return False, ""
+    return True, str(g.get("why", "not about the axis/need"))[:200]
+
+
 def extract_goal_impact(text: str, axis: str, need: str, url: str) -> tuple:
     """Read page text -> one goal-impact observation. Returns (obs, why). obs is None when
     nothing groundable is found (never fabricated)."""
@@ -273,6 +317,10 @@ def extract_goal_impact(text: str, axis: str, need: str, url: str) -> tuple:
     # furniture (axis/legend ticks), not a measurement.
     if _looks_like_scale(ev, val):
         return None, "value appears to be an axis/legend scale tick, not a measurement — rejected"
+    # GUARD 1e (relevance, deterministic): site furniture is the page describing itself, not
+    # a reading of the world. Free, so it runs before any model-based relevance call.
+    if _RELEVANCE_GATE and _is_boilerplate(obs, ev):
+        return None, "relevance: observation is site boilerplate, not a reading of the world — rejected"
     # GUARD 2 (assessment hygiene): a contested reading MUST carry a counter-view.
     sign = got.get("sign") if got.get("sign") in ("+", "-", "0") else "0"
     try:
@@ -282,6 +330,14 @@ def extract_goal_impact(text: str, axis: str, need: str, url: str) -> tuple:
     cv = str(got.get("counterview", "")).strip()
     if got.get("contested") and len(cv) < 15:
         return None, "contested impact without a counter-reading — rejected"
+
+    # GUARD 5 (relevance, axis-anchored): the observation must be ABOUT the axis/need. Runs
+    # before the sign guard so we never pay for a value-judgment on something off-topic, and
+    # fails closed — an unverifiable relevance claim is rejected, never quietly committed.
+    if _RELEVANCE_GATE:
+        _irr, _rel_why = _relevance_refuted(obs, ev, axis, need)
+        if _irr:
+            return None, f"relevance: not about the axis/need — rejected ({_rel_why})"
 
     # GUARD 4 (#39, canon-anchored): the value-judgment (sign) must survive a skeptic who
     # reads it against the goal frame. Refuted or uncheckable -> the FACT is kept but the

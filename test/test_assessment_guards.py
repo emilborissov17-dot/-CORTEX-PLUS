@@ -59,8 +59,11 @@ PAGE = ("Global report 2025. The number of active armed conflicts rose to 56, th
         "since WWII. Temperature anomalies (C) -14 -10 -6 -3 -1 -0.5 0 0.5 1 3 6 10 14")
 
 def router(impact_json, holds):
-    """Fake local model: impact read -> impact_json; sign-skeptic -> holds verdict."""
+    """Fake local model: impact read -> impact_json; relevance gate -> always relevant here
+    (it has its own suite); sign-skeptic -> holds verdict."""
     def _fake(prompt, num_predict=300, **kw):
+        if '"relevant"' in prompt:
+            return json.dumps({"relevant": True, "why": ""})
         if '"holds"' in prompt:
             return json.dumps({"holds": holds, "why": "" if holds else "direction contradicts the goal"})
         return json.dumps(impact_json)
