@@ -71,24 +71,30 @@ ok, _ = RS.evidence_complete(ANOM_EV, ["penumbra_model_anomaly_new"])
 check("...and passes when all three are present", ok)
 
 
-# ---------- the pulse cannot propose without evidence ----------
-def reasons(*keys):
-    return [{"key": k, "points": 3, "why": f"{k} happened"} for k in keys]
+# ---------- the raw signal carries the numbers; nothing can propose without them ----------
+# (since the split, the pulse only EMITS — the watchdog proposes. See
+# test_trigger_watchdog.py for the split itself.)
+sys.path.insert(0, str(REPO / "experiments" / "watchdog"))
+import trigger_watchdog as W
+W.PROPOSALS = P.CYCLE_PROPOSALS
 
 def ctx(prev_comp=0.50, comp=0.62):
     return {"prev": [{"spirit": {"composite": prev_comp}}], "composite": comp}
 
-P.CYCLE_PROPOSALS.unlink(missing_ok=True)
-r = P.propose_extraordinary_cycle(reasons("composite_moved"), ctx())
-check("a proposal with real composites is written", r.startswith("proposed:"))
-ev = json.loads(P.CYCLE_PROPOSALS.read_text(encoding="utf-8"))["pending"]["evidence"]
-check("...carrying the RAW numbers, not a sentence",
-      ev["pre_composite"] == 0.50 and ev["post_composite"] == 0.62 and ev["delta"] == 0.12)
+sig = P.build_signal(ctx())
+check("the pulse's signal carries the RAW numbers, not a sentence",
+      sig["pre_composite"] == 0.50 and sig["post_composite"] == 0.62 and sig["delta"] == 0.12)
 
-P.CYCLE_PROPOSALS.unlink(missing_ok=True)
-r = P.propose_extraordinary_cycle(reasons("composite_moved"), {"prev": [], "composite": None})
-check("no composites -> the pulse CANNOT propose at all",
-      r.startswith("not_proposed:incomplete_evidence") and not P.CYCLE_PROPOSALS.exists())
+ev, missing = W.evidence_from(sig, ["composite_moved"])
+check("...and they become complete evidence for a proposal", not missing)
+
+blank = P.build_signal({"prev": [], "composite": None})
+_, missing = W.evidence_from(blank, ["composite_moved"])
+check("no composites -> the evidence is incomplete", set(missing) >= {"pre_composite", "delta"})
+W.PROPOSALS.unlink(missing_ok=True)
+r = W.propose(blank, {"keys": ["composite_moved"], "reason": "x"})
+check("...so NOTHING can propose on it",
+      r.startswith("not_proposed:incomplete_evidence") and not W.PROPOSALS.exists())
 
 
 # ---------- the item never surfaces without raw fields ----------

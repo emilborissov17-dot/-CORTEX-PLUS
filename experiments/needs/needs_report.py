@@ -294,10 +294,11 @@ def _convergence_item():
         "gets it what it wants — it may also be the world genuinely getting stranger, "
         f"which is why this is a question, not a verdict (baseline frozen "
         f"{str(b.get('enabled_at'))[:10]})",
-        "READ the recent anomalies and ask whether they are real. If they are not, the "
-        "next hardening is to move trigger computation OUT of the system being triggered "
-        "— an exogenous watchdog owned by a different principal (see core/request_signing"
-        ".py). Do not answer this with more cycles",
+        "READ the recent anomalies and ask whether they are real. Trigger computation "
+        "already lives outside the pulse (experiments/watchdog/trigger_watchdog.py), so "
+        "if this still fires the remaining lever is co-residence: the next hardening is "
+        "BACKLOG #58 — a dedicated service account plus an ACL on the signing key, or "
+        "DPAPI/TPM. Do not answer this with more cycles",
         "human")]
 
 

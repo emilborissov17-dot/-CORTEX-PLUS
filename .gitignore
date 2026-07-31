@@ -94,3 +94,5 @@ memory/pulse_cycle_requests.json
 memory/extraordinary_request.json
 memory/pulse_rate_baseline.json
 *.key
+memory/pulse_signal.json
+memory/watchdog_runs.log

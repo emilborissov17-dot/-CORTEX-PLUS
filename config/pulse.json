@@ -6,7 +6,13 @@
     "paid for it, so a wake is always explainable after the fact.",
     "",
     "threshold  total score at or above which the tick takes WAKING ACTIONS.",
-    "           Under it: silence. The stream line IS the continuum."
+    "           Under it: silence. The stream line IS the continuum.",
+    "",
+    "MOVED OUT: composite_move (and its weight) now live in config/watchdog.json. The",
+    "pulse no longer decides whether a composite movement warrants a cycle — it emits the",
+    "raw signal to memory/pulse_signal.json and experiments/watchdog/trigger_watchdog.py",
+    "applies the threshold. The process that computes an escalation must not be the one",
+    "that benefits from it."
   ],
   "threshold": 4,
   "context_lines": 24,
@@ -14,13 +20,11 @@
   "quiet_hour": 21,
   "no_fire_hours_for_creative": 6,
   "series_stall_hours": 26,
-  "composite_move": 0.02,
   "disk_free_gb_min": 10,
   "weights": {
     "unconsumed_drops": 2,
     "needs_increased": 1,
     "series_stalled": 2,
-    "composite_moved": 3,
     "disk_low": 3,
     "ollama_dead": 2,
     "approvals_pending": 1,

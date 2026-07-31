@@ -155,21 +155,34 @@ check("5h later it is allowed", SV.decide(NOW, old, None, None, CFG,
                                           extraordinary=req).kind == SV.START)
 
 # ---------- 2. PULSE PROPOSES, never writes the supervisor's file ----------
-def reasons(*keys):
-    return [{"key": k, "points": 1, "why": f"{k} happened"} for k in keys]
-
-# raw evidence is now mandatory for a proposal (see test_escalation_evidence.py)
-PCTX = {"prev": [{"spirit": {"composite": 0.50}}], "composite": 0.62}
+# Since the split the PULSE cannot propose at all — the watchdog does, from the raw
+# signal. (test_trigger_watchdog.py owns the split; here we only need a proposal to exist
+# so the approval path can be exercised.)
+sys.path.insert(0, str(REPO / "experiments" / "watchdog"))
+import trigger_watchdog as W
+W.PROPOSALS = P.CYCLE_PROPOSALS
+W.SIGNAL = TMP / "pulse_signal.json"
+W.CONFIG = TMP / "watchdog.json"
+W.CONFIG.write_text(json.dumps({"composite_move_min": 0.02, "min_gap_minutes": 60,
+                                "propose_on_verified_anomaly": True,
+                                "signal_max_age_minutes": 30}), encoding="utf-8")
+PSIG = {"ts": NOW.isoformat(), "pre_composite": 0.50, "post_composite": 0.62,
+        "delta": 0.12, "anomaly_leaf_hash": None, "source_url": None,
+        "rule_violated": None}
 
 SV.EXTRAORDINARY_PATH.unlink(missing_ok=True)
 P.CYCLE_PROPOSALS.unlink(missing_ok=True)
-r = P.propose_extraordinary_cycle(reasons("unconsumed_drops", "approvals_pending"), PCTX)
-check("routine reasons never propose", r.startswith("not_proposed")
-      and not P.CYCLE_PROPOSALS.exists())
+check("the pulse has no proposal function at all (the split)",
+      not hasattr(P, "propose_extraordinary_cycle"))
 
-r = P.propose_extraordinary_cycle(reasons("composite_moved"), PCTX)
-check("composite_moved proposes", r == "proposed:composite_moved")
-check("...and the pulse did NOT write the supervisor's file",
+W.SIGNAL.write_text(json.dumps(dict(PSIG, delta=0.001)), encoding="utf-8")
+check("a movement under threshold proposes nothing",
+      W.run()["result"] == "silent" and not P.CYCLE_PROPOSALS.exists())
+
+W.SIGNAL.write_text(json.dumps(PSIG), encoding="utf-8")
+r = W.run()
+check("the WATCHDOG proposes when over threshold", r["result"] == "proposed:composite_moved")
+check("...and no one wrote the supervisor's file",
       not SV.EXTRAORDINARY_PATH.exists())
 check("...it wrote only a proposal", json.loads(
     P.CYCLE_PROPOSALS.read_text(encoding="utf-8"))["pending"]["reason"].startswith(
@@ -204,7 +217,9 @@ check("ideation-born anomaly creates NO cycle proposal (loop broken at the root)
       not P.CYCLE_PROPOSALS.exists())
 
 # ---------- the approval path is the only writer ----------
-P.propose_extraordinary_cycle(reasons("composite_moved"), PCTX)
+P.CYCLE_PROPOSALS.unlink(missing_ok=True)
+W.SIGNAL.write_text(json.dumps(PSIG), encoding="utf-8")
+W.run()
 items = [i for i in N._cycle_request_items() if i.get("approve_id")]
 check("the proposal surfaces as an approval item", len(items) == 1)
 check("...phrased as a request the human owns",
@@ -278,8 +293,9 @@ check("...at high severity, to a human", f[0]["severity"] == "high" and f[0]["ac
 check("...naming both rates so the human can judge",
       "12/week" in f[0]["need"] and "4.0/week" in f[0]["need"])
 check("...framed as a question, not a verdict", "not a verdict" in f[0]["why"])
-check("...and pointing at the exogenous watchdog as the next hardening",
-      "exogenous watchdog" in f[0]["proposed_action"])
+check("...pointing at the watchdog that now exists, and at the REMAINING boundary",
+      "trigger_watchdog" in f[0]["proposed_action"]
+      and "BACKLOG #58" in f[0]["proposed_action"])
 
 set_rates(baseline_per_week=0.0, now_external=2)
 check("tiny absolute numbers never flag, even from a zero baseline", not flagged())

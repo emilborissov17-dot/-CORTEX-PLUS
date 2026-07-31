@@ -1,0 +1,23 @@
+{
+  "_README": [
+    "Thresholds for experiments/watchdog/trigger_watchdog.py. HUMAN-EDITED ONLY.",
+    "",
+    "These moved OUT of config/pulse.json deliberately. The pulse emits the raw signal and",
+    "forms no opinion about it; the watchdog reads these numbers verbatim and decides. The",
+    "watchdog has NO code path that derives a threshold from historical data — if it could",
+    "learn its own trigger point, the split would be cosmetic, because the process that",
+    "computes the escalation would once again be tuning the escalation.",
+    "",
+    "composite_move_min   absolute change in the goal composite that warrants proposing a",
+    "                     full off-schedule cycle.",
+    "propose_on_verified_anomaly",
+    "                     whether a model_anomaly whose penumbra leaf hash VERIFIES against",
+    "                     the chain warrants proposing. An unverified hash never does.",
+    "min_gap_minutes      do not re-propose within this window; the supervisor separately",
+    "                     enforces a 4h gap between actual extraordinary STARTS."
+  ],
+  "composite_move_min": 0.02,
+  "propose_on_verified_anomaly": true,
+  "min_gap_minutes": 60,
+  "signal_max_age_minutes": 30
+}

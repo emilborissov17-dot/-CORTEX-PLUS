@@ -69,11 +69,14 @@ n = P.necessity(ctx(stalled=["A", "B"]), C)
 check("stalled series fires (+2), names the axes",
       n["score"] == 2 and "A" in n["reasons"][0]["why"])
 
-# needs_total matches prev here so ONLY the composite move can contribute
+# THE SPLIT: composite movement no longer contributes to necessity at all. That
+# comparison existed to justify an escalation, so it moved to the watchdog — the pulse
+# reports the composite and forms no opinion about whether the move is big enough.
 n = P.necessity(ctx(prev=prev, needs_total=5, composite=0.60), C)
-check("composite move fires (+3)", n["score"] == 3 and "composite_moved" in keys_of(n))
+check("a LARGE composite move no longer raises the pulse's own necessity",
+      n["score"] == 0 and "composite_moved" not in keys_of(n))
 n = P.necessity(ctx(prev=prev, needs_total=5, composite=0.505), C)
-check("a move under the threshold does NOT fire", n["score"] == 0)
+check("...and neither does a small one", n["score"] == 0)
 
 n = P.necessity(ctx(body={"disk_gb": 4, "ram_pct": 20, "ollama_alive": True}), C)
 check("low disk fires (+3)", n["score"] == 3 and "disk_low" in keys_of(n))
@@ -120,19 +123,20 @@ check("dry run takes no real action", called["ingest"] == 1 and acted == ["dry:u
 # the pulse may ASK for a cycle, never start one — and only for cycle-worthy reasons.
 # (Freshness, consumption and the 4h rate limit are the supervisor's side and live in
 # test_extraordinary_cycle.py.)
+# THE SPLIT: the pulse cannot propose a cycle at all any more. It emits the raw signal
+# and a separate process decides. (test_trigger_watchdog.py owns that contract.)
 P.CYCLE_PROPOSALS = TMP / "proposals.json"
-# a proposal now REQUIRES raw evidence (test_escalation_evidence.py owns that contract)
+P.PULSE_SIGNAL = TMP / "pulse_signal.json"
 PCTX = ctx(prev=[{"spirit": {"composite": 0.50}}], composite=0.62)
-check("routine reasons never propose a cycle",
-      P.propose_extraordinary_cycle([{"key": "unconsumed_drops", "why": "w"}], PCTX)
-      .startswith("not_proposed"))
+check("the pulse has no proposal function", not hasattr(P, "propose_extraordinary_cycle"))
 acted = P.wake({"reasons": [{"key": "composite_moved", "why": "0.5 -> 0.6"}]},
                PCTX, dry=False)
-check("a cycle-worthy reason PROPOSES (it cannot start one)",
-      any(a.startswith("cycle_proposal=proposed:composite_moved") for a in acted))
-check("...writing only a proposal for the human to approve",
-      P.CYCLE_PROPOSALS.exists())
-P.CYCLE_PROPOSALS.unlink(missing_ok=True)
+check("wake() no longer emits any cycle proposal",
+      not any("cycle_proposal" in a or "cycle_request" in a for a in acted))
+check("...and writes no proposal file", not P.CYCLE_PROPOSALS.exists())
+check("the pulse emits the raw signal instead", P.emit_signal(PCTX) == "signal_written"
+      and json.loads(P.PULSE_SIGNAL.read_text(encoding="utf-8"))["delta"] == 0.12)
+P.PULSE_SIGNAL.unlink(missing_ok=True)
 
 # ---------- degraded core ----------
 import builtins

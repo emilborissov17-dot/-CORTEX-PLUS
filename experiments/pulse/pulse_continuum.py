@@ -194,10 +194,10 @@ def necessity(ctx: dict, c: dict) -> dict:
     if ctx["stalled"]:
         add("series_stalled", f"series stalled >{c.get('series_stall_hours', 26)}h: "
                               f"{', '.join(ctx['stalled'][:4])}")
-    prev_comp = ((prev.get("spirit") or {}).get("composite"))
-    if isinstance(prev_comp, (int, float)) and isinstance(ctx["composite"], (int, float)):
-        if abs(ctx["composite"] - prev_comp) > c.get("composite_move", 0.02):
-            add("composite_moved", f"composite {prev_comp} -> {ctx['composite']}")
+    # composite_moved is GONE from here on purpose. That comparison existed to justify an
+    # escalation, so it now lives in the watchdog, against thresholds in
+    # config/watchdog.json. The pulse reports the composite on the stream line and in the
+    # signal; it no longer forms an opinion about whether the movement is big enough.
     dg = ctx["body"].get("disk_gb")
     if isinstance(dg, (int, float)) and dg < c.get("disk_free_gb_min", 10):
         add("disk_low", f"disk free {dg}GB")
@@ -243,12 +243,15 @@ def state_line(ctx: dict, nec: dict, degraded: bool) -> dict:
 
 # ── 5. WAKING ACTIONS (may wake; never writes scoring or specs) ──────────────
 
+# Written by experiments/watchdog/trigger_watchdog.py, NOT by the pulse. Read here only
+# to report a rate on the stream line — reading is not deciding.
 CYCLE_PROPOSALS = REPO / "memory" / "pulse_cycle_requests.json"
 
-# ONLY these warrant waking the whole daily cycle. Routine housekeeping — unconsumed
-# drops, a needs bump, pending approvals — is handled by the waking actions themselves
-# and must never escalate to a full cycle, or the pulse becomes a scheduler.
-_CYCLE_WORTHY = ("composite_moved", "penumbra_model_anomaly_new")
+# THE PULSE EMITS THIS AND STOPS. It is the raw signal, with no judgement attached: no
+# thresholds, no qualification, no proposal. Whether any of it warrants a cycle is decided
+# by a different process, because the process that computes an escalation must not be the
+# process that benefits from it.
+PULSE_SIGNAL = REPO / "memory" / "pulse_signal.json"
 
 # ORIGIN RESTRICTION. An anomaly born from the system's OWN ideation is a thought about
 # itself; an anomaly born from a collector reading the world is evidence. Only evidence
@@ -330,12 +333,12 @@ def rates() -> dict:
     return out
 
 
-def build_evidence(ctx: dict) -> dict:
-    """The RAW numbers an escalation rests on, carried through to the human unchanged.
+def build_signal(ctx: dict) -> dict:
+    """The RAW signal: what is true, with no opinion about what it deserves.
 
-    A summary sentence lets the proposer choose the framing; raw fields do not. These are
-    the same fields the signature will cover, so what Emil is shown and what the supervisor
-    honours cannot drift apart."""
+    These same fields become the evidence a human is shown and the signature covers, so
+    what Emil reads and what the supervisor honours cannot drift apart. The pulse's job
+    ends here — it states the numbers and does not argue from them."""
     prev = ctx.get("prev")[-1] if ctx.get("prev") else {}
     pre = (prev.get("spirit") or {}).get("composite")
     post = ctx.get("composite")
@@ -362,40 +365,21 @@ def build_evidence(ctx: dict) -> dict:
     return ev
 
 
-def propose_extraordinary_cycle(reasons, ctx: dict = None) -> str:
-    """PROPOSE a cycle — the system does not set its own alarm clock.
+def emit_signal(ctx: dict) -> str:
+    """Write the raw signal and stop. This replaces propose_extraordinary_cycle().
 
-    The pulse may notice that a full cycle looks warranted and register it as an approval
-    item; Emil's "OK <id>" is what makes approve_reader write the supervisor's request
-    file. System proposes, human disposes. This function therefore writes a PROPOSAL that
-    only the needs report reads — never anything the supervisor honours."""
-    worthy = [r for r in reasons if r.get("key") in _CYCLE_WORTHY]
-    if not worthy:
-        return "not_proposed:no_cycle_worthy_reason"
-    keys = [r["key"] for r in worthy]
-    evidence = build_evidence(ctx or {})
-    # An escalation the system cannot EVIDENCE is one it must not be able to propose.
+    The pulse used to decide whether a movement qualified as cycle-worthy and then write
+    its own proposal. It no longer does either: it states the numbers, and
+    experiments/watchdog/trigger_watchdog.py — a separate process, on its own schedule,
+    with thresholds it reads and never computes — decides what they deserve."""
+    sig = {"ts": _now(), **build_signal(ctx)}
     try:
-        from core.request_signing import evidence_complete
-        ok, missing = evidence_complete(evidence, keys)
-    except Exception:
-        ok, missing = False, ["<evidence check unavailable>"]
-    if not ok:
-        return "not_proposed:incomplete_evidence:" + ",".join(missing)
-    try:
-        reason = "; ".join(f"{r['key']}: {r['why']}" for r in worthy)
-        CYCLE_PROPOSALS.parent.mkdir(parents=True, exist_ok=True)
-        doc = _load(CYCLE_PROPOSALS, {})
-        doc["pending"] = {"ts": _now(), "proposed_by": "pulse_continuum",
-                          "reason": reason, "evidence": evidence,
-                          "keys": keys}
-        doc["history"] = ([h for h in (doc.get("history") or [])][-50:]
-                          + [{"ts": _now(), "keys": [r["key"] for r in worthy]}])
-        CYCLE_PROPOSALS.write_text(json.dumps(doc, ensure_ascii=False, indent=2),
-                                   encoding="utf-8")
-        return "proposed:" + ",".join(r["key"] for r in worthy)
+        PULSE_SIGNAL.parent.mkdir(parents=True, exist_ok=True)
+        PULSE_SIGNAL.write_text(json.dumps(sig, ensure_ascii=False, indent=2),
+                                encoding="utf-8")
+        return "signal_written"
     except Exception as e:
-        return f"propose_failed:{type(e).__name__}"
+        return f"signal_failed:{type(e).__name__}"
 
 
 def wake(nec: dict, ctx: dict, dry: bool) -> list:
@@ -427,8 +411,9 @@ def wake(nec: dict, ctx: dict, dry: bool) -> list:
                 acted.append("ollama=binary_missing")
         except Exception as e:
             acted.append(f"ollama FAILED {type(e).__name__}")
-    if keys & set(_CYCLE_WORTHY):
-        acted.append(f"cycle_proposal={propose_extraordinary_cycle(nec['reasons'], ctx)}")
+    # NOTE: no extraordinary-cycle branch here any more. The pulse cannot propose one; it
+    # emits the signal every tick (see tick()) and the watchdog decides. Waking actions
+    # remain the pulse's own business — they touch nothing the supervisor honours.
     return acted
 
 
@@ -625,6 +610,11 @@ def tick(dry: bool = False) -> dict:
     n_ticks = len(_tail(STREAM, 100000))
     if (n_ticks + 1) % int(c.get("reflection_every_n_ticks", 12)) == 0:
         line.update(reflection(ctx, frame))
+
+    # EMIT THE SIGNAL EVERY TICK, unconditionally and regardless of necessity. The pulse
+    # does not decide what is worth escalating, so it does not decide what is worth
+    # reporting either — a filter here would be the same judgement wearing a smaller hat.
+    line["signal"] = emit_signal(ctx) if not dry else "dry:signal_not_written"
 
     if nec["score"] >= int(c.get("threshold", 4)):
         line["actions"] = wake(nec, ctx, dry)

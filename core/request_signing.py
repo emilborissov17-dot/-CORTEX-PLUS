@@ -27,13 +27,21 @@ hardening does not justify a new dependency. With HMAC the verifier necessarily 
 signing key too, so the supervisor could in principle forge its own request — which is
 harmless, since the supervisor is the thing being asked.
 
-THE NEXT HARDENING, when it is needed
--------------------------------------
-The real fix is to move trigger computation OUT of the system being triggered: an exogenous
-watchdog process, owned by a different principal, that reads the pulse stream and decides
-independently. Deliberately NOT built yet — it is only worth its complexity if the
-instrumental-convergence monitor in needs_report ever fires. If you are reading this
-because it fired: that is the signal to build it.
+WHAT HAS SINCE BEEN BUILT, AND WHAT HAS NOT
+-------------------------------------------
+Trigger computation now lives OUTSIDE the component that benefits from it:
+experiments/watchdog/trigger_watchdog.py reads the pulse's raw signal, applies thresholds
+it never computes, and proposes. That closes the "the escalating process decides whether
+to escalate" hole.
+
+It does NOT close co-residence. The watchdog, approve_reader and the pulse all run as the
+same OS user, on the same file system, from editable code, and this key is readable by any
+of them. That remains open and is recorded as:
+
+    BACKLOG #58 — escalation capability boundary
+    Dedicated service account for trigger_watchdog + approve_reader; NTFS ACL on this key
+    restricted to that account; consider DPAPI/TPM for the key material. Until then the
+    separation is organisational, not enforced.
 """
 from __future__ import annotations
 
