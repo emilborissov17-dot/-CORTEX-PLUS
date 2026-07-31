@@ -276,6 +276,42 @@ def anomaly_arrivals(since_iso: str = None, until_iso: str = None,
     return n
 
 
+def newest_anomaly(exclude_origins=()) -> dict:
+    """The most recent model_anomaly leaf, with its LEAF HASH and file path, so a caller
+    can cite it and a verifier can recompute it from the chain instead of trusting the
+    citation. Returns {} when there is none."""
+    best = {}
+    for lf in _read_leaves(PENUMBRA_LEAVES):
+        if lf.get("kind") == "cold_marker":
+            continue
+        if (lf.get("quarantine") or {}).get("reason") != "model_anomaly":
+            continue
+        if (lf.get("collector") or "unknown") in exclude_origins:
+            continue
+        if not best or str(lf.get("ts", "")) > str(best.get("ts", "")):
+            best = lf
+    return best
+
+
+def leaf_hash_matches(leaf_hash: str, drop_id: str = None) -> bool:
+    """Recompute a penumbra leaf's hash FROM THE CHAIN and its file. The point is that a
+    hash arriving from another process is a claim; this turns it back into evidence."""
+    if not leaf_hash:
+        return False
+    for lf in _read_leaves(PENUMBRA_LEAVES):
+        if lf.get("leaf") != leaf_hash:
+            continue
+        if drop_id and lf.get("id") != drop_id:
+            continue
+        p = REPO / lf["path"]
+        if not p.exists():
+            p = REPO / _cold_map().get(lf["id"], lf["path"])
+        if not p.exists():
+            return False
+        return _sha(p.read_text(encoding="utf-8")) == leaf_hash
+    return False
+
+
 def promote(drop_id: str, by: str = "emil") -> str:
     """Move a penumbra item into verified sense — the ONLY exit from the shadow, and only
     by explicit human action. The penumbra leaf REMAINS: the history of having doubted it

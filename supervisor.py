@@ -211,6 +211,15 @@ def read_lock() -> Optional[dict]:
         return {"pid": None, "corrupt": True}
 
 
+def _log_refusal(why: str) -> None:
+    """A refused escalation must be NAMED, not silently dropped: a request that vanishes
+    without a reason is indistinguishable from one that was never made."""
+    try:
+        log(f"extraordinary request REFUSED: {why}")
+    except Exception:
+        pass
+
+
 def read_extraordinary(now: Optional[datetime] = None) -> Optional[dict]:
     """The pulse's request, if there is a VALID one. A request must be fresh and must
     NAME a reason: an unnamed or stale request is litter, and litter must never start a
@@ -231,10 +240,26 @@ def read_extraordinary(now: Optional[datetime] = None) -> Optional[dict]:
     if req.get("authored_by") != EXTRAORDINARY_AUTHOR or not str(req.get("approved_by", "")).strip():
         return None
     try:
-        from core.request_signing import verify as _verify_sig
+        from core.request_signing import (verify as _verify_sig,
+                                          evidence_digest as _ev_digest,
+                                          evidence_complete as _ev_complete)
     except Exception:
         return None                      # no verifier, no honoured request. Fail-closed.
+    # THE EQUALITY IS A GUARD, NOT A TEST. Recompute the digest from the RAW evidence
+    # rather than trusting the digest supplied with it, then require the signature to
+    # cover both. A request whose displayed numbers were edited after approval fails at
+    # the first step; one whose digest was edited to match fails at the second.
+    ev = req.get("evidence")
+    ok_ev, missing = _ev_complete(ev, req.get("keys", []))
+    if not ok_ev:
+        _log_refusal(f"incomplete evidence (missing {', '.join(missing)})")
+        return None
+    if _ev_digest(ev) != req.get("evidence_sha256"):
+        _log_refusal("evidence digest does not match the raw evidence — displayed and "
+                     "signed payloads have diverged")
+        return None
     if not _verify_sig(req):
+        _log_refusal("signature invalid, missing, or made with another key")
         return None
     now = now or datetime.now().astimezone()
     age_s = _age(now, req.get("ts"))

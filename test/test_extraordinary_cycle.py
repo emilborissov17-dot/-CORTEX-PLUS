@@ -58,10 +58,18 @@ CFG = {"daily_hour": 3, "catchup_grace_hours": 20}
 STATE_RAN = {"last_run_date": TODAY, "restarts": {}, "failure": None}
 
 
+EVID = {"pre_composite": 0.50, "post_composite": 0.62, "delta": 0.12,
+        "anomaly_leaf_hash": None, "source_url": None, "rule_violated": None}
+
+
 def human_req(ts=None, reason="composite_moved: 0.5 -> 0.6", author="approve_reader",
               approver="12345", sign=True, key=None):
+    # raw evidence + its digest are mandatory since the framing-control fix; the
+    # display/signature equality guard is owned by test_escalation_evidence.py
     body = {"ts": ts or NOW.isoformat(), "reason": reason,
-            "authored_by": author, "approved_by": approver}
+            "authored_by": author, "approved_by": approver,
+            "keys": ["composite_moved"], "evidence": EVID,
+            "evidence_sha256": RS.evidence_digest(EVID)}
     if sign:
         body = RS.signed(body, key)
     SV.EXTRAORDINARY_PATH.write_text(json.dumps(body), encoding="utf-8")
@@ -122,7 +130,9 @@ check("even a REFUSED file is consumed (it cannot retry tomorrow)",
 
 # ---------- decide(): honoured request, still fenced ----------
 req = RS.signed({"ts": NOW.isoformat(), "reason": "composite_moved: 0.5 -> 0.6",
-                 "authored_by": "approve_reader", "approved_by": "12345"})
+                 "authored_by": "approve_reader", "approved_by": "12345",
+                 "keys": ["composite_moved"], "evidence": EVID,
+                 "evidence_sha256": RS.evidence_digest(EVID)})
 a = SV.decide(NOW, dict(STATE_RAN), None, None, CFG, extraordinary=req)
 check("an approved request starts a cycle even though today's already ran",
       a.kind == SV.START and a.reason.startswith("extraordinary: "))
@@ -148,13 +158,16 @@ check("5h later it is allowed", SV.decide(NOW, old, None, None, CFG,
 def reasons(*keys):
     return [{"key": k, "points": 1, "why": f"{k} happened"} for k in keys]
 
+# raw evidence is now mandatory for a proposal (see test_escalation_evidence.py)
+PCTX = {"prev": [{"spirit": {"composite": 0.50}}], "composite": 0.62}
+
 SV.EXTRAORDINARY_PATH.unlink(missing_ok=True)
 P.CYCLE_PROPOSALS.unlink(missing_ok=True)
-r = P.propose_extraordinary_cycle(reasons("unconsumed_drops", "approvals_pending"))
+r = P.propose_extraordinary_cycle(reasons("unconsumed_drops", "approvals_pending"), PCTX)
 check("routine reasons never propose", r.startswith("not_proposed")
       and not P.CYCLE_PROPOSALS.exists())
 
-r = P.propose_extraordinary_cycle(reasons("composite_moved"))
+r = P.propose_extraordinary_cycle(reasons("composite_moved"), PCTX)
 check("composite_moved proposes", r == "proposed:composite_moved")
 check("...and the pulse did NOT write the supervisor's file",
       not SV.EXTRAORDINARY_PATH.exists())
@@ -191,7 +204,7 @@ check("ideation-born anomaly creates NO cycle proposal (loop broken at the root)
       not P.CYCLE_PROPOSALS.exists())
 
 # ---------- the approval path is the only writer ----------
-P.propose_extraordinary_cycle(reasons("composite_moved"))
+P.propose_extraordinary_cycle(reasons("composite_moved"), PCTX)
 items = [i for i in N._cycle_request_items() if i.get("approve_id")]
 check("the proposal surfaces as an approval item", len(items) == 1)
 check("...phrased as a request the human owns",

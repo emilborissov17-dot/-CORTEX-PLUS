@@ -222,10 +222,16 @@ AUTO_STIM_PER_WEEK = 3
 def _attach_cycle(item, req):
     """Make a pulse cycle-proposal approvable. THE ALARM CLOCK IS HUMAN-OWNED: this is
     the only path from 'the pulse thinks a cycle is warranted' to a cycle actually being
-    requested, and it runs through Emil's thumb."""
+    requested, and it runs through Emil's thumb.
+
+    The RAW evidence travels inline — the same fields the signature will cover. A summary
+    lets the proposer choose the framing; raw numbers do not."""
+    ev = req.get("evidence") or {}
     item["approve_id"] = _approve_id("cycle", str(req.get("reason", ""))[:120])
+    item["evidence"] = ev                       # what Emil is shown
     item["approve"] = {"type": "request_cycle", "reason": req.get("reason"),
                        "keys": req.get("keys", []), "proposed_at": req.get("ts"),
+                       "evidence": ev,          # what gets signed — identical object
                        "label": "extraordinary cycle"}
 
 
@@ -306,16 +312,44 @@ def _cycle_request_items():
         except Exception:
             age_min = 1e9
         if age_min <= CYCLE_PROPOSAL_MAX_AGE_MIN:
-            item = _item(
-                "MIND", "medium",
-                f"PULSE requests extraordinary cycle — reason: {req.get('reason')}",
-                "the pulse judged a full cycle warranted; it CANNOT start one — the alarm "
-                "clock is yours. Your OK is what writes the supervisor's request, which is "
-                "then still subject to the lock, the restart budget and a 4h rate limit",
-                "APPROVE to let the supervisor start an off-schedule cycle, or ignore",
-                "human")
-            _attach_cycle(item, req)
-            out.append(item)
+            # PRODUCTION GUARD, not a test: an escalation whose raw evidence is incomplete
+            # never reaches Emil at all. Refusing here — with the missing fields named —
+            # beats showing him a confident sentence with nothing behind it.
+            try:
+                sys.path.insert(0, str(REPO))
+                from core.request_signing import evidence_complete
+                ok, missing = evidence_complete(req.get("evidence"), req.get("keys", []))
+            except Exception:
+                ok, missing = False, ["<evidence check unavailable>"]
+            if not ok:
+                out.append(_item(
+                    "MIND", "low",
+                    "a cycle proposal was REFUSED before it could be shown: incomplete "
+                    f"evidence (missing {', '.join(missing)})",
+                    "an escalation that cannot show its raw numbers must not be "
+                    "approvable — the framing would be the only thing on offer",
+                    "no action; the pulse must carry pre/post composite and, for an "
+                    "anomaly, the leaf hash, source and violated rule",
+                    "none"))
+            else:
+                ev = req.get("evidence") or {}
+                item = _item(
+                    "MIND", "medium",
+                    f"PULSE requests extraordinary cycle — reason: {req.get('reason')}",
+                    "the pulse judged a full cycle warranted; it CANNOT start one — the "
+                    "alarm clock is yours. Your OK is what writes the supervisor's "
+                    "request, which is then still subject to the lock, the restart budget "
+                    "and a 4h rate limit. RAW EVIDENCE: "
+                    f"pre_composite={ev.get('pre_composite')} "
+                    f"post_composite={ev.get('post_composite')} delta={ev.get('delta')}"
+                    + (f" | anomaly_leaf_hash={ev.get('anomaly_leaf_hash')} "
+                       f"source_url={ev.get('source_url')} "
+                       f"rule_violated={ev.get('rule_violated')}"
+                       if ev.get("anomaly_leaf_hash") else ""),
+                    "APPROVE to let the supervisor start an off-schedule cycle, or ignore",
+                    "human")
+                _attach_cycle(item, req)
+                out.append(item)
 
     out.extend(_convergence_item())
 

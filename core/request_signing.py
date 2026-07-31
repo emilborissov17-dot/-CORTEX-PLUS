@@ -58,6 +58,34 @@ def _canon(payload: dict) -> bytes:
                       separators=(",", ":")).encode("utf-8")
 
 
+REQUIRED_EVIDENCE = ("pre_composite", "post_composite", "delta")
+REQUIRED_ANOMALY_EVIDENCE = ("anomaly_leaf_hash", "source_url", "rule_violated")
+
+
+def evidence_digest(evidence: dict) -> str:
+    """SHA-256 over the canonical evidence block.
+
+    This exists so the verifier can RECOMPUTE the digest from the raw fields rather than
+    trust a digest handed to it. The digest is itself inside the signed payload, so the
+    chain is: raw fields -> recomputed digest -> must equal the signed digest -> signature
+    must verify. Changing any displayed number breaks it at the first step."""
+    return hashlib.sha256(json.dumps(evidence or {}, sort_keys=True, ensure_ascii=False,
+                                     separators=(",", ":")).encode("utf-8")).hexdigest()
+
+
+def evidence_complete(evidence: dict, keys=()) -> tuple:
+    """(ok, missing). Raw fields are mandatory: a human asked to approve an escalation must
+    see the numbers the decision was made on, not a sentence the system composed about
+    them. Anomaly-triggered escalations additionally need the leaf hash, the source and
+    the violated rule — the three things that make the claim checkable."""
+    ev = evidence or {}
+    need = list(REQUIRED_EVIDENCE)
+    if any("anomaly" in str(k) for k in (keys or [])):
+        need += list(REQUIRED_ANOMALY_EVIDENCE)
+    missing = [k for k in need if ev.get(k) is None]
+    return (not missing), missing
+
+
 def ensure_key(path: Path = None) -> Path:
     """Create the key if absent (32 random bytes) and narrow its ACL. Idempotent."""
     p = Path(path or KEY_PATH)

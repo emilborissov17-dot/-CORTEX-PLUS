@@ -150,6 +150,17 @@ def _apply_cycle_request(spec: dict, chat_id):
     reason = str(spec.get("reason") or "").strip()
     if not reason:
         return {"ok": False, "error": "cycle request has no named reason — not written"}
+    evidence = spec.get("evidence") or {}
+    try:
+        sys.path.insert(0, str(REPO))
+        from core.request_signing import evidence_complete, evidence_digest
+        ok, missing = evidence_complete(evidence, spec.get("keys", []))
+    except Exception as e:
+        return {"ok": False, "error": f"evidence check unavailable ({type(e).__name__}) "
+                                      f"— not written"}
+    if not ok:
+        return {"ok": False, "error": f"refusing to sign an escalation with incomplete "
+                                      f"evidence (missing {', '.join(missing)})"}
     payload = {
         "ts": _now(),
         "authored_by": "approve_reader",
@@ -157,6 +168,11 @@ def _apply_cycle_request(spec: dict, chat_id):
         "proposed_at": spec.get("proposed_at"),
         "keys": spec.get("keys", []),
         "reason": reason,
+        # the RAW fields Emil was shown, plus a digest over them. The supervisor
+        # recomputes the digest from the raw fields rather than trusting this one, so
+        # what was displayed and what is honoured cannot diverge.
+        "evidence": evidence,
+        "evidence_sha256": evidence_digest(evidence),
     }
     # SIGN it. approve_reader holds the key; the pulse does not. The supervisor verifies
     # and refuses anything unsigned or wrongly signed — an authored_by string is a claim,

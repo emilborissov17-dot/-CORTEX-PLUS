@@ -330,7 +330,39 @@ def rates() -> dict:
     return out
 
 
-def propose_extraordinary_cycle(reasons) -> str:
+def build_evidence(ctx: dict) -> dict:
+    """The RAW numbers an escalation rests on, carried through to the human unchanged.
+
+    A summary sentence lets the proposer choose the framing; raw fields do not. These are
+    the same fields the signature will cover, so what Emil is shown and what the supervisor
+    honours cannot drift apart."""
+    prev = ctx.get("prev")[-1] if ctx.get("prev") else {}
+    pre = (prev.get("spirit") or {}).get("composite")
+    post = ctx.get("composite")
+    ev = {"pre_composite": pre, "post_composite": post,
+          "delta": (round(post - pre, 6)
+                    if isinstance(pre, (int, float)) and isinstance(post, (int, float))
+                    else None),
+          "anomaly_leaf_hash": None, "source_url": None, "rule_violated": None}
+    try:
+        import sensorium
+        lf = sensorium.newest_anomaly(exclude_origins=_SELF_ORIGINS)
+        if lf:
+            ev["anomaly_leaf_hash"] = lf.get("leaf")
+            ev["anomaly_drop_id"] = lf.get("id")
+            rec = _load(REPO / lf["path"], {})
+            pay = rec.get("payload") or {}
+            ev["source_url"] = (pay.get("url") or pay.get("source_url")
+                                or (pay.get("grounded_on") or [None])[0])
+            proof = ((pay.get("mentor") or {}).get("proof") or [])
+            ev["rule_violated"] = (pay.get("rule_violated")
+                                   or (proof[0] if proof else None))
+    except Exception:
+        pass
+    return ev
+
+
+def propose_extraordinary_cycle(reasons, ctx: dict = None) -> str:
     """PROPOSE a cycle — the system does not set its own alarm clock.
 
     The pulse may notice that a full cycle looks warranted and register it as an approval
@@ -340,13 +372,23 @@ def propose_extraordinary_cycle(reasons) -> str:
     worthy = [r for r in reasons if r.get("key") in _CYCLE_WORTHY]
     if not worthy:
         return "not_proposed:no_cycle_worthy_reason"
+    keys = [r["key"] for r in worthy]
+    evidence = build_evidence(ctx or {})
+    # An escalation the system cannot EVIDENCE is one it must not be able to propose.
+    try:
+        from core.request_signing import evidence_complete
+        ok, missing = evidence_complete(evidence, keys)
+    except Exception:
+        ok, missing = False, ["<evidence check unavailable>"]
+    if not ok:
+        return "not_proposed:incomplete_evidence:" + ",".join(missing)
     try:
         reason = "; ".join(f"{r['key']}: {r['why']}" for r in worthy)
         CYCLE_PROPOSALS.parent.mkdir(parents=True, exist_ok=True)
         doc = _load(CYCLE_PROPOSALS, {})
         doc["pending"] = {"ts": _now(), "proposed_by": "pulse_continuum",
-                          "reason": reason,
-                          "keys": [r["key"] for r in worthy]}
+                          "reason": reason, "evidence": evidence,
+                          "keys": keys}
         doc["history"] = ([h for h in (doc.get("history") or [])][-50:]
                           + [{"ts": _now(), "keys": [r["key"] for r in worthy]}])
         CYCLE_PROPOSALS.write_text(json.dumps(doc, ensure_ascii=False, indent=2),
@@ -386,7 +428,7 @@ def wake(nec: dict, ctx: dict, dry: bool) -> list:
         except Exception as e:
             acted.append(f"ollama FAILED {type(e).__name__}")
     if keys & set(_CYCLE_WORTHY):
-        acted.append(f"cycle_proposal={propose_extraordinary_cycle(nec['reasons'])}")
+        acted.append(f"cycle_proposal={propose_extraordinary_cycle(nec['reasons'], ctx)}")
     return acted
 
 

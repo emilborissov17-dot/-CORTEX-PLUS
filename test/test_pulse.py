@@ -121,11 +121,13 @@ check("dry run takes no real action", called["ingest"] == 1 and acted == ["dry:u
 # (Freshness, consumption and the 4h rate limit are the supervisor's side and live in
 # test_extraordinary_cycle.py.)
 P.CYCLE_PROPOSALS = TMP / "proposals.json"
+# a proposal now REQUIRES raw evidence (test_escalation_evidence.py owns that contract)
+PCTX = ctx(prev=[{"spirit": {"composite": 0.50}}], composite=0.62)
 check("routine reasons never propose a cycle",
-      P.propose_extraordinary_cycle([{"key": "unconsumed_drops", "why": "w"}])
+      P.propose_extraordinary_cycle([{"key": "unconsumed_drops", "why": "w"}], PCTX)
       .startswith("not_proposed"))
 acted = P.wake({"reasons": [{"key": "composite_moved", "why": "0.5 -> 0.6"}]},
-               ctx(), dry=False)
+               PCTX, dry=False)
 check("a cycle-worthy reason PROPOSES (it cannot start one)",
       any(a.startswith("cycle_proposal=proposed:composite_moved") for a in acted))
 check("...writing only a proposal for the human to approve",
