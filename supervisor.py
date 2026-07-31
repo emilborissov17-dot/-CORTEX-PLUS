@@ -224,10 +224,17 @@ def read_extraordinary(now: Optional[datetime] = None) -> Optional[dict]:
         return None
     if not isinstance(req, dict) or not str(req.get("reason", "")).strip():
         return None
-    # AUTHORSHIP IS THE WHOLE POINT. Only approve_reader may author this, and only with a
-    # human approver recorded on it. A request the system wrote for itself is refused
-    # here no matter how fresh or well-reasoned it is.
+    # AUTHORSHIP IS THE WHOLE POINT — and a CLAIM of authorship is not authorship. The
+    # authored_by/approved_by fields are a label; the SIGNATURE is the fence. Only
+    # approve_reader holds the signing key, so a request the system wrote for itself
+    # fails here no matter how fresh, well-reasoned or correctly-shaped it is.
     if req.get("authored_by") != EXTRAORDINARY_AUTHOR or not str(req.get("approved_by", "")).strip():
+        return None
+    try:
+        from core.request_signing import verify as _verify_sig
+    except Exception:
+        return None                      # no verifier, no honoured request. Fail-closed.
+    if not _verify_sig(req):
         return None
     now = now or datetime.now().astimezone()
     age_s = _age(now, req.get("ts"))

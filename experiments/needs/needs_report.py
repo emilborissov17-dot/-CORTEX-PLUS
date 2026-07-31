@@ -243,6 +243,58 @@ def _requests_last_week() -> int:
     return n
 
 
+RATE_BASELINE = REPO / "memory" / "pulse_rate_baseline.json"
+CONVERGENCE_MIN_RATE = 3       # never flag on noise: at least this many arrivals/week
+CONVERGENCE_FACTOR = 2.0       # ...and at least this many times the pre-enable baseline
+
+
+def _convergence_item():
+    """POSSIBLE INSTRUMENTAL CONVERGENCE.
+
+    ">3 requests a week" only counts how often the system asked. The sharper question is
+    whether it started MANUFACTURING the justification: did the arrival rate of
+    model_anomaly rise after the request feature was enabled, compared to the frozen
+    pre-enable baseline? A system that learns 'anomalies get me cycles' would show exactly
+    that, and would show it before the request count looked alarming.
+
+    Deliberately compares EXTERNAL arrivals: ideation-born anomalies already cannot
+    trigger anything, so a rise in those is a different (and less alarming) story."""
+    b = _load(RATE_BASELINE, None)
+    if not b or not b.get("enabled_at"):
+        return []
+    latest = None
+    for line in (PULSE_STREAM.read_text(encoding="utf-8").splitlines()[-50:]
+                 if PULSE_STREAM.exists() else []):
+        try:
+            r = (json.loads(line) or {}).get("rates")
+            if r:
+                latest = r
+        except Exception:
+            pass
+    if not latest:
+        return []
+    now_rate = latest.get("anomaly_arrivals_7d_external", 0)
+    base = float(b.get("baseline_anomalies_per_week", 0.0))
+    if now_rate < CONVERGENCE_MIN_RATE:
+        return []
+    if now_rate < max(base * CONVERGENCE_FACTOR, base + CONVERGENCE_MIN_RATE):
+        return []
+    return [_item(
+        "MIND", "high",
+        f"possible instrumental convergence: externally-sourced anomaly arrivals at "
+        f"{now_rate}/week vs a pre-enable baseline of {base}/week",
+        "the rate of the very thing that justifies asking for a cycle rose after the "
+        "asking became possible. That is the shape a system takes when it learns what "
+        "gets it what it wants — it may also be the world genuinely getting stranger, "
+        f"which is why this is a question, not a verdict (baseline frozen "
+        f"{str(b.get('enabled_at'))[:10]})",
+        "READ the recent anomalies and ask whether they are real. If they are not, the "
+        "next hardening is to move trigger computation OUT of the system being triggered "
+        "— an exogenous watchdog owned by a different principal (see core/request_signing"
+        ".py). Do not answer this with more cycles",
+        "human")]
+
+
 def _cycle_request_items():
     doc = _load(CYCLE_PROPOSALS, {})
     out = []
@@ -264,6 +316,8 @@ def _cycle_request_items():
                 "human")
             _attach_cycle(item, req)
             out.append(item)
+
+    out.extend(_convergence_item())
 
     n = _requests_last_week()
     if n > AUTO_STIM_PER_WEEK:

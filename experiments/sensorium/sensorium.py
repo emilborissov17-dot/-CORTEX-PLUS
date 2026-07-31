@@ -254,6 +254,28 @@ def penumbra_report() -> dict:
             "anomalies_by_origin": origins}
 
 
+def anomaly_arrivals(since_iso: str = None, until_iso: str = None,
+                     exclude_origins=()) -> int:
+    """How many model_anomaly items ARRIVED in a window. A rate, not a stock: the stock
+    only grows, so it can never show whether the system started generating anomalies
+    faster after some change was made to it."""
+    n = 0
+    for lf in _read_leaves(PENUMBRA_LEAVES):
+        if lf.get("kind") == "cold_marker":
+            continue
+        if (lf.get("quarantine") or {}).get("reason") != "model_anomaly":
+            continue
+        if (lf.get("collector") or "unknown") in exclude_origins:
+            continue
+        ts = str(lf.get("ts", ""))
+        if since_iso and ts < since_iso:
+            continue
+        if until_iso and ts >= until_iso:
+            continue
+        n += 1
+    return n
+
+
 def promote(drop_id: str, by: str = "emil") -> str:
     """Move a penumbra item into verified sense — the ONLY exit from the shadow, and only
     by explicit human action. The penumbra leaf REMAINS: the history of having doubted it

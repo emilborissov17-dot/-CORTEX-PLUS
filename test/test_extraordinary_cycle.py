@@ -35,12 +35,16 @@ import pulse_continuum as P
 import needs_report as N
 import approve_reader as A
 
+import core.request_signing as RS
+
 FAILS = []
 def check(name, cond):
     print(("PASS " if cond else "FAIL ") + name)
     if not cond: FAILS.append(name)
 
 TMP = Path(tempfile.mkdtemp())
+RS.KEY_PATH = TMP / "signing.key"          # never the real key
+RS.ensure_key()
 SV.EXTRAORDINARY_PATH = TMP / "extraordinary_request.json"
 A.EXTRAORDINARY = SV.EXTRAORDINARY_PATH
 P.CYCLE_PROPOSALS = TMP / "proposals.json"
@@ -55,28 +59,48 @@ STATE_RAN = {"last_run_date": TODAY, "restarts": {}, "failure": None}
 
 
 def human_req(ts=None, reason="composite_moved: 0.5 -> 0.6", author="approve_reader",
-              approver="12345"):
-    SV.EXTRAORDINARY_PATH.write_text(json.dumps(
-        {"ts": ts or NOW.isoformat(), "reason": reason,
-         "authored_by": author, "approved_by": approver}), encoding="utf-8")
+              approver="12345", sign=True, key=None):
+    body = {"ts": ts or NOW.isoformat(), "reason": reason,
+            "authored_by": author, "approved_by": approver}
+    if sign:
+        body = RS.signed(body, key)
+    SV.EXTRAORDINARY_PATH.write_text(json.dumps(body), encoding="utf-8")
 
 
-# ---------- 1. AUTHORSHIP: only a human-approved file is honoured ----------
+# ---------- 1. SIGNATURE is the fence; authored_by is only a label ----------
 human_req()
-check("an approve_reader file with a human approver is honoured",
+check("a correctly SIGNED, human-approved request is honoured",
       SV.read_extraordinary(NOW) is not None)
 
+human_req(sign=False)
+check("a correctly-SHAPED but UNSIGNED request is refused (self-declared authorship "
+      "is not authorship)", SV.read_extraordinary(NOW) is None)
+
+pulse_key = TMP / "pulse.key"
+RS.ensure_key(pulse_key)
+human_req(sign=True, key=pulse_key)
+check("a request signed with a key the PULSE could hold is refused",
+      SV.read_extraordinary(NOW) is None)
+
+human_req()
+tampered = json.loads(SV.EXTRAORDINARY_PATH.read_text(encoding="utf-8"))
+tampered["reason"] = "something the human never approved"
+SV.EXTRAORDINARY_PATH.write_text(json.dumps(tampered), encoding="utf-8")
+check("editing a signed request after the fact invalidates it",
+      SV.read_extraordinary(NOW) is None)
+
 human_req(author="pulse_continuum")
-check("a file the PULSE authored is REFUSED (the core fence)",
+check("the pulse cannot pass by claiming to be approve_reader",
       SV.read_extraordinary(NOW) is None)
-
 human_req(approver="")
-check("approve_reader file with no human approver is refused",
+check("a signed request with no human approver is refused",
       SV.read_extraordinary(NOW) is None)
 
-SV.EXTRAORDINARY_PATH.write_text(json.dumps({"ts": NOW.isoformat(), "reason": "x"}),
-                                 encoding="utf-8")
-check("a file with no authorship at all is refused", SV.read_extraordinary(NOW) is None)
+# and the primitive itself
+check("verify rejects an unsigned payload", RS.verify({"a": 1}) is False)
+check("verify rejects a payload signed with another key",
+      RS.verify(RS.signed({"a": 1}, pulse_key)) is False)
+check("verify accepts what this key signed", RS.verify(RS.signed({"a": 1})) is True)
 
 # ---------- freshness / consumption ----------
 human_req(ts=(NOW - timedelta(minutes=30)).isoformat())
@@ -97,8 +121,8 @@ check("even a REFUSED file is consumed (it cannot retry tomorrow)",
       SV.consume_extraordinary() and not SV.EXTRAORDINARY_PATH.exists())
 
 # ---------- decide(): honoured request, still fenced ----------
-req = {"ts": NOW.isoformat(), "reason": "composite_moved: 0.5 -> 0.6",
-       "authored_by": "approve_reader", "approved_by": "12345"}
+req = RS.signed({"ts": NOW.isoformat(), "reason": "composite_moved: 0.5 -> 0.6",
+                 "authored_by": "approve_reader", "approved_by": "12345"})
 a = SV.decide(NOW, dict(STATE_RAN), None, None, CFG, extraordinary=req)
 check("an approved request starts a cycle even though today's already ran",
       a.kind == SV.START and a.reason.startswith("extraordinary: "))
@@ -208,6 +232,51 @@ P.CYCLE_PROPOSALS.write_text(json.dumps({"history": [
     for d in (10, 20, 30, 40, 50)]}), encoding="utf-8")
 check("old requests age out of the 7-day window",
       not [i for i in N._cycle_request_items() if "auto-stimulation" in i["need"]])
+
+# ---------- 5. INSTRUMENTAL-CONVERGENCE MONITOR (rate, not count) ----------
+N.RATE_BASELINE = TMP / "baseline.json"
+
+
+def set_rates(baseline_per_week, now_external):
+    N.RATE_BASELINE.write_text(json.dumps(
+        {"enabled_at": (NOW - timedelta(days=30)).isoformat(),
+         "baseline_anomalies_per_week": baseline_per_week}), encoding="utf-8")
+    N.PULSE_STREAM.write_text(json.dumps(
+        {"ts": NOW.isoformat(),
+         "rates": {"anomaly_arrivals_7d": now_external + 2,
+                   "anomaly_arrivals_7d_external": now_external,
+                   "cycle_requests_7d": 1}}) + "\n", encoding="utf-8")
+
+
+def flagged():
+    return [i for i in N._convergence_item() if "instrumental convergence" in i["need"]]
+
+
+set_rates(baseline_per_week=4.0, now_external=4)
+check("a FLAT rate against its baseline is quiet", not flagged())
+
+set_rates(baseline_per_week=4.0, now_external=5)
+check("a small wobble is not a flag", not flagged())
+
+set_rates(baseline_per_week=4.0, now_external=12)
+f = flagged()
+check("a post-enable SPIKE vs the baseline flags convergence", len(f) == 1)
+check("...at high severity, to a human", f[0]["severity"] == "high" and f[0]["actor"] == "human")
+check("...naming both rates so the human can judge",
+      "12/week" in f[0]["need"] and "4.0/week" in f[0]["need"])
+check("...framed as a question, not a verdict", "not a verdict" in f[0]["why"])
+check("...and pointing at the exogenous watchdog as the next hardening",
+      "exogenous watchdog" in f[0]["proposed_action"])
+
+set_rates(baseline_per_week=0.0, now_external=2)
+check("tiny absolute numbers never flag, even from a zero baseline", not flagged())
+
+set_rates(baseline_per_week=0.0, now_external=6)
+check("a rise from a ZERO baseline still flags once it is material", len(flagged()) == 1)
+
+N.RATE_BASELINE.unlink(missing_ok=True)
+check("no baseline -> no claim (the monitor stays silent rather than guessing)",
+      not flagged())
 
 import shutil
 shutil.rmtree(TMP, ignore_errors=True)

@@ -237,6 +237,7 @@ def state_line(ctx: dict, nec: dict, degraded: bool) -> dict:
         "spirit": {"composite": ctx["composite"], "worst_gap_axis": ctx["worst_gap_axis"],
                    "ideas_pending": ctx["ideas_pending"]},
         "necessity": nec,
+        "rates": rates(),          # arrival rates, for the convergence monitor
     }
 
 
@@ -264,6 +265,69 @@ def external_anomalies(pen: dict) -> int:
     """model_anomaly items that came from OUTSIDE the system's own thinking."""
     origins = (pen or {}).get("anomalies_by_origin") or {}
     return sum(n for o, n in origins.items() if o not in _SELF_ORIGINS)
+
+
+RATE_BASELINE = REPO / "memory" / "pulse_rate_baseline.json"
+
+
+def ensure_baseline() -> dict:
+    """Freeze what the anomaly-arrival rate looked like BEFORE this feature existed.
+
+    Without a pre-enable baseline the monitor can only say 'anomalies exist', which is
+    useless. With one it can ask the question that matters: did giving the system a way to
+    ask for cycles make it start producing more of the thing that justifies asking?"""
+    b = _load(RATE_BASELINE, None)
+    if b:
+        return b
+    enabled_at = _now()
+    try:
+        import sensorium
+        pre = sensorium.anomaly_arrivals(until_iso=enabled_at)
+        first = None
+        for lf in sensorium._read_leaves(sensorium.PENUMBRA_LEAVES):
+            ts = str(lf.get("ts", ""))
+            if ts and (first is None or ts < first):
+                first = ts
+        weeks = 1.0
+        if first:
+            try:
+                span = (datetime.fromisoformat(enabled_at)
+                        - datetime.fromisoformat(first)).total_seconds() / 604800.0
+                weeks = max(span, 1.0)
+            except Exception:
+                pass
+        rate = round(pre / weeks, 3)
+    except Exception:
+        rate = 0.0
+    b = {"enabled_at": enabled_at, "baseline_anomalies_per_week": rate,
+         "note": "pre-enable arrival rate; the monitor compares post-enable weeks to this"}
+    try:
+        RATE_BASELINE.parent.mkdir(parents=True, exist_ok=True)
+        RATE_BASELINE.write_text(json.dumps(b, ensure_ascii=False, indent=2),
+                                 encoding="utf-8")
+    except Exception:
+        pass
+    return b
+
+
+def rates() -> dict:
+    """Arrival rates, recorded on every stream line so the trend is inspectable later."""
+    week_ago = (datetime.now(timezone.utc) - timedelta(days=7)).isoformat()
+    out = {"anomaly_arrivals_7d": 0, "anomaly_arrivals_7d_external": 0,
+           "cycle_requests_7d": 0}
+    try:
+        import sensorium
+        out["anomaly_arrivals_7d"] = sensorium.anomaly_arrivals(since_iso=week_ago)
+        out["anomaly_arrivals_7d_external"] = sensorium.anomaly_arrivals(
+            since_iso=week_ago, exclude_origins=_SELF_ORIGINS)
+    except Exception:
+        pass
+    try:
+        hist = (_load(CYCLE_PROPOSALS, {}).get("history") or [])
+        out["cycle_requests_7d"] = sum(1 for h in hist if str(h.get("ts", "")) >= week_ago)
+    except Exception:
+        pass
+    return out
 
 
 def propose_extraordinary_cycle(reasons) -> str:
@@ -510,6 +574,7 @@ def creative_due(ctx: dict, c: dict) -> bool:
 
 def tick(dry: bool = False) -> dict:
     c = cfg()
+    ensure_baseline()               # freeze the pre-enable rate on the very first tick
     frame, degraded = moral_core()
     ctx = context(c)
     nec = necessity(ctx, c)

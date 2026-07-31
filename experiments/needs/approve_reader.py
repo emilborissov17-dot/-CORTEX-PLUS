@@ -150,15 +150,27 @@ def _apply_cycle_request(spec: dict, chat_id):
     reason = str(spec.get("reason") or "").strip()
     if not reason:
         return {"ok": False, "error": "cycle request has no named reason — not written"}
-    EXTRAORDINARY.parent.mkdir(parents=True, exist_ok=True)
-    EXTRAORDINARY.write_text(json.dumps({
+    payload = {
         "ts": _now(),
         "authored_by": "approve_reader",
         "approved_by": str(chat_id),
         "proposed_at": spec.get("proposed_at"),
         "keys": spec.get("keys", []),
         "reason": reason,
-    }, ensure_ascii=False, indent=2), encoding="utf-8")
+    }
+    # SIGN it. approve_reader holds the key; the pulse does not. The supervisor verifies
+    # and refuses anything unsigned or wrongly signed — an authored_by string is a claim,
+    # a signature is evidence.
+    try:
+        sys.path.insert(0, str(REPO))
+        from core.request_signing import signed
+        payload = signed(payload)
+    except Exception as e:
+        return {"ok": False, "error": f"cannot sign the request ({type(e).__name__}) — "
+                                      f"not written; the supervisor would refuse it anyway"}
+    EXTRAORDINARY.parent.mkdir(parents=True, exist_ok=True)
+    EXTRAORDINARY.write_text(json.dumps(payload, ensure_ascii=False, indent=2),
+                             encoding="utf-8")
     try:                       # the proposal is spent; it must not re-surface
         doc = _load(CYCLE_PROPOSALS, {})
         doc.pop("pending", None)

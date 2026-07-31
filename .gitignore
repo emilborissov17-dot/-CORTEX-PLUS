@@ -92,3 +92,5 @@ memory/pulse_stream.jsonl
 memory/idea_stream.jsonl
 memory/pulse_cycle_requests.json
 memory/extraordinary_request.json
+memory/pulse_rate_baseline.json
+*.key
