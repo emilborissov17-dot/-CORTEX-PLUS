@@ -85,3 +85,8 @@ memory/browse_sources/
 memory/semantic_trajectory.jsonl
 memory/sensorium/
 memory/semantic_inbox/
+
+# Pulse runtime logs (#50): appended every 5 minutes.
+memory/pulse_runs.log
+memory/pulse_stream.jsonl
+memory/idea_stream.jsonl
