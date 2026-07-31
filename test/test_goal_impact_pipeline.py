@@ -102,7 +102,7 @@ check("overall signed & weighted computed", "overall_signed_weighted" in vec)
 check("dim_weights present (human-owned)", "peace" in vec["dim_weights_used"])
 check("dropped into sensorium", trail["dropped"] is not None)
 
-v = sensorium.verify()
+v = sensorium.verify()["verified"]      # verify() reports both chains separately (#55)
 check("sensorium Merkle verifies", v["ok"] and v["n"] == 1)
 
 ing = sensorium.ingest()

@@ -760,10 +760,17 @@ def main():
         from experiments.sensorium.sensorium import ingest as _sens_ingest, verify as _sens_verify
         _si = _sens_ingest()
         _sv = _sens_verify()
+        # verify() reports the two chains separately (#55): the verified sensory chain and
+        # the penumbra shadow. Each must scream on its own — a healthy shadow must never
+        # mask a corrupted sense, or the reverse.
+        _v, _p = _sv.get("verified", {}), _sv.get("penumbra", {})
         print(f"[FAST_CYCLE] sensorium -> ingested {_si.get('ingested', 0)} drop(s); "
-              f"merkle intact={_sv.get('ok')} ({_sv.get('n')} leaves)")
-        if not _sv.get("ok"):
-            print(f"[FAST_CYCLE] sensorium -> TAMPER/GAP: {_sv.get('mismatches')}")
+              f"merkle intact={_v.get('ok')} ({_v.get('n')} leaves) | "
+              f"penumbra intact={_p.get('ok')} ({_p.get('n')} leaves)")
+        if not _v.get("ok"):
+            print(f"[FAST_CYCLE] sensorium -> TAMPER/GAP (verified): {_v.get('mismatches')}")
+        if not _p.get("ok"):
+            print(f"[FAST_CYCLE] sensorium -> TAMPER/GAP (penumbra): {_p.get('mismatches')}")
     except Exception as e:
         print(f"[FAST_CYCLE] sensorium ingest -> FAILED: {type(e).__name__}: {e}")
 

@@ -208,7 +208,41 @@ def _mind_items():
                                  it.get("detail", ""),
                                  "correct refusal (not served as fresh); no action unless it's the only source",
                                  "none"))
+    out.extend(_penumbra_items())
     return out
+
+
+def _penumbra_items():
+    """Penumbra GROWTH as hunger (#55). An axis piling up unverifiable material is telling
+    you its model or its coverage is weak there — that is a need, not a score. Nothing here
+    reads the shadow's CONTENT; only how much of it there is, and why."""
+    try:
+        sys.path.insert(0, str(REPO / "experiments" / "sensorium"))
+        import sensorium
+        rep = sensorium.penumbra_report()
+    except Exception:
+        return []                            # fail-open: no penumbra, no hunger from it
+    if not rep.get("n_active"):
+        return []
+    items = []
+    anomalies = (rep.get("by_reason") or {}).get("model_anomaly", 0)
+    if anomalies:
+        items.append(_item(
+            "MIND", "high", f"penumbra: {anomalies} model_anomaly item(s) — an open wound",
+            "an observation contradicted a known rule while being well-sourced; the model "
+            "may be wrong, not the world. These never expire by design",
+            "review with: sensorium.py --penumbra ; promote with --promote <id> if the "
+            "observation is right and the rule is what needs changing",
+            "human"))
+    for g in (rep.get("growth") or [])[:5]:
+        items.append(_item(
+            "MIND", "low", f"{g['axis']}: {g['n_active']} item(s) accumulating in the penumbra",
+            "unverifiable material piling up on one axis points at weak coverage or a weak "
+            "model there — invisible to scoring by design, but it is a signal about US",
+            "no auto-action; grow the source portfolio for this axis, or promote what "
+            "turns out to be sound",
+            "auto->human"))
+    return items
 
 
 # ── BODY: compute / rate-limits / survival (homeostasis) ─────────────────────

@@ -99,4 +99,16 @@ Write-Beat 'run' "model=$($env:CORTEX_LOCAL_MODEL) headful=$($env:CORTEX_BROWSER
 & $Py $Script --from-needs @CollectorArgs
 $code = $LASTEXITCODE
 Write-Beat 'done' "collector exit=$code"
+
+# Penumbra expiry (#55): light, deterministic, no model. Moves quarantined items past
+# their date to cold storage -- never deletes, and model_anomaly is never touched. Runs
+# here because this wrapper already fires 4-hourly. Fail-open: never affects the exit code.
+$Sens = Join-Path $Repo 'experiments\sensorium\sensorium.py'
+try {
+    $out = & $Py $Sens --expire 2>&1 | Out-String
+    Write-Beat 'penumbra' ("expire -> " + ($out -replace '\s+', ' ').Trim())
+} catch {
+    Write-Beat 'penumbra' "expire failed (ignored): $($_.Exception.Message)"
+}
+
 exit $code
