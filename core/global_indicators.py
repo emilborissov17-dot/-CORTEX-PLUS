@@ -338,6 +338,35 @@ def _fetch_ucdp_local_csv() -> dict:
         return {}
 
 
+UCDP_YEAR_LOOKBACK = 3   # the ACD is an annual release; the newest year may not be out yet
+
+
+def _ucdp_api_latest_year(headers: dict, version: str):
+    """Active conflicts in the most recent year the API actually has, as (count, year).
+
+    The API must be asked for ONE YEAR. UCDP/PRIO ACD is a conflict-YEAR panel, so a
+    single-year query's TotalCount IS the number of distinct conflicts active that year —
+    verified against the local CSV, which agrees exactly (2024: 59 rows / 59 unique ids,
+    API 59; 2025: 65 / 65, API 65). Queried WITHOUT the year filter, TotalCount is instead
+    every conflict-year row since 1946 — 2816 — which is not a conflict count at all and is
+    what this axis was reporting. Walks back a few years because the newest year is only
+    published once UCDP releases it (2026 and 2027 both answer 0 today).
+    """
+    year = datetime.now(timezone.utc).year
+    for _ in range(UCDP_YEAR_LOOKBACK + 1):
+        data = _get(
+            f"https://ucdpapi.pcr.uu.se/api/{UCDP_RESOURCE}/{version}"
+            f"?pagesize=1&page=1&Year={year}",
+            timeout=30,
+            headers=headers,
+        )
+        if isinstance(data, dict) and isinstance(data.get("TotalCount"), int) \
+                and data["TotalCount"] > 0:
+            return data["TotalCount"], year
+        year -= 1
+    return None, None
+
+
 def fetch_ucdp() -> dict:
     """Number of active armed conflicts from Uppsala Conflict Data Program.
 
@@ -356,15 +385,12 @@ def fetch_ucdp() -> dict:
     if token:
         headers = {"x-ucdp-access-token": token}
         for version in UCDP_VERSIONS:
-            data = _get(
-                f"https://ucdpapi.pcr.uu.se/api/{UCDP_RESOURCE}/{version}?pagesize=1&page=1",
-                timeout=30,
-                headers=headers,
-            )
-            if data and isinstance(data, dict) and "TotalCount" in data:
+            count, year = _ucdp_api_latest_year(headers, version)
+            if count:
                 return {
-                    "active_armed_conflicts": data["TotalCount"],
+                    "active_armed_conflicts": count,
                     "ucdp_version": version,
+                    "ucdp_year": year,
                     "source": "api",
                 }
         print("  [GI] UCDP: token is set but the API returned nothing — "
