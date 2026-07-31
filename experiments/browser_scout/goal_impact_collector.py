@@ -43,8 +43,18 @@ import goal_impact as gi                 # extract_calibrated, compose_vector
 import sensorium                         # drop / ingest / verify (Merkle-committed)
 
 
+RUNS_LOG = REPO / "memory" / "collector_runs.jsonl"
+
+
 def _now_iso():
     return datetime.now(timezone.utc).isoformat()
+
+
+def _beat(phase: str, msg: str = ""):
+    """One line per phase on STDERR, so an unattended run is readable in the task log
+    while STDOUT stays a clean JSON trail for anything that pipes it."""
+    print(f"[COLLECT {_now_iso()[11:19]}] {phase}"
+          + (f" -> {msg}" if msg else ""), file=sys.stderr, flush=True)
 
 
 def gather_pages(axis: str, need: str, urls=None, n_open: int = 4, plan=None):
@@ -66,27 +76,52 @@ def collect(axis: str, need: str, urls=None, votes: int = 2, collector: str = "g
     Returns a trail: what it decided, what it read, each component's verdict, the vector,
     and the sensorium drop id (or None). Nothing is invented — an empty read yields n=0.
     """
+    _beat("need", f"{axis} :: {str(need)[:70]}")
     plan = {}
     try:
         if not urls:                       # let the model choose good search keywords
             plan = scout.decide(axis, need)
+            _beat("plan", f"query={plan.get('search_query')!r} metric={plan.get('target_metric')!r}")
     except Exception as e:
         plan = {"_decide_error": f"{type(e).__name__}: {e}"}
+        _beat("plan", f"FAILED {plan['_decide_error']} — falling back to the raw need")
 
     if pages is None:
+        _beat("search", "opening the browser" if not urls else f"{len(urls)} given url(s)")
         pages, query_used = gather_pages(axis, need, urls=urls, plan=plan)
+        _beat("search", f"{len(pages)} page(s) read | query={query_used!r}")
+        if not pages:
+            # A browse that returned NOTHING is a broken eye, not an empty world. Left
+            # unmarked it composes to n=0 and logs identically to "read pages, rejected
+            # them all" — so an unattended run would look like honest silence forever.
+            _beat("search", "SEARCH RETURNED NOTHING — the browse failed, this is not "
+                            "'no signal'. Headless is blocked by the engines; headful works.")
+            _browse_failed = True
+        else:
+            _browse_failed = False
     else:
         query_used = "(pages supplied)"
+        _browse_failed = False
 
     trail = {"axis": axis, "need": need, "plan": plan, "query_used": query_used,
              "pages_read": [u for u, _ in pages], "components": [], "rejected": []}
+    if _browse_failed:
+        trail["browse_failed"] = ("search returned 0 pages — the eye failed, not the world. "
+                                  "Headless Chromium is blocked by the search engines "
+                                  "(measured: headful 3 pages, headless 0, same query).")
     observations = []
-    for url, text in pages:
+    for _i, (url, text) in enumerate(pages, 1):
+        _beat(f"page {_i}/{len(pages)}", f"{url[:78]} ({len(text)} chars)")
         try:
             obs, why = gi.extract_calibrated(text, axis, need, url, votes=votes)
         except Exception as e:
             trail["rejected"].append({"url": url, "why": f"error: {type(e).__name__}: {e}"})
+            _beat(f"page {_i}/{len(pages)}", f"ERROR {type(e).__name__}: {e}")
             continue
+        _beat(f"page {_i}/{len(pages)}",
+              (f"ACCEPTED sign={obs.get('sign')} scalar={obs.get('signed_scalar')} "
+               f"dim={obs.get('dimension')} conf={obs.get('impact_confidence')}")
+              if obs else f"REJECTED {str(why)[:90]}")
         if obs:
             observations.append(obs)
             trail["components"].append({"url": url, "sign": obs.get("sign"),
@@ -108,9 +143,49 @@ def collect(axis: str, need: str, urls=None, votes: int = 2, collector: str = "g
     trail["dropped"] = None
     if drop and vector.get("n", 0) > 0:
         trail["dropped"] = sensorium.drop(axis, "goal_impact", vector, collector=collector)
+        _beat("verdict", f"n={vector['n']} overall={vector.get('overall_signed_weighted')} "
+                         f"-> DROPPED {trail['dropped']}")
     elif drop:
         trail["drop_skipped"] = "no groundable components — nothing committed (empty is empty)"
+        _beat("verdict", f"n=0, {len(trail['rejected'])} rejected — nothing committed "
+                         f"(empty is empty)")
+    else:
+        _beat("verdict", f"n={vector.get('n')} (dry run — no commit)")
     return trail
+
+
+def log_run(trail: dict, mode: str = "scheduled"):
+    """Append the trail TAIL — never the whole thing — so an unattended run leaves an
+    auditable record without the log growing by a page of text per fetch. Fail-open."""
+    try:
+        vec = trail.get("vector") or {}
+        entry = {
+            "ts": _now_iso(), "mode": mode,
+            "axis": trail.get("axis"), "need": str(trail.get("need"))[:160],
+            "query_used": trail.get("query_used"),
+            "pages_read": len(trail.get("pages_read") or []),
+            "n_components": vec.get("n"),
+            "overall_signed_weighted": vec.get("overall_signed_weighted"),
+            "by_dimension": vec.get("by_dimension"),
+            "dropped": trail.get("dropped"),
+            "drop_skipped": trail.get("drop_skipped"),
+            "browse_failed": trail.get("browse_failed"),
+            "components": [{"url": c.get("url"), "sign": c.get("sign"),
+                            "signed_scalar": c.get("signed_scalar"),
+                            "dimension": c.get("dimension"),
+                            "impact_confidence": c.get("impact_confidence"),
+                            "observation": str(c.get("observation"))[:180]}
+                           for c in (trail.get("components") or [])],
+            "rejected": [{"url": r.get("url"), "why": str(r.get("why"))[:180]}
+                         for r in (trail.get("rejected") or [])],
+        }
+        RUNS_LOG.parent.mkdir(parents=True, exist_ok=True)
+        with open(RUNS_LOG, "a", encoding="utf-8") as fh:
+            fh.write(json.dumps(entry, ensure_ascii=False) + "\n")
+        return str(RUNS_LOG)
+    except Exception as e:
+        _beat("log", f"FAILED {type(e).__name__}: {e}")
+        return None
 
 
 COMPOSER_NEEDS = REPO / "memory" / "composer_needs.json"
@@ -152,4 +227,6 @@ if __name__ == "__main__":
         trail["need_source"] = {"from": "memory/composer_needs.json",
                                 "axis": a["axis"], "slot": chosen.get("slot"),
                                 "kind": chosen.get("kind"), "detail": chosen.get("detail")}
+    _log = log_run(trail, mode="dry" if dry else "run")
+    _beat("log", _log or "not written")
     print(json.dumps(trail, ensure_ascii=False, indent=2))
