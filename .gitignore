@@ -1,6 +1,12 @@
 .env
 venv/
 venv312_metta/
+
+# Collector run logs (#44). Appended every 4 hours by CORTEX_Collector, so tracking them
+# would churn the repo forever. The Merkle sensorium is the authoritative audit trail;
+# these are operational logs for reading what a given run did.
+memory/collector_runs.jsonl
+memory/collector_runs.log
 __pycache__/
 *.pyc
 *.pyo
