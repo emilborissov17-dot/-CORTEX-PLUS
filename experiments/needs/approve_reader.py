@@ -116,6 +116,12 @@ def _apply_goal(spec: dict, chat_id):
     doc = _load(PROPOSALS, {"proposals": []})
     if not isinstance(doc, dict) or "proposals" not in doc:
         doc = {"proposals": []}
+    # dedupe, mirroring promotions: an approve_id is STABLE across cycles, so the same
+    # goal reappears in every brief and a second "OK <id>" would append a twin. Three
+    # identical SOCIAL_RELATIONS entries accumulated this way before this guard existed.
+    if any(p.get("component") == axis and p.get("measurable_goal") == goal
+           for p in doc["proposals"]):
+        return {"ok": True, "duplicate": True, "note": "already accepted (no-op)"}
     doc["proposals"].append({
         "component": axis,
         "problem": spec.get("need", f"{axis} furthest from goal"),
@@ -185,7 +191,10 @@ def run():
                         if ok else f"⚠️ promote failed for {label}: {res.get('error')}"))
             elif spec["type"] == "accept_goal":
                 res = _apply_goal(spec, chat_id)
-                _reply(token, chat_id, f"✅ accepted goal for {spec['axis']} into the improvement stream.")
+                _reply(token, chat_id,
+                       f"✅ goal for {spec['axis']}: {res['note']}"
+                       if res.get("duplicate") else
+                       f"✅ accepted goal for {spec['axis']} into the improvement stream.")
                 ok = True
             else:
                 _reply(token, chat_id, f"⚠️ id '{aid}' has an unsupported action type; ignored.")

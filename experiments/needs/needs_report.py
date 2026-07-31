@@ -428,6 +428,27 @@ def _push_status(rep: dict):
             return "fail:bad_channel"
     except Exception as e:
         return f"fail:send:{type(e).__name__}"  # network/creds — disk brief still stands
+    # ONE-TAP APPROVALS: the brief landed, so now send each reply string as its OWN
+    # message — bare "OK <id>", nothing else — so it can be copied with a single tap
+    # instead of picked character-by-character out of a paragraph. The inline
+    # "(reply: OK <id>)" hint stays in the brief; this is an addition, not a move.
+    # Telegram only: on ntfy every message is a separate phone notification, and N of
+    # them would be noise rather than convenience.
+    # FAIL-OPEN and deliberately last: the brief is already delivered, so an extra that
+    # fails must never downgrade a successful push into a failure.
+    if ch == "telegram":
+        _extras_sent = 0
+        for _i in act:
+            if not _i.get("approve_id"):
+                continue
+            try:
+                requests.post(f"https://api.telegram.org/bot{cfg.get('token')}/sendMessage",
+                              json={"chat_id": cfg.get("chat_id"),
+                                    "text": f"OK {_i['approve_id']}"}, timeout=15)
+                _extras_sent += 1
+            except Exception:
+                pass   # one unsent shortcut is a UX loss, not a delivery failure
+        rep["_one_tap_sent"] = _extras_sent
     try:
         PUSH_STATE.parent.mkdir(parents=True, exist_ok=True)
         PUSH_STATE.write_text(json.dumps({"last_sig": sig,
