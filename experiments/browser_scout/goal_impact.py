@@ -80,6 +80,59 @@ def _norm(s):
     return re.sub(r"\s+", " ", str(s)).strip().lower()
 
 
+def _loose(s):
+    """_norm plus punctuation-blind — for LOCATING a span only, never for comparing
+    numbers."""
+    return re.sub(r"[^a-z0-9 ]", "", _norm(s))
+
+
+def _located(ev, text) -> bool:
+    """Is this span findable on the page? Strict first (whitespace + case), then a
+    punctuation-blind retry.
+
+    Measured 2026-07-31: qwen2.5:7b quoted a real sentence from the page and wrapped it
+    in quotation marks. The span was 0.981 similar and matched the page exactly once
+    punctuation was ignored, but the strict check compares a 40-char prefix, so one
+    leading '"' shifted every character and a TRUE observation was rejected. That was
+    2 of 12 extractions.
+
+    This loosens WHERE a span may be found, never WHAT it must contain: GUARD 1/1c still
+    compare digits against the evidence with _digits(), so a fabricated number cannot ride
+    in on relaxed punctuation."""
+    n_ev, n_tx = _norm(ev), _norm(text)
+    if n_ev and n_ev[:40] in n_tx:
+        return True
+    l_ev = _loose(ev)
+    return bool(l_ev) and l_ev[:40] in _loose(text)
+
+
+# Page furniture that carries NUMBERS the model can mistake for data. The live case:
+# Wikipedia renders "List of ongoing armed conflicts 33 languages" in its nav block, and
+# qwen2.5:7b reported "33 ongoing armed conflicts" — 6 runs out of 6, deterministic,
+# because the chrome is always there. The page is 60k chars and the model sees the first
+# 6500, so the nav block was a large fraction of everything it saw.
+#
+# Stripped from the model's VIEW ONLY. Grounding is still checked against the untouched
+# page, so this can never make a fabrication easier to pass — only harder to invent.
+_CHROME = re.compile(
+    r"toggle the table of contents"
+    r"|jump to (?:content|navigation|search)"
+    r"|\b\d{1,3}\s+languages\b"                     # the exact '33 languages' trap
+    r"|create account\s*log\s?in"
+    r"|personal tools|move to sidebar|add topic|edit source|view history"
+    r"|skip to (?:main )?content"
+    r"|accept all cookies?|manage (?:your )?preferences"
+    r"|this website (?:uses|utilizes)[^.]{0,140}\."
+    r"|all rights reserved|privacy policy|terms of (?:use|service)",
+    re.IGNORECASE)
+
+
+def _strip_chrome(text: str) -> str:
+    """Drop navigation/consent furniture BEFORE the 6500-char truncation, so the budget
+    is spent on the page's content instead of its menus."""
+    return re.sub(r"\s+", " ", _CHROME.sub(" ", str(text))).strip()
+
+
 def _decompose_claims(observation, evidence, text):
     """Break the observation into atomic claims, each with its OWN verbatim evidence span.
     Grounding is enforced in code (_claim_grounded), never trusted from the model."""
@@ -91,7 +144,7 @@ def _decompose_claims(observation, evidence, text):
         '"unit":"<unit or empty>"},"polarity":"+|-|0","evidence_span":"<exact phrase from the '
         'page>"}]}\n'
         f"OBSERVATION: {observation}\nEVIDENCE HINT: {evidence}\n"
-        f"PAGE TEXT (truncated):\n{text[:6500]}")
+        f"PAGE TEXT (truncated):\n{_strip_chrome(text)[:6500]}")
     try:
         got = _json_from(_local(prompt, timeout=300, num_predict=700))
     except Exception as e:
@@ -104,7 +157,7 @@ def _claim_grounded(claim, text):
     """Per-claim generalisation of GUARD 1/1c: the claim's evidence_span must be verbatim in
     the page, and EVERY number in the claim (quantity or free text) must be in that span."""
     ev = str(claim.get("evidence_span", "")).strip()
-    if not ev or _norm(ev)[:40] not in _norm(text):
+    if not ev or not _located(ev, text):
         return False, "evidence_span not verbatim in page"
     q = (claim.get("quantity") or {}).get("value")
     if q is not None:
@@ -285,7 +338,7 @@ def extract_goal_impact(text: str, axis: str, need: str, url: str) -> tuple:
         f'"contested": true|false, '
         f'"counterview": "<the strongest opposing reading — required if contested, else empty>"}}\n'
         f"If the page has nothing relevant, set observation to \"\" and value null.\n\n"
-        f"PAGE TEXT (truncated):\n{text[:6500]}")
+        f"PAGE TEXT (truncated):\n{_strip_chrome(text)[:6500]}")
     try:
         got = _json_from(_local(prompt, num_predict=900))
     except Exception as e:
@@ -296,9 +349,7 @@ def extract_goal_impact(text: str, axis: str, need: str, url: str) -> tuple:
         return None, "nothing relevant found"
     # GUARD 1 (grounding): the evidence must be a verbatim span of the page text; and if a
     # number is claimed, its digits must be in the evidence. Facts must be locatable.
-    def _norm(s):
-        return re.sub(r"\s+", " ", s).strip().lower()
-    if not ev or _norm(ev)[:40] not in _norm(text):
+    if not ev or not _located(ev, text):
         return None, "evidence not grounded verbatim in page — rejected"
     val = got.get("value")
     if val is not None:
