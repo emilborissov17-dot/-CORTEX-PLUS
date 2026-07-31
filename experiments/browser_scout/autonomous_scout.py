@@ -73,16 +73,56 @@ def _json_from(text: str):
     return json.loads(best)
 
 
-def decide(axis: str, need: str) -> dict:
-    """Local model chooses the indicator + search keywords for this need."""
+_DAILY_CLASSES = ("measurement_daily", "event_daily")
+_SLOT_CLASSES = _DAILY_CLASSES + ("anchor_annual", "indirect_proxy")
+
+
+def need_class(need: str):
+    """The SLOT CLASS a need is asking for, read off the composer's own wording
+    ("needs >= 1 live source(s) of class 'measurement_daily', has 0"). None if absent.
+
+    This is the piece that was missing: the class never reached the query, so on
+    2026-07-31 a measurement_daily need produced the query 'global happiness index 2023'
+    — an ANNUAL REPORT search aimed at a DAILY slot. Every page it found was structurally
+    incapable of answering the need."""
+    s = str(need or "").lower()
+    for c in _SLOT_CLASSES:
+        if c in s:
+            return c
+    return None
+
+
+def decide(axis: str, need: str, slot: str = None) -> dict:
+    """Local model chooses the indicator + search keywords for this need.
+
+    The slot class travels INTO the prompt: a daily slot must be told to hunt live
+    dashboards and data portals, not annual PDFs. The current year is passed explicitly
+    because the model's prior is older than the calendar and it will happily search for
+    a year that is already history."""
+    cls = slot or need_class(need)
+    year = datetime.now(timezone.utc).year
+    cadence = ""
+    if cls in _DAILY_CLASSES:
+        cadence = (
+            f"\nCADENCE IS A HARD REQUIREMENT. This need is class '{cls}': the indicator "
+            f"must UPDATE DAILY or in near real-time. Prefer live dashboards, APIs, data "
+            f"portals, status/tracker pages, and current-year pages. AVOID annual reports, "
+            f"yearbooks, PDFs, and any page whose newest figure is a past year. "
+            f"The current year is {year} — do not search for older years.")
+    elif cls == "anchor_annual":
+        cadence = (f"\nThis need is class 'anchor_annual': a slow official yearly figure is "
+                   f"correct here. The current year is {year}.")
     prompt = (
         f"You are choosing ONE live, numeric, objective indicator to measure the axis "
-        f"'{axis}'. The system declared this need: {need}\n"
+        f"'{axis}'. The system declared this need: {need}{cadence}\n"
         f"Reply ONLY with a JSON object, no prose:\n"
         f'{{"search_query": "<3-6 web search keywords likely to find a page showing a '
         f'current number>", "target_metric": "<short name of the number to extract>", '
         f'"unit": "<unit>", "higher_is": "better|worse"}}')
-    return _json_from(_local(prompt, num_predict=200))
+    got = _json_from(_local(prompt, num_predict=200))
+    if isinstance(got, dict):
+        got["need_class"] = cls
+    return got
 
 
 def _env_key(name: str) -> str:
@@ -254,6 +294,18 @@ def search_robust(query: str, n: int = 5, replan_fn=None):
     return [], (variants[-1] if variants else query)
 
 
+PDF_SKIP_REASON = "pdf result skipped — no text extraction library installed"
+
+
+def _is_pdf(url: str) -> bool:
+    """URL-level PDF detection. No extraction library is installed (checked 2026-07-31:
+    no pymupdf/pdfminer/pypdf/pdfplumber), and a PDF opened in the browser yields empty
+    inner_text — which is indistinguishable from a page that genuinely said nothing. An
+    honest named skip beats pulling in a heavy dependency."""
+    u = str(url or "").split("?", 1)[0].split("#", 1)[0].strip().lower()
+    return u.endswith(".pdf")
+
+
 def _page_text(url: str, timeout: int = 20) -> str:
     import requests
     r = requests.get(url, timeout=timeout, headers={"User-Agent": "Mozilla/5.0 CORTEX-scout"})
@@ -320,10 +372,11 @@ def human_browse_read(query: str, n_open: int = 4):
     typed = _loosen(query)
     out = []
 
+    skipped = []                       # PDFs, surfaced so the caller can name the rejection
     api_urls = []
     if not headful:
         try:
-            api_urls = [u for u, _t in (search_brave(typed, n=n_open) or []) if u][:n_open]
+            api_urls = [u for u, _t in (search_brave(typed, n=n_open * 2) or []) if u]
             print(f"[scout] headless: Brave returned {len(api_urls)} url(s)", file=sys.stderr)
         except Exception as e:
             print(f"[scout] headless: Brave search failed ({type(e).__name__}: {e}) — "
@@ -357,13 +410,24 @@ def human_browse_read(query: str, n_open: int = 4):
                         href = a.get_attribute("href") or ""
                         if href.startswith("http") and host not in href and href not in urls:
                             urls.append(href)
-                        if len(urls) >= n_open:
+                        if len(urls) >= n_open * 2:   # over-fetch: PDFs get skipped below
                             break
                     if urls:
                         break
                 except Exception:
                     continue
-            for href in urls[:n_open]:          # OPEN each chosen result and READ it in-browser
+            # OPEN each chosen result and READ it in-browser. A PDF is skipped and the
+            # next candidate takes its place, so a PDF result does not COST a slot: with
+            # no extraction library installed it reads as empty text, which used to look
+            # exactly like a page that legitimately said nothing.
+            for href in urls:
+                if len(out) >= n_open:
+                    break
+                if _is_pdf(href):
+                    skipped.append(href)
+                    print(f"[scout] skipped PDF (no text extraction): {href[:110]}",
+                          file=sys.stderr)
+                    continue
                 try:
                     page.goto(href, wait_until="domcontentloaded", timeout=25000)
                     page.wait_for_timeout(900)
@@ -372,7 +436,11 @@ def human_browse_read(query: str, n_open: int = 4):
                     continue
         finally:
             browser.close()
+    human_browse_read.last_skipped = skipped   # caller names the rejection in its trail
     return out
+
+
+human_browse_read.last_skipped = []
 
 
 def research(axis: str, need: str, urls=None) -> dict:

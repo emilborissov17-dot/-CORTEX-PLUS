@@ -77,6 +77,7 @@ def collect(axis: str, need: str, urls=None, votes: int = 2, collector: str = "g
     and the sensorium drop id (or None). Nothing is invented — an empty read yields n=0.
     """
     _beat("need", f"{axis} :: {str(need)[:70]}")
+    _skipped_pdfs = []
     plan = {}
     try:
         if not urls:                       # let the model choose good search keywords
@@ -90,6 +91,9 @@ def collect(axis: str, need: str, urls=None, votes: int = 2, collector: str = "g
         _beat("search", "opening the browser" if not urls else f"{len(urls)} given url(s)")
         pages, query_used = gather_pages(axis, need, urls=urls, plan=plan)
         _beat("search", f"{len(pages)} page(s) read | query={query_used!r}")
+        for _pdf in (getattr(scout.human_browse_read, "last_skipped", None) or []):
+            _skipped_pdfs.append(_pdf)
+            _beat("search", f"PDF skipped: {_pdf[:90]}")
         if not pages:
             # A browse that returned NOTHING is a broken eye, not an empty world. Left
             # unmarked it composes to n=0 and logs identically to "read pages, rejected
@@ -128,9 +132,27 @@ def collect(axis: str, need: str, urls=None, votes: int = 2, collector: str = "g
                                         "signed_scalar": obs.get("signed_scalar"),
                                         "dimension": obs.get("dimension"),
                                         "impact_confidence": obs.get("impact_confidence"),
+                                        "cadence_match": obs.get("cadence_match"),
                                         "observation": obs.get("observation")})
         else:
             trail["rejected"].append({"url": url, "why": why})
+
+    # a PDF that was skipped must appear as a NAMED rejection, not vanish
+    for _pdf in _skipped_pdfs:
+        trail["rejected"].append({"url": _pdf, "why": scout.PDF_SKIP_REASON})
+
+    # Does anything found actually FILL the slot the need asked for? A daily slot is only
+    # filled by a component whose cadence matches; an annual figure is kept in the vector
+    # but the hunger stays declared, so data_scout and the approval loop keep hunting.
+    _cls = scout.need_class(need)
+    if _cls in ("measurement_daily", "event_daily"):
+        trail["need_class"] = _cls
+        trail["slot_filled"] = any(o.get("cadence_match") is True for o in observations)
+        if observations and not trail["slot_filled"]:
+            trail["slot_note"] = (f"components found, but none match the '{_cls}' cadence — "
+                                  f"kept in the vector, slot stays hungry")
+        _beat("cadence", f"class={_cls} slot_filled={trail['slot_filled']} "
+                         f"(cadence_match: {[o.get('cadence_match') for o in observations]})")
 
     vector = gi.compose_vector(observations)
     vector["axis"] = axis
@@ -170,10 +192,15 @@ def log_run(trail: dict, mode: str = "scheduled"):
             "dropped": trail.get("dropped"),
             "drop_skipped": trail.get("drop_skipped"),
             "browse_failed": trail.get("browse_failed"),
+            "need_class": trail.get("need_class"),
+            "slot_filled": trail.get("slot_filled"),
+            "slot_note": trail.get("slot_note"),
+            "search_query": (trail.get("plan") or {}).get("search_query"),
             "components": [{"url": c.get("url"), "sign": c.get("sign"),
                             "signed_scalar": c.get("signed_scalar"),
                             "dimension": c.get("dimension"),
                             "impact_confidence": c.get("impact_confidence"),
+                            "cadence_match": c.get("cadence_match"),
                             "observation": str(c.get("observation"))[:180]}
                            for c in (trail.get("components") or [])],
             "rejected": [{"url": r.get("url"), "why": str(r.get("why"))[:180]}

@@ -19,11 +19,12 @@ import json
 import os
 import re
 import sys
+from datetime import datetime, timezone
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
-from autonomous_scout import _local, _json_from, _digits  # sovereign local model + helpers
+from autonomous_scout import _local, _json_from, _digits, need_class  # local model + helpers
 
 # The reference frame — the sign/weight are RELATIVE to this, not an arbitrary scale.
 GOAL_FRAME = (
@@ -276,6 +277,31 @@ def _sign_refuted(obs_text: str, ev: str, sign: str, dimension) -> tuple:
 
 _RELEVANCE_GATE = os.environ.get("CORTEX_RELEVANCE_GATE", "1") != "0"  # is it even ABOUT the axis
 
+# words that mark a figure as current rather than a yearly retrospective
+_FRESH_MARKERS = ("today", "daily", "per day", "hourly", "real-time", "realtime",
+                  "live", "current", "updated", "this week", "last 24 hours", "past 24",
+                  "monthly", "per month", "as of", "latest")
+
+
+def _cadence_match(ev: str, need: str):
+    """Does the evidence's own cadence match what the SLOT asked for?
+
+    Returns None when the need is not a daily class (nothing to check), else True/False.
+    A False does NOT reject: the observation may be perfectly true and useful in the
+    vector. It means the HUNGER STAYS DECLARED — an annual figure cannot fill a
+    measurement_daily slot, and silently counting it as filled is how a daily slot ends up
+    permanently satisfied by a yearly report (2026-07-31: a measurement_daily need was
+    answered with 'global happiness index 2023')."""
+    if need_class(need) not in ("measurement_daily", "event_daily"):
+        return None
+    low = str(ev).lower()
+    if any(m in low for m in _FRESH_MARKERS):
+        return True
+    years = [int(y) for y in re.findall(r"\b(19\d{2}|20\d{2})\b", str(ev))]
+    if years and max(years) < datetime.now(timezone.utc).year:
+        return False
+    return True
+
 # Unambiguous site-chrome phrases. Two or more must co-occur, so an article that merely
 # mentions advertising or privacy is not caught — only the furniture itself.
 _BOILERPLATE = (
@@ -423,6 +449,9 @@ def extract_goal_impact(text: str, axis: str, need: str, url: str) -> tuple:
         "contested": bool(got.get("contested", False)),
         "counterview": cv[:300],
         "sign_guard": _sg_note,
+        # does this observation's cadence match the slot class the need asked for?
+        # None = not a daily need; False = kept, but the slot stays HUNGRY.
+        "cadence_match": _cadence_match(ev, need),
         "claims": _claims,
     }, "ok"
 
