@@ -61,9 +61,18 @@ NEEDS_FILE = REPO / "memory" / "composer_needs.json"
 OUT_FILE   = REPO / "memory" / "composed_indicators.json"
 DISCOVERED = REPO / "memory" / "discovered_data_sources.json"
 
-TTL_H     = 20   # fetched-OK within this window -> reuse, no re-fetch
-BACKOFF_H = 1    # failed within this window -> do not hammer again
-DEATH_AT  = 3    # consecutive failures -> dead + NEED
+TTL_H       = 20   # fetched-OK within this window -> reuse, no re-fetch
+BACKOFF_H   = 1    # failed within this window -> do not hammer again
+DEATH_AT    = 3    # consecutive HARD failures -> dead + NEED
+THROTTLE_H  = 0.25 # rate-limited within this window -> wait; NEVER counts toward death
+
+
+class RateLimited(RuntimeError):
+    """A 429 / provider throttle. Transient, NOT a dead source — the source is fine,
+    we just asked too often. Must back off WITHOUT counting toward DEATH_AT, or a
+    daily feed like GDELT (limit: 1 req / 5s) gets wrongly killed and the moving
+    signal on the DYNAMIC axes disappears. (Diagnosed live 30 Jul 2026: GDELT returns
+    either HTTP 429 or a 200 body 'Please limit requests to one every 5 seconds'.)"""
 
 
 def _now():
@@ -94,11 +103,20 @@ def _save(p, obj):
 
 
 def _dotted(d, path):
+    """Walk a dotted path. An integer part indexes a LIST ('daily.time.-1'), so the
+    array-shaped APIs that most open feeds return (open-meteo, EONET, USGS) are reachable
+    without a bespoke parser per provider. Dict-only paths behave exactly as before."""
     cur = d
-    for part in path.split("."):
-        if not isinstance(cur, dict):
+    for part in str(path).split("."):
+        if isinstance(cur, list):
+            try:
+                cur = cur[int(part)]
+            except (ValueError, IndexError):
+                return None
+        elif isinstance(cur, dict):
+            cur = cur.get(part)
+        else:
             return None
-        cur = cur.get(part)
     return cur
 
 
@@ -111,7 +129,13 @@ def _http(url, timeout=15):
         import requests
         r = requests.get(url, timeout=timeout,
                          headers={"User-Agent": "CORTEX-composer/1.0"})
+        if r.status_code == 429:
+            raise RateLimited("HTTP 429")
         r.raise_for_status()
+        # some providers (GDELT) answer 200 with a plaintext throttle notice instead
+        low = r.text[:200].lower()
+        if "please limit requests" in low or "rate limit" in low:
+            raise RateLimited("provider throttle notice")
         return r.text
     except ImportError:
         req = urllib.request.Request(url, headers={"User-Agent": "CORTEX-composer/1.0"})
@@ -137,8 +161,35 @@ def fetch(src) -> tuple:
     if kind == "http_csv":
         text = _http(src["url"])
         rows = [l for l in text.splitlines() if l.strip() and not l.lstrip().startswith("#")]
-        cells = rows[-1].replace(";", ",").split(",")
-        return float(cells[int(src.get("col", -1))]), None
+        # TAB is a first-class delimiter: USGS NWIS serves its daily-values feed as RDB
+        # (tab-separated), and without this every USGS row parses as a single cell.
+        cells = rows[-1].replace("\t", ",").replace(";", ",").split(",")
+        if src.get("data_date_col") is not None:
+            data_date = cells[int(src["data_date_col"])].strip()
+        return float(cells[int(src.get("col", -1))]), data_date
+    if kind == "http_json_count":
+        # The measurement IS the number of dated events (EONET categories, USGS feeds).
+        data = json.loads(_http(src["url"]))
+        arr = _dotted(data, src["extract"])
+        if not isinstance(arr, list):
+            raise ValueError(f"json_count: '{src['extract']}' is not a list")
+        return float(len(arr)), None
+    if kind == "http_json_series":
+        # Daily series APIs answer with parallel arrays {"daily":{"time":[...],"x":[...]}}.
+        # Take the last NON-NULL value — forecast arrays carry trailing nulls for variables
+        # the model does not supply, and a null tail must not read as a missing source.
+        data = json.loads(_http(src["url"]))
+        arr = _dotted(data, src["extract"])
+        if not isinstance(arr, list):
+            raise ValueError(f"json_series: '{src['extract']}' is not a list")
+        idx = next((i for i in range(len(arr) - 1, -1, -1) if arr[i] is not None), None)
+        if idx is None:
+            raise ValueError("json_series: every value in the series is null")
+        if src.get("data_date_extract"):
+            dates = _dotted(data, src["data_date_extract"])
+            if isinstance(dates, list) and idx < len(dates):
+                data_date = dates[idx]   # the date OF the value used, not of the request
+        return float(arr[idx]), data_date
     if kind == "http_gdelt_tone":
         data = json.loads(_http(src["url"]))
         series = (data.get("timeline") or [{}])[0].get("data") or []
@@ -188,8 +239,10 @@ def compose(axis: str, force: bool = False) -> dict:
             use_cache = (not force) and ok_age is not None and ok_age < TTL_H
             in_backoff = (not force) and att_age is not None and att_age < BACKOFF_H \
                 and st["consecutive_fails"] > 0
+            in_throttle = (not force) and att_age is not None and att_age < THROTTLE_H \
+                and st.get("throttled")
             attempted = False
-            if not use_cache and not in_backoff:
+            if not use_cache and not in_backoff and not in_throttle:
                 attempted = True
                 st["last_attempt_ts"] = _iso()
                 try:
@@ -206,9 +259,15 @@ def compose(axis: str, force: bool = False) -> dict:
                     st["last_value"] = v
                     st["last_ok_ts"] = _iso()
                     st["consecutive_fails"] = 0
+                    st.pop("throttled", None)
                     st.pop("last_error", None)
                     st["history"] = (st.get("history") or [])[-29:] + [[_iso(), v]]
+                except RateLimited as e:
+                    # transient throttle: wait, keep the source ALIVE, never kill it
+                    st["throttled"] = True
+                    st["last_error"] = f"rate-limited ({e}) — backing off {THROTTLE_H}h"
                 except Exception as e:
+                    st["throttled"] = False
                     st["consecutive_fails"] += 1
                     st["last_error"] = f"{type(e).__name__}: {e}"[:140]
                     if st["consecutive_fails"] >= DEATH_AT:
@@ -312,18 +371,28 @@ def compose(axis: str, force: bool = False) -> dict:
 
 # ── human-gated promotion: a candidate becomes a spec source (git-visible) ────
 
-def promote(axis, url, slot, kind, org, extract=None, col=None):
+PROMOTE_FIELDS = ("extract", "col", "data_date_col", "data_date_extract",
+                  "data_max_age_days", "provenance")
+
+
+def promote(axis, url, slot, kind, org, extract=None, col=None, **fields):
+    """Human-gated: a candidate becomes a spec source. The PARSING RULE travels with it —
+    a promoted source without its extract/col is a source that dies on first fetch and then
+    counts toward DEATH_AT, so the approval path must carry these through, not just the URL."""
     specs = _load(SPEC_FILE, {})
     spec = specs.get(axis)
     if not spec or slot not in spec.get("portfolio", {}):
         return {"error": f"axis/slot not in spec: {axis}/{slot}"}
     sid = f"promoted_{abs(hash(url)) % 100000}"
-    entry = {"id": sid, "kind": kind, "url": url, "org": org,
-             "provenance": "self-discovered, human-promoted"}
+    entry = {"id": sid, "kind": kind, "url": url, "org": org}
     if extract:
         entry["extract"] = extract
     if col is not None:
         entry["col"] = col
+    for k in PROMOTE_FIELDS:
+        if fields.get(k) is not None:
+            entry[k] = fields[k]
+    entry.setdefault("provenance", "self-discovered, human-promoted")
     spec["portfolio"][slot]["sources"].append(entry)
     _save(SPEC_FILE, specs)
     return {"promoted": sid, "into_slot": slot, "note": "spec edited — review the git diff"}
