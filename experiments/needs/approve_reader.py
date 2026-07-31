@@ -92,9 +92,15 @@ def _apply_promote(spec: dict):
     # Promoting one anyway creates a source that raises on every fetch and is dead in
     # three cycles — a silent hole in the portfolio that looks like an approved source.
     kind = spec.get("kind") or "http_json_path"
-    if kind in _NEEDS_EXTRACT and not (spec.get("parse") or {}).get("extract"):
+    _parse = spec.get("parse") or {}
+    if kind in _NEEDS_EXTRACT and not _parse.get("extract"):
         return {"ok": False, "error": f"no parsing rule: kind '{kind}' needs an 'extract' path. "
                                       f"Candidate was registered without one — not promoted."}
+    # a 'file' source is read from `path`, never from `url`; promoting one without a path
+    # yields KeyError('path') on every fetch
+    if kind == "file" and not _parse.get("path"):
+        return {"ok": False, "error": "no parsing rule: kind 'file' needs a repo-relative "
+                                      "'path' — not promoted."}
     # dedupe: if this url is already in the slot, don't append a twin
     specs = _load(getattr(composer, "SPEC_FILE"), {})
     portfolio = (specs.get(axis) or {}).get("portfolio", {})

@@ -384,7 +384,7 @@ def compose(axis: str, force: bool = False) -> dict:
 # ── human-gated promotion: a candidate becomes a spec source (git-visible) ────
 
 PROMOTE_FIELDS = ("extract", "col", "data_date_col", "data_date_extract",
-                  "data_max_age_days", "provenance")
+                  "data_max_age_days", "provenance", "path", "unit")
 
 
 def promote(axis, url, slot, kind, org, extract=None, col=None, **fields):

@@ -1,12 +1,29 @@
 {
-  "_updated": "2026-06-21T13:57:33.949732+00:00",
+  "_updated": "2026-07-31T12:35:20.033199+00:00",
   "CLIMATE_GLOBAL_RISK_REVIEW": {
-    "sources": [],
-    "last_asked_llm": "2026-06-19T18:30:07.739534+00:00"
+    "sources": [
+      {
+        "org": "NASA-EONET",
+        "slot_hint": "event_daily",
+        "kind": "http_json_count",
+        "format": "json",
+        "metric": "open+closed wildfire events worldwide, last 7 days (count)",
+        "url": "https://eonet.gsfc.nasa.gov/api/v3/events?status=all&days=7&category=wildfires",
+        "extract": "events",
+        "provenance": "NASA EONET v3 wildfire event count, 7d window. Event COUNT, not burned area; EONET coverage is uneven by region. Honest proxy for climate-driven hazard activity.",
+        "status": "active",
+        "discovered_at": "2026-07-31T11:49:32.073935+00:00",
+        "found_by": "phase1_deterministic_probe (curl-verified, cadence-checked)"
+      }
+    ],
+    "last_asked_llm": "2026-06-19T18:30:07.739534+00:00",
+    "slot_asks": {
+      "event_daily": "2026-07-30T12:51:12.743846+00:00"
+    }
   },
   "COSMIC_RESOURCES_REVIEW": {
     "sources": [],
-    "last_asked_llm": "2026-06-19T18:30:09.740734+00:00"
+    "last_asked_llm": "2026-07-29T06:36:52.295950+00:00"
   },
   "DEEP_TIME_RISKS_REVIEW": {
     "sources": [
@@ -25,44 +42,282 @@
         "org": "NOAA",
         "discovered_at": "2026-06-20T07:39:10.804422+00:00",
         "status": "active"
+      },
+      {
+        "url": "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.csv",
+        "format": "csv",
+        "metric": "Monthly global earthquake occurrences with magnitude, depth, latitude, longitude, and time",
+        "org": "USGS (U.S. Geological Survey)",
+        "discovered_at": "2026-07-19T06:55:32.570163+00:00",
+        "status": "active"
       }
     ],
-    "last_asked_llm": "2026-06-20T07:36:41.014394+00:00"
+    "last_asked_llm": "2026-07-29T06:37:51.135355+00:00"
   },
   "LONG_TERM_FUTURE_REVIEW": {
     "sources": [],
-    "last_asked_llm": "2026-06-20T07:39:14.562678+00:00"
+    "last_asked_llm": "2026-07-29T19:34:11.044998+00:00"
   },
   "SPACE_INFRASTRUCTURE_REVIEW": {
     "sources": [],
-    "last_asked_llm": "2026-06-20T10:32:24.106255+00:00"
+    "last_asked_llm": "2026-07-29T19:34:11.045272+00:00"
   },
   "COGNITION_LEARNING_REVIEW": {
-    "sources": [],
-    "last_asked_llm": "2026-06-20T10:32:26.108194+00:00"
+    "sources": [
+      {
+        "url": "https://api.worldbank.org/v2/country/all/indicator/SP.POP.GROW?format=json",
+        "format": "json",
+        "metric": "Population growth rate (annual %)",
+        "org": "World Bank",
+        "discovered_at": "2026-07-14T06:21:30.007243+00:00",
+        "status": "active"
+      },
+      {
+        "url": "https://api.worldbank.org/v2/country/all/indicator/SE.ADT.LITR.ZS?format=json&per_page=5000",
+        "format": "json",
+        "metric": "Literacy rate, adult total (% of people ages 15 and above)",
+        "org": "World Bank",
+        "discovered_at": "2026-07-22T01:05:48.383343+00:00",
+        "status": "active"
+      },
+      {
+        "url": "https://api.worldbank.org/v2/country/all/indicator/SE.SEC.ENRR?format=json&per_page=5000",
+        "format": "json",
+        "metric": "School enrollment, secondary (% gross)",
+        "org": "World Bank",
+        "discovered_at": "2026-07-22T01:05:49.711862+00:00",
+        "status": "active"
+      },
+      {
+        "url": "https://api.worldbank.org/v2/country/all/indicator/SE.XPD.TOTL.GB.ZS?format=json&per_page=5000",
+        "format": "json",
+        "metric": "Government expenditure on education, total (% of GDP)",
+        "org": "World Bank",
+        "discovered_at": "2026-07-22T01:05:50.971418+00:00",
+        "status": "active"
+      },
+      {
+        "url": "https://api.worldbank.org/v2/country/all/indicator/SE.PRM.ENRR?format=json&per_page=5000",
+        "format": "json",
+        "metric": "Primary school enrollment rate",
+        "org": "World Bank",
+        "discovered_at": "2026-07-30T00:49:32.222908+00:00",
+        "status": "active"
+      }
+    ],
+    "last_asked_llm": "2026-07-30T00:49:30.686602+00:00"
   },
   "CULTURE_MEDIA_REVIEW": {
-    "sources": [],
-    "last_asked_llm": "2026-06-20T11:56:46.808947+00:00"
+    "sources": [
+      {
+        "url": "https://api.worldbank.org/v2/country/all/indicator/IT.NET.USER.ZS?format=json",
+        "format": "json",
+        "metric": "Internet users (% of population) – proxy for information access and digital divide",
+        "org": "World Bank",
+        "discovered_at": "2026-07-25T00:48:36.129431+00:00",
+        "status": "active"
+      },
+      {
+        "url": "https://api.worldbank.org/v2/country/all/indicator/IC.CRD.PRCT?format=json",
+        "format": "json",
+        "metric": "Creative industries employment (% of total employment) – indicator of cultural sector vitality",
+        "org": "World Bank",
+        "discovered_at": "2026-07-25T00:48:36.881741+00:00",
+        "status": "active"
+      }
+    ],
+    "last_asked_llm": "2026-07-25T00:48:35.706106+00:00"
   },
   "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL": {
-    "sources": [],
-    "last_asked_llm": "2026-06-20T11:56:46.809203+00:00"
+    "sources": [
+      {
+        "url": "https://api.worldbank.org/v2/country/all/indicator/SL.GOV.04.NU?format=json",
+        "format": "json",
+        "metric": "Number of ministries and agencies responsible for human rights",
+        "org": "World Bank",
+        "discovered_at": "2026-07-25T00:48:51.043781+00:00",
+        "status": "active"
+      }
+    ],
+    "last_asked_llm": "2026-07-25T00:48:50.120357+00:00"
   },
   "HUMAN_WELL_BEING_REVIEW": {
     "sources": [],
-    "last_asked_llm": "2026-06-20T13:00:30.880818+00:00"
+    "last_asked_llm": "2026-07-30T00:49:46.387099+00:00"
   },
   "SOCIAL_RELATIONS_REVIEW": {
-    "sources": [],
-    "last_asked_llm": "2026-06-20T13:00:30.881339+00:00"
+    "sources": [
+      {
+        "url": "local://snapshots/master/global_indicators_latest.json#conflicts.active_armed_conflicts",
+        "path": "snapshots/master/global_indicators_latest.json",
+        "kind": "file",
+        "format": "json",
+        "extract": "conflicts.active_armed_conflicts",
+        "unit": "active_conflicts",
+        "org": "UCDP/PRIO",
+        "metric": "active armed conflicts worldwide, latest UCDP year (2025)",
+        "slot_hint": "anchor_annual",
+        "status": "active",
+        "provenance": "UCDP/PRIO ACD via the cycle's global_indicators snapshot. ANNUAL cadence, correct for anchor_annual and wrong for any daily slot. Reads 65 for 2025 once the snapshot refreshes at fast_cycle step 2.5; the file on disk still holds the pre-fix 2816 until that run.",
+        "discovered_at": "2026-07-31T12:35:20.033199+00:00",
+        "found_by": "ucdp_diagnosis (reader fixed in 3f1330e; verified 65 == local CSV unique ids)"
+      }
+    ],
+    "last_asked_llm": "2026-07-30T12:52:15.157357+00:00"
   },
   "OPENCLAW_SOLUTIONS": {
     "sources": [],
     "last_asked_llm": "2026-06-21T13:57:22.903694+00:00"
   },
   "PLANETARY_POTENTIAL_REVIEW": {
-    "sources": [],
-    "last_asked_llm": "2026-06-21T13:57:33.949404+00:00"
+    "sources": [
+      {
+        "url": "https://api.worldbank.org/v2/country/all/indicator/EG.FEC.RNEW.ZS?format=json&per_page=1000",
+        "format": "json",
+        "metric": "Renewable energy consumption",
+        "org": "World Bank",
+        "discovered_at": "2026-07-30T12:52:41.352622+00:00",
+        "status": "active"
+      }
+    ],
+    "last_asked_llm": "2026-07-30T12:52:39.845755+00:00"
+  },
+  "GOVERNANCE_INSTITUTIONS_REVIEW": {
+    "sources": [
+      {
+        "url": "https://api.worldbank.org/v2/country/all/indicator/GG.GOV.CORR?format=json&per_page=20000",
+        "format": "json",
+        "metric": "Control of Corruption (percentile rank)",
+        "org": "World Bank",
+        "discovered_at": "2026-07-21T06:16:14.872129+00:00",
+        "status": "active"
+      },
+      {
+        "url": "https://api.worldbank.org/v2/country/all/indicator/GG.GOV.EFFE?format=json&per_page=20000",
+        "format": "json",
+        "metric": "Government Effectiveness (percentile rank)",
+        "org": "World Bank",
+        "discovered_at": "2026-07-21T06:16:15.447108+00:00",
+        "status": "active"
+      },
+      {
+        "url": "https://api.worldbank.org/v2/country/all/indicator/GG.GOV.VOIC?format=json&per_page=20000",
+        "format": "json",
+        "metric": "Voice and Accountability (percentile rank)",
+        "org": "World Bank",
+        "discovered_at": "2026-07-21T06:16:16.038957+00:00",
+        "status": "active"
+      }
+    ],
+    "last_asked_llm": "2026-07-21T06:16:14.238421+00:00"
+  },
+  "WATER_REVIEW": {
+    "sources": [
+      {
+        "url": "https://api.worldbank.org/v2/country/all/indicator/ER.H2O.INTR.ZS?format=json&per_page=1000",
+        "format": "json",
+        "metric": "Renewable internal freshwater resources per capita",
+        "org": "World Bank",
+        "slot_hint": "event_daily",
+        "discovered_at": "2026-07-30T12:52:02.351610+00:00",
+        "status": "active"
+      },
+      {
+        "org": "USGS",
+        "slot_hint": "measurement_daily",
+        "kind": "http_csv",
+        "format": "csv",
+        "metric": "Potomac River daily mean discharge at Washington DC (cu ft/s)",
+        "url": "https://waterservices.usgs.gov/nwis/dv/?format=rdb&sites=01646500&parameterCd=00060&period=P10D",
+        "col": 3,
+        "data_date_col": 2,
+        "data_max_age_days": 7,
+        "provenance": "USGS NWIS gauge 01646500, real instrument observation. SINGLE US river — a local measurement standing in for a global water slot. Directionally honest, geographically narrow.",
+        "status": "active",
+        "discovered_at": "2026-07-31T11:49:32.073935+00:00",
+        "found_by": "phase1_deterministic_probe (curl-verified, cadence-checked)"
+      },
+      {
+        "org": "NASA-EONET",
+        "slot_hint": "event_daily",
+        "kind": "http_json_count",
+        "format": "json",
+        "metric": "flood events worldwide, last 30 days (count)",
+        "url": "https://eonet.gsfc.nasa.gov/api/v3/events?status=all&days=30&category=floods",
+        "extract": "events",
+        "provenance": "NASA EONET v3 flood event count, 30d window (status=all — the open-only filter returns 0). Event COUNT, not severity or people affected.",
+        "status": "active",
+        "discovered_at": "2026-07-31T11:49:32.073935+00:00",
+        "found_by": "phase1_deterministic_probe (curl-verified, cadence-checked)"
+      }
+    ],
+    "slot_asks": {
+      "measurement_daily": "2026-07-30T12:51:35.182504+00:00",
+      "event_daily": "2026-07-30T12:51:49.873502+00:00"
+    }
+  },
+  "FOOD_REVIEW": {
+    "sources": [
+      {
+        "org": "Open-Meteo",
+        "slot_hint": "measurement_daily",
+        "kind": "http_json_series",
+        "format": "json",
+        "metric": "reference evapotranspiration ET0 over the US corn belt (mm/day)",
+        "url": "https://api.open-meteo.com/v1/forecast?latitude=41.9&longitude=-93.6&daily=et0_fao_evapotranspiration&past_days=7&forecast_days=1&timezone=UTC",
+        "extract": "daily.et0_fao_evapotranspiration",
+        "data_date_extract": "daily.time",
+        "data_max_age_days": 3,
+        "provenance": "Open-Meteo (ECMWF-derived) reference evapotranspiration at 41.9N/-93.6W. A crop WATER-DEMAND proxy over one growing region — not a food-supply measurement, not global. Weakest link in the FOOD portfolio.",
+        "status": "active",
+        "discovered_at": "2026-07-31T11:49:32.073935+00:00",
+        "found_by": "phase1_deterministic_probe (curl-verified, cadence-checked)"
+      },
+      {
+        "org": "NASA-EONET",
+        "slot_hint": "event_daily",
+        "kind": "http_json_count",
+        "format": "json",
+        "metric": "severe storm events worldwide, last 7 days (count)",
+        "url": "https://eonet.gsfc.nasa.gov/api/v3/events?status=all&days=7&category=severeStorms",
+        "extract": "events",
+        "provenance": "NASA EONET v3 severe-storm count. NOT food-specific: EONET's drought category is permanently empty, so this stands in as a crop-disruption proxy shared with ENERGY. Replace when a real food-event feed is found.",
+        "status": "active",
+        "discovered_at": "2026-07-31T11:49:32.073935+00:00",
+        "found_by": "phase1_deterministic_probe (curl-verified, cadence-checked)"
+      }
+    ]
+  },
+  "ENERGY_REVIEW": {
+    "sources": [
+      {
+        "org": "Open-Meteo",
+        "slot_hint": "measurement_daily",
+        "kind": "http_json_series",
+        "format": "json",
+        "metric": "daily shortwave radiation sum over Germany (MJ/m2)",
+        "url": "https://api.open-meteo.com/v1/forecast?latitude=51.2&longitude=10.4&daily=shortwave_radiation_sum&past_days=7&forecast_days=1&timezone=UTC",
+        "extract": "daily.shortwave_radiation_sum",
+        "data_date_extract": "daily.time",
+        "data_max_age_days": 3,
+        "provenance": "Open-Meteo solar resource at 51.2N/10.4E. The DRIVER of solar generation, not generation itself, and one country only. Stand-in until a keyless generation feed is found (ENTSO-E and EIA both require API keys).",
+        "status": "active",
+        "discovered_at": "2026-07-31T11:49:32.073935+00:00",
+        "found_by": "phase1_deterministic_probe (curl-verified, cadence-checked)"
+      },
+      {
+        "org": "NASA-EONET",
+        "slot_hint": "event_daily",
+        "kind": "http_json_count",
+        "format": "json",
+        "metric": "severe storm events worldwide, last 7 days (count)",
+        "url": "https://eonet.gsfc.nasa.gov/api/v3/events?status=all&days=7&category=severeStorms",
+        "extract": "events",
+        "provenance": "NASA EONET v3 severe-storm count as a grid-disruption proxy. NOT energy-specific — EONET has no energy category. Shared with FOOD; replace when a real outage/generation feed is found.",
+        "status": "active",
+        "discovered_at": "2026-07-31T11:49:32.073935+00:00",
+        "found_by": "phase1_deterministic_probe (curl-verified, cadence-checked)"
+      }
+    ]
   }
 }

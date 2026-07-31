@@ -63,7 +63,7 @@ def _item(domain, severity, need, why, action, actor, candidate=None):
 
 
 PARSE_KEYS = ("extract", "col", "data_date_col", "data_date_extract",
-              "data_max_age_days", "provenance")
+              "data_max_age_days", "provenance", "path", "unit")
 
 
 def _parse_rule(src: dict) -> dict:
