@@ -47,6 +47,11 @@ GENESIS_HASH = "0" * 64
 
 PREDICTION = "PREDICTION_SEALED"
 OUTCOME = "OUTCOME_SCORED"
+# A prediction the system WANTED to make and honestly could not yet — too few
+# observations to state a band that could fail. Recorded in the chain rather than
+# skipped silently, because "we have no prediction and here is exactly why" is
+# evidence and an empty ledger is not. Never counted as a sealed prediction.
+PENDING = "PREDICTION_PENDING"
 
 
 def _utc_now() -> str:
@@ -119,6 +124,15 @@ def seal_prediction(target_kind: str, target_id: str, horizon_utc: str,
         basis=basis,
         **extra,
     )
+
+
+def note_pending(target_id: str, reason: str, **extra: Any) -> dict:
+    """Record that a prediction cannot yet be honestly stated, and why.
+
+    The alternative is to invent a prediction wide enough that it cannot fail, which
+    would score as a 'hit' forever and make the K1a curve a lie. A named absence is
+    worth more than a vacuous presence."""
+    return _append(PENDING, target_id=target_id, reason=reason, **extra)
 
 
 def _abs_err(pred: Any, actual: Any) -> Optional[float]:

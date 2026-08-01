@@ -308,6 +308,20 @@ def run():
         print("[FEEDBACK] axis_next: matured predictions scored + next-cycle sealed (authoritative)")
     except Exception as e:
         print(f"[FEEDBACK] axis_next prophecy skipped (fail-open): {e}")
+
+    # CALENDAR-horizon prophecies (target_kind 'composer_series'). The axis_next block
+    # above matures on the system's OWN schedule and is checked against a number the
+    # system produced; this one matures on a DATE and is checked against a composer
+    # source. That is the difference between a loop and a claim a human can hold you to.
+    # Runs AFTER the scoring above, deterministically, with no LLM. FAIL-OPEN.
+    try:
+        import sys as _sys
+        from pathlib import Path as _Path
+        _sys.path.insert(0, str(_Path(__file__).resolve().parents[1] / "scripts"))
+        import score_prophecies as _sp
+        print(f"[FEEDBACK] {_sp.summary_line(_sp.run())}")
+    except Exception as e:
+        print(f"[FEEDBACK] calendar prophecy skipped (fail-open): {type(e).__name__}: {e}")
     result = save_orchestration_result(attention, plan, state)
     print("\n✅ Оркестрацията записана!")
     
