@@ -278,7 +278,11 @@ def _composer_gaps(max_gaps: int = 3) -> list[dict]:
     out = []
     for axis, entry in (needs or {}).items():
         for item in (entry or {}).get("items", []):
-            if item.get("kind") in ("slot_unfilled", "source_dead"):
+            # human_sense_request: Emil demanded this axis be sensed via
+            # scripts/cortex_query.py, bypassing the system's own salience ranking.
+            # It is drained here exactly like the system's own declared hunger — the
+            # human's demand is not a lower class of need than the machine's.
+            if item.get("kind") in ("slot_unfilled", "source_dead", "human_sense_request"):
                 slot = item.get("slot", "?")
                 out.append({"axis": axis, "slot": slot,
                             "requirement": _SLOT_CLASS_DESC.get(slot, "a relevant numeric data source"),

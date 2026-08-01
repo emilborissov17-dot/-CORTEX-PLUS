@@ -24,6 +24,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import re
 import sys
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -40,6 +41,7 @@ BRIEF_MD       = REPO / "memory" / "needs_brief.md"
 NOTIFY_CFG     = REPO / "memory" / "notify_channel.json"   # gitignored; holds secret
 PUSH_STATE     = REPO / "memory" / "needs_push_state.json" # dedupe: last pushed sig
 PENDING        = REPO / "memory" / "pending_approvals.json"  # id -> action approve_reader executes
+HUMAN_PRIORITY = REPO / "memory" / "human_priority_override.json"  # human ranking, cortex_query
 
 _FMT2KIND = {"json": "http_json_path", "csv": "http_csv"}   # discovered 'format' -> composer kind
 
@@ -513,10 +515,47 @@ def _write_pending(rep: dict):
     return approvals
 
 
+def _human_priority() -> dict:
+    """Emil's own ranking of the axes (scripts/cortex_query.py --priority AXIS N).
+
+    Empty when he has ranked nothing — and then the system's severity order stands
+    untouched. This is deliberately a separate, human-owned file: the ranking that
+    overrides the system's salience must not live where the system writes."""
+    p = (_load(HUMAN_PRIORITY, {}) or {}).get("priority") or {}
+    out = {}
+    for k, v in p.items():
+        try:
+            out[str(k)] = int(v)
+        except (TypeError, ValueError):
+            continue
+    return out
+
+
+def _item_axis(item: dict) -> str | None:
+    """The axis an item is about, where it is DERIVABLE — never guessed. An item whose
+    axis cannot be determined is left unranked rather than assigned one, because a
+    wrong axis would silently reorder the human's own priorities."""
+    ax = (item.get("approve") or {}).get("axis")
+    if ax:
+        return str(ax)
+    cand = item.get("candidate")
+    if isinstance(cand, dict) and cand.get("axis"):
+        return str(cand["axis"])
+    m = re.search(r"\b[A-Z][A-Z_]{5,}\b", f"{item.get('need', '')} {item.get('why', '')}")
+    return m.group(0) if m else None
+
+
 def build() -> dict:
     items = _mind_items() + _body_items() + _spirit_items()
     order = {"high": 0, "medium": 1, "low": 2, "info": 3}
     items.sort(key=lambda x: order.get(x["severity"], 9))
+
+    # HUMAN RANKING WINS. Where Emil has ranked an axis, that ordering beats the
+    # system's own severity judgement — the whole point of the override. Python's sort
+    # is stable, so unranked items keep their severity order and follow the ranked ones.
+    ranks = _human_priority()
+    if ranks:
+        items.sort(key=lambda it: ranks.get(_item_axis(it) or "", 10 ** 6))
     rep = {"ts": datetime.now(timezone.utc).isoformat(),
            "state": _state(),
            "summary": {"total": len(items),

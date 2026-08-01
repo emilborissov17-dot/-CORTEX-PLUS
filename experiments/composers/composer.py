@@ -373,7 +373,15 @@ def compose(axis: str, force: bool = False) -> dict:
 
     _save(state_file, state)
     all_needs = _load(NEEDS_FILE, {})
-    all_needs[axis] = {"ts": _iso(), "items": needs}
+    # The human's own demands (scripts/cortex_query.py --axis X --force) live in this
+    # same file, and this assignment used to REPLACE the axis entry wholesale — so a
+    # request queued by Emil was silently deleted here at beat 2.6, long before
+    # data_scout read the file at beat 22.5. A queue nobody can write to durably is not
+    # a queue. Human items survive the composer's rewrite of its OWN findings; they
+    # leave only when the consumer marks them drained.
+    kept_human = [i for i in (all_needs.get(axis) or {}).get("items", [])
+                  if i.get("kind") == "human_sense_request" and not i.get("consumed")]
+    all_needs[axis] = {"ts": _iso(), "items": kept_human + needs}
     _save(NEEDS_FILE, all_needs)
     all_out = _load(OUT_FILE, {})
     all_out[axis] = report
