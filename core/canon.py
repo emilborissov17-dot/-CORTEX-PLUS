@@ -17,6 +17,7 @@ can't drift (the recurring failure the norms guard against).
 """
 from __future__ import annotations
 
+import hashlib
 import json
 from datetime import datetime, timezone
 from pathlib import Path
@@ -26,6 +27,42 @@ GOAL_FILE      = REPO / "civilization_goal.txt"
 VISION_FILE    = REPO / "civilization_vision.txt"
 WEIGHTS_FILE   = REPO / "config" / "goal_dimension_weights.json"
 INVARIANTS     = REPO / "memory" / "canon_invariants.json"   # consolidated stable lessons
+BOUNDARIES_FILE = REPO / "BOUNDARIES.md"                     # the second canonical document
+
+# ── THE ANCHOR ───────────────────────────────────────────────────────────────
+# BOUNDARIES.md is loaded against this hash, hard-coded here on purpose. The goal and
+# the vision say what the system should WANT; BOUNDARIES says what it may never BECOME,
+# and a boundary that can be edited by whatever it binds is not a boundary.
+#
+# The hash lives in CODE, not in a config file, for the same reason the protected-path
+# denylist does: data is what a patch can most easily rewrite. Changing the document now
+# requires changing core/canon.py too — and BOTH are in safety/protected_paths.py, so
+# neither is reachable from the self-modifier lane. Amending canon is a human act with
+# two hands on it, exactly as BOUNDARIES.md S "Amendment process" requires.
+#
+# Anchored 1 Aug 2026, 11277 bytes, 160 lines, LF.
+BOUNDARIES_SHA256 = "63034604997d8dac6771ee6d9c0f77a93acc77439b715254b0625863c14465d5"
+
+# The sentinel that must reach the frame when the document no longer matches. It is a
+# LOUD line in the frame the models actually read — not a log entry, not an exception
+# swallowed by a fail-open caller. A canon that quietly degrades to a fallback is how a
+# system ends up reasoning against a boundary nobody checked.
+MISMATCH_LINE = "BOUNDARIES HASH MISMATCH — canon integrity violated"
+
+# The distilled boundary carried in every prompt: S I's Wall and S VI's invariant, one
+# sentence each, quoted from the document. The frame has a small budget and BOUNDARIES.md
+# is 11KB, so the full text cannot ride along — but the two load-bearing sentences and
+# the hash of the authority behind them can, and that is what makes the reference
+# checkable rather than decorative.
+_WALL_SENTENCE = ("CORTEX senses and advises. It never ACTUATES - it never causes an effect "
+                  "on the world outside a human decision taken per action.")
+_INVARIANT_SENTENCE = ("The moment a system named CORTEX actuates autonomously, it is no longer "
+                       "CORTEX; it is a different system that has taken this name, and this "
+                       "document has been violated, not amended.")
+
+# Ceiling for the whole assembled frame. Asserted by test/test_canon_boundaries.py so the
+# boundary block can never be squeezed out by a growing goal or a pile of invariants.
+FRAME_BUDGET = 2800
 
 # The goal-dimensions the impact vector is scored on (kept here so canon owns them).
 DIMENSIONS = ["peace", "dignity", "sustainability", "freedom", "health", "truth",
@@ -59,6 +96,31 @@ def _load(p, default):
         return default
 
 
+def boundaries() -> dict:
+    """The boundary document, and whether it is still the one canon.py was sealed against.
+
+    READ ONLY. Nothing in this module writes to BOUNDARIES.md, and nothing may: the
+    document is human-owned, and a system that can edit its own boundary has none.
+    A missing file is treated as a violation, not as an absence to be shrugged off —
+    deleting the constitution must not be quieter than editing it."""
+    try:
+        raw = BOUNDARIES_FILE.read_bytes()
+    except Exception as e:
+        return {"present": False, "verified": False, "sha256": None,
+                "expected": BOUNDARIES_SHA256, "text": "",
+                "reason": f"BOUNDARIES.md could not be read ({type(e).__name__}) — "
+                          f"the canonical boundary document is absent"}
+    actual = hashlib.sha256(raw).hexdigest()
+    ok = (actual == BOUNDARIES_SHA256)
+    return {
+        "present": True, "verified": ok, "sha256": actual,
+        "expected": BOUNDARIES_SHA256, "path": str(BOUNDARIES_FILE),
+        "text": raw.decode("utf-8", errors="replace"),
+        "reason": None if ok else ("sha256 does not match the hash core/canon.py was "
+                                   "sealed with — the document has been altered"),
+    }
+
+
 def load_canon() -> dict:
     """The full permanent frame. Missing pieces fall back safely — the center is never lost."""
     weights = _load(WEIGHTS_FILE, {})
@@ -69,15 +131,42 @@ def load_canon() -> dict:
         "dimensions": DIMENSIONS,
         "dimension_weights": {d: float(weights.get(d, 1.0)) for d in DIMENSIONS},
         "invariants": inv,   # stable lessons consolidated from experience
+        "boundaries": boundaries(),   # what it may never BECOME (human-owned, hash-anchored)
     }
+
+
+def boundary_block(b: dict = None) -> str:
+    """The distilled boundary as it appears in every prompt.
+
+    On a hash mismatch this does NOT fall back quietly to the sealed text as though
+    nothing happened — the mismatch is stated first, in the frame itself, where the
+    model reading the frame will see it. The two sentences still follow, marked
+    unverified: the invariant does not stop applying because someone edited the file
+    it is written in. If anything it applies harder."""
+    b = b if b is not None else boundaries()
+    lines = []
+    if not b.get("verified"):
+        found = (b.get("sha256") or "absent")[:12]
+        lines.append(MISMATCH_LINE)
+        lines.append(f"  expected {BOUNDARIES_SHA256[:12]}, found {found} — {b.get('reason')}")
+        lines.append("  The two lines below are the SEALED text; the document on disk is NOT it.")
+    lines.append("BOUNDARY (canon, human-owned; this system may read it, never amend it):")
+    lines.append(_WALL_SENTENCE)
+    lines.append(_INVARIANT_SENTENCE)
+    lines.append(f"full authority: BOUNDARIES.md sha256={BOUNDARIES_SHA256[:12]}")
+    return "\n".join(lines)
 
 
 def as_frame(max_chars: int = 1400) -> str:
     """A compact text block for injecting the canon into ANY LLM prompt — the always-loaded
-    reference every judgment is made against."""
+    reference every judgment is made against.
+
+    Order is deliberate: goal, then boundary, then learned invariants. The boundary sits
+    ABOVE the invariants because an invariant is a lesson the system promoted from its own
+    experience, and no accumulated lesson may outrank the line it is not allowed to cross."""
     c = load_canon()
     goal = c["goal"] or c["vision"] or _FALLBACK
-    parts = [goal[:max_chars]]
+    parts = [goal[:max_chars], boundary_block(c.get("boundaries"))]
     if c["invariants"]:
         parts.append("Consolidated invariants (learned, stable): "
                      + "; ".join(i.get("lesson", str(i)) if isinstance(i, dict) else str(i)

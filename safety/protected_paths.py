@@ -53,6 +53,24 @@ PROTECTED_DIRS = (
 
 # Individual files.
 PROTECTED_FILES = frozenset({
+    # ── THE CANON (anchored 1 Aug 2026) ──────────────────────────────────────
+    # BOUNDARIES.md says what the system may never BECOME; core/canon.py holds the
+    # sha256 it is verified against and the distilled text injected into every prompt.
+    # Both, or neither: leaving canon.py writable would let a patch relax the hash
+    # constant and then rewrite the document to match, and leaving the document
+    # writable would make the hash the only thing standing between a self-edit and
+    # canon. The goal and vision files are the same lane — they are what the system
+    # is FOR, and a system that can rewrite its own purpose has no purpose.
+    #
+    # NOT protected, deliberately: memory/canon_invariants.json. That is the machine
+    # lane — consolidate_invariant() promotes lessons the system learned, which is
+    # exactly the growth this architecture is for. Invariants sit BELOW the boundary
+    # in the frame and can never outrank it.
+    "BOUNDARIES.md",
+    "core/canon.py",
+    "civilization_goal.txt",
+    "civilization_vision.txt",
+
     # ── The gates and the guardian ───────────────────────────────────────────
     "patch_guardian.py",
     "execute_patches.py",        # the gate must not be able to rewrite the gate

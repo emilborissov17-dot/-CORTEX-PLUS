@@ -156,7 +156,20 @@ class PatchGuardian:
         if protection is not None:
             log.error(f"[PatchGuardian] PROTECTED PATH ОТКАЗАН: {protection}")
             try:
-                quarantine(filename, new_code, f"PROTECTED_PATH: {protection}")
+                # quarantine() е keyword-only (виж safety/quarantine.py). Досега тук
+                # се извикваше ПОЗИЦИОННО -> TypeError, глътнат от except-а отдолу:
+                # отказът си работеше, но отхвърленият код НЕ се запазваше никъде.
+                # Тоест scripts/review_quarantine.py — прозорецът на човека към това
+                # какво е било отказано — не показваше нито един protected-path опит.
+                # Отказ без запазена улика е отказ, за който никой не може да научи.
+                quarantine(
+                    base_dir=Path.cwd(),
+                    filename=filename,
+                    reason=f"PROTECTED_PATH: {protection}",
+                    verdict={"file": filename, "success": False,
+                             "stage": "rejected_protected_path", "error": protection},
+                    content=new_code,
+                )
             except Exception as e:
                 log.error(f"[PatchGuardian] quarantine на protected patch се провали: {e}")
             return PatchResult(filename, False, "rejected_protected_path",
