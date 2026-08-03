@@ -35,11 +35,20 @@ USAGE
   cortex_query.py --ledger                 prophecy ledger status
   cortex_query.py --clock                  what the portfolio stands on: origin
                                            concentration, who measured it, collector counters
+  cortex_query.py --candidates             the FULL candidate pool (random sample if large)
+  cortex_query.py --rejected [--since D]   everything considered and dropped, with reasons
+
+The write half of human sovereignty over intake — proposing a source the system never
+found — is deliberately NOT here: see scripts/cortex_ingest.py. That command must run the
+system's real registration path, which means importing project code, and this file's whole
+guarantee is that it imports none. A read that cannot be mediated and a write that must be
+executed are different operations and they live in different files.
 """
 from __future__ import annotations
 
 import argparse
 import json
+import random
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -53,6 +62,8 @@ PRIORITY_FILE   = REPO / "memory" / "human_priority_override.json"
 PENUMBRA_DIR    = REPO / "memory" / "penumbra"
 PENUMBRA_LEAVES = PENUMBRA_DIR / "_penumbra_leaves.jsonl"
 LEDGER          = REPO / "experiments" / "prophecy" / "prophecy_ledger.jsonl"
+DISCOVERED      = REPO / "memory" / "discovered_data_sources.json"
+DISCARDED       = REPO / "memory" / "discarded_candidates.jsonl"
 SPEC_FILE       = REPO / "config" / "composer_specs.json"
 REPORTER_FILE   = REPO / "config" / "reporter_independence.json"
 INSTRUMENT      = REPO / "memory" / "collector_instrumentation.json"
@@ -410,6 +421,135 @@ def cmd_clock(threshold: float = 0.5) -> int:
     return 0
 
 
+# ── --candidates ─────────────────────────────────────────────────────────────
+
+CANDIDATE_PRINT_LIMIT = 40
+
+
+def _all_candidates():
+    doc = _read_json(DISCOVERED, {}) or {}
+    out = []
+    for axis, entry in doc.items():
+        if not isinstance(entry, dict):
+            continue
+        for s in entry.get("sources", []):
+            out.append((axis, s))
+    return out
+
+
+def cmd_candidates(limit: int = CANDIDATE_PRINT_LIMIT, seed=None) -> int:
+    """The WHOLE pool, or a RANDOM sample of it.
+
+    Never a relevance-ranked subset. Ranking is where the agenda lives: whatever the
+    system considers most relevant is exactly the axis along which it could quietly steer
+    what a human ever looks at, and it would do so while appearing helpful. A random
+    sample is dumber and cannot be steered — and the seed is printed, so any sample can
+    be reproduced and argued with.
+    """
+    cands = _all_candidates()
+    if not cands:
+        print(f"no candidates in {_rel(DISCOVERED)}")
+        return 0
+
+    print(RULE)
+    print(f"CANDIDATE POOL — {len(cands)} record(s) across "
+          f"{len({a for a, _ in cands})} axes")
+    print(RULE)
+    by_status = {}
+    for _a, s in cands:
+        st = s.get("status", "?")
+        by_status[st] = by_status.get(st, 0) + 1
+    print("by status: " + ", ".join(f"{k}={v}" for k, v in sorted(by_status.items())))
+
+    shown, note = cands, "all of them"
+    if len(cands) > limit:
+        seed = random.randrange(1 << 30) if seed is None else int(seed)
+        rng = random.Random(seed)
+        shown = rng.sample(cands, limit)
+        note = (f"a RANDOM sample of {limit} (seed {seed}; rerun with --seed {seed} to get "
+                f"this exact sample). NOT the 'most relevant' — that ranking is the system's "
+                f"opinion and it is not offered here")
+    print(f"showing: {note}")
+    print()
+
+    for axis, s in shown:
+        rule = {k: s[k] for k in ("extract", "col", "column_name", "row_key", "path")
+                if s.get(k) is not None}
+        print(f"[{s.get('status', '?')}] {axis}")
+        print(f"    org     {s.get('org') or '?'}")
+        print(f"    metric  {s.get('metric') or '?'}")
+        print(f"    url     {s.get('url') or '?'}")
+        print(f"    kind    {s.get('kind') or '(none derived)'}   slot_hint "
+              f"{s.get('slot_hint') or '-'}")
+        print(f"    rule    {rule or '(none — this one cannot be fetched as it stands)'}")
+        if s.get("rule_derivation"):
+            print(f"    derived {s['rule_derivation']}")
+        for k in ("rejected_why", "incomplete_why", "unblacklist_reason"):
+            if s.get(k):
+                print(f"    {k:<7} {str(s[k])[:150]}")
+    return 0
+
+
+# ── --rejected ───────────────────────────────────────────────────────────────
+
+def _after(ts, since):
+    if not since:
+        return True
+    try:
+        return str(ts or "") >= str(since)
+    except Exception:
+        return True
+
+
+def cmd_rejected(since=None) -> int:
+    """Everything considered and dropped, with the reason, and whether it was ever
+    actually contacted. Two different things live here and conflating them is what cost
+    OWID and the World Bank their place in the portfolio:
+
+      rejected    a real fetch was made and it failed. Evidence about the source.
+      incomplete  our record was missing a field. Evidence about US.
+      discarded   never registered at all — no rule could be derived from its payload.
+    """
+    rows = []
+    for axis, s in _all_candidates():
+        st = s.get("status")
+        if st in ("rejected", "incomplete"):
+            ts = s.get("rejected_at") or s.get("incomplete_at") or ""
+            if _after(ts, since):
+                rows.append((ts, st, axis, s.get("org"), s.get("url"),
+                             s.get("rejected_why") or s.get("incomplete_why"),
+                             s.get("rejected_class")))
+    for d in _read_jsonl(DISCARDED):
+        if _after(d.get("ts"), since):
+            rows.append((d.get("ts", ""), "discarded", d.get("axis"), None,
+                         d.get("url"), d.get("reason"), d.get("stage")))
+    rows.sort()
+
+    print(RULE)
+    print("EVERYTHING CONSIDERED AND DROPPED" + (f" SINCE {since}" if since else ""))
+    print(RULE)
+    print("rejected   = a real fetch failed. Evidence about the source.")
+    print("incomplete = our record lacked a field. Evidence about US, not about them.")
+    print("discarded  = never registered: no parsing rule derivable from its payload.")
+    print("Only 'rejected' is a verdict on a provider. It requires having asked.")
+    print()
+    if not rows:
+        print("nothing dropped in this window.")
+        return 0
+    for ts, st, axis, org, url, why, extra in rows:
+        print(f"{str(ts)[:19]:<19} [{st}] {axis or '?'}")
+        print(f"    {org or ''} {str(url)[:96]}")
+        print(f"    reason: {str(why)[:220]}")
+        if extra:
+            print(f"    {'class' if st == 'rejected' else 'stage'}: {extra}")
+    print()
+    counts = {}
+    for _t, st, *_r in rows:
+        counts[st] = counts.get(st, 0) + 1
+    print("totals: " + ", ".join(f"{k}={v}" for k, v in sorted(counts.items())))
+    return 0
+
+
 # ── --ledger ─────────────────────────────────────────────────────────────────
 
 def cmd_ledger() -> int:
@@ -479,6 +619,12 @@ def main(argv=None) -> int:
     p.add_argument("--ledger", action="store_true", help="prophecy ledger status")
     p.add_argument("--clock", action="store_true",
                    help="origin concentration, reporter independence, collector counters")
+    p.add_argument("--candidates", action="store_true",
+                   help="the FULL candidate pool, or a random sample — never ranked")
+    p.add_argument("--seed", help="reproduce an earlier --candidates sample")
+    p.add_argument("--rejected", action="store_true",
+                   help="every candidate considered and dropped, with the reason")
+    p.add_argument("--since", metavar="ISO", help="limit --rejected to this date onward")
     a = p.parse_args(argv)
 
     if a.penumbra:
@@ -497,6 +643,10 @@ def main(argv=None) -> int:
         return cmd_ledger()
     if a.clock:
         return cmd_clock()
+    if a.candidates:
+        return cmd_candidates(seed=a.seed)
+    if a.rejected:
+        return cmd_rejected(since=a.since)
 
     p.print_help()
     return 0

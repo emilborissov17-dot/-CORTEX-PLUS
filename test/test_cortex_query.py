@@ -28,7 +28,13 @@ import cortex_query as cq  # noqa: E402
 
 # ── the structural guarantee ─────────────────────────────────────────────────
 
-STDLIB_OK = {"argparse", "json", "sys", "datetime", "pathlib", "__future__"}
+# `random` is here for --candidates, which shows a RANDOM sample of the pool rather than a
+# relevance-ranked subset — ranking is where an agenda would live. `subprocess` is
+# deliberately ABSENT and asserted absent below: allowing it would let any command in this
+# file shell out to project code, which is the exact mediation the gate exists to prevent.
+# The human's write-command (proposing a source) lives in scripts/cortex_ingest.py, which
+# is free to import whatever it needs precisely because it is not this file.
+STDLIB_OK = {"argparse", "json", "random", "sys", "datetime", "pathlib", "__future__"}
 
 
 def test_imports_nothing_from_the_project():
@@ -48,6 +54,23 @@ def test_imports_nothing_from_the_project():
         f"cortex_query must import stdlib only; found {sorted(forbidden)}. "
         "A project import would put the system back between the human and the bytes."
     )
+
+
+def test_no_escape_hatch_to_project_code():
+    """subprocess would be an import-gate bypass: `python -m core.whatever` mediates the
+    output just as thoroughly as an import would, and it would be available to the READ
+    commands too. The ingest path was moved to its own file rather than smuggled in here."""
+    tree = ast.parse(MODULE.read_text(encoding="utf-8"))
+    imported = set()
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Import):
+            imported |= {a.name.split(".")[0] for a in node.names}
+        elif isinstance(node, ast.ImportFrom):
+            imported.add((node.module or "").split(".")[0])
+    for banned in ("subprocess", "os", "importlib", "runpy"):
+        assert banned not in imported, f"{banned} is a way back to project code"
+    assert (REPO / "scripts" / "cortex_ingest.py").exists(), \
+        "the human's write-command must exist somewhere — it is not allowed in here"
 
 
 def test_no_llm_call():

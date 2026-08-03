@@ -298,8 +298,10 @@ for node in ast.walk(tree):
         imported |= {a.name.split(".")[0] for a in node.names}
     elif isinstance(node, ast.ImportFrom):
         imported.add((node.module or "").split(".")[0])
-check("--clock added no import at all — the read path stays unmediated",
-      imported <= {"argparse", "json", "sys", "datetime", "pathlib", "__future__"})
+check("--clock added no project import — the read path stays unmediated",
+      imported <= {"argparse", "json", "random", "sys", "datetime", "pathlib", "__future__"})
+check("...and specifically no subprocess, which would reopen the gate for every command",
+      "subprocess" not in imported)
 
 
 # ── C7: the live distribution, which is the actual deliverable ───────────────

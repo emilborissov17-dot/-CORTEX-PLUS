@@ -147,10 +147,114 @@ def _http(url, timeout=15):
             return r.read().decode("utf-8", errors="replace")
 
 
+# ── CSV addressing: which row, which column ──────────────────────────────────
+#
+# PANEL DATA BREAKS "THE LAST ROW". An OWID grapher CSV with csvType=filtered is
+# entity x year: 195 rows, one per country, latest year each. Reading the last row of that
+# is reading whichever country happens to sort last — Zimbabwe's water stress reported as
+# the world's. The number would be real, correctly parsed, correctly hashed, and about the
+# wrong thing entirely: layer 4 (does the number measure what we think) failing while
+# every other layer passes.
+#
+# So a source may name its row. row_key_column (default "entity") + row_key selects it, and
+# column_name resolves the column by header rather than by a positional index that shifts
+# the day the provider inserts a column.
+#
+# AND IT FAILS LOUDLY. If the key matches no row, this raises with the key named and a
+# sample of what WAS there. It never falls back to the last row: a silent fallback would
+# turn "the entity I asked for is gone" into "here is a number", which is the exact shape
+# of the failure this whole pack exists to remove.
+
+class CsvRowNotFound(ValueError):
+    """A named row was asked for and the payload does not contain it."""
+
+
+def _csv_rows(text: str):
+    return [l for l in str(text).splitlines()
+            if l.strip() and not l.lstrip().startswith("#")]
+
+
+def _csv_cells(line: str):
+    # TAB is a first-class delimiter: USGS NWIS serves its daily-values feed as RDB
+    # (tab-separated), and without this every USGS row parses as a single cell.
+    return [c.strip() for c in line.replace("\t", ",").replace(";", ",").split(",")]
+
+
+def _csv_header(text: str):
+    rows = _csv_rows(text)
+    if not rows:
+        return []
+    head = _csv_cells(rows[0])
+    return [] if all(_is_number(c) for c in head) else head
+
+
+def _csv_col(src: dict, text: str) -> int:
+    """The column index to read: by header name when one is declared, else by index."""
+    name = src.get("column_name")
+    if name:
+        header = _csv_header(text)
+        if name not in header:
+            raise CsvRowNotFound(
+                f"csv: column_name {name!r} is not in the header {header[:8]}"
+                f"{'...' if len(header) > 8 else ''} — the provider renamed or dropped it")
+        return header.index(name)
+    return int(src.get("col", -1))
+
+
+def _csv_select(src: dict, text: str) -> tuple:
+    """(cells, data_date) for the row this source is about."""
+    rows = _csv_rows(text)
+    if not rows:
+        raise ValueError("csv: no data rows in the payload")
+    header = _csv_header(text)
+    body = rows[1:] if header else rows
+
+    key = src.get("row_key")
+    if key is None:
+        cells = _csv_cells(rows[-1])          # unchanged behaviour for single-series feeds
+    else:
+        key_col_name = src.get("row_key_column", "entity")
+        if not header:
+            raise CsvRowNotFound(f"csv: row_key {key!r} was asked for but the payload has "
+                                 f"no header row to find {key_col_name!r} in")
+        if key_col_name not in header:
+            raise CsvRowNotFound(f"csv: row_key_column {key_col_name!r} is not in the "
+                                 f"header {header[:8]}")
+        ki = header.index(key_col_name)
+        hit = None
+        for line in body:
+            c = _csv_cells(line)
+            if ki < len(c) and c[ki] == str(key):
+                hit = c                        # LAST match wins: panels are entity x year
+        if hit is None:
+            seen = []
+            for line in body[:400]:
+                c = _csv_cells(line)
+                if ki < len(c) and c[ki] not in seen:
+                    seen.append(c[ki])
+            raise CsvRowNotFound(
+                f"csv: no row where {key_col_name}=={key!r} among {len(body)} row(s). "
+                f"Present keys include {seen[:6]}. Refusing to read a different row — "
+                f"a fallback here would answer a question nobody asked")
+        cells = hit
+
+    if src.get("data_date_col") is not None:
+        data_date = cells[int(src["data_date_col"])]
+    elif src.get("data_date_column") and header and src["data_date_column"] in header:
+        data_date = cells[header.index(src["data_date_column"])]
+    else:
+        data_date = None
+    return cells, data_date
+
+
 # ── fetch kinds ───────────────────────────────────────────────────────────────
 
-def fetch(src) -> tuple:
-    """Returns (value: float, data_date: str|None). Raises on any failure."""
+def fetch(src, return_payload: bool = False) -> tuple:
+    """Returns (value: float, data_date: str|None) — or (value, data_date, payload) when
+    return_payload is set. Raises on any failure.
+
+    The payload is handed back so a DETERMINISTIC source's schema can be checked against
+    the exact bytes the value came from, without a second request."""
     kind = src.get("kind")
     data_date = None
     if kind == "file":
@@ -158,26 +262,24 @@ def fetch(src) -> tuple:
         v = _dotted(data, src["extract"])
         if src.get("data_date_extract"):
             data_date = _dotted(data, src["data_date_extract"])
-        return float(v), data_date
+        return (float(v), data_date, data) if return_payload else (float(v), data_date)
     if kind == "http_json_path":
         data = json.loads(_http(src["url"]))
-        return float(_dotted(data, src["extract"])), None
+        v = float(_dotted(data, src["extract"]))
+        return (v, None, data) if return_payload else (v, None)
     if kind == "http_csv":
         text = _http(src["url"])
-        rows = [l for l in text.splitlines() if l.strip() and not l.lstrip().startswith("#")]
-        # TAB is a first-class delimiter: USGS NWIS serves its daily-values feed as RDB
-        # (tab-separated), and without this every USGS row parses as a single cell.
-        cells = rows[-1].replace("\t", ",").replace(";", ",").split(",")
-        if src.get("data_date_col") is not None:
-            data_date = cells[int(src["data_date_col"])].strip()
-        return float(cells[int(src.get("col", -1))]), data_date
+        cells, data_date = _csv_select(src, text)
+        v = float(cells[_csv_col(src, text)])
+        return (v, data_date, text) if return_payload else (v, data_date)
     if kind == "http_json_count":
         # The measurement IS the number of dated events (EONET categories, USGS feeds).
         data = json.loads(_http(src["url"]))
         arr = _dotted(data, src["extract"])
         if not isinstance(arr, list):
             raise ValueError(f"json_count: '{src['extract']}' is not a list")
-        return float(len(arr)), None
+        v = float(len(arr))
+        return (v, None, data) if return_payload else (v, None)
     if kind == "http_json_series":
         # Daily series APIs answer with parallel arrays {"daily":{"time":[...],"x":[...]}}.
         # Take the last NON-NULL value — forecast arrays carry trailing nulls for variables
@@ -193,15 +295,95 @@ def fetch(src) -> tuple:
             dates = _dotted(data, src["data_date_extract"])
             if isinstance(dates, list) and idx < len(dates):
                 data_date = dates[idx]   # the date OF the value used, not of the request
-        return float(arr[idx]), data_date
+        v = float(arr[idx])
+        return (v, data_date, data) if return_payload else (v, data_date)
     if kind == "http_gdelt_tone":
         data = json.loads(_http(src["url"]))
         series = (data.get("timeline") or [{}])[0].get("data") or []
         vals = [float(p["value"]) for p in series[-7:] if "value" in p]
         if not vals:
             raise ValueError("gdelt: empty tone series")
-        return round(sum(vals) / len(vals), 4), None
+        v = round(sum(vals) / len(vals), 4)
+        return (v, None, data) if return_payload else (v, None)
     raise ValueError(f"unknown source kind: {kind}")
+
+
+# ── deterministic feeds: no model in the read path, and no silent adaptation ──
+#
+# THE CARVE-OUT AND ITS CONDITIONS, encoded rather than described.
+#
+# A deterministic feed skips nothing and is granted nothing. It routes through the SAME
+# slot architecture, competes for the SAME slots against browsed sources, and still
+# requires a human to promote it. What it gets is the right to be trusted without a model
+# in the read path, and what it pays for that is a schema contract with no forgiveness:
+#
+#   STRUCTURED KINDS ONLY   a value must be reachable by a declared path or column. If
+#                           reading it needs a model to interpret prose, it is not this.
+#   SCHEMA VIOLATION KILLS  at ONE failure, not three. DEATH_AT exists for flaky networks;
+#                           a feed that changed shape is not flaky, it is a different feed,
+#                           and three more cycles of reading it would be three cycles of
+#                           reading something else under the old name. An added field is as
+#                           fatal as a dropped one: both mean the contract we validated is
+#                           not the contract we are now reading.
+#   NO SPECIAL PLEADING     same slots, same min counts, same freshness, same promotion.
+DETERMINISTIC_KINDS = ("http_json_path", "http_csv", "http_json_series", "file")
+
+
+def schema_fingerprint(kind: str, payload) -> dict:
+    """The shape of a payload, in the terms its kind is read in."""
+    if kind == "http_csv":
+        rows = [l for l in str(payload).splitlines()
+                if l.strip() and not l.lstrip().startswith("#")]
+        if not rows:
+            return {"type": "csv", "n_cols": 0, "header": None}
+        head = rows[0].replace("\t", ",").replace(";", ",").split(",")
+        last = rows[-1].replace("\t", ",").replace(";", ",").split(",")
+        numeric_head = all(_is_number(c) for c in head)
+        return {"type": "csv", "n_cols": len(last),
+                "header": None if numeric_head else [c.strip() for c in head]}
+    if isinstance(payload, dict):
+        return {"type": "dict", "keys": sorted(map(str, payload.keys()))}
+    if isinstance(payload, list):
+        first = payload[0] if payload else None
+        if isinstance(first, dict):
+            return {"type": "list", "element_keys": sorted(map(str, first.keys()))}
+        return {"type": "list", "element_keys": None}
+    return {"type": type(payload).__name__}
+
+
+def _is_number(cell) -> bool:
+    try:
+        float(str(cell).strip())
+        return True
+    except (TypeError, ValueError):
+        return False
+
+
+def schema_diff(expected: dict, actual: dict) -> str:
+    """A named difference, or "" when the shape still matches."""
+    if not expected:
+        return ""
+    if expected.get("type") != actual.get("type"):
+        return f"payload type changed: {expected.get('type')} -> {actual.get('type')}"
+    for field in ("keys", "element_keys", "header"):
+        exp, act = expected.get(field), actual.get(field)
+        if exp is None and act is None:
+            continue
+        if exp is None or act is None:
+            return f"{field} appeared/disappeared: {exp!r} -> {act!r}"
+        gone, new = sorted(set(exp) - set(act)), sorted(set(act) - set(exp))
+        if gone or new:
+            return (f"{field} changed"
+                    + (f"; dropped {gone}" if gone else "")
+                    + (f"; unexpected {new}" if new else ""))
+    if expected.get("type") == "csv" and expected.get("n_cols") != actual.get("n_cols"):
+        return f"column count changed: {expected.get('n_cols')} -> {actual.get('n_cols')}"
+    return ""
+
+
+def check_schema(src: dict, payload) -> str:
+    """"" when the contract holds, else the named violation."""
+    return schema_diff(src.get("schema") or {}, schema_fingerprint(src.get("kind"), payload))
 
 
 def _data_too_old(data_date: str, max_days: float):
@@ -252,7 +434,27 @@ def compose(axis: str, force: bool = False) -> dict:
                 attempted = True
                 st["last_attempt_ts"] = _iso()
                 try:
-                    v, data_date = fetch(src)
+                    if src.get("deterministic"):
+                        v, data_date, payload = fetch(src, return_payload=True)
+                        violation = check_schema(src, payload)
+                        if violation:
+                            # DEATH AT ONE. DEATH_AT=3 forgives a flaky network; a feed
+                            # that changed shape is not flaky, it is a different feed, and
+                            # two more cycles of reading it would be two more cycles of
+                            # reading something else under the same name.
+                            st["status"] = "dead"
+                            st["consecutive_fails"] = DEATH_AT
+                            st["last_error"] = f"schema violation: {violation}"
+                            needs.append({"slot": slot_name, "kind": "schema_violation",
+                                          "detail": f"{sid} DIED AT THE FIRST VIOLATION — "
+                                                    f"{violation}. A deterministic feed "
+                                                    f"contracts to a shape; this is no "
+                                                    f"longer that shape, and adapting "
+                                                    f"silently is how you end up reading a "
+                                                    f"different quantity under the old name"})
+                            continue
+                    else:
+                        v, data_date = fetch(src)
                     too_old, dd_age = _data_too_old(data_date, float(src.get("data_max_age_days", 3650)))
                     if too_old:
                         # the source ANSWERED but its own data is outdated —
@@ -447,8 +649,14 @@ def compose(axis: str, force: bool = False) -> dict:
 
 # ── human-gated promotion: a candidate becomes a spec source (git-visible) ────
 
-PROMOTE_FIELDS = ("extract", "col", "data_date_col", "data_date_extract",
-                  "data_max_age_days", "provenance", "path", "unit")
+PROMOTE_FIELDS = ("extract", "col", "column_name", "row_key", "row_key_column",
+                  "data_date_col", "data_date_column", "data_date_extract",
+                  "data_max_age_days", "provenance", "path", "unit", "origin",
+                  "reporter_class", "reporter_class_confirmed_by",
+                  # `schema` must travel: without it a DECLARED contract was dropped on
+                  # the floor and smoke_fetch happily captured whatever it found, so a
+                  # source could be promoted against a shape nobody had validated.
+                  "deterministic", "schema")
 
 # WHERE EACH KIND ACTUALLY READS FROM.
 #
@@ -472,12 +680,14 @@ KIND_LOCATION = {
 # it lives but not how to read it fails identically on every fetch — which is a fact about
 # OUR record, not about the provider, and must never be charged to the provider.
 KIND_PARSE_RULE = {
-    "file":              "extract",
-    "http_json_path":    "extract",
-    "http_json_count":   "extract",
-    "http_json_series":  "extract",
-    "http_csv":          "col",
-    "http_gdelt_tone":   None,        # fixed payload shape, nothing to declare
+    "file":              ("extract",),
+    "http_json_path":    ("extract",),
+    "http_json_count":   ("extract",),
+    "http_json_series":  ("extract",),
+    # either a positional column or a header name — a name survives the provider inserting
+    # a column, which an index does not
+    "http_csv":          ("col", "column_name"),
+    "http_gdelt_tone":   (),          # fixed payload shape, nothing to declare
 }
 
 # WHY A REFUSAL NEEDS A CLASS.
@@ -540,16 +750,18 @@ def validate_rule(entry: dict) -> bool:
     kind = entry.get("kind")
     if kind not in KIND_PARSE_RULE:
         raise PromotionRejected(f"unknown kind {kind!r} — promotion rejected")
-    field = KIND_PARSE_RULE[kind]
-    if not field:
+    fields = KIND_PARSE_RULE[kind]
+    if not fields:
         return True
-    val = entry.get(field)
-    if isinstance(val, int) and not isinstance(val, bool):
-        return True                      # column 0 is a real column
-    if not str(val or "").strip():
-        raise PromotionRejected(f"kind={kind} requires {field!r} (the parsing rule) — "
-                                f"promotion rejected")
-    return True
+    for field in fields:
+        val = entry.get(field)
+        if isinstance(val, int) and not isinstance(val, bool):
+            return True                  # column 0 is a real column
+        if str(val or "").strip():
+            return True
+    named = " or ".join(repr(f) for f in fields)
+    raise PromotionRejected(f"kind={kind} requires {named} (the parsing rule) — "
+                            f"promotion rejected")
 
 
 def validate_entry(entry: dict) -> bool:
@@ -567,6 +779,23 @@ def validate_entry(entry: dict) -> bool:
     return True
 
 
+def validate_deterministic(entry: dict) -> bool:
+    """The carve-out's structural condition, checked BEFORE anything is fetched.
+
+    It lived inside smoke_fetch at first, which meant a network error preempted it: a
+    gdelt source wrongly marked deterministic was refused for being unreachable rather
+    than for being the wrong kind, and would have been ACCEPTED the moment the host came
+    back. Whether a kind can be read without a model is a fact about the entry, knowable
+    with no request at all, so it is settled with no request at all."""
+    if not entry.get("deterministic"):
+        return True
+    if entry.get("kind") not in DETERMINISTIC_KINDS:
+        raise PromotionRejected(
+            f"deterministic sources must use a structured kind {DETERMINISTIC_KINDS}; "
+            f"{entry.get('kind')!r} needs a model in the read path — promotion rejected")
+    return True
+
+
 def smoke_fetch(entry: dict):
     """Fetch this ONE entry with the SAME loader the composer uses, before the spec is
     written. 'Does it actually fetch?' stops being a question anyone has to ask later.
@@ -577,7 +806,7 @@ def smoke_fetch(entry: dict):
     A source whose own measurement date is already past its declared limit is refused
     here rather than after promotion: the composer would refuse every value it served
     anyway, so promoting it only buys a slot that looks filled and never moves."""
-    v, dd = fetch(entry)
+    v, dd, payload = fetch(entry, return_payload=True)
     if isinstance(v, bool) or not isinstance(v, (int, float)) or v != v:  # v!=v -> NaN
         raise SmokeFetchEmpty(f"smoke fetch returned no usable value ({v!r}) — "
                               f"promotion rejected")
@@ -585,6 +814,19 @@ def smoke_fetch(entry: dict):
     if too_old:
         raise StaleData(f"smoke fetch read {v}, but its own data date {dd} is {dd_age}d old "
                         f"(limit {entry.get('data_max_age_days')}d) — promotion rejected")
+    if entry.get("deterministic"):
+        # For a deterministic feed the smoke test IS the schema validation: the shape read
+        # here becomes the contract, so there is no window in which the source is trusted
+        # without one. A pre-declared schema must MATCH what was just read, or the entry
+        # is describing a feed that no longer exists.
+        actual = schema_fingerprint(entry.get("kind"), payload)
+        if entry.get("schema"):
+            drift = schema_diff(entry["schema"], actual)
+            if drift:
+                raise PromotionRejected(f"declared schema does not match what was fetched: "
+                                        f"{drift} — promotion rejected")
+        else:
+            entry["schema"] = actual
     return v, dd
 
 
@@ -614,7 +856,8 @@ def promote(axis, url, slot, kind, org, extract=None, col=None, **fields):
     try:
         validate_entry(entry)                       # 1. does it declare its location?
         validate_rule(entry)                        # 2. does it declare how to read it?
-        smoke_value, smoke_date = smoke_fetch(entry)  # 3. does it actually fetch, once?
+        validate_deterministic(entry)               # 3. may it claim the carve-out?
+        smoke_value, smoke_date = smoke_fetch(entry)  # 4. does it actually fetch, once?
     except PromotionRejected as e:
         fclass, code = classify_failure(e)
         return {"error": str(e), "rejected": True, "id": sid,
@@ -632,7 +875,8 @@ def promote(axis, url, slot, kind, org, extract=None, col=None, **fields):
     spec["portfolio"][slot]["sources"].append(entry)
     _save(SPEC_FILE, specs)
     return {"promoted": sid, "into_slot": slot, "smoke_value": smoke_value,
-            "smoke_data_date": smoke_date,
+            "smoke_data_date": smoke_date, "deterministic": bool(entry.get("deterministic")),
+            "schema": entry.get("schema"),
             "note": "spec edited — review the git diff"}
 
 
@@ -664,6 +908,17 @@ if __name__ == "__main__":
     ap.add_argument("--url"); ap.add_argument("--slot"); ap.add_argument("--kind")
     ap.add_argument("--org", default="?"); ap.add_argument("--extract")
     ap.add_argument("--col", type=int)
+    ap.add_argument("--column-name", dest="column_name",
+                    help="http_csv: read this HEADER NAME instead of a positional column")
+    ap.add_argument("--row-key", dest="row_key",
+                    help="http_csv: select the row whose row-key-column equals this "
+                         "(e.g. World). No match is a loud failure, never the last row")
+    ap.add_argument("--row-key-column", dest="row_key_column", default=None,
+                    help="http_csv: the key column (default 'entity')")
+    ap.add_argument("--unit")
+    ap.add_argument("--deterministic", action="store_true",
+                    help="structured kinds only; the smoke fetch's shape becomes a contract "
+                         "and any drift kills the source at the FIRST violation")
     ap.add_argument("--path", help="repo-relative file for --kind file (its READ location)")
     a = ap.parse_args()
 
@@ -688,6 +943,9 @@ if __name__ == "__main__":
         print(json.dumps(revive(a.revive), ensure_ascii=False, indent=2))
     elif a.promote:
         print(json.dumps(promote(a.promote, a.url, a.slot, a.kind, a.org, a.extract, a.col,
-                                 path=a.path), ensure_ascii=False, indent=2))
+                                 path=a.path, unit=a.unit, column_name=a.column_name,
+                                 row_key=a.row_key, row_key_column=a.row_key_column,
+                                 deterministic=a.deterministic or None),
+                         ensure_ascii=False, indent=2))
     else:
         ap.print_help()
