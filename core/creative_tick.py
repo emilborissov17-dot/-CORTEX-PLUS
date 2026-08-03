@@ -22,6 +22,16 @@ STATUS BEFORE THIS FILE
     memory/idea_stream.jsonl did not exist. The creative phase was specified
     (SPEC_penumbra_pulse.md Part B item 7) and never built. Zero ideas produced.
 
+WHAT IS INERT IN THIS REPO RIGHT NOW - verified 2026-08-03, not assumed
+    core/metta_oracle.py DOES NOT EXIST. Therefore:
+      - seed generator 1 (rule violations) yields NOTHING and will keep
+        yielding nothing until that module exists;
+      - the mentor pass returns mentor="unavailable" and every idea is
+        surfaced unchecked;
+      - the penumbra model_anomaly door is unreachable.
+    Only seed generator 2 (monotone trends) is live. Run --selftest before
+    trusting any claim about what this module is doing.
+
 WALL COMPLIANCE (BOUNDARIES.md S I / S V)
     This module writes exactly one file: memory/idea_stream.jsonl (append only).
     It actuates nothing. It changes no score, no source, no config. It cannot
@@ -441,8 +451,37 @@ def due():
     return out
 
 
+def selftest():
+    """Report which parts of this module are actually live in THIS repo.
+
+    Exists because a module that degrades silently lets a claim like 'the
+    mentor pass checks each idea' stay true on paper and false on disk.
+    """
+    oracle = _load_metta_oracle()
+    llm = _load_llm()
+    report = {
+        "repo_root": str(REPO),
+        "idea_stream": str(IDEA_STREAM),
+        "idea_stream_exists": IDEA_STREAM.exists(),
+        "seed_gen_1_rule_violations": "LIVE" if oracle else "INERT - core.metta_oracle not importable",
+        "seed_gen_2_trends": "LIVE (pure python, no dependency)",
+        "mentor_pass": "LIVE" if oracle else "INERT - every idea surfaces unchecked",
+        "penumbra_model_anomaly_door": "REACHABLE" if oracle else "UNREACHABLE",
+        "articulation": "LLM" if llm else "deterministic fallback - core.groq_backend.call_groq not importable",
+        "guards": ["grounded_on refs must exist on disk", "falsifiable_test required",
+                   "integer horizon_days required", "would_be_false_if required",
+                   "non-ASCII output rejected as non_english_output"],
+        "writes": [str(IDEA_STREAM)],
+        "actuates": "nothing",
+    }
+    degraded = [k for k, v in report.items() if isinstance(v, str) and ("INERT" in v or "UNREACHABLE" in v)]
+    report["DEGRADED"] = degraded or "none"
+    return report
+
+
 def main():
     ap = argparse.ArgumentParser(description="CORTEX background creative tick")
+    ap.add_argument("--selftest", action="store_true", help="report which integrations are actually live")
     ap.add_argument("--dry-run", action="store_true", help="print, write nothing")
     ap.add_argument("--status", action="store_true")
     ap.add_argument("--due", action="store_true", help="ideas whose horizon has passed and await a verdict")
@@ -450,8 +489,14 @@ def main():
     ap.add_argument("--series", default=None, help="path to a JSON file of {axis: [values]}")
     args = ap.parse_args()
 
+    if args.selftest:
+        print(json.dumps(selftest(), indent=2))
+        return 0
     if args.status:
-        print(json.dumps(status(), indent=2))
+        st = status()
+        st["integrations"] = {k: v for k, v in selftest().items()
+                              if k.startswith("seed_gen") or k in ("mentor_pass", "articulation", "DEGRADED")}
+        print(json.dumps(st, indent=2))
         return 0
     if args.due:
         for r in due():

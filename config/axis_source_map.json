@@ -11,9 +11,8 @@
     },
     "reporter_independence_classes": {
       "independent": "third party measures without the subject's control (instrument, satellite, expert coding, reconstruction from physical data)",
-      "self_reported": "the measured entity produces the statistic (government statistical office, ministry, self-report aggregated by an international body)",
-      "mixed": "third-party standardised, underlying counts supplied by the measured entity",
-      "adversarial": "the reporter has an interest in the number being WORSE than the subject would report (opposition monitor, litigant, competitor, whistleblower)",
+      "self_reported": "the measured entity produces the statistic, OR a third party standardises counts the measured entity supplied",
+      "adversarial": "the reporter has an interest in the number being WORSE than the subject would report (opposition monitor, litigant, whistleblower)",
       "unknown": "not determined - never default to independent"
     },
     "independence_is_a_property_of_the_series_not_the_host": "OWID is a re-publisher. An OWID URL inherits NOTHING. The class below belongs to the ORIGINATING measurement (V-Dem experts, Ember analysts, national police records), not to ourworldindata.org.",
@@ -35,11 +34,16 @@
       "anchor_annual": "the authoritative slow series the axis is scored against",
       "indirect_proxy": "correlated but not the thing itself - must be labelled as proxy",
       "semantic_periodic": "text read for meaning, not parsed for a scalar; produces a claim with provenance, never a silent number"
+    },
+    "taxonomy_authority": "config/reporter_independence.json governs. It defines exactly these FOUR classes. An earlier draft of this file used a fifth class 'mixed'; every such entry has been converted to self_reported (the weaker guess) and flagged class_was_mixed=true so the nuance is not lost.",
+    "relationship_to_other_config": {
+      "config/providers.json": "THE provider registry, read by core/provider_catalog.py. This file does NOT duplicate it and must never be used as a provider registry.",
+      "config/sdg_axis_map.json": "goal -> axes routing hint. This file's sdg_series_keys are series-level and complementary.",
+      "config/reporter_independence.json": "the org -> class table. Classes quoted here are proposals for that table, not a competing one.",
+      "this_file": "axis -> candidate series + semantic sources. Nothing else in the repo carries the semantic side or the nine null-metric axes."
     }
   },
-
   "PLANET": {
-
     "CLIMATE_GLOBAL_RISK_REVIEW": {
       "primary_metric": "co2_ppm_mauna_loa",
       "target": 350,
@@ -71,11 +75,26 @@
           "verified_header": "entity,code,year,emissions_total"
         }
       ],
-      "sdg_series_keys": ["EN_ATM_CO2", "EN_ATM_GHGT_AIP"],
-      "eurostat_datasets": ["env_air_gge", "cli_iad_ghg"],
+      "sdg_series_keys": [
+        "EN_ATM_CO2",
+        "EN_ATM_GHGT_AIP"
+      ],
+      "eurostat_datasets": [
+        "env_air_gge",
+        "cli_iad_ghg"
+      ],
       "semantic_sources": [
-        {"name": "IPCC AR/SR report SPM text", "reads_for": "whether the framing of the same physical numbers has shifted (confidence language, 'likely' vs 'virtually certain')", "independence": "independent"},
-        {"name": "UNFCCC NDC synthesis report", "reads_for": "the gap between stated pledges and physical trajectory - the classic self-report vs instrument divergence", "independence": "mixed"}
+        {
+          "name": "IPCC AR/SR report SPM text",
+          "reads_for": "whether the framing of the same physical numbers has shifted (confidence language, 'likely' vs 'virtually certain')",
+          "independence": "independent"
+        },
+        {
+          "name": "UNFCCC NDC synthesis report",
+          "reads_for": "the gap between stated pledges and physical trajectory - the classic self-report vs instrument divergence",
+          "independence": "self_reported",
+          "class_was_mixed": true
+        }
       ],
       "divergence_pair": {
         "self_reported": "UNFCCC national GHG inventories",
@@ -83,7 +102,6 @@
         "note": "This axis is one of the few where a genuine paired series of DIFFERENT independence classes already exists. It is the natural first test case for divergence detection (Stage 3)."
       }
     },
-
     "ECOSYSTEMS_BIODIVERSITY_REVIEW": {
       "primary_metric": "forest_area_pct",
       "target": 35,
@@ -110,11 +128,26 @@
           "probe_note": "may require an API key; if so, record NEEDS_AUTH exactly as UCDP was recorded - not as dead"
         }
       ],
-      "sdg_series_keys": ["AG_LND_FRST", "ER_RSK_LSTI", "ER_PTD_TERRS"],
-      "eurostat_datasets": ["for_area_efa", "env_bio2"],
+      "sdg_series_keys": [
+        "AG_LND_FRST",
+        "ER_RSK_LSTI",
+        "ER_PTD_TERRS"
+      ],
+      "eurostat_datasets": [
+        "for_area_efa",
+        "env_bio2"
+      ],
       "semantic_sources": [
-        {"name": "IUCN Red List assessment narratives", "reads_for": "why a species moved category - the causal claim, which no index carries", "independence": "independent"},
-        {"name": "IPBES assessment SPM", "reads_for": "drivers ranking", "independence": "independent"}
+        {
+          "name": "IUCN Red List assessment narratives",
+          "reads_for": "why a species moved category - the causal claim, which no index carries",
+          "independence": "independent"
+        },
+        {
+          "name": "IPBES assessment SPM",
+          "reads_for": "drivers ranking",
+          "independence": "independent"
+        }
       ],
       "divergence_pair": {
         "self_reported": "FAO FRA country-reported forest area",
@@ -122,7 +155,6 @@
         "note": "second-best divergence candidate after climate"
       }
     },
-
     "ENERGY_REVIEW": {
       "primary_metric": "renewable_energy_pct",
       "target": 80,
@@ -149,17 +181,29 @@
           "row_key_column": "entity",
           "unit": "TWh",
           "org": "Energy Institute / OWID",
-          "reporter_independence": "mixed",
-          "verified": "live_2026_08_03"
+          "reporter_independence": "self_reported",
+          "verified": "live_2026_08_03",
+          "class_was_mixed": true,
+          "independence_note": "[third-party standardised, underlying counts supplied by the measured entity; live taxonomy has no mixed class, so the weaker guess self_reported applies per config/providers.json]"
         }
       ],
-      "sdg_series_keys": ["EG_FEC_RNEW", "EG_ELC_ACCS", "EG_EGY_CLEAN"],
-      "eurostat_datasets": ["nrg_ind_ren", "nrg_bal_s"],
+      "sdg_series_keys": [
+        "EG_FEC_RNEW",
+        "EG_ELC_ACCS",
+        "EG_EGY_CLEAN"
+      ],
+      "eurostat_datasets": [
+        "nrg_ind_ren",
+        "nrg_bal_s"
+      ],
       "semantic_sources": [
-        {"name": "IEA World Energy Outlook scenario chapters", "reads_for": "which scenario the observed trajectory is actually tracking - a claim, not a number", "independence": "independent"}
+        {
+          "name": "IEA World Energy Outlook scenario chapters",
+          "reads_for": "which scenario the observed trajectory is actually tracking - a claim, not a number",
+          "independence": "independent"
+        }
       ]
     },
-
     "FOOD_REVIEW": {
       "primary_metric": "food_insecurity_pct",
       "target": 2.5,
@@ -188,10 +232,20 @@
           "verified": "unverified_must_probe"
         }
       ],
-      "sdg_series_keys": ["SN_ITK_DEFC", "SN_ITK_MSFI", "AG_PRD_FIESMS"],
-      "eurostat_datasets": ["ilc_mdes03"],
+      "sdg_series_keys": [
+        "SN_ITK_DEFC",
+        "SN_ITK_MSFI",
+        "AG_PRD_FIESMS"
+      ],
+      "eurostat_datasets": [
+        "ilc_mdes03"
+      ],
       "semantic_sources": [
-        {"name": "IPC/FEWS NET country alert narratives", "reads_for": "declared famine risk and the disputed cases - the disagreement itself is the signal", "independence": "adversarial"}
+        {
+          "name": "IPC/FEWS NET country alert narratives",
+          "reads_for": "declared famine risk and the disputed cases - the disagreement itself is the signal",
+          "independence": "adversarial"
+        }
       ],
       "divergence_pair": {
         "self_reported": "FAO undernourishment from national food balance sheets",
@@ -199,7 +253,6 @@
         "note": "the rarest and most valuable pair in the whole map: a case where an ADVERSARIAL class series exists. Currently the portfolio has adversarial=0."
       }
     },
-
     "MATERIALS_WASTE_REVIEW": {
       "primary_metric": null,
       "numeric_candidates": [
@@ -209,8 +262,10 @@
           "kind": "http_csv",
           "url": "https://ourworldindata.org/grapher/plastic-waste-per-capita.csv?csvType=filtered&useColumnShortNames=true",
           "org": "OWID / Jambeck et al",
-          "reporter_independence": "mixed",
-          "verified": "unverified_must_probe"
+          "reporter_independence": "self_reported",
+          "verified": "unverified_must_probe",
+          "class_was_mixed": true,
+          "independence_note": "[third-party standardised, underlying counts supplied by the measured entity; live taxonomy has no mixed class, so the weaker guess self_reported applies per config/providers.json]"
         },
         {
           "id": "eurostat_circular_material_use",
@@ -223,13 +278,24 @@
           "probe_note": "Eurostat JSON-stat 2.0 confirmed live on this API root - see data_providers.json"
         }
       ],
-      "sdg_series_keys": ["EN_MAT_DOMCMPC", "EN_MAT_FTPRPC", "SG_HAZ_CMRBASEL"],
-      "eurostat_datasets": ["cei_srm030", "env_wasmun", "env_ac_mfa"],
+      "sdg_series_keys": [
+        "EN_MAT_DOMCMPC",
+        "EN_MAT_FTPRPC",
+        "SG_HAZ_CMRBASEL"
+      ],
+      "eurostat_datasets": [
+        "cei_srm030",
+        "env_wasmun",
+        "env_ac_mfa"
+      ],
       "semantic_sources": [
-        {"name": "Basel Convention non-compliance notifications", "reads_for": "waste export disputes - who is shipping what to whom against the treaty", "independence": "adversarial"}
+        {
+          "name": "Basel Convention non-compliance notifications",
+          "reads_for": "waste export disputes - who is shipping what to whom against the treaty",
+          "independence": "adversarial"
+        }
       ]
     },
-
     "PLANETARY_POTENTIAL_REVIEW": {
       "primary_metric": "protected_terrestrial_area_pct",
       "target": 30,
@@ -259,13 +325,22 @@
           "verified": "unverified_must_probe"
         }
       ],
-      "sdg_series_keys": ["ER_PTD_TERRS", "ER_PTD_FRHWTR", "ER_MRN_MPA"],
-      "eurostat_datasets": ["env_bio1"],
+      "sdg_series_keys": [
+        "ER_PTD_TERRS",
+        "ER_PTD_FRHWTR",
+        "ER_MRN_MPA"
+      ],
+      "eurostat_datasets": [
+        "env_bio1"
+      ],
       "semantic_sources": [
-        {"name": "paper-park literature and WDPA management-effectiveness assessments", "reads_for": "whether designated area is actually managed - the gap a percentage cannot show", "independence": "independent"}
+        {
+          "name": "paper-park literature and WDPA management-effectiveness assessments",
+          "reads_for": "whether designated area is actually managed - the gap a percentage cannot show",
+          "independence": "independent"
+        }
       ]
     },
-
     "WATER_REVIEW": {
       "primary_metric": "safe_water_access_pct",
       "target": 100,
@@ -295,16 +370,26 @@
           "probe_note": "World Bank API timed out twice on 2026-08-03 - alive but slow. Needs a longer timeout. Do NOT blacklist on timeout."
         }
       ],
-      "sdg_series_keys": ["SH_H2O_SAFE", "ER_H2O_STRESS", "SH_SAN_SAFE"],
-      "eurostat_datasets": ["env_wat_abs", "env_wat_pop"],
+      "sdg_series_keys": [
+        "SH_H2O_SAFE",
+        "ER_H2O_STRESS",
+        "SH_SAN_SAFE"
+      ],
+      "eurostat_datasets": [
+        "env_wat_abs",
+        "env_wat_pop"
+      ],
       "semantic_sources": [
-        {"name": "transboundary basin dispute reporting (Nile, Indus, Mekong, Tigris-Euphrates)", "reads_for": "water as a conflict driver - no withdrawal percentage encodes an upstream dam decision", "independence": "mixed"}
+        {
+          "name": "transboundary basin dispute reporting (Nile, Indus, Mekong, Tigris-Euphrates)",
+          "reads_for": "water as a conflict driver - no withdrawal percentage encodes an upstream dam decision",
+          "independence": "self_reported",
+          "class_was_mixed": true
+        }
       ]
     }
   },
-
   "HUMAN": {
-
     "COGNITION_LEARNING_REVIEW": {
       "primary_metric": null,
       "numeric_candidates": [
@@ -317,21 +402,32 @@
           "row_key_column": "entity",
           "unit": "harmonized_score",
           "org": "World Bank Human Capital Project",
-          "reporter_independence": "mixed",
-          "independence_note": "harmonized across PISA/TIMSS/PIRLS; the underlying tests are administered under national ministry control",
+          "reporter_independence": "self_reported",
+          "independence_note": "harmonized across PISA/TIMSS/PIRLS; the underlying tests are administered under national ministry control [third-party standardised, underlying counts supplied by the measured entity; live taxonomy has no mixed class, so the weaker guess self_reported applies per config/providers.json]",
           "verified": "live_2026_08_03",
           "verified_header": "entity,code,year,harmonized_test_scores__sex_all_students,ny_gdp_pcap_pp_kd,population_historical,wb_region",
-          "verified_rows": 197
+          "verified_rows": 197,
+          "class_was_mixed": true
         }
       ],
-      "sdg_series_keys": ["SE_TOT_PRFL", "SE_ADT_ACTS", "SE_ADT_FUNS"],
-      "eurostat_datasets": ["educ_uoe_enra01", "trng_lfs_01"],
+      "sdg_series_keys": [
+        "SE_TOT_PRFL",
+        "SE_ADT_ACTS",
+        "SE_ADT_FUNS"
+      ],
+      "eurostat_datasets": [
+        "educ_uoe_enra01",
+        "trng_lfs_01"
+      ],
       "semantic_sources": [
-        {"name": "PISA/TIMSS national report commentary and the exclusion-rate footnotes", "reads_for": "which students were EXCLUDED from the sample - the single largest source of inflated national scores, and a footnote, never a number in the headline", "independence": "independent"}
+        {
+          "name": "PISA/TIMSS national report commentary and the exclusion-rate footnotes",
+          "reads_for": "which students were EXCLUDED from the sample - the single largest source of inflated national scores, and a footnote, never a number in the headline",
+          "independence": "independent"
+        }
       ],
       "what_no_number_can_capture": "Cognition is not test performance. A rising harmonized score under a narrowing curriculum is a fall in cognition reported as a rise. The axis needs the exclusion-rate and curriculum-narrowing literature read as text."
     },
-
     "CULTURE_MEDIA_REVIEW": {
       "primary_metric": null,
       "null_metric_note": "This axis has NO primary metric in target_config. It is the clearest case in the whole system where the meaning is semantic.",
@@ -369,15 +465,31 @@
           "verified_sample": "Albania,ALB,2025,0.673,Europe"
         }
       ],
-      "sdg_series_keys": ["VC_VAW_MTUHRA", "SG_REG_BRTH"],
+      "sdg_series_keys": [
+        "VC_VAW_MTUHRA",
+        "SG_REG_BRTH"
+      ],
       "semantic_sources": [
-        {"name": "GDELT Global Knowledge Graph theme timelines", "reads_for": "what the world's media is ABOUT, and how tone on a theme moves independently of the underlying physical series", "independence": "mixed", "already_in_portfolio": true},
-        {"name": "RSF Index annual narrative (not the score)", "reads_for": "the specific incidents behind a score change", "independence": "adversarial"},
-        {"name": "CPJ / Committee to Protect Journalists incident database", "reads_for": "named, dated, individual cases - the level at which a state cannot aggregate away a killing", "independence": "adversarial"}
+        {
+          "name": "GDELT Global Knowledge Graph theme timelines",
+          "reads_for": "what the world's media is ABOUT, and how tone on a theme moves independently of the underlying physical series",
+          "independence": "self_reported",
+          "already_in_portfolio": true,
+          "class_was_mixed": true
+        },
+        {
+          "name": "RSF Index annual narrative (not the score)",
+          "reads_for": "the specific incidents behind a score change",
+          "independence": "adversarial"
+        },
+        {
+          "name": "CPJ / Committee to Protect Journalists incident database",
+          "reads_for": "named, dated, individual cases - the level at which a state cannot aggregate away a killing",
+          "independence": "adversarial"
+        }
       ],
       "what_no_number_can_capture": "A press-freedom score of 40 and a score of 40 can mean 'noisy but free' and 'silent and safe'. The axis is about what a culture is able to SAY. Two numbers cannot distinguish self-censorship from consensus. Only the incident narratives can."
     },
-
     "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL": {
       "primary_metric": null,
       "numeric_candidates": [
@@ -392,14 +504,25 @@
           "probe_note": "sibling slug of freedom-of-expression-index which IS verified; the column will be a vdem__estimate_best variant - derive it from the real header, do not guess"
         }
       ],
-      "sdg_series_keys": ["SG_REG_BRTH", "VC_VOV_PHYL", "SG_HR_NHRC"],
+      "sdg_series_keys": [
+        "SG_REG_BRTH",
+        "VC_VOV_PHYL",
+        "SG_HR_NHRC"
+      ],
       "semantic_sources": [
-        {"name": "OHCHR Universal Periodic Review submissions - specifically the CIVIL SOCIETY submissions, not the state report", "reads_for": "the same country, described by the state and by its critics, in the same document set. This is a ready-made divergence pair in TEXT.", "independence": "adversarial"},
-        {"name": "Amnesty / HRW annual country entries", "reads_for": "named incidents", "independence": "adversarial"}
+        {
+          "name": "OHCHR Universal Periodic Review submissions - specifically the CIVIL SOCIETY submissions, not the state report",
+          "reads_for": "the same country, described by the state and by its critics, in the same document set. This is a ready-made divergence pair in TEXT.",
+          "independence": "adversarial"
+        },
+        {
+          "name": "Amnesty / HRW annual country entries",
+          "reads_for": "named incidents",
+          "independence": "adversarial"
+        }
       ],
       "what_no_number_can_capture": "Rights at human level are experienced one person at a time. The UPR pairing (state self-description vs civil-society description of the same year) is the single richest semantic divergence source available anywhere in this map."
     },
-
     "HUMAN_WELL_BEING_REVIEW": {
       "primary_metric": "child_mortality_per_1000",
       "numeric_candidates": [
@@ -412,11 +535,13 @@
           "row_key_column": "entity",
           "unit": "years",
           "org": "UN WPP / HMD via OWID",
-          "reporter_independence": "mixed",
+          "reporter_independence": "self_reported",
           "verified": "live_2026_08_03",
           "verified_header": "entity,code,year,life_expectancy_0",
           "verified_rows": 618,
-          "IMPORTANT": "This slug returns FULL HISTORY (618 rows, from 1770), not one row per entity. Row selection MUST be (entity, max(year)) - selecting 'the last row' would return an arbitrary historical value. A 'World' row EXISTS here (74 rows, 1770-2023) - one of the few OWID panels where it does."
+          "IMPORTANT": "This slug returns FULL HISTORY (618 rows, from 1770), not one row per entity. Row selection MUST be (entity, max(year)) - selecting 'the last row' would return an arbitrary historical value. A 'World' row EXISTS here (74 rows, 1770-2023) - one of the few OWID panels where it does.",
+          "class_was_mixed": true,
+          "independence_note": "[third-party standardised, underlying counts supplied by the measured entity; live taxonomy has no mixed class, so the weaker guess self_reported applies per config/providers.json]"
         },
         {
           "id": "owid_child_mortality",
@@ -424,20 +549,38 @@
           "kind": "http_csv",
           "url": "https://ourworldindata.org/grapher/child-mortality.csv?csvType=filtered&useColumnShortNames=true",
           "org": "UN IGME",
-          "reporter_independence": "mixed",
+          "reporter_independence": "self_reported",
           "verified": "unverified_must_probe",
-          "note": "this is the axis PRIMARY METRIC - probe it first, before anything else in HUMAN"
+          "note": "this is the axis PRIMARY METRIC - probe it first, before anything else in HUMAN",
+          "class_was_mixed": true,
+          "independence_note": "[third-party standardised, underlying counts supplied by the measured entity; live taxonomy has no mixed class, so the weaker guess self_reported applies per config/providers.json]"
         }
       ],
-      "sdg_series_keys": ["SH_DYN_MORT", "SH_DYN_IMRT", "SH_STA_MORT", "SH_XPD_CHEX"],
-      "eurostat_datasets": ["demo_mlexpec", "hlth_cd_asdr2"],
+      "sdg_series_keys": [
+        "SH_DYN_MORT",
+        "SH_DYN_IMRT",
+        "SH_STA_MORT",
+        "SH_XPD_CHEX"
+      ],
+      "eurostat_datasets": [
+        "demo_mlexpec",
+        "hlth_cd_asdr2"
+      ],
       "semantic_sources": [
-        {"name": "WHO Disease Outbreak News", "reads_for": "events that will move the annual series a year before the annual series moves", "independence": "mixed"},
-        {"name": "MSF / medical NGO field reporting", "reads_for": "conditions in places where no national statistical system operates - the zero-coverage regions the panels silently omit", "independence": "adversarial"}
+        {
+          "name": "WHO Disease Outbreak News",
+          "reads_for": "events that will move the annual series a year before the annual series moves",
+          "independence": "self_reported",
+          "class_was_mixed": true
+        },
+        {
+          "name": "MSF / medical NGO field reporting",
+          "reads_for": "conditions in places where no national statistical system operates - the zero-coverage regions the panels silently omit",
+          "independence": "adversarial"
+        }
       ],
       "emil_note": "Health is a key element of every governance decision. Without healthy people there is no model of a civilization sustainable in time. An earlier proposal of mine to gate feeds by axis-vocabulary would have mechanically severed health signals from governance axes. RETRACTED. Cross-domain feeds are the point, not the leak."
     },
-
     "SOCIAL_RELATIONS_REVIEW": {
       "primary_metric": "refugee_population",
       "numeric_candidates": [
@@ -450,10 +593,11 @@
           "row_key_column": "entity",
           "unit": "per_100k_population",
           "org": "UNODC",
-          "reporter_independence": "mixed",
-          "independence_note": "UNODC standardises, but the underlying counts come from national police/justice systems - a state that under-records under-reports",
+          "reporter_independence": "self_reported",
+          "independence_note": "UNODC standardises, but the underlying counts come from national police/justice systems - a state that under-records under-reports [third-party standardised, underlying counts supplied by the measured entity; live taxonomy has no mixed class, so the weaker guess self_reported applies per config/providers.json]",
           "verified": "live_2026_08_03",
-          "value_for_the_starved_axis": "This is the axis the browser collector looped on for 14 consecutive runs with zero yield. It is not that the axis is unmeasurable. It is that nobody mapped it."
+          "value_for_the_starved_axis": "This is the axis the browser collector looped on for 14 consecutive runs with zero yield. It is not that the axis is unmeasurable. It is that nobody mapped it.",
+          "class_was_mixed": true
         },
         {
           "id": "unhcr_population_statistics",
@@ -461,9 +605,11 @@
           "kind": "http_json_path",
           "url": "https://api.unhcr.org/population/v1/population/?year=2025&limit=1",
           "org": "UNHCR",
-          "reporter_independence": "mixed",
+          "reporter_independence": "self_reported",
           "verified": "unverified_must_probe",
-          "note": "refugee_population is the axis PRIMARY METRIC - probe this before anything else on this axis"
+          "note": "refugee_population is the axis PRIMARY METRIC - probe this before anything else on this axis",
+          "class_was_mixed": true,
+          "independence_note": "[third-party standardised, underlying counts supplied by the measured entity; live taxonomy has no mixed class, so the weaker guess self_reported applies per config/providers.json]"
         },
         {
           "id": "acled_conflict_events",
@@ -476,16 +622,26 @@
           "probe_note": "requires a free API key. Record NEEDS_AUTH, exactly as UCDP was recorded. Not dead."
         }
       ],
-      "sdg_series_keys": ["VC_IHR_PSRC", "SM_POP_REFG", "VC_PRS_UNSNT"],
-      "eurostat_datasets": ["migr_asyappctza", "crim_off_cat"],
+      "sdg_series_keys": [
+        "VC_IHR_PSRC",
+        "SM_POP_REFG",
+        "VC_PRS_UNSNT"
+      ],
+      "eurostat_datasets": [
+        "migr_asyappctza",
+        "crim_off_cat"
+      ],
       "semantic_sources": [
-        {"name": "UCDP conflict event descriptions (already local, data/ucdp/)", "reads_for": "the actor and the trigger, which the count of 65 conflicts does not carry", "independence": "independent", "already_in_portfolio": true}
+        {
+          "name": "UCDP conflict event descriptions (already local, data/ucdp/)",
+          "reads_for": "the actor and the trigger, which the count of 65 conflicts does not carry",
+          "independence": "independent",
+          "already_in_portfolio": true
+        }
       ]
     }
   },
-
   "CIVILIZATION": {
-
     "ECONOMY_WORK_REVIEW": {
       "primary_metric": null,
       "numeric_candidates": [
@@ -500,14 +656,27 @@
           "verified": "unverified_must_probe"
         }
       ],
-      "sdg_series_keys": ["SL_TLF_UEM", "SL_EMP_EARN", "SL_ISV_IFEM", "SL_TLF_NEET"],
-      "eurostat_datasets": ["une_rt_a", "lfsi_emp_a", "earn_ses_hourly"],
+      "sdg_series_keys": [
+        "SL_TLF_UEM",
+        "SL_EMP_EARN",
+        "SL_ISV_IFEM",
+        "SL_TLF_NEET"
+      ],
+      "eurostat_datasets": [
+        "une_rt_a",
+        "lfsi_emp_a",
+        "earn_ses_hourly"
+      ],
       "semantic_sources": [
-        {"name": "ILO informality reports", "reads_for": "the workforce that no unemployment rate counts - in many countries the majority", "independence": "mixed"}
+        {
+          "name": "ILO informality reports",
+          "reads_for": "the workforce that no unemployment rate counts - in many countries the majority",
+          "independence": "self_reported",
+          "class_was_mixed": true
+        }
       ],
       "what_no_number_can_capture": "Unemployment rate is the textbook case of a government legitimising itself through its own number: change the definition of 'actively seeking work' and the rate falls without one person gaining work. This axis REQUIRES the definitional footnotes to be read as text."
     },
-
     "EDUCATION_CULTURE_REVIEW": {
       "primary_metric": null,
       "numeric_candidates": [
@@ -521,13 +690,23 @@
           "verified": "unverified_must_probe"
         }
       ],
-      "sdg_series_keys": ["SE_TOT_CPLR", "SE_ACS_CMPTR", "SE_ADT_EDUCTRN"],
-      "eurostat_datasets": ["educ_uoe_enrt01", "edat_lfse_03"],
+      "sdg_series_keys": [
+        "SE_TOT_CPLR",
+        "SE_ACS_CMPTR",
+        "SE_ADT_EDUCTRN"
+      ],
+      "eurostat_datasets": [
+        "educ_uoe_enrt01",
+        "edat_lfse_03"
+      ],
       "semantic_sources": [
-        {"name": "UNESCO GEM Report", "reads_for": "who is being educated INTO what - curriculum content, which years-of-schooling cannot see", "independence": "independent"}
+        {
+          "name": "UNESCO GEM Report",
+          "reads_for": "who is being educated INTO what - curriculum content, which years-of-schooling cannot see",
+          "independence": "independent"
+        }
       ]
     },
-
     "GOVERNANCE_INSTITUTIONS_REVIEW": {
       "primary_metric": null,
       "numeric_candidates": [
@@ -546,14 +725,27 @@
           "verified_header": "entity,code,year,electdem_vdem__estimate_best,owid_region"
         }
       ],
-      "sdg_series_keys": ["SG_INT_MBRDEV", "SG_GOV_LOGV", "IU_COR_BRIB"],
-      "eurostat_datasets": ["gov_10a_main"],
+      "sdg_series_keys": [
+        "SG_INT_MBRDEV",
+        "SG_GOV_LOGV",
+        "IU_COR_BRIB"
+      ],
+      "eurostat_datasets": [
+        "gov_10a_main"
+      ],
       "semantic_sources": [
-        {"name": "V-Dem country-expert disagreement intervals", "reads_for": "where the experts DISAGREE - the disagreement is information the point estimate discards", "independence": "independent"},
-        {"name": "national constitutional court rulings against the executive", "reads_for": "whether institutions actually bind power, which no index measures", "independence": "independent"}
+        {
+          "name": "V-Dem country-expert disagreement intervals",
+          "reads_for": "where the experts DISAGREE - the disagreement is information the point estimate discards",
+          "independence": "independent"
+        },
+        {
+          "name": "national constitutional court rulings against the executive",
+          "reads_for": "whether institutions actually bind power, which no index measures",
+          "independence": "independent"
+        }
       ]
     },
-
     "INEQUALITY_POVERTY_REVIEW": {
       "primary_metric": null,
       "numeric_candidates": [
@@ -566,11 +758,13 @@
           "row_key_column": "entity",
           "unit": "gini_0_to_1",
           "org": "World Bank PIP",
-          "reporter_independence": "mixed",
+          "reporter_independence": "self_reported",
           "verified": "live_2026_08_03",
           "verified_rows": 185,
           "verified_sample": "Albania,ALB,2025,0.29419630765914917,,2020",
-          "IMPORTANT": "the row carries an __original_year column: the 2025 row for Albania is really a 2020 survey. The data_date MUST be taken from __original_year, not from the year column, or the system will report five-year-old inequality as current."
+          "IMPORTANT": "the row carries an __original_year column: the 2025 row for Albania is really a 2020 survey. The data_date MUST be taken from __original_year, not from the year column, or the system will report five-year-old inequality as current.",
+          "class_was_mixed": true,
+          "independence_note": "[third-party standardised, underlying counts supplied by the measured entity; live taxonomy has no mixed class, so the weaker guess self_reported applies per config/providers.json]"
         },
         {
           "id": "wid_top10_income_share",
@@ -583,16 +777,22 @@
           "verified": "unverified_must_probe"
         }
       ],
-      "sdg_series_keys": ["SI_POV_DAY1", "SI_POV_EMP1", "SI_DST_FISLRG"],
-      "eurostat_datasets": ["ilc_di12", "ilc_peps01n"],
+      "sdg_series_keys": [
+        "SI_POV_DAY1",
+        "SI_POV_EMP1",
+        "SI_DST_FISLRG"
+      ],
+      "eurostat_datasets": [
+        "ilc_di12",
+        "ilc_peps01n"
+      ],
       "semantic_sources": [],
       "divergence_pair": {
-        "mixed": "World Bank PIP Gini (household surveys)",
         "independent": "WID top-10 share (tax records)",
-        "note": "a textbook methodological divergence: surveys under-sample the rich, tax records do not. Where these two disagree the disagreement IS the finding."
+        "note": "a textbook methodological divergence: surveys under-sample the rich, tax records do not. Where these two disagree the disagreement IS the finding.",
+        "self_reported": "World Bank PIP Gini (household surveys)"
       }
     },
-
     "INFRASTRUCTURE_CITIES_REVIEW": {
       "primary_metric": null,
       "numeric_candidates": [
@@ -618,13 +818,24 @@
           "probe_note": "v3 requires an API key - record NEEDS_AUTH"
         }
       ],
-      "sdg_series_keys": ["EN_LKRT_URBAN", "SP_TRN_PUBL", "EN_ATM_PM25"],
-      "eurostat_datasets": ["urb_cpop1", "sdg_11_50"],
+      "sdg_series_keys": [
+        "EN_LKRT_URBAN",
+        "SP_TRN_PUBL",
+        "EN_ATM_PM25"
+      ],
+      "eurostat_datasets": [
+        "urb_cpop1",
+        "sdg_11_50"
+      ],
       "semantic_sources": [
-        {"name": "UN-Habitat city reports", "reads_for": "informal settlement conditions - the part of a city its own statistics do not enumerate", "independence": "mixed"}
+        {
+          "name": "UN-Habitat city reports",
+          "reads_for": "informal settlement conditions - the part of a city its own statistics do not enumerate",
+          "independence": "self_reported",
+          "class_was_mixed": true
+        }
       ]
     },
-
     "TECHNOLOGY_AI_REVIEW": {
       "primary_metric": null,
       "null_metric_note": "no primary metric - and this is the axis where CORTEX is measuring the domain it belongs to",
@@ -657,15 +868,29 @@
           "why_it_matters": "training-compute growth rate is the closest thing to a physical measurement of the capability trend that BOUNDARIES S IV exists to bound"
         }
       ],
-      "sdg_series_keys": ["GB_XPD_RSDV", "TX_IMP_GBMHT"],
+      "sdg_series_keys": [
+        "GB_XPD_RSDV",
+        "TX_IMP_GBMHT"
+      ],
       "semantic_sources": [
-        {"name": "AI Incident Database", "reads_for": "named, dated harms - the only concrete record of what AI systems actually did wrong", "independence": "adversarial"},
-        {"name": "frontier lab system cards and model cards", "reads_for": "self-reported capability and safety claims", "independence": "self_reported"},
-        {"name": "AI Safety Index / independent evaluations", "reads_for": "external assessment of the same labs", "independence": "adversarial"}
+        {
+          "name": "AI Incident Database",
+          "reads_for": "named, dated harms - the only concrete record of what AI systems actually did wrong",
+          "independence": "adversarial"
+        },
+        {
+          "name": "frontier lab system cards and model cards",
+          "reads_for": "self-reported capability and safety claims",
+          "independence": "self_reported"
+        },
+        {
+          "name": "AI Safety Index / independent evaluations",
+          "reads_for": "external assessment of the same labs",
+          "independence": "adversarial"
+        }
       ],
       "what_no_number_can_capture": "Publication counts measure activity, not capability, and certainly not risk. The paired system-card (self_reported) vs incident-database (adversarial) reading is the whole point of this axis. This is also the axis where CORTEX has an interest in the answer - and therefore the axis where its own reasoning must be held to the strictest provenance."
     },
-
     "TECHNOLOGY_INFRA_REVIEW": {
       "primary_metric": null,
       "numeric_candidates": [
@@ -698,16 +923,25 @@
           "why_it_matters": "an internet shutdown is simultaneously a TECHNOLOGY_INFRA event, a CULTURE_MEDIA event and a GOVERNANCE_RIGHTS event. It is the concrete proof that cross-domain feeds must not be gated by axis vocabulary."
         }
       ],
-      "sdg_series_keys": ["IT_USE_ii99", "IT_MOB_NTWK", "IT_NET_BBND"],
-      "eurostat_datasets": ["isoc_ci_ifp_iu", "isoc_bde15b_h"],
+      "sdg_series_keys": [
+        "IT_USE_ii99",
+        "IT_MOB_NTWK",
+        "IT_NET_BBND"
+      ],
+      "eurostat_datasets": [
+        "isoc_ci_ifp_iu",
+        "isoc_bde15b_h"
+      ],
       "semantic_sources": [
-        {"name": "Access Now #KeepItOn shutdown reports", "reads_for": "who ordered a shutdown and on what pretext", "independence": "adversarial"}
+        {
+          "name": "Access Now #KeepItOn shutdown reports",
+          "reads_for": "who ordered a shutdown and on what pretext",
+          "independence": "adversarial"
+        }
       ]
     }
   },
-
   "COSMOS": {
-
     "COSMIC_RESOURCES_REVIEW": {
       "primary_metric": null,
       "numeric_candidates": [
@@ -723,19 +957,38 @@
           "independence_note": "orbital mechanics from telescope observation; the least manipulable number in the entire system",
           "verified": "live_2026_08_03",
           "verified_count": 29,
-          "verified_fields": ["des", "orbit_id", "jd", "cd", "dist", "dist_min", "dist_max", "v_rel", "v_inf", "t_sigma_f", "h"],
+          "verified_fields": [
+            "des",
+            "orbit_id",
+            "jd",
+            "cd",
+            "dist",
+            "dist_min",
+            "dist_max",
+            "v_rel",
+            "v_inf",
+            "t_sigma_f",
+            "h"
+          ],
           "status": "READY NOW - installs with zero code change",
           "why_it_matters": "COSMOS currently has essentially no live feed. This is a real, daily-moving, fully independent number for a domain that has been scored on reasoning alone."
         }
       ],
       "sdg_series_keys": [],
       "semantic_sources": [
-        {"name": "IAU Minor Planet Center circulars", "reads_for": "newly catalogued objects and orbit revisions", "independence": "independent"},
-        {"name": "space resources policy literature (Artemis Accords signatory statements, Moon Agreement positions)", "reads_for": "the legal claim structure over off-Earth resources - entirely textual, no number exists", "independence": "self_reported"}
+        {
+          "name": "IAU Minor Planet Center circulars",
+          "reads_for": "newly catalogued objects and orbit revisions",
+          "independence": "independent"
+        },
+        {
+          "name": "space resources policy literature (Artemis Accords signatory statements, Moon Agreement positions)",
+          "reads_for": "the legal claim structure over off-Earth resources - entirely textual, no number exists",
+          "independence": "self_reported"
+        }
       ],
       "what_no_number_can_capture": "Cosmic resources are today a question of LAW and CLAIM, not of extraction volume. There is no tonnage series. The axis is semantic by nature until the first commercial extraction occurs."
     },
-
     "DEEP_TIME_RISKS_REVIEW": {
       "primary_metric": null,
       "numeric_candidates": [
@@ -756,37 +1009,70 @@
       ],
       "sdg_series_keys": [],
       "semantic_sources": [
-        {"name": "Bulletin of the Atomic Scientists Doomsday Clock statement", "reads_for": "the reasoning behind the setting, which is the content; the clock time itself is a summary of an argument", "independence": "independent"},
-        {"name": "Biological Weapons Convention / IAEA safeguards reporting", "reads_for": "compliance disputes", "independence": "mixed"},
-        {"name": "existential-risk research literature (FHI-successor, CSER, GCRI)", "reads_for": "newly identified risk classes - a risk nobody has named has no series", "independence": "independent"}
+        {
+          "name": "Bulletin of the Atomic Scientists Doomsday Clock statement",
+          "reads_for": "the reasoning behind the setting, which is the content; the clock time itself is a summary of an argument",
+          "independence": "independent"
+        },
+        {
+          "name": "Biological Weapons Convention / IAEA safeguards reporting",
+          "reads_for": "compliance disputes",
+          "independence": "self_reported",
+          "class_was_mixed": true
+        },
+        {
+          "name": "existential-risk research literature (FHI-successor, CSER, GCRI)",
+          "reads_for": "newly identified risk classes - a risk nobody has named has no series",
+          "independence": "independent"
+        }
       ],
       "what_no_number_can_capture": "The dominant deep-time risks (engineered pandemic, nuclear exchange, misaligned AI) have NO observational series at all. Their probability is an argument, not a measurement. An axis scored only on asteroid counts would be measuring the one deep-time risk that happens to be instrumented, and calling it the risk. That must be stated explicitly in the axis note or the axis lies by omission."
     },
-
     "GENERAL_SELF_REVIEW": {
       "primary_metric": null,
       "numeric_candidates": [],
       "external_sources": "NONE. This axis is about the system itself. Feeding it external data would be a category error.",
       "internal_sources": [
-        {"name": "memory/existence_ledger.jsonl", "reads_for": "did the system run, and did it run honestly"},
-        {"name": "memory/heartbeat.json", "reads_for": "boundary coverage"},
-        {"name": "memory/sensorium/_merkle_leaves.jsonl", "reads_for": "what it actually committed as observation"},
-        {"name": "memory/penumbra/ quarantine chain", "reads_for": "what it refused and why - arguably the most honest self-measure available"},
-        {"name": "memory/collector_runs.jsonl", "reads_for": "whether intake is diverse or looping"},
-        {"name": "memory/idea_stream.jsonl", "reads_for": "the creative tick output", "STATUS": "FILE DOES NOT EXIST as of 2026-08-03. The creative phase has produced zero ideas. This is the honest state."}
+        {
+          "name": "memory/existence_ledger.jsonl",
+          "reads_for": "did the system run, and did it run honestly"
+        },
+        {
+          "name": "memory/heartbeat.json",
+          "reads_for": "boundary coverage"
+        },
+        {
+          "name": "memory/sensorium/_merkle_leaves.jsonl",
+          "reads_for": "what it actually committed as observation"
+        },
+        {
+          "name": "memory/penumbra/ quarantine chain",
+          "reads_for": "what it refused and why - arguably the most honest self-measure available"
+        },
+        {
+          "name": "memory/collector_runs.jsonl",
+          "reads_for": "whether intake is diverse or looping"
+        },
+        {
+          "name": "memory/idea_stream.jsonl",
+          "reads_for": "the creative tick output",
+          "STATUS": "FILE DOES NOT EXIST as of 2026-08-03. The creative phase has produced zero ideas. This is the honest state."
+        }
       ],
       "semantic_sources": [
-        {"name": "BOUNDARIES.md", "reads_for": "the constitution the system must be testable against under conflict, not merely able to cite", "independence": "human_owned"}
+        {
+          "name": "BOUNDARIES.md",
+          "reads_for": "the constitution the system must be testable against under conflict, not merely able to cite",
+          "independence": "human_owned"
+        }
       ],
       "what_no_number_can_capture": "Self-review is where a self-scoring circuit is most dangerous: the system grading its own honesty. The only defensible measures here are ones the system cannot improve by wanting to - ledger completeness, quarantine rate, source diversity by ORIGIN - never an LLM's opinion of its own performance."
     },
-
     "GOAL_PROGRESS_REVIEW": {
       "primary_metric": "goal_score",
       "numeric_candidates": [],
       "note": "Computed internally by goal_score_calculator.py from the other 24 axes. It takes no external feed BY DESIGN. Its integrity depends entirely on the integrity of the other 24 - which is the argument for mapping all of them rather than the three that happened to be easy."
     },
-
     "LONG_TERM_FUTURE_REVIEW": {
       "primary_metric": null,
       "numeric_candidates": [
@@ -796,19 +1082,28 @@
           "kind": "http_csv",
           "url": "https://ourworldindata.org/grapher/population-long-run-with-projections.csv?csvType=filtered&useColumnShortNames=true",
           "org": "UN World Population Prospects",
-          "reporter_independence": "mixed",
+          "reporter_independence": "self_reported",
           "verified": "unverified_must_probe",
-          "caveat": "a PROJECTION is not a measurement. If it enters the sensorium it must be flagged kind=projection and never scored as an observation."
+          "caveat": "a PROJECTION is not a measurement. If it enters the sensorium it must be flagged kind=projection and never scored as an observation.",
+          "class_was_mixed": true,
+          "independence_note": "[third-party standardised, underlying counts supplied by the measured entity; live taxonomy has no mixed class, so the weaker guess self_reported applies per config/providers.json]"
         }
       ],
       "sdg_series_keys": [],
       "semantic_sources": [
-        {"name": "long-termist and civilizational-resilience literature", "reads_for": "the arguments about what makes a civilization persist", "independence": "independent"},
-        {"name": "VISION.md and civilization_goal.txt", "reads_for": "the system's own declared long-term criterion - the standard it is scored against", "independence": "human_owned"}
+        {
+          "name": "long-termist and civilizational-resilience literature",
+          "reads_for": "the arguments about what makes a civilization persist",
+          "independence": "independent"
+        },
+        {
+          "name": "VISION.md and civilization_goal.txt",
+          "reads_for": "the system's own declared long-term criterion - the standard it is scored against",
+          "independence": "human_owned"
+        }
       ],
       "what_no_number_can_capture": "Almost everything. This axis measures a future that has not happened. Any number here is a model output, not an observation. The honest scoring is: which arguments have gained or lost support, with citations - and an explicit flag that this axis contains no measurements."
     },
-
     "SPACE_INFRASTRUCTURE_REVIEW": {
       "primary_metric": null,
       "numeric_candidates": [
@@ -837,13 +1132,20 @@
       ],
       "sdg_series_keys": [],
       "semantic_sources": [
-        {"name": "ESA Space Environment Report", "reads_for": "Kessler-syndrome risk assessment - a trajectory argument, not a count", "independence": "independent"},
-        {"name": "national launch authority filings and ITU orbital slot allocations", "reads_for": "who is claiming what orbit", "independence": "self_reported"}
+        {
+          "name": "ESA Space Environment Report",
+          "reads_for": "Kessler-syndrome risk assessment - a trajectory argument, not a count",
+          "independence": "independent"
+        },
+        {
+          "name": "national launch authority filings and ITU orbital slot allocations",
+          "reads_for": "who is claiming what orbit",
+          "independence": "self_reported"
+        }
       ],
       "what_no_number_can_capture": "A satellite count rising can mean expanding capability or approaching cascade. The same number, two opposite meanings. Only the debris-environment argument distinguishes them."
     }
   },
-
   "_coverage_summary": {
     "axes_total": 25,
     "axes_with_at_least_one_LIVE_VERIFIED_source": 12,
