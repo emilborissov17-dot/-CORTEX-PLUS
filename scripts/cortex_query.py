@@ -37,6 +37,7 @@ USAGE
                                            concentration, who measured it, collector counters
   cortex_query.py --candidates             the FULL candidate pool (random sample if large)
   cortex_query.py --rejected [--since D]   everything considered and dropped, with reasons
+  cortex_query.py --pairs                  direct-vs-aggregate pairs, both sides verbatim
 
 The write half of human sovereignty over intake — proposing a source the system never
 found — is deliberately NOT here: see scripts/cortex_ingest.py. That command must run the
@@ -67,6 +68,7 @@ DISCARDED       = REPO / "memory" / "discarded_candidates.jsonl"
 SPEC_FILE       = REPO / "config" / "composer_specs.json"
 REPORTER_FILE   = REPO / "config" / "reporter_independence.json"
 INSTRUMENT      = REPO / "memory" / "collector_instrumentation.json"
+PAIRS_FILE      = REPO / "memory" / "provenance_pairs.json"
 
 RULE = "─" * 78
 
@@ -550,6 +552,52 @@ def cmd_rejected(since=None) -> int:
     return 0
 
 
+# ── --pairs ──────────────────────────────────────────────────────────────────
+
+def cmd_pairs() -> int:
+    """Both sides of every direct-vs-aggregate pair, as read. NOTHING IS COMPUTED here
+    either — this prints what core/provenance_pairs.py stored, and that module derives no
+    difference, ratio or agreement score by design. A delta published before anyone has
+    established that two series measure the same quantity for the same entity is a number
+    that will be read as evidence and is not one."""
+    doc = _read_json(PAIRS_FILE, {}) or {}
+    pairs = doc.get("pairs") or {}
+    print(RULE)
+    print("DIRECT vs AGGREGATE PAIRS — the same quantity from two provenances")
+    print(RULE)
+    if not pairs:
+        print(f"no pairs recorded at {_rel(PAIRS_FILE)}")
+        return 0
+    axes_both = set()
+    for pid, p in pairs.items():
+        print(f"\n{pid}   [{p.get('axis')}]   entity={p.get('entity')}")
+        print(f"  {p.get('indicator')}")
+        print(f"  same quantity because: {str(p.get('why_same_quantity'))[:200]}")
+        print(f"  confirmed by {p.get('confirmed_by')} on "
+              f"{str(p.get('confirmed_at'))[:10]}")
+        last = (p.get("observations") or [{}])[-1]
+        for side in ("primary", "aggregate"):
+            s = p.get(side) or {}
+            r = last.get(side) or {}
+            got = (f"{r['value']}  ({r.get('data_date')})" if "value" in r
+                   else f"NO VALUE — {str(r.get('error'))[:90]}")
+            print(f"  {side:<10} {s.get('reporter_class'):<14} {s.get('origin')}")
+            print(f"  {'':<10} {s.get('label')}")
+            print(f"  {'':<10} -> {got}")
+        if "value" in (last.get("primary") or {}) and "value" in (last.get("aggregate") or {}):
+            axes_both.add(p.get("axis"))
+    print()
+    print(RULE)
+    print(f"pairs confirmed          {len(pairs)}")
+    print(f"axes with a pair         {len({p.get('axis') for p in pairs.values()})}")
+    print(f"axes with BOTH sides     {len(axes_both)}   <- only this one means Stage 3 "
+          f"has anything to look at")
+    print("Stage 3 (divergence) was gated on 3 axes of paired series of DIFFERENT "
+          "provenance.")
+    print("A confirmed pair whose aggregate side never yields is not paired data.")
+    return 0
+
+
 # ── --ledger ─────────────────────────────────────────────────────────────────
 
 def cmd_ledger() -> int:
@@ -625,6 +673,8 @@ def main(argv=None) -> int:
     p.add_argument("--rejected", action="store_true",
                    help="every candidate considered and dropped, with the reason")
     p.add_argument("--since", metavar="ISO", help="limit --rejected to this date onward")
+    p.add_argument("--pairs", action="store_true",
+                   help="direct-vs-aggregate pairs, both sides as read (nothing computed)")
     a = p.parse_args(argv)
 
     if a.penumbra:
@@ -647,6 +697,8 @@ def main(argv=None) -> int:
         return cmd_candidates(seed=a.seed)
     if a.rejected:
         return cmd_rejected(since=a.since)
+    if a.pairs:
+        return cmd_pairs()
 
     p.print_help()
     return 0
