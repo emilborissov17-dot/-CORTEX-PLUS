@@ -477,13 +477,32 @@ def seeds_trend(min_points=5) -> list:
 
 def _refs_exist(refs) -> bool:
     """grounded_on must point at things that EXIST. An idea grounded on an invented file
-    is a hallucination with a citation."""
+    is a hallucination with a citation.
+
+    THE GUARD WAS OPEN FOR REFS THAT ARE NOTHING BUT AN ANCHOR. `split("#", 1)[0]` was
+    meant to drop a fragment from "docs/FILE.md#section". Given "#GLOBAL-TARGET.md" it
+    returns the EMPTY STRING, and `REPO / ""` is the repo root, which of course exists —
+    so the check passed. The single idea the creative phase had produced by 2026-08-03
+    cited "#GLOBAL-TARGET.md" and "#PODCELLS.md", neither of which is a file in this
+    repo, and it was kept and surfaced with well_sourced=true. A guard that accepts an
+    invented citation is worse than no guard: it puts a stamp on the hallucination.
+
+    Four things are now required of every ref, and the empty case is the one that bit:
+    a non-empty path, inside the repo, that resolves to an actual FILE — a directory
+    always exists and grounding an idea on one grounds it on nothing."""
     if not refs:
         return False
     for r in refs:
-        p = REPO / str(r).split("#", 1)[0].strip()
-        if not p.exists():
-            return False
+        raw = str(r or "").split("#", 1)[0].strip().lstrip("/\\")
+        if not raw:
+            return False                      # an anchor with no file behind it
+        p = REPO / raw
+        try:
+            p.resolve().relative_to(REPO.resolve())
+        except (ValueError, OSError):
+            return False                      # no escaping the repo with ../
+        if not p.is_file():
+            return False                      # a directory is not a citation
     return True
 
 

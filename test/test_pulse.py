@@ -225,6 +225,30 @@ check("...and is not surfaced as a kept idea", not r["kept"])
 check("every idea carries the outcome metric fields",
       r["penumbra"][0]["outcome"] is None and r["penumbra"][0]["test_horizon"])
 
+# ── the grounding guard, which was open ──────────────────────────────────────
+#
+# _refs_exist did `split("#", 1)[0]` to drop a fragment from "docs/FILE.md#section".
+# Given "#GLOBAL-TARGET.md" that returns the EMPTY STRING, and REPO / "" is the repo
+# root, which exists — so the check passed. The one idea the creative phase had produced
+# by 2026-08-03 cited "#GLOBAL-TARGET.md" and "#PODCELLS.md", neither a file in this
+# repo, and was kept and surfaced with well_sourced=true. A guard that accepts an
+# invented citation is worse than no guard: it puts a stamp on the hallucination.
+
+check("a ref that is nothing but an anchor is NOT grounding — the live bug",
+      P._refs_exist(["#GLOBAL-TARGET.md"]) is False)
+check("...nor two of them", P._refs_exist(["#GLOBAL-TARGET.md", "#PODCELLS.md"]) is False)
+check("an empty ref list is not grounding", P._refs_exist([]) is False)
+check("a file that does not exist is not grounding",
+      P._refs_exist(["docs/NOT_A_REAL_FILE_xyz.md"]) is False)
+check("a DIRECTORY is not a citation — it always exists and grounds nothing",
+      P._refs_exist(["docs"]) is False and P._refs_exist(["."]) is False)
+check("a path escaping the repo is refused", P._refs_exist(["../../etc/passwd"]) is False)
+check("a real file IS grounding", P._refs_exist(["CLAUDE.md"]) is True)
+check("...and a real file with an anchor fragment still is",
+      P._refs_exist(["CLAUDE.md#python-interpreter"]) is True)
+check("one bad ref among good ones fails the whole set",
+      P._refs_exist(["CLAUDE.md", "#INVENTED.md"]) is False)
+
 import shutil as _sh
 _sh.rmtree(TMP, ignore_errors=True)
 print("\n" + ("ALL PASS" if not FAILS else f"{len(FAILS)} FAILED: {FAILS}"))
