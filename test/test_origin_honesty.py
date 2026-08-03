@@ -24,7 +24,7 @@ be asserting a truth we have no evidence for.
 import json
 import sys
 import tempfile
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
@@ -269,6 +269,59 @@ check("the label count is still published, and higher — that is the point",
       and with_cfg["label_diversity"]["value"] > with_cfg["confidence_parts"]["diversity"])
 check("...explicitly named as labels, not origins",
       "not origins" in with_cfg["label_diversity"]["basis"])
+
+
+# ── the primary is the FRESHEST live source, not the first-declared ──────────
+#
+# "first live-and-fresh source is used" was only ever half implemented: `live` came out in
+# spec order, so a source serving a cached value from weeks ago outranked a sibling that
+# had just fetched. Measured live 2026-08-03: FOOD_REVIEW's anchor kept reporting
+# gi_undernourishment_pct = 8.5 from last-known-good while its snapshot key had gone None,
+# beating a UN SDG source that had just returned 28.0. Declaration order is seniority,
+# not priority.
+
+STALE = REPO / "test" / "_origin_honesty_stale.json"
+# EXACTLY the live shape: the first source's key has gone away (the snapshot published
+# None), so every fetch raises and it lives on last-known-good; the second reads fine.
+STALE.write_text(json.dumps({"new": 28.0}), encoding="utf-8")
+AX2 = "FRESHAX"
+C.SPEC_FILE.write_text(json.dumps({AX2: {
+    "anchor_slot": "anchor_annual", "measure_slot": "measurement_daily",
+    "portfolio": {"anchor_annual": {"min": 1, "freshness_days": 400, "sources": [
+        {"id": "declared_first_but_stale", "kind": "file",
+         "path": "test/_origin_honesty_stale.json", "extract": "gone_null",
+         "org": "A", "unit": "u"},
+        {"id": "declared_second_but_fresh", "kind": "file",
+         "path": "test/_origin_honesty_stale.json", "extract": "new", "org": "B", "unit": "u"},
+    ]}}}}), encoding="utf-8")
+
+C.STATE_DIR.mkdir(parents=True, exist_ok=True)
+(C.STATE_DIR / f"{AX2}.json").write_text(json.dumps({"sources": {
+    # fetched three weeks ago and serving that cached value ever since
+    "declared_first_but_stale": {"status": "active", "consecutive_fails": 0,
+                                 "last_value": 8.5, "history": [],
+                                 "last_ok_ts": (datetime.now(timezone.utc)
+                                                - timedelta(days=21)).isoformat()},
+}}), encoding="utf-8")
+
+rep = C.compose(AX2, force=True)
+prim = rep["composed"]["anchor"]
+live = rep["slots"]["anchor_annual"]["live"]
+check("the FRESHEST live source is the primary, not the first-declared",
+      prim["id"] == "declared_second_but_fresh" and prim["value"] == 28.0)
+check("...the stale one is still reported, not hidden", len(live) == 2)
+check("...serving its cached value, with its real age on it so the human sees why it lost",
+      live[1]["id"] == "declared_first_but_stale" and live[1]["value"] == 8.5
+      and round(live[1]["age_days"]) == 21)
+
+# equal age -> the human's declared order is untouched
+STALE.write_text(json.dumps({"gone_null": 8.5, "new": 28.0}), encoding="utf-8")
+(C.STATE_DIR / f"{AX2}.json").unlink(missing_ok=True)
+rep = C.compose(AX2, force=True)
+check("among sources of EQUAL age the declared priority order still wins — this only "
+      "ever demotes a source older than its sibling",
+      rep["composed"]["anchor"]["id"] == "declared_first_but_stale")
+STALE.unlink(missing_ok=True)
 
 
 # ── the duplication in cortex_query must never drift ─────────────────────────

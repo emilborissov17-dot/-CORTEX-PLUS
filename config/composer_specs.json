@@ -113,6 +113,37 @@
             "extract": "world_bank.safe_water_access_pct",
             "org": "World Bank",
             "unit": "pct_population"
+          },
+          {
+            "id": "promoted_60695",
+            "kind": "http_json_rows",
+            "url": "https://unstats.un.org/sdgapi/v1/sdg/Series/Data?seriesCode=SH_H2O_SAFE&areaCode=1&pageSize=800",
+            "org": "UN SDG Global Database",
+            "extract": "data",
+            "column_name": "value",
+            "row_key": "1",
+            "row_key_column": "geoAreaCode",
+            "where": {
+              "dimensions.Location": "ALLAREA",
+              "dimensions.Reporting Type": "G"
+            },
+            "timeout": 90,
+            "data_date_column": "timePeriodStart",
+            "provenance": "UN SDG SH_H2O_SAFE, World (M49 areaCode=1). SDG 6.1.1, WHO/UNICEF JMP. Exact match for this axis's declared primary_metric safe_water_access_pct (target 100). Replaces gi_safe_water_access_pct, whose snapshot key has been None.",
+            "unit": "pct_population",
+            "deterministic": true,
+            "schema": {
+              "type": "dict",
+              "keys": [
+                "attributes",
+                "data",
+                "dimensions",
+                "pageNumber",
+                "size",
+                "totalElements",
+                "totalPages"
+              ]
+            }
           }
         ]
       },
@@ -157,6 +188,37 @@
             "path": "snapshots/master/global_indicators_latest.json",
             "extract": "food.undernourishment_pct",
             "org": "FAO/WB"
+          },
+          {
+            "id": "promoted_99557",
+            "kind": "http_json_rows",
+            "url": "https://unstats.un.org/sdgapi/v1/sdg/Series/Data?seriesCode=ER_H2O_STRESS&areaCode=1&pageSize=800",
+            "org": "UN SDG Global Database",
+            "extract": "data",
+            "column_name": "value",
+            "row_key": "1",
+            "row_key_column": "geoAreaCode",
+            "where": {
+              "dimensions.Activity": "TOTAL",
+              "dimensions.Reporting Type": "G"
+            },
+            "timeout": 90,
+            "data_date_column": "timePeriodStart",
+            "provenance": "UN SDG ER_H2O_STRESS, World (M49 areaCode=1). SDG 6.4.2 water stress. A DIFFERENT quantity from access, so it constrains rather than duplicates. The slot previously held gi_undernourishment_pct — a FOOD indicator mis-filed under water, and null besides.",
+            "unit": "pct_of_available_freshwater",
+            "deterministic": true,
+            "schema": {
+              "type": "dict",
+              "keys": [
+                "attributes",
+                "data",
+                "dimensions",
+                "pageNumber",
+                "size",
+                "totalElements",
+                "totalPages"
+              ]
+            }
           }
         ]
       }
@@ -177,6 +239,39 @@
             "extract": "food.undernourishment_pct",
             "org": "FAO/WB",
             "unit": "pct_population"
+          },
+          {
+            "id": "promoted_19074",
+            "kind": "http_json_rows",
+            "url": "https://unstats.un.org/sdgapi/v1/sdg/Series/Data?seriesCode=AG_PRD_FIESMS&areaCode=1&pageSize=800",
+            "org": "UN SDG Global Database",
+            "extract": "data",
+            "column_name": "value",
+            "row_key": "1",
+            "row_key_column": "geoAreaCode",
+            "where": {
+              "dimensions.Age": "ALLAGE",
+              "dimensions.Location": "ALLAREA",
+              "dimensions.Reporting Type": "G",
+              "dimensions.Sex": "BOTHSEX"
+            },
+            "timeout": 90,
+            "data_date_column": "timePeriodStart",
+            "provenance": "UN SDG AG_PRD_FIESMS, World (M49 areaCode=1). SDG 2.1.2, FAO. Exact match for the declared primary_metric food_insecurity_pct (target 2.5). Replaces gi_undernourishment_pct, which is None in the snapshot.",
+            "unit": "pct_population",
+            "deterministic": true,
+            "schema": {
+              "type": "dict",
+              "keys": [
+                "attributes",
+                "data",
+                "dimensions",
+                "pageNumber",
+                "size",
+                "totalElements",
+                "totalPages"
+              ]
+            }
           }
         ]
       },
@@ -313,6 +408,16 @@
             "org": "UNHCR",
             "unit": "millions_persons",
             "provenance": "UNHCR refugee stock. NOTE: target_config states the metric in PERSONS, this is MILLIONS — a scale difference the scorer must reconcile, not the composer."
+          },
+          {
+            "id": "promoted_96302",
+            "kind": "file",
+            "url": "local://snapshots/master/global_indicators_latest.json#conflicts.active_armed_conflicts",
+            "org": "UCDP/PRIO",
+            "extract": "conflicts.active_armed_conflicts",
+            "provenance": "UCDP/PRIO ACD via the cycle's global_indicators snapshot. ANNUAL cadence, correct for anchor_annual and wrong for any daily slot. Reads 65 for 2025 once the snapshot refreshes at fast_cycle step 2.5; the file on disk still holds the pre-fix 2816 until that run.",
+            "path": "snapshots/master/global_indicators_latest.json",
+            "unit": "active_conflicts"
           }
         ]
       },
@@ -374,7 +479,16 @@
       "measurement_daily": {
         "min": 1,
         "freshness_days": 7,
-        "sources": []
+        "sources": [
+          {
+            "id": "promoted_84957",
+            "kind": "http_json_count",
+            "url": "https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/vaccinations/vaccinations.json",
+            "org": "Our World in Data (OWID) – data sourced from WHO and national health ministries",
+            "extract": "1.data",
+            "provenance": "self-discovered, human-promoted"
+          }
+        ]
       },
       "event_daily": {
         "min": 1,
@@ -542,6 +656,38 @@
             "org": "World Bank",
             "unit": "deaths_per_1000_infant",
             "provenance": "INFANT mortality. The axis's primary_metric is UNDER-5 (child) mortality — related but not identical; the real under-5 series is still missing."
+          },
+          {
+            "id": "promoted_9810",
+            "kind": "http_json_rows",
+            "url": "https://unstats.un.org/sdgapi/v1/sdg/Series/Data?seriesCode=SH_DYN_MORT&areaCode=1&pageSize=800",
+            "org": "UN SDG Global Database",
+            "extract": "data",
+            "column_name": "value",
+            "row_key": "1",
+            "row_key_column": "geoAreaCode",
+            "where": {
+              "dimensions.Age": "<5Y",
+              "dimensions.Sex": "BOTHSEX",
+              "dimensions.Reporting Type": "G"
+            },
+            "timeout": 90,
+            "data_date_column": "timePeriodStart",
+            "provenance": "UN SDG SH_DYN_MORT, World (M49 areaCode=1). SDG 3.2.1 under-five mortality, UN IGME. Exact match for the declared primary_metric child_mortality_per_1000. Age <5Y is the INDICATOR'S DEFINITION, not a breakdown. Replaces gi_infant_mortality, None in the snapshot.",
+            "unit": "deaths_per_1000_live_births",
+            "deterministic": true,
+            "schema": {
+              "type": "dict",
+              "keys": [
+                "attributes",
+                "data",
+                "dimensions",
+                "pageNumber",
+                "size",
+                "totalElements",
+                "totalPages"
+              ]
+            }
           }
         ]
       },
@@ -630,6 +776,37 @@
             "extract": "tech_infra.broadband_per100",
             "org": "ITU/World Bank",
             "unit": "per_100_people"
+          },
+          {
+            "id": "promoted_59051",
+            "kind": "http_json_rows",
+            "url": "https://unstats.un.org/sdgapi/v1/sdg/Series/Data?seriesCode=IT_USE_ii99&areaCode=1&pageSize=800",
+            "org": "UN SDG Global Database",
+            "extract": "data",
+            "column_name": "value",
+            "row_key": "1",
+            "row_key_column": "geoAreaCode",
+            "where": {
+              "dimensions.Reporting Type": "G",
+              "dimensions.Sex": "BOTHSEX"
+            },
+            "timeout": 90,
+            "data_date_column": "timePeriodStart",
+            "provenance": "UN SDG IT_USE_ii99, World (M49 areaCode=1). SDG 17.8.1 individuals using the internet, ITU. The standard headline measure of information infrastructure reach. Replaces gi_broadband, None in the snapshot.",
+            "unit": "pct_individuals",
+            "deterministic": true,
+            "schema": {
+              "type": "dict",
+              "keys": [
+                "attributes",
+                "data",
+                "dimensions",
+                "pageNumber",
+                "size",
+                "totalElements",
+                "totalPages"
+              ]
+            }
           }
         ]
       },
@@ -727,6 +904,36 @@
             "extract": "cities.urban_population_pct",
             "org": "World Bank",
             "unit": "pct_urban"
+          },
+          {
+            "id": "promoted_89405",
+            "kind": "http_json_rows",
+            "url": "https://unstats.un.org/sdgapi/v1/sdg/Series/Data?seriesCode=SP_TRN_PUBL&areaCode=1&pageSize=800",
+            "org": "UN SDG Global Database",
+            "extract": "data",
+            "column_name": "value",
+            "row_key": "1",
+            "row_key_column": "geoAreaCode",
+            "where": {
+              "dimensions.Reporting Type": "G"
+            },
+            "timeout": 90,
+            "data_date_column": "timePeriodStart",
+            "provenance": "UN SDG SP_TRN_PUBL, World (M49 areaCode=1). SDG 11.2.1 convenient access to public transport. An infrastructure measure for an infrastructure axis. Replaces gi_urban_pct, None in the snapshot.",
+            "unit": "pct_population",
+            "deterministic": true,
+            "schema": {
+              "type": "dict",
+              "keys": [
+                "attributes",
+                "data",
+                "dimensions",
+                "pageNumber",
+                "size",
+                "totalElements",
+                "totalPages"
+              ]
+            }
           }
         ]
       },
@@ -842,7 +1049,39 @@
       "anchor_annual": {
         "min": 1,
         "freshness_days": 45,
-        "sources": []
+        "sources": [
+          {
+            "id": "promoted_97499",
+            "kind": "http_json_rows",
+            "url": "https://unstats.un.org/sdgapi/v1/sdg/Series/Data?seriesCode=VC_VAW_MTUHRA&areaCode=1&pageSize=800",
+            "org": "UN SDG Global Database",
+            "extract": "data",
+            "column_name": "value",
+            "row_key": "1",
+            "row_key_column": "geoAreaCode",
+            "where": {
+              "dimensions.Reporting Type": "G",
+              "dimensions.Sex": "BOTHSEX"
+            },
+            "timeout": 90,
+            "data_date_column": "timePeriodStart",
+            "provenance": "UN SDG VC_VAW_MTUHRA, World (M49 areaCode=1). SDG 16.10.1 killings of journalists, human rights defenders and trade unionists. A DIRECT press-freedom measure, and this axis had ZERO sources in every slot. Higher is worse — the scorer must be told, this composer does not orient.",
+            "unit": "cases_per_year",
+            "deterministic": true,
+            "schema": {
+              "type": "dict",
+              "keys": [
+                "attributes",
+                "data",
+                "dimensions",
+                "pageNumber",
+                "size",
+                "totalElements",
+                "totalPages"
+              ]
+            }
+          }
+        ]
       },
       "measurement_daily": {
         "min": 1,
@@ -876,6 +1115,36 @@
             "extract": "world_bank.forest_area_pct",
             "org": "World Bank",
             "unit": "pct_land_area"
+          },
+          {
+            "id": "promoted_19109",
+            "kind": "http_json_rows",
+            "url": "https://unstats.un.org/sdgapi/v1/sdg/Series/Data?seriesCode=AG_LND_FRST&areaCode=1&pageSize=800",
+            "org": "UN SDG Global Database",
+            "extract": "data",
+            "column_name": "value",
+            "row_key": "1",
+            "row_key_column": "geoAreaCode",
+            "where": {
+              "dimensions.Reporting Type": "G"
+            },
+            "timeout": 90,
+            "data_date_column": "timePeriodStart",
+            "provenance": "UN SDG AG_LND_FRST, World (M49 areaCode=1). SDG 15.1.1 forest area. Exact match for the declared primary_metric forest_area_pct (target 35). Replaces gi_forest_area, None in the snapshot.",
+            "unit": "pct_of_land_area",
+            "deterministic": true,
+            "schema": {
+              "type": "dict",
+              "keys": [
+                "attributes",
+                "data",
+                "dimensions",
+                "pageNumber",
+                "size",
+                "totalElements",
+                "totalPages"
+              ]
+            }
           }
         ]
       },
@@ -998,7 +1267,17 @@
       "measurement_daily": {
         "min": 1,
         "freshness_days": 7,
-        "sources": []
+        "sources": [
+          {
+            "id": "promoted_39428",
+            "kind": "http_json_path",
+            "url": "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_day.geojson",
+            "org": "USGS",
+            "extract": "metadata.count",
+            "unit": "earthquakes_m4.5_past_day",
+            "provenance": "self-discovered, human-promoted"
+          }
+        ]
       },
       "event_daily": {
         "min": 1,
@@ -1016,6 +1295,36 @@
             "extract": "world_bank.forest_area_pct",
             "org": "World Bank",
             "unit": "pct_land_area"
+          },
+          {
+            "id": "promoted_74773",
+            "kind": "http_json_rows",
+            "url": "https://unstats.un.org/sdgapi/v1/sdg/Series/Data?seriesCode=ER_PTD_FRHWTR&areaCode=1&pageSize=800",
+            "org": "UN SDG Global Database",
+            "extract": "data",
+            "column_name": "value",
+            "row_key": "1",
+            "row_key_column": "geoAreaCode",
+            "where": {
+              "dimensions.Reporting Type": "G"
+            },
+            "timeout": 90,
+            "data_date_column": "timePeriodStart",
+            "provenance": "UN SDG ER_PTD_FRHWTR, World (M49 areaCode=1). SDG 15.1.2 freshwater KBA protection. DELIBERATELY indirect_proxy and NOT the anchor: this axis's declared primary_metric is protected_TERRESTRIAL_area_pct (target 30) and the terrestrial series ER_PTD_TERRS has no world row. Filling the anchor with a freshwater figure would hand the scorer a number to compare against a target meant for a different biome.",
+            "unit": "pct_kba_covered",
+            "deterministic": true,
+            "schema": {
+              "type": "dict",
+              "keys": [
+                "attributes",
+                "data",
+                "dimensions",
+                "pageNumber",
+                "size",
+                "totalElements",
+                "totalPages"
+              ]
+            }
           }
         ]
       }

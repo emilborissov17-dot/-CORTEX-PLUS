@@ -516,6 +516,25 @@ def compose(axis: str, force: bool = False) -> dict:
                     needs.append({"slot": slot_name, "kind": "stale_value",
                                   "detail": f"{sid} last good value is {age_d:.1f}d old "
                                             f"(> {fresh_days}d) — excluded"})
+        # WHICH LIVE SOURCE IS THE PRIMARY.
+        #
+        # The docstring's rule is "first LIVE-AND-FRESH source is used", and the code only
+        # ever honoured the first half: `live` was in spec order, so _slot_primary took
+        # whichever was declared first even when it was serving a cached value from weeks
+        # ago and a sibling had fetched successfully seconds earlier.
+        #
+        # Measured 2026-08-03: FOOD_REVIEW's anchor kept reporting gi_undernourishment_pct
+        # = 8.5 from last-known-good while its snapshot key had gone None, outranking a UN
+        # SDG source that had just returned 28.0. The stale number won on declaration
+        # order alone, which is not priority — it is seniority.
+        #
+        # Sorting by age puts a just-fetched reading first. Python's sort is stable, so
+        # among sources of equal age the human's declared priority order is untouched:
+        # this only ever demotes a source that is older than its sibling.
+        live_order = sorted(range(len(live)), key=lambda i: live[i]["age_days"])
+        live = [live[i] for i in live_order]
+        live_specs = [live_specs[i] for i in live_order]
+
         ok = len(live) >= int(slot.get("min", 1))
         status, status_note = prov.slot_status(live_specs, slot.get("min", 1))
         if ok:
