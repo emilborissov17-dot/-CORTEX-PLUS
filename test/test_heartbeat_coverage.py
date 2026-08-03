@@ -40,16 +40,33 @@ def isolated_heartbeat(tmp_path, monkeypatch):
 # ---------------------------------------------------------------------------
 
 def _steps_and_beats():
+    """(step_id, description, beats, beat_id) for every step boundary.
+
+    The beat must be the first EXECUTABLE line of the step. It used to be looked for in
+    a fixed 3-line window, which quietly meant "within 3 physical lines" rather than
+    "before any work" — so four correctly instrumented steps (2.54, 2.55, 2.6, 2.7)
+    failed this suite purely because their boundary comment runs to several lines. The
+    test was wrong, not the runner. Skipping the continuation comment first measures what
+    the docstring above actually claims, and costs nothing.
+    """
     lines = RUNNER.read_text(encoding="utf-8").splitlines()
     found = []
     for i, line in enumerate(lines):
         m = STEP_COMMENT_RE.match(line)
         if not m:
             continue
-        # A beat must appear within a few lines of the step boundary.
-        window = lines[i + 1: i + 4]
-        beats = any(BEAT_RE.match(w) for w in window)
-        found.append((m.group(1), m.group(2), beats))
+        j = i + 1
+        # a step boundary may carry a multi-line comment; the beat must come before code
+        while j < len(lines) and (not lines[j].strip()
+                                  or lines[j].lstrip().startswith("#")):
+            j += 1
+        window = lines[j: j + 3]
+        beat_line = next((w for w in window if BEAT_RE.match(w)), None)
+        beat_id = None
+        if beat_line:
+            bm = re.search(r'beat\(\s*"[^"]*"\s*,\s*"([\d.]+)"', beat_line)
+            beat_id = bm.group(1) if bm else None
+        found.append((m.group(1), m.group(2), beat_line is not None, beat_id))
     return found
 
 
@@ -57,13 +74,24 @@ def test_every_step_boundary_beats():
     steps = _steps_and_beats()
     assert steps, "no step boundaries found — did the comment format change?"
 
-    missing = [f"step {num}: {desc}" for num, desc, beats in steps if not beats]
+    missing = [f"step {num}: {desc}" for num, desc, beats, _bid in steps if not beats]
 
     assert not missing, (
         "These cycle steps do not call beat() — the watchdog will see the cycle "
         "as frozen for their whole duration and kill a healthy run:\n  "
         + "\n  ".join(missing)
     )
+
+
+def test_each_beat_reports_the_step_it_is_actually_in():
+    """A beat carrying the wrong step id is worse than a missing one: the watchdog's
+    per-step ceiling is keyed on that id, so a slow step reporting a fast step's number
+    gets killed early, and the log points the reader at the wrong place."""
+    wrong = [f"step {num} ({desc}) beats as {bid!r}"
+             for num, desc, beats, bid in _steps_and_beats()
+             if beats and bid and bid != num]
+    assert not wrong, ("These beats report a different step id than their boundary:\n  "
+                       + "\n  ".join(wrong))
 
 
 def test_there_are_a_plausible_number_of_steps():
