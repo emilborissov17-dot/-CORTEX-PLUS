@@ -21,7 +21,7 @@ location. Its presence is correct; reading it as the source was the error.
 
   venv\\Scripts\\python.exe test\\test_promotion_seam.py
 """
-import json, shutil, subprocess, sys, tempfile
+import inspect, json, re, shutil, subprocess, sys, tempfile
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
@@ -80,9 +80,19 @@ check("http kinds require url",
                                                      "promotion rejected")
 check("http kinds validate with url", rejected({"kind": "http_csv", "url": "http://x"}) is None)
 check("an unknown kind is rejected", "unknown kind" in (rejected({"kind": "nonsense"}) or ""))
-check("every kind fetch() handles declares a location",
-      set(C.KIND_LOCATION) == {"file", "http_json_path", "http_csv", "http_json_count",
-                               "http_json_series", "http_gdelt_tone"})
+# Derived from fetch() itself rather than restated here. A hard-coded list has to be
+# edited every time a kind is added, and the edit is indistinguishable from weakening the
+# test; reading the kinds out of the function means a new branch that forgets to declare
+# its location fails this on the day it is written, with no list to update.
+_FETCH_SRC = inspect.getsource(C.fetch)
+_HANDLED = set(re.findall(r'kind\s*==\s*"([a-z_]+)"', _FETCH_SRC)) | set(
+    re.findall(r'kind\s+in\s+\(([^)]*)\)', _FETCH_SRC)[0].replace('"', '').split(", ")
+    if re.findall(r'kind\s+in\s+\(([^)]*)\)', _FETCH_SRC) else [])
+_HANDLED = {k.strip() for k in _HANDLED if k.strip()}
+check(f"every kind fetch() handles declares a location ({len(_HANDLED)} kinds)",
+      _HANDLED and _HANDLED <= set(C.KIND_LOCATION))
+check("...and no kind declares a location fetch() cannot read",
+      set(C.KIND_LOCATION) == _HANDLED)
 
 # ---------- SMOKE TEST ----------
 ok_entry = {"id": "t", "kind": "file", "path": REL, "extract": "block.value"}

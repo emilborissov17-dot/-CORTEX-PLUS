@@ -56,6 +56,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 import provenance as prov      # origin + reporter independence (derived, never scored)
+import readers                 # deterministic parsers for json_rows / jsonstat / sdmx
 
 REPO = HERE.parents[1]
 
@@ -165,8 +166,11 @@ def _http(url, timeout=15):
 # turn "the entity I asked for is gone" into "here is a number", which is the exact shape
 # of the failure this whole pack exists to remove.
 
-class CsvRowNotFound(ValueError):
-    """A named row was asked for and the payload does not contain it."""
+class CsvRowNotFound(readers.RowNotFound):
+    """A named row was asked for and the payload does not contain it.
+
+    Shares a base with the json_rows / jsonstat / sdmx failures because they are the same
+    fact in four dialects: an address was declared and the payload does not hold it."""
 
 
 def _csv_rows(text: str):
@@ -305,6 +309,17 @@ def fetch(src, return_payload: bool = False) -> tuple:
             raise ValueError("gdelt: empty tone series")
         v = round(sum(vals) / len(vals), 4)
         return (v, None, data) if return_payload else (v, None)
+    # The three official-statistics families. Each is a DECLARED address into a payload —
+    # a row key, a dimension cell, a series key — resolved by experiments/composers/
+    # readers.py with no model anywhere in the path, and raising rather than substituting
+    # when the address matches nothing.
+    if kind in ("http_json_rows", "http_jsonstat", "http_sdmx"):
+        data = json.loads(_http(src["url"], timeout=int(src.get("timeout", 30))))
+        reader = {"http_json_rows": readers.read_json_rows,
+                  "http_jsonstat": readers.read_jsonstat,
+                  "http_sdmx": readers.read_sdmx}[kind]
+        v, dd = reader(data, src)
+        return (float(v), dd, data) if return_payload else (float(v), dd)
     raise ValueError(f"unknown source kind: {kind}")
 
 
@@ -326,7 +341,10 @@ def fetch(src, return_payload: bool = False) -> tuple:
 #                           fatal as a dropped one: both mean the contract we validated is
 #                           not the contract we are now reading.
 #   NO SPECIAL PLEADING     same slots, same min counts, same freshness, same promotion.
-DETERMINISTIC_KINDS = ("http_json_path", "http_csv", "http_json_series", "file")
+DETERMINISTIC_KINDS = ("http_json_path", "http_csv", "http_json_series", "file",
+                       # the official-statistics families: a declared address into a
+                       # structured payload, resolved with no model in the path
+                       "http_json_rows", "http_jsonstat", "http_sdmx")
 
 
 def schema_fingerprint(kind: str, payload) -> dict:
@@ -650,6 +668,8 @@ def compose(axis: str, force: bool = False) -> dict:
 # ── human-gated promotion: a candidate becomes a spec source (git-visible) ────
 
 PROMOTE_FIELDS = ("extract", "col", "column_name", "row_key", "row_key_column",
+                  # addresses for the official-statistics readers
+                  "cell", "series_key", "where", "timeout",
                   "data_date_col", "data_date_column", "data_date_extract",
                   "data_max_age_days", "provenance", "path", "unit", "origin",
                   "reporter_class", "reporter_class_confirmed_by",
@@ -673,6 +693,9 @@ KIND_LOCATION = {
     "http_json_count":   "url",
     "http_json_series":  "url",
     "http_gdelt_tone":   "url",
+    "http_json_rows":    "url",
+    "http_jsonstat":     "url",
+    "http_sdmx":         "url",
 }
 
 
@@ -688,6 +711,11 @@ KIND_PARSE_RULE = {
     # a column, which an index does not
     "http_csv":          ("col", "column_name"),
     "http_gdelt_tone":   (),          # fixed payload shape, nothing to declare
+    # the address into the payload, without which each of these would return SOME row,
+    # SOME cell, SOME series — which is the failure they exist to prevent
+    "http_json_rows":    ("extract",),
+    "http_jsonstat":     ("cell",),
+    "http_sdmx":         ("series_key",),
 }
 
 # WHY A REFUSAL NEEDS A CLASS.
