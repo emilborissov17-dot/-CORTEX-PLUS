@@ -85,22 +85,37 @@ _NEEDS_EXTRACT = ("http_json_path", "http_json_count", "http_json_series")
 
 
 def _apply_promote(spec: dict):
-    """Promote a self-discovered sensing source. Guarded against double-promote."""
+    """Promote a self-discovered sensing source. Guarded against double-promote.
+
+    Every refusal carries a failure_class. 'schema' means OUR record is incomplete — the
+    source was never contacted and must not be charged for it. 'fetch' means a real
+    request was made and the source failed it. Only the second may lead to a blacklist.
+    """
     import composer  # experiments/composers/composer.py
     axis, url, slot = spec["axis"], spec["url"], spec["slot"]
     # FAIL-CLOSED: these kinds cannot be fetched without knowing WHERE the value lives.
     # Promoting one anyway creates a source that raises on every fetch and is dead in
     # three cycles — a silent hole in the portfolio that looks like an approved source.
+    #
+    # As of the registration wall (core/source_registration.py) a candidate in this state
+    # should no longer EXIST: the rule is derived at discovery or the candidate is dropped.
+    # This stays as a second line, and it is now explicitly a SCHEMA refusal — an
+    # incomplete record of ours, never evidence against the provider.
     kind = spec.get("kind") or "http_json_path"
     _parse = spec.get("parse") or {}
     if kind in _NEEDS_EXTRACT and not _parse.get("extract"):
-        return {"ok": False, "error": f"no parsing rule: kind '{kind}' needs an 'extract' path. "
-                                      f"Candidate was registered without one — not promoted."}
+        return {"ok": False, "failure_class": composer.FAILURE_SCHEMA,
+                "reason_code": "incomplete_registration",
+                "error": f"no parsing rule: kind '{kind}' needs an 'extract' path. "
+                         f"Candidate was registered without one — not promoted. "
+                         f"The source was NOT contacted and is NOT blacklisted."}
     # a 'file' source is read from `path`, never from `url`; promoting one without a path
     # yields KeyError('path') on every fetch
     if kind == "file" and not _parse.get("path"):
-        return {"ok": False, "error": "no parsing rule: kind 'file' needs a repo-relative "
-                                      "'path' — not promoted."}
+        return {"ok": False, "failure_class": composer.FAILURE_SCHEMA,
+                "reason_code": "incomplete_registration",
+                "error": "no parsing rule: kind 'file' needs a repo-relative 'path' — "
+                         "not promoted. The source was NOT contacted and is NOT blacklisted."}
     # dedupe: if this url is already in the slot, don't append a twin
     specs = _load(getattr(composer, "SPEC_FILE"), {})
     portfolio = (specs.get(axis) or {}).get("portfolio", {})
@@ -108,16 +123,23 @@ def _apply_promote(spec: dict):
     if any(s.get("url") == url for s in existing):
         return {"ok": True, "note": "already promoted (no-op)"}
     # the parsing rule travels WITH the approval — promoting a bare url would create a
-    # source that raises on its first fetch and dies against DEATH_AT
+    # source that raises on its first fetch and dies against DEATH_AT.
+    # composer.promote() runs the SMOKE FETCH through the real loader before it writes
+    # anything: a raise or an empty read aborts the promotion and the spec is untouched.
     res = composer.promote(axis, url, slot, spec.get("kind") or "http_json_path",
                            spec.get("org") or "?", **(spec.get("parse") or {}))
     return {"ok": "error" not in res, **res}
 
 
-def _mark_candidate(axis, url, why):
-    """A REFUSED candidate must stop coming back. The promote guard is deterministic —
-    a record with no parsing rule fails identically every time — so without this the same
-    broken candidate is re-offered in every brief, and now in a one-tap message too.
+def _mark_candidate(axis, url, why, reason_code="unspecified"):
+    """BLACKLIST — and only ever after a REAL FETCH FAILURE.
+
+    A source that answered with nothing usable, never answered at all, or answered with
+    data already too old has earned this. A record of ours that was missing a field has
+    not: that is _discard_candidate below. The `rejected_class` says which failure it was,
+    so a future reader is never left guessing whether this source was tested or merely
+    mis-registered — the question that cost OWID and the World Bank their place.
+
     FAIL-OPEN: bookkeeping must never break the approval loop."""
     try:
         doc = _load(DISCOVERED, {})
@@ -127,10 +149,43 @@ def _mark_candidate(axis, url, why):
                 s["status"] = "rejected"
                 s["rejected_why"] = str(why)[:200]
                 s["rejected_at"] = _now()
+                s["rejected_class"] = str(reason_code)
+                s["rejected_after"] = "a real fetch through composer.fetch()"
                 hit = True
         if hit:
             DISCOVERED.write_text(json.dumps(doc, ensure_ascii=False, indent=2),
                                   encoding="utf-8")
+        return hit
+    except Exception:
+        return False
+
+
+def _discard_candidate(axis, url, why):
+    """INCOMPLETE, not bad. The candidate stops being offered — a deterministic refusal
+    would repeat forever otherwise — but it is marked 'incomplete', never 'rejected', so
+    it stays visible (cortex_query --rejected), can be completed by a later derivation,
+    and can be re-proposed by hand with scripts/cortex_ingest.py. Nothing about the
+    provider has been established, because nothing was ever asked of it.
+
+    FAIL-OPEN, same as the blacklist path."""
+    try:
+        doc = _load(DISCOVERED, {})
+        hit = False
+        for s in ((doc.get(axis) or {}).get("sources") or []):
+            if s.get("url") == url:
+                s["status"] = "incomplete"
+                s["incomplete_why"] = str(why)[:200]
+                s["incomplete_at"] = _now()
+                hit = True
+        if hit:
+            DISCOVERED.write_text(json.dumps(doc, ensure_ascii=False, indent=2),
+                                  encoding="utf-8")
+        try:
+            sys.path.insert(0, str(REPO))
+            from core.source_registration import discard as _sr_discard
+            _sr_discard(axis, url, why, stage="approval")
+        except Exception:
+            pass
         return hit
     except Exception:
         return False
@@ -278,13 +333,30 @@ def run():
                 label = spec.get("label", spec["axis"])
                 ok = res.get("ok")
                 if not ok:
-                    res["marked_rejected"] = _mark_candidate(spec["axis"], spec["url"],
-                                                             res.get("error"))
+                    # THE FORK THIS WHOLE FIX EXISTS FOR. A blacklist is a verdict on a
+                    # provider and may only follow evidence — a request that was actually
+                    # made and actually failed. A schema refusal is a verdict on our own
+                    # record and gets a discard instead.
+                    import composer as _c
+                    if res.get("failure_class") == _c.FAILURE_FETCH:
+                        res["marked_rejected"] = _mark_candidate(
+                            spec["axis"], spec["url"], res.get("error"),
+                            res.get("reason_code", "unspecified"))
+                    else:
+                        res["discarded"] = _discard_candidate(
+                            spec["axis"], spec["url"], res.get("error"))
+                tail = ""
+                if res.get("marked_rejected"):
+                    tail = (f" — marked rejected after a real fetch failure "
+                            f"({res.get('reason_code')}); it won't be offered again.")
+                elif res.get("discarded"):
+                    tail = (" — our record was incomplete, so it is DISCARDED, not "
+                            "blacklisted. The source was never contacted.")
+                if res.get("exception"):
+                    tail += f"\nraw: {str(res['exception'])[:300]}"
                 _reply(token, chat_id,
                        (f"✅ promoted {label} ({spec['slot']}). {res.get('note','spec edited — review git diff')}"
-                        if ok else f"⚠️ promote failed for {label}: {res.get('error')}"
-                                   + (" — marked rejected, it won't be offered again."
-                                      if res.get("marked_rejected") else "")))
+                        if ok else f"⚠️ promote failed for {label}: {res.get('error')}" + tail))
             elif spec["type"] == "request_cycle":
                 res = _apply_cycle_request(spec, chat_id)
                 ok = res.get("ok")

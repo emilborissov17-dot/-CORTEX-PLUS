@@ -8,7 +8,9 @@ Autonomous data discovery loop.
   1. LLM предлага 3 безплатни, публично достъпни URL-а
   2. Системата тества всеки URL (HTTP GET, timeout=12s)
   3. Валидира дали отговорът е реален JSON/CSV с числа
-  4. Записва работещите в memory/discovered_data_sources.json
+  4. Derives the PARSING RULE from that same payload (core/source_registration.py) —
+     a candidate without one is NOT registered and never reaches Telegram
+  5. Записва работещите в memory/discovered_data_sources.json
   5. Следващия цикъл — новите източници се включват в global_indicators
 
 Ограничения (съзнателни):
@@ -26,6 +28,8 @@ from pathlib import Path
 from typing import Any
 
 import requests
+
+from core import source_registration as _sr   # the registration schema wall
 
 BASE          = Path(__file__).resolve().parents[1]
 DISCOVERED    = BASE / "memory" / "discovered_data_sources.json"
@@ -208,19 +212,24 @@ def _suggest_via_local_brain(prompt: str, timeout: int = 45) -> list[dict]:
 # URL validation
 # ---------------------------------------------------------------------------
 
-def _validate(url: str, fmt: str) -> tuple[bool, str]:
+def _validate(url: str, fmt: str) -> tuple[bool, str, object]:
     """
-    Tests a URL: returns (is_valid, reason).
-    is_valid = True if: 200, response > 200 chars, has numbers for JSON/CSV.
+    Tests a URL: returns (is_valid, reason, payload).
+
+    The PAYLOAD is returned, not discarded. This function already parses the response to
+    prove it carries numbers; the parsing rule a composer source needs in order to be
+    fetchable is derivable from that very structure. Throwing it away here is what
+    produced candidates that could never be promoted — and then blacklisted the sources
+    for it (see core/source_registration.py). One fetch, one parse, rule included.
     """
     try:
         r = requests.get(url, timeout=12, headers={"User-Agent": "CORTEX-DataScout/1.0"})
         if r.status_code != 200:
-            return False, f"HTTP {r.status_code}"
+            return False, f"HTTP {r.status_code}", None
 
         body = r.text
         if len(body) < 100:
-            return False, "response too short"
+            return False, "response too short", None
 
         if fmt == "json":
             try:
@@ -228,25 +237,25 @@ def _validate(url: str, fmt: str) -> tuple[bool, str]:
                 # Must contain at least one numeric value somewhere
                 text = json.dumps(data)
                 has_numbers = any(c.isdigit() for c in text)
-                return has_numbers, "ok" if has_numbers else "no numeric data"
+                return has_numbers, ("ok" if has_numbers else "no numeric data"), data
             except Exception:
-                return False, "not valid JSON"
+                return False, "not valid JSON", None
 
         if fmt == "csv":
             lines = [l for l in body.splitlines() if l.strip() and not l.startswith("#")]
             if len(lines) < 3:
-                return False, "too few CSV rows"
+                return False, "too few CSV rows", None
             has_numbers = any(
                 any(c.isdigit() for c in line)
                 for line in lines[:10]
             )
-            return has_numbers, "ok" if has_numbers else "no numeric data in CSV"
+            return has_numbers, ("ok" if has_numbers else "no numeric data in CSV"), body
 
-        return True, "unknown format — accepted"
+        return True, "unknown format — accepted", body
     except requests.exceptions.Timeout:
-        return False, "timeout"
+        return False, "timeout", None
     except Exception as e:
-        return False, str(e)[:80]
+        return False, str(e)[:80], None
 
 
 # ---------------------------------------------------------------------------
@@ -327,18 +336,26 @@ def run(max_axes: int = 4) -> dict:
                 if not url.startswith("http"):
                     continue
                 print(f"  [SCOUT/NEED] Testing {axis}/{slot}: {url[:65]}")
-                ok, reason = _validate(url, fmt)
+                ok, reason, payload = _validate(url, fmt)
                 if ok:
-                    print(f"  [SCOUT/NEED] VALID {url[:65]} — candidate for slot '{slot}'")
+                    # THE REGISTRATION WALL. A candidate without a parsing rule is not a
+                    # candidate — it is an approval Emil cannot spend usefully. Derived
+                    # here, from the payload just fetched, or the candidate is dropped
+                    # with a named reason and never offered.
+                    rec, why = _sr.build_candidate(url, fmt, payload,
+                                                   metric=s.get("metric", ""),
+                                                   org=s.get("org", ""),
+                                                   slot_hint=slot, axis=axis)
+                    if rec is None:
+                        print(f"  [SCOUT/NEED] DROPPED {url[:65]} — {why}")
+                        _sr.discard(axis, url, why, stage="registration",
+                                    fmt=fmt, slot_hint=slot)
+                        continue
+                    print(f"  [SCOUT/NEED] VALID {url[:65]} — candidate for slot '{slot}' "
+                          f"[{rec['kind']}] {why}")
                     summary["validated"] += 1
                     if url not in {x["url"] for x in entry["sources"]}:
-                        entry["sources"].append({
-                            "url": url, "format": fmt,
-                            "metric": s.get("metric", ""), "org": s.get("org", ""),
-                            "slot_hint": slot,   # composer surfaces it as a promotion candidate
-                            "discovered_at": datetime.now(timezone.utc).isoformat(),
-                            "status": "active",
-                        })
+                        entry["sources"].append(rec)
                 else:
                     print(f"  [SCOUT/NEED] INVALID {url[:65]} — {reason}")
 
@@ -373,10 +390,19 @@ def run(max_axes: int = 4) -> dict:
 
             summary["axes"][axis]["suggested"].append(url)
             print(f"  [SCOUT] Testing {axis}: {url[:70]}")
-            ok, reason = _validate(url, fmt)
+            ok, reason, payload = _validate(url, fmt)
 
             if ok:
-                print(f"  [SCOUT] VALID   {url[:70]} ({s.get('metric','')})")
+                # the same wall as the composer-need path above: no rule, no registration
+                rec, why = _sr.build_candidate(url, fmt, payload,
+                                               metric=s.get("metric", ""),
+                                               org=s.get("org", ""), axis=axis)
+                if rec is None:
+                    print(f"  [SCOUT] DROPPED {url[:70]} — {why}")
+                    _sr.discard(axis, url, why, stage="registration", fmt=fmt)
+                    continue
+                print(f"  [SCOUT] VALID   {url[:70]} ({s.get('metric','')}) "
+                      f"[{rec['kind']}] {why}")
                 summary["validated"] += 1
                 summary["axes"][axis]["validated"].append(url)
 
@@ -385,14 +411,7 @@ def run(max_axes: int = 4) -> dict:
                 # Avoid duplicates
                 existing_urls = {src["url"] for src in discovered[axis]["sources"]}
                 if url not in existing_urls:
-                    discovered[axis]["sources"].append({
-                        "url":          url,
-                        "format":       fmt,
-                        "metric":       s.get("metric", ""),
-                        "org":          s.get("org", ""),
-                        "discovered_at": datetime.now(timezone.utc).isoformat(),
-                        "status":       "active",
-                    })
+                    discovered[axis]["sources"].append(rec)
             else:
                 print(f"  [SCOUT] INVALID {url[:70]} — {reason}")
 

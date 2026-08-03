@@ -412,8 +412,88 @@ KIND_LOCATION = {
 }
 
 
+# The PARSING RULE each kind needs on top of its location. A source that declares where
+# it lives but not how to read it fails identically on every fetch — which is a fact about
+# OUR record, not about the provider, and must never be charged to the provider.
+KIND_PARSE_RULE = {
+    "file":              "extract",
+    "http_json_path":    "extract",
+    "http_json_count":   "extract",
+    "http_json_series":  "extract",
+    "http_csv":          "col",
+    "http_gdelt_tone":   None,        # fixed payload shape, nothing to declare
+}
+
+# WHY A REFUSAL NEEDS A CLASS.
+#
+# Until 3 Aug 2026 every failed promotion looked the same to the approval path, so a
+# candidate we had registered without a parsing rule was blacklisted exactly like a dead
+# URL. Two working providers (OWID, the World Bank) were barred for a field WE had failed
+# to compute, having never once been fetched. The class is what separates "our record is
+# incomplete" from "this source does not work":
+#   schema -> our fault. Discard, complete it, offer it again. NEVER blacklist.
+#   fetch  -> the source's fault, and proven so by an actual request. Blacklisting is fair.
+FAILURE_SCHEMA = "schema"
+FAILURE_FETCH  = "fetch"
+
+
 class PromotionRejected(ValueError):
     """A promotion refused BEFORE config/composer_specs.json was touched."""
+    failure_class = FAILURE_SCHEMA
+    reason_code = "incomplete_registration"
+
+
+class SmokeFetchEmpty(PromotionRejected):
+    """It answered, and what came back is not a number."""
+    failure_class = FAILURE_FETCH
+    reason_code = "no_usable_value"
+
+
+class StaleData(PromotionRejected):
+    """It answered with a real number whose own measurement date is already too old."""
+    failure_class = FAILURE_FETCH
+    reason_code = "stale_data_date"
+
+
+_PARSE_ERRORS = (ValueError, TypeError, KeyError, IndexError, AttributeError,
+                 json.JSONDecodeError, UnicodeDecodeError)
+
+
+def classify_failure(exc: BaseException) -> tuple:
+    """(failure_class, reason_code) — the honest name for why a promotion failed.
+
+    Anything that carries its own class (the PromotionRejected family) states it. Anything
+    else is a real request that went wrong, and the only question is HOW: the payload was
+    unreadable, or the endpoint never answered."""
+    cls = getattr(exc, "failure_class", None)
+    if cls:
+        return cls, getattr(exc, "reason_code", "unspecified")
+    if isinstance(exc, RateLimited):
+        return FAILURE_FETCH, "rate_limited"
+    if isinstance(exc, FileNotFoundError):
+        return FAILURE_FETCH, "dead_url"
+    if isinstance(exc, _PARSE_ERRORS):
+        return FAILURE_FETCH, "unparseable_payload"
+    return FAILURE_FETCH, "dead_url"
+
+
+def validate_rule(entry: dict) -> bool:
+    """Second half of the schema wall: does this entry declare HOW to read what it points
+    at? Separate from validate_entry() because the two answer different questions and the
+    location check is asserted independently by test/test_promotion_seam.py."""
+    kind = entry.get("kind")
+    if kind not in KIND_PARSE_RULE:
+        raise PromotionRejected(f"unknown kind {kind!r} — promotion rejected")
+    field = KIND_PARSE_RULE[kind]
+    if not field:
+        return True
+    val = entry.get(field)
+    if isinstance(val, int) and not isinstance(val, bool):
+        return True                      # column 0 is a real column
+    if not str(val or "").strip():
+        raise PromotionRejected(f"kind={kind} requires {field!r} (the parsing rule) — "
+                                f"promotion rejected")
+    return True
 
 
 def validate_entry(entry: dict) -> bool:
@@ -436,11 +516,19 @@ def smoke_fetch(entry: dict):
     written. 'Does it actually fetch?' stops being a question anyone has to ask later.
 
     Note 0.0 is a VALID reading (an event count of zero is a measurement); only a
-    non-numeric result counts as empty."""
+    non-numeric result counts as empty.
+
+    A source whose own measurement date is already past its declared limit is refused
+    here rather than after promotion: the composer would refuse every value it served
+    anyway, so promoting it only buys a slot that looks filled and never moves."""
     v, dd = fetch(entry)
     if isinstance(v, bool) or not isinstance(v, (int, float)) or v != v:  # v!=v -> NaN
-        raise PromotionRejected(f"smoke fetch returned no usable value ({v!r}) — "
-                                f"promotion rejected")
+        raise SmokeFetchEmpty(f"smoke fetch returned no usable value ({v!r}) — "
+                              f"promotion rejected")
+    too_old, dd_age = _data_too_old(dd, float(entry.get("data_max_age_days", 3650)))
+    if too_old:
+        raise StaleData(f"smoke fetch read {v}, but its own data date {dd} is {dd_age}d old "
+                        f"(limit {entry.get('data_max_age_days')}d) — promotion rejected")
     return v, dd
 
 
@@ -463,19 +551,26 @@ def promote(axis, url, slot, kind, org, extract=None, col=None, **fields):
             entry[k] = fields[k]
     entry.setdefault("provenance", "self-discovered, human-promoted")
 
-    # TWO WALLS, both BEFORE the spec is touched. A rejected promotion must leave no
-    # trace: no half-written entry, no source that only fails later.
+    # THREE WALLS, all BEFORE the spec is touched. A rejected promotion must leave no
+    # trace: no half-written entry, no source that only fails later. Every refusal carries
+    # its CLASS, so the approval path can tell an incomplete record of ours from a source
+    # that genuinely does not work — only the second may ever be blacklisted.
     try:
         validate_entry(entry)                       # 1. does it declare its location?
-        smoke_value, smoke_date = smoke_fetch(entry)  # 2. does it actually fetch, once?
+        validate_rule(entry)                        # 2. does it declare how to read it?
+        smoke_value, smoke_date = smoke_fetch(entry)  # 3. does it actually fetch, once?
     except PromotionRejected as e:
+        fclass, code = classify_failure(e)
         return {"error": str(e), "rejected": True, "id": sid,
+                "failure_class": fclass, "reason_code": code,
                 "exception": f"{type(e).__name__}: {e}"}
     except Exception as e:
         # the RAW exception is surfaced: "it didn't work" is not a diagnosis
+        fclass, code = classify_failure(e)
         return {"error": f"smoke fetch failed — promotion rejected ({type(e).__name__}: "
                          f"{str(e)[:200]})",
                 "rejected": True, "id": sid,
+                "failure_class": fclass, "reason_code": code,
                 "exception": f"{type(e).__name__}: {e}"}
 
     spec["portfolio"][slot]["sources"].append(entry)
