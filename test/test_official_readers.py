@@ -74,6 +74,17 @@ check("a second dimension filter discriminates within the same entity and year",
 check("a different entity gives a different number, proving the key does the work",
       R.read_json_rows(UNSDG, dict(SDG_SRC, row_key="4"))[0] == 30.1)
 
+# the disguise the row key does NOT catch: same entity, same year, different breakdown
+err = raises(R.read_json_rows, UNSDG,
+             {k: v for k, v in SDG_SRC.items() if k != "where"})
+check("several values sharing the latest period is AMBIGUOUS, not a series", err is not None)
+check("...naming how many and showing them", "2 DIFFERENT values" in err
+      and "73.73517609" in err and "92.11" in err)
+check("...and telling the human which filter would resolve it", "`where` filter" in err)
+check("...refusing to flip a coin", "coin flip" in err)
+check("a where-filter that pins the breakdown resolves it cleanly",
+      R.read_json_rows(UNSDG, SDG_SRC)[0] == 73.73517609)
+
 err = raises(R.read_json_rows, UNSDG, dict(SDG_SRC, row_key="999"))
 check("an entity that is not there RAISES", err is not None)
 check("...naming the key asked for", "'999'" in err)
@@ -84,6 +95,22 @@ check("a where-filter that matches nothing raises too",
              dict(SDG_SRC, where={"dimensions.Location": "LUNAR"})) is not None)
 check("a column that carries no number raises rather than returning None",
       raises(R.read_json_rows, UNSDG, dict(SDG_SRC, column_name="geoAreaName")) is not None)
+
+# NaN is not a measurement. UN SDG series EG_FEC_RNEW answers a literal "NaN" for its
+# newest world row; float() accepts it and it then propagates silently through every
+# average and comparison downstream. Skipping it falls back to the newest REAL value —
+# live: nan (2024) became 18.0 (2023), which is the number that exists.
+NANNY = {"data": [
+    {"geoAreaCode": "1", "timePeriodStart": 2023.0, "value": "18.0",
+     "dimensions": {"Location": "ALLAREA"}},
+    {"geoAreaCode": "1", "timePeriodStart": 2024.0, "value": "NaN",
+     "dimensions": {"Location": "ALLAREA"}},
+]}
+check("a NaN reading is not a value, and the newest REAL one is used instead",
+      R.read_json_rows(NANNY, SDG_SRC) == (18.0, "2023.0"))
+check("...and infinity is refused the same way",
+      R._num("Infinity") is None and R._num(float("nan")) is None)
+check("...while a real zero is still a value", R._num("0") == 0.0)
 check("an extract that is not an array is a named failure",
       "not an array" in (raises(R.read_json_rows, UNSDG,
                                 dict(SDG_SRC, extract="totalElements")) or ""))

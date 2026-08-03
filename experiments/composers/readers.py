@@ -75,13 +75,21 @@ def dotted(d, path):
 
 def _num(x):
     """A number, or None. UN SDG returns its values as STRINGS ('8.535747528'), so a
-    reader that only accepted floats would report an empty world."""
+    reader that only accepted floats would report an empty world.
+
+    NaN and infinity are NOT numbers here. float('nan') survives float() and then
+    propagates silently through every downstream average, comparison and score — UN SDG
+    series EG_FEC_RNEW answers a literal 'NaN' string at world level, and it reached
+    composer.fetch as a valid reading before this line existed."""
     if isinstance(x, bool) or x is None:
         return None
     try:
-        return float(x)
+        v = float(x)
     except (TypeError, ValueError):
         return None
+    if v != v or v in (float("inf"), float("-inf")):
+        return None
+    return v
 
 
 def _sample(values, n=6):
@@ -151,8 +159,20 @@ def read_json_rows(payload, src: dict) -> tuple:
               "question nobody asked")
 
     hits.sort(key=lambda dv: dv[0])
-    date, value = hits[-1]
-    return value, (date or None)
+    latest = hits[-1][0]
+    tied = [v for d, v in hits if d == latest]
+    if len(set(tied)) > 1:
+        # SEVERAL DIFFERENT VALUES SHARE THE LATEST PERIOD. That is not a series, it is a
+        # breakdown — UN SDG carries Location RURAL/URBAN/ALLAREA, Sex, Age on the same
+        # series and the same year. Taking hits[-1] here would return whichever the
+        # provider happened to serialise last, which is the wrong-cell failure wearing the
+        # one disguise the row key does not catch.
+        raise RowNotFound(
+            f"json_rows: {len(tied)} DIFFERENT values share the latest period {latest!r} "
+            f"({sorted(set(tied))[:6]}) — the rows differ by a breakdown the address does "
+            f"not pin. Add a `where` filter (e.g. dimensions.Location) naming which one is "
+            f"meant. Returning one of them would be a coin flip reported as a measurement")
+    return tied[0], (latest or None)
 
 
 # ── JSON-stat 2.0 (Eurostat) ─────────────────────────────────────────────────

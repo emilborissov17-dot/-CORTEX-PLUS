@@ -196,6 +196,45 @@ for pid in PC.live_providers():
     check(f"{pid}: ...and may claim the deterministic carve-out",
           C.validate_deterministic(s) is True)
 
+# ── resolving a breakdown without flipping a coin ────────────────────────────
+#
+# Most UN SDG series carry a breakdown on the same entity and year (Location, Sex, Age).
+# The reader refuses to pick one. This proposes the all-totals row and REQUIRES it to be
+# unique — live, it resolved 11 of 24 ambiguous series and refused the other 13.
+
+def rows_with(*combos):
+    return [{"geoAreaCode": "1", "value": "1", "dimensions": dict(c)} for c in combos]
+
+
+w, why = PC.propose_total_filter(rows_with(
+    {"Location": "ALLAREA", "Reporting Type": "G"},
+    {"Location": "RURAL", "Reporting Type": "G"},
+    {"Location": "URBAN", "Reporting Type": "G"}))
+check("the all-totals breakdown is proposed when it is unique",
+      w == {"dimensions.Location": "ALLAREA", "dimensions.Reporting Type": "G"})
+check("...and the proposal states its own rule", "every dimension is its own total" in why)
+
+w, why = PC.propose_total_filter(rows_with(
+    {"Age": "<5Y", "Sex": "MALE"}, {"Age": "<5Y", "Sex": "FEMALE"},
+    {"Age": "<5Y", "Sex": "BOTHSEX"}))
+check("a dimension that is the INDICATOR'S OWN DEFINITION (<5Y) is not a total, so this "
+      "refuses rather than guessing — a human pins it once", w is None)
+check("...listing the competing breakdowns so the human can choose",
+      "a human must say which is meant" in why and "BOTHSEX" in why)
+
+w, why = PC.propose_total_filter(rows_with(
+    {"Type of product": "MIX_CMPLX"}, {"Type of product": "NFM"}))
+check("no totals row at all is a refusal, not a fallback to the first", w is None)
+
+w, why = PC.propose_total_filter(rows_with({"Reporting Type": "G"}))
+check("a single breakdown needs no filter", w == {} and "nothing to disambiguate" in why)
+check("an empty payload says so", PC.propose_total_filter([])[0] is None)
+check("the totals vocabulary is a small NAMED list, auditable by a human",
+      {"ALLAREA", "BOTHSEX", "TOTAL", "_T"} <= PC.TOTAL_CODES and len(PC.TOTAL_CODES) < 20)
+check("what it proposes is written into the source EXPLICITLY, never left as a flag",
+      "written into the source" in
+      (REPO / "core" / "provider_catalog.py").read_text(encoding="utf-8"))
+
 check("catalog traversal reuses the SHARED intake pipeline rather than a private one",
       "cortex_ingest" in PC.ingest.__doc__ or "cortex_ingest" in
       (REPO / "core" / "provider_catalog.py").read_text(encoding="utf-8"))

@@ -182,6 +182,59 @@ def for_axis(entries: list, axis: str) -> tuple:
     return hit, len(entries) - len(hit)
 
 
+# ── resolving a breakdown, without flipping a coin ───────────────────────────
+#
+# Most UN SDG series carry a BREAKDOWN on the same entity and the same year: Location
+# RURAL/URBAN/ALLAREA, Sex FEMALE/MALE/BOTHSEX, Age bands. readers.read_json_rows refuses
+# to pick one, correctly — several different values sharing the latest period is not a
+# series, and returning whichever the provider serialised last is the wrong-cell failure
+# in the one disguise a row key cannot catch.
+#
+# But the aggregate row is usually THERE and identifiable: every dimension set to its
+# own total. This proposes that filter and requires it to be UNIQUE. It never picks
+# between two plausible combinations, and what it proposes is written into the source
+# EXPLICITLY, so the stored record says `where: {"dimensions.Location": "ALLAREA"}` and
+# not a magic flag that re-decides itself on every fetch.
+TOTAL_CODES = {
+    "ALLAREA", "ALLAGE", "BOTHSEX", "TOTAL", "_T", "ALL", "ANY",
+    "G",           # Reporting Type: Global
+    "ISIC4_TOTAL", "NAT",
+}
+
+
+def propose_total_filter(rows: list, dim_field: str = "dimensions") -> tuple:
+    """(where_filter, reason). None when no UNIQUE all-totals breakdown exists.
+
+    `rows` are the payload's records, as fetched — this reads what is actually there
+    rather than assuming a vocabulary the provider may not use.
+    """
+    combos = {}
+    for r in rows:
+        if not isinstance(r, dict):
+            continue
+        dims = r.get(dim_field) or {}
+        if not isinstance(dims, dict):
+            continue
+        combos.setdefault(tuple(sorted(dims.items())), 0)
+        combos[tuple(sorted(dims.items()))] += 1
+    if not combos:
+        return None, "the payload carries no breakdown at all"
+    if len(combos) == 1:
+        return {}, "only one breakdown present — nothing to disambiguate"
+    totals = [c for c in combos
+              if all(str(v).upper() in TOTAL_CODES for _k, v in c)]
+    if len(totals) == 1:
+        return ({f"{dim_field}.{k}": v for k, v in totals[0]},
+                f"the one breakdown whose every dimension is its own total: "
+                f"{dict(totals[0])}")
+    if not totals:
+        return None, (f"none of the {len(combos)} breakdown(s) is an all-totals row — "
+                      f"a human must say which is meant: "
+                      f"{[dict(c) for c in list(combos)[:4]]}")
+    return None, (f"{len(totals)} competing all-totals breakdowns — refusing to choose: "
+                  f"{[dict(c) for c in totals[:4]]}")
+
+
 # ── a catalog entry -> a source the shared pipeline can test ─────────────────
 
 def build_source(pid: str, code: str, params: dict = None, address: dict = None) -> dict:
