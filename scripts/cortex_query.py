@@ -33,6 +33,8 @@ USAGE
   cortex_query.py --axis <AXIS> --force    demand this axis be sensed (bypasses salience)
   cortex_query.py --priority <AXIS> <N>    rank this axis for the needs report
   cortex_query.py --ledger                 prophecy ledger status
+  cortex_query.py --clock                  what the portfolio stands on: origin
+                                           concentration, who measured it, collector counters
 """
 from __future__ import annotations
 
@@ -51,6 +53,9 @@ PRIORITY_FILE   = REPO / "memory" / "human_priority_override.json"
 PENUMBRA_DIR    = REPO / "memory" / "penumbra"
 PENUMBRA_LEAVES = PENUMBRA_DIR / "_penumbra_leaves.jsonl"
 LEDGER          = REPO / "experiments" / "prophecy" / "prophecy_ledger.jsonl"
+SPEC_FILE       = REPO / "config" / "composer_specs.json"
+REPORTER_FILE   = REPO / "config" / "reporter_independence.json"
+INSTRUMENT      = REPO / "memory" / "collector_instrumentation.json"
 
 RULE = "─" * 78
 
@@ -268,6 +273,143 @@ def cmd_priority(axis: str, rank: str) -> int:
     return 0
 
 
+# ── --clock ──────────────────────────────────────────────────────────────────
+#
+# DELIBERATE DUPLICATION. origin() and the reporter lookup exist in
+# experiments/composers/provenance.py and are re-implemented here in nine lines of string
+# work. Importing that module would put a project code path between Emil and the bytes,
+# which is the one thing this file may never do. The price is two implementations; the
+# guard against drift is test_origin_honesty.py, which runs BOTH over the live spec and
+# fails if they ever disagree about a single source.
+
+def _host(url):
+    s = str(url or "").strip().split("://", 1)[-1].split("/", 1)[0]
+    return s.split("@")[-1].split(":")[0].lower()
+
+
+def _origin(src):
+    explicit = str(src.get("origin") or "").strip()
+    if explicit:
+        return explicit
+    if src.get("kind") == "file":
+        return str(src.get("path") or "?")
+    return _host(src.get("url")) or "?"
+
+
+def _reporter(src, confirmed):
+    on_rec = str(src.get("reporter_class") or "").strip()
+    if on_rec and str(src.get("reporter_class_confirmed_by") or "").strip():
+        return on_rec
+    for key in (f"host:{_host(src.get('url'))}" if src.get("url") else None,
+                f"org:{src.get('org')}" if src.get("org") else None,
+                f"path:{src.get('path')}" if src.get("path") else None):
+        if key and key in confirmed:
+            return confirmed[key].get("class", "unknown")
+    return "unknown"
+
+
+def cmd_clock(threshold: float = 0.5) -> int:
+    """The counters, unranked and unsummarised: what the portfolio actually stands on,
+    who measured it, and whether the collecting loop has been anywhere lately."""
+    specs = _read_json(SPEC_FILE, {}) or {}
+    confirmed = (_read_json(REPORTER_FILE, {}) or {}).get("confirmed") or {}
+    composed = _read_json(COMPOSED_OUT, {}) or {}
+
+    print(RULE)
+    print("PORTFOLIO CLOCK — origin concentration and who measured it")
+    print(RULE)
+    print("origin = what a source RESOLVES to: the file it is read from, or the host it is")
+    print("fetched from. NOT the `org` label, which is free text written at discovery.")
+    print()
+
+    all_srcs, flagged, nominal = [], [], []
+    print(f"{'axis':<38} {'src':>4} {'orig':>5} {'top share':>10}  top origin")
+    for axis, body in sorted(specs.items()):
+        if axis.startswith("_"):
+            continue
+        srcs = [s for sl in (body.get("portfolio") or {}).values()
+                for s in sl.get("sources", [])]
+        all_srcs += srcs
+        if not srcs:
+            print(f"{axis:<38} {0:>4} {'-':>5} {'-':>10}  (no sources declared)")
+            continue
+        counts = {}
+        for s in srcs:
+            o = _origin(s)
+            counts[o] = counts.get(o, 0) + 1
+        top, n = sorted(counts.items(), key=lambda kv: (-kv[1], kv[0]))[0]
+        share = n / len(srcs)
+        mark = "  <== origin_concentrated" if share > threshold else ""
+        if share > threshold:
+            flagged.append(axis)
+        print(f"{axis:<38} {len(srcs):>4} {len(counts):>5} {share:>9.0%}  {top[:44]}{mark}")
+
+        for slot, rep in ((composed.get(axis) or {}).get("slots") or {}).items():
+            if rep.get("nominally_filled"):
+                nominal.append(f"{axis}/{slot}")
+
+    print()
+    print(RULE)
+    print("REPORTER INDEPENDENCE — who produced the statistic")
+    print(RULE)
+    print("Layers 1 and 2 are closed: we did not invent it, and we read it correctly.")
+    print("Layer 3 is OPEN. A self-reported number is the measured entity's account of")
+    print("itself. This is shown, never scored — discounting it would be a truth claim.")
+    print()
+    tally, unmapped = {}, set()
+    for s in all_srcs:
+        c = _reporter(s, confirmed)
+        tally[c] = tally.get(c, 0) + 1
+        if c == "unknown":
+            if s.get("org"):
+                unmapped.add(f"org:{s['org']}")
+            if s.get("url"):
+                unmapped.add(f"host:{_host(s['url'])}")
+    total = sum(tally.values()) or 1
+    for c in ("self_reported", "independent", "adversarial", "unknown"):
+        print(f"  {c:<16} {tally.get(c, 0):>4}  {tally.get(c, 0) / total:>5.0%}")
+    print(f"  {'TOTAL':<16} {total:>4}")
+
+    self_only = []
+    for axis, body in sorted(specs.items()):
+        if axis.startswith("_"):
+            continue
+        srcs = [s for sl in (body.get("portfolio") or {}).values()
+                for s in sl.get("sources", [])]
+        if srcs and all(_reporter(s, confirmed) == "self_reported" for s in srcs):
+            self_only.append(axis)
+
+    print()
+    print(f"origin_concentrated  {len(flagged)} axis/axes: {', '.join(flagged) or 'none'}")
+    print(f"nominally_filled     {len(nominal)} slot(s): {', '.join(nominal) or 'none'}")
+    print(f"self_reported_only   {len(self_only)} axis/axes: {', '.join(self_only) or 'none'}")
+    if unmapped:
+        print(f"\nawaiting your ruling ({len(unmapped)} org/host with no confirmed class —")
+        print(f"unknown is never read as independent). Add to config/reporter_independence.json:")
+        for k in sorted(unmapped):
+            print(f"  {k}")
+
+    inst = _read_json(INSTRUMENT, {}) or {}
+    if inst:
+        print()
+        print(RULE)
+        print(f"COLLECTOR, LAST {inst.get('window_days', '?')} DAYS")
+        print(RULE)
+        print("A decline rate on its own cannot tell an honest guard from a stuck loop —")
+        print("both report ~90%. Read it only with the three counters beneath it.")
+        print()
+        print(f"  runs                 {inst.get('runs')}")
+        print(f"  decline_rate         {inst.get('decline_rate')}")
+        print(f"  distinct_urls_tried  {inst.get('distinct_urls_tried')}")
+        print(f"  distinct_queries     {inst.get('distinct_queries')}")
+        print(f"  axes_touched         {inst.get('n_axes_touched')}  "
+              f"{inst.get('axes_touched')}")
+        print(f"  seen_skipped         {inst.get('seen_skipped')}")
+    else:
+        print(f"\n(no collector instrumentation yet at {_rel(INSTRUMENT)})")
+    return 0
+
+
 # ── --ledger ─────────────────────────────────────────────────────────────────
 
 def cmd_ledger() -> int:
@@ -335,6 +477,8 @@ def main(argv=None) -> int:
     p.add_argument("--force", action="store_true", help="confirm the --axis demand")
     p.add_argument("--priority", nargs=2, metavar=("AXIS", "N"), help="rank an axis for the needs report")
     p.add_argument("--ledger", action="store_true", help="prophecy ledger status")
+    p.add_argument("--clock", action="store_true",
+                   help="origin concentration, reporter independence, collector counters")
     a = p.parse_args(argv)
 
     if a.penumbra:
@@ -351,6 +495,8 @@ def main(argv=None) -> int:
         return cmd_priority(a.priority[0], a.priority[1])
     if a.ledger:
         return cmd_ledger()
+    if a.clock:
+        return cmd_clock()
 
     p.print_help()
     return 0

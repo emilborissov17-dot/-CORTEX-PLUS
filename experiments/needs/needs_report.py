@@ -210,6 +210,29 @@ def _mind_items():
                                  it.get("detail", ""),
                                  "correct refusal (not served as fresh); no action unless it's the only source",
                                  "none"))
+            elif kind == "slot_nominally_filled":
+                out.append(_item(
+                    "MIND", "medium", f"{axis}: '{slot}' is NOMINALLY filled, not filled",
+                    it.get("detail", ""),
+                    "the min is met by a single origin: promote a source with a DIFFERENT "
+                    "origin into this slot, or accept that losing that one empties it",
+                    "auto->human"))
+            elif kind == "origin_concentrated":
+                out.append(_item(
+                    "MIND", "medium", f"{axis}: origin-concentrated",
+                    it.get("detail", ""),
+                    "not a bug to hide: it is what the portfolio actually is. The fix is a "
+                    "source with a different ORIGIN, not another label on the same file",
+                    "auto->human"))
+            elif kind == "self_reported_only":
+                out.append(_item(
+                    "MIND", "medium", f"{axis}: every source is SELF-REPORTED",
+                    it.get("detail", ""),
+                    "READ this axis knowing the measured entity wrote the number. Nothing "
+                    "here is discounted for it — that would be a truth claim we cannot "
+                    "support. What would change it is an independent source: satellite, "
+                    "sensor, third-party survey, market observation",
+                    "human"))
     out.extend(_penumbra_items())
     out.extend(_cycle_request_items())
     return out

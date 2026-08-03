@@ -48,11 +48,15 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
+sys.path.insert(0, str(HERE))
+import provenance as prov      # origin + reporter independence (derived, never scored)
+
 REPO = HERE.parents[1]
 
 SPEC_FILE  = REPO / "config" / "composer_specs.json"
@@ -223,12 +227,14 @@ def compose(axis: str, force: bool = False) -> dict:
     state = _load(state_file, {"sources": {}})
     S = state["sources"]
     needs, slots_report = [], {}
-    filled_orgs = set()
+    filled_orgs, filled_origins = set(), set()
     freshness_factors = []
+    rep_cfg = prov.reporter_config()
+    declared_sources = [s for sl in spec["portfolio"].values() for s in sl["sources"]]
 
     for slot_name, slot in spec["portfolio"].items():
         fresh_days = float(slot.get("freshness_days", 30))
-        live = []
+        live, live_specs = [], []
         for src in slot["sources"]:
             sid = src["id"]
             st = S.setdefault(sid, {"consecutive_fails": 0, "status": "active", "history": []})
@@ -279,30 +285,70 @@ def compose(axis: str, force: bool = False) -> dict:
             if st.get("last_ok_ts") and st.get("status") != "dead":
                 age_d = (_age_h(st["last_ok_ts"]) or 0.0) / 24.0
                 if age_d <= fresh_days:
+                    _cls, _why = prov.reporter_class(src, rep_cfg)
                     live.append({"id": sid, "org": src.get("org", "?"),
+                                 "origin": prov.origin(src),
+                                 "reporter_class": _cls, "reporter_why": _why,
                                  "value": st.get("last_value"), "unit": src.get("unit"),
                                  "age_days": round(age_d, 3), "cached": not attempted})
+                    live_specs.append(src)
                 else:
                     needs.append({"slot": slot_name, "kind": "stale_value",
                                   "detail": f"{sid} last good value is {age_d:.1f}d old "
                                             f"(> {fresh_days}d) — excluded"})
         ok = len(live) >= int(slot.get("min", 1))
+        status, status_note = prov.slot_status(live_specs, slot.get("min", 1))
         if ok:
             for l in live:
                 filled_orgs.add(l["org"])
+                filled_origins.add(l["origin"])
             freshness_factors.append(max(0.0, 1.0 - live[0]["age_days"] / fresh_days))
         else:
             needs.append({"slot": slot_name, "kind": "slot_unfilled",
                           "detail": f"needs >= {slot.get('min', 1)} live source(s) of class "
                                     f"'{slot_name}', has {len(live)}"})
-        slots_report[slot_name] = {"filled": ok, "live": live}
+        if status == "nominally_filled":
+            # the count is met and the redundancy is not real. Said out loud, because
+            # "filled" was quietly promising that losing one source would not empty it.
+            needs.append({"slot": slot_name, "kind": "slot_nominally_filled",
+                          "detail": status_note})
+        slots_report[slot_name] = {"filled": ok, "status": status,
+                                   "nominally_filled": status == "nominally_filled",
+                                   "status_note": status_note,
+                                   "origins": sorted({l["origin"] for l in live}),
+                                   "live": live}
 
     n_slots = len(spec["portfolio"])
     n_filled = sum(1 for s in slots_report.values() if s["filled"])
     coverage = n_filled / n_slots if n_slots else 0.0
-    diversity = min(1.0, len(filled_orgs) / n_slots) if n_slots else 0.0
+    # DIVERSITY IS COUNTED OVER ORIGINS, NOT OVER LABELS.
+    #
+    # This used to be len(filled_orgs)/n_slots — distinct `org` strings, which an LLM wrote
+    # at discovery time. 41 of the 43 file-kind sources in the live spec read the SAME file
+    # under 15 different org labels, so the old number reported a diversified portfolio
+    # standing on one file. The label count is still published below, explicitly named as
+    # labels, because it is a real thing about the spec — just not the thing the word
+    # "diversity" was being used to claim.
+    diversity = min(1.0, len(filled_origins) / n_slots) if n_slots else 0.0
+    label_diversity = min(1.0, len(filled_orgs) / n_slots) if n_slots else 0.0
     freshness = (sum(freshness_factors) / len(freshness_factors)) if freshness_factors else 0.0
     confidence = round(0.4 * coverage + 0.3 * diversity + 0.3 * freshness, 3)
+
+    # ── who measured this, and how much of it comes from one place ────────────
+    conc = prov.concentration(declared_sources)
+    shares = prov.class_shares(declared_sources, rep_cfg)
+    if conc["concentrated"]:
+        needs.append({"slot": "*", "kind": "origin_concentrated",
+                      "detail": f"{int(conc['top_share'] * 100)}% of this axis's "
+                                f"{conc['n_sources']} source(s) resolve to ONE origin "
+                                f"({conc['top_origin']}) — the portfolio moves when that "
+                                f"one moves, whatever the other labels say"})
+    if shares["self_reported_only"]:
+        needs.append({"slot": "*", "kind": "self_reported_only",
+                      "detail": f"every one of this axis's {shares['n_sources']} source(s) "
+                                f"is SELF-REPORTED: the measured entity produces the "
+                                f"statistic. Not a claim that the number is wrong — a "
+                                f"statement that nothing here could notice if it were"})
 
     # ── composed values (no invented blended unit — anchor unit is kept) ──────
     def _slot_primary(name):
@@ -366,8 +412,18 @@ def compose(axis: str, force: bool = False) -> dict:
                      "divergence_note": divergence_note},
         "slots": slots_report, "agreement": agreement,
         "confidence": confidence,
-        "confidence_parts": {"coverage": round(coverage, 3), "diversity": round(diversity, 3),
+        "confidence_parts": {"coverage": round(coverage, 3),
+                             "diversity": round(diversity, 3),
+                             "diversity_basis": "distinct ORIGINS across filled slots",
                              "freshness": round(freshness, 3)},
+        "label_diversity": {"value": round(label_diversity, 3),
+                            "basis": "distinct `org` LABELS, not origins",
+                            "note": "published for comparison and deliberately NOT scored: "
+                                    "org strings are free text written at discovery and "
+                                    "41 of 43 file sources share one origin under 15 labels"},
+        "origin_concentration": conc,
+        "reporter_independence": shares,
+        "unmapped_reporters": prov.unmapped_keys(declared_sources, rep_cfg),
         "needs": needs, "n_candidates": len(candidates),
     }
 
