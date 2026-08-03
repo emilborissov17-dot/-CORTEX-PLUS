@@ -1,0 +1,215 @@
+{
+  "_meta": {
+    "file": "config/data_providers.json",
+    "what": "The provider registry the traversal engine walks. axis_source_map.json says WHICH series an axis wants; this file says HOW to reach a provider's catalog, how to read its payload shape, and what independence class its series carry BY DEFAULT (always overridable per series, never assumed upward).",
+    "authored": "2026-08-03",
+    "principle": "Three intake modes, ONE discipline: registry lookup, catalog traversal, and free web search all converge on the same four steps - FETCH the real payload, DERIVE the rule from that payload, SMOKE TEST it, CLASSIFY its independence, then offer it to the human. A candidate that has not been fetched is not a candidate.",
+    "the_a027_rule": "No candidate is ever written to pending_approvals with an empty parse rule. If the rule cannot be derived from a real payload, the candidate is DROPPED, not offered.",
+    "failure_semantics": {
+      "timeout": "NOT a dead source. Retry with a longer timeout. Never blacklist on timeout. (World Bank timed out twice on 2026-08-03 and is perfectly alive.)",
+      "401_403_needs_key": "record NEEDS_AUTH with the URL preserved, exactly as UCDP was recorded. It auto-activates when a token arrives. Never blacklist.",
+      "robots_disallowed": "the source is fine; this fetcher cannot reach it. Record FETCHER_BLOCKED, not dead. (NOAA CO2 on 2026-08-03.)",
+      "404": "the slug is wrong. Drop the candidate, record the attempted URL so the same wrong slug is not re-derived next cycle.",
+      "schema_mismatch": "kill at 1, not at 3. A deterministic feed whose shape changed is not degraded, it is wrong.",
+      "never": "A source is only blacklisted after a real fetch that really failed for a real reason. Never on a schema refusal that never touched the network - that bug rejected OWID permanently and took a migration to undo."
+    }
+  },
+
+  "providers": {
+
+    "un_sdg_api": {
+      "name": "UN Statistics Division SDG API",
+      "catalog_endpoint": "https://unstats.un.org/SDGAPI/v1/sdg/Series/List",
+      "catalog_verified": "live_2026_08_03",
+      "catalog_shape": {
+        "type": "flat JSON array",
+        "entry_fields": ["goal", "target", "indicator", "release", "code", "description", "uri"],
+        "verified_sample": {"goal": ["3"], "target": ["3.b"], "indicator": ["3.b.2"], "code": "DC_TOF_HLTHNT", "description": "Total official development assistance to medical research and basic health sectors, net disbursement, by recipient countries (millions of constant 2023 United States dollars)"},
+        "verified_series_count": 489,
+        "release_observed": "2026.Q1.G.01"
+      },
+      "traversal": {
+        "how": "GET the catalog once per cycle-week, cache it. For each axis, match its sdg_series_keys against entry.code (exact prefix match, never fuzzy). The description field is the human-readable label to show in the Telegram approval.",
+        "data_endpoint_pattern": "https://unstats.un.org/SDGAPI/v1/sdg/Series/Data?seriesCode={code}&areaCode={m49}",
+        "data_endpoint_verified": false,
+        "must_probe_before_use": "the Data endpoint's payload shape has NOT been verified. Probe it once, read the real structure, and write the derived rule back into this file before any SDG series is registered."
+      },
+      "default_reporter_independence": "self_reported",
+      "independence_reasoning": "The SDG framework is national reporting standardised by UN custodian agencies. The custodian standardises; the state supplies. A few series (satellite-derived, expert-coded) are exceptions and must be reclassified individually - the default must never be independent.",
+      "cadence": "annual, catalog refreshed quarterly",
+      "why_it_matters": "489 series is the single largest structured catalog available to the system. It covers most of PLANET, HUMAN and CIVILIZATION. It covers NONE of COSMOS - which is why COSMOS needs JPL/ESA/CelesTrak and semantic reading instead."
+    },
+
+    "eurostat": {
+      "name": "Eurostat dissemination API (JSON-stat 2.0)",
+      "api_root": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/{dataset}",
+      "example_verified": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/env_air_gge?format=JSON&lang=EN&lastTimePeriod=1",
+      "catalog_verified": "partial_live_2026_08_03",
+      "payload_shape": {
+        "format": "JSON-stat 2.0",
+        "top_level_keys_observed": ["version", "class", "label", "source", "updated", "value"],
+        "verified_sample": "\"version\":\"2.0\",\"class\":\"dataset\",\"label\":\"Greenhouse gas emissions by source sector\",\"source\":\"ESTAT\",\"updated\":\"2026-06-02T23:00:00+0200\",\"value\":{\"69140\":0.0264,\"69121\":0.02843",
+        "value_structure": "dict keyed by FLAT INTEGER INDEX (as string), not by dimension label",
+        "CRITICAL": "the flat index is meaningless without the dimension block. JSON-stat 2.0 carries 'id', 'size' and 'dimension' keys that map index -> (geo, time, unit, ...). Those keys were NOT observed in the truncated probe response. The traversal engine MUST read id/size/dimension and MUST FAIL LOUDLY if they are absent. Reading value['0'] and calling it a country figure would be exactly the kind of confident nonsense this whole architecture exists to prevent."
+      },
+      "traversal": {
+        "catalog": "https://ec.europa.eu/eurostat/api/dissemination/catalogue/toc/txt",
+        "catalog_verified": false,
+        "how": "walk the table of contents, match dataset codes against each axis's eurostat_datasets list, then probe one dataset to derive the dimension mapping before registering anything"
+      },
+      "default_reporter_independence": "self_reported",
+      "independence_reasoning": "Eurostat is a compiler of national statistical institute submissions. The NSIs are state bodies. Eurostat harmonises definitions, which is real and valuable, but it does not independently measure.",
+      "geographic_coverage": "EU27 + EFTA + candidates. ~40 of 217 countries. Deep, not wide - use it for definitional quality and for cross-checking global panels in the region where both exist.",
+      "cadence": "varies by dataset, monthly to annual"
+    },
+
+    "national_statistical_institutes_sdmx": {
+      "name": "National statistical institutes via SDMX",
+      "the_leverage_point": "SDMX is the standard that makes 200 separate institutes addressable by ONE traversal engine instead of 200 scrapers. An institute with an SDMX endpoint exposes a machine-readable dataflow list; the same code walks all of them.",
+      "discovery_registry": "https://registry.sdmx.org/ws/public/sdmxapi/rest/dataflow/all/all/latest",
+      "registry_verified": false,
+      "known_sdmx_endpoints": [
+        {"agency": "ECB", "url": "https://data-api.ecb.europa.eu/service/dataflow", "verified": false},
+        {"agency": "OECD", "url": "https://sdmx.oecd.org/public/rest/dataflow/all/all/latest", "verified": false},
+        {"agency": "ILO", "url": "https://sdmx.ilo.org/rest/dataflow", "verified": false},
+        {"agency": "IMF", "url": "https://sdmxcentral.imf.org/ws/public/sdmxapi/rest/dataflow", "verified": false},
+        {"agency": "INSEE (France)", "url": "https://api.insee.fr/series/BDM/V1/dataflow", "verified": false},
+        {"agency": "ISTAT (Italy)", "url": "https://esploradati.istat.it/SDMXWS/rest/dataflow", "verified": false},
+        {"agency": "NSI Bulgaria", "url": "https://www.nsi.bg/en/content/opendata", "verified": false, "note": "NSI publishes open data but SDMX conformance is unconfirmed - probe before assuming"}
+      ],
+      "default_reporter_independence": "self_reported",
+      "independence_reasoning": "This is the PUREST self-report class in the entire registry. A national statistical institute is the measured entity measuring itself. That does not make it wrong - NSIs are often the most careful measurers in existence - but it is precisely the class where 'governments legitimise themselves through their own numbers' applies literally. Every NSI series must be paired, where possible, with an independent or adversarial series on the same axis before it is trusted to move a score.",
+      "must_probe_before_use": "SDMX is a family of dialects. Every endpoint returns a slightly different flavour. Probe each agency once, derive its rule, store the derived rule here. Do not write a generic SDMX parser and assume it generalises - it will not."
+    },
+
+    "owid": {
+      "name": "Our World in Data grapher CSV",
+      "url_pattern": "https://ourworldindata.org/grapher/{slug}.csv?csvType=filtered&useColumnShortNames=true",
+      "verified": "live_2026_08_03_across_10_slugs",
+      "payload_shape": {
+        "format": "CSV panel, entity x year",
+        "header_pattern": "entity,code,year,{short_column_name}[,owid_region][,{col}__original_year]",
+        "csvType_filtered": "usually returns ONE row per entity (latest year) - about 185-250 rows",
+        "EXCEPTION_OBSERVED": "life-expectancy returned 618 rows spanning 1770-2025, i.e. FULL HISTORY despite csvType=filtered. Never assume one-row-per-entity. Always select by (entity, max(year)) and fail loudly if the selection is ambiguous.",
+        "original_year_trap": "several slugs carry a {col}__original_year column. The 'year' column may say 2025 while the actual survey is 2020. data_date MUST come from __original_year when present, or the system reports five-year-old data as current."
+      },
+      "world_row": {
+        "finding": "MOST OWID panels have NO 'World' row - 6 of the first 8 probed did not. life-expectancy DOES (74 rows).",
+        "hard_rule": "If a global scalar is wanted and no World row exists, the fetch FAILS. It does NOT average 177 countries into a synthetic 'world' figure. That is the fabrication this entire pack exists to remove.",
+        "better_use": "the 195-row panel is exactly what wellbeing_country.py wants for 217-country scoring - one fetch instead of 195."
+      },
+      "default_reporter_independence": "unknown",
+      "independence_reasoning": "OWID IS A RE-PUBLISHER. An OWID URL inherits NOTHING. The class belongs to the ORIGINATING measurement: V-Dem experts are independent, FAO food balance sheets are self-reported, RSF is adversarial - all three arrive through the same host. Defaulting an OWID source to 'independent' because the host looks neutral would inflate the independence count exactly the way counting by record rather than by origin already does.",
+      "cadence": "irregular; OWID republishes when upstream updates"
+    },
+
+    "world_bank": {
+      "name": "World Bank Indicators API",
+      "url_pattern": "https://api.worldbank.org/v2/country/{iso3|all}/indicator/{indicator}?format=json&per_page=400&mrnev=1",
+      "verified": "endpoint_alive_but_slow",
+      "probe_note": "read timeout twice on 2026-08-03. The API is alive. It needs a longer timeout, not a blacklist. Mass 400s were also observed on 13 July - watch, but do not conclude death.",
+      "payload_shape": {
+        "format": "JSON array of TWO elements: [pagination_metadata, data_array]",
+        "note": "the two-element wrapper is the classic parsing trap - extract path must start at index 1, not 0",
+        "verified": false,
+        "must_probe_before_use": true
+      },
+      "default_reporter_independence": "self_reported",
+      "independence_reasoning": "The World Bank compiles from national accounts and national surveys. Its own reconstructions (PIP poverty, Human Capital Index) are closer to mixed. Classify per indicator, never per host."
+    },
+
+    "usgs": {
+      "name": "USGS earthquake feeds",
+      "url_pattern": "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/{magnitude}_{period}.geojson",
+      "verified": "live_2026_08_03",
+      "payload_shape": {
+        "top_level_keys": ["type", "metadata", "features", "bbox"],
+        "scalar_extract": "metadata.count",
+        "verified_value": 18
+      },
+      "default_reporter_independence": "independent",
+      "independence_reasoning": "seismometer network. No state reports its own earthquakes. Physical instrument, no reporting chain through the measured entity.",
+      "cadence": "continuous, regenerated every few minutes"
+    },
+
+    "nasa_jpl_ssd": {
+      "name": "NASA JPL Solar System Dynamics APIs",
+      "endpoints": [
+        {"id": "cad", "url": "https://ssd-api.jpl.nasa.gov/cad.api", "verified": "live_2026_08_03", "top_level_keys": ["signature", "count", "fields", "data"], "scalar_extract": "count"},
+        {"id": "sentry", "url": "https://ssd-api.jpl.nasa.gov/sentry.api", "verified": "live_2026_08_03", "top_level_key_observed": "data", "scalar_extract": "len(data)", "note": "count field not observed in the probe response - count the list, and fail loudly if 'data' is absent"}
+      ],
+      "default_reporter_independence": "independent",
+      "independence_reasoning": "orbital mechanics from telescope observation. The least manipulable numbers in the entire system - there is no political incentive structure attached to an asteroid's trajectory.",
+      "why_it_matters": "COSMOS has been scored almost entirely on reasoning. These two endpoints give it its first real instruments."
+    },
+
+    "gdelt": {
+      "name": "GDELT Doc API",
+      "url_pattern": "https://api.gdeltproject.org/api/v2/doc/doc?query={q}&mode=timelinetone&format=json",
+      "verified": "in_portfolio_working",
+      "probe_note": "HTTP 429 rate limited at probe time on 2026-08-03 - it works on the machine's own schedule, not under burst probing",
+      "default_reporter_independence": "mixed",
+      "independence_reasoning": "GDELT measures MEDIA, not the world. Its tone series is an independent measurement OF COVERAGE, and coverage is produced by outlets with their own positions. Classify what it measures honestly: it is an independent instrument pointed at a self-interested field.",
+      "the_semantic_role": "GDELT is the system's only existing bridge between numbers and meaning. It is the natural host for the divergence question: does media tone on an axis move with, against, or independently of the physical series? That question is Stage 4 and requires the independence taxonomy first."
+    },
+
+    "free_web_search": {
+      "name": "Open search - the third intake mode",
+      "why_it_exists": "Known-good providers give reliability. Search gives DIVERSIFICATION - and coverage of everything no catalog contains: a national institute nobody registered, a new adversarial monitor, a dataset published last month, and above all the SEMANTIC sources that no series catalog will ever list.",
+      "the_discipline_is_identical": "search -> fetch the real payload -> derive the rule FROM the payload -> smoke test -> classify independence -> offer to human. Search changes WHERE candidates come from. It changes NOTHING about what makes one admissible.",
+      "the_bug_it_must_not_repeat": "The browser collector ran 14 times, issued 2 distinct queries, and read 11 URLs, because need selection returned the first slot_unfilled in JSON key order. Search without axis rotation and without a seen-memory is not search; it is a loop with a network connection.",
+      "required_guards": [
+        "axis rotation - never twice consecutively on the same axis while any axis has an unfilled slot",
+        "seen-memory of URLs already read, per axis",
+        "query diversification - the query must be a function of the axis AND the round, not of the axis alone",
+        "no numeric ceiling on SEARCHING. The ceiling belongs on DIGESTION - how much enters the sensorium per cycle - not on how widely the collector may look. Search freely; swallow a measured portion."
+      ],
+      "default_reporter_independence": "unknown",
+      "independence_reasoning": "A source found by search has no inherited class at all. It must be classified explicitly from what the ORIGIN is, and 'unknown' is a legitimate final answer that simply means the source cannot yet be used to contradict another."
+    }
+  },
+
+  "semantic_intake": {
+    "why_this_section_exists": "Nine of the 25 axes have primary_metric=null in target_config. That is the configuration stating, in its own voice, that these axes are qualitative. Numbers are not everything - and on those nine, numbers are not even the main thing. The sensorium currently holds ZERO drops of kind=semantic. Not few. Zero.",
+    "what_a_semantic_drop_is": {
+      "not": "a number extracted from prose. That is numeric intake with extra steps.",
+      "is": "a CLAIM, with its verbatim supporting quote, its source, its date, its reporter-independence class, and an explicit statement of what would falsify it. It enters the sensorium as a claim and is scored as a claim - never silently converted into a scalar."
+    },
+    "required_fields_for_a_semantic_drop": [
+      "claim - one sentence, the assertion itself",
+      "verbatim_quote - the exact supporting text, unedited, from the source",
+      "source_url and source_org",
+      "published_date - never the fetch date",
+      "reporter_independence - one of the five classes",
+      "axis and dimension",
+      "falsifier - what observation would make this claim false",
+      "language - MANDATORY. A sign_guard rationale was committed in Chinese and is unreadable to both maintainers. Machine reasoning that a human cannot read is not auditable, and auditability is the point."
+    ],
+    "guards_that_carry_over_unchanged": [
+      "verbatim grounding - the quote must appear in the fetched text",
+      "chrome-strip and legend/chart-furniture rejection - a cookie banner was once committed as a CLIMATE observation",
+      "relevance gate",
+      "structural faithfulness - decompose the claim, check each part entails from the quote"
+    ],
+    "the_guard_that_does_not_carry_over": "sign skepticism. A claim has no sign. Forcing a direction onto a semantic drop is how a reading becomes a fabricated measurement.",
+    "the_ban_that_must_be_repeated_in_code": "NO axis-fit vocabulary gate. Health belongs in governance. An internet shutdown is simultaneously infrastructure, media and rights. Gating a feed by whether its words match its axis would mechanically sever exactly the cross-domain signals that make a civilization model a model rather than 25 disconnected dials. This was proposed, and retracted, and is recorded here so no future patch re-adds it."
+  },
+
+  "digestion_ceiling": {
+    "principle": "Neither starve nor overeat. The external collector has NO numeric limit on SEARCHING - it gathers as widely as its needs require. The limit is on the PORTION: how much becomes active source surface per cycle.",
+    "MAX_NEW_SOURCES_OFFERED_PER_CYCLE": 5,
+    "MAX_ACTIVE_SOURCES": null,
+    "MAX_ACTIVE_MODULES": null,
+    "why_null": "The two hard ceilings are deliberately unset in this file. They are a capability-ceiling question under BOUNDARIES S IV and belong to the humans, after an adversarial round - not to the artifact that proposes sources. Setting them here would be the system's intake layer writing its own bound.",
+    "what_is_set": "the per-cycle offer rate, which is an operational approval matter (Emil's Telegram path), not a canon amendment."
+  },
+
+  "approval_path": {
+    "who": "Emil, via Telegram, two-step",
+    "what_arrives": [
+      "NEW SOURCE: id, axis, slot, org, ORIGIN (not host), reporter_independence + the one-line reasoning, the derived parse rule, and the actual value returned by the smoke test. A source with no smoke-test value never reaches the message.",
+      "SELF-MODIFICATION PROPOSAL: the diff, the classification protected_path vs leaf_module (classified BY THE HUMAN - system self-classification is inadmissible), and what capability it changes."
+    ],
+    "what_never_arrives": "an amendment to BOUNDARIES.md. CORTEX has zero role there: it may surface that a boundary is causing a cost; it may never propose, trigger, compose, tally or enact. That path is human-only, two-human quorum, 60-day cooling, hash-bound vote, human enactment commit."
+  }
+}
