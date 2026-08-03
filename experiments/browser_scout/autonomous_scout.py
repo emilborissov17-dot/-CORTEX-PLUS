@@ -92,13 +92,18 @@ def need_class(need: str):
     return None
 
 
-def decide(axis: str, need: str, slot: str = None) -> dict:
+def decide(axis: str, need: str, slot: str = None, prior_queries=None) -> dict:
     """Local model chooses the indicator + search keywords for this need.
 
     The slot class travels INTO the prompt: a daily slot must be told to hunt live
     dashboards and data portals, not annual PDFs. The current year is passed explicitly
     because the model's prior is older than the calendar and it will happily search for
-    a year that is already history."""
+    a year that is already history.
+
+    PRIOR QUERIES travel in too. This is a temperature-0.1 call over an otherwise constant
+    prompt, so without them it is a pure function of (axis, need) and returns the same
+    keywords forever — measured: '2026 social media engagement daily', ten runs running,
+    zero components each time. Naming the failures is the only thing that moves it."""
     cls = slot or need_class(need)
     year = datetime.now(timezone.utc).year
     cadence = ""
@@ -112,9 +117,17 @@ def decide(axis: str, need: str, slot: str = None) -> dict:
     elif cls == "anchor_annual":
         cadence = (f"\nThis need is class 'anchor_annual': a slow official yearly figure is "
                    f"correct here. The current year is {year}.")
+    tried = ""
+    if prior_queries:
+        listed = "\n".join(f'  - "{q}"' for q in list(prior_queries)[:12])
+        tried = (f"\nTHESE QUERIES HAVE ALREADY BEEN TRIED AND PRODUCED NOTHING USABLE:\n"
+                 f"{listed}\n"
+                 f"Do NOT repeat any of them, and do not merely reorder their words. "
+                 f"Change the ANGLE: a different publisher, a different proxy quantity, a "
+                 f"different vocabulary for the same thing.")
     prompt = (
         f"You are choosing ONE live, numeric, objective indicator to measure the axis "
-        f"'{axis}'. The system declared this need: {need}{cadence}\n"
+        f"'{axis}'. The system declared this need: {need}{cadence}{tried}\n"
         f"Reply ONLY with a JSON object, no prose:\n"
         f'{{"search_query": "<3-6 web search keywords likely to find a page showing a '
         f'current number>", "target_metric": "<short name of the number to extract>", '
@@ -351,7 +364,7 @@ def extract(url: str, target: str):
     return extract_from_text(_page_text(url), target, url)
 
 
-def human_browse_read(query: str, n_open: int = 4):
+def human_browse_read(query: str, n_open: int = 4, skip=None):
     """Human end-to-end in ONE visible window (Emil: 'type real words, click a page, read it'):
     open the engine homepage, type the query (UNQUOTED) with real keystrokes, press Enter,
     then OPEN each of the top results in turn and READ the page in the browser. Returns
@@ -365,13 +378,20 @@ def human_browse_read(query: str, n_open: int = 4):
     API (a contract, not anti-bot roulette) and still open and READ each page in the browser.
     The system keeps choosing its own query either way — this is free search, not fixed URLs.
 
-    Headful is untouched: the full human flow, because that is the one Emil watches."""
+    Headful is untouched: the full human flow, because that is the one Emil watches.
+
+    `skip` is an optional callable(url) -> (bool, reason) consulted BEFORE a result is
+    opened. It is how the seen-memory (collector_memory.should_skip) stops the loop paying
+    a browser page-load and a pair of model votes to re-reject a page it already rejected.
+    A skipped URL does not COST a slot: the next candidate takes its place, exactly as a
+    PDF does. Skips are reported on human_browse_read.last_seen_skipped."""
     from playwright.sync_api import sync_playwright
     headful = os.environ.get("CORTEX_BROWSER_HEADFUL", "1") != "0"
     slowmo = int(os.environ.get("CORTEX_BROWSER_SLOWMO", "600" if headful else "0"))
     typed = _loosen(query)
     out = []
 
+    seen_skipped = []                  # already-rejected pages, named for the run row
     skipped = []                       # PDFs, surfaced so the caller can name the rejection
     api_urls = []
     if not headful:
@@ -428,6 +448,16 @@ def human_browse_read(query: str, n_open: int = 4):
                     print(f"[scout] skipped PDF (no text extraction): {href[:110]}",
                           file=sys.stderr)
                     continue
+                if skip:
+                    try:
+                        do_skip, why = skip(href)
+                    except Exception as e:
+                        do_skip, why = False, f"skip check failed ({type(e).__name__})"
+                    if do_skip:
+                        seen_skipped.append({"url": href, "why": why})
+                        print(f"[scout] seen_skipped: {href[:100]} — {why}",
+                              file=sys.stderr)
+                        continue
                 try:
                     page.goto(href, wait_until="domcontentloaded", timeout=25000)
                     page.wait_for_timeout(900)
@@ -437,10 +467,12 @@ def human_browse_read(query: str, n_open: int = 4):
         finally:
             browser.close()
     human_browse_read.last_skipped = skipped   # caller names the rejection in its trail
+    human_browse_read.last_seen_skipped = seen_skipped
     return out
 
 
 human_browse_read.last_skipped = []
+human_browse_read.last_seen_skipped = []
 
 
 def research(axis: str, need: str, urls=None) -> dict:
@@ -489,14 +521,22 @@ if __name__ == "__main__":
         if tok == "--axis": a["axis"] = sys.argv[i + 1]
         if tok == "--need": a["need"] = sys.argv[i + 1]
     if "--from-needs" in sys.argv:
+        # THE SAME BUG THE COLLECTOR HAD, and worse: the outer `break` meant only the FIRST
+        # axis in JSON key order was ever even looked at, so if it happened to have no
+        # slot_unfilled item this printed nothing at all. 21 axes were hungry and exactly
+        # one was ever visited. Both callers now share one starvation-avoiding rotation, or
+        # the scout would simply fight the collector's cursor.
+        import collector_memory as _mem
         needs = json.loads(COMPOSER_NEEDS.read_text(encoding="utf-8"))
-        for axis, entry in (needs or {}).items():
-            for it in (entry or {}).get("items", []):
-                if it.get("kind") == "slot_unfilled":
-                    print(json.dumps(research(axis, it.get("detail", "a live numeric indicator")),
-                                     ensure_ascii=False, indent=2))
-                    break
-            break
+        axis, item, note = _mem.pick_axis(needs)
+        if not axis:
+            print(json.dumps({"error": note}, ensure_ascii=False, indent=2))
+        else:
+            print(f"[scout] axis={axis} ({note})", file=sys.stderr)
+            trail = research(axis, item.get("detail", "a live numeric indicator"))
+            _mem.record_run(axis, 1 if trail.get("accepted") else 0)
+            trail["rotation_note"] = note
+            print(json.dumps(trail, ensure_ascii=False, indent=2))
     else:
         print(json.dumps(research(a.get("axis", "SOCIAL_RELATIONS_REVIEW"),
                                   a.get("need", "a daily-updating numeric signal of social stability")),

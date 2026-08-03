@@ -1,0 +1,16 @@
+{
+  "_note": "Knobs for the collector's memory (experiments/browser_scout/collector_memory.py). Every one of these exists because the loop had none of it and spent 3 days re-reading 4 pages on 1 axis.",
+
+  "seen_ttl_days": 14,
+  "_seen_ttl_days": "A URL already rejected for the same axis + need class is not re-read for this many days. After it, the record is stale and the page is read again regardless of its hash — the world moves.",
+
+  "hash_probe": true,
+  "hash_probe_timeout_s": 12,
+  "_hash_probe": "Inside the TTL, one cheap plain-HTTP GET decides whether the page CHANGED. If it did, the skip is lifted and the page is read properly. One GET is far less than a browser page-load plus two local-model votes, which is what the skip saves.",
+
+  "max_query_attempts": 3,
+  "_max_query_attempts": "A query that produced 0 components may not be reused. After this many attempts to produce a fresh one, the run ends with a named refusal instead of repeating.",
+
+  "dry_runs_before_rotation": 3,
+  "_dry_runs_before_rotation": "Consecutive runs producing 0 components after which an axis yields its slot to another hungry axis. Round-robin, and if every axis is over the limit the one waiting longest goes anyway — starvation is not a fix for repetition."
+}
