@@ -7,7 +7,15 @@
     "verification_discipline": {
       "rule": "An entry marked verified=live_2026_08_03 was ACTUALLY FETCHED on that date and its extract path / column name was read off the real payload. Everything else is a NAMED CANDIDATE, not a source. It must be probed, its rule derived FROM the payload, and smoke-tested before it is ever offered for approval.",
       "why": "a027 was rejected because it arrived with parse={} - a candidate with no parsing rule. This file exists so that never happens again: the map says WHERE to look; the probe says WHAT the payload actually is.",
-      "never": "Never promote an entry from this file to an active source without a real fetch. A name in this file is a hypothesis about the world, not a measurement of it."
+      "never": "Never promote an entry from this file to an active source without a real fetch. A name in this file is a hypothesis about the world, not a measurement of it.",
+      "what_live_verified_used_to_mean": "Until 2026-08-03 a live_verified marker meant the URL had been fetched and its header read. 17 sources carried it; 5 produced a world value. The other 12 are country panels with no World row. The label was measuring layer 2 (did we read it correctly) and being read as layer 4 (does it measure the thing we want). Every marker in this file now states which of the two it means.",
+      "marker_vocabulary": {
+        "WORLD_VALUE_2026_08_03": "fetched through composer.fetch; returned a world value.",
+        "PER_COUNTRY_PANEL_ONLY_2026_08_03": "fetches, has no World row. Useful per country, never a global anchor.",
+        "WRONG_ROW_2026_08_03": "returned a number from an unpinned panel — the last row, not the world. Needs an explicit row_key.",
+        "unverified_must_probe": "never fetched. Unchanged meaning.",
+        "already_in_portfolio": "lives in config/composer_specs.json."
+      }
     },
     "reporter_independence_classes": {
       "independent": "third party measures without the subject's control (instrument, satellite, expert coding, reconstruction from physical data)",
@@ -57,8 +65,10 @@
           "org": "NOAA GML",
           "reporter_independence": "independent",
           "independence_note": "flask and in-situ instrument network; no state reports its own CO2",
-          "verified": "already_in_portfolio",
-          "probe_note": "ROBOTS_DISALLOWED from the fetch tool on 2026-08-03 - the source is fine, it simply cannot be re-verified from a browser-class fetcher. Do NOT record as dead."
+          "verified": "WORLD_VALUE_2026_08_03",
+          "probe_note": "ROBOTS_DISALLOWED from the fetch tool on 2026-08-03 - the source is fine, it simply cannot be re-verified from a browser-class fetcher. Do NOT record as dead.",
+          "verified_value": 427.84,
+          "verified_note": "Read through composer.fetch and it returned a genuine world-level value on 2026-08-03."
         },
         {
           "id": "owid_co2_emissions_total",
@@ -71,8 +81,11 @@
           "org": "Global Carbon Project",
           "reporter_independence": "independent",
           "independence_note": "GCP reconstructs emissions from energy and industry data rather than accepting state inventories at face value - this is the adversarial-to-inventory series",
-          "verified": "live_2026_08_03",
-          "verified_header": "entity,code,year,emissions_total"
+          "verified": "PER_COUNTRY_PANEL_ONLY_2026_08_03",
+          "verified_header": "entity,code,year,emissions_total",
+          "verified_note": "Fetched and parsed live, and it has NO World row. The earlier live_verified marker meant 'the URL answered and the header was read', not 'it produces a global value' — the fetch was verified, the ADDRESS was not.",
+          "correct_use": "This is a ~180-country panel and it is genuinely useful AS one: it is what wellbeing_country.py wants, one fetch instead of 195. Set row_key to a country name to read it. It is NOT a global anchor and must not be promoted into one.",
+          "not_a_global_anchor": true
         }
       ],
       "sdg_series_keys": [
@@ -114,7 +127,10 @@
           "org": "FAO FRA / World Bank",
           "reporter_independence": "self_reported",
           "independence_note": "FAO Forest Resources Assessment is a country questionnaire - states report their own forest cover",
-          "verified": "unverified_must_probe"
+          "verified": "WRONG_ROW_2026_08_03",
+          "verified_note": "It returned a number, and the number was Zimbabwe's. With no row_key declared the composer reads the LAST ROW of the panel, which is whichever entity sorts last. Real, correctly parsed, correctly hashed, and about the wrong entity — the failure no guard before 2026-08-03 could see.",
+          "correct_use": "Declare row_key explicitly. If the panel has a World row, row_key='World' makes it global; if it has none, it is a per-country panel like the entries above.",
+          "not_a_global_anchor": true
         },
         {
           "id": "gfw_tree_cover_loss",
@@ -169,8 +185,11 @@
           "unit": "pct_of_electricity",
           "org": "Ember",
           "reporter_independence": "independent",
-          "verified": "live_2026_08_03",
-          "verified_header": "entity,code,year,renewable_share_of_electricity__pct"
+          "verified": "PER_COUNTRY_PANEL_ONLY_2026_08_03",
+          "verified_header": "entity,code,year,renewable_share_of_electricity__pct",
+          "verified_note": "Fetched and parsed live, and it has NO World row. The earlier live_verified marker meant 'the URL answered and the header was read', not 'it produces a global value' — the fetch was verified, the ADDRESS was not.",
+          "correct_use": "This is a ~180-country panel and it is genuinely useful AS one: it is what wellbeing_country.py wants, one fetch instead of 195. Set row_key to a country name to read it. It is NOT a global anchor and must not be promoted into one.",
+          "not_a_global_anchor": true
         },
         {
           "id": "owid_primary_energy_twh",
@@ -182,9 +201,12 @@
           "unit": "TWh",
           "org": "Energy Institute / OWID",
           "reporter_independence": "self_reported",
-          "verified": "live_2026_08_03",
+          "verified": "PER_COUNTRY_PANEL_ONLY_2026_08_03",
           "class_was_mixed": true,
-          "independence_note": "[third-party standardised, underlying counts supplied by the measured entity; live taxonomy has no mixed class, so the weaker guess self_reported applies per config/providers.json]"
+          "independence_note": "[third-party standardised, underlying counts supplied by the measured entity; live taxonomy has no mixed class, so the weaker guess self_reported applies per config/providers.json]",
+          "verified_note": "Fetched and parsed live, and it has NO World row. The earlier live_verified marker meant 'the URL answered and the header was read', not 'it produces a global value' — the fetch was verified, the ADDRESS was not.",
+          "correct_use": "This is a ~180-country panel and it is genuinely useful AS one: it is what wellbeing_country.py wants, one fetch instead of 195. Set row_key to a country name to read it. It is NOT a global anchor and must not be promoted into one.",
+          "not_a_global_anchor": true
         }
       ],
       "sdg_series_keys": [
@@ -219,7 +241,9 @@
           "org": "FAO / UN SDG 2.1.1",
           "reporter_independence": "self_reported",
           "independence_note": "FAO models from national food balance sheets supplied by states",
-          "verified": "live_2026_08_03"
+          "verified": "WORLD_VALUE_2026_08_03",
+          "verified_value": 8.2,
+          "verified_note": "Read through composer.fetch and it returned a genuine world-level value on 2026-08-03."
         },
         {
           "id": "fews_net_ipc_phase",
@@ -263,9 +287,12 @@
           "url": "https://ourworldindata.org/grapher/plastic-waste-per-capita.csv?csvType=filtered&useColumnShortNames=true",
           "org": "OWID / Jambeck et al",
           "reporter_independence": "self_reported",
-          "verified": "unverified_must_probe",
+          "verified": "WRONG_ROW_2026_08_03",
           "class_was_mixed": true,
-          "independence_note": "[third-party standardised, underlying counts supplied by the measured entity; live taxonomy has no mixed class, so the weaker guess self_reported applies per config/providers.json]"
+          "independence_note": "[third-party standardised, underlying counts supplied by the measured entity; live taxonomy has no mixed class, so the weaker guess self_reported applies per config/providers.json]",
+          "verified_note": "It returned a number, and the number was Yemen (2010)'s. With no row_key declared the composer reads the LAST ROW of the panel, which is whichever entity sorts last. Real, correctly parsed, correctly hashed, and about the wrong entity — the failure no guard before 2026-08-03 could see.",
+          "correct_use": "Declare row_key explicitly. If the panel has a World row, row_key='World' makes it global; if it has none, it is a per-country panel like the entries above.",
+          "not_a_global_anchor": true
         },
         {
           "id": "eurostat_circular_material_use",
@@ -310,9 +337,10 @@
           "org": "USGS",
           "reporter_independence": "independent",
           "independence_note": "seismometer network; no state reports its own earthquakes",
-          "verified": "live_2026_08_03",
-          "verified_value": 18,
-          "status": "REGISTERED - awaiting Telegram approval"
+          "verified": "WORLD_VALUE_2026_08_03",
+          "verified_value": 19.0,
+          "status": "REGISTERED - awaiting Telegram approval",
+          "verified_note": "Read through composer.fetch and it returned a genuine world-level value on 2026-08-03."
         },
         {
           "id": "wdpa_protected_area_share",
@@ -322,7 +350,10 @@
           "org": "UNEP-WCMC WDPA",
           "reporter_independence": "self_reported",
           "independence_note": "states designate and report their own protected areas; designation is not protection",
-          "verified": "unverified_must_probe"
+          "verified": "WRONG_ROW_2026_08_03",
+          "verified_note": "It returned a number, and the number was Zimbabwe's. With no row_key declared the composer reads the LAST ROW of the panel, which is whichever entity sorts last. Real, correctly parsed, correctly hashed, and about the wrong entity — the failure no guard before 2026-08-03 could see.",
+          "correct_use": "Declare row_key explicitly. If the panel has a World row, row_key='World' makes it global; if it has none, it is a per-country panel like the entries above.",
+          "not_a_global_anchor": true
         }
       ],
       "sdg_series_keys": [
@@ -355,9 +386,12 @@
           "unit": "pct_of_internal_renewable_resources_withdrawn",
           "org": "UN SDG 6.4.2 / FAO AQUASTAT",
           "reporter_independence": "self_reported",
-          "verified": "live_2026_08_03",
+          "verified": "PER_COUNTRY_PANEL_ONLY_2026_08_03",
           "verified_rows": 195,
-          "value_for_the_starved_axis": "WATER_REVIEW has 0 sources in measurement_daily and 0 in event_daily; this fills anchor_annual with a real 195-country panel"
+          "value_for_the_starved_axis": "WATER_REVIEW has 0 sources in measurement_daily and 0 in event_daily; this fills anchor_annual with a real 195-country panel",
+          "verified_note": "Fetched and parsed live, and it has NO World row. The earlier live_verified marker meant 'the URL answered and the header was read', not 'it produces a global value' — the fetch was verified, the ADDRESS was not.",
+          "correct_use": "This is a ~180-country panel and it is genuinely useful AS one: it is what wellbeing_country.py wants, one fetch instead of 195. Set row_key to a country name to read it. It is NOT a global anchor and must not be promoted into one.",
+          "not_a_global_anchor": true
         },
         {
           "id": "worldbank_safely_managed_water",
@@ -404,10 +438,13 @@
           "org": "World Bank Human Capital Project",
           "reporter_independence": "self_reported",
           "independence_note": "harmonized across PISA/TIMSS/PIRLS; the underlying tests are administered under national ministry control [third-party standardised, underlying counts supplied by the measured entity; live taxonomy has no mixed class, so the weaker guess self_reported applies per config/providers.json]",
-          "verified": "live_2026_08_03",
+          "verified": "PER_COUNTRY_PANEL_ONLY_2026_08_03",
           "verified_header": "entity,code,year,harmonized_test_scores__sex_all_students,ny_gdp_pcap_pp_kd,population_historical,wb_region",
           "verified_rows": 197,
-          "class_was_mixed": true
+          "class_was_mixed": true,
+          "verified_note": "Fetched and parsed live, and it has NO World row. The earlier live_verified marker meant 'the URL answered and the header was read', not 'it produces a global value' — the fetch was verified, the ADDRESS was not.",
+          "correct_use": "This is a ~180-country panel and it is genuinely useful AS one: it is what wellbeing_country.py wants, one fetch instead of 195. Set row_key to a country name to read it. It is NOT a global anchor and must not be promoted into one.",
+          "not_a_global_anchor": true
         }
       ],
       "sdg_series_keys": [
@@ -443,10 +480,13 @@
           "org": "Reporters Without Borders",
           "reporter_independence": "adversarial",
           "independence_note": "RSF is an advocacy monitor. Its score is produced BY an organisation whose purpose is to expose the measured state. That is exactly the class the portfolio has zero of - label it adversarial, not independent, and read it as such.",
-          "verified": "live_2026_08_03",
+          "verified": "PER_COUNTRY_PANEL_ONLY_2026_08_03",
           "verified_header": "entity,code,year,press_freedom_score",
           "verified_rows": 195,
-          "verified_sample": "Afghanistan,AFG,2021,40.19"
+          "verified_sample": "Afghanistan,AFG,2021,40.19",
+          "verified_note": "Fetched and parsed live, and it has NO World row. The earlier live_verified marker meant 'the URL answered and the header was read', not 'it produces a global value' — the fetch was verified, the ADDRESS was not.",
+          "correct_use": "This is a ~180-country panel and it is genuinely useful AS one: it is what wellbeing_country.py wants, one fetch instead of 195. Set row_key to a country name to read it. It is NOT a global anchor and must not be promoted into one.",
+          "not_a_global_anchor": true
         },
         {
           "id": "owid_vdem_freedom_of_expression",
@@ -459,10 +499,13 @@
           "org": "V-Dem Institute",
           "reporter_independence": "independent",
           "independence_note": "expert-coded by external country specialists, not supplied by the measured government",
-          "verified": "live_2026_08_03",
+          "verified": "PER_COUNTRY_PANEL_ONLY_2026_08_03",
           "verified_header": "entity,code,year,freeexpr_vdem__estimate_best,owid_region",
           "verified_rows": 195,
-          "verified_sample": "Albania,ALB,2025,0.673,Europe"
+          "verified_sample": "Albania,ALB,2025,0.673,Europe",
+          "verified_note": "Fetched and parsed live, and it has NO World row. The earlier live_verified marker meant 'the URL answered and the header was read', not 'it produces a global value' — the fetch was verified, the ADDRESS was not.",
+          "correct_use": "This is a ~180-country panel and it is genuinely useful AS one: it is what wellbeing_country.py wants, one fetch instead of 195. Set row_key to a country name to read it. It is NOT a global anchor and must not be promoted into one.",
+          "not_a_global_anchor": true
         }
       ],
       "sdg_series_keys": [
@@ -536,12 +579,14 @@
           "unit": "years",
           "org": "UN WPP / HMD via OWID",
           "reporter_independence": "self_reported",
-          "verified": "live_2026_08_03",
+          "verified": "WORLD_VALUE_2026_08_03",
           "verified_header": "entity,code,year,life_expectancy_0",
           "verified_rows": 618,
           "IMPORTANT": "This slug returns FULL HISTORY (618 rows, from 1770), not one row per entity. Row selection MUST be (entity, max(year)) - selecting 'the last row' would return an arbitrary historical value. A 'World' row EXISTS here (74 rows, 1770-2023) - one of the few OWID panels where it does.",
           "class_was_mixed": true,
-          "independence_note": "[third-party standardised, underlying counts supplied by the measured entity; live taxonomy has no mixed class, so the weaker guess self_reported applies per config/providers.json]"
+          "independence_note": "[third-party standardised, underlying counts supplied by the measured entity; live taxonomy has no mixed class, so the weaker guess self_reported applies per config/providers.json]",
+          "verified_value": 73.1694,
+          "verified_note": "Read through composer.fetch and it returned a genuine world-level value on 2026-08-03."
         },
         {
           "id": "owid_child_mortality",
@@ -550,10 +595,13 @@
           "url": "https://ourworldindata.org/grapher/child-mortality.csv?csvType=filtered&useColumnShortNames=true",
           "org": "UN IGME",
           "reporter_independence": "self_reported",
-          "verified": "unverified_must_probe",
+          "verified": "WRONG_ROW_2026_08_03",
           "note": "this is the axis PRIMARY METRIC - probe it first, before anything else in HUMAN",
           "class_was_mixed": true,
-          "independence_note": "[third-party standardised, underlying counts supplied by the measured entity; live taxonomy has no mixed class, so the weaker guess self_reported applies per config/providers.json]"
+          "independence_note": "[third-party standardised, underlying counts supplied by the measured entity; live taxonomy has no mixed class, so the weaker guess self_reported applies per config/providers.json]",
+          "verified_note": "It returned a number, and the number was United States's. With no row_key declared the composer reads the LAST ROW of the panel, which is whichever entity sorts last. Real, correctly parsed, correctly hashed, and about the wrong entity — the failure no guard before 2026-08-03 could see.",
+          "correct_use": "Declare row_key explicitly. If the panel has a World row, row_key='World' makes it global; if it has none, it is a per-country panel like the entries above.",
+          "not_a_global_anchor": true
         }
       ],
       "sdg_series_keys": [
@@ -595,9 +643,12 @@
           "org": "UNODC",
           "reporter_independence": "self_reported",
           "independence_note": "UNODC standardises, but the underlying counts come from national police/justice systems - a state that under-records under-reports [third-party standardised, underlying counts supplied by the measured entity; live taxonomy has no mixed class, so the weaker guess self_reported applies per config/providers.json]",
-          "verified": "live_2026_08_03",
+          "verified": "PER_COUNTRY_PANEL_ONLY_2026_08_03",
           "value_for_the_starved_axis": "This is the axis the browser collector looped on for 14 consecutive runs with zero yield. It is not that the axis is unmeasurable. It is that nobody mapped it.",
-          "class_was_mixed": true
+          "class_was_mixed": true,
+          "verified_note": "Fetched and parsed live, and it has NO World row. The earlier live_verified marker meant 'the URL answered and the header was read', not 'it produces a global value' — the fetch was verified, the ADDRESS was not.",
+          "correct_use": "This is a ~180-country panel and it is genuinely useful AS one: it is what wellbeing_country.py wants, one fetch instead of 195. Set row_key to a country name to read it. It is NOT a global anchor and must not be promoted into one.",
+          "not_a_global_anchor": true
         },
         {
           "id": "unhcr_population_statistics",
@@ -687,7 +738,10 @@
           "url": "https://ourworldindata.org/grapher/mean-years-of-schooling-long-run.csv?csvType=filtered&useColumnShortNames=true",
           "org": "Barro-Lee / UNDP",
           "reporter_independence": "self_reported",
-          "verified": "unverified_must_probe"
+          "verified": "WRONG_ROW_2026_08_03",
+          "verified_note": "It returned a number, and the number was Zimbabwe (2020)'s. With no row_key declared the composer reads the LAST ROW of the panel, which is whichever entity sorts last. Real, correctly parsed, correctly hashed, and about the wrong entity — the failure no guard before 2026-08-03 could see.",
+          "correct_use": "Declare row_key explicitly. If the panel has a World row, row_key='World' makes it global; if it has none, it is a per-country panel like the entries above.",
+          "not_a_global_anchor": true
         }
       ],
       "sdg_series_keys": [
@@ -721,8 +775,11 @@
           "org": "V-Dem Institute",
           "reporter_independence": "independent",
           "independence_note": "THE IMPORTANT ONE. Coded by external country experts, not supplied by the government being measured. This is the direct answer to 'governments legitimise themselves through their own numbers' on the one axis where the portfolio currently has no independent measure at all.",
-          "verified": "live_2026_08_03",
-          "verified_header": "entity,code,year,electdem_vdem__estimate_best,owid_region"
+          "verified": "PER_COUNTRY_PANEL_ONLY_2026_08_03",
+          "verified_header": "entity,code,year,electdem_vdem__estimate_best,owid_region",
+          "verified_note": "Fetched and parsed live, and it has NO World row. The earlier live_verified marker meant 'the URL answered and the header was read', not 'it produces a global value' — the fetch was verified, the ADDRESS was not.",
+          "correct_use": "This is a ~180-country panel and it is genuinely useful AS one: it is what wellbeing_country.py wants, one fetch instead of 195. Set row_key to a country name to read it. It is NOT a global anchor and must not be promoted into one.",
+          "not_a_global_anchor": true
         }
       ],
       "sdg_series_keys": [
@@ -759,12 +816,15 @@
           "unit": "gini_0_to_1",
           "org": "World Bank PIP",
           "reporter_independence": "self_reported",
-          "verified": "live_2026_08_03",
+          "verified": "PER_COUNTRY_PANEL_ONLY_2026_08_03",
           "verified_rows": 185,
           "verified_sample": "Albania,ALB,2025,0.29419630765914917,,2020",
           "IMPORTANT": "the row carries an __original_year column: the 2025 row for Albania is really a 2020 survey. The data_date MUST be taken from __original_year, not from the year column, or the system will report five-year-old inequality as current.",
           "class_was_mixed": true,
-          "independence_note": "[third-party standardised, underlying counts supplied by the measured entity; live taxonomy has no mixed class, so the weaker guess self_reported applies per config/providers.json]"
+          "independence_note": "[third-party standardised, underlying counts supplied by the measured entity; live taxonomy has no mixed class, so the weaker guess self_reported applies per config/providers.json]",
+          "verified_note": "Fetched and parsed live, and it has NO World row. The earlier live_verified marker meant 'the URL answered and the header was read', not 'it produces a global value' — the fetch was verified, the ADDRESS was not.",
+          "correct_use": "This is a ~180-country panel and it is genuinely useful AS one: it is what wellbeing_country.py wants, one fetch instead of 195. Set row_key to a country name to read it. It is NOT a global anchor and must not be promoted into one.",
+          "not_a_global_anchor": true
         },
         {
           "id": "wid_top10_income_share",
@@ -804,7 +864,10 @@
           "org": "UN WUP",
           "reporter_independence": "self_reported",
           "independence_note": "each country defines 'urban' itself - the definition is not comparable across borders",
-          "verified": "unverified_must_probe"
+          "verified": "WRONG_ROW_2026_08_03",
+          "verified_note": "It returned a number, and the number was Zimbabwe's. With no row_key declared the composer reads the LAST ROW of the panel, which is whichever entity sorts last. Real, correctly parsed, correctly hashed, and about the wrong entity — the failure no guard before 2026-08-03 could see.",
+          "correct_use": "Declare row_key explicitly. If the panel has a World row, row_key='World' makes it global; if it has none, it is a per-country panel like the entries above.",
+          "not_a_global_anchor": true
         },
         {
           "id": "openaq_pm25_measurements",
@@ -851,10 +914,13 @@
           "org": "OECD.AI / Stanford AI Index",
           "reporter_independence": "independent",
           "independence_note": "bibliometric count from publication records, not a state or lab self-report",
-          "verified": "live_2026_08_03",
+          "verified": "PER_COUNTRY_PANEL_ONLY_2026_08_03",
           "verified_header": "entity,code,year,num_articles__field_all",
           "verified_rows": 249,
-          "verified_sample": "Algeria,DZA,2024,1228"
+          "verified_sample": "Algeria,DZA,2024,1228",
+          "verified_note": "Fetched and parsed live, and it has NO World row. The earlier live_verified marker meant 'the URL answered and the header was read', not 'it produces a global value' — the fetch was verified, the ADDRESS was not.",
+          "correct_use": "This is a ~180-country panel and it is genuinely useful AS one: it is what wellbeing_country.py wants, one fetch instead of 195. Set row_key to a country name to read it. It is NOT a global anchor and must not be promoted into one.",
+          "not_a_global_anchor": true
         },
         {
           "id": "epoch_ai_training_compute",
@@ -905,11 +971,14 @@
           "org": "ITU via World Bank",
           "reporter_independence": "self_reported",
           "independence_note": "ITU compiles national regulator submissions",
-          "verified": "live_2026_08_03",
+          "verified": "PER_COUNTRY_PANEL_ONLY_2026_08_03",
           "verified_header": "entity,code,year,it_net_user_zs,it_net_user_zs__original_year",
           "verified_rows": 250,
           "verified_sample": "Albania,ALB,2025,85.8639,2024",
-          "IMPORTANT": "again an __original_year column - the 2025 row is 2024 data. Use __original_year as data_date."
+          "IMPORTANT": "again an __original_year column - the 2025 row is 2024 data. Use __original_year as data_date.",
+          "verified_note": "Fetched and parsed live, and it has NO World row. The earlier live_verified marker meant 'the URL answered and the header was read', not 'it produces a global value' — the fetch was verified, the ADDRESS was not.",
+          "correct_use": "This is a ~180-country panel and it is genuinely useful AS one: it is what wellbeing_country.py wants, one fetch instead of 195. Set row_key to a country name to read it. It is NOT a global anchor and must not be promoted into one.",
+          "not_a_global_anchor": true
         },
         {
           "id": "ioda_internet_outages",
@@ -955,7 +1024,7 @@
           "org": "NASA JPL SBDB",
           "reporter_independence": "independent",
           "independence_note": "orbital mechanics from telescope observation; the least manipulable number in the entire system",
-          "verified": "live_2026_08_03",
+          "verified": "WORLD_VALUE_2026_08_03",
           "verified_count": 29,
           "verified_fields": [
             "des",
@@ -971,7 +1040,9 @@
             "h"
           ],
           "status": "READY NOW - installs with zero code change",
-          "why_it_matters": "COSMOS currently has essentially no live feed. This is a real, daily-moving, fully independent number for a domain that has been scored on reasoning alone."
+          "why_it_matters": "COSMOS currently has essentially no live feed. This is a real, daily-moving, fully independent number for a domain that has been scored on reasoning alone.",
+          "verified_value": 29.0,
+          "verified_note": "Read through composer.fetch and it returned a genuine world-level value on 2026-08-03."
         }
       ],
       "sdg_series_keys": [],
@@ -1001,10 +1072,12 @@
           "unit": "objects_with_nonzero_impact_probability",
           "org": "NASA JPL Sentry",
           "reporter_independence": "independent",
-          "verified": "live_2026_08_03",
+          "verified": "WORLD_VALUE_2026_08_03",
           "verified_structure": "top-level key 'data' is a list; each entry carries des, fullname, ip (impact probability), ps_max (Palermo scale), diameter, range (year span), last_obs",
           "probe_note": "the fetch returned 'data' as the observed top-level key; count the list length rather than reading a 'count' field, and fail loudly if 'data' is absent",
-          "richer_use": "ps_max (Palermo scale) is the actual risk-weighted quantity - a count of objects is a weaker signal than max(ps_max). Recommend a second entry extracting max Palermo once row-level extraction exists."
+          "richer_use": "ps_max (Palermo scale) is the actual risk-weighted quantity - a count of objects is a weaker signal than max(ps_max). Recommend a second entry extracting max Palermo once row-level extraction exists.",
+          "verified_value": 2174.0,
+          "verified_note": "Read through composer.fetch and it returned a genuine world-level value on 2026-08-03."
         }
       ],
       "sdg_series_keys": [],
@@ -1147,38 +1220,40 @@
     }
   },
   "_coverage_summary": {
-    "axes_total": 25,
-    "axes_with_at_least_one_LIVE_VERIFIED_source": 12,
-    "live_verified_sources_total": 13,
-    "live_verified_on_2026_08_03": [
-      "usgs_quakes_m45_daily (PLANETARY_POTENTIAL)",
-      "owid_water_stress_sdg642 (WATER)",
-      "owid_vdem_electoral_democracy (GOVERNANCE_INSTITUTIONS)",
-      "owid_renewable_share_electricity (ENERGY)",
-      "owid_primary_energy_twh (ENERGY)",
-      "owid_undernourishment (FOOD)",
-      "owid_homicide_rate_unodc (SOCIAL_RELATIONS)",
-      "owid_co2_emissions_total (CLIMATE)",
-      "jpl_close_approaches_60d (COSMIC_RESOURCES)",
-      "jpl_sentry_impact_risk_list (DEEP_TIME_RISKS)",
-      "owid_press_freedom_rsf (CULTURE_MEDIA)",
-      "owid_vdem_freedom_of_expression (CULTURE_MEDIA)",
-      "owid_internet_users_share (TECHNOLOGY_INFRA)",
-      "owid_ai_scholarly_publications (TECHNOLOGY_AI)",
-      "owid_life_expectancy (HUMAN_WELL_BEING)",
-      "owid_gini_index (INEQUALITY_POVERTY)",
-      "owid_harmonized_test_scores (COGNITION_LEARNING)"
+    "_measured": "2026-08-03, every numeric_candidate run through composer.fetch",
+    "numeric_candidates_declared": 39,
+    "produce_a_real_WORLD_value": 6,
+    "which_ones": [
+      "jpl_close_approaches_60d",
+      "jpl_sentry_impact_risk_list",
+      "noaa_co2_trend_global",
+      "owid_life_expectancy",
+      "owid_undernourishment",
+      "usgs_quakes_m45_daily"
     ],
-    "correction": "the list above holds 17 entries - 8 from VERIFIED_SOURCE_PACK.json plus 9 probed today. Treat 17 as the count and this note as the audit trail; do not trust a summary integer over the enumerated list.",
-    "independence_distribution_of_the_verified_set": {
-      "independent": 9,
-      "self_reported": 3,
-      "mixed": 4,
-      "adversarial": 1,
-      "note": "the single adversarial entry is RSF press freedom. Before today the portfolio had ZERO adversarial sources. The map names four more (FEWS NET, IODA, AI Incident Database, OHCHR civil-society UPR submissions) - each unprobed, each high value precisely because of its class."
+    "fetch_but_have_no_World_row": [
+      "owid_ai_scholarly_publications",
+      "owid_co2_emissions_total",
+      "owid_gini_index",
+      "owid_harmonized_test_scores",
+      "owid_homicide_rate_unodc",
+      "owid_internet_users_share",
+      "owid_press_freedom_rsf",
+      "owid_primary_energy_twh",
+      "owid_renewable_share_electricity",
+      "owid_vdem_electoral_democracy",
+      "owid_vdem_freedom_of_expression",
+      "owid_water_stress_sdg642"
+    ],
+    "returned_the_wrong_row": {
+      "owid_child_mortality": "United States",
+      "owid_forest_area_share": "Zimbabwe",
+      "owid_mean_years_schooling": "Zimbabwe (2020)",
+      "owid_plastic_waste_per_capita": "Yemen (2010)",
+      "owid_urban_population_share": "Zimbabwe",
+      "wdpa_protected_area_share": "Zimbabwe"
     },
-    "axes_with_zero_candidates_named": 0,
-    "axes_that_are_semantic_by_nature": 9,
-    "the_honest_bottom_line": "Every one of the 25 axes now has at least a named path to data. 17 sources are live-verified. The rest are hypotheses that must be probed before they are anything else. What is NOT solved by this file: the composer still cannot select a CSV row by entity key, so 16 of the 17 verified sources cannot be installed until that capability lands. That single missing feature is what stands between this map and 25 moving axes."
+    "_previous_claim_was": "12 axes / 13 sources, while listing 17 names — three different numbers in one object, none of them measured.",
+    "_where_the_real_anchors_came_from": "UN SDG at areaCode=1. 23 series from these axes' own declared sdg_series_keys yield a world value; 9 were promoted into config/composer_specs.json on 2026-08-03. OWID is a per-country source and belongs to wellbeing_country.py."
   }
 }
