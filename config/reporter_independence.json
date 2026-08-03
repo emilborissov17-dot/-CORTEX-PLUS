@@ -73,6 +73,11 @@
     "host:api.open-meteo.com": {"class": "independent", "why": "weather model over instrument inputs", "confirmed_by": "Emil", "confirmed_at": "2026-08-03"},
     "host:api.gdeltproject.org": {"class": "independent", "why": "observes published media, not the subject's own statistic", "confirmed_by": "Emil", "confirmed_at": "2026-08-03"},
     "host:api.worldbank.org": {"class": "self_reported", "why": "national statistical office submissions", "confirmed_by": "Emil", "confirmed_at": "2026-08-03"},
+
+    "host:unstats.un.org": {"class": "self_reported", "why": "UN SDG Global Database: member states report to the custodian agency. Some series are custodian-ESTIMATED (WHO/UNICEF JMP, UNODC) and are closer to mixed — split this key per series if that distinction starts to matter.", "confirmed_by": "Emil", "confirmed_at": "2026-08-03"},
+    "host:ec.europa.eu": {"class": "self_reported", "why": "Eurostat: member states report, Eurostat standardises. The measured entity supplies the figures.", "confirmed_by": "Emil", "confirmed_at": "2026-08-03"},
+    "host:sdmx.oecd.org": {"class": "self_reported", "why": "OECD: member states report, the OECD standardises — the same aggregator logic as the World Bank", "confirmed_by": "Emil", "confirmed_at": "2026-08-03"},
+    "host:data-api.ecb.europa.eu": {"class": "independent", "why": "market prices and reference rates — an observation of a market, not a party's account of itself. ECB series ABOUT member states would need classing per series.", "confirmed_by": "Emil", "confirmed_at": "2026-08-03"},
     "host:fred.stlouisfed.org": {"class": "independent", "why": "market price series", "confirmed_by": "Emil", "confirmed_at": "2026-08-03"},
     "host:data-api.ecb.europa.eu": {"class": "independent", "why": "market reference rate", "confirmed_by": "Emil", "confirmed_at": "2026-08-03"}
   },

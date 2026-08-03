@@ -182,7 +182,7 @@ def read_jsonstat(payload, src: dict) -> tuple:
         raise RowNotFound(f"jsonstat: cell names dimension(s) {unknown} that are not in "
                           f"this dataset {ids}")
 
-    pos, chosen, time_period = [], {}, None
+    pos, chosen, time_period, ambiguous = [], {}, None, {}
     for i, dname in enumerate(ids):
         index = ((dim.get(dname) or {}).get("category") or {}).get("index") or {}
         # JSON-stat allows either {code: pos} or an ordered [code, ...]
@@ -202,13 +202,23 @@ def read_jsonstat(payload, src: dict) -> tuple:
             code = sorted(index, key=lambda c: str(c))[-1]     # the latest period
             p = index[code]
         else:
-            raise RowNotFound(
-                f"jsonstat: dimension {dname!r} has {size[i]} categories and the cell does "
-                f"not pin it — the address is ambiguous. Present: {_sample(list(index))}")
+            # Collect them ALL before raising. Reporting one at a time makes completing an
+            # address a guessing game played one round-trip per dimension; a Eurostat
+            # dataset routinely has three or four that need pinning.
+            ambiguous[dname] = {"n": size[i], "present": _sample(list(index), 8)}
+            code, p = None, 0
         pos.append(p)
         chosen[dname] = code
         if dname.lower() in ("time", "time_period"):
             time_period = code
+
+    if ambiguous:
+        detail = "; ".join(f"{d!r} has {v['n']} categories {v['present']}"
+                           for d, v in ambiguous.items())
+        raise RowNotFound(
+            f"jsonstat: the cell does not pin {len(ambiguous)} dimension(s), so the "
+            f"address is ambiguous — {detail}. Pin each of them, or the value returned "
+            f"would be whichever category happens to sit at index 0")
 
     stride, flat = 1, 0
     for i in range(len(size) - 1, -1, -1):

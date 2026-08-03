@@ -52,9 +52,17 @@ import provenance as P                        # noqa: E402  origin + reporter cl
 DISCOVERED = REPO / "memory" / "discovered_data_sources.json"
 
 PASSTHROUGH = ("extract", "col", "column_name", "row_key", "row_key_column",
+               # addresses for the official-statistics readers. Leaving these out meant a
+               # jsonstat `cell` was silently dropped, the walker then derived a json_path
+               # rule for a jsonstat kind, and the entry died at the schema wall reporting
+               # a missing address it had actually been given.
+               "cell", "series_key", "where", "timeout",
                "data_date_col", "data_date_column", "data_date_extract",
                "data_max_age_days", "path", "unit", "origin",
                "reporter_class", "reporter_class_confirmed_by")
+
+# An address the human (or a provider record) supplied. Present -> we do NOT guess.
+DECLARED_ADDRESS = ("extract", "col", "column_name", "cell", "series_key")
 
 
 def _now():
@@ -96,9 +104,8 @@ def ingest(url, axis=None, slot=None, fmt=None, kind=None, org=None, metric=None
 
     # 2. DERIVE THE RULE from what came back — unless the human declared it, in which case
     #    the human wins. They can see the payload; the walker only guesses at it.
-    if overrides.get("extract") or overrides.get("col") is not None \
-            or overrides.get("column_name"):
-        rule = {k: overrides[k] for k in ("extract", "col", "column_name")
+    if any(overrides.get(k) is not None for k in DECLARED_ADDRESS):
+        rule = {k: overrides[k] for k in DECLARED_ADDRESS
                 if overrides.get(k) is not None}
         kind = kind or ("http_csv" if fmt == "csv" else "http_json_path")
         step("derive", True, source="declared by the human", kind=kind, rule=rule)

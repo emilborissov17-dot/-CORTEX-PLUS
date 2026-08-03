@@ -1,0 +1,129 @@
+{
+  "_doc": [
+    "PROVIDERS, NOT SERIES. Registering 700 series would be registering 700 things that",
+    "can rot. Registering a PROVIDER means registering one catalog and one address shape;",
+    "traversal picks the series when a need appears. Adding a national institute that",
+    "speaks SDMX is then an entry in this file, not an adapter in the codebase.",
+    "",
+    "STATUS IS ABOUT US, NOT ABOUT THEM. `skipped` means we cannot read that dialect yet.",
+    "It is not a verdict on the provider and it is not a blacklist — IMF's data is fine;",
+    "we simply have no XML reader. Recording the reason is what makes it fixable later",
+    "instead of forgotten.",
+    "",
+    "reporter_independence here is the provider's DEFAULT class and is deliberately the",
+    "weaker guess where a provider mixes sources. config/reporter_independence.json still",
+    "governs, and an unmapped org still resolves to `unknown` — never to independent.",
+    "",
+    "Probed live 2026-08-03: every url and address below was fetched and read."
+  ],
+
+  "providers": {
+    "un_sdg": {
+      "name": "UN SDG Global Database",
+      "home": "https://unstats.un.org/sdgs/dataportal",
+      "status": "live",
+      "language": "en",
+      "kind": "http_json_rows",
+      "reporter_independence": "self_reported",
+      "independence_note": "national reporting to the UN, standardised by the custodian agency. Some series (WHO/UNICEF JMP, UNODC) are custodian-estimated and closer to mixed — the org-level map in reporter_independence.json is where that gets decided.",
+      "catalog": {
+        "url": "https://unstats.un.org/sdgapi/v1/sdg/Series/List",
+        "format": "json_list",
+        "code": "code",
+        "title": "description",
+        "topic": "goal",
+        "verified": "713 series, 2026-08-03"
+      },
+      "series_url": "https://unstats.un.org/sdgapi/v1/sdg/Series/Data?seriesCode={code}&areaCode={area}&pageSize=500",
+      "params": {"area": "1"},
+      "params_note": "area is a UN M49 code; 1 is World. Any country code works, which is the same payload the per-country scorer wants.",
+      "address": {
+        "extract": "data",
+        "row_key_column": "geoAreaCode",
+        "row_key": "{area}",
+        "column_name": "value",
+        "data_date_column": "timePeriodStart"
+      },
+      "address_note": "many series carry a further breakdown in `dimensions` (Location RURAL/URBAN/ALLAREA, Sex, Age). Where they do, the address is ambiguous without a `where` filter and the reader will say so rather than pick one."
+    },
+
+    "eurostat": {
+      "name": "Eurostat",
+      "home": "https://ec.europa.eu/eurostat",
+      "status": "live",
+      "language": "en",
+      "kind": "http_jsonstat",
+      "reporter_independence": "self_reported",
+      "independence_note": "member states report to Eurostat, which standardises. The measured entity supplies the figures.",
+      "catalog": {
+        "url": "https://ec.europa.eu/eurostat/api/dissemination/catalogue/toc/txt",
+        "format": "tsv",
+        "code": "code",
+        "title": "title",
+        "topic": "type",
+        "verified": "12229 rows, 2026-08-03"
+      },
+      "series_url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/{code}?format=JSON&lang=EN&lastTimePeriod=1",
+      "address": {"cell": {}},
+      "why_it_matters": "MONTHLY and QUARTERLY official series. Every anchor in this portfolio is annual, and an annual aggregator cannot fill a monthly slot no matter how many of them are added — this is the only route we have to one.",
+      "sdmx_note": "Eurostat's own SDMX 2.1 endpoint answers 406 to SDMX-JSON, with and without an Accept header (probed 2026-08-03). JSON-stat is the working route, so this provider does NOT use the sdmx reader."
+    },
+
+    "ecb": {
+      "name": "European Central Bank Data Portal",
+      "home": "https://data.ecb.europa.eu",
+      "status": "live",
+      "language": "en",
+      "kind": "http_sdmx",
+      "reporter_independence": "independent",
+      "independence_note": "market prices and reference rates — an observation of a market, not a party's account of itself. Its statistical series about member states are a different matter and should be classed per-series.",
+      "catalog": {
+        "url": "https://data-api.ecb.europa.eu/service/dataflow",
+        "format": "sdmx_dataflows",
+        "accept": "application/vnd.sdmx.structure+json;version=1.0.0",
+        "verified": "HTTP 504 at probe time 2026-08-03 — the DATA endpoint answered fine the same minute, so this is their catalogue service being slow, not a dead provider"
+      },
+      "series_url": "https://data-api.ecb.europa.eu/service/data/{code}?lastNObservations=1&format=jsondata",
+      "address": {"series_key": {}}
+    },
+
+    "oecd": {
+      "name": "OECD Data Explorer",
+      "home": "https://data-explorer.oecd.org",
+      "status": "live",
+      "language": "en",
+      "kind": "http_sdmx",
+      "reporter_independence": "self_reported",
+      "independence_note": "member states report; the OECD standardises. Same aggregator logic as the World Bank.",
+      "catalog": {
+        "url": "https://sdmx.oecd.org/public/rest/dataflow/all/all/latest",
+        "format": "sdmx_dataflows",
+        "accept": "application/vnd.sdmx.structure+json;version=1.0",
+        "verified": "5.9MB of dataflows, 2026-08-03"
+      },
+      "series_url": "https://sdmx.oecd.org/public/rest/data/{code}/all?lastNObservations=1&format=jsondata&dimensionAtObservation=AllDimensions",
+      "address": {"series_key": {}},
+      "address_note": "OECD needs dimensionAtObservation=AllDimensions; without it the key form is per-dataflow and answers 422. That is why the sdmx reader handles the flat shape as well as the series-major one."
+    },
+
+    "imf": {
+      "name": "International Monetary Fund",
+      "home": "https://data.imf.org",
+      "status": "skipped",
+      "language": "en",
+      "skip_reason": "api.imf.org answers SDMX-XML only; the older JSON host dataservices.imf.org does not resolve (probed 2026-08-03). We have no XML reader yet.",
+      "skip_is_not_a_blacklist": "Nothing is wrong with IMF's data. This records a gap in OUR readers so it can be closed deliberately, rather than IMF quietly never appearing again.",
+      "unblocks_if": "an SDMX-ML reader is added, or IMF exposes SDMX-JSON"
+    }
+  },
+
+  "_national_institutes_note": [
+    "The point of one SDMX reader is that adding a national statistical institute is an",
+    "entry here, not code. Prefer institutes publishing English metadata; where the",
+    "metadata is in another language, record `language` and set status `skipped` with the",
+    "reason — a language we cannot read yet is a gap in us, and must not be recorded as a",
+    "defect in them. None are registered yet: the reader is proven against ECB and OECD",
+    "first, and claiming coverage we have not tested would be exactly the kind of",
+    "diversification-on-paper this pack exists to remove."
+  ]
+}

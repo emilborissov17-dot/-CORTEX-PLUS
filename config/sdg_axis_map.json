@@ -1,0 +1,51 @@
+{
+  "_doc": [
+    "SDG goal -> our axes. HUMAN-OWNED, and a ROUTING HINT ONLY.",
+    "",
+    "READ THIS BEFORE USING IT AS A FILTER. core/source_registration.py refuses, in",
+    "writing, to add an axis-fit filter to intake, and for a reason that applies here too:",
+    "cross-domain evidence is the point. Child mortality is evidence about governance",
+    "capacity; grid frequency is evidence about both infrastructure and economy. A map",
+    "like this one, used to DECIDE what an axis may see, would mechanically destroy",
+    "exactly the cross-domain feeds the system exists to combine — and it would do it",
+    "silently, while looking tidy.",
+    "",
+    "So this map only ORDERS a catalog for a human who asked about one axis. Nothing is",
+    "removed: provider_catalog always reports how many series it set aside, and --all",
+    "shows every one of them. A series this map does not associate with an axis can still",
+    "be ingested for that axis, by hand, with no override and no warning — because the map",
+    "being silent about a pairing is not evidence that the pairing is wrong.",
+    "",
+    "Several goals map to several axes on purpose. A goal is not an axis and pretending",
+    "the two are in bijection would be the same tidiness error in a different place."
+  ],
+
+  "goal_to_axes": {
+    "1":  ["INEQUALITY_POVERTY_REVIEW", "HUMAN_WELL_BEING_REVIEW"],
+    "2":  ["FOOD_REVIEW", "HUMAN_WELL_BEING_REVIEW"],
+    "3":  ["HUMAN_WELL_BEING_REVIEW", "GOVERNANCE_INSTITUTIONS_REVIEW"],
+    "4":  ["EDUCATION_CULTURE_REVIEW", "COGNITION_LEARNING_REVIEW"],
+    "5":  ["SOCIAL_RELATIONS_REVIEW", "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL"],
+    "6":  ["WATER_REVIEW", "INFRASTRUCTURE_CITIES_REVIEW"],
+    "7":  ["ENERGY_REVIEW", "INFRASTRUCTURE_CITIES_REVIEW"],
+    "8":  ["ECONOMY_WORK_REVIEW", "INEQUALITY_POVERTY_REVIEW"],
+    "9":  ["TECHNOLOGY_INFRA_REVIEW", "INFRASTRUCTURE_CITIES_REVIEW", "TECHNOLOGY_AI_REVIEW"],
+    "10": ["INEQUALITY_POVERTY_REVIEW", "SOCIAL_RELATIONS_REVIEW"],
+    "11": ["INFRASTRUCTURE_CITIES_REVIEW", "SOCIAL_RELATIONS_REVIEW"],
+    "12": ["MATERIALS_WASTE_REVIEW", "PLANETARY_POTENTIAL_REVIEW"],
+    "13": ["CLIMATE_GLOBAL_RISK_REVIEW", "PLANETARY_POTENTIAL_REVIEW"],
+    "14": ["ECOSYSTEMS_BIODIVERSITY_REVIEW", "PLANETARY_POTENTIAL_REVIEW"],
+    "15": ["ECOSYSTEMS_BIODIVERSITY_REVIEW", "PLANETARY_POTENTIAL_REVIEW"],
+    "16": ["GOVERNANCE_INSTITUTIONS_REVIEW", "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL", "SOCIAL_RELATIONS_REVIEW"],
+    "17": ["GOVERNANCE_INSTITUTIONS_REVIEW", "ECONOMY_WORK_REVIEW"]
+  },
+
+  "_axes_with_no_sdg_goal": [
+    "CULTURE_MEDIA_REVIEW", "DEEP_TIME_RISKS_REVIEW", "LONG_TERM_FUTURE_REVIEW",
+    "COSMIC_RESOURCES_REVIEW", "SPACE_INFRASTRUCTURE_REVIEW", "GOAL_PROGRESS_REVIEW",
+    "GENERAL_SELF_REVIEW",
+    "-- these are not gaps in the map. The SDGs are a 2030 human-development agenda and",
+    "have nothing to say about deep time, space, or this system's own progress. Recording",
+    "the silence is better than inventing a mapping to make the table look complete."
+  ]
+}
