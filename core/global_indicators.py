@@ -24,6 +24,7 @@ import csv
 import json
 import os
 import re
+import time
 import xml.etree.ElementTree as ET
 from datetime import datetime, date, timedelta, timezone
 from pathlib import Path
@@ -44,15 +45,29 @@ except ImportError:
 # ---------------------------------------------------------------------------
 
 def _get(url: str, timeout: int = 20, params: dict | None = None,
-         headers: dict | None = None) -> Any:
-    try:
-        r = requests.get(url, params=params, timeout=timeout, headers=headers)
-        r.raise_for_status()
-        ct = r.headers.get("content-type", "")
-        return r.json() if "json" in ct else r.text
-    except Exception as e:
-        print(f"  [GI] fetch error {url[:70]}: {e}")
-        return None
+         headers: dict | None = None, attempts: int = 3) -> Any:
+    """Fetch, retrying transient failures.
+
+    A single timeout used to be indistinguishable from a dead endpoint: one slow answer
+    returned None, the None was written into the snapshot, and 26 composer sources across
+    9 axes died on the next cycle. Measured 2026-08-03: the World Bank API answered every
+    one of those indicators in 0.3-0.4s minutes after the timeouts that had emptied them.
+    A network blip is not a fact about the world."""
+    last = None
+    for attempt in range(1, max(1, attempts) + 1):
+        try:
+            r = requests.get(url, params=params,
+                             timeout=timeout * attempt,   # give a slow host more room
+                             headers=headers)
+            r.raise_for_status()
+            ct = r.headers.get("content-type", "")
+            return r.json() if "json" in ct else r.text
+        except Exception as e:
+            last = e
+            if attempt < attempts:
+                time.sleep(1.5 * attempt)
+    print(f"  [GI] fetch error after {attempts} attempt(s) {url[:70]}: {last}")
+    return None
 
 
 # ---------------------------------------------------------------------------
@@ -798,23 +813,97 @@ _SECTIONS = [
 ]
 
 
-def fetch_all() -> dict:
-    """Fetch all global indicators. Prints progress. Returns full dict."""
+# ---------------------------------------------------------------------------
+# A FETCH FAILURE MUST NEVER DESTROY A VALUE
+# ---------------------------------------------------------------------------
+#
+# fetch_all() used to return a fresh dict and the cycle wrote it over the snapshot
+# wholesale. So one bad minute at the World Bank turned safe_water_access_pct,
+# life_expectancy, infant_mortality_per1k, undernourishment_pct and eight others into
+# None — and 26 composer sources across 9 axes, every one of them reading this file,
+# died on the next cycle. Nothing about the world had changed.
+#
+# The composer has had the right rule for months: last-known-good, carried forward with
+# LOUD ageing, refused once it is too old. That rule simply was not applied one layer
+# earlier, at the file the composer reads. It is now.
+#
+# Carried values are marked, dated and counted. They are not laundered into fresh ones:
+# `_carried` says exactly which metrics are being served from a previous cycle and how
+# old each one is, and `_health` puts the totals where any reader trips over them.
+
+def _carry_forward(new: dict, old: dict, old_ts: str, carried_out: dict) -> dict:
+    """Keep a previous value wherever this cycle produced None. Records what it kept."""
+    if not isinstance(old, dict):
+        return new
+    merged = dict(new)
+    prev_carried = (old.get("_carried") or {}) if isinstance(old, dict) else {}
+    for k, v in old.items():
+        if k.startswith("_"):
+            continue
+        if merged.get(k) is None and v is not None:
+            merged[k] = v
+            # the ORIGINAL observation date, not the date we last copied it forward
+            since = (prev_carried.get(k) or {}).get("since") or old_ts
+            age_h = None
+            try:
+                age_h = round((datetime.now(timezone.utc)
+                               - datetime.fromisoformat(since)).total_seconds() / 3600, 1)
+            except Exception:
+                pass
+            carried_out[k] = {"value": v, "since": since, "age_hours": age_h}
+    if carried_out:
+        merged["_carried"] = dict(carried_out)
+    return merged
+
+
+def fetch_all(previous: dict | None = None) -> dict:
+    """Fetch all global indicators. Prints progress. Returns full dict.
+
+    `previous` is the snapshot on disk. Pass it and a metric that fails this cycle keeps
+    the value it had, marked and dated, instead of being blanked."""
     print("[GI] Fetching global indicators from 20 sources...")
+    prev = previous if isinstance(previous, dict) else {}
+    prev_ts = str(prev.get("timestamp") or "")
     result: dict = {
         "timestamp": datetime.now(timezone.utc).isoformat(),
         "sources":   {},
     }
+    fresh = carried = missing = 0
     for key, fn, source in _SECTIONS:
         try:
             data = fn()
-            result[key] = data
-            result["sources"][key] = source
-            ok = sum(1 for v in data.values() if v is not None)
-            print(f"  [GI] {source}: {ok}/{len(data)} metrics")
         except Exception as e:
-            result[key] = {}
+            data = {}
             print(f"  [GI] {source}: ERROR {e}")
+        got = sum(1 for v in data.values() if v is not None) if data else 0
+        carried_here: dict = {}
+        data = _carry_forward(data, prev.get(key) or {}, prev_ts, carried_here)
+        result[key] = data
+        result["sources"][key] = source
+        live = [k for k, v in data.items()
+                if not k.startswith("_") and v is not None and k not in carried_here]
+        gone = [k for k, v in data.items() if not k.startswith("_") and v is None]
+        fresh += len(live)
+        carried += len(carried_here)
+        missing += len(gone)
+        note = f"  [GI] {source}: {got} fresh"
+        if carried_here:
+            note += (f", {len(carried_here)} CARRIED FORWARD "
+                     f"({', '.join(sorted(carried_here))})")
+        if gone:
+            note += f", {len(gone)} still missing"
+        print(note)
+
+    result["_health"] = {
+        "fresh_this_cycle": fresh,
+        "carried_from_a_previous_cycle": carried,
+        "missing_everywhere": missing,
+        "rule": "a fetch failure never overwrites a good value with null. Carried "
+                "metrics are listed per section under _carried with the date of the "
+                "ORIGINAL observation, so a value copied forward for a month cannot "
+                "pass as this cycle's reading.",
+    }
+    print(f"[GI] {fresh} fresh | {carried} carried forward | {missing} missing")
     return result
 
 

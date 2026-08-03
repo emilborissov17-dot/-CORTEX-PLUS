@@ -737,14 +737,26 @@ def main():
     beat("global_indicators", "2.5")
     try:
         from core.global_indicators import fetch_all as _gi_fetch
-        gi_data = _gi_fetch()
         gi_path = BASE / "snapshots" / "master" / "global_indicators_latest.json"
+        # THE PREVIOUS SNAPSHOT GOES IN. Without it this write was a wholesale overwrite,
+        # so one slow minute at the World Bank blanked eleven metrics and killed 26
+        # composer sources across 9 axes — none of which had anything to do with the
+        # world changing. A metric that fails this cycle now keeps its last good value,
+        # marked and dated under _carried, and can never pass as a fresh reading.
+        try:
+            _gi_prev = json.loads(gi_path.read_text(encoding="utf-8"))
+        except Exception:
+            _gi_prev = None
+        gi_data = _gi_fetch(previous=_gi_prev)
         gi_path.parent.mkdir(parents=True, exist_ok=True)
         gi_path.write_text(json.dumps(gi_data, ensure_ascii=False, indent=2), encoding="utf-8")
         co2  = gi_data.get("co2", {}).get("co2_ppm", "?")
         temp = gi_data.get("temperature", {}).get("temp_anomaly_c", "?")
         conf = gi_data.get("conflicts", {}).get("active_armed_conflicts", "?")
-        print(f"[FAST_CYCLE] global_indicators -> CO2={co2}ppm | +{temp}°C | conflicts={conf}")
+        _h = gi_data.get("_health") or {}
+        print(f"[FAST_CYCLE] global_indicators -> CO2={co2}ppm | +{temp}°C | conflicts={conf}"
+              f" | {_h.get('fresh_this_cycle')} fresh, {_h.get('carried_from_a_previous_cycle')}"
+              f" carried, {_h.get('missing_everywhere')} missing")
     except Exception as e:
         import traceback as _tb
         print(f"[FAST_CYCLE] global_indicators -> FAILED: {e}")
