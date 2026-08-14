@@ -92,14 +92,27 @@ def _scan_software():
             for line in env_path.read_text(encoding="utf-8", errors="ignore").splitlines():
                 if line.startswith("GROQ_API_KEY="):
                     groq_key = line.split("=", 1)[1].strip()
-    ollama_status = "ACTIVE" if groq_key else "INACTIVE"
-    ollama_models = ["groq:llama-3.3-70b"] if groq_key else []
+    # 14 Aug 2026: this used to report "ollama ACTIVE" whenever a GROQ key existed —
+    # the self-model claimed a local brain it had not checked. МОЗЪКЪТ Е ГЛАВНА ЦЕЛ:
+    # the first step is the body telling the truth about what brain it actually has.
+    # Real probe: ask the local Ollama daemon what models it truly holds.
+    ollama_status, ollama_models = "NOT_RUNNING", []
+    try:
+        import requests as _rq
+        _r = _rq.get("http://localhost:11434/api/tags", timeout=3)
+        if _r.ok:
+            ollama_models = [m.get("name", "?") for m in (_r.json().get("models") or [])]
+            ollama_status = "ACTIVE" if ollama_models else "RUNNING_NO_MODELS"
+    except Exception:
+        pass
+    cloud_backend = "groq_key_present" if groq_key else "no_groq_key"
 
     return {
         "os":            os_info[:80],
         "python":        py_ver,
         "ollama_status": ollama_status,
         "ollama_models": ollama_models,
+        "cloud_backend": cloud_backend,
         "base_dir":      str(BASE_DIR),
         "pid":           os.getpid(),
         "uptime_sec":    round(time.time() - psutil.Process(os.getpid()).create_time(), 1),

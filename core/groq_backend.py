@@ -8,16 +8,18 @@ groq_backend.py — LLM backend с 4-степенен fallback chain
   3. OpenRouter (deepseek/deepseek-r1:free)  — openrouter.ai
   4. Gemini     (gemini-2.0-flash)           — 1500 req/day безплатно
 
-Ollama беше премахнат от веригата (2026-07-04) — локално няма нито един
-pull-нат модел ("Ollama: няма налични модели"), т.е. беше мъртъв safety
-net, който само маскираше AllBackendsFailedError. По-добре да гърми
-ясно, отколкото тихо да минава през несъществуващ backend.
-Останалият мъртъв Ollama код (_call_ollama, _get_ollama_model, URL-ите)
-е изтрит на 2026-07-13; test/test_no_ollama_in_live_path.py пази да не се
-върне.
+Ollama беше премахнат от веригата (2026-07-04) като ТИХ safety net, който
+маскираше AllBackendsFailedError. Това остава в сила: локалният модел НЕ е
+обикновена стъпка във веригата и НЕ маскира тихо нищо.
+ИЗКЛЮЧЕНИЕ (30 юли 2026, задача #16, изрично одобрено от Емил): локалният
+модел се връща като ЯВНА последна инстанция САМО когато и четирите облачни
+backend-а са в cooldown (пълен blackout). Отговорът е маркиран
+backend="local:<model>", degraded=True — видимо, не тихо. Целта е жива-но-
+деградирала оса вместо мъртва (LLM_FAILED) при едновременен blackout.
 
 При rate limit → веднага следващ backend, БЕЗ дълго чакане.
-Cooldown 60s на backend при rate limit — после се опитва пак.
+Cooldown прогресивен с капак 180s (60/120/180) — край на 10-мин blackout,
+който гладеше цикъла; hit-броячът се нулира при успешен отговор.
 
 При изчерпване на всички backends → вдига AllBackendsFailedError,
 която caller-ите могат да уловят и да маркират snapshot с
@@ -37,6 +39,8 @@ needs_reanalysis: True за приоритетен повторен анализ
 import os
 import re
 import time
+import json
+from datetime import datetime, timezone
 import threading
 import requests
 from pathlib import Path
@@ -83,14 +87,26 @@ class AllBackendsFailedError(RuntimeError):
     pass
 
 
-# Cooldown при rate limit:
-# - При първи rate limit → 60s (може да е временен)
-# - При втори rate limit → 600s (session blackout — не губим 2min/ос)
-_COOLDOWN_SECS_FIRST  = 60
-_COOLDOWN_SECS_REPEAT = 600   # 10 минути session blackout
+# Cooldown при rate limit — ПРОГРЕСИВЕН, но с КАПАК (30 юли 2026, задача #16).
+# Старо: 2-ри hit → 600s "session blackout". Диагнозата показа, че точно това
+# причинява LLM-глада: Groq пада 2 пъти рано → изпада за 10 мин → товарът се
+# излива на другите 3 → каскаден blackout → осите връщат LLM_FAILED. Ново: 60/120/180s
+# с капак 180s — backend се възстановява В РАМКИТЕ на цикъла вместо да изпада за 10 мин.
+# При успешен отговор hit-броячът се нулира (виж call_groq_meta), за да не се третира
+# вечно като хронично падащ.
+_COOLDOWN_SECS_FIRST = 60
+_COOLDOWN_SECS_MAX   = 180
 _cooldowns:     dict = {}
 _cooldown_hits: dict = {}     # брои колко пъти е hit-нат всеки backend
 _cd_lock = threading.Lock()
+
+# Local last-resort brain (Ollama HTTP :11434) — качва се САМО когато и четирите
+# облачни backend-а са в cooldown (пълен blackout). Изрично решение на Емил (30 юли
+# 2026) да се отпусне конвенцията "Ollama мъртъв в scoring" ЗА ПОСЛЕДНАТА ИНСТАНЦИЯ:
+# жива-но-деградирала оса > мъртва оса. Отговорът се маркира degraded=True/backend=
+# "local:<model>", за да е видно в самомодела, че е локален, не облачен.
+_OLLAMA_URL  = os.environ.get("CORTEX_OLLAMA_URL", "http://localhost:11434")
+_LOCAL_MODEL = os.environ.get("CORTEX_LOCAL_MODEL", "qwen2.5:3b")
 
 # Adaptive sleep — overridden by body_scanner directives at cycle start
 _SLEEP_SECS: float = 10.0
@@ -132,9 +148,17 @@ def _set_cooldown(name: str) -> None:
     with _cd_lock:
         hits = _cooldown_hits.get(name, 0) + 1
         _cooldown_hits[name] = hits
-        secs = _COOLDOWN_SECS_REPEAT if hits > 1 else _COOLDOWN_SECS_FIRST
+        secs = min(_COOLDOWN_SECS_FIRST * hits, _COOLDOWN_SECS_MAX)  # 60/120/180, capped
         _cooldowns[name] = time.time() + secs
     print(f"  [LLM] {name} cooldown {secs}s (hit #{hits})")
+
+
+def _clear_cooldown(name: str) -> None:
+    """A backend answered → it's healthy again. Reset its hit count so a past
+    rate-limit streak doesn't keep escalating its future cooldowns."""
+    with _cd_lock:
+        _cooldown_hits.pop(name, None)
+        _cooldowns.pop(name, None)
 
 
 # ---------------------------------------------------------------------------
@@ -308,6 +332,27 @@ def _call_gemini(prompt: str, max_tokens: int):
     return cand["content"]["parts"][0]["text"], {"finish_reason": finish_reason}
 
 
+def _call_local(prompt: str, max_tokens: int):
+    """Last-resort sovereign brain over Ollama HTTP (:11434). Called ONLY when all
+    four cloud backends are cooling. Returns (content, meta) or raises. No external
+    API — this is the local model, deliberately, so a full-blackout cycle stays alive."""
+    num_predict = max(64, min(int(max_tokens), 1024))
+    r = requests.post(
+        f"{_OLLAMA_URL}/api/chat",
+        json={"model": _LOCAL_MODEL, "stream": False,
+              "messages": [{"role": "system", "content": _system_msg()},
+                           {"role": "user", "content": prompt}],
+              "options": {"temperature": 0.4, "num_predict": num_predict}},
+        timeout=60,
+    )
+    if r.status_code != 200:
+        raise RuntimeError(f"local model HTTP {r.status_code}")
+    content = ((r.json().get("message") or {}).get("content") or "").strip()
+    if not content:
+        raise ValueError("empty response from local model")
+    return content, {"finish_reason": "stop", "degraded": True}
+
+
 # ---------------------------------------------------------------------------
 # Публичен интерфейс — API не се променя
 # ---------------------------------------------------------------------------
@@ -338,6 +383,29 @@ def call_groq_meta(prompt: str, max_tokens: int = 1024) -> tuple:
         ("Gemini",     "gemini",     _call_gemini),
     ]
 
+    def _log_provenance(backend_label: str, prompt_text: str, content_text: str):
+        """PROVENANCE (14 Aug 2026): every verdict the system records used to be
+        anonymous — no trace of WHICH model produced it, though the chain falls
+        through 4 providers many times per cycle. E7 (calibrated ensemble) and E2
+        (LLM-vs-data grounding) both need this join key. Append-only, fail-open,
+        5MB rotation; prompt is stored as a hash + head, never in full."""
+        try:
+            import hashlib as _hl
+            _pf = Path(__file__).resolve().parents[1] / "memory" / "llm_provenance.jsonl"
+            _pf.parent.mkdir(parents=True, exist_ok=True)
+            if _pf.exists() and _pf.stat().st_size > 5_000_000:
+                _pf.replace(_pf.with_suffix(".jsonl.1"))
+            with open(_pf, "a", encoding="utf-8") as _fh:
+                _fh.write(json.dumps({
+                    "ts": datetime.now(timezone.utc).isoformat(),
+                    "backend": backend_label,
+                    "prompt_sha1": _hl.sha1(prompt_text.encode("utf-8", "ignore")).hexdigest()[:12],
+                    "prompt_head": prompt_text[:80],
+                    "reply_chars": len(content_text or ""),
+                }, ensure_ascii=False) + "\n")
+        except Exception:
+            pass  # bookkeeping must never break the chain
+
     last_error = None
     for label, key, fn in backends:
         if _is_cooling(key):
@@ -346,6 +414,7 @@ def call_groq_meta(prompt: str, max_tokens: int = 1024) -> tuple:
         try:
             result, meta = fn(prompt, max_tokens)
             if result and result.strip():
+                _clear_cooldown(key)  # healthy again → reset its escalation
                 meta = dict(meta or {})
                 meta["backend"] = label
                 if meta.get("finish_reason") == "length":
@@ -354,14 +423,30 @@ def call_groq_meta(prompt: str, max_tokens: int = 1024) -> tuple:
                     print(f"[LLM] {label} OK (внимание: празен content, ползван е reasoning)")
                 else:
                     print(f"[LLM] {label} OK")
+                _log_provenance(label, prompt, result)
                 return result, meta
             raise ValueError(f"Empty response from {label}")
         except Exception as e:
             print(f"  [LLM] {label} failed ({e}) -- next...")
             last_error = e
 
+    # LAST RESORT: all four cloud backends failed/cooling → local sovereign brain,
+    # so the axis stays alive (degraded) instead of dying with LLM_FAILED. Clearly
+    # labelled so the self-model knows this answer was local. (Task #16; Emil-approved
+    # relaxation of the "no Ollama in scoring" convention for this blackout case only.)
+    try:
+        result, meta = _call_local(prompt, max_tokens)
+        meta = dict(meta or {})
+        meta["backend"] = f"local:{_LOCAL_MODEL}"
+        print(f"[LLM] ALL cloud backends down -> LOCAL {_LOCAL_MODEL} OK (DEGRADED)")
+        _log_provenance(f"local:{_LOCAL_MODEL}", prompt, result)
+        return result, meta
+    except Exception as e:
+        print(f"  [LLM] local last-resort failed ({e})")
+        last_error = e
+
     raise AllBackendsFailedError(
-        f"All LLM backends failed (Groq/Cerebras/OpenRouter/Gemini). "
+        f"All LLM backends failed (Groq/Cerebras/OpenRouter/Gemini + local). "
         f"Last error: {last_error}"
     )
 

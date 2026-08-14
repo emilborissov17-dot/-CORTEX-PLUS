@@ -1,0 +1,37 @@
+name: CI — compile gate + tests
+# 14 Aug 2026 (Claude): first CI for the public repo. Two jobs, honestly labelled:
+#  - compile: HARD gate — every .py must parse; a red X here is a real defect.
+#  - tests: informational for now (repo tests assume local data/venv quirks);
+#    promoted to a hard gate once they run clean on a bare runner.
+on: [push, pull_request]
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - name: Compile every tracked .py (hard gate)
+        run: |
+          python - <<'PY'
+          import pathlib, py_compile, sys
+          bad = []
+          for f in pathlib.Path('.').rglob('*.py'):
+              if any(p in f.parts for p in ('venv','venv312_metta','__pycache__','OLD','LEGACY')):
+                  continue
+              try: py_compile.compile(str(f), doraise=True)
+              except Exception as e: bad.append(f"{f}: {e}")
+          print(f"checked OK; broken: {len(bad)}")
+          for b in bad: print(" ", b)
+          sys.exit(1 if bad else 0)
+          PY
+  tests:
+    runs-on: ubuntu-latest
+    continue-on-error: true   # informational until green on a bare runner
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: pip install pytest requests feedparser psutil
+      - name: pytest (informational)
+        run: pytest tests/ test/ -x -q || true

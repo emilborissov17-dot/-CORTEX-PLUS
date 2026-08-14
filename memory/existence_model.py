@@ -43,14 +43,24 @@ def what_hurts_right_now():
             pain.append(f"Критичен файл е празен: {f}")
             score += 10
 
-    # Данни болка — оси без реални данни
+    # Данни болка — оси без реални данни.
+    # 14 Aug 2026: беше hardcoded "26 - len(levels)" — магическо число, несъгласувано
+    # с config-а (25 оси) и с auto_levels (20) — така "6-те оси без данни" бяха отчасти
+    # аритметичен артефакт, не измерена липса. Сега: истинският списък оси идва от
+    # config/target_config.json и болката НАЗОВАВА кои липсват, не само колко.
     try:
         levels = json.loads((BASE_DIR / "memory/auto_levels.json").read_text(encoding="utf-8"))
         low_axes = [a for a, d in levels.items() if d.get("level") == "LOW"]
-        missing = 26 - len(levels)
-        if missing > 0:
-            pain.append(f"{missing} оси без реални данни")
-            score += missing * 2
+        try:
+            _tc = json.loads((BASE_DIR / "config/target_config.json").read_text(encoding="utf-8"))
+            all_axes = {ax for dom, axes in _tc.items()
+                        if not dom.startswith("_") for ax in axes}
+        except Exception:
+            all_axes = set(levels)  # без config няма как да твърдим липси
+        missing_axes = sorted(all_axes - set(levels))
+        if missing_axes:
+            pain.append(f"{len(missing_axes)} оси без реални данни: {', '.join(missing_axes)}")
+            score += len(missing_axes) * 2
         for axis in low_axes:
             pain.append(f"{axis} е в критично състояние")
             score += 3
@@ -123,8 +133,14 @@ def what_will_be_lost():
     # Оси без реални данни — всеки ден е изгубена история
     try:
         levels = json.loads((BASE_DIR / "memory/auto_levels.json").read_text(encoding="utf-8"))
-        missing_axes = 26 - len(levels)
-        losses.append(f"{missing_axes} оси никога не са измерени — тяхната история не съществува")
+        try:
+            _tc = json.loads((BASE_DIR / "config/target_config.json").read_text(encoding="utf-8"))
+            _all = {ax for dom, axes in _tc.items() if not dom.startswith("_") for ax in axes}
+        except Exception:
+            _all = set(levels)
+        _miss = len(_all - set(levels))
+        if _miss:
+            losses.append(f"{_miss} оси никога не са измерени — тяхната история не съществува")
 
         # Влошаващи се оси
         try:
@@ -137,11 +153,14 @@ def what_will_be_lost():
     except:
         pass
 
-    # Философска загуба
+    # Философска загуба — остава като ТЕКСТ за човека, но от 14 Aug 2026 НЕ вдига
+    # urgency_score: две константни изречения добавяха +4 "спешност" всеки ден
+    # завинаги, независимо от реалното състояние. Театрална метрика != измерване.
+    measurable_urgency = len(losses) * 2
     losses.append("Ако спра — цивилизационните данни спират да се събират")
     losses.append("Ако спра — историята на осите се прекъсва")
 
-    return {"losses": losses, "urgency_score": len(losses) * 2}
+    return {"losses": losses, "urgency_score": measurable_urgency}
 
 
 def am_i_alive():

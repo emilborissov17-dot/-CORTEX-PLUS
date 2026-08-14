@@ -237,8 +237,12 @@ def _check_dependencies() -> bool:
     out_path = BASE / "snapshots" / "master" / "dependency_check_latest.json"
     out_path.parent.mkdir(parents=True, exist_ok=True)
 
-    # Зарежда .env в os.environ (само ако ключът не е вече зареден)
-    env_path = BASE / ".env"
+    # Зарежда .env в os.environ (само ако ключът не е вече зареден).
+    # 14 Aug 2026: първо се търси ~/.cortex/.env — ИЗВЪН дървото на репото, което
+    # самогенерирани patch-ове могат да четат. Преместването е решение на Емил
+    # (copy .env %USERPROFILE%\.cortex\.env); дотогава репо-копието продължава да работи.
+    _user_env = pathlib.Path.home() / ".cortex" / ".env"
+    env_path = _user_env if _user_env.exists() else (BASE / ".env")
     if env_path.exists():
         for line in env_path.read_text(encoding="utf-8", errors="ignore").splitlines():
             line = line.strip()
