@@ -193,6 +193,29 @@ def _sibling_dates(path: str, str_lists: list):
 
 # ── the derivation ───────────────────────────────────────────────────────────
 
+# Final path segments that name an ERROR ENVELOPE, not a measurement. This is a
+# MECHANICAL parse-validity gate, NOT an axis-fit filter (see module doctrine above):
+# it asks "is this field a message about the request?", never "does this number
+# belong to this axis?". Added 13 Aug 2026 after a World Bank HTTP-200 error payload
+# ([{"message":[{...}]}]) was derived into extract="0.message" and reached the
+# approval queue as a countable "measurement" of its own error text.
+_ERRORISH_KEYS = {"message", "messages", "error", "errors", "fault", "faults",
+                  "exception", "detail", "details", "warning", "warnings",
+                  "status_message", "statusmessage"}
+
+
+def _drop_errorish(cands: list) -> tuple:
+    """Split candidate (path, extra) pairs into (kept, dropped_paths) by final key."""
+    kept, dropped = [], []
+    for path, extra in cands:
+        final = path.rsplit(".", 1)[-1].lower()
+        if final in _ERRORISH_KEYS:
+            dropped.append(path)
+        else:
+            kept.append((path, extra))
+    return kept, dropped
+
+
 def derive_rule(fmt: str, payload, metric_hint: str = "") -> tuple:
     """(kind, rule_dict, reason). kind is None when no unambiguous rule exists.
 
@@ -226,6 +249,18 @@ def derive_rule(fmt: str, payload, metric_hint: str = "") -> tuple:
         return None, None, f"json: payload is {type(payload).__name__}, not an object or array"
 
     acc = _scan(payload)
+
+    # error-envelope gate: fields whose NAME says "message/error" are not measurements.
+    dropped_all = []
+    for bucket in ("scalars", "num_lists", "dict_lists"):
+        acc[bucket], dropped = _drop_errorish(acc[bucket])
+        dropped_all.extend(dropped)
+    if dropped_all and not (acc["scalars"] or acc["num_lists"] or acc["dict_lists"]):
+        return None, None, (
+            f"json: payload is an error envelope — every addressable field is error-ish "
+            f"({', '.join(dropped_all[:4])}); an HTTP 200 with only a message is a refusal, "
+            f"not a measurement")
+
     toks = _tokens(metric_hint)
 
     hit = _best(acc["scalars"], toks)

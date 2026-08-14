@@ -48,12 +48,35 @@ def _changed_axes(before: dict, after: dict) -> list:
     return changed
 
 
+_MEASURED_RE = re.compile(r"^MEASURED:\s*(.+)$", re.MULTILINE)
+
+def _extract_measured(stdout: str):
+    """The patch's own self-report: a 'MEASURED: {...}' line (required by the
+    self_modifier prompt since 13 Aug 2026). This is what makes a patch's claim
+    checkable — a patch that measures nothing cannot claim to have helped."""
+    m = _MEASURED_RE.search(stdout or "")
+    if not m:
+        return None
+    raw = m.group(1).strip()
+    try:
+        return json.loads(raw)
+    except Exception:
+        return raw[:200]  # non-JSON but present — keep the text
+
+
 def _record(name, ok, out, err, score_before, score_after, levels_before, levels_after):
     delta   = round(score_after - score_before, 2) if score_before is not None and score_after is not None else None
+    measured = _extract_measured(out)
     verdict = "NEUTRAL"
     if delta is not None:
         if delta > 1.0:   verdict = "BENEFICIAL"
         elif delta < -1.0: verdict = "HARMFUL"
+    # Axis levels almost never move in the seconds after one patch, so nearly every
+    # patch used to land as NEUTRAL — indistinguishable from "did nothing". A patch
+    # that ran fine but reported NO measurement is now named for what it is: the
+    # quarantine lesson (measurable_goal rule) applied at the execution end too.
+    if ok and verdict == "NEUTRAL" and measured is None:
+        verdict = "UNMEASURED"
 
     changed = _changed_axes(levels_before, levels_after)
     if changed:
@@ -75,6 +98,7 @@ def _record(name, ok, out, err, score_before, score_after, levels_before, levels
             "score_after":  score_after,
             "delta":        delta,
             "verdict":      verdict,
+            "measured":     measured,
             "changed_axes": changed,
         })
         JOURNAL_PATH.write_text(json.dumps(j, ensure_ascii=False, indent=2), encoding="utf-8")
@@ -104,6 +128,7 @@ def _record(name, ok, out, err, score_before, score_after, levels_before, levels
             "patch":        name,
             "success":      ok,
             "verdict":      verdict,
+            "measured":     measured,
             "score_before": score_before,
             "score_after":  score_after,
             "delta":        delta,
@@ -303,8 +328,15 @@ def run():
 
         else:
             print(f"  ⛔ GUARDIAN FAIL: {stderr[:200]}")
+            # A failed patch was rolled back, so the levels should be EXACTLY what they
+            # were. Passing {} here claimed the opposite: _changed_axes read a missing
+            # axis as None and printed "all 20 axes -> None" after every single failure,
+            # which is both false and the precise shape of the alarm that would matter
+            # if a rollback ever left damage behind. Recompute instead — silence now
+            # means the rollback was clean, and a line means it was not.
+            levels_after = _compute_levels()
             _record(patch.name, False, stdout, stderr,
-                    score_before, None, levels_before, {})
+                    score_before, None, levels_before, levels_after)
 
     print(f"\n[PATCH_EXECUTOR] final score = {_avg_score(levels_before)}")
     print(f"[PATCH_EXECUTOR] done at {datetime.now(timezone.utc).isoformat()}")

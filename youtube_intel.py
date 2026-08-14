@@ -357,6 +357,42 @@ def _get_transcript_playwright(video_id: str) -> Optional[str]:
 
 
 def get_transcript(video_id: str, title: str = "", description: str = "") -> dict:
+    """Portable deadline around the whole waterfall — see _get_transcript_unbounded.
+
+    TRANSCRIPT_TIMEOUT_SEC was enforced with signal.alarm, and _time_limit says so in
+    its own body: "само на Linux/Mac". On Windows it yields with no guard at all, so the
+    documented 60s-per-video ceiling did not exist on the machine this actually runs on.
+    Nor did it ever cover attempts 3 and 4 (Playwright, and a yt-dlp audio download fed
+    to Groq Whisper — that one alone allows 90s just for the download), which sit
+    outside the `with` block. One video could therefore occupy an axis for minutes.
+
+    That is what killed TECHNOLOGY_AI_REVIEW and COSMIC_RESOURCES_REVIEW on 2026-08-04:
+    both stalled at yt:transcript:<id> with no progress for 93s. A worker thread cannot
+    be force-killed here either, so the deadline stops WAITING rather than stopping the
+    work — the axis is freed, and a stuck fetch no longer costs an entire axis."""
+    from concurrent.futures import ThreadPoolExecutor, TimeoutError as _FTimeout
+    pool = ThreadPoolExecutor(max_workers=1)
+    try:
+        fut = pool.submit(_get_transcript_unbounded, video_id, title, description)
+        try:
+            return fut.result(timeout=TRANSCRIPT_TIMEOUT_SEC)
+        except _FTimeout:
+            print(f"    [TRANSCRIPT] {video_id[:11]} timeout {TRANSCRIPT_TIMEOUT_SEC}s "
+                  f"(hard deadline) - giving up on this video")
+            return {
+                "video_id":          video_id,
+                "title":             title,
+                "url":               f"https://www.youtube.com/watch?v={video_id}",
+                "transcript":        "",
+                "transcript_chars":  0,
+                "transcript_method": "timeout",
+                "has_transcript":    False,
+            }
+    finally:
+        pool.shutdown(wait=False)
+
+
+def _get_transcript_unbounded(video_id: str, title: str = "", description: str = "") -> dict:
     """
     Извлича транскрипция. FIX: глобален TRANSCRIPT_TIMEOUT_SEC guard.
     Ако YouTube е блокирал IP → пропускаме API и директно към yt-dlp.
@@ -621,7 +657,8 @@ def _generate_adaptive_queries(axis: str, config: dict, failures: list[str],
 
 
 def _run_with_adaptive_queries(axis: str, config: dict, max_videos: int,
-                                base_query: str, channel_ids: list[str]) -> list[dict]:
+                                base_query: str, channel_ids: list[str],
+                                tick=None) -> list[dict]:
     """
     Изпълнява search с адаптивна логика:
     1. Пробва base query
@@ -644,12 +681,18 @@ def _run_with_adaptive_queries(axis: str, config: dict, max_videos: int,
 
     for q in queries_to_try:
         print(f"    [ADAPTIVE] Пробвам query: '{q}'")
+        if tick:
+            tick(f"yt:searching:{q[:24]}")
         items = search_youtube(q, max_results=max_videos, channel_ids=channel_ids)
+        if tick:
+            tick(f"yt:search:{q[:24]}")
         # Извличаме транскрипции за да оценим
         enriched = []
         for video in items:
             time.sleep(0.5)
             td = get_transcript(video["video_id"], video["title"], video["description"])
+            if tick:
+                tick(f"yt:transcript:{video['video_id'][:12]}")
             content = td["transcript"] or video["description"]
             enriched.append({
                 "title":               f"[YT] {video['title']}",
@@ -677,19 +720,27 @@ def _run_with_adaptive_queries(axis: str, config: dict, max_videos: int,
     # Диагностика ако резултатите са слаби
     failures = []
     if best_score < 0.4:
+        if tick:
+            tick("yt:diagnosing")
         failures = _diagnose_failures(best_items, best_q_used)
         if failures:
             print(f"    [ADAPTIVE] ⚠️ Проблеми: {failures}")
             past_queries = axis_mem.get("queries", [])
+            if tick:
+                tick("yt:generating-queries")
             new_queries  = _generate_adaptive_queries(axis, config, failures, past_queries + queries_to_try)
             if new_queries:
                 print(f"    [ADAPTIVE] 🔄 Нови adaptive queries: {new_queries}")
                 for aq in new_queries:
+                    if tick:
+                        tick(f"yt:retry-search:{aq[:24]}")
                     items2 = search_youtube(aq, max_results=max_videos, channel_ids=channel_ids)
                     enriched2 = []
                     for video in items2:
                         time.sleep(0.5)
                         td = get_transcript(video["video_id"], video["title"], video["description"])
+                        if tick:
+                            tick(f"yt:retry-transcript:{video['video_id'][:12]}")
                         content = td["transcript"] or video["description"]
                         enriched2.append({
                             "title":               f"[YT] {video['title']}",
@@ -727,7 +778,21 @@ def _run_with_adaptive_queries(axis: str, config: dict, max_videos: int,
 
 
 def fetch_youtube_for_axis(axis: str, config: dict,
-                           max_videos: int = MAX_VIDEOS_PER_AXIS) -> list[dict]:
+                           max_videos: int = MAX_VIDEOS_PER_AXIS,
+                           on_progress=None) -> list[dict]:
+    """`on_progress(stage)` is called as each video resolves.
+
+    Without it this stage is a single opaque call that can run for minutes — searching,
+    then yt-dlp per video, then transcripts — and the axis orchestrator, which abandons
+    an axis that reports no progress, cannot tell it apart from a hung socket. On
+    2026-08-04 three healthy axes were dropped exactly here: their last signal was the
+    final RSS feed, and they were still working when the stall window expired."""
+    def _tick(stage: str) -> None:
+        if on_progress:
+            try:
+                on_progress(stage)
+            except Exception:
+                pass          # a progress hook must never break the fetch it reports on
     global _YT_IP_BLOCKED
     if _YT_IP_BLOCKED:
         print(f"    [YT] ⛔ IP блок активен — само yt-dlp за {axis}")
@@ -752,7 +817,8 @@ def fetch_youtube_for_axis(axis: str, config: dict,
         config = dict(config)
         config["_extra_queries"] = claude_queries[1:]
 
-    items = _run_with_adaptive_queries(axis, config, max_videos, query, channel_ids)
+    items = _run_with_adaptive_queries(axis, config, max_videos, query, channel_ids,
+                                       tick=_tick)
 
     if not items:
         print(f"    [YT] Няма намерени видеа за {axis}")

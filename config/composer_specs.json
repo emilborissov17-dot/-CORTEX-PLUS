@@ -424,12 +424,30 @@
       "measurement_daily": {
         "min": 1,
         "freshness_days": 7,
-        "sources": []
+        "sources": [
+          {
+            "id": "promoted_40232",
+            "kind": "http_json_count",
+            "url": "https://ghoapi.azureedge.net/api/Indicator?$filter=contains(IndicatorCode,'GHE')&$format=json",
+            "org": "WHO",
+            "extract": "value",
+            "provenance": "self-discovered, human-promoted"
+          }
+        ]
       },
       "event_daily": {
         "min": 1,
         "freshness_days": 3,
-        "sources": []
+        "sources": [
+          {
+            "id": "promoted_61568",
+            "kind": "http_json_count",
+            "url": "https://ghoapi.azureedge.net/api/Indicator?$filter=contains(IndicatorCode,'HIV')&$format=json",
+            "org": "World Health Organization (WHO) Global Health Observatory",
+            "extract": "value",
+            "provenance": "self-discovered, human-promoted"
+          }
+        ]
       },
       "indirect_proxy": {
         "min": 1,
@@ -1475,6 +1493,30 @@
         "min": 1,
         "freshness_days": 60,
         "sources": []
+      },
+      "measurement_daily": {
+        "min": 1,
+        "freshness_days": 7,
+        "sources": [
+          {
+            "id": "celestrak_launched_last_30d",
+            "kind": "http_json_count",
+            "url": "https://celestrak.org/NORAD/elements/gp.php?GROUP=last-30-days&FORMAT=json",
+            "extract": "",
+            "org": "CelesTrak",
+            "unit": "objects_launched_last_30d",
+            "note": "verified live 2026-08-04: 356 objects. Genuinely daily-moving — it is launch activity, not a standing total. The GROUP=active catalogue (16k objects) was tried first and answers 403 to repeated bulk pulls regardless of User-Agent, so it is not usable at cycle frequency."
+          },
+          {
+            "id": "celestrak_geostationary",
+            "kind": "http_json_count",
+            "url": "https://celestrak.org/NORAD/elements/gp.php?GROUP=geo&FORMAT=json",
+            "extract": "",
+            "org": "CelesTrak",
+            "unit": "geostationary_objects",
+            "note": "verified live 2026-08-04: 568 objects. Standing GEO infrastructure."
+          }
+        ]
       }
     }
   },
@@ -1519,6 +1561,30 @@
         "min": 1,
         "freshness_days": 60,
         "sources": []
+      },
+      "measurement_daily": {
+        "min": 1,
+        "freshness_days": 7,
+        "sources": [
+          {
+            "id": "gi_self_fresh_metrics",
+            "kind": "file",
+            "path": "snapshots/master/global_indicators_latest.json",
+            "extract": "_health.fresh_this_cycle",
+            "org": "CORTEX internal",
+            "unit": "indicators_refreshed",
+            "note": "how much of the system's own picture was actually re-observed this cycle. Self-review measured as fact, not as self-assessment."
+          },
+          {
+            "id": "gi_self_carried_metrics",
+            "kind": "file",
+            "path": "snapshots/master/global_indicators_latest.json",
+            "extract": "_health.carried_from_a_previous_cycle",
+            "org": "CORTEX internal",
+            "unit": "indicators_carried",
+            "note": "how much it is running on values copied forward. Rising here means the world model is ageing while the system reports normally."
+          }
+        ]
       }
     }
   }

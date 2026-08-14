@@ -52,6 +52,17 @@ def _approve_id(kind: str, key: str) -> str:
     return hashlib.sha1(f"{kind}:{key}".encode("utf-8")).hexdigest()[:4]
 
 
+DECLINED = REPO / "memory" / "declined_approvals.json"   # human "NO <id>" verdicts
+
+def _is_declined(approve_id: str) -> bool:
+    """A human said NO to this exact id (approve_reader). The stable-id property that
+    makes 'OK' safe across cycles is the same one that lets a decline stick."""
+    try:
+        return approve_id in _load(DECLINED, {})
+    except Exception:
+        return False
+
+
 def _load(p, default=None):
     try:
         return json.loads(Path(p).read_text(encoding="utf-8"))
@@ -81,7 +92,10 @@ def _attach_promote(item, axis, url, slot, kind, org, parse=None):
     if not (url and slot):
         return  # not enough to promote safely — stays informational
     short = axis.split("_")[0].title()
-    item["approve_id"] = _approve_id("promote", f"{axis}|{url}|{slot}")
+    aid = _approve_id("promote", f"{axis}|{url}|{slot}")
+    if _is_declined(aid):
+        return  # human already said NO to this exact promotion — stays informational
+    item["approve_id"] = aid
     item["approve"] = {"type": "promote_source", "axis": axis, "url": url,
                        "slot": slot, "kind": kind or "http_json_path",
                        "org": org or "?", "label": f"{short} <- {org or '?'}",
@@ -94,7 +108,10 @@ def _attach_goal(item, axis, proposal):
     goal = (proposal or {}).get("measurable_goal")
     if not goal:
         return
-    item["approve_id"] = _approve_id("goal", f"{axis}|{goal}")
+    aid = _approve_id("goal", f"{axis}|{goal}")
+    if _is_declined(aid):
+        return  # human already said NO to this exact goal — stays informational
+    item["approve_id"] = aid
     item["approve"] = {"type": "accept_goal", "axis": axis, "proposal": proposal,
                        "label": f"goal: {axis.split('_')[0].title()}"}
 
@@ -610,7 +627,7 @@ def _brief(rep: dict) -> str:
             c = it["candidate"]
             L.append(f"    - FOUND (awaiting your approval): {c.get('org')} — {c.get('metric')}  {c.get('url')}")
         if it.get("approve_id"):
-            L.append(f"    - approve by replying **OK {it['approve_id']}** in Telegram (or reject: ignore)")
+            L.append(f"    - approve: **OK {it['approve_id']}** · reject: **NO {it['approve_id']}** (in Telegram)")
     L.append("\n_All proposals are advisory. Nothing acts on the world without your approval._")
     return "\n".join(L)
 

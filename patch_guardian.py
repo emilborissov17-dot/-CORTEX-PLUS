@@ -96,6 +96,28 @@ def _subprocess_env() -> dict:
     return {**os.environ, "PYTHONPATH": base, "CORTEX_BASE": os.environ.get("CORTEX_BASE", base)}
 
 
+def _diagnosis(stderr: str, limit: int = 600) -> str:
+    """Keep the END of a traceback — the only part that says what actually broke.
+
+    Truncating stderr from the FRONT discarded the diagnosis every single time. A Python
+    traceback opens with "Traceback (most recent call last):" and a frame list, and names
+    the fault on its LAST line. Cutting at 300 characters from the head reliably kept the
+    boilerplate and threw away the verdict: the quarantine record for
+    ecosystems_biodiversity_review_patch stops mid-path at "...ecosystems_biodiversity_revie",
+    while the real cause — KeyError: 'name' — was never written down anywhere, so nothing
+    downstream could learn from the failure. One DeprecationWarning ahead of the traceback
+    was enough to eat the entire budget on its own.
+
+    First line for context, last lines for the cause."""
+    text = (stderr or "").strip()
+    if len(text) <= limit:
+        return text
+    lines = text.splitlines()
+    head = lines[0][:120]
+    tail = "\n".join(lines[1:])[-max(limit - len(head) - 8, 80):]
+    return f"{head}\n[...]\n{tail}"
+
+
 class PatchResult:
     def __init__(self, file: str, success: bool, stage: str, error: str = None,
                  backup_path: str = None, stdout: str = None):
@@ -337,7 +359,7 @@ class PatchGuardian:
             )
             if result.returncode == 0:
                 return True, None
-            return False, result.stderr.strip()[:300]
+            return False, _diagnosis(result.stderr)
         except subprocess.TimeoutExpired:
             return False, "Import timeout (>10s)"
         except Exception as e:
@@ -368,7 +390,7 @@ class PatchGuardian:
             out = stdout.decode(errors="replace").strip()
             if proc.returncode == 0:
                 return True, None, out[:2000]
-            return False, stderr.decode(errors="replace").strip()[:300], out[:500]
+            return False, _diagnosis(stderr.decode(errors="replace")), out[:500]
         except asyncio.TimeoutError:
             return False, f"Patch execution timeout (>{self.patch_exec_timeout}s)", None
         except Exception as e:

@@ -251,6 +251,28 @@ def _check_dependencies() -> bool:
     checks      = {}
     critical_ok = True
 
+    # ── Self-heal (14 Aug 2026): the ddgs search package was missing for weeks and
+    # web intelligence ran blind — a dependency the system can install for itself.
+    # Narrow by design: ONE hardcoded, known-safe package, own venv, logged, fail-open.
+    # This is self-maintenance inside the machine, not an action on the world.
+    try:
+        import ddgs  # noqa: F401
+        checks["pkg_ddgs"] = {"present": True, "level": "optional"}
+    except ImportError:
+        try:
+            import subprocess as _sp
+            r = _sp.run([sys.executable, "-m", "pip", "install", "ddgs"],
+                        capture_output=True, text=True, timeout=180)
+            ok = r.returncode == 0
+            checks["pkg_ddgs"] = {"present": ok, "level": "optional",
+                                  "self_installed": ok,
+                                  "note": (r.stdout or r.stderr)[-160:]}
+            print(f"[DEP_CHECK] {'SELF-INSTALLED' if ok else 'INSTALL FAILED':14s} ddgs (optional)")
+        except Exception as _ie:
+            checks["pkg_ddgs"] = {"present": False, "level": "optional",
+                                  "error": f"{type(_ie).__name__}: {_ie}"[:120]}
+            print(f"[DEP_CHECK] INSTALL ERROR ddgs: {type(_ie).__name__}")
+
     # 1. Проверка на ключове
     key_levels = {
         "GROQ_API_KEY":    "critical",

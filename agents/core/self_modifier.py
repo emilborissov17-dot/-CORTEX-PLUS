@@ -75,19 +75,19 @@ BASE_DIR = pathlib.Path(os.environ.get("CORTEX_BASE", ".")).resolve()
 sys.path.insert(0, str(BASE_DIR))
 '''
 
+# ВАЖНО (13 Aug 2026): 36 от 82-те runtime грешки бяха "AST gate: write_text()
+# target not statically verified" — LLM-ът пишеше файлове през f-string/променлива/
+# os.path.join път, който gate-ът доказуемо отхвърля (проверено срещу ast_gate).
+# Старият prompt никъде не забраняваше динамични пътища, а _safe_save() ги канеше.
+# Затова: четенето е през helper (безопасно), а ЗАПИСЪТ е винаги директен, с
+# литерална верига BASE_DIR / "memory" / "име.json", която gate-ът може да провери.
 _SAFE_FILE_TEMPLATE = '''\
-def _safe_load(path, default):
-    """Зарежда JSON файл, създава го с default ако не съществува."""
-    p = pathlib.Path(path)
-    if not p.exists():
-        p.parent.mkdir(parents=True, exist_ok=True)
-        p.write_text(json.dumps(default, ensure_ascii=False), encoding="utf-8")
-    return json.loads(p.read_text(encoding="utf-8"))
-
-def _safe_save(path, data):
-    p = pathlib.Path(path)
-    p.parent.mkdir(parents=True, exist_ok=True)
-    p.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
+def _read_json(path, default):
+    """Чете JSON файл; връща default ако липсва или е повреден. НИКОГА не пише."""
+    try:
+        return json.loads(pathlib.Path(path).read_text(encoding="utf-8"))
+    except Exception:
+        return default
 '''
 
 
@@ -329,18 +329,25 @@ def _generate_solution(problem, solution, root_cause, measurable_goal, component
         "Напиши Python patch който:\n"
         "1. Адресира ROOT CAUSE на проблема\n"
         "2. Имплементира РЕШЕНИЕТО\n"
-        "3. Принтира нещо measurable (за да можем да проверим дали е сработило)\n\n"
+        "3. ЗАДЪЛЖИТЕЛНО завършва с ТОЧНО този ред (изпълнителят го чете машинно):\n"
+        "     print(\"MEASURED:\", json.dumps({\"metric\": \"<какво измери>\", \"value\": <число>}))\n"
+        "   Patch без MEASURED ред се записва като UNMEASURED и се брои за провал.\n\n"
         "СТРОГО ЗАБРАНЕНО — кодът ти ще бъде отхвърлен ако съдържа:\n"
         f"  {forbidden_str}\n"
         "ПОЗВОЛЕНО: json, pathlib, os, datetime, sys — само локални файлове в memory/\n"
         "НЕ правиш HTTP заявки. НЕ използваш external APIs. НЕ използваш subprocess.\n\n"
-        "КРИТИЧНО — РАБОТА С ФАЙЛОВЕ:\n"
-        "НИКОГА не приемай че файл съществува. ВИНАГИ проверявай:\n"
-        "  if not file_path.exists():\n"
-        "      file_path.parent.mkdir(parents=True, exist_ok=True)\n"
-        "      file_path.write_text(json.dumps({'data': []}, ensure_ascii=False))\n"
-        "Използвай тази _safe_load helper функция в кода си:\n"
-        f"{_SAFE_FILE_TEMPLATE}\n\n"
+        "КРИТИЧНО — РАБОТА С ФАЙЛОВЕ (AST gate ще ОТХВЪРЛИ кода ти иначе):\n"
+        "1. ЧЕТИ файлове само с този helper (копирай го в кода си):\n"
+        f"{_SAFE_FILE_TEMPLATE}\n"
+        "2. ПИШИ файлове САМО с директен израз върху ЛИТЕРАЛЕН път под memory/:\n"
+        "     (BASE_DIR / \"memory\" / \"my_result.json\").write_text(\n"
+        "         json.dumps(data, ensure_ascii=False, indent=2), encoding=\"utf-8\")\n"
+        "   ЗАБРАНЕНО: запис през функция-обвивка, запис през променлива-път,\n"
+        "   f-string в пътя, os.path.join. Пътят на всеки запис трябва да е\n"
+        "   изписан буквално на реда на write_text(). Един изходен файл е достатъчен.\n"
+        "3. Кодът ти трябва да ЧЕТЕ поне един СЪЩЕСТВУВАЩ файл от memory/ (реални\n"
+        "   данни на системата), да изчисли нещо от него и да запише измерим резултат\n"
+        "   — код, който пише файл, който никой не чете, се брака като DEAD_WEIGHT.\n\n"
         "Само чист Python код. Без обяснение. Без markdown.\n"
         "Първи ред: #!/usr/bin/env python3\n"
         "BASE_DIR = pathlib.Path(os.environ['CORTEX_BASE'])\n"

@@ -26,7 +26,8 @@ import time
 import hashlib
 import shutil
 import requests
-from concurrent.futures import ThreadPoolExecutor, TimeoutError as FutureTimeoutError
+from concurrent.futures import (FIRST_COMPLETED, ThreadPoolExecutor,
+                                TimeoutError as FutureTimeoutError, wait)
 from datetime import datetime, timezone, timedelta
 from typing import Optional
 
@@ -62,7 +63,34 @@ except ImportError:
 BASE_DIR = pathlib.Path(os.environ.get("CORTEX_BASE", pathlib.Path(__file__).resolve().parent))
 sys.path.insert(0, str(BASE_DIR))
 
-AXIS_TIMEOUT_SEC = 90
+# An axis is abandoned when it STOPS MAKING PROGRESS, not when a clock runs out.
+#
+# There has to be some abandonment rule: a socket that never returns would hang the
+# whole cycle, and a Python thread cannot be force-killed. But elapsed wall-clock cannot
+# tell "slow because it is doing real work" from "stuck", and on 2026-08-04 that
+# difference became expensive. While fifteen RSS feeds were dead, axes finished fast
+# precisely BECAUSE they were fetching nothing — a 403 returns in milliseconds. The
+# moment the feeds were repaired the same axes began doing real work and blew through
+# the flat 90s ceiling: axes marked failed went from 3 to 15 in a single cycle. The
+# ceiling was not measuring health, it was measuring how much work was being skipped.
+#
+# memory/heartbeat.py already made this argument one level up, for the cycle as a whole:
+# "no output for 15 minutes" is indistinguishable from "hung", so a watchdog that reads
+# elapsed time kills healthy work. The fix there was a progress signal. Same fix here.
+#
+# AXIS_STALL_SEC     — no progress at all for this long -> abandoned.
+# AXIS_HARD_CAP_SEC  — backstop against a livelock that keeps reporting progress
+#                      forever. Generous on purpose; it should never be what fires.
+# The stall window must sit comfortably ABOVE the longest legitimate single operation,
+# or it starts killing healthy work again under a new name. The longest one here is a
+# transcript fetch, capped at youtube_intel.TRANSCRIPT_TIMEOUT_SEC = 60s; at a 90s window
+# that left 30s of margin for the un-instrumented search around it, and
+# TECHNOLOGY_AI_REVIEW was still being dropped mid-work. 180s is ~3x the longest bounded
+# operation. It is not a work budget — an axis doing real work reports progress and may
+# run far longer than this.
+AXIS_STALL_SEC = 180
+AXIS_HARD_CAP_SEC = 1800
+AXIS_TIMEOUT_SEC = AXIS_STALL_SEC        # legacy name, still read by the CLI/help text
 MAX_AGE_HOURS    = 6   # Обновяване на 6 часа вместо 2
 MAX_WORKERS      = 3   # Паралелни оси едновременно
 
@@ -122,7 +150,7 @@ AXES = {
         "rss": [
             "https://www.nasa.gov/rss/dyn/breaking_news.rss",
             "https://www.carbonbrief.org/feed",
-            "https://climate.nasa.gov/news/rss.xml",
+            "https://www.climatechangenews.com/feed/",
         ],
     },
     "ENERGY_REVIEW": {
@@ -138,7 +166,7 @@ AXES = {
         "domain": "planet",
         "keywords": ["water scarcity", "freshwater", "drought", "ocean pollution"],
         "rss": [
-            "https://www.waterworld.com/rss.xml",
+            "https://www.sciencedaily.com/rss/earth_climate/water.xml",
             "https://www.circleofblue.org/feed/",
         ],
     },
@@ -146,8 +174,8 @@ AXES = {
         "domain": "planet",
         "keywords": ["food security", "hunger", "agriculture", "famine"],
         "rss": [
-            "https://www.fao.org/news/rss-feed/en/",
-            "https://www.foodnavigator.com/rss/feed.php",
+            "https://www.sciencedaily.com/rss/plants_animals/food.xml",
+            "https://www.sciencedaily.com/rss/plants_animals/agriculture_and_food.xml",
         ],
     },
     "MATERIALS_WASTE_REVIEW": {
@@ -155,7 +183,7 @@ AXES = {
         "keywords": ["plastic pollution", "recycling", "circular economy", "waste management"],
         "rss": [
             "https://www.waste360.com/rss.xml",
-            "https://resource.co/rss.xml",
+            "https://www.wastedive.com/feeds/news/",
         ],
     },
     "ECOSYSTEMS_BIODIVERSITY_REVIEW": {
@@ -186,7 +214,7 @@ AXES = {
         "domain": "human",
         "keywords": ["education", "learning", "cognitive science", "AI education"],
         "rss": [
-            "https://www.edsurge.com/feed",
+            "https://www.edsurge.com/articles_rss",
             "https://feeds.feedburner.com/MindShift",
         ],
     },
@@ -202,7 +230,7 @@ AXES = {
         "domain": "human",
         "keywords": ["human rights", "democracy", "civil liberties"],
         "rss": [
-            "https://www.hrw.org/rss",
+            "https://www.amnesty.org/en/feed/",
             "https://freedomhouse.org/rss.xml",
         ],
     },
@@ -218,8 +246,8 @@ AXES = {
         "domain": "civilization",
         "keywords": ["poverty", "income inequality", "wealth gap"],
         "rss": [
-            "https://www.oxfam.org/en/feed",
-            "https://blogs.worldbank.org/rss.xml",
+            "https://www.oxfam.org/en/rss.xml",
+            "https://www.sciencedaily.com/rss/science_society/world_development.xml",
         ],
     },
     "INFRASTRUCTURE_CITIES_REVIEW": {
@@ -242,7 +270,7 @@ AXES = {
         "domain": "civilization",
         "keywords": ["global education", "literacy", "UNESCO"],
         "rss": [
-            "https://www.edsurge.com/feed",
+            "https://www.edsurge.com/articles_rss",
         ],
     },
     "TECHNOLOGY_INFRA_REVIEW": {
@@ -290,7 +318,7 @@ AXES = {
         "keywords": ["asteroid impact", "pandemic risk", "nuclear war"],
         "rss": [
             "https://www.who.int/rss-feeds/news-english.xml",
-            "https://www.thebulletin.org/feed/",
+            "https://futureoflife.org/feed/",
         ],
     },
     "GENERAL_SELF_REVIEW": {
@@ -320,12 +348,43 @@ AXES = {
 
 # -- Helpers ------------------------------------------------------------------
 
+# Sent on every feed request. Without it requests announces itself as
+# "python-requests/2.x" and a CDN in front of a publisher answers 403 — which reads in
+# the log exactly like a dead feed. Five of the fourteen feeds "lost" on 2026-08-04
+# (renewableenergyworld, un.org/press, un.org/sustainabledevelopment, foreignpolicy,
+# the EA forum) were never dead at all; they were refusing an unidentified client.
+_RSS_HEADERS = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+                  "(KHTML, like Gecko) Chrome/124.0 Safari/537.36",
+    "Accept": "application/rss+xml, application/xml, text/xml, */*",
+}
+
+
+_PROGRESS: dict = {}
+_PROGRESS_LOCK = __import__("threading").Lock()
+
+
+def _beat(axis: str, stage: str) -> None:
+    """An axis says 'I am still getting somewhere'. Cheap, thread-safe, in-memory.
+
+    Called at every boundary inside run_axis where real work completed. The
+    orchestrator abandons an axis only when these stop arriving — see AXIS_STALL_SEC."""
+    with _PROGRESS_LOCK:
+        _PROGRESS[axis] = (time.time(), stage)
+
+
+def _last_beat(axis: str) -> tuple:
+    with _PROGRESS_LOCK:
+        return _PROGRESS.get(axis, (None, "not started"))
+
+
 def _fetch_rss(url: str, max_items: int = 5) -> list:
     """Fetches one RSS feed with a bounded network timeout. A dead/slow feed
     must never block the axis it belongs to — any failure (network timeout,
     HTTP error, malformed feed) is logged and skipped, never raised."""
     try:
-        response = requests.get(url, timeout=20)
+        response = requests.get(url, timeout=20, headers=_RSS_HEADERS,
+                                allow_redirects=True)
         response.raise_for_status()
         feed = feedparser.parse(response.content)
         items = []
@@ -360,6 +419,57 @@ def _ddg_search(query: str, max_results: int = 5) -> list:
             ]
     except Exception:
         return []
+
+
+def _gdelt_search(query: str, max_results: int = 5) -> list:
+    """Search fallback with ZERO extra dependencies: the GDELT DOC 2.0 API
+    (free, keyless JSON news search). Added 13 Aug 2026 because ddgs was not
+    installed and the agent had been running blind on search for weeks — every
+    axis with thin RSS coverage silently fell back to nothing. GDELT is already
+    an accepted provider in this repo (composer kind http_gdelt_tone)."""
+    # GDELT throttles aggressively per IP (~1 req/5s). Confirmed live on 14 Aug:
+    # first cycle hit HTTPError on most queries. One paced retry recovers most of them.
+    for attempt in (1, 2):
+        try:
+            r = requests.get(
+                "https://api.gdeltproject.org/api/v2/doc/doc",
+                params={"query": query, "mode": "ArtList", "format": "json",
+                        "maxrecords": max_results, "sort": "DateDesc"},
+                headers={"User-Agent": "CORTEX-web-intel/1.0"},
+                timeout=20,
+            )
+            r.raise_for_status()
+            break
+        except Exception:
+            if attempt == 2:
+                print("    GDELT search failed twice (rate limit?) — skipped")
+                return []
+            time.sleep(6)  # GDELT's documented pacing before the single retry
+    try:
+        arts = (r.json() or {}).get("articles", []) or []
+        return [
+            {
+                "title":       a.get("title", ""),
+                "summary":     (a.get("title", "") + " — " + (a.get("domain") or ""))[:400],
+                "link":        a.get("url", ""),
+                "published":   a.get("seendate", ""),
+                "source_type": "gdelt",
+            }
+            for a in arts[:max_results] if a.get("url")
+        ]
+    except Exception as e:
+        print(f"    GDELT search failed ({type(e).__name__}) — skipped")
+        return []
+
+
+def _web_search(query: str, max_results: int = 5) -> list:
+    """DDG when the package is present, GDELT otherwise. One entry point so the
+    axis loop no longer goes blind when a single dependency is missing."""
+    if HAS_DDG:
+        hits = _ddg_search(query, max_results)
+        if hits:
+            return hits
+    return _gdelt_search(query, max_results)
 
 
 def _parse_llm_json(raw: str) -> dict:
@@ -549,42 +659,69 @@ def run_axis(axis: str, config: dict, force: bool = False) -> dict:
         return json.loads(output_path.read_text(encoding="utf-8"))
 
     print(f"  [FETCH] {axis}...")
+    _beat(axis, "started")
     all_items = []
 
-    # NOTE: no in-process wall-clock guard here anymore — SIGALRM-based
-    # timeouts don't exist on Windows and aren't safe to raise from a
-    # ThreadPoolExecutor worker thread on any platform (signal.alarm only
-    # works in the process's main thread). The AXIS_TIMEOUT_SEC ceiling is
-    # instead enforced by the caller via future.result(timeout=...) in
-    # run() — a hung axis is abandoned by the orchestrator and marked
-    # failed in the checkpoint, not stopped from within.
-    for url in config.get("rss", []):
-        items = _fetch_rss(url, max_items=4)
-        all_items.extend(items)
-        if items:
-            print(f"    RSS {url[:50]}... → {len(items)} items")
-        time.sleep(0.3)
+    # NOTE: no in-process wall-clock guard here — SIGALRM-based timeouts don't exist on
+    # Windows and aren't safe to raise from a ThreadPoolExecutor worker thread on any
+    # platform (signal.alarm only works in the process's main thread). Abandonment is
+    # the orchestrator's job in run(), and it watches the _beat() calls below rather
+    # than a clock: an axis is dropped when it stops making progress, not when it takes
+    # a long time doing real work.
+    # Feeds are fetched CONCURRENTLY, and that is not a micro-optimisation.
+    #
+    # Serially, each feed could burn the full 20s connect/read timeout before the next
+    # one started, and a 0.3s courtesy sleep sat between them. That was survivable while
+    # fifteen of the feeds were dead, because a 403 or a DNS failure returns in
+    # milliseconds — the axis was fast precisely BECAUSE it was fetching nothing. Once
+    # the roster was repaired on 2026-08-04 the same axes began doing real work and ate
+    # the 90s AXIS_TIMEOUT_SEC ceiling before the LLM ran at all: axes timing out went
+    # from 3 to 15 in one cycle. Fixing the feeds is what broke the budget.
+    #
+    # The feeds of one axis are independent and live on different hosts, so there is no
+    # politeness argument for serialising them — the sleep protected nobody.
+    feeds = list(config.get("rss", []))
+    if feeds:
+        with ThreadPoolExecutor(max_workers=min(len(feeds), 4)) as pool:
+            futures = {pool.submit(_fetch_rss, url, 4): url for url in feeds}
+            for fut in futures:
+                url = futures[fut]
+                try:
+                    items = fut.result(timeout=25)
+                except Exception as e:
+                    print(f"    RSS {url[:50]}... → skipped ({type(e).__name__})")
+                    continue
+                all_items.extend(items)
+                _beat(axis, f"rss:{url[:40]}")
+                if items:
+                    print(f"    RSS {url[:50]}... → {len(items)} items")
 
     claude_queries = CLAUDE_QUERY_PROPOSALS.get(axis, [])
     if claude_queries:
         print(f"    [CLAUDE→] Умни queries за {axis}: {claude_queries[:2]}")
 
-    if len(all_items) < 5 and HAS_DDG:
+    if len(all_items) < 5:
         search_queries = claude_queries[:2] if claude_queries else config.get("keywords", [])[:2]
         for kw in search_queries:
-            ddg = _ddg_search(kw, max_results=3)
-            all_items.extend(ddg)
+            hits = _web_search(kw, max_results=3)
+            all_items.extend(hits)
+            _beat(axis, f"search:{kw[:30]}")
             time.sleep(0.5)
 
     if HAS_YOUTUBE:
         try:
+            _beat(axis, "youtube:start")
+            _yt_tick = lambda stage: _beat(axis, stage)   # noqa: E731
             if claude_queries:
                 config_with_proposals = dict(config)
                 config_with_proposals["claude_queries"] = claude_queries
-                yt_items = fetch_youtube_for_axis(axis, config_with_proposals, max_videos=3)
+                yt_items = fetch_youtube_for_axis(axis, config_with_proposals,
+                                                  max_videos=3, on_progress=_yt_tick)
             else:
-                yt_items = fetch_youtube_for_axis(axis, config, max_videos=3)
+                yt_items = fetch_youtube_for_axis(axis, config, max_videos=3,
+                                                  on_progress=_yt_tick)
             all_items.extend(yt_items)
+            _beat(axis, "youtube")
             yt_with_tr = sum(1 for i in yt_items if i.get("has_full_transcript"))
             print(f"    YouTube: {len(yt_items)} видеа, {yt_with_tr} с транскрипция")
         except Exception as e:
@@ -600,8 +737,10 @@ def run_axis(axis: str, config: dict, force: bool = False) -> dict:
             unique_items.append(item)
 
     print(f"    Общо: {len(unique_items)} уникални sources")
+    _beat(axis, f"collected:{len(unique_items)}")
 
     analysis = _analyze_for_axis(axis, unique_items, domain)
+    _beat(axis, "analysed")
 
     result = {
         "axis":          axis,
@@ -692,7 +831,7 @@ def generate_master_report(results: list) -> pathlib.Path:
 
     print(f"\n[WEB_INTEL] Master report: {dated_path.relative_to(BASE_DIR)}")
     print(f"[WEB_INTEL] Критични оси:  {critical_axes}")
-    print(f"[WEB_INTEL] Проблеми с actions: {len([p for p in problems_found if p.get('actions')])}/{len(problems_found)}")
+    print(f"[WEB_INTEL] Проблеми С предложени действия: {len([p for p in problems_found if p.get('actions')])}/{len(problems_found)} (повече = по-добре)")
     print(f"[WEB_INTEL] YouTube видеа:  {total_yt}")
     return latest
 
@@ -766,25 +905,57 @@ def run(axes_filter: Optional[list] = None, force: bool = False, resume: bool = 
                 executor.submit(run_axis, axis, AXES[axis], force): axis
                 for axis in to_fetch
             }
-            # Windows has no SIGALRM, so the per-axis ceiling is enforced
-            # here instead of inside run_axis(): future.result(timeout=...)
-            # stops WAITING on a hung axis after AXIS_TIMEOUT_SEC without
-            # blocking on the others, which keep resolving independently.
-            for future, axis in futures.items():
-                try:
-                    result = future.result(timeout=AXIS_TIMEOUT_SEC)
-                    results.append(result)
-                    # Запиши checkpoint след всяка успешна ос
-                    completed_axes.append(axis)
-                    _checkpoint_save(completed_axes, done=False, failed=failed_axes)
-                    print(f"  [CHECKPOINT] {axis} ✓ ({len(completed_axes)}/{len(target_axes)})")
-                except FutureTimeoutError:
-                    print(f"  [TIMEOUT] {axis} exceeded {AXIS_TIMEOUT_SEC}s axis ceiling "
-                          f"— marking failed, cycle continues")
-                    failed_axes.append(axis)
-                    _checkpoint_save(completed_axes, done=False, failed=failed_axes)
-                except Exception as e:
-                    print(f"  [ERROR] {axis}: {e}")
+            # An axis runs FOR AS LONG AS IT KEEPS GETTING SOMEWHERE.
+            #
+            # This used to be `future.result(timeout=AXIS_TIMEOUT_SEC)` per axis, which
+            # asked the wrong question — "has this taken a long time?" instead of "is
+            # this still working?". The two answers only agreed while the RSS roster was
+            # half dead and axes finished fast because they were fetching nothing. With
+            # live feeds, 15 of 25 axes were killed mid-work in one cycle.
+            #
+            # Now the loop polls: an axis is abandoned only after AXIS_STALL_SEC with no
+            # _beat() at all, or on the AXIS_HARD_CAP_SEC backstop. Slow is allowed;
+            # stuck is not. Windows still has no SIGALRM and a Python thread still cannot
+            # be force-killed, so abandonment remains "stop waiting on it", not "stop it".
+            pending = dict(futures)
+            started: dict = {}          # axis -> time of its FIRST beat, not of submission
+            while pending:
+                done, _not_done = wait(list(pending), timeout=5,
+                                       return_when=FIRST_COMPLETED)
+                for future in done:
+                    axis = pending.pop(future)
+                    try:
+                        results.append(future.result())
+                        completed_axes.append(axis)
+                        _checkpoint_save(completed_axes, done=False, failed=failed_axes)
+                        print(f"  [CHECKPOINT] {axis} ✓ "
+                              f"({len(completed_axes)}/{len(target_axes)})")
+                    except Exception as e:
+                        print(f"  [ERROR] {axis}: {e}")
+                        failed_axes.append(axis)
+                        _checkpoint_save(completed_axes, done=False, failed=failed_axes)
+
+                now = time.time()
+                for future, axis in list(pending.items()):
+                    last_ts, stage = _last_beat(axis)
+                    if last_ts is None:
+                        # Submitted but not yet running: with MAX_WORKERS=3 and 25 axes,
+                        # most sit in the queue for minutes. Queue time is not stall time
+                        # — COSMIC_RESOURCES_REVIEW was killed at "not started" for
+                        # waiting its turn. The clock starts at the axis's first beat.
+                        continue
+                    started.setdefault(axis, last_ts)
+                    since = now - last_ts
+                    elapsed = now - started[axis]
+                    if since > AXIS_STALL_SEC:
+                        print(f"  [STALLED] {axis} — no progress for {since:.0f}s "
+                              f"(last stage: {stage}) — marking failed, cycle continues")
+                    elif elapsed > AXIS_HARD_CAP_SEC:
+                        print(f"  [HARD CAP] {axis} — {elapsed:.0f}s total, still "
+                              f"reporting progress at '{stage}' but the backstop fired")
+                    else:
+                        continue
+                    pending.pop(future, None)
                     failed_axes.append(axis)
                     _checkpoint_save(completed_axes, done=False, failed=failed_axes)
         finally:

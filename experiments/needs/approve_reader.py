@@ -45,6 +45,13 @@ DISCOVERED = REPO / "memory" / "discovered_data_sources.json"
 
 # "OK d8df", "ok  d8df", "approve d8df", "OK: d8df" -> the id
 _OK_RE = re.compile(r"^\s*(?:ok|approve|yes|да)\b[:\s]+([0-9a-fA-F]{3,8})\s*$", re.IGNORECASE)
+# "NO d8df", "reject d8df", "не d8df", "откажи d8df" -> the id. Before 13 Aug 2026 the
+# only human verb was OK — a junk proposal could not be dismissed and re-surfaced in
+# every brief forever. A decline is a HUMAN VERDICT on the proposal (recorded in
+# memory/declined_approvals.json + the ledger); it is NOT a blacklist of the provider —
+# nothing was fetched, nothing failed. The candidate is simply no longer offered.
+_NO_RE = re.compile(r"^\s*(?:no|reject|не|откажи)\b[:\s]+([0-9a-fA-F]{3,8})\s*$", re.IGNORECASE)
+DECLINED = REPO / "memory" / "declined_approvals.json"
 
 
 def _load(p, default=None):
@@ -191,6 +198,36 @@ def _discard_candidate(axis, url, why):
         return False
 
 
+def _record_decline(aid: str, spec: dict, chat_id: str):
+    """Persist a human 'NO': the id stops being offered by needs_report. For a
+    promote_source the discovered-store record also gets status='declined' (any
+    non-'active' status stops the candidate items). FAIL-OPEN like everything here."""
+    try:
+        doc = _load(DECLINED, {})
+        doc[aid] = {"ts": _now(), "type": spec.get("type"), "axis": spec.get("axis"),
+                    "label": spec.get("label") or spec.get("need", "")[:60],
+                    "declined_by": str(chat_id)}
+        DECLINED.parent.mkdir(parents=True, exist_ok=True)
+        DECLINED.write_text(json.dumps(doc, ensure_ascii=False, indent=2), encoding="utf-8")
+    except Exception:
+        pass
+    if spec.get("type") == "promote_source":
+        try:
+            doc = _load(DISCOVERED, {})
+            hit = False
+            for s in ((doc.get(spec["axis"]) or {}).get("sources") or []):
+                if s.get("url") == spec.get("url"):
+                    s["status"] = "declined"
+                    s["declined_why"] = "declined by human via Telegram (NO <id>)"
+                    s["declined_at"] = _now()
+                    hit = True
+            if hit:
+                DISCOVERED.write_text(json.dumps(doc, ensure_ascii=False, indent=2),
+                                      encoding="utf-8")
+        except Exception:
+            pass
+
+
 EXTRAORDINARY = REPO / "memory" / "extraordinary_request.json"
 CYCLE_PROPOSALS = REPO / "memory" / "pulse_cycle_requests.json"
 
@@ -316,6 +353,23 @@ def run():
         text = (msg.get("text") or "").strip()
         if chat != chat_id:
             continue  # LOCKED: only the owner can approve
+        m_no = _NO_RE.match(text)
+        if m_no:
+            aid = m_no.group(1).lower()
+            pend = _load(PENDING, {}).get("approvals", {})
+            spec = pend.get(aid)
+            if not spec:
+                _reply(token, chat_id, f"❓ unknown id '{aid}' — nothing to decline.")
+                _ledger({"event": "unknown_id", "id": aid, "by": chat})
+                continue
+            _record_decline(aid, spec, chat)
+            _ledger({"event": "decline", "id": aid, "type": spec.get("type"),
+                     "axis": spec.get("axis"), "by": chat, "ok": True})
+            _reply(token, chat_id,
+                   f"🚫 declined '{spec.get('label') or aid}' — it will not be offered again. "
+                   f"(The provider is NOT blacklisted; nothing was fetched.)")
+            applied += 1
+            continue
         m = _OK_RE.match(text)
         if not m:
             continue
