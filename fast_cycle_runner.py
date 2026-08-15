@@ -739,6 +739,21 @@ def _witness_or_refuse(step: str) -> bool:
     (github_publish) и СЕБЕ СИ (self_modifier, execute_patches), не тръгват без
     свидетел. Всичко останало — сетива, оценяване, дедукция, отчет — върви.
     Границата пак е на ДЕЙСТВИЕТО, не на мисълта (закон, т.4)."""
+    # ВТОРИЯТ СВИДЕТЕЛ Е ЧОВЕКЪТ (консенсус с Kimi, стъпка 4, 15 авг 2026):
+    # „Приложи същата логика като при MeTTa: отказ на външен свидетел = freeze на
+    # необратимите, не спиране на цикъла." Мъртъв канал значи, че снощната ЗАБРАНА
+    # може да не е стигнала дотук — значи не се действа необратимо. Празен inbox
+    # (200 OK) НЕ е отказ, и ненастроен канал НЕ е отказ.
+    _why_human = ""
+    try:
+        from experiments.needs.approve_reader import channel_alive
+        _ok_human, _why_human = channel_alive()
+        if not _ok_human:
+            print(f"[FAST_CYCLE] {step} -> ОТКАЗАНА: човешкият канал е мъртъв "
+                  f"({_why_human}). Снощната забрана може да не е стигнала дотук.")
+            return False
+    except Exception:
+        pass
     try:
         from core.metta_check import witness_present
         if witness_present():
@@ -942,10 +957,6 @@ def main():
     except Exception as e:
         print(f"[FAST_CYCLE] telegram approvals -> FAILED: {type(e).__name__}: {e}")
 
-    # ── Проверка за patches + initiatives ──
-    beat("notify_patches_and_initiatives", "0.15")
-    _notify_patches_and_initiatives()
-
     # ── МОЗЪКЪТ ОТВАРЯ ЦИКЪЛА (закон, т.3 — Емил, 15 авг 2026) ──────────────
     # Системата пита СЕБЕ СИ какво иска от този цикъл: фокус, подозрение към самата
     # себе си, и тест за успех, който сама си задава. Планът се пише в
@@ -962,6 +973,15 @@ def main():
             print("[FAST_CYCLE] brain plan -> brain silent (cycle runs unplanned)")
     except Exception as e:
         print(f"[FAST_CYCLE] brain plan -> FAILED: {type(e).__name__}: {e}")
+
+    # ── Известията — СЛЕД плана (консенсус с Kimi, стъпка 5, 15 авг 2026).
+    # Стояха преди плана. Kimi: „Стъпка 5 трябва да е СЛЕД плана — иначе планът
+    # ражда нужди, които излизат едва утре; човекът отговаря на вчерашни въпроси,
+    # докато днешните не са стигнали до него."
+    # Тоест забавката не беше една нощ, а две: нужда, родена от днешния план,
+    # изчакваше следващото известяване, преди изобщо да бъде показана.
+    beat("notify_patches_and_initiatives", "0.25")
+    _notify_patches_and_initiatives()
 
     # ── 0.5. Dependency check ──
     beat("dependency_check", "0.5")

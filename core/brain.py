@@ -304,10 +304,19 @@ def think(role: str, question: str, evidence: str = "", schema: dict | None = No
 def _state_for_briefing() -> str:
     """Каквото системата знае за себе си в момента — суровo, без мое резюме."""
     bits = []
+    # 15 авг 2026, стъпка 4. Kimi защити преместването на плана след одобренията с
+    # довода „human_approvals преди плана е КОНСТРЕЙНТ, не опция". Проверих дали
+    # това е вярно в кода, вместо да го приема: НЕ беше. Планът четеше
+    # pending_approvals.json (какво ЧАКА решение), но не и approvals_ledger.jsonl
+    # (какво човекът е РЕШИЛ). Тоест новият ред беше наполовина козметичен — думата
+    # на човека стигаше до системата, но не и до плана. Същото за тялото: четеше се
+    # хомеостазата, но не и адаптивните директиви, които body_scan току-що е издал.
     for rel, cap in (("memory/deductions_latest.json", 1800),
                      ("memory/homeostasis_latest.json", 600),
+                     ("memory/adaptive_directives.json", 400),
                      ("memory/goal_score_history.json", 700),
                      ("memory/diagnosis_latest.json", 700),
+                     ("memory/approvals_ledger.jsonl", 700),
                      ("memory/pending_approvals.json", 500)):
         try:
             bits.append(f"--- {rel} ---\n" +

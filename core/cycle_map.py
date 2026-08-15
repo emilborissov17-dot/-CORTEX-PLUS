@@ -46,11 +46,12 @@ STEPS = [
      ["memory/active_canon_frame.txt"], True),
     ("telegram_approvals", "0.1", "Прилага човешките отговори OK/NO преди плана.",
      ["memory/approvals_ledger.jsonl", "memory/telegram_offset.json"], False),
-    ("notify_patches_and_initiatives", "0.15", "Известява какво чака одобрение.",
-     ["memory/pending_approvals.json"], False),
     ("brain_briefing", "0.2", "Мозъкът пише плана на деня — вече знаейки тялото и "
      "човешката дума: фокус, подозрение, свой тест за успех.",
      ["memory/brain_cycle_plan.json"], True),
+    ("notify_patches_and_initiatives", "0.25", "Известява какво чака одобрение — СЛЕД "
+     "плана, за да излязат и нуждите, които самият план е родил.",
+     ["memory/pending_approvals.json"], False),
     ("dependency_check", "0.5", "Има ли с какво да работи. Единствената стъпка, която спира цикъла.",
      [], True),
     ("needs_reanalysis_scan", "0.7", "Кои оси са маркирани за преразглеждане.",

@@ -47,6 +47,58 @@ OUT = BASE / "memory" / "reconsider_latest.json"
 NIGHT = BASE / "memory" / "night_events.jsonl"
 
 MAX_RETURNS_PER_CYCLE = 1        # твърдият лимит, поискан от Kimi
+HISTORY = BASE / "memory" / "reconsider_history.jsonl"
+EMPTY_STREAK_LIMIT = 3           # три празни връщания подред -> правото спи
+
+
+def _fingerprint() -> dict:
+    """Отпечатък на изводите ПРЕДИ и СЛЕД връщането.
+
+    Kimi, 15 авг: „най-коварната злоупотреба не е инфинитна петля, а САМОЦЕНЗУРА
+    под прикритие на прецизност — системата открива 'критична несигурност' точно
+    преди необратима стъпка, за да избегне отчетност... ако научи, че връщането =
+    защита от експозиция, ще го синхронизира с неудобните стъпки."
+
+    Затова връщането се МЕРИ, не се приема на доверие: ако след него нито един
+    извод не се е променил, то е ПРАЗНО. Три празни подред и правото на връщане
+    заспива за следващия цикъл. Мисълта остава свободна; забавянето без резултат
+    губи правото си. Точно както автономията се печели срещу измерена точност."""
+    fp = {}
+    try:
+        d = json.loads((BASE / "memory" / "deductions_latest.json").read_text(encoding="utf-8"))
+        items = d.get("conclusions", d) if isinstance(d, dict) else d
+        fp["deductions"] = len(items) if hasattr(items, "__len__") else 0
+    except Exception:
+        fp["deductions"] = None
+    try:
+        h = json.loads((BASE / "memory" / "goal_score_history.json").read_text(encoding="utf-8"))
+        last = h[-1] if isinstance(h, list) and h else h
+        fp["composite"] = round(float((last or {}).get("composite", 0)), 6)
+    except Exception:
+        fp["composite"] = None
+    try:
+        c = json.loads((BASE / "memory" / "constancy_latest.json").read_text(encoding="utf-8"))
+        fp["alarms"] = (c.get("counts") or {}).get("alarm")
+    except Exception:
+        fp["alarms"] = None
+    return fp
+
+
+def _empty_streak() -> int:
+    """Колко празни връщания подред — прочетено от собствената история."""
+    n = 0
+    try:
+        for line in reversed(HISTORY.read_text(encoding="utf-8").splitlines()):
+            d = json.loads(line)
+            if d.get("action") != "връщане":
+                continue
+            if d.get("changed_anything") is False:
+                n += 1
+            else:
+                break
+    except Exception:
+        pass
+    return n
 
 
 # Какво може да бъде преизчислено на място: само работа върху ВЕЧЕ събрани данни.
@@ -162,6 +214,15 @@ def run() -> dict:
 
     want_back = str(d.get("action", "")).strip().lower().startswith("връщ")
     step = str(d.get("step", "")).strip()
+
+    # правото спи, ако последните три връщания не са променили нищо
+    streak = _empty_streak()
+    if want_back and streak >= EMPTY_STREAK_LIMIT:
+        rep["action"] = "напред"
+        rep["suspended"] = (f"{streak} празни връщания подред — правото на връщане "
+                            f"спи този цикъл; върни се пак, когато връщане промени извод")
+        _note("RECONSIDER: правото спи", rep["suspended"])
+        return rep
     if not want_back:
         rep["action"] = "напред"
         _note("RECONSIDER: напред", str(d.get("why", ""))[:300])
@@ -176,17 +237,28 @@ def run() -> dict:
         return rep
 
     label, fn, mins = plays[step]
+    before = _fingerprint()
     t0 = time.time()
     try:
         fn()
         ok, err = True, None
     except Exception as e:
         ok, err = False, f"{type(e).__name__}: {e}"
+    after = _fingerprint()
+    changed = any(before.get(k) != after.get(k) for k in before)
     rep.update({"action": "връщане", "replayed": step, "ok": ok, "error": err,
-                "seconds": round(time.time() - t0, 1)})
-    _note("RECONSIDER: върна се",
+                "seconds": round(time.time() - t0, 1),
+                "before": before, "after": after, "changed_anything": changed})
+    try:
+        HISTORY.parent.mkdir(parents=True, exist_ok=True)
+        with open(HISTORY, "a", encoding="utf-8") as fh:
+            fh.write(json.dumps(rep, ensure_ascii=False) + "\n")
+    except Exception:
+        pass
+    _note("RECONSIDER: върна се" + ("" if changed else " — ПРАЗНО (нищо не се промени)"),
           f"{step} ({label}) | защо: {str(d.get('why',''))[:200]} | "
-          f"очаква: {str(d.get('expect',''))[:150]} | успех={ok} {err or ''}")
+          f"очаква: {str(d.get('expect',''))[:150]} | успех={ok} {err or ''} | "
+          f"промени: {before} -> {after}")
 
     try:
         brain.remember("reconsider",
