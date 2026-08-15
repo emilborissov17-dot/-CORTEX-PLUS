@@ -1295,6 +1295,30 @@ def main():
     except Exception as e:
         print(f"[FAST_CYCLE] brain review -> FAILED: {type(e).__name__}: {e}")
 
+    # ── ОТЧЕТЪТ ПРЕД ЧОВЕКА, НАПИСАН ОТ САМАТА СИСТЕМА (Емил, 15 авг 2026) ──
+    # Стъпка по стъпка: за какво служи, какво каза самата тя, удържа ли обещания
+    # си файл (механична проверка по core/cycle_map.py) и какво е видял мозъкът.
+    # Уводът и заключението са негови думи, не мои. FAIL-OPEN.
+    beat("cycle_report", "25.6")
+    try:
+        from core.cycle_report import build as _rep_build, to_markdown as _rep_md, \
+            telegram_text as _rep_tg
+        from pathlib import Path as _P
+        _rep = _rep_build()
+        _dir = BASE / "output" / "reports"
+        _dir.mkdir(parents=True, exist_ok=True)
+        _day = str(_rep.get("ts", ""))[:10]
+        (_dir / f"CYCLE_REPORT_{_day}.md").write_text(_rep_md(_rep), encoding="utf-8")
+        print(f"[FAST_CYCLE] cycle_report -> output/reports/CYCLE_REPORT_{_day}.md "
+              f"(кухи: {len(_rep.get('broken', []))}, паднали: {len(_rep.get('failed', []))})")
+        try:                    # кратката версия отива на телефона
+            from experiments.needs.needs_report import _notify as _tg_notify
+            _tg_notify(_rep_tg(_rep))
+        except Exception:
+            pass
+    except Exception as e:
+        print(f"[FAST_CYCLE] cycle_report -> FAILED: {type(e).__name__}: {e}")
+
     # Cycle finished cleanly → seal the record, release the lock, drop the
     # heartbeat. Order matters: _seal_cycle_record() reads the heartbeat for the
     # cycle_id, so it must run BEFORE the heartbeat is cleared.
