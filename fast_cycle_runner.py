@@ -6,7 +6,7 @@ fast_cycle_runner.py
 """
 from __future__ import annotations
 import subprocess, sys, pathlib, json, time, gc
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
@@ -99,6 +99,15 @@ def _classify_cycle_id(env_id):
                   f"това е системен отказ, не ръчно пускане (случай C).")
             _note_boot_abort(f"нечетим cycle_id: {env_id!r}")
             raise SystemExit(2)
+        # Kimi (стъпка 1, 3-ти рунд): „clock skew — бъдещ env_id не се отхвърля".
+        # Часовник, избързал напред (NTP скок), ще произведе cycle_id от бъдещето,
+        # който после трови всяко сравнение по време. 5 минути толеранс за
+        # нормално разминаване между супервайзор и цикъл.
+        if parsed > now + timedelta(minutes=5):
+            print(f"[FAST_CYCLE] BOOT ABORT: CORTEX_CYCLE_ID={env_id} е в БЪДЕЩЕТО "
+                  f"спрямо {now.isoformat()} — часовникът лъже (случай C).")
+            _note_boot_abort(f"бъдещ cycle_id {env_id} > now+5min")
+            raise SystemExit(2)
         if last is not None and parsed <= last:
             print(f"[FAST_CYCLE] BOOT ABORT: stale CORTEX_CYCLE_ID={env_id} "
                   f"<= последния запечатан {last.isoformat()} (случай C). "
@@ -124,7 +133,13 @@ def _classify_cycle_id(env_id):
         if LOCK_PATH.exists():
             lk = json.loads(LOCK_PATH.read_text(encoding="utf-8"))
             other_pid, other_id = lk.get("pid"), lk.get("cycle_id")
-            if other_id and str(other_id) != str(cid) and _pid_alive(other_pid):
+            # Kimi: „other_id == cid не влиза в exit 3 — два живи процеса с еднакъв
+            # ID могат да текат паралелно". Вярно беше. Сега блокира и това, но
+            # ИЗКЛЮЧВА собствения си pid: супервайзорът пише ключалката с pid-а на
+            # процеса, който току-що е родил — тоест нашия. Без това изключение
+            # цикълът щеше да се самоубива при всяко нормално пускане.
+            _mine = other_pid is not None and int(other_pid or -1) == os.getpid()
+            if other_id and not _mine and _pid_alive(other_pid):
                 print(f"[FAST_CYCLE] BOOT ABORT: вече тече цикъл {other_id} "
                       f"(pid {other_pid}, жив) — случай D. Два цикъла върху едни и "
                       f"същи файлове е по-лошо от нито един.")
@@ -138,8 +153,13 @@ def _classify_cycle_id(env_id):
     except Exception:
         pass
 
+    # Kimi: „пиши LAST_ATTEMPT атомарно (tmp+rename), за да не остане половинчат
+    # при срив" — половин timestamp е по-лош от липсващ: не се парсва, значи
+    # утрешната проверка мълчаливо губи ориентира си.
     try:                      # ОПИТЪТ се записва СЕГА, не в края
-        LAST_ATTEMPT.write_text(cid, encoding="utf-8")
+        _tmp = LAST_ATTEMPT.with_suffix(".tmp")
+        _tmp.write_text(cid, encoding="utf-8")
+        os.replace(_tmp, LAST_ATTEMPT)
     except Exception:
         pass
     print(f"[FAST_CYCLE] boot -> cycle_id={cid} origin={origin} ({why})")
