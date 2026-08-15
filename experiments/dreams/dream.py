@@ -201,20 +201,34 @@ def read_pulse_summary(src: Sources, day: str) -> Optional[dict]:
         return None
 
 
-def read_goal_score(src: Sources) -> Optional[float]:
+def read_goal_score(src: Sources) -> dict:
+    """Композитът + отпечатъкът и покритието, без които не значи нищо.
+
+    Kimi, 15 август 2026: „Число без семантика е театър (или «тъмна цифра» — едно
+    и също)." А тук числото не просто се показва — то се ВАДИ от вчерашното, за да
+    се получи goal_delta. Ако междувременно се е сменило КАКВО мерим, разликата не
+    е разлика в света: „Delta при различни знаменатели е безсмислица."
+    Затова връщаме пакет, не скалар."""
     try:
         d = json.loads(src.goal_score_file.read_text(encoding="utf-8"))
-        v = d.get("composite_score")
-        return float(v) if v is not None else None
     except Exception:
-        return None
+        return {"score": None}
+    v = d.get("composite_score")
+    return {
+        "score": float(v) if v is not None else None,
+        "config_fingerprint": d.get("config_fingerprint"),
+        "coverage_of_goal": d.get("coverage_of_goal", d.get("coverage")),
+        "coverage_of_measurable": d.get("coverage_of_measurable"),
+        "ts": d.get("timestamp"),
+    }
 
 
-def previous_goal_score(src: Sources, day: str) -> Optional[float]:
-    """The composite score the most recent EARLIER dream saw. See GOAL_SEEN_FILE."""
+def previous_goal_score(src: Sources, day: str) -> dict:
+    """Целият предишен запис, не само числото — за да може да се провери дали
+    двата дни изобщо са сравними. See GOAL_SEEN_FILE."""
     if not src.goal_seen_file.exists():
-        return None
-    best: Optional[tuple[str, float]] = None
+        return {}
+    best = None
     for line in src.goal_seen_file.read_text(encoding="utf-8").splitlines():
         line = line.strip()
         if not line:
@@ -223,13 +237,23 @@ def previous_goal_score(src: Sources, day: str) -> Optional[float]:
             rec = json.loads(line)
         except json.JSONDecodeError:
             continue
-        d, s = rec.get("date"), rec.get("composite_score")
-        if d and s is not None and d < day and (best is None or d > best[0]):
-            best = (d, float(s))
-    return best[1] if best else None
+        d = rec.get("date")
+        v = rec.get("composite_score")
+        if not d or v is None or d >= day:
+            continue
+        if best is None or d > best.get("date", ""):
+            # нормализиран пакет, не суровият ред: същите ключове, каквито
+            # днешният запис носи, за да може сравнението да е по едно и също
+            best = {"date": d,
+                    "composite_score": float(v),
+                    "config_fingerprint": rec.get("config_fingerprint"),
+                    "coverage_of_goal": rec.get("coverage_of_goal"),
+                    "coverage_of_measurable": rec.get("coverage_of_measurable")}
+    return best or {}
 
 
-def record_goal_score(src: Sources, day: str, score: Optional[float]) -> None:
+def record_goal_score(src: Sources, day: str, score: Optional[float],
+                      pkg: Optional[dict] = None) -> None:
     """Append today's composite to the sidecar, so tomorrow's delta is checkable.
 
     Idempotent on `day`: if this date is already recorded (a re-run), do not
@@ -248,7 +272,12 @@ def record_goal_score(src: Sources, day: str, score: Optional[float]) -> None:
         return
     src.goal_seen_file.parent.mkdir(parents=True, exist_ok=True)
     with src.goal_seen_file.open("a", encoding="utf-8") as fh:
-        fh.write(json.dumps({"date": day, "composite_score": round(score, 4)}) + "\n")
+        fh.write(json.dumps({"date": day, "composite_score": round(score, 4),
+                             # СРЕЩУ КОЙ СВЯТ е било това число
+                             "config_fingerprint": (pkg or {}).get("config_fingerprint"),
+                             "coverage_of_goal": (pkg or {}).get("coverage_of_goal"),
+                             "coverage_of_measurable": (pkg or {}).get("coverage_of_measurable")},
+                            ensure_ascii=False) + "\n")
         fh.flush()
         os.fsync(fh.fileno())
 
@@ -256,17 +285,42 @@ def record_goal_score(src: Sources, day: str, score: Optional[float]) -> None:
 def gather_facts(src: Sources, day: str) -> dict:
     """The whole day, as plain facts. This is the answer key the note is scored on."""
     events = read_ledger_events(src, day)
-    score = read_goal_score(src)
-    prev = previous_goal_score(src, day)
+    pkg = read_goal_score(src)
+    score = pkg.get("score")
+    prev_rec = previous_goal_score(src, day)
+    prev = prev_rec.get("composite_score")
+
+    # ── РАЗЛИКА МЕЖДУ ДВА СВЯТА НЕ Е РАЗЛИКА (Kimi, 15 август 2026) ──────────
+    # Изваждането има смисъл само ако двата композита са средни от ЕДНО И СЪЩО
+    # множество оси. Смени ли се отпечатъкът, разликата е частично артефакт от
+    # ремонта, а не новина за света. Тогава тя е None с НАЗОВАНА причина, не
+    # число с етикет: „числото с етикет винаги се чете като число."
+    delta, delta_blocked = None, None
+    if score is None or prev is None:
+        delta_blocked = "няма две числа за изваждане"
+    else:
+        fp_now, fp_then = pkg.get("config_fingerprint"), prev_rec.get("config_fingerprint")
+        if fp_then is None:
+            delta_blocked = ("предишният ден е записан преди композитът да носи "
+                             "отпечатък — не се знае срещу какъв свят е бил")
+        elif fp_now and fp_now != fp_then:
+            delta_blocked = (f"смени се КАКВО мерим ({fp_then} -> {fp_now}); "
+                             f"разликата щеше да е ремонт, представен за новина")
+        else:
+            delta = round(score - prev, 4)
+
     return {
         "date": day,
         "ledger_events": events,
         "pulse": read_pulse_summary(src, day),
         "cycle_log_tail": read_cycle_log_tail(src, day),
         "goal_score": score,
+        "goal_coverage_of_goal": pkg.get("coverage_of_goal"),
+        "goal_coverage_of_measurable": pkg.get("coverage_of_measurable"),
+        "goal_config_fingerprint": pkg.get("config_fingerprint"),
         "goal_score_prev": prev,
-        "goal_delta": (round(score - prev, 4) if score is not None and prev is not None
-                       else None),
+        "goal_delta": delta,
+        "goal_delta_blocked": delta_blocked,
     }
 
 
@@ -315,13 +369,25 @@ def render_prompt(facts: dict) -> str:
         "  (cycle log empty or absent for this day)"
 
     score, prev, delta = facts["goal_score"], facts["goal_score_prev"], facts["goal_delta"]
+    blocked = facts.get("goal_delta_blocked")
+    cov_g = facts.get("goal_coverage_of_goal")
+    cov_m = facts.get("goal_coverage_of_measurable")
+    # Числото никога не влиза в промпта голо: моделът, който сънува деня, трябва да
+    # вижда и КОЛКО от целта изобщо е било измерено, иначе ще разказва за движение,
+    # което е било слепота.
+    cov_txt = ""
+    if isinstance(cov_g, (int, float)) and isinstance(cov_m, (int, float)):
+        cov_txt = f"  ({cov_m:.0%} of the measurable, {cov_g:.0%} of the goal)"
     if score is None:
         goal_txt = "  (goal score unavailable)"
     elif delta is None:
-        goal_txt = f"  composite_score={score}  (no prior note on record — no delta yet)"
+        goal_txt = (f"  composite_score={score}{cov_txt}\n"
+                    f"  no delta: {blocked or 'no prior note on record'}")
     else:
         arrow = "up" if delta > 0 else ("down" if delta < 0 else "flat")
-        goal_txt = f"  composite_score={score}  (was {prev}, {arrow} {abs(delta)} since last note)"
+        goal_txt = (f"  composite_score={score}{cov_txt}  "
+                    f"(was {prev}, {arrow} {abs(delta)} since last note — "
+                    f"same measurement definition, so the difference is real)")
 
     return PROMPT.format(
         date=facts["date"],
@@ -562,7 +628,11 @@ def run(day: str, model_want: str, dry_run: bool, src: Optional[Sources] = None)
     out_path = src.out_dir / f"{day}.md"
     src.out_dir.mkdir(parents=True, exist_ok=True)
     out_path.write_text(result["note"], encoding="utf-8")
-    record_goal_score(src, day, result["facts"]["goal_score"])
+    _f = result["facts"]
+    record_goal_score(src, day, _f["goal_score"],
+                      {"config_fingerprint": _f.get("goal_config_fingerprint"),
+                       "coverage_of_goal": _f.get("goal_coverage_of_goal"),
+                       "coverage_of_measurable": _f.get("goal_coverage_of_measurable")})
     print(f"\n[DREAM] wrote {out_path}")
     return 0
 
