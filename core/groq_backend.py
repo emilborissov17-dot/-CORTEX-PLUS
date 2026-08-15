@@ -106,7 +106,29 @@ _cd_lock = threading.Lock()
 # жива-но-деградирала оса > мъртва оса. Отговорът се маркира degraded=True/backend=
 # "local:<model>", за да е видно в самомодела, че е локален, не облачен.
 _OLLAMA_URL  = os.environ.get("CORTEX_OLLAMA_URL", "http://localhost:11434")
-_LOCAL_MODEL = os.environ.get("CORTEX_LOCAL_MODEL", "qwen2.5:3b")
+
+def _pick_local_model() -> str:
+    """14 Aug 2026: body_scan now reports the REAL installed Ollama models.
+    Prefer the strongest qwen3 the machine holds; env override wins; fall back
+    to the old default. Read at import so one call per process, fail-open."""
+    env = os.environ.get("CORTEX_LOCAL_MODEL")
+    if env:
+        return env
+    try:
+        import json as _j
+        _bs = _j.loads((Path(__file__).resolve().parents[1] / "memory" /
+                        "body_scan_latest.json").read_text(encoding="utf-8"))
+        models = _bs.get("software", {}).get("ollama_models", []) or []
+        for m in models:
+            if "qwen3" in str(m):
+                return str(m)
+        if models:
+            return str(models[0])
+    except Exception:
+        pass
+    return "qwen2.5:3b"
+
+_LOCAL_MODEL = _pick_local_model()
 
 # Adaptive sleep — overridden by body_scanner directives at cycle start
 _SLEEP_SECS: float = 10.0
@@ -336,15 +358,21 @@ def _call_local(prompt: str, max_tokens: int):
     """Last-resort sovereign brain over Ollama HTTP (:11434). Called ONLY when all
     four cloud backends are cooling. Returns (content, meta) or raises. No external
     API — this is the local model, deliberately, so a full-blackout cycle stays alive."""
+    # 15 Aug 2026 — измерено на машината (scripts/test_local_brain.py): СТУДЕНО
+    # първо повикване на qwen3:8b върху 4GB VRAM не се вмества в 60-90s, а топлите
+    # минават за ~48s. С 60s таймаут последната инстанция мълчеше точно когато е
+    # най-нужна — при пълно затъмнение на облака. keep_alive държи модела зареден
+    # между стъпките, а таймаутът е за студен старт.
     num_predict = max(64, min(int(max_tokens), 1024))
-    r = requests.post(
-        f"{_OLLAMA_URL}/api/chat",
-        json={"model": _LOCAL_MODEL, "stream": False,
-              "messages": [{"role": "system", "content": _system_msg()},
-                           {"role": "user", "content": prompt}],
-              "options": {"temperature": 0.4, "num_predict": num_predict}},
-        timeout=60,
-    )
+    body = {"model": _LOCAL_MODEL, "stream": False,
+            "messages": [{"role": "system", "content": _system_msg()},
+                         {"role": "user", "content": prompt}],
+            "keep_alive": "30m",
+            "options": {"temperature": 0.4, "num_predict": num_predict}}
+    try:
+        r = requests.post(f"{_OLLAMA_URL}/api/chat", json=body, timeout=300)
+    except requests.exceptions.Timeout:
+        raise RuntimeError(f"local model {_LOCAL_MODEL} cold-start >300s")
     if r.status_code != 200:
         raise RuntimeError(f"local model HTTP {r.status_code}")
     content = ((r.json().get("message") or {}).get("content") or "").strip()

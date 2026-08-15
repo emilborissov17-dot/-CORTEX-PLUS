@@ -315,6 +315,109 @@ def missing_fields(entry: dict) -> list:
     return out
 
 
+# ── the DISCOVERY BRAIN (14 Aug 2026, Emil's decision overriding the old doctrine) ──
+# The old rule "derivation must be deterministic" was RIGHT for daily WATCHING and
+# WRONG for one-time DISCOVERY: token-matching has no idea what a number MEANS, which
+# is how a Nobel-prize count became a governance proxy. New split: the LOCAL brain
+# (Ollama qwen3) reads the payload ONCE and says which field means what and why, with
+# a quote; every suggestion is then verified MECHANICALLY (path must exist, be numeric,
+# not error-ish) and the human still approves. Fail-open: no Ollama -> old token path.
+
+def _semantic_rule(payload, metric: str, axis: str) -> tuple:
+    """Ask the local model what the payload MEANS for this axis.
+    Returns (kind, rule, reason) or (None, None, why_not)."""
+    try:
+        import requests as _rq
+        try:
+            from core.groq_backend import _pick_local_model, _OLLAMA_URL
+            model, base = _pick_local_model(), _OLLAMA_URL
+        except Exception:
+            model, base = "qwen3", "http://localhost:11434"
+        acc = _scan(payload) if isinstance(payload, (dict, list)) else None
+        if not acc or not (acc["scalars"] or acc["num_lists"]):
+            return None, None, "semantic: nothing numeric to reason about"
+        paths = [p for p, _ in acc["scalars"]][:30] + [p for p, _ in acc["num_lists"]][:10]
+        # The brain sees the ACTUAL data (excerpt), not a bare menu of names — and it
+        # may refuse the whole file and say what WOULD measure this axis instead
+        # ("seek"), which becomes a lead for the next hunt. (Emil, 14 Aug: a brain
+        # limited to multiple-choice is not thinking. Pointing stays verifiable;
+        # thinking is free.)
+        excerpt = json.dumps(payload, ensure_ascii=False)[:1500]
+        prompt = (
+            "You are a data-discovery analyst. A monitoring axis needs a MEANINGFUL measurement.\n"
+            f"AXIS: {axis}\nMETRIC WANTED (free text): {metric}\n"
+            f"PAYLOAD EXCERPT (real data): {excerpt}\n"
+            f"NUMERIC PATHS THAT EXIST IN IT: {paths}\n"
+            "Think about what these numbers MEAN in context. Then reply ONLY JSON:\n"
+            '{"path": "<the one existing path that truly measures this, or NONE>",\n'
+            ' "unit": "<unit guess>", "why": "<one sentence>",\n'
+            ' "seek": "<if NONE: what indicator/source WOULD genuinely measure this axis, '
+            'so the scout can hunt it — else empty>"}'
+        )
+        # A wrong claim is not the end — it is FEEDBACK. The brain gets its own
+        # error back once and may correct itself; only a second failure falls
+        # through to the token method. (Emil, 14 Aug: refusal must teach, not kill.)
+        messages = [{"role": "user", "content": prompt}]
+        last_refusal = "semantic: no usable answer"
+        for attempt in (1, 2):
+            # 15 Aug: 60s стигат за топъл модел (измерено 49s), но не и за студен —
+            # 300s + keep_alive, за да не отпада откриването само защото мозъкът спи.
+            r = _rq.post(f"{base}/api/chat", timeout=300, json={
+                "model": model, "stream": False, "messages": messages,
+                "keep_alive": "30m",
+                "options": {"temperature": 0}})
+            r.raise_for_status()
+            txt = (r.json().get("message") or {}).get("content", "")
+            txt = txt.split("```")[1].strip() if "```" in txt else txt
+            if txt.startswith("json"):
+                txt = txt[4:].strip()
+            try:
+                ans = json.loads(txt[txt.index("{"):txt.rindex("}") + 1])
+            except Exception:
+                last_refusal = "semantic: reply was not JSON"
+                messages += [{"role": "assistant", "content": txt[:400]},
+                             {"role": "user", "content": "Your reply was not valid JSON. "
+                              "Reply ONLY the JSON object, nothing else."}]
+                continue
+            path = str(ans.get("path", "NONE"))
+            # MECHANICAL verification of the brain's claim — the wall does not trust it:
+            if path == "NONE":
+                seek = str(ans.get("seek", "")).strip()[:200]
+                if seek:  # the brain's counter-proposal is a LEAD, not a dead end —
+                    try:  # logged where cortex_query and data_scout can pick it up
+                        with open(DISCARDED.parent / "discovery_leads.jsonl", "a",
+                                  encoding="utf-8") as _fh:
+                            _fh.write(json.dumps({"ts": _now(), "axis": axis,
+                                                  "wanted": metric, "lead": seek,
+                                                  "by": f"local:{model}"},
+                                                 ensure_ascii=False) + "\n")
+                    except Exception:
+                        pass
+                    return None, None, f"semantic: file has no such meaning; LEAD logged: {seek[:80]}"
+                return None, None, "semantic: model says no field means this metric"
+            if path.rsplit(".", 1)[-1].lower() in _ERRORISH_KEYS:
+                last_refusal = f"semantic suggestion refused twice: error-ish field ({path})"
+                fb = (f"'{path}' is an error/message field, not a measurement. "
+                      f"Choose STRICTLY from this list or say NONE: {paths}")
+            elif any(p == path for p, _ in acc["scalars"]):
+                why = str(ans.get("why", ""))[:160]
+                return "http_json_path", {"extract": path, "unit": str(ans.get("unit", ""))[:40]}, \
+                    f"semantic(local:{model}): {why}"
+            elif any(p == path for p, _ in acc["num_lists"]):
+                why = str(ans.get("why", ""))[:160]
+                return "http_json_series", {"extract": path, "unit": str(ans.get("unit", ""))[:40]}, \
+                    f"semantic(local:{model}): {why}"
+            else:
+                last_refusal = f"semantic suggestion refused twice: path not in payload ({path})"
+                fb = (f"The path '{path}' DOES NOT EXIST in the payload — you invented it. "
+                      f"Choose STRICTLY from this list or say NONE: {paths}")
+            messages += [{"role": "assistant", "content": txt[:400]},
+                         {"role": "user", "content": fb}]
+        return None, None, last_refusal
+    except Exception as e:
+        return None, None, f"semantic unavailable ({type(e).__name__})"
+
+
 # ── the wall ─────────────────────────────────────────────────────────────────
 
 def build_candidate(url: str, fmt: str, payload, metric: str = "", org: str = "",
@@ -322,8 +425,12 @@ def build_candidate(url: str, fmt: str, payload, metric: str = "", org: str = ""
     """(record, reason). record is None when the candidate may NOT be registered.
 
     This is the wall. Everything past it is fetchable by construction.
+    Since 14 Aug 2026 the DISCOVERY BRAIN gets first word on MEANING; its suggestion
+    is mechanically verified above, and the deterministic token path is the fallback.
     """
-    kind, rule, reason = derive_rule(fmt, payload, metric)
+    kind, rule, reason = _semantic_rule(payload, metric, axis)
+    if not kind:
+        kind, rule, reason = derive_rule(fmt, payload, metric)
     if not kind:
         return None, reason
     rec = {
