@@ -775,6 +775,77 @@ def spawn_cycle(cycle_id: str) -> Optional[int]:
     return proc.pid
 
 
+# ── ИЗХОДЯЩАТА КУТИЯ (Емил, 15 авг 2026) ───────────────────────────────────────
+# „НАЙ-ДОБРЕ 2 ДОКЛАДА В ТЕЛЕГРАМ ..... ЕДИН ОТ САМАТА СИСТЕМА И ЕДИН ОТ ТЕБ."
+#
+# Системният доклад вече излиза сам (стъпка 25.6, cycle_report -> telegram_text).
+# Вторият е моят — а аз работя в облак, който НЕ ДОСТИГА api.telegram.org (проверих:
+# връзката пада). Затова не се преструвам, че мога да пратя: пускам файла в
+# memory/outbox/ на тази машина, а супервайзорът — който вече има токена и вече бие
+# на всеки 5 минути — го изпраща и го премества в sent/.
+#
+# Следствия, които приемам съзнателно:
+#   • закъснение до 5 минути. За сутрешен доклад това е нищо.
+#   • ако супервайзорът е мъртъв, докладът чака в кутията вместо да се загуби —
+#     и това е по-доброто от двете, защото файлът остава видим.
+#   • изпратеното НЕ се трие: остава в sent/ като запис какво е било казано.
+OUTBOX = BASE / "memory" / "outbox"
+OUTBOX_SENT = OUTBOX / "sent"
+OUTBOX_MAX = 3500
+
+
+def send_outbox() -> int:
+    """Изпраща чакащите доклади. Връща колко е изпратил. Никога не хвърля."""
+    try:
+        if not OUTBOX.exists():
+            return 0
+        items = sorted(x for x in OUTBOX.iterdir() if x.is_file() and x.suffix == ".md")
+    except Exception:
+        return 0
+    if not items:
+        return 0
+    try:
+        cfg = json.loads((BASE / "memory" / "notify_channel.json").read_text(encoding="utf-8"))
+        token, chat_id = cfg.get("token"), cfg.get("chat_id")
+        if not token or not chat_id:
+            return 0
+        import requests
+    except Exception:
+        return 0
+
+    n = 0
+    for f in items:
+        try:
+            body = f.read_text(encoding="utf-8")
+        except Exception:
+            continue
+        # дълъг доклад се реже на части, а не се премълчава наполовина
+        chunks = [body[i:i + OUTBOX_MAX] for i in range(0, len(body), OUTBOX_MAX)] or [""]
+        ok = True
+        for k, ch in enumerate(chunks):
+            head = "" if len(chunks) == 1 else f"({k + 1}/{len(chunks)}) "
+            try:
+                r = requests.post(f"https://api.telegram.org/bot{token}/sendMessage",
+                                  json={"chat_id": chat_id, "text": head + ch}, timeout=25)
+                if r.status_code != 200:
+                    ok = False
+                    break
+            except Exception:
+                ok = False
+                break
+        if not ok:
+            log(f"outbox: {f.name} НЕ Е изпратен — остава в кутията")
+            continue
+        try:
+            OUTBOX_SENT.mkdir(parents=True, exist_ok=True)
+            f.replace(OUTBOX_SENT / f.name)
+        except Exception:
+            pass
+        n += 1
+        log(f"outbox: изпратен {f.name} ({len(chunks)} част(и))")
+    return n
+
+
 def tick(now: Optional[datetime] = None, dry_run: bool = False) -> Action:
     now = now or datetime.now().astimezone()
     cfg = load_config()
@@ -802,6 +873,13 @@ def tick(now: Optional[datetime] = None, dry_run: bool = False) -> Action:
         log(f"extraordinary request consumed (valid={extra is not None})")
 
     today = now.date().isoformat()
+
+    # Изходящата кутия се пита на ВСЕКИ тик, включително в покой — сутрешният
+    # доклад не бива да чака следващото събитие, за да излезе.
+    try:
+        send_outbox()
+    except Exception:
+        pass
 
     if action.kind == NOTHING:
         return action     # the steady state: no log, no ledger entry, no noise

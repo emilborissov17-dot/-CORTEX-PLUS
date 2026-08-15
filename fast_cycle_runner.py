@@ -415,41 +415,79 @@ def _check_dependencies() -> bool:
     checks      = {}
     critical_ok = True
 
+    # КОНСЕНСУС С KIMI, стъпка 6: „Groq като единствен critical превръща резервната
+    # верига в ДЕКОР — един срив убива нощта въпреки четири живи пътя и локален
+    # мозък." И: „Ollama непроверен е СЛЕПОТА: той е fallback И законен мозък на
+    # всяка стъпка, но единствен непроверен."
+    # Затова критерият вече не е „този ключ го има", а „има ли поне един път до
+    # мислене". Цикълът спира само когато НИЩО не мисли — и тогава спира честно,
+    # защото тогава мозъкът наистина не може да се произнесе: той е падналото.
+    _paths = []
+
     # ── Self-heal (14 Aug 2026): the ddgs search package was missing for weeks and
     # web intelligence ran blind — a dependency the system can install for itself.
     # Narrow by design: ONE hardcoded, known-safe package, own venv, logged, fail-open.
     # This is self-maintenance inside the machine, not an action on the world.
+    # КОНСЕНСУС С KIMI, стъпка 6, 15 авг 2026: „pip install без надзор е ДУПКА,
+    # не бордюр." Съгласен съм и махам самоинсталацията. Досега липсващ пакет се
+    # доизтегляше от мрежата всяка нощ, без човек да е казал дума — тоест системата
+    # изпълняваше чужд код от интернет вътре в собствения си процес. Че пакетът е
+    # един и известен, не променя рода на действието; променя само вероятността.
+    # Сега липсата се ЗАПИСВА като предложение за човека и се вижда в известията.
     try:
         import ddgs  # noqa: F401
         checks["pkg_ddgs"] = {"present": True, "level": "optional"}
     except ImportError:
+        checks["pkg_ddgs"] = {"present": False, "level": "optional",
+                              "needs_human": "pip install ddgs"}
+        print("[DEP_CHECK] MISSING ddgs (optional) -> proposed to human, NOT self-installed")
         try:
-            import subprocess as _sp
-            r = _sp.run([sys.executable, "-m", "pip", "install", "ddgs"],
-                        capture_output=True, text=True, timeout=180)
-            ok = r.returncode == 0
-            checks["pkg_ddgs"] = {"present": ok, "level": "optional",
-                                  "self_installed": ok,
-                                  "note": (r.stdout or r.stderr)[-160:]}
-            print(f"[DEP_CHECK] {'SELF-INSTALLED' if ok else 'INSTALL FAILED':14s} ddgs (optional)")
-        except Exception as _ie:
-            checks["pkg_ddgs"] = {"present": False, "level": "optional",
-                                  "error": f"{type(_ie).__name__}: {_ie}"[:120]}
-            print(f"[DEP_CHECK] INSTALL ERROR ddgs: {type(_ie).__name__}")
+            _props = BASE / "memory" / "improvement_proposals.json"
+            _cur = json.loads(_props.read_text(encoding="utf-8")) if _props.exists() else []
+            if isinstance(_cur, list) and not any(
+                    "ddgs" in str(x.get("title", "")) for x in _cur if isinstance(x, dict)):
+                _cur.append({"ts": _utc_now(), "source": "dependency_check",
+                             "title": "Липсва пакет ddgs (търсене в мрежата)",
+                             "detail": "Web intelligence върви сляпо без него. "
+                                       "Инсталацията е ЧОВЕШКО действие: pip install ddgs",
+                             "needs_human": True})
+                _props.write_text(json.dumps(_cur, ensure_ascii=False, indent=2),
+                                  encoding="utf-8")
+        except Exception:
+            pass
 
     # 1. Проверка на ключове
     key_levels = {
-        "GROQ_API_KEY":    "critical",
-        "GEMINI_API_KEY":  "important",
-        "YOUTUBE_API_KEY": "optional",
-        "NASA_API_KEY":    "optional",
+        "GROQ_API_KEY":       "thinking_path",
+        "CEREBRAS_API_KEY":   "thinking_path",
+        "OPENROUTER_API_KEY": "thinking_path",
+        "GEMINI_API_KEY":     "thinking_path",
+        "YOUTUBE_API_KEY":    "optional",
+        "NASA_API_KEY":       "optional",
     }
     for key, level in key_levels.items():
         present = bool(os.environ.get(key))
         checks[key] = {"present": present, "level": level}
-        if not present and level == "critical":
-            critical_ok = False
+        if present and level == "thinking_path":
+            _paths.append(key)
         print(f"[DEP_CHECK] {'OK' if present else 'MISSING':7s} {key} ({level})")
+
+    # ЛОКАЛНИЯТ МОЗЪК — досега единственият непроверен, макар по закон да е на всяка
+    # стъпка. Пита се самият Ollama кои модели държи; отговор = път до мислене.
+    try:
+        import requests as _rq
+        from core.groq_backend import _OLLAMA_URL as _OL
+        _r = _rq.get(f"{_OL}/api/tags", timeout=8)
+        _models = [m.get("name") for m in (_r.json().get("models") or [])] if _r.ok else []
+        checks["local_brain"] = {"ok": bool(_models), "url": _OL, "models": _models[:6]}
+        if _models:
+            _paths.append("local_brain")
+            print(f"[DEP_CHECK] OK      local_brain ({len(_models)} model(s))")
+        else:
+            print(f"[DEP_CHECK] FAIL    local_brain: няма модели на {_OL}")
+    except Exception as _oe:
+        checks["local_brain"] = {"ok": False, "error": f"{type(_oe).__name__}: {_oe}"[:140]}
+        print(f"[DEP_CHECK] FAIL    local_brain: {type(_oe).__name__}")
 
     # 2. Тестов call към Groq chat — директна HTTP заявка с requests.
     #    429 (rate limit) = ключът е валиден, API достъпно → третираме като OK.
@@ -471,12 +509,15 @@ def _check_dependencies() -> bool:
                 print(f"[DEP_CHECK] OK      groq_chat (HTTP {r.status_code})")
             else:
                 checks["groq_chat"] = {"ok": False, "error": f"HTTP {r.status_code}"}
-                print(f"[DEP_CHECK] FAIL    groq_chat: HTTP {r.status_code}")
-                critical_ok = False
+                print(f"[DEP_CHECK] FAIL    groq_chat: HTTP {r.status_code} "
+                      f"(не е фатално — има други пътища)")
+                if "GROQ_API_KEY" in _paths:
+                    _paths.remove("GROQ_API_KEY")
         except Exception as e:
             checks["groq_chat"] = {"ok": False, "error": str(e)[:150]}
-            print(f"[DEP_CHECK] FAIL    groq_chat: {e}")
-            critical_ok = False
+            print(f"[DEP_CHECK] FAIL    groq_chat: {e} (не е фатално)")
+            if "GROQ_API_KEY" in _paths:
+                _paths.remove("GROQ_API_KEY")
     else:
         checks["groq_chat"] = {"ok": False, "error": "no key"}
 
@@ -488,12 +529,20 @@ def _check_dependencies() -> bool:
         checks["groq_whisper"] = {"ok": False, "note": "skipped — groq_chat failed"}
         print("[DEP_CHECK] SKIP    groq_whisper (groq_chat failed)")
 
+    # ЕДИНСТВЕНОТО фатално условие: нито един път до мислене.
+    critical_ok = bool(_paths)
+    checks["thinking_paths"] = {"alive": _paths, "count": len(_paths)}
+    print(f"[DEP_CHECK] {'OK' if critical_ok else 'FATAL':7s} пътища до мислене: "
+          f"{', '.join(_paths) if _paths else 'НИТО ЕДИН'}")
+
     report = {
         "timestamp":       _utc_now(),
         "all_critical_ok": critical_ok,
+        "thinking_paths":  _paths,
         "checks":          checks,
         "note":            "" if critical_ok else (
-            "ЦИКЪЛЪТ Е СПРЯН. Провери горните грешки и рестартирай fast_cycle_runner.py."
+            "ЦИКЪЛЪТ Е СПРЯН: няма НИТО ЕДИН път до мислене — нито външен доставчик, "
+            "нито локалният мозък. Това е единственото условие, при което спираме."
         ),
     }
     out_path.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
