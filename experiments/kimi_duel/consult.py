@@ -17,11 +17,13 @@ experiments/kimi_duel/consult.py — ВТОРОТО МНЕНИЕ, КАТО ЧА�
 experiments/kimi_duel/consults/ и се комитват. Ако Kimi е бил воден към отговор,
 това ще си личи от самия бриф.
 
-ЧЕСТНО ЗА ЦЕНАТА: Kimi K3 през OpenRouter НЕ е безплатен ($3/$15 за 1M токена,
-проверено 15 авг 2026). Правилото „само безплатни решения" важи за това, което
-СИСТЕМАТА ползва в цикъла си; консултът е човешки инструмент за преглед и се пуска
-рядко и ръчно. Един консулт е под 1 цент. Ако Емил реши, че и това е излишен
-разход — казва и минаваме на локалния мозък като опонент.
+ЦЕНА: НУЛА. Емил, 15 авг: „ПОЛЗВАМЕ БЕЗПЛАТНО КИМИ ... НЕ ПОЛЗВАМЕ ПЛАТЕНИТЕ МУ
+ВЕРСИИ." Затова опонентът е `moonshotai/kimi-k2.6:free` — безплатният вариант през
+OpenRouter (262K контекст, проверено на openrouter.ai/moonshotai/kimi-k2.6:free на
+15 авг 2026). Платеният `kimi-k3` НЕ се вика от този модул. Ако безплатният е зает
+(429 rate limit — това е цената на безплатното), се пробва вторият безплатен, и
+чак ако и той мълчи, се пада на локалния мозък с ИЗРИЧНА бележка, че той не е
+независим опонент, защото е същият мозък, който е взел решението.
 
   venv\\Scripts\\python.exe -m experiments.kimi_duel.consult brief.md
   venv\\Scripts\\python.exe -m experiments.kimi_duel.consult brief.md --local
@@ -37,7 +39,8 @@ from pathlib import Path
 BASE = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(BASE))
 OUT_DIR = Path(__file__).resolve().parent / "consults"
-KIMI_SLUG = "moonshotai/kimi-k3"
+# САМО безплатни варианти, по ред на предпочитание. Никакъв платен слъг тук.
+KIMI_FREE = ["moonshotai/kimi-k2.6:free", "moonshotai/kimi-k2:free"]
 
 # Единственото, което налагам на опонента, е ФОРМАТЪТ на несъгласието — не
 # съдържанието. Не му се казва какво да мисли, а че мълчаливото съгласие е
@@ -56,29 +59,47 @@ def _now():
 
 
 def ask_kimi(brief: str, max_tokens: int = 4000) -> dict:
+    """Безплатният Kimi. Пробва слъговете по ред; 429 значи 'зает', не 'счупен'."""
     import requests
     import core.groq_backend as gb
     key = gb._load_key("OPENROUTER_API_KEY")
     if not key:
-        return {"ok": False, "error": "OPENROUTER_API_KEY missing", "backend": KIMI_SLUG}
-    t0 = time.monotonic()
-    r = requests.post(
-        "https://openrouter.ai/api/v1/chat/completions",
-        headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json",
-                 "HTTP-Referer": "https://github.com/cortex-agi"},
-        json={"model": KIMI_SLUG, "max_tokens": max_tokens,
-              "messages": [{"role": "system", "content": SYSTEM},
-                           {"role": "user", "content": brief}]},
-        timeout=300)
-    lat = round(time.monotonic() - t0, 1)
-    if r.status_code != 200:
-        return {"ok": False, "error": f"HTTP {r.status_code}: {r.text[:300]}",
-                "backend": KIMI_SLUG, "latency_s": lat}
-    d = r.json()
-    txt = (((d.get("choices") or [{}])[0].get("message") or {}).get("content") or "").strip()
-    usage = d.get("usage") or {}
-    return {"ok": bool(txt), "text": txt, "backend": KIMI_SLUG, "latency_s": lat,
-            "usage": usage}
+        return {"ok": False, "error": "OPENROUTER_API_KEY missing", "backend": "none"}
+    tried = []
+    for slug in KIMI_FREE:
+        t0 = time.monotonic()
+        try:
+            r = requests.post(
+                "https://openrouter.ai/api/v1/chat/completions",
+                headers={"Authorization": f"Bearer {key}",
+                         "Content-Type": "application/json",
+                         "HTTP-Referer": "https://github.com/cortex-agi"},
+                json={"model": slug, "max_tokens": max_tokens,
+                      "messages": [{"role": "system", "content": SYSTEM},
+                                   {"role": "user", "content": brief}]},
+                timeout=300)
+        except Exception as e:
+            tried.append(f"{slug}: {type(e).__name__}")
+            continue
+        lat = round(time.monotonic() - t0, 1)
+        if r.status_code != 200:
+            tried.append(f"{slug}: HTTP {r.status_code} {r.text[:120]}")
+            continue
+        d = r.json()
+        txt = (((d.get("choices") or [{}])[0].get("message") or {}).get("content") or "").strip()
+        if not txt:
+            tried.append(f"{slug}: празен отговор")
+            continue
+        # ЗАЩИТА срещу тиха смяна към платен вариант: OpenRouter връща кой модел е
+        # обслужил заявката. Ако не е безплатният, отчитаме го като провал.
+        served = str(d.get("model") or slug)
+        if ":free" not in served and served not in KIMI_FREE:
+            tried.append(f"{slug}: обслужен от {served} — НЕ е безплатният, отказваме")
+            continue
+        return {"ok": True, "text": txt, "backend": served, "latency_s": lat,
+                "usage": d.get("usage") or {}, "cost_usd": 0.0, "tried": tried}
+    return {"ok": False, "error": "всички безплатни варианти отказаха",
+            "backend": "none", "tried": tried}
 
 
 def ask_local(brief: str) -> dict:
