@@ -67,6 +67,24 @@ ALLOWED_DIR_PREFIXES = ("memory", "output", "data", "snapshots", "daily")
 # доказуемо път под ALLOWED_DIR_PREFIXES.
 _WRITE_LIKE_ATTRS = {"write_text", "write_bytes", "open"}
 
+# ── ДУПКАТА ОТ 15 АВГ 2026 (намерена при спор с Kimi, стъпка 1) ──────────────
+# Kimi: „AST gate проверява само source-а на patch файла, не и дали той модифицира
+# други .py файлове при изпълнение. Ако patch-ът презапише safety/ast_gate.py,
+# quarantine връща само patch файла — останалите модули остават компрометирани."
+# Механизмът, който той описа (директен write), БЕШЕ покрит: write_text/open с
+# непроверим таргет се спират. Но тестът намери истинския обход — функции, които
+# пишат по ДЕСТИНАЦИЯ, без изобщо да пипат write_text/open:
+#     shutil.copy("a.py", "core/brain.py")      -> минаваше
+#     shutil.move / os.replace / os.rename      -> минаваха
+# Тоест портата пазеше вратата и оставяше прозореца. Тук се затваря: за тези
+# функции се проверява АРГУМЕНТЪТ-ДЕСТИНАЦИЯ по същия критерий.
+# ЦЕНА ЗА САМОРАЗВИТИЕТО: нулева. Системата и досега не можеше да пише извън
+# memory/output/data/snapshots/daily — просто вече не може и по обиколен път.
+_DEST_ARG_FUNCS = {
+    "copy": 1, "copy2": 1, "copyfile": 1, "move": 1,      # shutil
+    "replace": 1, "rename": 1, "link": 1, "symlink": 1,   # os
+}
+
 # Конструктори, които просто обвиват пътен израз.
 _PATH_CTOR_NAMES = {"Path", "pathlib.Path"}
 
@@ -394,6 +412,18 @@ def check_code(source: str) -> tuple[bool, str]:
                     return False, "open() target not statically verified under an allowed directory"
 
             # ── (3) Path.write_text()/write_bytes()/open() ───────────────────
+            # копиране/местене: пази се ДЕСТИНАЦИЯТА (вторият аргумент)
+            _fname = func.attr if isinstance(func, ast.Attribute) else (
+                func.id if isinstance(func, ast.Name) else None)
+            if _fname in _DEST_ARG_FUNCS:
+                _i = _DEST_ARG_FUNCS[_fname]
+                if len(node.args) <= _i:
+                    return False, f"{_fname}() without a statically visible destination"
+                scope = ctx.node_scope.get(id(node))
+                if not _target_allowed(node.args[_i], scope, ctx, frozenset()):
+                    return False, (f"{_fname}() destination not statically verified "
+                                   f"under an allowed directory")
+
             if isinstance(func, ast.Attribute) and func.attr in _WRITE_LIKE_ATTRS:
                 scope = ctx.node_scope.get(id(node))
                 if not _target_allowed(func.value, scope, ctx, frozenset()):
