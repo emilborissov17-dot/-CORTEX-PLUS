@@ -132,6 +132,18 @@ def _write_snapshot(axis, folder, domain, data):
     return out_path
 
 def _run(label, fn, free_after=False):
+    # 15 Aug 2026 (закон, т.1 и 3): преди да тръгне стъпка, се пита мозъкът какво
+    # е казал за нея в beat(). Ако е решил "пропусни" — пропуска се и се записва
+    # ЧИЯ е била преценката. Гръбнакът на одита не се пропуска по мнение
+    # (core.brain.skipped_by_brain пази този списък).
+    try:
+        from core.brain import skipped_by_brain as _skip, stance as _stance
+        if _skip(label):
+            print(f"[FAST_CYCLE] {label} -> SKIPPED BY BRAIN: "
+                  f"{str(_stance().get('expect'))[:120]}")
+            return
+    except Exception:
+        pass
     try:
         fn()
         print(f"[FAST_CYCLE] {label} -> OK")

@@ -374,6 +374,146 @@ def debrief_cycle(cycle_log_tail: str = "") -> dict | None:
     return d
 
 
+# ───────────── МОЗЪКЪТ Е НА ВСЯКА СТЪПКА (закон, т.1) ────────────────────────
+# 15 Aug 2026, Емил: "ДА Е НА ВСИЧКИТЕ 48 СТЪПКИ ТОЙ".
+# Единственият общ проход на всяка стъпка от цикъла е memory.heartbeat.beat().
+# Затова мозъкът се закача ТАМ: щом стъпка бие пулс, мозъкът я вижда — без да
+# трябва да пипам 48 отделни места и без стъпка да може да се промъкне покрай него.
+#
+# Цената е реална и я меря: това е ~50 повиквания на цикъл. Затова тук се ползва
+# НАЙ-БЪРЗИЯТ наличен модел и къс отговор (~4s/стъпка => ~3 мин на цикъл),
+# докато дългите разсъждения (план, аутопсия, дебриф) вървят на силния модел.
+STEP_LOG = BASE / "memory" / "brain_step_log.jsonl"
+STANCE = BASE / "memory" / "brain_stance.json"
+_AVAILABLE: bool | None = None
+_FAST: str | None = None
+
+
+def _fast_model() -> str | None:
+    """Най-малкият инсталиран модел — за преценка на всяка стъпка, не за есета."""
+    global _FAST
+    if _FAST is None:
+        ms = [m for m in models() if m]
+        def _size(name):
+            m = re.search(r":(\d+(?:\.\d+)?)b", str(name).lower())
+            return float(m.group(1)) if m else 99.0
+        _FAST = sorted(ms, key=_size)[0] if ms else ""
+    return _FAST or None
+
+
+def _prev_step_output() -> tuple:
+    """Какво изкара ПРЕДИШНАТА стъпка — истинските ѝ редове от лога на цикъла.
+    Така мозъкът не само обявява намерение, а съди и резултата преди него."""
+    try:
+        logs = sorted((BASE / "memory" / "cycle_logs").glob("cycle_*.log"),
+                      key=lambda p: p.stat().st_mtime, reverse=True)
+        if not logs:
+            return "", ""
+        lines = logs[0].read_text(encoding="utf-8", errors="ignore").splitlines()[-400:]
+        idx = None
+        for i in range(len(lines) - 1, -1, -1):
+            if lines[i].lstrip().startswith("[STEP] "):
+                idx = i
+                break
+        if idx is None:
+            return "", ""
+        prev_name = lines[idx].split("[STEP] ", 1)[1].strip()
+        body = [l.strip()[:200] for l in lines[idx + 1:] if l.strip()][-12:]
+        return prev_name, "\n".join(body)
+    except Exception:
+        return "", ""
+
+
+def attend(step: str) -> dict | None:
+    """Мозъкът застава пред всяка стъпка: съди какво излезе от предишната и казва
+    какво очаква от тази. Присъдата се пише в memory/brain_step_log.jsonl, а
+    последната — в memory/brain_stance.json, откъдето стъпките могат да я четат
+    (stance()). FAIL-OPEN и изключваема с CORTEX_BRAIN_ATTEND=0."""
+    global _AVAILABLE
+    import os
+    if os.environ.get("CORTEX_BRAIN_ATTEND", "1") == "0":
+        return None
+    if _AVAILABLE is None:
+        _AVAILABLE = bool(models())
+    if not _AVAILABLE:
+        return None
+    mdl = _fast_model()
+    if not mdl:
+        return None
+
+    prev_name, prev_out = _prev_step_output()
+    plan = current_plan()
+    prompt = (
+        "Ти си мозъкът на CORTEX++ и стоиш на всяка стъпка от собствения си цикъл.\n"
+        f"ТВОЯТ ПЛАН ДНЕС: фокус={plan.get('focus')!r}; следиш={plan.get('watch')!r}; "
+        f"тест за успех={str(plan.get('success_test'))[:120]!r}\n"
+        f"ТЯЛО: {_body()}\n"
+        f"ПРЕДИШНА СТЪПКА: {prev_name or '(няма)'}\n"
+        f"НЕЙНИЯТ ИЗХОД:\n{prev_out or '(празно)'}\n\n"
+        f"СЕГА ЗАПОЧВА: {step}\n\n"
+        'Отговори САМО с JSON: {"prev_ok": true/false, "prev_note": "кратко: какво '
+        'излезе от предишната", "stance": "върви|следи|пропусни", "expect": "какво '
+        'очакваш от тази стъпка (кратко)"}\n'
+        "Кратко. Ако предишната е дала празен/подозрителен резултат — кажи го."
+    )
+    try:
+        import requests as _rq
+        _, base = _pick_model()
+        r = _rq.post(f"{base}/api/chat", timeout=60, json={
+            "model": mdl, "stream": False, "keep_alive": KEEP_ALIVE, "format": "json",
+            "messages": [{"role": "user", "content": prompt}],
+            "options": {"temperature": 0.1, "num_predict": 160}})
+        r.raise_for_status()
+        t = ((r.json().get("message") or {}).get("content") or "").strip()
+        t = t.split("</think>")[-1].strip() if "</think>" in t else t
+        d = json.loads(t[t.find("{"): t.rfind("}") + 1])
+    except Exception:
+        return None
+    if not isinstance(d, dict):
+        return None
+
+    doc = {"ts": _now(), "step": step, "prev_step": prev_name,
+           "prev_ok": d.get("prev_ok"), "prev_note": str(d.get("prev_note", ""))[:300],
+           "stance": str(d.get("stance", "върви"))[:20],
+           "expect": str(d.get("expect", ""))[:300], "model": f"local:{mdl}"}
+    try:
+        STEP_LOG.parent.mkdir(parents=True, exist_ok=True)
+        if STEP_LOG.exists() and STEP_LOG.stat().st_size > 5_000_000:
+            STEP_LOG.replace(STEP_LOG.with_suffix(".jsonl.1"))
+        with open(STEP_LOG, "a", encoding="utf-8") as fh:
+            fh.write(json.dumps(doc, ensure_ascii=False) + "\n")
+        STANCE.write_text(json.dumps(doc, ensure_ascii=False, indent=2), encoding="utf-8")
+    except Exception:
+        pass
+    return doc
+
+
+def stance(step: str | None = None) -> dict:
+    """Какво каза мозъкът за текущата (или дадена) стъпка — за да може самата
+    стъпка да се съобрази с него, вместо да я води само моят фиксиран ред."""
+    try:
+        d = json.loads(STANCE.read_text(encoding="utf-8"))
+        return d if (step is None or d.get("step") == step) else {}
+    except Exception:
+        return {}
+
+
+def skipped_by_brain(step: str) -> bool:
+    """True, ако мозъкът е казал 'пропусни' за тази стъпка. Стъпките, които са
+    ГРЪБНАК на одита (печат на цикъла, Merkle ангажимент, пулс), не питат — там
+    границата е на ДЕЙСТВИЕТО, не на мисълта: мнението му се записва, но веригата
+    на доказателствата не се къса по мнение."""
+    BACKBONE = {"boot", "brain_briefing", "brain_debrief", "merklememory_commit",
+                "body_scan", "canon_load", "dependency_check"}
+    # Последната присъда е за стъпката, която тъкмо е бита — етикетът на _run()
+    # понякога се различава от името на beat() (internet_intelligence/internet_agent),
+    # затова се гледа последното становище, а не се търси по име.
+    last = stance()
+    if not last or last.get("step") in BACKBONE or step in BACKBONE:
+        return False
+    return str(last.get("stance", "")).strip().lower().startswith("пропусни")
+
+
 if __name__ == "__main__":
     import sys
     what = sys.argv[1] if len(sys.argv) > 1 else "brief"

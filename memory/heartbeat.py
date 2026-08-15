@@ -57,6 +57,14 @@ def beat(step: str, step_index: Optional[int] = None, cycle_id: Optional[str] = 
     heartbeat and restarts us — which is the correct conservative behaviour, and
     far better than crashing a healthy cycle over a transient file lock.
     """
+    # 15 Aug 2026: also stamp the step INTO THE CYCLE LOG. Until today the step
+    # name lived only in heartbeat.json, so when a cycle died the autopsy
+    # (core/self_diagnosis) could not find where in a 180k-line log the wedged
+    # step began — it could name the step but never show its last words.
+    try:
+        print(f"[STEP] {step}", flush=True)
+    except Exception:
+        pass
     try:
         prev = read() or {}
         # Preserve the cycle_id across beats; only the first beat sets it.
@@ -74,6 +82,18 @@ def beat(step: str, step_index: Optional[int] = None, cycle_id: Optional[str] = 
         _write_atomic(payload)
     except Exception:
         pass  # never let the heartbeat kill the cycle
+
+    # ── МОЗЪКЪТ Е НА ВСЯКА СТЪПКА (Емил, 15 авг 2026 — закон, т.1) ──────────
+    # beat() е ЕДИНСТВЕНИЯТ общ проход на всичките ~50 стъпки (виж горе: точно
+    # затова съществува). Затова мозъкът се закача тук — нито една стъпка не може
+    # да мине покрай него, и не се налага 48 отделни закърпвания.
+    # Редът е нарочен: пулсът се записва ПЪРВО (той пази живота на цикъла), чак
+    # после мисли мозъкът. FAIL-OPEN: мълчащ или бавен мозък не убива цикъл.
+    try:
+        from core.brain import attend as _attend
+        _attend(step)
+    except Exception:
+        pass
 
 
 def _write_atomic(payload: dict) -> None:
