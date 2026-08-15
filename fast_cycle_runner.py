@@ -32,6 +32,134 @@ def _utc_now():
     return datetime.now(timezone.utc).isoformat()
 
 
+LAST_CYCLE_ID = BASE / "memory" / "last_cycle_id.txt"        # последен ЗАПЕЧАТАН
+LAST_ATTEMPT = BASE / "memory" / "last_attempted_cycle_id.txt"  # последен ОПИТАН
+CYCLE_ORIGIN = BASE / "memory" / "cycle_origin.json"
+
+
+def _pid_alive(pid) -> bool:
+    """Жив ли е този процес. psutil, ако го има (Windows не поддържа signal 0)."""
+    try:
+        pid = int(pid)
+    except Exception:
+        return False
+    try:
+        import psutil
+        return psutil.pid_exists(pid)
+    except Exception:
+        pass
+    try:
+        os.kill(pid, 0)
+        return True
+    except Exception:
+        return False
+
+
+def _classify_cycle_id(env_id):
+    """A / B / C по консенсуса с Kimi (15 авг 2026, стъпка 1).
+
+    A: env е СТРОГО ПО-НОВ от последния запечатан цикъл -> нормално (supervisor).
+    B: env липсва -> ръчно пускане; нов id, origin=manual, за да НЕ го чака
+       супервайзорът като свой.
+    C: env е по-стар/равен на последния запечатан, ИЛИ е нечетим -> stale/повреден:
+       цикълът спира ВЕДНАГА, вместо да лъже, че е жив.
+    """
+    from datetime import datetime as _dt
+    now = _dt.now(timezone.utc)
+
+    def _parse(x):
+        try:
+            d = _dt.fromisoformat(str(x).replace("Z", "+00:00"))
+            return d if d.tzinfo else d.replace(tzinfo=timezone.utc)
+        except Exception:
+            return None
+
+    # ВЕРИФИКАЦИЯ НА KIMI (15 авг, стъпка 1): „last се пише само в края;
+    # прекъснат цикъл (стъпка 35) остава НЕВИДИМ за проверката" — тоест stale env
+    # от цикъл, умрял ПРЕДИ запечатване, минаваше като случай A. Дупка в кода, не
+    # в идеята. Затова се сравнява с ПО-КЪСНОТО от двете: последния запечатан и
+    # последния ОПИТАН (записва се при всеки boot, независимо дали цикълът стига
+    # до края). Супервайзорът дава ново cycle_id при всяко пускане (now.isoformat()),
+    # значи законен рестарт никога не е равен на предишен опит.
+    last = None
+    for f in (LAST_CYCLE_ID, LAST_ATTEMPT):
+        try:
+            v = _parse(f.read_text(encoding="utf-8").strip())
+            if v and (last is None or v > last):
+                last = v
+        except Exception:
+            pass
+
+    if env_id is None or str(env_id).strip() == "":
+        cid, origin, why = now.isoformat(), "manual", "няма CORTEX_CYCLE_ID — ръчно пускане"
+    else:
+        parsed = _parse(env_id)
+        if parsed is None:
+            print(f"[FAST_CYCLE] BOOT ABORT: нечетим CORTEX_CYCLE_ID={env_id!r} — "
+                  f"това е системен отказ, не ръчно пускане (случай C).")
+            _note_boot_abort(f"нечетим cycle_id: {env_id!r}")
+            raise SystemExit(2)
+        if last is not None and parsed <= last:
+            print(f"[FAST_CYCLE] BOOT ABORT: stale CORTEX_CYCLE_ID={env_id} "
+                  f"<= последния запечатан {last.isoformat()} (случай C). "
+                  f"Спирам сега, за да не изглеждам жив, докато съм мъртъв.")
+            _note_boot_abort(f"stale cycle_id {env_id} <= {last.isoformat()}")
+            raise SystemExit(2)
+        cid, origin, why = str(env_id), "supervisor", "env по-нов от последния запечатан"
+
+    try:
+        CYCLE_ORIGIN.parent.mkdir(parents=True, exist_ok=True)
+        CYCLE_ORIGIN.write_text(json.dumps(
+            {"cycle_id": cid, "origin": origin, "why": why,
+             "last_sealed": last.isoformat() if last else None},
+            ensure_ascii=False, indent=2), encoding="utf-8")
+    except Exception:
+        pass
+    # ── СЛУЧАЙ D: вече тече друг цикъл (Kimi, 15 авг: „при manual пускане може
+    # да се застъпи със supervisor цикъл"). Проверих кода: ключалката
+    # memory/cycle.lock се СЪЗДАВА от супервайзора и се ОСВОБОЖДАВА от цикъла, но
+    # самият цикъл никога не я проверява при старт. Значи два процеса можеха да
+    # пишат едновременно в едни и същи файлове. Тук се проверява.
+    try:
+        if LOCK_PATH.exists():
+            lk = json.loads(LOCK_PATH.read_text(encoding="utf-8"))
+            other_pid, other_id = lk.get("pid"), lk.get("cycle_id")
+            if other_id and str(other_id) != str(cid) and _pid_alive(other_pid):
+                print(f"[FAST_CYCLE] BOOT ABORT: вече тече цикъл {other_id} "
+                      f"(pid {other_pid}, жив) — случай D. Два цикъла върху едни и "
+                      f"същи файлове е по-лошо от нито един.")
+                _note_boot_abort(f"застъпване: жив цикъл {other_id} pid={other_pid}")
+                raise SystemExit(3)
+            if other_id and not _pid_alive(other_pid):
+                print(f"[FAST_CYCLE] boot -> заварена мъртва ключалка на {other_id} "
+                      f"(pid {other_pid}); продължавам.")
+    except SystemExit:
+        raise
+    except Exception:
+        pass
+
+    try:                      # ОПИТЪТ се записва СЕГА, не в края
+        LAST_ATTEMPT.write_text(cid, encoding="utf-8")
+    except Exception:
+        pass
+    print(f"[FAST_CYCLE] boot -> cycle_id={cid} origin={origin} ({why})")
+    return cid
+
+
+def _note_boot_abort(detail: str) -> None:
+    """Прекъснат старт не бива да изчезва — влиза в нощния дневник и утре
+    сутрин излиза в отчета (човекът не се буди, но научава)."""
+    try:
+        p = BASE / "memory" / "night_events.jsonl"
+        p.parent.mkdir(parents=True, exist_ok=True)
+        with open(p, "a", encoding="utf-8") as fh:
+            fh.write(json.dumps({"ts": datetime.now(timezone.utc).isoformat(),
+                                 "subject": "BOOT ABORTED (случай C)",
+                                 "detail": detail}, ensure_ascii=False) + "\n")
+    except Exception:
+        pass
+
+
 def _seal_cycle_record() -> None:
     """A cycle that finished cleanly says so, and lets go of its own lock.
 
@@ -657,7 +785,17 @@ def main():
     # supervisor._last_step_of() attributes the death to THIS cycle instead of
     # discarding the step on a cycle_id mismatch. Every later beat() preserves this
     # cycle_id, so attribution now works for deaths at any step, not only early ones.
-    _cycle_id = os.environ.get("CORTEX_CYCLE_ID")
+    # ── КОНСЕНСУС С KIMI, 15 авг 2026 (стъпка 1 от 52) ─────────────────────
+    # Той намери режима на отказ, който е по-лош от грешна атрибуция:
+    #   „heartbeat.json се пише с ГРЕШЕН cycle_id (stale CORTEX_CYCLE_ID от env на
+    #    предишен цикъл). Супервайзорът търси cycle_id=X, намира last_step=boot,
+    #    мисли че цикълът тече, а реално е мъртъв на стъпка 35. НЕ РЕСТАРТИРА."
+    # Тоест не срив, а ФАЛШИВО СПОКОЙСТВИЕ — най-опасното за система без надзор.
+    # Той поиска твърда проверка „env строго по-нов от последния"; аз възразих, че
+    # това убива ръчното пускане (там env изобщо липсва). Стигнахме до три случая,
+    # плюс неговото последно уточнение: НЕЧЕТИМ env е системен отказ, не ръчно
+    # пускане, значи се третира като C.
+    _cycle_id = _classify_cycle_id(os.environ.get("CORTEX_CYCLE_ID"))
     beat("boot", "-1", cycle_id=_cycle_id)
 
     # ── МОЗЪКЪТ ОТВАРЯ ЦИКЪЛА (закон, т.3 — Емил, 15 авг 2026) ──────────────
@@ -1349,6 +1487,13 @@ def main():
     # heartbeat. Order matters: _seal_cycle_record() reads the heartbeat for the
     # cycle_id, so it must run BEFORE the heartbeat is cleared.
     _seal_cycle_record()
+    try:                      # основата на проверката A/B/C за следващия цикъл
+        from memory.heartbeat import read as _hb_read
+        _done = (_hb_read() or {}).get("cycle_id")
+        if _done:
+            LAST_CYCLE_ID.write_text(str(_done), encoding="utf-8")
+    except Exception:
+        pass
     _clear_heartbeat()
 
     # Cycle finished → the organism speaks its needs in one voice: for each hunger

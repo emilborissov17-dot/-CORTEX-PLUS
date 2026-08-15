@@ -27,6 +27,7 @@ OpenRouter (262K контекст, проверено на openrouter.ai/moonsho
 
   venv\\Scripts\\python.exe -m experiments.kimi_duel.consult brief.md
   venv\\Scripts\\python.exe -m experiments.kimi_duel.consult brief.md --local
+  venv\\Scripts\\python.exe -m experiments.kimi_duel.consult brief.md --max-tokens=700
 """
 from __future__ import annotations
 
@@ -115,29 +116,52 @@ def ask_local(brief: str) -> dict:
             "independence_warning": "същият мозък, който взе решението — НЕ е независим"}
 
 
-def run(brief_path: str, local: bool = False) -> str:
+def run(brief_path: str, local: bool = False, max_tokens: int = 4000) -> str:
     brief = Path(brief_path).read_text(encoding="utf-8")
-    res = ask_local(brief) if local else ask_kimi(brief)
+    res = ask_local(brief) if local else ask_kimi(brief, max_tokens=max_tokens)
     OUT_DIR.mkdir(parents=True, exist_ok=True)
+
+    # Името вече носи датата на брифа — не я удвояваме (бележка на Claude Code,
+    # 15 авг: файлът излезе като 2026-08-15_2026-08-15_...).
     slug = Path(brief_path).stem.replace(".brief", "")
-    out = OUT_DIR / f"{str(_now())[:10]}_{slug}.json"
+    stem = slug if slug[:4].isdigit() else f"{str(_now())[:10]}_{slug}"
+    out = OUT_DIR / f"{stem}.json"
     out.write_text(json.dumps({"ts": _now(), "brief_file": str(brief_path),
                                "brief": brief, "system": SYSTEM, "response": res},
                               ensure_ascii=False, indent=2), encoding="utf-8")
+
+    # ПРОВАЛЪТ НЕ Е ОТГОВОР. Досега HTTP грешка се печаташе под заглавие „Отговор",
+    # тоест мълчанието на опонента изглеждаше като негово мнение — точно порокът,
+    # който този проект съществува да лови (Claude Code го хвана, 15 авг).
     md = out.with_suffix(".md")
-    md.write_text(f"# Консулт — {slug}\n\n_{_now()} · {res.get('backend')}_\n\n"
-                  f"## Отговор\n\n{res.get('text') or res.get('error')}\n\n"
-                  f"---\n\n## Брифът, който му беше даден (дословно)\n\n{brief}\n",
+    if res.get("ok"):
+        body = (f"# Консулт — {slug}\n\n_{_now()} · {res.get('backend')} · "
+                f"цена: ${res.get('cost_usd', 0)}_\n\n## Отговор\n\n{res['text']}\n")
+    else:
+        body = (f"# Консулт — {slug}\n\n_{_now()}_\n\n"
+                f"## НЯМА ОТГОВОР — консултът НЕ се е състоял\n\n"
+                f"Опонентът не е видял брифа. Този файл НЕ е второ мнение и не бива "
+                f"да се цитира като такова.\n\n"
+                f"- Грешка: `{res.get('error')}`\n"
+                f"- Пробвани: {res.get('tried')}\n")
+    md.write_text(body + f"\n---\n\n## Брифът, който му беше даден (дословно)\n\n{brief}\n",
                   encoding="utf-8")
+
     print(f"-> {out.relative_to(BASE)}")
     print(f"-> {md.relative_to(BASE)}")
     if res.get("ok"):
-        print("\n" + (res.get("text") or "")[:2000])
+        print(f"\nОБСЛУЖЕН ОТ: {res.get('backend')} (цена ${res.get('cost_usd', 0)})\n")
+        print((res.get("text") or "")[:2000])
     else:
-        print("ГРЕШКА:", res.get("error"))
+        print("КОНСУЛТЪТ НЕ СЕ СЪСТОЯ:", res.get("error"))
+        print("пробвани:", res.get("tried"))
     return str(out)
 
 
 if __name__ == "__main__":
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
-    run(args[0], local="--local" in sys.argv)
+    mt = 4000
+    for a in sys.argv[1:]:
+        if a.startswith("--max-tokens="):
+            mt = int(a.split("=", 1)[1])
+    run(args[0], local="--local" in sys.argv, max_tokens=mt)
