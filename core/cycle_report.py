@@ -188,6 +188,25 @@ def to_markdown(rep: dict) -> str:
                 "_(мозъкът мълчеше при съставянето на този отчет — "
                 "долното е само механичната истина)_", ""]
 
+    # Емил, 15 авг: „да не ме будят — искам само докладите за изминал ден."
+    # Значи всичко, което системата е преживяла сама през нощта, трябва да го
+    # има ТУК. Иначе тишината нощем става тишина и сутрин.
+    try:
+        ev = [json.loads(l) for l in
+              (BASE / "memory" / "night_events.jsonl").read_text(encoding="utf-8").splitlines()
+              if l.strip()]
+        ev = [e for e in ev if e.get("ts", "") >= str(rep.get("ts", ""))[:10]]
+        if ev:
+            out += ["## Какво стана през нощта, докато спеше", "",
+                    f"{len(ev)} събития, с които системата се справи сама "
+                    f"(или не се справи) без да те буди:", ""]
+            for e in ev[-10:]:
+                out.append(f"- **{str(e.get('ts'))[11:16]}** — {e.get('subject')}: "
+                           f"{str(e.get('detail','')).replace(chr(10), ' ')[:220]}")
+            out.append("")
+    except Exception:
+        pass
+
     # постоянството и съзвездието — прочит, който не гони промяната (15 авг)
     try:
         cn = json.loads((BASE / "memory" / "constancy_latest.json").read_text(encoding="utf-8"))

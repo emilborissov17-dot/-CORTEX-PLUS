@@ -126,15 +126,32 @@ def _norm(s: str) -> str:
     return re.sub(r"\s+", " ", str(s)).strip().lower()
 
 
-def _wide_evidence(step: str, window: int = 400) -> str:
-    """Целият край на лога, не само парчето около стъпката — за случаите, в които
-    коренът е далеч преди трупа (каскаден отказ, OOM отвън)."""
+_SIGNAL_RE = re.compile(r"(Traceback|Error|Exception|FAILED|Killed|OOM|rate limit|"
+                       r"timed out|refused|denied|No space|MemoryError|WARN)", re.I)
+
+
+def _wide_evidence(step: str, max_lines: int = 120, max_chars: int = 9000) -> str:
+    """По-широк поглед — но НЕ „целият лог".
+
+    Kimi, 15 авг: „целият лог може да е 10MB; 3B модел с 4GB VRAM няма контекст за
+    него — или ще се truncate-не, или ще гръмне, и се връщаме на същия проблем."
+    Прав е. Затова тук не се дава всичко, а СИТОТО: редовете, които носят сигнал
+    за отказ (traceback, Killed, rate limit, refused…) от целия лог, плюс края.
+    Така широчината идва от подбор, не от обем — и се казва честно колко е
+    отсято, за да не мине филтърът за пълен поглед."""
     try:
         p = _log_for(None)
-        lines = p.read_text(encoding="utf-8", errors="ignore").splitlines()
-        return "\n".join(l.strip()[:200] for l in lines[-window:] if l.strip())
+        lines = [l.strip()[:200] for l in
+                 p.read_text(encoding="utf-8", errors="ignore").splitlines() if l.strip()]
     except Exception:
         return ""
+    hits = [f"[ред {i+1}] {l}" for i, l in enumerate(lines) if _SIGNAL_RE.search(l)]
+    tail = lines[-40:]
+    picked = hits[-(max_lines - len(tail)):] + ["--- край на лога ---"] + tail
+    out = "\n".join(picked)[:max_chars]
+    _NOTE["wide_scope"] = (f"{len(lines)} реда в лога -> {len(hits)} със сигнал, "
+                           f"дадени {len(picked)} (подбор, не пълен лог)")
+    return out
 
 
 def _brain_diagnosis(step: str, evidence: list) -> dict | None:
@@ -189,7 +206,10 @@ def _brain_diagnosis(step: str, evidence: list) -> dict | None:
                     question=(f"Първият ти извод не се заземи в късия откъс. Ето "
                               f"ЦЕЛИЯ лог. Причината може да е далеч преди '{step}' "
                               f"или изобщо да не е в лога (напр. процесът е убит "
-                              f"отвън). Ако е така — кажи го и цитирай каквото има."),
+                              f"отвън). Ако е така — кажи го и цитирай каквото има. "
+                              f"ВАЖНО: това НЕ е целият лог, а подбрани редове със "
+                              f"сигнал за отказ плюс края — ако ти трябва нещо, "
+                              f"което го няма тук, кажи го вместо да гадаеш."),
                     evidence=wide,
                     schema={
                         "failure": "true/false", "cause": "ти я кръщаваш",

@@ -208,8 +208,40 @@ def _autopsy(action) -> str:
         return f"(автопсията не сработи: {type(e).__name__})"
 
 
+NIGHT_LOG = BASE / "memory" / "night_events.jsonl"
+QUIET_HOURS = (22, 9)      # 22:00-09:00 местно: човекът спи, системата се оправя сама
+
+
+def _quiet_now() -> bool:
+    h = datetime.now().hour
+    a, b = QUIET_HOURS
+    return h >= a or h < b
+
+
+def note_night_event(subject: str, detail: str) -> None:
+    """Емил, 15 авг 2026: „ДА НЕ МЕ БУДЯТ ... ДАЙ МУ ПЪЛНА АВТОНОМНОСТ ...
+    ИСКАМ САМО ДОКЛАДИТЕ ЗА ИЗМИНАЛ ДЕН."
+
+    Затова всичко, което системата преживее нощем, се записва ТУК, а не се
+    праща на телефона. Сутрешният отчет (core/cycle_report.py) го чете и го
+    разказва в раздел „какво стана през нощта без теб". Нищо не се губи —
+    само не звъни в 3 през нощта."""
+    try:
+        NIGHT_LOG.parent.mkdir(parents=True, exist_ok=True)
+        with open(NIGHT_LOG, "a", encoding="utf-8") as fh:
+            fh.write(json.dumps({"ts": datetime.now(timezone.utc).isoformat(),
+                                 "subject": subject, "detail": detail},
+                                ensure_ascii=False) + "\n")
+    except Exception:
+        pass
+
+
 def alarm_human(subject: str, detail: str) -> None:
     """15 Aug 2026 — THE DEAD-SYSTEM ALARM.
+
+    ПРОМЕНЕНО (15 авг, вечер): в тихите часове НЕ буди. Записва събитието за
+    сутрешния отчет и се връща. Пътят към телефона остава за деня — и за
+    случаите, в които човекът сам е поискал да бъде питан.
 
     Between 23 and 28 July the restart budget was exhausted ELEVEN times: the system
     was down, and it "called for a human" by writing a line into supervisor.log and a
@@ -218,6 +250,9 @@ def alarm_human(subject: str, detail: str) -> None:
     channel that reaches Emil's pocket, and it does so from the MACHINE (which can
     reach the API; the cloud cannot). Fail-open, never raises, never blocks recovery.
     """
+    note_night_event(subject, detail)
+    if _quiet_now():
+        return                      # спи човекът; сутринта ще прочете всичко
     try:
         cfg = json.loads((BASE / "memory" / "notify_channel.json").read_text(encoding="utf-8"))
         if cfg.get("channel") != "telegram" or not cfg.get("token") or not cfg.get("chat_id"):
@@ -251,7 +286,11 @@ def alarm_human(subject: str, detail: str) -> None:
 # autopsy says the cause is transient. A CODE_ERROR or a full disk is never
 # transient and still fails loudly at once — repeating those is the infinite loop
 # the budget exists to prevent. This ceiling, like every other, is not self-raisable.
-DIAGNOSED_RETRY_MAX = 2
+# 15 авг 2026 — пълна автономност: диагностицираните опити вече не са с таван.
+# Сляпият бюджет (max_restarts_per_day) си остава за СЛЕПИТЕ рестарти; когато
+# мозъкът е дал заземена причина и е преценил, че е преходно, той решава колко
+# пъти си струва. Всеки такъв опит се вписва в дневника за сутрешния отчет.
+DIAGNOSED_RETRY_MAX = 10**6
 
 
 def diagnosed_retries_today(state: dict, today: str) -> int:
@@ -568,8 +607,8 @@ def _kill_or_fail(state, today, cfg, reason, step, step_index, age, ceil, pid, c
         # Досега такъв отговор нямаше къде да се побере и той беше сведен до
         # таймер. Ако го каже, се уважава веднага и без пазарлък.
         if d.get("halt_and_call_human"):
-            log(f"BRAIN SAYS HALT: {d.get('cause')} — no restart, calling human")
-            alarm_human("CYCLE HALTED BY ITS OWN BRAIN",
+            log(f"BRAIN SAYS HALT: {d.get('cause')} — no restart; will be in the report")
+            note_night_event("CYCLE HALTED BY ITS OWN BRAIN",
                         f"cause={d.get('cause')}\nwhy={d.get('why')}\n"
                         f"remedy={d.get('proposed_fix')}\n"
                         f"(the brain judged a restart would not help)")
