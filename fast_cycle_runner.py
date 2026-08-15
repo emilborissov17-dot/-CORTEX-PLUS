@@ -1252,6 +1252,26 @@ def main():
         _orchestrate()
     _run("cortex_orchestrator", _cortex_orchestrator)
 
+    # ── 12.75. ТОЧКАТА НА ВРЪЩАНЕ (консенсус с Kimi, 15 авг 2026) ──────────
+    # „Планът се ражда на стъпка 2 от слепота и умира на стъпка 51, без да е
+    #  променян от нищо видяно по средата." Тук цикълът спира за миг и мозъкът
+    #  решава: продължавам ли, или се връщам. Мястото е негово предложение —
+    #  след оркестратора (има цялостна картина), но ПРЕДИ каквото и да е
+    #  необратимо (публикуване, патчове). Най-много ЕДНО връщане на цикъл;
+    #  цената в минути му се казва предварително. FAIL-OPEN.
+    beat("brain_reconsider", "12.75")
+    try:
+        from core.reconsider import run as _reconsider
+        _rc = _reconsider()
+        if _rc.get("action") == "връщане":
+            print(f"[FAST_CYCLE] reconsider -> ВЪРНА {_rc.get('replayed')} "
+                  f"({_rc.get('seconds')}s, ok={_rc.get('ok')}) | {str(_rc.get('why'))[:120]}")
+        else:
+            print(f"[FAST_CYCLE] reconsider -> напред | {str(_rc.get('why'))[:120]}"
+                  + (f" | ОТКАЗАНО: {_rc['refused']}" if _rc.get("refused") else ""))
+    except Exception as e:
+        print(f"[FAST_CYCLE] reconsider -> FAILED: {type(e).__name__}: {e}")
+
     # ── 13. Body scan ──
     beat("body_scan", "13")
     _run("body_scanner", lambda: __import__(
