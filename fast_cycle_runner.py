@@ -648,6 +648,23 @@ def main():
     _cycle_id = os.environ.get("CORTEX_CYCLE_ID")
     beat("boot", "-1", cycle_id=_cycle_id)
 
+    # ── МОЗЪКЪТ ОТВАРЯ ЦИКЪЛА (закон, т.3 — Емил, 15 авг 2026) ──────────────
+    # Преди която и да е стъпка системата пита СЕБЕ СИ какво иска от този цикъл:
+    # фокус, подозрение към самата себе си, и тест за успех, който сама си задава.
+    # Планът се пише в memory/brain_cycle_plan.json и всяка стъпка може да го чете
+    # (core.brain.current_plan()). FAIL-OPEN: мълчащ мозък не спира цикъла.
+    beat("brain_briefing", "-0.9")
+    try:
+        from core.brain import brief_cycle as _brief
+        _plan = _brief()
+        if _plan:
+            print(f"[FAST_CYCLE] brain plan -> focus={_plan.get('focus')!r} "
+                  f"watch={_plan.get('watch')} test={str(_plan.get('success_test'))[:90]!r}")
+        else:
+            print("[FAST_CYCLE] brain plan -> brain silent (cycle runs unplanned)")
+    except Exception as e:
+        print(f"[FAST_CYCLE] brain plan -> FAILED: {type(e).__name__}: {e}")
+
     # ── Telegram approvals: apply any "OK <id>" replies BEFORE the cycle runs, so
     #    a source you approved is live for this cycle's scoring. Sensing-source
     #    promotions + accepted goals only — never a world-action, and only from the
@@ -1021,6 +1038,16 @@ def main():
     _run("goal_score_calculator", _goal_score_calculator)
 
     # ── 12.7. Cognitive Orchestrator — Attentional Meta Protocol ──
+    # ── 12.65. Deduction layer v1 (14 Aug 2026) — symbolic conclusions with premises
+    #    from auto_levels + trends + measured scores. Read by daily_analysis (human),
+    #    needs_report (Telegram) and available to the orchestrator. FAIL-OPEN.
+    beat("deduction", "12.65")
+    try:
+        from core.deduction import run as _deduction_run
+        _deduction_run()
+    except Exception as e:
+        print(f"[FAST_CYCLE] deduction -> FAILED: {type(e).__name__}: {e}")
+
     beat("cognitive_orchestrator", "12.7")
     # Runs BEFORE HyperClaw so it can use its priority_axes assessment.
     # (CortexStrategist was moved to step 3.5 to run before token budget is depleted.)
@@ -1239,6 +1266,23 @@ def main():
     except Exception as e:
         print(f"[FAST_CYCLE] merkle_to_training -> FAILED: {e}")
 
+    # ── МОЗЪКЪТ ЗАТВАРЯ ЦИКЪЛА (закон, т.3) ────────────────────────────────
+    # Той сам съди сбъднал ли се е ТЕСТЪТ, който сам си зададе сутринта, и какво
+    # да носи напред. Това затваря кръга ум→действие→памет: следващият план се
+    # пише върху тази присъда, не върху чиста дъска. FAIL-OPEN.
+    beat("brain_debrief", "25.5")
+    try:
+        from core.brain import debrief_cycle as _debrief
+        _rev = _debrief()
+        if _rev:
+            print(f"[FAST_CYCLE] brain review -> success={_rev.get('success')} "
+                  f"| {str(_rev.get('verdict'))[:120]}")
+            print(f"[FAST_CYCLE] brain blind spot -> {str(_rev.get('blind_spot'))[:120]}")
+        else:
+            print("[FAST_CYCLE] brain review -> no plan to judge / brain silent")
+    except Exception as e:
+        print(f"[FAST_CYCLE] brain review -> FAILED: {type(e).__name__}: {e}")
+
     # Cycle finished cleanly → seal the record, release the lock, drop the
     # heartbeat. Order matters: _seal_cycle_record() reads the heartbeat for the
     # cycle_id, so it must run BEFORE the heartbeat is cleared.
@@ -1270,6 +1314,14 @@ def main():
             print(f"[FAST_CYCLE] needs push -> FAILED: {type(_pe).__name__}: {_pe}")
     except Exception as e:
         print(f"[FAST_CYCLE] needs -> FAILED: {type(e).__name__}: {e}")
+
+    # ── RATIONALE в Telegram (14 Aug 2026, поръчано от Емил): машината, не облакът,
+    # му казва какво направи и ЗАЩО — с изводите и предпоставките им. FAIL-OPEN.
+    try:
+        from experiments.needs.needs_report import push_rationale as _rat
+        print(f"[FAST_CYCLE] rationale -> {_rat()}")
+    except Exception as e:
+        print(f"[FAST_CYCLE] rationale -> FAILED: {type(e).__name__}: {e}")
 
     print("=" * 50)
     print(f"[FAST_CYCLE] done at {_utc_now()}")
