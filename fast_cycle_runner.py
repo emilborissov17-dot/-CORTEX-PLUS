@@ -729,6 +729,39 @@ def _get_pending_patches() -> list[str]:
     return pending
 
 
+def _witness_or_refuse(step: str) -> bool:
+    """Има ли символен свидетел за тази необратима стъпка.
+
+    КОНСЕНСУС С KIMI, 15 авг 2026. Той:
+      „Не стига — обявяваш отсъствие, но продължаваш. Това е монолог, не диалог."
+    Прав беше. Дотогава липсата на MeTTa се записваше в дневника и нищо повече —
+    тоест струваше точно нула. Сега струва: трите стъпки, които пипат СВЕТА
+    (github_publish) и СЕБЕ СИ (self_modifier, execute_patches), не тръгват без
+    свидетел. Всичко останало — сетива, оценяване, дедукция, отчет — върви.
+    Границата пак е на ДЕЙСТВИЕТО, не на мисълта (закон, т.4)."""
+    try:
+        from core.metta_check import witness_present
+        if witness_present():
+            return True
+    except Exception as e:
+        print(f"[FAST_CYCLE] {step} -> witness check failed: {type(e).__name__}: {e}")
+    print(f"[FAST_CYCLE] {step} -> ОТКАЗАНА: няма символен свидетел (MeTTa не е на "
+          f"линия). Необратимо действие без проверка не се прави.")
+    try:
+        from memory.heartbeat import BASE as _B
+        import json as _j
+        from datetime import datetime as _dt, timezone as _tz
+        with open(_B / "memory" / "night_events.jsonl", "a", encoding="utf-8") as fh:
+            fh.write(_j.dumps({"ts": _dt.now(_tz.utc).isoformat(),
+                               "subject": f"{step} ОТКАЗАНА",
+                               "detail": "няма символен свидетел (MeTTa); необратимите "
+                                         "стъпки спират, останалите вървят"},
+                              ensure_ascii=False) + "\n")
+    except Exception:
+        pass
+    return False
+
+
 def _notify_patches_and_initiatives() -> None:
     """Run initiative tracker then send a single Windows notification combining
     pending code patches and PROPOSED/IN_PROGRESS initiatives."""
@@ -818,40 +851,6 @@ def main():
     _cycle_id = _classify_cycle_id(os.environ.get("CORTEX_CYCLE_ID"))
     beat("boot", "-1", cycle_id=_cycle_id)
 
-    # ── МОЗЪКЪТ ОТВАРЯ ЦИКЪЛА (закон, т.3 — Емил, 15 авг 2026) ──────────────
-    # Преди която и да е стъпка системата пита СЕБЕ СИ какво иска от този цикъл:
-    # фокус, подозрение към самата себе си, и тест за успех, който сама си задава.
-    # Планът се пише в memory/brain_cycle_plan.json и всяка стъпка може да го чете
-    # (core.brain.current_plan()). FAIL-OPEN: мълчащ мозък не спира цикъла.
-    beat("brain_briefing", "-0.9")
-    try:
-        from core.brain import brief_cycle as _brief
-        _plan = _brief()
-        if _plan:
-            print(f"[FAST_CYCLE] brain plan -> focus={_plan.get('focus')!r} "
-                  f"watch={_plan.get('watch')} test={str(_plan.get('success_test'))[:90]!r}")
-        else:
-            print("[FAST_CYCLE] brain plan -> brain silent (cycle runs unplanned)")
-    except Exception as e:
-        print(f"[FAST_CYCLE] brain plan -> FAILED: {type(e).__name__}: {e}")
-
-    # ── Telegram approvals: apply any "OK <id>" replies BEFORE the cycle runs, so
-    #    a source you approved is live for this cycle's scoring. Sensing-source
-    #    promotions + accepted goals only — never a world-action, and only from the
-    #    configured chat_id. FAIL-OPEN: a failure here never blocks the cycle.
-    beat("telegram_approvals", "-0.7")
-    try:
-        from experiments.needs.approve_reader import run as _approve_run
-        _n_appr = _approve_run()
-        if _n_appr:
-            print(f"[FAST_CYCLE] telegram approvals -> applied {_n_appr}")
-    except Exception as e:
-        print(f"[FAST_CYCLE] telegram approvals -> FAILED: {type(e).__name__}: {e}")
-
-    # ── Проверка за patches + initiatives преди всичко друго ──
-    beat("notify_patches_and_initiatives", "-0.5")
-    _notify_patches_and_initiatives()
-
     # ── 0. Body scan → adaptive directives (runs FIRST, before everything) ──
     beat("body_scan", "0")
     print("[FAST_CYCLE] Step 0: body scan + dependency check...")
@@ -895,9 +894,30 @@ def main():
     except Exception:
         pass
 
-    # ── 0.3. Canon — the ALWAYS-LOADED conceptual center (core/canon.py). Homeostasis
-    #    above is the PHYSICAL self; the canon is the CONCEPTUAL self. FAIL-OPEN.
-    beat("canon_load", "0.3")
+    # ══ КОНСЕНСУС С KIMI, 15 авг 2026 — СТЪПКА 2 от 53 ═════════════════════
+    # Дотук планът на деня се пишеше ВТОРИ, веднага след boot — тоест сляп за
+    # тялото и за човешката дума. Моята позиция: няма причина за това. Kimi се
+    # съгласи и добави довода, който липсваше в моята:
+    #   „Няма причина планът да е преди тялото — план при OOM или thermal throttle
+    #    е фикция."
+    #   „human_approvals преди плана е констрейнт, не опция; иначе планът пише
+    #    желания, които човекът вече е забранил."
+    # Затова новият ред е: pulse -> body_scan (+ хомеостаза) -> човешките одобрения
+    # -> известията -> ПЛАНЪТ. Мозъкът вече планира с отворени очи: знае колко
+    # памет има, знае какво човекът е разрешил и забранил.
+    # Четвъртото му искане — „body_scan трябва да може да СПРЕ цикъла директно" —
+    # е вече изпълнено по-горе и го проверих, вместо да го добавям втори път:
+    # homeostasis.assess().can_start връща цикъла преди този ред.
+
+    # ── 0.05. Canon — the ALWAYS-LOADED conceptual center (core/canon.py).
+    # СТЪПКА 3, 15 авг 2026. Дефект, който САМО ПРЕМЕСТВАНЕТО НА СТЪПКА 2 роди:
+    # канонът се зареждаше на 0.3, а планът на деня се пише на 0.2. Мозъкът чете
+    # канона през memory/active_canon_frame.txt (core/brain.py::_spirit), тоест
+    # щеше да напише днешния план, гледайки ВЧЕРАШНИЯ си концептуален център — а
+    # канонът е човешки защитен файл, който Емил може да е сменил снощи.
+    # Хомеостазата е физическото „аз"; канонът е концептуалното. И двете трябва да
+    # са налице, преди да се пише план. Затова канонът минава преди плана.
+    beat("canon_load", "0.05")
     try:
         from core.canon import as_frame as _canon_frame, load_canon as _load_canon
         _cf = _canon_frame()
@@ -908,6 +928,40 @@ def main():
               f"{len(_cc.get('dimensions', []))} goal-dimensions; center stamped for this cycle")
     except Exception as e:
         print(f"[FAST_CYCLE] canon load -> FAILED (fallback center in effect): {type(e).__name__}: {e}")
+
+    # ── Telegram approvals: apply any "OK <id>" replies BEFORE the cycle runs, so
+    #    a source you approved is live for this cycle's scoring. Sensing-source
+    #    promotions + accepted goals only — never a world-action, and only from the
+    #    configured chat_id. FAIL-OPEN: a failure here never blocks the cycle.
+    beat("telegram_approvals", "0.1")
+    try:
+        from experiments.needs.approve_reader import run as _approve_run
+        _n_appr = _approve_run()
+        if _n_appr:
+            print(f"[FAST_CYCLE] telegram approvals -> applied {_n_appr}")
+    except Exception as e:
+        print(f"[FAST_CYCLE] telegram approvals -> FAILED: {type(e).__name__}: {e}")
+
+    # ── Проверка за patches + initiatives ──
+    beat("notify_patches_and_initiatives", "0.15")
+    _notify_patches_and_initiatives()
+
+    # ── МОЗЪКЪТ ОТВАРЯ ЦИКЪЛА (закон, т.3 — Емил, 15 авг 2026) ──────────────
+    # Системата пита СЕБЕ СИ какво иска от този цикъл: фокус, подозрение към самата
+    # себе си, и тест за успех, който сама си задава. Планът се пише в
+    # memory/brain_cycle_plan.json и всяка стъпка може да го чете
+    # (core.brain.current_plan()). FAIL-OPEN: мълчащ мозък не спира цикъла.
+    beat("brain_briefing", "0.2")
+    try:
+        from core.brain import brief_cycle as _brief
+        _plan = _brief()
+        if _plan:
+            print(f"[FAST_CYCLE] brain plan -> focus={_plan.get('focus')!r} "
+                  f"watch={_plan.get('watch')} test={str(_plan.get('success_test'))[:90]!r}")
+        else:
+            print("[FAST_CYCLE] brain plan -> brain silent (cycle runs unplanned)")
+    except Exception as e:
+        print(f"[FAST_CYCLE] brain plan -> FAILED: {type(e).__name__}: {e}")
 
     # ── 0.5. Dependency check ──
     beat("dependency_check", "0.5")
@@ -1293,10 +1347,13 @@ def main():
 
     # ── 15.8. GitHub publish — cycle synthesis + verified hypotheses ──
     beat("github_publish", "15.8")
-    def _github_publisher():
-        from github_publisher import publish_synthesis as _gh_publish
-        _gh_publish()
-    _run("github_publisher", _github_publisher)
+    if not _witness_or_refuse("github_publish"):
+        pass
+    else:
+        def _github_publisher():
+            from github_publisher import publish_synthesis as _gh_publish
+            _gh_publish()
+        _run("github_publisher", _github_publisher)
 
     # ── 16. Action recommendations ──
     beat("action_recommendations", "16")
@@ -1328,13 +1385,23 @@ def main():
 
     # ── 18. Self modifier ──
     beat("self_modifier", "18")
-    _run("self_modifier", lambda: __import__(
-        "agents.core.self_modifier", fromlist=["run"]).run(), free_after=True)
+    if _witness_or_refuse("self_modifier"):
+        _run("self_modifier", lambda: __import__(
+            "agents.core.self_modifier", fromlist=["run"]).run(), free_after=True)
 
     # ── 19. Execute patches — вика auto_level вътрешно за реален before/after ──
     beat("execute_patches", "19")
-    _run("execute_patches", lambda: __import__(
-        "execute_patches", fromlist=["run"]).run())
+    if _witness_or_refuse("execute_patches"):
+        _run("execute_patches", lambda: __import__(
+            "execute_patches", fromlist=["run"]).run())
+        # Тук системата току-що е пренаписала СОБСТВЕНИЯ си код, значи изведените
+        # requires може вече да са други. Kimi, 15 авг: „графът е построен преди
+        # стъпка 1 и не знае за новото." Затова се престроява от нула.
+        try:
+            from core.metta_check import invalidate as _mc_invalidate
+            _mc_invalidate("след execute_patches — кодът се промени, requires също")
+        except Exception:
+            pass
 
     # ── 20. Feedback loop ──
     beat("feedback_loop", "20")

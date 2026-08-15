@@ -207,6 +207,42 @@ def to_markdown(rep: dict) -> str:
     except Exception:
         pass
 
+    # РАЗМИНАВАНИЯТА мозък-срещу-факти (Емил, 15 авг: MeTTa като точка за
+    # съпоставка на всяка стъпка). Ако мозъкът е казал едно, а фактите друго —
+    # човекът трябва да го види, а не да се разчита, че някой ще отвори лог.
+    try:
+        _dv = [json.loads(l) for l in
+               (BASE / "memory" / "divergence_log.jsonl").read_text(encoding="utf-8").splitlines()
+               if l.strip()]
+        _dv = [d for d in _dv if d.get("divergence")
+               and d.get("ts", "") >= str(rep.get("ts", ""))[:10]]
+        if _dv:
+            out += ["## Където мозъкът и фактите не се разбраха", "",
+                    f"{len(_dv)} разминавания този цикъл (MeTTa срещу преценката на мозъка):", ""]
+            for d in _dv[:8]:
+                out.append(f"- `{d.get('step')}` — {d.get('divergence')}")
+            out.append("")
+
+        # ТАБЛИЦАТА СРЕЩУ НАБЛЮДЕНИЕТО (Kimi, 15 авг: „свидетел, чиито предпоставки
+        # си писал ти, не лови твоите грешки"). Тук се съди НЕ мозъкът, а моята
+        # декларация: стъпка, която пише недекларирано, или декларира и не пипа.
+        _tb = [json.loads(l) for l in
+               (BASE / "memory" / "divergence_log.jsonl").read_text(encoding="utf-8").splitlines()
+               if l.strip()]
+        _tb = [d for d in _tb if (d.get("table_blind") or d.get("table_lies"))
+               and d.get("ts", "") >= str(rep.get("ts", ""))[:10]]
+        if _tb:
+            out += ["## Където таблицата се разминава с диска", "",
+                    "Това не съди мозъка, а собственото ми описание на цикъла — "
+                    "сравнено с това, което наистина е пипнато:", ""]
+            for d in _tb[:8]:
+                for key in ("table_blind", "table_lies"):
+                    if d.get(key):
+                        out.append(f"- {d[key]}")
+            out.append("")
+    except Exception:
+        pass
+
     # постоянството и съзвездието — прочит, който не гони промяната (15 авг)
     try:
         cn = json.loads((BASE / "memory" / "constancy_latest.json").read_text(encoding="utf-8"))

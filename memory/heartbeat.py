@@ -91,7 +91,21 @@ def beat(step: str, step_index: Optional[int] = None, cycle_id: Optional[str] = 
     # после мисли мозъкът. FAIL-OPEN: мълчащ или бавен мозък не убива цикъл.
     try:
         from core.brain import attend as _attend
-        _attend(step)
+        _said = _attend(step)
+    except Exception:
+        _said = None
+
+    # ── ВТОРОТО МНЕНИЕ: MeTTa на всяка стъпка (Емил, 15 авг 2026) ───────────
+    # „имаме ли МеТТа и Хиперон връзка на всяка стъпка (като допълнително мнение
+    # и точка за съпоставка)?" — дотогава НЕ, MeTTa стоеше само в графа за
+    # пропускането. Сега стои до мозъка на всяка стъпка, но НЕ като втори мозък:
+    # мозъкът казва какво МИСЛИ, MeTTa казва какво СЛЕДВА ОТ ФАКТИТЕ, и когато
+    # се разминат — разминаването се записва. Мозък, който твърди „предишната
+    # мина добре", докато обещаният ѝ файл не е пипнат, вече не минава невидим.
+    # Цена: ~0.06s за целия цикъл, нула LLM повиквания. FAIL-OPEN.
+    try:
+        from core.metta_check import compare as _mcompare
+        _mcompare(step, (_said or {}).get("prev_step"), _said)
     except Exception:
         pass
 
