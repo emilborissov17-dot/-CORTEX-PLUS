@@ -61,8 +61,11 @@ STEPS = [
      "бюджет (таван-300s) в отделен процес: спира сама с частичен резултат, вместо "
      "часовоят да убие цикъла. Редът на осите е по плана на мозъка.",
      ["memory/web_intelligence"], False),
-    ("global_indicators", "2.5", "~20 живи HTTP източника — твърдите числа.",
-     ["snapshots/master/global_indicators_latest.json"], False),
+    ("global_indicators", "2.5", "20 секции от 14 независими хоста (7 от тях през един "
+     "— World Bank). Всяко число получава произход: откъде, КОГА Е НАБЛЮДАВАНО, "
+     "закъснение и доверие по обявена формула.",
+     ["snapshots/master/global_indicators_latest.json",
+      "memory/provenance_latest.json"], False),
     ("sensorium_ingest", "2.54", "Поглъща сензорни капки; проверява истинската верига и сянката поотделно.",
      ["memory/sensorium"], False),
     ("browser_scout", "2.55", "Ходи по страници за смислови заключения, не само за числа.",

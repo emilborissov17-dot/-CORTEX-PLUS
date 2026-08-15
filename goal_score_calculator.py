@@ -323,8 +323,9 @@ def compute_goal_score(
     metric_details: dict = {}
     axis_scores:    dict = {}
 
-    total_weight  = 0.0
-    weighted_sum  = 0.0
+    total_weight    = 0.0
+    weighted_sum    = 0.0
+    measured_weight = 0.0      # теглото, зад което наистина стои число
 
     for domain_key, axes in targets.items():
         if domain_key.startswith("_"):
@@ -346,13 +347,34 @@ def compute_goal_score(
                 score = 0.5
                 tti   = None
             else:
-                # Qualitative / no data → neutral 0.5
-                score = 0.5
+                # ── КОНСЕНСУС С KIMI, 15 август 2026 ─────────────────────────
+                # Дотук тук пишеше: „Qualitative / no data -> neutral 0.5", и това
+                # 0.5 влизаше в претеглената сума С ПЪЛНОТО СИ ТЕГЛО. Преброено:
+                # 11 от 25 оси нямаха разрешено число, тоест 65 от 173 тегло —
+                # 38% ОТ КОМПОЗИТА стоеше на константа. Първата от тях беше
+                # CLIMATE_GLOBAL_RISK_REVIEW, с най-високото тегло в конфигурацията.
+                #
+                # Kimi, дословно:
+                #   „Оси без числа не са 'неизмервани' — те са ИЗМЕРЕНИ ОТ LLM БЕЗ
+                #    КОНТРОЛ, което е по-опасно от призната невежда."
+                #   „Не махай 0.5 — замени го с NULL, но остави осите в знаменателя.
+                #    Така липсата се вижда."
+                #   „Сравнимост: двойка (score, coverage). Ден с 62% не е сравним с
+                #    95% — това не е бъг, а истина."
+                #   „Едно число при 38% незнание е СТАТИСТИЧЕСКА ЛЪЖА. Публикуваш
+                #    score само при coverage >= праг, иначе 'insufficient data'."
+                #
+                # Затова: липсата вече е None, не 0.5. Тежестта ѝ НЕ влиза в
+                # числителя (иначе незнанието щеше да оценява), но влиза в общото
+                # тегло — така покритието се вижда, вместо да се крие.
+                score = None
                 tti   = None
 
-            axis_scores[axis_name] = round(score, 4)
-            weighted_sum  += score * weight
+            axis_scores[axis_name] = round(score, 4) if score is not None else None
             total_weight  += weight
+            if score is not None:
+                weighted_sum  += score * weight
+                measured_weight += weight
 
             if metric:
                 metric_details[metric] = {
@@ -361,15 +383,41 @@ def compute_goal_score(
                     "target":       target_val,
                     "unit":         unit,
                     "direction":    direction,
-                    "score":        round(score, 4),
+                    "score":        (round(score, 4) if score is not None else None),
+                    "measured":     score is not None,
                     "weight":       weight,
                     "tti_cycles":   tti,
                 }
 
-    composite = round(weighted_sum / total_weight, 4) if total_weight > 0 else 0.0
+    # Покритието е ЧАСТ ОТ ОТГОВОРА, не бележка под линия.
+    coverage = round(measured_weight / total_weight, 4) if total_weight > 0 else 0.0
+    measured_composite = (round(weighted_sum / measured_weight, 4)
+                          if measured_weight > 0 else None)
+
+    # Прагът, под който едно число е лъжа. 0.80 е предложението на Kimi; стои тук
+    # като явна константа, за да може да се оспори, а не скрито в израз.
+    COVERAGE_MIN = 0.80
+    enough = coverage >= COVERAGE_MIN
+    unmeasured = sorted(a for a, s in axis_scores.items() if s is None)
+
+    # ЗА СЪВМЕСТИМОСТ: composite_score остава ЧИСЛО, защото цикълът, Merkle
+    # ангажиментът и отчетите го четат — но вече е средно САМО от измереното, а не
+    # разредено с константи. Дали изобщо бива да се чете като истина, казва
+    # composite_valid: под прага то е False и придружено с причина.
+    composite = measured_composite if measured_composite is not None else 0.0
 
     return {
         "composite_score": composite,
+        "composite_valid": enough,
+        "coverage": coverage,
+        "coverage_min": COVERAGE_MIN,
+        "measured_weight": round(measured_weight, 1),
+        "unmeasured_axes": unmeasured,
+        "insufficient_data": (None if enough else
+                              f"покритие {coverage:.0%} < {COVERAGE_MIN:.0%}: "
+                              f"{len(unmeasured)} оси без число "
+                              f"({', '.join(unmeasured[:4])}...). Едно число при "
+                              f"{1 - coverage:.0%} незнание не е оценка."),
         "axis_scores":     axis_scores,
         "metric_details":  metric_details,
         "total_weight":    total_weight,

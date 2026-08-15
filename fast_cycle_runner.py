@@ -1341,6 +1341,17 @@ def main():
         co2  = gi_data.get("co2", {}).get("co2_ppm", "?")
         temp = gi_data.get("temperature", {}).get("temp_anomaly_c", "?")
         conf = gi_data.get("conflicts", {}).get("active_armed_conflicts", "?")
+        # ── ПРОИЗХОДЪТ НА ЧИСЛАТА (Kimi, 15 авг 2026) ─────────────────────
+        # „Твърдите числа са просто API отговори СЪС ЗАКЪСНЕНИЕ и без контекст."
+        # Мерено върху вчерашната снимка: средно доверие 0.36; едно число прясно
+        # (CO2, 11 дни); бежанците със закъснение 1321 дни; две секции ПРАЗНИ, но
+        # броени за източници. Оттук нататък това се смята всеки цикъл и се пише,
+        # за да не може закъснението пак да се скрие зад думата „източник".
+        try:
+            from core.provenance import run as _prov_run
+            _prov_run()
+        except Exception as _pe:
+            print(f"[FAST_CYCLE] provenance -> FAILED: {type(_pe).__name__}: {_pe}")
         _h = gi_data.get("_health") or {}
         print(f"[FAST_CYCLE] global_indicators -> CO2={co2}ppm | +{temp}°C | conflicts={conf}"
               f" | {_h.get('fresh_this_cycle')} fresh, {_h.get('carried_from_a_previous_cycle')}"
@@ -1581,7 +1592,19 @@ def main():
         from goal_score_calculator import compute_goal_score
         gs_result = compute_goal_score()
         composite  = gs_result["composite_score"]
-        print(f"[FAST_CYCLE] goal_score_calculator -> composite={composite:.4f}")
+        # КОНСЕНСУС С KIMI, 15 авг 2026: композитът вече върви ЗАЕДНО с покритието.
+        # „Ден с 62% не е сравним с 95% — това не е бъг, а истина."
+        _cov = gs_result.get("coverage")
+        _ok  = gs_result.get("composite_valid")
+        print(f"[FAST_CYCLE] goal_score_calculator -> composite={composite:.4f} "
+              f"| покритие={_cov:.0%} | валиден={_ok}")
+        if not _ok:
+            print(f"[FAST_CYCLE] ВНИМАНИЕ: {gs_result.get('insufficient_data')}")
+            try:
+                _note_night("КОМПОЗИТЪТ НЕ Е ВАЛИДЕН",
+                            str(gs_result.get("insufficient_data")))
+            except Exception:
+                pass
         # Persist result as snapshot so master + MerkleMemory can read it
         gs_snap = BASE / "snapshots" / "master" / "goal_score_latest.json"
         gs_snap.parent.mkdir(parents=True, exist_ok=True)

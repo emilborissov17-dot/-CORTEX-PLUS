@@ -243,6 +243,27 @@ def to_markdown(rep: dict) -> str:
     except Exception:
         pass
 
+    # ПОКРИТИЕТО НА КОМПОЗИТА (консенсус с Kimi, 15 авг 2026). Дотук отчетът
+    # показваше едно число. Число при 32% незнание не е оценка — затова тук стои
+    # заедно с това КОЛКО от целта изобщо е измерена.
+    try:
+        _g = json.loads((BASE / "memory" / "goal_score_history.json")
+                        .read_text(encoding="utf-8"))
+        _last = _g[-1] if isinstance(_g, list) and _g else _g
+        _cov = (_last or {}).get("coverage")
+        if _cov is not None:
+            _valid = (_last or {}).get("composite_valid")
+            _un = (_last or {}).get("unmeasured_axes") or []
+            out += ["## Колко от целта изобщо е измерена", "",
+                    f"- покритие: **{_cov:.0%}** от теглото стои зад реално число",
+                    f"- композитът {'ВАЛИДЕН' if _valid else 'НЕ Е ВАЛИДЕН — не го чети като оценка'}"]
+            if _un:
+                out.append(f"- без нито едно число: {', '.join(_un[:8])}"
+                           + (f" (+{len(_un) - 8})" if len(_un) > 8 else ""))
+            out.append("")
+    except Exception:
+        pass
+
     # постоянството и съзвездието — прочит, който не гони промяната (15 авг)
     try:
         cn = json.loads((BASE / "memory" / "constancy_latest.json").read_text(encoding="utf-8"))
