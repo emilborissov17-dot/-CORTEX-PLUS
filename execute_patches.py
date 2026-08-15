@@ -64,7 +64,39 @@ def _extract_measured(stdout: str):
         return raw[:200]  # non-JSON but present — keep the text
 
 
-def _record(name, ok, out, err, score_before, score_after, levels_before, levels_after):
+_READ_CALL_RE = re.compile(r"(_read_json\s*\(|read_text\s*\(|json\.load\s*\()")
+_QUOTED_JSON_RE = re.compile(r'["\']([\w./\\-]+\.jsonl?)["\']')
+
+def _measurement_quality(measured, source: str):
+    """15 Aug 2026 — THE LETTER-VS-SPIRIT FIX.
+
+    Yesterday's rule ("every patch must print MEASURED") worked mechanically and
+    failed substantively: today's four patches all printed MEASURED and all of
+    them reported 0 / 0.0 / a hardcoded constant, having read nothing. A number
+    that came from no file is not a measurement, it is a decoration.
+
+    Returns (quality, why):
+      MEASURED   — a real value derived from a file the system actually has
+      ZERO       — printed a measurement of 0/None/empty (nothing was measured)
+      FABRICATED — never read any existing data file; the number is invented
+      UNMEASURED — no MEASURED line at all
+    """
+    if measured is None:
+        return "UNMEASURED", "no MEASURED line"
+    val = measured.get("value") if isinstance(measured, dict) else measured
+    reads = bool(_READ_CALL_RE.search(source or ""))
+    named = [f for f in _QUOTED_JSON_RE.findall(source or "")
+             if (BASE / f).exists() or (BASE / "memory" / pathlib.Path(f).name).exists()]
+    if not (reads and named):
+        return "FABRICATED", ("no read of an existing data file"
+                              if not named else "no read call")
+    if val is None or (isinstance(val, (int, float)) and float(val) == 0.0) or val == "":
+        return "ZERO", f"measured {val!r} from {named[0]} — nothing actually measured"
+    return "MEASURED", f"{val!r} derived from {named[0]}"
+
+
+def _record(name, ok, out, err, score_before, score_after, levels_before, levels_after,
+            source: str = ""):
     delta   = round(score_after - score_before, 2) if score_before is not None and score_after is not None else None
     measured = _extract_measured(out)
     verdict = "NEUTRAL"
@@ -75,8 +107,10 @@ def _record(name, ok, out, err, score_before, score_after, levels_before, levels
     # patch used to land as NEUTRAL — indistinguishable from "did nothing". A patch
     # that ran fine but reported NO measurement is now named for what it is: the
     # quarantine lesson (measurable_goal rule) applied at the execution end too.
-    if ok and verdict == "NEUTRAL" and measured is None:
-        verdict = "UNMEASURED"
+    quality, quality_why = _measurement_quality(measured, source)
+    if ok and verdict == "NEUTRAL" and quality != "MEASURED":
+        verdict = quality          # UNMEASURED / ZERO / FABRICATED — never silent NEUTRAL
+        print(f"  [MEASUREMENT] {quality}: {quality_why}")
 
     changed = _changed_axes(levels_before, levels_after)
     if changed:
@@ -99,6 +133,8 @@ def _record(name, ok, out, err, score_before, score_after, levels_before, levels
             "delta":        delta,
             "verdict":      verdict,
             "measured":     measured,
+            "measurement_quality": quality,
+            "measurement_why":     quality_why,
             "changed_axes": changed,
         })
         JOURNAL_PATH.write_text(json.dumps(j, ensure_ascii=False, indent=2), encoding="utf-8")
@@ -129,6 +165,7 @@ def _record(name, ok, out, err, score_before, score_after, levels_before, levels
             "success":      ok,
             "verdict":      verdict,
             "measured":     measured,
+            "measurement_quality": quality,
             "score_before": score_before,
             "score_after":  score_after,
             "delta":        delta,
@@ -304,6 +341,10 @@ def run():
             print(f"  ✔  Auto-approved (не пипа чувствителни зони)")
 
         # ── PatchGuardian supervised run: syntax+backup+compile+execute+apply_patch
+        try:
+            _src = patch.read_text(encoding="utf-8", errors="ignore")
+        except Exception:
+            _src = ""
         ok, stdout, stderr = _guardian_supervised_run(patch, env)
 
         if ok:
@@ -313,7 +354,7 @@ def run():
 
             verdict, delta, changed = _record(
                 patch.name, True, stdout, "",
-                score_before, score_after, levels_before, levels_after
+                score_before, score_after, levels_before, levels_after, source=_src
             )
 
             if verdict == "HARMFUL":
@@ -336,7 +377,7 @@ def run():
             # means the rollback was clean, and a line means it was not.
             levels_after = _compute_levels()
             _record(patch.name, False, stdout, stderr,
-                    score_before, None, levels_before, levels_after)
+                    score_before, None, levels_before, levels_after, source=_src)
 
     print(f"\n[PATCH_EXECUTOR] final score = {_avg_score(levels_before)}")
     print(f"[PATCH_EXECUTOR] done at {datetime.now(timezone.utc).isoformat()}")

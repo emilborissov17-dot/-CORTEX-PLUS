@@ -29,59 +29,260 @@
     "Keys: 'org:<exact org string>' | 'host:<hostname>' | 'path:<repo-relative file>'.",
     "Lookup order is host, then org, then path — the most specific thing we know wins."
   ],
-
   "_classes": {
     "self_reported": "the measured entity produces the statistic: a government statistical office, ministry or state agency; a company reporting on itself; any body reporting on its own jurisdiction or its own performance. Includes AGGREGATORS of national reporting — the aggregator is not the measurer.",
     "independent": "a third party measures without the subject's control: satellite and remote sensing, physical sensor networks, independent surveys, academic measurement, market and price observation.",
     "adversarial": "a party whose interest is OPPOSED to the subject's, or a measurement the subject would prefer suppressed.",
     "unknown": "cannot be determined. The default. Never inferred to be independent."
   },
-
   "confirmed": {
-    "org:World Bank": {"class": "self_reported", "why": "aggregates figures supplied by national statistical offices — the aggregator is not the measurer", "confirmed_by": "Emil", "confirmed_at": "2026-08-03"},
-    "org:WB": {"class": "self_reported", "why": "World Bank, same aggregation of national reporting", "confirmed_by": "Emil", "confirmed_at": "2026-08-03"},
-    "org:World Bank WGI": {"class": "self_reported", "why": "Worldwide Governance Indicators: aggregates state-sourced and survey inputs about states", "confirmed_by": "Emil", "confirmed_at": "2026-08-03"},
-    "org:FAO/WB": {"class": "self_reported", "why": "FAO and World Bank food statistics, compiled from national agricultural reporting", "confirmed_by": "Emil", "confirmed_at": "2026-08-03"},
-    "org:ITU/World Bank": {"class": "self_reported", "why": "ITU telecoms indicators are reported by national regulators and operators", "confirmed_by": "Emil", "confirmed_at": "2026-08-03"},
-    "org:ITU/WB": {"class": "self_reported", "why": "as ITU/World Bank", "confirmed_by": "Emil", "confirmed_at": "2026-08-03"},
-    "org:IUCN/World Bank": {"class": "self_reported", "why": "threatened-species counts compiled from national and institutional submissions", "confirmed_by": "Emil", "confirmed_at": "2026-08-03"},
-    "org:UNHCR": {"class": "self_reported", "why": "refugee, IDP and asylum stocks are reported to UNHCR by host states", "confirmed_by": "Emil", "confirmed_at": "2026-08-03"},
-    "org:CORTEX/WGI+V-Dem": {"class": "self_reported", "why": "MIXED and deliberately classed at its weaker half: WGI aggregates state-sourced inputs, V-Dem is independent expert coding. Split this key if the two are ever separated.", "confirmed_by": "Emil", "confirmed_at": "2026-08-03"},
-    "org:CORTEX (self)": {"class": "self_reported", "why": "the system's own goal score. It is the measured entity and the reporter at once — the sharpest case of this whole file.", "confirmed_by": "Emil", "confirmed_at": "2026-08-03"},
-
-    "org:NOAA": {"class": "independent", "why": "physical instrument record (CO2, sea level); measures the atmosphere, not a party's account of itself", "confirmed_by": "Emil", "confirmed_at": "2026-08-03"},
-    "org:NOAA-GML": {"class": "independent", "why": "Global Monitoring Laboratory flask and in-situ measurement", "confirmed_by": "Emil", "confirmed_at": "2026-08-03"},
-    "org:NOAA-CU": {"class": "independent", "why": "satellite altimetry sea level", "confirmed_by": "Emil", "confirmed_at": "2026-08-03"},
-    "org:NOAA-local-cache": {"class": "independent", "why": "a local cache of the NOAA instrument record; caching does not change who measured", "confirmed_by": "Emil", "confirmed_at": "2026-08-03"},
-    "org:NASA": {"class": "independent", "why": "satellite and instrument measurement", "confirmed_by": "Emil", "confirmed_at": "2026-08-03"},
-    "org:NASA-EONET": {"class": "independent", "why": "natural-event detection from earth-observing satellites", "confirmed_by": "Emil", "confirmed_at": "2026-08-03"},
-    "org:NASA JPL CNEOS": {"class": "independent", "why": "orbital observation; no interested party involved", "confirmed_by": "Emil", "confirmed_at": "2026-08-03"},
-    "org:NASA Exoplanet Archive": {"class": "independent", "why": "telescope observation", "confirmed_by": "Emil", "confirmed_at": "2026-08-03"},
-    "org:USGS": {"class": "independent", "why": "seismometer and stream-gauge networks — physical sensors", "confirmed_by": "Emil", "confirmed_at": "2026-08-03"},
-    "org:Open-Meteo": {"class": "independent", "why": "numerical weather model over instrument and satellite inputs", "confirmed_by": "Emil", "confirmed_at": "2026-08-03"},
-    "org:GDELT": {"class": "independent", "why": "observes what others PUBLISH; it is not the subject's own statistic. NOTE: independent of the subject is not the same as unbiased — see layer 4, which this file does not address.", "confirmed_by": "Emil", "confirmed_at": "2026-08-03"},
-    "org:UCDP/PRIO": {"class": "independent", "why": "academic conflict coding from press and field reporting, not from the belligerents", "confirmed_by": "Emil", "confirmed_at": "2026-08-03"},
-    "org:SIPRI/FAS": {"class": "independent", "why": "estimates arsenals the measured states do not disclose — arguably adversarial; classed independent as the weaker, safer claim", "confirmed_by": "Emil", "confirmed_at": "2026-08-03"},
-    "org:GBIF": {"class": "independent", "why": "aggregated field and citizen-science species observation", "confirmed_by": "Emil", "confirmed_at": "2026-08-03"},
-    "org:FRED/St.Louis Fed": {"class": "independent", "why": "market price observation (Treasury yield). The publisher is a state agency but the quantity is a market price, not the state's account of itself.", "confirmed_by": "Emil", "confirmed_at": "2026-08-03"},
-    "org:ECB": {"class": "independent", "why": "market reference exchange rate — a price, not a self-assessment", "confirmed_by": "Emil", "confirmed_at": "2026-08-03"},
-
-    "host:gml.noaa.gov": {"class": "independent", "why": "NOAA instrument record", "confirmed_by": "Emil", "confirmed_at": "2026-08-03"},
-    "host:eonet.gsfc.nasa.gov": {"class": "independent", "why": "NASA earth observation", "confirmed_by": "Emil", "confirmed_at": "2026-08-03"},
-    "host:earthquake.usgs.gov": {"class": "independent", "why": "seismometer network", "confirmed_by": "Emil", "confirmed_at": "2026-08-03"},
-    "host:waterservices.usgs.gov": {"class": "independent", "why": "stream-gauge network", "confirmed_by": "Emil", "confirmed_at": "2026-08-03"},
-    "host:api.open-meteo.com": {"class": "independent", "why": "weather model over instrument inputs", "confirmed_by": "Emil", "confirmed_at": "2026-08-03"},
-    "host:api.gdeltproject.org": {"class": "independent", "why": "observes published media, not the subject's own statistic", "confirmed_by": "Emil", "confirmed_at": "2026-08-03"},
-    "host:api.worldbank.org": {"class": "self_reported", "why": "national statistical office submissions", "confirmed_by": "Emil", "confirmed_at": "2026-08-03"},
-
-    "host:unstats.un.org": {"class": "self_reported", "why": "UN SDG Global Database: member states report to the custodian agency. Some series are custodian-ESTIMATED (WHO/UNICEF JMP, UNODC) and are closer to mixed — split this key per series if that distinction starts to matter.", "confirmed_by": "Emil", "confirmed_at": "2026-08-03"},
-    "host:ec.europa.eu": {"class": "self_reported", "why": "Eurostat: member states report, Eurostat standardises. The measured entity supplies the figures.", "confirmed_by": "Emil", "confirmed_at": "2026-08-03"},
-    "host:sdmx.oecd.org": {"class": "self_reported", "why": "OECD: member states report, the OECD standardises — the same aggregator logic as the World Bank", "confirmed_by": "Emil", "confirmed_at": "2026-08-03"},
-    "host:data-api.ecb.europa.eu": {"class": "independent", "why": "market prices and reference rates — an observation of a market, not a party's account of itself. ECB series ABOUT member states would need classing per series.", "confirmed_by": "Emil", "confirmed_at": "2026-08-03"},
-    "host:fred.stlouisfed.org": {"class": "independent", "why": "market price series", "confirmed_by": "Emil", "confirmed_at": "2026-08-03"},
-    "host:data-api.ecb.europa.eu": {"class": "independent", "why": "market reference rate", "confirmed_by": "Emil", "confirmed_at": "2026-08-03"}
+    "org:World Bank": {
+      "class": "self_reported",
+      "why": "aggregates figures supplied by national statistical offices — the aggregator is not the measurer",
+      "confirmed_by": "Emil",
+      "confirmed_at": "2026-08-03"
+    },
+    "org:WB": {
+      "class": "self_reported",
+      "why": "World Bank, same aggregation of national reporting",
+      "confirmed_by": "Emil",
+      "confirmed_at": "2026-08-03"
+    },
+    "org:World Bank WGI": {
+      "class": "self_reported",
+      "why": "Worldwide Governance Indicators: aggregates state-sourced and survey inputs about states",
+      "confirmed_by": "Emil",
+      "confirmed_at": "2026-08-03"
+    },
+    "org:FAO/WB": {
+      "class": "self_reported",
+      "why": "FAO and World Bank food statistics, compiled from national agricultural reporting",
+      "confirmed_by": "Emil",
+      "confirmed_at": "2026-08-03"
+    },
+    "org:ITU/World Bank": {
+      "class": "self_reported",
+      "why": "ITU telecoms indicators are reported by national regulators and operators",
+      "confirmed_by": "Emil",
+      "confirmed_at": "2026-08-03"
+    },
+    "org:ITU/WB": {
+      "class": "self_reported",
+      "why": "as ITU/World Bank",
+      "confirmed_by": "Emil",
+      "confirmed_at": "2026-08-03"
+    },
+    "org:IUCN/World Bank": {
+      "class": "self_reported",
+      "why": "threatened-species counts compiled from national and institutional submissions",
+      "confirmed_by": "Emil",
+      "confirmed_at": "2026-08-03"
+    },
+    "org:UNHCR": {
+      "class": "self_reported",
+      "why": "refugee, IDP and asylum stocks are reported to UNHCR by host states",
+      "confirmed_by": "Emil",
+      "confirmed_at": "2026-08-03"
+    },
+    "org:CORTEX/WGI+V-Dem": {
+      "class": "self_reported",
+      "why": "MIXED and deliberately classed at its weaker half: WGI aggregates state-sourced inputs, V-Dem is independent expert coding. Split this key if the two are ever separated.",
+      "confirmed_by": "Emil",
+      "confirmed_at": "2026-08-03"
+    },
+    "org:CORTEX (self)": {
+      "class": "self_reported",
+      "why": "the system's own goal score. It is the measured entity and the reporter at once — the sharpest case of this whole file.",
+      "confirmed_by": "Emil",
+      "confirmed_at": "2026-08-03"
+    },
+    "org:NOAA": {
+      "class": "independent",
+      "why": "physical instrument record (CO2, sea level); measures the atmosphere, not a party's account of itself",
+      "confirmed_by": "Emil",
+      "confirmed_at": "2026-08-03"
+    },
+    "org:NOAA-GML": {
+      "class": "independent",
+      "why": "Global Monitoring Laboratory flask and in-situ measurement",
+      "confirmed_by": "Emil",
+      "confirmed_at": "2026-08-03"
+    },
+    "org:NOAA-CU": {
+      "class": "independent",
+      "why": "satellite altimetry sea level",
+      "confirmed_by": "Emil",
+      "confirmed_at": "2026-08-03"
+    },
+    "org:NOAA-local-cache": {
+      "class": "independent",
+      "why": "a local cache of the NOAA instrument record; caching does not change who measured",
+      "confirmed_by": "Emil",
+      "confirmed_at": "2026-08-03"
+    },
+    "org:NASA": {
+      "class": "independent",
+      "why": "satellite and instrument measurement",
+      "confirmed_by": "Emil",
+      "confirmed_at": "2026-08-03"
+    },
+    "org:NASA-EONET": {
+      "class": "independent",
+      "why": "natural-event detection from earth-observing satellites",
+      "confirmed_by": "Emil",
+      "confirmed_at": "2026-08-03"
+    },
+    "org:NASA JPL CNEOS": {
+      "class": "independent",
+      "why": "orbital observation; no interested party involved",
+      "confirmed_by": "Emil",
+      "confirmed_at": "2026-08-03"
+    },
+    "org:NASA Exoplanet Archive": {
+      "class": "independent",
+      "why": "telescope observation",
+      "confirmed_by": "Emil",
+      "confirmed_at": "2026-08-03"
+    },
+    "org:USGS": {
+      "class": "independent",
+      "why": "seismometer and stream-gauge networks — physical sensors",
+      "confirmed_by": "Emil",
+      "confirmed_at": "2026-08-03"
+    },
+    "org:Open-Meteo": {
+      "class": "independent",
+      "why": "numerical weather model over instrument and satellite inputs",
+      "confirmed_by": "Emil",
+      "confirmed_at": "2026-08-03"
+    },
+    "org:GDELT": {
+      "class": "independent",
+      "why": "observes what others PUBLISH; it is not the subject's own statistic. NOTE: independent of the subject is not the same as unbiased — see layer 4, which this file does not address.",
+      "confirmed_by": "Emil",
+      "confirmed_at": "2026-08-03"
+    },
+    "org:UCDP/PRIO": {
+      "class": "independent",
+      "why": "academic conflict coding from press and field reporting, not from the belligerents",
+      "confirmed_by": "Emil",
+      "confirmed_at": "2026-08-03"
+    },
+    "org:SIPRI/FAS": {
+      "class": "independent",
+      "why": "estimates arsenals the measured states do not disclose — arguably adversarial; classed independent as the weaker, safer claim",
+      "confirmed_by": "Emil",
+      "confirmed_at": "2026-08-03"
+    },
+    "org:GBIF": {
+      "class": "independent",
+      "why": "aggregated field and citizen-science species observation",
+      "confirmed_by": "Emil",
+      "confirmed_at": "2026-08-03"
+    },
+    "org:FRED/St.Louis Fed": {
+      "class": "independent",
+      "why": "market price observation (Treasury yield). The publisher is a state agency but the quantity is a market price, not the state's account of itself.",
+      "confirmed_by": "Emil",
+      "confirmed_at": "2026-08-03"
+    },
+    "org:ECB": {
+      "class": "independent",
+      "why": "market reference exchange rate — a price, not a self-assessment",
+      "confirmed_by": "Emil",
+      "confirmed_at": "2026-08-03"
+    },
+    "host:gml.noaa.gov": {
+      "class": "independent",
+      "why": "NOAA instrument record",
+      "confirmed_by": "Emil",
+      "confirmed_at": "2026-08-03"
+    },
+    "host:eonet.gsfc.nasa.gov": {
+      "class": "independent",
+      "why": "NASA earth observation",
+      "confirmed_by": "Emil",
+      "confirmed_at": "2026-08-03"
+    },
+    "host:earthquake.usgs.gov": {
+      "class": "independent",
+      "why": "seismometer network",
+      "confirmed_by": "Emil",
+      "confirmed_at": "2026-08-03"
+    },
+    "host:waterservices.usgs.gov": {
+      "class": "independent",
+      "why": "stream-gauge network",
+      "confirmed_by": "Emil",
+      "confirmed_at": "2026-08-03"
+    },
+    "host:api.open-meteo.com": {
+      "class": "independent",
+      "why": "weather model over instrument inputs",
+      "confirmed_by": "Emil",
+      "confirmed_at": "2026-08-03"
+    },
+    "host:api.gdeltproject.org": {
+      "class": "independent",
+      "why": "observes published media, not the subject's own statistic",
+      "confirmed_by": "Emil",
+      "confirmed_at": "2026-08-03"
+    },
+    "host:api.worldbank.org": {
+      "class": "self_reported",
+      "why": "national statistical office submissions",
+      "confirmed_by": "Emil",
+      "confirmed_at": "2026-08-03"
+    },
+    "host:unstats.un.org": {
+      "class": "self_reported",
+      "why": "UN SDG Global Database: member states report to the custodian agency. Some series are custodian-ESTIMATED (WHO/UNICEF JMP, UNODC) and are closer to mixed — split this key per series if that distinction starts to matter.",
+      "confirmed_by": "Emil",
+      "confirmed_at": "2026-08-03"
+    },
+    "host:ec.europa.eu": {
+      "class": "self_reported",
+      "why": "Eurostat: member states report, Eurostat standardises. The measured entity supplies the figures.",
+      "confirmed_by": "Emil",
+      "confirmed_at": "2026-08-03"
+    },
+    "host:sdmx.oecd.org": {
+      "class": "self_reported",
+      "why": "OECD: member states report, the OECD standardises — the same aggregator logic as the World Bank",
+      "confirmed_by": "Emil",
+      "confirmed_at": "2026-08-03"
+    },
+    "host:data-api.ecb.europa.eu": {
+      "class": "independent",
+      "why": "market reference rate",
+      "confirmed_by": "Emil",
+      "confirmed_at": "2026-08-03"
+    },
+    "host:fred.stlouisfed.org": {
+      "class": "independent",
+      "why": "market price series",
+      "confirmed_by": "Emil",
+      "confirmed_at": "2026-08-03"
+    },
+    "org:CelesTrak": {
+      "class": "independent",
+      "why": "non-governmental orbital-data distributor. It republishes US Space Force tracking of third-party objects and reports on no state's own performance — the observer is not the observed.",
+      "confirmed_by": "Claude, under Emil's explicit authorisation 2026-08-04 (coverage-gap fix)",
+      "confirmed_at": "2026-08-04"
+    },
+    "host:celestrak.org": {
+      "class": "independent",
+      "why": "as org:CelesTrak",
+      "confirmed_by": "Claude, under Emil's explicit authorisation 2026-08-04 (coverage-gap fix)",
+      "confirmed_at": "2026-08-04"
+    },
+    "org:CORTEX internal": {
+      "class": "self_reported",
+      "why": "CORTEX measuring CORTEX. GENERAL_SELF_REVIEW reads this system's own health counters, so it is self-reported BY DEFINITION and must never be counted as independent corroboration of anything.",
+      "confirmed_by": "Claude, under Emil's explicit authorisation 2026-08-04 (coverage-gap fix)",
+      "confirmed_at": "2026-08-04"
+    }
   },
-
   "proposed": {
     "_doc": "The system may append here when it meets an org or host that is in neither map. NOTHING here is ever applied — reporter_class() does not read this object. It exists so a human has a queue to confirm from, with the rule that suggested each entry stated next to it. Deliberately left empty at seeding: arXiv and GitHub (technology axes) are genuinely ambiguous — a third-party index of what researchers themselves publish — and they stay `unknown` until a human decides, rather than being flattered into `independent`."
   }

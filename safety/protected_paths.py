@@ -75,6 +75,15 @@ PROTECTED_FILES = frozenset({
     "patch_guardian.py",
     "execute_patches.py",        # the gate must not be able to rewrite the gate
     "scripts/review_quarantine.py",   # the human's window into what was rejected
+    # The ranking that decides which rejected patches a human looks at first. It is the
+    # same lane as review_quarantine.py and protected for the same reason, one step
+    # earlier: a system that can rewrite its own triage can promote its own patches —
+    # not by defeating the guardian, but by editing the order in which its drafts are
+    # presented for approval. Its verdicts are already deterministic where it matters
+    # (protected paths, wiring, fabricated data); this stops those rules being softened
+    # by the thing they judge. Added 2026-08-04 with Emil's explicit authorisation —
+    # PROTECTED_DIRS covers safety/, so no patch could have made this change itself.
+    "scripts/triage_quarantine.py",
 
     # ── The scheduler / supervisor (autonomy rung 1) ─────────────────────────
     # The thing that decides WHETHER the system runs must not be writable by

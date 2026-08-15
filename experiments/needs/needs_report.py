@@ -147,8 +147,13 @@ def _parse_candidate(detail: str, axis: str, disc: dict):
         cmd = detail[detail.index("--promote"):].strip()
         if url and "--url" in cmd:  # rebuild with the full URL, drop the trailing "..."
             cmd = cmd.split("--url", 1)[0].strip() + f" --url {url}"
+    rd = None
+    for s in ax_entry.get("sources", []):
+        if org and s.get("org") == org:
+            rd = s.get("rule_derivation")
+            break
     return {"org": org, "metric": metric, "url": url, "cmd": cmd, "slot": slot,
-            "kind": kind, "parse": parse, "status": status}
+            "kind": kind, "parse": parse, "status": status, "rule_derivation": rd}
 
 
 def _mind_items():
@@ -188,6 +193,8 @@ def _mind_items():
                     "human", candidate={"org": c.get("org"), "url": url, "metric": c.get("metric")})
                 _attach_promote(item, axis, url, c.get("slot"), c.get("kind"), c.get("org"),
                                 parse=c.get("parse"))
+                if item.get("approve") and c.get("rule_derivation"):
+                    item["approve"]["rule_derivation"] = c["rule_derivation"]
                 out.append(item)
         # 2) slot problems
         for it in items:
@@ -585,8 +592,27 @@ def _item_axis(item: dict) -> str | None:
     return m.group(0) if m else None
 
 
+def _deduction_items():
+    """Conclusions of core/deduction.py (14 Aug 2026) — the symbolic layer speaks
+    through the same needs channel as everything else, premises included, so a
+    derived ALARM reaches Emil's phone with the facts it stands on."""
+    ded = _load(REPO / "memory" / "deductions_latest.json", {})
+    out = []
+    for c in (ded.get("conclusions") or []):
+        if c.get("severity") != "high":
+            continue
+        prem = "; ".join(f"{p.get('file','?').split('/')[-1]}[{p.get('key')}]={p.get('value')}"
+                         for p in c.get("premises", []))
+        out.append(_item("MIND", "high",
+                         f"ДЕДУКЦИЯ [{c.get('rule_id')}]: {c.get('conclusion')}",
+                         f"изведено от: {prem}",
+                         "виж memory/deductions_latest.json — извод с проверими предпоставки",
+                         "human"))
+    return out
+
+
 def build() -> dict:
-    items = _mind_items() + _body_items() + _spirit_items()
+    items = _mind_items() + _deduction_items() + _body_items() + _spirit_items()
     order = {"high": 0, "medium": 1, "low": 2, "info": 3}
     items.sort(key=lambda x: order.get(x["severity"], 9))
 
@@ -648,6 +674,71 @@ def _notify(text: str):
 # and only when that subset changed since last push — so a 5-min scheduler tick with
 # the same needs does not buzz the phone every time.
 
+def push_rationale() -> str:
+    """14 Aug 2026, поръчано от Емил: след всеки цикъл МАШИНАТА му праща в Telegram
+    кратък RATIONALE — не сурови числа, а 'какво направих и ЗАЩО', с предпоставки.
+    Самостоятелна, fail-open; връща статус-стринг като _push_status."""
+    cfg = _load(NOTIFY_CFG, {})
+    if cfg.get("channel") != "telegram" or not cfg.get("token") or not cfg.get("chat_id"):
+        return "skip:no_config"
+    L = ["🧠 CORTEX — дневен rationale"]
+    try:  # композит + посока + САЛИЕНТНОСТ: системата сама казва кое мръдна най-много
+        hist = _load(REPO / "memory" / "goal_score_history.json", [])
+        if hist:
+            cur = hist[-1].get("scores", {})
+            avg = round(sum(cur.values()) / max(len(cur), 1), 1)
+            line = f"Средно по осите: {avg}/100"
+            if len(hist) > 1:
+                prev = hist[-2].get("scores", {})
+                pavg = round(sum(prev.values()) / max(len(prev), 1), 1)
+                line += f" (вчера {pavg}, Δ{avg - pavg:+.1f})"
+                movers = sorted(((a, cur[a] - prev[a]) for a in cur if a in prev),
+                                key=lambda x: -abs(x[1]))[:2]
+                for a, d in movers:
+                    if abs(d) >= 1:
+                        line += f"\nНай-голяма промяна: {a} {d:+.1f} ({prev[a]}→{cur[a]})"
+            L.append(line)
+    except Exception:
+        pass
+    try:  # фокус с ИЗМЕРЕНО защо (weighted gap), не наемна проза
+        pr = _load(REPO / "memory" / "self_directed_priority.json", {})
+        ax, gap = pr.get("priority_axis"), pr.get("weighted_gap_from_goal")
+        if ax and ax != "SELF_PRESERVATION":
+            L.append(f"Фокус: {ax} — защото е най-далече от целта "
+                     f"(претеглена дупка {gap}, memory/self_directed_priority.json)")
+    except Exception:
+        pass
+    try:  # дедукции с предпоставки — сърцето на rationale-а
+        ded = _load(REPO / "memory" / "deductions_latest.json", {})
+        for c in (ded.get("conclusions") or [])[:3]:
+            prem = "; ".join(f"{p.get('key')}={p.get('value')}" for p in c.get("premises", [])[:2])
+            L.append(f"Извод [{c.get('rule_id')}]: {c.get('conclusion','')[:110]} (⇐ {prem})")
+    except Exception:
+        pass
+    try:  # какво направи по себе си
+        import datetime as _dt
+        today = _dt.datetime.now(_dt.timezone.utc).strftime("%Y-%m-%d")
+        pe = (_load(REPO / "memory" / "development_journal.json", {})
+              .get(today, {}).get("patch_executions", []))
+        if pe:
+            vc = {}
+            for p in pe:
+                vc[p.get("verdict", "?")] = vc.get(p.get("verdict", "?"), 0) + 1
+            L.append("Самопоправяне: " + ", ".join(f"{v}×{k}" for k, v in vc.items()))
+    except Exception:
+        pass
+    text = "\n".join(L)
+    if len(L) < 2:
+        return "skip:no_content"
+    try:
+        import requests as _rq
+        r = _rq.post(f"https://api.telegram.org/bot{cfg['token']}/sendMessage",
+                     json={"chat_id": cfg["chat_id"], "text": text}, timeout=20)
+        return "sent:telegram" if r.ok else f"fail:http_{r.status_code}"
+    except Exception as e:
+        return f"fail:send:{type(e).__name__}"
+
+
 def _actionable(rep: dict):
     return [i for i in rep["items"] if i["severity"] == "high" or i.get("approve_id")]
 
@@ -660,8 +751,22 @@ def _push_text(rep: dict, act: list):
     for i in act:
         if i.get("approve_id"):
             ap = i.get("approve", {})
-            lines.append(f"• APPROVE {i['approve_id']}: {ap.get('label') or i['need'][:40]}"
-                         f"  (reply: OK {i['approve_id']})")
+            lines.append(f"• {ap.get('label') or i['need'][:40]}")
+            # 14 Aug 2026 (Емил: "натискал съм в тъмното") — човешкото копче носи
+            # ЦЯЛОТО обяснение: какво мери, от кого, защо значи нещо, и двата отговора.
+            cand = i.get("candidate") or {}
+            if cand.get("metric") or cand.get("org"):
+                lines.append(f"   какво: {cand.get('metric') or '?'} | от: {cand.get('org') or '?'}")
+            if cand.get("url"):
+                lines.append(f"   адрес: {str(cand['url'])[:70]}")
+            why = str(i.get("why") or "")
+            if why:
+                lines.append(f"   защо: {why[:120]}")
+            rd = str((ap.get("parse") or {}).get("unit") or "")
+            der = str(ap.get("rule_derivation") or "")
+            if der:
+                lines.append(f"   мозъкът: {der[:110]}")
+            lines.append(f"   ✅ приеми: OK {i['approve_id']}   🚫 откажи: NO {i['approve_id']}")
         elif i["severity"] == "high":
             lines.append(f"• [HIGH] {i['need']}")
     return "\n".join(lines)

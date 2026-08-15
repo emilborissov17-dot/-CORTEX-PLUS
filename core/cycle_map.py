@@ -90,6 +90,9 @@ STEPS = [
      ["memory/goal_score_history.json"], True),
     ("deduction", "12.65", "Дедуктивният слой R1-R7 с предпоставки за всеки извод.",
      ["memory/deductions_latest.json", "memory/deduction_rule_stats.json"], False),
+    ("constancy_and_constellation", "12.66",
+     "Постоянството като измерване: очакван режим на всеки показател + четене на всички заедно.",
+     ["memory/constancy_latest.json", "memory/constellation_latest.json"], False),
     ("cognitive_orchestrator", "12.7", "Когнитивна оркестрация; дава priority_axes на HyperClaw.",
      ["memory/orchestration_latest.json"], False),
     ("body_scan", "13", "Тялото СЛЕД тежките стъпки.",
@@ -120,6 +123,8 @@ STEPS = [
     ("training_data_accumulation", "25", "Трупа тренировъчни данни от архива.", [], False),
     ("brain_debrief", "25.5", "Мозъкът съди собствения си план: сбъдна ли се тестът му.",
      ["memory/brain_journal.jsonl"], True),
+    ("cycle_report", "25.6", "Отчетът пред човека, написан от самата система.",
+     ["output/reports"], True),
 ]
 
 # Логовете отпреди [STEP] маркерите носят етикетите на _run(), които не съвпадат

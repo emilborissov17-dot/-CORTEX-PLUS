@@ -17,12 +17,15 @@ What is being defended:
 
   venv\\Scripts\\python.exe test\\test_pulse.py
 """
-import json, sys, tempfile
+import json, os, sys, tempfile, types
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "experiments" / "pulse"))
 import pulse_continuum as P
+
+_REAL_MENTOR = P.mentor          # kept before the stubs shadow it
+_REAL_SEEDS_TREND = P.seeds_trend
 
 FAILS = []
 def check(name, cond):
@@ -173,7 +176,7 @@ P.seeds_rule_violation = lambda: [{"kind": "hypothesis", "seed": "rule_violation
 P.seeds_trend = lambda min_points=5: []
 
 def art(payload):
-    return lambda seed, frame: payload
+    return lambda seed, frame, catalog=None: payload
 
 P.mentor = lambda rec, seed: {"checked": True, "contradicts": False}
 P.articulate = art({"idea": "a real idea", "grounded_on": ["config/pulse.json"],
@@ -248,6 +251,139 @@ check("...and a real file with an anchor fragment still is",
       P._refs_exist(["CLAUDE.md#python-interpreter"]) is True)
 check("one bad ref among good ones fails the whole set",
       P._refs_exist(["CLAUDE.md", "#INVENTED.md"]) is False)
+
+# ── the OTHER half of the same bug: the prompt never showed the model the repo ──
+#
+# The guard above is correct. What starved the creative phase from 2026-08-03 to
+# 2026-08-04 was articulate() demanding "repo-relative file paths that already exist"
+# while handing the model zero paths from this repo — so it invented plausible ones
+# ("climate_change_analysis/data/CO2_levels.csv") and every idea died. The catalog is
+# built from the file the seed was literally read out of, and is now in the prompt.
+
+_seed_tr = {"kind": "hypothesis", "seed": "trend", "axis": "CLIMATE_GLOBAL_RISK_REVIEW",
+            "source": "gi_noaa_co2", "detail": "d"}
+_cat = P._catalog(_seed_tr)
+check("catalog is non-empty and every entry is a real file",
+      bool(_cat) and all((P.REPO / c).is_file() for c in _cat))
+check("catalog names the very series file the trend seed came from",
+      "memory/composer_state/CLIMATE_GLOBAL_RISK_REVIEW.json" in _cat)
+check("a real file that is NOT in the catalog is still refused — existing != cited",
+      P._refs_exist(["CLAUDE.md"], _cat) is False)
+check("a catalog entry passes", P._refs_exist([_cat[0]], _cat) is True)
+
+_seen = {}
+P.articulate = lambda seed, frame, catalog=None: _seen.update(catalog=catalog) or {
+    "idea": "x", "grounded_on": ["config/pulse.json"], "dimension": "d",
+    "falsifiable_test": "t", "horizon": "2026-09-01"}
+P.ideate("frame", dry=True)
+check("ideate hands articulate the real catalog", bool(_seen.get("catalog")))
+
+# ── a constant resampled is NOT a trend ──────────────────────────────────────
+#
+# Measured 2026-08-04: 27 of 40 trend seeds had five IDENTICAL values —
+# gi_temp_anomaly [1.19]*5, gi_confirmed_exoplanets [6333.0]*5 — each announced as
+# "moved monotonically up over 5 points", because `all(b >= a)` is vacuously true for a
+# flat run. They are ANNUAL indicators the composer re-samples every cycle: one yearly
+# figure photographed five times. The ideas of that day stood on exactly this. A system
+# built to expose the gap between claim and measurement was manufacturing that gap in
+# its own output.
+
+import tempfile as _tf
+_TREND_DIR = Path(_tf.mkdtemp())
+_saved_composer = P.COMPOSER_ST
+P.COMPOSER_ST = _TREND_DIR
+
+def _series(name, values):
+    (_TREND_DIR / f"{name}.json").write_text(json.dumps(
+        {"sources": {f"src_{name}": {"history": [[f"t{i}", v] for i, v in enumerate(values)]}}}),
+        encoding="utf-8")
+
+_series("FLAT", [1.19] * 6)
+_series("ONESTEP", [0, 0, 1, 1, 1, 1])
+_series("REALUP", [1, 2, 3, 4, 5, 6])
+_series("REALDOWN", [9, 7, 6, 4, 2, 1])
+_series("NOISY", [1, 5, 2, 8, 3, 6])
+_series("SHORT", [1, 2, 3])
+
+_axes = {s["axis"] for s in _REAL_SEEDS_TREND()}
+check("a flat series yields NO trend seed — the live bug",
+      "FLAT" not in _axes)
+check("a single step is an event, not a trend", "ONESTEP" not in _axes)
+check("a genuinely rising series still yields a seed", "REALUP" in _axes)
+check("a genuinely falling series still yields a seed", "REALDOWN" in _axes)
+check("a non-monotonic series yields nothing", "NOISY" not in _axes)
+check("too few points yields nothing", "SHORT" not in _axes)
+
+_up = [s for s in _REAL_SEEDS_TREND() if s["axis"] == "REALUP"][0]
+check("the seed names the direction and the actual movement",
+      "up" in _up["detail"] and "->" in _up["detail"] and _up["distinct_values"] >= 3)
+check("a flat run is not rescued by lowering min_distinct to 1 accidentally",
+      not [s for s in _REAL_SEEDS_TREND(min_distinct=3) if s["axis"] == "FLAT"])
+
+P.COMPOSER_ST = _saved_composer
+_sh_early = __import__("shutil"); _sh_early.rmtree(_TREND_DIR, ignore_errors=True)
+
+# ── ideation must reach every axis, not the alphabetically first one ─────────
+#
+# ideate() took `seeds[:6]`. seeds_trend() walks sorted(COMPOSER_ST.glob("*.json")), so
+# seeds arrive grouped by axis in ALPHABETICAL order, and CLIMATE_GLOBAL_RISK_REVIEW
+# sorts near the front with five qualifying series — it took five of the six slots every
+# run and COSMIC took the sixth. On 2026-08-04: 40 seeds, 16 axes, 2 axes reachable. The
+# output read as a system obsessed with climate; it was a slice, not a worldview.
+
+_many = ([{"axis": "AAA_CLIMATE", "seed": "trend", "detail": f"c{i}"} for i in range(5)]
+         + [{"axis": "BBB_FOOD", "seed": "trend", "detail": f"f{i}"} for i in range(5)]
+         + [{"axis": f"Z{i}", "seed": "trend", "detail": "d"} for i in range(6)])
+
+_old = _many[:6]
+check("the old slice reached only 2 of 8 axes — the bug",
+      len({s["axis"] for s in _old}) == 2)
+
+_new = P._spread(_many, per_axis=2, total=40)
+check("round-robin reaches EVERY axis that has a seed",
+      {s["axis"] for s in _new} == {s["axis"] for s in _many})
+check("...and no axis exceeds its per-axis quota",
+      max(sum(1 for s in _new if s["axis"] == a) for a in {s["axis"] for s in _new}) == 2)
+check("the total budget is still respected",
+      len(P._spread(_many, per_axis=2, total=5)) == 5)
+check("a small budget is spread ACROSS axes, not spent on one",
+      len({s["axis"] for s in P._spread(_many, per_axis=2, total=5)}) == 5)
+check("no seeds in, nothing out", P._spread([], 2, 40) == [])
+
+# the operator escape hatch: it may open the gate, but it may not forge the stamp
+P.articulate = lambda seed, frame, catalog=None: {
+    "idea": "ungrounded but let through", "grounded_on": ["totally/invented.csv"],
+    "dimension": "d", "falsifiable_test": "t", "horizon": "2026-09-01"}
+P.seeds_trend = lambda min_points=5: [dict(_seed_tr)]
+P.seeds_rule_violation = lambda: []
+P.mentor = lambda rec, seed: {"checked": True, "contradicts": False}
+
+check("bypass is OFF unless the operator says so", P.grounding_bypassed() is False)
+os.environ["CORTEX_PULSE_GROUNDING_OFF"] = "1"
+try:
+    check("bypass reads the env switch", P.grounding_bypassed() is True)
+    r = P.ideate("frame", dry=True)
+    check("bypass ON lets an ungrounded idea through", len(r["kept"]) == 1)
+    check("...but it is stamped BYPASSED, not verified",
+          r["kept"][0]["grounding"] == "BYPASSED" and r.get("grounding") == "BYPASSED")
+finally:
+    os.environ.pop("CORTEX_PULSE_GROUNDING_OFF", None)
+
+r = P.ideate("frame", dry=True)
+check("bypass OFF is the default and the guard bites again", not r["kept"])
+
+# mentor's stamp, tested against a live-shaped oracle rather than through a stub
+sys.modules["metta_oracle"] = types.SimpleNamespace(
+    levels_from_scores=lambda *a, **k: {},
+    ask=lambda *a, **k: {"ok": True, "inconsistencies": []})
+_tr_seed = {"seed": "trend", "axis": "AX"}
+check("a verified citation earns well_sourced",
+      _REAL_MENTOR({"grounded_on": ["config/pulse.json"], "grounding": "verified"},
+               _tr_seed)["well_sourced"] is True)
+check("a BYPASSED citation never earns well_sourced — the stamp is not free",
+      _REAL_MENTOR({"grounded_on": ["totally/invented.csv"], "grounding": "BYPASSED"},
+               _tr_seed)["well_sourced"] is False)
+del sys.modules["metta_oracle"]
 
 import shutil as _sh
 _sh.rmtree(TMP, ignore_errors=True)

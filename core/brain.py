@@ -162,7 +162,8 @@ def _smaller(current: str) -> str | None:
 
 def think(role: str, question: str, evidence: str = "", schema: dict | None = None,
           require_quote: bool = False, kind: str = "thought",
-          remember_it: bool = True, temperature: float = 0.2) -> dict | None:
+          remember_it: bool = True, temperature: float = 0.2,
+          fast: bool = False) -> dict | None:
     """Питай мозъка. Той отговаря със свои думи и свои категории.
 
     role      — коя роля носи в този момент ("дежурен инженер", "стратег", ...)
@@ -177,6 +178,10 @@ def think(role: str, question: str, evidence: str = "", schema: dict | None = No
     Записва: memory/brain_journal.jsonl + memory/llm_provenance.jsonl.
     """
     model, base = _pick_model()
+    # fast=True: къса преценка, която се повтаря десетки пъти в един цикъл
+    # (напр. по един показател). Силният модел е за дългите разсъждения.
+    if fast:
+        model = _fast_model() or model
     fields = ""
     if schema:
         fields = ("\n\nОтговори САМО с JSON с тези полета (без текст около него):\n{\n" +

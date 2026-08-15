@@ -194,6 +194,76 @@ def ceiling_for(step: Optional[str], cfg: dict) -> int:
     return int(ceilings.get("_default", 900))
 
 
+def _autopsy(action) -> str:
+    """Ask core.self_diagnosis WHY the cycle died, so the alarm carries a cause and a
+    proposed fix instead of a bare symptom. Fail-open: a broken autopsy must never
+    stop the alarm from reaching the human. (15 Aug 2026)"""
+    try:
+        sys.path.insert(0, str(BASE))
+        from core.self_diagnosis import diagnose, summary_line
+        return summary_line(diagnose(action.wedged_step, action.cycle_id,
+                                     getattr(action, "ceiling_sec", None),
+                                     getattr(action, "heartbeat_age_sec", None)))
+    except Exception as e:
+        return f"(автопсията не сработи: {type(e).__name__})"
+
+
+def alarm_human(subject: str, detail: str) -> None:
+    """15 Aug 2026 — THE DEAD-SYSTEM ALARM.
+
+    Between 23 and 28 July the restart budget was exhausted ELEVEN times: the system
+    was down, and it "called for a human" by writing a line into supervisor.log and a
+    block at the top of notes/next_actions.txt — files nobody opens while the thing is
+    dead. An alarm nobody hears is not an alarm. This sends it to Telegram, the one
+    channel that reaches Emil's pocket, and it does so from the MACHINE (which can
+    reach the API; the cloud cannot). Fail-open, never raises, never blocks recovery.
+    """
+    try:
+        cfg = json.loads((BASE / "memory" / "notify_channel.json").read_text(encoding="utf-8"))
+        if cfg.get("channel") != "telegram" or not cfg.get("token") or not cfg.get("chat_id"):
+            return
+        # do not spam: one alarm per subject per day
+        stamp = BASE / "memory" / "alarm_sent.json"
+        try:
+            sent = json.loads(stamp.read_text(encoding="utf-8"))
+        except Exception:
+            sent = {}
+        key = f"{datetime.now(timezone.utc).strftime('%Y-%m-%d')}:{subject[:40]}"
+        if sent.get(key):
+            return
+        import requests
+        requests.post(f"https://api.telegram.org/bot{cfg['token']}/sendMessage",
+                      json={"chat_id": cfg["chat_id"],
+                            "text": f"🚨 CORTEX: {subject}\n{detail}"[:3500]}, timeout=20)
+        sent[key] = True
+        stamp.write_text(json.dumps(sent, ensure_ascii=False)[:20000], encoding="utf-8")
+    except Exception:
+        pass
+
+
+# ── DIAGNOSED RETRY (15 Aug 2026, Emil: "защо да жертваме цял ден заради 2 сляпи
+# рестарта, чиято причина не е отстранена?") ────────────────────────────────────
+# The blind-restart budget stays exactly as it was: a system that retries without
+# understanding must stop. But a retry that comes WITH a diagnosis of a TRANSIENT
+# cause (LLM cooldowns that expire, a source/network blip) is not blind — the cause
+# really has cleared by the next tick. So: after the blind budget is spent, the
+# supervisor may earn up to DIAGNOSED_RETRY_MAX further attempts, and ONLY when the
+# autopsy says the cause is transient. A CODE_ERROR or a full disk is never
+# transient and still fails loudly at once — repeating those is the infinite loop
+# the budget exists to prevent. This ceiling, like every other, is not self-raisable.
+DIAGNOSED_RETRY_MAX = 2
+
+
+def diagnosed_retries_today(state: dict, today: str) -> int:
+    return int((state.get("diagnosed_retries") or {}).get(today, 0))
+
+
+def note_diagnosed_retry(state: dict, today: str) -> None:
+    d = state.setdefault("diagnosed_retries", {})
+    d[today] = int(d.get(today, 0)) + 1
+    save_state(state)
+
+
 def restarts_today(state: dict, today: str) -> int:
     return int((state.get("restarts") or {}).get(today, 0))
 
@@ -486,8 +556,27 @@ def _kill_or_fail(state, today, cfg, reason, step, step_index, age, ceil, pid, c
 
     kind = KILL_RESTART if used < budget else KILL_BUDGET_DONE
     if kind == KILL_BUDGET_DONE:
-        reason = (f"{reason} — and the restart budget for today is exhausted "
-                  f"({used}/{budget}). NOT restarting; failing loudly.")
+        # Before giving up the whole day: is the cause KNOWN and TRANSIENT?
+        try:
+            sys.path.insert(0, str(BASE))
+            from core.self_diagnosis import diagnose
+            d = diagnose(step, cycle_id, ceil, age)
+        except Exception as e:
+            d = {"cause": f"AUTOPSY_FAILED({type(e).__name__})", "transient": False}
+        dused = diagnosed_retries_today(state, today)
+        if d.get("transient") and dused < DIAGNOSED_RETRY_MAX:
+            note_diagnosed_retry(state, today)
+            kind = KILL_RESTART
+            reason = (f"{reason} — blind budget spent ({used}/{budget}), BUT the autopsy "
+                      f"says the cause is TRANSIENT ({d.get('cause')}); taking diagnosed "
+                      f"retry {dused + 1}/{DIAGNOSED_RETRY_MAX} instead of losing the day.")
+            log(f"DIAGNOSED_RETRY {dused + 1}/{DIAGNOSED_RETRY_MAX}: {d.get('cause')} "
+                f"on step '{step}' — retrying despite spent blind budget.")
+        else:
+            reason = (f"{reason} — and the restart budget for today is exhausted "
+                      f"({used}/{budget}); autopsy: {d.get('cause')} "
+                      f"({'transient but diagnosed retries also spent' if d.get('transient') else 'NOT transient'}). "
+                      f"NOT restarting; failing loudly.")
 
     return Action(kind, reason=reason, wedged_step=step, wedged_step_index=step_index,
                   heartbeat_age_sec=age, ceiling_sec=ceil, pid=pid, cycle_id=cycle_id,
@@ -718,6 +807,17 @@ def tick(now: Optional[datetime] = None, dry_run: bool = False) -> Action:
                       detail=action.reason)
         log("!!! RESTART BUDGET EXHAUSTED after a cycle death — the system is NOT "
             "running. Human intervention required. This will appear in the daily report.")
+        _diag = _autopsy(action)
+        alarm_human("СИСТЕМАТА НЕ РАБОТИ — рестартите за деня свършиха",
+                    f"Умряла на стъпка: {action.wedged_step}\n"
+                    f"{_diag}\n"
+                    f"Рестарти: {used}/{int(cfg.get('max_restarts_per_day', 2))}\n"
+                    f"Причина: {str(action.reason)[:300]}\n"
+                    f"КАКВО ДА НАПРАВИШ:\n"
+                    f"1) нищо — утре бюджетът се нулира и системата опитва пак (губиш 1 ден данни)\n"
+                    f"2) ако стъпката е БАВНА, не счупена: вдигни тавана й в config/scheduler.json\n"
+                    f"3) ръчен опит: venv\\Scripts\\python.exe fast_cycle_runner.py\n"
+                    f"4) прати ми този текст — диагностицирам и поправям")
         return action
 
     if action.kind in (START, CATCHUP):
@@ -794,6 +894,17 @@ def tick(now: Optional[datetime] = None, dry_run: bool = False) -> Action:
                       detail=action.reason)
         log("!!! RESTART BUDGET EXHAUSTED — the system is NOT running. "
             "Human intervention required. This will appear in the daily report.")
+        _diag = _autopsy(action)
+        alarm_human("СИСТЕМАТА НЕ РАБОТИ — рестартите за деня свършиха",
+                    f"Заклещена на стъпка: {action.wedged_step}\n"
+                    f"{_diag}\n"
+                    f"Рестарти: {used}/{int(cfg.get('max_restarts_per_day', 2))}\n"
+                    f"Причина: {str(action.reason)[:300]}\n"
+                    f"КАКВО ДА НАПРАВИШ:\n"
+                    f"1) нищо — утре бюджетът се нулира и системата опитва пак (губиш 1 ден данни)\n"
+                    f"2) ако стъпката е БАВНА, не счупена: вдигни тавана й в config/scheduler.json\n"
+                    f"3) ръчен опит: venv\\Scripts\\python.exe fast_cycle_runner.py\n"
+                    f"4) прати ми този текст — диагностицирам и поправям")
         return action
 
     return action

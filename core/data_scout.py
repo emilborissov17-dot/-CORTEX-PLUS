@@ -258,6 +258,26 @@ def _validate(url: str, fmt: str) -> tuple[bool, str, object]:
         return False, str(e)[:80], None
 
 
+# Known annual-by-nature providers — parseable JSON, but they move ONCE A YEAR.
+# _validate can't tell a yearly World Bank series from a daily feed, so without this
+# an annual source would fake-fill a daily slot: coverage goes up, the gap looks
+# solved, and the moving daily signal we actually need (task #3) stays missing.
+# Heuristic denylist; genuine daily-ness is still proven later by the composer
+# needing >= 2 dated observations before it will move.
+_ANNUAL_URL_HINTS = ("api.worldbank.org", "data.worldbank.org", "/indicator/",
+                     "ourworldindata.org/grapher")
+
+
+def _cadence_ok(url: str, slot: str) -> tuple[bool, str]:
+    """For daily-cadence slots, reject sources that are annual by nature."""
+    if slot not in ("measurement_daily", "event_daily"):
+        return True, "non-daily slot"
+    u = (url or "").lower()
+    if any(h in u for h in _ANNUAL_URL_HINTS):
+        return False, "annual source rejected for daily slot (World Bank/OWID are yearly)"
+    return True, "ok"
+
+
 # ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
@@ -338,6 +358,10 @@ def run(max_axes: int = 4) -> dict:
                 print(f"  [SCOUT/NEED] Testing {axis}/{slot}: {url[:65]}")
                 ok, reason, payload = _validate(url, fmt)
                 if ok:
+                    cok, creason = _cadence_ok(url, slot)
+                    if not cok:
+                        print(f"  [SCOUT/NEED] REJECT {url[:65]} — {creason}")
+                        continue
                     # THE REGISTRATION WALL. A candidate without a parsing rule is not a
                     # candidate — it is an approval Emil cannot spend usefully. Derived
                     # here, from the payload just fetched, or the candidate is dropped

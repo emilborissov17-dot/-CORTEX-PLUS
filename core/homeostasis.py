@@ -28,6 +28,27 @@ DIRECTIVES_PATH    = BASE / "memory" / "adaptive_directives.json"
 # Self-profile — постоянно самопознание
 # ---------------------------------------------------------------------------
 
+def _detect_gpu():
+    """Detect a real NVIDIA GPU via nvidia-smi (no extra deps). Returns
+    {name, vram_total_mb, vram_free_mb} or None. Never raises.
+    Added 30 Jul 2026: the profile hard-coded 'No local GPU', but the box actually
+    has a GTX 1650 (4GB) — the self-model was lying about its own body, which wrongly
+    marked K1b weight-learning as impossible. Now it senses the card."""
+    try:
+        import subprocess
+        out = subprocess.run(
+            ["nvidia-smi", "--query-gpu=name,memory.total,memory.free",
+             "--format=csv,noheader,nounits"],
+            capture_output=True, text=True, timeout=10)
+        if out.returncode != 0 or not out.stdout.strip():
+            return None
+        name, total, free = [p.strip() for p in out.stdout.strip().splitlines()[0].split(",")]
+        return {"name": name, "vram_total_mb": int(float(total)),
+                "vram_free_mb": int(float(free))}
+    except Exception:
+        return None
+
+
 def build_self_profile() -> dict:
     """
     Изгражда пълен профил на системата — хардуер, APIs, възможности, лимити.
@@ -68,6 +89,9 @@ def build_self_profile() -> dict:
             "can_run_chromadb": m.available > 2e9,
             "safe_to_start":    m.percent < 85,
         }
+        gpu = _detect_gpu()
+        if gpu:
+            profile["hardware"]["gpu"] = gpu
     except Exception:
         pass
 
@@ -113,7 +137,17 @@ def build_self_profile() -> dict:
         lims.append("Insufficient free RAM for ChromaDB — semantic memory degraded")
     if not profile["apis"]["groq"]["available"]:
         lims.append("No Groq API key — LLM synthesis unavailable")
-    lims.append("No local GPU — all inference via cloud APIs (rate-limited)")
+    gpu = hw.get("gpu")
+    if gpu:
+        vram_gb = round(gpu.get("vram_total_mb", 0) / 1024, 1)
+        profile["capabilities"].append(
+            f"Local GPU: {gpu.get('name')} ({vram_gb}GB VRAM) — small-model LoRA/QLoRA "
+            f"fine-tune and neural RL policies feasible on-box (K1b no longer hardware-blocked)")
+        if vram_gb < 8:
+            lims.append(f"GPU VRAM limited ({vram_gb}GB) — only small models (<=3B) with "
+                        f"quantization/LoRA; no full fine-tune of large models")
+    else:
+        lims.append("No local GPU — all inference via cloud APIs (rate-limited)")
     lims.append("No persistent process — cycle must be triggered manually or via scheduler")
 
     profile["limitations"] = lims

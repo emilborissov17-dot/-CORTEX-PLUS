@@ -456,7 +456,32 @@ def seeds_rule_violation() -> list:
         return []
 
 
-def seeds_trend(min_points=5) -> list:
+MIN_DISTINCT_VALUES = 3      # a trend has to MOVE, and move more than once
+
+
+def seeds_trend(min_points=5, min_distinct=MIN_DISTINCT_VALUES) -> list:
+    """Series that actually moved. A constant resampled is not a trend.
+
+    THE BUG, measured 2026-08-04: 27 of the 40 trend seeds were series whose last five
+    values were IDENTICAL — gi_temp_anomaly [1.19]*5, gi_confirmed_exoplanets [6333.0]*5,
+    gi_unemployment [4.7913]*5 — every one of them announced as "moved monotonically up
+    over 5 points". `all(b >= a)` is vacuously true for a flat run, so a constant passed
+    as a rising trend.
+
+    These are ANNUAL indicators (World Bank, NASA counts) that the composer re-samples
+    every cycle. The value cannot change between cycles; the "history" is one yearly
+    figure photographed five times. The ideas generated on 2026-08-04 stood on exactly
+    this — including a hypothesis about confirmed exoplanets "moving up" from a number
+    that had not moved at all.
+
+    That is the system manufacturing a claim its own data does not support: precisely
+    the gap between stated and measured that CORTEX exists to detect, turned inward. A
+    flat series is not a trend to explain, it is a STALLED one — which the pulse already
+    has a concept for (series_stalled in necessity()) and was contradicting here.
+
+    So a direction now requires real movement: monotonic AND ends away from where it
+    started AND changes value at least `min_distinct` times. Conservative on purpose —
+    a single step ([0,0,1,1,1]) is an event, not a trend, and gets no seed."""
     out = []
     for f in sorted(COMPOSER_ST.glob("*.json")) if COMPOSER_ST.exists() else []:
         for sid, s in (_load(f, {}).get("sources") or {}).items():
@@ -465,17 +490,60 @@ def seeds_trend(min_points=5) -> list:
             if len(hist) < min_points:
                 continue
             tail = hist[-min_points:]
-            up = all(b >= a for a, b in zip(tail, tail[1:]))
-            down = all(b <= a for a, b in zip(tail, tail[1:]))
+            if len(set(tail)) < min_distinct:
+                continue                      # a constant, or a single step: not a trend
+            up = all(b >= a for a, b in zip(tail, tail[1:])) and tail[-1] > tail[0]
+            down = all(b <= a for a, b in zip(tail, tail[1:])) and tail[-1] < tail[0]
             if up or down:
                 out.append({"kind": "hypothesis", "seed": "trend", "axis": f.stem,
                             "source": sid, "series_tail": tail,
+                            "distinct_values": len(set(tail)),
                             "detail": f"{sid} moved monotonically "
-                                      f"{'up' if up else 'down'} over {min_points} points"})
+                                      f"{'up' if up else 'down'} over {min_points} points "
+                                      f"({tail[0]} -> {tail[-1]})"})
     return out
 
 
-def _refs_exist(refs) -> bool:
+def _catalog(seed: dict) -> list:
+    """The files that ACTUALLY stand behind this seed — repo-relative, verified present.
+
+    THE GUARD WAS RIGHT AND THE PROMPT WAS WRONG. `articulate` asked the model for
+    "repo-relative file paths that already exist" while never showing it a single path
+    from this repo, so it did the only thing it could: it invented plausible ones
+    ("climate_change_analysis/data/CO2_levels.csv"). Every idea then died on
+    _refs_exist, and the creative phase produced nothing for a day and a half. A model
+    cannot cite a repo it has never been shown. This builds the citation list from the
+    files the seed was literally read out of, and articulate() hands it over verbatim."""
+    cands = []
+    axis = str(seed.get("axis") or "")
+    if seed.get("seed") == "trend" and axis:
+        cands.append(COMPOSER_ST / f"{axis}.json")   # the series this trend was read from
+    cands += [CONFIG,
+              REPO / "config" / "axis_source_map.json",
+              REPO / "output" / "cortex_scores_latest.json",
+              REPO / "memory" / "auto_levels.json"]
+    out = []
+    for p in cands:
+        try:
+            if p.is_file():
+                rel = p.relative_to(REPO).as_posix()
+                if rel not in out:
+                    out.append(rel)
+        except (ValueError, OSError):
+            continue
+    return out
+
+
+def grounding_bypassed() -> bool:
+    """TEMPORARY, OPERATOR-CONTROLLED. `CORTEX_PULSE_GROUNDING_OFF=1` lets ideas through
+    without a verified citation. It exists so a starved creative phase can be unblocked
+    by hand, and it never lies about what it did: a bypassed idea is stamped
+    grounding="BYPASSED" and can never be marked well_sourced. Default is OFF — the
+    guard is on."""
+    return os.environ.get("CORTEX_PULSE_GROUNDING_OFF", "").strip().lower() in ("1", "true", "yes")
+
+
+def _refs_exist(refs, catalog=None) -> bool:
     """grounded_on must point at things that EXIST. An idea grounded on an invented file
     is a hallucination with a citation.
 
@@ -503,28 +571,75 @@ def _refs_exist(refs) -> bool:
             return False                      # no escaping the repo with ../
         if not p.is_file():
             return False                      # a directory is not a citation
+        if catalog is not None and raw not in catalog:
+            return False                      # a real file it was never shown is a guess
     return True
 
 
-def articulate(seed: dict, frame: str) -> dict:
+def articulate(seed: dict, frame: str, catalog=None) -> dict:
     from autonomous_scout import _local, _json_from
     horizon = (datetime.now(timezone.utc) + timedelta(days=30)).date().isoformat()
+    allowed = "\n".join(f"  {c}" for c in (catalog or []))
+    cite = (f"These files exist in the repo and are the ONLY citations you may use. "
+            f"Copy them verbatim into grounded_on — do not invent, shorten or guess a "
+            f"path:\n{allowed}\n\n" if catalog else "")
     out = _local(
         f"{frame}\n\nA deterministic check produced this seed:\n{json.dumps(seed)[:900]}\n\n"
+        f"{cite}"
         f"Turn it into ONE testable idea. Reply ONLY JSON:\n"
-        f'{{"idea": "<one sentence>", "grounded_on": ["<repo-relative file paths that '
-        f'already exist and support this>"], "dimension": "<one word>", '
+        f'{{"idea": "<one sentence>", "grounded_on": ["<one or more paths copied '
+        f'exactly from the list above>"], "dimension": "<one word>", '
         f'"falsifiable_test": "<a concrete check>", "horizon": "{horizon}"}}',
         timeout=180, num_predict=350)
     return _json_from(out)
 
 
-def ideate(frame: str, dry: bool) -> dict:
+def _spread(seeds: list, per_axis: int, total: int) -> list:
+    """Round-robin across axes, so one axis cannot eat the whole ideation budget.
+
+    THE BUG: ideate() took `seeds[:6]`. seeds_trend() walks
+    `sorted(COMPOSER_ST.glob("*.json"))`, so the seeds arrive grouped by axis in
+    ALPHABETICAL order — and CLIMATE_GLOBAL_RISK_REVIEW sorts near the front with five
+    qualifying series. It took five of the six slots every single time; COSMIC took the
+    sixth. On 2026-08-04 there were 40 seeds spanning 16 axes and exactly 2 axes could
+    ever produce an idea. The output looked like a system obsessed with climate. It was
+    a slice, not a worldview.
+
+    One seed per axis per round, so every axis with real data is reached before any axis
+    gets a second idea."""
+    by_axis = {}
+    for s in seeds:
+        by_axis.setdefault(s.get("axis") or "?", []).append(s)
+    out = []
+    for rnd in range(max(per_axis, 0)):
+        progressed = False
+        for ax in by_axis:
+            bucket = by_axis[ax]
+            if rnd < len(bucket) and len(out) < total:
+                out.append(bucket[rnd])
+                progressed = True
+        if not progressed or len(out) >= total:
+            break
+    return out
+
+
+def ideate(frame: str, dry: bool, c: dict | None = None) -> dict:
+    c = c or {}
+    per_axis = int(c.get("creative_ideas_per_axis", 2))
+    budget = int(c.get("creative_max_ideas", 40))
     seeds = seeds_rule_violation() + seeds_trend()
-    result = {"seeds": len(seeds), "kept": [], "rejected": [], "penumbra": []}
-    for s in seeds[:6]:
+    picked = _spread(seeds, per_axis, budget)
+    result = {"seeds": len(seeds), "attempted": len(picked),
+              "axes_seen": len({s.get("axis") for s in seeds}),
+              "axes_attempted": len({s.get("axis") for s in picked}),
+              "kept": [], "rejected": [], "penumbra": []}
+    bypass = grounding_bypassed()
+    if bypass:
+        result["grounding"] = "BYPASSED"
+    for s in picked:
+        catalog = _catalog(s)
         try:
-            got = articulate(s, frame)
+            got = articulate(s, frame, catalog)
         except Exception as e:
             result["rejected"].append({"seed": s.get("detail"), "why": f"articulate failed: {type(e).__name__}"})
             continue
@@ -535,7 +650,8 @@ def ideate(frame: str, dry: bool) -> dict:
         if not idea:
             result["rejected"].append({"seed": s.get("detail"), "why": "empty idea"})
             continue
-        if not _refs_exist(refs):
+        grounded = _refs_exist(refs, catalog)
+        if not grounded and not bypass:
             result["rejected"].append({"idea": idea[:90], "why": "ungrounded — grounded_on "
                                                                 "refs do not exist"})
             continue
@@ -545,7 +661,8 @@ def ideate(frame: str, dry: bool) -> dict:
             continue
         rec = {"ts": _now(), "idea": idea, "grounded_on": refs, "dimension":
                got.get("dimension"), "falsifiable_test": test, "kind": s.get("kind"),
-               "seed": s.get("seed"), "test_horizon": horizon, "outcome": None}
+               "seed": s.get("seed"), "test_horizon": horizon, "outcome": None,
+               "grounding": "verified" if grounded else "BYPASSED"}
         verdict = mentor(rec, s)
         rec["mentor"] = verdict
         if verdict.get("contradicts") and verdict.get("well_sourced"):
@@ -585,7 +702,11 @@ def mentor(rec: dict, seed: dict) -> dict:
         bad = [b for b in res.get("inconsistencies", []) if b["axis"] == seed.get("axis")]
         return {"checked": True, "contradicts": bool(bad),
                 "proof": [p for b in bad for p in b.get("proofs", [])],
-                "well_sourced": bool(rec.get("grounded_on")) and seed.get("seed") == "trend"}
+                # a bypassed citation is never "well sourced" — the stamp is the whole
+                # point of the guard, and it does not get handed out for free
+                "well_sourced": bool(rec.get("grounded_on"))
+                                and rec.get("grounding") == "verified"
+                                and seed.get("seed") == "trend"}
     except Exception:
         return {"checked": False}
 
@@ -641,7 +762,7 @@ def tick(dry: bool = False) -> dict:
         line["actions"] = []
 
     if creative_due(ctx, c):
-        line["creative"] = ideate(frame, dry)
+        line["creative"] = ideate(frame, dry, c)
 
     _append(STREAM, line, dry)
     return line

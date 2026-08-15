@@ -33,6 +33,9 @@ TRENDS_FILE         = BASE / "cortex_memory" / "abstractions" / "trends.json"
 LAST_OBS_FILE       = BASE / "data" / "last_observations.json"
 TARGET_CFG_FILE     = BASE / "config" / "target_config.json"
 WELLBEING_GLOBE_FILE = BASE / "output" / "wellbeing_globe.json"
+GLOBAL_IND_FILE     = BASE / "snapshots" / "master" / "global_indicators_latest.json"
+GLOBAL_IND_FRESHNESS_DAYS = 14
+PROBED_FILE         = BASE / "memory" / "probed_signals.json"   # what the organism's own hands fetched
 
 # How many trend points to use for linear extrapolation
 TTI_WINDOW = 10
@@ -108,6 +111,55 @@ def load_governance_globals() -> dict:
     }
 
 
+def load_global_indicators() -> dict:
+    """Adapt the LIVE global_indicators_latest.json (written each cycle by
+    core.global_indicators.fetch_all) into the flat obs keys _resolve_metric
+    expects. Fresh data overrides stale data/last_observations.json.
+    Freshness-gated; loud stderr + {} if missing or too old."""
+    data = _load(GLOBAL_IND_FILE, {})
+    if not data:
+        print("[goal_score] WARNING: global_indicators_latest.json missing — dead axes stay 0.5.", file=sys.stderr)
+        return {}
+    ts_str = data.get("timestamp")
+    if ts_str:
+        try:
+            age = (datetime.now(timezone.utc) - datetime.fromisoformat(ts_str)).total_seconds() / 86400
+            if age > GLOBAL_IND_FRESHNESS_DAYS:
+                print(f"[goal_score] WARNING: global_indicators {age:.0f}d old (>{GLOBAL_IND_FRESHNESS_DAYS}d) — not used.", file=sys.stderr)
+                return {}
+        except ValueError:
+            pass
+    co2, wb   = data.get("co2", {}),   data.get("world_bank", {})
+    food, dsp = data.get("food", {}),  data.get("displaced", {})
+    econ, cty = data.get("economy", {}), data.get("cities", {})
+    out: dict = {}
+    def put(k, v):
+        if v is not None: out[k] = v
+    put("noaa_co2_ppm",         co2.get("co2_ppm"))
+    put("wb_AG.LND.FRST.ZS",    wb.get("forest_area_pct"))
+    put("wb_EG.ELC.RNEW.ZS",    wb.get("renewable_elec_pct"))
+    put("wb_SH.H2O.SMDW.ZS",    wb.get("safe_water_access_pct"))
+    put("wb_SH.DYN.MORT",       wb.get("infant_mortality_per1k"))     # APPROX: infant vs under-5
+    put("wb_SI.POV.DDAY",       wb.get("poverty_190_pct"))
+    put("wb_SE.ADT.1524.LT.ZS", wb.get("literacy_rate_adult_pct"))    # APPROX: adult vs youth
+    put("wb_SN.ITK.DEFC.ZS",    food.get("undernourishment_pct"))
+    r = dsp.get("refugees_millions")
+    put("unhcr_refugees",       r * 1_000_000 if r is not None else None)
+    put("wb_NY.GDP.MKTP.KD.ZG", econ.get("gdp_growth_annual_pct"))
+    put("wb_SP.URB.TOTL.IN.ZS", cty.get("urban_population_pct"))
+    return out
+
+
+def load_probed_signals() -> dict:
+    """Signals the organism's OWN hands fetched (memory/probed_signals.json).
+    ONLY the 'validated_obs' block feeds the score — self-discovered probes stay
+    in the file's audit, pending semantic validation, so an unvalidated auto-found
+    number can never move the goal. This is probe -> scoring, closed and gated."""
+    data = _load(PROBED_FILE, {})
+    obs = data.get("validated_obs", {}) if isinstance(data, dict) else {}
+    return {k: v for k, v in obs.items() if isinstance(v, (int, float))}
+
+
 # ── metric resolution ─────────────────────────────────────────────────────────
 
 def _resolve_metric(metric_name: str, trends: dict, last_obs: dict) -> float | None:
@@ -134,6 +186,8 @@ def _resolve_metric(metric_name: str, trends: dict, last_obs: dict) -> float | N
 
     # last_observations keys
     obs_map = {
+        "co2_ppm_mauna_loa":          "noaa_co2_ppm",
+        "co2_ppm":                    "noaa_co2_ppm",
         "child_mortality_per_1000":   "wb_SH.DYN.MORT",
         "safe_water_access_pct":      "wb_SH.H2O.SMDW.ZS",
         "extreme_poverty_rate_pct":   "wb_SI.POV.DDAY",
@@ -150,6 +204,8 @@ def _resolve_metric(metric_name: str, trends: dict, last_obs: dict) -> float | N
     obs_key = obs_map.get(metric_name, metric_name)
     val = last_obs.get(obs_key)
     if val is not None:
+        if metric_name == "refugee_population" and float(val) == 0.0:
+            return None  # sentinel zero, not a real count
         return float(val)
 
     return None
@@ -259,7 +315,8 @@ def compute_goal_score(
     if trends is None:
         trends = load_trends()
     if last_obs is None:
-        last_obs = {**load_last_obs(), **load_governance_globals()}
+        last_obs = {**load_last_obs(), **load_governance_globals(),
+                    **load_global_indicators(), **load_probed_signals()}
     if targets is None:
         targets = load_targets()
 

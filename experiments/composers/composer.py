@@ -110,7 +110,14 @@ def _save(p, obj):
 def _dotted(d, path):
     """Walk a dotted path. An integer part indexes a LIST ('daily.time.-1'), so the
     array-shaped APIs that most open feeds return (open-meteo, EONET, USGS) are reachable
-    without a bespoke parser per provider. Dict-only paths behave exactly as before."""
+    without a bespoke parser per provider. Dict-only paths behave exactly as before.
+
+    An EMPTY path is the document itself. Some feeds answer with a bare top-level array
+    and nothing to address it by — Celestrak's satellite catalogue is one — and without
+    this, `"".split(".")` yielded [""] and int("") raised, so the whole payload was
+    unreachable and the source unusable."""
+    if path is None or str(path) == "":
+        return d
     cur = d
     for part in str(path).split("."):
         if isinstance(cur, list):

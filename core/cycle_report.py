@@ -188,6 +188,48 @@ def to_markdown(rep: dict) -> str:
                 "_(мозъкът мълчеше при съставянето на този отчет — "
                 "долното е само механичната истина)_", ""]
 
+    # постоянството и съзвездието — прочит, който не гони промяната (15 авг)
+    try:
+        cn = json.loads((BASE / "memory" / "constancy_latest.json").read_text(encoding="utf-8"))
+        cc = cn.get("counts", {})
+        out += ["## Показателите: какво стои и какво мърда", "",
+                f"От {cc.get('total')} проследени показателя **{cc.get('still')} стоят неподвижни**, "
+                f"а {cc.get('alarm')} са отбелязани от системата като тревожни.", ""]
+        still_ok = [r for r in cn.get("rows", [])
+                    if str((r.get("verdict") or {}).get("healthy")).lower() == "true"
+                    and r.get("observed") != "ПОДВИЖНА"]
+        if still_ok:
+            out += ["Неподвижни и **здрави** — постоянството им е добрата новина:", ""]
+            for r in still_ok[:6]:
+                v = r["verdict"]
+                out.append(f"- `{r['axis']}.{r['metric']}` = {r['last']} — "
+                           f"{v.get('expected_regime')}: {str(v.get('reading',''))[:140]}")
+            out.append("")
+        alarms = [r for r in cn.get("rows", [])
+                  if str((r.get("verdict") or {}).get("alarm")).lower() == "true"]
+        if alarms:
+            out += ["Тревожни:", ""]
+            for r in alarms[:6]:
+                v = r["verdict"]
+                out.append(f"- `{r['axis']}.{r['metric']}` ({r['observed']}, последно {r['last']}) — "
+                           f"{str(v.get('reading',''))[:160]}")
+            out.append("")
+    except Exception:
+        pass
+    try:
+        st = json.loads((BASE / "memory" / "constellation_latest.json").read_text(encoding="utf-8"))
+        out += ["## Показателите, четени заедно", "",
+                f"**Най-показателното:** {st.get('most_telling')}", ""]
+        rels = st.get("relations")
+        if isinstance(rels, list):
+            out += [f"- {x}" for x in rels[:6]] + [""]
+        elif rels:
+            out += [str(rels), ""]
+        if st.get("what_would_change_my_mind"):
+            out += [f"_Какво би оборило този прочит: {st['what_would_change_my_mind']}_", ""]
+    except Exception:
+        pass
+
     p = rep.get("plan") or {}
     if p:
         out += ["## Планът, който сама си зададе сутринта", "",

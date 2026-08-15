@@ -71,6 +71,40 @@ def _write(folder, axis_name, data):
     out_path.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
     return out_path
 
+def _carry_forward(folder, axis_name, reason):
+    """Keep the last good values rather than replacing them with nothing.
+
+    An EMPTY fetch is not an exception, so `raw = provider.fetch()` returning `{}` fell
+    straight through the success path and wrote {"source_type": "REAL_DATA",
+    "metrics": {}}. GOVERNANCE_INSTITUTIONS_REVIEW went from 18 metrics to zero in one
+    cycle and its scorer from degraded to DEAD, while the file still declared REAL_DATA.
+    The provider returned all 18 when run by hand minutes later.
+
+    The merge rule is the one core/global_indicators.py already applies to the master
+    file — see agents/snapshot_carry.py."""
+    from agents.snapshot_carry import carry_forward_metrics
+    path = SNAPSHOT_DIR / folder / f"{folder}_snapshot_latest.json"
+    merged, carried = carry_forward_metrics(path, {})
+    if not merged:
+        return None
+    try:
+        prev = json.loads(path.read_text(encoding="utf-8"))
+    except Exception:
+        prev = {}
+    observed = prev.get("observed_utc") or prev.get("snapshot_timestamp")
+    _write(folder, axis_name, {
+        "source_type": "REAL_DATA_CARRIED",
+        "metrics": merged,
+        "raw": merged,
+        "observed_utc": observed,
+        "_carried": carried,
+        "carried_forward": {"reason": reason, "carried_at": _utc_now(),
+                            "note": "kept from the last successful fetch; NOT a fresh "
+                                    "observation"},
+    })
+    return path
+
+
 def main():
     print("[CIVILIZATION_SNAPSHOT] generating CIVILIZATION axis snapshots...")
     for cfg in AXES:
@@ -78,9 +112,24 @@ def main():
         print(f"[CIVILIZATION_SNAPSHOT] generating {axis}...")
         try:
             raw = cfg["provider"]().fetch()
-            path = _write(folder, axis, {"source_type": "REAL_DATA", "metrics": raw, "raw": raw})
+            if not raw:
+                # Empty is not success. Never overwrite a good value with nothing.
+                carried = _carry_forward(folder, axis, "provider returned no metrics")
+                if carried:
+                    print(f"[CIVILIZATION_SNAPSHOT] {axis}: empty fetch — CARRIED FORWARD "
+                          f"last good value -> {carried}")
+                    continue
+                raise ValueError("provider returned no metrics and no previous snapshot "
+                                 "exists to carry forward")
+            path = _write(folder, axis, {"source_type": "REAL_DATA", "metrics": raw,
+                                         "raw": raw, "observed_utc": _utc_now()})
             print(f"[CIVILIZATION_SNAPSHOT] wrote {axis} -> {path}")
         except Exception as e:
+            carried = _carry_forward(folder, axis, f"provider raised {type(e).__name__}: {e}")
+            if carried:
+                print(f"[CIVILIZATION_SNAPSHOT] {axis}: fetch failed ({e}) — CARRIED "
+                      f"FORWARD last good value instead of inventing one")
+                continue
             print(f"[CIVILIZATION_SNAPSHOT] fallback for {axis}: {e}")
             snap = _llm_fallback(
                 f"Generate JSON snapshot for {axis}. Include current_level, key_metrics, main_risks, trends. ONLY JSON. Respond ONLY in English.",

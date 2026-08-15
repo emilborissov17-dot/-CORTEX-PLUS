@@ -516,7 +516,16 @@
       "indirect_proxy": {
         "min": 1,
         "freshness_days": 60,
-        "sources": []
+        "sources": [
+          {
+            "id": "promoted_78396",
+            "kind": "http_json_path",
+            "url": "https://api.nobelprize.org/2.1/nobelPrizes?category=peace&year=2024",
+            "org": "Nobel Foundation",
+            "extract": "meta.count",
+            "provenance": "self-discovered, human-promoted"
+          }
+        ]
       }
     }
   },
