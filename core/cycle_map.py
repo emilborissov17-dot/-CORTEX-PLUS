@@ -54,9 +54,12 @@ STEPS = [
      ["memory/pending_approvals.json"], False),
     ("dependency_check", "0.5", "Има ли с какво да работи. Единствената стъпка, която спира цикъла.",
      [], True),
-    ("needs_reanalysis_scan", "0.7", "Кои оси са маркирани за преразглеждане.",
-     [], False),
-    ("web_intelligence", "1", "Свободно търсене в мрежата по осите (най-дългата стъпка).",
+    ("needs_reanalysis_scan", "0.7", "Кои оси са маркирани за преразглеждане. Флагът се "
+     "гаси в update_master (12) с ПО-НОВ чист запис, не с изтекло време.",
+     ["snapshots/master/needs_reanalysis_latest.json"], False),
+    ("web_intelligence", "1", "Свободно търсене в мрежата по осите (най-дългата). Свой "
+     "бюджет (таван-300s) в отделен процес: спира сама с частичен резултат, вместо "
+     "часовоят да убие цикъла. Редът на осите е по плана на мозъка.",
      ["memory/web_intelligence"], False),
     ("global_indicators", "2.5", "~20 живи HTTP източника — твърдите числа.",
      ["snapshots/master/global_indicators_latest.json"], False),

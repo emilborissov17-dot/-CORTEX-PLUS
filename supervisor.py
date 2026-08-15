@@ -61,6 +61,7 @@ import json
 import os
 import subprocess
 import sys
+import time
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -846,6 +847,76 @@ def send_outbox() -> int:
     return n
 
 
+# ── ДОКАЗАТЕЛСТВОТО НА ЖЕЛЯЗОТО (15 авг 2026) ──────────────────────────────────
+# Емил, трети път: „не е ли време това да се пусне РЕАЛНО на машината ми?"
+# Прав е, и досегашното ми положение беше нечестно: твърдях „MeTTa е на всяка
+# стъпка", а го бях мерил само в облака, където hyperon се внася пряко. На тази машина
+# hyperon живее САМО във venv312_metta и минава през мост, който никога не е бил
+# пускан тук. Аз нямам как да изпълня команда на тази машина — но СУПЕРВАЙЗОРЪТ
+# работи тук, на всеки 5 минути, със същия venv като цикъла. Значи проверката не
+# се иска от човек: тя се прави сама и оставя писмен резултат.
+#
+# ЧЕСТНО ЗА ОБХВАТА: това доказва, че мостът работи В ПРОЦЕСА НА СУПЕРВАЙЗОРА.
+# Цикълът е друг процес със същия интерпретатор — затова резултатът се записва с
+# пътя на интерпретатора, за да се вижда дали са един и същ.
+METTA_CHECK_FILE = BASE / "memory" / "metta_bridge_check.json"
+METTA_CHECK_EVERY_H = 6
+
+
+def metta_selfcheck(force: bool = False) -> Optional[dict]:
+    """Пуска реален MeTTa мост и записва какво е излязло. Никога не хвърля."""
+    try:
+        if not force and METTA_CHECK_FILE.exists():
+            prev = json.loads(METTA_CHECK_FILE.read_text(encoding="utf-8"))
+            ts = datetime.fromisoformat(prev["ts"])
+            if (datetime.now(ts.tzinfo) - ts).total_seconds() < METTA_CHECK_EVERY_H * 3600:
+                return prev
+    except Exception:
+        pass
+
+    rec = {"ts": datetime.now(timezone.utc).isoformat(),
+           "python": sys.executable, "engine": None}
+    t0 = time.time()
+    try:
+        sys.path.insert(0, str(BASE))
+        from core import metta_check as _mc
+        _mc.invalidate()
+        v = _mc.verdict("body_scan")
+        rec["engine"] = v.get("engine")
+        rec["feeds"] = v.get("feeds")
+        rec["needs_missing"] = v.get("needs_missing")
+        rec["silent"] = v.get("silent")
+    except BaseException as e:
+        rec["error"] = f"{type(e).__name__}: {e}"[:300]
+    rec["seconds"] = round(time.time() - t0, 3)
+    rec["verdict"] = ("МОСТЪТ РАБОТИ" if rec.get("engine") else "МОСТЪТ МЪЛЧИ")
+
+    try:
+        METTA_CHECK_FILE.parent.mkdir(parents=True, exist_ok=True)
+        METTA_CHECK_FILE.write_text(json.dumps(rec, ensure_ascii=False, indent=2),
+                                    encoding="utf-8")
+    except Exception:
+        pass
+    log(f"metta_selfcheck: {rec['verdict']} engine={rec.get('engine')} "
+        f"({rec['seconds']}s) {rec.get('error', '')}")
+
+    # Мълчащ мост е новина за човека — минава през същата изходяща кутия.
+    if not rec.get("engine"):
+        try:
+            OUTBOX.mkdir(parents=True, exist_ok=True)
+            (OUTBOX / f"METTA_SILENT_{rec['ts'][:10]}.md").write_text(
+                "CORTEX: символният свидетел МЪЛЧИ\n\n"
+                f"MeTTa не проговори на тази машина ({rec['ts'][:19]}).\n"
+                f"Интерпретатор: {rec['python']}\n"
+                f"Грешка: {rec.get('error', '(няма — просто липсва engine)')}\n\n"
+                "Следствие: необратимите стъпки (github_publish, self_modifier, "
+                "execute_patches) ще бъдат ОТКАЗАНИ, а нула записани разминавания "
+                "НЕ значи съгласие.", encoding="utf-8")
+        except Exception:
+            pass
+    return rec
+
+
 def tick(now: Optional[datetime] = None, dry_run: bool = False) -> Action:
     now = now or datetime.now().astimezone()
     cfg = load_config()
@@ -878,6 +949,31 @@ def tick(now: Optional[datetime] = None, dry_run: bool = False) -> Action:
     # доклад не бива да чака следващото събитие, за да излезе.
     try:
         send_outbox()
+    except Exception:
+        pass
+
+    # Доказателството на желязото — веднъж на 6 часа, вътре в редовния тик.
+    try:
+        metta_selfcheck()
+    except Exception:
+        pass
+
+    # ВЕРИГАТА НА АТЕСТАЦИЯТА се сверява ОТВЪН (Kimi: „системата не може да подмени
+    # минало, защото хешът е извън нея"). Ако е скъсана — човекът научава веднага.
+    try:
+        sys.path.insert(0, str(BASE))
+        from core.notary import verify_chain as _vc
+        _r = _vc()
+        if not _r.get("ok"):
+            log(f"АТЕСТАЦИОННАТА ВЕРИГА Е СКЪСАНА: {_r}")
+            OUTBOX.mkdir(parents=True, exist_ok=True)
+            (OUTBOX / f"ATTEST_BROKEN_{datetime.now(timezone.utc).isoformat()[:10]}.md"
+             ).write_text(
+                "CORTEX: атестационната верига е СКЪСАНА\n\n"
+                f"{json.dumps(_r, ensure_ascii=False)}\n\n"
+                "Значение: печат за произход е бил променян СЛЕД записа си. "
+                "Дотогавашните нива на доверие не бива да се четат като верни.",
+                encoding="utf-8")
     except Exception:
         pass
 

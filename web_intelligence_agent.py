@@ -33,11 +33,24 @@ from typing import Optional
 
 # -- Зависимости --------------------------------------------------------------
 
+# КОНСЕНСУС С KIMI, 15 авг 2026 (одит след стъпка 8):
+#   „sys.exit() при импорт е противопехотна мина в система без надзор.
+#    BaseException е бинт, не лек... Истинската поправка е ЗАБРАНА: нито един модул
+#    не бива да убива процеса при липса на НЕЗАДЪЛЖИТЕЛЕН пакет; трябва да хвърля
+#    ImportError или да си мълчи. Нощният запис е късно — ако гръмне на стъпка 1,
+#    остават 51 слепи стъпки."
+# Тук стоеше sys.exit(1). Липсата на feedparser убиваше ЦЕЛИЯ нощен цикъл, защото
+# SystemExit не се лови нито от ImportError, нито от Exception в извикващия.
+# feedparser се ползва на ЕДНО място (_fetch_rss). Липсата му значи „без RSS", а не
+# „без нощ". Затова: деградация, обявена на глас, вместо смърт.
 try:
     import feedparser
+    HAS_FEEDPARSER = True
 except ImportError:
-    print("[WEB_INTEL] feedparser не е инсталиран: pip install feedparser --break-system-packages")
-    sys.exit(1)
+    feedparser = None
+    HAS_FEEDPARSER = False
+    print("[WEB_INTEL] feedparser липсва -> RSS изворите СА ИЗКЛЮЧЕНИ този цикъл "
+          "(pip install feedparser). Останалите сетива работят.")
 
 try:
     from ddgs import DDGS as _DDGS
@@ -382,6 +395,8 @@ def _fetch_rss(url: str, max_items: int = 5) -> list:
     """Fetches one RSS feed with a bounded network timeout. A dead/slow feed
     must never block the axis it belongs to — any failure (network timeout,
     HTTP error, malformed feed) is logged and skipped, never raised."""
+    if not HAS_FEEDPARSER:
+        return []          # без парсер няма RSS — казано веднъж при импорта
     try:
         response = requests.get(url, timeout=20, headers=_RSS_HEADERS,
                                 allow_redirects=True)

@@ -109,6 +109,19 @@ def beat(step: str, step_index: Optional[int] = None, cycle_id: Optional[str] = 
     except Exception:
         pass
 
+    # ── ТРЕТИЯТ РОД ЗНАНИЕ: ПРОИЗХОДЪТ (Kimi, 15 авг 2026) ─────────────────
+    # „Третият слой не е оркестратор — той е НОТАРИУС НА АВТОНОМИЯТА: на всяка
+    #  стъпка подпечатва продукта с текущото ниво на доверие. Без тази верига на
+    #  атестация, портата одобрява необратимо действие върху данни с неизвестен
+    #  произход — архитектурна лъжа."
+    # Мозъкът казва какво МИСЛИ, MeTTa какво СЛЕДВА ОТ ФАКТИТЕ, нотариусът — ПОД
+    # КАКЪВ РЕЖИМ е произведено това. Лек, детерминистичен, нула LLM. FAIL-OPEN.
+    try:
+        from core.notary import attest as _attest
+        _attest(step, (_said or {}).get("prev_step"))
+    except Exception:
+        pass
+
 
 def _write_atomic(payload: dict) -> None:
     HEARTBEAT_PATH.parent.mkdir(parents=True, exist_ok=True)

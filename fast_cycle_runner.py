@@ -303,16 +303,124 @@ def _run(label, fn, free_after=False):
         _free_ollama()
     gc.collect()  # release memory after every agent step
 
-def run_web_intelligence():
+def _note_night(subject: str, detail: str) -> None:
+    """Нощно събитие — това, което сутрешните доклади четат."""
     try:
-        sys.path.insert(0, str(BASE))
-        from web_intelligence_agent import run as _wi_run
-        _wi_run()
-        print("[FAST_CYCLE] web_intelligence_agent -> OK")
-    except ImportError:
-        print("[FAST_CYCLE] web_intelligence_agent -> SKIP")
+        p = BASE / "memory" / "night_events.jsonl"
+        p.parent.mkdir(parents=True, exist_ok=True)
+        with open(p, "a", encoding="utf-8") as fh:
+            fh.write(json.dumps({"ts": _utc_now(), "subject": subject,
+                                 "detail": detail[:600]}, ensure_ascii=False) + "\n")
+    except Exception:
+        pass
+
+
+def _web_intel_order():
+    """Редът на осите според плана на деня — ПРИОРИТЕТ, не филтър.
+
+    КОНСЕНСУС С KIMI, стъпка 8, т.3 (15 авг 2026). Проверих с grep: планът
+    (memory/brain_cycle_plan.json) се четеше само от runner-а и от core/brain.py.
+    Стъпката, която яде най-много от нощта, не знаеше какво мозъкът е поискал.
+    Нарочно НЕ филтрирам: тесен фокус не бива да значи отрязани сетива. Осите,
+    които мозъкът е посочил, минават НАПРЕД; всички останали ги следват. При
+    изчерпан бюджет отрязаното е това, което той е сметнал за маловажно — негово
+    решение, не мое.
+    """
+    try:
+        from web_intelligence_agent import AXES
+        allx = list(AXES.keys())
+    except BaseException:          # виж run_web_intelligence: модулът може да sys.exit
+        return None
+    try:
+        from core.brain import current_plan
+        plan = current_plan() or {}
+        if plan.get("_stale"):
+            return None
+        want = " ".join(str(plan.get(k, "")) for k in ("focus", "watch")).lower()
+    except Exception:
+        return None
+    if not want.strip():
+        return None
+    first = [a for a in allx if any(w and w in a.lower()
+                                    for w in want.replace(",", " ").split())]
+    if not first:
+        return None
+    rest = [a for a in allx if a not in first]
+    print(f"[FAST_CYCLE] web_intel ред по плана: първо {first[:5]} (+{len(rest)} след тях)")
+    return first + rest
+
+
+def run_web_intelligence():
+    """КОНСЕНСУС С KIMI, стъпка 8 (15 авг 2026). Той подреди приоритета:
+      „Първо бих направил точка 2 — SKIP да ГОРИ в night_events.jsonl."
+      „Смърт от часовоя е ВИДИМА, но сляп цикъл, завършил 'успешно', е по-опасна лъжа."
+      „Точка 3 е важна, но без 2 системата не знае, че е ослепяла."
+
+    Затова тук има три неща, които преди нямаше:
+      1. МЪЛЧАНИЕТО ГОРИ. ImportError вече не е тихо „SKIP" — записва се като
+         нощно събитие и влиза в сутрешния доклад. Цикъл, вървял без сетива, не
+         може да се отчете като нормален.
+      2. СОБСТВЕН БЮДЖЕТ. Таванът стоеше само в часовоя, тоест единственият изход
+         при бавност беше да бъде убит ЦЕЛИЯТ цикъл. Сега стъпката се пуска в
+         отделен процес със свой срок (таванът минус запас) и при изтичане се
+         прекратява САМА, запазвайки каквото вече е записала на диска. Деградация
+         вместо смърт.
+      3. РЕДЪТ Е ПО ПЛАНА (виж _web_intel_order) — приоритет, не филтър.
+    """
+    # НАМЕРЕНО ПРИ ТЕСТА, 15 авг 2026 — по-лошо от трите точки по-горе.
+    # web_intelligence_agent вика sys.exit(1) при липсващ feedparser, ПРИ ИМПОРТ.
+    # SystemExit НЕ Е ImportError и НЕ Е Exception — тоест старият
+    #     except ImportError: ... except Exception: ...
+    # не хващаше нищо, и липсата на ЕДИН незадължителен пакет убиваше ЦЕЛИЯ цикъл
+    # на стъпка 1, без обяснение в пулса. Мина незабелязано само защото на машината
+    # feedparser е инсталиран. Затова тук се лови BaseException.
+    try:
+        import web_intelligence_agent  # noqa: F401
+    except BaseException as e:
+        print(f"[FAST_CYCLE] web_intelligence_agent -> НЕ СЕ ЗАРЕЖДА: "
+              f"{type(e).__name__}: {e}")
+        _note_night("ЦИКЪЛЪТ ВЪРВЯ СЛЯП",
+                    f"web_intelligence не се зареди ({type(e).__name__}: {e}); нощта "
+                    f"минава без свободно търсене в мрежата. Това НЕ е нормален цикъл.")
+        gc.collect()
+        return
+
+    ceiling = 3600
+    try:
+        ceiling = int((json.loads((BASE / "config" / "scheduler.json")
+                                  .read_text(encoding="utf-8")).get("step_ceilings_sec")
+                       or {}).get("web_intelligence", 3600))
+    except Exception:
+        pass
+    budget = max(300, ceiling - 300)          # запас, за да свърши ПРЕДИ часовоя
+
+    order = _web_intel_order()
+    code = ("import sys, json; sys.path.insert(0, %r);"
+            "import web_intelligence_agent as w;"
+            "w.run(axes_filter=%r)" % (str(BASE), order))
+    t0 = time.time()
+    try:
+        r = subprocess.run([sys.executable, "-c", code], cwd=str(BASE),
+                           timeout=budget)
+        took = round(time.time() - t0)
+        if r.returncode == 0:
+            print(f"[FAST_CYCLE] web_intelligence_agent -> OK ({took}s)")
+        else:
+            print(f"[FAST_CYCLE] web_intelligence_agent -> exit {r.returncode} ({took}s)")
+            _note_night("web_intelligence падна",
+                        f"exit={r.returncode} след {took}s; каквото е записано на "
+                        f"диска остава, останалото липсва")
+    except subprocess.TimeoutExpired:
+        took = round(time.time() - t0)
+        print(f"[FAST_CYCLE] web_intelligence_agent -> БЮДЖЕТЪТ ИЗТЕЧЕ след {took}s; "
+              f"спирам сама, вместо да чакам часовоя да убие цикъла")
+        _note_night("web_intelligence спряна по бюджет",
+                    f"{took}s от таван {ceiling}s. Частичен резултат: каквото е "
+                    f"стигнало до диска. Редът беше "
+                    f"{'по плана на мозъка' if order else 'по подразбиране'}.")
     except Exception as e:
-        print(f"[FAST_CYCLE] web_intelligence_agent -> FAILED: {e}")
+        print(f"[FAST_CYCLE] web_intelligence_agent -> FAILED: {type(e).__name__}: {e}")
+        _note_night("web_intelligence се провали", f"{type(e).__name__}: {e}")
     gc.collect()
 
 def refresh_llm_axes():
@@ -684,13 +792,21 @@ def _scan_needs_reanalysis() -> list[dict]:
     Резултатът се записва в snapshots/master/needs_reanalysis_latest.json
     за да може initiative_tracker / cortex_strategist да го намерят.
     """
+    # КОНСЕНСУС С KIMI, стъпка 7 (15 авг 2026), т.2: „45GB rglob е отделен грях —
+    # трябва индекс, не сканиране на архива." Архивът е ИСТОРИЯ; флагът живее само
+    # в живите снимки. Пропускаме архива и всичко под него.
     snap_dir = BASE / "snapshots"
+    _SKIP_PARTS = {"master", "self_archive", "__pycache__"}
     flagged = []
     for path in snap_dir.rglob("*.json"):
-        if "master" in path.parts:
+        if _SKIP_PARTS & set(path.parts):
             continue
         try:
             data = json.loads(path.read_text(encoding="utf-8"))
+            # т.1: флагът се ГАСИ със заключение, не с чистене — щом на оста е
+            # сложен reanalysis_resolved_at, тя вече не чака работа.
+            if isinstance(data, dict) and data.get("reanalysis_resolved_at"):
+                continue
             if isinstance(data, dict) and data.get("needs_reanalysis"):
                 axis = data.get("axis") or data.get("axis_name") or path.stem
                 flagged.append({
@@ -709,6 +825,70 @@ def _scan_needs_reanalysis() -> list[dict]:
         encoding="utf-8",
     )
     return flagged
+
+
+def _resolve_reanalysis() -> int:
+    """Гаси флага „чака преразглеждане" — КОНСЕНСУС С KIMI, стъпка 7, 15 авг 2026.
+
+    Той: „Съгласен — гасенето е ЗАКЛЮЧЕНИЕ: нов успешен запис за оста трябва да
+    носи reanalysis_resolved_at, иначе silent overwrite оставя флага висок."
+    И: „Нов риск: ако гасенето е на стъпка, която после се пропуска, флагът остава
+    висок ЗАВИНАГИ — зависимост от несигурна стъпка. Гасенето да е в update_master
+    (12) или scoring_engine (12.4), които са в ГРЪБНАКА, не в пропускаеми."
+    Затова живее тук и се вика от update_master — стъпка, която мозъкът няма право
+    да пропусне.
+
+    Критерият е доказателство, не изтекло време: за ос с вдигнат флаг търсим
+    ПО-НОВА снимка на същата ос БЕЗ флаг. Има ли такава — старата се подпечатва
+    като разрешена. Няма ли — флагът си стои, колкото и стар да е.
+    """
+    idx = BASE / "snapshots" / "master" / "needs_reanalysis_latest.json"
+    try:
+        flagged = (json.loads(idx.read_text(encoding="utf-8")) or {}).get("axes", [])
+    except Exception:
+        return 0
+    if not flagged:
+        return 0
+
+    # най-новата ЧИСТА снимка на всяка ос
+    newest_clean = {}
+    _SKIP_PARTS = {"master", "self_archive", "__pycache__"}
+    for path in (BASE / "snapshots").rglob("*.json"):
+        if _SKIP_PARTS & set(path.parts):
+            continue
+        try:
+            d = json.loads(path.read_text(encoding="utf-8"))
+            if not isinstance(d, dict) or d.get("needs_reanalysis"):
+                continue
+            ax = d.get("axis") or d.get("axis_name") or path.stem
+            m = path.stat().st_mtime
+            if m > newest_clean.get(ax, (0, None))[0]:
+                newest_clean[ax] = (m, path)
+        except Exception:
+            continue
+
+    n = 0
+    for item in flagged:
+        ax, rel = item.get("axis"), item.get("file")
+        old_p = BASE / str(rel)
+        try:
+            old_m = old_p.stat().st_mtime
+        except Exception:
+            continue
+        cand = newest_clean.get(ax)
+        if not cand or cand[0] <= old_m:
+            continue                      # няма по-нов чист запис -> флагът остава
+        try:
+            d = json.loads(old_p.read_text(encoding="utf-8"))
+            d["reanalysis_resolved_at"] = _utc_now()
+            d["reanalysis_resolved_by"] = str(cand[1].relative_to(BASE))
+            old_p.write_text(json.dumps(d, ensure_ascii=False, indent=2), encoding="utf-8")
+            n += 1
+        except Exception:
+            continue
+    if n:
+        print(f"[FAST_CYCLE] reanalysis: {n} ос(и) разрешени с по-нов чист запис")
+    return n
 
 
 def _load_directives() -> dict:
@@ -803,6 +983,32 @@ def _witness_or_refuse(step: str) -> bool:
             return False
     except Exception:
         pass
+    # ── ПОРТАТА ЧЕТЕ ПЕЧАТИТЕ (Kimi, 15 авг 2026) ──────────────────────────
+    # „Стъпка 18 може да има твърда порта, но ако входът ѝ е роден на стъпка 5 при
+    #  channel_alive=false, портата е СЛЯПА."
+    # Дотук тази функция гледаше само СЕГАШНОТО състояние (жив ли е свидетелят,
+    # жив ли е каналът). Сега пита нотариуса, който носи и ПРОИЗХОДА на входовете:
+    # наследено най-лошо, освен ако по пътя е имало независима верификация.
+    try:
+        from core.notary import may_act
+        ok, why = may_act(step)
+        if ok:
+            return True
+        print(f"[FAST_CYCLE] {step} -> ОТКАЗАНА: {why}")
+        try:
+            from memory.heartbeat import BASE as _B
+            import json as _j
+            from datetime import datetime as _dt, timezone as _tz
+            with open(_B / "memory" / "night_events.jsonl", "a", encoding="utf-8") as fh:
+                fh.write(_j.dumps({"ts": _dt.now(_tz.utc).isoformat(),
+                                   "subject": f"{step} ОТКАЗАНА от нотариуса",
+                                   "detail": why}, ensure_ascii=False) + "\n")
+        except Exception:
+            pass
+        return False
+    except Exception as e:
+        print(f"[FAST_CYCLE] {step} -> нотариусът е недостъпен: {type(e).__name__}: {e}")
+
     try:
         from core.metta_check import witness_present
         if witness_present():
@@ -1035,9 +1241,52 @@ def main():
     # ── 0.5. Dependency check ──
     beat("dependency_check", "0.5")
     if not _check_dependencies():
-        print("\n[FAST_CYCLE] СПРЯН — dependency check failed.")
+        print("\n[FAST_CYCLE] СПРЯН — няма нито един път до мислене.")
         print("[FAST_CYCLE] Отчет: snapshots/master/dependency_check_latest.json")
         return
+
+    # ── КОНСЕНСУС С KIMI, стъпка 6, т.4 (15 авг 2026) ───────────────────────
+    # „Убиването преди мозъка е допустимо само ако НИКОЙ не може да мисли —
+    #  иначе МОЗЪКЪТ трябва да реши дали да продължи с локален модел."
+    # Горното спиране остава (там наистина няма кой да прецени — падналото Е
+    # преценяващият). Но случаят „всички външни са мъртви, локалният е жив" не е
+    # авария, а ИЗБОР: цикъл с 3B модел върху 25 оси е друг цикъл, не същият
+    # по-бавен. Затова изборът е негов, не мой и не на хардкоднат праг.
+    try:
+        _dep = json.loads((BASE / "snapshots" / "master" /
+                           "dependency_check_latest.json").read_text(encoding="utf-8"))
+        _alive = _dep.get("thinking_paths") or []
+        if _alive == ["local_brain"]:
+            print("[FAST_CYCLE] само локалният мозък е жив — питам него, не себе си")
+            from core import brain as _brain
+            _d = _brain.think(
+                role="стопанин на цикъла, останал без външни доставчици",
+                question=("Всички външни доставчици са мъртви. Жив си само ти — локален "
+                          "модел на 4GB VRAM. Пред теб са 25 оси и 217 държави.\n"
+                          "Въпросът е твой: този цикъл струва ли си сега, или е по-честно "
+                          "да не се прави, отколкото да се напълни паметта с плитки "
+                          "преценки, които утре ще се четат като истина?\n"
+                          "Ако продължиш — кажи какво СЪКРАЩАВАШ, за да остане каквото "
+                          "правиш смислено. Ако спреш — това не е провал, а преценка."),
+                evidence=json.dumps(_dep, ensure_ascii=False)[:2000],
+                kind="degraded_mode")
+            _ans = str((_d or {}).get("action", "")).strip().lower()
+            _why = str((_d or {}).get("why", ""))[:300]
+            if _d and _ans.startswith(("спри", "не", "откаж")):
+                print(f"[FAST_CYCLE] СПРЯН по преценка на мозъка: {_why}")
+                try:
+                    with open(BASE / "memory" / "night_events.jsonl", "a",
+                              encoding="utf-8") as _fh:
+                        _fh.write(json.dumps(
+                            {"ts": _utc_now(), "subject": "цикълът спрян ОТ МОЗЪКА",
+                             "detail": f"само локален модел; неговата причина: {_why}"},
+                            ensure_ascii=False) + "\n")
+                except Exception:
+                    pass
+                return
+            print(f"[FAST_CYCLE] мозъкът продължава на локален модел: {_why}")
+    except Exception as _de:
+        print(f"[FAST_CYCLE] degraded-mode decision skipped: {type(_de).__name__}: {_de}")
 
     # Skip web intel if offline
     if directives.get("skip_web_intel"):
@@ -1239,6 +1488,12 @@ def main():
     # ── 12. Update master след всички snapshots ──
     beat("update_master", "12")
     update_master()
+    # Гасенето на „чака преразглеждане" живее ТУК, в гръбнака (Kimi, стъпка 7, т.4):
+    # ако беше на пропускаема стъпка, един пропуск оставяше флага висок завинаги.
+    try:
+        _resolve_reanalysis()
+    except Exception as _re:
+        print(f"[FAST_CYCLE] reanalysis resolve -> FAILED: {type(_re).__name__}: {_re}")
 
     # ── 12.3. System hypergraph — rebuild so cortex_strategist/self_observer can query it ──
     beat("system_hypergraph", "12.3")
