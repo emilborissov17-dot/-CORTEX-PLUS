@@ -784,10 +784,13 @@ def main():
         print("[FAST_CYCLE] Step 1: web_intelligence SKIPPED (offline)")
 
     # ── 2. LLM self-review оси ──
-    beat("llm_self_review_axes", "2")
-    refresh_llm_axes()
-    update_master()
-
+    # 15 авг 2026 — ПРЕМЕСТЕНА (възражение на Kimi, проверено в кода):
+    # „llm_self_review_axes е ОЦЕНКА, не сетиво, и тича преди суровите данни
+    #  (2.5–2.55). Преглежда оси с ВЧЕРАШНИ стойности; мястото ѝ е след 2.7."
+    # Беше стъпка 2 — тоест всяка нощ LLM произнасяше LOW/MEDIUM/HIGH върху
+    # вчерашните числа, днешните пристигаха след него, и скорингът на 12.4
+    # работеше върху друга реалност. Два прочита на един ден, върху различни
+    # данни. Сега е на 2.75: след като всички сетива са внесли своето.
     # ── 2.5. Global indicators — реални данни от 7 источника ──
     beat("global_indicators", "2.5")
     try:
@@ -893,6 +896,10 @@ def main():
         _ground_record()
     except Exception as e:
         print(f"[FAST_CYCLE] grounding_ledger -> FAILED: {type(e).__name__}: {e}")
+
+    beat("llm_self_review_axes", "2.75")
+    refresh_llm_axes()
+    update_master()
 
     # ── 3. Trend tracker ──
     beat("trend_tracker", "3")
@@ -1059,6 +1066,25 @@ def main():
         _deduction_run()
     except Exception as e:
         print(f"[FAST_CYCLE] deduction -> FAILED: {type(e).__name__}: {e}")
+
+    # ── 12.66. ПОСТОЯНСТВОТО КАТО ИЗМЕРВАНЕ (Емил, 15 авг 2026) ────────────
+    # Досега системата гонеше само промяната; плоската серия минаваше за нищо.
+    # Но кислородът в атмосферата е постоянен ЗАЩОТО е здрав — там движението е
+    # алармата. Мозъкът казва в какъв режим ОЧАКВА да е всеки показател и дали
+    # видяното е здраве или симптом; после чете всички ЗАЕДНО и търси връзки,
+    # които нито един поотделно не показва. FAIL-OPEN.
+    beat("constancy_and_constellation", "12.66")
+    try:
+        from core.constancy import run as _const_run
+        _cres = _const_run()
+        _cc = _cres["constancy"]["counts"]
+        print(f"[FAST_CYCLE] constancy -> {_cc['total']} показателя, "
+              f"{_cc['still']} неподвижни, {_cc['alarm']} тревожни")
+        _cj = _cres.get("constellation") or {}
+        if _cj.get("most_telling"):
+            print(f"[FAST_CYCLE] constellation -> {str(_cj['most_telling'])[:160]}")
+    except Exception as e:
+        print(f"[FAST_CYCLE] constancy -> FAILED: {type(e).__name__}: {e}")
 
     beat("cognitive_orchestrator", "12.7")
     # Runs BEFORE HyperClaw so it can use its priority_axes assessment.

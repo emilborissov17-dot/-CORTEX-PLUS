@@ -564,6 +564,16 @@ def _kill_or_fail(state, today, cfg, reason, step, step_index, age, ceil, pid, c
         except Exception as e:
             d = {"cause": f"AUTOPSY_FAILED({type(e).__name__})", "transient": False}
         dused = diagnosed_retries_today(state, today)
+        # 15 авг 2026: мозъкът вече може да каже „НЕ рестартирай — викай човека".
+        # Досега такъв отговор нямаше къде да се побере и той беше сведен до
+        # таймер. Ако го каже, се уважава веднага и без пазарлък.
+        if d.get("halt_and_call_human"):
+            log(f"BRAIN SAYS HALT: {d.get('cause')} — no restart, calling human")
+            alarm_human("CYCLE HALTED BY ITS OWN BRAIN",
+                        f"cause={d.get('cause')}\nwhy={d.get('why')}\n"
+                        f"remedy={d.get('proposed_fix')}\n"
+                        f"(the brain judged a restart would not help)")
+            return
         if d.get("transient") and dused < DIAGNOSED_RETRY_MAX:
             note_diagnosed_retry(state, today)
             kind = KILL_RESTART

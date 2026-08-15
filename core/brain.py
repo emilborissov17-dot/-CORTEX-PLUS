@@ -504,19 +504,49 @@ def stance(step: str | None = None) -> dict:
 
 
 def skipped_by_brain(step: str) -> bool:
-    """True, ако мозъкът е казал 'пропусни' за тази стъпка. Стъпките, които са
-    ГРЪБНАК на одита (печат на цикъла, Merkle ангажимент, пулс), не питат — там
-    границата е на ДЕЙСТВИЕТО, не на мисълта: мнението му се записва, но веригата
-    на доказателствата не се къса по мнение."""
-    BACKBONE = {"boot", "brain_briefing", "brain_debrief", "merklememory_commit",
-                "body_scan", "canon_load", "dependency_check"}
-    # Последната присъда е за стъпката, която тъкмо е бита — етикетът на _run()
-    # понякога се различава от името на beat() (internet_intelligence/internet_agent),
-    # затова се гледа последното становище, а не се търси по име.
+    """Мозъкът ИСКА да пропусне; графът казва МОЖЕ ЛИ. Действие само при двете.
+
+    15 авг 2026 — падна ръчният списък „гръбнак от 7 стъпки". Kimi го събори с
+    едно изречение: „критерият е сгрешен по същество, защото разделя по
+    имплементационна обвивка, а не по семантична критичност... това не е гръбнак,
+    а коремна кухина със спинален имплант." Прав беше: естетичен отчет в обвивка
+    минаваше за пропускаем, а проверка на източник inline — за неприкосновена.
+    Сега границата е СЛЕДСТВИЕ от графа (core.cycle_graph, MeTTa): пропуска се
+    само стъпка, чийто продукт никой надолу не чака. Ако графът не знае —
+    не се пропуска. Незнанието не е разрешение."""
     last = stance()
-    if not last or last.get("step") in BACKBONE or step in BACKBONE:
+    if not last:
         return False
-    return str(last.get("stance", "")).strip().lower().startswith("пропусни")
+    wants = str(last.get("stance", "")).strip().lower().startswith("пропусни")
+    if not wants:
+        return False
+    try:
+        from core.cycle_graph import can_skip
+        import json as _j
+        from datetime import datetime as _dt
+        try:                       # началото на ТОЗИ цикъл, не последните 24ч
+            hb = _j.loads((BASE / "memory" / "heartbeat.json").read_text(encoding="utf-8"))
+            since = _dt.fromisoformat(hb["cycle_id"]).timestamp()
+        except Exception:
+            since = None
+        v = can_skip(step, since)
+    except Exception as e:
+        remember("skip_denied", f"{step}: графът не се зареди ({type(e).__name__})")
+        return False
+    ok = v.get("verdict") == "РАЗРЕШЕНО"
+    remember("skip_decision",
+             f"{step}: мозъкът иска пропускане; графът казва {v.get('verdict')} — {v.get('why')}",
+             {"blockers": v.get("blockers", [])})
+    return ok
+
+
+def watching(step: str) -> bool:
+    """„следи" вече значи нещо. Досега мозъкът можеше да каже 'следи' и това не
+    водеше доникъде — дадена дума без последствие (хванато от Kimi: „каква е
+    семантиката на 'следи'? никъде не е казано"). Сега стъпката се изпълнява, но
+    се маркира като наблюдавана и излиза отделно в отчета на цикъла."""
+    last = stance()
+    return bool(last) and str(last.get("stance", "")).strip().lower().startswith("следи")
 
 
 if __name__ == "__main__":

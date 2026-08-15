@@ -49,7 +49,7 @@ STEPS = [
      [], False),
     ("web_intelligence", "1", "Свободно търсене в мрежата по осите (най-дългата стъпка).",
      ["memory/web_intelligence"], False),
-    ("llm_self_review_axes", "2", "LLM преглед по ос: ниво + разсъждение.",
+    ("llm_self_review_axes", "2.75", "LLM преглед по ос СЛЕД сетивата: ниво + разсъждение върху ДНЕШНИТЕ данни.",
      [], False),
     ("global_indicators", "2.5", "~20 живи HTTP източника — твърдите числа.",
      ["snapshots/master/global_indicators_latest.json"], False),

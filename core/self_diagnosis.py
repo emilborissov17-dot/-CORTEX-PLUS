@@ -126,6 +126,17 @@ def _norm(s: str) -> str:
     return re.sub(r"\s+", " ", str(s)).strip().lower()
 
 
+def _wide_evidence(step: str, window: int = 400) -> str:
+    """Целият край на лога, не само парчето около стъпката — за случаите, в които
+    коренът е далеч преди трупа (каскаден отказ, OOM отвън)."""
+    try:
+        p = _log_for(None)
+        lines = p.read_text(encoding="utf-8", errors="ignore").splitlines()
+        return "\n".join(l.strip()[:200] for l in lines[-window:] if l.strip())
+    except Exception:
+        return ""
+
+
 def _brain_diagnosis(step: str, evidence: list) -> dict | None:
     """МОЗЪКЪТ СЪДИ. Той чете доказателството и сам казва: има ли изобщо повреда,
     как да се казва причината (със свои думи — няма списък за избор), минава ли
@@ -157,25 +168,66 @@ def _brain_diagnosis(step: str, evidence: list) -> dict | None:
                 "cause": "ти кръщаваш причината, ГЛАВНИ_БУКВИ_С_ДОЛНИ_ЧЕРТИ",
                 "why": "1-2 изречения защо",
                 "transient": "true/false — минава ли сама с време",
-                "retry_after_sec": "ако е преходна: след колко секунди има смисъл нов опит",
+                "retry_after_sec": "ако е преходна: след колко секунди има смисъл "
+                                   "нов опит — ТИ решаваш числото, няма таван",
+                "halt_and_call_human": "true/false — по-добре ли е ИЗОБЩО да не се "
+                                       "рестартира и вместо това да се вика човекът",
                 "remedy": "какво да се направи, конкретно",
             },
             require_quote=bool(blob), kind="autopsy")
+        # Kimi: „изискването да цитира ред принуждава модела да обърка симптом с
+        # причина — OOM killer оставя само 'Killed', коренът може да е в стъпка 8,
+        # а той вижда 12 реда." Затова при отказ поради незаземен цитат НЕ падаме
+        # веднага на рефлекса: питаме пак с ЦЕЛИЯ лог. Границата е срещу измисляне,
+        # не срещу дълбочина.
+        if not d and blob:
+            wide = _wide_evidence(step)
+            if wide and wide != blob:
+                _NOTE["widened"] = f"{len(wide)} знака вместо {len(blob)}"
+                d = _brain.think(
+                    role="дежурен инженер на цикъла (широк поглед)",
+                    question=(f"Първият ти извод не се заземи в късия откъс. Ето "
+                              f"ЦЕЛИЯ лог. Причината може да е далеч преди '{step}' "
+                              f"или изобщо да не е в лога (напр. процесът е убит "
+                              f"отвън). Ако е така — кажи го и цитирай каквото има."),
+                    evidence=wide,
+                    schema={
+                        "failure": "true/false", "cause": "ти я кръщаваш",
+                        "why": "1-2 изречения", "transient": "true/false",
+                        "retry_after_sec": "ти решаваш числото, няма таван",
+                        "halt_and_call_human": "true/false",
+                        "remedy": "конкретно лечение",
+                    },
+                    require_quote=True, kind="autopsy")
         if d:
+            # 15 авг 2026 — ПАДНА притискането [60,900]. Kimi: „това е
+            # infantilizing — даваш титла 'мозък', но взимаш решенията за времето.
+            # Ако не му вярваш за времето, защо му вярваш за stance?... при
+            # thermal throttling 60s са малко, при cooldown на API 900s са малко."
+            # Прав е, и Емил го потвърди: „или системата е автономна и носи
+            # отговорност за грешките си (включително за времето за рестарт),
+            # или не е". Значи е. Времето е негово; отговорността също — всяка
+            # негова преценка се записва и се съди по резултата.
             try:
                 retry = int(float(d.get("retry_after_sec") or 0))
             except Exception:
                 retry = 0
             transient = str(d.get("transient")).lower() in ("true", "1", "yes") \
                 and str(d.get("failure")).lower() != "false"
-            retry = min(max(retry, 60), 900) if transient else 0
+            # Единственото, което остава механично, е долната граница от 5 секунди —
+            # не защото не му вярвам, а защото под нея това не е рестарт, а
+            # бомбардировка на собствената машина. Горна граница НЯМА.
+            retry = max(retry, 5) if transient else 0
+            # НОВО ПРАВО: „не рестартирай, викай човека". Досега такъв отговор
+            # просто не съществуваше в схемата — мозъкът беше сведен до таймер.
+            halt = str(d.get("halt_and_call_human")).lower() in ("true", "1", "yes")
             cause = re.sub(r"[^A-Z0-9_А-Я]+", "_",
                            str(d.get("cause", "")).upper()).strip("_")
             remedy = str(d.get("remedy", "")).strip()
             if d.get("_human_proposal"):
                 remedy = (f"[ПРЕДЛОЖЕНИЕ ДО ТЕБ — пипа "
                           f"{', '.join(d['_human_proposal'])}, аз не го правя]: {remedy[:300]}")
-            return {"cause": cause or "БЕЗ_ИМЕ",
+            return {"cause": cause or "БЕЗ_ИМЕ", "halt_and_call_human": halt,
                     "why": str(d.get("why", "")).strip()[:400],
                     "fix": remedy[:400] or "(мозъкът не предложи лечение)",
                     "transient": transient, "retry_after_sec": retry,
