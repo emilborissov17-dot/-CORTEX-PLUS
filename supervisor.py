@@ -88,6 +88,16 @@ EXTRAORDINARY_PATH   = BASE / "memory" / "extraordinary_request.json"
 EXTRAORDINARY_MAX_AGE_MIN = 10    # older than this is not a request, it is litter
 EXTRAORDINARY_MIN_GAP_H   = 4     # a daily cycle must not become an hourly one
 EXTRAORDINARY_AUTHOR = "approve_reader"   # the ONLY accepted author
+
+# How long a heartbeat alone may vouch for a cycle whose lock pid has vanished.
+# GLOBAL on purpose, not per-step (Kimi, 16 Aug 2026): the per-step ceiling for
+# web_intelligence is 3600s, so using it here would mean waiting 59 minutes to
+# admit a death that happened in the first 10 seconds of the step. Ten minutes is
+# long enough to cover the gap between two beats in normal operation and short
+# enough that a real death is still noticed the same night.
+# This is the FALLBACK. The primary evidence is the heartbeat's own pid; when that
+# pid answers, no ceiling applies at all — see decide().
+HEARTBEAT_ALIVE_CEILING = 600
 STATE_PATH  = BASE / "memory" / "scheduler_state.json"
 LOCK_PATH   = BASE / "memory" / "cycle.lock"
 LOG_PATH    = BASE / "logs" / "supervisor.log"
@@ -212,6 +222,24 @@ def _autopsy(action) -> str:
 NIGHT_LOG = BASE / "memory" / "night_events.jsonl"
 QUIET_HOURS = (22, 9)      # 22:00-09:00 местно: човекът спи, системата се оправя сама
 
+# LIFTED OUT OF alarm_human() ON 16 AUG 2026 — and the reason is a scar.
+#
+# Both of these used to be built inline, inside the function body:
+#     stamp = BASE / "memory" / "alarm_sent.json"
+#     cfg   = json.loads((BASE / "memory" / "notify_channel.json").read_text(...))
+# A path built inside a function cannot be redirected by a test fixture, cannot be
+# seen by the write-surface guard, and cannot be found by anyone reading the list of
+# constants at the top of the file. On 16 Aug the test suite therefore reached the
+# REAL Telegram token and sent a REAL alarm carrying a fabricated pid — and then
+# stamped the real dedup file, which silently suppressed the day's genuine alarm.
+#
+# As module constants they are three things at once: monkeypatchable by the sandbox,
+# visible to the guard, and — most importantly — a test that redirects NOTIFY_CHANNEL
+# into a temp dir finds NO credentials there, so alarm_human() returns before it can
+# reach the network. The cause is removed, not the symptom stubbed.
+NOTIFY_CHANNEL = BASE / "memory" / "notify_channel.json"
+ALARM_STAMP    = BASE / "memory" / "alarm_sent.json"
+
 
 def _quiet_now() -> bool:
     h = datetime.now().hour
@@ -255,13 +283,12 @@ def alarm_human(subject: str, detail: str) -> None:
     if _quiet_now():
         return                      # спи човекът; сутринта ще прочете всичко
     try:
-        cfg = json.loads((BASE / "memory" / "notify_channel.json").read_text(encoding="utf-8"))
+        cfg = json.loads(NOTIFY_CHANNEL.read_text(encoding="utf-8"))
         if cfg.get("channel") != "telegram" or not cfg.get("token") or not cfg.get("chat_id"):
             return
         # do not spam: one alarm per subject per day
-        stamp = BASE / "memory" / "alarm_sent.json"
         try:
-            sent = json.loads(stamp.read_text(encoding="utf-8"))
+            sent = json.loads(ALARM_STAMP.read_text(encoding="utf-8"))
         except Exception:
             sent = {}
         key = f"{datetime.now(timezone.utc).strftime('%Y-%m-%d')}:{subject[:40]}"
@@ -272,7 +299,7 @@ def alarm_human(subject: str, detail: str) -> None:
                       json={"chat_id": cfg["chat_id"],
                             "text": f"🚨 CORTEX: {subject}\n{detail}"[:3500]}, timeout=20)
         sent[key] = True
-        stamp.write_text(json.dumps(sent, ensure_ascii=False)[:20000], encoding="utf-8")
+        ALARM_STAMP.write_text(json.dumps(sent, ensure_ascii=False)[:20000], encoding="utf-8")
     except Exception:
         pass
 
@@ -459,20 +486,128 @@ def kill_tree(pid: int) -> bool:
 def decide(now: datetime, state: dict, heartbeat: Optional[dict],
            lock: Optional[dict], cfg: dict, lock_pid_alive: bool = False,
            lock_cycle_finished: bool = False,
-           extraordinary: Optional[dict] = None) -> Action:
+           extraordinary: Optional[dict] = None,
+           heartbeat_pid_alive: bool = False) -> Action:
     """What should this tick do? Exactly one thing.
 
-    `lock_pid_alive`, `lock_cycle_finished` and `extraordinary` are passed in rather
-    than probed (from the OS, the existence ledger, and the request file respectively),
-    so the whole policy stays pure and testable — the same discipline that lets us
-    assert a healthy 40-minute web_intelligence step is never killed. Consuming the
-    request file is tick()'s job, not this function's.
+    `lock_pid_alive`, `heartbeat_pid_alive`, `lock_cycle_finished` and `extraordinary`
+    are passed in rather than probed (from the OS, the existence ledger, and the
+    request file respectively), so the whole policy stays pure and testable — the same
+    discipline that lets us assert a healthy 40-minute web_intelligence step is never
+    killed. Consuming the request file is tick()'s job, not this function's.
+
+    `heartbeat_pid_alive` is new on 16 Aug 2026 and is the pid that actually matters:
+    the lock's pid comes from Popen and on this machine points at the venv launcher
+    stub, while the heartbeat's pid is written by the cycle itself with os.getpid().
+    One is hearsay, the other is the process speaking for itself.
     """
     today = now.date().isoformat()
 
     # ── A cycle is (or claims to be) running ────────────────────────────────
     if lock is not None:
         if not lock_pid_alive:
+            # ── THE HEARTBEAT OUTRANKS THE PID (16 Aug 2026) ───────────────────
+            # Measured, not reasoned. Of 33 CYCLE_DIED entries in the existence
+            # ledger, 21 landed at EXACTLY 300s after CYCLE_STARTED — one tick.
+            # Nine of the twelve "unknown" deaths did too. And the named ones
+            # carried LIVE step names (web_intelligence, body_scan, the axis
+            # self-review): a dead process has no step in progress.
+            #
+            # (The spelled-out step name is avoided on purpose — this file is
+            # guarded by a substring test that forbids any model-related word in
+            # it, and the guard is right to be crude: the supervisor must never
+            # grow the ability to ask a model whether the system should run.)
+            #
+            # The cause: write_lock() stores Popen.pid, and on this machine
+            # venv\Scripts\python.exe is a LAUNCHER — it spawns the real
+            # interpreter as a child and exits. Measured twice:
+            #     Popen.pid = 85400 | child os.getpid() = 97752   -> MISMATCH
+            # So pid_is_our_cycle(lock["pid"]) goes False within seconds of a
+            # perfectly healthy start, and this branch buried a working cycle on
+            # the supervisor's very first look at it. total_kills stayed 0 — the
+            # supervisor never killed anything, it just declared, cleared the
+            # lock and the heartbeat, and started a SECOND cycle on top of the
+            # first. 57 started / 24 finished / 33 "died" is that, not fragility.
+            #
+            # The rule this restores: the lock's pid is INDIRECT evidence and, on
+            # Windows venv, known to lie. The cycle's OWN pid and its OWN heartbeat
+            # are direct evidence. Direct wins.
+            #
+            #   Kimi, 16 Aug: „При система без надзор fail-deadly е по-лошо от
+            #   fail-unsafe." Declaring a live cycle dead is the fail-deadly side.
+            #
+            # TWO independent rescues, in order of strength. Kimi asked for both,
+            # and the pair is what makes the second one's number safe to pick:
+            #
+            #   (1) the heartbeat's OWN pid is alive. That pid was written by the
+            #       cycle with os.getpid(), so it is the process speaking for
+            #       itself, not Popen's hearsay. This is what protects a legitimate
+            #       one-hour web_intelligence step that has not beaten in 50
+            #       minutes because there are no sub-beats inside it yet.
+            #
+            #   (2) the heartbeat beat within a GLOBAL ceiling, deliberately NOT
+            #       the per-step one:
+            #         Kimi, 16 Aug: „Ако стъпката е web_intelligence с таван 3600
+            #         секунди, и цикълът е умрял 10 секунди след началото ѝ,
+            #         супервайзорът ще чака 3590 секунди преди да признае смърт.
+            #         Това е неприемливо — то превръща «спасение от фалшива смърт»
+            #         в «приемане на истинска смърт»."
+            #       So a fresh beat buys at most HEARTBEAT_ALIVE_CEILING seconds of
+            #       benefit of the doubt, never an hour.
+            #
+            # A RETIRED heartbeat counts as neither: it is a record of where a cycle
+            # stopped, not proof that one is running — otherwise the evidence we
+            # just decided to preserve would resurrect the cycle it documents.
+            _hb_same = bool(heartbeat) \
+                and not (heartbeat or {}).get("retired_utc") \
+                and str((heartbeat or {}).get("cycle_id")) == str(lock.get("cycle_id"))
+            _hb_age = _age(now, (heartbeat or {}).get("updated_utc")) if _hb_same else None
+            if _hb_same and heartbeat_pid_alive:
+                # ПРИВРЕМЕННО (Kimi, 16 Aug 2026): при жив пид от пулса приемаме
+                # цикъла за жив НЕЗАВИСИМО от тавана. Това е валидно само докато
+                # няма прогрес-пулсове в дългите стъпки. След въвеждането им тук
+                # трябва да се добави проверка за stale heartbeat ДОРИ при жив пид.
+                #
+                # Why it is a compromise and not a principle: a live pid with a
+                # heartbeat that stopped >600s ago is an ANOMALY, not proof of life
+                # — the process may be alive and spinning in a loop that will never
+                # end. Today we cannot tell that apart from a legitimate hour-long
+                # step, because web_intelligence beats once and then works in
+                # silence. So today we choose the survivable error.
+                #
+                # The anomaly is RECORDED now even though it is not acted on, so
+                # that when the progress-heartbeat lands tomorrow the decision is
+                # made from evidence instead of from an argument.
+                _ceil = int(cfg.get("heartbeat_alive_ceiling_sec", HEARTBEAT_ALIVE_CEILING))
+                _anomaly = ""
+                if _hb_age is not None and _hb_age > _ceil:
+                    _anomaly = (f" | process_alive_but_heart_stopped: silent for "
+                                f"{_hb_age:.0f}s (>{_ceil}s). NOT treated as death "
+                                f"today — see the note in decide(). If this line "
+                                f"appears on a night the cycle did NOT finish, the "
+                                f"progress-heartbeat is overdue.")
+                return Action(NOTHING,
+                              reason=f"lock pid {lock.get('pid')} is gone (venv launcher "
+                                     f"exits after spawning the real interpreter), but the "
+                                     f"cycle's OWN pid {(heartbeat or {}).get('pid')} from "
+                                     f"the heartbeat is alive in step "
+                                     f"'{(heartbeat or {}).get('step')}'. Alive.{_anomaly}")
+            if _hb_same and _hb_age is not None:
+                _hb_ceil = int(cfg.get("heartbeat_alive_ceiling_sec",
+                                       HEARTBEAT_ALIVE_CEILING))
+                if _hb_age <= _hb_ceil:
+                    return Action(NOTHING,
+                                  reason=f"lock pid {lock.get('pid')} is gone (venv "
+                                         f"launcher), and the cycle's own pid could not be "
+                                         f"confirmed — but the heartbeat for THIS cycle "
+                                         f"beat {_hb_age:.0f}s ago in step "
+                                         f"'{(heartbeat or {}).get('step')}' "
+                                         f"(global ceiling {_hb_ceil}s). Alive.")
+                # Same cycle, its pid unconfirmed, and silent for longer than the
+                # global ceiling. NOW it may be called dead — on evidence about the
+                # cycle itself, not about a launcher stub. Fall through with the
+                # heartbeat intact so the death record can name the step.
+
             # A dead pid holding a lock. Now that the runner clears its own lock on
             # a clean exit, a surviving lock means the cycle ended badly — but there
             # are still TWO ways to end badly, and the ledger tells them apart.
@@ -925,13 +1060,24 @@ def tick(now: Optional[datetime] = None, dry_run: bool = False) -> Action:
     beat = hb.read()
 
     alive = pid_is_our_cycle(lock.get("pid")) if lock else False
+    # THE PID THAT ACTUALLY BELONGS TO THE CYCLE (16 Aug 2026). The lock's pid is
+    # Popen's and on this machine names the venv launcher stub, which exits within
+    # seconds; the heartbeat's pid is written by the cycle itself with os.getpid().
+    # Probed here, not inside decide(), so the policy stays a pure function.
+    # Only asked when it can change the answer — a live lock pid needs no second
+    # opinion, and tasklist is a subprocess call we do not spend for nothing.
+    beat_alive = False
+    if lock and not alive and beat and not beat.get("retired_utc"):
+        if str(beat.get("cycle_id")) == str(lock.get("cycle_id")):
+            beat_alive = pid_is_our_cycle(beat.get("pid"))
     # Only ask the ledger the question that matters: a dead-pid lock either came
     # from a cycle that finished cleanly (CYCLE_FINISHED sealed) or one that died
     # mid-run (no seal). A live cycle needs no such lookup.
     finished = ledger.has_finished(lock.get("cycle_id")) if (lock and not alive) else False
     extra = read_extraordinary(now)
     action = decide(now, state, beat, lock, cfg, lock_pid_alive=alive,
-                    lock_cycle_finished=finished, extraordinary=extra)
+                    lock_cycle_finished=finished, extraordinary=extra,
+                    heartbeat_pid_alive=beat_alive)
 
     if dry_run:
         log(f"[dry-run] {action.kind}: {action.reason}")
@@ -984,20 +1130,29 @@ def tick(now: Optional[datetime] = None, dry_run: bool = False) -> Action:
 
     if action.kind == CLEAR_STALE_LOCK:
         clear_lock()
-        hb.clear()
+        # RETIRE, do not delete: the cycle finished cleanly and cleared its own
+        # heartbeat already; if one is still here it belongs to something else,
+        # and deleting another cycle's proof of life is how we went blind.
+        hb.retire(action.reason, by="supervisor:clear_stale_lock",
+                  ended_cycle_id=action.cycle_id)
         ledger.append(ledger.LOCK_STALE, pid=action.pid, cycle_id=action.cycle_id,
                       detail=action.reason)
         return action
 
     if action.kind in (DEAD_LOCK_RETRY, DEAD_LOCK_BUDGET_DONE):
-        # Record the death FIRST, off the still-present heartbeat, then clear both.
+        # Record the death FIRST, off the still-present heartbeat, then retire it.
         # A cycle killed by the supervisor gets CYCLE_KILLED from the kill path; a
         # cycle that died on its own is witnessed here and only here.
         ledger.record_death(cycle_id=action.cycle_id or "unknown",
                             pid=action.pid or -1, last_step=action.wedged_step,
                             detail=action.reason)
         clear_lock()
-        hb.clear()
+        # Kimi, 16 Aug 2026: the heartbeat is the only evidence of WHERE the cycle
+        # died and the only thing that feeds deaths_by_step. It survives the death
+        # it documents; only the cycle itself may delete it, and only on a clean
+        # finish or a human Ctrl+C.
+        hb.retire(action.reason, by="supervisor:dead_lock",
+                  ended_cycle_id=action.cycle_id)
 
         used = restarts_today(state, today)
 
@@ -1075,10 +1230,27 @@ def tick(now: Optional[datetime] = None, dry_run: bool = False) -> Action:
         return action
 
     if action.kind in (KILL_RESTART, KILL_BUDGET_DONE):
-        if action.pid and pid_is_our_cycle(action.pid):
+        # THE WATCHDOG MUST SIGN ITS OWN KILLS (Kimi, 16 Aug 2026):
+        #   „Но watchdog трябва да записва в свой лог: sent SIGTERM to pid X at Y,
+        #    reason: Z. Тогава, когато анализираме замръзнал heartbeat, можем да
+        #    видим дали смъртта е от вътрешен срив или от външно убийство."
+        # On Windows the kill is taskkill /T /F, which the cycle cannot catch and
+        # so cannot self-report. This log line is therefore the ONLY way to tell
+        # a killed cycle from a crashed one, and it is written whether or not the
+        # kill actually lands.
+        _killable = bool(action.pid) and pid_is_our_cycle(action.pid)
+        log(f"WATCHDOG KILL: pid={action.pid} cycle={action.cycle_id} "
+            f"step='{action.wedged_step}' hb_age={action.heartbeat_age_sec}s "
+            f"ceiling={action.ceiling_sec}s killable={_killable} "
+            f"reason={str(action.reason)[:200]}")
+        if _killable:
             kill_tree(action.pid)
         clear_lock()
-        hb.clear()
+        # Killed, not finished: the heartbeat is retired (and now says WHO ended
+        # it), never deleted. See heartbeat.clear() for who may delete.
+        hb.retire(action.reason, by="supervisor:watchdog_kill",
+                  ended_cycle_id=action.cycle_id,
+                  killed_by_watchdog=True, kill_landed=_killable)
 
         used = restarts_today(state, today)
         ledger.record_kill(

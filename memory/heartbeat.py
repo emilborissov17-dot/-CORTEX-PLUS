@@ -168,9 +168,57 @@ def age_seconds(now: Optional[datetime] = None) -> Optional[float]:
 
 
 def clear() -> None:
-    """Remove the heartbeat — called when a cycle ends cleanly, so a finished
-    cycle is never mistaken for a hung one."""
+    """Remove the heartbeat.
+
+    WHO MAY CALL THIS — the rule, not a suggestion (Kimi, 16 Aug 2026):
+
+        „Heartbeat се чисти само при KeyboardInterrupt и при CYCLE_FINISHED.
+         При всяко друго прекъсване — включително SIGTERM от watchdog — се оставя."
+
+    Exactly two callers are legitimate:
+      1. the cycle itself, after a CLEAN finish (the record is already sealed);
+      2. the cycle itself, on KeyboardInterrupt — a human stop is a human
+         decision, not a system failure, and a frozen heartbeat left behind by a
+         Ctrl+C would be read next morning as a death at that step.
+
+    Everything else must call retire() instead. A crash, an OOM, a taskkill —
+    in every one of those the heartbeat is the ONLY record of WHERE the cycle
+    was when it ended, and it is what feeds deaths_by_step and the autopsy.
+
+    This is not theory. Until 16 Aug 2026 the supervisor called clear() on every
+    phantom death, which erased the proof that the "dead" cycle was in fact
+    alive and working — and that is why nine of twelve deaths in the ledger read
+    `last_step=unknown`: the heartbeat had been deleted by the previous tick.
+    Deleting evidence to tidy up is how a system goes blind to its own errors.
+    """
     try:
         HEARTBEAT_PATH.unlink(missing_ok=True)
     except Exception:
         pass
+
+
+def retire(reason: str, by: str = "supervisor", **fields) -> bool:
+    """End the heartbeat WITHOUT destroying it. Returns True if one was there.
+
+    The retired heartbeat keeps every field it had — pid, cycle_id, step,
+    step_index, updated_utc — and gains `retired_utc`, `retired_by` and
+    `retired_reason`. So the morning autopsy can still answer "where was it and
+    who ended it", which a deleted file cannot.
+
+    Readers must treat a retired heartbeat as NOT proof of life: it says where
+    the cycle stopped, not that it is running. supervisor.decide() enforces that.
+    """
+    hb = read()
+    if hb is None:
+        return False
+    hb["retired_utc"] = _utc_now()
+    hb["retired_by"] = str(by)[:80]
+    hb["retired_reason"] = str(reason)[:400]
+    for k, v in fields.items():
+        if v is not None:
+            hb[k] = v
+    try:
+        _write_atomic(hb)
+    except Exception:
+        pass
+    return True

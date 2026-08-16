@@ -46,6 +46,28 @@ def lock(pid=999, started=None, cycle_id="c1"):
             "started_utc": (started or at(3)).isoformat()}
 
 
+def _silence_heartbeat(minutes: int = 20) -> None:
+    """Backdate the heartbeat on disk so the cycle reads as SILENT.
+
+    Why this exists (16 Aug 2026). The end-to-end death tests used to call
+    hb.beat(...) and then assert the cycle was dead — a heartbeat written this
+    instant, next to a claim that nothing is running. No machine can be in that
+    state, and the impossibility was load-bearing: it let the supervisor's
+    "dead pid -> dead cycle" rule pass its tests for a month while, on the real
+    laptop, that rule buried 21 live cycles at exactly the 300-second mark.
+
+    Death is now judged by SILENCE, so a test that wants a death must produce
+    silence. Twenty minutes is comfortably past HEARTBEAT_ALIVE_CEILING (600s).
+    """
+    import json as _json
+    from memory import heartbeat as _hb
+    d = _hb.read() or {}
+    d["updated_utc"] = (datetime.now(timezone.utc)
+                        - timedelta(minutes=minutes)).isoformat()
+    _hb.HEARTBEAT_PATH.write_text(_json.dumps(d, ensure_ascii=False, indent=2),
+                                  encoding="utf-8")
+
+
 def state(last_run_date=None, restarts=None, failure=None):
     return {"last_run_date": last_run_date, "last_run_utc": None,
             "restarts": restarts or {}, "failure": failure}
@@ -250,13 +272,79 @@ def test_dead_lock_from_a_died_cycle_is_recorded_and_retried():
 
 
 def test_a_died_cycle_records_its_last_step_from_the_heartbeat():
-    """A death should still answer 'which step killed me?' — from the last beat."""
+    """A death should still answer 'which step killed me?' — from the last beat.
+
+    SETUP CORRECTED 16 Aug 2026, and the correction is the point of the whole day.
+    This test used to beat 5 minutes ago while asserting the cycle was dead. That
+    is not a state a real machine can be in: a process that no probe can find, yet
+    which wrote a file 300 seconds ago. The impossible setup was not harmless — it
+    is what let `not lock_pid_alive -> death` look correct for a month while, on
+    the real machine, it buried 21 live cycles at exactly the 300-second mark.
+    A test may only assert on a state the world can actually produce.
+    So: silent for 20 minutes, which is past HEARTBEAT_ALIVE_CEILING (600s). NOW
+    it is dead, and the death is judged on the cycle's own silence rather than on
+    a launcher stub's pid.
+    """
     now = at(9)
-    hb = beat("web_intelligence", now - timedelta(minutes=5))  # its own heartbeat
+    hb = beat("web_intelligence", now - timedelta(minutes=20))  # its own heartbeat
     a = sup.decide(now, state(last_run_date="2026-07-13"), hb, lock(pid=4321),
                    CFG, lock_pid_alive=False, lock_cycle_finished=False)
     assert a.kind == sup.DEAD_LOCK_RETRY
     assert a.wedged_step == "web_intelligence"
+
+
+def test_a_live_cycle_is_not_buried_when_the_launcher_pid_dies():
+    """THE 2026-08-16 bug, stated as the regression it is.
+
+    On this machine venv\\Scripts\\python.exe is a launcher: it spawns the real
+    interpreter and exits, so the pid Popen handed the supervisor is dead within
+    seconds of a perfectly healthy start. Measured: Popen.pid=85400, child
+    os.getpid()=97752. From the ledger: 21 of 33 CYCLE_DIED landed at EXACTLY 300s
+    — one tick — and the named ones carried live step names.
+
+    Two independent rescues, and this test demands BOTH, because either alone
+    leaves a hole: without the pid check a legitimate one-hour step dies at 600s;
+    without the ceiling a cycle that died inside a 3600s step waits 59 minutes to
+    be noticed.
+    """
+    now = at(3, 20)
+    # (1) the cycle's own pid answers — no ceiling applies, however long the step
+    hb = beat("web_intelligence", now - timedelta(minutes=50))
+    a = sup.decide(now, state("2026-07-13"), hb, lock(pid=4321), CFG,
+                   lock_pid_alive=False, heartbeat_pid_alive=True)
+    assert a.kind == sup.NOTHING, "a live cycle was buried on a dead launcher pid"
+    # ...but the compromise must SAY it is one. A live pid over a heart that
+    # stopped 50 minutes ago is an anomaly we are choosing not to act on, and an
+    # unrecorded choice is indistinguishable from not having noticed.
+    assert "process_alive_but_heart_stopped" in a.reason, \
+        "the anomaly was swallowed instead of recorded"
+
+    # (2) pid unconfirmed, but it beat inside the global ceiling
+    hb = beat("web_intelligence", now - timedelta(seconds=120))
+    a = sup.decide(now, state("2026-07-13"), hb, lock(pid=4321), CFG,
+                   lock_pid_alive=False, heartbeat_pid_alive=False)
+    assert a.kind == sup.NOTHING
+
+    # ...and the mercy is BOUNDED: silence past the global ceiling is still death,
+    # even though the step's own ceiling is an hour. Otherwise "rescue from a false
+    # death" quietly becomes "acceptance of a real one".
+    hb = beat("web_intelligence", now - timedelta(seconds=900))
+    a = sup.decide(now, state("2026-07-13"), hb, lock(pid=4321), CFG,
+                   lock_pid_alive=False, heartbeat_pid_alive=False)
+    assert a.kind == sup.DEAD_LOCK_RETRY
+
+
+def test_a_retired_heartbeat_does_not_resurrect_its_own_cycle():
+    """The heartbeat now SURVIVES the death it documents (it is the autopsy). That
+    creates a trap: the record of where a cycle stopped must never be read as proof
+    that one is running, or the evidence would resurrect the corpse."""
+    now = at(9)
+    hb = beat("scoring_engine", now - timedelta(seconds=10))
+    hb["retired_utc"] = now.isoformat()
+    hb["retired_by"] = "supervisor:dead_lock"
+    a = sup.decide(now, state(last_run_date="2026-07-13"), hb, lock(pid=4321), CFG,
+                   lock_pid_alive=False, heartbeat_pid_alive=True)
+    assert a.kind == sup.DEAD_LOCK_RETRY, "a retired heartbeat vouched for a corpse"
 
 
 def test_a_stale_heartbeat_from_another_cycle_is_not_attributed_to_the_death():
@@ -439,8 +527,79 @@ def test_supervisor_makes_no_llm_call():
             f"supervisor must not reference {forbidden}"
 
 
+def test_a_test_can_never_fire_a_real_alarm(tick_sandbox, monkeypatch):
+    """THE 16 AUGUST 2026 ACCIDENT, pinned so it cannot happen twice.
+
+    That day a test reached the branch that wakes the human, and every safety
+    assumption held except the ones that mattered:
+      * it read the REAL memory/notify_channel.json, token and chat id included;
+      * it POSTed to api.telegram.org and the message ARRIVED on the phone —
+        confirmed by the human, not inferred — describing a failure with a
+        fabricated pid that had never occurred;
+      * it then stamped the real dedup file, which SUPPRESSED the day's genuine
+        alarm on a day the supervisor was already at an exhausted restart budget.
+
+    So the test disarmed the alarm. That is the failure mode worth a permanent
+    test: not "did we send the wrong message" but "can a test silence the thing
+    that wakes a human when the system dies".
+
+    This forces the dangerous path deliberately — quiet hours off, an already
+    populated stamp file — and asserts nothing leaves the sandbox.
+    """
+    import sys
+    import types
+
+    monkeypatch.setattr(sup, "_quiet_now", lambda: False)   # force the SENDING path
+
+    # A requests module that refuses to be used. If alarm_human ever finds
+    # credentials in a test again, this fails loudly instead of dialling out.
+    # NOTE, and this detail is the whole lesson of the day in miniature: a
+    # poisoned requests.post that merely RAISES proves nothing here, because
+    # alarm_human's body is wrapped in `except Exception: pass`. The raise would be
+    # swallowed, no stamp would be written, and the test would go green — for the
+    # wrong reason, having actually reached the network. So the attempt is RECORDED
+    # in a list that no exception handler can reach, and the list is what is
+    # asserted on. Verified by reverting the fix and watching this go red.
+    attempts = []
+    poisoned = types.ModuleType("requests")
+
+    def _record_then_refuse(*a, **k):
+        attempts.append(a[0] if a else "?")
+        raise AssertionError("network call from a test")
+
+    poisoned.post = _record_then_refuse
+    monkeypatch.setitem(sys.modules, "requests", poisoned)
+
+    sup.alarm_human("СИСТЕМАТА НЕ РАБОТИ — рестартите за деня свършиха",
+                    "fabricated detail from a test")
+
+    assert not attempts, (
+        "a test reached the network through alarm_human — this is exactly the "
+        "16 Aug 2026 accident, which put a fabricated failure on the human's phone "
+        f"and suppressed that day's real alarm. Called: {attempts}")
+    assert not sup.ALARM_STAMP.exists(), \
+        "a test stamped the alarm dedup file; the next REAL alarm would be swallowed"
+    assert sup.NIGHT_LOG.exists(), "the night event should still be recorded — in the sandbox"
+    assert str(tick_sandbox) in str(sup.NIGHT_LOG), "the night event escaped the sandbox"
+
+
 def test_supervisor_never_writes_outside_its_permitted_surface():
-    """Enumerated in the design: heartbeat/lock/ledger/state/log. Nothing else."""
+    """Enumerated in the design: heartbeat/lock/ledger/state/log. Nothing else.
+
+    WIDENED 16 Aug 2026, because it was narrower than it read. It scanned only
+    `X.write_text(...)` / `X.write_bytes(...)`. But night_events.jsonl is written
+    like this:
+
+        with open(NIGHT_LOG, "a", encoding="utf-8") as fh:
+
+    — an append through open(), completely invisible to the old scan. So the test
+    that exists to enumerate the whole write surface did not see appends at all,
+    and NIGHT_LOG sat outside the enumeration while the test shone green. On the
+    same day a test wrote a fabricated failure into that very file.
+
+    A guard that inspects one of the two ways to write a file is not a guard; it is
+    a decoration. Both are checked now.
+    """
     import ast
     src = open(sup.__file__, encoding="utf-8").read()
     tree = ast.parse(src)
@@ -452,9 +611,66 @@ def test_supervisor_never_writes_outside_its_permitted_surface():
                 tgt = node.func.value
                 if isinstance(tgt, ast.Name):
                     written.add(tgt.id)
+            # Path.open("w"/"a") — the same hole in its method form
+            if node.func.attr == "open" and isinstance(node.func.value, ast.Name):
+                mode = node.args[0] if node.args else None
+                if isinstance(mode, ast.Constant) and any(
+                        c in str(mode.value) for c in ("w", "a", "x", "+")):
+                    written.add(node.func.value.id)
+        # os.replace(tmp, NAME) / os.rename / shutil.move — the DESTINATION is a
+        # write, and it is how every atomic write in this codebase is performed
+        # (memory/heartbeat.py writes its file exactly this way: tempfile, then
+        # os.replace). Kimi flagged it as the one omission worth closing: without
+        # it the most important files in the system are invisible to this guard.
+        if isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute) \
+                and node.func.attr in ("replace", "rename", "move", "copy",
+                                       "copyfile", "copy2") \
+                and len(node.args) >= 2 and isinstance(node.args[1], ast.Name):
+            written.add(node.args[1].id)
+        # builtin open(NAME, "a") — how night_events.jsonl is written
+        if isinstance(node, ast.Call) and isinstance(node.func, ast.Name) \
+                and node.func.id == "open" and node.args:
+            mode = node.args[1] if len(node.args) > 1 else None
+            for kw in node.keywords:
+                if kw.arg == "mode":
+                    mode = kw.value
+            is_write = isinstance(mode, ast.Constant) and any(
+                c in str(mode.value) for c in ("w", "a", "x", "+"))
+            if is_write and isinstance(node.args[0], ast.Name):
+                written.add(node.args[0].id)
 
-    allowed = {"LOCK_PATH", "STATE_PATH", "LOG_PATH", "CONFIG_PATH"}
-    assert written <= allowed, f"supervisor writes to unexpected targets: {written - allowed}"
+    allowed = {
+        "LOCK_PATH", "STATE_PATH", "LOG_PATH", "CONFIG_PATH",
+        # Added 16 Aug 2026 — NOT to make the test pass, but because this test had
+        # been RED on the machine for weeks and nobody was running it, which makes
+        # an enumerated surface worth exactly nothing. Each new name is admitted
+        # deliberately, with what it is and why it is harmless:
+        "METTA_CHECK_FILE",   # memory/metta_bridge_check.json — the result of the
+                              # 6-hourly MeTTa bridge probe. Written by the
+                              # supervisor because it is the only process that runs
+                              # on this machine every 5 minutes. Read by humans and
+                              # by the report; nothing in the cycle branches on it.
+        "ALARM_STAMP",        # memory/alarm_sent.json — the "I already woke the
+                              # human about this" marker that stops one failure
+                              # from sending the same alarm every five minutes.
+                              # Was an inline `stamp = BASE / ...` until 16 Aug, so
+                              # it appeared here under a local variable's name — a
+                              # constant with an alias is a constant in disguise.
+        # Found by the widened scan on 16 Aug 2026 — both were being written all
+        # along through open(), where the old check could not see them:
+        "NIGHT_LOG",          # memory/night_events.jsonl — appended by
+                              # note_night_event(); the record of what happened
+                              # while the human slept, read back by cycle_report.
+                              # This is the file a test poisoned on 16 Aug.
+        "log_file",           # memory/cycle_logs/cycle_<stamp>.log — opened for the
+                              # spawned cycle's stdout. The supervisor opens the
+                              # handle; everything inside is written by the cycle.
+    }
+    assert written <= allowed, (
+        f"supervisor writes to unexpected targets: {written - allowed}. "
+        f"If the write is legitimate, ADD IT HERE WITH A REASON — do not widen "
+        f"the set silently. The point of this test is that the surface stays "
+        f"enumerated by a human, not discovered after the fact.")
 
 
 # ---------------------------------------------------------------------------
@@ -463,9 +679,47 @@ def test_supervisor_never_writes_outside_its_permitted_surface():
 
 @pytest.fixture
 def tick_sandbox(tmp_path, monkeypatch):
-    """Point every surface tick() touches at a throwaway dir: state, lock, log,
-    cycle logs, the existence ledger, and the heartbeat. The real ones are
-    protected constitutional state — a test must never write to them."""
+    """Point every surface tick() touches at a throwaway dir.
+
+    WHAT THIS FIXTURE COST BEFORE IT WAS FIXED (16 August 2026)
+    -----------------------------------------------------------
+    It used to redirect six paths and it looked complete. Then the suite was run on
+    the real machine for the first time in weeks, and the one test that reaches the
+    budget-exhausted branch did all of this to LIVE state:
+
+      * wrote a fabricated system-failure event (pid=4321, step 'scoring_engine' —
+        the fixture's invented values) into the real memory/night_events.jsonl,
+        which core/cycle_report.py reads for the "what happened overnight" section;
+      * called the real local model for an autopsy, taking 5m53s of the 5m56s run;
+      * sent a REAL Telegram alarm to the human's phone about a failure that had
+        not happened;
+      * and stamped the real memory/alarm_sent.json — whose dedup key is
+        `date:subject[:40]` — thereby SUPPRESSING the day's genuine alarm on a day
+        the supervisor was already sitting at an exhausted restart budget.
+
+    The last one is the worst: a test quietly disarmed the alarm that exists to wake
+    a human when the system dies.
+
+    None of it was caught by review, and none of it could be caught by running the
+    suite in a cloud container, where `core` is absent, no local model answers and
+    api.telegram.org is unreachable — there every one of these calls fails silently
+    into an `except Exception: pass`. Green there, live rounds here.
+
+    THE FIX IS NOT "ADD THE TWO MISSING PATHS"
+    ------------------------------------------
+    That is what produced the hole: a hand-kept list that looked exhaustive. Two
+    things changed instead:
+
+      1. `alarm_human()` no longer builds its paths inline. NOTIFY_CHANNEL and
+         ALARM_STAMP are module constants, so this fixture can redirect them — and
+         once NOTIFY_CHANNEL points at an empty temp dir there is no token to find,
+         so the function returns BEFORE the network call. The capability is removed
+         rather than the call stubbed.
+      2. test_the_sandbox_covers_every_writable_path_in_the_supervisor below reads
+         the module's own constants and fails if any of them still points at the
+         real repo while this fixture is active. The next path someone adds is
+         covered automatically, or the suite goes red. No more hand-kept list.
+    """
     from memory import existence_ledger as el
     from memory import heartbeat as hb
 
@@ -473,9 +727,92 @@ def tick_sandbox(tmp_path, monkeypatch):
     monkeypatch.setattr(sup, "LOCK_PATH", tmp_path / "cycle.lock")
     monkeypatch.setattr(sup, "LOG_PATH", tmp_path / "supervisor.log")
     monkeypatch.setattr(sup, "CYCLE_LOG_DIR", tmp_path / "cycle_logs")
+    monkeypatch.setattr(sup, "NIGHT_LOG", tmp_path / "night_events.jsonl")
+    monkeypatch.setattr(sup, "NOTIFY_CHANNEL", tmp_path / "notify_channel.json")
+    monkeypatch.setattr(sup, "ALARM_STAMP", tmp_path / "alarm_sent.json")
+    monkeypatch.setattr(sup, "EXTRAORDINARY_PATH", tmp_path / "extraordinary_request.json")
+    monkeypatch.setattr(sup, "METTA_CHECK_FILE", tmp_path / "metta_bridge_check.json")
+    monkeypatch.setattr(sup, "OUTBOX", tmp_path / "outbox")
+    monkeypatch.setattr(sup, "OUTBOX_SENT", tmp_path / "outbox" / "sent")
     monkeypatch.setattr(el, "LEDGER_PATH", tmp_path / "existence_ledger.jsonl")
     monkeypatch.setattr(hb, "HEARTBEAT_PATH", tmp_path / "heartbeat.json")
+
+    # The autopsy calls a local model over HTTP. Left live it took 5m53s of a 5m56s
+    # run — and a suite that takes six minutes is a suite nobody runs, which is how
+    # every defect in this file survived a month.
+    #
+    #   Kimi, 16 Aug 2026: „Мокнете, не заглушавайте. Вместо да премахвате _autopsy
+    #   от пътя, заменете я в тестовата среда."
+    #
+    # So it is RECORDED, not deleted: the branch still calls it, the call lands in
+    # _AUTOPSY_CALLS, and the integration test asserts it happened. The difference
+    # matters — a stub that returns a string proves the code did not crash; a mock
+    # that records proves the code still asks. Only the six minutes are removed.
+    #
+    # HONEST SCOPE: this mocks sup._autopsy, not core.self_diagnosis.diagnose one
+    # layer deeper. What the diagnosis DOES with evidence is core's subject and
+    # belongs in core's own test, with the model mocked there.
+    _AUTOPSY_CALLS.clear()
+
+    def _recording_autopsy(action):
+        _AUTOPSY_CALLS.append(action)
+        return "(autopsy mocked in tests — the real one calls a local model over HTTP)"
+
+    monkeypatch.setattr(sup, "_autopsy", _recording_autopsy)
     return tmp_path
+
+
+# Filled by tick_sandbox's mock, asserted by the integration test below.
+_AUTOPSY_CALLS = []
+
+
+# The module-level paths the supervisor may write to. Anything under memory/ or
+# logs/ must be redirected by tick_sandbox; anything else must be justified here.
+_NOT_WRITTEN_BY_SUPERVISOR = {
+    "CONFIG_PATH",   # config/scheduler.json — human-owned, read-only to the machine
+    "RUNNER",        # fast_cycle_runner.py — spawned, never written
+    "PYTHON",        # venv interpreter — spawned, never written
+    # BASE is the repo root. It is never written to AS A PATH — but read the
+    # warning, because it is how the 16 August accident became possible: every
+    # inline `BASE / "memory" / "something.json"` built inside a function body is a
+    # write surface that no fixture can redirect and no scan of these constants can
+    # see. If you are about to write `BASE / ...` inside a function, stop and make
+    # it a module constant instead. That single rule is what closed this hole.
+    "BASE",
+}
+
+
+def test_the_sandbox_covers_every_writable_path_in_the_supervisor(tick_sandbox):
+    """The fixture must be exhaustive BY CHECK, not by good intentions.
+
+    On 16 Aug 2026 the hand-kept list in tick_sandbox missed NIGHT_LOG and the
+    alarm stamp, and a test wrote to real memory and fired a real alarm. Counting
+    on the next person to remember is what failed. This walks the supervisor's own
+    module constants and fails if any writable one still points at the live repo.
+    """
+    from pathlib import Path
+
+    tmp = Path(tick_sandbox).resolve()
+    escaped = []
+    for name in dir(sup):
+        if not name.isupper():
+            continue
+        val = getattr(sup, name)
+        if not isinstance(val, Path):
+            continue
+        if name in _NOT_WRITTEN_BY_SUPERVISOR:
+            continue
+        try:
+            val.resolve().relative_to(tmp)
+        except ValueError:
+            escaped.append(f"{name} -> {val}")
+
+    assert not escaped, (
+        "these supervisor paths are NOT redirected by tick_sandbox, so a test can "
+        "write to the live system through them:\n  " + "\n  ".join(escaped) +
+        "\n\nAdd a monkeypatch.setattr line to tick_sandbox, or — if the path is "
+        "genuinely never written by the supervisor — name it in "
+        "_NOT_WRITTEN_BY_SUPERVISOR with the reason. Do not delete this test.")
 
 
 def _today():
@@ -495,6 +832,7 @@ def test_tick_records_a_death_and_retries_the_day(tick_sandbox, monkeypatch):
     today = _today()
     el.append(el.CYCLE_STARTED, cycle_id="dead-1", pid=4321, trigger="CATCHUP")
     hb.beat("web_intelligence", 12, cycle_id="dead-1")
+    _silence_heartbeat(minutes=20)      # see the helper: a corpse does not beat
     sup.write_lock(pid=4321, cycle_id="dead-1")
     st = sup.load_state(); st["last_run_date"] = today; sup.save_state(st)
 
@@ -513,9 +851,17 @@ def test_tick_records_a_death_and_retries_the_day(tick_sandbox, monkeypatch):
     assert st["last_run_date"] is None, "a death must not count as today's run"
     assert st["restarts"][today] == 1, "the retry must spend one unit of budget"
 
-    # The lock and heartbeat are gone, the chain is intact...
+    # The lock is gone and the chain is intact — but the HEARTBEAT SURVIVES.
+    # Changed 16 Aug 2026 (Kimi): „Heartbeat се чисти само при KeyboardInterrupt и
+    # при CYCLE_FINISHED." Deleting it here used to erase the only record of where
+    # the cycle was, which is exactly why nine of twelve deaths in the live ledger
+    # read last_step=unknown: the previous tick had already thrown the evidence
+    # away. It is now RETIRED — kept, and stamped with who ended it.
     assert not sup.LOCK_PATH.exists()
-    assert hb.read() is None
+    _hb = hb.read()
+    assert _hb is not None, "the autopsy evidence was destroyed"
+    assert _hb.get("retired_utc"), "the heartbeat was left looking alive"
+    assert _hb.get("step") == "web_intelligence", "the death lost its location"
     assert el.verify()["valid"] is True
 
     # ...and the very next decision, given the un-satisfied day, retries.
@@ -550,16 +896,44 @@ def test_tick_does_not_retry_a_cleanly_finished_cycle(tick_sandbox, monkeypatch)
     assert el.verify()["valid"] is True
 
 
+def test_budget_exhaustion_is_decided_without_touching_anything():
+    """THE UNIT HALF (split out 16 Aug 2026, on Kimi's instruction).
+
+    The old single test bundled two questions: "is the decision right?" and "does
+    the system then do the right things?" The first needs no files, no model and no
+    network; the second needs all three mocked. Bundled, the fast half was hostage
+    to the slow half — and the slow half is why the suite took 5m53s and therefore
+    went unrun for a month, which is how every defect in this file survived.
+
+    This half is pure: decide() sees a dead cycle with the day's budget spent and
+    must refuse to retry.
+    """
+    now = at(9)
+    hb = beat("scoring_engine", now - timedelta(minutes=20))
+    a = sup.decide(now, state("2026-07-13", restarts={"2026-07-13": 2}), hb,
+                   lock(pid=4321), CFG, lock_pid_alive=False, lock_cycle_finished=False)
+    assert a.kind == sup.DEAD_LOCK_BUDGET_DONE
+    assert "budget" in a.reason.lower()
+
+
 def test_tick_stops_after_repeated_deaths_exhaust_the_budget(tick_sandbox, monkeypatch):
-    """A cycle that dies on every attempt must become a VISIBLE failure, not an
-    invisible restart loop. Once the budget is spent the death is still recorded,
-    but the system stays down and waits for a human."""
+    """THE INTEGRATION HALF. A cycle that dies on every attempt must become a
+    VISIBLE failure, not an invisible restart loop. Once the budget is spent the
+    death is still recorded, but the system stays down and waits for a human.
+
+    This is the only test that reaches the branch which wakes a human, so it is the
+    one that has to prove the waking machinery is exercised AND contained. The
+    autopsy is MOCKED, not removed (Kimi: „Мокнете, не заглушавайте") — the branch
+    still calls it, and the call is asserted below. What is removed is only its
+    ability to spend six minutes talking to a local model.
+    """
     from memory import existence_ledger as el
     from memory import heartbeat as hb
 
     today = _today()
     el.append(el.CYCLE_STARTED, cycle_id="dead-3", pid=4321)
     hb.beat("scoring_engine", 15, cycle_id="dead-3")
+    _silence_heartbeat(minutes=20)      # a corpse does not beat; see the helper
     sup.write_lock(pid=4321, cycle_id="dead-3")
     st = sup.load_state()
     st["last_run_date"] = today
@@ -570,6 +944,13 @@ def test_tick_stops_after_repeated_deaths_exhaust_the_budget(tick_sandbox, monke
 
     action = sup.tick()
     assert action.kind == sup.DEAD_LOCK_BUDGET_DONE
+
+    # The waking machinery RAN — mocked, but ran. A test that merely deleted the
+    # autopsy from the path would leave nobody checking that this branch still
+    # tries to explain itself to the human before going quiet.
+    assert len(_AUTOPSY_CALLS) == 1, \
+        "the budget-exhausted branch no longer asks for an autopsy before it gives up"
+    assert _AUTOPSY_CALLS[0].kind == sup.DEAD_LOCK_BUDGET_DONE
 
     kinds = [e["event"] for e in el.read_all()]
     assert el.CYCLE_DIED in kinds, "the death must be recorded even when the budget is spent"
