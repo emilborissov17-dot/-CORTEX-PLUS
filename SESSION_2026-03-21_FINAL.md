@@ -19,4 +19,4 @@
 3. Action executor с human approval
 4. Playwright за Level 4 Action
 
-## ЦЕЛ: Устойчива общочовешка цивилизация. Venus Project.
+## ЦЕЛ: Устойчива общочовешка цивилизация. 
