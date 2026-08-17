@@ -487,23 +487,52 @@ def _fast_model() -> str | None:
 
 def _prev_step_output() -> tuple:
     """Какво изкара ПРЕДИШНАТА стъпка — истинските ѝ редове от лога на цикъла.
-    Така мозъкът не само обявява намерение, а съди и резултата преди него."""
+    Така мозъкът не само обявява намерение, а съди и резултата преди него.
+
+    ── ИМЕТО ИДВА ОТ ПУЛСА, НЕ ОТ ПОВТОРНО ЧЕТЕНЕ (17 авг 2026) ──────────────
+    Дотук тази функция вземаше ПОСЛЕДНИЯ [STEP] ред от лога. Но beat() пише този
+    ред ПРЕДИ да повика мозъка, значи последният ред е СЕГАШНАТА стъпка: върнатото
+    „prev_name" беше самата стъпка, във всичките 53 реда от 17 авг. Нотариусът
+    после сравняваше стъпка със себе си и наричаше това обещание.
+
+    beat() вече хваща предишното име ПРЕДИ да напише новото и го пази
+    (memory.heartbeat.previous_step). Тук се чете пазеното, а логът се ползва само
+    за ТЯЛОТО — редовете между маркера на предишната стъпка и следващия маркер.
+    """
     try:
+        kept = None
+        try:
+            from memory.heartbeat import previous_step
+            kept = previous_step()
+        except Exception:
+            kept = None
+        if not kept:
+            return "", ""          # първата стъпка: няма предшественик, и се казва
+
         logs = sorted((BASE / "memory" / "cycle_logs").glob("cycle_*.log"),
                       key=lambda p: p.stat().st_mtime, reverse=True)
         if not logs:
-            return "", ""
+            return kept, ""
         lines = logs[0].read_text(encoding="utf-8", errors="ignore").splitlines()[-400:]
-        idx = None
+
+        # Последният маркер, който НОСИ ИМЕТО НА ПАЗЕНАТА СТЪПКА — не просто
+        # последният маркер, който вече е нашият.
+        start = None
         for i in range(len(lines) - 1, -1, -1):
-            if lines[i].lstrip().startswith("[STEP] "):
-                idx = i
+            s = lines[i].lstrip()
+            if s.startswith("[STEP] ") and s.split("[STEP] ", 1)[1].strip() == kept:
+                start = i
                 break
-        if idx is None:
-            return "", ""
-        prev_name = lines[idx].split("[STEP] ", 1)[1].strip()
-        body = [l.strip()[:200] for l in lines[idx + 1:] if l.strip()][-12:]
-        return prev_name, "\n".join(body)
+        if start is None:
+            return kept, ""
+
+        body = []
+        for l in lines[start + 1:]:
+            if l.lstrip().startswith("[STEP] "):
+                break              # стигнахме следващата стъпка — тялото свърши
+            if l.strip():
+                body.append(l.strip()[:200])
+        return kept, "\n".join(body[-12:])
     except Exception:
         return "", ""
 

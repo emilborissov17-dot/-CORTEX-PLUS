@@ -43,6 +43,51 @@ from typing import Optional
 
 BASE = Path(__file__).resolve().parent.parent
 HEARTBEAT_PATH = BASE / "memory" / "heartbeat.json"
+CYCLE_LOG_DIR = BASE / "memory" / "cycle_logs"
+
+# ── КОЯ Е БИЛА ПРЕДИШНАТА СТЪПКА (17 авг 2026) ─────────────────────────────
+# core/brain.py::_prev_step_output() четеше ПОСЛЕДНИЯ [STEP] ред от лога, за да
+# намери предишната стъпка. Но beat() пише този ред ПРЕДИ да повика мозъка, значи
+# „последният" е СЕГАШНАТА стъпка. Затова prev_step == step във всичките 53 реда
+# от 17 авг, а нотариусът сравняваше стъпка със самата себе си.
+#
+# Поправката НЕ Е да се премести print-ът след мозъка. Маркерът съществува точно
+# за да може аутопсията да намери КЪДЕ е започнала заклещената стъпка (виж
+# коментара в beat()); ако се пише след повикване към мозъка с таван 60 секунди,
+# то при смърт ПО ВРЕМЕ на това повикване маркерът никога не се написва и
+# аутопсията губи границата на стъпката — точно когато най-много ѝ трябва.
+# core/cycle_report.py реже изхода МЕЖДУ два маркера; преместен маркер би
+# приписал думите на мозъка на предишната стъпка.
+#
+# Затова: стойността се ХВАЩА преди новия ред да бъде написан, и се помни.
+# Никакво повторно четене — четенето е това, което не може да различи двете.
+_PREV_STEP: Optional[str] = None
+
+
+def _last_step_in_log() -> Optional[str]:
+    """The [STEP] name currently last in the cycle log.
+
+    Called BEFORE this beat writes its own line, so what it finds is the step that
+    actually ran before this one.
+    """
+    try:
+        logs = sorted(CYCLE_LOG_DIR.glob("cycle_*.log"),
+                      key=lambda p: p.stat().st_mtime, reverse=True)
+        if not logs:
+            return None
+        lines = logs[0].read_text(encoding="utf-8", errors="ignore").splitlines()[-400:]
+        for line in reversed(lines):
+            if line.lstrip().startswith("[STEP] "):
+                return line.split("[STEP] ", 1)[1].strip() or None
+    except Exception:
+        return None
+    return None
+
+
+def previous_step() -> Optional[str]:
+    """The step that ran before the one currently running, or None if this is the
+    first beat of the cycle. Captured, never re-read."""
+    return _PREV_STEP
 
 
 def _utc_now() -> str:
@@ -61,6 +106,10 @@ def beat(step: str, step_index: Optional[int] = None, cycle_id: Optional[str] = 
     # name lived only in heartbeat.json, so when a cycle died the autopsy
     # (core/self_diagnosis) could not find where in a 180k-line log the wedged
     # step began — it could name the step but never show its last words.
+    # CAPTURE FIRST, THEN ANNOUNCE. The order of these two statements is the whole
+    # fix: once the new line is written, nothing can tell it from the old one.
+    global _PREV_STEP
+    _PREV_STEP = _last_step_in_log()
     try:
         print(f"[STEP] {step}", flush=True)
     except Exception:
