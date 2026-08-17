@@ -121,17 +121,91 @@ def _witness_state() -> tuple:
         return UNKNOWN, f"MeTTa недостъпен: {type(e).__name__}"
 
 
-def _human_state() -> tuple:
-    """Стигна ли човешката дума дотук."""
+# Колко пресен трябва да е самият ОТЧЕТ, за да значи нещо: approve_reader върви
+# на всеки цикъл и на всеки 10 мин по график, така че запис на повече от 6 часа
+# описва канала от снощи, не отсега.
+HUMAN_CHECK_FRESH_H = 6
+# Колко назад „човек е писал" още е доказателство, че някой наглежда канала.
+# Одобренията не са ежедневни; седмица е щедро, но крайно.
+HUMAN_ACT_DAYS = 7
+
+
+def _age_hours(ts: str | None):
+    if not ts:
+        return None
     try:
-        from experiments.needs.approve_reader import channel_alive
-        ok, why = channel_alive()
-        if not ok:
-            return UNKNOWN, f"човешкият канал: {why}"
-        return (FULL, f"човешкият канал: {why}") if "alive" in why else \
-               (REDUCED, f"човешкият канал: {why}")
+        t = datetime.fromisoformat(str(ts))
+        if t.tzinfo is None:
+            t = t.replace(tzinfo=timezone.utc)
+        return (datetime.now(timezone.utc) - t).total_seconds() / 3600.0
+    except Exception:
+        return None
+
+
+def _human_state() -> tuple:
+    """Стигна ли човешката дума дотук — и колко от нея наистина е доказана.
+
+    КАКВО ТОЗИ ПРОВЕРКА МОЖЕ И КАКВО НЕ МОЖЕ ДА ДОКАЖЕ (17 авг 2026)
+    -----------------------------------------------------------------
+    Три различни неща стояха слети в едно:
+
+      ДОСТИЖИМОСТ  Telegram върна 200. Доказва, че ТРАНСПОРТЪТ работи.
+                   За човек не доказва нищо.
+      ПРИСЪСТВИЕ   човек наистина е писал нещо през канала наскоро. Слабо, но
+                   истинско доказателство, че някой наглежда.
+      СЪГЛАСИЕ     човек е одобрил ТОВА действие. Каналът НИКОГА не доказва
+                   това — съгласието е за отделно действие и живее в
+                   pending_approvals/declined_approvals, не тук.
+
+    Дотук „200 OK, 0 нови съобщения" даваше FULL — най-високата оценка за
+    човешки произход се присъждаше на факт за един HTTP endpoint. Затова
+    таванът тук е РЕАЛНОСТТА: без следа от човешко действие каналът стига най-
+    много до REDUCED. FULL иска човек наистина да е проговорил.
+
+    И, измерено преди поправката:
+
+        не проверен изобщо   -> REDUCED(2)  МИНАВА портата
+        проверен, мъртъв     -> UNKNOWN(0)  спира
+        запис нечетим        -> REDUCED(2)  МИНАВА портата
+
+    Тоест най-евтиният начин да отвориш портата беше да не гледаш. Липсата на
+    проверка вече не може да струва повече от проверена лоша новина: всичко
+    непроверено е UNKNOWN, наравно с мъртъв канал.
+    """
+    try:
+        from experiments.needs.approve_reader import channel_state
+        st = channel_state()
     except Exception as e:
-        return MINIMAL, f"човешкият канал непроверим: {type(e).__name__}"
+        # Непроверимо е UNKNOWN, не MINIMAL. Преди беше MINIMAL — пак по-високо
+        # от проверен провал, същата дупка с друго име.
+        return UNKNOWN, f"човешкият канал непроверим: {type(e).__name__}"
+
+    state = str(st.get("state", "unknown"))
+    why = str(st.get("why", ""))
+    tag = f"човешкият канал: {state}: {why}"
+
+    if state in ("unknown", "dead"):
+        return UNKNOWN, tag
+    if state == "not_configured":
+        # Проверен, определен отговор: няма човешки път. Знанието е честно, но
+        # път до човек няма — под прага за необратимо.
+        return MINIMAL, tag
+
+    if state != "alive":
+        return UNKNOWN, f"{tag} (непознато състояние)"
+
+    checked_h = _age_hours(st.get("ts"))
+    if checked_h is None:
+        return UNKNOWN, f"{tag} — записът няма годно време"
+    if checked_h > HUMAN_CHECK_FRESH_H:
+        return MINIMAL, (f"{tag} — но проверката е отпреди "
+                         f"{checked_h:.0f}ч (>{HUMAN_CHECK_FRESH_H}ч)")
+
+    acted_h = _age_hours(st.get("last_human_msg_utc"))
+    if acted_h is not None and acted_h <= HUMAN_ACT_DAYS * 24:
+        return FULL, f"{tag} — човек е писал преди {acted_h:.0f}ч"
+    return REDUCED, (f"{tag} — каналът отговаря, но няма човешко действие"
+                     + (f" от {acted_h / 24:.0f}д" if acted_h is not None else " изобщо"))
 
 
 def _thought_state() -> tuple:

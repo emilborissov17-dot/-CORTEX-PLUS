@@ -339,24 +339,79 @@ def _apply_goal(spec: dict, chat_id):
 CHANNEL_STATE = REPO / "memory" / "human_channel_state.json"
 
 
-def _mark_channel(state: str, why: str) -> None:
+UNKNOWN_CHANNEL = "unknown"
+
+
+def _mark_channel(state: str, why: str, human_msgs: int = 0) -> None:
+    """Запиши какво знаем за канала — И кога човек за последно е ПИСАЛ.
+
+    `human_msgs` е добавено на 17 авг 2026. Дотук записът казваше само че
+    Telegram е върнал 200 — тоест че ТРАНСПОРТЪТ работи. Това не е човек. Без
+    следа кога човек наистина е проговорил, нотариусът нямаше как да различи
+    „каналът е жив и човекът отговаря" от „каналът е жив и от седмици никой не е
+    писал", и даваше FULL и на двете. `last_human_msg_utc` се пренася напред,
+    защото фактът „човек писа онзи ден" не изчезва, когато днешната проверка
+    върне празен inbox.
+    """
     try:
+        prev = {}
+        try:
+            prev = json.loads(CHANNEL_STATE.read_text(encoding="utf-8"))
+        except Exception:
+            prev = {}
+        now = datetime.now(timezone.utc).isoformat()
+        last_human = prev.get("last_human_msg_utc")
+        if human_msgs:
+            last_human = now
         CHANNEL_STATE.parent.mkdir(parents=True, exist_ok=True)
         CHANNEL_STATE.write_text(json.dumps(
-            {"ts": datetime.now(timezone.utc).isoformat(), "state": state, "why": why},
+            {"ts": now, "state": state, "why": why,
+             "human_msgs": int(human_msgs),
+             "last_human_msg_utc": last_human},
             ensure_ascii=False, indent=2), encoding="utf-8")
     except Exception:
         pass
 
 
-def channel_alive() -> tuple:
-    """(може ли да се действа необратимо, защо). Мъртъв канал = не."""
+def channel_state() -> dict:
+    """Какво ЗНАЕМ за канала. `unknown` когато не сме гледали или не сме могли.
+
+    Отделено от channel_alive() на 17 авг 2026, защото „не проверено" и
+    „проверено и мъртво" се връщаха като едно и също нещо — по-точно, „не
+    проверено" се връщаше като ПО-ДОБРОТО от двете. Виж channel_alive().
+    """
     try:
         d = json.loads(CHANNEL_STATE.read_text(encoding="utf-8"))
-    except Exception:
-        return True, "няма запис за канала — не се третира като отказ"
-    st = str(d.get("state", ""))
-    return st != "dead", f"{st}: {d.get('why', '')}"
+    except FileNotFoundError:
+        return {"state": UNKNOWN_CHANNEL, "why": "няма запис — каналът НЕ Е проверяван"}
+    except Exception as e:
+        return {"state": UNKNOWN_CHANNEL,
+                "why": f"записът за канала е нечетим: {type(e).__name__}"}
+    if not isinstance(d, dict) or not d.get("state"):
+        return {"state": UNKNOWN_CHANNEL, "why": "записът няма поле state"}
+    return d
+
+
+def channel_alive() -> tuple:
+    """(може ли да се действа необратимо, защо). Мъртъв ИЛИ непроверен = не.
+
+    ПРОМЯНА, 17 авг 2026 — и тя е поправка на дупка, не затягане:
+    досега липсващ или нечетим запис връщаше True („не се третира като отказ").
+    Тоест НИКОГА НЕ ПРОВЕРЕН канал даваше повече права от канал, който сме
+    проверили и е бил мъртъв. Невежеството не бива да струва по-малко от лошата
+    новина; иначе най-безопасният начин да минеш през портата е да не гледаш.
+
+    `not_configured` остава НЕ-отказ нарочно (решението на Емил/Kimi, 15 авг:
+    ненастроен канал не е отказ) — това е проверен, определен отговор, не липса
+    на проверка. Необратимите стъпки пак спират, но ги спира нотариусът, който
+    му дава MINIMAL — виж core/notary.py:_human_state.
+    """
+    st = channel_state()
+    state = str(st.get("state", UNKNOWN_CHANNEL))
+    why = f"{state}: {st.get('why', '')}"
+    if state in ("dead", UNKNOWN_CHANNEL):
+        return False, why
+    return True, why
 
 
 def run():
@@ -388,7 +443,8 @@ def run():
 
     # 200 OK с празно тяло Е валидно състояние — човекът просто не е писал.
     updates = data.get("result", [])
-    _mark_channel("alive", f"200 OK, {len(updates)} нови съобщения")
+    _mark_channel("alive", f"200 OK, {len(updates)} нови съобщения",
+                  human_msgs=len(updates))
     max_id = offset
     applied = 0
     for u in updates:
