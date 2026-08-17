@@ -43,3 +43,24 @@ jobs:
         # continue-on-error stays: this is still informational, not a gate. But the
         # step must now show what it found.
         run: pytest test/ -q
+  ruff:
+    runs-on: ubuntu-latest
+    continue-on-error: true   # informational, like tests — not a gate yet
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: pip install ruff
+      - name: ruff (informational)
+        # NO `|| true`. continue-on-error keeps the JOB from blocking the run, but the
+        # STEP reports its real exit code, so the annotation says what ruff found. The
+        # two are not the same thing and conflating them is how this repo ended up with
+        # a tests job that could not fail — see the comment above.
+        #
+        # Measured 17 Aug 2026 before wiring this up, so the first red is not a
+        # surprise: `ruff check .` reports 3311 findings over 393 files (venv/ is
+        # excluded automatically; there is no ruff config in this repo). Note that
+        # ruff 0.16's out-of-the-box rule set is much wider than the documented
+        # E4,E7,E9,F default — restricted to exactly those four, the count is 754.
+        # No config is committed yet, deliberately: the raw number comes first.
+        run: ruff check .
