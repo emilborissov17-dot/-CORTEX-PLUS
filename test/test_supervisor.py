@@ -732,6 +732,7 @@ def tick_sandbox(tmp_path, monkeypatch):
     monkeypatch.setattr(sup, "ALARM_STAMP", tmp_path / "alarm_sent.json")
     monkeypatch.setattr(sup, "EXTRAORDINARY_PATH", tmp_path / "extraordinary_request.json")
     monkeypatch.setattr(sup, "METTA_CHECK_FILE", tmp_path / "metta_bridge_check.json")
+    monkeypatch.setattr(sup, "CYCLE_EXIT_PATH", tmp_path / "cycle_exit.json")
     monkeypatch.setattr(sup, "OUTBOX", tmp_path / "outbox")
     monkeypatch.setattr(sup, "OUTBOX_SENT", tmp_path / "outbox" / "sent")
     monkeypatch.setattr(el, "LEDGER_PATH", tmp_path / "existence_ledger.jsonl")

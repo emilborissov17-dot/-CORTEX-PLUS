@@ -32,6 +32,13 @@ import supervisor as sup
 @pytest.fixture
 def log_dir(tmp_path, monkeypatch):
     monkeypatch.setattr(sup, "CYCLE_LOG_DIR", tmp_path / "cycle_logs")
+    # spawn_cycle also starts a detached reaper, which writes the child's exit
+    # code to CYCLE_EXIT_PATH and appends to NIGHT_LOG. Both are handed to it on
+    # the command line precisely so this line can keep it out of live memory/ —
+    # without it these tests would append a fabricated CYCLE_EXIT to the real
+    # night log, which is the 16 Aug 2026 accident all over again.
+    monkeypatch.setattr(sup, "CYCLE_EXIT_PATH", tmp_path / "cycle_exit.json")
+    monkeypatch.setattr(sup, "NIGHT_LOG", tmp_path / "night_events.jsonl")
     return tmp_path / "cycle_logs"
 
 

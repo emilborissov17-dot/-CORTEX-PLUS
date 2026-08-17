@@ -112,6 +112,19 @@ PYTHON      = BASE / "venv" / "Scripts" / "python.exe"
 CYCLE_LOG_DIR   = BASE / "memory" / "cycle_logs"
 CYCLE_LOG_KEEP  = 14      # ~two weeks; a cycle log is a few hundred KB
 
+# The cycle's EXIT CODE, written by memory/cycle_reaper.py — not by this file.
+# The supervisor only passes the path down to the reaper it spawns, because a
+# tick that waited for the exit code would have to wait out the whole cycle.
+# See memory/cycle_reaper.py for why one integer was worth a second process:
+# on 17 Aug 2026 a cycle died and four explanations survived the autopsy purely
+# because Popen's handle was discarded before anyone read a number off it.
+CYCLE_EXIT_PATH = BASE / "memory" / "cycle_exit.json"
+# How long the reaper waits, after the cycle is gone, for a killer to sign the
+# heartbeat before it concludes nobody will. A watchdog kill signs within
+# milliseconds; this is slack, not a budget. A knob because the end-to-end test
+# would otherwise spend it waiting for a signature it knows will never come.
+REAPER_SETTLE_SEC = 8.0
+
 
 # ---------------------------------------------------------------------------
 # Actions — the complete vocabulary of what a tick may do
@@ -848,6 +861,43 @@ def prune_cycle_logs(keep: int = CYCLE_LOG_KEEP) -> int:
     return n
 
 
+def _spawn_reaper(python: str, pid: int, cycle_id: str) -> Optional[int]:
+    """Start the detached process that will record how `pid` ended. Never raises.
+
+    WHY THIS IS NOT `proc.wait()` IN THE TICK: the tick exits in milliseconds and
+    the cycle runs for ninety minutes. Waiting here would turn the supervisor into
+    the cycle. So the wait is moved into its own process, which holds a handle to
+    the cycle and outlives us both. memory/cycle_reaper.py explains the rest.
+
+    The two output paths are passed EXPLICITLY rather than left to the reaper's
+    defaults. The reaper is detached, so no test fixture can monkeypatch inside
+    it; handing it this process's own (redirectable) constants is the only way a
+    sandboxed test can keep it out of live memory/.
+
+    A reaper that fails to start costs us the exit code and nothing else — the
+    cycle is already running and must not be endangered by its own bookkeeping.
+    """
+    try:
+        proc = subprocess.Popen(
+            [python, "-m", "memory.cycle_reaper",
+             "--pid", str(pid),
+             "--cycle-id", str(cycle_id),
+             "--exit-record", str(CYCLE_EXIT_PATH),
+             "--night-log", str(NIGHT_LOG),
+             "--settle-sec", str(REAPER_SETTLE_SEC)],
+            cwd=str(BASE), env={**os.environ, "PYTHONIOENCODING": "utf-8"},
+            stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+            creationflags=(getattr(subprocess, "CREATE_NEW_PROCESS_GROUP", 0)
+                           | getattr(subprocess, "DETACHED_PROCESS", 0)),
+        )
+        return proc.pid
+    except Exception as e:
+        log(f"reaper failed to start for pid={pid}: {type(e).__name__}: {e} "
+            f"— the cycle runs, but its exit code will be lost")
+        return None
+
+
 def spawn_cycle(cycle_id: str) -> Optional[int]:
     """Start fast_cycle_runner detached, with its output captured. Returns its PID.
 
@@ -888,12 +938,48 @@ def spawn_cycle(cycle_id: str) -> Optional[int]:
         fh = subprocess.DEVNULL
         log_file = None
 
+    # ── DETACHED_PROCESS — THE 17 AUG 2026 SCAR ──────────────────────────────
+    # CREATE_NEW_PROCESS_GROUP alone was not detachment. It stops Ctrl+C from
+    # reaching the child, and it is why the runner's KeyboardInterrupt branch
+    # almost never fires — but the child still INHERITED the launching console.
+    # Closing that console window sends CTRL_CLOSE_EVENT to every process
+    # attached to it, and a process that does not handle it is terminated after
+    # a five-second grace: no handler, no traceback, no output.
+    #
+    # That is exactly how the 17:13 cycle died. It was started by hand with
+    # `supervisor.py --run-now` from a PowerShell window; the window was closed
+    # while the cycle was 3 minutes in; the cycle died mid-step, the log ended
+    # without a traceback and the heartbeat froze. A 90-minute unattended run
+    # must not depend on a terminal staying open.
+    #
+    # DETACHED_PROCESS (not CREATE_NO_WINDOW) — and the two are mutually
+    # exclusive, CreateProcess fails if both are set:
+    #   * DETACHED_PROCESS gives the child NO console at all, so there is no
+    #     console whose closing can signal it. CREATE_NO_WINDOW would give it a
+    #     new hidden console instead — that also survives this particular death,
+    #     but it keeps a console object the cycle has no use for and can still
+    #     deliver control events. This process is a headless 90-minute job; the
+    #     honest description of it is "no controlling terminal".
+    #   * WHAT IT COSTS: nothing in the log. stdout and stderr were already
+    #     redirected to memory/cycle_logs/cycle_<stamp>.log through `fh` above
+    #     and still are — the supervisor captures exactly what it captured
+    #     before, and a human running this by hand never saw the output in their
+    #     window anyway, because it was already going to the file.
+    #   * WHAT IT REALLY COSTS: a manually started cycle now genuinely outlives
+    #     the terminal that started it. Closing the window no longer stops it.
+    #     Stopping it means the watchdog, an extraordinary request, or taskkill.
+    #     That is the intended trade and it should not be discovered by surprise.
+    #   * stdin is pinned to DEVNULL. With no console, an inherited stdin handle
+    #     is invalid, and code that reads it would fail in a way that has nothing
+    #     to do with its actual bug.
+    creationflags = (getattr(subprocess, "CREATE_NEW_PROCESS_GROUP", 0)
+                     | getattr(subprocess, "DETACHED_PROCESS", 0))
     try:
         proc = subprocess.Popen(
             [python, str(RUNNER)],
             cwd=str(BASE), env=env,
-            stdout=fh, stderr=subprocess.STDOUT,
-            creationflags=getattr(subprocess, "CREATE_NEW_PROCESS_GROUP", 0),
+            stdin=subprocess.DEVNULL, stdout=fh, stderr=subprocess.STDOUT,
+            creationflags=creationflags,
         )
     except Exception as e:
         log(f"failed to spawn cycle: {type(e).__name__}: {e}")
@@ -906,6 +992,16 @@ def spawn_cycle(cycle_id: str) -> Optional[int]:
     try:
         if log_file:
             log(f"cycle output -> {log_file}")
+    except Exception:
+        pass
+
+    # The reaper is started AFTER the pid exists and inside the protected zone:
+    # its whole job is bookkeeping, and bookkeeping must never cost us the pid.
+    try:
+        reaper_pid = _spawn_reaper(python, proc.pid, cycle_id)
+        if reaper_pid:
+            log(f"reaper {reaper_pid} watching cycle pid {proc.pid} "
+                f"-> {CYCLE_EXIT_PATH}")
     except Exception:
         pass
     return proc.pid

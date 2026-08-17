@@ -50,6 +50,9 @@ def test_child_output_survives_a_hard_kill(tmp_path, monkeypatch):
     monkeypatch.setattr(sup, "RUNNER", runner)
     monkeypatch.setattr(sup, "CYCLE_LOG_DIR", tmp_path / "cycle_logs")
     monkeypatch.setattr(sup, "LOG_PATH", tmp_path / "supervisor.log")
+    # spawn_cycle also starts a detached reaper; keep its two sinks in the sandbox.
+    monkeypatch.setattr(sup, "CYCLE_EXIT_PATH", tmp_path / "cycle_exit.json")
+    monkeypatch.setattr(sup, "NIGHT_LOG", tmp_path / "night_events.jsonl")
 
     pid = sup.spawn_cycle("hard-kill-test")
     assert pid, "the child failed to spawn"
