@@ -434,6 +434,28 @@ def call_groq_meta(prompt: str, max_tokens: int = 1024) -> tuple:
         except Exception:
             pass  # bookkeeping must never break the chain
 
+    def _model_for(backend_label: str) -> str:
+        """Which model actually answered — for provenance.
+
+        Added 17 Aug 2026: meta already said WHICH BACKEND replied but never
+        which model, so anything archiving a verdict could record "Groq" and not
+        "llama-3.3-70b-versatile". Gemini's name is parsed out of GEMINI_API_URL
+        (.../models/gemini-2.0-flash:generateContent) rather than duplicated into
+        a constant, so the two cannot drift apart.
+        """
+        if backend_label == "Groq":
+            return GROQ_MODEL
+        if backend_label == "Cerebras":
+            return CEREBRAS_MODEL
+        if backend_label == "OpenRouter":
+            return OPENROUTER_MODEL
+        if backend_label == "Gemini":
+            try:
+                return GEMINI_API_URL.rsplit("/", 1)[-1].split(":")[0]
+            except Exception:
+                return "gemini (model in GEMINI_API_URL)"
+        return backend_label
+
     last_error = None
     for label, key, fn in backends:
         if _is_cooling(key):
@@ -445,6 +467,7 @@ def call_groq_meta(prompt: str, max_tokens: int = 1024) -> tuple:
                 _clear_cooldown(key)  # healthy again → reset its escalation
                 meta = dict(meta or {})
                 meta["backend"] = label
+                meta["model"] = _model_for(label)
                 if meta.get("finish_reason") == "length":
                     print(f"[LLM] {label} OK (finish_reason=length — ОТРЯЗАН отговор)")
                 elif meta.get("used_reasoning_fallback"):
@@ -466,6 +489,7 @@ def call_groq_meta(prompt: str, max_tokens: int = 1024) -> tuple:
         result, meta = _call_local(prompt, max_tokens)
         meta = dict(meta or {})
         meta["backend"] = f"local:{_LOCAL_MODEL}"
+        meta["model"] = _LOCAL_MODEL
         print(f"[LLM] ALL cloud backends down -> LOCAL {_LOCAL_MODEL} OK (DEGRADED)")
         _log_provenance(f"local:{_LOCAL_MODEL}", prompt, result)
         return result, meta

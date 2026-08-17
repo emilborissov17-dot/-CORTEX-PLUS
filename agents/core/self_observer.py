@@ -5,6 +5,7 @@ REDESIGN: Наблюдава системата и формулира ПРОБЛ
 Не оценява score — открива конкретни проблеми и предлага конкретни действия.
 """
 from typing import Optional
+import hashlib
 import os
 import json
 import sys
@@ -476,13 +477,32 @@ def _build_problem_proposals(history: list, web_intel: dict, merkle_essence: str
     )
     raw = ""
     try:
-        raw = call_groq(prompt, max_tokens=700)
+        # call_groq_meta, not call_groq: the archive must record WHICH model and
+        # provider produced a proposal. The wrapper throws that away, and a
+        # proposal whose author is unknown cannot be weighed against the others
+        # later. `raw` is kept too — it is the model's full output for this
+        # batch, which is the only thing resembling reasoning that any provider
+        # in the chain actually returns. See memory/proposal_archive.py.
+        from core.groq_backend import call_groq_meta as _call_meta
+        raw, _meta = _call_meta(prompt, max_tokens=700)
         proposals = _extract_json_array(raw)
+
+        _prov = {
+            "provider":      (_meta or {}).get("backend"),
+            "model":         (_meta or {}).get("model"),
+            "finish_reason": (_meta or {}).get("finish_reason"),
+            "prompt_sha1":   hashlib.sha1(prompt.encode("utf-8", "ignore")).hexdigest()[:12],
+            "raw_response":  raw,
+            "generated_by":  "self_observer:problem_solution",
+        }
 
         # Enrich each proposal with downstream_impact from hypergraph
         for p in proposals:
             p["source"]   = "self_observer_problem_solution"
             p["priority"] = "HIGH"
+            # Popped off again by save_proposals before anything is persisted —
+            # it belongs in the archive, not in improvement_proposals.json.
+            p["_provenance"] = _prov
             component = p.get("component", "")
             if component:
                 hg = _query_hypergraph(component)
@@ -542,6 +562,37 @@ def _parse_ts(ts_str: str) -> datetime:
 
 # ── SAVE PROPOSALS ───────────────────────────────────────────────────────────
 
+try:
+    from memory import proposal_archive as _PA
+except Exception as _pa_err:      # in-repo module; failing to import it is real
+    class _PA:                    # noqa: N801 — stub with the same surface
+        """Stub so a missing archive degrades the RECORD, never the cycle.
+
+        It keeps the constants so the call sites below stay readable, and its
+        record() prints instead of writing. Loud, not silent: the archive is the
+        only copy of a blocked proposal, and losing it quietly is precisely the
+        failure this whole file was written to end.
+        """
+        ACCEPTED, BLOCKED, DUPLICATE = "ACCEPTED", "BLOCKED", "DUPLICATE"
+
+        @staticmethod
+        def record(*_a, **_k):
+            print(f"  [PROPOSAL_ARCHIVE] UNAVAILABLE ({_pa_err}) — NOT archived")
+            return None
+
+
+def _archive(obs: dict, outcome: str, reason: str, provenance: dict | None) -> None:
+    """Archive one proposal. Fail-open: bookkeeping must not kill the step.
+
+    record() already swallows and reports its own errors, so this only guards the
+    call itself.
+    """
+    try:
+        _PA.record(obs, outcome, reason=reason, provenance=provenance)
+    except Exception as e:
+        print(f"  [PROPOSAL_ARCHIVE] FAILED ({type(e).__name__}: {e})")
+
+
 def save_proposals(observations: list):
     from alignment.civilization_guard import evaluate_proposal_alignment
     proposals_path = BASE_DIR / "memory" / "improvement_proposals.json"
@@ -567,7 +618,21 @@ def save_proposals(observations: list):
 
     added = 0
     for obs in observations:
+        # ── THE ARCHIVE, UPSTREAM OF EVERY LOSSY PATH (17 Aug 2026) ──────────
+        # This loop is the single chokepoint every proposal passes through, and
+        # until today three of its four exits led nowhere: the dedup `continue`
+        # below, the guard's else-branch, and — later in this same function —
+        # the 7-day cutoff and the 50-cap that act on data["proposals"].
+        # Archiving HERE, at the moment of decision, is upstream of all four.
+        # The provenance rides on the proposal from _build_problem_proposals and
+        # comes off before anything is persisted, so improvement_proposals.json
+        # is unchanged in shape.
+        _prov = obs.pop("_provenance", None)
+
         if obs["problem"][:80] in existing_problems:
+            _archive(obs, _PA.DUPLICATE,
+                     "fuzzy dedup: first 80 chars of problem already proposed",
+                     _prov)
             continue
         result = evaluate_proposal_alignment(obs)
         if result["allowed"]:
@@ -575,11 +640,16 @@ def save_proposals(observations: list):
             obs["rejected"]  = False
             obs["priority"]  = "HIGH"
             obs["timestamp"] = datetime.now(timezone.utc).isoformat()
+            _archive(obs, _PA.ACCEPTED, "", _prov)
             data["proposals"].append(obs)
             existing_problems.add(obs["problem"][:80])
             added += 1
             print(f"  [GUARD] ✅ Добавен: {obs['problem'][:60]}")
         else:
+            # The blocked ones are the whole point of the archive: this branch
+            # used to print and drop. What the system wanted and we refused was
+            # the one class of record that never touched disk at all.
+            _archive(obs, _PA.BLOCKED, result.get("notes", ""), _prov)
             print(f"  [GUARD] ❌ Блокиран: {result['notes']}")
 
     # ── Ако е над лимита — запази само най-новите ────────────────────────────
