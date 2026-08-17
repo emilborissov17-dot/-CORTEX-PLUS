@@ -106,7 +106,7 @@ class CodebaseScanner:
                     lines = f.readlines()
                     stats["total_lines"] += len(lines)
                     stats["modules"][str(py_file.relative_to(self.root))] = len(lines)
-            except:
+            except Exception:
                 pass
         return stats
 
@@ -155,7 +155,7 @@ class CapabilityAssessor:
             from core.llm_backend import LLMBackend
             llm = LLMBackend()
             caps["llm_access"] = llm.available_models()
-        except:
+        except Exception:
             caps["llm_access"] = ["qwen (local)"]
         return caps
 
@@ -165,7 +165,7 @@ class GoalLoader:
         try:
             from memory.goal_alignment import GoalAlignment
             return GoalAlignment().goal
-        except:
+        except Exception:
             return None
 
 class HistoryLoader:

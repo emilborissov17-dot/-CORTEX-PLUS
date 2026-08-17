@@ -11,7 +11,7 @@ def update():
     if prev_path.exists():
         try:
             prev = json.loads(prev_path.read_text(encoding="utf-8"))
-        except:
+        except Exception:
             pass
 
     state = {}
@@ -21,7 +21,7 @@ def update():
         client = chromadb.PersistentClient(path=str(BASE / "memory/chromadb"))
         col = client.get_or_create_collection("cortex_insights")
         state["chromadb_memories"] = col.count()
-    except:
+    except Exception:
         state["chromadb_memories"] = 0
 
     pulse_path = BASE / "memory/pulse_latest.json"
@@ -31,7 +31,7 @@ def update():
             state["groq"] = "ACTIVE" if pulse.get("groq_alive") else "DOWN"
             state["system_state"] = pulse.get("state", "?")
             state["snapshots"] = pulse.get("snap_count", 0)
-        except:
+        except Exception:
             pass
 
     achievements = prev.get("achievements", [

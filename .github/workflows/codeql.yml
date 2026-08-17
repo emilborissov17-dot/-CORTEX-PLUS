@@ -1,0 +1,67 @@
+name: "CodeQL"
+
+# WHY security-extended AND NOT security-and-quality
+# ---------------------------------------------------
+# The quality half of security-and-quality overlaps almost entirely with what
+# SonarCloud already reports on this repo — the same maintainability findings,
+# counted twice, in two dashboards, with two backlogs. security-extended keeps the
+# half that SonarCloud is weakest at (dataflow-driven security queries) and drops the
+# half it already does well.
+#
+# WHY THE SCHEDULE IS MIDDAY MONDAY UTC
+# --------------------------------------
+# The nightly cycle starts at 03:00 Athens (config/scheduler.json daily_hour: 3),
+# which is 00:00 UTC, and last night ran until 04:37 Athens / 01:37 UTC. A scheduled
+# analysis overlapping that window would compete with the cycle for the same machine
+# on a self-hosted runner and, more importantly, would put two unrelated red marks in
+# the same morning report. 12:00 UTC Monday is 15:00 Athens — clear of the cycle by
+# ten hours in either direction.
+#
+# THIS WORKFLOW CAN FAIL, AND THAT IS THE POINT.
+# There is no `|| true` and no continue-on-error anywhere in it. A CodeQL failure is
+# a red check. The repo already carried a "tests" job that could not fail under any
+# circumstances — it named a directory git does not track and then swallowed the exit
+# code — and reported green for weeks while the suite had four failures. A check that
+# cannot fail is not a check.
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+  schedule:
+    - cron: '0 12 * * 1'      # Mondays 12:00 UTC = 15:00 Athens
+
+permissions:
+  security-events: write
+  contents: read
+  actions: read
+
+jobs:
+  analyze:
+    name: Analyze
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [python]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: ${{ matrix.language }}
+          queries: security-extended
+
+      # No build step: CodeQL analyses Python from source. Adding an autobuild step
+      # here would be cargo-culted from the compiled-language template and would only
+      # add a way for this workflow to fail for a reason unrelated to the code.
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: "/language:${{ matrix.language }}"

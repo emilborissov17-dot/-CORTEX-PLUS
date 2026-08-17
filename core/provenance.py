@@ -55,8 +55,52 @@ OUT = BASE / "memory" / "provenance_latest.json"
 
 MEASURED, ANNUAL, CONSTANT, UNKNOWN = "measured", "annual", "constant", "unknown"
 
+# ── КОЙ СТОИ ЗАД АГРЕГАТОРА (Kimi, 15 авг 2026) ────────────────────────────
+# Емил попита за Евростат, ООН, Световната банка и националните статистически
+# институти. Като ги подредих, излезе нещо неудобно: Световната банка, Евростат и
+# ООН НЕ СА независими източници — и тримата ПРЕПУБЛИКУВАТ едни и същи НСИ.
+# Kimi, дословно:
+#   „217 NSI-та са самоубийство на лаптоп, но АГРЕГАТОР БЕЗ UPSTREAM Е
+#    СТАТИСТИЧЕСКИ КОСПЛЕЙ. Полето upstream е минималната честност."
+#   „Разминаването е улика срещу агрегатора САМО АКО Е СИСТЕМНО. Печели
+#    по-скорошната РЕВИЗИЯ, не институцията... записвай дата на ревизия, не само
+#    стойност."
+#   „Eurostat отделно е смислен САМО ако записваш дефиниционната разлика
+#    (ЕС-хармонизиран vs национален метод). Иначе е фалшива независимост."
+#
+# Следствието за мярката, която сам предложих сутринта („14 независими хоста"):
+# тя брои ЛИЦА, не ИЗТОЧНИЦИ. Седем секции през World Bank + утрешен Евростат щяха
+# да се броят за независими, докато всички седят върху един и същ първичен слой.
+UPSTREAM = {
+    "api.worldbank.org": "национални статистически институти (препубликувани от WB)",
+    "ec.europa.eu/eurostat": "национални статистически институти (ЕС-хармонизирани)",
+    "unstats.un.org": "национални статистически институти (докладвани към ООН)",
+    "api.unhcr.org": "правителства и полеви операции на UNHCR",
+    "gml.noaa.gov": "собствено измерване (Mauna Loa)",
+    "data.giss.nasa.gov": "собствен анализ на NASA върху станции и сателити",
+    "sealevel.colorado.edu": "сателитна алтиметрия (собствено измерване)",
+    "api.gbif.org": "музеи, институти и граждански наблюдения",
+    "ucdp.uu.se": "собствено кодиране на Uppsala",
+    "celestrak.org": "каталог на US Space Force (препубликуван)",
+    "api.eia.gov": "собствено измерване на EIA (САЩ)",
+    "api.gdeltproject.org": "новинарски издания (собствена агрегация)",
+    "exoplanetarchive.ipac.caltech.edu": "рецензирани публикации (препубликувани)",
+    "ssd-api.jpl.nasa.gov": "собствени наблюдения на JPL",
+    "export.arxiv.org + api.github.com": "самите платформи (първичен брой)",
+    "(вписана стойност — SIPRI)": "SIPRI Yearbook (вписан на ръка, не извличан)",
+}
+
+# По чий метод е числото. Различната дефиниция е причина едно число да НЕ е
+# сравнимо с друго, дори когато мери същото нещо.
+DEFINITION = {
+    "api.worldbank.org": "WDI, глобални агрегати по методика на Световната банка",
+    "ec.europa.eu/eurostat": "ЕС-хармонизиран метод (различен от националния)",
+    "unstats.un.org": "SDG индикаторна рамка на ООН",
+}
+
 # Откъде идва всяка секция — един хост, изписан явно. Това е и отговорът на
-# въпроса на Емил: секциите са 20, хостовете са по-малко.
+# въпроса на Емил: секциите са 20, хостовете са по-малко, а ПЪРВИЧНИТЕ са още
+# по-малко (виж UPSTREAM).
 HOSTS = {
     "co2": "gml.noaa.gov", "temperature": "data.giss.nasa.gov",
     "sea_level": "sealevel.colorado.edu", "biodiversity": "api.gbif.org",
@@ -117,32 +161,66 @@ def _parse_observed(v) -> datetime | None:
     return None
 
 
-def _confidence(kind: str, lag_days: float | None) -> float:
-    """Обявена формула, не налучкване. Смисълът: доверието пада с давността, а
-    видът на числото слага таван.
+def _witness_count(sections: dict) -> dict:
+    """Колко НЕЗАВИСИМИ СВИДЕТЕЛСТВА стоят зад картината — не наказание, а броене.
 
-    Таваните: measured 1.00, annual 0.80, constant 0.50, unknown 0.30.
-    Спадът: 1.0 до 2 дни, после линейно надолу до 0.2 при 3 години.
-    Числото се публикува ЗАЕДНО с формулата, за да може да се оспори."""
-    cap = {MEASURED: 1.0, ANNUAL: 0.8, CONSTANT: 0.5, UNKNOWN: 0.3}.get(kind, 0.3)
-    if lag_days is None:
-        return round(min(cap, 0.3), 2)
-    if lag_days <= 2:
-        decay = 1.0
-    else:
-        decay = max(0.2, 1.0 - (lag_days - 2) / (365 * 3 - 2) * 0.8)
-    return round(cap * decay, 2)
+    ОТМЕНЕНО РЕШЕНИЕ (Kimi, 15 авг 2026). Тук стоеше „наказание за концентрация":
+    доверието на всяка секция се делеше на sqrt(n) според това колко секции висят
+    на един upstream. Kimi го отмени:
+
+      „ОТМЕНИ — sqrt е ПРОИЗВОЛ. Групирай по upstream: 7 секции от един източник =
+       1 НАБЛЮДЕНИЕ, не 7 с наказание."
+      „Нито една. Групата НЕ РАЖДА СТОЙНОСТ — ражда само брой независими
+       свидетелства = 1. Всяко остойностяване си пази собствената стойност."
+      „Теглата НЕ ПАДАТ. Групирането важи само за distinct_upstream_count, не за
+       композитното тегло."
+
+    Бях смесил две неща: КОЛКО СТРУВА ЧИСЛОТО и КОЛКО СВИДЕТЕЛИ ИМА. Първото си е
+    работа на самото число; второто е свойство на картината. Сега те са отделни:
+    стойностите не се пипат, а свидетелите се броят.
+    """
+    groups: dict = {}
+    for name, r in sections.items():
+        groups.setdefault(r["upstream_key"], []).append(name)
+    return groups
+
+
+# ── ОТМЕНЕНАТА ФОРМУЛА (Kimi, 15 авг 2026) ─────────────────────────────────
+# Тук стоеше _confidence(): таван по род (измерено 1.0 / годишно 0.8 / вписано 0.5 /
+# неизвестно 0.3), умножен по спад с давността до 0.2 при три години. Числата бяха
+# МОИ. Kimi ги отмени с довод, който сам ми беше дал по-рано за доверие-интервала:
+#
+#   „ОТМЕНИ — числата са НАЛУЧКАНИ. Таваните са ЕВРИСТИКА, МАСКИРАНА КАТО ФОРМУЛА;
+#    няма principled derivation."
+#   „Вариант А сега, със seed за Б. Публикувай СУРОВИТЕ ФАКТИ (род, давност,
+#    upstream-и). НЕ ИЗМИСЛЯЙ ЧИСЛО. Но започни да трупаш историята в криптата —
+#    след месеци Вариант Б ще има ДАННИ, НЕ МНЕНИЕ."
+#
+# Затова тук няма число. Секцията носи какво Е: род, давност в дни, кой е първичният
+# източник, колко независими свидетели има. Който съди — съди по тях.
+#
+# ВАРИАНТ Б (доверие, ИЗМЕРЕНО от миналата точност на източника) не е изоставен —
+# той е отложен, защото днес няма история. Семето му е криптата
+# (attestation/quarantine_attestations.jsonl): всяко отхвърлено число се записва от
+# днес, и след месеци доверието ще може да се смята от „колко пъти този източник е
+# бил отхвърлян", вместо от моята преценка.
 
 
 def _section(name: str, body: dict, fetched: datetime) -> dict:
     n_values = sum(1 for k, v in body.items()
                    if not k.startswith("_") and isinstance(v, (int, float)))
-    rec = {"host": HOSTS.get(name, "?"), "values": n_values,
-           "fetched_at": fetched.isoformat()}
+    host = HOSTS.get(name, "?")
+    rec = {"host": host, "values": n_values,
+           "fetched_at": fetched.isoformat(),
+           "upstream": UPSTREAM.get(host, "неизвестен първичен източник"),
+           "definition": DEFINITION.get(host),
+           # Ревизията е ДРУГО нещо от наблюдението: число за 2023 може да бъде
+           # преработено през 2026. Днес го нямаме от нито един fetcher — казва се
+           # тук, а не се подразбира (Kimi: „записвай дата на ревизия").
+           "revision_date": body.get("_revision_date")}
 
     if n_values == 0:
         rec.update({"kind": UNKNOWN, "observed_at": None, "lag_days": None,
-                    "confidence": 0.0,
                     "note": "секцията е ПРАЗНА — брои се като източник, а няма число"})
         return rec
 
@@ -171,7 +249,7 @@ def _section(name: str, body: dict, fetched: datetime) -> dict:
 
     lag = round((fetched - obs).total_seconds() / 86400.0, 1) if obs else None
     rec.update({"kind": kind, "observed_at": obs.isoformat()[:10] if obs else None,
-                "lag_days": lag, "confidence": _confidence(kind, lag)})
+                "lag_days": lag})
     if obs is None:
         rec["note"] = ("числото е тук, датата му я няма — това НЕ значи прясно, "
                        "а че произходът е неизвестен")
@@ -197,9 +275,17 @@ def build(snapshot: dict | None = None) -> dict:
             continue
         sections[name] = _section(name, body, fetched)
 
-    hosts = {}
+    # каноничният ключ идва от каталога — един и същ навсякъде
+    try:
+        from core.catalog import normalize_upstream
+    except Exception:
+        def normalize_upstream(x): return x or "НЕРАЗПОЗНАТ"
+    hosts, ups = {}, {}
     for name, r in sections.items():
+        r["upstream_key"] = normalize_upstream(r.get("upstream", ""))
         hosts.setdefault(r["host"], []).append(name)
+        ups.setdefault(r["upstream"], []).append(name)
+    witnesses = _witness_count(sections)
     by_kind = {}
     for r in sections.values():
         by_kind[r["kind"]] = by_kind.get(r["kind"], 0) + 1
@@ -212,17 +298,37 @@ def build(snapshot: dict | None = None) -> dict:
         "summary": {
             "sections_total": len(sections),
             "independent_hosts": len(hosts),
+            # ЧЕСТНАТА мярка: колко РАЗЛИЧНИ ПЪРВИЧНИ източника стоят зад всичко.
+            # Хостовете са лица; upstream-ите са източници.
+            "independent_upstreams": len(ups),
+            "upstream_map": {k: sorted(v) for k, v in sorted(ups.items())},
+            "unknown_upstream": [n for n, r in sections.items()
+                                 if r["upstream"].startswith("неизвестен")],
+            "no_revision_date": [n for n, r in sections.items()
+                                 if not r.get("revision_date")],
             "by_kind": by_kind,
             "empty_sections": [n for n, r in sections.items() if r["values"] == 0],
             "unknown_provenance": [n for n, r in sections.items() if r["kind"] == UNKNOWN],
             "largest_host": {"host": concentration[0], "sections": concentration[1],
                              "share": round(concentration[1] / max(1, len(sections)), 2)},
-            "mean_confidence": round(
-                sum(r["confidence"] for r in sections.values()) / max(1, len(sections)), 2),
+            # Вместо „средно доверие" — какво ИМА, преброено:
+            "by_kind_counts": by_kind,
+            "median_lag_days": (sorted(
+                [r["lag_days"] for r in sections.values() if r.get("lag_days") is not None]
+            ) or [None])[len([r for r in sections.values()
+                              if r.get("lag_days") is not None]) // 2],
+            "witnesses": {k: sorted(v) for k, v in sorted(witnesses.items())},
+            "independent_witnesses": len([k for k in witnesses if k != "НЕРАЗПОЗНАТ"]),
+            "largest_upstream": max(
+                ((u, len(v)) for u, v in ups.items()), key=lambda x: x[1],
+                default=("?", 0))[0],
         },
-        "rule": ("доверието = таван по род (measured 1.0 / annual 0.8 / constant 0.5 / "
-                 "unknown 0.3), умножен по спад с давността (пълно до 2 дни, до 0.2 при "
-                 "3 години). Формулата се публикува, за да може да се оспори."),
+        "rule": ("ТУК НЯМА ЧИСЛО ЗА ДОВЕРИЕ. Формулата, която стоеше на това място, беше "
+                 "евристика, маскирана като формула (Kimi, 15 авг 2026). Публикуват се "
+                 "суровите факти: род на числото, давност в дни, кой е първичният "
+                 "източник и колко НЕЗАВИСИМИ свидетели стоят зад картината. Доверие, "
+                 "ИЗМЕРЕНО от миналата точност на всеки източник, ще стане възможно, "
+                 "когато криптата натрупа история — не по-рано."),
     }
 
 
@@ -237,7 +343,8 @@ def run() -> dict:
     if s:
         print(f"[PROVENANCE] {s['sections_total']} секции | {s['independent_hosts']} "
               f"независими хоста | най-голям: {s['largest_host']['host']} "
-              f"({s['largest_host']['share']:.0%}) | средно доверие {s['mean_confidence']}")
+              f"({s['largest_host']['share']:.0%}) | родове {s['by_kind_counts']} "
+              f"| медианна давност {s['median_lag_days']} дни")
         if s["unknown_provenance"]:
             print(f"[PROVENANCE] БЕЗ ДАТА НА НАБЛЮДЕНИЕ: {', '.join(s['unknown_provenance'])}")
         if s["empty_sections"]:
@@ -249,6 +356,7 @@ if __name__ == "__main__":
     r = run()
     print()
     for n, s in sorted(r.get("sections", {}).items(),
-                       key=lambda kv: kv[1]["confidence"]):
-        print(f"  {s['confidence']:.2f}  {n:14s} {s['kind']:9s} "
-              f"lag={s['lag_days']} host={s['host']}")
+                       key=lambda kv: (kv[1].get("lag_days") is None,
+                                       kv[1].get("lag_days") or 0)):
+        print(f"  {n:14s} {s['kind']:9s} lag={s['lag_days']} "
+              f"upstream={s['upstream_key']} host={s['host']}")

@@ -25,7 +25,7 @@ def what_hurts_right_now():
             elif status.get("ms", 0) > 1000:
                 pain.append(f"API {name} е бавен — {status['ms']}ms")
                 score += 1
-    except:
+    except Exception:
         pass
 
     # Памет болка — изтрити или празни файлове
@@ -64,7 +64,7 @@ def what_hurts_right_now():
         for axis in low_axes:
             pain.append(f"{axis} е в критично състояние")
             score += 3
-    except:
+    except Exception:
         pass
 
     # Грешки от runtime
@@ -74,7 +74,7 @@ def what_hurts_right_now():
         if err_count > 0:
             pain.append(f"{err_count} грешки в паметта")
             score += err_count
-    except:
+    except Exception:
         pass
 
     return {"pain_points": pain, "pain_score": score}
@@ -101,7 +101,7 @@ def what_have_i_learned():
                         "wound": m.get("action", "")[:80],
                         "type": "CODE_WRITTEN"
                     })
-    except:
+    except Exception:
         pass
 
     # Добави известните белези от тази сесия
@@ -127,7 +127,7 @@ def what_will_be_lost():
         hours_ago = (datetime.now(timezone.utc).timestamp() - last_run) / 3600
         if hours_ago > 25:
             losses.append(f"Последен snapshot преди {round(hours_ago)}ч — ден без данни изгубен")
-    except:
+    except Exception:
         pass
 
     # Оси без реални данни — всеки ден е изгубена история
@@ -148,9 +148,9 @@ def what_will_be_lost():
             for axis, trend in trends.items():
                 if trend.get("direction") == "WORSENING":
                     losses.append(f"{axis} се влошава — всеки ден без действие е необратим")
-        except:
+        except Exception:
             pass
-    except:
+    except Exception:
         pass
 
     # Философска загуба — остава като ТЕКСТ за човека, но от 14 Aug 2026 НЕ вдига

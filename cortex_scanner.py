@@ -28,7 +28,7 @@ def scan():
                     "summary": str(data.get("summary", data.get("real_state", "")))[:200]
                 }
                 snap_count += 1
-        except: pass
+        except Exception: pass
     state["system"]["snap_count"] = snap_count
 
     # Trends
@@ -44,7 +44,7 @@ def scan():
                 "insufficient": t.get("insufficient_data", []),
                 "axes_tracked": t.get("axes_tracked", 0)
             }
-        except: pass
+        except Exception: pass
 
     # Axis scores — само нормализирани 0-100
     history_file = BASE / "memory" / "axis_history.json"
@@ -67,11 +67,11 @@ def scan():
                                 fv = float(v)
                                 if 0 <= fv <= 100:
                                     vals.append(fv)
-                            except: pass
+                            except Exception: pass
                         if vals:
                             scores[axis] = round(sum(vals)/len(vals), 1)
             state["trends"]["scores"] = scores
-        except: pass
+        except Exception: pass
 
     # Session — последният наличен файл
     sessions = sorted((BASE / "memory").glob("session_*.json"), reverse=True)
@@ -86,7 +86,7 @@ def scan():
                 "groq": cs.get("groq"),
                 "achievements": s.get("achievements", [])[:5]
             }
-        except: pass
+        except Exception: pass
 
     # Reasoning
     reasoning_file = BASE / "memory" / "reasoning_memory.json"
@@ -98,7 +98,7 @@ def scan():
                 "total_sessions": len(sessions),
                 "last": sessions[-1] if sessions else None
             }
-        except: pass
+        except Exception: pass
 
     # Journal
     journal_file = BASE / "memory" / "development_journal.json"
@@ -118,7 +118,7 @@ def scan():
             state["memory"]["modifier_ok"] = ok
             state["memory"]["modifier_fail"] = fail
             state["memory"]["modifier_recent"] = recent[-12:]
-        except: pass
+        except Exception: pass
 
     # Body scan
     body_file = BASE / "memory" / "body_scan_latest.json"
@@ -134,7 +134,7 @@ def scan():
             state["system"]["ram_used"] = hw.get("ram_percent")
             state["system"]["gpu_name"] = gpu.get("name")
             state["system"]["gpu_vram_free"] = gpu.get("vram_free_mb")
-        except: pass
+        except Exception: pass
 
     # CortexStrategist
     cortex_strategist_file = BASE / "snapshots" / "cortex_strategist" / "cortex_strategist_snapshot_latest.json"
@@ -145,7 +145,7 @@ def scan():
                 "health": o.get("health"),
                 "mission_pct": o.get("mission_alignment_pct"),
             }
-        except: pass
+        except Exception: pass
 
     # Predictor
     predictor_file = BASE / "memory" / "predictor_memory.json"
@@ -161,7 +161,7 @@ def scan():
                 "avg_error": round(sum(errs)/len(errs), 2) if errs else None,
                 "last_5": preds[-5:]
             }
-        except: pass
+        except Exception: pass
 
     OUT.write_text(json.dumps(state, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"[SCANNER] Сканирано: {snap_count} snapshots")

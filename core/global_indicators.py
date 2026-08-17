@@ -536,10 +536,24 @@ def fetch_satellites() -> dict:
 # 11. Energy — EIA Open Data (free key via EIA_API_KEY env var; skips if absent)
 # ---------------------------------------------------------------------------
 
+EIA_SOURCE_KEY = "eia_api"
+
+
 def fetch_eia() -> dict:
-    """US total primary energy consumption (quadrillion BTU) — EIA API v2."""
-    key = os.environ.get("EIA_API_KEY", "").strip()
+    """US total primary energy consumption (quadrillion BTU) — EIA API v2.
+
+    15 авг 2026: дотук липсата на ключ връщаше {} МЪЛЧАЛИВО. Секцията energy стоеше
+    празна в снимката и пак се броеше сред „20 източника" — мълчалив отказ, който
+    изглежда като успех. Сега минава през регистъра, като UCDP: отказът се обявява
+    веднъж и се вижда в отчета.
+    ЧЕСТНО И ЗА ДРУГОТО: дори с ключ това е ЩАТСКО потребление на първична енергия,
+    подадено на глобална ос ENERGY_REVIEW. Това е слаб заместител и не бива да се
+    представя за световен показател."""
+    key = credential_for(EIA_SOURCE_KEY) or os.environ.get("EIA_API_KEY", "").strip()
     if not key:
+        if is_skipped(EIA_SOURCE_KEY):
+            return {}
+        print("  [GI] EIA: NEEDS_AUTH — няма EIA_API_KEY, секцията остава ПРАЗНА")
         return {}
     data = _get(
         "https://api.eia.gov/v2/total-energy/data/",
@@ -896,6 +910,7 @@ def fetch_all(previous: dict | None = None) -> dict:
         "sources":   {},
     }
     fresh = carried = missing = 0
+    silent = []          # секции, които не дадоха НИЩО и нямаха какво да пренесат
     for key, fn, source in _SECTIONS:
         try:
             data = fn()
@@ -913,6 +928,15 @@ def fetch_all(previous: dict | None = None) -> dict:
         fresh += len(live)
         carried += len(carried_here)
         missing += len(gone)
+        # ── МЪЛЧАЛИВАТА СЕКЦИЯ (15 авг 2026) ──────────────────────────────
+        # Секция, върнала {} без нищо за пренасяне, дотук не влизаше в НИТО ЕДИН
+        # брояч: не е „fresh", не е „carried", не е „missing". Тоест не съществуваше
+        # за отчета и пак се броеше за източник. energy и satellites стояха така.
+        if not data:
+            silent.append({"section": key, "source": source})
+            print(f"  [GI] {source}: ПРАЗНА — нула стойности и нищо за пренасяне")
+            continue
+
         note = f"  [GI] {source}: {got} fresh"
         if carried_here:
             note += (f", {len(carried_here)} CARRIED FORWARD "
@@ -925,12 +949,17 @@ def fetch_all(previous: dict | None = None) -> dict:
         "fresh_this_cycle": fresh,
         "carried_from_a_previous_cycle": carried,
         "missing_everywhere": missing,
+        "silent_sections": silent,
+        "silent_note": ("Секция без нито една стойност НЕ е източник. Дотук такава "
+                        "секция не влизаше в никой брояч и се броеше за жива."),
         "rule": "a fetch failure never overwrites a good value with null. Carried "
                 "metrics are listed per section under _carried with the date of the "
                 "ORIGINAL observation, so a value copied forward for a month cannot "
                 "pass as this cycle's reading.",
     }
-    print(f"[GI] {fresh} fresh | {carried} carried forward | {missing} missing")
+    print(f"[GI] {fresh} fresh | {carried} carried forward | {missing} missing"
+          + (f" | {len(silent)} ПРАЗНИ СЕКЦИИ: "
+             + ", ".join(s["section"] for s in silent) if silent else ""))
     return result
 
 

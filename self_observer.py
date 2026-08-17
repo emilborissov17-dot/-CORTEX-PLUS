@@ -557,7 +557,7 @@ class SelfObserver:
             # Последния ред е най-новото измерване — филтрирай невалидни (-999.99) и нечислови редове
             def _valid_co2(l):
                 try: return float(l.split(",")[4].strip()) > 0
-                except: return False
+                except Exception: return False
             lines = [l for l in lines if _valid_co2(l)]
             last = lines[-1].split(",")
             # Колони: year,month,day,decimal_date,co2_ppm,...

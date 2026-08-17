@@ -68,7 +68,7 @@ def _load_civilization_state() -> str:
                 for k, v in list(metrics.items())[:2]:
                     if v is not None:
                         try: top.append(f'{k}={round(float(v),1)}')
-                        except: top.append(f'{k}={v}')
+                        except Exception: top.append(f'{k}={v}')
                 metrics_str = ', '.join(top) if top else ''
                 entry = f'  {axis}: {level}'
                 if metrics_str: entry += f' | {metrics_str}'

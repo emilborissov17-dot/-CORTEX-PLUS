@@ -24,7 +24,7 @@ def extract_reasoning(conversation_text: str) -> dict:
 def save_reasoning(reasoning: dict):
     try:
         memory = json.loads(MEMORY_FILE.read_text(encoding="utf-8"))
-    except:
+    except Exception:
         memory = {"sessions": []}
     memory["sessions"].append(reasoning)
     memory["sessions"] = memory["sessions"][-50:]
@@ -42,7 +42,7 @@ def load_context(n: int = 3) -> str:
             context += f"Прозрения: {', '.join(s.get('key_insights', []))}\n"
             context += f"Следваща стъпка: {s.get('next_step')}\n\n"
         return context
-    except:
+    except Exception:
         return ""
 
 if __name__ == "__main__":

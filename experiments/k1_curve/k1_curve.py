@@ -13,7 +13,7 @@ def acc(rs):
 
 def mt(r):
     try: return datetime.fromisoformat(r.get('made_at',''))
-    except: return None
+    except Exception: return None
 
 def main(path="memory/predictions.json"):
     d=json.load(open(path,encoding="utf-8"))

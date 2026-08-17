@@ -37,7 +37,7 @@ AXIS_WEIGHTS = {
 def compute_goal_score() -> dict:
     try:
         levels = json.loads(LEVELS_PATH.read_text(encoding="utf-8"))
-    except:
+    except Exception:
         return {"score": 0, "breakdown": {}}
 
     weighted_sum, total_weight = 0.0, 0.0
@@ -67,7 +67,7 @@ def compute_goal_score() -> dict:
 def _read(path) -> dict:
     try:
         return json.loads(pathlib.Path(path).read_text(encoding="utf-8"))
-    except:
+    except Exception:
         return {}
 
 
@@ -75,7 +75,7 @@ def _log_score(score_data: dict):
     try:
         try:
             history = json.loads(SCORE_LOG.read_text(encoding="utf-8"))
-        except:
+        except Exception:
             history = []
         history.append({
             "timestamp": datetime.now(timezone.utc).isoformat(),
@@ -84,7 +84,7 @@ def _log_score(score_data: dict):
         })
         history = history[-200:]
         SCORE_LOG.write_text(json.dumps(history, ensure_ascii=False, indent=2), encoding="utf-8")
-    except:
+    except Exception:
         pass
 
 
