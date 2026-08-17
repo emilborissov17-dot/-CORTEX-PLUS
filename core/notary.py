@@ -79,6 +79,12 @@ LEVEL_NAMES = {3: "level_3 (пълно)", 2: "level_2 (намалено)",
 # към най-ограниченото — както е в проекта на OpenClaw (default_unclassified).
 IRREVERSIBLE_MIN = REDUCED
 
+# ── ЯВНИ МАРКЕРИ ЗА ПРЕДШЕСТВЕНИКА ─────────────────────────────────────────
+# Извикващият ТРЯБВА да каже кое от двете е вярно. Няма стойност по подразбиране,
+# която значи доверие: PREV_UNKNOWN е подразбирането и той струва 0.
+PREV_UNKNOWN = "__prev_unknown__"      # никой не знае / не е казал -> UNKNOWN
+PREV_NONE = "__no_previous_step__"     # явно: това Е първата стъпка -> FULL
+
 # Стъпки, които ВЕРИФИЦИРАТ срещу жив външен източник, вместо само да преработват.
 # Само те имат право да ПРЕЧУПЯТ наследеното (Kimi: „верификациите пречупват").
 # Списъкът е нарочно къс и явен: всяко добавяне тук е разширяване на правото за
@@ -181,10 +187,33 @@ def _age_state(inputs: list) -> tuple:
     return lvl, f"най-стар вход {oldest_name}: {days:.1f} дни"
 
 
-def _promise_state(prev_step: str | None) -> tuple:
-    """Удържала ли е предишната стъпка обявения си продукт."""
-    if not prev_step:
-        return FULL, "няма предишна стъпка"
+def _promise_state(prev_step: str | None, step: str | None = None) -> tuple:
+    """Удържала ли е предишната стъпка обявения си продукт.
+
+    НЯМА ПОДРАЗБИРАНЕ, КОЕТО ЗНАЧИ ДОВЕРИЕ (17 авг 2026). Дотук `not prev_step`
+    връщаше FULL — тоест „никой не ми каза предшественика" се четеше като
+    „предишната си удържа думата". may_act() вика attest() БЕЗ prev_step, значи
+    точно на портата — единственото място, където векторът се налага — това
+    измерение беше структурно FULL. Едно от пет изключено, тихо.
+
+    Сега трите случая са РАЗЛИЧНИ и само първият е доверие:
+      PREV_NONE      — явно обявено „това е първата стъпка"      -> FULL
+      PREV_UNKNOWN / None / празно — никой не е казал            -> UNKNOWN
+      prev_step == step — стъпката е свой собствен предшественик -> UNKNOWN
+    """
+    if prev_step == PREV_NONE:
+        return FULL, "няма предишна стъпка (обявено явно)"
+    if prev_step is None or prev_step == PREV_UNKNOWN or not str(prev_step).strip():
+        return UNKNOWN, ("предишната стъпка не е обявена — обещанието е "
+                         "непроверимо, а непроверимото не е удържано")
+    if step is not None and str(prev_step) == str(step):
+        # Сравнение със себе си не е доказателство. Виж core/brain.py:
+        # _prev_step_output() чете ПОСЛЕДНИЯ [STEP] ред от лога, а beat() пише
+        # този ред ПРЕДИ да повика мозъка — затова „предишната" е самата стъпка,
+        # във всичките 53 реда от 17 авг. Тази проверка не поправя причината;
+        # тя спира резултатът ѝ да минава за удържано обещание.
+        return UNKNOWN, (f"'{step}' е обявена за свой собствен предшественик — "
+                         f"сравнение със себе си не е доказателство")
     try:
         from core import cycle_map as cm
         from core.metta_check import _cycle_start
@@ -196,7 +225,8 @@ def _promise_state(prev_step: str | None) -> tuple:
         return UNKNOWN, f"обещанието непроверимо: {type(e).__name__}"
 
 
-def vector(step: str, prev_step: str | None = None, inputs: list | None = None) -> dict:
+def vector(step: str, prev_step: str | None = PREV_UNKNOWN,
+           inputs: list | None = None) -> dict:
     """Петте състояния — записът, който пази ЗАЩО."""
     if inputs is None:
         try:
@@ -208,7 +238,7 @@ def vector(step: str, prev_step: str | None = None, inputs: list | None = None) 
     h, hl = _human_state()
     t, tl = _thought_state()
     a, al = _age_state(inputs)
-    p, pl = _promise_state(prev_step)
+    p, pl = _promise_state(prev_step, step)
     return {"witness": w, "human": h, "thought": t, "age": a, "promise": p,
             "why": {"witness": wl, "human": hl, "thought": tl, "age": al, "promise": pl}}
 
@@ -240,7 +270,7 @@ def _stamps() -> dict:
     return out
 
 
-def attest(step: str, prev_step: str | None = None) -> dict:
+def attest(step: str, prev_step: str | None = PREV_UNKNOWN) -> dict:
     """Подпечатва продуктите на стъпката. Лек, детерминистичен, без LLM."""
     try:
         from core import cycle_map as cm
@@ -336,14 +366,14 @@ def verify_chain() -> dict:
 
 # ── ПОРТАТА ─────────────────────────────────────────────────────────────────
 
-def may_act(step: str) -> tuple:
+def may_act(step: str, prev_step: str | None = PREV_UNKNOWN) -> tuple:
     """Разрешено ли е НЕОБРАТИМО действие сега. (може_ли, обяснение).
 
     Скаларът решава (Kimi: детерминистично). Векторът обяснява — това е моето
     възражение към чистия min: „MeTTa мълчи" и „входът е на 400 дни" дават едно и
     също ниво, но искат различни действия. Портата трябва да каже КОЕ липсва.
     """
-    rec = attest(step)
+    rec = attest(step, prev_step)
     lvl = rec["level"]
     if lvl >= IRREVERSIBLE_MIN:
         return True, f"{rec['level_name']}"

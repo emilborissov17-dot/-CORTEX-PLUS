@@ -37,21 +37,21 @@ The step's region imports `core.metta_check` only for a post-hoc cleanup call; t
 module that does the work is loaded via `__import__("execute_patches", ...)`, a
 function call that `_IMPORT_RE` — which matches import STATEMENTS — cannot see.
 
-DO NOT "FIX" THE TYPO IN ISOLATION. IT OPENS THE GATE.
--------------------------------------------------------
-`core/notary.py:_age_state` returns FULL(3) for an EMPTY inputs list
-("стъпката не чете входове"). So both obvious cleanups are unsafe:
+DO NOT "FIX" THE TYPO IN ISOLATION — AND THE REASON HAS SINCE BEEN CLOSED
+--------------------------------------------------------------------------
+Until 17 Aug 2026 `_age_state` returned FULL(3) for an EMPTY inputs list, so both
+obvious cleanups were unsafe: filtering `_IGNORE` out of the harvest, or correcting
+the name to a real file, each gave `inputs = []` or all-present inputs, `age` FULL,
+and level_3 — the maximum stamp — on the step that rewrites the system's own source.
+`self_modifier` and `github_publish` were already passing the gate that way, on
+`[]`, on every attestation on record.
 
-    filter _IGNORE out of the harvest -> inputs = []  -> age FULL -> level_3
-    correct the name to a real file   -> all inputs exist -> age FULL -> level_3
-
-Either way `own` becomes 3, the inheritance loop `for rel in inputs:` stops running
-at all, and the step that rewrites the system's own source carries level_3 — the
-maximum stamp the notary can issue, comfortably over IRREVERSIBLE_MIN(2).
-
-This is not hypothetical. The same defect ALREADY runs in the open direction:
-`self_modifier` and `github_publish` both harvest to `[]` and have passed the gate
-at level_3 on every attestation on record.
+That fail-open is now closed: an empty list returns UNKNOWN, and the promise
+dimension no longer defaults to FULL when nobody states a predecessor. The warning
+in this heading still stands for a different reason — the phantom is no longer the
+only thing holding the gate, so removing it changes less than it used to, but the
+step's declared inputs remain seven entries harvested out of an ignore list, and
+that is still not a description of what it reads.
 
 WHAT THIS FILE LOCKS
 --------------------
@@ -125,8 +125,11 @@ def healthy_environment(notary, monkeypatch):
     """
     for name in ("_witness_state", "_human_state", "_thought_state"):
         monkeypatch.setattr(notary, name, lambda: (notary.FULL, "forced FULL for this test"))
+    # Two positional args since 17 Aug: _promise_state(prev_step, step). The stub
+    # takes *a so a future signature change surfaces as a real assertion failure
+    # rather than as a TypeError from the fixture.
     monkeypatch.setattr(notary, "_promise_state",
-                        lambda prev: (notary.FULL, "forced FULL for this test"))
+                        lambda *a: (notary.FULL, "forced FULL for this test"))
     return notary
 
 
@@ -293,3 +296,93 @@ def test_the_phantom_is_still_the_thing_holding_the_gate(
         f"The coupling this file guards has changed. If core/notary.py:_age_state "
         f"was made honest about unknown provenance, this file has done its job — "
         f"delete it. If not, find out what else moved before trusting the green.")
+
+
+# ---------------------------------------------------------------------------
+# THE PROMISE DIMENSION MUST NOT BE FULL BY DEFAULT
+#
+# may_act() used to call attest(step) with no prev_step. _promise_state(None)
+# returned FULL, "няма предишна стъпка" — so at the ONE place the vector is
+# enforced, one of its five dimensions was structurally maximal. Measured on the
+# live chain, 17 Aug: github_publish attested TWICE in the same second, level_0 from
+# the heartbeat (which passes prev_step) and level_3 from the gate (which did not).
+# The gate acted on its own row. The audit log and the decision disagreed.
+# ---------------------------------------------------------------------------
+
+def test_an_unstated_predecessor_is_not_a_kept_promise(notary):
+    """Nobody-said is UNKNOWN, not FULL.
+
+    THE STAKE: this is the dimension that answers "did the step before this one
+    actually produce what it promised". Defaulting it to FULL means the gate asks
+    the question and accepts silence as a yes — on github_publish, which writes to a
+    public repository, and self_modifier, which writes generated Python.
+    """
+    for absent in (None, notary.PREV_UNKNOWN, "", "   "):
+        lvl, why = notary._promise_state(absent, "some_step")
+        assert lvl == notary.UNKNOWN, (
+            f"_promise_state({absent!r}) returned {lvl}, not UNKNOWN — an unstated "
+            f"predecessor is being read as a kept promise ({why!r})")
+
+
+def test_a_step_is_not_its_own_predecessor(notary):
+    """prev_step == step must be UNKNOWN, never KEPT.
+
+    All 53 brain rows on 17 Aug carry prev_step == step, because
+    core/brain.py::_prev_step_output() reads the last `[STEP]` line of the cycle log
+    and memory/heartbeat.py::beat() writes that line BEFORE calling the brain. So the
+    "previous" step is the current one. This assertion does not repair that — it
+    stops its output being scored as evidence.
+    """
+    lvl, why = notary._promise_state("github_publish", "github_publish")
+    assert lvl == notary.UNKNOWN, (
+        f"a step comparing against itself scored {lvl} ({why!r}) — self-comparison "
+        f"is not evidence that a promise was kept")
+    assert "себе си" in why or "own predecessor" in why.lower()
+
+
+def test_explicitly_declared_first_step_is_the_only_full(notary):
+    """POSITIVE CONTROL. If every input scored UNKNOWN the tests above would pass on
+    a function that always returns 0, which would be a wall rather than a gate.
+    Exactly one input means trust, and it has to be said out loud."""
+    lvl, why = notary._promise_state(notary.PREV_NONE, "boot")
+    assert lvl == notary.FULL, f"PREV_NONE must be FULL, got {lvl} ({why!r})"
+
+    # ...and a real, different predecessor is evaluated rather than short-circuited.
+    lvl2, why2 = notary._promise_state("self_observer", "self_modifier")
+    assert lvl2 != notary.FULL or "self_observer" in why2, (
+        "a genuine predecessor should be CHECKED, not waved through")
+
+
+def test_may_act_defaults_to_unknown_not_trust(notary):
+    """The default argument itself must not mean trust.
+
+    A caller that forgets prev_step should lose a dimension, not gain one.
+    """
+    import inspect
+    default = inspect.signature(notary.may_act).parameters["prev_step"].default
+    assert default == notary.PREV_UNKNOWN, (
+        f"may_act's prev_step defaults to {default!r} — the default must be the "
+        f"UNKNOWN marker, never None-meaning-FULL and never a real step name")
+    assert notary._promise_state(default, "x")[0] == notary.UNKNOWN
+
+
+def test_the_gate_call_sites_pass_a_real_predecessor():
+    """fast_cycle_runner must hand the gate the step that actually ran before.
+
+    Source-structure: the predecessors come from the beat() order in the runner
+    itself — github_publish <- hyperclaw_plan, self_modifier <- self_observer,
+    execute_patches <- self_modifier — not from the cycle log, which reports the
+    current step as its own predecessor.
+    """
+    import re
+    src = (REPO_ROOT / "fast_cycle_runner.py").read_text(encoding="utf-8-sig")
+    calls = dict(re.findall(r'_witness_or_refuse\("([^"]+)",\s*"([^"]+)"\)', src))
+
+    expected = {"github_publish": "hyperclaw_plan",
+                "self_modifier": "self_observer",
+                "execute_patches": "self_modifier"}
+    assert calls == expected, (
+        f"gate call sites pass {calls}, expected {expected}. If the runner's step "
+        f"order changed, re-derive from the beat() sequence — do not guess.")
+    assert not re.search(r'_witness_or_refuse\("[^"]+"\)\s*[:)]', src), \
+        "a gate call site is still passing only the step, with no predecessor"

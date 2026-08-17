@@ -138,20 +138,114 @@ def _classify_cycle_id(env_id):
             # ИЗКЛЮЧВА собствения си pid: супервайзорът пише ключалката с pid-а на
             # процеса, който току-що е родил — тоест нашия. Без това изключение
             # цикълът щеше да се самоубива при всяко нормално пускане.
+            # ── ПРИНЦИПЪТ НА НОЩНИЯ ПАЗАЧ (Kimi, 16 август 2026) ─────────────
+            # Този пазач уби цикъла ТРИ ПОРЕДНИ ПЪТИ в нощта на 16 август и
+            # системата не работи цяло денонощие. Причината, измерена от логовете:
+            #   ключалка cycle_id=03:04:02.435030  pid 59108
+            #   процесът  "started at"  03:04:02.862      (0.43 сек по-късно)
+            # Супервайзорът пише ключалката СЛЕД spawn, със същия cycle_id, който
+            # подава на детето. Тоест цикълът четеше СВОЯТА СОБСТВЕНА ключалка.
+            # Единственото, което го пазеше, беше сравнението по pid — а то не
+            # работи, защото os.getpid() на процеса не съвпада с pid-а, върнат от
+            # Popen (venv launcher/wrapper ражда истинския интерпретатор).
+            #   Kimi: „Супервайзорът записва pid, който НЕ ПОЗНАВА. Това е вродена
+            #          лъжа." И, признавайки собствената си вчерашна присъда:
+            #          „Вчера настоях за строг пазач, без да помисля, че при
+            #          неопределеност той ще убие системата. Това е моя грешка."
+            #
+            # ПРИНЦИПЪТ, който липсваше:
+            #   „Ако не си сигурен дали да спреш, ПРОДЪЛЖИ с ясен запис на
+            #    неопределеността. Смъртта е необратима; логът може да се поправи
+            #    на сутринта. При система без надзор fail-deadly е по-лошо от
+            #    fail-unsafe — пазачът трябва да е консервативен в причиняването
+            #    на смърт."
+            # Два цикъла върху едни файлове дават размазани данни, които ЧОВЕК
+            # лови на сутринта. Нула цикъла дава ЛИПСА — а липсата не се лови, тя
+            # е отсъствие.
+            #
+            # Оттук асиметрията:
+            #   ясен чужд цикъл (ДРУГ cycle_id + жив pid) -> ABORT
+            #   всичко неясно (същият cycle_id, несъвпадащ pid, нечетима ключалка)
+            #                                              -> LOG и ПРОДЪЛЖИ
+            _same_id = bool(other_id) and str(other_id) == str(cid)
             _mine = other_pid is not None and int(other_pid or -1) == os.getpid()
-            if other_id and not _mine and _pid_alive(other_pid):
-                print(f"[FAST_CYCLE] BOOT ABORT: вече тече цикъл {other_id} "
+
+            if other_id and not _same_id and not _mine and _pid_alive(other_pid):
+                print(f"[FAST_CYCLE] BOOT ABORT: вече тече ДРУГ цикъл {other_id} "
                       f"(pid {other_pid}, жив) — случай D. Два цикъла върху едни и "
                       f"същи файлове е по-лошо от нито един.")
-                _note_boot_abort(f"застъпване: жив цикъл {other_id} pid={other_pid}")
+                _note_boot_abort(f"застъпване: жив ЧУЖД цикъл {other_id} pid={other_pid}")
                 raise SystemExit(3)
-            if other_id and not _pid_alive(other_pid):
+
+            if _same_id and not _mine:
+                # Ключалката носи МОЯ cycle_id, но чужд pid — почти сигурно
+                # обвивката, която ме е родила. Приемам я за своя и я ПРЕЗАПИСВАМ
+                # с истинския си pid, за да не се бие следващият рестарт със
+                # същата сянка.
+                print(f"[FAST_CYCLE] boot -> ключалка със СЪВПАДАЩ cycle_id {other_id}, "
+                      f"но pid {other_pid} != {os.getpid()} (wrapper?); приемам я за "
+                      f"своя и обновявам pid. Неопределеност -> продължавам, не умирам.")
+                _note_boot_abort(f"НЕ Е ПРЕКЪСВАНЕ: своя ключалка с чужд pid "
+                                 f"{other_pid} -> презаписан с {os.getpid()}")
+                try:
+                    lk["pid"] = os.getpid()
+                    lk["pid_rewritten_by_cycle"] = True
+                    LOCK_PATH.write_text(json.dumps(lk, ensure_ascii=False, indent=2),
+                                         encoding="utf-8")
+                except Exception as _e:
+                    print(f"[FAST_CYCLE] boot -> не успях да обновя ключалката "
+                          f"({type(_e).__name__}); продължавам въпреки това.")
+
+            if other_id and not _same_id and not _pid_alive(other_pid):
                 print(f"[FAST_CYCLE] boot -> заварена мъртва ключалка на {other_id} "
                       f"(pid {other_pid}); продължавам.")
     except SystemExit:
         raise
-    except Exception:
-        pass
+    except Exception as _e:
+        # НЕЧЕТИМА КЛЮЧАЛКА Е НЕОПРЕДЕЛЕНОСТ, НЕ РАЗРЕШЕНИЕ — и не е повод за
+        # смърт. Продължаваме, но го КАЗВАМЕ: досега този `pass` мълчеше, тоест
+        # повредена ключалка беше неразличима от липсваща.
+        print(f"[FAST_CYCLE] boot -> ключалката не се чете "
+              f"({type(_e).__name__}: {_e}); третирам го като неопределеност и "
+              f"продължавам — смъртта е необратима, логът не е.")
+        _note_boot_abort(f"НЕ Е ПРЕКЪСВАНЕ: нечетима ключалка ({type(_e).__name__})")
+
+    # ── ЦИКЪЛЪТ ПОЕМА СОБСТВЕНАТА СИ КЛЮЧАЛКА (16 август 2026) ──────────────
+    # Измерено на машината, два пъти подред:
+    #     Popen.pid = 85400 | child os.getpid() = 97752 -> MISMATCH
+    #     chain: [(94152, 'python.exe')] — psutil НЕ намира жив родител
+    # venv\Scripts\python.exe е ЛАУНЧЕР: Popen получава pid-а на стъпката, тя ражда
+    # истинския интерпретатор и УМИРА. Тоест pid-ът, който супервайзорът записва,
+    # е мъртъв секунди след старта.
+    #
+    # Това чупи ДВЕ неща, не едно:
+    #   1. boot пазача (поправен по-горе с cycle_id),
+    #   2. и — по-лошото — `pid_is_our_cycle()` в супервайзора, който пита
+    #      tasklist за записания pid. Той връща False почти веднага, значи
+    #      супервайзорът смята жив цикъл за МЪРТЪВ, рестартира го, и изчерпва
+    #      бюджета. Точно това пише в scheduler_state от снощи:
+    #      „pid=86528 is gone; no CYCLE_FINISHED on record".
+    #
+    # Затова цикълът поема ключалката САМ и записва СВОЯ истински pid. Никой друг
+    # не знае кой е той — Popen не го вижда, стъпката вече е умряла. Единственият,
+    # който го знае, е самият процес.
+    #   Kimi: „Супервайзорът записва pid, който НЕ ПОЗНАВА. Това е вродена лъжа.
+    #          Поправката е да се премахне зависимостта от Popen pid изобщо."
+    try:
+        LOCK_PATH.parent.mkdir(parents=True, exist_ok=True)
+        LOCK_PATH.write_text(json.dumps({
+            "pid": os.getpid(),
+            "cycle_id": cid,
+            "started_utc": datetime.now(timezone.utc).isoformat(),
+            "claimed_by": "cycle",          # НЕ от супервайзора — от самия процес
+            "note": ("pid-ът тук е истинският на цикъла. Супервайзорът записва "
+                     "pid-а на venv launcher-а, който умира веднага."),
+        }, ensure_ascii=False, indent=2), encoding="utf-8")
+        print(f"[FAST_CYCLE] boot -> поех ключалката със СВОЯ pid {os.getpid()}")
+    except Exception as _e:
+        print(f"[FAST_CYCLE] boot -> не можах да поема ключалката "
+              f"({type(_e).__name__}: {_e}); продължавам — липсата на ключалка "
+              f"не е повод да умра.")
 
     # Kimi: „пиши LAST_ATTEMPT атомарно (tmp+rename), за да не остане половинчат
     # при срив" — половин timestamp е по-лош от липсващ: не се парсва, значи
@@ -958,7 +1052,7 @@ def _get_pending_patches() -> list[str]:
     return pending
 
 
-def _witness_or_refuse(step: str) -> bool:
+def _witness_or_refuse(step: str, prev_step: str) -> bool:
     """Има ли символен свидетел за тази необратима стъпка.
 
     КОНСЕНСУС С KIMI, 15 авг 2026. Той:
@@ -991,7 +1085,7 @@ def _witness_or_refuse(step: str) -> bool:
     # наследено най-лошо, освен ако по пътя е имало независима верификация.
     try:
         from core.notary import may_act
-        ok, why = may_act(step)
+        ok, why = may_act(step, prev_step)
         if ok:
             return True
         print(f"[FAST_CYCLE] {step} -> ОТКАЗАНА: {why}")
@@ -1336,8 +1430,45 @@ def main():
         except Exception:
             _gi_prev = None
         gi_data = _gi_fetch(previous=_gi_prev)
+
+        # ── КРИПТАТА (консенсус с Kimi, 15 авг 2026) ───────────────────────
+        # Число, което е физически невъзможно или идва от карантиниран източник,
+        # НЕ влиза в снимката като число. На мястото му остава null плюс препратка
+        # към attestation/quarantine_attestations.jsonl, където стои какво точно е
+        # било отхвърлено и защо.
+        # Kimi: „А е епистемично самоубийство — без запис на отхвърленото не можеш
+        # да провериш дали карантината е била права, а 'липса' се чете като 'никога
+        # не сме имали'. Неизбежен етикет: value е null, отхвърленото живее само в
+        # rejected масив. Консуматор, който не чете етикета, получава безопасен
+        # null, НЕ ЛЪЖА."
+        try:
+            from core.source_trust import filter_snapshot as _filter
+            _before = json.dumps(gi_data, ensure_ascii=False)
+            gi_data = _filter(gi_data)
+            _rej = gi_data.get("_rejected") or []
+            if _rej:
+                print(f"[FAST_CYCLE] source_trust -> ОТХВЪРЛЕНИ {len(_rej)} числа: "
+                      + ", ".join(f"{r['section']}.{r['metric']}" for r in _rej[:5]))
+                _note_night("отхвърлени числа",
+                            f"{len(_rej)} стойности не влязоха в снимката: "
+                            + ", ".join(f"{r['section']}.{r['metric']}({r['crypt_ref']})"
+                                        for r in _rej[:8]))
+        except Exception as _se:
+            print(f"[FAST_CYCLE] source_trust -> FAILED: {type(_se).__name__}: {_se}")
+
         gi_path.parent.mkdir(parents=True, exist_ok=True)
         gi_path.write_text(json.dumps(gi_data, ensure_ascii=False, indent=2), encoding="utf-8")
+
+        # BATCH COMMIT в проверената Merkle верига (Kimi, 15 авг 2026): една секция =
+        # един лист. Дотук твърдите числа стояха ИЗВЪН всякаква одитна верига, докато
+        # сензорните капки имаха дърво. Не хиляди листа — двайсет.
+        try:
+            from core.source_trust import commit_sections as _commit
+            _c = _commit(gi_data)
+            print(f"[FAST_CYCLE] merkle -> {_c.get('committed', 0)} секции ангажирани "
+                  f"в проверената верига")
+        except Exception as _ce:
+            print(f"[FAST_CYCLE] merkle commit -> FAILED: {type(_ce).__name__}: {_ce}")
         co2  = gi_data.get("co2", {}).get("co2_ppm", "?")
         temp = gi_data.get("temperature", {}).get("temp_anomaly_c", "?")
         conf = gi_data.get("conflicts", {}).get("active_armed_conflicts", "?")
@@ -1427,16 +1558,33 @@ def main():
     except Exception as e:
         print(f"[FAST_CYCLE] composers -> FAILED: {type(e).__name__}: {e}")
 
-    # ── 2.7. Grounding ledger (E2) — record per-axis anchor-vs-daily divergence and
-    #    proxy agreement, tamper-evidently. Reads composed_indicators, appends to its
-    #    own ledger — NEVER touches scoring. Inert (no alerts) until daily sources are
-    #    live, then it surfaces contradictions the human can act on. FAIL-OPEN.
+    # ── 2.7. Grounding ledger (E2) — anchor vs daily proxy, recorded tamper-evidently.
+    #    TWO SEPARATE ACTS, on purpose (Kimi, 15 Aug 2026): the ledger only RECORDS —
+    #    raw numbers, each axis's own sigma, and `insufficient_history` where the axis
+    #    has fewer than `grounding_min_history` observations. It holds no threshold and
+    #    raises no alert. The VERDICT is passed by source_trust, with the same sigma
+    #    that judges everything else, and the distrust point lands on the DAILY SOURCE,
+    #    not on the axis. One truth, one judge. FAIL-OPEN both times.
     beat("grounding_ledger", "2.7")
     try:
         from experiments.grounding.divergence_ledger import record as _ground_record
-        _ground_record()
+        _grec = _ground_record()
     except Exception as e:
+        _grec = None
         print(f"[FAST_CYCLE] grounding_ledger -> FAILED: {type(e).__name__}: {e}")
+    if _grec:
+        try:
+            from core import source_trust as _st
+            _verdicts = _st.judge_grounding(_grec)
+            _diverged = [v for v in _verdicts if v.get("verdict") == "РАЗМИНАВАНЕ"]
+            _unknown = [v for v in _verdicts if v.get("verdict") == "НЕИЗВЕСТНО"]
+            print(f"[FAST_CYCLE] grounding_verdicts -> {len(_verdicts)} axes judged | "
+                  f"divergent {len(_diverged)} | not yet judgeable {len(_unknown)}")
+            for _v in _diverged:
+                print(f"  DIVERGENCE {_v['axis']}: {_v.get('z')} sigma over n={_v.get('n')}"
+                      f"{' -> distrust point on ' + str(_v['distrust'].get('source', '?')) if _v.get('distrust') else ' (daily source unknown — charged to no one)'}")
+        except Exception as e:
+            print(f"[FAST_CYCLE] grounding_verdicts -> FAILED: {type(e).__name__}: {e}")
 
     beat("llm_self_review_axes", "2.75")
     refresh_llm_axes()
@@ -1589,30 +1737,41 @@ def main():
     composite = 0.0  # initialized here so MerkleMemory commit can read it at step 24
     def _goal_score_calculator():
         nonlocal composite
-        from goal_score_calculator import compute_goal_score
+        from goal_score_calculator import compute_goal_score, format_headline
         gs_result = compute_goal_score()
         composite  = gs_result["composite_score"]
-        # КОНСЕНСУС С KIMI, 15 авг 2026: композитът вече върви ЗАЕДНО с покритието.
-        # „Ден с 62% не е сравним с 95% — това не е бъг, а истина."
-        _cov = gs_result.get("coverage")
-        _ok  = gs_result.get("composite_valid")
-        print(f"[FAST_CYCLE] goal_score_calculator -> composite={composite:.4f} "
-              f"| покритие={_cov:.0%} | валиден={_ok}")
-        if not _ok:
-            print(f"[FAST_CYCLE] ВНИМАНИЕ: {gs_result.get('insufficient_data')}")
+        # КОНСЕНСУС С KIMI, 15 авг 2026: числото НИКОГА не излиза само.
+        # „Число без семантика е театър (или «тъмна цифра» — едно и също).
+        #  Консуматор, който иска само числото, получава пакета или нищо."
+        # Пакетът се сглобява на ЕДНО място — format_headline — а
+        # test/test_goal_score_package.py чупи билда, ако някой го заобиколи.
+        print(f"[FAST_CYCLE] goal_score_calculator -> {format_headline(gs_result)}")
+        _sens = gs_result.get("sensors_ok")
+        _goal = gs_result.get("goal_covered")
+        # ДВА флага, защото един е мъртъв: goal_covered е False по построение,
+        # докато семантичните оси нямат мярка; sensors_ok мига всеки ден и затова
+        # е този, който носи новина.
+        if not _sens:
+            print(f"[FAST_CYCLE] СЕТИВАТА КУЦАТ: покритие на измеримото "
+                  f"{gs_result.get('coverage_of_measurable', 0):.0%} — "
+                  f"{len(gs_result.get('unmeasured_axes') or [])} измерими оси без число днес")
             try:
-                _note_night("КОМПОЗИТЪТ НЕ Е ВАЛИДЕН",
-                            str(gs_result.get("insufficient_data")))
+                _note_night("СЕТИВАТА КУЦАТ",
+                            "; ".join(f"{a}: {v['why']}" for a, v in
+                                      (gs_result.get("unmeasured_reasons") or {}).items()))
             except Exception:
                 pass
-        # Persist result as snapshot so master + MerkleMemory can read it
-        gs_snap = BASE / "snapshots" / "master" / "goal_score_latest.json"
-        gs_snap.parent.mkdir(parents=True, exist_ok=True)
-        gs_snap.write_text(
-            json.dumps({**gs_result, "axis": "GOAL_SCORE", "source_type": "CALCULATED"},
-                       ensure_ascii=False, indent=2),
-            encoding="utf-8",
-        )
+        if not _goal:
+            print(f"[FAST_CYCLE] ЦЕЛТА НЕ Е ПОКРИТА: {gs_result.get('insufficient_data')}")
+            _unassessed = gs_result.get("semantic_unassessed") or []
+            if _unassessed:
+                print(f"[FAST_CYCLE] семантични оси БЕЗ никаква оценка ({len(_unassessed)}): "
+                      f"{', '.join(_unassessed[:6])}"
+                      f"{'...' if len(_unassessed) > 6 else ''}")
+        # Persist through the ONE writer (goal_score_calculator.persist), so the
+        # cycle and core.reconsider cannot drift into two different snapshots.
+        from goal_score_calculator import persist as _persist_goal
+        _persist_goal(gs_result)
     _run("goal_score_calculator", _goal_score_calculator)
 
     # ── 12.7. Cognitive Orchestrator — Attentional Meta Protocol ──
@@ -1694,7 +1853,10 @@ def main():
 
     # ── 15.8. GitHub publish — cycle synthesis + verified hypotheses ──
     beat("github_publish", "15.8")
-    if not _witness_or_refuse("github_publish"):
+    # Предшественикът идва от РЕДА НА beat() в този файл, не от лога: brain
+    # ._prev_step_output() чете последния [STEP] ред, а beat() го пише ПРЕДИ да
+    # повика мозъка, тоест връща самата стъпка. Тук се подава истинският.
+    if not _witness_or_refuse("github_publish", "hyperclaw_plan"):
         pass
     else:
         def _github_publisher():
@@ -1732,13 +1894,13 @@ def main():
 
     # ── 18. Self modifier ──
     beat("self_modifier", "18")
-    if _witness_or_refuse("self_modifier"):
+    if _witness_or_refuse("self_modifier", "self_observer"):
         _run("self_modifier", lambda: __import__(
             "agents.core.self_modifier", fromlist=["run"]).run(), free_after=True)
 
     # ── 19. Execute patches — вика auto_level вътрешно за реален before/after ──
     beat("execute_patches", "19")
-    if _witness_or_refuse("execute_patches"):
+    if _witness_or_refuse("execute_patches", "self_modifier"):
         _run("execute_patches", lambda: __import__(
             "execute_patches", fromlist=["run"]).run())
         # Тук системата току-що е пренаписала СОБСТВЕНИЯ си код, значи изведените
@@ -2032,6 +2194,47 @@ if __name__ == "__main__":
             @_cm
             def _lidaction_guard(*a, **k):
                 yield False
+        # ── WHO MAY ERASE THE PULSE (Kimi, 16 Aug 2026) ─────────────────────────
+        #   „Heartbeat се чисти само при KeyboardInterrupt и при CYCLE_FINISHED.
+        #    При всяко друго прекъсване — включително SIGTERM от watchdog — се
+        #    оставя."
+        # Three endings, three different truths:
+        #   • CLEAN FINISH  -> main() clears it itself, after sealing the record.
+        #   • HUMAN Ctrl+C  -> a decision, not a failure. Clear it, or tomorrow's
+        #                      autopsy reads the frozen step as a death. (Measured:
+        #                      the 16 Aug manual stop left `step: boot` behind and
+        #                      it looked exactly like a boot-time death. It wasn't —
+        #                      attend() was 4 seconds from returning.)
+        #   • CRASH / KILL  -> LEAVE IT. It is the only record of where the cycle
+        #                      was, and the only thing feeding deaths_by_step.
+        try:
+            _sig = __import__("signal")
+
+            def _on_term(signum, _frame):
+                # Best-effort self-report. taskkill /F cannot be caught on Windows,
+                # so the supervisor's own WATCHDOG KILL log line is the real
+                # fallback; this only helps when a graceful signal does arrive.
+                try:
+                    from memory.heartbeat import retire as _hb_retire
+                    _hb_retire(f"signal {signum}", by="cycle:signal",
+                               dying_by_signal=int(signum))
+                except Exception:
+                    pass
+                raise SystemExit(128 + int(signum))
+
+            _sig.signal(_sig.SIGTERM, _on_term)
+        except Exception:
+            pass  # FAIL-OPEN: no signal handling is worse than no cycle
+
         with _keep_awake():
             with _lidaction_guard():
-                main()
+                try:
+                    main()
+                except KeyboardInterrupt:
+                    _clear_heartbeat()
+                    _note_boot_abort("прекъснат от човек (Ctrl+C) — пулсът е изчистен, "
+                                     "това НЕ е смърт и не бива да влиза в deaths_by_step")
+                    print("[FAST_CYCLE] прекъснат от човек — пулсът е изчистен.")
+                    raise SystemExit(130)
+                # Any other exception propagates untouched, WITH the heartbeat
+                # still on disk. That is deliberate: see the note above.
