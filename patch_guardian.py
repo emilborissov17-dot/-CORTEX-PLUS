@@ -33,6 +33,7 @@ import time
 from datetime import datetime
 from pathlib import Path
 
+from safety.safe_path import UnsafePath, safe_path
 from safety.quarantine import quarantine
 from safety.protected_paths import is_protected, normalise, protection_reason
 
@@ -201,7 +202,22 @@ class PatchGuardian:
             return PatchResult(filename, False, "rejected",
                                f"Файлът '{filename}' не е в списъка с patchable файлове.")
 
-        file_path = Path(filename)
+        # ── LAYER 3: DOES IT RESOLVE INSIDE THE REPO? (17 Aug 2026) ──────────
+        # is_protected() and _is_patchable() above are STRING checks — normalise()
+        # never stats anything. Measured: a name like 'agents/core/evil_patch.py'
+        # passes normalise(), _is_dynamic_patch() and _is_patchable(); if that name
+        # is a SYMLINK to somewhere outside the repo, write_text() below follows it
+        # and the patch lands outside the bubble. The string layers cannot see that,
+        # because a symlink is a fact about the filesystem, not about the name.
+        #
+        # safe_repo_path() calls realpath and refuses anything that does not resolve
+        # inside the repo root. Fail closed: an unresolvable name is a refusal, never
+        # a silently cleaned-up path.
+        try:
+            file_path = safe_path(filename, Path.cwd())
+        except UnsafePath as e:
+            log.error(f"[PatchGuardian] UNSAFE_PATH: {e}")
+            return PatchResult(filename, False, "rejected_unsafe_path", str(e))
         dynamic = _is_dynamic_patch(filename)
         existed = file_path.exists()
 
@@ -300,7 +316,13 @@ class PatchGuardian:
         """
         Ръчен rollback към последния backup (или конкретен backup_path).
         """
-        file_path = Path(filename)
+        # rollback() is a SECOND public entry point that writes to a model-supplied
+        # name — it does not pass through apply_patch()'s gates, so it carries its own.
+        try:
+            file_path = safe_path(filename, Path.cwd())
+        except UnsafePath as e:
+            log.error(f"[PatchGuardian] rollback UNSAFE_PATH: {e}")
+            return False
 
         if backup_path:
             bp = Path(backup_path)
@@ -375,7 +397,16 @@ class PatchGuardian:
         предишния директен subprocess.run в execute_patches.py: cwd=BASE,
         30s timeout.
         """
-        file_path = Path(filename)
+        # This path is not written — it is EXECUTED, which is strictly worse. A
+        # symlinked 'agents/core/*_patch.py' would hand sys.executable a file from
+        # anywhere on the machine. Guarded for that reason, even though apply_patch()
+        # has already resolved the same name: the containment check is cheap and this
+        # is the last point before execution.
+        try:
+            file_path = safe_path(filename, Path.cwd())
+        except UnsafePath as e:
+            log.error(f"[PatchGuardian] dynamic-exec UNSAFE_PATH: {e}")
+            return False, str(e), ""
         env = _subprocess_env()
         try:
             proc = await asyncio.create_subprocess_exec(
