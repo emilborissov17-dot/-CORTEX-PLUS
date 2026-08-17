@@ -70,12 +70,31 @@ def _fingerprint() -> dict:
         fp["deductions"] = len(items) if hasattr(items, "__len__") else 0
     except Exception:
         fp["deductions"] = None
+    # ── МЪРТВОТО ПОЛЕ (15 август 2026) ──────────────────────────────────────
+    # Тук се четеше memory/goal_score_history.json и се търсеше ключ "composite".
+    # Проверено на живите данни: НИТО ЕДИН от 37-те записа няма такъв ключ — файлът
+    # се пълни от feedback_loop с {"timestamp","scores"} и от goal_planner с
+    # {"timestamp","score","source"}. Значи .get("composite", 0) връщаше 0.0 ВИНАГИ,
+    # без да гръмне, и отпечатъкът беше СЛЯП за движението на композита: връщането
+    # можеше да промени числото и пак да се отчете за „празно".
+    # Композитът се чете от там, където цикълът наистина го пише — и, по договора
+    # от 15 август, ЗАЕДНО с покритието си, не сам.
     try:
-        h = json.loads((BASE / "memory" / "goal_score_history.json").read_text(encoding="utf-8"))
-        last = h[-1] if isinstance(h, list) and h else h
-        fp["composite"] = round(float((last or {}).get("composite", 0)), 6)
+        g = json.loads((BASE / "snapshots" / "master" / "goal_score_latest.json")
+                       .read_text(encoding="utf-8"))
+        fp["composite"] = round(float(g.get("composite_score", 0.0)), 6)
+        fp["coverage_of_goal"] = g.get("coverage_of_goal", g.get("coverage"))
+        fp["coverage_of_measurable"] = g.get("coverage_of_measurable")
+        # ОТ КОГА Е ЧИСЛОТО. Отпечатъкът чете ЗАПИСАНОТО състояние, не пресмята
+        # наново — това е нарочно, защото сравняваме ангажирани числа, не мисли.
+        # Но „записано" и „днешно" не са едно и също: ако снимката е от снощи,
+        # композитът в отпечатъка е снощен и трябва да се вижда, че е такъв.
+        fp["composite_ts"] = str(g.get("timestamp"))[:19] or None
     except Exception:
         fp["composite"] = None
+        fp["coverage_of_goal"] = None
+        fp["coverage_of_measurable"] = None
+        fp["composite_ts"] = None
     try:
         c = json.loads((BASE / "memory" / "constancy_latest.json").read_text(encoding="utf-8"))
         fp["alarms"] = (c.get("counts") or {}).get("alarm")
@@ -113,8 +132,12 @@ def _replayable() -> dict:
         _r()
 
     def _goal():
+        # ПРЕДИ: `g.compute_goal_score()` — сметни и хвърли. Всички съседни
+        # действия тук записват на диск; това не записваше, а отпечатъкът чете
+        # точно диска. Значи „преизчисли композита" беше единственото преправяне,
+        # което по построение не можеше да промени нищо измеримо. (15 авг 2026)
         import goal_score_calculator as g
-        g.compute_goal_score()
+        g.persist(g.compute_goal_score())
 
     def _deduction():
         from core.deduction import run as _r

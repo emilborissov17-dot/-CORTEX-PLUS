@@ -297,6 +297,22 @@ def main():
         next_actions_lines.append(f"EXISTENCE: unavailable ({type(e).__name__}: {e})\n\n")
 
     next_actions_lines.append(f"QUARANTINE: {quarantine_summary}\n\n")
+
+    # ── DEDUCTIONS (14 Aug 2026): the symbolic layer's conclusions, each with its
+    # premises — the "claim + trace" pair. Written for the human here; the same
+    # conclusions reach Telegram via needs_report and the machine via the JSON.
+    try:
+        _ded = json.loads((BASE_DIR / "memory" / "deductions_latest.json")
+                          .read_text(encoding="utf-8"))
+        _dc = _ded.get("conclusions", [])
+        next_actions_lines.append(f"DEDUCTIONS ({len(_dc)}):\n")
+        for _c in _dc:
+            next_actions_lines.append(f"  [{_c['rule_id']}] {_c['conclusion']}\n")
+            for _p in _c.get("premises", []):
+                next_actions_lines.append(f"      <- {_p.get('file')}[{_p.get('key')}] = {_p.get('value')}\n")
+        next_actions_lines.append("\n")
+    except Exception:
+        next_actions_lines.append("DEDUCTIONS: (няма файл — слоят не е пускан този цикъл)\n\n")
     next_actions_lines.append("OVERALL ASSESSMENT:\n")
     next_actions_lines.append(overall + "\n\n")
     next_actions_lines.append("RECOMMENDED ACTIONS BY AXIS:\n")
