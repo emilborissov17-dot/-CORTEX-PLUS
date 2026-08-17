@@ -5,9 +5,15 @@ test/test_approval_server_is_closed.py — THE APPROVAL GATE IS NOT A PUBLIC END
 
 WHAT WENT WRONG (measured 17 August 2026)
 ------------------------------------------
-`cortex_approval_server.py` ended in:
+`cortex_approval_server.py` ended in a Flask `app.run(...)` whose host argument was
+the all-interfaces address 0.0.0.0, on port 5000.
 
-    app.run(host="0.0.0.0", port=5000, debug=False)
+(That line is described here rather than quoted, and the same goes for the bad
+patterns in the positive control below. This file is scanned by its own test — see
+_tracked_python_files — so a verbatim copy of the offending code would make this file
+the repo's only offender and test_no_service_binds_all_interfaces could never pass.
+Discovered the hard way: the test was green while it was still untracked, and went red
+the moment it was committed and the scan could finally see it.)
 
 That server has NO authentication of any kind — no token, no session, no origin check.
 Bound to all interfaces, any device on the LAN could POST /api/approve/<n> and approve
@@ -103,20 +109,25 @@ def test_the_all_interfaces_detector_actually_detects():
     """POSITIVE CONTROL for (a). A scan that finds nothing proves nothing until the
     scanner is shown catching what it is for.
 
-    The bad hosts are built by concatenation so the literal never appears in this file
-    — otherwise this test would be the repo's only offender and (a) could never pass.
+    EVERY bad pattern is assembled at runtime so that no literal binding expression
+    appears in this file's source. That is not cosmetic: this file is itself inside
+    the scan, so a literal here would make it the repo's only offender and (a) could
+    never pass. The empty-host cases matter as much as the dotted-quad ones — they
+    were the two that actually slipped through the first time.
     """
     quad = "0.0.0." + "0"
-    for bad in (f'app.run(host="{quad}", port=5000)',
+    q = chr(34)              # a double quote, never written literally beside host=
+    empty = q + q            # -> ""
+    for bad in (f'app.run(host={q}{quad}{q}, port=5000)',
                 f"uvicorn.run(app, host='{quad}', port=8000)",
-                f'sock.bind(("{quad}", 5000))',
-                'srv.run(host="")',
-                'sock.bind(("", 5000))'):
+                f'sock.bind(({q}{quad}{q}, 5000))',
+                f'srv.run(host={empty})',
+                f'sock.bind(({empty}, 5000))'):
         assert _find_all_interface_binds(bad), f"detector MISSED a real bind: {bad!r}"
 
-    for good in ('app.run(host="127.0.0.1", port=5000)',
+    for good in (f'app.run(host={q}127.0.0.1{q}, port=5000)',
                  "uvicorn.run(app, host='localhost')",
-                 'sock.bind(("127.0.0.1", 5000))',
+                 f'sock.bind(({q}127.0.0.1{q}, 5000))',
                  f'# on {quad} any device on the LAN could approve'):
         assert not _find_all_interface_binds(good), f"detector FALSE-POSITIVED on {good!r}"
 
