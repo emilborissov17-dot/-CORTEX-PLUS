@@ -335,6 +335,13 @@ def _update_progress_for_active(indicators: dict) -> None:
         prog = _measure_progress(rec, indicators)
 
         if prog.get("measurable"):
+            # MEASURED 17 Aug 2026: this flag was written ONLY in the else-branch
+            # below (`rec.setdefault("measurable", False)`), never here. So all 89
+            # initiative records on disk said measurable:false while 53 of them
+            # carried a live baseline, current_value and progress %. A field that
+            # can only ever be false is not a field — it is a constant that reads
+            # like evidence, and anything filtering on it saw nothing at all.
+            rec["measurable"] = True
             # Persist baseline only on first measurement
             if rec.get("baseline_value") is None:
                 rec["baseline_value"]       = prog["baseline_value"]
