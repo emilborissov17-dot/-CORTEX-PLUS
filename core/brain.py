@@ -82,21 +82,68 @@ def _body() -> str:
         return "(няма body_scan)"
 
 
+def _tail_budget(text: str, budget: int, what: str) -> str:
+    """Ако духът НЕ се побира, режи от НАЧАЛОТО и си го признай на глас.
+
+    ── ЗАЩО СЪЩЕСТВУВА ТАЗИ ФУНКЦИЯ (15 август 2026) ────────────────────────
+    Тук стоеше `bg[:1400]` и `canon[:800]` — рязане от края, мълчаливо.
+    Измерено на живите файлове: законът е 1816 знака, канонът 1245. Тоест
+    мозъкът НИКОГА не е виждал последните 445 знака на канона, а именно там
+    стои ГРАНИЦАТА:
+
+        „CORTEX senses and advises. It never ACTUATES — it never causes an
+         effect on the world outside a human decision taken per action.
+         The moment a system named CORTEX actuates autonomously, it is no
+         longer CORTEX; it is a different system that has taken this name."
+
+    Срезът падаше насред думата „обрат|ими" в подцел 5. Значи мозъкът е
+    получавал ЦЕЛТА БЕЗ НЕЙНАТА СТЕНА — максимата „максимизирай устойчивостта
+    на разумния живот" без „ти усещаш и съветваш, никога не действаш". От
+    закона пък падаха т.6 („мълчанието не е присъда") и т.7 („автономията се
+    печели") — точно правилата за това как се печели доверие.
+
+    Цел без граница е най-опасната форма, която една инструкция може да има.
+    Тук тя беше произведена не от философия, а от резен.
+
+    Затова: границите живеят НАКРАЯ на такива документи, значи при недостиг
+    се жертва началото. И жертвата се ОБЯВЯВА — отрязан дух, който мълчи, е
+    същото като липсващ дух, който лъже."""
+    if len(text) <= budget:
+        return text
+    keep = text[-budget:]
+    return (f"[ВНИМАНИЕ: {what} не се побира — отрязани са първите "
+            f"{len(text) - budget} знака от {len(text)}. Виждаш КРАЯ, защото "
+            f"там стоят границите. Ако решението ти зависи от отрязаното, "
+            f"кажи го вместо да гадаеш.]\n" + keep)
+
+
+# Духът е ~3 KB общо. Материалът, който така или иначе се подава, е до 5 KB.
+# Затова таванът тук е висок нарочно: няма причина точно СЪВЕСТТА да е орязаната.
+SPIRIT_LAW_BUDGET = 6000
+SPIRIT_CANON_BUDGET = 6000
+
+
 def _spirit() -> str:
-    """Кой е и защо съществува — законът плюс активния канон."""
-    out = []
+    """Кой е и защо съществува — законът плюс активния канон, ЦЕЛИ."""
+    out, missing = [], []
     try:
         law = LAW_FILE.read_text(encoding="utf-8")
         bg = law.split("## BG", 1)[-1].split("## EN", 1)[0].strip()
-        out.append("ЗАКОН:\n" + bg[:1400])
-    except Exception:
-        pass
+        out.append("ЗАКОН:\n" + _tail_budget(bg, SPIRIT_LAW_BUDGET, "законът"))
+    except Exception as e:
+        missing.append(f"ЗАКОНЪТ не се чете ({type(e).__name__})")
     try:
-        out.append("КАНОН:\n" + (BASE / "memory" / "active_canon_frame.txt")
-                   .read_text(encoding="utf-8")[:800])
-    except Exception:
-        pass
-    return "\n\n".join(out) or "(няма канон)"
+        canon = (BASE / "memory" / "active_canon_frame.txt").read_text(encoding="utf-8")
+        out.append("КАНОН (цел + граница):\n"
+                   + _tail_budget(canon, SPIRIT_CANON_BUDGET, "канонът"))
+    except Exception as e:
+        missing.append(f"КАНОНЪТ не се чете ({type(e).__name__})")
+    if missing:
+        # Липсващият дух не бива да изглежда като липсващ ред. Мозък без канон
+        # трябва ДА ЗНАЕ, че е без канон — иначе ще действа все едно го е чел.
+        out.append("[ВНИМАНИЕ: " + "; ".join(missing) +
+                   " — мислиш БЕЗ част от духа си. Отбележи го в отговора си.]")
+    return "\n\n".join(out) or "(НЯМА КАНОН И НЯМА ЗАКОН — мислиш без дух)"
 
 
 def _memory(kind: str | None = None, n: int = 5) -> str:
@@ -461,6 +508,30 @@ def _prev_step_output() -> tuple:
         return "", ""
 
 
+# Колко чака мозъкът на ЕДНА стъпка. Стои като явна константа, защото е
+# компромис, не истина: твърде малко — мозъкът мълчи на всяка тежка стъпка;
+# твърде много — един заспал модел бави целия цикъл ~50 пъти.
+ATTEND_TIMEOUT = 60
+
+
+def _record_silence(step: str, prev_step: str | None, model: str, why: str,
+                    sec: float, prompt_chars: int) -> None:
+    """Мълчанието на мозъка е СЪБИТИЕ, не липса на събитие (законът, т.6).
+
+    Без този запис „мозъкът е на всяка стъпка" е непроверимо твърдение: в
+    дневника се виждат само стъпките, на които е ПРОГОВОРИЛ, и никой не може да
+    различи «мозъкът реши да мълчи» от «мозъкът никога не беше попитан»."""
+    doc = {"ts": _now(), "step": step, "prev_step": prev_step,
+           "stance": "reflex:мълчание", "silent": True, "why": why,
+           "sec": sec, "prompt_chars": prompt_chars, "model": f"local:{model}"}
+    try:
+        STEP_LOG.parent.mkdir(parents=True, exist_ok=True)
+        with open(STEP_LOG, "a", encoding="utf-8") as fh:
+            fh.write(json.dumps(doc, ensure_ascii=False) + "\n")
+    except Exception:
+        pass
+
+
 def attend(step: str) -> dict | None:
     """Мозъкът застава пред всяка стъпка: съди какво излезе от предишната и казва
     какво очаква от тази. Присъдата се пише в memory/brain_step_log.jsonl, а
@@ -480,39 +551,107 @@ def attend(step: str) -> dict | None:
 
     prev_name, prev_out = _prev_step_output()
     plan = current_plan()
+    # ── УМ, ДУХ И ТЯЛО + ЦЕЛ — В ЕДНО (Емил, 15 август 2026) ────────────────
+    # Дотук ТУК имаше само УМ и ТЯЛО. Проверено ред по ред: този промпт носеше
+    # плана, тялото, предишната стъпка и текущата — и НИТО ЕДНА дума от духа:
+    # без канон, без цел, без граница, без памет. А точно този промпт е мозъкът
+    # НА ВСЯКА СТЪПКА; think() го носи всичко, но think() се вика няколко пъти
+    # на цикъл, докато attend() — при всеки beat.
+    # Тоест законът, т.5 („Той носи тялото, духа и паметта си във ВСЯКА мисъл")
+    # се спазваше на редките мисли и се нарушаваше на честите.
+    # Цената е призната честно: духът е ~3 KB, тоест ~+800 токена на стъпка при
+    # локален модел. Това е цената на това мозъкът да знае за какво съществува,
+    # докато решава дали да пропусне стъпка. По-евтиният вариант — да му подадем
+    # само „главното" от духа — е точно резенът, който днес отряза границата.
     prompt = (
-        "Ти си мозъкът на CORTEX++ и стоиш на всяка стъпка от собствения си цикъл.\n"
+        "Ти си мозъкът на CORTEX++ и стоиш на всяка стъпка от собствения си цикъл.\n\n"
+        f"ДУХ (кой си, за какво съществуваш и къде ти е границата):\n{_spirit()}\n\n"
+        f"ПАМЕТ (твои предишни присъди по стъпки):\n{_memory('step_stance', n=3)}\n\n"
         f"ТВОЯТ ПЛАН ДНЕС: фокус={plan.get('focus')!r}; следиш={plan.get('watch')!r}; "
         f"тест за успех={str(plan.get('success_test'))[:120]!r}\n"
         f"ТЯЛО: {_body()}\n"
-        f"ПРЕДИШНА СТЪПКА: {prev_name or '(няма)'}\n"
-        f"НЕЙНИЯТ ИЗХОД:\n{prev_out or '(празно)'}\n\n"
-        f"СЕГА ЗАПОЧВА: {step}\n\n"
-        'Отговори САМО с JSON: {"prev_ok": true/false, "prev_note": "кратко: какво '
-        'излезе от предишната", "stance": "върви|следи|пропусни", "expect": "какво '
-        'очакваш от тази стъпка (кратко)"}\n'
-        "Кратко. Ако предишната е дала празен/подозрителен резултат — кажи го."
+        # ── ПРАЗНАТА КЛЕТКА НЕ СЕ ПОДАВА (15 август 2026) ───────────────────
+        # Първите два реални записа на attend() дадоха ЕДНО И СЪЩО празно
+        # prev_step и ДВЕ ПРОТИВОПОЛОЖНИ присъди: веднъж prev_ok=true „изпълнена
+        # успешно", веднъж prev_ok=false „не всички мрежи достигнаха нужната
+        # точност" — при това вторият описваше проект за обучение на невронни
+        # мрежи с екип, какъвто тук няма. 3B модел, изправен пред празна клетка,
+        # я запълва с правдоподобна проза.
+        # Затова празната клетка вече НЕ СЕ ПОКАЗВА. Не питаш за нещо, което го
+        # няма, и после не филтрираш отговора — не даваш повод за отговор.
+        + (f"ПРЕДИШНА СТЪПКА: {prev_name}\n"
+           f"НЕЙНИЯТ ИЗХОД:\n{prev_out}\n\n" if (prev_name and prev_out) else
+           "ПРЕДИШНА СТЪПКА: НЯМА (това е първата стъпка или изходът ѝ не се вижда).\n"
+           "НЕ съди предишната стъпка — за нея нямаш доказателство. Остави prev_ok "
+           "и prev_note празни.\n\n")
+        + f"СЕГА ЗАПОЧВА: {step}\n\n"
+        + ('Отговори САМО с JSON: {"prev_ok": true/false, "prev_note": "кратко: какво '
+           'излезе от предишната", ' if (prev_name and prev_out) else
+           'Отговори САМО с JSON: {')
+        + '"stance": "върви|следи|пропусни", "expect": "какво '
+          'очакваш от тази стъпка (кратко)", "serves_goal": "с едно изречение: как '
+          'ТАЗИ стъпка служи на целта, или защо не ѝ служи"}\n'
+        + ("Кратко. Ако предишната е дала празен/подозрителен резултат — кажи го."
+           if (prev_name and prev_out) else
+           "Кратко. Говори САМО за стъпката, която започва сега.")
     )
+    # ── МЪЛЧАНИЕТО СЕ ЗАПИСВА (законът, т.6) ───────────────────────────────
+    # Дотук всяка несполука тук се връщаше като None БЕЗ СЛЕДА. Затова днешният
+    # brain_step_log.jsonl съдържа ЕДИН ред за ~50 стъпки, а защо липсват
+    # останалите 49 — никой не може да каже. Законът е изричен: „Мълчанието не е
+    # присъда. Ако мозъкът не отговори, тялото пада на рефлекс — и това се
+    # записва явно: reflex:* и защо." Мълчаливото None нарушаваше собствения му
+    # закон и правеше диагнозата невъзможна.
+    t0 = time.time()
+    d, silence = None, None
     try:
         import requests as _rq
         _, base = _pick_model()
-        r = _rq.post(f"{base}/api/chat", timeout=60, json={
+        r = _rq.post(f"{base}/api/chat", timeout=ATTEND_TIMEOUT, json={
             "model": mdl, "stream": False, "keep_alive": KEEP_ALIVE, "format": "json",
             "messages": [{"role": "user", "content": prompt}],
-            "options": {"temperature": 0.1, "num_predict": 160}})
+            "options": {"temperature": 0.1, "num_predict": 220}})
         r.raise_for_status()
         t = ((r.json().get("message") or {}).get("content") or "").strip()
         t = t.split("</think>")[-1].strip() if "</think>" in t else t
         d = json.loads(t[t.find("{"): t.rfind("}") + 1])
-    except Exception:
-        return None
-    if not isinstance(d, dict):
+        if not isinstance(d, dict):
+            d, silence = None, f"отговор, който не е обект: {type(d).__name__}"
+    except Exception as e:
+        silence = f"{type(e).__name__}: {e}"
+
+    if d is None:
+        _record_silence(step, prev_name, mdl, silence or "неизвестна причина",
+                        round(time.time() - t0, 1), len(prompt))
         return None
 
-    doc = {"ts": _now(), "step": step, "prev_step": prev_name,
-           "prev_ok": d.get("prev_ok"), "prev_note": str(d.get("prev_note", ""))[:300],
+    # ── ПРИСЪДА БЕЗ ДОКАЗАТЕЛСТВО СЕ ОТМЕНЯ ОТ ИЗВИКВАЩИЯ ──────────────────
+    # Дори с поправения промпт моделът може да произнесе нещо за предишната
+    # стъпка. Затова тук стои втора, механична преграда: няма ли доказателство,
+    # няма присъда — независимо какво е казал. И казаното НЕ се изтрива, а се
+    # пази в prev_ok_model_said, защото честотата на съчиняването е измерване:
+    # без нея никога няма да знаем колко често мозъкът запълва празни клетки.
+    _has_evidence = bool(prev_name) and bool(prev_out)
+    _blocked = None
+    if not prev_name:
+        _blocked = "no_previous_step: това е първата стъпка — няма какво да се съди"
+    elif not prev_out:
+        _blocked = (f"no_visible_output: '{prev_name}' не е оставила видим изход — "
+                    f"липсата на изход не е доказателство за провал")
+
+    doc = {"ts": _now(), "step": step, "prev_step": prev_name or None,
+           "prev_ok": (d.get("prev_ok") if _has_evidence else None),
+           "prev_note": (str(d.get("prev_note", ""))[:300] if _has_evidence else None),
+           "prev_verdict_blocked": _blocked,
+           "prev_ok_model_said": (None if _has_evidence else d.get("prev_ok")),
+           "prev_note_model_said": (None if _has_evidence
+                                    else str(d.get("prev_note", ""))[:200] or None),
            "stance": str(d.get("stance", "върви"))[:20],
-           "expect": str(d.get("expect", ""))[:300], "model": f"local:{mdl}"}
+           "expect": str(d.get("expect", ""))[:300],
+           # СЛУЖИ ЛИ ТАЗИ СТЪПКА НА ЦЕЛТА — питаме го, защото сега вече знае целта.
+           "serves_goal": str(d.get("serves_goal", ""))[:300],
+           "sec": round(time.time() - t0, 1),
+           "model": f"local:{mdl}"}
     try:
         STEP_LOG.parent.mkdir(parents=True, exist_ok=True)
         if STEP_LOG.exists() and STEP_LOG.stat().st_size > 5_000_000:
