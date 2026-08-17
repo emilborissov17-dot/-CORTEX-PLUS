@@ -117,29 +117,35 @@ def publish_cycle(web_intel_dir: pathlib.Path = None):
     print(f"[GitHub] Публикувани: {published} | Грешки: {errors}")
 
 
+# The web_intelligence writer puts its verdict under "analysis", but older files
+# (and some axes) carry the same keys at the root. _format_as_markdown solved that
+# from the day it was written; _publish_daily_index did not, and read the root
+# only. The result was public for months: every row of every daily index read
+# "UNKNOWN | ..." while the axis page one click behind it read "Severity: HIGH".
+# Lifted out of _format_as_markdown rather than copied, so there is one definition
+# of where a field lives and the index cannot drift away from the page again.
+def get_field(data: dict, *keys):
+    """First non-empty value for `keys`, looked up under "analysis" then the root."""
+    analysis = data.get("analysis") or {}
+    if not isinstance(analysis, dict):
+        analysis = {}
+    for k in keys:
+        v = analysis.get(k) or data.get(k)
+        if v:
+            return v
+    return None
+
+
 def _format_as_markdown(axis: str, data: dict, date: str) -> str:
     md = f"# {axis.replace('_', ' ')}\n"
     md += f"**Date:** {date}\n\n"
 
-    # analysis може да е dict вътре или директно в root
-    analysis = data.get("analysis", {}) or {}
-    if not isinstance(analysis, dict):
-        analysis = {}
-
-    # Четем от analysis или от root
-    def get_field(*keys):
-        for k in keys:
-            v = analysis.get(k) or data.get(k)
-            if v:
-                return v
-        return None
-
-    severity  = get_field("severity")
-    action    = get_field("action")
-    goal      = get_field("measurable_goal")
-    problem   = get_field("problem")
-    root_cause= get_field("root_cause")
-    timeframe = get_field("timeframe")
+    severity  = get_field(data, "severity")
+    action    = get_field(data, "action")
+    goal      = get_field(data, "measurable_goal")
+    problem   = get_field(data, "problem")
+    root_cause= get_field(data, "root_cause")
+    timeframe = get_field(data, "timeframe")
 
     if severity:
         md += f"**Severity:** {severity}\n\n"
@@ -155,7 +161,7 @@ def _format_as_markdown(axis: str, data: dict, date: str) -> str:
         md += f"**Timeframe:** {timeframe}\n\n"
 
     # proposed_actions като списък
-    proposed = data.get("proposed_actions") or analysis.get("proposed_actions")
+    proposed = get_field(data, "proposed_actions")
     if proposed and isinstance(proposed, list):
         md += "## Proposed Actions\n"
         for a in proposed:
@@ -189,25 +195,55 @@ def _format_as_markdown(axis: str, data: dict, date: str) -> str:
     return md
 
 
+# master_web_intel.json is the RUN SUMMARY, not an axis. It has no axis,
+# severity, problem or analysis — only axes_covered, total_sources and
+# critical_axes — so listing it in the axis table produced a permanent
+# "UNKNOWN | ..." row and made the table 26 rows long while the README (and the
+# file's own axes_covered) say 25.
+#
+# It stays PUBLISHED as its own page: reports/{date}/master_web_intel.md has
+# existed in 33 report folders and dropping it would break links in published
+# history for no gain. What changes is where it appears — its numbers now open
+# the index as a coverage line, which is what a summary is for, and the table
+# below it contains axes and only axes.
+SUMMARY_STEMS = {"master_web_intel"}
+
+
 def _publish_daily_index(date: str, web_intel_dir: pathlib.Path):
-    axes = []
+    axes, summary = [], {}
     for json_file in sorted(web_intel_dir.rglob("*.json")):
         try:
             data = json.loads(json_file.read_text(encoding="utf-8"))
-            axis = data.get("axis", json_file.stem)
-            severity = data.get("severity", "UNKNOWN")
-            problem = data.get("problem", "")[:100]
-            axes.append((axis, severity, problem))
         except Exception:
-            pass
+            continue
+        if json_file.stem in SUMMARY_STEMS:
+            summary = data
+            continue
+        axis = data.get("axis", json_file.stem)
+        # get_field, not data.get: severity and problem live under "analysis".
+        # Reading the root only is what made every published index say the
+        # system knew nothing about all 26 axes.
+        severity = get_field(data, "severity") or "UNKNOWN"
+        problem = str(get_field(data, "problem") or "")[:100]
+        axes.append((axis, severity, problem))
 
     md = f"# CORTEX++ Daily Report — {date}\n\n"
     md += "> An autonomous system monitoring 25 axes of civilization toward dignity, sustainability and long-term survival of intelligent life.\n\n"
+    if summary:
+        crit = summary.get("critical_axes") or []
+        md += (f"**Coverage:** {summary.get('axes_covered', len(axes))} axes · "
+               f"{summary.get('total_sources', '?')} sources · "
+               f"{summary.get('youtube_videos_total', '?')} videos · "
+               f"{len(crit)} axes flagged critical "
+               f"([details](master_web_intel.md))\n\n")
+        if crit:
+            md += "**Critical this run:** " + ", ".join(str(c) for c in crit[:12]) + "\n\n"
     md += "## Today's Findings\n\n"
     md += "| Axis | Severity | Summary |\n|------|----------|----------|\n"
     for axis, severity, problem in axes:
         link = f"[{axis}]({axis.lower()}.md)"
-        md += f"| {link} | {severity} | {problem[:80]}... |\n"
+        ellipsis = "..." if len(problem) > 80 else ""
+        md += f"| {link} | {severity} | {problem[:80]}{ellipsis} |\n"
 
     md += f"\n---\n*Generated by CORTEX++ AGI | {date}*\n"
     _push_file(f"reports/{date}/index.md", md, f"[{date}] Daily index")
