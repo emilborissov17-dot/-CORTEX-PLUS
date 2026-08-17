@@ -243,6 +243,51 @@ def to_markdown(rep: dict) -> str:
     except Exception:
         pass
 
+    # ПРАЗНИТЕ СЕКЦИИ (15 авг 2026). Източник, който не дава нищо, не е източник —
+    # но дотук се броеше за такъв, защото празнотата не влизаше в никой брояч.
+    try:
+        _gi = json.loads((BASE / "snapshots" / "master" /
+                          "global_indicators_latest.json").read_text(encoding="utf-8"))
+        _sil = (_gi.get("_health") or {}).get("silent_sections") or []
+        if _sil:
+            out += ["## Източници, които мълчаха", "",
+                    f"{len(_sil)} секции не дадоха НИТО ЕДНА стойност. Те се броят "
+                    f"сред източниците, но не носят данни:", ""]
+            for s in _sil:
+                out.append(f"- `{s.get('section')}` — {s.get('source')}")
+            out.append("")
+    except Exception:
+        pass
+
+    # ОТХВЪРЛЕНИТЕ ЧИСЛА (консенсус с Kimi, 15 авг 2026). Отхвърленото не е липсващо
+    # и разликата трябва да се вижда от човека, а не да се лови от логовете.
+    #
+    # ПОПРАВЕНА ПРЕПРАТКА (17 авг 2026). Този текст пращаше човека към
+    # `attestation/quarantine_attestations.jsonl`. Този файл НЕ СЪЩЕСТВУВА и никога
+    # не е съществувал — той е FALLBACK в core/source_trust.bury(), който се пише
+    # само когато сензориумът е недостъпен. По подразбиране отхвърленото число отива
+    # в сензорната СЯНКА (penumbra, Merkle-верига) и crypt_ref сочи натам.
+    # Отчет, който праща човека към несъществуващ файл, е по-лош от отчет без
+    # препратка: първият изглежда проверим.
+    try:
+        _gi = json.loads((BASE / "snapshots" / "master" /
+                          "global_indicators_latest.json").read_text(encoding="utf-8"))
+        _rej = _gi.get("_rejected") or []
+        if _rej:
+            out += ["## Числа, които системата ОТХВЪРЛИ", "",
+                    f"{len(_rej)} стойности не влязоха в оценката. Те не липсват — "
+                    f"отхвърлени са. Всяко е погребано от `core/source_trust.bury()` "
+                    f"в сензорната сянка (penumbra) и `crypt_ref` по-долу сочи към "
+                    f"него. Ако сензориумът е бил недостъпен, записът е паднал във "
+                    f"`attestation/quarantine_attestations.jsonl` и веригата за това "
+                    f"число ЛИПСВА — тогава файлът съществува, иначе не:", ""]
+            for r in _rej[:10]:
+                out.append(f"- `{r.get('section')}.{r.get('metric')}` — "
+                           f"{r.get('reason')} (crypt_ref `{r.get('crypt_ref')}`)")
+            out.append("")
+    except Exception:
+        pass
+
     # ПОКРИТИЕТО НА КОМПОЗИТА (консенсус с Kimi, 15 авг 2026). Дотук отчетът
     # показваше едно число. Число при 32% незнание не е оценка — затова тук стои
     # заедно с това КОЛКО от целта изобщо е измерена.
