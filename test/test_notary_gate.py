@@ -212,11 +212,6 @@ def test_execute_patches_never_reaches_full_trust(healthy_environment, live_harv
     assert not ok, f"may_act({STEP!r}) permitted an irreversible action: {why}"
 
 
-@pytest.mark.xfail(
-    strict=True,
-    reason="core/cycle_graph.py:23-26 promises the unknown is not passable; "
-           "_age_state does the opposite. When this xfail starts PASSING, the "
-           "design has been made consistent.")
 def test_an_empty_inputs_list_is_not_a_reason_to_trust(notary):
     """An empty requires list is ignorance, and ignorance is not evidence of freshness.
 
@@ -226,20 +221,22 @@ def test_an_empty_inputs_list_is_not_a_reason_to_trust(notary):
          пропускаемо. Точно обратното на старото правило, където необявеното
          минаваше за безопасно."
 
-    core/notary.py:_age_state does the old thing:
+    core/notary.py:_age_state used to do the old thing:
 
         if not inputs:
             return FULL, "стъпката не чете входове"
 
     Empty means the harvester found nothing, and it finds nothing constantly: 32 of
     52 steps harvest to `[]`, including `self_modifier` and `github_publish`, both of
-    which are irreversible and both of which have passed the gate at level_3 on every
+    which are irreversible and both of which passed the gate at level_3 on every
     attestation on record. The harvester cannot see modules reached through
     `__import__(...)` or through a wrapper, so "no inputs" is usually a statement
     about the scanner, not about the step.
 
-    EXPECTED TO FAIL TODAY. It is not a bug report against a line of code — it is the
-    contradiction between two files, held open where it can be seen.
+    THIS TEST WAS AN xfail(strict=True) UNTIL 17 AUG 2026 — a specification held open
+    where it could be seen, rather than a claim that the code was right. The flip
+    landed and the marker came off: `_age_state([])` now returns UNKNOWN. Keep it
+    passing. If it ever fails again, the fail-open has come back.
     """
     level, why = notary._age_state([])
     assert level != notary.FULL, (
