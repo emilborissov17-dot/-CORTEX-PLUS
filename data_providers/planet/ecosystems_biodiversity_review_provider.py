@@ -24,7 +24,7 @@ def _wb(ind: str) -> float | None:
             if item.get("value") is not None:
                 return float(item["value"])
         return None
-    except:
+    except Exception:
         return None
 
 def _noaa_co2_ppm() -> float | None:
@@ -37,10 +37,10 @@ def _noaa_co2_ppm() -> float | None:
                  if not l.startswith("#") and l.strip()]
         def _valid(l):
             try: return float(l.split(",")[4].strip()) > 0
-            except: return False
+            except Exception: return False
         lines = [l for l in lines if _valid(l)]
         return float(lines[-1].split(",")[4].strip())
-    except:
+    except Exception:
         return None
 
 def _gbif_observations_30d() -> int | None:
@@ -55,7 +55,7 @@ def _gbif_observations_30d() -> int | None:
             "limit": 0,
         }, timeout=15)
         return int(r.json().get("count", 0))
-    except:
+    except Exception:
         return None
 
 class BiodiversityProvider(PlanetDataProvider):

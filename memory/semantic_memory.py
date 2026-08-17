@@ -68,7 +68,7 @@ def remember_from_snapshot() -> int:
     levels_path = BASE_DIR / "memory" / "auto_levels.json"
     try:
         auto_levels = json.loads(levels_path.read_text(encoding="utf-8"))
-    except:
+    except Exception:
         auto_levels = {}
 
     count = 0
@@ -93,7 +93,7 @@ def remember_from_news() -> int:
     news_path = BASE_DIR / "news" / "news_latest.json"
     try:
         news = json.loads(news_path.read_text(encoding="utf-8"))
-    except:
+    except Exception:
         return 0
     
     count = 0

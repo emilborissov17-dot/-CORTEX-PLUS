@@ -20,7 +20,7 @@ def _wb(ind):
         r = requests.get(f"{WB_API}/{ind}?format=json&mrv=1&per_page=1", timeout=15)
         v = r.json()[1][0].get("value")
         return float(v) if v is not None else None
-    except: return None
+    except Exception: return None
 
 class FoodProvider(PlanetDataProvider):
     axis: str = "FOOD_REVIEW"

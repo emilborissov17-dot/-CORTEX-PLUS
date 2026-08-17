@@ -57,7 +57,7 @@ def _scan_hardware():
                     "temperature_c":int(parts[4]),
                     "utilization_pct": int(parts[5]),
                 }
-    except:
+    except Exception:
         pass
     
     return {
@@ -77,12 +77,12 @@ def _scan_software():
     """Операционна система и среда."""
     try:
         os_info = subprocess.run(["uname", "-a"], capture_output=True, text=True).stdout.strip()
-    except:
+    except Exception:
         os_info = "unknown"
     
     try:
         py_ver = subprocess.run(["python3", "--version"], capture_output=True, text=True).stdout.strip()
-    except:
+    except Exception:
         py_ver = "unknown"
 
     groq_key = os.environ.get("GROQ_API_KEY", "")
@@ -165,7 +165,7 @@ def _scan_memory():
         try:
             data = json.loads(experiences_path.read_text(encoding="utf-8"))
             exp_count = len(data.get("experiences", []))
-        except:
+        except Exception:
             pass
     
     return {
@@ -212,7 +212,7 @@ def _scan_power():
             levels = json.loads(auto_levels_path.read_text(encoding="utf-8"))
             axes_measured = len(levels)
             critical_axes = [a for a, d in levels.items() if d.get("level") == "LOW"]
-        except:
+        except Exception:
             pass
     
     return {
@@ -292,7 +292,7 @@ def read_self(query=None):
                     "lines":    len(content.splitlines()),
                     "size_kb":  round(f.stat().st_size/1024, 1),
                 }
-        except:
+        except Exception:
             pass
     
     return results
@@ -313,7 +313,7 @@ def find_in_self(query):
                         "line": i+1,
                         "content": line.strip()[:100]
                     })
-        except:
+        except Exception:
             pass
     return matches
 
@@ -324,7 +324,7 @@ def read_json_memory():
     for f in sorted(mem_dir.glob("*.json")):
         try:
             memory[f.name] = json.loads(f.read_text(encoding="utf-8"))
-        except:
+        except Exception:
             memory[f.name] = {"error": "не може да се прочете"}
     return memory
 
@@ -351,7 +351,7 @@ def scan_all_files():
                 "size_kb": size_kb,
                 "modified": modified
             })
-        except:
+        except Exception:
             pass
     
     # Сортирай по размер

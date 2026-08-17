@@ -29,7 +29,7 @@ QUARANTINE = {"authoritative": False, "superseded_by": "prophecy:axis_next"}
 def _now(): return datetime.now(timezone.utc).isoformat()
 def _load():
     try: return json.loads(PRED_FILE.read_text(encoding="utf-8"))
-    except: return []
+    except Exception: return []
 
 def make_prediction(axis, prediction, urgency):
     preds = _load()

@@ -29,7 +29,7 @@ def _wb_world(ind) -> Optional[float]:
             if item.get("value") is not None:
                 return float(item["value"])
         return None
-    except:
+    except Exception:
         return None
 
 
@@ -43,7 +43,7 @@ def _wb_global_mean(ind) -> Optional[float]:
         items = raw[1] if len(raw) > 1 and raw[1] else []
         values = [float(i["value"]) for i in items if i.get("value") is not None]
         return round(sum(values) / len(values), 4) if values else None
-    except:
+    except Exception:
         return None
 
 

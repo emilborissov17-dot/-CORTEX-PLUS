@@ -28,7 +28,7 @@ def _measure() -> dict:
     try:
         r = requests.get("https://api.groq.com", timeout=2)
         groq_ok = True
-    except:
+    except Exception:
         pass
 
     # Брой snapshots
@@ -41,7 +41,7 @@ def _measure() -> dict:
         try:
             lines = log_path.read_text(encoding="utf-8").splitlines()
             last_log = lines[-1][:80] if lines else ""
-        except:
+        except Exception:
             pass
 
     return {
@@ -129,7 +129,7 @@ def read() -> dict:
     """Чете последния пулс."""
     try:
         return json.loads(PULSE_FILE.read_text(encoding="utf-8"))
-    except:
+    except Exception:
         return {}
 
 def read_history(last_n: int = 10) -> list:
@@ -139,7 +139,7 @@ def read_history(last_n: int = 10) -> list:
     try:
         lines = PULSE_LOG.read_text(encoding="utf-8").splitlines()
         return [json.loads(l) for l in lines[-last_n:] if l.strip()]
-    except:
+    except Exception:
         return []
 
 if __name__ == "__main__":

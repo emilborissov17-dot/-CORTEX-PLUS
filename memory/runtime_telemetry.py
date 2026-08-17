@@ -18,7 +18,7 @@ def record_experience(event_type, data={}):
     
     try:
         experiences = json.loads(tel_path.read_text(encoding="utf-8"))
-    except:
+    except Exception:
         experiences = {"experiences": [], "summary": {}}
     
     # Реални данни за тялото в момента
@@ -98,7 +98,7 @@ def get_self_feeling():
             feeling.append(f"Паметта ми е натоварена — {ram}MB RAM")
         
         return " | ".join(feeling) if feeling else "Нямам достатъчно опит още"
-    except:
+    except Exception:
         return "Нямам опит още — тепърва започвам да усещам"
 
 if __name__ == "__main__":

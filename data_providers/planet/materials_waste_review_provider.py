@@ -39,7 +39,7 @@ def _wb(ind: str) -> Optional[float]:
             if item.get("value") is not None:
                 return float(item["value"])
         return None
-    except:
+    except Exception:
         return None
 
 

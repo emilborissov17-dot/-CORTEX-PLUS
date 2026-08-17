@@ -13,12 +13,12 @@ def load(p):
         line=line.strip()
         if line:
             try: rows.append(json.loads(line))
-            except: pass
+            except Exception: pass
     return rows
 
 def dt(ts):
     try: return datetime.fromisoformat(ts)
-    except: return None
+    except Exception: return None
 
 def cycles(rows):
     starts={}; out=[]

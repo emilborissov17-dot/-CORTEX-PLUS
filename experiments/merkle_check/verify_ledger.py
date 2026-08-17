@@ -10,7 +10,7 @@ def main(path="memory/existence_ledger.jsonl"):
         line=line.strip()
         if line:
             try: rows.append(json.loads(line))
-            except: pass
+            except Exception: pass
     print(f"[verify_ledger] entries: {len(rows)}")
     breaks=[]; seqbreaks=[]
     for i in range(1,len(rows)):

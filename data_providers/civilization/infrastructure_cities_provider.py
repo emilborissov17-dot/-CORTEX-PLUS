@@ -29,7 +29,7 @@ def _wb(ind: str) -> Optional[float]:
             if item.get("value") is not None:
                 return float(item["value"])
         return None
-    except:
+    except Exception:
         return None
 
 
@@ -46,7 +46,7 @@ def _wb_global_mean(ind: str) -> Optional[float]:
                     by_country[cc] = (i["date"], float(i["value"]))
         vals = [v for _, v in by_country.values()]
         return round(sum(vals) / len(vals), 4) if vals else None
-    except:
+    except Exception:
         return None
 
 
