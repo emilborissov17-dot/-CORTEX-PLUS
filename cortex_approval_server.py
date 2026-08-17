@@ -9,7 +9,7 @@ cortex_approval_server.py
 import json
 import pathlib
 from datetime import datetime, timezone
-from flask import Flask, jsonify, request, send_file
+from flask import Flask, jsonify
 
 BASE_DIR = pathlib.Path(__file__).resolve().parent
 PROPOSALS_FILE = BASE_DIR / "memory" / "improvement_proposals.json"
@@ -150,6 +150,17 @@ function togglePanel() {
   if (p.style.display === 'block') loadProposals();
 }
 
+// Every proposal field below is written by an LLM (goal_planner, self_observer) into
+// memory/improvement_proposals.json and was being interpolated straight into innerHTML.
+// A proposal whose text contained markup therefore executed in the approval page — the
+// one page whose whole purpose is to let a human judge that proposal before it runs.
+// The generated code was already shown as a flag, never as text, so nothing legitimate
+// here needs HTML: escape all of it.
+function esc(v) {
+  return String(v == null ? '' : v).replace(/[&<>"']/g,
+    c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
+}
+
 async function loadProposals() {
   const res = await fetch('/api/proposals');
   const proposals = await res.json();
@@ -158,17 +169,20 @@ async function loadProposals() {
     list.innerHTML = '<div class="no-proposals">Няма pending proposals.</div>';
     return;
   }
-  list.innerHTML = proposals.map(p => `
-    <div class="proposal-item" id="prop-${p.index}">
+  list.innerHTML = proposals.map(p => {
+    const i = Number(p.index);          // an int from enumerate(); never a string
+    return `
+    <div class="proposal-item" id="prop-${i}">
       <div class="proposal-text">
-        <div class="proposal-component">${p.component || 'unknown'} · ${p.priority || 'MEDIUM'}</div>
-        <div>${p.problem || ''}</div>
-        ${p.solution ? `<div style="color:#666;margin-top:3px;">${p.solution}</div>` : ''}
+        <div class="proposal-component">${esc(p.component || 'unknown')} · ${esc(p.priority || 'MEDIUM')}</div>
+        <div>${esc(p.problem || '')}</div>
+        ${p.solution ? `<div style="color:#666;margin-top:3px;">${esc(p.solution)}</div>` : ''}
         ${p.python_code ? '<div style="color:#378ADD;margin-top:3px;">📝 Съдържа python код</div>' : ''}
       </div>
-      <button class="btn-approve" onclick="approve(${p.index})">✓ Approve</button>
-      <button class="btn-reject" onclick="reject(${p.index})">✗ Reject</button>
-    </div>`).join('');
+      <button class="btn-approve" onclick="approve(${i})">✓ Approve</button>
+      <button class="btn-reject" onclick="reject(${i})">✗ Reject</button>
+    </div>`;
+  }).join('');
 }
 
 async function approve(index) {
@@ -187,6 +201,21 @@ async function reject(index) {
 
 
 if __name__ == "__main__":
-    print("[APPROVAL SERVER] Стартира на http://localhost:5000")
+    # LOOPBACK ONLY. This server has NO authentication of any kind: anyone who can
+    # reach port 5000 can approve or reject a self-modification proposal. Bound to
+    # 0.0.0.0 it handed that power to every device on the LAN.
+    #
+    # Verified before narrowing it (17 Aug 2026), because closing a port the human
+    # actually uses is its own kind of failure: nothing off-machine calls this. No
+    # uvicorn, ngrok, cloudflared or tailscale anywhere in the repo; no code fetches
+    # :5000; no scheduled task starts it; memory/approval_queue.json — the only thing
+    # it writes — is read by nobody and last changed 13 Apr 2026. The human approval
+    # gate that IS live runs over Telegram (memory/pending_approvals.json ->
+    # experiments/needs/approve_reader.py), not over this port.
+    #
+    # If it turns out you do open this from a phone on the LAN, the opt-in is one
+    # line — host = os.getenv("CORTEX_APPROVAL_HOST", "127.0.0.1") — but it must stay
+    # closed by default and never go back to a bare 0.0.0.0.
+    print("[APPROVAL SERVER] Стартира на http://127.0.0.1:5000 (само локално)")
     print("[APPROVAL SERVER] Спри с Ctrl+C")
-    app.run(host="0.0.0.0", port=5000, debug=False)
+    app.run(host="127.0.0.1", port=5000, debug=False)

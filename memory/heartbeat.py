@@ -91,7 +91,34 @@ def beat(step: str, step_index: Optional[int] = None, cycle_id: Optional[str] = 
     # после мисли мозъкът. FAIL-OPEN: мълчащ или бавен мозък не убива цикъл.
     try:
         from core.brain import attend as _attend
-        _attend(step)
+        _said = _attend(step)
+    except Exception:
+        _said = None
+
+    # ── ВТОРОТО МНЕНИЕ: MeTTa на всяка стъпка (Емил, 15 авг 2026) ───────────
+    # „имаме ли МеТТа и Хиперон връзка на всяка стъпка (като допълнително мнение
+    # и точка за съпоставка)?" — дотогава НЕ, MeTTa стоеше само в графа за
+    # пропускането. Сега стои до мозъка на всяка стъпка, но НЕ като втори мозък:
+    # мозъкът казва какво МИСЛИ, MeTTa казва какво СЛЕДВА ОТ ФАКТИТЕ, и когато
+    # се разминат — разминаването се записва. Мозък, който твърди „предишната
+    # мина добре", докато обещаният ѝ файл не е пипнат, вече не минава невидим.
+    # Цена: ~0.06s за целия цикъл, нула LLM повиквания. FAIL-OPEN.
+    try:
+        from core.metta_check import compare as _mcompare
+        _mcompare(step, (_said or {}).get("prev_step"), _said)
+    except Exception:
+        pass
+
+    # ── ТРЕТИЯТ РОД ЗНАНИЕ: ПРОИЗХОДЪТ (Kimi, 15 авг 2026) ─────────────────
+    # „Третият слой не е оркестратор — той е НОТАРИУС НА АВТОНОМИЯТА: на всяка
+    #  стъпка подпечатва продукта с текущото ниво на доверие. Без тази верига на
+    #  атестация, портата одобрява необратимо действие върху данни с неизвестен
+    #  произход — архитектурна лъжа."
+    # Мозъкът казва какво МИСЛИ, MeTTa какво СЛЕДВА ОТ ФАКТИТЕ, нотариусът — ПОД
+    # КАКЪВ РЕЖИМ е произведено това. Лек, детерминистичен, нула LLM. FAIL-OPEN.
+    try:
+        from core.notary import attest as _attest
+        _attest(step, (_said or {}).get("prev_step"))
     except Exception:
         pass
 
@@ -141,9 +168,57 @@ def age_seconds(now: Optional[datetime] = None) -> Optional[float]:
 
 
 def clear() -> None:
-    """Remove the heartbeat — called when a cycle ends cleanly, so a finished
-    cycle is never mistaken for a hung one."""
+    """Remove the heartbeat.
+
+    WHO MAY CALL THIS — the rule, not a suggestion (Kimi, 16 Aug 2026):
+
+        „Heartbeat се чисти само при KeyboardInterrupt и при CYCLE_FINISHED.
+         При всяко друго прекъсване — включително SIGTERM от watchdog — се оставя."
+
+    Exactly two callers are legitimate:
+      1. the cycle itself, after a CLEAN finish (the record is already sealed);
+      2. the cycle itself, on KeyboardInterrupt — a human stop is a human
+         decision, not a system failure, and a frozen heartbeat left behind by a
+         Ctrl+C would be read next morning as a death at that step.
+
+    Everything else must call retire() instead. A crash, an OOM, a taskkill —
+    in every one of those the heartbeat is the ONLY record of WHERE the cycle
+    was when it ended, and it is what feeds deaths_by_step and the autopsy.
+
+    This is not theory. Until 16 Aug 2026 the supervisor called clear() on every
+    phantom death, which erased the proof that the "dead" cycle was in fact
+    alive and working — and that is why nine of twelve deaths in the ledger read
+    `last_step=unknown`: the heartbeat had been deleted by the previous tick.
+    Deleting evidence to tidy up is how a system goes blind to its own errors.
+    """
     try:
         HEARTBEAT_PATH.unlink(missing_ok=True)
     except Exception:
         pass
+
+
+def retire(reason: str, by: str = "supervisor", **fields) -> bool:
+    """End the heartbeat WITHOUT destroying it. Returns True if one was there.
+
+    The retired heartbeat keeps every field it had — pid, cycle_id, step,
+    step_index, updated_utc — and gains `retired_utc`, `retired_by` and
+    `retired_reason`. So the morning autopsy can still answer "where was it and
+    who ended it", which a deleted file cannot.
+
+    Readers must treat a retired heartbeat as NOT proof of life: it says where
+    the cycle stopped, not that it is running. supervisor.decide() enforces that.
+    """
+    hb = read()
+    if hb is None:
+        return False
+    hb["retired_utc"] = _utc_now()
+    hb["retired_by"] = str(by)[:80]
+    hb["retired_reason"] = str(reason)[:400]
+    for k, v in fields.items():
+        if v is not None:
+            hb[k] = v
+    try:
+        _write_atomic(hb)
+    except Exception:
+        pass
+    return True

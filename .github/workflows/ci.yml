@@ -34,4 +34,12 @@ jobs:
         with: {python-version: "3.12"}
       - run: pip install pytest requests feedparser psutil
       - name: pytest (informational)
-        run: pytest tests/ test/ -x -q || true
+        # 17 Aug 2026: this step reported a green check it had not earned. It named
+        # tests/ — a directory git does not carry, so on a fresh checkout pytest
+        # exited "file or directory not found" — and then `|| true` swallowed that
+        # exit code, as it swallowed every real failure behind it. With
+        # continue-on-error already set, the job could not go red for any reason, and
+        # was reporting success while the suite had 4 failures.
+        # continue-on-error stays: this is still informational, not a gate. But the
+        # step must now show what it found.
+        run: pytest test/ -q

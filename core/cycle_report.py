@@ -207,6 +207,63 @@ def to_markdown(rep: dict) -> str:
     except Exception:
         pass
 
+    # РАЗМИНАВАНИЯТА мозък-срещу-факти (Емил, 15 авг: MeTTa като точка за
+    # съпоставка на всяка стъпка). Ако мозъкът е казал едно, а фактите друго —
+    # човекът трябва да го види, а не да се разчита, че някой ще отвори лог.
+    try:
+        _dv = [json.loads(l) for l in
+               (BASE / "memory" / "divergence_log.jsonl").read_text(encoding="utf-8").splitlines()
+               if l.strip()]
+        _dv = [d for d in _dv if d.get("divergence")
+               and d.get("ts", "") >= str(rep.get("ts", ""))[:10]]
+        if _dv:
+            out += ["## Където мозъкът и фактите не се разбраха", "",
+                    f"{len(_dv)} разминавания този цикъл (MeTTa срещу преценката на мозъка):", ""]
+            for d in _dv[:8]:
+                out.append(f"- `{d.get('step')}` — {d.get('divergence')}")
+            out.append("")
+
+        # ТАБЛИЦАТА СРЕЩУ НАБЛЮДЕНИЕТО (Kimi, 15 авг: „свидетел, чиито предпоставки
+        # си писал ти, не лови твоите грешки"). Тук се съди НЕ мозъкът, а моята
+        # декларация: стъпка, която пише недекларирано, или декларира и не пипа.
+        _tb = [json.loads(l) for l in
+               (BASE / "memory" / "divergence_log.jsonl").read_text(encoding="utf-8").splitlines()
+               if l.strip()]
+        _tb = [d for d in _tb if (d.get("table_blind") or d.get("table_lies"))
+               and d.get("ts", "") >= str(rep.get("ts", ""))[:10]]
+        if _tb:
+            out += ["## Където таблицата се разминава с диска", "",
+                    "Това не съди мозъка, а собственото ми описание на цикъла — "
+                    "сравнено с това, което наистина е пипнато:", ""]
+            for d in _tb[:8]:
+                for key in ("table_blind", "table_lies"):
+                    if d.get(key):
+                        out.append(f"- {d[key]}")
+            out.append("")
+    except Exception:
+        pass
+
+    # ПОКРИТИЕТО НА КОМПОЗИТА (консенсус с Kimi, 15 авг 2026). Дотук отчетът
+    # показваше едно число. Число при 32% незнание не е оценка — затова тук стои
+    # заедно с това КОЛКО от целта изобщо е измерена.
+    try:
+        _g = json.loads((BASE / "memory" / "goal_score_history.json")
+                        .read_text(encoding="utf-8"))
+        _last = _g[-1] if isinstance(_g, list) and _g else _g
+        _cov = (_last or {}).get("coverage")
+        if _cov is not None:
+            _valid = (_last or {}).get("composite_valid")
+            _un = (_last or {}).get("unmeasured_axes") or []
+            out += ["## Колко от целта изобщо е измерена", "",
+                    f"- покритие: **{_cov:.0%}** от теглото стои зад реално число",
+                    f"- композитът {'ВАЛИДЕН' if _valid else 'НЕ Е ВАЛИДЕН — не го чети като оценка'}"]
+            if _un:
+                out.append(f"- без нито едно число: {', '.join(_un[:8])}"
+                           + (f" (+{len(_un) - 8})" if len(_un) > 8 else ""))
+            out.append("")
+    except Exception:
+        pass
+
     # постоянството и съзвездието — прочит, който не гони промяната (15 авг)
     try:
         cn = json.loads((BASE / "memory" / "constancy_latest.json").read_text(encoding="utf-8"))

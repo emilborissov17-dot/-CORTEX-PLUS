@@ -7,6 +7,7 @@ REDESIGN: Генерира patches за решаване на РЕАЛНИ ПР�
 import json, pathlib, sys, os, re, textwrap
 from datetime import datetime, timezone
 from core.groq_backend import call_groq
+from safety.safe_path import UnsafePath, safe_path
 from alignment.civilization_guard import evaluate_proposal_alignment
 from safety.ast_gate import check_code
 from safety.quarantine import quarantine
@@ -17,6 +18,19 @@ except Exception:
     _rec = lambda *a, **k: None
 
 BASE_DIR = pathlib.Path(__file__).resolve().parents[2]
+
+# LIFTED OUT OF _write_python() ON 17 AUG 2026, for the reason supervisor.py already
+# records as a scar: a value defined inside a function body cannot be imported by the
+# test that depends on it, so the test has to RESTATE it — and a restated allowlist
+# silently stops matching the real one the moment somebody edits the function.
+#
+# test/test_safe_path.py asserts that whatever implements safe_path() is NOT reachable
+# from this list. That assertion is only worth anything if it reads the list itself.
+#
+# 'safety/' is deliberately absent and must stay absent: safety/ is in
+# protected_paths.PROTECTED_DIRS, and it is where the guard that bounds this function
+# lives. Adding it here would let the self-modifier rewrite its own containment check.
+WRITE_ALLOWLIST = ["memory/", "agents/core/", "data_providers/", "alignment/", "core/"]
 
 AVAILABLE_MODULES = """
 Налични модули в системата:
@@ -399,8 +413,34 @@ def _inject_base(content: str) -> str:
 
 def _write_python(target_file, content, proposal=None):
     try:
-        allowed = ["memory/", "agents/core/", "data_providers/", "alignment/", "core/"]
-        if not any(target_file.startswith(a) for a in allowed):
+        # ── RESOLVE BEFORE YOU JUDGE (17 Aug 2026) ──────────────────────────
+        # This allowlist used to be applied to the RAW string:
+        #     if not any(target_file.startswith(a) for a in allowed)
+        # `startswith` knows nothing about '..', so the check was bypassable by a
+        # target that satisfies it and then climbs out. Verified against this repo:
+        #     memory/../../../evil.py        -> allowlist PASSED -> C:\...\Desktop\evil.py
+        #     core/../../../../Windows/...   -> allowlist PASSED -> outside the repo
+        # target_file comes from a proposal — from a model — and the value is handed
+        # straight to write_text() below, so this was a live traversal into anywhere
+        # the process could write.
+        #
+        # Order matters and is the whole fix: resolve and confine FIRST, then apply
+        # the prefix policy to the RESOLVED, repo-relative path. Applying a policy to
+        # an unresolved string is what made the policy decorative.
+        # Root is this module's own BASE_DIR, read at CALL time — not a constant
+        # imported from elsewhere. Tests sandbox this function with
+        # monkeypatch.setattr(self_modifier, "BASE_DIR", tmp_path), and a guard pinned
+        # to the real repository would resolve sandboxed targets against the live tree
+        # and write into it. Containment is always relative to the root the caller is
+        # actually operating in.
+        root = pathlib.Path(os.path.realpath(BASE_DIR))
+        try:
+            target = safe_path(target_file, root)
+        except UnsafePath as e:
+            return {"success": False, "reason": f"Небезопасен път: {e}"}
+
+        rel = target.relative_to(root).as_posix()
+        if not any(rel.startswith(a) for a in WRITE_ALLOWLIST):
             return {"success": False, "reason": f"Не е позволено: {target_file}"}
 
         is_safe, reason = _check_forbidden_patterns(content)
@@ -434,7 +474,8 @@ def _write_python(target_file, content, proposal=None):
             return {"success": False, "reason": f"AST gate: {gate_reason}"}
         print(f"  [AST_GATE] ✅ Код разрешен")
 
-        target = BASE_DIR / target_file
+        # `target` was resolved and confined at the top of this function; do NOT
+        # rebuild it from the raw string here.
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_text(content, encoding="utf-8")
         return {"success": True, "action": f"Код написан: {target_file}", "code_written": True}

@@ -1,0 +1,11 @@
+{
+  "_README": "ЧОВЕШКИ ФАЙЛ. Системата го чете, не го пише. Тук се решава КОЛКО лъжа се търпи — това е човешко решение, а прилагането е на системата (консенсус с Kimi, 15 авг 2026).",
+  "sigma": 3.0,
+  "min_history": 8,
+  "range_slack": 0.25,
+  "min_slack_of_value": 0.5,
+  "distrust_to_quarantine": 3,
+  "distrust_window_days": 30,
+  "correlation_min_pairs": 10,
+  "correlation_break_below": 0.2
+}

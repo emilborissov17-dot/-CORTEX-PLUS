@@ -323,27 +323,72 @@ def _apply_goal(spec: dict, chat_id):
     return {"ok": True, "note": "accepted into improvement_proposals.json"}
 
 
+# ── СЪСТОЯНИЕТО НА ЧОВЕШКИЯ КАНАЛ (консенсус с Kimi, стъпка 4, 15 авг 2026) ──
+# Той: „Мълчанието не значи разрешено — но трябва да различаваш „НЯМА НОВИ
+# СЪОБЩЕНИЯ" (норма) от „КАНАЛЪТ Е МЪРТЪВ" (отказ). Разграничението е в HTTP
+# статуса/таймаута, не в празния отговор. При мъртъв канал: необратимите стъпки
+# спират като при липса на свидетел — freeze, не спиране на цикъла."
+# Дотогава двете бяха неразличими: всяка грешка се преглъщаше с return 0, тоест
+# ЗАБРАНА, изпратена снощи, можеше да се загуби мълчаливо и цикълът продължаваше
+# неограничен. Сега състоянието се записва и необратимите стъпки го четат.
+#
+# ТРЕТО СЪСТОЯНИЕ, което добавям и обявявам: not_configured. Канал, който никога
+# не е бил настроен, не е ОТКАЗАЛ — човекът просто не го ползва. Да замразим
+# необратимото заради него би значело системата да си върже ръцете завинаги заради
+# функция, която никой не е поискал. Замразява само `dead`.
+CHANNEL_STATE = REPO / "memory" / "human_channel_state.json"
+
+
+def _mark_channel(state: str, why: str) -> None:
+    try:
+        CHANNEL_STATE.parent.mkdir(parents=True, exist_ok=True)
+        CHANNEL_STATE.write_text(json.dumps(
+            {"ts": datetime.now(timezone.utc).isoformat(), "state": state, "why": why},
+            ensure_ascii=False, indent=2), encoding="utf-8")
+    except Exception:
+        pass
+
+
+def channel_alive() -> tuple:
+    """(може ли да се действа необратимо, защо). Мъртъв канал = не."""
+    try:
+        d = json.loads(CHANNEL_STATE.read_text(encoding="utf-8"))
+    except Exception:
+        return True, "няма запис за канала — не се третира като отказ"
+    st = str(d.get("state", ""))
+    return st != "dead", f"{st}: {d.get('why', '')}"
+
+
 def run():
     cfg = _load(NOTIFY_CFG, {})
     if cfg.get("channel") != "telegram":
         print("[approve] no telegram config — nothing to read")
+        _mark_channel("not_configured", "channel != telegram")
         return 0
     token, chat_id = cfg.get("token"), str(cfg.get("chat_id") or "")
     if not token or not chat_id:
         print("[approve] telegram config incomplete")
+        _mark_channel("not_configured", "token/chat_id missing")
         return 0
 
     offset = _load(OFFSET, {}).get("offset", 0)
     try:
         data = _tg(token, "getUpdates", offset=offset + 1, timeout=0)
     except Exception as e:
-        print(f"[approve] getUpdates failed: {type(e).__name__}: {e}")
-        return 0  # fail-open
+        # HTTP/таймаут отказ = МЪРТЪВ канал, не „няма съобщения". Цикълът върви,
+        # но необратимите стъпки замръзват (виж channel_alive).
+        print(f"[approve] getUpdates FAILED -> channel treated as DEAD: "
+              f"{type(e).__name__}: {e}")
+        _mark_channel("dead", f"{type(e).__name__}: {e}")
+        return 0
     if not data.get("ok"):
-        print(f"[approve] telegram error: {data.get('description')}")
+        print(f"[approve] telegram error -> channel DEAD: {data.get('description')}")
+        _mark_channel("dead", f"telegram ok=false: {data.get('description')}")
         return 0
 
+    # 200 OK с празно тяло Е валидно състояние — човекът просто не е писал.
     updates = data.get("result", [])
+    _mark_channel("alive", f"200 OK, {len(updates)} нови съобщения")
     max_id = offset
     applied = 0
     for u in updates:

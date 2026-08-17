@@ -172,12 +172,24 @@ _WB_WORLD = "https://api.worldbank.org/v2/country/WLD/indicator"
 _WB_ALL   = "https://api.worldbank.org/v2/country/all/indicator"
 
 
+# ── ПРОИЗХОДЪТ НА ЧИСЛОТО (15 авг 2026) ────────────────────────────────────
+# Kimi: „фетишизираш твърдите числа като ground truth, а те са просто API отговори
+# СЪС ЗАКЪСНЕНИЕ и без контекст... всяко остойностяване трябва да носи доверие."
+# Проверих какво прави този код и той беше по-лош от упрека: mrv=5 иска ПОСЛЕДНИТЕ
+# ПЕТ ГОДИНИ, взима първата непразна стойност и ИЗХВЪРЛЯ годината. Тоест
+# продължителността на живота и грамотността влизаха в днешния композит без никой
+# да знае от коя година са — API-то го казва, кодът го хвърляше.
+# Сега годината се пази. Числото си остава число; годината му върви до него.
+_WB_YEARS: dict = {}          # индикатор -> годината, от която е върнатата стойност
+
+
 def _wb_world(ind: str, mrv: int = 5) -> Optional[float]:
     data = _get(f"{_WB_WORLD}/{ind}?format=json&mrv={mrv}&per_page={mrv}")
     if not data or not isinstance(data, list) or len(data) < 2:
         return None
     for item in (data[1] or []):
         if item.get("value") is not None:
+            _WB_YEARS[ind] = item.get("date")      # НЕ се изхвърля повече
             return round(float(item["value"]), 4)
     return None
 
@@ -191,8 +203,9 @@ def _wb_global_mean(ind: str) -> Optional[float]:
 
 
 def fetch_world_bank() -> dict:
+    _WB_YEARS.clear()
     pop = _wb_world("SP.POP.TOTL")
-    return {
+    out = {
         "population_billions":       round(pop / 1e9, 3) if pop else None,
         "poverty_190_pct":           _wb_world("SI.POV.DDAY"),
         "life_expectancy":           _wb_world("SP.DYN.LE00.IN"),
@@ -205,6 +218,20 @@ def fetch_world_bank() -> dict:
         "threatened_mammals_no":     _wb_world("EN.MAM.THRD.NO"),
         "co2_emissions_kt":          _wb_world("EN.ATM.CO2E.KT"),
     }
+    # Годината на ВСЯКО число, по показател — това, което дотук се губеше.
+    out["_observed_years"] = {
+        "population_billions":     _WB_YEARS.get("SP.POP.TOTL"),
+        "poverty_190_pct":         _WB_YEARS.get("SI.POV.DDAY"),
+        "life_expectancy":         _WB_YEARS.get("SP.DYN.LE00.IN"),
+        "infant_mortality_per1k":  _WB_YEARS.get("SP.DYN.IMRT.IN"),
+        "forest_area_pct":         _WB_YEARS.get("AG.LND.FRST.ZS"),
+        "renewable_elec_pct":      _WB_YEARS.get("EG.ELC.RNEW.ZS"),
+        "safe_water_access_pct":   _WB_YEARS.get("SH.H2O.SMDW.ZS"),
+        "literacy_rate_adult_pct": _WB_YEARS.get("SE.ADT.LITR.ZS"),
+        "threatened_mammals_no":   _WB_YEARS.get("EN.MAM.THRD.NO"),
+        "co2_emissions_kt":        _WB_YEARS.get("EN.ATM.CO2E.KT"),
+    }
+    return out
 
 
 # ---------------------------------------------------------------------------

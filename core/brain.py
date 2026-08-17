@@ -304,10 +304,19 @@ def think(role: str, question: str, evidence: str = "", schema: dict | None = No
 def _state_for_briefing() -> str:
     """Каквото системата знае за себе си в момента — суровo, без мое резюме."""
     bits = []
+    # 15 авг 2026, стъпка 4. Kimi защити преместването на плана след одобренията с
+    # довода „human_approvals преди плана е КОНСТРЕЙНТ, не опция". Проверих дали
+    # това е вярно в кода, вместо да го приема: НЕ беше. Планът четеше
+    # pending_approvals.json (какво ЧАКА решение), но не и approvals_ledger.jsonl
+    # (какво човекът е РЕШИЛ). Тоест новият ред беше наполовина козметичен — думата
+    # на човека стигаше до системата, но не и до плана. Същото за тялото: четеше се
+    # хомеостазата, но не и адаптивните директиви, които body_scan току-що е издал.
     for rel, cap in (("memory/deductions_latest.json", 1800),
                      ("memory/homeostasis_latest.json", 600),
+                     ("memory/adaptive_directives.json", 400),
                      ("memory/goal_score_history.json", 700),
                      ("memory/diagnosis_latest.json", 700),
+                     ("memory/approvals_ledger.jsonl", 700),
                      ("memory/pending_approvals.json", 500)):
         try:
             bits.append(f"--- {rel} ---\n" +
@@ -338,7 +347,15 @@ def brief_cycle() -> dict | None:
         kind="cycle_plan")
     if not d:
         return None
-    doc = {"ts": _now(), **{k: v for k, v in d.items()}}
+    # cycle_id се записва В плана, за да може current_plan() да различи днешния
+    # от вчерашния (стъпка 2, консенсус с Kimi, 15 авг).
+    _cid = None
+    try:
+        _cid = json.loads((BASE / "memory" / "heartbeat.json").read_text(
+            encoding="utf-8")).get("cycle_id")
+    except Exception:
+        pass
+    doc = {"ts": _now(), "cycle_id": _cid, **{k: v for k, v in d.items()}}
     try:
         PLAN.write_text(json.dumps(doc, ensure_ascii=False, indent=2), encoding="utf-8")
     except Exception:
@@ -347,11 +364,26 @@ def brief_cycle() -> dict | None:
 
 
 def current_plan() -> dict:
-    """Всяка стъпка може да пита: 'какво иска мозъкът от мен днес?'"""
+    """Всяка стъпка може да пита: 'какво иска мозъкът от мен днес?'
+
+    15 авг 2026, следствие от консенсуса с Kimi по стъпка 2: планът вече се пише
+    СЛЕД тялото, значи първите няколко стъпки (boot, body_scan, одобренията) текат,
+    докато днешен план още няма. Тогава на диска стои ВЧЕРАШНИЯТ. Да го върнем като
+    „днешния" би било тихо лъжене на всяка ранна стъпка — затова план от друг цикъл
+    се маркира като стар и не се представя за днешен."""
     try:
-        return json.loads(PLAN.read_text(encoding="utf-8"))
+        d = json.loads(PLAN.read_text(encoding="utf-8"))
     except Exception:
         return {}
+    try:
+        hb = json.loads((BASE / "memory" / "heartbeat.json").read_text(encoding="utf-8"))
+        cid = hb.get("cycle_id")
+        if cid and d.get("cycle_id") and str(d["cycle_id"]) != str(cid):
+            return {"_stale": True, "_written_for": d.get("cycle_id"),
+                    "_note": "план от предишен цикъл — днешният още не е писан"}
+    except Exception:
+        pass
+    return d
 
 
 def debrief_cycle(cycle_log_tail: str = "") -> dict | None:

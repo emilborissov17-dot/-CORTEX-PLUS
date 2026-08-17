@@ -110,15 +110,31 @@ def forecast_baselines(series: list[float], current: float) -> dict:
     }
 
 
-def best_baseline(kind: str = GOAL_KIND, min_n: int = 3) -> dict:
+def best_baseline(kind: str = GOAL_KIND, min_n: int = 3,
+                  fingerprint: str | None = None) -> dict:
     """Which forecast baseline has the lowest recent error? Returns
-    {model, mae, n, ranking}. Falls back to persistence until enough evidence."""
+    {model, mae, n, ranking}. Falls back to persistence until enough evidence.
+
+    ОТ 15 АВГУСТ 2026: доказателствата се филтрират по отпечатъка на композита.
+    Отказът да се СЪДЯТ несъпоставими двойки нямаше да свърши работа сам: вече
+    съдените от миналото си остават в дневника, а тук се смята средната грешка
+    върху тях. Ако не се филтрират, изборът на модел продължава да се крепи на
+    свят, който вече не съществува. Kimi: „Сравнение само при идентичен отпечатък
+    — иначе сравняваш различни светове."
+    Цената е призната честно: в деня след структурна промяна доказателствата
+    падат на нула и изборът се връща на persistence. Това не е загуба на знание —
+    това е признаване, че знанието е било за друго нещо."""
     records = pl.read_all()
-    model_of = {p.get("hash"): p.get("model") for p in records if p.get("event") == pl.PREDICTION}
+    preds = {p.get("hash"): p for p in records if p.get("event") == pl.PREDICTION}
     outcomes = [e for e in records if e.get("event") == pl.OUTCOME and e.get("target_kind") == kind]
     agg: dict[str, list] = {}
+    dropped = 0
     for o in outcomes:
-        m = model_of.get(o.get("ref_hash"))   # OUTCOME carries no model field -> join to its sealed prediction
+        p_rec = preds.get(o.get("ref_hash")) or {}   # OUTCOME carries no model -> join to its sealed prediction
+        m = p_rec.get("model")
+        if fingerprint and p_rec.get("config_fingerprint") != fingerprint:
+            dropped += 1
+            continue
         if m and o.get("learner_err") is not None:
             agg.setdefault(m, []).append(o["learner_err"])
     ranking = sorted(((round(sum(v) / len(v), 6), m, len(v)) for m, v in agg.items()))
@@ -126,22 +142,61 @@ def best_baseline(kind: str = GOAL_KIND, min_n: int = 3) -> dict:
     if not ranking or total_n < min_n:
         return {"model": "persistence", "mae": None, "n": total_n,
                 "ranking": [{"model": m, "mae": e, "n": n} for e, m, n in ranking],
-                "reason": "insufficient sealed evidence -> default to persistence"}
+                "evidence_dropped_other_world": dropped,
+                "reason": ("insufficient sealed evidence UNDER THE CURRENT "
+                           f"fingerprint ({dropped} outcome(s) belong to an earlier "
+                           "definition of the composite) -> default to persistence"
+                           if dropped else
+                           "insufficient sealed evidence -> default to persistence")}
     mae, model, n = ranking[0]
     return {"model": model, "mae": mae, "n": n,
+            "evidence_dropped_other_world": dropped,
             "ranking": [{"model": m, "mae": e, "n": nn} for e, m, nn in ranking]}
 
 
 # ── world + body sensors ──────────────────────────────────────────────────────
 
+# ── СРАВНИМОСТТА ПРЕЗ ВРЕМЕТО (Kimi, 15 август 2026) ─────────────────────────
+# Този модул ЗАПЕЧАТВА предсказание за следващия композит и после се самооценява
+# срещу изпълнението — а по грешката ИЗБИРА на кой прогнозен модел да вярва. Значи
+# всяка несъпоставима двойка не просто дава грешно число, а разваля избора.
+#   Kimi: „Отказ. not_comparable — предсказанието чака до узряване при съвпадащ
+#          отпечатък. MAE от несъпоставими двойки е отрова за избора на модел."
+#   И за втория филтър: „отказ при abs(coverage_pred − coverage_mature) > 15%
+#          (или rolling std, ако имаш история). Предсказание за пълен композит,
+#          узряло в беден ден, е предсказание за друга вселена — грешката не е
+#          на модела."
+#   И: „Запечатвай и двете покрития до всяко предсказание — те са metadata, не
+#          тежест, и обясняват грешката без да я фалшифицират."
+#
+# Прагът НЕ живее тук: чете се от човешкия config/source_trust_rules.json, при
+# всички останали допуски. 0.15 е само резервата на Kimi, ако файлът мълчи.
+COVERAGE_DRIFT_FALLBACK = 0.15
+
+
+def _coverage_drift_max() -> float:
+    try:
+        from core import source_trust
+        return float(source_trust.rules().get("coverage_drift_max",
+                                              COVERAGE_DRIFT_FALLBACK))
+    except Exception:
+        return COVERAGE_DRIFT_FALLBACK
+
+
 def _live_goal():
+    """Композитът + пакетът, без който не значи нищо."""
     from goal_score_calculator import compute_goal_score, load_targets
     res = compute_goal_score()
     targets = load_targets()
     weights = {ax: float(cfg.get("weight", 1))
                for dom, axes in targets.items() if not dom.startswith("_")
                for ax, cfg in axes.items()}
-    return res["composite_score"], res["axis_scores"], weights
+    ctx = {"config_fingerprint": res.get("config_fingerprint"),
+           "coverage_of_goal": res.get("coverage_of_goal"),
+           "coverage_of_measurable": res.get("coverage_of_measurable"),
+           "sensors_ok": res.get("sensors_ok"),
+           "goal_covered": res.get("goal_covered")}
+    return res["composite_score"], res["axis_scores"], weights, ctx
 
 
 def _composite_series() -> list[float]:
@@ -201,35 +256,87 @@ def _body_state() -> dict:
 
 # ── the atomic pieces of one tick ──────────────────────────────────────────────
 
-def _score_matured() -> int:
+def _comparable(p: dict, now: dict) -> tuple:
+    """Може ли ТОВА предсказание да се съди срещу ДНЕШНИЯ свят?
+
+    Две причини за отказ, и двете са за това, че междувременно се е сменило НЕ
+    състоянието на света, а онова, което мерим:
+      * различен config_fingerprint — композитът е средно от друго множество оси;
+      * покритието е избягало — предсказание за пълен композит, узряло в беден ден.
+    Отказът НЕ изхвърля предсказанието: то остава несъдено и чака ден, в който
+    сравнението е честно."""
+    fp_then, fp_now = p.get("config_fingerprint"), now.get("config_fingerprint")
+    if fp_then is None:
+        return False, ("sealed_before_fingerprints: запечатано преди композитът да "
+                       "носи отпечатък — срещу какъв свят е било казано, не се знае")
+    if fp_now and fp_then != fp_now:
+        return False, (f"config_changed: {fp_then} -> {fp_now}; композитът вече е "
+                       f"средно от друго множество оси")
+    c_then = p.get("coverage_of_measurable")
+    c_now = now.get("coverage_of_measurable")
+    if isinstance(c_then, (int, float)) and isinstance(c_now, (int, float)):
+        drift = abs(float(c_now) - float(c_then))
+        lim = _coverage_drift_max()
+        if drift > lim:
+            return False, (f"coverage_drift: {c_then:.0%} -> {c_now:.0%} "
+                           f"(разлика {drift:.0%} > {lim:.0%}) — беден ден, "
+                           f"грешката не е на модела")
+    return True, ""
+
+
+def _score_matured(now: dict | None = None) -> dict:
+    """Оценява САМО съпоставимите. Връща {scored, deferred, reasons}."""
+    now = now or {}
     series = _composite_series()
     records = pl.read_all()
     scored = {r.get("ref_hash") for r in records if r.get("event") == pl.OUTCOME}
-    n = 0
+    noted = {r.get("target_id") for r in records if r.get("event") == pl.PENDING}
+    n, deferred, reasons = 0, 0, {}
     for p in records:
         if p.get("event") != pl.PREDICTION or p.get("hash") in scored:
             continue
         seen = int(p.get("seen", 0))
-        if p.get("target_kind") == GOAL_KIND and len(series) > seen:
-            pl.score_prediction(p["hash"], round(series[seen], 6)); n += 1   # value right AFTER the seal (one-step-ahead)
-        elif p.get("target_kind") == AXIS_KIND:
-            aser = _axis_series(p.get("axis", ""))
-            if len(aser) > seen:
-                pl.score_prediction(p["hash"], round(aser[seen], 6)); n += 1
-    return n
+        kind = p.get("target_kind")
+        # има ли изобщо узряла стойност
+        if kind == GOAL_KIND:
+            ser = series
+        elif kind == AXIS_KIND:
+            ser = _axis_series(p.get("axis", ""))
+        else:
+            continue
+        if len(ser) <= seen:
+            continue                       # още не е узряло — нормално чакане
+        ok, why = _comparable(p, now)
+        if not ok:
+            deferred += 1
+            reasons[why.split(":")[0]] = reasons.get(why.split(":")[0], 0) + 1
+            key = f"not_comparable::{p.get('hash')}"
+            if key not in noted:           # веднъж, не всяка нощ
+                pl.note_pending(key, why, target_kind=kind,
+                                sealed_fingerprint=p.get("config_fingerprint"),
+                                current_fingerprint=now.get("config_fingerprint"))
+                noted.add(key)
+            continue
+        pl.score_prediction(p["hash"], round(ser[seen], 6)); n += 1
+    return {"scored": n, "deferred": deferred, "reasons": reasons}
 
 
-def _seal_next(composite, axis_scores) -> int:
+def _seal_next(composite, axis_scores, ctx: dict | None = None) -> int:
     _log_goal_vector(composite, axis_scores)
     series = _composite_series()
     models = forecast_baselines(series, composite)
     base = models["persistence"]
+    ctx = ctx or {}
     sealed = 0
     for name, pred in models.items():             # every baseline, sealed
         pl.seal_prediction(GOAL_KIND, f"composite::next::{name}", "next_cycle_goal_composite",
                            learner_value=pred, baseline_value=base,
                            basis=f"forecast={name}; control=persistence; scale=0-1",
-                           model=name, current=round(composite, 6), seen=len(series))
+                           model=name, current=round(composite, 6), seen=len(series),
+                           # ЗАПЕЧАТАНИЯТ КОНТЕКСТ: срещу кой свят е било казано.
+                           config_fingerprint=ctx.get("config_fingerprint"),
+                           coverage_of_goal=ctx.get("coverage_of_goal"),
+                           coverage_of_measurable=ctx.get("coverage_of_measurable"))
         sealed += 1
     for ax, sc in axis_scores.items():            # per-axis (trend vs persistence)
         aser = _axis_series(ax)
@@ -237,7 +344,10 @@ def _seal_next(composite, axis_scores) -> int:
         pl.seal_prediction(AXIS_KIND, f"{ax}::next", "next_cycle_goal_axis",
                            learner_value=am["trend"], baseline_value=am["persistence"],
                            basis="forecast=trend; control=persistence; scale=0-1",
-                           model="trend", axis=ax, current=round(sc, 6), seen=len(aser))
+                           model="trend", axis=ax, current=round(sc, 6), seen=len(aser),
+                           config_fingerprint=ctx.get("config_fingerprint"),
+                           coverage_of_goal=ctx.get("coverage_of_goal"),
+                           coverage_of_measurable=ctx.get("coverage_of_measurable"))
         sealed += 1
     return sealed
 
@@ -567,16 +677,24 @@ def self_narrative(entry: dict, reaction: dict) -> dict:
 
 def cmd_self() -> dict:
     """One autonomous pass the scheduler runs each cycle. No external stepping."""
-    composite, axis_scores, weights = _live_goal()
+    composite, axis_scores, weights, ctx = _live_goal()
 
-    graded = _score_matured()               # 1. grade my own last predictions vs reality
-    best = best_baseline()                # 2. pick the best-scoring forecast baseline (selection, NOT learning)
+    grading = _score_matured(ctx)         # 1. grade ONLY what is comparable to today
+    graded = grading["scored"]
+    best = best_baseline(fingerprint=ctx.get("config_fingerprint"))   # 2. pick the best baseline — from THIS world's evidence only
     reaction = _react(composite, axis_scores, weights, best)   # 3. react toward goal, body-modulated
-    sealed = _seal_next(composite, axis_scores)                # 4. seal my next self-prediction
+    sealed = _seal_next(composite, axis_scores, ctx)           # 4. seal my next self-prediction
 
     board = pl.scoreboard()
-    entry = {"ts": _utc_now(), "graded": graded, "trusted_baseline": best["model"],
+    entry = {"ts": _utc_now(), "graded": graded,
+             "deferred_not_comparable": grading["deferred"],
+             "deferral_reasons": grading["reasons"],
+             "config_fingerprint": ctx.get("config_fingerprint"),
+             "coverage_of_goal": ctx.get("coverage_of_goal"),
+             "coverage_of_measurable": ctx.get("coverage_of_measurable"),
+             "trusted_baseline": best["model"],
              "baseline_mae": best.get("mae"), "baseline_ranking": best.get("ranking"),
+             "evidence_dropped_other_world": best.get("evidence_dropped_other_world"),
              "mode": reaction["mode"], "priority_axis": reaction["priority_axis"],
              "composite": reaction["composite"], "expected_next_composite": reaction["expected_next_composite"],
              "body_distress": reaction["body_sensor"]["distress"],
@@ -593,7 +711,14 @@ def cmd_self() -> dict:
 
 def cmd_status():
     board = pl.scoreboard()
-    board["trusted_baseline"] = best_baseline()
+    # и тук доказателствата се четат за ТОЗИ свят, не за всички минали
+    try:
+        from goal_score_calculator import config_fingerprint, load_targets
+        _fp = config_fingerprint(load_targets())
+    except Exception:
+        _fp = None
+    board["config_fingerprint"] = _fp
+    board["trusted_baseline"] = best_baseline(fingerprint=_fp)
     print(json.dumps(board, ensure_ascii=False, indent=2))
 
 
