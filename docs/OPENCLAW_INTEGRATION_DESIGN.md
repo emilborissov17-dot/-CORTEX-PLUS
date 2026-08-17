@@ -1,9 +1,35 @@
 # OPENCLAW INTEGRATION DESIGN
 ## CORTEX++ → External OpenClaw — Controlled Autonomy
 
-**Version:** 0.1 (design only, no code written yet)  
-**Status:** For review by Ivan/Emil before implementation  
-**Date:** 2026-06-29
+**Version:** 0.1 — design; **Phase 0 of it is now code**  
+**Status:** For review by Ivan/Emil before implementation of Phase 1+  
+**Date:** 2026-06-29 (design) · corrected 2026-08-17
+
+> **CORRECTION, 2026-08-17.** This header said *"design only, no code written yet"*
+> for seven weeks after that stopped being true. `agents/openclaw_bridge.py` was
+> committed on 2026-07-18 as `565cefa` — *"feat: OpenClaw Phase 0 — policy gate,
+> audit-first bridge skeleton, dry-run default"* — 176 lines, 141 of them code, with
+> `test/test_openclaw_bridge.py` alongside it.
+>
+> **What Phase 0 IS:**
+> - `classify(action_type)` — a pure allowlist lookup against
+>   `config/openclaw_action_policy.json`. No LLM, no fuzzy matching. `always_blocked`
+>   is checked first. **Fail-closed:** a missing or corrupt policy file classifies
+>   every action as `level_3` — never auto-blocked, never auto-allowed.
+> - `submit_action()` — writes the audit record to `memory/openclaw_audit_log.json`
+>   **before** any branch runs (blocked / level_3 queue / dry-run / execute).
+> - `dry_run=True` by default.
+>
+> **What Phase 0 IS NOT — and this half matters more:**
+> - **It cannot act.** `_execute()` raises `NotImplementedError` unconditionally.
+>   There is no gateway call, no HTTP client, no credential. Nothing reaches OpenClaw.
+> - **It is not wired into the cycle.** `submit_action()` has no caller anywhere in
+>   the repo except `test/test_openclaw_bridge.py`. `fast_cycle_runner.py` never
+>   invokes it. Nothing in a nightly run touches this module.
+>
+> So the honest description is: **a tested policy gate and an audit skeleton, with no
+> execution capability and no caller.** Not "no code", and not "a working bridge"
+> either. The distance from here to acting in the world is the whole of Phase 1.
 
 ---
 

@@ -1,7 +1,16 @@
-# DREAMS — nightly memory consolidation (spec only — **not implemented**)
+# DREAMS — nightly memory consolidation (**implemented**, manual-run only)
 
-> **Status: SPEC. No code exists in this directory, and none is written until PULSE
-> passes its anomaly test (C3).**
+> **Status: CODE EXISTS. Corrected 2026-08-17.**
+>
+> This header said *"spec only — not implemented"* and *"No code exists in this
+> directory"*. Both were false: `dream.py`, `check.py` and `test_dream.py` are all
+> tracked in this directory. PULSE passed C3 and the gate below was satisfied; the
+> README was never updated to say so.
+>
+> What is true, and is the part worth keeping: DREAMS is **manual-run only**. It is
+> not called by `fast_cycle_runner.py` and no scheduled task fires it, so a nightly
+> cycle does not run it. "Implemented" here means the code exists and has a test —
+> not that it runs on its own.
 >
 > Rung 2 of the local-brain ladder (`docs/LOCAL_BRAIN_LADDER.md`). Each rung runs only
 > if the previous one passes. Building DREAMS on a PULSE that failed C3 would mean
