@@ -96,3 +96,31 @@ memory/pulse_rate_baseline.json
 *.key
 memory/pulse_signal.json
 memory/watchdog_runs.log
+
+# Атестационната верига (core/notary.py) — печатите за произход на всеки продукт.
+# Локален запис за КОНКРЕТНАТА машина и конкретните цикли, не код. Скъсана верига
+# се лови от супервайзора при старт, не от git.
+attestation/
+
+# ── МИСЪЛТА НА СИСТЕМАТА ЗА САМАТА СЕБЕ СИ (17 авг 2026) ──────────────────────
+# Тези файлове НЕ бяха в git и НЕ бяха в .gitignore. Че никога не са попадали в
+# историята беше въпрос на това никой да не е написал `git add memory/` — не на
+# правило. Под memory/ стоят 1128 неследени файла, които никое правило не покрива;
+# един небрежен `git add memory/` ги качва всичките в ПУБЛИЧНО хранилище, завинаги.
+#
+# Съдържанието им не е тайна и не е ключ — проверено. То е нещо друго: разказът на
+# системата за самата себе си, присъдите ѝ по стъпки, планът ѝ за цикъла. Това е
+# локален запис за КОНКРЕТНАТА машина, като attestation/ по-горе, и не е код.
+#
+# ИЗРИЧНО ИЗБРОЕНИ, БЕЗ ШАБЛОН. `memory/self_*` щеше да хване
+# memory/self_profile.json и memory/self_awareness.json, които СА следени — а
+# правило, което мълчаливо се разминава със състоянието на git, е по-лошо от
+# липсващо правило.
+memory/self_narrative_latest.txt
+memory/self_reflection_log.jsonl
+memory/self_directed_priority.json
+memory/brain_journal.jsonl
+memory/brain_step_log.jsonl
+memory/brain_stance.json
+memory/brain_cycle_plan.json
+memory/local_brain_test.json
