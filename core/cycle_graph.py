@@ -88,7 +88,28 @@ def scan_requires() -> dict:
                 except Exception:
                     pass
         out.setdefault(name, set()).update(files)
-    return {k: sorted(v) for k, v in out.items()}
+    derived = {k: sorted(v) for k, v in out.items()}
+
+    # ── WRITTEN BEATS INFERRED (18 авг 2026) ────────────────────────────────
+    # Скенерът чете буквални пътища; стъпка, която строи пътя си по време на
+    # изпълнение, се извежда на [] — а [] значи НЕИЗВЕСТНО и портата отказва
+    # заради незнание, не заради дефект. config/step_inputs.json позволява на
+    # ЧОВЕК да напише договора, който скенерът не може да изведе.
+    #
+    # ЗАМЕСТВА, не обединява: щом някой е написал какво чете стъпката, неговият
+    # списък е договорът. Обединяването щеше да остави фантомите на скенера вътре
+    # (виж test/test_notary_gate.py: седем входа на execute_patches, събрани от
+    # ЕДИН ОТРИЦАТЕЛЕН списък).
+    #
+    # Асиметрията е цялата гаранция: файлът говори САМО за стъпките, които
+    # назовава. Стъпка, която не е спомената, остава точно както е днес.
+    try:
+        from core.declared_inputs import all_declared
+        for step, files in all_declared().items():
+            derived[step] = list(files)
+    except Exception:
+        pass                                  # липсва/счупен -> само скенерът
+    return derived
 
 
 def _hollow(p: Path) -> bool:

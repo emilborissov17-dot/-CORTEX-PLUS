@@ -223,12 +223,47 @@ def _thought_state() -> tuple:
         return MINIMAL, "състоянието на мисленето е непроверено"
 
 
-def _age_state(inputs: list) -> tuple:
+def _inputs_for(step: str) -> tuple:
+    """(входовете на стъпката, ОТКЪДЕ идва списъкът).
+
+    Два източника, в този ред на предимство (18 авг 2026):
+      1. config/step_inputs.json — НАПИСАН от човек за стъпките, които назовава.
+      2. статичният скенер (core/cycle_graph.scan_requires през metta_check._REQ).
+
+    Източникът се връща заедно със списъка, за да може портата да КАЖЕ на какво
+    се е доверила. Ниво без произход на решението е число; с произход е запис.
+
+    Стъпка, за която никой не е писал, минава по точка 2 непроменена — включително
+    когато скенерът мълчи и списъкът е празен, което си остава НЕИЗВЕСТНО.
+    """
+    try:
+        from core.declared_inputs import for_step, SOURCE_WRITTEN
+        written = for_step(step)
+        if written is not None:
+            return list(written), SOURCE_WRITTEN
+    except Exception:
+        pass                                   # няма файл -> както преди файла
+    try:
+        from core.declared_inputs import SOURCE_SCANNER as _src
+    except Exception:
+        _src = "the static scanner"
+    try:
+        from core.metta_check import _REQ
+        return list(_REQ.get(step, [])), _src
+    except Exception:
+        return [], _src
+
+
+def _age_state(inputs: list, source: str | None = None) -> tuple:
     """Колко стар е НАЙ-СТАРИЯТ вход, който тази стъпка чете.
 
     Давността е факт за произхода, не преценка: число от миналата година, влязло
     в днешния композит, е произведено при по-малко доверие, независимо колко е
-    красив източникът."""
+    красив източникът.
+
+    `source` е ОТКЪДЕ е списъкът (виж _inputs_for). Влиза в обяснението, а не в
+    оценката: кой е обявил входовете не прави входовете по-пресни."""
+    tail = f" (входовете идват от {source})" if source else ""
     if not inputs:
         # ── FAIL CLOSED (17 авг 2026) ───────────────────────────────────────
         # Тук стоеше `return FULL, "стъпката не чете входове"` — празният списък
@@ -240,7 +275,7 @@ def _age_state(inputs: list) -> tuple:
         # максимално доказателство.
         # Това е и правилото, което core/cycle_graph.py обявява в своя докстринг:
         # „неизвестното НЕ е пропускаемо".
-        return UNKNOWN, "no declared inputs - provenance unknown"
+        return UNKNOWN, "no declared inputs - provenance unknown" + tail
     now = datetime.now(timezone.utc).timestamp()
     oldest, oldest_name = None, None
     for rel in inputs:
@@ -249,16 +284,16 @@ def _age_state(inputs: list) -> tuple:
             m = (max((c.stat().st_mtime for c in p.rglob("*") if c.is_file()), default=0)
                  if p.is_dir() else p.stat().st_mtime)
         except Exception:
-            return UNKNOWN, f"вход липсва: {rel}"
+            return UNKNOWN, f"вход липсва: {rel}" + tail
         if m and (oldest is None or m < oldest):
             oldest, oldest_name = m, rel
     if oldest is None:
-        return UNKNOWN, "възрастта на входовете е неизвестна"
+        return UNKNOWN, "възрастта на входовете е неизвестна" + tail
     days = (now - oldest) / 86400.0
     d2, d30, d365 = _STALE_DAYS
     lvl = FULL if days <= d2 else REDUCED if days <= d30 else \
         MINIMAL if days <= d365 else UNKNOWN
-    return lvl, f"най-стар вход {oldest_name}: {days:.1f} дни"
+    return lvl, f"най-стар вход {oldest_name}: {days:.1f} дни" + tail
 
 
 def _promise_state(prev_step: str | None, step: str | None = None) -> tuple:
@@ -300,18 +335,15 @@ def _promise_state(prev_step: str | None, step: str | None = None) -> tuple:
 
 
 def vector(step: str, prev_step: str | None = PREV_UNKNOWN,
-           inputs: list | None = None) -> dict:
+           inputs: list | None = None, inputs_source: str | None = None) -> dict:
     """Петте състояния — записът, който пази ЗАЩО."""
     if inputs is None:
-        try:
-            from core.metta_check import _REQ
-            inputs = list(_REQ.get(step, []))
-        except Exception:
-            inputs = []
+        inputs, resolved_src = _inputs_for(step)
+        inputs_source = inputs_source or resolved_src
     w, wl = _witness_state()
     h, hl = _human_state()
     t, tl = _thought_state()
-    a, al = _age_state(inputs)
+    a, al = _age_state(inputs, inputs_source)
     p, pl = _promise_state(prev_step, step)
     return {"witness": w, "human": h, "thought": t, "age": a, "promise": p,
             "why": {"witness": wl, "human": hl, "thought": tl, "age": al, "promise": pl}}
@@ -353,12 +385,11 @@ def attest(step: str, prev_step: str | None = PREV_UNKNOWN) -> dict:
             if name == step:
                 products = list(prod)
                 break
-        from core.metta_check import _REQ
-        inputs = list(_REQ.get(step, []))
     except Exception:
-        products, inputs = [], []
+        products = []
+    inputs, inputs_source = _inputs_for(step)
 
-    vec = vector(step, prev_step, inputs)
+    vec = vector(step, prev_step, inputs, inputs_source)
     own = min(vec[k] for k in ("witness", "human", "thought", "age", "promise"))
 
     # НАСЛЕДЯВАНЕ: най-лошото от печатите на входовете...
@@ -378,7 +409,8 @@ def attest(step: str, prev_step: str | None = PREV_UNKNOWN) -> dict:
            "why": vec["why"], "own": own, "inherited": inherited,
            "inherited_from": from_who, "verifier": verified, "level": level,
            "level_name": LEVEL_NAMES.get(level, str(level)),
-           "products": products, "inputs": inputs}
+           "products": products, "inputs": inputs,
+           "inputs_source": inputs_source}
     _append(rec)
     return rec
 
@@ -445,16 +477,33 @@ def may_act(step: str, prev_step: str | None = PREV_UNKNOWN) -> tuple:
 
     Скаларът решава (Kimi: детерминистично). Векторът обяснява — това е моето
     възражение към чистия min: „MeTTa мълчи" и „входът е на 400 дни" дават едно и
-    също ниво, но искат различни действия. Портата трябва да каже КОЕ липсва.
+    същo ниво, но искат различни действия. Портата трябва да каже КОЕ липсва.
+
+    И РАЗРЕШЕНИЕТО СЕ ОБЯСНЯВА (18 авг 2026). Дотук отказът носеше причина, а
+    „да" носеше само името на нивото — тоест единственият случай, в който системата
+    пипа света, беше и единственият, за който записът не казваше НА КАКВО се е
+    доверила. Сега и двата отговора назовават откъде идва списъкът с входове:
+    написан от човек в config/step_inputs.json, или изведен от скенера.
     """
     rec = attest(step, prev_step)
     lvl = rec["level"]
     if lvl >= IRREVERSIBLE_MIN:
-        return True, f"{rec['level_name']}"
+        return True, f"{rec['level_name']} — {rec['why']['age']}"
     weak = [k for k, v in rec["vector"].items() if v == lvl]
     why = "; ".join(rec["why"][k] for k in weak)
     src = (f" (наследено от {rec['inherited_from']})"
            if rec["inherited"] < rec["own"] and rec["inherited_from"] else "")
+    if not why:
+        # НАСЛЕДЕНОТО НИВО СИ НЯМА ИЗМЕРЕНИЕ. Нито едно от петте не е равно на lvl,
+        # защото lvl не е дошло от вектора на ТАЗИ стъпка, а от печата на неин вход.
+        # Дотук това даваше „слабо звено:" и празно след двоеточието — отказ без
+        # причина, точно в случая, който отказът трябва да обясни най-добре.
+        why = (f"нивото не е на тази стъпка: собственото ѝ е "
+               f"{LEVEL_NAMES.get(rec['own'], rec['own'])}, а входът "
+               f"{rec['inherited_from']} носи "
+               f"{LEVEL_NAMES.get(rec['inherited'], rec['inherited'])} от този цикъл"
+               if rec.get("inherited_from") else
+               f"нивото не съвпада с нито едно измерение: {rec['vector']}")
     return False, f"{rec['level_name']}{src} — слабо звено: {why}"
 
 

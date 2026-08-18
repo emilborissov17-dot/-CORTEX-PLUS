@@ -1,0 +1,32 @@
+{
+  "_what_this_is": "The written contract for what a cycle step READS. core/notary.py grades a step by the age of its inputs; until this file existed that list came only from the static scanner in core/cycle_graph.scan_requires(), which resolves literal paths and nothing else. A step whose paths are built at runtime scanned to [], [] means UNKNOWN provenance, and UNKNOWN means the gate refuses an irreversible action. This file lets a human WRITE the contract that the scanner cannot infer.",
+
+  "_the_rule": "A declaration WINS over the scanner for the steps it names. A step not named here is untouched: scanner only, and the scanner's silence still means UNKNOWN, which still means refuse. This file has no syntax for weakening a step it does not mention, and if it is deleted, unreadable or malformed the system behaves exactly as it did before it existed.",
+
+  "_who_owns_it": "A human. Named in safety/protected_paths.py, so no generated patch can write it at either enforcement layer. This is the one place where a step can be handed provenance it did not earn from a scan; a system able to edit it could declare itself trustworthy.",
+
+  "_how_to_add_a_step": "Read the module the step actually calls and list what it opens on THAT path. Do not copy the scanner's output, do not guess from the step name, and record where the list came from in 'derived_from'. Paths are repo-relative POSIX; a directory means the whole tree (the notary takes its newest file's mtime).",
+
+  "steps": {
+    "github_publish": {
+      "entry_point": "github_publisher.publish_synthesis() — fast_cycle_runner.py:1863. NOT publish_vision() and NOT the module's __main__ block; the cycle calls only publish_synthesis, which is publish_cycle() + publish_verified_hypotheses().",
+
+      "inputs": [
+        "memory/web_intelligence"
+      ],
+
+      "_inputs_why": {
+        "memory/web_intelligence": "publish_cycle() -> _find_latest_web_intel_dir() lists this tree, takes the newest dated folder that holds JSON, and json_file.read_text() every *.json under it (github_publisher.py:57-101). _publish_daily_index re-reads the same folder (line ~196). This is the whole substance of what the step publishes, so its age IS the age of the publication. Declared as a tree because the step chooses the folder at runtime; the notary grades a directory by its newest file, which is the folder the step would pick."
+      },
+
+      "also_reads": {
+        "cortex_memory/hypotheses/pending.json": "READ but deliberately NOT an age input, for two reasons a human should re-examine if either stops being true. (1) It is OPTIONAL BY CONSTRUCTION: publish_verified_hypotheses() returns 0 and publishes nothing when the file is absent (github_publisher.py:~330). core/notary.py:_age_state scores a MISSING declared input as UNKNOWN, so listing it under 'inputs' would mean that DELETING this dead store lowers the gate instead of raising it. (2) Its staleness is not silent: since commit 948d084 every row it publishes carries its own resolution state (SCORED/EXPIRED/PENDING) and its original prediction date, with an explicit past-due banner. The age dimension exists to catch stale data entering a composite INVISIBLY; this is the opposite case. CONSEQUENCE OF DISAGREEING, measured 18 Aug 2026: the store's mtime is 2026-06-20, 59 days old, because nothing on the cycle resolves it (evaluator.check_due_hypotheses' only caller is hypothesis_generator.py --check). Moving this string into 'inputs' therefore drops github_publish from level_2 to level_1 and the gate closes. That is a one-line change and it is a human's to make.",
+        ".env": "READ by _load_token() only when the GITHUB_TOKEN environment variable is unset (github_publisher.py:20-28). A credential, not data: its mtime says when a token was last rotated, which carries no provenance for anything published. Listing it would also make the gate depend on which of two token sources the machine happens to use.",
+        "civilization_vision.txt": "READ by publish_vision() only, which the cycle does not call — it runs from the module's __main__ block. Both files are already protected in safety/protected_paths.py as canon.",
+        "civilization_goal.txt": "Same as civilization_vision.txt: publish_vision() only, not on the cycle path."
+      },
+
+      "derived_from": "Direct read of github_publisher.py (421 lines) on 2026-08-18, following publish_synthesis() through publish_cycle() and publish_verified_hypotheses() to every open/read_text call. Cross-checked against docs/MODULE_MAP.json, whose AST pass records the same four literal reads plus two UNRESOLVED `json_file` reads at lines 101 and 196 — those two are the memory/web_intelligence tree the scanner cannot resolve, and they are the reason this entry exists."
+    }
+  }
+}

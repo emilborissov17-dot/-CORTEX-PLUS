@@ -93,6 +93,20 @@ PROTECTED_FILES = frozenset({
     # ── The registry logic behind config/dead_sources.json ───────────────────
     "core/source_status.py",
 
+    # ── The written input contract (added 18 Aug 2026) ───────────────────────
+    # config/step_inputs.json is the ONE place in the repo where a cycle step can be
+    # handed provenance it did not earn from a scan: core/notary.py grades a step by
+    # the age of the files it reads, and for the steps this file names, its list wins
+    # over the static scanner. A system able to edit it could declare its own inputs
+    # fresh and walk through the gate that stops it publishing and rewriting itself.
+    #
+    # Already covered by PROTECTED_DIRS("config") — named ANYWAY, and deliberately.
+    # That entry is a blanket over a directory of ordinary settings and is the kind
+    # of rule someone narrows one day to let a scheduler tweak land. This file must
+    # not lose its protection as a side effect of that decision; it has to be taken
+    # away on purpose, in a diff that says so.
+    "config/step_inputs.json",
+
     # ── The audit trail ──────────────────────────────────────────────────────
     # These live under memory/, which ast_gate's ALLOWED_DIR_PREFIXES otherwise
     # permits generated code to write to. Without an explicit rule, a patch
