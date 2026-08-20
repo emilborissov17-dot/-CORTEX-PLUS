@@ -5,36 +5,44 @@ scripts/openclaw_axis_worker.py — THE DMZ FETCH WORKER.
 
 WHAT CROSSES, AND WHAT DOES NOT
 --------------------------------
-This is the only thing in CORTEX that reaches the outside world for an axis
-number, and it is deliberately small enough to read in one sitting.
+The only thing in CORTEX that reaches the outside world for an axis number.
 
-    IN   a URL from config/openclaw_sources.json, and nothing else
+    IN   a URL, from the seed config or from what data_scout found
     OUT  one finite NUMBER bound to (axis, key), or a named refusal
 
-Same contract as agents/axis/axis_feed.py, applied one step further out. There
-the risk was a model writing prose where a measurement belonged; here it is a
-remote service answering with a string, a null, an error object or an HTML
-error page, and that landing in the queue as if someone had measured it.
+Same contract as agents/axis/axis_feed.py, one step further out. There the risk
+was a model writing prose where a measurement belonged; here it is a remote
+service answering with a string, a null, an error object or an HTML maintenance
+page, and that landing in the queue as if somebody had measured it.
 
-config/openclaw_sources.json IS THE ALLOWLIST. The worker fetches nothing that
-is not named there, so widening what CORTEX touches is a human edit to a config
-file rather than something a model can decide at runtime.
-docs/OPENCLAW_INTEGRATION_DESIGN.md: "Неизвестното = изисква одобрение."
+THE ALLOWLIST IS GONE, ON PURPOSE
+----------------------------------
+It used to be that a human wrote four URLs into a config and only those were
+fetched. Safe, and a dead end: data_scout has been finding sources since June
+and 44 active JSON candidates sit unused in memory/discovered_data_sources.json,
+some since 31 July, because nothing decided whether to believe them.
 
-REFUSALS ARE WRITTEN DOWN, NOT DROPPED
----------------------------------------
-openclaw_queue/external_refusals.jsonl gets a row with the reason: HTTP status,
-unreadable body, path that does not resolve, or a value that is not a number.
-A source that has quietly rotted must look different from a source nobody
-asked. One entry in the allowlist is broken ON PURPOSE so that the refusal path
-is exercised on every real run, not only under test.
+A hand-written list cannot grow. What grows is a PROCESS for earning trust —
+core/source_lifecycle.py. Sources now come from BOTH places:
 
-    venv\\Scripts\\python.exe scripts/openclaw_axis_worker.py          # fetch
-    venv\\Scripts\\python.exe scripts/openclaw_axis_worker.py --dry-run
+    config/openclaw_sources.json          the seed, hand-written
+    memory/discovered_data_sources.json   data_scout's own finds
+
+and every one of them starts as a CANDIDATE. Candidates are fetched every cycle
+and their readings are STORED BUT NOT BELIEVED — shadow rows, written beside
+the trusted ones and marked. Only a source that has earned TRUSTED enters the
+composite as MEASURED.
+
+GET ONLY. The worker issues no other verb; that is asserted by a test rather
+than left to discipline.
+
+    venv/Scripts/python.exe scripts/openclaw_axis_worker.py
+    venv/Scripts/python.exe scripts/openclaw_axis_worker.py --dry-run
 """
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import math
 import pathlib
@@ -50,6 +58,7 @@ SOURCES = BASE / "config" / "openclaw_sources.json"
 QUEUE = BASE / "openclaw_queue"
 FEEDS = QUEUE / "external_feeds.jsonl"
 REFUSALS = QUEUE / "external_refusals.jsonl"
+SHADOWS = QUEUE / "external_shadow.jsonl"
 
 DEFAULT_TIMEOUT = 30
 
@@ -62,9 +71,81 @@ def _now() -> str:
     return datetime.now(timezone.utc).isoformat()
 
 
+DISCOVERED = BASE / "memory" / "discovered_data_sources.json"
+
+
 def load_sources(path: pathlib.Path | None = None) -> tuple[list[dict], int]:
+    """The seed list only. Kept separate so its shape stays readable."""
     cfg = json.loads((path or SOURCES).read_text(encoding="utf-8"))
     return cfg.get("sources", []), int(cfg.get("timeout_sec", DEFAULT_TIMEOUT))
+
+
+def load_discovered(path: pathlib.Path | None = None) -> list[dict]:
+    """data_scout's finds, translated into the worker's shape.
+
+    Only status=active and format=json: a CSV needs a different parser and a
+    rejected source was already judged by something else. kind=http_json_count
+    means the number is the LENGTH of the list at `extract` — that is how EONET
+    reports events — so the path becomes '<extract>.#len'.
+    """
+    try:
+        blob = json.loads((path or DISCOVERED).read_text(encoding="utf-8"))
+    except Exception:
+        return []
+
+    out: list[dict] = []
+    for axis, node in blob.items():
+        if axis.startswith("_"):
+            continue
+        entries = node.get("sources") if isinstance(node, dict) else node
+        for src in entries or []:
+            if not isinstance(src, dict):
+                continue
+            if src.get("status") != "active" or src.get("format") != "json":
+                continue
+            url, extract = src.get("url"), src.get("extract")
+            if not url or not extract:
+                continue
+            path_expr = (f"{extract}.#len" if src.get("kind") == "http_json_count"
+                         else extract)
+            out.append({
+                # STABLE across processes. The first version used hash(url),
+                # which Python randomises per interpreter (PYTHONHASHSEED), so
+                # every run minted fresh ids and no source could accumulate a
+                # streak — visible as the candidate count climbing 32, 60, 88,
+                # 116 over four runs of the same 33 sources.
+                "id": f"scout:{src.get('org', '?')}:"
+                      f"{hashlib.sha1(url.encode('utf-8')).hexdigest()[:8]}",
+                "axis": axis,
+                "key": (src.get("metric") or extract)[:60],
+                "url": url,
+                "path": path_expr,
+                "unit": src.get("slot_hint") or "unknown",
+                "org": src.get("org"),
+                "why": src.get("provenance") or src.get("metric"),
+                "origin": "data_scout",
+                "discovered_at": src.get("discovered_at"),
+            })
+    return out
+
+
+def all_sources(seed_path=None, discovered_path=None) -> tuple[list[dict], int]:
+    """Seed plus discovered, de-duplicated on (axis, url)."""
+    seed, timeout = load_sources(seed_path)
+    for s in seed:
+        s.setdefault("origin", "seed")
+    # Keyed on the PATH too, not just (axis, url). The seed deliberately holds
+    # two entries against the same USGS url — one real, one with a path that
+    # walks into a number — so that the refusal branch runs on every fetch.
+    # De-duplicating on (axis, url) alone silently ate the broken one.
+    merged, seen = [], set()
+    for src in list(seed) + load_discovered(discovered_path):
+        key = (src.get("axis"), src.get("url"), src.get("path"))
+        if key in seen:
+            continue
+        seen.add(key)
+        merged.append(src)
+    return merged, timeout
 
 
 # ---------------------------------------------------------------------------
@@ -171,41 +252,98 @@ def fetch_one(source: dict, timeout: int, getter=None) -> dict:
     }
 
 
-def run(sources_path=None, queue_dir=None, getter=None, dry_run=False) -> dict:
-    sources, timeout = load_sources(sources_path)
-    q = pathlib.Path(queue_dir) if queue_dir else QUEUE
+def _peer_for(axis: str, key: str, queue_dir: pathlib.Path) -> float | None:
+    """The TRUSTED reading of the SAME QUANTITY, if one exists.
 
-    feeds, refusals = [], []
+    THE BUG THIS FIXES, found by running it. The first version compared a
+    candidate against the axis's primary metric from goal_score. Those measure
+    different things: NASA-EONET reports 113 wildfire events for
+    CLIMATE_GLOBAL_RISK, whose primary metric is 427.59 ppm of CO2. Every
+    discovered source therefore "contradicted" the axis on its very first
+    reading — 16 of them on the first live run — and since a contradiction
+    resets the clean streak, NO discovered source could ever have been promoted.
+    A lifecycle that can only ever refuse is not a lifecycle.
+
+    A contradiction has to be between two claims about the SAME quantity. Until
+    a trusted source exists for this (axis, key), there is no incumbent to
+    disagree with, and the candidate is judged only on whether it answers and
+    whether it is stable.
+    """
+    path = queue_dir / FEEDS.name
+    if not path.exists():
+        return None
+    latest = None
+    try:
+        for line in path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            row = json.loads(line)
+            if (row.get("axis") == axis and row.get("key") == key
+                    and row.get("measured") and isinstance(row.get("value"), (int, float))):
+                latest = float(row["value"])
+    except Exception:
+        return None
+    return latest
+
+
+def run(sources_path=None, queue_dir=None, getter=None, dry_run=False,
+        discovered_path=None, lifecycle_state=None, ledger=None) -> dict:
+    from core import source_lifecycle as life
+
+    sources, timeout = all_sources(sources_path, discovered_path)
+    q = pathlib.Path(queue_dir) if queue_dir else QUEUE
+    own_state = lifecycle_state is None
+    lstate = life.load() if own_state else lifecycle_state
+
+    feeds, shadows, refusals = [], [], []
     for source in sources:
+        sid = source.get("id") or "<unnamed>"
+        axis = source.get("axis")
         try:
             row = fetch_one(source, timeout, getter)
-            feeds.append(row)
-            print(f"[DMZ] OK      {row['source_id']:<26} {row['axis']:<28} "
-                  f"{row['value']} {row['unit'] or ''}")
+            rec = life.observe(sid, axis=axis, ok=True, value=row["value"],
+                               peer=_peer_for(axis, source.get('key'), q),
+                               state=lstate, ledger=ledger)
+            row["trust"] = rec["state"]
+            row["origin"] = source.get("origin")
+            # ── ONLY A TRUSTED SOURCE IS A MEASUREMENT ─────────────────────
+            # A candidate's number is stored beside the trusted ones and marked,
+            # so it can be compared later — but it is not measured, and nothing
+            # downstream may read it as one.
+            row["measured"] = rec["state"] == life.TRUSTED
+            row["status"] = "PRESENT" if row["measured"] else "SHADOW"
+            (feeds if row["measured"] else shadows).append(row)
+            mark = "OK     " if row["measured"] else "shadow "
+            print(f"[DMZ] {mark}{sid:<34} {str(axis):<28} "
+                  f"{row['value']} {row['unit'] or ''} [{rec['state']}]")
         except Refused as exc:
-            refusal = {"ts": _now(), "source_id": source.get("id"),
-                       "axis": source.get("axis"), "key": source.get("key"),
-                       "url": source.get("url"), "path": source.get("path"),
-                       "status": "REFUSED", "reason": str(exc)}
-            refusals.append(refusal)
-            print(f"[DMZ] REFUSED {source.get('id'):<26} {exc}")
+            life.observe(sid, axis=axis, ok=False, reason=str(exc),
+                         state=lstate, ledger=ledger)
+            refusals.append({"ts": _now(), "source_id": sid, "axis": axis,
+                             "key": source.get("key"), "url": source.get("url"),
+                             "path": source.get("path"), "origin": source.get("origin"),
+                             "status": "REFUSED", "reason": str(exc)})
+            print(f"[DMZ] REFUSED {sid:<34} {exc}")
 
     if not dry_run:
         q.mkdir(parents=True, exist_ok=True)
-        if feeds:
-            with open(q / FEEDS.name, "a", encoding="utf-8") as fh:
-                for row in feeds:
-                    fh.write(json.dumps(row, ensure_ascii=False) + "\n")
-        if refusals:
-            with open(q / REFUSALS.name, "a", encoding="utf-8") as fh:
-                for row in refusals:
-                    fh.write(json.dumps(row, ensure_ascii=False) + "\n")
+        for rows, name in ((feeds, FEEDS.name), (shadows, SHADOWS.name),
+                           (refusals, REFUSALS.name)):
+            if rows:
+                with open(q / name, "a", encoding="utf-8") as fh:
+                    for row in rows:
+                        fh.write(json.dumps(row, ensure_ascii=False) + "\n")
+        if own_state:
+            life.save(lstate)
 
-    print(f"[DMZ] {len(feeds)} feed(s), {len(refusals)} refusal(s) "
-          f"of {len(sources)} allowlisted source(s)"
+    counts = life.summary(lstate)
+    print(f"[DMZ] {len(feeds)} trusted / {len(shadows)} shadow / "
+          f"{len(refusals)} refused of {len(sources)} sources "
+          f"({counts[life.TRUSTED]} TRUSTED, {counts[life.CANDIDATE]} CANDIDATE, "
+          f"{counts[life.DEMOTED]} DEMOTED)"
           f"{' — DRY RUN, nothing written' if dry_run else ''}")
     return {"ts": _now(), "sources": len(sources), "feeds": feeds,
-            "refusals": refusals}
+            "shadows": shadows, "refusals": refusals, "lifecycle": counts}
 
 
 def main() -> int:

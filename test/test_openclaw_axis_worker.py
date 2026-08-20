@@ -11,8 +11,10 @@ where a measurement belongs; this guards one step further out, against a remote
 service answering with a string, a null, an error object or an HTML error page
 — and that landing in the queue looking like something somebody measured.
 
-config/openclaw_sources.json is the ALLOWLIST. Nothing outside it is fetched,
-so widening what CORTEX touches is a human edit, not a runtime decision.
+THE ALLOWLIST IS GONE. Sources now come from the seed config AND from
+data_scout's own finds, and every one starts as a CANDIDATE whose readings are
+stored but not believed. Only a source that has earned TRUSTED through
+core/source_lifecycle.py enters the composite as MEASURED.
 
 RUN ONCE ON THE MACHINE, 20 August 2026:
 
@@ -36,8 +38,28 @@ import pathlib
 
 import pytest
 
-from scripts.openclaw_axis_worker import (Refused, as_number, fetch_one,
-                                          load_sources, run, walk)
+from scripts.openclaw_axis_worker import (Refused, all_sources, as_number,
+                                          fetch_one, load_discovered,
+                                          load_sources, run as _run_raw, walk)
+
+
+def run(**kw):
+    """Every test runs ISOLATED from the machine's own state.
+
+    run() now merges data_scout's discovered sources and advances the real
+    source_lifecycle state. Without these three redirects a test would fetch
+    the live discovery list and promote or demote real sources — the 16 Aug
+    2026 incident, where the suite wrote into live state, in a new place.
+    """
+    kw.setdefault("discovered_path", pathlib.Path("does-not-exist.json"))
+    kw.setdefault("lifecycle_state", {})
+    # NOT inside queue_dir: log() mkdirs the ledger's parent, which would
+    # create the queue directory that test_dry_run_writes_nothing asserts is
+    # absent — the helper would have manufactured the thing under test.
+    tmp = kw.get("queue_dir")
+    kw.setdefault("ledger", (pathlib.Path(tmp).parent / "lifecycle_ledger.jsonl")
+                  if tmp else None)
+    return _run_raw(**kw)
 
 REPO = pathlib.Path(__file__).resolve().parents[1]
 SOURCES = REPO / "config" / "openclaw_sources.json"
@@ -151,19 +173,64 @@ def test_an_html_error_page_is_refused(tmp_path):
 # (c) The happy path
 # ---------------------------------------------------------------------------
 
-def test_a_real_number_becomes_a_feed_row(tmp_path):
-    """POSITIVE CONTROL — a worker that refuses everything is not a worker."""
+def test_a_real_number_becomes_a_SHADOW_row_on_first_sight(tmp_path):
+    """POSITIVE CONTROL, and the lifecycle rule in one test.
+
+    A number came back and was recorded — but a source seen once has earned
+    nothing, so it is stored beside the trusted rows and marked, not counted.
+    """
     result = run(sources_path=_sources_file(tmp_path, [SRC]),
                  queue_dir=tmp_path / "q",
                  getter=getter_returning({"count": 24}))
 
-    assert len(result["feeds"]) == 1
-    row = _read(tmp_path / "q" / "external_feeds.jsonl")[0]
-    assert row["value"] == 24.0
-    assert isinstance(row["value"], float)
+    assert result["feeds"] == [], "a first-time source must not be measured"
+    assert len(result["shadows"]) == 1
+
+    row = _read(tmp_path / "q" / "external_shadow.jsonl")[0]
+    assert row["value"] == 24.0 and isinstance(row["value"], float)
     assert row["axis"] == "AX" and row["key"] == "k"
-    assert row["org"] == "O" and row["unit"] == "u"
-    assert row["status"] == "PRESENT"
+    assert row["trust"] == "CANDIDATE"
+    assert row["measured"] is False
+    assert row["status"] == "SHADOW"
+    assert not (tmp_path / "q" / "external_feeds.jsonl").exists()
+
+
+def test_a_source_that_keeps_answering_earns_its_way_into_the_composite(tmp_path):
+    """Five clean, stable observations and it is measured. This is the whole
+    point of deleting the allowlist: belief is earned, not written down."""
+    from core.source_lifecycle import PROMOTE_AFTER
+    lstate, q = {}, tmp_path / "q"
+    sources = _sources_file(tmp_path, [SRC])
+
+    for i in range(PROMOTE_AFTER):
+        result = run(sources_path=sources, queue_dir=q,
+                     getter=getter_returning({"count": 24 + i * 0.1}),
+                     lifecycle_state=lstate)
+
+    assert result["feeds"], "it never promoted"
+    assert result["feeds"][0]["measured"] is True
+    assert result["feeds"][0]["trust"] == "TRUSTED"
+    assert (q / "external_feeds.jsonl").exists()
+
+
+def test_the_queue_is_a_ledger_not_a_snapshot(tmp_path):
+    q = tmp_path / "q"
+    sources = _sources_file(tmp_path, [SRC])
+    lstate = {}
+    run(sources_path=sources, queue_dir=q, lifecycle_state=lstate,
+        getter=getter_returning({"count": 1}))
+    run(sources_path=sources, queue_dir=q, lifecycle_state=lstate,
+        getter=getter_returning({"count": 2}))
+    rows = _read(q / "external_shadow.jsonl")
+    assert [r["value"] for r in rows] == [1.0, 2.0], "the worker overwrote history"
+
+
+def test_dry_run_writes_nothing(tmp_path):
+    result = run(sources_path=_sources_file(tmp_path, [SRC]),
+                 queue_dir=tmp_path / "q",
+                 getter=getter_returning({"count": 24}), dry_run=True)
+    assert len(result["shadows"]) == 1
+    assert not (tmp_path / "q").exists()
 
 
 @pytest.mark.parametrize("payload,path,expected", [
@@ -175,23 +242,6 @@ def test_a_real_number_becomes_a_feed_row(tmp_path):
 def test_the_path_syntax_resolves_the_shapes_the_allowlist_uses(payload, path,
                                                                 expected):
     assert as_number(walk(payload, path), "w") == expected
-
-
-def test_the_queue_is_a_ledger_not_a_snapshot(tmp_path):
-    q = tmp_path / "q"
-    sources = _sources_file(tmp_path, [SRC])
-    run(sources_path=sources, queue_dir=q, getter=getter_returning({"count": 1}))
-    run(sources_path=sources, queue_dir=q, getter=getter_returning({"count": 2}))
-    rows = _read(q / "external_feeds.jsonl")
-    assert [r["value"] for r in rows] == [1.0, 2.0], "the worker overwrote history"
-
-
-def test_dry_run_writes_nothing(tmp_path):
-    result = run(sources_path=_sources_file(tmp_path, [SRC]),
-                 queue_dir=tmp_path / "q",
-                 getter=getter_returning({"count": 24}), dry_run=True)
-    assert len(result["feeds"]) == 1
-    assert not (tmp_path / "q").exists()
 
 
 # ---------------------------------------------------------------------------
