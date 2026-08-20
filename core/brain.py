@@ -340,9 +340,20 @@ def think(role: str, question: str, evidence: str = "", schema: dict | None = No
     d["_model"] = f"local:{model}"
     d["_sec"] = took
     if remember_it:
-        remember(kind, json.dumps({k: v for k, v in d.items()
-                                   if not k.startswith("_")}, ensure_ascii=False)[:400],
-                 {"role": role, "model": model})
+        # ── THE FULL DICT GOES INTO payload, NOT ONLY INTO A TRUNCATED SUMMARY ──
+        # summary is capped at 400 chars for the human-readable memory recall
+        # (_memory() reads it). Until 21 Aug 2026 that cap was the ONLY copy of
+        # a structured verdict: payload held {role, model} and nothing else, so
+        # the autopsy of 20 Aug — the one that said halt_and_call_human: true —
+        # survived on disk as JSON cut off mid-string:
+        #
+        #   ..."remedy": "Провери статуса на локалния qwen3:8b и опреде
+        #
+        # Anything reading that verdict had to guess at the fields. The summary
+        # keeps its cap; the fields now ride intact beside it.
+        fields = {k: v for k, v in d.items() if not k.startswith("_")}
+        remember(kind, json.dumps(fields, ensure_ascii=False)[:400],
+                 {"role": role, "model": model, "fields": fields})
     return d
 
 
