@@ -55,18 +55,50 @@ def _measured_axis_scores():
     ONLY for axes whose primary metric had a real observed value this cycle.
     Verification over assertion: where a measurement exists, it outranks the
     LLM's LOW/MEDIUM/HIGH bucket, which for a month collapsed every axis to
-    a constant 60. Fail-open: any error returns {} and the LLM buckets stand."""
+    a constant 60.
+
+    ПОПРАВЕНО 20 август 2026. Предишната версия проверяваше `current`, а викаше
+    float() върху `score`. Една ос със score=None хвърляше TypeError, външният
+    except го лапваше, връщаше {} — и ВСИЧКИТЕ оси падаха на llm_level. Измерено
+    в цикъла от тази нощ:
+
+        [FEEDBACK] measured scores unavailable
+        (TypeError: float() argument must be a string or a real number, not 'NoneType')
+        [FEEDBACK] axis scores: 0 measured / 10 LLM-level
+
+    Едно празно число изключваше измерването на цялата система и го заменяше с
+    мнение на модела. Сега провалът е ПО ОС и се назовава поименно; останалите
+    измервания оцеляват. Fail-open остава само за истински системен провал
+    (липсващ модул, счупен конфиг), а не за една липсваща стойност."""
     try:
         import goal_score_calculator as gsc
         res = gsc.compute_goal_score()
-        measured = {}
-        for detail in res.get("metric_details", {}).values():
-            if detail.get("current") is not None and detail.get("axis"):
-                measured[detail["axis"]] = round(float(detail["score"]) * 100.0, 2)
-        return measured
     except Exception as e:
-        print(f"[FEEDBACK] measured scores unavailable ({type(e).__name__}: {e}) — using LLM levels only")
+        print(f"[FEEDBACK] measured scores unavailable ({type(e).__name__}: {e}) "
+              f"— using LLM levels only")
         return {}
+
+    measured: dict = {}
+    skipped: list = []
+    for detail in (res.get("metric_details", {}) or {}).values():
+        if not isinstance(detail, dict):
+            continue
+        axis = detail.get("axis")
+        if not axis:
+            continue
+        if detail.get("current") is None or detail.get("score") is None:
+            skipped.append(axis)
+            continue
+        try:
+            measured[axis] = round(float(detail["score"]) * 100.0, 2)
+        except (TypeError, ValueError) as e:
+            # една счупена ос не бива да заглушава останалите
+            skipped.append(f"{axis}({type(e).__name__})")
+
+    if skipped:
+        print(f"[FEEDBACK] no measurement for {len(skipped)} axes: "
+              f"{', '.join(sorted(set(skipped)))}")
+    return measured
 
 def read_current_scores():
     master = _load_json(MASTER_SNAP, {})
