@@ -2,11 +2,12 @@
 """
 groq_backend.py — LLM backend с 4-степенен fallback chain
 ==========================================================
-Ред на опити:
-  1. Groq       (llama-3.3-70b-versatile)    — бърз, безплатен
-  2. Cerebras   (llama-3.3-70b)              — cloud.cerebras.ai
-  3. OpenRouter (deepseek/deepseek-r1:free)  — openrouter.ai
-  4. Gemini     (gemini-2.0-flash)           — 1500 req/day безплатно
+Ред на опити (моделите са верифицирани срещу живите листинги на 20 август 2026;
+трите reasoning пътя минават през _reasoning_budget — виж него):
+  1. Groq       (openai/gpt-oss-120b)                  — reasoning, бърз, безплатен
+  2. Cerebras   (gpt-oss-120b)                         — reasoning, cloud.cerebras.ai
+  3. OpenRouter (nvidia/nemotron-3-super-120b-a12b:free) — openrouter.ai
+  4. Gemini     (gemini-3.5-flash)                     — reasoning, 1500 req/day
 
 Ollama беше премахнат от веригата (2026-07-04) като ТИХ safety net, който
 маскираше AllBackendsFailedError. Това остава в сила: локалният модел НЕ е
@@ -63,6 +64,31 @@ CEREBRAS_MODEL   = "gpt-oss-120b"   # reasoning model; "zai-glm-4.7" е алте
 CEREBRAS_BUDGET_MULT  = float(os.environ.get("CEREBRAS_BUDGET_MULT",  "3"))
 CEREBRAS_BUDGET_FLOOR = int(os.environ.get("CEREBRAS_BUDGET_FLOOR", "1500"))
 CEREBRAS_BUDGET_CAP   = int(os.environ.get("CEREBRAS_BUDGET_CAP",   "8192"))
+
+# 20 август 2026 — СЪЩИЯТ трансформ, сега и за Groq и за Gemini.
+#
+# Groq вече сервира openai/gpt-oss-120b — точно моделът, за който подът горе беше
+# въведен при Cerebras. Gemini сервира gemini-3.5-flash. И двата МИСЛЯТ, и при
+# двата мисленето се брои В бюджета на отговора. Измерено днес, не предположено:
+#
+#   Groq   gpt-oss-120b     completion_tokens=150 при content 549 знака
+#                           + отделно поле "reasoning" -> мисленето е вътре
+#   Gemini gemini-3.5-flash maxOutputTokens=100 -> thoughts=93 candidates=3  MAX_TOKENS
+#                           maxOutputTokens=300 -> thoughts=285 candidates=11 MAX_TOKENS
+#                           maxOutputTokens=1024-> thoughts=460 candidates=62 STOP
+#
+# Тоест thoughts + candidates <= тавана: мисленето изяжда бюджета ПРЕДИ отговора.
+# Call site-овете тук са оразмерени за llama-3.3-70b (80..4096) — при 80 токена
+# gpt-oss/gemini свършват бюджета още в мисленето и връщат отрязан или празен
+# отговор. Точно това се случи в цикъла от 17:05: 29 отрязвания, 19 Groq и
+# 10 Gemini, докато Cerebras (който има пода) не отряза нито веднъж.
+GROQ_BUDGET_MULT  = float(os.environ.get("GROQ_BUDGET_MULT",  "3"))
+GROQ_BUDGET_FLOOR = int(os.environ.get("GROQ_BUDGET_FLOOR", "1500"))
+GROQ_BUDGET_CAP   = int(os.environ.get("GROQ_BUDGET_CAP",   "8192"))
+
+GEMINI_BUDGET_MULT  = float(os.environ.get("GEMINI_BUDGET_MULT",  "3"))
+GEMINI_BUDGET_FLOOR = int(os.environ.get("GEMINI_BUDGET_FLOOR", "1500"))
+GEMINI_BUDGET_CAP   = int(os.environ.get("GEMINI_BUDGET_CAP",   "8192"))
 # low | medium | high (Cerebras default за gpt-oss-120b е "medium")
 CEREBRAS_REASONING_EFFORT = os.environ.get("CEREBRAS_REASONING_EFFORT", "low")
 
@@ -192,18 +218,23 @@ def _call_groq(prompt: str, max_tokens: int):
     if not key:
         raise ValueError("GROQ_API_KEY не е намерен")
 
-    print("  [LLM] Groq llama-3.3-70b...")
+    print(f"  [LLM] Groq {GROQ_MODEL}...")
     headers = {
         "Authorization": f"Bearer {key}",
         "Content-Type": "application/json",
     }
+    # gpt-oss-120b е reasoning модел: мисленето се брои В бюджета на отговора,
+    # точно както при Cerebras. max_completion_tokens е полето, което покрива
+    # двете заедно; "max_tokens" е наследеният псевдоним.
+    budget = _reasoning_budget(max_tokens, GROQ_BUDGET_MULT,
+                               GROQ_BUDGET_FLOOR, GROQ_BUDGET_CAP)
     payload = {
         "model": GROQ_MODEL,
         "messages": [
             {"role": "system", "content": _system_msg()},
             {"role": "user",   "content": prompt},
         ],
-        "max_tokens": max_tokens,
+        "max_completion_tokens": budget,
     }
     time.sleep(_SLEEP_SECS)  # adaptive: set by body_scanner directives (default 2s)
     r = requests.post(GROQ_API_URL, headers=headers, json=payload, timeout=(10, 60))
@@ -225,8 +256,18 @@ def _effective_budget(max_tokens: int) -> int:
     payload-ът изобщо да започне — независимо колко малко е поискал call
     site-ът. Капът ни държи далеч под 32k тавана на free tier-а.
     """
-    scaled = int(max_tokens * CEREBRAS_BUDGET_MULT)
-    return min(CEREBRAS_BUDGET_CAP, max(CEREBRAS_BUDGET_FLOOR, scaled))
+    return _reasoning_budget(max_tokens, CEREBRAS_BUDGET_MULT,
+                             CEREBRAS_BUDGET_FLOOR, CEREBRAS_BUDGET_CAP)
+
+
+def _reasoning_budget(max_tokens: int, mult: float, floor: int, cap: int) -> int:
+    """Бюджет за модел, който МИСЛИ вътре в бюджета на отговора.
+
+    Един и същ трансформ за трите reasoning backend-а (Cerebras, Groq, Gemini).
+    Подът е същината: 3 x 80 = 240 не стига дори за мисленето, така че малките
+    call site-ове (media_intel_worker подава 80) получават пода, не кратното.
+    """
+    return min(cap, max(floor, int(max_tokens * mult)))
 
 
 def _call_cerebras(prompt: str, max_tokens: int):
@@ -329,11 +370,18 @@ def _call_gemini(prompt: str, max_tokens: int):
     if not key:
         raise ValueError("GEMINI_API_KEY не е намерен")
 
-    print("  [LLM] Gemini 2.0-flash...")
+    model_name = GEMINI_API_URL.rsplit("/", 1)[-1].split(":")[0]
+    print(f"  [LLM] Gemini {model_name}...")
     url = f"{GEMINI_API_URL}?key={key}"
+    # Измерено 20 август 2026 срещу gemini-3.5-flash: thoughts + candidates <=
+    # maxOutputTokens. При 100 -> thoughts=93, candidates=3, finishReason=
+    # MAX_TOKENS. Мисленето изяжда бюджета преди отговора, точно както при
+    # Groq и Cerebras, затова същият под важи и тук.
+    budget = _reasoning_budget(max_tokens, GEMINI_BUDGET_MULT,
+                               GEMINI_BUDGET_FLOOR, GEMINI_BUDGET_CAP)
     payload = {
         "contents": [{"parts": [{"text": prompt}]}],
-        "generationConfig": {"maxOutputTokens": max_tokens},
+        "generationConfig": {"maxOutputTokens": budget},
     }
     time.sleep(_SLEEP_SECS)
     r = requests.post(url, json=payload, timeout=(10, 60))
