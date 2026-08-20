@@ -50,7 +50,7 @@ from pathlib import Path
 # ---------------------------------------------------------------------------
 
 GROQ_API_URL    = "https://api.groq.com/openai/v1/chat/completions"
-GROQ_MODEL      = "llama-3.3-70b-versatile"
+GROQ_MODEL      = "openai/gpt-oss-120b"
 
 CEREBRAS_API_URL = "https://api.cerebras.ai/v1/chat/completions"
 CEREBRAS_MODEL   = "gpt-oss-120b"   # reasoning model; "zai-glm-4.7" е алтернатива
@@ -69,7 +69,7 @@ CEREBRAS_REASONING_EFFORT = os.environ.get("CEREBRAS_REASONING_EFFORT", "low")
 OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions"
 OPENROUTER_MODEL   = "nvidia/nemotron-3-super-120b-a12b:free"  # 120B, верифициран безплатен
 
-GEMINI_API_URL  = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent"
+GEMINI_API_URL  = "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent"
 
 # Ollama константите и _call_ollama/_get_ollama_model са премахнати (2026-07-13).
 # Ollama излезе от веригата на 2026-07-04 (виж docstring-а горе) — оттогава кодът
