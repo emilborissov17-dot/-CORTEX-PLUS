@@ -1844,6 +1844,20 @@ def main():
     beat("cognitive_orchestrator", "12.7")
     # Runs BEFORE HyperClaw so it can use its priority_axes assessment.
     # (CortexStrategist was moved to step 3.5 to run before token budget is depleted.)
+    #
+    # ── РЕДЪТ Е АРИТМЕТИКА, ПРОЗАТА Е БЕЛЕЖКА (20 авг 2026) ────────────────
+    # Приоритетът вече се смята ПРЕДИ моделът да е попитан за каквото и да е:
+    # need = weight x penalty, от target_config и goal_score_latest — нито едно
+    # от двете не е мнение. core/orchestrator_grounded.py го пише, после
+    # cortex_orchestrator чете ТОВА като свой вход. Моделът може да ДОПИШЕ
+    # бележка към ред; не може да пренареди, да смени кофата или да измисли
+    # действие извън затворения речник. Разликата е между коментар и
+    # непроверено решение.
+    def _grounded_first():
+        from core.orchestrator_grounded import run as _grounded
+        _grounded()
+    _run("orchestrator_grounded", _grounded_first)
+
     def _cortex_orchestrator():
         from core.cortex_orchestrator import run as _orchestrate
         _orchestrate()
