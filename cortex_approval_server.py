@@ -8,13 +8,16 @@ cortex_approval_server.py
 """
 import json
 import pathlib
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
+from html import escape
+
 from flask import Flask, jsonify
 
 BASE_DIR = pathlib.Path(__file__).resolve().parent
 PROPOSALS_FILE = BASE_DIR / "memory" / "improvement_proposals.json"
 APPROVAL_QUEUE = BASE_DIR / "memory" / "approval_queue.json"
 DASHBOARD_FILE = BASE_DIR / "output" / "cortex_dashboard_live.html"
+SCORES_FILE = BASE_DIR / "output" / "cortex_scores_latest.json"
 
 app = Flask(__name__)
 
@@ -35,16 +38,145 @@ def _save_json(path: pathlib.Path, data) -> None:
     path.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
+# ---------------------------------------------------------------------------
+# THE FRESHNESS GATE
+# ---------------------------------------------------------------------------
+# The dashboard served at "/" is a FILE ON DISK, not a live render. Nothing in the
+# cycle writes it: `grep -rn "dashboard_generator" --include=*.py .` returns only that
+# module's own docstring, and hypercortex_runner.py / fast_cycle_runner.py / run_daily.py
+# never mention a dashboard at all. It is produced by hand, by running
+# cortex_dashboard_generator.py as __main__.
+#
+# So the page drifts away from the data behind it. Measured 20 Aug 2026:
+#
+#     output/cortex_dashboard_live.html   Apr 13 17:29
+#     output/cortex_scores_latest.json    Aug 20 04:33
+#
+# Four months apart, under a filename containing the word "live". This route was
+# serving that April page — with the approval panel injected into it — as the surface
+# an operator reads while deciding whether to approve a self-modification. The page
+# carries its own timestamp, generated whenever it was last run by hand, so it looks
+# current while showing scores from another season.
+#
+# This gate does not fix the generator and does not make the page fresh. The generator
+# has no caller and its arithmetic is knowingly broken (its lines 148/150/151 fabricate
+# 0.5 for an unmeasured domain, average domain means without the target_config weights,
+# and default a score-less axis to 0.5 so a blind axis can never read as critical) —
+# that is a separate decision and is deliberately untouched here.
+#
+# What this gate does is make staleness LOUD instead of silent. If the dashboard is
+# older than the scores it purports to show, the dashboard is not served at all.
+# ---------------------------------------------------------------------------
+
+_PLAIN_CSS = """<style>
+body { background:#0d0d0d; color:#ddd; margin:0; padding:2.5rem 2rem 45vh;
+       font:14px/1.55 -apple-system, "Segoe UI", sans-serif; }
+.wrap { max-width:780px; margin:0 auto; }
+h1 { font-size:17px; font-weight:600; color:#E24B4A; margin:0 0 0.9rem; }
+p.lede { color:#999; margin:0 0 1.3rem; }
+table { border-collapse:collapse; width:100%; margin:0 0 1.3rem; }
+td { border:0.5px solid #333; padding:7px 12px; vertical-align:top; }
+td.k { color:#777; white-space:nowrap; width:1%; }
+td.v { color:#EF9F27; font-family:ui-monospace, Consolas, monospace; font-size:13px;
+       word-break:break-all; }
+.note { color:#6f6f6f; font-size:12.5px; border-left:2px solid #333; padding-left:12px; }
+code { color:#378ADD; font-family:ui-monospace, Consolas, monospace; }
+</style>"""
+
+
+def _mtime_utc(path: pathlib.Path) -> datetime:
+    """Last-modified time of `path` as an aware UTC datetime."""
+    return datetime.fromtimestamp(path.stat().st_mtime, tz=timezone.utc)
+
+
+def _fmt(moment: datetime) -> str:
+    return moment.isoformat(timespec="seconds")
+
+
+def _human_gap(gap: timedelta) -> str:
+    seconds = int(gap.total_seconds())
+    days, rem = divmod(seconds, 86400)
+    hours, rem = divmod(rem, 3600)
+    minutes, secs = divmod(rem, 60)
+    parts = [f"{days}d", f"{hours}h", f"{minutes}m"] if days else (
+        [f"{hours}h", f"{minutes}m"] if hours else [f"{minutes}m", f"{secs}s"])
+    return " ".join(parts)
+
+
+def _plain_page(headline: str, rows: list[tuple[str, str]], note: str) -> str:
+    """A dashboard-less page: the reason, the evidence, then the approval panel.
+
+    The panel is still rendered — the operator can still read and judge proposals.
+    What is withheld is the stale dashboard, so that no approval is ever made while
+    looking at scores older than the data on disk.
+    """
+    rows_html = "".join(
+        f"<tr><td class='k'>{escape(key)}</td><td class='v'>{escape(value)}</td></tr>"
+        for key, value in rows
+    )
+    return f"""<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<title>CORTEX++ approval — dashboard withheld</title>
+{_PLAIN_CSS}</head>
+<body><div class="wrap">
+<h1>{escape(headline)}</h1>
+<p class="lede">No dashboard was served on this page. Nothing you see above the
+approval panel came from a rendered dashboard — do not read it as scores.</p>
+<table>{rows_html}</table>
+<div class="note">{note}</div>
+</div>
+{_build_approval_panel()}
+</body></html>"""
+
+
+_REGENERATE = ("Generate it by hand: "
+               r"<code>venv\Scripts\python.exe cortex_dashboard_generator.py</code> "
+               "(nothing in the cycle does this for you).")
+
+
 @app.route("/")
 def index():
-    """Serve dashboard с approval бутони."""
-    if DASHBOARD_FILE.exists():
-        content = DASHBOARD_FILE.read_text(encoding="utf-8")
-        # Инжектирай approval панел преди </body>
-        approval_panel = _build_approval_panel()
-        content = content.replace("</body>", f"{approval_panel}</body>")
-        return content
-    return "<h2>Dashboard не е генериран още. Пусни hypercortex_runner.py първо.</h2>"
+    """Serve the dashboard with approval buttons — but never if it is stale."""
+    if not DASHBOARD_FILE.exists():
+        return _plain_page(
+            "No dashboard has been generated.",
+            [("expected at", str(DASHBOARD_FILE))],
+            _REGENERATE + " The message here used to name hypercortex_runner.py, "
+            "which does not generate the dashboard and never did.",
+        )
+
+    if not SCORES_FILE.exists():
+        return _plain_page(
+            "Dashboard freshness cannot be verified — withheld.",
+            [
+                ("dashboard written", _fmt(_mtime_utc(DASHBOARD_FILE))),
+                ("scores file", f"{SCORES_FILE} — MISSING"),
+            ],
+            "The dashboard is withheld rather than vouched for: with no scores file "
+            "there is nothing to compare its age against, and an unverifiable page is "
+            "exactly the one an operator should not approve against.",
+        )
+
+    dashboard_at = _mtime_utc(DASHBOARD_FILE)
+    scores_at = _mtime_utc(SCORES_FILE)
+
+    if dashboard_at < scores_at:
+        return _plain_page(
+            "STALE DASHBOARD — withheld. The scores are newer than the page.",
+            [
+                ("dashboard written", _fmt(dashboard_at)),
+                ("scores written", _fmt(scores_at)),
+                ("dashboard is behind by", _human_gap(scores_at - dashboard_at)),
+                ("dashboard file", str(DASHBOARD_FILE)),
+                ("scores file", str(SCORES_FILE)),
+            ],
+            "The page would have shown scores older than the ones on disk, while "
+            "carrying its own generation timestamp and a filename saying "
+            "<code>live</code>. " + _REGENERATE,
+        )
+
+    content = DASHBOARD_FILE.read_text(encoding="utf-8")
+    return content.replace("</body>", f"{_build_approval_panel()}</body>")
 
 
 @app.route("/api/proposals")
