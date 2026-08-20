@@ -1827,6 +1827,20 @@ def main():
     except Exception as e:
         print(f"[FAST_CYCLE] constancy -> FAILED: {type(e).__name__}: {e}")
 
+    # ── 12.68. AXIS FEEDS — ЧИСЛОТО, КОЕТО ПРЕСИЧА ГРАНИЦАТА ───────────────
+    # Един агент на ос, и всеки може да изнесе САМО число, вързано за (ос, ключ).
+    # Не изречение, не дума за ниво, не обобщение на модел. Точно това е DMZ
+    # договорът от docs/OPENCLAW_INTEGRATION_DESIGN.md, приложен към данните:
+    # каквото излиза, се ограничава по ТИП, а не по добро намерение.
+    # Ос без число не изчезва — излиза с ABSENT ред и причина, защото „липсваща
+    # ос" и „ос, която никой не е погледнал" не бива да изглеждат еднакво.
+    beat("axis_feed", "12.68")
+    try:
+        _axis_feed = __import__("agents.axis.axis_feed", fromlist=["run"])
+        _axis_feed.run()
+    except Exception as e:
+        print(f"[FAST_CYCLE] axis_feed -> FAILED: {type(e).__name__}: {e}")
+
     beat("cognitive_orchestrator", "12.7")
     # Runs BEFORE HyperClaw so it can use its priority_axes assessment.
     # (CortexStrategist was moved to step 3.5 to run before token budget is depleted.)
