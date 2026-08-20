@@ -433,7 +433,8 @@ def _call_local(prompt: str, max_tokens: int):
 # Публичен интерфейс — API не се променя
 # ---------------------------------------------------------------------------
 
-def call_groq_meta(prompt: str, max_tokens: int = 1024) -> tuple:
+def call_groq_meta(prompt: str, max_tokens: int = 1024,
+                   purpose: str | None = None) -> tuple:
     """
     Fallback chain: Groq → Cerebras → OpenRouter → Gemini
 
@@ -505,7 +506,22 @@ def call_groq_meta(prompt: str, max_tokens: int = 1024) -> tuple:
         return backend_label
 
     last_error = None
+
+    # ── THE POLICY GATE (20 Aug 2026) ───────────────────────────────────────
+    # Not every failure is the same failure. See core/backend_policy.py: a 402
+    # is an account that will not serve this run, a 429 is a window that will
+    # reopen, and a step that has already watched all four die three times over
+    # should stop spending its ceiling proving it again.
+    from core import backend_policy as _policy
+    _cloud_ok, _why = _policy.cloud_allowed(purpose)
+    if not _cloud_ok:
+        print(f"  [LLM] cloud skipped -- {_why}")
+        backends = []
+
     for label, key, fn in backends:
+        if _policy.is_disabled(key):
+            print(f"  [LLM] {label} disabled for this run -- skipping")
+            continue
         if _is_cooling(key):
             print(f"  [LLM] {label} in cooldown -- skipping")
             continue
@@ -523,9 +539,11 @@ def call_groq_meta(prompt: str, max_tokens: int = 1024) -> tuple:
                 else:
                     print(f"[LLM] {label} OK")
                 _log_provenance(label, prompt, result)
+                _policy.note_cloud_success()
                 return result, meta
             raise ValueError(f"Empty response from {label}")
         except Exception as e:
+            _policy.note_failure(key, e)
             print(f"  [LLM] {label} failed ({e}) -- next...")
             last_error = e
 
@@ -533,6 +551,11 @@ def call_groq_meta(prompt: str, max_tokens: int = 1024) -> tuple:
     # so the axis stays alive (degraded) instead of dying with LLM_FAILED. Clearly
     # labelled so the self-model knows this answer was local. (Task #16; Emil-approved
     # relaxation of the "no Ollama in scoring" convention for this blackout case only.)
+    if _cloud_ok:
+        # Only count it when the cloud was actually attempted. A call that
+        # skipped the cloud by policy must not push the counter further.
+        _policy.note_all_cloud_failed()
+
     try:
         result, meta = _call_local(prompt, max_tokens)
         meta = dict(meta or {})
