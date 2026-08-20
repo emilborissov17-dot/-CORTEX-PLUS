@@ -1,0 +1,66 @@
+{
+  "_what_this_is": [
+    "Sources the DMZ fetch worker (scripts/openclaw_axis_worker.py) may reach.",
+    "One entry = one URL, one path into its JSON, one axis+key it feeds.",
+    "",
+    "THIS FILE IS THE ALLOWLIST. The worker fetches nothing that is not named",
+    "here, so widening what CORTEX reaches from the outside world is a human",
+    "edit to a config file, not a decision a model can make at runtime.",
+    "docs/OPENCLAW_INTEGRATION_DESIGN.md: 'Неизвестното = изисква одобрение.'"
+  ],
+  "_the_contract": [
+    "Whatever the path resolves to must be a finite number. A string, a null, a",
+    "list, a bool — all refused, by name, into external_refusals.jsonl. The",
+    "number is what crosses the boundary; nothing else does."
+  ],
+  "_path_syntax": [
+    "Dotted keys walk objects. Integer segments index lists.",
+    "'#len' takes the length of the list at that point.",
+    "  count                  -> {'count': 40}          -> 40",
+    "  current.temperature_2m -> {'current': {...}}     -> 21.3",
+    "  #len                   -> [ {...}, {...} ]       -> 2"
+  ],
+  "timeout_sec": 30,
+  "sources": [
+    {
+      "id": "usgs_quakes_m45_24h",
+      "axis": "DEEP_TIME_RISKS_REVIEW",
+      "key": "quakes_m45_last_24h",
+      "url": "https://earthquake.usgs.gov/fdsnws/event/1/count?format=geojson&minmagnitude=4.5&starttime=now-1days",
+      "path": "count",
+      "unit": "events_24h",
+      "org": "USGS",
+      "why": "seismometer network — instrument record, no interested party"
+    },
+    {
+      "id": "open_meteo_surface_temp",
+      "axis": "CLIMATE_GLOBAL_RISK_REVIEW",
+      "key": "surface_temp_c_sofia",
+      "url": "https://api.open-meteo.com/v1/forecast?latitude=42.7&longitude=23.3&current=temperature_2m",
+      "path": "current.temperature_2m",
+      "unit": "celsius",
+      "org": "Open-Meteo",
+      "why": "weather model over instrument inputs"
+    },
+    {
+      "id": "celestrak_launched_30d",
+      "axis": "SPACE_INFRASTRUCTURE_REVIEW",
+      "key": "objects_launched_last_30d",
+      "url": "https://celestrak.org/NORAD/elements/gp.php?GROUP=last-30-days&FORMAT=json",
+      "path": "#len",
+      "unit": "objects_30d",
+      "org": "CelesTrak",
+      "why": "catalogue of tracked objects"
+    },
+    {
+      "id": "deliberately_broken_path",
+      "axis": "DEEP_TIME_RISKS_REVIEW",
+      "key": "this_path_does_not_exist",
+      "url": "https://earthquake.usgs.gov/fdsnws/event/1/count?format=geojson&minmagnitude=4.5&starttime=now-1days",
+      "path": "count.total.missing",
+      "unit": "none",
+      "org": "USGS",
+      "why": "DELIBERATELY BROKEN. The endpoint is real and answers 200; the path walks into a number as if it were an object. Kept in the allowlist on purpose so the refusal path is exercised on every run instead of only in a test."
+    }
+  ]
+}
