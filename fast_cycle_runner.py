@@ -409,6 +409,20 @@ def _run(label, fn, free_after=False):
             return
     except Exception:
         pass
+    # ── СЪДЕНО ПО СЛЕДАТА, НЕ ПО МЪЛЧАНИЕТО (21 авг 2026) ──────────────────
+    # Долният except печата един ред и продължава. Стъпка, която е глътнала
+    # грешката си и не е записала нищо, изглежда в ЦЯЛАТА следа на цикъла точно
+    # като стъпка, която си е свършила работата. core/step_contract.py мери
+    # какво е ПИПНАЛА спрямо какво обикновено пипа: NO_EFFECT е тихият отказ.
+    # Цена: две снимки на 4853 файла = ~0.8s на стъпка, ~42s на цикъл от 1h47m.
+    # FAIL-OPEN: счупен контракт не бива да убива стъпка.
+    _contract = None
+    try:
+        from core.step_contract import StepContract
+        _contract = StepContract(label)
+        _contract.__enter__()
+    except Exception:
+        _contract = None
     try:
         fn()
         print(f"[FAST_CYCLE] {label} -> OK")
@@ -416,6 +430,14 @@ def _run(label, fn, free_after=False):
         # str(e) can be empty (e.g. bare MemoryError()) — always show the
         # exception type too, so a failure never renders as a blank message.
         print(f"[FAST_CYCLE] {label} -> FAILED: {type(e).__name__}: {e}")
+        if _contract is not None:
+            _contract.note_swallowed(f"{type(e).__name__}: {e}")
+    finally:
+        if _contract is not None:
+            try:
+                _contract.finish()
+            except Exception:
+                pass
     if free_after:
         _free_ollama()
     gc.collect()  # release memory after every agent step
