@@ -1,0 +1,362 @@
+{
+  "_what_this_is": "The 52 beat() names of fast_cycle_runner.py, grouped into 7 phases so that a failure costs one phase instead of a whole cycle. Generated from the beat() calls themselves, not transcribed: see test/test_cycle_phases_cover_every_step.py, which re-parses the runner and fails if this file and the code disagree.",
+  "_identity_is_the_index_not_the_name": "body_scan runs TWICE — at index 0 inside A_ORIENT (is this machine healthy enough to start?) and again at index 13 inside E_PROPOSE (what shall we do about the body?). 53 beat() calls carry 52 distinct names. A phase map keyed by name alone could not represent that, so every step here is identified by (name, index).",
+  "_requires": "Files that must EXIST and BELONG TO THIS CYCLE before the phase may start. Belonging is not the same as existing: a file from last night exists and is worthless. --from checks both and refuses rather than guessing.",
+  "_produces": "Files the phase must leave behind. A phase that raised nothing but produced nothing is PARTIAL, not DONE. This list is what lets the report contradict the steps.",
+  "_not_exhaustive": "produces names the load-bearing artifact per step, not every byte written. Dated outputs (daily/<date>_analysis.json, memory/session_<date>.json, news/<date>/) are deliberately absent: their names move, so presence cannot be checked this way.",
+  "phases": {
+    "A_ORIENT": {
+      "purpose": "Wake up, find out what machine and what rules we are inside, and decide what needs redoing.",
+      "index_range": [
+        "-1",
+        "0.7"
+      ],
+      "steps": [
+        {
+          "name": "boot",
+          "index": "-1"
+        },
+        {
+          "name": "body_scan",
+          "index": "0"
+        },
+        {
+          "name": "canon_load",
+          "index": "0.05"
+        },
+        {
+          "name": "telegram_approvals",
+          "index": "0.1"
+        },
+        {
+          "name": "brain_briefing",
+          "index": "0.2"
+        },
+        {
+          "name": "notify_patches_and_initiatives",
+          "index": "0.25"
+        },
+        {
+          "name": "dependency_check",
+          "index": "0.5"
+        },
+        {
+          "name": "needs_reanalysis_scan",
+          "index": "0.7"
+        }
+      ],
+      "requires": [],
+      "produces": [
+        "snapshots/body/body_snapshot_latest.json",
+        "memory/active_canon_frame.txt",
+        "memory/brain_stance.json",
+        "memory/brain_cycle_plan.json",
+        "snapshots/master/dependency_check_latest.json",
+        "snapshots/master/needs_reanalysis_latest.json"
+      ]
+    },
+    "B_SENSE": {
+      "purpose": "Reach the outside world. Everything downstream is an opinion about what this phase fetched.",
+      "index_range": [
+        "1",
+        "4"
+      ],
+      "steps": [
+        {
+          "name": "web_intelligence",
+          "index": "1"
+        },
+        {
+          "name": "global_indicators",
+          "index": "2.5"
+        },
+        {
+          "name": "sensorium_ingest",
+          "index": "2.54"
+        },
+        {
+          "name": "browser_scout",
+          "index": "2.55"
+        },
+        {
+          "name": "composers",
+          "index": "2.6"
+        },
+        {
+          "name": "grounding_ledger",
+          "index": "2.7"
+        },
+        {
+          "name": "llm_self_review_axes",
+          "index": "2.75"
+        },
+        {
+          "name": "trend_tracker",
+          "index": "3"
+        },
+        {
+          "name": "cortexstrategist",
+          "index": "3.5"
+        },
+        {
+          "name": "internet_intelligence",
+          "index": "4"
+        }
+      ],
+      "requires": [
+        "snapshots/master/dependency_check_latest.json",
+        "memory/active_canon_frame.txt"
+      ],
+      "produces": [
+        "memory/web_intelligence/latest.json",
+        "snapshots/master/global_indicators_latest.json",
+        "memory/composed_indicators.json",
+        "memory/grounding_ledger.jsonl",
+        "memory/trends_latest.json",
+        "snapshots/cortex_strategist/cortex_strategist_snapshot_latest.json",
+        "news/news_latest.json"
+      ]
+    },
+    "C_SNAPSHOT": {
+      "purpose": "Turn what was sensed into one snapshot per domain. Reads B, writes the four trees.",
+      "index_range": [
+        "5",
+        "11"
+      ],
+      "steps": [
+        {
+          "name": "civilization_snapshots",
+          "index": "5"
+        },
+        {
+          "name": "planet_snapshots",
+          "index": "6"
+        },
+        {
+          "name": "human_snapshots",
+          "index": "7"
+        },
+        {
+          "name": "cosmos_snapshots",
+          "index": "8"
+        },
+        {
+          "name": "planetary_potential",
+          "index": "9"
+        },
+        {
+          "name": "energy_review",
+          "index": "10"
+        },
+        {
+          "name": "self_awareness",
+          "index": "11"
+        }
+      ],
+      "requires": [
+        "memory/web_intelligence/latest.json",
+        "snapshots/master/global_indicators_latest.json"
+      ],
+      "produces": [
+        "snapshots/civilization/economy_work/economy_work_snapshot_latest.json",
+        "snapshots/planet/energy/energy_snapshot_latest.json",
+        "snapshots/planet/planetary_potential/planetary_potential_snapshot_latest.json",
+        "snapshots/human/cognition_learning/cognition_learning_snapshot_latest.json",
+        "snapshots/cosmos/goal_progress/goal_progress_snapshot_latest.json"
+      ]
+    },
+    "D_SCORE": {
+      "purpose": "Collapse the snapshots into numbers. The composite is born here and nowhere else.",
+      "index_range": [
+        "12",
+        "12.75"
+      ],
+      "steps": [
+        {
+          "name": "update_master",
+          "index": "12"
+        },
+        {
+          "name": "system_hypergraph",
+          "index": "12.3"
+        },
+        {
+          "name": "scoring_engine",
+          "index": "12.4"
+        },
+        {
+          "name": "facade_self_check",
+          "index": "12.45"
+        },
+        {
+          "name": "auto_levels",
+          "index": "12.5"
+        },
+        {
+          "name": "goal_score_calculator",
+          "index": "12.6"
+        },
+        {
+          "name": "deduction",
+          "index": "12.65"
+        },
+        {
+          "name": "constancy_and_constellation",
+          "index": "12.66"
+        },
+        {
+          "name": "cognitive_orchestrator",
+          "index": "12.7"
+        },
+        {
+          "name": "brain_reconsider",
+          "index": "12.75"
+        }
+      ],
+      "requires": [
+        "snapshots/civilization/economy_work/economy_work_snapshot_latest.json",
+        "snapshots/planet/energy/energy_snapshot_latest.json",
+        "snapshots/human/cognition_learning/cognition_learning_snapshot_latest.json",
+        "snapshots/cosmos/goal_progress/goal_progress_snapshot_latest.json"
+      ],
+      "produces": [
+        "snapshots/master/master_snapshot_latest.json",
+        "data/cortex_hypergraph.json",
+        "output/cortex_scores_latest.json",
+        "output/facade_audit_latest.json",
+        "memory/auto_levels.json",
+        "snapshots/master/goal_score_latest.json",
+        "memory/deductions_latest.json",
+        "memory/constancy_latest.json",
+        "memory/orchestration_latest.json"
+      ]
+    },
+    "E_PROPOSE": {
+      "purpose": "Look at the numbers and say what to do about them. Writes proposals, executes nothing.",
+      "index_range": [
+        "13",
+        "17"
+      ],
+      "steps": [
+        {
+          "name": "body_scan",
+          "index": "13"
+        },
+        {
+          "name": "growth_planner",
+          "index": "14"
+        },
+        {
+          "name": "hyperclaw",
+          "index": "15.6"
+        },
+        {
+          "name": "hyperclaw_plan",
+          "index": "15.7"
+        },
+        {
+          "name": "github_publish",
+          "index": "15.8"
+        },
+        {
+          "name": "action_recommendations",
+          "index": "16"
+        },
+        {
+          "name": "self_observer",
+          "index": "17"
+        }
+      ],
+      "requires": [
+        "snapshots/master/master_snapshot_latest.json",
+        "output/cortex_scores_latest.json",
+        "snapshots/master/goal_score_latest.json"
+      ],
+      "produces": [
+        "snapshots/body/body_snapshot_latest.json",
+        "snapshots/body/growth_plan_latest.json",
+        "memory/improvement_proposals.json"
+      ]
+    },
+    "F_SELF": {
+      "purpose": "The only phase that changes this repository. Smallest on purpose: two steps, easy to skip.",
+      "index_range": [
+        "18",
+        "19"
+      ],
+      "steps": [
+        {
+          "name": "self_modifier",
+          "index": "18"
+        },
+        {
+          "name": "execute_patches",
+          "index": "19"
+        }
+      ],
+      "requires": [
+        "memory/improvement_proposals.json"
+      ],
+      "produces": [
+        "memory/improvement_proposals.json"
+      ]
+    },
+    "G_LEARN": {
+      "purpose": "Score what was predicted, write down what happened, seal it. Nothing here fetches or decides.",
+      "index_range": [
+        "20",
+        "25.6"
+      ],
+      "steps": [
+        {
+          "name": "feedback_loop",
+          "index": "20"
+        },
+        {
+          "name": "session_update",
+          "index": "21"
+        },
+        {
+          "name": "daily_analysis",
+          "index": "22"
+        },
+        {
+          "name": "data_scout",
+          "index": "22.5"
+        },
+        {
+          "name": "continuous_learning",
+          "index": "23"
+        },
+        {
+          "name": "merklememory_commit",
+          "index": "24"
+        },
+        {
+          "name": "training_data_accumulation",
+          "index": "25"
+        },
+        {
+          "name": "brain_debrief",
+          "index": "25.5"
+        },
+        {
+          "name": "cycle_report",
+          "index": "25.6"
+        }
+      ],
+      "requires": [
+        "output/cortex_scores_latest.json",
+        "memory/improvement_proposals.json"
+      ],
+      "produces": [
+        "memory/feedback_log.json",
+        "memory/development_journal.json",
+        "memory/runtime_experiences.json",
+        "memory/axis_history.json",
+        "memory/goal_score_history.json",
+        "cortex_memory/archive/merkle_root.txt"
+      ]
+    }
+  }
+}
