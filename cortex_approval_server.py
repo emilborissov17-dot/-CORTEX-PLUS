@@ -129,9 +129,35 @@ approval panel came from a rendered dashboard — do not read it as scores.</p>
 </body></html>"""
 
 
-_REGENERATE = ("Generate it by hand: "
-               r"<code>venv\Scripts\python.exe cortex_dashboard_generator.py</code> "
-               "(nothing in the cycle does this for you).")
+# WHY THIS IS A STATEMENT AND NOT AN INSTRUCTION
+# -----------------------------------------------
+# This used to read "Generate it by hand:" followed by a command line for the
+# dashboard generator. That was the wrong advice to give. The generator has no caller,
+# and the single number an operator reads first — the big "overall" figure — is
+# fabricated four different ways. Sending someone off to run it would hand them a page
+# that looks authoritative and is not, which is a worse outcome than no page.
+#
+# So the operator is told the reason, not a task. There is deliberately no command line
+# here and no path to run; see the negative control in
+# test/test_dashboard_freshness.py::test_the_page_does_not_tell_the_operator_to_run_the_broken_generator.
+#
+# When the four defects below are fixed, or the generator is retired, this string is
+# what changes — not the gate above it.
+_UNAVAILABLE = (
+    "<b>No dashboard is available, and none is offered here.</b> The generator that "
+    "would produce one has no caller in the cycle and is known to fabricate the "
+    "overall score, so running it would not be a fix:"
+    "<ul>"
+    "<li><b>line 148</b> — an empty domain renders as a confident 0.50 tile.</li>"
+    "<li><b>line 150</b> — &quot;overall&quot; is an unweighted mean of domain means; "
+    "it is NOT the composite, and nothing on the page says so.</li>"
+    "<li><b>line 151</b> — a blind axis defaults to 0.5 and can never be critical.</li>"
+    "<li><b>DOMAIN_MAP</b> still groups by PLANET/HUMAN/CIVILIZATION/COSMOS, which "
+    "config/target_config.json no longer has.</li>"
+    "</ul>"
+    "The dashboard stays unavailable until those are fixed or the generator is "
+    "retired. That decision is a human one and has not been made."
+)
 
 
 @app.route("/")
@@ -141,7 +167,7 @@ def index():
         return _plain_page(
             "No dashboard has been generated.",
             [("expected at", str(DASHBOARD_FILE))],
-            _REGENERATE + " The message here used to name hypercortex_runner.py, "
+            _UNAVAILABLE + " The message here used to name hypercortex_runner.py, "
             "which does not generate the dashboard and never did.",
         )
 
@@ -154,7 +180,7 @@ def index():
             ],
             "The dashboard is withheld rather than vouched for: with no scores file "
             "there is nothing to compare its age against, and an unverifiable page is "
-            "exactly the one an operator should not approve against.",
+            "exactly the one an operator should not approve against. " + _UNAVAILABLE,
         )
 
     dashboard_at = _mtime_utc(DASHBOARD_FILE)
@@ -172,7 +198,7 @@ def index():
             ],
             "The page would have shown scores older than the ones on disk, while "
             "carrying its own generation timestamp and a filename saying "
-            "<code>live</code>. " + _REGENERATE,
+            "<code>live</code>. " + _UNAVAILABLE,
         )
 
     content = DASHBOARD_FILE.read_text(encoding="utf-8")

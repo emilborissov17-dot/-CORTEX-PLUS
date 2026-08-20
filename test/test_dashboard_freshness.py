@@ -53,6 +53,7 @@ approval server hands back, given two files with known mtimes.
 from __future__ import annotations
 
 import os
+import re
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -181,16 +182,89 @@ def test_a_missing_scores_file_does_not_open_the_gate(client, tmp_path):
 
 
 # ---------------------------------------------------------------------------
-# (c) The fallback names an entry point that exists
+# (c) A withheld page states a reason and hands over no task
 # ---------------------------------------------------------------------------
+#
+# The first version of this file asserted the opposite: that the withheld page NAMED
+# cortex_dashboard_generator.py as the entry point to run. That was replaced once the
+# generator was looked at properly. It has no caller, and the number an operator reads
+# first is fabricated four ways (its lines 148/150/151 and a DOMAIN_MAP that groups by
+# a taxonomy config/target_config.json no longer has). Pointing someone at it produced
+# a page that looks authoritative and is not — worse than no page at all.
+#
+# So the page now explains why there is nothing to show, and offers no command.
 
-def test_the_missing_dashboard_message_names_the_real_entry_point(client, tmp_path):
-    """It used to say "run hypercortex_runner.py first". That file does not generate
-    the dashboard and never did — grep it for "dashboard" and there are no hits."""
-    body = _get(client)
+# The filename may be discussed in prose. What must never come back is a runnable
+# invocation of it: inside a <code> block, or downstream of a run-verb.
+_CODE_INVOCATION = re.compile(
+    r"<code>[^<]*cortex_dashboard_generator\.py[^<]*</code>", re.I
+)
+_RUN_CONTEXT = re.compile(
+    r"(?:python(?:3|\.exe)?|generate it by hand|\brun\b|\bexecute\b|пусни)"
+    r"[^<>]{0,120}?cortex_dashboard_generator\.py",
+    re.I,
+)
 
-    assert "cortex_dashboard_generator.py" in body
-    assert "hypercortex_runner.py first" not in body
+
+def _withheld_pages(client, tmp_path) -> dict[str, str]:
+    """Every page the gate can serve in place of a dashboard, keyed by which branch."""
+    dashboard = tmp_path / "cortex_dashboard_live.html"
+    scores = tmp_path / "cortex_scores_latest.json"
+
+    pages = {"no dashboard on disk": _get(client)}
+
+    _write(dashboard, FIXTURE_DASHBOARD, BASE_EPOCH)
+    pages["scores file missing"] = _get(client)
+
+    _write(scores, "{}", BASE_EPOCH + HOUR)
+    pages["stale dashboard"] = _get(client)
+
+    for label, body in pages.items():
+        assert DASHBOARD_MARKER not in body, f"{label}: served the dashboard"
+    return pages
+
+
+def test_the_page_does_not_tell_the_operator_to_run_the_broken_generator(
+    client, tmp_path
+):
+    """NEGATIVE CONTROL: restore the old "Generate it by hand: <code>venv\\Scripts\\
+    python.exe cortex_dashboard_generator.py</code>" string and this goes red.
+
+    An operator who is told to run it gets an overall score that is an unweighted mean
+    of domain means over a stale taxonomy, presented as the composite. Withholding the
+    dashboard and then handing over the command to rebuild a fabricated one would give
+    back exactly what the gate just took away.
+    """
+    for label, body in _withheld_pages(client, tmp_path).items():
+        assert "venv\\Scripts\\python.exe" not in body, (
+            f"{label}: the withheld page hands the operator a command line. No page "
+            f"that refuses to show scores should tell them how to regenerate scores "
+            f"that are known to be fabricated."
+        )
+        assert not _CODE_INVOCATION.search(body), (
+            f"{label}: cortex_dashboard_generator.py appears inside a <code> block, "
+            f"which reads as a command to run. It is not fit to be recommended: its "
+            f"line 150 'overall' is not the composite."
+        )
+        assert not _RUN_CONTEXT.search(body), (
+            f"{label}: the page tells the operator to run "
+            f"cortex_dashboard_generator.py. That generator fabricates the overall "
+            f"score; the page must state that, not delegate it."
+        )
+
+
+def test_the_withheld_page_states_why_rather_than_saying_nothing(client, tmp_path):
+    """The counterweight to the test above: removing the instruction must not be
+    achievable by blanking the note. The four defects are the reason the operator is
+    owed, and they must be on every withheld page."""
+    for label, body in _withheld_pages(client, tmp_path).items():
+        assert "No dashboard is available" in body, f"{label}: no statement of why"
+        assert "line 148" in body, f"{label}: the 0.50-tile defect is not named"
+        assert "line 150" in body, f"{label}: the fabricated-overall defect is missing"
+        assert "line 151" in body, f"{label}: the blind-axis defect is not named"
+        assert "DOMAIN_MAP" in body, f"{label}: the stale taxonomy is not named"
+        assert "PLANET/HUMAN/CIVILIZATION/COSMOS" in body
+        assert "hypercortex_runner.py first" not in body
 
 
 def test_no_instruction_tells_the_operator_to_run_hypercortex_runner():
