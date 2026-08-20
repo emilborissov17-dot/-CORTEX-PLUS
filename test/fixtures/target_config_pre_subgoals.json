@@ -1,0 +1,229 @@
+{
+  "_meta": {
+    "description": "Scientific targets and weights for all 25 CORTEX++ review axes",
+    "vision_ref": "civilization_vision.txt",
+    "weight_scale": "1-10 (10=highest priority per civilization vision)",
+    "weight_principles": [
+      "Climate/CO2 and basic needs (water, food) highest — direct civilizational threats",
+      "Human dignity axes (poverty, refugees, health) next tier",
+      "Governance, education, technology lower — important but derivative",
+      "Cosmos/long-term lowest — critical but further horizon",
+      "Technology trends (GitHub) minimal weight — proxy, not goal"
+    ]
+  },
+
+  "PLANET": {
+    "CLIMATE_GLOBAL_RISK_REVIEW": {
+      "primary_metric": "co2_ppm_mauna_loa",
+      "target_value": 350.0,
+      "direction": "lower_better",
+      "weight": 10,
+      "unit": "ppm",
+      "rationale": "Planetary Boundaries safe CO2 ceiling (Rockström et al. 2009, Nature 461:472; pre-industrial ~280 ppm, safe boundary ~350 ppm)"
+    },
+    "ECOSYSTEMS_BIODIVERSITY_REVIEW": {
+      "primary_metric": "forest_area_pct",
+      "target_value": 35.0,
+      "direction": "higher_better",
+      "weight": 8,
+      "unit": "percent of land area",
+      "rationale": "Planetary boundary for forest cover; current ~31% is below safe threshold"
+    },
+    "ENERGY_REVIEW": {
+      "primary_metric": "renewable_energy_pct",
+      "target_value": 80.0,
+      "direction": "higher_better",
+      "weight": 8,
+      "unit": "percent of total energy",
+      "rationale": "IEA Net Zero 2050 requires 80%+ renewables by 2050"
+    },
+    "FOOD_REVIEW": {
+      "primary_metric": "food_insecurity_pct",
+      "target_value": 2.5,
+      "direction": "lower_better",
+      "weight": 9,
+      "unit": "percent of population",
+      "rationale": "SDG2: near-zero hunger; current ~10% severely food insecure"
+    },
+    "MATERIALS_WASTE_REVIEW": {
+      "primary_metric": "co2_ppm_mauna_loa",
+      "target_value": 350.0,
+      "direction": "lower_better",
+      "weight": 9,
+      "unit": "ppm",
+      "rationale": "Atmospheric CO2 as proxy for material throughput sustainability"
+    },
+    "PLANETARY_POTENTIAL_REVIEW": {
+      "primary_metric": "protected_terrestrial_area_pct",
+      "target_value": 30.0,
+      "direction": "higher_better",
+      "weight": 7,
+      "unit": "percent of land area",
+      "rationale": "30x30 global target (CBD Kunming-Montreal 2022)"
+    },
+    "WATER_REVIEW": {
+      "primary_metric": "safe_water_access_pct",
+      "target_value": 100.0,
+      "direction": "higher_better",
+      "weight": 9,
+      "unit": "percent of population",
+      "rationale": "SDG6: universal safe water access; current ~74%"
+    }
+  },
+
+  "HUMAN": {
+    "COGNITION_LEARNING_REVIEW": {
+      "primary_metric": "literacy_rate_youth_pct",
+      "target_value": 100.0,
+      "direction": "higher_better",
+      "weight": 7,
+      "unit": "percent",
+      "rationale": "Universal literacy as foundation for human autonomy (SDG4)"
+    },
+    "CULTURE_MEDIA_REVIEW": {
+      "primary_metric": null,
+      "target_value": null,
+      "direction": "higher_better",
+      "weight": 5,
+      "unit": "qualitative score",
+      "rationale": "No single numeric threshold; LLM-assessed cultural health"
+    },
+    "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL": {
+      "primary_metric": "governance_rights_score_global",
+      "target_value": 1.0,
+      "direction": "higher_better",
+      "weight": 7,
+      "unit": "0-1 pop-weighted score (WGI+V-Dem)",
+      "rationale": "Population-weighted global mean of WGI (CC/RL) + V-Dem (corr/rule) via wellbeing_country.py; see output/wellbeing_globe.json"
+    },
+    "HUMAN_WELL_BEING_REVIEW": {
+      "primary_metric": "child_mortality_per_1000",
+      "target_value": 25.0,
+      "reference_worst": 100.0,
+      "direction": "lower_better",
+      "weight": 9,
+      "unit": "deaths per 1000 live births",
+      "rationale": "SDG 3.2 official target: ≤25/1,000 under-5 mortality by 2030 (WHO SDG metadata); reference_worst=100 (conservative floor; pre-industrial rates were 200-300/1,000)"
+    },
+    "SOCIAL_RELATIONS_REVIEW": {
+      "primary_metric": "refugee_population",
+      "target_value": 1000000.0,
+      "reference_worst": 120000000.0,
+      "direction": "lower_better",
+      "weight": 8,
+      "unit": "persons",
+      "rationale": "Pre-2011 baseline ~10M; reference_worst=120M (UNHCR 2023 peak: ~117M forcibly displaced globally)"
+    }
+  },
+
+  "CIVILIZATION": {
+    "ECONOMY_WORK_REVIEW": {
+      "primary_metric": "gdp_growth_pct",
+      "target_value": null,
+      "direction": "stable_better",
+      "weight": 5,
+      "unit": "percent",
+      "rationale": "Resource-based model de-emphasizes GDP; stable sustainable activity preferred"
+    },
+    "EDUCATION_CULTURE_REVIEW": {
+      "primary_metric": "primary_completion_rate",
+      "target_value": 100.0,
+      "direction": "higher_better",
+      "weight": 7,
+      "unit": "percent",
+      "rationale": "Universal primary education completion (SDG4)"
+    },
+    "GOVERNANCE_INSTITUTIONS_REVIEW": {
+      "primary_metric": "governance_institutions_score_global",
+      "target_value": 1.0,
+      "direction": "higher_better",
+      "weight": 7,
+      "unit": "0-1 pop-weighted score (WGI+V-Dem)",
+      "rationale": "Population-weighted global mean of WGI (GE/RL/CC) + V-Dem (corr/rule) via wellbeing_country.py; see output/wellbeing_globe.json"
+    },
+    "INEQUALITY_POVERTY_REVIEW": {
+      "primary_metric": "extreme_poverty_rate_pct",
+      "target_value": 0.0,
+      "reference_worst": 60.0,
+      "direction": "lower_better",
+      "weight": 9,
+      "unit": "percent below $2.15/day",
+      "rationale": "SDG1: end extreme poverty; reference_worst=60% (World Bank est. ~60% poverty rate pre-1980 at $2.15/day threshold)"
+    },
+    "INFRASTRUCTURE_CITIES_REVIEW": {
+      "primary_metric": "urbanization_pct",
+      "target_value": null,
+      "direction": "stable_better",
+      "weight": 5,
+      "unit": "percent urban",
+      "rationale": "Urbanization itself not a goal; sustainable city design matters more"
+    },
+    "TECHNOLOGY_AI_REVIEW": {
+      "primary_metric": null,
+      "target_value": null,
+      "direction": "higher_better",
+      "weight": 6,
+      "unit": "qualitative score",
+      "rationale": "Beneficial AI adoption; no numeric global threshold exists"
+    },
+    "TECHNOLOGY_INFRA_REVIEW": {
+      "primary_metric": null,
+      "target_value": null,
+      "direction": "higher_better",
+      "weight": 5,
+      "unit": "qualitative score",
+      "rationale": "Digital infrastructure access — approximate only"
+    }
+  },
+
+  "COSMOS": {
+    "COSMIC_RESOURCES_REVIEW": {
+      "primary_metric": null,
+      "target_value": null,
+      "direction": "higher_better",
+      "weight": 3,
+      "unit": "qualitative score",
+      "rationale": "Long-horizon; no near-term threshold applicable"
+    },
+    "DEEP_TIME_RISKS_REVIEW": {
+      "primary_metric": null,
+      "target_value": null,
+      "direction": "lower_better",
+      "weight": 5,
+      "unit": "qualitative risk level",
+      "rationale": "Asteroid/supervolcano risk — no actionable threshold at current tech level"
+    },
+    "GENERAL_SELF_REVIEW": {
+      "primary_metric": null,
+      "target_value": null,
+      "direction": "higher_better",
+      "weight": 6,
+      "unit": "qualitative AGI score",
+      "rationale": "CORTEX++ self-assessment across 10 AGI axes"
+    },
+    "GOAL_PROGRESS_REVIEW": {
+      "primary_metric": "goal_score",
+      "target_value": 1.0,
+      "direction": "higher_better",
+      "weight": 8,
+      "unit": "composite 0-1 score",
+      "rationale": "Overall civilization goal progress — central meta-metric"
+    },
+    "LONG_TERM_FUTURE_REVIEW": {
+      "primary_metric": null,
+      "target_value": null,
+      "direction": "lower_better",
+      "weight": 7,
+      "unit": "qualitative risk level",
+      "rationale": "Existential risk (nuclear, AGI misalignment, bio) — no single threshold"
+    },
+    "SPACE_INFRASTRUCTURE_REVIEW": {
+      "primary_metric": null,
+      "target_value": null,
+      "direction": "higher_better",
+      "weight": 4,
+      "unit": "qualitative score",
+      "rationale": "Space redundancy goal — critical long-term, not short-term"
+    }
+  }
+}
