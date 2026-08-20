@@ -13,6 +13,29 @@ if hasattr(sys.stdout, "reconfigure"):
 if hasattr(sys.stderr, "reconfigure"):
     sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
+# ── A HARD CRASH MUST LEAVE A TRACEBACK ─────────────────────────────────────
+# Four cycles have now died leaving a log that ends mid-step with no error, no
+# traceback and no last words. A Python exception would have been printed; a
+# fault below Python — SIGSEGV or SIGABRT inside a C extension, and this process
+# loads several (requests/OpenSSL, chromadb/sqlite, ollama clients) — prints
+# nothing at all. The interpreter dies before it can say why.
+#
+# faulthandler installs OS-level signal handlers that dump the Python stack of
+# every thread at the moment of the fault. It writes to sys.stderr, which the
+# supervisor points at the cycle log (stderr=STDOUT, stdout=the log file), so a
+# fatal fault now lands in the same log as the step that provoked it.
+#
+# Cost: one signal handler per fatal signal, nothing at runtime.
+#
+# WHAT THIS DOES NOT CATCH: a HANG. faulthandler.enable() fires on a fault, not
+# on a process that is alive and waiting forever — which is what the evidence
+# points to for the 17:59 death (STEP_STUCK, four times, heartbeat frozen mid
+# beat()). faulthandler.dump_traceback_later() is the tool for that case and is
+# deliberately NOT enabled here: it would need a chosen interval and a decision
+# about repeat/exit, which is a behaviour change rather than a diagnostic.
+import faulthandler
+faulthandler.enable(all_threads=True)
+
 BASE = pathlib.Path(__file__).resolve().parent
 import os
 os.environ["CORTEX_BASE"] = str(BASE)

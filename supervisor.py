@@ -975,8 +975,15 @@ def spawn_cycle(cycle_id: str) -> Optional[int]:
     creationflags = (getattr(subprocess, "CREATE_NEW_PROCESS_GROUP", 0)
                      | getattr(subprocess, "DETACHED_PROCESS", 0))
     try:
+        # -u as well as PYTHONUNBUFFERED. The env var is already set above and
+        # was VERIFIED effective on 20 Aug 2026 (sys.stdout.reconfigure() in the
+        # runner does NOT reset write_through, measured — a line printed before
+        # an abrupt os._exit still reached disk). The flag is redundancy, not the
+        # fix: an env var can be dropped by a wrapper, a shell profile or a
+        # future edit to this dict, and the one run that needs the log is the one
+        # where that happened. -u cannot be lost that way.
         proc = subprocess.Popen(
-            [python, str(RUNNER)],
+            [python, "-u", str(RUNNER)],
             cwd=str(BASE), env=env,
             stdin=subprocess.DEVNULL, stdout=fh, stderr=subprocess.STDOUT,
             creationflags=creationflags,
