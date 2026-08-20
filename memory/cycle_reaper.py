@@ -59,6 +59,7 @@ WHAT THIS STILL CANNOT TELL US — read before trusting a record
 from __future__ import annotations
 
 import argparse
+import atexit
 import ctypes
 import json
 import os
@@ -252,6 +253,70 @@ def _settle_for_signature(cycle_id: str | None,
 # The record
 # ---------------------------------------------------------------------------
 
+def _append_night(night_log: Path, fields: dict) -> bool:
+    """One line in the night log. Never raises — see reap()'s docstring."""
+    try:
+        night_log.parent.mkdir(parents=True, exist_ok=True)
+        with open(night_log, "a", encoding="utf-8") as fh:
+            fh.write(json.dumps({"ts": _utc_now(), **fields},
+                                ensure_ascii=False) + "\n")
+        return True
+    except Exception:
+        return False
+
+
+def _write_provisional(exit_record: Path, pid: int, cycle_id) -> bool:
+    """Open the record in state WATCHING, before the wait begins.
+
+    If the reaper dies during the wait, THIS is what is left on disk, and it
+    says plainly that the watcher did not outlive the watched.
+    """
+    try:
+        _write_atomic(exit_record, {
+            "ts": _utc_now(),
+            "cycle_id": cycle_id,
+            "pid": int(pid),
+            "reaper_pid": os.getpid(),
+            "state": "WATCHING",
+            "note": ("The reaper is waiting on this pid. If this record is still "
+                     "in state WATCHING after the cycle is gone, the reaper died "
+                     "before it could write the exit code — the cycle's last "
+                     "integer is lost for that run, and that is itself the "
+                     "finding, not an absence of one."),
+        })
+        return True
+    except Exception:
+        return False
+
+
+def _note_orphaned_predecessor(exit_record: Path, night_log: Path, cycle_id) -> None:
+    """A WATCHING record for some OTHER cycle means the previous reaper vanished.
+
+    This is how the 17:59 death would have been visible: the 17:05 record was
+    RECORDED, the 17:59 one never appeared at all, and nothing said a watcher
+    had gone missing.
+    """
+    try:
+        prev = json.loads(exit_record.read_text(encoding="utf-8"))
+    except Exception:
+        return
+    if not isinstance(prev, dict) or prev.get("state") != "WATCHING":
+        return
+    if str(prev.get("cycle_id")) == str(cycle_id):
+        return
+    _append_night(night_log, {
+        "subject": f"{SUBJECT} PREVIOUS REAPER VANISHED",
+        "detail": (f"the exit record was still in state WATCHING for cycle "
+                   f"{prev.get('cycle_id')} (cycle pid={prev.get('pid')}, reaper "
+                   f"pid={prev.get('reaper_pid')}) when the reaper for "
+                   f"{cycle_id} started. That reaper died while waiting, so that "
+                   f"cycle's exit code was never recorded."),
+        "cycle_id": prev.get("cycle_id"),
+        "pid": prev.get("pid"),
+        "reaper_pid": prev.get("reaper_pid"),
+    })
+
+
 def _write_atomic(path: Path, payload: dict) -> None:
     """temp + os.replace, the same way the heartbeat is written.
 
@@ -295,6 +360,38 @@ def reap(pid: int, cycle_id: str | None = None,
     exit_record = Path(exit_record) if exit_record else EXIT_RECORD
     night_log = Path(night_log) if night_log else NIGHT_LOG
 
+    # ── THE RECORD MUST EXIST BEFORE IT CAN BE LOST (20 Aug 2026) ───────────
+    # The 17:59 cycle left NO cycle_exit.json at all, while the 17:05 one did.
+    # Everything below used to happen after wait_for_exit() returned, so a
+    # reaper that died while waiting wrote nothing — and its silence was
+    # indistinguishable from a reaper that was never started. Two processes
+    # died together and the surviving evidence said only that one of them had
+    # been alive at some point.
+    #
+    # So the record is now opened at the START, in state WATCHING, and closed
+    # at the end in state RECORDED. A WATCHING record left on disk is itself
+    # the finding: the reaper did not outlive the cycle it was watching.
+    _note_orphaned_predecessor(exit_record, night_log, cycle_id)
+    _write_provisional(exit_record, pid, cycle_id)
+    _finalised = {"done": False}
+
+    def _on_exit() -> None:
+        # A reaper killed outright cannot run this. One that exits for any
+        # reason python can see — an exception, a SystemExit, an interpreter
+        # shutdown — leaves a line saying it went without recording.
+        if _finalised["done"]:
+            return
+        _append_night(night_log, {
+            "subject": f"{SUBJECT} REAPER EXITED WITHOUT RECORDING",
+            "detail": (f"reaper pid={os.getpid()} stopped while waiting on cycle "
+                       f"pid={pid} (cycle_id={cycle_id}). The cycle's exit code "
+                       f"is lost for this run. A WATCHING record is on disk at "
+                       f"{exit_record}."),
+            "cycle_id": cycle_id, "pid": int(pid), "reaper_pid": os.getpid(),
+        })
+
+    atexit.register(_on_exit)
+
     t0 = time.monotonic()
     exit_code, source = wait_for_exit(int(pid))
     waited = round(time.monotonic() - t0, 1)
@@ -319,10 +416,14 @@ def reap(pid: int, cycle_id: str | None = None,
         "kill_landed": (hb or {}).get("kill_landed"),
         "waited_sec": waited,
         "reaper_pid": os.getpid(),
+        # RECORDED means the reaper outlived the cycle and this is the whole
+        # story. WATCHING on disk means it did not.
+        "state": "RECORDED",
     }
 
     try:
         _write_atomic(exit_record, record)
+        _finalised["done"] = True
         record["exit_record_written"] = True
     except Exception as e:
         record["exit_record_written"] = f"{type(e).__name__}: {e}"
