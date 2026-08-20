@@ -205,6 +205,10 @@
           "index": "12.66"
         },
         {
+          "name": "axis_feed",
+          "index": "12.68"
+        },
+        {
           "name": "cognitive_orchestrator",
           "index": "12.7"
         },
@@ -335,6 +339,14 @@
         {
           "name": "training_data_accumulation",
           "index": "25"
+        },
+        {
+          "name": "metta_column",
+          "index": "25.35"
+        },
+        {
+          "name": "brain_relay",
+          "index": "25.36"
         },
         {
           "name": "brain_debrief",

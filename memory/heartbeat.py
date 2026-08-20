@@ -148,6 +148,17 @@ def beat(step: str, step_index: Optional[int] = None, cycle_id: Optional[str] = 
     except Exception:
         pass  # a policy that cannot load must not kill the cycle
 
+    # ── ФАЗАТА СЕ ЗАТВАРЯ, ЩОМ ЦИКЪЛЪТ Я НАПУСНЕ (21 авг 2026) ─────────────
+    # config/cycle_phases.json групира 54-те стъпки в 7 фази, phase_report може
+    # да съди една, phase_debrief може да я разкаже, а supervisor може да я
+    # прати — четири готови части без шев помежду им. Шевът е тук, защото
+    # beat() е единственият общ проход. FAIL-OPEN.
+    try:
+        from core.phase_tracker import on_beat as _phase_beat
+        _phase_beat(step, step_index, cycle_id)
+    except Exception:
+        pass
+
     try:
         from core.brain import attend as _attend
         _said = _attend(step)

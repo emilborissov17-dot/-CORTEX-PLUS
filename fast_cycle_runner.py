@@ -2135,6 +2135,22 @@ def main():
     # Той сам съди сбъднал ли се е ТЕСТЪТ, който сам си зададе сутринта, и какво
     # да носи напред. Това затваря кръга ум→действие→памет: следващият план се
     # пише върху тази присъда, не върху чиста дъска. FAIL-OPEN.
+    # ── 25.4. СИМВОЛНАТА КОЛОНА И РЕЛЕТО ──────────────────────────────────
+    # metta_parallel гледа фийдовете с 5 правила и записва несъгласията, които
+    # влизат в доклада на D_SCORE. brain_relay изнася на телефона онова, което
+    # мозъкът е казал — на 20 авг той поиска човек и никой не разбра.
+    beat("metta_column", "25.35")
+    def _metta_column():
+        from core.metta_parallel import run as _metta
+        _metta()
+    _run("metta_column", _metta_column)
+
+    beat("brain_relay", "25.36")
+    def _brain_relay():
+        from core.brain_relay import run as _relay
+        _relay()
+    _run("brain_relay", _brain_relay)
+
     beat("brain_debrief", "25.5")
     try:
         from core.brain import debrief_cycle as _debrief
