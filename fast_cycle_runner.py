@@ -2151,7 +2151,75 @@ def main():
     print("=" * 50)
 
 
+def _phase_cli(argv: list) -> None:
+    """--only <PHASE> / --from <PHASE>: the resume gate.
+
+    --from asserts that every phase before it already ran THIS cycle. That claim
+    is checked against the artifacts on disk before anything starts, and a
+    missing or stale one refuses the run by name. See core/phase_resume.py.
+
+    HONEST LIMIT, 20 Aug 2026: this gate decides WHETHER a resume may start. It
+    does not yet skip the earlier steps, because main() is one linear 900-line
+    function and 30 of its 53 step bodies are inline rather than wrapped in
+    _run() — the only place a skip hook exists today. Gating on _run() alone
+    would silently execute those 30 while claiming to skip them, which is the
+    exact class of defect the phase reports were built to expose. So --only and
+    --from currently REFUSE OR PERMIT, print the phases they would run, and
+    stop. Decomposing main() into per-phase callables is the follow-up that
+    makes them execute; it is deliberately not being done underneath a live
+    cycle.
+    """
+    from datetime import datetime, timezone
+
+    from core.phase_resume import (FROM, ONLY, ResumeRefused, phase_names,
+                                   verify_or_refuse)
+
+    mode = ONLY if "--only" in argv else FROM
+    flag = "--only" if mode == ONLY else "--from"
+    try:
+        phase = argv[argv.index(flag) + 1]
+    except IndexError:
+        print(f"[PHASE] {flag} needs a phase name. Have: {', '.join(phase_names())}")
+        raise SystemExit(2)
+
+    # NOT _classify_cycle_id(): that function CLAIMS memory/cycle.lock as a side
+    # effect. Calling it here overwrote the lock of a cycle that was still on
+    # disk — a gate that seizes the lock in order to announce it will not run is
+    # worse than no gate. Everything below is read-only.
+    cycle_id = os.environ.get("CORTEX_CYCLE_ID") or ""
+    started = None
+    lock = BASE / "memory" / "cycle.lock"
+    if lock.exists():
+        try:
+            held = json.loads(lock.read_text(encoding="utf-8"))
+            cycle_id = cycle_id or str(held.get("cycle_id") or "")
+            started = datetime.fromisoformat(held["started_utc"])
+        except Exception:
+            started = None
+    if not cycle_id:
+        print("[PHASE] no cycle_id: neither CORTEX_CYCLE_ID nor a readable "
+              "memory/cycle.lock. There is no cycle to resume into.")
+        raise SystemExit(2)
+    if started is None:
+        started = datetime.now(timezone.utc)
+
+    try:
+        phases = verify_or_refuse(mode, phase, cycle_id, started)
+    except ResumeRefused as exc:
+        print(f"[PHASE] {exc}")
+        raise SystemExit(2)
+
+    print(f"[PHASE] {flag} {phase} — requires satisfied for cycle {cycle_id}")
+    print(f"[PHASE] would run: {', '.join(phases)}")
+    print("[PHASE] step-level skipping is not wired yet — see _phase_cli.__doc__. "
+          "Nothing was run.")
+    raise SystemExit(0)
+
+
 if __name__ == "__main__":
+    if len(sys.argv) > 1 and ("--only" in sys.argv or "--from" in sys.argv):
+        _phase_cli(sys.argv)
+
     if len(sys.argv) > 1 and sys.argv[1] == "--pulse":
         try:
             from memory.autonomic_pulse import start as _ps, read as _pr, stop as _pstop
