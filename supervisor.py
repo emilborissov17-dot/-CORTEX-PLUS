@@ -278,7 +278,8 @@ def note_night_event(subject: str, detail: str) -> None:
         pass
 
 
-def alarm_human(subject: str, detail: str) -> None:
+def alarm_human(subject: str, detail: str, dedup_key: str | None = None,
+                trigger: str | None = None) -> None:
     """15 Aug 2026 — THE DEAD-SYSTEM ALARM.
 
     ПРОМЕНЕНО (15 авг, вечер): в тихите часове НЕ буди. Записва събитието за
@@ -293,7 +294,12 @@ def alarm_human(subject: str, detail: str) -> None:
     reach the API; the cloud cannot). Fail-open, never raises, never blocks recovery.
     """
     note_night_event(subject, detail)
-    if _quiet_now():
+    # ── QUIET HOURS DO NOT APPLY TO A RUN THE HUMAN STARTED (20 Aug 2026) ───
+    # "ДА НЕ МЕ БУДЯТ" is about the NIGHTLY cycle, which runs while he sleeps.
+    # A cycle started by hand is one he is sitting in front of, waiting for; a
+    # per-phase report that arrives tomorrow morning is useless to him. So the
+    # quiet window is skipped when trigger=MANUAL and only then.
+    if _quiet_now() and str(trigger or "").upper() != "MANUAL":
         return                      # спи човекът; сутринта ще прочете всичко
     try:
         cfg = json.loads(NOTIFY_CHANNEL.read_text(encoding="utf-8"))
@@ -304,7 +310,13 @@ def alarm_human(subject: str, detail: str) -> None:
             sent = json.loads(ALARM_STAMP.read_text(encoding="utf-8"))
         except Exception:
             sent = {}
-        key = f"{datetime.now(timezone.utc).strftime('%Y-%m-%d')}:{subject[:40]}"
+        # ── DEDUP BY WHAT IT IS ABOUT, NOT BY WHAT DAY IT IS (20 Aug 2026) ──
+        # date+subject meant the SECOND phase report of a day was swallowed as a
+        # duplicate of the first: same subject, same date. A phase report is
+        # unique to one phase of one cycle, so that is the key. Callers with
+        # nothing better keep the old day-scoped behaviour.
+        key = dedup_key or (
+            f"{datetime.now(timezone.utc).strftime('%Y-%m-%d')}:{subject[:40]}")
         if sent.get(key):
             return
         import requests
@@ -315,6 +327,18 @@ def alarm_human(subject: str, detail: str) -> None:
         ALARM_STAMP.write_text(json.dumps(sent, ensure_ascii=False)[:20000], encoding="utf-8")
     except Exception:
         pass
+
+
+def send_phase_debrief(phase: str, cycle_id: str, text: str,
+                       trigger: str | None = None) -> str:
+    """One Telegram message per phase per cycle. Returns the dedup key used.
+
+    Reuses alarm_human so there is ONE path to the phone, with one set of
+    fail-open rules, rather than a second sender that drifts from it.
+    """
+    key = f"{cycle_id}:{phase}"
+    alarm_human(f"фаза {phase}", text, dedup_key=key, trigger=trigger)
+    return key
 
 
 # ── DIAGNOSED RETRY (15 Aug 2026, Emil: "защо да жертваме цял ден заради 2 сляпи
