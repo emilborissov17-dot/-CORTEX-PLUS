@@ -110,6 +110,15 @@ def _provenance_between(start: datetime, end: datetime,
     return counts
 
 
+def _symbolic_disagreements() -> list[dict]:
+    """The metta column's objections, for the D_SCORE report. Fail-open."""
+    try:
+        from core.metta_parallel import for_phase_report
+        return for_phase_report()
+    except Exception:
+        return []
+
+
 class PhaseReport:
     """Records one phase and writes its report.
 
@@ -236,6 +245,12 @@ class PhaseReport:
             "llm_calls": _provenance_between(self.started, self.ended, self.provenance),
             "verdict": verdict,
             "reason": reason,
+            # D_SCORE is where the composite is born, so it is where the
+            # symbolic column's objections belong. R3 caught auto_levels saying
+            # LOW while goal_score said 81.85/100 for the same axis on the same
+            # night; nothing in the cycle had been comparing them.
+            **({"symbolic_disagreements": _symbolic_disagreements()}
+               if self.phase == "D_SCORE" else {}),
         }
 
     def path(self) -> pathlib.Path:
