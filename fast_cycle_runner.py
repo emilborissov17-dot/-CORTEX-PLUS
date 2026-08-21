@@ -1745,6 +1745,17 @@ def main():
 
     # ── 12.45. Facade self-check — did each real scorer consume real data, or
     #           default to a constant? Fails LOUD instead of silent. FAIL-OPEN. ──
+    # ── 12.42. ЧЕРВЕНИТЕ ЛИНИИ ────────────────────────────────────────────
+    # Веднага след скоринга, защото аларма, която чака сутрешния дайджест, е
+    # доклад, а не аларма. Пресичане ЗВЪНИ веднага и минава през тихите часове.
+    # Днес всичките 25 прага са null — нищо не звъни, а броячът
+    # AWAITING_HUMAN_VALUES стои в доклада като открит въпрос към Емил.
+    beat("alarm_bands", "12.42")
+    def _alarm_bands():
+        from core.alarm_bands import run as _sweep
+        _sweep()
+    _run("alarm_bands", _alarm_bands)
+
     beat("facade_self_check", "12.45")
     try:
         from core.scorer_self_check import run_from_snapshots as _facade_check, format_report as _facade_fmt

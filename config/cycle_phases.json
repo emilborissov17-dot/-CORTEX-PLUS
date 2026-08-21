@@ -185,6 +185,10 @@
           "index": "12.4"
         },
         {
+          "name": "alarm_bands",
+          "index": "12.42"
+        },
+        {
           "name": "facade_self_check",
           "index": "12.45"
         },
