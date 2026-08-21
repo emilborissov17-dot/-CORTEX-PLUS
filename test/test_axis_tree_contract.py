@@ -29,7 +29,18 @@ SPEC_FILE = BASE / "agi_axes_spec.txt"
 
 # A deliberate act, not a moving target: adding or retiring an axis must be a
 # visible edit to this number, reviewed like any other change to the goal.
-EXPECTED_AXIS_COUNT = 25
+#
+# 25 -> 24 on 21 Aug 2026: GENERAL_SELF_REVIEW retired. Self-observation is a
+# SENSE, not a state of the world, and an axis that scores the observer lets
+# degraded sensors raise the composite by rating themselves higher. It now lives
+# in core/self_mirror.py and feeds no number. Total weight 173 -> 167.
+EXPECTED_AXIS_COUNT = 24
+
+# Retiring an axis breaks the composite series by construction: the denominator
+# changes. The break is DECLARED, never silent -- config/series_breaks.json holds
+# the record and test_retired_axes_are_declared below refuses a retirement that
+# was not written down.
+RETIRED_AXES = {"GENERAL_SELF_REVIEW"}
 
 
 def _cfg() -> dict:
@@ -263,3 +274,60 @@ def test_regrouping_did_not_move_the_composite():
     # and with a partially blind sensor set, which is the real-world case
     half = {a: s for a, s in scores.items() if hash(a) % 2 == 0}
     assert _composite(old, half) == pytest.approx(_composite(new, half), abs=1e-12)
+
+
+# --------------------------------------------------------------------------- #
+# (e) a retirement is declared, never silent -- rule 1.3
+# --------------------------------------------------------------------------- #
+
+BREAKS_FILE = BASE / "config" / "series_breaks.json"
+
+
+def _breaks() -> list:
+    return json.loads(BREAKS_FILE.read_text(encoding="utf-8"))["breaks"]
+
+
+def test_retired_axes_are_declared_as_a_series_break():
+    """Rule 1.3: if the weights move, the series are marked BROKEN, not silently
+    continued. Removing an axis moves the denominator of the goal, so it MUST
+    leave a record naming both fingerprints."""
+    declared = " ".join(json.dumps(b, ensure_ascii=False) for b in _breaks())
+    missing = sorted(a for a in RETIRED_AXES if a not in declared)
+    assert not missing, (
+        f"{missing} left the goal tree with no entry in "
+        f"{BREAKS_FILE.relative_to(BASE)} -- rule 1.3 forbids a silent break.")
+
+
+def test_every_break_names_the_fingerprint_on_both_sides():
+    """A break whose record does not say what the fingerprint was before and
+    after cannot be used to decide whether two points are comparable."""
+    for b in _breaks():
+        before = b.get("config_fingerprint_before")
+        after = b.get("config_fingerprint_after")
+        assert before and after, f"{b.get('id')}: missing a fingerprint"
+        assert before != after, (
+            f"{b.get('id')}: identical fingerprints -- nothing actually broke, or "
+            "the record was copied without being updated.")
+
+
+def test_the_declared_after_fingerprint_is_the_one_the_live_config_produces():
+    """NEGATIVE CONTROL for the record itself. A break entry that names an
+    'after' fingerprint no live config produces is a story, not evidence."""
+    import goal_score_calculator as gsc
+
+    live = gsc.config_fingerprint(_cfg())
+    latest = _breaks()[-1]
+    assert latest["config_fingerprint_after"] == live, (
+        f"the newest break claims the tree now fingerprints as "
+        f"{latest['config_fingerprint_after']}, but config/target_config.json "
+        f"fingerprints as {live}. Either the tree changed again without a new "
+        "break entry, or the entry was written by hand and never checked.")
+
+
+def test_a_retired_axis_does_not_linger_in_the_spec():
+    """The spec is what a score MEANS. A definition for an axis that no longer
+    carries weight is the dead-weight failure CLAUDE.md exists to stop."""
+    still_there = sorted(RETIRED_AXES & _spec_axis_names())
+    assert not still_there, (
+        f"{still_there} is retired from the tree but still defined in "
+        "agi_axes_spec.txt")

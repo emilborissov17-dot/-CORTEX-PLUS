@@ -30,7 +30,6 @@
       "TECHNOLOGY_INFRA_REVIEW",
       "COSMIC_RESOURCES_REVIEW",
       "DEEP_TIME_RISKS_REVIEW",
-      "GENERAL_SELF_REVIEW",
       "LONG_TERM_FUTURE_REVIEW",
       "SPACE_INFRASTRUCTURE_REVIEW",
       "GOAL_PROGRESS_REVIEW (metric goal_score - internal, not external)"
@@ -1100,46 +1099,6 @@
         }
       ],
       "what_no_number_can_capture": "The dominant deep-time risks (engineered pandemic, nuclear exchange, misaligned AI) have NO observational series at all. Their probability is an argument, not a measurement. An axis scored only on asteroid counts would be measuring the one deep-time risk that happens to be instrumented, and calling it the risk. That must be stated explicitly in the axis note or the axis lies by omission."
-    },
-    "GENERAL_SELF_REVIEW": {
-      "primary_metric": null,
-      "numeric_candidates": [],
-      "external_sources": "NONE. This axis is about the system itself. Feeding it external data would be a category error.",
-      "internal_sources": [
-        {
-          "name": "memory/existence_ledger.jsonl",
-          "reads_for": "did the system run, and did it run honestly"
-        },
-        {
-          "name": "memory/heartbeat.json",
-          "reads_for": "boundary coverage"
-        },
-        {
-          "name": "memory/sensorium/_merkle_leaves.jsonl",
-          "reads_for": "what it actually committed as observation"
-        },
-        {
-          "name": "memory/penumbra/ quarantine chain",
-          "reads_for": "what it refused and why - arguably the most honest self-measure available"
-        },
-        {
-          "name": "memory/collector_runs.jsonl",
-          "reads_for": "whether intake is diverse or looping"
-        },
-        {
-          "name": "memory/idea_stream.jsonl",
-          "reads_for": "the creative tick output",
-          "STATUS": "FILE DOES NOT EXIST as of 2026-08-03. The creative phase has produced zero ideas. This is the honest state."
-        }
-      ],
-      "semantic_sources": [
-        {
-          "name": "BOUNDARIES.md",
-          "reads_for": "the constitution the system must be testable against under conflict, not merely able to cite",
-          "independence": "human_owned"
-        }
-      ],
-      "what_no_number_can_capture": "Self-review is where a self-scoring circuit is most dangerous: the system grading its own honesty. The only defensible measures here are ones the system cannot improve by wanting to - ledger completeness, quarantine rate, source diversity by ORIGIN - never an LLM's opinion of its own performance."
     },
     "GOAL_PROGRESS_REVIEW": {
       "primary_metric": "goal_score",

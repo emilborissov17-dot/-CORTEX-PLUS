@@ -278,7 +278,7 @@
     },
     "org:CORTEX internal": {
       "class": "self_reported",
-      "why": "CORTEX measuring CORTEX. GENERAL_SELF_REVIEW reads this system's own health counters, so it is self-reported BY DEFINITION and must never be counted as independent corroboration of anything.",
+      "why": "CORTEX measuring CORTEX. core/self_mirror.py reads this system's own health counters, so it is self-reported BY DEFINITION and must never be counted as independent corroboration of anything. (Until 21 Aug 2026 the example here was the GENERAL_SELF_REVIEW axis; the axis was retired for exactly the reason stated in this sentence, and the self-observation it carried moved to the mirror, which enters no score.)",
       "confirmed_by": "Claude, under Emil's explicit authorisation 2026-08-04 (coverage-gap fix)",
       "confirmed_at": "2026-08-04"
     }

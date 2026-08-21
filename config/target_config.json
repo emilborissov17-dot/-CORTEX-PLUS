@@ -35,6 +35,16 @@
         "subgoal_index": 5,
         "subgoal_bg": "Безопасност"
       }
+    },
+    "retired_axes": {
+      "GENERAL_SELF_REVIEW": {
+        "retired_utc": "2026-08-21",
+        "was_branch": "KNOWLEDGE_UNDERSTANDING",
+        "was_weight": 6,
+        "why": "Самонаблюдението е СЕТИВО, не състояние на света. Ос, която мери качеството на собствения наблюдател, вкарва наблюдателя в наблюдаваното: влошени сензори можеха да вдигнат композита през по-висока самооценка. Наблюдението продължава в core/self_mirror.py и НЕ влиза в никакво число.",
+        "moved_to": "core/self_mirror.py -> memory/self_mirror_latest.json",
+        "series_break": "config/series_breaks.json"
+      }
     }
   },
   "SUSTAINABLE_RESOURCES": {
@@ -253,17 +263,6 @@
       "unit": "percent",
       "rationale": "Universal literacy as foundation for human autonomy (SDG4)",
       "legacy_domain": "HUMAN",
-      "score_meaning": "goodness",
-      "alarm_threshold": null
-    },
-    "GENERAL_SELF_REVIEW": {
-      "primary_metric": null,
-      "target_value": null,
-      "direction": "higher_better",
-      "weight": 6,
-      "unit": "qualitative AGI score",
-      "rationale": "CORTEX++ self-assessment across 10 AGI axes",
-      "legacy_domain": "COSMOS",
       "score_meaning": "goodness",
       "alarm_threshold": null
     }

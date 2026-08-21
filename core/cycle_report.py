@@ -164,10 +164,27 @@ def build(cycle_start: float | None = None) -> dict:
     except Exception:
         pass
 
+    # ── ОГЛЕДАЛОТО И ПРЕКЪСВАНИЯТА ──────────────────────────────────────────
+    # И двете са ОПИСАНИЯ. Огледалото не носи скор, а прекъсването е декларация
+    # за сравнимост. FAIL-OPEN: отчет без огледало е по-добър от липсващ отчет.
+    mirror = None
+    try:
+        from core import self_mirror
+        mirror = self_mirror.build()
+    except Exception as e:  # noqa: BLE001
+        print(f"[REPORT] огледалото не се сглоби: {type(e).__name__}: {e}")
+
+    breaks = []
+    try:
+        breaks = json.loads((BASE / "config" / "series_breaks.json")
+                            .read_text(encoding="utf-8")).get("breaks", [])
+    except Exception:
+        breaks = []
+
     return {"ts": _now(), "log": str(log_path.relative_to(BASE)),
             "cycle_start": cycle_start, "plan": plan, "rows": rows,
             "broken": [r["step"] for r in broken], "failed": [r["step"] for r in failed],
-            "brain": opening}
+            "brain": opening, "mirror": mirror, "series_breaks": breaks}
 
 
 def to_markdown(rep: dict) -> str:
@@ -415,6 +432,40 @@ def to_markdown(rep: dict) -> str:
                 f"- **Следи:** {p.get('watch')}",
                 f"- **Подозрение към себе си:** {p.get('suspicion')}",
                 f"- **Свой тест за успех:** {p.get('success_test')}", ""]
+
+    # ── ОГЛЕДАЛОТО (21 авг 2026) ────────────────────────────────────────────
+    # Самонаблюдението вече не е ос от целта. То стои ТУК, като секция, и не
+    # влиза в нито едно число. Калибрацията е най-важният ѝ ред: колко пъти
+    # мозъкът е обявил провал, който дискът опровергава.
+    if rep.get("mirror"):
+        try:
+            from core.self_mirror import to_markdown as _mirror_md
+            out += [_mirror_md(rep["mirror"]), ""]
+        except Exception as e:  # noqa: BLE001
+            out += ["## Огледало", "",
+                    f"_(не се сглоби: {type(e).__name__}: {e})_", ""]
+
+    # ── ПРЕКЪСНАТИ СЕРИИ (правило 1.3) ──────────────────────────────────────
+    # Ако теглата мръднат, сериите се маркират като прекъснати, не мълчаливо.
+    if rep.get("series_breaks"):
+        out += ["## Прекъснати серии", ""]
+        for b in rep["series_breaks"]:
+            eff = b.get("measured_effect") or {}
+            out += [f"**{b.get('date_utc')} · {b.get('cause')}** (правило {b.get('rule')})", "",
+                    f"- отпечатък: `{b.get('config_fingerprint_before')}` → "
+                    f"`{b.get('config_fingerprint_after')}`",
+                    f"- тегло на целта: {(eff.get('total_weight') or {}).get('before')} → "
+                    f"{(eff.get('total_weight') or {}).get('after')}; "
+                    f"оси: {(eff.get('axes') or {}).get('before')} → "
+                    f"{(eff.get('axes') or {}).get('after')}",
+                    f"- композит: {(eff.get('composite_score') or {}).get('before')} → "
+                    f"{(eff.get('composite_score') or {}).get('after')}; "
+                    f"покритие на целта: {(eff.get('coverage_of_goal') or {}).get('before')} → "
+                    f"{(eff.get('coverage_of_goal') or {}).get('after')}",
+                    f"- {b.get('why')}", ""]
+            if eff.get("note"):
+                out += [f"> {eff['note']}", ""]
+        out += ["_Точки от двете страни на прекъсване НЕ се сравняват._", ""]
 
     if rep["broken"]:
         out += ["## ⚠ Стъпки, които казаха ОК, но не пипнаха обещаното", "",

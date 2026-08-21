@@ -96,13 +96,6 @@
   },
 
   "meta_brain": {
-    "GENERAL_SELF_REVIEW": {
-      "domains": [
-        "all_resource_domains",
-        "internal_logs",
-        "self_improvement_history"
-      ]
-    },
     "GOAL_PROGRESS_REVIEW": {
       "domains": [
         "all_resource_domains",

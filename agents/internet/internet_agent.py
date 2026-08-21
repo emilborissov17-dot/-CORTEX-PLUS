@@ -72,7 +72,7 @@ RSS_FEEDS = {
     'CLIMATE_GLOBAL_RISK_REVIEW':     'https://feeds.bbci.co.uk/news/science_and_environment/rss.xml',
     'ENERGY_REVIEW':                  'https://www.renewableenergyworld.com/feed/',
     'WATER_REVIEW':                   'https://www.theguardian.com/environment/water/rss',
-    'FOOD_REVIEW':                    'https://www.fao.org/news/rss-feed/en/',
+    'FOOD_REVIEW':                    'https://www.sciencedaily.com/rss/plants_animals/food.xml',
     'ECOSYSTEMS_BIODIVERSITY_REVIEW': 'https://www.sciencedaily.com/rss/plants_animals/ecology.xml',
     'ECONOMY_WORK_REVIEW':            'https://feeds.bbci.co.uk/news/business/rss.xml',
     'INEQUALITY_POVERTY_REVIEW':      'https://feeds.bbci.co.uk/news/world/rss.xml',
@@ -81,9 +81,8 @@ RSS_FEEDS = {
     'GOAL_PROGRESS_REVIEW':           'https://news.un.org/feed/subscribe/en/news/topic/sdgs/feed/rss.xml',
     'SPACE_INFRASTRUCTURE_REVIEW':    'https://www.nasa.gov/rss/dyn/breaking_news.rss',
     'LONG_TERM_FUTURE_REVIEW':        'https://feeds.bbci.co.uk/news/technology/rss.xml',
-    'GENERAL_SELF_REVIEW':            'https://feeds.bbci.co.uk/news/technology/rss.xml',
     'HUMAN_WELL_BEING_REVIEW':        'https://feeds.bbci.co.uk/news/health/rss.xml',
-    'MATERIALS_WASTE_REVIEW':         'https://feeds.theecologist.org/resilience',
+    'MATERIALS_WASTE_REVIEW':         'https://www.wastedive.com/feeds/news/',
     'SOCIAL_RELATIONS_REVIEW':        'https://feeds.bbci.co.uk/news/world/rss.xml',
     'COGNITION_LEARNING_REVIEW':      'https://www.sciencedaily.com/rss/mind_brain/educational_psychology.xml',
     'INFRASTRUCTURE_CITIES_REVIEW':   'https://feeds.bbci.co.uk/news/technology/rss.xml',
@@ -114,7 +113,6 @@ GITHUB_QUERIES = {
     'COSMIC_RESOURCES_REVIEW':          'asteroid-mining',
     'DEEP_TIME_RISKS_REVIEW':           'existential-risk',
     'GOAL_PROGRESS_REVIEW':             'sustainable-development',
-    'GENERAL_SELF_REVIEW':              'llm-agent',
 }
 
 ARXIV_QUERIES = {
@@ -142,7 +140,6 @@ ARXIV_QUERIES = {
     'COSMIC_RESOURCES_REVIEW':          'asteroid mining space resources',
     'DEEP_TIME_RISKS_REVIEW':           'long term existential risk',
     'GOAL_PROGRESS_REVIEW':             'sustainable development goals measurement',
-    'GENERAL_SELF_REVIEW':              'AI self improvement meta learning',
 }
 
 ARXIV_CATEGORIES = {
@@ -170,7 +167,6 @@ ARXIV_CATEGORIES = {
     'COSMIC_RESOURCES_REVIEW':          'astro-ph.EP',
     'DEEP_TIME_RISKS_REVIEW':           'cs.AI',
     'GOAL_PROGRESS_REVIEW':             'econ.GN',
-    'GENERAL_SELF_REVIEW':              'cs.AI',
 }
 
 GDELT_QUERIES = {
@@ -198,7 +194,6 @@ GDELT_QUERIES = {
     'COSMIC_RESOURCES_REVIEW':          'asteroid mining space resources',
     'DEEP_TIME_RISKS_REVIEW':           'nuclear war pandemic existential risk',
     'GOAL_PROGRESS_REVIEW':             'sustainable development goals SDG',
-    'GENERAL_SELF_REVIEW':              'artificial intelligence progress',
 }
 
 # YouTube queries — пълен набор за всички 25 оси
@@ -225,7 +220,6 @@ YOUTUBE_QUERIES = {
     "COSMIC_RESOURCES_REVIEW":          "asteroid mining space economy resources",
     "LONG_TERM_FUTURE_REVIEW":          "existential risk humanity future civilization",
     "DEEP_TIME_RISKS_REVIEW":           "pandemic risk nuclear war asteroid impact supervolcano",
-    "GENERAL_SELF_REVIEW":              "AI consciousness AGI progress machine sentience",
     "GOAL_PROGRESS_REVIEW":             "sustainable development goals SDG 2030 UN progress",
     "PLANETARY_POTENTIAL_REVIEW":       "planetary boundaries geoengineering tipping points",
 }
@@ -255,7 +249,6 @@ PODCAST_FEEDS = {
     'COSMIC_RESOURCES_REVIEW':          'https://feeds.feedburner.com/TEDTalks_audio',
     'DEEP_TIME_RISKS_REVIEW':           'https://futureoflife.org/feed/',
     'GOAL_PROGRESS_REVIEW':             'https://feeds.transistor.fm/80000-hours-podcast',
-    'GENERAL_SELF_REVIEW':              'https://lexfridman.com/feed/podcast/',
 }
 
 # ── Helpers ───────────────────────────────────────────────────────────────────

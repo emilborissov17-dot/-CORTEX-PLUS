@@ -1,0 +1,48 @@
+{
+  "_doc": [
+    "DECLARED DISCONTINUITIES IN THE SYSTEM'S OWN SERIES.",
+    "",
+    "Rule 1.3 (PROGRESS/CORTEX++_TASKS_2026-08-20.txt): 'Ако теглата мръднат —",
+    "сериите се маркират като прекъснати, не мълчаливо.' If the weights move, the",
+    "series are marked BROKEN, not silently continued.",
+    "",
+    "WHY A FILE AND NOT A COMMENT. goal_score_calculator already refuses to compare",
+    "two composites with different config_fingerprint values — that is the mechanical",
+    "half. This file is the HUMAN-READABLE half: which break, when, why, and what it",
+    "measurably did to the numbers. A fingerprint that changed with no record beside",
+    "it tells a later reader that the series broke but not what broke it.",
+    "",
+    "Every entry states the fingerprint on both sides. Anything comparing points",
+    "across a break must say so out loud or refuse."
+  ],
+  "breaks": [
+    {
+      "id": "2026-08-21-general-self-review-retired",
+      "date_utc": "2026-08-21",
+      "rule": "1.3",
+      "series": [
+        "snapshots/master/goal_score_latest.json :: composite_score, coverage_of_goal",
+        "memory/goal_score_history.json",
+        "cortex_memory/abstractions/trends.json :: goal_score"
+      ],
+      "cause": "GENERAL_SELF_REVIEW retired from the goal tree (config/target_config.json)",
+      "why": "Self-observation is a SENSE, not a state of the world. An axis that scores the observer puts the observer inside the observed: a system with degraded sensors could raise its own composite by rating itself higher. The observation continues in core/self_mirror.py and enters no number.",
+      "config_fingerprint_before": "0c9c5da2036e3ea4",
+      "config_fingerprint_after": "4a79df6c631359b7",
+      "measured_effect": {
+        "how": "goal_score_calculator.compute_goal_score() run twice on the SAME live trends/observations, once against each config. No file was written.",
+        "axes": {"before": 25, "after": 24},
+        "total_weight": {"before": 173.0, "after": 167.0},
+        "composite_score": {"before": 0.6282, "after": 0.6282},
+        "coverage_of_goal": {"before": 0.578, "after": 0.5988},
+        "coverage_of_measurable": {"before": 0.8772, "after": 0.8772},
+        "measured_weight": {"before": 100.0, "after": 100.0},
+        "measurable_weight": {"before": 114.0, "after": 114.0},
+        "semantic_weight": {"before": 59.0, "after": 53.0},
+        "semantic_share_of_goal": {"before": 0.341, "after": 0.3174},
+        "note": "composite_score did NOT move: GENERAL_SELF_REVIEW was a semantic axis with no primary_metric, so it was never in the numerator. What moved is the DENOMINATOR of the goal — 6 of the 59 weight that had no live source left the tree, so coverage_of_goal rose from 57.8% to 59.9% WITHOUT a single new measurement. That rise is bookkeeping, not progress, and it is exactly why the break has to be declared: a reader of the coverage series who does not know about this entry would read +2.1 points as a sensor that came online."
+      },
+      "comparable_across_break": false
+    }
+  ]
+}

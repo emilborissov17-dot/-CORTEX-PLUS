@@ -563,13 +563,13 @@ def run_web_intelligence():
     gc.collect()
 
 def refresh_llm_axes():
+    # 21 авг 2026: GENERAL_SELF_REVIEW излезе оттук заедно с осата. Тази стъпка
+    # викаше core.cortex_reasoner.self_review(), който взимаше думата на облачен
+    # модел за самия CORTEX ("HIGH"/"MEDIUM"/"LOW"), превеждаше я в 85/55/25 и я
+    # подаваше на continuous_learner като СКОР. Тоест системата се оценяваше сама
+    # с число, което после пътуваше като измерване. Самонаблюдението вече върви
+    # през core/self_mirror.py и не произвежда нито едно число за композита.
     axes = [
-        {
-            "axis": "GENERAL_SELF_REVIEW",
-            "folder": "general_self_review",
-            "domain": "cosmos",
-            "use_reasoner": True,
-        },
         {
             "axis": "GOAL_PROGRESS_REVIEW",
             "folder": "goal_progress",
@@ -2195,6 +2195,16 @@ def main():
         from core.needs_auth import run as _ask
         _ask()
     _run("needs_auth", _needs_auth)
+
+    # ── 25.45. ОГЛЕДАЛОТО ──────────────────────────────────────────────────
+    # Самонаблюдението вече не е ос от целта (GENERAL_SELF_REVIEW се пенсионира
+    # на 21 авг 2026). Стои тук, ПРЕДИ отчета, защото отчетът чете каквото то
+    # запише. Пише САМО собствените си два файла и не докосва никакво число.
+    beat("self_mirror", "25.45")
+    def _self_mirror():
+        from core.self_mirror import run as _mirror_run
+        _mirror_run(source="cycle")
+    _run("self_mirror", _self_mirror)
 
     beat("brain_debrief", "25.5")
     try:

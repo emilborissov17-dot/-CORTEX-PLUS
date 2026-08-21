@@ -143,7 +143,15 @@ def test_no_unpinned_axis_appears_among_the_corrections():
 
 # 3 ---------------------------------------------------------------------------
 
-def test_all_twenty_five_axes_are_pinned_after_the_ruling():
+# The ruling covered every axis in the tree. 25 -> 24 on 21 Aug 2026 when
+# GENERAL_SELF_REVIEW was retired (declared in config/series_breaks.json). The
+# number is pinned so the ruling's scope cannot narrow by accident; changing it
+# has to be a visible edit, in the same commit as the tree.
+PINNED_AXIS_COUNT = 24
+TOTAL_WEIGHT = 167.0
+
+
+def test_all_axes_are_pinned_after_the_ruling():
     """The ruling's scope, pinned so it cannot quietly narrow again."""
     pinned = set(lr.pinned_axes())
     cfg = json.loads((REPO / "config" / "target_config.json").read_text(encoding="utf-8"))
@@ -151,18 +159,33 @@ def test_all_twenty_five_axes_are_pinned_after_the_ruling():
                   for a in axes}
 
     assert pinned == everything, f"unpinned: {sorted(everything - pinned)}"
-    assert len(pinned) == 25
+    assert len(pinned) == PINNED_AXIS_COUNT
     for risk in ("CLIMATE_GLOBAL_RISK_REVIEW", "DEEP_TIME_RISKS_REVIEW"):
         assert risk in pinned, f"{risk} is still unpinned"
 
 
-def test_the_migration_was_composite_neutral():
-    """score_meaning is metadata. If a weight moved, it was not neutral."""
+def test_the_score_meaning_migration_moved_no_weight():
+    """score_meaning is metadata. If a weight moved, it was not neutral.
+
+    The total is 167 since 21 Aug 2026 — 173 minus GENERAL_SELF_REVIEW's 6. That
+    is the ONLY sanctioned way this number may change, and it is written down in
+    config/series_breaks.json. Any other drift means a weight moved without a
+    declared break, which is exactly what rule 1.3 forbids.
+    """
     cfg = json.loads((REPO / "config" / "target_config.json").read_text(encoding="utf-8"))
     total = sum(spec.get("weight", 0) or 0
                 for b, axes in cfg.items() if not b.startswith("_")
                 for spec in axes.values())
-    assert total == 173.0, f"total weight is {total}, was 173"
+    assert total == TOTAL_WEIGHT, (
+        f"total weight is {total}, expected {TOTAL_WEIGHT}. If a weight really "
+        "moved, declare the break in config/series_breaks.json in the same commit.")
+
+    breaks = json.loads((REPO / "config" / "series_breaks.json")
+                        .read_text(encoding="utf-8"))["breaks"]
+    latest = breaks[-1]["measured_effect"]["total_weight"]
+    assert latest["after"] == TOTAL_WEIGHT, (
+        "the newest declared break does not end at the weight the tree actually "
+        f"carries ({latest['after']} vs {TOTAL_WEIGHT})")
 
 
 # 4 ---------------------------------------------------------------------------

@@ -365,6 +365,10 @@
           "index": "25.37"
         },
         {
+          "name": "self_mirror",
+          "index": "25.45"
+        },
+        {
           "name": "brain_debrief",
           "index": "25.5"
         },
@@ -383,7 +387,9 @@
         "memory/runtime_experiences.json",
         "memory/axis_history.json",
         "memory/goal_score_history.json",
-        "cortex_memory/archive/merkle_root.txt"
+        "cortex_memory/archive/merkle_root.txt",
+        "memory/self_mirror_latest.json",
+        "memory/self_mirror_log.jsonl"
       ]
     }
   }

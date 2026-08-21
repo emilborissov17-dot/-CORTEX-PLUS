@@ -14,8 +14,8 @@ LLM_AXES = [
      "llm_prompt": "Generate a JSON snapshot for LONG_TERM_FUTURE_REVIEW (existential risks: nuclear, AGI, bio, climate). Include: current_level (LOW/MEDIUM/HIGH), key_metrics dict, main_risks list, trends list. ONLY valid JSON. Respond ONLY in English."},
     {"axis_name": "DEEP_TIME_RISKS_REVIEW",  "folder": "deep_time_risks",
      "llm_prompt": "Generate a JSON snapshot for DEEP_TIME_RISKS_REVIEW (asteroid, supervolcano, astrophysical). Include: current_level, key_metrics, main_risks, trends. ONLY valid JSON. Respond ONLY in English."},
-    {"axis_name": "GENERAL_SELF_REVIEW",     "folder": "general_self_review",
-     "llm_prompt": "You are CORTEX++ AGI. Generate JSON self-review for GENERAL_SELF_REVIEW. Include: current_level, strengths, weaknesses, improvement_suggestions. ONLY valid JSON. Respond ONLY in English."},
+    # GENERAL_SELF_REVIEW retired 21 Aug 2026 — self-observation is a sense, not a
+    # world axis. It is core/self_mirror.py now, and it produces no level.
     {"axis_name": "GOAL_PROGRESS_REVIEW",    "folder": "goal_progress",
      "llm_prompt": "You are CORTEX++ AGI. Generate JSON for GOAL_PROGRESS_REVIEW toward sustainable civilization. Include: current_level, progress_by_axis, main_bottlenecks, next_actions. ONLY valid JSON. Respond ONLY in English."},
 ]
@@ -78,6 +78,19 @@ def main():
         axis, folder = cfg["axis_name"], cfg["folder"]
         print(f"[COSMOS_SNAPSHOT] generating {axis} (REAL)...")
         raw = cfg["provider"]().fetch()
+        if not raw:
+            # An empty fetch is not success. Never overwrite a good value with
+            # nothing — see agents/snapshot_carry.py for what this cost on
+            # 2026-08-04.
+            from agents.snapshot_carry import carry_forward_metrics
+            _p = SNAPSHOT_DIR / folder / f"{folder}_snapshot_latest.json"
+            merged, carried = carry_forward_metrics(_p, {})
+            if merged:
+                path = _write(folder, axis, {"source_type": "REAL_DATA_CARRIED",
+                                             "raw": merged, "_carried": carried})
+                print(f"[COSMOS_SNAPSHOT] {axis}: empty fetch — CARRIED FORWARD -> {path}")
+                continue
+            raise ValueError("provider returned no data and nothing to carry forward")
         path = _write(folder, axis, {"source_type": "REAL_DATA", "raw": raw})
         print(f"[COSMOS_SNAPSHOT] wrote {axis} -> {path}")
     for cfg in LLM_AXES:

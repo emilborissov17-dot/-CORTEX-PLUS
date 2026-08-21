@@ -1556,45 +1556,6 @@
         "sources": []
       }
     }
-  },
-  "GENERAL_SELF_REVIEW": {
-    "anchor_slot": "anchor_annual",
-    "measure_slot": "measurement_daily",
-    "portfolio": {
-      "anchor_annual": {
-        "min": 1,
-        "freshness_days": 45,
-        "sources": []
-      },
-      "indirect_proxy": {
-        "min": 1,
-        "freshness_days": 60,
-        "sources": []
-      },
-      "measurement_daily": {
-        "min": 1,
-        "freshness_days": 7,
-        "sources": [
-          {
-            "id": "gi_self_fresh_metrics",
-            "kind": "file",
-            "path": "snapshots/master/global_indicators_latest.json",
-            "extract": "_health.fresh_this_cycle",
-            "org": "CORTEX internal",
-            "unit": "indicators_refreshed",
-            "note": "how much of the system's own picture was actually re-observed this cycle. Self-review measured as fact, not as self-assessment."
-          },
-          {
-            "id": "gi_self_carried_metrics",
-            "kind": "file",
-            "path": "snapshots/master/global_indicators_latest.json",
-            "extract": "_health.carried_from_a_previous_cycle",
-            "org": "CORTEX internal",
-            "unit": "indicators_carried",
-            "note": "how much it is running on values copied forward. Rising here means the world model is ageing while the system reports normally."
-          }
-        ]
-      }
-    }
   }
+
 }
