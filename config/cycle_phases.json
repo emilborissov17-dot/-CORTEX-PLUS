@@ -193,6 +193,10 @@
           "index": "12.5"
         },
         {
+          "name": "level_reconcile",
+          "index": "12.55"
+        },
+        {
           "name": "goal_score_calculator",
           "index": "12.6"
         },

@@ -1777,6 +1777,19 @@ def main():
     except Exception as e:
         print(f"[FAST_CYCLE] auto_levels -> FAILED: {e}")
 
+    # ── 12.55. ДУМАТА СЛЕДВА ЧИСЛОТО ──────────────────────────────────────
+    # auto_levels пише дума по свои прагове; goal_score пише число от измерена
+    # стойност спрямо цел и посока. Никой не ги сравняваше и се разминаха: на
+    # 21 авг SOCIAL_RELATIONS стоеше MEDIUM при 3.4/100. Където двете спорят и
+    # значението на резултата е ЗАКОВАНО, числото печели. Двете _RISK_ оси са
+    # нарочно незаковани — там LOW може да значи „нисък РИСК", обратната
+    # полярност — и се само ОТБЕЛЯЗВАТ, никога не се поправят.
+    beat("level_reconcile", "12.55")
+    def _level_reconcile():
+        from core.level_reconciler import run as _reconcile
+        _reconcile()
+    _run("level_reconcile", _level_reconcile)
+
     # ── 12.6. Goal score calculator ──
     beat("goal_score_calculator", "12.6")
     composite = 0.0  # initialized here so MerkleMemory commit can read it at step 24
