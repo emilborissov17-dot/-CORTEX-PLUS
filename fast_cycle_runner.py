@@ -1258,6 +1258,28 @@ def main():
     # плюс неговото последно уточнение: НЕЧЕТИМ env е системен отказ, не ръчно
     # пускане, значи се третира като C.
     _cycle_id = _classify_cycle_id(os.environ.get("CORTEX_CYCLE_ID"))
+
+    # ── A CYCLE STARTED BY HAND MUST ALSO LEAVE A LOG (21 Aug 2026) ─────────
+    # supervisor.spawn_cycle() redirects this process's stdout into
+    # memory/cycle_logs/cycle_<stamp>.log. A cycle started by hand — which is
+    # step 3 of the alarm the supervisor sends when it gives up,
+    # `venv\Scripts\python.exe fast_cycle_runner.py` — had no such redirect,
+    # and since 17 Aug the child runs with DETACHED_PROCESS, i.e. with no
+    # console at all. So the run a human started BECAUSE the automatic one
+    # failed was the one that left nothing to read.
+    #
+    # IDEMPOTENT BY EVIDENCE, NOT BY A FLAG: the supervisor opens that exact
+    # path with mode "w" before spawning us, so core.cycle_log.tee_stdio()
+    # refuses when the file already exists. An env var would be one wrapper away
+    # from being lost; the file either is there or is not.
+    try:
+        from core.cycle_log import tee_stdio as _tee
+        _tee_rec = _tee(_cycle_id)
+        print(f"[FAST_CYCLE] cycle log: {_tee_rec['path']} "
+              f"(teeing={_tee_rec['teeing']}; {_tee_rec['why']})")
+    except Exception as _e:
+        print(f"[FAST_CYCLE] cycle log tee unavailable: {type(_e).__name__}: {_e}")
+
     beat("boot", "-1", cycle_id=_cycle_id)
 
     # ── 0. Body scan → adaptive directives (runs FIRST, before everything) ──

@@ -25,6 +25,7 @@ core/cycle_report.py — ОТЧЕТЪТ НА ЦИКЪЛА, НАПИСАН ОТ �
 from __future__ import annotations
 
 import json
+import os
 import re
 from datetime import datetime, timezone
 from pathlib import Path
@@ -39,7 +40,51 @@ def _now() -> str:
     return datetime.now(timezone.utc).isoformat()
 
 
-def _latest_log() -> Path | None:
+def _current_cycle_id() -> str | None:
+    """Whose report is this? The lock first (it names the running cycle), then
+    the heartbeat, then the env the supervisor stamped at spawn."""
+    for path, key in ((BASE / "memory" / "cycle.lock", "cycle_id"),
+                      (BASE / "memory" / "heartbeat.json", "cycle_id")):
+        try:
+            cid = json.loads(path.read_text(encoding="utf-8")).get(key)
+            if cid:
+                return str(cid)
+        except Exception:
+            continue
+    return os.environ.get("CORTEX_CYCLE_ID") or None
+
+
+def _log_for(cycle_id: str | None) -> Path | None:
+    """THE LOG OF THIS CYCLE, OR NONE — never the newest, never a neighbour.
+
+    This used to be `sorted(...)[0] by mtime`, i.e. "the most recently touched
+    file in the directory", which is not the same claim as "this cycle's log"
+    and on 21 Aug 2026 was demonstrably a different one: the directory held
+    cycle_2026-08-21_172402.log (killed at 14:24) and
+    cycle_2026-08-21_174401.log (its replacement) side by side. A report built
+    from the wrong one is wrong with the confidence of a fact.
+
+    Callers must handle None by SAYING ABSENT. Falling back to the newest file
+    is exactly the defect.
+    """
+    try:
+        from core.cycle_log import find_for
+        return find_for(cycle_id) if cycle_id else None
+    except Exception:
+        return None
+
+
+def _latest_log(cycle_id: str | None = None) -> Path | None:
+    """Kept for callers that have no cycle_id to offer. With one, it is the
+    match-by-id path above; without one, it is honestly the newest file and the
+    report says which cycle it actually read."""
+    if cycle_id is None:
+        cycle_id = _current_cycle_id()
+    found = _log_for(cycle_id)
+    if found is not None:
+        return found
+    if cycle_id:
+        return None            # ABSENT: this cycle has no log. Do not substitute.
     logs = sorted((BASE / "memory" / "cycle_logs").glob("cycle_*.log"),
                   key=lambda p: p.stat().st_mtime, reverse=True)
     return logs[0] if logs else None
@@ -96,10 +141,22 @@ def _brain_words(cycle_start: float) -> dict:
 _SIGNAL = re.compile(r"(FAILED|ERROR|Traceback|SKIP|DEAD|WARN|->)", re.I)
 
 
-def build(cycle_start: float | None = None) -> dict:
-    log_path = _latest_log()
+def build(cycle_start: float | None = None, cycle_id: str | None = None) -> dict:
+    cycle_id = cycle_id or _current_cycle_id()
+    log_path = _latest_log(cycle_id)
     if not log_path:
-        return {"error": "няма лог на цикъл"}
+        # ABSENT, and it says WHOSE log is absent. "няма лог на цикъл" over a
+        # directory full of other cycles' logs reads as a broken reporter; this
+        # reads as the fact it is.
+        try:
+            from core.cycle_log import describe
+            d = describe(cycle_id or "")
+        except Exception:
+            d = {"status": "ABSENT", "why": "core.cycle_log is not importable"}
+        return {"error": f"ABSENT: логът на цикъл {cycle_id or '(неизвестен)'} "
+                         f"го няма — {d.get('why')}",
+                "log_status": d.get("status", "ABSENT"),
+                "cycle_id": cycle_id}
     if cycle_start is None:
         # началото на цикъла = времето на файла минус неговата продължителност;
         # най-надеждно: първият ред на лога, иначе mtime на самия файл.
