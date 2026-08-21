@@ -357,6 +357,10 @@
           "index": "25.36"
         },
         {
+          "name": "proposal_sla",
+          "index": "25.38"
+        },
+        {
           "name": "needs_auth",
           "index": "25.37"
         },
