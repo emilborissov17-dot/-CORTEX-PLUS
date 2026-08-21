@@ -126,14 +126,20 @@ def test_a_guarded_experiment_registers_but_blocks_the_arm_it_cannot_apply(tmp_p
     rec = sx.register(sx.FIRST, store=store)
     assert rec["accepted"] is True
     assert rec["knob_is_guarded"] is True
-    # The live file reads 900 today, so arm a is observable and arm b is not.
-    assert rec["live_value_at_registration"] == 900
-    assert rec["arms_observable_now"] == ["a"]
+    # Whichever arm the guarded file currently carries is the observable one, and
+    # the OTHER becomes a proposal. Registered on 21 Aug the file read 900 (arm a);
+    # after Emil approved the ceiling change the same day it reads 1500 (arm b).
+    # Pinning either number here would make this test a record of one afternoon.
+    live = rec["live_value_at_registration"]
+    assert live in (900, 1500)
+    observable = "a" if live == 900 else "b"
+    assert rec["arms_observable_now"] == [observable]
 
     sx.propose_human_arm(rec, improvements=imp)
     rows = json.loads(imp.read_text(encoding="utf-8"))["proposals"]
     assert len(rows) == 1
-    assert "1500" in rows[0]["solution"]
+    other = 1500 if live == 900 else 900
+    assert str(other) in rows[0]["solution"]
     assert rows[0]["component"] == "config/scheduler.json"
 
 
@@ -161,18 +167,20 @@ def test_an_observation_whose_arm_was_not_in_force_does_not_count(tmp_path):
     ACTUALLY said, and refuses to count a cycle that ran the other setting."""
     store = tmp_path / "exp.json"
     sx.register(sx.FIRST, store=store)
-    # ordinal 1 -> arm b (1500); the live scheduler still reads 900.
-    row = sx.observe(sx.FIRST["id"], "cyc-1", 1, "2026-08-01T00:00:00+00:00",
-                     "2026-09-01T00:00:00+00:00", store=store)
-    assert row["arm_expected"] == "b"
-    assert row["value_expected"] == 1500
-    assert row["value_in_force"] == 900
+    live = sx.live_value("step_ceiling", step="daily_analysis")
+    matching = 0 if live == 900 else 1        # ordinal parity that draws it
+    other = 1 - matching
+    future = "2099-01-01T00:00:00+00:00"      # nothing edited after this
+
+    row = sx.observe(sx.FIRST["id"], "cyc-1", other,
+                     "2026-08-01T00:00:00+00:00", future, store=store)
+    assert row["value_in_force"] == live
+    assert row["value_expected"] != live
     assert row["counts"] is False
     assert "not applied" in row["why_not"]
 
-    # ordinal 0 -> arm a (900), which IS what the file reads.
-    row = sx.observe(sx.FIRST["id"], "cyc-2", 0, "2026-08-01T00:00:00+00:00",
-                     "2026-09-01T00:00:00+00:00", store=store)
+    row = sx.observe(sx.FIRST["id"], "cyc-2", matching,
+                     "2026-08-01T00:00:00+00:00", future, store=store)
     assert row["counts"] is True
     assert row["metric"]["watchdog_kills"] >= 0
 
@@ -443,3 +451,52 @@ def test_the_first_arm_a_observation_is_on_disk():
     assert first["value_in_force"] == 900 == first["value_expected"]
     assert first["metric"]["watchdog_kills"] >= 1
     assert first["window"][0] < first["window"][1]
+
+
+# --------------------------------------------------------------------------- #
+# (h) what was in force THEN, not what the file says now
+# --------------------------------------------------------------------------- #
+
+def test_a_knob_edited_after_the_cycle_ended_cannot_be_attributed_to_it():
+    """A defect this session's own fix created, caught the same hour. Once a
+    cycle is judged AFTER it closes, "what the file says now" stops being "what
+    the file said then". Live: a cycle died at 14:39:02 and the ceiling was
+    raised to 1500 at 14:40:11 — 69 seconds later. Reading the file would have
+    recorded that cycle as an arm-B observation of a setting it never saw."""
+    value, basis = sx.value_in_force(
+        "step_ceiling", step="daily_analysis",
+        cycle_end="2000-01-01T00:00:00+00:00")
+    assert value is None
+    assert "cannot be established" in basis
+
+
+def test_an_untouched_knob_is_read_from_the_file():
+    value, basis = sx.value_in_force(
+        "step_ceiling", step="daily_analysis",
+        cycle_end="2099-01-01T00:00:00+00:00")
+    assert value == sx.live_value("step_ceiling", step="daily_analysis")
+    assert "unchanged since" in basis
+
+
+def test_a_kill_record_is_testimony_from_the_moment():
+    """CYCLE_KILLED carries the ceiling the watchdog actually measured against.
+    That outranks the file, and survives any later edit."""
+    killed = {"event": "CYCLE_KILLED",
+              "reason": {"wedged_step": "daily_analysis", "ceiling_sec": 900}}
+    value, basis = sx.value_in_force(
+        "step_ceiling", step="daily_analysis",
+        cycle_end="2000-01-01T00:00:00+00:00", evidence=killed)
+    assert value == 900
+    assert "CYCLE_KILLED" in basis
+
+
+def test_an_unestablished_value_never_counts(tmp_path):
+    """NEGATIVE CONTROL. 'I cannot tell what was in force' must not resolve to
+    'it matched' — that is how a fabricated data point enters an experiment."""
+    store = tmp_path / "exp.json"
+    sx.register(sx.FIRST, store=store)
+    row = sx.observe(sx.FIRST["id"], "c", 0, "2026-08-01T00:00:00+00:00",
+                     "2000-01-01T00:00:00+00:00", store=store)
+    assert row["value_in_force"] is None
+    assert row["counts"] is False
+    assert "cannot be established" in row["why_not"]

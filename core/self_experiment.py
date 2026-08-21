@@ -284,6 +284,57 @@ RESOLVERS = {"watchdog_kills+step_seconds": resolve_watchdog_and_seconds}
 # The live value of a knob — read, never assumed
 # ---------------------------------------------------------------------------
 
+def value_in_force(knob_name: str, step: str | None = None,
+                   cycle_end: str | None = None,
+                   evidence: dict | None = None) -> tuple:
+    """(value, basis) — какво е било в сила ПО ВРЕМЕ НА наблюдавания цикъл.
+
+    ── ДЕФЕКТ, РОДЕН ОТ СОБСТВЕНАТА МИ ПОПРАВКА (21 август 2026, същия ден) ──
+    Докато наблюдателят вървеше ВЪТРЕ в цикъла, „какво казва файлът сега" и
+    „какво е казвал тогава" бяха едно и също и въпросът не съществуваше. Щом
+    цикълът започна да се съди СЛЕД края си, двете се разделиха — и то веднага,
+    на живо: в 17:39 цикъл умря при таван 900, а в 17:45 човекът вдигна тавана
+    на 1500. Следващото наблюдение щеше да прочете 1500, да го нарече рамо B и
+    да брои като рамо B цикъл, който никога не е виждал 1500. Един ред данни,
+    измислен от закъснение.
+
+    Затова стойността се ДОКАЗВА, а не се предполага:
+
+      1. Ако цикълът е убит, записът на убийството носи `reason.ceiling_sec` —
+         таванът, срещу който часовоят е мерил. Това е свидетелство от момента.
+      2. Иначе: ако файлът НЕ е пипан след края на цикъла, днешното му
+         съдържание е и тогавашното.
+      3. Иначе — НЕ ЗНАЕМ. Връща се (None, причина), наблюдението не се брои и
+         казва защо.
+    """
+    if knob_name == "step_ceiling" and isinstance(evidence, dict):
+        ceiling = (evidence.get("reason") or {}).get("ceiling_sec")
+        if isinstance(ceiling, (int, float)):
+            return int(ceiling), "recorded in the CYCLE_KILLED event"
+
+    declared = ALLOWED_KNOBS.get(knob_name)
+    if declared is None:
+        return None, f"unknown knob {knob_name!r}"
+
+    if cycle_end:
+        try:
+            path = BASE / declared["file"]
+            touched = datetime.fromtimestamp(path.stat().st_mtime, tz=timezone.utc)
+            ended = datetime.fromisoformat(str(cycle_end).replace("Z", "+00:00"))
+            if ended.tzinfo is None:
+                ended = ended.replace(tzinfo=timezone.utc)
+            if touched > ended:
+                return None, (
+                    f"{declared['file']} was edited at "
+                    f"{touched.isoformat()[:19]}, after this cycle ended at "
+                    f"{ended.isoformat()[:19]} — what was in force then cannot "
+                    f"be established from the file")
+        except Exception:
+            pass
+
+    return live_value(knob_name, step=step), "read from the file, unchanged since"
+
+
 def live_value(knob_name: str, step: str | None = None):
     """Какво казва файлът ДНЕС. Рамото не се обявява — то се ПРОЧИТА."""
     declared = ALLOWED_KNOBS.get(knob_name)
@@ -451,7 +502,8 @@ def propose_human_arm(record: dict, improvements: pathlib.Path | None = None) ->
 
 
 def observe(exp_id: str, cycle_id: str, ordinal: int, since: str, until: str,
-            store: pathlib.Path | None = None, **paths) -> dict:
+            store: pathlib.Path | None = None, evidence: dict | None = None,
+            **paths) -> dict:
     """Едно наблюдение. Рамото се ОБЯВЯВА по поредния номер и се ПРОВЕРЯВА срещу
     това, което файлът наистина е носел. Разминат ли се — наблюдението се
     записва, но НЕ СЕ БРОИ. Опит, който вярва на намерението си вместо на
@@ -467,8 +519,9 @@ def observe(exp_id: str, cycle_id: str, ordinal: int, since: str, until: str,
     arm = arm_for_cycle(ordinal)
     expected = exp["knob"][arm]
     step = (exp.get("metric") or {}).get("step")
-    in_force = live_value(exp["knob"]["name"], step=step)
-    counts = (in_force == expected)
+    in_force, basis = value_in_force(exp["knob"]["name"], step=step,
+                                     cycle_end=until, evidence=evidence)
+    counts = (in_force is not None and in_force == expected)
 
     resolver = RESOLVERS[exp["metric"]["resolver"]]
     metric = resolver(exp, since, until, **paths)
@@ -476,10 +529,11 @@ def observe(exp_id: str, cycle_id: str, ordinal: int, since: str, until: str,
     row = {
         "ts": _now(), "cycle_id": cycle_id, "cycle_ordinal": ordinal,
         "arm_expected": arm, "value_expected": expected,
-        "value_in_force": in_force, "counts": counts,
-        "why_not": None if counts else
-                   (f"the file read {in_force!r}, the alternation asked for "
-                    f"{expected!r} — arm not applied"),
+        "value_in_force": in_force, "in_force_basis": basis, "counts": counts,
+        "why_not": None if counts else (
+            basis if in_force is None else
+            f"the knob read {in_force!r}, the alternation asked for "
+            f"{expected!r} — arm not applied"),
         "window": [since, until],
         "metric": metric,
     }
@@ -752,6 +806,21 @@ def last_cycle_window(ledger: pathlib.Path | None = None) -> tuple:
     return (cid, since, until)
 
 
+def _terminal_event(cycle_id, ledger: pathlib.Path | None = None) -> dict:
+    """The event that ended this cycle. A CYCLE_KILLED record carries
+    reason.ceiling_sec — testimony from the moment about what was in force."""
+    if not cycle_id:
+        return {}
+    try:
+        rows = [json.loads(l) for l in
+                (ledger or LEDGER).read_text(encoding="utf-8").splitlines() if l.strip()]
+    except Exception:
+        return {}
+    mine = [e for e in rows if e.get("cycle_id") == cycle_id
+            and e.get("event") in TERMINAL_EVENTS]
+    return mine[-1] if mine else {}
+
+
 def observe_all(store: pathlib.Path | None = None) -> list:
     """Наблюдава ВСЕКИ незавършен опит за последния ЗАВЪРШИЛ цикъл. FAIL-OPEN.
 
@@ -760,12 +829,14 @@ def observe_all(store: pathlib.Path | None = None) -> list:
     бъде извикано.
     """
     cid, since, until, ordinal = last_closed_cycle()
+    terminal = _terminal_event(cid)
     if not cid:
         print("[EXPERIMENT] няма завършил цикъл в летописа — няма какво да се наблюдава")
         return []
     out = []
     for exp in running():
-        row = observe(exp["id"], cid, ordinal, since, until, store=store)
+        row = observe(exp["id"], cid, ordinal, since, until, store=store,
+                      evidence=terminal)
         out.append(row)
         if row.get("error"):
             print(f"[EXPERIMENT] {exp['id']}: {row['error']}")

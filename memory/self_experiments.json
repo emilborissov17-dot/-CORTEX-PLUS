@@ -56,6 +56,25 @@
             "watchdog_kills": 1,
             "step_seconds": null
           }
+        },
+        {
+          "ts": "2026-08-21T14:43:09.387958+00:00",
+          "cycle_id": "2026-08-21T17:24:01.815295+03:00",
+          "cycle_ordinal": 79,
+          "arm_expected": "b",
+          "value_expected": 1500,
+          "value_in_force": null,
+          "in_force_basis": "config/scheduler.json was edited at 2026-08-21T14:40:11, after this cycle ended at 2026-08-21T14:39:02 — what was in force then cannot be established from the file",
+          "counts": false,
+          "why_not": "config/scheduler.json was edited at 2026-08-21T14:40:11, after this cycle ended at 2026-08-21T14:39:02 — what was in force then cannot be established from the file",
+          "window": [
+            "2026-08-21T14:24:01.815295+00:00",
+            "2026-08-21T14:39:02.028237+00:00"
+          ],
+          "metric": {
+            "watchdog_kills": 1,
+            "step_seconds": null
+          }
         }
       ],
       "verdict": {
