@@ -460,37 +460,17 @@ def call_groq_meta(prompt: str, max_tokens: int = 1024,
         ("Gemini",     "gemini",     _call_gemini),
     ]
 
-    def _log_provenance(backend_label: str, prompt_text: str, content_text: str):
-        """PROVENANCE (14 Aug 2026): every verdict the system records used to be
-        anonymous — no trace of WHICH model produced it, though the chain falls
-        through 4 providers many times per cycle. E7 (calibrated ensemble) and E2
-        (LLM-vs-data grounding) both need this join key. Append-only, fail-open,
-        5MB rotation; prompt is stored as a hash + head, never in full."""
-        try:
-            import hashlib as _hl
-            _pf = Path(__file__).resolve().parents[1] / "memory" / "llm_provenance.jsonl"
-            _pf.parent.mkdir(parents=True, exist_ok=True)
-            if _pf.exists() and _pf.stat().st_size > 5_000_000:
-                _pf.replace(_pf.with_suffix(".jsonl.1"))
-            with open(_pf, "a", encoding="utf-8") as _fh:
-                _fh.write(json.dumps({
-                    "ts": datetime.now(timezone.utc).isoformat(),
-                    "backend": backend_label,
-                    "prompt_sha1": _hl.sha1(prompt_text.encode("utf-8", "ignore")).hexdigest()[:12],
-                    "prompt_head": prompt_text[:80],
-                    "reply_chars": len(content_text or ""),
-                }, ensure_ascii=False) + "\n")
-        except Exception:
-            pass  # bookkeeping must never break the chain
-
     def _model_for(backend_label: str) -> str:
         """Which model actually answered — for provenance.
 
         Added 17 Aug 2026: meta already said WHICH BACKEND replied but never
         which model, so anything archiving a verdict could record "Groq" and not
-        "llama-3.3-70b-versatile". Gemini's name is parsed out of GEMINI_API_URL
-        (.../models/gemini-2.0-flash:generateContent) rather than duplicated into
-        a constant, so the two cannot drift apart.
+        the id it actually called. Gemini's name is parsed out of GEMINI_API_URL
+        (.../models/<id>:generateContent) rather than duplicated into a constant,
+        so the two cannot drift apart.
+
+        MOVED ABOVE _log_provenance ON 21 AUG 2026, because for four days it was
+        computed and then thrown away — see the note there.
         """
         if backend_label == "Groq":
             return GROQ_MODEL
@@ -503,7 +483,52 @@ def call_groq_meta(prompt: str, max_tokens: int = 1024,
                 return GEMINI_API_URL.rsplit("/", 1)[-1].split(":")[0]
             except Exception:
                 return "gemini (model in GEMINI_API_URL)"
+        if backend_label.startswith("local:"):
+            return backend_label.split(":", 1)[1]
         return backend_label
+
+    def _log_provenance(backend_label: str, prompt_text: str, content_text: str):
+        """PROVENANCE (14 Aug 2026): every verdict the system records used to be
+        anonymous — no trace of WHICH model produced it, though the chain falls
+        through 4 providers many times per cycle. E7 (calibrated ensemble) and E2
+        (LLM-vs-data grounding) both need this join key. Append-only, fail-open,
+        5MB rotation; prompt is stored as a hash + head, never in full.
+
+        THE EXACT MODEL ID (21 Aug 2026, Emil). _model_for() has existed since
+        17 Aug and this function never called it: every cloud row on disk says
+        "Groq" or "Cerebras" and not one of them says WHICH model. Counted on
+        the live log: 235 Groq rows, 440 Cerebras, 232 OpenRouter, 41 Gemini —
+        948 cloud verdicts whose model is unrecoverable.
+
+        That is not bookkeeping pedantry, it is the reason the 18-20 Aug outage
+        took log-grepping to diagnose. 471 lines of
+        "Groq failed (404 Client Error)" sat in memory/cycle_logs/, and the only
+        way to learn which id had 404'd was to read the [LLM] print line
+        immediately above each one. Provenance — the file that exists to answer
+        "which model said this" — could not.
+
+        `backend` keeps its old values on purpose: core/phase_report
+        ._provenance_between() groups by it, and renaming the field would break
+        the per-phase LLM-call table for every historical row. `model` is added
+        beside it.
+        """
+        try:
+            import hashlib as _hl
+            _pf = Path(__file__).resolve().parents[1] / "memory" / "llm_provenance.jsonl"
+            _pf.parent.mkdir(parents=True, exist_ok=True)
+            if _pf.exists() and _pf.stat().st_size > 5_000_000:
+                _pf.replace(_pf.with_suffix(".jsonl.1"))
+            with open(_pf, "a", encoding="utf-8") as _fh:
+                _fh.write(json.dumps({
+                    "ts": datetime.now(timezone.utc).isoformat(),
+                    "backend": backend_label,
+                    "model": _model_for(backend_label),
+                    "prompt_sha1": _hl.sha1(prompt_text.encode("utf-8", "ignore")).hexdigest()[:12],
+                    "prompt_head": prompt_text[:80],
+                    "reply_chars": len(content_text or ""),
+                }, ensure_ascii=False) + "\n")
+        except Exception:
+            pass  # bookkeeping must never break the chain
 
     last_error = None
 

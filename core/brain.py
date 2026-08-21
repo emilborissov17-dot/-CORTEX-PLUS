@@ -37,6 +37,13 @@ from pathlib import Path
 
 BASE = Path(__file__).resolve().parents[1]
 JOURNAL = BASE / "memory" / "brain_journal.jsonl"
+# A MODULE CONSTANT, for the reason supervisor.NOTIFY_CHANNEL is one
+# (16 Aug 2026): a path built inside a function cannot be redirected by a
+# fixture, cannot be seen by the write-surface guard, and cannot be found by
+# anyone reading the constants at the top of the file. It was inline until
+# 21 Aug, so every test of this write path either touched live state or did
+# not exist. The second one is what actually happened.
+PROVENANCE = BASE / "memory" / "llm_provenance.jsonl"
 PLAN = BASE / "memory" / "brain_cycle_plan.json"
 PROPOSALS = BASE / "memory" / "repair_proposals.json"
 LAW_FILE = BASE / "LAW_OF_THE_BRAIN.md"
@@ -331,11 +338,23 @@ def think(role: str, question: str, evidence: str = "", schema: dict | None = No
     took = round(time.time() - t0, 1)
     try:            # provenance: коя мисъл от кой модел (join key за E7/E2)
         import hashlib as _hl
-        pf = BASE / "memory" / "llm_provenance.jsonl"
+        pf = PROVENANCE
         pf.parent.mkdir(parents=True, exist_ok=True)
         with open(pf, "a", encoding="utf-8") as fh:
             fh.write(json.dumps({
                 "ts": _now(), "backend": f"local:{model}", "caller": f"brain:{role}",
+                # THE EXACT MODEL ID IN ITS OWN FIELD (21 Aug 2026). It was
+                # already inside the backend string here — "local:qwen3:8b" —
+                # which meant reading it required knowing to split on the first
+                # colon and not the second. The cloud path had it nowhere at
+                # all. One field, same name, both paths, so a query for "which
+                # model produced this verdict" is one key on every row.
+                #
+                # `requested` matters when they differ: think() may fall back to
+                # a smaller local model on timeout, and a row that records only
+                # what answered hides the degradation that made it answer.
+                "model": model,
+                "requested": (model_override or picked),
                 "prompt_sha": _hl.sha256(prompt.encode("utf-8")).hexdigest()[:16],
                 "prompt_head": prompt[:160], "chars": len(txt), "sec": took,
             }, ensure_ascii=False) + "\n")
