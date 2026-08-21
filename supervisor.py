@@ -232,6 +232,45 @@ def _autopsy(action) -> str:
         return f"(автопсията не сработи: {type(e).__name__})"
 
 
+def _ring_death_bell(event: str, action=None, restarts_used=None,
+                     restart_budget=None, detail=None, with_postmortem=None) -> None:
+    """21 Aug 2026 — THE DEATH BELL.
+
+    At 14:24:02Z a CYCLE_KILLED row was written to the existence ledger, and at
+    14:39 a CYCLE_DIED row. Neither produced a single Telegram message: the only
+    alarm on this path fired on CYCLE_FAILED_BUDGET_EXHAUSTED, i.e. after the
+    day's last restart was already spent. Everything before that was silent by
+    construction — the reaper had a perfect memory and no voice.
+
+    Every ledger write that means "the cycle is not running any more" now rings.
+    ALARM class: core/death_bell.py sends with trigger="MANUAL", which is the one
+    value alarm_human() honours as past the quiet window. A death at 00:20
+    reported at 09:00 is an obituary, not an alarm.
+
+    FAIL-OPEN. A dead bot must never block the reaper: this swallows everything,
+    including a missing core/death_bell.py, and the kill or restart proceeds.
+    """
+    try:
+        from core import death_bell
+        death_bell.ring(
+            event,
+            cycle_id=getattr(action, "cycle_id", None),
+            wedged_step=getattr(action, "wedged_step", None),
+            heartbeat_age_sec=getattr(action, "heartbeat_age_sec", None),
+            ceiling_sec=getattr(action, "ceiling_sec", None),
+            restarts_used=restarts_used,
+            restart_budget=restart_budget,
+            detail=detail if detail is not None else getattr(action, "reason", None),
+            with_postmortem=with_postmortem,
+        )
+    except Exception as exc:  # noqa: BLE001
+        try:
+            log(f"death bell failed ({type(exc).__name__}: {exc}) — "
+                f"the {event} still stands, only the message was lost")
+        except Exception:
+            pass
+
+
 NIGHT_LOG = BASE / "memory" / "night_events.jsonl"
 QUIET_HOURS = (22, 9)      # 22:00-09:00 местно: човекът спи, системата се оправя сама
 
@@ -1273,6 +1312,12 @@ def tick(now: Optional[datetime] = None, dry_run: bool = False) -> Action:
         ledger.record_death(cycle_id=action.cycle_id or "unknown",
                             pid=action.pid or -1, last_step=action.wedged_step,
                             detail=action.reason)
+        # Ring BEFORE the lock is cleared and the state is rewritten: the facts
+        # sent are the facts just written to the ledger, not a re-derivation of
+        # them after the surrounding state has moved on.
+        _ring_death_bell("CYCLE_DIED", action,
+                         restarts_used=restarts_today(state, today),
+                         restart_budget=int(cfg.get("max_restarts_per_day", 2)))
         clear_lock()
         # Kimi, 16 Aug 2026: the heartbeat is the only evidence of WHERE the cycle
         # died and the only thing that feeds deaths_by_step. It survives the death
@@ -1310,6 +1355,9 @@ def tick(now: Optional[datetime] = None, dry_run: bool = False) -> Action:
         ledger.append(ledger.BUDGET_EXHAUSTED, cycle_id=action.cycle_id,
                       wedged_step=action.wedged_step, restarts_used=used,
                       detail=action.reason)
+        _ring_death_bell("CYCLE_FAILED_BUDGET_EXHAUSTED", action,
+                         restarts_used=used,
+                         restart_budget=int(cfg.get("max_restarts_per_day", 2)))
         log("!!! RESTART BUDGET EXHAUSTED after a cycle death — the system is NOT "
             "running. Human intervention required. This will appear in the daily report.")
         _diag = _autopsy(action)
@@ -1387,6 +1435,11 @@ def tick(now: Optional[datetime] = None, dry_run: bool = False) -> Action:
             ceiling_sec=action.ceiling_sec,
             restart_number=used + 1,
         )
+        # The kill is the one death whose numbers support a diagnosis: there is a
+        # wedged step and a measured heartbeat age. with_postmortem defaults to
+        # True for CYCLE_KILLED in death_bell.ring(), on a 60 s budget.
+        _ring_death_bell("CYCLE_KILLED", action, restarts_used=used,
+                         restart_budget=int(cfg.get("max_restarts_per_day", 2)))
 
         if action.kind == KILL_RESTART:
             state.setdefault("restarts", {})[today] = used + 1
@@ -1401,6 +1454,10 @@ def tick(now: Optional[datetime] = None, dry_run: bool = False) -> Action:
                               after_wedged_step=action.wedged_step)
                 ledger.append(ledger.CYCLE_STARTED, cycle_id=cycle_id, pid=pid,
                               trigger="RESTART")
+                _ring_death_bell("CYCLE_RESTARTED", action,
+                                 restarts_used=used + 1,
+                                 restart_budget=int(cfg.get("max_restarts_per_day", 2)),
+                                 detail=f"нов цикъл {cycle_id} pid={pid}")
             return action
 
         # Budget exhausted — fail loudly, do not restart.
@@ -1414,6 +1471,9 @@ def tick(now: Optional[datetime] = None, dry_run: bool = False) -> Action:
         ledger.append(ledger.BUDGET_EXHAUSTED, cycle_id=action.cycle_id,
                       wedged_step=action.wedged_step, restarts_used=used,
                       detail=action.reason)
+        _ring_death_bell("CYCLE_FAILED_BUDGET_EXHAUSTED", action,
+                         restarts_used=used,
+                         restart_budget=int(cfg.get("max_restarts_per_day", 2)))
         log("!!! RESTART BUDGET EXHAUSTED — the system is NOT running. "
             "Human intervention required. This will appear in the daily report.")
         _diag = _autopsy(action)
