@@ -36,6 +36,7 @@
     "hyperclaw": 1200,
     "data_scout": 1200,
     "self_observer": 1200,
-    "continuous_learning": 1200
+    "continuous_learning": 1200,
+    "daily_analysis": 1500
   }
 }
