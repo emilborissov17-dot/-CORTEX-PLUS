@@ -22,7 +22,7 @@
       "state": "REGISTERED",
       "observations": [
         {
-          "ts": "2026-08-21T11:10:14.382223+00:00",
+          "ts": "2026-08-21T11:20:21.466767+00:00",
           "cycle_id": "2026-08-21T00:33:50.628425+03:00",
           "cycle_ordinal": 75,
           "arm_expected": "b",
@@ -38,19 +38,37 @@
             "watchdog_kills": 0,
             "step_seconds": 764.65
           }
+        },
+        {
+          "ts": "2026-08-21T14:28:41.220692+00:00",
+          "cycle_id": "2026-08-21T11:57:28.506347+00:00",
+          "cycle_ordinal": 78,
+          "arm_expected": "a",
+          "value_expected": 900,
+          "value_in_force": 900,
+          "counts": true,
+          "why_not": null,
+          "window": [
+            "2026-08-21T11:57:28.506347+00:00",
+            "2026-08-21T14:24:02.718298+00:00"
+          ],
+          "metric": {
+            "watchdog_kills": 1,
+            "step_seconds": null
+          }
         }
       ],
       "verdict": {
-        "n_a": 0,
+        "n_a": 1,
         "n_b": 0,
         "n_per_arm": 4,
-        "kills_a": null,
+        "kills_a": 1.0,
         "kills_b": null,
         "seconds_a": null,
         "seconds_b": null,
         "decided": false,
         "winner": null,
-        "why": "not enough counted observations: a=0/4, b=0/4"
+        "why": "not enough counted observations: a=1/4, b=0/4"
       },
       "knob_is_guarded": true,
       "knob_file": "config/scheduler.json",

@@ -332,15 +332,114 @@ def test_the_current_cycle_never_counts_itself(tmp_path):
             == sx.cycle_ordinal(ledger=supervised, current="c2") == 1)
 
 
-def test_the_window_prefers_the_running_cycle_over_the_ledger(monkeypatch, tmp_path):
-    """The last CYCLE_STARTED belongs to the PREVIOUS cycle during a manual run.
-    Measuring that window would score somebody else's cycle as this one's."""
-    monkeypatch.setattr(sx, "BASE", tmp_path)
-    (tmp_path / "memory").mkdir()
-    (tmp_path / "memory" / "cycle.lock").write_text(json.dumps({
-        "cycle_id": "running-now", "started_utc": "2026-08-21T11:57:28+00:00"}),
-        encoding="utf-8")
-    cid, since, until = sx.last_cycle_window()
-    assert cid == "running-now"
-    assert since == "2026-08-21T11:57:28+00:00"
-    assert until > since
+def test_the_window_is_never_the_running_cycles(monkeypatch, tmp_path):
+    """Superseded on 21 Aug: an earlier version of this preferred the RUNNING
+    cycle, and that is precisely what made a killed cycle unobservable. The
+    window must belong to a cycle that has ENDED, even while another one runs.
+    """
+    led = _ledger(tmp_path, [
+        {"event": "CYCLE_STARTED", "cycle_id": "closed-one",
+         "ts": "2026-08-21T09:00:00+00:00"},
+        {"event": "CYCLE_FINISHED", "cycle_id": "closed-one",
+         "ts": "2026-08-21T11:00:00+00:00"},
+        {"event": "CYCLE_STARTED", "cycle_id": "running-now",
+         "ts": "2026-08-21T12:00:00+00:00"},
+    ])
+    cid, since, until = sx.last_cycle_window(ledger=led)
+    assert cid == "closed-one"
+    assert since == "2026-08-21T09:00:00+00:00"
+    assert until == "2026-08-21T11:00:00+00:00"
+
+
+# --------------------------------------------------------------------------- #
+# (g) a cycle is scored AFTER it ends — learned from a live kill
+# --------------------------------------------------------------------------- #
+
+def test_a_killed_cycle_is_still_observed(tmp_path):
+    """THE lesson of 21 Aug. The first cycle with the observer live was killed by
+    the watchdog at daily_analysis — the exact failure exp-001 was registered to
+    study — and the observation did not happen, because the observer sits at step
+    25.44 and the cycle died at step 22.
+
+    An experiment about a step that brings the cycle down can never be seen by an
+    observer running at the end of that same cycle. The blindness is worst
+    exactly where the hypothesis is most right. So the cycle is judged from the
+    ledger AFTER it closes, and a kill is a perfectly observable ending."""
+    led = _ledger(tmp_path, [
+        {"event": "CYCLE_STARTED", "cycle_id": "c1", "ts": "2026-08-20T00:00:00+00:00"},
+        {"event": "CYCLE_FINISHED", "cycle_id": "c1", "ts": "2026-08-20T02:00:00+00:00"},
+        {"event": "CYCLE_STARTED", "cycle_id": "c2", "ts": "2026-08-21T00:00:00+00:00"},
+        {"event": "CYCLE_KILLED", "cycle_id": "c2", "ts": "2026-08-21T02:00:00+00:00",
+         "reason": {"wedged_step": "daily_analysis", "ceiling_sec": 900}},
+    ])
+    cid, since, until, ordinal = sx.last_closed_cycle(ledger=led)
+    assert cid == "c2"
+    assert since == "2026-08-21T00:00:00+00:00"
+    assert until == "2026-08-21T02:00:00+00:00"
+    assert ordinal == 1, "the ordinal must be the OBSERVED cycle's, not today's"
+
+
+def test_the_window_covers_the_whole_cycle_not_just_its_death(tmp_path):
+    """NEGATIVE CONTROL. A manually launched cycle has no CYCLE_STARTED —
+    supervisor.py writes that, the runner does not — so the only event carrying
+    its id can be its own kill, and the window would collapse to one instant.
+    The cycle_id IS the start time; it is used as the floor."""
+    led = _ledger(tmp_path, [
+        {"event": "CYCLE_FINISHED", "cycle_id": "old", "ts": "2026-08-20T02:00:00+00:00"},
+        {"event": "CYCLE_KILLED", "cycle_id": "2026-08-21T11:57:28+00:00",
+         "ts": "2026-08-21T14:24:02+00:00"},
+    ])
+    cid, since, until, _ = sx.last_closed_cycle(ledger=led)
+    assert since.startswith("2026-08-21T11:57:28")
+    assert until.startswith("2026-08-21T14:24:02")
+    assert since < until, "the window collapsed onto the moment of death"
+
+
+def test_a_watchdog_kill_on_the_measured_step_is_counted(tmp_path):
+    led = _ledger(tmp_path, [
+        {"event": "CYCLE_KILLED", "cycle_id": "c", "ts": "2026-08-21T14:00:00+00:00",
+         "reason": {"wedged_step": "daily_analysis"}},
+        {"event": "CYCLE_KILLED", "cycle_id": "d", "ts": "2026-08-21T15:00:00+00:00",
+         "reason": {"wedged_step": "web_intelligence"}},
+    ])
+    m = sx.resolve_watchdog_and_seconds(
+        {"metric": {"step": "daily_analysis"}},
+        "2026-08-21T00:00:00+00:00", "2026-08-21T23:00:00+00:00", ledger=led)
+    assert m["watchdog_kills"] == 1, "a kill on another step must not count here"
+
+
+def test_an_unfinished_step_reports_no_seconds_rather_than_a_number(tmp_path):
+    """A step the watchdog killed has no duration in the contract, and inventing
+    one — the ceiling, say — would be a fabricated measurement in a training-
+    grade record."""
+    baseline = tmp_path / "baseline.json"
+    baseline.write_text(json.dumps({"daily_analysis": {"runs": []}}), encoding="utf-8")
+    m = sx.resolve_watchdog_and_seconds(
+        {"metric": {"step": "daily_analysis"}},
+        "2026-08-21T00:00:00+00:00", "2026-08-21T23:00:00+00:00",
+        ledger=tmp_path / "none.jsonl", baseline=baseline)
+    assert m["step_seconds"] is None
+
+
+def test_observing_the_same_cycle_twice_leaves_one_row(tmp_path):
+    store = tmp_path / "exp.json"
+    sx.register(sx.FIRST, store=store)
+    for _ in range(3):
+        sx.observe(sx.FIRST["id"], "same-cycle", 0, "2026-08-01T00:00:00+00:00",
+                   "2026-09-01T00:00:00+00:00", store=store)
+    exp = json.loads(store.read_text(encoding="utf-8"))["experiments"][0]
+    assert len(exp["observations"]) == 1
+
+
+def test_the_first_arm_a_observation_is_on_disk():
+    """THE DELIVERABLE. One counted arm-A observation, and it is a watchdog kill
+    on daily_analysis — the hypothesis reproducing itself."""
+    exp = next(e for e in sx.load()["experiments"]
+               if e["id"] == "exp-001-daily-analysis-ceiling")
+    counted = [o for o in exp["observations"]
+               if o["counts"] and o["arm_expected"] == "a"]
+    assert counted, "no counted arm-A observation was ever recorded"
+    first = counted[0]
+    assert first["value_in_force"] == 900 == first["value_expected"]
+    assert first["metric"]["watchdog_kills"] >= 1
+    assert first["window"][0] < first["window"][1]

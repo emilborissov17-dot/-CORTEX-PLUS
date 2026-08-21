@@ -674,49 +674,95 @@ def cycle_ordinal(ledger: pathlib.Path | None = None,
     return len(seen)
 
 
-def last_cycle_window(ledger: pathlib.Path | None = None) -> tuple:
-    """(cycle_id, since, until) — прозорецът, върху който се чете метриката.
+# Събития, които приключват цикъл. КЪМ КОЕТО И ДА Е ОТ ТЯХ — цикълът вече не
+# тече и прозорецът му е затворен.
+TERMINAL_EVENTS = ("CYCLE_FINISHED", "CYCLE_KILLED", "CYCLE_DIED",
+                   "CYCLE_FAILED_BUDGET_EXHAUSTED")
 
-    ТЕКУЩИЯТ цикъл има предимство пред летописа. Същата поправка като в
-    cycle_ordinal и по същата причина: последният CYCLE_STARTED е написан от
-    supervisor, тоест при ръчен пробег той сочи ПРЕДИШНИЯ цикъл — и наблюдението
-    щеше да измери чужд прозорец, представяйки го за свой.
+
+def last_closed_cycle(ledger: pathlib.Path | None = None) -> tuple:
+    """(cycle_id, since, until, ordinal) на последния ЗАВЪРШИЛ цикъл.
+
+    ── ЗАЩО НЕ ТЕКУЩИЯ (научено на живо, 21 август 2026) ───────────────────
+    Първият цикъл с този наблюдател беше УБИТ от часовоя на `daily_analysis`,
+    982 s срещу таван 900 s — точно провалът, за който exp-001 е записан. И
+    точно затова наблюдението не се случи: наблюдателят стои на стъпка 25.44, а
+    цикълът умря на стъпка 22.
+
+    Опит за стъпка, която сваля цикъла, НИКОГА не може да бъде наблюдаван от
+    наблюдател, който върви в края на същия цикъл. Това не е нещастно съвпадение
+    — това е системна слепота точно към най-интересния случай: колкото по-вярна
+    е хипотезата, толкова по-сигурно наблюдението не се записва.
+
+    Затова цикълът се съди СЛЕД като е свършил, от летописа, който помни и
+    убийството. Днешният цикъл записва вчерашния. Метриката така или иначе се
+    чете от летописа и от контракта, не от жива памет, така че нищо не се губи
+    от изчакването — а всичко се губи от това да не изчакаш.
     """
-    mine = current_cycle_id()
-    if mine:
-        lock = _read_json(BASE / "memory" / "cycle.lock", {})
-        hb = _read_json(BASE / "memory" / "heartbeat.json", {})
-        since = (lock.get("started_utc") or hb.get("step_started_utc")
-                 or hb.get("updated_utc"))
-        if since:
-            return (mine, str(since), _now())
-
     path = ledger or LEDGER
-    started = None
     try:
         rows = [json.loads(l) for l in path.read_text(encoding="utf-8").splitlines()
                 if l.strip()]
     except Exception:
-        return (None, None, None)
+        return (None, None, None, 0)
+
+    closed = None
     for e in rows:
-        if e.get("event") == "CYCLE_STARTED":
-            started = e
-    if started is None:
-        return (None, None, None)
-    cid = started.get("cycle_id")
-    since = str(started.get("ts") or "")
-    ends = [str(e.get("ts") or "") for e in rows
-            if e.get("cycle_id") == cid and e.get("event") != "CYCLE_STARTED"]
-    return (cid, since, max(ends) if ends else _now())
+        if e.get("event") in TERMINAL_EVENTS and e.get("cycle_id"):
+            closed = e.get("cycle_id")
+    if closed is None:
+        return (None, None, None, 0)
+
+    mine = [e for e in rows if e.get("cycle_id") == closed]
+    since = min(str(e.get("ts") or "") for e in mine)
+    until = max(str(e.get("ts") or "") for e in mine)
+
+    # A cycle_id IS its start time, and it is the only start a manually launched
+    # cycle has — supervisor.py writes CYCLE_STARTED, the runner does not. Without
+    # this the window of a manual run collapses to the instant of its own death:
+    # measured on the 21 Aug kill, since == until == 14:24:02. The kill still fell
+    # inside it, so the count came out right — by the luck of an inclusive bound,
+    # which is not a thing to build on.
+    try:
+        started = datetime.fromisoformat(str(closed).replace("Z", "+00:00"))
+        if started.tzinfo is None:
+            started = started.replace(tzinfo=timezone.utc)
+        iso = started.astimezone(timezone.utc).isoformat()
+        since = min(since, iso)
+    except Exception:
+        pass
+
+    # Поредният номер Е НА НАБЛЮДАВАНИЯ ЦИКЪЛ, не на текущия: рамото, което се
+    # съди, е онова, което е било в сила ТОГАВА.
+    seen, ordinal = set(), 0
+    for e in rows:
+        cid = e.get("cycle_id")
+        if not cid or cid in seen:
+            continue
+        if cid == closed:
+            ordinal = len(seen)
+            break
+        seen.add(str(cid))
+    return (closed, since, until, ordinal)
+
+
+def last_cycle_window(ledger: pathlib.Path | None = None) -> tuple:
+    """(cycle_id, since, until) на последния ЗАВЪРШИЛ цикъл — без поредния номер."""
+    cid, since, until, _ = last_closed_cycle(ledger)
+    return (cid, since, until)
 
 
 def observe_all(store: pathlib.Path | None = None) -> list:
-    """Наблюдава ВСЕКИ незавършен опит за последния цикъл. FAIL-OPEN."""
-    cid, since, until = last_cycle_window()
+    """Наблюдава ВСЕКИ незавършен опит за последния ЗАВЪРШИЛ цикъл. FAIL-OPEN.
+
+    Повторно наблюдение на същия цикъл е безобидно: observe() заменя реда по
+    cycle_id, така че един цикъл дава точно едно наблюдение колкото пъти и да
+    бъде извикано.
+    """
+    cid, since, until, ordinal = last_closed_cycle()
     if not cid:
-        print("[EXPERIMENT] няма цикъл в летописа — няма какво да се наблюдава")
+        print("[EXPERIMENT] няма завършил цикъл в летописа — няма какво да се наблюдава")
         return []
-    ordinal = cycle_ordinal()
     out = []
     for exp in running():
         row = observe(exp["id"], cid, ordinal, since, until, store=store)
