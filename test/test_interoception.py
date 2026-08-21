@@ -32,6 +32,12 @@ if str(REPO) not in sys.path:
 
 from core import interoception as io   # noqa: E402
 
+# The mirror of 21 Aug 2026, captured VERBATIM from memory/self_mirror_latest.json
+# (producer: core/self_mirror.py). Laid out as <base>/memory/... because that is
+# exactly what interoception.must_cite(base=...) resolves.
+MIRROR_BASE = REPO / "test" / "fixtures" / "interoception_2026-08-21"
+MIRROR_FIXTURE = MIRROR_BASE / "memory" / "self_mirror_latest.json"
+
 
 # --------------------------------------------------------------------------- #
 # Five rows, fixed positions, no pictures of numbers
@@ -258,12 +264,28 @@ def test_one_mirror_number_is_not_two():
     assert any("owes 2" in r for r in reasons)
 
 
-def test_the_quota_applies_to_g_learn_and_to_nothing_else():
+def test_the_quota_applies_to_g_learn_and_to_nothing_else(monkeypatch):
+    """The routing, end-to-end, on a captured mirror.
+
+    G_LEARN's quota is drawn from memory/self_mirror_latest.json, which is
+    regenerable runtime state and is no longer tracked. The mirror of 21 Aug 2026
+    is captured VERBATIM under test/fixtures/interoception_2026-08-21/, so this
+    still exercises the real path phase_tracker -> interoception.must_cite ->
+    mirror_numbers rather than asserting against whatever ran here last night.
+    """
     from core import phase_tracker as pt
-    assert pt._must_cite("G_LEARN")
+    monkeypatch.setattr(io, "MIRROR", MIRROR_FIXTURE)
+    assert pt._must_cite("G_LEARN"), (
+        "G_LEARN draws no numbers from the captured mirror")
     for phase in ("A_ORIENT", "B_SENSE", "C_SNAPSHOT", "D_SCORE",
                   "E_PROPOSE", "F_SELF"):
         assert pt._must_cite(phase) == set(), phase
+
+
+def test_the_quota_reads_the_mirror_through_the_documented_base():
+    """must_cite(base=...) resolves <base>/memory/self_mirror_latest.json."""
+    assert io.must_cite(base=MIRROR_BASE) == io.must_cite(base=MIRROR_BASE)
+    assert io.must_cite(base=MIRROR_BASE), "the captured mirror yields no numbers"
 
 
 def test_the_mirrors_own_numbers_stay_f_selfs_own():

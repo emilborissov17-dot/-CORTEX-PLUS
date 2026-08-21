@@ -36,6 +36,13 @@ from core import alarm_bands as ab
 
 REPO = pathlib.Path(__file__).resolve().parents[1]
 
+# The suggestions of 21 Aug 2026, captured VERBATIM from memory/threshold_proposals.json
+# (producer: scripts/propose_alarm_thresholds.py) on the day the sweep first ran.
+# The live file is regenerable runtime state and is no longer tracked, so the three
+# tests below read the capture: they guard the SHAPE of a proposal and the two
+# defects found that day, neither of which depends on today's numbers.
+PROPOSALS = REPO / "test" / "fixtures" / "threshold_proposals_2026-08-21.json"
+
 
 def _fixture(tmp_path, axes: dict, values: dict):
     cp = tmp_path / "config.json"
@@ -229,8 +236,8 @@ def test_every_axis_has_the_key_and_every_value_is_null():
 
 
 def test_the_proposals_exist_and_name_their_basis():
-    path = REPO / "memory" / "threshold_proposals.json"
-    assert path.exists(), "no suggestions were generated for Emil to approve"
+    path = PROPOSALS
+    assert path.exists(), "the captured suggestions are missing from test/fixtures/"
     data = json.loads(path.read_text(encoding="utf-8"))
 
     assert data["axes"] == 25
@@ -240,8 +247,7 @@ def test_the_proposals_exist_and_name_their_basis():
 
 
 def test_a_fallback_suggestion_says_it_is_not_evidence():
-    data = json.loads((REPO / "memory" / "threshold_proposals.json")
-                      .read_text(encoding="utf-8"))
+    data = json.loads(PROPOSALS.read_text(encoding="utf-8"))
     fallbacks = [r for r in data["proposals"] if r["basis"] == "fallback"]
     assert fallbacks
     for row in fallbacks:
@@ -258,8 +264,7 @@ def test_a_citation_number_is_not_proposed_as_a_threshold():
         "a bibliography entry was read as science"
     )
 
-    data = json.loads((REPO / "memory" / "threshold_proposals.json")
-                      .read_text(encoding="utf-8"))
+    data = json.loads(PROPOSALS.read_text(encoding="utf-8"))
     climate = next(r for r in data["proposals"]
                    if r["axis"] == "CLIMATE_GLOBAL_RISK_REVIEW")
     assert climate["suggested"] != 461.0

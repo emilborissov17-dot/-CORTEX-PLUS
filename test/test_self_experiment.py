@@ -27,6 +27,10 @@ BASE = pathlib.Path(__file__).resolve().parents[1]
 
 from core import self_experiment as sx  # noqa: E402
 
+# The store of 21 Aug 2026, captured VERBATIM from memory/self_experiments.json
+# (producer: core/self_experiment.py) on the day exp-001 was accepted.
+STORE_FIXTURE = BASE / "test" / "fixtures" / "self_experiments_2026-08-21.json"
+
 
 def _spec(**over) -> dict:
     s = copy.deepcopy(sx.FIRST)
@@ -277,8 +281,15 @@ def test_a_guarded_knob_is_never_served_from_the_overlay(tmp_path, monkeypatch):
     assert sx.knob("step_ceiling", default=900) == 900
 
 
-def test_the_first_experiment_is_registered_in_the_live_store():
-    """The deliverable: exp-001 exists on disk, accepted, with arm a observable."""
+def test_the_first_experiment_is_registered_in_the_captured_store(monkeypatch):
+    """The deliverable: exp-001 was registered, accepted, with arm a observable.
+
+    Read from the capture of 21 Aug 2026 (test/fixtures/self_experiments_2026-08-21.json,
+    VERBATIM from memory/self_experiments.json). The live store is regenerable runtime
+    state and is no longer tracked; what is guarded is the registration of exp-001 as
+    it was accepted, which is a fact about that day and does not move.
+    """
+    monkeypatch.setattr(sx, "STORE", STORE_FIXTURE)
     blob = sx.load()
     exp = next((e for e in blob.get("experiments", [])
                 if e["id"] == "exp-001-daily-analysis-ceiling"), None)
@@ -439,9 +450,11 @@ def test_observing_the_same_cycle_twice_leaves_one_row(tmp_path):
     assert len(exp["observations"]) == 1
 
 
-def test_the_first_arm_a_observation_is_on_disk():
+def test_the_first_arm_a_observation_is_in_the_capture(monkeypatch):
     """THE DELIVERABLE. One counted arm-A observation, and it is a watchdog kill
-    on daily_analysis — the hypothesis reproducing itself."""
+    on daily_analysis — the hypothesis reproducing itself. Read from the capture
+    of 21 Aug 2026; see the note on the registration test above."""
+    monkeypatch.setattr(sx, "STORE", STORE_FIXTURE)
     exp = next(e for e in sx.load()["experiments"]
                if e["id"] == "exp-001-daily-analysis-ceiling")
     counted = [o for o in exp["observations"]

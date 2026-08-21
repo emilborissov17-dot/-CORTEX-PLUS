@@ -1,0 +1,222 @@
+{
+  "_what_this_is": "SUGGESTED alarm thresholds, one per axis, derived only from what config/target_config.json already says. These are PROPOSALS: nothing here is written into the config, and core/alarm_bands.py never alarms on a null. The nulls stay null until a human signs each one.",
+  "_basis_meanings": {
+    "reference_worst": "the config's own record of how bad it has been",
+    "rationale": "a number the axis's own rationale line states",
+    "fallback": "arithmetic off the target — the weakest, and it says so",
+    "none": "no target or direction; nothing to draw a line relative to"
+  },
+  "ts": "2026-08-21T09:51:34.005159+00:00",
+  "axes": 25,
+  "by_basis": {
+    "fallback": 9,
+    "rationale": 3,
+    "none": 10,
+    "reference_worst": 3
+  },
+  "proposals": [
+    {
+      "axis": "ENERGY_REVIEW",
+      "suggested": 40.0,
+      "basis": "fallback",
+      "reasoning": "NOTHING IN THE CONFIG SUPPORTS A NUMBER HERE. This is target 80.0 moved 50% in the bad direction — arithmetic, not evidence. Treat it as a prompt to choose, not as a recommendation",
+      "target": 80.0,
+      "direction": "higher_better"
+    },
+    {
+      "axis": "WATER_REVIEW",
+      "suggested": 74.0,
+      "basis": "rationale",
+      "reasoning": "the axis's own rationale names 74.0: 'SDG6: universal safe water access; current ~74%' — the line is drawn at the level the config already treats as the present state",
+      "target": 100.0,
+      "direction": "higher_better"
+    },
+    {
+      "axis": "FOOD_REVIEW",
+      "suggested": 10.0,
+      "basis": "rationale",
+      "reasoning": "the axis's own rationale names 10.0: 'SDG2: near-zero hunger; current ~10% severely food insecure' — the line is drawn at the level the config already treats as the present state",
+      "target": 2.5,
+      "direction": "lower_better"
+    },
+    {
+      "axis": "MATERIALS_WASTE_REVIEW",
+      "suggested": 525.0,
+      "basis": "fallback",
+      "reasoning": "NOTHING IN THE CONFIG SUPPORTS A NUMBER HERE. This is target 350.0 moved 50% in the bad direction — arithmetic, not evidence. Treat it as a prompt to choose, not as a recommendation",
+      "target": 350.0,
+      "direction": "lower_better"
+    },
+    {
+      "axis": "COSMIC_RESOURCES_REVIEW",
+      "suggested": null,
+      "basis": "none",
+      "reasoning": "no target_value or usable direction (target=None, direction='higher_better') — there is nothing to draw a line relative to",
+      "target": null,
+      "direction": "higher_better"
+    },
+    {
+      "axis": "CLIMATE_GLOBAL_RISK_REVIEW",
+      "suggested": 525.0,
+      "basis": "fallback",
+      "reasoning": "NOTHING IN THE CONFIG SUPPORTS A NUMBER HERE. This is target 350.0 moved 50% in the bad direction — arithmetic, not evidence. Treat it as a prompt to choose, not as a recommendation",
+      "target": 350.0,
+      "direction": "lower_better"
+    },
+    {
+      "axis": "ECOSYSTEMS_BIODIVERSITY_REVIEW",
+      "suggested": 31.0,
+      "basis": "rationale",
+      "reasoning": "the axis's own rationale names 31.0: 'Planetary boundary for forest cover; current ~31% is below safe threshold' — the line is drawn at the level the config already treats as the present state",
+      "target": 35.0,
+      "direction": "higher_better"
+    },
+    {
+      "axis": "PLANETARY_POTENTIAL_REVIEW",
+      "suggested": 15.0,
+      "basis": "fallback",
+      "reasoning": "NOTHING IN THE CONFIG SUPPORTS A NUMBER HERE. This is target 30.0 moved 50% in the bad direction — arithmetic, not evidence. Treat it as a prompt to choose, not as a recommendation",
+      "target": 30.0,
+      "direction": "higher_better"
+    },
+    {
+      "axis": "ECONOMY_WORK_REVIEW",
+      "suggested": null,
+      "basis": "none",
+      "reasoning": "no target_value or usable direction (target=None, direction='stable_better') — there is nothing to draw a line relative to",
+      "target": null,
+      "direction": "stable_better"
+    },
+    {
+      "axis": "INEQUALITY_POVERTY_REVIEW",
+      "suggested": 30.0,
+      "basis": "reference_worst",
+      "reasoning": "halfway between the target 0.0 and the config's own reference_worst 60.0 — the line sits where half the known ground has been lost",
+      "target": 0.0,
+      "direction": "lower_better",
+      "reference_worst": 60.0
+    },
+    {
+      "axis": "INFRASTRUCTURE_CITIES_REVIEW",
+      "suggested": null,
+      "basis": "none",
+      "reasoning": "no target_value or usable direction (target=None, direction='stable_better') — there is nothing to draw a line relative to",
+      "target": null,
+      "direction": "stable_better"
+    },
+    {
+      "axis": "GOVERNANCE_INSTITUTIONS_REVIEW",
+      "suggested": 0.5,
+      "basis": "fallback",
+      "reasoning": "NOTHING IN THE CONFIG SUPPORTS A NUMBER HERE. This is target 1.0 moved 50% in the bad direction — arithmetic, not evidence. Treat it as a prompt to choose, not as a recommendation",
+      "target": 1.0,
+      "direction": "higher_better"
+    },
+    {
+      "axis": "HUMAN_WELL_BEING_REVIEW",
+      "suggested": 62.5,
+      "basis": "reference_worst",
+      "reasoning": "halfway between the target 25.0 and the config's own reference_worst 100.0 — the line sits where half the known ground has been lost",
+      "target": 25.0,
+      "direction": "lower_better",
+      "reference_worst": 100.0
+    },
+    {
+      "axis": "SOCIAL_RELATIONS_REVIEW",
+      "suggested": 60500000.0,
+      "basis": "reference_worst",
+      "reasoning": "halfway between the target 1000000.0 and the config's own reference_worst 120000000.0 — the line sits where half the known ground has been lost",
+      "target": 1000000.0,
+      "direction": "lower_better",
+      "reference_worst": 120000000.0
+    },
+    {
+      "axis": "CULTURE_MEDIA_REVIEW",
+      "suggested": null,
+      "basis": "none",
+      "reasoning": "no target_value or usable direction (target=None, direction='higher_better') — there is nothing to draw a line relative to",
+      "target": null,
+      "direction": "higher_better"
+    },
+    {
+      "axis": "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL",
+      "suggested": 0.5,
+      "basis": "fallback",
+      "reasoning": "NOTHING IN THE CONFIG SUPPORTS A NUMBER HERE. This is target 1.0 moved 50% in the bad direction — arithmetic, not evidence. Treat it as a prompt to choose, not as a recommendation",
+      "target": 1.0,
+      "direction": "higher_better"
+    },
+    {
+      "axis": "TECHNOLOGY_INFRA_REVIEW",
+      "suggested": null,
+      "basis": "none",
+      "reasoning": "no target_value or usable direction (target=None, direction='higher_better') — there is nothing to draw a line relative to",
+      "target": null,
+      "direction": "higher_better"
+    },
+    {
+      "axis": "EDUCATION_CULTURE_REVIEW",
+      "suggested": 50.0,
+      "basis": "fallback",
+      "reasoning": "NOTHING IN THE CONFIG SUPPORTS A NUMBER HERE. This is target 100.0 moved 50% in the bad direction — arithmetic, not evidence. Treat it as a prompt to choose, not as a recommendation",
+      "target": 100.0,
+      "direction": "higher_better"
+    },
+    {
+      "axis": "COGNITION_LEARNING_REVIEW",
+      "suggested": 50.0,
+      "basis": "fallback",
+      "reasoning": "NOTHING IN THE CONFIG SUPPORTS A NUMBER HERE. This is target 100.0 moved 50% in the bad direction — arithmetic, not evidence. Treat it as a prompt to choose, not as a recommendation",
+      "target": 100.0,
+      "direction": "higher_better"
+    },
+    {
+      "axis": "GENERAL_SELF_REVIEW",
+      "suggested": null,
+      "basis": "none",
+      "reasoning": "no target_value or usable direction (target=None, direction='higher_better') — there is nothing to draw a line relative to",
+      "target": null,
+      "direction": "higher_better"
+    },
+    {
+      "axis": "TECHNOLOGY_AI_REVIEW",
+      "suggested": null,
+      "basis": "none",
+      "reasoning": "no target_value or usable direction (target=None, direction='higher_better') — there is nothing to draw a line relative to",
+      "target": null,
+      "direction": "higher_better"
+    },
+    {
+      "axis": "DEEP_TIME_RISKS_REVIEW",
+      "suggested": null,
+      "basis": "none",
+      "reasoning": "no target_value or usable direction (target=None, direction='lower_better') — there is nothing to draw a line relative to",
+      "target": null,
+      "direction": "lower_better"
+    },
+    {
+      "axis": "GOAL_PROGRESS_REVIEW",
+      "suggested": 0.5,
+      "basis": "fallback",
+      "reasoning": "NOTHING IN THE CONFIG SUPPORTS A NUMBER HERE. This is target 1.0 moved 50% in the bad direction — arithmetic, not evidence. Treat it as a prompt to choose, not as a recommendation",
+      "target": 1.0,
+      "direction": "higher_better"
+    },
+    {
+      "axis": "LONG_TERM_FUTURE_REVIEW",
+      "suggested": null,
+      "basis": "none",
+      "reasoning": "no target_value or usable direction (target=None, direction='lower_better') — there is nothing to draw a line relative to",
+      "target": null,
+      "direction": "lower_better"
+    },
+    {
+      "axis": "SPACE_INFRASTRUCTURE_REVIEW",
+      "suggested": null,
+      "basis": "none",
+      "reasoning": "no target_value or usable direction (target=None, direction='higher_better') — there is nothing to draw a line relative to",
+      "target": null,
+      "direction": "higher_better"
+    }
+  ]
+}

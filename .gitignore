@@ -124,3 +124,43 @@ memory/brain_step_log.jsonl
 memory/brain_stance.json
 memory/brain_cycle_plan.json
 memory/local_brain_test.json
+
+# ── REGENERABLE RUNTIME ARTIFACTS UNDER memory/ (21 Aug 2026) ─────────────────
+# These thirteen were TRACKED, and were about to become permanent in a PUBLIC
+# repo on the feature/lidaction-guard push. A pre-push audit found no secret in
+# them — the reason they go is the rule above: the CODE is committed, the DATA
+# it generates is not. Every one is rebuilt by a named producer:
+#
+#   embeddings_cache.json          core/interval_head.py     (2.0 MB cache)
+#   interval_head_curve.json       core/interval_head.py
+#   interval_head_runs.jsonl       core/interval_head.py
+#   training_log.jsonl             core/training_log.py      (1064 rows)
+#   step_callmap.json              scripts/step_callmap.py
+#   threshold_proposals.json       scripts/propose_alarm_thresholds.py
+#   self_experiments.json          core/self_experiment.py
+#   self_mirror_latest.json        core/self_mirror.py
+#   self_mirror_log.jsonl          core/self_mirror.py
+#   micro_cycle_latest.json        scripts/micro_cycle.py
+#   micro_cycle_log.jsonl          scripts/micro_cycle.py
+#   micro_cycle_contract_latest.json    scripts/micro_cycle.py
+#   micro_cycle_contract_baseline.json  scripts/micro_cycle.py
+#
+# Two suites read two of these from the repo rather than from tmp_path. Their
+# data moved to test/fixtures/ and the tests point there, so the suite no longer
+# depends on a file a fresh clone does not have. See test/fixtures/README.md.
+#
+# EXPLICITLY LISTED, NO PATTERN — same reason as the block above: `memory/micro_cycle_*`
+# and `memory/self_*` would silently reach files that ARE tracked.
+memory/embeddings_cache.json
+memory/interval_head_curve.json
+memory/interval_head_runs.jsonl
+memory/training_log.jsonl
+memory/step_callmap.json
+memory/threshold_proposals.json
+memory/self_experiments.json
+memory/self_mirror_latest.json
+memory/self_mirror_log.jsonl
+memory/micro_cycle_latest.json
+memory/micro_cycle_log.jsonl
+memory/micro_cycle_contract_latest.json
+memory/micro_cycle_contract_baseline.json

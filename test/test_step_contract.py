@@ -38,6 +38,7 @@ import pytest
 from core import step_contract as sc
 
 REPO = pathlib.Path(__file__).resolve().parents[1]
+CALLMAP_FIXTURE = REPO / "test" / "fixtures" / "step_callmap_2026-08-21.json"
 
 
 @pytest.fixture
@@ -228,10 +229,17 @@ def test_an_ok_verdict_does_not_carry_them(sandbox):
     assert "substeps" not in c.result
 
 
-def test_it_reads_the_real_callmap_for_a_real_step():
-    """The map on disk must actually answer for a step that exists."""
-    subs = sc.substeps_for("daily_analysis")
-    assert subs, "step_callmap.json has nothing for daily_analysis"
+def test_it_reads_a_real_callmap_for_a_real_step():
+    """The map must actually answer for a step that exists.
+
+    Reads the capture of 21 Aug 2026 (test/fixtures/step_callmap_2026-08-21.json,
+    VERBATIM from memory/step_callmap.json, producer scripts/step_callmap.py). The
+    live map is regenerable runtime state and is no longer tracked; what is guarded
+    here is that a real map parses and answers for a real step, which does not
+    depend on today's AST.
+    """
+    subs = sc.substeps_for("daily_analysis", callmap_path=CALLMAP_FIXTURE)
+    assert subs, "the captured callmap has nothing for daily_analysis"
     assert any("daily_analysis_agent" in str(s.get("module")) for s in subs)
 
 
