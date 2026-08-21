@@ -58,7 +58,43 @@ Ollama, кешират се на диска по sha256 на текста, и Н
 MEASURED. Ред, чийто произход е модел, никога не влиза — и това се проверява
 тук отново, а не се приема на доверие.
 
+ДВА ЧЕСТНИ ОТРИЦАТЕЛНИ РЕЗУЛТАТА (21 август 2026)
+--------------------------------------------------
+ПЪРВИЯТ. Главата виждаше ЕДНО вграждане на ИМЕ на стъпка, тоест всички редове на
+`daily_analysis` имаха вход, който не се различава по нищо. При разделяне по цели
+стъпки въпросът беше „можеш ли да предскажеш времетраенето на име, което не си
+чел" — и отговорът беше не. Правилен отговор: имената не носят нищо за това
+колко ще тече една стъпка.
+
+ВТОРИЯТ, с истински признаци. Добавени са пореден номер на стъпката в цикъла,
+час от денонощието като sin/cos, времетраенето на СЪЩАТА стъпка в последните три
+цикъла, брой цикли от началото на дневника и свободна RAM в началото на стъпката.
+Същият протокол — същото разделяне по цели стъпки, същата плоска базова линия,
+същият хеширан контрол, същите епохи и семе. Измерено (`--compare`):
+
+    рамо                                    heldout Winkler   покритие   ширина
+    A  само имена, истинско вграждане            16.7224        11%       16 s
+    B  само имена, хеширан контрол               17.1295         9%        9 s
+    C  имена + признаци, истинско вграждане      13.3303        24%       12 s
+    D  имена + признаци, хеширан контрол         15.6935         4%        3 s
+    ПЛОСКА БАЗОВА ЛИНИЯ                            8.4337
+
+Признаците помагат много — 16.72 -> 13.33, с покритие от 11% на 24% — И ВСЕ ПАК
+ГУБЯТ от една константа. Това се казва на глас и не се пипа. Втори честен
+отрицателен резултат е напредък; настройване, докато числото стане по-хубаво от
+базовата линия, е Goodhart върху собствения ти измервателен уред.
+
+ТРЕТО НЕЩО, КОЕТО ЛИЧИ ОТ ТАБЛИЦАТА и не беше търсено: C бие D (13.33 срещу
+15.69), докато A и B са неразличими (16.72 срещу 17.13). Тоест семантичното
+вграждане НЕ носи нищо само по себе си, но носи нещо, когато има с какво да се
+съчетае. Това е хипотеза от една таблица, не заключение.
+
+И ЧЕТВЪРТО: покритие 24% при номинални 80% значи, че главата не е неинформирана
+— тя е СВРЪХУВЕРЕНА. Интервали от 12 s за стъпки от 0.01 s до 2710 s. Диагнозата
+е различна от „не знае" и вероятно е следващата работа, но не днес.
+
     venv\\Scripts\\python.exe core/interval_head.py --selftest
+    venv\\Scripts\\python.exe core/interval_head.py --compare
     venv\\Scripts\\python.exe -m core.interval_head --train
 """
 from __future__ import annotations
@@ -305,6 +341,178 @@ def dataset(target: str = "step_seconds") -> dict:
             "target": target}
 
 
+# ---------------------------------------------------------------------------
+# PER-ROW FEATURES (21 August 2026)
+# ---------------------------------------------------------------------------
+#
+# THE HONEST NEGATIVE THAT CAME BEFORE THIS. The head has so far seen ONE
+# embedding per step NAME, so every row of `daily_analysis` had an identical
+# input. Held out by whole step, it was being asked to predict the duration of a
+# name it had never read, from the name alone. It lost to the flat baseline, and
+# that result was correct: names carry nothing about how long a step will run.
+#
+# These are features that plausibly DO. Every one of them is available at
+# prediction time — that is the test of whether a feature is real or is the
+# answer in disguise:
+#
+#   step_ordinal        where in the cycle this step ran (1st, 17th, 52nd)
+#   hour sin/cos        time of day on a circle, so 23:00 and 01:00 are near
+#   prev1/2/3           this step's duration in the last three cycles
+#   prev_count          how many of those three actually existed (0-3)
+#   cycles_since_boot   how many cycles this log has seen before this one
+#   ram_free_at_start   from the body sensorium — see the flag below
+#
+# ABSENT IS ZERO AND A FLAG, NEVER ZERO ALONE. A step running for the first
+# time has no previous duration; writing 0 there without saying so would tell
+# the head "this step took no time last cycle", which is a measurement, and a
+# false one. So every may-be-missing feature ships with its own presence flag
+# and the head can learn to ignore the value when the flag is 0.
+#
+# WHAT prev1/2/3 DOES TO THE HOLDOUT, SAID OUT LOUD. The split holds out whole
+# STEPS, and its question was "can you predict a step you have never seen". With
+# prev1/2/3 that question changes: for a held-out step the model still never
+# trains on that step's targets, but it can read that step's own earlier
+# durations as inputs. That is legitimate — it is exactly what production has,
+# and the targets of held-out rows are never used in training — but it is a
+# DIFFERENT question: "given a step's own recent history, can you bound its next
+# run". Both are worth answering, so train() reports both arms and never quietly
+# substitutes one for the other.
+#
+# ONLY STRICTLY EARLIER ROWS. prev1/2/3 are taken from rows whose timestamp is
+# strictly before this one. A same-cycle or future row would be the target
+# wearing a hat.
+
+# Consecutive rows more than this far apart belong to different cycles.
+# MEASURED, not chosen: on 628 grounded rows the sorted gap list steps from
+# 4,343 s to 10,293 s with nothing in between, so any threshold in that gap
+# gives the same 9 cycles over the six days of log. 2 h sits inside it and is
+# comfortably above the longest single step ever recorded (2,710 s).
+CYCLE_GAP_SEC = 7200
+
+ROW_FEATURE_NAMES = (
+    "step_ordinal",
+    "hour_sin",
+    "hour_cos",
+    "prev1_log",
+    "prev2_log",
+    "prev3_log",
+    "prev_count",
+    "cycles_since_boot",
+    "ram_free_gb_at_start",
+    "has_prev",
+    "has_ram",
+)
+
+
+def _cycle_of(rows) -> list:
+    """Which cycle each row belongs to, by time gap. Rows must be ts-sorted."""
+    out, cyc = [], 0
+    prev_ts = None
+    for r in rows:
+        try:
+            t = datetime.fromisoformat(r["ts"]).timestamp()
+        except Exception:
+            t = prev_ts if prev_ts is not None else 0.0
+        if prev_ts is not None and (t - prev_ts) > CYCLE_GAP_SEC:
+            cyc += 1
+        out.append(cyc)
+        prev_ts = t
+    return out
+
+
+def _ram_free_gb_at(ts_iso: str) -> float | None:
+    """RAM free at the moment the step started, from the body sensorium.
+
+    Returns None when there is no reading within an hour of the row — which, for
+    every row currently in the training log, is the case: core/body_sensorium.py
+    began recording on 21 Aug 2026 and the log starts on 16 Aug. The feature is
+    wired and flagged absent rather than left out, so that it starts carrying
+    information as soon as there is history behind it, without another edit.
+    """
+    try:
+        from core.body_sensorium import _rows_since
+        from datetime import timedelta
+        t = datetime.fromisoformat(ts_iso)
+        rows = _rows_since(t - timedelta(hours=1))
+    except Exception:
+        return None
+    best, best_d = None, None
+    for r in rows or []:
+        try:
+            d = abs((datetime.fromisoformat(r["ts"]) - t).total_seconds())
+        except Exception:
+            continue
+        if r.get("ram_available_mb") is None:
+            continue
+        if best_d is None or d < best_d:
+            best, best_d = r["ram_available_mb"] / 1024.0, d
+    return best if (best_d is not None and best_d <= 3600) else None
+
+
+def row_features(rows) -> tuple:
+    """(F, names, coverage). One row of numbers per training row.
+
+    `coverage` reports, per may-be-missing feature, on what fraction of rows it
+    was actually present — because a feature that is absent everywhere is not a
+    feature, and a table that does not say so implies it was.
+    """
+    ordered = sorted(range(len(rows)), key=lambda i: str(rows[i].get("ts") or ""))
+    cycles = _cycle_of([rows[i] for i in ordered])
+    cycle_of = {}
+    ordinal = {}
+    seen_in_cycle: dict = {}
+    for pos, i in enumerate(ordered):
+        c = cycles[pos]
+        cycle_of[i] = c
+        seen_in_cycle[c] = seen_in_cycle.get(c, 0) + 1
+        ordinal[i] = seen_in_cycle[c]
+
+    # Strictly-earlier durations of the SAME step.
+    history: dict = {}
+    prevs: dict = {}
+    for i in ordered:
+        key = str(rows[i]["key"])
+        past = history.get(key, [])
+        prevs[i] = list(past[-3:])[::-1]      # newest first
+        history.setdefault(key, []).append(max(float(rows[i]["value"]), 1e-3))
+
+    F, present_prev, present_ram = [], 0, 0
+    for i in range(len(rows)):
+        r = rows[i]
+        try:
+            t = datetime.fromisoformat(r["ts"])
+            hour = t.hour + t.minute / 60.0
+        except Exception:
+            hour = 0.0
+        p = prevs.get(i, [])
+        p_log = [math.log(v) for v in p]
+        while len(p_log) < 3:
+            p_log.append(0.0)
+        if p:
+            present_prev += 1
+        ram = _ram_free_gb_at(str(r.get("ts") or ""))
+        if ram is not None:
+            present_ram += 1
+        F.append([
+            float(ordinal.get(i, 0)),
+            math.sin(2 * math.pi * hour / 24.0),
+            math.cos(2 * math.pi * hour / 24.0),
+            p_log[0], p_log[1], p_log[2],
+            float(len(p)),
+            float(cycle_of.get(i, 0)),
+            float(ram if ram is not None else 0.0),
+            1.0 if p else 0.0,
+            1.0 if ram is not None else 0.0,
+        ])
+    n = max(len(rows), 1)
+    coverage = {
+        "prev_durations_present": round(present_prev / n, 3),
+        "ram_free_present": round(present_ram / n, 3),
+        "cycles_detected": (max(cycles) + 1) if cycles else 0,
+    }
+    return np.asarray(F, dtype=np.float64), list(ROW_FEATURE_NAMES), coverage
+
+
 def split_by_step(keys, y, fraction: float = HOLDOUT_FRACTION, seed: int = SEED):
     """Hold out whole STEPS. A random row split would test memorisation."""
     steps = sorted(set(keys))
@@ -331,11 +539,16 @@ def coverage_and_width(lo, hi, y):
 
 def train(epochs: int = EPOCHS, lr: float = LR, alpha: float = ALPHA,
           write: bool = True, verbose: bool = True,
-          force_fallback: bool = False) -> dict:
+          force_fallback: bool = False, row_feats: bool = False) -> dict:
     """One training run. `force_fallback` is the CONTROL: the same head on the
     same split with the semantic embedding replaced by a meaningless hash. If
     the real embedding is carrying information, it must beat this; if the two
-    are indistinguishable, the frozen embedding is decoration."""
+    are indistinguishable, the frozen embedding is decoration.
+
+    `row_feats` appends the per-row features (see ROW_FEATURE_NAMES) to the
+    step embedding. Everything else — the split, the loss, the baseline, the
+    epochs, the seed — is unchanged, because a new arm compared under a new
+    protocol is not a comparison."""
     data = dataset()
     keys, y = data["keys"], data["y"]
     if len(keys) < 20:
@@ -350,6 +563,11 @@ def train(epochs: int = EPOCHS, lr: float = LR, alpha: float = ALPHA,
         E, source = embed(texts)
     by_step = {s: E[i] for i, s in enumerate(steps)}
     X = np.asarray([by_step[k] for k in keys])
+
+    row_cov, row_names = None, []
+    if row_feats:
+        F, row_names, row_cov = row_features(data["rows"])
+        X = np.hstack([X, F])
 
     tr, va, held = split_by_step(keys, y)
     mu = X[tr].mean(axis=0)
@@ -396,6 +614,8 @@ def train(epochs: int = EPOCHS, lr: float = LR, alpha: float = ALPHA,
         "rows_total": len(keys),
         "rows_excluded_asserted": data["excluded_asserted"],
         "rows_excluded_asserted_whole_log": data["excluded_asserted_whole_log"],
+        "row_features": row_names,
+        "row_feature_coverage": row_cov,
         "steps_total": len(steps),
         "steps_heldout": held,
         "rows_train": int(len(tr)),
@@ -448,6 +668,74 @@ def summary(result: dict) -> str:
         f"  excluded as asserted: {result['rows_excluded_asserted']} rows for "
         f"this target, {result.get('rows_excluded_asserted_whole_log')} across "
         f"the whole training log")
+
+
+# ---------------------------------------------------------------------------
+# The four arms, under one protocol
+# ---------------------------------------------------------------------------
+
+ARMS = (
+    ("A  names only, real embedding", dict(force_fallback=False, row_feats=False)),
+    ("B  names only, hashed control", dict(force_fallback=True, row_feats=False)),
+    ("C  names + row features, real", dict(force_fallback=False, row_feats=True)),
+    ("D  names + row features, hash", dict(force_fallback=True, row_feats=True)),
+)
+
+
+def compare(write: bool = False) -> dict:
+    """All four arms on the SAME split, loss, baseline, epochs and seed.
+
+    One table, produced by one command, so that "the features helped" and "the
+    features won" cannot be confused with each other by anybody reading a
+    number out of context — including whoever wrote it.
+    """
+    rows, flat = [], None
+    for label, kw in ARMS:
+        r = train(write=write, verbose=False, **kw)
+        if r.get("error"):
+            rows.append({"arm": label, "error": r["error"]})
+            continue
+        flat = r["flat_baseline"]["heldout"]
+        rows.append({
+            "arm": label,
+            "heldout": r["final"]["heldout"],
+            "coverage": r["final"]["heldout_coverage"],
+            "width_sec": r["final"]["heldout_mean_width_sec"],
+            "beats_flat": r["beats_flat_baseline_heldout"],
+            "embedding": r["embedding"],
+            "row_feature_coverage": r.get("row_feature_coverage"),
+        })
+    return {"ts": _now(), "arms": rows, "flat_baseline_heldout": flat,
+            "any_arm_beats_flat": any(x.get("beats_flat") for x in rows)}
+
+
+def compare_table(result: dict) -> str:
+    out = [f"{'arm':<34}{'heldout':>10}{'coverage':>10}{'width':>9}  verdict"]
+    for r in result["arms"]:
+        if r.get("error"):
+            out.append(f"{r['arm']:<34}  ERROR {r['error']}")
+            continue
+        out.append(f"{r['arm']:<34}{r['heldout']:>10.4f}"
+                   f"{r['coverage']:>9.0%}{r['width_sec']:>8.0f}s  "
+                   f"{'BEATS flat' if r['beats_flat'] else 'LOSES to flat'}")
+    out.append(f"{'FLAT BASELINE':<34}{result['flat_baseline_heldout']:>10.4f}")
+    cov = next((r.get("row_feature_coverage") for r in result["arms"]
+                if r.get("row_feature_coverage")), None)
+    if cov:
+        out.append("")
+        out.append(f"row-feature coverage: prev durations present on "
+                   f"{cov['prev_durations_present']:.0%} of rows, RAM-at-start on "
+                   f"{cov['ram_free_present']:.0%}, "
+                   f"{cov['cycles_detected']} cycles detected")
+        if cov["ram_free_present"] == 0:
+            out.append("  RAM-at-start is ABSENT on every row: the body "
+                       "sensorium began recording on 21 Aug 2026 and this log "
+                       "starts on 16 Aug. Wired and flagged, not dropped.")
+    if not result["any_arm_beats_flat"]:
+        out.append("")
+        out.append("NO ARM BEATS THE FLAT BASELINE. Said plainly, and not tuned "
+                   "until it does — that would be Goodhart on our own instrument.")
+    return "\n".join(out)
 
 
 # ---------------------------------------------------------------------------
@@ -631,6 +919,12 @@ def _selftest() -> int:
 if __name__ == "__main__":
     if "--selftest" in sys.argv:
         sys.exit(_selftest())
+    if "--compare" in sys.argv:
+        # All four arms, one protocol, one table. write=False by default: a
+        # comparison is not a training run and must not append four rows to
+        # memory/interval_head_runs.jsonl as though it were.
+        print(compare_table(compare(write="--write" in sys.argv)))
+        sys.exit(0)
     res = train()
     print()
     print(summary(res))
