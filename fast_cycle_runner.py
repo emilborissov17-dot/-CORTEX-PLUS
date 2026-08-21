@@ -2175,6 +2175,17 @@ def main():
         _relay()
     _run("brain_relay", _brain_relay)
 
+    # ── 25.37. ИЗТОЧНИЦИ, КОИТО ЧАКАТ КЛЮЧ ────────────────────────────────
+    # Тихото прескачане е правилно (липсващ ключ не бива да вали цикъла) и
+    # точно затова е невидимо: EIA стои от 15 авг, а energy секцията беше
+    # празна и въпреки това броена сред „20 източника". Веднъж СЕДМИЧНО, с
+    # линка и името на променливата. Ключът тръгва сам — нула код.
+    beat("needs_auth", "25.37")
+    def _needs_auth():
+        from core.needs_auth import run as _ask
+        _ask()
+    _run("needs_auth", _needs_auth)
+
     beat("brain_debrief", "25.5")
     try:
         from core.brain import debrief_cycle as _debrief

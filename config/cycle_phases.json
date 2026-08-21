@@ -357,6 +357,10 @@
           "index": "25.36"
         },
         {
+          "name": "needs_auth",
+          "index": "25.37"
+        },
+        {
           "name": "brain_debrief",
           "index": "25.5"
         },
