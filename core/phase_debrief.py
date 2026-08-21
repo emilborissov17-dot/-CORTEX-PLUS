@@ -29,8 +29,43 @@ THE REJECTION PATH IS THE POINT
 A debrief is REJECTED and recorded as rejected, never published, when:
 
   * "what" cites no number from the phase's own data
+  * "what" cites no number that is UNIQUE to this phase  (SWAP_GENERIC)
   * ANY CJK character appears anywhere in the output
   * "verdict" is not one of the three words
+
+THE SWAP TEST (21 August 2026)
+-------------------------------
+The number gate above was never wrong, and for six phases in a row it was
+useless. On 21 Aug 2026 six debriefs were accepted, and this is all six:
+
+    "Фазата A_ORIENT завърши с композитен скор 0.6282, като се измериха
+     11 метрика."
+    "Фазата B_SENSE завърши с композитен скор 0.6282, ..."      (identical)
+    "Фазата C_SNAPSHOT завърши с композитен скор 0.6282, ..."   (identical)
+    ... and D_SCORE, E_PROPOSE, F_SELF, the same sentence again.
+
+0.6282 IS a number from the evidence, so the gate passed it — because
+core/phase_tracker._evidence() handed every phase the same composite. The
+evidence was generic, so the debrief was generic, and the gate could not tell.
+
+The test is the one a human would apply: SWAP THE PHASE NAME. If the sentence
+still reads correctly under another phase's heading, it is not about this phase.
+Mechanically: core/phase_evidence.own_numbers(phase) is the set of numbers in
+this phase's menu that appear in NO other phase's menu, and an accepted debrief
+must cite at least one of them. Rejection reason: SWAP_GENERIC.
+
+When own_numbers is empty the rule is NOT applied and the record says so
+(`swap_test: "not applied"`). A gate that cannot be satisfied is a gate that
+gets switched off, and silently converting "I had nothing to check against"
+into "you failed" is the kind of lie this repo exists to catch.
+
+THE VALIDATOR FEEDS THE PROMPT
+-------------------------------
+A rejection whose reason never reaches the model is a scorecard, not a loop. The
+sharpened retry now receives, verbatim: the rejection reason, the numbers that
+WERE cited and were wrong (foreign or generic), and the numbers that are unique
+to this phase — the counterexample stated in promptable form. The validator is
+upstream of the prompt, so the gate teaches the thing it judges.
 
 The CJK rule is not hypothetical. On 20 August 2026 memory/brain_stance.json
 was written entirely in Chinese by local:qwen2.5:3b — all four fields — for a
@@ -116,8 +151,19 @@ def evidence_numbers(evidence: dict) -> set[str]:
     return numbers_in(json.dumps(evidence, ensure_ascii=False, default=str))
 
 
-def validate(debrief: dict, evidence: dict) -> tuple[bool, list[str]]:
-    """Returns (accepted, reasons_for_rejection). Never raises."""
+SWAP_GENERIC = "SWAP_GENERIC"
+
+
+def validate(debrief: dict, evidence: dict,
+             own_numbers: set | None = None) -> tuple[bool, list[str]]:
+    """Returns (accepted, reasons_for_rejection). Never raises.
+
+    `own_numbers` are the numbers unique to this phase (see
+    core/phase_evidence.own_numbers). Passed and non-empty, the swap test
+    applies: 'what' must cite one of them. Passed empty or not passed at all,
+    the swap test is skipped — see the docstring on why that is not silently
+    turned into a failure.
+    """
     reasons: list[str] = []
 
     if not isinstance(debrief, dict):
@@ -147,6 +193,21 @@ def validate(debrief: dict, evidence: dict) -> tuple[bool, list[str]]:
         reasons.append(
             f"'what' cites {sorted(said)[:4]} but none of those appear in this "
             f"phase's own data — the sentence is not about this phase")
+
+    # ── THE SWAP TEST ──────────────────────────────────────────────────────
+    # Cited a number from the menu, but one that every other phase's menu also
+    # holds? Then swapping the phase name leaves the sentence true, and the
+    # debrief says nothing about THIS phase. Reported with both halves of the
+    # counterexample — what was cited, and what should have been — because the
+    # retry prompt is built straight out of this string.
+    elif own_numbers:
+        if not (said & set(own_numbers)):
+            reasons.append(
+                f"{SWAP_GENERIC}: 'what' cites {sorted(said)[:4]}, which every "
+                f"other phase's evidence also contains — swap the phase name "
+                f"and the sentence still reads true. Numbers only "
+                f"{evidence.get('phase', 'this phase')} has: "
+                f"{sorted(own_numbers, key=lambda s: (len(s), s))[:8]}")
 
     return (not reasons), reasons
 
@@ -187,9 +248,17 @@ PROMPT_SHARP = """Ти си CORTEX++. Приключи фаза {phase} от с�
 ЧИСЛАТА, КОИТО ИМАШ ПРАВО ДА ЦИТИРАШ (други няма да бъдат приети):
 {numbers}
 
+ЧИСЛА, КОИТО ИМА САМО ТАЗИ ФАЗА (поне едно от тях ТРЯБВА да е в 'what' —
+всяко друго число го има и в другите фази, значи не казва нищо за ТАЗИ):
+{own}
+
+КОНТРАПРИМЕР: „Фазата приключи с композитен скор 0.6282" е ОТХВЪРЛЕНО
+изречение. Не защото е невярно, а защото сменяш името на фазата и то си остава
+вярно — на 21 август 2026 шест фази получиха точно това изречение.
+
 Напиши РОВНО четири полета, като JSON и нищо друго:
-  what    — едно изречение. То ТРЯБВА да съдържа поне едно от числата по-горе,
-            написано точно както е дадено.
+  what    — едно изречение. То ТРЯБВА да съдържа поне едно от числата от
+            ВТОРИЯ списък, написано точно както е дадено.
   verdict — точно една от думите: OK, DEGRADED, BROKEN
   risk    — какво може да се обърка след това заради станалото
   do      — едно нещо, което човек да обмисли
@@ -237,12 +306,17 @@ def _numbers_menu(evidence: dict, limit: int = 24) -> str:
 
 
 def ask_local(phase: str, evidence: dict, model: str | None = None,
-              why: str | None = None) -> dict | None:
+              why: str | None = None, own: set | None = None) -> dict | None:
     """Ask the LOCAL brain only. Returns the parsed object or None.
 
     `why` switches to the sharpened prompt: it is the rejection reason from the
     first attempt, handed back so the second attempt answers the actual
     objection instead of repeating the same shape.
+
+    `own` is the swap test's answer key — the numbers unique to this phase. It
+    goes into the prompt as its own list, because "cite a number" and "cite a
+    number that distinguishes this phase" are different instructions and the
+    model failed the second one six times in a row while satisfying the first.
     """
     try:
         from core.brain import think
@@ -250,9 +324,12 @@ def ask_local(phase: str, evidence: dict, model: str | None = None,
         return None
     ev = json.dumps(evidence, ensure_ascii=False, indent=2)[:2500]
     sharpened = bool(why) or prompt_variant() == SHARP_PROMPT
+    own_list = (", ".join(sorted(own, key=lambda s: (len(s), s))[:16])
+                if own else "(няма — тази фаза няма собствени числа този цикъл)")
     question = (PROMPT_SHARP.format(phase=phase, evidence=ev,
                                     why=why or "нямаше число в 'what'",
-                                    numbers=_numbers_menu(evidence))
+                                    numbers=_numbers_menu(evidence),
+                                    own=own_list)
                 if sharpened else
                 PROMPT_BG.format(phase=phase, evidence=ev))
     try:
@@ -292,19 +369,30 @@ def render_telegram(phase: str, d: dict) -> str:
 
 def debrief_phase(phase: str, cycle_id: str, evidence: dict,
                   base: pathlib.Path | None = None,
-                  asker=None) -> dict:
+                  asker=None, own_numbers: set | None = None) -> dict:
     """Ask, judge, ONE sharpened retry, then write the debrief or the rejection.
 
     Returns {"accepted": bool, ...}. Never raises: a debrief that cannot be
     produced must not take a phase down with it.
+
+    `own_numbers` defaults to core/phase_evidence.own_numbers(phase) — computed
+    here rather than demanded of the caller, so that the swap test cannot be
+    switched off by a caller that simply forgets to pass it.
     """
     ask = asker or ask_local
     attempts = []
     started = time.time()
 
+    if own_numbers is None:
+        try:
+            from core.phase_evidence import own_numbers as _own
+            own_numbers = _own(phase, base=base)
+        except Exception:
+            own_numbers = set()
+
     said = ask(phase, evidence)
     accepted, reasons = (False, ["the local brain returned nothing"]) \
-        if said is None else validate(said, evidence)
+        if said is None else validate(said, evidence, own_numbers)
     attempts.append({"prompt": BASE_PROMPT, "said": said,
                      "accepted": accepted, "rejected_because": reasons})
 
@@ -334,12 +422,17 @@ def debrief_phase(phase: str, cycle_id: str, evidence: dict,
         # and read as "this asker has no retry", hiding a live bug.
         import inspect
         try:
-            takes_why = "why" in inspect.signature(ask).parameters
+            params = inspect.signature(ask).parameters
+            takes_why = "why" in params
+            takes_own = "own" in params
         except (TypeError, ValueError):
-            takes_why = False
-        retry = ask(phase, evidence, why=why) if takes_why else None
+            takes_why = takes_own = False
+        retry = None
+        if takes_why:
+            retry = (ask(phase, evidence, why=why, own=own_numbers) if takes_own
+                     else ask(phase, evidence, why=why))
         if retry is not None:
-            ok2, reasons2 = validate(retry, evidence)
+            ok2, reasons2 = validate(retry, evidence, own_numbers)
             attempts.append({"prompt": SHARP_PROMPT, "said": retry,
                              "accepted": ok2, "rejected_because": reasons2})
             if ok2:
@@ -359,6 +452,15 @@ def debrief_phase(phase: str, cycle_id: str, evidence: dict,
         "attempt_log": attempts,
         "debrief": said,
         "rejected_because": reasons,
+        # THE EVIDENCE IS KEPT (21 Aug 2026). Until today the record stored the
+        # verdict and not what it was judged against, so the six accepted
+        # debriefs of 21 Aug could not be re-judged without guessing what they
+        # had been shown. A verdict whose evidence is gone cannot be replayed,
+        # and a gate that cannot be replayed cannot be improved.
+        "evidence": evidence,
+        "own_numbers": sorted(own_numbers or []),
+        "swap_test": ("applied" if own_numbers else
+                      "not applied — this phase had no numbers of its own"),
     }
     if accepted:
         record["debrief"] = {**said,

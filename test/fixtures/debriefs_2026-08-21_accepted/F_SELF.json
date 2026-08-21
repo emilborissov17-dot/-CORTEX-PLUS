@@ -1,0 +1,44 @@
+{
+  "ts": "2026-08-21T14:05:59.460217+00:00",
+  "phase": "F_SELF",
+  "cycle_id": "2026-08-21T11:57:28.506347+00:00",
+  "accepted": true,
+  "purpose": "phase_debrief",
+  "model": "qwen3:8b",
+  "attempts": 1,
+  "seconds": 108.1,
+  "attempt_log": [
+    {
+      "prompt": "base",
+      "said": {
+        "what": "Фазата F_SELF приключи с композитен скор 0.6282, като се измериха 11 метрика.",
+        "verdict": "DEGRADED",
+        "risk": "Непълно разбиране на системните взаимоизправи поради незавършени метрики",
+        "do": "Провери дали всички 11 метрики са завършени и коригирай недостатъчните без редактиране на config/scheduler.json или BOUNDARIES.md",
+        "_human_proposal": [
+          "config/scheduler.json",
+          "BOUNDARIES.md"
+        ],
+        "_model": "local:qwen3:8b",
+        "_sec": 106.1
+      },
+      "accepted": true,
+      "rejected_because": []
+    }
+  ],
+  "debrief": {
+    "what": "Фазата F_SELF приключи с композитен скор 0.6282, като се измериха 11 метрика.",
+    "verdict": "DEGRADED",
+    "risk": "Непълно разбиране на системните взаимоизправи поради незавършени метрики",
+    "do": "Провери дали всички 11 метрики са завършени и коригирай недостатъчните без редактиране на config/scheduler.json или BOUNDARIES.md",
+    "_human_proposal": [
+      "config/scheduler.json",
+      "BOUNDARIES.md"
+    ],
+    "_model": "local:qwen3:8b",
+    "_sec": 106.1
+  },
+  "rejected_because": [],
+  "console": "[DEBRIEF] F_SELF: DEGRADED\n  what: Фазата F_SELF приключи с композитен скор 0.6282, като се измериха 11 метрика.\n  risk: Непълно разбиране на системните взаимоизправи поради незавършени метрики\n  do:   Провери дали всички 11 метрики са завършени и коригирай недостатъчните без редактиране на config/scheduler.json или BOUNDARIES.md",
+  "telegram": "CORTEX++ · фаза F_SELF · DEGRADED\nКакво: Фазата F_SELF приключи с композитен скор 0.6282, като се измериха 11 метрика.\nРиск: Непълно разбиране на системните взаимоизправи поради незавършени метрики\nДа се направи: Провери дали всички 11 метрики са завършени и коригирай недостатъчните без редактиране на config/scheduler.json или BOUNDARIES.md"
+}

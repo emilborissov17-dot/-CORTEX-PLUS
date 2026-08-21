@@ -154,9 +154,13 @@ def test_the_sharpened_prompt_lists_the_acceptable_numbers():
         assert n in menu
     text = pd.PROMPT_SHARP.format(phase="D_SCORE", evidence="{}",
                                   why="'what' cites no number at all",
-                                  numbers=menu)
+                                  numbers=menu, own="173")
     assert "173" in text
     assert "cites no number" in text
+    # 21 Aug 2026: the sharpened prompt also carries the SWAP TEST's answer key
+    # — the numbers unique to this phase — and the counterexample that made the
+    # rule necessary. See core/phase_debrief.SWAP_GENERIC.
+    assert "0.6282" in text, "the counterexample is not stated in the prompt"
     assert text != pd.PROMPT_BG.format(phase="D_SCORE", evidence="{}")
 
 

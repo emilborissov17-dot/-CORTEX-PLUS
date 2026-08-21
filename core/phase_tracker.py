@@ -59,25 +59,43 @@ def phase_of(step: str, index: str | None = None) -> str | None:
 
 
 def _evidence(phase: str) -> dict:
-    """What the debrief is allowed to cite: this phase's own numbers."""
-    ev = {"phase": phase}
+    """What the debrief is allowed to cite: this phase's own numbers.
+
+    UNTIL 21 AUG 2026 THIS WAS A LIE BY CONSTRUCTION. The docstring said "this
+    phase's own numbers" and the body read snapshots/master/goal_score_latest
+    .json — the composite — for EVERY phase, plus a step count. So A_ORIENT,
+    which runs before the scorer, was handed the previous day's composite and
+    told to cite a number from its own data. It did. So did the other five, and
+    the six accepted debriefs of that cycle are one sentence with the phase name
+    substituted:
+
+        "Фазата <PHASE> завърши с композитен скор 0.6282, като се измериха
+         11 метрика."
+
+    The menus now live in core/phase_evidence.py, one per phase, each read from
+    that phase's own artifacts, and each carrying at least two numbers no other
+    phase's menu contains (measured by its --selftest, not asserted here).
+    """
     try:
-        from core.phase_report import load_phases
-        spec = load_phases()[phase]
-        ev["promised_artifacts"] = len(spec["produces"])
-        ev["steps"] = len(spec["steps"])
-    except Exception:
-        pass
+        from core.phase_evidence import menu
+        return menu(phase)
+    except Exception as exc:  # noqa: BLE001
+        # FAIL-OPEN, AND VISIBLY. Returning the old generic composite here would
+        # restore the exact defect above under a different name; returning a
+        # bare label lets phase_debrief reject for "no number", which is the
+        # honest outcome when the evidence could not be built.
+        return {"phase": phase,
+                "evidence_error": f"{type(exc).__name__}: {exc}"}
+
+
+def _own_numbers(phase: str) -> set:
+    """The swap test's answer key. Empty on any failure — and an empty key
+    disables the swap test rather than failing every debrief with it."""
     try:
-        goal = json.loads((BASE / "snapshots" / "master" /
-                           "goal_score_latest.json").read_text(encoding="utf-8"))
-        ev["composite_score"] = goal.get("composite_score")
-        ev["measured_metrics"] = sum(
-            1 for d in (goal.get("metric_details") or {}).values()
-            if d.get("measured"))
+        from core.phase_evidence import own_numbers
+        return own_numbers(phase)
     except Exception:
-        pass
-    return ev
+        return set()
 
 
 def _close(phase: str, report) -> None:
@@ -91,7 +109,8 @@ def _close(phase: str, report) -> None:
     debrief = None
     try:
         from core.phase_debrief import debrief_phase
-        debrief = debrief_phase(phase, str(_cycle_id), _evidence(phase))
+        debrief = debrief_phase(phase, str(_cycle_id), _evidence(phase),
+                                own_numbers=_own_numbers(phase))
     except Exception as exc:  # noqa: BLE001
         print(f"[PHASE] {phase}: debrief failed ({type(exc).__name__}: {exc})")
 
