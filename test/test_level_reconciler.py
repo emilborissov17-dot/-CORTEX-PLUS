@@ -17,15 +17,23 @@ Everything reading a level word — self_modifier choosing which axis deserves a
 patch, the orchestrator, the reports — was reading a word its own number
 contradicts.
 
-THE TWO PROOFS
----------------
-  * SOCIAL_RELATIONS 3.4/MEDIUM -> CORRECTED LOW
-  * an unpinned _RISK_ axis is FLAGGED, never corrected
+THE POLARITY RULING, 21 August 2026 (Emil)
+-------------------------------------------
+This file first asserted the opposite of what it now asserts, and that is worth
+leaving visible. The two _RISK_ axes were held back as FLAGGED because nobody
+had said whether LOW meant "low risk" or "far from goal" — a disagreement there
+was evidence of an unanswered question, not of an error.
 
-The second is the one that keeps this honest. On a _RISK_ axis, LOW might mean
-"low risk" — the opposite polarity. A disagreement there is not evidence of an
-error, it is evidence that nobody has said what the word means. Correcting it
-would be guessing, and guessing is how the drift started.
+The question is answered. ONE rule for all 25 axes: the LEVEL WORD describes
+CLOSENESS TO GOAL. LOW = far from goal = bad, everywhere. Risk inverts ONCE, at
+measurement, and never again in the label.
+
+  * SOCIAL_RELATIONS 3.4/MEDIUM      -> CORRECTED LOW
+  * CLIMATE_GLOBAL_RISK 81.85/LOW    -> CORRECTED HIGH
+  * and HIGH on a risk axis is rendered "ниво HIGH (нисък риск)" for people
+
+The FLAGGED path stays, exercised by a fixture: no axis is unpinned today, but
+a new one could arrive before anyone says what its score means.
 
     venv\\Scripts\\python.exe -m pytest test/test_level_reconciler.py -v
 """
@@ -41,6 +49,8 @@ from core import level_reconciler as lr
 REPO = pathlib.Path(__file__).resolve().parents[1]
 
 PINNED_AXIS = "SOCIAL_RELATIONS_REVIEW"
+# Named for what it WAS before the 21 Aug ruling; kept so the history
+# of this test file stays legible.
 UNPINNED_AXIS = "CLIMATE_GLOBAL_RISK_REVIEW"
 
 
@@ -77,20 +87,51 @@ def test_social_relations_is_corrected_to_low_on_live_data():
 
 # 2 ---------------------------------------------------------------------------
 
-def test_an_unpinned_risk_axis_is_flagged_never_corrected():
-    """THE SECOND PROOF. It disagrees just as loudly and must not be touched."""
+def test_climate_global_risk_is_corrected_to_high_under_the_ruling():
+    """THE SECOND PROOF, rewritten by Emil's polarity ruling of 21 August.
+
+    This test used to assert the opposite — that a _RISK_ axis is FLAGGED and
+    never corrected — because nobody had said whether LOW meant "low risk" or
+    "far from goal". The ruling settled it: the level word describes CLOSENESS
+    TO GOAL on every axis, risk inverts once at measurement and never in the
+    label. So 81.85/100 is HIGH, and the axis is corrected like any other.
+    """
     result = lr.reconcile()
     row = next((r for r in result["rows"] if r["axis"] == UNPINNED_AXIS), None)
 
     assert row is not None
-    assert row["verdict"] == lr.FLAGGED, (
-        f"\n  AN UNPINNED _RISK_ AXIS WAS {row['verdict']}.\n"
-        f"  On a risk axis LOW may mean low RISK — the opposite polarity. A\n"
-        f"  disagreement is not evidence of an error here, it is evidence that\n"
-        f"  nobody has said what the word means. That is Emil's call.\n"
+    assert row["verdict"] == lr.CORRECTED, (
+        f"\n  CLIMATE_GLOBAL_RISK WAS {row['verdict']}, NOT CORRECTED.\n"
+        f"  Under the ruling there is nothing left to be ambiguous about:\n"
+        f"  the word means closeness to goal on every axis.\n"
     )
-    assert "corrected_to" not in row
-    assert "RISK" in row["why"]
+    assert row["corrected_to"] == "HIGH"
+    assert row["score"] == pytest.approx(0.8185)
+
+
+def test_a_risk_axis_carries_its_human_translation():
+    """HIGH on an axis named GLOBAL_RISK reads as danger and means the
+    opposite. The machine keeps one rule; the person gets a translation."""
+    assert lr.human_level("CLIMATE_GLOBAL_RISK_REVIEW", "HIGH") == "ниво HIGH (нисък риск)"
+    assert lr.human_level("DEEP_TIME_RISKS_REVIEW", "LOW") == "ниво LOW (висок риск)"
+    assert lr.human_level("ENERGY_REVIEW", "LOW") == "ниво LOW", (
+        "an ordinary axis must not be given a risk gloss"
+    )
+
+
+def test_the_correction_row_carries_the_translation():
+    result = lr.reconcile()
+    row = next(r for r in result["corrections"] if r["axis"] == UNPINNED_AXIS)
+    assert row["human"] == "ниво HIGH (нисък риск)"
+
+
+def test_the_flag_path_still_exists_for_a_genuinely_unpinnable_axis(tmp_path):
+    """No axis is unpinned today, but the mechanism must survive: an axis whose
+    direction is not one of the normalising forms still cannot be judged."""
+    paths = _fixture(tmp_path, {"WEIRD": "LOW"}, {"WEIRD": 0.9}, [])
+    result = lr.reconcile(**paths)
+    assert result["rows"][0]["verdict"] == lr.FLAGGED
+    assert result["corrections"] == []
 
 
 def test_no_unpinned_axis_appears_among_the_corrections():
@@ -102,18 +143,17 @@ def test_no_unpinned_axis_appears_among_the_corrections():
 
 # 3 ---------------------------------------------------------------------------
 
-def test_exactly_the_two_risk_axes_are_unpinned():
-    """The migration's scope, pinned so it cannot quietly widen."""
+def test_all_twenty_five_axes_are_pinned_after_the_ruling():
+    """The ruling's scope, pinned so it cannot quietly narrow again."""
     pinned = set(lr.pinned_axes())
     cfg = json.loads((REPO / "config" / "target_config.json").read_text(encoding="utf-8"))
     everything = {a for b, axes in cfg.items() if not b.startswith("_")
                   for a in axes}
-    unpinned = everything - pinned
 
-    assert unpinned == {"CLIMATE_GLOBAL_RISK_REVIEW", "DEEP_TIME_RISKS_REVIEW"}, (
-        f"the unpinned set moved: {sorted(unpinned)}"
-    )
-    assert len(pinned) == 23
+    assert pinned == everything, f"unpinned: {sorted(everything - pinned)}"
+    assert len(pinned) == 25
+    for risk in ("CLIMATE_GLOBAL_RISK_REVIEW", "DEEP_TIME_RISKS_REVIEW"):
+        assert risk in pinned, f"{risk} is still unpinned"
 
 
 def test_the_migration_was_composite_neutral():
@@ -204,11 +244,14 @@ def test_flagged_rows_are_recorded_too_but_the_word_is_untouched(tmp_path):
 
 # 8 ---------------------------------------------------------------------------
 
-def test_the_flagged_rows_reach_the_phase_report():
+def test_the_flagged_channel_is_empty_now_and_that_is_the_point():
+    """Every axis is pinned, so nothing should be flagged. An entry here means
+    a new axis arrived without anyone saying what its score means."""
     flagged = lr.for_phase_report()
     assert isinstance(flagged, list)
-    assert all(r["verdict"] == lr.FLAGGED for r in flagged)
-    assert any(r["axis"] == UNPINNED_AXIS for r in flagged)
+    assert flagged == [], (
+        f"axes nobody has ruled on: {[r['axis'] for r in flagged]}"
+    )
 
 
 # 9 ---------------------------------------------------------------------------

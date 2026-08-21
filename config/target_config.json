@@ -97,7 +97,8 @@
       "weight": 10,
       "unit": "ppm",
       "rationale": "Planetary Boundaries safe CO2 ceiling (Rockström et al. 2009, Nature 461:472; pre-industrial ~280 ppm, safe boundary ~350 ppm)",
-      "legacy_domain": "PLANET"
+      "legacy_domain": "PLANET",
+      "score_meaning": "goodness"
     },
     "ECOSYSTEMS_BIODIVERSITY_REVIEW": {
       "primary_metric": "forest_area_pct",
@@ -265,7 +266,8 @@
       "weight": 5,
       "unit": "qualitative risk level",
       "rationale": "Asteroid/supervolcano risk — no actionable threshold at current tech level",
-      "legacy_domain": "COSMOS"
+      "legacy_domain": "COSMOS",
+      "score_meaning": "goodness"
     },
     "GOAL_PROGRESS_REVIEW": {
       "primary_metric": "goal_score",

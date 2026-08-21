@@ -23,15 +23,15 @@ arguable — higher_better, lower_better and stable_better all normalise to a
 0..1 goodness score in goal_score_calculator, so a high score is a good state
 and a level word must be read the same way.
 
-It does NOT touch the two _RISK_ axes:
+THE POLARITY RULING (21 August 2026, Emil) settled what this migration first
+refused to guess. One rule for all 25 axes: THE LEVEL WORD DESCRIBES CLOSENESS
+TO GOAL — LOW = far from goal = bad, everywhere. Risk inverts ONCE, at
+measurement, and never again in the label.
 
-    CLIMATE_GLOBAL_RISK_REVIEW
-    DEEP_TIME_RISKS_REVIEW
-
-Their direction is unambiguous; their NAME is not. "Risk" invites reading LOW
-as "low risk" — the opposite polarity from every other axis. Guessing here
-would silently flip the meaning of two axes and change what the reconciler
-believes about them. That is Emil's call, not a migration's.
+So the two _RISK_ axes are pinned too. CLIMATE_GLOBAL_RISK at 81.85/100 is
+HIGH: close to goal. Human-facing reports translate that to "ниво HIGH (нисък
+риск)" so the word reads correctly to a person, and renaming the axes so their
+names stop inviting the wrong reading belongs to the August axis migration.
 
 COMPOSITE-NEUTRAL. score_meaning is metadata: goal_score_calculator does not
 read it, no weight moves, and the composite before and after must be identical
@@ -63,10 +63,28 @@ def axes_of(cfg: dict):
 
 
 def is_ambiguous(axis: str, spec: dict) -> str | None:
-    """Returns the reason this axis must stay unpinned, or None."""
-    if "RISK" in axis.upper():
-        return ("the name invites reading a level word as RISK rather than as "
-                "goodness — opposite polarity from every other axis")
+    """Returns the reason this axis must stay unpinned, or None.
+
+    ── THE POLARITY RULING, 21 August 2026, Emil ──────────────────────────
+    One rule for all 25 axes: THE LEVEL WORD DESCRIBES CLOSENESS TO GOAL.
+    LOW = far from goal = bad, on every axis without exception. Risk inverts
+    ONCE, at measurement — the score is already risk-inverted — and never
+    again in the label.
+
+    That resolves what this function used to refuse. The two _RISK_ axes were
+    held back because "LOW" could be read as "low risk", the opposite polarity.
+    Under the ruling it cannot: LOW always means far from goal. So they are
+    pinned like everything else, and CLIMATE_GLOBAL_RISK at 81.85/100 is HIGH —
+    close to goal — with the human-facing reports adding "(нисък риск)" so the
+    word reads correctly to a person.
+
+    Renaming the two axes so their names stop inviting the wrong reading is
+    Emil's, and belongs to the August axis migration, not here.
+
+    The function stays because the SHAPE of the rule is still needed: an axis
+    whose direction is not one of the three normalising forms cannot be pinned
+    by anything but a human.
+    """
     if spec.get("direction") not in UNAMBIGUOUS:
         return f"direction {spec.get('direction')!r} is not one of {UNAMBIGUOUS}"
     return None

@@ -77,6 +77,41 @@ def level_for(score: float) -> str:
     return "LOW"
 
 
+# ── THE POLARITY RULING, 21 August 2026 (Emil) ────────────────────────────
+# ONE rule for all 25 axes: the LEVEL WORD describes CLOSENESS TO GOAL.
+# LOW = far from goal = bad, everywhere, without exception. Risk inverts ONCE,
+# at measurement — the score is already risk-inverted — and never again in the
+# label.
+#
+# So CLIMATE_GLOBAL_RISK at 81.85/100 is HIGH: close to goal. Which is correct
+# and reads backwards to a person, because the axis is NAMED for risk. The
+# machine keeps one rule; the human gets a translation.
+#
+# Renaming the axes so they stop inviting the wrong reading is Emil's and
+# belongs to the August axis migration, not here.
+RISK_TRANSLATION = {"HIGH": "нисък риск", "MEDIUM": "среден риск",
+                    "LOW": "висок риск"}
+
+
+def is_risk_axis(axis: str) -> bool:
+    return "RISK" in axis.upper()
+
+
+def human_level(axis: str, word: str | None) -> str:
+    """The level word as a PERSON should read it.
+
+    Everywhere user-facing. On an ordinary axis this is the word itself; on a
+    _RISK_ axis it carries the translation, because "ниво HIGH" on an axis
+    called GLOBAL_RISK reads as danger when it means the opposite.
+    """
+    if not word:
+        return "—"
+    word = word.upper()
+    if is_risk_axis(axis) and word in RISK_TRANSLATION:
+        return f"ниво {word} ({RISK_TRANSLATION[word]})"
+    return f"ниво {word}"
+
+
 def pinned_axes(config_path=None) -> dict[str, str]:
     """{axis: score_meaning} for axes whose meaning someone has written down."""
     try:
@@ -148,6 +183,7 @@ def reconcile(levels_path=None, goal_path=None, config_path=None) -> dict:
         rows.append({
             "axis": axis, "verdict": CORRECTED, "level": word, "score": score,
             "implied": implied, "corrected_to": implied,
+            "human": human_level(axis, implied),
             "why": (f"score {round(score * 100, 2)}/100 puts this axis in "
                     f"{implied}; auto_levels said {word}. The score is derived "
                     f"from a measured value against a declared target and "
@@ -220,7 +256,8 @@ def run() -> dict:
           f"no score {c[NO_SCORE]}")
     for row in result["corrections"]:
         print(f"[LEVELS] CORRECTED {row['axis']}: {row['level']} -> "
-              f"{row['corrected_to']} (score {round(row['score'] * 100, 2)}/100)")
+              f"{row['corrected_to']} (score {round(row['score'] * 100, 2)}/100)"
+              + (f"  [{row['human']}]" if is_risk_axis(row["axis"]) else ""))
     for row in result["flagged"]:
         print(f"[LEVELS] FLAGGED {row['axis']}: {row['level']} vs "
               f"{round(row['score'] * 100, 2)}/100 — unpinned, left alone")
