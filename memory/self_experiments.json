@@ -1,0 +1,64 @@
+{
+  "experiments": [
+    {
+      "id": "exp-001-daily-analysis-ceiling",
+      "registered_utc": "2026-08-21T11:10:14.285276+00:00",
+      "hypothesis": "daily_analysis е убивана от часовоя на 900 s таван (измерено: CYCLE_KILLED, wedged_step=daily_analysis, heartbeat_age 972.7 s, 20 авг 2026). Ако таванът ѝ стане 1500 s, стъпката ще довърши и убийствата ще паднат, без средното ѝ време да порасне — защото 764 s е реалната ѝ дължина, а не таванът.",
+      "knob": {
+        "name": "step_ceiling",
+        "file": "config/scheduler.json",
+        "step": "daily_analysis",
+        "a": 900,
+        "b": 1500
+      },
+      "metric": {
+        "resolver": "watchdog_kills+step_seconds",
+        "step": "daily_analysis",
+        "direction": "lower_better"
+      },
+      "n_per_arm": 4,
+      "accepted": true,
+      "rejected_because": [],
+      "state": "REGISTERED",
+      "observations": [
+        {
+          "ts": "2026-08-21T11:10:14.382223+00:00",
+          "cycle_id": "2026-08-21T00:33:50.628425+03:00",
+          "cycle_ordinal": 75,
+          "arm_expected": "b",
+          "value_expected": 1500,
+          "value_in_force": 900,
+          "counts": false,
+          "why_not": "the file read 900, the alternation asked for 1500 — arm not applied",
+          "window": [
+            "2026-08-20T21:33:50.652517+00:00",
+            "2026-08-21T00:31:18.663426+00:00"
+          ],
+          "metric": {
+            "watchdog_kills": 0,
+            "step_seconds": 764.65
+          }
+        }
+      ],
+      "verdict": {
+        "n_a": 0,
+        "n_b": 0,
+        "n_per_arm": 4,
+        "kills_a": null,
+        "kills_b": null,
+        "seconds_a": null,
+        "seconds_b": null,
+        "decided": false,
+        "winner": null,
+        "why": "not enough counted observations: a=0/4, b=0/4"
+      },
+      "knob_is_guarded": true,
+      "knob_file": "config/scheduler.json",
+      "live_value_at_registration": 900,
+      "arms_observable_now": [
+        "a"
+      ],
+      "blocked_note": "config/scheduler.json is human-only. Arm(s) ['a'] are observable because the file already reads 900; the other arm needs one human edit. A proposal was filed."
+    }
+  ]
+}

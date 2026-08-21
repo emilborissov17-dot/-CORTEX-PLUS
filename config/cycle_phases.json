@@ -365,6 +365,10 @@
           "index": "25.37"
         },
         {
+          "name": "self_experiment",
+          "index": "25.44"
+        },
+        {
           "name": "self_mirror",
           "index": "25.45"
         },
@@ -389,7 +393,8 @@
         "memory/goal_score_history.json",
         "cortex_memory/archive/merkle_root.txt",
         "memory/self_mirror_latest.json",
-        "memory/self_mirror_log.jsonl"
+        "memory/self_mirror_log.jsonl",
+        "memory/self_experiments.json"
       ]
     }
   }
