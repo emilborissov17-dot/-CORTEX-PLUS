@@ -110,11 +110,33 @@ def _fingerprint(root: Path):
 # its ability to reach a model and to write live files is removed.
 HOOK_CALLS = []
 
+#
+# ── THE THIRD LEAK, found on 21 Aug 2026: the same hole, one hook later ────────
+#
+# core/phase_tracker.on_beat was hung off beat() on 20 Aug and never added here.
+# The result was exactly the leak this list exists to stop, wearing a new hat:
+# every hb.beat() in a test opened a phase, and the NEXT one closed it — writing
+# a real local-model debrief into the live tree as
+#
+#     memory/phase_debriefs/dead-1/D_SCORE.rejected.json
+#     memory/phase_debriefs/manual-run-1/G_LEARN.rejected.json
+#
+# under cycle ids invented by test_supervisor.py and
+# test_cycle_seals_its_own_completion.py. Three directories of fabricated
+# debriefs sat in live memory, the suite spent nine and a half minutes waiting
+# on a language model, and core/self_mirror.py — which reads the newest debrief
+# directory — was reading test garbage as if it were the cycle's own record.
+#
+# The lesson is not "we forgot one". It is that a list of neutralised hooks is a
+# denylist, and a denylist silently stops covering anything added after it. The
+# guard against that is test_no_live_debriefs.py, which asserts that EVERY hook
+# reachable from beat() is either neutralised here or provably harmless.
 _NEUTRALISED = (
     ("core.brain", "attend", lambda *a, **k: None),
     ("core.metta_check", "compare", lambda *a, **k: None),
     ("core.notary", "attest", lambda *a, **k: None),
     ("core.self_diagnosis", "diagnose", lambda *a, **k: {"cause": "MOCKED_IN_TESTS"}),
+    ("core.phase_tracker", "on_beat", lambda *a, **k: None),
 )
 
 

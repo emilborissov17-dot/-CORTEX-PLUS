@@ -44,6 +44,28 @@ a verdict. Rejections are written to memory/phase_debriefs/<cycle>/<PHASE>.
 rejected.json so that a model which keeps failing this is visible rather than
 merely silent.
 
+WHICH MODEL, AND ONE RETRY (21 August 2026)
+--------------------------------------------
+The 21 Aug cycle closed six phases and REJECTED six debriefs — all six for the
+same reason, "'what' cites no number at all", all six written by
+local:qwen2.5:3b. A gate that refuses everything teaches the operator to stop
+reading it, so two things changed and neither weakens the gate:
+
+  * THE MODEL. brain.think(fast=True) picks the SMALLEST installed model, which
+    is how a 3B ended up judging phases. A debrief happens seven times a cycle,
+    not seventy, so it can afford qwen3:8b. The choice goes through
+    core/self_experiment.ALLOWED_KNOBS, so it is a knob an experiment can vary
+    rather than a constant somebody has to remember.
+
+  * ONE RETRY, SHARPENED. The first prompt SAYS "cite a number". The second one
+    SHOWS which numbers exist and quotes the exact rejection reason back. A
+    model that writes "the phase completed successfully" has not refused the
+    rule — it has failed to connect it to the numbers in front of it. Exactly
+    one retry: one attempt is rude to an instrument that misheard the question,
+    three is pressing until it invents something. Both attempts are kept in
+    `attempt_log`, so a judge that only ever passes on the second try is
+    visible.
+
     venv\\Scripts\\python.exe core/phase_debrief.py --selftest
 """
 from __future__ import annotations
@@ -52,6 +74,7 @@ import json
 import pathlib
 import re
 import sys
+import time
 from datetime import datetime, timezone
 
 if __package__ in (None, ""):
@@ -146,22 +169,99 @@ PROMPT_BG = """Ти си CORTEX++. Току-що приключи фаза {phas
 Пиши на български или английски. НЕ пиши на китайски, японски или корейски —
 човекът, който чете това, не ги чете."""
 
+# ── ВТОРИЯТ ОПИТ (21 август 2026) ──────────────────────────────────────────
+# Първият промпт КАЗВА „цитирай число". Вторият ПОКАЗВА кои числа са налични и
+# защо първият опит е отхвърлен. Разликата не е учтивост: моделът, който пише
+# „фазата приключи успешно", не е отказал да цитира число — той не е свързал
+# изискването с конкретните числа пред себе си. Един опит е грубост към уред,
+# който не е разбрал въпроса; три опита са настояване, докато не съчини.
+# Затова точно един.
+PROMPT_SHARP = """Ти си CORTEX++. Приключи фаза {phase} от собствения ти цикъл.
 
-def ask_local(phase: str, evidence: dict, model: str | None = None) -> dict | None:
-    """Ask the LOCAL brain only. Returns the parsed object or None."""
+ПЪРВИЯТ ТИ ОТГОВОР БЕШЕ ОТХВЪРЛЕН. Причина:
+{why}
+
+ДАННИТЕ НА ФАЗАТА:
+{evidence}
+
+ЧИСЛАТА, КОИТО ИМАШ ПРАВО ДА ЦИТИРАШ (други няма да бъдат приети):
+{numbers}
+
+Напиши РОВНО четири полета, като JSON и нищо друго:
+  what    — едно изречение. То ТРЯБВА да съдържа поне едно от числата по-горе,
+            написано точно както е дадено.
+  verdict — точно една от думите: OK, DEGRADED, BROKEN
+  risk    — какво може да се обърка след това заради станалото
+  do      — едно нещо, което човек да обмисли
+
+Само български или английски. Никакви йероглифи."""
+
+# The model that writes the debriefs. qwen2.5:3b was the default because
+# brain.think(fast=True) picks the SMALLEST installed model, and on 21 Aug 2026
+# it failed the number gate on all six phases that closed — six for six, every
+# one with 'what' citing no number at all. The judge of a phase is not a call
+# that repeats dozens of times per cycle; it happens seven times, so it can
+# afford the bigger model.
+DEBRIEF_MODEL = "qwen3:8b"
+
+BASE_PROMPT, SHARP_PROMPT = "base", "sharpened"
+
+# How long the FIRST attempt may take and still leave room for a second.
+# Measured 21 Aug 2026: qwen3:8b writes one debrief in 124.5 s.
+RETRY_BUDGET_SEC = 150
+
+
+def debrief_model() -> str:
+    """The model to use — the experiment overlay may vary it, within the
+    choices core/self_experiment.ALLOWED_KNOBS declares."""
+    try:
+        from core.self_experiment import knob
+        return knob("debrief_model", default=DEBRIEF_MODEL) or DEBRIEF_MODEL
+    except Exception:
+        return DEBRIEF_MODEL
+
+
+def prompt_variant() -> str:
+    try:
+        from core.self_experiment import knob
+        return knob("debrief_prompt", default=BASE_PROMPT) or BASE_PROMPT
+    except Exception:
+        return BASE_PROMPT
+
+
+def _numbers_menu(evidence: dict, limit: int = 24) -> str:
+    """The numbers actually present in this phase's data, as a list."""
+    found = sorted(evidence_numbers(evidence),
+                   key=lambda s: (len(s), s))[:limit]
+    return ", ".join(found) if found else "(няма нито едно число в данните)"
+
+
+def ask_local(phase: str, evidence: dict, model: str | None = None,
+              why: str | None = None) -> dict | None:
+    """Ask the LOCAL brain only. Returns the parsed object or None.
+
+    `why` switches to the sharpened prompt: it is the rejection reason from the
+    first attempt, handed back so the second attempt answers the actual
+    objection instead of repeating the same shape.
+    """
     try:
         from core.brain import think
     except Exception:
         return None
+    ev = json.dumps(evidence, ensure_ascii=False, indent=2)[:2500]
+    sharpened = bool(why) or prompt_variant() == SHARP_PROMPT
+    question = (PROMPT_SHARP.format(phase=phase, evidence=ev,
+                                    why=why or "нямаше число в 'what'",
+                                    numbers=_numbers_menu(evidence))
+                if sharpened else
+                PROMPT_BG.format(phase=phase, evidence=ev))
     try:
         said = think(
             role=f"съдия на фаза {phase}",
-            question=PROMPT_BG.format(
-                phase=phase,
-                evidence=json.dumps(evidence, ensure_ascii=False, indent=2)[:2500]),
+            question=question,
             schema={f: "" for f in FIELDS},
             kind="phase_debrief",
-            fast=True,
+            model_override=model or debrief_model(),
         )
         return said if isinstance(said, dict) else None
     except Exception:
@@ -193,14 +293,59 @@ def render_telegram(phase: str, d: dict) -> str:
 def debrief_phase(phase: str, cycle_id: str, evidence: dict,
                   base: pathlib.Path | None = None,
                   asker=None) -> dict:
-    """Ask, judge, and write either the debrief or the rejection.
+    """Ask, judge, ONE sharpened retry, then write the debrief or the rejection.
 
     Returns {"accepted": bool, ...}. Never raises: a debrief that cannot be
     produced must not take a phase down with it.
     """
-    said = (asker or ask_local)(phase, evidence)
+    ask = asker or ask_local
+    attempts = []
+    started = time.time()
+
+    said = ask(phase, evidence)
     accepted, reasons = (False, ["the local brain returned nothing"]) \
         if said is None else validate(said, evidence)
+    attempts.append({"prompt": BASE_PROMPT, "said": said,
+                     "accepted": accepted, "rejected_because": reasons})
+
+    # ── ЕДИН ВТОРИ ОПИТ, С ИЗОСТРЕН ПРОМПТ ─────────────────────────────────
+    # Не защото моделът заслужава втори шанс, а защото първият отказ носи
+    # информация, която първият промпт не е носел: КОЕ точно е сгрешено и кои
+    # числа са допустими. Ако и вторият падне, отказът се записва с ДВАТА
+    # отговора — история на един провалил се съдия, а не един анонимен ред.
+    # ── ВТОРИЯТ ОПИТ ИМА БЮДЖЕТ ────────────────────────────────────────────
+    # Измерено на живо: qwen3:8b пише един дебриф за 124.5 s. Затварянето на
+    # фаза става ВЪТРЕ в beat(), тоест закъснението се плаща от тавана на
+    # стъпката, която току-що е започнала. Един опит е поносим; два прави 250 s
+    # срещу таван от 900 s, а това вече е причина стъпка да бъде убита заради
+    # съдията си. Затова вторият опит се пуска само ако първият е свършил
+    # достатъчно бързо — и когато не се пусне, отказът го КАЗВА, вместо да
+    # изглежда като модел, който не е бил питан втори път.
+    if not accepted and (time.time() - started) > RETRY_BUDGET_SEC:
+        reasons = reasons + [
+            f"no retry: the first attempt took {time.time() - started:.0f}s, "
+            f"past the {RETRY_BUDGET_SEC}s budget — a second call would be "
+            f"charged to the step that just started"]
+    elif not accepted:
+        why = "; ".join(reasons)[:400]
+        # An injected asker (tests, fixtures) may take only (phase, evidence).
+        # Deciding that by INSPECTION rather than by catching TypeError matters:
+        # a TypeError raised INSIDE a real asker would otherwise be swallowed
+        # and read as "this asker has no retry", hiding a live bug.
+        import inspect
+        try:
+            takes_why = "why" in inspect.signature(ask).parameters
+        except (TypeError, ValueError):
+            takes_why = False
+        retry = ask(phase, evidence, why=why) if takes_why else None
+        if retry is not None:
+            ok2, reasons2 = validate(retry, evidence)
+            attempts.append({"prompt": SHARP_PROMPT, "said": retry,
+                             "accepted": ok2, "rejected_because": reasons2})
+            if ok2:
+                said, accepted, reasons = retry, True, []
+            else:
+                said, reasons = retry, reasons2
 
     record = {
         "ts": _now(),
@@ -208,6 +353,10 @@ def debrief_phase(phase: str, cycle_id: str, evidence: dict,
         "cycle_id": cycle_id,
         "accepted": accepted,
         "purpose": PURPOSE,
+        "model": debrief_model(),
+        "attempts": len(attempts),
+        "seconds": round(time.time() - started, 1),
+        "attempt_log": attempts,
         "debrief": said,
         "rejected_because": reasons,
     }
@@ -229,8 +378,11 @@ def debrief_phase(phase: str, cycle_id: str, evidence: dict,
 
     if accepted:
         print(record["console"])
+        if len(attempts) > 1:
+            print(f"[DEBRIEF] {phase}: accepted on the sharpened retry")
     else:
-        print(f"[DEBRIEF] {phase}: REJECTED — {'; '.join(reasons)}")
+        print(f"[DEBRIEF] {phase}: REJECTED after {len(attempts)} attempt(s) "
+              f"— {'; '.join(reasons)}")
     return record
 
 

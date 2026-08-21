@@ -56,6 +56,13 @@ def _capture():
 # (a) A crossing sends immediately
 # ---------------------------------------------------------------------------
 
+# 25 axes / 173 weight until 21 Aug 2026, when GENERAL_SELF_REVIEW was retired
+# (weight 6) and the break was declared in config/series_breaks.json. Pinned so
+# a weight cannot move without an edit here, in the same commit.
+AXIS_COUNT = 24
+TOTAL_WEIGHT = 167.0
+
+
 def test_a_crossing_alarms_and_sends(tmp_path):
     paths = _fixture(tmp_path,
                      {"A": {"direction": "lower_better", "alarm_threshold": 350.0,
@@ -111,15 +118,15 @@ def test_a_null_threshold_never_alarms(tmp_path):
 
 def test_the_live_config_has_every_band_unset_and_says_how_many():
     result = ab.sweep()
-    assert result["axes"] == 25
-    assert result["AWAITING_HUMAN_VALUES"] == 25
+    assert result["axes"] == AXIS_COUNT
+    assert result["AWAITING_HUMAN_VALUES"] == AXIS_COUNT
     assert result["alarms"] == []
 
 
 def test_the_counter_reaches_the_cycle_report():
     counter = ab.for_cycle_report()
-    assert counter["awaiting_human_values"] == 25
-    assert counter["axes"] == 25
+    assert counter["awaiting_human_values"] == AXIS_COUNT
+    assert counter["axes"] == AXIS_COUNT
 
 
 # ---------------------------------------------------------------------------
@@ -205,14 +212,14 @@ def test_the_migration_was_composite_neutral():
     total = sum(spec.get("weight", 0) or 0
                 for b, axes in cfg.items() if not b.startswith("_")
                 for spec in axes.values())
-    assert total == 173.0
+    assert total == TOTAL_WEIGHT
 
 
 def test_every_axis_has_the_key_and_every_value_is_null():
     cfg = json.loads((REPO / "config" / "target_config.json").read_text(encoding="utf-8"))
     axes = {a: s for b, g in cfg.items() if not b.startswith("_")
             for a, s in g.items()}
-    assert len(axes) == 25
+    assert len(axes) == AXIS_COUNT
     for axis, spec in axes.items():
         assert "alarm_threshold" in spec, f"{axis} has no band"
         assert spec["alarm_threshold"] is None, (

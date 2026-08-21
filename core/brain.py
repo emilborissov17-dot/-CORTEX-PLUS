@@ -210,7 +210,7 @@ def _smaller(current: str) -> str | None:
 def think(role: str, question: str, evidence: str = "", schema: dict | None = None,
           require_quote: bool = False, kind: str = "thought",
           remember_it: bool = True, temperature: float = 0.2,
-          fast: bool = False) -> dict | None:
+          fast: bool = False, model_override: str | None = None) -> dict | None:
     """Питай мозъка. Той отговаря със свои думи и свои категории.
 
     role      — коя роля носи в този момент ("дежурен инженер", "стратег", ...)
@@ -220,15 +220,34 @@ def think(role: str, question: str, evidence: str = "", schema: dict | None = No
                 Описанията казват КАКВО е полето, не КАКВО да пише в него.
     require_quote — иска се поле "quote", което трябва да стои буквално в evidence
                 (заземяване: забрана да си измисля факти, не цензура на извода).
+    model_override — поискай КОНКРЕТЕН локален модел. Ако не е инсталиран, се
+                казва на глас и се пада на избрания по подразбиране. При
+                таймаут пак се пада на по-малък — но кой е отговорил стои в
+                `_model` на върнатия обект, така че деградацията е видима.
 
     Връща dict (при schema) или {"text": ...}; None, ако мозъкът мълчи.
     Записва: memory/brain_journal.jsonl + memory/llm_provenance.jsonl.
     """
-    model, base = _pick_model()
+    picked, base = _pick_model()
     # fast=True: къса преценка, която се повтаря десетки пъти в един цикъл
     # (напр. по един показател). Силният модел е за дългите разсъждения.
     if fast:
-        model = _fast_model() or model
+        picked = _fast_model() or picked
+    # ── ЯВЕН ИЗБОР НА МОДЕЛ (21 авг 2026) ──────────────────────────────────
+    # Извикващият може да поиска КОНКРЕТЕН модел, ако той е инсталиран. Дотук
+    # единственият избор беше „най-малкият" (fast=True) или „най-силният qwen3",
+    # което вкара дебрифите на фазите в qwen2.5:3b — и той се провали на
+    # числовата преграда 6 от 6 пъти в цикъла на 21 август. Молбата се проверява
+    # срещу инсталираните модели: заявка за модел, който машината няма, не бива
+    # да мълчи, а да падне обратно с обявена причина.
+    model = picked
+    if model_request := (model_override or None):
+        available = models()
+        if model_request in available:
+            model = model_request
+        else:
+            print(f"  [BRAIN] {model_request} не е инсталиран "
+                  f"({', '.join(available) or 'няма модели'}) -> {model}")
     fields = ""
     if schema:
         fields = ("\n\nОтговори САМО с JSON с тези полета (без текст около него):\n{\n" +
