@@ -23,7 +23,7 @@
     "_default": 900,
 
     "web_intelligence": 3600,
-    "internet_intelligence": 2700,
+    "internet_intelligence": 3600,
     "global_indicators": 1200,
     "energy_review": 1800,
     "planetary_potential": 1800,
