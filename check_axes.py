@@ -1,6 +1,8 @@
 import json, pathlib
 
-base = pathlib.Path(r'C:\Users\emilb\Desktop\AGI\CORTEX++_QWEN\memory\web_intelligence')
+# Was a hardcoded absolute path into CORTEX++_QWEN — the ARCHIVED system,
+# whose scheduler was disabled on 2 Jul 2026. This repo is the live one.
+base = pathlib.Path(__file__).resolve().parent / 'memory' / 'web_intelligence'
 for f in sorted(base.rglob('*_web_intel.json')):
     try:
         d = json.loads(f.read_text(encoding='utf-8'))

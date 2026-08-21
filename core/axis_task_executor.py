@@ -2,7 +2,19 @@ import os
 from pathlib import Path
 from datetime import datetime
 
-BASE_DIR = r"C:\Users\emilb\Desktop\AGI\CORTEX++"
+# 21 Aug 2026 — this read:
+#     BASE_DIR = r"C:\Users\emilb\Desktop\AGI\CORTEX++"
+# a hardcoded absolute path to one machine, and not even to THIS repo: the
+# directory it named is CORTEX++, while this file lives in CORTEX++_MERGED. So
+# on the only machine where the path resolved at all, it resolved to a different
+# checkout's logs/. Anywhere else, LOGS_DIR simply did not exist and every
+# function here returned None with a printed excuse — which is
+# indistinguishable, in the output, from "there was nothing to execute".
+#
+# Repo-relative, with CORTEX_BASE as the override the supervisor already sets at
+# spawn. No drive letters anywhere in this repo outside the safety tests that
+# assert drive-absolute paths are refused.
+BASE_DIR = os.environ.get("CORTEX_BASE") or str(Path(__file__).resolve().parents[1])
 LOGS_DIR = Path(BASE_DIR) / "logs"
 EXECUTOR_LOG = LOGS_DIR / "AXIS_TASK_EXECUTOR_LOG.txt"
 

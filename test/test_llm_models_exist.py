@@ -26,6 +26,11 @@ Network or auth trouble -> skip, because that is not a decommission and must not
 cry wolf. The ONLY thing that turns this red is a provider answering normally
 with a listing that does not contain the id we have pinned.
 
+MARKED `network` (21 Aug 2026). It is the only module in test/ that makes a
+live outbound request, so it is the only one CI excludes with -m "not network".
+The skip-without-keys behaviour above is kept anyway: CI is not the only place
+without a network, and a marker is a routing hint, not a safety mechanism.
+
 NEGATIVE CONTROL (proven both ways before commit)
 --------------------------------------------------
 Point GROQ_MODEL at a fabricated id -- "llama-does-not-exist-70b" -- and
@@ -50,6 +55,10 @@ import re
 import pytest
 
 requests = pytest.importorskip("requests", reason="requests is needed to reach a provider")
+
+# Every test in this module reaches a real provider. Registered in pytest.ini;
+# CI excludes it with -m "not network".
+pytestmark = pytest.mark.network
 
 REPO = pathlib.Path(__file__).resolve().parents[1]
 BACKEND = REPO / "core" / "groq_backend.py"

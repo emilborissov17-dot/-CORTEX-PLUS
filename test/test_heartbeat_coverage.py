@@ -173,12 +173,33 @@ def test_clear_is_safe_when_already_absent():
     hb.clear()   # must not raise
 
 
-def test_beat_never_raises_even_if_the_path_is_unwritable(monkeypatch):
+def test_beat_never_raises_even_if_the_path_is_unwritable(monkeypatch, tmp_path):
     """A failed heartbeat write must never kill the cycle. Worst case the
     supervisor sees a stale beat and restarts us — which is correct and
-    conservative. Crashing a healthy cycle over a transient file lock is not."""
-    monkeypatch.setattr(hb, "HEARTBEAT_PATH", Path("Z:/nonexistent/dir/hb.json"))
+    conservative. Crashing a healthy cycle over a transient file lock is not.
+
+    THE DRIVE-LETTER BUG (found by the fork test, 21 Aug 2026). This used to
+    point HEARTBEAT_PATH at an unmapped drive letter — Z, then a colon, then
+    /nonexistent/dir/hb.json. That is an unwritable ABSOLUTE path on Windows and
+    a perfectly ordinary RELATIVE path on Linux. (Written out in words here
+    because test/test_ci_contract.py now scans this repo for drive-absolute
+    literals and does not read docstrings differently from code — which is the
+    correct strictness.) On Linux the test therefore did not test what it says: hb.beat()
+    would happily mkdir a directory literally named "Z:" inside whatever the
+    working directory happened to be, write the heartbeat into it, and pass —
+    while leaving that directory behind in the checkout.
+
+    The unwritable path is now built from tmp_path: a real FILE with a child
+    path underneath it, so the mkdir fails with NotADirectoryError on every
+    platform. Repo-relative and drive-letter-free, which is the rule for the
+    whole repo now — the only places a drive letter may appear are the safety
+    tests that assert such paths are REJECTED.
+    """
+    wall = tmp_path / "not_a_directory"
+    wall.write_text("I am a file", encoding="utf-8")
+    monkeypatch.setattr(hb, "HEARTBEAT_PATH", wall / "nested" / "hb.json")
     hb.beat("x", "1")   # must not raise
+    assert not (wall / "nested").exists(), "the write was supposed to fail"
 
 
 def test_write_is_atomic_no_temp_files_left_behind(tmp_path, monkeypatch):
