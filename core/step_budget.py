@@ -217,9 +217,24 @@ def call_with_timeout(fn: Callable, timeout_sec: float):
     box = {}
 
     def _target():
+        # `except Exception`, not BaseException. test_no_bare_except.py keeps that
+        # allowlist at two genuinely unavoidable entries, and this is not one of
+        # them — growing a safety allowlist for a case that has a clean
+        # alternative is how such lists stop meaning anything.
+        #
+        # The `done` flag is what makes the narrower catch safe. A worker killed
+        # by a BaseException — a client library that calls sys.exit() on a hard
+        # error — leaves `done` unset, so it is reported RAISED instead of
+        # passing for EMPTY, which means "the model declined to answer". Reading
+        # a crash as a decline is the quiet failure this repo keeps finding.
+        # `done` is set on the SUCCESS path, not in a `finally`. A finally block
+        # runs while a BaseException is propagating too, so it would mark the
+        # crashed thread as having finished normally — which is the exact
+        # confusion this flag exists to prevent. Caught by the test below.
         try:
             box["value"] = fn()
-        except BaseException as e:                    # noqa: BLE001
+            box["done"] = True
+        except Exception as e:                        # noqa: BLE001
             box["error"] = "{}: {}".format(type(e).__name__, e)
 
     thread = threading.Thread(target=_target, daemon=True,
@@ -233,6 +248,8 @@ def call_with_timeout(fn: Callable, timeout_sec: float):
         return TIMEOUT, None, None, elapsed
     if "error" in box:
         return RAISED, None, box["error"], elapsed
+    if not box.get("done"):
+        return RAISED, None, "worker thread died without returning", elapsed
     value = box.get("value")
     if value is None:
         return EMPTY, None, None, elapsed

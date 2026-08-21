@@ -282,3 +282,23 @@ def test_the_attempt_thread_is_a_daemon():
 
     call_with_timeout(record, 5)
     assert seen["daemon"] is True
+
+
+@pytest.mark.filterwarnings("ignore::pytest.PytestUnhandledThreadExceptionWarning")
+def test_a_worker_killed_by_a_baseexception_reports_raised_not_empty():
+    """A crash must not pass for a decline.
+
+    `except Exception` deliberately does not catch this (test_no_bare_except.py
+    keeps that allowlist small), so the `done` flag is what tells the two apart.
+    Without it, sys.exit() inside a model client would look exactly like a model
+    that answered None — and the ladder would record a declined answer where a
+    crash happened.
+    """
+    def dies_hard():
+        raise SystemExit(3)
+
+    outcome, value, error, _ = call_with_timeout(dies_hard, 5)
+
+    assert outcome == RAISED
+    assert value is None
+    assert "died without returning" in error
