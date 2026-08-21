@@ -1,0 +1,43 @@
+# CORTEX++ — optional media, browser and desktop extras.
+#
+# NONE of these are needed to run the test suite or a nightly cycle. They are
+# split out (21 Aug 2026) because a fork that wants to reproduce our numbers
+# should not be made to download a browser engine to do it, and because
+# `pip install -r requirements.txt` failing on a heavyweight optional package is
+# indistinguishable, to the person reading the traceback, from the project being
+# broken.
+#
+#     pip install -r requirements.txt          # the suite and the cycle
+#     pip install -r requirements-media.txt    # plus browsers and screen capture
+#
+# Every import below is guarded in the code, and the step that needs it announces
+# its own absence rather than dying. Same pinning rule as requirements.txt: exact
+# versions, measured from venv/ on 21 Aug 2026 under CPython 3.14.5.
+
+playwright==1.60.0
+# experiments/browser_scout/ (the autonomous scout and the semantic scout) and
+# youtube_intel's transcript fallback. NEEDS A SECOND STEP after pip:
+#     python -m playwright install chromium
+# The wheel alone installs the API, not the browser, and a scout with the API and
+# no browser fails at first navigation — which reads as a broken scout.
+
+youtube-transcript-api==1.2.4
+# youtube_intel.py. Without it there are no transcripts, and the YouTube signal
+# in B_SENSE is titles and metadata only.
+
+mss==10.2.0
+# experiments/desktop_hands/agent.py — screen capture.
+
+PyAutoGUI==0.9.54
+# experiments/desktop_hands/agent.py — synthetic mouse and keyboard.
+#
+# NOTE, and it is not a packaging note: experiments/desktop_hands/ can move this
+# machine's real cursor and type into whatever window has focus. It is not
+# wired into fast_cycle_runner.py and installing this file does not start it.
+# See BOUNDARIES.md before running anything under that directory.
+
+aiohttp==3.14.1
+# self_observer.py at the repo root, unguarded at module level. Nothing in the
+# repo imports that file — the live observer is agents/core/self_observer.py,
+# which does not use aiohttp — so this line exists to keep the root file
+# importable for anyone reading it, not because a cycle needs it.

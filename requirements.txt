@@ -1,4 +1,91 @@
-requests>=2.31.0
-flask>=3.0.0
-chromadb>=1.0.0
-pytest>=8.0.0
+# CORTEX++ — what a fresh clone actually needs.
+#
+# WHY THIS FILE WAS REWRITTEN (21 Aug 2026)
+# ------------------------------------------
+# It used to list four packages: requests, flask, chromadb, pytest. A fork test
+# run that morning on a clean checkout could not collect the test suite: psutil
+# is imported by twelve modules in this repo — including memory/heartbeat.py and
+# the body scanner, i.e. the parts a fork would run first — and was in no
+# requirements file anywhere. numpy is imported unguarded by core/interval_head
+# .py and test/test_training_record.py, and was likewise absent. The list was
+# not a dependency declaration; it was four names somebody remembered.
+#
+# HOW THIS LIST WAS DERIVED — NOT REMEMBERED
+# -------------------------------------------
+# An AST scan of all 423 tracked .py files (venv/, __pycache__/, quarantine/
+# excluded), collecting every top-level import that is neither stdlib nor a
+# module of this repo, then resolved to the distribution that provides it via
+# importlib.metadata.packages_distributions() and pinned to the version actually
+# installed in venv/. The measurement, the pins and the proof below were made on
+# the same afternoon against the same interpreter.
+#
+# PINS ARE EXACT ON PURPOSE
+# --------------------------
+# docs/KNOWN_FORK_FINDINGS.md asks a fork to report its numbers before reading
+# ours. Numbers produced against a different resolution of these packages are
+# not a reproduction of anything. If a pin cannot be satisfied on your platform,
+# that IS the finding — file it rather than floating the pin quietly.
+#
+# MEASURED AGAINST: CPython 3.14.5 (venv/), Windows 11.
+# ALSO RESOLVED ON: CPython 3.12 — the version .github/workflows/ci.yml uses.
+#
+# PROVED, 21 Aug 2026, and reproducible:
+#   python -m venv /tmp/fork && /tmp/fork/Scripts/python -m pip install -r requirements.txt
+#   /tmp/fork/Scripts/python -m pytest test/ --collect-only -q
+#   -> 1332 tests collected in 2.69s, 0 errors
+#
+# Media, browser and desktop extras are NOT here. See requirements-media.txt —
+# a fork that only wants to run the suite should not be made to install a
+# browser engine.
+
+# ── Fatal if missing ─────────────────────────────────────────────────────────
+# Absence of any of these stops the test suite from even collecting, or stops a
+# cycle at its first step. Verified by removing each from a clean venv.
+
+requests==2.34.2
+# 63 files. Every HTTP fetch, every LLM backend, supervisor.alarm_human's send
+# to Telegram. Nothing works without it.
+
+urllib3==2.7.0
+# wellbeing_country.py imports urllib3.util.retry directly and unguarded. It
+# arrives as a dependency of requests anyway; it is pinned here because the
+# repo imports it by name, and a transitive pin is not a declaration.
+
+psutil==7.2.2
+# 12 files, among them memory/heartbeat.py, agents/body/body_scanner.py and the
+# supervisor's process checks. THE PACKAGE THE FORK TEST TRIPPED OVER.
+
+numpy==2.4.6
+# core/interval_head.py and test/test_training_record.py, both unguarded at
+# module level, so pytest cannot import them without it.
+
+pytest==9.1.1
+# The suite. test/test_script_suite.py also shells out to script-style suites
+# with the same interpreter.
+
+flask==3.1.3
+# cortex_approval_server.py, which test/test_dashboard_freshness.py imports at
+# module scope — so this is a collection-time dependency, not only a runtime one.
+
+# ── Degrading if missing, and it says so out loud ────────────────────────────
+# These are guarded by try/except and the code announces the degradation. A
+# cycle runs without them; it senses less. Pinned because "runs" and "runs as
+# measured" are different claims.
+
+feedparser==6.0.12
+# web_intelligence_agent._fetch_rss. Missing means no RSS at all, i.e. B_SENSE
+# collects from fewer sources than the numbers in any report of ours assume.
+
+ddgs==9.14.4
+# fast_cycle_runner's dependency_check names it explicitly and files a proposal
+# for the human when it is missing — which it was, for weeks, before 14 Aug 2026.
+
+python-dotenv==1.2.2
+# youtube_intel.py, to read .env. Without it the API keys in .env are simply not
+# seen, which looks exactly like not having keys.
+
+chromadb==1.5.9
+# core/session_updater.py (the session_update step of G_LEARN). By far the
+# heaviest entry here — it pulls onnxruntime and friends. It is guarded, so a
+# fork that wants only the suite may drop this line; the suite collects and runs
+# without it. Kept in the core list because the nightly cycle uses it.
