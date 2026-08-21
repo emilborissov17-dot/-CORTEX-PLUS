@@ -292,6 +292,15 @@ QUIET_HOURS = (22, 9)      # 22:00-09:00 местно: човекът спи, с
 NOTIFY_CHANNEL = BASE / "memory" / "notify_channel.json"
 ALARM_STAMP    = BASE / "memory" / "alarm_sent.json"
 
+# Where the tick's telemetry row goes. A MODULE CONSTANT for exactly the reason
+# the two above it are — and the reason was proved again on 21 Aug 2026, within
+# minutes of wiring it. core/body_sensorium.tick() was called with no argument,
+# so it used its own default, and four sandboxed supervisor tests wrote rows
+# into the LIVE memory/body_sensorium/. test/conftest.py's write-surface guard
+# caught it and named the file. A path a fixture cannot redirect is a path a
+# test will eventually write to for real.
+BODY_SENSE_DIR = BASE / "memory" / "body_sensorium"
+
 
 def _quiet_now() -> bool:
     h = datetime.now().hour
@@ -1220,6 +1229,31 @@ def metta_selfcheck(force: bool = False) -> Optional[dict]:
 
 def tick(now: Optional[datetime] = None, dry_run: bool = False) -> Action:
     now = now or datetime.now().astimezone()
+
+    # ── THE BODY'S RAW FEED (21 Aug 2026) ──────────────────────────────────
+    # One telemetry row per tick — cpu, ram, disk, net rate, battery/AC, GPU
+    # VRAM, process count. STAGE 0 IS NUMBERS ONLY: no audio, no images, no
+    # capture of any kind, and those stay out until the physical-switch design
+    # is agreed. See core/body_sensorium.py.
+    #
+    # It rides the tick because a sense has to be continuous to be a sense.
+    # agents/body/body_scanner.py already answers "how is the machine right
+    # now", once a cycle, when asked — which cannot tell whether RAM has been
+    # at 96% for an hour or arrived there ninety seconds ago.
+    #
+    # Skipped on --dry-run: a dry run must leave no trace, and this writes.
+    # FAIL-OPEN: a sense must never be able to kill the body it reports on.
+    if not dry_run:
+        try:
+            from core import body_sensorium
+            body_sensorium.tick(base=BODY_SENSE_DIR)
+        except Exception as _exc:  # noqa: BLE001
+            try:
+                log(f"body sensorium tick failed "
+                    f"({type(_exc).__name__}: {_exc}) — supervision continues")
+            except Exception:
+                pass
+
     cfg = load_config()
     state = load_state()
     lock = read_lock()

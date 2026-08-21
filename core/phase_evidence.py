@@ -213,6 +213,19 @@ def _a_orient(base=None) -> dict:
     stance = _json("memory/brain_stance.json", base)
     if isinstance(stance, dict):
         _put(ev, "stance_fields", len(stance) or None)
+
+    # ── THE BODY, AS A SENSE OF A_ORIENT ───────────────────────────────────
+    # body_scan is A_ORIENT's step 0, so the machine's own state is this
+    # phase's own data — and it is the only phase whose menu can carry it
+    # without borrowing. Level AND duration: the newest row plus the 1-hour
+    # trend, so a debrief can say "RAM has been at 96% for an hour" rather than
+    # "RAM is at 96%", which is the difference the continuous feed exists for.
+    try:
+        from core.body_sensorium import for_evidence
+        ev.update(for_evidence(
+            (base / "memory" / "body_sensorium") if base else None))
+    except Exception:
+        pass
     return ev
 
 

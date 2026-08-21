@@ -418,6 +418,10 @@ def sandboxed_supervisor(tmp_path, monkeypatch):
     monkeypatch.setattr(sup, "LOCK_PATH", tmp_path / "cycle.lock")
     monkeypatch.setattr(sup, "LOG_PATH", tmp_path / "supervisor.log")
     monkeypatch.setattr(el, "LEDGER_PATH", tmp_path / "existence_ledger.jsonl")
+    # tick() appends one telemetry row per call (core/body_sensorium.py). Into
+    # tmp_path, not into the live memory/body_sensorium/ — caught by the
+    # write-surface guard the first time this was wired without it.
+    monkeypatch.setattr(sup, "BODY_SENSE_DIR", tmp_path / "body_sensorium")
     return tmp_path
 
 
@@ -734,6 +738,14 @@ def tick_sandbox(tmp_path, monkeypatch):
     monkeypatch.setattr(sup, "METTA_CHECK_FILE", tmp_path / "metta_bridge_check.json")
     monkeypatch.setattr(sup, "CYCLE_EXIT_PATH", tmp_path / "cycle_exit.json")
     monkeypatch.setattr(sup, "OUTBOX", tmp_path / "outbox")
+    # 21 Aug 2026: tick() now appends a telemetry row per call
+    # (core/body_sensorium.py). It was wired calling tick() with no argument, so
+    # it used the module default and four tests here wrote into the LIVE
+    # memory/body_sensorium/. The write-surface guard named the file within
+    # minutes, and the meta-test below went red because the constant still
+    # pointed at the repo — which is precisely what item 2 of this docstring
+    # promises. The mechanism was not bypassed; it was used.
+    monkeypatch.setattr(sup, "BODY_SENSE_DIR", tmp_path / "body_sensorium")
     monkeypatch.setattr(sup, "OUTBOX_SENT", tmp_path / "outbox" / "sent")
     monkeypatch.setattr(el, "LEDGER_PATH", tmp_path / "existence_ledger.jsonl")
     monkeypatch.setattr(hb, "HEARTBEAT_PATH", tmp_path / "heartbeat.json")

@@ -400,6 +400,31 @@ def scan() -> dict:
         "adaptive_directives": directives,
     }
 
+    # ── THE CONTINUOUS SENSE, NOT ANOTHER GLANCE (21 Aug 2026) ─────────────
+    # Everything above is measured HERE AND NOW, once a cycle. That cannot
+    # answer "has this been true for an hour or for ninety seconds", and the
+    # two have different actions attached: RAM at 96% arriving in the last
+    # minute is a step allocating; RAM at 96% for an hour is a machine with no
+    # headroom left for the rest of the cycle.
+    #
+    # core/body_sensorium.py has been appending a row every supervisor tick
+    # since. This attaches the newest row and the 1-hour trend so the scan
+    # carries duration, not only level. Fail-open: an unwired or empty sense
+    # leaves body["sensorium"] saying so rather than removing the key, because
+    # a missing key reads as "nobody asked".
+    try:
+        from core import body_sensorium
+        body["sensorium"] = {
+            "latest": body_sensorium.latest(),
+            "trend_1h": body_sensorium.trend(1.0),
+        }
+        if body["sensorium"]["latest"] is None:
+            body["sensorium"]["note"] = (
+                "no row yet — the supervisor has not ticked since this sense "
+                "was wired, or it is not running")
+    except Exception as exc:  # noqa: BLE001
+        body["sensorium"] = {"error": f"{type(exc).__name__}: {exc}"}
+
     return body
 
 def _detect_bottleneck(cpu: dict, ram: dict) -> str:
