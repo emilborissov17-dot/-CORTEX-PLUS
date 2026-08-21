@@ -278,3 +278,69 @@ def test_the_first_experiment_is_registered_in_the_live_store():
     assert exp["accepted"] is True
     assert exp["knob"]["a"] == 900 and exp["knob"]["b"] == 1500
     assert exp["n_per_arm"] == 4
+
+
+# --------------------------------------------------------------------------- #
+# (f) the ordinal counts cycles, not supervisor announcements
+# --------------------------------------------------------------------------- #
+
+def _ledger(tmp_path, rows) -> pathlib.Path:
+    p = tmp_path / "existence_ledger.jsonl"
+    p.write_text("\n".join(json.dumps(r) for r in rows), encoding="utf-8")
+    return p
+
+
+def test_the_ordinal_counts_distinct_cycles(tmp_path):
+    led = _ledger(tmp_path, [
+        {"event": "CYCLE_STARTED", "cycle_id": "c1"},
+        {"event": "CYCLE_FINISHED", "cycle_id": "c1"},
+        {"event": "CYCLE_STARTED", "cycle_id": "c2"},
+        {"event": "CYCLE_KILLED", "cycle_id": "c2"},
+        {"event": "CYCLE_FAILED_BUDGET_EXHAUSTED", "cycle_id": "c2"},
+        {"event": "MISSED_RUN_CATCHUP"},
+    ])
+    assert sx.cycle_ordinal(ledger=led, current=None) == 2
+
+
+def test_a_manual_run_still_advances_the_ordinal(tmp_path):
+    """CYCLE_STARTED is written by supervisor.py, not by the runner. Counting it
+    meant two manual runs in a row drew the SAME arm and the alternation — the
+    entire reason the choice is deterministic — silently stopped."""
+    rows = [{"event": "CYCLE_STARTED", "cycle_id": "c1"},
+            {"event": "CYCLE_FINISHED", "cycle_id": "c1"}]
+    led = _ledger(tmp_path, rows)
+    first = sx.cycle_ordinal(ledger=led, current="manual-1")
+    rows += [{"event": "CYCLE_FINISHED", "cycle_id": "manual-1"}]
+    led = _ledger(tmp_path, rows)
+    second = sx.cycle_ordinal(ledger=led, current="manual-2")
+    assert first == 1 and second == 2
+    assert sx.arm_for_cycle(first) != sx.arm_for_cycle(second), (
+        "two consecutive manual runs drew the same arm")
+
+
+def test_the_current_cycle_never_counts_itself(tmp_path):
+    """A supervisor run's own CYCLE_STARTED is already in the ledger while it
+    runs; a manual run's is not. Without excluding the current id the two kinds
+    of run would count themselves differently and draw different arms for the
+    same position in the sequence."""
+    rows = [{"event": "CYCLE_STARTED", "cycle_id": "c1"},
+            {"event": "CYCLE_FINISHED", "cycle_id": "c1"}]
+    manual = _ledger(tmp_path, rows)
+    supervised = _ledger(tmp_path, rows + [{"event": "CYCLE_STARTED",
+                                            "cycle_id": "c2"}])
+    assert (sx.cycle_ordinal(ledger=manual, current="c2")
+            == sx.cycle_ordinal(ledger=supervised, current="c2") == 1)
+
+
+def test_the_window_prefers_the_running_cycle_over_the_ledger(monkeypatch, tmp_path):
+    """The last CYCLE_STARTED belongs to the PREVIOUS cycle during a manual run.
+    Measuring that window would score somebody else's cycle as this one's."""
+    monkeypatch.setattr(sx, "BASE", tmp_path)
+    (tmp_path / "memory").mkdir()
+    (tmp_path / "memory" / "cycle.lock").write_text(json.dumps({
+        "cycle_id": "running-now", "started_utc": "2026-08-21T11:57:28+00:00"}),
+        encoding="utf-8")
+    cid, since, until = sx.last_cycle_window()
+    assert cid == "running-now"
+    assert since == "2026-08-21T11:57:28+00:00"
+    assert until > since

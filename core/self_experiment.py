@@ -630,26 +630,67 @@ def running() -> list:
 # Observing from inside a live cycle
 # ---------------------------------------------------------------------------
 
-def cycle_ordinal(ledger: pathlib.Path | None = None) -> int:
-    """Поредният номер на цикъла = колко CYCLE_STARTED има в летописа.
+def current_cycle_id() -> str | None:
+    for src in (BASE / "memory" / "cycle.lock", BASE / "memory" / "heartbeat.json"):
+        blob = _read_json(src, {})
+        if isinstance(blob, dict) and blob.get("cycle_id"):
+            return str(blob["cycle_id"])
+    return None
 
-    Броячът е чужд — води го memory/existence_ledger.jsonl, който е ПАЗЕН файл
-    и е верижно подписан. Опитът не може да си избере рамото, като си пренапише
-    брояча, защото броячът не е негов.
+
+def cycle_ordinal(ledger: pathlib.Path | None = None,
+                  current: str | None = None) -> int:
+    """КОЛКО ЦИКЪЛА СА БИЛИ ПРЕДИ ТОЗИ — броени по различни cycle_id в летописа.
+
+    Броячът е чужд: memory/existence_ledger.jsonl е ПАЗЕН файл и е верижно
+    подписан. Опитът не може да си избере рамото, като пренапише брояча.
+
+    ── ЗАЩО НЕ CYCLE_STARTED (поправено на 21 август 2026, по време на първия
+       наблюдаван цикъл) ─────────────────────────────────────────────────────
+    CYCLE_STARTED се пише от supervisor.py, не от бегача. Значи ръчно пуснат
+    цикъл НЕ мърда този брояч изобщо: два ръчни цикъла подред получаваха ЕДНО И
+    СЪЩО рамо, а редуването — цялата причина за детерминирания избор — просто
+    спираше. Обратното също беше вярно и по-лошо: при supervisor-ски цикъл
+    неговият собствен CYCLE_STARTED вече стои в летописа по време на пробега, а
+    при ръчен не стои, тоест двата вида пробег броят различно СЕБЕ СИ.
+
+    Броенето по различни cycle_id, с изваден ТЕКУЩИЯ, няма нито единия проблем:
+    еднакво е за всеки начин на пускане и не зависи от това дали цикълът е
+    успял да обяви началото си.
     """
     path = ledger or LEDGER
-    n = 0
+    mine = current if current is not None else current_cycle_id()
+    seen = set()
     try:
         for line in path.read_text(encoding="utf-8").splitlines():
-            if line.strip() and '"CYCLE_STARTED"' in line:
-                n += 1
+            if not line.strip():
+                continue
+            cid = json.loads(line).get("cycle_id")
+            if cid:
+                seen.add(str(cid))
     except Exception:
         return 0
-    return n
+    seen.discard(mine)
+    return len(seen)
 
 
 def last_cycle_window(ledger: pathlib.Path | None = None) -> tuple:
-    """(cycle_id, since, until) на последния цикъл, от летописа."""
+    """(cycle_id, since, until) — прозорецът, върху който се чете метриката.
+
+    ТЕКУЩИЯТ цикъл има предимство пред летописа. Същата поправка като в
+    cycle_ordinal и по същата причина: последният CYCLE_STARTED е написан от
+    supervisor, тоест при ръчен пробег той сочи ПРЕДИШНИЯ цикъл — и наблюдението
+    щеше да измери чужд прозорец, представяйки го за свой.
+    """
+    mine = current_cycle_id()
+    if mine:
+        lock = _read_json(BASE / "memory" / "cycle.lock", {})
+        hb = _read_json(BASE / "memory" / "heartbeat.json", {})
+        since = (lock.get("started_utc") or hb.get("step_started_utc")
+                 or hb.get("updated_utc"))
+        if since:
+            return (mine, str(since), _now())
+
     path = ledger or LEDGER
     started = None
     try:
