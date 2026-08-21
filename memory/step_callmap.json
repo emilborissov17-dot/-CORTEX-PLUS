@@ -1,10 +1,10 @@
 {
   "_what_this_is": "Static map of what each beat() step reaches, extracted from the AST of fast_cycle_runner.py by scripts/step_callmap.py. Static only: it reports what the file says, not what runs.",
   "_opaque_means": "No local import, no top-level alias call and no __import__ dispatch appears between this beat and the next. The map cannot say what the step runs. That is a question to answer, not an empty result.",
-  "generated_utc": "2026-08-20T21:33:19.666562+00:00",
+  "generated_utc": "2026-08-21T11:51:58.431582+00:00",
   "runner": "fast_cycle_runner.py",
-  "beats": 56,
-  "total_substeps": 111,
+  "beats": 62,
+  "total_substeps": 119,
   "unresolved_imports": [],
   "opaque_steps": [
     {
@@ -98,12 +98,12 @@
     {
       "step": "hyperclaw_plan",
       "index": "15.7",
-      "line": 1924,
+      "line": 1948,
       "delegates_to": [
         {
           "function": "_hyperclaw_to_proposals",
           "defined_at": 851,
-          "called_at": 1925
+          "called_at": 1949
         }
       ]
     }
@@ -205,42 +205,42 @@
       "source": "except Exception:"
     },
     {
-      "line": 1807,
+      "line": 1831,
       "catches": "Exception",
       "source": "except Exception:"
     },
     {
-      "line": 1985,
+      "line": 2009,
       "catches": "Exception",
       "source": "except Exception:"
     },
     {
-      "line": 2059,
+      "line": 2083,
       "catches": "Exception",
       "source": "except Exception:"
     },
     {
-      "line": 2072,
+      "line": 2096,
       "catches": "Exception",
       "source": "except Exception:"
     },
     {
-      "line": 2186,
+      "line": 2266,
       "catches": "Exception",
       "source": "except Exception:"
     },
     {
-      "line": 2200,
+      "line": 2297,
       "catches": "Exception",
       "source": "except Exception:"
     },
     {
-      "line": 2378,
+      "line": 2475,
       "catches": "Exception",
       "source": "except Exception:"
     },
     {
-      "line": 2383,
+      "line": 2480,
       "catches": "Exception",
       "source": "except Exception:"
     }
@@ -929,7 +929,7 @@
       "name": "scoring_engine",
       "index": "12.4",
       "line": 1712,
-      "ends_line": 1748,
+      "ends_line": 1753,
       "substeps": [
         {
           "kind": "local_import",
@@ -968,16 +968,40 @@
       "opaque": false
     },
     {
+      "name": "alarm_bands",
+      "index": "12.42",
+      "line": 1753,
+      "ends_line": 1759,
+      "substeps": [
+        {
+          "kind": "local_import",
+          "module": "core.alarm_bands",
+          "symbol": "run",
+          "line": 1755,
+          "file": "core/alarm_bands.py",
+          "stdlib": false
+        }
+      ],
+      "delegates_to": [
+        {
+          "function": "_run",
+          "defined_at": 399,
+          "called_at": 1757
+        }
+      ],
+      "opaque": false
+    },
+    {
       "name": "facade_self_check",
       "index": "12.45",
-      "line": 1748,
-      "ends_line": 1769,
+      "line": 1759,
+      "ends_line": 1780,
       "substeps": [
         {
           "kind": "local_import",
           "module": "core.scorer_self_check",
           "symbol": "run_from_snapshots",
-          "line": 1750,
+          "line": 1761,
           "file": "core/scorer_self_check.py",
           "stdlib": false
         },
@@ -985,7 +1009,7 @@
           "kind": "local_import",
           "module": "core.scorer_self_check",
           "symbol": "format_report",
-          "line": 1750,
+          "line": 1761,
           "file": "core/scorer_self_check.py",
           "stdlib": false
         },
@@ -993,7 +1017,7 @@
           "kind": "local_import",
           "module": "datetime",
           "symbol": null,
-          "line": 1751,
+          "line": 1762,
           "file": null,
           "stdlib": true
         },
@@ -1001,7 +1025,7 @@
           "kind": "toplevel_alias",
           "module": "json",
           "symbol": "dumps",
-          "line": 1757,
+          "line": 1768,
           "file": null,
           "stdlib": true
         }
@@ -1012,14 +1036,14 @@
     {
       "name": "auto_levels",
       "index": "12.5",
-      "line": 1769,
-      "ends_line": 1781,
+      "line": 1780,
+      "ends_line": 1798,
       "substeps": [
         {
           "kind": "local_import",
           "module": "memory.auto_level",
           "symbol": "run",
-          "line": 1774,
+          "line": 1785,
           "file": "memory/auto_level.py",
           "stdlib": false
         }
@@ -1028,16 +1052,40 @@
       "opaque": false
     },
     {
+      "name": "level_reconcile",
+      "index": "12.55",
+      "line": 1798,
+      "ends_line": 1805,
+      "substeps": [
+        {
+          "kind": "local_import",
+          "module": "core.level_reconciler",
+          "symbol": "run",
+          "line": 1800,
+          "file": "core/level_reconciler.py",
+          "stdlib": false
+        }
+      ],
+      "delegates_to": [
+        {
+          "function": "_run",
+          "defined_at": 399,
+          "called_at": 1802
+        }
+      ],
+      "opaque": false
+    },
+    {
       "name": "goal_score_calculator",
       "index": "12.6",
-      "line": 1781,
-      "ends_line": 1826,
+      "line": 1805,
+      "ends_line": 1850,
       "substeps": [
         {
           "kind": "local_import",
           "module": "goal_score_calculator",
           "symbol": "compute_goal_score",
-          "line": 1785,
+          "line": 1809,
           "file": "goal_score_calculator.py",
           "stdlib": false
         },
@@ -1045,7 +1093,7 @@
           "kind": "local_import",
           "module": "goal_score_calculator",
           "symbol": "format_headline",
-          "line": 1785,
+          "line": 1809,
           "file": "goal_score_calculator.py",
           "stdlib": false
         },
@@ -1053,7 +1101,7 @@
           "kind": "local_import",
           "module": "goal_score_calculator",
           "symbol": "persist",
-          "line": 1818,
+          "line": 1842,
           "file": "goal_score_calculator.py",
           "stdlib": false
         }
@@ -1062,12 +1110,12 @@
         {
           "function": "_run",
           "defined_at": 399,
-          "called_at": 1820
+          "called_at": 1844
         },
         {
           "function": "_note_night",
           "defined_at": 445,
-          "called_at": 1804
+          "called_at": 1828
         }
       ],
       "opaque": false
@@ -1075,14 +1123,14 @@
     {
       "name": "deduction",
       "index": "12.65",
-      "line": 1826,
-      "ends_line": 1839,
+      "line": 1850,
+      "ends_line": 1863,
       "substeps": [
         {
           "kind": "local_import",
           "module": "core.deduction",
           "symbol": "run",
-          "line": 1828,
+          "line": 1852,
           "file": "core/deduction.py",
           "stdlib": false
         }
@@ -1093,14 +1141,14 @@
     {
       "name": "constancy_and_constellation",
       "index": "12.66",
-      "line": 1839,
-      "ends_line": 1859,
+      "line": 1863,
+      "ends_line": 1883,
       "substeps": [
         {
           "kind": "local_import",
           "module": "core.constancy",
           "symbol": "run",
-          "line": 1841,
+          "line": 1865,
           "file": "core/constancy.py",
           "stdlib": false
         }
@@ -1111,14 +1159,14 @@
     {
       "name": "axis_feed",
       "index": "12.68",
-      "line": 1859,
-      "ends_line": 1866,
+      "line": 1883,
+      "ends_line": 1890,
       "substeps": [
         {
           "kind": "dunder_import",
           "module": "agents.axis.axis_feed",
           "symbol": "run",
-          "line": 1861,
+          "line": 1885,
           "file": "agents/axis/axis_feed.py",
           "stdlib": false
         }
@@ -1129,14 +1177,14 @@
     {
       "name": "cognitive_orchestrator",
       "index": "12.7",
-      "line": 1866,
-      "ends_line": 1895,
+      "line": 1890,
+      "ends_line": 1919,
       "substeps": [
         {
           "kind": "local_import",
           "module": "core.orchestrator_grounded",
           "symbol": "run",
-          "line": 1879,
+          "line": 1903,
           "file": "core/orchestrator_grounded.py",
           "stdlib": false
         },
@@ -1144,7 +1192,7 @@
           "kind": "local_import",
           "module": "core.cortex_orchestrator",
           "symbol": "run",
-          "line": 1884,
+          "line": 1908,
           "file": "core/cortex_orchestrator.py",
           "stdlib": false
         }
@@ -1153,7 +1201,7 @@
         {
           "function": "_run",
           "defined_at": 399,
-          "called_at": 1881
+          "called_at": 1905
         }
       ],
       "opaque": false
@@ -1161,14 +1209,14 @@
     {
       "name": "brain_reconsider",
       "index": "12.75",
-      "line": 1895,
-      "ends_line": 1909,
+      "line": 1919,
+      "ends_line": 1933,
       "substeps": [
         {
           "kind": "local_import",
           "module": "core.reconsider",
           "symbol": "run",
-          "line": 1897,
+          "line": 1921,
           "file": "core/reconsider.py",
           "stdlib": false
         }
@@ -1179,14 +1227,14 @@
     {
       "name": "body_scan",
       "index": "13",
-      "line": 1909,
-      "ends_line": 1914,
+      "line": 1933,
+      "ends_line": 1938,
       "substeps": [
         {
           "kind": "dunder_import",
           "module": "agents.body.body_scanner",
           "symbol": "run",
-          "line": 1910,
+          "line": 1934,
           "file": "agents/body/body_scanner.py",
           "stdlib": false
         }
@@ -1195,7 +1243,7 @@
         {
           "function": "_run",
           "defined_at": 399,
-          "called_at": 1910
+          "called_at": 1934
         }
       ],
       "opaque": false
@@ -1203,14 +1251,14 @@
     {
       "name": "growth_planner",
       "index": "14",
-      "line": 1914,
-      "ends_line": 1919,
+      "line": 1938,
+      "ends_line": 1943,
       "substeps": [
         {
           "kind": "dunder_import",
           "module": "agents.body.growth_planner",
           "symbol": "run",
-          "line": 1915,
+          "line": 1939,
           "file": "agents/body/growth_planner.py",
           "stdlib": false
         }
@@ -1219,7 +1267,7 @@
         {
           "function": "_run",
           "defined_at": 399,
-          "called_at": 1915
+          "called_at": 1939
         }
       ],
       "opaque": false
@@ -1227,14 +1275,14 @@
     {
       "name": "hyperclaw",
       "index": "15.6",
-      "line": 1919,
-      "ends_line": 1924,
+      "line": 1943,
+      "ends_line": 1948,
       "substeps": [
         {
           "kind": "dunder_import",
           "module": "agents.hyperclaw.hyperclaw_orchestrator",
           "symbol": "main",
-          "line": 1920,
+          "line": 1944,
           "file": "agents/hyperclaw/hyperclaw_orchestrator.py",
           "stdlib": false
         }
@@ -1243,7 +1291,7 @@
         {
           "function": "_run",
           "defined_at": 399,
-          "called_at": 1920
+          "called_at": 1944
         }
       ],
       "opaque": false
@@ -1251,14 +1299,14 @@
     {
       "name": "hyperclaw_plan",
       "index": "15.7",
-      "line": 1924,
-      "ends_line": 1928,
+      "line": 1948,
+      "ends_line": 1952,
       "substeps": [],
       "delegates_to": [
         {
           "function": "_hyperclaw_to_proposals",
           "defined_at": 851,
-          "called_at": 1925
+          "called_at": 1949
         }
       ],
       "opaque": true
@@ -1266,14 +1314,14 @@
     {
       "name": "github_publish",
       "index": "15.8",
-      "line": 1928,
-      "ends_line": 1941,
+      "line": 1952,
+      "ends_line": 1965,
       "substeps": [
         {
           "kind": "local_import",
           "module": "github_publisher",
           "symbol": "publish_synthesis",
-          "line": 1936,
+          "line": 1960,
           "file": "github_publisher.py",
           "stdlib": false
         }
@@ -1282,12 +1330,12 @@
         {
           "function": "_witness_or_refuse",
           "defined_at": 1100,
-          "called_at": 1932
+          "called_at": 1956
         },
         {
           "function": "_run",
           "defined_at": 399,
-          "called_at": 1938
+          "called_at": 1962
         }
       ],
       "opaque": false
@@ -1295,14 +1343,14 @@
     {
       "name": "action_recommendations",
       "index": "16",
-      "line": 1941,
-      "ends_line": 1964,
+      "line": 1965,
+      "ends_line": 1988,
       "substeps": [
         {
           "kind": "local_import",
           "module": "core.cortex_reasoner",
           "symbol": "reason",
-          "line": 1943,
+          "line": 1967,
           "file": "core/cortex_reasoner.py",
           "stdlib": false
         },
@@ -1310,7 +1358,7 @@
           "kind": "local_import",
           "module": "memory.semantic_memory",
           "symbol": "remember",
-          "line": 1944,
+          "line": 1968,
           "file": "memory/semantic_memory.py",
           "stdlib": false
         },
@@ -1318,7 +1366,7 @@
           "kind": "local_import",
           "module": "memory.context_injector",
           "symbol": "record_causal",
-          "line": 1952,
+          "line": 1976,
           "file": "memory/context_injector.py",
           "stdlib": false
         }
@@ -1327,7 +1375,7 @@
         {
           "function": "_run",
           "defined_at": 399,
-          "called_at": 1961
+          "called_at": 1985
         }
       ],
       "opaque": false
@@ -1335,14 +1383,14 @@
     {
       "name": "self_observer",
       "index": "17",
-      "line": 1964,
-      "ends_line": 1969,
+      "line": 1988,
+      "ends_line": 1993,
       "substeps": [
         {
           "kind": "dunder_import",
           "module": "agents.core.self_observer",
           "symbol": "run",
-          "line": 1965,
+          "line": 1989,
           "file": "agents/core/self_observer.py",
           "stdlib": false
         }
@@ -1351,7 +1399,7 @@
         {
           "function": "_run",
           "defined_at": 399,
-          "called_at": 1965
+          "called_at": 1989
         }
       ],
       "opaque": false
@@ -1359,14 +1407,14 @@
     {
       "name": "self_modifier",
       "index": "18",
-      "line": 1969,
-      "ends_line": 1975,
+      "line": 1993,
+      "ends_line": 1999,
       "substeps": [
         {
           "kind": "dunder_import",
           "module": "agents.core.self_modifier",
           "symbol": "run",
-          "line": 1971,
+          "line": 1995,
           "file": "agents/core/self_modifier.py",
           "stdlib": false
         }
@@ -1375,12 +1423,12 @@
         {
           "function": "_witness_or_refuse",
           "defined_at": 1100,
-          "called_at": 1970
+          "called_at": 1994
         },
         {
           "function": "_run",
           "defined_at": 399,
-          "called_at": 1971
+          "called_at": 1995
         }
       ],
       "opaque": false
@@ -1388,14 +1436,14 @@
     {
       "name": "execute_patches",
       "index": "19",
-      "line": 1975,
-      "ends_line": 1989,
+      "line": 1999,
+      "ends_line": 2013,
       "substeps": [
         {
           "kind": "local_import",
           "module": "core.metta_check",
           "symbol": "invalidate",
-          "line": 1983,
+          "line": 2007,
           "file": "core/metta_check.py",
           "stdlib": false
         },
@@ -1403,7 +1451,7 @@
           "kind": "dunder_import",
           "module": "execute_patches",
           "symbol": "run",
-          "line": 1977,
+          "line": 2001,
           "file": "execute_patches.py",
           "stdlib": false
         }
@@ -1412,12 +1460,12 @@
         {
           "function": "_witness_or_refuse",
           "defined_at": 1100,
-          "called_at": 1976
+          "called_at": 2000
         },
         {
           "function": "_run",
           "defined_at": 399,
-          "called_at": 1977
+          "called_at": 2001
         }
       ],
       "opaque": false
@@ -1425,14 +1473,14 @@
     {
       "name": "feedback_loop",
       "index": "20",
-      "line": 1989,
-      "ends_line": 1994,
+      "line": 2013,
+      "ends_line": 2018,
       "substeps": [
         {
           "kind": "dunder_import",
           "module": "agents.core.feedback_loop",
           "symbol": "run",
-          "line": 1990,
+          "line": 2014,
           "file": "agents/core/feedback_loop.py",
           "stdlib": false
         }
@@ -1441,7 +1489,7 @@
         {
           "function": "_run",
           "defined_at": 399,
-          "called_at": 1990
+          "called_at": 2014
         }
       ],
       "opaque": false
@@ -1449,14 +1497,14 @@
     {
       "name": "session_update",
       "index": "21",
-      "line": 1994,
-      "ends_line": 2001,
+      "line": 2018,
+      "ends_line": 2025,
       "substeps": [
         {
           "kind": "local_import",
           "module": "core.session_updater",
           "symbol": "update",
-          "line": 1996,
+          "line": 2020,
           "file": "core/session_updater.py",
           "stdlib": false
         }
@@ -1465,7 +1513,7 @@
         {
           "function": "_run",
           "defined_at": 399,
-          "called_at": 1998
+          "called_at": 2022
         }
       ],
       "opaque": false
@@ -1473,14 +1521,14 @@
     {
       "name": "daily_analysis",
       "index": "22",
-      "line": 2001,
-      "ends_line": 2006,
+      "line": 2025,
+      "ends_line": 2030,
       "substeps": [
         {
           "kind": "dunder_import",
           "module": "agents.core.daily_analysis_agent",
           "symbol": "main",
-          "line": 2002,
+          "line": 2026,
           "file": "agents/core/daily_analysis_agent.py",
           "stdlib": false
         }
@@ -1489,7 +1537,7 @@
         {
           "function": "_run",
           "defined_at": 399,
-          "called_at": 2002
+          "called_at": 2026
         }
       ],
       "opaque": false
@@ -1497,14 +1545,14 @@
     {
       "name": "data_scout",
       "index": "22.5",
-      "line": 2006,
-      "ends_line": 2020,
+      "line": 2030,
+      "ends_line": 2044,
       "substeps": [
         {
           "kind": "local_import",
           "module": "core.data_scout",
           "symbol": "run",
-          "line": 2010,
+          "line": 2034,
           "file": "core/data_scout.py",
           "stdlib": false
         }
@@ -1513,7 +1561,7 @@
         {
           "function": "_run",
           "defined_at": 399,
-          "called_at": 2017
+          "called_at": 2041
         }
       ],
       "opaque": false
@@ -1521,14 +1569,14 @@
     {
       "name": "continuous_learning",
       "index": "23",
-      "line": 2020,
-      "ends_line": 2032,
+      "line": 2044,
+      "ends_line": 2056,
       "substeps": [
         {
           "kind": "local_import",
           "module": "memory.continuous_learner",
           "symbol": "learn_from_cycle",
-          "line": 2022,
+          "line": 2046,
           "file": "memory/continuous_learner.py",
           "stdlib": false
         }
@@ -1537,7 +1585,7 @@
         {
           "function": "_utc_now",
           "defined_at": 54,
-          "called_at": 2023
+          "called_at": 2047
         }
       ],
       "opaque": false
@@ -1545,14 +1593,14 @@
     {
       "name": "merklememory_commit",
       "index": "24",
-      "line": 2032,
-      "ends_line": 2123,
+      "line": 2056,
+      "ends_line": 2147,
       "substeps": [
         {
           "kind": "local_import",
           "module": "asyncio",
           "symbol": null,
-          "line": 2034,
+          "line": 2058,
           "file": null,
           "stdlib": true
         },
@@ -1560,7 +1608,7 @@
           "kind": "local_import",
           "module": "re",
           "symbol": null,
-          "line": 2035,
+          "line": 2059,
           "file": null,
           "stdlib": true
         },
@@ -1568,7 +1616,7 @@
           "kind": "local_import",
           "module": "merkle_memory",
           "symbol": "MerkleMemory",
-          "line": 2036,
+          "line": 2060,
           "file": "merkle_memory.py",
           "stdlib": false
         },
@@ -1576,7 +1624,7 @@
           "kind": "local_import",
           "module": "memory.existence_ledger",
           "symbol": "verify",
-          "line": 2092,
+          "line": 2116,
           "file": "memory/existence_ledger.py",
           "stdlib": false
         },
@@ -1584,7 +1632,7 @@
           "kind": "local_import",
           "module": "memory.existence_ledger",
           "symbol": "summary",
-          "line": 2092,
+          "line": 2116,
           "file": "memory/existence_ledger.py",
           "stdlib": false
         },
@@ -1592,7 +1640,7 @@
           "kind": "toplevel_alias",
           "module": "json",
           "symbol": "loads",
-          "line": 2057,
+          "line": 2081,
           "file": null,
           "stdlib": true
         },
@@ -1600,7 +1648,7 @@
           "kind": "toplevel_alias",
           "module": "datetime",
           "symbol": "now",
-          "line": 2069,
+          "line": 2093,
           "file": null,
           "stdlib": true
         }
@@ -1609,7 +1657,7 @@
         {
           "function": "_utc_now",
           "defined_at": 54,
-          "called_at": 2108
+          "called_at": 2132
         }
       ],
       "opaque": false
@@ -1617,15 +1665,23 @@
     {
       "name": "training_data_accumulation",
       "index": "25",
-      "line": 2123,
-      "ends_line": 2142,
+      "line": 2147,
+      "ends_line": 2181,
       "substeps": [
         {
           "kind": "local_import",
           "module": "merkle_to_training",
           "symbol": "append_latest_cycle",
-          "line": 2126,
+          "line": 2150,
           "file": "merkle_to_training.py",
+          "stdlib": false
+        },
+        {
+          "kind": "local_import",
+          "module": "core.training_log",
+          "symbol": "harvest",
+          "line": 2168,
+          "file": "core/training_log.py",
           "stdlib": false
         }
       ],
@@ -1635,14 +1691,14 @@
     {
       "name": "metta_column",
       "index": "25.35",
-      "line": 2142,
-      "ends_line": 2148,
+      "line": 2181,
+      "ends_line": 2187,
       "substeps": [
         {
           "kind": "local_import",
           "module": "core.metta_parallel",
           "symbol": "run",
-          "line": 2144,
+          "line": 2183,
           "file": "core/metta_parallel.py",
           "stdlib": false
         }
@@ -1651,7 +1707,7 @@
         {
           "function": "_run",
           "defined_at": 399,
-          "called_at": 2146
+          "called_at": 2185
         }
       ],
       "opaque": false
@@ -1659,14 +1715,14 @@
     {
       "name": "brain_relay",
       "index": "25.36",
-      "line": 2148,
-      "ends_line": 2154,
+      "line": 2187,
+      "ends_line": 2202,
       "substeps": [
         {
           "kind": "local_import",
           "module": "core.brain_relay",
           "symbol": "run",
-          "line": 2150,
+          "line": 2189,
           "file": "core/brain_relay.py",
           "stdlib": false
         }
@@ -1675,7 +1731,103 @@
         {
           "function": "_run",
           "defined_at": 399,
-          "called_at": 2152
+          "called_at": 2191
+        }
+      ],
+      "opaque": false
+    },
+    {
+      "name": "proposal_sla",
+      "index": "25.38",
+      "line": 2202,
+      "ends_line": 2208,
+      "substeps": [
+        {
+          "kind": "local_import",
+          "module": "core.proposal_sla",
+          "symbol": "run",
+          "line": 2204,
+          "file": "core/proposal_sla.py",
+          "stdlib": false
+        }
+      ],
+      "delegates_to": [
+        {
+          "function": "_run",
+          "defined_at": 399,
+          "called_at": 2206
+        }
+      ],
+      "opaque": false
+    },
+    {
+      "name": "needs_auth",
+      "index": "25.37",
+      "line": 2208,
+      "ends_line": 2218,
+      "substeps": [
+        {
+          "kind": "local_import",
+          "module": "core.needs_auth",
+          "symbol": "run",
+          "line": 2210,
+          "file": "core/needs_auth.py",
+          "stdlib": false
+        }
+      ],
+      "delegates_to": [
+        {
+          "function": "_run",
+          "defined_at": 399,
+          "called_at": 2212
+        }
+      ],
+      "opaque": false
+    },
+    {
+      "name": "self_experiment",
+      "index": "25.44",
+      "line": 2218,
+      "ends_line": 2228,
+      "substeps": [
+        {
+          "kind": "local_import",
+          "module": "core.self_experiment",
+          "symbol": "observe_all",
+          "line": 2220,
+          "file": "core/self_experiment.py",
+          "stdlib": false
+        }
+      ],
+      "delegates_to": [
+        {
+          "function": "_run",
+          "defined_at": 399,
+          "called_at": 2222
+        }
+      ],
+      "opaque": false
+    },
+    {
+      "name": "self_mirror",
+      "index": "25.45",
+      "line": 2228,
+      "ends_line": 2234,
+      "substeps": [
+        {
+          "kind": "local_import",
+          "module": "core.self_mirror",
+          "symbol": "run",
+          "line": 2230,
+          "file": "core/self_mirror.py",
+          "stdlib": false
+        }
+      ],
+      "delegates_to": [
+        {
+          "function": "_run",
+          "defined_at": 399,
+          "called_at": 2232
         }
       ],
       "opaque": false
@@ -1683,14 +1835,14 @@
     {
       "name": "brain_debrief",
       "index": "25.5",
-      "line": 2154,
-      "ends_line": 2171,
+      "line": 2234,
+      "ends_line": 2251,
       "substeps": [
         {
           "kind": "local_import",
           "module": "core.brain",
           "symbol": "debrief_cycle",
-          "line": 2156,
+          "line": 2236,
           "file": "core/brain.py",
           "stdlib": false
         }
@@ -1701,14 +1853,14 @@
     {
       "name": "cycle_report",
       "index": "25.6",
-      "line": 2171,
-      "ends_line": 2398,
+      "line": 2251,
+      "ends_line": 2495,
       "substeps": [
         {
           "kind": "local_import",
           "module": "datetime",
           "symbol": "datetime",
-          "line": 2261,
+          "line": 2358,
           "file": null,
           "stdlib": true
         },
@@ -1716,7 +1868,7 @@
           "kind": "local_import",
           "module": "datetime",
           "symbol": "timezone",
-          "line": 2261,
+          "line": 2358,
           "file": null,
           "stdlib": true
         },
@@ -1724,7 +1876,7 @@
           "kind": "local_import",
           "module": "core.phase_resume",
           "symbol": "FROM",
-          "line": 2263,
+          "line": 2360,
           "file": "core/phase_resume.py",
           "stdlib": false
         },
@@ -1732,7 +1884,7 @@
           "kind": "local_import",
           "module": "core.phase_resume",
           "symbol": "ONLY",
-          "line": 2263,
+          "line": 2360,
           "file": "core/phase_resume.py",
           "stdlib": false
         },
@@ -1740,7 +1892,7 @@
           "kind": "local_import",
           "module": "core.phase_resume",
           "symbol": "ResumeRefused",
-          "line": 2263,
+          "line": 2360,
           "file": "core/phase_resume.py",
           "stdlib": false
         },
@@ -1748,7 +1900,7 @@
           "kind": "local_import",
           "module": "core.phase_resume",
           "symbol": "phase_names",
-          "line": 2263,
+          "line": 2360,
           "file": "core/phase_resume.py",
           "stdlib": false
         },
@@ -1756,7 +1908,7 @@
           "kind": "local_import",
           "module": "core.phase_resume",
           "symbol": "verify_or_refuse",
-          "line": 2263,
+          "line": 2360,
           "file": "core/phase_resume.py",
           "stdlib": false
         },
@@ -1764,7 +1916,7 @@
           "kind": "local_import",
           "module": "core.cycle_report",
           "symbol": "build",
-          "line": 2173,
+          "line": 2253,
           "file": "core/cycle_report.py",
           "stdlib": false
         },
@@ -1772,7 +1924,7 @@
           "kind": "local_import",
           "module": "core.cycle_report",
           "symbol": "to_markdown",
-          "line": 2173,
+          "line": 2253,
           "file": "core/cycle_report.py",
           "stdlib": false
         },
@@ -1780,7 +1932,7 @@
           "kind": "local_import",
           "module": "core.cycle_report",
           "symbol": "telegram_text",
-          "line": 2173,
+          "line": 2253,
           "file": "core/cycle_report.py",
           "stdlib": false
         },
@@ -1788,15 +1940,23 @@
           "kind": "local_import",
           "module": "pathlib",
           "symbol": "Path",
-          "line": 2175,
+          "line": 2255,
           "file": null,
           "stdlib": true
         },
         {
           "kind": "local_import",
+          "module": "core.phase_tracker",
+          "symbol": "close_last",
+          "line": 2283,
+          "file": "core/phase_tracker.py",
+          "stdlib": false
+        },
+        {
+          "kind": "local_import",
           "module": "memory.heartbeat",
           "symbol": "read",
-          "line": 2196,
+          "line": 2293,
           "file": "memory/heartbeat.py",
           "stdlib": false
         },
@@ -1804,7 +1964,7 @@
           "kind": "local_import",
           "module": "experiments.needs.needs_report",
           "symbol": "build",
-          "line": 2210,
+          "line": 2307,
           "file": "experiments/needs/needs_report.py",
           "stdlib": false
         },
@@ -1812,7 +1972,7 @@
           "kind": "local_import",
           "module": "experiments.needs.needs_report",
           "symbol": "_brief",
-          "line": 2210,
+          "line": 2307,
           "file": "experiments/needs/needs_report.py",
           "stdlib": false
         },
@@ -1820,7 +1980,7 @@
           "kind": "local_import",
           "module": "experiments.needs.needs_report",
           "symbol": "_notify",
-          "line": 2210,
+          "line": 2307,
           "file": "experiments/needs/needs_report.py",
           "stdlib": false
         },
@@ -1828,7 +1988,7 @@
           "kind": "local_import",
           "module": "experiments.needs.needs_report",
           "symbol": "push_rationale",
-          "line": 2233,
+          "line": 2330,
           "file": "experiments/needs/needs_report.py",
           "stdlib": false
         },
@@ -1836,7 +1996,7 @@
           "kind": "local_import",
           "module": "experiments.needs.needs_report",
           "symbol": "push",
-          "line": 2221,
+          "line": 2318,
           "file": "experiments/needs/needs_report.py",
           "stdlib": false
         },
@@ -1844,7 +2004,7 @@
           "kind": "toplevel_alias",
           "module": "datetime",
           "symbol": "now",
-          "line": 2293,
+          "line": 2390,
           "file": null,
           "stdlib": true
         },
@@ -1852,7 +2012,7 @@
           "kind": "local_import",
           "module": "memory.autonomic_pulse",
           "symbol": "start",
-          "line": 2314,
+          "line": 2411,
           "file": "memory/autonomic_pulse.py",
           "stdlib": false
         },
@@ -1860,7 +2020,7 @@
           "kind": "local_import",
           "module": "memory.autonomic_pulse",
           "symbol": "read",
-          "line": 2314,
+          "line": 2411,
           "file": "memory/autonomic_pulse.py",
           "stdlib": false
         },
@@ -1868,7 +2028,7 @@
           "kind": "local_import",
           "module": "memory.autonomic_pulse",
           "symbol": "stop",
-          "line": 2314,
+          "line": 2411,
           "file": "memory/autonomic_pulse.py",
           "stdlib": false
         },
@@ -1876,7 +2036,7 @@
           "kind": "local_import",
           "module": "experiments.keepalive.keep_awake",
           "symbol": "keep_awake",
-          "line": 2335,
+          "line": 2432,
           "file": "experiments/keepalive/keep_awake.py",
           "stdlib": false
         },
@@ -1884,7 +2044,7 @@
           "kind": "local_import",
           "module": "experiments.keepalive.lidaction_guard",
           "symbol": "lidaction_guard",
-          "line": 2348,
+          "line": 2445,
           "file": "experiments/keepalive/lidaction_guard.py",
           "stdlib": false
         },
@@ -1892,7 +2052,7 @@
           "kind": "toplevel_alias",
           "module": "json",
           "symbol": "loads",
-          "line": 2283,
+          "line": 2380,
           "file": null,
           "stdlib": true
         },
@@ -1900,7 +2060,7 @@
           "kind": "toplevel_alias",
           "module": "datetime",
           "symbol": "fromisoformat",
-          "line": 2285,
+          "line": 2382,
           "file": null,
           "stdlib": true
         },
@@ -1908,7 +2068,7 @@
           "kind": "local_import",
           "module": "contextlib",
           "symbol": "contextmanager",
-          "line": 2337,
+          "line": 2434,
           "file": null,
           "stdlib": true
         },
@@ -1916,7 +2076,7 @@
           "kind": "dunder_import",
           "module": "signal",
           "symbol": null,
-          "line": 2368,
+          "line": 2465,
           "file": null,
           "stdlib": true
         },
@@ -1924,7 +2084,7 @@
           "kind": "toplevel_alias",
           "module": "sys",
           "symbol": "exit",
-          "line": 2317,
+          "line": 2414,
           "file": null,
           "stdlib": true
         },
@@ -1932,7 +2092,7 @@
           "kind": "toplevel_alias",
           "module": "time",
           "symbol": "sleep",
-          "line": 2324,
+          "line": 2421,
           "file": null,
           "stdlib": true
         },
@@ -1940,7 +2100,7 @@
           "kind": "local_import",
           "module": "memory.heartbeat",
           "symbol": "retire",
-          "line": 2375,
+          "line": 2472,
           "file": "memory/heartbeat.py",
           "stdlib": false
         }
@@ -1949,27 +2109,27 @@
         {
           "function": "_seal_cycle_record",
           "defined_at": 300,
-          "called_at": 2194
+          "called_at": 2291
         },
         {
           "function": "_phase_cli",
-          "defined_at": 2243,
-          "called_at": 2310
+          "defined_at": 2340,
+          "called_at": 2407
         },
         {
           "function": "_utc_now",
           "defined_at": 54,
-          "called_at": 2239
+          "called_at": 2336
         },
         {
           "function": "main",
           "defined_at": 1237,
-          "called_at": 2389
+          "called_at": 2486
         },
         {
           "function": "_note_boot_abort",
           "defined_at": 286,
-          "called_at": 2392
+          "called_at": 2489
         }
       ],
       "opaque": false

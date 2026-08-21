@@ -2,20 +2,20 @@
  "generated_from": "fast_cycle_runner.py",
  "method": "AST. Module-level path constants are followed; paths built at runtime are recorded as UNRESOLVED with their source expression, never guessed and never omitted.",
  "totals": {
-  "modules": 321,
-  "on_live_cycle_path": 110,
-  "resolved_reads": 251,
-  "resolved_writes": 148,
-  "unresolved_paths": 586,
-  "modules_with_unresolved": 177,
+  "modules": 396,
+  "on_live_cycle_path": 133,
+  "resolved_reads": 314,
+  "resolved_writes": 160,
+  "unresolved_paths": 810,
+  "modules_with_unresolved": 237,
   "parse_errors": 0,
-  "total_loc": 63388
+  "total_loc": 79794
  },
  "step_gap": {
-  "steps_declared": 53,
-  "steps_with_resolvable_inputs": 26,
-  "steps_with_zero_resolvable_inputs": 27,
-  "of_those_that_do_read_but_only_dynamically": 17,
+  "steps_declared": 55,
+  "steps_with_resolvable_inputs": 27,
+  "steps_with_zero_resolvable_inputs": 28,
+  "of_those_that_do_read_but_only_dynamically": 18,
   "note": "A step with zero resolvable inputs is where core/notary.py's _age_state() sees an empty list and returns FULL trust. The count is the size of that fail-open surface.",
   "steps": [
    {
@@ -55,7 +55,7 @@
     "products": 2,
     "modules_seen": 1,
     "resolvable_inputs": 0,
-    "unresolved_in_those_modules": 12,
+    "unresolved_in_those_modules": 13,
     "inputs": []
    },
    {
@@ -333,9 +333,9 @@
    {
     "step": "cognitive_orchestrator",
     "products": 1,
-    "modules_seen": 1,
+    "modules_seen": 2,
     "resolvable_inputs": 2,
-    "unresolved_in_those_modules": 4,
+    "unresolved_in_those_modules": 7,
     "inputs": [
      "memory/pulse_latest.json",
      "news/news_latest.json"
@@ -529,12 +529,31 @@
    {
     "step": "training_data_accumulation",
     "products": 0,
-    "modules_seen": 1,
-    "resolvable_inputs": 2,
-    "unresolved_in_those_modules": 1,
+    "modules_seen": 2,
+    "resolvable_inputs": 3,
+    "unresolved_in_those_modules": 5,
     "inputs": [
+     "config/scheduler.json",
      "cortex_memory/abstractions/essence.md",
      "cortex_memory/training/training_data.jsonl"
+    ]
+   },
+   {
+    "step": "self_experiment",
+    "products": 1,
+    "modules_seen": 1,
+    "resolvable_inputs": 0,
+    "unresolved_in_those_modules": 5,
+    "inputs": []
+   },
+   {
+    "step": "self_mirror",
+    "products": 2,
+    "modules_seen": 1,
+    "resolvable_inputs": 1,
+    "unresolved_in_those_modules": 4,
+    "inputs": [
+     "memory/last_cycle_id.txt"
     ]
    },
    {
@@ -557,22 +576,27 @@
    {
     "step": "cycle_report",
     "products": 1,
-    "modules_seen": 6,
-    "resolvable_inputs": 12,
-    "unresolved_in_those_modules": 12,
+    "modules_seen": 8,
+    "resolvable_inputs": 17,
+    "unresolved_in_those_modules": 15,
     "inputs": [
+     "config/cycle_phases.json",
+     "config/series_breaks.json",
      "logs/fast_cycle_log.txt",
      "memory/brain_cycle_plan.json",
      "memory/brain_step_log.jsonl",
      "memory/constancy_latest.json",
      "memory/constellation_latest.json",
+     "memory/cycle.lock",
      "memory/divergence_log.jsonl",
      "memory/goal_score_history.json",
      "memory/heartbeat.json",
+     "memory/metta_assessment_latest.json",
      "memory/night_events.jsonl",
      "memory/pulse_history.jsonl",
      "memory/pulse_latest.json",
-     "snapshots/master/global_indicators_latest.json"
+     "snapshots/master/global_indicators_latest.json",
+     "snapshots/master/goal_score_latest.json"
     ]
    }
   ]
@@ -760,6 +784,65 @@
    ]
   },
   {
+   "module": "agents/axis/__init__.py",
+   "reads": [],
+   "writes": [],
+   "unresolved": [],
+   "imports": [],
+   "loc": 0,
+   "on_live_cycle_path": false,
+   "imported_by": [
+    "scripts/micro_cycle.py"
+   ]
+  },
+  {
+   "module": "agents/axis/axis_feed.py",
+   "reads": [],
+   "writes": [],
+   "unresolved": [
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "path or TARGET_CONFIG",
+     "line": 72
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "goal_score_path or GOAL_SCORE",
+     "line": 175
+    },
+    {
+     "kind": "write",
+     "how": "open(mode=a)",
+     "expr": "log",
+     "line": 209
+    },
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "latest",
+     "line": 215
+    }
+   ],
+   "imports": [
+    "__future__",
+    "datetime",
+    "json",
+    "math",
+    "pathlib",
+    "sys",
+    "tempfile"
+   ],
+   "loc": 213,
+   "on_live_cycle_path": true,
+   "imported_by": [
+    "fast_cycle_runner.py",
+    "test/test_axis_feed.py",
+    "test/test_openclaw_axis_worker.py"
+   ]
+  },
+  {
    "module": "agents/body/__init__.py",
    "reads": [],
    "writes": [],
@@ -811,7 +894,8 @@
    "on_live_cycle_path": true,
    "imported_by": [
     "agents/body/growth_planner.py",
-    "fast_cycle_runner.py"
+    "fast_cycle_runner.py",
+    "scripts/micro_cycle.py"
    ]
   },
   {
@@ -1039,7 +1123,7 @@
     "os",
     "pathlib"
    ],
-   "loc": 194,
+   "loc": 220,
    "on_live_cycle_path": true,
    "imported_by": [
     "fast_cycle_runner.py",
@@ -1148,7 +1232,7 @@
      "kind": "read",
      "how": ".read_text()",
      "expr": "p",
-     "line": 135
+     "line": 136
     }
    ],
    "imports": [
@@ -1156,7 +1240,9 @@
     "core.groq_backend",
     "core.llm_json",
     "datetime",
+    "hashlib",
     "json",
+    "memory",
     "memory.body_scan",
     "memory.existence_model",
     "merkle_memory",
@@ -1168,11 +1254,12 @@
     "time",
     "typing"
    ],
-   "loc": 487,
+   "loc": 528,
    "on_live_cycle_path": true,
    "imported_by": [
     "fast_cycle_runner.py",
-    "test/test_llm_json.py"
+    "test/test_llm_json.py",
+    "test/test_proposal_archive.py"
    ]
   },
   {
@@ -1316,7 +1403,7 @@
     "sys",
     "typing"
    ],
-   "loc": 94,
+   "loc": 92,
    "on_live_cycle_path": true,
    "imported_by": [
     "fast_cycle_runner.py"
@@ -1477,31 +1564,31 @@
      "kind": "read",
      "how": ".read_text()",
      "expr": "p",
-     "line": 483
+     "line": 476
     },
     {
      "kind": "write",
      "how": ".write_text()",
      "expr": "_cache_path(video_id)",
-     "line": 506
+     "line": 499
     },
     {
      "kind": "read",
      "how": "open(mode=r)",
      "expr": "filepath",
-     "line": 660
+     "line": 653
     },
     {
      "kind": "read",
      "how": "open(mode=rb)",
      "expr": "audio_path",
-     "line": 740
+     "line": 733
     },
     {
      "kind": "write",
      "how": ".write_text()",
      "expr": "out_dir / f'{axis.lower()}_news_latest.json'",
-     "line": 1093
+     "line": 1086
     }
    ],
    "imports": [
@@ -1535,7 +1622,7 @@
     "youtube_intel",
     "youtube_transcript_api"
    ],
-   "loc": 995,
+   "loc": 988,
    "on_live_cycle_path": true,
    "imported_by": [
     "fast_cycle_runner.py",
@@ -1776,7 +1863,8 @@
     "agents/core/self_modifier.py",
     "agents/core/self_observer.py",
     "agents/core/self_observer_backup.py",
-    "cortex_proposal_executor.py"
+    "cortex_proposal_executor.py",
+    "test/test_proposal_archive.py"
    ]
   },
   {
@@ -1894,10 +1982,14 @@
     "core/cycle_graph.py",
     "core/cycle_report.py",
     "core/data_scout.py",
+    "core/declared_inputs.py",
+    "core/groq_backend.py",
+    "core/interval_head.py",
     "core/metta_check.py",
     "core/notary.py",
     "core/reconsider.py",
     "core/self_diagnosis.py",
+    "core/self_mirror.py",
     "cortex/agent_loop.py",
     "experiments/composers/composer.py",
     "experiments/grounding/divergence_ledger.py",
@@ -1905,15 +1997,68 @@
     "experiments/prophecy/goal_prophecy.py",
     "fast_cycle_runner.py",
     "scripts/cortex_ingest.py",
+    "scripts/micro_cycle.py",
+    "scripts/openclaw_axis_worker.py",
     "supervisor.py",
+    "test/test_alarm_bands.py",
+    "test/test_backend_policy.py",
+    "test/test_brain_relay.py",
     "test/test_canon_boundaries.py",
     "test/test_cerebras_budget.py",
+    "test/test_continents.py",
+    "test/test_declared_provenance.py",
+    "test/test_level_reconciler.py",
+    "test/test_metta_parallel.py",
+    "test/test_micro_cycle.py",
+    "test/test_needs_auth.py",
     "test/test_no_ollama_in_live_path.py",
+    "test/test_phase_debrief.py",
+    "test/test_phase_debrief_retry.py",
+    "test/test_proposal_sla.py",
     "test/test_provenance_pairs.py",
     "test/test_provider_registry.py",
     "test/test_registration_wall.py",
     "test/test_scorer_self_check.py",
-    "test/test_snapshot_carry_forward.py"
+    "test/test_self_experiment.py",
+    "test/test_self_mirror.py",
+    "test/test_snapshot_carry_forward.py",
+    "test/test_source_lifecycle.py",
+    "test/test_step_contract.py",
+    "test/test_training_record.py"
+   ]
+  },
+  {
+   "module": "core/alarm_bands.py",
+   "reads": [],
+   "writes": [
+    "memory/alarm_bands_latest.json"
+   ],
+   "unresolved": [
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "config_path or CONFIG",
+     "line": 69
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "goal_path or GOAL_SCORE",
+     "line": 84
+    }
+   ],
+   "imports": [
+    "__future__",
+    "datetime",
+    "json",
+    "pathlib",
+    "supervisor",
+    "sys"
+   ],
+   "loc": 207,
+   "on_live_cycle_path": true,
+   "imported_by": [
+    "fast_cycle_runner.py"
    ]
   },
   {
@@ -1944,6 +2089,22 @@
    "imported_by": []
   },
   {
+   "module": "core/backend_policy.py",
+   "reads": [],
+   "writes": [],
+   "unresolved": [],
+   "imports": [
+    "__future__",
+    "sys",
+    "threading"
+   ],
+   "loc": 185,
+   "on_live_cycle_path": true,
+   "imported_by": [
+    "memory/heartbeat.py"
+   ]
+  },
+  {
    "module": "core/brain.py",
    "reads": [
     "LAW_OF_THE_BRAIN.md",
@@ -1968,13 +2129,13 @@
      "kind": "read",
      "how": ".read_text()",
      "expr": "BASE / rel",
-     "line": 370
+     "line": 400
     },
     {
      "kind": "read",
      "how": ".read_text()",
      "expr": "logs[0]",
-     "line": 496
+     "line": 546
     }
    ],
    "imports": [
@@ -1984,6 +2145,7 @@
     "datetime",
     "hashlib",
     "json",
+    "memory.heartbeat",
     "os",
     "pathlib",
     "re",
@@ -1991,11 +2153,55 @@
     "sys",
     "time"
    ],
-   "loc": 571,
+   "loc": 605,
    "on_live_cycle_path": true,
    "imported_by": [
+    "core/phase_debrief.py",
     "fast_cycle_runner.py",
-    "memory/heartbeat.py"
+    "memory/heartbeat.py",
+    "test/test_prev_step_is_not_the_current_step.py"
+   ]
+  },
+  {
+   "module": "core/brain_relay.py",
+   "reads": [],
+   "writes": [],
+   "unresolved": [
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "path or CURSOR",
+     "line": 159
+    },
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "p",
+     "line": 167
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "path or JOURNAL",
+     "line": 173
+    }
+   ],
+   "imports": [
+    "__future__",
+    "collections",
+    "datetime",
+    "hashlib",
+    "json",
+    "pathlib",
+    "re",
+    "supervisor",
+    "sys",
+    "tempfile"
+   ],
+   "loc": 271,
+   "on_live_cycle_path": true,
+   "imported_by": [
+    "fast_cycle_runner.py"
    ]
   },
   {
@@ -2062,6 +2268,37 @@
    "imported_by": [
     "core/reconsider.py",
     "fast_cycle_runner.py"
+   ]
+  },
+  {
+   "module": "core/continents.py",
+   "reads": [],
+   "writes": [],
+   "unresolved": [
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "path or CONTINENTS",
+     "line": 86
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "path or CONTINENTS",
+     "line": 109
+    }
+   ],
+   "imports": [
+    "__future__",
+    "datetime",
+    "json",
+    "pathlib",
+    "sys"
+   ],
+   "loc": 164,
+   "on_live_cycle_path": true,
+   "imported_by": [
+    "core/cycle_report.py"
    ]
   },
   {
@@ -2235,18 +2472,19 @@
      "kind": "read",
      "how": ".read_text()",
      "expr": "p",
-     "line": 109
+     "line": 130
     },
     {
      "kind": "read",
      "how": ".read_text()",
      "expr": "p",
-     "line": 113
+     "line": 134
     }
    ],
    "imports": [
     "__future__",
     "core",
+    "core.declared_inputs",
     "datetime",
     "hyperon",
     "json",
@@ -2254,11 +2492,13 @@
     "re",
     "sys"
    ],
-   "loc": 232,
+   "loc": 239,
    "on_live_cycle_path": true,
    "imported_by": [
     "core/brain.py",
+    "core/declared_inputs.py",
     "core/metta_check.py",
+    "test/test_declared_step_inputs.py",
     "test/test_notary_gate.py"
    ]
   },
@@ -2271,19 +2511,23 @@
     "__future__",
     "pathlib"
    ],
-   "loc": 182,
+   "loc": 190,
    "on_live_cycle_path": false,
-   "imported_by": []
+   "imported_by": [
+    "scripts/build_module_map.py"
+   ]
   },
   {
    "module": "core/cycle_report.py",
    "reads": [
+    "config/series_breaks.json",
     "memory/brain_cycle_plan.json",
     "memory/brain_step_log.jsonl",
     "memory/constancy_latest.json",
     "memory/constellation_latest.json",
     "memory/divergence_log.jsonl",
     "memory/goal_score_history.json",
+    "memory/metta_assessment_latest.json",
     "memory/night_events.jsonl",
     "snapshots/master/global_indicators_latest.json"
    ],
@@ -2305,27 +2549,32 @@
      "kind": "write",
      "how": ".write_text()",
      "expr": "md",
-     "line": 405
+     "line": 512
     },
     {
      "kind": "write",
      "how": ".write_text()",
      "expr": "OUT_DIR / f'cycle_report_{day}.json'",
-     "line": 406
+     "line": 513
     }
    ],
    "imports": [
     "__future__",
     "core",
+    "core.continents",
+    "core.proposal_sla",
+    "core.self_mirror",
     "datetime",
     "json",
     "pathlib",
     "re"
    ],
-   "loc": 335,
+   "loc": 413,
    "on_live_cycle_path": true,
    "imported_by": [
-    "fast_cycle_runner.py"
+    "fast_cycle_runner.py",
+    "test/test_continents.py",
+    "test/test_proposal_sla.py"
    ]
   },
   {
@@ -2362,6 +2611,38 @@
    "on_live_cycle_path": true,
    "imported_by": [
     "fast_cycle_runner.py"
+   ]
+  },
+  {
+   "module": "core/declared_inputs.py",
+   "reads": [
+    "config/step_inputs.json"
+   ],
+   "writes": [],
+   "unresolved": [
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "Path(notary.__file__)",
+     "line": 154
+    }
+   ],
+   "imports": [
+    "__future__",
+    "core",
+    "core.cycle_graph",
+    "json",
+    "pathlib",
+    "safety.protected_paths",
+    "sys"
+   ],
+   "loc": 139,
+   "on_live_cycle_path": true,
+   "imported_by": [
+    "core/cycle_graph.py",
+    "core/notary.py",
+    "test/test_declared_provenance.py",
+    "test/test_declared_step_inputs.py"
    ]
   },
   {
@@ -2458,28 +2739,29 @@
      "kind": "read",
      "how": ".read_text()",
      "expr": "Path(__file__).resolve().parents[1] / 'memory' / 'body_scan_latest.json'",
-     "line": 119
+     "line": 145
     },
     {
      "kind": "read",
      "how": ".read_text()",
      "expr": "candidate",
-     "line": 150
+     "line": 176
     },
     {
      "kind": "read",
      "how": ".read_text()",
      "expr": "p",
-     "line": 161
+     "line": 187
     },
     {
      "kind": "write",
      "how": "open(mode=a)",
      "expr": "_pf",
-     "line": 426
+     "line": 475
     }
    ],
    "imports": [
+    "core",
     "datetime",
     "hashlib",
     "json",
@@ -2490,7 +2772,7 @@
     "threading",
     "time"
    ],
-   "loc": 365,
+   "loc": 419,
    "on_live_cycle_path": true,
    "imported_by": [
     "agents/actions/hypercortex_actions_agent.py",
@@ -2526,6 +2808,7 @@
     "predictor.py",
     "reasoning_extractor.py",
     "test/test_llm_json.py",
+    "test/test_reasoning_budget.py",
     "test_llm.py",
     "web_intelligence_agent.py"
    ]
@@ -2555,6 +2838,88 @@
    "on_live_cycle_path": true,
    "imported_by": [
     "agents/cortex_strategist/cortex_strategist_agent.py",
+    "fast_cycle_runner.py"
+   ]
+  },
+  {
+   "module": "core/interval_head.py",
+   "reads": [
+    "memory/embeddings_cache.json"
+   ],
+   "writes": [
+    "memory/embeddings_cache.json",
+    "memory/interval_head_curve.json",
+    "memory/interval_head_runs.jsonl"
+   ],
+   "unresolved": [],
+   "imports": [
+    "__future__",
+    "core",
+    "datetime",
+    "hashlib",
+    "json",
+    "math",
+    "numpy",
+    "pathlib",
+    "requests",
+    "sys"
+   ],
+   "loc": 498,
+   "on_live_cycle_path": false,
+   "imported_by": []
+  },
+  {
+   "module": "core/level_reconciler.py",
+   "reads": [],
+   "writes": [],
+   "unresolved": [
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "config_path or CONFIG",
+     "line": 118
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "goal_path or GOAL_SCORE",
+     "line": 133
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "levels_path or LEVELS",
+     "line": 147
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "path",
+     "line": 209
+    },
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "path",
+     "line": 225
+    },
+    {
+     "kind": "write",
+     "how": "open(mode=a)",
+     "expr": "cpath",
+     "line": 233
+    }
+   ],
+   "imports": [
+    "__future__",
+    "datetime",
+    "json",
+    "pathlib",
+    "sys"
+   ],
+   "loc": 233,
+   "on_live_cycle_path": true,
+   "imported_by": [
     "fast_cycle_runner.py"
    ]
   },
@@ -2608,6 +2973,31 @@
    ]
   },
   {
+   "module": "core/measurement_honesty.py",
+   "reads": [
+    "config/target_config.json",
+    "memory/goal_score_history.json"
+   ],
+   "writes": [
+    "memory/measurement_honesty_latest.json"
+   ],
+   "unresolved": [],
+   "imports": [
+    "__future__",
+    "dataclasses",
+    "datetime",
+    "json",
+    "pathlib"
+   ],
+   "loc": 244,
+   "on_live_cycle_path": true,
+   "imported_by": [
+    "core/training_log.py",
+    "test/test_measurement_honesty.py",
+    "test/test_training_record.py"
+   ]
+  },
+  {
    "module": "core/metta_check.py",
    "reads": [
     "memory/heartbeat.json"
@@ -2646,6 +3036,102 @@
    ]
   },
   {
+   "module": "core/metta_parallel.py",
+   "reads": [
+    "memory/metta_assessment_latest.json"
+   ],
+   "writes": [],
+   "unresolved": [
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "feeds_path or FEEDS",
+     "line": 97
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "goal_path or GOAL_SCORE",
+     "line": 101
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "levels_path or AUTO_LEVELS",
+     "line": 105
+    },
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "path",
+     "line": 396
+    }
+   ],
+   "imports": [
+    "__future__",
+    "datetime",
+    "json",
+    "pathlib",
+    "subprocess",
+    "sys",
+    "time"
+   ],
+   "loc": 368,
+   "on_live_cycle_path": true,
+   "imported_by": [
+    "core/phase_report.py",
+    "fast_cycle_runner.py",
+    "hyperon_bridge.py"
+   ]
+  },
+  {
+   "module": "core/needs_auth.py",
+   "reads": [],
+   "writes": [],
+   "unresolved": [
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "path",
+     "line": 67
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "registry_path or REGISTRY",
+     "line": 82
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "path or STAMP",
+     "line": 159
+    },
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "p",
+     "line": 168
+    }
+   ],
+   "imports": [
+    "__future__",
+    "datetime",
+    "json",
+    "os",
+    "pathlib",
+    "re",
+    "supervisor",
+    "sys",
+    "tempfile"
+   ],
+   "loc": 236,
+   "on_live_cycle_path": true,
+   "imported_by": [
+    "fast_cycle_runner.py"
+   ]
+  },
+  {
    "module": "core/notary.py",
    "reads": [
     "attestation/attest.jsonl",
@@ -2661,12 +3147,13 @@
      "kind": "write",
      "how": ".write_text()",
      "expr": "tmp",
-     "line": 290
+     "line": 436
     }
    ],
    "imports": [
     "__future__",
     "core",
+    "core.declared_inputs",
     "core.metta_check",
     "datetime",
     "experiments.needs.approve_reader",
@@ -2676,12 +3163,254 @@
     "pathlib",
     "sys"
    ],
-   "loc": 281,
+   "loc": 388,
    "on_live_cycle_path": true,
    "imported_by": [
     "fast_cycle_runner.py",
     "memory/heartbeat.py",
     "supervisor.py"
+   ]
+  },
+  {
+   "module": "core/orchestrator_grounded.py",
+   "reads": [],
+   "writes": [],
+   "unresolved": [
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "path or FEEDS",
+     "line": 91
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "path or GOAL_SCORE",
+     "line": 99
+    },
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "path",
+     "line": 209
+    }
+   ],
+   "imports": [
+    "__future__",
+    "datetime",
+    "json",
+    "pathlib",
+    "sys",
+    "tempfile"
+   ],
+   "loc": 219,
+   "on_live_cycle_path": true,
+   "imported_by": [
+    "fast_cycle_runner.py",
+    "test/test_orchestrator_grounded.py"
+   ]
+  },
+  {
+   "module": "core/phase_debrief.py",
+   "reads": [],
+   "writes": [],
+   "unresolved": [
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "d / name",
+     "line": 373
+    }
+   ],
+   "imports": [
+    "__future__",
+    "core.brain",
+    "core.phase_report",
+    "core.self_experiment",
+    "datetime",
+    "inspect",
+    "json",
+    "pathlib",
+    "re",
+    "sys",
+    "tempfile",
+    "time"
+   ],
+   "loc": 298,
+   "on_live_cycle_path": true,
+   "imported_by": [
+    "core/phase_tracker.py",
+    "test/test_phase_debrief.py"
+   ]
+  },
+  {
+   "module": "core/phase_report.py",
+   "reads": [],
+   "writes": [],
+   "unresolved": [
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "path or PHASES_FILE",
+     "line": 86
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "path",
+     "line": 96
+    },
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "out",
+     "line": 264
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "rep.path()",
+     "line": 294
+    },
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "target",
+     "line": 303
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "rep2.path()",
+     "line": 305
+    }
+   ],
+   "imports": [
+    "__future__",
+    "core.metta_parallel",
+    "datetime",
+    "json",
+    "pathlib",
+    "re",
+    "sys",
+    "tempfile"
+   ],
+   "loc": 230,
+   "on_live_cycle_path": true,
+   "imported_by": [
+    "core/phase_debrief.py",
+    "core/phase_resume.py",
+    "core/phase_tracker.py",
+    "core/self_mirror.py",
+    "test/test_metta_parallel.py",
+    "test/test_phase_report.py",
+    "test/test_phase_resume.py"
+   ]
+  },
+  {
+   "module": "core/phase_resume.py",
+   "reads": [],
+   "writes": [],
+   "unresolved": [
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "path",
+     "line": 87
+    },
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "p",
+     "line": 181
+    }
+   ],
+   "imports": [
+    "__future__",
+    "core.phase_report",
+    "datetime",
+    "json",
+    "pathlib",
+    "sys",
+    "tempfile"
+   ],
+   "loc": 148,
+   "on_live_cycle_path": true,
+   "imported_by": [
+    "fast_cycle_runner.py",
+    "test/test_phase_resume.py"
+   ]
+  },
+  {
+   "module": "core/phase_tracker.py",
+   "reads": [
+    "config/cycle_phases.json",
+    "memory/cycle.lock",
+    "snapshots/master/goal_score_latest.json"
+   ],
+   "writes": [],
+   "unresolved": [],
+   "imports": [
+    "__future__",
+    "core.phase_debrief",
+    "core.phase_report",
+    "datetime",
+    "json",
+    "pathlib",
+    "supervisor",
+    "sys"
+   ],
+   "loc": 150,
+   "on_live_cycle_path": true,
+   "imported_by": [
+    "fast_cycle_runner.py",
+    "memory/heartbeat.py"
+   ]
+  },
+  {
+   "module": "core/proposal_sla.py",
+   "reads": [],
+   "writes": [],
+   "unresolved": [
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "path or IMPROVEMENTS",
+     "line": 85
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "path or THRESHOLDS",
+     "line": 141
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "path or STAMP",
+     "line": 203
+    },
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "p",
+     "line": 212
+    }
+   ],
+   "imports": [
+    "__future__",
+    "datetime",
+    "json",
+    "pathlib",
+    "re",
+    "supervisor",
+    "sys"
+   ],
+   "loc": 246,
+   "on_live_cycle_path": true,
+   "imported_by": [
+    "core/cycle_report.py",
+    "fast_cycle_runner.py"
    ]
   },
   {
@@ -2914,10 +3643,114 @@
     "time"
    ],
    "loc": 493,
-   "on_live_cycle_path": false,
+   "on_live_cycle_path": true,
    "imported_by": [
     "scripts/test_local_brain.py",
     "supervisor.py"
+   ]
+  },
+  {
+   "module": "core/self_experiment.py",
+   "reads": [],
+   "writes": [],
+   "unresolved": [
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "path",
+     "line": 128
+    },
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "path",
+     "line": 135
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "path",
+     "line": 243
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "path",
+     "line": 643
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "path",
+     "line": 656
+    }
+   ],
+   "imports": [
+    "__future__",
+    "copy",
+    "datetime",
+    "json",
+    "pathlib",
+    "safety.protected_paths",
+    "sys",
+    "tempfile"
+   ],
+   "loc": 653,
+   "on_live_cycle_path": true,
+   "imported_by": [
+    "core/phase_debrief.py",
+    "fast_cycle_runner.py",
+    "test/test_phase_debrief_retry.py"
+   ]
+  },
+  {
+   "module": "core/self_mirror.py",
+   "reads": [
+    "memory/last_cycle_id.txt"
+   ],
+   "writes": [],
+   "unresolved": [
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "path",
+     "line": 86
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "path",
+     "line": 93
+    },
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "p",
+     "line": 432
+    },
+    {
+     "kind": "write",
+     "how": "open(mode=a)",
+     "expr": "p",
+     "line": 440
+    }
+   ],
+   "imports": [
+    "__future__",
+    "core",
+    "core.phase_report",
+    "datetime",
+    "json",
+    "pathlib",
+    "prophecy_ledger",
+    "sys"
+   ],
+   "loc": 491,
+   "on_live_cycle_path": true,
+   "imported_by": [
+    "core/cycle_report.py",
+    "fast_cycle_runner.py",
+    "scripts/micro_cycle.py"
    ]
   },
   {
@@ -2951,6 +3784,52 @@
    "on_live_cycle_path": true,
    "imported_by": [
     "fast_cycle_runner.py"
+   ]
+  },
+  {
+   "module": "core/source_lifecycle.py",
+   "reads": [],
+   "writes": [],
+   "unresolved": [
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "path or STATE",
+     "line": 94
+    },
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "p",
+     "line": 102
+    },
+    {
+     "kind": "write",
+     "how": "open(mode=a)",
+     "expr": "p",
+     "line": 112
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "led",
+     "line": 288
+    }
+   ],
+   "imports": [
+    "__future__",
+    "datetime",
+    "json",
+    "math",
+    "pathlib",
+    "statistics",
+    "sys",
+    "tempfile"
+   ],
+   "loc": 223,
+   "on_live_cycle_path": false,
+   "imported_by": [
+    "test/test_openclaw_axis_worker.py"
    ]
   },
   {
@@ -3057,6 +3936,119 @@
     "sys"
    ],
    "loc": 544,
+   "on_live_cycle_path": true,
+   "imported_by": [
+    "fast_cycle_runner.py"
+   ]
+  },
+  {
+   "module": "core/step_contract.py",
+   "reads": [],
+   "writes": [],
+   "unresolved": [
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "path or BASELINE",
+     "line": 107
+    },
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "p",
+     "line": 115
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "callmap_path or CALLMAP",
+     "line": 182
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "path",
+     "line": 293
+    },
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "path",
+     "line": 300
+    },
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "root / 'memory' / 'out.json'",
+     "line": 325
+    },
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "root / 'memory' / 'out.json'",
+     "line": 329
+    }
+   ],
+   "imports": [
+    "__future__",
+    "datetime",
+    "json",
+    "pathlib",
+    "statistics",
+    "sys",
+    "tempfile",
+    "threading",
+    "time"
+   ],
+   "loc": 266,
+   "on_live_cycle_path": true,
+   "imported_by": [
+    "fast_cycle_runner.py",
+    "scripts/micro_cycle.py"
+   ]
+  },
+  {
+   "module": "core/training_log.py",
+   "reads": [
+    "config/scheduler.json"
+   ],
+   "writes": [],
+   "unresolved": [
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "path",
+     "line": 73
+    },
+    {
+     "kind": "write",
+     "how": "open(mode=a)",
+     "expr": "p",
+     "line": 151
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "baseline or CONTRACT_BASELINE",
+     "line": 209
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "path",
+     "line": 277
+    }
+   ],
+   "imports": [
+    "__future__",
+    "core.measurement_honesty",
+    "datetime",
+    "json",
+    "pathlib",
+    "sys",
+    "tempfile"
+   ],
+   "loc": 330,
    "on_live_cycle_path": true,
    "imported_by": [
     "fast_cycle_runner.py"
@@ -3174,46 +4166,27 @@
      "kind": "read",
      "how": ".read_text()",
      "expr": "path",
-     "line": 28
+     "line": 31
     },
     {
      "kind": "write",
      "how": ".write_text()",
      "expr": "path",
-     "line": 35
+     "line": 38
     }
    ],
    "imports": [
     "datetime",
     "flask",
+    "html",
     "json",
     "pathlib"
    ],
-   "loc": 167,
+   "loc": 264,
    "on_live_cycle_path": false,
-   "imported_by": []
-  },
-  {
-   "module": "cortex_dashboard_generator.py",
-   "reads": [
-    "memory/improvement_proposals.json",
-    "output/cortex_scores_latest.json"
-   ],
-   "writes": [
-    "output/cortex_dashboard_live.html"
-   ],
-   "unresolved": [],
-   "imports": [
-    "__future__",
-    "datetime",
-    "json",
-    "pathlib",
-    "subprocess",
-    "sys"
-   ],
-   "loc": 274,
-   "on_live_cycle_path": false,
-   "imported_by": []
+   "imported_by": [
+    "test/test_dashboard_freshness.py"
+   ]
   },
   {
    "module": "cortex_planning_agent.py",
@@ -5235,22 +6208,28 @@
      "line": 322
     },
     {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "CHANNEL_STATE",
+     "line": 359
+    },
+    {
      "kind": "write",
      "how": ".write_text()",
      "expr": "CHANNEL_STATE",
-     "line": 345
+     "line": 367
     },
     {
      "kind": "read",
      "how": ".read_text()",
      "expr": "CHANNEL_STATE",
-     "line": 355
+     "line": 384
     },
     {
      "kind": "write",
      "how": ".write_text()",
      "expr": "OFFSET",
-     "line": 487
+     "line": 543
     }
    ],
    "imports": [
@@ -5265,7 +6244,7 @@
     "requests",
     "sys"
    ],
-   "loc": 390,
+   "loc": 438,
    "on_live_cycle_path": true,
    "imported_by": [
     "core/notary.py",
@@ -6091,89 +7070,90 @@
      "kind": "read",
      "how": ".read_text()",
      "expr": "f",
-     "line": 87
+     "line": 110
     },
     {
      "kind": "write",
      "how": ".write_text()",
      "expr": "_tmp",
-     "line": 255
+     "line": 278
     },
     {
      "kind": "write",
      "how": ".write_text()",
      "expr": "out_path",
-     "line": 373
+     "line": 396
     },
     {
      "kind": "read",
      "how": ".read_text()",
      "expr": "json_file",
-     "line": 577
+     "line": 622
     },
     {
      "kind": "read",
      "how": ".read_text()",
      "expr": "env_path",
-     "line": 609
+     "line": 654
     },
     {
      "kind": "read",
      "how": ".read_text()",
      "expr": "plan_files[0]",
-     "line": 816
+     "line": 861
     },
     {
      "kind": "read",
      "how": ".read_text()",
      "expr": "path",
-     "line": 899
+     "line": 944
     },
     {
      "kind": "read",
      "how": ".read_text()",
      "expr": "path",
-     "line": 954
+     "line": 999
     },
     {
      "kind": "read",
      "how": ".read_text()",
      "expr": "old_p",
-     "line": 976
+     "line": 1021
     },
     {
      "kind": "write",
      "how": ".write_text()",
      "expr": "old_p",
-     "line": 979
+     "line": 1024
     },
     {
      "kind": "read",
      "how": ".read_text()",
      "expr": "patch",
-     "line": 1039
+     "line": 1084
     },
     {
      "kind": "write",
      "how": "open(mode=a)",
      "expr": "_B / 'memory' / 'night_events.jsonl'",
-     "line": 1096
+     "line": 1141
     },
     {
      "kind": "write",
      "how": "open(mode=a)",
      "expr": "_B / 'memory' / 'night_events.jsonl'",
-     "line": 1118
+     "line": 1163
     },
     {
      "kind": "write",
      "how": ".write_text()",
      "expr": "_dir / f'CYCLE_REPORT_{_day}.md'",
-     "line": 2088
+     "line": 2260
     }
    ],
    "imports": [
     "__future__",
+    "agents.axis.axis_feed",
     "agents.body.body_scanner",
     "agents.body.growth_planner",
     "agents.civilization.civilization_snapshots_agent_qwen",
@@ -6193,7 +7173,9 @@
     "asyncio",
     "contextlib",
     "core",
+    "core.alarm_bands",
     "core.brain",
+    "core.brain_relay",
     "core.canon",
     "core.constancy",
     "core.cortex_orchestrator",
@@ -6204,13 +7186,24 @@
     "core.global_indicators",
     "core.groq_backend",
     "core.homeostasis",
+    "core.level_reconciler",
     "core.metta_check",
+    "core.metta_parallel",
+    "core.needs_auth",
     "core.notary",
+    "core.orchestrator_grounded",
+    "core.phase_resume",
+    "core.phase_tracker",
+    "core.proposal_sla",
     "core.provenance",
     "core.reconsider",
     "core.scorer_self_check",
+    "core.self_experiment",
+    "core.self_mirror",
     "core.session_updater",
     "core.source_trust",
+    "core.step_contract",
+    "core.training_log",
     "cortex_scoring_engine",
     "datetime",
     "ddgs",
@@ -6223,6 +7216,7 @@
     "experiments.needs.approve_reader",
     "experiments.needs.needs_report",
     "experiments.sensorium.sensorium",
+    "faulthandler",
     "gc",
     "github_publisher",
     "goal_score_calculator",
@@ -6250,7 +7244,7 @@
     "traceback",
     "web_intelligence_agent"
    ],
-   "loc": 1631,
+   "loc": 1756,
    "on_live_cycle_path": true,
    "imported_by": [
     "test/test_cycle_seals_its_own_completion.py"
@@ -6276,7 +7270,7 @@
      "kind": "read",
      "how": ".read_text()",
      "expr": "json_file",
-     "line": 196
+     "line": 216
     }
    ],
    "imports": [
@@ -6287,10 +7281,12 @@
     "pathlib",
     "requests"
    ],
-   "loc": 246,
+   "loc": 324,
    "on_live_cycle_path": true,
    "imported_by": [
-    "fast_cycle_runner.py"
+    "fast_cycle_runner.py",
+    "test/test_daily_index_reads_the_analysis.py",
+    "test/test_published_predictions_expire.py"
    ]
   },
   {
@@ -6324,7 +7320,8 @@
     "agents/core/feedback_loop.py",
     "core/reconsider.py",
     "experiments/prophecy/goal_prophecy.py",
-    "fast_cycle_runner.py"
+    "fast_cycle_runner.py",
+    "test/test_axis_tree_contract.py"
    ]
   },
   {
@@ -6376,9 +7373,11 @@
    "writes": [],
    "unresolved": [],
    "imports": [
-    "hyperon"
+    "core.metta_parallel",
+    "json",
+    "sys"
    ],
-   "loc": 11,
+   "loc": 36,
    "on_live_cycle_path": false,
    "imported_by": []
   },
@@ -6432,55 +7431,55 @@
      "kind": "write",
      "how": ".write_text()",
      "expr": "f",
-     "line": 358
+     "line": 365
     },
     {
      "kind": "read",
      "how": ".read_text()",
      "expr": "f",
-     "line": 372
+     "line": 379
     },
     {
      "kind": "write",
      "how": ".write_text()",
      "expr": "f",
-     "line": 385
+     "line": 392
     },
     {
      "kind": "read",
      "how": ".read_text()",
      "expr": "init_path",
-     "line": 403
+     "line": 410
     },
     {
      "kind": "write",
      "how": ".write_text()",
      "expr": "init_path",
-     "line": 427
+     "line": 434
     },
     {
      "kind": "read",
      "how": ".read_text()",
      "expr": "init_path",
-     "line": 468
+     "line": 475
     },
     {
      "kind": "write",
      "how": ".write_text()",
      "expr": "init_path",
-     "line": 518
+     "line": 525
     },
     {
      "kind": "read",
      "how": ".read_text()",
      "expr": "f",
-     "line": 539
+     "line": 546
     },
     {
      "kind": "read",
      "how": ".read_text()",
      "expr": "f",
-     "line": 557
+     "line": 564
     }
    ],
    "imports": [
@@ -6497,10 +7496,11 @@
     "sys",
     "time"
    ],
-   "loc": 511,
+   "loc": 512,
    "on_live_cycle_path": true,
    "imported_by": [
-    "fast_cycle_runner.py"
+    "fast_cycle_runner.py",
+    "test/test_initiative_measurable_flag.py"
    ]
   },
   {
@@ -6691,12 +7691,17 @@
    "unresolved": [],
    "imports": [],
    "loc": 0,
-   "on_live_cycle_path": false,
+   "on_live_cycle_path": true,
    "imported_by": [
+    "agents/core/self_observer.py",
+    "memory/cycle_reaper.py",
+    "memory/proposal_archive.py",
     "supervisor.py",
+    "test/test_cycle_reaper.py",
     "test/test_cycle_seals_its_own_completion.py",
     "test/test_existence_ledger.py",
     "test/test_heartbeat_coverage.py",
+    "test/test_proposal_archive.py",
     "test/test_pulse_cycle_sense.py",
     "test/test_supervisor.py"
    ]
@@ -6905,6 +7910,58 @@
    ]
   },
   {
+   "module": "memory/cycle_reaper.py",
+   "reads": [
+    "supervisor.py"
+   ],
+   "writes": [],
+   "unresolved": [
+    {
+     "kind": "write",
+     "how": "open(mode=a)",
+     "expr": "night_log",
+     "line": 260
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "exit_record",
+     "line": 300
+    },
+    {
+     "kind": "write",
+     "how": "os.replace()",
+     "expr": "path",
+     "line": 331
+    },
+    {
+     "kind": "write",
+     "how": "open(mode=a)",
+     "expr": "night_log",
+     "line": 436
+    }
+   ],
+   "imports": [
+    "__future__",
+    "argparse",
+    "atexit",
+    "ctypes",
+    "datetime",
+    "json",
+    "memory",
+    "os",
+    "pathlib",
+    "shutil",
+    "subprocess",
+    "sys",
+    "tempfile",
+    "time"
+   ],
+   "loc": 438,
+   "on_live_cycle_path": false,
+   "imported_by": []
+  },
+  {
    "module": "memory/existence_ledger.py",
    "reads": [
     "memory/existence_ledger.jsonl"
@@ -6988,12 +8045,21 @@
    "writes": [
     "memory/heartbeat.json"
    ],
-   "unresolved": [],
+   "unresolved": [
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "logs[0]",
+     "line": 78
+    }
+   ],
    "imports": [
     "__future__",
+    "core.backend_policy",
     "core.brain",
     "core.metta_check",
     "core.notary",
+    "core.phase_tracker",
     "datetime",
     "json",
     "os",
@@ -7001,10 +8067,13 @@
     "tempfile",
     "typing"
    ],
-   "loc": 163,
+   "loc": 198,
    "on_live_cycle_path": true,
    "imported_by": [
-    "fast_cycle_runner.py"
+    "core/brain.py",
+    "fast_cycle_runner.py",
+    "test/test_backend_policy.py",
+    "test/test_prev_step_is_not_the_current_step.py"
    ]
   },
   {
@@ -7028,6 +8097,72 @@
     "test/test_axis_prediction_sealing.py",
     "test/test_f1_self_grading_retired.py"
    ]
+  },
+  {
+   "module": "memory/proposal_archive.py",
+   "reads": [
+    "agents/core/self_observer.py"
+   ],
+   "writes": [],
+   "unresolved": [
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "readme",
+     "line": 246
+    },
+    {
+     "kind": "write",
+     "how": "open(mode=a)",
+     "expr": "path",
+     "line": 250
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "f",
+     "line": 270
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "live_path",
+     "line": 294
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "july",
+     "line": 331
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "july",
+     "line": 340
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "july",
+     "line": 342
+    }
+   ],
+   "imports": [
+    "__future__",
+    "datetime",
+    "hashlib",
+    "json",
+    "memory",
+    "os",
+    "pathlib",
+    "shutil",
+    "sys",
+    "tempfile"
+   ],
+   "loc": 314,
+   "on_live_cycle_path": false,
+   "imported_by": []
   },
   {
    "module": "memory/runtime_telemetry.py",
@@ -7629,6 +8764,7 @@
     "execute_patches.py",
     "scripts/review_quarantine.py",
     "test/test_ast_gate.py",
+    "test/test_declared_step_inputs.py",
     "test/test_protected_paths.py"
    ]
   },
@@ -7644,13 +8780,16 @@
     "sys",
     "typing"
    ],
-   "loc": 117,
+   "loc": 118,
    "on_live_cycle_path": true,
    "imported_by": [
+    "core/declared_inputs.py",
+    "core/self_experiment.py",
     "patch_guardian.py",
     "safety/ast_gate.py",
     "scripts/triage_quarantine.py",
     "test/test_canon_boundaries.py",
+    "test/test_declared_step_inputs.py",
     "test/test_existence_ledger.py",
     "test/test_protected_paths.py",
     "test/test_quarantine_triage.py",
@@ -7730,6 +8869,64 @@
    ]
   },
   {
+   "module": "scripts/__init__.py",
+   "reads": [],
+   "writes": [],
+   "unresolved": [],
+   "imports": [],
+   "loc": 0,
+   "on_live_cycle_path": false,
+   "imported_by": []
+  },
+  {
+   "module": "scripts/_cuda_churn_probe.py",
+   "reads": [],
+   "writes": [],
+   "unresolved": [
+    {
+     "kind": "write",
+     "how": "open(mode=a)",
+     "expr": "a.out",
+     "line": 163
+    }
+   ],
+   "imports": [
+    "__future__",
+    "argparse",
+    "datetime",
+    "json",
+    "os",
+    "pathlib",
+    "requests",
+    "subprocess",
+    "sys",
+    "tempfile",
+    "time"
+   ],
+   "loc": 153,
+   "on_live_cycle_path": false,
+   "imported_by": []
+  },
+  {
+   "module": "scripts/_probe_models.py",
+   "reads": [
+    ".env",
+    "core/groq_backend.py"
+   ],
+   "writes": [],
+   "unresolved": [],
+   "imports": [
+    "__future__",
+    "pathlib",
+    "re",
+    "requests",
+    "sys"
+   ],
+   "loc": 128,
+   "on_live_cycle_path": false,
+   "imported_by": []
+  },
+  {
    "module": "scripts/audit_placeholders.py",
    "reads": [
     "snapshots/master/master_snapshot_latest.json"
@@ -7749,6 +8946,35 @@
     "pathlib"
    ],
    "loc": 69,
+   "on_live_cycle_path": false,
+   "imported_by": []
+  },
+  {
+   "module": "scripts/build_module_map.py",
+   "reads": [],
+   "writes": [
+    "docs/MODULE_MAP.json",
+    "docs/MODULE_MAP.md"
+   ],
+   "unresolved": [
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "REPO / rel",
+     "line": 52
+    }
+   ],
+   "imports": [
+    "__future__",
+    "ast",
+    "core.cycle_map",
+    "json",
+    "pathlib",
+    "re",
+    "subprocess",
+    "sys"
+   ],
+   "loc": 346,
    "on_live_cycle_path": false,
    "imported_by": []
   },
@@ -7848,6 +9074,230 @@
     "urllib.parse"
    ],
    "loc": 92,
+   "on_live_cycle_path": false,
+   "imported_by": []
+  },
+  {
+   "module": "scripts/micro_cycle.py",
+   "reads": [],
+   "writes": [
+    "memory/micro_cycle_latest.json",
+    "memory/micro_cycle_log.jsonl"
+   ],
+   "unresolved": [
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "path",
+     "line": 84
+    }
+   ],
+   "imports": [
+    "__future__",
+    "agents.axis",
+    "agents.body.body_scanner",
+    "core",
+    "core.self_mirror",
+    "core.step_contract",
+    "datetime",
+    "importlib.util",
+    "json",
+    "os",
+    "pathlib",
+    "prophecy",
+    "supervisor",
+    "sys",
+    "time"
+   ],
+   "loc": 343,
+   "on_live_cycle_path": false,
+   "imported_by": []
+  },
+  {
+   "module": "scripts/migrate_axis_tree_to_subgoals.py",
+   "reads": [],
+   "writes": [
+    "config/target_config.json"
+   ],
+   "unresolved": [
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "path",
+     "line": 122
+    },
+    {
+     "kind": "write",
+     "how": "shutil.copy2()",
+     "expr": "CFG.with_suffix('.json.bak')",
+     "line": 254
+    }
+   ],
+   "imports": [
+    "__future__",
+    "argparse",
+    "collections",
+    "json",
+    "pathlib",
+    "shutil",
+    "sys"
+   ],
+   "loc": 218,
+   "on_live_cycle_path": false,
+   "imported_by": []
+  },
+  {
+   "module": "scripts/migrate_pin_score_meaning.py",
+   "reads": [
+    "config/target_config.json",
+    "snapshots/master/goal_score_latest.json"
+   ],
+   "writes": [
+    "config/target_config.json"
+   ],
+   "unresolved": [],
+   "imports": [
+    "__future__",
+    "json",
+    "pathlib",
+    "sys"
+   ],
+   "loc": 115,
+   "on_live_cycle_path": false,
+   "imported_by": []
+  },
+  {
+   "module": "scripts/morning_check.py",
+   "reads": [],
+   "writes": [],
+   "unresolved": [
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "path",
+     "line": 80
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "p",
+     "line": 198
+    }
+   ],
+   "imports": [
+    "__future__",
+    "datetime",
+    "json",
+    "pathlib",
+    "sys"
+   ],
+   "loc": 209,
+   "on_live_cycle_path": false,
+   "imported_by": []
+  },
+  {
+   "module": "scripts/openclaw_axis_worker.py",
+   "reads": [],
+   "writes": [],
+   "unresolved": [
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "path or SOURCES",
+     "line": 79
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "path or DISCOVERED",
+     "line": 92
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "path",
+     "line": 277
+    },
+    {
+     "kind": "write",
+     "how": "open(mode=a)",
+     "expr": "q / name",
+     "line": 333
+    }
+   ],
+   "imports": [
+    "__future__",
+    "argparse",
+    "core",
+    "datetime",
+    "hashlib",
+    "json",
+    "math",
+    "pathlib",
+    "requests",
+    "sys",
+    "time"
+   ],
+   "loc": 285,
+   "on_live_cycle_path": false,
+   "imported_by": [
+    "test/test_openclaw_axis_worker.py",
+    "test/test_source_lifecycle.py"
+   ]
+  },
+  {
+   "module": "scripts/propose_alarm_thresholds.py",
+   "reads": [
+    "config/target_config.json"
+   ],
+   "writes": [
+    "memory/threshold_proposals.json"
+   ],
+   "unresolved": [],
+   "imports": [
+    "__future__",
+    "datetime",
+    "json",
+    "pathlib",
+    "re",
+    "sys"
+   ],
+   "loc": 145,
+   "on_live_cycle_path": false,
+   "imported_by": [
+    "test/test_alarm_bands.py"
+   ]
+  },
+  {
+   "module": "scripts/regroup_axis_spec_to_subgoals.py",
+   "reads": [
+    "agi_axes_spec.txt",
+    "civilization_goal.txt",
+    "config/target_config.json",
+    "scripts/_new_axis_defs.txt"
+   ],
+   "writes": [
+    "agi_axes_spec.txt"
+   ],
+   "unresolved": [
+    {
+     "kind": "write",
+     "how": "shutil.copy2()",
+     "expr": "SPEC.with_suffix('.txt.bak')",
+     "line": 170
+    }
+   ],
+   "imports": [
+    "__future__",
+    "argparse",
+    "collections",
+    "json",
+    "pathlib",
+    "re",
+    "shutil",
+    "sys"
+   ],
+   "loc": 150,
    "on_live_cycle_path": false,
    "imported_by": []
   },
@@ -8097,25 +9547,25 @@
      "kind": "write",
      "how": "Path.open(mode=w)",
      "expr": "log_file",
-     "line": 883
+     "line": 957
     },
     {
      "kind": "read",
      "how": ".read_text()",
      "expr": "f",
-     "line": 955
+     "line": 1082
     },
     {
      "kind": "write",
      "how": ".write_text()",
      "expr": "OUTBOX / f\"METTA_SILENT_{rec['ts'][:10]}.md\"",
-     "line": 1042
+     "line": 1169
     },
     {
      "kind": "write",
      "how": ".write_text()",
      "expr": "OUTBOX / f'ATTEST_BROKEN_{datetime.now(timezone.utc).isoformat()[:10]}.md'",
-     "line": 1116
+     "line": 1243
     }
    ],
    "imports": [
@@ -8137,13 +9587,22 @@
     "time",
     "typing"
    ],
-   "loc": 991,
-   "on_live_cycle_path": false,
+   "loc": 1045,
+   "on_live_cycle_path": true,
    "imported_by": [
+    "core/alarm_bands.py",
+    "core/brain_relay.py",
+    "core/needs_auth.py",
+    "core/phase_tracker.py",
+    "core/proposal_sla.py",
+    "scripts/micro_cycle.py",
     "test/test_cycle_log_survives_kill.py",
     "test/test_cycle_logs.py",
+    "test/test_cycle_reaper.py",
     "test/test_escalation_evidence.py",
     "test/test_extraordinary_cycle.py",
+    "test/test_micro_cycle.py",
+    "test/test_phase_telegram.py",
     "test/test_supervisor.py",
     "test/test_trigger_watchdog.py"
    ]
@@ -8217,7 +9676,7 @@
     "shutil",
     "sys"
    ],
-   "loc": 211,
+   "loc": 212,
    "on_live_cycle_path": false,
    "imported_by": []
   },
@@ -8302,6 +9761,41 @@
    "imported_by": []
   },
   {
+   "module": "test/test_alarm_bands.py",
+   "reads": [
+    "config/target_config.json",
+    "fast_cycle_runner.py",
+    "memory/threshold_proposals.json"
+   ],
+   "writes": [],
+   "unresolved": [
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "cp",
+     "line": 42
+    },
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "gp",
+     "line": 44
+    }
+   ],
+   "imports": [
+    "__future__",
+    "core",
+    "inspect",
+    "json",
+    "pathlib",
+    "pytest",
+    "scripts.propose_alarm_thresholds"
+   ],
+   "loc": 187,
+   "on_live_cycle_path": false,
+   "imported_by": []
+  },
+  {
    "module": "test/test_approval_server_is_closed.py",
    "reads": [
     "cortex_approval_server.py"
@@ -8351,6 +9845,74 @@
     "safety.ast_gate"
    ],
    "loc": 80,
+   "on_live_cycle_path": false,
+   "imported_by": []
+  },
+  {
+   "module": "test/test_axis_feed.py",
+   "reads": [
+    "fast_cycle_runner.py"
+   ],
+   "writes": [],
+   "unresolved": [
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "goal",
+     "line": 137
+    },
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "goal",
+     "line": 149
+    },
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "goal",
+     "line": 170
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "log",
+     "line": 179
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "latest",
+     "line": 181
+    },
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "goal",
+     "line": 186
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "q / 'axis_feeds.jsonl'",
+     "line": 191
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "q / 'axis_feeds.jsonl'",
+     "line": 193
+    }
+   ],
+   "imports": [
+    "__future__",
+    "agents.axis.axis_feed",
+    "json",
+    "math",
+    "pathlib",
+    "pytest"
+   ],
+   "loc": 154,
    "on_live_cycle_path": false,
    "imported_by": []
   },
@@ -8442,6 +10004,103 @@
     "sys"
    ],
    "loc": 81,
+   "on_live_cycle_path": false,
+   "imported_by": []
+  },
+  {
+   "module": "test/test_axis_tree_contract.py",
+   "reads": [
+    "agi_axes_spec.txt",
+    "civilization_goal.txt",
+    "config/series_breaks.json",
+    "config/target_config.json",
+    "test/fixtures/target_config_pre_subgoals.json"
+   ],
+   "writes": [],
+   "unresolved": [],
+   "imports": [
+    "__future__",
+    "goal_score_calculator",
+    "json",
+    "pathlib",
+    "pytest",
+    "re"
+   ],
+   "loc": 229,
+   "on_live_cycle_path": false,
+   "imported_by": []
+  },
+  {
+   "module": "test/test_backend_policy.py",
+   "reads": [],
+   "writes": [],
+   "unresolved": [
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "__import__('pathlib').Path(hb.__file__)",
+     "line": 144
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "pathlib.Path(__file__).resolve().parents[1] / 'core' / 'groq_backend.py'",
+     "line": 252
+    }
+   ],
+   "imports": [
+    "__future__",
+    "core",
+    "memory.heartbeat",
+    "pathlib",
+    "pytest",
+    "time"
+   ],
+   "loc": 185,
+   "on_live_cycle_path": false,
+   "imported_by": []
+  },
+  {
+   "module": "test/test_brain_relay.py",
+   "reads": [
+    "core/brain.py"
+   ],
+   "writes": [],
+   "unresolved": [
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "p",
+     "line": 59
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "tmp_path / 'cursor.json'",
+     "line": 163
+    },
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "cursor",
+     "line": 199
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "cursor",
+     "line": 266
+    }
+   ],
+   "imports": [
+    "__future__",
+    "core",
+    "inspect",
+    "json",
+    "pathlib",
+    "pytest"
+   ],
+   "loc": 212,
    "on_live_cycle_path": false,
    "imported_by": []
   },
@@ -8617,6 +10276,32 @@
    "imported_by": []
   },
   {
+   "module": "test/test_continents.py",
+   "reads": [
+    "output/wellbeing_continent.json"
+   ],
+   "writes": [],
+   "unresolved": [
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "bad",
+     "line": 173
+    }
+   ],
+   "imports": [
+    "__future__",
+    "core",
+    "core.cycle_report",
+    "json",
+    "pathlib",
+    "pytest"
+   ],
+   "loc": 130,
+   "on_live_cycle_path": false,
+   "imported_by": []
+  },
+  {
    "module": "test/test_cortex_query.py",
    "reads": [
     "core/data_scout.py",
@@ -8707,6 +10392,63 @@
    "imported_by": []
   },
   {
+   "module": "test/test_crash_leaves_a_trace.py",
+   "reads": [
+    "fast_cycle_runner.py",
+    "supervisor.py"
+   ],
+   "writes": [],
+   "unresolved": [
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "script",
+     "line": 64
+    },
+    {
+     "kind": "write",
+     "how": "Path.open(mode=w)",
+     "expr": "log",
+     "line": 66
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "log",
+     "line": 85
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "log",
+     "line": 111
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "log",
+     "line": 158
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "log",
+     "line": 178
+    }
+   ],
+   "imports": [
+    "__future__",
+    "os",
+    "pathlib",
+    "pytest",
+    "subprocess",
+    "sys"
+   ],
+   "loc": 141,
+   "on_live_cycle_path": false,
+   "imported_by": []
+  },
+  {
    "module": "test/test_cycle_log_survives_kill.py",
    "reads": [],
    "writes": [],
@@ -8721,19 +10463,19 @@
      "kind": "read",
      "how": ".read_text()",
      "expr": "log_file",
-     "line": 68
+     "line": 71
     },
     {
      "kind": "read",
      "how": ".read_text()",
      "expr": "log_file",
-     "line": 83
+     "line": 86
     },
     {
      "kind": "read",
      "how": "open(mode=r)",
      "expr": "sup.__file__",
-     "line": 94
+     "line": 97
     }
    ],
    "imports": [
@@ -8742,7 +10484,7 @@
     "supervisor",
     "time"
    ],
-   "loc": 83,
+   "loc": 85,
    "on_live_cycle_path": false,
    "imported_by": []
   },
@@ -8755,43 +10497,43 @@
      "kind": "write",
      "how": ".write_text()",
      "expr": "child",
-     "line": 50
+     "line": 57
     },
     {
      "kind": "read",
      "how": ".read_text()",
      "expr": "logs[0]",
-     "line": 66
+     "line": 73
     },
     {
      "kind": "read",
      "how": ".read_text()",
      "expr": "logs[0]",
-     "line": 74
+     "line": 81
     },
     {
      "kind": "write",
      "how": ".write_text()",
      "expr": "child",
-     "line": 91
+     "line": 98
     },
     {
      "kind": "write",
      "how": ".write_text()",
      "expr": "log_dir / f'cycle_2026-06-{d:02d}_030000.log'",
-     "line": 116
+     "line": 123
     },
     {
      "kind": "write",
      "how": ".write_text()",
      "expr": "log_dir / 'cycle_2026-07-14_030000.log'",
-     "line": 129
+     "line": 136
     },
     {
      "kind": "write",
      "how": ".write_text()",
      "expr": "child",
-     "line": 147
+     "line": 154
     }
    ],
    "imports": [
@@ -8803,7 +10545,72 @@
     "sys",
     "time"
    ],
-   "loc": 125,
+   "loc": 127,
+   "on_live_cycle_path": false,
+   "imported_by": []
+  },
+  {
+   "module": "test/test_cycle_phases_cover_every_step.py",
+   "reads": [
+    "config/cycle_phases.json",
+    "fast_cycle_runner.py"
+   ],
+   "writes": [],
+   "unresolved": [],
+   "imports": [
+    "__future__",
+    "collections",
+    "json",
+    "pathlib",
+    "pytest",
+    "re"
+   ],
+   "loc": 147,
+   "on_live_cycle_path": false,
+   "imported_by": []
+  },
+  {
+   "module": "test/test_cycle_reaper.py",
+   "reads": [],
+   "writes": [],
+   "unresolved": [
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "path",
+     "line": 87
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "sandbox / 'cycle_exit.json'",
+     "line": 108
+    },
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "runner",
+     "line": 312
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "record",
+     "line": 329
+    }
+   ],
+   "imports": [
+    "json",
+    "memory",
+    "os",
+    "pathlib",
+    "pytest",
+    "subprocess",
+    "supervisor",
+    "sys",
+    "time"
+   ],
+   "loc": 264,
    "on_live_cycle_path": false,
    "imported_by": []
   },
@@ -8835,6 +10642,169 @@
     "sys"
    ],
    "loc": 108,
+   "on_live_cycle_path": false,
+   "imported_by": []
+  },
+  {
+   "module": "test/test_daily_index_reads_the_analysis.py",
+   "reads": [
+    "github_publisher.py"
+   ],
+   "writes": [],
+   "unresolved": [
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "f",
+     "line": 69
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "f",
+     "line": 89
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "f",
+     "line": 111
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "f",
+     "line": 131
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "f",
+     "line": 133
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "d / 'master_web_intel.json'",
+     "line": 191
+    }
+   ],
+   "imports": [
+    "github_publisher",
+    "json",
+    "pathlib",
+    "pytest",
+    "sys"
+   ],
+   "loc": 148,
+   "on_live_cycle_path": false,
+   "imported_by": []
+  },
+  {
+   "module": "test/test_dashboard_freshness.py",
+   "reads": [
+    "cortex_approval_server.py"
+   ],
+   "writes": [],
+   "unresolved": [
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "path",
+     "line": 84
+    }
+   ],
+   "imports": [
+    "__future__",
+    "cortex_approval_server",
+    "datetime",
+    "os",
+    "pathlib",
+    "pytest",
+    "re"
+   ],
+   "loc": 187,
+   "on_live_cycle_path": false,
+   "imported_by": []
+  },
+  {
+   "module": "test/test_declared_provenance.py",
+   "reads": [
+    "config/step_inputs.json"
+   ],
+   "writes": [],
+   "unresolved": [],
+   "imports": [
+    "__future__",
+    "core",
+    "core.declared_inputs",
+    "json",
+    "pathlib",
+    "pytest"
+   ],
+   "loc": 132,
+   "on_live_cycle_path": false,
+   "imported_by": []
+  },
+  {
+   "module": "test/test_declared_step_inputs.py",
+   "reads": [
+    "config/step_inputs.json",
+    "docs/MODULE_MAP.json",
+    "github_publisher.py"
+   ],
+   "writes": [],
+   "unresolved": [
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "p / 'fixture.json'",
+     "line": 135
+    },
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "decl",
+     "line": 289
+    },
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "decl",
+     "line": 291
+    },
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "decl",
+     "line": 294
+    },
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "decl",
+     "line": 297
+    },
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "decl",
+     "line": 301
+    }
+   ],
+   "imports": [
+    "__future__",
+    "core.cycle_graph",
+    "core.declared_inputs",
+    "importlib",
+    "importlib.util",
+    "json",
+    "pathlib",
+    "pytest",
+    "safety.ast_gate",
+    "safety.protected_paths"
+   ],
+   "loc": 327,
    "on_live_cycle_path": false,
    "imported_by": []
   },
@@ -9195,6 +11165,23 @@
    "imported_by": []
   },
   {
+   "module": "test/test_feedback_measured_scores.py",
+   "reads": [],
+   "writes": [],
+   "unresolved": [],
+   "imports": [
+    "__future__",
+    "importlib",
+    "pathlib",
+    "pytest",
+    "sys",
+    "types"
+   ],
+   "loc": 102,
+   "on_live_cycle_path": false,
+   "imported_by": []
+  },
+  {
    "module": "test/test_goal_impact_pipeline.py",
    "reads": [],
    "writes": [],
@@ -9292,6 +11279,135 @@
    "imported_by": []
   },
   {
+   "module": "test/test_human_channel_grading.py",
+   "reads": [],
+   "writes": [],
+   "unresolved": [
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "path",
+     "line": 90
+    },
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "corrupt",
+     "line": 127
+    }
+   ],
+   "imports": [
+    "datetime",
+    "experiments.needs",
+    "importlib.util",
+    "json",
+    "pathlib",
+    "pytest",
+    "sys"
+   ],
+   "loc": 187,
+   "on_live_cycle_path": false,
+   "imported_by": []
+  },
+  {
+   "module": "test/test_initiative_measurable_flag.py",
+   "reads": [],
+   "writes": [],
+   "unresolved": [
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "d / f\"{rec['id']}.json\"",
+     "line": 68
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "d / f'{name}.json'",
+     "line": 75
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "f",
+     "line": 123
+    }
+   ],
+   "imports": [
+    "initiative_tracker",
+    "json",
+    "pathlib",
+    "pytest",
+    "sys"
+   ],
+   "loc": 111,
+   "on_live_cycle_path": false,
+   "imported_by": []
+  },
+  {
+   "module": "test/test_level_reconciler.py",
+   "reads": [
+    "config/series_breaks.json",
+    "config/target_config.json",
+    "fast_cycle_runner.py"
+   ],
+   "writes": [],
+   "unresolved": [
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "lp",
+     "line": 59
+    },
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "gp",
+     "line": 62
+    },
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "cp",
+     "line": 66
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "paths['levels_path']",
+     "line": 242
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "paths['levels_path']",
+     "line": 256
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "corrections",
+     "line": 260
+    },
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "bad",
+     "line": 304
+    }
+   ],
+   "imports": [
+    "__future__",
+    "core",
+    "json",
+    "pathlib",
+    "pytest"
+   ],
+   "loc": 214,
+   "on_live_cycle_path": false,
+   "imported_by": []
+  },
+  {
    "module": "test/test_llm_json.py",
    "reads": [],
    "writes": [],
@@ -9306,6 +11422,40 @@
     "pytest"
    ],
    "loc": 232,
+   "on_live_cycle_path": false,
+   "imported_by": []
+  },
+  {
+   "module": "test/test_llm_models_exist.py",
+   "reads": [
+    ".env",
+    "core/groq_backend.py"
+   ],
+   "writes": [],
+   "unresolved": [],
+   "imports": [
+    "__future__",
+    "pathlib",
+    "pytest",
+    "re"
+   ],
+   "loc": 137,
+   "on_live_cycle_path": false,
+   "imported_by": []
+  },
+  {
+   "module": "test/test_measurement_honesty.py",
+   "reads": [],
+   "writes": [],
+   "unresolved": [],
+   "imports": [
+    "__future__",
+    "core.measurement_honesty",
+    "pathlib",
+    "pytest",
+    "sys"
+   ],
+   "loc": 126,
    "on_live_cycle_path": false,
    "imported_by": []
   },
@@ -9327,6 +11477,96 @@
     "json"
    ],
    "loc": 36,
+   "on_live_cycle_path": false,
+   "imported_by": []
+  },
+  {
+   "module": "test/test_metta_parallel.py",
+   "reads": [
+    "hyperon_bridge.py"
+   ],
+   "writes": [],
+   "unresolved": [
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "rep.path()",
+     "line": 249
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "rep.path()",
+     "line": 262
+    }
+   ],
+   "imports": [
+    "__future__",
+    "ast",
+    "core",
+    "core.phase_report",
+    "json",
+    "pathlib",
+    "pytest"
+   ],
+   "loc": 187,
+   "on_live_cycle_path": false,
+   "imported_by": []
+  },
+  {
+   "module": "test/test_micro_cycle.py",
+   "reads": [
+    "config/scheduler.json"
+   ],
+   "writes": [],
+   "unresolved": [
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "lock",
+     "line": 163
+    },
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "lock",
+     "line": 174
+    },
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "lock",
+     "line": 187
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "mc.LATEST",
+     "line": 208
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "mc.REPORT",
+     "line": 226
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "mc.LATEST",
+     "line": 235
+    }
+   ],
+   "imports": [
+    "__future__",
+    "core",
+    "importlib.util",
+    "json",
+    "pathlib",
+    "pytest",
+    "supervisor"
+   ],
+   "loc": 165,
    "on_live_cycle_path": false,
    "imported_by": []
   },
@@ -9426,6 +11666,92 @@
    "imported_by": []
   },
   {
+   "module": "test/test_needs_auth.py",
+   "reads": [
+    "fast_cycle_runner.py"
+   ],
+   "writes": [],
+   "unresolved": [
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "p",
+     "line": 47
+    },
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "p",
+     "line": 60
+    },
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "stamp",
+     "line": 113
+    },
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "env",
+     "line": 132
+    },
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "env",
+     "line": 137
+    },
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "env",
+     "line": 157
+    },
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "env",
+     "line": 167
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "stamp",
+     "line": 170
+    },
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "env",
+     "line": 172
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "stamp",
+     "line": 176
+    },
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "p",
+     "line": 215
+    }
+   ],
+   "imports": [
+    "__future__",
+    "core",
+    "datetime",
+    "json",
+    "pathlib",
+    "pytest"
+   ],
+   "loc": 164,
+   "on_live_cycle_path": false,
+   "imported_by": []
+  },
+  {
    "module": "test/test_no_bare_except.py",
    "reads": [],
    "writes": [],
@@ -9496,14 +11822,16 @@
   },
   {
    "module": "test/test_notary_gate.py",
-   "reads": [],
+   "reads": [
+    "fast_cycle_runner.py"
+   ],
    "writes": [],
    "unresolved": [
     {
      "kind": "write",
      "how": ".write_text()",
      "expr": "p",
-     "line": 174
+     "line": 177
     }
    ],
    "imports": [
@@ -9512,10 +11840,12 @@
     "core.metta_check",
     "importlib",
     "importlib.util",
+    "inspect",
     "pathlib",
-    "pytest"
+    "pytest",
+    "re"
    ],
-   "loc": 240,
+   "loc": 301,
    "on_live_cycle_path": false,
    "imported_by": []
   },
@@ -9534,6 +11864,37 @@
     "sys"
    ],
    "loc": 201,
+   "on_live_cycle_path": false,
+   "imported_by": []
+  },
+  {
+   "module": "test/test_openclaw_axis_worker.py",
+   "reads": [],
+   "writes": [],
+   "unresolved": [
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "p",
+     "line": 282
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "path",
+     "line": 288
+    }
+   ],
+   "imports": [
+    "__future__",
+    "agents.axis.axis_feed",
+    "core.source_lifecycle",
+    "json",
+    "pathlib",
+    "pytest",
+    "scripts.openclaw_axis_worker"
+   ],
+   "loc": 202,
    "on_live_cycle_path": false,
    "imported_by": []
   },
@@ -9585,6 +11946,41 @@
     "pytest"
    ],
    "loc": 147,
+   "on_live_cycle_path": false,
+   "imported_by": []
+  },
+  {
+   "module": "test/test_orchestrator_grounded.py",
+   "reads": [],
+   "writes": [],
+   "unresolved": [
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "p",
+     "line": 51
+    },
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "p",
+     "line": 57
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "path",
+     "line": 223
+    }
+   ],
+   "imports": [
+    "__future__",
+    "core.orchestrator_grounded",
+    "json",
+    "pathlib",
+    "pytest"
+   ],
+   "loc": 161,
    "on_live_cycle_path": false,
    "imported_by": []
   },
@@ -9696,6 +12092,187 @@
    "imported_by": []
   },
   {
+   "module": "test/test_phase_debrief.py",
+   "reads": [],
+   "writes": [],
+   "unresolved": [
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "path",
+     "line": 98
+    }
+   ],
+   "imports": [
+    "__future__",
+    "core",
+    "core.phase_debrief",
+    "json",
+    "pathlib",
+    "pytest"
+   ],
+   "loc": 143,
+   "on_live_cycle_path": false,
+   "imported_by": []
+  },
+  {
+   "module": "test/test_phase_debrief_retry.py",
+   "reads": [
+    "config/cycle_phases.json",
+    "fast_cycle_runner.py",
+    "test/conftest.py"
+   ],
+   "writes": [],
+   "unresolved": [
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "pathlib.Path(rec['written_to'])",
+     "line": 108
+    }
+   ],
+   "imports": [
+    "__future__",
+    "core",
+    "core.self_experiment",
+    "json",
+    "pathlib",
+    "pytest"
+   ],
+   "loc": 189,
+   "on_live_cycle_path": false,
+   "imported_by": []
+  },
+  {
+   "module": "test/test_phase_report.py",
+   "reads": [],
+   "writes": [],
+   "unresolved": [
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "path",
+     "line": 53
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "rep.path()",
+     "line": 58
+    },
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "prov",
+     "line": 217
+    }
+   ],
+   "imports": [
+    "__future__",
+    "core.phase_report",
+    "datetime",
+    "json",
+    "os",
+    "pathlib",
+    "pytest"
+   ],
+   "loc": 169,
+   "on_live_cycle_path": false,
+   "imported_by": []
+  },
+  {
+   "module": "test/test_phase_resume.py",
+   "reads": [
+    "memory/cycle.lock"
+   ],
+   "writes": [],
+   "unresolved": [
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "p",
+     "line": 59
+    }
+   ],
+   "imports": [
+    "__future__",
+    "core.phase_report",
+    "core.phase_resume",
+    "datetime",
+    "json",
+    "os",
+    "pathlib",
+    "pytest",
+    "subprocess",
+    "sys"
+   ],
+   "loc": 147,
+   "on_live_cycle_path": false,
+   "imported_by": []
+  },
+  {
+   "module": "test/test_phase_telegram.py",
+   "reads": [],
+   "writes": [],
+   "unresolved": [
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "supervisor.NOTIFY_CHANNEL",
+     "line": 66
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "supervisor.NIGHT_LOG",
+     "line": 178
+    }
+   ],
+   "imports": [
+    "__future__",
+    "inspect",
+    "json",
+    "pytest",
+    "supervisor",
+    "sys"
+   ],
+   "loc": 147,
+   "on_live_cycle_path": false,
+   "imported_by": []
+  },
+  {
+   "module": "test/test_prev_step_is_not_the_current_step.py",
+   "reads": [
+    "memory/heartbeat.py"
+   ],
+   "writes": [],
+   "unresolved": [
+    {
+     "kind": "write",
+     "how": "Path.open(mode=a)",
+     "expr": "log",
+     "line": 67
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "cycle_log",
+     "line": 87
+    }
+   ],
+   "imports": [
+    "__future__",
+    "core.brain",
+    "importlib",
+    "memory.heartbeat",
+    "pathlib",
+    "pytest"
+   ],
+   "loc": 138,
+   "on_live_cycle_path": false,
+   "imported_by": []
+  },
+  {
    "module": "test/test_promotion_seam.py",
    "reads": [
     "config/composer_specs.json"
@@ -9730,6 +12307,143 @@
     "tempfile"
    ],
    "loc": 142,
+   "on_live_cycle_path": false,
+   "imported_by": []
+  },
+  {
+   "module": "test/test_proposal_archive.py",
+   "reads": [],
+   "writes": [],
+   "unresolved": [
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "f",
+     "line": 87
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "f",
+     "line": 95
+    },
+    {
+     "kind": "read",
+     "how": ".read_bytes()",
+     "expr": "month",
+     "line": 172
+    },
+    {
+     "kind": "read",
+     "how": ".read_bytes()",
+     "expr": "month",
+     "line": 175
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "live",
+     "line": 206
+    },
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "live",
+     "line": 209
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "july",
+     "line": 248
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "this_month",
+     "line": 263
+    },
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "live",
+     "line": 291
+    }
+   ],
+   "imports": [
+    "agents.core.self_observer",
+    "alignment.civilization_guard",
+    "datetime",
+    "json",
+    "memory",
+    "pathlib",
+    "pytest",
+    "sys"
+   ],
+   "loc": 233,
+   "on_live_cycle_path": false,
+   "imported_by": []
+  },
+  {
+   "module": "test/test_proposal_sla.py",
+   "reads": [
+    "fast_cycle_runner.py"
+   ],
+   "writes": [],
+   "unresolved": [
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "imp",
+     "line": 56
+    },
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "q / f'a_patch.{_epoch(10)}.py'",
+     "line": 64
+    },
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "thr",
+     "line": 67
+    },
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "imp",
+     "line": 87
+    },
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "thr",
+     "line": 91
+    },
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "f",
+     "line": 160
+    },
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "imp",
+     "line": 188
+    }
+   ],
+   "imports": [
+    "__future__",
+    "core",
+    "core.cycle_report",
+    "datetime",
+    "json",
+    "pathlib",
+    "pytest"
+   ],
+   "loc": 181,
    "on_live_cycle_path": false,
    "imported_by": []
   },
@@ -9787,6 +12501,26 @@
     "sys"
    ],
    "loc": 190,
+   "on_live_cycle_path": false,
+   "imported_by": []
+  },
+  {
+   "module": "test/test_published_predictions_expire.py",
+   "reads": [
+    "cortex_memory/hypotheses/pending.json",
+    "github_publisher.py"
+   ],
+   "writes": [],
+   "unresolved": [],
+   "imports": [
+    "datetime",
+    "github_publisher",
+    "json",
+    "pathlib",
+    "pytest",
+    "sys"
+   ],
+   "loc": 138,
    "on_live_cycle_path": false,
    "imported_by": []
   },
@@ -10042,6 +12776,76 @@
    "imported_by": []
   },
   {
+   "module": "test/test_reaper_records_its_own_death.py",
+   "reads": [],
+   "writes": [],
+   "unresolved": [
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "path",
+     "line": 85
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "path",
+     "line": 96
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "record",
+     "line": 143
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "record",
+     "line": 168
+    },
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "record",
+     "line": 189
+    },
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "record",
+     "line": 222
+    }
+   ],
+   "imports": [
+    "__future__",
+    "json",
+    "os",
+    "pathlib",
+    "pytest",
+    "subprocess",
+    "sys",
+    "time"
+   ],
+   "loc": 201,
+   "on_live_cycle_path": false,
+   "imported_by": []
+  },
+  {
+   "module": "test/test_reasoning_budget.py",
+   "reads": [],
+   "writes": [],
+   "unresolved": [],
+   "imports": [
+    "__future__",
+    "core.groq_backend",
+    "pytest"
+   ],
+   "loc": 131,
+   "on_live_cycle_path": false,
+   "imported_by": []
+  },
+  {
    "module": "test/test_registration_wall.py",
    "reads": [
     "core/source_registration.py"
@@ -10267,6 +13071,111 @@
    "imported_by": []
   },
   {
+   "module": "test/test_self_experiment.py",
+   "reads": [
+    "config/scheduler.json"
+   ],
+   "writes": [],
+   "unresolved": [
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "imp",
+     "line": 124
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "imp",
+     "line": 134
+    },
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "imp",
+     "line": 144
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "imp",
+     "line": 148
+    },
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "imp",
+     "line": 228
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "imp",
+     "line": 238
+    },
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "overlay",
+     "line": 252
+    },
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "overlay",
+     "line": 257
+    },
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "overlay",
+     "line": 266
+    }
+   ],
+   "imports": [
+    "__future__",
+    "copy",
+    "core",
+    "json",
+    "pathlib",
+    "pytest"
+   ],
+   "loc": 195,
+   "on_live_cycle_path": false,
+   "imported_by": []
+  },
+  {
+   "module": "test/test_self_mirror.py",
+   "reads": [
+    "config/target_config.json"
+   ],
+   "writes": [],
+   "unresolved": [
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "p",
+     "line": 186
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "log",
+     "line": 210
+    }
+   ],
+   "imports": [
+    "__future__",
+    "core",
+    "json",
+    "pathlib",
+    "pytest"
+   ],
+   "loc": 162,
+   "on_live_cycle_path": false,
+   "imported_by": []
+  },
+  {
    "module": "test/test_self_sense_model_pick.py",
    "reads": [],
    "writes": [],
@@ -10313,6 +13222,30 @@
     "sys"
    ],
    "loc": 113,
+   "on_live_cycle_path": false,
+   "imported_by": []
+  },
+  {
+   "module": "test/test_source_lifecycle.py",
+   "reads": [],
+   "writes": [],
+   "unresolved": [
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "ledger",
+     "line": 56
+    }
+   ],
+   "imports": [
+    "__future__",
+    "core",
+    "json",
+    "pathlib",
+    "pytest",
+    "scripts.openclaw_axis_worker"
+   ],
+   "loc": 200,
    "on_live_cycle_path": false,
    "imported_by": []
   },
@@ -10393,6 +13326,80 @@
    "imported_by": []
   },
   {
+   "module": "test/test_step_contract.py",
+   "reads": [
+    "fast_cycle_runner.py"
+   ],
+   "writes": [],
+   "unresolved": [
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "sandbox / 'memory' / f'{label}.json'",
+     "line": 63
+    },
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "sandbox / 'memory' / 'writer.json'",
+     "line": 98
+    },
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "sandbox / 'memory' / 'unrelated.json'",
+     "line": 106
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "sandbox / 'baseline.json'",
+     "line": 133
+    },
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "sandbox / 'memory' / 'slowpoke.json'",
+     "line": 168
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "sandbox / 'baseline.json'",
+     "line": 171
+    },
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "sandbox / 'baseline.json'",
+     "line": 174
+    },
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "callmap",
+     "line": 209
+    },
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "sandbox / 'memory' / 'quiet.json'",
+     "line": 226
+    }
+   ],
+   "imports": [
+    "__future__",
+    "core",
+    "json",
+    "pathlib",
+    "pytest",
+    "time"
+   ],
+   "loc": 174,
+   "on_live_cycle_path": false,
+   "imported_by": []
+  },
+  {
    "module": "test/test_structural_faithfulness.py",
    "reads": [],
    "writes": [],
@@ -10443,7 +13450,52 @@
     "sys",
     "types"
    ],
-   "loc": 662,
+   "loc": 663,
+   "on_live_cycle_path": false,
+   "imported_by": []
+  },
+  {
+   "module": "test/test_training_record.py",
+   "reads": [
+    "config/scheduler.json"
+   ],
+   "writes": [],
+   "unresolved": [
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "log",
+     "line": 120
+    },
+    {
+     "kind": "write",
+     "how": ".write_text()",
+     "expr": "log",
+     "line": 135
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "ih.CURVE",
+     "line": 254
+    },
+    {
+     "kind": "read",
+     "how": ".read_text()",
+     "expr": "ih.CURVE",
+     "line": 268
+    }
+   ],
+   "imports": [
+    "__future__",
+    "core",
+    "core.measurement_honesty",
+    "json",
+    "numpy",
+    "pathlib",
+    "pytest"
+   ],
+   "loc": 200,
    "on_live_cycle_path": false,
    "imported_by": []
   },

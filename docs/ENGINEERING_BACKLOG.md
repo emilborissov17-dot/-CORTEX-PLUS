@@ -240,3 +240,55 @@ Suite is otherwise green (445 passed). **Do not treat these as merge-induced.**
   a date and evidence rather than letting it 404 every cycle.
 - **Never let a fallback number pass as authoritative.** Label it (`score_source`,
   `_status: TRUNCATED`, `needs_reanalysis`) so downstream can tell.
+
+---
+
+## Subtraction, 21 Aug 2026 — deleted with evidence
+
+One commit, six targets, each with the grep that proves nothing calls it. Git
+keeps the history; nothing was archived anywhere else.
+
+| deleted | size | proof of zero callers | recoverable from |
+|---|---|---|---|
+| `LEGACY/` | 278 KB, 27 entries | `grep -rnE "^\s*(from\|import)\s+LEGACY" --include=*.py .` (excluding LEGACY/ and OLD/ themselves) → **no matches** | `git show 2afdcd1^:LEGACY/<file>` |
+| `OLD/` | 16 MB, 31 entries | same grep for `OLD` → **no matches** | `git show 2afdcd1^:OLD/<file>` |
+| `cortex_dashboard_generator.py` | 12.9 KB | `grep -rnE "import\s+cortex_dashboard_generator" --include=*.py .` → **no matches**. Every remaining mention is prose ABOUT it: `cortex_approval_server.py`'s own comment saying nothing in the cycle writes the dashboard, and `test_dashboard_freshness.py` asserting the string must not appear as a runnable command in the served page | `git show 14ca73c:cortex_dashboard_generator.py` |
+| `fast_cycle_runner.py.bak_20260617_180555` | 12.8 KB | 0 references | blob `689449e0` already in git under the live filename |
+| `hypercortex_runner.py.bak_20260618_134540` | 4.0 KB | 0 references | blob `d09db34f` already in git |
+| `agents/cosmos/cosmos_snapshots_agent_qwen.py.bak_20260617_171145` | — | 0 references | blob `d1af3c9e` already in git |
+| `data_providers/human/cognition_learning_provider.py.bak_20260617_160215` | — | 0 references | blob `a9f700ab` already in git |
+| `data_providers/planet/ecosystems_biodiversity_review_provider.py.bak_20260617_160215` | 2.1 KB | 0 references | **NOT in git — this was the only copy** |
+
+Three things worth saying out loud rather than leaving in a diff:
+
+- **`data/patch_guardian/backups/*.bak` was NOT deleted, deliberately.** A blanket
+  `*.bak` sweep would have taken all 78 of them, and they are not stale editor
+  copies — `patch_guardian._rollback()` globs exactly `{filename}.*.bak` to undo an
+  applied patch. Deleting them removes the undo, on the day the first patch is
+  meant to be accepted.
+
+- **The `.bak_*` files were gitignored (`.gitignore:16`), so git never held them.**
+  Four of the five are byte-identical to a blob git already has under the live
+  filename. The fifth was genuinely the only copy; it was deleted anyway, and here
+  is why: it is the strictly older, strictly worse version of the ecosystems
+  provider — the one still using `EN.ATM.CO2E.PC`, an indicator with no WLD
+  aggregate, behind a bare `except:` and with no NOAA fallback. It holds nothing
+  the live file does not, and it holds one thing the live file deliberately
+  removed.
+
+- **`hypercortex_runner.py.bak_20260618_134540` looked referenced and was not.**
+  `reports/actions_run_log.json` mentions `hypercortex_runner.py.bak_20260327_...`
+  — a different backup, in the CORTEX++_QWEN archive, from March. A `grep -l` on
+  the prefix matches it; a grep on the full name does not.
+
+**Newly orphaned as a consequence, NOT deleted (out of the named scope):**
+`core/cortex_llm.py`. It was live only in the sense that `LEGACY/cortex4_v2 - Copy.py`
+and `OLD/core_legacy/cortex4_v2.py` imported it — both now gone, so it has zero
+importers anywhere in the tree. `test/test_no_ollama_in_live_path.py` documents it
+as "imported only from LEGACY/ and OLD/, which are not the live path"; that
+sentence is now stale in a way that matters, since there is no importer at all.
+Decide retire-or-keep in a later pass.
+
+**After:** `scripts/step_callmap.py` regenerates with **0 unresolved imports**
+(unchanged — it was 0 before, so the deletion introduced none), 8 OPAQUE steps
+(unchanged). `scripts/build_module_map.py` regenerates with 0 parse errors.
