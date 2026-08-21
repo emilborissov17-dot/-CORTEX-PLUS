@@ -309,6 +309,42 @@ def to_markdown(rep: dict) -> str:
     except Exception:
         pass
 
+    # ── КОНТИНЕНТИТЕ (21 авг 2026) ─────────────────────────────────────────
+    # wellbeing_globe смята този слой от 2 юли и никой доклад не го е показвал:
+    # цялата планета се отчиташе с едно число, докато разбивка на седем реда от
+    # същите данни стоеше непрочетена на диска. Терминът към човека е КОНТИНЕНТ
+    # навсякъде; кодът на Световната банка си остава само join ключ.
+    try:
+        from core.continents import render_markdown as _cont_md
+        _cont = _cont_md()
+        if _cont:
+            out += _cont
+    except Exception:
+        pass
+
+    # ── ОСИТЕ ОТВЪД ЦЕЛТА СИ, С АТРИБУЦИЯ ──────────────────────────────────
+    # R4 казва, че оста е от грешната страна на собствената си цел. Глобално
+    # число, лошо навсякъде, и глобално число, лошо на едно място, искат
+    # различен отговор — а самата ос не ги различава.
+    try:
+        from core.continents import attribution as _attr
+        _mt = json.loads((BASE / "memory" / "metta_assessment_latest.json")
+                         .read_text(encoding="utf-8"))
+        _r4 = [d for d in (_mt.get("disagreements") or [])
+               if d.get("rule") == "R4_OFF_TARGET"]
+        if _r4:
+            out += ["## Оси отвъд собствената си цел", "",
+                    f"{len(_r4)} оси стоят от грешната страна на целта си:", ""]
+            _lead = _attr("")
+            for d in _r4[:10]:
+                line = f"- **{d.get('axis')}** — {d.get('says')}"
+                if _lead:
+                    line += f" · {_lead}"
+                out.append(line)
+            out.append("")
+    except Exception:
+        pass
+
     # постоянството и съзвездието — прочит, който не гони промяната (15 авг)
     try:
         cn = json.loads((BASE / "memory" / "constancy_latest.json").read_text(encoding="utf-8"))
