@@ -154,8 +154,12 @@ def evidence_numbers(evidence: dict) -> set[str]:
 SWAP_GENERIC = "SWAP_GENERIC"
 
 
+MIRROR_QUOTA_UNMET = "MIRROR_QUOTA_UNMET"
+
+
 def validate(debrief: dict, evidence: dict,
-             own_numbers: set | None = None) -> tuple[bool, list[str]]:
+             own_numbers: set | None = None,
+             must_cite: set | None = None, quota: int = 2) -> tuple[bool, list[str]]:
     """Returns (accepted, reasons_for_rejection). Never raises.
 
     `own_numbers` are the numbers unique to this phase (see
@@ -208,6 +212,25 @@ def validate(debrief: dict, evidence: dict,
                 f"and the sentence still reads true. Numbers only "
                 f"{evidence.get('phase', 'this phase')} has: "
                 f"{sorted(own_numbers, key=lambda s: (len(s), s))[:8]}")
+
+    # ── THE MIRROR QUOTA (21 Aug 2026, G_LEARN only) ───────────────────────
+    # G_LEARN gained a substep in which the brain is handed the whole mirror.
+    # Without a quota, "I read the mirror" is unfalsifiable — the phase could
+    # debrief entirely on its own file sizes and nothing would notice. Two is
+    # the smallest count that cannot be satisfied by restating one headline.
+    #
+    # Checked against the MIRROR's numbers, not against what the model claimed
+    # to have read, so the debrief cannot satisfy the rule by agreeing with a
+    # bad reading. Applies only when a caller passes must_cite; every other
+    # phase is unaffected.
+    if must_cite:
+        from_mirror = said & set(must_cite)
+        if len(from_mirror) < quota:
+            reasons.append(
+                f"{MIRROR_QUOTA_UNMET}: 'what' cites {len(from_mirror)} number(s) "
+                f"from the mirror ({sorted(from_mirror)}) and this phase owes "
+                f"{quota}. The mirror was read at step 25.46; a debrief that "
+                f"does not carry two of its numbers did not use it.")
 
     return (not reasons), reasons
 
@@ -369,7 +392,8 @@ def render_telegram(phase: str, d: dict) -> str:
 
 def debrief_phase(phase: str, cycle_id: str, evidence: dict,
                   base: pathlib.Path | None = None,
-                  asker=None, own_numbers: set | None = None) -> dict:
+                  asker=None, own_numbers: set | None = None,
+                  must_cite: set | None = None) -> dict:
     """Ask, judge, ONE sharpened retry, then write the debrief or the rejection.
 
     Returns {"accepted": bool, ...}. Never raises: a debrief that cannot be
@@ -392,7 +416,7 @@ def debrief_phase(phase: str, cycle_id: str, evidence: dict,
 
     said = ask(phase, evidence)
     accepted, reasons = (False, ["the local brain returned nothing"]) \
-        if said is None else validate(said, evidence, own_numbers)
+        if said is None else validate(said, evidence, own_numbers, must_cite)
     attempts.append({"prompt": BASE_PROMPT, "said": said,
                      "accepted": accepted, "rejected_because": reasons})
 
@@ -432,7 +456,7 @@ def debrief_phase(phase: str, cycle_id: str, evidence: dict,
             retry = (ask(phase, evidence, why=why, own=own_numbers) if takes_own
                      else ask(phase, evidence, why=why))
         if retry is not None:
-            ok2, reasons2 = validate(retry, evidence, own_numbers)
+            ok2, reasons2 = validate(retry, evidence, own_numbers, must_cite)
             attempts.append({"prompt": SHARP_PROMPT, "said": retry,
                              "accepted": ok2, "rejected_because": reasons2})
             if ok2:
@@ -459,6 +483,7 @@ def debrief_phase(phase: str, cycle_id: str, evidence: dict,
         # and a gate that cannot be replayed cannot be improved.
         "evidence": evidence,
         "own_numbers": sorted(own_numbers or []),
+        "mirror_quota": (len(must_cite) if must_cite else 0),
         "swap_test": ("applied" if own_numbers else
                       "not applied — this phase had no numbers of its own"),
     }

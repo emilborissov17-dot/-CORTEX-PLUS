@@ -2253,6 +2253,25 @@ def main():
         _mirror_run(source="cycle")
     _run("self_mirror", _self_mirror)
 
+    # ── ЕДИН СЪЗНАТЕЛЕН ПРОЧИТ НА ОГЛЕДАЛОТО (21 август 2026) ──────────────
+    # Петте реда на core/interoception.py влизат във ВСЯКО повикване — това е
+    # усет, а не четене: присъстват, независимо дали някой им обръща внимание.
+    # Веднъж на цикъл мозъкът получава ЦЯЛОТО огледало и казва какво вижда.
+    # Числата, които наистина е цитирал, се проверяват срещу огледалото (не се
+    # приемат на доверие) и влизат в менюто на G_LEARN, а дебрифът на фазата е
+    # длъжен да цитира поне две от тях.
+    # Стои СЛЕД self_mirror, защото чете каквото то току-що е написало.
+    beat("read_the_mirror", "25.46")
+    def _read_the_mirror():
+        from core.interoception import read_the_mirror as _rtm
+        rec = _rtm()
+        print(f"[FAST_CYCLE] read_the_mirror -> цитирани {rec.get('cited_count', 0)} "
+              f"от {rec.get('mirror_numbers_available', 0)} числа "
+              f"(квота {rec.get('quota')}, изпълнена={rec.get('met_quota')})")
+        if rec.get("said"):
+            print(f"[FAST_CYCLE] огледалото каза -> {str(rec['said'].get('saw'))[:200]}")
+    _run("read_the_mirror", _read_the_mirror)
+
     beat("brain_debrief", "25.5")
     try:
         from core.brain import debrief_cycle as _debrief

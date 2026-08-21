@@ -444,6 +444,26 @@ def _g_learn(base=None) -> dict:
     _put(ev, "training_log_rows", _lines("memory/training_log.jsonl", base))
     _put(ev, "mirror_log_rows", _lines("memory/self_mirror_log.jsonl", base))
 
+    # ── THE DELIBERATE READ (21 Aug 2026) ──────────────────────────────────
+    # read_the_mirror is G_LEARN's step 25.46. Its own numbers — how many the
+    # brain quoted, out of how many exist, in how long — are this phase's, and
+    # they are NOT the mirror's own values, so F_SELF keeps those as its own and
+    # the swap test stays sharp for both phases.
+    #
+    # The mirror numbers the debrief is REQUIRED to cite are not put here for
+    # that exact reason: they are handed to the validator separately, through
+    # core/phase_tracker._must_cite, as a quota rather than as menu items.
+    read = _json("memory/mirror_read_latest.json", base)
+    if isinstance(read, dict):
+        for k, out in (("cited_count", "mirror_read_cited"),
+                       ("mirror_numbers_available", "mirror_read_available"),
+                       ("mirror_bytes", "mirror_read_bytes"),
+                       ("seconds", "mirror_read_seconds"),
+                       ("quota", "mirror_read_quota")):
+            _put(ev, out, read.get(k))
+        _put(ev, "mirror_read_age_min",
+             _age_min("memory/mirror_read_latest.json", base))
+
     for rel, key in (("memory/feedback_log.json", "feedback_rows"),
                      ("memory/development_journal.json", "journal_rows"),
                      ("memory/axis_history.json", "axis_history_axes"),

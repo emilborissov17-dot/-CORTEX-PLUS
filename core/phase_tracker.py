@@ -98,6 +98,22 @@ def _own_numbers(phase: str) -> set:
         return set()
 
 
+def _must_cite(phase: str) -> set:
+    """G_LEARN, and only G_LEARN, owes the mirror two numbers.
+
+    Its step 25.46 hands the brain the whole mirror; without a quota on the
+    debrief, "I read it" is a claim nothing can check. Every other phase gets an
+    empty set, which switches the rule off — see core/phase_debrief.validate.
+    """
+    if phase != "G_LEARN":
+        return set()
+    try:
+        from core.interoception import must_cite
+        return must_cite()
+    except Exception:
+        return set()
+
+
 def _close(phase: str, report) -> None:
     """Write the report, ask for a debrief, send one message. All fail-open."""
     try:
@@ -110,7 +126,8 @@ def _close(phase: str, report) -> None:
     try:
         from core.phase_debrief import debrief_phase
         debrief = debrief_phase(phase, str(_cycle_id), _evidence(phase),
-                                own_numbers=_own_numbers(phase))
+                                own_numbers=_own_numbers(phase),
+                                must_cite=_must_cite(phase))
     except Exception as exc:  # noqa: BLE001
         print(f"[PHASE] {phase}: debrief failed ({type(exc).__name__}: {exc})")
 
