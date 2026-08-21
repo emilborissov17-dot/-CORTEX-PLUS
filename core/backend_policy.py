@@ -67,6 +67,8 @@ _lock = threading.Lock()
 _disabled: dict[str, str] = {}          # backend -> reason, for the whole process
 _step: str | None = None
 _all_cloud_failures_this_step = 0
+_local_only = False                     # process-wide: no cloud at all
+_local_only_reason = ""
 
 
 # ---------------------------------------------------------------------------
@@ -168,8 +170,33 @@ def cloud_blocked_for_step() -> bool:
 # The one question the chain asks
 # ---------------------------------------------------------------------------
 
+def block_cloud(reason: str) -> None:
+    """Declare this PROCESS local-only. Not a failure count — a decision.
+
+    Added 21 Aug 2026 for scripts/micro_cycle.py, which promises to run in
+    10-15 minutes without touching a cloud model. Until now the only way to make
+    that promise true was to hope no step reached for one. A promise enforced by
+    hope is a promise with no mechanism, which is the class of defect the whole
+    repo is aimed at. This is the mechanism: one flag, checked at the same gate
+    every other cloud decision passes through, so there is no second door.
+    """
+    global _local_only, _local_only_reason
+    with _lock:
+        _local_only = True
+        _local_only_reason = reason
+    print(f"  [POLICY] cloud is off for this process — {reason}")
+
+
+def local_only() -> tuple:
+    with _lock:
+        return _local_only, _local_only_reason
+
+
 def cloud_allowed(purpose: str | None = None) -> tuple[bool, str]:
     """May this call try the cloud at all? Returns (allowed, reason)."""
+    blocked, why = local_only()
+    if blocked:
+        return False, f"process declared local-only: {why}"
     if purpose in SELF_DIRECTED:
         return False, f"self-directed call ({purpose}) never uses cloud"
     if cloud_blocked_for_step():
@@ -180,11 +207,13 @@ def cloud_allowed(purpose: str | None = None) -> tuple[bool, str]:
 
 def reset_for_tests() -> None:
     """Tests only. The process-lifetime state above is deliberately global."""
-    global _step, _all_cloud_failures_this_step
+    global _step, _all_cloud_failures_this_step, _local_only, _local_only_reason
     with _lock:
         _disabled.clear()
         _step = None
         _all_cloud_failures_this_step = 0
+        _local_only = False
+        _local_only_reason = ""
 
 
 def _selftest() -> int:

@@ -1,0 +1,70 @@
+{
+  "ts": "2026-08-21T11:20:21.877228+00:00",
+  "previous_ts": "2026-08-21T11:18:00.133084+00:00",
+  "folded_steps": [
+    "axis_feed",
+    "body_scan",
+    "observe_experiments",
+    "resolve_predictions"
+  ],
+  "steps": {
+    "body_scan": {
+      "seconds": 3.47,
+      "verdict": "UNKNOWN",
+      "touched": 2,
+      "undeclared": [],
+      "result": {
+        "health": "STRESSED",
+        "capacity_pct": 21.7,
+        "mode": "REDUCED"
+      },
+      "error": null
+    },
+    "axis_feed": {
+      "seconds": 0.21,
+      "verdict": "UNKNOWN",
+      "touched": 2,
+      "undeclared": [],
+      "result": {
+        "present": 13,
+        "absent": 11,
+        "rejected": []
+      },
+      "error": null
+    },
+    "resolve_predictions": {
+      "seconds": 0.28,
+      "verdict": "UNKNOWN",
+      "touched": 0,
+      "undeclared": [],
+      "result": {
+        "self_failure": "scored",
+        "axis_next": "scored",
+        "composer_series": {
+          "hit": 0,
+          "miss": 0,
+          "unresolvable": 0,
+          "waiting": 1,
+          "details": []
+        },
+        "still_open": 70
+      },
+      "error": null
+    },
+    "observe_experiments": {
+      "seconds": 0.2,
+      "verdict": "UNKNOWN",
+      "touched": 1,
+      "undeclared": [],
+      "result": {
+        "observed": 1,
+        "counted": 0,
+        "running": 1
+      },
+      "error": null
+    }
+  },
+  "violations": [],
+  "seconds": 5.2,
+  "all_six_footprints": "memory\\micro_cycle_contract_latest.json"
+}

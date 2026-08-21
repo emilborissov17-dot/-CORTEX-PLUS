@@ -260,6 +260,12 @@ class StepContract:
                                              "touched": files}])[-20:]
         save_baseline(self.baseline, self.baseline_path)
 
+        # The FULL list, kept on the object rather than in the report: the report
+        # truncates to 40 so it stays readable, but a caller that wants to check
+        # a step against a DECLARED output set (scripts/micro_cycle.py) needs
+        # every path, not the first forty.
+        self.touched_files = files
+
         self.result = {
             "ts": _now(), "step": self.label, "seconds": seconds,
             "verdict": verdict, "why": why,

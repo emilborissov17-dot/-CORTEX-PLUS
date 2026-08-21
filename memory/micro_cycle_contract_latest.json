@@ -1,0 +1,91 @@
+{
+  "steps": [
+    {
+      "ts": "2026-08-21T11:20:20.348851+00:00",
+      "step": "micro:body_scan",
+      "seconds": 3.47,
+      "verdict": "UNKNOWN",
+      "why": "warming up: 1 of 3 runs recorded, no baseline to judge against yet",
+      "touched": [
+        "memory/adaptive_directives.json",
+        "snapshots/body/body_snapshot_latest.json"
+      ],
+      "touched_count": 2,
+      "error": null,
+      "runs_recorded": 2,
+      "substeps": []
+    },
+    {
+      "ts": "2026-08-21T11:20:20.747399+00:00",
+      "step": "micro:axis_feed",
+      "seconds": 0.21,
+      "verdict": "UNKNOWN",
+      "why": "warming up: 1 of 3 runs recorded, no baseline to judge against yet",
+      "touched": [
+        "openclaw_queue/axis_feeds.jsonl",
+        "openclaw_queue/axis_feeds_latest.json"
+      ],
+      "touched_count": 2,
+      "error": null,
+      "runs_recorded": 2,
+      "substeps": []
+    },
+    {
+      "ts": "2026-08-21T11:20:21.262943+00:00",
+      "step": "micro:resolve_predictions",
+      "seconds": 0.28,
+      "verdict": "UNKNOWN",
+      "why": "warming up: 1 of 3 runs recorded, no baseline to judge against yet",
+      "touched": [],
+      "touched_count": 0,
+      "error": null,
+      "runs_recorded": 2,
+      "substeps": []
+    },
+    {
+      "ts": "2026-08-21T11:20:21.669297+00:00",
+      "step": "micro:observe_experiments",
+      "seconds": 0.2,
+      "verdict": "UNKNOWN",
+      "why": "warming up: 1 of 3 runs recorded, no baseline to judge against yet",
+      "touched": [
+        "memory/self_experiments.json"
+      ],
+      "touched_count": 1,
+      "error": null,
+      "runs_recorded": 2,
+      "substeps": []
+    },
+    {
+      "ts": "2026-08-21T11:20:22.078337+00:00",
+      "step": "micro:consolidate",
+      "seconds": 0.21,
+      "verdict": "UNKNOWN",
+      "why": "warming up: 1 of 3 runs recorded, no baseline to judge against yet",
+      "touched": [
+        "memory/micro_cycle_latest.json",
+        "memory/micro_cycle_log.jsonl"
+      ],
+      "touched_count": 2,
+      "error": null,
+      "runs_recorded": 2,
+      "substeps": []
+    },
+    {
+      "ts": "2026-08-21T11:20:22.505152+00:00",
+      "step": "micro:mirror_row",
+      "seconds": 0.22,
+      "verdict": "UNKNOWN",
+      "why": "warming up: 1 of 3 runs recorded, no baseline to judge against yet",
+      "touched": [
+        "memory/self_mirror_latest.json",
+        "memory/self_mirror_log.jsonl"
+      ],
+      "touched_count": 2,
+      "error": null,
+      "runs_recorded": 2,
+      "substeps": []
+    }
+  ],
+  "ts": "2026-08-21T11:20:22.505991+00:00"
+}

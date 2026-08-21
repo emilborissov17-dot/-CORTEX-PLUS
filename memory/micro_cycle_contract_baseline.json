@@ -1,0 +1,114 @@
+{
+  "micro:body_scan": {
+    "runs": [
+      {
+        "ts": "2026-08-21T11:17:58.629612+00:00",
+        "seconds": 3.75,
+        "touched": [
+          "memory/adaptive_directives.json",
+          "snapshots/body/body_snapshot_latest.json"
+        ]
+      },
+      {
+        "ts": "2026-08-21T11:20:20.348129+00:00",
+        "seconds": 3.47,
+        "touched": [
+          "memory/adaptive_directives.json",
+          "snapshots/body/body_snapshot_latest.json"
+        ]
+      }
+    ]
+  },
+  "micro:axis_feed": {
+    "runs": [
+      {
+        "ts": "2026-08-21T11:17:59.031552+00:00",
+        "seconds": 0.2,
+        "touched": [
+          "openclaw_queue/axis_feeds.jsonl",
+          "openclaw_queue/axis_feeds_latest.json"
+        ]
+      },
+      {
+        "ts": "2026-08-21T11:20:20.746674+00:00",
+        "seconds": 0.21,
+        "touched": [
+          "openclaw_queue/axis_feeds.jsonl",
+          "openclaw_queue/axis_feeds_latest.json"
+        ]
+      }
+    ]
+  },
+  "micro:resolve_predictions": {
+    "runs": [
+      {
+        "ts": "2026-08-21T11:17:59.511182+00:00",
+        "seconds": 0.28,
+        "touched": []
+      },
+      {
+        "ts": "2026-08-21T11:20:21.261943+00:00",
+        "seconds": 0.28,
+        "touched": []
+      }
+    ]
+  },
+  "micro:observe_experiments": {
+    "runs": [
+      {
+        "ts": "2026-08-21T11:17:59.915398+00:00",
+        "seconds": 0.21,
+        "touched": [
+          "memory/self_experiments.json"
+        ]
+      },
+      {
+        "ts": "2026-08-21T11:20:21.668589+00:00",
+        "seconds": 0.2,
+        "touched": [
+          "memory/self_experiments.json"
+        ]
+      }
+    ]
+  },
+  "micro:consolidate": {
+    "runs": [
+      {
+        "ts": "2026-08-21T11:18:00.329343+00:00",
+        "seconds": 0.22,
+        "touched": [
+          "memory/micro_cycle_latest.json",
+          "memory/micro_cycle_log.jsonl"
+        ]
+      },
+      {
+        "ts": "2026-08-21T11:20:22.077577+00:00",
+        "seconds": 0.21,
+        "touched": [
+          "memory/micro_cycle_latest.json",
+          "memory/micro_cycle_log.jsonl"
+        ]
+      }
+    ]
+  },
+  "micro:mirror_row": {
+    "runs": [
+      {
+        "ts": "2026-08-21T11:18:00.755573+00:00",
+        "seconds": 0.23,
+        "touched": [
+          "memory/self_mirror_latest.json",
+          "memory/self_mirror_log.jsonl"
+        ]
+      },
+      {
+        "ts": "2026-08-21T11:20:22.504371+00:00",
+        "seconds": 0.22,
+        "touched": [
+          "memory/self_mirror_latest.json",
+          "memory/self_mirror_log.jsonl"
+        ]
+      }
+    ]
+  }
+}
