@@ -559,3 +559,38 @@ writes to a file the system actually runs, and what it writes breaks the next
 boot. It does not need approving to be worth knowing about.
 
 No patch was applied and no patch was rejected in producing this report.
+
+---
+
+## EXECUTED — 22 August 2026
+
+Emil ran the bulk-reject list above. The 34 JUNK patches were rejected with
+`scripts/review_quarantine.py --reject`, one command each, exactly as printed.
+
+    quarantine before   38 patches
+    quarantine after     4 patches   (the REVIEW four, untouched)
+    rejected/ before    20 patches
+    rejected/ after     54 patches   (20 + 34)
+
+NOTHING WAS DELETED. `--reject` MOVES the patch and its `.json` sidecar into
+`patches/quarantine/rejected/`, which now holds 108 files (54 patches + 54
+sidecars). Every rejected patch is still readable, and the move is reversible
+with a plain `mv`. That is the point of the directory: a rejected patch is a
+record of what the system tried to do, and deleting it would leave no evidence
+of the attempt.
+
+The partition was cross-checked against disk before anything moved: the 34 JUNK
+names plus the 4 REVIEW names are exactly the 38 files that were in quarantine,
+with no overlap and nothing unaccounted for. Afterwards the 4 remaining files
+were diffed against the REVIEW list and matched exactly.
+
+### The four that remain, for a one-by-one review later
+
+    general_patch.1785306175.py   LLM rate-limit config + a live call_groq() on import
+    general_patch.1785353287.py   config-driven agent loading (fast_cycle_config.json)
+    general_patch.1785353298.py   DailyAnalysisAgent over the real existence_model/body_scan
+    general_patch.1786755265.py   DANGEROUS — rewrites fast_cycle_runner.py to import
+                                  agents.water_review_agent, which does not exist.
+                                  Applied, the next boot dies on ImportError.
+
+Read the last one first. It does not need approving to be worth knowing about.
