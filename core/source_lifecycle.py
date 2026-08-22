@@ -115,15 +115,56 @@ def log(entry: dict, ledger: pathlib.Path | None = None) -> None:
         pass  # the ledger must never take the cycle down
 
 
-def record_for(state: dict, source_id: str, axis: str | None = None) -> dict:
+# ── SOURCE CLASSES (22 Aug 2026) ────────────────────────────────────────────
+# What KIND of pipeline this source is, recorded at intake so the cockpit's five
+# columns can be built without re-guessing it later from a url.
+#
+# This is NOT the trust ladder and NOT an independence class. The ladder is the
+# `state` field below — CANDIDATE -> TRUSTED -> DEMOTED — and it is untouched by
+# anything here. The independence classes live in
+# config/reporter_independence.json and stay at four. A source class says where
+# the numbers physically come from; a source may be PHYSICAL and still be
+# DEMOTED, and often should be.
+#
+# PHYSICAL and SCIENCE are the two added now, because they are the two the
+# columns panel cannot infer: a hardware sensor and a peer-reviewed archive look
+# like any other url from the outside.
+PHYSICAL_CLASS = "physical"      # a sensor this machine can read
+SCIENCE_CLASS = "science"        # peer review: arXiv, DOI, journals
+OFFICIAL_CLASS = "official"      # international institution aggregating states
+NATIONAL_CLASS = "national"      # the state measuring itself
+FREE_CLASS = "free"              # press, NGOs, anyone with no seat at the table
+UNCLASSED = "unclassed"          # the default. Never inferred to be physical.
+
+SOURCE_CLASSES = (PHYSICAL_CLASS, SCIENCE_CLASS, OFFICIAL_CLASS,
+                  NATIONAL_CLASS, FREE_CLASS, UNCLASSED)
+
+
+def record_for(state: dict, source_id: str, axis: str | None = None,
+               source_class: str | None = None) -> dict:
+    """The CANDIDATE intake. Creates a record; moves nothing on the ladder.
+
+    `source_class` is written once, on first sight, and then only FILLED IN if
+    it was left unclassed — never overwritten. A source that has been recorded
+    as PHYSICAL and later arrives tagged FREE is a collision worth noticing, not
+    a correction to apply silently, so the first tag stands and the caller can
+    compare. An unknown class is stored as `unclassed` rather than rejected: the
+    intake refusing rows would lose the source entirely, and `unclassed` is
+    exactly the honest answer.
+    """
     rec = state.setdefault(source_id, {
         "source_id": source_id, "axis": axis, "state": CANDIDATE,
+        "source_class": UNCLASSED,
         "clean_streak": 0, "contradictions": 0,
         "observations": 0, "refusals": 0,
         "recent_values": [], "first_seen": _now(), "history": [],
     })
     if axis and not rec.get("axis"):
         rec["axis"] = axis
+    rec.setdefault("source_class", UNCLASSED)
+    if source_class and rec["source_class"] == UNCLASSED:
+        rec["source_class"] = (source_class if source_class in SOURCE_CLASSES
+                               else UNCLASSED)
     return rec
 
 

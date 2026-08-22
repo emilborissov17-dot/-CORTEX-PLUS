@@ -599,3 +599,259 @@ def _selftest() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(_selftest())
+
+
+# ===========================================================================
+# THE FIVE DISPLAY COLUMNS — a refinement of the four classes, not a fifth one
+# ===========================================================================
+# Emil's ruling, 22 August 2026: the cockpit shows FIVE columns —
+# PHYSICAL | SCIENCE | OFFICIAL | NATIONAL | FREE.
+#
+# THIS IS NOT A FIFTH INDEPENDENCE CLASS, and the distinction is load-bearing.
+# CLAUDE.md says config/reporter_independence.json defines exactly four classes
+# and no fifth may be invented; COLUMNS above still holds exactly the three
+# placeable ones, and the test that pins them to the config still passes
+# unchanged. What is added here is a finer PARTITION of those same classes for
+# display:
+#
+#     PHYSICAL   refines independent    a sensor this machine can read
+#     SCIENCE    refines independent    peer review
+#     OFFICIAL   refines self_reported  an international body aggregating states
+#     NATIONAL   refines self_reported  the state measuring itself
+#     FREE       refines adversarial    press, NGOs, anyone with no seat at the table
+#
+# WHAT MAKES SOMETHING A COLUMN
+# ------------------------------
+# A column must have an INDEPENDENT INPUT PIPELINE: a different API, a hardware
+# sensor, or a peer-review process, queryable without an LLM intermediary. Two
+# columns sharing a scraper or an LLM summariser are ECHO, not columns. Maximum
+# five. That criterion is not decoration — it is checked, in
+# assert_columns_independent(), and it has teeth on this repo's real data:
+#
+#     OFFICIAL and NATIONAL can share their upstream measurer. The World Bank
+#     does not measure safe water access; national statistical offices do, and
+#     the Bank aggregates them. config/reporter_independence.json says so in its
+#     own words: "Includes AGGREGATORS of national reporting — the aggregator is
+#     not the measurer."
+#
+# So an OFFICIAL row whose upstream is a national office is marked echo_of
+# NATIONAL and is EXCLUDED from the independent-witness count. It still renders,
+# in its own column, with the badge. Hiding it would lose information; counting
+# it as a second witness would manufacture agreement out of one measurement
+# quoted twice, which is the exact failure this whole module exists to catch.
+
+PHYSICAL, SCIENCE, OFFICIAL, NATIONAL, FREE = (
+    "physical", "science", "official", "national", "free")
+DISPLAY_COLUMNS = (PHYSICAL, SCIENCE, OFFICIAL, NATIONAL, FREE)
+
+# Pipeline kinds that satisfy the criterion. An LLM is deliberately not one.
+HARDWARE, PEER_REVIEW, API, EDITORIAL = "hardware", "peer_review", "api", "editorial"
+PIPELINE_KINDS = (HARDWARE, PEER_REVIEW, API, EDITORIAL)
+
+# The lifecycle state a row defaults to. NAMED HERE so nobody has to guess:
+# core/source_lifecycle.py's ladder is CANDIDATE -> TRUSTED -> DEMOTED. There is
+# no SHADOW state in it. "SHADOW" exists only as a ROW STATUS in
+# scripts/openclaw_axis_worker.py, for a reading stored but not believed. The
+# columns panel displays the SOURCE_LIFECYCLE state, and says so in its legend.
+CANDIDATE_STATE = "CANDIDATE"
+LIFECYCLE_LADDER = "CANDIDATE -> TRUSTED -> DEMOTED (core/source_lifecycle.py)"
+
+# Badges.
+NO_PHYSICAL = "no physical coverage"
+INVALID = "INVALID"
+
+
+@dataclass(frozen=True)
+class DisplayColumn:
+    """One visible column and the pipeline that makes it independent."""
+    key: str
+    title: str
+    refines: str            # which of the three independence classes
+    pipeline: str           # the concrete pipeline id
+    pipeline_kind: str      # HARDWARE | PEER_REVIEW | API | EDITORIAL
+    why: str
+
+
+COLUMN_SPEC = {
+    PHYSICAL: DisplayColumn(
+        PHYSICAL, "PHYSICAL", INDEPENDENT, "local_hardware_sensors", HARDWARE,
+        "sensors on this machine. No API, no publisher, nothing to persuade."),
+    SCIENCE: DisplayColumn(
+        SCIENCE, "SCIENCE", INDEPENDENT, "peer_review_archives", PEER_REVIEW,
+        "arXiv/DOI/journals. The pipeline is refereeing, not an endpoint."),
+    OFFICIAL: DisplayColumn(
+        OFFICIAL, "OFFICIAL", SELF_REPORTED, "international_institution_api", API,
+        "WHO/World Bank/UN endpoints. Often an AGGREGATOR — see echo_of."),
+    NATIONAL: DisplayColumn(
+        NATIONAL, "NATIONAL", SELF_REPORTED, "national_statistical_api", API,
+        "the state measuring itself. Its own jurisdiction, its own number."),
+    FREE: DisplayColumn(
+        FREE, "FREE", ADVERSARIAL, "open_press_and_ngo_feeds", EDITORIAL,
+        "press, NGOs, anyone whose interest is not the subject's. Holds DEMOTED."),
+}
+
+
+def assert_columns_independent(spec: Optional[dict] = None) -> list:
+    """Violations of the column criterion. An empty list means the five are five.
+
+    Returns rather than raises: the point is to SHOW the reader where two
+    columns lean on one pipeline, not to refuse to render.
+    """
+    spec = spec if spec is not None else COLUMN_SPEC
+    problems = []
+    if len(spec) > 5:
+        problems.append("more than five columns: {}".format(sorted(spec)))
+    seen = {}
+    for key in sorted(spec):
+        col = spec[key]
+        if col.pipeline_kind not in PIPELINE_KINDS:
+            problems.append("{}: {!r} is not an input pipeline kind".format(
+                key, col.pipeline_kind))
+        if col.pipeline in seen:
+            problems.append(
+                "{} and {} share the pipeline {!r} — that is echo, not two "
+                "columns".format(seen[col.pipeline], key, col.pipeline))
+        seen[col.pipeline] = key
+        if col.refines not in COLUMNS:
+            problems.append("{}: refines {!r}, which is not one of the three "
+                            "independence classes".format(key, col.refines))
+    return problems
+
+
+def display_row(raw: dict) -> dict:
+    """One raw source row -> one renderable row. NEVER raises, never hides.
+
+    A row without a url is not dropped and not corrected: it comes back with
+    valid=False so the panel renders it INVALID in red. Entry() raises on a
+    missing url because a claim being COMPARED must be openable; a row being
+    DISPLAYED must be visible precisely when it is broken, or the reader never
+    learns the pipeline is producing junk.
+    """
+    url = str(raw.get("url") or "").strip()
+    column = str(raw.get("display_column") or "").strip().lower()
+    row = {
+        "source": raw.get("source") or raw.get("source_id") or "(unnamed)",
+        "url": url,
+        "display_column": column if column in DISPLAY_COLUMNS else "",
+        "claim_type": raw.get("claim_type") or CLAIM,
+        "estimate": raw.get("estimate"),
+        "error": raw.get("error", 0.0),
+        "text": raw.get("text") or raw.get("claim_text") or "",
+        "ts": raw.get("ts"),
+        "lifecycle_state": raw.get("lifecycle_state") or CANDIDATE_STATE,
+        "echo_of": raw.get("echo_of") or None,
+        "valid": True,
+        "invalid_reason": None,
+        "demoted": False,
+        "demoted_because": None,
+        "rehabilitation": None,
+    }
+    if not url:
+        row["valid"] = False
+        row["invalid_reason"] = "no url — a claim nobody can open is not evidence"
+    elif not row["display_column"]:
+        row["valid"] = False
+        row["invalid_reason"] = "no display column: {!r} is not one of {}".format(
+            raw.get("display_column"), ", ".join(DISPLAY_COLUMNS))
+    return row
+
+
+def _rehabilitation_of(source: str, claim_type: str, track: dict) -> dict:
+    """What it would take for this source to be believed again."""
+    rec = ((track.get(source) or {}).get(claim_type) or {})
+    return {
+        "physical_checks": int(rec.get("physical_checks") or 0),
+        "falsified_by_physical": int(rec.get("falsified_by_physical") or 0),
+        "note": ("rehabilitation is earned by physical checks that do NOT "
+                 "falsify. Nothing here is deleted and nothing expires by time."),
+    }
+
+
+def five_column_view(claim_id: str, axis: str, raw_rows: list,
+                     track: Optional[dict] = None) -> dict:
+    """The cockpit's view of one claim across five columns.
+
+    ET IS COMPUTED OVER ALL FIVE, with two rules that change the arithmetic:
+
+      * a claim with NO PHYSICAL row stays OUT of the interval arithmetic and
+        carries the "no physical coverage" badge. The physical sensor is the
+        anchor, and an interval agreed by four talkers who all read the same
+        press release is not evidence of anything.
+      * an ECHO row (OFFICIAL aggregating NATIONAL) renders but does not count
+        as an independent witness.
+
+    Demoted rows are visible INSIDE their column with reason and rehabilitation
+    status, and collected into `demoted` for the FREE panel. No voice is ever
+    deleted, and falsified_by_physical keeps writing track records either way.
+    """
+    track = track if track is not None else load_track_record()
+    rows = [display_row(r) for r in raw_rows]
+
+    cols = {c: [] for c in DISPLAY_COLUMNS}
+    invalid = []
+    for row in rows:
+        if not row["valid"]:
+            invalid.append(row)
+        # An invalid row still belongs to the column it named, so it renders in
+        # place rather than in an orphan bin nobody scrolls to. A row that named
+        # no column at all goes to FREE, visibly broken.
+        cols[row["display_column"] or FREE].append(row)
+
+    demoted = []
+    for col_key, col_rows in cols.items():
+        refines = (COLUMN_SPEC[col_key].refines
+                   if col_key in COLUMN_SPEC else UNKNOWN_CLASS)
+        for row in col_rows:
+            dem, why = is_demoted(row["source"], row["claim_type"], refines, track)
+            row["demoted"] = bool(dem)
+            row["demoted_because"] = why if dem else None
+            if dem:
+                row["rehabilitation"] = _rehabilitation_of(
+                    row["source"], row["claim_type"], track)
+                demoted.append({**row, "was_column": col_key})
+
+    physical_rows = [r for r in cols[PHYSICAL] if r["valid"] and not r["demoted"]]
+    has_physical = bool(physical_rows)
+
+    witnesses = [(c, r) for c in DISPLAY_COLUMNS for r in cols[c]
+                 if r["valid"] and not r["demoted"] and not r["echo_of"]]
+
+    echoes = [r for c in DISPLAY_COLUMNS for r in cols[c] if r["echo_of"]]
+
+    badges = []
+    if not has_physical:
+        badges.append(NO_PHYSICAL)
+    if invalid:
+        badges.append("{} INVALID row(s)".format(len(invalid)))
+    if echoes:
+        badges.append("{} echo row(s) not counted as witnesses".format(len(echoes)))
+
+    et, et_band = None, None
+    if has_physical:
+        intervals = []
+        for _, row in witnesses:
+            if row.get("estimate") is not None:
+                e = abs(float(row.get("error") or 0.0))
+                intervals.append((float(row["estimate"]) - e,
+                                  float(row["estimate"]) + e))
+        if intervals:
+            et = epistemic_tension_quantitative(intervals)
+            et_band = band(et)
+
+    return {
+        "claim_id": claim_id,
+        "axis": axis,
+        "ts": _now(),
+        "columns": cols,
+        "column_order": list(DISPLAY_COLUMNS),
+        "column_spec": {k: asdict(v) for k, v in COLUMN_SPEC.items()},
+        "independence_violations": assert_columns_independent(),
+        "physical_coverage": has_physical,
+        "independent_witnesses": len(witnesses),
+        "epistemic_tension": et,
+        "band": et_band,
+        "badges": badges,
+        "invalid": invalid,
+        "demoted": demoted,
+        "lifecycle_ladder": LIFECYCLE_LADDER,
+    }
