@@ -185,3 +185,5 @@ memory/hypotheses.jsonl
 memory/columns/
 # Потокът на цикъла (core/flow_score.py) — по един ред на цикъл.
 memory/flow_score.jsonl
+# Отложената работа за 8b (core/cycle_profile.py) — изчаква първия дневен цикъл.
+memory/deferred_batch.json

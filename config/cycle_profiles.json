@@ -1,0 +1,62 @@
+{
+  "_README": [
+    "Read by core/cycle_profile.py. HUMAN-tunable only, like config/scheduler.json,",
+    "config/step_priority.json and config/model_window.json.",
+    "",
+    "TWO PROFILES, BY WALL-CLOCK HOUR.",
+    "",
+    "  day    06:00-22:00  the full cycle. The cloud is primary for batch work and",
+    "                      the qwen3:8b window (config/model_window.json) is allowed.",
+    "  night  22:00-06:00  lean. qwen3:8b is FORBIDDEN outright; anything that needs",
+    "                      it is appended to memory/deferred_batch.json and picked up",
+    "                      by the first day cycle instead.",
+    "",
+    "WHY 8b IS FORBIDDEN AT NIGHT AND NOT MERELY DISCOURAGED. Measured on this box:",
+    "qwen2.5:3b and qwen3:8b never coexist in 4GB of VRAM, and 8b does not fit even",
+    "alone (3.32GB of 5.75GB resident, the rest on CPU). A night run that loads it",
+    "pays a full reload on the way in and another on the way out, out of a step's",
+    "ceiling, with nobody awake to see it degrade. The day has a human nearby.",
+    "",
+    "AN OBSERVATION THAT MAKES THE 'lean' LABEL PARTLY UNTRUE, SAID OUT LOUD RATHER",
+    "THAN LEFT TO BE DISCOVERED. `allowed_priorities` below is [CRITICAL, NORMAL],",
+    "and config/step_priority.json defines exactly those two values and no third.",
+    "Measured: CRITICAL 16 steps, NORMAL 38, total 54 of 54. So the night profile's",
+    "priority filter excludes NOTHING, and the whole of its leanness is the 8b",
+    "prohibition and the deferral. It is written this way because that is what was",
+    "specified, and the filter is real machinery that will bite the day a third",
+    "priority exists -- but today it is a no-op, and a config that quietly implies",
+    "otherwise would be the sort of decoration this repo keeps deleting.",
+    "",
+    "  To make the night genuinely lean on STEPS, either add a third priority to",
+    "  config/step_priority.json (and its README forbids a scale, deliberately), or",
+    "  set night.allowed_priorities to [\"CRITICAL\"] here -- which would run 16 of",
+    "  54 steps, close to what survival mode already does (17 of 55). A human's",
+    "  call, not the system's.",
+    "",
+    "Boundaries: a window is [start, end). 06:00 is day, 22:00 is night. The night",
+    "window wraps midnight and the resolver handles that explicitly."
+  ],
+
+  "enabled": true,
+
+  "profiles": {
+    "day": {
+      "starts_hour": 6,
+      "ends_hour": 22,
+      "allowed_priorities": ["CRITICAL", "NORMAL"],
+      "big_model_allowed": true,
+      "cloud_primary_for_batch": true,
+      "why": "a human is awake; the expensive model and the cloud are both affordable"
+    },
+    "night": {
+      "starts_hour": 22,
+      "ends_hour": 6,
+      "allowed_priorities": ["CRITICAL", "NORMAL"],
+      "big_model_allowed": false,
+      "cloud_primary_for_batch": true,
+      "why": "nobody is watching; 8b is forbidden and its work is deferred to the first day cycle"
+    }
+  },
+
+  "deferred_batch_path": "memory/deferred_batch.json"
+}
