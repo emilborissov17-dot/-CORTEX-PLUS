@@ -50,6 +50,8 @@ That is a narrower question and it is the only one that earns a kill.
 """
 from __future__ import annotations
 
+import json
+import time
 import pathlib
 import sys
 from dataclasses import asdict, dataclass
@@ -143,6 +145,103 @@ def broken_invariant(step: str, degraded: bool,
     if not degraded:
         return None
     return (SAFETY_INVARIANTS if invariants is None else invariants).get(step)
+
+
+# ---------------------------------------------------------------------------
+# Gathering the observation — the impure half, kept apart from the decision
+# ---------------------------------------------------------------------------
+
+IO_STATE_FILE = "watchdog_io.json"
+
+
+def _io_totals(proc) -> Optional[int]:
+    """Total bytes+ops this process has done, or None if the OS will not say.
+
+    Windows denies io_counters() for some processes even to their own user, and a
+    denial is NOT evidence of idleness — it is absence of evidence. Returning None
+    keeps that distinction, and decide() treats None as "not livelock".
+    """
+    try:
+        io = proc.io_counters()
+    except Exception:
+        return None
+    return int(getattr(io, "read_bytes", 0) + getattr(io, "write_bytes", 0)
+               + getattr(io, "read_count", 0) + getattr(io, "write_count", 0))
+
+
+def observe(pid: Optional[int],
+            step: str,
+            priority: str = NORMAL,
+            degraded: bool = False,
+            heartbeat_age_sec: float = 0.0,
+            ceiling_sec: float = 900.0,
+            base: Optional[pathlib.Path] = None,
+            cpu_interval: float = 1.0) -> Observation:
+    """Build an Observation of a live cycle. Never raises.
+
+    io_idle_sec CANNOT BE MEASURED IN ONE SAMPLE. The supervisor is a short-lived
+    tick that exits in milliseconds; "this process has done no I/O for 60s" is a
+    statement about a span it does not live through. So the last non-zero I/O
+    total and the time it was seen are persisted in memory/watchdog_io.json, and
+    io_idle_sec is the age of that mark. The first tick after a cycle starts has
+    nothing to compare against and reports None — which decide() reads as "not
+    livelocked", the safe direction: a missing measurement must never be grounds
+    for a kill.
+
+    Every field that cannot be established is None rather than a default. A
+    default here would be a fabricated observation, and this is the one function
+    in the repo whose output can end a cycle.
+    """
+    root = base or BASE
+    obs = Observation(step=step or "unknown", priority=priority, degraded=degraded,
+                      heartbeat_age_sec=heartbeat_age_sec, ceiling_sec=ceiling_sec,
+                      cpu_percent=None, io_idle_sec=None, cuda_state="OK")
+    if not pid:
+        return obs
+
+    try:
+        import psutil
+    except Exception:
+        return obs
+
+    try:
+        proc = psutil.Process(int(pid))
+    except Exception:
+        return obs                      # gone; a dead process is not livelocked
+
+    try:
+        # interval= blocks for that long and returns a real percentage. The
+        # interval-less form returns 0.0 on a first call, which would read as an
+        # idle process and is exactly the wrong lie in this function.
+        obs.cpu_percent = float(proc.cpu_percent(interval=cpu_interval))
+    except Exception:
+        obs.cpu_percent = None
+
+    total = _io_totals(proc)
+    if total is None:
+        return obs
+
+    path = root / "memory" / IO_STATE_FILE
+    now = time.time()
+    try:
+        prev = json.loads(path.read_text(encoding="utf-8"))
+    except Exception:
+        prev = {}
+
+    same_process = (prev.get("pid") == int(pid))
+    if same_process and prev.get("io_total") == total:
+        obs.io_idle_sec = max(0.0, now - float(prev.get("since", now)))
+        mark = prev                      # unchanged: keep the original timestamp
+    else:
+        mark = {"pid": int(pid), "io_total": total, "since": now}
+        obs.io_idle_sec = 0.0 if same_process else None
+
+    try:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps(mark, ensure_ascii=False), encoding="utf-8")
+    except Exception:
+        pass
+    return obs
 
 
 def decide(obs: Observation,

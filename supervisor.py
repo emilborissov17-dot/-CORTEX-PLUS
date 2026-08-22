@@ -247,6 +247,43 @@ def ceiling_for(step: Optional[str], cfg: dict) -> int:
         return base_ceiling
 
 
+def _step_priority(step: Optional[str]) -> str:
+    """CRITICAL or NORMAL, from config/step_priority.json. NORMAL when unknown.
+
+    NORMAL is the fail-safe answer here, and the direction is worth stating: an
+    unknown step is one the kill policy will refuse to kill for slowness. Guessing
+    CRITICAL instead would let a typo in the priority table license a kill.
+    """
+    try:
+        from core.survival_mode import priority_of
+        return priority_of(step or "")
+    except Exception:
+        from core.kill_policy import NORMAL as _N
+        return _N
+
+
+def _step_is_degraded(step: Optional[str]) -> bool:
+    """Did this step already report DEGRADED, per memory/step_contract_latest.json?
+
+    The contract is written when a step FINISHES, so for the step currently wedged
+    this is normally False — the interesting case is a step that degraded, kept
+    running, and is now also past its ceiling. False on anything unreadable: a
+    degradation nobody recorded must not be invented here, because for a CRITICAL
+    step `degraded` is one half of the only condition that authorises a kill.
+    """
+    if not step:
+        return False
+    try:
+        blob = json.loads((BASE / "memory" / "step_contract_latest.json")
+                          .read_text(encoding="utf-8"))
+        for row in reversed(blob.get("steps", [])):
+            if row.get("step") == step:
+                return row.get("verdict") == "DEGRADED"
+    except Exception:
+        pass
+    return False
+
+
 def _autopsy(action) -> str:
     """Ask core.self_diagnosis WHY the cycle died, so the alarm carries a cause and a
     proposed fix instead of a bare symptom. Fail-open: a broken autopsy must never
@@ -761,6 +798,50 @@ def decide(now: datetime, state: dict, heartbeat: Optional[dict],
             return Action(NOTHING, reason="heartbeat present but unparseable timestamp")
 
         if age > ceil:
+            # ── БАВНОТО ВЕЧЕ НЕ Е ПРЕСТЪПЛЕНИЕ (22 авг 2026) ────────────────
+            # A stale heartbeat past a ceiling used to be the whole question and
+            # the whole answer. The ledger's verdict on that rule: 11 kills, both
+            # hot spots LLM steps (internet_intelligence 6, daily_analysis 5),
+            # every one of them a step waiting on a model. The night's remaining
+            # steps were destroyed to punish one step for being slow.
+            #
+            # core/step_budget.py now gives slowness a better answer — the step
+            # spends its budget, gets nothing, is marked DEGRADED, and the cycle
+            # walks on. So the kill is asked for separately, and only three causes
+            # may carry one: a CRITICAL step whose stale output would be published
+            # as fresh, a livelock, or an unrecoverable CUDA context.
+            #
+            # THIS LANDS AFTER THE LADDER ON PURPOSE. Removing the kill before
+            # degradation existed would have left a wedged step with no answer at
+            # all — the cycle would hang instead of dying, which is worse.
+            _kp_decision = None
+            try:
+                from core import kill_policy as _kp
+                _obs = _kp.observe(
+                    pid=lock.get("pid"), step=step,
+                    priority=_step_priority(step),
+                    degraded=_step_is_degraded(step),
+                    heartbeat_age_sec=float(age), ceiling_sec=float(ceil),
+                )
+                _kp_decision = _kp.decide(_obs)
+                log(f"KILL POLICY: step={step!r} age={age:.0f}s ceiling={ceil:.0f}s "
+                    f"cpu={_obs.cpu_percent} io_idle={_obs.io_idle_sec} "
+                    f"degraded={_obs.degraded} -> {_kp_decision.verdict} "
+                    f"({_kp_decision.cause or 'no kill cause'}): {_kp_decision.reason}")
+            except Exception as e:
+                # A policy that cannot answer must not silently authorise a kill,
+                # and must not silently forbid one either. Say so and fall back to
+                # the old rule, which is the behaviour every prior night had.
+                log(f"kill_policy unavailable ({type(e).__name__}: {e}) — "
+                    f"falling back to the ceiling rule")
+
+            if _kp_decision is not None and not _kp_decision.kill:
+                return Action(NOTHING,
+                              reason=f"past ceiling but not killable: "
+                                     f"{_kp_decision.reason}",
+                              pid=lock.get("pid"),
+                              cycle_id=lock.get("cycle_id"))
+
             return _kill_or_fail(state, today, cfg,
                                  reason=f"heartbeat stale: step '{step}' has not beaten for "
                                         f"{age:.0f}s (ceiling {ceil}s)",
