@@ -205,41 +205,92 @@ def api_panels():
 
 @app.get("/api/cycles")
 def api_cycles():
-    """Cycles as checklists: green = checkpointed, current = heartbeat, grey = rest."""
-    from core.cycle_map import STEPS
-    all_steps = [{"step": s[0], "index": s[1], "what": s[2]} for s in STEPS]
+    """Cycles as checklists, with the EVIDENCE for each square distinguishable.
 
-    resume = _read_jsonl(ds.BASE / "memory" / "cycle_resume.jsonl", limit=2000)
+    THREE FAULTS FIXED HERE, all found by reading the live files rather than the
+    code (22 Aug 2026, cycle 14:51 running):
+
+    1. `ticks recorded 0` for the last sealed cycle. `ticks` was len(done), and
+       `done` is the CURRENT cycle's checkpoint set — which is empty while a
+       different cycle is running. The sealed cycle's own set is what it needed.
+
+    2. EVERY STEP OF THE RUNNING CYCLE RENDERED "todo", which was true and
+       useless. Checkpoints are written by _run() AFTER a step completes, and
+       most steps are not wrapped in _run(): the earliest name that has ever
+       been checkpointed is `cortexstrategist` at map position 16. A cycle at
+       position 17 has legitimately produced zero checkpoints. So position is
+       now used as a SECOND, WEAKER kind of evidence — `passed` — and it is
+       rendered differently from `done` and labelled as inferred. A green square
+       that means "we assume so" must not look like one that means "it is on
+       record".
+
+    3. TEN OF TWENTY-NINE CHECKPOINTS COULD NEVER LIGHT A SQUARE. alarm_bands,
+       brain_relay, level_reconcile, needs_auth, proposal_sla, read_the_mirror,
+       session_updater, metta_column, cortex_orchestrator and
+       orchestrator_grounded are recorded as completed steps and appear in
+       neither core.cycle_map.STEPS nor its ALIASES. They were being silently
+       dropped, which is what made "ticks 29 / checklist 20" look like a
+       rounding difference. They are now returned as `unmapped`, counted, and
+       named, because a checkpoint nothing can display is a step nobody can see.
+    """
+    from core.cycle_map import STEPS
+    try:
+        from core.cycle_map import ALIASES
+    except ImportError:
+        ALIASES = {}
+
+    all_steps = [{"step": s[0], "index": s[1], "what": s[2]} for s in STEPS]
+    names = [s["step"] for s in all_steps]
+    pos = {n: i for i, n in enumerate(names)}
+
+    resume = _read_jsonl(ds.BASE / "memory" / "cycle_resume.jsonl", limit=4000)
     heartbeat = _read_json(ds.BASE / "memory" / "heartbeat.json", {}) or {}
     survival = _read_json(ds.BASE / "memory" / "survival_state.json", {}) or {}
     contract = _read_json(ds.BASE / "memory" / "step_contract_latest.json", {}) or {}
 
-    by_cycle = {}
+    # Checkpoints per cycle, with the alias applied in BOTH directions so a name
+    # recorded either way still finds its square.
+    by_cycle, unmapped_by_cycle = {}, {}
+    rev = {v: k for k, v in (ALIASES or {}).items()}
     for row in resume:
-        cid = row.get("cycle_id")
-        if not cid:
+        cid, step = row.get("cycle_id"), row.get("last_completed_step")
+        if not cid or not step:
             continue
-        by_cycle.setdefault(cid, set()).add(row.get("last_completed_step"))
+        canon = ALIASES.get(step, step)
+        if canon not in pos:
+            canon = rev.get(step, canon)
+        if canon in pos:
+            by_cycle.setdefault(cid, set()).add(canon)
+        else:
+            unmapped_by_cycle.setdefault(cid, set()).add(step)
 
     sealed = last_sealed_cycle(ds.BASE / "memory" / "existence_ledger.jsonl")
     live = som.cycle_is_live()
 
-    # WHICH CYCLE THIS CHECKLIST IS ABOUT. When nothing is running, the heartbeat
-    # names whatever cycle died or finished last, and rendering "(no cycle) 0/55"
-    # off it is the least informative true statement available — it looks like a
-    # system that has never run. Between runs the checklist shows the LAST SEALED
-    # cycle, labelled as such.
     current_cycle = heartbeat.get("cycle_id")
     current_step = heartbeat.get("step") if live else None
     if not live and sealed:
         current_cycle = sealed["cycle_id"]
+
     done = by_cycle.get(current_cycle, set())
+    unmapped = sorted(unmapped_by_cycle.get(current_cycle, set()))
+
+    # The heartbeat's step name resolved to a MAP POSITION. Its own step_index is
+    # the runner's label ("4"), which is not the map's ordering.
+    cur_name = ALIASES.get(current_step, current_step) if current_step else None
+    cur_pos = pos.get(cur_name) if cur_name else None
 
     checklist = []
-    for s in all_steps:
-        state = ("done" if s["step"] in done else
-                 "current" if s["step"] == current_step else "todo")
-        checklist.append({**s, "state": state})
+    for i, s in enumerate(all_steps):
+        if s["step"] in done:
+            state, evidence = "done", "checkpoint in cycle_resume.jsonl"
+        elif s["step"] == cur_name:
+            state, evidence = "current", "heartbeat"
+        elif cur_pos is not None and i < cur_pos:
+            state, evidence = "passed", "inferred: the heartbeat is past this step"
+        else:
+            state, evidence = "todo", ""
+        checklist.append({**s, "state": state, "evidence": evidence})
 
     steps_blob = contract.get("steps") if isinstance(contract, dict) else None
     degraded = 0
@@ -247,22 +298,37 @@ def api_cycles():
         degraded = sum(1 for x in steps_blob
                        if isinstance(x, dict) and x.get("verdict") == "DEGRADED")
 
+    sealed_done = by_cycle.get(sealed["cycle_id"], set()) if sealed else set()
+    sealed_unmapped = sorted(unmapped_by_cycle.get(sealed["cycle_id"], set())) if sealed else []
+
+    counts = {k: sum(1 for c in checklist if c["state"] == k)
+              for k in ("done", "passed", "current", "todo")}
+
     return jsonify({
         "ts": _now(),
         "current_cycle": current_cycle,
         "current_step": current_step,
+        "current_position": cur_pos,
         "heartbeat": heartbeat,
         "checklist": checklist,
         "total_steps": len(all_steps),
-        "done_count": sum(1 for c in checklist if c["state"] == "done"),
+        "counts": counts,
+        # done_count keeps its old meaning — CHECKPOINTED only. `covered` is the
+        # number a human reads as "how far along is it".
+        "done_count": counts["done"],
+        "covered": counts["done"] + counts["passed"] + counts["current"],
+        "unmapped_checkpoints": unmapped,
+        "unmapped_note": ("recorded as completed but present in neither "
+                          "cycle_map.STEPS nor ALIASES, so they can light no "
+                          "square" if unmapped else ""),
         "cycles_seen": sorted(by_cycle, reverse=True)[:20],
         "live": live,
         "label": ("running now" if live else
                   "last completed cycle" if sealed else "no cycle has ever sealed"),
         "last_sealed": ({**sealed,
-                         "ticks": len(done),
-                         "outcome": ("finished" if sealed and heartbeat.get(
-                             "cycle_id") == sealed["cycle_id"] else "finished")}
+                         "ticks": len(sealed_done),
+                         "unmapped": sealed_unmapped,
+                         "outcome": "finished"}
                         if sealed else None),
         "badges": {
             "survival_latched": bool(survival.get("active")),
