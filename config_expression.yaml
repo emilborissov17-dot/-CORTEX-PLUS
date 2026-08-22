@@ -1,0 +1,48 @@
+# config_expression.yaml — the human half of the state language.
+#
+# The MACHINE decides which states exist (k-means over the 25-dim cycle vector,
+# cockpit/lexicon.py). The HUMAN decides what they are called. Keeping the two in
+# separate files is deliberate: when naming and clustering live together, the
+# names start driving the maths — a cluster gets nudged until it matches the word
+# somebody already picked for it.
+#
+# A glyph with no name here is NOT an error. It renders as the bare glyph, which
+# is the honest display of "this state is real and nobody has christened it yet".
+
+vector_version: v1
+vector_dims: 25
+seed_k: 16
+seed: 0
+
+# SILENCE MODE — the week-of-silence performativity test.
+#
+# When true, the system computes everything as usual and emits NO expression
+# lines: glyphs are still assigned, the stream still carries env and sys lines,
+# and pending_expression stays empty. The question it exists to ask is whether
+# anything downstream actually changes when the model stops talking, or whether
+# the expression window was theatre for the operator. A test that can be answered
+# by a toggle is worth more than an argument about it.
+silence_mode: false
+
+# The christening map. Δ0..Δ15 seeded; entries may be added as states earn names.
+christening:
+  Δ0: ""
+  Δ1: ""
+  Δ2: ""
+  Δ3: ""
+  Δ4: ""
+  Δ5: ""
+  Δ6: ""
+  Δ7: ""
+  Δ8: ""
+  Δ9: ""
+  Δ10: ""
+  Δ11: ""
+  Δ12: ""
+  Δ13: ""
+  Δ14: ""
+  Δ15: ""
+
+# Compound states earned by measured predictive value (support >= 5, lift >= 1.5).
+# Written by cockpit/lexicon.propose_compound(); named here by the human.
+compounds: {}
