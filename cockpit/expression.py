@@ -412,6 +412,24 @@ def queue_read(db_path: pathlib.Path, limit: int = 100) -> list:
         conn.close()
 
 
+def queue_mark_answered(row_id: int, db_path: pathlib.Path) -> bool:
+    """Mark one question answered. `db_path` is REQUIRED — no default.
+
+    An UPDATE, not a delete: the row, its text and its route stay exactly where
+    they were. Append-only here means nothing is ever REMOVED — a question that
+    has been answered is still a question that was asked, and the schema's
+    trigger refuses DELETE while permitting this flag to move.
+    """
+    conn = queue_connect(db_path)
+    try:
+        cur = conn.execute("UPDATE human_input SET answered = 1 WHERE id = ?",
+                           (int(row_id),))
+        conn.commit()
+        return cur.rowcount > 0
+    finally:
+        conn.close()
+
+
 # ---------------------------------------------------------------------------
 # The unread buffer
 # ---------------------------------------------------------------------------
