@@ -70,6 +70,7 @@ if str(BASE) not in sys.path:
 from cockpit import datasources as ds          # noqa: E402
 from cockpit import expression as ex           # noqa: E402
 from cockpit import somatic as som             # noqa: E402
+from cockpit import pulse as pls               # noqa: E402
 
 # ── THE LIVE PATHS. Named ONCE, here, and passed explicitly everywhere. ──────
 STREAM_PATH = BASE / "memory" / "expression_stream.jsonl"
@@ -77,6 +78,16 @@ PENDING_PATH = BASE / "memory" / "pending_expression.json"
 QUEUE_DB = BASE / "memory" / "human_input_queue.db"
 QUARANTINE_ROOT = BASE / "memory" / "expression_quarantine"
 VECTOR_STORE = BASE / "memory" / "state_vectors.jsonl"
+
+# ── THE PULSE PRODUCER, WIRED (22 Aug 2026) ─────────────────────────────────
+# It was committed in 2fb57be with tests and NO CALLER, so the stream stayed
+# empty through two full cycles. One producer per server process, because the
+# emission rule compares against the LAST EMITTED reading and a fresh producer
+# per request would treat every reading as the first one and emit everything.
+_PULSE = pls.PulseProducer()
+
+# The last (cycle_id, step) a spine line was emitted for.
+_SPINE_SEEN = {"cycle_id": None, "step": None}
 FORKS_CACHE = BASE / "memory" / "cockpit_forks_cache.json"
 TERMINAL_LOG = BASE / "memory" / "cockpit_terminal.log"
 
@@ -602,13 +613,59 @@ def api_expression():
     })
 
 
+def _spine_if_step_changed(heartbeat: dict) -> list:
+    """One spine line per cycle step, derived from the HEARTBEAT.
+
+    The runner is the natural place to emit these and it is the live cycle's own
+    file, so it is out of bounds while one is running. This watches the heartbeat
+    instead and emits when the step name changes.
+
+    HONEST LIMIT, and it is not small: this only sees a step if the cockpit is
+    polled while that step is current. A step shorter than the poll interval is
+    missed entirely, so the spine is a sampling of the timeline rather than the
+    timeline. The line says `spine_source: heartbeat` so nobody reads it as the
+    runner's own record.
+    """
+    cid, step = heartbeat.get("cycle_id"), heartbeat.get("step")
+    if not cid or not step:
+        return []
+    if _SPINE_SEEN["cycle_id"] == cid and _SPINE_SEEN["step"] == step:
+        return []
+    _SPINE_SEEN["cycle_id"], _SPINE_SEEN["step"] = cid, step
+    line = _PULSE.spine(step, heartbeat.get("step_index") or "")
+    line["spine_source"] = "heartbeat"
+    ex.append_line(line, path=STREAM_PATH)
+    return [line]
+
+
 @app.get("/api/somatic")
 def api_somatic():
-    """Live sensor read. Mic and camera stay off unless explicitly toggled on."""
-    mic = request.args.get("mic") == "1"
-    cam = request.args.get("camera") == "1"
+    """Live sensor read, AND the pulse emission rule for what it found.
+
+    The mic/camera arguments are None unless explicitly given. They used to
+    default to False, which meant every ordinary page refresh passed an explicit
+    "off" and OVERRODE the operator's own toggle — the switch wrote true into
+    config_expression.yaml and the panel went on reading DISABLED.
+    """
+    mic = True if request.args.get("mic") == "1" else None
+    cam = True if request.args.get("camera") == "1" else None
     r = som.probe(mic_enabled=mic, camera_enabled=cam)
-    return jsonify({**r, "state_vector": som.state_vector(r)})
+
+    emitted = []
+    try:
+        emitted = _PULSE.emit(r)
+        for line in emitted:
+            ex.append_line(line, path=STREAM_PATH)
+        heartbeat = _read_json(ds.BASE / "memory" / "heartbeat.json", {}) or {}
+        emitted += _spine_if_step_changed(heartbeat)
+    except Exception as e:                                   # noqa: BLE001
+        # A failed pulse must never take the panel down: the readings are the
+        # point and the stream is a by-product.
+        emitted = [{"error": "{}: {}".format(type(e).__name__, e)}]
+
+    return jsonify({**r, "state_vector": som.state_vector(r),
+                    "pulse_emitted": len(emitted),
+                    "pulse_lines": emitted})
 
 
 @app.get("/api/somatic/selftest")
