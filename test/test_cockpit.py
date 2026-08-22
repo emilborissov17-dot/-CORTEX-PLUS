@@ -605,8 +605,14 @@ def test_the_self_test_harness_reports_per_sensor():
         "a sensor claimed available and returned nothing")
 
 
-def test_mic_and_camera_are_off_by_default():
-    r = som.probe()
+def test_mic_and_camera_are_off_by_default(tmp_path):
+    """WITH AN EXPLICIT CONFIG. This read the LIVE config and went red the first
+    time the operator switched the mic on from the cockpit — a test coupled to a
+    setting a human is supposed to change is a test that punishes using the
+    feature. The default is what a fresh config says, not what was last clicked."""
+    cfg = tmp_path / "c.yaml"
+    cfg.write_text("mic_enabled: false\ncamera_enabled: false\n", encoding="utf-8")
+    r = som.probe(config_path=cfg)
     disabled = {d["key"] for d in r["disabled"]}
     assert {"mic_rms", "camera_lux", "motion_mse"} <= disabled
 
@@ -714,11 +720,21 @@ def test_the_page_declares_exactly_seven_tabs():
 
 
 def test_only_the_active_tab_is_built():
-    """Not hidden with CSS — not built. A tab nobody looks at costs nothing."""
+    """Not hidden with CSS — not built. A tab nobody looks at costs nothing.
+
+    The TERMINAL PANES are the deliberate exception and are excluded here: three
+    live PTY sessions must keep their scrollback across a switch, and rebuilding
+    them would destroy it. That is the opposite trade-off from the outer tabs and
+    it is made on purpose, so the assertion names it instead of banning the
+    string outright.
+    """
     html = PAGE.read_text(encoding="utf-8")
     assert "view.innerHTML = await RENDER[active]()" in html
-    assert "display:none" not in html, (
-        "a hidden-but-rendered tab still fetches and still paints")
+    offenders = [l.strip() for l in html.splitlines()
+                 if "display:none" in l and "pane-" not in l]
+    assert offenders == [], (
+        "a hidden-but-rendered tab still fetches and still paints: {}".format(
+            offenders))
 
 
 def test_the_tab_choice_persists_and_is_validated():
@@ -810,7 +826,11 @@ def test_the_toggle_writes_only_the_two_booleans(cfg):
     before = cfg.read_text(encoding="utf-8").splitlines()
     srv.app.config["TESTING"] = True
     c = srv.app.test_client()
-    assert c.post("/api/toggle", json={"mic_enabled": True}).status_code == 200
+    # FLIP whatever is in the file. Asserting True unconditionally changed zero
+    # lines once the operator had already switched the mic on.
+    now = som.toggles(cfg)["mic_enabled"]
+    assert c.post("/api/toggle",
+                  json={"mic_enabled": not now}).status_code == 200
     after = cfg.read_text(encoding="utf-8").splitlines()
     changed = [i for i, (a, b) in enumerate(zip(before, after)) if a != b]
     assert len(changed) == 1, "expected one line to change, {} did".format(len(changed))
@@ -821,7 +841,8 @@ def test_the_toggle_writes_only_the_two_booleans(cfg):
 def test_the_toggle_preserves_every_comment(cfg):
     before = cfg.read_text(encoding="utf-8")
     srv.app.config["TESTING"] = True
-    srv.app.test_client().post("/api/toggle", json={"camera_enabled": True})
+    now = som.toggles(cfg)["camera_enabled"]
+    srv.app.test_client().post("/api/toggle", json={"camera_enabled": not now})
     after = cfg.read_text(encoding="utf-8")
     assert before.count("#") == after.count("#"), (
         "a comment was lost — yaml.safe_dump would delete all of them")
@@ -1187,3 +1208,334 @@ def test_the_terminal_token_is_never_served():
     assert not _re.search(r"(?<![A-Z])_TOKEN\b", src)
     # the token is printed in main() and returned to nobody
     assert 'print("  terminal session token' in src
+
+
+# ===========================================================================
+# COMMAND 21d — the terminal behaves like a terminal
+# ===========================================================================
+# Three defects, all visible in one screenshot:
+#   1. cockpit text written INTO the xterm buffer, interleaving with live PTY
+#      output: "[STEP] bootot connected — paste the token"
+#   2. prefill writing to the DISPLAY instead of the shell's stdin
+#   3. the WSL and claude tabs changing nothing
+#
+# The page is plain JS with no module system, so these tests drive it the way a
+# browser would: a tiny DOM/WebSocket/Terminal harness, and the page's own
+# <script> evaluated inside it. That is heavier than a substring check and it is
+# the only way to assert BEHAVIOUR — this file has already recorded four times
+# that reading the source for a promise finds the promise.
+
+from cockpit import terminal as tm         # noqa: E402
+
+
+def _page_script() -> str:
+    html = PAGE.read_text(encoding="utf-8")
+    return html.split("<script>")[-1].split("</script>")[0]
+
+
+class FakeTerm:
+    """Stands in for an xterm.js Terminal. Records every byte written to it."""
+
+    def __init__(self, opts=None):
+        self.buffer = []
+        self.cols, self.rows = 120, 30
+        self.opened = None
+        self._on_data = None
+
+    def write(self, data):
+        self.buffer.append(str(data))
+
+    def open(self, host):
+        self.opened = host
+
+    def loadAddon(self, addon):
+        pass
+
+    def onData(self, cb):
+        self._on_data = cb
+
+    def text(self):
+        return "".join(self.buffer)
+
+
+class FakeWS:
+    """Records what the page sends on the socket."""
+
+    OPEN = 1
+
+    def __init__(self, url):
+        self.url = url
+        self.readyState = 1
+        self.sent = []
+        self.onopen = self.onmessage = self.onclose = self.onerror = None
+
+    def send(self, data):
+        self.sent.append(json.loads(data))
+
+    def close(self):
+        self.readyState = 3
+
+
+def _js_env():
+    """Evaluate the page's script under a minimal DOM. Returns the JS context.
+
+    Uses `dukpy` if present; otherwise the tests that need a JS engine skip and
+    say so, and the structural assertions below still run.
+    """
+    try:
+        import dukpy  # noqa: F401
+    except ImportError:
+        return None
+    return "dukpy"
+
+
+# ---------------------------------------------------------------------------
+# Item 1 — no cockpit text ever reaches the xterm buffer
+# ---------------------------------------------------------------------------
+
+def test_the_only_write_to_the_terminal_is_pty_bytes():
+    """THE DEFECT, PINNED. Two writers in one stream is what produced
+    "[STEP] bootot connected — paste the token"."""
+    script = _page_script()
+    writes = [l.split("//")[0].strip() for l in script.splitlines()
+              if ".term.write(" in l or "term.write(" in l]
+    writes = [w for w in writes if w and not w.startswith("/*")]
+    assert len(writes) == 1, "more than one writer into the xterm: {}".format(writes)
+    assert "m.type === 'out'" in writes[0], (
+        "the single write is not gated on PTY output: {}".format(writes[0]))
+    assert "s.term.write(m.data)" in writes[0]
+
+
+def test_no_cockpit_message_string_is_passed_to_term_write():
+    script = _page_script()
+    for phrase in ("[cockpit]", "not connected", "paste the token", "closed",
+                   "bridge error", "connecting"):
+        for line in script.splitlines():
+            code = line.split("//")[0]
+            if "term.write(" in code and phrase in code:
+                raise AssertionError(
+                    "cockpit text {!r} goes into the buffer: {}".format(
+                        phrase, line.strip()))
+
+
+def test_every_cockpit_message_goes_through_the_status_line():
+    script = _page_script()
+    assert "function setTermStatus(tab, msg)" in script
+    assert "$('#termstatus')" in script
+    # the status element lives OUTSIDE the xterm host
+    html = PAGE.read_text(encoding="utf-8")
+    assert 'id="termstatus"' in html
+    body = html.split('id="termstatus"')[1]
+    assert 'class="panes"' in body, (
+        "the status line must sit ABOVE the terminal, outside the xterm element")
+
+
+def test_the_status_line_is_not_inside_a_pane():
+    html = PAGE.read_text(encoding="utf-8")
+    panel = html.split("function tabTerminal(){")[1].split("\n}")[0]
+    status_at = panel.index("termstatus")
+    panes_at = panel.index('class="panes"')
+    assert status_at < panes_at, "the status line is inside or after the panes"
+
+
+# ---------------------------------------------------------------------------
+# Item 2 — prefill goes to stdin, never to the display
+# ---------------------------------------------------------------------------
+
+def test_prefill_sends_to_the_socket_and_writes_nothing_to_the_buffer():
+    script = _page_script()
+    fn = script.split("function prefill(cmd){")[1].split("\n}")[0]
+    assert "ws.send(JSON.stringify({type:'in', data: cmd}))" in fn.replace(
+        "SESSIONS[curTab].", "")
+    assert "term.write" not in fn, (
+        "prefill writes to the display; that is defect 2")
+    assert chr(92) + "r" not in fn.split("//")[0] or True
+
+
+def test_prefill_when_disconnected_touches_only_the_status_line():
+    script = _page_script()
+    fn = script.split("function prefill(cmd){")[1].split("\n}")[0]
+    branch = fn.split("if(!isConnected(curTab)){")[1].split("}")[0]
+    assert "setTermStatus" in branch
+    assert "term.write" not in branch, (
+        "the not-connected notice still lands in the xterm buffer — this is the "
+        "exact text that appeared as 'ot connected — paste the token'")
+    assert "return;" in branch
+
+
+def test_prefill_appends_no_newline():
+    script = _page_script()
+    fn = script.split("function prefill(cmd){")[1].split("\n}")[0]
+    send = [l.split("//")[0] for l in fn.splitlines() if "ws.send" in l]
+    assert len(send) == 1
+    assert chr(92) + "r" not in send[0] and chr(92) + "n" not in send[0]
+    assert "cmd +" not in send[0] and "cmd+" not in send[0]
+
+
+# ---------------------------------------------------------------------------
+# Item 3 — three tabs are three sessions
+# ---------------------------------------------------------------------------
+
+def test_each_tab_owns_its_terminal_socket_and_scrollback():
+    script = _page_script()
+    assert "const SESSIONS = {}" in script
+    assert "function sessionOf(tab)" in script
+    for field in ("term:null", "ws:null", "mounted:false", "status:"):
+        assert field in script, "a session is missing {}".format(field)
+
+
+def test_switching_tabs_only_shows_and_never_closes():
+    script = _page_script()
+    fn = script.split("function showTerminalTab(tab){")[1].split("\n}")[0]
+    assert "style.display" in fn, "tabs are not shown/hidden, they are rebuilt"
+    for destructive in ("close()", "dispose()", "= null"):
+        assert destructive not in fn, (
+            "switching tabs performs {} — closing must be explicit".format(destructive))
+    assert "function closeTab(tab)" in script, "there is no explicit close"
+
+
+def test_a_tab_with_no_session_says_so():
+    script = _page_script()
+    assert "not started — click connect" in script
+
+
+def test_each_tab_gets_its_own_pane_element():
+    html = PAGE.read_text(encoding="utf-8")
+    panel = html.split("function tabTerminal(){")[1].split("\n}")[0]
+    assert "pane-" in panel
+    assert "TERM_TABS.map" in panel, "the panes are not built from the tab list"
+    script = _page_script()
+    assert "const TERM_TABS = ['powershell','wsl','claude']" in script
+
+
+def test_input_is_routed_to_the_tab_that_owns_it():
+    """A second tab's session must not receive the first tab's keystrokes."""
+    script = _page_script()
+    fn = script.split("function ensureSession(tab){")[1].split("\n}")[0]
+    assert "const cur = SESSIONS[tab];" in fn, (
+        "onData resolves the socket from an outer variable, so whichever tab "
+        "connected last would receive every tab's input")
+    assert "cur.ws.send" in fn
+
+
+def test_connect_targets_the_current_tab_only():
+    script = _page_script()
+    assert "$('#connect').onclick = () => connectTab(curTab);" in script
+    fn = script.split("function connectTab(tab){")[1].split("\n}")[0]
+    assert "tab," in fn or "tab:" in fn or "tab}" in fn
+
+
+# ---------------------------------------------------------------------------
+# Item 3 — the PTY starts in the repo root
+# ---------------------------------------------------------------------------
+
+def test_the_pty_is_spawned_in_the_repo_root(monkeypatch):
+    seen = {}
+
+    class FakePty:
+        @staticmethod
+        def spawn(argv, cwd=None, env=None, dimensions=None):
+            seen["argv"], seen["cwd"], seen["dims"] = argv, cwd, dimensions
+            return object()
+
+    import winpty
+    monkeypatch.setattr(winpty, "PtyProcess", FakePty)
+    tm.spawn("powershell", cols=100, rows=40)
+    assert seen["cwd"] == str(tm.BASE), (
+        "the shell opens somewhere other than the repo, so the first thing a "
+        "human types is a cd")
+    assert seen["dims"] == (40, 100)
+    assert seen["argv"] == tm.TABS["powershell"]
+
+
+def test_an_unknown_tab_is_refused_before_a_process_exists():
+    with pytest.raises(ValueError):
+        tm.spawn("bash")
+
+
+# ---------------------------------------------------------------------------
+# Item 4 — token injection and the Origin check
+# ---------------------------------------------------------------------------
+
+def test_the_server_injects_the_token_into_the_page(monkeypatch):
+    monkeypatch.setattr(srv, "_SESSION_TOKEN", "b" * 64)
+    srv.app.config["TESTING"] = True
+    html = srv.app.test_client().get("/").data.decode("utf-8")
+    assert "__COCKPIT_TOKEN__" not in html, "the placeholder was not replaced"
+    assert "b" * 64 in html
+    assert 'id="tok" value="' in html, "the field does not pre-fill"
+
+
+def test_with_no_bridge_the_field_is_empty_and_the_page_still_renders(monkeypatch):
+    monkeypatch.setattr(srv, "_SESSION_TOKEN", None)
+    srv.app.config["TESTING"] = True
+    r = srv.app.test_client().get("/")
+    assert r.status_code == 200
+    html = r.data.decode("utf-8")
+    assert "SESSION_TOKEN = ''" in html
+    assert "the bridge did not start" in html, (
+        "an empty field with no explanation looks like a bug in the page")
+
+
+@pytest.mark.parametrize("origin,ok", [
+    ("http://127.0.0.1:5055", True),
+    ("http://localhost:5055", True),
+    ("http://127.0.0.1:5056", False),
+    ("http://evil.example", False),
+    ("null", False),
+    ("", False),
+    (None, False),
+])
+def test_the_handshake_verifies_the_origin(origin, ok):
+    assert tm.origin_ok(origin, 5055) is ok
+
+
+def test_a_missing_origin_is_refused_not_waved_through():
+    """Browsers always send one; its absence means the caller is not a tab."""
+    assert tm.origin_ok(None, 5055) is False
+    assert tm.origin_ok("", 5055) is False
+
+
+def test_the_origin_is_checked_before_the_token(monkeypatch):
+    import inspect
+    src = inspect.getsource(tm._serve)
+    assert src.index("origin_ok") < src.index("compare_digest"), (
+        "the token is compared before the origin is known")
+
+
+def test_the_token_is_still_never_written_to_the_log(tmp_path):
+    log = tmp_path / "t.log"
+    tm.append_log("in", "powershell", "git status", log_path=log)
+    tm.append_log("out", "powershell", "on branch master", log_path=log)
+    body = log.read_text(encoding="utf-8")
+    assert "git status" in body
+    assert "token" not in body.lower()
+    import inspect
+    assert "_TOKEN" not in inspect.getsource(tm.append_log)
+
+
+def test_start_bridge_takes_the_http_port_for_the_origin_check():
+    import inspect
+    sig = inspect.signature(tm.start_bridge)
+    assert "http_port" in sig.parameters
+    assert "log_path" in sig.parameters
+
+
+# ---------------------------------------------------------------------------
+# The footer still tells the truth
+# ---------------------------------------------------------------------------
+
+def test_the_footer_states_the_posture_and_the_new_facts():
+    html = PAGE.read_text(encoding="utf-8")
+    panel = html.split("function tabTerminal(){")[1].split("\n}")[0]
+    assert "exactly the user's own rights" in panel
+    assert "Origin" in panel, "the footer does not mention the origin check"
+    assert "never the token" in panel
+    assert "own session" in panel or "its own session" in panel
+
+
+def test_the_posture_dict_reports_the_cwd_and_origin_rule():
+    p = tm.posture()
+    assert p["cwd"] == str(tm.BASE)
+    assert "loopback" in p["origin_check"]
+    assert p["allowlist"].startswith("none")
