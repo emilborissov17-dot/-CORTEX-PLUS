@@ -33,6 +33,7 @@ from __future__ import annotations
 
 import json
 import pathlib
+import sys
 from datetime import datetime, timedelta, timezone
 
 import pytest
@@ -93,7 +94,7 @@ def test_a_proposal_aged_25h_escalates(tmp_path):
     sent, sender = _capture()
     result = sla.run(improvements_path=imp, quarantine_dir=empty,
                      thresholds_path=thr, stamp_path=tmp_path / "s.json",
-                     sender=sender)
+                     sender=sender, queue_path=tmp_path / "queue.json")
 
     assert len(sent) == 1, f"{len(sent)} messages for one overdue proposal"
     assert "25" in sent[0]["text"] or "1.0 дни" in sent[0]["text"]
@@ -106,12 +107,13 @@ def test_the_same_proposal_does_not_escalate_every_cycle(tmp_path, queue):
     stamp = tmp_path / "s.json"
     sent, sender = _capture()
 
-    sla.run(**queue, stamp_path=stamp, sender=sender)
+    qf = tmp_path / "queue.json"
+    sla.run(**queue, stamp_path=stamp, sender=sender, queue_path=qf)
     first = len(sent)
     assert first >= 1
 
     for _ in range(3):
-        sla.run(**queue, stamp_path=stamp, sender=sender)
+        sla.run(**queue, stamp_path=stamp, sender=sender, queue_path=qf)
 
     assert len(sent) == first, (
         f"\n  THE SAME PROPOSALS ESCALATED {len(sent)} TIMES ACROSS 4 CYCLES.\n"
@@ -124,7 +126,8 @@ def test_the_same_proposal_does_not_escalate_every_cycle(tmp_path, queue):
 def test_a_fresh_proposal_does_not_escalate(tmp_path, queue):
     """POSITIVE CONTROL — inside the SLA there is nothing to answer for yet."""
     sent, sender = _capture()
-    result = sla.run(**queue, stamp_path=tmp_path / "s.json", sender=sender)
+    result = sla.run(**queue, stamp_path=tmp_path / "s.json", sender=sender,
+                     queue_path=tmp_path / "queue.json")
 
     assert not any("fresh one" in s["text"] for s in sent)
     fresh = [r for r in result["rows"] if "fresh" in r["title"]]
@@ -258,3 +261,167 @@ def test_the_message_offers_the_telegram_reply_form():
     text = sla.message(row)
     assert "OK imp:3" in text
     assert "24 часа" in text
+
+
+# ---------------------------------------------------------------------------
+# (f) ONE MESSAGE PER DELIVERY RUN — the 28-in-two-minutes defect
+# ---------------------------------------------------------------------------
+# On 22 Aug 2026 the first run to meet a real backlog sent 28 separate Telegram
+# messages inside two minutes. Every one of them obeyed "escalate once per
+# proposal"; together they were exactly the muted channel that rule exists to
+# prevent. The queue now speaks once per run.
+
+def _thirty(tmp_path, n=30):
+    """A fake backlog of n proposals, all long overdue, oldest first by age."""
+    imp = tmp_path / "i.json"
+    imp.write_text(json.dumps({"proposals": [
+        {"problem": f"proposal number {i}",
+         "timestamp": (datetime.now(timezone.utc)
+                       - timedelta(days=2 + i)).isoformat()}
+        for i in range(n)]}), encoding="utf-8")
+    q = tmp_path / "q"; q.mkdir()
+    thr = tmp_path / "t.json"; thr.write_text("{}", encoding="utf-8")
+    return dict(improvements_path=imp, quarantine_dir=q, thresholds_path=thr)
+
+
+def test_thirty_overdue_proposals_send_exactly_one_message(tmp_path):
+    sent, sender = _capture()
+    result = sla.run(**_thirty(tmp_path), stamp_path=tmp_path / "s.json",
+                     sender=sender, queue_path=tmp_path / "queue.json")
+
+    assert result["summary"]["overdue"] == 30
+    assert len(sent) == 1, (
+        f"\n  {len(sent)} TELEGRAM MESSAGES FOR ONE DELIVERY RUN.\n"
+        f"  This is the 22 Aug defect exactly: 28 notifications in two minutes\n"
+        f"  is not 28x the pressure of one, it is a muted channel — and the\n"
+        f"  24-hour promise dies with the channel.\n")
+    assert len(result["escalated"]) == 30, "all 30 must still be marked escalated"
+
+
+def test_the_digest_carries_the_count_the_five_oldest_and_the_reply_form(tmp_path):
+    sent, sender = _capture()
+    sla.run(**_thirty(tmp_path), stamp_path=tmp_path / "s.json", sender=sender,
+            queue_path=tmp_path / "queue.json")
+    text = sent[0]["text"]
+
+    assert "30" in text, "the count is the actual news and it is missing"
+    # oldest first: proposal 29 is 31 days old, 25 is 27 days old
+    for i in (29, 28, 27, 26, 25):
+        assert f"imp:{i}" in text, f"imp:{i} is among the five oldest and is absent"
+    assert "imp:0" not in text, "the newest proposal is in the top five"
+    assert text.count("imp:") <= sla.DIGEST_TOP + 1, "more than five were listed"
+    assert "OK <id>" in text, (
+        "a digest that names problems but not the handle to grab them by makes "
+        "the human open a laptop")
+    assert "още 25" in text, "the 25 not listed are not accounted for"
+
+
+def test_the_full_list_goes_to_the_file_the_cockpit_reads(tmp_path):
+    sent, sender = _capture()
+    qf = tmp_path / "queue.json"
+    result = sla.run(**_thirty(tmp_path), stamp_path=tmp_path / "s.json",
+                     sender=sender, queue_path=qf)
+
+    assert qf.exists(), "the phone got a headline and nothing got the table"
+    blob = json.loads(qf.read_text(encoding="utf-8"))
+    assert len(blob["rows"]) == 30
+    assert blob["summary"]["overdue"] == 30
+    assert all(r["overdue"] for r in blob["rows"])
+    assert blob["rows"][0]["age_days"] > blob["rows"][-1]["age_days"]
+    assert str(qf) in sent[0]["text"], "the message does not say where the rest is"
+    assert result["queue_file"] == str(qf)
+
+
+def test_the_queue_file_is_written_even_when_nothing_escalates(tmp_path, queue):
+    """A cockpit that only sees the queue on escalation nights sees it wrong."""
+    qf = tmp_path / "queue.json"
+    stamp = tmp_path / "s.json"
+    sent, sender = _capture()
+    sla.run(**queue, stamp_path=stamp, sender=sender, queue_path=qf)
+    qf.unlink()
+    sla.run(**queue, stamp_path=stamp, sender=sender, queue_path=qf)   # nothing new
+    assert len(sent) == 1
+    assert qf.exists(), "the second run sent nothing and also recorded nothing"
+
+
+def test_a_second_run_with_the_same_backlog_is_silent(tmp_path):
+    q = _thirty(tmp_path)
+    stamp = tmp_path / "s.json"
+    sent, sender = _capture()
+    sla.run(**q, stamp_path=stamp, sender=sender, queue_path=tmp_path / "qu.json")
+    for _ in range(3):
+        sla.run(**q, stamp_path=stamp, sender=sender, queue_path=tmp_path / "qu.json")
+    assert len(sent) == 1, f"{len(sent)} digests across four runs of one backlog"
+
+
+def test_a_single_overdue_proposal_keeps_the_per_proposal_message(tmp_path):
+    """A digest of one is a worse message than the proposal itself."""
+    sent, sender = _capture()
+    sla.run(**_thirty(tmp_path, n=1), stamp_path=tmp_path / "s.json",
+            sender=sender, queue_path=tmp_path / "queue.json")
+    assert len(sent) == 1
+    assert "OK imp:0" in sent[0]["text"], "the reply form lost the id"
+    assert "най-старите" not in sent[0]["text"]
+
+
+def test_the_batch_key_changes_when_the_backlog_does(tmp_path):
+    a = sla.digest_key(["imp:1", "imp:2"])
+    assert a == sla.digest_key(["imp:2", "imp:1"]), "order must not matter"
+    assert a != sla.digest_key(["imp:1", "imp:2", "imp:3"]), (
+        "a grown backlog reuses the old dedup key and is swallowed as a repeat")
+    assert len(sla.digest_key([f"imp:{i}" for i in range(30)])) < 40, (
+        "the key is stored in a 20k-char stamp file; 30 ids in a key would "
+        "evict the day's dedup memory")
+
+
+def test_dry_run_writes_nothing_and_sends_nothing(tmp_path):
+    qf = tmp_path / "queue.json"
+    stamp = tmp_path / "s.json"
+    result = sla.run(**_thirty(tmp_path), stamp_path=stamp, dry_run=True,
+                     queue_path=qf)
+    assert not qf.exists() and not stamp.exists(), (
+        "a dry run touched disk")
+    # escalated on a dry run is a PREVIEW of what a real run would say — the
+    # pre-existing contract, kept: it is what makes --dry-run readable.
+    assert len(result["escalated"]) == 30
+    assert result["messages_sent"] == 0
+
+
+# ---------------------------------------------------------------------------
+# (g) ALARM-CLASS EVENTS ARE NOT BATCHED
+# ---------------------------------------------------------------------------
+
+def test_the_alarm_path_still_sends_one_message_per_event(monkeypatch, tmp_path):
+    """An alarm is a thing that just happened; a queue is a standing debt whose
+    whole content is its size. Batching the first would be a defect."""
+    import supervisor
+
+    posts = []
+    monkeypatch.setattr(supervisor, "NOTIFY_CHANNEL", tmp_path / "ch.json")
+    (tmp_path / "ch.json").write_text(json.dumps(
+        {"channel": "telegram", "token": "t", "chat_id": "1"}), encoding="utf-8")
+    monkeypatch.setattr(supervisor, "ALARM_STAMP", tmp_path / "stamp.json")
+    monkeypatch.setattr(supervisor, "note_night_event", lambda *a, **k: None)
+    monkeypatch.setattr(supervisor, "_quiet_now", lambda: False)
+
+    class _Req:
+        @staticmethod
+        def post(url, json=None, timeout=None):
+            posts.append(json)
+
+    monkeypatch.setitem(sys.modules, "requests", _Req)
+
+    supervisor.alarm_human("wedged step", "daily_analysis is hung",
+                           dedup_key="a:1", trigger="AUTO")
+    supervisor.alarm_human("disk full", "3% left", dedup_key="a:2", trigger="AUTO")
+    assert len(posts) == 2, (
+        "two separate alarms arrived as one message; the SLA digest leaked into "
+        "the channel every event shares")
+
+
+def test_only_this_module_batches():
+    src = (REPO / "core" / "proposal_sla.py").read_text(encoding="utf-8")
+    assert "digest" in src
+    sup = (REPO / "supervisor.py").read_text(encoding="utf-8")
+    assert "proposal_sla" not in sup, (
+        "the supervisor imported the queue's batching; alarms would inherit it")

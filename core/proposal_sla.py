@@ -30,10 +30,33 @@ proposal that pings nightly for 27 days is how a person learns to ignore the
 channel, and then the 24-hour promise is worth less than no promise. The
 standing counter in the report is what carries the pressure after that.
 
+AND ONE MESSAGE PER DELIVERY RUN (22 August 2026)
+--------------------------------------------------
+"Once per proposal" was not enough. The first run that met a real backlog sent
+28 separate Telegram messages inside two minutes. Each one obeyed the rule
+above; together they were the thing the rule exists to prevent. Twenty-eight
+notifications is not twenty-eight times the pressure of one — it is a muted
+channel, and the 24-hour promise dies with the channel.
+
+So the queue speaks ONCE per run: how many, the five oldest with their ids, and
+the reply form. The full list goes to memory/proposal_sla_queue.json, which is
+where a cockpit reads it — the phone gets the headline, the screen gets the
+table. A single overdue proposal still gets the per-proposal message; a digest
+of one is a worse message than the thing itself.
+
+THE BATCHING IS A PROPERTY OF THIS QUEUE, NOT OF THE CHANNEL
+--------------------------------------------------------------
+Nothing here touches supervisor.alarm_human, which stays exactly what it was:
+one message per event. An alarm is a thing that just happened and may need an
+answer in minutes; a proposal queue is a standing debt whose whole content is
+its size. Batching the first would be a defect. Only this module batches, and
+only its own rows.
+
     venv\\Scripts\\python.exe core/proposal_sla.py --selftest
 """
 from __future__ import annotations
 
+import hashlib
 import json
 import pathlib
 import re
@@ -49,8 +72,10 @@ QUARANTINE = BASE / "patches" / "quarantine"
 THRESHOLDS = BASE / "memory" / "threshold_proposals.json"
 STAMP = BASE / "memory" / "proposal_sla_escalated.json"
 PENDING = BASE / "memory" / "pending_approvals.json"
+QUEUE = BASE / "memory" / "proposal_sla_queue.json"
 
 SLA_HOURS = 24
+DIGEST_TOP = 5
 
 DECIDED_FLAGS = ("approved", "rejected", "executed", "applied", "dismissed")
 
@@ -224,32 +249,107 @@ def message(row: dict) -> str:
             f"Отговори с OK {row['id']} за одобрение.")
 
 
+def digest(late: list[dict], rows: list[dict] | None = None,
+           queue_path=None, top: int = DIGEST_TOP) -> str:
+    """The ONE message a delivery run is allowed to send about the queue.
+
+    Count first, because the count is the actual news. Then the five oldest by
+    age WITH their ids, because "OK <id>" is the whole point — a digest that
+    names a problem but not the handle to grab it by makes the human open a
+    laptop, which at 02:00 means it waits another day. The rest goes to the
+    queue file; the message says how many are down there.
+    """
+    rows = rows if rows is not None else late
+    n = len(late)
+    oldest = late[:top]
+    lines = [f"⏳ CORTEX++ · {n} предложения без отговор",
+             f"просрочени над {SLA_HOURS}ч · открити общо {len(rows)}",
+             ""]
+    lines.append(f"най-старите {len(oldest)}:")
+    for r in oldest:
+        days = (r["age_hours"] or 0) / 24
+        lines.append(f"· {days:.1f} дни · {r['id']}\n  {r['title'][:70]}")
+    if n > len(oldest):
+        lines.append(f"... и още {n - len(oldest)}")
+    lines += ["", "Отговори с OK <id> за одобрение."]
+    if queue_path is not None:
+        lines.append(f"Пълен списък: {queue_path}")
+    return "\n".join(lines)
+
+
+def digest_key(ids: list[str]) -> str:
+    """A dedup key for the BATCH, so a re-run with the same backlog is silent.
+
+    Hashed rather than listed because the key is stored in alarm_human's stamp
+    file, capped at 20 000 characters — thirty ids in a key would spend a fifth
+    of that budget on one entry and evict the rest of the day's dedup memory.
+    """
+    h = hashlib.sha1("|".join(sorted(ids)).encode("utf-8")).hexdigest()[:12]
+    return f"sla:digest:{len(ids)}:{h}"
+
+
+def write_queue(rows: list[dict], path=None) -> pathlib.Path | None:
+    """The full table, for the screen. Fail-open: the phone message matters more.
+
+    Written on every non-dry run, including runs that send nothing, because a
+    cockpit that only sees the queue on escalation nights sees it wrong.
+    """
+    p = path or QUEUE
+    try:
+        p.parent.mkdir(parents=True, exist_ok=True)
+        p.write_text(json.dumps({
+            "generated_utc": _now().isoformat(),
+            "sla_hours": SLA_HOURS,
+            "summary": summary(rows),
+            "rows": [{**r, "age_days": round((r["age_hours"] or 0) / 24, 2),
+                      "overdue": (r["age_hours"] or 0) > SLA_HOURS}
+                     for r in rows],
+        }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        return p
+    except Exception as e:                                       # noqa: BLE001
+        print(f"[SLA] queue file NOT written: {type(e).__name__}: {e}")
+        return None
+
+
 def run(improvements_path=None, quarantine_dir=None, thresholds_path=None,
-        stamp_path=None, sender=None, dry_run: bool = False) -> dict:
+        stamp_path=None, sender=None, dry_run: bool = False,
+        queue_path=None) -> dict:
+    """One pass over the queue: write the full table, send at most ONE message."""
     rows = all_open(improvements_path, quarantine_dir, thresholds_path)
     late = overdue(rows)
     stamp = load_stamp(stamp_path)
 
-    escalated = []
-    for row in late:
-        if row["id"] in stamp:
-            continue
+    written = None if dry_run else write_queue(rows, queue_path)
+
+    # Everything overdue that has never been escalated. ONE message covers the
+    # whole set — see the module docstring on the 28 messages in two minutes.
+    fresh = [r for r in late if r["id"] not in stamp]
+    escalated: list[str] = []
+    if fresh:
+        ids = [r["id"] for r in fresh]
+        # A digest of one is a worse message than the proposal itself: the
+        # per-proposal form names it, ages it and hands over the reply line.
+        text = (message(fresh[0]) if len(fresh) == 1
+                else digest(fresh, rows, written))
+        key = f"sla:{ids[0]}" if len(fresh) == 1 else digest_key(ids)
         ok = True
         if not dry_run:
             try:
                 if sender is not None:
-                    sender(row["id"], message(row))
+                    sender(key, text)
                 else:
                     import supervisor
                     supervisor.alarm_human(
-                        "предложение без отговор", message(row),
-                        dedup_key=f"sla:{row['id']}", trigger="MANUAL")
+                        "предложение без отговор", text,
+                        dedup_key=key, trigger="MANUAL")
             except Exception:
                 ok = False
         if ok:
-            escalated.append(row["id"])
-            stamp[row["id"]] = {"escalated_at": _now().isoformat(),
-                                "age_hours": row["age_hours"]}
+            escalated = ids
+            for r in fresh:
+                stamp[r["id"]] = {"escalated_at": _now().isoformat(),
+                                  "age_hours": r["age_hours"],
+                                  "delivered_as": key}
 
     if not dry_run:
         save_stamp(stamp, stamp_path)
@@ -258,12 +358,16 @@ def run(improvements_path=None, quarantine_dir=None, thresholds_path=None,
     print(f"[SLA] open {s['open']} | overdue {s['overdue']} | "
           f"escalated now {len(escalated)} | oldest {s['oldest_days']} days "
           f"| {s['by_kind']}" + (" — DRY RUN" if dry_run else ""))
-    for pid in escalated[:5]:
+    if escalated:
+        print(f"[SLA] {'WOULD SEND one' if dry_run else 'one'} message covering "
+              f"{len(escalated)} proposal(s); full list -> {written}")
+    for pid in escalated[:DIGEST_TOP]:
         row = next(r for r in late if r["id"] == pid)
         print(f"[SLA] OVERDUE {pid}: {row['title'][:70]} "
               f"({(row['age_hours'] or 0) / 24:.1f} days)")
     return {"rows": rows, "overdue": late, "escalated": escalated,
-            "summary": s}
+            "summary": s, "messages_sent": 1 if (escalated and not dry_run) else 0,
+            "queue_file": str(written) if written else None}
 
 
 def for_cycle_report() -> dict:
