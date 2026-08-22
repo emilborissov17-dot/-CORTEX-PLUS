@@ -78,35 +78,139 @@ def _now() -> str:
     return datetime.now(timezone.utc).isoformat()
 
 
-def build_prompt(phase_report: str, glyph_info: dict, top_sensors: list) -> str:
-    """The whole input. Deterministic given its arguments — no hidden state."""
-    lines = [ex.SYSTEM_PROMPT, ""]
-    if glyph_info.get("glyph"):
-        lines.append("CURRENT STATE GLYPH: {}".format(glyph_info["glyph"]))
-    else:
-        lines.append(WARMING_NOTE.format(
-            label=(glyph_info.get("warming") or {}).get("label", "warming")))
-        lines.append("RAW VECTOR: {}".format(glyph_info.get("raw_summary", "")))
-    lines.append("")
-    lines.append("PHASE REPORT: {}".format(str(phase_report)[:1200]))
-    lines.append("")
-    lines.append("THREE SENSORS THAT MOVED MOST:")
-    for s in (top_sensors or [])[:3]:
-        lines.append("  {}={} ({})".format(s.get("key"), s.get("value"),
-                                           s.get("reason", "")))
-    return "\n".join(lines)
+NOTHING_MOVED = ("no sensor moved beyond its band since the last line")
 
 
 def movers(pulse_lines: list, n: int = 3) -> list:
-    """The n sensors that moved most, from the pulse producer's own lines."""
-    out = []
+    """The n sensors that moved MOST, from the pulse producer's own lines.
+
+    THIS FUNCTION USED TO LIE TWICE. It returned value=None for every sensor —
+    the value was only ever in the display string — and it took the FIRST n
+    lines rather than the largest, so "the three that moved most" was really
+    "the three that happened to be emitted first". Both are fixed by the
+    structured fields the pulse line now carries: value, unit and magnitude.
+
+    Ranked by magnitude, and a line without one (a band change on a value with
+    no previous reading, an availability flip) sorts last rather than being
+    dropped — an availability flip is often the most important thing on the
+    list even though it has no percentage.
+    """
+    rows = []
     for line in pulse_lines or []:
-        if line.get("kind") in ("move", "band", "availability") and line.get("sensor"):
-            out.append({"key": line["sensor"], "value": None,
-                        "reason": line.get("text", "")[:80]})
-        if len(out) >= n:
-            break
-    return out
+        if line.get("kind") not in ("move", "band", "availability", "first"):
+            continue
+        if not line.get("sensor"):
+            continue
+        rows.append({
+            "key": line["sensor"],
+            "value": line.get("value"),
+            "unit": line.get("unit") or "",
+            "magnitude": line.get("magnitude"),
+            "kind": line.get("kind"),
+            "reason": line.get("why") or line.get("text", "")[:80],
+        })
+    # newest wins for a sensor that moved more than once in the window
+    latest = {}
+    for r in rows:
+        latest[r["key"]] = r
+    ranked = sorted(latest.values(),
+                    key=lambda r: (r["magnitude"] is None, -(r["magnitude"] or 0.0)))
+    return ranked[:n]
+
+
+def recent_pulse(stream_path: pathlib.Path, limit: int = 120) -> list:
+    """The tail of the stream. `stream_path` is REQUIRED — no default."""
+    return [l for l in ex.read_stream(stream_path, limit=limit)
+            if l.get("depth") == ex.PULSE]
+
+
+def current_state(stream_path: pathlib.Path, glyph_info: dict,
+                  heartbeat: Optional[dict] = None,
+                  flow: Optional[dict] = None,
+                  degraded: Optional[int] = None) -> dict:
+    """Everything the model is told about NOW. All of it, or a named absence.
+
+    THE FAULT THIS REPLACES: drain() passed [] where speak() expected the three
+    sensors that moved most, so the 3b was handed a grammar, a question and no
+    state — and it filled the shape. Asked "how are you" it answered
+    "QUERY sensor_id=disk_read_mb threshold_crossed=false", which is form-valid
+    and says nothing, because there was nothing to say anything about.
+
+    An empty list is the worst possible way to express "nothing moved": it is
+    indistinguishable from "nobody looked". So a quiet system reports
+    NOTHING_MOVED as a sentence the model can answer WITH, rather than an
+    absence it has to guess the meaning of.
+    """
+    return {
+        "movers": movers(recent_pulse(stream_path)),
+        "nothing_moved": NOTHING_MOVED,
+        "glyph": glyph_info.get("glyph"),
+        "warming": (glyph_info.get("warming") or {}).get("label"),
+        "raw_summary": glyph_info.get("raw_summary"),
+        "step": (heartbeat or {}).get("step"),
+        "step_index": (heartbeat or {}).get("step_index"),
+        "cycle_id": (heartbeat or {}).get("cycle_id"),
+        "flow_score": (flow or {}).get("flow_score"),
+        "flow_band": (flow or {}).get("band"),
+        "degraded_steps": degraded,
+    }
+
+
+def render_state(state: dict) -> str:
+    """The state, as the lines the model actually sees."""
+    out = []
+    if state.get("glyph"):
+        out.append("CURRENT STATE GLYPH: {}".format(state["glyph"]))
+    else:
+        out.append(WARMING_NOTE.format(label=state.get("warming") or "warming"))
+        if state.get("raw_summary"):
+            out.append("RAW VECTOR: {}".format(state["raw_summary"]))
+
+    cyc = []
+    if state.get("step"):
+        cyc.append("step {} {}".format(state.get("step_index") or "",
+                                       state["step"]).strip())
+    if state.get("flow_score") is not None:
+        cyc.append("flow score {} ({})".format(
+            state["flow_score"], state.get("flow_band") or "unbanded"))
+    if state.get("degraded_steps") is not None:
+        cyc.append("{} DEGRADED step(s)".format(state["degraded_steps"]))
+    out.append("CYCLE: {}".format("; ".join(cyc) if cyc else "no cycle is running"))
+
+    movers_ = state.get("movers") or []
+    if movers_:
+        out.append("THREE SENSORS THAT MOVED MOST:")
+        for m in movers_:
+            mag = ("{:.0%}".format(m["magnitude"])
+                   if m.get("magnitude") is not None else "no prior reading")
+            out.append("  {}={}{} moved {} — {}".format(
+                m["key"], m.get("value"),
+                (" " + m["unit"]) if m.get("unit") else "", mag,
+                m.get("reason", "")))
+    else:
+        # NOT AN EMPTY LIST. See current_state().
+        out.append("SENSORS: {}. That is itself a fact about the system and a "
+                   "valid thing to report.".format(state.get(
+                       "nothing_moved", NOTHING_MOVED)))
+    return "\n".join(out)
+
+
+def build_prompt(phase_report: str, glyph_info: dict, top_sensors: list = None,
+                 state: Optional[dict] = None) -> str:
+    """The whole input. Deterministic given its arguments — no hidden state.
+
+    `state` is the modern argument. `top_sensors` is kept so the older two-arg
+    calls and their tests still mean what they meant, and is folded into a state
+    when no state is given.
+    """
+    st = state if state is not None else {
+        "movers": list(top_sensors or []),
+        "glyph": glyph_info.get("glyph"),
+        "warming": (glyph_info.get("warming") or {}).get("label"),
+        "raw_summary": glyph_info.get("raw_summary"),
+    }
+    return "\n".join([ex.SYSTEM_PROMPT, "", render_state(st), "",
+                      "PHASE REPORT: {}".format(str(phase_report)[:1200])])
 
 
 def call_3b(prompt: str, max_tokens: int = 160) -> str:
@@ -131,7 +235,7 @@ class ReflexProducer:
 
     def speak(self, phase_report: str, glyph_info: dict, top_sensors: list,
               stream_path: pathlib.Path, quarantine_root: pathlib.Path,
-              source: str = ex.MODEL) -> dict:
+              source: str = ex.MODEL, state: Optional[dict] = None) -> dict:
         """One expression attempt, with one retry. Both paths are REQUIRED args.
 
         Returns {emitted, text|None, attempts, rejected:[reasons], quarantined}.
@@ -142,7 +246,8 @@ class ReflexProducer:
                     "why": "per-cycle budget of {} calls is spent".format(
                         self.max_calls)}
 
-        prompt = build_prompt(phase_report, glyph_info, top_sensors)
+        prompt = build_prompt(phase_report, glyph_info, top_sensors,
+                              state=state)
         rejected = []
         raw = None
 

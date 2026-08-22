@@ -225,11 +225,23 @@ def validate(text: str) -> Verdict:
 
 # The prompt the generator must use. Hardcoded here, not in a config file: a
 # grammar that can be widened by editing a yaml is a grammar that will be.
+# FORM AND FIDELITY ARE TWO DIFFERENT CONSTRAINTS, and until 22 Aug 2026 this
+# contract only carried the first. Handed real state — cpu_percent up 23% —
+# the 3b produced "QUERY sensor_id=CPU_PERCENT threshold_crossed=-0.01%
+# step_ago=3 steps": the right SENSOR, taken from the state, wrapped around two
+# numbers it made up and a field that does not exist. Form-valid and false.
+#
+# A grammar that says nothing about where the numbers come from gets numbers
+# from wherever. The fidelity rule is stated as flatly as the form rules, and
+# for the same reason they are hardcoded here rather than in a yaml.
 SYSTEM_PROMPT = """You emit one line for a machine log.
 The first token MUST be exactly one of: STATUS QUERY HYPOTHESIS ANOMALY.
 STATUS must contain exactly one state glyph of the form D<number>.
 ANOMALY must cite sensor_id=<name> and name the threshold crossed.
 Do not use first person. Do not use emotional words. Do not use simile or metaphor.
+EVERY sensor name, number and unit you write MUST be copied from the STATE above.
+Do not invent a value, a percentage, a threshold or a field name. If the state
+does not contain what you would need, report what it does contain instead.
 Maximum 120 tokens. Output the single line and nothing else."""
 
 

@@ -44,6 +44,8 @@ from cockpit import reflex as rx          # noqa: E402
 from cockpit import vector as vec         # noqa: E402
 
 STREAM = BASE / "memory" / "expression_stream.jsonl"
+HEARTBEAT = BASE / "memory" / "heartbeat.json"
+CONTRACT = BASE / "memory" / "step_contract_latest.json"
 QUEUE_DB = BASE / "memory" / "human_input_queue.db"
 QUARANTINE = BASE / "memory" / "expression_quarantine"
 VECTOR_STORE = BASE / "memory" / "state_vectors.jsonl"
@@ -56,6 +58,37 @@ def glyph_now() -> dict:
     return vec.glyph_for(vec.assemble(), store_path=VECTOR_STORE)
 
 
+def _read(path: pathlib.Path, default=None):
+    try:
+        return json.loads(pathlib.Path(path).read_text(encoding="utf-8"))
+    except Exception:
+        return default
+
+
+def state_now() -> dict:
+    """The whole state handed to the model: movers, flow, step, DEGRADED, warming.
+
+    Assembled here rather than inside speak() because every field comes from a
+    different file on disk, and speak() takes its inputs as arguments so a test
+    can hand it a state without a filesystem.
+    """
+    heartbeat = _read(HEARTBEAT, {}) or {}
+    contract = _read(CONTRACT, {}) or {}
+    steps = contract.get("steps") if isinstance(contract, dict) else None
+    degraded = (sum(1 for x in steps
+                    if isinstance(x, dict) and x.get("verdict") == "DEGRADED")
+                if isinstance(steps, list) else None)
+    flow = None
+    try:
+        from core import flow_score as fs
+        score = fs.compute()
+        flow = score.as_dict() if hasattr(score, "as_dict") else dict(score)
+    except Exception:
+        flow = None
+    return rx.current_state(STREAM, glyph_now(), heartbeat=heartbeat,
+                            flow=flow, degraded=degraded)
+
+
 def drain(producer: rx.ReflexProducer, db_path: pathlib.Path,
           stream_path: pathlib.Path, quarantine_root: pathlib.Path,
           dry_run: bool = False) -> list:
@@ -66,6 +99,7 @@ def drain(producer: rx.ReflexProducer, db_path: pathlib.Path,
         return [{"would_answer": r["id"], "text": r["text"]} for r in rows]
 
     g = glyph_now()
+    st = state_now()
     out = []
     for row in rows:
         if producer.budget_left() <= 0:
@@ -73,7 +107,8 @@ def drain(producer: rx.ReflexProducer, db_path: pathlib.Path,
             break
         res = producer.speak(
             "A human asked, in the cockpit: {}".format(row["text"])[:600],
-            g, [], stream_path=stream_path, quarantine_root=quarantine_root)
+            g, None, stream_path=stream_path, quarantine_root=quarantine_root,
+            state=st)
         if res["emitted"]:
             ex.queue_mark_answered(row["id"], db_path=db_path)
         out.append({"id": row["id"], "question": row["text"], **res})
@@ -114,8 +149,8 @@ def phase_line(producer: rx.ReflexProducer, seen_path: pathlib.Path,
     report = "Phase {} of cycle {}: accepted={} attempts={} seconds={}".format(
         blob.get("phase"), cycle, blob.get("accepted"), blob.get("attempts"),
         blob.get("seconds"))
-    res = producer.speak(report, glyph_now(), [], stream_path=stream_path,
-                         quarantine_root=quarantine_root)
+    res = producer.speak(report, glyph_now(), None, stream_path=stream_path,
+                         quarantine_root=quarantine_root, state=state_now())
     seen.setdefault("seen", []).append(key)
     pathlib.Path(seen_path).parent.mkdir(parents=True, exist_ok=True)
     pathlib.Path(seen_path).write_text(json.dumps(seen, ensure_ascii=False,

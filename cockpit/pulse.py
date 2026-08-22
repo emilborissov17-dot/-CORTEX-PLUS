@@ -192,6 +192,14 @@ class PulseProducer:
 
         out = []
         for row, reason in changed:
+            # THE STRUCTURED FIELDS ARE THE POINT, not decoration. A downstream
+            # reader had to parse "gpu_power_w=35.1 W (moved 15%)" back out of a
+            # display string to learn anything, so it did not — reflex.movers()
+            # returned value=None for every sensor. value, unit and magnitude
+            # travel beside the text now, and magnitude is what makes "the three
+            # that moved MOST" answerable at all.
+            prev = self.last_emitted.get(row["key"]) or {}
+            magnitude = _relative_move(row.get("value"), prev.get("value"))
             self.last_emitted[row["key"]] = dict(row)
             self._recent.append(t)
             out.append(ex.make_line(
@@ -201,7 +209,10 @@ class PulseProducer:
                                       (" " + row["unit"]) if row.get("unit") else "",
                                       reason["reason"]),
                 source_tag="sensor", reflexivity=0,
-                kind=reason["kind"], sensor=row["key"]))
+                kind=reason["kind"], sensor=row["key"],
+                value=row.get("value"), unit=row.get("unit", ""),
+                magnitude=(round(magnitude, 4) if magnitude is not None else None),
+                band=row.get("band"), why=reason["reason"]))
         return out
 
 
