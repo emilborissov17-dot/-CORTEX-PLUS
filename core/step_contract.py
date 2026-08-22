@@ -65,6 +65,18 @@ SLOW_FACTOR = 3.0
 OK, NO_EFFECT, SLOW, MISSING, RAISED, UNKNOWN = (
     "OK", "NO_EFFECT", "SLOW", "MISSING", "RAISED", "UNKNOWN")
 
+# DEGRADED — the step ran, produced something, and did it on a weaker footing than
+# it was supposed to: the cloud was gone and a local model answered, or no model
+# answered at all and the step carried on without one.
+#
+# It is a VERDICT and not an exception on purpose (core/step_budget.py). The whole
+# point of the ladder is that the cycle CONTINUES, so nothing raises — which means
+# that without a verdict of its own, a degraded step is indistinguishable in the
+# trace from one that did its job properly. That is the same silence NO_EFFECT was
+# invented to break, one level up: not "did it touch anything" but "did it think
+# with what it was meant to think with".
+DEGRADED = "DEGRADED"
+
 
 def _now() -> str:
     return datetime.now(timezone.utc).isoformat()
@@ -146,12 +158,22 @@ def usual_files(record: dict) -> set[str]:
 # ---------------------------------------------------------------------------
 
 def judge(label: str, seconds: float, files: list[str],
-          error: str | None, baseline: dict) -> tuple[str, str]:
+          error: str | None, baseline: dict,
+          degraded: str | None = None) -> tuple[str, str]:
     record = baseline.get(label) or {}
     runs = record.get("runs", [])
 
     if error:
         return RAISED, f"raised {error}"
+
+    # DEGRADED outranks everything below it and is deliberately checked BEFORE
+    # the warmup guard. UNKNOWN means "no baseline yet, no opinion"; but a step
+    # that ran without the model it needed is a fact about THIS run, not a
+    # comparison against history, and it is knowable on the first night. Letting
+    # warmup swallow it would hide the verdict for the first three runs of every
+    # new step — which is exactly when a human is watching.
+    if degraded:
+        return DEGRADED, degraded
 
     if len(runs) < WARMUP_CYCLES:
         return UNKNOWN, (f"warming up: {len(runs)} of {WARMUP_CYCLES} runs "
@@ -195,6 +217,38 @@ def substeps_for(label: str, callmap_path: pathlib.Path | None = None) -> list[d
 # The wrapper
 # ---------------------------------------------------------------------------
 
+# The contract for the step that is running right now, or None between steps.
+#
+# WHY A MODULE GLOBAL. The thing that discovers a degradation is the LLM layer
+# (core/groq_backend.call_groq_meta), which is reached from 127 call sites across
+# 25 files and has no idea which step it is inside. Threading a contract object
+# through all of them is a refactor with no owner and no test. A step is a serial
+# region of one process, so "the contract that is currently open" is a true
+# description of it — the same reasoning core/step_budget.py uses for its account.
+_CURRENT: "StepContract | None" = None
+
+
+def current() -> "StepContract | None":
+    return _CURRENT
+
+
+def note_degraded_on_current(reason: str) -> bool:
+    """Record a degradation against whatever step is running. True if it landed.
+
+    False means there was no open contract — a call made outside a step, from a
+    script or a selftest. That is not an error, but it IS a call whose degradation
+    nobody will see, so the caller is told rather than left to assume.
+    """
+    c = _CURRENT
+    if c is None:
+        return False
+    try:
+        c.note_degraded(reason)
+        return True
+    except Exception:
+        return False
+
+
 class StepContract:
     """Wraps one _run(). Records the footprint, judges it, reports it."""
 
@@ -210,6 +264,11 @@ class StepContract:
         self.announce = announce
         self.baseline = load_baseline(baseline_path)
         self.error: str | None = None
+        # Set by note_degraded(). Kept off judge()'s error path deliberately: a
+        # degraded step did not raise, and calling it RAISED would be a lie in the
+        # other direction.
+        self.degraded: str | None = None
+        self.degraded_count = 0
         self.result: dict | None = None
         self._timer: threading.Timer | None = None
 
@@ -232,9 +291,11 @@ class StepContract:
         self._timer.start()
 
     def __enter__(self) -> "StepContract":
+        global _CURRENT
         self.started = time.time()
         self.before = snapshot(self.base, self.watched)
         self._arm_slow_warning()
+        _CURRENT = self
         return self
 
     def __exit__(self, exc_type, exc, tb) -> bool:
@@ -249,11 +310,37 @@ class StepContract:
         """For a step whose own except-block ate the exception."""
         self.error = error
 
+    def note_degraded(self, reason: str) -> None:
+        """The step ran on a weaker footing than intended — see DEGRADED above.
+
+        Accumulates rather than overwrites: one step can make many model calls and
+        degrade on several of them, and "3 of 12 calls fell to the local model" is
+        a different fact from "one did". Only the FIRST reason is kept in full;
+        the rest are counted, because the report has to stay readable.
+        """
+        if not reason:
+            return
+        self.degraded_count = getattr(self, "degraded_count", 0) + 1
+        if not getattr(self, "degraded", None):
+            self.degraded = reason
+
     def finish(self) -> dict:
+        global _CURRENT
+        if _CURRENT is self:
+            # Cleared FIRST. Everything below writes files, and a degradation
+            # noted by one of those writes would land on a contract that has
+            # already been judged — recorded nowhere, or worse, carried into the
+            # next step.
+            _CURRENT = None
         seconds = round(time.time() - self.started, 2)
         after = snapshot(self.base, self.watched)
         files = touched(self.before, after)
-        verdict, why = judge(self.label, seconds, files, self.error, self.baseline)
+        degraded_note = self.degraded
+        if degraded_note and self.degraded_count > 1:
+            degraded_note = "{} (and {} more degraded call(s) in this step)".format(
+                degraded_note, self.degraded_count - 1)
+        verdict, why = judge(self.label, seconds, files, self.error, self.baseline,
+                             degraded=degraded_note)
 
         record = self.baseline.setdefault(self.label, {"runs": []})
         record["runs"] = (record["runs"] + [{"ts": _now(), "seconds": seconds,
@@ -271,6 +358,8 @@ class StepContract:
             "verdict": verdict, "why": why,
             "touched": files[:40], "touched_count": len(files),
             "error": self.error,
+            "degraded": self.degraded,
+            "degraded_calls": self.degraded_count,
             "runs_recorded": len(record["runs"]),
         }
         if verdict != OK:

@@ -402,6 +402,55 @@ def _call_gemini(prompt: str, max_tokens: int):
     return cand["content"]["parts"][0]["text"], {"finish_reason": finish_reason}
 
 
+def _note_degraded(reason: str) -> None:
+    """Tell the running step it is working on a weaker footing than intended.
+
+    Fail-open and quiet about its own failure: the point is to make a degradation
+    visible, and a crash here would take down the very call that was trying to
+    stay alive. When there is no open step (a script, a selftest) the note has
+    nowhere to land, and that is fine — it is said on stdout either way by the
+    caller.
+    """
+    try:
+        from core.step_contract import note_degraded_on_current
+        note_degraded_on_current(reason)
+    except Exception:
+        pass
+
+
+def _call_local_as(model_id: str, prompt: str, max_tokens: int):
+    """_call_local for an EXPLICIT model, so the ladder can name its tier.
+
+    The ladder needs to ask for 3b and 8b by name; _call_local asks
+    core/model_window for whichever one is currently legal. Both paths exist on
+    purpose — a caller with no opinion should get the policy's answer, and the
+    ladder, which IS expressing an opinion about tiers, should get what it asked
+    for. The window still has the last word: it is consulted for keep_alive, and
+    the ladder is only ever handed the 8b tier while the window is open.
+    """
+    num_predict = max(64, min(int(max_tokens), 1024))
+    try:
+        from core import model_window as _mw
+        keep_alive = _mw.keep_alive_for(model_id)
+    except Exception:
+        keep_alive = "30m"
+    body = {"model": model_id, "stream": False,
+            "messages": [{"role": "system", "content": _system_msg()},
+                         {"role": "user", "content": prompt}],
+            "keep_alive": keep_alive,
+            "options": {"temperature": 0.4, "num_predict": num_predict}}
+    try:
+        r = requests.post(f"{_OLLAMA_URL}/api/chat", json=body, timeout=300)
+    except requests.exceptions.Timeout:
+        raise RuntimeError(f"local model {model_id} cold-start >300s")
+    if r.status_code != 200:
+        raise RuntimeError(f"local model HTTP {r.status_code}")
+    content = ((r.json().get("message") or {}).get("content") or "").strip()
+    if not content:
+        raise ValueError("empty response from local model")
+    return content, {"finish_reason": "stop", "degraded": True}
+
+
 def _call_local(prompt: str, max_tokens: int):
     """Last-resort sovereign brain over Ollama HTTP (:11434). Called ONLY when all
     four cloud backends are cooling. Returns (content, meta) or raises. No external
@@ -558,55 +607,112 @@ def call_groq_meta(prompt: str, max_tokens: int = 1024,
         print(f"  [LLM] cloud skipped -- {_why}")
         backends = []
 
-    for label, key, fn in backends:
-        if _policy.is_disabled(key):
-            print(f"  [LLM] {label} disabled for this run -- skipping")
-            continue
-        if _is_cooling(key):
-            print(f"  [LLM] {label} in cooldown -- skipping")
-            continue
-        try:
-            result, meta = fn(prompt, max_tokens)
-            if result and result.strip():
-                _clear_cooldown(key)  # healthy again → reset its escalation
-                meta = dict(meta or {})
-                meta["backend"] = label
-                meta["model"] = _model_for(label)
-                if meta.get("finish_reason") == "length":
-                    print(f"[LLM] {label} OK (finish_reason=length — ОТРЯЗАН отговор)")
-                elif meta.get("used_reasoning_fallback"):
-                    print(f"[LLM] {label} OK (внимание: празен content, ползван е reasoning)")
-                else:
-                    print(f"[LLM] {label} OK")
-                _log_provenance(label, prompt, result)
-                _policy.note_cloud_success()
-                return result, meta
-            raise ValueError(f"Empty response from {label}")
-        except Exception as e:
-            _policy.note_failure(key, e)
-            print(f"  [LLM] {label} failed ({e}) -- next...")
-            last_error = e
+    # ── THE LADDER (22 Aug 2026) ────────────────────────────────────────────
+    # Until today this function walked cloud -> cloud -> cloud -> cloud -> local
+    # with no timeout the CALLER controlled. A provider that accepts a connection
+    # and then says nothing blocks here for as long as its own socket timeout
+    # allows; the step stops beating; the ceiling passes; the watchdog kills the
+    # whole cycle for one step's unavailable model. That is the shape of all six
+    # internet_intelligence kills in the existence ledger.
+    #
+    # core/step_budget.py spends the step's budget B in thirds and never blocks
+    # past a slice. The three tiers are the same three that were always here —
+    # what changes is that each one is ABANDONED at its slice instead of waited
+    # on, and that running out means DEGRADED rather than a dead cycle.
+    #
+    # The cloud tier below is the ENTIRE original chain, unchanged, moved into a
+    # closure: cooldowns, the policy gate, provenance, per-backend logging. This
+    # is a change to how long it may take, not to how it chooses.
 
-    # LAST RESORT: all four cloud backends failed/cooling → local sovereign brain,
-    # so the axis stays alive (degraded) instead of dying with LLM_FAILED. Clearly
-    # labelled so the self-model knows this answer was local. (Task #16; Emil-approved
-    # relaxation of the "no Ollama in scoring" convention for this blackout case only.)
+    def _cloud_chain():
+        nonlocal last_error
+        for label, key, fn in backends:
+            if _policy.is_disabled(key):
+                print(f"  [LLM] {label} disabled for this run -- skipping")
+                continue
+            if _is_cooling(key):
+                print(f"  [LLM] {label} in cooldown -- skipping")
+                continue
+            try:
+                result, meta = fn(prompt, max_tokens)
+                if result and result.strip():
+                    _clear_cooldown(key)  # healthy again → reset its escalation
+                    meta = dict(meta or {})
+                    meta["backend"] = label
+                    meta["model"] = _model_for(label)
+                    if meta.get("finish_reason") == "length":
+                        print(f"[LLM] {label} OK (finish_reason=length — ОТРЯЗАН отговор)")
+                    elif meta.get("used_reasoning_fallback"):
+                        print(f"[LLM] {label} OK (внимание: празен content, ползван е reasoning)")
+                    else:
+                        print(f"[LLM] {label} OK")
+                    _log_provenance(label, prompt, result)
+                    _policy.note_cloud_success()
+                    return result, meta
+                raise ValueError(f"Empty response from {label}")
+            except Exception as e:
+                _policy.note_failure(key, e)
+                print(f"  [LLM] {label} failed ({e}) -- next...")
+                last_error = e
+        return None                      # None => this tier declined, next tier
+
+    def _local_tier(model_id: str):
+        def _go():
+            try:
+                result, meta = _call_local_as(model_id, prompt, max_tokens)
+            except Exception as e:
+                nonlocal_err.append(e)
+                return None
+            meta = dict(meta or {})
+            meta["backend"] = f"local:{model_id}"
+            meta["model"] = model_id
+            meta["degraded"] = True
+            _log_provenance(f"local:{model_id}", prompt, result)
+            return result, meta
+        return _go
+
+    nonlocal_err: list = []
+
+    from core import step_budget as _budget
+    from core import model_window as _mw
+    _small = _mw.small_model()
+    _big = _mw.big_model()
+
+    res = _budget.run_call(
+        cloud=_cloud_chain,
+        local_3b=_local_tier(_small),
+        # The 8b tier is offered only when the window is open. Outside it, handing
+        # step_budget a callable that loads 8b would evict the pinned 3b mid-step —
+        # the exact churn core/model_window.py exists to stop — and the ladder's
+        # own CRITICAL check is about priority, not residency.
+        local_8b=_local_tier(_big) if _mw.is_open() else None,
+    )
+
+    if res.outcome == _budget.OK and res.value is not None:
+        result, meta = res.value
+        if res.tier != _budget.CLOUD:
+            _note_degraded(
+                f"answered by {res.tier} ({meta.get('model')}) after the cloud "
+                f"tier was abandoned at its slice of B={res.budget_sec:.0f}s")
+            print(f"[LLM] cloud abandoned -> {res.tier} {meta.get('model')} OK "
+                  f"(DEGRADED)")
+        return result, meta
+
+    # Nothing answered inside B. The step is TOLD, and then the original exception
+    # is raised so that 127 existing call sites keep the contract they were written
+    # against (a string, or AllBackendsFailedError). What is new is that the
+    # degradation is on the record BEFORE the raise — _run()'s `except Exception`
+    # prints one line and carries on, and a step that carried on without a model
+    # used to be indistinguishable from one that worked.
     if _cloud_ok:
         # Only count it when the cloud was actually attempted. A call that
         # skipped the cloud by policy must not push the counter further.
         _policy.note_all_cloud_failed()
-
-    try:
-        result, meta = _call_local(prompt, max_tokens)
-        meta = dict(meta or {})
-        meta["backend"] = f"local:{_LOCAL_MODEL}"
-        meta["model"] = _LOCAL_MODEL
-        print(f"[LLM] ALL cloud backends down -> LOCAL {_LOCAL_MODEL} OK (DEGRADED)")
-        _log_provenance(f"local:{_LOCAL_MODEL}", prompt, result)
-        return result, meta
-    except Exception as e:
-        print(f"  [LLM] local last-resort failed ({e})")
-        last_error = e
+    if nonlocal_err:
+        last_error = nonlocal_err[-1]
+    _note_degraded("no tier answered within B={:.0f}s ({})".format(
+        res.budget_sec, res.reason))
+    print(f"  [LLM] DEGRADED: {res.reason}")
 
     raise AllBackendsFailedError(
         f"All LLM backends failed (Groq/Cerebras/OpenRouter/Gemini + local). "

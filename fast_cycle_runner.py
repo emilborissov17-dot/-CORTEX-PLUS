@@ -592,6 +592,20 @@ def _run(label, fn, free_after=False):
         _contract.__enter__()
     except Exception:
         _contract = None
+    # ── ЕДИН БЮДЖЕТ ЗА СТЪПКАТА, ПОДЕЛЕН ОТ ВСИЧКИ ѝ ПОВИКВАНИЯ (22 авг) ───
+    # Opened here so every call_groq_meta inside fn() draws from the same B.
+    # daily_analysis made 24 model calls in one run on 20 Aug; giving each of
+    # them B would have been a budget of 24xB, which is not a budget.
+    # The step's priority decides only one thing — whether the 8b tier is on the
+    # ladder at all (config/step_priority.json says so in its own README).
+    try:
+        from core import step_budget as _sb
+        from core.cycle_map import ALIASES as _AL0
+        from core.survival_mode import priority_of as _prio
+        _sb.begin_step(_AL0.get(label, label), _prio(_AL0.get(label, label)))
+    except Exception as e:
+        print(f"[FAST_CYCLE] step_budget.begin_step({label}) -> "
+              f"{type(e).__name__}: {e}")
     _completed = False
     try:
         fn()
@@ -604,6 +618,21 @@ def _run(label, fn, free_after=False):
         if _contract is not None:
             _contract.note_swallowed(f"{type(e).__name__}: {e}")
     finally:
+        # Closed BEFORE the contract is judged: the contract's verdict depends on
+        # what this account recorded, so a spend summary that lands afterwards
+        # describes a step that has already been sentenced.
+        try:
+            from core import step_budget as _sb
+            _spent = _sb.end_step()
+            if _spent and _spent.get("calls"):
+                print("[BUDGET] {}: {} model call(s), {:.0f}s of B={:.0f}s, "
+                      "tiers={} degraded={}".format(
+                          label, _spent["calls"], _spent["spent"],
+                          _spent["budget"].seconds, _spent["tiers"] or "{}",
+                          _spent["degraded_calls"]))
+        except Exception as e:
+            print(f"[FAST_CYCLE] step_budget.end_step({label}) -> "
+                  f"{type(e).__name__}: {e}")
         if _contract is not None:
             try:
                 _contract.finish()

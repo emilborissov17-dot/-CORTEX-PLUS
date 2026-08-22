@@ -72,6 +72,12 @@ BUDGET_FACTOR = 1.5
 # would degrade on arithmetic rather than on evidence. 30s => 10s per tier.
 MIN_BUDGET_SEC = 30.0
 
+# The smallest per-tier slice worth attempting. Below this a step's account counts
+# as empty — see run_call(). Not a tuning knob: it is the claim that no model on
+# this machine answers in under a second (the fastest measured warm 3b call is
+# ~7s), so a slice smaller than this buys a socket and nothing else.
+MIN_TIER_SEC = 1.0
+
 OK = "OK"
 DEGRADED = "DEGRADED"
 
@@ -337,6 +343,138 @@ def run_with_ladder(step: str,
         "step marked DEGRADED, cycle continues".format(
             budget.seconds, ", ".join(
                 "{}={}".format(a.tier, a.outcome) for a in attempts)))
+
+
+# ---------------------------------------------------------------------------
+# ONE BUDGET PER STEP, SHARED BY EVERY CALL THE STEP MAKES
+# ---------------------------------------------------------------------------
+#
+# run_with_ladder() above spends B on ONE attempt-chain. A real step does not make
+# one model call — daily_analysis made 24 in a single run on 20 Aug. Handing each
+# of them the full B would give that step a budget of 24 x B, which is not a
+# budget. So the step opens an account, every call draws from what is left, and
+# when it is empty the remaining calls degrade immediately without touching the
+# network.
+#
+# Deliberately module-level rather than passed down: 127 call sites reach
+# call_groq_meta, across 25 files, and threading a budget object through all of
+# them is a refactor with no owner. A step is a serial, single-threaded region of
+# one process, so a process-global "current step" is a true description of it. The
+# lock is for the daemon threads run_with_ladder abandons, not for concurrency.
+
+_step_lock = threading.Lock()
+_open_step: Optional[dict] = None
+
+
+def begin_step(step: str, priority: str = NORMAL,
+               baseline: Optional[dict] = None,
+               ceilings: Optional[dict] = None) -> dict:
+    """Open this step's account. Idempotent per step; re-opening resets it."""
+    global _open_step
+    budget = budget_for(step, baseline, ceilings)
+    with _step_lock:
+        _open_step = {
+            "step": step,
+            "priority": priority,
+            "budget": budget,
+            "spent": 0.0,
+            "calls": 0,
+            "degraded_calls": 0,
+            "tiers": {},
+            "started": time.monotonic(),
+        }
+        return dict(_open_step)
+
+
+def end_step() -> Optional[dict]:
+    """Close the account and return what it spent. None if none was open."""
+    global _open_step
+    with _step_lock:
+        if _open_step is None:
+            return None
+        out = dict(_open_step)
+        out["wall_sec"] = round(time.monotonic() - out["started"], 3)
+        _open_step = None
+    return out
+
+
+def current_step() -> Optional[dict]:
+    with _step_lock:
+        return dict(_open_step) if _open_step is not None else None
+
+
+def remaining_sec() -> Optional[float]:
+    with _step_lock:
+        if _open_step is None:
+            return None
+        return max(0.0, _open_step["budget"].seconds - _open_step["spent"])
+
+
+def run_call(cloud: Optional[Callable] = None,
+             local_3b: Optional[Callable] = None,
+             local_8b: Optional[Callable] = None,
+             now: Callable = time.monotonic) -> LadderResult:
+    """One model call, laddered, charged to the OPEN STEP's account.
+
+    With no step open this still works — it just gets a default budget and keeps
+    no running total, so a call made outside a step (a script, a selftest) is
+    never blocked by an account that does not exist.
+    """
+    state = current_step()
+    if state is None:
+        return run_with_ladder("_no_step", NORMAL,
+                               Budget("_no_step", MIN_BUDGET_SEC * 2, "default", 0),
+                               cloud, local_3b, local_8b, now)
+
+    left = remaining_sec() or 0.0
+    # WHY NOT `left <= 0` (measured, not reasoned): each call spends a THIRD of
+    # what remains, so the account decays geometrically and never actually
+    # reaches zero. Four abandoned calls against B=0.9s left 0.171s. The total
+    # spend is still bounded by B, so the step's clock was safe — but the
+    # "degrade without touching the network" branch was unreachable, and the step
+    # went on making calls with slices of 0.3s, 0.2s, 0.13s, none of which any
+    # model could answer in. Useless calls that still cost a socket.
+    #
+    # So the account is empty when no TIER could land in its slice. One second is
+    # generous for that: the fastest real answer measured on this box is ~7s.
+    # In production this floor never binds — real budgets are 900-3600s, so the
+    # slices are 300-1200s.
+    if left / 3.0 < MIN_TIER_SEC:
+        # The step has spent its budget. Not an error and not a kill: the step
+        # keeps running, it just stops being allowed to wait for models.
+        res = LadderResult(
+            state["step"], DEGRADED, None, None, state["budget"].seconds, 0.0,
+            [Attempt(CLOUD, SKIPPED, 0.0, "step budget exhausted")],
+            "step budget of {:.0f}s already spent by {} earlier call(s); this one "
+            "degrades without waiting".format(state["budget"].seconds,
+                                              state["calls"]))
+        _charge(0.0, res)
+        return res
+
+    # The per-call budget is EXACTLY what is left, so the thirds shrink as the
+    # step spends. No MIN_BUDGET_SEC floor here, and that is the whole point:
+    # the floor belongs to budget_for(), which sets the STEP's budget, and
+    # applying it again per call let a call be granted 30s out of an account
+    # holding 6 — measured, first run of this code: "1 model call, 10s of B=6s".
+    # A budget that a call may exceed is not a budget, it is a suggestion.
+    call_budget = Budget(state["step"], left,
+                         state["budget"].source, state["budget"].runs_seen)
+    res = run_with_ladder(state["step"], state["priority"], call_budget,
+                          cloud, local_3b, local_8b, now)
+    _charge(res.elapsed_sec, res)
+    return res
+
+
+def _charge(seconds: float, res: LadderResult) -> None:
+    with _step_lock:
+        if _open_step is None:
+            return
+        _open_step["spent"] += float(seconds or 0.0)
+        _open_step["calls"] += 1
+        if res.outcome == DEGRADED:
+            _open_step["degraded_calls"] += 1
+        if res.tier:
+            _open_step["tiers"][res.tier] = _open_step["tiers"].get(res.tier, 0) + 1
 
 
 # ---------------------------------------------------------------------------
