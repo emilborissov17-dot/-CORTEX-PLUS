@@ -107,7 +107,9 @@
   .sw{border-color:#5c2424;color:var(--dim)}
   .sw.on{border-color:var(--grn);color:var(--grn)}
   details summary{cursor:pointer;color:var(--dim);font-size:11px}
-  #term{height:calc(100vh - var(--bar) - var(--ctl) - 120px);min-height:300px}
+  .panes,.pane{height:calc(100vh - var(--bar) - var(--ctl) - 150px);min-height:280px}
+  .termstatus{font-size:11px;color:var(--yel);background:#0a0d11;border:1px solid var(--line);
+              border-bottom:none;border-radius:3px 3px 0 0;padding:3px 8px;min-height:20px}
   .foot{color:var(--dim);font-size:11px;padding:4px 0}
 </style>
 </head>
@@ -158,6 +160,9 @@ const TABS = [
   {id:'terminal',   name:'TERMINAL'},
 ];
 const KEY = 'cortex.cockpit.tab';
+const SESSION_TOKEN = '__COCKPIT_TOKEN__';   // injected by the server
+const TERM_TABS = ['powershell','wsl','claude'];
+let curTab = 'powershell';
 let active = localStorage.getItem(KEY) || 'overview';
 if (!TABS.some(t => t.id === active)) active = 'overview';
 let hasData = {};
@@ -353,19 +358,25 @@ async function tabPending(){
 }
 
 function tabTerminal(){
+  const panes = TERM_TABS.map(t =>
+    `<div id="pane-${t}" class="pane" style="display:none"></div>`).join('');
+  const btns = [['powershell','PowerShell'],['wsl','WSL Ubuntu'],['claude','claude']]
+    .map(([id,label]) => `<button data-tt="${id}" class="tabbtn">${label}</button>`).join('');
   return `<div class="grid">${panel('Terminal', `
     <div class="ctlrow" style="margin-bottom:6px">
-      <button data-tt="powershell" class="tabbtn active">PowerShell</button>
-      <button data-tt="wsl" class="tabbtn">WSL Ubuntu</button>
-      <button data-tt="claude" class="tabbtn">claude</button>
-      <input type="text" id="tok" placeholder="session token (printed on the launch console)"
-             style="flex:1;min-width:260px;background:#0a0d11;border:1px solid var(--line);color:var(--ink);padding:4px 8px;border-radius:3px;font:inherit">
+      ${btns}
+      <input type="text" id="tok" value="${esc(SESSION_TOKEN)}"
+             placeholder="session token (injected by the server)"
+             style="flex:1;min-width:200px;background:#0a0d11;border:1px solid var(--line);color:var(--ink);padding:4px 8px;border-radius:3px;font:inherit">
       <button id="connect">connect</button>
+      <button id="closebtn" disabled>close session</button>
     </div>
-    <div id="term"></div>
+    <div id="termstatus" class="termstatus">—</div>
+    <div class="panes">${panes}</div>
     <div class="foot">This terminal has exactly the user's own rights, the same as opening
-      PowerShell directly. Bound to 127.0.0.1; a session token is required; all I/O is appended
-      to memory/cockpit_terminal.log. No command parsing and no allowlist.</div>`, true)}</div>`;
+      PowerShell directly. Bound to 127.0.0.1; a session token and a loopback Origin are
+      required; all I/O is appended to memory/cockpit_terminal.log (never the token).
+      No command parsing and no allowlist. Each tab is its own session, in the repo root.</div>`, true)}</div>
 }
 
 const RENDER = {overview:tabOverview, cycle:tabCycle, world:tabWorld, body:tabBody,
@@ -421,11 +432,17 @@ $('#askbox').addEventListener('keydown', e => { if(e.key === 'Enter') $('#asksen
 function prefill(cmd){
   switchTo('terminal');
   setTimeout(() => {
-    if(!ws || ws.readyState !== 1){
-      term.write('\r\n[cockpit] not connected — paste the token and press connect, then click the button again\r\n');
+    if(!isConnected(curTab)){
+      /* NOTHING IS WRITTEN TO THE BUFFER. The old code wrote a notice into the
+         xterm, which is how a cockpit message ended up on top of live output. */
+      setTermStatus(curTab, 'not connected — press connect, then click the button again');
       return;
     }
-    ws.send(JSON.stringify({type:'in', data: cmd}));   // NO "\r". The human presses Enter.
+    /* TO THE SHELL'S STDIN, exactly as if typed. The shell echoes it at its own
+       prompt and the cursor lands at the end of the line. NO newline: the human
+       presses Enter. */
+    SESSIONS[curTab].ws.send(JSON.stringify({type:'in', data: cmd}));
+    setTermStatus(curTab, 'typed into the shell — press Enter to run it');
   }, 120);
 }
 document.querySelectorAll('.cmd').forEach(b => b.onclick = () => prefill(b.dataset.cmd));
@@ -457,39 +474,133 @@ async function refreshSwitches(){
   }catch(e){}
 }
 
-/* ─────────────────────────── terminal ─────────────────────────── */
-let term, fit, ws, curTab = 'powershell', termReady = false;
-function ensureTerm(){
-  if(termReady) return;
-  term = new Terminal({fontSize:12, theme:{background:'#080a0d'}, convertEol:true});
-  fit = new FitAddon.FitAddon(); term.loadAddon(fit);
-  termReady = true;
-}
-function wireTerminal(){
-  ensureTerm();
-  term.open($('#term'));
-  try{ fit.fit(); }catch(e){}
-  if(!term._wired){
-    term.onData(d => ws && ws.readyState === 1 && ws.send(JSON.stringify({type:'in', data:d})));
-    term._wired = true;
+/* ─────────────────────────── terminal ───────────────────────────
+   THREE TABS ARE THREE SESSIONS. Each has its own Terminal instance, its own
+   scrollback and its own WebSocket, spawned on first connect and kept alive when
+   you switch away. Switching tabs shows that session's buffer; it never closes
+   anything. Closing is explicit.
+
+   THE XTERM BUFFER CARRIES PTY BYTES AND NOTHING ELSE. Every cockpit message
+   goes to #termstatus, a line ABOVE the terminal and outside the xterm element.
+   Writing status into the buffer is what produced "[STEP] bootot connected —
+   paste the token": two writers interleaving inside one stream, one of them
+   racing a live cycle's stdout. A status line cannot interleave with anything.  */
+
+const SESSIONS = {};          // tab -> {term, fit, ws, mounted, status}
+
+function sessionOf(tab){
+  if(!SESSIONS[tab]){
+    SESSIONS[tab] = {term:null, fit:null, ws:null, mounted:false,
+                     status:'not started — click connect'};
   }
-  document.querySelectorAll('.tabbtn').forEach(b => b.onclick = () => {
-    document.querySelectorAll('.tabbtn').forEach(x => x.classList.remove('active'));
-    b.classList.add('active'); curTab = b.dataset.tt;
+  return SESSIONS[tab];
+}
+
+/* THE ONLY PLACE COCKPIT TEXT IS ALLOWED TO GO. Never term.write(). */
+function setTermStatus(tab, msg){
+  sessionOf(tab).status = msg;
+  if(active === 'terminal' && curTab === tab){
+    const el = $('#termstatus');
+    if(el) el.textContent = msg;
+  }
+}
+
+function isConnected(tab){
+  const s = SESSIONS[tab];
+  return !!(s && s.ws && s.ws.readyState === 1);
+}
+
+function ensureSession(tab){
+  const s = sessionOf(tab);
+  if(!s.term){
+    s.term = new Terminal({fontSize:12, theme:{background:'#080a0d'}, convertEol:true});
+    s.fit = new FitAddon.FitAddon();
+    s.term.loadAddon(s.fit);
+    s.term.onData(d => {
+      const cur = SESSIONS[tab];
+      if(cur && cur.ws && cur.ws.readyState === 1)
+        cur.ws.send(JSON.stringify({type:'in', data:d}));
+    });
+  }
+  return s;
+}
+
+function mountSession(tab){
+  const s = ensureSession(tab);
+  const host = document.getElementById('pane-' + tab);
+  if(host && !s.mounted){ s.term.open(host); s.mounted = true; }
+  try{ s.fit.fit(); }catch(e){}
+}
+
+function showTerminalTab(tab){
+  curTab = tab;
+  TERM_TABS.forEach(t => {
+    const pane = document.getElementById('pane-' + t);
+    if(pane) pane.style.display = (t === tab) ? 'block' : 'none';
   });
-  $('#connect').onclick = connect;
+  document.querySelectorAll('.tabbtn').forEach(b =>
+    b.classList.toggle('active', b.dataset.tt === tab));
+  mountSession(tab);
+  const el = $('#termstatus');
+  if(el) el.textContent = sessionOf(tab).status;
+  const close = $('#closebtn');
+  if(close) close.disabled = !isConnected(tab);
 }
-function connect(){
-  const token = $('#tok').value.trim();
-  if(!token){ term.write('\r\n[cockpit] paste the session token from the launch console\r\n'); return; }
-  if(ws) try{ ws.close(); }catch(e){}
-  ws = new WebSocket('ws://127.0.0.1:5056');
-  ws.onopen = () => ws.send(JSON.stringify({token, tab:curTab, cols:term.cols, rows:term.rows}));
-  ws.onmessage = e => { const m = JSON.parse(e.data);
-    if(m.type==='out') term.write(m.data); else if(m.type==='error') term.write('\r\n[error] '+m.error+'\r\n'); };
-  ws.onclose = e => term.write('\r\n[cockpit] closed'+(e.reason?(': '+e.reason):'')+'\r\n');
+
+function connectTab(tab){
+  const s = ensureSession(tab);
+  if(isConnected(tab)){ setTermStatus(tab, 'already connected'); return; }
+  const token = ($('#tok') ? $('#tok').value.trim() : '');
+  if(!token){
+    setTermStatus(tab, 'no session token — the server injects it; if this field is '
+                     + 'empty the bridge did not start (see the launch console)');
+    return;
+  }
+  setTermStatus(tab, 'connecting…');
+  const ws = new WebSocket('ws://127.0.0.1:5056');
+  s.ws = ws;
+  ws.onopen = () => {
+    ws.send(JSON.stringify({token, tab, cols:s.term.cols, rows:s.term.rows}));
+    setTermStatus(tab, 'connected · cwd is the repo root');
+    const c = $('#closebtn'); if(c && curTab === tab) c.disabled = false;
+  };
+  ws.onmessage = e => {
+    const m = JSON.parse(e.data);
+    /* PTY BYTES ONLY. An error from the bridge is cockpit text and goes to the
+       status line, not into the buffer. */
+    if(m.type === 'out') s.term.write(m.data);
+    else if(m.type === 'error') setTermStatus(tab, 'bridge error: ' + m.error);
+  };
+  ws.onclose = e => {
+    s.ws = null;
+    setTermStatus(tab, 'closed' + (e.reason ? (': ' + e.reason) : '')
+                       + ' — click connect to start a new session');
+    const c = $('#closebtn'); if(c && curTab === tab) c.disabled = true;
+  };
+  ws.onerror = () => setTermStatus(tab, 'could not reach the bridge on 127.0.0.1:5056');
 }
-window.addEventListener('resize', () => { if(termReady && active==='terminal'){ try{fit.fit();}catch(e){} } });
+
+function closeTab(tab){
+  const s = SESSIONS[tab];
+  if(!s || !s.ws){ setTermStatus(tab, 'nothing to close'); return; }
+  try{ s.ws.close(); }catch(e){}
+  s.ws = null;
+  setTermStatus(tab, 'closed by you — the scrollback is kept');
+}
+
+function wireTerminal(){
+  TERM_TABS.forEach(t => ensureSession(t));
+  document.querySelectorAll('.tabbtn').forEach(b =>
+    b.onclick = () => showTerminalTab(b.dataset.tt));
+  $('#connect').onclick = () => connectTab(curTab);
+  $('#closebtn').onclick = () => closeTab(curTab);
+  showTerminalTab(curTab);
+}
+
+window.addEventListener('resize', () => {
+  if(active === 'terminal'){ const s = SESSIONS[curTab];
+    if(s && s.fit){ try{ s.fit.fit(); }catch(e){} } }
+});
 
 /* ─────────────────────────── boot ─────────────────────────── */
 async function tick(){
