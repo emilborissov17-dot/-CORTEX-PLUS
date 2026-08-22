@@ -71,6 +71,7 @@ TABS = {
 
 _TOKEN: Optional[str] = None
 _THREAD: Optional[threading.Thread] = None
+_HTTP_PORT: int = 5055          # the page's own port; set by start_bridge()
 
 
 def _now() -> str:
@@ -99,13 +100,37 @@ def append_log(direction: str, tab: str, data: str, log_path: pathlib.Path) -> N
                              "data": data}, ensure_ascii=False) + "\n")
 
 
-def spawn(tab: str, cols: int = 120, rows: int = 30):
-    """Start a PTY for one tab. Raises if pywinpty is absent."""
+def allowed_origins(port: int) -> set:
+    """The Origin values the browser may send. Loopback only, both spellings."""
+    return {"http://127.0.0.1:{}".format(port), "http://localhost:{}".format(port)}
+
+
+def origin_ok(origin: Optional[str], port: int) -> bool:
+    """A SECOND lock, not the only one.
+
+    The token is what authenticates; this stops a page on some other origin from
+    opening a socket to 127.0.0.1:5056 in a browser that already has the token in
+    memory. A MISSING Origin is refused too: browsers always send one on a
+    WebSocket handshake, so its absence means the caller is not a browser tab and
+    has no business here.
+    """
+    return bool(origin) and origin in allowed_origins(port)
+
+
+def spawn(tab: str, cols: int = 120, rows: int = 30,
+          cwd: Optional[pathlib.Path] = None):
+    """Start a PTY for one tab, IN THE REPO ROOT. Raises if pywinpty is absent.
+
+    cwd defaults to the repo rather than to wherever the server happened to be
+    launched from: every command a human types here is about this repository, and
+    a terminal that opens somewhere else makes the first thing they type a `cd`.
+    """
     if tab not in TABS:
         raise ValueError("unknown tab {!r}; the three are {}".format(
             tab, ", ".join(TABS)))
     from winpty import PtyProcess          # noqa: PLC0415
-    return PtyProcess.spawn(TABS[tab], dimensions=(rows, cols))
+    return PtyProcess.spawn(TABS[tab], cwd=str(cwd or BASE),
+                            dimensions=(rows, cols))
 
 
 async def _serve(websocket, log_path: pathlib.Path):
@@ -117,6 +142,19 @@ async def _serve(websocket, log_path: pathlib.Path):
         hello = json.loads(hello_raw)
     except Exception:
         await websocket.close(code=1008, reason="handshake required")
+        return
+
+    # ORIGIN FIRST, then the token. Both must hold.
+    origin = None
+    try:
+        origin = websocket.request.headers.get("Origin")
+    except Exception:
+        try:
+            origin = websocket.request_headers.get("Origin")
+        except Exception:
+            origin = None
+    if not origin_ok(origin, _HTTP_PORT):
+        await websocket.close(code=1008, reason="bad origin")
         return
 
     if not _TOKEN or not secrets.compare_digest(str(hello.get("token") or ""), _TOKEN):
@@ -131,7 +169,8 @@ async def _serve(websocket, log_path: pathlib.Path):
         return
 
     try:
-        pty = spawn(tab, int(hello.get("cols") or 120), int(hello.get("rows") or 30))
+        pty = spawn(tab, int(hello.get("cols") or 120), int(hello.get("rows") or 30),
+                    cwd=BASE)
     except Exception as e:
         await websocket.send(json.dumps(
             {"type": "error", "error": "{}: {}".format(type(e).__name__, e)}))
@@ -181,14 +220,16 @@ async def _serve(websocket, log_path: pathlib.Path):
             pass
 
 
-def start_bridge(log_path: pathlib.Path, port: int = DEFAULT_WS_PORT) -> str:
+def start_bridge(log_path: pathlib.Path, port: int = DEFAULT_WS_PORT,
+                 http_port: int = 5055) -> str:
     """Start the WS bridge in a daemon thread. Returns the token.
 
     `log_path` is REQUIRED — no default.
     """
-    global _TOKEN, _THREAD
+    global _TOKEN, _THREAD, _HTTP_PORT
     import websockets                       # noqa: PLC0415
 
+    _HTTP_PORT = int(http_port)
     _TOKEN = new_token()
 
     async def runner():
@@ -221,6 +262,8 @@ def posture() -> dict:
                       "process already has the user's rights, and it invites "
                       "someone to expose the port believing it is contained"),
         "tabs": sorted(TABS),
+        "cwd": str(BASE),
+        "origin_check": "loopback only, and a missing Origin is refused",
     }
 
 
