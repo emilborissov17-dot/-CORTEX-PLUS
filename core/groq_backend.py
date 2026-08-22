@@ -411,16 +411,31 @@ def _call_local(prompt: str, max_tokens: int):
     # минават за ~48s. С 60s таймаут последната инстанция мълчеше точно когато е
     # най-нужна — при пълно затъмнение на облака. keep_alive държи модела зареден
     # между стъпките, а таймаутът е за студен старт.
+    #
+    # 22 Aug 2026 — WHICH local model is no longer decided here. core/model_window.py
+    # owns residency: 8b is legal only inside one contiguous window per cycle, because
+    # /api/ps proved the two models never coexist on 4GB and every alternation pays a
+    # full reload out of the running step's ceiling. Outside the window this call is
+    # SERVED 3b and the downgrade is recorded there. Fail-open to the old module-level
+    # pick: a missing policy must not remove the last resort.
     num_predict = max(64, min(int(max_tokens), 1024))
-    body = {"model": _LOCAL_MODEL, "stream": False,
+    model = _LOCAL_MODEL
+    keep_alive = "30m"
+    try:
+        from core import model_window as _mw
+        model = _mw.local_model(want_big=True, purpose="groq_backend.last_resort")
+        keep_alive = _mw.keep_alive_for(model)
+    except Exception:
+        pass
+    body = {"model": model, "stream": False,
             "messages": [{"role": "system", "content": _system_msg()},
                          {"role": "user", "content": prompt}],
-            "keep_alive": "30m",
+            "keep_alive": keep_alive,
             "options": {"temperature": 0.4, "num_predict": num_predict}}
     try:
         r = requests.post(f"{_OLLAMA_URL}/api/chat", json=body, timeout=300)
     except requests.exceptions.Timeout:
-        raise RuntimeError(f"local model {_LOCAL_MODEL} cold-start >300s")
+        raise RuntimeError(f"local model {model} cold-start >300s")
     if r.status_code != 200:
         raise RuntimeError(f"local model HTTP {r.status_code}")
     content = ((r.json().get("message") or {}).get("content") or "").strip()

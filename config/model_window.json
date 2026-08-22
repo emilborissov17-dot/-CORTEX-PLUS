@@ -1,0 +1,38 @@
+{
+  "_README": [
+    "Read by core/model_window.py. HUMAN-tunable only, like config/scheduler.json",
+    "and config/step_priority.json — a system that can widen its own access to the",
+    "expensive model has no model budget.",
+    "",
+    "WHY THIS FILE EXISTS. Measured on this box 22 Aug 2026 via /api/ps: qwen2.5:3b",
+    "and qwen3:8b never coexist. 4GB of VRAM holds one of them, so every call to one",
+    "fully evicts the other, and 8b does not fit even alone (3.32GB of 5.75GB",
+    "resident; the other 42% runs on the CPU). Alternating them costs a full reload",
+    "each time — 7-14s warm, minutes cold — charged to whichever step is running.",
+    "",
+    "  window_opens_at_step      first step at which qwen3:8b may be loaded",
+    "  window_closes_after_step  last such step; after it, 8b is unloaded and 3b is",
+    "                            reloaded pinned (keep_alive=-1)",
+    "  enabled                   false = 8b denied everywhere (3b only, all cycle)",
+    "",
+    "THE BOUNDARY IS A JUDGEMENT AND IT IS MEANT TO BE ARGUED WITH. The default is",
+    "the reasoning tail: the front of the cycle ACQUIRES data, where cloud plus 3b",
+    "are enough, and the tail REASONS about what was acquired, which is the work a",
+    "bigger model is actually for. Consequence worth saying out loud:",
+    "internet_intelligence — one of the two steps the existence ledger blames for",
+    "kills (6 each) — sits OUTSIDE the window and will be served 3b. That is the",
+    "intended trade: it is a fetch step, and a fetch step that degrades is cheaper",
+    "than a cycle that dies.",
+    "",
+    "Steps are matched by POSITION in core/cycle_map.py STEPS, not by a name list,",
+    "so a step inserted between these two endpoints joins the window automatically."
+  ],
+
+  "enabled": true,
+
+  "small_model": "qwen2.5:3b",
+  "big_model": "qwen3:8b",
+
+  "window_opens_at_step": "brain_reconsider",
+  "window_closes_after_step": "cycle_report"
+}

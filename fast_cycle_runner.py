@@ -370,7 +370,26 @@ def _seal_cycle_record() -> None:
         print(f"[FAST_CYCLE] lock release -> FAILED: {type(e).__name__}: {e}")
 
 def _free_ollama():
+    """Release the GPU after a model-heavy step.
+
+    22 Aug 2026 — THIS FUNCTION USED TO BE A LIE. Its whole body was `gc.collect()`,
+    which frees Python objects and has no effect whatsoever on what Ollama holds in
+    VRAM; twelve steps pass `free_after=True` in the belief that they are handing the
+    GPU back. Measured on this box, they were handing back nothing.
+
+    What it does now: outside the 8b window, unload the big model and pin the small
+    one (keep_alive=-1) so the next step finds it already resident. Inside the window
+    it deliberately does nothing — releasing 8b mid-window is the alternation this
+    whole change exists to stop. Never raises; the GPU is not worth a cycle.
+    """
     gc.collect()
+    try:
+        from core import model_window as _mw
+        if not _mw.is_open():
+            _mw.release_big()
+            _mw.pin_small()
+    except Exception as e:
+        print(f"[FAST_CYCLE] _free_ollama -> {type(e).__name__}: {e}")
 
 def _llm(prompt):
     try:
@@ -397,6 +416,18 @@ def _write_snapshot(axis, folder, domain, data):
     return out_path
 
 def _run(label, fn, free_after=False):
+    # ── МОДЕЛЪТ СЕ СМЕНЯ ПО ПРОЗОРЕЦ, НЕ ПО СТЪПКА (22 авг 2026) ───────────
+    # core/model_window.py opens the 8b window when the cycle reaches the first
+    # step inside it and closes it after the last, unloading 8b and re-pinning 3b.
+    # Driven from here, by the cycle's real position, because a caller that has to
+    # REMEMBER to close a window is a caller that will one day forget.
+    # FAIL-OPEN: a residency policy that raises must not cost a step.
+    try:
+        from core import model_window as _mw
+        _mw.on_step(label)
+    except Exception as e:
+        print(f"[FAST_CYCLE] model_window.on_step({label}) -> "
+              f"{type(e).__name__}: {e}")
     # 15 Aug 2026 (закон, т.1 и 3): преди да тръгне стъпка, се пита мозъкът какво
     # е казал за нея в beat(). Ако е решил "пропусни" — пропуска се и се записва
     # ЧИЯ е била преценката. Гръбнакът на одита не се пропуска по мнение
@@ -1281,6 +1312,16 @@ def main():
         print(f"[FAST_CYCLE] cycle log tee unavailable: {type(_e).__name__}: {_e}")
 
     beat("boot", "-1", cycle_id=_cycle_id)
+
+    # A new cycle walks the step list from the top. The window's cursor is what
+    # tells a repeated step name (body_scan appears at index 1 AND index 35) which
+    # occurrence it is at; carried over from a previous run it would resolve every
+    # early step to a late position and open the 8b window at boot.
+    try:
+        from core import model_window as _mw
+        _mw.reset_cursor()
+    except Exception as e:
+        print(f"[FAST_CYCLE] model_window.reset_cursor -> {type(e).__name__}: {e}")
 
     # ── 0. Body scan → adaptive directives (runs FIRST, before everything) ──
     beat("body_scan", "0")
@@ -2325,6 +2366,20 @@ def main():
         _close_last()
     except Exception as e:
         print(f"[FAST_CYCLE] close_last -> FAILED: {type(e).__name__}: {e}")
+
+    # ── ПРОЗОРЕЦЪТ НА 8b СЕ ЗАТВАРЯ ОТ КРАЯ НА ЦИКЪЛА (22 авг 2026) ─────────
+    # Same shape as close_last above, and for the same reason: the window opens
+    # at `brain_reconsider` and its closing step would be the one AFTER
+    # `cycle_report` — and there is none. Measured by walking the real step list:
+    # without this call the window ends the night open, leaving qwen3:8b pinned in
+    # VRAM with nothing to serve, so the next cycle's first 3b call pays a reload
+    # that this whole module exists to avoid.
+    try:
+        from core import model_window as _mw
+        _closed = _mw.close_window()
+        print(f"[FAST_CYCLE] model_window closed: {_closed}")
+    except Exception as e:
+        print(f"[FAST_CYCLE] model_window close -> FAILED: {type(e).__name__}: {e}")
 
     # Cycle finished cleanly → seal the record, release the lock, drop the
     # heartbeat. Order matters: _seal_cycle_record() reads the heartbeat for the
