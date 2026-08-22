@@ -187,3 +187,5 @@ memory/columns/
 memory/flow_score.jsonl
 # Отложената работа за 8b (core/cycle_profile.py) — изчаква първия дневен цикъл.
 memory/deferred_batch.json
+# Индексът от вграждания (core/embed_index.py) — mmap-ван, регенерира се от кеша.
+memory/embed_index/
