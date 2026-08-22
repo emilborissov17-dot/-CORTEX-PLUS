@@ -379,27 +379,115 @@ def test_a_demoted_source_is_visible_with_reason_and_rehabilitation():
     assert d["was_column"] == tc.FREE, "no voice is deleted; it stays in FREE"
 
 
-def test_no_physical_coverage_keeps_a_claim_out_of_interval_arithmetic():
+# ── THE ET COVERAGE RULE (replaced 22 Aug 2026) ────────────────────────────
+# The old rule made ET None whenever no PHYSICAL row covered the claim, which
+# silenced it for essentially every world statistic. The absence of a physical
+# anchor must be VISIBLE, not silencing.
+
+def test_two_independent_witnesses_without_physical_still_produce_an_ET():
+    """The regression the old rule caused, pinned so it cannot come back."""
     v = tc.five_column_view("c3", "AXIS", [
-        {"source": "wb", "url": "https://a.example", "display_column": "official",
+        {"source": "arxiv", "url": "https://a.example", "display_column": "science",
          "claim_type": "rate", "estimate": 70.0, "error": 1.0},
+        {"source": "who", "url": "https://b.example", "display_column": "official",
+         "claim_type": "rate", "estimate": 74.0, "error": 1.0}], track={})
+    assert v["physical_coverage"] is False
+    assert v["epistemic_tension"] is not None, (
+        "ET was silenced because no sensor covered a world statistic")
+    assert v["coverage"]["label"] == tc.UNANCHORED
+    assert v["coverage"]["witnesses"] == 2
+    assert tc.NO_PHYSICAL in v["badges"], "the absence must still be VISIBLE"
+
+
+def test_an_echoing_column_leaves_one_witness_and_ET_undefined():
+    """OFFICIAL aggregating NATIONAL is one measurement quoted twice."""
+    v = tc.five_column_view("c3b", "AXIS", [
+        {"source": "wb", "url": "https://a.example", "display_column": "official",
+         "claim_type": "rate", "estimate": 70.0, "error": 1.0,
+         "echo_of": "national"},
         {"source": "nsi", "url": "https://b.example", "display_column": "national",
          "claim_type": "rate", "estimate": 71.0, "error": 1.0}], track={})
-    assert v["physical_coverage"] is False
     assert v["epistemic_tension"] is None
-    assert tc.NO_PHYSICAL in v["badges"]
+    assert v["coverage"]["witnesses"] == 1
+    assert v["coverage"]["undefined_reason"] == "one witness, echo not counted"
+    # and it is still RENDERED, in its own column
+    assert len(v["columns"][tc.OFFICIAL]) == 1
 
 
-def test_an_echo_row_renders_but_is_not_counted_as_a_witness():
+def test_physical_plus_one_other_is_an_anchored_ET():
+    v = tc.five_column_view("c3c", "AXIS", [
+        {"source": "smi", "url": "file://local/x", "display_column": "physical",
+         "claim_type": "rate", "estimate": 61.0, "error": 1.0},
+        {"source": "vendor", "url": "https://v.example", "display_column": "official",
+         "claim_type": "rate", "estimate": 55.0, "error": 2.0}], track={})
+    assert v["epistemic_tension"] is not None
+    assert v["coverage"]["label"] == tc.ANCHORED
+    assert v["coverage"]["physical"] is True
+    assert tc.NO_PHYSICAL not in v["badges"]
+
+
+def test_physical_is_a_witness_never_an_entry_ticket():
+    """A lone PHYSICAL row is one witness, and one witness is not an ET."""
+    v = tc.five_column_view("c3d", "AXIS", [
+        {"source": "smi", "url": "file://local/x", "display_column": "physical",
+         "claim_type": "rate", "estimate": 61.0, "error": 1.0}], track={})
+    assert v["coverage"]["physical"] is True
+    assert v["epistemic_tension"] is None
+    assert "needs two" in v["coverage"]["undefined_reason"]
+
+
+def test_every_ET_value_carries_a_coverage_label():
+    for rows in ([{"source": "a", "url": "https://a", "display_column": "science",
+                   "claim_type": "rate", "estimate": 1.0, "error": 0.1},
+                  {"source": "b", "url": "https://b", "display_column": "free",
+                   "claim_type": "rate", "estimate": 1.05, "error": 0.1}],
+                 [{"source": "p", "url": "file://x", "display_column": "physical",
+                   "claim_type": "rate", "estimate": 1.0, "error": 0.1},
+                  {"source": "b", "url": "https://b", "display_column": "national",
+                   "claim_type": "rate", "estimate": 1.05, "error": 0.1}]):
+        v = tc.five_column_view("cx", "AXIS", rows, track={})
+        assert v["epistemic_tension"] is not None
+        cov = v["coverage"]
+        assert cov["label"] in (tc.ANCHORED, tc.UNANCHORED)
+        assert cov["columns"], "the label does not name which columns took part"
+        assert cov["independence_classes"]
+
+
+def test_a_witness_contributes_one_interval_however_many_rows_it_has():
+    """Two rows from one upstream must not become two votes."""
+    v = tc.five_column_view("c3e", "AXIS", [
+        {"source": "wb1", "url": "https://a", "display_column": "official",
+         "claim_type": "rate", "estimate": 70.0, "error": 1.0, "echo_of": "national"},
+        {"source": "wb2", "url": "https://b", "display_column": "official",
+         "claim_type": "rate", "estimate": 70.5, "error": 1.0, "echo_of": "national"},
+        {"source": "nsi", "url": "https://c", "display_column": "national",
+         "claim_type": "rate", "estimate": 71.0, "error": 1.0}], track={})
+    assert v["coverage"]["witnesses"] == 1
+    assert v["epistemic_tension"] is None
+
+
+def test_an_echo_row_collapses_into_its_upstream_rather_than_vanishing():
+    """AN ECHO IS COLLAPSED, NOT DELETED — and the difference matters.
+
+    Written first as "an echo row is not counted as a witness at all", which is
+    what the old code did. That is too strong: if OFFICIAL aggregates NATIONAL
+    and no NATIONAL row is present, the aggregator is the only voice that
+    upstream has, and dropping it would silence MORE than the physical-coverage
+    rule this replaced. It collapses WITH a NATIONAL row when one exists (see
+    test_an_echoing_column_leaves_one_witness_and_ET_undefined) and stands for
+    that upstream when one does not.
+    """
     v = tc.five_column_view("c4", "AXIS", [
         {"source": "sensor", "url": "file://local/x", "display_column": "physical",
          "claim_type": "rate", "estimate": 70.0, "error": 1.0},
         {"source": "wb", "url": "https://a.example", "display_column": "official",
          "claim_type": "rate", "estimate": 70.0, "error": 1.0,
          "echo_of": "national"}], track={})
-    assert v["independent_witnesses"] == 1
-    assert any("echo" in b for b in v["badges"])
+    assert v["independent_witnesses"] == 2, (
+        "the sensor and the national office are different measurers")
+    assert any("echo" in b for b in v["badges"]), "the echo is not flagged"
     assert len(v["columns"][tc.OFFICIAL]) == 1, "the echo row was hidden"
+    assert v["coverage"]["echo_collapsed"] == 1
 
 
 def test_the_panel_names_which_ladder_it_shows():

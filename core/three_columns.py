@@ -656,9 +656,16 @@ PIPELINE_KINDS = (HARDWARE, PEER_REVIEW, API, EDITORIAL)
 CANDIDATE_STATE = "CANDIDATE"
 LIFECYCLE_LADDER = "CANDIDATE -> TRUSTED -> DEMOTED (core/source_lifecycle.py)"
 
-# Badges.
+# Badges and coverage labels.
 NO_PHYSICAL = "no physical coverage"
 INVALID = "INVALID"
+
+# Every ET value carries one of these. The label is not decoration: an ET of 0.1
+# agreed by two institutions that both read the same press release means
+# something different from an ET of 0.1 where one of the witnesses is a sensor,
+# and a number without that label invites the reader to treat them as equal.
+ANCHORED = "physically anchored"
+UNANCHORED = "unanchored"
 
 
 @dataclass(frozen=True)
@@ -773,12 +780,15 @@ def five_column_view(claim_id: str, axis: str, raw_rows: list,
 
     ET IS COMPUTED OVER ALL FIVE, with two rules that change the arithmetic:
 
-      * a claim with NO PHYSICAL row stays OUT of the interval arithmetic and
-        carries the "no physical coverage" badge. The physical sensor is the
-        anchor, and an interval agreed by four talkers who all read the same
-        press release is not evidence of anything.
-      * an ECHO row (OFFICIAL aggregating NATIONAL) renders but does not count
-        as an independent witness.
+      * ET is computed whenever TWO INDEPENDENT WITNESSES exist. PHYSICAL is one
+        possible witness and never an entry ticket — the earlier rule made ET
+        None without a sensor, which silenced it for essentially every world
+        statistic and turned a missing anchor into a missing number.
+      * witnesses are keyed by UPSTREAM MEASURER. An ECHO row (OFFICIAL
+        aggregating NATIONAL) collapses into the column it echoes rather than
+        voting twice; it still renders, in its own column, with the badge.
+      * every ET carries a coverage label naming the participating columns and
+        saying whether PHYSICAL was among them: anchored or unanchored.
 
     Demoted rows are visible INSIDE their column with reason and rehabilitation
     status, and collected into `demoted` for the FREE panel. No voice is ever
@@ -813,10 +823,24 @@ def five_column_view(claim_id: str, axis: str, raw_rows: list,
     physical_rows = [r for r in cols[PHYSICAL] if r["valid"] and not r["demoted"]]
     has_physical = bool(physical_rows)
 
-    witnesses = [(c, r) for c in DISPLAY_COLUMNS for r in cols[c]
-                 if r["valid"] and not r["demoted"] and not r["echo_of"]]
+    # ── WITNESSES, AND WHAT MAKES TWO OF THEM ONE (22 Aug 2026) ───────────
+    # A witness is keyed by its UPSTREAM MEASURER, not by the column it renders
+    # in. A row that declares echo_of collapses into the column it is echoing,
+    # so OFFICIAL aggregating NATIONAL is one witness quoted twice rather than
+    # two witnesses agreeing. Every row still RENDERS, in its own column, with
+    # its badge; what it loses is a second vote it never earned.
+    witness_rows = [(c, r) for c in DISPLAY_COLUMNS for r in cols[c]
+                    if r["valid"] and not r["demoted"]]
+    upstream_of = {}
+    for col_key, row in witness_rows:
+        upstream_of.setdefault(row["echo_of"] or col_key, []).append((col_key, row))
 
+    witnesses = [(k, rows) for k, rows in upstream_of.items()]
     echoes = [r for c in DISPLAY_COLUMNS for r in cols[c] if r["echo_of"]]
+
+    participating = sorted({c for _, rows in witnesses for c, _ in rows})
+    classes = sorted({COLUMN_SPEC[c].refines for c in participating
+                      if c in COLUMN_SPEC})
 
     badges = []
     if not has_physical:
@@ -824,19 +848,61 @@ def five_column_view(claim_id: str, axis: str, raw_rows: list,
     if invalid:
         badges.append("{} INVALID row(s)".format(len(invalid)))
     if echoes:
-        badges.append("{} echo row(s) not counted as witnesses".format(len(echoes)))
+        badges.append("{} echo row(s) not counted as a second witness".format(
+            len(echoes)))
 
-    et, et_band = None, None
-    if has_physical:
-        intervals = []
-        for _, row in witnesses:
+    # ── ET IS COMPUTED ON TWO INDEPENDENT WITNESSES. PHYSICAL IS NOT A GATE.
+    # The rule this replaces made ET None whenever no local sensor covered the
+    # claim, which silenced it for essentially every world statistic — verified
+    # on safe-water-access BG. That inverted the intent: the ABSENCE of a
+    # physical anchor is something the reader must SEE, not something that
+    # removes the number they were reading. So ET is now computed whenever two
+    # independent witnesses exist, and every value carries a coverage label
+    # saying which columns took part and whether PHYSICAL was one of them.
+    #
+    # PHYSICAL is one possible witness. It is never an entry ticket.
+    et, et_band, undefined_reason = None, None, None
+
+    quantitative = []
+    for key, rows in witnesses:
+        for _, row in rows:
             if row.get("estimate") is not None:
                 e = abs(float(row.get("error") or 0.0))
-                intervals.append((float(row["estimate"]) - e,
-                                  float(row["estimate"]) + e))
-        if intervals:
-            et = epistemic_tension_quantitative(intervals)
-            et_band = band(et)
+                quantitative.append((key, (float(row["estimate"]) - e,
+                                           float(row["estimate"]) + e)))
+                break                       # one interval per WITNESS, not per row
+
+    qualitative_texts = []
+    for key, rows in witnesses:
+        for _, row in rows:
+            if (row.get("text") or "").strip():
+                qualitative_texts.append((key, row["text"]))
+                break
+
+    if len(witnesses) < 2:
+        undefined_reason = (
+            "one witness, echo not counted" if echoes else
+            "{} independent witness(es); ET needs two".format(len(witnesses)))
+    elif len(quantitative) >= 2:
+        et = epistemic_tension_quantitative([iv for _, iv in quantitative])
+        et_band = band(et)
+    elif len(qualitative_texts) >= 2:
+        et = epistemic_tension_qualitative([t for _, t in qualitative_texts])
+        et_band = band(et)
+    else:
+        undefined_reason = (
+            "{} independent witnesses, but fewer than two carry a comparable "
+            "value".format(len(witnesses)))
+
+    coverage = {
+        "witnesses": len(witnesses),
+        "columns": participating,
+        "independence_classes": classes,
+        "physical": has_physical,
+        "label": ANCHORED if has_physical else UNANCHORED,
+        "echo_collapsed": len(echoes),
+        "undefined_reason": undefined_reason,
+    }
 
     return {
         "claim_id": claim_id,
@@ -850,6 +916,7 @@ def five_column_view(claim_id: str, axis: str, raw_rows: list,
         "independent_witnesses": len(witnesses),
         "epistemic_tension": et,
         "band": et_band,
+        "coverage": coverage,
         "badges": badges,
         "invalid": invalid,
         "demoted": demoted,
