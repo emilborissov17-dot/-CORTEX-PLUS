@@ -95,3 +95,12 @@ jsonschema==4.26.0
 # action is ever classified. It was already installed as a transitive dependency;
 # undeclared, a fresh install would land in the ImportError branch, which fails
 # CLOSED but refuses every action carrying data. Named here so it is a choice.
+
+pywinpty==3.0.5
+# cockpit/terminal.py — the PTY behind the embedded terminal. Installed with
+# --no-deps on purpose: a cycle was live, and --no-deps guarantees pip touches
+# no existing package in the venv the cycle is running from.
+
+websockets>=16.0
+# cockpit/terminal.py — the terminal bridge. Already present; named so a fresh
+# install does not silently lose the terminal.
