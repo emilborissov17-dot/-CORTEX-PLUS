@@ -174,3 +174,8 @@ memory/cycle_resume.jsonl
 memory/cycle_resume.json
 # Записът на прозореца за модела (core/model_window.py) — същото.
 memory/model_window.json
+# Студената черупка (scripts/intel_daemon.py) — суровите находки от мрежата.
+# Регенерира се на всеки ~6h и расте без таван; локален запис, не код.
+memory/intel.db
+memory/intel.db-journal
+memory/intel.db-wal
