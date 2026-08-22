@@ -113,6 +113,9 @@ MAX_CONNECTIONS = 3
 # Per agent. The growth rule in the docstring is enforced against this.
 MEMORY_BUDGET_MB = 20.0
 
+# Hard wall for one full sweep. Checked BETWEEN agents — see sweep().
+WALL_CAP_SEC = 600.0
+
 USER_AGENT = "CORTEX-Axon/1.0"
 
 THREAT, WATCH, NORMAL = "THREAT", "WATCH", "NORMAL"
@@ -579,6 +582,208 @@ async def parse_rss_items(raw: bytes, max_items: int) -> list:
 
 
 # ---------------------------------------------------------------------------
+# The delta — what is actually new since this agent last looked
+# ---------------------------------------------------------------------------
+
+def parse_pub_date(raw: str) -> Optional[datetime]:
+    """RFC-822 pubDate -> aware datetime, or None. Never raises."""
+    if not raw:
+        return None
+    try:
+        from email.utils import parsedate_to_datetime      # noqa: PLC0415
+        d = parsedate_to_datetime(str(raw))
+    except Exception:
+        return None
+    if d is None:
+        return None
+    return d if d.tzinfo else d.replace(tzinfo=timezone.utc)
+
+
+def _parse_iso(raw: Optional[str]) -> Optional[datetime]:
+    if not raw:
+        return None
+    try:
+        d = datetime.fromisoformat(str(raw).replace("Z", "+00:00"))
+    except Exception:
+        return None
+    return d if d.tzinfo else d.replace(tzinfo=timezone.utc)
+
+
+# How many recently-seen urls per feed are remembered, for items that carry no
+# usable date. Bounded because this is a ring, not an archive.
+SEEN_RING = 50
+
+
+def select_new(items: list, last_sweep_ts: Optional[str],
+               seen_urls: Optional[Iterable[str]] = None) -> list:
+    """The items an agent has not reported before.
+
+    TWO RULES, BECAUSE FEEDS HAVE TWO HABITS:
+
+      dated item    new iff its pubDate is strictly after last_sweep_ts. The
+                    first sweep (last_sweep_ts is None) takes everything.
+      undated item  cannot be placed in time at all, so a timestamp rule would
+                    either re-report it every single sweep or drop it forever.
+                    It is new iff its url is not in the feed's recent-url ring.
+
+    The ring is the smaller evil of the two, and it is bounded at SEEN_RING per
+    feed so it is a memory, not an archive. Undated items are counted separately
+    in the sweep stats so the report shows how much of a feed is arriving with
+    no date rather than hiding it in a total.
+    """
+    cutoff = _parse_iso(last_sweep_ts)
+    ring = set(seen_urls or ())
+    out = []
+    for item in items:
+        when = parse_pub_date(item.get("pub_date"))
+        if when is not None:
+            if cutoff is None or when > cutoff:
+                out.append(item)
+        else:
+            url = (item.get("url") or "").strip()
+            if url and url not in ring:
+                out.append(item)
+    return out
+
+
+# ---------------------------------------------------------------------------
+# The CANDIDATE intake
+# ---------------------------------------------------------------------------
+# WHERE THE ROWS GO, AND WHY IT IS TWO PLACES
+#
+# core/source_lifecycle.py tracks SOURCES — it stores {source_id: record} and
+# moves them CANDIDATE -> TRUSTED -> DEMOTED on numeric readings. It has no
+# row-level store, so there was nowhere to put a {url, title, claim_text}. The
+# intake is therefore:
+#
+#   memory/axon_candidates.jsonl   the rows, append-only
+#   source_lifecycle state         the SOURCE, registered as CANDIDATE
+#
+# The source is registered with record_for(), NOT observe(). observe() is the
+# ladder: five clean observations promote a source to TRUSTED. Calling it here
+# would be a trust change, and the brief forbids one — correctly, since "this
+# feed returned some XML" is not evidence that its claims are true.
+# record_for() creates the record at CANDIDATE and moves nothing.
+#
+# A NOTE ON THE LADDER'S NAME. The brief says CANDIDATE -> SHADOW -> TRUSTED.
+# The ladder in this repo is CANDIDATE -> TRUSTED -> DEMOTED; there is no SHADOW
+# state. "SHADOW" exists as a ROW STATUS in scripts/openclaw_axis_worker.py, for
+# a reading stored but not believed. Same idea, different layer, and the two
+# should not be conflated by a module that writes to neither by that name.
+
+INTAKE_PATH = BASE / "memory" / "axon_candidates.jsonl"
+
+# The url rule is not restated here. It is the daemon's, imported, so a row
+# without a link is refused by the same exception in both places.
+from scripts.intel_daemon import LinkRequired  # noqa: E402
+
+
+def to_candidate_row(axis: str, item: dict, seen_at: Optional[str] = None) -> dict:
+    """One {axis, url, title, claim_text, ts} row, or LinkRequired.
+
+    Refused loudly rather than skipped: a caller that produced a linkless row has
+    a bug, and dropping it quietly hides that bug behind a low row count. This
+    repo has spent months separating claims that can be checked from claims that
+    cannot, and a finding whose source cannot be opened is the second kind.
+    """
+    url = (item.get("url") or "").strip()
+    if not url:
+        raise LinkRequired(
+            "refusing to intake {!r} for {}: no url. A claim whose source cannot "
+            "be opened cannot be checked by anyone.".format(
+                (item.get("title") or "")[:60], axis))
+    when = parse_pub_date(item.get("pub_date"))
+    return {
+        "axis": axis,
+        "url": url,
+        "title": (item.get("title") or "")[:500],
+        "claim_text": (item.get("claim_text") or "")[:2000],
+        "ts": when.isoformat() if when else (seen_at or _now()),
+        "seen_at": seen_at or _now(),
+    }
+
+
+def write_candidates(rows: list, source_id: str, axis: str,
+                     intake_path: Optional[pathlib.Path] = None,
+                     lifecycle_state_path: Optional[pathlib.Path] = None) -> int:
+    """Append rows to the intake and register the source as CANDIDATE.
+
+    Returns the number of rows written. No scoring, no trust movement, and no
+    write to anything else — the promotion ladder stays the ladder's job.
+    """
+    if not rows:
+        return 0
+    p = pathlib.Path(intake_path or INTAKE_PATH)
+    p.parent.mkdir(parents=True, exist_ok=True)
+    with p.open("a", encoding="utf-8") as fh:
+        for row in rows:
+            fh.write(json.dumps(row, ensure_ascii=False) + "\n")
+
+    from core import source_lifecycle as _sl                    # noqa: PLC0415
+    st = _sl.load(lifecycle_state_path)
+    before = dict(st.get(source_id) or {})
+    _sl.record_for(st, source_id, axis)
+    after = st.get(source_id) or {}
+    # Assert the intake did not become a judgement. Cheap, and it is the one
+    # thing that would make this function a liar.
+    for moving in ("state", "clean_streak", "contradictions", "observations"):
+        if before and before.get(moving) != after.get(moving):
+            raise RuntimeError(
+                "axon intake moved {} on {} — the intake must register a "
+                "candidate, never judge one".format(moving, source_id))
+    _sl.save(st, lifecycle_state_path)
+    return len(rows)
+
+
+# ---------------------------------------------------------------------------
+# One agent's sweep, and the whole sweep
+# ---------------------------------------------------------------------------
+
+async def sweep_agent(agent: AxonAgent, session, *,
+                      intake_path: Optional[pathlib.Path] = None,
+                      lifecycle_state_path: Optional[pathlib.Path] = None,
+                      seen_rings: Optional[dict] = None,
+                      now: Optional[str] = None) -> AxonAgent:
+    """GET the agent's feeds, keep what is new, write CANDIDATE rows. Nothing else."""
+    agent.reset_stats()
+    rings = seen_rings if seen_rings is not None else {}
+    started = now or _now()
+
+    for feed in agent.feeds:
+        raw, refusal = await fetch(session, feed, agent.allowed_domains)
+        if refusal:
+            if "allowed_domains" in refusal:
+                agent.stats["refused_domain"] += 1
+            else:
+                agent.stats["refused_url"] += 1
+            continue
+        agent.stats["bytes"] += len(raw or b"")
+        items = await parse_rss_items(raw, agent.max_items)
+        agent.stats["seen"] += len(items)
+
+        fresh = select_new(items, agent.last_sweep_ts, rings.get(feed, []))
+        agent.stats["new"] += len(fresh)
+
+        rows = []
+        for item in fresh:
+            try:
+                rows.append(to_candidate_row(agent.axis, item, seen_at=started))
+            except LinkRequired:
+                agent.stats["no_url"] += 1
+
+        agent.stats["candidates"] += write_candidates(
+            rows, source_id=feed, axis=agent.axis,
+            intake_path=intake_path, lifecycle_state_path=lifecycle_state_path)
+
+        ring = list(rings.get(feed, []))
+        ring.extend(r["url"] for r in rows)
+        rings[feed] = ring[-SEEN_RING:]
+
+    agent.last_sweep_ts = started
+    return agent
+
+
+# ---------------------------------------------------------------------------
 # The one-line heartbeat
 # ---------------------------------------------------------------------------
 
@@ -596,6 +801,61 @@ def batch_line(agents: Iterable[AxonAgent], elapsed_sec: float) -> str:
             "candidates {} / {:.0f} KB").format(
         len(ags), elapsed_sec, tot["seen"], tot["new"], tot["candidates"],
         tot["bytes"] / 1024.0)
+
+
+async def sweep(agents: list, *, session=None,
+                intake_path: Optional[pathlib.Path] = None,
+                lifecycle_state_path: Optional[pathlib.Path] = None,
+                state_path: Optional[pathlib.Path] = None,
+                wall_cap_sec: float = WALL_CAP_SEC,
+                heartbeat_sink: Optional[Callable] = None,
+                clock: Optional[Callable] = None) -> dict:
+    """Walk the agents ONE AT A TIME, in order, under one session and one clock.
+
+    The wall cap is checked BETWEEN agents rather than enforced by cancelling one
+    mid-flight: a cancelled agent leaves a half-written intake and a last_sweep_ts
+    that claims it looked when it did not. An agent that starts is allowed to
+    finish; what the cap stops is the NEXT one starting. With per-request timeouts
+    at STREAM_TIMEOUT_SEC and MAX_CONNECTIONS sockets, the worst overrun is one
+    agent's feeds, which is bounded and small.
+    """
+    tick = clock or (lambda: datetime.now(timezone.utc).timestamp())
+    t0 = tick()
+    state = load_state(state_path)
+    rings = {k: list(v) for k, v in (state.get("_seen_rings") or {}).items()}
+
+    own_session = session is None
+    if own_session:
+        session = make_session()
+    ran, skipped = [], []
+    try:
+        for agent in agents:
+            if tick() - t0 >= wall_cap_sec:
+                skipped.append(agent.axis)
+                continue
+            await sweep_agent(agent, session,
+                              intake_path=intake_path,
+                              lifecycle_state_path=lifecycle_state_path,
+                              seen_rings=rings)
+            ran.append(agent)
+    finally:
+        if own_session:
+            await session.close()
+
+    for agent in ran:
+        state[agent.axis] = {"last_sweep_ts": agent.last_sweep_ts,
+                             "last_stats": dict(agent.stats)}
+    state["_seen_rings"] = rings
+    save_state(state, state_path)
+
+    elapsed = tick() - t0
+    line = emit_heartbeat(ran, elapsed, heartbeat_sink)
+    if skipped:
+        print("[AXON] wall cap {}s reached — {} agent(s) not swept: {}".format(
+            int(wall_cap_sec), len(skipped), ", ".join(skipped)))
+    return {"ran": [a.axis for a in ran], "skipped": skipped,
+            "elapsed_sec": round(elapsed, 2), "line": line,
+            "agents": ran}
 
 
 def emit_heartbeat(agents: Iterable[AxonAgent], elapsed_sec: float,
