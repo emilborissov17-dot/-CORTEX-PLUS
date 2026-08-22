@@ -381,21 +381,119 @@ _RESUME = {"active": False, "skip": frozenset(), "reason": "not evaluated",
 # 03:00 scheduled task starts this process with no knowledge of yesterday, and the
 # flag is the only thing that carries "the budget was exhausted" across the gap.
 _SURVIVAL = {"active": False, "reason": "not evaluated", "skip": frozenset(),
-             "ceilings": {}}
+             "ceilings": {}, "profile": "FULL", "profile_why": "not evaluated"}
 
 
-def _decide_survival() -> dict:
-    """CRITICAL steps only, at p50 ceilings, when the flag is latched for today.
+def _cycle_origin(env=None) -> str:
+    """"manual" when nothing named this cycle, "scheduled" when something did.
 
-    Latched by supervisor.py when the restart budget runs out. Deliberately read
-    here rather than passed in: a cycle started by the Windows scheduler has no
-    parent to inherit from, and that is exactly the cycle this profile is for.
+    The same discriminator _classify_cycle_id() uses: the supervisor and the
+    Windows scheduled task both spawn with CORTEX_CYCLE_ID set; a human typing
+    `venv/Scripts/python.exe fast_cycle_runner.py` does not.
     """
+    env = os.environ if env is None else env
+    return "scheduled" if (env.get("CORTEX_CYCLE_ID") or "").strip() else "manual"
+
+
+def _decide_survival(argv=None, origin=None) -> dict:
+    """Which profile this cycle runs under — and, for a manual run, who decides.
+
+    THE POVERTY HAS TWO SOURCES AND THEY ARE NOT THE SAME AUTHORITY
+    ----------------------------------------------------------------
+    core.survival_mode.resolve() returns (active, reason, is_new). The third
+    value separates them, and everything below turns on it:
+
+      * is_new is False -> the LATCH. Some earlier process explicitly entered
+        survival mode and persisted it in memory/survival_state.json. That is a
+        decision already taken about this system's state, and it binds every
+        cycle, by hand or not.
+      * is_new is True  -> DERIVED FROM DISK, this second, out of the restart
+        budget in scheduler_state.json or the day's failure block. Nobody
+        decided anything; a reader inferred poverty from two counters.
+
+    A DERIVED POVERTY DOES NOT BIND A HAND-STARTED RUN
+    ---------------------------------------------------
+    The restart budget bounds UNATTENDED restarts — it exists so a wedged system
+    cannot spend the night relaunching itself into the same wall with nobody
+    watching. And the failure banner the supervisor prints when the budget runs
+    out ends with, literally, "Human intervention required."
+
+    A run started by hand IS that intervention. The human is at the keyboard, the
+    log is on screen, and the thing the budget was protecting against — an
+    unsupervised loop — is not what is happening. Refusing that run the full
+    profile answers the alarm's own instruction with a reduced cycle, which is
+    the one outcome nobody asked for.
+
+    So: derived poverty applies to scheduled and restart cycles ONLY. A manual
+    run under an exhausted budget gets the FULL profile, and says so.
+
+    THE FOUR WAYS IT RESOLVES
+    --------------------------
+      --survival   a manual run opting IN. Survival profile even if nothing on
+                   disk says the system is poor. The human may know something
+                   the counters do not.
+      --full       overrides even the LATCH, and prints HUMAN OVERRIDE. The latch
+                   is a decision by a process; this is a decision by a person,
+                   and the person outranks it. (Latch wins over the mere absence
+                   of the flag — silence is not an override.)
+      both flags   a contradiction. Honoured as SURVIVAL, because the cheaper
+                   night is the recoverable mistake: re-run with --full alone and
+                   nothing is lost, whereas a full night into a real wall costs
+                   the wall again.
+      neither      latch binds everyone; derived poverty binds only non-manual.
+
+    Deliberately read from disk rather than passed in: a cycle started by the
+    Windows scheduler has no parent to inherit from, and that is exactly the
+    cycle the reduced profile is for.
+    """
+    argv = list(sys.argv if argv is None else argv)
+    want_survival = "--survival" in argv
+    want_full = "--full" in argv
+    origin = _cycle_origin() if origin is None else origin
+
+    def _off(reason: str, why: str) -> dict:
+        return {"active": False, "reason": reason, "skip": frozenset(),
+                "ceilings": {}, "profile": "FULL", "profile_why": why}
+
     try:
         from core import survival_mode as _sm
         from core.cycle_map import STEPS as _S
         today = datetime.now().astimezone().date().isoformat()
-        active, reason, _is_new = _sm.resolve(today)
+        active, reason, is_new = _sm.resolve(today)
+
+        # ── who decides, in order of authority ─────────────────────────────
+        if want_survival and want_full:
+            print("[SURVIVAL] CONFLICT: both --survival and --full were given. "
+                  "Honouring --survival — the cheaper night is the recoverable "
+                  "mistake. Re-run with --full alone to mean it.")
+            active = True
+            reason = "--survival requested by hand (--full also given, refused)"
+            why = "both flags given; --survival honoured"
+        elif want_survival:
+            active = True
+            reason = "--survival requested by hand" + (
+                " (on top of: {})".format(reason) if active else "")
+            why = "manual opt-in via --survival"
+        elif want_full and active:
+            print("[SURVIVAL] HUMAN OVERRIDE: --full given — running the FULL "
+                  "profile despite: {}".format(reason))
+            return _off("--full overrode: {}".format(reason),
+                        "HUMAN OVERRIDE via --full")
+        elif active and is_new and origin == "manual":
+            # Derived this second from the restart budget / failure block, and
+            # nobody is unattended. See the docstring.
+            return _off(
+                "derived poverty ignored for a manual run ({}); the restart "
+                "budget guards UNATTENDED restarts and the failure banner asks "
+                "for exactly this intervention".format(reason),
+                "manual run outranks derived poverty")
+        elif active and is_new:
+            why = "derived from disk for a {} cycle".format(origin)
+        elif active:
+            why = "persisted latch binds every origin"
+        else:
+            why = "nothing on disk says the system is poor"
+
         steps = [s[0] for s in _S]
         p = _sm.plan(steps, active, reason)
         for w in p.warnings:
@@ -406,14 +504,14 @@ def _decide_survival() -> dict:
         if active and not p.run:
             print("[SURVIVAL] REFUSED: the plan would run no steps at all — "
                   "running the full cycle instead")
-            return {"active": False, "reason": "plan was empty: " + reason,
-                    "skip": frozenset(), "ceilings": {}}
+            return _off("plan was empty: " + reason, "empty survival plan refused")
         return {"active": active, "reason": reason,
-                "skip": frozenset(p.skip), "ceilings": dict(p.ceilings)}
+                "skip": frozenset(p.skip), "ceilings": dict(p.ceilings),
+                "profile": "SURVIVAL" if active else "FULL",
+                "profile_why": why}
     except Exception as e:
-        return {"active": False, "skip": frozenset(), "ceilings": {},
-                "reason": f"survival check failed ({type(e).__name__}: {e}) — "
-                          f"running the full cycle"}
+        return _off(f"survival check failed ({type(e).__name__}: {e}) — "
+                    f"running the full cycle", "survival check raised")
 
 
 def _decide_resume(argv) -> dict:
@@ -1529,7 +1627,7 @@ def main():
     # supervisor.spawn_cycle() redirects this process's stdout into
     # memory/cycle_logs/cycle_<stamp>.log. A cycle started by hand — which is
     # step 3 of the alarm the supervisor sends when it gives up,
-    # `venv\Scripts\python.exe fast_cycle_runner.py` — had no such redirect,
+    # `venv/Scripts/python.exe fast_cycle_runner.py` — had no such redirect,
     # and since 17 Aug the child runs with DETACHED_PROCESS, i.e. with no
     # console at all. So the run a human started BECAUSE the automatic one
     # failed was the one that left nothing to read.
@@ -1555,7 +1653,14 @@ def main():
     # Survival first: it decides which steps exist tonight, and resume only has
     # an opinion about steps that do.
     global _SURVIVAL, _RESUME
-    _SURVIVAL = _decide_survival()
+    _SURVIVAL = _decide_survival(sys.argv)
+    # ONE line, in the cycle log, saying which profile won and why — because a
+    # reader six months from now asking "why did that night only run nine steps"
+    # should find the answer on one line, not reconstruct it from a flag file, an
+    # env var and a restart counter.
+    print(f"[FAST_CYCLE] PROFILE: {_SURVIVAL['profile']} "
+          f"(origin={_cycle_origin()}) — {_SURVIVAL['profile_why']}: "
+          f"{_SURVIVAL['reason']}")
     if _SURVIVAL["active"]:
         print(f"[FAST_CYCLE] SURVIVAL MODE ACTIVE: {_SURVIVAL['reason']}")
         print(f"[FAST_CYCLE] survival will skip {len(_SURVIVAL['skip'])} NORMAL "
