@@ -2,44 +2,80 @@
 <!--
   cockpit/templates/cockpit.html — one local window over memory/.
 
-  LOCAL-FIRST. Every asset is served from cockpit/static/. There is no CDN link
-  in this file, so the page renders with the network unplugged and cannot be
-  changed by a third party between one load and the next.
+  TABS, NOT A SCROLL. Eleven panels stacked in one column meant the terminal was
+  panel 11 and the ask box was buried inside panel 9: everything was READABLE and
+  nothing was USABLE. Only the active tab renders — not hidden with CSS, actually
+  not built — so a tab you are not looking at costs nothing to draw and nothing to
+  fetch.
 
-  A panel whose data file does not exist renders an "no data yet" card naming the
+  LOCAL-FIRST. Every asset comes from cockpit/static/. No CDN link exists in this
+  file, so the page renders with the network unplugged and cannot be changed by a
+  third party between one load and the next.
+
+  A panel whose data file does not exist renders a "no data yet" card naming the
   missing path. It never renders zeros and never borrows a neighbour's file.
 -->
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <title>CORTEX++ cockpit</title>
+<link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/static/xterm.css">
 <style>
   :root{
     --bg:#0b0e12; --panel:#12161c; --line:#1e242c; --ink:#c7d0da; --dim:#6b7683;
     --grn:#4ec46e; --yel:#d8b13a; --red:#e05a5a; --blu:#5aa9e0; --mag:#b07ad8;
+    --bar:56px; --ctl:64px;
   }
   *{box-sizing:border-box}
+  html,body{height:100%}
   body{margin:0;background:var(--bg);color:var(--ink);
-       font:13px/1.45 "Cascadia Mono",Consolas,ui-monospace,monospace}
-  header{padding:10px 14px;border-bottom:1px solid var(--line);
-         display:flex;gap:16px;align-items:baseline;flex-wrap:wrap}
-  h1{font-size:14px;margin:0;letter-spacing:.14em;color:var(--ink)}
-  .muted{color:var(--dim)}
+       font:13px/1.45 "Cascadia Mono",Consolas,ui-monospace,monospace;
+       padding-top:var(--bar);padding-bottom:var(--ctl)}
+
+  /* ── the fixed top bar ─────────────────────────────────────────────── */
+  header{position:fixed;top:0;left:0;right:0;height:var(--bar);z-index:30;
+         background:#0d1116;border-bottom:1px solid var(--line);
+         display:flex;align-items:center;gap:14px;padding:0 14px}
+  h1{font-size:13px;margin:0;letter-spacing:.14em;white-space:nowrap}
+  .meta{color:var(--dim);font-size:11px;white-space:nowrap}
+  nav{display:flex;gap:4px;margin-left:auto;flex-wrap:wrap}
+  .tab{background:#141a21;border:1px solid var(--line);color:var(--dim);
+       padding:5px 10px;border-radius:3px;cursor:pointer;font:inherit;font-size:11px;
+       display:flex;align-items:center;gap:6px;letter-spacing:.08em}
+  .tab:hover{border-color:#39424e;color:var(--ink)}
+  .tab.on{border-color:var(--blu);color:var(--blu);background:#101820}
+  .tab .k{opacity:.45;font-size:10px}
+  .dot{width:6px;height:6px;border-radius:50%;background:#2c343d}
+  .dot.has{background:var(--grn)}
+
+  /* ── the docked control bar ────────────────────────────────────────── */
+  footer{position:fixed;bottom:0;left:0;right:0;height:var(--ctl);z-index:30;
+         background:#0d1116;border-top:1px solid var(--line);
+         display:flex;flex-direction:column;justify-content:center;gap:4px;
+         padding:6px 14px}
+  .ctlrow{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .ctlnote{color:var(--dim);font-size:10px}
+  #askbox{flex:1;min-width:220px;background:#0a0d11;border:1px solid var(--line);
+          color:var(--ink);padding:5px 8px;border-radius:3px;font:inherit}
+  .unread{color:var(--yel);font-size:11px;white-space:nowrap}
+  .unread.zero{color:var(--dim)}
+
+  /* ── panels ────────────────────────────────────────────────────────── */
   .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(430px,1fr));
         gap:12px;padding:12px}
   .panel{background:var(--panel);border:1px solid var(--line);border-radius:5px;
-         padding:10px 12px;min-height:110px;overflow:hidden}
+         padding:10px 12px;overflow:hidden}
   .panel h2{font-size:11px;letter-spacing:.16em;color:var(--dim);margin:0 0 8px;
             text-transform:uppercase;font-weight:600}
+  .wide{grid-column:1/-1}
   .nodata{color:var(--dim);border:1px dashed var(--line);border-radius:4px;
           padding:12px;font-size:12px}
   .nodata b{color:var(--yel)}
   table{width:100%;border-collapse:collapse;font-size:12px}
-  td,th{padding:2px 6px;text-align:left;vertical-align:top;
-        border-bottom:1px solid #171c22}
+  td,th{padding:2px 6px;text-align:left;vertical-align:top;border-bottom:1px solid #171c22}
   th{color:var(--dim);font-weight:500}
-  .bar{height:8px;background:#1a2029;border-radius:2px;overflow:hidden}
+  .bar{height:8px;background:#1a2029;border-radius:2px;overflow:hidden;min-width:60px}
   .bar>i{display:block;height:100%;background:var(--grn)}
   .bar.warn>i{background:var(--yel)} .bar.bad>i{background:var(--red)}
   .pill{display:inline-block;padding:1px 6px;border-radius:9px;font-size:10px;
@@ -49,15 +85,15 @@
   .pill.bad{color:var(--red);border-color:#5c2424}
   .steps{display:flex;flex-wrap:wrap;gap:3px}
   .step{width:11px;height:11px;border-radius:2px;background:#232a33}
-  .step.done{background:var(--grn)} .step.current{background:var(--yel);
-        box-shadow:0 0 0 2px #4a3d17}
-  .needle{font-size:30px;font-weight:700}
+  .step.done{background:var(--grn)} .step.current{background:var(--yel);box-shadow:0 0 0 2px #4a3d17}
+  .needle{font-size:32px;font-weight:700}
   .needle.bad{color:var(--red)} .needle.ok{color:var(--grn)}
   a{color:var(--blu)}
   .invalid{color:var(--red);font-weight:700}
   .cols{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
   .col h3{font-size:10px;letter-spacing:.1em;color:var(--dim);margin:0 0 4px}
-  .stream{height:280px;overflow-y:auto;background:#080a0d;border:1px solid var(--line);
+  .stream{height:calc(100vh - var(--bar) - var(--ctl) - 150px);min-height:260px;
+          overflow-y:auto;background:#080a0d;border:1px solid var(--line);
           padding:6px;border-radius:3px}
   .ln{white-space:pre-wrap;margin:0 0 2px}
   .ln .pre{color:var(--dim)}
@@ -65,49 +101,44 @@
   .mediation{color:var(--yel)}
   .expression{color:var(--blu);font-weight:700;font-family:system-ui,sans-serif}
   button{background:#1a212a;border:1px solid var(--line);color:var(--ink);
-         padding:3px 9px;border-radius:3px;cursor:pointer;font:inherit;font-size:11px}
+         padding:4px 9px;border-radius:3px;cursor:pointer;font:inherit;font-size:11px}
   button:hover{border-color:#39424e}
   button.active{border-color:var(--blu);color:var(--blu)}
-  input[type=text]{background:#0a0d11;border:1px solid var(--line);color:var(--ink);
-         padding:4px 7px;border-radius:3px;font:inherit;width:100%}
+  .sw{border-color:#5c2424;color:var(--dim)}
+  .sw.on{border-color:var(--grn);color:var(--grn)}
   details summary{cursor:pointer;color:var(--dim);font-size:11px}
-  #term{height:330px}
-  .footer{color:var(--dim);font-size:11px;padding:6px 12px 20px}
-  .wide{grid-column:1/-1}
+  #term{height:calc(100vh - var(--bar) - var(--ctl) - 120px);min-height:300px}
+  .foot{color:var(--dim);font-size:11px;padding:4px 0}
 </style>
 </head>
 <body>
+
 <header>
-  <h1>CORTEX++ COCKPIT</h1>
-  <span class="muted" id="clock">—</span>
-  <span class="muted" id="panelstat">—</span>
-  <span class="muted">read-only over memory/ · 127.0.0.1 · no CDN</span>
+  <h1>CORTEX++</h1>
+  <span class="meta" id="clock">—</span>
+  <span class="meta" id="panelstat">—</span>
+  <nav id="tabs"></nav>
 </header>
 
-<div class="grid">
-  <section class="panel" id="p-cycles"><h2>Cycle checklist</h2><div>loading…</div></section>
-  <section class="panel" id="p-flow"><h2>Flow score</h2><div>loading…</div></section>
-  <section class="panel" id="p-somatic"><h2>Somatic map</h2><div>loading…</div></section>
-  <section class="panel" id="p-pending"><h2>Pending human</h2><div>loading…</div></section>
-  <section class="panel" id="p-proposals"><h2>Proposals by author</h2><div>loading…</div></section>
-  <section class="panel" id="p-forks"><h2>Forks</h2><div>loading…</div></section>
-  <section class="panel wide" id="p-goal"><h2>Goal · 5 nerves · 25 axes · 7 continents</h2><div>loading…</div></section>
-  <section class="panel wide" id="p-columns"><h2>Five columns</h2><div>loading…</div></section>
-  <section class="panel wide" id="p-expression"><h2>Expression window</h2><div>loading…</div></section>
-  <section class="panel wide" id="p-thoughts"><h2>Thoughts</h2><div>loading…</div></section>
-  <section class="panel wide" id="p-terminal"><h2>Terminal</h2>
-    <div>
-      <button data-tab="powershell" class="tabbtn active">PowerShell</button>
-      <button data-tab="wsl" class="tabbtn">WSL Ubuntu</button>
-      <button data-tab="claude" class="tabbtn">claude</button>
-      <input type="text" id="tok" placeholder="session token (printed on the launch console)"
-             style="width:auto;min-width:320px;margin-left:8px">
-      <button id="connect">connect</button>
-    </div>
-    <div id="term"></div>
-    <div class="footer" id="termfooter">—</div>
-  </section>
-</div>
+<main id="view"><div class="grid"><section class="panel">loading…</section></div></main>
+
+<footer>
+  <div class="ctlrow">
+    <input type="text" id="askbox" placeholder="ask — prefix DEEP: to send it to the 8b batch window">
+    <button id="asksend">ask</button>
+    <span class="unread zero" id="unread">0 unread</span>
+    <span style="width:12px"></span>
+    <button class="cmd" data-cmd="venv\Scripts\python.exe supervisor.py --status">supervisor status</button>
+    <button class="cmd" data-cmd="venv\Scripts\python.exe fast_cycle_runner.py">run full cycle</button>
+    <button class="cmd" data-cmd="claude">claude code</button>
+    <button class="cmd" data-cmd="git status">git status</button>
+    <span style="width:12px"></span>
+    <button class="sw" id="swmic">MIC OFF</button>
+    <button class="sw" id="swcam">CAM OFF</button>
+  </div>
+  <div class="ctlnote">buttons type the command; you press Enter. &nbsp;·&nbsp;
+    keys 1-7 switch tabs &nbsp;·&nbsp; mic and camera ask before switching on</div>
+</footer>
 
 <script src="/static/xterm.js"></script>
 <script src="/static/xterm-addon-fit.js"></script>
@@ -115,232 +146,372 @@
 const $ = s => document.querySelector(s);
 const esc = s => String(s==null?"":s).replace(/[&<>"]/g, c =>
   ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const get = async u => (await fetch(u)).json();
+
+const TABS = [
+  {id:'overview',   name:'OVERVIEW'},
+  {id:'cycle',      name:'CYCLE'},
+  {id:'world',      name:'WORLD'},
+  {id:'body',       name:'BODY'},
+  {id:'expression', name:'EXPRESSION'},
+  {id:'pending',    name:'PENDING'},
+  {id:'terminal',   name:'TERMINAL'},
+];
+const KEY = 'cortex.cockpit.tab';
+let active = localStorage.getItem(KEY) || 'overview';
+if (!TABS.some(t => t.id === active)) active = 'overview';
+let hasData = {};
+
+function drawTabs(){
+  $('#tabs').innerHTML = TABS.map((t,i) =>
+    `<button class="tab ${t.id===active?'on':''}" data-tab="${t.id}">
+       <span class="dot ${hasData[t.id]?'has':''}"></span>${t.name}<span class="k">${i+1}</span>
+     </button>`).join('');
+  document.querySelectorAll('.tab').forEach(b =>
+    b.onclick = () => switchTo(b.dataset.tab));
+}
+
+function switchTo(id){
+  if(!TABS.some(t=>t.id===id)) return;
+  active = id;
+  localStorage.setItem(KEY, id);
+  drawTabs();
+  render();
+}
+
+document.addEventListener('keydown', e => {
+  if(document.activeElement && ['INPUT','TEXTAREA'].includes(document.activeElement.tagName)) return;
+  if(e.target && e.target.closest && e.target.closest('#term')) return;
+  const n = parseInt(e.key, 10);
+  if(n >= 1 && n <= TABS.length) switchTo(TABS[n-1].id);
+});
 
 function nodata(d){
   return `<div class="nodata"><b>no data yet</b><br>
     missing: ${esc((d.missing||[]).join(", ")) || "(unknown)"}<br>
-    <span class="muted">${esc(d.why||d.note||"")}</span></div>`;
+    <span class="meta">${esc(d.why||d.note||"")}</span></div>`;
 }
-async function get(u){ const r = await fetch(u); return r.json(); }
+const panel = (title, body, wide) =>
+  `<section class="panel ${wide?'wide':''}"><h2>${esc(title)}</h2>${body}</section>`;
 
-/* ---------- cycles ---------- */
-async function drawCycles(){
-  const d = await get('/api/cycles');
-  const b = d.badges||{};
-  const steps = d.checklist.map(s =>
+/* ─────────────────────────── renderers ─────────────────────────── */
+
+async function tabOverview(){
+  const [c, f, p] = await Promise.all([get('/api/cycles'), get('/api/flow'), get('/api/pending')]);
+  const b = c.badges||{};
+  const squares = c.checklist.map(s =>
     `<div class="step ${s.state}" title="${esc(s.index+' '+s.step)}"></div>`).join('');
-  $('#p-cycles').innerHTML = `<h2>Cycle checklist</h2>
-    <div class="muted">${esc(d.current_cycle||'(no cycle)')} · step
-      <b>${esc(d.current_step||'—')}</b> · ${d.done_count}/${d.total_steps} done</div>
-    <div class="steps" style="margin:8px 0">${steps}</div>
-    <div>
-      <span class="pill ${b.survival_latched?'bad':'on'}">survival ${b.survival_latched?'LATCHED':'off'}</span>
+  const n = f.computed_now||{};
+  const v = n.flow_score!==undefined?n.flow_score:null;
+  const bad = v!==null && v < f.red_below;
+  return `<div class="grid">
+    ${panel('Cycle · '+esc(c.label), `
+      <div class="meta">${esc(c.current_cycle||'—')}</div>
+      <div class="steps" style="margin:8px 0">${squares}</div>
+      <div><span class="pill ${b.survival_latched?'bad':'on'}">survival ${b.survival_latched?'LATCHED':'off'}</span>
       <span class="pill ${b.degraded_steps?'warn':''}">DEGRADED ${b.degraded_steps}</span>
-    </div>`;
+      <span class="pill">${c.done_count}/${c.total_steps} steps</span></div>`)}
+    ${panel('Flow score', `
+      <div class="needle ${bad?'bad':'ok'}">${v===null?'—':esc(v)}</div>
+      <div class="meta">red zone below ${f.red_below}${f.computed_not_recalled?' · computed now, not recalled':''}</div>`)}
+    ${panel('Pending human', `<table>
+      <tr><td>improvement proposals</td><td><b>${p.improvement_proposals.open}</b></td></tr>
+      <tr><td>threshold proposals unsigned</td><td><b>${p.threshold_proposals.unsigned}</b></td></tr>
+      <tr><td>quarantined patches</td><td><b>${p.quarantined_patches.count}</b></td></tr>
+      </table>`)}
+  </div>`;
 }
 
-/* ---------- flow ---------- */
-async function drawFlow(){
-  const d = await get('/api/flow');
-  const n = d.computed_now||{};
-  const v = (n.flow_score!==undefined?n.flow_score:(n.score!==undefined?n.score:null));
-  const bad = v!==null && v < d.red_below;
-  $('#p-flow').innerHTML = `<h2>Flow score</h2>
-    <div class="needle ${bad?'bad':'ok'}">${v===null?'—':esc(v)}</div>
-    <div class="muted">red zone below ${d.red_below}</div>
-    <div class="muted" style="margin-top:6px">${d.computed_not_recalled
-      ? 'COMPUTED NOW, not recalled — '+esc(d.note) : esc(d.history.length+' historical points')}</div>
-    ${n.error?`<div class="invalid">${esc(n.error)}</div>`:''}`;
+async function tabCycle(){
+  const c = await get('/api/cycles');
+  const b = c.badges||{};
+  const rows = c.checklist.map(s =>
+    `<tr><td style="width:56px" class="meta">${esc(s.index)}</td>
+      <td><span class="pill ${s.state==='done'?'on':s.state==='current'?'warn':''}">${s.state}</span></td>
+      <td>${esc(s.step)}</td><td class="meta">${esc((s.what||'').slice(0,70))}</td></tr>`).join('');
+  const sealed = c.last_sealed;
+  return `<div class="grid">
+    ${panel('Cycle · '+esc(c.label), `
+      <div class="meta">${esc(c.current_cycle||'—')} · current step <b>${esc(c.current_step||'—')}</b></div>
+      <div>
+        <span class="pill ${b.survival_latched?'bad':'on'}">survival ${b.survival_latched?'LATCHED':'off'}</span>
+        <span class="pill ${b.degraded_steps?'warn':''}">DEGRADED ${b.degraded_steps}</span>
+        <span class="pill">${c.done_count}/${c.total_steps}</span>
+      </div>
+      ${sealed?`<table style="margin-top:8px">
+        <tr><td>last sealed</td><td>${esc(sealed.sealed_at||'')}</td></tr>
+        <tr><td>duration</td><td>${esc(sealed.duration_sec)} s</td></tr>
+        <tr><td>ticks recorded</td><td>${esc(sealed.ticks)}</td></tr>
+        <tr><td>outcome</td><td>${esc(sealed.outcome)}</td></tr></table>`:''}`, true)}
+    ${panel('Steps', `<table>${rows}</table>`, true)}
+  </div>`;
 }
 
-/* ---------- somatic ---------- */
-async function drawSomatic(){
+async function tabWorld(){
+  const [g, col] = await Promise.all([get('/api/goal'), get('/api/columns')]);
+  const tree = Object.entries(g.tree).map(([sg,axes]) =>
+    `<div style="margin-bottom:6px"><div class="meta">${esc(sg)} <span class="pill">${axes.length}</span></div>
+     ${axes.map(a=>`<span class="pill">${esc(a.axis)}</span>`).join('')}</div>`).join('');
+  const cont = (g.continents||[]).map(c =>
+    `<tr><td>${esc(c.region_id||'')}</td><td>${esc(c.zone||'')}</td></tr>`).join('');
+  const heads = col.column_order.map(k => {
+    const s = col.column_spec[k];
+    return `<div class="col"><h3>${esc(s.title)}</h3>
+      <div class="meta" style="font-size:10px">refines ${esc(s.refines)}<br>${esc(s.pipeline_kind)}</div></div>`;
+  }).join('');
+  const viol = col.independence_violations.length
+    ? `<div class="invalid">independence violations: ${esc(col.independence_violations.join('; '))}</div>`
+    : `<div class="meta">independence assertion: five distinct pipelines, no echo</div>`;
+  return `<div class="grid">
+    ${panel('Goal · 5 nerves · 25 axes', `
+      <div class="meta">${g.subgoal_count} subgoals · ${g.axis_count} axes ·
+        ${g.composite_history.length} history points</div>${tree}`, true)}
+    ${panel('7 continents', `<table><tr><th>region</th><th>zone</th></tr>${cont}</table>`)}
+    ${panel('Five columns', `<div class="cols">${heads}</div>${viol}
+      <div class="meta" style="margin-top:6px">${esc(col.lifecycle_ladder)}<br>
+        <span style="font-size:11px">${esc(col.ladder_note)}</span></div>
+      ${col.record_count?'':nodata({missing:['memory/columns/'],why:col.empty_because})}`)}
+  </div>`;
+}
+
+async function tabBody(){
   const d = await get('/api/somatic');
-  let html = `<h2>Somatic map <span class="muted">${d.available_count}/${d.total_count} · vector ${esc(d.vector_version)} ${d.state_vector.measured}/${d.state_vector.dims}</span></h2>`;
-  for (const [g, rows] of Object.entries(d.groups)){
+  const t = d.toggles||{};
+  let html = `<div class="ctlrow" style="margin-bottom:8px">
+     <button class="sw ${t.mic_enabled?'on':''}" data-sw="mic">MIC ${t.mic_enabled?'ON':'OFF'}</button>
+     <button class="sw ${t.camera_enabled?'on':''}" data-sw="camera">CAMERA ${t.camera_enabled?'ON':'OFF'}</button>
+     <span class="meta">${esc(d.gates.mic)}</span></div>`;
+  for(const [g, rows] of Object.entries(d.groups)){
     if(!rows.length) continue;
-    html += `<div style="margin-bottom:6px"><div class="muted" style="font-size:10px;letter-spacing:.1em">${esc(g)}</div><table>`;
+    html += `<div style="margin-bottom:6px"><div class="meta" style="font-size:10px;letter-spacing:.1em">${esc(g)}</div><table>`;
     for(const r of rows){
       let cell;
       if(r.disabled) cell = `<span class="pill">DISABLED</span>`;
-      else if(!r.available) cell = `<span class="muted" title="${esc(r.reason)}">NOT AVAILABLE</span>`;
-      else if(typeof r.value === 'number' && (r.unit==='%'))
+      else if(!r.available) cell = `<span class="meta" title="${esc(r.reason)}">NOT AVAILABLE</span>`;
+      else if(typeof r.value === 'number' && r.unit==='%')
         cell = `<div class="bar ${r.value>85?'bad':r.value>65?'warn':''}"><i style="width:${Math.min(100,r.value)}%"></i></div> ${esc(r.value)}%`;
-      else cell = `${esc(r.value)} <span class="muted">${esc(r.unit)}</span>`;
-      html += `<tr><td style="width:38%">${esc(r.key)}</td><td>${cell}</td>
-               <td class="muted" style="width:70px">refl ${r.reflexivity}</td></tr>`;
+      else cell = `${esc(r.value)} <span class="meta">${esc(r.unit)}</span>`;
+      html += `<tr><td style="width:36%">${esc(r.key)}</td><td>${cell}</td>
+               <td class="meta" style="width:64px">refl ${r.reflexivity}</td></tr>`;
     }
     html += `</table></div>`;
   }
   html += `<details><summary>NOT AVAILABLE on this machine (${d.not_available.length})</summary><table>` +
-    d.not_available.map(x=>`<tr><td>${esc(x.key)}</td><td class="muted">${esc(x.reason)}</td></tr>`).join('') +
-    `</table></details>`;
-  $('#p-somatic').innerHTML = html;
+    d.not_available.map(x=>`<tr><td>${esc(x.key)}</td><td class="meta">${esc(x.reason)}</td></tr>`).join('') + `</table></details>`;
+  return `<div class="grid">${panel(
+    'Somatic map · '+d.available_count+'/'+d.total_count+' · vector '+esc(d.state_vector.version)+
+    ' '+d.state_vector.measured+'/'+d.state_vector.dims, html, true)}</div>`;
 }
 
-/* ---------- pending ---------- */
-async function drawPending(){
-  const d = await get('/api/pending');
-  $('#p-pending').innerHTML = `<h2>Pending human</h2><table>
-    <tr><td>improvement proposals</td><td><b>${d.improvement_proposals.open}</b></td></tr>
-    <tr><td>threshold proposals unsigned</td><td><b>${d.threshold_proposals.unsigned}</b></td></tr>
-    <tr><td>quarantined patches</td><td><b>${d.quarantined_patches.count}</b></td></tr>
-    <tr><td>deferred to 8b</td><td>${d.deferred_batch?'yes':'<span class="muted">none</span>'}</td></tr>
-    <tr><td>openclaw level 3</td><td>${d.openclaw_level_3?'yes':'<span class="muted">none</span>'}</td></tr>
-    </table>`;
-}
-
-/* ---------- proposals ---------- */
-async function drawProposals(){
-  const d = await get('/api/proposals');
-  const rows = Object.entries(d.groups).map(([a,g]) =>
-    `<tr><td>${esc(a)}</td><td><b>${g.count}</b></td></tr>`).join('');
-  $('#p-proposals').innerHTML = `<h2>Proposals by author</h2>
-    <div class="muted">grouped on <code>${esc(d.field_used)}</code> · ${d.total} total</div>
-    <table>${rows}</table>`;
-}
-
-/* ---------- forks ---------- */
-async function drawForks(refresh){
-  const d = await get('/api/forks'+(refresh?'?refresh=1':''));
-  let body;
-  if(d.no_data) body = nodata(d);
-  else if(d.offline) body = `<div class="nodata"><b>offline</b><br><span class="muted">${esc(d.error)}</span></div>`;
-  else body = `<div class="muted">${d.count} fork(s) ${d.from_cache?'(from cache)':'(fresh)'}</div><table>` +
-    (d.forks||[]).map(f=>`<tr><td><a href="${esc(f.html_url)}" target="_blank">${esc(f.full_name)}</a></td>
-      <td class="muted">${esc(f.created_at||'')}</td></tr>`).join('') + `</table>`;
-  $('#p-forks').innerHTML = `<h2>Forks</h2>${body}
-    <button onclick="drawForks(1)">refresh (manual, one network call)</button>`;
-}
-
-/* ---------- goal ---------- */
-async function drawGoal(){
-  const d = await get('/api/goal');
-  const tree = Object.entries(d.tree).map(([sg,axes]) =>
-    `<div style="margin-bottom:6px"><div class="muted">${esc(sg)} <span class="pill">${axes.length}</span></div>
-     ${axes.map(a=>`<span class="pill">${esc(a.axis)}</span>`).join('')}</div>`).join('');
-  const cont = (d.continents||[]).map(c =>
-    `<tr><td>${esc(c.region_id||c.region||'')}</td><td>${esc(c.zone||'')}</td>
-     <td class="muted">${esc(JSON.stringify(c).slice(0,90))}</td></tr>`).join('');
-  $('#p-goal').innerHTML = `<h2>Goal · 5 nerves · 25 axes · 7 continents</h2>
-    <div class="muted">${d.subgoal_count} subgoals · ${d.axis_count} axes ·
-      ${d.composite_history.length} history points · continents computed ${esc(d.continents_computed_at||'—')}</div>
-    ${tree}<table><tr><th>region</th><th>zone</th><th></th></tr>${cont}</table>`;
-}
-
-/* ---------- five columns ---------- */
-async function drawColumns(){
-  const d = await get('/api/columns');
-  const heads = d.column_order.map(c => {
-    const s = d.column_spec[c];
-    return `<div class="col"><h3>${esc(s.title)}</h3>
-      <div class="muted" style="font-size:10px">refines ${esc(s.refines)}<br>
-      pipeline ${esc(s.pipeline_kind)}</div></div>`;
-  }).join('');
-  const viol = d.independence_violations.length
-    ? `<div class="invalid">independence violations: ${esc(d.independence_violations.join('; '))}</div>`
-    : `<div class="muted">independence assertion: five distinct pipelines, no echo</div>`;
-  $('#p-columns').innerHTML = `<h2>Five columns</h2>
-    <div class="cols">${heads}</div>${viol}
-    <div class="muted" style="margin-top:6px">ladder shown: ${esc(d.lifecycle_ladder)}<br>
-      <span style="font-size:11px">${esc(d.ladder_note)}</span></div>
-    ${d.record_count ? '' : nodata({missing:['memory/columns/'], why:d.empty_because})}`;
-}
-
-/* ---------- expression ---------- */
 let exFilter = 'ALL';
-async function drawExpression(){
+async function tabExpression(){
   const d = await get('/api/expression?filter='+exFilter);
   const lines = d.lines.map(l =>
     `<p class="ln ${esc(l.visual)}"><span class="pre">[${esc(l.source)}|${esc(l.depth)}] ${esc((l.ts||'').slice(11,19))}</span> ${esc(l.text)}</p>`).join('');
   const rej = d.rejected.map(r =>
-    `<tr><td class="muted">${esc((r.timestamp||'').slice(11,19))}</td>
-     <td>${esc(r.raw_output).slice(0,80)}</td><td class="invalid">${esc(r.rejection_reason)}</td></tr>`).join('');
-  $('#p-expression').innerHTML = `<h2>Expression window
-      <span class="pill ${d.unread?'warn':''}">${d.unread} unread</span></h2>
-    <div style="margin-bottom:6px">
+    `<tr><td class="meta">${esc((r.timestamp||'').slice(11,19))}</td>
+     <td>${esc(String(r.raw_output).slice(0,70))}</td><td class="invalid">${esc(r.rejection_reason)}</td></tr>`).join('');
+  const warm = d.lexicon || {};
+  return `<div class="grid">${panel('Expression window', `
+    <div class="ctlrow" style="margin-bottom:6px">
       ${['ENV','SYS','ALL'].map(p=>`<button class="fbtn ${p===exFilter?'active':''}" data-f="${p}">${p}</button>`).join('')}
-      <span class="muted">one stream, grepped — never a second window</span>
+      <span class="meta">one stream, grepped — never a second window</span>
+      <span class="pill ${warm.warm?'on':'warn'}">${esc(warm.label||'lexicon: unknown')}</span>
     </div>
-    <div class="stream">${lines || '<span class="muted">no expression line has been generated yet</span>'}</div>
-    <div style="margin-top:6px;display:flex;gap:6px">
-      <input type="text" id="askbox" placeholder="ask (PULL) — prefix DEEP: to send to the 8b batch window">
-      <button id="asksend">ask</button>
-    </div>
+    <div class="stream">${lines || '<span class="meta">no line has been produced yet. The producers run during a cycle, and while the cockpit is open.</span>'}</div>
     <details style="margin-top:6px"><summary>rejected by the validator (${d.rejected.length}) — quarantine, not deletion</summary>
-      <table>${rej||'<tr><td class="muted">none</td></tr>'}</table></details>`;
-  document.querySelectorAll('.fbtn').forEach(b => b.onclick = () => { exFilter=b.dataset.f; drawExpression(); });
-  $('#asksend').onclick = async () => {
-    const t = $('#askbox').value.trim(); if(!t) return;
-    const deep = /^DEEP:/i.test(t);
-    await fetch('/api/ask', {method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({text: deep? t.slice(5).trim(): t, tag: deep?'DEEP':null})});
-    $('#askbox').value=''; drawExpression();
-  };
+      <table>${rej||'<tr><td class="meta">none</td></tr>'}</table></details>`, true)}</div>`;
 }
 
-/* ---------- thoughts ---------- */
-async function drawThoughts(){
-  const d = await get('/api/thoughts');
-  const deb = d.debriefs.map(x =>
-    `<tr><td>${esc(x.phase)}</td><td class="muted">${esc(x.model||'')}</td>
-     <td>${x.accepted?'<span class="pill on">accepted</span>':'<span class="pill bad">rejected</span>'}</td>
-     <td class="muted">${x.attempts||0} attempt(s), ${x.rejected_count} rejected</td></tr>`).join('');
-  $('#p-thoughts').innerHTML = `<h2>Thoughts</h2>
-    <div class="muted">stance: ${esc((d.stance||{}).step||'—')} · prev_ok ${esc(String((d.stance||{}).prev_ok))}</div>
-    <table><tr><th>phase</th><th>model</th><th></th><th>attempts</th></tr>${deb}</table>
-    <details><summary>dream</summary>${d.dream && d.dream.no_data
-      ? nodata(d.dream) : `<pre class="ln">${esc((d.dream||{}).text||'')}</pre>`}</details>
-    <details><summary>ideas (${d.ideas.length})</summary><table>${
-      d.ideas.slice(-12).map(i=>`<tr><td class="muted">${esc(i.kind||'')}</td><td>${esc((i.text||i.idea||'')).slice(0,150)}</td></tr>`).join('')
-    }</table></details>`;
+async function tabPending(){
+  const [p, pr, fk] = await Promise.all([get('/api/pending'), get('/api/proposals'), get('/api/forks')]);
+  const authors = Object.entries(pr.groups).map(([a,g]) =>
+    `<tr><td>${esc(a)}</td><td><b>${g.count}</b></td></tr>`).join('');
+  let forks;
+  if(fk.no_data) forks = nodata(fk);
+  else if(fk.offline) forks = `<div class="nodata"><b>offline</b><br><span class="meta">${esc(fk.error)}</span></div>`;
+  else forks = `<div class="meta">${fk.count} fork(s)</div><table>` +
+    (fk.forks||[]).map(f=>`<tr><td><a href="${esc(f.html_url)}" target="_blank">${esc(f.full_name)}</a></td></tr>`).join('')+`</table>`;
+  return `<div class="grid">
+    ${panel('Pending human', `
+      <div class="meta" style="margin-bottom:6px">buttons TYPE the approval command into the terminal.
+        Nothing here approves anything — you read it and press Enter.</div>
+      <table>
+       <tr><td>improvement proposals</td><td><b>${p.improvement_proposals.open}</b></td>
+        <td><button class="pf" data-cmd="venv\\Scripts\\python.exe cortex_approval_server.py">open approval server</button></td></tr>
+       <tr><td>threshold proposals unsigned</td><td><b>${p.threshold_proposals.unsigned}</b></td>
+        <td><button class="pf" data-cmd="venv\\Scripts\\python.exe -m core.threshold_proposals --list">list thresholds</button></td></tr>
+       <tr><td>quarantined patches</td><td><b>${p.quarantined_patches.count}</b></td>
+        <td><button class="pf" data-cmd="venv\\Scripts\\python.exe scripts/review_quarantine.py">review quarantine</button></td></tr>
+       <tr><td>telegram approvals</td><td class="meta">OK &lt;id&gt;</td>
+        <td><button class="pf" data-cmd="venv\\Scripts\\python.exe experiments/needs/approve_reader.py">run approve_reader</button></td></tr>
+      </table>`, true)}
+    ${panel('Proposals by author', `<div class="meta">grouped on <code>${esc(pr.field_used)}</code> · ${pr.total} total</div>
+      <table>${authors}</table>`)}
+    ${panel('Forks', forks + `<button onclick="drawForksRefresh()">refresh (one manual network call)</button>`)}
+  </div>`;
 }
 
-/* ---------- terminal ---------- */
-let term, fit, ws, curTab='powershell';
-function initTerm(){
+function tabTerminal(){
+  return `<div class="grid">${panel('Terminal', `
+    <div class="ctlrow" style="margin-bottom:6px">
+      <button data-tt="powershell" class="tabbtn active">PowerShell</button>
+      <button data-tt="wsl" class="tabbtn">WSL Ubuntu</button>
+      <button data-tt="claude" class="tabbtn">claude</button>
+      <input type="text" id="tok" placeholder="session token (printed on the launch console)"
+             style="flex:1;min-width:260px;background:#0a0d11;border:1px solid var(--line);color:var(--ink);padding:4px 8px;border-radius:3px;font:inherit">
+      <button id="connect">connect</button>
+    </div>
+    <div id="term"></div>
+    <div class="foot">This terminal has exactly the user's own rights, the same as opening
+      PowerShell directly. Bound to 127.0.0.1; a session token is required; all I/O is appended
+      to memory/cockpit_terminal.log. No command parsing and no allowlist.</div>`, true)}</div>`;
+}
+
+const RENDER = {overview:tabOverview, cycle:tabCycle, world:tabWorld, body:tabBody,
+                expression:tabExpression, pending:tabPending, terminal:tabTerminal};
+
+async function render(){
+  const view = $('#view');
+  if(active === 'terminal'){
+    view.innerHTML = tabTerminal();
+    wireTerminal();
+    return;
+  }
+  try { view.innerHTML = await RENDER[active](); }
+  catch(e){ view.innerHTML = `<div class="grid">${panel('error',
+    `<div class="invalid">${esc(e.message||e)}</div>`)}</div>`; }
+  wirePanel();
+}
+
+function wirePanel(){
+  document.querySelectorAll('.fbtn').forEach(b =>
+    b.onclick = () => { exFilter = b.dataset.f; render(); });
+  document.querySelectorAll('[data-sw]').forEach(b =>
+    b.onclick = () => toggleDevice(b.dataset.sw));
+  document.querySelectorAll('.pf').forEach(b =>
+    b.onclick = () => prefill(b.dataset.cmd));
+}
+
+/* ── forks refresh needs to survive a re-render ── */
+async function drawForksRefresh(){ await get('/api/forks?refresh=1'); render(); }
+
+/* ─────────────────────────── control bar ─────────────────────────── */
+
+async function refreshUnread(){
+  try{
+    const d = await get('/api/expression');
+    const el = $('#unread');
+    el.textContent = d.unread + ' unread';
+    el.className = 'unread' + (d.unread ? '' : ' zero');
+  }catch(e){}
+}
+
+$('#asksend').onclick = async () => {
+  const t = $('#askbox').value.trim(); if(!t) return;
+  const deep = /^DEEP:/i.test(t);
+  await fetch('/api/ask', {method:'POST', headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({text: deep ? t.slice(5).trim() : t, tag: deep ? 'DEEP' : null})});
+  $('#askbox').value = '';
+  refreshUnread();
+};
+$('#askbox').addEventListener('keydown', e => { if(e.key === 'Enter') $('#asksend').click(); });
+
+/* PREFILL: switch to TERMINAL and TYPE the command. Never sends a newline. */
+function prefill(cmd){
+  switchTo('terminal');
+  setTimeout(() => {
+    if(!ws || ws.readyState !== 1){
+      term.write('\r\n[cockpit] not connected — paste the token and press connect, then click the button again\r\n');
+      return;
+    }
+    ws.send(JSON.stringify({type:'in', data: cmd}));   // NO "\r". The human presses Enter.
+  }, 120);
+}
+document.querySelectorAll('.cmd').forEach(b => b.onclick = () => prefill(b.dataset.cmd));
+
+async function toggleDevice(which){
+  const state = await get('/api/toggle');
+  const key = which === 'mic' ? 'mic_enabled' : 'camera_enabled';
+  const turningOn = !state.toggles[key];
+  const what = which === 'mic' ? 'the microphone' : 'the camera';
+  const msg = turningOn
+    ? `Switch ${what} ON?\n\nOne sample is taken per probe, at most once every 10 seconds, reduced to a scalar. No audio or image is ever written to disk. Refused entirely while a cycle is running.`
+    : `Switch ${what} OFF?`;
+  if(!confirm(msg)) return;
+  await fetch('/api/toggle', {method:'POST', headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({[key]: turningOn})});
+  refreshSwitches();
+  if(active === 'body') render();
+}
+$('#swmic').onclick = () => toggleDevice('mic');
+$('#swcam').onclick = () => toggleDevice('camera');
+
+async function refreshSwitches(){
+  try{
+    const d = await get('/api/toggle');
+    $('#swmic').textContent = 'MIC ' + (d.toggles.mic_enabled ? 'ON' : 'OFF');
+    $('#swmic').className = 'sw' + (d.toggles.mic_enabled ? ' on' : '');
+    $('#swcam').textContent = 'CAM ' + (d.toggles.camera_enabled ? 'ON' : 'OFF');
+    $('#swcam').className = 'sw' + (d.toggles.camera_enabled ? ' on' : '');
+  }catch(e){}
+}
+
+/* ─────────────────────────── terminal ─────────────────────────── */
+let term, fit, ws, curTab = 'powershell', termReady = false;
+function ensureTerm(){
+  if(termReady) return;
   term = new Terminal({fontSize:12, theme:{background:'#080a0d'}, convertEol:true});
   fit = new FitAddon.FitAddon(); term.loadAddon(fit);
-  term.open($('#term')); fit.fit();
-  window.addEventListener('resize', ()=>{ try{fit.fit(); sendResize();}catch(e){} });
-  term.onData(d => ws && ws.readyState===1 && ws.send(JSON.stringify({type:'in', data:d})));
+  termReady = true;
+}
+function wireTerminal(){
+  ensureTerm();
+  term.open($('#term'));
+  try{ fit.fit(); }catch(e){}
+  if(!term._wired){
+    term.onData(d => ws && ws.readyState === 1 && ws.send(JSON.stringify({type:'in', data:d})));
+    term._wired = true;
+  }
   document.querySelectorAll('.tabbtn').forEach(b => b.onclick = () => {
-    document.querySelectorAll('.tabbtn').forEach(x=>x.classList.remove('active'));
-    b.classList.add('active'); curTab = b.dataset.tab;
+    document.querySelectorAll('.tabbtn').forEach(x => x.classList.remove('active'));
+    b.classList.add('active'); curTab = b.dataset.tt;
   });
   $('#connect').onclick = connect;
-  $('#termfooter').textContent =
-    "This terminal has exactly the user's own rights, the same as opening PowerShell directly. "
-    + "Bound to 127.0.0.1; a session token is required; all I/O is appended to memory/cockpit_terminal.log. "
-    + "No command parsing and no allowlist.";
-}
-function sendResize(){
-  if(ws && ws.readyState===1)
-    ws.send(JSON.stringify({type:'resize', cols:term.cols, rows:term.rows}));
 }
 function connect(){
   const token = $('#tok').value.trim();
   if(!token){ term.write('\r\n[cockpit] paste the session token from the launch console\r\n'); return; }
-  if(ws) try{ws.close();}catch(e){}
+  if(ws) try{ ws.close(); }catch(e){}
   ws = new WebSocket('ws://127.0.0.1:5056');
-  ws.onopen = () => { ws.send(JSON.stringify({token, tab:curTab, cols:term.cols, rows:term.rows})); };
+  ws.onopen = () => ws.send(JSON.stringify({token, tab:curTab, cols:term.cols, rows:term.rows}));
   ws.onmessage = e => { const m = JSON.parse(e.data);
     if(m.type==='out') term.write(m.data); else if(m.type==='error') term.write('\r\n[error] '+m.error+'\r\n'); };
   ws.onclose = e => term.write('\r\n[cockpit] closed'+(e.reason?(': '+e.reason):'')+'\r\n');
 }
+window.addEventListener('resize', () => { if(termReady && active==='terminal'){ try{fit.fit();}catch(e){} } });
 
-/* ---------- boot ---------- */
-async function refreshAll(){
+/* ─────────────────────────── boot ─────────────────────────── */
+async function tick(){
   $('#clock').textContent = new Date().toISOString().slice(0,19)+'Z';
-  const p = await get('/api/panels');
-  const live = p.panels.filter(x=>x.live).length;
-  $('#panelstat').textContent = live+'/'+p.panels.length+' panels have data';
-  await Promise.all([drawCycles(),drawFlow(),drawSomatic(),drawPending(),
-                     drawProposals(),drawGoal(),drawColumns(),drawExpression(),
-                     drawThoughts()]);
+  try{
+    const p = await get('/api/panels');
+    const live = p.panels.filter(x => x.live);
+    $('#panelstat').textContent = live.length+'/'+p.panels.length+' panels have data';
+    const map = {overview:['cycles','flow','pending'], cycle:['cycles'],
+                 world:['goal','columns'], body:['somatic'],
+                 expression:['expression'], pending:['pending','proposals','forks'],
+                 terminal:['terminal']};
+    hasData = {};
+    for(const [t, keys] of Object.entries(map))
+      hasData[t] = keys.some(k => (p.panels.find(x => x.panel===k)||{}).live);
+    drawTabs();
+  }catch(e){}
+  refreshUnread(); refreshSwitches();
+  if(active !== 'terminal') render();
 }
-initTerm(); drawForks(0); refreshAll();
-setInterval(refreshAll, 15000);
+drawTabs(); render(); tick();
+setInterval(tick, 15000);
 </script>
 </body>
 </html>

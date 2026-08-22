@@ -76,6 +76,7 @@ STREAM_PATH = BASE / "memory" / "expression_stream.jsonl"
 PENDING_PATH = BASE / "memory" / "pending_expression.json"
 QUEUE_DB = BASE / "memory" / "human_input_queue.db"
 QUARANTINE_ROOT = BASE / "memory" / "expression_quarantine"
+VECTOR_STORE = BASE / "memory" / "state_vectors.jsonl"
 FORKS_CACHE = BASE / "memory" / "cockpit_forks_cache.json"
 TERMINAL_LOG = BASE / "memory" / "cockpit_terminal.log"
 
@@ -158,6 +159,17 @@ def last_sealed_cycle(ledger_path: pathlib.Path) -> Optional[dict]:
             "duration_sec": last.get("duration_sec"),
             "pid": last.get("pid"),
             "outcome": "finished"}
+
+
+def _warming() -> dict:
+    """How far the lexicon is from existing. Never implies a glyph."""
+    try:
+        from cockpit import vector as vec
+        return vec.warming(VECTOR_STORE)
+    except Exception as e:                                   # noqa: BLE001
+        return {"warm": False, "cycles": 0, "needed": 20,
+                "label": "lexicon state unreadable",
+                "why": "{}: {}".format(type(e).__name__, e)}
 
 
 def no_data(panel: str) -> dict:
@@ -518,6 +530,7 @@ def api_expression():
         "rejected": ex.read_rejected(QUARANTINE_ROOT),
         "grammar": {"forms": list(ex.FORMS), "max_tokens": ex.MAX_TOKENS,
                     "banned_groups": sorted(ex.BANNED_GROUPS)},
+        "lexicon": _warming(),
         "empty_because": (None if lines else
                           "no expression line has been generated yet"),
     })
