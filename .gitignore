@@ -183,3 +183,5 @@ memory/intel.db-wal
 memory/hypotheses.jsonl
 # Записите на трите колони (core/three_columns.py) — по едно досие на твърдение.
 memory/columns/
+# Потокът на цикъла (core/flow_score.py) — по един ред на цикъл.
+memory/flow_score.jsonl
