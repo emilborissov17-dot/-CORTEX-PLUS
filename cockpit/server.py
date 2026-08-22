@@ -140,6 +140,26 @@ def _summarise(blob, cap: int = 400):
     return blob
 
 
+def last_sealed_cycle(ledger_path: pathlib.Path) -> Optional[dict]:
+    """The last CYCLE_FINISHED seal. `ledger_path` is REQUIRED.
+
+    Exists because the checklist used to render "(no cycle) 0/55" whenever no
+    cycle was live, which is the least informative true statement available: it
+    looks like a system that has never run. The last SEALED cycle is what a
+    reader actually wants between runs.
+    """
+    rows = _read_jsonl(ledger_path, limit=4000)
+    seals = [r for r in rows if r.get("event") == "CYCLE_FINISHED"]
+    if not seals:
+        return None
+    last = seals[-1]
+    return {"cycle_id": last.get("cycle_id"),
+            "sealed_at": last.get("ts"),
+            "duration_sec": last.get("duration_sec"),
+            "pid": last.get("pid"),
+            "outcome": "finished"}
+
+
 def no_data(panel: str) -> dict:
     """The honest-empty card. Names the missing paths; never fakes a shape.
 
@@ -189,9 +209,19 @@ def api_cycles():
             continue
         by_cycle.setdefault(cid, set()).add(row.get("last_completed_step"))
 
+    sealed = last_sealed_cycle(ds.BASE / "memory" / "existence_ledger.jsonl")
+    live = som.cycle_is_live()
+
+    # WHICH CYCLE THIS CHECKLIST IS ABOUT. When nothing is running, the heartbeat
+    # names whatever cycle died or finished last, and rendering "(no cycle) 0/55"
+    # off it is the least informative true statement available — it looks like a
+    # system that has never run. Between runs the checklist shows the LAST SEALED
+    # cycle, labelled as such.
     current_cycle = heartbeat.get("cycle_id")
+    current_step = heartbeat.get("step") if live else None
+    if not live and sealed:
+        current_cycle = sealed["cycle_id"]
     done = by_cycle.get(current_cycle, set())
-    current_step = heartbeat.get("step")
 
     checklist = []
     for s in all_steps:
@@ -214,6 +244,14 @@ def api_cycles():
         "total_steps": len(all_steps),
         "done_count": sum(1 for c in checklist if c["state"] == "done"),
         "cycles_seen": sorted(by_cycle, reverse=True)[:20],
+        "live": live,
+        "label": ("running now" if live else
+                  "last completed cycle" if sealed else "no cycle has ever sealed"),
+        "last_sealed": ({**sealed,
+                         "ticks": len(done),
+                         "outcome": ("finished" if sealed and heartbeat.get(
+                             "cycle_id") == sealed["cycle_id"] else "finished")}
+                        if sealed else None),
         "badges": {
             "survival_latched": bool(survival.get("active")),
             "survival_reason": survival.get("reason"),
@@ -604,6 +642,23 @@ def api_toggle_read():
 
 
 # ---------------------------------------------------------------------------
+
+@app.get("/favicon.ico")
+def favicon():
+    """Served locally like everything else. A 404 in the console on every load
+    trains the reader to ignore the console, which is where the terminal token
+    and the bridge errors appear."""
+    return send_from_directory(
+        str(pathlib.Path(__file__).parent / "static"), "favicon.svg",
+        mimetype="image/svg+xml")
+
+
+@app.get("/favicon.svg")
+def favicon_svg():
+    return send_from_directory(
+        str(pathlib.Path(__file__).parent / "static"), "favicon.svg",
+        mimetype="image/svg+xml")
+
 
 @app.get("/")
 def index():
