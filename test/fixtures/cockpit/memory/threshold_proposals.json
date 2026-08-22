@@ -1,0 +1,15 @@
+{
+  "ts": "2026-08-01T00:00:00+00:00",
+  "proposals": [
+    {
+      "axis": "WATER_REVIEW",
+      "suggested": 0.4,
+      "basis": "fixture"
+    },
+    {
+      "axis": "FOOD_REVIEW",
+      "suggested": null,
+      "basis": "none"
+    }
+  ]
+}

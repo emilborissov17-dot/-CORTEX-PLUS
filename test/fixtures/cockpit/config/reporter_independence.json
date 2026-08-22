@@ -1,0 +1,13 @@
+{
+  "_doc": [
+    "fixture"
+  ],
+  "_classes": {
+    "self_reported": "x",
+    "independent": "y",
+    "adversarial": "z",
+    "unknown": "w"
+  },
+  "confirmed": {},
+  "proposed": {}
+}

@@ -1,0 +1,19 @@
+{
+  "steps": [
+    {
+      "step": "a",
+      "verdict": "FULL",
+      "seconds": 10
+    },
+    {
+      "step": "b",
+      "verdict": "DEGRADED",
+      "seconds": 20
+    },
+    {
+      "step": "c",
+      "verdict": "DEGRADED",
+      "seconds": 30
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "phase": "A_ORIENT",
+  "model": "qwen3:8b",
+  "accepted": true,
+  "attempts": 2,
+  "seconds": 12.3,
+  "attempt_log": [
+    {
+      "prompt": "base",
+      "accepted": false,
+      "said": {
+        "what": "a rejected attempt"
+      }
+    },
+    {
+      "prompt": "retry",
+      "accepted": true,
+      "said": {
+        "what": "the accepted one"
+      }
+    }
+  ]
+}

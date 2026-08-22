@@ -1,0 +1,17 @@
+{
+  "_meta": {
+    "description": "fixture"
+  },
+  "SUSTAINABLE_RESOURCES": {
+    "WATER_REVIEW": {
+      "weight": 7,
+      "target_value": 1.0
+    }
+  },
+  "SAFETY": {
+    "TECHNOLOGY_AI_REVIEW": {
+      "weight": 5,
+      "target_value": 1.0
+    }
+  }
+}

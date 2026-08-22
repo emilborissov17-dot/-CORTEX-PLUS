@@ -132,11 +132,22 @@ def _summarise(blob, cap: int = 400):
 
 
 def no_data(panel: str) -> dict:
-    """The honest-empty card. Names the missing paths; never fakes a shape."""
+    """The honest-empty card. Names the missing paths; never fakes a shape.
+
+    `missing` lists EVERY absent source, required or optional — not just the
+    required ones. Panel.missing() counts only required files because that is
+    what decides whether a panel is live; but a card that says "no data yet" and
+    then names nothing is useless to the person trying to work out why, and the
+    forks panel's only source is optional.
+    """
     p = ds.PANELS_BY_KEY.get(panel)
-    st = p.status() if p else {"missing": [], "note": ""}
+    if not p:
+        return {"no_data": True, "panel": panel, "missing": [], "note": "",
+                "why": "unknown panel"}
+    absent = [s.rel for s in p.sources if not s.exists()]
     return {"no_data": True, "panel": panel,
-            "missing": st.get("missing", []), "note": st.get("note", ""),
+            "missing": absent, "required_missing": [s.rel for s in p.missing()],
+            "note": p.note,
             "why": "the file(s) named above do not exist yet; nothing is invented "
                    "to fill the panel"}
 

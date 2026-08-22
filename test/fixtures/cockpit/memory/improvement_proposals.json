@@ -1,0 +1,22 @@
+{
+  "proposals": [
+    {
+      "component": "a",
+      "problem": "p1",
+      "timestamp": "2026-08-01T00:00:00+00:00",
+      "generated_by": "HYPERCLAW"
+    },
+    {
+      "component": "b",
+      "problem": "p2",
+      "timestamp": "2026-08-02T00:00:00+00:00",
+      "generated_by": "HYPERCLAW",
+      "approved": true
+    },
+    {
+      "component": "c",
+      "problem": "p3",
+      "timestamp": "2026-08-03T00:00:00+00:00"
+    }
+  ]
+}
