@@ -159,6 +159,10 @@ DRIVE_LETTERS_ARE_THE_POINT = {
     "test/test_guardian_diagnosis.py",       # a captured Windows traceback
     "experiments/pulse/pulse_daemon.py",     # psutil.disk_usage(REPO.anchor or "C:\\")
     "test/test_ci_contract.py",              # this file
+    # The drive letter is the ATTACK, not a path this code uses: the schema gate
+    # must refuse "C:\Windows\system32" as a value for a relative-path field,
+    # and testing that requires writing a Windows absolute path down.
+    "test/test_openclaw_schema_gate.py",
 }
 
 SKIP_PARTS = {"venv", "venv312_metta", "__pycache__", ".git", ".claude",

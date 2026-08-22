@@ -146,10 +146,20 @@ def test_every_quarantined_patch_is_counted_at_its_own_age():
     assert len(rows) == len(on_disk), (
         f"counter says {len(rows)}, disk holds {len(on_disk)}"
     )
-    assert len(rows) >= 30, (
-        "the working note said 5 and an earlier count said 17; the counter "
-        "wins, and it is far larger than either"
-    )
+    # WAS `>= 30`, and that number expired on 22 Aug 2026 when the 34 JUNK
+    # patches from docs/QUARANTINE_TRIAGE_2026-08-22.md were rejected, leaving 4.
+    #
+    # The floor existed to settle a dispute: a working note said 5, an earlier
+    # count said 17, and the counter said far more than either — so the counter
+    # won. What it was really pinning is that the counter does not UNDERCOUNT.
+    # A draining queue is the human doing their job, and a test that reddens
+    # when the backlog is cleared teaches people to clear it less.
+    #
+    # The invariant that matters is the one above: counter == disk. This keeps
+    # the anti-undercount half without freezing a backlog size into a test.
+    if on_disk:
+        assert rows, "disk holds patches and the counter reported none"
+    assert all(r["kind"] == "quarantined_patch" for r in rows)
     for r in rows:
         assert r["age_hours"] and r["age_hours"] > 0
         assert r["age_basis"] in ("timestamp in filename", "file mtime")
