@@ -110,6 +110,7 @@
   .panes,.pane{height:calc(100vh - var(--bar) - var(--ctl) - 150px);min-height:280px}
   .termstatus{font-size:11px;color:var(--yel);background:#0a0d11;border:1px solid var(--line);
               border-bottom:none;border-radius:3px 3px 0 0;padding:3px 8px;min-height:20px}
+  .b-green{color:var(--grn)} .b-amber{color:var(--yel)} .b-red{color:var(--red)}
   .foot{color:var(--dim);font-size:11px;padding:4px 0}
 </style>
 </head>
@@ -282,10 +283,16 @@ async function tabWorld(){
 async function tabBody(){
   const d = await get('/api/somatic');
   const t = d.toggles||{};
-  let html = `<div class="ctlrow" style="margin-bottom:8px">
+  /* ITEM E — the tag is stated ONCE. reflexivity 0 was repeated on all 42 rows,
+     which is noise: a constant printed 42 times carries no information and
+     crowds out the values. It renders per-row only where it is NOT 0. */
+  let html = `<div class="ctlrow" style="margin-bottom:6px">
      <button class="sw ${t.mic_enabled?'on':''}" data-sw="mic">MIC ${t.mic_enabled?'ON':'OFF'}</button>
      <button class="sw ${t.camera_enabled?'on':''}" data-sw="camera">CAMERA ${t.camera_enabled?'ON':'OFF'}</button>
-     <span class="meta">${esc(d.gates.mic)}</span></div>`;
+   </div>
+   <div class="meta" style="margin-bottom:8px">all rows: source <b>hardware</b>,
+     reflexivity <b>0</b> — raw sensor, no interpretation. A row shows its own tag
+     only when it differs.</div>`;
   for(const [g, rows] of Object.entries(d.groups)){
     if(!rows.length) continue;
     html += `<div style="margin-bottom:6px"><div class="meta" style="font-size:10px;letter-spacing:.1em">${esc(g)}</div><table>`;
@@ -293,11 +300,18 @@ async function tabBody(){
       let cell;
       if(r.disabled) cell = `<span class="pill">DISABLED</span>`;
       else if(!r.available) cell = `<span class="meta" title="${esc(r.reason)}">NOT AVAILABLE</span>`;
-      else if(typeof r.value === 'number' && r.unit==='%')
-        cell = `<div class="bar ${r.value>85?'bad':r.value>65?'warn':''}"><i style="width:${Math.min(100,r.value)}%"></i></div> ${esc(r.value)}%`;
+      else if(typeof r.value === 'number' && r.band){
+        /* ITEM D — the colour comes from the API's band, which knows whether
+           higher is better. battery 97 is green; battery 15 is red. */
+        const cls = r.band==='red'?'bad':r.band==='amber'?'warn':'';
+        const pct = (r.unit==='%') ? Math.min(100, Math.max(0, r.value)) : null;
+        cell = (pct!==null ? `<div class="bar ${cls}"><i style="width:${pct}%"></i></div> ` : '')
+             + `<span class="b-${esc(r.band)}">${esc(r.value)}</span> <span class="meta">${esc(r.unit)}</span>`;
+      }
       else cell = `${esc(r.value)} <span class="meta">${esc(r.unit)}</span>`;
-      html += `<tr><td style="width:36%">${esc(r.key)}</td><td>${cell}</td>
-               <td class="meta" style="width:64px">refl ${r.reflexivity}</td></tr>`;
+      const tag = (r.reflexivity !== 0 || r.source !== 'hardware')
+        ? `<td class="meta" style="width:96px">${esc(r.source)} refl ${esc(r.reflexivity)}</td>` : '<td></td>';
+      html += `<tr><td style="width:36%">${esc(r.key)}</td><td>${cell}</td>${tag}</tr>`;
     }
     html += `</table></div>`;
   }

@@ -112,7 +112,11 @@ class Reading:
         return {"group": self.group, "key": self.key, "value": self.value,
                 "unit": self.unit, "available": self.available,
                 "reason": self.reason, "disabled": self.disabled,
-                "source": self.source, "reflexivity": self.reflexivity}
+                "source": self.source, "reflexivity": self.reflexivity,
+                # Computed here so the API and the page cannot disagree about
+                # what colour a number is.
+                "band": band_for(self.key, self.value) if self.available else None,
+                "direction": direction_of(self.key)}
 
 
 def _na(group: str, key: str, reason: str, unit: str = "") -> Reading:
@@ -171,6 +175,62 @@ def toggles(config_path: Optional[pathlib.Path] = None) -> dict:
     return {"mic_enabled": bool(blob.get("mic_enabled")),
             "camera_enabled": bool(blob.get("camera_enabled"))}
 
+
+
+# ---------------------------------------------------------------------------
+# DIRECTION: WHICH WAY IS BAD
+# ---------------------------------------------------------------------------
+# battery_percent 97 rendered RED, because the bar coloured on MAGNITUDE alone:
+# anything over 85 was "bad". For a battery, 97 is the best reading available.
+#
+# So each metric declares its direction. HIGHER_BETTER means a large value is
+# healthy and the warning is at the LOW end (battery, wifi signal, free disk);
+# LOWER_BETTER means the opposite (load, temperature, memory, swap). A metric
+# with no direction gets no colour at all rather than a guessed one — a grey bar
+# says "not judged", and a green bar says "judged, and fine". Those are different
+# claims and the panel should not make the second one by accident.
+
+HIGHER_BETTER, LOWER_BETTER, NEUTRAL = "higher_better", "lower_better", "neutral"
+
+# (direction, amber_edge, red_edge). For HIGHER_BETTER the edges are floors that
+# a value falls THROUGH; for LOWER_BETTER they are ceilings it rises through.
+DIRECTIONS = {
+    "battery_percent":   (HIGHER_BETTER, 40.0, 15.0),
+    "wifi_signal_pct":   (HIGHER_BETTER, 50.0, 25.0),
+    "brightness_pct":    (NEUTRAL, None, None),
+    "cpu_percent":       (LOWER_BETTER, 65.0, 85.0),
+    "gpu_util_pct":      (LOWER_BETTER, 80.0, 95.0),
+    "ram_percent":       (LOWER_BETTER, 75.0, 90.0),
+    "swap_percent":      (LOWER_BETTER, 50.0, 80.0),
+    "gpu_temp_c":        (LOWER_BETTER, 75.0, 85.0),
+    "cpu_temp_c":        (LOWER_BETTER, 75.0, 90.0),
+    "gateway_ping_ms":   (LOWER_BETTER, 100.0, 500.0),
+    "idle_seconds":      (NEUTRAL, None, None),
+    "uptime_hours":      (NEUTRAL, None, None),
+    "event_log_errors_24h": (LOWER_BETTER, 5.0, 25.0),
+}
+
+
+def direction_of(key: str) -> str:
+    return DIRECTIONS.get(key, (NEUTRAL, None, None))[0]
+
+
+def band_for(key: str, value) -> Optional[str]:
+    """green / amber / red, or None when the metric declares no direction.
+
+    None is not a failure and not "green". It means nobody has said which way is
+    bad for this number, so the panel draws it uncoloured instead of implying a
+    verdict it does not have.
+    """
+    spec = DIRECTIONS.get(key)
+    if not spec or not isinstance(value, (int, float)) or isinstance(value, bool):
+        return None
+    direction, amber, red = spec
+    if direction == NEUTRAL or amber is None:
+        return None
+    if direction == HIGHER_BETTER:
+        return "red" if value <= red else "amber" if value <= amber else "green"
+    return "red" if value >= red else "amber" if value >= amber else "green"
 
 # ---------------------------------------------------------------------------
 # Groups
