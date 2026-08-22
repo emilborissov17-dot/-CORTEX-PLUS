@@ -1,0 +1,20 @@
+{
+  "axis": "TECHNOLOGY_AI_REVIEW",
+  "slug": "technology_ai",
+  "note": "READ-ONLY DATA. Never concatenated into a prompt — only whitelisted fields reach fixed slots. See core/axon_agents.render_role().",
+  "queries": [
+    "AI capability milestone",
+    "AI governance and oversight",
+    "frontier model evaluation"
+  ],
+  "feeds": [
+    "https://feeds.bbci.co.uk/news/technology/rss.xml",
+    "http://export.arxiv.org/rss/cs.AI"
+  ],
+  "allowed_domains": [
+    "bbci.co.uk",
+    "bbc.co.uk",
+    "arxiv.org"
+  ],
+  "max_items": 8
+}

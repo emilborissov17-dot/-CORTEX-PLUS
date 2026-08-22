@@ -1,0 +1,20 @@
+{
+  "axis": "CULTURE_MEDIA_REVIEW",
+  "slug": "culture_media",
+  "note": "READ-ONLY DATA. Never concatenated into a prompt — only whitelisted fields reach fixed slots. See core/axon_agents.render_role().",
+  "queries": [
+    "media trust and press freedom",
+    "cultural production and access",
+    "information ecosystem health"
+  ],
+  "feeds": [
+    "https://feeds.bbci.co.uk/news/entertainment_and_arts/rss.xml",
+    "http://export.arxiv.org/rss/cs.SI"
+  ],
+  "allowed_domains": [
+    "bbci.co.uk",
+    "bbc.co.uk",
+    "arxiv.org"
+  ],
+  "max_items": 8
+}
