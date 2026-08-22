@@ -309,6 +309,33 @@ def _selftest() -> int:
         print("  fast_cycle_runner    NOT WIRED — nothing calls "
               "record_step_complete(); this module records nothing yet")
 
+    # WIRED IS NOT THE SAME AS COVERED, and the difference is the whole safety
+    # question for --resume. Checkpoints are written from _run()'s success path,
+    # but only ~a third of the cycle's steps go through _run(); the rest beat()
+    # and then run inline with their own try/except. An uncovered step never
+    # records a completion, so a resume that trusted this log would re-run it —
+    # which is the SAFE direction, but only as long as the number is known.
+    # Printed, not asserted: this is a measurement, and it should move as steps
+    # migrate to _run() rather than fail a selftest that cannot fix it.
+    if wired:
+        try:
+            import re
+            from core.cycle_map import ALIASES, STEPS
+            labels = set(re.findall(r"_run\(\s*[\"']([A-Za-z0-9_]+)[\"']", runner))
+            covered = {ALIASES.get(x, x) for x in labels}
+            names = list(dict.fromkeys(s[0] for s in STEPS))
+            missing = [n for n in names if n not in covered]
+            print("  checkpoint coverage  {}/{} steps record a completion; "
+                  "{} do not".format(len(names) - len(missing), len(names),
+                                     len(missing)))
+            if missing:
+                print("    uncovered (they beat but never checkpoint): "
+                      "{}{}".format(", ".join(missing[:6]),
+                                    " ..." if len(missing) > 6 else ""))
+        except Exception as e:
+            print("  checkpoint coverage  UNKNOWN ({}: {})".format(
+                type(e).__name__, e))
+
     steps = ["a", "b", "c"]
     ck = {"cycle_id": "c1", "last_completed_step": "b"}
     d = decide_resume("c1", steps, ck, cycle_finished=False, enabled=True)

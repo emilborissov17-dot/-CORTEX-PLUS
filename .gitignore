@@ -164,3 +164,13 @@ memory/micro_cycle_latest.json
 memory/micro_cycle_log.jsonl
 memory/micro_cycle_contract_latest.json
 memory/micro_cycle_contract_baseline.json
+
+# ── СЛЕДАТА НА ДОВЪРШЕНИТЕ СТЪПКИ (22 авг 2026) ──────────────────────────────
+# core/cycle_checkpoint.py пише един ред на довършена стъпка. Това е запис за
+# КОНКРЕТНИЯ цикъл на КОНКРЕТНАТА машина — регенерира се всяка нощ и не е код,
+# точно като artefacts-ите, които 2050200 спря да следи. Изброени поименно, по
+# същата причина като по-горе: шаблон memory/cycle_* щеше да хване и следени файлове.
+memory/cycle_resume.jsonl
+memory/cycle_resume.json
+# Записът на прозореца за модела (core/model_window.py) — същото.
+memory/model_window.json

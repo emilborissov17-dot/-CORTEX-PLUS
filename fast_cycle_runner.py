@@ -369,6 +369,30 @@ def _seal_cycle_record() -> None:
     except Exception as e:
         print(f"[FAST_CYCLE] lock release -> FAILED: {type(e).__name__}: {e}")
 
+def _checkpoint_step(label: str) -> None:
+    """Record that `label` finished. Called only from the success path of _run().
+
+    The cycle_id is read from the heartbeat rather than passed down, because the
+    heartbeat is already the one place that holds the SUPERVISOR's cycle_id — a
+    second source for the same id is how a checkpoint ends up filed under a cycle
+    that never ran.
+
+    NEVER RAISES. A checkpoint is a convenience for the next run; a cycle that
+    dies because it could not write one has traded a real night for a hypothetical
+    one. The failure is printed, not swallowed silently.
+    """
+    try:
+        from core import cycle_checkpoint as _cc
+        from core.cycle_map import ALIASES as _AL
+        from memory.heartbeat import read as _hb_read
+        _hb = _hb_read() or {}
+        _cid = _hb.get("cycle_id") or "unknown"
+        _step = _AL.get(label, label)
+        _cc.record_step_complete(_cid, _step, _hb.get("step_index"))
+    except Exception as e:
+        print(f"[FAST_CYCLE] checkpoint({label}) -> {type(e).__name__}: {e}")
+
+
 def _free_ollama():
     """Release the GPU after a model-heavy step.
 
@@ -454,9 +478,11 @@ def _run(label, fn, free_after=False):
         _contract.__enter__()
     except Exception:
         _contract = None
+    _completed = False
     try:
         fn()
         print(f"[FAST_CYCLE] {label} -> OK")
+        _completed = True
     except Exception as e:
         # str(e) can be empty (e.g. bare MemoryError()) — always show the
         # exception type too, so a failure never renders as a blank message.
@@ -469,6 +495,19 @@ def _run(label, fn, free_after=False):
                 _contract.finish()
             except Exception:
                 pass
+    # ── ЗАВЪРШВАНЕТО СЕ ЗАПИСВА, НЕ ВЛИЗАНЕТО (22 авг 2026) ────────────────
+    # Deliberately here and NOT inside beat(). beat() fires when a step is
+    # ENTERED; a cycle that dies mid-step has beaten for it, and a checkpoint
+    # written on entry would name that step as done and let a resume skip the
+    # work it died in the middle of. Completion is the only thing worth
+    # recording, and `_completed` is set on the success path only — the except
+    # branch above swallows the error and carries on, so "we got here" is not
+    # the same question as "it worked".
+    # WRITE-ONLY TODAY. Nothing reads this to skip steps; --resume is item 3 and
+    # is off by default. This exists so that tomorrow's resume has a real record
+    # to stand on instead of an inferred one.
+    if _completed:
+        _checkpoint_step(label)
     if free_after:
         _free_ollama()
     gc.collect()  # release memory after every agent step
