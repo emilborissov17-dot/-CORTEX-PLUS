@@ -369,6 +369,107 @@ def _seal_cycle_record() -> None:
     except Exception as e:
         print(f"[FAST_CYCLE] lock release -> FAILED: {type(e).__name__}: {e}")
 
+# ── --resume: OFF UNLESS SOMEBODY SAYS OTHERWISE (22 авг 2026) ───────────────
+# Populated once by _decide_resume() at the top of main(); read by _run(). A dict
+# rather than a bare set so that "no decision was taken" and "the decision was to
+# skip nothing" stay distinguishable in the log.
+_RESUME = {"active": False, "skip": frozenset(), "reason": "not evaluated",
+           "seal_only": False}
+
+
+def _decide_resume(argv) -> dict:
+    """Should this run skip work a previous cycle already completed?
+
+    Four independent ways to say no, and all of them mean "run the whole cycle" —
+    never "run some of it and hope":
+
+      * --resume absent. The default, and the only thing a manual run gets unless
+        the human types the flag.
+      * no checkpoint, or one filed under a different cycle than the one we were
+        told we are continuing.
+      * that cycle already sealed CYCLE_FINISHED — there is nothing to resume.
+      * the artifact gate (core/phase_resume) says the evidence the completed
+        prefix promises is not on disk, or belongs to an older cycle. That gate
+        exists because scoring will happily run on last night's snapshots and
+        stamp today's date on the result.
+
+    The set of steps actually skipped is the INTERSECTION of decide_resume's
+    prefix with the steps that genuinely recorded a completion. Prefix alone is
+    not enough here: only 21 of 54 steps checkpoint at all, and `body_scan`
+    appears twice in the step list so an index-based prefix is ambiguous for it.
+    Evidence beats arithmetic — a step is skipped only if it is on record as done.
+    """
+    if "--resume" not in argv:
+        return {"active": False, "skip": frozenset(),
+                "reason": "resume not requested (--resume is OFF by default)",
+                "seal_only": False}
+    try:
+        from core import cycle_checkpoint as _cc
+        from core.cycle_map import STEPS as _STEPS
+        from memory.existence_ledger import has_finished as _has_finished
+
+        prev = os.environ.get("CORTEX_RESUME_CYCLE_ID") or ""
+        if not prev:
+            return {"active": False, "skip": frozenset(), "seal_only": False,
+                    "reason": "--resume given but CORTEX_RESUME_CYCLE_ID is empty; "
+                              "nothing names the cycle being continued"}
+
+        steps = [s[0] for s in _STEPS]
+        decision = _cc.decide_resume(
+            prev, steps, _cc.latest(),
+            cycle_finished=_has_finished(prev),
+            enabled=True,
+            artifact_check=_artifact_veto,
+        )
+        if not decision.resume:
+            return {"active": False, "skip": frozenset(), "seal_only": False,
+                    "reason": decision.reason}
+
+        done = set(_cc.completed_steps(prev))
+        skip = frozenset(s for s in decision.skipped_steps if s in done)
+        seal_only = decision.start_index >= len(steps)
+        return {"active": True, "skip": skip, "seal_only": seal_only,
+                "reason": decision.reason}
+    except Exception as e:
+        # A resume that cannot be reasoned about is a resume that does not happen.
+        return {"active": False, "skip": frozenset(), "seal_only": False,
+                "reason": f"resume evaluation failed ({type(e).__name__}: {e}) — "
+                          f"running the full cycle"}
+
+
+def _artifact_veto(step: str):
+    """core/phase_resume as decide_resume's veto. Returns a refusal string or None.
+
+    Maps the last completed STEP to the phase the cycle would resume INTO, and
+    asks phase_resume whether that phase's required artifacts exist AND belong to
+    this cycle. Anything it cannot answer is a refusal, not a shrug: an unknown
+    phase is exactly when a wrong resume is most likely.
+    """
+    try:
+        from core.phase_report import load_phases
+        phases = load_phases()
+        names = list(phases)
+        here = None
+        for i, ph in enumerate(names):
+            if any(s.get("name") == step for s in phases[ph].get("steps", [])):
+                here = i
+        if here is None:
+            return f"step {step!r} belongs to no declared phase"
+        if here + 1 >= len(names):
+            return None            # nothing after it to require anything
+        nxt = names[here + 1]
+        from core.phase_resume import check_requires
+        cid = os.environ.get("CORTEX_RESUME_CYCLE_ID") or ""
+        bad = [r for r in check_requires(nxt, cid) if not r["ok"]]
+        if bad:
+            return "{} of {} artifact(s) for {} missing: {}".format(
+                len(bad), len(bad), nxt,
+                "; ".join(f"{r['path']} ({r['reason']})" for r in bad[:3]))
+        return None
+    except Exception as e:
+        return f"artifact gate could not run ({type(e).__name__}: {e})"
+
+
 def _checkpoint_step(label: str) -> None:
     """Record that `label` finished. Called only from the success path of _run().
 
@@ -456,6 +557,19 @@ def _run(label, fn, free_after=False):
     # е казал за нея в beat(). Ако е решил "пропусни" — пропуска се и се записва
     # ЧИЯ е била преценката. Гръбнакът на одита не се пропуска по мнение
     # (core.brain.skipped_by_brain пази този списък).
+    # Already done by the cycle this run is continuing? Then it is not done again.
+    # Checked BEFORE the brain's opinion and before the contract opens, because a
+    # step that is being skipped should not open a contract it will never finish.
+    if _RESUME["active"]:
+        try:
+            from core.cycle_map import ALIASES as _AL
+            if _AL.get(label, label) in _RESUME["skip"]:
+                print(f"[FAST_CYCLE] {label} -> SKIPPED (resume: completed by "
+                      f"{os.environ.get('CORTEX_RESUME_CYCLE_ID', '?')})")
+                return
+        except Exception as e:
+            print(f"[FAST_CYCLE] resume gate for {label} -> "
+                  f"{type(e).__name__}: {e} (running it)")
     try:
         from core.brain import skipped_by_brain as _skip, stance as _stance
         if _skip(label):
@@ -1351,6 +1465,23 @@ def main():
         print(f"[FAST_CYCLE] cycle log tee unavailable: {type(_e).__name__}: {_e}")
 
     beat("boot", "-1", cycle_id=_cycle_id)
+
+    # ── РЕШЕНИЕТО ЗА ПРОДЪЛЖАВАНЕ СЕ ВЗИМА ВЕДНЪЖ, ТУК (22 авг 2026) ───────
+    # Taken once, at the top, so that the reason is in the log ABOVE the first
+    # step it affects — a skip line explained two hundred lines later is not an
+    # explanation. Default is off; only a supervisor RESTART passes --resume.
+    global _RESUME
+    _RESUME = _decide_resume(sys.argv)
+    if _RESUME["active"]:
+        print(f"[FAST_CYCLE] RESUME ACTIVE: {_RESUME['reason']}")
+        print(f"[FAST_CYCLE] resume will skip {len(_RESUME['skip'])} step(s) "
+              f"already recorded complete: "
+              f"{', '.join(sorted(_RESUME['skip'])) or '(none)'}")
+        if _RESUME["seal_only"]:
+            print("[FAST_CYCLE] RESUME: every step completed but the cycle never "
+                  "sealed — this run exists to seal it")
+    else:
+        print(f"[FAST_CYCLE] resume OFF: {_RESUME['reason']}")
 
     # A new cycle walks the step list from the top. The window's cursor is what
     # tells a repeated step name (body_scan appears at index 1 AND index 35) which

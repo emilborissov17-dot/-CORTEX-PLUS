@@ -970,8 +970,21 @@ def _spawn_reaper(python: str, pid: int, cycle_id: str) -> Optional[int]:
         return None
 
 
-def spawn_cycle(cycle_id: str) -> Optional[int]:
+def spawn_cycle(cycle_id: str, resume_from: Optional[str] = None) -> Optional[int]:
     """Start fast_cycle_runner detached, with its output captured. Returns its PID.
+
+    `resume_from` is the cycle_id of a cycle that DIED, whose completed steps the
+    new run may skip. Passing it adds `--resume` to the child's argv; without it
+    the runner starts from the top, which is the default and stays the default.
+
+    WHY IT IS A SEPARATE ID AND NOT JUST cycle_id (found 22 Aug 2026, by reading
+    the restart path rather than assuming it). A KILL_RESTART mints a BRAND NEW
+    cycle_id — `cycle_id = now.isoformat()` at the call site. So the checkpoint
+    left by the killed cycle is filed under the old id, and decide_resume's own
+    guard ("checkpoint belongs to another cycle") would refuse every restart
+    resume that has ever been attempted. Reusing the dead cycle's id instead
+    would fix the match and break the ledger, which counts two runs as two runs.
+    So the new cycle keeps its own identity and is TOLD what it is continuing.
 
     The handle is deliberately NOT closed here and the process is NOT waited on:
     the supervisor is a short-lived tick that exits in milliseconds while the
@@ -997,6 +1010,10 @@ def spawn_cycle(cycle_id: str) -> Optional[int]:
            # discarding it on a cycle_id mismatch (which recorded last_step=
            # "unknown" for every death before 2026-07-19).
            "CORTEX_CYCLE_ID": cycle_id}
+    # The id of the cycle whose completed steps this run may skip. Separate from
+    # CORTEX_CYCLE_ID above, which is this run's OWN identity — see the docstring.
+    if resume_from:
+        env["CORTEX_RESUME_CYCLE_ID"] = str(resume_from)
 
     try:
         CYCLE_LOG_DIR.mkdir(parents=True, exist_ok=True)
@@ -1054,8 +1071,11 @@ def spawn_cycle(cycle_id: str) -> Optional[int]:
         # fix: an env var can be dropped by a wrapper, a shell profile or a
         # future edit to this dict, and the one run that needs the log is the one
         # where that happened. -u cannot be lost that way.
+        argv = [python, "-u", str(RUNNER)]
+        if resume_from:
+            argv.append("--resume")
         proc = subprocess.Popen(
-            [python, "-u", str(RUNNER)],
+            argv,
             cwd=str(BASE), env=env,
             stdin=subprocess.DEVNULL, stdout=fh, stderr=subprocess.STDOUT,
             creationflags=creationflags,
@@ -1480,12 +1500,19 @@ def tick(now: Optional[datetime] = None, dry_run: bool = False) -> Action:
             save_state(state)
 
             cycle_id = now.isoformat()
-            pid = spawn_cycle(cycle_id)
+            # A RESTART is the one spawn that may resume: the cycle it replaces
+            # died mid-run and left a record of what it had finished. The daily
+            # START and the human's --run-now both begin a genuinely new day and
+            # get no --resume, so an unattended restart is the only path on which
+            # work is ever skipped. The runner still refuses unless the artifacts
+            # of the completed prefix are on disk and belong to that cycle.
+            pid = spawn_cycle(cycle_id, resume_from=action.cycle_id)
             if pid:
                 write_lock(pid, cycle_id)
                 ledger.append(ledger.CYCLE_RESTARTED, cycle_id=cycle_id, pid=pid,
                               restart_number=used + 1,
-                              after_wedged_step=action.wedged_step)
+                              after_wedged_step=action.wedged_step,
+                              resuming_cycle_id=action.cycle_id)
                 ledger.append(ledger.CYCLE_STARTED, cycle_id=cycle_id, pid=pid,
                               trigger="RESTART")
                 _ring_death_bell("CYCLE_RESTARTED", action,
