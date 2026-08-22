@@ -242,6 +242,99 @@ def ceiling_for(step: Optional[str], cfg: dict) -> int:
         return base_ceiling
 
 
+def _last_finished_cycle() -> tuple:
+    """(cycle_id, ts) of the most recent CYCLE_FINISHED, or (None, None)."""
+    try:
+        for e in reversed(ledger.read_all()):
+            if e.get("event") == ledger.CYCLE_FINISHED:
+                return e.get("cycle_id"), e.get("ts")
+    except Exception:
+        pass
+    return None, None
+
+
+def failure_status(state: dict) -> dict:
+    """Is the recorded failure still true, and how old is it?
+
+    THE DEFECT THIS ANSWERS. state["failure"] was written once and never
+    unwritten. `supervisor --status` printed it as a bare banner with no date, no
+    cycle_id and no age, so a failure from a cycle that died days ago looked
+    exactly like one from an hour ago — and there was no way for a human to tell
+    that the system was currently fine. Worse than cosmetic: core/survival_mode
+    .derived_from_disk treats a failure block dated today as grounds for survival
+    mode, so a stale block does not just mislead a reader, it changes behaviour.
+
+    STALE means a cycle FINISHED after the failure was recorded. Not "a cycle
+    started", not "a day passed" — finishing is the only evidence that the thing
+    the failure describes is over.
+
+    Returns a dict; never raises. `stale` is False when it cannot be established,
+    because clearing a failure on a guess is the more expensive mistake.
+    """
+    failure = (state or {}).get("failure") or {}
+    if not failure:
+        return {"present": False}
+
+    at = failure.get("at_utc") or failure.get("date")
+    age_sec = None
+    try:
+        stamp = datetime.fromisoformat(str(at))
+        if stamp.tzinfo is None:
+            stamp = stamp.replace(tzinfo=timezone.utc)
+        age_sec = (datetime.now(timezone.utc) - stamp).total_seconds()
+    except Exception:
+        pass
+
+    fin_id, fin_ts = _last_finished_cycle()
+    stale = False
+    if fin_ts and at:
+        try:
+            f = datetime.fromisoformat(str(fin_ts))
+            a = datetime.fromisoformat(str(at))
+            if f.tzinfo is None:
+                f = f.replace(tzinfo=timezone.utc)
+            if a.tzinfo is None:
+                a = a.replace(tzinfo=timezone.utc)
+            stale = f > a
+        except Exception:
+            stale = False
+
+    return {
+        "present": True,
+        "stale": stale,
+        "reason": failure.get("reason"),
+        "cycle_id": failure.get("cycle_id"),
+        "wedged_step": failure.get("wedged_step"),
+        "date": failure.get("date"),
+        "at_utc": failure.get("at_utc"),
+        "age_sec": age_sec,
+        "superseded_by": fin_id if stale else None,
+        "superseded_at": fin_ts if stale else None,
+    }
+
+
+def _clear_stale_failure(state: dict) -> bool:
+    """Drop a failure block that a later finished cycle has already answered.
+
+    Called from tick(), so the clearing happens on the same schedule the watchdog
+    already runs on. Returns True if anything was cleared.
+    """
+    st = failure_status(state)
+    if not st.get("present") or not st.get("stale"):
+        return False
+    state["failure"] = None
+    state.setdefault("failure_history", [])
+    state["failure_history"] = (state["failure_history"] + [{
+        "cleared_utc": datetime.now(timezone.utc).isoformat(),
+        "superseded_by": st.get("superseded_by"),
+        "was": {k: st.get(k) for k in ("reason", "cycle_id", "wedged_step", "date")},
+    }])[-20:]
+    log(f"cleared a stale failure block (from cycle {st.get('cycle_id')}, "
+        f"step {st.get('wedged_step')!r}) — cycle {st.get('superseded_by')} has "
+        f"since FINISHED")
+    return True
+
+
 def _step_priority(step: Optional[str]) -> str:
     """CRITICAL or NORMAL, from config/step_priority.json. NORMAL when unknown.
 
@@ -1381,6 +1474,13 @@ def tick(now: Optional[datetime] = None, dry_run: bool = False) -> Action:
 
     cfg = load_config()
     state = load_state()
+    # A failure that a later cycle has already answered is not a failure any
+    # more. Cleared here, on the schedule the watchdog already runs on, because
+    # a stale block does not merely mislead a reader: survival_mode reads it as
+    # grounds for the reduced profile, so leaving it would quietly starve a
+    # healthy system of its own steps.
+    if not dry_run and _clear_stale_failure(state):
+        save_state(state)
     lock = read_lock()
     beat = hb.read()
 
@@ -1506,6 +1606,12 @@ def tick(now: Optional[datetime] = None, dry_run: bool = False) -> Action:
         # Budget spent — stay down and visible, do not silently limp on.
         state["failure"] = {
             "date": today,
+            # WHICH cycle and WHEN. Without these the banner in --status is a
+            # bare sentence that reads the same whether the failure is an hour
+            # old or a week old, and failure_status() cannot tell whether a later
+            # cycle has already answered it.
+            "cycle_id": action.cycle_id,
+            "at_utc": datetime.now(timezone.utc).isoformat(),
             "reason": action.reason,
             "wedged_step": action.wedged_step,
             "restarts_used": used,
@@ -1629,6 +1735,12 @@ def tick(now: Optional[datetime] = None, dry_run: bool = False) -> Action:
         # Budget exhausted — fail loudly, do not restart.
         state["failure"] = {
             "date": today,
+            # WHICH cycle and WHEN. Without these the banner in --status is a
+            # bare sentence that reads the same whether the failure is an hour
+            # old or a week old, and failure_status() cannot tell whether a later
+            # cycle has already answered it.
+            "cycle_id": action.cycle_id,
+            "at_utc": datetime.now(timezone.utc).isoformat(),
             "reason": action.reason,
             "wedged_step": action.wedged_step,
             "restarts_used": used,
@@ -1723,8 +1835,38 @@ def cmd_status() -> None:
     print(f"restarts today      {restarts_today(state, now.date().isoformat())}"
           f" / {cfg['max_restarts_per_day']}")
 
-    if state.get("failure"):
-        print(f"\n  !!! FAILURE: {state['failure']['reason']}\n")
+    # ── БАНЕРЪТ КАЗВА КОГА И ЗА КОЙ ЦИКЪЛ (22 авг 2026) ────────────────────
+    # It used to be one line — the reason, and nothing else. A failure from a
+    # cycle that died last Tuesday printed identically to one from an hour ago,
+    # so nobody could tell from --status whether the system was currently fine.
+    # Now it carries the cycle_id and the age, and says plainly when a later
+    # cycle has already finished and answered it.
+    _fs = failure_status(state)
+    if _fs.get("present"):
+        _age = _fs.get("age_sec")
+        _age_s = ("age unknown" if _age is None else
+                  f"{_age/3600:.1f}h old" if _age >= 3600 else f"{_age/60:.0f}m old")
+        _cid = _fs.get("cycle_id") or "(id not recorded — block predates the field)"
+        if _fs.get("stale"):
+            print(f"\n  (stale) a failure was recorded for cycle {_cid} "
+                  f"({_age_s}), step {_fs.get('wedged_step')!r}:")
+            print(f"          {str(_fs.get('reason'))[:200]}")
+            print(f"  RESOLVED — cycle {_fs.get('superseded_by')} has since "
+                  f"FINISHED ({_fs.get('superseded_at')}).")
+            print("  The system is NOT currently in that failure. The block is "
+                  "cleared on the next non-dry-run tick.\n")
+        else:
+            print(f"\n  !!! FAILURE (current — no cycle has finished since): "
+                  f"cycle {_cid}, {_age_s}, step {_fs.get('wedged_step')!r}")
+            print(f"      {_fs.get('reason')}\n")
+
+    try:
+        from core import survival_mode as _sm
+        _sv_active, _sv_reason, _ = _sm.resolve(now.date().isoformat())
+        print(f"survival mode       {'ACTIVE' if _sv_active else 'off'}"
+              f"  ({_sv_reason})")
+    except Exception as e:
+        print(f"survival mode       unknown ({type(e).__name__}: {e})")
 
     if lock:
         alive = pid_is_our_cycle(lock.get("pid"))
