@@ -673,10 +673,35 @@ def favicon_svg():
         mimetype="image/svg+xml")
 
 
+# The token the running bridge is using. Set by main() AFTER start_bridge();
+# None when the bridge did not start, and the page then shows the field empty
+# with the reason rather than a box that silently never works.
+_SESSION_TOKEN: Optional[str] = None
+
+
 @app.get("/")
 def index():
-    return send_from_directory(str(pathlib.Path(__file__).parent / "templates"),
-                               "cockpit.html")
+    """The page, with the terminal token injected.
+
+    WHY INJECTING IT IS NOT A WEAKENING. The token's job is to stop OTHER
+    software on this machine from driving a shell through the bridge. The page
+    is served from 127.0.0.1 to a browser the operator opened; anything that can
+    fetch this HTML can already reach every other cockpit endpoint. Making the
+    human copy a hex string from a console into a field protects nothing and
+    guarantees the field is sometimes pasted wrong — which is exactly how the
+    terminal ended up disconnected while its buttons looked live.
+
+    What DOES the work is on the socket: the token is still required on the
+    handshake, and the handshake now also verifies the Origin, so a page from
+    any other origin is refused even holding a valid token.
+
+    Still never written to memory/cockpit_terminal.log.
+    """
+    html = (pathlib.Path(__file__).parent / "templates" / "cockpit.html").read_text(
+        encoding="utf-8")
+    token = _SESSION_TOKEN or ""
+    return html.replace("__COCKPIT_TOKEN__", token), 200, {
+        "Content-Type": "text/html; charset=utf-8"}
 
 
 def main(argv=None) -> int:
@@ -687,11 +712,14 @@ def main(argv=None) -> int:
                    help="do not start the terminal websocket bridge")
     args = p.parse_args(argv)
 
+    global _SESSION_TOKEN
     token = None
     if not args.no_terminal:
         try:
             from cockpit import terminal
-            token = terminal.start_bridge(log_path=TERMINAL_LOG)
+            token = terminal.start_bridge(log_path=TERMINAL_LOG,
+                                          http_port=args.port)
+            _SESSION_TOKEN = token
         except Exception as e:
             print("[COCKPIT] terminal bridge NOT started: {}: {}".format(
                 type(e).__name__, e))
