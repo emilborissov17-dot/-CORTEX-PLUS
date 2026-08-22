@@ -76,8 +76,15 @@ VECTOR_FIELDS = (
     "disk_read_mb", "disk_write_mb", "open_handles",
     "net_sent_mb", "net_recv_mb",
     "wifi_signal_pct", "gateway_ping_ms", "connections",
-    "idle_seconds", "brightness_pct", "event_log_errors",
+    "idle_seconds", "brightness_pct", "event_log_errors_24h",
 )
+# ^ WAS "event_log_errors", which matched no sensor key: the reading is emitted
+# as event_log_errors_24h, so dim 25 silently resolved to None and the report
+# called it "24 of 25 measured" as if the machine could not answer. It could —
+# the Windows Event Log was read correctly every time and thrown away on a name.
+# cockpit/vector.assert_fields_resolve() now fails loudly if this recurs. No
+# version bump: memory/state_vectors.jsonl did not exist, so nothing was ever
+# fitted from the broken vector and there is no migration to log.
 assert len(VECTOR_FIELDS) == 25, "the state vector is 25-dimensional by contract"
 
 GROUPS = ("ENERGY", "THERMAL", "COMPUTE", "MEMORY", "STORAGE", "NETWORK",
