@@ -179,3 +179,5 @@ memory/model_window.json
 memory/intel.db
 memory/intel.db-journal
 memory/intel.db-wal
+# Ledger-ът на хипотезите (core/hypothesis_search.py) — присъди по цикли.
+memory/hypotheses.jsonl
