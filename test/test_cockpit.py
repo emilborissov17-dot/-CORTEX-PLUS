@@ -130,7 +130,12 @@ def test_every_endpoint_answers_json(client, ep):
     assert r.get_json() is not None, ep
 
 
-def test_cycles_marks_done_current_and_todo(client):
+def test_cycles_marks_done_current_and_todo(client, monkeypatch):
+    # current_step is blanked unless a cycle is LIVE (COMMAND 21b item 8): the
+    # heartbeat still names whatever ran last, and leaving it on screen made a
+    # finished cycle look like one stuck on its final step. The fixture pid does
+    # not exist, so the live path has to be asserted deliberately.
+    monkeypatch.setattr(som, "cycle_is_live", lambda: True)
     d = client.get("/api/cycles").get_json()
     states = {c["state"] for c in d["checklist"]}
     assert "done" in states and "todo" in states
@@ -216,10 +221,12 @@ def test_the_server_binds_loopback_only():
             raise AssertionError("0.0.0.0 appears as a live string, not a comment")
 
 
-def test_exactly_two_flask_post_routes_and_they_are_the_declared_ones():
+def test_the_flask_post_routes_are_exactly_the_declared_ones():
+    """WAS "exactly two". /api/toggle is the third — see
+    test_exactly_four_writeful_endpoints_now for the whole surface."""
     posts = sorted(str(r) for r in srv.app.url_map.iter_rules()
                    if "POST" in r.methods)
-    assert posts == ["/api/ask", "/api/expression/seen"]
+    assert posts == ["/api/ask", "/api/expression/seen", "/api/toggle"]
     assert set(posts) < set(srv.WRITE_ENDPOINTS)
 
 
@@ -679,3 +686,504 @@ def test_the_panel_table_marks_missing_required_files(tmp_path, monkeypatch):
     assert all(r["missing"] for r in required)
     optional_only = [r for r in rows if r not in required]
     assert all(not r["missing"] for r in optional_only)
+
+
+# ===========================================================================
+# COMMAND 21b — usable cockpit, real switches, real producers
+# ===========================================================================
+
+from cockpit import pulse as pl            # noqa: E402
+from cockpit import reflex as rx           # noqa: E402
+from cockpit import vector as vec          # noqa: E402
+
+PAGE = REPO / "cockpit" / "templates" / "cockpit.html"
+
+TAB_IDS = ("overview", "cycle", "world", "body", "expression", "pending",
+           "terminal")
+
+
+# ---------------------------------------------------------------------------
+# Item 1 — tab routing and persistence
+# ---------------------------------------------------------------------------
+
+def test_the_page_declares_exactly_seven_tabs():
+    html = PAGE.read_text(encoding="utf-8")
+    for t in TAB_IDS:
+        assert "id:'{}'".format(t) in html, "tab {} is missing".format(t)
+    assert html.count("id:'") == len(TAB_IDS), "a tab was added or removed"
+
+
+def test_only_the_active_tab_is_built():
+    """Not hidden with CSS — not built. A tab nobody looks at costs nothing."""
+    html = PAGE.read_text(encoding="utf-8")
+    assert "view.innerHTML = await RENDER[active]()" in html
+    assert "display:none" not in html, (
+        "a hidden-but-rendered tab still fetches and still paints")
+
+
+def test_the_tab_choice_persists_and_is_validated():
+    html = PAGE.read_text(encoding="utf-8")
+    assert "localStorage.setItem(KEY, id)" in html
+    assert "localStorage.getItem(KEY)" in html
+    assert "if (!TABS.some(t => t.id === active)) active = 'overview'" in html, (
+        "a stale localStorage value would render a tab that no longer exists")
+
+
+def test_keys_one_to_seven_switch_tabs_but_not_while_typing():
+    html = PAGE.read_text(encoding="utf-8")
+    assert "n >= 1 && n <= TABS.length" in html
+    assert "['INPUT','TEXTAREA'].includes(document.activeElement.tagName)" in html, (
+        "typing 3 into the ask box would jump to the WORLD tab")
+    assert "closest('#term')" in html, "typing 3 in the terminal would switch tabs"
+
+
+def test_every_tab_has_a_has_data_dot_fed_by_the_panel_table():
+    html = PAGE.read_text(encoding="utf-8")
+    assert 'class="dot ' in html
+    assert "p.panels.find(x => x.panel===k)" in html, (
+        "the dot must come from the same table that decides the no-data cards")
+
+
+# ---------------------------------------------------------------------------
+# Item 2 — the control bar
+# ---------------------------------------------------------------------------
+
+def test_the_ask_box_lives_in_the_control_bar_not_inside_a_panel():
+    html = PAGE.read_text(encoding="utf-8")
+    footer = html.split("<footer>")[1].split("</footer>")[0]
+    assert 'id="askbox"' in footer, "the ask box is still buried in a panel"
+    assert 'id="unread"' in footer, "the unread count is not beside the ask box"
+
+
+def test_the_control_bar_says_the_buttons_only_type():
+    html = PAGE.read_text(encoding="utf-8")
+    assert "buttons type the command; you press Enter" in html
+
+
+def test_prefill_sends_the_command_without_a_newline():
+    """THE LOAD-BEARING ONE. A trailing CR would make every button an executor."""
+    html = PAGE.read_text(encoding="utf-8")
+    fn = html.split("function prefill(cmd){")[1].split("\n}")[0]
+    # The SEND LINE only. The function also writes a not-connected message that
+    # legitimately contains CRLF, and matching the whole body caught that instead
+    # of the behaviour — the same substring-vs-behaviour mistake this file has
+    # now made three times.
+    send = [l.split("//")[0] for l in fn.splitlines() if "ws.send" in l]
+    assert len(send) == 1, "more than one send path in prefill"
+    assert "type:'in', data: cmd" in send[0]
+    # ...and with the trailing COMMENT stripped, because the comment on that line
+    # says NO "\\r" and the assertion kept matching the promise instead of the code.
+    assert chr(92) + "r" not in send[0], "prefill sends a CR: the button EXECUTES"
+    assert "cmd +" not in send[0] and "cmd+" not in send[0]
+
+
+def test_the_ask_box_appends_exactly_one_row(client):
+    before = len(ex.queue_read(db_path=srv.QUEUE_DB))
+    r = client.post("/api/ask", json={"text": "how warm is the lexicon"})
+    assert r.status_code == 200
+    rows = ex.queue_read(db_path=srv.QUEUE_DB)
+    assert len(rows) == before + 1, "the ask box wrote {} rows".format(
+        len(rows) - before)
+    assert rows[-1]["text"] == "how warm is the lexicon"
+
+
+def test_an_empty_question_appends_nothing(client):
+    before = len(ex.queue_read(db_path=srv.QUEUE_DB))
+    assert client.post("/api/ask", json={"text": "   "}).status_code == 400
+    assert len(ex.queue_read(db_path=srv.QUEUE_DB)) == before
+
+
+# ---------------------------------------------------------------------------
+# Item 3 — the toggle writes two booleans and nothing else
+# ---------------------------------------------------------------------------
+
+@pytest.fixture
+def cfg(tmp_path, monkeypatch):
+    import shutil
+    p = tmp_path / "config_expression.yaml"
+    shutil.copy(REPO / "config_expression.yaml", p)
+    monkeypatch.setattr(srv, "CONFIG_EXPRESSION", p)
+    return p
+
+
+def test_the_toggle_writes_only_the_two_booleans(cfg):
+    before = cfg.read_text(encoding="utf-8").splitlines()
+    srv.app.config["TESTING"] = True
+    c = srv.app.test_client()
+    assert c.post("/api/toggle", json={"mic_enabled": True}).status_code == 200
+    after = cfg.read_text(encoding="utf-8").splitlines()
+    changed = [i for i, (a, b) in enumerate(zip(before, after)) if a != b]
+    assert len(changed) == 1, "expected one line to change, {} did".format(len(changed))
+    assert "mic_enabled" in after[changed[0]]
+    assert len(before) == len(after), "the file grew or shrank"
+
+
+def test_the_toggle_preserves_every_comment(cfg):
+    before = cfg.read_text(encoding="utf-8")
+    srv.app.config["TESTING"] = True
+    srv.app.test_client().post("/api/toggle", json={"camera_enabled": True})
+    after = cfg.read_text(encoding="utf-8")
+    assert before.count("#") == after.count("#"), (
+        "a comment was lost — yaml.safe_dump would delete all of them")
+    assert "silence_mode" in after
+
+
+def test_the_toggle_refuses_any_other_key(cfg):
+    srv.app.config["TESTING"] = True
+    r = srv.app.test_client().post("/api/toggle", json={"silence_mode": True})
+    assert r.status_code == 400
+    assert "silence_mode" in r.get_json()["error"]
+    assert "silence_mode: false" in cfg.read_text(encoding="utf-8")
+
+
+def test_exactly_four_writeful_endpoints_now():
+    posts = sorted(str(r) for r in srv.app.url_map.iter_rules()
+                   if "POST" in r.methods)
+    assert posts == ["/api/ask", "/api/expression/seen", "/api/toggle"]
+    assert set(posts) < set(srv.WRITE_ENDPOINTS)
+    assert len(srv.WRITE_ENDPOINTS) == 4
+
+
+def test_the_probe_reads_the_toggles_from_the_config_every_call(tmp_path):
+    p = tmp_path / "c.yaml"
+    p.write_text("mic_enabled: true\ncamera_enabled: false\n", encoding="utf-8")
+    assert som.toggles(p) == {"mic_enabled": True, "camera_enabled": False}
+    p.write_text("mic_enabled: false\ncamera_enabled: false\n", encoding="utf-8")
+    assert som.toggles(p)["mic_enabled"] is False, (
+        "the toggle was cached; switching a device OFF would need a restart")
+
+
+def test_a_missing_config_reads_both_switches_off(tmp_path):
+    assert som.toggles(tmp_path / "nope.yaml") == {
+        "mic_enabled": False, "camera_enabled": False}
+
+
+# ---------------------------------------------------------------------------
+# Item 3 — capture closes its handle, writes no media, honours the cooldown
+# ---------------------------------------------------------------------------
+
+def test_the_camera_handle_is_released_even_when_the_read_fails(monkeypatch):
+    released = []
+
+    class FakeCap:
+        def isOpened(self):
+            return True
+
+        def read(self):
+            raise RuntimeError("device exploded mid-read")
+
+        def release(self):
+            released.append(True)
+
+    import cv2
+    monkeypatch.setattr(cv2, "VideoCapture", lambda *a, **k: FakeCap())
+    lux, mse, err = som.camera_scalars_once()
+    assert err and "device exploded" in err
+    assert released == [True], "the camera was not released on the failure path"
+
+
+def test_the_camera_handle_is_released_on_the_happy_path(monkeypatch):
+    import numpy as np
+    released = []
+
+    class FakeCap:
+        def isOpened(self):
+            return True
+
+        def read(self):
+            return True, np.zeros((48, 64, 3), dtype="uint8")
+
+        def release(self):
+            released.append(True)
+
+    import cv2
+    monkeypatch.setattr(cv2, "VideoCapture", lambda *a, **k: FakeCap())
+    lux, mse, err = som.camera_scalars_once()
+    assert err is None and lux == 0.0
+    assert released == [True]
+
+
+def test_capture_writes_no_audio_or_image_file(monkeypatch, tmp_path):
+    """Only scalars survive. Asserted by watching the filesystem, not by reading
+    the code and believing it."""
+    import numpy as np
+    import cv2
+
+    class FakeCap:
+        def isOpened(self):
+            return True
+
+        def read(self):
+            return True, np.zeros((48, 64, 3), dtype="uint8")
+
+        def release(self):
+            pass
+
+    monkeypatch.setattr(cv2, "VideoCapture", lambda *a, **k: FakeCap())
+    monkeypatch.setattr(som, "mic_rms_once", lambda: (0.01, None))
+    monkeypatch.setattr(som, "cycle_is_live", lambda: False)
+    monkeypatch.chdir(tmp_path)
+    som._last_capture["camera"] = 0.0
+    som._last_capture["mic"] = 0.0
+    som.optic(enabled=True)
+    som.acoustic(enabled=True)
+    made = [p for p in tmp_path.rglob("*") if p.is_file()]
+    assert made == [], "capture wrote {}".format([p.name for p in made])
+
+
+def test_a_second_capture_inside_ten_seconds_is_refused(monkeypatch):
+    monkeypatch.setattr(som, "mic_rms_once", lambda: (0.01, None))
+    monkeypatch.setattr(som, "cycle_is_live", lambda: False)
+    som._last_capture["mic"] = 0.0
+    first = som.acoustic(enabled=True)
+    assert first[0].available, first[0].reason
+    second = som.acoustic(enabled=True)
+    assert not second[0].available
+    assert "cooldown" in second[0].reason
+    assert som.CAPTURE_COOLDOWN_SEC == 10.0
+
+
+def test_capture_is_refused_while_a_cycle_is_live(monkeypatch):
+    monkeypatch.setattr(som, "cycle_is_live", lambda: True)
+    som._last_capture["mic"] = 0.0
+    som._last_capture["camera"] = 0.0
+    for row in som.acoustic(enabled=True) + som.optic(enabled=True):
+        assert not row.available
+        assert "cycle is running" in row.reason
+
+
+def test_a_switched_off_device_reads_disabled_not_zero():
+    for row in som.acoustic(enabled=False) + som.optic(enabled=False):
+        assert row.disabled and row.value is None
+
+
+# ---------------------------------------------------------------------------
+# Item 4 — the pulse emission rule
+# ---------------------------------------------------------------------------
+
+def _row(key, value, unit="%", available=True):
+    return {"key": key, "value": value, "unit": unit, "available": available,
+            "disabled": False, "reason": ""}
+
+
+def test_a_value_inside_the_band_emits_nothing():
+    p = pl.PulseProducer()
+    p.emit({"groups": {"C": [_row("cpu", 40.0)]}}, now=0)
+    assert p.emit({"groups": {"C": [_row("cpu", 41.0)]}}, now=1) == [], (
+        "a 2.5 percent move inside one band produced a line")
+
+
+def test_a_band_crossing_emits_exactly_one_line():
+    p = pl.PulseProducer()
+    p.emit({"groups": {"C": [_row("cpu", 40.0)]}}, now=0)
+    lines = p.emit({"groups": {"C": [_row("cpu", 70.0)]}}, now=1)
+    assert len(lines) == 1
+    assert "band green -> amber" in lines[0]["text"]
+    assert lines[0]["source_tag"] == "sensor" and lines[0]["reflexivity"] == 0
+
+
+def test_a_move_over_fifteen_percent_emits():
+    p = pl.PulseProducer()
+    p.emit({"groups": {"C": [_row("x", 100.0, unit="")]}}, now=0)
+    assert p.emit({"groups": {"C": [_row("x", 110.0, unit="")]}}, now=1) == []
+    assert len(p.emit({"groups": {"C": [_row("x", 140.0, unit="")]}}, now=2)) == 1
+
+
+def test_an_availability_flip_emits_in_both_directions():
+    p = pl.PulseProducer()
+    p.emit({"groups": {"C": [_row("k", 10.0)]}}, now=0)
+    gone = p.emit({"groups": {"C": [_row("k", None, available=False)]}}, now=1)
+    assert len(gone) == 1 and "NOT AVAILABLE" in gone[0]["text"]
+    back = p.emit({"groups": {"C": [_row("k", 10.0)]}}, now=2)
+    assert len(back) == 1 and "became readable" in back[0]["text"]
+
+
+def test_a_flood_produces_one_aggregate_line_that_says_it_truncated():
+    p = pl.PulseProducer(cap_per_minute=3)
+    p.emit({"groups": {"X": [_row("k{}".format(i), 1.0) for i in range(30)]}}, now=0)
+    lines = p.emit({"groups": {"X": [_row("k{}".format(i), 10.0) for i in range(30)]}},
+                   now=1)
+    assert len(lines) == 1
+    assert "30 sensors moved" in lines[0]["text"]
+    assert "TRUNCATED" in lines[0]["text"], (
+        "a stream that silently drops lines cannot be told from a calm one")
+    assert lines[0]["truncated"] is True
+
+
+def test_the_spine_line_exists_regardless_of_movement():
+    s = pl.PulseProducer().spine("deduction", "12.5")
+    assert s["depth"] == ex.PULSE and s["source"] == ex.SYS
+    assert "deduction" in s["text"]
+    assert s["reflexivity"] == 0
+
+
+def test_the_pulse_producer_reaches_no_model():
+    src = (REPO / "cockpit" / "pulse.py").read_text(encoding="utf-8")
+    for bad in ("groq", "ollama", "call_local", "openai"):
+        assert bad not in src
+
+
+# ---------------------------------------------------------------------------
+# Item 5 — one retry, then quarantine
+# ---------------------------------------------------------------------------
+
+def test_a_valid_line_is_emitted_on_the_first_attempt(tmp_path):
+    p = rx.ReflexProducer(caller=lambda prompt: "QUERY which axis lacks a column")
+    r = p.speak("phase", {"glyph": "D1"}, [], stream_path=tmp_path / "s.jsonl",
+                quarantine_root=tmp_path / "q")
+    assert r["emitted"] and r["attempts"] == 1 and p.calls == 1
+
+
+def test_a_rejected_line_gets_exactly_one_retry_told_why(tmp_path):
+    seen = []
+
+    def caller(prompt):
+        seen.append(prompt)
+        return "I feel odd" if len(seen) == 1 else "QUERY what changed"
+
+    p = rx.ReflexProducer(caller=caller)
+    r = p.speak("phase", {"glyph": "D1"}, [], stream_path=tmp_path / "s.jsonl",
+                quarantine_root=tmp_path / "q")
+    assert r["emitted"] and r["attempts"] == 2
+    assert "your previous output was rejected because" in seen[1]
+    assert "first token" in seen[1], "the retry was not told what was wrong"
+
+
+def test_two_failures_quarantine_and_never_try_a_third_time(tmp_path):
+    p = rx.ReflexProducer(caller=lambda prompt: "I feel uneasy")
+    r = p.speak("phase", {"glyph": "D1"}, [], stream_path=tmp_path / "s.jsonl",
+                quarantine_root=tmp_path / "q")
+    assert not r["emitted"] and r["quarantined"]
+    assert p.calls == 2, "a third attempt is coaching, not reporting"
+    assert len(ex.read_rejected(root=tmp_path / "q")) == 2
+
+
+def test_a_double_rejection_leaves_a_mediation_line_naming_the_file(tmp_path):
+    stream = tmp_path / "s.jsonl"
+    p = rx.ReflexProducer(caller=lambda prompt: "I feel uneasy")
+    p.speak("phase", {"glyph": "D1"}, [], stream_path=stream,
+            quarantine_root=tmp_path / "q")
+    lines = ex.read_stream(stream)
+    assert lines and lines[-1]["depth"] == ex.MEDIATION
+    assert "rejected twice" in lines[-1]["text"]
+    assert "rejected_" in lines[-1]["text"], "the line does not say where to read it"
+
+
+def test_the_per_cycle_call_budget_is_enforced(tmp_path):
+    p = rx.ReflexProducer(caller=lambda prompt: "QUERY x", max_calls=2)
+    for _ in range(2):
+        p.speak("a", {"glyph": "D1"}, [], stream_path=tmp_path / "s.jsonl",
+                quarantine_root=tmp_path / "q")
+    r = p.speak("a", {"glyph": "D1"}, [], stream_path=tmp_path / "s.jsonl",
+                quarantine_root=tmp_path / "q")
+    assert not r["emitted"] and "budget" in r["why"]
+    assert p.calls == 2
+    assert rx.MAX_CALLS_PER_CYCLE == 9
+
+
+def test_the_warming_prompt_forbids_status_and_offers_no_glyph():
+    prompt = rx.build_prompt("report", {"glyph": None,
+                                        "warming": {"label": "lexicon warming: 3/20"},
+                                        "raw_summary": "25/25 dims"}, [])
+    assert "do not use STATUS" in prompt
+    assert "NO GLYPH" in prompt
+
+
+# ---------------------------------------------------------------------------
+# Item 6 — the vector chain and lexicon warming
+# ---------------------------------------------------------------------------
+
+def test_every_vector_field_resolves_to_a_real_sensor():
+    """The 25th dim read None for a whole command because it was misspelled."""
+    assert vec.assert_fields_resolve() == [], (
+        "a VECTOR_FIELD has no sensor behind it; it will silently read None")
+
+
+def test_the_vector_is_twenty_five_dims_and_fully_measured_here():
+    v = vec.assemble()
+    assert v["dims"] == 25 and len(v["vector"]) == 25
+    assert v["unresolved_fields"] == []
+
+
+def test_warming_shows_n_of_twenty_and_no_glyph(tmp_path):
+    store = tmp_path / "vec.jsonl"
+    v = vec.assemble()
+    assert vec.warming(store)["label"] == "lexicon warming: 0/20 cycles"
+    for i in range(19):
+        vec.append({**v, "ts": "t{}".format(i)}, store_path=store)
+    st = vec.warming(store)
+    assert st["warm"] is False and "19/20" in st["label"]
+    g = vec.glyph_for(v, store_path=store)
+    assert g["glyph"] is None, "a glyph was fabricated while warming"
+    assert g["status_lines_possible"] is False
+    assert g["raw_summary"], "nothing was offered in place of the glyph"
+
+
+def test_the_twentieth_cycle_warms_the_lexicon(tmp_path):
+    store = tmp_path / "vec.jsonl"
+    v = vec.assemble()
+    for i in range(20):
+        vec.append({**v, "ts": "t{}".format(i)}, store_path=store)
+    st = vec.warming(store)
+    assert st["warm"] is True and st["cycles"] == 20
+    assert vec.MIN_CYCLES == 20
+
+
+def test_none_dims_are_dropped_rather_than_imputed():
+    rows = [{"vector": [1.0, None, 3.0]}, {"vector": [2.0, 5.0, 4.0]}]
+    matrix, keep = vec.usable_matrix(rows)
+    assert keep == [0, 2], "a None column survived and would become a centroid"
+    assert matrix == [[1.0, 3.0], [2.0, 4.0]]
+
+
+def test_the_expression_endpoint_reports_the_warming_state(client):
+    d = client.get("/api/expression").get_json()
+    assert "lexicon" in d
+    assert "/20 cycles" in d["lexicon"]["label"] or d["lexicon"]["warm"]
+
+
+# ---------------------------------------------------------------------------
+# Item 8 — the last sealed cycle, favicon, token
+# ---------------------------------------------------------------------------
+
+def test_the_checklist_shows_the_last_sealed_cycle_when_none_is_live(
+        client, monkeypatch, tmp_path):
+    ledger = tmp_path / "led.jsonl"
+    ledger.write_text("\n".join(json.dumps(r) for r in [
+        {"event": "CYCLE_STARTED", "cycle_id": "c1", "ts": "2026-08-20T00:00:00+00:00"},
+        {"event": "CYCLE_FINISHED", "cycle_id": "c1", "ts": "2026-08-20T02:00:00+00:00",
+         "duration_sec": 7200.0, "pid": 1},
+    ]) + "\n", encoding="utf-8")
+    sealed = srv.last_sealed_cycle(ledger)
+    assert sealed["cycle_id"] == "c1" and sealed["duration_sec"] == 7200.0
+
+    monkeypatch.setattr(som, "cycle_is_live", lambda: False)
+    d = client.get("/api/cycles").get_json()
+    assert d["live"] is False
+    assert d["label"] == "last completed cycle"
+    assert d["current_step"] is None, (
+        "a finished cycle rendered as one stuck on its final step")
+
+
+def test_a_ledger_with_no_seal_says_so_rather_than_inventing_one(tmp_path):
+    empty = tmp_path / "led.jsonl"
+    empty.write_text("", encoding="utf-8")
+    assert srv.last_sealed_cycle(empty) is None
+
+
+def test_the_favicon_is_served_locally(client):
+    for path in ("/favicon.ico", "/favicon.svg"):
+        r = client.get(path)
+        assert r.status_code == 200
+        assert b"<svg" in r.data
+
+
+def test_the_terminal_token_is_never_served():
+    """Word-boundary, not substring: "_TOKEN" also matches ex.MAX_TOKENS."""
+    import re as _re
+    src = (REPO / "cockpit" / "server.py").read_text(encoding="utf-8")
+    assert "current_token" not in src
+    assert not _re.search(r"terminal[.]_TOKEN", src)
+    assert not _re.search(r"(?<![A-Z])_TOKEN\b", src)
+    # the token is printed in main() and returned to nobody
+    assert 'print("  terminal session token' in src
