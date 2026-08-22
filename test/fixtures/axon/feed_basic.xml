@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Fixture Feed</title>
+    <item>
+      <title>Old item from before the last sweep</title>
+      <description>&lt;p&gt;Markup that must be &lt;b&gt;stripped&lt;/b&gt;.&lt;/p&gt;</description>
+      <link>https://feeds.bbci.co.uk/a/old</link>
+      <pubDate>Mon, 18 Aug 2026 09:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>New item after the last sweep</title>
+      <description>A fresh claim.</description>
+      <link>https://feeds.bbci.co.uk/a/new</link>
+      <pubDate>Fri, 21 Aug 2026 18:30:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Undated item</title>
+      <description>No pubDate at all.</description>
+      <link>https://feeds.bbci.co.uk/a/undated</link>
+    </item>
+    <item>
+      <title>Item with no link at all</title>
+      <description>This one must be refused, not silently dropped.</description>
+      <pubDate>Fri, 21 Aug 2026 19:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <description>An item with no title is skipped by the parser.</description>
+      <link>https://feeds.bbci.co.uk/a/untitled</link>
+      <pubDate>Fri, 21 Aug 2026 19:05:00 GMT</pubDate>
+    </item>
+  </channel>
+</rss>
