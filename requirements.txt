@@ -104,3 +104,9 @@ pywinpty==3.0.5
 websockets>=16.0
 # cockpit/terminal.py — the terminal bridge. Already present; named so a fresh
 # install does not silently lose the terminal.
+
+sounddevice==0.5.6
+opencv-python-headless==5.0.0.93
+# cockpit/somatic.py — the mic and camera capture paths. ONE sample each, reduced
+# to a scalar before the function returns; no audio or image is ever written. Both
+# are OFF by default and gated by config_expression.yaml.

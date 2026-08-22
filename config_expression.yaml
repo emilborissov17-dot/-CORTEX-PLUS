@@ -24,6 +24,18 @@ seed: 0
 # by a toggle is worth more than an argument about it.
 silence_mode: false
 
+# THE ONLY TWO VALUES /api/toggle MAY WRITE.
+#
+# Emil fixed the cockpit's writeful endpoints at three and, by doing so, made the
+# mic/camera switches unbuildable. Amended 22 Aug 2026: a FOURTH endpoint,
+# POST /api/toggle, may write these two booleans and nothing else in this file.
+# The somatic probe re-reads them on EVERY call, so a switch takes effect on the
+# next refresh without restarting anything — and so that turning it off is as
+# immediate as turning it on.
+mic_enabled: false
+camera_enabled: false
+
+
 # The christening map. Δ0..Δ15 seeded; entries may be added as states earn names.
 christening:
   Δ0: ""

@@ -142,6 +142,29 @@ def cycle_is_live() -> bool:
         return False
 
 
+
+CONFIG_PATH = BASE / "config_expression.yaml"
+
+
+def toggles(config_path: Optional[pathlib.Path] = None) -> dict:
+    """{mic_enabled, camera_enabled} read from config_expression.yaml.
+
+    Read on EVERY probe rather than cached at import: a switch the operator
+    turns OFF must take effect on the next refresh, and a cached value would
+    mean the device stays live until somebody restarts the server. Missing file
+    or unreadable yaml reads FALSE for both — the fail-closed direction.
+    """
+    try:
+        import yaml
+        blob = yaml.safe_load(
+            pathlib.Path(config_path or CONFIG_PATH).read_text(encoding="utf-8"))
+        blob = blob if isinstance(blob, dict) else {}
+    except Exception:
+        blob = {}
+    return {"mic_enabled": bool(blob.get("mic_enabled")),
+            "camera_enabled": bool(blob.get("camera_enabled"))}
+
+
 # ---------------------------------------------------------------------------
 # Groups
 # ---------------------------------------------------------------------------
@@ -395,42 +418,205 @@ def periphery() -> list:
     return out
 
 
+# ---------------------------------------------------------------------------
+# CAPTURE — ONE SAMPLE, ONE SCALAR, NO BUFFER, NO FILE
+# ---------------------------------------------------------------------------
+# Both capture paths follow the same four steps and nothing else:
+#
+#     open the device -> take ONE sample -> close it -> reduce to a scalar
+#
+# The reduction happens while the raw data is still a local variable, and the
+# variable goes out of scope with the function. Nothing is appended to a list,
+# nothing is cached for a later comparison, and NO AUDIO OR IMAGE FILE IS EVER
+# WRITTEN. What survives is a float.
+#
+# The camera's motion MSE compares against the PREVIOUS FRAME'S SCALAR SUMMARY,
+# not against a stored frame. That is the whole reason the summary is a small
+# vector of block means rather than the frame: a stored frame is a picture of
+# somebody's room, and a stored 4x4 grid of averages is not.
+#
+# THE COOLDOWN IS A CONTRACT, NOT A PERFORMANCE TUNING. A cockpit that polls
+# /api/somatic every 15 seconds must not become a device that samples the room
+# every 15 seconds. Ten seconds between captures, enforced here rather than by
+# asking callers to behave.
+
+CAPTURE_COOLDOWN_SEC = 10.0
+
+MIC_WINDOW_SEC = 0.1            # ~100 ms
+MIC_SAMPLE_RATE = 16000
+
+# An RMS spike must PERSIST to be reported as a level. A single 100 ms window
+# that reads loud may be a click, a key press, or an ultrasonic artefact; the
+# room being loud shows up in the next window too. The guard stores one float.
+ULTRASONIC_GUARD_FACTOR = 4.0
+
+_last_capture = {"mic": 0.0, "camera": 0.0}
+_last_mic_rms = None            # one float, for the persistence guard
+_last_frame_summary = None      # 16 floats, for the motion MSE
+
+
+def capture_state() -> dict:
+    """What the guards currently hold. Floats only — inspectable, and small."""
+    return {"last_capture": dict(_last_capture),
+            "last_mic_rms": _last_mic_rms,
+            "frame_summary_len": (0 if _last_frame_summary is None
+                                  else len(_last_frame_summary)),
+            "cooldown_sec": CAPTURE_COOLDOWN_SEC}
+
+
+def _cooldown_block(kind: str, now: Optional[float] = None) -> Optional[float]:
+    """Seconds still to wait, or None if a capture is allowed."""
+    t = time.monotonic() if now is None else now
+    left = CAPTURE_COOLDOWN_SEC - (t - _last_capture.get(kind, 0.0))
+    return left if left > 0 else None
+
+
+def _stamp(kind: str) -> None:
+    _last_capture[kind] = time.monotonic()
+
+
+def mic_rms_once() -> tuple:
+    """(rms, error). ONE ~100 ms window. The device is closed before returning.
+
+    sounddevice.rec() + wait() opens a stream, fills one array and closes the
+    stream on return. The array is reduced to a float on the next line and is
+    never stored, written, or passed anywhere.
+    """
+    try:
+        import sounddevice as sd
+        import numpy as np
+    except ImportError as e:
+        return None, "no audio capture library: {}".format(e)
+    try:
+        frames = int(MIC_WINDOW_SEC * MIC_SAMPLE_RATE)
+        block = sd.rec(frames, samplerate=MIC_SAMPLE_RATE, channels=1,
+                       dtype="float32")
+        sd.wait()
+        rms = float(np.sqrt(np.mean(np.square(block, dtype="float64"))))
+        del block                     # explicit: the samples end here
+        return rms, None
+    except Exception as e:            # noqa: BLE001
+        return None, "{}: {}".format(type(e).__name__, e)
+    finally:
+        try:
+            import sounddevice as sd
+            sd.stop()                 # idempotent; guarantees no stream is left open
+        except Exception:
+            pass
+
+
+def _frame_summary(gray) -> list:
+    """A 4x4 grid of block means. Sixteen floats — not a picture."""
+    import numpy as np
+    h, w = gray.shape[:2]
+    bh, bw = max(1, h // 4), max(1, w // 4)
+    return [float(np.mean(gray[r * bh:(r + 1) * bh, c * bw:(c + 1) * bw]))
+            for r in range(4) for c in range(4)]
+
+
+def camera_scalars_once() -> tuple:
+    """(lux, motion_mse, error). ONE frame. The device is released before returning.
+
+    The frame never leaves this function. What is kept between calls is the 4x4
+    block-mean summary, sixteen floats, which is what the motion MSE is computed
+    against — a stored frame would be a picture of a room, and this is not one.
+    """
+    global _last_frame_summary
+    cap = None
+    try:
+        import cv2
+        import numpy as np
+    except ImportError as e:
+        return None, None, "no camera library: {}".format(e)
+    try:
+        cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+        if not cap.isOpened():
+            return None, None, "camera did not open"
+        ok, frame = cap.read()
+        if not ok or frame is None:
+            return None, None, "camera opened but returned no frame"
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        lux = float(np.mean(gray))
+        summary = _frame_summary(gray)
+        del frame, gray               # explicit: the image ends here
+        mse = None
+        if _last_frame_summary is not None:
+            a = np.asarray(summary, dtype="float64")
+            b = np.asarray(_last_frame_summary, dtype="float64")
+            mse = float(np.mean((a - b) ** 2))
+        _last_frame_summary = summary
+        return lux, mse, None
+    except Exception as e:            # noqa: BLE001
+        return None, None, "{}: {}".format(type(e).__name__, e)
+    finally:
+        # RELEASED IN A finally, so an exception on any line above still closes
+        # the device. A test asserts release() was called.
+        if cap is not None:
+            try:
+                cap.release()
+            except Exception:
+                pass
+
+
 def acoustic(enabled: bool = False) -> list:
-    """RMS scalar only. OFF by default."""
+    """RMS scalar only. OFF unless the toggle says otherwise."""
+    global _last_mic_rms
     if not enabled:
         return [_off("ACOUSTIC", "mic_rms", "rms")]
     if cycle_is_live():
         return [_na("ACOUSTIC", "mic_rms",
                     "REFUSED: a cycle is running and no microphone is activated "
                     "while one is", "rms")]
-    try:
-        import sounddevice  # noqa: F401
-    except ImportError:
+    left = _cooldown_block("mic")
+    if left is not None:
         return [_na("ACOUSTIC", "mic_rms",
-                    "no audio capture library installed (sounddevice/pyaudio "
-                    "absent) — enabling the toggle cannot make one appear", "rms")]
-    return [_na("ACOUSTIC", "mic_rms",
-                "capture path not implemented in v1; the toggle and the gates are, "
-                "so nothing is claimed that is not measured", "rms")]
+                    "REFUSED: {:.1f}s left of the {:.0f}s capture cooldown — a "
+                    "15-second page refresh must not become a device that "
+                    "samples the room every 15 seconds".format(
+                        left, CAPTURE_COOLDOWN_SEC), "rms")]
+    _stamp("mic")
+    rms, err = mic_rms_once()
+    if err:
+        return [_na("ACOUSTIC", "mic_rms", err, "rms")]
+
+    # THE ULTRASONIC / TRANSIENT GUARD. A window far above the previous one is
+    # reported as a TRANSIENT, not as a level: a click is not a room.
+    kind = "level"
+    if _last_mic_rms is not None and rms > ULTRASONIC_GUARD_FACTOR * max(
+            _last_mic_rms, 1e-6):
+        kind = "transient (not reported as a level: a spike must persist)"
+    _last_mic_rms = rms
+    return [Reading("ACOUSTIC", "mic_rms", round(rms, 6), "rms"),
+            Reading("ACOUSTIC", "mic_reading_kind", kind, "")]
 
 
 def optic(enabled: bool = False) -> list:
-    """Derived scalars only — lux and motion MSE. Frames never stored. OFF by default."""
+    """Derived scalars only — lux and motion MSE. OFF unless the toggle says so."""
     if not enabled:
         return [_off("OPTIC", "camera_lux", "lux"), _off("OPTIC", "motion_mse", "mse")]
     if cycle_is_live():
         return [_na("OPTIC", "camera_lux",
                     "REFUSED: a cycle is running and no camera is activated while "
-                    "one is", "lux")]
-    try:
-        import cv2  # noqa: F401
-    except ImportError:
-        return [_na("OPTIC", "camera_lux",
-                    "no camera library installed (cv2 absent) — enabling the "
-                    "toggle cannot make one appear", "lux")]
-    return [_na("OPTIC", "camera_lux",
-                "capture path not implemented in v1; the toggle and the gates are",
-                "lux")]
+                    "one is", "lux"),
+                _na("OPTIC", "motion_mse", "REFUSED: a cycle is running", "mse")]
+    left = _cooldown_block("camera")
+    if left is not None:
+        msg = ("REFUSED: {:.1f}s left of the {:.0f}s capture cooldown".format(
+            left, CAPTURE_COOLDOWN_SEC))
+        return [_na("OPTIC", "camera_lux", msg, "lux"),
+                _na("OPTIC", "motion_mse", msg, "mse")]
+    _stamp("camera")
+    lux, mse, err = camera_scalars_once()
+    if err:
+        return [_na("OPTIC", "camera_lux", err, "lux"),
+                _na("OPTIC", "motion_mse", err, "mse")]
+    rows = [Reading("OPTIC", "camera_lux", round(lux, 3), "lux")]
+    rows.append(Reading("OPTIC", "motion_mse", round(mse, 4), "mse")
+                if mse is not None else
+                _na("OPTIC", "motion_mse",
+                    "first frame of this session; motion needs a previous "
+                    "summary to compare against", "mse"))
+    return rows
 
 
 def logs() -> list:
@@ -450,8 +636,19 @@ def logs() -> list:
 # The probe
 # ---------------------------------------------------------------------------
 
-def probe(mic_enabled: bool = False, camera_enabled: bool = False) -> dict:
-    """Every group, once. Read-only; safe to run beside a live cycle."""
+def probe(mic_enabled: Optional[bool] = None,
+          camera_enabled: Optional[bool] = None,
+          config_path: Optional[pathlib.Path] = None) -> dict:
+    """Every group, once. Read-only; safe to run beside a live cycle.
+
+    With no explicit argument the toggles come from config_expression.yaml, read
+    fresh on every call. An explicit True/False still wins, which is what the
+    tests use — they must never depend on what the operator last switched.
+    """
+    cfg = toggles(config_path)
+    mic_enabled = cfg["mic_enabled"] if mic_enabled is None else mic_enabled
+    camera_enabled = (cfg["camera_enabled"] if camera_enabled is None
+                      else camera_enabled)
     rows = []
     rows += energy()
     rows += thermal()
@@ -481,6 +678,10 @@ def probe(mic_enabled: bool = False, camera_enabled: bool = False) -> dict:
         "available_count": sum(1 for r in rows if r.available),
         "total_count": len(rows),
         "cycle_live": cycle_is_live(),
+        "toggles": {"mic_enabled": bool(mic_enabled),
+                    "camera_enabled": bool(camera_enabled),
+                    "source": "config_expression.yaml, re-read every probe"},
+        "capture": capture_state(),
         "gates": {
             "camera": "local-only, never stored, never leaves the machine, "
                       "never enters the columns; only lux and motion MSE are kept",

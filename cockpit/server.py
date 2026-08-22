@@ -24,11 +24,18 @@ considered and rejected for three reasons, in order of weight:
 
 So: its own app, its own port, 127.0.0.1 only.
 
-EXACTLY THREE WRITEFUL ENDPOINTS EXIST IN THE WHOLE COCKPIT
--------------------------------------------------------------
+EXACTLY FOUR WRITEFUL ENDPOINTS EXIST IN THE WHOLE COCKPIT
+------------------------------------------------------------
     POST /api/expression/seen     append-only mark-as-seen
     POST /api/ask                 append to human_input_queue (append-only sqlite)
+    POST /api/toggle              mic_enabled / camera_enabled, and NOTHING else
     WS   /terminal                the terminal bridge (cockpit/terminal.py)
+
+The fourth was added 22 Aug 2026. Fixing the count at three had made the mic and
+camera switches unbuildable — the rule was protecting a number rather than the
+property the number stood for. /api/toggle may write exactly two booleans in
+config_expression.yaml; it rewrites those two lines in place and leaves every
+other line of the file byte-identical, which a test asserts.
 
 Everything else is GET and opens no file for writing. WRITE_ENDPOINTS below is
 the list, and a test asserts that no other route accepts POST.
@@ -77,7 +84,9 @@ FORKS_URL = "https://api.github.com/repos/emilborissov17-dot/-CORTEX-PLUS/forks"
 DEFAULT_PORT = 5055
 HOST = "127.0.0.1"          # never 0.0.0.0. A test asserts it.
 
-WRITE_ENDPOINTS = ("/api/expression/seen", "/api/ask", "/terminal")
+WRITE_ENDPOINTS = ("/api/expression/seen", "/api/ask", "/api/toggle",
+                   "/terminal")
+CONFIG_EXPRESSION = BASE / "config_expression.yaml"
 
 app = Flask(__name__, static_folder=str(pathlib.Path(__file__).parent / "static"),
             static_url_path="/static")
@@ -525,6 +534,73 @@ def api_ask():
 @app.get("/api/ask")
 def api_ask_read():
     return jsonify({"ts": _now(), "queue": ex.queue_read(db_path=QUEUE_DB)})
+
+
+TOGGLE_KEYS = ("mic_enabled", "camera_enabled")
+
+
+def _write_toggles(values: dict, config_path: pathlib.Path) -> dict:
+    """WRITEFUL 3 of 4. Rewrites exactly two lines. `config_path` is REQUIRED.
+
+    LINE-LEVEL, NOT yaml.safe_dump(). Round-tripping through the yaml loader
+    would silently reformat the file and DELETE EVERY COMMENT — and this file is
+    mostly comments, including the ones explaining what silence_mode is for and
+    why naming lives apart from clustering. A writer that erases the reasoning
+    around it is not a small write.
+
+    Only keys in TOGGLE_KEYS are touched. A key that is not in the file is
+    appended; nothing else is reordered, reformatted or removed.
+    """
+    p = pathlib.Path(config_path)
+    lines = p.read_text(encoding="utf-8").splitlines(keepends=True)
+    wanted = {k: bool(v) for k, v in values.items() if k in TOGGLE_KEYS}
+    seen = set()
+    out = []
+    for line in lines:
+        stripped = line.lstrip()
+        hit = None
+        for k in wanted:
+            if stripped.startswith(k + ":"):
+                hit = k
+                break
+        if hit:
+            out.append("{}: {}\n".format(hit, "true" if wanted[hit] else "false"))
+            seen.add(hit)
+        else:
+            out.append(line)
+    for k in wanted:
+        if k not in seen:
+            out.append("{}: {}\n".format(k, "true" if wanted[k] else "false"))
+    p.write_text("".join(out), encoding="utf-8")
+    return som.toggles(p)
+
+
+@app.post("/api/toggle")
+def api_toggle():
+    """WRITEFUL 3 of 4. The mic and camera switches, and nothing else.
+
+    Refuses any key that is not one of the two. The refusal is explicit rather
+    than a silent filter: a caller sending `silence_mode` should be told it was
+    ignored, not left believing it was applied.
+    """
+    body = request.get_json(silent=True) or {}
+    unknown = sorted(set(body) - set(TOGGLE_KEYS))
+    if unknown:
+        return jsonify({"ok": False,
+                        "error": "this endpoint may write only {}; refused {}".format(
+                            ", ".join(TOGGLE_KEYS), ", ".join(unknown))}), 400
+    if not body:
+        return jsonify({"ok": True, "toggles": som.toggles(CONFIG_EXPRESSION),
+                        "note": "nothing to change"})
+    now = _write_toggles(body, config_path=CONFIG_EXPRESSION)
+    return jsonify({"ok": True, "toggles": now,
+                    "note": "the somatic probe re-reads this file on every call"})
+
+
+@app.get("/api/toggle")
+def api_toggle_read():
+    return jsonify({"ts": _now(), "toggles": som.toggles(CONFIG_EXPRESSION),
+                    "writable_keys": list(TOGGLE_KEYS)})
 
 
 # ---------------------------------------------------------------------------
