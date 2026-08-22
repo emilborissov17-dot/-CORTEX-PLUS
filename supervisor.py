@@ -234,15 +234,10 @@ def ceiling_for(step: Optional[str], cfg: dict) -> int:
     if not step:
         return base_ceiling
     try:
-        from core import survival_mode as _sm
-        today = datetime.now().astimezone().date().isoformat()
-        active, _reason, _new = _sm.resolve(today)
-        if not active:
-            return base_ceiling
-        seconds, _source = _sm.p50_ceiling(step, ceilings=ceilings)
-        # Tighten only. p50 above the human ceiling would be a system widening
-        # its own limit, which config/scheduler.json's README forbids by name.
-        return int(min(base_ceiling, max(1, int(seconds))))
+        # DELEGATED, not duplicated. Two independent readers of the same config
+        # is what produced the disagreement this now prevents.
+        from core.step_budget import effective_ceiling
+        return int(effective_ceiling(step, ceilings))
     except Exception:
         return base_ceiling
 

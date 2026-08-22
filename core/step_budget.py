@@ -157,6 +157,59 @@ def ceiling_for(step: str, ceilings: Optional[dict] = None) -> float:
     return float(ceilings.get(step, ceilings.get("_default", 900)))
 
 
+# The floor under a survival-mode ceiling. A p50 is the MEDIAN of observed runs,
+# so using it raw as a ceiling means half of all runs breach it — that is the
+# intended aggression of a night the system cannot afford. What is NOT intended
+# is the degenerate case, and it is not hypothetical: measured 22 Aug 2026,
+# data_scout's p50 produced a ceiling of ONE SECOND, against a budget of 471s.
+# A step that usually no-ops has a tiny median and would be declared overrun
+# before it had finished importing. Two minutes is enough for any step here to
+# start and beat at least once.
+MIN_SURVIVAL_CEILING_SEC = 120.0
+
+
+def effective_ceiling(step: str, ceilings: Optional[dict] = None) -> float:
+    """THE ONE CEILING. Everything that needs to know "how long may this step
+    take" asks here — the watchdog through supervisor.ceiling_for, the budget
+    through budget_for below.
+
+    THE RULE, also written into config/scheduler.json's README:
+
+        config/scheduler.json step_ceilings_sec is the SINGLE SOURCE OF TRUTH.
+        It is human-tunable only. Everything else DERIVES from it and may only
+        ever TIGHTEN it, never widen it.
+
+    Two derivations exist today:
+        survival mode   p50 of observed runs, floored at MIN_SURVIVAL_CEILING_SEC
+        step_budget     B = learned p95 x 1.5, clamped to whatever this returns
+
+    Before this function there were two independent readers of the same config
+    and they disagreed in production. Measured 22 Aug 2026 with survival mode
+    latched: internet_intelligence had a watchdog ceiling of 2397s and a budget
+    of 3600s — the step was authorised to spend 1203s longer than the watchdog
+    would tolerate. A budget that outlives its own ceiling is not a budget.
+    """
+    # WHOLE SECONDS, always. The watchdog compares an int; a fractional ceiling
+    # here meant supervisor.ceiling_for truncated 2397.5 to 2397 while the budget
+    # kept 2397.5, and the budget was then one second longer than the ceiling it
+    # was supposed to be clamped to. A reconciliation that leaves a one-second
+    # disagreement has not reconciled anything.
+    base = float(int(ceiling_for(step, ceilings)))
+    try:
+        from core import survival_mode as _sm      # imported here: survival_mode
+        from datetime import datetime as _dt        # imports THIS module at top
+        today = _dt.now().astimezone().date().isoformat()
+        active, _reason, _new = _sm.resolve(today)
+        if not active:
+            return base
+        seconds, _source = _sm.p50_ceiling(step, ceilings=ceilings)
+        return float(int(min(base, max(MIN_SURVIVAL_CEILING_SEC, float(seconds)))))
+    except Exception:
+        # A ceiling that cannot be derived falls back to the human number. Never
+        # to a guess: this value decides what the watchdog acts on.
+        return base
+
+
 @dataclass
 class Budget:
     step: str
@@ -190,7 +243,11 @@ def budget_for(step: str, baseline: Optional[dict] = None,
     the outer bound and the learned value may only ever TIGHTEN it.
     """
     seen = learned_seconds(step, baseline)
-    ceiling = ceiling_for(step, ceilings)
+    # effective_ceiling, not ceiling_for: under survival mode the watchdog acts on
+    # a TIGHTER number, and a budget clamped to the looser one would authorise a
+    # step to spend past the point where it is stopped. Measured before this
+    # change: internet_intelligence, watchdog 2397s, budget 3600s.
+    ceiling = effective_ceiling(step, ceilings)
     p95 = percentile(seen, 0.95)
     if p95 is None:
         return Budget(step, max(MIN_BUDGET_SEC, ceiling), "ceiling", len(seen))
