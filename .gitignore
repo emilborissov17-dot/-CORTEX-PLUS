@@ -181,3 +181,5 @@ memory/intel.db-journal
 memory/intel.db-wal
 # Ledger-ът на хипотезите (core/hypothesis_search.py) — присъди по цикли.
 memory/hypotheses.jsonl
+# Записите на трите колони (core/three_columns.py) — по едно досие на твърдение.
+memory/columns/
