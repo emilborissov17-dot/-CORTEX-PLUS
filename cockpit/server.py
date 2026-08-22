@@ -406,35 +406,128 @@ def api_forks():
                         "note": "the last cache is shown if there is one"})
 
 
+def _age_days(ts) -> Optional[float]:
+    try:
+        t = datetime.fromisoformat(str(ts).replace("Z", "+00:00"))
+        if t.tzinfo is None:
+            t = t.replace(tzinfo=timezone.utc)
+        return round((datetime.now(timezone.utc) - t).total_seconds() / 86400.0, 1)
+    except Exception:
+        return None
+
+
+def _triage_verdicts() -> dict:
+    """filename -> JUNK|REVIEW, read from the triage document.
+
+    The verdicts live in docs/QUARANTINE_TRIAGE_2026-08-22.md, which is the
+    record a human already produced. Re-deriving them here would be a second
+    opinion nobody asked for and would drift from the one in the repo.
+    """
+    doc = ds.BASE / "docs" / "QUARANTINE_TRIAGE_2026-08-22.md"
+    out = {}
+    try:
+        for line in doc.read_text(encoding="utf-8").splitlines():
+            if line.startswith("| ") and "_patch." in line and "**" in line:
+                cells = [c.strip() for c in line.strip("|").split("|")]
+                name = next((c.strip("`") for c in cells if "_patch." in c), None)
+                verdict = next((c.strip("*") for c in cells if "**" in c), None)
+                if name and verdict:
+                    out[name] = verdict
+    except OSError:
+        pass
+    return out
+
+
 @app.get("/api/pending")
 def api_pending():
-    """Everything waiting on a human."""
+    """Everything waiting on a human — AS ITEMS, not as counts.
+
+    A count tells the operator that something is waiting and nothing about what.
+    Four numbers on a panel is four reasons to open a terminal; four LISTS is a
+    panel somebody can read. Each row carries what it needs to be judged (id,
+    title, author, age; axis and value; filename and triage verdict) and its own
+    prefill command, so reading and acting stay in the same place.
+    """
     imp = _read_json(ds.BASE / "memory" / "improvement_proposals.json", {}) or {}
-    rows = imp.get("proposals") if isinstance(imp, dict) else imp
+    raw = imp.get("proposals") if isinstance(imp, dict) else imp
     decided = ("approved", "rejected", "executed", "applied", "dismissed")
-    open_props = [r for r in (rows or [])
-                  if isinstance(r, dict) and not any(r.get(f) for f in decided)]
+    proposals = []
+    for i, r in enumerate(raw or []):
+        if not isinstance(r, dict) or any(r.get(f) for f in decided):
+            continue
+        proposals.append({
+            "id": "imp:{}".format(i),
+            "title": str(r.get("problem") or r.get("component") or "?")[:120],
+            "component": r.get("component"),
+            "author": str(r.get("generated_by") or "(unattributed)"),
+            "age_days": _age_days(r.get("timestamp")),
+            "priority": r.get("priority"),
+            "prefill": "venv\\Scripts\\python.exe cortex_approval_server.py",
+        })
+    proposals.sort(key=lambda x: -(x["age_days"] or 0))
 
     thr = _read_json(ds.BASE / "memory" / "threshold_proposals.json", {}) or {}
-    unsigned = [t for t in (thr.get("proposals") or [])
-                if t.get("suggested") is not None]
+    thresholds = [{
+        "id": "thr:{}".format(t.get("axis")),
+        "axis": t.get("axis"),
+        "suggested": t.get("suggested"),
+        "target": t.get("target"),
+        "basis": t.get("basis"),
+        "direction": t.get("direction"),
+        "prefill": "venv\\Scripts\\python.exe -c \"import json;print(json.load("
+                   "open('memory/threshold_proposals.json',encoding='utf-8'))"
+                   "['proposals'])\"",
+    } for t in (thr.get("proposals") or []) if t.get("suggested") is not None]
 
     qdir = ds.BASE / "patches" / "quarantine"
-    quarantined = sorted(p.name for p in qdir.glob("*_patch.*.py")) if qdir.is_dir() else []
+    verdicts = _triage_verdicts()
+    quarantine = []
+    if qdir.is_dir():
+        for p in sorted(qdir.glob("*_patch.*.py")):
+            quarantine.append({
+                "id": "qua:{}".format(p.name),
+                "file": p.name,
+                "bytes": p.stat().st_size,
+                "verdict": verdicts.get(p.name, "(not in the 22 Aug triage)"),
+                "prefill": "venv\\Scripts\\python.exe scripts/review_quarantine.py "
+                           "--show {}".format(p.name),
+            })
 
-    sla = _read_json(ds.BASE / "memory" / "proposal_sla_queue.json", None)
-    deferred = _read_json(ds.BASE / "memory" / "deferred_batch.json", None)
-    l3 = _read_json(ds.BASE / "memory" / "openclaw_pending_l3.json", None)
+    appr = _read_json(ds.BASE / "memory" / "pending_approvals.json", {}) or {}
+    telegram = []
+    for key, row in (appr.get("approvals") or {}).items():
+        row = row if isinstance(row, dict) else {}
+        telegram.append({
+            "id": key,
+            "label": str(row.get("label") or row.get("type") or "?")[:80],
+            "axis": row.get("axis"),
+            "type": row.get("type"),
+            "need": str(row.get("need") or "")[:140],
+            "prefill": "venv\\Scripts\\python.exe experiments/needs/approve_reader.py",
+            "reply": "OK {}".format(key),
+        })
 
     return jsonify({
         "ts": _now(),
-        "improvement_proposals": {"open": len(open_props),
-                                  "rows": open_props[:50]},
-        "threshold_proposals": {"unsigned": len(unsigned), "rows": unsigned[:50]},
-        "quarantined_patches": {"count": len(quarantined), "rows": quarantined[:50]},
-        "sla_queue": sla if sla else no_data("pending"),
-        "deferred_batch": deferred,
-        "openclaw_level_3": l3,
+        "queues": {
+            "proposals": {"count": len(proposals), "rows": proposals[:50]},
+            "thresholds": {"count": len(thresholds), "rows": thresholds[:50]},
+            "quarantine": {"count": len(quarantine), "rows": quarantine[:50]},
+            "telegram": {"count": len(telegram), "rows": telegram[:50]},
+        },
+        "prefill_note": ("every button TYPES its command into the terminal. "
+                         "Nothing here approves anything — you read it and press "
+                         "Enter."),
+        # kept so older callers and the OVERVIEW tab keep working
+        "improvement_proposals": {"open": len(proposals), "rows": proposals[:50]},
+        "threshold_proposals": {"unsigned": len(thresholds), "rows": thresholds[:50]},
+        "quarantined_patches": {"count": len(quarantine),
+                                "rows": [q["file"] for q in quarantine[:50]]},
+        "sla_queue": _read_json(ds.BASE / "memory" / "proposal_sla_queue.json", None)
+                     or no_data("pending"),
+        "deferred_batch": _read_json(ds.BASE / "memory" / "deferred_batch.json", None),
+        "openclaw_level_3": _read_json(
+            ds.BASE / "memory" / "openclaw_pending_l3.json", None),
     })
 
 

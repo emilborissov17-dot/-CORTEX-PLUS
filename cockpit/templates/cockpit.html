@@ -344,6 +344,26 @@ async function tabExpression(){
 
 async function tabPending(){
   const [p, pr, fk] = await Promise.all([get('/api/pending'), get('/api/proposals'), get('/api/forks')]);
+  const q = p.queues;
+  const pf = c => `<button class="pf" data-cmd="${esc(c)}">prefill</button>`;
+
+  const proposals = q.proposals.rows.map(r =>
+    `<tr><td class="meta">${esc(r.id)}</td><td>${esc(r.title)}</td>
+      <td class="meta">${esc(r.author)}</td><td class="meta">${esc(r.age_days)}d</td>
+      <td>${pf(r.prefill)}</td></tr>`).join('');
+  const thresholds = q.thresholds.rows.map(r =>
+    `<tr><td>${esc(r.axis)}</td><td><b>${esc(r.suggested)}</b></td>
+      <td class="meta">target ${esc(r.target)}</td><td class="meta">${esc(r.basis)}</td>
+      <td>${pf(r.prefill)}</td></tr>`).join('');
+  const quarantine = q.quarantine.rows.map(r =>
+    `<tr><td>${esc(r.file)}</td>
+      <td><span class="pill ${r.verdict==='REVIEW'?'warn':''}">${esc(r.verdict)}</span></td>
+      <td class="meta">${esc(r.bytes)} B</td><td>${pf(r.prefill)}</td></tr>`).join('');
+  const telegram = q.telegram.rows.map(r =>
+    `<tr><td class="meta">${esc(r.id)}</td><td>${esc(r.label)}</td>
+      <td class="meta">${esc(r.axis||'')}</td><td class="meta">reply: ${esc(r.reply)}</td>
+      <td>${pf(r.prefill)}</td></tr>`).join('');
+
   const authors = Object.entries(pr.groups).map(([a,g]) =>
     `<tr><td>${esc(a)}</td><td><b>${g.count}</b></td></tr>`).join('');
   let forks;
@@ -351,20 +371,17 @@ async function tabPending(){
   else if(fk.offline) forks = `<div class="nodata"><b>offline</b><br><span class="meta">${esc(fk.error)}</span></div>`;
   else forks = `<div class="meta">${fk.count} fork(s)</div><table>` +
     (fk.forks||[]).map(f=>`<tr><td><a href="${esc(f.html_url)}" target="_blank">${esc(f.full_name)}</a></td></tr>`).join('')+`</table>`;
+
   return `<div class="grid">
-    ${panel('Pending human', `
-      <div class="meta" style="margin-bottom:6px">buttons TYPE the approval command into the terminal.
-        Nothing here approves anything — you read it and press Enter.</div>
-      <table>
-       <tr><td>improvement proposals</td><td><b>${p.improvement_proposals.open}</b></td>
-        <td><button class="pf" data-cmd="venv\\Scripts\\python.exe cortex_approval_server.py">open approval server</button></td></tr>
-       <tr><td>threshold proposals unsigned</td><td><b>${p.threshold_proposals.unsigned}</b></td>
-        <td><button class="pf" data-cmd="venv\\Scripts\\python.exe -m core.threshold_proposals --list">list thresholds</button></td></tr>
-       <tr><td>quarantined patches</td><td><b>${p.quarantined_patches.count}</b></td>
-        <td><button class="pf" data-cmd="venv\\Scripts\\python.exe scripts/review_quarantine.py">review quarantine</button></td></tr>
-       <tr><td>telegram approvals</td><td class="meta">OK &lt;id&gt;</td>
-        <td><button class="pf" data-cmd="venv\\Scripts\\python.exe experiments/needs/approve_reader.py">run approve_reader</button></td></tr>
-      </table>`, true)}
+    ${panel('Proposals waiting — '+q.proposals.count, `
+      <div class="meta" style="margin-bottom:6px">${esc(p.prefill_note)}</div>
+      <table><tr><th>id</th><th>problem</th><th>author</th><th>age</th><th></th></tr>${proposals}</table>`, true)}
+    ${panel('Thresholds unsigned — '+q.thresholds.count,
+      `<table><tr><th>axis</th><th>suggested</th><th></th><th>basis</th><th></th></tr>${thresholds}</table>`)}
+    ${panel('Quarantine — '+q.quarantine.count,
+      `<table><tr><th>file</th><th>triage</th><th></th><th></th></tr>${quarantine}</table>`)}
+    ${panel('Telegram approvals — '+q.telegram.count,
+      `<table><tr><th>id</th><th>what</th><th>axis</th><th></th><th></th></tr>${telegram}</table>`)}
     ${panel('Proposals by author', `<div class="meta">grouped on <code>${esc(pr.field_used)}</code> · ${pr.total} total</div>
       <table>${authors}</table>`)}
     ${panel('Forks', forks + `<button onclick="drawForksRefresh()">refresh (one manual network call)</button>`)}
