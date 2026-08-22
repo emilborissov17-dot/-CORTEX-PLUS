@@ -118,9 +118,52 @@ def test_cycle_that_just_started_without_a_heartbeat_is_not_killed():
 # Wedged cycles must be killed — with a REASON
 # ---------------------------------------------------------------------------
 
-def test_stale_heartbeat_past_ceiling_is_killed():
+@pytest.fixture
+def livelocked(monkeypatch):
+    """Make the kill policy see a process that is burning CPU with no I/O.
+
+    Added 22 Aug 2026, when the watchdog stopped killing for slowness alone
+    (core/kill_policy.py). A stale heartbeat past a ceiling no longer reaches
+    the kill path by itself, so the tests below — which are about the RESTART
+    BUDGET, not about why a kill happened — have to supply a cause that is still
+    killable, or they would be silently testing nothing.
+    """
+    import core.kill_policy as kp
+
+    def _livelocked(pid, step, priority=kp.NORMAL, degraded=False,
+                    heartbeat_age_sec=0.0, ceiling_sec=900.0, **kw):
+        return kp.Observation(step=step or "unknown", priority=priority,
+                              degraded=degraded,
+                              heartbeat_age_sec=heartbeat_age_sec,
+                              ceiling_sec=ceiling_sec,
+                              cpu_percent=99.0, io_idle_sec=120.0,
+                              cuda_state="OK")
+
+    monkeypatch.setattr(kp, "observe", _livelocked)
+
+
+def test_a_stale_heartbeat_past_its_ceiling_is_NOT_killed():
+    """REVERSED 22 Aug 2026. This asserted KILL_RESTART, which was the rule that
+    produced 11 kills — internet_intelligence 6, daily_analysis 5 — every one a
+    NORMAL step waiting on a model, each destroying the steps that followed.
+
+    Slowness now has a better answer than death: core/step_budget marks the step
+    DEGRADED and the cycle walks on. See core/kill_policy.py for the three causes
+    that may still carry a kill.
+    """
     now = at(4)
     hb = beat("trend_tracker", now - timedelta(seconds=1000))   # default ceiling 900
+    a = sup.decide(now, state("2026-07-13"), hb, lock(), CFG, lock_pid_alive=True)
+
+    assert a.kind == sup.NOTHING, (
+        f"a slow NORMAL step was still killed ({a.kind}): {a.reason}")
+    assert "not killable" in a.reason
+
+
+def test_a_livelocked_cycle_is_still_killed(livelocked):
+    """The kill did not disappear — it acquired a reason."""
+    now = at(4)
+    hb = beat("trend_tracker", now - timedelta(seconds=1000))
     a = sup.decide(now, state("2026-07-13"), hb, lock(), CFG, lock_pid_alive=True)
 
     assert a.kind == sup.KILL_RESTART
@@ -129,7 +172,7 @@ def test_stale_heartbeat_past_ceiling_is_killed():
     assert a.heartbeat_age_sec == pytest.approx(1000, abs=2)
 
 
-def test_kill_records_which_step_and_by_how_much():
+def test_kill_records_which_step_and_by_how_much(livelocked):
     """A future agent needs to know WHY it was restarted, not just that it was."""
     now = at(5)
     hb = beat("web_intelligence", now - timedelta(seconds=3700))  # ceiling 3600
@@ -155,7 +198,7 @@ def test_alive_cycle_that_never_beats_is_eventually_killed():
 # Restart budget
 # ---------------------------------------------------------------------------
 
-def test_second_restart_is_allowed():
+def test_second_restart_is_allowed(livelocked):
     now = at(4)
     hb = beat("x", now - timedelta(seconds=1000))
     a = sup.decide(now, state("2026-07-13", restarts={"2026-07-13": 1}), hb, lock(),
@@ -163,7 +206,7 @@ def test_second_restart_is_allowed():
     assert a.kind == sup.KILL_RESTART
 
 
-def test_third_restart_fails_loudly_instead_of_restarting():
+def test_third_restart_fails_loudly_instead_of_restarting(livelocked):
     now = at(4)
     hb = beat("x", now - timedelta(seconds=1000))
     a = sup.decide(now, state("2026-07-13", restarts={"2026-07-13": 2}), hb, lock(),
@@ -173,7 +216,7 @@ def test_third_restart_fails_loudly_instead_of_restarting():
     assert "budget" in a.reason.lower()
 
 
-def test_yesterdays_restarts_do_not_count_against_today():
+def test_yesterdays_restarts_do_not_count_against_today(livelocked):
     now = at(4)
     hb = beat("x", now - timedelta(seconds=1000))
     a = sup.decide(now, state("2026-07-13", restarts={"2026-07-12": 2}), hb, lock(),
