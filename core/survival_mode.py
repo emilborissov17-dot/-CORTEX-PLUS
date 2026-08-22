@@ -160,9 +160,30 @@ def resolve(today: str,
             cfg: Optional[dict] = None) -> tuple:
     """(active, reason, is_new_entry) — the answer any process can reach alone.
 
-    The latched flag wins if it is for TODAY; otherwise the day's state is
-    re-derived. A latch from yesterday is not carried over: survival mode is a
-    property of a day, and 03:00 is a fresh start by design.
+    THE LATCH OUTLIVES THE DAY THAT SET IT. This was the opposite yesterday, and
+    the old rule made the flag unreachable in practice. Walk it through:
+
+      the budget is exhausted on day D, at 05:42. The latch is written for D.
+      no further restart happens on D — that is what "exhausted" means.
+      at 03:00 on D+1 the scheduled task starts a cycle. Under a day-scoped
+      latch, resolve(D+1) sees a latch for D, discards it, re-derives from
+      scheduler_state for D+1 — zero restarts, no failure — and reports
+      NOT ACTIVE.
+
+    So the reduced profile could only ever apply to restarts within the same day,
+    and by construction there are none left. The flag would have been latched,
+    written, notified about, and never once read as True.
+
+    The Windows scheduled task is what makes this concrete: it starts a cycle at
+    03:00 whether or not the supervisor considers the system down. The restart
+    budget governs the SUPERVISOR's restarts, not the clock. Without a latch that
+    survives midnight, that cycle walks into the same wall that emptied the
+    budget, at full fat.
+
+    WHAT CLEARS IT IS EVIDENCE, NOT TIME. fast_cycle_runner calls clear() when a
+    cycle reaches its last step. The flag asserts "this system could not carry a
+    full night"; the only thing that refutes it is a full night carried. A human
+    can also clear it by hand — see clear().
     """
     root = base or BASE
     if scheduler_state is None:
@@ -171,8 +192,13 @@ def resolve(today: str,
         cfg = _load_json(root / "config" / "scheduler.json")
 
     latched = read_state(root)
-    if latched.get("active") and latched.get("date") == today:
-        return True, latched.get("reason", "latched"), False
+    if latched.get("active"):
+        since = latched.get("date")
+        reason = latched.get("reason", "latched")
+        if since and since != today:
+            reason = "{} (latched {}, still not cleared — no cycle has finished " \
+                     "since)".format(reason, since)
+        return True, reason, False
 
     should, reason = derived_from_disk(scheduler_state, cfg, today)
     return should, reason, should

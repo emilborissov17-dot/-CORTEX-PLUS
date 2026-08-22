@@ -376,6 +376,45 @@ def _seal_cycle_record() -> None:
 _RESUME = {"active": False, "skip": frozenset(), "reason": "not evaluated",
            "seal_only": False}
 
+# ── SURVIVAL MODE: THE PROFILE THIS CYCLE RUNS UNDER ─────────────────────────
+# Read once at startup from the PERSISTED flag, not inherited from a parent — the
+# 03:00 scheduled task starts this process with no knowledge of yesterday, and the
+# flag is the only thing that carries "the budget was exhausted" across the gap.
+_SURVIVAL = {"active": False, "reason": "not evaluated", "skip": frozenset(),
+             "ceilings": {}}
+
+
+def _decide_survival() -> dict:
+    """CRITICAL steps only, at p50 ceilings, when the flag is latched for today.
+
+    Latched by supervisor.py when the restart budget runs out. Deliberately read
+    here rather than passed in: a cycle started by the Windows scheduler has no
+    parent to inherit from, and that is exactly the cycle this profile is for.
+    """
+    try:
+        from core import survival_mode as _sm
+        from core.cycle_map import STEPS as _S
+        today = datetime.now().astimezone().date().isoformat()
+        active, reason, _is_new = _sm.resolve(today)
+        steps = [s[0] for s in _S]
+        p = _sm.plan(steps, active, reason)
+        for w in p.warnings:
+            print(f"[SURVIVAL] WARNING: {w}")
+        # A survival plan that would run NOTHING is refused. config/step_priority
+        # missing means no step is CRITICAL, and a night that runs zero steps is
+        # worse than a night that runs too many.
+        if active and not p.run:
+            print("[SURVIVAL] REFUSED: the plan would run no steps at all — "
+                  "running the full cycle instead")
+            return {"active": False, "reason": "plan was empty: " + reason,
+                    "skip": frozenset(), "ceilings": {}}
+        return {"active": active, "reason": reason,
+                "skip": frozenset(p.skip), "ceilings": dict(p.ceilings)}
+    except Exception as e:
+        return {"active": False, "skip": frozenset(), "ceilings": {},
+                "reason": f"survival check failed ({type(e).__name__}: {e}) — "
+                          f"running the full cycle"}
+
 
 def _decide_resume(argv) -> dict:
     """Should this run skip work a previous cycle already completed?
@@ -557,6 +596,20 @@ def _run(label, fn, free_after=False):
     # е казал за нея в beat(). Ако е решил "пропусни" — пропуска се и се записва
     # ЧИЯ е била преценката. Гръбнакът на одита не се пропуска по мнение
     # (core.brain.skipped_by_brain пази този списък).
+    # Survival mode: a NORMAL step does not run at all tonight.
+    # Checked before the resume gate because the two answer different questions —
+    # "was it already done" versus "can the system afford it" — and affordability
+    # is the one that decides whether the step exists tonight.
+    if _SURVIVAL["active"]:
+        try:
+            from core.cycle_map import ALIASES as _AL1
+            if _AL1.get(label, label) in _SURVIVAL["skip"]:
+                print(f"[FAST_CYCLE] {label} -> SKIPPED (survival mode: NORMAL "
+                      f"priority, and the system is running on less)")
+                return
+        except Exception as e:
+            print(f"[FAST_CYCLE] survival gate for {label} -> "
+                  f"{type(e).__name__}: {e} (running it)")
     # Already done by the cycle this run is continuing? Then it is not done again.
     # Checked BEFORE the brain's opinion and before the contract opens, because a
     # step that is being skipped should not open a contract it will never finish.
@@ -1499,7 +1552,17 @@ def main():
     # Taken once, at the top, so that the reason is in the log ABOVE the first
     # step it affects — a skip line explained two hundred lines later is not an
     # explanation. Default is off; only a supervisor RESTART passes --resume.
-    global _RESUME
+    # Survival first: it decides which steps exist tonight, and resume only has
+    # an opinion about steps that do.
+    global _SURVIVAL, _RESUME
+    _SURVIVAL = _decide_survival()
+    if _SURVIVAL["active"]:
+        print(f"[FAST_CYCLE] SURVIVAL MODE ACTIVE: {_SURVIVAL['reason']}")
+        print(f"[FAST_CYCLE] survival will skip {len(_SURVIVAL['skip'])} NORMAL "
+              f"step(s); ceilings cut to p50 where a p50 exists")
+    else:
+        print(f"[FAST_CYCLE] survival mode off: {_SURVIVAL['reason']}")
+
     _RESUME = _decide_resume(sys.argv)
     if _RESUME["active"]:
         print(f"[FAST_CYCLE] RESUME ACTIVE: {_RESUME['reason']}")
@@ -2579,6 +2642,28 @@ def main():
         print(f"[FAST_CYCLE] model_window closed: {_closed}")
     except Exception as e:
         print(f"[FAST_CYCLE] model_window close -> FAILED: {type(e).__name__}: {e}")
+
+    # ── ФЛАГЪТ ЗА ОЦЕЛЯВАНЕ ПАДА ЕДВА КОГАТО ЦИКЪЛ Е ЗАВЪРШИЛ (22 авг 2026) ─
+    # Here, at the end of a cycle that reached its last step — not at the start of
+    # the next one, and not by the calendar. The flag says "this system could not
+    # carry a full night"; the only evidence that overturns it is a full night
+    # carried. Clearing it on entry would mean every cycle starts by forgetting
+    # why it was told to be careful, and the reduced profile would never run twice
+    # in a row however bad things were.
+    #
+    # Placed BEFORE _seal_cycle_record() for the same reason close_last() is: this
+    # is part of the cycle, and a cycle that dies between here and the seal has
+    # still done the work the flag was waiting on.
+    if _SURVIVAL["active"]:
+        try:
+            from core import survival_mode as _sm
+            _sm.clear()
+            print("[FAST_CYCLE] SURVIVAL MODE CLEARED — a cycle finished under "
+                  "the reduced profile; the next one runs in full")
+        except Exception as e:
+            print(f"[FAST_CYCLE] survival_mode.clear -> FAILED: "
+                  f"{type(e).__name__}: {e} (the flag stays latched, which is the "
+                  f"safe direction)")
 
     # Cycle finished cleanly → seal the record, release the lock, drop the
     # heartbeat. Order matters: _seal_cycle_record() reads the heartbeat for the

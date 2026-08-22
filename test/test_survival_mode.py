@@ -120,12 +120,47 @@ def test_the_latched_flag_survives_a_process_death(tmp_path):
     assert reason == "budget spent"
 
 
-def test_a_latch_from_yesterday_does_not_carry_over(tmp_path):
+def test_a_latch_from_yesterday_DOES_carry_over(tmp_path):
+    """REVERSED 22 Aug 2026. This test used to assert the opposite, and the
+    behaviour it pinned made the flag unreachable.
+
+    Walk the old rule through the only sequence that can produce a latch:
+      budget exhausted on day D -> latch written for D
+      no further restart on D — that is what "exhausted" means
+      03:00 on D+1: the scheduled task starts a cycle regardless of the
+      supervisor's budget. Day-scoped resolve() discards the latch for D,
+      re-derives from scheduler_state for D+1 (zero restarts, no failure) and
+      answers NOT ACTIVE.
+
+    So the reduced profile applied only to restarts inside the same day, and by
+    construction there were none left. The flag would have been written,
+    notified about, and never once read as True.
+
+    What clears it is evidence, not the clock: a cycle that finishes.
+    """
     (tmp_path / "memory").mkdir()
     enter("2026-08-20", "yesterday's collapse", base=tmp_path)
 
+    active, reason, is_new = resolve(TODAY, base=tmp_path,
+                                     scheduler_state=_state(), cfg=CFG)
+    assert active is True, (
+        "the latch was dropped at midnight, so the 03:00 cycle — the one the "
+        "flag exists for — would run at full fat into the wall that set it")
+    assert is_new is False, "a carried-over latch must not re-announce itself"
+    assert "2026-08-20" in reason, (
+        "the reason must say WHEN it was latched; a stale flag with no date is "
+        "indistinguishable from a fresh one")
+
+
+def test_a_finished_cycle_is_what_lifts_the_latch(tmp_path):
+    (tmp_path / "memory").mkdir()
+    enter("2026-08-20", "yesterday's collapse", base=tmp_path)
+    clear(base=tmp_path)
+
     active, _, _ = resolve(TODAY, base=tmp_path, scheduler_state=_state(), cfg=CFG)
-    assert active is False, "03:00 is a fresh start; the latch is per-day"
+    assert active is False, (
+        "clear() is what a finished cycle calls; after it the next cycle runs "
+        "in full")
 
 
 # ── exactly one notice ─────────────────────────────────────────────────────

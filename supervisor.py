@@ -212,10 +212,39 @@ def log(msg: str) -> None:
 
 
 def ceiling_for(step: Optional[str], cfg: dict) -> int:
+    """The watchdog's ceiling for this step, in seconds.
+
+    THE SINGLE SOURCE OF TRUTH IS config/scheduler.json (see item 7 and that
+    file's own README: ceilings are human-tunable only). Everything else DERIVES
+    from it and may only ever TIGHTEN it:
+
+      core/step_budget.budget_for   B = learned p95 x 1.5, clamped to this
+      core/survival_mode.p50_ceiling  p50 of observed runs, applied below
+
+    Under survival mode the ceiling drops to the step's p50. A step that normally
+    finishes in p50 still finishes; one that is going to overrun is stopped
+    sooner, which is the point of a night the system cannot afford. Where there is
+    no p50 the config ceiling is left ALONE rather than divided by a made-up
+    factor — a fabricated tighter ceiling on a step with no history is just a new
+    way to kill a healthy step.
+    """
     ceilings = cfg.get("step_ceilings_sec", {})
-    if step and step in ceilings:
-        return int(ceilings[step])
-    return int(ceilings.get("_default", 900))
+    base_ceiling = int(ceilings[step]) if (step and step in ceilings) \
+        else int(ceilings.get("_default", 900))
+    if not step:
+        return base_ceiling
+    try:
+        from core import survival_mode as _sm
+        today = datetime.now().astimezone().date().isoformat()
+        active, _reason, _new = _sm.resolve(today)
+        if not active:
+            return base_ceiling
+        seconds, _source = _sm.p50_ceiling(step, ceilings=ceilings)
+        # Tighten only. p50 above the human ceiling would be a system widening
+        # its own limit, which config/scheduler.json's README forbids by name.
+        return int(min(base_ceiling, max(1, int(seconds))))
+    except Exception:
+        return base_ceiling
 
 
 def _autopsy(action) -> str:
@@ -1535,19 +1564,67 @@ def tick(now: Optional[datetime] = None, dry_run: bool = False) -> Action:
         _ring_death_bell("CYCLE_FAILED_BUDGET_EXHAUSTED", action,
                          restarts_used=used,
                          restart_budget=int(cfg.get("max_restarts_per_day", 2)))
-        log("!!! RESTART BUDGET EXHAUSTED — the system is NOT running. "
-            "Human intervention required. This will appear in the daily report.")
+        # ── ИЗЧЕРПАН БЮДЖЕТ ВЕЧЕ НЕ ЗНАЧИ „СПРИ" (22 авг 2026) ──────────────
+        # It still means "do not spawn another cycle now" — a system that can
+        # restart itself indefinitely has no restart budget, and that limit is
+        # the point. What changes is what the NEXT cycle inherits.
+        #
+        # THE FINDING THAT SHAPES THIS. The Windows scheduled task starts a cycle
+        # at 03:00 whether or not this supervisor considers the system down; the
+        # restart budget governs the supervisor's restarts, not the clock. So the
+        # day after an exhausted budget, a full-fat cycle starts anyway and walks
+        # into the same wall that emptied the budget. Latching a PERSISTED flag is
+        # what lets that cycle know: it reads survival_state.json before its first
+        # step and runs the reduced profile — CRITICAL steps only, ceilings at
+        # p50 — instead of the profile that has already failed twice today.
+        #
+        # The flag is cleared only when a cycle FINISHES. Not on entry to the next
+        # one, not by the clock: the thing that proves the system can carry a full
+        # night again is a full night carried.
+        #
+        # The notifier is INJECTED. core/survival_mode.py refuses to import an
+        # alarm path itself, because on 16 Aug 2026 a test in this repo sent a
+        # real emergency alarm to the human's phone about a failure that never
+        # happened. enter() sends at most one notice per day, and the "notified"
+        # flag lives in the persisted state so the once-ness survives a process
+        # death — which matters exactly here, where the next caller is a fresh
+        # cycle that knows nothing about this one.
         _diag = _autopsy(action)
-        alarm_human("СИСТЕМАТА НЕ РАБОТИ — рестартите за деня свършиха",
+        _survival_reason = (
+            f"restart budget exhausted ({used}/{int(cfg.get('max_restarts_per_day', 2))}) "
+            f"on step {action.wedged_step!r}: {str(action.reason)[:200]}")
+        try:
+            from core import survival_mode as _sm
+            _sm_state = _sm.enter(
+                today, _survival_reason,
+                notifier=lambda subject, detail: alarm_human(
+                    subject,
+                    f"{detail}\n\n"
                     f"Заклещена на стъпка: {action.wedged_step}\n"
                     f"{_diag}\n"
-                    f"Рестарти: {used}/{int(cfg.get('max_restarts_per_day', 2))}\n"
-                    f"Причина: {str(action.reason)[:300]}\n"
+                    f"Следващият цикъл ще тръгне САМО с критичните стъпки и "
+                    f"тавани по p50. Флагът се вдига чак когато цикъл ЗАВЪРШИ.\n"
                     f"КАКВО ДА НАПРАВИШ:\n"
-                    f"1) нищо — утре бюджетът се нулира и системата опитва пак (губиш 1 ден данни)\n"
-                    f"2) ако стъпката е БАВНА, не счупена: вдигни тавана й в config/scheduler.json\n"
+                    f"1) нищо — утре системата опитва пак, но пестеливо\n"
+                    f"2) ако стъпката е БАВНА, не счупена: вдигни тавана й в "
+                    f"config/scheduler.json\n"
                     f"3) ръчен опит: venv\\Scripts\\python.exe fast_cycle_runner.py\n"
-                    f"4) прати ми този текст — диагностицирам и поправям")
+                    f"4) прати ми този текст — диагностицирам и поправям",
+                    dedup_key=f"survival:{today}"))
+            log(f"!!! RESTART BUDGET EXHAUSTED — no further restarts today. "
+                f"SURVIVAL MODE latched for {today} "
+                f"(entries={_sm_state.get('entries')}, "
+                f"notified={_sm_state.get('notified')}); the next cycle will run "
+                f"CRITICAL steps only at p50 ceilings.")
+        except Exception as e:
+            # A survival mode that cannot latch must not silence the old alarm.
+            log(f"survival_mode.enter FAILED ({type(e).__name__}: {e}) — "
+                f"falling back to the plain budget-exhausted alarm")
+            alarm_human("СИСТЕМАТА НЕ РАБОТИ — рестартите за деня свършиха",
+                        f"Заклещена на стъпка: {action.wedged_step}\n"
+                        f"{_diag}\n"
+                        f"Рестарти: {used}/{int(cfg.get('max_restarts_per_day', 2))}\n"
+                        f"Причина: {str(action.reason)[:300]}")
         return action
 
     return action
