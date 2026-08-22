@@ -26,6 +26,37 @@ external OpenClaw gateway. Per docs/OPENCLAW_INTEGRATION_DESIGN.md:
 
 Phase 0 has NO real execution capability: _execute() is a stub that raises
 NotImplementedError. Wiring an actual OpenClaw gateway call is a later phase.
+
+  (d) Per-action PARAMETER SCHEMAS, checked before classification. classify()
+      only ever looked at action_type — a string. Everything else in the task
+      dict travelled untouched, so "web_fetch_get" carrying
+      {"url": "__import__('os').system('calc')"} was classified level_1 on the
+      strength of its label while the payload rode along unread. Phase 0 could
+      not execute it, which made the hole invisible rather than absent.
+
+      config/openclaw_action_schemas.json holds one JSON Schema (Draft 2020-12)
+      per action_type, validated by validate_parameters(). Every string pattern
+      is an ALLOWLIST of the characters that field legitimately needs, never a
+      blocklist of attack strings: a blocklist of "__import__" loses to the next
+      payload, whereas a path pattern permitting only [A-Za-z0-9_./-] refuses
+      that payload for its quotes and parentheses and refuses the next one too.
+      additionalProperties is false everywhere, so an unknown field is refused
+      rather than ignored.
+
+      THE ORDER IS PART OF THE CONTRACT:
+
+          1. always_blocked   — first, unconditionally. A blocked action stays
+                                blocked even if its parameters are malformed;
+                                "your payload was invalid" is a softer answer
+                                than "this action may never run", and the harder
+                                answer must win.
+          2. schema           — refused actions never reach classification, so a
+                                malformed payload can never be handed a level.
+          3. policy match     — the pure allowlist lookup, fail-closed level_3.
+
+      An action_type with no schema entry falls to "_default", which permits NO
+      parameters at all. Fail-closed by construction: a new action type must
+      have a schema written for it, in a commit, before it can carry data.
 """
 import json
 import pathlib
@@ -34,8 +65,11 @@ from datetime import datetime, timezone
 
 BASE_DIR = pathlib.Path(__file__).resolve().parents[1]
 POLICY_PATH = BASE_DIR / "config" / "openclaw_action_policy.json"
+SCHEMA_PATH = BASE_DIR / "config" / "openclaw_action_schemas.json"
 AUDIT_LOG_PATH = BASE_DIR / "memory" / "openclaw_audit_log.json"
 PENDING_L3_PATH = BASE_DIR / "memory" / "openclaw_pending_l3.json"
+
+REFUSED_SCHEMA = "refused_schema"
 
 
 def load_policy(policy_path: pathlib.Path = POLICY_PATH) -> dict | None:
@@ -48,6 +82,81 @@ def load_policy(policy_path: pathlib.Path = POLICY_PATH) -> dict | None:
         return json.loads(pathlib.Path(policy_path).read_text(encoding="utf-8"))
     except Exception:
         return None
+
+
+def is_always_blocked(action_type: str, policy_path: pathlib.Path = POLICY_PATH) -> bool:
+    """The first question asked about any action, before anything else runs.
+
+    Split out of classify() so submit_action() can ask it BEFORE schema
+    validation. A blocked action must stay blocked even when its parameters are
+    also malformed: "your payload was invalid" invites a corrected retry, and
+    "this action may never run" does not.
+
+    Fail-closed: an unreadable policy is not a licence. It returns False here
+    because classify() will then send everything to level_3 anyway — no path
+    reaches execution on a missing policy.
+    """
+    policy = load_policy(policy_path)
+    if policy is None:
+        return False
+    return action_type in policy.get("always_blocked", {}).get("action_types", [])
+
+
+def load_schemas(schema_path: pathlib.Path = SCHEMA_PATH) -> dict | None:
+    """Fail-closed schema load. None means "refuse anything with parameters"."""
+    try:
+        blob = json.loads(pathlib.Path(schema_path).read_text(encoding="utf-8"))
+        return blob if isinstance(blob, dict) else None
+    except Exception:
+        return None
+
+
+def validate_parameters(action_type: str, parameters: dict,
+                        schema_path: pathlib.Path = SCHEMA_PATH) -> tuple[bool, str | None]:
+    """(ok, reason). Runs BEFORE classification — see the module docstring.
+
+    A missing or corrupt schema file refuses every action that carries
+    parameters and lets parameterless ones through to classification, which is
+    itself fail-closed. That is deliberately not "refuse everything": a deleted
+    config file would then be a way to take the bridge down, and the policy gate
+    already answers level_3 to anything it cannot vouch for.
+    """
+    params = parameters if isinstance(parameters, dict) else None
+    if params is None:
+        return False, "parameters must be a JSON object, got {}".format(
+            type(parameters).__name__)
+
+    blob = load_schemas(schema_path)
+    if blob is None:
+        if params:
+            return False, ("schema file is missing or unreadable and this action "
+                           "carries parameters — refused rather than guessed")
+        return True, None
+
+    schemas = blob.get("schemas") or {}
+    schema = schemas.get(action_type, blob.get("_default"))
+    if schema is None:
+        return False, "no schema and no _default for {!r}".format(action_type)
+
+    try:
+        import jsonschema                                    # noqa: PLC0415
+    except ImportError:
+        # The validator itself is missing. Refuse anything carrying data rather
+        # than wave it through unvalidated; an unchecked payload is the exact
+        # thing this function exists to stop.
+        if params:
+            return False, "jsonschema is not installed — parameters cannot be validated"
+        return True, None
+
+    try:
+        jsonschema.validate(instance=params, schema=schema)
+    except jsonschema.ValidationError as e:
+        where = "/".join(str(p) for p in e.absolute_path) or "(root)"
+        return False, "{}: {}".format(where, e.message)
+    except jsonschema.SchemaError as e:
+        return False, "the schema for {!r} is itself invalid: {}".format(
+            action_type, e.message)
+    return True, None
 
 
 def classify(action_type: str, policy_path: pathlib.Path = POLICY_PATH) -> str:
@@ -125,15 +234,39 @@ def submit_action(
     policy_path: pathlib.Path = POLICY_PATH,
     audit_path: pathlib.Path = AUDIT_LOG_PATH,
     pending_path: pathlib.Path = PENDING_L3_PATH,
+    schema_path: pathlib.Path = SCHEMA_PATH,
 ) -> dict:
     """Single entry point for any OpenClaw action request.
 
-    task must contain "action_type". Log-then-act: the audit record is
-    written to disk before any of the branches below (blocked / level_3
-    queue / dry_run / execute) runs — never after.
+    task must contain "action_type"; its parameters live under "parameters".
+    Log-then-act: the audit record is written to disk before any of the branches
+    below (blocked / schema-refused / level_3 queue / dry_run / execute) runs —
+    never after.
+
+    The three checks happen in the order the docstring fixes — always_blocked,
+    then schema, then policy — and only then is anything written or branched on.
+    Deciding before logging is not a violation of log-then-act: what that rule
+    protects is that no ACTION is taken without a record, and the record below is
+    written before the first branch.
     """
     action_type = task.get("action_type")
-    verdict = classify(action_type, policy_path=policy_path)
+
+    # 1. always_blocked, unconditionally first.
+    blocked = is_always_blocked(action_type, policy_path=policy_path)
+
+    # 2. schema — but only if the action was not already blocked. A blocked
+    #    action must not be re-labelled "your payload was invalid".
+    schema_ok, schema_reason = (True, None) if blocked else validate_parameters(
+        action_type, task.get("parameters") or {}, schema_path=schema_path)
+
+    # 3. the policy lookup, fail-closed level_3. Never reached by a refused
+    #    payload: a malformed action is not handed an autonomy level at all.
+    if blocked:
+        verdict = "blocked"
+    elif not schema_ok:
+        verdict = REFUSED_SCHEMA
+    else:
+        verdict = classify(action_type, policy_path=policy_path)
 
     audit_id = _new_audit_id()
     record = {
@@ -145,11 +278,19 @@ def submit_action(
         "status": "pending",
         "task": task,
     }
+    if verdict == REFUSED_SCHEMA:
+        record["schema_error"] = schema_reason
     _append_json_list(audit_path, record)
 
     if verdict == "blocked":
         _update_audit_status(audit_path, audit_id, status="blocked")
         return {"executed": False, "status": "blocked", "audit_id": audit_id}
+
+    if verdict == REFUSED_SCHEMA:
+        _update_audit_status(audit_path, audit_id, status=REFUSED_SCHEMA,
+                             schema_error=schema_reason)
+        return {"executed": False, "status": REFUSED_SCHEMA,
+                "reason": schema_reason, "audit_id": audit_id}
 
     if verdict == "level_3":
         _append_json_list(pending_path, {

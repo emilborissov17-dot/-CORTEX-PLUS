@@ -89,3 +89,9 @@ chromadb==1.5.9
 # heaviest entry here — it pulls onnxruntime and friends. It is guarded, so a
 # fork that wants only the suite may drop this line; the suite collects and runs
 # without it. Kept in the core list because the nightly cycle uses it.
+
+jsonschema==4.26.0
+# agents/openclaw_bridge.py — per-action PARAMETER schemas, validated before an
+# action is ever classified. It was already installed as a transitive dependency;
+# undeclared, a fresh install would land in the ImportError branch, which fails
+# CLOSED but refuses every action carrying data. Named here so it is a choice.

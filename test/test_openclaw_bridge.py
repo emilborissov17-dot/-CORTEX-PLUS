@@ -69,7 +69,7 @@ def test_dry_run_never_executes(tmp_path, monkeypatch):
 
     policy_path = _write_policy(tmp_path, REAL_POLICY)
     result = submit_action(
-        {"action_type": "web_fetch_get"},
+        {"action_type": "web_fetch_get", "parameters": {"url": "https://example.com/a"}},
         dry_run=True,
         policy_path=policy_path,
         audit_path=tmp_path / "audit.json",
@@ -89,7 +89,7 @@ def test_dry_run_false_on_level_1_reaches_execute_stub(tmp_path, monkeypatch):
 
     policy_path = _write_policy(tmp_path, REAL_POLICY)
     result = submit_action(
-        {"action_type": "web_fetch_get"},
+        {"action_type": "web_fetch_get", "parameters": {"url": "https://example.com/a"}},
         dry_run=False,
         policy_path=policy_path,
         audit_path=tmp_path / "audit.json",
@@ -97,7 +97,7 @@ def test_dry_run_false_on_level_1_reaches_execute_stub(tmp_path, monkeypatch):
     )
 
     assert result["executed"] is True
-    assert calls == [({"action_type": "web_fetch_get"}, "level_1")]
+    assert calls == [({"action_type": "web_fetch_get", "parameters": {"url": "https://example.com/a"}}, "level_1")]
 
 
 def test_level_3_never_reaches_execute_even_with_dry_run_false(tmp_path, monkeypatch):
@@ -165,7 +165,7 @@ def test_audit_record_exists_before_any_status_change(tmp_path, monkeypatch):
     monkeypatch.setattr(bridge, "_execute", fake_execute)
 
     submit_action(
-        {"action_type": "web_fetch_get"},
+        {"action_type": "web_fetch_get", "parameters": {"url": "https://example.com/a"}},
         dry_run=False,
         policy_path=policy_path,
         audit_path=audit_path,
@@ -190,7 +190,7 @@ def test_execute_stub_raises_not_implemented_when_actually_reached(tmp_path):
 
     with pytest.raises(NotImplementedError):
         submit_action(
-            {"action_type": "web_fetch_get"},
+            {"action_type": "web_fetch_get", "parameters": {"url": "https://example.com/a"}},
             dry_run=False,
             policy_path=policy_path,
             audit_path=audit_path,

@@ -1,0 +1,144 @@
+{
+  "_meta": {
+    "description": "Per-action-type JSON Schema (Draft 2020-12) for the PARAMETERS of an OpenClaw action. Validated by agents/openclaw_bridge.validate_parameters() BEFORE classification, and after the always_blocked check.",
+    "why_allowlist_patterns": "Every string pattern here is an ALLOWLIST of the characters that field legitimately needs, never a blocklist of attack strings. A blocklist of '__import__' loses to the next payload; a path pattern that permits only [A-Za-z0-9_./-] refuses __import__(\"os\").system(...) because of the quotes and parentheses, and refuses everything else shaped like it too.",
+    "default_is_no_parameters": "An action_type with no entry below falls to \"_default\", which permits NO parameters at all. Fail-closed: a new action type must have a schema written for it, in a commit, before it can carry data.",
+    "additionalProperties": "false everywhere, on purpose. An unknown field is refused, not ignored — a field that silently does nothing is how somebody comes to believe it does something."
+  },
+
+  "_default": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {}
+  },
+
+  "schemas": {
+    "web_fetch_get": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["url"],
+      "properties": {
+        "url": { "type": "string", "maxLength": 2048, "pattern": "^https?://[A-Za-z0-9._~:/?#\\[\\]@!$&'()*+,;=%-]+$" }
+      }
+    },
+    "public_api_get": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["url"],
+      "properties": {
+        "url": { "type": "string", "maxLength": 2048, "pattern": "^https?://[A-Za-z0-9._~:/?#\\[\\]@!$&'()*+,;=%-]+$" }
+      }
+    },
+    "rss_fetch": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["url"],
+      "properties": {
+        "url": { "type": "string", "maxLength": 2048, "pattern": "^https?://[A-Za-z0-9._~:/?#\\[\\]@!$&'()*+,;=%-]+$" }
+      }
+    },
+    "pdf_fetch_public": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["url"],
+      "properties": {
+        "url": { "type": "string", "maxLength": 2048, "pattern": "^https?://[A-Za-z0-9._~:/?#\\[\\]@!$&'()*+,;=%-]+$" }
+      }
+    },
+    "web_search": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["query"],
+      "properties": {
+        "query": { "type": "string", "minLength": 1, "maxLength": 200, "pattern": "^[A-Za-z0-9 ,.:;?!'\\-_/]+$" },
+        "max_results": { "type": "integer", "minimum": 1, "maximum": 50 }
+      }
+    },
+    "read_local_file": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path"],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[A-Za-z0-9_][A-Za-z0-9_./-]*$",
+          "not": { "pattern": "\\.\\." }
+        }
+      }
+    },
+    "list_directory": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path"],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[A-Za-z0-9_][A-Za-z0-9_./-]*$",
+          "not": { "pattern": "\\.\\." }
+        }
+      }
+    },
+    "query_cortex_memory": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["query"],
+      "properties": {
+        "query": { "type": "string", "minLength": 1, "maxLength": 500 },
+        "limit": { "type": "integer", "minimum": 1, "maximum": 200 }
+      }
+    },
+    "write_knowledge_file": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["target_path", "backup_enabled"],
+      "properties": {
+        "target_path": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[A-Za-z0-9_][A-Za-z0-9_./-]*$",
+          "not": { "pattern": "\\.\\." }
+        },
+        "backup_enabled": { "const": true },
+        "content": { "type": "string", "maxLength": 1000000 }
+      }
+    },
+    "write_data_file": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["target_path", "backup_enabled"],
+      "properties": {
+        "target_path": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[A-Za-z0-9_][A-Za-z0-9_./-]*$",
+          "not": { "pattern": "\\.\\." }
+        },
+        "backup_enabled": { "const": true },
+        "content": { "type": "string", "maxLength": 1000000 }
+      }
+    },
+    "send_telegram_message": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["text"],
+      "properties": {
+        "text": { "type": "string", "minLength": 1, "maxLength": 3500 }
+      }
+    },
+    "http_post_external": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["url"],
+      "properties": {
+        "url": { "type": "string", "maxLength": 2048, "pattern": "^https://[A-Za-z0-9._~:/?#\\[\\]@!$&'()*+,;=%-]+$" },
+        "body": { "type": "string", "maxLength": 100000 }
+      }
+    }
+  }
+}
