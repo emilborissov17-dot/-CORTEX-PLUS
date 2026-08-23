@@ -51,6 +51,11 @@ ALLOWED = {
     # It monkeypatches _record_p_survive so the suite does not write rows into
     # the real metric history. A test is not a prompt builder.
     "test/test_survival_gate.py",
+    # It asserts the five test rows survive and that the annotation explains
+    # them, so it names the file and the metric on purpose. It became visible
+    # to this sweep only when it was committed: the sweep walks `git ls-files`,
+    # so an untracked test is invisible to it and a tracked one is not.
+    "test/test_corrections_27.py",
     "docs/HOMEOSTASIS_STATUS.md",
 }
 

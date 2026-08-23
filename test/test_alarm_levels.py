@@ -91,6 +91,35 @@ def test_a_notice_is_still_held_through_the_quiet_window(phone, monkeypatch):
     assert not phone, "a phase that went fine woke the human at 3am"
 
 
+def _alarm_calls_without_level(path):
+    """Line numbers of real supervisor.alarm_human(...) calls with no level=.
+
+    AST, not a regex. See test_the_checker_tells_a_call_from_a_sentence_about_one
+    for why that distinction is load-bearing.
+    """
+    import ast
+    try:
+        tree = ast.parse(pathlib.Path(path).read_text(encoding="utf-8",
+                                                      errors="replace"))
+    except SyntaxError:
+        return []
+    out = []
+    for node in ast.walk(tree):
+        if not isinstance(node, ast.Call):
+            continue
+        f = node.func
+        name = None
+        if isinstance(f, ast.Attribute):
+            name = f.attr
+        elif isinstance(f, ast.Name):
+            name = f.id
+        if name != "alarm_human":
+            continue
+        if not any(k.arg == "level" for k in node.keywords):
+            out.append(node.lineno)
+    return out
+
+
 def test_every_caller_states_its_level():
     """A siren added by omission is the failure this file exists to stop.
 
@@ -100,15 +129,51 @@ def test_every_caller_states_its_level():
     """
     missing = []
     for path in sorted((REPO / "core").glob("*.py")):
-        src = path.read_text(encoding="utf-8", errors="replace")
-        for match in re.finditer(r"supervisor\.alarm_human\((.*?)\)\n",
-                                 src, re.S):
-            if "level=" not in match.group(1):
-                missing.append("{}:{}".format(
-                    path.name, src[:match.start()].count("\n") + 1))
+        for lineno in _alarm_calls_without_level(path):
+            missing.append("{}:{}".format(path.name, lineno))
     assert not missing, (
         "these calls fall back to the ALARM default without saying so: {}"
         .format(", ".join(missing)))
+
+
+def test_the_checker_tells_a_call_from_a_sentence_about_one(tmp_path):
+    r"""23 Aug 2026 — THIS CHECK WAS A REGEX AND IT CRIED WOLF.
+
+    `re.finditer(r"supervisor\.alarm_human\((.*?)\)\n", src, re.S)` matched the
+    PROSE in core/survival_gate.py's module docstring, which explains that a
+    refusal goes out through "supervisor.alarm_human() at ALARM level". Empty
+    parens, then everything up to the next `)` on a line end — and the capture
+    contained no `level=`, so the file was reported for the one thing its
+    docstring was promising it does. The real call four hundred lines below
+    passes level=supervisor.ALARM.
+
+    A checker that flags a comment saying "we always do X" for not doing X is a
+    checker somebody switches off. It parses now, and this test holds both
+    directions."""
+    real = tmp_path / "real.py"
+    real.write_text(
+        "import supervisor\n"
+        "def f():\n"
+        "    supervisor.alarm_human('s', 'd')\n", encoding="utf-8")
+    assert _alarm_calls_without_level(real) == [3]
+
+    stated = tmp_path / "stated.py"
+    stated.write_text(
+        "import supervisor\n"
+        "def f():\n"
+        "    supervisor.alarm_human('s', 'd', level=supervisor.ALARM)\n",
+        encoding="utf-8")
+    assert _alarm_calls_without_level(stated) == []
+
+    prose = tmp_path / "prose.py"
+    prose.write_text(
+        '"""It reaches a human through supervisor.alarm_human() at ALARM.\n'
+        'Three things happen: a ledger line, the siren, a non-zero exit.\n'
+        '"""\n'
+        "def f():\n"
+        "    return 1\n", encoding="utf-8")
+    assert _alarm_calls_without_level(prose) == [], (
+        "the checker still reads docstrings as calls")
 
 
 def test_the_phase_trigger_is_read_and_not_asserted():
