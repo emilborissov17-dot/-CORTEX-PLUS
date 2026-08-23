@@ -1,29 +1,36 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-scripts/cockpit_answer.py — RUN THE REFLEX PRODUCER. THE CALLER IT NEVER HAD.
+scripts/cockpit_answer.py — RUN THE REFLEX PRODUCER BY HAND. THE FALLBACK.
 
 cockpit/reflex.py was committed in 41267ee with a passing selftest and no
-caller. This is the caller.
+caller. This was the first caller, and for one day it was the only one.
 
-WHY A SCRIPT AND NOT A HOOK IN THE RUNNER
--------------------------------------------
-The right home for the phase-boundary call is fast_cycle_runner.py, at the same
-place the phase debrief is written. That file is the live cycle's own path and
-is out of bounds while a cycle is running, so this exists to be run BY HAND, and
-the phase hook is named in the report as still-unwired rather than pretended.
+THE PHASE HOOK NOW LIVES WHERE IT BELONGS (23 Aug 2026)
+---------------------------------------------------------
+core/phase_tracker._close() calls cockpit/phase_voice.on_phase_close() at every
+phase boundary, from beat(), from the runner. That is the real hook, and it sees
+what this script could not:
 
-What this script can do without touching the runner:
+    a phase that produced NO debrief — invisible to a file watcher, and the
+    phase most worth a line, because a rejected debrief is a fact about it;
+    two phases closing between two runs of this script — one line here, two
+    there.
+
+WHAT THIS IS STILL FOR
+-----------------------
+A hook only fires while a cycle runs. By hand, after the fact:
 
     --drain    answer every unanswered human_input_queue row routed to the 3b
     --phase    emit one expression line for the newest phase debrief on disk
     --dry-run  show what would be called, and call nothing
 
-PHASE BOUNDARIES ARE DETECTED FROM DISK, NOT FROM A HOOK. A new file under
-memory/phase_debriefs/<cycle>/ means a phase finished. That is a real signal and
-a weaker one than the runner calling us: a phase that produced no debrief is
-invisible here, and two phases finishing between runs of this script produce one
-line, not two. Said here rather than discovered later.
+--phase still detects boundaries from disk, with the same two blind spots named
+above. That is what makes it a fallback and not the mechanism.
+
+The state handed to the model is assembled in cockpit/phase_voice.py and
+imported here. Two copies of "what the model is told about now" would drift, and
+both would keep working while they drifted.
 
     venv/Scripts/python.exe scripts/cockpit_answer.py --drain
     venv/Scripts/python.exe scripts/cockpit_answer.py --phase
@@ -40,8 +47,8 @@ if str(BASE) not in sys.path:
     sys.path.insert(0, str(BASE))
 
 from cockpit import expression as ex      # noqa: E402
+from cockpit import phase_voice as pv     # noqa: E402
 from cockpit import reflex as rx          # noqa: E402
-from cockpit import vector as vec         # noqa: E402
 
 STREAM = BASE / "memory" / "expression_stream.jsonl"
 HEARTBEAT = BASE / "memory" / "heartbeat.json"
@@ -54,8 +61,8 @@ PHASE_SEEN = BASE / "memory" / "cockpit_phase_seen.json"
 
 
 def glyph_now() -> dict:
-    """The current glyph, or the warming state. Never fabricates one."""
-    return vec.glyph_for(vec.assemble(), store_path=VECTOR_STORE)
+    """The current glyph, or the warming state. One implementation, in the hook."""
+    return pv.glyph_now(VECTOR_STORE)
 
 
 def _read(path: pathlib.Path, default=None):
@@ -66,27 +73,14 @@ def _read(path: pathlib.Path, default=None):
 
 
 def state_now() -> dict:
-    """The whole state handed to the model: movers, flow, step, DEGRADED, warming.
+    """The whole state handed to the model — the SAME assembly the hook uses.
 
-    Assembled here rather than inside speak() because every field comes from a
-    different file on disk, and speak() takes its inputs as arguments so a test
-    can hand it a state without a filesystem.
+    This used to be a second copy of cockpit/phase_voice.state_from_disk(). Two
+    assemblies of "what the model is told about now" drift, and nothing fails
+    while they do: both keep producing a state, and the hand-run line stops
+    describing the same machine as the hooked one.
     """
-    heartbeat = _read(HEARTBEAT, {}) or {}
-    contract = _read(CONTRACT, {}) or {}
-    steps = contract.get("steps") if isinstance(contract, dict) else None
-    degraded = (sum(1 for x in steps
-                    if isinstance(x, dict) and x.get("verdict") == "DEGRADED")
-                if isinstance(steps, list) else None)
-    flow = None
-    try:
-        from core import flow_score as fs
-        score = fs.compute()
-        flow = score.as_dict() if hasattr(score, "as_dict") else dict(score)
-    except Exception:
-        flow = None
-    return rx.current_state(STREAM, glyph_now(), heartbeat=heartbeat,
-                            flow=flow, degraded=degraded)
+    return pv.state_from_disk(STREAM, HEARTBEAT, CONTRACT, VECTOR_STORE)
 
 
 def drain(producer: rx.ReflexProducer, db_path: pathlib.Path,

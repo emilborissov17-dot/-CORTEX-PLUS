@@ -115,7 +115,12 @@ def _must_cite(phase: str) -> set:
 
 
 def _close(phase: str, report) -> None:
-    """Write the report, ask for a debrief, send one message. All fail-open."""
+    """Write the report, ask for a debrief, say one line, send one message.
+
+    All four fail-open, and in that order: the report is the record, the debrief
+    is the brain's word about it, the expression line is the cockpit's, and the
+    message is only a notification that the first three happened.
+    """
     try:
         result = report.finish()
     except Exception as exc:  # noqa: BLE001
@@ -130,6 +135,27 @@ def _close(phase: str, report) -> None:
                                 must_cite=_must_cite(phase))
     except Exception as exc:  # noqa: BLE001
         print(f"[PHASE] {phase}: debrief failed ({type(exc).__name__}: {exc})")
+
+    # ── ГРАНИЦАТА НА ФАЗАТА ВИКА ПРОИЗВОДИТЕЛЯ (23 авг 2026) ───────────────
+    # THE CALL SITE. scripts/cockpit_answer.py --phase намираше границата по
+    # НОВ ФАЙЛ под memory/phase_debriefs/ — тоест не виждаше фаза без дебриф
+    # (а отхвърленият дебриф е точно фазата, за която си струва ред) и сливаше
+    # две фази в една, когато и двете затворят между две пускания на скрипта.
+    # Границата не е загадка: ето я, веднъж на фаза, с доклада и дебрифа в ръка.
+    # FAIL-OPEN и с таван: cockpit/phase_voice.py минава през
+    # step_budget.call_with_timeout, така че заклещен 3b струва един липсващ
+    # ред, не нощ.
+    try:
+        from cockpit.phase_voice import on_phase_close
+        _said = on_phase_close(phase, str(_cycle_id), result, debrief)
+        if _said.get("emitted"):
+            print(f"[PHASE] {phase}: expression -> {_said.get('text')}")
+        else:
+            print(f"[PHASE] {phase}: no expression line "
+                  f"({str(_said.get('why') or _said.get('rejected'))[:120]})")
+    except Exception as exc:  # noqa: BLE001
+        print(f"[PHASE] {phase}: expression hook failed "
+              f"({type(exc).__name__}: {exc})")
 
     try:
         import supervisor
