@@ -1405,6 +1405,13 @@ def _scan_needs_reanalysis() -> list[dict]:
     # КОНСЕНСУС С KIMI, стъпка 7 (15 авг 2026), т.2: „45GB rglob е отделен грях —
     # трябва индекс, не сканиране на архива." Архивът е ИСТОРИЯ; флагът живее само
     # в живите снимки. Пропускаме архива и всичко под него.
+    #
+    # 23 Aug 2026: snapshots/self_archive/ NO LONGER EXISTS — it was deleted by
+    # hand once the ballooning bug was confirmed gone, and the comment above
+    # describes it in the present tense as if it were still there. The skip
+    # entry is kept anyway: it costs one set intersection, and the documented
+    # remediation for a recurrence is to recreate exactly that directory. The
+    # other two entries are live — snapshots/master/ exists.
     snap_dir = BASE / "snapshots"
     _SKIP_PARTS = {"master", "self_archive", "__pycache__"}
     flagged = []

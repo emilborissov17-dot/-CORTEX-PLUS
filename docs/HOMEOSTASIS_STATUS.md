@@ -53,11 +53,33 @@ disk_free_pct  shutil.disk_usage(BASE) -> 100 * free / total
 
 ### Two gaps inside the built pair
 
-**Nothing fires the disk actuator.** `core/disk_actuator.py` is built,
-hash-stamped, tested and dry-runnable, and `sweep(apply=True)` is called from
-nowhere in this repo. So today the `action` level does what `notice` does: it is
-recorded. Deletion is the only irreversible act in this layer, so switching it
-on is a decision for a human rather than a loose end. Verify with:
+**Nothing fires the disk actuator, and that is now a decision rather than a
+gap.** `core/disk_actuator.py` is built, hash-stamped, tested and dry-runnable,
+and `sweep(apply=True)` is called from nowhere. So the `action` level does what
+`notice` does: it is recorded.
+
+**DISK IS GATED, NOT DEFENDED. Ruled 23 Aug 2026, and the numbers are the
+reason.** A manifest amendment to sweep the self archive was specified and then
+cancelled once the inventory was read:
+
+- `snapshots/self_archive/` — the 45 GB target the rule was written for — **does
+  not exist.** It was deleted by hand after the ballooning bug was confirmed
+  fixed; `docs/ENGINEERING_BACKLOG.md` records the decision. The 45 GB figure
+  was carried from a status block into a plan without being rechecked.
+- `snapshots/self/`, the only remaining candidate, holds **59 files / 13.4 MB**.
+  Under age>30d + keep>=10 + not-referenced it would free **12.7 MB at most**,
+  or **4.6 MB** if "referenced" is read against every file that names a snapshot
+  rather than only `reconsider_history.jsonl` (which references none at all).
+- The actuator already finds **14.8 MB** in `__pycache__` without any amendment.
+- Disk sits at **65.5% free and falling at 0.005%/hour** — a time-to-gate on the
+  order of **289 days**.
+
+A rule that frees 13 MB against a 289-day horizon is theatre. When disk actually
+approaches its thresholds, the right move is to find where the space has gone at
+that time and write a manifest against that, not against a memory of where it
+once was. The negative allowlist is unchanged.
+
+Verify the actuator still has no caller with:
 
 ```
 grep -rn "disk_actuator" --include=*.py core/ fast_cycle_runner.py

@@ -194,6 +194,12 @@ def witness_present(since_ts: float | None = None) -> bool:
 # стъпка, която пише недекларирано (таблицата ми е сляпа) или декларира и не пипа
 # (таблицата ми лъже).
 _WATCH = ("memory", "output", "daily", "plans", "data")
+# "self_archive" GUARDS A DIRECTORY THAT DOES NOT EXIST TODAY (23 Aug 2026).
+# snapshots/self_archive/ held 45 GB and was deleted by hand once the
+# ballooning bug was confirmed gone. The entry stays: it costs one string
+# compare, and the documented remediation for that bug is to recreate the
+# directory. Removing it means the next person who does gets an rglob over
+# 45 GB and has to rediscover why that is slow.
 _SKIP = ("self_archive", "__pycache__", ".git", "ucdp")
 _MAX_FILES = 6000
 # Собственото счетоводство на слоя НЕ се брои за продукт на стъпката — иначе

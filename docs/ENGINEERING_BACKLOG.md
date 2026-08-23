@@ -167,6 +167,34 @@ why the failure rendered as an **empty error string**.
 > **Open (human decision):** `snapshots/self_archive/` holds **45 GB**. Emil deletes
 > manually after a few healthy cycles confirm the ballooning bug is gone. Quarantine
 > principle applies to data too — keep one small sample regardless.
+>
+> **CLOSED 23 Aug 2026.** The directory does not exist on disk; the deletion
+> happened. `snapshots/self/` now holds **59 files / 13.4 MB**, of which 23 files
+> (12.7 MB) are older than 30 days — the old ones are the fat ones, which is the
+> ballooning bug's residue. The `self_archive` skip guards in
+> `core/metta_check.py` and `fast_cycle_runner.py` are deliberately kept and
+> now say why.
+
+### Dead weight, recorded not removed (23 Aug 2026)
+
+`cycle.log` at the repo root — **233 KB, last written 29 July, and NOTHING in
+this repository writes it.** A grep across every file type returns no writer.
+`run_fast_cycle.bat` does not write it either: that script `cd`s to
+`CORTEX++_QWEN` — the archived system, not this repo — and redirects into
+`logs\fast_cycle_log.txt`.
+
+The live stdout path is `memory/cycle_logs/cycle_<stamp>.log`, opened by
+`supervisor.spawn_cycle()` with mode `"w"` before the spawn, or teed by
+`core/cycle_log.tee_stdio()` when a cycle is started by hand.
+
+It was **not** put on the negative allowlist by name: protecting a file no live
+component writes would be protecting a fossil and would state a relationship
+that does not exist. It is **not** deleted here either. It is one file, it is
+recorded, and the decision is a human's.
+
+> **Open (human decision):** delete `cycle.log`, or leave it. Nothing depends on
+> it. The disk actuator would sweep it today only because it is 24 days old, and
+> the actuator has no caller.
 
 ### Scheduler + Watchdog — the first autonomy rung
 **Commits:** `a642dae` (denylist) · `012b7a9` (heartbeat) · `edf42e7` (ledger) · `a18b694` (supervisor)
