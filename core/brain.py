@@ -262,6 +262,44 @@ def _entry_is_clean(entry: dict) -> bool:
         return False
 
 
+# ── AMNESIA MODE (23 Aug 2026) ─────────────────────────────────────────────
+# The gate in Part 2 is correct and it empties two pools outright: constancy
+# (244 entries rejected) and autopsy (13). That is the right outcome and it
+# creates a second problem, because the failure mode of a 3B model handed two
+# exemplars instead of five is not "slightly worse content" — it is a model that
+# loses the SHAPE and starts inventing structure, which is how empty cells got
+# filled with plausible prose in the first place.
+#
+# So below MIN_POOL clean entries the block falls back to hand-written English
+# format anchors from config/few_shot_seed.json, and SAYS SO in the block. Eight
+# is not a statistical threshold; it is the point below which the exemplars stop
+# outnumbering the ways there are to get the shape wrong.
+MIN_POOL = 8
+
+SEED_FILE = BASE / "config" / "few_shot_seed.json"
+
+AMNESIA_MARKER = ("[AMNESIA MODE: using seed templates, clean history pool = "
+                  "{n} < {floor}]")
+
+
+def _seed_exemplars(kind: str | None) -> list:
+    """Hand-written English format anchors for this kind, or []. Never raises."""
+    if not kind:
+        return []
+    try:
+        blob = json.loads(SEED_FILE.read_text(encoding="utf-8"))
+    except Exception:
+        return []
+    rows = blob.get(kind)
+    if not isinstance(rows, list):
+        return []
+    # A seed that is not English is a seed that would reintroduce the problem it
+    # exists to solve. Checked here rather than trusted, because the file is
+    # hand-edited and hand-edited files drift.
+    return [r for r in rows if isinstance(r, str) and r.strip()
+            and _entry_is_clean({"summary": r})]
+
+
 def _memory(kind: str | None = None, n: int = 5) -> str:
     """What it thought before — its own verdicts, and ONLY the clean ones.
 
@@ -282,7 +320,12 @@ def _memory(kind: str | None = None, n: int = 5) -> str:
         lines = JOURNAL.read_text(encoding="utf-8").splitlines()[-400:]
     except Exception:
         return "(empty memory — this is your first recorded thought)"
-    picked, rejected = [], 0
+    # THE POOL AND THE BLOCK ARE TWO DIFFERENT SIZES, and conflating them was a
+    # real bug in the first version of amnesia mode: `picked` is capped at n=5,
+    # so a pool floor of 8 measured against it could never be reached and every
+    # single kind fell into amnesia permanently. `clean_total` counts what
+    # EXISTS in the window; `picked` is what gets shown.
+    picked, rejected, clean_total = [], 0, 0
     for line in reversed(lines):
         try:
             d = json.loads(line)
@@ -293,20 +336,33 @@ def _memory(kind: str | None = None, n: int = 5) -> str:
         if not _entry_is_clean(d):
             rejected += 1
             continue
-        picked.append(f"[{str(d.get('ts'))[:16]}] {d.get('kind')}: "
-                      f"{str(d.get('summary'))[:220]}")
-        if len(picked) >= n:
-            break
-    if not picked:
-        # SAY WHY IT IS EMPTY. "No memories of this kind" and "every memory of
-        # this kind was rejected" are different facts about the system, and the
-        # second one is the one somebody needs to act on.
-        if rejected:
-            return ("(no usable memory of this kind: {} entr{} rejected by the "
-                    "language gate)".format(rejected,
-                                            "y was" if rejected == 1 else "ies were"))
-        return "(no memories of this kind)"
-    return "\n".join(reversed(picked))
+        clean_total += 1
+        if len(picked) < n:
+            picked.append(f"[{str(d.get('ts'))[:16]}] {d.get('kind')}: "
+                          f"{str(d.get('summary'))[:220]}")
+    if clean_total >= MIN_POOL:
+        return "\n".join(reversed(picked))
+
+    # Too thin to hold the shape on its own. The seeds are format anchors and
+    # they NEVER mix with a flagged entry — `picked` already contains only
+    # entries the gate passed, so what follows is clean-plus-clean.
+    seeds = _seed_exemplars(kind)
+    if seeds:
+        head = AMNESIA_MARKER.format(n=clean_total, floor=MIN_POOL)
+        body = ["[seed] {}: {}".format(kind, str(sd)[:220]) for sd in seeds]
+        body += list(reversed(picked))
+        return "\n".join([head] + body)
+
+    if picked:
+        return "\n".join(reversed(picked))
+    # SAY WHY IT IS EMPTY. "No memories of this kind" and "every memory of this
+    # kind was rejected" are different facts about the system, and the second is
+    # the one somebody needs to act on.
+    if rejected:
+        return ("(no usable memory of this kind: {} entr{} rejected by the "
+                "language gate, and no seed template exists for it)".format(
+                    rejected, "y was" if rejected == 1 else "ies were"))
+    return "(no memories of this kind)"
 
 
 def remember(kind: str, summary: str, payload: dict | None = None) -> None:

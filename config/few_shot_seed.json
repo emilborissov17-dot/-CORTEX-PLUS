@@ -1,0 +1,83 @@
+{
+  "_README": [
+    "FORMAT ANCHORS, NOT CONTENT CLAIMS. Every string below is hand-written",
+    "English in the exact shape the schema at that call site asks for. They exist",
+    "for one reason: core/language_gate.py rejects 85% of the historical exemplar",
+    "pool, and a 3B model handed two examples instead of five loses format",
+    "stability and starts inventing structure. These hold the shape while a clean",
+    "pool rebuilds.",
+    "",
+    "NO FACTS, NO NUMBERS, NO PLACE NAMES. Every specific is an angle-bracket",
+    "placeholder — <AXIS>, <INDICATOR>, <STEP>, <N>. A seed exemplar that carried",
+    "a real-looking number would be teaching the model to assert it, and the",
+    "model cannot tell an example's content from an example's form.",
+    "",
+    "They are rendered with a [seed] marker instead of a timestamp, so nothing",
+    "can mistake one for something the system actually thought.",
+    "",
+    "step_stance IS DELIBERATELY ABSENT. attend()'s schema demands a Bulgarian",
+    "enum — \"stance\": \"върви|следи|пропусни\" — and core/brain.py:927 and :956",
+    "compare against those literals to decide whether a step is skipped. An",
+    "all-English seed there would teach the model to break the contract; a seed",
+    "carrying the enum would put Cyrillic back into a block whose whole promise",
+    "is that it has none. Changing the enum needs those two consumers changed",
+    "with it, which is a separate piece of work. Named here rather than left to",
+    "be discovered."
+  ],
+
+  "cycle_plan": [
+    "{\"focus\": \"<ONE OR TWO WORDS>\", \"why\": \"The state of <SUBSYSTEM> makes this the thing worth attending to this cycle.\", \"watch\": [\"<INDICATOR>\", \"<STEP>\"], \"suspicion\": \"<WHAT MAY BE WRONG IN MYSELF, OR EMPTY>\", \"success_test\": \"By the end of the cycle, <OBSERVABLE CONDITION> will be true.\"}",
+    "{\"focus\": \"<ONE OR TWO WORDS>\", \"why\": \"Nothing has changed in <AREA> for several cycles and I do not know whether that is health or a stalled reader.\", \"watch\": [\"<INDICATOR>\"], \"suspicion\": \"\", \"success_test\": \"I will be able to say which of the two it is, from evidence rather than from absence.\"}",
+    "{\"focus\": \"<ONE OR TWO WORDS>\", \"why\": \"The previous cycle left <ARTEFACT> untouched, so the steps downstream of it worked on stale input.\", \"watch\": [\"<STEP>\", \"<ARTEFACT>\"], \"suspicion\": \"My own plan may be describing work that no step actually performs.\", \"success_test\": \"<ARTEFACT> is written this cycle, or the reason it was not is recorded.\"}"
+  ],
+
+  "cycle_review": [
+    "{\"success\": false, \"verdict\": \"The test I set myself was not met: <CONDITION> did not become true, and the reason was <CAUSE>.\", \"blind_spot\": \"My plan assumed <ASSUMPTION> and never checked it.\", \"carry_forward\": \"Check <ASSUMPTION> before planning around it again.\"}",
+    "{\"success\": true, \"verdict\": \"<CONDITION> became true and the evidence for it is in <ARTEFACT>, not in my own account of the cycle.\", \"blind_spot\": \"I watched <INDICATOR> and did not notice that <OTHER INDICATOR> moved with it.\", \"carry_forward\": \"Those two indicators may not be independent; read them together next time.\"}",
+    "{\"success\": false, \"verdict\": \"The cycle finished but the step that mattered produced nothing, so the result is a completed cycle and no answer.\", \"blind_spot\": \"I treated 'the step ran' as 'the step worked'.\", \"carry_forward\": \"A step's own output is the evidence, not its exit.\"}"
+  ],
+
+  "constancy": [
+    "{\"expected_regime\": \"Stable by nature\", \"why_expected\": \"<INDICATOR> measures a quantity that changes over years rather than days, so a flat reading over the observed window is the expected behaviour and not a fault.\", \"healthy\": true, \"alarm\": false, \"reading\": \"The series is flat because the quantity is slow, not because the reader has stopped.\"}",
+    "{\"expected_regime\": \"Should move\", \"why_expected\": \"<INDICATOR> on axis <AXIS> is a daily proxy and is expected to vary between readings; an unchanged value across the whole window is more likely a stalled source than a stable world.\", \"healthy\": false, \"alarm\": true, \"reading\": \"The value has not changed across the observed window, which for this indicator points at a frozen reader rather than a steady quantity.\"}",
+    "{\"expected_regime\": \"Bounded drift\", \"why_expected\": \"<INDICATOR> is a cumulative counter, so it only ever rises; what matters is the size of each increment, not the level.\", \"healthy\": true, \"alarm\": false, \"reading\": \"The increments are within the range this counter usually shows, so nothing here needs attention.\"}",
+    "{\"expected_regime\": \"Unknown\", \"why_expected\": \"The material does not say how <INDICATOR> is produced, and without that I cannot tell a stable quantity from a stopped reader.\", \"healthy\": false, \"alarm\": false, \"reading\": \"There is not enough in the material to judge this series; the gap is in the provenance, not in the numbers.\"}"
+  ],
+
+  "constellation": [
+    "{\"relations\": [\"<INDICATOR A> and <INDICATOR B> should move together and did not, over the same window.\", \"<INDICATOR C> is flat, which only matters because <INDICATOR D> moved.\"], \"most_telling\": \"The first, because two indicators that share a source cannot legitimately disagree about direction.\", \"what_would_change_my_mind\": \"Evidence that <INDICATOR A> and <INDICATOR B> are drawn from different sources after all.\"}",
+    "{\"relations\": [\"<INDICATOR A> and <INDICATOR B> both stopped changing on the same reading, which is a coincidence only if they have separate readers.\"], \"most_telling\": \"That they stopped together; a shared stall is a fact about the pipeline, not about the world.\", \"what_would_change_my_mind\": \"A record showing the two are read by independent collectors.\"}",
+    "{\"relations\": [\"<INDICATOR A> moved while <INDICATOR B>, which is derived from it, did not.\"], \"most_telling\": \"A derived value that does not follow its input has stopped being derived from it.\", \"what_would_change_my_mind\": \"A lag in the derivation long enough to explain the gap.\"}"
+  ],
+
+  "cycle_report": [
+    "{\"opening\": \"The cycle completed. <N OF M> steps touched the artefact they promise, and the ones that did not are named below. The composite moved within its usual range. Nothing in this cycle required a human.\", \"decisions\": [\"Kept <STEP> despite its cost, because the steps after it read what it writes.\", \"Recorded <OBSERVATION> rather than acting on it, because one cycle is not evidence.\"], \"worry\": \"<STEP> reports success and touches nothing, so its verdict and its effect disagree.\", \"closing\": \"A working cycle with one unresolved question, which is a better outcome than a clean report with no questions in it.\"}",
+    "{\"opening\": \"The cycle finished late and degraded. The model tier that usually answers was unavailable for most of the run, so several steps produced nothing rather than producing something wrong.\", \"decisions\": [\"Let the degraded steps degrade instead of retrying them into the ceiling.\"], \"worry\": \"A degraded step and a successful one look the same in the log unless the reader knows where to check.\", \"closing\": \"Not a successful cycle, and the failure is recorded honestly enough to act on.\"}",
+    "{\"opening\": \"An ordinary cycle with nothing unusual in it. Every backbone step ran, the artefacts are fresh, and no threshold was crossed.\", \"decisions\": [\"Changed nothing.\"], \"worry\": \"Several cycles in a row with nothing to report may mean the system is stable, or that it has stopped looking.\", \"closing\": \"Successful, and worth checking that the quiet is real.\"}"
+  ],
+
+  "mirror_read": [
+    "{\"saw\": \"The oldest item waiting for a human has been waiting <N> days, and the count of open proposals has not fallen for several cycles.\", \"worries\": \"Work is accumulating faster than it is being answered, and nothing in the system slows down when that happens.\", \"numbers\": \"<N> open proposals, oldest <N> days, <N> judged calibration points.\"}",
+    "{\"saw\": \"The judge's calibration has fewer resolved points than open predictions, so its accuracy is being reported from a small sample.\", \"worries\": \"An accuracy figure computed from few points reads as confidently as one computed from many.\", \"numbers\": \"<N> resolved of <N> open predictions.\"}",
+    "{\"saw\": \"Several phase debriefs were rejected for citing no number from their own data.\", \"worries\": \"A rejected debrief leaves the phase with no account of itself at all, which is worse than a weak one.\", \"numbers\": \"<N> of <N> debriefs rejected.\"}"
+  ],
+
+  "phase_debrief": [
+    "{\"what\": \"The phase completed <N> steps and produced <N> artefacts, the oldest of them <N> minutes old.\", \"verdict\": \"OK\", \"risk\": \"One of the artefacts is older than the phase itself, so a step downstream may be reading the previous cycle's work.\", \"do\": \"Check the timestamp of <ARTEFACT> against the cycle's start before trusting anything derived from it.\"}",
+    "{\"what\": \"The phase ran to the end but <N> of its steps touched none of the files they declare.\", \"verdict\": \"DEGRADED\", \"risk\": \"The phase reports success while part of its output is stale, and the steps after it cannot tell.\", \"do\": \"Treat <ARTEFACT> as unwritten this cycle and say so in the report.\"}",
+    "{\"what\": \"The phase was cut short: the model tier it depends on returned nothing within the budget.\", \"verdict\": \"DEGRADED\", \"risk\": \"No judgement was produced for this phase, and an absent judgement can be mistaken for an untroubled one.\", \"do\": \"Record the absence explicitly rather than leaving the phase without a line.\"}"
+  ],
+
+  "reconsider": [
+    "{\"action\": \"forward\", \"step\": \"\", \"why\": \"Nothing seen since the plan was written contradicts it, and recomputing a step costs minutes I would be spending on a guess.\", \"expect\": \"\", \"wants\": \"\"}",
+    "{\"action\": \"rollback\", \"step\": \"<STEP>\", \"why\": \"<STEP> ran before <ARTEFACT> was written, so it scored data that has since been replaced.\", \"expect\": \"The score changes, or it does not and I learn the input did not matter.\", \"wants\": \"To recompute the two steps together rather than one of them.\"}",
+    "{\"action\": \"forward\", \"step\": \"\", \"why\": \"The step I would go back to has already been recomputed once this cycle, and a second return would be me arguing with myself.\", \"expect\": \"\", \"wants\": \"A way to record the doubt without spending the cycle on it.\"}"
+  ],
+
+  "autopsy": [
+    "{\"failure\": true, \"cause\": \"MODEL_TIER_UNAVAILABLE\", \"why\": \"The step blocked on a model call that never returned, and the watchdog reached its ceiling before the call did.\", \"transient\": true, \"retry_after_sec\": 600, \"halt_and_call_human\": false, \"remedy\": \"Let the ladder abandon the tier at its slice instead of waiting, and let the step degrade.\"}",
+    "{\"failure\": true, \"cause\": \"RESTART_BUDGET_EXHAUSTED\", \"why\": \"Every restart permitted for the day has been used and the cycle is still not completing.\", \"transient\": false, \"retry_after_sec\": 0, \"halt_and_call_human\": true, \"remedy\": \"Stop restarting and put the wedged step in front of a human; another restart will fail the same way.\"}",
+    "{\"failure\": false, \"cause\": \"NO_FAILURE_HERE\", \"why\": \"The step ended early by its own rule rather than by an error, and the evidence says the rule fired correctly.\", \"transient\": false, \"retry_after_sec\": 0, \"halt_and_call_human\": false, \"remedy\": \"Nothing. Record that this is a designed exit so the next reader does not diagnose it again.\"}",
+    "{\"failure\": true, \"cause\": \"STALE_INPUT_ACCEPTED\", \"why\": \"The step read an artefact from a previous cycle and stamped this cycle's date on the result.\", \"transient\": false, \"retry_after_sec\": 0, \"halt_and_call_human\": false, \"remedy\": \"Check that the input belongs to this cycle before using it, and refuse by name when it does not.\"}"
+  ]
+}
