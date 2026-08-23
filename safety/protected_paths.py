@@ -115,6 +115,17 @@ PROTECTED_FILES = frozenset({
     # has to lose its protection ON PURPOSE, in a diff that says so.
     "config/homeostasis.json",
 
+    # config/reactions.json — the two switches that decide whether the cycle
+    # makes a model call at every phase boundary. UNSTAMPED on purpose: it is a
+    # routine on/off switch and a hash that must be re-cut every time it is
+    # flipped is a hash nobody checks. Which is exactly why it needs this entry
+    # instead: the system must never be able to switch its own model calls on.
+    # A human edits this file or it does not change. Named for the same reason
+    # as the two above — the PROTECTED_DIRS("config") blanket is the kind of
+    # rule someone narrows one day, and this must lose its protection only on
+    # purpose, in a diff that says so.
+    "config/reactions.json",
+
     # ── The audit trail ──────────────────────────────────────────────────────
     # These live under memory/, which ast_gate's ALLOWED_DIR_PREFIXES otherwise
     # permits generated code to write to. Without an explicit rule, a patch

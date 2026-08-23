@@ -1,0 +1,39 @@
+{
+  "_README": [
+    "Runtime switches for the model calls that happen INSIDE a cycle.",
+    "",
+    "THIS FILE IS WRITTEN BY A HUMAN AND NEVER BY THE SYSTEM. It carries no",
+    "sha256 stamp, deliberately. config/homeostasis.json is stamped because a",
+    "defended threshold must not change quietly; a routine on/off switch there",
+    "would mean re-stamping the hash every time it is flipped, and a guard that",
+    "is re-stamped routinely is a guard nobody reads.",
+    "",
+    "config_expression.yaml was the other candidate and was rejected: the",
+    "cockpit rewrites it in place when the mic/camera toggles are flipped, so",
+    "the system does write it.",
+    "",
+    "Both switches default to false. They stay false until one full nightly",
+    "cycle has run clean with the cycle-end state vector in place. Each makes a",
+    "model call at every phase boundary - about 63 a night - which is the shape",
+    "that produced AllBackendsFailedError.",
+    "",
+    "It is on the protected-path denylist, so no self-generated patch can flip",
+    "these on. A human edits this file or it does not change."
+  ],
+  "reaction": {
+    "enabled": false,
+    "what": "the model is handed the raw receptor lines since the last phase boundary and answers, in its own words, what they say about its own state",
+    "cost": "one model call per phase boundary, ~63 per cycle",
+    "model": "qwen2.5:3b",
+    "max_lines": 40,
+    "timeout_sec": 20
+  },
+  "perplexity": {
+    "enabled": false,
+    "what": "the model states its own condition from the cycle vector and the perplexity of that statement is published as a receptor",
+    "cost": "one model call per phase boundary, ~63 per cycle",
+    "model": "qwen2.5:3b",
+    "num_predict": 24,
+    "timeout_sec": 20
+  }
+}
