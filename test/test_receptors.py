@@ -94,9 +94,18 @@ def test_an_unreadable_value_is_ignored_not_guessed(bank):
 # ═══ THE RAMP — why there are two channels ══════════════════════════════════
 
 def test_a_ramp_under_d_over_alpha_emits_nothing_on_R_and_S_fires(bank):
-    """The headline. d/alpha = 1/0.2 = 5, eps = 6, so R is silent for ever
-    while the value walks from 100 all the way through every set-point."""
-    r = bank.add_receptor("disk", alpha=0.2, eps=6.0, calibration_ticks=3)
+    """The headline, AMENDED 24 Aug 2026 by the anchor (COMMAND 28 part 1).
+
+    The RESIDUAL is still silent for ever on this ramp - d/alpha = 1/0.2 = 5,
+    under eps = 6 - and that is still the reason channel S exists. What changed
+    is that the receptor is no longer silent overall: the anchor fires every
+    band/d ticks. The assertion below therefore pins emitted_by_residual, which
+    is the quantity the original claim was really about.
+
+    anchor_k is set to infinity here so the ramp's own crossings of S are read
+    without anchor lines interleaved; test/test_anchor.py holds the anchor."""
+    r = bank.add_receptor("disk", alpha=0.2, eps=6.0, calibration_ticks=3,
+                          anchor_k=1e18)
     s = bank.add_setpoint("disk", {"notice": 28, "action": 15, "gate": 5}, "%")
 
     value, crossings = 100.0, []
@@ -106,7 +115,8 @@ def test_a_ramp_under_d_over_alpha_emits_nothing_on_R_and_S_fires(bank):
         if out["S"] is not None:
             crossings.append((round(value), out["S"].meta["level"]))
 
-    assert r.emitted == 0, "R fired on a slow ramp it cannot represent"
+    assert r.emitted_by_residual == 0, "the residual fired on a slow ramp"
+    assert r.emitted == 0, "with the anchor disabled R should be wholly silent"
     assert crossings == [(28, "notice"), (15, "action"), (5, "gate")]
     assert s.last_level == "gate"
 

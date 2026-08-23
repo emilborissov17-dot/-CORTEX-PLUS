@@ -104,6 +104,12 @@ PHASE_CALIBRATING = "calibrating"   # no seed: silent for CALIBRATION_TICKS
 PHASE_WARMUP = "warmup"             # seeded: silent for WARMUP_SECONDS
 PHASE_LIVE = "live"
 
+# THE ANCHOR BAND, as a multiple of eps. Measured on this machine's own
+# recorded history rather than chosen: see the replay in the COMMAND 28 report.
+# k=3 is the knee — it restores the drift the EMA absorbs without restoring the
+# noise the EMA was brought in to remove.
+ANCHOR_K = 3.0
+
 # The hard cap. Eight total.
 MAX_HIGH_FREQUENCY = 3           # network, ETW disk, WMI thermal
 MAX_LOW_FREQUENCY = 5            # battery, power, file changes, registry, firewall
@@ -126,7 +132,8 @@ class Receptor:
                  unit: str = "", seed: Optional[dict] = None,
                  bus: Optional[eb.EventBus] = None,
                  warmup_seconds: float = WARMUP_SECONDS,
-                 calibration_ticks: int = CALIBRATION_TICKS):
+                 calibration_ticks: int = CALIBRATION_TICKS,
+                 anchor_k: float = ANCHOR_K):
         self.key = key
         self.alpha = float(alpha)
         # eps=None means SELF-CALIBRATING. A sensor this repo has never seen has
@@ -147,6 +154,28 @@ class Receptor:
         # The residual from the most recent feed(), kept so a consumer can ask
         # "why" without recomputing it against a baseline that has since moved.
         self.last_signal: Optional[float] = None
+
+        # ── THE SECOND ANCHOR (24 Aug 2026) ────────────────────────────────
+        # The last value this receptor actually EMITTED, and the drift away
+        # from it. The EMA baseline answers "did something just change"; this
+        # answers "have I wandered far from the last thing I said".
+        #
+        # COMMAND 27 removed the old MOVE rule, which was anchored to exactly
+        # this, and the replay showed the cost: 161 lines fell to 33 and
+        # idle_seconds went from 32 to 1 — but ram_percent, ram_used_gb,
+        # connections, gpu_temp_c and gpu_mem_used_mb all drifted more than
+        # their own noise floor across the recorded history and NONE of them
+        # said so, because an EMA fed by every reading absorbs exactly that.
+        #
+        # It is also the answer to the d/alpha problem: on a steady ramp the
+        # residual settles at a constant, so R is either silent for ever or
+        # firing every tick for ever, and neither state says "getting closer".
+        # The anchor says it, at a predictable interval.
+        self.last_emitted_value: Optional[float] = None
+        self.last_drift: Optional[float] = None
+        self.anchor_k = float(anchor_k)
+        self.emitted_by_anchor = 0
+        self.emitted_by_residual = 0
         self.ticks = 0
         self.emitted = 0
         self.suppressed_warmup = 0
@@ -160,6 +189,8 @@ class Receptor:
         if seed and isinstance(seed.get("base"), (int, float)):
             self.base = float(seed["base"])
             self.seeded = True
+            if isinstance(seed.get("last_emitted_value"), (int, float)):
+                self.last_emitted_value = float(seed["last_emitted_value"])
             self.seed_ts = seed.get("ts")
         else:
             self.seed_ts = None
@@ -209,6 +240,7 @@ class Receptor:
             self.base = x                  # first ever reading IS the baseline
             self.last = x
             self.last_signal = 0.0
+            self.last_emitted_value = x   # the first reading is the first anchor
             if self.eps is None:
                 # It counts toward the calibration window too. Leaving it out
                 # made a 20-tick window need 21 ticks and never close.
@@ -233,19 +265,50 @@ class Receptor:
         if self.warming(now):
             self.suppressed_warmup += 1
             return None
-        if abs(signal) <= self.eps:
+
+        # TWO RULES, OR-ed. Not one replacing the other.
+        drift = (None if self.last_emitted_value is None
+                 else x - self.last_emitted_value)
+        self.last_drift = drift
+        band = self.anchor_band
+
+        by_residual = abs(signal) > self.eps
+        by_anchor = (drift is not None and band is not None
+                     and abs(drift) > band)
+
+        if not (by_residual or by_anchor):
             self.suppressed_quiet += 1
             return None
 
+        why = ("residual" if by_residual and not by_anchor else
+               "anchor" if by_anchor and not by_residual else "both")
         self.emitted += 1
+        if by_residual:
+            self.emitted_by_residual += 1
+        if by_anchor:
+            self.emitted_by_anchor += 1
+        self.last_emitted_value = x
+
         return self.bus.publish(
             self.topic, x, eb.CHANNEL_R,
             meta={"signal": signal, "base": self.base, "eps": self.eps,
                   "alpha": self.alpha, "unit": self.unit,
-                  "key": self.key, "ticks": self.ticks},
+                  "key": self.key, "ticks": self.ticks,
+                  "drift": drift, "anchor_band": band, "why": why,
+                  "by_residual": by_residual, "by_anchor": by_anchor},
             ts=now)
 
     # -- persistence --------------------------------------------------------
+
+    @property
+    def anchor_band(self) -> Optional[float]:
+        """How far it may wander from the last emitted value before saying so.
+
+        Deliberately WIDER than eps. If it were equal, the anchor would fire
+        every time the residual did and add nothing; if it were narrower it
+        would become the only rule and the EMA would be decoration.
+        """
+        return None if self.eps is None else self.eps * self.anchor_k
 
     def _finish_calibration(self) -> None:
         """eps = 3 sigma of the calibration window it just collected."""
@@ -261,6 +324,10 @@ class Receptor:
     def seed_record(self) -> dict:
         return {"base": self.base, "ticks": self.ticks,
                 "alpha": self.alpha, "eps": self.eps,
+                # The anchor is seeded too. Without it, the first reading of
+                # the next night becomes the anchor and the drift across the
+                # gap between cycles is silently forgiven.
+                "last_emitted_value": self.last_emitted_value,
                 "ts": time.time()}
 
     def stats(self) -> dict:
@@ -270,7 +337,12 @@ class Receptor:
                 "eps": self.eps, "eps_source": self.eps_source,
                 "ticks": self.ticks, "emitted": self.emitted,
                 "suppressed_warmup": self.suppressed_warmup,
-                "suppressed_quiet": self.suppressed_quiet}
+                "suppressed_quiet": self.suppressed_quiet,
+                "anchor_k": self.anchor_k, "anchor_band": self.anchor_band,
+                "last_emitted_value": self.last_emitted_value,
+                "last_drift": self.last_drift,
+                "emitted_by_residual": self.emitted_by_residual,
+                "emitted_by_anchor": self.emitted_by_anchor}
 
     def __repr__(self) -> str:
         return "Receptor({} alpha={} eps={} {})".format(
@@ -561,7 +633,15 @@ def _selftest() -> int:
         out = bank2.feed("disk", value)
         if out["S"] is not None:
             crossed.append((round(value), out["S"].meta["level"]))
-    check("a ramp under d/alpha <= eps emits NOTHING on R", ramp.emitted == 0)
+    # The RESIDUAL stays silent on this ramp — that is still true and still the
+    # reason S exists. What changed on 24 Aug is that the ANCHOR now speaks.
+    check("a ramp under d/alpha <= eps produces no RESIDUAL emission",
+          ramp.emitted_by_residual == 0)
+    check("but the anchor fires at a predictable interval",
+          ramp.emitted_by_anchor > 0)
+    gaps = ramp.anchor_band / 1.0        # d = 1.0 per tick
+    check("roughly every band/d ticks ({:.0f})".format(gaps),
+          abs(ramp.emitted_by_anchor - 120 / gaps) <= 2)
     check("and crosses S on schedule",
           crossed == [(28, "notice"), (15, "action"), (5, "gate")])
     check("S never adapts", sp.stats()["adapts"] is False)
