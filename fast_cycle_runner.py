@@ -112,6 +112,22 @@ def beat(step, step_index=None, cycle_id=None):
     _OPEN_STEP["checkpointed"] = set()
     _beat_raw(step, step_index, cycle_id)
 
+    # ── ONE HOMEOSTATIC SAMPLE PER STEP (23 Aug 2026) ─────────────────────
+    # The rate that feeds direction, time-to-threshold and
+    # p_survive_next_cycle needs three samples inside a 60-minute window. Taken
+    # only at boot that is one sample a night and every one of those numbers is
+    # None for ever. The step boundary fires ~63 times a night, which is a
+    # cadence the layer can actually measure against.
+    #
+    # Two sensor reads and one small write. Silent by design — 63 lines a night
+    # in a log a human reads is not instrumentation, it is noise — and
+    # fail-open, because a sampler must never cost a step.
+    try:
+        from core.homeostasis import tick as _homeo_tick
+        _homeo_tick()
+    except Exception:
+        pass
+
 LOCK_PATH = BASE / "memory" / "cycle.lock"
 
 def _utc_now():

@@ -677,3 +677,39 @@ def evaluate(cfg=None, state=None, now=None, sensors=None) -> dict:
 
     out["state"] = state
     return out
+
+
+# ---------------------------------------------------------------------------
+# WITHOUT THIS, EVERYTHING ABOVE IS INERT (23 Aug 2026)
+# ---------------------------------------------------------------------------
+#
+# The rate needs min_samples_for_rate=3 inside a 60-minute window. A sample
+# taken only at cycle boot gives ONE sample per night, and consecutive nights
+# are hours apart, so the window never holds more than one point. Every rate is
+# None, every direction is "unknown", every TTT is None, and
+# p_survive_next_cycle is None for ever.
+#
+# So the sampling has to happen on a cadence the layer can actually measure
+# against, and there is already one: the step boundary. fast_cycle_runner.beat()
+# fires ~63 times a night, which puts tens of points inside the window and makes
+# the rate, the direction and the TTT real numbers instead of placeholders.
+#
+# Two sensor reads and one small file write per step. FAIL-OPEN and silent: a
+# sampler that raises must not cost a step, and a sampler that prints would add
+# 63 lines a night to a log that is read by a human.
+
+
+def tick(now=None, sensors=None, state_path=None) -> dict:
+    """Take one sample and keep it. Called from the step boundary. Never raises.
+
+    Returns the reading, or {} when anything at all went wrong.
+    """
+    try:
+        cfg = load_config()
+        st = load_state(state_path)
+        reading = sample(cfg, now, sensors)
+        record_sample(reading, st, cfg)
+        save_state(st, state_path)
+        return reading
+    except Exception:
+        return {}

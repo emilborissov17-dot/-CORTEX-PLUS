@@ -207,6 +207,29 @@ def _save_state(decision: dict) -> None:
         pass
 
 
+def _record_p_survive(cycle_id, decision: dict):
+    """Record the metric, once per cycle, beside the decision.
+
+    THE DECISION ABOVE DOES NOT CONSULT IT. `decision["allowed"]` is already
+    final by the time this runs, and the gate would behave identically if
+    core/p_survive.py were deleted. The scalar is for a human reading a trend
+    line; it is not an input to anything, and above all it never reaches a
+    model prompt. See the header of core/p_survive.py for why.
+    """
+    try:
+        from core import p_survive
+        rec = p_survive.record(cycle_id=cycle_id)
+        if rec.get("value") is not None:
+            print("[{}] {} = {} (confidence {}) — recorded, not consulted"
+                  .format(NAME, p_survive.NAME, rec["value"],
+                          rec["confidence"]))
+        return {"value": rec.get("value"), "confidence": rec.get("confidence")}
+    except Exception as exc:
+        print("[{}] p_survive not recorded: {}: {}".format(
+            NAME, type(exc).__name__, exc))
+        return None
+
+
 def guard(cycle_id=None, state=None, sensors=None, now=None,
           on_refuse=None) -> dict:
     """The one call fast_cycle_runner makes at boot.
@@ -218,6 +241,7 @@ def guard(cycle_id=None, state=None, sensors=None, now=None,
     """
     decision = check(state=state, sensors=sensors, now=now)
     _save_state(decision)
+    decision["p_survive"] = _record_p_survive(cycle_id, decision)
 
     if decision["allowed"]:
         if decision.get("gate_error"):
