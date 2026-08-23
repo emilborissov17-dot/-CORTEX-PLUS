@@ -118,16 +118,44 @@ def _tail_budget(text: str, budget: int, what: str) -> str:
     if len(text) <= budget:
         return text
     keep = text[-budget:]
-    return (f"[ВНИМАНИЕ: {what} не се побира — отрязани са първите "
-            f"{len(text) - budget} знака от {len(text)}. Виждаш КРАЯ, защото "
-            f"там стоят границите. Ако решението ти зависи от отрязаното, "
-            f"кажи го вместо да гадаеш.]\n" + keep)
+    return (f"[WARNING: {what} does not fit — the first "
+            f"{len(text) - budget} characters of {len(text)} were cut. You are "
+            f"seeing the END, because that is where the boundaries are. If your "
+            f"decision depends on what was cut, say so instead of guessing.]\n"
+            + keep)
 
 
 # Духът е ~3 KB общо. Материалът, който така или иначе се подава, е до 5 KB.
 # Затова таванът тук е висок нарочно: няма причина точно СЪВЕСТТА да е орязаната.
 SPIRIT_LAW_BUDGET = 6000
 SPIRIT_CANON_BUDGET = 6000
+
+# ── THE LANGUAGE PIN (23 Aug 2026) ──────────────────────────────────────────
+# MEASURED, not suspected. Brain verdicts by day: 16 Aug 24 clean / 0 Russian;
+# 17 Aug 48/17; 18 Aug 48/48; 100% every day since. 19 of the 63 stances in the
+# 23 Aug night cycle are Chinese. The model never changed — every one of those
+# 360 verdicts is qwen2.5:3b. Nothing in this repo contains Russian.
+#
+# The cause is two facts standing next to each other:
+#   1. NO PROMPT IN THIS FILE EVER SAID WHAT LANGUAGE TO ANSWER IN. Grepped:
+#      zero hits for english/language/answer in, anywhere in the chain.
+#   2. _memory(kind) hands the model its own five most recent same-kind outputs
+#      as few-shot exemplars. So the first spontaneous drift becomes the worked
+#      example for the next call, and the ratchet never releases: 31 clean
+#      entries on 17 Aug, then R for the remaining 17 in a row, forever after.
+#
+# THE ROOT RULE FROM THE REVIEW: never use a model output as a few-shot example
+# without validation. core/language_gate.py is the validation. This is the pin.
+#
+# Hardcoded on purpose. Not a parameter, not a config key, not overridable. A
+# language rule that can be switched off is a language rule that will be off on
+# the night it matters, and the failure is silent for six days before anyone
+# reads a digest.
+LANGUAGE_PIN = (
+    "All reasoning, stance, debrief, quote and explanation text you produce "
+    "must be written in English. Do not use any other language. This is not "
+    "conditional."
+)
 
 
 def _self_state() -> str:
@@ -157,26 +185,53 @@ def _self_state() -> str:
 
 
 def _spirit() -> str:
-    """Кой е и защо съществува — законът плюс активния канон, ЦЕЛИ."""
+    """Who it is and why it exists — the law plus the active canon.
+
+    READS THE ENGLISH LAW NOW (23 Aug 2026), and the labels around it are
+    English too. A pin that says "answer in English" sitting inside a prompt
+    whose every heading is Cyrillic is an instruction arguing with its own
+    context, and a 3B model resolves that argument in favour of the context.
+
+    THE COST IS REAL AND IS NOT HIDDEN. LAW_OF_THE_BRAIN.md's `## EN` section
+    is 409 characters against the BG section's 1816 — 23% — and it is labelled
+    `(summary)` by whoever wrote it. It condenses nine numbered clauses into one
+    paragraph. Switching to it removes the largest Cyrillic block from every
+    brain prompt, which is what this change is for, and it costs the brain the
+    numbered form of its own law. That file is guarded; a full English law is
+    Emil's to approve, not mine to write. Until he does, the marker below says
+    out loud that the brain is reading the summary, so a thin answer can be
+    traced to a thin law instead of being blamed on the model.
+    """
     out, missing = [], []
     try:
         law = LAW_FILE.read_text(encoding="utf-8")
-        bg = law.split("## BG", 1)[-1].split("## EN", 1)[0].strip()
-        out.append("ЗАКОН:\n" + _tail_budget(bg, SPIRIT_LAW_BUDGET, "законът"))
+        en = law.split("## EN", 1)[-1].strip()
+        if not en:
+            raise ValueError("the ## EN section is empty")
+        out.append("LAW (English summary section; the full law is BG-only "
+                   "pending approval):\n"
+                   + _tail_budget(en, SPIRIT_LAW_BUDGET, "the law"))
     except Exception as e:
-        missing.append(f"ЗАКОНЪТ не се чете ({type(e).__name__})")
+        missing.append(f"THE LAW cannot be read ({type(e).__name__})")
     try:
         canon = (BASE / "memory" / "active_canon_frame.txt").read_text(encoding="utf-8")
-        out.append("КАНОН (цел + граница):\n"
-                   + _tail_budget(canon, SPIRIT_CANON_BUDGET, "канонът"))
+        # HONEST LIMIT: the canon is a generated file and is still 66% Cyrillic
+        # by letter count. It is the largest non-English block left in the
+        # prompt and it is out of scope here — it is produced by the canon
+        # pipeline, not written in this module.
+        out.append("CANON (goal + boundary):\n"
+                   + _tail_budget(canon, SPIRIT_CANON_BUDGET, "the canon"))
     except Exception as e:
-        missing.append(f"КАНОНЪТ не се чете ({type(e).__name__})")
+        missing.append(f"THE CANON cannot be read ({type(e).__name__})")
     if missing:
-        # Липсващият дух не бива да изглежда като липсващ ред. Мозък без канон
-        # трябва ДА ЗНАЕ, че е без канон — иначе ще действа все едно го е чел.
-        out.append("[ВНИМАНИЕ: " + "; ".join(missing) +
-                   " — мислиш БЕЗ част от духа си. Отбележи го в отговора си.]")
-    return "\n\n".join(out) or "(НЯМА КАНОН И НЯМА ЗАКОН — мислиш без дух)"
+        # A missing spirit must not look like a missing line. A brain without
+        # its canon has to KNOW it is without it, or it will act as though it
+        # had read one.
+        out.append("[WARNING: " + "; ".join(missing) +
+                   " — you are thinking WITHOUT part of your spirit. Say so in "
+                   "your answer.]")
+    return "\n\n".join(out) or ("(NO CANON AND NO LAW — you are thinking "
+                                 "without a spirit)")
 
 
 def _memory(kind: str | None = None, n: int = 5) -> str:
@@ -296,6 +351,10 @@ def think(role: str, question: str, evidence: str = "", schema: dict | None = No
         f"КАК СЕ СПРАВЯШ (пет реда, винаги в този ред):\n{_self_state()}\n\n"
         f"ДУХ:\n{_spirit()}\n\n"
         f"ПАМЕТ (твои предишни присъди):\n{_memory(kind)}\n\n"
+        # AFTER the memory block and immediately before the question, which is
+        # the position that matters: whatever the exemplars just demonstrated,
+        # this is the last instruction the model reads before being asked.
+        f"{LANGUAGE_PIN}\n\n"
         f"ВЪПРОС: {question}\n"
         + (f"\nМАТЕРИАЛ:\n{str(evidence)[-5000:]}\n" if evidence else "")
         + "\nГРАНИЦИ на ДЕЙСТВИЕТО (не на мисълта): само безплатни/локални решения; "
@@ -689,6 +748,14 @@ def attend(step: str) -> dict | None:
            "ПРЕДИШНА СТЪПКА: НЯМА (това е първата стъпка или изходът ѝ не се вижда).\n"
            "НЕ съди предишната стъпка — за нея нямаш доказателство. Остави prev_ok "
            "и prev_note празни.\n\n")
+        # THE SECOND PROMPT BUILDER, AND THE ONE THAT DRIFTED FURTHEST. think()
+        # runs a few times a cycle; this runs at EVERY beat — 63 times on the
+        # 23 Aug night — and 19 of those 63 stances came back in Chinese. It is
+        # also the one _memory() cannot help: nothing has ever called
+        # remember('step_stance', ...), so its exemplar block has always been
+        # empty and the gate in Part 2 has nothing to filter here. The pin is
+        # the only thing that reaches this stream.
+        + f"{LANGUAGE_PIN}\n\n"
         + f"СЕГА ЗАПОЧВА: {step}\n\n"
         + ('Отговори САМО с JSON: {"prev_ok": true/false, "prev_note": "кратко: какво '
            'излезе от предишната", ' if (prev_name and prev_out) else
