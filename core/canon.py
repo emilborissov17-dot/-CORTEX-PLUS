@@ -157,16 +157,110 @@ def boundary_block(b: dict = None) -> str:
     return "\n".join(lines)
 
 
+# ── THE GOAL, RENDERED IN ENGLISH FOR THE MODEL (23 Aug 2026) ────────────────
+#
+# civilization_goal.txt is EMIL'S file and stays Bulgarian. He reads it; the
+# model does not read it directly. What the model reads is the frame this module
+# builds, and the frame is the point of generation, so the translation lives
+# here rather than in his file.
+#
+# WHY IT WAS WORTH DOING. as_frame() output is injected into EVERY brain prompt
+# through _spirit(). Measured before this change: 1270 characters at 64.67%
+# Cyrillic — the single largest non-English block the model was reading, larger
+# than the law. A pin that says "answer in English" cannot win an argument
+# against the goal statement itself being in another language.
+#
+# TRANSLATION, NOT PARAPHRASE. Five sub-goals in, five sub-goals out; two
+# bullets each, in the same order, with the same verbs. "Насърчавай" is
+# "encourage" and not "optimise for"; "Ограничавай" is "limit" and not
+# "prevent"; "Предпочитай обратими стратегии" is "prefer reversible strategies"
+# and not "avoid irreversible ones", because those are different instructions.
+GOAL_EN = """# GLOBAL GOAL
+
+Maximise the resilience and the long-term viability of intelligent life and of
+its environments of existence in the Universe (biological and non-biological),
+with priority for Earth at the present stage, at minimal risk of harm.
+
+# SUB-GOALS
+
+1. Sustainable resources
+   - Minimise the risk of critical resources being exhausted
+   - Encourage cyclical, regenerative flows
+
+2. Healthy environments of existence
+   - Maintain and improve the conditions for life
+   - Limit pollution and irreversible damage
+
+3. Sustainable civilisation
+   - Reduce the risk of wars and collapses
+   - Fair distribution of resources
+
+4. Knowledge and understanding
+   - Increase the understanding of complex systems
+   - Structure knowledge for future agents
+
+5. Safety
+   - Avoid actions with high risk
+   - Prefer reversible strategies"""
+
+# The exact bytes GOAL_EN was translated from. A translation that silently
+# outlives its source is the failure this repo keeps finding, so the frame
+# CHECKS: if Emil edits civilization_goal.txt, the model is told, in the frame,
+# that the English it is reading no longer matches the Bulgarian authority. It
+# is not silently replaced by the Bulgarian, because that would undo the whole
+# migration on the day he fixes a typo — it is served with the mismatch named.
+GOAL_SOURCE_SHA256 = (
+    "fa2b4512ecfd0354a47652b58b6ebed4d0f8e02a125905787aee0374e70e21a5")
+
+GOAL_DRIFT_LINE = (
+    "[WARNING: the English goal below was translated from a version of "
+    "civilization_goal.txt that is no longer on disk (expected {expected}, "
+    "found {found}). The GOAL may have been changed and this rendering may no "
+    "longer match it. Say so if your judgement depends on the goal's exact "
+    "wording.]")
+
+
+def goal_source_sha256() -> str:
+    """sha256 of civilization_goal.txt as it is on disk right now."""
+    import hashlib
+    try:
+        return hashlib.sha256(GOAL_FILE.read_bytes()).hexdigest()
+    except OSError:
+        return "absent"
+
+
+def goal_block() -> str:
+    """The goal as the model reads it: English, with a drift warning if needed.
+
+    Falls back to whatever load_canon() found — Bulgarian included — when there
+    is no English rendering to serve. A missing goal is worse than a goal in the
+    wrong language, and this module's whole job is that the centre is never lost.
+    """
+    if not GOAL_EN.strip():
+        c = load_canon()
+        return c["goal"] or c["vision"] or _FALLBACK
+    found = goal_source_sha256()
+    if found != GOAL_SOURCE_SHA256:
+        return (GOAL_DRIFT_LINE.format(expected=GOAL_SOURCE_SHA256[:12],
+                                       found=found[:12])
+                + "\n" + GOAL_EN)
+    return GOAL_EN
+
+
 def as_frame(max_chars: int = 1400) -> str:
     """A compact text block for injecting the canon into ANY LLM prompt — the always-loaded
     reference every judgment is made against.
 
     Order is deliberate: goal, then boundary, then learned invariants. The boundary sits
     ABOVE the invariants because an invariant is a lesson the system promoted from its own
-    experience, and no accumulated lesson may outrank the line it is not allowed to cross."""
+    experience, and no accumulated lesson may outrank the line it is not allowed to cross.
+
+    THE GOAL IS SERVED IN ENGLISH (23 Aug 2026) — see GOAL_EN. The boundary block
+    below was already English and is UNCHANGED: not one word of the wall sentence
+    or the invariant sentence is touched by this, and BOUNDARIES.md is not read
+    differently, not re-hashed and not edited."""
     c = load_canon()
-    goal = c["goal"] or c["vision"] or _FALLBACK
-    parts = [goal[:max_chars], boundary_block(c.get("boundaries"))]
+    parts = [goal_block()[:max_chars], boundary_block(c.get("boundaries"))]
     if c["invariants"]:
         parts.append("Consolidated invariants (learned, stable): "
                      + "; ".join(i.get("lesson", str(i)) if isinstance(i, dict) else str(i)
