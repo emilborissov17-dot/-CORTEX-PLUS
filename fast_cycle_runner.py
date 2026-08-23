@@ -128,6 +128,44 @@ def beat(step, step_index=None, cycle_id=None):
     except Exception:
         pass
 
+    # ── PROPRIOCEPTION: THE STEP BOUNDARY IS THE TICK (23 Aug 2026) ────────
+    # Every other sensor here reads the machine as an object. This one reads
+    # how long the system's own step actually took, in its own clock. The
+    # interval between two beat() calls IS the tick: it is the unit of work
+    # this system is built out of, and when the box is loaded it stretches.
+    #
+    # perf_counter() costs 67 ns on this machine (measured, not quoted), so the
+    # instrument does not stretch what it measures. No syscall, no thread, and
+    # nothing is published until the receptor has calibrated.
+    #
+    # Silent and fail-open like the sampler above it: a sense that costs a step
+    # is not a sense worth having.
+    try:
+        _tick_boundary()
+    except Exception:
+        pass
+
+# ── the tick meter, one per process ────────────────────────────────────────
+# Built lazily so that importing this module does not construct a bus publisher,
+# and held in a dict rather than a global so the closure stays readable.
+_TICK = {"meter": None}
+
+
+def _tick_boundary():
+    """Close the previous step's tick and open the next. Never raises."""
+    m = _TICK["meter"]
+    if m is None:
+        from core import proprioception as _pp
+        # What a step is EXPECTED to cost: the median cycle is ~112 minutes
+        # over ~63 steps, so about 107 seconds. The receptor learns the real
+        # baseline; expected_ms only sets the stretch ratio a reader sees.
+        m = _pp.TickMeter(expected_ms=107_000.0)
+        _TICK["meter"] = m
+    else:
+        m.stop()
+    m.start()
+
+
 LOCK_PATH = BASE / "memory" / "cycle.lock"
 
 def _utc_now():
