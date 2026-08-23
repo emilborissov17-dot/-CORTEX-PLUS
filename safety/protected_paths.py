@@ -107,6 +107,14 @@ PROTECTED_FILES = frozenset({
     # away on purpose, in a diff that says so.
     "config/step_inputs.json",
 
+    # config/homeostasis.json — the thresholds that decide whether a cycle may
+    # start at all. Human-approved and hash-stamped; the system reads it and
+    # must never widen it. Named here for the same reason step_inputs.json is:
+    # PROTECTED_DIRS("config") already blankets it, and that blanket is the kind
+    # of rule someone narrows one day to let a settings tweak land. This file
+    # has to lose its protection ON PURPOSE, in a diff that says so.
+    "config/homeostasis.json",
+
     # ── The audit trail ──────────────────────────────────────────────────────
     # These live under memory/, which ast_gate's ALLOWED_DIR_PREFIXES otherwise
     # permits generated code to write to. Without an explicit rule, a patch

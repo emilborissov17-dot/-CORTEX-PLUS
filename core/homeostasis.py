@@ -283,3 +283,397 @@ def as_prompt_block(assessment: dict | None = None) -> str:
             lines.append(f"  ⚠ {r}")
     lines.append("──────────────────────────────────────────────────────")
     return "\n".join(lines)
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+# THE DEFENDED VARIABLES (23 Aug 2026)
+# ═══════════════════════════════════════════════════════════════════════════
+#
+# WHY THIS LIVES IN THE SAME FILE AS assess(), AND WHAT THE DIFFERENCE IS.
+# Everything above is the ADAPTIVE layer: it reads the body once at boot and
+# decides what kind of night to have — FULL, MINIMAL, which steps to skip. It
+# runs once and its thresholds are inline literals.
+#
+# This is the HOMEOSTATIC layer. It watches two variables continuously, holds a
+# level with hysteresis, acts to move the value back, and notices when its own
+# action did not work. Its thresholds are in config/homeostasis.json, which is
+# human-approved, hash-stamped and never written by this system.
+#
+# They are not rivals. assess() answers "what can I do tonight"; this answers
+# "am I still able to do anything at all". The second one can stop the first.
+#
+# TWO VARIABLES ONLY, and the restraint is the design. The review's words:
+# building five actuators at once gives you "the disk cleanup causes a CPU
+# spike, which raises a thermal alarm, which throttles, which slows the cycle,
+# which raises a duration alarm — that is not homeostasis, that is an
+# autoimmune disorder".
+
+import hashlib as _hashlib
+import os as _os
+import shutil as _shutil
+
+HOMEOSTASIS_CONFIG = BASE / "config" / "homeostasis.json"
+HOMEOSTASIS_STATE = BASE / "memory" / "homeostasis_state.json"
+
+NOTICE, ACTION, GATE = "notice", "action", "gate"
+LEVELS = (NOTICE, ACTION, GATE)          # ordered least -> most severe
+CLEAR = "clear"
+
+# Confidence in a TTT is a statement about the SAMPLE, not about the future.
+CONF_NONE, CONF_LOW, CONF_HIGH = "none", "low", "high"
+
+
+class ConfigRefused(Exception):
+    """The signed config did not verify. The layer refuses; it does not guess."""
+
+
+def _canonical_bytes(doc: dict) -> bytes:
+    body = {k: v for k, v in doc.items() if k != "sha256"}
+    return json.dumps(body, ensure_ascii=False, sort_keys=True,
+                      separators=(",", ":")).encode("utf-8")
+
+
+def load_config(path=None) -> dict:
+    """Read config/homeostasis.json and verify its own stamp.
+
+    A MISMATCH IS A HARD REFUSAL, NOT A FALLBACK. Silent defaults here would
+    mean the thresholds that decide whether a cycle may start could be changed
+    by anything that can write a file, and nobody would see it. The layer
+    declines to run and says so.
+    """
+    p = Path(path or HOMEOSTASIS_CONFIG)
+    try:
+        raw = p.read_text(encoding="utf-8")
+    except OSError as exc:
+        raise ConfigRefused("cannot read {}: {}".format(p, exc)) from exc
+    try:
+        doc = json.loads(raw)
+    except ValueError as exc:
+        raise ConfigRefused("{} is not valid JSON: {}".format(p, exc)) from exc
+    stamped = doc.get("sha256")
+    if not stamped:
+        raise ConfigRefused("{} carries no sha256".format(p))
+    actual = _hashlib.sha256(_canonical_bytes(doc)).hexdigest()
+    if actual != stamped:
+        raise ConfigRefused(
+            "{} sha256 mismatch: stamped {}, computed {} — the approved "
+            "thresholds have been edited without being re-approved".format(
+                p, stamped[:16], actual[:16]))
+    return doc
+
+
+# ---------------------------------------------------------------------------
+# Sensors — two, and no more
+# ---------------------------------------------------------------------------
+
+def read_ram_free_mb() -> float:
+    import psutil
+    return psutil.virtual_memory().available / (1024 ** 2)
+
+
+def read_disk_free_pct(path=None) -> float:
+    du = _shutil.disk_usage(str(path or BASE))
+    return 100.0 * du.free / du.total
+
+
+SENSORS = {
+    "ram_free": read_ram_free_mb,
+    "disk_free_pct": lambda: read_disk_free_pct(),
+}
+
+
+# ---------------------------------------------------------------------------
+# The four interoceptive numbers. No affect vocabulary, anywhere.
+# ---------------------------------------------------------------------------
+
+def interoception(name: str, value: float, spec: dict, history: list) -> dict:
+    """distance, direction, rate and ttt for one defended variable.
+
+    `history` is [(epoch_seconds, value), ...] oldest first.
+
+    TTT IS INFINITE WHEN THE RATE POINTS AWAY. A variable moving to safety has
+    no time-to-threshold, and reporting a large finite number there would invite
+    somebody to compare it with a real one.
+    """
+    levels = spec["levels"]
+    # The next threshold DOWNWARD is the one that matters for a
+    # higher_is_safer variable: the nearest one still below the current value.
+    below = sorted((v for v in levels.values() if v <= value), reverse=True)
+    target = below[0] if below else min(levels.values())
+    distance = value - target
+
+    rate, conf = _rate_per_second(history, spec)
+    if rate is None:
+        direction = "unknown"
+    elif rate > 0:
+        direction = "rising"
+    elif rate < 0:
+        direction = "falling"
+    else:
+        direction = "flat"
+
+    ttt = None
+    if rate is not None and rate < 0 and distance > 0:
+        ttt = distance / abs(rate)
+    elif rate is not None and rate >= 0:
+        ttt = float("inf")        # moving away from the threshold, or not moving
+
+    return {
+        "variable": name,
+        "value": round(value, 3),
+        "unit": spec.get("unit", ""),
+        "next_threshold": target,
+        "distance": round(distance, 3),
+        "direction": direction,
+        "rate_per_second": None if rate is None else round(rate, 8),
+        "rate_per_hour": None if rate is None else round(rate * 3600.0, 5),
+        "ttt_seconds": (None if ttt is None
+                        else ("inf" if ttt == float("inf") else round(ttt, 1))),
+        "ttt_confidence": conf,
+        "samples": len(history),
+    }
+
+
+def _rate_per_second(history: list, spec: dict):
+    """(rate, confidence). Least squares over the window; None when too thin."""
+    cfg = _TTT_CFG
+    min_n = int(cfg.get("min_samples_for_rate", 3))
+    high_n = int(cfg.get("high_confidence_samples", 8))
+    window = float(cfg.get("sample_window_minutes", 60)) * 60.0
+
+    pts = [(t, v) for t, v in history if isinstance(t, (int, float))]
+    if pts:
+        newest = pts[-1][0]
+        pts = [(t, v) for t, v in pts if newest - t <= window]
+    n = len(pts)
+    if n < min_n:
+        return None, CONF_NONE
+    span = pts[-1][0] - pts[0][0]
+    if span <= 0:
+        return None, CONF_NONE
+    mean_t = sum(t for t, _ in pts) / n
+    mean_v = sum(v for _, v in pts) / n
+    num = sum((t - mean_t) * (v - mean_v) for t, v in pts)
+    den = sum((t - mean_t) ** 2 for t, _ in pts)
+    if den == 0:
+        return None, CONF_NONE
+    return num / den, (CONF_HIGH if n >= high_n else CONF_LOW)
+
+
+_TTT_CFG = {"min_samples_for_rate": 3, "high_confidence_samples": 8,
+            "sample_window_minutes": 60}
+
+
+# ---------------------------------------------------------------------------
+# Hysteresis — a level arms at its threshold and disarms past threshold+h
+# ---------------------------------------------------------------------------
+
+def level_for(value: float, spec: dict, armed: str = CLEAR) -> str:
+    """The level this value holds, given what is currently armed.
+
+    ARMING IS NOT THE SAME AS CLEARING, and that asymmetry is the whole point.
+    A higher_is_safer variable arms a level when it falls TO the threshold, and
+    clears it only when it climbs back past threshold + hysteresis. Without the
+    gap a value sitting on the line chatters: engage, release, engage, release,
+    and for the disk actuator every one of those is a real deletion sweep.
+    """
+    levels = spec["levels"]
+    h = float(spec.get("hysteresis", 0))
+
+    # What would arm right now, ignoring history?
+    fresh = CLEAR
+    for name in LEVELS:                       # notice, action, gate
+        if value <= levels[name]:
+            fresh = name
+    if armed == CLEAR:
+        return fresh
+
+    # Something is armed. It stays armed until the value clears ITS release
+    # point; a MORE severe level may arm at any time.
+    armed_idx = LEVELS.index(armed) if armed in LEVELS else -1
+    fresh_idx = LEVELS.index(fresh) if fresh in LEVELS else -1
+    if fresh_idx > armed_idx:
+        return fresh                          # escalation is immediate
+    if value >= levels[armed] + h:
+        # Cleared this level. Fall back to whatever else still holds, which
+        # may be a milder level rather than CLEAR.
+        return fresh
+    return armed                              # still inside the dead band
+
+
+def release_point(spec: dict, level: str) -> float:
+    return float(spec["levels"][level]) + float(spec.get("hysteresis", 0))
+
+
+# ---------------------------------------------------------------------------
+# INSUFFICIENT — the system does not fight a symptom it cannot move
+# ---------------------------------------------------------------------------
+#
+# An actuator that fires and does not move the value is worse than one that
+# never fired: it burns the resource it was trying to save, it looks like the
+# problem is being handled, and it will do the same thing again in ten minutes.
+#
+# So an action is judged by its EFFECT, measured after the fact. If the value
+# has not come back past the release point, that action is marked INSUFFICIENT:
+# it is not repeated for 24 hours, and the NEXT arrival at the action level is
+# treated as the GATE level instead. The escalation goes to the human, because
+# the machine has just demonstrated it has nothing left to try.
+
+
+def load_state(path=None) -> dict:
+    try:
+        blob = json.loads(Path(path or HOMEOSTASIS_STATE).read_text(
+            encoding="utf-8"))
+        return blob if isinstance(blob, dict) else {}
+    except Exception:
+        return {}
+
+
+def save_state(state: dict, path=None) -> bool:
+    """Durable: this is what tells the next boot which actions are burnt."""
+    try:
+        p = Path(path or HOMEOSTASIS_STATE)
+        p.parent.mkdir(parents=True, exist_ok=True)
+        tmp = p.with_suffix(p.suffix + ".tmp")
+        with tmp.open("w", encoding="utf-8") as fh:
+            json.dump(state, fh, ensure_ascii=False, indent=2)
+            fh.flush()
+            _os.fsync(fh.fileno())
+        _os.replace(tmp, p)
+        return True
+    except Exception:
+        return False
+
+
+def _hours_since(ts, now) -> float:
+    if not ts:
+        return float("inf")
+    try:
+        t = datetime.fromisoformat(str(ts).replace("Z", "+00:00"))
+        if t.tzinfo is None:
+            t = t.replace(tzinfo=timezone.utc)
+        return max(0.0, (now - t).total_seconds() / 3600.0)
+    except Exception:
+        return float("inf")
+
+
+def is_insufficient(name: str, state: dict, cfg: dict, now=None) -> bool:
+    """Is this variable's action currently burnt?"""
+    now = now or datetime.now(timezone.utc)
+    rec = (state.get("insufficient") or {}).get(name)
+    if not rec:
+        return False
+    cooldown = float((cfg.get("insufficient") or {}).get("cooldown_hours", 24))
+    return _hours_since(rec.get("at"), now) < cooldown
+
+
+def mark_insufficient(name: str, state: dict, detail: str, now=None) -> dict:
+    now = now or datetime.now(timezone.utc)
+    state.setdefault("insufficient", {})[name] = {
+        "at": now.isoformat(),
+        "detail": detail,
+    }
+    return state
+
+
+def effective_level(name: str, held: str, state: dict, cfg: dict,
+                    now=None) -> tuple:
+    """(level, why). ACTION becomes GATE when the action is known insufficient.
+
+    This is the escalation the review asked for, and it is mechanical: nothing
+    decides to escalate, the level simply IS the gate once the action has been
+    shown not to work.
+    """
+    if held == ACTION and is_insufficient(name, state, cfg, now):
+        rec = (state.get("insufficient") or {}).get(name, {})
+        return GATE, ("action level reached again while the actuator is marked "
+                      "INSUFFICIENT ({}) — escalated to gate".format(
+                          str(rec.get("detail"))[:120]))
+    return held, ""
+
+
+# ---------------------------------------------------------------------------
+# The whole picture, assembled
+# ---------------------------------------------------------------------------
+
+def sample(cfg=None, now=None, sensors=None) -> dict:
+    """Read both variables and record the sample. Never raises."""
+    now = now or datetime.now(timezone.utc)
+    cfg = cfg or load_config()
+    sensors = sensors or SENSORS
+    out = {}
+    for name in cfg["variables"]:
+        fn = sensors.get(name)
+        if fn is None:
+            out[name] = None
+            continue
+        try:
+            out[name] = float(fn())
+        except Exception:
+            out[name] = None
+    return {"ts": now.isoformat(), "epoch": now.timestamp(), "values": out}
+
+
+def record_sample(reading: dict, state: dict, cfg: dict) -> dict:
+    """Keep a bounded history per variable, for the rate and the TTT."""
+    window = float((cfg.get("ttt") or {}).get("sample_window_minutes", 60))
+    keep_from = reading["epoch"] - window * 60.0
+    hist = state.setdefault("history", {})
+    for name, value in reading["values"].items():
+        if value is None:
+            continue
+        series = [p for p in hist.get(name, [])
+                  if isinstance(p, list) and len(p) == 2 and p[0] >= keep_from]
+        series.append([reading["epoch"], value])
+        hist[name] = series[-240:]          # ~1 sample/15s over the window
+    return state
+
+
+def evaluate(cfg=None, state=None, now=None, sensors=None) -> dict:
+    """The full homeostatic state: level, interoception and escalation, per
+    defended variable. Reads sensors; writes nothing."""
+    now = now or datetime.now(timezone.utc)
+    cfg = cfg or load_config()
+    state = state if state is not None else load_state()
+    global _TTT_CFG
+    _TTT_CFG = dict(cfg.get("ttt") or _TTT_CFG)
+
+    reading = sample(cfg, now, sensors)
+    record_sample(reading, state, cfg)
+
+    armed = state.setdefault("armed", {})
+    out = {"ts": reading["ts"], "config_sha256": cfg.get("sha256"),
+           "variables": {}, "gate": False, "gate_reasons": []}
+
+    for name, spec in cfg["variables"].items():
+        value = reading["values"].get(name)
+        if value is None:
+            out["variables"][name] = {"variable": name, "value": None,
+                                      "level": "unknown",
+                                      "why": "sensor unreadable"}
+            continue
+        held = level_for(value, spec, armed.get(name, CLEAR))
+        armed[name] = held
+        level, why = effective_level(name, held, state, cfg, now)
+        info = interoception(name, value, spec, state["history"].get(name, []))
+        info.update({
+            "level": level,
+            "held": held,
+            "escalated": level != held,
+            "why": why,
+            "release_point": (None if level == CLEAR
+                              else release_point(spec, level)),
+            "insufficient": is_insufficient(name, state, cfg, now),
+        })
+        out["variables"][name] = info
+        if level == GATE:
+            out["gate"] = True
+            out["gate_reasons"].append(
+                "{}={}{} at gate level {} (ttt {}, confidence {}){}".format(
+                    name, info["value"], spec.get("unit", ""),
+                    spec["levels"][GATE], info["ttt_seconds"],
+                    info["ttt_confidence"],
+                    " [escalated: " + why + "]" if why else ""))
+
+    out["state"] = state
+    return out

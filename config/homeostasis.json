@@ -1,0 +1,83 @@
+{
+  "_README": [
+    "HUMAN-APPROVED. The system may READ this file. It may never write it,",
+    "never widen a threshold, and never add a variable. Emil approved these",
+    "exact numbers; changing them is a human edit followed by a re-stamp of",
+    "the sha256 below.",
+    "",
+    "Three levels per variable, and each level has a DIFFERENT MECHANICAL",
+    "EFFECT. A level that only sends a different message is theatre:",
+    "  notice -> record only",
+    "  action -> do something that changes the value",
+    "  gate   -> refuse to start a new cycle",
+    "",
+    "TWO VARIABLES ONLY. CPU temperature, network and cloud quota are",
+    "defended variables 3, 4 and 5 and are deliberately NOT here. Building",
+    "five actuators at once produces alarm crosstalk: the disk cleanup",
+    "causes a CPU spike, which raises a thermal alarm, which throttles,",
+    "which slows the cycle, which raises a duration alarm. That is not",
+    "homeostasis, it is an autoimmune disorder. See",
+    "docs/HOMEOSTASIS_STATUS.md."
+  ],
+  "version": 1,
+  "approved_by": "Emil Borissov",
+  "approved_utc": "2026-08-23",
+  "variables": {
+    "ram_free": {
+      "unit": "MB",
+      "direction": "higher_is_safer",
+      "sensor": "psutil.virtual_memory().available",
+      "levels": {
+        "notice": 1200,
+        "action": 900,
+        "gate": 600
+      },
+      "hysteresis": 300,
+      "_why": [
+        "The box has 14188 MB total. 600 MB free is the point below",
+        "which loading the 3b model at all is a gamble, and a cycle that",
+        "starts and then cannot think has spent the night for nothing."
+      ]
+    },
+    "disk_free_pct": {
+      "unit": "%",
+      "direction": "higher_is_safer",
+      "sensor": "shutil.disk_usage(repo).free / total * 100",
+      "levels": {
+        "notice": 28,
+        "action": 15,
+        "gate": 5
+      },
+      "hysteresis": 5,
+      "_why": [
+        "action at 15% free = 85% used; it releases at 20% free = 80%",
+        "used. The reason is physical, not cosmetic: NTFS reserves",
+        "around 10% for the MFT, and below 80% real free space the",
+        "allocator fragments and write latency goes nonlinear."
+      ]
+    }
+  },
+  "insufficient": {
+    "_why": [
+      "If an action fires and does NOT bring the value back past the",
+      "release point, the action is marked INSUFFICIENT: it is not",
+      "repeated for 24 hours, and the next arrival at the action level is",
+      "treated as the GATE level instead. The system does not fight a",
+      "symptom it cannot move; it escalates to the human."
+    ],
+    "cooldown_hours": 24
+  },
+  "ttt": {
+    "_why": [
+      "80% growing at 0.01%/hour and 80% growing at 5%/minute are the",
+      "same distance and opposite situations. Distance alone cannot tell",
+      "them apart, so every defended variable also carries time-to-",
+      "threshold. NO AFFECT VOCABULARY ANYWHERE: the system emits",
+      "'ttt: 247s, confidence: high', never 'urgent' and never 'hungry'."
+    ],
+    "min_samples_for_rate": 3,
+    "high_confidence_samples": 8,
+    "sample_window_minutes": 60
+  },
+  "sha256": "8242a23a3ed8e2f86cec6ceb2b42f5fc3f77b902ed9f1991de865253ccd07b83"
+}

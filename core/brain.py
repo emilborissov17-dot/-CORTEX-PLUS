@@ -55,6 +55,7 @@ WARM_TIMEOUT = 150
 POLICY = {
     "free_only": True,
     "protected_files": ["config/scheduler.json", "config/pulse.json",
+                        "config/homeostasis.json",
                         "BOUNDARIES.md", "core/canon.py"],
 }
 _PAID_RE = re.compile(r"(плат[еи]|абонамент|subscription|paid|pricing|premium|"
