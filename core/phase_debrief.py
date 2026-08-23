@@ -30,7 +30,8 @@ A debrief is REJECTED and recorded as rejected, never published, when:
 
   * "what" cites no number from the phase's own data
   * "what" cites no number that is UNIQUE to this phase  (SWAP_GENERIC)
-  * ANY CJK character appears anywhere in the output
+  * ANY CJK character appears anywhere in the output (Cyrillic is TAGGED, not
+    rejected — see the note above the CJK pattern)
   * "verdict" is not one of the three words
 
 THE SWAP TEST (21 August 2026)
@@ -120,8 +121,38 @@ from core.phase_report import REPO, safe_cycle_dir  # noqa: E402
 VERDICTS = ("OK", "DEGRADED", "BROKEN")
 FIELDS = ("what", "verdict", "risk", "do")
 
-# CJK unified ideographs, plus the Hiragana/Katakana and Hangul blocks. Cyrillic
-# and Latin are both fine — the system is bilingual by design.
+# CJK unified ideographs, plus the Hiragana/Katakana and Hangul blocks. This one
+# still REJECTS: an operator who cannot read the verdict cannot act on it.
+
+# ── THE DESIGN IS NO LONGER BILINGUAL (23 Aug 2026) ─────────────────────────
+#
+# The line above used to end "Cyrillic and Latin are both fine — the system is
+# bilingual by design." That was true when it was written and it is not true
+# now. COMMAND 25 made everything the model READS English: the law, the canon
+# frame, every label, every schema description, every role and question, and the
+# two enums. What the model WRITES follows what it reads, and the language pin
+# in core/brain.py says so in as many words.
+#
+# INTERNAL ENGLISH, BULGARIAN ONLY IN THE RENDER LAYER. render_telegram() below
+# still wraps the model's words in "Какво:", "Риск:" and "Да се направи:",
+# because that message is for Emil. The words inside are the model's and they
+# are English now.
+#
+# TAGGED, NOT REJECTED, AND THAT IS A DELIBERATE CHOICE. A validator that
+# started refusing Cyrillic tonight would throw away every debrief of a model
+# that is still drifting, and a rejected debrief leaves the phase with no
+# account of itself at all — which is worse than one in the wrong language.
+# There is no harm left to prevent here either: core/language_gate.py already
+# stops a contaminated debrief being fed back as a few-shot exemplar, which was
+# the whole mechanism of the ratchet.
+#
+# So the profile is measured, stamped onto the record, and counted. The alarming
+# is done by the 24-hour purity ratio from COMMAND 24, which has a floor, a
+# minimum sample and a rate limit — three things an inline reject does not.
+#
+# REVISIT AFTER A WEEK OF CLEAN CYCLES. If purity_ratio() holds at or above its
+# floor for seven consecutive days, the honest next step is to make this reject
+# like the CJK rule does. Until then, measuring is the whole job.
 CJK = re.compile(r"[぀-ヿ㐀-䶿一-鿿豈-﫿가-힯]")
 
 NUMBER = re.compile(r"-?\d+(?:[.,]\d+)?")
@@ -372,6 +403,23 @@ def ask_local(phase: str, evidence: dict, model: str | None = None,
 # Rendering — Bulgarian for Telegram, English for console
 # ---------------------------------------------------------------------------
 
+def _language_profile(debrief) -> dict:
+    """What language this debrief came back in. Measured, never enforced here.
+
+    Uses core/language_gate.py so the tag and the 24-hour purity ratio cannot
+    disagree about the same text — two independent judgements of "is this
+    English" would eventually produce a debrief the ratio counts as dirty and
+    the record calls clean.
+    """
+    blob = " ".join(str((debrief or {}).get(f) or "") for f in FIELDS)
+    try:
+        from core import language_gate as lg          # noqa: PLC0415
+        return lg.verdict(blob)
+    except Exception as exc:                           # noqa: BLE001
+        return {"ok": True, "reason": "GATE_UNAVAILABLE_{}".format(
+            type(exc).__name__), "profile": {}}
+
+
 def render_console(phase: str, d: dict) -> str:
     return (f"[DEBRIEF] {phase}: {d['verdict']}\n"
             f"  what: {d['what']}\n"
@@ -486,6 +534,10 @@ def debrief_phase(phase: str, cycle_id: str, evidence: dict,
         "mirror_quota": (len(must_cite) if must_cite else 0),
         "swap_test": ("applied" if own_numbers else
                       "not applied — this phase had no numbers of its own"),
+        # Stamped on EVERY record, accepted or rejected. A rejected debrief is
+        # still a model output and still counts towards the ratio; leaving it
+        # untagged would make the measurement flattering.
+        "lang": _language_profile(said),
     }
     if accepted:
         record["debrief"] = {**said,
