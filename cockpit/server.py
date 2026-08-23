@@ -861,6 +861,27 @@ def api_somatic():
 #
 # test/test_glass.py counts guarded probes with the tab shut and again after
 # rendering it repeatedly, and the two numbers must match.
+# ── THE RAW RECEPTOR STREAM (24 Aug 2026) ──────────────────────────────────
+# A SUBSCRIBER, not a prober. It drains what the bus already carried and
+# renders it; it never calls a sensor, and core/event_bus.py raises if anything
+# in a consumer callback tries.
+#
+# The receptors themselves are built and fed by _PULSE on every /api/somatic
+# read, so this endpoint sees whatever that produced. If /api/somatic has not
+# run yet the panel says NO RECEPTORS YET rather than showing an empty box.
+@app.get("/api/stream")
+def api_stream():
+    from cockpit import stream as st
+    try:
+        tap = st.tap()
+        bank = getattr(_PULSE, "_bank", None)
+        return jsonify(tap.state(bank))
+    except Exception as e:                                   # noqa: BLE001
+        return jsonify({"error": "{}: {}".format(type(e).__name__, e),
+                        "lines": [], "silence": {"state": "ERROR",
+                                                 "text": "STREAM ERROR"}})
+
+
 @app.get("/api/glass")
 def api_glass():
     from cockpit import glass as gl

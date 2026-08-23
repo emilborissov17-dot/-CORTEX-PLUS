@@ -277,6 +277,7 @@ class EventBus:
             self._seq[topic] = self._seq.get(topic, 0) + 1
             seq = self._seq[topic]
             targets = list(self._subs.get(topic, ()))
+            targets += list(self._subs.get(self.ALL, ()))
             self.published += 1
         ev = Event(topic, time.monotonic() if ts is None else ts,
                    value, channel, seq, meta)
@@ -285,6 +286,20 @@ class EventBus:
         return ev
 
     # -- subscribers --------------------------------------------------------
+
+    # A subscription that is not tied to one topic. The raw-stream panel needs
+    # every line the body produces, including from receptors that do not exist
+    # yet when it subscribes — a panel that had to enumerate topics in advance
+    # would silently miss the next sensor somebody adds.
+    #
+    # It is still a SUBSCRIBER: same bounded deque, same drops counted, same
+    # guard against probing a sensor. Nothing about the rule changes because
+    # the filter is wider.
+    ALL = "*"
+
+    def subscribe_all(self, name: str,
+                      maxlen: Optional[int] = None) -> Subscription:
+        return self.subscribe(self.ALL, name, maxlen)
 
     def subscribe(self, topic: str, name: str,
                   maxlen: Optional[int] = None) -> Subscription:
@@ -307,7 +322,7 @@ class EventBus:
 
     def topics(self) -> list:
         with self._lock:
-            return sorted(set(self._owners) | set(self._subs))
+            return sorted((set(self._owners) | set(self._subs)) - {self.ALL})
 
     def stats(self) -> dict:
         return {
