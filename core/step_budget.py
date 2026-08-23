@@ -345,6 +345,67 @@ class LadderResult:
         return d
 
 
+# ---------------------------------------------------------------------------
+# STICKY CLOUD DEMOTION — CYCLE-SCOPED, RESET AT BOOT
+# ---------------------------------------------------------------------------
+#
+# MEASURED, cycle 2026-08-22 11:22. Three steps produced nothing while 48-80s of
+# their budget sat unused, and all three failed the same way:
+#
+#   cortex_strategist_agent  50s of B=120s   cloud=EMPTY local_3b=TIMEOUT
+#   hyperclaw_orchestrator   40s of B=120s   cloud=EMPTY local_3b=TIMEOUT
+#   cortex_reasoner          72s of B=120s   cloud=EMPTY local_3b=TIMEOUT
+#
+# EMPTY on the cloud tier means every provider was rate-limited or in cooldown —
+# a declined answer, not a slow one. By the third such step the cloud is not
+# coming back this cycle, and it was still being handed the first slice of every
+# ladder while the local model, the only tier that could actually answer, was
+# held to a third.
+#
+# So: after CLOUD_EMPTY_LIMIT empty cloud tiers in one cycle the cloud stops
+# receiving a slice for the rest of that cycle. Sticky, because the condition it
+# describes (a rate-limit window) does not clear inside a cycle; cycle-scoped and
+# reset at boot, because it does clear overnight. In-memory on purpose: a cycle
+# is one process, and a demotion that outlived the process would be a policy
+# nobody set.
+
+CLOUD_EMPTY_LIMIT = 3
+
+_cloud_empty = 0
+_cloud_demoted_at = None          # the empty-count at which it tripped
+
+
+def reset_cycle() -> dict:
+    """Forget the demotion. Called from the runner's boot step, once per cycle."""
+    global _cloud_empty, _cloud_demoted_at
+    was = {"cloud_empty": _cloud_empty,
+           "cloud_demoted": _cloud_demoted_at is not None}
+    _cloud_empty, _cloud_demoted_at = 0, None
+    return was
+
+
+def cloud_demoted() -> bool:
+    return _cloud_demoted_at is not None
+
+
+def cloud_state() -> dict:
+    return {"cloud_empty": _cloud_empty, "demoted": cloud_demoted(),
+            "limit": CLOUD_EMPTY_LIMIT}
+
+
+def _note_cloud_outcome(outcome: str) -> None:
+    """Count empty cloud tiers; trip the demotion once, out loud."""
+    global _cloud_empty, _cloud_demoted_at
+    if outcome != EMPTY:
+        return
+    _cloud_empty += 1
+    if _cloud_demoted_at is None and _cloud_empty >= CLOUD_EMPTY_LIMIT:
+        _cloud_demoted_at = _cloud_empty
+        print("[BUDGET] cloud tier DEMOTED for the rest of this cycle: "
+              "{} empty cloud tiers (limit {}). The local tiers get the whole "
+              "budget from here.".format(_cloud_empty, CLOUD_EMPTY_LIMIT))
+
+
 def run_with_ladder(step: str,
                     priority: str,
                     budget: Budget,
@@ -357,24 +418,41 @@ def run_with_ladder(step: str,
     `priority` gates the 8b tier only. Everything else is the same for a CRITICAL
     and a NORMAL step, because degrading is right for both — what differs is
     whether the expensive model is worth loading to avoid it.
+
+    THE LAST VIABLE TIER GETS WHAT IS LEFT, NOT A THIRD (23 Aug 2026).
+    `per_tier` is B/3 whether or not three tiers exist. On the night measured
+    above only two did — the 8b is offered only inside its residency window
+    (core/groq_backend passes None outside it), so the ladder was cloud, then 3b,
+    then nothing. The 3b was capped at 40s of a 120s budget and timed out; 70s of
+    that budget was never offered to the only tier that could have used it.
+    A third of a budget is the right share when there are three claimants. When
+    there is one, it is an unspent budget and a DEGRADED step.
+
+    Viability is decided BEFORE the walk, so "last" means last in fact and not
+    last in the list: a tier with no callable, a NORMAL step's 8b, and a demoted
+    cloud are all out before the first slice is cut.
     """
-    slice_sec = budget.per_tier
     started = now()
     attempts: list = []
 
+    demoted = cloud_demoted()
     tiers = [
-        (CLOUD, cloud, True),
-        (LOCAL_3B, local_3b, True),
-        (LOCAL_8B, local_8b, priority == CRITICAL),
+        (CLOUD, cloud, not demoted,
+         "cloud demoted this cycle after {} empty tiers".format(_cloud_empty)),
+        (LOCAL_3B, local_3b, True, ""),
+        (LOCAL_8B, local_8b, priority == CRITICAL,
+         "priority is {}, 8b is CRITICAL-only".format(priority)),
     ]
 
-    for tier, fn, allowed in tiers:
+    viable = [t for t, fn, allowed, _why in tiers if fn is not None and allowed]
+    last_viable = viable[-1] if viable else None
+
+    for tier, fn, allowed, why in tiers:
         if fn is None:
             attempts.append(Attempt(tier, SKIPPED, 0.0, "no callable supplied"))
             continue
         if not allowed:
-            attempts.append(Attempt(tier, SKIPPED, 0.0,
-                                    "priority is {}, 8b is CRITICAL-only".format(priority)))
+            attempts.append(Attempt(tier, SKIPPED, 0.0, why))
             continue
 
         spent = now() - started
@@ -383,9 +461,15 @@ def run_with_ladder(step: str,
             attempts.append(Attempt(tier, SKIPPED, 0.0, "budget exhausted"))
             continue
 
-        outcome, value, error, elapsed = call_with_timeout(
-            fn, min(slice_sec, remaining))
+        # THE WHOLE REMAINDER when nothing viable comes after this tier;
+        # otherwise the declared share, still clamped by what is actually left.
+        slice_sec = (remaining if tier == last_viable
+                     else min(budget.per_tier, remaining))
+
+        outcome, value, error, elapsed = call_with_timeout(fn, slice_sec)
         attempts.append(Attempt(tier, outcome, round(elapsed, 3), error))
+        if tier == CLOUD:
+            _note_cloud_outcome(outcome)
 
         if outcome == DONE:
             return LadderResult(

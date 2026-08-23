@@ -1765,6 +1765,21 @@ def main():
     except Exception as e:
         print(f"[FAST_CYCLE] model_window.reset_cursor -> {type(e).__name__}: {e}")
 
+    # ── И ПОНИЖЕНИЕТО НА ОБЛАКА СЕ ЗАБРАВЯ ПРИ BOOT (23 авг 2026) ───────────
+    # Същата причина като реда над него. core/step_budget.py спира да дава
+    # първия резен на облака, след като той е върнал EMPTY три пъти в ЕДИН
+    # цикъл — това описва прозорец на rate-limit, който не се затваря вътре в
+    # цикъла, но се затваря до следващата нощ. Пренесено през цикли, това щеше
+    # да е политика, която никой не е задавал.
+    try:
+        from core import step_budget as _sb0
+        _was = _sb0.reset_cycle()
+        if _was.get("cloud_demoted"):
+            print(f"[FAST_CYCLE] step_budget: cloud demotion from the previous "
+                  f"run cleared ({_was['cloud_empty']} empty tiers)")
+    except Exception as e:
+        print(f"[FAST_CYCLE] step_budget.reset_cycle -> {type(e).__name__}: {e}")
+
     # ── 0. Body scan → adaptive directives (runs FIRST, before everything) ──
     beat("body_scan", "0")
     print("[FAST_CYCLE] Step 0: body scan + dependency check...")

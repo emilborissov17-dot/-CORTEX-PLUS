@@ -309,6 +309,30 @@ def _no_live_writes(monkeypatch, request):
             "is genuinely intended, it does not belong in a test.")
 
 
+@pytest.fixture(autouse=True)
+def _reset_cycle_scoped_state():
+    """Cycle-scoped module state does not survive a cycle. Nor a test.
+
+    core/step_budget.py demotes the cloud tier after three empty tiers IN ONE
+    CYCLE, and the demotion is deliberately module-global and sticky — a cycle
+    is one process, and the runner clears it at boot. In a test session there is
+    no boot: one test that drives three empty clouds silently demotes the cloud
+    for every test that follows, and five tests in this suite started failing
+    for that reason and passing in isolation. Boot is simulated here.
+    """
+    try:
+        from core import step_budget as _sb
+        _sb.reset_cycle()
+    except Exception:
+        pass
+    yield
+    try:
+        from core import step_budget as _sb
+        _sb.reset_cycle()
+    except Exception:
+        pass
+
+
 @pytest.fixture(scope="session", autouse=True)
 def _live_state_canary():
     """Filesystem diff over memory/ and config/. WARNS — never fails. See above."""
