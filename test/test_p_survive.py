@@ -48,6 +48,9 @@ ALLOWED = {
     "core/p_survive.py",
     "core/survival_gate.py",
     "test/test_p_survive.py",
+    # It monkeypatches _record_p_survive so the suite does not write rows into
+    # the real metric history. A test is not a prompt builder.
+    "test/test_survival_gate.py",
     "docs/HOMEOSTASIS_STATUS.md",
 }
 

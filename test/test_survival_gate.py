@@ -48,6 +48,11 @@ def caught(monkeypatch):
     monkeypatch.setattr(sg, "_to_siren",
                         lambda cid, d: (box["siren"].append((cid, d)) or True))
     monkeypatch.setattr(sg, "_save_state", lambda d: box["saved"].append(d))
+    # guard() records p_survive_next_cycle, and the default path is the REAL
+    # memory/p_survive_history.jsonl. Without this, running the suite writes
+    # test rows into a metric history a human reads as a trend line.
+    monkeypatch.setattr(sg, "_record_p_survive",
+                        lambda cid, d: box.setdefault("p", []).append(cid))
     box["on_refuse"] = lambda code: box["exit"].append(code)
     return box
 
