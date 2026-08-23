@@ -705,15 +705,19 @@ from cockpit import vector as vec          # noqa: E402
 
 PAGE = REPO / "cockpit" / "templates" / "cockpit.html"
 
+# GLASS added 23 Aug 2026, between PENDING and TERMINAL. The order matters:
+# these ids are also the digit-key shortcuts, so inserting one renumbers every
+# tab after it, and TERMINAL stays last because it is the only one that holds
+# live PTY state across a switch.
 TAB_IDS = ("overview", "cycle", "world", "body", "expression", "pending",
-           "terminal")
+           "glass", "terminal")
 
 
 # ---------------------------------------------------------------------------
 # Item 1 — tab routing and persistence
 # ---------------------------------------------------------------------------
 
-def test_the_page_declares_exactly_seven_tabs():
+def test_the_page_declares_exactly_the_tabs_in_TAB_IDS():
     html = PAGE.read_text(encoding="utf-8")
     for t in TAB_IDS:
         assert "id:'{}'".format(t) in html, "tab {} is missing".format(t)
