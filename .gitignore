@@ -89,6 +89,10 @@ memory/semantic_inbox/
 # Pulse runtime logs (#50): appended every 5 minutes.
 memory/pulse_runs.log
 memory/pulse_stream.jsonl
+# the cockpit's own sensor samples: a rolling window of the last 1000
+# probes, rewritten every few minutes. It is the machine's recent state,
+# not a record anyone should diff.
+memory/somatic_history.jsonl
 memory/idea_stream.jsonl
 memory/pulse_cycle_requests.json
 memory/extraordinary_request.json

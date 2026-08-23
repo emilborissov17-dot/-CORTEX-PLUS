@@ -70,6 +70,7 @@ if str(BASE) not in sys.path:
 from cockpit import datasources as ds          # noqa: E402
 from cockpit import expression as ex           # noqa: E402
 from cockpit import somatic as som             # noqa: E402
+from cockpit import norms as nm                # noqa: E402
 from cockpit import timeline as tl             # noqa: E402
 from cockpit import pulse as pls               # noqa: E402
 
@@ -79,6 +80,7 @@ PENDING_PATH = BASE / "memory" / "pending_expression.json"
 QUEUE_DB = BASE / "memory" / "human_input_queue.db"
 QUARANTINE_ROOT = BASE / "memory" / "expression_quarantine"
 VECTOR_STORE = BASE / "memory" / "state_vectors.jsonl"
+HISTORY_PATH = BASE / "memory" / "somatic_history.jsonl"
 
 # ── THE PULSE PRODUCER, WIRED (22 Aug 2026) ─────────────────────────────────
 # It was committed in 2fb57be with tests and NO CALLER, so the stream stayed
@@ -89,6 +91,12 @@ _PULSE = pls.PulseProducer()
 
 # The last (cycle_id, step) a spine line was emitted for.
 _SPINE_SEEN = {"cycle_id": None, "step": None}
+
+# The previous probe's numeric readings, for the FIXED rule's fallback — it needs
+# a "previous value" and a sensor with too little history has no norm to use
+# instead. Kept in memory rather than re-read: this is the same process that
+# took the previous probe.
+_LAST_READING = {}
 FORKS_CACHE = BASE / "memory" / "cockpit_forks_cache.json"
 TERMINAL_LOG = BASE / "memory" / "cockpit_terminal.log"
 
@@ -781,6 +789,20 @@ def api_somatic():
     cam = True if request.args.get("camera") == "1" else None
     r = som.probe(mic_enabled=mic, camera_enabled=cam)
 
+    # ── THE READINGS ARE KEPT NOW (23 Aug 2026) ───────────────────────────
+    # This endpoint has been probing every 15 seconds and throwing the numbers
+    # away: only readings that EARNED a pulse line were stored, and stored as
+    # prose. So "rank by what is unusual for this machine" had no history to be
+    # computed from — cockpit/norms.py is the norm, and this line is the half
+    # of it that was missing. Never takes the panel down.
+    previous = dict(_LAST_READING)
+    try:
+        nm.record(r, HISTORY_PATH)
+        _LAST_READING.clear()
+        _LAST_READING.update(nm.flatten(r))
+    except Exception as e:                                   # noqa: BLE001
+        print("[COCKPIT] somatic history: {}: {}".format(type(e).__name__, e))
+
     emitted = []
     try:
         emitted = _PULSE.emit(r)
@@ -793,9 +815,14 @@ def api_somatic():
         # point and the stream is a by-product.
         emitted = [{"error": "{}: {}".format(type(e).__name__, e)}]
 
+    rows = [row for rows_ in (r.get("groups") or {}).values() for row in rows_]
     return jsonify({**r, "state_vector": som.state_vector(r),
                     "pulse_emitted": len(emitted),
-                    "pulse_lines": emitted})
+                    "pulse_lines": emitted,
+                    # WHAT IS UNUSUAL FOR THIS MACHINE, beside what merely
+                    # moved. Each row says which rule judged it.
+                    "unusual": nm.unusual_now(rows, HISTORY_PATH,
+                                              previous=previous)})
 
 
 @app.get("/api/somatic/selftest")

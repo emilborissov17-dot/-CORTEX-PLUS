@@ -62,6 +62,7 @@ HEARTBEAT = BASE / "memory" / "heartbeat.json"
 CONTRACT = BASE / "memory" / "step_contract_latest.json"
 QUARANTINE = BASE / "memory" / "expression_quarantine"
 VECTOR_STORE = BASE / "memory" / "state_vectors.jsonl"
+HISTORY_PATH = BASE / "memory" / "somatic_history.jsonl"
 
 # One local 3b call. The warm 3b answers in ~7-25s on this box; 60s is the point
 # past which the line is not worth the cycle's time.
@@ -86,7 +87,8 @@ def glyph_now(store_path: pathlib.Path = VECTOR_STORE) -> dict:
 def state_from_disk(stream_path: pathlib.Path = STREAM,
                     heartbeat_path: pathlib.Path = HEARTBEAT,
                     contract_path: pathlib.Path = CONTRACT,
-                    store_path: pathlib.Path = VECTOR_STORE) -> dict:
+                    store_path: pathlib.Path = VECTOR_STORE,
+                    history_path: pathlib.Path = HISTORY_PATH) -> dict:
     """The whole state handed to the model: movers, flow, step, DEGRADED, warming.
 
     Lifted out of scripts/cockpit_answer.state_now() so the hook and the manual
@@ -105,8 +107,17 @@ def state_from_disk(stream_path: pathlib.Path = STREAM,
         flow = score.as_dict() if hasattr(score, "as_dict") else dict(score)
     except Exception:
         flow = None
+    # READ, never probe. The cockpit already samples every 15 seconds and
+    # cockpit/norms.record() keeps what it found, so a phase boundary that
+    # probed the machine again would be measuring the cost of asking.
+    try:
+        from cockpit import norms as nm
+        unusual = nm.unusual_from_disk(history_path)
+    except Exception:
+        unusual = None
     return rx.current_state(stream_path, glyph_now(store_path),
-                            heartbeat=heartbeat, flow=flow, degraded=degraded)
+                            heartbeat=heartbeat, flow=flow, degraded=degraded,
+                            unusual=unusual)
 
 
 def producer_for(cycle_id: str) -> rx.ReflexProducer:

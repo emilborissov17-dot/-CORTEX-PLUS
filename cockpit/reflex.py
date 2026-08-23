@@ -127,7 +127,8 @@ def recent_pulse(stream_path: pathlib.Path, limit: int = 120) -> list:
 def current_state(stream_path: pathlib.Path, glyph_info: dict,
                   heartbeat: Optional[dict] = None,
                   flow: Optional[dict] = None,
-                  degraded: Optional[int] = None) -> dict:
+                  degraded: Optional[int] = None,
+                  unusual: Optional[dict] = None) -> dict:
     """Everything the model is told about NOW. All of it, or a named absence.
 
     THE FAULT THIS REPLACES: drain() passed [] where speak() expected the three
@@ -143,6 +144,15 @@ def current_state(stream_path: pathlib.Path, glyph_info: dict,
     """
     return {
         "movers": movers(recent_pulse(stream_path)),
+        # WHICH READING IS UNUSUAL FOR THIS MACHINE (23 Aug 2026). `movers` is
+        # ranked by raw relative movement against a flat 15%, which made
+        # idle_seconds — a laptop being left alone — the loudest thing on the
+        # list at "moved 4800%". cockpit/norms.py ranks by deviation from each
+        # sensor's OWN median, and says per row which rule judged it. Both are
+        # carried: the mover list is what the stream showed, the unusual list is
+        # what it means here.
+        "unusual": (unusual or {}).get("rows") or [],
+        "unusual_rules": (unusual or {}).get("rule_meaning") or {},
         "nothing_moved": NOTHING_MOVED,
         "glyph": glyph_info.get("glyph"),
         "warming": (glyph_info.get("warming") or {}).get("label"),
@@ -177,9 +187,22 @@ def render_state(state: dict) -> str:
         cyc.append("{} DEGRADED step(s)".format(state["degraded_steps"]))
     out.append("CYCLE: {}".format("; ".join(cyc) if cyc else "no cycle is running"))
 
+    unusual = state.get("unusual") or []
+    if unusual:
+        # FIRST, because it is the question worth answering. "Which moved most"
+        # is arithmetic about the last two readings; "which is unusual here" is
+        # arithmetic about this machine's own history, and only the second one
+        # tells the model anything it could not have guessed.
+        out.append("WHAT IS UNUSUAL FOR THIS MACHINE RIGHT NOW:")
+        for u in unusual:
+            out.append("  {}={}{} — {} [judged by the {} rule]".format(
+                u.get("key"), u.get("value"),
+                (" " + u["unit"]) if u.get("unit") else "",
+                u.get("why", ""), u.get("rule")))
+
     movers_ = state.get("movers") or []
     if movers_:
-        out.append("THREE SENSORS THAT MOVED MOST:")
+        out.append("SENSORS THAT MOVED MOST (raw movement, not a norm):")
         for m in movers_:
             mag = ("{:.0%}".format(m["magnitude"])
                    if m.get("magnitude") is not None else "no prior reading")
@@ -187,7 +210,7 @@ def render_state(state: dict) -> str:
                 m["key"], m.get("value"),
                 (" " + m["unit"]) if m.get("unit") else "", mag,
                 m.get("reason", "")))
-    else:
+    elif not unusual:
         # NOT AN EMPTY LIST. See current_state().
         out.append("SENSORS: {}. That is itself a fact about the system and a "
                    "valid thing to report.".format(state.get(
