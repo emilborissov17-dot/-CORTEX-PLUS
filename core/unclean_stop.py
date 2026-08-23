@@ -57,7 +57,12 @@ EVENT = "RESTART_AFTER_UNCLEAN_STOP"
 # unclean ones, because a CYCLE_DIED written by the supervisor is an account of
 # the same stop and a second record would double-count it.
 END_EVENTS = ("CYCLE_FINISHED", "CYCLE_DIED", "CYCLE_KILLED",
-              "CYCLE_FAILED_BUDGET_EXHAUSTED", EVENT)
+              "CYCLE_FAILED_BUDGET_EXHAUSTED",
+              # A cycle the survival gate refused to start is the cleanest stop
+              # there is: it was a decision, not a death. Without this entry
+              # tomorrow's boot would report tonight's refusal as a crash and
+              # bill it 8 hours of "lost" duration.
+              "CYCLE_REFUSED_SURVIVAL_GATE", EVENT)
 
 
 def _parse(ts) -> Optional[datetime]:

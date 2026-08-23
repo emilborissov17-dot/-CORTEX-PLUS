@@ -1762,6 +1762,40 @@ def main():
 
     beat("boot", "-1", cycle_id=_cycle_id)
 
+    # ── THE SURVIVAL GATE (23 Aug 2026) ────────────────────────────────────
+    # HERE, and not one step later. Placed after the cycle log tee so that the
+    # refusal is written into the log a human will read tomorrow, and before
+    # every step that costs something.
+    #
+    # This is the third mechanical effect of the homeostatic layer. notice is
+    # recorded; action fires an actuator; GATE refuses to start the cycle. A
+    # level whose only effect is a printed warning is a level that does not
+    # exist, and three of those in a row is a system that watches itself starve
+    # with excellent instrumentation.
+    #
+    # A cycle started with 400 MB of RAM free does not run slowly. It dies at
+    # step 30 with a MemoryError having spent four hours and every token it was
+    # given. A cycle started with 3% disk free cannot write its journal, cannot
+    # write the ledger line saying it died, and cannot write the heartbeat the
+    # supervisor needs to attribute the death.
+    #
+    # AND IT DOES NOT SKIP THE NIGHT QUIETLY: a refusal writes a hash-chained
+    # ledger line naming the variable, the value, the threshold and the TTT,
+    # fires the siren at ALARM level, and exits non-zero. A refusal that only
+    # printed would be indistinguishable, the next morning, from a scheduler
+    # that never fired.
+    #
+    # FAIL-OPEN. If the gate itself breaks the cycle starts. A broken gate that
+    # stops every night is worse than the failure it prevents.
+    try:
+        from core.survival_gate import guard as _survival_guard
+        _survival_guard(cycle_id=_cycle_id)
+    except SystemExit:
+        raise
+    except Exception as _e:
+        print(f"[FAST_CYCLE] survival_gate unavailable -> "
+              f"{type(_e).__name__}: {_e} — the cycle starts (fail-open)")
+
     # ── РЕШЕНИЕТО ЗА ПРОДЪЛЖАВАНЕ СЕ ВЗИМА ВЕДНЪЖ, ТУК (22 авг 2026) ───────
     # Taken once, at the top, so that the reason is in the log ABOVE the first
     # step it affects — a skip line explained two hundred lines later is not an
