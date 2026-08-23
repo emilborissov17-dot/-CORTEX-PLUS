@@ -698,7 +698,8 @@ def test_the_panel_table_marks_missing_required_files(tmp_path, monkeypatch):
 # COMMAND 21b — usable cockpit, real switches, real producers
 # ===========================================================================
 
-from cockpit import pulse as pl            # noqa: E402
+from cockpit import pulse as pl
+from core import receptors as rc            # noqa: E402
 from cockpit import reflex as rx           # noqa: E402
 from cockpit import vector as vec          # noqa: E402
 
@@ -1012,17 +1013,36 @@ def test_a_band_crossing_emits_exactly_one_line():
 
 def test_a_key_the_direction_map_has_never_heard_of_gets_no_band():
     """Not green. A grey bar says 'not judged'; green says 'judged, and fine'."""
-    p = pl.PulseProducer()
-    p.emit({"groups": {"C": [_row("cpu", 40.0)]}}, now=0)
+    # History injected: without it "cpu" is a key with no recorded samples and
+    # no table entry, so its receptor self-calibrates and stays silent — which
+    # would make this test pass or fail for a reason that is not about bands.
+    p = pl.PulseProducer(history={"cpu": [40.0] * 25})
+    # 30 ticks of calibration first. A cold receptor is SILENT by design - see
+    # the warmup section of core/receptors.py - so without this the test would
+    # be asserting against a receptor that has not started yet.
+    for _ in range(rc.CALIBRATION_TICKS):
+        p.emit({"groups": {"C": [_row("cpu", 40.0)]}}, now=0)
     lines = p.emit({"groups": {"C": [_row("cpu", 70.0)]}}, now=1)
     assert lines and "band" not in lines[0]["text"]
 
 
-def test_a_move_over_fifteen_percent_emits():
-    p = pl.PulseProducer()
-    p.emit({"groups": {"C": [_row("x", 100.0, unit="")]}}, now=0)
-    assert p.emit({"groups": {"C": [_row("x", 110.0, unit="")]}}, now=1) == []
-    assert len(p.emit({"groups": {"C": [_row("x", 140.0, unit="")]}}, now=2)) == 1
+def test_a_signal_over_eps_emits_and_one_under_it_does_not():
+    """MOVE_THRESHOLD retired 23 Aug 2026. This was
+    test_a_move_over_fifteen_percent_emits, asserting a flat 15% relative to the
+    last EMITTED reading; the rule is now the adaptive residual against a
+    baseline fed by every reading, with eps from cockpit/norms.py.
+
+    History is injected so eps is a known number rather than whatever this
+    machine happened to record."""
+    hist = {"x": [100.0, 101.0, 99.0, 100.5, 99.5] * 5}     # sigma ~0.7, eps ~2.1
+    p = pl.PulseProducer(history=hist)
+    for _ in range(30):
+        p.emit({"groups": {"C": [_row("x", 100.0, unit="")]}}, now=0)
+    assert p.emit({"groups": {"C": [_row("x", 101.0, unit="")]}}, now=1) == [], \
+        "a wobble inside the noise floor earned a line"
+    lines = p.emit({"groups": {"C": [_row("x", 140.0, unit="")]}}, now=2)
+    assert len(lines) == 1
+    assert "signal" in lines[0]["text"]
 
 
 def test_an_availability_flip_emits_in_both_directions():
@@ -1035,8 +1055,18 @@ def test_an_availability_flip_emits_in_both_directions():
 
 
 def test_a_flood_produces_one_aggregate_line_that_says_it_truncated():
-    p = pl.PulseProducer(cap_per_minute=3)
-    p.emit({"groups": {"X": [_row("k{}".format(i), 1.0) for i in range(30)]}}, now=0)
+    """THE CAP IS UNCHANGED by the move to the residual rule — verified here
+    rather than assumed. What did change is that a key with no history and no
+    table entry now self-calibrates instead of emitting on a flat 15%, so the
+    flood has to clear each receptor's own noise floor to reach the cap."""
+    hist = {"k{}".format(i): [1.0] * 25 for i in range(30)}
+    p = pl.PulseProducer(cap_per_minute=3, history=hist)
+    quiet = {"groups": {"X": [_row("k{}".format(i), 1.0) for i in range(30)]}}
+    # The very first probe emits "first reading" for every key - a different
+    # branch of why_emit, and not what this test is about. Warm up, then look.
+    for _ in range(rc.CALIBRATION_TICKS):
+        p.emit(quiet, now=0)
+    assert p.emit(quiet, now=0) == [], "a flat input earned a line"
     lines = p.emit({"groups": {"X": [_row("k{}".format(i), 10.0) for i in range(30)]}},
                    now=1)
     assert len(lines) == 1

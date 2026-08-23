@@ -477,3 +477,124 @@ def _selftest() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(_selftest())
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+# THE RECEPTOR CONSTANTS (23 Aug 2026) — alpha and eps live here
+# ═══════════════════════════════════════════════════════════════════════════
+#
+# This module already declares that it owns what a meaningful change is. That
+# ownership stands; the arithmetic under it changes.
+#
+# MOVE_THRESHOLD retires. It was a flat 15% relative to the last EMITTED
+# reading, the same number for a GPU idling at 3 W and spiking to 90 and for a
+# disk counter that only goes up, and it was a placeholder from the day it was
+# written — an operator's constant that said nothing about this machine. What
+# replaces it in cockpit/pulse.why_emit() is the adaptive residual:
+#
+#     base   <- (1 - alpha) * base + alpha * x
+#     signal <- x - base
+#     emit when |signal| > eps
+#
+# TWO FUNCTIONS, TWO QUESTIONS, AND THEY ARE NOT RIVALS.
+#   residual/eps below  gates:  is this reading worth a line AT ALL?
+#   norm_for()/MAD      ranks:  of the lines earned, which matters most?
+# The first is about change over time and adapts. The second is about level
+# against this sensor's own distribution and does not. Keeping them apart is
+# the point; collapsing them would put a fast-moving trivium above a slow slide
+# into a threshold, which is the failure norms.py was built to stop.
+
+# The physics table. Where a number came from a datasheet or an allocation
+# granularity rather than from this machine, it is here and it says so.
+RECEPTOR_TABLE = {
+    "cpu_temp_c":      {"alpha": 0.05, "eps": 2.0,
+                        "source": "datasheet thermal resolution"},
+    "gpu_temp_c":      {"alpha": 0.05, "eps": 2.0,
+                        "source": "datasheet thermal resolution"},
+    "ram_free_mb":     {"alpha": 0.20, "eps": 50.0,
+                        "source": "Windows allocates in 64 KB chunks"},
+    "disk_free_mb":    {"alpha": 0.02, "eps": 100.0,
+                        "source": "cluster size x typical file count"},
+    "net_packets":     {"alpha": 0.50, "eps": 0.1,
+                        "source": "Poisson noise floor, 1 packet / 10 s"},
+    "tick_latency_ms": {"alpha": 0.30, "eps": 5.0,
+                        "source": "time.sleep() jitter on Windows"},
+}
+
+DEFAULT_ALPHA = 0.2
+EPS_SIGMA_MULTIPLE = 3.0
+MIN_SAMPLES_FOR_EPS = 20
+
+# A sensor that has never moved has sigma 0, and 3 * 0 = 0 would make the very
+# next float wobble an event. Seven sensors on this machine are flat constants
+# (battery_percent, brightness_pct, cpu_cores, event_log_errors_24h,
+# gpu_util_pct, mic_rms, ram_total_gb). For those the floor is what fires: any
+# real movement of a constant IS meaningful, but it has to be a real movement.
+EPS_ZERO_FLOOR = 1e-9
+
+
+def alpha_for(key: str) -> tuple:
+    """(alpha, source). The table, or the default."""
+    row = RECEPTOR_TABLE.get(key)
+    if row:
+        return float(row["alpha"]), "table: " + row["source"]
+    return DEFAULT_ALPHA, "default ({}) — no table entry for {!r}".format(
+        DEFAULT_ALPHA, key)
+
+
+def measure_eps(values: list) -> tuple:
+    """(eps, basis, n) from a sensor's own recorded history, or (None, why, n).
+
+    COUNTER-AWARE, and it has to be. disk_read_mb only ever goes up, so the
+    standard deviation of its LEVELS measures how far the counter travelled,
+    not how noisy it is — 3 sigma of 164,000 for page_faults is a range, not a
+    noise floor. For a counter the noise lives in the increments.
+    """
+    vals = [v for v in (values or []) if isinstance(v, (int, float))]
+    if len(vals) < MIN_SAMPLES_FOR_EPS:
+        return None, "only {} sample(s), need {}".format(
+            len(vals), MIN_SAMPLES_FOR_EPS), len(vals)
+    counter = is_counter(vals)
+    use = [v for v in (diffs(vals) if counter else vals)
+           if isinstance(v, (int, float))]
+    if len(use) < 2:
+        return None, "not enough usable points", len(vals)
+    mean = sum(use) / len(use)
+    var = sum((v - mean) ** 2 for v in use) / len(use)
+    sigma = var ** 0.5
+    eps = EPS_SIGMA_MULTIPLE * sigma
+    basis = "measured: {} sigma over {} {}".format(
+        EPS_SIGMA_MULTIPLE, len(use), "increments" if counter else "levels")
+    if eps <= 0:
+        return EPS_ZERO_FLOOR, basis + " — sigma is 0, this sensor is a constant", len(vals)
+    return eps, basis, len(vals)
+
+
+def eps_for(key: str, values: Optional[list] = None) -> tuple:
+    """(eps, source). MEASUREMENT WINS OVER THE TABLE.
+
+    The table is a physics estimate; the history is this machine. Where both
+    exist the measurement is used and the table value is reported beside it, so
+    a disagreement is visible rather than resolved silently.
+
+    On 23 Aug the table said 50 MB for RAM. This machine's RAM wanders about
+    116 MB peak to peak at rest, so 50 MB would have emitted on nothing at all,
+    continuously. That is the disagreement this ordering exists to surface.
+    """
+    measured, basis, n = measure_eps(values) if values else (None, "no history", 0)
+    row = RECEPTOR_TABLE.get(key)
+    if measured is not None:
+        src = basis
+        if row:
+            src += " (table said {} from {})".format(row["eps"], row["source"])
+        return measured, src
+    if row:
+        return float(row["eps"]), "table: " + row["source"]
+    return None, "no table entry and {}".format(basis)
+
+
+def receptor_constants(key: str, values: Optional[list] = None) -> dict:
+    a, a_src = alpha_for(key)
+    e, e_src = eps_for(key, values)
+    return {"key": key, "alpha": a, "alpha_source": a_src,
+            "eps": e, "eps_source": e_src}

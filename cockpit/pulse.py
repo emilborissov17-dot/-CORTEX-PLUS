@@ -58,7 +58,17 @@ from cockpit import expression as ex        # noqa: E402
 # AND there, with the same value, which is one threshold and one future
 # disagreement. norms.py is the module that owns what a meaningful change is;
 # this one only decides whether to print a line about it.
-from cockpit.norms import MOVE_THRESHOLD   # noqa: E402,F401  (15%, relative)
+# MOVE_THRESHOLD RETIRED (23 Aug 2026). It was a flat 15% relative to the last
+# EMITTED reading — an operator's constant that said nothing about this machine,
+# and a placeholder from the day it was written. What replaces it is the
+# adaptive residual, with per-sensor alpha and eps still owned by norms.py:
+#
+#     base <- (1-alpha)*base + alpha*x ;  emit when |x - base| > eps
+#
+# norms.py keeps ownership of what a meaningful change is. Only the arithmetic
+# under it changed.
+from cockpit import norms as nm            # noqa: E402
+from core import receptors as rc           # noqa: E402
 
 CAP_PER_MINUTE = 20
 WINDOW_SEC = 60.0
@@ -114,12 +124,29 @@ def _relative_move(new, old) -> Optional[float]:
     return abs(float(new) - float(old)) / abs(float(old))
 
 
-def why_emit(row: dict, last: Optional[dict]) -> Optional[dict]:
-    """The reason this reading earns a line, or None. Pure; no state touched.
+def why_emit(row: dict, last: Optional[dict],
+             receptor=None) -> Optional[dict]:
+    """The reason this reading earns a line, or None.
 
-    `last` is the last EMITTED reading for this key, not the last one taken —
-    otherwise a value drifting 14% per read would never emit while wandering
-    arbitrarily far from anything the reader was shown.
+    BAND and AVAILABILITY are unchanged and still compare against `last`, the
+    last EMITTED reading. MOVE is gone; in its place the receptor's adaptive
+    residual, which compares against a baseline fed by EVERY reading.
+
+    THAT DIFFERENCE CHANGES BEHAVIOUR AND IT IS NOT A DETAIL. The old rule was
+    deliberately anchored to the last emitted value so that a sensor drifting
+    14% per read could not wander arbitrarily far from what the reader had been
+    shown without ever earning a line. An EMA baseline absorbs exactly that
+    drift: it follows the sensor, the residual settles at d/alpha, and if that
+    is under eps the drift is silent for ever.
+
+    For ram_free and disk_free_pct that gap is covered — channel S in
+    core/receptors.py watches the absolute thresholds and never adapts. For the
+    other sensors there is no set-point today, and this is the honest statement
+    of what that costs: slow drift on them is no longer reported by this rule.
+    Measured on the recorded history, see the commit message for the counts.
+
+    `receptor` is a core.receptors.Receptor for this key, already fed with this
+    reading. Without one, only BAND and AVAILABILITY can fire.
     """
     key, unit = row.get("key"), row.get("unit", "")
     now_available = bool(row.get("available"))
@@ -141,11 +168,18 @@ def why_emit(row: dict, last: Optional[dict]) -> Optional[dict]:
     if nb and ob and nb != ob:
         return {"kind": "band", "reason": "band {} -> {}".format(ob, nb)}
 
-    move = _relative_move(value, last.get("value"))
-    if move is not None and move > MOVE_THRESHOLD:
-        return {"kind": "move", "reason": "moved {:.0%} (> {:.0%})".format(
-            move, MOVE_THRESHOLD)}
-    return None
+    if receptor is None:
+        return None
+    if receptor.warming():
+        # VISIBLE, not hidden: silent because warming is a different state from
+        # silent because nothing happened, and a reader may ask which.
+        return None
+    signal = receptor.last_signal
+    if signal is None or abs(signal) <= receptor.eps:
+        return None
+    return {"kind": "signal",
+            "reason": "signal {:+.4g}{} (eps {:.4g}, base {:.4g})".format(
+                signal, unit or "", receptor.eps, receptor.base)}
 
 
 class PulseProducer:
@@ -156,11 +190,42 @@ class PulseProducer:
     """
 
     def __init__(self, cap_per_minute: int = CAP_PER_MINUTE,
-                 window_sec: float = WINDOW_SEC):
+                 window_sec: float = WINDOW_SEC, bank=None, history=None):
         self.last_emitted = {}
         self.cap = cap_per_minute
         self.window = window_sec
         self._recent = []                    # timestamps of emitted change lines
+        # One receptor per key, alpha and eps from norms.py — measurement from
+        # this machine's own history where there is any, the physics table
+        # where there is not. Built lazily: a probe names its own keys.
+        self._bank = bank if bank is not None else rc.ReceptorBank()
+        self._history = history
+        self._no_constants = set()
+
+    def _receptor(self, key: str):
+        r = self._bank.receptors.get(key)
+        if r is not None or key in self._no_constants:
+            return r
+        if self._history is None:
+            try:
+                self._history = nm.history(nm.HISTORY)
+            except Exception:
+                self._history = {}
+        c = nm.receptor_constants(key, (self._history or {}).get(key))
+        if c["eps"] is None:
+            # No table entry and no history. NOT silence: the receptor collects
+            # its own calibration window and sets eps = 3 sigma from it. A key
+            # this repo has never seen would otherwise never emit again, which
+            # is how 30 synthetic sensors went quiet the first time this ran.
+            self._no_constants.add(key)
+            c = dict(c, eps=None,
+                     eps_source="self-calibrating: no history, no table entry")
+        return self._bank.add_receptor(key, c["alpha"], c["eps"],
+                                       c["alpha_source"], c["eps_source"])
+
+    def constants_missing(self) -> list:
+        """Keys with neither history nor a table entry. Reported, not hidden."""
+        return sorted(self._no_constants)
 
     def _prune(self, now: float) -> None:
         self._recent = [t for t in self._recent if now - t < self.window]
@@ -186,7 +251,10 @@ class PulseProducer:
         for row in rows:
             if row.get("disabled"):
                 continue
-            reason = why_emit(row, self.last_emitted.get(row["key"]))
+            receptor = self._receptor(row["key"])
+            if receptor is not None and row.get("available"):
+                receptor.feed(row.get("value"), now=t)
+            reason = why_emit(row, self.last_emitted.get(row["key"]), receptor)
             if reason:
                 changed.append((row, reason))
 
@@ -196,11 +264,16 @@ class PulseProducer:
         room = self._room(t)
         if len(changed) > room:
             # THE AGGREGATE. One line, and it says it is one.
-            largest = max(
-                changed,
-                key=lambda cr: (_relative_move(cr[0].get("value"),
-                                               (self.last_emitted.get(cr[0]["key"]) or {}).get("value"))
-                                or 0.0))
+            # Largest by |signal| / eps — how many noise floors it moved —
+            # rather than by relative percentage. The old ranking put
+            # idle_seconds "moved 4800%" (0.1s to 4.9s, a laptop left alone)
+            # above ram_percent crossing its band.
+            def _magnitude(cr):
+                r = self._bank.receptors.get(cr[0]["key"])
+                if r is None or r.last_signal is None or not r.eps:
+                    return 0.0
+                return abs(r.last_signal) / r.eps
+            largest = max(changed, key=_magnitude)
             for row, _ in changed:
                 self.last_emitted[row["key"]] = dict(row)
             self._recent.append(t)
