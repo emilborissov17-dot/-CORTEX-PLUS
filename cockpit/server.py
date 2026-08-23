@@ -70,6 +70,7 @@ if str(BASE) not in sys.path:
 from cockpit import datasources as ds          # noqa: E402
 from cockpit import expression as ex           # noqa: E402
 from cockpit import somatic as som             # noqa: E402
+from cockpit import timeline as tl             # noqa: E402
 from cockpit import pulse as pls               # noqa: E402
 
 # ── THE LIVE PATHS. Named ONCE, here, and passed explicitly everywhere. ──────
@@ -704,6 +705,42 @@ def api_expression():
         "empty_because": (None if lines else
                           "no expression line has been generated yet"),
     })
+
+
+@app.get("/api/timeline")
+def api_timeline():
+    """THE WINDOW RENDERS WHAT THE SYSTEM ALREADY SAYS — it does not produce it.
+
+    The expression window used to show one thin channel of its own while the
+    plan, the stances, the phase debriefs, the autopsy, the reconsider decision
+    and the report all went to Telegram and to a file and to no window. This
+    merges every one of those into ONE timeline, ordered by the timestamp its
+    own writer stamped, with the pulse between them. The model's lines are in
+    it unchanged, as one source among several.
+
+    ?cycle=<cycle_id> scopes it; the default is the last cycle that sealed.
+    """
+    cycle = request.args.get("cycle") or None
+    try:
+        limit = max(1, min(2000, int(request.args.get("limit", 600))))
+    except ValueError:
+        limit = 600
+    blob = tl.collect(cycle, limit=limit,
+                      include_pulse=request.args.get("pulse", "1") != "0")
+    return jsonify({**blob, "cycles_available": _timeline_cycles()})
+
+
+def _timeline_cycles(limit: int = 20) -> list:
+    """The cycle ids a timeline can be asked for, newest first."""
+    rows = _read_jsonl(ds.BASE / "memory" / "existence_ledger.jsonl", limit=4000)
+    seen = []
+    for row in reversed(rows):
+        cid = row.get("cycle_id")
+        if cid and cid not in seen:
+            seen.append(cid)
+        if len(seen) >= limit:
+            break
+    return seen
 
 
 def _spine_if_step_changed(heartbeat: dict) -> list:

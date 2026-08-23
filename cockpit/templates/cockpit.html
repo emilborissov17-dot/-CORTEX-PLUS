@@ -100,6 +100,23 @@
   .measurement{font-size:11px;color:#8c96a3}
   .mediation{color:var(--yel)}
   .expression{color:var(--blu);font-weight:700;font-family:system-ui,sans-serif}
+  /* ITEM 4 — the window RENDERS the streams the system already writes. The rung
+     is what colours a row, because the rung is the thing a reader needs at a
+     glance: r0 measured, r1 the system reading the world, r2 the system
+     reading itself. The source tag is printed beside it, never inferred. */
+  .tl{white-space:pre-wrap;margin:0 0 2px;font-size:12px;line-height:1.35}
+  .tl .pre{color:#5d6774}
+  .tl .src{display:inline-block;min-width:112px;color:var(--dim)}
+  .tl.r0{font-size:11px;color:#79828e}
+  .tl.r1{color:#cfd6de}
+  .tl.r2{color:var(--blu);font-weight:600}
+  .tl.s-phase_debrief .src{color:var(--blu)}
+  .tl.s-autopsy{color:var(--red)}
+  .tl.s-reconsider .src{color:var(--yel)}
+  .tl.s-expression{font-family:system-ui,sans-serif}
+  .srcstate{font-size:10px;color:var(--dim)}
+  .srcstate b.missing{color:var(--red)} .srcstate b.silent{color:var(--yel)}
+  .srcstate b.speaking{color:var(--grn)}
   button{background:#1a212a;border:1px solid var(--line);color:var(--ink);
          padding:4px 9px;border-radius:3px;cursor:pointer;font:inherit;font-size:11px}
   button:hover{border-color:#39424e}
@@ -323,22 +340,44 @@ async function tabBody(){
 }
 
 let exFilter = 'ALL';
+let tlCycle = '';        // '' = the last cycle that sealed
+
+/* ITEM 4 — THE WINDOW READS THE VOICE THE SYSTEM ALREADY HAS.
+   It used to render memory/expression_stream.jsonl alone: a thin channel of its
+   own, while the day's plan, every step stance, every phase debrief, the
+   autopsy, the reconsider decision and the report all went to Telegram and to a
+   file and to no window. /api/timeline merges all of them, in the order their
+   own writers stamped, with the pulse between them. The model's lines are in
+   it unchanged — one source among several, not the only one. */
 async function tabExpression(){
-  const d = await get('/api/expression?filter='+exFilter);
-  const lines = d.lines.map(l =>
-    `<p class="ln ${esc(l.visual)}"><span class="pre">[${esc(l.source)}|${esc(l.depth)}] ${esc((l.ts||'').slice(11,19))}</span> ${esc(l.text)}</p>`).join('');
+  const q = tlCycle ? ('?cycle='+encodeURIComponent(tlCycle)) : '';
+  const [d, t] = await Promise.all([get('/api/expression?filter='+exFilter),
+                                    get('/api/timeline'+q)]);
+  const rows = (t.rows||[]).map(r =>
+    `<p class="tl r${esc(r.reflexivity)} s-${esc(r.source)}"><span class="pre">${esc((r.ts||'').slice(11,19))} r${esc(r.reflexivity)}</span> <span class="src">${esc(r.source)}</span> ${esc(r.text)}</p>`).join('');
+  const counts = Object.entries(t.counts_by_source||{}).sort()
+    .map(([k,v])=>`<span class="pill">${esc(k)} ${esc(v)}</span>`).join('');
+  const srcs = (t.sources||[]).map(x =>
+    `<tr><td><b class="${esc(x.state)}">${esc(x.state)}</b></td><td>${esc(x.source)}</td>
+     <td class="meta">${esc(x.path)}</td><td class="meta">${esc(x.rows)} row(s)${x.why?' — '+esc(x.why):''}</td></tr>`).join('');
+  const cycles = (t.cycles_available||[]).slice(0,12).map(c =>
+    `<option value="${esc(c)}"${c===t.cycle_id?' selected':''}>${esc(c)}</option>`).join('');
   const rej = d.rejected.map(r =>
     `<tr><td class="meta">${esc((r.timestamp||'').slice(11,19))}</td>
      <td>${esc(String(r.raw_output).slice(0,70))}</td><td class="invalid">${esc(r.rejection_reason)}</td></tr>`).join('');
   const warm = d.lexicon || {};
-  return `<div class="grid">${panel('Expression window', `
+  return `<div class="grid">${panel('Expression window · one timeline, every stream', `
     <div class="ctlrow" style="margin-bottom:6px">
-      ${['ENV','SYS','ALL'].map(p=>`<button class="fbtn ${p===exFilter?'active':''}" data-f="${p}">${p}</button>`).join('')}
-      <span class="meta">one stream, grepped — never a second window</span>
+      <select id="tlcycle">${cycles}</select>
+      <span class="meta">${esc(t.started||'')} → ${esc(t.finished||'still running')}</span>
       <span class="pill ${warm.warm?'on':'warn'}">${esc(warm.label||'lexicon: unknown')}</span>
     </div>
-    <div class="stream">${lines || '<span class="meta">no line has been produced yet. The producers run during a cycle, and while the cockpit is open.</span>'}</div>
-    <details style="margin-top:6px"><summary>rejected by the validator (${d.rejected.length}) — quarantine, not deletion</summary>
+    <div class="ctlrow" style="margin-bottom:6px">${counts}
+      <span class="meta">r0 measured · r1 the system reading the world · r2 the system reading itself</span></div>
+    <div class="stream">${rows || '<span class="meta">'+esc(t.empty_because||'nothing on this cycle\'s timeline')+'</span>'}</div>
+    <details style="margin-top:6px"><summary>the streams this window reads (${(t.sources||[]).length}) — a silent source is named, not dropped</summary>
+      <table class="srcstate">${srcs}</table></details>
+    <details style="margin-top:4px"><summary>rejected by the validator (${d.rejected.length}) — quarantine, not deletion</summary>
       <table>${rej||'<tr><td class="meta">none</td></tr>'}</table></details>`, true)}</div>`;
 }
 
@@ -429,6 +468,8 @@ async function render(){
 function wirePanel(){
   document.querySelectorAll('.fbtn').forEach(b =>
     b.onclick = () => { exFilter = b.dataset.f; render(); });
+  const tlc = $('#tlcycle');
+  if(tlc) tlc.onchange = () => { tlCycle = tlc.value; render(); };
   document.querySelectorAll('[data-sw]').forEach(b =>
     b.onclick = () => toggleDevice(b.dataset.sw));
   document.querySelectorAll('.pf').forEach(b =>
