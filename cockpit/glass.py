@@ -112,16 +112,25 @@ def stdout_tail(n: int = STDOUT_TAIL_LINES,
 # ---------------------------------------------------------------------------
 
 def blocked_connections(n: int = FIREWALL_TAIL_ROWS,
-                        path: Optional[pathlib.Path] = None) -> dict:
-    """The firewall log tail. Reading a file the OS already writes."""
+                        path: Optional[pathlib.Path] = None,
+                        since: int = 0) -> dict:
+    """The firewall log tail. Reading a file the OS already writes.
+
+    `since` is a row offset, so the panel can ask for only what ARRIVED and
+    draw a spark per new row rather than redrawing the whole tail. Part 0.5
+    proved this does not lock the file: with our reader handle held open, a
+    concurrent append succeeded and the held reader saw the new bytes.
+    """
     from core import receptors as rc
-    raw = rc.read_firewall_drops(path=path)
+    raw = rc.read_firewall_drops(path=path, since_offset=since)
     out = {"panel": "blocked connections", "available": raw["available"],
            "total": raw["count"], "rows": [], "why": raw["why"],
            "mediation": MEDIATION,
            "note": ("Most of this is internet background noise and some of it "
                     "is your own software being denied a port. It is not an "
                     "attack log.")}
+    out["offset"] = raw.get("offset", 0)
+    out["new"] = len(raw["rows"] or [])
     rows = raw["rows"][-n:] if raw["rows"] else []
     for r in rows:
         out["rows"].append({
@@ -133,6 +142,16 @@ def blocked_connections(n: int = FIREWALL_TAIL_ROWS,
             "pid": r.get("pid", ""),
             "process": _process_for(r.get("pid")),
         })
+    # THE COUNTERS GO UNDER THE SPARKS, not above them. The arrivals are the
+    # panel; a total is context for them, and context that sits on top becomes
+    # the headline.
+    from collections import Counter
+    out["counters"] = {
+        "by_action": dict(Counter(r["action"] for r in out["rows"] if r["action"])),
+        "by_protocol": dict(Counter(r["protocol"] for r in out["rows"] if r["protocol"])),
+        "by_process": dict(Counter(r["process"] for r in out["rows"] if r["process"]).most_common(6)),
+        "by_port": dict(Counter(r["dst_port"] for r in out["rows"] if r["dst_port"]).most_common(6)),
+    }
     return out
 
 

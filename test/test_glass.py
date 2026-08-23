@@ -302,3 +302,67 @@ def test_all_three_panels_are_drawn():
 
 def test_the_selftest_passes():
     assert gl._selftest() == 0
+
+
+# ── PART 8: blocked connections as they arrive ──────────────────────────────
+
+def test_the_tail_is_incremental_so_only_new_rows_spark():
+    d = gl.blocked_connections()
+    if not d["available"]:
+        pytest.skip("no firewall log")
+    assert d["offset"] == d["total"]
+    again = gl.blocked_connections(since=d["offset"])
+    assert again["new"] == 0, "the same rows came back as new"
+
+
+def test_a_new_row_is_reported_as_new(tmp_path):
+    log = tmp_path / "pf.log"
+    hdr = ("#Fields: date time action protocol src-ip dst-ip src-port "
+           "dst-port size tcpflags tcpsyn tcpack tcpwin icmptype icmpcode "
+           "info path pid\n")
+    row = ("2026-08-24 10:00:0{} DROP UDP 192.168.2.1 239.255.255.250 1 1900 "
+           "1 - - - - - - - RECEIVE 4\n")
+    log.write_text(hdr + row.format(0), encoding="utf-8")
+    first = gl.blocked_connections(path=log)
+    assert first["new"] == 1 and first["offset"] == 1
+    with log.open("a", encoding="utf-8") as fh:
+        fh.write(row.format(1))
+    nxt = gl.blocked_connections(path=log, since=first["offset"])
+    assert nxt["new"] == 1
+    assert nxt["offset"] == 2
+
+
+def test_the_counters_exist_and_are_under_the_sparks():
+    d = gl.blocked_connections()
+    if not d["rows"]:
+        pytest.skip("no rows")
+    assert set(d["counters"]) == {"by_action", "by_protocol", "by_process",
+                                  "by_port"}
+    html = (REPO / "cockpit" / "templates" / "cockpit.html").read_text(
+        encoding="utf-8")
+    block = html.split("async function drawBlocked()", 1)[1].split(
+        "async function drawEntropy()", 1)[0]
+    assert block.index("sparks") < block.index("counters"), (
+        "the counters are drawn above the arrivals")
+
+
+def test_the_spark_carries_source_destination_port_and_pid():
+    d = gl.blocked_connections()
+    if not d["rows"]:
+        pytest.skip("no rows")
+    r = d["rows"][-1]
+    for k in ("src", "dst", "dst_port", "pid"):
+        assert k in r, k
+    html = (REPO / "cockpit" / "templates" / "cockpit.html").read_text(
+        encoding="utf-8")
+    block = html.split("async function drawBlocked()", 1)[1][:1800]
+    for k in ("r.src", "r.dst", "r.dst_port", "r.pid"):
+        assert k in block, k
+
+
+def test_the_arriving_panel_is_still_never_called_attacks():
+    html = (REPO / "cockpit" / "templates" / "cockpit.html").read_text(
+        encoding="utf-8")
+    block = html.split("async function drawBlocked()", 1)[1].split(
+        "async function drawEntropy()", 1)[0]
+    assert "attack" not in block.lower()
