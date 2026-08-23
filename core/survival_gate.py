@@ -63,9 +63,16 @@ if str(BASE) not in sys.path:
 NAME = "survival_gate"
 EVENT = "CYCLE_REFUSED_SURVIVAL_GATE"
 
-# The disk actuator is allowed to fire from here at the ACTION level, because
-# by then the alternative is the GATE.
-ACTUATORS = ("disk_free_pct",)
+# NO ACTUATOR IS FIRED FROM HERE YET, and the constant that claimed otherwise
+# has been removed rather than left to read as wiring. core/disk_actuator.py is
+# built, hash-stamped, tested and dry-runnable, but nothing calls sweep() with
+# apply=True anywhere in this repo. So today the ACTION level does what the
+# NOTICE level does: it is recorded.
+#
+# That is a real gap and it is written down in docs/HOMEOSTASIS_STATUS.md
+# rather than implied away, because deletion is the one irreversible thing in
+# this layer and enabling it is a decision for a human, not a loose end for the
+# next commit to tidy. The GATE level above it is real and does stop a cycle.
 
 
 def _now() -> datetime:

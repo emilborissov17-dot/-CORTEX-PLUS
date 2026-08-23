@@ -37,8 +37,9 @@ Thresholds live in `config/homeostasis.json`, human-approved and sha256-stamped
 Each level has a **distinct mechanical effect**:
 
 - **notice** — recorded, nothing else.
-- **action** — an actuator fires. Disk has one (`core/disk_actuator.py`); RAM
-  does not, and that is stated below rather than implied.
+- **action** — an actuator is supposed to fire. Today NEITHER variable fires
+  one: disk has an actuator that nothing calls, RAM has none at all. See the two
+  gaps below. This level is currently indistinguishable from `notice`.
 - **gate** — `core/survival_gate.py` refuses to start the cycle, writes
   `CYCLE_REFUSED_SURVIVAL_GATE` to the existence ledger with variable, value,
   threshold and time-to-threshold, and fires the siren at ALARM level.
@@ -50,7 +51,19 @@ ram_free       psutil.virtual_memory().available / 1024**2
 disk_free_pct  shutil.disk_usage(BASE) -> 100 * free / total
 ```
 
-### The gap inside the built pair
+### Two gaps inside the built pair
+
+**Nothing fires the disk actuator.** `core/disk_actuator.py` is built,
+hash-stamped, tested and dry-runnable, and `sweep(apply=True)` is called from
+nowhere in this repo. So today the `action` level does what `notice` does: it is
+recorded. Deletion is the only irreversible act in this layer, so switching it
+on is a decision for a human rather than a loose end. Verify with:
+
+```
+grep -rn "disk_actuator" --include=*.py core/ fast_cycle_runner.py
+```
+
+### The other gap
 
 **`ram_free` has no actuator.** Its `action` level currently has the same effect
 as `notice` — it is recorded and nothing happens — which is exactly the failure
@@ -180,7 +193,7 @@ hand. Until then a "quota" threshold would be a threshold on a guess.
 | # | variable | sensor today | actuator today | status |
 |---|---|---|---|---|
 | 1 | `ram_free` | readable | **none** | gated, not defended |
-| 2 | `disk_free_pct` | readable | `core/disk_actuator.py` | **defended** |
+| 2 | `disk_free_pct` | readable | `core/disk_actuator.py`, built but **never fired** | gated; actuator dry-run only |
 | 3 | CPU temperature | **not readable** (needs elevation or a driver) | none | declared |
 | 4 | network | readable | reactive, in `backend_policy` | declared |
 | 5 | cloud quota | inferred only | `step_budget` demotion | declared |
