@@ -703,6 +703,18 @@ def logs() -> list:
 # The probe
 # ---------------------------------------------------------------------------
 
+# GUARDED (23 Aug 2026). This is THE probe of the machine, and it is the one
+# /api/somatic was calling every 15 seconds before throwing the readings away.
+# Inside an event_bus consumer callback it now raises instead: a viewer is a
+# visitor with the chart, not a nurse with a thermometer.
+try:
+    from core.event_bus import guard_sensor as _guard_sensor
+except Exception:                                          # pragma: no cover
+    def _guard_sensor(_name):                              # fail-open
+        return lambda fn: fn
+
+
+@_guard_sensor("somatic.probe")
 def probe(mic_enabled: Optional[bool] = None,
           camera_enabled: Optional[bool] = None,
           config_path: Optional[pathlib.Path] = None) -> dict:

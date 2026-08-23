@@ -366,11 +366,25 @@ def load_config(path=None) -> dict:
 # Sensors — two, and no more
 # ---------------------------------------------------------------------------
 
+# GUARDED (23 Aug 2026). These two functions are the only places this layer
+# touches the machine, so they are where "a subscriber never probes a sensor"
+# is enforced. Called from inside an event_bus consumer callback they raise
+# SensorProbeInSubscriber rather than quietly returning a second reading that
+# disagrees with the one the bus already published.
+try:
+    from core.event_bus import guard_sensor as _guard_sensor
+except Exception:                                          # pragma: no cover
+    def _guard_sensor(_name):                              # fail-open
+        return lambda fn: fn
+
+
+@_guard_sensor("ram_free")
 def read_ram_free_mb() -> float:
     import psutil
     return psutil.virtual_memory().available / (1024 ** 2)
 
 
+@_guard_sensor("disk_free_pct")
 def read_disk_free_pct(path=None) -> float:
     du = _shutil.disk_usage(str(path or BASE))
     return 100.0 * du.free / du.total
