@@ -157,6 +157,12 @@ LANGUAGE_PIN = (
     "conditional."
 )
 
+# IT APPEARS TWICE IN EVERY PROMPT (23 Aug 2026): once immediately before the
+# question, where it answers whatever the exemplars just demonstrated, and once
+# as the very last line, after the schema block, because that is what the model
+# reads last. The first placement is about WHAT it is arguing with; the second
+# is about WHEN it is read.
+
 
 def _self_state() -> str:
     """ИНТЕРОЦЕПЦИЯ (21 август 2026) — пет реда, които влизат в ВСЯКО повикване.
@@ -478,6 +484,18 @@ def think(role: str, question: str, evidence: str = "", schema: dict | None = No
           "for those, propose to the human.\nThink from the material, not in "
           "generalities. If the material is not enough for a conclusion, say so."
         + fields
+        # ── AND AGAIN, LAST (23 Aug 2026) ─────────────────────────────────
+        # The pin sits before the question because that is where it answers the
+        # exemplars. But ~730 characters follow it — the material, the limits,
+        # the schema — so before this line the LAST thing the model read was
+        # not the pin. Recency is the cheapest lever there is and it costs 30
+        # tokens; a 3B model weights the end of a long prompt heavily, and the
+        # end is where a JSON schema tells it what shape to answer in.
+        #
+        # Two copies, not one moved: the first still does its job of arriving
+        # immediately after the memory block, and the second is simply the last
+        # thing read. Neither is redundant with the other.
+        + "\n\n" + LANGUAGE_PIN
     )
 
     t0 = time.time()
@@ -884,6 +902,10 @@ def attend(step: str) -> dict | None:
            "say so."
            if (prev_name and prev_out) else
            "Be short. Speak ONLY about the step that is starting now.")
+        # Last here too, and it matters more here: this prompt ends with a JSON
+        # shape whose `stance` values are the one enum in the system, and this
+        # is the stream that produced 19 Chinese stances in one night.
+        + "\n\n" + LANGUAGE_PIN
     )
     # ── МЪЛЧАНИЕТО СЕ ЗАПИСВА (законът, т.6) ───────────────────────────────
     # Дотук всяка несполука тук се връщаше като None БЕЗ СЛЕДА. Затова днешният

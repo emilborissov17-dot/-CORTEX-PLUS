@@ -120,6 +120,35 @@ def test_the_stance_prompt_is_pinned_too(captured, monkeypatch):
         "the pin is read before the exemplar block in attend() too")
 
 
+def test_the_prompt_ENDS_with_the_pin(captured):
+    """Recency. Before this, ~730 characters followed the pin — the material,
+    the limits, the schema — so the last thing the model read was a JSON shape,
+    not the language rule."""
+    brain.think(role="tester", question="q", evidence="material",
+                schema={"verdict": "what you conclude"}, remember_it=False)
+    assert _prompt_from(captured).rstrip().endswith(brain.LANGUAGE_PIN)
+
+
+def test_the_stance_prompt_ends_with_it_too(captured, monkeypatch):
+    monkeypatch.setattr(brain, "_AVAILABLE", True)
+    monkeypatch.setattr(brain, "_prev_step_output", lambda: (None, None))
+    monkeypatch.setattr(brain, "current_plan", lambda: {})
+    monkeypatch.setattr(brain, "_record_silence", lambda *a, **k: None)
+    _REAL_ATTEND("scoring_engine")
+    assert _prompt_from(captured).rstrip().endswith(brain.LANGUAGE_PIN)
+
+
+def test_the_pin_is_present_twice_not_moved(captured):
+    """The first copy answers the exemplars; the second is read last. Dropping
+    either one would be a different change from the one that was asked for."""
+    brain.think(role="tester", question="q",
+                schema={"verdict": "x"}, remember_it=False)
+    prompt = _prompt_from(captured)
+    assert prompt.count(brain.LANGUAGE_PIN) == 2, prompt.count(brain.LANGUAGE_PIN)
+    first = prompt.index(brain.LANGUAGE_PIN)
+    assert prompt[first + len(brain.LANGUAGE_PIN):].lstrip().startswith("QUESTION:")
+
+
 def test_the_pin_cannot_be_switched_off_by_a_parameter():
     """A language rule with an off switch is off on the night it matters."""
     import inspect
