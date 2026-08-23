@@ -61,6 +61,7 @@ STREAM = BASE / "memory" / "expression_stream.jsonl"
 HEARTBEAT = BASE / "memory" / "heartbeat.json"
 CONTRACT = BASE / "memory" / "step_contract_latest.json"
 QUARANTINE = BASE / "memory" / "expression_quarantine"
+PHASE_SEEN = BASE / "memory" / "cockpit_phase_seen.json"
 VECTOR_STORE = BASE / "memory" / "state_vectors.jsonl"
 HISTORY_PATH = BASE / "memory" / "somatic_history.jsonl"
 
@@ -120,6 +121,49 @@ def state_from_disk(stream_path: pathlib.Path = STREAM,
                             unusual=unusual)
 
 
+def seen_key(cycle_id: str, phase: str) -> str:
+    """The key BOTH sides use, and they have to be the same or nothing is shared.
+
+    scripts/cockpit_answer.py keys on the phase_debriefs DIRECTORY NAME, which is
+    the cycle_id with every character outside [alnum-_.] replaced — that is how
+    supervisor writes the folder. This hook has the raw cycle_id in hand. The
+    first version of this wiring used the raw form, so the two ledgers agreed on
+    nothing and the sharing was decorative:
+
+        raw     2026-08-23T03:04:02.345362+03:00
+        folder  2026-08-23T03_04_02.345362_03_00
+
+    Caught by comparing the two against a real folder rather than by reading the
+    code.
+    """
+    safe = "".join(c if (c.isalnum() or c in "-_.") else "_"
+                   for c in str(cycle_id))
+    return "{}::{}".format(safe, phase)
+
+
+def _seen(path: pathlib.Path) -> list:
+    try:
+        blob = json.loads(pathlib.Path(path).read_text(encoding="utf-8"))
+        return list(blob.get("seen") or [])
+    except Exception:
+        return []
+
+
+def _mark_seen(key: str, path: pathlib.Path) -> None:
+    """Record that this (cycle, phase) already has a line. Never raises."""
+    try:
+        seen = _seen(path)
+        if key in seen:
+            return
+        seen.append(key)
+        p = pathlib.Path(path)
+        p.parent.mkdir(parents=True, exist_ok=True)
+        p.write_text(json.dumps({"seen": seen}, ensure_ascii=False, indent=2),
+                     encoding="utf-8")
+    except Exception:
+        pass
+
+
 def producer_for(cycle_id: str) -> rx.ReflexProducer:
     """One producer per cycle, so its per-cycle budget means what it says."""
     global _producer, _producer_cycle
@@ -161,12 +205,27 @@ def on_phase_close(phase: str, cycle_id: str, result: Optional[dict] = None,
                    producer: Optional[rx.ReflexProducer] = None,
                    stream_path: pathlib.Path = STREAM,
                    quarantine_root: pathlib.Path = QUARANTINE,
+                   seen_path: pathlib.Path = PHASE_SEEN,
                    timeout_sec: float = PHASE_LINE_TIMEOUT_SEC) -> dict:
     """THE HOOK. Called from core/phase_tracker._close(), once per phase.
 
     Returns the producer's own result dict, or {"emitted": False, "why": ...}.
     Never raises — the caller is a cycle in flight.
+
+    SHARES ITS SEEN-LEDGER WITH THE MANUAL SCRIPT (23 Aug 2026).
+    scripts/cockpit_answer.py --phase has always written
+    memory/cockpit_phase_seen.json to avoid speaking twice for the same phase,
+    and until now this hook neither read it nor wrote it — so a phase could get
+    a line at the boundary and a SECOND one the next time anyone ran the script
+    by hand, and the file that existed to prevent exactly that was consulted by
+    nobody. It is read and written here now. The alternative was deleting the
+    write, which would have left the manual path repeating itself instead.
     """
+    key = seen_key(cycle_id, phase)
+    if key in _seen(seen_path):
+        return {"emitted": False, "phase": phase,
+                "why": "already spoken for {}".format(key)}
+
     prod = producer or producer_for(str(cycle_id))
     if prod.budget_left() <= 0:
         return {"emitted": False, "phase": phase,
@@ -189,6 +248,11 @@ def on_phase_close(phase: str, cycle_id: str, result: Optional[dict] = None,
                 "why": "hook failed: {}: {}".format(type(exc).__name__, exc)}
 
     if value is not None:
+        # Marked on EMISSION, not on entry. A boundary whose producer was
+        # abandoned at its timeout has said nothing, and recording it as spoken
+        # would silence the manual fallback for the one phase that needs it.
+        if value.get("emitted"):
+            _mark_seen(key, seen_path)
         return {**value, "seconds": round(elapsed, 1), "phase": phase}
     return {"emitted": False, "phase": phase, "seconds": round(elapsed, 1),
             "why": "producer {}{}".format(outcome,
@@ -206,13 +270,18 @@ def _selftest() -> int:
     print("cockpit/phase_voice.py --selftest   (stubbed caller; no model contacted)")
     tmp = pathlib.Path(tempfile.mkdtemp())
     stream, quar = tmp / "stream.jsonl", tmp / "quar"
+    # AND THE SEEN-LEDGER. Caught by running it: the first version of the 6.3
+    # wiring defaulted seen_path to the live memory/cockpit_phase_seen.json, so
+    # this selftest wrote two fake cycle keys into the operator's real file.
+    seen = tmp / "cockpit_phase_seen.json"
 
     stub = rx.ReflexProducer(caller=lambda p: "QUERY which phase left no debrief")
     res = on_phase_close("A_ORIENT", "cycle-1",
                          {"verdict": "OK", "steps_ok": 9, "seconds": 41.2,
                           "reason": "nine steps, none refused"},
                          {"accepted": True},
-                         producer=stub, stream_path=stream, quarantine_root=quar)
+                         producer=stub, stream_path=stream,
+                         quarantine_root=quar, seen_path=seen)
     print("  accepted debrief     emitted={} text={!r}".format(
         res["emitted"], res.get("text")))
 
@@ -220,7 +289,8 @@ def _selftest() -> int:
                           {"verdict": "DEGRADED", "seconds": 900},
                           {"accepted": False,
                            "rejected_because": ["no number from its own data"]},
-                          producer=stub, stream_path=stream, quarantine_root=quar)
+                          producer=stub, stream_path=stream,
+                          quarantine_root=quar, seen_path=seen)
     print("  REJECTED debrief     emitted={}  (the file-watcher saw no file for "
           "this phase at all)".format(res2["emitted"]))
 
@@ -231,7 +301,8 @@ def _selftest() -> int:
 
     spent = rx.ReflexProducer(caller=lambda p: "QUERY x", max_calls=0)
     r3 = on_phase_close("C_JUDGE", "c1", {}, {}, producer=spent,
-                        stream_path=stream, quarantine_root=quar)
+                        stream_path=stream, quarantine_root=quar,
+                        seen_path=seen)
     print("  budget enforced      emitted={} why={}".format(
         r3["emitted"], r3["why"][:44]))
 
@@ -246,6 +317,13 @@ def _selftest() -> int:
     print("  core/phase_tracker   {}".format(
         "WIRED — _close() calls on_phase_close()" if "phase_voice" in tracker
         else "NOT WIRED — nothing calls this module"))
+    again = on_phase_close("A_ORIENT", "cycle-1", {"verdict": "OK"},
+                           {"accepted": True}, producer=stub,
+                           stream_path=stream, quarantine_root=quar,
+                           seen_path=seen)
+    print("  spoken once only    emitted={} why={}".format(
+        again["emitted"], again.get("why")))
+    print("  live ledger untouched: {}".format(not seen.parent.samefile(BASE / "memory")))
     print("  RESULT: OK")
     return 0
 

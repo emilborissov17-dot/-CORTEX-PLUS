@@ -72,7 +72,19 @@ MAX_ROWS = 1000
 # the file has drifted this far past the cap.
 TRIM_SLACK = 250
 
-FIXED_MOVE_THRESHOLD = 0.15      # the constant this module exists to replace
+# A PLACEHOLDER UNTIL THE SENSOR'S OWN DISTRIBUTION EXISTS. 15% is an operator's
+# number, identical for a GPU that idles at 3W and spikes to 90W and for a disk
+# counter that only ever rises; it is what a sensor is judged by while it has
+# fewer than MIN_SAMPLES of its own history, and nothing more than that.
+#
+# It lives here rather than in cockpit/pulse.py because this is the module that
+# owns what "a meaningful change" means. There were two copies of the number,
+# one here and one there, and two copies of a threshold is one threshold and one
+# future disagreement. The value is unchanged.
+MOVE_THRESHOLD = 0.15
+
+# The name the ranking code and scripts/compare_mover_rules.py already use.
+FIXED_MOVE_THRESHOLD = MOVE_THRESHOLD
 
 BY_HISTORY, BY_FIXED = "history", "fixed"
 

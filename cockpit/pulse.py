@@ -54,7 +54,12 @@ if str(BASE) not in sys.path:
 
 from cockpit import expression as ex        # noqa: E402
 
-MOVE_THRESHOLD = 0.15           # 15%, relative
+# THE THRESHOLD LIVES IN cockpit/norms.py (23 Aug 2026). It was declared here
+# AND there, with the same value, which is one threshold and one future
+# disagreement. norms.py is the module that owns what a meaningful change is;
+# this one only decides whether to print a line about it.
+from cockpit.norms import MOVE_THRESHOLD   # noqa: E402,F401  (15%, relative)
+
 CAP_PER_MINUTE = 20
 WINDOW_SEC = 60.0
 

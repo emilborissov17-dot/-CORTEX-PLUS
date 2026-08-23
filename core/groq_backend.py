@@ -5,7 +5,10 @@ groq_backend.py — LLM backend с 4-степенен fallback chain
 Ред на опити (моделите са верифицирани срещу живите листинги на 20 август 2026;
 трите reasoning пътя минават през _reasoning_budget — виж него):
   1. Groq       (openai/gpt-oss-120b)                  — reasoning, бърз, безплатен
-  2. Cerebras   (gpt-oss-120b)                         — reasoning, cloud.cerebras.ai
+  2. Cerebras   (gpt-oss-120b)   DECLARED DEAD — see DECLARED_DEAD below: its
+     reasoning tokens are charged against max_tokens, and there is no budget for
+     the paid tier that would make that affordable. The code path is intact and
+     the chain skips it by name.
   3. OpenRouter (nvidia/nemotron-3-super-120b-a12b:free) — openrouter.ai
   4. Gemini     (gemini-3.5-flash)                     — reasoning, 1500 req/day
 
@@ -91,6 +94,22 @@ GEMINI_BUDGET_FLOOR = int(os.environ.get("GEMINI_BUDGET_FLOOR", "1500"))
 GEMINI_BUDGET_CAP   = int(os.environ.get("GEMINI_BUDGET_CAP",   "8192"))
 # low | medium | high (Cerebras default за gpt-oss-120b е "medium")
 CEREBRAS_REASONING_EFFORT = os.environ.get("CEREBRAS_REASONING_EFFORT", "low")
+
+# ── PROVIDERS DECLARED DEAD (23 Aug 2026) ───────────────────────────────────
+# A provider that cannot serve this system is skipped BY NAME, with the reason
+# written down, and its code path is left exactly where it is. Deleting the path
+# would make the decision unreviewable: nobody reading this file later could
+# tell "we tried it and it does not work for us" from "nobody ever wired it".
+#
+# The reason is a literal string and it travels into the log line, so the
+# question "why is there no Cerebras in this run" is answered in the run's own
+# output rather than in somebody's memory.
+#
+# To bring one back: delete its entry here. Nothing else has to change.
+DECLARED_DEAD = {
+    "cerebras": "DISABLED: reasoning tokens consume max_tokens; "
+                "no budget for a paid tier",
+}
 
 OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions"
 OPENROUTER_MODEL   = "nvidia/nemotron-3-super-120b-a12b:free"  # 120B, верифициран безплатен
@@ -627,6 +646,12 @@ def call_groq_meta(prompt: str, max_tokens: int = 1024,
     def _cloud_chain():
         nonlocal last_error
         for label, key, fn in backends:
+            # A DECLARED SKIP, NOT A DELETED PATH. _call_cerebras is still here,
+            # still tested, still correct; it is simply not on the ladder, and
+            # the run says why every time it walks past it.
+            if key in DECLARED_DEAD:
+                print(f"  [LLM] {label} -- {DECLARED_DEAD[key]}")
+                continue
             if _policy.is_disabled(key):
                 print(f"  [LLM] {label} disabled for this run -- skipping")
                 continue

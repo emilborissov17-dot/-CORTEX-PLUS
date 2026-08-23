@@ -129,7 +129,10 @@ def phase_line(producer: rx.ReflexProducer, seen_path: pathlib.Path,
     if not found:
         return {"emitted": False, "why": "no phase debrief on disk"}
     cycle, phase, path = found
-    key = "{}::{}".format(cycle, phase)
+    # ONE KEY BUILDER, IN THE HOOK. `cycle` here is already the mangled folder
+    # name, so seen_key's normalisation is a no-op on it — which is exactly the
+    # property that makes the hook's raw cycle_id land on the same string.
+    key = pv.seen_key(cycle, phase)
     try:
         seen = json.loads(pathlib.Path(seen_path).read_text(encoding="utf-8"))
     except Exception:
