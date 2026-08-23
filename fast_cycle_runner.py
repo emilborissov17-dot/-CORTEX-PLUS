@@ -1712,6 +1712,31 @@ def main():
     # това убива ръчното пускане (там env изобщо липсва). Стигнахме до три случая,
     # плюс неговото последно уточнение: НЕЧЕТИМ env е системен отказ, не ръчно
     # пускане, значи се третира като C.
+    # ── WHAT THE LAST STOP COST, BEFORE ANYTHING ELSE (23 Aug 2026) ────────
+    # FIRST, because the heartbeat this reads is about to be overwritten by our
+    # own first beat(). One line later and the evidence is gone.
+    #
+    # The gap it closes: supervisor.py:1529 is the only place that combines
+    # "pid is not alive" with "no end record", and it is gated on a stale LOCK
+    # file. When the process dies and the lock is gone, the heartbeat is the
+    # only witness left and nobody was reading it. Measured on this machine on
+    # 23 Aug: pid 80336, dead, cycle with no end record, 294.9 minutes
+    # unaccounted for, and nothing in the repository had noticed.
+    #
+    # Writes at most ONE record and only when the stop was genuinely unclean.
+    # Absence is the signal: a ledger with no RESTART_AFTER_UNCLEAN_STOP between
+    # two cycles is a statement that the first ended properly. FAIL-OPEN.
+    try:
+        from core.unclean_stop import record as _record_unclean
+        _unclean = _record_unclean()
+        if _unclean:
+            print(f"[FAST_CYCLE] previous stop was UNCLEAN: "
+                  f"{_unclean.get('lost_duration_seconds')}s lost at step "
+                  f"{_unclean.get('last_step')} of cycle "
+                  f"{_unclean.get('cycle_id')} — recorded in the ledger")
+    except Exception as _e:
+        print(f"[FAST_CYCLE] unclean-stop check -> {type(_e).__name__}: {_e}")
+
     _cycle_id = _classify_cycle_id(os.environ.get("CORTEX_CYCLE_ID"))
 
     # ── A CYCLE STARTED BY HAND MUST ALSO LEAVE A LOG (21 Aug 2026) ─────────
