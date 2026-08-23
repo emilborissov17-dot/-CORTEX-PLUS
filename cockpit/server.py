@@ -861,6 +861,34 @@ def api_somatic():
 #
 # test/test_glass.py counts guarded probes with the tab shut and again after
 # rendering it repeatedly, and the two numbers must match.
+# ── THE REACTION (24 Aug 2026) — READ ONLY FROM HERE ───────────────────────
+# This endpoint NEVER asks the model. It reads what core/reaction.py stored,
+# whenever that was. The call itself belongs at a phase boundary inside the
+# cycle and is behind reaction.enabled in config/reactions.json, which is off.
+#
+# So the panel can be open all day and cost nothing: it is a reader of a record,
+# like every other panel on this tab.
+@app.get("/api/reaction")
+def api_reaction():
+    from core import reaction as rx
+    try:
+        rows = rx.history(10)
+        return jsonify({
+            "enabled": rx.enabled(),
+            "source": rx.SOURCE, "directed": rx.DIRECTED,
+            "mediation": rx.MEDIATION,
+            "label": "source:{}, directed:{}, mediation:{}".format(
+                rx.SOURCE, rx.DIRECTED, rx.MEDIATION),
+            "rows": rows,
+            "why_off": ("reaction.enabled is false in config/reactions.json - "
+                        "one model call per phase boundary is about 63 a night "
+                        "inside a live cycle"),
+        })
+    except Exception as e:                                   # noqa: BLE001
+        return jsonify({"error": "{}: {}".format(type(e).__name__, e),
+                        "rows": []})
+
+
 # ── THE RAW RECEPTOR STREAM (24 Aug 2026) ──────────────────────────────────
 # A SUBSCRIBER, not a prober. It drains what the bus already carried and
 # renders it; it never calls a sensor, and core/event_bus.py raises if anything

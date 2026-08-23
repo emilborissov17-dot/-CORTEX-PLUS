@@ -47,6 +47,12 @@
   .sline{white-space:pre;font-size:11px;line-height:1.3}
   .sline.ch-S{color:#e8b04b}
   .quiet{padding:8px 0;font-size:12px;opacity:.75}
+  .rx{margin:8px 0;padding:6px 0;border-top:1px solid #222}
+  .rxlines{font-size:10px;opacity:.55;white-space:pre;margin:3px 0;max-height:9em;overflow:auto}
+  /* VERBATIM. No ellipsis, no clamp, no prettifying. */
+  .rxanswer{font-size:12px;white-space:pre-wrap;line-height:1.45}
+  .ok{color:#6db56d}
+  .bad{color:#c98b3a}
   pre.raw{max-height:52vh;overflow:auto;white-space:pre;font-size:11px;
           line-height:1.35;margin:6px 0 0;padding:6px;background:#0b0b0b}
   table.tbl{width:100%;border-collapse:collapse;font-size:11px;margin-top:6px}
@@ -539,6 +545,43 @@ function streamControls(){
   ).join('');
 }
 
+/* ── the reaction: shown verbatim, or not shown at all ────────────────────
+   Never post-edited, never summarised, never replaced by a template when it
+   is poor. A weak answer is displayed as a weak answer - that is data about
+   the system, and a template would hide exactly the thing worth seeing.
+
+   The language gate decides the EXEMPLAR POOL. It has no vote on display, and
+   an answer that failed it is shown WITH its verdict beside it. */
+async function drawReaction(){
+  const el = $('#reactionBody');
+  if(!el) return;
+  try{
+    const d = await get('/api/reaction');
+    if(d.error){ el.innerHTML = `<div class="invalid">${esc(d.error)}</div>`; return; }
+    const head = `<div class="muted">${esc(d.label||'')} —
+      ${d.enabled ? 'ENABLED' : 'DISABLED'}: ${esc(d.why_off||'')}</div>`;
+    if(!d.rows || !d.rows.length){
+      el.innerHTML = head + `<div class="quiet">NO REACTIONS RECORDED
+        <div class="muted">the flag is off; nothing has asked</div></div>`;
+      return;
+    }
+    const body = d.rows.slice().reverse().map(r => {
+      const lang = r.language || {};
+      const badge = lang.exemplar_ok
+        ? `<span class="ok">exemplar: yes</span>`
+        : `<span class="bad">exemplar: no (${esc(lang.reason||'')})</span>`;
+      const lines = (r.lines||[]).map(l => esc(l)).join('\n');
+      return `<div class="rx">
+        <div class="muted">${esc(r.ts||'')} · ${esc(r.model||'')} ·
+          ${r.n_lines} line(s) · ${badge}</div>
+        <pre class="rxlines">${lines}</pre>
+        <div class="rxanswer">${esc(r.answer || '(the model returned nothing)')}</div>
+      </div>`;
+    }).join('');
+    el.innerHTML = head + body;
+  }catch(e){ el.innerHTML = `<div class="invalid">${esc(e.message||e)}</div>`; }
+}
+
 async function tabGlass(){
   const d = await get('/api/glass');
   if(d.error) return `<div class="grid">${panel('GLASS',
@@ -580,6 +623,7 @@ async function tabGlass(){
   return `<div class="grid">
     ${panel('GLASS', `<div class="muted">${esc(d.label)}</div>`)}
     ${panel('raw receptor stream', streamPanel)}
+    ${panel('the reaction', `<div id="reactionBody"><div class="muted">loading...</div></div>`)}
     ${panel('raw stdout', stdoutBody)}
     ${panel('blocked connections', blockedBody)}
     ${panel('traffic counters', trafficBody)}
@@ -602,7 +646,8 @@ async function render(){
 function wirePanel(){
   document.querySelectorAll('.spd').forEach(b =>
     b.onclick = () => { streamHz = parseFloat(b.dataset.hz); render(); });
-  if(active === 'glass'){ drawStream(); startStream(); } else { stopStream(); }
+  if(active === 'glass'){ drawStream(); drawReaction(); startStream(); }
+  else { stopStream(); }
   document.querySelectorAll('.fbtn').forEach(b =>
     b.onclick = () => { exFilter = b.dataset.f; render(); });
   const tlc = $('#tlcycle');
