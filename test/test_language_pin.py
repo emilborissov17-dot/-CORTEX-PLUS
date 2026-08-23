@@ -78,7 +78,7 @@ def test_the_pin_comes_after_the_memory_block(captured):
     """Whatever the exemplars just demonstrated, the pin is read after them."""
     brain.think(role="tester", question="ordering", remember_it=False)
     prompt = _prompt_from(captured)
-    memory_at = prompt.index("ПАМЕТ")
+    memory_at = prompt.index("MEMORY (your own earlier verdicts)")
     pin_at = prompt.index(brain.LANGUAGE_PIN)
     assert pin_at > memory_at, (
         "the pin is read BEFORE the exemplars that contradict it")
@@ -89,7 +89,7 @@ def test_the_pin_comes_immediately_before_the_question(captured):
     prompt = _prompt_from(captured)
     after_pin = prompt[prompt.index(brain.LANGUAGE_PIN)
                        + len(brain.LANGUAGE_PIN):]
-    assert after_pin.lstrip().startswith("ВЪПРОС:"), (
+    assert after_pin.lstrip().startswith("QUESTION:"), (
         "something was inserted between the pin and the question: "
         + repr(after_pin[:80]))
 
@@ -115,7 +115,8 @@ def test_the_stance_prompt_is_pinned_too(captured, monkeypatch):
     assert silences, "attend() did not reach its request at all"
     prompt = _prompt_from(captured)
     assert brain.LANGUAGE_PIN in prompt
-    assert prompt.index(brain.LANGUAGE_PIN) > prompt.index("ПАМЕТ"), (
+    assert prompt.index(brain.LANGUAGE_PIN) > prompt.index(
+        "MEMORY (your own earlier step verdicts)"), (
         "the pin is read before the exemplar block in attend() too")
 
 

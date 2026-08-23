@@ -181,15 +181,15 @@ def _brain_diagnosis(step: str, evidence: list) -> dict | None:
                       f"сама с време и какво да се направи."),
             evidence=blob or "(празно — няма редове)",
             schema={
-                "failure": "true/false — има ли изобщо повреда тук",
-                "cause": "ти кръщаваш причината, ГЛАВНИ_БУКВИ_С_ДОЛНИ_ЧЕРТИ",
-                "why": "1-2 изречения защо",
-                "transient": "true/false — минава ли сама с време",
-                "retry_after_sec": "ако е преходна: след колко секунди има смисъл "
-                                   "нов опит — ТИ решаваш числото, няма таван",
-                "halt_and_call_human": "true/false — по-добре ли е ИЗОБЩО да не се "
-                                       "рестартира и вместо това да се вика човекът",
-                "remedy": "какво да се направи, конкретно",
+                "failure": "true/false — is there a fault here at all",
+                "cause": "you name the cause, CAPITALS_WITH_UNDERSCORES",
+                "why": "1-2 sentences why",
+                "transient": "true/false — does it pass on its own with time",
+                "retry_after_sec": "if transient: after how many seconds a new attempt "
+                                   "makes sense — YOU decide the number, no ceiling",
+                "halt_and_call_human": "true/false — is it better NOT to restart at all "
+                                       "and to call the human instead",
+                "remedy": "what to do, concretely",
             },
             require_quote=bool(blob), kind="autopsy")
         # Kimi: „изискването да цитира ред принуждава модела да обърка симптом с
@@ -212,11 +212,11 @@ def _brain_diagnosis(step: str, evidence: list) -> dict | None:
                               f"което го няма тук, кажи го вместо да гадаеш."),
                     evidence=wide,
                     schema={
-                        "failure": "true/false", "cause": "ти я кръщаваш",
-                        "why": "1-2 изречения", "transient": "true/false",
-                        "retry_after_sec": "ти решаваш числото, няма таван",
+                        "failure": "true/false", "cause": "you name it",
+                        "why": "1-2 sentences", "transient": "true/false",
+                        "retry_after_sec": "you decide the number, no ceiling",
                         "halt_and_call_human": "true/false",
-                        "remedy": "конкретно лечение",
+                        "remedy": "a concrete remedy",
                     },
                     require_quote=True, kind="autopsy")
         if d:

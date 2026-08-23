@@ -9,11 +9,11 @@ of 1.0 than at 0.05, and could not know which it was.
 
 Measured on this machine while writing this, which is why the number matters:
 
-    ФАЛШИВИ_ТРЕВОГИ: 1.0 (16 от 16 сдвоени)
-    ОТВОРЕНИ_ПРЕДЛОЖЕНИЯ: 72 (39 просрочени), най-старото на 27.4 дни
-    ПОСЛЕДЕН_ЦИКЪЛ: DIED на стъпка body_scan
-    СВОБОДНА_ПАМЕТ: RAM 149.4 MB (98.9% заети), VRAM 518 MB от 4096
-    РЕСТАРТИ_ДНЕС: 2/2, остават 0
+    FALSE_ALARMS: 1.0 (16 of 16 paired)
+    OPEN_PROPOSALS: 72 (39 overdue), oldest 27.4 days
+    LAST_CYCLE: DIED at step body_scan
+    FREE_MEMORY: RAM 149.4 MB (98.9% used), VRAM 518 MB of 4096
+    RESTARTS_TODAY: 2/2, 0 left
 
 Every doubt the system raised in the window came out false, and it did not know.
 """
@@ -80,7 +80,7 @@ def test_a_row_that_raises_still_produces_a_row(monkeypatch):
                         lambda *a, **k: (_ for _ in ()).throw(RuntimeError("boom")))
     s = io.self_state()
     assert len(s) == 5
-    assert "RuntimeError" in s["РЕСТАРТИ_ДНЕС"]
+    assert "RuntimeError" in s["RESTARTS_TODAY"]
 
 
 # --------------------------------------------------------------------------- #
@@ -96,7 +96,7 @@ def test_the_last_cycle_row_names_the_step_it_died_on(tmp_path):
         {"event": "CYCLE_KILLED", "cycle_id": "c1",
          "reason": {"wedged_step": "daily_analysis"}},
     ]) + "\n", encoding="utf-8")
-    assert io._last_cycle(led) == "KILLED на стъпка daily_analysis"
+    assert io._last_cycle(led) == "KILLED at step daily_analysis"
 
 
 def test_a_finished_cycle_says_finished(tmp_path):
@@ -120,7 +120,7 @@ def test_zero_paired_judgements_is_not_a_rate_of_zero():
                                             "justified_doubts": 0,
                                             "missed_failures": 0}})
     assert io.UNKNOWN in row
-    assert "0 сдвоени" in row
+    assert "0 paired" in row
 
 
 def test_the_restart_row_survives_an_unreadable_state_file():
@@ -156,7 +156,7 @@ def test_it_is_built_per_call_not_cached():
 def test_every_brain_call_carries_the_block():
     src = (REPO / "core" / "brain.py").read_text(encoding="utf-8")
     assert "_self_state()" in src
-    assert "КАК СЕ СПРАВЯШ" in src
+    assert "HOW YOU ARE DOING" in src
     prompt = src.split("prompt = (", 1)[1][:900]
     assert "_self_state()" in prompt, (
         "the block is defined but does not reach the prompt string")

@@ -211,10 +211,10 @@ def build(cycle_start: float | None = None, cycle_id: str | None = None) -> dict
                       "кажи го. Пиши на български, кратко и разбираемо."),
             evidence=("ТВОЯТ ПЛАН:\n" + json.dumps(plan, ensure_ascii=False)[:800] +
                       "\n\nСТЪПКИТЕ:\n" + digest[-4000:]),
-            schema={"opening": "3-4 изречения: какво стана днес, с твои думи",
-                    "decisions": "какво реши ТИ днес (списък, кратко)",
-                    "worry": "кое те притеснява най-много в този цикъл",
-                    "closing": "едно изречение: беше ли този цикъл успешен и защо"},
+            schema={"opening": "3-4 sentences: what happened today, in your own words",
+                    "decisions": "what YOU decided today (a list, short)",
+                    "worry": "what worries you most in this cycle",
+                    "closing": "one sentence: was this cycle successful, and why"},
             kind="cycle_report")
         if d:
             opening, closing = d, d

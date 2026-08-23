@@ -81,12 +81,12 @@ def _body() -> str:
             if hw.get(k) is not None:
                 parts.append(f"{k}={hw[k]}")
         if sw.get("ollama_models"):
-            parts.append("местни модели=" + ",".join(str(m) for m in sw["ollama_models"]))
+            parts.append("local models=" + ",".join(str(m) for m in sw["ollama_models"]))
         if sw.get("ollama_running") is not None:
-            parts.append(f"ollama={'жива' if sw['ollama_running'] else 'мъртва'}")
-        return "; ".join(parts) or "(няма body_scan)"
+            parts.append(f"ollama={'alive' if sw['ollama_running'] else 'dead'}")
+        return "; ".join(parts) or "(no body_scan)"
     except Exception:
-        return "(няма body_scan)"
+        return "(no body_scan)"
 
 
 def _tail_budget(text: str, budget: int, what: str) -> str:
@@ -180,8 +180,8 @@ def _self_state() -> str:
         from core.interoception import block
         return block()
     except Exception as exc:  # noqa: BLE001
-        return (f"(самонаблюдението не се чете: {type(exc).__name__} — "
-                f"мисли без него, но знай, че го няма)")
+        return (f"(self-observation cannot be read: {type(exc).__name__} — "
+                f"think without it, but know that it is missing)")
 
 
 def _spirit() -> str:
@@ -453,29 +453,30 @@ def think(role: str, question: str, evidence: str = "", schema: dict | None = No
                   f"({', '.join(available) or 'няма модели'}) -> {model}")
     fields = ""
     if schema:
-        fields = ("\n\nОтговори САМО с JSON с тези полета (без текст около него):\n{\n" +
+        fields = ("\n\nAnswer ONLY with JSON carrying these fields (no text "
+                  "around it):\n{\n" +
                   ",\n".join(f'  "{k}": ... // {v}' for k, v in schema.items()) + "\n}")
         if require_quote and "quote" not in schema:
-            fields = fields[:-2] + ',\n  "quote": ... // точен ред от материала,\
- на който стъпва изводът ти\n}'
+            fields = fields[:-2] + ',\n  "quote": ... // the exact line from the material\
+ your conclusion stands on\n}'
 
     prompt = (
-        f"Ти си мозъкът на CORTEX++ — не помощник, а самата система, която мисли.\n"
-        f"РОЛЯ СЕГА: {role}\n\n"
-        f"ТЯЛО (машината ти в момента): {_body()}\n\n"
-        f"КАК СЕ СПРАВЯШ (пет реда, винаги в този ред):\n{_self_state()}\n\n"
-        f"ДУХ:\n{_spirit()}\n\n"
-        f"ПАМЕТ (твои предишни присъди):\n{_memory(kind)}\n\n"
+        f"You are the brain of CORTEX++ — not an assistant, but the system itself, thinking.\n"
+        f"ROLE NOW: {role}\n\n"
+        f"BODY (your machine right now): {_body()}\n\n"
+        f"HOW YOU ARE DOING (five rows, always in this order):\n{_self_state()}\n\n"
+        f"SPIRIT:\n{_spirit()}\n\n"
+        f"MEMORY (your own earlier verdicts):\n{_memory(kind)}\n\n"
         # AFTER the memory block and immediately before the question, which is
         # the position that matters: whatever the exemplars just demonstrated,
         # this is the last instruction the model reads before being asked.
         f"{LANGUAGE_PIN}\n\n"
-        f"ВЪПРОС: {question}\n"
-        + (f"\nМАТЕРИАЛ:\n{str(evidence)[-5000:]}\n" if evidence else "")
-        + "\nГРАНИЦИ на ДЕЙСТВИЕТО (не на мисълта): само безплатни/локални решения; "
-          f"не редактирай сам {', '.join(POLICY['protected_files'])} — за тях предлагай "
-          "на човека.\nМисли от материала, не общи приказки. Ако материалът не стига "
-          "за извод, кажи го."
+        f"QUESTION: {question}\n"
+        + (f"\nMATERIAL:\n{str(evidence)[-5000:]}\n" if evidence else "")
+        + "\nLIMITS ON THE ACTION (not on the thought): free or local solutions "
+          f"only; do not edit {', '.join(POLICY['protected_files'])} yourself — "
+          "for those, propose to the human.\nThink from the material, not in "
+          "generalities. If the material is not enough for a conclusion, say so."
         + fields
     )
 
@@ -635,11 +636,11 @@ def brief_cycle() -> dict | None:
                   "план, не чужда задача."),
         evidence=_state_for_briefing(),
         schema={
-            "focus": "с една дума-две: какво е фокусът ти този цикъл",
-            "why": "защо точно това, според състоянието ти",
-            "watch": "списък от 1-3 неща, които искаш да следиш този цикъл",
-            "suspicion": "какво подозираш, че е сгрешено в самия теб (или празно)",
-            "success_test": "по какво ще познаеш накрая, че цикълът е успял",
+            "focus": "in a word or two: what your focus is this cycle",
+            "why": "why exactly that, given your state",
+            "watch": "a list of 1-3 things you want to watch this cycle",
+            "suspicion": "what you suspect is wrong in yourself (or empty)",
+            "success_test": "how you will know at the end that the cycle succeeded",
         },
         kind="cycle_plan")
     if not d:
@@ -699,10 +700,10 @@ def debrief_cycle(cycle_log_tail: str = "") -> dict | None:
                   "\n\nКРАЯТ НА ЦИКЪЛА:\n" + str(cycle_log_tail)[-3000:] +
                   "\n\nСЪСТОЯНИЕ СЕГА:\n" + _state_for_briefing()),
         schema={
-            "success": "true/false — сбъдна ли се твоят success_test",
-            "verdict": "1-3 изречения: какво стана наистина",
-            "blind_spot": "какво планът ти не видя",
-            "carry_forward": "какво да помниш за следващия цикъл",
+            "success": "true/false — did your success_test come true",
+            "verdict": "1-3 sentences: what actually happened",
+            "blind_spot": "what your plan did not see",
+            "carry_forward": "what to remember for the next cycle",
         },
         kind="cycle_review")
     return d
@@ -843,12 +844,12 @@ def attend(step: str) -> dict | None:
     # докато решава дали да пропусне стъпка. По-евтиният вариант — да му подадем
     # само „главното" от духа — е точно резенът, който днес отряза границата.
     prompt = (
-        "Ти си мозъкът на CORTEX++ и стоиш на всяка стъпка от собствения си цикъл.\n\n"
-        f"ДУХ (кой си, за какво съществуваш и къде ти е границата):\n{_spirit()}\n\n"
-        f"ПАМЕТ (твои предишни присъди по стъпки):\n{_memory('step_stance', n=3)}\n\n"
-        f"ТВОЯТ ПЛАН ДНЕС: фокус={plan.get('focus')!r}; следиш={plan.get('watch')!r}; "
-        f"тест за успех={str(plan.get('success_test'))[:120]!r}\n"
-        f"ТЯЛО: {_body()}\n"
+        "You are the brain of CORTEX++ and you stand at every step of your own cycle.\n\n"
+        f"SPIRIT (who you are, what you exist for, and where your limit is):\n{_spirit()}\n\n"
+        f"MEMORY (your own earlier step verdicts):\n{_memory('step_stance', n=3)}\n\n"
+        f"YOUR PLAN TODAY: focus={plan.get('focus')!r}; watching={plan.get('watch')!r}; "
+        f"success test={str(plan.get('success_test'))[:120]!r}\n"
+        f"BODY: {_body()}\n"
         # ── ПРАЗНАТА КЛЕТКА НЕ СЕ ПОДАВА (15 август 2026) ───────────────────
         # Първите два реални записа на attend() дадоха ЕДНО И СЪЩО празно
         # prev_step и ДВЕ ПРОТИВОПОЛОЖНИ присъди: веднъж prev_ok=true „изпълнена
@@ -858,11 +859,12 @@ def attend(step: str) -> dict | None:
         # я запълва с правдоподобна проза.
         # Затова празната клетка вече НЕ СЕ ПОКАЗВА. Не питаш за нещо, което го
         # няма, и после не филтрираш отговора — не даваш повод за отговор.
-        + (f"ПРЕДИШНА СТЪПКА: {prev_name}\n"
-           f"НЕЙНИЯТ ИЗХОД:\n{prev_out}\n\n" if (prev_name and prev_out) else
-           "ПРЕДИШНА СТЪПКА: НЯМА (това е първата стъпка или изходът ѝ не се вижда).\n"
-           "НЕ съди предишната стъпка — за нея нямаш доказателство. Остави prev_ok "
-           "и prev_note празни.\n\n")
+        + (f"PREVIOUS STEP: {prev_name}\n"
+           f"ITS OUTPUT:\n{prev_out}\n\n" if (prev_name and prev_out) else
+           "PREVIOUS STEP: NONE (this is the first step, or its output is not "
+           "visible).\n"
+           "Do NOT judge the previous step — you have no evidence about it. "
+           "Leave prev_ok and prev_note empty.\n\n")
         # THE SECOND PROMPT BUILDER, AND THE ONE THAT DRIFTED FURTHEST. think()
         # runs a few times a cycle; this runs at EVERY beat — 63 times on the
         # 23 Aug night — and 19 of those 63 stances came back in Chinese. It is
@@ -871,16 +873,17 @@ def attend(step: str) -> dict | None:
         # empty and the gate in Part 2 has nothing to filter here. The pin is
         # the only thing that reaches this stream.
         + f"{LANGUAGE_PIN}\n\n"
-        + f"СЕГА ЗАПОЧВА: {step}\n\n"
-        + ('Отговори САМО с JSON: {"prev_ok": true/false, "prev_note": "кратко: какво '
-           'излезе от предишната", ' if (prev_name and prev_out) else
-           'Отговори САМО с JSON: {')
-        + '"stance": "върви|следи|пропусни", "expect": "какво '
-          'очакваш от тази стъпка (кратко)", "serves_goal": "с едно изречение: как '
-          'ТАЗИ стъпка служи на целта, или защо не ѝ служи"}\n'
-        + ("Кратко. Ако предишната е дала празен/подозрителен резултат — кажи го."
+        + f"NOW STARTING: {step}\n\n"
+        + ('Answer ONLY with JSON: {"prev_ok": true/false, "prev_note": "short: '
+           'what came out of the previous step", ' if (prev_name and prev_out) else
+           'Answer ONLY with JSON: {')
+        + '"stance": "върви|следи|пропусни", "expect": "what you '
+          'expect from this step (short)", "serves_goal": "in one sentence: how '
+          'THIS step serves the goal, or why it does not"}\n'
+        + ("Be short. If the previous step gave an empty or suspicious result — "
+           "say so."
            if (prev_name and prev_out) else
-           "Кратко. Говори САМО за стъпката, която започва сега.")
+           "Be short. Speak ONLY about the step that is starting now.")
     )
     # ── МЪЛЧАНИЕТО СЕ ЗАПИСВА (законът, т.6) ───────────────────────────────
     # Дотук всяка несполука тук се връщаше като None БЕЗ СЛЕДА. Затова днешният

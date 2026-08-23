@@ -221,10 +221,10 @@ def run() -> dict:
         evidence=_state(),
         schema={
             "action": "напред или връщане",
-            "step": "ако връщане: кое точно от списъка (иначе празно)",
-            "why": "какво в днешната картина обезсмисля свършеното",
-            "expect": "какво очакваш да се промени след преизчислението",
-            "wants": "какво би поискал, ако нямаше ограничения (или празно)",
+            "step": "if rollback: exactly which one from the list (otherwise empty)",
+            "why": "what in today's picture makes the finished work pointless",
+            "expect": "what you expect to change after the recomputation",
+            "wants": "what you would ask for if there were no limits (or empty)",
         },
         kind="reconsider")
 

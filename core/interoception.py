@@ -64,11 +64,11 @@ LEDGER = BASE / "memory" / "existence_ledger.jsonl"
 SCHED_STATE = BASE / "memory" / "scheduler_state.json"
 SCHED_CFG = BASE / "config" / "scheduler.json"
 
-UNKNOWN = "неизвестно"
+UNKNOWN = "unknown"
 
 # The five, in this order, always.
-ROWS = ("ФАЛШИВИ_ТРЕВОГИ", "ОТВОРЕНИ_ПРЕДЛОЖЕНИЯ", "ПОСЛЕДЕН_ЦИКЪЛ",
-        "СВОБОДНА_ПАМЕТ", "РЕСТАРТИ_ДНЕС")
+ROWS = ("FALSE_ALARMS", "OPEN_PROPOSALS", "LAST_CYCLE",
+        "FREE_MEMORY", "RESTARTS_TODAY")
 
 # If building the block costs more than this, say so out loud rather than
 # letting it be discovered as "the cycle got slower".
@@ -91,7 +91,7 @@ def _json(p: pathlib.Path):
 
 def _false_alarms(mirror) -> str:
     if not isinstance(mirror, dict):
-        return f"{UNKNOWN} (memory/self_mirror_latest.json не се чете)"
+        return f"{UNKNOWN} (memory/self_mirror_latest.json cannot be read)"
     cal = mirror.get("calibration")
     if not isinstance(cal, dict):
         return f"{UNKNOWN} (огледалото няма раздел calibration)"
@@ -99,8 +99,8 @@ def _false_alarms(mirror) -> str:
     judged = sum(int(cal.get(k) or 0) for k in
                  ("false_alarms", "justified_doubts", "missed_failures"))
     if fa is None or judged == 0:
-        return f"{UNKNOWN} (0 сдвоени присъди в прозореца — няма от какво да се смята)"
-    return f"{round(int(fa) / judged, 3)} ({fa} от {judged} сдвоени)"
+        return f"{UNKNOWN} (0 paired verdicts in the window — nothing to compute from)"
+    return f"{round(int(fa) / judged, 3)} ({fa} of {judged} paired)"
 
 
 def _open_proposals(mirror) -> str:
@@ -108,12 +108,12 @@ def _open_proposals(mirror) -> str:
         return f"{UNKNOWN} (memory/self_mirror_latest.json не се чете)"
     p = mirror.get("proposals")
     if not isinstance(p, dict) or p.get("open") is None:
-        return f"{UNKNOWN} (огледалото не брои предложения)"
+        return f"{UNKNOWN} (the mirror does not count proposals)"
     out = f"{p['open']}"
     if p.get("overdue") is not None:
-        out += f" ({p['overdue']} просрочени)"
+        out += f" ({p['overdue']} overdue)"
     if p.get("oldest_days") is not None:
-        out += f", най-старото на {p['oldest_days']} дни"
+        out += f", oldest {p['oldest_days']} days"
     return out
 
 
@@ -126,7 +126,7 @@ def _last_cycle(ledger_path: pathlib.Path | None = None) -> str:
         lines = [ln for ln in p.read_text(encoding="utf-8",
                                           errors="ignore").splitlines() if ln.strip()]
     except Exception:
-        return f"{UNKNOWN} (регистърът на съществуването не се чете)"
+        return f"{UNKNOWN} (the existence ledger cannot be read)"
     for line in reversed(lines):
         try:
             e = json.loads(line)
@@ -138,24 +138,24 @@ def _last_cycle(ledger_path: pathlib.Path | None = None) -> str:
         if ev == "CYCLE_FINISHED":
             return "FINISHED"
         step = (e.get("reason") or {}).get("wedged_step") or e.get("last_step") \
-            or e.get("wedged_step") or "неизвестна стъпка"
-        return f"{ev.replace('CYCLE_', '')} на стъпка {step}"
-    return f"{UNKNOWN} (никое终 събитие в регистъра)".replace("终", "")
+            or e.get("wedged_step") or "an unknown step"
+        return f"{ev.replace('CYCLE_', '')} at step {step}"
+    return f"{UNKNOWN} (no terminal event in the ledger)"
 
 
 def _headroom(body_row) -> str:
     if not isinstance(body_row, dict):
-        return f"{UNKNOWN} (сензориумът няма нито един ред — супервайзорът не е тиктакал)"
+        return f"{UNKNOWN} (the sensorium has no row at all — the supervisor has not ticked)"
     parts = []
     if body_row.get("ram_available_mb") is not None:
         parts.append(f"RAM {body_row['ram_available_mb']} MB "
-                     f"({body_row.get('ram_pct', '?')}% заети)")
+                     f"({body_row.get('ram_pct', '?')}% used)")
     if body_row.get("gpu_vram_total_mb"):
         free = body_row["gpu_vram_total_mb"] - body_row.get("gpu_vram_used_mb", 0)
-        parts.append(f"VRAM {free} MB от {body_row['gpu_vram_total_mb']}")
+        parts.append(f"VRAM {free} MB of {body_row['gpu_vram_total_mb']}")
     elif (body_row.get("unavailable") or {}).get("gpu"):
-        parts.append("VRAM неизвестна (няма nvidia-smi)")
-    return ", ".join(parts) or f"{UNKNOWN} (редът няма нито памет, нито VRAM)"
+        parts.append("VRAM unknown (no nvidia-smi)")
+    return ", ".join(parts) or f"{UNKNOWN} (the row has neither memory nor VRAM)"
 
 
 _UNSET = object()   # "not passed" is a different thing from "passed, unreadable"
@@ -170,13 +170,13 @@ def _restart_budget(state=_UNSET, cfg=_UNSET) -> str:
     st = _json(SCHED_STATE) if state is _UNSET else state
     cf = _json(SCHED_CFG) if cfg is _UNSET else cfg
     if not isinstance(cf, dict):
-        return f"{UNKNOWN} (config/scheduler.json не се чете)"
+        return f"{UNKNOWN} (config/scheduler.json cannot be read)"
     budget = int(cf.get("max_restarts_per_day", 2))
     if not isinstance(st, dict):
-        return f"0/{budget} (memory/scheduler_state.json не се чете — приема се 0)"
+        return f"0/{budget} (memory/scheduler_state.json cannot be read — 0 assumed)"
     today = datetime.now().astimezone().date().isoformat()
     used = int((st.get("restarts") or {}).get(today, 0))
-    return f"{used}/{budget}, остават {max(budget - used, 0)}"
+    return f"{used}/{budget}, {max(budget - used, 0)} left"
 
 
 # ---------------------------------------------------------------------------
@@ -196,11 +196,11 @@ def self_state(mirror=None, body_row=None) -> dict:
 
     out = {}
     for label, fn in (
-        ("ФАЛШИВИ_ТРЕВОГИ", lambda: _false_alarms(mirror)),
-        ("ОТВОРЕНИ_ПРЕДЛОЖЕНИЯ", lambda: _open_proposals(mirror)),
-        ("ПОСЛЕДЕН_ЦИКЪЛ", _last_cycle),
-        ("СВОБОДНА_ПАМЕТ", lambda: _headroom(body_row)),
-        ("РЕСТАРТИ_ДНЕС", _restart_budget),
+        ("FALSE_ALARMS", lambda: _false_alarms(mirror)),
+        ("OPEN_PROPOSALS", lambda: _open_proposals(mirror)),
+        ("LAST_CYCLE", _last_cycle),
+        ("FREE_MEMORY", lambda: _headroom(body_row)),
+        ("RESTARTS_TODAY", _restart_budget),
     ):
         try:
             out[label] = str(fn())
@@ -244,18 +244,20 @@ READ_OUT = BASE / "memory" / "mirror_read_latest.json"
 
 MIRROR_QUOTA = 2
 
-READ_PROMPT = """Това е ЦЯЛОТО ти огледало за този цикъл — как си се справял, не
-как си устроен. Прочети го и кажи какво виждаш.
+READ_PROMPT = """This is your WHOLE mirror for this cycle — how you have been
+doing, not how you are built. Read it and say what you see.
 
-ОГЛЕДАЛОТО:
+THE MIRROR:
 {mirror}
 
-Отговори с JSON и нищо друго:
-  saw      — кое е най-важното в тези числа, с ТОЧНИТЕ числа в изречението
-  worries  — кое от тях те притеснява и защо
-  numbers  — списък от числата, които цитира (както са написани в огледалото)
+Answer with JSON and nothing else:
+  saw      — what matters most in these numbers, with the EXACT numbers in the
+             sentence
+  worries  — what worries you in them, and why
+  numbers  — the numbers you cited, as a list, written as they stand in the
+             mirror
 
-Български или английски. Никакви йероглифи. Не измисляй число, което го няма."""
+Do not invent a number that is not there."""
 
 
 def mirror_numbers(mirror=None) -> set:

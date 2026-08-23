@@ -163,12 +163,12 @@ def judge_series(limit: int = 24) -> dict:
                 f"застой). Ти решаваш кое от двете е това — и как се казва режимът."),
             evidence=json.dumps(r, ensure_ascii=False, indent=2),
             schema={
-                "expected_regime": "как ТИ наричаш режима, в който този показател "
-                                   "трябва да бъде по своята природа",
-                "why_expected": "на какво основание очакваш точно този режим",
-                "healthy": "true/false — здраво ли е видяното спрямо очакваното",
-                "alarm": "true/false — има ли повод за тревога",
-                "reading": "какво ТОЧНО ти казва тази серия, с едно-две изречения",
+                "expected_regime": "what YOU call the regime this indicator "
+                                   "should be in by its nature",
+                "why_expected": "on what grounds you expect exactly that regime",
+                "healthy": "true/false — is what you see healthy against what you expected",
+                "alarm": "true/false — is there cause for alarm",
+                "reading": "what EXACTLY this series tells you, in one or two sentences",
             },
             kind="constancy", fast=True)
         r["verdict"] = {k: v for k, v in (d or {}).items() if not k.startswith("_")} or None
@@ -221,10 +221,10 @@ def judge_together(rows: list | None = None) -> dict | None:
                   "ДВА конкретни показателя от таблицата — иначе не я казвай."),
         evidence=table,
         schema={
-            "relations": "списък от връзки; всяка назовава поне два показателя "
-                         "и казва какво следва от съчетанието им",
-            "most_telling": "коя връзка е най-показателна и защо",
-            "what_would_change_my_mind": "какво наблюдение би оборило този прочит",
+            "relations": "a list of relations; each names at least two indicators "
+                         "and says what follows from their combination",
+            "most_telling": "which relation is the most telling, and why",
+            "what_would_change_my_mind": "what observation would refute this reading",
         },
         kind="constellation")
     if not d:
