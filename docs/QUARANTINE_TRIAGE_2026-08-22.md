@@ -594,3 +594,87 @@ were diffed against the REVIEW list and matched exactly.
                                   Applied, the next boot dies on ImportError.
 
 Read the last one first. It does not need approving to be worth knowing about.
+
+---
+
+## EXECUTED — 23 August 2026, the one-by-one review begins
+
+Two of the four kept back on 22 August were read in full, line by line, and
+rejected. Same tool, same rule, one command each:
+
+    scripts/review_quarantine.py --reject general_patch.1785353287.py
+    scripts/review_quarantine.py --reject general_patch.1785353298.py
+
+    quarantine before    4 patches
+    quarantine after     2 patches
+    rejected/ before    54 patches  (108 files)
+    rejected/ after     56 patches  (112 files)
+    deleted              0
+
+NOTHING WAS DELETED. Both `.py` files and both `.json` sidecars were MOVED into
+`patches/quarantine/rejected/`. The sha256 of each file is unchanged across the
+move, so it is provably a move and not a rewrite:
+
+    5132322746d21bcc  general_patch.1785353287.py   before and after
+    d0d03501123e4336  general_patch.1785353298.py   before and after
+
+A plain `mv` puts either one back.
+
+### general_patch.1785353287.py — REJECTED
+
+> registers a class that does not exist and would break any future config loader
+
+Writes `config/fast_cycle_config.json` with
+`{"module": "agents.energy.energy_review_agent_qwen", "class":
+"EnergyReviewAgentQwen", "enabled": true}`.
+
+The module exists. **The class does not — `EnergyReviewAgentQwen` appears
+nowhere in this repository.** `agents/energy/energy_review_agent_qwen.py` is a
+module with a `main()` function and no classes at all, which is exactly how
+`fast_cycle_runner.py:2204` already calls it. So this is worse than inert: today
+nothing reads `fast_cycle_config.json`, but the moment anyone writes the loader
+this config is asking for, that loader dies on `getattr(module,
+"EnergyReviewAgentQwen")`. It leaves a tripwire for the next person who does the
+work it is proposing.
+
+It also imports `call_groq`, `full_scan` and `find_in_self` and uses none of
+them — three live imports for a body that touches nothing.
+
+The energy step has been wired since long before this patch was written, at
+`fast_cycle_runner.py:2203-2205`.
+
+### general_patch.1785353298.py — REJECTED
+
+> duplicates three fields already recorded elsewhere and self-describes as a stub
+
+A `DailyAnalysisAgent` that calls `memory.existence_model.am_i_alive()` and
+`memory.body_scan.full_scan()` — both real, both resolving correctly, including
+`full_scan()["timestamp"]` — and appends `{timestamp, system_alive,
+last_body_scan}` to `memory/daily_log.json`.
+
+All three fields are already on disk. `system_alive` is in
+`memory/heartbeat.json` and in the existence ledger; `last_body_scan` is in
+`memory/body_scan_latest.json`, written by the `body_scan` step every cycle;
+`timestamp` is on both. Nothing reads `daily_log.json`, so this is a fourth copy
+of two facts, in a file with no reader.
+
+Its own docstring is the clearest argument against it: *"Simple integration
+stub. The real CORTEX++ system loads agents via a dispatcher; here we just
+ensure that the daily agent runs when this script is executed as a stand-alone
+module."* It says it is not wired.
+
+Daily analysis has been wired since before this patch, at
+`fast_cycle_runner.py:2549-2550`, running `agents/core/daily_analysis_agent.py`
+— a 14.7 KB module, not a class.
+
+### The two that remain
+
+    general_patch.1785306175.py   LLM rate-limit config + a live call_groq() on
+                                  import
+    general_patch.1786755265.py   DANGEROUS — rewrites fast_cycle_runner.py to
+                                  import agents.water_review_agent, which does
+                                  not exist. Applied, the next boot dies on
+                                  ImportError.
+
+Read the second one first. It is the only patch in the set that writes to a file
+the system actually runs.
