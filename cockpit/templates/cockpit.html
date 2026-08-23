@@ -58,8 +58,13 @@
   .ctlnote{color:var(--dim);font-size:10px}
   #askbox{flex:1;min-width:220px;background:#0a0d11;border:1px solid var(--line);
           color:var(--ink);padding:5px 8px;border-radius:3px;font:inherit}
-  .unread{color:var(--yel);font-size:11px;white-space:nowrap}
-  .unread.zero{color:var(--dim)}
+  /* ITEM 6b — it was a <span>. The count was correct, /api/expression/seen was
+     wired and tested, and NOTHING EVER CALLED IT: the number could only ever go
+     up, so the one control that says "I have read this" did not exist and the
+     count stopped meaning anything after the first day. */
+  .unread{color:var(--yel);font-size:11px;white-space:nowrap;cursor:pointer}
+  .unread.zero{color:var(--dim);cursor:default}
+  .unread:disabled{cursor:default}
 
   /* ── panels ────────────────────────────────────────────────────────── */
   .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(430px,1fr));
@@ -86,6 +91,12 @@
   .steps{display:flex;flex-wrap:wrap;gap:3px}
   .step{width:11px;height:11px;border-radius:2px;background:#232a33}
   .step.done{background:var(--grn)} .step.current{background:var(--yel);box-shadow:0 0 0 2px #4a3d17}
+  /* ITEM 6c — `passed` means "the heartbeat is past this step", which is
+     INFERRED FROM POSITION and not a checkpoint. The API has computed it since
+     22 Aug and the page rendered only done/current/todo, so the weaker evidence
+     never reached the reader. It must not look like `done`: a hollow outline in
+     the same green says "we assume so", a filled square says "it is on record". */
+  .step.passed{background:transparent;box-shadow:inset 0 0 0 1.5px #245c33}
   .needle{font-size:32px;font-weight:700}
   .needle.bad{color:var(--red)} .needle.ok{color:var(--grn)}
   a{color:var(--blu)}
@@ -146,7 +157,7 @@
   <div class="ctlrow">
     <input type="text" id="askbox" placeholder="ask — prefix DEEP: to send it to the 8b batch window">
     <button id="asksend">ask</button>
-    <span class="unread zero" id="unread">0 unread</span>
+    <button class="unread zero" id="unread" title="mark every expression line on screen as seen">0 unread</button>
     <span style="width:12px"></span>
     <button class="cmd" data-cmd="venv\Scripts\python.exe supervisor.py --status">supervisor status</button>
     <button class="cmd" data-cmd="venv\Scripts\python.exe fast_cycle_runner.py">run full cycle</button>
@@ -223,7 +234,8 @@ async function tabOverview(){
   const [c, f, p] = await Promise.all([get('/api/cycles'), get('/api/flow'), get('/api/pending')]);
   const b = c.badges||{};
   const squares = c.checklist.map(s =>
-    `<div class="step ${s.state}" title="${esc(s.index+' '+s.step)}"></div>`).join('');
+    `<div class="step ${s.state}" title="${esc(s.index+' '+s.step+' — '+s.state+(s.evidence?': '+s.evidence:''))}"></div>`).join('');
+  const k = c.counts||{};
   const n = f.computed_now||{};
   const v = n.flow_score!==undefined?n.flow_score:null;
   const bad = v!==null && v < f.red_below;
@@ -233,7 +245,11 @@ async function tabOverview(){
       <div class="steps" style="margin:8px 0">${squares}</div>
       <div><span class="pill ${b.survival_latched?'bad':'on'}">survival ${b.survival_latched?'LATCHED':'off'}</span>
       <span class="pill ${b.degraded_steps?'warn':''}">DEGRADED ${b.degraded_steps}</span>
-      <span class="pill">${c.done_count}/${c.total_steps} steps</span></div>`)}
+      <span class="pill on">${esc(k.done||0)} on record</span>
+      <span class="pill">${esc(k.passed||0)} passed (inferred)</span>
+      <span class="pill">${esc(c.covered)}/${c.total_steps} covered</span></div>
+      <div class="meta">filled = a checkpoint in cycle_resume.jsonl · outline =
+      inferred from the heartbeat's position, not on record</div>`)}
     ${panel('Flow score', `
       <div class="needle ${bad?'bad':'ok'}">${v===null?'—':esc(v)}</div>
       <div class="meta">red zone below ${f.red_below}${f.computed_not_recalled?' · computed now, not recalled':''}</div>`)}
@@ -250,7 +266,8 @@ async function tabCycle(){
   const b = c.badges||{};
   const rows = c.checklist.map(s =>
     `<tr><td style="width:56px" class="meta">${esc(s.index)}</td>
-      <td><span class="pill ${s.state==='done'?'on':s.state==='current'?'warn':''}">${s.state}</span></td>
+      <td><span class="pill ${s.state==='done'?'on':s.state==='current'?'warn':''}"
+        title="${esc(s.evidence||'')}">${s.state}</span>${s.state==='passed'?'<span class="meta"> inferred</span>':''}</td>
       <td>${esc(s.step)}</td><td class="meta">${esc((s.what||'').slice(0,70))}</td></tr>`).join('');
   const sealed = c.last_sealed;
   return `<div class="grid">
@@ -259,7 +276,9 @@ async function tabCycle(){
       <div>
         <span class="pill ${b.survival_latched?'bad':'on'}">survival ${b.survival_latched?'LATCHED':'off'}</span>
         <span class="pill ${b.degraded_steps?'warn':''}">DEGRADED ${b.degraded_steps}</span>
-        <span class="pill">${c.done_count}/${c.total_steps}</span>
+        <span class="pill on">${esc((c.counts||{}).done||0)} on record</span>
+        <span class="pill">${esc((c.counts||{}).passed||0)} passed (inferred)</span>
+        <span class="pill">${esc(c.covered)}/${c.total_steps} covered</span>
       </div>
       ${sealed?`<table style="margin-top:8px">
         <tr><td>last sealed</td><td>${esc(sealed.sealed_at||'')}</td></tr>
@@ -487,7 +506,31 @@ async function refreshUnread(){
     const el = $('#unread');
     el.textContent = d.unread + ' unread';
     el.className = 'unread' + (d.unread ? '' : ' zero');
+    el.disabled = !d.unread;
   }catch(e){}
+}
+
+/* ITEM 6b — the pull that marks lines seen. /api/expression/seen is append-only
+   by design: "seen" is a fact about a moment and a mark that can be taken back
+   makes the count a number the reader can talk themselves into. So this sends
+   the timestamps of the expression lines CURRENTLY IN THE STREAM and nothing
+   else — never "mark everything", which would silently swallow lines written
+   between the last poll and the click. */
+async function markSeen(){
+  const el = $('#unread');
+  try{
+    const d = await get('/api/expression');
+    const ts = (d.lines||[]).filter(l => l.depth === 'expression')
+                            .map(l => l.ts).filter(Boolean);
+    if(!ts.length){ return; }
+    const r = await fetch('/api/expression/seen', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ts})});
+    const out = await r.json();
+    el.textContent = out.unread + ' unread';
+    el.className = 'unread' + (out.unread ? '' : ' zero');
+    el.disabled = !out.unread;
+  }catch(e){ el.textContent = 'seen failed'; }
 }
 
 $('#asksend').onclick = async () => {
@@ -533,6 +576,7 @@ async function toggleDevice(which){
   refreshSwitches();
   if(active === 'body') render();
 }
+$('#unread').onclick = markSeen;
 $('#swmic').onclick = () => toggleDevice('mic');
 $('#swcam').onclick = () => toggleDevice('camera');
 

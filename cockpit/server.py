@@ -255,9 +255,14 @@ def api_cycles():
     """
     from core.cycle_map import STEPS
     try:
+        from core.cycle_map import SUBSTEP, UNKNOWN, resolve
+    except ImportError:                      # older map, no resolver
         from core.cycle_map import ALIASES
-    except ImportError:
-        ALIASES = {}
+        SUBSTEP, UNKNOWN = "substep", "unknown"
+
+        def resolve(name):
+            canon = ALIASES.get(name, name)
+            return canon, ("step" if canon != name else UNKNOWN)
 
     all_steps = [{"step": s[0], "index": s[1], "what": s[2]} for s in STEPS]
     names = [s["step"] for s in all_steps]
@@ -268,19 +273,30 @@ def api_cycles():
     survival = _read_json(ds.BASE / "memory" / "survival_state.json", {}) or {}
     contract = _read_json(ds.BASE / "memory" / "step_contract_latest.json", {}) or {}
 
-    # Checkpoints per cycle, with the alias applied in BOTH directions so a name
-    # recorded either way still finds its square.
-    by_cycle, unmapped_by_cycle = {}, {}
-    rev = {v: k for k, v in (ALIASES or {}).items()}
+    # ── ONE RESOLVER, NOT A LOCAL GUESS (23 Aug 2026) ─────────────────────
+    # This used to apply ALIASES in both directions and call whatever was left
+    # `unmapped`. core.cycle_map.resolve() now knows all three tables — steps,
+    # aliases and SUBSTEPS — so cortex_orchestrator and orchestrator_grounded,
+    # which are two _run()s inside cognitive_orchestrator's one beat, light that
+    # step's square instead of being reported as names nothing can display.
+    # A name that resolves to nothing is STILL reported: unmapped is now the
+    # genuinely unknown, which is the only thing it was ever supposed to mean.
+    by_cycle, unmapped_by_cycle, substeps_by_cycle = {}, {}, {}
     for row in resume:
         cid, step = row.get("cycle_id"), row.get("last_completed_step")
         if not cid or not step:
             continue
-        canon = ALIASES.get(step, step)
-        if canon not in pos:
-            canon = rev.get(step, canon)
+        canon, kind = resolve(step)
+        if kind == SUBSTEP:
+            substeps_by_cycle.setdefault(cid, set()).add(step)
         if canon in pos:
-            by_cycle.setdefault(cid, set()).add(canon)
+            # IDENTITY IS (NAME, INDEX). body_scan runs twice — index 0 before
+            # everything and index 13 after the heavy steps — so a set of names
+            # lit BOTH squares off one checkpoint and the checklist claimed one
+            # more finished step than the log holds. The checkpoint has carried
+            # its step_index all along; it just was not being read.
+            by_cycle.setdefault(cid, set()).add(
+                (canon, str(row.get("step_index") or "")))
         else:
             unmapped_by_cycle.setdefault(cid, set()).add(step)
 
@@ -293,16 +309,20 @@ def api_cycles():
         current_cycle = sealed["cycle_id"]
 
     done = by_cycle.get(current_cycle, set())
+    # An older checkpoint may carry no index; then the name alone is all the
+    # evidence there is, and it lights whichever square matches by name.
+    done_names = {name for name, idx in done if not idx}
+
     unmapped = sorted(unmapped_by_cycle.get(current_cycle, set()))
 
     # The heartbeat's step name resolved to a MAP POSITION. Its own step_index is
     # the runner's label ("4"), which is not the map's ordering.
-    cur_name = ALIASES.get(current_step, current_step) if current_step else None
+    cur_name = resolve(current_step)[0] if current_step else None
     cur_pos = pos.get(cur_name) if cur_name else None
 
     checklist = []
     for i, s in enumerate(all_steps):
-        if s["step"] in done:
+        if (s["step"], str(s["index"])) in done or s["step"] in done_names:
             state, evidence = "done", "checkpoint in cycle_resume.jsonl"
         elif s["step"] == cur_name:
             state, evidence = "current", "heartbeat"
@@ -337,6 +357,10 @@ def api_cycles():
         # number a human reads as "how far along is it".
         "done_count": counts["done"],
         "covered": counts["done"] + counts["passed"] + counts["current"],
+        "substep_checkpoints": sorted(substeps_by_cycle.get(current_cycle, set())),
+        "substep_note": ("recorded under a SUBSTEP name — a _run() inside "
+                         "another step's beat() — and resolved to the step it "
+                         "belongs to, not counted as a step of its own"),
         "unmapped_checkpoints": unmapped,
         "unmapped_note": ("recorded as completed but present in neither "
                           "cycle_map.STEPS nor ALIASES, so they can light no "

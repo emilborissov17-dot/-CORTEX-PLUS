@@ -58,13 +58,23 @@ MOVE_THRESHOLD = 0.15           # 15%, relative
 CAP_PER_MINUTE = 20
 WINDOW_SEC = 60.0
 
-# Band edges per unit. A percentage bar turns yellow at 65 and red at 85 — the
-# same numbers the page uses, kept here so the line and the bar cannot disagree.
-PERCENT_BANDS = (65.0, 85.0)
-TEMP_BANDS = (70.0, 83.0)       # GPU degrees
-PING_BANDS = (100.0, 500.0)     # milliseconds
-
-BANDS_BY_UNIT = {"%": PERCENT_BANDS, "C": TEMP_BANDS, "ms": PING_BANDS}
+# ── THE BAND COMES FROM THE DIRECTION MAP, NOT FROM THE UNIT (23 Aug 2026) ──
+# This module used to band by UNIT: anything in percent turned amber at 65 and
+# red at 85. So wifi_signal_pct at 85% — the best Wi-Fi this laptop has ever
+# had — rendered "band amber -> red", twice, at an unchanged value, while the
+# structured `band` field on the very same line said "green". The line
+# disagreed with itself, and the page was right.
+#
+# cockpit/somatic.DIRECTIONS is the map that already knows which way is bad for
+# each metric: HIGHER_BETTER (battery, wifi signal) warns at the LOW end,
+# LOWER_BETTER (load, temperature, memory) at the high end. It is what the panel
+# has used since COMMAND 21e item D, and it is what this uses now. Two band
+# tables over the same readings is how the two halves of one line end up
+# contradicting each other.
+#
+# A metric with no entry gets NO BAND — not green. A grey bar says "not judged";
+# a green bar says "judged, and fine", and this module must not make the second
+# claim by accident either.
 
 TRUNCATION_NOTE = ("TRUNCATED: over {cap} pulse lines in {window:.0f}s, so the "
                    "individual lines were not emitted")
@@ -74,13 +84,20 @@ def _now() -> str:
     return datetime.now(timezone.utc).isoformat()
 
 
-def band_of(value, unit: str) -> Optional[str]:
-    """green / amber / red, or None where the unit has no bands."""
-    edges = BANDS_BY_UNIT.get(unit)
-    if edges is None or not isinstance(value, (int, float)) or isinstance(value, bool):
+def band_of(value, unit: str = "", key: str = "") -> Optional[str]:
+    """green / amber / red for THIS metric, or None when nobody has judged it.
+
+    `key` is what decides; `unit` is kept only so the older two-argument calls
+    still parse, and with no key there is no band — a guess from the unit is
+    exactly what produced "wifi at 85% is red".
+    """
+    if not key:
         return None
-    lo, hi = edges
-    return "red" if value >= hi else "amber" if value >= lo else "green"
+    try:
+        from cockpit import somatic as som          # noqa: PLC0415
+    except Exception:
+        return None
+    return som.band_for(key, value)
 
 
 def _relative_move(new, old) -> Optional[float]:
@@ -115,7 +132,7 @@ def why_emit(row: dict, last: Optional[dict]) -> Optional[dict]:
     if not now_available:
         return None
 
-    nb, ob = band_of(value, unit), band_of(last.get("value"), unit)
+    nb, ob = band_of(value, unit, key), band_of(last.get("value"), unit, key)
     if nb and ob and nb != ob:
         return {"kind": "band", "reason": "band {} -> {}".format(ob, nb)}
 
@@ -246,6 +263,17 @@ def _selftest() -> int:
     lines = p.emit(crossed, now=2)
     print("  band green->amber    {} line(s): {}".format(
         len(lines), lines[0]["text"] if lines else ""))
+
+    # THE ONE THAT WAS WRONG. 85% of Wi-Fi signal is the best this laptop gets;
+    # the unit table called it red because 85 is a big number in percent.
+    w = PulseProducer()
+    w.emit({"groups": {"NETWORK": [row("wifi_signal_pct", 60.0)]}}, now=0)
+    lines = w.emit({"groups": {"NETWORK": [row("wifi_signal_pct", 85.0)]}}, now=1)
+    print("  wifi 60% -> 85%      {} line(s) {}  (band_of={}; the unit table "
+          "said 'amber -> red')".format(
+              len(lines), lines[0]["text"] if lines else "",
+              band_of(85.0, "%", "wifi_signal_pct")))
+    print("  no key, no band      {}".format(band_of(85.0, "%")))
 
     gone = {"groups": {"COMPUTE": [row("cpu_percent", None, available=False)]}}
     lines = p.emit(gone, now=3)

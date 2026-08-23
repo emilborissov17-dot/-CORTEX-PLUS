@@ -995,12 +995,27 @@ def test_a_value_inside_the_band_emits_nothing():
 
 
 def test_a_band_crossing_emits_exactly_one_line():
+    # THE KEY IS WHAT DECIDES, NOT THE UNIT (23 Aug 2026). This used to pass
+    # with the made-up key "cpu": the band came from a per-UNIT table, so any
+    # percentage crossing 65 was amber. That table is what rendered
+    # wifi_signal_pct at 85% as "amber -> red" — the strongest Wi-Fi this laptop
+    # gets — while the same line's own `band` field said green. The band now
+    # comes from cockpit/somatic.DIRECTIONS, which knows which way is bad for
+    # each metric, so the test has to name a metric that map has heard of.
     p = pl.PulseProducer()
-    p.emit({"groups": {"C": [_row("cpu", 40.0)]}}, now=0)
-    lines = p.emit({"groups": {"C": [_row("cpu", 70.0)]}}, now=1)
+    p.emit({"groups": {"C": [_row("cpu_percent", 40.0)]}}, now=0)
+    lines = p.emit({"groups": {"C": [_row("cpu_percent", 70.0)]}}, now=1)
     assert len(lines) == 1
     assert "band green -> amber" in lines[0]["text"]
     assert lines[0]["source_tag"] == "sensor" and lines[0]["reflexivity"] == 0
+
+
+def test_a_key_the_direction_map_has_never_heard_of_gets_no_band():
+    """Not green. A grey bar says 'not judged'; green says 'judged, and fine'."""
+    p = pl.PulseProducer()
+    p.emit({"groups": {"C": [_row("cpu", 40.0)]}}, now=0)
+    lines = p.emit({"groups": {"C": [_row("cpu", 70.0)]}}, now=1)
+    assert lines and "band" not in lines[0]["text"]
 
 
 def test_a_move_over_fifteen_percent_emits():
