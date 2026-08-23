@@ -96,6 +96,9 @@ memory/somatic_history.jsonl
 # the language purity check's own state: a ratio, a window and the stamp that
 # rate-limits its alarm. Runtime, rewritten every cycle that is below the floor.
 memory/language_quarantine.json
+# the retrospective exemplar audit is a report about the journal, regenerated
+# on demand by scripts/audit_exemplars.py. Not a record anyone should diff.
+memory/exemplar_audit_latest.json
 memory/idea_stream.jsonl
 memory/pulse_cycle_requests.json
 memory/extraordinary_request.json
