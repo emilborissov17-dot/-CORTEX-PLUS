@@ -140,7 +140,8 @@ def test_the_send_bypasses_quiet_hours(monkeypatch, tmp_path):
     monkeypatch.setattr(supervisor, "NOTIFY_CHANNEL", tmp_path / "notify.json")
     monkeypatch.setattr(supervisor, "ALARM_STAMP", tmp_path / "stamp.json")
     monkeypatch.setattr(supervisor, "alarm_human",
-                        lambda subject, detail, dedup_key=None, trigger=None:
+                        lambda subject, detail, dedup_key=None, trigger=None,
+                        level=None:
                         calls.append({"subject": subject, "detail": detail,
                                       "dedup_key": dedup_key, "trigger": trigger}))
 
@@ -188,7 +189,8 @@ def test_a_watchdog_kill_rings_the_bell(monkeypatch):
 
     sent = []
     monkeypatch.setattr(supervisor, "alarm_human",
-                        lambda subject, detail, dedup_key=None, trigger=None:
+                        lambda subject, detail, dedup_key=None, trigger=None,
+                        level=None:
                         sent.append(detail))
 
     supervisor._ring_death_bell("CYCLE_KILLED", _kill_action(),
@@ -215,7 +217,8 @@ def test_the_mutation_breaking_the_send_turns_this_red(monkeypatch):
 
     sent = []
     monkeypatch.setattr(supervisor, "alarm_human",
-                        lambda subject, detail, dedup_key=None, trigger=None:
+                        lambda subject, detail, dedup_key=None, trigger=None,
+                        level=None:
                         sent.append(detail))
     monkeypatch.setattr(supervisor, "_ring_death_bell",
                         lambda *a, **k: None)      # ← the mutation

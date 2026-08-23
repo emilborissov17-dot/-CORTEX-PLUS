@@ -305,10 +305,15 @@ def _default_sender(text: str, escalation: bool) -> bool:
     """Through the supervisor's one path to the phone."""
     try:
         import supervisor
+        # THE ESCALATION FLAG IS ALREADY THE ANSWER. asks_for_a_human()
+        # returns true for halt_and_call_human and its siblings; that is an
+        # ALARM by the definition in supervisor.alarm_human. The nightly digest
+        # of what the brain thought is not.
         supervisor.alarm_human(
             "мозъкът", text,
             dedup_key=f"brain:{hashlib.sha1(text.encode()).hexdigest()[:12]}",
-            trigger="MANUAL" if escalation else None)
+            trigger="MANUAL" if escalation else None,
+            level=supervisor.ALARM if escalation else supervisor.NOTICE)
         return True
     except Exception:
         return False

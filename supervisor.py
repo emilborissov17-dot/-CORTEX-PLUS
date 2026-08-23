@@ -480,8 +480,30 @@ def note_night_event(subject: str, detail: str) -> None:
         pass
 
 
+# ── TWO CLASSES, AND ONLY ONE OF THEM IS AN ALARM (23 Aug 2026) ─────────────
+# Every message out of here carried "🚨 CORTEX:". Seven phases of a nightly
+# cycle completing normally arrived as seven sirens, and so did "EIA still needs
+# a key" and "a proposal is 3 days old". A siren that fires for a phase that
+# went fine is a siren nobody reads by the second week, and then the one that
+# matters arrives looking exactly like the six that did not.
+#
+# ALARM is for what actually needs a human NOW: halt_and_call_human, a red-line
+# threshold crossed, a death, the restart budget exhausted. Everything else is a
+# NOTICE. Emil's standing ruling — "ИСКАМ САМО ДОКЛАДИТЕ ЗА ИЗМИНАЛ ДЕН" — is
+# that the morning is enough for anything that is not urgent.
+#
+# `level` is keyword-only and DEFAULTS TO ALARM. A caller that forgets is too
+# loud, which is where this started and is survivable; a default of NOTICE would
+# make a forgotten caller silently quiet, which is not.
+ALARM, NOTICE = "alarm", "notice"
+
+# The alarm keeps the siren. The notice gets a name and a separator, so the two
+# are distinguishable in a notification list at a glance and by search.
+LEVEL_PREFIX = {ALARM: "🚨 CORTEX: ", NOTICE: "CORTEX · "}
+
+
 def alarm_human(subject: str, detail: str, dedup_key: str | None = None,
-                trigger: str | None = None) -> None:
+                trigger: str | None = None, *, level: str = ALARM) -> None:
     """15 Aug 2026 — THE DEAD-SYSTEM ALARM.
 
     ПРОМЕНЕНО (15 авг, вечер): в тихите часове НЕ буди. Записва събитието за
@@ -522,9 +544,10 @@ def alarm_human(subject: str, detail: str, dedup_key: str | None = None,
         if sent.get(key):
             return
         import requests
+        prefix = LEVEL_PREFIX.get(level, LEVEL_PREFIX[ALARM])
         requests.post(f"https://api.telegram.org/bot{cfg['token']}/sendMessage",
                       json={"chat_id": cfg["chat_id"],
-                            "text": f"🚨 CORTEX: {subject}\n{detail}"[:3500]}, timeout=20)
+                            "text": f"{prefix}{subject}\n{detail}"[:3500]}, timeout=20)
         sent[key] = True
         ALARM_STAMP.write_text(json.dumps(sent, ensure_ascii=False)[:20000], encoding="utf-8")
     except Exception:
@@ -537,9 +560,14 @@ def send_phase_debrief(phase: str, cycle_id: str, text: str,
 
     Reuses alarm_human so there is ONE path to the phone, with one set of
     fail-open rules, rather than a second sender that drifts from it.
+
+    ALWAYS A NOTICE. A phase closing is the most ordinary event this system
+    has — it happens seven times a night — and it was arriving with the siren
+    reserved for a death.
     """
     key = f"{cycle_id}:{phase}"
-    alarm_human(f"фаза {phase}", text, dedup_key=key, trigger=trigger)
+    alarm_human(f"фаза {phase}", text, dedup_key=key, trigger=trigger,
+                level=NOTICE)
     return key
 
 
@@ -1627,6 +1655,8 @@ def tick(now: Optional[datetime] = None, dry_run: bool = False) -> Action:
             "running. Human intervention required. This will appear in the daily report.")
         _diag = _autopsy(action)
         alarm_human("СИСТЕМАТА НЕ РАБОТИ — рестартите за деня свършиха",
+                    # ALARM: the system is not running and only a human can
+                    # change that. This is what the siren is for.
                     f"Умряла на стъпка: {action.wedged_step}\n"
                     f"{_diag}\n"
                     f"Рестарти: {used}/{int(cfg.get('max_restarts_per_day', 2))}\n"
@@ -1785,6 +1815,8 @@ def tick(now: Optional[datetime] = None, dry_run: bool = False) -> Action:
             from core import survival_mode as _sm
             _sm_state = _sm.enter(
                 today, _survival_reason,
+                # ALARM: the system has stopped running on its own and the
+                # next cycle will be a skeleton until a human looks at it.
                 notifier=lambda subject, detail: alarm_human(
                     subject,
                     f"{detail}\n\n"

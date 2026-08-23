@@ -341,7 +341,10 @@ def run(improvements_path=None, quarantine_dir=None, thresholds_path=None,
                     import supervisor
                     supervisor.alarm_human(
                         "предложение без отговор", text,
-                        dedup_key=key, trigger="MANUAL")
+                        dedup_key=key, trigger="MANUAL",
+                        # An overdue promise is pressure, not an emergency. The
+                        # counter in the morning report carries it from here.
+                        level=supervisor.NOTICE)
             except Exception:
                 ok = False
         if ok:

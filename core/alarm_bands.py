@@ -187,7 +187,10 @@ def send(result: dict, sender=None) -> int:
                 supervisor.alarm_human(
                     f"червена линия {row['axis']}", text,
                     dedup_key=f"alarm:{row['axis']}:{row['value']}",
-                    trigger="MANUAL")      # MANUAL bypasses the quiet window
+                    trigger="MANUAL",      # MANUAL bypasses the quiet window
+                    # ALARM, and one of the three things that earn it: a
+                    # threshold the human set has been crossed NOW.
+                    level=supervisor.ALARM)
             sent += 1
         except Exception:
             pass

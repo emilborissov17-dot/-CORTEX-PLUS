@@ -114,6 +114,21 @@ def _must_cite(phase: str) -> set:
         return set()
 
 
+def _trigger() -> str | None:
+    """MANUAL only for a cycle a human started. Anything unreadable is nightly.
+
+    Failing towards "nightly" is deliberate: the cost of getting it wrong that
+    way is a phase report the human reads in the morning instead of at once;
+    the cost of the other way is being woken by a phase that went fine.
+    """
+    try:
+        origin = json.loads((BASE / "memory" / "cycle_origin.json")
+                            .read_text(encoding="utf-8")).get("origin")
+    except Exception:
+        return None
+    return "MANUAL" if str(origin).lower() == "manual" else None
+
+
 def _close(phase: str, report) -> None:
     """Write the report, ask for a debrief, say one line, send one message.
 
@@ -166,8 +181,15 @@ def _close(phase: str, report) -> None:
             text = (f"CORTEX++ · фаза {phase} · {result['verdict']}\n"
                     f"{result['reason'][:300]}\n"
                     f"(дебрифът е отхвърлен: {why[:160]})")
+        # ── trigger="MANUAL" WAS HARDCODED, AND THAT WAS THE SIREN ────────
+        # MANUAL is the one value alarm_human() honours as "past the quiet
+        # window", and it exists for a cycle a human started and is sitting in
+        # front of. Every phase of every NIGHTLY cycle claimed it, so seven
+        # ordinary phase closings woke the human at 3am, every night. The
+        # runner already records who started the cycle in
+        # memory/cycle_origin.json; ask it instead of asserting.
         supervisor.send_phase_debrief(phase, str(_cycle_id), text,
-                                      trigger="MANUAL")
+                                      trigger=_trigger())
     except Exception as exc:  # noqa: BLE001
         print(f"[PHASE] {phase}: telegram failed ({type(exc).__name__}: {exc})")
 

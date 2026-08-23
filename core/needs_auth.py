@@ -211,7 +211,10 @@ def run(registry_path=None, env_path=None, stamp_path=None,
                         f"ключ за {row['source']}", text,
                         dedup_key=f"needs_auth:{row['source']}:"
                                   f"{_now().strftime('%Y-W%W')}",
-                        trigger="MANUAL")
+                        trigger="MANUAL",
+                        # A source that has been waiting for a key since 15 Aug
+                        # can wait until the morning. Once a week, and not a siren.
+                        level=supervisor.NOTICE)
             except Exception:
                 ok = False
         if ok:
