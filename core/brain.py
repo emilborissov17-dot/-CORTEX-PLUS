@@ -378,12 +378,16 @@ def remember(kind: str, summary: str, payload: dict | None = None) -> None:
     """
     try:
         text = str(summary)[:600]
-        JOURNAL.parent.mkdir(parents=True, exist_ok=True)
-        with open(JOURNAL, "a", encoding="utf-8") as fh:
-            fh.write(json.dumps({"ts": _now(), "kind": kind,
-                                 "summary": text,
-                                 "lang": _lang_verdict(text),
-                                 "payload": payload or {}}, ensure_ascii=False) + "\n")
+        # DURABLE (23 Aug 2026). 38 writes on the last sealed cycle — under the
+        # batching threshold, so every verdict is on the platter before
+        # remember() returns. The journal is the only record that the brain
+        # thought anything at all; a tail lost to a kill is a cycle nobody can
+        # audit afterwards.
+        from core.durable import append_json as _append_json   # noqa: PLC0415
+        _append_json(JOURNAL, {"ts": _now(), "kind": kind,
+                               "summary": text,
+                               "lang": _lang_verdict(text),
+                               "payload": payload or {}})
     except Exception:
         pass
 
@@ -533,8 +537,12 @@ def think(role: str, question: str, evidence: str = "", schema: dict | None = No
         import hashlib as _hl
         pf = PROVENANCE
         pf.parent.mkdir(parents=True, exist_ok=True)
-        with open(pf, "a", encoding="utf-8") as fh:
-            fh.write(json.dumps({
+        # BATCHED (23 Aug 2026). 143 writes on the last sealed cycle.
+        # Provenance is a diagnostic stream about which model answered; losing
+        # the tail of the step that died is survivable, and 143 fsyncs a night
+        # is not free. The barrier is beat(), so the window is ONE STEP.
+        from core.durable import append_json as _append_json   # noqa: PLC0415
+        _append_json(pf, {
                 "ts": _now(), "backend": f"local:{model}", "caller": f"brain:{role}",
                 # THE EXACT MODEL ID IN ITS OWN FIELD (21 Aug 2026). It was
                 # already inside the backend string here — "local:qwen3:8b" —
@@ -550,7 +558,7 @@ def think(role: str, question: str, evidence: str = "", schema: dict | None = No
                 "requested": (model_override or picked),
                 "prompt_sha": _hl.sha256(prompt.encode("utf-8")).hexdigest()[:16],
                 "prompt_head": prompt[:160], "chars": len(txt), "sec": took,
-            }, ensure_ascii=False) + "\n")
+            }, batched=True)
     except Exception:
         pass
 
@@ -858,9 +866,9 @@ def _record_silence(step: str, prev_step: str | None, model: str, why: str,
            "stance": "reflex:мълчание", "silent": True, "why": why,
            "sec": sec, "prompt_chars": prompt_chars, "model": f"local:{model}"}
     try:
-        STEP_LOG.parent.mkdir(parents=True, exist_ok=True)
-        with open(STEP_LOG, "a", encoding="utf-8") as fh:
-            fh.write(json.dumps(doc, ensure_ascii=False) + "\n")
+        # BATCHED (23 Aug 2026). 63 step-log writes on the last sealed cycle.
+        from core.durable import append_json as _append_json   # noqa: PLC0415
+        _append_json(STEP_LOG, doc, batched=True)
     except Exception:
         pass
 
@@ -1003,8 +1011,9 @@ def attend(step: str) -> dict | None:
         STEP_LOG.parent.mkdir(parents=True, exist_ok=True)
         if STEP_LOG.exists() and STEP_LOG.stat().st_size > 5_000_000:
             STEP_LOG.replace(STEP_LOG.with_suffix(".jsonl.1"))
-        with open(STEP_LOG, "a", encoding="utf-8") as fh:
-            fh.write(json.dumps(doc, ensure_ascii=False) + "\n")
+        # BATCHED (23 Aug 2026) — see _record_silence above.
+        from core.durable import append_json as _append_json   # noqa: PLC0415
+        _append_json(STEP_LOG, doc, batched=True)
         STANCE.write_text(json.dumps(doc, ensure_ascii=False, indent=2), encoding="utf-8")
     except Exception:
         pass

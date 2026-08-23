@@ -199,6 +199,20 @@ def _write_atomic(payload: dict) -> None:
     try:
         with os.fdopen(fd, "w", encoding="utf-8") as fh:
             json.dump(payload, fh, ensure_ascii=False, indent=2)
+            # ── FSYNC BEFORE THE REPLACE (23 Aug 2026) ────────────────────
+            # os.replace is atomic with respect to READERS — nobody ever sees a
+            # half-written heartbeat. It is NOT atomic with respect to POWER.
+            # Without this the rename can reach the disk while the tmp file's
+            # CONTENT is still in the page cache, and the machine comes back
+            # with heartbeat.json pointing at an empty or truncated file. The
+            # supervisor then reads no proof of life and cannot tell "the cycle
+            # died" from "the heartbeat did".
+            #
+            # This is a ~1ms cost on a file written once per step, 63 times on
+            # the last sealed cycle. It buys the one file the restart logic and
+            # the unclean-stop record both depend on.
+            fh.flush()
+            os.fsync(fh.fileno())
         os.replace(tmp, HEARTBEAT_PATH)   # atomic on Windows and POSIX
     except Exception:
         try:

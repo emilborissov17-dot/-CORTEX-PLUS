@@ -91,6 +91,22 @@ def _close_open_step() -> None:
 
 def beat(step, step_index=None, cycle_id=None):
     """Границата на стъпка: затвори предишната на запис, после обяви новата."""
+    # ── THE DURABILITY BARRIER (23 Aug 2026) ──────────────────────────────
+    # core/durable.py lets the two high-frequency writers — llm_provenance
+    # (143 writes/cycle) and brain_step_log (63) — defer their fsync, because
+    # 206 fsyncs a night is a real cost for two diagnostic streams. The deferral
+    # is only safe if something forces them out on a known cadence, and this is
+    # it: the step boundary. The exposure window is therefore exactly ONE STEP,
+    # and it is stated rather than discovered.
+    #
+    # FIRST in beat(), before the pulse and before _close_open_step(), so the
+    # previous step's bytes are on the platter before anything claims that step
+    # is over. FAIL-OPEN: a barrier that cannot run must not cost a cycle.
+    try:
+        from core.durable import barrier as _durable_barrier
+        _durable_barrier()
+    except Exception as e:
+        print(f"[FAST_CYCLE] durable.barrier -> {type(e).__name__}: {e}")
     _close_open_step()
     _OPEN_STEP["label"], _OPEN_STEP["index"] = step, step_index
     _OPEN_STEP["checkpointed"] = set()

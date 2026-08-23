@@ -601,15 +601,18 @@ def call_groq_meta(prompt: str, max_tokens: int = 1024,
             _pf.parent.mkdir(parents=True, exist_ok=True)
             if _pf.exists() and _pf.stat().st_size > 5_000_000:
                 _pf.replace(_pf.with_suffix(".jsonl.1"))
-            with open(_pf, "a", encoding="utf-8") as _fh:
-                _fh.write(json.dumps({
+            # BATCHED (23 Aug 2026). The cloud half of the same
+            # 143-writes-a-night provenance stream as core/brain.py.
+            # Same trade, same barrier: beat(). See core/durable.py.
+            from core.durable import append_json as _append_json  # noqa: PLC0415
+            _append_json(_pf, {
                     "ts": datetime.now(timezone.utc).isoformat(),
                     "backend": backend_label,
                     "model": _model_for(backend_label),
                     "prompt_sha1": _hl.sha1(prompt_text.encode("utf-8", "ignore")).hexdigest()[:12],
                     "prompt_head": prompt_text[:80],
                     "reply_chars": len(content_text or ""),
-                }, ensure_ascii=False) + "\n")
+                }, batched=True)
         except Exception:
             pass  # bookkeeping must never break the chain
 
