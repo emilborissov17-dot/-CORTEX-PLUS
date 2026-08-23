@@ -849,6 +849,28 @@ def api_somatic():
                                               previous=previous)})
 
 
+# ── GLASS — A WINDOW, NOT A SENSE (23 Aug 2026) ────────────────────────────
+# THIS ENDPOINT TAKES NO READING. It renders the newest cycle log, the firewall
+# log tail and the network counters the somatic endpoint ALREADY read — passed
+# in from _LAST_READING, which /api/somatic fills on its own schedule.
+#
+# That is the whole point and it is the bug from two days ago stated as a rule:
+# /api/somatic probed every 15 seconds and threw the numbers away, so a panel
+# meant to display the body was a second, disagreeing body. A viewer is a
+# visitor with the chart, not a nurse with a thermometer.
+#
+# test/test_glass.py counts guarded probes with the tab shut and again after
+# rendering it repeatedly, and the two numbers must match.
+@app.get("/api/glass")
+def api_glass():
+    from cockpit import glass as gl
+    try:
+        return jsonify(gl.render(last_reading=dict(_LAST_READING)))
+    except Exception as e:                                   # noqa: BLE001
+        return jsonify({"error": "{}: {}".format(type(e).__name__, e),
+                        "label": gl.LABEL})
+
+
 @app.get("/api/somatic/selftest")
 def api_somatic_selftest():
     return jsonify(som.selftest())

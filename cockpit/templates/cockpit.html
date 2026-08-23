@@ -40,6 +40,12 @@
   h1{font-size:13px;margin:0;letter-spacing:.14em;white-space:nowrap}
   .meta{color:var(--dim);font-size:11px;white-space:nowrap}
   nav{display:flex;gap:4px;margin-left:auto;flex-wrap:wrap}
+  /* GLASS: raw means raw. No wrapping, no prettifying. */
+  pre.raw{max-height:52vh;overflow:auto;white-space:pre;font-size:11px;
+          line-height:1.35;margin:6px 0 0;padding:6px;background:#0b0b0b}
+  table.tbl{width:100%;border-collapse:collapse;font-size:11px;margin-top:6px}
+  table.tbl th{text-align:left;opacity:.6;font-weight:normal;padding:2px 6px 2px 0}
+  table.tbl td{padding:1px 6px 1px 0;white-space:nowrap}
   .tab{background:#141a21;border:1px solid var(--line);color:var(--dim);
        padding:5px 10px;border-radius:3px;cursor:pointer;font:inherit;font-size:11px;
        display:flex;align-items:center;gap:6px;letter-spacing:.08em}
@@ -186,6 +192,7 @@ const TABS = [
   {id:'body',       name:'BODY'},
   {id:'expression', name:'EXPRESSION'},
   {id:'pending',    name:'PENDING'},
+  {id:'glass',      name:'GLASS'},
   {id:'terminal',   name:'TERMINAL'},
 ];
 const KEY = 'cortex.cockpit.tab';
@@ -469,7 +476,58 @@ function tabTerminal(){
 }
 
 const RENDER = {overview:tabOverview, cycle:tabCycle, world:tabWorld, body:tabBody,
-                expression:tabExpression, pending:tabPending, terminal:tabTerminal};
+                expression:tabExpression, pending:tabPending, glass:tabGlass,
+                terminal:tabTerminal};
+
+
+/* ── GLASS — a window, not a sense ──────────────────────────────────────────
+   Three panels, each rendering something that already flows. It takes NO
+   reading of its own: /api/glass reads the cycle log, the firewall log and the
+   counters /api/somatic already fetched. The banner says so, because a raw
+   render that is not labelled gets mistaken for the pulse stream or for
+   expression, and those are mediated and this is not.
+
+   It is a TOP-LEVEL TAB, one click from anywhere, not the bottom of a scroll. */
+async function tabGlass(){
+  const d = await get('/api/glass');
+  if(d.error) return `<div class="grid">${panel('GLASS',
+    `<div class="invalid">${esc(d.error)}</div>`)}</div>`;
+
+  const so = d.stdout || {};
+  const stdoutBody = (so.lines && so.lines.length)
+    ? `<div class="muted">${esc(so.path||'')} — ${so.total_lines} line(s)${so.truncated?', showing the last '+so.lines.length:''}</div>
+       <pre class="raw">${esc(so.lines.join('\n'))}</pre>`
+    : `<div class="muted">${esc(so.why||'nothing yet')}</div>`;
+
+  const bl = d.blocked || {};
+  const rows = (bl.rows||[]).slice().reverse().map(r =>
+    `<tr><td>${esc(r.time)}</td><td>${esc(r.action)}</td><td>${esc(r.protocol)}</td>
+         <td>${esc(r.src)}</td><td>${esc(r.dst)}:${esc(r.dst_port)}</td>
+         <td>${esc(r.direction)}</td><td>${esc(r.pid)}</td>
+         <td>${esc(r.process||'')}</td></tr>`).join('');
+  const blockedBody = bl.available
+    ? `<div class="muted">${bl.total} row(s) in the log, showing ${(bl.rows||[]).length}. ${esc(bl.note||'')}</div>
+       <table class="tbl"><thead><tr><th>time</th><th>action</th><th>proto</th>
+         <th>from</th><th>to</th><th>dir</th><th>pid</th><th>process</th></tr></thead>
+         <tbody>${rows}</tbody></table>`
+    : `<div class="muted">${esc(bl.why||'firewall log unreadable')}</div>`;
+
+  const tr = d.traffic || {};
+  const tvals = Object.entries(tr.values||{}).map(([k,v]) =>
+    `<tr><td>${esc(k)}</td><td>${v===null?'—':esc(String(v))}</td>
+         <td class="muted">${(tr.series&&tr.series[k])?tr.series[k].length+' samples':''}</td></tr>`).join('');
+  const trafficBody = tvals
+    ? `<div class="muted">from ${esc(tr.source||'?')} — no probe was taken to draw this</div>
+       <table class="tbl"><tbody>${tvals}</tbody></table>`
+    : `<div class="muted">${esc(tr.why||'no reading yet')}</div>`;
+
+  return `<div class="grid">
+    ${panel('GLASS', `<div class="muted">${esc(d.label)}</div>`)}
+    ${panel('raw stdout', stdoutBody)}
+    ${panel('blocked connections', blockedBody)}
+    ${panel('traffic counters', trafficBody)}
+  </div>`;
+}
 
 async function render(){
   const view = $('#view');

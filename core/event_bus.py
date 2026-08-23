@@ -135,12 +135,30 @@ def assert_not_in_subscriber(what: str) -> None:
                 what, current_consumer() or "<unknown>"))
 
 
+# Every guarded probe is COUNTED. Not for policy — nothing throttles on this —
+# but so that "this panel adds zero new sensor probes" is a measurement a test
+# can take rather than a claim a reviewer has to believe. See
+# test/test_glass.py, which counts probes with the tab shut and with it open.
+PROBES = {}
+
+
+def probe_count(name: Optional[str] = None) -> int:
+    if name is None:
+        return sum(PROBES.values())
+    return PROBES.get(name, 0)
+
+
+def reset_probe_count() -> None:
+    PROBES.clear()
+
+
 def guard_sensor(name: str) -> Callable:
     """Decorator. Marks a function as a real probe of the machine."""
     def deco(fn):
         @functools.wraps(fn)
         def wrapper(*a, **k):
             assert_not_in_subscriber(name)
+            PROBES[name] = PROBES.get(name, 0) + 1
             return fn(*a, **k)
         wrapper.__guarded_sensor__ = name
         return wrapper
