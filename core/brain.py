@@ -811,6 +811,41 @@ def _prev_step_output() -> tuple:
 # твърде много — един заспал модел бави целия цикъл ~50 пъти.
 ATTEND_TIMEOUT = 60
 
+# ── THE STANCE ENUM, AND THE HISTORY THAT STILL HAS TO PARSE (23 Aug 2026) ──
+# The model was asked to emit "върви|следи|пропусни" and three places compared
+# against those literals. That is a contract written in a language the model is
+# now told not to use, sitting in the last line of the one prompt that runs at
+# every beat — the stream that produced 19 Chinese stances in a single night.
+#
+# NEW WRITES ARE ENGLISH. READS ACCEPT BOTH. memory/brain_step_log.jsonl has
+# 1117 rows in it and memory/brain_journal.jsonl is append-only history; a
+# migration that made yesterday unreadable would be deleting evidence by
+# omission, which is the same defect as deleting it by hand.
+STANCE_GO, STANCE_WATCH, STANCE_SKIP = "go", "watch", "skip"
+
+# old literal -> new. Prefix matching, because the model has always been allowed
+# to answer "пропусни, защото..." and the consumers used startswith().
+STANCE_LEGACY = {
+    "върви": STANCE_GO,
+    "следи": STANCE_WATCH,
+    "пропусни": STANCE_SKIP,
+}
+
+
+def normalise_stance(value) -> str:
+    """One reader for both vocabularies. Unknown values return "" — an
+    unrecognised stance must not silently become "go"."""
+    v = str(value or "").strip().lower()
+    if not v:
+        return ""
+    for name in (STANCE_GO, STANCE_WATCH, STANCE_SKIP):
+        if v.startswith(name):
+            return name
+    for old, new in STANCE_LEGACY.items():
+        if v.startswith(old):
+            return new
+    return ""
+
 
 def _record_silence(step: str, prev_step: str | None, model: str, why: str,
                     sec: float, prompt_chars: int) -> None:
@@ -895,7 +930,7 @@ def attend(step: str) -> dict | None:
         + ('Answer ONLY with JSON: {"prev_ok": true/false, "prev_note": "short: '
            'what came out of the previous step", ' if (prev_name and prev_out) else
            'Answer ONLY with JSON: {')
-        + '"stance": "върви|следи|пропусни", "expect": "what you '
+        + '"stance": "go|watch|skip", "expect": "what you '
           'expect from this step (short)", "serves_goal": "in one sentence: how '
           'THIS step serves the goal, or why it does not"}\n'
         + ("Be short. If the previous step gave an empty or suspicious result — "
@@ -958,7 +993,7 @@ def attend(step: str) -> dict | None:
            "prev_ok_model_said": (None if _has_evidence else d.get("prev_ok")),
            "prev_note_model_said": (None if _has_evidence
                                     else str(d.get("prev_note", ""))[:200] or None),
-           "stance": str(d.get("stance", "върви"))[:20],
+           "stance": normalise_stance(d.get("stance")) or STANCE_GO,
            "expect": str(d.get("expect", ""))[:300],
            # СЛУЖИ ЛИ ТАЗИ СТЪПКА НА ЦЕЛТА — питаме го, защото сега вече знае целта.
            "serves_goal": str(d.get("serves_goal", ""))[:300],
@@ -1000,7 +1035,7 @@ def skipped_by_brain(step: str) -> bool:
     last = stance()
     if not last:
         return False
-    wants = str(last.get("stance", "")).strip().lower().startswith("пропусни")
+    wants = normalise_stance(last.get("stance")) == STANCE_SKIP
     if not wants:
         return False
     try:
@@ -1029,7 +1064,7 @@ def watching(step: str) -> bool:
     семантиката на 'следи'? никъде не е казано"). Сега стъпката се изпълнява, но
     се маркира като наблюдавана и излиза отделно в отчета на цикъла."""
     last = stance()
-    return bool(last) and str(last.get("stance", "")).strip().lower().startswith("следи")
+    return bool(last) and normalise_stance(last.get("stance")) == STANCE_WATCH
 
 
 if __name__ == "__main__":

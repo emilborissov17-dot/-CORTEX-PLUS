@@ -179,17 +179,9 @@ def test_every_schema_description_reaching_the_model_is_english():
                         continue
                     if cyrillic_fraction(str(desc)) > 0:
                         dirty.append("{}:{} {}".format(rel, node.lineno, key))
-    # ── ONE EXPECTED EXCEPTION, AND IT CLEARS ITSELF ──────────────────────
-    # reconsider's "action" description is "напред или връщане" — the two words
-    # the model must EMIT and that core/reconsider.py:112 and :238 and
-    # fast_cycle_runner.py:2443 compare against. It is a contract, not text,
-    # and migrating it is COMMAND 25 Part 5.
-    #
-    # Asserted as an EQUALITY rather than skipped: when Part 5 lands this test
-    # goes red and forces the exception to be deleted, instead of quietly
-    # licensing a Bulgarian description forever.
-    KNOWN_ENUM_DESCRIPTIONS = {"core/reconsider.py:207 action"}
-    assert set(dirty) == KNOWN_ENUM_DESCRIPTIONS, (
-        "unexpected Bulgarian schema descriptions: {}; expected exactly {}"
-        .format(sorted(set(dirty) - KNOWN_ENUM_DESCRIPTIONS),
-                sorted(KNOWN_ENUM_DESCRIPTIONS)))
+    # THE EXCEPTION LIST IS EMPTY AND STAYS EMPTY. For one commit it held
+    # reconsider's "action" description — "напред или връщане", the two words
+    # the model had to EMIT and three places compared against. Part 5 migrated
+    # the enum to forward|rollback and this assertion went red the moment it
+    # did, which is what an equality is for.
+    assert not dirty, dirty

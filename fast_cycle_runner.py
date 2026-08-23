@@ -2440,7 +2440,9 @@ def main():
     try:
         from core.reconsider import run as _reconsider
         _rc = _reconsider()
-        if _rc.get("action") == "връщане":
+        from core.reconsider import ACTION_ROLLBACK as _ACT_BACK, \
+            normalise_action as _norm_action
+        if _norm_action(_rc.get("action")) == _ACT_BACK:
             print(f"[FAST_CYCLE] reconsider -> ВЪРНА {_rc.get('replayed')} "
                   f"({_rc.get('seconds')}s, ok={_rc.get('ok')}) | {str(_rc.get('why'))[:120]}")
         else:

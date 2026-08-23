@@ -48,6 +48,32 @@ NIGHT = BASE / "memory" / "night_events.jsonl"
 
 MAX_RETURNS_PER_CYCLE = 1        # твърдият лимит, поискан от Kimi
 HISTORY = BASE / "memory" / "reconsider_history.jsonl"
+
+# ── THE ACTION ENUM (23 Aug 2026) ───────────────────────────────────────────
+# The model emitted "напред" or "връщане" and three places compared against
+# those literals: here twice, and fast_cycle_runner.py at the reconsider step.
+# Same rule as the stance enum in core/brain.py — new writes are English, reads
+# accept both, because memory/reconsider_history.jsonl is the file _empty_streak
+# counts from and rewriting it would destroy the streak it exists to measure.
+ACTION_FORWARD, ACTION_ROLLBACK = "forward", "rollback"
+
+ACTION_LEGACY = {"напред": ACTION_FORWARD, "връщане": ACTION_ROLLBACK,
+                 "връщ": ACTION_ROLLBACK}
+
+
+def normalise_action(value) -> str:
+    """One reader for both vocabularies. Unknown returns "" — and an
+    unrecognised action must never be read as a rollback."""
+    v = str(value or "").strip().lower()
+    if not v:
+        return ""
+    for name in (ACTION_FORWARD, ACTION_ROLLBACK):
+        if v.startswith(name):
+            return name
+    for old, new in ACTION_LEGACY.items():
+        if v.startswith(old):
+            return new
+    return ""
 EMPTY_STREAK_LIMIT = 3           # три празни връщания подред -> правото спи
 
 
@@ -109,7 +135,7 @@ def _empty_streak() -> int:
     try:
         for line in reversed(HISTORY.read_text(encoding="utf-8").splitlines()):
             d = json.loads(line)
-            if d.get("action") != "връщане":
+            if normalise_action(d.get("action")) != ACTION_ROLLBACK:
                 continue
             if d.get("changed_anything") is False:
                 n += 1
@@ -193,10 +219,10 @@ def _note(subject: str, detail: str) -> None:
 def run() -> dict:
     """Мозъкът гледа какво е излязло и решава: продължавам ли, или се връщам.
 
-    Връща {'action': 'напред'|'връщане', ...}. Изпълнява най-много едно връщане."""
-    rep = {"ts": _now(), "action": "напред", "replayed": None}
+    Връща {'action': 'forward'|'rollback', ...}. Изпълнява най-много едно връщане."""
+    rep = {"ts": _now(), "action": ACTION_FORWARD, "replayed": None}
     plays = _replayable()
-    menu = "\n".join(f"- {k}: {v[0]} (~{v[2]} мин)" for k, v in plays.items())
+    menu = "\n".join(f"- {k}: {v[0]} (~{v[2]} min)" for k, v in plays.items())
 
     try:
         from core import brain
@@ -214,13 +240,13 @@ def run() -> dict:
             "цикъл. Ето какво е преизчислимо и колко струва:\n" + menu + "\n\n"
             "Цената е реална: тези минути се вадят от нощта и забавят всичко "
             "надолу. Връщане, което не променя извод, е загубено време. Ако "
-            "нищо не е сгрешено — кажи 'напред' без свян; това също е решение.\n"
+            "нищо не е сгрешено — кажи 'forward' без свян; това също е решение.\n"
             "Ако ти трябва нещо, което НЕ е в списъка (напр. ново обхождане на "
             "мрежата), кажи го в 'wants' — няма да се изпълни сега, но ще стигне "
             "до човека."),
         evidence=_state(),
         schema={
-            "action": "напред или връщане",
+            "action": "forward or rollback",
             "step": "if rollback: exactly which one from the list (otherwise empty)",
             "why": "what in today's picture makes the finished work pointless",
             "expect": "what you expect to change after the recomputation",
@@ -235,24 +261,24 @@ def run() -> dict:
     rep.update({k: v for k, v in d.items() if not k.startswith("_")})
     rep["by"] = d.get("_model")
 
-    want_back = str(d.get("action", "")).strip().lower().startswith("връщ")
+    want_back = normalise_action(d.get("action")) == ACTION_ROLLBACK
     step = str(d.get("step", "")).strip()
 
     # правото спи, ако последните три връщания не са променили нищо
     streak = _empty_streak()
     if want_back and streak >= EMPTY_STREAK_LIMIT:
-        rep["action"] = "напред"
+        rep["action"] = ACTION_FORWARD
         rep["suspended"] = (f"{streak} празни връщания подред — правото на връщане "
                             f"спи този цикъл; върни се пак, когато връщане промени извод")
         _note("RECONSIDER: правото спи", rep["suspended"])
         return rep
     if not want_back:
-        rep["action"] = "напред"
+        rep["action"] = ACTION_FORWARD
         _note("RECONSIDER: напред", str(d.get("why", ""))[:300])
         return rep
 
     if step not in plays:
-        rep["action"] = "напред"
+        rep["action"] = ACTION_FORWARD
         rep["refused"] = (f"поиска '{step}', което не е преизчислимо на място; "
                           f"записано като предложение за човека")
         _note("RECONSIDER: поиска непреизчислима стъпка",
@@ -269,7 +295,7 @@ def run() -> dict:
         ok, err = False, f"{type(e).__name__}: {e}"
     after = _fingerprint()
     changed = any(before.get(k) != after.get(k) for k in before)
-    rep.update({"action": "връщане", "replayed": step, "ok": ok, "error": err,
+    rep.update({"action": ACTION_ROLLBACK, "replayed": step, "ok": ok, "error": err,
                 "seconds": round(time.time() - t0, 1),
                 "before": before, "after": after, "changed_anything": changed})
     try:
