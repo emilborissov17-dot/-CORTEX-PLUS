@@ -1,7 +1,7 @@
-#!/usr/bin/env python3
+﻿#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-core/disk_actuator.py — THE ONLY THING HERE THAT DELETES, AND IT ALMOST NEVER DOES.
+core/disk_actuator.py â€” THE ONLY THING HERE THAT DELETES, AND IT ALMOST NEVER DOES.
 
 THE WARNING THIS IS BUILT AGAINST
 -----------------------------------
@@ -18,7 +18,7 @@ That has to be impossible BY CONSTRUCTION, not by care. So:
 The negative list is checked last and independently, on the resolved absolute
 path of each candidate, after the positive list has already said yes. A file
 that matches both is kept. There is no ordering, no priority number and no flag
-that can reverse that — the keep branch returns before the delete branch is
+that can reverse that â€” the keep branch returns before the delete branch is
 reachable.
 
 BOTH LISTS ARE HASHED. manifest_sha256() covers the two lists and the age
@@ -29,7 +29,7 @@ hash refuses the sweep.
 WHAT "TRACKED BY GIT" MEANS HERE
 ----------------------------------
 `git ls-files` is consulted once per sweep and cached. Anything git knows about
-is protected, full stop — that covers every source file, every config, every
+is protected, full stop â€” that covers every source file, every config, every
 document, without needing to enumerate them. If git cannot be reached the sweep
 REFUSES rather than proceeding without that protection: losing a cleanup is a
 missed opportunity, losing a tracked file is data loss.
@@ -62,7 +62,7 @@ BASE = pathlib.Path(__file__).resolve().parents[1]
 
 SWEEP_LOG = BASE / "memory" / "disk_actuator_log.jsonl"
 
-# ── POSITIVE ALLOWLIST — the ONLY things that may be removed ────────────────
+# â”€â”€ POSITIVE ALLOWLIST â€” the ONLY things that may be removed â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 # Emil approved this exact manifest in writing. Nothing is added to it by the
 # system, ever, under any pressure.
 POSITIVE_GLOBS = (
@@ -81,13 +81,13 @@ POSITIVE_DIRS = (
 LOG_MAX_AGE_DAYS = 7
 LOG_GLOB = "*.log"
 
-# ── NEGATIVE ALLOWLIST — never touched, checked before EVERY deletion ───────
+# â”€â”€ NEGATIVE ALLOWLIST â€” never touched, checked before EVERY deletion â”€â”€â”€â”€â”€â”€â”€
 # Repo-relative paths, matched case-insensitively because Windows filesystems
 # are, and a check that missed that would be trivially bypassable.
 #
 # THE BASENAME IS PROTECTED TOO, WHEREVER IT SITS. `memory/` is not on the
 # positive list, so a stray `tmp/heartbeat.json` cannot arise from the current
-# lists — but the rule this module exists to enforce is that the negative
+# lists â€” but the rule this module exists to enforce is that the negative
 # allowlist wins BY CONSTRUCTION, not by luck of the directory layout. The test
 # that put every one of these names inside `tmp/` deleted three of them:
 # BOUNDARIES.md, LAW_OF_THE_BRAIN.md and heartbeat.json. Path-only matching was
@@ -108,6 +108,20 @@ NEGATIVE_FILES = (
 )
 
 # Whole subtrees that are never entered.
+#
+# memory/cycle_logs IS THE RULE, NOT AN EXCEPTION (23 Aug 2026). Any path a LIVE
+# component writes to is named here, and is not left to be protected by the
+# accident of its age or by not happening to match the positive list.
+# supervisor.spawn_cycle() opens memory/cycle_logs/cycle_<stamp>.log with mode
+# "w" BEFORE it spawns the runner, and core/cycle_log.tee_stdio() writes the
+# same path for a cycle started by hand. That directory does not match any
+# positive glob today, so this entry is belt and braces â€” which is the point.
+# The lesson of the tmp/ defect found in COMMAND 26 is that the negative list
+# has to hold by construction and not by the luck of the directory layout.
+#
+# cycle.log at the repo root is deliberately NOT here. It has no writer anywhere
+# in this repository; protecting it would state a live relationship that does
+# not exist. It is recorded in docs/ENGINEERING_BACKLOG.md instead.
 NEGATIVE_DIRS = (
     ".git",
     "config",
@@ -115,6 +129,7 @@ NEGATIVE_DIRS = (
     "venv",
     "venv312_metta",
     "patches",
+    "memory/cycle_logs",
 )
 
 # Any file whose name matches these, wherever it is.
@@ -148,8 +163,8 @@ def manifest_sha256() -> str:
 
 
 # The stamp of the manifest as Emil approved it. sweep() refuses if the computed
-# hash differs — the system cannot extend either list.
-MANIFEST_SHA256 = "23000a001ff2175d7bf8383d7ea6c907ac1c8d9f2c8075f615e49761a94e743e"
+# hash differs â€” the system cannot extend either list.
+MANIFEST_SHA256 = "8311f104e8b912b28ad5e287182594b75564098b9e41c0afb8e944595f4a6d12"
 
 
 class ManifestRefused(Exception):
@@ -166,7 +181,7 @@ _tracked_cache: Optional[frozenset] = None
 def tracked_files(base=None, refresh: bool = False) -> Optional[frozenset]:
     """Every path git knows about, repo-relative and lower-cased.
 
-    None means git could not be reached — and the caller must treat that as a
+    None means git could not be reached â€” and the caller must treat that as a
     refusal, not as an empty set. An empty set would say "nothing is tracked",
     which would remove the single broadest protection this module has.
     """
@@ -204,7 +219,7 @@ def is_protected(path, base=None, tracked=None) -> tuple:
     """(bool, reason). THE NEGATIVE LIST. Checked before every deletion.
 
     Anything this cannot reason about is protected. A path that escapes the
-    repo, a path git cannot be asked about, a path that will not resolve —
+    repo, a path git cannot be asked about, a path that will not resolve â€”
     every one of those returns True, because the cost of a wrong "no" here is
     the ledger and the cost of a wrong "yes" is one file left on disk.
     """
@@ -223,7 +238,7 @@ def is_protected(path, base=None, tracked=None) -> tuple:
     if NEGATIVE_MATCH_BASENAME:
         for f in NEGATIVE_FILES:
             if name == pathlib.PurePosixPath(f.lower()).name:
-                return True, ("carries the protected name {!r} — the negative "
+                return True, ("carries the protected name {!r} â€” the negative "
                               "allowlist matches the basename wherever it "
                               "sits".format(pathlib.PurePosixPath(f).name))
     for g in NEGATIVE_GLOBS:
@@ -320,7 +335,7 @@ def sweep(level: str = "action", apply: bool = False, base=None, now=None,
     computed = manifest_sha256()
     if computed != MANIFEST_SHA256:
         raise ManifestRefused(
-            "manifest sha256 mismatch: stamped {}, computed {} — the "
+            "manifest sha256 mismatch: stamped {}, computed {} â€” the "
             "allowlists have been edited".format(MANIFEST_SHA256[:16],
                                                  computed[:16]))
 
@@ -378,7 +393,7 @@ def sweep(level: str = "action", apply: bool = False, base=None, now=None,
 
 
 def _log(result: dict, log_path=None) -> None:
-    """What, why, how many bytes, which level. Durable — see core/durable.py."""
+    """What, why, how many bytes, which level. Durable â€” see core/durable.py."""
     try:
         from core.durable import append_json
         append_json(log_path or SWEEP_LOG, {
@@ -408,7 +423,7 @@ def _cli(argv) -> int:
         print("match   = {}".format(manifest_sha256() == MANIFEST_SHA256))
         return 0
 
-    print("core/disk_actuator.py — DRY RUN. Nothing is deleted.")
+    print("core/disk_actuator.py â€” DRY RUN. Nothing is deleted.")
     print()
     try:
         res = sweep(level="action", apply=False)

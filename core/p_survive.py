@@ -135,6 +135,10 @@ def _ttt_to_gate(info: dict, gate_threshold: float):
     rate = info.get("rate_per_second")
     if rate is None:
         return None                       # not yet measurable
+    if info.get("rate_significant") is False:
+        # The slope does not beat its own noise. Extrapolating it into a
+        # survival probability would launder scatter into a decimal.
+        return None
     if rate >= 0:
         return float("inf")               # rising or flat: not going there
     distance = float(info.get("value")) - float(gate_threshold)
@@ -162,9 +166,14 @@ def per_variable(evaluation: dict, cfg: dict, horizon: float) -> dict:
         ttt = _ttt_to_gate(info, gate)
         conf = info.get("ttt_confidence", CONF_NONE)
         if ttt is None:
-            out[name] = {"p": None, "confidence": CONF_NONE,
-                         "why": "rate not yet measurable ({} sample(s))".format(
-                             info.get("samples"))}
+            why = ("rate is within its own noise — {} samples, slope {} +/- {} "
+                   "per second".format(info.get("samples"),
+                                       info.get("rate_per_second"),
+                                       info.get("rate_stderr_per_second"))
+                   if info.get("rate_per_second") is not None
+                   else "rate not yet measurable ({} sample(s))".format(
+                       info.get("samples")))
+            out[name] = {"p": None, "confidence": CONF_NONE, "why": why}
             continue
         if ttt == float("inf"):
             out[name] = {"p": 1.0, "confidence": conf,

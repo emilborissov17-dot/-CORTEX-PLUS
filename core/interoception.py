@@ -75,7 +75,13 @@ ROWS = ("FALSE_ALARMS", "OPEN_PROPOSALS", "LAST_CYCLE",
 LATENCY_BUDGET_SEC = 2.0
 
 TERMINAL = ("CYCLE_FINISHED", "CYCLE_KILLED", "CYCLE_DIED",
-            "CYCLE_FAILED_BUDGET_EXHAUSTED")
+            "CYCLE_FAILED_BUDGET_EXHAUSTED",
+            # A cycle the survival gate refused to start is TERMINAL. Without
+            # it, the newest event in the ledger is not one this loop
+            # recognises, so the row falls through to "no terminal event" and a
+            # deliberate refusal is displayed as an incomplete cycle - the one
+            # reading it is definitely not. (23 Aug 2026)
+            "CYCLE_REFUSED_SURVIVAL_GATE",)
 
 
 def _json(p: pathlib.Path):
@@ -137,6 +143,11 @@ def _last_cycle(ledger_path: pathlib.Path | None = None) -> str:
             continue
         if ev == "CYCLE_FINISHED":
             return "FINISHED"
+        if ev == "CYCLE_REFUSED_SURVIVAL_GATE":
+            names = ", ".join(
+                str(v.get("variable")) for v in (e.get("variables") or [])
+            ) or "a defended variable"
+            return "REFUSED before it started ({} at its gate)".format(names)
         step = (e.get("reason") or {}).get("wedged_step") or e.get("last_step") \
             or e.get("wedged_step") or "an unknown step"
         return f"{ev.replace('CYCLE_', '')} at step {step}"

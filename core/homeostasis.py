@@ -402,9 +402,13 @@ def interoception(name: str, value: float, spec: dict, history: list) -> dict:
     target = below[0] if below else min(levels.values())
     distance = value - target
 
-    rate, conf = _rate_per_second(history, spec)
+    rate, conf, stderr, significant = _rate_per_second(history, spec)
     if rate is None:
         direction = "unknown"
+    elif not significant:
+        # The fit does not beat its own noise. "flat" here means "we cannot
+        # tell", and the TTT is withheld rather than extrapolated from scatter.
+        direction = "flat"
     elif rate > 0:
         direction = "rising"
     elif rate < 0:
@@ -413,9 +417,11 @@ def interoception(name: str, value: float, spec: dict, history: list) -> dict:
         direction = "flat"
 
     ttt = None
-    if rate is not None and rate < 0 and distance > 0:
+    if rate is None or not significant:
+        ttt = None                # not "inf": inf claims it is not heading there
+    elif rate < 0 and distance > 0:
         ttt = distance / abs(rate)
-    elif rate is not None and rate >= 0:
+    else:
         ttt = float("inf")        # moving away from the threshold, or not moving
 
     return {
@@ -427,15 +433,50 @@ def interoception(name: str, value: float, spec: dict, history: list) -> dict:
         "direction": direction,
         "rate_per_second": None if rate is None else round(rate, 8),
         "rate_per_hour": None if rate is None else round(rate * 3600.0, 5),
+        "rate_stderr_per_second": None if stderr is None else round(stderr, 10),
+        "rate_significant": bool(significant),
         "ttt_seconds": (None if ttt is None
                         else ("inf" if ttt == float("inf") else round(ttt, 1))),
-        "ttt_confidence": conf,
+        # Confidence in WHAT, when there is no TTT? A "high" beside a withheld
+        # number reads as certainty about the withholding. There is no TTT to
+        # be confident in, so the label goes with it.
+        "ttt_confidence": (conf if ttt is not None else CONF_NONE),
         "samples": len(history),
     }
 
 
+# A slope has to beat its own noise before it is allowed to be a direction.
+# Two standard errors is the bar. Below it the fit is indistinguishable from a
+# flat line through scatter, and the honest output is "flat, no TTT".
+SLOPE_SIGNIFICANCE_SE = 2.0
+
+
 def _rate_per_second(history: list, spec: dict):
-    """(rate, confidence). Least squares over the window; None when too thin."""
+    """(rate, confidence, stderr, significant).
+
+    Least squares over the window, plus the standard error of the slope.
+
+    WHY THE STANDARD ERROR IS NOT OPTIONAL (23 Aug 2026)
+    -----------------------------------------------------
+    On 23 Aug, RAM fluctuated between 3628 and 3744 MB with no trend at all.
+    Least squares fitted -1652 MB/hour to that scatter, interoception turned it
+    into "105 minutes to the gate", and the label on it was
+    `confidence: high` — because nine samples is nine samples, and the
+    confidence label describes the SAMPLE, not the fit.
+
+    A number with the wrong label is worse than a missing number. Nothing
+    mechanical depended on it (the gate compares the instantaneous value against
+    its thresholds and never reads a TTT), but a human reading that line would
+    have believed the machine had an hour and three quarters to live.
+
+    So the slope must exceed SLOPE_SIGNIFICANCE_SE standard errors before it is
+    reported as a direction. Below that bar the caller is told the fit is not
+    significant and emits `direction: flat, ttt: none` — "we cannot tell",
+    which is a different statement from `ttt: inf`, "it is confidently not
+    heading there".
+
+    stderr(b) = sqrt( (SSE / (n-2)) / Sxx )
+    """
     cfg = _TTT_CFG
     min_n = int(cfg.get("min_samples_for_rate", 3))
     high_n = int(cfg.get("high_confidence_samples", 8))
@@ -447,17 +488,30 @@ def _rate_per_second(history: list, spec: dict):
         pts = [(t, v) for t, v in pts if newest - t <= window]
     n = len(pts)
     if n < min_n:
-        return None, CONF_NONE
+        return None, CONF_NONE, None, False
     span = pts[-1][0] - pts[0][0]
     if span <= 0:
-        return None, CONF_NONE
+        return None, CONF_NONE, None, False
     mean_t = sum(t for t, _ in pts) / n
     mean_v = sum(v for _, v in pts) / n
     num = sum((t - mean_t) * (v - mean_v) for t, v in pts)
     den = sum((t - mean_t) ** 2 for t, _ in pts)
     if den == 0:
-        return None, CONF_NONE
-    return num / den, (CONF_HIGH if n >= high_n else CONF_LOW)
+        return None, CONF_NONE, None, False
+
+    slope = num / den
+    conf = CONF_HIGH if n >= high_n else CONF_LOW
+
+    # Residual scatter about the fitted line.
+    if n <= 2:
+        # Two points define a line exactly; there is no residual to measure and
+        # therefore no evidence that the line is real.
+        return slope, conf, None, False
+    intercept = mean_v - slope * mean_t
+    sse = sum((v - (intercept + slope * t)) ** 2 for t, v in pts)
+    stderr = ((sse / (n - 2)) / den) ** 0.5
+    significant = abs(slope) >= SLOPE_SIGNIFICANCE_SE * stderr
+    return slope, conf, stderr, significant
 
 
 _TTT_CFG = {"min_samples_for_rate": 3, "high_confidence_samples": 8,
