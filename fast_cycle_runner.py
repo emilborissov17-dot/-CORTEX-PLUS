@@ -47,7 +47,54 @@ os.environ["CORTEX_BASE"] = str(BASE)
 # hits 20 live APIs; web_intelligence can run the better part of an hour) and the
 # watchdog would kill healthy cycles. test/test_heartbeat_coverage.py enforces
 # that every step boundary is instrumented, so this cannot silently rot.
-from memory.heartbeat import beat, clear as _clear_heartbeat
+from memory.heartbeat import beat as _beat_raw, clear as _clear_heartbeat
+
+
+# ── ВСЯКА СТЪПКА СИ ЗАПИСВА ЗАВЪРШВАНЕТО, ОБВИТА ИЛИ НЕ (23 авг 2026) ──────
+# Дотук чекпойнт се пишеше САМО от успешния път на _run(). Но _run() обвива
+# 33 етикета, а стъпките са 62: първите 16 стъпки на цикъла — boot, body_scan,
+# canon_load, telegram_approvals, brain_briefing, dependency_check,
+# needs_reanalysis_scan, web_intelligence, global_indicators, sensorium_ingest,
+# browser_scout, composers, grounding_ledger, llm_self_review_axes,
+# trend_tracker — вървят инлайн със собствен try/except и НЕ МОЖЕХА да се
+# появят на запис. Cockpit-ът показваше 31 отметки от 62 и всяка нощ отчиташе
+# по-малко, отколкото е станало.
+#
+# ЗАЩО ТУК, А НЕ ВЪТРЕ В beat(): beat() е в memory/heartbeat.py и се вика и от
+# други места; чекпойнтът е на ЦИКЪЛА, не на пулса. Тук е единственият общ
+# проход НА ЦИКЪЛА, и обвивката вижда точно това, което ѝ трябва — коя стъпка
+# е била отворена преди новата.
+#
+# ЧЕСТНО ЗА СИЛАТА НА ТВЪРДЕНИЕТО: за инлайн стъпка "стигнахме до следващия
+# beat()" НЕ Е същото като "не хвърли". Инлайн блокът си глътва грешката и
+# печата един ред. Затова записът носи how=BOUNDARY, а _run() пише
+# how=RETURNED — виж core/cycle_checkpoint.py. Два различни факта, две различни
+# думи, вместо една обща, която ги смесва.
+_OPEN_STEP = {"label": None, "index": None, "checkpointed": set()}
+
+
+def _close_open_step() -> None:
+    """Запиши завършването на отворената стъпка, ако _run() не го е направил."""
+    label = _OPEN_STEP["label"]
+    if not label:
+        return
+    try:
+        from core.cycle_map import _canon as _cm_canon
+        canon = _cm_canon(label)
+    except Exception:
+        canon = label
+    if canon not in _OPEN_STEP["checkpointed"]:
+        _checkpoint_step(label, index=_OPEN_STEP["index"], how="boundary")
+    _OPEN_STEP["label"], _OPEN_STEP["index"] = None, None
+    _OPEN_STEP["checkpointed"] = set()
+
+
+def beat(step, step_index=None, cycle_id=None):
+    """Границата на стъпка: затвори предишната на запис, после обяви новата."""
+    _close_open_step()
+    _OPEN_STEP["label"], _OPEN_STEP["index"] = step, step_index
+    _OPEN_STEP["checkpointed"] = set()
+    _beat_raw(step, step_index, cycle_id)
 
 LOCK_PATH = BASE / "memory" / "cycle.lock"
 
@@ -607,8 +654,9 @@ def _artifact_veto(step: str):
         return f"artifact gate could not run ({type(e).__name__}: {e})"
 
 
-def _checkpoint_step(label: str) -> None:
-    """Record that `label` finished. Called only from the success path of _run().
+def _checkpoint_step(label: str, index=None, how: str = "returned") -> None:
+    """Record that `label` finished. Called from _run()'s success path AND from
+    the step boundary in beat() for the steps _run() never wrapped.
 
     The cycle_id is read from the heartbeat rather than passed down, because the
     heartbeat is already the one place that holds the SUPERVISOR's cycle_id — a
@@ -621,12 +669,28 @@ def _checkpoint_step(label: str) -> None:
     """
     try:
         from core import cycle_checkpoint as _cc
-        from core.cycle_map import ALIASES as _AL
+        from core.cycle_map import _canon as _cm_canon
         from memory.heartbeat import read as _hb_read
         _hb = _hb_read() or {}
         _cid = _hb.get("cycle_id") or "unknown"
-        _step = _AL.get(label, label)
-        _cc.record_step_complete(_cid, _step, _hb.get("step_index"))
+        # _canon, not ALIASES.get: подстъпките (cortex_orchestrator,
+        # orchestrator_grounded) също се разрешават до стъпката си, вместо да
+        # се запишат под име, което после никой не може да покаже.
+        _step = _cm_canon(label)
+        # ЕДНА СТЪПКА — ЕДИН ЗАПИС. cognitive_orchestrator се състои от две
+        # подстъпки с отделни _run(); без тази проверка тя се записваше ДВА пъти
+        # за един цикъл и всеки брояч я броеше двойно. Коя от двете е минала и
+        # коя не — това вече го казва [CONTRACT], поотделно за всяка.
+        if _step in _OPEN_STEP["checkpointed"]:
+            return
+        # Индексът е на ОТВОРЕНАТА стъпка, не от heartbeat-а: етикетът на _run()
+        # може да е подстъпка и тогава heartbeat-ът носи индекса на стъпката,
+        # което е правилното — но при ръчно подаден индекс той печели.
+        _idx = index if index is not None else (
+            _OPEN_STEP["index"] if _OPEN_STEP["index"] is not None
+            else _hb.get("step_index"))
+        _cc.record_step_complete(_cid, _step, _idx, how=how)
+        _OPEN_STEP["checkpointed"].add(_step)
     except Exception as e:
         print(f"[FAST_CYCLE] checkpoint({label}) -> {type(e).__name__}: {e}")
 
@@ -768,6 +832,17 @@ def _run(label, fn, free_after=False):
         print(f"[FAST_CYCLE] {label} -> FAILED: {type(e).__name__}: {e}")
         if _contract is not None:
             _contract.note_swallowed(f"{type(e).__name__}: {e}")
+        # ── ГРАНИЦАТА НЕ БИВА ДА СПАСЯВА ПАДНАЛА СТЪПКА (23 авг 2026) ──────
+        # _run() знае, че fn() е хвърлила, и затова не пише чекпойнт. Но новата
+        # граница в beat() не знае и щеше да ѝ запише how=boundary — тоест
+        # падналата стъпка щеше да излезе на екрана като завършена, което е
+        # точно лъжата, заради която чекпойнтите изобщо съществуват. Записът се
+        # маркира като „вече уреден", което значи „и няма да има".
+        try:
+            from core.cycle_map import _canon as _cm_canon2
+            _OPEN_STEP["checkpointed"].add(_cm_canon2(label))
+        except Exception:
+            pass
     finally:
         # Closed BEFORE the contract is judged: the contract's verdict depends on
         # what this account recorded, so a spend summary that lands afterwards
@@ -2716,6 +2791,13 @@ def main():
             pass
     except Exception as e:
         print(f"[FAST_CYCLE] cycle_report -> FAILED: {type(e).__name__}: {e}")
+
+    # ── И ПОСЛЕДНАТА СТЪПКА СИ ЗАПИСВА ЗАВЪРШВАНЕТО (23 авг 2026) ──────────
+    # cycle_report е последната: няма следващ beat(), който да затвори границата
+    # ѝ. Без този ред тя щеше да е единствената от 62, която пак не се записва —
+    # точно защото е последна, тоест точно когато записът значи "цикълът стигна
+    # до края".
+    _close_open_step()
 
     # ── ПОСЛЕДНАТА ФАЗА СЕ ЗАТВАРЯ ОТ КРАЯ НА ЦИКЪЛА (21 авг 2026) ──────────
     # phase_tracker затваря фаза, когато пулсът влезе в СЛЕДВАЩАТА. За G_LEARN

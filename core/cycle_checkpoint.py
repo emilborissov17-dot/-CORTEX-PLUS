@@ -74,8 +74,15 @@ def _paths(base: Optional[pathlib.Path]) -> tuple:
 # Write
 # ---------------------------------------------------------------------------
 
+RETURNED = "returned"     # _run()'s fn() returned without raising
+BOUNDARY = "boundary"     # an inline step whose block reached the NEXT step's beat()
+
+HOW = (RETURNED, BOUNDARY)
+
+
 def record_step_complete(cycle_id: str, step: str, step_index,
-                         base: Optional[pathlib.Path] = None) -> dict:
+                         base: Optional[pathlib.Path] = None,
+                         how: str = RETURNED) -> dict:
     """Called AFTER a step returns without raising. Appends, then repoints latest.
 
     Order matters and is not arbitrary. The append happens first and is fsynced
@@ -83,6 +90,20 @@ def record_step_complete(cycle_id: str, step: str, step_index,
     AHEAD of the pointer — recoverable, and wrong in the safe direction (we resume
     from an earlier step than we could have). The reverse order would leave a
     pointer naming a completion with no record behind it.
+
+    `how` IS NOT DECORATION. Two different facts were being written under one
+    name once every step started checkpointing (23 Aug 2026):
+
+      RETURNED  _run() called fn(), fn() did not raise. The strong claim.
+      BOUNDARY  an inline step's block ran to its end and the cycle reached the
+                NEXT step's beat(). Weaker, because ~15 inline steps carry their
+                own try/except and print one line on failure — so "it got to the
+                end" includes "it swallowed its own error".
+
+    Both are real completions and both belong on the record; conflating them
+    would let a resume treat a swallowed failure as finished work. Readers that
+    care can filter (see completed_steps(only=...)); readers that only want to
+    know a step was reached do not have to.
     """
     log_path, latest_path = _paths(base)
     log_path.parent.mkdir(parents=True, exist_ok=True)
@@ -92,6 +113,7 @@ def record_step_complete(cycle_id: str, step: str, step_index,
         "last_completed_step": step,
         "step_index": str(step_index),
         "ts": _now(),
+        "how": how if how in HOW else RETURNED,
     }
 
     with log_path.open("a", encoding="utf-8") as fh:
@@ -160,8 +182,15 @@ def _tail_of_log(log_path: pathlib.Path) -> Optional[dict]:
     return None
 
 
-def completed_steps(cycle_id: str, base: Optional[pathlib.Path] = None) -> list:
-    """Every step this cycle_id recorded as complete, in the order recorded."""
+def completed_steps(cycle_id: str, base: Optional[pathlib.Path] = None,
+                    only: Optional[str] = None) -> list:
+    """Every step this cycle_id recorded as complete, in the order recorded.
+
+    `only` filters by `how` (RETURNED / BOUNDARY). Default None returns both,
+    which is what a "how far did it get" reader wants. A resume that wants the
+    strong claim only asks for RETURNED. Records written before `how` existed
+    carry no field and count as RETURNED, which is what they were.
+    """
     log_path, _ = _paths(base)
     out: list = []
     try:
@@ -176,8 +205,11 @@ def completed_steps(cycle_id: str, base: Optional[pathlib.Path] = None) -> list:
             data = json.loads(line)
         except Exception:
             continue
-        if data.get("cycle_id") == cycle_id and data.get("last_completed_step"):
-            out.append(data["last_completed_step"])
+        if data.get("cycle_id") != cycle_id or not data.get("last_completed_step"):
+            continue
+        if only is not None and data.get("how", RETURNED) != only:
+            continue
+        out.append(data["last_completed_step"])
     return out
 
 
