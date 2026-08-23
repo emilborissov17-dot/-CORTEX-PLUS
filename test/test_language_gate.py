@@ -106,10 +106,28 @@ def test_the_active_layers_are_reported_not_assumed():
 
 # ── the filter, and the bytes ───────────────────────────────────────────────
 
-def test_memory_returns_exactly_the_two_english_entries(journal):
+def test_memory_returns_exactly_the_two_english_entries(journal, monkeypatch):
+    """The filter on its own, with the seeds out of the way.
+
+    Part 3 added amnesia mode, which prepends hand-written seed exemplars when
+    the clean pool is under MIN_POOL — and a five-row fixture is always under
+    it. That is correct behaviour and it is tested in test_amnesia_mode.py; what
+    THIS file is about is the filter, so the seed file is pointed at nothing and
+    the block is only what survived the gate.
+    """
+    monkeypatch.setattr(brain, "SEED_FILE", journal.parent / "no_seeds.json")
     block = brain._memory("constancy", n=5)
     lines = [l for l in block.splitlines() if l.strip()]
     assert len(lines) == 2, block
+    assert EN1[:40] in block and EN2[:40] in block
+    assert RU[:20] not in block
+
+
+def test_the_history_entries_survive_alongside_the_seeds(journal):
+    """And with the real seed file, the two clean entries are still in there."""
+    block = brain._memory("constancy", n=5)
+    assert "[AMNESIA MODE:" in block
+    assert "clean history pool = 2 < 8" in block
     assert EN1[:40] in block and EN2[:40] in block
     assert RU[:20] not in block
 
@@ -131,14 +149,17 @@ def test_the_journal_is_byte_identical_afterwards(journal):
 
 
 def test_an_all_rejected_kind_says_why_it_is_empty(tmp_path, monkeypatch):
+    """A kind with NO seed behind it. `autopsy` has one since Part 3, so using
+    it here would test amnesia mode rather than the message."""
     path = _write(tmp_path / "j.jsonl", [
-        {"ts": "2026-08-23T10:00:00+00:00", "kind": "autopsy", "summary": RU},
-        {"ts": "2026-08-23T11:00:00+00:00", "kind": "autopsy", "summary": ZH},
+        {"ts": "2026-08-23T10:00:00+00:00", "kind": "consult", "summary": RU},
+        {"ts": "2026-08-23T11:00:00+00:00", "kind": "consult", "summary": ZH},
     ])
     monkeypatch.setattr(brain, "JOURNAL", path)
-    block = brain._memory("autopsy", n=5)
+    block = brain._memory("consult", n=5)
     assert "rejected by the language gate" in block
     assert "2 entries" in block
+    assert "no seed template exists for it" in block
 
 
 def test_a_kind_that_never_existed_says_something_different(journal):
