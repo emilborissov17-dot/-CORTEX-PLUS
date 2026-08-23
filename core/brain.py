@@ -234,13 +234,55 @@ def _spirit() -> str:
                                  "without a spirit)")
 
 
+def _lang_verdict(summary) -> dict:
+    """The gate's judgement on one summary. Never raises."""
+    try:
+        from core import language_gate as _lg          # noqa: PLC0415
+        return _lg.verdict(summary)
+    except Exception as exc:                            # noqa: BLE001
+        # FAIL-OPEN ON THE WRITE SIDE. A gate that cannot load must not stop the
+        # brain from recording what it thought; the read side fails CLOSED (see
+        # _entry_is_clean), which is the direction that matters.
+        return {"ok": True, "reason": "GATE_UNAVAILABLE_{}".format(
+            type(exc).__name__), "profile": {}}
+
+
+def _entry_is_clean(entry: dict) -> bool:
+    """May this journal row be shown to the model as a worked example?
+
+    FAILS CLOSED. If the gate cannot answer, the answer is no. An exemplar is
+    not something the system needs — it is something it offers — and offering an
+    unvalidated one is precisely how six days of Russian happened.
+    """
+    try:
+        from core import language_gate as _lg          # noqa: PLC0415
+        ok, _reason = _lg.entry_is_clean(entry)
+        return bool(ok)
+    except Exception:
+        return False
+
+
 def _memory(kind: str | None = None, n: int = 5) -> str:
-    """Какво е мислил преди — своите присъди, не чужди резюмета."""
+    """What it thought before — its own verdicts, and ONLY the clean ones.
+
+    ── THE ROOT RULE (23 Aug 2026) ────────────────────────────────────────
+    NEVER USE A MODEL OUTPUT AS A FEW-SHOT EXAMPLE WITHOUT VALIDATION.
+
+    This function was the vector. It returned the five most recent same-kind
+    summaries verbatim, so the first Russian answer became the worked example
+    for the next call, and by the second day every answer of that kind was
+    Russian. 85% of the 400-line window this reads is contaminated right now.
+
+    The filter is a READ-TIME filter. Nothing on disk is touched: rows written
+    before the gate existed carry no `lang` field and are judged from their
+    stored summary as they are read. The journal is append-only history, and
+    history that lied is still evidence.
+    """
     try:
         lines = JOURNAL.read_text(encoding="utf-8").splitlines()[-400:]
     except Exception:
-        return "(празна памет — това е първата ти записана мисъл)"
-    picked = []
+        return "(empty memory — this is your first recorded thought)"
+    picked, rejected = [], 0
     for line in reversed(lines):
         try:
             d = json.loads(line)
@@ -248,20 +290,42 @@ def _memory(kind: str | None = None, n: int = 5) -> str:
             continue
         if kind and d.get("kind") != kind:
             continue
+        if not _entry_is_clean(d):
+            rejected += 1
+            continue
         picked.append(f"[{str(d.get('ts'))[:16]}] {d.get('kind')}: "
                       f"{str(d.get('summary'))[:220]}")
         if len(picked) >= n:
             break
-    return "\n".join(reversed(picked)) or "(няма спомени от този вид)"
+    if not picked:
+        # SAY WHY IT IS EMPTY. "No memories of this kind" and "every memory of
+        # this kind was rejected" are different facts about the system, and the
+        # second one is the one somebody needs to act on.
+        if rejected:
+            return ("(no usable memory of this kind: {} entr{} rejected by the "
+                    "language gate)".format(rejected,
+                                            "y was" if rejected == 1 else "ies were"))
+        return "(no memories of this kind)"
+    return "\n".join(reversed(picked))
 
 
 def remember(kind: str, summary: str, payload: dict | None = None) -> None:
-    """Мозъкът помни собствените си мисли. Без това всеки цикъл е амнезия."""
+    """The brain remembers its own thoughts. Without this every cycle is amnesia.
+
+    EVERY LINE IS STILL WRITTEN (23 Aug 2026). The language gate's verdict is
+    stamped into the row as `lang`, and nothing is dropped, filtered or
+    rewritten on the way in. A thought the system had in Russian is a thought
+    the system had, and deleting it would destroy the only evidence of the
+    drift. The verdict decides one thing and one thing only: whether _memory()
+    may later offer this row back to the model as an example of correct output.
+    """
     try:
+        text = str(summary)[:600]
         JOURNAL.parent.mkdir(parents=True, exist_ok=True)
         with open(JOURNAL, "a", encoding="utf-8") as fh:
             fh.write(json.dumps({"ts": _now(), "kind": kind,
-                                 "summary": str(summary)[:600],
+                                 "summary": text,
+                                 "lang": _lang_verdict(text),
                                  "payload": payload or {}}, ensure_ascii=False) + "\n")
     except Exception:
         pass
