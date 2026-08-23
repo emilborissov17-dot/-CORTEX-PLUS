@@ -3073,6 +3073,38 @@ def main():
                   f"{type(e).__name__}: {e} (the flag stays latched, which is the "
                   f"safe direction)")
 
+    # ── THE CYCLE DESCRIBES ITSELF, ONCE, AT THE END (24 Aug 2026) ─────────
+    # cockpit/vector.append() has had no caller since COMMAND 21 and
+    # memory/state_vectors.jsonl has never existed, so warming() has said
+    # "0/20 cycles" every time it was asked and no glyph could ever be fitted.
+    # This is the missing wire.
+    #
+    # HERE, and not earlier: after every step, after close_last(), after the
+    # window is shut and the survival flag is cleared, so the vector describes
+    # a night that is actually over. Before _seal_cycle_record() only because
+    # the seal is where the cycle stops being a live thing.
+    #
+    # Runs ONCE per cycle, not per step. FAIL-OPEN AND LOUD: a cycle must never
+    # die because it failed to describe itself, and a silent failure would make
+    # the lexicon merely look slow to warm.
+    try:
+        from core.cycle_vector import write_at_cycle_end as _write_vector
+        from core.cycle_vector import STORE as _VECTOR_STORE
+        # The same source _seal_cycle_record() uses two lines below: the lock
+        # this process still holds. Reading it here rather than trusting the
+        # module-level _cycle_id keeps the two in step if one is ever rewritten.
+        _cid = None
+        try:
+            if LOCK_PATH.exists():
+                _cid = json.loads(
+                    LOCK_PATH.read_text(encoding="utf-8")).get("cycle_id")
+        except Exception:
+            _cid = None
+        _write_vector(cycle_id=_cid, store_path=_VECTOR_STORE)
+    except Exception as _e:
+        print(f"[FAST_CYCLE] STATE VECTOR NOT WRITTEN: {type(_e).__name__}: "
+              f"{_e} — the cycle seals normally")
+
     # Cycle finished cleanly → seal the record, release the lock, drop the
     # heartbeat. Order matters: _seal_cycle_record() reads the heartbeat for the
     # cycle_id, so it must run BEFORE the heartbeat is cleared.
