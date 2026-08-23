@@ -861,6 +861,34 @@ def api_somatic():
 #
 # test/test_glass.py counts guarded probes with the tab shut and again after
 # rendering it repeatedly, and the two numbers must match.
+# ── BLOCKED CONNECTIONS AS THEY ARRIVE (24 Aug 2026) ───────────────────────
+# `since` is a row offset so the panel draws a spark per NEW row instead of
+# redrawing the tail. Reading a file the OS already writes is not a probe.
+@app.get("/api/blocked")
+def api_blocked():
+    from cockpit import glass as gl
+    try:
+        since = int(request.args.get("since", 0))
+    except (TypeError, ValueError):
+        since = 0
+    try:
+        return jsonify(gl.blocked_connections(since=since))
+    except Exception as e:                                   # noqa: BLE001
+        return jsonify({"error": "{}: {}".format(type(e).__name__, e),
+                        "rows": [], "offset": since})
+
+
+# ── WHAT IS ACTUALLY WEARING (24 Aug 2026) ─────────────────────────────────
+# File sizes, row counts and durations. No simulated ageing anywhere.
+@app.get("/api/entropy")
+def api_entropy():
+    from cockpit import entropy as en
+    try:
+        return jsonify(en.report(last_reading=dict(_LAST_READING)))
+    except Exception as e:                                   # noqa: BLE001
+        return jsonify({"error": "{}: {}".format(type(e).__name__, e)})
+
+
 # ── THE REACTION (24 Aug 2026) — READ ONLY FROM HERE ───────────────────────
 # This endpoint NEVER asks the model. It reads what core/reaction.py stored,
 # whenever that was. The call itself belongs at a phase boundary inside the

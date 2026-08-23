@@ -51,6 +51,10 @@
   .rxlines{font-size:10px;opacity:.55;white-space:pre;margin:3px 0;max-height:9em;overflow:auto}
   /* VERBATIM. No ellipsis, no clamp, no prettifying. */
   .rxanswer{font-size:12px;white-space:pre-wrap;line-height:1.45}
+  .sparks{max-height:22vh;overflow:auto;margin:4px 0}
+  .spark{font-size:11px;line-height:1.35;opacity:.85}
+  .spark.fresh{opacity:1;background:#1a1408}
+  .counters{border-top:1px solid #222;margin-top:4px;padding-top:4px;font-size:11px}
   .ok{color:#6db56d}
   .bad{color:#c98b3a}
   pre.raw{max-height:52vh;overflow:auto;white-space:pre;font-size:11px;
@@ -582,6 +586,87 @@ async function drawReaction(){
   }catch(e){ el.innerHTML = `<div class="invalid">${esc(e.message||e)}</div>`; }
 }
 
+/* ── blocked connections, as they arrive ─────────────────────────────────
+   A spark per NEW row. Named for what it is: most of this is internet
+   background noise and some is Emil's own software being denied a port. If a
+   stable pattern appears we name it then, with numbers. */
+let blockedOffset = null;
+let blockedTimer = null;
+const blockedSparks = [];
+
+function stopBlocked(){ if(blockedTimer){ clearInterval(blockedTimer); blockedTimer = null; } }
+
+async function drawBlocked(){
+  const el = $('#blockedBody');
+  if(!el){ stopBlocked(); return; }
+  try{
+    const q = blockedOffset === null ? '' : `?since=${blockedOffset}`;
+    const d = await get('/api/blocked' + q);
+    if(d.error){ el.innerHTML = `<div class="invalid">${esc(d.error)}</div>`; return; }
+    if(blockedOffset !== null && d.new){
+      for(const r of d.rows.slice(-d.new)) blockedSparks.unshift(r);
+      blockedSparks.length = Math.min(blockedSparks.length, 60);
+    } else if(blockedOffset === null){
+      blockedSparks.length = 0;
+      for(const r of (d.rows||[]).slice().reverse()) blockedSparks.push(r);
+    }
+    blockedOffset = d.offset;
+
+    const sparks = blockedSparks.map((r,i) =>
+      `<div class="spark ${i===0?'fresh':''}">${esc(r.time)} ${esc(r.action)}
+         ${esc(r.protocol)} ${esc(r.src)} &rarr; ${esc(r.dst)}:${esc(r.dst_port)}
+         <span class="muted">pid ${esc(r.pid)} ${esc(r.process||'')}</span></div>`
+    ).join('');
+
+    const c = d.counters || {};
+    const row = o => Object.entries(o||{}).map(([k,v]) =>
+      `${esc(k)} ${v}`).join(' · ') || '-';
+    /* COUNTERS UNDER THE SPARKS. The arrivals are the panel. */
+    const counters = `<div class="counters">
+        <div>${row(c.by_action)} · ${row(c.by_protocol)}</div>
+        <div class="muted">by process: ${row(c.by_process)}</div>
+        <div class="muted">by port: ${row(c.by_port)}</div></div>`;
+
+    el.innerHTML = `<div class="muted">${d.total} row(s) in the log.
+        ${esc(d.note||'')}</div><div class="sparks">${sparks}</div>${counters}`;
+  }catch(e){ el.innerHTML = `<div class="invalid">${esc(e.message||e)}</div>`; }
+}
+
+/* ── what is actually wearing ─────────────────────────────────────────── */
+async function drawEntropy(){
+  const el = $('#entropyBody');
+  if(!el) return;
+  try{
+    const d = await get('/api/entropy');
+    if(d.error){ el.innerHTML = `<div class="invalid">${esc(d.error)}</div>`; return; }
+    const g = Object.entries(d.growth||{}).filter(([,v]) => v.exists)
+      .map(([k,v]) => `<tr><td>${esc(k)}</td><td>${v.bytes.toLocaleString()} B</td>
+        <td>${v.rows.toLocaleString()} rows</td>
+        <td>${Math.round(v.bytes_per_day).toLocaleString()} B/day</td></tr>`).join('');
+    const dur = (d.duration||{});
+    const cyc = (dur.cycles||[]).slice(-6).map(c =>
+      `<tr><td>${c.minutes} min</td><td>${c.steps===null?'—':c.steps} steps</td>
+        <td>${c.min_per_step!==undefined ? c.min_per_step+' min/step ('+c.vs_normal+'x)' : '—'}</td></tr>`
+      ).join('');
+    const amb = Object.entries(d.ambient||{}).map(([k,v]) =>
+      `<div class="muted">${esc(k)}: ${v.readable?'readable':'not readable'} —
+        ${esc(v.why)}</div>`).join('');
+    el.innerHTML = `
+      <table class="tbl"><tbody>${g}</tbody></table>
+      <div class="muted" style="margin-top:6px">cycle duration against step
+        count (normal ${dur.normal_min_per_step} min/step)</div>
+      <table class="tbl"><tbody>${cyc}</tbody></table>
+      ${dur.why ? `<div class="muted">${esc(dur.why)}</div>` : ''}
+      <div style="margin-top:6px">INSUFFICIENT marks: ${(d.insufficient||{}).count}
+        <span class="muted">${esc((d.insufficient||{}).why||'')}</span></div>
+      <div>idle_seconds: ${(d.idle||{}).idle_seconds}
+        <span class="muted">${esc((d.idle||{}).note||'')}</span></div>
+      <div class="muted" style="margin-top:6px">fragmentation:
+        ${esc((d.fragmentation||{}).why||'')}</div>
+      <div style="margin-top:6px">ambient sensors — declared, not built:</div>${amb}`;
+  }catch(e){ el.innerHTML = `<div class="invalid">${esc(e.message||e)}</div>`; }
+}
+
 async function tabGlass(){
   const d = await get('/api/glass');
   if(d.error) return `<div class="grid">${panel('GLASS',
@@ -625,8 +710,9 @@ async function tabGlass(){
     ${panel('raw receptor stream', streamPanel)}
     ${panel('the reaction', `<div id="reactionBody"><div class="muted">loading...</div></div>`)}
     ${panel('raw stdout', stdoutBody)}
-    ${panel('blocked connections', blockedBody)}
+    ${panel('blocked connections', `<div id="blockedBody"><div class="muted">loading...</div></div>`)}
     ${panel('traffic counters', trafficBody)}
+    ${panel('what is wearing', `<div id="entropyBody"><div class="muted">loading...</div></div>`)}
   </div>`;
 }
 
@@ -646,8 +732,13 @@ async function render(){
 function wirePanel(){
   document.querySelectorAll('.spd').forEach(b =>
     b.onclick = () => { streamHz = parseFloat(b.dataset.hz); render(); });
-  if(active === 'glass'){ drawStream(); drawReaction(); startStream(); }
-  else { stopStream(); }
+  if(active === 'glass'){
+    drawStream(); drawReaction(); startStream();
+    blockedOffset = null; drawBlocked();
+    stopBlocked(); blockedTimer = setInterval(drawBlocked, 3000);
+    drawEntropy();
+  }
+  else { stopStream(); stopBlocked(); }
   document.querySelectorAll('.fbtn').forEach(b =>
     b.onclick = () => { exFilter = b.dataset.f; render(); });
   const tlc = $('#tlcycle');
