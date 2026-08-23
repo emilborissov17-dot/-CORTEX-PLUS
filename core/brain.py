@@ -192,15 +192,12 @@ def _spirit() -> str:
     whose every heading is Cyrillic is an instruction arguing with its own
     context, and a 3B model resolves that argument in favour of the context.
 
-    THE COST IS REAL AND IS NOT HIDDEN. LAW_OF_THE_BRAIN.md's `## EN` section
-    is 409 characters against the BG section's 1816 — 23% — and it is labelled
-    `(summary)` by whoever wrote it. It condenses nine numbered clauses into one
-    paragraph. Switching to it removes the largest Cyrillic block from every
-    brain prompt, which is what this change is for, and it costs the brain the
-    numbered form of its own law. That file is guarded; a full English law is
-    Emil's to approve, not mine to write. Until he does, the marker below says
-    out loud that the brain is reading the summary, so a thin answer can be
-    traced to a thin law instead of being blamed on the model.
+    THE DEBT IS PAID (23 Aug 2026). For one day the `## EN` section was a
+    409-character summary against the BG section's 1820, this docstring said so,
+    and the label in the prompt said so too. Emil approved the full translation:
+    `## EN` now carries all SEVEN clauses, clause for clause, and `## BG` is
+    byte-identical to what it always was. The brain reads its whole law again,
+    in the language it is required to answer in, so the label is just "LAW:".
     """
     out, missing = [], []
     try:
@@ -208,9 +205,7 @@ def _spirit() -> str:
         en = law.split("## EN", 1)[-1].strip()
         if not en:
             raise ValueError("the ## EN section is empty")
-        out.append("LAW (English summary section; the full law is BG-only "
-                   "pending approval):\n"
-                   + _tail_budget(en, SPIRIT_LAW_BUDGET, "the law"))
+        out.append("LAW:\n" + _tail_budget(en, SPIRIT_LAW_BUDGET, "the law"))
     except Exception as e:
         missing.append(f"THE LAW cannot be read ({type(e).__name__})")
     try:

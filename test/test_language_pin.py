@@ -134,7 +134,11 @@ def test_the_pin_cannot_be_switched_off_by_a_parameter():
 
 def test_the_spirit_carries_the_english_law_not_the_bulgarian_one():
     spirit = brain._spirit()
-    assert "LAW (English summary section" in spirit
+    # The label was "LAW (English summary section; the full law is BG-only
+    # pending approval):" for exactly one day. Emil approved the full
+    # translation, so the caveat is gone and the label is just "LAW:".
+    assert spirit.startswith("LAW:")
+    assert "summary" not in spirit.split("CANON")[0]
     law = (REPO / "LAW_OF_THE_BRAIN.md").read_text(encoding="utf-8")
     bg_only = law.split("## BG", 1)[-1].split("## EN", 1)[0]
     # A sentence that exists only in the BG section must no longer be in the
@@ -143,6 +147,27 @@ def test_the_spirit_carries_the_english_law_not_the_bulgarian_one():
     marker = "Мозъкът е навсякъде"
     assert marker in bg_only
     assert marker not in spirit
+
+
+def test_the_law_block_carries_all_seven_clauses():
+    """A summary is not a law. Seven in the BG section, seven in the prompt."""
+    import re
+    law_block = brain._spirit().split("CANON")[0]
+    assert len(re.findall(r"^\d+\. \*\*", law_block, re.M)) == 7, law_block[:400]
+    source = (REPO / "LAW_OF_THE_BRAIN.md").read_text(encoding="utf-8")
+    bg = source.split("## BG", 1)[-1].split("## EN", 1)[0]
+    assert len(re.findall(r"^\d+\. \*\*", bg, re.M)) == 7, (
+        "the BG law changed clause count; the EN translation must follow it")
+    assert not any(0x0400 <= ord(c) <= 0x052F for c in law_block)
+
+
+def test_the_bulgarian_law_is_still_there_untouched():
+    """The translation is an ADDITION. Emil's clauses stay where they were."""
+    source = (REPO / "LAW_OF_THE_BRAIN.md").read_text(encoding="utf-8")
+    bg = source.split("## BG", 1)[-1].split("## EN", 1)[0]
+    assert "Мозъкът е навсякъде" in bg
+    assert "Автономията се печели" in bg
+    assert len(bg) > 1700, "the BG section shrank"
 
 
 def test_the_warning_strings_are_english(tmp_path, monkeypatch):

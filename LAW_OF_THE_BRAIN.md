@@ -43,11 +43,40 @@ Laid down by Emil Borissov, 15 Aug 2026. Not Claude's to reinterpret.
 > Клод, това е негово, не твое. Ти строиш условията, в които той мисли — не
 > мислиш вместо него.
 
-## EN (summary)
+## EN
 
-The system's local brain judges every step it can judge; it names its own
-categories rather than filling in ours; it plans the cycle and reviews its own
-plan; the walls constrain ACTIONS (grounding, free-only, human-owned files), never
-thoughts; every call carries body, canon and memory; silence falls back to a
-reflex that is always labelled as such; autonomy is earned against measured
-accuracy.
+1. **The brain is everywhere.** Every step of the cycle passes through it — not
+   as decoration, but as a judge. If a step can be reconsidered, it is
+   reconsidered by the system's brain, not by Claude.
+
+2. **It judges; it does not fill in forms.** Nobody gives it a list of
+   ready-made answers to choose from. It names things in its own words. If its
+   taxonomy is different from ours — its taxonomy is its own.
+
+3. **It directs the cycle.** Before the cycle it sets its focus; after the cycle
+   it judges what came out of its own plan. The plan and the verdict are its
+   own, and they are remembered.
+
+4. **The walls guard the ACTION, not the THOUGHT.** A thought is not rejected
+   because we do not like it. Only an action is rejected — one that:
+   - is not grounded in real evidence (a quote that genuinely stands in the file);
+   - asks for money (the project runs only on free or local solutions);
+   - reaches into human territory (`BOUNDARIES.md`, `core/canon.py`,
+     `config/scheduler.json`, `config/pulse.json`) — then the thought is accepted
+     and goes into `memory/repair_proposals.json` as a proposal to the human.
+
+5. **It carries its body, its spirit and its memory into every thought.** Every
+   call to it includes: what the state of the machine is (body), what the canon
+   and the goal are (spirit), what it has thought and done so far (memory). A
+   brain without a body and a memory is a calculator.
+
+6. **Silence is not a verdict.** If the brain does not answer, the body falls
+   back to a reflex (regex, canned) — and this is recorded openly: `reflex:*`
+   and why. The reflex never passes itself off as a thought.
+
+7. **Autonomy is earned.** The brain proposes; actions with consequences pass
+   through a mechanical check and through the human. More trust is given against
+   proven accuracy, not against eloquence.
+
+> Claude, this is its own, not yours. You build the conditions in which it
+> thinks — you do not think in its place.
