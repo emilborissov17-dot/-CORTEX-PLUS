@@ -2807,6 +2807,33 @@ def main():
     except Exception as e:
         print(f"[FAST_CYCLE] cycle_report -> FAILED: {type(e).__name__}: {e}")
 
+    # ── IS THE BRAIN STILL ANSWERING IN ENGLISH? (23 Aug 2026) ─────────────
+    # Here, with the report, because this is the one place per cycle that exists
+    # to tell a human what happened. The language drift ran for six days in
+    # plain sight: every verdict was on disk and readable, and nobody read them,
+    # because reading a journal is something you do once you are already
+    # suspicious. A ratio changes on its own.
+    #
+    # Below 20 samples it says INSUFFICIENT SAMPLE and does not alarm; below the
+    # 98% floor it writes memory/language_quarantine.json and rings once per
+    # rolling 24 hours through the one existing path to the phone. It cannot
+    # block and it cannot kill: it is a measurement ABOUT the cycle, not a step
+    # of it.
+    try:
+        from core.language_gate import check_purity as _purity
+        _pc = _purity(hours=24)
+        print("[LANGUAGE] purity {} over {} model output(s) -> {} | {}".format(
+            "n/a" if _pc.get("ratio") is None else "{:.1%}".format(_pc["ratio"]),
+            _pc.get("n_total"), _pc.get("verdict"), _pc.get("why")))
+        if _pc.get("alarmed"):
+            print("[LANGUAGE] ALARM sent; read memory/language_quarantine.json")
+        for _k, _v in sorted((_pc.get("by_kind") or {}).items(),
+                             key=lambda kv: kv[1]["ratio"])[:5]:
+            print("[LANGUAGE]   {:<18} {}/{} clean".format(
+                _k, _v["clean"], _v["total"]))
+    except Exception as e:
+        print(f"[FAST_CYCLE] language purity -> FAILED: {type(e).__name__}: {e}")
+
     # ── И ПОСЛЕДНАТА СТЪПКА СИ ЗАПИСВА ЗАВЪРШВАНЕТО (23 авг 2026) ──────────
     # cycle_report е последната: няма следващ beat(), който да затвори границата
     # ѝ. Без този ред тя щеше да е единствената от 62, която пак не се записва —

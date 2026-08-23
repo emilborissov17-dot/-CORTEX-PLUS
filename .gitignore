@@ -93,6 +93,9 @@ memory/pulse_stream.jsonl
 # probes, rewritten every few minutes. It is the machine's recent state,
 # not a record anyone should diff.
 memory/somatic_history.jsonl
+# the language purity check's own state: a ratio, a window and the stamp that
+# rate-limits its alarm. Runtime, rewritten every cycle that is below the floor.
+memory/language_quarantine.json
 memory/idea_stream.jsonl
 memory/pulse_cycle_requests.json
 memory/extraordinary_request.json
